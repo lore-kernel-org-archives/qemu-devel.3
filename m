@@ -4,53 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3B45ECE582
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:26:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54869ECE582
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:27:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so4cQ-0000mP-9N; Tue, 10 Sep 2024 13:25:34 -0400
+	id 1so4dt-0007MV-Qd; Tue, 10 Sep 2024 13:27:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=54h1=QI=kaod.org=clg@ozlabs.org>)
- id 1so4cO-0000dE-Oj; Tue, 10 Sep 2024 13:25:32 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1so4dr-0007Eu-Sz
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:27:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=54h1=QI=kaod.org=clg@ozlabs.org>)
- id 1so4cM-0003K9-1H; Tue, 10 Sep 2024 13:25:32 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4X39ZZ3LQlz4x3r;
- Wed, 11 Sep 2024 03:25:26 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4X39ZW5zN6z4wc1;
- Wed, 11 Sep 2024 03:25:23 +1000 (AEST)
-Message-ID: <6efd3440-7b77-474e-a778-f57cdd786168@kaod.org>
-Date: Tue, 10 Sep 2024 19:25:21 +0200
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1so4dq-0003YX-8k
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:27:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725989221;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LwxjXMUQr4Xjv38FMLIjh5rAgIpVCJme6TNvtU0kcfE=;
+ b=cHO7BRZGh2fWZgZDNv9ddlkSbLodCtNqUyt3nCcJk3SoK2eqF47QxdaTU81g4mq3B3GA8K
+ UKza1afdbEBR4i9M4tI5VOCAXv2S7uRQZB4jzCa4HF6i60oWbpWoA2L4NJS6oGgIJK6dCE
+ XQbzrd5BtzaLzDd4b2erCEXgixoVpe0=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-178-uQOiYQABME6UKfPrCe7fAw-1; Tue, 10 Sep 2024 13:27:00 -0400
+X-MC-Unique: uQOiYQABME6UKfPrCe7fAw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-42cb827e9b6so8285065e9.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 10:27:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725989219; x=1726594019;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LwxjXMUQr4Xjv38FMLIjh5rAgIpVCJme6TNvtU0kcfE=;
+ b=Rv3q2M5lPpr6EHDK5pzEfk56Ave8IqBR8upuzT3s0PYqUs6kDHS0jO44mJgwFUXtrN
+ h02TVCdqC8Urg6tu3Zj5Mcwl9uD2cGL+WNu0NyYRA2v/Gwa0jQWl11kKV5FvIaht0I+1
+ WVZLjZHpidyEl+p60dsDIJFr0FACymLWkhQXqXv7rrMvcjnWr5O4Hcv7B/Hst+F34rto
+ KLAnEZQKnobaQh1OTyLZkVsWGuJEUVmIMYmLo0xyJXLCH9FTWRqhD4UlMYC9OfRLdUBZ
+ YCbINs/Fa5J2AmILXpbNuhKQZ5/GW12Fy4Ynzujilpftzj4Ne4zEbrdokRCzbm6NHOgG
+ P9yQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXWVrPNklaroghsTNBPLd90xJf237w5+/Hd6XzBC3R40F9bZmw7AsJ7rW1X/Gdy7qCmX9Vp/VRzcjcc@nongnu.org
+X-Gm-Message-State: AOJu0YzlCmCpi4SBN+s3VLDwCpQzvHJ1nOuXbKoNb6ziNahV5YfS2rwu
+ j/BhaKBkIX+hPaGTL9+l29bu58dN/EMfrZyx6Rzp/BvNdRpitrmP9/IjXzGkbmNW5LIYan7spy3
+ P51dQx36kbMqPF+9zEs4dy3hg+46CzURnnlv2bQdMMPnWn38d+K2Z
+X-Received: by 2002:a05:600c:3109:b0:42c:b9dd:93ee with SMTP id
+ 5b1f17b1804b1-42ccd35fcbemr3063335e9.34.1725989219155; 
+ Tue, 10 Sep 2024 10:26:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHAuysiFODPzDSAUAn9inzDiiewuatunlg5RkzOWXPsNMzHD7oMQCUa9BlVeRGfjbysCE/RHQ==
+X-Received: by 2002:a05:600c:3109:b0:42c:b9dd:93ee with SMTP id
+ 5b1f17b1804b1-42ccd35fcbemr3063035e9.34.1725989218332; 
+ Tue, 10 Sep 2024 10:26:58 -0700 (PDT)
+Received: from redhat.com ([31.187.78.63]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42caeb44887sm119093435e9.23.2024.09.10.10.26.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Sep 2024 10:26:57 -0700 (PDT)
+Date: Tue, 10 Sep 2024 13:26:49 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
+Subject: Re: [PATCH] docs/devel: Prohibit calling object_unparent() for
+ memory region
+Message-ID: <20240910132635-mutt-send-email-mst@kernel.org>
+References: <20240829-memory-v1-1-ac07af2f4fa5@daynix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/14] ppc/xive2: Dump the VP-group and crowd tables
- with 'info pic'
-To: Michael Kowal <kowal@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
- milesg@linux.ibm.com
-References: <20240909211038.27440-1-kowal@linux.ibm.com>
- <20240909211038.27440-7-kowal@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240909211038.27440-7-kowal@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=54h1=QI=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240829-memory-v1-1-ac07af2f4fa5@daynix.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,240 +114,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/9/24 23:10, Michael Kowal wrote:
-> From: Frederic Barrat <fbarrat@linux.ibm.com>
+On Thu, Aug 29, 2024 at 02:46:48PM +0900, Akihiko Odaki wrote:
+> Previously it was allowed to call object_unparent() for a memory region
+> in instance_finalize() of its parent. However, such a call typically
+> has no effect because child objects get unparented before
+> instance_finalize().
 > 
-> The 'info pic' HMP command dumps the state of the interrupt controller.
-> Add the dump of the NVG and NVC tables to its output to ease debug.
+> Worse, memory regions typically gets finalized when they get unparented
+> before instance_finalize(). This means calling object_unparent() for
+> them in instance_finalize() is to call the function for an object
+> already finalized, which should be avoided.
 > 
-> Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
-> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 
-Thanks,
-
-C.
-
+who's applying this? Paolo?
 
 > ---
->   include/hw/ppc/xive2.h      | 12 ++++++++
->   include/hw/ppc/xive2_regs.h |  6 ++++
->   hw/intc/pnv_xive2.c         | 44 +++++++++++++++++++++++++++--
->   hw/intc/xive2.c             | 55 +++++++++++++++++++++++++++++++++++++
->   4 files changed, 114 insertions(+), 3 deletions(-)
+>  docs/devel/memory.rst | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
 > 
-> diff --git a/include/hw/ppc/xive2.h b/include/hw/ppc/xive2.h
-> index 654f485e9b..b7a7c33ddd 100644
-> --- a/include/hw/ppc/xive2.h
-> +++ b/include/hw/ppc/xive2.h
-> @@ -53,6 +53,12 @@ typedef struct Xive2RouterClass {
->                      Xive2Nvp *nvp);
->       int (*write_nvp)(Xive2Router *xrtr, uint8_t nvp_blk, uint32_t nvp_idx,
->                        Xive2Nvp *nvp, uint8_t word_number);
-> +    int (*get_nvgc)(Xive2Router *xrtr, bool crowd,
-> +                    uint8_t nvgc_blk, uint32_t nvgc_idx,
-> +                    Xive2Nvgc *nvgc);
-> +    int (*write_nvgc)(Xive2Router *xrtr, bool crowd,
-> +                      uint8_t nvgc_blk, uint32_t nvgc_idx,
-> +                      Xive2Nvgc *nvgc);
->       uint8_t (*get_block_id)(Xive2Router *xrtr);
->       uint32_t (*get_config)(Xive2Router *xrtr);
->   } Xive2RouterClass;
-> @@ -67,6 +73,12 @@ int xive2_router_get_nvp(Xive2Router *xrtr, uint8_t nvp_blk, uint32_t nvp_idx,
->                           Xive2Nvp *nvp);
->   int xive2_router_write_nvp(Xive2Router *xrtr, uint8_t nvp_blk, uint32_t nvp_idx,
->                             Xive2Nvp *nvp, uint8_t word_number);
-> +int xive2_router_get_nvgc(Xive2Router *xrtr, bool crowd,
-> +                          uint8_t nvgc_blk, uint32_t nvgc_idx,
-> +                          Xive2Nvgc *nvgc);
-> +int xive2_router_write_nvgc(Xive2Router *xrtr, bool crowd,
-> +                            uint8_t nvgc_blk, uint32_t nvgc_idx,
-> +                            Xive2Nvgc *nvgc);
->   uint32_t xive2_router_get_config(Xive2Router *xrtr);
->   
->   void xive2_router_notify(XiveNotifier *xn, uint32_t lisn, bool pq_checked);
-> diff --git a/include/hw/ppc/xive2_regs.h b/include/hw/ppc/xive2_regs.h
-> index d71a54f9ff..99840e88a8 100644
-> --- a/include/hw/ppc/xive2_regs.h
-> +++ b/include/hw/ppc/xive2_regs.h
-> @@ -212,6 +212,7 @@ void xive2_nvp_pic_print_info(Xive2Nvp *nvp, uint32_t nvp_idx, GString *buf);
->   typedef struct Xive2Nvgc {
->           uint32_t        w0;
->   #define NVGC2_W0_VALID             PPC_BIT32(0)
-> +#define NVGC2_W0_PGONEXT           PPC_BITMASK32(26, 31)
->           uint32_t        w1;
->           uint32_t        w2;
->           uint32_t        w3;
-> @@ -221,4 +222,9 @@ typedef struct Xive2Nvgc {
->           uint32_t        w7;
->   } Xive2Nvgc;
->   
-> +#define xive2_nvgc_is_valid(nvgc)    (be32_to_cpu((nvgc)->w0) & NVGC2_W0_VALID)
-> +
-> +void xive2_nvgc_pic_print_info(Xive2Nvgc *nvgc, uint32_t nvgc_idx,
-> +                               GString *buf);
-> +
->   #endif /* PPC_XIVE2_REGS_H */
-> diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-> index 78609105a8..834d32287b 100644
-> --- a/hw/intc/pnv_xive2.c
-> +++ b/hw/intc/pnv_xive2.c
-> @@ -490,6 +490,23 @@ static int pnv_xive2_write_nvp(Xive2Router *xrtr, uint8_t blk, uint32_t idx,
->                                 word_number);
->   }
->   
-> +static int pnv_xive2_get_nvgc(Xive2Router *xrtr, bool crowd,
-> +                              uint8_t blk, uint32_t idx,
-> +                              Xive2Nvgc *nvgc)
-> +{
-> +    return pnv_xive2_vst_read(PNV_XIVE2(xrtr), crowd ? VST_NVC : VST_NVG,
-> +                              blk, idx, nvgc);
-> +}
-> +
-> +static int pnv_xive2_write_nvgc(Xive2Router *xrtr, bool crowd,
-> +                                uint8_t blk, uint32_t idx,
-> +                                Xive2Nvgc *nvgc)
-> +{
-> +    return pnv_xive2_vst_write(PNV_XIVE2(xrtr), crowd ? VST_NVC : VST_NVG,
-> +                               blk, idx, nvgc,
-> +                               XIVE_VST_WORD_ALL);
-> +}
-> +
->   static int pnv_xive2_nxc_to_table_type(uint8_t nxc_type, uint32_t *table_type)
->   {
->       switch (nxc_type) {
-> @@ -2407,6 +2424,8 @@ static void pnv_xive2_class_init(ObjectClass *klass, void *data)
->       xrc->write_end = pnv_xive2_write_end;
->       xrc->get_nvp   = pnv_xive2_get_nvp;
->       xrc->write_nvp = pnv_xive2_write_nvp;
-> +    xrc->get_nvgc   = pnv_xive2_get_nvgc;
-> +    xrc->write_nvgc = pnv_xive2_write_nvgc;
->       xrc->get_config  = pnv_xive2_get_config;
->       xrc->get_block_id = pnv_xive2_get_block_id;
->   
-> @@ -2497,8 +2516,9 @@ void pnv_xive2_pic_print_info(PnvXive2 *xive, GString *buf)
->       Xive2Eas eas;
->       Xive2End end;
->       Xive2Nvp nvp;
-> +    Xive2Nvgc nvgc;
->       int i;
-> -    uint64_t xive_nvp_per_subpage;
-> +    uint64_t entries_per_subpage;
->   
->       g_string_append_printf(buf, "XIVE[%x] Source %08x .. %08x\n",
->                              blk, srcno0, srcno0 + nr_esbs - 1);
-> @@ -2530,10 +2550,28 @@ void pnv_xive2_pic_print_info(PnvXive2 *xive, GString *buf)
->   
->       g_string_append_printf(buf, "XIVE[%x] #%d NVPT %08x .. %08x\n",
->                              chip_id, blk, 0, XIVE2_NVP_COUNT - 1);
-> -    xive_nvp_per_subpage = pnv_xive2_vst_per_subpage(xive, VST_NVP);
-> -    for (i = 0; i < XIVE2_NVP_COUNT; i += xive_nvp_per_subpage) {
-> +    entries_per_subpage = pnv_xive2_vst_per_subpage(xive, VST_NVP);
-> +    for (i = 0; i < XIVE2_NVP_COUNT; i += entries_per_subpage) {
->           while (!xive2_router_get_nvp(xrtr, blk, i, &nvp)) {
->               xive2_nvp_pic_print_info(&nvp, i++, buf);
->           }
->       }
-> +
-> +    g_string_append_printf(buf, "XIVE[%x] #%d NVGT %08x .. %08x\n",
-> +                           chip_id, blk, 0, XIVE2_NVP_COUNT - 1);
-> +    entries_per_subpage = pnv_xive2_vst_per_subpage(xive, VST_NVG);
-> +    for (i = 0; i < XIVE2_NVP_COUNT; i += entries_per_subpage) {
-> +        while (!xive2_router_get_nvgc(xrtr, false, blk, i, &nvgc)) {
-> +            xive2_nvgc_pic_print_info(&nvgc, i++, buf);
-> +        }
-> +    }
-> +
-> +    g_string_append_printf(buf, "XIVE[%x] #%d NVCT %08x .. %08x\n",
-> +                          chip_id, blk, 0, XIVE2_NVP_COUNT - 1);
-> +    entries_per_subpage = pnv_xive2_vst_per_subpage(xive, VST_NVC);
-> +    for (i = 0; i < XIVE2_NVP_COUNT; i += entries_per_subpage) {
-> +        while (!xive2_router_get_nvgc(xrtr, true, blk, i, &nvgc)) {
-> +            xive2_nvgc_pic_print_info(&nvgc, i++, buf);
-> +        }
-> +    }
->   }
-> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-> index ac581fa195..26b6e72129 100644
-> --- a/hw/intc/xive2.c
-> +++ b/hw/intc/xive2.c
-> @@ -43,6 +43,26 @@ static uint64_t xive2_nvp_reporting_addr(Xive2Nvp *nvp)
->       return cache_addr;
->   }
->   
-> +static uint32_t xive2_nvgc_get_backlog(Xive2Nvgc *nvgc, uint8_t priority)
-> +{
-> +    uint32_t val = 0;
-> +    uint8_t *ptr, i;
-> +
-> +    if (priority > 7) {
-> +        return 0;
-> +    }
-> +
-> +    /*
-> +     * The per-priority backlog counters are 24-bit and the structure
-> +     * is stored in big endian
-> +     */
-> +    ptr = (uint8_t *)&nvgc->w2 + priority * 3;
-> +    for (i = 0; i < 3; i++, ptr++) {
-> +        val = (val << 8) + *ptr;
-> +    }
-> +    return val;
-> +}
-> +
->   void xive2_eas_pic_print_info(Xive2Eas *eas, uint32_t lisn, GString *buf)
->   {
->       if (!xive2_eas_is_valid(eas)) {
-> @@ -189,6 +209,23 @@ void xive2_nvp_pic_print_info(Xive2Nvp *nvp, uint32_t nvp_idx, GString *buf)
->       g_string_append_c(buf, '\n');
->   }
->   
-> +void xive2_nvgc_pic_print_info(Xive2Nvgc *nvgc, uint32_t nvgc_idx, GString *buf)
-> +{
-> +    uint8_t i;
-> +
-> +    if (!xive2_nvgc_is_valid(nvgc)) {
-> +        return;
-> +    }
-> +
-> +    g_string_append_printf(buf, "  %08x PGoNext:%02x bklog: ", nvgc_idx,
-> +                           xive_get_field32(NVGC2_W0_PGONEXT, nvgc->w0));
-> +    for (i = 0; i <= XIVE_PRIORITY_MAX; i++) {
-> +        g_string_append_printf(buf, "[%d]=0x%x ",
-> +                               i, xive2_nvgc_get_backlog(nvgc, i));
-> +    }
-> +    g_string_append_printf(buf, "\n");
-> +}
-> +
->   static void xive2_end_enqueue(Xive2End *end, uint32_t data)
->   {
->       uint64_t qaddr_base = xive2_end_qaddr(end);
-> @@ -610,6 +647,24 @@ int xive2_router_write_nvp(Xive2Router *xrtr, uint8_t nvp_blk, uint32_t nvp_idx,
->      return xrc->write_nvp(xrtr, nvp_blk, nvp_idx, nvp, word_number);
->   }
->   
-> +int xive2_router_get_nvgc(Xive2Router *xrtr, bool crowd,
-> +                          uint8_t nvgc_blk, uint32_t nvgc_idx,
-> +                          Xive2Nvgc *nvgc)
-> +{
-> +   Xive2RouterClass *xrc = XIVE2_ROUTER_GET_CLASS(xrtr);
-> +
-> +   return xrc->get_nvgc(xrtr, crowd, nvgc_blk, nvgc_idx, nvgc);
-> +}
-> +
-> +int xive2_router_write_nvgc(Xive2Router *xrtr, bool crowd,
-> +                            uint8_t nvgc_blk, uint32_t nvgc_idx,
-> +                            Xive2Nvgc *nvgc)
-> +{
-> +   Xive2RouterClass *xrc = XIVE2_ROUTER_GET_CLASS(xrtr);
-> +
-> +   return xrc->write_nvgc(xrtr, crowd, nvgc_blk, nvgc_idx, nvgc);
-> +}
-> +
->   /*
->    * The thread context register words are in big-endian format.
->    */
+> diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
+> index 69c5e3f914ac..83760279e3db 100644
+> --- a/docs/devel/memory.rst
+> +++ b/docs/devel/memory.rst
+> @@ -168,11 +168,10 @@ and VFIOQuirk in hw/vfio/pci.c.
+>  
+>  You must not destroy a memory region as long as it may be in use by a
+>  device or CPU.  In order to do this, as a general rule do not create or
+> -destroy memory regions dynamically during a device's lifetime, and only
+> -call object_unparent() in the memory region owner's instance_finalize
+> -callback.  The dynamically allocated data structure that contains the
+> -memory region then should obviously be freed in the instance_finalize
+> -callback as well.
+> +destroy memory regions dynamically during a device's lifetime, and do not
+> +call object_unparent().  The dynamically allocated data structure that contains
+> +the memory region then should be freed in the instance_finalize callback, which
+> +is called after it gets unparented.
+>  
+>  If you break this rule, the following situation can happen:
+>  
+> @@ -199,8 +198,9 @@ but nevertheless it is used in a few places.
+>  
+>  For regions that "have no owner" (NULL is passed at creation time), the
+>  machine object is actually used as the owner.  Since instance_finalize is
+> -never called for the machine object, you must never call object_unparent
+> -on regions that have no owner, unless they are aliases or containers.
+> +never called for the machine object, you must never free regions that have no
+> +owner, unless they are aliases or containers, which you can manually call
+> +object_unparent() for.
+>  
+>  
+>  Overlapping regions and priority
+> 
+> ---
+> base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
+> change-id: 20240829-memory-cfd3ee0af44d
+> 
+> Best regards,
+> -- 
+> Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
