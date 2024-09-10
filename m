@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 634A1EDE9AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:58:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80A45EDE9AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:59:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so58L-0004Py-0L; Tue, 10 Sep 2024 13:58:33 -0400
+	id 1so58n-0006hi-NH; Tue, 10 Sep 2024 13:59:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1so58G-0004DO-Om
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:58:28 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1so58m-0006YW-0L
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:59:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1so58F-0006NR-2u
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:58:28 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1so58k-0006QV-Ay
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:58:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725991106;
+ s=mimecast20190719; t=1725991137;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JocpYcC+QFf1LAhnFndqLcQmZ38s1CCcvmmdPsn8swM=;
- b=FefBXN3F8bweh1u79VVBYVGG/hlqxnZ4htgdrrqc3niUrK7iKwwA72b7h6X3XjMWTZ/qKf
- 6E5z3zlxDS5wXTtwR+3UuY++ahgy5O/JKwT1ujZLAko90bWh+L7+IpjTUrhaIXmV70ruv2
- gCAtckwZW7C5Z6A6npks1DuMlXzmvg8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=cECBk1qPAy/kFJQbJli+ig8bld14E32zOLZX1hTjPnw=;
+ b=S9n+LsJQ1H3HRm2Sp0+xX6ZK9sMLAiyoq7u8cHHZM9PDIAF0eBo3tB7evibGh5vG6g7F/R
+ 9GuftQk0vIREgol64ziJZo24KJXRIQo+4ntMObFS3rcPnx3dLGG3Xmo6GLBD3+K13NIVh8
+ wZP2pIbpIlpye+SLWNdYQVyiOvooapA=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-692-P9UMfzoGP4eb29lgYnER_A-1; Tue,
- 10 Sep 2024 13:58:23 -0400
-X-MC-Unique: P9UMfzoGP4eb29lgYnER_A-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-450-43twLiD5OiSpbQqui4OpKg-1; Tue,
+ 10 Sep 2024 13:58:54 -0400
+X-MC-Unique: 43twLiD5OiSpbQqui4OpKg-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B0E521955D47; Tue, 10 Sep 2024 17:58:21 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF208195394C; Tue, 10 Sep 2024 17:58:52 +0000 (UTC)
 Received: from t14s.redhat.com (unknown [10.22.32.182])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B2B7A1956060; Tue, 10 Sep 2024 17:58:16 +0000 (UTC)
+ id 423BB19560AD; Tue, 10 Sep 2024 17:58:47 +0000 (UTC)
 From: David Hildenbrand <david@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, David Hildenbrand <david@redhat.com>,
@@ -55,9 +55,9 @@ Cc: qemu-s390x@nongnu.org, David Hildenbrand <david@redhat.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  Janosch Frank <frankja@linux.ibm.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>
-Subject: [PATCH v1 01/14] s390x/s390-virtio-ccw: don't crash on weird RAM sizes
-Date: Tue, 10 Sep 2024 19:57:56 +0200
-Message-ID: <20240910175809.2135596-2-david@redhat.com>
+Subject: [PATCH v1 07/14] s390x/s390-hypercall: introduce DIAG500 STORAGE_LIMIT
+Date: Tue, 10 Sep 2024 19:58:02 +0200
+Message-ID: <20240910175809.2135596-8-david@redhat.com>
 In-Reply-To: <20240910175809.2135596-1-david@redhat.com>
 References: <20240910175809.2135596-1-david@redhat.com>
 MIME-Version: 1.0
@@ -87,46 +87,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM is not happy when starting a VM with weird RAM sizes:
+A guest OS that supports memory hotplug / memory devices must during
+boot be aware of the maximum possible physical memory address that it might
+have to handle at a later stage during its runtime
 
-  # qemu-system-s390x --enable-kvm --nographic -m 1234K
-  qemu-system-s390x: kvm_set_user_memory_region: KVM_SET_USER_MEMORY_REGION
-    failed, slot=0, start=0x0, size=0x244000: Invalid argument
-  kvm_set_phys_mem: error registering slot: Invalid argument
-  Aborted (core dumped)
+For example, the maximum possible memory address might be required to
+prepare the kernel virtual address space accordingly (e.g., select page
+table hierarchy depth).
 
-Let's handle that in a better way by rejecting such weird RAM sizes
-right from the start:
+On s390x there is currently no such mechanism that is compatible with
+paravirtualized memory devices, because the whole SCLP interface was
+designed around the idea of "storage increments" and "standby memory".
+Paravirtualized memory devices we want to support, such as virtio-mem, have
+no intersection with any of that, but could co-exist with them in the
+future if ever needed.
 
-  # qemu-system-s390x --enable-kvm --nographic -m 1234K
-  qemu-system-s390x: ram size must be multiples of 1 MiB
+In particular, a guest OS must never detect and use device memory
+without the help of a proper device driver. Device memory must not be
+exposed in any firmware-provided memory map (SCLP or diag260 on s390x).
+For this reason, these memory devices will be places in memory *above*
+the "maximum storage increment" exposed via SCLP.
+
+Let's provide a new diag500 subcode to query the memory limit determined in
+s390_memory_init().
 
 Signed-off-by: David Hildenbrand <david@redhat.com>
 ---
- hw/s390x/s390-virtio-ccw.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ hw/s390x/s390-hypercall.c | 3 +++
+ hw/s390x/s390-hypercall.h | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 18240a0fd8..e30cf0a2a1 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -180,6 +180,17 @@ static void s390_memory_init(MemoryRegion *ram)
- {
-     MemoryRegion *sysmem = get_system_memory();
+diff --git a/hw/s390x/s390-hypercall.c b/hw/s390x/s390-hypercall.c
+index f09e8a1d81..ac48fc0961 100644
+--- a/hw/s390x/s390-hypercall.c
++++ b/hw/s390x/s390-hypercall.c
+@@ -68,6 +68,9 @@ int handle_diag_500(CPUS390XState *env)
+     case DIAG500_VIRTIO_CCW_NOTIFY:
+         env->regs[2] = handle_virtio_ccw_notify(env->regs[2], env->regs[3]);
+         return 0;
++    case DIAG500_STORAGE_LIMIT:
++        env->regs[2] = s390_get_memory_limit() - 1;
++        return 0;
+     default:
+         return -EINVAL;
+     }
+diff --git a/hw/s390x/s390-hypercall.h b/hw/s390x/s390-hypercall.h
+index b7ac29f444..f0ca62bcbb 100644
+--- a/hw/s390x/s390-hypercall.h
++++ b/hw/s390x/s390-hypercall.h
+@@ -18,6 +18,7 @@
+ #define DIAG500_VIRTIO_RESET            1 /* legacy */
+ #define DIAG500_VIRTIO_SET_STATUS       2 /* legacy */
+ #define DIAG500_VIRTIO_CCW_NOTIFY       3 /* KVM_S390_VIRTIO_CCW_NOTIFY */
++#define DIAG500_STORAGE_LIMIT           4
  
-+    if (!QEMU_IS_ALIGNED(memory_region_size(ram), 1 * MiB)) {
-+        /*
-+         * The SCLP cannot possibly expose smaller granularity right now and KVM
-+         * cannot handle smaller granularity. As we don't support NUMA, the
-+         * region size directly corresponds to machine->ram_size, and the region
-+         * is a single RAM memory region.
-+         */
-+        error_report("ram size must be multiples of 1 MiB");
-+        exit(EXIT_FAILURE);
-+    }
-+
-     /* allocate RAM for core */
-     memory_region_add_subregion(sysmem, 0, ram);
+ int handle_diag_500(CPUS390XState *env);
  
 -- 
 2.46.0
