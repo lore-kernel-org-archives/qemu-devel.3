@@ -4,75 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6148EDE9AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 18:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A4C9EDE9AD
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 18:10:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so59H-0000nQ-G3; Tue, 10 Sep 2024 13:59:31 -0400
+	id 1so5JI-0003lX-EX; Tue, 10 Sep 2024 14:09:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1so59G-0000dY-1S
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:59:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <git@dprinz.de>) id 1so5JH-0003gN-5B
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:09:51 -0400
+Received: from mail.dprinz.de ([62.171.170.140])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1so59D-0006U8-KG
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:59:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725991167;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=75nB3XlxHtyFpg5pWr/5/YeyWJyE2v0N5lLtydj1lT8=;
- b=UdMRGcQqoShmU6EhcYZ7KMQAgKTiNFfdhL+aiPY634HGxDUNAotBKFRfRGTaXykGozf7sv
- C4Paa5syt1QG7/D7MMCP5nFIAvq0xsdRhiDoFz4EzoATUOxvzlsHqkZfXJl0/brRoq1n5a
- +YOLyY8SQUfwm2EYq8HmyBm8Lsz9WTk=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-568-dBmsZHunPGScXd29v6yp3g-1; Tue,
- 10 Sep 2024 13:59:23 -0400
-X-MC-Unique: dBmsZHunPGScXd29v6yp3g-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BFFE0195394A; Tue, 10 Sep 2024 17:59:21 +0000 (UTC)
-Received: from t14s.redhat.com (unknown [10.22.32.182])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 800C019560AD; Tue, 10 Sep 2024 17:59:17 +0000 (UTC)
-From: David Hildenbrand <david@redhat.com>
+ (Exim 4.90_1) (envelope-from <git@dprinz.de>) id 1so5JD-0007pK-Tc
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:09:50 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
+ with ESMTPSA id 48DFF1BD; Tue, 10 Sep 2024 20:09:38 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dprinz.de; s=dkim;
+ t=1725991780; h=from:subject:date:message-id:to:cc:mime-version:
+ content-transfer-encoding:in-reply-to:references;
+ bh=UElSgIew27IKEkvI804tLfULXFMFcMBQRfNiXzPXqtA=;
+ b=svxDtS2uXRVtd7fGM5D0n5SNTNr1jHI7Yc/mMHqKI91NR+TcV6QD/evHnaBDw6bYEXZ/hM
+ QY6yLJpqwIgC/tnVEZAoHAt0Ux+6JrG9kKG95yZTkfIRRt6g3RI7joZPkVQpykRpu0RqgH
+ htskOYDnWIXnnecXjbdipWJ4UNYi97OWgIVRxtGvdFGyWI3P+7ZxzvZN/tsfllY0AhUJme
+ Cu4RO0ekdswnIczlOie1vY5bIasVClVr+noEksL3gHT+G2b8eNIyWTaVCIsTzmgusmvMHc
+ dfD2DLdKf6mcN2Zi67pDe6qWvyG754E90u3Q8RM+wTT7XKy/gGZvQJqSKkPXTQ==
+From: Dominic Prinz <git@dprinz.de>
 To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, David Hildenbrand <david@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>
-Subject: [PATCH v1 13/14] s390x/virtio-ccw: add support for virtio based
- memory devices
-Date: Tue, 10 Sep 2024 19:58:08 +0200
-Message-ID: <20240910175809.2135596-14-david@redhat.com>
-In-Reply-To: <20240910175809.2135596-1-david@redhat.com>
-References: <20240910175809.2135596-1-david@redhat.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Dominic Prinz <git@dprinz.de>
+Subject: [PATCH v3] hw/acpi/ich9: Add periodic and swsmi timer
+Date: Tue, 10 Sep 2024 20:08:20 +0200
+Message-ID: <1d90ea69e01ab71a0f2ced116801dc78e04f4448.1725991505.git.git@dprinz.de>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240910111914-mutt-send-email-mst@kernel.org>
+References: <20240910111914-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-Last-TLS-Session-Version: TLSv1.3
+Received-SPF: pass client-ip=62.171.170.140; envelope-from=git@dprinz.de;
+ helo=mail.dprinz.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,271 +66,330 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let's implement support for abstract virtio based memory devices, using
-the virtio-pci implementation as an orientation.
+This patch implements the periodic and the swsmi ICH9 chipset timers. They are
+especially useful when prototyping UEFI firmware (e.g. with EDK2's OVMF)
+using QEMU.
 
-As we neither support virtio-mem or virtio-pmem yet, the code is
-effectively unused and not wired up. We'll implement support for
-virtio-mem based on this next.
+For backwards compatibility, the compat properties "x-smi-swsmi-timer",
+and "x-smi-periodic-timer" are introduced.
 
-Signed-off-by: David Hildenbrand <david@redhat.com>
+Additionally, writes to the SMI_STS register are enabled for the
+corresponding two bits using a write mask to make future work easier.
+
+Signed-off-by: Dominic Prinz <git@dprinz.de>
 ---
- MAINTAINERS              |   2 +
- hw/s390x/meson.build     |   1 +
- hw/s390x/virtio-ccw-md.c | 153 +++++++++++++++++++++++++++++++++++++++
- hw/s390x/virtio-ccw-md.h |  44 +++++++++++
- hw/virtio/Kconfig        |   1 +
- 5 files changed, 201 insertions(+)
- create mode 100644 hw/s390x/virtio-ccw-md.c
- create mode 100644 hw/s390x/virtio-ccw-md.h
+Changes from v2 to v3 (this):
+  - Updated compat properties to reflect new minor release (9.1)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0c1bc69828..53ed2c5f0f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2400,6 +2400,8 @@ F: include/hw/virtio/virtio-crypto.h
- virtio based memory device
- M: David Hildenbrand <david@redhat.com>
- S: Supported
-+F: hw/s390x/virtio-ccw-md.c
-+F: hw/s390x/virtio-ccw-md.h
- F: hw/virtio/virtio-md-pci.c
- F: include/hw/virtio/virtio-md-pci.h
- F: stubs/virtio-md-pci.c
-diff --git a/hw/s390x/meson.build b/hw/s390x/meson.build
-index 71ec747f4c..4df40da855 100644
---- a/hw/s390x/meson.build
-+++ b/hw/s390x/meson.build
-@@ -48,6 +48,7 @@ endif
- virtio_ss.add(when: 'CONFIG_VHOST_SCSI', if_true: files('vhost-scsi-ccw.c'))
- virtio_ss.add(when: 'CONFIG_VHOST_VSOCK', if_true: files('vhost-vsock-ccw.c'))
- virtio_ss.add(when: 'CONFIG_VHOST_USER_FS', if_true: files('vhost-user-fs-ccw.c'))
-+virtio_ss.add(when: 'CONFIG_VIRTIO_MD', if_true: files('virtio-ccw-md.c'))
- s390x_ss.add_all(when: 'CONFIG_VIRTIO_CCW', if_true: virtio_ss)
+Changes from v1 to v2:
+  - Ensured backwards compatablity by introducing two compat properties
+  - Introduced write mask for SMI_STS register to make future work easier
+
+ hw/acpi/ich9.c                | 23 +++++++++
+ hw/acpi/ich9_timer.c          | 93 +++++++++++++++++++++++++++++++++++
+ hw/acpi/meson.build           |  2 +-
+ hw/i386/pc.c                  |  5 +-
+ hw/isa/lpc_ich9.c             | 14 ++++++
+ include/hw/acpi/ich9.h        |  6 +++
+ include/hw/acpi/ich9_timer.h  | 23 +++++++++
+ include/hw/southbridge/ich9.h |  4 ++
+ 8 files changed, 168 insertions(+), 2 deletions(-)
+ create mode 100644 hw/acpi/ich9_timer.c
+ create mode 100644 include/hw/acpi/ich9_timer.h
+
+diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
+index 02d8546bd3..c15e5b8281 100644
+--- a/hw/acpi/ich9.c
++++ b/hw/acpi/ich9.c
+@@ -35,6 +35,7 @@
+ #include "sysemu/runstate.h"
+ #include "hw/acpi/acpi.h"
+ #include "hw/acpi/ich9_tco.h"
++#include "hw/acpi/ich9_timer.h"
  
- hw_arch += {'s390x': s390x_ss}
-diff --git a/hw/s390x/virtio-ccw-md.c b/hw/s390x/virtio-ccw-md.c
+ #include "hw/southbridge/ich9.h"
+ #include "hw/mem/pc-dimm.h"
+@@ -108,6 +109,18 @@ static void ich9_smi_writel(void *opaque, hwaddr addr, uint64_t val,
+         }
+         pm->smi_en &= ~pm->smi_en_wmask;
+         pm->smi_en |= (val & pm->smi_en_wmask);
++        if (pm->swsmi_timer_enabled) {
++            ich9_pm_update_swsmi_timer(pm, pm->smi_en &
++                                               ICH9_PMIO_SMI_EN_SWSMI_EN);
++        }
++        if (pm->periodic_timer_enabled) {
++            ich9_pm_update_periodic_timer(pm, pm->smi_en &
++                                                  ICH9_PMIO_SMI_EN_PERIODIC_EN);
++        }
++        break;
++    case 4:
++        pm->smi_sts &= ~pm->smi_sts_wmask;
++        pm->smi_sts |= (val & pm->smi_sts_wmask);
+         break;
+     }
+ }
+@@ -286,6 +299,8 @@ static void pm_powerdown_req(Notifier *n, void *opaque)
+ 
+ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
+ {
++    pm->smi_sts_wmask = 0;
++
+     memory_region_init(&pm->io, OBJECT(lpc_pci), "ich9-pm", ICH9_PMIO_SIZE);
+     memory_region_set_enabled(&pm->io, false);
+     memory_region_add_subregion(pci_address_space_io(lpc_pci),
+@@ -305,6 +320,14 @@ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
+                           "acpi-smi", 8);
+     memory_region_add_subregion(&pm->io, ICH9_PMIO_SMI_EN, &pm->io_smi);
+ 
++    if (pm->swsmi_timer_enabled) {
++        ich9_pm_swsmi_timer_init(pm);
++    }
++
++    if (pm->periodic_timer_enabled) {
++        ich9_pm_periodic_timer_init(pm);
++    }
++
+     if (pm->enable_tco) {
+         acpi_pm_tco_init(&pm->tco_regs, &pm->io);
+     }
+diff --git a/hw/acpi/ich9_timer.c b/hw/acpi/ich9_timer.c
 new file mode 100644
-index 0000000000..de333282df
+index 0000000000..5b1c910156
 --- /dev/null
-+++ b/hw/s390x/virtio-ccw-md.c
-@@ -0,0 +1,153 @@
++++ b/hw/acpi/ich9_timer.c
+@@ -0,0 +1,93 @@
 +/*
-+ * Virtio CCW support for abstract virtio based memory device
++ * QEMU ICH9 Timer emulation
 + *
-+ * Copyright (C) 2024 Red Hat, Inc.
++ * Copyright (c) 2024 Dominic Prinz <git@dprinz.de>
 + *
-+ * Authors:
-+ *  David Hildenbrand <david@redhat.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2.
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
 + * See the COPYING file in the top-level directory.
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/s390x/virtio-ccw-md.h"
-+#include "hw/mem/memory-device.h"
-+#include "qapi/error.h"
-+#include "qemu/error-report.h"
++#include "hw/core/cpu.h"
++#include "hw/pci/pci.h"
++#include "hw/southbridge/ich9.h"
++#include "qemu/timer.h"
 +
-+void virtio_ccw_md_pre_plug(VirtIOMDCcw *vmd, MachineState *ms, Error **errp)
++#include "hw/acpi/ich9_timer.h"
++
++void ich9_pm_update_swsmi_timer(ICH9LPCPMRegs *pm, bool enable)
 +{
-+    DeviceState *dev = DEVICE(vmd);
-+    HotplugHandler *bus_handler = qdev_get_bus_hotplug_handler(dev);
-+    MemoryDeviceState *md = MEMORY_DEVICE(vmd);
-+    Error *local_err = NULL;
++    uint16_t swsmi_rate_sel;
++    int64_t expire_time;
++    ICH9LPCState *lpc;
 +
-+    if (!bus_handler && dev->hotplugged) {
-+        /*
-+         * Without a bus hotplug handler, we cannot control the plug/unplug
-+         * order. We should never reach this point when hotplugging, but
-+         * better add a safety net.
-+         */
-+        error_setg(errp, "hotplug of virtio based memory devices not supported"
-+                   " on this bus.");
-+        return;
-+    }
++    if (enable) {
++        lpc = container_of(pm, ICH9LPCState, pm);
++        swsmi_rate_sel =
++            (pci_get_word(lpc->d.config + ICH9_LPC_GEN_PMCON_3) & 0xc0) >> 6;
 +
-+    /*
-+     * First, see if we can plug this memory device at all. If that
-+     * succeeds, branch of to the actual hotplug handler.
-+     */
-+    memory_device_pre_plug(md, ms, &local_err);
-+    if (!local_err && bus_handler) {
-+        hotplug_handler_pre_plug(bus_handler, dev, &local_err);
-+    }
-+    error_propagate(errp, local_err);
-+}
-+
-+void virtio_ccw_md_plug(VirtIOMDCcw *vmd, MachineState *ms, Error **errp)
-+{
-+    DeviceState *dev = DEVICE(vmd);
-+    HotplugHandler *bus_handler = qdev_get_bus_hotplug_handler(dev);
-+    MemoryDeviceState *md = MEMORY_DEVICE(vmd);
-+    Error *local_err = NULL;
-+
-+    /*
-+     * Plug the memory device first and then branch off to the actual
-+     * hotplug handler. If that one fails, we can easily undo the memory
-+     * device bits.
-+     */
-+    memory_device_plug(md, ms);
-+    if (bus_handler) {
-+        hotplug_handler_plug(bus_handler, dev, &local_err);
-+        if (local_err) {
-+            memory_device_unplug(md, ms);
++        if (swsmi_rate_sel == 0) {
++            expire_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + 1500000LL;
++        } else {
++            expire_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
++                          8 * (1 << swsmi_rate_sel) * 1000000LL;
 +        }
-+    }
-+    error_propagate(errp, local_err);
-+}
 +
-+void virtio_ccw_md_unplug_request(VirtIOMDCcw *vmd, MachineState *ms,
-+                                  Error **errp)
-+{
-+    VirtIOMDCcwClass *vmdc = VIRTIO_MD_CCW_GET_CLASS(vmd);
-+    DeviceState *dev = DEVICE(vmd);
-+    HotplugHandler *bus_handler = qdev_get_bus_hotplug_handler(dev);
-+    HotplugHandlerClass *hdc;
-+    Error *local_err = NULL;
-+
-+    if (!vmdc->unplug_request_check) {
-+        error_setg(errp,
-+                   "this virtio based memory devices cannot be unplugged");
-+        return;
-+    }
-+
-+    if (!bus_handler) {
-+        error_setg(errp, "hotunplug of virtio based memory devices not"
-+                   "supported on this bus");
-+        return;
-+    }
-+
-+    vmdc->unplug_request_check(vmd, &local_err);
-+    if (local_err) {
-+        error_propagate(errp, local_err);
-+        return;
-+    }
-+
-+    /*
-+     * Forward the async request or turn it into a sync request (handling it
-+     * like qdev_unplug()).
-+     */
-+    hdc = HOTPLUG_HANDLER_GET_CLASS(bus_handler);
-+    if (hdc->unplug_request) {
-+        hotplug_handler_unplug_request(bus_handler, dev, &local_err);
++        timer_mod(pm->swsmi_timer, expire_time);
 +    } else {
-+        virtio_ccw_md_unplug(vmd, ms, &local_err);
-+        if (!local_err) {
-+            object_unparent(OBJECT(dev));
-+        }
++        timer_del(pm->swsmi_timer);
 +    }
 +}
 +
-+void virtio_ccw_md_unplug(VirtIOMDCcw *vmd, MachineState *ms, Error **errp)
++static void ich9_pm_swsmi_timer_expired(void *opaque)
 +{
-+    DeviceState *dev = DEVICE(vmd);
-+    HotplugHandler *bus_handler = qdev_get_bus_hotplug_handler(dev);
-+    MemoryDeviceState *md = MEMORY_DEVICE(vmd);
-+    Error *local_err = NULL;
++    ICH9LPCPMRegs *pm = opaque;
 +
-+    /* Unplug the memory device while it is still realized. */
-+    memory_device_unplug(md, ms);
++    pm->smi_sts |= ICH9_PMIO_SMI_STS_SWSMI_STS;
++    ich9_generate_smi();
 +
-+    if (bus_handler) {
-+        hotplug_handler_unplug(bus_handler, dev, &local_err);
-+        if (local_err) {
-+            /* Not expected to fail ... but still try to recover. */
-+            memory_device_plug(md, ms);
-+            error_propagate(errp, local_err);
-+            return;
-+        }
++    ich9_pm_update_swsmi_timer(pm, pm->smi_en & ICH9_PMIO_SMI_EN_SWSMI_EN);
++}
++
++void ich9_pm_swsmi_timer_init(ICH9LPCPMRegs *pm)
++{
++    pm->smi_sts_wmask |= ICH9_PMIO_SMI_STS_SWSMI_STS;
++    pm->swsmi_timer =
++        timer_new_ns(QEMU_CLOCK_VIRTUAL, ich9_pm_swsmi_timer_expired, pm);
++}
++
++void ich9_pm_update_periodic_timer(ICH9LPCPMRegs *pm, bool enable)
++{
++    uint16_t per_smi_sel;
++    int64_t expire_time;
++    ICH9LPCState *lpc;
++
++    if (enable) {
++        lpc = container_of(pm, ICH9LPCState, pm);
++        per_smi_sel = pci_get_word(lpc->d.config + ICH9_LPC_GEN_PMCON_1) & 3;
++        expire_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
++                      8 * (1 << (3 - per_smi_sel)) * NANOSECONDS_PER_SECOND;
++
++        timer_mod(pm->periodic_timer, expire_time);
 +    } else {
-+        /* Very unexpected, but let's just try to do the right thing. */
-+        warn_report("Unexpected unplug of virtio based memory device");
-+        qdev_unrealize(dev);
++        timer_del(pm->periodic_timer);
 +    }
 +}
 +
-+static const TypeInfo virtio_ccw_md_info = {
-+    .name = TYPE_VIRTIO_MD_CCW,
-+    .parent = TYPE_VIRTIO_CCW_DEVICE,
-+    .instance_size = sizeof(VirtIOMDCcw),
-+    .class_size = sizeof(VirtIOMDCcwClass),
-+    .abstract = true,
-+    .interfaces = (InterfaceInfo[]) {
-+        { TYPE_MEMORY_DEVICE },
-+        { }
-+    },
++static void ich9_pm_periodic_timer_expired(void *opaque)
++{
++    ICH9LPCPMRegs *pm = opaque;
++
++    pm->smi_sts = ICH9_PMIO_SMI_STS_PERIODIC_STS;
++    ich9_generate_smi();
++
++    ich9_pm_update_periodic_timer(pm,
++                                  pm->smi_en & ICH9_PMIO_SMI_EN_PERIODIC_EN);
++}
++
++void ich9_pm_periodic_timer_init(ICH9LPCPMRegs *pm)
++{
++    pm->smi_sts_wmask |= ICH9_PMIO_SMI_STS_PERIODIC_STS;
++    pm->periodic_timer =
++        timer_new_ns(QEMU_CLOCK_VIRTUAL, ich9_pm_periodic_timer_expired, pm);
++}
+diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
+index fa5c07db90..7f8ccc9b7a 100644
+--- a/hw/acpi/meson.build
++++ b/hw/acpi/meson.build
+@@ -24,7 +24,7 @@ acpi_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_true: files('pci-bridge.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_true: files('pcihp.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_false: files('acpi-pci-hotplug-stub.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_VIOT', if_true: files('viot.c'))
+-acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c'))
++acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c', 'ich9_timer.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_ERST', if_true: files('erst.c'))
+ acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'), if_false: files('ipmi-stub.c'))
+ acpi_ss.add(when: 'CONFIG_PC', if_false: files('acpi-x86-stub.c'))
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index ba0ff51183..8d84c22458 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -79,7 +79,10 @@
+     { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
+     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
+ 
+-GlobalProperty pc_compat_9_1[] = {};
++GlobalProperty pc_compat_9_1[] = {
++    { "ICH9-LPC", "x-smi-swsmi-timer", "off" },
++    { "ICH9-LPC", "x-smi-periodic-timer", "off" },
 +};
+ const size_t pc_compat_9_1_len = G_N_ELEMENTS(pc_compat_9_1);
+ 
+ GlobalProperty pc_compat_9_0[] = {
+diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
+index bd727b2320..ab17b76f54 100644
+--- a/hw/isa/lpc_ich9.c
++++ b/hw/isa/lpc_ich9.c
+@@ -43,6 +43,7 @@
+ #include "hw/southbridge/ich9.h"
+ #include "hw/acpi/acpi.h"
+ #include "hw/acpi/ich9.h"
++#include "hw/acpi/ich9_timer.h"
+ #include "hw/pci/pci_bus.h"
+ #include "hw/qdev-properties.h"
+ #include "sysemu/runstate.h"
+@@ -531,6 +532,15 @@ ich9_lpc_pmcon_update(ICH9LPCState *lpc)
+     uint16_t gen_pmcon_1 = pci_get_word(lpc->d.config + ICH9_LPC_GEN_PMCON_1);
+     uint16_t wmask;
+ 
++    if (lpc->pm.swsmi_timer_enabled) {
++        ich9_pm_update_swsmi_timer(
++            &lpc->pm, lpc->pm.smi_en & ICH9_PMIO_SMI_EN_SWSMI_EN);
++    }
++    if (lpc->pm.periodic_timer_enabled) {
++        ich9_pm_update_periodic_timer(
++            &lpc->pm, lpc->pm.smi_en & ICH9_PMIO_SMI_EN_PERIODIC_EN);
++    }
 +
-+static void virtio_ccw_md_register(void)
-+{
-+    type_register_static(&virtio_ccw_md_info);
-+}
-+type_init(virtio_ccw_md_register)
-diff --git a/hw/s390x/virtio-ccw-md.h b/hw/s390x/virtio-ccw-md.h
+     if (gen_pmcon_1 & ICH9_LPC_GEN_PMCON_1_SMI_LOCK) {
+         wmask = pci_get_word(lpc->d.wmask + ICH9_LPC_GEN_PMCON_1);
+         wmask &= ~ICH9_LPC_GEN_PMCON_1_SMI_LOCK;
+@@ -826,6 +836,10 @@ static Property ich9_lpc_properties[] = {
+                       ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT, true),
+     DEFINE_PROP_BIT64("x-smi-cpu-hotunplug", ICH9LPCState, smi_host_features,
+                       ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT, true),
++    DEFINE_PROP_BOOL("x-smi-swsmi-timer", ICH9LPCState,
++                     pm.swsmi_timer_enabled, true),
++    DEFINE_PROP_BOOL("x-smi-periodic-timer", ICH9LPCState,
++                     pm.periodic_timer_enabled, true),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+diff --git a/include/hw/acpi/ich9.h b/include/hw/acpi/ich9.h
+index 2faf7f0cae..245fe08dc2 100644
+--- a/include/hw/acpi/ich9.h
++++ b/include/hw/acpi/ich9.h
+@@ -46,6 +46,7 @@ typedef struct ICH9LPCPMRegs {
+     uint32_t smi_en;
+     uint32_t smi_en_wmask;
+     uint32_t smi_sts;
++    uint32_t smi_sts_wmask;
+ 
+     qemu_irq irq;      /* SCI */
+ 
+@@ -68,6 +69,11 @@ typedef struct ICH9LPCPMRegs {
+     bool smm_compat;
+     bool enable_tco;
+     TCOIORegs tco_regs;
++
++    bool swsmi_timer_enabled;
++    bool periodic_timer_enabled;
++    QEMUTimer *swsmi_timer;
++    QEMUTimer *periodic_timer;
+ } ICH9LPCPMRegs;
+ 
+ #define ACPI_PM_PROP_TCO_ENABLED "enable_tco"
+diff --git a/include/hw/acpi/ich9_timer.h b/include/hw/acpi/ich9_timer.h
 new file mode 100644
-index 0000000000..e83d40f6c4
+index 0000000000..5112df4385
 --- /dev/null
-+++ b/hw/s390x/virtio-ccw-md.h
-@@ -0,0 +1,44 @@
++++ b/include/hw/acpi/ich9_timer.h
+@@ -0,0 +1,23 @@
 +/*
-+ * Virtio CCW support for abstract virtio based memory device
++ * QEMU ICH9 Timer emulation
 + *
-+ * Copyright (C) 2024 Red Hat, Inc.
++ * Copyright (c) 2024 Dominic Prinz <git@dprinz.de>
 + *
-+ * Authors:
-+ *  David Hildenbrand <david@redhat.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2.
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
 + * See the COPYING file in the top-level directory.
 + */
 +
-+#ifndef HW_S390X_VIRTIO_CCW_MD_H
-+#define HW_S390X_VIRTIO_CCW_MD_H
++#ifndef HW_ACPI_ICH9_TIMER_H
++#define HW_ACPI_ICH9_TIMER_H
 +
-+#include "virtio-ccw.h"
-+#include "qom/object.h"
++#include "hw/acpi/ich9.h"
 +
-+/*
-+ * virtio-md-ccw: This extends VirtioCcwDevice.
-+ */
-+#define TYPE_VIRTIO_MD_CCW "virtio-md-ccw"
++void ich9_pm_update_swsmi_timer(ICH9LPCPMRegs *pm, bool enable);
 +
-+OBJECT_DECLARE_TYPE(VirtIOMDCcw, VirtIOMDCcwClass, VIRTIO_MD_CCW)
++void ich9_pm_swsmi_timer_init(ICH9LPCPMRegs *pm);
 +
-+struct VirtIOMDCcwClass {
-+    /* private */
-+    VirtIOCCWDeviceClass parent;
++void ich9_pm_update_periodic_timer(ICH9LPCPMRegs *pm, bool enable);
 +
-+    /* public */
-+    void (*unplug_request_check)(VirtIOMDCcw *vmd, Error **errp);
-+};
-+
-+struct VirtIOMDCcw {
-+    VirtioCcwDevice parent_obj;
-+};
-+
-+void virtio_ccw_md_pre_plug(VirtIOMDCcw *vmd, MachineState *ms, Error **errp);
-+void virtio_ccw_md_plug(VirtIOMDCcw *vmd, MachineState *ms, Error **errp);
-+void virtio_ccw_md_unplug_request(VirtIOMDCcw *vmd, MachineState *ms,
-+                                  Error **errp);
-+void virtio_ccw_md_unplug(VirtIOMDCcw *vmd, MachineState *ms, Error **errp);
++void ich9_pm_periodic_timer_init(ICH9LPCPMRegs *pm);
 +
 +#endif
-diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
-index 0afec2ae92..f4b14e1a44 100644
---- a/hw/virtio/Kconfig
-+++ b/hw/virtio/Kconfig
-@@ -25,6 +25,7 @@ config VIRTIO_MMIO
- config VIRTIO_CCW
-     bool
-     select VIRTIO
-+    select VIRTIO_MD_SUPPORTED
+diff --git a/include/hw/southbridge/ich9.h b/include/hw/southbridge/ich9.h
+index fd01649d04..6c60017024 100644
+--- a/include/hw/southbridge/ich9.h
++++ b/include/hw/southbridge/ich9.h
+@@ -196,8 +196,12 @@ struct ICH9LPCState {
+ #define ICH9_PMIO_GPE0_LEN                      16
+ #define ICH9_PMIO_SMI_EN                        0x30
+ #define ICH9_PMIO_SMI_EN_APMC_EN                (1 << 5)
++#define ICH9_PMIO_SMI_EN_SWSMI_EN               (1 << 6)
+ #define ICH9_PMIO_SMI_EN_TCO_EN                 (1 << 13)
++#define ICH9_PMIO_SMI_EN_PERIODIC_EN            (1 << 14)
+ #define ICH9_PMIO_SMI_STS                       0x34
++#define ICH9_PMIO_SMI_STS_SWSMI_STS             (1 << 6)
++#define ICH9_PMIO_SMI_STS_PERIODIC_STS          (1 << 14)
+ #define ICH9_PMIO_TCO_RLD                       0x60
+ #define ICH9_PMIO_TCO_LEN                       32
  
- config VIRTIO_BALLOON
-     bool
 -- 
-2.46.0
+2.43.0
 
 
