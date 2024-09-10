@@ -4,90 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C990EDE9AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:33:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05CB1EDE9AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:40:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so4ju-00075r-0e; Tue, 10 Sep 2024 13:33:19 -0400
+	id 1so4ps-0005lK-CU; Tue, 10 Sep 2024 13:39:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1so4jX-0005np-C2
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:32:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1so4jV-00044y-0o
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:32:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725989570;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rqOsnL77CbWV938DL6ZPgYq9h5A6u1mM6hjyDiIqaXg=;
- b=LNKprSszunrHSCQx03VmyungXM9KJSgCm6XdO+2iV5lPH2ugu58sqVooQY5c5TL2AyGFGE
- aEw40hw/9I0AyC2pehNrqM1uqIETaAOZ8IppMYROGYRV/YYstWMktLtvb7qB0AbM7Boxz4
- HkWCi+FXU7OUVlyf5iPZoaY29RDKbfI=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-a7H2XcVeP6yOHgJXA6qVyg-1; Tue, 10 Sep 2024 13:32:48 -0400
-X-MC-Unique: a7H2XcVeP6yOHgJXA6qVyg-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-374c434b952so2727545f8f.1
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 10:32:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725989567; x=1726594367;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1so4pa-0004mi-TY
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:39:11 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1so4pY-0004a2-43
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:39:10 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5c3c30e663fso1197774a12.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 10:39:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1725989947; x=1726594747; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rqOsnL77CbWV938DL6ZPgYq9h5A6u1mM6hjyDiIqaXg=;
- b=qvAC0L/jb0oJ5zcZ6CLAmFO8HILaBlxjv4biknlKEJZlAzqFNFK/QQl1aA4v3lFh03
- 1oqviwDQlsITXYkME8o1O7fKLPwleOxEbIPmSPiaPGxppGY/RbGGvgMcr1u385XRTl43
- hGKcBNo8yVDr05JzZJ5hQtz/T7qNJ07gTdHyGms6W6n+Xk0DUFS0ODtGeVW4EB6hjkv7
- MLBq8yci+8CdhWMp9JowVtWQRkauOfqP7o2Vp6QfjES59A9W/7zqnkU2nVzB5pwXTsNN
- dLK3Mvheh4xShKGb8COnVbOjImjKB7zeKC4+932opzswLksf/xzQGVtQ/EAQ8JKBATYi
- bakQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVC+ztmxV3g4UEScxXxQh3Bk6b8pRTeKd+2pad614upwnXrpAzJC5iS2fLyHNGy9oUvZXCrgM0eG5dF@nongnu.org
-X-Gm-Message-State: AOJu0YzunepiPf4ERag0eurypR4mUrSxQKSi3lxvh7zAN9NSoxmDWL4I
- nAv9Mqvh0tOHZShSlNcc+AhV8leXeEAUJT5Wtv17YIfm3qcJ8m4YeyxYqy23Kge4bafHoudyQdu
- 0ZX21WJfqbxDNZ9pp7nD5EpA0u1aOX5bmxiYqiBdavFv4PfV+IAsF
-X-Received: by 2002:a05:6000:1281:b0:371:8c9c:d97f with SMTP id
- ffacd0b85a97d-378895b7999mr9449083f8f.10.1725989567441; 
- Tue, 10 Sep 2024 10:32:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFDDea/ZaXXBj6VDEJAvb1U4RGFMUj0rA5y5cb8ZIkmMARm+2HvlVZFxc0jZv+tYq0zKS05kA==
-X-Received: by 2002:a05:6000:1281:b0:371:8c9c:d97f with SMTP id
- ffacd0b85a97d-378895b7999mr9449064f8f.10.1725989566639; 
- Tue, 10 Sep 2024 10:32:46 -0700 (PDT)
-Received: from redhat.com ([31.187.78.63]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37895665762sm9492768f8f.45.2024.09.10.10.32.44
+ bh=4x/2lUUGLpLRO+8rqUP/+rQmXa+2LMUSZP6UGcSNzgE=;
+ b=pmJuufhhEeVxIgHBm7w4URAbm6RtYPrSVCPuWAn/9GBnp4Oprj1hX81QfFx0mUDjDF
+ XwM/0H23UBMpUkitPnN7avyBrvYJjRoMEijKJkqgmp6fcnVqscgaBBR8YONIQa0U97AQ
+ 3bcAlk++I31kvqUVnFM2MzPWiawZiKs8hvpeV4ec3aQ/mMYUK3QLc/UWLzLT30+5YWQ0
+ pC7u6Q7dGLHtZEsOyAlXneOrqqbdq3XzGBDtkiWXJaJFL89oMkJz7EY8d8lkf5z7ZYQp
+ 8LnDVLAg2xPmUfuIMSKNV4R/xJbWoT0eiNu4wpAV2fq1ZoQdeBh4bt8X/e+7Dwl46KDn
+ J6VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725989947; x=1726594747;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4x/2lUUGLpLRO+8rqUP/+rQmXa+2LMUSZP6UGcSNzgE=;
+ b=IRO9/zCWTvnsCU9QE+D+n6R1l0V34BbDbjSXuULlLWjKMl8patiETyWpEHBPDEMcPj
+ EOj47UiHIeQ+gnjrJVJoW6/OagFakRU5HJvC1mHkMlKlm9KRVyZP/SsCj0QaxAfUuXA4
+ +vg5P89/S2V/RUwNJBvc0xMzYRuwkBJFZwKErnCBTH8lTDmrl8E8yxsAj5QAk2Z+rfun
+ +xuzec54qbFlQp7dlN6YHnv9lzyXmwpOnDH2I9AMjpaX0RbU4d9quhujchvi3kSKgRGj
+ dVsBgEBpXMxEszZsr8awehx/030Ua9R1Q5mqhHctkTmqiqNe81rAZODEt2hvadZTx2u9
+ irXA==
+X-Gm-Message-State: AOJu0YxLMj/ucniJKnQgih/K8KY6xyxnEoL2+gu1WHOhWBPKJ9QqzUOd
+ FnhhWjBIXbCRQu4UaoDgU83uXDXVkG/rFtvaJzoo7Sjdu76hohm1H6hhNidh6oY=
+X-Google-Smtp-Source: AGHT+IEjRyIc6i/258npWh4FAc//VInayQfzNOCF7k8IdBTXDr/nd0pQvaqevcqiGcohd0fLAi/L+A==
+X-Received: by 2002:a17:907:f15a:b0:a8d:5472:b591 with SMTP id
+ a640c23a62f3a-a900478ee2bmr34753866b.5.1725989946510; 
+ Tue, 10 Sep 2024 10:39:06 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a8d25c624efsm507008566b.114.2024.09.10.10.39.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2024 10:32:45 -0700 (PDT)
-Date: Tue, 10 Sep 2024 13:32:42 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Igor Mammedov <imammedo@redhat.com>, Song Gao <gaosong@loongson.cn>,
- Ani Sinha <anisinha@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- "Jason A . Donenfeld" <Jason@zx2c4.com>,
- Thomas =?iso-8859-1?Q?Wei=DFschuh?= <thomas@t-8ch.de>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/2] acpi: ged: Add macro for acpi ged sleep register
-Message-ID: <20240910133154-mutt-send-email-mst@kernel.org>
-References: <20240906021943.150494-1-maobibo@loongson.cn>
- <20240906021943.150494-2-maobibo@loongson.cn>
+ Tue, 10 Sep 2024 10:39:04 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 05B555FA08;
+ Tue, 10 Sep 2024 18:39:01 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-arm@nongnu.org,
+ devel@lists.libvirt.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Beraldo Leal <bleal@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>
+Subject: [PATCH v2 06/10] gdbstub: Use specific MMU index when probing MTE
+ addresses
+Date: Tue, 10 Sep 2024 18:38:56 +0100
+Message-Id: <20240910173900.4154726-7-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240910173900.4154726-1-alex.bennee@linaro.org>
+References: <20240910173900.4154726-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240906021943.150494-2-maobibo@loongson.cn>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,54 +111,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 06, 2024 at 10:19:42AM +0800, Bibo Mao wrote:
-> Macro definition is added for acpi ged sleep register, so that ged
-> emulation driver can use this, also it can be used in FDT table if
-> ged is exposed with FDT table.
-> 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->  hw/acpi/generic_event_device.c         | 6 +++---
->  include/hw/acpi/generic_event_device.h | 3 +++
->  2 files changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-> index 15b4c3ebbf..10a338877c 100644
-> --- a/hw/acpi/generic_event_device.c
-> +++ b/hw/acpi/generic_event_device.c
-> @@ -201,9 +201,9 @@ static void ged_regs_write(void *opaque, hwaddr addr, uint64_t data,
->  
->      switch (addr) {
->      case ACPI_GED_REG_SLEEP_CTL:
-> -        slp_typ = (data >> 2) & 0x07;
-> -        slp_en  = (data >> 5) & 0x01;
-> -        if (slp_en && slp_typ == 5) {
-> +        slp_typ = (data & ACPI_GED_SLP_TYP_MASK) >> ACPI_GED_SLP_TYP_SHIFT;
-> +        slp_en  = !!(data  & ACPI_GED_SLP_ENABLE);
-> +        if (slp_en && slp_typ == ACPI_GED_SLP_TYP_S5) {
->              qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
->          }
->          return;
-> diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
-> index 40af3550b5..526fea6efe 100644
-> --- a/include/hw/acpi/generic_event_device.h
-> +++ b/include/hw/acpi/generic_event_device.h
-> @@ -82,7 +82,10 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
->  #define ACPI_GED_RESET_VALUE       0x42
->  
->  /* ACPI_GED_REG_SLEEP_CTL.SLP_TYP value for S5 (aka poweroff) */
-> +#define ACPI_GED_SLP_TYP_SHIFT     0x02
->  #define ACPI_GED_SLP_TYP_S5        0x05
-> +#define ACPI_GED_SLP_TYP_MASK      0x1C
-> +#define ACPI_GED_SLP_ENABLE        0x20
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
-The comment is wrong now, isn't it?
-Pls document each value, copying name from spec verbatim.
+Use cpu_mmu_index() to determine the specific translation regime (MMU
+index) before probing addresses using allocation_tag_mem_probe().
 
->  
->  #define GED_DEVICE      "GED"
->  #define AML_GED_EVT_REG "EREG"
-> -- 
-> 2.39.3
+Currently, the MMU index is hardcoded to 0 and only works for user mode.
+By obtaining the specific MMU index according to the translation regime,
+future use of the stubs relying on allocation_tag_mem_probe in other
+regimes will be possible, like in EL1.
+
+This commit also changes the ptr_size value passed to
+allocation_tag_mem_probe() from 8 to 1. The ptr_size parameter actually
+represents the number of bytes in the memory access (which can be as
+small as 1 byte), rather than the number of bits used in the address
+space pointed to by ptr.
+
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240906143316.657436-2-gustavo.romero@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ target/arm/gdbstub64.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
+index 5221381cc8..85a19c14c7 100644
+--- a/target/arm/gdbstub64.c
++++ b/target/arm/gdbstub64.c
+@@ -435,6 +435,7 @@ static void handle_q_memtag(GArray *params, void *user_ctx)
+ {
+     ARMCPU *cpu = ARM_CPU(user_ctx);
+     CPUARMState *env = &cpu->env;
++    uint32_t mmu_index;
+ 
+     uint64_t addr = gdb_get_cmd_param(params, 0)->val_ull;
+     uint64_t len = gdb_get_cmd_param(params, 1)->val_ul;
+@@ -458,8 +459,10 @@ static void handle_q_memtag(GArray *params, void *user_ctx)
+         gdb_put_packet("E03");
+     }
+ 
++    /* Find out the current translation regime for probe. */
++    mmu_index = cpu_mmu_index(env_cpu(env), false);
+     /* Note that tags are packed here (2 tags packed in one byte). */
+-    tags = allocation_tag_mem_probe(env, 0, addr, MMU_DATA_LOAD, 8 /* 64-bit */,
++    tags = allocation_tag_mem_probe(env, mmu_index, addr, MMU_DATA_LOAD, 1,
+                                     MMU_DATA_LOAD, true, 0);
+     if (!tags) {
+         /* Address is not in a tagged region. */
+@@ -478,13 +481,16 @@ static void handle_q_isaddresstagged(GArray *params, void *user_ctx)
+ {
+     ARMCPU *cpu = ARM_CPU(user_ctx);
+     CPUARMState *env = &cpu->env;
++    uint32_t mmu_index;
+ 
+     uint64_t addr = gdb_get_cmd_param(params, 0)->val_ull;
+ 
+     uint8_t *tags;
+     const char *reply;
+ 
+-    tags = allocation_tag_mem_probe(env, 0, addr, MMU_DATA_LOAD, 8 /* 64-bit */,
++    /* Find out the current translation regime for probe. */
++    mmu_index = cpu_mmu_index(env_cpu(env), false);
++    tags = allocation_tag_mem_probe(env, mmu_index, addr, MMU_DATA_LOAD, 1,
+                                     MMU_DATA_LOAD, true, 0);
+     reply = tags ? "01" : "00";
+ 
+@@ -495,6 +501,7 @@ static void handle_Q_memtag(GArray *params, void *user_ctx)
+ {
+     ARMCPU *cpu = ARM_CPU(user_ctx);
+     CPUARMState *env = &cpu->env;
++    uint32_t mmu_index;
+ 
+     uint64_t start_addr = gdb_get_cmd_param(params, 0)->val_ull;
+     uint64_t len = gdb_get_cmd_param(params, 1)->val_ul;
+@@ -527,8 +534,10 @@ static void handle_Q_memtag(GArray *params, void *user_ctx)
+      * Get all tags in the page starting from the tag of the start address.
+      * Note that there are two tags packed into a single byte here.
+      */
+-    tags = allocation_tag_mem_probe(env, 0, start_addr, MMU_DATA_STORE,
+-                                    8 /* 64-bit */, MMU_DATA_STORE, true, 0);
++    /* Find out the current translation regime for probe. */
++    mmu_index = cpu_mmu_index(env_cpu(env), false);
++    tags = allocation_tag_mem_probe(env, mmu_index, start_addr, MMU_DATA_STORE,
++                                    1, MMU_DATA_STORE, true, 0);
+     if (!tags) {
+         /* Address is not in a tagged region. */
+         gdb_put_packet("E04");
+-- 
+2.39.2
 
 
