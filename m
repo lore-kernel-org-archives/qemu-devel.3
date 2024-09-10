@@ -4,94 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4534EDE9A0
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 16:07:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE398EDE9A0
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 16:11:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so3OT-0007q5-Fu; Tue, 10 Sep 2024 12:07:05 -0400
+	id 1so3SN-0003zv-3H; Tue, 10 Sep 2024 12:11:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1so3OQ-0007pQ-Fj
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 12:07:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1so3ON-000303-4D
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 12:07:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725984417;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=eOC6MZJyOs7MU9E9KpWkOzfQL3Bi4o5aJ9iuyKs0c7E=;
- b=KLNBLmPUikCidL+V29EeZ2uRQJPIqhFrjB55kKaXyt9KwRMqu/UTYYl9MxzXMT3cXp95w/
- 2i8lSqOlNb0XHUNDhiOOXVa2mrG3mr3NWe7VKXTAEV7vxf2oAkxhBUu2uV+oFQRc8T9AvH
- Vq3GIBw+UWF0Z7lusNQK1zLyUoolQP0=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-395-sxPBAYoJOXS5Li7MGoz43Q-1; Tue, 10 Sep 2024 12:06:54 -0400
-X-MC-Unique: sxPBAYoJOXS5Li7MGoz43Q-1
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-6d73c1c8356so157627587b3.1
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 09:06:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725984413; x=1726589213;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1so3SK-0003yy-Sm
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 12:11:04 -0400
+Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1so3SI-0003Wi-JE
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 12:11:04 -0400
+Received: by mail-oo1-xc2f.google.com with SMTP id
+ 006d021491bc7-5d5c7f23f22so3311209eaf.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 09:11:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1725984661; x=1726589461;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eOC6MZJyOs7MU9E9KpWkOzfQL3Bi4o5aJ9iuyKs0c7E=;
- b=J5gmlZLjCXJR1IpNOKYe7y/wfepB3t8jXtyz3UoCdulPTjvX0qn8rc4iRtk6UkUWJn
- 34hx7IbYwN9ED4ikKW8AzkjlAmnb8H6PC5vhj5hdxIoIYIrwLrShOzzL58u4NNdEfoG+
- pGvlytMoyPvR0BG8hVEnxbplOXJ67bI3BuQSjM6mqaM5KJP6tSML/Z4XG4A1ABZcLyzx
- rWPQpYlTqGf6DSgBtOO/T3QksxeTgLKDAO8IQBxNNnbcpZYMvVDW2cJGx9TPwKXpRR6+
- fDTwv6OQJyR2zYA+C+WrIctT9G2emQ7ObBgsvUYiYqjYwhlDwPjXZXDPuCS6g2IxWtWU
- epFQ==
+ bh=xhJz73nxqh6xQa3oW3aMTYalOpqSo2No8sD4Wx2QEzE=;
+ b=lonYLVaiTjRvHeFZ1ARhUhcH6RDgznkAw/PbDzD/s5wtcdfM4ESqi+DYwRmaF6BPfA
+ MF082rf8lQg/6cKy3BH+07wMRhLCFsco+gpA+S4AhUH/i42D/EsBiIdjlgE51MC70no+
+ MVI40UmAmWcMbBhrBDZJ/Dax4ZXQQDIRJMIJZjd/GMlzLp/rUs3Qe98IY68QwjW2bvYc
+ dFbF8wu5FInzS+6Y6tNyic+qGpjMdECR3j04KMOwm/RNnZd2ybsKq8bP4TUuAzsmUikr
+ y+ct/VXhlTK5sfnsGnR7SyCWhL2xvO+5JdlVwkJGZIz4oHaZdu8vKBNQF7REnMvEsXF9
+ 0+7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725984661; x=1726589461;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xhJz73nxqh6xQa3oW3aMTYalOpqSo2No8sD4Wx2QEzE=;
+ b=VRyAWXKZUzYDVw5Xwo3dwyokLjddD07a+tVp3i3LChk4yEmekp+6RQZ5atCnwkDwBj
+ rutPq4yTeiDnd6S9vrFDT292SnnDAzPMHgdFOHvq/9qILBp2A+l1Xud4Q8ZkePnO0Z0q
+ zH1zRxlc044+rnjMmGVJfUq3IiH/kpsfc5DDWHnOdElHgByEKn+vJuWkb4fV9EaiMQoT
+ PCUrIz0+fgS5PBzBtMrpbuQdOTZWcb2HsT6vd9MZQFiSCwC0lm3M4kBYLOte+VDT6/QB
+ uMjpOZjxPKtj7VUinX651Smh5Guho1tFeieff1LsLuh2c4YV8NmANuQMbJSUcrsHDE1V
+ mPrw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVXMrzZFA+uo9WXrT9/N+P1apYHNZzgD25RLXX13tkxnw2+K3mvWmxt2Hgs25VHzCHkTmGoM9NtxM4m@nongnu.org
-X-Gm-Message-State: AOJu0YxP9r4FYCOd74v5H4k8nHAMqR/SajEiaGqL9O+S4g/OQrZ7h6zI
- QOXttXCEdsRJjHR6RhbRrKT23jc4iKoCP6BcR8Sclgye1+oqjfbZ3tB6EdVdme3Yd830+btuEsE
- nlJG0Iw6PsXaCPTNcdo0WPUG7ra6qxOc5O6/9u6PdDF4hiHKlgwu+
-X-Received: by 2002:a05:690c:350a:b0:6b2:7ff8:ca1 with SMTP id
- 00721157ae682-6db4515443dmr148748567b3.22.1725984413543; 
- Tue, 10 Sep 2024 09:06:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEgVdOlR5+6n2K4mQRgD6GTqMqtI1GElrZPkB7ZqfaT5OgGQmo82FxwFTAHTZqL6nGbTgOqRQ==
-X-Received: by 2002:a05:690c:350a:b0:6b2:7ff8:ca1 with SMTP id
- 00721157ae682-6db4515443dmr148748057b3.22.1725984413046; 
- Tue, 10 Sep 2024 09:06:53 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-6db96491b4esm3405477b3.65.2024.09.10.09.06.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2024 09:06:52 -0700 (PDT)
-Date: Tue, 10 Sep 2024 12:06:49 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 12/17] migration/multifd: Device state transfer
- support - send side
-Message-ID: <ZuBumSH-nZDzpCcQ@x1n>
-References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <fdcfd68dfcf3b20278a4495eb639905b2a8e8ff3.1724701542.git.maciej.szmigiero@oracle.com>
+ AJvYcCUKh9qxtcULlmmP4couWnDC02/7SHYvMMtOTsgBqvwv3HgImoZ71LQMJDzMJmgsDoeTMyCSptcU0ueB@nongnu.org
+X-Gm-Message-State: AOJu0YwgpvfYTZB9mfn6/+cb+oqe4mA73rdRIaRICbkLf46J3IP2TfGK
+ 70ECJe23ujlyiJ7DCxUZ9wWEGTTQ4VYmjlINMJ9zlSZaLQxl+L4m+q0rpvnz+JkT/qHEA4QECzM
+ gO3SmglaPXgJm47st7bW1np3NbwPyEpDTxZwZFA==
+X-Google-Smtp-Source: AGHT+IHpUz+Z9xFP/JsWbzCmx913cc6bAGSA31Pf1C6QTCxCFcjRazZDm8PshaNX9YZO2oXsc0qqKbM7fSiYR7WPKFw=
+X-Received: by 2002:a05:6820:60a:b0:5e1:eba9:8fee with SMTP id
+ 006d021491bc7-5e1eba99197mr1153602eaf.1.1725984660743; Tue, 10 Sep 2024
+ 09:11:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <fdcfd68dfcf3b20278a4495eb639905b2a8e8ff3.1724701542.git.maciej.szmigiero@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240819135455.2957406-1-mnissler@rivosinc.com>
+ <20240910105002-mutt-send-email-mst@kernel.org>
+ <CAFEAcA9dxdKmU-SPg1QGUbziKeydVB=i8BZUaKqMZvMSTr8RVw@mail.gmail.com>
+In-Reply-To: <CAFEAcA9dxdKmU-SPg1QGUbziKeydVB=i8BZUaKqMZvMSTr8RVw@mail.gmail.com>
+From: Mattias Nissler <mnissler@rivosinc.com>
+Date: Tue, 10 Sep 2024 18:10:50 +0200
+Message-ID: <CAGNS4Ta7RbLNCk3ffaS7fpqDJDjAUwnCXsVvjawSb6F7+inYxg@mail.gmail.com>
+Subject: Re: [PATCH] softmmu: Support concurrent bounce buffers
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, stefanha@redhat.com, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ David Hildenbrand <david@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
+ envelope-from=mnissler@rivosinc.com; helo=mail-oo1-xc2f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,44 +97,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 27, 2024 at 07:54:31PM +0200, Maciej S. Szmigiero wrote:
-> +bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
-> +                                char *data, size_t len)
-> +{
-> +    /* Device state submissions can come from multiple threads */
-> +    QEMU_LOCK_GUARD(&queue_job_mutex);
+On Tue, Sep 10, 2024 at 5:44=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Tue, 10 Sept 2024 at 15:53, Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > On Mon, Aug 19, 2024 at 06:54:54AM -0700, Mattias Nissler wrote:
+> > > When DMA memory can't be directly accessed, as is the case when
+> > > running the device model in a separate process without shareable DMA
+> > > file descriptors, bounce buffering is used.
+> > >
+> > > It is not uncommon for device models to request mapping of several DM=
+A
+> > > regions at the same time. Examples include:
+> > >  * net devices, e.g. when transmitting a packet that is split across
+> > >    several TX descriptors (observed with igb)
+> > >  * USB host controllers, when handling a packet with multiple data TR=
+Bs
+> > >    (observed with xhci)
+> > >
+> > > Previously, qemu only provided a single bounce buffer per AddressSpac=
+e
+> > > and would fail DMA map requests while the buffer was already in use. =
+In
+> > > turn, this would cause DMA failures that ultimately manifest as hardw=
+are
+> > > errors from the guest perspective.
+> > >
+> > > This change allocates DMA bounce buffers dynamically instead of
+> > > supporting only a single buffer. Thus, multiple DMA mappings work
+> > > correctly also when RAM can't be mmap()-ed.
+> > >
+> > > The total bounce buffer allocation size is limited individually for e=
+ach
+> > > AddressSpace. The default limit is 4096 bytes, matching the previous
+> > > maximum buffer size. A new x-max-bounce-buffer-size parameter is
+> > > provided to configure the limit for PCI devices.
+> > >
+> > > Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+> > > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> > > Acked-by: Peter Xu <peterx@redhat.com>
+> > > ---
+> > > This patch is split out from my "Support message-based DMA in vfio-us=
+er server"
+> > > series. With the series having been partially applied, I'm splitting =
+this one
+> > > out as the only remaining patch to system emulation code in the hope =
+to
+> > > simplify getting it landed. The code has previously been reviewed by =
+Stefan
+> > > Hajnoczi and Peter Xu. This latest version includes changes to switch=
+ the
+> > > bounce buffer size bookkeeping to `size_t` as requested and LGTM'd by=
+ Phil in
+> > > v9.
+> > > ---
+> > >  hw/pci/pci.c                |  8 ++++
+> > >  include/exec/memory.h       | 14 +++----
+> > >  include/hw/pci/pci_device.h |  3 ++
+> > >  system/memory.c             |  5 ++-
+> > >  system/physmem.c            | 82 ++++++++++++++++++++++++++---------=
+--
+> > >  5 files changed, 76 insertions(+), 36 deletions(-)
+> > >
+> > > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> > > index fab86d0567..d2caf3ee8b 100644
+> > > --- a/hw/pci/pci.c
+> > > +++ b/hw/pci/pci.c
+> > > @@ -85,6 +85,8 @@ static Property pci_props[] =3D {
+> > >                      QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
+> > >      DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
+> > >                      QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
+> > > +    DEFINE_PROP_SIZE32("x-max-bounce-buffer-size", PCIDevice,
+> > > +                     max_bounce_buffer_size, DEFAULT_MAX_BOUNCE_BUFF=
+ER_SIZE),
+> > >      DEFINE_PROP_END_OF_LIST()
+> > >  };
+> > >
+> >
+> > I'm a bit puzzled by now there being two fields named
+> > max_bounce_buffer_size, one directly controllable by
+> > a property.
 
-Ah, just notice there's the mutex.
+One is one the pci device, the other is on the address space. The
+former can be set via a command line parameter, and that value is used
+to initialize the field on the address space, which is then consulted
+when allocating bounce buffers.
 
-So please consider the reply in the other thread, IIUC we can make it for
-multifd_send() to be a generic mutex to simplify the other patch too, then
-drop here.
+I'm not sure which aspect of this is unclear and/or deserves
+additional commenting - let me know and I'll be happy to send a patch.
 
-I assume the ram code should be fine taking one more mutex even without
-vfio, if it only takes once for each ~128 pages to enqueue, and only take
-in the main thread, then each update should be also in the hot path
-(e.g. no cache bouncing).
-
-> +    MultiFDDeviceState_t *device_state;
-> +
-> +    assert(multifd_payload_empty(device_state_send));
-> +
-> +    multifd_set_payload_type(device_state_send, MULTIFD_PAYLOAD_DEVICE_STATE);
-> +    device_state = &device_state_send->u.device_state;
-> +    device_state->idstr = g_strdup(idstr);
-> +    device_state->instance_id = instance_id;
-> +    device_state->buf = g_memdup2(data, len);
-> +    device_state->buf_len = len;
-> +
-> +    if (!multifd_send(&device_state_send)) {
-> +        multifd_send_data_clear(device_state_send);
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-
--- 
-Peter Xu
-
+> >
+> > Pls add code comments explaining how they are related.
+> >
+> >
+> > Also, what is the point of adding a property without
+> > making it part of an API? No one will be able to rely on
+> > it working.
+>
+> Note that this patch is already upstream as commit 637b0aa13.
+>
+> thanks
+> -- PMM
 
