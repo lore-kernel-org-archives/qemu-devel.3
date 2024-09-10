@@ -4,52 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43A17EDE9AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:23:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FD6EEDE9AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:25:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so4aX-0000Yc-QQ; Tue, 10 Sep 2024 13:23:37 -0400
+	id 1so4bw-0006kp-5I; Tue, 10 Sep 2024 13:25:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=54h1=QI=kaod.org=clg@ozlabs.org>)
- id 1so4aV-0000RF-V5; Tue, 10 Sep 2024 13:23:35 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1so4bt-0006bA-OO
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:25:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=54h1=QI=kaod.org=clg@ozlabs.org>)
- id 1so4aU-00033z-6H; Tue, 10 Sep 2024 13:23:35 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4X39XK05gnz4wb0;
- Wed, 11 Sep 2024 03:23:29 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4X39XG4lYqz4x2J;
- Wed, 11 Sep 2024 03:23:26 +1000 (AEST)
-Message-ID: <f8ba5d94-69b3-460a-9a3c-4473bf2fb41e@kaod.org>
-Date: Tue, 10 Sep 2024 19:23:24 +0200
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1so4bs-00037M-0d
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:25:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725989098;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NZCWltfZIXyROYrJtJZxPfSUQ22U/7y7wxjOsnrAVTY=;
+ b=TsFa740tElEAH6bh8PT36KoxJ6lj2278wdH8Ys/T9ClXpZ1mnoQfeuTZoxQmuizXtu4CLc
+ j33EcunQLZGGFVm035vYk4KjikYSwW0xe2MEN2ubQm0fWJ2UnHP9VJqphnbrkNo74mQNuL
+ eJI0YlKBUAG0InR9bxWwu5Q1CsDaDUg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-130-7UvM6jLUMlCUmA5NoYISsg-1; Tue, 10 Sep 2024 13:24:56 -0400
+X-MC-Unique: 7UvM6jLUMlCUmA5NoYISsg-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-42cb080ab53so22766725e9.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 10:24:56 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725989095; x=1726593895;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NZCWltfZIXyROYrJtJZxPfSUQ22U/7y7wxjOsnrAVTY=;
+ b=nnbltnMgWmtSu9Ox4bnqRm1+hyWbqbXBc4WheyYak32ChJsQA6awq1x81Vvxa7IG7U
+ gws+einyKYPzL/hlHzfCKAu0aCUShviFu8CnI3+x+CaEJtHirndISczVvZqmPz5diwuN
+ Hg0uka84BFpgPOwCv4+wqUb8JlBnJ4UjGYZCUF/WGw1xNrNjYvDFQz7avnSacyQ7tbMC
+ w1vH/28DAWOdR8q8tkRrxtoGYgqxTHGOIqWTmvvuVCdzpPg8FAi5X0XYdJe6vg/0NGVe
+ r8xE5iXJM6PLrLa0dJhKpAc5LTZNhYzAlaDWOezeSkL8qqB9NV449E2URyqPKrYjwpBj
+ BsNQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUYCFv3IhHHeJXnUnNPLN4c8X34tcrTi4OdOjQMxctn4R431sWJ869UUnXqAGvu4ghad5CWK+ZkTq1P@nongnu.org
+X-Gm-Message-State: AOJu0YzhMJBp9W7cqL81PfysQHKChL2M9oM60cFTewMFAIUZveFHNJd9
+ 7Mla0JpT22hH3zczVobJNOV6ZqBKlqURzVsp81cjLWGcQtzbF0xTNAT89DrzUcFGj+2Wa2TV29U
+ 6m7DADrLMfDgoPI9hlyvKsX5CKlIRV4ZG4++5lAxC3zXe3/6INb7/
+X-Received: by 2002:a05:600c:1d15:b0:42c:b9a5:ebbc with SMTP id
+ 5b1f17b1804b1-42cb9a5ee47mr48206995e9.16.1725989095182; 
+ Tue, 10 Sep 2024 10:24:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFUB1AajfQUJnpqrnECuJOGtbuML3O+JUlQbwgNJnAfTbD4xuza0NH9Urs5xuGCFPqjvQzDNA==
+X-Received: by 2002:a05:600c:1d15:b0:42c:b9a5:ebbc with SMTP id
+ 5b1f17b1804b1-42cb9a5ee47mr48206755e9.16.1725989094522; 
+ Tue, 10 Sep 2024 10:24:54 -0700 (PDT)
+Received: from redhat.com ([31.187.78.63]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-378956d374fsm9497936f8f.86.2024.09.10.10.24.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Sep 2024 10:24:53 -0700 (PDT)
+Date: Tue, 10 Sep 2024 13:24:49 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ imammedo@redhat.com, anisinha@redhat.com, peter.maydell@linaro.org,
+ shannon.zhaosl@gmail.com, sunilvl@ventanamicro.com,
+ palmer@dabbelt.com, alistair.francis@wdc.com,
+ bin.meng@windriver.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
+Subject: Re: [PATCH v5 0/3] Upgrade ACPI SPCR table to support SPCR table
+ revision 4 format
+Message-ID: <20240910132404-mutt-send-email-mst@kernel.org>
+References: <20240829015920.95778-1-jeeheng.sia@starfivetech.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/14] ppc/xive2: Dump more NVP state with 'info pic'
-To: Michael Kowal <kowal@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
- milesg@linux.ibm.com
-References: <20240909211038.27440-1-kowal@linux.ibm.com>
- <20240909211038.27440-6-kowal@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240909211038.27440-6-kowal@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=54h1=QI=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240829015920.95778-1-jeeheng.sia@starfivetech.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,68 +104,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/9/24 23:10, Michael Kowal wrote:
-> From: Frederic Barrat <fbarrat@linux.ibm.com>
+On Wed, Aug 28, 2024 at 06:59:17PM -0700, Sia Jee Heng wrote:
+> Update the SPCR table to accommodate the SPCR Table revision 4 [1].
+> The SPCR table has been modified to adhere to the revision 4 format [2].
 > 
-> The 'PGoFirst' field of a Notify Virtual Processor tells if the NVP
-> belongs to a VP group.
+> Meanwhile, the virt SPCR golden reference file for RISC-V have been updated to
+> accommodate the SPCR Table revision 4.
 > 
-> Also, print the Reporting Cache Line address, if defined.
+> [1]: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table
+> [2]: https://github.com/acpica/acpica/pull/931
+
+Seems most appropriate on riscv5 tree.
+The code looks ok.
+
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+
+
+> Changes in v5:
+> - Reverted the SPCR table revision history for the ARM architecture.
+> - Corrected the output of the SPCR Table diff.
 > 
-> Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
-> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
-> ---
->   include/hw/ppc/xive2_regs.h |  1 +
->   hw/intc/xive2.c             | 10 ++++++++--
->   2 files changed, 9 insertions(+), 2 deletions(-)
+> Changes in v4:
+> - Remove the SPCR table revision 4 update for the ARM architecture.
 > 
-> diff --git a/include/hw/ppc/xive2_regs.h b/include/hw/ppc/xive2_regs.h
-> index 7acf7dccf3..d71a54f9ff 100644
-> --- a/include/hw/ppc/xive2_regs.h
-> +++ b/include/hw/ppc/xive2_regs.h
-> @@ -151,6 +151,7 @@ typedef struct Xive2Nvp {
->   #define NVP2_W0_VALID              PPC_BIT32(0)
->   #define NVP2_W0_HW                 PPC_BIT32(7)
->   #define NVP2_W0_ESC_END            PPC_BIT32(25) /* 'N' bit 0:ESB  1:END */
-> +#define NVP2_W0_PGOFIRST           PPC_BITMASK32(26, 31)
->           uint32_t       w1;
->   #define NVP2_W1_CO                 PPC_BIT32(13)
->   #define NVP2_W1_CO_PRIV            PPC_BITMASK32(14, 15)
-> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-> index fbd05aa9f5..ac581fa195 100644
-> --- a/hw/intc/xive2.c
-> +++ b/hw/intc/xive2.c
-> @@ -161,14 +161,20 @@ void xive2_nvp_pic_print_info(Xive2Nvp *nvp, uint32_t nvp_idx, GString *buf)
->   {
->       uint8_t  eq_blk = xive_get_field32(NVP2_W5_VP_END_BLOCK, nvp->w5);
->       uint32_t eq_idx = xive_get_field32(NVP2_W5_VP_END_INDEX, nvp->w5);
-> +    uint64_t cache_line = xive2_nvp_reporting_addr(nvp);
->   
->       if (!xive2_nvp_is_valid(nvp)) {
->           return;
->       }
->   
-> -    g_string_append_printf(buf, "  %08x end:%02x/%04x IPB:%02x",
-> +    g_string_append_printf(buf, "  %08x end:%02x/%04x IPB:%02x PGoFirst:%02x",
->                              nvp_idx, eq_blk, eq_idx,
-> -                           xive_get_field32(NVP2_W2_IPB, nvp->w2));
-> +                           xive_get_field32(NVP2_W2_IPB, nvp->w2),
-> +                           xive_get_field32(NVP2_W0_PGOFIRST, nvp->w0));
-> +    if (cache_line) {
-> +        g_string_append_printf(buf, "  reporting CL:%016"PRIx64, cache_line);
-> +    }
-> +
->       /*
->        * When the NVP is HW controlled, more fields are updated
->        */
+> Changes in v3:
+> - Rebased on the latest QEMU.
+> - Added Acked-by: Alistair Francis <alistair.francis@wdc.com>
+> 
+> Changes in v2:
+> - Utilizes a three-patch approach to modify the ACPI pre-built binary
+>   files required by the Bios-Table-Test.
+> - Rebases and incorporates changes to support both ARM and RISC-V ACPI
+>   pre-built binary files.
+> 
+> Sia Jee Heng (3):
+>   qtest: allow SPCR acpi table changes
+>   hw/acpi: Upgrade ACPI SPCR table to support SPCR table revision 4
+>     format
+>   tests/qtest/bios-tables-test: Update virt SPCR golden reference for
+>     RISC-V
+> 
+>  hw/acpi/aml-build.c               |  20 ++++++++++++++++----
+>  hw/arm/virt-acpi-build.c          |   8 ++++++--
+>  hw/riscv/virt-acpi-build.c        |  12 +++++++++---
+>  include/hw/acpi/acpi-defs.h       |   7 +++++--
+>  include/hw/acpi/aml-build.h       |   2 +-
+>  tests/data/acpi/riscv64/virt/SPCR | Bin 80 -> 90 bytes
+>  6 files changed, 37 insertions(+), 12 deletions(-)
+> 
+> 
+> base-commit: cec99171931ea79215c79661d33423ac84e63b6e
+> -- 
+> 2.34.1
 
 
