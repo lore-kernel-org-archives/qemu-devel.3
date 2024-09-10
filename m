@@ -4,68 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C243ECE564
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:39:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D83C0EB64DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:39:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so08N-0003E2-OT; Tue, 10 Sep 2024 08:38:17 -0400
+	id 1so07A-00047z-JS; Tue, 10 Sep 2024 08:37:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so08A-0002HF-UI
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:38:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so084-00059j-5u
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:38:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725971871;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mlabaCVvf/B/G7Lq44qPt5H9r63tvaxqvyFiA2TTRdw=;
- b=YIH32Zgh+KDK1hZt4ZxVw+fG3CbbUNjBit43QqkC4O7rGIz9F2ZqFXN4TP8/h3MtCoh2Z3
- pDCQ1nR2OzqQmICRVspvvgWdnrzSsG+CShlJn8xvsl3LUu6zKheVJSaOUhJHwdMHUXQ5Rj
- euRlxoi4QlR7xHmBgzRtetSa9lZKLrE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-531-f8MojtspNy6m4p5n4vbsDQ-1; Tue,
- 10 Sep 2024 08:37:47 -0400
-X-MC-Unique: f8MojtspNy6m4p5n4vbsDQ-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1CE6E1977021; Tue, 10 Sep 2024 12:37:46 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.193.120])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EC60F19560B0; Tue, 10 Sep 2024 12:37:44 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1so06m-0002RJ-3V
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:36:36 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1so06i-00053D-C2
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:36:35 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8Bxb+tFPeBmZ7kDAA--.9255S3;
+ Tue, 10 Sep 2024 20:36:21 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front2 (Coremail) with SMTP id qciowMBx+cVCPeBmXGoDAA--.15753S3;
+ Tue, 10 Sep 2024 20:36:20 +0800 (CST)
+From: Xianglai Li <lixianglai@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 08/22] tests/functional: Convert the m68k Q800 Avocado test
- into a functional test
-Date: Tue, 10 Sep 2024 14:37:09 +0200
-Message-ID: <20240910123726.182975-9-thuth@redhat.com>
-In-Reply-To: <20240910123726.182975-1-thuth@redhat.com>
-References: <20240910123726.182975-1-thuth@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Huacai Chen <chenhuacai@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ kvm@vger.kernel.org, Bibo Mao <maobibo@loongson.cn>
+Subject: [RFC PATCH V2 1/5] include: Add macro definitions needed for
+ interrupt controller kvm emulation
+Date: Tue, 10 Sep 2024 20:18:28 +0800
+Message-Id: <2182eb694629ee3f2859e441b8076d62d3606ee2.1725969898.git.lixianglai@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <cover.1725969898.git.lixianglai@loongson.cn>
+References: <cover.1725969898.git.lixianglai@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qciowMBx+cVCPeBmXGoDAA--.15753S3
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,126 +67,305 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Just had to update the asset checksum to use SHA256 instead of SHA1,
-but apart from that it is a pretty much straightforward conversion.
+Add macro definitions needed for interrupt controller kvm emulation.
 
-Message-ID: <20240906180549.792832-3-thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
 ---
- MAINTAINERS                         |  1 +
- tests/avocado/boot_linux_console.py | 24 -------------------
- tests/functional/meson.build        |  3 ++-
- tests/functional/test_m68k_q800.py  | 37 +++++++++++++++++++++++++++++
- 4 files changed, 40 insertions(+), 25 deletions(-)
- create mode 100755 tests/functional/test_m68k_q800.py
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Cornelia Huck <cohuck@redhat.com>
+Cc: kvm@vger.kernel.org
+Cc: Bibo Mao <maobibo@loongson.cn>
+Cc: Xianglai Li <lixianglai@loongson.cn>
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 822f89847b..a25022a77a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1310,6 +1310,7 @@ F: include/hw/m68k/q800-glue.h
- F: include/hw/misc/djmemc.h
- F: include/hw/misc/iosb.h
- F: include/hw/audio/asc.h
-+F: tests/functional/test_m68k_q800.py
+ include/hw/intc/loongarch_extioi.h    | 38 ++++++++++++++++--
+ include/hw/intc/loongarch_ipi.h       | 15 +++++++
+ include/hw/intc/loongarch_pch_pic.h   | 58 +++++++++++++++++++++++++--
+ include/hw/intc/loongson_ipi.h        |  1 -
+ include/hw/intc/loongson_ipi_common.h |  2 +
+ include/hw/loongarch/virt.h           | 15 +++++++
+ linux-headers/asm-loongarch/kvm.h     | 18 +++++++++
+ linux-headers/linux/kvm.h             |  6 +++
+ 8 files changed, 146 insertions(+), 7 deletions(-)
+
+diff --git a/include/hw/intc/loongarch_extioi.h b/include/hw/intc/loongarch_extioi.h
+index 626a37dfa1..97f6aa4d60 100644
+--- a/include/hw/intc/loongarch_extioi.h
++++ b/include/hw/intc/loongarch_extioi.h
+@@ -15,7 +15,7 @@
+ #define EXTIOI_IRQS                (256)
+ #define EXTIOI_IRQS_BITMAP_SIZE    (256 / 8)
+ /* irq from EXTIOI is routed to no more than 4 cpus */
+-#define EXTIOI_CPUS                (4)
++#define EXTIOI_CPUS                (256)
+ /* map to ipnum per 32 irqs */
+ #define EXTIOI_IRQS_IPMAP_SIZE     (256 / 32)
+ #define EXTIOI_IRQS_COREMAP_SIZE   256
+@@ -36,7 +36,7 @@
+ #define EXTIOI_ISR_START             (0x700 - APIC_OFFSET)
+ #define EXTIOI_ISR_END               (0x720 - APIC_OFFSET)
+ #define EXTIOI_COREISR_START         (0x800 - APIC_OFFSET)
+-#define EXTIOI_COREISR_END           (0xB20 - APIC_OFFSET)
++#define EXTIOI_COREISR_END           (0x820 - APIC_OFFSET)
+ #define EXTIOI_COREMAP_START         (0xC00 - APIC_OFFSET)
+ #define EXTIOI_COREMAP_END           (0xD00 - APIC_OFFSET)
+ #define EXTIOI_SIZE                  0x800
+@@ -64,7 +64,8 @@ typedef struct ExtIOICore {
+     qemu_irq parent_irq[LS3A_INTC_IP];
+ } ExtIOICore;
  
- virt
- M: Laurent Vivier <laurent@vivier.eu>
-diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-index 18c69d6acc..396836bf64 100644
---- a/tests/avocado/boot_linux_console.py
-+++ b/tests/avocado/boot_linux_console.py
-@@ -1325,30 +1325,6 @@ def test_alpha_clipper(self):
-         console_pattern = 'Kernel command line: %s' % kernel_command_line
-         self.wait_for_console_pattern(console_pattern)
+-#define TYPE_LOONGARCH_EXTIOI "loongarch.extioi"
++#define TYPE_LOONGARCH_EXTIOI        "loongarch-extioi"
++#define TYPE_KVM_LOONGARCH_EXTIOI    "loongarch-kvm-extioi"
+ OBJECT_DECLARE_SIMPLE_TYPE(LoongArchExtIOI, LOONGARCH_EXTIOI)
+ struct LoongArchExtIOI {
+     SysBusDevice parent_obj;
+@@ -86,4 +87,35 @@ struct LoongArchExtIOI {
+     MemoryRegion extioi_system_mem;
+     MemoryRegion virt_extend;
+ };
++
++struct KVMLoongArchExtIOI {
++    SysBusDevice parent_obj;
++    uint32_t num_cpu;
++    uint32_t features;
++    uint32_t status;
++
++    /* hardware state */
++    uint32_t nodetype[EXTIOI_IRQS_NODETYPE_COUNT / 2];
++    uint32_t bounce[EXTIOI_IRQS_GROUP_COUNT];
++    uint32_t isr[EXTIOI_IRQS / 32];
++    uint32_t coreisr[EXTIOI_CPUS][EXTIOI_IRQS_GROUP_COUNT];
++    uint32_t enable[EXTIOI_IRQS / 32];
++    uint32_t ipmap[EXTIOI_IRQS_IPMAP_SIZE / 4];
++    uint32_t coremap[EXTIOI_IRQS / 4];
++    uint8_t  sw_coremap[EXTIOI_IRQS];
++};
++typedef struct KVMLoongArchExtIOI KVMLoongArchExtIOI;
++DECLARE_INSTANCE_CHECKER(KVMLoongArchExtIOI, KVM_LOONGARCH_EXTIOI,
++                         TYPE_KVM_LOONGARCH_EXTIOI)
++
++struct KVMLoongArchExtIOIClass {
++    SysBusDeviceClass parent_class;
++    DeviceRealize parent_realize;
++
++    bool is_created;
++    int dev_fd;
++};
++typedef struct KVMLoongArchExtIOIClass KVMLoongArchExtIOIClass;
++DECLARE_CLASS_CHECKERS(KVMLoongArchExtIOIClass, KVM_LOONGARCH_EXTIOI,
++                       TYPE_KVM_LOONGARCH_EXTIOI)
+ #endif /* LOONGARCH_EXTIOI_H */
+diff --git a/include/hw/intc/loongarch_ipi.h b/include/hw/intc/loongarch_ipi.h
+index 276b3040a3..64ebbdcba6 100644
+--- a/include/hw/intc/loongarch_ipi.h
++++ b/include/hw/intc/loongarch_ipi.h
+@@ -22,4 +22,19 @@ struct LoongarchIPIClass {
+     LoongsonIPICommonClass parent_class;
+ };
  
--    def test_m68k_q800(self):
--        """
--        :avocado: tags=arch:m68k
--        :avocado: tags=machine:q800
--        """
--        deb_url = ('https://snapshot.debian.org/archive/debian-ports'
--                   '/20191021T083923Z/pool-m68k/main'
--                   '/l/linux/kernel-image-5.3.0-1-m68k-di_5.3.7-1_m68k.udeb')
--        deb_hash = '044954bb9be4160a3ce81f8bc1b5e856b75cccd1'
--        deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinux-5.3.0-1-m68k')
++#define TYPE_KVM_LOONGARCH_IPI  "kvm_loongarch_ipi"
++
++OBJECT_DECLARE_TYPE(KVMLoongarchIPIState,
++                    KVMLoongArchIPIClass, KVM_LOONGARCH_IPI)
++
++struct KVMLoongarchIPIState {
++    LoongsonIPICommonState parent_obj;
++    int dev_fd;
++};
++
++struct KVMLoongArchIPIClass {
++   LoongsonIPICommonClass parent_class;
++   DeviceRealize parent_realize;
++    DeviceUnrealize parent_unrealize;
++};
+ #endif
+diff --git a/include/hw/intc/loongarch_pch_pic.h b/include/hw/intc/loongarch_pch_pic.h
+index d5437e88f2..bbde9e6de9 100644
+--- a/include/hw/intc/loongarch_pch_pic.h
++++ b/include/hw/intc/loongarch_pch_pic.h
+@@ -5,9 +5,13 @@
+  * Copyright (c) 2021 Loongson Technology Corporation Limited
+  */
+ 
++#ifndef LOONGARCH_PCH_PIC_H
++#define LOONGARCH_PCH_PIC_H
++
+ #include "hw/sysbus.h"
+ 
+-#define TYPE_LOONGARCH_PCH_PIC "loongarch_pch_pic"
++#define TYPE_LOONGARCH_PCH_PIC          "loongarch_pch_pic"
++#define TYPE_KVM_LOONGARCH_PCH_PIC      "loongarch_kvm_pch_pic"
+ #define PCH_PIC_NAME(name) TYPE_LOONGARCH_PCH_PIC#name
+ OBJECT_DECLARE_SIMPLE_TYPE(LoongArchPCHPIC, LOONGARCH_PCH_PIC)
+ 
+@@ -28,15 +32,26 @@ OBJECT_DECLARE_SIMPLE_TYPE(LoongArchPCHPIC, LOONGARCH_PCH_PIC)
+ #define PCH_PIC_AUTO_CTRL0_HI           0xc4
+ #define PCH_PIC_AUTO_CTRL1_LO           0xe0
+ #define PCH_PIC_AUTO_CTRL1_HI           0xe4
+-#define PCH_PIC_ROUTE_ENTRY_OFFSET      0x100
++#define PCH_PIC_ROUTE_ENTRY_START       0x100
+ #define PCH_PIC_ROUTE_ENTRY_END         0x13f
+-#define PCH_PIC_HTMSI_VEC_OFFSET        0x200
++#define PCH_PIC_HTMSI_VEC_START         0x200
+ #define PCH_PIC_HTMSI_VEC_END           0x23f
+ #define PCH_PIC_INT_STATUS_LO           0x3a0
+ #define PCH_PIC_INT_STATUS_HI           0x3a4
+ #define PCH_PIC_INT_POL_LO              0x3e0
+ #define PCH_PIC_INT_POL_HI              0x3e4
+ 
++#define PCH_PIC_INT_ID_START            PCH_PIC_INT_ID_LO
++#define PCH_PIC_MASK_START              PCH_PIC_INT_MASK_LO
++#define PCH_PIC_HTMSI_EN_START          PCH_PIC_HTMSI_EN_LO
++#define PCH_PIC_EDGE_START              PCH_PIC_INT_EDGE_LO
++#define PCH_PIC_CLEAR_START             PCH_PIC_INT_CLEAR_LO
++#define PCH_PIC_AUTO_CTRL0_START        PCH_PIC_AUTO_CTRL0_LO
++#define PCH_PIC_AUTO_CTRL1_START        PCH_PIC_AUTO_CTRL1_LO
++#define PCH_PIC_INT_IRR_START           0x380
++#define PCH_PIC_INT_ISR_START           PCH_PIC_INT_STATUS_LO
++#define PCH_PIC_POLARITY_START          PCH_PIC_INT_POL_LO
++
+ #define STATUS_LO_START                 0
+ #define STATUS_HI_START                 0x4
+ #define POL_LO_START                    0x40
+@@ -67,3 +82,40 @@ struct LoongArchPCHPIC {
+     MemoryRegion iomem8;
+     unsigned int irq_num;
+ };
++
++struct KVMLoongArchPCHPIC {
++    SysBusDevice parent_obj;
++    uint64_t int_mask; /*0x020 interrupt mask register*/
++    uint64_t htmsi_en; /*0x040 1=msi*/
++    uint64_t intedge; /*0x060 edge=1 level  =0*/
++    uint64_t intclr; /*0x080 for clean edge int,set 1 clean,set 0 is noused*/
++    uint64_t auto_crtl0; /*0x0c0*/
++    uint64_t auto_crtl1; /*0x0e0*/
++    uint64_t last_intirr;    /* edge detection */
++    uint64_t intirr; /* 0x380 interrupt request register */
++    uint64_t intisr; /* 0x3a0 interrupt service register */
++    /*
++     * 0x3e0 interrupt level polarity selection
++     * register 0 for high level trigger
++     */
++    uint64_t int_polarity;
++
++    uint8_t route_entry[64]; /*0x100 - 0x138*/
++    uint8_t htmsi_vector[64]; /*0x200 - 0x238*/
++};
++typedef struct KVMLoongArchPCHPIC KVMLoongArchPCHPIC;
++DECLARE_INSTANCE_CHECKER(KVMLoongArchPCHPIC, KVM_LOONGARCH_PCH_PIC,
++                         TYPE_KVM_LOONGARCH_PCH_PIC)
++
++struct KVMLoongArchPCHPICClass {
++    SysBusDeviceClass parent_class;
++    DeviceRealize parent_realize;
++
++    bool is_created;
++    int dev_fd;
++};
++typedef struct KVMLoongArchPCHPICClass KVMLoongArchPCHPICClass;
++DECLARE_CLASS_CHECKERS(KVMLoongArchPCHPICClass, KVM_LOONGARCH_PCH_PIC,
++                       TYPE_KVM_LOONGARCH_PCH_PIC)
++
++#endif /* LOONGARCH_PCH_PIC_H */
+diff --git a/include/hw/intc/loongson_ipi.h b/include/hw/intc/loongson_ipi.h
+index 4e517cc8dc..57e0d94e2b 100644
+--- a/include/hw/intc/loongson_ipi.h
++++ b/include/hw/intc/loongson_ipi.h
+@@ -27,5 +27,4 @@ struct LoongsonIPIState {
+ 
+     MemoryRegion *ipi_mmio_mem;
+ };
 -
--        self.vm.set_console()
--        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
--                               'console=ttyS0 vga=off')
--        self.vm.add_args('-kernel', kernel_path,
--                         '-append', kernel_command_line)
--        self.vm.launch()
--        console_pattern = 'Kernel command line: %s' % kernel_command_line
--        self.wait_for_console_pattern(console_pattern)
--        console_pattern = 'No filesystem could mount root'
--        self.wait_for_console_pattern(console_pattern)
--
-     def do_test_advcal_2018(self, day, tar_hash, kernel_name, console=0):
-         tar_url = ('https://qemu-advcal.gitlab.io'
-                    '/qac-best-of-multiarch/download/day' + day + '.tar.xz')
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index cda89c4b0c..c6bb345d2c 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -57,7 +57,8 @@ tests_loongarch64_system_thorough = [
- ]
+ #endif
+diff --git a/include/hw/intc/loongson_ipi_common.h b/include/hw/intc/loongson_ipi_common.h
+index df9d9c5168..adba8ffd49 100644
+--- a/include/hw/intc/loongson_ipi_common.h
++++ b/include/hw/intc/loongson_ipi_common.h
+@@ -45,6 +45,8 @@ struct LoongsonIPICommonClass {
+     DeviceUnrealize parent_unrealize;
+     AddressSpace *(*get_iocsr_as)(CPUState *cpu);
+     CPUState *(*cpu_by_arch_id)(int64_t id);
++    void (*pre_save)(LoongsonIPICommonState *s);
++    void (*post_load)(LoongsonIPICommonState *s, int version_id);
+ };
  
- tests_m68k_system_thorough = [
--  'm68k_nextcube'
-+  'm68k_nextcube',
-+  'm68k_q800',
- ]
+ MemTxResult loongson_ipi_core_readl(void *opaque, hwaddr addr, uint64_t *data,
+diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+index c373e48f27..c1769fc20c 100644
+--- a/include/hw/loongarch/virt.h
++++ b/include/hw/loongarch/virt.h
+@@ -36,6 +36,21 @@
  
- tests_microblaze_system_thorough = [
-diff --git a/tests/functional/test_m68k_q800.py b/tests/functional/test_m68k_q800.py
-new file mode 100755
-index 0000000000..3b17244b98
---- /dev/null
-+++ b/tests/functional/test_m68k_q800.py
-@@ -0,0 +1,37 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test for testing the q800 m68k machine
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
+ #define FDT_BASE                0x100000
+ 
++/* KVM_IRQ_LINE irq field index values */
++#define KVM_LOONGARCH_IRQ_TYPE_SHIFT            24
++#define KVM_LOONGARCH_IRQ_TYPE_MASK             0xff
++#define KVM_LOONGARCH_IRQ_VCPU_SHIFT            16
++#define KVM_LOONGARCH_IRQ_VCPU_MASK             0xff
++#define KVM_LOONGARCH_IRQ_NUM_SHIFT             0
++#define KVM_LOONGARCH_IRQ_NUM_MASK              0xffff
 +
-+from qemu_test import LinuxKernelTest, Asset
++/* irq_type field */
++#define KVM_LOONGARCH_IRQ_TYPE_CPU_IP           0
++#define KVM_LOONGARCH_IRQ_TYPE_CPU_IO           1
++#define KVM_LOONGARCH_IRQ_TYPE_HT               2
++#define KVM_LOONGARCH_IRQ_TYPE_MSI              3
++#define KVM_LOONGARCH_IRQ_TYPE_IOAPIC           4
 +
-+class Q800MachineTest(LinuxKernelTest):
+ struct LoongArchVirtMachineState {
+     /*< private >*/
+     MachineState parent_obj;
+diff --git a/linux-headers/asm-loongarch/kvm.h b/linux-headers/asm-loongarch/kvm.h
+index f9abef3823..e102d500a3 100644
+--- a/linux-headers/asm-loongarch/kvm.h
++++ b/linux-headers/asm-loongarch/kvm.h
+@@ -108,4 +108,22 @@ struct kvm_iocsr_entry {
+ #define KVM_IRQCHIP_NUM_PINS	64
+ #define KVM_MAX_CORES		256
+ 
++#define KVM_DEV_LOONGARCH_IPI_GRP_REGS		        0x40000001
 +
-+    ASSET_KERNEL = Asset(
-+        ('https://snapshot.debian.org/'
-+         'archive/debian-ports/20191021T083923Z/pool-m68k/main/l/linux/'
-+         'kernel-image-5.3.0-1-m68k-di_5.3.7-1_m68k.udeb'),
-+        '949e50d74d4b9bc15d26c06d402717b7a4c0e32ff8100014f5930d8024de7b73')
++#define KVM_DEV_LOONGARCH_EXTIOI_GRP_REGS	        0x40000002
 +
-+    def test_m68k_q800(self):
-+        self.set_machine('q800')
++#define KVM_DEV_LOONGARCH_EXTIOI_GRP_SW_STATUS	        0x40000003
++#define KVM_DEV_LOONGARCH_EXTIOI_SW_STATUS_NUM_CPU   	0x0
++#define KVM_DEV_LOONGARCH_EXTIOI_SW_STATUS_FEATURE   	0x1
++#define KVM_DEV_LOONGARCH_EXTIOI_SW_STATUS_STATE   	0x2
 +
-+        deb_path = self.ASSET_KERNEL.fetch()
-+        kernel_path = self.extract_from_deb(deb_path,
-+                                            '/boot/vmlinux-5.3.0-1-m68k')
++#define KVM_DEV_LOONGARCH_EXTIOI_GRP_CTRL	        0x40000004
++#define KVM_DEV_LOONGARCH_EXTIOI_CTRL_INIT_NUM_CPU   	0x0
++#define KVM_DEV_LOONGARCH_EXTIOI_CTRL_INIT_FEATURE 	0x1
++#define KVM_DEV_LOONGARCH_EXTIOI_CTRL_LOAD_FINISHED   	0x3
 +
-+        self.vm.set_console()
-+        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-+                               'console=ttyS0 vga=off')
-+        self.vm.add_args('-kernel', kernel_path,
-+                         '-append', kernel_command_line)
-+        self.vm.launch()
-+        console_pattern = 'Kernel command line: %s' % kernel_command_line
-+        self.wait_for_console_pattern(console_pattern)
-+        console_pattern = 'No filesystem could mount root'
-+        self.wait_for_console_pattern(console_pattern)
++#define KVM_DEV_LOONGARCH_PCH_PIC_GRP_REGS	        0x40000005
++#define KVM_DEV_LOONGARCH_PCH_PIC_GRP_CTRL	        0x40000006
++#define KVM_DEV_LOONGARCH_PCH_PIC_CTRL_INIT	        0
 +
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+ #endif /* __UAPI_ASM_LOONGARCH_KVM_H */
+diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
+index c93876ca0b..cd2aed735c 100644
+--- a/linux-headers/linux/kvm.h
++++ b/linux-headers/linux/kvm.h
+@@ -1138,6 +1138,12 @@ enum kvm_device_type {
+ #define KVM_DEV_TYPE_ARM_PV_TIME	KVM_DEV_TYPE_ARM_PV_TIME
+ 	KVM_DEV_TYPE_RISCV_AIA,
+ #define KVM_DEV_TYPE_RISCV_AIA		KVM_DEV_TYPE_RISCV_AIA
++	KVM_DEV_TYPE_LOONGARCH_PCH_PIC,
++#define KVM_DEV_TYPE_LOONGARCH_PCH_PIC  KVM_DEV_TYPE_LOONGARCH_PCH_PIC
++	KVM_DEV_TYPE_LOONGARCH_IPI,
++#define KVM_DEV_TYPE_LOONGARCH_IPI      KVM_DEV_TYPE_LOONGARCH_IPI
++	KVM_DEV_TYPE_LOONGARCH_EXTIOI,
++#define KVM_DEV_TYPE_LOONGARCH_EXTIOI   KVM_DEV_TYPE_LOONGARCH_EXTIOI
+ 	KVM_DEV_TYPE_MAX,
+ };
+ 
 -- 
-2.46.0
+2.39.1
 
 
