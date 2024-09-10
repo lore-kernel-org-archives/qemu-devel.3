@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A38C0EDE9AD
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:40:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23182EDE9AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:40:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so4pk-0005EO-8Y; Tue, 10 Sep 2024 13:39:20 -0400
+	id 1so4qt-0003DK-3X; Tue, 10 Sep 2024 13:40:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so4pa-0004mh-TV
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:39:11 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1so4qp-0002h9-Vb
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:40:28 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so4pY-0004Zt-8S
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:39:10 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a8a7b1c2f2bso167213166b.0
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 10:39:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1so4qn-0004sq-R6
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:40:27 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2d88c0f8e79so4562967a91.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 10:40:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725989946; x=1726594746; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725990024; x=1726594824; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0gsP/ANf70RJH0KlgA0KWCypst2Oh4Yb8PQcZ6VG+qU=;
- b=CFUJVCMA2vm7cJSDLpxCLFDM5b+5sHQYqPquJSiJBUBOqR6fy0Gbvf8mZtKc9u+YO5
- LVMh5cPVGOcsdcO9pTnqc8uWVHMS5K/0I1io8hCXWJkPF/FmKCWThgZXzUs7lxg3tyxF
- h6LnaHTvTA5/ZHvkb84f0QLJbbEUTT8KWYNdsOuDIN+xhjA/4/oGKTMwtGjWG5r/e0tV
- MiGCVD28NJS04hYUMXurtRqK/H5RTfEPvhWyxfGh4IGAHWDF8DJQf/uK6aaSanZfBcW8
- RA3fbKogTmVnS2WcrL/Lx/7GvX5MF4zefoSsbvzcl1dsaig3kwo2FJYp7/GRVYipYT9R
- kQAw==
+ bh=PxK/kUedWi76nv9Z4j6eZ6ETsIVX17z0F3roB87C/Q0=;
+ b=sFSVBUQY5xCEoltEOz8AJzF+cm7OG1v+pU6x0db57yT9SfjpvXndcpCnzg3ih+yP/J
+ 4Du32UtzUcFa+JiLm4rGsxUPxnABM+VXGa6SLyz//CSeUiadp5l2MPMhn+3niXqTMGsm
+ Y1OjGeCY8gyVegIIMCZt6m3Y4Vvioln7h6fT3KZvurMdudKR6db4K3brcgwERgxE9rUh
+ BwBTd9MEF5xLDjUFFJ8TmQflOdVxYiXSyapq2nAugQzT6wlcWHzsff9z1W/X35P5ACsh
+ 08zrcpjrIHWtW4IT3SHtr1k8la4/+hNjvcfa/Q4MdvLV0XrONevNsFROnsa7IzUa+Cc8
+ MYhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725989946; x=1726594746;
+ d=1e100.net; s=20230601; t=1725990024; x=1726594824;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0gsP/ANf70RJH0KlgA0KWCypst2Oh4Yb8PQcZ6VG+qU=;
- b=ZWCCPyfAK/3KKr/IoMSD/u1UZUQkq1q2goVy8w6yvD4oB0KOvQTQ3AGiNBRz7OBcbA
- j1fVg0hQqyUk22xQnBSABVL3gpNAzlSuz950I/wOjCs2xvPTM9b3bYHZ30TcKycOTLaz
- EBbRfdow+pTGlDDHlYLpuyAQINzMKLV2otC9t6g5y4TATusAS60mqY6GT9CS5W4AOAo/
- SK3uPkDP9QAJvXUcUah6YcjHeWq/KXB6gKs535XB2BM62qCHmYWchEO2QOGxYuRb1vwJ
- yNLTE5dkhMEa3i2EiVleZ3UoVQanABaMUSA7nIKE7+XCqbRByaL78DYsvvR8lfZviBnz
- s7Uw==
-X-Gm-Message-State: AOJu0Yz8KHuxj4cU+JT3TysXS3i189usksYeqzUm7Fd4sYxaFrwoGgnZ
- Ulz0XRWh0TYs9PcCBRLWsg9YBhtSMFVo415AaSUwn1iYxc9TeYDwPptkjXavFEY=
-X-Google-Smtp-Source: AGHT+IHSFzOvB+PcMjQG2dt4gKhB4ImBN52E3779TS1kH8SZo8hP+j8Q4GUBszrP1/TrrvUd5BY40w==
-X-Received: by 2002:a17:907:2d13:b0:a86:aa57:57b8 with SMTP id
- a640c23a62f3a-a9004aba7c7mr29382466b.63.1725989946197; 
- Tue, 10 Sep 2024 10:39:06 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25ce970csm505277266b.159.2024.09.10.10.39.02
+ bh=PxK/kUedWi76nv9Z4j6eZ6ETsIVX17z0F3roB87C/Q0=;
+ b=QIX7HMA/Mk/X6ODFiWiD6rfRkMOm5LUXntX0zYiq+uD7rnV9wmc+W+fOKEqEcKqVCB
+ HZJQeUGbyYvkXdEJI0eOdqmjZZfpRePvlg7Ui2Q2jzZOUXZLPu3NVExqF4iHIS9ZJ57W
+ ojuIkbAYIwqYVzq2qW1hcT3Tpy/B7cHkF2wAPiRsIGZw1v9mL7ZGH2jvUQbVOhox29DS
+ XqFjacBmisEAHwbxSYxvj4JCtRSAaMWGnKnEVL61ETtkDTupr+r0xsw5hCrf1EuyqluM
+ oe0lWSCOR+jAoytJBbxaInzaz3RsVegoX5nH8jJwHyfbd/IbGtwtxPzvMvkmhxKiVkhb
+ /fkg==
+X-Gm-Message-State: AOJu0Yy4uqPAmxPG8oPSp8gMQ2xO+K3zYrDqkkW2iD6ANnNs3qULZ5pI
+ 706S08SK7TS3etl3Y7VUD5suvM/+sOhFDPUbDCZgSGdEGSUkTKMXGSpzE9F86GJm3bd4RLvlbC9
+ s0VvWEg==
+X-Google-Smtp-Source: AGHT+IHIEh2gOaDV+kP/9BofpfisOSSU+8HsXyUxQbN5hvDsWwuXez7jJ9Dt81kkjIr+UHHAmLwAYg==
+X-Received: by 2002:a17:90b:3c43:b0:2da:5156:1253 with SMTP id
+ 98e67ed59e1d1-2dad50141cbmr5998023a91.21.1725990024249; 
+ Tue, 10 Sep 2024 10:40:24 -0700 (PDT)
+Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::9633])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2db04966d3asm6682751a91.38.2024.09.10.10.40.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2024 10:39:04 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 335A35FA11;
- Tue, 10 Sep 2024 18:39:01 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ Tue, 10 Sep 2024 10:40:23 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-arm@nongnu.org,
- devel@lists.libvirt.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Beraldo Leal <bleal@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
+Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>
-Subject: [PATCH v2 08/10] tests/guest-debug: Support passing arguments to the
- GDB test script
-Date: Tue, 10 Sep 2024 18:38:58 +0100
-Message-Id: <20240910173900.4154726-9-alex.bennee@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ kvm@vger.kernel.org, Thomas Huth <thuth@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-s390x@nongnu.org, Beraldo Leal <bleal@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 2/3] target/i386: fix build warning (gcc-12
+ -fsanitize=thread)
+Date: Tue, 10 Sep 2024 10:40:12 -0700
+Message-Id: <20240910174013.1433331-3-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240910173900.4154726-1-alex.bennee@linaro.org>
-References: <20240910173900.4154726-1-alex.bennee@linaro.org>
+In-Reply-To: <20240910174013.1433331-1-pierrick.bouvier@linaro.org>
+References: <20240910174013.1433331-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,87 +107,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
+Found on debian stable.
 
-This commit adds support for passing arguments to the GDB test scripts
-so it's possible to parse the args in an "argparse way" in the test
-scripts launched by the runner. The arguments should be preceded by --
-when passed to the runner. For example, passing "--help" arg to the
-GDB_TEST_SCRIPT:
+../target/i386/kvm/kvm.c: In function ‘kvm_handle_rdmsr’:
+../target/i386/kvm/kvm.c:5345:1: error: control reaches end of non-void function [-Werror=return-type]
+ 5345 | }
+      | ^
+../target/i386/kvm/kvm.c: In function ‘kvm_handle_wrmsr’:
+../target/i386/kvm/kvm.c:5364:1: error: control reaches end of non-void function [-Werror=return-type]
+ 5364 | }
 
-run-test.py [...] --test <GDB_TEST_SCRIPT> -- --help
-
-The test script should not use the argparse module directly but import
-arg_parser from test_gdbstub module. arg_parser then can be used just
-like the argparse.ArgumentParser class:
-
-from test_gdbstub import arg_parser
-
-p = arg_parser(prog="test-mytest.py", description="My test.")
-p.add_argument("--vowel", help="Select vowel",
-               required=True, choices=['a','e','i','o','u'])
-[...]
-
-The arg_parser allows a smooth and informative exit if, for instance,
-the caller of the runner script passes an invalid argument or misses a
-required argument by the test script.
-
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240906143316.657436-4-gustavo.romero@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- tests/guest-debug/run-test.py     | 6 ++++++
- tests/guest-debug/test_gdbstub.py | 5 +++++
- 2 files changed, 11 insertions(+)
+ target/i386/kvm/kvm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tests/guest-debug/run-test.py b/tests/guest-debug/run-test.py
-index 368ff8a890..5a091db8be 100755
---- a/tests/guest-debug/run-test.py
-+++ b/tests/guest-debug/run-test.py
-@@ -27,6 +27,10 @@ def get_args():
-     parser.add_argument("--binary", help="Binary to debug",
-                         required=True)
-     parser.add_argument("--test", help="GDB test script")
-+    parser.add_argument('test_args', nargs='*',
-+                        help="Additional args for GDB test script. "
-+                        "The args should be preceded by -- to avoid confusion "
-+                        "with flags for runner script")
-     parser.add_argument("--gdb", help="The gdb binary to use",
-                         default=None)
-     parser.add_argument("--gdb-args", help="Additional gdb arguments")
-@@ -91,6 +95,8 @@ def log(output, msg):
-     gdb_cmd += " -ex 'target remote %s'" % (socket_name)
-     # finally the test script itself
-     if args.test:
-+        if args.test_args:
-+            gdb_cmd += f" -ex \"py sys.argv={args.test_args}\""
-         gdb_cmd += " -x %s" % (args.test)
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 2fa88ef1e37..308b0e1cb37 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -5770,7 +5770,7 @@ static int kvm_handle_rdmsr(X86CPU *cpu, struct kvm_run *run)
+         }
+     }
  
+-    assert(false);
++    g_assert_not_reached();
+ }
  
-diff --git a/tests/guest-debug/test_gdbstub.py b/tests/guest-debug/test_gdbstub.py
-index 46fbf98f0c..a715c0e3f5 100644
---- a/tests/guest-debug/test_gdbstub.py
-+++ b/tests/guest-debug/test_gdbstub.py
-@@ -2,6 +2,7 @@
+ static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
+@@ -5789,7 +5789,7 @@ static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
+         }
+     }
  
- """
- from __future__ import print_function
-+import argparse
- import gdb
- import os
- import sys
-@@ -9,6 +10,10 @@
+-    assert(false);
++    g_assert_not_reached();
+ }
  
- fail_count = 0
- 
-+class arg_parser(argparse.ArgumentParser):
-+    def exit(self, status=None, message=""):
-+        print("Wrong GDB script test argument! " + message)
-+        gdb.execute("exit 1")
- 
- def report(cond, msg):
-     """Report success/fail of a test"""
+ static bool has_sgx_provisioning;
 -- 
 2.39.2
 
