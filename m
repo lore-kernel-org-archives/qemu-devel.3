@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84233ECE582
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 07:07:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25604ECE58B
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 07:10:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snuxi-0004UQ-1J; Tue, 10 Sep 2024 03:06:54 -0400
+	id 1snv10-0001fF-Tj; Tue, 10 Sep 2024 03:10:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snuxg-0004PH-MO
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 03:06:52 -0400
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snuxe-0008Uj-VX
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 03:06:52 -0400
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-2f761cfa5d8so28358811fa.2
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 00:06:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725952009; x=1726556809; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=m4e7yrZL8EI2osvdoujnFqGKwjgylpzzlVIrd8thyC4=;
- b=ib76tza9M2avyaQRJUyKUExgOLrKYsBzKmYzePcXGGHc4Tub9eI7VNu/1olsrJYnse
- CzRqZia7lpvkOA5TbuUG5z3NwDv3+dDsMi7XKqVmTy7XKHbid8XM+OUR9KvdPfa3Kb9g
- dBymlUv6Oi9l0WhnKwkwhDo5WW1ftijXEUVx11PpGGkPST7uXBPHiNnAk/twS7N/RuEq
- pifLzntolDz8/U5jd7s1xddixHYA6LDSI953+U2YDL5uu1WiQI/+1fneTYPTVuoGIW1E
- 3Lmn5gMPJGtFci+N8960irBajx+iWnvekUwrqV7Pmc8RDYMPlAgb3ft3cN+RWtGb7SxZ
- bq0Q==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1snv0z-0001el-Os
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 03:10:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1snv0y-0000Sz-4T
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 03:10:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725952213;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oOX6cOVT1Kdz8jmnBkIPWo5ukqdAQGLFFwQKyS0eYUM=;
+ b=LQv93Eo+WDZa/Gf9WVEab51JKJYaw+A5N4i8GHLRj6aWWHq1b6cqkcJuu0ffKeNy7CXRzV
+ nqzqsX/JnpYCG36Y7YuzPnZsTZv09bLm+zaKm5Ie2WwGr5B4/6M/lX0LylmowvP8G4yzmN
+ INkL/nCebl7NCENunvoZpkBSs8rSYWY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-333-vJXLwOZiO1e43Z9RKoeKlA-1; Tue, 10 Sep 2024 03:10:10 -0400
+X-MC-Unique: vJXLwOZiO1e43Z9RKoeKlA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42cb857fc7dso13394645e9.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 00:10:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725952009; x=1726556809;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=m4e7yrZL8EI2osvdoujnFqGKwjgylpzzlVIrd8thyC4=;
- b=pdac9ST/Cq5PEmbPn9G6dMeB6YZUzB5c2z+hrEOFzsYUKlVRYxmtw9JCLxYySF2hDZ
- 8NYK+xfZawBhTPW7hB5cblxztBOQaO9sN6kakPMwrG8tCOCOpPwLjqazXEMZsgO2QK8T
- WIOpyAkirpZ7TSmUp6e/6Z6EishJFYEML/gMeEUGgamxudrZaxJ5NhsztSNeJrxOleYZ
- HwOi1uXkI+YUIuLBY2m/2hzteFLENz9GvvNj0HBLE0GvUJ69g5OEo9pSwFzP5sdXc6Tc
- G80xIDQkAoBC856DMgI5yHKCv2lsO4uNGJyynMZYUjQxXc1v7UBVGmIj1b2IH1FG+asY
- FJGw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXNXbsZqfaryye+CouiRlLgYhNT1AP0UrkOig8PguJsaRgGDl+cxdKZA4mAk8bxeIgCNuKx87PcGbXq@nongnu.org
-X-Gm-Message-State: AOJu0YzbRQxn58RK+OVXykVchNmIB3ZC+LV4msnoj4eWB0c0V1yNJPGg
- TI5+eFfUVN7g4Zt80/CnZwkEn1R9TM4DSrvbOs/JxOj0d7a9NM975qaAErPCROo=
-X-Google-Smtp-Source: AGHT+IF6YiimLNXg7MMG2TarPL7OS2vdllmKJbVpy0m8NBQgkpRqviV0WWULwg+Jqg7IPdhd4SdSpQ==
-X-Received: by 2002:a2e:bc21:0:b0:2f3:aed8:aa9b with SMTP id
- 38308e7fff4ca-2f751eaef7emr91026861fa.5.1725952008565; 
- Tue, 10 Sep 2024 00:06:48 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.217.32])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd8cd43sm3913147a12.93.2024.09.10.00.06.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 00:06:48 -0700 (PDT)
-Message-ID: <ae3a0c8c-99a6-42b1-aeef-2b71b50ea611@linaro.org>
-Date: Tue, 10 Sep 2024 09:06:46 +0200
+ d=1e100.net; s=20230601; t=1725952209; x=1726557009;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oOX6cOVT1Kdz8jmnBkIPWo5ukqdAQGLFFwQKyS0eYUM=;
+ b=loF2B3frWyU6MfFxSMYlnHzlZPDfPpgIqCUq8E/bnf8cIUaBUnmSxdQGUexLgX9yFj
+ 8NaOfOo0OaT26oj9ln4WBqMqNEGrtgwP0+jc4iD5B/PHTZg1KClaNnmmggnv723daytg
+ w2TOzek4qwRGUCrwJlgtdDUK8/4bc90I7S39GcQVjCqYuGA71SV7M/nUNxNeWrrP+Ia7
+ Jd4dSnh6jCPqyAMj0zfmymXwRkVuW4CdpmD7s2A9+yuBPuph1vMDEWmGUTIGIsuWQJNX
+ 4q/AgLOfqesRSOCmI8+l/7OfE3TyT0F9R8AME4BvkusQ69GyMTBIwF5htVwrTPHRdfUT
+ pP5w==
+X-Gm-Message-State: AOJu0Yw5lKOKtYVwjhu2r9Op1MlFQ1GiuxbL26ryXx39z7DzSiZWgAG5
+ r8STU0HWk14R4DcoJh/Wd0VBfVOi1kp0Ab+3tExb9HgP/r/U1pGSC0Je7MHSRnDjTxFol0pC6WG
+ j3NZubnGEV63nG1nPDKTvo+nbqEke9YgWdn5PdvL+IU6o9Dnt+jIL
+X-Received: by 2002:a05:600c:1c21:b0:42c:bad0:6c1c with SMTP id
+ 5b1f17b1804b1-42cbad06f22mr29801605e9.18.1725952208960; 
+ Tue, 10 Sep 2024 00:10:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGcGnK2F9ITxbFHcYHdm+n6wvXO4tCB24zQYo85x2MsY5bAfqQ4eQKPNwmwVIcwpdNvC07pNA==
+X-Received: by 2002:a05:600c:1c21:b0:42c:bad0:6c1c with SMTP id
+ 5b1f17b1804b1-42cbad06f22mr29801215e9.18.1725952208099; 
+ Tue, 10 Sep 2024 00:10:08 -0700 (PDT)
+Received: from redhat.com ([31.187.78.173]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42ca0600651sm134047875e9.32.2024.09.10.00.10.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Sep 2024 00:10:07 -0700 (PDT)
+Date: Tue, 10 Sep 2024 03:10:03 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: Re: [PATCH 0/2] Solve vt82c686 qemu_irq leak.
+Message-ID: <20240910030754-mutt-send-email-mst@kernel.org>
+References: <cover.1719690591.git.balaton@eik.bme.hu>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/10 2/4] target/s390x: Use deposit to set psw_mask in
- save_link_info
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
- Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20240605215739.4758-7-richard.henderson@linaro.org>
- <20240909231910.14428-2-philmd@linaro.org>
- <9aac4861-b9b6-444a-b0fd-db03f21b1343@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <9aac4861-b9b6-444a-b0fd-db03f21b1343@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1719690591.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,63 +100,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/24 01:50, Richard Henderson wrote:
-> On 9/9/24 16:19, Philippe Mathieu-Daudé wrote:
->> From: Richard Henderson <richard.henderson@linaro.org>
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> Message-ID: <20240605215739.4758-7-richard.henderson@linaro.org>
->> [PMD: Split patch, part 2/4]
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   target/s390x/tcg/translate.c | 12 ++++++++----
->>   1 file changed, 8 insertions(+), 4 deletions(-)
->>
->> diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
->> index faa6d37c8e..53ec817e29 100644
->> --- a/target/s390x/tcg/translate.c
->> +++ b/target/s390x/tcg/translate.c
->> @@ -1417,6 +1417,7 @@ static DisasJumpType op_bas(DisasContext *s, 
->> DisasOps *o)
->>   static void save_link_info(DisasContext *s, DisasOps *o)
->>   {
->> +    TCGv_i64 t1;
->>       TCGv_i64 t2;
->>       if (s->base.tb->flags & (FLAG_MASK_32 | FLAG_MASK_64)) {
->> @@ -1425,14 +1426,17 @@ static void save_link_info(DisasContext *s, 
->> DisasOps *o)
->>       }
->>       gen_op_calc_cc(s);
->> +    t1 = tcg_temp_new_i64();
->>       t2 = tcg_temp_new_i64();
->> +
->>       tcg_gen_andi_i64(o->out, o->out, 0xffffffff00000000ull);
->> +
->> +    /* Shift program mask into place, garbage outside of [27:24]. */
->> +    tcg_gen_shri_i64(t1, psw_mask, 16);
->> +    /* Deposit pc to replace garbage bits below program mask. */
->>       gen_psw_addr_disp(s, t2, s->ilen);
->> -    tcg_gen_or_i64(o->out, o->out, t2);
->> +    tcg_gen_deposit_i64(o->out, t1, t2, 0, 24);
+On Sat, Jun 29, 2024 at 10:01:52PM +0200, BALATON Zoltan wrote:
+> This is an alternative appriach to solve the qemu_irq leak in
+> vt82c686. Allowing embedding an irq and init it in place like done
+> with other objects may allow cleaner fix for similar issues and I also
+> plan to use this for adding qemu_itq to pegasos2 machine state for
+> which gpio would not work.
 > 
-> This is incorrect, as you've lost the high 32-bits of out.
+> BALATON Zoltan (2):
+>   hw: Move declaration of IRQState to header and add init function
+>   hw/isa/vt82c686.c: Embed i8259 irq in device state instead of
+>     allocating
 
-Ah, I felt something was not right but couldn't figure it out,
-thanks for pointing at it.
+This looked like a simpler approach to shut up analyzer warnings, so I
+picked this one.
 
-The original patch is not trivial to review...
 
+
+>  hw/core/irq.c     | 25 +++++++++++--------------
+>  hw/isa/vt82c686.c |  7 ++++---
+>  include/hw/irq.h  | 18 ++++++++++++++++++
+>  3 files changed, 33 insertions(+), 17 deletions(-)
 > 
-> r~
+> -- 
+> 2.30.9
 > 
-> 
->>       tcg_gen_ori_i64(o->out, o->out, (s->ilen / 2) << 30);
->> -    tcg_gen_shri_i64(t2, psw_mask, 16);
->> -    tcg_gen_andi_i64(t2, t2, 0x0f000000);
->> -    tcg_gen_or_i64(o->out, o->out, t2);
->>       tcg_gen_extu_i32_i64(t2, cc_op);
->>       tcg_gen_shli_i64(t2, t2, 28);
->>       tcg_gen_or_i64(o->out, o->out, t2);
 > 
 
 
