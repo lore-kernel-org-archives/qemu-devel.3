@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9498EEE01E9
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 21:26:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 869B4EE01E9
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 21:26:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so8Mr-0002C3-D4; Tue, 10 Sep 2024 17:25:45 -0400
+	id 1so8Ms-0002GG-9k; Tue, 10 Sep 2024 17:25:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gregorhaas1997@gmail.com>)
- id 1so8Mq-00026t-56; Tue, 10 Sep 2024 17:25:44 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ id 1so8Mr-0002B0-4h; Tue, 10 Sep 2024 17:25:45 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gregorhaas1997@gmail.com>)
- id 1so8Mn-0002Ir-Po; Tue, 10 Sep 2024 17:25:43 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-6d9f0cf5ae3so13530797b3.0; 
- Tue, 10 Sep 2024 14:25:41 -0700 (PDT)
+ id 1so8Mo-0002Iz-U0; Tue, 10 Sep 2024 17:25:44 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-6d3f4218081so59068327b3.1; 
+ Tue, 10 Sep 2024 14:25:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726003540; x=1726608340; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1726003541; x=1726608341; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
  bh=Sul7/BXCsjPRlqt3G2+RLEijKUxX/bYzUBFroC3XHX8=;
- b=nioAumAqgu4yGw1IaxfbGkquatPraTKskkaEuRlxIB/+9+TZFKUk37dMPTIqMUcLc6
- LLS26u/1Y8EZ/xZVqjVcDl5YD8r8tZhJOmnEmWc0Zm3Lk+MDDnlk95ee16NAgCuwxgZQ
- bzn21z0O3C4pFTo5THDsEuPXzfR6nuyz9gqHsXqG9IWlVC1w4aAUd5n36JQk070jlwJa
- trCSJ3ZqH3QuZIiy8wCENCYvZis0O+AA+hFG4WB68y87W71/Wswb7K5M6t1rovm0PSYE
- kMRMfSbElnXhc6GsnlBBEeBq3ptZBqky1xC1cT+D6590zL2SWs5Kkiy98Q4jTtUR2KoC
- eZuQ==
+ b=NNw/AwJWudejZh8znGmBJrK+PnlYsdROYO8YiMIOkwa9ILdkfeZHr9I+R7rWw661Aq
+ zznGhVbvTnO/Q/0fUbIAMngKu6g8Q9tl+Vgd1zgHQRatchdy8JognfSYQa3YgihaEyNL
+ jp4RttNWIcZHZdM/+meFaG+YCyqeW9XGzFCQ9o0Xk6tQfQ1a02wC1P28f4cMccTpbB9/
+ y+MAusBtm5nlWc3m1PQmD6pPI4EwGIud8lmz3JbLDoGjY86jfhxZOJCcuSWinQTiFNxr
+ 67xbLuBfkZQvvKdiWRoBUzAI52/dpJ8rr5d7x9mk7ozzrIs49Unk83OQwVf/nuWKvCCS
+ D6Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726003540; x=1726608340;
+ d=1e100.net; s=20230601; t=1726003541; x=1726608341;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
  bh=Sul7/BXCsjPRlqt3G2+RLEijKUxX/bYzUBFroC3XHX8=;
- b=ixiRzkLerLmQ4cdwNUoYhn2ENArjVAAkvE55OT8+Q7AMSjxH1Qpx9OmIZEM/34z0eA
- wiZL3FOagkU+lc9pzAbeKvX92fzHbalwVtp9/kZz9DCr1Od8KLUpubQpr2nFFzPWN+Lu
- GdzKI7brSGaP0kahOxyKmcIw/xojgx2jFS9fCANkYYGcJx/356k7AnMPrE5oFI//LWwe
- tpxS1MF0Nhe8OYdIM7cDgm0BeEZ3rWPFxvSpza7FGGmicFqsZSbHc5L+G+tOXMxGx92r
- Gm8eORj0Z9J6EdqelXv/9N4VB7pwQhk4Yc79O63DGavZ7Q9DRY+gt3ylLiAcE7+tChEQ
- ABJg==
-X-Gm-Message-State: AOJu0YxwbhE2Q2e7FNPpkKrMfsBogY5R6l+RTzyhLGEFdfWBYOKgWT1w
- RgxQzjx4mnzXWD7tDwHDIrhdvlEONLmleNcqH/9TqA/QapUESrpZt2ndzI1K
-X-Google-Smtp-Source: AGHT+IFfDruHfq0pQWyOfyEhNzR4eaXJs3gqUFwTM1bVD3qjzAAZrpjLjEX48asu+9UbFnrBrohKBw==
-X-Received: by 2002:a05:690c:60c3:b0:6db:4809:ed4e with SMTP id
- 00721157ae682-6dba6dc047bmr13909407b3.22.1726003540215; 
- Tue, 10 Sep 2024 14:25:40 -0700 (PDT)
+ b=Ici0+Jq1O2UdHCYqayx8tu3n7/R8R0FX9KP9tjMmUrFKmQue0JPfj1PymRORz8d/5M
+ 2/Xu/4/5JNcjaN2VHpl02kDAYYiMZagk5vmFaNGvjBMaPEijLtH0rUGsrtRkYRCwvRSq
+ nGIlZH/raS2mmSLJ3BWbWnflonWzUTIz7YOPVmLzHz9VDCeQSHICUmqO/S4VpDlilpus
+ v3VG9ioEuacvX+XP0kud9Dou4NOZOwXMRhv9bBTS8oRyHY1xcUYvhZV6LP15SqL0t8ZG
+ YwRw5Osowkd0k7N+NzvtzbdgLoNm4XkF+S5lBF4lzfd578uK9I/YJ4a+5EfHmc1+2N9j
+ ux6g==
+X-Gm-Message-State: AOJu0YyhKUdZHxxPM/Qa78hqRkYKQBkgq153rug0Y+BK+QzrpAZNYYxF
+ sIVOaV06TZ3tMTzgYRpdm2HJT0fwwGRFgz0Yd9w2eOB4W2JVGV2CoQjavOew
+X-Google-Smtp-Source: AGHT+IF9uGnRMRk4MebQSBNtEVoh/GtzWzYdf0FBa4If4bNikE0RBCGI9Do70Bi5nVkaqO8pB/iRuQ==
+X-Received: by 2002:a05:690c:350e:b0:6af:b0cc:abda with SMTP id
+ 00721157ae682-6db45164af1mr168531427b3.40.1726003541368; 
+ Tue, 10 Sep 2024 14:25:41 -0700 (PDT)
 Received: from localhost ([2600:1700:830:3db0::14])
  by smtp.gmail.com with UTF8SMTPSA id
- 00721157ae682-6db965216e3sm4454407b3.130.2024.09.10.14.25.39
+ 00721157ae682-6db9650df6dsm4428357b3.103.2024.09.10.14.25.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 14:25:39 -0700 (PDT)
+ Tue, 10 Sep 2024 14:25:40 -0700 (PDT)
 From: Gregor Haas <gregorhaas1997@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, atishp@rivosinc.com, dbarboza@ventanamicro.com,
  alistair.francis@wdc.com, Gregor Haas <gregorhaas1997@gmail.com>
-Subject: [PATCH v5 2/2] Add documentation for command-line OpenSBI domains
-Date: Tue, 10 Sep 2024 14:25:32 -0700
-Message-ID: <20240910212533.986734-4-gregorhaas1997@gmail.com>
+Subject: [PATCH v5 2/2] docs/system/riscv: Add documentation for command-line
+ OpenSBI domains
+Date: Tue, 10 Sep 2024 14:25:33 -0700
+Message-ID: <20240910212533.986734-5-gregorhaas1997@gmail.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240910212533.986734-1-gregorhaas1997@gmail.com>
 References: <20240910212533.986734-1-gregorhaas1997@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=gregorhaas1997@gmail.com; helo=mail-yw1-x1134.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=gregorhaas1997@gmail.com; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
