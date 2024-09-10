@@ -4,79 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23931ECE582
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 06:01:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85FE1ECE564
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 06:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sntvy-0006AH-PD; Tue, 10 Sep 2024 02:01:03 -0400
+	id 1snuHS-0000P7-SX; Tue, 10 Sep 2024 02:23:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1sntvo-00069J-4a
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 02:00:56 -0400
-Received: from mail-oa1-x2b.google.com ([2001:4860:4864:20::2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1sntvi-0001lx-BG
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 02:00:50 -0400
-Received: by mail-oa1-x2b.google.com with SMTP id
- 586e51a60fabf-277c861d9f6so2942301fac.2
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 23:00:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1725948044; x=1726552844;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=p0Q9bWyjvRXqcr4iD+iPDPvO9ruYSsjQ6f1X128SPLA=;
- b=sQg7QgUkFgTWNjGJEsLMoUZrWLUw3b0OWtL259oWJd7JKNgybZXEa0IFa/uCTp6+/V
- ob/8LJnZkA4O9qHU576kaGaWP/SwigGO1bDxNHx3Gw8jpumGF/iGdRJsmIfNxZI75b9F
- emjhe0Szkgs9NLF8+BVuPOzYhHt3pNm8Lk2vId5+F5YgkY4s4/HxrBAv8TeRWVci0CmN
- SDnT+HXhbtZXCwZ4s52718urMMINykTTVhyp4knxqFPZWnB2qhTZdqRcQVGY1WebfD9W
- Mai0SyNtxgMZM9EKy5YYoqhN9xzXVDgYNCNC5UsWLgVN736k3/31lKROppcCGmDqfKEs
- FEcg==
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1snuHQ-0000Nu-FD
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 02:23:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1snuHM-0003zJ-Vh
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 02:23:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725949387;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Oafz0srtZ39dbgDQ+xR592IzsTYYh0I8vvWDGWKmgXU=;
+ b=TsYc981EgAZTh0/o0MO2z7b0mAYUseK5EbkfOwPQ2FQ0E/EJOQSbLC3LdkBkXSgDCbbGnM
+ 6H1ZCqK/dyqhefEUUu3XlEYbeVPj4bVNgzv82/rvzhmNpeWGwWwtZpMdAwWq0slbowftK0
+ aipd4Sl/Y0tSpog3rNzLPtQFQjpFZjk=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-423-vG7_PYjKMtO3HFtYh6VM3A-1; Tue, 10 Sep 2024 02:23:05 -0400
+X-MC-Unique: vG7_PYjKMtO3HFtYh6VM3A-1
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-6d73dd8ac65so152045817b3.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 23:23:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725948044; x=1726552844;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=p0Q9bWyjvRXqcr4iD+iPDPvO9ruYSsjQ6f1X128SPLA=;
- b=t7UL2uTIbXnENL80okCDFTLUijXLP7w/AqixWAVWFw2v8QLnOvqp40UiaNPoEEbdPt
- fkSoRauZmDmrMnJ8IpjzioF3a7ZqOgGp6iyTQ8eGoIfBDyOeRSBNJA+Rw8OrPZMYJwYr
- 6e/AfCnyxf+hitg06eA4rp2ud8JuSE3b1j+uBXx3RLVBjNJbs4XBYk61fDtmBOgwLJex
- lhbQEi7KZ15PaOTRevVy0eOKc5GbVN0vBPcQZ1Ippj38QII+VZxG9pWH8slMTiK93sUt
- 4hfdZlwivCPLH1qGbU7xqKkjQBIomf6dtQqcwxMjxWAZUJQrZTFzCp36quocRkVXZI24
- kp/w==
-X-Gm-Message-State: AOJu0YzHDOWvW6AcZ9p9BzLTlP6q1xA9KWXQnFp40sVt1cV8scAniE98
- 6IZfluY4e30I0bXZsgxItqTjz0/+5BZ1IUqwra1uuS432GqTPfAzSd2NHizU/G3hVcOrKiMrXRC
- CkMiTm4LtL274DoRFxSVSqOaKhwOBk229Lv7Ku8S2ywfhggxMu/3gF8s9
-X-Google-Smtp-Source: AGHT+IEuuZtXugZ8dpgTWKow9XN7/TTHemaoksHCBB8c8oJkj88rzwYe66d3ByZrE4LMWfjnYdi4oIZNI7Yac/7/g64=
-X-Received: by 2002:a05:6870:af47:b0:278:8b:57b1 with SMTP id
- 586e51a60fabf-27b82fab4a7mr13352727fac.35.1725948043166; Mon, 09 Sep 2024
- 23:00:43 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725949385; x=1726554185;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Oafz0srtZ39dbgDQ+xR592IzsTYYh0I8vvWDGWKmgXU=;
+ b=p46euwpc/xGY3JNAPDoEkxpGdOaZaPc/Keob86UEAFfRUWfIgjBVn4iJhazv4cj+fM
+ oElebuG7tXo2vxYzKcih4YiAwQHwrNL36idxVPnxFLJcqwT9sv+/OlAxqpvt4tWmDv3V
+ 1mJvWS37InbJTnMeha/SiOg3X0/3UU3bpGOX60vVlk8ezE7nz6s5ZcMb3XFrDYxnQ77O
+ 2Ea4cJTn8FToAS4I81I+fRTpBB+N12dlhNbIpPfM2EsLuqCsa1WpVEqqb6hXe8AYNwNc
+ NcJEvHOMySJAgOwO9cfbnnesRA1kHEBNHKnx9lOj+fxIi00aY/fw+9l2pZkMElQg0VhV
+ 45Dw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUbreikFuZ34ty59KfW7GNr08L9mysKSgni7HXzAp1sgTgxcUuxV5aGO5d+FmkthGJN7xKcSWQ8fXMd@nongnu.org
+X-Gm-Message-State: AOJu0Yy+VE2RNtgm+GTY51lHWaxnqMEyGQu69mcIrkbSUAtBk1RBCJhB
+ mCV6l9niODvThYHP+ytle/QXf3PDlwuI75geJfbpVYqcC/x6cAdSFTS4sHdzvvCe4fruGw9K4mx
+ 7txRaAY6/8jI6SPwVTOkf7XgsQzJs2ptVuduyfiznHzsLWeq+lZqoFb+M9YkzKoDEZcFNmCGNry
+ KWObNF0kK/4oI+jg7DglMYsJwqUc4=
+X-Received: by 2002:a05:690c:4391:b0:6b0:e93b:7179 with SMTP id
+ 00721157ae682-6db44f41516mr101655987b3.26.1725949384930; 
+ Mon, 09 Sep 2024 23:23:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFb1XTZKtRxqLDyrfMlZ0MJN75vtX1C5gC9lDqmNea4iMxB/xlWkhB44dTdW0//8ffCIAySjzWEwZfts2JEPQU=
+X-Received: by 2002:a05:690c:4391:b0:6b0:e93b:7179 with SMTP id
+ 00721157ae682-6db44f41516mr101655857b3.26.1725949384378; Mon, 09 Sep 2024
+ 23:23:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1725891841.git.yong.huang@smartx.com>
- <08d77dbc95b8836189bae049e82e790ead6c8535.1725891841.git.yong.huang@smartx.com>
-In-Reply-To: <08d77dbc95b8836189bae049e82e790ead6c8535.1725891841.git.yong.huang@smartx.com>
-From: Yong Huang <yong.huang@smartx.com>
-Date: Tue, 10 Sep 2024 14:00:26 +0800
-Message-ID: <CAK9dgma3ruS0KgkP-Cz-4BtF6foQD3i5iPKHS9g5jEF4eEHTtg@mail.gmail.com>
-Subject: Re: [PATCH RESEND RFC 08/10] migration: Introduce
- cpu-responsive-throttle parameter
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, David Hildenbrand <david@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000003a3420621bd986d"
-Received-SPF: pass client-ip=2001:4860:4864:20::2b;
- envelope-from=yong.huang@smartx.com; helo=mail-oa1-x2b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+References: <20240821125548.749143-1-jonah.palmer@oracle.com>
+ <20240821125548.749143-2-jonah.palmer@oracle.com>
+ <CAJaqyWegFi5h56HQ2Ga5BsJ-UwMmxF5rQujE6ZAYJKEZaRy65w@mail.gmail.com>
+ <436fc148-d1ac-17be-09f4-e776661c534a@oracle.com>
+ <CAJaqyWeEgSar8f_O26aw+WoSKFGc8DoVkxTv-XEPPo_AeLXLSw@mail.gmail.com>
+ <43277dbe-fb11-025c-fe99-8ee074a6a345@oracle.com>
+ <CAJaqyWcFBxF4+LzC7EDXgFsp+dUNaWmzOqY5x8dav88LM6LhCw@mail.gmail.com>
+ <febc124c-dd19-4ae8-ad84-b77dc4e399a7@oracle.com>
+In-Reply-To: <febc124c-dd19-4ae8-ad84-b77dc4e399a7@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Tue, 10 Sep 2024 08:22:28 +0200
+Message-ID: <CAJaqyWcLqHe_+K=DRXxkVqh3bpa9yS5P9sLgLOXUXTHcJ4fMLQ@mail.gmail.com>
+Subject: Re: [RFC 1/2] vhost-vdpa: Decouple the IOVA allocator
+To: Si-Wei Liu <si-wei.liu@oracle.com>
+Cc: Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org,
+ mst@redhat.com, 
+ leiyang@redhat.com, peterx@redhat.com, dtatulea@nvidia.com, 
+ jasowang@redhat.com, boris.ostrovsky@oracle.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,516 +108,560 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000003a3420621bd986d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, Sep 10, 2024 at 7:30=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.com> =
+wrote:
+>
+> Sorry for the delayed response, it seems I missed the email reply for
+> some reason during the long weekend.
+>
+> On 9/2/2024 4:09 AM, Eugenio Perez Martin wrote:
+> > On Fri, Aug 30, 2024 at 11:05=E2=80=AFPM Si-Wei Liu <si-wei.liu@oracle.=
+com> wrote:
+> >>
+> >>
+> >> On 8/30/2024 1:05 AM, Eugenio Perez Martin wrote:
+> >>> On Fri, Aug 30, 2024 at 6:20=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle=
+.com> wrote:
+> >>>>
+> >>>> On 8/29/2024 9:53 AM, Eugenio Perez Martin wrote:
+> >>>>> On Wed, Aug 21, 2024 at 2:56=E2=80=AFPM Jonah Palmer <jonah.palmer@=
+oracle.com> wrote:
+> >>>>>> Decouples the IOVA allocator from the IOVA->HVA tree and instead a=
+dds
+> >>>>>> the allocated IOVA range to an IOVA-only tree (iova_map). This IOV=
+A tree
+> >>>>>> will hold all IOVA ranges that have been allocated (e.g. in the
+> >>>>>> IOVA->HVA tree) and are removed when any IOVA ranges are deallocat=
+ed.
+> >>>>>>
+> >>>>>> A new API function vhost_iova_tree_insert() is also created to add=
+ a
+> >>>>>> IOVA->HVA mapping into the IOVA->HVA tree.
+> >>>>>>
+> >>>>> I think this is a good first iteration but we can take steps to
+> >>>>> simplify it. Also, it is great to be able to make points on real co=
+de
+> >>>>> instead of designs on the air :).
+> >>>>>
+> >>>>> I expected a split of vhost_iova_tree_map_alloc between the current
+> >>>>> vhost_iova_tree_map_alloc and vhost_iova_tree_map_alloc_gpa, or
+> >>>>> similar. Similarly, a vhost_iova_tree_remove and
+> >>>>> vhost_iova_tree_remove_gpa would be needed.
+> >>>>>
+> >>>>> The first one is used for regions that don't exist in the guest, li=
+ke
+> >>>>> SVQ vrings or CVQ buffers. The second one is the one used by the
+> >>>>> memory listener to map the guest regions into the vdpa device.
+> >>>>>
+> >>>>> Implementation wise, only two trees are actually needed:
+> >>>>> * Current iova_taddr_map that contains all IOVA->vaddr translations=
+ as
+> >>>>> seen by the device, so both allocation functions can work on a sing=
+le
+> >>>>> tree. The function iova_tree_find_iova keeps using this one, so the
+> >>>> I thought we had thorough discussion about this and agreed upon the
+> >>>> decoupled IOVA allocator solution.
+> >>> My interpretation of it is to leave the allocator as the current one,
+> >>> and create a new tree with GPA which is guaranteed to be unique. But
+> >>> we can talk over it of course.
+> >>>
+> >>>> But maybe I missed something earlier,
+> >>>> I am not clear how come this iova_tree_find_iova function could stil=
+l
+> >>>> work with the full IOVA-> HVA tree when it comes to aliased memory o=
+r
+> >>>> overlapped HVAs? Granted, for the memory map removal in the
+> >>>> .region_del() path, we could rely on the GPA tree to locate the
+> >>>> corresponding IOVA, but how come the translation path could figure o=
+ut
+> >>>> which IOVA range to return when the vaddr happens to fall in an
+> >>>> overlapped HVA range?
+> >>> That is not a problem, as they both translate to the same address at =
+the device.
+> >> Not sure I followed, it might return a wrong IOVA (range) which the ho=
+st
+> >> kernel may have conflict or unmatched attribute i.e. permission, size =
+et
+> >> al in the map.
+> >>
+> > Let's leave out the permissions at the moment. I'm going to use the
+> > example you found, but I'll reorder (1) and (3) insertions so it picks
+> > the "wrong" IOVA range intentionally:
+> >
+> > (1)
+> > HVA: [0x7f7903ea0000, 0x7f7903ec0000)
+> > GPA: [0xfeda0000, 0xfedc0000)
+> > IOVA: [0x1000, 0x21000)
+> >
+> > (2)
+> > HVA: [0x7f7983e00000, 0x7f9903e00000)
+> > GPA: [0x100000000, 0x2080000000)
+> > IOVA: [0x80001000, 0x2000001000)
+> >
+> > (3)
+> > HVA: [0x7f7903e00000, 0x7f7983e00000)
+> > GPA: [0x0, 0x80000000)
+> > IOVA: [0x2000001000, 0x2080000000)
+> >
+> > Let's say that SVQ wants to translate the HVA range
+> > 0xfeda0000-0xfedd0000. So it makes available for the device two
+> > chained buffers: One with addr=3D0x1000 len=3D0x20000 and the other one
+> > with addr=3D(0x20000c1000 len=3D0x10000).
+> >
+> > The VirtIO device should be able to translate these two buffers in
+> > isolation and chain them. Not optimal but it helps to keep QEMU source
+> > clean, as the device already must support it. I don't foresee lots of
+> > cases like this anyway :).
+> Hmmm, this scheme will only work if the aliased map doesn't go away
+> immediately. If the BQL is not held or an unmap is to be done out of RCU
+> critical section, it's pretty dangerous to assume we can be always fine
+> to work with the other overlapped regions.
 
-In order to reduce the maintenance work of QMP.
+But all the updates and reads are done in the critical sections, and
+will be that way in the future too. That's the reason why the iova
+tree does not have any mutex or equivalent.
 
-Given that the focus of this patchset is huge VM migration, is
-it possible to enable or disable these two features with a single
-parameter, such as "cpu-aggressive-throttle"?
+If we take out SVQ from BQL, we will need to protect the update of it
+with something, either a mutex or similar. But that's already part of
+the plan, even without my proposal or if we implement this RFC the way
+it is.
 
-Yong
+> In my opinion if we have to
+> work with the HVA tree, it'd be ideal for the caller(s) to get more aid
+> in helping figure out the right IOVA range in match rather than for SVQ
+> or vhost-iova-tree to blindly pick a random one or break up contiguous
+> range into pieces (in an inconsistent and unnecessary way).
 
-On Mon, Sep 9, 2024 at 10:26=E2=80=AFPM Hyman Huang <yong.huang@smartx.com>=
- wrote:
+The point is that SVQ already needs to work like that, as it needs to
+support that a contiguous GPA range is splitted between different HVA.
+Moreover, this is not a part of SVQ, but of VirtQueue. Both should be
+extremely rare cases. Is it worth it to complicate / penalize the
+general case solution to benefit this weird case, which is supported?
 
-> To enable the responsive throttle that will be implemented
-> in the next commit, introduce the cpu-responsive-throttle
-> parameter.
+> This would
+> require a bit extensive changes to all the callers to pass in more
+> information though, like the GPA, or the RAMBlock/MemoryRegionSection
+> backing the relevant guest memory, along with the offset.
 >
-> Signed-off-by: Hyman Huang <yong.huang@smartx.com>
-> ---
->  migration/migration-hmp-cmds.c |  8 ++++++++
->  migration/options.c            | 20 ++++++++++++++++++++
->  migration/options.h            |  1 +
->  qapi/migration.json            | 16 +++++++++++++++-
->  4 files changed, 44 insertions(+), 1 deletion(-)
->
-> diff --git a/migration/migration-hmp-cmds.c
-> b/migration/migration-hmp-cmds.c
-> index f7b8e06bb4..a3d4d3f62f 100644
-> --- a/migration/migration-hmp-cmds.c
-> +++ b/migration/migration-hmp-cmds.c
-> @@ -273,6 +273,10 @@ void hmp_info_migrate_parameters(Monitor *mon, const
-> QDict *qdict)
->              MigrationParameter_str(
->                  MIGRATION_PARAMETER_CPU_PERIODIC_THROTTLE_INTERVAL),
->              params->cpu_periodic_throttle_interval);
-> +        assert(params->has_cpu_responsive_throttle);
-> +        monitor_printf(mon, "%s: %s\n",
-> +
-> MigrationParameter_str(MIGRATION_PARAMETER_CPU_RESPONSIVE_THROTTLE),
-> +            params->cpu_responsive_throttle ? "on" : "off");
->          assert(params->has_max_cpu_throttle);
->          monitor_printf(mon, "%s: %u\n",
->              MigrationParameter_str(MIGRATION_PARAMETER_MAX_CPU_THROTTLE)=
-,
-> @@ -529,6 +533,10 @@ void hmp_migrate_set_parameter(Monitor *mon, const
-> QDict *qdict)
->          p->has_cpu_periodic_throttle_interval =3D true;
->          visit_type_uint8(v, param, &p->cpu_periodic_throttle_interval,
-> &err);
->          break;
-> +    case MIGRATION_PARAMETER_CPU_RESPONSIVE_THROTTLE:
-> +        p->has_cpu_responsive_throttle =3D true;
-> +        visit_type_bool(v, param, &p->cpu_responsive_throttle, &err);
-> +        break;
->      case MIGRATION_PARAMETER_MAX_CPU_THROTTLE:
->          p->has_max_cpu_throttle =3D true;
->          visit_type_uint8(v, param, &p->max_cpu_throttle, &err);
-> diff --git a/migration/options.c b/migration/options.c
-> index 2dbe275ba0..aa233684ee 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -110,6 +110,8 @@ Property migration_properties[] =3D {
->      DEFINE_PROP_UINT8("x-cpu-periodic-throttle-interval", MigrationState=
-,
->                        parameters.cpu_periodic_throttle_interval,
->                        DEFAULT_MIGRATE_CPU_PERIODIC_THROTTLE_INTERVAL),
-> +    DEFINE_PROP_BOOL("x-cpu-responsive-throttle", MigrationState,
-> +                      parameters.cpu_responsive_throttle, false),
->      DEFINE_PROP_SIZE("x-max-bandwidth", MigrationState,
->                        parameters.max_bandwidth, MAX_THROTTLE),
->      DEFINE_PROP_SIZE("avail-switchover-bandwidth", MigrationState,
-> @@ -715,6 +717,13 @@ bool migrate_periodic_throttle(void)
->      return s->parameters.cpu_periodic_throttle;
->  }
->
-> +bool migrate_responsive_throttle(void)
-> +{
-> +    MigrationState *s =3D migrate_get_current();
-> +
-> +    return s->parameters.cpu_responsive_throttle;
-> +}
-> +
->  bool migrate_cpu_throttle_tailslow(void)
->  {
->      MigrationState *s =3D migrate_get_current();
-> @@ -899,6 +908,8 @@ MigrationParameters
-> *qmp_query_migrate_parameters(Error **errp)
->      params->has_cpu_periodic_throttle_interval =3D true;
->      params->cpu_periodic_throttle_interval =3D
->          s->parameters.cpu_periodic_throttle_interval;
-> +    params->has_cpu_responsive_throttle =3D true;
-> +    params->cpu_responsive_throttle =3D
-> s->parameters.cpu_responsive_throttle;
->      params->tls_creds =3D g_strdup(s->parameters.tls_creds);
->      params->tls_hostname =3D g_strdup(s->parameters.tls_hostname);
->      params->tls_authz =3D g_strdup(s->parameters.tls_authz ?
-> @@ -967,6 +978,7 @@ void migrate_params_init(MigrationParameters *params)
->      params->has_cpu_throttle_tailslow =3D true;
->      params->has_cpu_periodic_throttle =3D true;
->      params->has_cpu_periodic_throttle_interval =3D true;
-> +    params->has_cpu_responsive_throttle =3D true;
->      params->has_max_bandwidth =3D true;
->      params->has_downtime_limit =3D true;
->      params->has_x_checkpoint_delay =3D true;
-> @@ -1208,6 +1220,10 @@ static void
-> migrate_params_test_apply(MigrateSetParameters *params,
->              params->cpu_periodic_throttle_interval;
->      }
->
-> +    if (params->has_cpu_responsive_throttle) {
-> +        dest->cpu_responsive_throttle =3D params->cpu_responsive_throttl=
-e;
-> +    }
-> +
->      if (params->tls_creds) {
->          assert(params->tls_creds->type =3D=3D QTYPE_QSTRING);
->          dest->tls_creds =3D params->tls_creds->u.s;
-> @@ -1325,6 +1341,10 @@ static void
-> migrate_params_apply(MigrateSetParameters *params, Error **errp)
->              params->cpu_periodic_throttle_interval;
->      }
->
-> +    if (params->has_cpu_responsive_throttle) {
-> +        s->parameters.cpu_responsive_throttle =3D
-> params->cpu_responsive_throttle;
-> +    }
-> +
->      if (params->tls_creds) {
->          g_free(s->parameters.tls_creds);
->          assert(params->tls_creds->type =3D=3D QTYPE_QSTRING);
-> diff --git a/migration/options.h b/migration/options.h
-> index efeac01470..613d675003 100644
-> --- a/migration/options.h
-> +++ b/migration/options.h
-> @@ -70,6 +70,7 @@ uint8_t migrate_cpu_throttle_increment(void);
->  uint8_t migrate_cpu_throttle_initial(void);
->  uint8_t migrate_periodic_throttle_interval(void);
->  bool migrate_periodic_throttle(void);
-> +bool migrate_responsive_throttle(void);
->  bool migrate_cpu_throttle_tailslow(void);
->  bool migrate_direct_io(void);
->  uint64_t migrate_downtime_limit(void);
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 6d8358c202..9f52ed1899 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -734,6 +734,10 @@
->  # @cpu-periodic-throttle-interval: Interval of the periodic CPU
-> throttling.
->  #     (Since 9.1)
->  #
-> +# @cpu-responsive-throttle: Make CPU throttling more responsively by
-> +#                           introduce an extra detection metric of
-> +#                           migration convergence. (Since 9.1)
-> +#
->  # @tls-creds: ID of the 'tls-creds' object that provides credentials
->  #     for establishing a TLS connection over the migration data
->  #     channel.  On the outgoing side of the migration, the credentials
-> @@ -855,7 +859,7 @@
->             'throttle-trigger-threshold',
->             'cpu-throttle-initial', 'cpu-throttle-increment',
->             'cpu-throttle-tailslow', 'cpu-periodic-throttle',
-> -           'cpu-periodic-throttle-interval',
-> +           'cpu-periodic-throttle-interval', 'cpu-responsive-throttle',
->             'tls-creds', 'tls-hostname', 'tls-authz', 'max-bandwidth',
->             'avail-switchover-bandwidth', 'downtime-limit',
->             { 'name': 'x-checkpoint-delay', 'features': [ 'unstable' ] },
-> @@ -916,6 +920,10 @@
->  # @cpu-periodic-throttle-interval: Interval of the periodic CPU
-> throttling.
->  #     (Since 9.1)
->  #
-> +# @cpu-responsive-throttle: Make CPU throttling more responsively by
-> +#                           introduce an extra detection metric of
-> +#                           migration convergence. (Since 9.1)
-> +#
->  # @tls-creds: ID of the 'tls-creds' object that provides credentials
->  #     for establishing a TLS connection over the migration data
->  #     channel.  On the outgoing side of the migration, the credentials
-> @@ -1045,6 +1053,7 @@
->              '*cpu-throttle-tailslow': 'bool',
->              '*cpu-periodic-throttle': 'bool',
->              '*cpu-periodic-throttle-interval': 'uint8',
-> +            '*cpu-responsive-throttle': 'bool',
->              '*tls-creds': 'StrOrNull',
->              '*tls-hostname': 'StrOrNull',
->              '*tls-authz': 'StrOrNull',
-> @@ -1132,6 +1141,10 @@
->  # @cpu-periodic-throttle-interval: Interval of the periodic CPU
-> throttling.
->  #     (Since 9.1)
->  #
-> +# @cpu-responsive-throttle: Make CPU throttling more responsively by
-> +#                           introduce an extra detection metric of
-> +#                           migration convergence. (Since 9.1)
-> +#
->  # @tls-creds: ID of the 'tls-creds' object that provides credentials
->  #     for establishing a TLS connection over the migration data
->  #     channel.  On the outgoing side of the migration, the credentials
-> @@ -1254,6 +1267,7 @@
->              '*cpu-throttle-tailslow': 'bool',
->              '*cpu-periodic-throttle': 'bool',
->              '*cpu-periodic-throttle-interval': 'uint8',
-> +            '*cpu-responsive-throttle': 'bool',
->              '*tls-creds': 'str',
->              '*tls-hostname': 'str',
->              '*tls-authz': 'str',
-> --
-> 2.39.1
->
+> > About the permissions, maybe we can make the permissions to be part of
+> > the lookup? Instead of returning them at iova_tree_find_iova, make
+> > them match at iova_tree_find_address_iterator.
+> Yes, if there's no easy way out we have to add this extra info to the
+> HVA tree and make the lookup routine even complex (or duplicative).
 >
 
---=20
-Best regards
+Right.
 
---00000000000003a3420621bd986d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> >
+> >>> The most complicated situation is where we have a region contained in
+> >>> another region, and the requested buffer crosses them. If the IOVA
+> >>> tree returns the inner region, it will return the buffer chained with
+> >>> the rest of the content in the outer region. Not optimal, but solved
+> >>> either way.
+> >> Don't quite understand what it means... So in this overlapping case,
+> >> speaking of the expectation of the translation API, you would like to
+> >> have all IOVA ranges that match the overlapped HVA to be returned? And
+> >> then to rely on the user (caller) to figure out which one is correct?
+> >> Wouldn't it be easier for the user (SVQ) to use the memory system API
+> >> directly to figure out?
+> >>
+> > All of them are correct in the translation path. The device should be
+> > able to work with a buffer that spans over different IOTLB too. You
+> > can see how QEMU handles it at hw/virtio/virtio.c:virtqueue_map_desc.
+> > If the region is not big enough to contain the whole buffer, the
+> > device must keep looking for the rest of it.
+> Yeah I see why you prefer working with HVA tree even with overlapping
+> ranges, as the current API virtqueue_map_desc() that returns the HVA
+> already wraps up the translation internals well for e.g. when span over
+> different IOMMU.  Are you worry with the vIOMMU case where the GPA is no
+> longer cached in the virtqueue elem? Maybe we can add also that
+> information to the elem even for vIOMMU (we can defer doing it until we
+> add the vIOMMU support to SVQ), so that SVQ can just look up the GPA
+> tree directly in the translation path?
 
-<div dir=3D"ltr"><div style=3D"font-family:&quot;comic sans ms&quot;,sans-s=
-erif" class=3D"gmail_default">In order to reduce the maintenance work of QM=
-P.<br></div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif"=
- class=3D"gmail_default"><br></div><div style=3D"font-family:&quot;comic sa=
-ns ms&quot;,sans-serif" class=3D"gmail_default">Given that the focus of thi=
-s patchset is huge VM migration, is</div><div style=3D"font-family:&quot;co=
-mic sans ms&quot;,sans-serif" class=3D"gmail_default">it possible to enable=
- or disable these two features with a single</div><div style=3D"font-family=
-:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_default">parameter, s=
-uch as &quot;cpu-aggressive-throttle&quot;?<br></div><div style=3D"font-fam=
-ily:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_default"><br></div=
-><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"g=
-mail_default">Yong</div></div><br><div class=3D"gmail_quote"><div dir=3D"lt=
-r" class=3D"gmail_attr">On Mon, Sep 9, 2024 at 10:26=E2=80=AFPM Hyman Huang=
- &lt;<a href=3D"mailto:yong.huang@smartx.com" target=3D"_blank">yong.huang@=
-smartx.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;=
-border-left-color:rgb(204,204,204);padding-left:1ex">To enable the responsi=
-ve throttle that will be implemented<br>
-in the next commit, introduce the cpu-responsive-throttle<br>
-parameter.<br>
-<br>
-Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" tar=
-get=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
----<br>
-=C2=A0migration/migration-hmp-cmds.c |=C2=A0 8 ++++++++<br>
-=C2=A0migration/options.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 20 +++=
-+++++++++++++++++<br>
-=C2=A0migration/options.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =
-1 +<br>
-=C2=A0qapi/migration.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 16 +++=
-++++++++++++-<br>
-=C2=A04 files changed, 44 insertions(+), 1 deletion(-)<br>
-<br>
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.=
-c<br>
-index f7b8e06bb4..a3d4d3f62f 100644<br>
---- a/migration/migration-hmp-cmds.c<br>
-+++ b/migration/migration-hmp-cmds.c<br>
-@@ -273,6 +273,10 @@ void hmp_info_migrate_parameters(Monitor *mon, const Q=
-Dict *qdict)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0MigrationParameter_str(<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0MIGRATION_PAR=
-AMETER_CPU_PERIODIC_THROTTLE_INTERVAL),<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0params-&gt;cpu_periodic_thr=
-ottle_interval);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 assert(params-&gt;has_cpu_responsive_throttle)=
-;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 monitor_printf(mon, &quot;%s: %s\n&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 MigrationParameter_str(MIGRATION=
-_PARAMETER_CPU_RESPONSIVE_THROTTLE),<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 params-&gt;cpu_responsive_thrott=
-le ? &quot;on&quot; : &quot;off&quot;);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0assert(params-&gt;has_max_cpu_throttle);<=
-br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0monitor_printf(mon, &quot;%s: %u\n&quot;,=
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0MigrationParameter_str(MIGR=
-ATION_PARAMETER_MAX_CPU_THROTTLE),<br>
-@@ -529,6 +533,10 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDi=
-ct *qdict)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0p-&gt;has_cpu_periodic_throttle_interval =
-=3D true;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0visit_type_uint8(v, param, &amp;p-&gt;cpu=
-_periodic_throttle_interval, &amp;err);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-+=C2=A0 =C2=A0 case MIGRATION_PARAMETER_CPU_RESPONSIVE_THROTTLE:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 p-&gt;has_cpu_responsive_throttle =3D true;<br=
+I think that IOVA should just replace GPA in the tree, isn't it? Or am
+I missing something?
+
+So the user of the IOVA tree (vhost-vdpa.c) should be slightly changed
+but there is no change required for SVQ or IOVATree as far as I know.
+
+> >
+> >> As we are talking about API we may want to build it in a way generic
+> >> enough to address all possible needs (which goes with what memory
+> >> subsystem is capable of), rather than just look on the current usage
+> >> which has kind of narrow scope. Although virtio-net device doesn't wor=
+k
+> >> with aliased region now, some other virtio device may do, or maybe som=
+e
+> >> day virtio-net would need to use aliased region than the API and the
+> >> users (SVQ) would have to go with another round of significant
+> >> refactoring due to the iova-tree internal working. I feel it's just to=
+o
+> >> early or too tight to abstract the iova-tree layer and get the API
+> >> customized for the current use case with a lot of limitations on how
+> >> user should expect to use it. We need some more flexibility and ease o=
+n
+> >> extensibility if we want to take the chance to get it rewritten, given
+> >> it is not a lot of code that Jonah had showed here ..
+> >>
+> > Let me know if they are addressed here. Sorry if I didn't explain it
+> > well, but I'm not trying to limit the alias or to handle just a subset
+> > of them. I'm trying to delegate the handling of these to the device as
+> > much as possible, as the device already needs to handle them and the
+> > less we complicate the QEMU solution, the better. Of course, the IOVA
+> > tree is a very self-contained area easy to rewrite in theory, but with
+> > potential future users it might get complicated.
+> Sure, understood. I just want to compare the Pros and Cons for each
+> candidate, so that Jonah won't spend quite a lot of time to come up with
+> complicated code, then soon find out all or most of them have to be
+> thrown away, due to short sighted design which is unable to cope with
+> foreseeable future use cases.
 >
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 visit_type_bool(v, param, &amp;p-&gt;cpu_respo=
-nsive_throttle, &amp;err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-=C2=A0 =C2=A0 =C2=A0case MIGRATION_PARAMETER_MAX_CPU_THROTTLE:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0p-&gt;has_max_cpu_throttle =3D true;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0visit_type_uint8(v, param, &amp;p-&gt;max=
-_cpu_throttle, &amp;err);<br>
-diff --git a/migration/options.c b/migration/options.c<br>
-index 2dbe275ba0..aa233684ee 100644<br>
---- a/migration/options.c<br>
-+++ b/migration/options.c<br>
-@@ -110,6 +110,8 @@ Property migration_properties[] =3D {<br>
-=C2=A0 =C2=A0 =C2=A0DEFINE_PROP_UINT8(&quot;x-cpu-periodic-throttle-interva=
-l&quot;, MigrationState,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0parameters.cpu_periodic_throttle_interval,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0DEFAULT_MIGRATE_CPU_PERIODIC_THROTTLE_INTERVAL),<br>
-+=C2=A0 =C2=A0 DEFINE_PROP_BOOL(&quot;x-cpu-responsive-throttle&quot;, Migr=
-ationState,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 parameters.cpu_responsive_throttle, false),<br>
-=C2=A0 =C2=A0 =C2=A0DEFINE_PROP_SIZE(&quot;x-max-bandwidth&quot;, Migration=
-State,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0parameters.max_bandwidth, MAX_THROTTLE),<br>
-=C2=A0 =C2=A0 =C2=A0DEFINE_PROP_SIZE(&quot;avail-switchover-bandwidth&quot;=
-, MigrationState,<br>
-@@ -715,6 +717,13 @@ bool migrate_periodic_throttle(void)<br>
-=C2=A0 =C2=A0 =C2=A0return s-&gt;parameters.cpu_periodic_throttle;<br>
-=C2=A0}<br>
-<br>
-+bool migrate_responsive_throttle(void)<br>
-+{<br>
-+=C2=A0 =C2=A0 MigrationState *s =3D migrate_get_current();<br>
-+<br>
-+=C2=A0 =C2=A0 return s-&gt;parameters.cpu_responsive_throttle;<br>
-+}<br>
-+<br>
-=C2=A0bool migrate_cpu_throttle_tailslow(void)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0MigrationState *s =3D migrate_get_current();<br>
-@@ -899,6 +908,8 @@ MigrationParameters *qmp_query_migrate_parameters(Error=
- **errp)<br>
-=C2=A0 =C2=A0 =C2=A0params-&gt;has_cpu_periodic_throttle_interval =3D true;=
-<br>
-=C2=A0 =C2=A0 =C2=A0params-&gt;cpu_periodic_throttle_interval =3D<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;parameters.cpu_periodic_throttle_in=
-terval;<br>
-+=C2=A0 =C2=A0 params-&gt;has_cpu_responsive_throttle =3D true;<br>
-+=C2=A0 =C2=A0 params-&gt;cpu_responsive_throttle =3D s-&gt;parameters.cpu_=
-responsive_throttle;<br>
-=C2=A0 =C2=A0 =C2=A0params-&gt;tls_creds =3D g_strdup(s-&gt;parameters.tls_=
-creds);<br>
-=C2=A0 =C2=A0 =C2=A0params-&gt;tls_hostname =3D g_strdup(s-&gt;parameters.t=
-ls_hostname);<br>
-=C2=A0 =C2=A0 =C2=A0params-&gt;tls_authz =3D g_strdup(s-&gt;parameters.tls_=
-authz ?<br>
-@@ -967,6 +978,7 @@ void migrate_params_init(MigrationParameters *params)<b=
-r>
-=C2=A0 =C2=A0 =C2=A0params-&gt;has_cpu_throttle_tailslow =3D true;<br>
-=C2=A0 =C2=A0 =C2=A0params-&gt;has_cpu_periodic_throttle =3D true;<br>
-=C2=A0 =C2=A0 =C2=A0params-&gt;has_cpu_periodic_throttle_interval =3D true;=
-<br>
-+=C2=A0 =C2=A0 params-&gt;has_cpu_responsive_throttle =3D true;<br>
-=C2=A0 =C2=A0 =C2=A0params-&gt;has_max_bandwidth =3D true;<br>
-=C2=A0 =C2=A0 =C2=A0params-&gt;has_downtime_limit =3D true;<br>
-=C2=A0 =C2=A0 =C2=A0params-&gt;has_x_checkpoint_delay =3D true;<br>
-@@ -1208,6 +1220,10 @@ static void migrate_params_test_apply(MigrateSetPara=
-meters *params,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0params-&gt;cpu_periodic_thr=
-ottle_interval;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-+=C2=A0 =C2=A0 if (params-&gt;has_cpu_responsive_throttle) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 dest-&gt;cpu_responsive_throttle =3D params-&g=
-t;cpu_responsive_throttle;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0if (params-&gt;tls_creds) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0assert(params-&gt;tls_creds-&gt;type =3D=
-=3D QTYPE_QSTRING);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dest-&gt;tls_creds =3D params-&gt;tls_cre=
-ds-&gt;u.s;<br>
-@@ -1325,6 +1341,10 @@ static void migrate_params_apply(MigrateSetParameter=
-s *params, Error **errp)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0params-&gt;cpu_periodic_thr=
-ottle_interval;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-+=C2=A0 =C2=A0 if (params-&gt;has_cpu_responsive_throttle) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;parameters.cpu_responsive_throttle =3D p=
-arams-&gt;cpu_responsive_throttle;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0if (params-&gt;tls_creds) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0g_free(s-&gt;parameters.tls_creds);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0assert(params-&gt;tls_creds-&gt;type =3D=
-=3D QTYPE_QSTRING);<br>
-diff --git a/migration/options.h b/migration/options.h<br>
-index efeac01470..613d675003 100644<br>
---- a/migration/options.h<br>
-+++ b/migration/options.h<br>
-@@ -70,6 +70,7 @@ uint8_t migrate_cpu_throttle_increment(void);<br>
-=C2=A0uint8_t migrate_cpu_throttle_initial(void);<br>
-=C2=A0uint8_t migrate_periodic_throttle_interval(void);<br>
-=C2=A0bool migrate_periodic_throttle(void);<br>
-+bool migrate_responsive_throttle(void);<br>
-=C2=A0bool migrate_cpu_throttle_tailslow(void);<br>
-=C2=A0bool migrate_direct_io(void);<br>
-=C2=A0uint64_t migrate_downtime_limit(void);<br>
-diff --git a/qapi/migration.json b/qapi/migration.json<br>
-index 6d8358c202..9f52ed1899 100644<br>
---- a/qapi/migration.json<br>
-+++ b/qapi/migration.json<br>
-@@ -734,6 +734,10 @@<br>
-=C2=A0# @cpu-periodic-throttle-interval: Interval of the periodic CPU throt=
-tling.<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0(Since 9.1)<br>
-=C2=A0#<br>
-+# @cpu-responsive-throttle: Make CPU throttling more responsively by<br>
-+#=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0introduce an extra detection metric of<br>
-+#=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0migration convergence. (Since 9.1)<br>
-+#<br>
-=C2=A0# @tls-creds: ID of the &#39;tls-creds&#39; object that provides cred=
-entials<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0for establishing a TLS connection over the migra=
-tion data<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0channel.=C2=A0 On the outgoing side of the migra=
-tion, the credentials<br>
-@@ -855,7 +859,7 @@<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;throttle-trigger-threshold&#=
-39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;cpu-throttle-initial&#39;, &=
-#39;cpu-throttle-increment&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;cpu-throttle-tailslow&#39;, =
-&#39;cpu-periodic-throttle&#39;,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;cpu-periodic-throttle-interv=
-al&#39;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;cpu-periodic-throttle-interv=
-al&#39;, &#39;cpu-responsive-throttle&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;tls-creds&#39;, &#39;tls-hos=
-tname&#39;, &#39;tls-authz&#39;, &#39;max-bandwidth&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;avail-switchover-bandwidth&#=
-39;, &#39;downtime-limit&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 { &#39;name&#39;: &#39;x-checkpoi=
-nt-delay&#39;, &#39;features&#39;: [ &#39;unstable&#39; ] },<br>
-@@ -916,6 +920,10 @@<br>
-=C2=A0# @cpu-periodic-throttle-interval: Interval of the periodic CPU throt=
-tling.<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0(Since 9.1)<br>
-=C2=A0#<br>
-+# @cpu-responsive-throttle: Make CPU throttling more responsively by<br>
-+#=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0introduce an extra detection metric of<br>
-+#=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0migration convergence. (Since 9.1)<br>
-+#<br>
-=C2=A0# @tls-creds: ID of the &#39;tls-creds&#39; object that provides cred=
-entials<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0for establishing a TLS connection over the migra=
-tion data<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0channel.=C2=A0 On the outgoing side of the migra=
-tion, the credentials<br>
-@@ -1045,6 +1053,7 @@<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;*cpu-throttle-tailslow=
-&#39;: &#39;bool&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;*cpu-periodic-throttle=
-&#39;: &#39;bool&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;*cpu-periodic-throttle=
--interval&#39;: &#39;uint8&#39;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;*cpu-responsive-throttle&#3=
-9;: &#39;bool&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;*tls-creds&#39;: &#39;=
-StrOrNull&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;*tls-hostname&#39;: &#=
-39;StrOrNull&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;*tls-authz&#39;: &#39;=
-StrOrNull&#39;,<br>
-@@ -1132,6 +1141,10 @@<br>
-=C2=A0# @cpu-periodic-throttle-interval: Interval of the periodic CPU throt=
-tling.<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0(Since 9.1)<br>
-=C2=A0#<br>
-+# @cpu-responsive-throttle: Make CPU throttling more responsively by<br>
-+#=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0introduce an extra detection metric of<br>
-+#=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0migration convergence. (Since 9.1)<br>
-+#<br>
-=C2=A0# @tls-creds: ID of the &#39;tls-creds&#39; object that provides cred=
-entials<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0for establishing a TLS connection over the migra=
-tion data<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0channel.=C2=A0 On the outgoing side of the migra=
-tion, the credentials<br>
-@@ -1254,6 +1267,7 @@<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;*cpu-throttle-tailslow=
-&#39;: &#39;bool&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;*cpu-periodic-throttle=
-&#39;: &#39;bool&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;*cpu-periodic-throttle=
--interval&#39;: &#39;uint8&#39;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;*cpu-responsive-throttle&#3=
-9;: &#39;bool&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;*tls-creds&#39;: &#39;=
-str&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;*tls-hostname&#39;: &#=
-39;str&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;*tls-authz&#39;: &#39;=
-str&#39;,<br>
--- <br>
-2.39.1<br>
-<br>
-</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
-gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
-iv dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font>=
-</div></div>
+> Thanks,
+> -Siwei
+>
+> >
+> >>> The only problem that comes to my mind is the case where the inner
+> >>> region is RO
+> >> Yes, this is one of examples around the permission or size I mentioned
+> >> above, which may have a conflict view with the memory system or the ke=
+rnel.
+> >>
+> >> Thanks,
+> >> -Siwei
+> >>
+> >>> and it is a write command, but I don't think we have this
+> >>> case in a sane guest. A malicious guest cannot do any harm this way
+> >>> anyway.
+> >>>
+> >>>> Do we still assume some overlapping order so we
+> >>>> always return the first match from the tree? Or we expect every curr=
+ent
+> >>>> user of iova_tree_find_iova should pass in GPA rather than HVA and u=
+se
+> >>>> the vhost_iova_xxx_gpa API variant to look up IOVA?
+> >>>>
+> >>> No, iova_tree_find_iova should keep asking for vaddr, as the result i=
+s
+> >>> guaranteed to be there. Users of VhostIOVATree only need to modify ho=
+w
+> >>> they add or remove regions, knowing if they come from the guest or
+> >>> not. As shown by this series, it is easier to do in that place than i=
+n
+> >>> translation.
+> >>>
+> >>>> Thanks,
+> >>>> -Siwei
+> >>>>
+> >>>>> user does not need to know if the address is from the guest or only
+> >>>>> exists in QEMU by using RAMBlock etc. All insert and remove functio=
+ns
+> >>>>> use this tree.
+> >>>>> * A new tree that relates IOVA to GPA, that only
+> >>>>> vhost_iova_tree_map_alloc_gpa and vhost_iova_tree_remove_gpa uses.
+> >>>>>
+> >>>>> The ideal case is that the key in this new tree is the GPA and the
+> >>>>> value is the IOVA. But IOVATree's DMA is named the reverse: iova is
+> >>>>> the key and translated_addr is the vaddr. We can create a new tree
+> >>>>> struct for that, use GTree directly, or translate the reverse
+> >>>>> linearly. As memory add / remove should not be frequent, I think th=
+e
+> >>>>> simpler is the last one, but I'd be ok with creating a new tree.
+> >>>>>
+> >>>>> vhost_iova_tree_map_alloc_gpa needs to add the map to this new tree
+> >>>>> also. Similarly, vhost_iova_tree_remove_gpa must look for the GPA i=
+n
+> >>>>> this tree, and only remove the associated DMAMap in iova_taddr_map
+> >>>>> that matches the IOVA.
+> >>>>>
+> >>>>> Does it make sense to you?
+> >>>>>
+> >>>>>> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+> >>>>>> ---
+> >>>>>>     hw/virtio/vhost-iova-tree.c | 38 +++++++++++++++++++++++++++++=
++++-----
+> >>>>>>     hw/virtio/vhost-iova-tree.h |  1 +
+> >>>>>>     hw/virtio/vhost-vdpa.c      | 31 ++++++++++++++++++++++++-----=
+-
+> >>>>>>     net/vhost-vdpa.c            | 13 +++++++++++--
+> >>>>>>     4 files changed, 70 insertions(+), 13 deletions(-)
+> >>>>>>
+> >>>>>> diff --git a/hw/virtio/vhost-iova-tree.c b/hw/virtio/vhost-iova-tr=
+ee.c
+> >>>>>> index 3d03395a77..32c03db2f5 100644
+> >>>>>> --- a/hw/virtio/vhost-iova-tree.c
+> >>>>>> +++ b/hw/virtio/vhost-iova-tree.c
+> >>>>>> @@ -28,12 +28,17 @@ struct VhostIOVATree {
+> >>>>>>
+> >>>>>>         /* IOVA address to qemu memory maps. */
+> >>>>>>         IOVATree *iova_taddr_map;
+> >>>>>> +
+> >>>>>> +    /* IOVA tree (IOVA allocator) */
+> >>>>>> +    IOVATree *iova_map;
+> >>>>>>     };
+> >>>>>>
+> >>>>>>     /**
+> >>>>>> - * Create a new IOVA tree
+> >>>>>> + * Create a new VhostIOVATree with a new set of IOVATree's:
+> >>>>> s/IOVA tree/VhostIOVATree/ is good, but I think the rest is more an
+> >>>>> implementation detail.
+> >>>>>
+> >>>>>> + * - IOVA allocator (iova_map)
+> >>>>>> + * - IOVA->HVA tree (iova_taddr_map)
+> >>>>>>      *
+> >>>>>> - * Returns the new IOVA tree
+> >>>>>> + * Returns the new VhostIOVATree
+> >>>>>>      */
+> >>>>>>     VhostIOVATree *vhost_iova_tree_new(hwaddr iova_first, hwaddr i=
+ova_last)
+> >>>>>>     {
+> >>>>>> @@ -44,6 +49,7 @@ VhostIOVATree *vhost_iova_tree_new(hwaddr iova_f=
+irst, hwaddr iova_last)
+> >>>>>>         tree->iova_last =3D iova_last;
+> >>>>>>
+> >>>>>>         tree->iova_taddr_map =3D iova_tree_new();
+> >>>>>> +    tree->iova_map =3D iova_tree_new();
+> >>>>>>         return tree;
+> >>>>>>     }
+> >>>>>>
+> >>>>>> @@ -53,6 +59,7 @@ VhostIOVATree *vhost_iova_tree_new(hwaddr iova_f=
+irst, hwaddr iova_last)
+> >>>>>>     void vhost_iova_tree_delete(VhostIOVATree *iova_tree)
+> >>>>>>     {
+> >>>>>>         iova_tree_destroy(iova_tree->iova_taddr_map);
+> >>>>>> +    iova_tree_destroy(iova_tree->iova_map);
+> >>>>>>         g_free(iova_tree);
+> >>>>>>     }
+> >>>>>>
+> >>>>>> @@ -88,13 +95,12 @@ int vhost_iova_tree_map_alloc(VhostIOVATree *t=
+ree, DMAMap *map)
+> >>>>>>         /* Some vhost devices do not like addr 0. Skip first page =
+*/
+> >>>>>>         hwaddr iova_first =3D tree->iova_first ?: qemu_real_host_p=
+age_size();
+> >>>>>>
+> >>>>>> -    if (map->translated_addr + map->size < map->translated_addr |=
+|
+> >>>>> Why remove this condition? If the request is invalid we still need =
+to
+> >>>>> return an error here.
+> >>>>>
+> >>>>> Maybe we should move it to iova_tree_alloc_map though.
+> >>>>>
+> >>>>>> -        map->perm =3D=3D IOMMU_NONE) {
+> >>>>>> +    if (map->perm =3D=3D IOMMU_NONE) {
+> >>>>>>             return IOVA_ERR_INVALID;
+> >>>>>>         }
+> >>>>>>
+> >>>>>>         /* Allocate a node in IOVA address */
+> >>>>>> -    return iova_tree_alloc_map(tree->iova_taddr_map, map, iova_fi=
+rst,
+> >>>>>> +    return iova_tree_alloc_map(tree->iova_map, map, iova_first,
+> >>>>>>                                    tree->iova_last);
+> >>>>>>     }
+> >>>>>>
+> >>>>>> @@ -107,4 +113,26 @@ int vhost_iova_tree_map_alloc(VhostIOVATree *=
+tree, DMAMap *map)
+> >>>>>>     void vhost_iova_tree_remove(VhostIOVATree *iova_tree, DMAMap m=
+ap)
+> >>>>>>     {
+> >>>>>>         iova_tree_remove(iova_tree->iova_taddr_map, map);
+> >>>>>> +    iova_tree_remove(iova_tree->iova_map, map);
+> >>>>>> +}
+> >>>>>> +
+> >>>>>> +/**
+> >>>>>> + * Insert a new mapping to the IOVA->HVA tree
+> >>>>>> + *
+> >>>>>> + * @tree: The VhostIOVATree
+> >>>>>> + * @map: The iova map
+> >>>>>> + *
+> >>>>>> + * Returns:
+> >>>>>> + * - IOVA_OK if the map fits in the container
+> >>>>>> + * - IOVA_ERR_INVALID if the map does not make sense (like size o=
+verflow)
+> >>>>>> + * - IOVA_ERR_OVERLAP if the IOVA range overlaps with an existing=
+ range
+> >>>>>> + */
+> >>>>>> +int vhost_iova_tree_insert(VhostIOVATree *iova_tree, DMAMap *map)
+> >>>>>> +{
+> >>>>>> +    if (map->translated_addr + map->size < map->translated_addr |=
+|
+> >>>>>> +        map->perm =3D=3D IOMMU_NONE) {
+> >>>>>> +        return IOVA_ERR_INVALID;
+> >>>>>> +    }
+> >>>>>> +
+> >>>>>> +    return iova_tree_insert(iova_tree->iova_taddr_map, map);
+> >>>>>>     }
+> >>>>>> diff --git a/hw/virtio/vhost-iova-tree.h b/hw/virtio/vhost-iova-tr=
+ee.h
+> >>>>>> index 4adfd79ff0..8bf7b64786 100644
+> >>>>>> --- a/hw/virtio/vhost-iova-tree.h
+> >>>>>> +++ b/hw/virtio/vhost-iova-tree.h
+> >>>>>> @@ -23,5 +23,6 @@ const DMAMap *vhost_iova_tree_find_iova(const Vh=
+ostIOVATree *iova_tree,
+> >>>>>>                                             const DMAMap *map);
+> >>>>>>     int vhost_iova_tree_map_alloc(VhostIOVATree *iova_tree, DMAMap=
+ *map);
+> >>>>>>     void vhost_iova_tree_remove(VhostIOVATree *iova_tree, DMAMap m=
+ap);
+> >>>>>> +int vhost_iova_tree_insert(VhostIOVATree *iova_tree, DMAMap *map)=
+;
+> >>>>>>
+> >>>>>>     #endif
+> >>>>>> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+> >>>>>> index 3cdaa12ed5..6702459065 100644
+> >>>>>> --- a/hw/virtio/vhost-vdpa.c
+> >>>>>> +++ b/hw/virtio/vhost-vdpa.c
+> >>>>>> @@ -361,10 +361,10 @@ static void vhost_vdpa_listener_region_add(M=
+emoryListener *listener,
+> >>>>>>         if (s->shadow_data) {
+> >>>>>>             int r;
+> >>>>>>
+> >>>>>> -        mem_region.translated_addr =3D (hwaddr)(uintptr_t)vaddr,
+> >>>>>>             mem_region.size =3D int128_get64(llsize) - 1,
+> >>>>>>             mem_region.perm =3D IOMMU_ACCESS_FLAG(true, section->r=
+eadonly),
+> >>>>>>
+> >>>>>> +        /* Allocate IOVA range and add the mapping to the IOVA tr=
+ee */
+> >>>>>>             r =3D vhost_iova_tree_map_alloc(s->iova_tree, &mem_reg=
+ion);
+> >>>>>>             if (unlikely(r !=3D IOVA_OK)) {
+> >>>>>>                 error_report("Can't allocate a mapping (%d)", r);
+> >>>>>> @@ -372,6 +372,14 @@ static void vhost_vdpa_listener_region_add(Me=
+moryListener *listener,
+> >>>>>>             }
+> >>>>>>
+> >>>>>>             iova =3D mem_region.iova;
+> >>>>>> +
+> >>>>>> +        /* Add mapping to the IOVA->HVA tree */
+> >>>>>> +        mem_region.translated_addr =3D (hwaddr)(uintptr_t)vaddr;
+> >>>>>> +        r =3D vhost_iova_tree_insert(s->iova_tree, &mem_region);
+> >>>>>> +        if (unlikely(r !=3D IOVA_OK)) {
+> >>>>>> +            error_report("Can't add listener region mapping (%d)"=
+, r);
+> >>>>>> +            goto fail_map;
+> >>>>>> +        }
+> >>>>> I'd say it is not intuitive for the caller code.
+> >>>>>
+> >>>>>>         }
+> >>>>>>
+> >>>>>>         vhost_vdpa_iotlb_batch_begin_once(s);
+> >>>>>> @@ -1142,19 +1150,30 @@ static void vhost_vdpa_svq_unmap_rings(str=
+uct vhost_dev *dev,
+> >>>>>>      *
+> >>>>>>      * @v: Vhost-vdpa device
+> >>>>>>      * @needle: The area to search iova
+> >>>>>> + * @taddr: The translated address (SVQ HVA)
+> >>>>>>      * @errorp: Error pointer
+> >>>>>>      */
+> >>>>>>     static bool vhost_vdpa_svq_map_ring(struct vhost_vdpa *v, DMAM=
+ap *needle,
+> >>>>>> -                                    Error **errp)
+> >>>>>> +                                    hwaddr taddr, Error **errp)
+> >>>>>>     {
+> >>>>>>         int r;
+> >>>>>>
+> >>>>>> +    /* Allocate IOVA range and add the mapping to the IOVA tree *=
+/
+> >>>>>>         r =3D vhost_iova_tree_map_alloc(v->shared->iova_tree, need=
+le);
+> >>>>>>         if (unlikely(r !=3D IOVA_OK)) {
+> >>>>>>             error_setg(errp, "Cannot allocate iova (%d)", r);
+> >>>>>>             return false;
+> >>>>>>         }
+> >>>>>>
+> >>>>>> +    /* Add mapping to the IOVA->HVA tree */
+> >>>>>> +    needle->translated_addr =3D taddr;
+> >>>>>> +    r =3D vhost_iova_tree_insert(v->shared->iova_tree, needle);
+> >>>>>> +    if (unlikely(r !=3D IOVA_OK)) {
+> >>>>>> +        error_setg(errp, "Cannot add SVQ vring mapping (%d)", r);
+> >>>>>> +        vhost_iova_tree_remove(v->shared->iova_tree, *needle);
+> >>>>>> +        return false;
+> >>>>>> +    }
+> >>>>>> +
+> >>>>>>         r =3D vhost_vdpa_dma_map(v->shared, v->address_space_id, n=
+eedle->iova,
+> >>>>>>                                needle->size + 1,
+> >>>>>>                                (void *)(uintptr_t)needle->translat=
+ed_addr,
+> >>>>>> @@ -1192,11 +1211,11 @@ static bool vhost_vdpa_svq_map_rings(struc=
+t vhost_dev *dev,
+> >>>>>>         vhost_svq_get_vring_addr(svq, &svq_addr);
+> >>>>>>
+> >>>>>>         driver_region =3D (DMAMap) {
+> >>>>>> -        .translated_addr =3D svq_addr.desc_user_addr,
+> >>>>>>             .size =3D driver_size - 1,
+> >>>>>>             .perm =3D IOMMU_RO,
+> >>>>>>         };
+> >>>>>> -    ok =3D vhost_vdpa_svq_map_ring(v, &driver_region, errp);
+> >>>>>> +    ok =3D vhost_vdpa_svq_map_ring(v, &driver_region, svq_addr.de=
+sc_user_addr,
+> >>>>>> +                                 errp);
+> >>>>>>         if (unlikely(!ok)) {
+> >>>>>>             error_prepend(errp, "Cannot create vq driver region: "=
+);
+> >>>>>>             return false;
+> >>>>>> @@ -1206,11 +1225,11 @@ static bool vhost_vdpa_svq_map_rings(struc=
+t vhost_dev *dev,
+> >>>>>>         addr->avail_user_addr =3D driver_region.iova + avail_offse=
+t;
+> >>>>>>
+> >>>>>>         device_region =3D (DMAMap) {
+> >>>>>> -        .translated_addr =3D svq_addr.used_user_addr,
+> >>>>>>             .size =3D device_size - 1,
+> >>>>>>             .perm =3D IOMMU_RW,
+> >>>>>>         };
+> >>>>>> -    ok =3D vhost_vdpa_svq_map_ring(v, &device_region, errp);
+> >>>>>> +    ok =3D vhost_vdpa_svq_map_ring(v, &device_region, svq_addr.us=
+ed_user_addr,
+> >>>>>> +                                 errp);
+> >>>>>>         if (unlikely(!ok)) {
+> >>>>>>             error_prepend(errp, "Cannot create vq device region: "=
+);
+> >>>>>>             vhost_vdpa_svq_unmap_ring(v, driver_region.translated_=
+addr);
+> >>>>>> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+> >>>>>> index 03457ead66..81da956b92 100644
+> >>>>>> --- a/net/vhost-vdpa.c
+> >>>>>> +++ b/net/vhost-vdpa.c
+> >>>>>> @@ -512,15 +512,24 @@ static int vhost_vdpa_cvq_map_buf(struct vho=
+st_vdpa *v, void *buf, size_t size,
+> >>>>>>         DMAMap map =3D {};
+> >>>>>>         int r;
+> >>>>>>
+> >>>>>> -    map.translated_addr =3D (hwaddr)(uintptr_t)buf;
+> >>>>>>         map.size =3D size - 1;
+> >>>>>>         map.perm =3D write ? IOMMU_RW : IOMMU_RO,
+> >>>>>> +
+> >>>>>> +    /* Allocate IOVA range and add the mapping to the IOVA tree *=
+/
+> >>>>>>         r =3D vhost_iova_tree_map_alloc(v->shared->iova_tree, &map=
+);
+> >>>>>>         if (unlikely(r !=3D IOVA_OK)) {
+> >>>>>> -        error_report("Cannot map injected element");
+> >>>>>> +        error_report("Cannot allocate IOVA range for injected ele=
+ment");
+> >>>>>>             return r;
+> >>>>>>         }
+> >>>>>>
+> >>>>>> +    /* Add mapping to the IOVA->HVA tree */
+> >>>>>> +    map.translated_addr =3D (hwaddr)(uintptr_t)buf;
+> >>>>>> +    r =3D vhost_iova_tree_insert(v->shared->iova_tree, &map);
+> >>>>>> +    if (unlikely(r !=3D IOVA_OK)) {
+> >>>>>> +        error_report("Cannot map injected element into IOVA->HVA =
+tree");
+> >>>>>> +        goto dma_map_err;
+> >>>>>> +    }
+> >>>>>> +
+> >>>>>>         r =3D vhost_vdpa_dma_map(v->shared, v->address_space_id, m=
+ap.iova,
+> >>>>>>                                vhost_vdpa_net_cvq_cmd_page_len(), =
+buf, !write);
+> >>>>>>         if (unlikely(r < 0)) {
+> >>>>>> --
+> >>>>>> 2.43.5
+> >>>>>>
+>
 
---00000000000003a3420621bd986d--
 
