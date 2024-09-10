@@ -4,57 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05AEEEDE994
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 02:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD5F8EDE996
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 03:05:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snqy3-0003PZ-F2; Mon, 09 Sep 2024 22:50:59 -0400
+	id 1snrAf-00017R-FU; Mon, 09 Sep 2024 23:04:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1snqy1-0003NK-QG; Mon, 09 Sep 2024 22:50:57 -0400
-Received: from out30-131.freemail.mail.aliyun.com ([115.124.30.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1snqxz-0007ui-Dw; Mon, 09 Sep 2024 22:50:57 -0400
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1snrAd-000140-Pc; Mon, 09 Sep 2024 23:03:59 -0400
+Received: from mail-vk1-xa34.google.com ([2607:f8b0:4864:20::a34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1snrAc-0000fC-8D; Mon, 09 Sep 2024 23:03:59 -0400
+Received: by mail-vk1-xa34.google.com with SMTP id
+ 71dfb90a1353d-502fbf07c47so79039e0c.3; 
+ Mon, 09 Sep 2024 20:03:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1725936649; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=sIsOF/NCJExJYmgliUcKf+dlTxkxwBFTdKKaABCL7vE=;
- b=YAzghRlL8YYU9h/eYX08UrC2N7TnEI6ge1Im4Q2vS+orG6kZmN11eM85tuV92EZMbUD2VaKSn/f262Q+7wj4NrjG3GIFjWN8ME4Lepld4UipbcPdELDKjdJljMj1iB5Tn5Rk0OH9LrmggJYg/4E2vWkfiO/jVHGmVk2H57A+tIc=
-Received: from 30.251.160.182(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WEiiRdB_1725936648) by smtp.aliyun-inc.com;
- Tue, 10 Sep 2024 10:50:48 +0800
-Message-ID: <de11de3f-8435-4400-aa3a-04ba85aa0feb@linux.alibaba.com>
-Date: Tue, 10 Sep 2024 10:49:51 +0800
+ d=gmail.com; s=20230601; t=1725937436; x=1726542236; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0sbJwnaa8JMq3yEC94H95wQBYjXJak8dV6q2xHmWwW0=;
+ b=I3V0yQdePAkPytDRExk/8NmRKUnM35/kskl4N/d4UT5hz3+Jmlga/IJBTGfl5HadLK
+ 4CZbPWZNR7IszDIXWY/2V5+6U/atTkcBB2yxlxH4JPoTnV0CLCr5hEPgQphxDfXQezF3
+ yozV8YwRdfK7PMWaDBAVX+ieVr8XjWbf791C4qJtYjN/FU94E63h/9Dm7jjaHG/D4yks
+ r0cMFFrHR5P5bVSiVYXbRMsgJvHlSC0aNivKIcCeOHYfRZiRX7SiVMm6+AAaePCHVQQD
+ X3l1iPJhs9Ns3VqulfoHyK9UZe9zGv1RlwozHQfMzWFFIIPanVc1oeyFzTFwLQ+VnQrF
+ XrGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725937436; x=1726542236;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0sbJwnaa8JMq3yEC94H95wQBYjXJak8dV6q2xHmWwW0=;
+ b=iNy7h1xrSIjT2t0/dS2+gR44ux93BjI3jZr5qD5D1pRdGwQx6n6toxQi1OhezRp8kT
+ dbW2v/AYrk6id4itPxC27NPFKEl3uhhmrwBubv6s9ZyLd51EnthIN26jx5EZ7yXnqgIH
+ 7WeiHmYLRt4FfOxffuEYi/znFgL/I9dpJdaM2UnetoV69wh+MZgY6fTuGu5o37tYVDBg
+ aPtCg/jtQgvFy8olZinmwkdtz437cLLUj6kdZzbIXO3JuDeHR8RvFPBcK1cJfYdPV3ru
+ e7aNgSsrsYch/nbwAEYT3xnSFlgCTA/64NrfrIL657vqe/FRyHP2FVp0aLu+EgmwRR48
+ c4ww==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWftDyE37d+Kb284B6X8EyDo/SE0mLun+J5vWbfv377VPm5vyXXMUZYnuUDOdjJN5i38UKwiehvl9i1@nongnu.org
+X-Gm-Message-State: AOJu0Yx1a0Ge9dU0aEq6QIV4+VA8AXSsiOGlai04YLvZOp3vtHNJfeHT
+ dJk4u0D9Qj94k+tOaYN5Affco7kiGFbF5WO+Y4IApIZoXDcpvIALyVR9ahxznLtryINNrIJ2EjK
+ vigLQGMd4o0bNz5w5cmmK1izLE08=
+X-Google-Smtp-Source: AGHT+IH6Uxj6yeFDq+nx3bUmZPeWt3yZ2qTUu36XrNmVBX9bydcnB2lVBmzsNQRDvNLgNogMErlUJhKJeI+Yi8Dyyxs=
+X-Received: by 2002:a05:6122:4d1a:b0:502:b3a9:f40b with SMTP id
+ 71dfb90a1353d-502b3a9f4ffmr13403660e0c.7.1725937436135; Mon, 09 Sep 2024
+ 20:03:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 03/14] tcg/riscv: Add basic support for vector
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- Swung0x48 <swung0x48@outlook.com>,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-References: <20240904142739.854-1-zhiwei_liu@linux.alibaba.com>
- <20240904142739.854-4-zhiwei_liu@linux.alibaba.com>
- <943abf2a-de03-49fd-b594-76b15224f2cc@linaro.org>
-Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <943abf2a-de03-49fd-b594-76b15224f2cc@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.131;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-131.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+References: <20240909083241.43836-2-ajones@ventanamicro.com>
+In-Reply-To: <20240909083241.43836-2-ajones@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 10 Sep 2024 13:03:29 +1000
+Message-ID: <CAKmqyKNFUHtsw6oJZaX4xLgs+WrNbX4dOhUrBS2W1vP6SH-STA@mail.gmail.com>
+Subject: Re: [PATCH v2] target/riscv32: Fix masking of physical address
+To: Andrew Jones <ajones@ventanamicro.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, zong.li@sifive.com, 
+ liwei1518@gmail.com, cwshu@andestech.com, dbarboza@ventanamicro.com, 
+ richard.henderson@linaro.org, philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a34;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa34.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,157 +93,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Sep 9, 2024 at 6:33=E2=80=AFPM Andrew Jones <ajones@ventanamicro.co=
+m> wrote:
+>
+> C doesn't extend the sign bit for unsigned types since there isn't a
+> sign bit to extend. This means a promotion of a u32 to a u64 results
+> in the upper 32 bits of the u64 being zero. If that result is then
+> used as a mask on another u64 the upper 32 bits will be cleared. rv32
+> physical addresses may be up to 34 bits wide, so we don't want to
+> clear the high bits while page aligning the address. The fix is to
+> use hwaddr for the mask, which, even on rv32, is 64-bits wide.
+>
+> Fixes: af3fc195e3c8 ("target/riscv: Change the TLB page size depends on P=
+MP entries.")
+> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
 
-On 2024/9/5 12:05, Richard Henderson wrote:
-> On 9/4/24 07:27, LIU Zhiwei wrote:
->> From: Swung0x48 <swung0x48@outlook.com>
->>
->> The RISC-V vector instruction set utilizes the LMUL field to group
->> multiple registers, enabling variable-length vector registers. This
->> implementation uses only the first register number of each group while
->> reserving the other register numbers within the group.
->>
->> In TCG, each VEC_IR can have 3 types (TCG_TYPE_V64/128/256), and the
->> host runtime needs to adjust LMUL based on the type to use different
->> register groups.
->>
->> This presents challenges for TCG's register allocation. Currently, we
->> avoid modifying the register allocation part of TCG and only expose the
->> minimum number of vector registers.
->>
->> For example, when the host vlen is 64 bits and type is TCG_TYPE_V256, 
->> with
->> LMUL equal to 4, we use 4 vector registers as one register group. We can
->> use a maximum of 8 register groups, but the V0 register number is 
->> reserved
->> as a mask register, so we can effectively use at most 7 register groups.
->> Moreover, when type is smaller than TCG_TYPE_V256, only 7 registers are
->> forced to be used. This is because TCG cannot yet dynamically constrain
->> registers with type; likewise, when the host vlen is 128 bits and
->> TCG_TYPE_V256, we can use at most 15 registers.
->>
->> There is not much pressure on vector register allocation in TCG now, so
->> using 7 registers is feasible and will not have a major impact on code
->> generation.
->>
->> This patch:
->> 1. Reserves vector register 0 for use as a mask register.
->> 2. When using register groups, reserves the additional registers within
->>     each group.
->>
->> Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
->> Co-authored-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
->> Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
->
-> This patch does not compile.
->
-> ../src/tcg/tcg.c:135:13: error: 'tcg_out_dup_vec' used but never 
-> defined [-Werror]
->   135 | static bool tcg_out_dup_vec(TCGContext *s, TCGType type, 
-> unsigned vece,
->       |             ^~~~~~~~~~~~~~~
-> ../src/tcg/tcg.c:137:13: error: 'tcg_out_dupm_vec' used but never 
-> defined [-Werror]
->   137 | static bool tcg_out_dupm_vec(TCGContext *s, TCGType type, 
-> unsigned vece,
->       |             ^~~~~~~~~~~~~~~~
-> ../src/tcg/tcg.c:139:13: error: 'tcg_out_dupi_vec' used but never 
-> defined [-Werror]
->   139 | static void tcg_out_dupi_vec(TCGContext *s, TCGType type, 
-> unsigned vece,
->       |             ^~~~~~~~~~~~~~~~
-> In file included from ../src/tcg/tcg.c:755:
-> /home/rth/qemu/src/tcg/riscv/tcg-target.c.inc:516:13: error: 
-> 'tcg_out_opc_ldst_vec' defined but not used [-Werror=unused-function]
->   516 | static void tcg_out_opc_ldst_vec(TCGContext *s, RISCVInsn opc, 
-> TCGReg data,
->       |             ^~~~~~~~~~~~~~~~~~~~
-> /home/rth/qemu/src/tcg/riscv/tcg-target.c.inc:507:13: error: 
-> 'tcg_out_opc_vi' defined but not used [-Werror=unused-function]
->   507 | static void tcg_out_opc_vi(TCGContext *s, RISCVInsn opc, 
-> TCGReg vd,
->       |             ^~~~~~~~~~~~~~
-> /home/rth/qemu/src/tcg/riscv/tcg-target.c.inc:501:13: error: 
-> 'tcg_out_opc_vx' defined but not used [-Werror=unused-function]
->   501 | static void tcg_out_opc_vx(TCGContext *s, RISCVInsn opc, 
-> TCGReg vd,
->       |             ^~~~~~~~~~~~~~
-> /home/rth/qemu/src/tcg/riscv/tcg-target.c.inc:495:13: error: 
-> 'tcg_out_opc_vv' defined but not used [-Werror=unused-function]
->   495 | static void tcg_out_opc_vv(TCGContext *s, RISCVInsn opc, 
-> TCGReg vd,
->       |             ^~~~~~~~~~~~~~
-> cc1: all warnings being treated as errors
-Oops. We miss compiling each patch one by one.
->
-> Either:
-> (1) Provide stubs for the functions that are required, and delay 
-> implementation
->     of the unused functions until the patch(es) that use them.
-We will take this way.
-> (2) Merge the dup patch so that these functions are defined and 
-> implemented,
->     which will also provide uses for most of the tcg_out_opc_* functions.
->
->
->> @@ -2100,6 +2174,32 @@ static void tcg_target_init(TCGContext *s)
->>   {
->>       tcg_target_available_regs[TCG_TYPE_I32] = 0xffffffff;
->>       tcg_target_available_regs[TCG_TYPE_I64] = 0xffffffff;
->> +    s->reserved_regs = 0;
->> +
->> +    if (cpuinfo & CPUINFO_ZVE64X) {
->> +        switch (riscv_vlen) {
->> +        case 64:
->> +            tcg_target_available_regs[TCG_TYPE_V64] = ALL_VECTOR_REGS;
->> +            tcg_target_available_regs[TCG_TYPE_V128] = 
->> ALL_DVECTOR_REG_GROUPS;
->> +            tcg_target_available_regs[TCG_TYPE_V256] = 
->> ALL_QVECTOR_REG_GROUPS;
->> +            s->reserved_regs |= (~ALL_QVECTOR_REG_GROUPS & 
->> 0xffffffff00000000);
->
-> No need for ().
-> Use ALL_VECTOR_REGS instead of the immediate integer.
-OK.
->
->> +            break;
->> +        case 128:
->> +            tcg_target_available_regs[TCG_TYPE_V64] = ALL_VECTOR_REGS;
->> +            tcg_target_available_regs[TCG_TYPE_V128] = ALL_VECTOR_REGS;
->> +            tcg_target_available_regs[TCG_TYPE_V256] = 
->> ALL_DVECTOR_REG_GROUPS;
->> +            s->reserved_regs |= (~ALL_DVECTOR_REG_GROUPS & 
->> 0xffffffff00000000);
->> +            break;
->> +        case 256:
->> +            tcg_target_available_regs[TCG_TYPE_V64] = ALL_VECTOR_REGS;
->> +            tcg_target_available_regs[TCG_TYPE_V128] = ALL_VECTOR_REGS;
->> +            tcg_target_available_regs[TCG_TYPE_V256] = ALL_VECTOR_REGS;
->> +            break;
->> +        default:
->> +            g_assert_not_reached();
->
-> The first host with 512-bit or larger vectors will trigger the assert.
->
-> With my suggestion against patch 2, this becomes
->
->     switch (riscv_lg2_vlenb) {
->     case TCG_TYPE_V64:
->         ...
->     case TCG_TYPE_V128:
->         ...
->     default:
->         /* Guaranteed by Zve64x. */
->         tcg_debug_assert(riscv_lg2_vlenb >= TCG_TYPE_V256);
->     }
->
-Agree.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
+Alistair
 
-Thanks,
-
-Zhiwei
+> ---
+> -v2: Switch from signed long to hwaddr
 >
-> r~
+>  target/riscv/cpu_helper.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 395a1d914061..4b2c72780c36 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -1323,7 +1323,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address=
+, int size,
+>      int ret =3D TRANSLATE_FAIL;
+>      int mode =3D mmuidx_priv(mmu_idx);
+>      /* default TLB page size */
+> -    target_ulong tlb_size =3D TARGET_PAGE_SIZE;
+> +    hwaddr tlb_size =3D TARGET_PAGE_SIZE;
+>
+>      env->guest_phys_fault_addr =3D 0;
+>
+> @@ -1375,7 +1375,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address=
+, int size,
+>
+>                  qemu_log_mask(CPU_LOG_MMU,
+>                                "%s PMP address=3D" HWADDR_FMT_plx " ret %=
+d prot"
+> -                              " %d tlb_size " TARGET_FMT_lu "\n",
+> +                              " %d tlb_size %" HWADDR_PRIu "\n",
+>                                __func__, pa, ret, prot_pmp, tlb_size);
+>
+>                  prot &=3D prot_pmp;
+> @@ -1409,7 +1409,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address=
+, int size,
+>
+>              qemu_log_mask(CPU_LOG_MMU,
+>                            "%s PMP address=3D" HWADDR_FMT_plx " ret %d pr=
+ot"
+> -                          " %d tlb_size " TARGET_FMT_lu "\n",
+> +                          " %d tlb_size %" HWADDR_PRIu "\n",
+>                            __func__, pa, ret, prot_pmp, tlb_size);
+>
+>              prot &=3D prot_pmp;
+> --
+> 2.46.0
+>
+>
 
