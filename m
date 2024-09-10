@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3CADEDE9AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 18:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50443EDE9AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 18:22:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so5RO-0002Qc-OT; Tue, 10 Sep 2024 14:18:14 -0400
+	id 1so5Um-0006un-Cj; Tue, 10 Sep 2024 14:21:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1so5RI-00023A-UW
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:18:09 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1so5Uk-0006no-1U
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:21:42 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1so5RH-0000J7-8i
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:18:08 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2068acc8b98so54571555ad.3
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 11:18:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1so5Uh-0000dy-3M
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:21:41 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-53658f30749so5253238e87.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 11:21:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725992286; x=1726597086; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IJ3BbOvxATGbK3xeLZAm7u0IhggThd8APdZa7shtZwk=;
- b=ptbYhTsejfzaGlEvuRFSIft+8YjKS5dwFqwv3RGNsesw/V2O36slOtqy4d/IvyldSz
- GRtQYHEpE6ri8ktYP4TZknHHBdlpuvpqLA7PnjQQl+xsiXItu3GqqJfy70QT7Wg1GLIx
- wofJ3QiUADePdUSYBxuyf1QBdJv0weweMkHFUsKpICPcad+pJTpRy7uxpDVqwMbFYPPU
- 22WWRhJG5OL5kYgSy+Mmg+P09W01Ke4AfkvVYQ0e6o800wr+A+m8WIR/bfglhrviwM9y
- jmI/hPDjxijsNePEbwNDep44PFRYscnPZEcEPhKy9HL9yW4uTx1YcIG5nQS5NazZpE15
- OVrA==
+ d=linaro.org; s=google; t=1725992497; x=1726597297; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=HW7Z70h68alb0ZlYfRuig3E1yX1hmuw7MmHA3n9PApg=;
+ b=vNN9htBVeDDrWKi/t0LVtyAsLa47YBzcZKkjy44UF6c7lTvvnIhsqmiJMK6ZU0AAM6
+ rw1DEpjdBYAiKlpgj0uqogFBVcrGIlG+9Qr+n8lGJnbdrJTDIRXlgmi3WHYtE9mL4ZJ9
+ RXzrGb2T8KbYSdp2OdFBQMlFC2uPtu25E7r2uHyDu5Bf4ZCrEVxqrJ7+03G3JTV24oX0
+ WkZTWexw3mHXKwFFkR/GUQz6HLOQiFaqhviCB6avN0TL9zlDGvg05FZKAOz0xavtJ46p
+ llviCuri9WVlCMnJoucKmGxw+M0V+MVPaoArwR7Lw+4jhP7R31V6Z+1LK6mDOL55LIju
+ 1DDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725992286; x=1726597086;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IJ3BbOvxATGbK3xeLZAm7u0IhggThd8APdZa7shtZwk=;
- b=NWzvlD8zQsvTaFkeRsjI4PLJrK1uPsznaIUIFCcRUu2y7HFH4wUn4tQ8Da/FkiKMAn
- ogASs4FtVL/qbiDZ46m/OgAtUHZ0Njhz49CvhhC12nezE3o2F9MjUd7vHwSCJedQ8CLR
- U9QanSIK5OWhq1dhFZVoWXqr/QBQJ+kzib1wBt2sbpRxg8dZsH5Fk2L94LNP0XnePrzY
- tn9fI/o+3JRX8ETAW0T0DsQlUaEY1djBhum4n3ZyWSIxEDaaOppzYvueEnx3kY2QInsS
- 3FvNydEdr5UxFlpnMisly+ClGbCuWOlMnFjrWyD7F4yhQug1d7UL2R2IQOT91wp50JTS
- JTYA==
+ d=1e100.net; s=20230601; t=1725992497; x=1726597297;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HW7Z70h68alb0ZlYfRuig3E1yX1hmuw7MmHA3n9PApg=;
+ b=E9LIsADDSFnLmcgrOXVWUAe7WXjDyacy3FojXrPOFfhhWefTqRXYrvAVGKCvWJItzS
+ xasYLGHubh3eyonIk1sWc+2ub6kBnpreUNBSjRycMZRAMgVSpt4J5mLSduaPh8fBpMKU
+ q2cyp6Q+FZqY5QFgURwZ70kJz+KaXCf+zi8d93gF5p3VkxpYjaAuMNzpwTyX7VQ/HObZ
+ 68y0kPyAvCFiwFTeQgnmb7rN0qExl6USbgVvBndTF3lbTcZDa/rXZk1mxaKjRUB9c4yK
+ hJiodT9O9ZngGaU7k6pf5JFzoXAKQsZQONWT760YsZPCbixSVBc4IzrUgxzdMCbjZano
+ AePw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW4oeT1eUbqbISjacRmuXichV8rSo1DCYaaeDWuL5TUH/ANlHWg0NRb4VaOWmow6heMPLeiU6LQZXid@nongnu.org
-X-Gm-Message-State: AOJu0YxnlcFiRhpZfDitRwc0JdIud5rtM2x+dNe/PvcTDqFY4qtffnY1
- Q/teap6u9Q5YHuk9cNe0Q0YP5Rw1Qc+k3/pb6tZ4dFOGaW7Z/zCvSjqbFNPLOeY=
-X-Google-Smtp-Source: AGHT+IFxt15gX/mP+45nOs1fw827bX2r+fArIp46ZQ1Iy6CQMZdgIoy+MijoDJdNwKZSyfn4L2LlYQ==
-X-Received: by 2002:a17:902:dad1:b0:207:1570:13e8 with SMTP id
- d9443c01a7336-2074c4c56demr19542475ad.12.1725992285592; 
- Tue, 10 Sep 2024 11:18:05 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710f4c9b9sm51362855ad.302.2024.09.10.11.18.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 11:18:05 -0700 (PDT)
-Message-ID: <41ab786e-87b7-4aa9-a259-cdf5d14003a6@linaro.org>
-Date: Tue, 10 Sep 2024 11:18:03 -0700
+ AJvYcCU1kfcDfcYcd2UT2kbjOOPkKbEHqSRthpKWTvX0TGaIltesvrmqT52NkTupAjO3b+iLsursARkXiC3g@nongnu.org
+X-Gm-Message-State: AOJu0Yy0LAuraJOGeUyrlqgjV504cRc8KRgtdYEe7sVqH9C31Yv8Q4Wb
+ ZWNrpy3RXkiWvtzycwJaRUJkiLc7xNyhKkzY6Fyt49GYZNxmbZYFOae1PFb7G24hLdkx3ZTYdFb
+ 3/0abB5L489Y7KYz6u+yRg1E63CfIiGSEG2wHWQ==
+X-Google-Smtp-Source: AGHT+IE4QJzHst9tW9qFWQx1rRqistYL0P62BLg85j9ePCM2fsJGyGSgOTEDE+iIi0SelbfxttpyUbYYVl/I5kT3IF4=
+X-Received: by 2002:a05:6512:694:b0:52c:9383:4c16 with SMTP id
+ 2adb3069b0e04-536587ac1abmr9552780e87.22.1725992496686; Tue, 10 Sep 2024
+ 11:21:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 2/2] target/riscv: rvv: improve performance of RISC-V vector
- loads and stores on large amounts of data.
-To: Paolo Savini <paolo.savini@embecosm.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Helene Chelin <helene.chelin@embecosm.com>, Max Chou <max.chou@sifive.com>
-References: <20240717153040.11073-1-paolo.savini@embecosm.com>
- <20240717153040.11073-3-paolo.savini@embecosm.com>
- <8e0c2afd-4c31-47f8-ade9-60a83ca20859@linaro.org>
- <1753bd69-6f7a-4b34-a7ae-8a0b225b72c9@embecosm.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <1753bd69-6f7a-4b34-a7ae-8a0b225b72c9@embecosm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+References: <20240829-memory-v1-1-ac07af2f4fa5@daynix.com>
+ <20240910132635-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240910132635-mutt-send-email-mst@kernel.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 10 Sep 2024 19:21:25 +0100
+Message-ID: <CAFEAcA9AoDKbekaXUkUD=R+Voy9Om0oQmHMgDiLB5cUJqtW+WA@mail.gmail.com>
+Subject: Re: [PATCH] docs/devel: Prohibit calling object_unparent() for memory
+ region
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>, 
+ BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, 
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,17 +106,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/10/24 04:20, Paolo Savini wrote:
-> Thanks for the feedback Richard, I'm working on the endianness. Could you please give me 
-> more details about the atomicity issues you are referring to?
+On Tue, 10 Sept 2024 at 18:27, Michael S. Tsirkin <mst@redhat.com> wrote:
+>
+> On Thu, Aug 29, 2024 at 02:46:48PM +0900, Akihiko Odaki wrote:
+> > Previously it was allowed to call object_unparent() for a memory region
+> > in instance_finalize() of its parent. However, such a call typically
+> > has no effect because child objects get unparented before
+> > instance_finalize().
+> >
+> > Worse, memory regions typically gets finalized when they get unparented
+> > before instance_finalize(). This means calling object_unparent() for
+> > them in instance_finalize() is to call the function for an object
+> > already finalized, which should be avoided.
+> >
+> > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>
+>
+> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+>
+> who's applying this? Paolo?
 
-For instance a 32-bit atomic memory operation in the guest must be implemented with a >= 
-32-bit atomic memory operation in the host.
+It's a docs change to clarify a complex point that's
+under active discussion in a different patch thread,
+so it needs review before anybody applies it...
 
-The main thing to remember is that memcpy() has no atomicity guarantee.  It could be 
-implemented as a byte loop.  Thus you may only use memcpy with guest byte vectors.
-
-
-
-r~
+-- PMM
 
