@@ -4,85 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 975EFEB64DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC54FECE57A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:13:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snzhC-0008LS-Js; Tue, 10 Sep 2024 08:10:10 -0400
+	id 1snzkO-0005Ab-5W; Tue, 10 Sep 2024 08:13:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1snzhA-0008G9-3J
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:10:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1snzkI-000592-Ur
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:13:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1snzh8-0000lo-2h
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:10:07 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1snzkA-0001Cn-AT
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:13:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725970204;
+ s=mimecast20190719; t=1725970393;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+x3LTte3EDw2YVn9G0en09BnY+YMkddWzmuoS9sQ2cM=;
- b=E8YRdRgqNYKnBeCTgjHvbw0hIvpR5NvVmbYAwOn8mKDp7nHpvJViEotE05z6twB74Jjihm
- dxSAbz2jtQTs44v+2516e7867wxVriRh7YIqTjCi0Ssv/wsDNT6520AdD4vCLCHb7QYilX
- CwDCowQ0Xv6kbrF6fUizs1rd0Xa2roM=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zMCLFNxyejVSEI0C0ONg2nRCjcJL3nR79nFtGUR0tjU=;
+ b=XG8YGENlOUQ0zxKf5nBBMLkQ8B1ha4Gc6AKORjMWbgLolFvoV89rTIfigRCXdK2mr+ykVN
+ umCcN4xf3oYarnVK4Ivfhnuv3exxej5y8ZMayoKcwpz3bfLy/09Cq2ZQ09Cs8yT6ERKFQ3
+ gE//bxvHvQmWq3l++UOg8YgMlbWKqVo=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-643-RpQLCf-WOwWYWDS9vEJXeA-1; Tue, 10 Sep 2024 08:10:03 -0400
-X-MC-Unique: RpQLCf-WOwWYWDS9vEJXeA-1
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7a9a95429c4so428055385a.1
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 05:10:03 -0700 (PDT)
+ us-mta-574-oGlndHUoNjKbDLrfnXX7xw-1; Tue, 10 Sep 2024 08:13:11 -0400
+X-MC-Unique: oGlndHUoNjKbDLrfnXX7xw-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6c5135456cbso83951856d6.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 05:13:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725970202; x=1726575002;
+ d=1e100.net; s=20230601; t=1725970390; x=1726575190;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+x3LTte3EDw2YVn9G0en09BnY+YMkddWzmuoS9sQ2cM=;
- b=Tt9FUqRGtlJ1Phq+GYArebwADUHIIxqtnhCTH5L3i1wBk4MakaH4zdtq9O6h4+S+aT
- WcRHUOFyBI6MXcBjuaQxMOwADs6lrorHx6fLwCnkp22kn5ZOQBZnMmugDfouBXyb5sqy
- 2L2bsHS+cIBaaVtgNvllNFYCMRIVWeN3HYYUYN6YExcLN58ZG/CiIYnDF1yxvEn4t1L3
- PTE01GQNNskxZiW+O317gqrZ1wx7+FRMxFpo2OXHyOAbK8lhQPmAxcrhrUeV74NBgiSP
- xlvWGRsV5w+6HxF3aMT3gKLesm2lRuLIqotkkdup0cimXCyEhldLEpU0UjrmU0peY2hl
- ZB6g==
+ bh=zMCLFNxyejVSEI0C0ONg2nRCjcJL3nR79nFtGUR0tjU=;
+ b=O4O8bwvsLnY63D+OmSz3Nrl6bHKVQHdc06v/Eyj3YDYnvPI0bdqx7IN6E6wDP8fWpj
+ yy1VIezt/YjOI9RiZNlM+hhbuTeuKCrL1m5q4RULwrEmK+vUgKvDXwTLOxfGt13i9+Vf
+ P+Ukzpw8Q685TPi792L2vh49p36ymFf0d2jr4Mud6l8R6yGdOijTTWHCMV0Oxw91mIpO
+ GYznIHU+ymsjUjfOtYKG76CJDUGHY7krCVOu/koyYkRhd2QHVEo/71Ekxis4lLdDWt2a
+ HfH246ez29z5QN5VTdaSCFqVxnRf0ps+Pqva6T/Mp61HhJf73qTaM6GLi/KcIkSJZj7t
+ MfQA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFrpsCMWmUcx4x2vDk8C4+WIZCZkTGcRJy2xJ9DDj9YdVYhIpazOLR9QQsL6AGLjHhenFMmBprLQL3@nongnu.org
-X-Gm-Message-State: AOJu0YwYUiUnRpVuVbJKQueMaberbonnWpgY2ctqTq9UiN1eauIbNwyA
- AFBajIFjbiu0aTynolVmeh9qRmhu+MuHEM53p2Kha8HbCBtJBeyI1S+jvTWelFnXPgwRC+WDD8c
- dGP5n5E9vtVu1ETx3UxSqXkxT1C5iIDyyT9BQREwXP3uOm/v7+ugx
-X-Received: by 2002:a05:620a:17a9:b0:7a9:bf2a:d7c8 with SMTP id
- af79cd13be357-7a9bf2ad945mr545667485a.41.1725970202429; 
- Tue, 10 Sep 2024 05:10:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFjsP0PuAumCkuEVypR1GgIpms99HHt5HNN1m1fAY9dU9YvGNvRj60FFI7eumyeZT94Yhy1WA==
-X-Received: by 2002:a05:620a:17a9:b0:7a9:bf2a:d7c8 with SMTP id
- af79cd13be357-7a9bf2ad945mr545662385a.41.1725970202133; 
- Tue, 10 Sep 2024 05:10:02 -0700 (PDT)
+ AJvYcCUsWv4MayKbYxJ3OjMTBx2elUSyeHq76SthAuhRgGRj4a+Xla7plWNgCs9GE5FgjJP7ShTJ34rwnoOQ@nongnu.org
+X-Gm-Message-State: AOJu0Yz9Hp8rfcf6kyum1819LSdT3pWXFWNmuhb5wTBSTJI5v5VNvoAw
+ 7cIuJNRFR5z4SMYEr7xK3LzNoEk3uxtXYaqd68qRqAAeG10TwuaJMWE6vFGDBWb3kT28hNRVbm0
+ uR8oskO/ULak+VXNIbVxUNaAw3wsFVVWMwFuKvV3T8N8b/5se+xuO
+X-Received: by 2002:a05:6214:4302:b0:6c3:643d:3b with SMTP id
+ 6a1803df08f44-6c528509e5fmr150722326d6.42.1725970390582; 
+ Tue, 10 Sep 2024 05:13:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHuYPTEuoTwU0B3cQTKkjFSq1PKrF9H9b4cIxCDILwbNmPE4bV1HTutaH0cmT5mOqb16po7fQ==
+X-Received: by 2002:a05:6214:4302:b0:6c3:643d:3b with SMTP id
+ 6a1803df08f44-6c528509e5fmr150722096d6.42.1725970390210; 
+ Tue, 10 Sep 2024 05:13:10 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-178-122.web.vodafone.de.
  [109.43.178.122]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a9a7948814sm302519185a.14.2024.09.10.05.10.00
+ 6a1803df08f44-6c5343293d3sm29533986d6.17.2024.09.10.05.13.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 05:10:01 -0700 (PDT)
-Message-ID: <280613d1-bae6-41ec-9a29-a3f1526709a5@redhat.com>
-Date: Tue, 10 Sep 2024 14:09:58 +0200
+ Tue, 10 Sep 2024 05:13:09 -0700 (PDT)
+Message-ID: <3d74779c-7048-4de8-ba6d-e65062b541c5@redhat.com>
+Date: Tue, 10 Sep 2024 14:13:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] license: Update deprecated SPDX tag GPL-2.0 to
- GPL-2.0-only
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Stefan Weil <sw@weilnetz.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-trivial@nongnu.org
-References: <20240910115131.28766-1-philmd@linaro.org>
- <20240910115131.28766-6-philmd@linaro.org>
- <3849f9dc-57ce-4924-ba90-b2ad912ccd60@linaro.org>
+Subject: Re: [PATCH 2/2] .gitlab-ci.d/crossbuilds.yml: Force 'make check'
+ single threaded for cross-i686-tci
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20240906180723.503855-1-peter.maydell@linaro.org>
+ <20240906180723.503855-3-peter.maydell@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -127,18 +122,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <3849f9dc-57ce-4924-ba90-b2ad912ccd60@linaro.org>
+In-Reply-To: <20240906180723.503855-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,52 +149,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/09/2024 14.04, Philippe Mathieu-Daudé wrote:
-> On 10/9/24 13:51, Philippe Mathieu-Daudé wrote:
->> The 'GPL-2.0' license identifier has been deprecated since license
->> list version 3.0 [1] and replaced by the 'GPL-2.0-only' tag [2].
->>
->> [1] https://spdx.org/licenses/GPL-2.0.html
->> [2] https://spdx.org/licenses/GPL-2.0-only.html
->>
->> Mechanical patch running:
->>
->>    $ sed -i -e s/GPL-2.0/GPL-2.0-only/ \
->>      $(git grep -l 'SPDX-License-Identifier: GPL-2.0$')
+On 06/09/2024 20.07, Peter Maydell wrote:
+> The cross-i686-tci CI job is persistently flaky with various tests
+> hitting timeouts.  One theory for why this is happening is that we're
+> running too many tests in parallel and so sometimes a test gets
+> starved of CPU and isn't able to complete within the timeout.
 > 
-> This didn't catch the full list, this command does:
+> Set the MESON_TESTTHREADS environment variable to 1 for this job;
+> this will cause 'meson test' to run only one test at a time.
 > 
->    $ sed -i -e s/GPL-2.0/GPL-2.0-only/ \
->      $(git grep -lE 'SPDX-License-Identifier: GPL-2.0( \*|$)' \
->          | egrep -v '^linux-headers|^include/standard-headers')
+> (Note that this relies on the change to meson2make that makes it
+> honour MESON_TESTTHREADS; otherwise it will have no effect.)
 > 
-> Thus squashing:
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> Seems worth a try -- if this doesn't have an effect then
+> we can revert it, but we'll at least have determined what
+> the problem isn't...
+> ---
+>   .gitlab-ci.d/crossbuilds.yml | 3 +++
+>   1 file changed, 3 insertions(+)
 > 
-> -- >8 --
-> diff --git a/hw/net/igb_regs.h b/hw/net/igb_regs.h
-> index e5a47eab64..4dc4c31da2 100644
-> --- a/hw/net/igb_regs.h
-> +++ b/hw/net/igb_regs.h
-> @@ -1,4 +1,4 @@
-> -/* SPDX-License-Identifier: GPL-2.0 */
-> +/* SPDX-License-Identifier: GPL-2.0-only */
->   /*
->    * This is copied + edited from kernel header files in
->    * drivers/net/ethernet/intel/igb
-> diff --git a/tests/tcg/loongarch64/system/regdef.h 
-> b/tests/tcg/loongarch64/system/regdef.h
-> index faa09b2377..b586b4e86d 100644
-> --- a/tests/tcg/loongarch64/system/regdef.h
-> +++ b/tests/tcg/loongarch64/system/regdef.h
-> @@ -1,4 +1,4 @@
-> -/* SPDX-License-Identifier: GPL-2.0 */
-> +/* SPDX-License-Identifier: GPL-2.0-only */
->   /*
->    * Copyright (c) 2021 Loongson Technology Corporation Limited
->    */
+> diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
+> index cb499e4ee0d..ca1db011b11 100644
+> --- a/.gitlab-ci.d/crossbuilds.yml
+> +++ b/.gitlab-ci.d/crossbuilds.yml
+> @@ -70,6 +70,9 @@ cross-i686-tci:
+>       ACCEL: tcg-interpreter
+>       EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,aarch64-softmmu,aarch64-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins --disable-kvm
+>       MAKE_CHECK_ARGS: check check-tcg
+> +    # Force 'meson test' to run only one test at once, to
+> +    # see whether this reduces the flakiness of this CI job.
+> +    MESON_TESTTHREADS: 1
 
-Looks good, you can keep:
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Can't we simply add "-j1" to the MAKE_CHECK_ARGS line?
+
+According to the man-page of "make":
+
+  "If there is more than one -j option, the last one is effective."
+
+So adding a -j1 should override the previous setting, I think.
+
+  Thomas
 
 
 
