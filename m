@@ -4,131 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC9DFECE564
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:01:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6978ECE564
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:01:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snzXz-000804-Cn; Tue, 10 Sep 2024 08:00:39 -0400
+	id 1snzZ1-00048z-Kd; Tue, 10 Sep 2024 08:01:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1snzXm-0007KT-4j
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:00:26 -0400
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1snzYk-00033t-Nl
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:01:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1snzXk-00082a-0p
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:00:25 -0400
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1snzYj-0008BH-1X
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:01:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725969622;
+ s=mimecast20190719; t=1725969683;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9FFtlVjBG1wkPKnV7v8IjARwdBHUtoj3VO5tGdOQ6/w=;
- b=W1DIB1xsBsaPjDvsnmVuQ0eKRTqHkgBRZmMl4YzS4hSkUgAdXCizXC6XijG/VWaLmFTE3c
- 3gzijk6b24aiKIK21gnA8sbpxMnYT5f8vDgGEGLJjlsciHTyGZpWVs3Tzsvk3j2iksd02j
- 5aop71j6PQbAiY6HM7LvN+Sc90uE7IQ=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=mJ+nu4OBRWNA66awMDjqGlw+Jxra9J0zh8CjtX6F30A=;
+ b=eTkbe/vvUx+dnh6fSh34x3+VqwCBeegmyP8v/ahtE5jM+6fqQP9fB74UjOPq4BhuZlfzRO
+ SBwSEtHleiHSxggqlu6DI/tY5oXDjvi9ZqKaQWUglxuCoZYYJQyBWGW7UNViVhvjD8KHF6
+ sv/XARygkeZuuPpG4apnbS6iRSzdk0E=
+Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
+ [209.85.160.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-501-PWOoUswaPcWY6t9avNnIgQ-1; Tue, 10 Sep 2024 08:00:19 -0400
-X-MC-Unique: PWOoUswaPcWY6t9avNnIgQ-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6c366f8b1ebso125085936d6.1
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 05:00:19 -0700 (PDT)
+ us-mta-193-qsoj8XfGOLaU7bAnHvavwA-1; Tue, 10 Sep 2024 08:01:21 -0400
+X-MC-Unique: qsoj8XfGOLaU7bAnHvavwA-1
+Received: by mail-oa1-f71.google.com with SMTP id
+ 586e51a60fabf-277e6462843so6440022fac.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 05:01:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725969618; x=1726574418;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9FFtlVjBG1wkPKnV7v8IjARwdBHUtoj3VO5tGdOQ6/w=;
- b=uTcYRztLISecc5cT25UWUxznYIFXllKUAd3uvKlQCDXcUCNaxL4/U/X+KYHQ80FWUD
- cfwWUfAX9eL/ayFCH5ygX7qVCBQ5tOamTbkcIEjSQGxPPt9Rr4F9ob+WEhGF+8RYygPz
- Q3ajffMr981eODwCOXxtg6roVve885CmrsPWZ1sNn9didUkwSwRsPsTm6kfAhvLx8h/L
- 60lAd7kQu/Wvx/+t7KQm++UtSe0A4RHl7PHO0kppA+sNc6Bi4qcs86ZO7tlHH9zytqQk
- ujHP9C19O/05elQW+YbC/QwbHz32ReWFte4o628rR2OgAkDz7GnmIHlpgWVbVe0X6SfF
- R5/w==
+ d=1e100.net; s=20230601; t=1725969681; x=1726574481;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mJ+nu4OBRWNA66awMDjqGlw+Jxra9J0zh8CjtX6F30A=;
+ b=aAEj5jjbvgF/o98wwwIzcSY4BF5b2R5EUoAvfvbOnFsE/uweYWKQcOL196aBrWEg4B
+ PMdveO3kGJfrJ1fvzmCauL2d9pPk7wNhK59fZtxAtfTd/04tX8a3AVpc/4eSGVurowEE
+ YRfeMAWsCME8jzrJZt8sLyLmkOoNtQQaiGa30QbV6JyWhxq3yNTOIdxkIFHZsVxzUjze
+ 6/ztYEl4TxOZdTdrz5b04xKphmkP27XYKl+WcQ52qwgxiyEYftCqE/QZMGV0n2mqQXt/
+ IHVRkMWm780y9uzshI5uwHJocoEvzY43gtaY010rKAc77Y9KXzafFWUYGzFrZcfzlm5w
+ jTgA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVvstVTDHk8mED4VHymB0mqME19B+oO6YbtyTmMjQwpLywSaGShpKX1TvGvwGtqeNDLWi2DCV9AHIAz@nongnu.org
-X-Gm-Message-State: AOJu0YxFYQL61GzUoSevczYwloJqzN5WNu4K+jzhrQl5Z+jeBxTGlL/O
- H3sa84AabJGqsNmSixgTo4SJCKeGcb695YyfLwcMeDQT0mAvWBBHeIaqE/uVJT72kCr77dS1jN2
- zsPaew6J1ChLbigCWlQX0MBOjEPIRo3boZksFxEhU+wRqVOD4SrdC
-X-Received: by 2002:a05:6214:588b:b0:6c5:51f0:3b20 with SMTP id
- 6a1803df08f44-6c554d1d08fmr56359416d6.6.1725969618435; 
- Tue, 10 Sep 2024 05:00:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHRPfutO7NXo5f7GfoDUtK266nUTVJqc8SM1d9hRD2pxABA8YWuHSwtZ9MDLzdZLc/EpqNT+Q==
-X-Received: by 2002:a05:6214:588b:b0:6c5:51f0:3b20 with SMTP id
- 6a1803df08f44-6c554d1d08fmr56358476d6.6.1725969617886; 
- Tue, 10 Sep 2024 05:00:17 -0700 (PDT)
-Received: from [192.168.0.6] (ip-109-43-178-122.web.vodafone.de.
- [109.43.178.122]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c5347747b3sm29492546d6.122.2024.09.10.05.00.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 05:00:17 -0700 (PDT)
-Message-ID: <86138a3a-a845-4cb3-860f-c3146a3dca1f@redhat.com>
-Date: Tue, 10 Sep 2024 14:00:12 +0200
+ AJvYcCVSgErQPAhsDsbXsFsD1ce+uiD5bX4llWRZq3ir0WWsnLVof0GcoQUkuwNkCh0RTkk7A/F+a/KxyHl1@nongnu.org
+X-Gm-Message-State: AOJu0YySSQCrAb/YioCHtmqlAq38BPZYePRTjUaICwEt+YaETSEMrB4n
+ abHUkRhF5IKnOQlwA9d9WSsS76LmIdwX36qlIxhwRp57x0NWo5IkMD1VzJqFFmfZtpp+hGXKdsL
+ B3zxGlpQlLIHqbQriWUFHE5/wcskLKZXj/9+F6DzKsc4QxTNisp6V
+X-Received: by 2002:a05:6870:420b:b0:27b:71ec:1463 with SMTP id
+ 586e51a60fabf-27b9d80424bmr6022327fac.14.1725969680768; 
+ Tue, 10 Sep 2024 05:01:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHKNM1RIEOPmWgPTNkRCyIY9guWZduAmShOA8KD9AwMiHIEz69RwSIK+/aLznVnMpZVYwwnKw==
+X-Received: by 2002:a05:6870:420b:b0:27b:71ec:1463 with SMTP id
+ 586e51a60fabf-27b9d80424bmr6022290fac.14.1725969680252; 
+ Tue, 10 Sep 2024 05:01:20 -0700 (PDT)
+Received: from localhost.localdomain ([115.96.78.44])
+ by smtp.googlemail.com with ESMTPSA id
+ 41be03b00d2f7-7d8259bd054sm4722766a12.77.2024.09.10.05.01.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Sep 2024 05:01:19 -0700 (PDT)
+From: Ani Sinha <anisinha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Ani Sinha <anisinha@redhat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2] memory: notify hypervisor of all eventfds during listener
+ (de)registration
+Date: Tue, 10 Sep 2024 17:31:00 +0530
+Message-ID: <20240910120100.9460-1-anisinha@redhat.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] NSIS: Simplify license description
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Stefan Weil <sw@weilnetz.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-trivial@nongnu.org
-References: <20240910115131.28766-1-philmd@linaro.org>
- <20240910115131.28766-2-philmd@linaro.org>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240910115131.28766-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -136,7 +87,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,17 +103,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/09/2024 13.51, Philippe Mathieu-Daudé wrote:
-> Since the "2 | 3+" expression can be simplified as "2+",
-> it is pointless to mention the GPLv3 license.
-> 
-> Add the corresponding SPDX identifier to remove all doubt.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   qemu.nsi | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
+When a new listener for an address space is registered, the hypervisor must be
+informed of all existing eventfds for that address space by calling
+eventfd_add() for that listener. Similarly, when a listener is de-registered
+from an address space, the hypervisor must be informed of all existing eventfds
+for that address space with a call to eventfd_del().
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Same is also true for coalesced io. Send coalesced io add/del listener
+notifications if any flatrage for the address space registered with the
+listener intersects with any coalesced io range.
+
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+---
+ system/memory.c | 77 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 77 insertions(+)
+
+changelog:
+v2: tags added, indentation fixed, commit log fixed, code cleanup.
+
+diff --git a/system/memory.c b/system/memory.c
+index 5e6eb459d5..8379e086fb 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -941,6 +941,38 @@ static void flat_range_coalesced_io_add(FlatRange *fr, AddressSpace *as)
+     }
+ }
+ 
++static void
++flat_range_coalesced_io_notify_listener_add_del(FlatRange *fr,
++                                                MemoryRegionSection *mrs,
++                                                MemoryListener *listener,
++                                                AddressSpace *as, bool add)
++{
++    CoalescedMemoryRange *cmr;
++    MemoryRegion *mr = fr->mr;
++    AddrRange tmp;
++
++    QTAILQ_FOREACH(cmr, &mr->coalesced, link) {
++        tmp = addrrange_shift(cmr->addr,
++                              int128_sub(fr->addr.start,
++                                         int128_make64(fr->offset_in_region)));
++
++        if (!addrrange_intersects(tmp, fr->addr)) {
++            return;
++        }
++        tmp = addrrange_intersection(tmp, fr->addr);
++
++        if (add) {
++            listener->coalesced_io_add(listener, mrs,
++                                       int128_get64(tmp.start),
++                                       int128_get64(tmp.size));
++        } else {
++            listener->coalesced_io_del(listener, mrs,
++                                       int128_get64(tmp.start),
++                                       int128_get64(tmp.size));
++        }
++    }
++}
++
+ static void address_space_update_topology_pass(AddressSpace *as,
+                                                const FlatView *old_view,
+                                                const FlatView *new_view,
+@@ -3015,8 +3047,10 @@ void memory_global_dirty_log_stop(unsigned int flags)
+ static void listener_add_address_space(MemoryListener *listener,
+                                        AddressSpace *as)
+ {
++    unsigned i;
+     FlatView *view;
+     FlatRange *fr;
++    MemoryRegionIoeventfd *fd;
+ 
+     if (listener->begin) {
+         listener->begin(listener);
+@@ -3041,10 +3075,31 @@ static void listener_add_address_space(MemoryListener *listener,
+         if (listener->region_add) {
+             listener->region_add(listener, &section);
+         }
++
++        /* send coalesced io add notifications */
++        flat_range_coalesced_io_notify_listener_add_del(fr, &section,
++                                                        listener, as, true);
++
+         if (fr->dirty_log_mask && listener->log_start) {
+             listener->log_start(listener, &section, 0, fr->dirty_log_mask);
+         }
+     }
++
++    /*
++     * register all eventfds for this address space for the newly registered
++     * listener.
++     */
++    for (i = 0; i < as->ioeventfd_nb; i++) {
++        fd = &as->ioeventfds[i];
++        MemoryRegionSection section = (MemoryRegionSection) {
++            .fv = address_space_to_flatview(as),
++            .offset_within_address_space = int128_get64(fd->addr.start),
++            .size = fd->addr.size,
++        };
++        listener->eventfd_add(listener, &section,
++                              fd->match_data, fd->data, fd->e);
++    }
++
+     if (listener->commit) {
+         listener->commit(listener);
+     }
+@@ -3054,8 +3109,10 @@ static void listener_add_address_space(MemoryListener *listener,
+ static void listener_del_address_space(MemoryListener *listener,
+                                        AddressSpace *as)
+ {
++    unsigned i;
+     FlatView *view;
+     FlatRange *fr;
++    MemoryRegionIoeventfd *fd;
+ 
+     if (listener->begin) {
+         listener->begin(listener);
+@@ -3067,10 +3124,30 @@ static void listener_del_address_space(MemoryListener *listener,
+         if (fr->dirty_log_mask && listener->log_stop) {
+             listener->log_stop(listener, &section, fr->dirty_log_mask, 0);
+         }
++
++        /* send coalesced io del notifications */
++        flat_range_coalesced_io_notify_listener_add_del(fr, &section,
++                                                        listener, as, false);
+         if (listener->region_del) {
+             listener->region_del(listener, &section);
+         }
+     }
++
++    /*
++     * de-register all eventfds for this address space for the current
++     * listener.
++     */
++    for (i = 0; i < as->ioeventfd_nb; i++) {
++        fd = &as->ioeventfds[i];
++        MemoryRegionSection section = (MemoryRegionSection) {
++            .fv = address_space_to_flatview(as),
++            .offset_within_address_space = int128_get64(fd->addr.start),
++            .size = fd->addr.size,
++        };
++        listener->eventfd_del(listener, &section,
++                              fd->match_data, fd->data, fd->e);
++    }
++
+     if (listener->commit) {
+         listener->commit(listener);
+     }
+-- 
+2.42.0
 
 
