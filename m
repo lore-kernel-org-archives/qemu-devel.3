@@ -4,90 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24168EDE9AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:41:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ABC2EDE9AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:41:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so4ps-0005jm-5i; Tue, 10 Sep 2024 13:39:28 -0400
+	id 1so4qu-0003Oa-VC; Tue, 10 Sep 2024 13:40:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so4pZ-0004lX-EG
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:39:09 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1so4qr-0002sI-26
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:40:29 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so4pW-0004ZN-7h
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:39:09 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5c25554ec1eso7583301a12.1
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 10:39:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1so4qo-0004tI-Sw
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:40:28 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-7ae3d7222d4so850186a12.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 10:40:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725989945; x=1726594745; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725990025; x=1726594825; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rxdRaiTcMZc5S1W+zC5XJ30AZucjTk2s7eZ1WW+ddog=;
- b=ggfKaOWQPe1dS893CgpGZ5mGcfBrOPYpqL0Nvz2KzaMixQClCybr6odljo7HROtuTw
- 6KzKtXt5tIrippbctoMsf2p44FuEs29Cnnyk9LAlr+E8AcnYvRirmAPhv4QY17zpICty
- fHInb0UFFpFxisBJ5iRmXExC+3IPu2ReG9SE75XRfeQa9PEj6lMfofyr65lxa2bVMFEX
- UP0B/G/fpz6wWMbXGP6WmvPTGW+Jj5nzwVRlgs4BXFk899xCYn+hrd/xYitciD/Jj6NC
- 9DikcGw+FrwdSRXUcix5bx3RuRArcf2YNcJwOgvE8jt9Mo8Qg7V93rcAgS23am4Vbpgp
- lsGQ==
+ bh=IlCj2ixhxM/epvOBESU4I3HZLS9l35ap6tDyuxDs4dc=;
+ b=JS5RIiPtYSDrEPH0Dl9bI4J1B5atixhhrbPxalBWNa09lKoJi1ddI2MYe+Dbsow+oU
+ Jj1feojV+NBhUPYQDEdzFUQfFenPjiOUeQxIRorSVJFcI/gVS7ryK0l7H2eV2ZFyHiwF
+ EfKjz7F02xBN2dsQQ8CFH0jdCbtCEP/FjsuyZbs9EK2uBLDYQ50E7899VPiZJECwtLO/
+ 1auWxYk0fNHRh5vYfCcc/EhXPkxChJY5HIuOTKmQyd/Xj/h2ngTmUqmojwBnHy4nC4Bf
+ Cdl5mrwrFCScKsHrimvR9tl9eOt4d7RF5VI8OavXJA+gfuhmxOabGF8o/LaUs7Xd30mb
+ Nkyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725989945; x=1726594745;
+ d=1e100.net; s=20230601; t=1725990025; x=1726594825;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rxdRaiTcMZc5S1W+zC5XJ30AZucjTk2s7eZ1WW+ddog=;
- b=UnkjI+/gNj5vOFyBccRQx1XjFGcmHHAtNw62Vpk16Qw7f1hIxDi75k8dytAVQxiflV
- giAUc5qouD0394Fa/zcNaFuojt8LlvNYiy+QQ3AP5dlixvWBX98dsoIhqXkJV/hzuM2O
- U3WI6kqL4DUGQ4corUftYUE7cv6jvoEQ9zDBMJ8i1wUuzUT9eJnPzxDOD+b6hdVxTz36
- 0A4VvqkRSRe90SB07TR72VdSG6rwmBOzEJa0ZM1UmFpw6UaQ0r4PffUcDaR7b5L77LgP
- Va2HH9QI1gBZX4A8CkaqCBDCvYB+YzKBA0RuBBPBJI+4eHYIdTsc4/Gs5XoqWV/8jFDa
- EpVA==
-X-Gm-Message-State: AOJu0YwIa+y9H7v1+RRVT60vblmgyb87X7yFcl+er9RWymJa2OB7wPHj
- PVJ7bEfnSdyakeH2eV0DpVnCkwYtHVbeXkasCd5u9vwJT1ZCZpWFGPpgDl7z7/4=
-X-Google-Smtp-Source: AGHT+IEy8xm9TQ/OfdiMVTVxFx9PsY1/i7uDVqSwJfXKQyMFqLVYM95l36xLFNnAVnlOxzL43plRbQ==
-X-Received: by 2002:a05:6402:5111:b0:5c2:6d80:b4ed with SMTP id
- 4fb4d7f45d1cf-5c3e9630ee6mr8601383a12.13.1725989944583; 
- Tue, 10 Sep 2024 10:39:04 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd41c36sm4512760a12.2.2024.09.10.10.39.01
+ bh=IlCj2ixhxM/epvOBESU4I3HZLS9l35ap6tDyuxDs4dc=;
+ b=ONyUtFpcuaRLh5TY0+7+nRCyQtm7fZ/6B93mog7MT56ptV5Bvs8zSGT90oC4/q31KQ
+ /6M/kYglfsHbZ5A06g6Wiq2xQcBqZWpOu3EMLS/pXMry/2rFZ0+TBGOIrHEvVWI9j8WC
+ CM/vvwF2Jk6kWuILVuTMsZ5jxeMbASzaUc57YRVokbjhp+o0/58IOBXcAgZ/kz25/BFD
+ rbnRtqJN5p7APyq6pR0XOWE2CP4oIhiMz9m8H17ENmzWIGPt3VMtAIDm6ZVF+LeVJQqw
+ agTaEsOYZcEvfR+Lkb5wti6Rv0aKIUtWaFDNRrLGIUbuSsZreZUR1kjMJXfP91ollN64
+ 9Lkg==
+X-Gm-Message-State: AOJu0YylW8MkIMY+Cf33EuHkXzXBg77kw/vCENEA0RxBqVx7pViIC98l
+ n2ilJnNyZtwByR1hWbJnik8X8Aa66AwQ8iGf1JYGgjOfK6K42SVLO/tStE3dgDfH1m9a0sRoXQn
+ nWN+gOA==
+X-Google-Smtp-Source: AGHT+IEDoWGBv7ts4eAbU+3GWSnN9KnHavnhQ7oMRWijIdyG4R93doDvhi7Ldov7owH5gTg/MhEDzw==
+X-Received: by 2002:a17:90a:4d81:b0:2d8:5b9f:75ab with SMTP id
+ 98e67ed59e1d1-2db830582dfmr361931a91.29.1725990025406; 
+ Tue, 10 Sep 2024 10:40:25 -0700 (PDT)
+Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::9633])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2db04966d3asm6682751a91.38.2024.09.10.10.40.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2024 10:39:01 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9CFDA5F7B4;
- Tue, 10 Sep 2024 18:39:00 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ Tue, 10 Sep 2024 10:40:25 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-arm@nongnu.org,
- devel@lists.libvirt.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Beraldo Leal <bleal@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
+Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH v2 02/10] tests/docker: update debian i686 and mipsel images
- to bookworm
-Date: Tue, 10 Sep 2024 18:38:52 +0100
-Message-Id: <20240910173900.4154726-3-alex.bennee@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ kvm@vger.kernel.org, Thomas Huth <thuth@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-s390x@nongnu.org, Beraldo Leal <bleal@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 3/3] docs/devel: update tsan build documentation
+Date: Tue, 10 Sep 2024 10:40:13 -0700
+Message-Id: <20240910174013.1433331-4-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240910173900.4154726-1-alex.bennee@linaro.org>
-References: <20240910173900.4154726-1-alex.bennee@linaro.org>
+In-Reply-To: <20240910174013.1433331-1-pierrick.bouvier@linaro.org>
+References: <20240910174013.1433331-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,145 +105,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Whatever issues there were which stopped these being updates when the
-rest were have now been resolved. However mips64el continues to be
-broken so don't update it here.
+Mention it's now possible to build with gcc, instead of clang, and
+explain how to build a sanitized glib version.
 
-Message-Id: <20240910140733.4007719-3-alex.bennee@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- tests/docker/dockerfiles/debian-i686-cross.docker   | 10 ++++------
- tests/docker/dockerfiles/debian-mipsel-cross.docker | 10 ++++------
- tests/lcitool/refresh                               |  4 ++--
- 3 files changed, 10 insertions(+), 14 deletions(-)
+ docs/devel/testing/main.rst | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
-index 3fe8ee623d..2328ee1732 100644
---- a/tests/docker/dockerfiles/debian-i686-cross.docker
-+++ b/tests/docker/dockerfiles/debian-i686-cross.docker
-@@ -1,10 +1,10 @@
- # THIS FILE WAS AUTO-GENERATED
- #
--#  $ lcitool dockerfile --layers all --cross-arch i686 debian-11 qemu
-+#  $ lcitool dockerfile --layers all --cross-arch i686 debian-12 qemu
- #
- # https://gitlab.com/libvirt/libvirt-ci
+diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
+index e9921a4b10a..2e57390d990 100644
+--- a/docs/devel/testing/main.rst
++++ b/docs/devel/testing/main.rst
+@@ -634,20 +634,38 @@ Building and Testing with TSan
+ It is possible to build and test with TSan, with a few additional steps.
+ These steps are normally done automatically in the docker.
  
--FROM docker.io/library/debian:11-slim
-+FROM docker.io/library/debian:12-slim
+-There is a one time patch needed in clang-9 or clang-10 at this time:
++TSan is supported for clang and gcc.
++One particularity of sanitizers is that all the code, including shared objects
++dependencies, should be built with it.
++In the case of TSan, any synchronization primitive from glib (GMutex for
++instance) will not be recognized, and will lead to false positives.
++
++To build a tsan version of glib:
  
- RUN export DEBIAN_FRONTEND=noninteractive && \
-     apt-get update && \
-@@ -48,16 +48,15 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-opencv \
-                       python3-pillow \
-                       python3-pip \
--                      python3-setuptools \
-                       python3-sphinx \
-                       python3-sphinx-rtd-theme \
-                       python3-venv \
--                      python3-wheel \
-                       python3-yaml \
-                       rpm2cpio \
-                       sed \
-                       socat \
-                       sparse \
-+                      swtpm \
-                       tar \
-                       tesseract-ocr \
-                       tesseract-ocr-eng \
-@@ -69,8 +68,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     dpkg-reconfigure locales && \
-     rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
+ .. code::
  
--RUN /usr/bin/pip3 install tomli
--
- ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
- ENV LANG "en_US.UTF-8"
- ENV MAKE "/usr/bin/make"
-@@ -145,6 +142,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libvdeplug-dev:i386 \
-                       libvirglrenderer-dev:i386 \
-                       libvte-2.91-dev:i386 \
-+                      libxdp-dev:i386 \
-                       libzstd-dev:i386 \
-                       nettle-dev:i386 \
-                       systemtap-sdt-dev:i386 \
-diff --git a/tests/docker/dockerfiles/debian-mipsel-cross.docker b/tests/docker/dockerfiles/debian-mipsel-cross.docker
-index 0d559ae4ba..4ac314e22e 100644
---- a/tests/docker/dockerfiles/debian-mipsel-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mipsel-cross.docker
-@@ -1,10 +1,10 @@
- # THIS FILE WAS AUTO-GENERATED
- #
--#  $ lcitool dockerfile --layers all --cross-arch mipsel debian-11 qemu
-+#  $ lcitool dockerfile --layers all --cross-arch mipsel debian-12 qemu
- #
- # https://gitlab.com/libvirt/libvirt-ci
+-  sed -i 's/^const/static const/g' \
+-      /usr/lib/llvm-10/lib/clang/10.0.0/include/sanitizer/tsan_interface.h
++   $ git clone --depth=1 --branch=2.81.0 https://github.com/GNOME/glib.git
++   $ cd glib
++   $ CFLAGS="-O2 -g -fsanitize=thread" meson build
++   $ ninja -C build
  
--FROM docker.io/library/debian:11-slim
-+FROM docker.io/library/debian:12-slim
+ To configure the build for TSan:
  
- RUN export DEBIAN_FRONTEND=noninteractive && \
-     apt-get update && \
-@@ -48,16 +48,15 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-opencv \
-                       python3-pillow \
-                       python3-pip \
--                      python3-setuptools \
-                       python3-sphinx \
-                       python3-sphinx-rtd-theme \
-                       python3-venv \
--                      python3-wheel \
-                       python3-yaml \
-                       rpm2cpio \
-                       sed \
-                       socat \
-                       sparse \
-+                      swtpm \
-                       tar \
-                       tesseract-ocr \
-                       tesseract-ocr-eng \
-@@ -69,8 +68,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     dpkg-reconfigure locales && \
-     rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
+ .. code::
  
--RUN /usr/bin/pip3 install tomli
--
- ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
- ENV LANG "en_US.UTF-8"
- ENV MAKE "/usr/bin/make"
-@@ -143,6 +140,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libvdeplug-dev:mipsel \
-                       libvirglrenderer-dev:mipsel \
-                       libvte-2.91-dev:mipsel \
-+                      libxdp-dev:mipsel \
-                       libzstd-dev:mipsel \
-                       nettle-dev:mipsel \
-                       systemtap-sdt-dev:mipsel \
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 199d5fad87..c60490a7fa 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -159,7 +159,7 @@ try:
-                         trailer=cross_build("arm-linux-gnueabihf-",
-                                             "arm-softmmu,arm-linux-user"))
+-  ../configure --enable-tsan --cc=clang-10 --cxx=clang++-10 \
++  ../configure --enable-tsan \
+                --disable-werror --extra-cflags="-O0"
  
--    generate_dockerfile("debian-i686-cross", "debian-11",
-+    generate_dockerfile("debian-i686-cross", "debian-12",
-                         cross="i686",
-                         trailer=cross_build("i686-linux-gnu-",
-                                             "x86_64-softmmu,"
-@@ -171,7 +171,7 @@ try:
-                         trailer=cross_build("mips64el-linux-gnuabi64-",
-                                             "mips64el-softmmu,mips64el-linux-user"))
++When executing qemu, don't forget to point to tsan glib:
++
++.. code::
++
++   $ glib_dir=/path/to/glib
++   $ export LD_LIBRARY_PATH=$glib_dir/build/gio:$glib_dir/build/glib:$glib_dir/build/gmodule:$glib_dir/build/gobject:$glib_dir/build/gthread
++   # check correct version is used
++   $ ldd build/qemu-x86_64 | grep glib
++   $ qemu-system-x86_64 ...
++
+ The runtime behavior of TSAN is controlled by the TSAN_OPTIONS environment
+ variable.
  
--    generate_dockerfile("debian-mipsel-cross", "debian-11",
-+    generate_dockerfile("debian-mipsel-cross", "debian-12",
-                         cross="mipsel",
-                         trailer=cross_build("mipsel-linux-gnu-",
-                                             "mipsel-softmmu,mipsel-linux-user"))
 -- 
 2.39.2
 
