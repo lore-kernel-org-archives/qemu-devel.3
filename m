@@ -4,69 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C197EDE99A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 15:39:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3ABCEDE99A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 15:45:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so2x3-00030C-E3; Tue, 10 Sep 2024 11:38:45 -0400
+	id 1so32U-00036T-2n; Tue, 10 Sep 2024 11:44:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1so2x2-0002zX-4S
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 11:38:44 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1so32S-000347-6g
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 11:44:20 -0400
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1so2x0-0008Ch-9s
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 11:38:43 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5c3c34e3c39so8042181a12.2
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 08:38:41 -0700 (PDT)
+ id 1so32Q-0000Ol-BU
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 11:44:19 -0400
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2f75a81b6d5so40242911fa.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 08:44:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725982720; x=1726587520; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725983056; x=1726587856; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=G+MwTWjJmVFM4I7GiuFCQ7keM3v9tcNhGnqLV5Q2Rz4=;
- b=waLEF2XRVtXvR9kSebzgpCjf5s4LZmGI8hHnbbDmJnPV0OxQsfh3iPsF6Yn7a4/LlN
- nmDwJLgvB5nqmjD0u/wJLmfU7OvN1g4F/nDmQppSqy7iqhGqFRqJNKXQm77ldDDTlzqS
- ioMBy6o4k7zUHzMBrj0zWf9/vXJdNxlVl3oBJwBJVPNz9TV0YJhmbTBCL5iN+i5kNoqe
- pF14OKlLUtqgECJGI7S70nItzcZ+1K1chmubfdIF6D68kM/Dlk0abccTFXVErayFQI2U
- LlZpRt+r6cpyV2L5Vjf0RSnkdpTg6YKbkJ7cKVUq7Z6N3W+g6zA48arhhkjQGzklh3nq
- vbmw==
+ bh=LSXUcdf+AFB6pXykINnOaOeGj5koD2UbOsxWW388qWo=;
+ b=jJofsf1zmq8+zstW9nyB5Id73N8XlZpkQkH+kDQ90qjTdxbLIoaV84HVh3Yjueh3dE
+ Va/CSXkhnh+H6+kY6Lntv6wWiPcRZNQ9YW1KTNVt8letZ5huXoyuX9SIcZ+Md5r3V1Ju
+ 4J27iiwKQNWJW/zI0U2C43feT113eKgKs14HMUDgLPD1HYpsDFI1RnXXGZCe7gkO5Gm3
+ kJUFzs8qw4qUnwpkb1gvQlpiMJa25jXRB0JzptZ9suvEdLQ/8g38ARGWq7fTmEoaRRrA
+ KD943o72HHfvR7mn/ysw1Ly0cQPU8THEUPUcxyEMtNuNssN/xEBM9pagMrg5+QLYKbsT
+ KBqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725982720; x=1726587520;
+ d=1e100.net; s=20230601; t=1725983056; x=1726587856;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=G+MwTWjJmVFM4I7GiuFCQ7keM3v9tcNhGnqLV5Q2Rz4=;
- b=Di1WK/6NjKAUP/VIxzRdERSlvGeV+y+/lvHTXpCFJ5iLLME4SfXHj09K5fLnrQyavI
- 6qkMx6Jhb1PRHTqzl4GQ2zc1fOUsqvgEpTQiE9MLCnLGnjvsBe5Gq8qDvxN9mOoQyAT/
- RocMwZOLOEL9J5bQZvnOOjGG90KAUlQA4wKXCL+YYbNF/yy7dp2pCAfLLlf3yDcAhEgo
- Lvo/CA3Nnsy+60feOCxWUK44xzVU4kd/rsj4vIoLDEL+jUIqTrw++FivUVeBk0j1df2k
- 0NgieQdtQwn3zcIfZ28N9k3IiDS62NeuGqZPg7X6pzLwT9Ih7flaCzqC8b/h3gOGJzx7
- iCMg==
-X-Gm-Message-State: AOJu0Yw08nW9nX0hYuEGyyZFm4W9bqcf03/hrA0VNueWvNAdzDi0Csn0
- EMDlao+8K+D8k+Sk7liyGHHnEnDEQ0IiYvYA8eToP4IWze2/1d8M/WxtIyaRcMBvBPsY7JPlwtQ
- Arlw8JohlCYDu7N3KSQVWkqXFII/7CIMacou7fg==
-X-Google-Smtp-Source: AGHT+IFltW0FXlVBO/2oGhw98eHaaIy2YGqQ3IiIzVga0arBw4ir0jaQxRUdisIvMg01EzckZZVCSDerX7RBuKD94lA=
-X-Received: by 2002:a05:6402:3705:b0:5c0:ad94:1d3 with SMTP id
- 4fb4d7f45d1cf-5c3dc7c52b7mr9164528a12.32.1725982719941; Tue, 10 Sep 2024
- 08:38:39 -0700 (PDT)
+ bh=LSXUcdf+AFB6pXykINnOaOeGj5koD2UbOsxWW388qWo=;
+ b=BbKyZaCS9taIVJxnpTXMlviZQOv3FrptvmVLOqOsVYTqOhZQBXqFh9RxqQ+LIJ+kOl
+ K51t/5lfQVdc96hRIKHIaOHg5dlP49gF1LsEwtW/wUJhtq6bbtX8ekyKMqwtotSeOHqE
+ yMeZn2/tsgOKwTLBUnSH31jXOi8PyLZ1YbMWOQxWQQ/gSWNa4VP2xptklWc812o6rKdb
+ U1LYQchGoLT57RlaJkpm66XYVgFNTw0xT6ZGSn5jXEyoqw278ot/TrH/+Z5eXH09Clhz
+ sAMbiTGfJWN5s3R83/cgyLRg6AaGdUqXBI+Vf1nFmig+j1bdwWSpMCYEAdt9etW0PLUG
+ 6zuQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUvCMtR4tFNi8DavJtAJI4O2U8iuifOrJipO4xfXwXjHfVsrClLOnNyXGWw3GrejRLoD2yTTxilABTZ@nongnu.org
+X-Gm-Message-State: AOJu0Yzdul4/uqQ0AUMq73gDKsTac8swTNj2yTgtibu6MH0kJH/LXw5I
+ 1DAHHgYWwJKfoXlk4Be+n2grDIBkz5CZfhVlmsekgbhZb322PXUEVF7kPS2E2Qv9tclerC81x8G
+ IwRIqNXAtyT2j+72HZfqHMoLtbNrXwP4pBxF5GA==
+X-Google-Smtp-Source: AGHT+IFpRYmFWFWuc0lg1fFpbJdoNcwdBTiuTLGfQKGh1iPx/WjyYACd192h3XyPI7Jitlm8iUG0U2WzJJLW8Y308Cw=
+X-Received: by 2002:a2e:4c01:0:b0:2f0:25dc:1894 with SMTP id
+ 38308e7fff4ca-2f751eaf1c3mr82762951fa.2.1725983055483; Tue, 10 Sep 2024
+ 08:44:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240910123726.182975-1-thuth@redhat.com>
-In-Reply-To: <20240910123726.182975-1-thuth@redhat.com>
+References: <20240819135455.2957406-1-mnissler@rivosinc.com>
+ <20240910105002-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240910105002-mutt-send-email-mst@kernel.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 10 Sep 2024 16:38:29 +0100
-Message-ID: <CAFEAcA_f1hMj=6wXzv2ZYuFVGDbaOpDOPzZrh3VAYqup06dXDg@mail.gmail.com>
-Subject: Re: [PULL 00/22] Tests and misc patches
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org
+Date: Tue, 10 Sep 2024 16:44:04 +0100
+Message-ID: <CAFEAcA9dxdKmU-SPg1QGUbziKeydVB=i8BZUaKqMZvMSTr8RVw@mail.gmail.com>
+Subject: Re: [PATCH] softmmu: Support concurrent bounce buffers
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Mattias Nissler <mnissler@rivosinc.com>, qemu-devel@nongnu.org, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, stefanha@redhat.com, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ David Hildenbrand <david@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,92 +96,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 10 Sept 2024 at 13:37, Thomas Huth <thuth@redhat.com> wrote:
+On Tue, 10 Sept 2024 at 15:53, Michael S. Tsirkin <mst@redhat.com> wrote:
 >
-> The following changes since commit 7bbadc60b58b742494555f06cd342311ddab93=
-51:
+> On Mon, Aug 19, 2024 at 06:54:54AM -0700, Mattias Nissler wrote:
+> > When DMA memory can't be directly accessed, as is the case when
+> > running the device model in a separate process without shareable DMA
+> > file descriptors, bounce buffering is used.
+> >
+> > It is not uncommon for device models to request mapping of several DMA
+> > regions at the same time. Examples include:
+> >  * net devices, e.g. when transmitting a packet that is split across
+> >    several TX descriptors (observed with igb)
+> >  * USB host controllers, when handling a packet with multiple data TRBs
+> >    (observed with xhci)
+> >
+> > Previously, qemu only provided a single bounce buffer per AddressSpace
+> > and would fail DMA map requests while the buffer was already in use. In
+> > turn, this would cause DMA failures that ultimately manifest as hardwar=
+e
+> > errors from the guest perspective.
+> >
+> > This change allocates DMA bounce buffers dynamically instead of
+> > supporting only a single buffer. Thus, multiple DMA mappings work
+> > correctly also when RAM can't be mmap()-ed.
+> >
+> > The total bounce buffer allocation size is limited individually for eac=
+h
+> > AddressSpace. The default limit is 4096 bytes, matching the previous
+> > maximum buffer size. A new x-max-bounce-buffer-size parameter is
+> > provided to configure the limit for PCI devices.
+> >
+> > Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+> > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> > Acked-by: Peter Xu <peterx@redhat.com>
+> > ---
+> > This patch is split out from my "Support message-based DMA in vfio-user=
+ server"
+> > series. With the series having been partially applied, I'm splitting th=
+is one
+> > out as the only remaining patch to system emulation code in the hope to
+> > simplify getting it landed. The code has previously been reviewed by St=
+efan
+> > Hajnoczi and Peter Xu. This latest version includes changes to switch t=
+he
+> > bounce buffer size bookkeeping to `size_t` as requested and LGTM'd by P=
+hil in
+> > v9.
+> > ---
+> >  hw/pci/pci.c                |  8 ++++
+> >  include/exec/memory.h       | 14 +++----
+> >  include/hw/pci/pci_device.h |  3 ++
+> >  system/memory.c             |  5 ++-
+> >  system/physmem.c            | 82 ++++++++++++++++++++++++++-----------
+> >  5 files changed, 76 insertions(+), 36 deletions(-)
+> >
+> > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> > index fab86d0567..d2caf3ee8b 100644
+> > --- a/hw/pci/pci.c
+> > +++ b/hw/pci/pci.c
+> > @@ -85,6 +85,8 @@ static Property pci_props[] =3D {
+> >                      QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
+> >      DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
+> >                      QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
+> > +    DEFINE_PROP_SIZE32("x-max-bounce-buffer-size", PCIDevice,
+> > +                     max_bounce_buffer_size, DEFAULT_MAX_BOUNCE_BUFFER=
+_SIZE),
+> >      DEFINE_PROP_END_OF_LIST()
+> >  };
+> >
 >
->   Merge tag 'crypto-fixes-pull-request' of https://gitlab.com/berrange/qe=
-mu into staging (2024-09-09 15:19:32 +0100)
+> I'm a bit puzzled by now there being two fields named
+> max_bounce_buffer_size, one directly controllable by
+> a property.
 >
-> are available in the Git repository at:
+> Pls add code comments explaining how they are related.
 >
->   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-09-10
 >
-> for you to fetch changes up to cc3e005eb22332ba277bff2e39025d0087f3795e:
->
->   tests/functional: Fix bad usage of has_cmd (2024-09-10 13:44:42 +0200)
->
-> ----------------------------------------------------------------
-> * Split --enable-sanitizers to --enable-{asan, ubsan}
-> * Build MSYS2 job using multiple CPUs
-> * Fix "make distclean" wrt contrib/plugins/
-> * Convert more Avocado tests to plain standalone functional tests
-> * Fix bug that breaks "make check-functional" when tesseract is missing
->
-> ----------------------------------------------------------------
+> Also, what is the point of adding a property without
+> making it part of an API? No one will be able to rely on
+> it working.
 
-On the 'make check-vm-openbsd' test I run:
-
-595/944 qemu:func-quick+func-mips64el /
-func-mips64el-mips64el_fuloong2e          ERROR            6.16s
-exit status 1
-602/944 qemu:func-quick+func-or1k / func-or1k-or1k_sim
-           ERROR            6.91s   exit status 1
-
-Slightly more detail further up in the log:
-
-
-595/944 qemu:func-quick+func-mips64el /
-func-mips64el-mips64el_fuloong2e          ERROR            6.16s
-exit status 1
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80  =E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95
-stderr:
-Traceback (most recent call last):
-  File "/home/qemu/qemu-test.fsnflZ/src/tests/functional/test_mips64el_fulo=
-ong2e.py",
-line 29, in test_linux_kernel_3_16
-    deb_path =3D self.ASSET_KERNEL.fetch()
-  File "/home/qemu/qemu-test.fsnflZ/src/tests/functional/qemu_test/asset.py=
-",
-line 135, in fetch
-    if not self._check(tmp_cache_file):
-  File "/home/qemu/qemu-test.fsnflZ/src/tests/functional/qemu_test/asset.py=
-",
-line 52, in _check
-    checksum =3D subprocess.check_output(
-  File "/usr/local/lib/python3.10/subprocess.py", line 421, in check_output
-    return run(*popenargs, stdout=3DPIPE, timeout=3Dtimeout, check=3DTrue,
-  File "/usr/local/lib/python3.10/subprocess.py", line 503, in run
-    with Popen(*popenargs, **kwargs) as process:
-  File "/usr/local/lib/python3.10/subprocess.py", line 971, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-  File "/usr/local/lib/python3.10/subprocess.py", line 1863, in _execute_ch=
-ild
-    raise child_exception_type(errno_num, err_msg, err_filename)
-FileNotFoundError: [Errno 2] No such file or directory: 'sha256sum'
-
-
-(test program exited with status code 1)
-
-
-Similarly for the or1k failure.
-
-If you want to use sha256sum in "make check" then we should
-ensure that it's installed in these BSD VM images.
-
-Also, does this mean that "make check" is now going to run
-a lot of the tests that were previously in "make check-avocado"?
-That seems like it might make our CI jobs take longer...
+Note that this patch is already upstream as commit 637b0aa13.
 
 thanks
 -- PMM
