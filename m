@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 659D7EDE9AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 18:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3CADEDE9AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 18:18:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so5QK-0006wg-BD; Tue, 10 Sep 2024 14:17:08 -0400
+	id 1so5RO-0002Qc-OT; Tue, 10 Sep 2024 14:18:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1so5QJ-0006s4-55
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:17:07 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1so5RI-00023A-UW
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:18:09 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1so5QH-0000GQ-Fp
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:17:06 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a83562f9be9so107759066b.0
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 11:17:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1so5RH-0000J7-8i
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:18:08 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2068acc8b98so54571555ad.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 11:18:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725992224; x=1726597024; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725992286; x=1726597086; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ZNpInoAnaoFw/b6JC0InJhjKIpedK1j64nWnGbkzwe8=;
- b=pMFBBQ2j/F8v11Ly6s+NnqOszW1o9o87RoysG9uVGY5VMJeYyYcvgrfum9KEP9PQvu
- 8vkbgnAy2nxP/ZMonM6F3SPRd98AmJv9O2qgGxhyfzPt3r4XZX4XZRBQTwsywn1ny5Gl
- IouuAC3EjVbqbV62KloMXqnYGikgPz9jL3qSV+cwscr8dDabgGG3Q3tg9vD0iWNcBWar
- aAj5jbLvpdg3cYilwpq6QA6hOxCa5/91CCOgQFU3KJ3Q1/9phAz6SrmPZbUtsHHNIhsc
- 2ov0ORLmUmHMJ6QgrGnt3sjaExDcCtO5PsCuxKQI+x4j4o4TVdm78LVAySTImvKw1siD
- lDlA==
+ bh=IJ3BbOvxATGbK3xeLZAm7u0IhggThd8APdZa7shtZwk=;
+ b=ptbYhTsejfzaGlEvuRFSIft+8YjKS5dwFqwv3RGNsesw/V2O36slOtqy4d/IvyldSz
+ GRtQYHEpE6ri8ktYP4TZknHHBdlpuvpqLA7PnjQQl+xsiXItu3GqqJfy70QT7Wg1GLIx
+ wofJ3QiUADePdUSYBxuyf1QBdJv0weweMkHFUsKpICPcad+pJTpRy7uxpDVqwMbFYPPU
+ 22WWRhJG5OL5kYgSy+Mmg+P09W01Ke4AfkvVYQ0e6o800wr+A+m8WIR/bfglhrviwM9y
+ jmI/hPDjxijsNePEbwNDep44PFRYscnPZEcEPhKy9HL9yW4uTx1YcIG5nQS5NazZpE15
+ OVrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725992224; x=1726597024;
+ d=1e100.net; s=20230601; t=1725992286; x=1726597086;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZNpInoAnaoFw/b6JC0InJhjKIpedK1j64nWnGbkzwe8=;
- b=FVncLOHKWpdwOxqBknCMV2PSSi6gdtpN78UjnuAh/tHl6JeyOnLXU9bg28XrCaEROr
- Lc1Q7PyeYX3aQOQguyPt7tqZQM1kCprkAPTxDTOdRLeoKVtYJtdgiEJIEs/bOm4obl8m
- /Q7Jbx0cpB9fHbFsy/HZjFluRqrFEqnPcLYOby2Zrit7AnDmRYcWG6S7lL8C1BcAU52y
- PLatHgR9bMoJJeWTAR6wgAiemEfIhC+sZ6O+0RJCMSMSH3DjPUFKwYtyCoHo7L015jxK
- cUtdcxgRctpo0giBqaupsGul61KnSJJ98sRW9IDsHtnILgnINKwK23iYSPgdNtLuoIbj
- yZkA==
+ bh=IJ3BbOvxATGbK3xeLZAm7u0IhggThd8APdZa7shtZwk=;
+ b=NWzvlD8zQsvTaFkeRsjI4PLJrK1uPsznaIUIFCcRUu2y7HFH4wUn4tQ8Da/FkiKMAn
+ ogASs4FtVL/qbiDZ46m/OgAtUHZ0Njhz49CvhhC12nezE3o2F9MjUd7vHwSCJedQ8CLR
+ U9QanSIK5OWhq1dhFZVoWXqr/QBQJ+kzib1wBt2sbpRxg8dZsH5Fk2L94LNP0XnePrzY
+ tn9fI/o+3JRX8ETAW0T0DsQlUaEY1djBhum4n3ZyWSIxEDaaOppzYvueEnx3kY2QInsS
+ 3FvNydEdr5UxFlpnMisly+ClGbCuWOlMnFjrWyD7F4yhQug1d7UL2R2IQOT91wp50JTS
+ JTYA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCViuLNPy5kkZXCAq+pvCHOzdIJR5TZ+MU+uyd8kViUOpQRIXaBd8m5ZXcUFTMPPB3OeJ81sE02bpALn@nongnu.org
-X-Gm-Message-State: AOJu0YxWnXCf/xQNCBH9GqhgAGZNREokqjklEfOlwEu1fLUP17vuiob0
- nLjdkTzRSEQ6btiWD7EzXTHgXBTwPGJGBaKH8SNqCja8seuptgiYcedpgSbjW1M=
-X-Google-Smtp-Source: AGHT+IHVBAS7aoNz98tml5HNyb5wUj8Kc52IBzujPkjYyxzcZdwbjvBFkiRx/JtImA3ubIeoEer34w==
-X-Received: by 2002:a17:907:7f25:b0:a7d:e5b1:bf65 with SMTP id
- a640c23a62f3a-a9004818013mr46073066b.21.1725992223484; 
- Tue, 10 Sep 2024 11:17:03 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.217.32])
+ AJvYcCW4oeT1eUbqbISjacRmuXichV8rSo1DCYaaeDWuL5TUH/ANlHWg0NRb4VaOWmow6heMPLeiU6LQZXid@nongnu.org
+X-Gm-Message-State: AOJu0YxnlcFiRhpZfDitRwc0JdIud5rtM2x+dNe/PvcTDqFY4qtffnY1
+ Q/teap6u9Q5YHuk9cNe0Q0YP5Rw1Qc+k3/pb6tZ4dFOGaW7Z/zCvSjqbFNPLOeY=
+X-Google-Smtp-Source: AGHT+IFxt15gX/mP+45nOs1fw827bX2r+fArIp46ZQ1Iy6CQMZdgIoy+MijoDJdNwKZSyfn4L2LlYQ==
+X-Received: by 2002:a17:902:dad1:b0:207:1570:13e8 with SMTP id
+ d9443c01a7336-2074c4c56demr19542475ad.12.1725992285592; 
+ Tue, 10 Sep 2024 11:18:05 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25ced20csm514193866b.172.2024.09.10.11.17.00
+ d9443c01a7336-20710f4c9b9sm51362855ad.302.2024.09.10.11.18.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 11:17:02 -0700 (PDT)
-Message-ID: <8f93171c-2964-48dc-b742-72c73e57d917@linaro.org>
-Date: Tue, 10 Sep 2024 20:16:59 +0200
+ Tue, 10 Sep 2024 11:18:05 -0700 (PDT)
+Message-ID: <41ab786e-87b7-4aa9-a259-cdf5d14003a6@linaro.org>
+Date: Tue, 10 Sep 2024 11:18:03 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/10] tests/docker: remove debian-armel-cross
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- qemu-arm@nongnu.org, devel@lists.libvirt.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Beraldo Leal <bleal@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Yanan Wang
- <wangyanan55@huawei.com>, Wainer dos Santos Moschetta <wainersm@redhat.com>
-References: <20240910173900.4154726-1-alex.bennee@linaro.org>
- <20240910173900.4154726-2-alex.bennee@linaro.org>
+Subject: Re: [RFC 2/2] target/riscv: rvv: improve performance of RISC-V vector
+ loads and stores on large amounts of data.
+To: Paolo Savini <paolo.savini@embecosm.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Helene Chelin <helene.chelin@embecosm.com>, Max Chou <max.chou@sifive.com>
+References: <20240717153040.11073-1-paolo.savini@embecosm.com>
+ <20240717153040.11073-3-paolo.savini@embecosm.com>
+ <8e0c2afd-4c31-47f8-ade9-60a83ca20859@linaro.org>
+ <1753bd69-6f7a-4b34-a7ae-8a0b225b72c9@embecosm.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240910173900.4154726-2-alex.bennee@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <1753bd69-6f7a-4b34-a7ae-8a0b225b72c9@embecosm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,29 +107,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/24 19:38, Alex Bennée wrote:
-> As debian-11 transitions to LTS we are starting to have problems
-> building the image. While we could update to a later Debian building a
-> 32 bit QEMU without modern floating point is niche host amongst the
-> few remaining 32 bit hosts we regularly build for. For now we still
-> have armhf-debian-cross-container which is currently built from the
-> more recent debian-12.
+On 9/10/24 04:20, Paolo Savini wrote:
+> Thanks for the feedback Richard, I'm working on the endianness. Could you please give me 
+> more details about the atomicity issues you are referring to?
 
-Indeed I can't remember a armel build failure that wasn't also
-happening on the armhf container.
+For instance a 32-bit atomic memory operation in the guest must be implemented with a >= 
+32-bit atomic memory operation in the host.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> Message-Id: <20240910140733.4007719-2-alex.bennee@linaro.org>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   .gitlab-ci.d/container-cross.yml              |   6 -
->   .gitlab-ci.d/crossbuilds.yml                  |   7 -
->   .../dockerfiles/debian-armel-cross.docker     | 179 ------------------
->   tests/lcitool/refresh                         |   6 -
->   4 files changed, 198 deletions(-)
->   delete mode 100644 tests/docker/dockerfiles/debian-armel-cross.docker
+The main thing to remember is that memcpy() has no atomicity guarantee.  It could be 
+implemented as a byte loop.  Thus you may only use memcpy with guest byte vectors.
 
 
+
+r~
 
