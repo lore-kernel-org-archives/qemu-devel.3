@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DBA1EE01ED
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 22:20:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B839EE01EB
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 22:20:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so9C6-0005ra-6n; Tue, 10 Sep 2024 18:18:42 -0400
+	id 1so9Bk-000383-Bi; Tue, 10 Sep 2024 18:18:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1so9Bg-0002Yx-RF
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 18:18:16 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1so9Bc-0001td-Mm
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 18:18:12 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1so9Be-0007Ae-U4
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 18:18:16 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-718e11e4186so1245240b3a.2
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 15:18:14 -0700 (PDT)
+ id 1so9Ba-00078K-Fg
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 18:18:12 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-718e6299191so2047551b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 15:18:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726006693; x=1726611493; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726006689; x=1726611489; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WAUNG2Z8iwfixvozuxuZzI5U7SDFeb08Hf/Nr+6pfa0=;
- b=sMGKU92uUL6VoGMdtD1nMNktU7SCizbIPCx2nhX/ToN2xSX7x2+qAfEqeKdNOinRWE
- zFwWnrk6LEegildz92cUU/0CiiYoSoS7H2CunZKcRE0cM76NMUhycnW6OVLH+Am35uPZ
- ZFRovXadWkn6LYG9qozJs9FEWpVTlkCytM+TzjCq3XcjT34BRO0R4LRH1QWNwl1GjkDB
- gCtStwyDH2I1+MkvvYcfMFCEQBgn+eK6tTwY+CZAoSz8zqWcid6LViYx3kMuZz/gFqoy
- ucJJagd550VwcdSBw6t2Sr1mh3th0Bi0QctSmQpJVEn1EfaRx6tZ864LpRg7YJDkSzW8
- +pZA==
+ bh=w3yhi+ZDTWCfsZmUwBuf/pfnGgC91a9e/gCoVrv3y5U=;
+ b=v20gkdNoFF3X/7OXulCW111qIIh+/d2QLCUfFm72mk20An0iD1snWkW57vYIJJDYO9
+ xWcga7oukhfo+81Zr0Mcwggtce/nFlKiTCnviTZLERJEd4t/fGf0U2bHiefmCgrYtNcm
+ cKCaLGyXoDIefZGpydDASuoVdogZKb/qimutpvQ3b6aA1Xljwa2rGcvKOvl7/4cUb1V9
+ +iCi8ip24UM5mB0VLXOwfFbKFlTKypuO20UmAJmRQr/BENeBwLk6U3Jg749KOLyaui1P
+ 5I7rn9EsM+XheZ5TcZmaWFLhOhVSRvVYWbE5TMxC6Xd66dNbK3YBQImpmOpQeR399Xvo
+ TieQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726006693; x=1726611493;
+ d=1e100.net; s=20230601; t=1726006689; x=1726611489;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WAUNG2Z8iwfixvozuxuZzI5U7SDFeb08Hf/Nr+6pfa0=;
- b=CJxr0swgN4oe/hCBPglBNVZIhrjxZbjQDaNuSlH73QRKwLNw1EpSEWsqZuqbrarroe
- pqE9ionpFvP9y501AiUezy8toSaSAEpT884oO3osLdPiKJu4WL6H4T/44DXxnOMO/iaS
- XLlvuCwyqzSGCLmgN4Fw72YccPC+zQUSAJRpgJgsUwUPIa2Zh8hA8zEKa0fsOkaev3q6
- Fuvohp02n+iKSlM801R2aIygKGObEzSgBtAPNtQi6AoxZDxl18QWqksLYBzeydVzVYPG
- dE2fLF78eo2CokmOWirtndtbww5DHrFPbrZqDBedmLQGHDW+8vGIpF2hmyYsIXUGBR82
- Y9zQ==
-X-Gm-Message-State: AOJu0Yz4StwMfQ0pBgSZr/ds/g3t8EG+7bvukjjHOUcjCkwKnvItWO9+
- 0eLy3NA+OXEkaUpNF7RveC3ePoFNdgWgN+6ED+s6TZSwehHeVE3aWkOvUkT31QUSXb99ZOnnuHS
- NvQ6ZXv1M
-X-Google-Smtp-Source: AGHT+IFGhI3LMnJRi+254dAZqpPbVgzsgGXn7sXIi4XpOoxOVhAxol60+FTs3bT9dBxAMQw1ZiUN2w==
-X-Received: by 2002:a05:6a20:e609:b0:1cf:42ab:5776 with SMTP id
- adf61e73a8af0-1cf62d5ca4amr1800943637.32.1726006693348; 
- Tue, 10 Sep 2024 15:18:13 -0700 (PDT)
+ bh=w3yhi+ZDTWCfsZmUwBuf/pfnGgC91a9e/gCoVrv3y5U=;
+ b=FDz/Jl6kd9CDS6bG1Js1O1gHZYoHuVUXmsbP6sin4Nb6Uu+P7c2DtjfHVQyuxT1ooh
+ kCAGza8JFcD2lXHDiDCuifWt2N81Pqod3cMaLoWi4+E9JLI+9Z+wqwzTVls89B6uQCYP
+ 8/DdKPTy28Ie5glund/puL2RKKQQ1F3TPmrxVdOpnJJWoDYWhwRUnWz8s9yXI+K/LLjs
+ MB2NpUA76/DFYgSYnZMxXxYqHYnFXcAo37FCSZYmXlhfD1b0HJyS8qO3mIAzuxyZtWgg
+ YUE/8bVTgHQCXvCSDQ4SC+mTOKPF3Wrn8O4EXv/Jr9WgPLzmI0DvgNebz/Y6jrHogRkz
+ PcvQ==
+X-Gm-Message-State: AOJu0YyNBiBfc+QyByFA4yA/+Q2yz06f8KPlH8UN0r5hknc5NMmS7DaS
+ 3OVdRGafqPCYd8qFy0PdEskmI5hD+5Moo7efnCiw94fXAleqYzza3AAF/iFM5NAAbhO+m0yVpI6
+ ICIYx2gwb
+X-Google-Smtp-Source: AGHT+IFWVQXCFJBuiwg4sJ6d5t1Y5jRczP6OzJP2N7AUafUaS1UpRZkOWeoH/e+NIJwWwR2fc3KdxA==
+X-Received: by 2002:a05:6a00:218e:b0:717:9768:a4e7 with SMTP id
+ d2e1a72fcca58-718d5ded0acmr15828847b3a.2.1726006688573; 
+ Tue, 10 Sep 2024 15:18:08 -0700 (PDT)
 Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::9633])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71909003d0esm1884055b3a.93.2024.09.10.15.18.11
+ d2e1a72fcca58-71909003d0esm1884055b3a.93.2024.09.10.15.18.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2024 15:18:12 -0700 (PDT)
+ Tue, 10 Sep 2024 15:18:08 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, "Richard W.M. Jones" <rjones@redhat.com>,
@@ -105,17 +105,16 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, "Richard W.M. Jones" <rjones@redhat.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  Jason Wang <jasowang@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 39/39] scripts/checkpatch.pl: emit error when using
- assert(false)
-Date: Tue, 10 Sep 2024 15:16:06 -0700
-Message-Id: <20240910221606.1817478-40-pierrick.bouvier@linaro.org>
+Subject: [PATCH 37/39] fpu: remove break after g_assert_not_reached()
+Date: Tue, 10 Sep 2024 15:16:04 -0700
+Message-Id: <20240910221606.1817478-38-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240910221606.1817478-1-pierrick.bouvier@linaro.org>
 References: <20240910221606.1817478-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -140,23 +139,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- scripts/checkpatch.pl | 3 +++
- 1 file changed, 3 insertions(+)
+ fpu/softfloat-parts.c.inc | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 65b6f46f905..fa9c12230eb 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -3102,6 +3102,9 @@ sub process {
- 		if ($line =~ /\b(g_)?assert\(0\)/) {
- 			ERROR("use g_assert_not_reached() instead of assert(0)\n" . $herecurr);
- 		}
-+		if ($line =~ /\b(g_)?assert\(false\)/) {
-+			ERROR("use g_assert_not_reached() instead of assert(false)\n" . $herecurr);
-+		}
- 		if ($line =~ /\bstrerrorname_np\(/) {
- 			ERROR("use strerror() instead of strerrorname_np()\n" . $herecurr);
- 		}
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index a44649f4f4a..cc6e06b9761 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -1373,7 +1373,6 @@ static FloatPartsN *partsN(minmax)(FloatPartsN *a, FloatPartsN *b,
+             break;
+         default:
+             g_assert_not_reached();
+-            break;
+         }
+         switch (b->cls) {
+         case float_class_normal:
+@@ -1386,7 +1385,6 @@ static FloatPartsN *partsN(minmax)(FloatPartsN *a, FloatPartsN *b,
+             break;
+         default:
+             g_assert_not_reached();
+-            break;
+         }
+     }
+ 
 -- 
 2.39.2
 
