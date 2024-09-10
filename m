@@ -4,91 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DC3FECE564
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 13:54:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A4F6ECE564
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 13:56:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so1JV-00013Q-Bt; Tue, 10 Sep 2024 09:53:49 -0400
+	id 1so1Lw-0006cP-3X; Tue, 10 Sep 2024 09:56:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1so1JT-00012N-Nq; Tue, 10 Sep 2024 09:53:47 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1so1Lt-0006bn-0A
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 09:56:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1so1JR-0004zR-RJ; Tue, 10 Sep 2024 09:53:47 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48AAVJRQ011017;
- Tue, 10 Sep 2024 13:53:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- OS1twHQ3woy8X4StN6DiqEMyf06EgUDt5LIXZAkKjuw=; b=fUmKcGhgK1L750VE
- 0eqajMPmRk8d9BGeSss82g+I6iJVrXZ76xhmOgCcKMAlIJbx4LRMY64bOrKLVpYU
- 4yBpi9xaQ4OZWkb2g501bDPCPQk+GevgdduKZ9QwpT4UWDnzSAKhx0nfEj1S4gQP
- tldBgtDqydpIACSiTtOFy89l8/kuxPbNN13081qPUT/UekZH/fKe166zQB/Mv/Z0
- ldtWM/rf8ZCwVT3y/tMvRftEbWkswCXF4miE7Srk6FoiIlgtFfkiAdyPuF58lOmC
- 0DnL4GEXbWSEUqTqolumg3iWElafuKgZUoct4bVm0B9r+eJ06DUAVETsFeVzLrS0
- 6RjU3Q==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41gybpp301-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Sep 2024 13:53:39 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
- [10.47.97.35])
- by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48ADrctQ014524
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Sep 2024 13:53:39 GMT
-Received: from [10.222.168.90] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Sep
- 2024 06:53:38 -0700
-Message-ID: <83bbc1d7-350f-4fc9-812a-847f63d3a00f@quicinc.com>
-Date: Tue, 10 Sep 2024 08:53:37 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1so1Lr-0005Le-BZ
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 09:56:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725976574;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=spqhTNVJHhEhdKNaoWNom/Wy0L3Nm7AzxOZR3GPa0jc=;
+ b=E1tv8hZxXXvkkmRKhhlhsoebT3FVUqycYBBr5GNLQMGBnhM9D5Zi4aWyZWLHEGP5yBUjkM
+ vpZAnGqjnSlCU3hBYrMTiV4tSx530IRUWd4aFB9iCNy4aBBEqVgHiXrxXpctHHLft80MtR
+ Bk1hflFYSDJP8qZFVp0m/eIdoK05ASI=
+Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com
+ [209.85.221.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-454-Ui3fjwUwPJW1yLOqas-ixg-1; Tue, 10 Sep 2024 09:56:11 -0400
+X-MC-Unique: Ui3fjwUwPJW1yLOqas-ixg-1
+Received: by mail-vk1-f199.google.com with SMTP id
+ 71dfb90a1353d-501061b4a41so1701294e0c.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 06:56:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725976570; x=1726581370;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=spqhTNVJHhEhdKNaoWNom/Wy0L3Nm7AzxOZR3GPa0jc=;
+ b=ej1MOOLcuPlxHkaxENxVR6Er7WIQcmyFKts6wFcBtNuayNVmSK0bKbXkbpS0mHfV4T
+ IyA7CRFN8Lpvlp4pFf8jgyZy21OVkaroWkLAggrQDUj/ZDogXzkqJ6/YcTZlIIl73s8J
+ acpcSUFu8elnwIEwaMFLEhjBqRjEHYhjOvi4mtQwXxyI48T9oO7yFgiif4tbDdcB1tvX
+ PAU2SwdEqPApxYo9tNFXq+nQj0YCp20l0aDgvzjWK0C7hkuzFErkjyQJ7Et9FUTSTiPg
+ Xk4nXcgxZYSXJhZE+zfEOlqlToiAR5NippzCSp2QD++Xf2q3KZtBeTz08WzFk3LjrZs3
+ oxwg==
+X-Gm-Message-State: AOJu0YxhBhKp2qGklRFr6u/1tCxY2LKnMC9gCDrxNv/OcSMNS2+3lF0v
+ m9vdo/v6DBd25WEqoPabuADmJW7fK9lcBLw9iJnkLuWBFAoOqArjkCbOzvaFS6tBb0bNwJDHOTF
+ ozn4RC9nThSo3cmvXC6TpCTNxjcmWsAF/9SDHfkdR4of7t4SpvQxy
+X-Received: by 2002:a05:6122:3282:b0:4f5:abe4:50e2 with SMTP id
+ 71dfb90a1353d-50207c69ffdmr15737594e0c.6.1725976570476; 
+ Tue, 10 Sep 2024 06:56:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHThpWTJWnOIKO7aFwx1fq8deA8VX8wZBP4O4RSgGD7/Z5hjdVEUWJoldgt5fkbX7uzOGaw/g==
+X-Received: by 2002:a05:6122:3282:b0:4f5:abe4:50e2 with SMTP id
+ 71dfb90a1353d-50207c69ffdmr15737557e0c.6.1725976570078; 
+ Tue, 10 Sep 2024 06:56:10 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6c534786c12sm29928886d6.146.2024.09.10.06.56.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Sep 2024 06:56:09 -0700 (PDT)
+Date: Tue, 10 Sep 2024 09:56:07 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Yong Huang <yong.huang@smartx.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH RESEND RFC 03/10] qapi/migration: Introduce periodic CPU
+ throttling parameters
+Message-ID: <ZuBP90uSWiJWXTgQ@x1n>
+References: <cover.1725891841.git.yong.huang@smartx.com>
+ <0bbcdfd86f35830e0a398220663aac5afd8b7e1e.1725891841.git.yong.huang@smartx.com>
+ <Zt9o5r1ZWOxnjctC@x1n>
+ <CAK9dgma+kmV=sXPu-RUnT8mkQmRUJXRRkiDXfFDoT+6JBu-nHw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/hexagon: Rename macros.inc -> macros.h.inc
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- <qemu-devel@nongnu.org>
-CC: Brian Cain <bcain@quicinc.com>, <qemu-trivial@nongnu.org>, Anton Johansson
- <anjo@rev.ng>, Alessandro Di Federico <ale@rev.ng>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- "Matheus Tavares Bernardino" <quic_mathbern@quicinc.com>
-References: <20240910112833.27594-1-philmd@linaro.org>
- <20240910112833.27594-2-philmd@linaro.org>
-Content-Language: en-US
-From: Brian Cain <quic_bcain@quicinc.com>
-In-Reply-To: <20240910112833.27594-2-philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-ORIG-GUID: CtTTBFaB1HXFDkLeeWx2RMaIHUhyqJkU
-X-Proofpoint-GUID: CtTTBFaB1HXFDkLeeWx2RMaIHUhyqJkU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 spamscore=0 adultscore=0
- lowpriorityscore=0 mlxlogscore=999 clxscore=1011 bulkscore=0
- impostorscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409100103
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=quic_bcain@quicinc.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <CAK9dgma+kmV=sXPu-RUnT8mkQmRUJXRRkiDXfFDoT+6JBu-nHw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,84 +107,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Sep 10, 2024 at 01:47:04PM +0800, Yong Huang wrote:
+> On Tue, Sep 10, 2024 at 5:30 AM Peter Xu <peterx@redhat.com> wrote:
+> 
+> > On Mon, Sep 09, 2024 at 10:25:36PM +0800, Hyman Huang wrote:
+> > > To activate the periodic CPU throttleing feature, introduce
+> > > the cpu-periodic-throttle.
+> > >
+> > > To control the frequency of throttling, introduce the
+> > > cpu-periodic-throttle-interval.
+> > >
+> > > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+> >
+> > Considering that I would still suggest postcopy over auto-converge, IMO we
+> >
+> 
+> We are considering the hybrid of precopy and postcopy in fact, and i
+> entirely agree with what you are saying: postcopy migration is an
+> alternative
+> solution to deal with migrations that refuse to converge, or take too long
+> to converge. But enabling this feature may not be easy in production since
+> the
+> recovery requires upper apps to interface, the hugepages and spdk/dpdk
 
-On 9/10/2024 6:28 AM, Philippe Mathieu-Daudé wrote:
-> Since commits 139c1837db ("meson: rename included C source files
-> to .c.inc") and 0979ed017f ("meson: rename .inc.h files to .h.inc"),
-> EMU standard procedure for included header files is to use *.h.inc.
->
-> Besides, since commit 6a0057aa22 ("docs/devel: make a statement
-> about includes") this is documented in the Coding Style:
->
->    If you do use template header files they should be named with
->    the ``.c.inc`` or ``.h.inc`` suffix to make it clear they are
->    being included for expansion.
->
-> Therefore rename "macros.inc" as "macros.h.inc".
->
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
+Libvirt should support recovery, while vhost-user should also be supported
+in general by both qemu/libvirt.  Huge page is indeed still the issue,
+though.
 
-Reviewed-by: Brian Cain <bcain@quicinc.com>
+> scenarios also need to be considered and re-test.
+> Considering auto-converge is the main policy in the industry, the
+> optimization
+> may still make sense. We would like to try to optimize the auto-converge in
+> huge
+> VM case and, IMHO, it doesn't conflict with postcopy.
 
+Yeah, that's OK.
 
->   target/hexagon/idef-parser/README.rst                   | 4 ++--
->   target/hexagon/idef-parser/{macros.inc => macros.h.inc} | 0
->   target/hexagon/gen_idef_parser_funcs.py                 | 2 +-
->   target/hexagon/meson.build                              | 2 +-
->   4 files changed, 4 insertions(+), 4 deletions(-)
->   rename target/hexagon/idef-parser/{macros.inc => macros.h.inc} (100%)
->
-> diff --git a/target/hexagon/idef-parser/README.rst b/target/hexagon/idef-parser/README.rst
-> index d0aa34309b..7199177ee3 100644
-> --- a/target/hexagon/idef-parser/README.rst
-> +++ b/target/hexagon/idef-parser/README.rst
-> @@ -138,7 +138,7 @@ we obtain the pseudo code
->   with macros such as ``fJUMPR`` intact.
->   
->   The second step is to expand macros into a form suitable for our parser.
-> -These macros are defined in ``idef-parser/macros.inc`` and the step is
-> +These macros are defined in ``idef-parser/macros.h.inc`` and the step is
->   carried out by the ``prepare`` script which runs the C preprocessor on
->   ``idef_parser_input.h.inc`` to produce
->   ``idef_parser_input.preprocessed.h.inc``.
-> @@ -266,7 +266,7 @@ in plain C is defined as
->       #define fABS(A) (((A) < 0) ? (-(A)) : (A))
->   
->   and returns the absolute value of the argument ``A``. This macro is not included
-> -in ``idef-parser/macros.inc`` and as such is not expanded and kept as a "call"
-> +in ``idef-parser/macros.h.inc`` and as such is not expanded and kept as a "call"
->   ``fABS(...)``. Reason being, that ``fABS`` is easier to match and map to
->   ``tcg_gen_abs_<width>``, compared to the full ternary expression above. Loads of
->   macros in ``macros.h`` are kept unexpanded to aid in parsing, as seen in the
-> diff --git a/target/hexagon/idef-parser/macros.inc b/target/hexagon/idef-parser/macros.h.inc
-> similarity index 100%
-> rename from target/hexagon/idef-parser/macros.inc
-> rename to target/hexagon/idef-parser/macros.h.inc
-> diff --git a/target/hexagon/gen_idef_parser_funcs.py b/target/hexagon/gen_idef_parser_funcs.py
-> index eb494abba8..72f11c68ca 100644
-> --- a/target/hexagon/gen_idef_parser_funcs.py
-> +++ b/target/hexagon/gen_idef_parser_funcs.py
-> @@ -50,7 +50,7 @@ def main():
->       tagimms = hex_common.get_tagimms()
->   
->       with open(sys.argv[-1], "w") as f:
-> -        f.write('#include "macros.inc"\n\n')
-> +        f.write('#include "macros.h.inc"\n\n')
->   
->           for tag in hex_common.tags:
->               ## Skip the priv instructions
-> diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
-> index 9ea1f4fc59..f1723778a6 100644
-> --- a/target/hexagon/meson.build
-> +++ b/target/hexagon/meson.build
-> @@ -284,7 +284,7 @@ if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
->           'idef_parser_input.preprocessed.h.inc',
->           output: 'idef_parser_input.preprocessed.h.inc',
->           input: idef_parser_input_generated,
-> -        depend_files: [idef_parser_dir / 'macros.inc'],
-> +        depend_files: [idef_parser_dir / 'macros.h.inc'],
->           command: [idef_parser_dir / 'prepare', '@INPUT@', '-I' + idef_parser_dir, '-o', '@OUTPUT@'],
->       )
->   
+> 
+> 
+> > should be cautious on adding more QMP interfaces on top of auto-converge,
+> > because that means more maintenance burden everywhere.. and it's against
+> > our goal to provide, hopefully, one solution for the long term for
+> > convergence issues.
+> >
+> > Postcopy has a major issue with VFIO, but auto converge isn't anything
+> > better from that regard.. as we can't yet throttle a device so far anyway.
+> > Throttling of DMA probably means DMA faults, then postcopy might be doable
+> > too.  Meanwhile we're looking at working out 1G postcopy at some point.
+> >
+> > So I wonder whether we can make any further optmization for auto-converge
+> > (if we still really want that..) to be at least transparent, so that they
+> >
+> 
+> Thanks for the advice and of course yes.
+> So, at first, We'll try to avoid adding the new periodic throttle parameter
+> and make it be transparent ?
+
+That'll be my take on this, so we can keep relatively focused for hopefully
+all migration developers around QEMU in the near future.  I wonder this
+could be a good measure so we at least try to reduce part of the burden.
+
+I don't think it's a published rule, it's just something I thought about
+when glancing your series.  So feel free to share your thoughts.  Btw I'll
+not be able to read into details yet in the next few days due to flooded
+inbox.. sorry for that.  But I'll come back after I flush the rest.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
