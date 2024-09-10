@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37531ECE564
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 14:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3005DECE564
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 14:14:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so1cw-0002H1-Id; Tue, 10 Sep 2024 10:13:54 -0400
+	id 1so1d1-0002o5-OI; Tue, 10 Sep 2024 10:13:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so1cv-0002Bs-6S
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:13:53 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ id 1so1cy-0002R2-MX
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:13:56 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so1ct-0007Sc-B1
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:13:52 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-535be093a43so1123330e87.3
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 07:13:50 -0700 (PDT)
+ id 1so1ct-0007Sx-Oc
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:13:56 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5c26852aff1so6524861a12.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 07:13:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725977629; x=1726582429; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725977630; x=1726582430; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uAf+CXUcolH9rKHrNsjwgZNqlQIpEkE3qYyXUtlw504=;
- b=N+7ZwCV1JFEhV8XpLvuinDGsFEYMkrw2eyWVxJek6Ds/pAGrUNddetSPeV8IBIDB0j
- BLSaG4SOBP0yJdiMqkAbH5TFPWC7DzOryVtgAx/vCGSRXyG+SfCzS+BCJsUSehA9oDHc
- o8usauivhOuYWaGdEFmqGIDa2Kq1Yjuoe6z2pbnWFb8oNJsVuk4SMgCxTdYDNblv2eIi
- HznJk6XXu0I3DeOq/jRN/t/5fHJZsfhpmfH5MVMvnBcvR13HCbHpztInx5nU2S+Js/k9
- c+Q0xOnOseOZYkvtryvx+2dMmVY9arG7ns6lt/gHotXf4GfrFfpVrgSjhJgECjWzkbGX
- tHGQ==
+ bh=S6DKrSbtb2UyOkFJWx3GO7dDs+1RREyLEnRKm6VRifM=;
+ b=HJo7h8k0x5t/aNeCB1FTtjSocQHCZPj/t0EPjE+nzCfyc4Unvc6TIIJxGzfeHva++w
+ aRcAow/vyzbuD60usyl8eyiR/Htp9iyFgVJNLiOIfwO6WIBoGfqzlHXlwFVRj3mc7cmg
+ RCDeKO0uPm//yjn7+236/6g9FQzPTFlEp9k2Cf7WjKDUGdQXhH/G6y0+Ccty8wHP65sJ
+ puGyho5ZspAEjiyWJfYrm57qAKRTU7Mzml+Sg8XNKhQEZK8t6ssJ8n2+wFAoe2/hpG7q
+ HMKgoyDXcYK/516IZ11c+rISmvdNewjXugSxCShvPZhGnKvRcLAM2ZYc7xZ8lyI8LMW+
+ +p0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725977629; x=1726582429;
+ d=1e100.net; s=20230601; t=1725977630; x=1726582430;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uAf+CXUcolH9rKHrNsjwgZNqlQIpEkE3qYyXUtlw504=;
- b=Uv2iXTakex5qa0jlCAbDE4eEV127DxCihltGQHgVUn25m7t/t2rqzV4TGj7q3lcLVx
- ztEGmZfKkINAuVl27iLCUTA5iOwXRqmUf+kL+6WP4DguJBC54UTHWI9NS7+JOX4v71mz
- OnmEcicij0mv3cKF06azTlML146Q+BrUF+zyK9JKBICiBYPv50WvW291apO+2/Fxxj/1
- /v3eGRtOevheKDV0Cu0lMJLiLk2u2pnPv1PrkkEtH6+sNlvBVAsE2/foPqOfVfhAKIar
- QeFu6fUCLiq+rtGT+kGrpDuTTpVWohQCrvdGBSLhiWbJPXzSH4ZNSRyoBiBxuf0vSPe/
- c8Yw==
-X-Gm-Message-State: AOJu0Yy4NuYldCshN+eqEec9sOLtfqa57w/j28jsfyimRsXHAYY2+08J
- BPlFv6po19MGu2F4ehpruEUJWSGTmkamEzpMF+Nk8M2wivnVlcGDMWsgVjqUoSY=
-X-Google-Smtp-Source: AGHT+IFZd/MkBN6yfcK/74xW1ec/RETc6+NIIFo9aML0rb0CZNrc+9Bg02E6fjsfmXTG4cp4UJtSrg==
-X-Received: by 2002:a05:6512:3b22:b0:536:545c:bbf6 with SMTP id
- 2adb3069b0e04-536587a3fb8mr9036141e87.1.1725977628420; 
- Tue, 10 Sep 2024 07:13:48 -0700 (PDT)
+ bh=S6DKrSbtb2UyOkFJWx3GO7dDs+1RREyLEnRKm6VRifM=;
+ b=QbANkH72XSbr7akU3gz2VCIj5wCOfCV0Qf1EFqzjqq0qcKVv/4la3ROrfS8w+RX9R6
+ wFsf/zZAbz2oXgZa7LNpTVEwg0slXoaodokJTHucQ2eeDVKyJM9VlRu0uppTCQ9ZfKNV
+ flYhywR/+JDG+ncvANxYfRdrYf3SdzZWzFuL97G0tELm1qvX+bNbIkBQh7v1ruRvhM2f
+ byts6ItQnoOePhTU4YWZkT+BdYBm2fSpeFlRzkRUbO9jIdXkQEd7khA0Fc3DpgoDmJ2S
+ mLpvwRcEnFLXMVUaC6/iFy2c7oPGgP/v3MprDX7xydbUS7omC6f4/oGU2YibLsx99r3a
+ VtxQ==
+X-Gm-Message-State: AOJu0Yyhk4Jccuwfz3dHfygi3TkpVqo5Op2DeXMhRGDs5JkSoPN9eUoW
+ 8OUoHYxe9La4tL12C+x/Bs41ThNSq2Acn85AsM48WyzP1YZeeiyj04pSCjRyHuE=
+X-Google-Smtp-Source: AGHT+IF5KrELJLIlD3YioUixACIgWYs8AgZ0uiRx0KCPrBRDFcGJOhZt0fYSh0pG54+TAZBbX9ottw==
+X-Received: by 2002:a05:6402:4015:b0:5c3:cd88:a0a with SMTP id
+ 4fb4d7f45d1cf-5c3e963621dmr9118972a12.18.1725977629785; 
+ Tue, 10 Sep 2024 07:13:49 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd41cd7sm4339984a12.3.2024.09.10.07.13.47
+ 4fb4d7f45d1cf-5c3ebce3448sm4368461a12.0.2024.09.10.07.13.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 10 Sep 2024 07:13:47 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8E34C6343F;
+ by draig.lan (Postfix) with ESMTP id F2C9D634A2;
  Tue, 10 Sep 2024 15:07:35 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -75,18 +75,21 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
  qemu-arm@nongnu.org, devel@lists.libvirt.org,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH 19/26] tests/tcg: clean up output of memory system test
-Date: Tue, 10 Sep 2024 15:07:26 +0100
-Message-Id: <20240910140733.4007719-20-alex.bennee@linaro.org>
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Yotaro Nada <yotaro.nada@gmail.com>
+Subject: [PATCH 23/26] contrib/plugins: Add a plugin to generate basic block
+ vectors
+Date: Tue, 10 Sep 2024 15:07:30 +0100
+Message-Id: <20240910140733.4007719-24-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240910140733.4007719-1-alex.bennee@linaro.org>
 References: <20240910140733.4007719-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x131.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,187 +112,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is useful information when debugging memory issues so lets
-improve by:
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-  - include the ptr address for u8 fills (like the others)
-  - indicate the number of operations for reads and writes
-  - explicitly note when we are flushing
-  - move the fill printf to after the reset
+SimPoint is a widely used tool to find the ideal microarchitecture
+simulation points so Valgrind[2] and Pin[3] support generating basic
+block vectors for use with them. Let's add a corresponding plugin to
+QEMU too.
 
+Note that this plugin has a different goal with tests/plugin/bb.c.
+
+This plugin creates a vector for each constant interval instead of
+counting the execution of basic blocks for the entire run and able to
+describe the change of execution behavior. Its output is also
+syntactically simple and better suited for parsing, while the output of
+tests/plugin/bb.c is more human-readable.
+
+[1] https://cseweb.ucsd.edu/~calder/simpoint/
+[2] https://valgrind.org/docs/manual/bbv-manual.html
+[3] https://www.intel.com/content/www/us/en/developer/articles/tool/pin-a-dynamic-binary-instrumentation-tool.html
+
+Signed-off-by: Yotaro Nada <yotaro.nada@gmail.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20240816-bb-v3-1-b9aa4a5c75c5@daynix.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/tcg/multiarch/system/memory.c | 47 ++++++++++++++++++-----------
- 1 file changed, 29 insertions(+), 18 deletions(-)
+ docs/about/emulation.rst |  30 ++++++++
+ contrib/plugins/bbv.c    | 158 +++++++++++++++++++++++++++++++++++++++
+ contrib/plugins/Makefile |   1 +
+ 3 files changed, 189 insertions(+)
+ create mode 100644 contrib/plugins/bbv.c
 
-diff --git a/tests/tcg/multiarch/system/memory.c b/tests/tcg/multiarch/system/memory.c
-index 6eb2eb16f7..8f2371975d 100644
---- a/tests/tcg/multiarch/system/memory.c
-+++ b/tests/tcg/multiarch/system/memory.c
-@@ -63,12 +63,14 @@ static void init_test_data_u8(int unused_offset)
-     int i;
-     (void)(unused_offset);
+diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+index eea1261baa..a4470127c9 100644
+--- a/docs/about/emulation.rst
++++ b/docs/about/emulation.rst
+@@ -272,6 +272,36 @@ Behaviour can be tweaked with the following arguments:
+   * - idle=true|false
+     - Dump the current execution stats whenever the guest vCPU idles
  
--    ml_printf("Filling test area with u8:");
-+    ml_printf("Filling test area with u8 (%p):", ptr);
++Basic Block Vectors
++...................
 +
-     for (i = 0; i < TEST_SIZE; i++) {
-         *ptr++ = BYTE_NEXT(count);
-         pdot(i);
-     }
--    ml_printf("done\n");
++``contrib/plugins/bbv.c``
 +
-+    ml_printf("done %d @ %p\n", i, ptr);
- }
++The bbv plugin allows you to generate basic block vectors for use with the
++`SimPoint <https://cseweb.ucsd.edu/~calder/simpoint/>`__ analysis tool.
++
++.. list-table:: Basic block vectors arguments
++  :widths: 20 80
++  :header-rows: 1
++
++  * - Option
++    - Description
++  * - interval=N
++    - The interval to generate a basic block vector specified by the number of
++      instructions (Default: N = 100000000)
++  * - outfile=PATH
++    - The path to output files.
++      It will be suffixed with ``.N.bb`` where ``N`` is a vCPU index.
++
++Example::
++
++  $ qemu-aarch64 \
++    -plugin contrib/plugins/libbbv.so,interval=100,outfile=sha1 \
++    tests/tcg/aarch64-linux-user/sha1
++  SHA1=15dd99a1991e0b3826fede3deffc1feba42278e6
++  $ du sha1.0.bb
++  23128   sha1.0.bb
++
+ Instruction
+ ...........
  
- /*
-@@ -94,7 +96,7 @@ static void init_test_data_s8(bool neg_first)
-         *ptr++ = get_byte(i, !neg_first);
-         pdot(i);
-     }
--    ml_printf("done\n");
-+    ml_printf("done %d @ %p\n", i * 2, ptr);
- }
- 
- /*
-@@ -105,9 +107,18 @@ static void reset_start_data(int offset)
- {
-     uint32_t *ptr = (uint32_t *) &test_data[0];
-     int i;
+diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
+new file mode 100644
+index 0000000000..a5256517dd
+--- /dev/null
++++ b/contrib/plugins/bbv.c
+@@ -0,0 +1,158 @@
++/*
++ * Generate basic block vectors for use with the SimPoint analysis tool.
++ * SimPoint: https://cseweb.ucsd.edu/~calder/simpoint/
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+    if (!offset) {
++#include <stdio.h>
++#include <glib.h>
++
++#include <qemu-plugin.h>
++
++typedef struct Bb {
++    uint64_t vaddr;
++    struct qemu_plugin_scoreboard *count;
++    unsigned int index;
++} Bb;
++
++typedef struct Vcpu {
++    uint64_t count;
++    FILE *file;
++} Vcpu;
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
++static GHashTable *bbs;
++static GRWLock bbs_lock;
++static char *filename;
++static struct qemu_plugin_scoreboard *vcpus;
++static uint64_t interval = 100000000;
++
++static void plugin_exit(qemu_plugin_id_t id, void *p)
++{
++    for (int i = 0; i < qemu_plugin_num_vcpus(); i++) {
++        fclose(((Vcpu *)qemu_plugin_scoreboard_find(vcpus, i))->file);
++    }
++
++    g_hash_table_unref(bbs);
++    g_free(filename);
++    qemu_plugin_scoreboard_free(vcpus);
++}
++
++static void free_bb(void *data)
++{
++    qemu_plugin_scoreboard_free(((Bb *)data)->count);
++    g_free(data);
++}
++
++static qemu_plugin_u64 count_u64(void)
++{
++    return qemu_plugin_scoreboard_u64_in_struct(vcpus, Vcpu, count);
++}
++
++static qemu_plugin_u64 bb_count_u64(Bb *bb)
++{
++    return qemu_plugin_scoreboard_u64(bb->count);
++}
++
++static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
++{
++    g_autofree gchar *vcpu_filename = NULL;
++    Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
++
++    vcpu_filename = g_strdup_printf("%s.%u.bb", filename, vcpu_index);
++    vcpu->file = fopen(vcpu_filename, "w");
++}
++
++static void vcpu_interval_exec(unsigned int vcpu_index, void *udata)
++{
++    Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
++    GHashTableIter iter;
++    void *value;
++
++    if (!vcpu->file) {
 +        return;
 +    }
 +
-+    ml_printf("Flushing %d bytes from %p: ", offset, ptr);
++    vcpu->count -= interval;
 +
-     for (i = 0; i < offset; i++) {
-         *ptr++ = 0;
-     }
++    fputc('T', vcpu->file);
 +
-+    ml_printf("done %d @ %p\n", i, ptr);
- }
- 
- static void init_test_data_u16(int offset)
-@@ -117,17 +128,17 @@ static void init_test_data_u16(int offset)
-     const int max = (TEST_SIZE - offset) / sizeof(word);
-     int i;
- 
--    ml_printf("Filling test area with u16 (offset %d, %p):", offset, ptr);
--
-     reset_start_data(offset);
- 
-+    ml_printf("Filling test area with u16 (offset %d, %p):", offset, ptr);
++    g_rw_lock_reader_lock(&bbs_lock);
++    g_hash_table_iter_init(&iter, bbs);
 +
-     for (i = 0; i < max; i++) {
-         uint16_t low = BYTE_NEXT(count), high = BYTE_NEXT(count);
-         word = BYTE_SHIFT(high, 1) | BYTE_SHIFT(low, 0);
-         *ptr++ = word;
-         pdot(i);
-     }
--    ml_printf("done @ %p\n", ptr);
-+    ml_printf("done %d @ %p\n", i, ptr);
- }
- 
- static void init_test_data_u32(int offset)
-@@ -137,10 +148,10 @@ static void init_test_data_u32(int offset)
-     const int max = (TEST_SIZE - offset) / sizeof(word);
-     int i;
- 
--    ml_printf("Filling test area with u32 (offset %d, %p):", offset, ptr);
--
-     reset_start_data(offset);
- 
-+    ml_printf("Filling test area with u32 (offset %d, %p):", offset, ptr);
++    while (g_hash_table_iter_next(&iter, NULL, &value)) {
++        Bb *bb = value;
++        uint64_t bb_count = qemu_plugin_u64_get(bb_count_u64(bb), vcpu_index);
 +
-     for (i = 0; i < max; i++) {
-         uint32_t b4 = BYTE_NEXT(count), b3 = BYTE_NEXT(count);
-         uint32_t b2 = BYTE_NEXT(count), b1 = BYTE_NEXT(count);
-@@ -149,7 +160,7 @@ static void init_test_data_u32(int offset)
-         *ptr++ = word;
-         pdot(i);
-     }
--    ml_printf("done @ %p\n", ptr);
-+    ml_printf("done %d @ %p\n", i, ptr);
- }
- 
- static void init_test_data_u64(int offset)
-@@ -159,10 +170,10 @@ static void init_test_data_u64(int offset)
-     const int max = (TEST_SIZE - offset) / sizeof(word);
-     int i;
- 
--    ml_printf("Filling test area with u64 (offset %d, %p):", offset, ptr);
--
-     reset_start_data(offset);
- 
-+    ml_printf("Filling test area with u64 (offset %d, %p):", offset, ptr);
++        if (!bb_count) {
++            continue;
++        }
 +
-     for (i = 0; i < max; i++) {
-         uint64_t b8 = BYTE_NEXT(count), b7 = BYTE_NEXT(count);
-         uint64_t b6 = BYTE_NEXT(count), b5 = BYTE_NEXT(count);
-@@ -174,7 +185,7 @@ static void init_test_data_u64(int offset)
-         *ptr++ = word;
-         pdot(i);
-     }
--    ml_printf("done @ %p\n", ptr);
-+    ml_printf("done %d @ %p\n", i, ptr);
- }
++        fprintf(vcpu->file, ":%u:%" PRIu64 " ", bb->index, bb_count);
++        qemu_plugin_u64_set(bb_count_u64(bb), vcpu_index, 0);
++    }
++
++    g_rw_lock_reader_unlock(&bbs_lock);
++    fputc('\n', vcpu->file);
++}
++
++static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
++{
++    uint64_t n_insns = qemu_plugin_tb_n_insns(tb);
++    uint64_t vaddr = qemu_plugin_tb_vaddr(tb);
++    Bb *bb;
++
++    g_rw_lock_writer_lock(&bbs_lock);
++    bb = g_hash_table_lookup(bbs, &vaddr);
++    if (!bb) {
++        bb = g_new(Bb, 1);
++        bb->vaddr = vaddr;
++        bb->count = qemu_plugin_scoreboard_new(sizeof(uint64_t));
++        bb->index = g_hash_table_size(bbs);
++        g_hash_table_replace(bbs, &bb->vaddr, bb);
++    }
++    g_rw_lock_writer_unlock(&bbs_lock);
++
++    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
++        tb, QEMU_PLUGIN_INLINE_ADD_U64, count_u64(), n_insns);
++
++    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
++        tb, QEMU_PLUGIN_INLINE_ADD_U64, bb_count_u64(bb), n_insns);
++
++    qemu_plugin_register_vcpu_tb_exec_cond_cb(
++        tb, vcpu_interval_exec, QEMU_PLUGIN_CB_NO_REGS,
++        QEMU_PLUGIN_COND_GE, count_u64(), interval, NULL);
++}
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
++                                           const qemu_info_t *info,
++                                           int argc, char **argv)
++{
++    for (int i = 0; i < argc; i++) {
++        char *opt = argv[i];
++        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
++        if (g_strcmp0(tokens[0], "interval") == 0) {
++            interval = g_ascii_strtoull(tokens[1], NULL, 10);
++        } else if (g_strcmp0(tokens[0], "outfile") == 0) {
++            filename = tokens[1];
++            tokens[1] = NULL;
++        } else {
++            fprintf(stderr, "option parsing failed: %s\n", opt);
++            return -1;
++        }
++    }
++
++    if (!filename) {
++        fputs("outfile unspecified\n", stderr);
++        return -1;
++    }
++
++    bbs = g_hash_table_new_full(g_int64_hash, g_int64_equal, NULL, free_bb);
++    vcpus = qemu_plugin_scoreboard_new(sizeof(Vcpu));
++    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
++    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
++    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
++
++    return 0;
++}
+diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
+index d4ac599f93..bbddd4800f 100644
+--- a/contrib/plugins/Makefile
++++ b/contrib/plugins/Makefile
+@@ -13,6 +13,7 @@ TOP_SRC_PATH = $(SRC_PATH)/../..
+ VPATH += $(SRC_PATH)
  
- static bool read_test_data_u16(int offset)
-@@ -198,7 +209,7 @@ static bool read_test_data_u16(int offset)
-         }
- 
-     }
--    ml_printf("done @ %p\n", ptr);
-+    ml_printf("done %d @ %p\n", i, ptr);
-     return true;
- }
- 
-@@ -239,7 +250,7 @@ static bool read_test_data_u32(int offset)
-             pdot(i);
-         }
-     }
--    ml_printf("done @ %p\n", ptr);
-+    ml_printf("done %d @ %p\n", i, ptr);
-     return true;
- }
- 
-@@ -293,7 +304,7 @@ static bool read_test_data_u64(int offset)
-             pdot(i);
-         }
-     }
--    ml_printf("done @ %p\n", ptr);
-+    ml_printf("done %d @ %p\n", i, ptr);
-     return true;
- }
- 
-@@ -365,7 +376,7 @@ static bool read_test_data_s8(int offset, bool neg_first)
-             return false;
-         }
-     }
--    ml_printf("done @ %p\n", ptr);
-+    ml_printf("done %d @ %p\n", i * 2, ptr);
-     return true;
- }
- 
-@@ -398,7 +409,7 @@ static bool read_test_data_s16(int offset, bool neg_first)
-             return false;
-         }
-     }
--    ml_printf("done @ %p\n", ptr);
-+    ml_printf("done %d @ %p\n", i, ptr);
-     return true;
- }
- 
-@@ -431,7 +442,7 @@ static bool read_test_data_s32(int offset, bool neg_first)
-             return false;
-         }
-     }
--    ml_printf("done @ %p\n", ptr);
-+    ml_printf("done %d @ %p\n", i, ptr);
-     return true;
- }
- 
+ NAMES :=
++NAMES += bbv
+ NAMES += execlog
+ NAMES += hotblocks
+ NAMES += hotpages
 -- 
 2.39.2
 
