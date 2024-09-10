@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 637C1EB64DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 14:09:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7614FEB64DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 14:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so1XB-00005C-85; Tue, 10 Sep 2024 10:07:57 -0400
+	id 1so1X5-00084S-HA; Tue, 10 Sep 2024 10:07:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so1X8-0008GV-3C
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:07:54 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1so1X4-0007y5-1U
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:07:50 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so1X4-0006ZO-O9
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:07:53 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a8a897bd4f1so581114566b.3
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 07:07:50 -0700 (PDT)
+ id 1so1X0-0006XY-Vd
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:07:49 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5c26852af8fso7329944a12.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 07:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725977269; x=1726582069; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725977265; x=1726582065; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tNcKpK3gqW5pd0AiX4NmCCbDvgLi1QOfUkQVya3+J3c=;
- b=bwZPAxUOz8fDk0nuJ8Nw6Ziy6JJ2cUV5PLew3t4woDjflcUzSlB+GA+CJopn2JcNQV
- kdHmbdGq/YmfXPH08F3Iyymi6NOWvGPH6630p1F6a1I8DGy5XjeTp4KxkEBiJayWGMYj
- S4pfHwb+iZGokZEvTLBYJN6ALTaZP95Qp0F/7aTt+q7Jb4ng++IoixfDDFzGUZneHz9Z
- QCUNJjLGuIGGK3PoJvcar5nBc9vnT3mD0L7WX8bebBOVDf79DUndlYTYRpR6Ip+wU64l
- eenF5XtsuKC8MjjKiHSNtdN/fD97Kho9MGhj2bdIkact0X6JFS2Sn0gJrcVaXm62sM/Z
- 7jcg==
+ bh=bg1S7MpqFLKynDQMTW/BgVqsjzz9T+4SZvu94a93bN0=;
+ b=OSGH31h3qkkw7RvVqoDEAkbUyqhE03bXYGqVfczno4PyMCbnuxxQ1lki3CBdB1VNHE
+ ibErBbDaongY04CUvmp/GiJIwQHI/8eaxUOEBnRhszK9r+f8ekIe8Eg9xMbBiOyYvsHm
+ Y7GQsWr02kKAtPHDjR54PqRC2AfwMX/fwhDgimXGeNdiBM1YwaVK1ZEcDXkyESWa+NiO
+ 6pstBrUWTPfTARW3BPhjy9sSDBCe94qsWZbObnyA5ofodaiCIiV4ED1aS6whezrQIvuV
+ 2hDbIbY4sjvpR1MFQe/ssMwa6MFZAzC7GcwKpr/3b8ifVSwjY9NgiTTZPyA1w4YHF4w0
+ kEAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725977269; x=1726582069;
+ d=1e100.net; s=20230601; t=1725977265; x=1726582065;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tNcKpK3gqW5pd0AiX4NmCCbDvgLi1QOfUkQVya3+J3c=;
- b=n+20q5rLKkGkm+yuGi0RX9wpd7WY+SA+eKfyvkKngzJAzJEzv+ASFN51aoNqfdGLZU
- zH2BaUMPIJjeSG+5AzdHukIdhHqRdY6oxE3/qBp1vmd/Tw0cgopwqCBWaMsocJNwoaLs
- aBTT+j1cCqsvfG0ljy0zU3YNp5JDKrXezKXDGM0B4VAIXQkHUKXnWaVPG0WppASfq+yA
- FZrJ/P2mm9WksR+7hVMRFQhUvHN+lfkeinat4hBs0TrY+jjJNiVa4gaGqA2GFnr1GagO
- MZwxC5C4i9NFa2gqh8XI18vZ3Zs+2getsAH3Ay8L/AC4pcuoxHnMABYfwKyY+SlzWH+B
- O+xw==
-X-Gm-Message-State: AOJu0YzIXrhnO03xMvIwugfQWR7IuKqtZQ202aEwtSIn50rVnNdrqpnX
- Dcj/iIfkiZpyu3R9Tbh/QOUfvMi+QUt3KQColH64W3Q5cik4TiWntwr02VqBNLM=
-X-Google-Smtp-Source: AGHT+IF0irRXfjqUTLP0ADVFD7/rZSWwKBMZaLQ/m4gUJjLt0sjcRBJLb/Iyj9rBZ5om/rHGXGJGDw==
-X-Received: by 2002:a17:907:2684:b0:a72:9d25:8ad3 with SMTP id
- a640c23a62f3a-a8ffaa93bc5mr95735566b.9.1725977268733; 
- Tue, 10 Sep 2024 07:07:48 -0700 (PDT)
+ bh=bg1S7MpqFLKynDQMTW/BgVqsjzz9T+4SZvu94a93bN0=;
+ b=l8q/9C1YEFAHIBT0V7KSkyNT4OUvGDwrEW6DJ/vqK6At0aWsSB89bHTxnj78GyBTqM
+ c9C9pEIKPWFDvruqz5oudbY28zhdfaX0jHo6XZhOpRK73dF9yb2J72otNla7AR1yk+u6
+ 0E7ABRSkI1o+QfhERNP1pkKPuPWHUcyakFllICqtR9Ixb23l62DtrHzXw1VeWUsyhceK
+ 5/WsavFI+DI+l4TXvoMt+4QEyh3wGGYNKZarhsaW/CvePj3jcudEm4wDAN0tDPWCUDpA
+ HugyQKa0dBsigygxep4mB0/355B6qKZdq7rWS8hQqyTA9jVaP4Ga2jrL1TMwwIohPTN0
+ p00g==
+X-Gm-Message-State: AOJu0YxcFSglYMuJLEHyZ/JPJnBhEO5h8abt2iXBpy9xBk7JzppGxxXX
+ mV94MFukR4AvTeiDHteKXKuzj8ZW5DumR1OiTIgKON1LAw6VI+SLh7uElKy0CIY=
+X-Google-Smtp-Source: AGHT+IEi/0Wc0xg/L10zGHE+wHVRRGYGpIfWYPv8hdMQh0hn+pxd7BZD+gpJ3LXBwtWBKfSQIV8GYA==
+X-Received: by 2002:a05:6402:5109:b0:5c2:4d9f:61c with SMTP id
+ 4fb4d7f45d1cf-5c3e9533614mr10178504a12.8.1725977265376; 
+ Tue, 10 Sep 2024 07:07:45 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25cea3e1sm482516466b.167.2024.09.10.07.07.40
+ 4fb4d7f45d1cf-5c3ebd4696asm4311411a12.30.2024.09.10.07.07.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 10 Sep 2024 07:07:42 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 74CEF5F7B4;
+ by draig.lan (Postfix) with ESMTP id 31AEF633E6;
  Tue, 10 Sep 2024 15:07:35 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -77,24 +77,24 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Xingtao Yao <yaoxt.fnst@fujitsu.com>
-Subject: [PATCH 18/26] tests/plugin/mem: add option to print memory accesses
-Date: Tue, 10 Sep 2024 15:07:25 +0100
-Message-Id: <20240910140733.4007719-19-alex.bennee@linaro.org>
+Subject: [PATCH 15/26] plugins: extend API to get latest memory value accessed
+Date: Tue, 10 Sep 2024 15:07:22 +0100
+Message-Id: <20240910140733.4007719-16-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240910140733.4007719-1-alex.bennee@linaro.org>
 References: <20240910140733.4007719-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,130 +112,132 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-By using "print-accesses=true" option, mem plugin will now print every
-value accessed, with associated size, type (store vs load), symbol,
-instruction address and phys/virt address accessed.
+This value can be accessed only during a memory callback, using
+new qemu_plugin_mem_get_value function.
 
+Returned value can be extended when QEMU will support accesses wider
+than 128 bits.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1719
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2152
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Xingtao Yao <yaoxt.fnst@fujitsu.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240724194708.1843704-6-pierrick.bouvier@linaro.org>
+Message-Id: <20240724194708.1843704-3-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/tcg/plugins/mem.c | 69 ++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 68 insertions(+), 1 deletion(-)
+ include/qemu/qemu-plugin.h   | 32 ++++++++++++++++++++++++++++++++
+ plugins/api.c                | 33 +++++++++++++++++++++++++++++++++
+ plugins/qemu-plugins.symbols |  1 +
+ 3 files changed, 66 insertions(+)
 
-diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
-index b650dddcce..086e6f5bdf 100644
---- a/tests/tcg/plugins/mem.c
-+++ b/tests/tcg/plugins/mem.c
-@@ -21,10 +21,15 @@ typedef struct {
-     uint64_t io_count;
- } CPUCount;
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index c71c705b69..649ce89815 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -262,6 +262,29 @@ enum qemu_plugin_mem_rw {
+     QEMU_PLUGIN_MEM_RW,
+ };
  
-+typedef struct {
-+    uint64_t vaddr;
-+    const char *sym;
-+} InsnInfo;
++enum qemu_plugin_mem_value_type {
++    QEMU_PLUGIN_MEM_VALUE_U8,
++    QEMU_PLUGIN_MEM_VALUE_U16,
++    QEMU_PLUGIN_MEM_VALUE_U32,
++    QEMU_PLUGIN_MEM_VALUE_U64,
++    QEMU_PLUGIN_MEM_VALUE_U128,
++};
 +
- static struct qemu_plugin_scoreboard *counts;
- static qemu_plugin_u64 mem_count;
- static qemu_plugin_u64 io_count;
--static bool do_inline, do_callback;
-+static bool do_inline, do_callback, do_print_accesses;
- static bool do_haddr;
- static enum qemu_plugin_mem_rw rw = QEMU_PLUGIN_MEM_RW;
++/* typedef qemu_plugin_mem_value - value accessed during a load/store */
++typedef struct {
++    enum qemu_plugin_mem_value_type type;
++    union {
++        uint8_t u8;
++        uint16_t u16;
++        uint32_t u32;
++        uint64_t u64;
++        struct {
++            uint64_t low;
++            uint64_t high;
++        } u128;
++    } data;
++} qemu_plugin_mem_value;
++
+ /**
+  * enum qemu_plugin_cond - condition to enable callback
+  *
+@@ -551,6 +574,15 @@ bool qemu_plugin_mem_is_big_endian(qemu_plugin_meminfo_t info);
+ QEMU_PLUGIN_API
+ bool qemu_plugin_mem_is_store(qemu_plugin_meminfo_t info);
  
-@@ -60,6 +65,44 @@ static void vcpu_mem(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
-     }
++/**
++ * qemu_plugin_mem_get_mem_value() - return last value loaded/stored
++ * @info: opaque memory transaction handle
++ *
++ * Returns: memory value
++ */
++QEMU_PLUGIN_API
++qemu_plugin_mem_value qemu_plugin_mem_get_value(qemu_plugin_meminfo_t info);
++
+ /**
+  * qemu_plugin_get_hwaddr() - return handle for memory operation
+  * @info: opaque memory info structure
+diff --git a/plugins/api.c b/plugins/api.c
+index 2ff13d09de..3316d4a04d 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -351,6 +351,39 @@ bool qemu_plugin_mem_is_store(qemu_plugin_meminfo_t info)
+     return get_plugin_meminfo_rw(info) & QEMU_PLUGIN_MEM_W;
  }
  
-+static void print_access(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
-+                         uint64_t vaddr, void *udata)
++qemu_plugin_mem_value qemu_plugin_mem_get_value(qemu_plugin_meminfo_t info)
 +{
-+    InsnInfo *insn_info = udata;
-+    unsigned size = 8 << qemu_plugin_mem_size_shift(meminfo);
-+    const char *type = qemu_plugin_mem_is_store(meminfo) ? "store" : "load";
-+    qemu_plugin_mem_value value = qemu_plugin_mem_get_value(meminfo);
-+    uint64_t hwaddr =
-+        qemu_plugin_hwaddr_phys_addr(qemu_plugin_get_hwaddr(meminfo, vaddr));
-+    g_autoptr(GString) out = g_string_new("");
-+    g_string_printf(out,
-+                    "0x%"PRIx64",%s,0x%"PRIx64",0x%"PRIx64",%d,%s,",
-+                    insn_info->vaddr, insn_info->sym,
-+                    vaddr, hwaddr, size, type);
-+    switch (value.type) {
-+    case QEMU_PLUGIN_MEM_VALUE_U8:
-+        g_string_append_printf(out, "0x%02"PRIx8, value.data.u8);
++    uint64_t low = current_cpu->neg.plugin_mem_value_low;
++    qemu_plugin_mem_value value;
++
++    switch (qemu_plugin_mem_size_shift(info)) {
++    case 0:
++        value.type = QEMU_PLUGIN_MEM_VALUE_U8;
++        value.data.u8 = (uint8_t)low;
 +        break;
-+    case QEMU_PLUGIN_MEM_VALUE_U16:
-+        g_string_append_printf(out, "0x%04"PRIx16, value.data.u16);
++    case 1:
++        value.type = QEMU_PLUGIN_MEM_VALUE_U16;
++        value.data.u16 = (uint16_t)low;
 +        break;
-+    case QEMU_PLUGIN_MEM_VALUE_U32:
-+        g_string_append_printf(out, "0x%08"PRIx32, value.data.u32);
++    case 2:
++        value.type = QEMU_PLUGIN_MEM_VALUE_U32;
++        value.data.u32 = (uint32_t)low;
 +        break;
-+    case QEMU_PLUGIN_MEM_VALUE_U64:
-+        g_string_append_printf(out, "0x%016"PRIx64, value.data.u64);
++    case 3:
++        value.type = QEMU_PLUGIN_MEM_VALUE_U64;
++        value.data.u64 = low;
 +        break;
-+    case QEMU_PLUGIN_MEM_VALUE_U128:
-+        g_string_append_printf(out, "0x%016"PRIx64"%016"PRIx64,
-+                               value.data.u128.high, value.data.u128.low);
++    case 4:
++        value.type = QEMU_PLUGIN_MEM_VALUE_U128;
++        value.data.u128.low = low;
++        value.data.u128.high = current_cpu->neg.plugin_mem_value_high;
 +        break;
 +    default:
 +        g_assert_not_reached();
 +    }
-+    g_string_append_printf(out, "\n");
-+    qemu_plugin_outs(out->str);
++    return value;
 +}
 +
- static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
- {
-     size_t n = qemu_plugin_tb_n_insns(tb);
-@@ -79,6 +122,16 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-                                              QEMU_PLUGIN_CB_NO_REGS,
-                                              rw, NULL);
-         }
-+        if (do_print_accesses) {
-+            /* we leak this pointer, to avoid locking to keep track of it */
-+            InsnInfo *insn_info = g_malloc(sizeof(InsnInfo));
-+            const char *sym = qemu_plugin_insn_symbol(insn);
-+            insn_info->sym = sym ? sym : "";
-+            insn_info->vaddr = qemu_plugin_insn_vaddr(insn);
-+            qemu_plugin_register_vcpu_mem_cb(insn, print_access,
-+                                             QEMU_PLUGIN_CB_NO_REGS,
-+                                             rw, (void *) insn_info);
-+        }
-     }
- }
- 
-@@ -117,6 +170,12 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-                 fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
-                 return -1;
-             }
-+        } else if (g_strcmp0(tokens[0], "print-accesses") == 0) {
-+            if (!qemu_plugin_bool_parse(tokens[0], tokens[1],
-+                                        &do_print_accesses)) {
-+                fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
-+                return -1;
-+            }
-         } else {
-             fprintf(stderr, "option parsing failed: %s\n", opt);
-             return -1;
-@@ -129,6 +188,14 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-         return -1;
-     }
- 
-+    if (do_print_accesses) {
-+        g_autoptr(GString) out = g_string_new("");
-+        g_string_printf(out,
-+                "insn_vaddr,insn_symbol,mem_vaddr,mem_hwaddr,"
-+                "access_size,access_type,mem_value\n");
-+        qemu_plugin_outs(out->str);
-+    }
-+
-     counts = qemu_plugin_scoreboard_new(sizeof(CPUCount));
-     mem_count = qemu_plugin_scoreboard_u64_in_struct(
-         counts, CPUCount, mem_count);
+ /*
+  * Virtual Memory queries
+  */
+diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+index ca773d8d9f..eed9d8abd9 100644
+--- a/plugins/qemu-plugins.symbols
++++ b/plugins/qemu-plugins.symbols
+@@ -13,6 +13,7 @@
+   qemu_plugin_insn_size;
+   qemu_plugin_insn_symbol;
+   qemu_plugin_insn_vaddr;
++  qemu_plugin_mem_get_value;
+   qemu_plugin_mem_is_big_endian;
+   qemu_plugin_mem_is_sign_extended;
+   qemu_plugin_mem_is_store;
 -- 
 2.39.2
 
