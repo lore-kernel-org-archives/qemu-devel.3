@@ -4,52 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F9D2ECE564
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:38:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2AC4EB64DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:39:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so07C-0004Jo-Tm; Tue, 10 Sep 2024 08:37:03 -0400
+	id 1so086-0001rX-Kt; Tue, 10 Sep 2024 08:37:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1so06k-0002Gr-D7
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:36:34 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1so06h-000539-FI
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:36:34 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxhehEPeBmYrkDAA--.7710S3;
- Tue, 10 Sep 2024 20:36:20 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front2 (Coremail) with SMTP id qciowMBx+cVCPeBmXGoDAA--.15753S2;
- Tue, 10 Sep 2024 20:36:19 +0800 (CST)
-From: Xianglai Li <lixianglai@loongson.cn>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so083-0001Wq-Os
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:37:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so080-00059X-4N
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:37:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725971869;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DseQ+PNtGUI5GM+MFiMyUvwByq4R1FQSDsAnXzpfdD0=;
+ b=ieFltaHeEohe9ur7o7SFsM0G4oJum+XuSkSTEj8URhinsPxwUXqaVSIogkXzfdI1pPa4jp
+ DzTE1SZvEu5xNlo0f0k9oVuvityWMHGQ6MLFS67EuPC8pAC/VN9gjRNzkwOQtyvh0o0VGL
+ Gn8YmkZgtPg9EDfAHP1O0PMO70Vejxo=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-148-D7MuhjtfNTehQPQ4N1Q0Iw-1; Tue,
+ 10 Sep 2024 08:37:48 -0400
+X-MC-Unique: D7MuhjtfNTehQPQ4N1Q0Iw-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B7BFE1935876; Tue, 10 Sep 2024 12:37:47 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.193.120])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8BE2219560B1; Tue, 10 Sep 2024 12:37:46 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Huacai Chen <chenhuacai@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- kvm@vger.kernel.org, Bibo Mao <maobibo@loongson.cn>
-Subject: [RFC PATCH V2 0/5] Added Interrupt controller emulation for loongarch
- kvm
-Date: Tue, 10 Sep 2024 20:18:27 +0800
-Message-Id: <cover.1725969898.git.lixianglai@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 09/22] tests/functional: Convert mips64el Fuloong2e avocado
+ test (2/2)
+Date: Tue, 10 Sep 2024 14:37:10 +0200
+Message-ID: <20240910123726.182975-10-thuth@redhat.com>
+In-Reply-To: <20240910123726.182975-1-thuth@redhat.com>
+References: <20240910123726.182975-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qciowMBx+cVCPeBmXGoDAA--.15753S2
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,98 +81,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before this, the interrupt controller simulation has been completed
-in the user mode program. In order to reduce the loss caused by frequent
-switching of the virtual machine monitor from kernel mode to user mode
-when the guest accesses the interrupt controller, we add the interrupt
-controller simulation in kvm.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-In qemu side implementation is simple, just make a new IPI EXTIOI PCH KVM
-related several classes, And the interface to access kvm related data is
-implemented.
+Straight forward conversion. Update the SHA1 hashes to
+SHA256 hashes since SHA1 should not be used anymore nowadays.
 
-Most of the simulation work of the interrupt controller is done in kvm.
-Because KVM the changes have not been the Linux community acceptance,
-the patches of this series will have RFC label until KVM patch into the community.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240827094905.80648-3-philmd@linaro.org>
+[thuth: Use LinuxKernelTest class for this test]
+Message-ID: <20240906180549.792832-4-thuth@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/avocado/boot_linux_console.py         | 21 -----------------
+ tests/functional/test_mips64el_fuloong2e.py | 25 ++++++++++++++++++---
+ 2 files changed, 22 insertions(+), 24 deletions(-)
 
-For the implementation of kvm simulation, refer to the following documents.
-
-IPI simulation implementation reference:
-https://github.com/loongson/LoongArch-Documentation/tree/main/docs/Loongson-3A5000-usermanual-EN/inter-processor-interrupts-and-communication
-
-EXTIOI simulation implementation reference:
-https://github.com/loongson/LoongArch-Documentation/tree/main/docs/Loongson-3A5000-usermanual-EN/io-interrupts/extended-io-interrupts
-
-PCH-PIC simulation implementation reference:
-https://github.com/loongson/LoongArch-Documentation/blob/main/docs/Loongson-7A1000-usermanual-EN/interrupt-controller.adoc
-
-For PCH-MSI, we used irqfd mechanism to send the interrupt signal
-generated by user state to kernel state and then to EXTIOI without
-maintaining PCH-MSI state in kernel state.
-
-You can easily get the code from the link below:
-the kernel:
-https://github.com/lixianglai/linux
-the branch is: interrupt
-
-the qemu:
-https://github.com/lixianglai/qemu
-the branch is: interrupt
-
-Please note that the code above is regularly updated based on community
-reviews.
-
-changelog:
-V1->V2
-1.Make changes involving header files a separate patch
-2.rebase based on the latest qemu code
-3.Optimize the kvm ipi class into the ipi common class and the ipi kvm
-class.
-4.Optimized the interface for kernel reading and writing data on ipi
-extioi pch_pic device.
-
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Cc: Huacai Chen <chenhuacai@kernel.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Cornelia Huck <cohuck@redhat.com>
-Cc: kvm@vger.kernel.org
-Cc: Bibo Mao <maobibo@loongson.cn>
-Cc: Xianglai Li <lixianglai@loongson.cn>
-
-Xianglai Li (5):
-  include: Add macro definitions needed for interrupt controller kvm
-    emulation
-  hw/loongarch: Add KVM IPI device support
-  hw/loongarch: Add KVM extioi device support
-  hw/loongarch: Add KVM pch pic device support
-  hw/loongarch: Add KVM pch msi device support
-
- hw/intc/Kconfig                       |   9 +
- hw/intc/loongarch_extioi_kvm.c        | 250 ++++++++++++++++++++++++++
- hw/intc/loongarch_ipi_kvm.c           | 128 +++++++++++++
- hw/intc/loongarch_pch_msi.c           |  42 +++--
- hw/intc/loongarch_pch_pic.c           |  40 +++--
- hw/intc/loongarch_pch_pic_kvm.c       | 180 +++++++++++++++++++
- hw/intc/loongson_ipi_common.c         |  28 +++
- hw/intc/meson.build                   |   3 +
- hw/loongarch/Kconfig                  |   3 +
- hw/loongarch/virt.c                   | 138 ++++++++------
- include/hw/intc/loongarch_extioi.h    |  38 +++-
- include/hw/intc/loongarch_ipi.h       |  15 ++
- include/hw/intc/loongarch_pch_pic.h   |  58 +++++-
- include/hw/intc/loongson_ipi.h        |   1 -
- include/hw/intc/loongson_ipi_common.h |   2 +
- include/hw/loongarch/virt.h           |  15 ++
- linux-headers/asm-loongarch/kvm.h     |  18 ++
- linux-headers/linux/kvm.h             |   6 +
- 18 files changed, 891 insertions(+), 83 deletions(-)
- create mode 100644 hw/intc/loongarch_extioi_kvm.c
- create mode 100644 hw/intc/loongarch_ipi_kvm.c
- create mode 100644 hw/intc/loongarch_pch_pic_kvm.c
-
+diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
+index 396836bf64..e1e20c36f7 100644
+--- a/tests/avocado/boot_linux_console.py
++++ b/tests/avocado/boot_linux_console.py
+@@ -170,27 +170,6 @@ def test_mips64el_malta(self):
+         console_pattern = 'Kernel command line: %s' % kernel_command_line
+         self.wait_for_console_pattern(console_pattern)
+ 
+-    def test_mips64el_fuloong2e(self):
+-        """
+-        :avocado: tags=arch:mips64el
+-        :avocado: tags=machine:fuloong2e
+-        :avocado: tags=endian:little
+-        """
+-        deb_url = ('http://archive.debian.org/debian/pool/main/l/linux/'
+-                   'linux-image-3.16.0-6-loongson-2e_3.16.56-1+deb8u1_mipsel.deb')
+-        deb_hash = 'd04d446045deecf7b755ef576551de0c4184dd44'
+-        deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
+-        kernel_path = self.extract_from_deb(deb_path,
+-                                            '/boot/vmlinux-3.16.0-6-loongson-2e')
+-
+-        self.vm.set_console()
+-        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
+-        self.vm.add_args('-kernel', kernel_path,
+-                         '-append', kernel_command_line)
+-        self.vm.launch()
+-        console_pattern = 'Kernel command line: %s' % kernel_command_line
+-        self.wait_for_console_pattern(console_pattern)
+-
+     def test_mips_malta_cpio(self):
+         """
+         :avocado: tags=arch:mips
+diff --git a/tests/functional/test_mips64el_fuloong2e.py b/tests/functional/test_mips64el_fuloong2e.py
+index 7688a32713..a32d5f9d08 100755
+--- a/tests/functional/test_mips64el_fuloong2e.py
++++ b/tests/functional/test_mips64el_fuloong2e.py
+@@ -12,14 +12,33 @@
+ import os
+ import subprocess
+ 
+-from qemu_test import QemuSystemTest
++from qemu_test import LinuxKernelTest, Asset
+ from qemu_test import wait_for_console_pattern
+ from unittest import skipUnless
+ 
+-class MipsFuloong2e(QemuSystemTest):
++class MipsFuloong2e(LinuxKernelTest):
+ 
+     timeout = 60
+ 
++    ASSET_KERNEL = Asset(
++        ('http://archive.debian.org/debian/pool/main/l/linux/'
++         'linux-image-3.16.0-6-loongson-2e_3.16.56-1+deb8u1_mipsel.deb'),
++        '2a70f15b397f4ced632b0c15cb22660394190644146d804d60a4796eefbe1f50')
++
++    def test_linux_kernel_3_16(self):
++        deb_path = self.ASSET_KERNEL.fetch()
++        kernel_path = self.extract_from_deb(deb_path,
++                                            '/boot/vmlinux-3.16.0-6-loongson-2e')
++
++        self.set_machine('fuloong2e')
++        self.vm.set_console()
++        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
++        self.vm.add_args('-kernel', kernel_path,
++                         '-append', kernel_command_line)
++        self.vm.launch()
++        console_pattern = 'Kernel command line: %s' % kernel_command_line
++        self.wait_for_console_pattern(console_pattern)
++
+     @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
+     @skipUnless(os.getenv('RESCUE_YL_PATH'), 'RESCUE_YL_PATH not available')
+     def test_linux_kernel_2_6_27_isa_serial(self):
+@@ -42,4 +61,4 @@ def test_linux_kernel_2_6_27_isa_serial(self):
+ 
+ 
+ if __name__ == '__main__':
+-    QemuSystemTest.main()
++    LinuxKernelTest.main()
 -- 
-2.39.1
+2.46.0
 
 
