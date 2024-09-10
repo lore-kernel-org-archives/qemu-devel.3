@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CEB1EDE994
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 02:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05AEEEDE994
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 02:51:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snqvx-0005ML-5l; Mon, 09 Sep 2024 22:48:49 -0400
+	id 1snqy3-0003PZ-F2; Mon, 09 Sep 2024 22:50:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1snqvv-0005GB-K2; Mon, 09 Sep 2024 22:48:47 -0400
-Received: from out30-124.freemail.mail.aliyun.com ([115.124.30.124])
+ id 1snqy1-0003NK-QG; Mon, 09 Sep 2024 22:50:57 -0400
+Received: from out30-131.freemail.mail.aliyun.com ([115.124.30.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1snqvt-0007eE-Ch; Mon, 09 Sep 2024 22:48:47 -0400
+ id 1snqxz-0007ui-Dw; Mon, 09 Sep 2024 22:50:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1725936520; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=XEijes8Y0Jsg3d7z3vl7uDnH04h2KGkvypbAmWdJUtI=;
- b=YecvGKWMcDipeagDq90HrhXtw9I5MMPFOTIsLlAbx2wJ9681Q6BhtmLa/Wxjgfsg65BhH0Wpp6j1HmWhgnrm/zu++LMMYYCARC/ndWjWfk7p4PoAjbtTznedN0/veQ5a6UVBbzpWIONUcx0uBVRWg1opE6PCg+EaD3JaIczXb2w=
+ t=1725936649; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=sIsOF/NCJExJYmgliUcKf+dlTxkxwBFTdKKaABCL7vE=;
+ b=YAzghRlL8YYU9h/eYX08UrC2N7TnEI6ge1Im4Q2vS+orG6kZmN11eM85tuV92EZMbUD2VaKSn/f262Q+7wj4NrjG3GIFjWN8ME4Lepld4UipbcPdELDKjdJljMj1iB5Tn5Rk0OH9LrmggJYg/4E2vWkfiO/jVHGmVk2H57A+tIc=
 Received: from 30.251.160.182(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WEic5pe_1725936518) by smtp.aliyun-inc.com;
- Tue, 10 Sep 2024 10:48:39 +0800
-Message-ID: <fad67093-e815-48fe-82b4-c9c417796b95@linux.alibaba.com>
-Date: Tue, 10 Sep 2024 10:47:42 +0800
+ fp:SMTPD_---0WEiiRdB_1725936648) by smtp.aliyun-inc.com;
+ Tue, 10 Sep 2024 10:50:48 +0800
+Message-ID: <de11de3f-8435-4400-aa3a-04ba85aa0feb@linux.alibaba.com>
+Date: Tue, 10 Sep 2024 10:49:51 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/14] util: Add RISC-V vector extension probe in
- cpuinfo
+Subject: Re: [PATCH v3 03/14] tcg/riscv: Add basic support for vector
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ Swung0x48 <swung0x48@outlook.com>,
  TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 References: <20240904142739.854-1-zhiwei_liu@linux.alibaba.com>
- <20240904142739.854-3-zhiwei_liu@linux.alibaba.com>
- <286685da-74e3-401a-afe4-fed0831fd97c@linaro.org>
- <5fc48f87-b233-40b9-a0e1-4de920d97957@linux.alibaba.com>
- <0475550c-53c4-4166-bb04-1ff21f5d11b9@linaro.org>
+ <20240904142739.854-4-zhiwei_liu@linux.alibaba.com>
+ <943abf2a-de03-49fd-b594-76b15224f2cc@linaro.org>
 Content-Language: en-US
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <0475550c-53c4-4166-bb04-1ff21f5d11b9@linaro.org>
+In-Reply-To: <943abf2a-de03-49fd-b594-76b15224f2cc@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.124;
+Received-SPF: pass client-ip=115.124.30.131;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-124.freemail.mail.aliyun.com
+ helo=out30-131.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -73,64 +71,156 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 2024/9/9 23:45, Richard Henderson wrote:
-> On 9/9/24 00:18, LIU Zhiwei wrote:
+On 2024/9/5 12:05, Richard Henderson wrote:
+> On 9/4/24 07:27, LIU Zhiwei wrote:
+>> From: Swung0x48 <swung0x48@outlook.com>
 >>
->> On 2024/9/5 11:34, Richard Henderson wrote:
->>> On 9/4/24 07:27, LIU Zhiwei wrote:
->>>> +    if (info & CPUINFO_ZVE64X) {
->>>> +        /*
->>>> +         * Get vlenb for Vector: vsetvli rd, x0, e64.
->>>> +         * VLMAX = LMUL * VLEN / SEW.
->>>> +         * The "vsetvli rd, x0, e64" means "LMUL = 1, SEW = 64, rd 
->>>> = VLMAX",
->>>> +         * so "vlenb = VLMAX * 64 / 8".
->>>> +         */
->>>> +        unsigned long vlmax = 0;
->>>> +        asm volatile(".insn i 0x57, 7, %0, zero, (3 << 3)" : 
->>>> "=r"(vlmax));
->>>> +        if (vlmax) {
->>>> +            riscv_vlenb = vlmax * 8;
->>>> +            assert(riscv_vlen >= 64 && !(riscv_vlen & (riscv_vlen 
->>>> - 1)));
->>>> +        } else {
->>>> +            info &= ~CPUINFO_ZVE64X;
->>>> +        }
->>>> +    }
->>>
->>> Surely this does not compile, since the riscv_vlen referenced in the 
->>> assert does not exist.
->> riscv_vlen is macro about riscv_vlenb. I think you miss it.
->
-> I did miss the macro.  But there's also no need for it to exist.
->
->>>
->>> That said, I've done some experimentation and I believe there is a 
->>> further simplification to be had in instead saving log2(vlenb).
->>>
->>>     if (info & CPUINFO_ZVE64X) {
->>>         /*
->>>          * We are guaranteed by RVV-1.0 that VLEN is a power of 2.
->>>          * We are guaranteed by Zve64x that VLEN >= 64, and that
->>>          * EEW of {8,16,32,64} are supported.
->>>          *
->>>          * Cache VLEN in a convenient form.
->>>          */
->>>         unsigned long vlenb;
->>>         asm("csrr %0, vlenb" : "=r"(vlenb));
+>> The RISC-V vector instruction set utilizes the LMUL field to group
+>> multiple registers, enabling variable-length vector registers. This
+>> implementation uses only the first register number of each group while
+>> reserving the other register numbers within the group.
 >>
->> Should we use the .insn format here? Maybe we are having a compiler 
->> doesn't support vector.
+>> In TCG, each VEC_IR can have 3 types (TCG_TYPE_V64/128/256), and the
+>> host runtime needs to adjust LMUL based on the type to use different
+>> register groups.
+>>
+>> This presents challenges for TCG's register allocation. Currently, we
+>> avoid modifying the register allocation part of TCG and only expose the
+>> minimum number of vector registers.
+>>
+>> For example, when the host vlen is 64 bits and type is TCG_TYPE_V256, 
+>> with
+>> LMUL equal to 4, we use 4 vector registers as one register group. We can
+>> use a maximum of 8 register groups, but the V0 register number is 
+>> reserved
+>> as a mask register, so we can effectively use at most 7 register groups.
+>> Moreover, when type is smaller than TCG_TYPE_V256, only 7 registers are
+>> forced to be used. This is because TCG cannot yet dynamically constrain
+>> registers with type; likewise, when the host vlen is 128 bits and
+>> TCG_TYPE_V256, we can use at most 15 registers.
+>>
+>> There is not much pressure on vector register allocation in TCG now, so
+>> using 7 registers is feasible and will not have a major impact on code
+>> generation.
+>>
+>> This patch:
+>> 1. Reserves vector register 0 for use as a mask register.
+>> 2. When using register groups, reserves the additional registers within
+>>     each group.
+>>
+>> Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+>> Co-authored-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+>> Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 >
-> Neither gcc nor clang requires V be enabled at compile time in order 
-> to access the CSR.
-> It does seem like a mistake, but I'm happy to use it.
+> This patch does not compile.
+>
+> ../src/tcg/tcg.c:135:13: error: 'tcg_out_dup_vec' used but never 
+> defined [-Werror]
+>   135 | static bool tcg_out_dup_vec(TCGContext *s, TCGType type, 
+> unsigned vece,
+>       |             ^~~~~~~~~~~~~~~
+> ../src/tcg/tcg.c:137:13: error: 'tcg_out_dupm_vec' used but never 
+> defined [-Werror]
+>   137 | static bool tcg_out_dupm_vec(TCGContext *s, TCGType type, 
+> unsigned vece,
+>       |             ^~~~~~~~~~~~~~~~
+> ../src/tcg/tcg.c:139:13: error: 'tcg_out_dupi_vec' used but never 
+> defined [-Werror]
+>   139 | static void tcg_out_dupi_vec(TCGContext *s, TCGType type, 
+> unsigned vece,
+>       |             ^~~~~~~~~~~~~~~~
+> In file included from ../src/tcg/tcg.c:755:
+> /home/rth/qemu/src/tcg/riscv/tcg-target.c.inc:516:13: error: 
+> 'tcg_out_opc_ldst_vec' defined but not used [-Werror=unused-function]
+>   516 | static void tcg_out_opc_ldst_vec(TCGContext *s, RISCVInsn opc, 
+> TCGReg data,
+>       |             ^~~~~~~~~~~~~~~~~~~~
+> /home/rth/qemu/src/tcg/riscv/tcg-target.c.inc:507:13: error: 
+> 'tcg_out_opc_vi' defined but not used [-Werror=unused-function]
+>   507 | static void tcg_out_opc_vi(TCGContext *s, RISCVInsn opc, 
+> TCGReg vd,
+>       |             ^~~~~~~~~~~~~~
+> /home/rth/qemu/src/tcg/riscv/tcg-target.c.inc:501:13: error: 
+> 'tcg_out_opc_vx' defined but not used [-Werror=unused-function]
+>   501 | static void tcg_out_opc_vx(TCGContext *s, RISCVInsn opc, 
+> TCGReg vd,
+>       |             ^~~~~~~~~~~~~~
+> /home/rth/qemu/src/tcg/riscv/tcg-target.c.inc:495:13: error: 
+> 'tcg_out_opc_vv' defined but not used [-Werror=unused-function]
+>   495 | static void tcg_out_opc_vv(TCGContext *s, RISCVInsn opc, 
+> TCGReg vd,
+>       |             ^~~~~~~~~~~~~~
+> cc1: all warnings being treated as errors
+Oops. We miss compiling each patch one by one.
+>
+> Either:
+> (1) Provide stubs for the functions that are required, and delay 
+> implementation
+>     of the unused functions until the patch(es) that use them.
+We will take this way.
+> (2) Merge the dup patch so that these functions are defined and 
+> implemented,
+>     which will also provide uses for most of the tcg_out_opc_* functions.
+>
+>
+>> @@ -2100,6 +2174,32 @@ static void tcg_target_init(TCGContext *s)
+>>   {
+>>       tcg_target_available_regs[TCG_TYPE_I32] = 0xffffffff;
+>>       tcg_target_available_regs[TCG_TYPE_I64] = 0xffffffff;
+>> +    s->reserved_regs = 0;
+>> +
+>> +    if (cpuinfo & CPUINFO_ZVE64X) {
+>> +        switch (riscv_vlen) {
+>> +        case 64:
+>> +            tcg_target_available_regs[TCG_TYPE_V64] = ALL_VECTOR_REGS;
+>> +            tcg_target_available_regs[TCG_TYPE_V128] = 
+>> ALL_DVECTOR_REG_GROUPS;
+>> +            tcg_target_available_regs[TCG_TYPE_V256] = 
+>> ALL_QVECTOR_REG_GROUPS;
+>> +            s->reserved_regs |= (~ALL_QVECTOR_REG_GROUPS & 
+>> 0xffffffff00000000);
+>
+> No need for ().
+> Use ALL_VECTOR_REGS instead of the immediate integer.
+OK.
+>
+>> +            break;
+>> +        case 128:
+>> +            tcg_target_available_regs[TCG_TYPE_V64] = ALL_VECTOR_REGS;
+>> +            tcg_target_available_regs[TCG_TYPE_V128] = ALL_VECTOR_REGS;
+>> +            tcg_target_available_regs[TCG_TYPE_V256] = 
+>> ALL_DVECTOR_REG_GROUPS;
+>> +            s->reserved_regs |= (~ALL_DVECTOR_REG_GROUPS & 
+>> 0xffffffff00000000);
+>> +            break;
+>> +        case 256:
+>> +            tcg_target_available_regs[TCG_TYPE_V64] = ALL_VECTOR_REGS;
+>> +            tcg_target_available_regs[TCG_TYPE_V128] = ALL_VECTOR_REGS;
+>> +            tcg_target_available_regs[TCG_TYPE_V256] = ALL_VECTOR_REGS;
+>> +            break;
+>> +        default:
+>> +            g_assert_not_reached();
+>
+> The first host with 512-bit or larger vectors will trigger the assert.
+>
+> With my suggestion against patch 2, this becomes
+>
+>     switch (riscv_lg2_vlenb) {
+>     case TCG_TYPE_V64:
+>         ...
+>     case TCG_TYPE_V128:
+>         ...
+>     default:
+>         /* Guaranteed by Zve64x. */
+>         tcg_debug_assert(riscv_lg2_vlenb >= TCG_TYPE_V256);
+>     }
+>
+Agree.
 
-Can we follow you here? 🙂
+
+Thanks,
 
 Zhiwei
-
->
 >
 > r~
 
