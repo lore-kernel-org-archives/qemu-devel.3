@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D51C4ECE564
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 14:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36FB3EB64DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 14:36:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so1wY-0002jX-AP; Tue, 10 Sep 2024 10:34:10 -0400
+	id 1so1yA-0001d0-0s; Tue, 10 Sep 2024 10:35:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1so1wQ-0002Si-Dy
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:34:02 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1so1y9-0001aq-FZ
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:35:49 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1so1wO-0001Vl-TH
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:34:02 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a8d29b7edc2so448939666b.1
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 07:34:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1so1y7-0001l1-PR
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:35:49 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a8d2b24b7a8so36867466b.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 07:35:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725978839; x=1726583639; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725978946; x=1726583746; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=LuQOXsZmhBvhlFdXkQhwG9jubmnqYTr/GtKVU1B7PsQ=;
- b=COaeUjEGzw2y8TVlOJJREshnyEgdc4BGx+yHVSN0l27jfV6XjofzQlCVa25SA8d6aH
- Mwst91SFR2CtUiGCmZG4Y34Uc38XD8xC9HdaoiV2iid5VuWC9GN2Gg2ehQcG0b5WSvQW
- v2gAx/cw4VGSt6uY77FyxYvTf6WtxG9G8V61nmRo3kUaud0IgL5wdZz8JhHP8RR6SsUw
- mgfkcXj5iZWJ5WsfAOtfii62MtCBjT8CKiskN8RyMbXOOKQ4e0/J1/M/v0j+HWCay9MF
- pqk39cnAigebrz9eS7S6fbngPE2nozFQ53sfS8MWH09czU3raYHhKQOXwkCStJO7W4xJ
- NrqQ==
+ bh=/ThHsnqzo118WatRvbc8JkNGEO1aD0jGfu2wbQopy0k=;
+ b=T7KLIEyxEhSlLv/sPD50dgi+g+87dr4/iENdkPe41VWRDw/Bc5KUHNz+JMig2MiVzD
+ bgkC2E6xqDzGASGfIFo/el7dj8za4blIRJeVBnyCrbxSwJ+Lhce6nlmo1APZA/rLp1pQ
+ dnm4P3eW6UYwcys+BnBdGwdAv6RPQHDCsBaFjKOyLa11CRTgqp15i29lqdMHQwTijVa9
+ S7KCbLGMCf42RedBpRVdbK7fOtSdyHPOHeq9qfTZM/YIMn6pkqSXFq2VfyxtRDNpa3yV
+ vW+lGkyUQEbFtijVM2ZSx/q1izSMuYTFX4cjwvNL1C6CH8Dd33YKKbAPEiDTbXE6QMeh
+ 3n3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725978839; x=1726583639;
+ d=1e100.net; s=20230601; t=1725978946; x=1726583746;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LuQOXsZmhBvhlFdXkQhwG9jubmnqYTr/GtKVU1B7PsQ=;
- b=d1VlWU7iAVuWjx4vftCxMBGDMjgWNH0GITYKvdIEA2/JzeyIivDsif3YZiSKVqHmVM
- KHKDIagHdNksuNQwDqtSI2ckbni00S8J57JCuU96RIkhC3fQZMh+69+QlhfT0gyhYlE+
- YlACIb8Xw3PauEv0AtyP+5nNeYcejUXYIxZ0qgdk2B7I61DOcyY0OPDUYJWZ3slLF20R
- wDmLXS3OmtwRh2BD1gHQR0Xx33bGjM+QWkcOihWVMCvZP1+rwGBkhoUk588/DApuG00/
- bWkzeF3Ic/+WDF94nxnmu73jPDUNFv3dHERbxDE9lomamCUS0da5fXPxyxsINy+d9hLL
- ZaFA==
+ bh=/ThHsnqzo118WatRvbc8JkNGEO1aD0jGfu2wbQopy0k=;
+ b=dMATyb2hMbTerjpfYvsxaW7yAYnw7qjeJQL+N2gT8QwaDXitD3gCD0yg4c24fdoMnY
+ 8wpRF2zKNO4gAZuduLwP4QuC7mJtAu1sg3ePdAFcqt78tDeAYJFN6rR3nGFEnRGlQZU3
+ Dm4gJyyGwipTD8Uj/hvEhbdKMwpBwdh8jMiwykDjjD6+/y3vW3xPHJcoNRTjNzZphac7
+ UFLPPfgGpF54U7lhUTEwInSYkjLrb5rkmZv6bMBWk9RdH9uqAs1jsfBxdRZx4bh0VBUE
+ SmZf6ZbG2/xlqnKwnkkA8d+2zl7Bvyf8C2IonjepsbsioEXRCS4dnBhZI9DwjvBMLYkt
+ cFBQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVssxBjvezSdrHaRJgb5IZoQJvwX5ZFUux8vAAEnKlC2qHp5PyOJJ1FFuZMlqeLS7oNDjm7Uky4ruEu@nongnu.org
-X-Gm-Message-State: AOJu0YxSMO6znSy025yHOpICTO7KZLfu77tU+G8y0Xp5YsGbVCrjgpOU
- z2Nh0M044c25yfknZx3eQAg1bE4pNk+hL65vHS0GAbQdd2qk3fq6c4F5u4KydoU=
-X-Google-Smtp-Source: AGHT+IHBXyYofeLN0dABoGVXGBAABn/FFxzf9QVFO9ZDv+bxiXNtgmjH1D0BT36yjfmtpzYjmOHGcA==
-X-Received: by 2002:a17:907:869f:b0:a86:78fd:1df0 with SMTP id
- a640c23a62f3a-a8ffab8353amr86117466b.34.1725978838480; 
- Tue, 10 Sep 2024 07:33:58 -0700 (PDT)
+ AJvYcCUMuTYOAqDHY4EVIo/Gv3i1+HWxp3MQLECzed1pG9QnYUy1IGh8EMEIRhcY/NJ4rd5HEtOFtNM0RSy/@nongnu.org
+X-Gm-Message-State: AOJu0YwYUbdTwtZkWQdg7n2EcOP9+FrR07muk0Rme88JunJXjX89iMH6
+ NVhZphCwC8YASlvAgZmiWRIEQSF34gjnVTSECw5lwMJrOpvLBOoYV+ZdNP5u0To=
+X-Google-Smtp-Source: AGHT+IHuIQ6p+LijDzjGXue+BWtdpzUYD+GY+gBu4vQn4JVUuv+9UuTMqZN6isCpS9ZmLtjrKxu0bw==
+X-Received: by 2002:a17:906:bc24:b0:a8d:43c5:9a16 with SMTP id
+ a640c23a62f3a-a8ffb1c213dmr129569166b.6.1725978946015; 
+ Tue, 10 Sep 2024 07:35:46 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.217.32])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25ceaf86sm487678966b.155.2024.09.10.07.33.54
+ a640c23a62f3a-a8d25d40064sm491419566b.190.2024.09.10.07.35.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 07:33:57 -0700 (PDT)
-Message-ID: <0a00b59d-fdd7-47de-b3bd-62aed07d295e@linaro.org>
-Date: Tue, 10 Sep 2024 16:33:53 +0200
+ Tue, 10 Sep 2024 07:35:45 -0700 (PDT)
+Message-ID: <bdeaa715-84bb-42ea-a3ea-eec330150e87@linaro.org>
+Date: Tue, 10 Sep 2024 16:35:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] hw/pci-host/designware: Declare CPU QOM types using
- DEFINE_TYPES() macro
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org
-Cc: Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20231012121857.31873-1-philmd@linaro.org>
- <20231012121857.31873-2-philmd@linaro.org>
- <2f3df725-0d99-97d0-af7b-7054036e4228@linaro.org>
+Subject: Re: [PATCH v2 12/29] target/arm: Convert FMOVI (scalar, immediate) to
+ decodetree
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+References: <20240909162240.647173-1-richard.henderson@linaro.org>
+ <20240909162240.647173-13-richard.henderson@linaro.org>
+ <678932dd-02e3-488d-8cb1-6f3d37c112ab@linaro.org>
+ <CAFEAcA9s1FDB_rFoo6VrcCh_bdL4-sSnzGALSv_+MKCTR9WNgA@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <2f3df725-0d99-97d0-af7b-7054036e4228@linaro.org>
+In-Reply-To: <CAFEAcA9s1FDB_rFoo6VrcCh_bdL4-sSnzGALSv_+MKCTR9WNgA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,29 +100,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/8/24 06:21, Gustavo Romero wrote:
-> Hi Phil,
-> 
-> On 10/12/23 9:18 AM, Philippe Mathieu-Daudé wrote:
->> When multiple QOM types are registered in the same file,
->> it is simpler to use the the DEFINE_TYPES() macro. In
->> particular because type array declared with such macro
->> are easier to review.
+On 10/9/24 14:27, Peter Maydell wrote:
+> On Mon, 9 Sept 2024 at 23:24, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
 >>
->> Remove a pointless structure declaration in "designware.h".
+>> On 9/9/24 18:22, Richard Henderson wrote:
+>>> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 >>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->> ---
->>   include/hw/pci-host/designware.h |  2 --
->>   hw/pci-host/designware.c         | 39 ++++++++++++++------------------
->>   2 files changed, 17 insertions(+), 24 deletions(-)
-
-
-> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+>> I wonder, maybe you mispasted my previous R-b tags
+>> with Peter's?
+>> https://lore.kernel.org/qemu-devel/37096dc8-7827-4a4c-a27b-4f8343aa9c6c@linaro.org/
 > 
-> This patch can get merged independently of this series.
+> I gave the whole of the v1 series an r-by at the
+> cover-letter level:
+> https://lore.kernel.org/qemu-devel/CAFEAcA8vJxUUHWA_nUF-810fDhYyPggtc=HGFdp0QUa5segB=A@mail.gmail.com/
 
-OK, thank you!
+Oh indeed. I'll check the rest of the series for missing tags then.
 
+Thanks,
+
+Phil.
 
