@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC19CECE58B
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 09:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B7FECE58D
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 09:49:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snxUD-0006Vl-Q8; Tue, 10 Sep 2024 05:48:37 -0400
+	id 1snxUF-0006cj-Da; Tue, 10 Sep 2024 05:48:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1snxUB-0006TU-NS; Tue, 10 Sep 2024 05:48:35 -0400
+ id 1snxUD-0006VZ-LO; Tue, 10 Sep 2024 05:48:37 -0400
 Received: from muminek.juszkiewicz.com.pl ([213.251.184.221])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1snxU9-0000M8-TU; Tue, 10 Sep 2024 05:48:35 -0400
+ id 1snxUC-0000MT-45; Tue, 10 Sep 2024 05:48:37 -0400
 Received: from localhost (localhost [127.0.0.1])
- by muminek.juszkiewicz.com.pl (Postfix) with ESMTP id 7D7422602C9;
- Tue, 10 Sep 2024 11:48:31 +0200 (CEST)
+ by muminek.juszkiewicz.com.pl (Postfix) with ESMTP id 0FD35260836;
+ Tue, 10 Sep 2024 11:48:34 +0200 (CEST)
 X-Virus-Scanned: Debian amavis at juszkiewicz.com.pl
 Received: from muminek.juszkiewicz.com.pl ([127.0.0.1])
  by localhost (muminek.juszkiewicz.com.pl [127.0.0.1]) (amavis, port 10024)
- with ESMTP id gcrsLz_4zubZ; Tue, 10 Sep 2024 11:48:29 +0200 (CEST)
+ with ESMTP id JbCQcShU0BRq; Tue, 10 Sep 2024 11:48:32 +0200 (CEST)
 Received: from applejack.lan (83.11.24.101.ipv4.supernova.orange.pl
  [83.11.24.101])
- by muminek.juszkiewicz.com.pl (Postfix) with ESMTPSA id C4026260898;
- Tue, 10 Sep 2024 11:48:28 +0200 (CEST)
+ by muminek.juszkiewicz.com.pl (Postfix) with ESMTPSA id 6BAA0260BB4;
+ Tue, 10 Sep 2024 11:48:31 +0200 (CEST)
 From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Date: Tue, 10 Sep 2024 11:48:08 +0200
-Subject: [PATCH v5 1/4] tests: use default cpu for aarch64/sbsa-ref
+Date: Tue, 10 Sep 2024 11:48:10 +0200
+Subject: [PATCH v5 3/4] tests: expand timeout information for aarch64/sbsa-ref
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240910-b4-move-to-freebsd-v5-1-0fb66d803c93@linaro.org>
+Message-Id: <20240910-b4-move-to-freebsd-v5-3-0fb66d803c93@linaro.org>
 References: <20240910-b4-move-to-freebsd-v5-0-0fb66d803c93@linaro.org>
 In-Reply-To: <20240910-b4-move-to-freebsd-v5-0-0fb66d803c93@linaro.org>
 To: qemu-devel@nongnu.org
@@ -69,83 +69,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We want to run tests using default cpu without having to remember which
-Arm core is it.
-
-Change Neoverse-N1 (old default) test to use default cpu (Neoverse-N2 at
-the moment).
+'Test might timeout' means nothing. Replace it with useful information
+that it is emulation of pointer authentication what makes this test run
+too long.
 
 Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
 ---
- tests/functional/test_aarch64_sbsaref.py | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ tests/functional/test_aarch64_sbsaref.py | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/tests/functional/test_aarch64_sbsaref.py b/tests/functional/test_aarch64_sbsaref.py
-index f31c2a60b6..528882f4fa 100755
+index 89d0b9587a..1648e8ceb6 100755
 --- a/tests/functional/test_aarch64_sbsaref.py
 +++ b/tests/functional/test_aarch64_sbsaref.py
-@@ -110,16 +110,17 @@ def test_sbsaref_edk2_firmware(self):
-     # This tests the whole boot chain from EFI to Userspace
-     # We only boot a whole OS for the current top level CPU and GIC
-     # Other test profiles should use more minimal boots
--    def boot_alpine_linux(self, cpu):
-+    def boot_alpine_linux(self, cpu=None):
-         self.fetch_firmware()
+@@ -137,7 +137,8 @@ def test_sbsaref_alpine_linux_max_pauth_off(self):
+     def test_sbsaref_alpine_linux_max_pauth_impdef(self):
+         self.boot_alpine_linux("max,pauth-impdef=on")
  
-         iso_path = self.ASSET_ALPINE_ISO.fetch()
+-    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
++    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
++                'Test might timeout due to PAuth emulation')
+     def test_sbsaref_alpine_linux_max(self):
+         self.boot_alpine_linux("max")
  
-         self.vm.set_console()
-         self.vm.add_args(
--            "-cpu", cpu,
-             "-drive", f"file={iso_path},media=cdrom,format=raw",
-         )
-+        if cpu:
-+            self.vm.add_args("-cpu", cpu)
- 
-         self.vm.launch()
-         wait_for_console_pattern(self, "Welcome to Alpine Linux 3.17")
-@@ -127,8 +128,8 @@ def boot_alpine_linux(self, cpu):
-     def test_sbsaref_alpine_linux_cortex_a57(self):
-         self.boot_alpine_linux("cortex-a57")
- 
--    def test_sbsaref_alpine_linux_neoverse_n1(self):
--        self.boot_alpine_linux("neoverse-n1")
-+    def test_sbsaref_alpine_linux_default_cpu(self):
-+        self.boot_alpine_linux()
- 
-     def test_sbsaref_alpine_linux_max_pauth_off(self):
-         self.boot_alpine_linux("max,pauth=off")
-@@ -148,16 +149,17 @@ def test_sbsaref_alpine_linux_max(self):
-     # This tests the whole boot chain from EFI to Userspace
-     # We only boot a whole OS for the current top level CPU and GIC
-     # Other test profiles should use more minimal boots
--    def boot_openbsd73(self, cpu):
-+    def boot_openbsd73(self, cpu=None):
-         self.fetch_firmware()
- 
-         img_path = self.ASSET_OPENBSD_ISO.fetch()
- 
-         self.vm.set_console()
-         self.vm.add_args(
--            "-cpu", cpu,
-             "-drive", f"file={img_path},format=raw,snapshot=on",
-         )
-+        if cpu:
-+            self.vm.add_args("-cpu", cpu)
- 
-         self.vm.launch()
-         wait_for_console_pattern(self,
-@@ -167,8 +169,8 @@ def boot_openbsd73(self, cpu):
-     def test_sbsaref_openbsd73_cortex_a57(self):
-         self.boot_openbsd73("cortex-a57")
- 
--    def test_sbsaref_openbsd73_neoverse_n1(self):
--        self.boot_openbsd73("neoverse-n1")
-+    def test_sbsaref_openbsd73_default_cpu(self):
-+        self.boot_openbsd73()
- 
+@@ -175,11 +176,13 @@ def test_sbsaref_openbsd73_default_cpu(self):
      def test_sbsaref_openbsd73_max_pauth_off(self):
          self.boot_openbsd73("max,pauth=off")
+ 
+-    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
++    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
++                'Test might timeout due to PAuth emulation')
+     def test_sbsaref_openbsd73_max_pauth_impdef(self):
+         self.boot_openbsd73("max,pauth-impdef=on")
+ 
+-    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
++    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
++                'Test might timeout due to PAuth emulation')
+     def test_sbsaref_openbsd73_max(self):
+         self.boot_openbsd73("max")
+ 
+@@ -216,11 +219,13 @@ def test_sbsaref_freebsd14_default_cpu(self):
+     def test_sbsaref_freebsd14_max_pauth_off(self):
+         self.boot_freebsd14("max,pauth=off")
+ 
+-    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
++    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
++                'Test might timeout due to PAuth emulation')
+     def test_sbsaref_freebsd14_max_pauth_impdef(self):
+         self.boot_freebsd14("max,pauth-impdef=on")
+ 
+-    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
++    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
++                'Test might timeout due to PAuth emulation')
+     def test_sbsaref_freebsd14_max(self):
+         self.boot_freebsd14("max")
+ 
 
 -- 
 2.46.0
