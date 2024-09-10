@@ -4,90 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63738ECE564
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 14:15:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC07EB64DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 14:16:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so1d4-0003Cd-Pl; Tue, 10 Sep 2024 10:14:02 -0400
+	id 1so1fU-0000At-GA; Tue, 10 Sep 2024 10:16:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so1d2-0002xU-Ul
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:14:00 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1so1fS-0008Vd-PS
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:16:30 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so1d1-0007Vq-4r
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:14:00 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a8d6ac24a3bso27825066b.1
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 07:13:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1so1fQ-0007wu-RC
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:16:30 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5c3ca32971cso1197756a12.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 07:16:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725977636; x=1726582436; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VkzJlS4txjflyKkh4CCHIuVaip6qn2yADs/S0X5KKR8=;
- b=RNKA/M8m4PM+OZSubSJ6YOY/OyokkKEotNLgR1Xs3kpZZyL/vpSvQ5oJkNp0/GaazA
- mLxjAj/cZr9t0q10f16VreTvNMc38j5lWUq78MfLjT0znKyde6zDqLFDHojtZeL40YU4
- E5UJy+tfruWKVfxNV8EoAB/ivT7mi4SLk3N3YIVHYDAMXihD4Zx3Q3zkg52slLuHOGkA
- nUxlwRRLUVqOYAlyjvT9HeDtJGsliOO32wrTTHLSzDbzApYDptT1h2BbhNXKF+z5axQ1
- QGmDZGSAapdyEaHTHunAe5cpj4hcsjPo8GUHDwDGTd0rUWflg1/WSB6388sH5hhbhzYF
- HbHQ==
+ d=linaro.org; s=google; t=1725977787; x=1726582587; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aTO3SbR8/CS5imaO2ZtO2Uj6evUCssJ5RCky30jkoA4=;
+ b=uAJjFpNC093Vq+M5fgAolqZ681pFZu870eYQGdC5qLEG827GzDx5DhkFvAw0im37jW
+ AM/TsAL/lst1BjCkfGBGGKGPtKz5U1YW8LgzQCS3zhpnEZnEv3tFW1qWNdoSq8x2m45V
+ Uv2pKgitFk3FnALrIQLRoRx5LP+rmgQDQMaG+XPnjcNsk0hwwt8P/OK+ehG3UHEdQDxC
+ RSOu+qwyuKeUY9t0ph/el5IN6PCe7PEy8bvIY8jxGumdU231AdhNe7v2Hqusx7630QAF
+ y0dIRjQRgkI9noa86wlNkeipBpwcdAjx64DSfwIMI+xv8nmKJq3sW+g0GEDgYoJ/7dQF
+ nErw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725977636; x=1726582436;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VkzJlS4txjflyKkh4CCHIuVaip6qn2yADs/S0X5KKR8=;
- b=fcMq2MdVy9+Vd6O8ySERtBUKwg4xXfKVTlJV+aD+YqXwdYSulwCOGhD9E6r7lUcqJy
- H/YSzxGE5gNe9ZWpeWCg5HbJ9B38A7PkrMQIRXjM+TQ479NCO8HMXmNkKbIdRVkMxrMG
- 412jHFhVJcdFaqRm9PzLpiHSHDnlHlDNHMWpQXbSUxLYEWLwf0tTDyLhqMVR1FLP7AWH
- Wlw3an6FDo2xLkEZN73eJ4KZ+bguWeJLtENlOJ5uLSZmyeorj137TPXzvC6REHwwJN5b
- nhvYklFjyhtmCIm5tN6KMz2+40p3M8FuUXHH1vSB4R9jr7gBIQSlOseL8Km5emjEQMWT
- 9iJQ==
-X-Gm-Message-State: AOJu0Yz6hG5igd1c2Ad/SJt026ADH/76jXBMfbtMseQK/I2F9VdhXxWR
- OxuhTXe0eSOyTV2kDgsCmChSuvAZJGBYgE6nCtF4hNmFcVBInYijp0UptKq/RNA=
-X-Google-Smtp-Source: AGHT+IF0n41cF7B1EFfMC4EoXC2MXohjR9xo5rsGQgQXXAcqKVCZIXQA9xUQ/GKhQak3g2247joROQ==
-X-Received: by 2002:a17:907:e291:b0:a8d:505a:5458 with SMTP id
- a640c23a62f3a-a8ffb20f42amr123827766b.10.1725977636389; 
- Tue, 10 Sep 2024 07:13:56 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d259c1fa3sm487925166b.80.2024.09.10.07.13.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2024 07:13:53 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A628E63460;
- Tue, 10 Sep 2024 15:07:35 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Beraldo Leal <bleal@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org, devel@lists.libvirt.org,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH 20/26] tests/tcg: only read/write 64 bit words on 64 bit
- systems
-Date: Tue, 10 Sep 2024 15:07:27 +0100
-Message-Id: <20240910140733.4007719-21-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240910140733.4007719-1-alex.bennee@linaro.org>
-References: <20240910140733.4007719-1-alex.bennee@linaro.org>
+ d=1e100.net; s=20230601; t=1725977787; x=1726582587;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=aTO3SbR8/CS5imaO2ZtO2Uj6evUCssJ5RCky30jkoA4=;
+ b=BD3HEfXdRz014bQ3YiddrlM2xL3xVHZukRtkgYGuN1WGFFRwvelKf7MoRerTaK24FQ
+ 9URHsI1KuQ6I8cZ9MhzHIjDfolXdAOf2z8z+Rqh2OZ8j2kI4tZ2huyrZJlzjXis4kB5a
+ 9XtfRnVY8kkhiypTiNt/NPrCgrzSzRKsYEWIcJqwgn9ZbbVxBaE5P1EfGQzGBVVH6oXf
+ Fe+anJ7YPwaXDYuIfOb5H9VgcNp9bfzra8jHqTeoUH3PTp19rQxnyBW/m0mbTgf9obhW
+ Ogr34R1iB8+AhD0UT65k1HZDwGWHfGsx5jFilC/COffNams7Rp/CpN40MuZeeePk1X9V
+ BQ8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVgCstv5drkTkhXgRKtCz4wFsvK4M1fm6HUkf9a4c5acVXzkxfCCQfD50/hHgdZ9xqvJZRCInVqWL9C@nongnu.org
+X-Gm-Message-State: AOJu0YyWuNVhQwXtc7KnHGKc9Uhf4yDMRuNd4ruCXd/K6io/a3mJq4MI
+ NA715PpgmqKvggAuyaw61eRo84w77MuurFV4gDjqD+776zJwmtHy6QdXsjrHmBg=
+X-Google-Smtp-Source: AGHT+IFAGjw+abPhxhHX0Re1aE9GVOOiy4Jgffq3gvvgleE0NPDLMAlE+kkItOjrG8WurqO/irFbDw==
+X-Received: by 2002:a05:6402:5cd:b0:5c2:439e:d6d6 with SMTP id
+ 4fb4d7f45d1cf-5c3dc78a1d6mr10104231a12.11.1725977786753; 
+ Tue, 10 Sep 2024 07:16:26 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.217.32])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5c3ebd8d9easm4265169a12.97.2024.09.10.07.16.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Sep 2024 07:16:26 -0700 (PDT)
+Message-ID: <fc493743-5ab0-49eb-98ed-dd260f0f60d6@linaro.org>
+Date: Tue, 10 Sep 2024 16:16:23 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 20/24] audio: Add sndio backend
+To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
+ Alexandre Ratchov <alex@caoua.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>
+Cc: Qiuhao Li <Qiuhao.Li@outlook.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Darren Kenny <darren.kenny@oracle.com>, Bandan Das <bsd@redhat.com>,
+ Alexander Bulekov <alxndr@bu.edu>, Markus Armbruster <armbru@redhat.com>,
+ Akihiko Odaki <akihiko.odaki@gmail.com>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Brad Smith <brad@comstyle.com>,
+ =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
+References: <20220927081912.180983-1-kraxel@redhat.com>
+ <20220927081912.180983-21-kraxel@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20220927081912.180983-21-kraxel@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,84 +105,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While the compilers will generally happily synthesise a 64 bit value
-for you on 32 bit systems it doesn't exercise anything on QEMU. It
-also makes it hard to accurately compare the accesses to test_data
-when instrumenting.
+Hi,
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/tcg/multiarch/system/memory.c | 26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+(This is commit 663df1cc68).
 
-diff --git a/tests/tcg/multiarch/system/memory.c b/tests/tcg/multiarch/system/memory.c
-index 8f2371975d..680dd4800b 100644
---- a/tests/tcg/multiarch/system/memory.c
-+++ b/tests/tcg/multiarch/system/memory.c
-@@ -163,6 +163,7 @@ static void init_test_data_u32(int offset)
-     ml_printf("done %d @ %p\n", i, ptr);
- }
- 
-+#if __SIZEOF_POINTER__ == 8
- static void init_test_data_u64(int offset)
- {
-     uint8_t count = 0;
-@@ -187,6 +188,7 @@ static void init_test_data_u64(int offset)
-     }
-     ml_printf("done %d @ %p\n", i, ptr);
- }
-+#endif
- 
- static bool read_test_data_u16(int offset)
- {
-@@ -254,6 +256,7 @@ static bool read_test_data_u32(int offset)
-     return true;
- }
- 
-+#if __SIZEOF_POINTER__ == 8
- static bool read_test_data_u64(int offset)
- {
-     uint64_t word, *ptr = (uint64_t *)&test_data[offset];
-@@ -307,11 +310,16 @@ static bool read_test_data_u64(int offset)
-     ml_printf("done %d @ %p\n", i, ptr);
-     return true;
- }
-+#endif
- 
- /* Read the test data and verify at various offsets */
--read_ufn read_ufns[] = { read_test_data_u16,
--                         read_test_data_u32,
--                         read_test_data_u64 };
-+read_ufn read_ufns[] = {
-+    read_test_data_u16,
-+    read_test_data_u32,
-+#if __SIZEOF_POINTER__ == 8
-+    read_test_data_u64
-+#endif
-+};
- 
- bool do_unsigned_reads(int start_off)
- {
-@@ -476,10 +484,14 @@ bool do_signed_reads(bool neg_first)
-     return ok;
- }
- 
--init_ufn init_ufns[] = { init_test_data_u8,
--                         init_test_data_u16,
--                         init_test_data_u32,
--                         init_test_data_u64 };
-+init_ufn init_ufns[] = {
-+    init_test_data_u8,
-+    init_test_data_u16,
-+    init_test_data_u32,
-+#if __SIZEOF_POINTER__ == 8
-+    init_test_data_u64
-+#endif
-+};
- 
- int main(void)
- {
--- 
-2.39.2
+On 27/9/22 10:19, Gerd Hoffmann wrote:
+> From: Alexandre Ratchov <alex@caoua.org>
+> 
+> sndio is the native API used by OpenBSD, although it has been ported to
+> other *BSD's and Linux (packages for Ubuntu, Debian, Void, Arch, etc.).
+> 
+> Signed-off-by: Brad Smith <brad@comstyle.com>
+> Signed-off-by: Alexandre Ratchov <alex@caoua.org>
+> Reviewed-by: Volker Rümelin <vr_qemu@t-online.de>
+> Tested-by: Volker Rümelin <vr_qemu@t-online.de>
+> Message-Id: <YxibXrWsrS3XYQM3@vm1.arverb.com>
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>   meson_options.txt             |   4 +-
+>   audio/audio_template.h        |   2 +
+>   audio/audio.c                 |   1 +
+>   audio/sndioaudio.c            | 565 ++++++++++++++++++++++++++++++++++
+>   MAINTAINERS                   |   7 +
+>   audio/meson.build             |   1 +
+>   meson.build                   |   9 +-
+>   qapi/audio.json               |  25 +-
+>   qemu-options.hx               |  16 +
+>   scripts/meson-buildoptions.sh |   7 +-
+>   10 files changed, 632 insertions(+), 5 deletions(-)
+>   create mode 100644 audio/sndioaudio.c
 
+
+> diff --git a/audio/sndioaudio.c b/audio/sndioaudio.c
+> new file mode 100644
+> index 000000000000..7c45276d36ce
+> --- /dev/null
+> +++ b/audio/sndioaudio.c
+> @@ -0,0 +1,565 @@
+> +/*
+> + * SPDX-License-Identifier: ISC
+
+This is the single use of the ISC license in the more than 10k
+files in the repository. Just checking IIUC this document:
+https://www.gnu.org/licenses/quick-guide-gplv3.en.html
+
+ISC -> LGPLv2.1 -> GPLv2 -> GPLv3
+
+So ISC is compatible with GPLv2-or-later. Is that correct?
+
+Thanks,
+
+Phil.
+
+> + *
+> + * Copyright (c) 2019 Alexandre Ratchov <alex@caoua.org>
+> + */
+> +
+> +/*
+> + * TODO :
+> + *
+> + * Use a single device and open it in full-duplex rather than
+> + * opening it twice (once for playback once for recording).
+> + *
+> + * This is the only way to ensure that playback doesn't drift with respect
+> + * to recording, which is what guest systems expect.
+> + */
+> +
+> +#include <poll.h>
+> +#include <sndio.h>
+> +#include "qemu/osdep.h"
+> +#include "qemu/main-loop.h"
+> +#include "audio.h"
+> +#include "trace.h"
+> +
+> +#define AUDIO_CAP "sndio"
+> +#include "audio_int.h"
+[...]
 
