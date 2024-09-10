@@ -4,75 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A3A4ECE582
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 09:35:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CF90ECE564
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 09:39:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snxHG-0002eb-7m; Tue, 10 Sep 2024 05:35:14 -0400
+	id 1snxKu-00014k-2V; Tue, 10 Sep 2024 05:39:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1snxHE-0002We-5L
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 05:35:12 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ id 1snxKs-00014C-83
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 05:38:58 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1snxHB-0006yz-Da
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 05:35:11 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2f025b94e07so44070321fa.0
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 02:35:08 -0700 (PDT)
+ id 1snxKq-0007Kh-AL
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 05:38:57 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2f025b94e07so44100451fa.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 02:38:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725960907; x=1726565707; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uLPchcVdsrTiH/SbvNa6W5ML4Pf8wEFkqIc9ZZ0co9c=;
- b=Pu5aNdQYOQg/FpQPxy3VsxVu99iY0sCw2MuwFwBTFtnt2FcW38m7cTW1jecUtmjPoJ
- HmHU3cUCyjqiM1OHymdbhaa2MmrRxdBEg2QQtU7pUqIW3kacyBrCHQcN7wNdfTHzwaMq
- WJoIlaCpGS91N95msKYOR7xUDpOCYHRPlEmyk7AEDEuogPLHtOX2/d0Oo1HU0mgu2f4H
- wcOT6ObdJtikUdC4+eAPv2lJNMrILPyV77QeA4Y68R6FlV1zPgLs88fvNER/JinsxyLL
- QdFRSA5kWM9AJT80jVO5pfIDk5lnqWp7Bb3YFrt2iSvA0XaufTjJ1lbAJujahSb8Ut4I
- zweQ==
+ d=linaro.org; s=google; t=1725961134; x=1726565934; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=JVsUXo1EC0jj3FH2hzr6jMlbK9W9eHzOPJpvQ6LrQWw=;
+ b=d1nhcDu8DcY10skTIC7CX5bJoQtNClz9wSMdgcLU88D7vtFZTsyuRDz3iQXQ5GqydS
+ Xo3vwSLYVrYc5GDYW/3ooHeiHk1MIPKiRxPA6Et3wt5vSJ82gqqbYAe7EwkqYFh6hdf9
+ rCjRpqNzdt3S21/Lb8Nvrfi/xmnZmvFCivIfzybOFbDsZsbhxDxJ+eYo+c3tUqHm67Og
+ G7y2WPuE20Pdh9R4IeEcT3ehWutL5Lj7KvxzgT4bDBClxqHhYNwHrsapj1xMxVkpzOsr
+ yd9sKmVx2foj22c048Xz+ibSWn2NDWr9vADUPl8O3W+cD8UahqnGiVM5Q5ippDWJXEWb
+ wojg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725960907; x=1726565707;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=uLPchcVdsrTiH/SbvNa6W5ML4Pf8wEFkqIc9ZZ0co9c=;
- b=GxLJnat69NlK49/FnUuqu4yGysq6Hz9lCmSMviNq+K8U56LjtN6chiy647lyHqhdxI
- EjmSM4MbCvelJcqwnGf+PmEaZukFQw36RevzRI7IM0hemmRIeot7OfDZHzyhok6nOxlc
- u9ETHJLJRtkGtm7HGpPD1IG1csRV1A7tIq5JzFXoerlRqHjJ32NsrgevZeFgH1eaA4v9
- nYuVADRrqj5xFWhO77VdZ9oMzgTNS3DmYPDdTWa4ZLsg8gyM21iCtRl3SxJKr/yGGVfA
- w1WEy7mg4Nd7/mhjURuBU/v12iCpnc3JKDSWSGYiNzUfrfyMZdu6T9Gs3UoDjqPzA/7l
- lC4Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVsTXxwB19TsZqgG++TS5fqnKTC7PTR42YA0chIoo0A8DasEoweTSCgfY/BjIMJShhwCwF7KNMx4Wfc@nongnu.org
-X-Gm-Message-State: AOJu0YwmhXHMhIDsegJCVkzfsOtY9zHs4VUC07+zuDu3+bOTuSC3nxbE
- 3qPyq+yo4KlsJu/mvlu4FJV4FgUC3ZZuSosn92WFSO70efaEKhSw9LBISMUQFY9tcjjAeK2APFT
- 4MIa+N7iu9lCsqdDlaXTm3z3RQYEnaI05dhfoyw==
-X-Google-Smtp-Source: AGHT+IFsnE+xXeFTaU1vgcgWdA45voPx4fxvCJMQY7L5F9/h8pkL6PuONiE2hN6Q+aBodbbr7s2LyhVbMuzlyLtjjvA=
-X-Received: by 2002:a2e:b88b:0:b0:2f3:d008:a54e with SMTP id
- 38308e7fff4ca-2f752495f71mr75374971fa.36.1725960906795; Tue, 10 Sep 2024
- 02:35:06 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725961134; x=1726565934;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JVsUXo1EC0jj3FH2hzr6jMlbK9W9eHzOPJpvQ6LrQWw=;
+ b=JqGLtsyu8qBvAMi+oyg4cI9QOaWl4AeBFrZXDT3PFS+OlY3rO/gR5as1cYdJWoyZ8l
+ 4b+w5J+Of+BOR/vh4XJ60LEEKv4xtT9K53VkLMs/jAt+BU72Y5z9lTGg7z2/tUEuAdI4
+ Dmet9cnv6VO+bOQG/PXH5Fr7ddZDkkVmRrL2pLN7bzCPSTq/5xiB9cpmz02hcDkSUYcT
+ W0RTLhxRD7G6rtFW9UsBtZNkieZs1u4oUDrIIh1FrOVgFr4R1hD3iRUYFtmVdCvZImrh
+ aU2XOwgyVWtnUFgNRDnJL47u7Vld1gcshzltDUbD2GdEepWnzdJK2mnEXiQ9b+c67NOC
+ dkeQ==
+X-Gm-Message-State: AOJu0YwI7wcvlVr81sjiWmAo4okO3NG8uAJKPI+9qFkGU8NdhumhW8Bu
+ 9f/BBBl9CQAgbQirB5IbhrC+l/t0+hfkuY60FkhMXcv9kuH6cWa+BDucQgXy2twDxQhdHv2C0+v
+ +EyfPaQweR7fqySVUGpytCCIV7Q61O5xKFmkjrQ==
+X-Google-Smtp-Source: AGHT+IEHDGEdDLw/q0sVgAu532b1ICxNkrkMLYqR/A+fKL/fHqBe1JwdYG9D8h0KqJmddaDo23b+wopELq6U/K2G76E=
+X-Received: by 2002:a05:651c:b28:b0:2f7:663c:48d7 with SMTP id
+ 38308e7fff4ca-2f7663c4cc1mr35888471fa.39.1725961133754; Tue, 10 Sep 2024
+ 02:38:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240902061944.526873-1-satur9nine@gmail.com>
- <CAFEAcA9wP7f_yPYNJmaTDe1bB8cPifErAGpjtsNPKsR0s_65Sg@mail.gmail.com>
- <667c28a5-3c00-4de2-b37e-566dc7ffca14@linaro.org>
-In-Reply-To: <667c28a5-3c00-4de2-b37e-566dc7ffca14@linaro.org>
+References: <20240819144303.37852-1-peter.maydell@linaro.org>
+ <20240910110344.10e4805e@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240910110344.10e4805e@imammedo.users.ipa.redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 10 Sep 2024 10:34:55 +0100
-Message-ID: <CAFEAcA9GHEGrar3Mcf09Hrrmz6mWeQhD0Z7KEvxr3RxYSyFeEQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/char/stm32l4x5_usart.c: Fix ACK and min access size
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Jacob Abrams <satur9nine@gmail.com>, qemu-devel@nongnu.org, 
- Arnaud Minier <arnaud.minier@telecom-paris.fr>, 
- =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>
+Date: Tue, 10 Sep 2024 10:38:42 +0100
+Message-ID: <CAFEAcA_Rjiy1so28OVPpL=+++XuU+gSXhn-v_WHMcpc_wa_xMw@mail.gmail.com>
+Subject: Re: [PATCH] docs/system/cpu-hotplug: Update example's
+ socket-id/core-id
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x232.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,124 +89,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 9 Sept 2024 at 18:40, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+On Tue, 10 Sept 2024 at 10:03, Igor Mammedov <imammedo@redhat.com> wrote:
 >
-> Hi,
+> On Mon, 19 Aug 2024 15:43:03 +0100
+> Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> (Cc'ing Arnaud & In=C3=A8s who are listed as maintainers)
->
-> On 6/9/24 18:12, Peter Maydell wrote:
-> > On Mon, 2 Sept 2024 at 14:38, Jacob Abrams <satur9nine@gmail.com> wrote=
-:
-> >>
-> >> These changes allow the official STM32L4xx HAL UART driver to function
-> >> properly with the b-l475e-iot01a machine.
-> >>
-> >> Modifying USART_CR1 TE bit should alter USART_ISR TEACK bit, and
-> >> likewise for RE and REACK bit.
-> >>
-> >> USART registers may be accessed via 16-bit instructions.
-> >>
-> >> Reseting USART_CR1 UE bit should restore ISR to default value.
-> >>
-> >> Fixes: 87b77e6e01ca ("hw/char/stm32l4x5_usart: Enable serial read and =
-write")
-> >> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2540
-> >> Signed-off-by: Jacob Abrams <satur9nine@gmail.com>
+> > At some point the way we allocate socket-id and core-id to CPUs
+> > by default changed; update the example of how to do CPU hotplug
+> > and unplug so the example commands work again. The differences
+> > in the sample input and output are:
+> >  * the second CPU is now socket-id=0 core-id=1,
+> >    not socket-id=1 core-id=0
+> >  * the order of fields from the qmp_shell is different (it seems
+> >    to now always be in alphabetical order)
 > >
-> > Thanks for this patch. I have one question below, and one
-> > minor nit.
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> > I noticed this while I was playing around with vcpu hotplug trying to
+> > demonstrate a memory leak I want to fix...
 > >
-> >> ---
-> >>   hw/char/stm32l4x5_usart.c          | 29 +++++++++++++++++++---
-> >>   tests/qtest/stm32l4x5_usart-test.c | 39 ++++++++++++++++++++++++++++=
-+-
-> >>   2 files changed, 64 insertions(+), 4 deletions(-)
->
->
-> >>   static void stm32l4x5_update_irq(Stm32l4x5UsartBaseState *s)
-> >>   {
-> >>       if (((s->isr & R_ISR_WUF_MASK) && (s->cr3 & R_CR3_WUFIE_MASK))  =
-      ||
-> >> @@ -367,7 +389,7 @@ static void stm32l4x5_usart_base_reset_hold(Object=
- *obj, ResetType type)
-> >>       s->brr =3D 0x00000000;
-> >>       s->gtpr =3D 0x00000000;
-> >>       s->rtor =3D 0x00000000;
-> >> -    s->isr =3D 0x020000C0;
-> >> +    s->isr =3D ISR_RESET_VALUE;
-> >>       s->rdr =3D 0x00000000;
-> >>       s->tdr =3D 0x00000000;
-> >>
-> >> @@ -456,6 +478,7 @@ static void stm32l4x5_usart_base_write(void *opaqu=
-e, hwaddr addr,
-> >>       case A_CR1:
-> >>           s->cr1 =3D value;
-> >>           stm32l4x5_update_params(s);
-> >> +        stm32l4x5_update_isr(s);
-> >>           stm32l4x5_update_irq(s);
-> >>           return;
-> >>       case A_CR2:
-> >> @@ -508,12 +531,12 @@ static const MemoryRegionOps stm32l4x5_usart_bas=
-e_ops =3D {
-> >>       .endianness =3D DEVICE_NATIVE_ENDIAN,
-> >>       .valid =3D {
-> >>           .max_access_size =3D 4,
-> >> -        .min_access_size =3D 4,
-> >> +        .min_access_size =3D 2,
-> >>           .unaligned =3D false
-> >>       },
-> >>       .impl =3D {
-> >>           .max_access_size =3D 4,
-> >> -        .min_access_size =3D 4,
-> >> +        .min_access_size =3D 2,
-> >>           .unaligned =3D false
-> >>       },
+> >  docs/system/cpu-hotplug.rst | 54 ++++++++++++++++++-------------------
+> >  1 file changed, 26 insertions(+), 28 deletions(-)
 > >
-> > The effect of these is that a 16-bit write not aligned
-> > to a (4-aligned) register offset will generate a GUEST_ERROR
-> > logged message, and a 16-bit write aligned to a 4-aligned
-> > register offset will write the value zero-extended to 32 bits.
-> > That seems reasonable to me.
+> > diff --git a/docs/system/cpu-hotplug.rst b/docs/system/cpu-hotplug.rst
+> > index 015ce2b6ec3..443ff226b90 100644
+> > --- a/docs/system/cpu-hotplug.rst
+> > +++ b/docs/system/cpu-hotplug.rst
+> > @@ -33,23 +33,23 @@ vCPU hotplug
+> >        {
+> >            "return": [
+> >                {
+> > -                  "type": "IvyBridge-IBRS-x86_64-cpu",
+> > -                  "vcpus-count": 1,
+> >                    "props": {
+> > -                      "socket-id": 1,
+> > -                      "core-id": 0,
+> > +                      "core-id": 1,
+> > +                      "socket-id": 0,
+> >                        "thread-id": 0
+> > -                  }
+> > +                  },
+> > +                  "type": "IvyBridge-IBRS-x86_64-cpu",
+> > +                  "vcpus-count": 1
+> >                },
+> >                {
+> > +                  "props": {
+> > +                      "core-id": 0,
+> > +                      "socket-id": 0,
+> > +                      "thread-id": 0
+> > +                  },
+> >                    "qom-path": "/machine/unattached/device[0]",
+> >                    "type": "IvyBridge-IBRS-x86_64-cpu",
+> > -                  "vcpus-count": 1,
+> > -                  "props": {
+> > -                      "socket-id": 0,
+> > -                      "core-id": 0,
+> > -                      "thread-id": 0
+> > -                  }
+> > +                  "vcpus-count": 1
+> >                }
+> >            ]
+> >        }
+> > @@ -58,18 +58,18 @@ vCPU hotplug
+> >  (4) The ``query-hotpluggable-cpus`` command returns an object for CPUs
+> >      that are present (containing a "qom-path" member) or which may be
+> >      hot-plugged (no "qom-path" member).  From its output in step (3), we
+> > -    can see that ``IvyBridge-IBRS-x86_64-cpu`` is present in socket 0,
+> > -    while hot-plugging a CPU into socket 1 requires passing the listed
+> > +    can see that ``IvyBridge-IBRS-x86_64-cpu`` is present in socket 0 core 0,
+> > +    while hot-plugging a CPU into socket 0 core 1 requires passing the listed
+> >      properties to QMP ``device_add``::
+> >
 >
-> Peter, are you describing the .valid.min_access_size 4 -> 2 change
-> or the .impl.min_access_size one?
-
-I was intending to summarise the effects of making the code
-changes above (both .impl and .valid), without any reference
-to what the real hardware behaviour might or might not be
-(as a starter for figuring out whether the change is reasonable).
-
-> My understanding of the implementation is a 32-bit one:
+> >        (QEMU) device_add id=cpu-2 driver=IvyBridge-IBRS-x86_64-cpu socket-id=1 core-id=0 thread-id=0
 >
->    REG32(CR1, 0x00)
+> >        {
+> >            "execute": "device_add",
+> >            "arguments": {
+> > -              "socket-id": 1,
+> > +              "core-id": 1,
+> >                "driver": "IvyBridge-IBRS-x86_64-cpu",
+> >                "id": "cpu-2",
+> > -              "core-id": 0,
+> > +              "socket-id": 0,
+> >                "thread-id": 0
 >
->    struct Stm32l4x5UsartBaseState {
->        ...
->        uint32_t cr1;
+> after above changes device_add doesn't match comment nor 'execute' output
+
+Oops, yes. The device_add line should be changed too
+("socket-id=0 core-id=1 thread-id=0").
+
 >
->    static void stm32l4x5_usart_base_write(void *opaque, hwaddr addr,
->                                    uint64_t val64, unsigned int size)
->    {
->        ...
->        switch (addr) {
->        case A_CR1:
->            s->cr1 =3D value;
+> >            }
+> >        }
+> > @@ -83,34 +83,32 @@ vCPU hotplug
+> >
+> >        (QEMU) query-cpus-fast
+> >        {
+> > -          "execute": "query-cpus-fast",
+> >            "arguments": {}
+> > +          "execute": "query-cpus-fast",
+> >        }
+> >        {
+> >            "return": [
+> >                {
+> > -                  "qom-path": "/machine/unattached/device[0]",
+> > -                  "target": "x86_64",
+> > -                  "thread-id": 11534,
+> >                    "cpu-index": 0,
+> >                    "props": {
+> > -                      "socket-id": 0,
+> >                        "core-id": 0,
+> > +                      "socket-id": 0,
+> >                        "thread-id": 0
+> >                    },
+> > -                  "arch": "x86"
+> > +                  "qom-path": "/machine/unattached/device[0]",
+> > +                  "target": "x86_64",
+> > +                  "thread-id": 28957
+> >                },
+> >                {
+> > -                  "qom-path": "/machine/peripheral/cpu-2",
+> > -                  "target": "x86_64",
+> > -                  "thread-id": 12106,
+> >                    "cpu-index": 1,
+> >                    "props": {
+> > -                      "socket-id": 1,
+> > -                      "core-id": 0,
+> > +                      "core-id": 1,
+> > +                      "socket-id": 0,
+> >                        "thread-id": 0
+> >                    },
+> > -                  "arch": "x86"
+> > +                  "qom-path": "/machine/peripheral/cpu-2",
+> > +                  "target": "x86_64",
+> > +                  "thread-id": 29095
+> >                }
 >
-> Am I missing something?
+> beside reordering, which seems fine, this hunk also introduces target change
+> perhaps a separate patch for that?
 
-If we make the .impl and .valid changes, then the result is
-that we permit 16 bit writes to come through to the read
-and write functions. Since we don't make any changes to
-those functions to specially handle size =3D=3D 2, you get the
-effects of the existing code. If the 16 bit write is aligned
-to a 4-aligned register offset it will match one of the A_*
-cases, and will write 16-bit-value-zero-extended to it.
-If the 16 bit write isn't to a 4-aligned offset it will fall
-into the "default" case and be logged as a GUEST_ERROR.
+What target change? It all says "target": "x86_64" both before
+and after.
 
-Did I miss some aspect of what the behaviour change is?
-
+thanks
 -- PMM
 
