@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FEFCEDE9AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 18:26:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93DA4EDE9AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 18:27:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so5Yk-00009C-3A; Tue, 10 Sep 2024 14:25:51 -0400
+	id 1so5Zr-0000yd-35; Tue, 10 Sep 2024 14:26:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1so5YS-00006b-R6
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:25:33 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1so5YN-000104-1V
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:25:29 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-205659dc63aso58692175ad.1
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 11:25:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725992725; x=1726597525; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=U+apKFwRTq+GS/zaWIu8Jni8n15c/rLBfDrOp5IZGZ8=;
- b=a2Pj45R717J9ybGxyotKQltNKyc4Gyz+TQNfRi8QW/y9ZDMc/hHgM19gjQmfGMyCae
- fM5kW7piDvQQ3kXiOhrKFw0axdrUiNVyhNpKAd3cslt1HiUPzE7av6qufd4daAFPGM0y
- 9KfN/vAzIgm+tSJOqnAZfxdr2UM9IEXTibp53oVaFNgfxaK2sycYeOo+NfgsVwR0z7t5
- xvyTig7WYVkdzIDZWZmZC+fAEPcUw438LkeSUQJEKih+Ex04a+DYNk0u2wh+SAITvnGx
- r4nboxaBEy7u3ahh7lytUPmBG9YbqTHv2Ju3AukIBvkz/1SaZzv4HxTl44Er6gT/+Q9S
- Mp3Q==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1so5ZT-0000iS-OP
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:26:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1so5ZQ-00013C-Vz
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 14:26:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725992792;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cRoEgMJfS5M5bG8vybS/0PppI1EkZSN/qb4WA5VLPz0=;
+ b=Z7Y/jT+KXzlEQD4JmEiXiwxHR5pJ1RTmHjqV/vqc7OD9bXYAA4WATfmLb0SX2mwZiGm9o6
+ uAHczuoRAS9HGOW9BeDRm9zWlgaylznQbGMsqG+dYHKCIUc0HGpXo+sYim+IlBcWi/YDXT
+ 8b2YAyxpry4FVlCaqV7xvQx4Ko3k0ZM=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-680-ot0j5WinOs2lRiEzyreejg-1; Tue, 10 Sep 2024 14:26:28 -0400
+X-MC-Unique: ot0j5WinOs2lRiEzyreejg-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42cb22d396cso25793775e9.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 11:26:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725992725; x=1726597525;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=U+apKFwRTq+GS/zaWIu8Jni8n15c/rLBfDrOp5IZGZ8=;
- b=OYXTBlz8maoZTRtiJbinD69csCIDlrLsOaQCDSlLPI151PY0XW1NzVbh+5Ysipvxgo
- 6oGGEcsXZcCTX1PgoydzlAa8Oz5NZRuGhM0cAKgKaqRVLGA0FiZDGhtdUIuatq+AMWYO
- rvp6l1il9TT1acPTAnirNMLzprDsxlqvcnU89irmkDmCZdv6McOmzcd+UvdId4K1H+lD
- lzCsovs3X8E6WOeHmYYqio9jC467Xait08/JhyapzlyeNR6Mqd39mt/FF+XBePYUO6XL
- 25QcOBXlHBIT/1y/Oj31QUoAsXRb9Z3JWbRz8+GSXTwP2aUUI6nd1TKX62yMHZd5RzO5
- 5GnQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXc70wm8w4D4QIRpWs7Q0sLNFXqTMHmAa1mj61SJ4YgwjRZCWujtvS6jjoFklEwaKqtTYEqzZZqGQgb@nongnu.org
-X-Gm-Message-State: AOJu0YyRZELsF291NH8Re3R4rjxpk9Aj7eb5lA96SItNljCU0W/2Ok3F
- 898aB2fx0le6cGx9slyb9kLcCllTzz8qq4zhgisy9aQY+wRfKwsT5gRGN3cUXmw=
-X-Google-Smtp-Source: AGHT+IFJv16jHK1VoNBh6Qxh2fKthyUzRfOV5/JspBH0NTA37vv4HmsU+suFsoG6WS7iBCOroI7/DQ==
-X-Received: by 2002:a17:903:2a8e:b0:202:3103:c250 with SMTP id
- d9443c01a7336-2074c72280emr21118395ad.38.1725992724664; 
- Tue, 10 Sep 2024 11:25:24 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710eea9d1sm51593905ad.157.2024.09.10.11.25.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 11:25:23 -0700 (PDT)
-Message-ID: <bef11607-6743-4822-89ad-e91f79bb57d0@linaro.org>
-Date: Tue, 10 Sep 2024 11:25:21 -0700
+ d=1e100.net; s=20230601; t=1725992787; x=1726597587;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cRoEgMJfS5M5bG8vybS/0PppI1EkZSN/qb4WA5VLPz0=;
+ b=tVX7YGggkmhJHLvIR/Va5OFoMxkEPZMSWC2JQZA8t02QVXikZF+RINK/MI1kI22XXp
+ htllkb7AevTWpEzONLDqe9CR7obZEk6ou9XmqtnGZgAQmW6SNdMb5Tp7E6ucHdlWL549
+ y6ixddntEop7B03Vn36bdZ8288c+Q8r/kiLIaoHo7xZBbkCNLEi7+CfEUcxd2YsfV+ZY
+ Bw+yl+jjKHCK3fnXJ4jJm8h92pATjb1dALpwcTGi2L1yCmiMVvrTwktGv+ZMAn4NUZtL
+ ++HkzvlDSSVcwGLwzGBTRRWl7s0d6uxXusaRW35Bxthy/6M9OY/vrSZUJ3tAgtQK2zi0
+ mkNA==
+X-Gm-Message-State: AOJu0YwnBKtY6iPZgYVY/uP6/kBz+dkoX2wSWJDXh2kq5m0aDWQk+DGf
+ LT+TeD0hNpjiFetDC/HciTAxRmeDJq6UIqO+rS1P4baz2KX5uEc517u4h5NZQTxUKGCxBG/nKQR
+ 0aHY23CItEH841BELcs155tAboNFnpLjaawHwf2VZqvPIRHiNpRRM
+X-Received: by 2002:a05:600c:4f4b:b0:42c:c92a:f157 with SMTP id
+ 5b1f17b1804b1-42cc92af337mr12869785e9.3.1725992787553; 
+ Tue, 10 Sep 2024 11:26:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IELXfODvximhY9RUg42djZFLB/XtrIFWvQGupibD37DpSLTCtQoIMjgPsiTBkPlEtuXzLDDtw==
+X-Received: by 2002:a05:600c:4f4b:b0:42c:c92a:f157 with SMTP id
+ 5b1f17b1804b1-42cc92af337mr12869505e9.3.1725992786901; 
+ Tue, 10 Sep 2024 11:26:26 -0700 (PDT)
+Received: from redhat.com ([31.187.78.63]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42caeb818b6sm121168695e9.38.2024.09.10.11.26.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Sep 2024 11:26:26 -0700 (PDT)
+Date: Tue, 10 Sep 2024 14:26:22 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, Gavin Shan <gshan@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH v1] virtio-mem: don't warn about THP sizes on a kernel
+ without THP support
+Message-ID: <20240910142458-mutt-send-email-mst@kernel.org>
+References: <20240910163433.2100295-1-david@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] license: Fix typos and update deprecated SPDX tags
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Stefan Weil <sw@weilnetz.de>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, qemu-trivial@nongnu.org
-References: <20240910115131.28766-1-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240910115131.28766-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240910163433.2100295-1-david@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,15 +98,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/10/24 04:51, Philippe Mathieu-Daudé wrote:
-> Philippe Mathieu-Daudé (5):
->    NSIS: Simplify license description
->    tests/functional: Correct typo in test_netdev_ethtool.py SPDX tag
->    license: Update deprecated SPDX tag LGPL-2.0+ to LGPL-2.0-or-later
->    license: Update deprecated SPDX tag GPL-2.0+ to GPL-2.0-or-later
->    license: Update deprecated SPDX tag GPL-2.0 to GPL-2.0-only
+On Tue, Sep 10, 2024 at 06:34:33PM +0200, David Hildenbrand wrote:
+> If the config directory in sysfs does not exist at all, we are dealing
+> with a system that does not support THPs. Simply use 1 MiB block size
+> then, instead of warning "Could not detect THP size, falling back to
+> ..." and falling back to the default THP size.
+> 
+> Cc: "Michael S. Tsirkin" <mst@redhat.com>
+> Cc: Gavin Shan <gshan@redhat.com>
+> Cc: Juraj Marcin <jmarcin@redhat.com>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Okay, I picked it up. But I have a question
 
-r~
+> ---
+>  hw/virtio/virtio-mem.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+> index ef64bf1b4a..4075f3d4ce 100644
+> --- a/hw/virtio/virtio-mem.c
+> +++ b/hw/virtio/virtio-mem.c
+> @@ -88,6 +88,7 @@ static uint32_t virtio_mem_default_thp_size(void)
+>  static uint32_t thp_size;
+>  
+>  #define HPAGE_PMD_SIZE_PATH "/sys/kernel/mm/transparent_hugepage/hpage_pmd_size"
+> +#define HPAGE_PATH "/sys/kernel/mm/transparent_hugepage/"
+
+
+If this code runs e.g. on windows, it will poke at cwd root with
+unpredictable results.
+It doesn't look like this is linux specific, did I miss anything?
+
+>  static uint32_t virtio_mem_thp_size(void)
+>  {
+>      gchar *content = NULL;
+> @@ -98,6 +99,12 @@ static uint32_t virtio_mem_thp_size(void)
+>          return thp_size;
+>      }
+>  
+> +    /* No THP -> no restrictions. */
+> +    if (!g_file_test(HPAGE_PATH, G_FILE_TEST_EXISTS)) {
+> +        thp_size = VIRTIO_MEM_MIN_BLOCK_SIZE;
+> +        return thp_size;
+> +    }
+> +
+>      /*
+>       * Try to probe the actual THP size, fallback to (sane but eventually
+>       * incorrect) default sizes.
+> -- 
+> 2.46.0
+
 
