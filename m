@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17A83EB64DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 03:47:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D09DEB64DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 03:59:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snrqQ-0006jM-Pn; Mon, 09 Sep 2024 23:47:10 -0400
+	id 1sns1F-0000Ze-UP; Mon, 09 Sep 2024 23:58:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1snrqO-0006g8-JC; Mon, 09 Sep 2024 23:47:08 -0400
-Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sns1D-0000YX-Vz
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 23:58:20 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1snrqL-0005LS-Vz; Mon, 09 Sep 2024 23:47:08 -0400
-Received: by mail-vk1-xa2e.google.com with SMTP id
- 71dfb90a1353d-5010861905bso2602452e0c.1; 
- Mon, 09 Sep 2024 20:47:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sns1B-0006FB-SD
+ for qemu-devel@nongnu.org; Mon, 09 Sep 2024 23:58:19 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-7d916b6a73aso1100118a12.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 20:58:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725940024; x=1726544824; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1725940696; x=1726545496; darn=nongnu.org;
+ h=content-transfer-encoding:subject:from:cc:to:content-language
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lZNPRbionTsAOUBsp9u7Q6mRoWxD1l6R4haxdEA0Ua0=;
- b=KX1J5D65O+IMtBCZVfpy5j+iMlX+Us4feO+bWd+HIBWPOiPnWFpCGkAbsEMRTBY9HB
- nfuWz0H+Wwn1dO3P+cKt9zJqz87xz0qGkaO/98L9lGsOsER8TOXB7vgbylW+jkE9vFT9
- 1NUNKFG+zYLi4kbtJiIQ73s0gxB5ivdkqY60lMfXP4VTAsIU6syDvNR/YcG0IY9rmI5/
- 31XkqMRkV+8erZbrB7cAxPA2Jlo6R9TY9d2HQkL6MDIvEm2TVZyHUUfAnIZBgpL9Cjmv
- MYOkAw1czQYqY1Ssq1kMKoYQvKKlFTVWlH0m4LhU7FRh8wVEaXJzeC0jMf34Lw1lhI5P
- HPBA==
+ bh=b6Ygp3KxJtVt5paKEJ8MT0i9eDhcBLerQFd6zDp8+LY=;
+ b=KcwXKHmJNxOq2irSBM4+bBq61UhtUQA3DS+ndBxIODqZ3WamrHU8X6hgqjLXGa7X3G
+ zIfvZaoxAvZ+g9ESolr5xZgFauIWAcUlGaDD2KSFFpZODjA9EiZY9XrPa8g8UFWRTHHa
+ EgMe5ukNry/RY5QehKl10l8dBx/Zsgod4Nh2znppLOvxonINwVla9ZjSCRmR5Rv6g+8u
+ ZZNxWjgmU9lDmj6bXG1Jg8xcV8jiT8oXZewERd+bRWlBIVKcIqbPfmHcHME9u2Etim+4
+ lcLfVq42T65W+LC4pA7L965IoA/46si6o/mfT3LTQCLT4Y1TYkFJsdMDgLV96OlMyscT
+ RrWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725940024; x=1726544824;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lZNPRbionTsAOUBsp9u7Q6mRoWxD1l6R4haxdEA0Ua0=;
- b=dg7ZuMzpRfE3g7WWVKVA/LHphzrG83NP7UIX4Jqzy+F/1chot+mdC9I0gg1rhTtRGx
- zlCcKV0XBi+59ambhEHDpO/Zx3wvrgczCl097LBb+Z/ZXX8KLWNjF4AhYa/iKySlBGcZ
- SzyN8OfCawBWY4Vmr+b1QdEFxFx/HSgomRccalCxqBF4uakg543BzQuyHyjNsv+O+jKT
- viLLqVUGvNR8J8rzKZ2IAlWE9O/9Lme+Vk6g57q30ne3ZlYE2J+NBQD4ELA2wFMX2Ju0
- cqGSoEE4LU+HbTNouwZvQD4AoTZfBMcS3Tjc0ABPFAvsjyeS8/5/VWHghz2TYBqp9x5V
- yhuA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVgiNanm5dsTppgEQUUQtEvn/XJ/SwKViD/NOBKnEaphrLXIScq20DVo6UznoPYesdKBHzlWZdnY6V6@nongnu.org
-X-Gm-Message-State: AOJu0YwMI55q8b78+Bq4hBFGIH5J7LR/+uWKXChqj8LKXPKO2HrxR+dn
- dbPrynf+yMvsM8keByTQCw2T7UmISLafaI+Deth/bMiaeVEDtQAT/9ZDy12Evw16LQdeMTtP0f5
- tNo8gNmicEHP83YW267tzysUNu6k=
-X-Google-Smtp-Source: AGHT+IHCe18uRYIPptKP0e40LVOph7TPmmu0adDPCcRm3V0yQTrdVrrGcJj2JF6CfghoVrXKDl8AAVycoLCgyjL3xzk=
-X-Received: by 2002:a05:6122:da4:b0:4f5:197a:d679 with SMTP id
- 71dfb90a1353d-502f72e1a49mr1552023e0c.1.1725940024163; Mon, 09 Sep 2024
- 20:47:04 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1725940696; x=1726545496;
+ h=content-transfer-encoding:subject:from:cc:to:content-language
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=b6Ygp3KxJtVt5paKEJ8MT0i9eDhcBLerQFd6zDp8+LY=;
+ b=Cw/w9BcevMXGz6a1Pgm8s1CEzVMT0XsdPsPmZhN6yKfE/1rIx681frfSx7AmZMCRul
+ 0SycHQ25nAhTx6c8vSc2/p4ZeWTsQyP2kwfpobw07XsRXTZg0pppiZzDtNmqANLzPuGf
+ pmzy4+s9rpdtLo2WTe+L5F+NWYXNwKods9HRc7p0wf7VJd5cnVN8WLDpVS9+q5F0k8rf
+ kDWe1wI0k/6B1Hp/qicHAoD+sUTFLfJc3TXDzfc+zYAXLDpyoEVeDb81hutoMtTQKFxz
+ p7lSy6VIrm3gi0HAKgkIT+RhPFChZoOxEJ09PPElwbnqZllEDiCSonnsF8Bpoy4J0vD0
+ 3FKA==
+X-Gm-Message-State: AOJu0Yw5D5nQp5/p8+rqc7KQ9/aoc5BzRuXSFy/8N5BgbQAKFns+ojYi
+ f6RDZJAwkHPHJJdrs2cAzp/u6j9dUcC3w+SS7JhP5klihQkzHC1KHmu8OSYX0a0LpIa80c7RAuM
+ F
+X-Google-Smtp-Source: AGHT+IEPQ/EtNneuri4r/A1ADJTrtGEZa8seW7QKJ6o8yFhtJjyw9pxe8cfPszZXOq0XBrfmmDf2XA==
+X-Received: by 2002:a17:90b:1092:b0:2d3:ce99:44b6 with SMTP id
+ 98e67ed59e1d1-2dad517f7afmr11836419a91.29.1725940695486; 
+ Mon, 09 Sep 2024 20:58:15 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2dadbfe4897sm7490944a91.7.2024.09.09.20.58.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Sep 2024 20:58:15 -0700 (PDT)
+Message-ID: <5f193fa1-89ec-4424-b6fd-c7ae1a4beedf@linaro.org>
+Date: Mon, 9 Sep 2024 20:58:13 -0700
 MIME-Version: 1.0
-References: <20240909083241.43836-2-ajones@ventanamicro.com>
-In-Reply-To: <20240909083241.43836-2-ajones@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 10 Sep 2024 13:46:37 +1000
-Message-ID: <CAKmqyKPzhFSfVVVQmqjCTApJp+uv5or38edLUf7sr-+faifEjw@mail.gmail.com>
-Subject: Re: [PATCH v2] target/riscv32: Fix masking of physical address
-To: Andrew Jones <ajones@ventanamicro.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, bmeng.cn@gmail.com, zong.li@sifive.com, 
- liwei1518@gmail.com, cwshu@andestech.com, dbarboza@ventanamicro.com, 
- richard.henderson@linaro.org, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: qemu-devel <qemu-devel@nongnu.org>
+Cc: Thomas Huth <thuth@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Subject: check-functional skipUnless failure
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -93,72 +94,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 9, 2024 at 6:33=E2=80=AFPM Andrew Jones <ajones@ventanamicro.co=
-m> wrote:
->
-> C doesn't extend the sign bit for unsigned types since there isn't a
-> sign bit to extend. This means a promotion of a u32 to a u64 results
-> in the upper 32 bits of the u64 being zero. If that result is then
-> used as a mask on another u64 the upper 32 bits will be cleared. rv32
-> physical addresses may be up to 34 bits wide, so we don't want to
-> clear the high bits while page aligning the address. The fix is to
-> use hwaddr for the mask, which, even on rv32, is 64-bits wide.
->
-> Fixes: af3fc195e3c8 ("target/riscv: Change the TLB page size depends on P=
-MP entries.")
-> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+[rth@cfarm120 bld]$ make check-functional
+[1/2] Generating tests/functional/func-precache-m68k-m68k_nextcube with a custom command 
+(wrapped by meson to set env)
+FAILED: tests/functional/m68k-m68k_nextcube.tstamp
+env QEMU_TEST_PRECACHE=/home/rth/qemu/bld/tests/functional/m68k-m68k_nextcube.tstamp 
+PYTHONPATH=/home/rth/qemu/src/python:/home/rth/qemu/src/tests/functional 
+/home/rth/qemu/bld/pyvenv/bin/python3 
+/home/rth/qemu/src/tests/functional/test_m68k_nextcube.py
+Traceback (most recent call last):
+   File "/home/rth/qemu/src/tests/functional/test_m68k_nextcube.py", line 25, in <module>
+     class NextCubeMachine(QemuSystemTest):
+   File "/home/rth/qemu/src/tests/functional/test_m68k_nextcube.py", line 60, in 
+NextCubeMachine
+     @skipUnless(tesseract_available(4), 'tesseract OCR tool not available')
+   File "/home/rth/qemu/src/tests/functional/qemu_test/tesseract.py", line 16, in 
+tesseract_available
+     (stdout, stderr, ret) = run_cmd([ 'tesseract', '--version'])
+   File "/home/rth/qemu/src/tests/functional/qemu_test/cmd.py", line 69, in run_cmd
+     subp = subprocess.Popen(args,
+   File "/usr/lib64/python3.9/subprocess.py", line 951, in __init__
+     self._execute_child(args, executable, preexec_fn, close_fds,
+   File "/usr/lib64/python3.9/subprocess.py", line 1837, in _execute_child
+     raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'tesseract'
 
-Thanks!
 
-Applied to riscv-to-apply.next
-
-Alistair
+On this host, tesseract is not available.
+But skipUnless is not skipping, but erroring out.
 
 
-> ---
-> -v2: Switch from signed long to hwaddr
->
->  target/riscv/cpu_helper.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 395a1d914061..4b2c72780c36 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1323,7 +1323,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address=
-, int size,
->      int ret =3D TRANSLATE_FAIL;
->      int mode =3D mmuidx_priv(mmu_idx);
->      /* default TLB page size */
-> -    target_ulong tlb_size =3D TARGET_PAGE_SIZE;
-> +    hwaddr tlb_size =3D TARGET_PAGE_SIZE;
->
->      env->guest_phys_fault_addr =3D 0;
->
-> @@ -1375,7 +1375,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address=
-, int size,
->
->                  qemu_log_mask(CPU_LOG_MMU,
->                                "%s PMP address=3D" HWADDR_FMT_plx " ret %=
-d prot"
-> -                              " %d tlb_size " TARGET_FMT_lu "\n",
-> +                              " %d tlb_size %" HWADDR_PRIu "\n",
->                                __func__, pa, ret, prot_pmp, tlb_size);
->
->                  prot &=3D prot_pmp;
-> @@ -1409,7 +1409,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address=
-, int size,
->
->              qemu_log_mask(CPU_LOG_MMU,
->                            "%s PMP address=3D" HWADDR_FMT_plx " ret %d pr=
-ot"
-> -                          " %d tlb_size " TARGET_FMT_lu "\n",
-> +                          " %d tlb_size %" HWADDR_PRIu "\n",
->                            __func__, pa, ret, prot_pmp, tlb_size);
->
->              prot &=3D prot_pmp;
-> --
-> 2.46.0
->
->
+r~
 
