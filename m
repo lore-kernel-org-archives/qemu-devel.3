@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E3EEDE99A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 16:48:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 808C8EDE9A6
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 16:48:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so41k-00079U-TX; Tue, 10 Sep 2024 12:47:40 -0400
+	id 1so41p-0007Sr-PX; Tue, 10 Sep 2024 12:47:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1so41Z-0006nJ-L1
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 12:47:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1so41c-0006s0-Ct
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 12:47:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1so41V-0007Z5-1k
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 12:47:29 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1so41X-0007aG-2F
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 12:47:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725986844;
+ s=mimecast20190719; t=1725986846;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BPgIWJFDXw1X3s4ousUDlkeawfkmplLI8vxddj+tXTs=;
- b=iUe0Swe5wZoDUGlzMrI/07tDvjZ7mxRSJ10G0IlP+NGGd++ehJR/VqGShkh5Uep0XvGR5A
- sZkpDD1gQHRweseEOzzt2YVlIf0IwxJlwxPbxps/H5QWE9lj36WsHB63WPMUuUlyVgAzB6
- 7SnFjMPk/PrleiGMaARK2/H9rH3rj/w=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=LRmFhYSLxv+IPWQZuvsDU0iiyPAqhQqOAvKJtCUY8Fw=;
+ b=OwxdW8uDTe3zThcg5olSgGWUWxvfCVPE9Tx4pRrzQXk8UK95VoYVpKwv049pBUbOwrwQjV
+ 7LPIB/+QGiEhDUIQXLj4oQJVdDSrOJskjdWhJNZhzPsugVfJ0ugpwVAAe4g/nPTXNki8er
+ 2q//+2vJnM5iS1G+zFyxuru1cHsS7g4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-cSlpnjj7NnSS0oGVLzBofw-1; Tue,
- 10 Sep 2024 12:47:21 -0400
-X-MC-Unique: cSlpnjj7NnSS0oGVLzBofw-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-Lm8P1UUQPqCs97vpgkaOKg-1; Tue,
+ 10 Sep 2024 12:47:23 -0400
+X-MC-Unique: Lm8P1UUQPqCs97vpgkaOKg-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E4B2219560A2; Tue, 10 Sep 2024 16:47:19 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 303031955DA6; Tue, 10 Sep 2024 16:47:22 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.112])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6B83D19560AB; Tue, 10 Sep 2024 16:47:19 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AAFDD19560AD; Tue, 10 Sep 2024 16:47:21 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A031121E682C; Tue, 10 Sep 2024 18:47:14 +0200 (CEST)
+ id A962321E683A; Tue, 10 Sep 2024 18:47:14 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 14/19] qapi/crypto: Rename QCryptoAkCipherAlgorithm to *Algo,
- and drop prefix
-Date: Tue, 10 Sep 2024 18:47:09 +0200
-Message-ID: <20240910164714.1993531-15-armbru@redhat.com>
+Subject: [PULL 17/19] qapi/cryptodev: Drop unwanted 'prefix'
+Date: Tue, 10 Sep 2024 18:47:12 +0200
+Message-ID: <20240910164714.1993531-18-armbru@redhat.com>
 In-Reply-To: <20240910164714.1993531-1-armbru@redhat.com>
 References: <20240910164714.1993531-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -88,240 +87,147 @@ QAPI's 'prefix' feature can make the connection between enumeration
 type and its constants less than obvious.  It's best used with
 restraint.
 
-QCryptoAkCipherAlgorithm has a 'prefix' that overrides the generated
-enumeration constants' prefix to QCRYPTO_AKCIPHER_ALG.
+QCryptodevBackendServiceType has a 'prefix' that overrides the
+generated enumeration constants' prefix to QCRYPTODEV_BACKEND_SERVICE.
 
-We could simply drop 'prefix', but then the prefix becomes
-QCRYPTO_AK_CIPHER_ALGORITHM, which is rather long.
-
-We could additionally rename the type to QCryptoAkCipherAlg, but I
-think the abbreviation "alg" is less than clear.
-
-Rename the type to QCryptoAkCipherAlgo instead.  The prefix becomes
-QCRYPTO_AK_CIPHER_ALGO.
+Drop it.  The prefix becomes QCRYPTODEV_BACKEND_SERVICE_TYPE.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Acked-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20240904111836.3273842-15-armbru@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20240904111836.3273842-18-armbru@redhat.com>
 ---
- qapi/crypto.json                        |  7 +++----
- crypto/akcipherpriv.h                   |  2 +-
- backends/cryptodev-builtin.c            |  4 ++--
- backends/cryptodev-lkcf.c               |  4 ++--
- crypto/akcipher.c                       |  2 +-
- tests/bench/benchmark-crypto-akcipher.c |  2 +-
- tests/unit/test-crypto-akcipher.c       | 10 +++++-----
- crypto/akcipher-gcrypt.c.inc            |  4 ++--
- crypto/akcipher-nettle.c.inc            |  4 ++--
- 9 files changed, 19 insertions(+), 20 deletions(-)
+ qapi/cryptodev.json             |  1 -
+ backends/cryptodev-builtin.c    |  8 ++++----
+ backends/cryptodev-lkcf.c       |  2 +-
+ backends/cryptodev-vhost-user.c |  6 +++---
+ backends/cryptodev.c            |  6 +++---
+ hw/virtio/virtio-crypto.c       | 10 +++++-----
+ 6 files changed, 16 insertions(+), 17 deletions(-)
 
-diff --git a/qapi/crypto.json b/qapi/crypto.json
-index 3e6a7fb8e5..331d49ebb8 100644
---- a/qapi/crypto.json
-+++ b/qapi/crypto.json
-@@ -586,7 +586,7 @@
-             '*sanity-check': 'bool',
-             '*passwordid': 'str' } }
+diff --git a/qapi/cryptodev.json b/qapi/cryptodev.json
+index 60f8fe8e4a..65abc16842 100644
+--- a/qapi/cryptodev.json
++++ b/qapi/cryptodev.json
+@@ -31,7 +31,6 @@
+ # Since: 8.0
  ##
--# @QCryptoAkCipherAlgorithm:
-+# @QCryptoAkCipherAlgo:
- #
- # The supported algorithms for asymmetric encryption ciphers
- #
-@@ -594,8 +594,7 @@
- #
- # Since: 7.1
- ##
--{ 'enum': 'QCryptoAkCipherAlgorithm',
--  'prefix': 'QCRYPTO_AKCIPHER_ALG',
-+{ 'enum': 'QCryptoAkCipherAlgo',
-   'data': ['rsa']}
+ { 'enum': 'QCryptodevBackendServiceType',
+-  'prefix': 'QCRYPTODEV_BACKEND_SERVICE',
+   'data': ['cipher', 'hash', 'mac', 'aead', 'akcipher']}
  
  ##
-@@ -649,6 +648,6 @@
- # Since: 7.1
- ##
- { 'union': 'QCryptoAkCipherOptions',
--  'base': { 'alg': 'QCryptoAkCipherAlgorithm' },
-+  'base': { 'alg': 'QCryptoAkCipherAlgo' },
-   'discriminator': 'alg',
-   'data': { 'rsa': 'QCryptoAkCipherOptionsRSA' }}
-diff --git a/crypto/akcipherpriv.h b/crypto/akcipherpriv.h
-index 739f639bcf..3b33e54f08 100644
---- a/crypto/akcipherpriv.h
-+++ b/crypto/akcipherpriv.h
-@@ -27,7 +27,7 @@
- typedef struct QCryptoAkCipherDriver QCryptoAkCipherDriver;
- 
- struct QCryptoAkCipher {
--    QCryptoAkCipherAlgorithm alg;
-+    QCryptoAkCipherAlgo alg;
-     QCryptoAkCipherKeyType type;
-     int max_plaintext_len;
-     int max_ciphertext_len;
 diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
-index 2672755661..d8b64091b6 100644
+index 6f3990481b..170c93a6be 100644
 --- a/backends/cryptodev-builtin.c
 +++ b/backends/cryptodev-builtin.c
-@@ -64,7 +64,7 @@ static void cryptodev_builtin_init_akcipher(CryptoDevBackend *backend)
- {
-     QCryptoAkCipherOptions opts;
- 
--    opts.alg = QCRYPTO_AKCIPHER_ALG_RSA;
-+    opts.alg = QCRYPTO_AK_CIPHER_ALGO_RSA;
-     opts.u.rsa.padding_alg = QCRYPTO_RSA_PADDING_ALG_RAW;
+@@ -68,7 +68,7 @@ static void cryptodev_builtin_init_akcipher(CryptoDevBackend *backend)
+     opts.u.rsa.padding_alg = QCRYPTO_RSA_PADDING_ALGO_RAW;
      if (qcrypto_akcipher_supports(&opts)) {
          backend->conf.crypto_services |=
-@@ -318,7 +318,7 @@ static int cryptodev_builtin_create_akcipher_session(
+-                     (1u << QCRYPTODEV_BACKEND_SERVICE_AKCIPHER);
++                     (1u << QCRYPTODEV_BACKEND_SERVICE_TYPE_AKCIPHER);
+         backend->conf.akcipher_algo = 1u << VIRTIO_CRYPTO_AKCIPHER_RSA;
+     }
+ }
+@@ -93,9 +93,9 @@ static void cryptodev_builtin_init(
+     backend->conf.peers.ccs[0] = cc;
  
-     switch (sess_info->algo) {
-     case VIRTIO_CRYPTO_AKCIPHER_RSA:
--        opts.alg = QCRYPTO_AKCIPHER_ALG_RSA;
-+        opts.alg = QCRYPTO_AK_CIPHER_ALGO_RSA;
-         if (cryptodev_builtin_set_rsa_options(sess_info->u.rsa.padding_algo,
-             sess_info->u.rsa.hash_algo, &opts.u.rsa, errp) != 0) {
-             return -1;
+     backend->conf.crypto_services =
+-                         1u << QCRYPTODEV_BACKEND_SERVICE_CIPHER |
+-                         1u << QCRYPTODEV_BACKEND_SERVICE_HASH |
+-                         1u << QCRYPTODEV_BACKEND_SERVICE_MAC;
++                         1u << QCRYPTODEV_BACKEND_SERVICE_TYPE_CIPHER |
++                         1u << QCRYPTODEV_BACKEND_SERVICE_TYPE_HASH |
++                         1u << QCRYPTODEV_BACKEND_SERVICE_TYPE_MAC;
+     backend->conf.cipher_algo_l = 1u << VIRTIO_CRYPTO_CIPHER_AES_CBC;
+     backend->conf.hash_algo = 1u << VIRTIO_CRYPTO_HASH_SHA1;
+     /*
 diff --git a/backends/cryptodev-lkcf.c b/backends/cryptodev-lkcf.c
-index 6e6012e716..6fb6e03d98 100644
+index fde32950f6..0dc4b067f5 100644
 --- a/backends/cryptodev-lkcf.c
 +++ b/backends/cryptodev-lkcf.c
-@@ -133,7 +133,7 @@ static int cryptodev_lkcf_set_op_desc(QCryptoAkCipherOptions *opts,
-                                       Error **errp)
- {
-     QCryptoAkCipherOptionsRSA *rsa_opt;
--    if (opts->alg != QCRYPTO_AKCIPHER_ALG_RSA) {
-+    if (opts->alg != QCRYPTO_AK_CIPHER_ALGO_RSA) {
-         error_setg(errp, "Unsupported alg: %u", opts->alg);
-         return -1;
+@@ -230,7 +230,7 @@ static void cryptodev_lkcf_init(CryptoDevBackend *backend, Error **errp)
+     backend->conf.peers.ccs[0] = cc;
+ 
+     backend->conf.crypto_services =
+-        1u << QCRYPTODEV_BACKEND_SERVICE_AKCIPHER;
++        1u << QCRYPTODEV_BACKEND_SERVICE_TYPE_AKCIPHER;
+     backend->conf.akcipher_algo = 1u << VIRTIO_CRYPTO_AKCIPHER_RSA;
+     lkcf->running = true;
+ 
+diff --git a/backends/cryptodev-vhost-user.c b/backends/cryptodev-vhost-user.c
+index c3283ba84a..e33fb78521 100644
+--- a/backends/cryptodev-vhost-user.c
++++ b/backends/cryptodev-vhost-user.c
+@@ -221,9 +221,9 @@ static void cryptodev_vhost_user_init(
+                      cryptodev_vhost_user_event, NULL, s, NULL, true);
+ 
+     backend->conf.crypto_services =
+-                         1u << QCRYPTODEV_BACKEND_SERVICE_CIPHER |
+-                         1u << QCRYPTODEV_BACKEND_SERVICE_HASH |
+-                         1u << QCRYPTODEV_BACKEND_SERVICE_MAC;
++                         1u << QCRYPTODEV_BACKEND_SERVICE_TYPE_CIPHER |
++                         1u << QCRYPTODEV_BACKEND_SERVICE_TYPE_HASH |
++                         1u << QCRYPTODEV_BACKEND_SERVICE_TYPE_MAC;
+     backend->conf.cipher_algo_l = 1u << VIRTIO_CRYPTO_CIPHER_AES_CBC;
+     backend->conf.hash_algo = 1u << VIRTIO_CRYPTO_HASH_SHA1;
+ 
+diff --git a/backends/cryptodev.c b/backends/cryptodev.c
+index fff89fd62a..76dfe65904 100644
+--- a/backends/cryptodev.c
++++ b/backends/cryptodev.c
+@@ -74,7 +74,7 @@ static int qmp_query_cryptodev_foreach(Object *obj, void *data)
+ 
+     backend = CRYPTODEV_BACKEND(obj);
+     services = backend->conf.crypto_services;
+-    for (i = 0; i < QCRYPTODEV_BACKEND_SERVICE__MAX; i++) {
++    for (i = 0; i < QCRYPTODEV_BACKEND_SERVICE_TYPE__MAX; i++) {
+         if (services & (1 << i)) {
+             QAPI_LIST_PREPEND(info->service, i);
+         }
+@@ -424,11 +424,11 @@ cryptodev_backend_complete(UserCreatable *uc, Error **errp)
      }
-@@ -518,7 +518,7 @@ static int cryptodev_lkcf_create_asym_session(
  
-     switch (sess_info->algo) {
-     case VIRTIO_CRYPTO_AKCIPHER_RSA:
--        sess->akcipher_opts.alg = QCRYPTO_AKCIPHER_ALG_RSA;
-+        sess->akcipher_opts.alg = QCRYPTO_AK_CIPHER_ALGO_RSA;
-         if (cryptodev_lkcf_set_rsa_opt(
-             sess_info->u.rsa.padding_algo, sess_info->u.rsa.hash_algo,
-             &sess->akcipher_opts.u.rsa, &local_error) != 0) {
-diff --git a/crypto/akcipher.c b/crypto/akcipher.c
-index e4bbc6e5f1..0a0576b792 100644
---- a/crypto/akcipher.c
-+++ b/crypto/akcipher.c
-@@ -115,7 +115,7 @@ int qcrypto_akcipher_export_p8info(const QCryptoAkCipherOptions *opts,
-                                    Error **errp)
- {
-     switch (opts->alg) {
--    case QCRYPTO_AKCIPHER_ALG_RSA:
-+    case QCRYPTO_AK_CIPHER_ALGO_RSA:
-         qcrypto_akcipher_rsakey_export_p8info(key, keylen, dst, dst_len);
-         return 0;
+     services = backend->conf.crypto_services;
+-    if (services & (1 << QCRYPTODEV_BACKEND_SERVICE_CIPHER)) {
++    if (services & (1 << QCRYPTODEV_BACKEND_SERVICE_TYPE_CIPHER)) {
+         backend->sym_stat = g_new0(CryptodevBackendSymStat, 1);
+     }
  
-diff --git a/tests/bench/benchmark-crypto-akcipher.c b/tests/bench/benchmark-crypto-akcipher.c
-index 0029972385..225e426bde 100644
---- a/tests/bench/benchmark-crypto-akcipher.c
-+++ b/tests/bench/benchmark-crypto-akcipher.c
-@@ -25,7 +25,7 @@ static QCryptoAkCipher *create_rsa_akcipher(const uint8_t *priv_key,
+-    if (services & (1 << QCRYPTODEV_BACKEND_SERVICE_AKCIPHER)) {
++    if (services & (1 << QCRYPTODEV_BACKEND_SERVICE_TYPE_AKCIPHER)) {
+         backend->asym_stat = g_new0(CryptodevBackendAsymStat, 1);
+     }
+ }
+diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c
+index 5034768bff..0ab8ae3282 100644
+--- a/hw/virtio/virtio-crypto.c
++++ b/hw/virtio/virtio-crypto.c
+@@ -1008,19 +1008,19 @@ static uint32_t virtio_crypto_init_services(uint32_t qservices)
  {
-     QCryptoAkCipherOptions opt;
+     uint32_t vservices = 0;
  
--    opt.alg = QCRYPTO_AKCIPHER_ALG_RSA;
-+    opt.alg = QCRYPTO_AK_CIPHER_ALGO_RSA;
-     opt.u.rsa.padding_alg = padding;
-     opt.u.rsa.hash_alg = hash;
-     return qcrypto_akcipher_new(&opt, QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE,
-diff --git a/tests/unit/test-crypto-akcipher.c b/tests/unit/test-crypto-akcipher.c
-index 86501f19ab..7dd86125c2 100644
---- a/tests/unit/test-crypto-akcipher.c
-+++ b/tests/unit/test-crypto-akcipher.c
-@@ -785,7 +785,7 @@ static QCryptoAkCipherTestData akcipher_test_data[] = {
-     {
-         .path = "/crypto/akcipher/rsa1024-raw",
-         .opt = {
--            .alg = QCRYPTO_AKCIPHER_ALG_RSA,
-+            .alg = QCRYPTO_AK_CIPHER_ALGO_RSA,
-             .u.rsa = {
-                 .padding_alg = QCRYPTO_RSA_PADDING_ALG_RAW,
-             },
-@@ -805,7 +805,7 @@ static QCryptoAkCipherTestData akcipher_test_data[] = {
-     {
-         .path = "/crypto/akcipher/rsa1024-pkcs1",
-         .opt = {
--            .alg = QCRYPTO_AKCIPHER_ALG_RSA,
-+            .alg = QCRYPTO_AK_CIPHER_ALGO_RSA,
-             .u.rsa = {
-                 .padding_alg = QCRYPTO_RSA_PADDING_ALG_PKCS1,
-                 .hash_alg = QCRYPTO_HASH_ALGO_SHA1,
-@@ -830,7 +830,7 @@ static QCryptoAkCipherTestData akcipher_test_data[] = {
-     {
-         .path = "/crypto/akcipher/rsa2048-raw",
-         .opt = {
--            .alg = QCRYPTO_AKCIPHER_ALG_RSA,
-+            .alg = QCRYPTO_AK_CIPHER_ALGO_RSA,
-             .u.rsa = {
-                 .padding_alg = QCRYPTO_RSA_PADDING_ALG_RAW,
-             },
-@@ -850,7 +850,7 @@ static QCryptoAkCipherTestData akcipher_test_data[] = {
-     {
-         .path = "/crypto/akcipher/rsa2048-pkcs1",
-         .opt = {
--            .alg = QCRYPTO_AKCIPHER_ALG_RSA,
-+            .alg = QCRYPTO_AK_CIPHER_ALGO_RSA,
-             .u.rsa = {
-                 .padding_alg = QCRYPTO_RSA_PADDING_ALG_PKCS1,
-                 .hash_alg = QCRYPTO_HASH_ALGO_SHA1,
-@@ -944,7 +944,7 @@ static void test_rsakey(const void *opaque)
- {
-     const QCryptoRSAKeyTestData *data = (const QCryptoRSAKeyTestData *)opaque;
-     QCryptoAkCipherOptions opt = {
--        .alg = QCRYPTO_AKCIPHER_ALG_RSA,
-+        .alg = QCRYPTO_AK_CIPHER_ALGO_RSA,
-         .u.rsa = {
-             .padding_alg = QCRYPTO_RSA_PADDING_ALG_PKCS1,
-             .hash_alg = QCRYPTO_HASH_ALGO_SHA1,
-diff --git a/crypto/akcipher-gcrypt.c.inc b/crypto/akcipher-gcrypt.c.inc
-index 2c81de97de..8f1c2b8143 100644
---- a/crypto/akcipher-gcrypt.c.inc
-+++ b/crypto/akcipher-gcrypt.c.inc
-@@ -59,7 +59,7 @@ QCryptoAkCipher *qcrypto_akcipher_new(const QCryptoAkCipherOptions *opts,
-                                       Error **errp)
- {
-     switch (opts->alg) {
--    case QCRYPTO_AKCIPHER_ALG_RSA:
-+    case QCRYPTO_AK_CIPHER_ALGO_RSA:
-         return (QCryptoAkCipher *)qcrypto_gcrypt_rsa_new(
-             &opts->u.rsa, type, key, keylen, errp);
+-    if (qservices & (1 << QCRYPTODEV_BACKEND_SERVICE_CIPHER)) {
++    if (qservices & (1 << QCRYPTODEV_BACKEND_SERVICE_TYPE_CIPHER)) {
+         vservices |= (1 << VIRTIO_CRYPTO_SERVICE_CIPHER);
+     }
+-    if (qservices & (1 << QCRYPTODEV_BACKEND_SERVICE_HASH)) {
++    if (qservices & (1 << QCRYPTODEV_BACKEND_SERVICE_TYPE_HASH)) {
+         vservices |= (1 << VIRTIO_CRYPTO_SERVICE_HASH);
+     }
+-    if (qservices & (1 << QCRYPTODEV_BACKEND_SERVICE_MAC)) {
++    if (qservices & (1 << QCRYPTODEV_BACKEND_SERVICE_TYPE_MAC)) {
+         vservices |= (1 << VIRTIO_CRYPTO_SERVICE_MAC);
+     }
+-    if (qservices & (1 << QCRYPTODEV_BACKEND_SERVICE_AEAD)) {
++    if (qservices & (1 << QCRYPTODEV_BACKEND_SERVICE_TYPE_AEAD)) {
+         vservices |= (1 << VIRTIO_CRYPTO_SERVICE_AEAD);
+     }
+-    if (qservices & (1 << QCRYPTODEV_BACKEND_SERVICE_AKCIPHER)) {
++    if (qservices & (1 << QCRYPTODEV_BACKEND_SERVICE_TYPE_AKCIPHER)) {
+         vservices |= (1 << VIRTIO_CRYPTO_SERVICE_AKCIPHER);
+     }
  
-@@ -568,7 +568,7 @@ error:
- bool qcrypto_akcipher_supports(QCryptoAkCipherOptions *opts)
- {
-     switch (opts->alg) {
--    case QCRYPTO_AKCIPHER_ALG_RSA:
-+    case QCRYPTO_AK_CIPHER_ALGO_RSA:
-         switch (opts->u.rsa.padding_alg) {
-         case QCRYPTO_RSA_PADDING_ALG_RAW:
-             return true;
-diff --git a/crypto/akcipher-nettle.c.inc b/crypto/akcipher-nettle.c.inc
-index 37a579fbd9..21f27f8286 100644
---- a/crypto/akcipher-nettle.c.inc
-+++ b/crypto/akcipher-nettle.c.inc
-@@ -61,7 +61,7 @@ QCryptoAkCipher *qcrypto_akcipher_new(const QCryptoAkCipherOptions *opts,
-                                       Error **errp)
- {
-     switch (opts->alg) {
--    case QCRYPTO_AKCIPHER_ALG_RSA:
-+    case QCRYPTO_AK_CIPHER_ALGO_RSA:
-         return qcrypto_nettle_rsa_new(&opts->u.rsa, type, key, keylen, errp);
- 
-     default:
-@@ -425,7 +425,7 @@ error:
- bool qcrypto_akcipher_supports(QCryptoAkCipherOptions *opts)
- {
-     switch (opts->alg) {
--    case QCRYPTO_AKCIPHER_ALG_RSA:
-+    case QCRYPTO_AK_CIPHER_ALGO_RSA:
-         switch (opts->u.rsa.padding_alg) {
-         case QCRYPTO_RSA_PADDING_ALG_PKCS1:
-             switch (opts->u.rsa.hash_alg) {
 -- 
 2.46.0
 
