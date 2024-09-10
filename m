@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D9F4ECE564
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 06:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00254ECE582
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 07:00:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snuqF-0002Pr-KU; Tue, 10 Sep 2024 02:59:11 -0400
+	id 1snurR-0007aX-71; Tue, 10 Sep 2024 03:00:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snuqD-0002HC-Ty
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 02:59:10 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snurO-0007U5-5Y
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 03:00:22 -0400
 Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snuqC-0007gI-9F
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 02:59:09 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1snurM-0007y8-IE
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 03:00:21 -0400
 Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a8a7cdfdd80so385722066b.0
- for <qemu-devel@nongnu.org>; Mon, 09 Sep 2024 23:59:07 -0700 (PDT)
+ a640c23a62f3a-a8d0d0aea3cso472247666b.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 00:00:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725951547; x=1726556347; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725951619; x=1726556419; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ZGaskGv33OS4ZJUw/8+n5ARjH/33/Y1wa5brevBDsGc=;
- b=R06LmEvIEKgFyMaKn6kFY/7WYM9DTGrRy7KiFM2QLU52OkuH8VKZ3xJS/8wzQ9q+Mb
- SJ8ar3fGdGyWUlOOHZGCCxVhDNJRxW/C+XA5Bg3W5OR/3EH98GTat2WTuU4cfz8G4Qst
- vvaqdfr5dCbgy13dODloYC7CzsiF9A/V0GaWgVJLQgZYHLi+TVJXsX2xwueXaJQYrRBz
- nqNkUknIFzj4h0gp3RIdUgHdiMMa4+nAv3K2i9qMxwffEKI3+qeVsBcyu1+xmnV2Z5Av
- fnqsAao8Pfe2g9R0Wba0O63AgxkZyafYIqfOKAFkTmrH8MC3K/3d1KQlFXEgdLMr5CRT
- c+rg==
+ bh=DO7YlwvMlC4jDj1Ww/Ttr0hNeLNP5z6IyC3oV1OXmUc=;
+ b=zstkFVneB7czUFR+pAcdRxs8iY/yqRf4t0zyuV0Je2ir6FzRwT8Wct8Mg16+aoBs0D
+ DQROkRLpHbA9OQ0MW1cXmW+nKwtjdjVs7NmdoRWYq4jKh0cDb4lmlh01Lopr/dvyAi7K
+ r0CTY8Si2tSXU/RtDsoxDKBM7MWXgtwJ40GUOGegrW6n7wGNaF2s/UDvO5pFon35vYnk
+ 9EqWKmlsWczjr0CnKQhyZv1CVE7Rtgx4xjbPSb8VTp6BxDWZoyn/ay2Wl1AJKZ6f2MmG
+ VGE8pIyIdTmoxidXUihYWBC0ul7cMYUsUVpdGIi+GH6DeuhlleFoZ0jpSNe3FaZNmtwB
+ W2sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725951547; x=1726556347;
+ d=1e100.net; s=20230601; t=1725951619; x=1726556419;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZGaskGv33OS4ZJUw/8+n5ARjH/33/Y1wa5brevBDsGc=;
- b=nmagF0XJr87oXkvUrM7uR0j9XHUmzWvCheIsjHj0qAxhre55W59RkLC9W+uoWCZ+Eu
- 5kQt/0xyvQ6tTdAhGHLh1WUCtXlHwLEc+ORjywRudtvlTHG3tB6jHp4ok6HU7atZQOJB
- tZpVzLg7RTLb7UwDaExJl0EO670xjswUVyMTuMbZ3yOZAEvmSacu1wi25Yusq3Qy2+oK
- 9ioBJt6aj3Leqo1atgXmpfBQ9W4TNaPoMZ4BQYubBEryl11s51bF66Jg66ueaEg3wrFe
- BEQsLdhnvGkXm+lOK55YXVhYapdIWbESl0NJ69oTCuxd+Qf0YJLf5vz1aD608hkuQpyk
- +6GQ==
+ bh=DO7YlwvMlC4jDj1Ww/Ttr0hNeLNP5z6IyC3oV1OXmUc=;
+ b=tQbRytAEWDyTHJq/sQU88xVfz9hyWcJ8110LExtU28d/gUU+1cOWhB061rTBhe8b3E
+ cGAKz/LKVv7xi6f7A8qd0CowZuullSwCBpWKr+qIDGe9GCOQ5g54oom6MKGWB5KODqTm
+ 2a+kYMcQYyKvB9bwb7rM1brB7eI73Mripu2a0OGMo10vOn5T01FwFLygwKDyjDeCZ/lI
+ LsN9WC0hgDPWsU2vH1c5/UgALkuKckiVPJM/vXX0AP6xQP8juZTWvH/UKuIJ9YdoLlCB
+ Cck54cB/uGyqpTzns/PAr7EbLFayXKn5ZlojHPm+OYfeVFRXaU5cSR3AcQ1JmuPwm2ze
+ atPg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMTB6VnOhmkoLW5STeuuFadsmCX6+q61Vcc3nAwfG4LFhxae752OZe/d4C+zJR9rzKIehIUJnYAo2P@nongnu.org
-X-Gm-Message-State: AOJu0YzPsZo/tbwDGQoEvkfZg0L8i6fV0vd+3dVRiCR1x7www9pxI6oB
- Ka6H7gENjcEfVcFN+VeEaDT/+d18Z1FCYa6Kl11l8ABzFVK0gGw3MG1Z7kwnjjWuUM/WPGqWy6+
- k
-X-Google-Smtp-Source: AGHT+IGdpso+D5a9xS9sWimo3GV49rmGCjvytxR9QP8wN4HRZH8N8CHSTCd680C0/+DdE4HQ5vbucw==
-X-Received: by 2002:a17:907:3f83:b0:a86:94e2:2a47 with SMTP id
- a640c23a62f3a-a8a885f8046mr1214236166b.15.1725951546576; 
- Mon, 09 Sep 2024 23:59:06 -0700 (PDT)
+ AJvYcCWfhvjrZKMZ2N/aRvs6cF3m7cZNgGT9+MQecx2ZITUVMMR/2oppZSYpA1+YKKN5CcqGC7T6vSsZfL31@nongnu.org
+X-Gm-Message-State: AOJu0YwqKg+kHduupFOLyTWbYxGMwBoNmSeVFJotk9PvFHCMbWTG7XU4
+ V4gAUWp3sKJOP9N11YJDVNjlaz3lmjAxbcUUvZ23zJ7bqiyvBUeQ1DSudTZUmXY=
+X-Google-Smtp-Source: AGHT+IFcipWbS18cnJ18OAmSsyU1BCyQ5PWAbv/FTnyjxJXmGBZc74xF+tDzMOSdGu3iDUHyEs1Plw==
+X-Received: by 2002:a17:907:25c8:b0:a86:89ea:ee6c with SMTP id
+ a640c23a62f3a-a8a88667d31mr1074656466b.30.1725951618646; 
+ Tue, 10 Sep 2024 00:00:18 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.217.32])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25c61240sm436928166b.133.2024.09.09.23.59.05
+ a640c23a62f3a-a8d25045afesm439005766b.0.2024.09.10.00.00.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Sep 2024 23:59:06 -0700 (PDT)
-Message-ID: <366309d7-7f70-4073-aad3-bf1454f8fcfb@linaro.org>
-Date: Tue, 10 Sep 2024 08:59:03 +0200
+ Tue, 10 Sep 2024 00:00:18 -0700 (PDT)
+Message-ID: <024f5acd-0cb3-4bbe-8cb1-dbadc1e1e570@linaro.org>
+Date: Tue, 10 Sep 2024 09:00:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/12] tcg/i386: Split out tcg_out_vex_modrm_type
+Subject: Re: [PATCH 06/12] tcg/optimize: Fold movcond with true and false
+ values identical
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: zhiwei_liu@linux.alibaba.com, tangtiancheng.ttc@alibaba-inc.com,
  liwei1518@gmail.com, bmeng.cn@gmail.com
 References: <20240908022632.459477-1-richard.henderson@linaro.org>
- <20240908022632.459477-4-richard.henderson@linaro.org>
+ <20240908022632.459477-7-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240908022632.459477-4-richard.henderson@linaro.org>
+In-Reply-To: <20240908022632.459477-7-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::630;
@@ -99,13 +99,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/9/24 04:26, Richard Henderson wrote:
-> Helper function to handle setting of VEXL based
-> on the type of the operation.
+> Fold "x = cond ? y : y" to "x = y".
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   tcg/i386/tcg-target.c.inc | 38 +++++++++++++++-----------------------
->   1 file changed, 15 insertions(+), 23 deletions(-)
+>   tcg/optimize.c | 5 +++++
+>   1 file changed, 5 insertions(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
