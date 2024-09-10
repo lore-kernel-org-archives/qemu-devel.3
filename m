@@ -4,92 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC07EB64DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 14:16:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E243ECE564
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 14:20:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so1fU-0000At-GA; Tue, 10 Sep 2024 10:16:32 -0400
+	id 1so1iV-0004PT-EG; Tue, 10 Sep 2024 10:19:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1so1fS-0008Vd-PS
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:16:30 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1so1iU-0004K7-3F
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:19:38 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1so1fQ-0007wu-RC
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:16:30 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5c3ca32971cso1197756a12.0
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 07:16:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1so1iS-0008DB-4e
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:19:37 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5c251ba0d1cso978349a12.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 07:19:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725977787; x=1726582587; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=aTO3SbR8/CS5imaO2ZtO2Uj6evUCssJ5RCky30jkoA4=;
- b=uAJjFpNC093Vq+M5fgAolqZ681pFZu870eYQGdC5qLEG827GzDx5DhkFvAw0im37jW
- AM/TsAL/lst1BjCkfGBGGKGPtKz5U1YW8LgzQCS3zhpnEZnEv3tFW1qWNdoSq8x2m45V
- Uv2pKgitFk3FnALrIQLRoRx5LP+rmgQDQMaG+XPnjcNsk0hwwt8P/OK+ehG3UHEdQDxC
- RSOu+qwyuKeUY9t0ph/el5IN6PCe7PEy8bvIY8jxGumdU231AdhNe7v2Hqusx7630QAF
- y0dIRjQRgkI9noa86wlNkeipBpwcdAjx64DSfwIMI+xv8nmKJq3sW+g0GEDgYoJ/7dQF
- nErw==
+ d=linaro.org; s=google; t=1725977974; x=1726582774; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=1FREOUDCx1VLyhPhrv1zXf/ZT0CjpOXI1qZs1mxDi4w=;
+ b=jt5vGjDYecgBROxTYNJh41S4m/USeT0ALbpGy3ebdWYa+AoVDmW8ZmrSlXOnd8NM/B
+ iX8OCHMAyaCF03t2/RauzpE74sqYBqjei9HRzICcsdNwN8aru6pxXnpoceGLNUvK4GZ+
+ czh7cHioV1L99cAcuaGcwLfRe8rZOdh02w7hoRN3KhwMQvhFh+V25UvRl8m+OjkNS9Ed
+ HUJVPeKAAovLO1ouJc5CB+AJ6IDpNcW5dceP91tj7iVQ/9wVcFBPL/PPRgQenoAUuNSZ
+ SvyzEH0mCskN1L63QlwPpB7Zya2NUDTAEvdJViPwYnxsjNNwsHVjmOReS7C/RUQGcP9b
+ IQWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725977787; x=1726582587;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aTO3SbR8/CS5imaO2ZtO2Uj6evUCssJ5RCky30jkoA4=;
- b=BD3HEfXdRz014bQ3YiddrlM2xL3xVHZukRtkgYGuN1WGFFRwvelKf7MoRerTaK24FQ
- 9URHsI1KuQ6I8cZ9MhzHIjDfolXdAOf2z8z+Rqh2OZ8j2kI4tZ2huyrZJlzjXis4kB5a
- 9XtfRnVY8kkhiypTiNt/NPrCgrzSzRKsYEWIcJqwgn9ZbbVxBaE5P1EfGQzGBVVH6oXf
- Fe+anJ7YPwaXDYuIfOb5H9VgcNp9bfzra8jHqTeoUH3PTp19rQxnyBW/m0mbTgf9obhW
- Ogr34R1iB8+AhD0UT65k1HZDwGWHfGsx5jFilC/COffNams7Rp/CpN40MuZeeePk1X9V
- BQ8Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVgCstv5drkTkhXgRKtCz4wFsvK4M1fm6HUkf9a4c5acVXzkxfCCQfD50/hHgdZ9xqvJZRCInVqWL9C@nongnu.org
-X-Gm-Message-State: AOJu0YyWuNVhQwXtc7KnHGKc9Uhf4yDMRuNd4ruCXd/K6io/a3mJq4MI
- NA715PpgmqKvggAuyaw61eRo84w77MuurFV4gDjqD+776zJwmtHy6QdXsjrHmBg=
-X-Google-Smtp-Source: AGHT+IFAGjw+abPhxhHX0Re1aE9GVOOiy4Jgffq3gvvgleE0NPDLMAlE+kkItOjrG8WurqO/irFbDw==
-X-Received: by 2002:a05:6402:5cd:b0:5c2:439e:d6d6 with SMTP id
- 4fb4d7f45d1cf-5c3dc78a1d6mr10104231a12.11.1725977786753; 
- Tue, 10 Sep 2024 07:16:26 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.217.32])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd8d9easm4265169a12.97.2024.09.10.07.16.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 07:16:26 -0700 (PDT)
-Message-ID: <fc493743-5ab0-49eb-98ed-dd260f0f60d6@linaro.org>
-Date: Tue, 10 Sep 2024 16:16:23 +0200
+ d=1e100.net; s=20230601; t=1725977974; x=1726582774;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1FREOUDCx1VLyhPhrv1zXf/ZT0CjpOXI1qZs1mxDi4w=;
+ b=s15QFjHvs0ihLDsiV+jagD4Bx3N+e7/gb05T7zCjBFKUT5LS73p/poCUeI971StAQT
+ BU1y4ZH5mXuxcOfbBlxnmDJ4/ziw5/sFKPm5vWuBA3Z3h6GZ/0Qr4wK9lHzFuGRTKVud
+ lylO1C6oJu+HtYRnY7jp2h83hX+ogb4CfOl+CmdN6+GKoEAANMXoQcHNck1dgj0GpQNu
+ V1TcWjpB97ekKO4cJGSSrIDCh0DBbuBvGZOJcmSxny27DteLJ4G3m866PrAIpptiSMTU
+ YNaCQqWksK2Q2nTGfQ6bbPdVEzgR1ps2I10ikqqkcXep0fvnuU1sKwnr6ZZ5Eu0zWOgJ
+ OtBA==
+X-Gm-Message-State: AOJu0YxtCuqOBtF+XBlx3WHrN3XvSh9LhbZ5VGE0q5DIoirMimhvnxKz
+ rpG3oCDo1Q0ZTtXWJsXHgLKoW9fudqVJ97SwQEZEdV0JVheHRP5tPhGBM+m8/SAhX+cn0yq4W29
+ zCtcoBh15sGDByZ/a8ip7QuWiw1Gt+X/Qhf2BYQ==
+X-Google-Smtp-Source: AGHT+IHn6mdwIBnnBRXZGVNoTzfTkCwYDnCmKlbcy2bFjpwAh3B7txbUA63EOCmm2cTaBzgosoA5mtKQMUq90kS4Aj8=
+X-Received: by 2002:a05:6402:4312:b0:5c2:18fd:8a27 with SMTP id
+ 4fb4d7f45d1cf-5c3dc7b8016mr11653356a12.25.1725977974156; Tue, 10 Sep 2024
+ 07:19:34 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 20/24] audio: Add sndio backend
-To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
- Alexandre Ratchov <alex@caoua.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>
-Cc: Qiuhao Li <Qiuhao.Li@outlook.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Eric Blake <eblake@redhat.com>,
- Darren Kenny <darren.kenny@oracle.com>, Bandan Das <bsd@redhat.com>,
- Alexander Bulekov <alxndr@bu.edu>, Markus Armbruster <armbru@redhat.com>,
- Akihiko Odaki <akihiko.odaki@gmail.com>, Laurent Vivier
- <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Brad Smith <brad@comstyle.com>,
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
-References: <20220927081912.180983-1-kraxel@redhat.com>
- <20220927081912.180983-21-kraxel@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20220927081912.180983-21-kraxel@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x534.google.com
+References: <20240909162240.647173-1-richard.henderson@linaro.org>
+ <20240909162240.647173-27-richard.henderson@linaro.org>
+In-Reply-To: <20240909162240.647173-27-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 10 Sep 2024 15:19:23 +0100
+Message-ID: <CAFEAcA_L06h8M1fUSs1aoOzvyuF4Qb94bzTYT9Ohkr=kY4Jqvg@mail.gmail.com>
+Subject: Re: [PATCH v2 26/29] target/arm: Widen NeonGenNarrowEnvFn return to
+ 64 bits
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,80 +89,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Mon, 9 Sept 2024 at 17:25, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> While these functions really do return a 32-bit value,
+> widening the return type means that we need do less
+> marshalling between TCG types.
+>
+> Remove NeonGenNarrowEnvFn typedef; add NeonGenOne64OpEnvFn.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-(This is commit 663df1cc68).
+> --- a/target/arm/tcg/neon_helper.c
+> +++ b/target/arm/tcg/neon_helper.c
+> @@ -598,13 +598,13 @@ NEON_VOP_ENV(qrdmulh_s32, neon_s32, 1)
+>  #undef NEON_FN
+>  #undef NEON_QDMULH32
+>
+> -uint32_t HELPER(neon_narrow_u8)(uint64_t x)
+> +uint64_t HELPER(neon_narrow_u8)(uint64_t x)
+>  {
+>      return (x & 0xffu) | ((x >> 8) & 0xff00u) | ((x >> 16) & 0xff0000u)
+>             | ((x >> 24) & 0xff000000u);
+>  }
 
-On 27/9/22 10:19, Gerd Hoffmann wrote:
-> From: Alexandre Ratchov <alex@caoua.org>
-> 
-> sndio is the native API used by OpenBSD, although it has been ported to
-> other *BSD's and Linux (packages for Ubuntu, Debian, Void, Arch, etc.).
-> 
-> Signed-off-by: Brad Smith <brad@comstyle.com>
-> Signed-off-by: Alexandre Ratchov <alex@caoua.org>
-> Reviewed-by: Volker Rümelin <vr_qemu@t-online.de>
-> Tested-by: Volker Rümelin <vr_qemu@t-online.de>
-> Message-Id: <YxibXrWsrS3XYQM3@vm1.arverb.com>
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> ---
->   meson_options.txt             |   4 +-
->   audio/audio_template.h        |   2 +
->   audio/audio.c                 |   1 +
->   audio/sndioaudio.c            | 565 ++++++++++++++++++++++++++++++++++
->   MAINTAINERS                   |   7 +
->   audio/meson.build             |   1 +
->   meson.build                   |   9 +-
->   qapi/audio.json               |  25 +-
->   qemu-options.hx               |  16 +
->   scripts/meson-buildoptions.sh |   7 +-
->   10 files changed, 632 insertions(+), 5 deletions(-)
->   create mode 100644 audio/sndioaudio.c
+For almost all of these helper functions where we change the return
+type, we return the same value we used to return, but zero extended
+from 32 to 64 bits.
 
+> -uint32_t HELPER(neon_narrow_sat_s32)(CPUARMState *env, uint64_t x)
+> +uint64_t HELPER(neon_narrow_sat_s32)(CPUARMState *env, uint64_t x)
+>  {
+>      if ((int64_t)x != (int32_t)x) {
+>          SET_QC();
 
-> diff --git a/audio/sndioaudio.c b/audio/sndioaudio.c
-> new file mode 100644
-> index 000000000000..7c45276d36ce
-> --- /dev/null
-> +++ b/audio/sndioaudio.c
-> @@ -0,0 +1,565 @@
-> +/*
-> + * SPDX-License-Identifier: ISC
+But for this one we don't. e.g. if the input is 0xffff0000ffff0000
+then the old output was 0x80000000 and the new output is
+0xffffffff80000000.
 
-This is the single use of the ISC license in the more than 10k
-files in the repository. Just checking IIUC this document:
-https://www.gnu.org/licenses/quick-guide-gplv3.en.html
+Presumably we're effectively ignoring the high 32 bits in
+the caller, but this seems inconsistent.
 
-ISC -> LGPLv2.1 -> GPLv2 -> GPLv3
+It might also be helpful to have a comment describing what
+the semantics of the return value is for this class of helpers.
 
-So ISC is compatible with GPLv2-or-later. Is that correct?
+I suspect also that coverity may complain about the
+    return (uint16_t)low | (high << 16);
+in neon_unarrow_sat16, neon_narrow_sat_u16 and neon_narrow_sat_s16,
+which have the desired semantics but look suspiciously like
+somebody forgot to do the shift of 'high' as a 64-bit shift.
+I guess we could write them as
+    return deposit32(low, 16, 16, high);
+or maybe
+    return (uint16_t)low | (uint32_t)(high << 16);
+to avoid that.
 
-Thanks,
-
-Phil.
-
-> + *
-> + * Copyright (c) 2019 Alexandre Ratchov <alex@caoua.org>
-> + */
-> +
-> +/*
-> + * TODO :
-> + *
-> + * Use a single device and open it in full-duplex rather than
-> + * opening it twice (once for playback once for recording).
-> + *
-> + * This is the only way to ensure that playback doesn't drift with respect
-> + * to recording, which is what guest systems expect.
-> + */
-> +
-> +#include <poll.h>
-> +#include <sndio.h>
-> +#include "qemu/osdep.h"
-> +#include "qemu/main-loop.h"
-> +#include "audio.h"
-> +#include "trace.h"
-> +
-> +#define AUDIO_CAP "sndio"
-> +#include "audio_int.h"
-[...]
+thanks
+-- PMM
 
