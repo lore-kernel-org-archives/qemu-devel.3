@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8319EEE01EE
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 22:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BD1DEE01ED
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 22:22:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so9An-0003DE-9I; Tue, 10 Sep 2024 18:17:22 -0400
+	id 1so9B0-0004wj-8K; Tue, 10 Sep 2024 18:17:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1so9AD-0008Kn-Ki
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 18:16:45 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1so9AF-0008Uo-L3
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 18:16:50 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1so9A6-0006dC-92
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 18:16:44 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-71788bfe60eso980451b3a.1
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 15:16:37 -0700 (PDT)
+ id 1so9AC-0006g7-Hp
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 18:16:47 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-718e482930bso2306466b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 15:16:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726006596; x=1726611396; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726006603; x=1726611403; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YnSUA+ALMkkUgp2nZaPD+gGHE2tL17OL5Bsrx2xXh8A=;
- b=CS9oIXVREjeWphf222WuCIasUWB0XlPKhtnkclbnxFNkt2EXGTSmScJ1Jbs9Y8KgX6
- gNIBaQk98yiKNCaq7hfgNesp4ZKPAFTO4dFa/wvxjCLaLLqtcKO8G1Vx9SF5QxPi2T4B
- UAp8DPFYtBOplaG9+GfUDpeF8bHsNI0j017FwLYaXTS3cJ1h1jns1EXQwdsoLZBH1Gf1
- +TyW/YToVOjaX6TNtoKBlgxcyW7U3vvvzH/S9zGZx0U2gB6TtkfAiMTPPgN+SBfyvNap
- qFb66X2CefliqVM9LovivBoo5Afk2f7A55o9OFYUXZJTGyHjd9rYlZa8kOV+dHJDCGNK
- Pj9w==
+ bh=iYkzieYJP14CnD0ztJrOrrQh8wNVhd37zVufqRq95Wk=;
+ b=sdq6Pur7gtLseLJFd2IEMActMXUY3fiG5046DdljjNGD45m10pOVZxY2BAEcwqsYOE
+ cRpX2Z7Lgo7CewQb9gWYEoLjaH+tZNYp7SrVmJqaoVn7GNmIHXTDBfJEa8W5qhxuuHKP
+ yYYwwPDQX9cf67R5faiehBvu0ATB4HMlLyxM0ngtj9Ua2g/QmwixrFSzHLFQx9e82vdg
+ QY1JNQGkjDSTRMZrz+8oplSuZ10N+EXAkRQR4wPN/j3uKSJxxXcx/JpCpKQEl7rejJH+
+ pDEYplyBW1Dmq4log5TwjcNm1EuEkDh5L64kY6wODFyZK/bErb1ZNCTtACNh7IzGy0OR
+ CP+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726006596; x=1726611396;
+ d=1e100.net; s=20230601; t=1726006603; x=1726611403;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YnSUA+ALMkkUgp2nZaPD+gGHE2tL17OL5Bsrx2xXh8A=;
- b=F9PRTcfRrG1easIa3TcFkLUcSk7ezplNW8JkrbgQqiLwRPEi9E21IGpOEuZ1FoRybY
- O4QHJGMZt3gOrUsBQpbl8ik1NRyAOY3lUmqfli4xDyBZkpJNd12+7VgniD0WI6a3wbtb
- EZzQqoEo51GvGdwd4Ry1/uLC04G214TyQ9qBmB/vG+fzNCad7D6GJyjuY9VPr4VqTZny
- 3bH2SiEphpBeN+JHAHqBwibbd/ad6+71rxm8A8Y3KyIRr5l0p9dFWvT1uC2p1e1B20NA
- g6W/J8HpEtISywzYwjfKLIQ2vH6KA1yI7d16+B1VdCYBjcVlw/QiqvjFTLSv4YOOcUIz
- r2ag==
-X-Gm-Message-State: AOJu0Ywfq4ZAI4Uen3EDQmdyR8Ra0LFG73bIUVC+I1dC8PGG3DGVpARz
- Vixr0Cwdvmj8OWpm6e6aHep/CfBPgVBVVlY/W9lMwFSD/FD8K3Ikvh0FCbhrRiJhBf4YF/AJpfB
- fKgmcfkI8
-X-Google-Smtp-Source: AGHT+IFDzIZM3DP/M5OgAw1eZ3RYHrodZQmKcteQvXWpEmdrDFT50vvYruksRMQadCg93cKWdz6IHg==
-X-Received: by 2002:a05:6a00:4b46:b0:70d:2725:ebe4 with SMTP id
- d2e1a72fcca58-71916e7a2a1mr1263422b3a.13.1726006596413; 
- Tue, 10 Sep 2024 15:16:36 -0700 (PDT)
+ bh=iYkzieYJP14CnD0ztJrOrrQh8wNVhd37zVufqRq95Wk=;
+ b=ZxJ49HqZUQXXKeZTA2yTk45NZIDeZheZXcODvXCh4S5c83dlReMOlgtbfmIDLoujFV
+ vP/lHWgheKZroz87Ktfg+C0CyvJ5HM9p/9ohnOD4hlAhtHFQGaQaPwjSe4oSakEJDeb+
+ +Q1dMftki9oAsuZ6m9xVCJsjNtsvkf/W4jlCW9cs2M9GVknX5HGwIsmCbih3pdt7VbOf
+ YPWdooBE/uBmYnKeP+xkPqKpXOiD6o8fl5Gr+yajPyATtObIoN/byBR0F6mhAMn/v0gI
+ oTwZB0kqaqpE5/5oQyZM5tEA+SaBAHl1welBoX7h2o7PQaTg4Qg2f8L9LihzxY8kxr+5
+ GI9Q==
+X-Gm-Message-State: AOJu0Yw0eCDwB6fMEXiS0QigXicR6I7lRk7tJzcVefRXbEuACQTdCBTf
+ PmgR8eq8RarP7KpRqKnQBYg7nML6e7uGgV9Vh+ycuNjzlu4E/LuQDgEiCeWcDV9QMFEh6J3RiNu
+ YH+Q9oH2y
+X-Google-Smtp-Source: AGHT+IHKXs1YiNP1OusG1gOCeK6/p++op+cHmYKzQLej9YXDjOXxCcnGSzx+XKVm5NrT1vtmlbfLhg==
+X-Received: by 2002:a05:6a20:d525:b0:1cf:58e3:2d1 with SMTP id
+ adf61e73a8af0-1cf5e197fecmr2959596637.47.1726006603120; 
+ Tue, 10 Sep 2024 15:16:43 -0700 (PDT)
 Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::9633])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71909003d0esm1884055b3a.93.2024.09.10.15.16.34
+ d2e1a72fcca58-71909003d0esm1884055b3a.93.2024.09.10.15.16.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2024 15:16:35 -0700 (PDT)
+ Tue, 10 Sep 2024 15:16:42 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, "Richard W.M. Jones" <rjones@redhat.com>,
@@ -105,17 +105,17 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, "Richard W.M. Jones" <rjones@redhat.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  Jason Wang <jasowang@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 11/39] target/ppc: replace assert(0) with
+Subject: [PATCH 14/39] include/hw/s390x: replace assert(false) with
  g_assert_not_reached()
-Date: Tue, 10 Sep 2024 15:15:38 -0700
-Message-Id: <20240910221606.1817478-12-pierrick.bouvier@linaro.org>
+Date: Tue, 10 Sep 2024 15:15:41 -0700
+Message-Id: <20240910221606.1817478-15-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240910221606.1817478-1-pierrick.bouvier@linaro.org>
 References: <20240910221606.1817478-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -140,63 +140,22 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/ppc/dfp_helper.c | 8 ++++----
- target/ppc/mmu_helper.c | 2 +-
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ include/hw/s390x/cpu-topology.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/ppc/dfp_helper.c b/target/ppc/dfp_helper.c
-index 5967ea07a92..6ef31a480b7 100644
---- a/target/ppc/dfp_helper.c
-+++ b/target/ppc/dfp_helper.c
-@@ -249,7 +249,7 @@ static void dfp_set_FPRF_from_FRT_with_context(struct PPC_DFP *dfp,
-         fprf = 0x05;
-         break;
-     default:
--        assert(0); /* should never get here */
-+        g_assert_not_reached(); /* should never get here */
-     }
-     dfp->env->fpscr &= ~FP_FPRF;
-     dfp->env->fpscr |= (fprf << FPSCR_FPRF);
-@@ -1243,7 +1243,7 @@ void helper_##op(CPUPPCState *env, ppc_fprp_t *t, ppc_fprp_t *b) \
-         } else if (decNumberIsQNaN(&dfp.b)) {                  \
-             vt.VsrD(1) = -2;                                   \
-         } else {                                               \
--            assert(0);                                         \
-+            g_assert_not_reached();                                         \
-         }                                                      \
-         set_dfp64(t, &vt);                                     \
-     } else {                                                   \
-@@ -1252,7 +1252,7 @@ void helper_##op(CPUPPCState *env, ppc_fprp_t *t, ppc_fprp_t *b) \
-         } else if ((size) == 128) {                            \
-             vt.VsrD(1) = dfp.b.exponent + 6176;                \
-         } else {                                               \
--            assert(0);                                         \
-+            g_assert_not_reached();                                         \
-         }                                                      \
-         set_dfp64(t, &vt);                                     \
-     }                                                          \
-@@ -1300,7 +1300,7 @@ void helper_##op(CPUPPCState *env, ppc_fprp_t *t, ppc_fprp_t *a,          \
-         raw_inf = 0x1e000;                                                \
-         bias = 6176;                                                      \
-     } else {                                                              \
--        assert(0);                                                        \
-+        g_assert_not_reached();                                                        \
-     }                                                                     \
-                                                                           \
-     if (unlikely((exp < 0) || (exp > max_exp))) {                         \
-diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
-index b0a0676beba..b167b37e0ab 100644
---- a/target/ppc/mmu_helper.c
-+++ b/target/ppc/mmu_helper.c
-@@ -316,7 +316,7 @@ void ppc_tlb_invalidate_one(CPUPPCState *env, target_ulong addr)
-         break;
-     default:
-         /* Should never reach here with other MMU models */
--        assert(0);
-+        g_assert_not_reached();
-     }
- #else
-     ppc_tlb_invalidate_all(env);
+diff --git a/include/hw/s390x/cpu-topology.h b/include/hw/s390x/cpu-topology.h
+index c064f427e94..dcb25956a64 100644
+--- a/include/hw/s390x/cpu-topology.h
++++ b/include/hw/s390x/cpu-topology.h
+@@ -57,7 +57,7 @@ static inline void s390_topology_setup_cpu(MachineState *ms,
+ static inline void s390_topology_reset(void)
+ {
+     /* Unreachable, CPU topology not implemented for TCG */
+-    assert(false);
++    g_assert_not_reached();
+ }
+ #endif
+ 
 -- 
 2.39.2
 
