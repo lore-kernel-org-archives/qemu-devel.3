@@ -4,123 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C46BEEDE9AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 19:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A10BEDE9B4
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 20:15:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so6ue-0004pw-2G; Tue, 10 Sep 2024 15:52:32 -0400
+	id 1so7GE-0001pT-Ut; Tue, 10 Sep 2024 16:14:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so6ub-0004gp-Cr
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 15:52:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1so7GE-0001nN-D2
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 16:14:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so6uY-0001oq-S8
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 15:52:28 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1so7GC-0003xo-EO
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 16:14:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725997945;
+ s=mimecast20190719; t=1725999285;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=RyZPXtSGoXBlUicoXkQATaKF1znGDD7yLv90noGJvSE=;
- b=bFfgS0Z89fClx4hDlrkYngRD9EVYRR8s75bWfYA/jky1809KK5cSCPlyIEMgF5NCwQy6vb
- a/caU2yuU4gVDLoBXWns6LhixSRVe+AHqQSpzyYS838zkd9bENL4LyeCFFER5g+GW1d3Sj
- GTOwHlGgArPCAfXrobAtWDthRpQF77o=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=kN0SVQe+R6Q/Am9uMaXvCjMgaZkrm3d5lGXG7KM9Ceo=;
+ b=CmJWG3cZd6TN1Qvpw0M0OT2WcyTAfo0zxkY/vr5O/YcK5r2t8r9hgucqc+qIMByoc+d31z
+ P6R0P1KXec4Q6YOLKUFYnCeSRgJoZIGjOzbdaQTYYa+oS+VroO8BJXj35H6veLjqTjBJLN
+ PP2BXiRAk5KSdgBhJ/uZqfK4aNX03rs=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-_H-N0fjTOEqrCrOVw7Cpjw-1; Tue, 10 Sep 2024 15:52:23 -0400
-X-MC-Unique: _H-N0fjTOEqrCrOVw7Cpjw-1
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-45828d941f1so54656891cf.3
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 12:52:23 -0700 (PDT)
+ us-mta-139-mQqPqX6-PQSLnbr4AvvoHg-1; Tue, 10 Sep 2024 16:14:44 -0400
+X-MC-Unique: mQqPqX6-PQSLnbr4AvvoHg-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a8d21b5cb5fso219404066b.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 13:14:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725997943; x=1726602743;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RyZPXtSGoXBlUicoXkQATaKF1znGDD7yLv90noGJvSE=;
- b=ZVovbyct5jSRnVMvu2UWrvbleP+l1k9qkRxSLeC/2TvErmryyauSTpbGzdLfUWZkFq
- haLHSvgh0yTsTpPmdAptC+dA63BAs6m0k0ZaWAmYTjWJTs76ODH0gYs83fN4r+Br3Hjb
- zmW65zK1Uu34c2HeUrn2gg6pJIHRoYiNGxGfG+0APFcQw/PSS5+F03RMok6+lwQ3m763
- j9plxjJjjIG8pvUNR+rU9HlTsGoHfdyFxR/oX8TS4i1aUAUklfUr2LIG5WjZySy81UtN
- uyLNNhwmoNhP+2xqapzcLCSniGustOU3e1paVwM3ymKMGf9hSL6W1KkXpwbuLytbVZ5X
- EWPQ==
-X-Gm-Message-State: AOJu0YyAlrA3IGnM+F49anDI7qspH3KOAmmg6+RP/NNmPWJ49Elkaea8
- mm2f7+AXKNqkNPd8ZgdM/tN6llAoSZ4hcdgHCQqdn1SxvFWBnd6xebmuj5EPWvYLzaLu5HBPa1D
- 0YeYKwDFWbiWtgvkHhqKvER5B7FLqHFjXHlxIdBmuklbiYT1waRfH
-X-Received: by 2002:a05:622a:1a95:b0:458:4e4c:b68f with SMTP id
- d75a77b69052e-4584e4cbd60mr9964351cf.46.1725997943299; 
- Tue, 10 Sep 2024 12:52:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFdVxMCDJy2cXkvj2pvVdfO3jF2wzEQ52m9FOkCJmayiX2pj/kPdovugIfjc18iYUWxBZZU6Q==
-X-Received: by 2002:a05:622a:1a95:b0:458:4e4c:b68f with SMTP id
- d75a77b69052e-4584e4cbd60mr9964111cf.46.1725997942906; 
- Tue, 10 Sep 2024 12:52:22 -0700 (PDT)
-Received: from [192.168.0.6] (ip-109-43-178-122.web.vodafone.de.
- [109.43.178.122]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-45822f608b9sm32292051cf.64.2024.09.10.12.52.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 12:52:22 -0700 (PDT)
-Message-ID: <3be9f503-5c73-49c7-8df4-184cfd05ff0f@redhat.com>
-Date: Tue, 10 Sep 2024 21:52:19 +0200
+ d=1e100.net; s=20230601; t=1725999283; x=1726604083;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kN0SVQe+R6Q/Am9uMaXvCjMgaZkrm3d5lGXG7KM9Ceo=;
+ b=PKuWPur6zEZvGzS0/VnWX/Poiv/uOoWx1hfzEFl6zM/s7Lz5F7Me8BX4PQz0Jdpjcl
+ Rb6+hXm5zC+VdRtyNKq3DVzHxhTu3RY8dfw3kPXQAGVPMaL0DlJ9crpirRECU9IBnl6e
+ p2VpitVNM6cHNMFbz2VSBRLEQ5zaiBoZip1XTzYStr+LUuNWIusAJqlOzlBQGGMAwofw
+ wALcvIPJeMUeg28guwwgC6V6Or30ubj/OuOOlvsXncvFfZeJVoE+PUIiCBUSKu7IZsIL
+ g8XkuHkhMwOOWLIGoaieHeItQwp/dewp6fFrhc8plTTkVsJsfdayo2Ggfqk3V3cJe7UK
+ 6UFg==
+X-Gm-Message-State: AOJu0YzIveqQhazQX0SfV6BceckxbL8B6E7klNgxMu5CuMhsdC7HSuUJ
+ IsRjNbQFq3ib6h1nf7SeMcLOFcQgQrsNwBMZg+Lz7/rJmdyMYcPuUKBDMCLGDqudKxut96tYNoF
+ uomtBvoClAyHxajQpY32PQBHnM7m/RcHO3mdgpk0yrOJEtAYGwDFyVSN23Ejy
+X-Received: by 2002:a17:907:9812:b0:a86:a30f:4aef with SMTP id
+ a640c23a62f3a-a8ffab29059mr170986266b.22.1725999282799; 
+ Tue, 10 Sep 2024 13:14:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGRTOz/XOwI7jwjExfz071xYB1R3GP0HZdczdNcd6gKXHqvAF4ENbRAF3AM5S/K0ITzRNI8zg==
+X-Received: by 2002:a17:907:9812:b0:a86:a30f:4aef with SMTP id
+ a640c23a62f3a-a8ffab29059mr170983066b.22.1725999281897; 
+ Tue, 10 Sep 2024 13:14:41 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:176:f5ce:2d9:5bfa:9916:aa0a])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a8d25d645a0sm525177266b.214.2024.09.10.13.14.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Sep 2024 13:14:41 -0700 (PDT)
+Date: Tue, 10 Sep 2024 16:14:36 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Santosh Shukla <santosh.shukla@amd.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, joao.m.martins@oracle.com,
+ Suravee.Suthikulpanit@amd.com, vasant.hegde@amd.com,
+ mtosatti@redhat.com, marcel.apfelbaum@gmail.com
+Subject: Re: [PATCH 0/5] Interrupt Remap support for emulated amd viommu
+Message-ID: <20240910161403-mutt-send-email-mst@kernel.org>
+References: <20240904100257.184851-1-santosh.shukla@amd.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/22] Tests and misc patches
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20240910123726.182975-1-thuth@redhat.com>
- <CAFEAcA_f1hMj=6wXzv2ZYuFVGDbaOpDOPzZrh3VAYqup06dXDg@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAFEAcA_f1hMj=6wXzv2ZYuFVGDbaOpDOPzZrh3VAYqup06dXDg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240904100257.184851-1-santosh.shukla@amd.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -144,85 +99,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/09/2024 17.38, Peter Maydell wrote:
-> On Tue, 10 Sept 2024 at 13:37, Thomas Huth <thuth@redhat.com> wrote:
->>
->> The following changes since commit 7bbadc60b58b742494555f06cd342311ddab9351:
->>
->>    Merge tag 'crypto-fixes-pull-request' of https://gitlab.com/berrange/qemu into staging (2024-09-09 15:19:32 +0100)
->>
->> are available in the Git repository at:
->>
->>    https://gitlab.com/thuth/qemu.git tags/pull-request-2024-09-10
->>
->> for you to fetch changes up to cc3e005eb22332ba277bff2e39025d0087f3795e:
->>
->>    tests/functional: Fix bad usage of has_cmd (2024-09-10 13:44:42 +0200)
->>
->> ----------------------------------------------------------------
->> * Split --enable-sanitizers to --enable-{asan, ubsan}
->> * Build MSYS2 job using multiple CPUs
->> * Fix "make distclean" wrt contrib/plugins/
->> * Convert more Avocado tests to plain standalone functional tests
->> * Fix bug that breaks "make check-functional" when tesseract is missing
->>
->> ----------------------------------------------------------------
+On Wed, Sep 04, 2024 at 05:02:52AM -0500, Santosh Shukla wrote:
+> Series adds following feature support for emulated amd vIOMMU
+> 1) Pass Through(PT) mode
+> 2) Interrupt Remapping(IR) mode
 > 
-> On the 'make check-vm-openbsd' test I run:
+> 1) PT mode
+> Introducing the shared 'nodma' memory region that can be aliased
+> by all the devices in the PT mode. Shared memory with aliasing
+> approach will help run VM faster when lot of devices attached to
+> VM.
 > 
-> 595/944 qemu:func-quick+func-mips64el /
-> func-mips64el-mips64el_fuloong2e          ERROR            6.16s
-> exit status 1
-> 602/944 qemu:func-quick+func-or1k / func-or1k-or1k_sim
->             ERROR            6.91s   exit status 1
+> 2) IR mode
+> Shared IR memory region with aliasing approach proposed for the
+> reason mentioned in 1). Also add support to invalidate Interrupt
+> remaping table(IRT).
 > 
-> Slightly more detail further up in the log:
-> 
-> 
-> 595/944 qemu:func-quick+func-mips64el /
-> func-mips64el-mips64el_fuloong2e          ERROR            6.16s
-> exit status 1
-> ――――――――――――――――――――――――――――――――――――― ✀  ―――――――――――――――――――――――――――――――――――――
-> stderr:
-> Traceback (most recent call last):
->    File "/home/qemu/qemu-test.fsnflZ/src/tests/functional/test_mips64el_fuloong2e.py",
-> line 29, in test_linux_kernel_3_16
->      deb_path = self.ASSET_KERNEL.fetch()
->    File "/home/qemu/qemu-test.fsnflZ/src/tests/functional/qemu_test/asset.py",
-> line 135, in fetch
->      if not self._check(tmp_cache_file):
->    File "/home/qemu/qemu-test.fsnflZ/src/tests/functional/qemu_test/asset.py",
-> line 52, in _check
->      checksum = subprocess.check_output(
->    File "/usr/local/lib/python3.10/subprocess.py", line 421, in check_output
->      return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
->    File "/usr/local/lib/python3.10/subprocess.py", line 503, in run
->      with Popen(*popenargs, **kwargs) as process:
->    File "/usr/local/lib/python3.10/subprocess.py", line 971, in __init__
->      self._execute_child(args, executable, preexec_fn, close_fds,
->    File "/usr/local/lib/python3.10/subprocess.py", line 1863, in _execute_child
->      raise child_exception_type(errno_num, err_msg, err_filename)
-> FileNotFoundError: [Errno 2] No such file or directory: 'sha256sum'
-> 
-> 
-> (test program exited with status code 1)
-> 
-> 
-> Similarly for the or1k failure.
-> 
-> If you want to use sha256sum in "make check" then we should
-> ensure that it's installed in these BSD VM images.
+> Series based on f259e4cb8a8b4ef5463326fc214a7d8d7703d5de.
 
-Ok ... I'm looking into using the hashlib from Python instead, that way 
-we'll be independent from external binaries here.
 
-> Also, does this mean that "make check" is now going to run
-> a lot of the tests that were previously in "make check-avocado"?
-> That seems like it might make our CI jobs take longer...
+Fails build on non-kvm:
 
-No, it will only some basic tests that don't download any assets. These 
-should be the rather quick ones.
+https://gitlab.com/mstredhat/qemu/-/jobs/7791357916
 
-  Thomas
+/usr/lib/gcc-cross/i686-linux-gnu/10/../../../../i686-linux-gnu/bin/ld: libqemu-x86_64-softmmu.a.p/hw_i386_amd_iommu.c.o: in function `amdvi_sysbus_realize':
+/builds/mstredhat/qemu/build/../hw/i386/amd_iommu.c:1660: undefined reference to `kvm_enable_x2apic'
+collect2: error: ld returned 1 exit status
+
+
+> Testing:
+> 1. nvme/fio testing for VM with > 255 vCPU with xtsup=on and x2apic
+> enabled
+> 2. Windows Server 2022 VM testing for > 255 vCPU.
+> 
+> Suravee Suthikulpanit (5):
+>   amd_iommu: Rename variable mmio to mr_mmio
+>   amd_iommu: Add support for pass though mode
+>   amd_iommu: Use shared memory region for Interrupt Remapping
+>   amd_iommu: Send notification when invaldate interrupt entry cache
+>   amd_iommu: Check APIC ID > 255 for XTSup
+> 
+>  hw/i386/acpi-build.c |  4 +-
+>  hw/i386/amd_iommu.c  | 98 +++++++++++++++++++++++++++++++++++---------
+>  hw/i386/amd_iommu.h  |  5 ++-
+>  3 files changed, 85 insertions(+), 22 deletions(-)
+> 
+> -- 
+> 2.43.5
 
 
