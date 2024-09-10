@@ -4,67 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0D70ECE564
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:38:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B5D0EB64DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:38:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so086-0001sk-R1; Tue, 10 Sep 2024 08:37:58 -0400
+	id 1so07d-0006nu-NO; Tue, 10 Sep 2024 08:37:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so07p-0008F7-Pr
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:37:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so07n-00057q-4w
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:37:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725971855;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Rju49n8Z3Hj8Bn7+6iZDm9Iio+jiWTk7ezdxQvx0KGo=;
- b=jIsArbsU61l1+BVJiMSgjr3TSRKWlREx88Fprk/NDm+A+hRQN+Sx0BjZYNAJ8Vf+iBFvL2
- kzP3nCmi0RcgoJIq9jzHX0Vv0SGUkZPEb1x3/TvTofxpov89uRVA4HhlvlGFGtOmtvLqcA
- NoE9SypfQI3U4wuSBzebD0iuX2tntbk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-486-xcfK1AWbNBSnW5p-0Xnmzw-1; Tue,
- 10 Sep 2024 08:37:34 -0400
-X-MC-Unique: xcfK1AWbNBSnW5p-0Xnmzw-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 64D5C193E8DE; Tue, 10 Sep 2024 12:37:32 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.193.120])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3C1C519560AB; Tue, 10 Sep 2024 12:37:30 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1so06l-0002Nm-DB
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:36:36 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1so06i-000534-Bv
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:36:35 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8CxhehIPeBmeLkDAA--.7716S3;
+ Tue, 10 Sep 2024 20:36:24 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front2 (Coremail) with SMTP id qciowMBx+cVCPeBmXGoDAA--.15753S6;
+ Tue, 10 Sep 2024 20:36:23 +0800 (CST)
+From: Xianglai Li <lixianglai@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 01/22] meson: Split --enable-sanitizers to --enable-{asan,
- ubsan}
-Date: Tue, 10 Sep 2024 14:37:02 +0200
-Message-ID: <20240910123726.182975-2-thuth@redhat.com>
-In-Reply-To: <20240910123726.182975-1-thuth@redhat.com>
-References: <20240910123726.182975-1-thuth@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Huacai Chen <chenhuacai@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ kvm@vger.kernel.org, Bibo Mao <maobibo@loongson.cn>
+Subject: [RFC PATCH V2 4/5] hw/loongarch: Add KVM pch pic device support
+Date: Tue, 10 Sep 2024 20:18:31 +0800
+Message-Id: <86f29d4f56b12f826e8a5817cdb1efbfb6007a08.1725969898.git.lixianglai@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <cover.1725969898.git.lixianglai@loongson.cn>
+References: <cover.1725969898.git.lixianglai@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qciowMBx+cVCPeBmXGoDAA--.15753S6
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,226 +66,437 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Added pch_pic interrupt controller for kvm emulation.
+The main process is to send the command word for
+creating an pch_pic device to the kernel,
+Delivers the pch pic interrupt controller configuration
+register base address to the kernel.
+When the VM is saved, the ioctl obtains the pch_pic
+interrupt controller data in the kernel and saves it.
+When the VM is recovered, the saved data is sent to the kernel.
 
-We do not always want both address and undefined behavior
-sanitizers running at the same time.
-
-For the gitlab custom-runners, drop to only --enable-ubsan.
-These jobs are not run by default, but as will be obvious in the
-next patch, we don't run ASan on x86 either, and it seems wrong
-to hold aarch64 and s390x to a different standard.
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240813095216.306555-2-richard.henderson@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
 ---
- docs/devel/testing/fuzzing.rst                    |  4 ++--
- meson.build                                       | 15 +++++++++++----
- tests/qtest/fdc-test.c                            |  2 +-
- .../custom-runners/ubuntu-22.04-aarch64.yml       |  2 +-
- .../custom-runners/ubuntu-22.04-s390x.yml         |  2 +-
- meson_options.txt                                 |  6 ++++--
- scripts/meson-buildoptions.sh                     |  9 ++++++---
- tests/docker/test-debug                           |  4 ++--
- 8 files changed, 28 insertions(+), 16 deletions(-)
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Cornelia Huck <cohuck@redhat.com>
+Cc: kvm@vger.kernel.org
+Cc: Bibo Mao <maobibo@loongson.cn>
+Cc: Xianglai Li <lixianglai@loongson.cn>
 
-diff --git a/docs/devel/testing/fuzzing.rst b/docs/devel/testing/fuzzing.rst
-index 3bfcb33fc4..dfe1973cf8 100644
---- a/docs/devel/testing/fuzzing.rst
-+++ b/docs/devel/testing/fuzzing.rst
-@@ -24,8 +24,8 @@ Configure with (substitute the clang binaries with the version you installed).
- Here, enable-sanitizers, is optional but it allows us to reliably detect bugs
- such as out-of-bounds accesses, use-after-frees, double-frees etc.::
+ hw/intc/Kconfig                 |   3 +
+ hw/intc/loongarch_pch_pic.c     |  40 ++++---
+ hw/intc/loongarch_pch_pic_kvm.c | 180 ++++++++++++++++++++++++++++++++
+ hw/intc/meson.build             |   1 +
+ hw/loongarch/Kconfig            |   1 +
+ hw/loongarch/virt.c             |  67 ++++++------
+ 6 files changed, 249 insertions(+), 43 deletions(-)
+ create mode 100644 hw/intc/loongarch_pch_pic_kvm.c
+
+diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
+index df9352d41d..1169926eec 100644
+--- a/hw/intc/Kconfig
++++ b/hw/intc/Kconfig
+@@ -105,6 +105,9 @@ config LOONGARCH_PCH_PIC
+     bool
+     select UNIMP
  
--    CC=clang-8 CXX=clang++-8 /path/to/configure --enable-fuzzing \
--                                                --enable-sanitizers
-+    CC=clang-8 CXX=clang++-8 /path/to/configure \
-+        --enable-fuzzing --enable-asan --enable-ubsan
++config LOONGARCH_PCH_PIC_KVM
++    bool
++
+ config LOONGARCH_PCH_MSI
+     select MSI_NONBROKEN
+     bool
+diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+index 2d5e65abff..13934be7d9 100644
+--- a/hw/intc/loongarch_pch_pic.c
++++ b/hw/intc/loongarch_pch_pic.c
+@@ -16,18 +16,27 @@
+ #include "migration/vmstate.h"
+ #include "trace.h"
+ #include "qapi/error.h"
++#include "sysemu/kvm.h"
  
- Fuzz targets are built similarly to system targets::
+ static void pch_pic_update_irq(LoongArchPCHPIC *s, uint64_t mask, int level)
+ {
+     uint64_t val;
+     int irq;
++    int kvm_irq;
  
-diff --git a/meson.build b/meson.build
-index fbda17c987..f6b8060b72 100644
---- a/meson.build
-+++ b/meson.build
-@@ -479,24 +479,31 @@ if get_option('safe_stack') and coroutine_backend != 'ucontext'
-   error('SafeStack is only supported with the ucontext coroutine backend')
- endif
- 
--if get_option('sanitizers')
-+if get_option('asan')
-   if cc.has_argument('-fsanitize=address')
-     qemu_cflags = ['-fsanitize=address'] + qemu_cflags
-     qemu_ldflags = ['-fsanitize=address'] + qemu_ldflags
-+  else
-+    error('Your compiler does not support -fsanitize=address')
-   endif
-+endif
- 
--  # Detect static linking issue with ubsan - https://gcc.gnu.org/bugzilla/show_bug.cgi?id=84285
-+if get_option('ubsan')
-+  # Detect static linking issue with ubsan:
-+  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=84285
-   if cc.links('int main(int argc, char **argv) { return argc + 1; }',
-               args: [qemu_ldflags, '-fsanitize=undefined'])
-     qemu_cflags = ['-fsanitize=undefined'] + qemu_cflags
-     qemu_ldflags = ['-fsanitize=undefined'] + qemu_ldflags
-+  else
-+    error('Your compiler does not support -fsanitize=undefined')
-   endif
- endif
- 
- # Thread sanitizer is, for now, much noisier than the other sanitizers;
- # keep it separate until that is not the case.
- if get_option('tsan')
--  if get_option('sanitizers')
-+  if get_option('asan') or get_option('ubsan')
-     error('TSAN is not supported with other sanitizers')
-   endif
-   if not cc.has_function('__tsan_create_fiber',
-@@ -2516,7 +2523,7 @@ if rdma.found()
- endif
- 
- have_asan_fiber = false
--if get_option('sanitizers') and \
-+if get_option('asan') and \
-    not cc.has_function('__sanitizer_start_switch_fiber',
-                          args: '-fsanitize=address',
-                          prefix: '#include <sanitizer/asan_interface.h>')
-diff --git a/tests/qtest/fdc-test.c b/tests/qtest/fdc-test.c
-index 5e8fbda9df..8645b080f7 100644
---- a/tests/qtest/fdc-test.c
-+++ b/tests/qtest/fdc-test.c
-@@ -552,7 +552,7 @@ static bool qtest_check_clang_sanitizer(void)
- #ifdef QEMU_SANITIZE_ADDRESS
-     return true;
- #else
--    g_test_skip("QEMU not configured using --enable-sanitizers");
-+    g_test_skip("QEMU not configured using --enable-asan");
-     return false;
- #endif
+     if (level) {
+         val = mask & s->intirr & ~s->int_mask;
+         if (val) {
+             irq = ctz64(val);
+             s->intisr |= MAKE_64BIT_MASK(irq, 1);
+-            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 1);
++            if (kvm_enabled() && kvm_irqchip_in_kernel()) {
++                kvm_irq = (
++                KVM_LOONGARCH_IRQ_TYPE_IOAPIC << KVM_LOONGARCH_IRQ_TYPE_SHIFT)
++                | (0 <<  KVM_LOONGARCH_IRQ_VCPU_SHIFT) | s->htmsi_vector[irq];
++                kvm_set_irq(kvm_state, kvm_irq, !!level);
++            } else {
++                qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 1);
++            }
+         }
+     } else {
+         /*
+@@ -38,7 +47,14 @@ static void pch_pic_update_irq(LoongArchPCHPIC *s, uint64_t mask, int level)
+         if (val) {
+             irq = ctz64(val);
+             s->intisr &= ~MAKE_64BIT_MASK(irq, 1);
+-            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 0);
++            if (kvm_enabled() && kvm_irqchip_in_kernel()) {
++                kvm_irq = (
++                KVM_LOONGARCH_IRQ_TYPE_IOAPIC << KVM_LOONGARCH_IRQ_TYPE_SHIFT)
++                | (0 <<  KVM_LOONGARCH_IRQ_VCPU_SHIFT) | s->htmsi_vector[irq];
++                kvm_set_irq(kvm_state, kvm_irq, !!level);
++            } else {
++                qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 0);
++            }
+         }
+     }
  }
-diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml b/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml
-index 263a3c2140..ca2f140471 100644
---- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml
-+++ b/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml
-@@ -103,7 +103,7 @@ ubuntu-22.04-aarch64-clang:
-  script:
-  - mkdir build
-  - cd build
-- - ../configure --disable-libssh --cc=clang --cxx=clang++ --enable-sanitizers
-+ - ../configure --disable-libssh --cc=clang --cxx=clang++ --enable-ubsan
-    || { cat config.log meson-logs/meson-log.txt; exit 1; }
-  - make --output-sync -j`nproc --ignore=40`
-  - make --output-sync -j`nproc --ignore=40` check
-diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
-index 69ddd3e7d5..ca374acb8c 100644
---- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
-+++ b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
-@@ -80,7 +80,7 @@ ubuntu-22.04-s390x-clang:
-  script:
-  - mkdir build
-  - cd build
-- - ../configure --cc=clang --cxx=clang++ --enable-sanitizers
-+ - ../configure --cc=clang --cxx=clang++ --enable-ubsan
-    || { cat config.log meson-logs/meson-log.txt; exit 1; }
-  - make --output-sync -j`nproc`
-  - make --output-sync -j`nproc` check
-diff --git a/meson_options.txt b/meson_options.txt
-index 0269fa0f16..98615c3c4e 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -91,8 +91,10 @@ option('tcg_interpreter', type: 'boolean', value: false,
-        description: 'TCG with bytecode interpreter (slow)')
- option('safe_stack', type: 'boolean', value: false,
-        description: 'SafeStack Stack Smash Protection (requires clang/llvm and coroutine backend ucontext)')
--option('sanitizers', type: 'boolean', value: false,
--       description: 'enable default sanitizers')
-+option('asan', type: 'boolean', value: false,
-+       description: 'enable address sanitizer')
-+option('ubsan', type: 'boolean', value: false,
-+       description: 'enable undefined behaviour sanitizer')
- option('tsan', type: 'boolean', value: false,
-        description: 'enable thread sanitizer')
- option('stack_protector', type: 'feature', value: 'auto',
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index c97079a38c..a6ee2d9c01 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -21,6 +21,7 @@ meson_options_help() {
-   printf "%s\n" '  --disable-relocatable    toggle relocatable install'
-   printf "%s\n" '  --docdir=VALUE           Base directory for documentation installation'
-   printf "%s\n" '                           (can be empty) [share/doc]'
-+  printf "%s\n" '  --enable-asan            enable address sanitizer'
-   printf "%s\n" '  --enable-block-drv-whitelist-in-tools'
-   printf "%s\n" '                           use block whitelist also in tools instead of only'
-   printf "%s\n" '                           QEMU'
-@@ -46,13 +47,13 @@ meson_options_help() {
-   printf "%s\n" '                           getrandom()'
-   printf "%s\n" '  --enable-safe-stack      SafeStack Stack Smash Protection (requires'
-   printf "%s\n" '                           clang/llvm and coroutine backend ucontext)'
--  printf "%s\n" '  --enable-sanitizers      enable default sanitizers'
-   printf "%s\n" '  --enable-strip           Strip targets on install'
-   printf "%s\n" '  --enable-tcg-interpreter TCG with bytecode interpreter (slow)'
-   printf "%s\n" '  --enable-trace-backends=CHOICES'
-   printf "%s\n" '                           Set available tracing backends [log] (choices:'
-   printf "%s\n" '                           dtrace/ftrace/log/nop/simple/syslog/ust)'
-   printf "%s\n" '  --enable-tsan            enable thread sanitizer'
-+  printf "%s\n" '  --enable-ubsan           enable undefined behaviour sanitizer'
-   printf "%s\n" '  --firmwarepath=VALUES    search PATH for firmware files [share/qemu-'
-   printf "%s\n" '                           firmware]'
-   printf "%s\n" '  --iasl=VALUE             Path to ACPI disassembler'
-@@ -230,6 +231,8 @@ _meson_option_parse() {
-     --disable-af-xdp) printf "%s" -Daf_xdp=disabled ;;
-     --enable-alsa) printf "%s" -Dalsa=enabled ;;
-     --disable-alsa) printf "%s" -Dalsa=disabled ;;
-+    --enable-asan) printf "%s" -Dasan=true ;;
-+    --disable-asan) printf "%s" -Dasan=false ;;
-     --enable-attr) printf "%s" -Dattr=enabled ;;
-     --disable-attr) printf "%s" -Dattr=disabled ;;
-     --audio-drv-list=*) quote_sh "-Daudio_drv_list=$2" ;;
-@@ -456,8 +459,6 @@ _meson_option_parse() {
-     --disable-rutabaga-gfx) printf "%s" -Drutabaga_gfx=disabled ;;
-     --enable-safe-stack) printf "%s" -Dsafe_stack=true ;;
-     --disable-safe-stack) printf "%s" -Dsafe_stack=false ;;
--    --enable-sanitizers) printf "%s" -Dsanitizers=true ;;
--    --disable-sanitizers) printf "%s" -Dsanitizers=false ;;
-     --enable-sdl) printf "%s" -Dsdl=enabled ;;
-     --disable-sdl) printf "%s" -Dsdl=disabled ;;
-     --enable-sdl-image) printf "%s" -Dsdl_image=enabled ;;
-@@ -505,6 +506,8 @@ _meson_option_parse() {
-     --disable-u2f) printf "%s" -Du2f=disabled ;;
-     --enable-uadk) printf "%s" -Duadk=enabled ;;
-     --disable-uadk) printf "%s" -Duadk=disabled ;;
-+    --enable-ubsan) printf "%s" -Dubsan=true ;;
-+    --disable-ubsan) printf "%s" -Dubsan=false ;;
-     --enable-usb-redir) printf "%s" -Dusb_redir=enabled ;;
-     --disable-usb-redir) printf "%s" -Dusb_redir=disabled ;;
-     --enable-vde) printf "%s" -Dvde=enabled ;;
-diff --git a/tests/docker/test-debug b/tests/docker/test-debug
-index f52f16328c..678ceccc27 100755
---- a/tests/docker/test-debug
-+++ b/tests/docker/test-debug
-@@ -1,6 +1,6 @@
- #!/bin/bash -e
- #
--# Compile and check with clang & --enable-debug --enable-sanitizers.
-+# Compile and check with clang & debug & sanitizers
- #
- # Copyright (c) 2016-2018 Red Hat Inc.
- #
-@@ -19,7 +19,7 @@ requires_binary clang
- cd "$BUILD_DIR"
+@@ -265,18 +281,18 @@ static uint64_t loongarch_pch_pic_readb(void *opaque, hwaddr addr,
+ {
+     LoongArchPCHPIC *s = LOONGARCH_PCH_PIC(opaque);
+     uint64_t val = 0;
+-    uint32_t offset = (addr & 0xfff) + PCH_PIC_ROUTE_ENTRY_OFFSET;
++    uint32_t offset = (addr & 0xfff) + PCH_PIC_ROUTE_ENTRY_START;
+     int64_t offset_tmp;
  
- OPTS="--cxx=clang++ --cc=clang --host-cc=clang"
--OPTS="--enable-debug --enable-sanitizers $OPTS"
-+OPTS="--enable-debug --enable-asan --enable-ubsan $OPTS"
+     switch (offset) {
+-    case PCH_PIC_HTMSI_VEC_OFFSET ... PCH_PIC_HTMSI_VEC_END:
+-        offset_tmp = offset - PCH_PIC_HTMSI_VEC_OFFSET;
++    case PCH_PIC_HTMSI_VEC_START ... PCH_PIC_HTMSI_VEC_END:
++        offset_tmp = offset - PCH_PIC_HTMSI_VEC_START;
+         if (offset_tmp >= 0 && offset_tmp < 64) {
+             val = s->htmsi_vector[offset_tmp];
+         }
+         break;
+-    case PCH_PIC_ROUTE_ENTRY_OFFSET ... PCH_PIC_ROUTE_ENTRY_END:
+-        offset_tmp = offset - PCH_PIC_ROUTE_ENTRY_OFFSET;
++    case PCH_PIC_ROUTE_ENTRY_START ... PCH_PIC_ROUTE_ENTRY_END:
++        offset_tmp = offset - PCH_PIC_ROUTE_ENTRY_START;
+         if (offset_tmp >= 0 && offset_tmp < 64) {
+             val = s->route_entry[offset_tmp];
+         }
+@@ -294,19 +310,19 @@ static void loongarch_pch_pic_writeb(void *opaque, hwaddr addr,
+ {
+     LoongArchPCHPIC *s = LOONGARCH_PCH_PIC(opaque);
+     int32_t offset_tmp;
+-    uint32_t offset = (addr & 0xfff) + PCH_PIC_ROUTE_ENTRY_OFFSET;
++    uint32_t offset = (addr & 0xfff) + PCH_PIC_ROUTE_ENTRY_START;
  
- export ASAN_OPTIONS=detect_leaks=0
- build_qemu $OPTS
+     trace_loongarch_pch_pic_writeb(size, addr, data);
+ 
+     switch (offset) {
+-    case PCH_PIC_HTMSI_VEC_OFFSET ... PCH_PIC_HTMSI_VEC_END:
+-        offset_tmp = offset - PCH_PIC_HTMSI_VEC_OFFSET;
++    case PCH_PIC_HTMSI_VEC_START ... PCH_PIC_HTMSI_VEC_END:
++        offset_tmp = offset - PCH_PIC_HTMSI_VEC_START;
+         if (offset_tmp >= 0 && offset_tmp < 64) {
+             s->htmsi_vector[offset_tmp] = (uint8_t)(data & 0xff);
+         }
+         break;
+-    case PCH_PIC_ROUTE_ENTRY_OFFSET ... PCH_PIC_ROUTE_ENTRY_END:
+-        offset_tmp = offset - PCH_PIC_ROUTE_ENTRY_OFFSET;
++    case PCH_PIC_ROUTE_ENTRY_START ... PCH_PIC_ROUTE_ENTRY_END:
++        offset_tmp = offset - PCH_PIC_ROUTE_ENTRY_START;
+         if (offset_tmp >= 0 && offset_tmp < 64) {
+             s->route_entry[offset_tmp] = (uint8_t)(data & 0xff);
+         }
+diff --git a/hw/intc/loongarch_pch_pic_kvm.c b/hw/intc/loongarch_pch_pic_kvm.c
+new file mode 100644
+index 0000000000..9b6a2f6784
+--- /dev/null
++++ b/hw/intc/loongarch_pch_pic_kvm.c
+@@ -0,0 +1,180 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * LoongArch kvm pch pic interrupt support
++ *
++ * Copyright (C) 2024 Loongson Technology Corporation Limited
++ */
++
++#include "qemu/osdep.h"
++#include "hw/qdev-properties.h"
++#include "qemu/typedefs.h"
++#include "hw/intc/loongarch_pch_pic.h"
++#include "hw/sysbus.h"
++#include "linux/kvm.h"
++#include "migration/vmstate.h"
++#include "qapi/error.h"
++#include "sysemu/kvm.h"
++#include "hw/loongarch/virt.h"
++#include "hw/pci-host/ls7a.h"
++#include "qemu/error-report.h"
++
++static void kvm_pch_pic_access_regs(int fd, uint64_t addr,
++                                       void *val, bool is_write)
++{
++        kvm_device_access(fd, KVM_DEV_LOONGARCH_PCH_PIC_GRP_REGS,
++                          addr, val, is_write, &error_abort);
++}
++
++static void kvm_loongarch_pch_pic_save_load(void *opaque, bool is_write)
++{
++    KVMLoongArchPCHPIC *s = (KVMLoongArchPCHPIC *)opaque;
++    KVMLoongArchPCHPICClass *class = KVM_LOONGARCH_PCH_PIC_GET_CLASS(s);
++    int fd = class->dev_fd;
++    int addr, offset;
++
++    kvm_pch_pic_access_regs(fd, PCH_PIC_MASK_START,
++                            (void *)&s->int_mask, is_write);
++    kvm_pch_pic_access_regs(fd, PCH_PIC_HTMSI_EN_START,
++                            (void *)&s->htmsi_en, is_write);
++    kvm_pch_pic_access_regs(fd, PCH_PIC_EDGE_START,
++                            (void *)&s->intedge, is_write);
++    kvm_pch_pic_access_regs(fd, PCH_PIC_AUTO_CTRL0_START,
++                            (void *)&s->auto_crtl0, is_write);
++    kvm_pch_pic_access_regs(fd, PCH_PIC_AUTO_CTRL1_START,
++                            (void *)&s->auto_crtl1, is_write);
++
++    for (addr = PCH_PIC_ROUTE_ENTRY_START;
++         addr < PCH_PIC_ROUTE_ENTRY_END; addr++) {
++        offset = addr - PCH_PIC_ROUTE_ENTRY_START;
++        kvm_pch_pic_access_regs(fd, addr,
++                                (void *)&s->route_entry[offset], is_write);
++    }
++
++    for (addr = PCH_PIC_HTMSI_VEC_START; addr < PCH_PIC_HTMSI_VEC_END; addr++) {
++        offset = addr - PCH_PIC_HTMSI_VEC_START;
++        kvm_pch_pic_access_regs(fd, addr,
++                                (void *)&s->htmsi_vector[offset], is_write);
++    }
++
++    kvm_pch_pic_access_regs(fd, PCH_PIC_INT_IRR_START,
++                            (void *)&s->intirr, is_write);
++    kvm_pch_pic_access_regs(fd, PCH_PIC_INT_ISR_START,
++                            (void *)&s->intisr, is_write);
++    kvm_pch_pic_access_regs(fd, PCH_PIC_POLARITY_START,
++                            (void *)&s->int_polarity, is_write);
++}
++
++static int kvm_loongarch_pch_pic_pre_save(void *opaque)
++{
++    kvm_loongarch_pch_pic_save_load(opaque, false);
++    return 0;
++}
++
++static int kvm_loongarch_pch_pic_post_load(void *opaque, int version_id)
++{
++    kvm_loongarch_pch_pic_save_load(opaque, true);
++    return 0;
++}
++
++static void kvm_pch_pic_handler(void *opaque, int irq, int level)
++{
++    int kvm_irq;
++
++    if (kvm_enabled()) {
++        kvm_irq = \
++            (KVM_LOONGARCH_IRQ_TYPE_IOAPIC << KVM_LOONGARCH_IRQ_TYPE_SHIFT)
++            | (0 <<  KVM_LOONGARCH_IRQ_VCPU_SHIFT) | irq;
++        kvm_set_irq(kvm_state, kvm_irq, !!level);
++    }
++}
++
++static void kvm_loongarch_pch_pic_realize(DeviceState *dev, Error **errp)
++{
++    KVMLoongArchPCHPICClass *pch_pic_class =
++            KVM_LOONGARCH_PCH_PIC_GET_CLASS(dev);
++    struct kvm_create_device cd = {0};
++    uint64_t pch_pic_base = VIRT_PCH_REG_BASE;
++    Error *err = NULL;
++    int ret;
++
++    pch_pic_class->parent_realize(dev, &err);
++    if (err) {
++        error_propagate(errp, err);
++        return;
++    }
++
++    if (!pch_pic_class->is_created) {
++        cd.type = KVM_DEV_TYPE_LOONGARCH_PCH_PIC;
++        ret = kvm_vm_ioctl(kvm_state, KVM_CREATE_DEVICE, &cd);
++        if (ret < 0) {
++            error_setg_errno(errp, errno,
++                             "Creating the KVM pch pic device failed");
++            return;
++        }
++        pch_pic_class->is_created = true;
++        pch_pic_class->dev_fd = cd.fd;
++        fprintf(stdout, "Create LoongArch pch pic irqchip in KVM done!\n");
++
++        ret = kvm_device_access(cd.fd, KVM_DEV_LOONGARCH_PCH_PIC_GRP_CTRL,
++                                KVM_DEV_LOONGARCH_PCH_PIC_CTRL_INIT,
++                                &pch_pic_base, true, NULL);
++        if (ret < 0) {
++            error_report(
++                "KVM PCH_PIC: failed to set the base address of PCH PIC");
++            exit(1);
++        }
++
++        qdev_init_gpio_in(dev, kvm_pch_pic_handler, VIRT_PCH_PIC_IRQ_NUM);
++    }
++}
++
++static const VMStateDescription vmstate_kvm_loongarch_pch_pic = {
++    .name = TYPE_LOONGARCH_PCH_PIC,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .pre_save = kvm_loongarch_pch_pic_pre_save,
++    .post_load = kvm_loongarch_pch_pic_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64(int_mask, KVMLoongArchPCHPIC),
++        VMSTATE_UINT64(htmsi_en, KVMLoongArchPCHPIC),
++        VMSTATE_UINT64(intedge, KVMLoongArchPCHPIC),
++        VMSTATE_UINT64(intclr, KVMLoongArchPCHPIC),
++        VMSTATE_UINT64(auto_crtl0, KVMLoongArchPCHPIC),
++        VMSTATE_UINT64(auto_crtl1, KVMLoongArchPCHPIC),
++        VMSTATE_UINT8_ARRAY(route_entry, KVMLoongArchPCHPIC, 64),
++        VMSTATE_UINT8_ARRAY(htmsi_vector, KVMLoongArchPCHPIC, 64),
++        VMSTATE_UINT64(last_intirr, KVMLoongArchPCHPIC),
++        VMSTATE_UINT64(intirr, KVMLoongArchPCHPIC),
++        VMSTATE_UINT64(intisr, KVMLoongArchPCHPIC),
++        VMSTATE_UINT64(int_polarity, KVMLoongArchPCHPIC),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++
++static void kvm_loongarch_pch_pic_class_init(ObjectClass *oc, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++    KVMLoongArchPCHPICClass *pch_pic_class = KVM_LOONGARCH_PCH_PIC_CLASS(oc);
++
++    pch_pic_class->parent_realize = dc->realize;
++    dc->realize = kvm_loongarch_pch_pic_realize;
++    pch_pic_class->is_created = false;
++    dc->vmsd = &vmstate_kvm_loongarch_pch_pic;
++
++}
++
++static const TypeInfo kvm_loongarch_pch_pic_info = {
++    .name = TYPE_KVM_LOONGARCH_PCH_PIC,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(KVMLoongArchPCHPIC),
++    .class_size = sizeof(KVMLoongArchPCHPICClass),
++    .class_init = kvm_loongarch_pch_pic_class_init,
++};
++
++static void kvm_loongarch_pch_pic_register_types(void)
++{
++    type_register_static(&kvm_loongarch_pch_pic_info);
++}
++
++type_init(kvm_loongarch_pch_pic_register_types)
+diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+index 85174d1af1..c20c0a2c05 100644
+--- a/hw/intc/meson.build
++++ b/hw/intc/meson.build
+@@ -77,3 +77,4 @@ specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_PIC', if_true: files('loongarch_pch_
+ specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_MSI', if_true: files('loongarch_pch_msi.c'))
+ specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI', if_true: files('loongarch_extioi.c'))
+ specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI_KVM', if_true: files('loongarch_extioi_kvm.c'))
++specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_PIC_KVM', if_true: files('loongarch_pch_pic_kvm.c'))
+diff --git a/hw/loongarch/Kconfig b/hw/loongarch/Kconfig
+index 99a523171f..f909f799ad 100644
+--- a/hw/loongarch/Kconfig
++++ b/hw/loongarch/Kconfig
+@@ -17,6 +17,7 @@ config LOONGARCH_VIRT
+     select LOONGARCH_PCH_MSI
+     select LOONGARCH_EXTIOI
+     select LOONGARCH_IPI_KVM if KVM
++    select LOONGARCH_PCH_PIC_KVM if KVM
+     select LOONGARCH_EXTIOI_KVM if KVM
+     select LS7A_RTC
+     select SMBIOS
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 8ca7c09016..db0c08899b 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -865,40 +865,45 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+     /* Add Extend I/O Interrupt Controller node */
+     fdt_add_eiointc_node(lvms, &cpuintc_phandle, &eiointc_phandle);
+ 
+-    pch_pic = qdev_new(TYPE_LOONGARCH_PCH_PIC);
+-    num = VIRT_PCH_PIC_IRQ_NUM;
+-    qdev_prop_set_uint32(pch_pic, "pch_pic_irq_num", num);
+-    d = SYS_BUS_DEVICE(pch_pic);
+-    sysbus_realize_and_unref(d, &error_fatal);
+-    memory_region_add_subregion(get_system_memory(), VIRT_IOAPIC_REG_BASE,
+-                            sysbus_mmio_get_region(d, 0));
+-    memory_region_add_subregion(get_system_memory(),
+-                            VIRT_IOAPIC_REG_BASE + PCH_PIC_ROUTE_ENTRY_OFFSET,
++    if (kvm_enabled() && kvm_irqchip_in_kernel()) {
++        pch_pic = qdev_new(TYPE_KVM_LOONGARCH_PCH_PIC);
++        sysbus_realize_and_unref(SYS_BUS_DEVICE(pch_pic), &error_fatal);
++    } else {
++        pch_pic = qdev_new(TYPE_LOONGARCH_PCH_PIC);
++        num = VIRT_PCH_PIC_IRQ_NUM;
++        qdev_prop_set_uint32(pch_pic, "pch_pic_irq_num", num);
++        d = SYS_BUS_DEVICE(pch_pic);
++        sysbus_realize_and_unref(d, &error_fatal);
++        memory_region_add_subregion(get_system_memory(), VIRT_IOAPIC_REG_BASE,
++                                sysbus_mmio_get_region(d, 0));
++        memory_region_add_subregion(get_system_memory(),
++                            VIRT_IOAPIC_REG_BASE + PCH_PIC_ROUTE_ENTRY_START,
+                             sysbus_mmio_get_region(d, 1));
+-    memory_region_add_subregion(get_system_memory(),
+-                            VIRT_IOAPIC_REG_BASE + PCH_PIC_INT_STATUS_LO,
+-                            sysbus_mmio_get_region(d, 2));
+-
+-    /* Connect pch_pic irqs to extioi */
+-    for (i = 0; i < num; i++) {
+-        qdev_connect_gpio_out(DEVICE(d), i, qdev_get_gpio_in(extioi, i));
+-    }
++        memory_region_add_subregion(get_system_memory(),
++                                VIRT_IOAPIC_REG_BASE + PCH_PIC_INT_STATUS_LO,
++                                sysbus_mmio_get_region(d, 2));
+ 
+-    /* Add PCH PIC node */
+-    fdt_add_pch_pic_node(lvms, &eiointc_phandle, &pch_pic_phandle);
++        /* Connect pch_pic irqs to extioi */
++        for (i = 0; i < num; i++) {
++            qdev_connect_gpio_out(DEVICE(d), i, qdev_get_gpio_in(extioi, i));
++        }
+ 
+-    pch_msi = qdev_new(TYPE_LOONGARCH_PCH_MSI);
+-    start   =  num;
+-    num = EXTIOI_IRQS - start;
+-    qdev_prop_set_uint32(pch_msi, "msi_irq_base", start);
+-    qdev_prop_set_uint32(pch_msi, "msi_irq_num", num);
+-    d = SYS_BUS_DEVICE(pch_msi);
+-    sysbus_realize_and_unref(d, &error_fatal);
+-    sysbus_mmio_map(d, 0, VIRT_PCH_MSI_ADDR_LOW);
+-    for (i = 0; i < num; i++) {
+-        /* Connect pch_msi irqs to extioi */
+-        qdev_connect_gpio_out(DEVICE(d), i,
+-                              qdev_get_gpio_in(extioi, i + start));
++        /* Add PCH PIC node */
++        fdt_add_pch_pic_node(lvms, &eiointc_phandle, &pch_pic_phandle);
++
++        pch_msi = qdev_new(TYPE_LOONGARCH_PCH_MSI);
++        start   =  num;
++        num = EXTIOI_IRQS - start;
++        qdev_prop_set_uint32(pch_msi, "msi_irq_base", start);
++        qdev_prop_set_uint32(pch_msi, "msi_irq_num", num);
++        d = SYS_BUS_DEVICE(pch_msi);
++        sysbus_realize_and_unref(d, &error_fatal);
++        sysbus_mmio_map(d, 0, VIRT_PCH_MSI_ADDR_LOW);
++        for (i = 0; i < num; i++) {
++            /* Connect pch_msi irqs to extioi */
++            qdev_connect_gpio_out(DEVICE(d), i,
++                                  qdev_get_gpio_in(extioi, i + start));
++        }
+     }
+ 
+     /* Add PCH MSI node */
 -- 
-2.46.0
+2.39.1
 
 
