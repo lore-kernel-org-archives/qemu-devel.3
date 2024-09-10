@@ -4,97 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E281EEB64DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 14:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1F0AEB64DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 14:46:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so28A-0003YK-DA; Tue, 10 Sep 2024 10:46:10 -0400
+	id 1so28s-0006wP-4O; Tue, 10 Sep 2024 10:46:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1so285-0003E3-Ux
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:46:06 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1so28o-0006kH-3n
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:46:50 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1so283-0002sT-Sx
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:46:05 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-717929b671eso787484b3a.0
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 07:45:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1so28l-000300-Fc
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:46:49 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2d88c5d76eeso3634167a91.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 07:46:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725979554; x=1726584354; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1725979606; x=1726584406; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=uYSeYNIcyB/uAalIVUx5IAGO9XhLQ4BnuYdzVKveX5M=;
- b=f/j84GWE2te+9n4lFB4FiztrtdulqKmCQEv+R4IPSgxdC2WqTjog1HC5KV7eeUwi68
- 7gglzYMHAM9FdxfWIstG4OP0MKnRvana3BjGddRFVuhW9Ld8Gjs+tINwdh1vZmFKgvZ8
- Ksn3zllbeaMD5MjqKwCjEktFmD+affCX4R9DxNJqsaxxSg0+okIz+/Rz4LOS6kDeey2b
- JaXcx+F2QXFlIek2JwFhRg0SjHUp/9zViUmLoQHa9iJ+USELKzRZ4oBj4AP+qIUqBa1P
- nSQDNFMCWCEXHE5nT58odQGrtM1C1Yxl8XOaIl2pbX6catON8+2XRLoOGaVeGTbanYQb
- 7vTg==
+ bh=jA4hGoOryKawSsl9YEqZ2VbZcmPiA2b8I2q5KaEUGFQ=;
+ b=IN4PfLwWFNPOgaVonKBzmvVBdwI5brrU62EJ1fffRmchjylbo6Gy4vR0ZHwPtAx/IK
+ 2nPKHDz/SOGL+aI6agUPva0T5C9vmeYJap3+wDf2Pc+5iSAGsVXk57ka+xpvk7L1ePay
+ f/UoTq+G1sfG8QwbqFddDj9ncW6M0i4KO3eYMpakNp7x6qMqTi1ULIFWu4Lc+VN/Ey9A
+ DrG4hbLyQnUEv0v3qBJ/tsjSVtxS44xHj/fImW/hhHKq4EumGSvMLC1dMI0n/OUJSsvF
+ wm3hOXcdAHiiqP1FE1xRdtuJ1xjzrwBGzsy/h653UY7miBfANUXtK6pWO5dVedzt++db
+ 8YFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725979554; x=1726584354;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1725979606; x=1726584406;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uYSeYNIcyB/uAalIVUx5IAGO9XhLQ4BnuYdzVKveX5M=;
- b=FZjjjMlJNH68gSf46C4QKPL6z98HAfuYv8Bt3yEZI/ecmTDwFL1HE3PaQce+syLcjy
- ENhnewNo/revhGwDpT9SgZH5DrZ53mSawHOqMIbod9iHzlIbq1/Ct6t3lr4GJ0KMKGiw
- BALKIIVX6oEIEv5t1SBxRaP7/MVdt8QELOjQIOmAKDljYEEGcbhtWwL7JoXQQdW1GtrA
- 8i9gxr3uzko6QRLFhMqbCEhoawnxZZTBNjmDeu1/JxGkUMSF4Ino/RII+591So/i/mro
- wjiLf1X7Kqp1O3Qt4Ny8H4VU7sXjrElOzFEsZxfKIv+iiu2Prz8MSK5vWIkSUIfTTcfi
- mz3Q==
+ bh=jA4hGoOryKawSsl9YEqZ2VbZcmPiA2b8I2q5KaEUGFQ=;
+ b=UFzPbT6K9GnRtkjRrTrMHdsK6jPXMrDb/pKLlDCXYu3XDCIvNfTI9EPPuI07Vu/Mq+
+ h8iJuJUaKWaMlbsod12Dsi4oaKOBwHsxX4pV+QXPe0GE677lTeF0asZLf3a7CbjoEtIu
+ 1MCTuIMH2bKjP5HtR/zsltNZB1HQjh4fUYA/WJgIMTKqGDf/VWY88ACBHsc0aHbH+2s0
+ mzA6FpodQfCU+xUyuc5hMXUcpQZ37lWvBX+h/k098L01ODDGoREY2sT+37cFVBX8mZwB
+ KTwLlD6psSUB+vf5tByFsPloDwRzhw1YG/eiPlniyPDNro08a2K9IBg2vQVoQfvQ4LjM
+ YTLw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWmJukLxgyzRNE9ZsU8usp5Q5WdZeSF5KPDHUX6MOj2/beEM6Qfk/NwGHmRk7QP7RyxBIOcGi+Crknq@nongnu.org
-X-Gm-Message-State: AOJu0YyDeQPA1/Xikvq2FrxcndjV0O4+x74jENhUkCSkZqMqTCfH3E3j
- TKb3Dm2GffWTFeNtnXCSQVka9hvfTidk1Vh1VnE7AyIqcBas9Qcxt3dHYfRbGfA=
-X-Google-Smtp-Source: AGHT+IGyL0oyBzc2ysV4WxjzqE9iaKhofGCvuUZhjwiX0XDoewtdeUOc1LeOdNsATLz5adCPNiVfSg==
-X-Received: by 2002:a05:6a00:91cb:b0:714:1fc3:79f4 with SMTP id
- d2e1a72fcca58-718d5df1e4emr12664029b3a.5.1725979554446; 
- Tue, 10 Sep 2024 07:45:54 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::9633? ([2604:3d08:9384:1d00::9633])
+ AJvYcCVgrFPZKZIrldEXtb0ooDZqF0FyZKtINEVlagVOJqZ9K4/+hQTNDNTAtCsQJItnc70bSF8Or/RCBnDC@nongnu.org
+X-Gm-Message-State: AOJu0YwE0K2CqYqllyJjdh5y3WihjBrBIzy2+s5NQTfmwo6C7wwhOHrd
+ qcFtSeEVws5UZo/DIoKlru/BMeVNMeS28ypeIay3VjBHCaUd3kLjeTr0rKYX3Vm6ljQg0d34NDf
+ i
+X-Google-Smtp-Source: AGHT+IGM0riEyd4HOXpO4q0zUHKEBgzYvvjKRYYvehfd7i0FMebjetAp3lN25spbukRQfHA4JTDltg==
+X-Received: by 2002:a17:90b:390f:b0:2d8:94f1:b572 with SMTP id
+ 98e67ed59e1d1-2dad505d285mr14076296a91.18.1725979605793; 
+ Tue, 10 Sep 2024 07:46:45 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-719090923adsm1448840b3a.100.2024.09.10.07.45.53
+ 98e67ed59e1d1-2dadc12a1cesm8575689a91.56.2024.09.10.07.46.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 07:45:54 -0700 (PDT)
-Message-ID: <89d18e02-8d08-46cb-80a9-2d826f22bbea@linaro.org>
-Date: Tue, 10 Sep 2024 07:45:52 -0700
+ Tue, 10 Sep 2024 07:46:45 -0700 (PDT)
+Message-ID: <c3c21cac-2a8b-4890-9db6-98947eb2d034@linaro.org>
+Date: Tue, 10 Sep 2024 07:46:42 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/26] deprecation: don't enable TCG plugins by default
- with TCI
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Subject: Re: [PATCH 01/12] tcg: Fix iteration step in 32-bit gvec operation
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Beraldo Leal <bleal@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Yanan Wang <wangyanan55@huawei.com>, Peter Maydell
- <peter.maydell@linaro.org>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
- devel@lists.libvirt.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-References: <20240910140733.4007719-1-alex.bennee@linaro.org>
- <20240910140733.4007719-13-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240910140733.4007719-13-alex.bennee@linaro.org>
+Cc: zhiwei_liu@linux.alibaba.com, tangtiancheng.ttc@alibaba-inc.com,
+ liwei1518@gmail.com, bmeng.cn@gmail.com, qemu-stable@nongnu.org
+References: <20240908022632.459477-1-richard.henderson@linaro.org>
+ <20240908022632.459477-2-richard.henderson@linaro.org>
+ <a831998e-0845-4270-8f76-811c8eec2c4c@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <a831998e-0845-4270-8f76-811c8eec2c4c@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,45 +102,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gOS8xMC8yNCAwNzowNywgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBUaGUgc29mdG1tdSBt
-ZW1vcnkgaW5zdHJ1bWVudGF0aW9uIHRlc3Qgc2VlcyBzbyBtYW55IG1vcmUgYWNjZXNzZXMN
-Cj4gdGhhbiBhIG5vcm1hbCB0cmFuc2xhdGVkIGhvc3QgYW5kIGl0cyByZWFsbHkgbm90IHdv
-cnRoIGZpeGluZyB1cC4gTGV0cw0KPiBkZXByZWNhdGUgdGhpcyBvZGQgY29uZmlndXJhdGlv
-biBhbmQgc2F2ZSBvbiB0aGUgQ0kgY3ljbGVzLg0KPiANCj4gU2lnbmVkLW9mZi1ieTogQWxl
-eCBCZW5uw6llIDxhbGV4LmJlbm5lZUBsaW5hcm8ub3JnPg0KPiAtLS0NCj4gICBkb2NzL2Fi
-b3V0L2RlcHJlY2F0ZWQucnN0IHwgIDggKysrKysrKysNCj4gICBjb25maWd1cmUgICAgICAg
-ICAgICAgICAgIHwgMTEgKysrKysrKysrLS0NCj4gICAyIGZpbGVzIGNoYW5nZWQsIDE3IGlu
-c2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvZG9jcy9h
-Ym91dC9kZXByZWNhdGVkLnJzdCBiL2RvY3MvYWJvdXQvZGVwcmVjYXRlZC5yc3QNCj4gaW5k
-ZXggZjdjN2MzM2QzOS4uNWFhMmUzNTMxNCAxMDA2NDQNCj4gLS0tIGEvZG9jcy9hYm91dC9k
-ZXByZWNhdGVkLnJzdA0KPiArKysgYi9kb2NzL2Fib3V0L2RlcHJlY2F0ZWQucnN0DQo+IEBA
-IC0xOTYsNiArMTk2LDE0IEBAIGJlbmVmaXRzIGZyb20gaGF2aW5nIHBsZW50eSBvZiBob3N0
-IG1lbW9yeSBpdCBzZWVtcyByZWFzb25hYmxlIHRvDQo+ICAgZW5jb3VyYWdlIHVzZXJzIHRv
-IHVzZSA2NCBiaXQgYnVpbGRzIG9mIFFFTVUgZm9yIGFuYWx5c2lzIHdvcmsNCj4gICB3aGF0
-ZXZlciB0YXJnZXRzIHRoZXkgYXJlIGluc3RydW1lbnRpbmcuDQo+ICAgDQo+ICtUQ0cgUGx1
-Z2luIHN1cHBvcnQgbm90IGVuYWJsZWQgYnkgZGVmYXVsdCB3aXRoIFRDSSAoc2luY2UgOS4y
-KQ0KPiArJycnJycnJycnJycnJycnJycnJycnJycnJycnJycnJycnJycnJycnJycnJycnJycn
-JycnJycnJycnJycnJycNCj4gKw0KPiArV2hpbGUgdGhlIFRDRyBpbnRlcnByZXRlciBjYW4g
-aW50ZXJwcmV0IHRoZSBUQ0cgb3BzIHVzZWQgYnkgcGx1Z2lucyBpdA0KPiAraXMgZ29pbmcg
-dG8gYmUgc28gbXVjaCBzbG93ZXIgaXQgd291bGRuJ3QgbWFrZSBzZW5zZSBmb3IgYW55IHNl
-cmlvdXMNCj4gK2luc3RydW1lbnRhdGlvbi4gRHVlIHRvIGltcGxlbWVudGF0aW9uIGRpZmZl
-cmVuY2VzIHRoZXJlIHdpbGwgYWxzbyBiZQ0KPiArYW5vbWFsaWVzIGluIHRoaW5ncyBsaWtl
-IG1lbW9yeSBpbnN0cnVtZW50YXRpb24uDQo+ICsNCj4gICBTeXN0ZW0gZW11bGF0b3IgQ1BV
-cw0KPiAgIC0tLS0tLS0tLS0tLS0tLS0tLS0tDQo+ICAgDQo+IGRpZmYgLS1naXQgYS9jb25m
-aWd1cmUgYi9jb25maWd1cmUNCj4gaW5kZXggMTQ1ODFjMWI5YS4uMWJkYTZiM2EzYiAxMDA3
-NTUNCj4gLS0tIGEvY29uZmlndXJlDQo+ICsrKyBiL2NvbmZpZ3VyZQ0KPiBAQCAtNjI5LDYg
-KzYyOSw5IEBAIG1lc29uX29wdGlvbl9wYXJzZSgpIHsNCj4gICAgICAgZXhpdCAxDQo+ICAg
-ICBmaQ0KPiAgIH0NCj4gK2hhc19tZXNvbl9vcHRpb24oKSB7DQo+ICsgICAgdGVzdCAiJHtt
-ZXNvbl9vcHRpb25zIyoiJDEifSIgIT0gIiRtZXNvbl9vcHRpb25zIg0KPiArfQ0KPiAgIA0K
-PiAgIG1lc29uX2FkZF9tYWNoaW5lX2ZpbGUoKSB7DQo+ICAgICBpZiB0ZXN0ICIkY3Jvc3Nf
-Y29tcGlsZSIgPSAieWVzIjsgdGhlbg0KPiBAQCAtMTA0OCw4ICsxMDUxLDEyIEBAIGlmIHRl
-c3QgIiRzdGF0aWMiID0gInllcyIgOyB0aGVuDQo+ICAgICBwbHVnaW5zPSJubyINCj4gICBm
-aQ0KPiAgIGlmIHRlc3QgIiRwbHVnaW5zIiAhPSAibm8iICYmIHRlc3QgJGhvc3RfYml0cyAt
-ZXEgNjQ7IHRoZW4NCj4gLSAgcGx1Z2lucz15ZXMNCj4gLSAgc3ViZGlycz0iJHN1YmRpcnMg
-Y29udHJpYi9wbHVnaW5zIg0KPiArICAgIGlmIGhhc19tZXNvbl9vcHRpb24gIi1EdGNnX2lu
-dGVycHJldGVyPXRydWUiOyB0aGVuDQo+ICsgICAgICAgIHBsdWdpbnM9Im5vIg0KPiArICAg
-IGVsc2UNCj4gKyAgICAgICAgcGx1Z2lucz15ZXMNCj4gKyAgICAgICAgc3ViZGlycz0iJHN1
-YmRpcnMgY29udHJpYi9wbHVnaW5zIg0KPiArICAgIGZpDQo+ICAgZmkNCj4gICANCj4gICBj
-YXQgPiAkVE1QQyA8PCBFT0YNCg0KUmV2aWV3ZWQtYnk6IFBpZXJyaWNrIEJvdXZpZXIgPHBp
-ZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCg==
+On 9/9/24 23:57, Philippe Mathieu-Daudé wrote:
+> On 8/9/24 04:26, Richard Henderson wrote:
+>> From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+>>
+>> The loop in the 32-bit case of the vector compare operation
+>> was incorrectly incrementing by 8 bytes per iteration instead
+>> of 4 bytes. This caused the function to process only half of
+>> the intended elements.
+>>
+>> Cc: qemu-stable@nongnu.org
+>> Fixes: 9622c697d1 (tcg: Add gvec compare with immediate and scalar operand)
+>> Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+>> Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Message-ID: <20240904142739.854-2-zhiwei_liu@linux.alibaba.com>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   tcg/tcg-op-gvec.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
+>> index 0308732d9b..78ee1ced80 100644
+>> --- a/tcg/tcg-op-gvec.c
+>> +++ b/tcg/tcg-op-gvec.c
+>> @@ -3939,7 +3939,7 @@ void tcg_gen_gvec_cmps(TCGCond cond, unsigned vece, uint32_t dofs,
+>>           uint32_t i;
+>>           tcg_gen_extrl_i64_i32(t1, c);
+>> -        for (i = 0; i < oprsz; i += 8) {
+>> +        for (i = 0; i < oprsz; i += 4) {
+> 
+> Maybe using memop_size(vece) would have been safer to avoid copy/paste bugs?
+
+No, vece can be smaller than 4 here.
+
+r~
+
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+>>               tcg_gen_ld_i32(t0, tcg_env, aofs + i);
+>>               tcg_gen_negsetcond_i32(cond, t0, t0, t1);
+>>               tcg_gen_st_i32(t0, tcg_env, dofs + i);
+> 
+
 
