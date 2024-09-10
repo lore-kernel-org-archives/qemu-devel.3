@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D408DEE01ED
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 22:17:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE805EE01EB
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 22:17:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so99w-00075a-VV; Tue, 10 Sep 2024 18:16:30 -0400
+	id 1so9Ak-0002of-13; Tue, 10 Sep 2024 18:17:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1so99l-0006U3-5E
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 18:16:17 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1so9AB-0008Cl-Qc
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 18:16:45 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1so99i-0006Rx-78
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 18:16:16 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-718a3b8a2dcso3687294b3a.2
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 15:16:13 -0700 (PDT)
+ id 1so9A8-0006eB-Aw
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 18:16:43 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-717914d6c95so3988211b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 15:16:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726006573; x=1726611373; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726006599; x=1726611399; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CeSGQFthD+JPD1wVuC9PwgsK3RUFyGiI0SGu9xd9Ivo=;
- b=rhbZGnlDNOC+F4FxLysBk2HCD3E4ibnAxbiI1Z29HlvOIxnBURjejLNtLPupD0a38d
- ieKSqotaNDCgJnw3GdtoGuNFMMJhp77l7v0hPuV6Ttgk/Z2qBhrIhyuE1zNGr1ON2yws
- s8somf5nUWKBHjxeNmatTYyE8WJes48SmXuOL437fshEW/mqAHxHBsBAPwSjyfVlHhyZ
- UOcBrMvvdEZ5dvitpGr82qVMVba6I4Pyz2btDznt89TcBA6rAIvk5eP1gybf4ciIUagx
- dNjjWjtyiX2VrTvPs45kkRXKcf2Za1FfyVguvGw99BBnSMhk2VDPfq5p57ECu/0f9rKz
- Q80w==
+ bh=5e7jM2SGiugZIDj7hvcHvckpF7J0ao6gx5zsDNU5OmE=;
+ b=wduGhNEUW654bI5J5WjytgxOJ/DUmkzd1a4bCa6xp5jIMaPPS8DwZ+5ytCc1YCeifk
+ SMZjcVeENF3XDQZRjYoZpkeRZ2w3cZKwzn7ugVLPq3l5u2eC07t9hYVnIJ1ikHhzGQPF
+ lZVUVydpCFasXRtu4BCzVDLZeAgwXAHoEFsNzgsbSbPxfX1qLwwOnrYEuTWJwoe5u6Zc
+ lvH70jsqI9CECxc7udypkPjn/gxZbIGs6iYwATxXds8WG+GTfYL8tq3CAULQzs2tkExB
+ olF3LCQWTNQkzWIxTbPOBp5DZyvgu99bTjcqbWHCo11De2GcKRy3Nf+zcnv44AKvBc1K
+ cJeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726006573; x=1726611373;
+ d=1e100.net; s=20230601; t=1726006599; x=1726611399;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CeSGQFthD+JPD1wVuC9PwgsK3RUFyGiI0SGu9xd9Ivo=;
- b=tkemAe76K65uzgxtwVVR3H2CD/C9HpzVHVzOlRrPIIiU3hubd92kZfHzFayJCo+Zug
- RTmpTs3PW00Sgf5xn2oLVTfYWd0v8asyIdabNwBxdMOzvv1iA+YJidSY6w6A+FDWRmQY
- +S7SWfu2PyWOmqzrZC1Rq1cr253ss5MhQgPDOLMzBqV1x1MClX2MiyBqWEllsKy4YFSn
- HzFGWtZlsXZtpKoGMQIYImBgklTG0eRlFo7l/oryRyVyYl+Sim2zjsL6k2hY6yeQjZHn
- Tt/G52aA/neKbdJD5zm5jDnb2GVTOm6VT/AXcUYVZLQOWssENK8CdQBA7EO8tJ2RtECS
- wYag==
-X-Gm-Message-State: AOJu0Yzve709O6QOlgamF73kQ0oyfx9E8cGSQw9+uml7+l6a3uu8Kllm
- PjCGf+mvzF1mzfbayOHbnZ3U6HSxgdgPCeqPZ1r7LrLBwhX69YA3iXMz1YbTQb9Quk8np1g5ZfV
- TmsP8HqXu
-X-Google-Smtp-Source: AGHT+IE7453ZnoDagMTvxw086SwFz1gaHnvHw1jrau87eetjbI39fjMwGBgCRYADVfAcbJ/ECITkzQ==
-X-Received: by 2002:a05:6a20:c703:b0:1cf:590f:ddbc with SMTP id
- adf61e73a8af0-1cf5e0b7845mr3064462637.18.1726006572754; 
- Tue, 10 Sep 2024 15:16:12 -0700 (PDT)
+ bh=5e7jM2SGiugZIDj7hvcHvckpF7J0ao6gx5zsDNU5OmE=;
+ b=VkOG6hH+9q+5h/kj+aFNWvxkj+J57jpKgUmK/uVzN9jckivHlx5qW1PRtBiG5lo4JT
+ R6/cVthPhEWMszw6JwckX2fPO5hglooZvcP8YKMRxMYkJ968sxWNAlRfEh/y9ER+D/xn
+ v6qZEthK9dRQYEwA9Gbz8Wuo8Vv1jKLjkO/h2sc2Z+MQZtX6RM2yhc10t2tv9I7iwrIu
+ EqRQ6u2l9ChSbMHKYCJPG39qXbEcXAI94jVZT5/Hznu2BZIs/6o0pMa6P32lbsTfU0YE
+ rSqjTWhHFWcrXCMlgAdBWw/WQz0AauN0/FqZ38oxKWl4eVb3Q6nWj4krKVuJ//m9Uhv4
+ i6GA==
+X-Gm-Message-State: AOJu0YxRoNQVwAyuHI3EmJM83M6zaFdxnZ+oiRI6ScvbiC0BTEgpDTOL
+ UYEvdvmurIsuM3cIEzwI+6s9qfxoWXpeHTjx4GVR24hTcoB5Pkf5s6clKhFDQd6g4ARKNJ+CkMG
+ ADiFuSeTe
+X-Google-Smtp-Source: AGHT+IGmTWAlHqohfvDcmF4lhCn4e0s9xwSiGMy/9LUB1RgrtDOx1fMalziLV42CXKlDan+123/d1Q==
+X-Received: by 2002:a05:6a20:289e:b0:1cf:4348:d5c8 with SMTP id
+ adf61e73a8af0-1cf5e157922mr2270616637.39.1726006598631; 
+ Tue, 10 Sep 2024 15:16:38 -0700 (PDT)
 Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::9633])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71909003d0esm1884055b3a.93.2024.09.10.15.16.10
+ d2e1a72fcca58-71909003d0esm1884055b3a.93.2024.09.10.15.16.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2024 15:16:12 -0700 (PDT)
+ Tue, 10 Sep 2024 15:16:38 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, "Richard W.M. Jones" <rjones@redhat.com>,
@@ -105,23 +105,24 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, "Richard W.M. Jones" <rjones@redhat.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  Jason Wang <jasowang@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 01/39] docs/spin: replace assert(0) with g_assert_not_reached()
-Date: Tue, 10 Sep 2024 15:15:28 -0700
-Message-Id: <20240910221606.1817478-2-pierrick.bouvier@linaro.org>
+Subject: [PATCH 12/39] tests/qtest: replace assert(0) with
+ g_assert_not_reached()
+Date: Tue, 10 Sep 2024 15:15:39 -0700
+Message-Id: <20240910221606.1817478-13-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240910221606.1817478-1-pierrick.bouvier@linaro.org>
 References: <20240910221606.1817478-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,66 +140,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- docs/spin/aio_notify_accept.promela | 6 +++---
- docs/spin/aio_notify_bug.promela    | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ tests/qtest/ipmi-bt-test.c  | 2 +-
+ tests/qtest/ipmi-kcs-test.c | 4 ++--
+ tests/qtest/rtl8139-test.c  | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/docs/spin/aio_notify_accept.promela b/docs/spin/aio_notify_accept.promela
-index 9cef2c955dd..f929d303281 100644
---- a/docs/spin/aio_notify_accept.promela
-+++ b/docs/spin/aio_notify_accept.promela
-@@ -118,7 +118,7 @@ accept_if_req_not_eventually_false:
-     if
-         :: req -> goto accept_if_req_not_eventually_false;
-     fi;
--    assert(0);
-+    g_assert_not_reached();
+diff --git a/tests/qtest/ipmi-bt-test.c b/tests/qtest/ipmi-bt-test.c
+index 383239bcd48..13f7c841f59 100644
+--- a/tests/qtest/ipmi-bt-test.c
++++ b/tests/qtest/ipmi-bt-test.c
+@@ -251,7 +251,7 @@ static void emu_msg_handler(void)
+         msg[msg_len++] = 0xa0;
+         write_emu_msg(msg, msg_len);
+     } else {
+-        g_assert(0);
++        g_assert_not_reached();
+     }
  }
  
- #else
-@@ -141,12 +141,12 @@ accept_if_event_not_eventually_true:
-         :: !event && notifier_done  -> do :: true -> skip; od;
-         :: !event && !notifier_done -> goto accept_if_event_not_eventually_true;
-     fi;
--    assert(0);
-+    g_assert_not_reached();
+diff --git a/tests/qtest/ipmi-kcs-test.c b/tests/qtest/ipmi-kcs-test.c
+index afc24dd3e46..3186c6ad64b 100644
+--- a/tests/qtest/ipmi-kcs-test.c
++++ b/tests/qtest/ipmi-kcs-test.c
+@@ -145,7 +145,7 @@ static void kcs_cmd(uint8_t *cmd, unsigned int cmd_len,
+         break;
  
- accept_if_event_not_eventually_false:
-     if
-         :: event     -> goto accept_if_event_not_eventually_false;
-     fi;
--    assert(0);
-+    g_assert_not_reached();
+     default:
+-        g_assert(0);
++        g_assert_not_reached();
+     }
+     *rsp_len = j;
  }
- #endif
-diff --git a/docs/spin/aio_notify_bug.promela b/docs/spin/aio_notify_bug.promela
-index b3bfca1ca4f..ce6f5177ed5 100644
---- a/docs/spin/aio_notify_bug.promela
-+++ b/docs/spin/aio_notify_bug.promela
-@@ -106,7 +106,7 @@ accept_if_req_not_eventually_false:
-     if
-         :: req -> goto accept_if_req_not_eventually_false;
-     fi;
--    assert(0);
-+    g_assert_not_reached();
- }
+@@ -184,7 +184,7 @@ static void kcs_abort(uint8_t *cmd, unsigned int cmd_len,
+         break;
  
- #else
-@@ -129,12 +129,12 @@ accept_if_event_not_eventually_true:
-         :: !event && notifier_done  -> do :: true -> skip; od;
-         :: !event && !notifier_done -> goto accept_if_event_not_eventually_true;
-     fi;
--    assert(0);
-+    g_assert_not_reached();
+     default:
+-        g_assert(0);
++        g_assert_not_reached();
+     }
  
- accept_if_event_not_eventually_false:
-     if
-         :: event     -> goto accept_if_event_not_eventually_false;
-     fi;
--    assert(0);
-+    g_assert_not_reached();
- }
- #endif
+     /* Start the abort here */
+diff --git a/tests/qtest/rtl8139-test.c b/tests/qtest/rtl8139-test.c
+index eedf90f65af..55f671f2f59 100644
+--- a/tests/qtest/rtl8139-test.c
++++ b/tests/qtest/rtl8139-test.c
+@@ -65,7 +65,7 @@ PORT(IntrMask, w, 0x3c)
+ PORT(IntrStatus, w, 0x3E)
+ PORT(TimerInt, l, 0x54)
+ 
+-#define fatal(...) do { g_test_message(__VA_ARGS__); g_assert(0); } while (0)
++#define fatal(...) do { g_test_message(__VA_ARGS__); g_assert_not_reached(); } while (0)
+ 
+ static void test_timer(void)
+ {
 -- 
 2.39.2
 
