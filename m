@@ -4,163 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E708ECE564
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 09:09:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5942FECE564
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 09:10:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1snwrq-00006t-15; Tue, 10 Sep 2024 05:09:01 -0400
+	id 1snwsE-0001I8-IT; Tue, 10 Sep 2024 05:09:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <william.roche@oracle.com>)
- id 1snwrW-0007to-0m
+ id 1snwrW-0007tn-2v
  for qemu-devel@nongnu.org; Tue, 10 Sep 2024 05:08:45 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <william.roche@oracle.com>)
- id 1snwrS-0004J8-SE
+ id 1snwrS-0004J6-SB
  for qemu-devel@nongnu.org; Tue, 10 Sep 2024 05:08:36 -0400
 Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48A8tZZd008924
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 09:08:31 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48A8tZZc008924
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 09:08:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
  from:to:cc:subject:date:message-id:in-reply-to:references
  :content-transfer-encoding:content-type:mime-version; s=
- corp-2023-11-20; bh=6zRKVP0wxYzEad+yxt0t268SLIx2OcpPGkov/2Pn12M=; b=
- J+eu4MyxSGPSsKyWxa0N9XO9Goge9HlAdkuzVFMXYT++hGQQkBpT7EOAkTYeDi3Z
- GAWEKZdmVPfMGHy/B7SHEYTi4zoKZVURxTJ1j5kWw9i/SYIxWa0hjgNH2poq5ECF
- mcPG0Y5EwcxKyab05XFKnAmbXMi3EhNKJMdNZgR7Z17KjARypg2ohoSuxJ7XKILx
- 61pdygwFceS868AtiRc3IyVE5r8dwjZlwu/9ZzsdyE38/NAE+GCBjBwpriQFBtFO
- KPrE48eIDffNAEmplk901ya8+jdP6h/84ZBzjWTE2WSlzpKQTXZgdKGINNgmPfel
- LfhiPI7akl9BU8AOKst2sA==
+ corp-2023-11-20; bh=q0iQvauBKftLkn5wPQYkulRxXA4ngQtig5Bo3welgzw=; b=
+ LyiXyyVpqkW8uEAY+WsyiOALwnxc/YQBCHddAkXv/1hnoknSpB/EfEo/UKSFGymR
+ gOh81K4/LlUUH8llyS/kNVG/R+ZpJaepgf+zofhDbAqVM+9k77dMMm3vpUatBbNc
+ xS+kucp4u02SuIGWDSn5iRFBu00ox+lPmdJqg5z6dYjMIZ6S5nBJ/iKUmOihi2Tv
+ qlnDK3xSZ8UEqtawLvS9JwXE3OZh3ZLaGCSGZkOvEKvw/8dT2z9/dWiNezQmmtw+
+ UmDoEJHq+cUUb0cOJGHlNn7Ndk8nywb/1ZaA8i3EQ0NCxHBzlGsOxGwyxHS27Dr2
+ zbef0cFtHixqCDE9lud3DA==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 41geq9n07u-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 41geq9n07t-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
  for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 09:08:30 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 48A8ao8S005070
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 09:08:29 GMT
+ with ESMTP id 48A8ao8R005070
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 09:08:28 GMT
 Received: from nam11-co1-obe.outbound.protection.outlook.com
  (mail-co1nam11lp2168.outbound.protection.outlook.com [104.47.56.168])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 41gd9898f7-3
+ 41gd9898f7-2
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 09:08:29 +0000
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 09:08:28 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eYBVtjY4xfdtG+fdZLCNlOHTdZ30UNRcwOT4Nqj3eYG7YJSZleYpT+/TNt7pmrNWiaGTKrPbuZwn8BFycNnOlC9NrgdlOkMwQkEGpByUdn6ARAjR95VX5GLx06myVQobCXFZDExkXBIe1lqqHpngavTPwijysw3fukvcPjn2DqN0PVc+7d0SXxqZzjq/1jRIT/YkdLdbTHpV1CigkIZW0bPIBoYMf/gvPg4XmQ+bpAud9wTj3wr0PGPtW65NYHWYjpt74t4YMkI0t2FENDlXgNDCqlR6u0f0HzHhcPICSgQE/JjcKrDSv8ohjW5d5SIR2IagjcooE2Y0vR0whJSJug==
+ b=KiVEkCkR5hKZlqiQU75FNykR8/8p7IA/ODBeC2o7nlVUNpTrSIMrdvJNRBkTAPkWsjaqa/+z3ovPgeWjwr8wsutXQLzoZfoMtjv+Gnsp7D6GGDHCjO6jM05RdNED2iF0TqOCyhi/CLp1FUAHS43+bawgziaQusGfyDqVNuCo+Jo2CXkp2FJEmHBA2RfAUEW2XzgeoLuHjTdYDjCzEt9OrzagR+c9NGGrEv2nFHowZ3NwxHdT6Tsm+ZQ6OUHh+jP0mZWWqczn0QsRzsQ7sgfMf7Xemjo0HK6lgxAsl2k3ZmfqenUQcj6edUEdMUbY/Tucx6USFYrMfi8gRA9MYr1HcA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6zRKVP0wxYzEad+yxt0t268SLIx2OcpPGkov/2Pn12M=;
- b=flSU+nL7PbJlk50SthsdbLb4Cs57mcbHboFKkJgX/02PWEWp73QOJV0yX7mZt54BzfW8wnHaeVpPcsmPK3K54KJbko7lsqqGZ+20BcMNeT0ulaFc2bbYFbBiUSjKu1WULrNXLxCDdTxPBnX5IGBRuKGw/r6o5z6F+qG5pvF8dGrWYjvekebpreY9TO06P6T+AUahGY65HfAb5jWpBHDFyc2thBJ9ZXdI9lCDCdKpUzJnrrImLm6L0VqmVlgSLJrNfsu5JyBRl5eZBuNMc5+zuxDrpx3GDH1I7u1zFTzr6t1N/gQADhCCgw4aRM2BYmcQD4F8XC79d4BENnf0s1AYqw==
+ bh=q0iQvauBKftLkn5wPQYkulRxXA4ngQtig5Bo3welgzw=;
+ b=f0yg0j5CO/4NBemRyzkCAjWLJ/T5SCwEbZZ8+HZymtJ644cRLj6qE87uzqaKu5hqBuHAfA4ZE59ndcjaLHqX/RaldqUSXvwdGokGRW7HIKF/j9L8j3DGvwAVGAvaVuiTqxW31jF7dLwhoxPj1IQcUdAKmCQ1Ye78YUJUzNciE8mO0Aqleu0zf0da3NHlyZiWpyRvMsZcaYTtn5xvL4KcPeuuGHQSKuwJGfPFM1cey/tUlm2f1lJx40WyhTZ2OOXLj6gMLSLqGGNh6y5cybO72FwKgF8LAKfhFeJSRTIpgSAz/2jb05BDqt9GrB8/+Z7KeJlbjzAEV1FK7SmLPEYMBg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6zRKVP0wxYzEad+yxt0t268SLIx2OcpPGkov/2Pn12M=;
- b=yZ53M1QSnzc6uGfhb3lsovdFq9CvIN8HDpXnoYXk1ckQhNiuXPW6cTAQ3E7l84SB31nLD8zvWz0sH/NZDGA01xID/ziTG+V9li0bwhnSc2shvG3FSUmPqAmqSExPsVoG31A+NQksBAbscdMmWUMT3Lqa5LlFm9b5TEhyQOAiAYo=
+ bh=q0iQvauBKftLkn5wPQYkulRxXA4ngQtig5Bo3welgzw=;
+ b=mmuMckIFeXpcpDLW7Vunks/1pEfzkLfrcbGtHtYuj1l9oT1lbgxg0vyIiMSfFt16Tzip5Qhzx+gvua6JEvKYLdUpEhuO0DeuGVeDmHChMWpeiitGZ4WuXu64EZsvoQJs3X2AD9hBjz5nsoNNgCzKT27D7o2gr6beRiF0KX61sHs=
 Received: from CH3PR10MB7329.namprd10.prod.outlook.com (2603:10b6:610:12c::16)
  by CH3PR10MB7163.namprd10.prod.outlook.com (2603:10b6:610:127::9)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7962.16; Tue, 10 Sep
- 2024 09:08:03 +0000
+ 2024 09:08:01 +0000
 Received: from CH3PR10MB7329.namprd10.prod.outlook.com
  ([fe80::f238:6143:104c:da23]) by CH3PR10MB7329.namprd10.prod.outlook.com
  ([fe80::f238:6143:104c:da23%5]) with mapi id 15.20.7939.010; Tue, 10 Sep 2024
- 09:08:03 +0000
+ 09:08:01 +0000
 From: =?UTF-8?q?=E2=80=9CWilliam=20Roche?= <william.roche@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: william.roche@oracle.com, joao.m.martins@oracle.com
-Subject: [RFC 6/6] system/hugetlb_ras: Replay lost BUS_MCEERR_AO signals on VM
- resume
-Date: Tue, 10 Sep 2024 09:07:47 +0000
-Message-ID: <20240910090747.2741475-7-william.roche@oracle.com>
+Subject: [RFC 5/6] system/hugetlb_ras: Handle madvise SIGBUS signal on listener
+Date: Tue, 10 Sep 2024 09:07:46 +0000
+Message-ID: <20240910090747.2741475-6-william.roche@oracle.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20240910090747.2741475-1-william.roche@oracle.com>
 References: <20240910090747.2741475-1-william.roche@oracle.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: SJ0PR03CA0077.namprd03.prod.outlook.com
- (2603:10b6:a03:331::22) To CH3PR10MB7329.namprd10.prod.outlook.com
+X-ClientProxiedBy: SJ0PR13CA0074.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c4::19) To CH3PR10MB7329.namprd10.prod.outlook.com
  (2603:10b6:610:12c::16)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH3PR10MB7329:EE_|CH3PR10MB7163:EE_
-X-MS-Office365-Filtering-Correlation-Id: 688e1f75-be63-4cf4-1aaa-08dcd17813a3
+X-MS-Office365-Filtering-Correlation-Id: dfc37579-713f-4073-a76e-08dcd178124f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?P9fMdBl8LiogQHjdVms+rCv6hqM2mQfvOyTdpMWQJq6RzIFrylHmi3jy7CfZ?=
- =?us-ascii?Q?LHyCu5n/fgtSu0VFk2LjhA/ageAXdtJSHF/Xj8ggYiOgKIt95vYfUsgNaMzJ?=
- =?us-ascii?Q?GaUkIvhblWQ+v3mOTZ/phZQ1CKkcGtbxpjfqk45AMgjLgV5VF0renMCo3pPc?=
- =?us-ascii?Q?ntjNdLk6QVvzN5R07aOPSsv0y46CA/xK9zpsNwS0nhn0zibgcwouLd0IwQpK?=
- =?us-ascii?Q?iIw/8LRQEiOWX0m3qEWrQQbZUcELHRTDWTnseZpdyUEGSVXyXPlu+4fGSiUN?=
- =?us-ascii?Q?ty3GWDVpv5VK0lflxnSq067NoFozM0K63TOk7IT/4NOOiYBhycbbq3dNHwlO?=
- =?us-ascii?Q?MFf9yYpaIWm6WdT3WTMQ+otawDG/TtT8aTK3cF/1RVRyr1lLPs1ZJS2+I6Dv?=
- =?us-ascii?Q?iTGXITRlnicD7UY7SWJW8rW3k4YhsXy+eDo6v5pBQ/53D9M0XlyT2yiBK4hI?=
- =?us-ascii?Q?5xxgu2JJSk/kjzmJ7GTjH8AZNsL3BYnl4QlSSo5yA/FtnFclnQZ5Zb7y1UZ1?=
- =?us-ascii?Q?K8nI9OKPKAt/Cf5CV568b32h9z8MlaXfnCL4pkD9Qc4fGrqfuo9K/En+iBlS?=
- =?us-ascii?Q?hVIevI8iXRE5dGOmOHO1vxruaKs+XJV9oOQedtVQWi/6Q8wpp8BSTzO3zZpd?=
- =?us-ascii?Q?0V2OPqpdKtO5SD3eorh/qWd6zazKlAtE8/H3vxkNAIkBuev5h5BPQ82fEHyL?=
- =?us-ascii?Q?We7nwu7fH6ggjDqLQ2HTcrYhBlMP4vhkEUc39DFSNgWhDsD2kVYlREqkn69i?=
- =?us-ascii?Q?RREApKXrWF/TKTHVu38OVr858Y1wG5WWm9Hd2z4Q9LppB0LnUzd5gfRVxXlN?=
- =?us-ascii?Q?ywkdq+r8bFm0k8nz08MQhEsKAcuqFEoTG8zbwYDwNeqaImWO5n4uPEAar3Z0?=
- =?us-ascii?Q?QBDkUO672JVLolxz/g77RwzLY63lwjTnYPrl/L/zTl6/U+6z9T9swyuELIcE?=
- =?us-ascii?Q?h8nvsvxF4KjmZC423KkTrBwTMJxXzKQVbYwDEX6+W/e4zhe/QU3NqkimJtNZ?=
- =?us-ascii?Q?yDPjDVJ5UfNlOX+GeMiu7Q7SlH/Ydy6t9HdM2ucSbzkzCHxdvekFbLGTSuv8?=
- =?us-ascii?Q?rJrOFKe5bMgRaBwaVMwCX+FTiM/haV0zuhoj6sDgQvV0MdDK9cNOjeNSyUOn?=
- =?us-ascii?Q?/mwkL/ORYS7JbYXbJujScoy3nIfsRoypzSzRL+RNHwPFnI6nx5dCHCMDK2G5?=
- =?us-ascii?Q?5jrCshlMnlMHt4cuTE7S6E9dZGL0Zky2Ld0rqtDD3zU1knr9IrAtbP814iWW?=
- =?us-ascii?Q?8+YF5fXm7+fg1qLq0cMLXphIb5OWFXpq+1bV0pyHSKWT23HhN0pTlaXv28zn?=
- =?us-ascii?Q?jzNlfuYw0Py7pJI+SVKZwlHEUgZ6VUdufZ0wujo9Ck9cxA=3D=3D?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?4aC0e332yH5bykxnoYaZ0ENvAwfsePqd+xKkHQGDzlmc18xq4UJpplx/OT6i?=
+ =?us-ascii?Q?ePfoiz94EtcWLOyMf1UtWCAFlZ/DO1HuAgEdwiN3CyIsHXoVWXj1xrn45U1g?=
+ =?us-ascii?Q?yCue4V9xkaYOYbaq4OyhNqU7cTnSew1RuovmtxuGAAN3/Pd8xpVN9NgNmBmz?=
+ =?us-ascii?Q?eL2T17jOu5R/S46D3spsPxlfwkPOH2aD5N21KG/utUXttzJ4p1cH3uWwmilR?=
+ =?us-ascii?Q?0EGbdBkiNtD5Z19qHoCYAOGRpoeC1/w8pDPxToo/aiRXXekVB4/zic+U6kAA?=
+ =?us-ascii?Q?IKzqmOSaYx3XloIOikqiJTjzo/FtsBD6YiAQw+1u1T/DqfwIcS8bXHUG+0ab?=
+ =?us-ascii?Q?ae2RlxP1a5V8+LLV+3mn497c7M8DACzD++cqVdW8Yh1oBfA/wKqCrVMnY1Ab?=
+ =?us-ascii?Q?WGOmIYG1tg9itnLNCftSNELfcn+OUj6byX1WpCKiY/kX+1kwmTd2+G9C8xoY?=
+ =?us-ascii?Q?/4LoB70RhhY53l92srn9X0qeFx9ZjOEcZ+TtU40mui3UFH1slyeJIffz5vVx?=
+ =?us-ascii?Q?/JdhYdPvphQwuQcjy9ivNUQd1jy+gzNZR3OPiIEYRA72G7I8ZiPqaNVOVGVE?=
+ =?us-ascii?Q?ssnmZGo0qFn36Pscd5OwMEPidEELmsQh2oiGHnKj8FEBeNmrVPVMpUw62VD0?=
+ =?us-ascii?Q?oW66bvRSkV1FoY9ck/ZNWq2rDOa7d8KcHwnY/1h3ZkcisdpERiZnXvOB8eD9?=
+ =?us-ascii?Q?gTBhIjQP4epHSmEL6W8FJ7pNA8eNP4PXfTYnlmgLqAi2vXqYAhYjFweNKfHO?=
+ =?us-ascii?Q?sypWq5SaTRHGCVOt3/AS9KPrVakroTauCTPvZAlHVMhvhSVSzvKUF98bPj0B?=
+ =?us-ascii?Q?V/bxEEU+EILs9AMgulHva4nnQ2jeUlB8Z7IG0DOptPKvUMb0ACMlbNRgnWqh?=
+ =?us-ascii?Q?dx78MEYrWRKnXB8n1jNl4/v/q7GvbqUzEp2eocPn2VKnO6eZR6TWTgc9CHFu?=
+ =?us-ascii?Q?QrWD/yYjZSSnevH8i4qFJzYz4WdvZW+OMYjye9f8X/i2cV3iFQS/NsEm4vLE?=
+ =?us-ascii?Q?a6BcXzWVBwXf0JxfWMlMdPhc3EQ6Ff0jMlKbPzb2XTkqxtTDm1JB7ycQskn3?=
+ =?us-ascii?Q?xQuwkyib816+Y2gjUsAk0j/vYFw3fKNhy1t22AtD51g2QISDq88vvzmaACj+?=
+ =?us-ascii?Q?HLndXpOI9YskQtDciVqvDLq+eMaiEeaSBDkrZqypi8lVtm7OBsyZoOV5rNV8?=
+ =?us-ascii?Q?1EXuIH+74CQN3wVCxhhTkfZAHFlelR5ONoegensYt4tglr/Qpyk3cBfUNV0x?=
+ =?us-ascii?Q?Kw/d47/x3LqQvobr+56KDAUUZmTiQ1QqIAZTVfrWnve9cfZpI4yTMWylfZFL?=
+ =?us-ascii?Q?O5AMRS/JQDITCQg/AprDURkZvnUCtMk0hdeUFzn22jihfA=3D=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:CH3PR10MB7329.namprd10.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?VQeIBgPrtpIEGgH7dXpjIG5aQnQTLbTzc1aq9tAYWohHKxHYuVzi/HwsPJN2?=
- =?us-ascii?Q?gld3tfjviUzhmQOkHmBN8DaSkYDPyddm9nLmc8/SqueN/A/hLu9wURd9+XKY?=
- =?us-ascii?Q?aAtCAFXeDp1wqv7596N5miVQOJAepIm/R9n379tfBlxi/fP85AlRgd9CefBh?=
- =?us-ascii?Q?ju9qCWEb09+dG96sgIaNU2XGY/q6NQt7D/xIIMSCWaSUmFCVK/lQme3Pxzi8?=
- =?us-ascii?Q?fd+gu5c0TXNpQBUWVLoKNceBkXem6QxChgqG9hpLFj+tGJ0Cg+yh7te1SlU5?=
- =?us-ascii?Q?iuCQQa5YT1NwybLHA5IDhG6KpHqdJaRnwhxL/R4foORD457PU8kCT0fs1da0?=
- =?us-ascii?Q?SJEZR+yoMv7LFvgLn4H1dDyIZorohjmvycCW593OrwoybZG5POrrXfac7Acu?=
- =?us-ascii?Q?lOA3SML/albUc/6W5GvUwjJ8S2mb/kDVjuHIteCYqMo1/XMUAqqsNI2xRpAj?=
- =?us-ascii?Q?oogMqn+q7tv2VLzS71kArjDEjSnMm1mRDrFugLMoQ4Urmkv5GZSS6tMTBfCw?=
- =?us-ascii?Q?M3YpS9iDMuQ4lhVd2u6YGoPBnarl3h5xcKZgik21QJSFx/WV7gh/7Uh+UWST?=
- =?us-ascii?Q?7kq2WJbJOHAh0BKSox2BcB4RoWPl0FAn5kZfwNshqCXbvE+2Auu8yV5NE036?=
- =?us-ascii?Q?wks61kcEb0NfqYUoCJK3pGjhWl0xfEyrAr85+DbldfIKvGvnV6xTYJ0SRp/u?=
- =?us-ascii?Q?uu7cujhBhu6+4rw3k9NrFnCI2KC29XkcH+rdhui5Iu4SteAOiLQTw4x3CCA3?=
- =?us-ascii?Q?qWRviLSJrCs7+jUVehU/K8567drAb0glFmVkOI8r0dtQBNwkwqGZm2oTnsWb?=
- =?us-ascii?Q?0AbbGooK9+nuLxxPbn+J8pMkb3sGgji1wK5/2EGJ6+IaEiKX/QHV8hcA1egu?=
- =?us-ascii?Q?g1uwxXmZXyZTPRiOZd5SQpNezrEkPVozgMFHa2pXfxQGb+7uwFpLMxERc+Fm?=
- =?us-ascii?Q?1M3Gio2jGVFBYzxEHhg8aXrIpgwlo36RmDjd41U0VtSS+drTTxrVr7Lf3nsU?=
- =?us-ascii?Q?tnduyL2lZnTLfd4pXDW2qKtqyKQ+4pm8LMG3BXM6zndZHuR3PV2sE/DdKFS/?=
- =?us-ascii?Q?0+sqRmezX/0iW5nV+6fftdH0200e6CzeublS+tFXaRsk9GJ6x7QaYewZHTCV?=
- =?us-ascii?Q?4/b2R+wpIrhmj8CEP/GbzjxRF5r+b5cwpA9DD7haYegx+imToikFq5XUplxD?=
- =?us-ascii?Q?vTDIa1sCVgZo0bGzV9bth7WHeRbaStOQPlUYtGEVRNV6l5TQIs4WaGWcCq6O?=
- =?us-ascii?Q?4g3hH2DVGqoub5o/DXGL1sIu2F6a1C7nZbmBEb+tKC33rjLEgyxXaIneq41n?=
- =?us-ascii?Q?MX+rX7uJj5Mb+3XcAJs4DARwbWlrm15FGTPW8zoyIFGwEoh3qVGCQnZk80Vz?=
- =?us-ascii?Q?qL9iXxDsSd3wsCo8Rv5zVBkuLNFIc37tUCT5oaDIDF/GFYCwRLWdDyhYc4+i?=
- =?us-ascii?Q?99tG3n7m5u0HBDcCbCQec2ABSAZYrX2NMVuXNbmur7ZB27GoFwF+gCv+gJPn?=
- =?us-ascii?Q?0A5PmxHhfsk4mMu78mAvgIzp1H+N3uSATUHd4af6AOQzNJUDYSalG/iVivVp?=
- =?us-ascii?Q?RGBMWs5BH+M6OEvCy9mO3ypwSOrbh7GxZzFIxplZ+5xoAAV3N9va0AFBJD/5?=
- =?us-ascii?Q?yw=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?7Hfwcb35aQsBKMLbCaSlam7wKmfYbYhxA0jpeBMnUKvmJxQUOvtEJpZeP8em?=
+ =?us-ascii?Q?oytZlN7uecC1micYyEzG4vAxek15jVGBzO1CNwD9o78snnquCbdxBaSH4KNm?=
+ =?us-ascii?Q?M8HfaYkvXlee/JXgPfKZ79MqZRQJB8VUcHfAwoVzSmFG5GXNRWFetzXXnsDT?=
+ =?us-ascii?Q?ZkTpcp40k5kjIZVxeOh65kalyelbuAIZkgHwv7/63dX9Q0T9ICH85VgZmqPU?=
+ =?us-ascii?Q?fVHq8WQa972hBLc39Sxe+5Kj3XaH6mP5ngdwSUS/WgwNBsRm6z3kS5VYgdbu?=
+ =?us-ascii?Q?aX9KTGrjf8FL2c3t1qYoIR8Rw7+1knezpjwUrojljJ5aPp9IxK9pWX9Pe8LM?=
+ =?us-ascii?Q?I1XYm63n352mtWit5l2R3ERvRT6l/3qZiWsTOEj+wBWSX+Y/LOjWFHwBZxqZ?=
+ =?us-ascii?Q?Yzs0DyeOZ7Bp9Unf6Yqw3y0v5RqylxVSH+a2KCq+FQlLgPJIbUxYWZbmswUz?=
+ =?us-ascii?Q?hnj8fNCNVYziIJXRhydECwcqJiwG2KKi/s/U+6rJ4lPyRE4dxiHc4vq9/lhL?=
+ =?us-ascii?Q?8/7E6zJACEVZnbO84EuTp0HzAJt75CMDaDrNSWVAa5UEbAF6JEJT7apPtA/m?=
+ =?us-ascii?Q?PRB54d9kOt4p3+zJtrqnURLSKRbPNCsYnJjUWQw3znA6AbwThTypChJ6QraI?=
+ =?us-ascii?Q?GL9sCChRX+iQM30daEbewKPdq2aS/Zr/R7W3zTKr7/CFz2mkHl3HtZrjbGGQ?=
+ =?us-ascii?Q?X7LngFHSyD0d4mOAjXejPhr5KcdD61GrOXdF8db/WSgi3jQ7VjDsQVCY5PSk?=
+ =?us-ascii?Q?JqBOqNa3/lLWHi0s5hEKjP45mkr1Qt2XoESRWuokhEZRlLWzEdf/BQWF2U84?=
+ =?us-ascii?Q?6yz3Tig49cZwgsAgvhyfns5BTqvQAbCiCMijywmFf+y/AEGBweLdpn0iAA6/?=
+ =?us-ascii?Q?wYB0j28NRtP9SQWDdHhftcb3JRNxLVzWtxr0pZrom6V0O7F5EgSIDFXAEZYk?=
+ =?us-ascii?Q?wxSXI4DryjADLCZ8LYb7/JA5EGL3EcYnJq93De4d1Flunp0BhcqjBjAMQ76e?=
+ =?us-ascii?Q?7QnHij1SXGsZo9cUHRnMzcGBRIUV21r75SGhFq51lxzA3WkqAvYbFBXYYKH7?=
+ =?us-ascii?Q?93GqtIEWSdoX9i5W9VgSQ0aFWSVxfhkJaWxX+Oq/gcQpB3J2w9Ju50WeKNCs?=
+ =?us-ascii?Q?HgmSZu/tdgK6wUnVjTgumIRYI0ubIpIPN5s/9Fgf1Al4E0BmjBDHzEPKSBpr?=
+ =?us-ascii?Q?n98dhZtI+noeXJwcOsYk+RAh5y7TeCni6uFTPO43Kkfcdmsx0oUuv6OcR0k1?=
+ =?us-ascii?Q?JjVfNM9xl1NkQOnV4Ush7hI9jCfFpT7jvSP+BvUDlpxvOqsv8ks/oIt6sjZS?=
+ =?us-ascii?Q?aKztdpwnZ4+LSpp1o6Txl6osTd15CZOlnoA+O6mYAd344OIwYN0/Lpsmp0HQ?=
+ =?us-ascii?Q?+gs4hz1uMzsCJ+ZMxaKVpNp67Yy28xbNoRW3KjWdEgAg3hGCeqShHx7AGyvr?=
+ =?us-ascii?Q?kOfZcie9V+ObAROLS0CoRzhD8wgfQ7eUuniZr7DDVKd/qmmciHCp9cDD4lb9?=
+ =?us-ascii?Q?igha08+029myW4f9pGJmN3Vc4rcDJpx8YAuV541oMmjqciTmyzUQE+642ik6?=
+ =?us-ascii?Q?NBqCol5Ar1cCBcWx8V8iT5ekcvZT9lpxYzO10MRZIyM16CrLOID/lHod2cwr?=
+ =?us-ascii?Q?YQ=3D=3D?=
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 8thEDtHZz9snR9Ca6XKpUnK8voXvl1JuCkoVuiJWOoruKexN1YoySPS2TkgJTMFRzZl66CdEir1x6QbWjJ+CUJ+6URNeXNGJ1wbYd4o8wdaqdtKMktybd5D+7jnJtqxffbQLNpl8ay0pFYC7mpLTrLvb5zABrSGZG5lPNs8Ec3zZlecHqGYk2rHV6akUpj7aM4x7oY7As09IDWGHLLkHlpi23sZuJdxwMWgg4HXStLxnuy2y8nz52KpRWIb0rXXx6G+01lAWUZGpgCNU3fU5um3qOKAnq9jLU/ukBOC26GOb7acOIJHZK1qmRBZ8i8i3NFv6BCbjyyxLXEZ2LkJ4lwx4U3WYU070iUtzaqdbDPd4SYQYiDuebaGroJkbjE3gwi3mY/faWLekDzaEVmekgjrZIjmoHLyvXh7srOIec2THtuEKCWJ0VA9DcwAQG5LZIpf6AffNEY+TbCMCevWaeNkmY4QfcaIQZ8J1xjCJ/Q3xXjwhA81TgKUZKH8Cpm4omaawVP99YeFl3R8lTK/g9x/a2rnZ5OKCAuNxSuV9pgxKruaZ6cH2Px5RklZv/HixhxUbp2/LpTWLtB//gCEhZYQH4Dw8/61Sj8ggq27TmpA=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 2utK5CsBJETOaN3R5ooy1XT0TN4vPuug8E0UuwfbGkv9METXD8WLd5dZ9vF5kmSL/GNygsQNw4ZPVa4IvrOD4OR3tVcNvy5FREGd7CO/ppTwNja+NIIiht3NSfD7SpUMcFKL6ITPlGeqnEejqzMLJJoRpHRJIujKeXwqKb92rDWw+jRKImR3k5lHzVsAgryi9B/2DgXYlqJjC5QRoXFI17vsn783m8HsYfFgZE5DDLYCmbaf1NTS+ISM70dJ+p1ucPPiu0dUUh/u19Slc4LRIi6YYevH49YiL+TFgycBqJ8Chlo4RT6BZfuUYozXB+axsItEObJ8VebTu/iDpTKrKZXQ9uWeut3Yiz5x5Fo0B4Wjcsfh7/tSYSaLb6gFQ5ZjazOLM5cAYTjn0+b1qEFhjIhHfIJTco4KmLAHUPtmq/Kbl/309NE473PdNdbgkH/k1aY++3F6n7lExIa2PsXtYNBjCLayHIT0/qACNFboeLrJnnycQWdvbGanY5QzQruwkwui1FfMyqOQOEvzyRG6V39mUQdLMANJ9gW9UIW9yJS2wAmOBB5+V2xxt1gQc3+2LlPcZbFluhaXltNJmLeV3vWQZdUsuEGqJOKdAE879MU=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 688e1f75-be63-4cf4-1aaa-08dcd17813a3
+X-MS-Exchange-CrossTenant-Network-Message-Id: dfc37579-713f-4073-a76e-08dcd178124f
 X-MS-Exchange-CrossTenant-AuthSource: CH3PR10MB7329.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2024 09:08:03.6984 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2024 09:08:01.4935 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: YTUme79k+Z87R7F1dcoNYO1GAdfiY9AYvKvo+lXYBC8RTyb2OfKbifQjChWoSHTIJZSzpJIRJ470xyOLFwhazIpsCs7seqlZ6aLOVRibEzo=
+X-MS-Exchange-CrossTenant-UserPrincipalName: 23FVuucykByfGD2BhHoEqrfMgNlRcx7vnab+NIob8RInmdVd/CEPDh8sS1L24NoZCwSSumdrgtjADKjgnYsuZvoH1Ef0FN+nIh8vNaqbye0=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR10MB7163
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
@@ -170,8 +169,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  mlxlogscore=999 bulkscore=0 adultscore=0 phishscore=0 suspectscore=0
  mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2408220000 definitions=main-2409100069
-X-Proofpoint-ORIG-GUID: eeTNbU0ywurDNPkBxXGxFsXOKpMMuoEN
-X-Proofpoint-GUID: eeTNbU0ywurDNPkBxXGxFsXOKpMMuoEN
+X-Proofpoint-ORIG-GUID: Dd-MVO7QG7l2cATmoJ_eteIDhZuHQn55
+X-Proofpoint-GUID: Dd-MVO7QG7l2cATmoJ_eteIDhZuHQn55
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=william.roche@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
@@ -198,102 +197,150 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: William Roche <william.roche@oracle.com>
 
-In case the SIGBUS handler is triggered by a BUS_MCEERR_AO signal
-and this handler needs to exit to let the VM pause during the memory
-mapping change, this SIGBUS won't be regenerated when the VM resumes.
-In this case we take note of this signal before exiting the handler
-to replay it when the VM resumes.
+madvise MADV_HWPOISON can generate a SIGBUS when called, so the listener
+thread (the caller) needs to deal with this signal.
+The signal handler recognizes a thread specific variable allowing it to
+directly exit when generated from this thread.
 
 Signed-off-by: William Roche <william.roche@oracle.com>
 ---
- system/hugetlbfs_ras.c | 60 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 60 insertions(+)
+ system/cpus.c          |  9 +++++++++
+ system/hugetlbfs_ras.c | 43 ++++++++++++++++++++++++++++++++++++++++--
+ system/hugetlbfs_ras.h |  1 +
+ 3 files changed, 51 insertions(+), 2 deletions(-)
 
+diff --git a/system/cpus.c b/system/cpus.c
+index 12e630f760..642055f729 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -47,6 +47,10 @@
+ #include "hw/hw.h"
+ #include "trace.h"
+ 
++#ifdef CONFIG_HUGETLBFS_RAS
++#include "system/hugetlbfs_ras.h"
++#endif
++
+ #ifdef CONFIG_LINUX
+ 
+ #include <sys/prctl.h>
+@@ -374,6 +378,11 @@ static void sigbus_handler(int n, siginfo_t *siginfo, void *ctx)
+         sigbus_reraise();
+     }
+ 
++#ifdef CONFIG_HUGETLBFS_RAS
++    /* skip error on the listener thread - does not return in this case */
++    hugetlbfs_ras_signal_from_listener();
++#endif
++
+     if (current_cpu) {
+         /* Called asynchronously in VCPU thread.  */
+         if (kvm_on_sigbus_vcpu(current_cpu, siginfo->si_code,
 diff --git a/system/hugetlbfs_ras.c b/system/hugetlbfs_ras.c
-index 90e399bbad..50f810f836 100644
+index 2f7e550f56..90e399bbad 100644
 --- a/system/hugetlbfs_ras.c
 +++ b/system/hugetlbfs_ras.c
-@@ -155,6 +155,56 @@ hugetlbfs_ras_backend_sz(void *addr)
-     return rb->page_size;
+@@ -70,6 +70,8 @@ static QemuCond large_hwpoison_vm_running;
+ static QemuMutex large_hwpoison_mtx;
+ static QemuThread thread;
+ static void *hugetlbfs_ras_listener(void *arg);
++static pthread_key_t id_key;
++static sigjmp_buf listener_jmp_buf;
+ static int vm_running;
+ static bool hugetlbfs_ras_initialized;
+ static int _PAGE_SIZE = 4096;
+@@ -105,6 +107,10 @@ hugetlbfs_ras_init(void)
+     qemu_cond_init(&large_hwpoison_vm_running);
+     qemu_mutex_init(&large_hwpoison_mtx);
+ 
++    if (pthread_key_create(&id_key, NULL) != 0) {
++        warn_report("No support for hugetlbfs largepage errors - no id_key");
++        return -EIO;
++    }
+     qemu_thread_create(&thread, "hugetlbfs_error", hugetlbfs_ras_listener,
+                        NULL, QEMU_THREAD_DETACHED);
+ 
+@@ -288,6 +294,19 @@ hugetlbfs_ras_correct(void **paddr, size_t *psz, int code)
+     return (*paddr == NULL ? false : true);
  }
  
-+
-+/*
-+ *  List of BUS_MCEERR_AO signals received before replaying.
-+ *  Addition is serialized under large_hwpoison_mtx, but replay is
-+ *  asynchronous.
-+ */
-+typedef struct LargeHWPoisonAO {
-+    void  *addr;
-+    QLIST_ENTRY(LargeHWPoisonAO) list;
-+} LargeHWPoisonAO;
-+
-+static QLIST_HEAD(, LargeHWPoisonAO) large_hwpoison_ao =
-+    QLIST_HEAD_INITIALIZER(large_hwpoison_ao);
-+
-+static void
-+large_hwpoison_ao_record(void *addr)
++/* this madvise can generate a SIGBUS, use the jump buffer to deal with it */
++static bool poison_location(void *addr, int size)
 +{
-+    LargeHWPoisonAO *cel;
-+
-+    cel = g_new(LargeHWPoisonAO, 1);
-+    cel->addr = addr;
-+    QLIST_INSERT_HEAD(&large_hwpoison_ao, cel, list);
++    if (sigsetjmp(listener_jmp_buf, 1) == 0) {
++        if (madvise(addr, size, MADV_HWPOISON)) {
++            DPRINTF("poison injection failed: %s (addr:%p sz:%d)\n",
++                    strerror(errno), addr, size);
++            return false;
++        }
++    }
++    return true;
 +}
 +
-+/* replay the possible BUS_MCEERR_AO recorded signal(s) */
-+static void
-+hugetlbfs_ras_ao_replay_bh(void)
+ /*
+  * Sequentially read the valid data from the failed large page (shared) backend
+  * file and copy that into our set of standard sized pages.
+@@ -321,7 +340,7 @@ static int take_valid_data_lpg(LargeHWPoisonPage *page, const char **err)
+     slot_num = page->page_size / ps;
+ 
+     if (!qemu_ram_is_shared(rb)) { /* we can't use the backend file */
+-        if (madvise(page->page_addr, page->page_size, MADV_HWPOISON) == 0) {
++        if (poison_location(page->page_addr, page->page_size)) {
+             page->first_poison = page->page_addr;
+             warn_report("Large memory error, unrecoverable section "
+                 "(unshared hugetlbfs): start:%p length: %ld",
+@@ -350,7 +369,7 @@ static int take_valid_data_lpg(LargeHWPoisonPage *page, const char **err)
+             retrieved += count;
+         }
+         if (retrieved < ps) { /* consider this page as poisoned */
+-            if (madvise(page->page_addr + i * ps, ps, MADV_HWPOISON)) {
++            if (!poison_location(page->page_addr + i * ps, ps)) {
+                 if (err) {
+                     *err = "poison injection failed";
+                 }
+@@ -402,6 +421,19 @@ void hugetlbfs_ras_empty(void)
+     qemu_mutex_unlock(&large_hwpoison_mtx);
+ }
+ 
++/*
++ * Check if the signal is taken from the listener thread,
++ * in this thread we don't return as we jump after the madvise call.
++ */
++void
++hugetlbfs_ras_signal_from_listener(void)
 +{
-+    LargeHWPoisonAO *cel, *next;
-+    QLIST_HEAD(, LargeHWPoisonAO) local_list =
-+    QLIST_HEAD_INITIALIZER(local_list);
-+
-+    /*
-+     * Copy to a local list to avoid holding large_hwpoison_mtx
-+     * when calling kvm_on_sigbus().
-+     */
-+    qemu_mutex_lock(&large_hwpoison_mtx);
-+    QLIST_FOREACH_SAFE(cel, &large_hwpoison_ao, list, next) {
-+        QLIST_REMOVE(cel, list);
-+        QLIST_INSERT_HEAD(&local_list, cel, list);
-+    }
-+    qemu_mutex_unlock(&large_hwpoison_mtx);
-+
-+    QLIST_FOREACH_SAFE(cel, &local_list, list, next) {
-+        DPRINTF("AO on %p\n", cel->addr);
-+        kvm_on_sigbus(BUS_MCEERR_AO, cel->addr, _PAGE_SHIFT);
-+        g_free(cel);
++    /* check if we take the SIGBUS in the listener */
++    if (pthread_getspecific(id_key) != NULL) {
++        siglongjmp(listener_jmp_buf, 1);
 +    }
 +}
 +
  /*
-  * Report if this std page address of the given faulted large page should be
-  * retried or if the current signal handler should continue to deal with it.
-@@ -276,6 +326,15 @@ hugetlbfs_ras_correct(void **paddr, size_t *psz, int code)
-     if (large_hwpoison_vm_stop) {
-         DPRINTF("Handler exit requested as on page %p\n", page->page_addr);
-         *paddr = NULL;
-+        /*
-+         * BUS_MCEERR_AO specific case: this signal is not regenerated,
-+         * we keep it to replay when the VM is ready to take it.
-+         */
-+        if (code == BUS_MCEERR_AO) {
-+            large_hwpoison_ao_record(page->first_poison ? page->first_poison :
-+                reported_addr);
-+        }
+  * Deal with the given page, initializing its data.
+  */
+@@ -498,6 +530,13 @@ hugetlbfs_ras_listener(void *arg)
+     LargeHWPoisonPage *page;
+     int new;
+     const char *err;
++    sigset_t set;
 +
-     }
-     qemu_mutex_unlock(&large_hwpoison_mtx);
++    pthread_setspecific(id_key, (void *)1);
++    /* unblock SIGBUS */
++    sigemptyset(&set);
++    sigaddset(&set, SIGBUS);
++    pthread_sigmask(SIG_UNBLOCK, &set, NULL);
  
-@@ -522,6 +581,7 @@ static void coroutine_hugetlbfs_ras_vmstop_bh(void *opaque)
- static void coroutine_hugetlbfs_ras_vmstart_bh(void *opaque)
- {
-     vm_start();
-+    hugetlbfs_ras_ao_replay_bh();
- }
- 
- static void *
+     /* monitor any newly submitted element in the list */
+     qemu_mutex_lock(&large_hwpoison_mtx);
+diff --git a/system/hugetlbfs_ras.h b/system/hugetlbfs_ras.h
+index 324228bda3..9c2a6e49a1 100644
+--- a/system/hugetlbfs_ras.h
++++ b/system/hugetlbfs_ras.h
+@@ -1,3 +1,4 @@
+ bool hugetlbfs_ras_use(void);
+ bool hugetlbfs_ras_correct(void **paddr, size_t *psz, int code);
+ void hugetlbfs_ras_empty(void);
++void hugetlbfs_ras_signal_from_listener(void);
 -- 
 2.43.5
 
