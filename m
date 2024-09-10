@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15BF3ECE57A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:41:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B307EECE564
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:41:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so08X-0004oW-PJ; Tue, 10 Sep 2024 08:38:25 -0400
+	id 1so08S-0003vC-Ow; Tue, 10 Sep 2024 08:38:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so08T-00048j-Ol
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:38:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so08G-0002bn-4t
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:38:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so08L-0005Br-SA
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:38:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so086-0005AR-Nw
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:38:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725971891;
+ s=mimecast20190719; t=1725971875;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SwPTIzHpUeoFawqSwrNeTP5ILEUDpSh3nsV9yz+gTEc=;
- b=IZipdZE4S5tdnS9Dh9fz6P/iLX1YjyR2FzniZJlLdZavYStq9ZmobJgCHCddhpGJM2BdYE
- R26VALM/1wz/CButXcL69La0S3NvUFPqVqGx9irDLXKJOBMhgC7wdSa77aIhw/s+qQg/PL
- LlvD3zcG9LCQvqsGdA5GchB0eYRJfhs=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=iZe3dpPIOirOU0DqUL9wsE5Tn/WVqS1Vb/yx1VX2zk0=;
+ b=APMk5Sf8+ZsZw49PMQDIKs0OYVIW4eNDeKt2gxdLR6+Hq+LfPcgqpHbg6SXghG8PedoI2i
+ vYlW7BOPSZQpZHPUPL0Jw+zF92RUuswkUoB/HQQW3K7FTLt/ZK9iRdO5DuNcxdM/O2xWhW
+ knoJqLC2pRNyU/mlCR1q4b1ASJLGD9A=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-119-efpwD4y9MfiHJyMqozripg-1; Tue,
- 10 Sep 2024 08:38:08 -0400
-X-MC-Unique: efpwD4y9MfiHJyMqozripg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-gOeDVagRO9mKL6VtlbKmeA-1; Tue,
+ 10 Sep 2024 08:37:52 -0400
+X-MC-Unique: gOeDVagRO9mKL6VtlbKmeA-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 429B01955D62; Tue, 10 Sep 2024 12:38:07 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 298D4195604F; Tue, 10 Sep 2024 12:37:51 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.120])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 66C3019560B0; Tue, 10 Sep 2024 12:38:04 +0000 (UTC)
+ id 2981B19560AD; Tue, 10 Sep 2024 12:37:49 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 16/22] tests/functional: Convert Aarch64 Raspi3 avocado tests
-Date: Tue, 10 Sep 2024 14:37:17 +0200
-Message-ID: <20240910123726.182975-17-thuth@redhat.com>
+Subject: [PULL 11/22] tests/functional: Convert mips64el 5KEc Malta avocado
+ tests
+Date: Tue, 10 Sep 2024 14:37:12 +0200
+Message-ID: <20240910123726.182975-12-thuth@redhat.com>
 In-Reply-To: <20240910123726.182975-1-thuth@redhat.com>
 References: <20240910123726.182975-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ PDS_BTC_ID=0.156, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,127 +84,197 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Straight forward conversion. Update the SHA1 hashes to SHA256
-hashes since SHA1 should not be used anymore nowadays.
+Straight forward conversion. Update the SHA1 hashes to
+SHA256 hashes since SHA1 should not be used anymore nowadays.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240826221058.75126-4-philmd@linaro.org>
-[thuth: Use the LinuxKernelTest class]
-Message-ID: <20240906180549.792832-11-thuth@redhat.com>
+Message-ID: <20240827094905.80648-5-philmd@linaro.org>
+Message-ID: <20240906180549.792832-6-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                             |  1 +
- tests/avocado/boot_linux_console.py     | 23 --------------
- tests/functional/meson.build            |  1 +
- tests/functional/test_aarch64_raspi3.py | 41 +++++++++++++++++++++++++
- 4 files changed, 43 insertions(+), 23 deletions(-)
- create mode 100755 tests/functional/test_aarch64_raspi3.py
+ tests/avocado/boot_linux_console.py     | 74 ------------------------
+ tests/functional/test_mips64el_malta.py | 76 +++++++++++++++++++++++++
+ 2 files changed, 76 insertions(+), 74 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 3cc9c19d02..828c469478 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -912,6 +912,7 @@ F: include/hw/arm/rasp*
- F: include/hw/*/bcm283*
- F: docs/system/arm/raspi.rst
- F: tests/functional/test_arm_raspi2.py
-+F: tests/functional/test_aarch64_raspi3.py
- 
- Real View
- M: Peter Maydell <peter.maydell@linaro.org>
 diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-index 827a286429..e4caf34379 100644
+index e1e20c36f7..84b31cb84e 100644
 --- a/tests/avocado/boot_linux_console.py
 +++ b/tests/avocado/boot_linux_console.py
-@@ -979,29 +979,6 @@ def test_arm_orangepi_uboot_netbsd9(self):
-         # Wait for user-space
-         wait_for_console_pattern(self, 'Starting root file system check')
+@@ -138,38 +138,6 @@ def test_mips_malta(self):
+         console_pattern = 'Kernel command line: %s' % kernel_command_line
+         self.wait_for_console_pattern(console_pattern)
  
--    def test_aarch64_raspi3_atf(self):
+-    def test_mips64el_malta(self):
 -        """
--        :avocado: tags=accel:tcg
--        :avocado: tags=arch:aarch64
--        :avocado: tags=machine:raspi3b
--        :avocado: tags=cpu:cortex-a53
--        :avocado: tags=device:pl011
--        :avocado: tags=atf
+-        This test requires the ar tool to extract "data.tar.gz" from
+-        the Debian package.
+-
+-        The kernel can be rebuilt using this Debian kernel source [1] and
+-        following the instructions on [2].
+-
+-        [1] http://snapshot.debian.org/package/linux-2.6/2.6.32-48/
+-            #linux-source-2.6.32_2.6.32-48
+-        [2] https://kernel-team.pages.debian.net/kernel-handbook/
+-            ch-common-tasks.html#s-common-official
+-
+-        :avocado: tags=arch:mips64el
+-        :avocado: tags=machine:malta
 -        """
--        zip_url = ('https://github.com/pbatard/RPi3/releases/download/'
--                   'v1.15/RPi3_UEFI_Firmware_v1.15.zip')
--        zip_hash = '74b3bd0de92683cadb14e008a7575e1d0c3cafb9'
--        zip_path = self.fetch_asset(zip_url, asset_hash=zip_hash)
+-        deb_url = ('http://snapshot.debian.org/archive/debian/'
+-                   '20130217T032700Z/pool/main/l/linux-2.6/'
+-                   'linux-image-2.6.32-5-5kc-malta_2.6.32-48_mipsel.deb')
+-        deb_hash = '1aaec92083bf22fda31e0d27fa8d9a388e5fc3d5'
+-        deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
+-        kernel_path = self.extract_from_deb(deb_path,
+-                                            '/boot/vmlinux-2.6.32-5-5kc-malta')
 -
--        archive.extract(zip_path, self.workdir)
--        efi_fd = os.path.join(self.workdir, 'RPI_EFI.fd')
--
--        self.vm.set_console(console_index=1)
--        self.vm.add_args('-nodefaults',
--                         '-device', 'loader,file=%s,force-raw=true' % efi_fd)
+-        self.vm.set_console()
+-        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
+-        self.vm.add_args('-kernel', kernel_path,
+-                         '-append', kernel_command_line)
 -        self.vm.launch()
--        self.wait_for_console_pattern('version UEFI Firmware v1.15')
+-        console_pattern = 'Kernel command line: %s' % kernel_command_line
+-        self.wait_for_console_pattern(console_pattern)
 -
-     def test_alpha_clipper(self):
+     def test_mips_malta_cpio(self):
          """
-         :avocado: tags=arch:alpha
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index ff3fe7981e..35eebbe9b9 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -35,6 +35,7 @@ tests_generic_bsduser = [
- ]
+         :avocado: tags=arch:mips
+@@ -211,48 +179,6 @@ def test_mips_malta_cpio(self):
+         # Wait for VM to shut down gracefully
+         self.vm.wait()
  
- tests_aarch64_system_thorough = [
-+  'aarch64_raspi3',
-   'aarch64_sbsaref',
-   'aarch64_virt',
- ]
-diff --git a/tests/functional/test_aarch64_raspi3.py b/tests/functional/test_aarch64_raspi3.py
-new file mode 100755
-index 0000000000..369f95a3d9
---- /dev/null
-+++ b/tests/functional/test_aarch64_raspi3.py
-@@ -0,0 +1,41 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Linux kernel on a Raspberry Pi machine
-+# and checks the console
-+#
-+# Copyright (c) 2020 Philippe Mathieu-Daudé <f4bug@amsat.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+-    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
+-    def test_mips64el_malta_5KEc_cpio(self):
+-        """
+-        :avocado: tags=arch:mips64el
+-        :avocado: tags=machine:malta
+-        :avocado: tags=endian:little
+-        :avocado: tags=cpu:5KEc
+-        """
+-        kernel_url = ('https://github.com/philmd/qemu-testing-blob/'
+-                      'raw/9ad2df38/mips/malta/mips64el/'
+-                      'vmlinux-3.19.3.mtoman.20150408')
+-        kernel_hash = '00d1d268fb9f7d8beda1de6bebcc46e884d71754'
+-        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
+-        initrd_url = ('https://github.com/groeck/linux-build-test/'
+-                      'raw/8584a59e/rootfs/'
+-                      'mipsel64/rootfs.mipsel64r1.cpio.gz')
+-        initrd_hash = '1dbb8a396e916847325284dbe2151167'
+-        initrd_path_gz = self.fetch_asset(initrd_url, algorithm='md5',
+-                                          asset_hash=initrd_hash)
+-        initrd_path = self.workdir + "rootfs.cpio"
+-        archive.gzip_uncompress(initrd_path_gz, initrd_path)
+-
+-        self.vm.set_console()
+-        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE
+-                               + 'console=ttyS0 console=tty '
+-                               + 'rdinit=/sbin/init noreboot')
+-        self.vm.add_args('-kernel', kernel_path,
+-                         '-initrd', initrd_path,
+-                         '-append', kernel_command_line,
+-                         '-no-reboot')
+-        self.vm.launch()
+-        wait_for_console_pattern(self, 'Boot successful.')
+-
+-        exec_command_and_wait_for_pattern(self, 'cat /proc/cpuinfo',
+-                                                'MIPS 5KE')
+-        exec_command_and_wait_for_pattern(self, 'uname -a',
+-                                                '3.19.3.mtoman.20150408')
+-        exec_command_and_wait_for_pattern(self, 'reboot',
+-                                                'reboot: Restarting system')
+-        # Wait for VM to shut down gracefully
+-        self.vm.wait()
+-
+     def do_test_mips_malta32el_nanomips(self, kernel_path_xz):
+         kernel_path = self.workdir + "kernel"
+         with lzma.open(kernel_path_xz, 'rb') as f_in:
+diff --git a/tests/functional/test_mips64el_malta.py b/tests/functional/test_mips64el_malta.py
+index 0c4e9a00ef..1be93d7ff0 100755
+--- a/tests/functional/test_mips64el_malta.py
++++ b/tests/functional/test_mips64el_malta.py
+@@ -30,6 +30,82 @@
+     CV2_AVAILABLE = False
+ 
+ 
++class MaltaMachineConsole(QemuSystemTest):
 +
-+import os
-+from zipfile import ZipFile
++    ASSET_KERNEL_2_63_2 = Asset(
++        ('http://snapshot.debian.org/archive/debian/'
++         '20130217T032700Z/pool/main/l/linux-2.6/'
++         'linux-image-2.6.32-5-5kc-malta_2.6.32-48_mipsel.deb'),
++        '35eb476f03be589824b0310358f1c447d85e645b88cbcd2ac02b97ef560f9f8d')
 +
-+from qemu_test import LinuxKernelTest, Asset
++    def test_mips64el_malta(self):
++        """
++        This test requires the ar tool to extract "data.tar.gz" from
++        the Debian package.
 +
++        The kernel can be rebuilt using this Debian kernel source [1] and
++        following the instructions on [2].
 +
-+class Aarch64Raspi3Machine(LinuxKernelTest):
++        [1] http://snapshot.debian.org/package/linux-2.6/2.6.32-48/
++            #linux-source-2.6.32_2.6.32-48
++        [2] https://kernel-team.pages.debian.net/kernel-handbook/
++            ch-common-tasks.html#s-common-official
++        """
++        deb_path = self.ASSET_KERNEL_2_63_2.fetch()
++        kernel_path = extract_from_deb(deb_path, self.workdir,
++                                       '/boot/vmlinux-2.6.32-5-5kc-malta')
 +
-+    ASSET_RPI3_UEFI = Asset(
-+        ('https://github.com/pbatard/RPi3/releases/download/'
-+         'v1.15/RPi3_UEFI_Firmware_v1.15.zip'),
-+        '8cff2e979560048b4c84921f41a91893240b9fb71a88f0b5c5d6c8edd994bd5b')
-+
-+    def test_aarch64_raspi3_atf(self):
-+        efi_name = 'RPI_EFI.fd'
-+        zip_path = self.ASSET_RPI3_UEFI.fetch()
-+
-+        with ZipFile(zip_path, 'r') as zf:
-+                     zf.extract(efi_name, path=self.workdir)
-+        efi_fd = os.path.join(self.workdir, efi_name)
-+
-+        self.set_machine('raspi3b')
-+        self.vm.set_console(console_index=1)
-+        self.vm.add_args('-cpu', 'cortex-a53',
-+                         '-nodefaults',
-+                         '-device', f'loader,file={efi_fd},force-raw=true')
++        self.set_machine('malta')
++        self.vm.set_console()
++        kernel_command_line = KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
++        self.vm.add_args('-kernel', kernel_path,
++                         '-append', kernel_command_line)
 +        self.vm.launch()
-+        self.wait_for_console_pattern('version UEFI Firmware v1.15')
++        console_pattern = 'Kernel command line: %s' % kernel_command_line
++        linux_kernel_wait_for_pattern(self, console_pattern)
++
++    ASSET_KERNEL_3_19_3 = Asset(
++        ('https://github.com/philmd/qemu-testing-blob/'
++         'raw/9ad2df38/mips/malta/mips64el/'
++         'vmlinux-3.19.3.mtoman.20150408'),
++        '8d3beb003bc66051ead98e7172139017fcf9ce2172576541c57e86418dfa5ab8')
++
++    ASSET_CPIO_R1 = Asset(
++        ('https://github.com/groeck/linux-build-test/'
++         'raw/8584a59e/rootfs/mipsel64/'
++         'rootfs.mipsel64r1.cpio.gz'),
++        '75ba10cd35fb44e32948eeb26974f061b703c81c4ba2fab1ebcacf1d1bec3b61')
++
++    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
++    def test_mips64el_malta_5KEc_cpio(self):
++        kernel_path = self.ASSET_KERNEL_3_19_3.fetch()
++        initrd_path_gz = self.ASSET_CPIO_R1.fetch()
++        initrd_path = os.path.join(self.workdir, 'rootfs.cpio')
++        gzip_uncompress(initrd_path_gz, initrd_path)
++
++        self.set_machine('malta')
++        self.vm.set_console()
++        kernel_command_line = (KERNEL_COMMON_COMMAND_LINE
++                               + 'console=ttyS0 console=tty '
++                               + 'rdinit=/sbin/init noreboot')
++        self.vm.add_args('-cpu', '5KEc',
++                         '-kernel', kernel_path,
++                         '-initrd', initrd_path,
++                         '-append', kernel_command_line,
++                         '-no-reboot')
++        self.vm.launch()
++        linux_kernel_wait_for_pattern(self, 'Boot successful.')
++
++        exec_command_and_wait_for_pattern(self, 'cat /proc/cpuinfo',
++                                                'MIPS 5KE')
++        exec_command_and_wait_for_pattern(self, 'uname -a',
++                                                '3.19.3.mtoman.20150408')
++        exec_command_and_wait_for_pattern(self, 'reboot',
++                                                'reboot: Restarting system')
++        # Wait for VM to shut down gracefully
++        self.vm.wait()
 +
 +
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+ @skipUnless(NUMPY_AVAILABLE, 'Python NumPy not installed')
+ @skipUnless(CV2_AVAILABLE, 'Python OpenCV not installed')
+ class MaltaMachineFramebuffer(LinuxKernelTest):
 -- 
 2.46.0
 
