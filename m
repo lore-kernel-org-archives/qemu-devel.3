@@ -4,68 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 464CCECE564
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:42:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6504EEB64DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:42:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so08R-0003fB-Qr; Tue, 10 Sep 2024 08:38:19 -0400
+	id 1so07R-0005P8-75; Tue, 10 Sep 2024 08:37:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so08B-0002II-5K
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:38:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so084-00059U-6u
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:38:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725971869;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RtRLAuvqf+JeUxfTMm7H0IZIsVPZvbApHU6YhP9jrU0=;
- b=i5hoUJZQEjmFZpCEbWibVGDOMtPecNSYBQ8Lmlwt5oqoxtvqdJmQjofgN/A+PsvJpLHjFq
- 4Y5r2ElcqYwNe8WR7L036ucsgCi1D2YA5RZ43KSapIiCg4UP3WfhBjsDRQAOU/Pxt+LqqO
- R+byrbv19mFKjYoVrRcJFyXZepzGWV8=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-zyQliyLZPR23YntrdvbUhQ-1; Tue,
- 10 Sep 2024 08:37:46 -0400
-X-MC-Unique: zyQliyLZPR23YntrdvbUhQ-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A368A1944DDE; Tue, 10 Sep 2024 12:37:44 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.193.120])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4012B19560AB; Tue, 10 Sep 2024 12:37:43 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1so06k-0002J4-SX
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:36:35 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1so06h-00052Z-Q4
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:36:34 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8CxhehHPeBmcrkDAA--.7713S3;
+ Tue, 10 Sep 2024 20:36:23 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front2 (Coremail) with SMTP id qciowMBx+cVCPeBmXGoDAA--.15753S5;
+ Tue, 10 Sep 2024 20:36:22 +0800 (CST)
+From: Xianglai Li <lixianglai@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 07/22] tests/functional: Add the LinuxKernelTest for testing
- the Linux boot process
-Date: Tue, 10 Sep 2024 14:37:08 +0200
-Message-ID: <20240910123726.182975-8-thuth@redhat.com>
-In-Reply-To: <20240910123726.182975-1-thuth@redhat.com>
-References: <20240910123726.182975-1-thuth@redhat.com>
+Cc: Tianrui Zhao <zhaotianrui@loongson.cn>,
+ Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Huacai Chen <chenhuacai@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ kvm@vger.kernel.org, Bibo Mao <maobibo@loongson.cn>
+Subject: [RFC PATCH V2 3/5] hw/loongarch: Add KVM extioi device support
+Date: Tue, 10 Sep 2024 20:18:30 +0800
+Message-Id: <f359346bb865fcc4d52552c8c0fc27123c858aad.1725969898.git.lixianglai@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <cover.1725969898.git.lixianglai@loongson.cn>
+References: <cover.1725969898.git.lixianglai@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qciowMBx+cVCPeBmXGoDAA--.15753S5
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,76 +67,387 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Copy the LinuxKernelTest from tests/acceptance/boot_linux_console.py
-to be able to convert the related tests to the functional test framework
-in the following patches.
+Added extioi interrupt controller for kvm emulation.
+The main process is to send the command word for
+creating an extioi device to the kernel.
+When the VM is saved, the ioctl obtains the related
+data of the extioi interrupt controller in the kernel
+and saves it. When the VM is recovered, the saved data
+is sent to the kernel.
 
-Message-ID: <20240906180549.792832-2-thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Tianrui Zhao <zhaotianrui@loongson.cn>
+Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
 ---
- tests/functional/qemu_test/__init__.py    |  1 +
- tests/functional/qemu_test/linuxkernel.py | 41 +++++++++++++++++++++++
- 2 files changed, 42 insertions(+)
- create mode 100644 tests/functional/qemu_test/linuxkernel.py
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Cornelia Huck <cohuck@redhat.com>
+Cc: kvm@vger.kernel.org
+Cc: Bibo Mao <maobibo@loongson.cn>
+Cc: Xianglai Li <lixianglai@loongson.cn>
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index f33282efe8..67f87be9c4 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -12,3 +12,4 @@
-     interrupt_interactive_console_until_pattern, wait_for_console_pattern, \
-     exec_command, exec_command_and_wait_for_pattern, get_qemu_img
- from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
-+from .linuxkernel import LinuxKernelTest
-diff --git a/tests/functional/qemu_test/linuxkernel.py b/tests/functional/qemu_test/linuxkernel.py
+ hw/intc/Kconfig                |   3 +
+ hw/intc/loongarch_extioi_kvm.c | 250 +++++++++++++++++++++++++++++++++
+ hw/intc/meson.build            |   1 +
+ hw/loongarch/Kconfig           |   1 +
+ hw/loongarch/virt.c            |  51 ++++---
+ 5 files changed, 285 insertions(+), 21 deletions(-)
+ create mode 100644 hw/intc/loongarch_extioi_kvm.c
+
+diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
+index 5201505f23..df9352d41d 100644
+--- a/hw/intc/Kconfig
++++ b/hw/intc/Kconfig
+@@ -112,3 +112,6 @@ config LOONGARCH_PCH_MSI
+ 
+ config LOONGARCH_EXTIOI
+     bool
++
++config LOONGARCH_EXTIOI_KVM
++    bool
+diff --git a/hw/intc/loongarch_extioi_kvm.c b/hw/intc/loongarch_extioi_kvm.c
 new file mode 100644
-index 0000000000..fdd5307629
+index 0000000000..139a00ac2a
 --- /dev/null
-+++ b/tests/functional/qemu_test/linuxkernel.py
-@@ -0,0 +1,41 @@
-+# Test class for testing the boot process of a Linux kernel
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
++++ b/hw/intc/loongarch_extioi_kvm.c
+@@ -0,0 +1,250 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * LoongArch kvm extioi interrupt support
++ *
++ * Copyright (C) 2024 Loongson Technology Corporation Limited
++ */
 +
-+import os
++#include "qemu/osdep.h"
++#include "hw/qdev-properties.h"
++#include "qemu/typedefs.h"
++#include "hw/intc/loongarch_extioi.h"
++#include "hw/sysbus.h"
++#include "linux/kvm.h"
++#include "migration/vmstate.h"
++#include "qapi/error.h"
++#include "sysemu/kvm.h"
 +
-+from .testcase import QemuSystemTest
-+from .cmd import run_cmd, wait_for_console_pattern
-+from .utils import archive_extract
++static void kvm_extioi_access_regs(int fd, uint64_t addr,
++                                       void *val, bool is_write)
++{
++        kvm_device_access(fd, KVM_DEV_LOONGARCH_EXTIOI_GRP_REGS,
++                          addr, val, is_write, &error_abort);
++}
 +
-+class LinuxKernelTest(QemuSystemTest):
-+    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
++static void kvm_extioi_access_sw_status(int fd, uint64_t addr,
++                                       void *val, bool is_write)
++{
++        kvm_device_access(fd, KVM_DEV_LOONGARCH_EXTIOI_GRP_SW_STATUS,
++                          addr, val, is_write, &error_abort);
++}
 +
-+    def wait_for_console_pattern(self, success_message, vm=None):
-+        wait_for_console_pattern(self, success_message,
-+                                 failure_message='Kernel panic - not syncing',
-+                                 vm=vm)
++static void kvm_extioi_save_load_sw_status(void *opaque, bool is_write)
++{
++    KVMLoongArchExtIOI *s = (KVMLoongArchExtIOI *)opaque;
++    KVMLoongArchExtIOIClass *class = KVM_LOONGARCH_EXTIOI_GET_CLASS(s);
++    int fd = class->dev_fd;
++    int addr;
 +
-+    def extract_from_deb(self, deb_path, path):
-+        """
-+        Extracts a file from a deb package into the test workdir
++    addr = KVM_DEV_LOONGARCH_EXTIOI_SW_STATUS_NUM_CPU;
++    kvm_extioi_access_sw_status(fd, addr, (void *)&s->num_cpu, is_write);
 +
-+        :param deb_path: path to the deb archive
-+        :param path: path within the deb archive of the file to be extracted
-+        :returns: path of the extracted file
-+        """
-+        cwd = os.getcwd()
-+        os.chdir(self.workdir)
-+        (stdout, stderr, ret) = run_cmd(['ar', 't', deb_path])
-+        file_path = stdout.split()[2]
-+        run_cmd(['ar', 'x', deb_path, file_path])
-+        archive_extract(file_path, self.workdir)
-+        os.chdir(cwd)
-+        # Return complete path to extracted file.  Because callers to
-+        # extract_from_deb() specify 'path' with a leading slash, it is
-+        # necessary to use os.path.relpath() as otherwise os.path.join()
-+        # interprets it as an absolute path and drops the self.workdir part.
-+        return os.path.normpath(os.path.join(self.workdir,
-+                                             os.path.relpath(path, '/')))
++    addr = KVM_DEV_LOONGARCH_EXTIOI_SW_STATUS_FEATURE;
++    kvm_extioi_access_sw_status(fd, addr, (void *)&s->features, is_write);
 +
++    addr = KVM_DEV_LOONGARCH_EXTIOI_SW_STATUS_STATE;
++    kvm_extioi_access_sw_status(fd, addr, (void *)&s->status, is_write);
++}
++
++static void kvm_extioi_save_load_regs(void *opaque, bool is_write)
++{
++    KVMLoongArchExtIOI *s = (KVMLoongArchExtIOI *)opaque;
++    KVMLoongArchExtIOIClass *class = KVM_LOONGARCH_EXTIOI_GET_CLASS(s);
++    int fd = class->dev_fd;
++    int addr, offset, cpuid;
++
++    for (addr = EXTIOI_NODETYPE_START; addr < EXTIOI_NODETYPE_END; addr += 4) {
++        offset = (addr - EXTIOI_NODETYPE_START) / 4;
++        kvm_extioi_access_regs(fd, addr,
++                               (void *)&s->nodetype[offset], is_write);
++    }
++
++    for (addr = EXTIOI_IPMAP_START; addr < EXTIOI_IPMAP_END; addr += 4) {
++        offset = (addr - EXTIOI_IPMAP_START) / 4;
++        kvm_extioi_access_regs(fd, addr, (void *)&s->ipmap[offset], is_write);
++    }
++
++    for (addr = EXTIOI_ENABLE_START; addr < EXTIOI_ENABLE_END; addr += 4) {
++        offset = (addr - EXTIOI_ENABLE_START) / 4;
++        kvm_extioi_access_regs(fd, addr,
++                               (void *)&s->enable[offset], is_write);
++    }
++
++    for (addr = EXTIOI_BOUNCE_START; addr < EXTIOI_BOUNCE_END; addr += 4) {
++        offset = (addr - EXTIOI_BOUNCE_START) / 4;
++        kvm_extioi_access_regs(fd, addr,
++                               (void *)&s->bounce[offset], is_write);
++    }
++
++    for (addr = EXTIOI_ISR_START; addr < EXTIOI_ISR_END; addr += 4) {
++        offset = (addr - EXTIOI_ISR_START) / 4;
++        kvm_extioi_access_regs(fd, addr,
++                               (void *)&s->isr[offset], is_write);
++    }
++
++    for (addr = EXTIOI_COREMAP_START; addr < EXTIOI_COREMAP_END; addr += 4) {
++        offset = (addr - EXTIOI_COREMAP_START) / 4;
++        kvm_extioi_access_regs(fd, addr,
++                               (void *)&s->coremap[offset], is_write);
++    }
++
++    for (cpuid = 0; cpuid < s->num_cpu; cpuid++) {
++        for (addr = EXTIOI_COREISR_START;
++             addr < EXTIOI_COREISR_END; addr += 4) {
++            offset = (addr - EXTIOI_COREISR_START) / 4;
++            addr = (cpuid << 16) | addr;
++            kvm_extioi_access_regs(fd, addr,
++                              (void *)&s->coreisr[cpuid][offset], is_write);
++        }
++    }
++}
++
++static int kvm_loongarch_extioi_pre_save(void *opaque)
++{
++    kvm_extioi_save_load_regs(opaque, false);
++    kvm_extioi_save_load_sw_status(opaque, false);
++    return 0;
++}
++
++static int kvm_loongarch_extioi_post_load(void *opaque, int version_id)
++{
++    KVMLoongArchExtIOI *s = (KVMLoongArchExtIOI *)opaque;
++    KVMLoongArchExtIOIClass *class = KVM_LOONGARCH_EXTIOI_GET_CLASS(s);
++    int fd = class->dev_fd;
++
++    kvm_extioi_save_load_regs(opaque, true);
++    kvm_extioi_save_load_sw_status(opaque, true);
++
++    kvm_device_access(fd, KVM_DEV_LOONGARCH_EXTIOI_GRP_CTRL,
++                      KVM_DEV_LOONGARCH_EXTIOI_CTRL_LOAD_FINISHED,
++                      NULL, true, &error_abort);
++    return 0;
++}
++
++static void kvm_loongarch_extioi_realize(DeviceState *dev, Error **errp)
++{
++    KVMLoongArchExtIOIClass *extioi_class = KVM_LOONGARCH_EXTIOI_GET_CLASS(dev);
++    KVMLoongArchExtIOI *s = KVM_LOONGARCH_EXTIOI(dev);
++    struct kvm_create_device cd = {0};
++    Error *err = NULL;
++    int ret, i;
++
++    extioi_class->parent_realize(dev, &err);
++    if (err) {
++        error_propagate(errp, err);
++        return;
++    }
++
++    if (s->num_cpu == 0) {
++        error_setg(errp, "num-cpu must be at least 1");
++        return;
++    }
++
++
++    if (extioi_class->is_created) {
++        error_setg(errp, "extioi had be created");
++        return;
++    }
++
++    if (s->features & BIT(EXTIOI_HAS_VIRT_EXTENSION)) {
++        s->features |= EXTIOI_VIRT_HAS_FEATURES;
++    }
++
++    cd.type = KVM_DEV_TYPE_LOONGARCH_EXTIOI;
++    ret = kvm_vm_ioctl(kvm_state, KVM_CREATE_DEVICE, &cd);
++    if (ret < 0) {
++        error_setg_errno(errp, errno,
++                         "Creating the KVM extioi device failed");
++        return;
++    }
++    extioi_class->is_created = true;
++    extioi_class->dev_fd = cd.fd;
++
++    ret = kvm_device_access(cd.fd, KVM_DEV_LOONGARCH_EXTIOI_GRP_CTRL,
++                            KVM_DEV_LOONGARCH_EXTIOI_CTRL_INIT_NUM_CPU,
++                            &s->num_cpu, true, NULL);
++    if (ret < 0) {
++        error_setg_errno(errp, errno,
++                         "KVM EXTIOI: failed to set the num-cpu of EXTIOI");
++        exit(1);
++    }
++
++    ret = kvm_device_access(cd.fd, KVM_DEV_LOONGARCH_EXTIOI_GRP_CTRL,
++                            KVM_DEV_LOONGARCH_EXTIOI_CTRL_INIT_FEATURE,
++                            &s->features, true, NULL);
++    if (ret < 0) {
++        error_setg_errno(errp, errno,
++                         "KVM EXTIOI: failed to set the feature of EXTIOI");
++        exit(1);
++    }
++
++    fprintf(stdout, "Create LoongArch extioi irqchip in KVM done!\n");
++
++    kvm_async_interrupts_allowed = true;
++    kvm_msi_via_irqfd_allowed = kvm_irqfds_enabled();
++    if (kvm_has_gsi_routing()) {
++        for (i = 0; i < 64; ++i) {
++            kvm_irqchip_add_irq_route(kvm_state, i, 0, i);
++        }
++        kvm_gsi_routing_allowed = true;
++    }
++}
++
++static const VMStateDescription vmstate_kvm_extioi_core = {
++    .name = "kvm-extioi-single",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .pre_save = kvm_loongarch_extioi_pre_save,
++    .post_load = kvm_loongarch_extioi_post_load,
++    .fields = (VMStateField[]) {
++        VMSTATE_UINT32_ARRAY(nodetype, KVMLoongArchExtIOI,
++                             EXTIOI_IRQS_NODETYPE_COUNT / 2),
++        VMSTATE_UINT32_ARRAY(bounce, KVMLoongArchExtIOI,
++                             EXTIOI_IRQS_GROUP_COUNT),
++        VMSTATE_UINT32_ARRAY(isr, KVMLoongArchExtIOI, EXTIOI_IRQS / 32),
++        VMSTATE_UINT32_2DARRAY(coreisr, KVMLoongArchExtIOI, EXTIOI_CPUS,
++                               EXTIOI_IRQS_GROUP_COUNT),
++        VMSTATE_UINT32_ARRAY(enable, KVMLoongArchExtIOI, EXTIOI_IRQS / 32),
++        VMSTATE_UINT32_ARRAY(ipmap, KVMLoongArchExtIOI,
++                             EXTIOI_IRQS_IPMAP_SIZE / 4),
++        VMSTATE_UINT32_ARRAY(coremap, KVMLoongArchExtIOI, EXTIOI_IRQS / 4),
++        VMSTATE_UINT8_ARRAY(sw_coremap, KVMLoongArchExtIOI, EXTIOI_IRQS),
++        VMSTATE_UINT32(features, KVMLoongArchExtIOI),
++        VMSTATE_UINT32(status, KVMLoongArchExtIOI),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static Property extioi_properties[] = {
++    DEFINE_PROP_UINT32("num-cpu", KVMLoongArchExtIOI, num_cpu, 1),
++    DEFINE_PROP_BIT("has-virtualization-extension", KVMLoongArchExtIOI,
++                    features, EXTIOI_HAS_VIRT_EXTENSION, 0),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static void kvm_loongarch_extioi_class_init(ObjectClass *oc, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++    KVMLoongArchExtIOIClass *extioi_class = KVM_LOONGARCH_EXTIOI_CLASS(oc);
++
++    extioi_class->parent_realize = dc->realize;
++    dc->realize = kvm_loongarch_extioi_realize;
++    extioi_class->is_created = false;
++    device_class_set_props(dc, extioi_properties);
++    dc->vmsd = &vmstate_kvm_extioi_core;
++}
++
++static const TypeInfo kvm_loongarch_extioi_info = {
++    .name = TYPE_KVM_LOONGARCH_EXTIOI,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(KVMLoongArchExtIOI),
++    .class_size = sizeof(KVMLoongArchExtIOIClass),
++    .class_init = kvm_loongarch_extioi_class_init,
++};
++
++static void kvm_loongarch_extioi_register_types(void)
++{
++    type_register_static(&kvm_loongarch_extioi_info);
++}
++
++type_init(kvm_loongarch_extioi_register_types)
+diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+index f55eb1b80b..85174d1af1 100644
+--- a/hw/intc/meson.build
++++ b/hw/intc/meson.build
+@@ -76,3 +76,4 @@ specific_ss.add(when: 'CONFIG_LOONGARCH_IPI_KVM', if_true: files('loongarch_ipi_
+ specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_PIC', if_true: files('loongarch_pch_pic.c'))
+ specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_MSI', if_true: files('loongarch_pch_msi.c'))
+ specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI', if_true: files('loongarch_extioi.c'))
++specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI_KVM', if_true: files('loongarch_extioi_kvm.c'))
+diff --git a/hw/loongarch/Kconfig b/hw/loongarch/Kconfig
+index f8fcac3e7b..99a523171f 100644
+--- a/hw/loongarch/Kconfig
++++ b/hw/loongarch/Kconfig
+@@ -17,6 +17,7 @@ config LOONGARCH_VIRT
+     select LOONGARCH_PCH_MSI
+     select LOONGARCH_EXTIOI
+     select LOONGARCH_IPI_KVM if KVM
++    select LOONGARCH_EXTIOI_KVM if KVM
+     select LS7A_RTC
+     select SMBIOS
+     select ACPI_PCI
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 3b28e8e671..8ca7c09016 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -828,28 +828,37 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+     }
+ 
+     /* Create EXTIOI device */
+-    extioi = qdev_new(TYPE_LOONGARCH_EXTIOI);
+-    qdev_prop_set_uint32(extioi, "num-cpu", ms->smp.cpus);
+-    if (virt_is_veiointc_enabled(lvms)) {
+-        qdev_prop_set_bit(extioi, "has-virtualization-extension", true);
+-    }
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(extioi), &error_fatal);
+-    memory_region_add_subregion(&lvms->system_iocsr, APIC_BASE,
+-                    sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 0));
+-    if (virt_is_veiointc_enabled(lvms)) {
+-        memory_region_add_subregion(&lvms->system_iocsr, EXTIOI_VIRT_BASE,
+-                    sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 1));
+-    }
++    if (kvm_enabled() && kvm_irqchip_in_kernel()) {
++        extioi = qdev_new(TYPE_KVM_LOONGARCH_EXTIOI);
++        qdev_prop_set_uint32(extioi, "num-cpu", ms->smp.cpus);
++        if (virt_is_veiointc_enabled(lvms)) {
++            qdev_prop_set_bit(extioi, "has-virtualization-extension", true);
++        }
++        sysbus_realize_and_unref(SYS_BUS_DEVICE(extioi), &error_fatal);
++    } else {
++        extioi = qdev_new(TYPE_LOONGARCH_EXTIOI);
++        qdev_prop_set_uint32(extioi, "num-cpu", ms->smp.cpus);
++        if (virt_is_veiointc_enabled(lvms)) {
++            qdev_prop_set_bit(extioi, "has-virtualization-extension", true);
++        }
++        sysbus_realize_and_unref(SYS_BUS_DEVICE(extioi), &error_fatal);
++        memory_region_add_subregion(&lvms->system_iocsr, APIC_BASE,
++                       sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 0));
++        if (virt_is_veiointc_enabled(lvms)) {
++            memory_region_add_subregion(&lvms->system_iocsr, EXTIOI_VIRT_BASE,
++                        sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 1));
++        }
+ 
+-    /*
+-     * connect ext irq to the cpu irq
+-     * cpu_pin[9:2] <= intc_pin[7:0]
+-     */
+-    for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
+-        cpudev = DEVICE(qemu_get_cpu(cpu));
+-        for (pin = 0; pin < LS3A_INTC_IP; pin++) {
+-            qdev_connect_gpio_out(extioi, (cpu * 8 + pin),
+-                                  qdev_get_gpio_in(cpudev, pin + 2));
++        /*
++         * connect ext irq to the cpu irq
++         * cpu_pin[9:2] <= intc_pin[7:0]
++         */
++        for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
++            cpudev = DEVICE(qemu_get_cpu(cpu));
++            for (pin = 0; pin < LS3A_INTC_IP; pin++) {
++                qdev_connect_gpio_out(extioi, (cpu * 8 + pin),
++                                      qdev_get_gpio_in(cpudev, pin + 2));
++            }
+         }
+     }
+ 
 -- 
-2.46.0
+2.39.1
 
 
