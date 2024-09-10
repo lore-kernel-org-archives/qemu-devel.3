@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2475ECE564
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 14:11:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBCDFECE564
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 14:11:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so1X4-0007z4-BB; Tue, 10 Sep 2024 10:07:50 -0400
+	id 1so1X2-0007qV-Ba; Tue, 10 Sep 2024 10:07:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so1X2-0007sL-NH
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:07:48 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ id 1so1X0-0007hO-7T
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:07:46 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so1Wz-0006We-DB
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:07:48 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-53661a131b4so3723060e87.1
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 07:07:44 -0700 (PDT)
+ id 1so1Wv-0006VG-Ve
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 10:07:45 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a8d4093722bso449358366b.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 07:07:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725977263; x=1726582063; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725977260; x=1726582060; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=b313DFQEs8B271qGHlfKxgFhU13Os4oo/NuzYy1RUc0=;
- b=bMN4RQwDrjOseBIGL0ppdfKoGAOQtpgLxsGZS/0Nv2mxme+/Qs8v0h1Qb4KecHwGxM
- oXMNW0gtDxk+Y386BX/r/cFfmkrv7wz9ilObAOTvZTuYt7KE/4SGt+fYWYdc5clPGKVi
- /h2gSoppokl5yqs8Tjb8PNuuGo6EG/RtftjU5hmSSrFp86x2PeEo0wTzyVNFc2a6mh7L
- bcJ6I9ZY4Zav8J/X8kokmRbCWD9XByNiHi8cXYTlvl5hJDwkQD2QwxYV+sCnrz4O/lqD
- QMUWQP3MYJDHy8fe4AtniC9p65f04jglA6s2wxiV9a1BPqvKCp9UrPOKrqqd1+aZjBBY
- l1+A==
+ bh=4x/2lUUGLpLRO+8rqUP/+rQmXa+2LMUSZP6UGcSNzgE=;
+ b=O7E6uwHSbHOuWwdIOCEcsg4vaGkmKongHQIe22PkTFdYOShs/iAWUf3JRvA9Yplfkv
+ 2/+O9Q5OnuEQaO234QyRvxBkpU6pjYBrySXxduQ+X9PIigOXhxACQXvlyBr7TAHJdmEL
+ gieD45sL3mPkLojRY9WQpaP88W74arVX7xg+LsciyzYylTLeV8AfatMWzOKhT/WgT+3E
+ 5bXNhyuom5EIBrs+lWdl354f5SmMukps5MwWKv+JDRQqc/uJLWPaewXEEr4SnNaZ4D6S
+ XnXVx8NWdKdEIsedP4FJQClWds70M4LzL/TRAghq8quUp1yIAMxHXd0eQBnRcQNkICzI
+ W8VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725977263; x=1726582063;
+ d=1e100.net; s=20230601; t=1725977260; x=1726582060;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=b313DFQEs8B271qGHlfKxgFhU13Os4oo/NuzYy1RUc0=;
- b=GIGNdFCGd5KNX7deNnkiDdXeYZlOUUAEtjFZs1wM1szJbqEzaOC1QXFA2gjebLP9SX
- JaRG8HCMlGys7cvB1yENiBUDECjbEx471h/9JuwxkldZvLKr+UTWPvCExoWtHt8X2mDz
- 83lPDb+AMFceG7wqmZRgflJeNgTpMPMFzmVbbLAuEmepSYtUSoqxA8D0o0zBF12pNkle
- Z97cesWWkJx+gxflstvLZylHMGEN1xni2MprywBg2FQ2dGY4bLjblJVjWE6f6whiIbyi
- mNeyGXN7Unw7SliUQpBL4jFBFa6xynWZ1moNsO3cbgpbpYfQ2/UWezrNsoF1NmmHKZzp
- 1eBw==
-X-Gm-Message-State: AOJu0YycnKPhvNLtyAUFd5EGhpTWjpIo0wND1sMka0nYkT+s885XQxcz
- lvn1QZS+ebNfQRiAT7WY35DIvmWedBjpAPfUQFQnI7OJlAEFpvn4NdMUjJ7EozM=
-X-Google-Smtp-Source: AGHT+IFwO8H6MQwQurzjS0eTgVG0M9Cu5OMs+G0LwZFRbZEmCxIeo0Cs7eE9m636G9ihGMN/RsqLdw==
-X-Received: by 2002:a05:6512:398d:b0:533:4652:983a with SMTP id
- 2adb3069b0e04-536587cda61mr8522331e87.35.1725977262997; 
- Tue, 10 Sep 2024 07:07:42 -0700 (PDT)
+ bh=4x/2lUUGLpLRO+8rqUP/+rQmXa+2LMUSZP6UGcSNzgE=;
+ b=G7OZ0wIfJUKrkbYx9UbVKiPFkCfAzAjntv7i0ape2uwNaOKXnUVTvZlme9sI98FRMn
+ lyU4LGbOhIKoeZ2+9Inrh4m6nuqZ+sBYsAQ7yIZ/lewLWnPg5Du0AMEEQzVcApJ648pN
+ VeDRkq6lTvOEyx1rSQOb65L/N+lv0JgPy0Lr4NLx2oFrMmFexYHtkpa767Rt4Nq1Cz+t
+ 4j4Y9ZFYJew4aekeH+XPb6rLEbCU6cDAST/7hkolbX1++Siav5kc5zncwzOJ8e3bi2bz
+ w+AAgOO2ypnNxzgKEvGTj2aaTUPoySRD/H0LjJP1Hu0VRpXuiLl5TWdsAbv82nxYcbaA
+ i2oQ==
+X-Gm-Message-State: AOJu0Yw6HCRi/lcfCtIWKtzcWiFFmzkQEK22Dh7JZHYYicjAZKAQ8TXC
+ U/tfeLZDJi6VJMDJYglOBCkiThsRSqZBryORJwDkILdX1e9HUG3yG7BQmXf7OA4=
+X-Google-Smtp-Source: AGHT+IEvuWIAiAG/1WQfC8cKFBctoP0A4dYQjLeoHf7iKJZzLcR5lBFadtqLJorqSvb5dGkIUb/WEg==
+X-Received: by 2002:a17:906:dc92:b0:a7a:3928:3529 with SMTP id
+ a640c23a62f3a-a8ffaaa54d0mr74864366b.13.1725977260214; 
+ Tue, 10 Sep 2024 07:07:40 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25c72748sm485424066b.117.2024.09.10.07.07.36
+ a640c23a62f3a-a8d25c7286esm481008866b.138.2024.09.10.07.07.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2024 07:07:42 -0700 (PDT)
+ Tue, 10 Sep 2024 07:07:36 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B972C5FA1C;
+ by draig.lan (Postfix) with ESMTP id 22ADC5F9CE;
  Tue, 10 Sep 2024 15:07:34 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -75,19 +75,20 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
  qemu-arm@nongnu.org, devel@lists.libvirt.org,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH 11/26] deprecation: don't enable TCG plugins by default on 32
- bit hosts
-Date: Tue, 10 Sep 2024 15:07:18 +0100
-Message-Id: <20240910140733.4007719-12-alex.bennee@linaro.org>
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>
+Subject: [PATCH 05/26] gdbstub: Use specific MMU index when probing MTE
+ addresses
+Date: Tue, 10 Sep 2024 15:07:12 +0100
+Message-Id: <20240910140733.4007719-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240910140733.4007719-1-alex.bennee@linaro.org>
 References: <20240910140733.4007719-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x133.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,82 +111,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The existing plugins already liberally use host pointer stuffing for
-passing user data which will fail when doing 64 bit guests on 32 bit
-hosts. We should discourage this by officially deprecating support and
-adding another nail to the 32 bit host coffin.
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
+Use cpu_mmu_index() to determine the specific translation regime (MMU
+index) before probing addresses using allocation_tag_mem_probe().
+
+Currently, the MMU index is hardcoded to 0 and only works for user mode.
+By obtaining the specific MMU index according to the translation regime,
+future use of the stubs relying on allocation_tag_mem_probe in other
+regimes will be possible, like in EL1.
+
+This commit also changes the ptr_size value passed to
+allocation_tag_mem_probe() from 8 to 1. The ptr_size parameter actually
+represents the number of bytes in the memory access (which can be as
+small as 1 byte), rather than the number of bits used in the address
+space pointed to by ptr.
+
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240906143316.657436-2-gustavo.romero@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
-v2
-  - don't manually set based on CPU type, use __SIZEOF_POINTER__
----
- docs/about/deprecated.rst | 11 +++++++++++
- configure                 | 21 ++++++++++++++++++++-
- 2 files changed, 31 insertions(+), 1 deletion(-)
+ target/arm/gdbstub64.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 88f0f03786..f7c7c33d39 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -184,6 +184,17 @@ be an effective use of its limited resources, and thus intends to discontinue
- it. Since all recent x86 hardware from the past >10 years is capable of the
- 64-bit x86 extensions, a corresponding 64-bit OS should be used instead.
+diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
+index 5221381cc8..85a19c14c7 100644
+--- a/target/arm/gdbstub64.c
++++ b/target/arm/gdbstub64.c
+@@ -435,6 +435,7 @@ static void handle_q_memtag(GArray *params, void *user_ctx)
+ {
+     ARMCPU *cpu = ARM_CPU(user_ctx);
+     CPUARMState *env = &cpu->env;
++    uint32_t mmu_index;
  
-+TCG Plugin support not enabled by default on 32-bit hosts (since 9.2)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+While it is still possible to enable TCG plugin support for 32-bit
-+hosts there are a number of potential pitfalls when instrumenting
-+64-bit guests. The plugin APIs typically pass most addresses as
-+uint64_t but practices like encoding that address in a host pointer
-+for passing as user-data will lose data. As most software analysis
-+benefits from having plenty of host memory it seems reasonable to
-+encourage users to use 64 bit builds of QEMU for analysis work
-+whatever targets they are instrumenting.
+     uint64_t addr = gdb_get_cmd_param(params, 0)->val_ull;
+     uint64_t len = gdb_get_cmd_param(params, 1)->val_ul;
+@@ -458,8 +459,10 @@ static void handle_q_memtag(GArray *params, void *user_ctx)
+         gdb_put_packet("E03");
+     }
  
- System emulator CPUs
- --------------------
-diff --git a/configure b/configure
-index 40186d865e..14581c1b9a 100755
---- a/configure
-+++ b/configure
-@@ -516,6 +516,25 @@ case "$cpu" in
-     ;;
- esac
++    /* Find out the current translation regime for probe. */
++    mmu_index = cpu_mmu_index(env_cpu(env), false);
+     /* Note that tags are packed here (2 tags packed in one byte). */
+-    tags = allocation_tag_mem_probe(env, 0, addr, MMU_DATA_LOAD, 8 /* 64-bit */,
++    tags = allocation_tag_mem_probe(env, mmu_index, addr, MMU_DATA_LOAD, 1,
+                                     MMU_DATA_LOAD, true, 0);
+     if (!tags) {
+         /* Address is not in a tagged region. */
+@@ -478,13 +481,16 @@ static void handle_q_isaddresstagged(GArray *params, void *user_ctx)
+ {
+     ARMCPU *cpu = ARM_CPU(user_ctx);
+     CPUARMState *env = &cpu->env;
++    uint32_t mmu_index;
  
-+# Now we have our CPU_CFLAGS we can check if we are targeting a 32 or
-+# 64 bit host.
-+
-+check_64bit_host() {
-+cat > $TMPC <<EOF
-+#if __SIZEOF_POINTER__ != 8
-+#error not 64 bit system
-+#endif
-+int main(void) { return 0; }
-+EOF
-+  compile_object "$1"
-+}
-+
-+if check_64bit_host "$CPU_CFLAGS"; then
-+    host_bits=64
-+else
-+    host_bits=32
-+fi
-+
- if test -n "$host_arch" && {
-     ! test -d "$source_path/linux-user/include/host/$host_arch" ||
-     ! test -d "$source_path/common-user/host/$host_arch"; }; then
-@@ -1028,7 +1047,7 @@ if test "$static" = "yes" ; then
-   fi
-   plugins="no"
- fi
--if test "$plugins" != "no"; then
-+if test "$plugins" != "no" && test $host_bits -eq 64; then
-   plugins=yes
-   subdirs="$subdirs contrib/plugins"
- fi
+     uint64_t addr = gdb_get_cmd_param(params, 0)->val_ull;
+ 
+     uint8_t *tags;
+     const char *reply;
+ 
+-    tags = allocation_tag_mem_probe(env, 0, addr, MMU_DATA_LOAD, 8 /* 64-bit */,
++    /* Find out the current translation regime for probe. */
++    mmu_index = cpu_mmu_index(env_cpu(env), false);
++    tags = allocation_tag_mem_probe(env, mmu_index, addr, MMU_DATA_LOAD, 1,
+                                     MMU_DATA_LOAD, true, 0);
+     reply = tags ? "01" : "00";
+ 
+@@ -495,6 +501,7 @@ static void handle_Q_memtag(GArray *params, void *user_ctx)
+ {
+     ARMCPU *cpu = ARM_CPU(user_ctx);
+     CPUARMState *env = &cpu->env;
++    uint32_t mmu_index;
+ 
+     uint64_t start_addr = gdb_get_cmd_param(params, 0)->val_ull;
+     uint64_t len = gdb_get_cmd_param(params, 1)->val_ul;
+@@ -527,8 +534,10 @@ static void handle_Q_memtag(GArray *params, void *user_ctx)
+      * Get all tags in the page starting from the tag of the start address.
+      * Note that there are two tags packed into a single byte here.
+      */
+-    tags = allocation_tag_mem_probe(env, 0, start_addr, MMU_DATA_STORE,
+-                                    8 /* 64-bit */, MMU_DATA_STORE, true, 0);
++    /* Find out the current translation regime for probe. */
++    mmu_index = cpu_mmu_index(env_cpu(env), false);
++    tags = allocation_tag_mem_probe(env, mmu_index, start_addr, MMU_DATA_STORE,
++                                    1, MMU_DATA_STORE, true, 0);
+     if (!tags) {
+         /* Address is not in a tagged region. */
+         gdb_put_packet("E04");
 -- 
 2.39.2
 
