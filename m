@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23182EDE9AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:40:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0846EDE9AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:40:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so4qt-0003DK-3X; Tue, 10 Sep 2024 13:40:31 -0400
+	id 1so4pw-0005pY-5Y; Tue, 10 Sep 2024 13:39:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1so4qp-0002h9-Vb
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:40:28 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1so4pc-0004pw-5u
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:39:13 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1so4qn-0004sq-R6
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:40:27 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2d88c0f8e79so4562967a91.3
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 10:40:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1so4pZ-0004ak-OI
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:39:11 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a8d29b7edc2so474940166b.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 10:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725990024; x=1726594824; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725989948; x=1726594748; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PxK/kUedWi76nv9Z4j6eZ6ETsIVX17z0F3roB87C/Q0=;
- b=sFSVBUQY5xCEoltEOz8AJzF+cm7OG1v+pU6x0db57yT9SfjpvXndcpCnzg3ih+yP/J
- 4Du32UtzUcFa+JiLm4rGsxUPxnABM+VXGa6SLyz//CSeUiadp5l2MPMhn+3niXqTMGsm
- Y1OjGeCY8gyVegIIMCZt6m3Y4Vvioln7h6fT3KZvurMdudKR6db4K3brcgwERgxE9rUh
- BwBTd9MEF5xLDjUFFJ8TmQflOdVxYiXSyapq2nAugQzT6wlcWHzsff9z1W/X35P5ACsh
- 08zrcpjrIHWtW4IT3SHtr1k8la4/+hNjvcfa/Q4MdvLV0XrONevNsFROnsa7IzUa+Cc8
- MYhA==
+ bh=4JYCYUJifJOf8IAr8uZJXdISd8++rwC9FrhK6nCyU7M=;
+ b=pzDz8okpSnvB5sZALhzWB4nYHRQVcicma5IhzJylcfpfDfuGaDrPtk2rr6dUjTo4pK
+ cCU6WufHroT/s6Pch9cLsUN5o2cA78sN1D9CcZOaibRx1+tcaR0lLcZfQ+dlnRUvabpF
+ CVNcujBvNemihuc9gf6K6k72CHJvO1la6xqSYigL+YdbEP3deNBGuqIrQeEdhXVLH40z
+ AB9EMTyphn6jubOeQ20nnaUMFsRmnSheZmF+ZyZHfMk1I0Ig3vjYg+7WBtUqVRDWlYdP
+ l08wxCaP2dI6qBNgD5wz/6oHyo2Figa3nemIiv3uFcpltedm1zfH1Ya3BFXTMjy6AVq4
+ 4BaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725990024; x=1726594824;
+ d=1e100.net; s=20230601; t=1725989948; x=1726594748;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PxK/kUedWi76nv9Z4j6eZ6ETsIVX17z0F3roB87C/Q0=;
- b=QIX7HMA/Mk/X6ODFiWiD6rfRkMOm5LUXntX0zYiq+uD7rnV9wmc+W+fOKEqEcKqVCB
- HZJQeUGbyYvkXdEJI0eOdqmjZZfpRePvlg7Ui2Q2jzZOUXZLPu3NVExqF4iHIS9ZJ57W
- ojuIkbAYIwqYVzq2qW1hcT3Tpy/B7cHkF2wAPiRsIGZw1v9mL7ZGH2jvUQbVOhox29DS
- XqFjacBmisEAHwbxSYxvj4JCtRSAaMWGnKnEVL61ETtkDTupr+r0xsw5hCrf1EuyqluM
- oe0lWSCOR+jAoytJBbxaInzaz3RsVegoX5nH8jJwHyfbd/IbGtwtxPzvMvkmhxKiVkhb
- /fkg==
-X-Gm-Message-State: AOJu0Yy4uqPAmxPG8oPSp8gMQ2xO+K3zYrDqkkW2iD6ANnNs3qULZ5pI
- 706S08SK7TS3etl3Y7VUD5suvM/+sOhFDPUbDCZgSGdEGSUkTKMXGSpzE9F86GJm3bd4RLvlbC9
- s0VvWEg==
-X-Google-Smtp-Source: AGHT+IHIEh2gOaDV+kP/9BofpfisOSSU+8HsXyUxQbN5hvDsWwuXez7jJ9Dt81kkjIr+UHHAmLwAYg==
-X-Received: by 2002:a17:90b:3c43:b0:2da:5156:1253 with SMTP id
- 98e67ed59e1d1-2dad50141cbmr5998023a91.21.1725990024249; 
- Tue, 10 Sep 2024 10:40:24 -0700 (PDT)
-Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::9633])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2db04966d3asm6682751a91.38.2024.09.10.10.40.23
+ bh=4JYCYUJifJOf8IAr8uZJXdISd8++rwC9FrhK6nCyU7M=;
+ b=S6BJCSxzNrq4ytYNsm7klRftSnpGQWaIcWiDyRKYylgvyX1ZMXCGFx6CTDGVsf4ugS
+ ckjKH824U1+hSL5eAYUqmaZHkiPXqiG01BpkkgWXU5pOfms7zfPQul2k42wg/9hKIzkx
+ xlBAZCVnkVv7Pug1OA65vOt1hw/gVji1/29tMTJsattCaBFcFxz4rv2dOt3vznf8vHtg
+ lhs1Dk4heM5wa7bMrQr89eW7vTRBi+RXjRNTIqK/WmlVhWsoIx8CCjXoQeJFBYmBuE0r
+ T5hSu23yNWI+Q6cDgIuLwSFjAwYSTqMNLVicbgkTBJXa2XkjE5YFJ6PTveemB0ffzTxo
+ ZKjw==
+X-Gm-Message-State: AOJu0Ywl8Z/1kJiTrHyKojmrTw/NzoXCX0WEf9+n2vrk1fYz1ZKW/4Bg
+ 5Rrwf0mU16PiXhCKCsdafqvUMTlR4bpkIpkqrUf+Xn8SpUinax2Q2NdKF3rvxn8=
+X-Google-Smtp-Source: AGHT+IF01JF6bkpfXUUAD7B8/SqE9++NilsryYre//MgoT1zo4BQkG9c196L9fAV75D2WwY7jhIKCA==
+X-Received: by 2002:a17:907:7fa8:b0:a8d:128a:cc49 with SMTP id
+ a640c23a62f3a-a8ffadc8c5amr121943666b.52.1725989948025; 
+ Tue, 10 Sep 2024 10:39:08 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a8d2597ac96sm510004966b.73.2024.09.10.10.39.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2024 10:40:23 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ Tue, 10 Sep 2024 10:39:04 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 1C1475FA0E;
+ Tue, 10 Sep 2024 18:39:01 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+Cc: Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-arm@nongnu.org,
+ devel@lists.libvirt.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- kvm@vger.kernel.org, Thomas Huth <thuth@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-s390x@nongnu.org, Beraldo Leal <bleal@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 2/3] target/i386: fix build warning (gcc-12
- -fsanitize=thread)
-Date: Tue, 10 Sep 2024 10:40:12 -0700
-Message-Id: <20240910174013.1433331-3-pierrick.bouvier@linaro.org>
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Beraldo Leal <bleal@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>
+Subject: [PATCH v2 07/10] gdbstub: Add support for MTE in system mode
+Date: Tue, 10 Sep 2024 18:38:57 +0100
+Message-Id: <20240910173900.4154726-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240910174013.1433331-1-pierrick.bouvier@linaro.org>
-References: <20240910174013.1433331-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20240910173900.4154726-1-alex.bennee@linaro.org>
+References: <20240910173900.4154726-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,45 +110,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Found on debian stable.
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
-../target/i386/kvm/kvm.c: In function ‘kvm_handle_rdmsr’:
-../target/i386/kvm/kvm.c:5345:1: error: control reaches end of non-void function [-Werror=return-type]
- 5345 | }
-      | ^
-../target/i386/kvm/kvm.c: In function ‘kvm_handle_wrmsr’:
-../target/i386/kvm/kvm.c:5364:1: error: control reaches end of non-void function [-Werror=return-type]
- 5364 | }
+This commit makes handle_q_memtag, handle_q_isaddresstagged, and
+handle_Q_memtag stubs build for system mode, allowing all GDB
+'memory-tag' subcommands to work with QEMU gdbstub on aarch64 system
+mode.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/620
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- target/i386/kvm/kvm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Message-Id: <20240906143316.657436-3-gustavo.romero@linaro.org>
+[AJB: add #ifdef CONFIG_TCG guards]
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 2fa88ef1e37..308b0e1cb37 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5770,7 +5770,7 @@ static int kvm_handle_rdmsr(X86CPU *cpu, struct kvm_run *run)
-         }
-     }
- 
--    assert(false);
-+    g_assert_not_reached();
+---
+v2
+  - while we enable system mode it is still TCG only so added guards
+  to handle the --disable-tcg case (native KVM and Xen builds)
+---
+ target/arm/gdbstub64.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
+index 85a19c14c7..1a4dbec567 100644
+--- a/target/arm/gdbstub64.c
++++ b/target/arm/gdbstub64.c
+@@ -430,7 +430,9 @@ int aarch64_gdb_set_tag_ctl_reg(CPUState *cs, uint8_t *buf, int reg)
+     return 0;
+ #endif
  }
++#endif /* CONFIG_USER_ONLY */
  
- static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
-@@ -5789,7 +5789,7 @@ static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
-         }
-     }
++#ifdef CONFIG_TCG
+ static void handle_q_memtag(GArray *params, void *user_ctx)
+ {
+     ARMCPU *cpu = ARM_CPU(user_ctx);
+@@ -600,13 +602,13 @@ static const GdbCmdParseEntry cmd_handler_table[NUM_CMDS] = {
+         .need_cpu_context = true
+     },
+ };
+-#endif /* CONFIG_USER_ONLY */
++#endif /* CONFIG_TCG */
  
--    assert(false);
-+    g_assert_not_reached();
- }
+ void aarch64_cpu_register_gdb_commands(ARMCPU *cpu, GString *qsupported,
+                                        GPtrArray *qtable, GPtrArray *stable)
+ {
+-#ifdef CONFIG_USER_ONLY
+     /* MTE */
++#ifdef CONFIG_TCG
+     if (cpu_isar_feature(aa64_mte, cpu)) {
+         g_string_append(qsupported, ";memory-tagging+");
  
- static bool has_sgx_provisioning;
 -- 
 2.39.2
 
