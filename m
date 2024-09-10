@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCDFEEDE9B4
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 20:21:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B983EDE9B4
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 20:22:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so7Mi-0002yx-1h; Tue, 10 Sep 2024 16:21:32 -0400
+	id 1so7Nm-0006D8-0T; Tue, 10 Sep 2024 16:22:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1so7Mg-0002xr-Gs
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 16:21:30 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1so7Nj-000626-RJ
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 16:22:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1so7Me-0004jX-VN
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 16:21:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=rJfsBPYe3ffSfQf5YPA9CIW3HW6M2N9H2270t4VdEuw=; b=ud6p/oYI/lns1Riherwael8eHS
- eLH1gdhq8KOyh8m5eUfd4N/RU4OdJECEu329PYxBYM7ujDOQH5TQZpqPKc7Niu/RKVX2zXJiOqu9Q
- CjhKwpV6TDAlb4N5YQrJ9Wol4bhL5ZjiosQBL51ZLa874V+n/w2d8CPabem4aNSdLVWafrcMDaadZ
- sI6vDzKJOKwHxsgTQFjmGs0vxTRPR9m4GtGcRUEID+KRxhrwJJGaRtpFoQ1H5FSleQjp0BqlzoF/x
- HnQWYlo/OVK5cObh1Xc5hylvTingrvwZ94C8HJQp/3I5OgyKMBBn3HnM2JJ3W/ff8R2Ll9DSCoA1B
- JFk3s6w1K8hCLcqmaU/GoK+USpH6BpDb0nzh4SVB5byRVm2CmaTpP1F3bend+55oF5LMRpj4CpLrk
- o/FhvHHMyeSXK/FRjXVgnOS1sdO9t4e7lEa57LzDUxw+mHL9/CxYnlYZF/3lQenYKabQvEHeo/bj5
- Q9VQp+l0wO80+bfy4l+uC5kd6uOAmBUwjp+BMwBP+mkc2Uc8F8T78c20CMKjaDFqxMl2retAiG0Zc
- Pk2ywprPg0S9L4+TlYCGISATM7DwMpKd2AP+mIzUM5NyJmMKDGAaraUEN53uTdBBqWrMvclfcNSdZ
- cOOfKMTPlBGBnB2o/5SQsdxkwMZk/dvd7FdqacaJI=;
-Received: from [2a00:23c4:8bb8:1400:b001:a616:651c:c1d5]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1so7MV-0000mJ-Ae; Tue, 10 Sep 2024 21:21:23 +0100
-Message-ID: <c5141d98-1592-4832-b289-2b4eddaef92a@ilande.co.uk>
-Date: Tue, 10 Sep 2024 21:21:16 +0100
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1so7Ni-0004l8-BS
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 16:22:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1725999753;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UYF0ZKWpHFsPEUD6OVEl5KXpR3TmwNFArxks4a2lGM8=;
+ b=Cw28KxKpRtvshb4F72NlzjF1skleFgC9BcyeQVZDtLQ/myXdhJAqhaNyfGJk0W2j0iJPwI
+ t2Ux+B9UfdDzM2F5nAMCdBv5bGBIujBCoR+gRMpw+faMoJg0x0QWcrZgXETpGlP/hSGD3T
+ 8BbjUB0SkiaJy3DByBZEVO//HXtDxoU=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-515-qbT8XK5mOsahL-fQ0G9Z8g-1; Tue, 10 Sep 2024 16:22:31 -0400
+X-MC-Unique: qbT8XK5mOsahL-fQ0G9Z8g-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a8d15eff783so218682866b.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 13:22:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1725999750; x=1726604550;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UYF0ZKWpHFsPEUD6OVEl5KXpR3TmwNFArxks4a2lGM8=;
+ b=ASCM1ec70blrJEeLbyaQwbtHINM43GFqXv5JhWZXH+0GlCnE4jR9s4hr2/b636ejM1
+ vPPBAEaAJk36h++9gGD+DK15Uyp55R/htTHEbmbhgWWe87F3ST9r94KoH7i/PvwgZ7eT
+ j/fj45OdmsvzA1LCejbOig4qAx3yhuqM8aS3uKcP0/jFe4dDlpEOe2MVANg1tZ6/FIYH
+ nnHmGxjAa9Mkmm1SjqHZ2FMwnhQ2y5cX+jhPcJoK3FXoxUCXSFCaL/InsIwKXfwWFiYs
+ HSV+0w2RkfGJgs268YUmWd9LGhFQrIYZYBiF4NoxX3XvDUyV+ztGQkunumWZBtsoIfjY
+ BUhg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUjFXGPflvwHiIonie6eh/K1MJXIAk7I5fOXNI3eh+Dzo+opUAFn0v9irf2cGFdGASr5Igc9Q7ogM2c@nongnu.org
+X-Gm-Message-State: AOJu0Ywn8ad+XCgspKZscZZhpTug4e1ALOB0U/8B9FQYD44fkknmY8iE
+ cJ9wqnyfCd/g/RxJRDmsCWC4kkZMz/fDgFxvp34nxkaWWre4iRO7OxUCw4b7bjHd9LP+DsJFwRB
+ J2iXX+1PvXUx1LAHgD4chu35cTUeSOY5TFGrilFt3QTdRyenlSJZ0
+X-Received: by 2002:a17:907:9807:b0:a8d:2d35:3dc6 with SMTP id
+ a640c23a62f3a-a8ffab2a201mr171369766b.26.1725999749716; 
+ Tue, 10 Sep 2024 13:22:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGvZ8OLT5nsRrv1cEDosG/4ozRJWxYJVlFu/oF5QlV782yuOtsNdITI3v9+RGIrsc1O3+gA1g==
+X-Received: by 2002:a17:907:9807:b0:a8d:2d35:3dc6 with SMTP id
+ a640c23a62f3a-a8ffab2a201mr171367566b.26.1725999749082; 
+ Tue, 10 Sep 2024 13:22:29 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:176:f5ce:2d9:5bfa:9916:aa0a])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a8d25d65cf6sm518157966b.222.2024.09.10.13.22.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Sep 2024 13:22:28 -0700 (PDT)
+Date: Tue, 10 Sep 2024 16:22:24 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "jasowang@redhat.com" <jasowang@redhat.com>
+Subject: Re: [PATCH] MAINTAINERS: Add myself as a reviewer of VT-d
+Message-ID: <20240910162203-mutt-send-email-mst@kernel.org>
+References: <20240820095112.61510-1-clement.mathieu--drif@eviden.com>
+ <20240910131304-mutt-send-email-mst@kernel.org>
+ <9c523e4c-9405-4d81-a2db-517863ec23c4@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: chauser@pullman.com
-References: <20240909180712.651651-1-richard.henderson@linaro.org>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20240909180712.651651-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:1400:b001:a616:651c:c1d5
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v4 0/5] target/sparc: emulate floating point queue when
- raising fp traps
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9c523e4c-9405-4d81-a2db-517863ec23c4@linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,43 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09/09/2024 19:07, Richard Henderson wrote:
-
-> Changes for v5:
->    - Fix stdfq advance_pc.
+On Tue, Sep 10, 2024 at 08:29:25PM +0200, Philippe Mathieu-Daudé wrote:
+> On 10/9/24 19:14, Michael S. Tsirkin wrote:
+> > On Tue, Aug 20, 2024 at 09:51:47AM +0000, CLEMENT MATHIEU--DRIF wrote:
+> > > Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+> > 
+> > Using index info to reconstruct a base tree...
+> > error: patch failed: MAINTAINERS:3672
+> > error: MAINTAINERS: patch does not apply
+> > error: Did you hand edit your patch?
+> > It does not apply to blobs recorded in its index.
 > 
-> r~
+> I suppose you process your mailbox in FIFO order so you might
+> notice it before reading this reply, but I already queued this
+> patch since it was languishing and trivial:
+> https://lore.kernel.org/qemu-devel/9f4cba51-5aa0-4942-a7a0-6bd3eb29a7b6@linaro.org/
+
+Thanks!. You can add 
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+if you like.
+
+> > 
+> > > ---
+> > >   MAINTAINERS | 1 +
+> > >   1 file changed, 1 insertion(+)
 > 
-> Carl Hauser (2):
->    target/sparc: Add FQ and FSR.QNE
->    target/sparc: Populate sparc32 FQ when raising fp exception
-> 
-> Richard Henderson (3):
->    target/sparc: Add FSR_QNE to tb_flags
->    target/sparc: Implement STDFQ
->    target/sparc: Add gen_trap_if_nofpu_fpexception
-> 
->   target/sparc/cpu.h          |  30 ++++++++-
->   target/sparc/fop_helper.c   |   4 ++
->   target/sparc/int32_helper.c |  40 ++++++-----
->   target/sparc/machine.c      |  25 +++++++
->   target/sparc/translate.c    | 128 ++++++++++++++++++++++++++----------
->   target/sparc/insns.decode   |   2 +-
->   6 files changed, 178 insertions(+), 51 deletions(-)
-
-Should there be a:
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2340
-
-somewhere in this series? I've not had to look at the FP exceptions in this level of 
-detail before (so unsure that I have any suitable test cases lying around), but it 
-looks reasonable so:
-
-Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-
-
-ATB,
-
-Mark.
 
 
