@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0846EDE9AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:40:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24168EDE9AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 17:41:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so4pw-0005pY-5Y; Tue, 10 Sep 2024 13:39:32 -0400
+	id 1so4ps-0005jm-5i; Tue, 10 Sep 2024 13:39:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so4pc-0004pw-5u
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:39:13 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ id 1so4pZ-0004lX-EG
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:39:09 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1so4pZ-0004ak-OI
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:39:11 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a8d29b7edc2so474940166b.1
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 10:39:09 -0700 (PDT)
+ id 1so4pW-0004ZN-7h
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 13:39:09 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-5c25554ec1eso7583301a12.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 10:39:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1725989948; x=1726594748; darn=nongnu.org;
+ d=linaro.org; s=google; t=1725989945; x=1726594745; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4JYCYUJifJOf8IAr8uZJXdISd8++rwC9FrhK6nCyU7M=;
- b=pzDz8okpSnvB5sZALhzWB4nYHRQVcicma5IhzJylcfpfDfuGaDrPtk2rr6dUjTo4pK
- cCU6WufHroT/s6Pch9cLsUN5o2cA78sN1D9CcZOaibRx1+tcaR0lLcZfQ+dlnRUvabpF
- CVNcujBvNemihuc9gf6K6k72CHJvO1la6xqSYigL+YdbEP3deNBGuqIrQeEdhXVLH40z
- AB9EMTyphn6jubOeQ20nnaUMFsRmnSheZmF+ZyZHfMk1I0Ig3vjYg+7WBtUqVRDWlYdP
- l08wxCaP2dI6qBNgD5wz/6oHyo2Figa3nemIiv3uFcpltedm1zfH1Ya3BFXTMjy6AVq4
- 4BaQ==
+ bh=rxdRaiTcMZc5S1W+zC5XJ30AZucjTk2s7eZ1WW+ddog=;
+ b=ggfKaOWQPe1dS893CgpGZ5mGcfBrOPYpqL0Nvz2KzaMixQClCybr6odljo7HROtuTw
+ 6KzKtXt5tIrippbctoMsf2p44FuEs29Cnnyk9LAlr+E8AcnYvRirmAPhv4QY17zpICty
+ fHInb0UFFpFxisBJ5iRmXExC+3IPu2ReG9SE75XRfeQa9PEj6lMfofyr65lxa2bVMFEX
+ UP0B/G/fpz6wWMbXGP6WmvPTGW+Jj5nzwVRlgs4BXFk899xCYn+hrd/xYitciD/Jj6NC
+ 9DikcGw+FrwdSRXUcix5bx3RuRArcf2YNcJwOgvE8jt9Mo8Qg7V93rcAgS23am4Vbpgp
+ lsGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725989948; x=1726594748;
+ d=1e100.net; s=20230601; t=1725989945; x=1726594745;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4JYCYUJifJOf8IAr8uZJXdISd8++rwC9FrhK6nCyU7M=;
- b=S6BJCSxzNrq4ytYNsm7klRftSnpGQWaIcWiDyRKYylgvyX1ZMXCGFx6CTDGVsf4ugS
- ckjKH824U1+hSL5eAYUqmaZHkiPXqiG01BpkkgWXU5pOfms7zfPQul2k42wg/9hKIzkx
- xlBAZCVnkVv7Pug1OA65vOt1hw/gVji1/29tMTJsattCaBFcFxz4rv2dOt3vznf8vHtg
- lhs1Dk4heM5wa7bMrQr89eW7vTRBi+RXjRNTIqK/WmlVhWsoIx8CCjXoQeJFBYmBuE0r
- T5hSu23yNWI+Q6cDgIuLwSFjAwYSTqMNLVicbgkTBJXa2XkjE5YFJ6PTveemB0ffzTxo
- ZKjw==
-X-Gm-Message-State: AOJu0Ywl8Z/1kJiTrHyKojmrTw/NzoXCX0WEf9+n2vrk1fYz1ZKW/4Bg
- 5Rrwf0mU16PiXhCKCsdafqvUMTlR4bpkIpkqrUf+Xn8SpUinax2Q2NdKF3rvxn8=
-X-Google-Smtp-Source: AGHT+IF01JF6bkpfXUUAD7B8/SqE9++NilsryYre//MgoT1zo4BQkG9c196L9fAV75D2WwY7jhIKCA==
-X-Received: by 2002:a17:907:7fa8:b0:a8d:128a:cc49 with SMTP id
- a640c23a62f3a-a8ffadc8c5amr121943666b.52.1725989948025; 
- Tue, 10 Sep 2024 10:39:08 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d2597ac96sm510004966b.73.2024.09.10.10.39.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=rxdRaiTcMZc5S1W+zC5XJ30AZucjTk2s7eZ1WW+ddog=;
+ b=UnkjI+/gNj5vOFyBccRQx1XjFGcmHHAtNw62Vpk16Qw7f1hIxDi75k8dytAVQxiflV
+ giAUc5qouD0394Fa/zcNaFuojt8LlvNYiy+QQ3AP5dlixvWBX98dsoIhqXkJV/hzuM2O
+ U3WI6kqL4DUGQ4corUftYUE7cv6jvoEQ9zDBMJ8i1wUuzUT9eJnPzxDOD+b6hdVxTz36
+ 0A4VvqkRSRe90SB07TR72VdSG6rwmBOzEJa0ZM1UmFpw6UaQ0r4PffUcDaR7b5L77LgP
+ Va2HH9QI1gBZX4A8CkaqCBDCvYB+YzKBA0RuBBPBJI+4eHYIdTsc4/Gs5XoqWV/8jFDa
+ EpVA==
+X-Gm-Message-State: AOJu0YwIa+y9H7v1+RRVT60vblmgyb87X7yFcl+er9RWymJa2OB7wPHj
+ PVJ7bEfnSdyakeH2eV0DpVnCkwYtHVbeXkasCd5u9vwJT1ZCZpWFGPpgDl7z7/4=
+X-Google-Smtp-Source: AGHT+IEy8xm9TQ/OfdiMVTVxFx9PsY1/i7uDVqSwJfXKQyMFqLVYM95l36xLFNnAVnlOxzL43plRbQ==
+X-Received: by 2002:a05:6402:5111:b0:5c2:6d80:b4ed with SMTP id
+ 4fb4d7f45d1cf-5c3e9630ee6mr8601383a12.13.1725989944583; 
  Tue, 10 Sep 2024 10:39:04 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5c3ebd41c36sm4512760a12.2.2024.09.10.10.39.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Sep 2024 10:39:01 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1C1475FA0E;
- Tue, 10 Sep 2024 18:39:01 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 9CFDA5F7B4;
+ Tue, 10 Sep 2024 18:39:00 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
@@ -75,26 +75,26 @@ Cc: Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>
-Subject: [PATCH v2 07/10] gdbstub: Add support for MTE in system mode
-Date: Tue, 10 Sep 2024 18:38:57 +0100
-Message-Id: <20240910173900.4154726-8-alex.bennee@linaro.org>
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+Subject: [PATCH v2 02/10] tests/docker: update debian i686 and mipsel images
+ to bookworm
+Date: Tue, 10 Sep 2024 18:38:52 +0100
+Message-Id: <20240910173900.4154726-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240910173900.4154726-1-alex.bennee@linaro.org>
 References: <20240910173900.4154726-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,58 +110,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
+Whatever issues there were which stopped these being updates when the
+rest were have now been resolved. However mips64el continues to be
+broken so don't update it here.
 
-This commit makes handle_q_memtag, handle_q_isaddresstagged, and
-handle_Q_memtag stubs build for system mode, allowing all GDB
-'memory-tag' subcommands to work with QEMU gdbstub on aarch64 system
-mode.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/620
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240906143316.657436-3-gustavo.romero@linaro.org>
-[AJB: add #ifdef CONFIG_TCG guards]
+Message-Id: <20240910140733.4007719-3-alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
-v2
-  - while we enable system mode it is still TCG only so added guards
-  to handle the --disable-tcg case (native KVM and Xen builds)
----
- target/arm/gdbstub64.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ tests/docker/dockerfiles/debian-i686-cross.docker   | 10 ++++------
+ tests/docker/dockerfiles/debian-mipsel-cross.docker | 10 ++++------
+ tests/lcitool/refresh                               |  4 ++--
+ 3 files changed, 10 insertions(+), 14 deletions(-)
 
-diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-index 85a19c14c7..1a4dbec567 100644
---- a/target/arm/gdbstub64.c
-+++ b/target/arm/gdbstub64.c
-@@ -430,7 +430,9 @@ int aarch64_gdb_set_tag_ctl_reg(CPUState *cs, uint8_t *buf, int reg)
-     return 0;
- #endif
- }
-+#endif /* CONFIG_USER_ONLY */
+diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
+index 3fe8ee623d..2328ee1732 100644
+--- a/tests/docker/dockerfiles/debian-i686-cross.docker
++++ b/tests/docker/dockerfiles/debian-i686-cross.docker
+@@ -1,10 +1,10 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all --cross-arch i686 debian-11 qemu
++#  $ lcitool dockerfile --layers all --cross-arch i686 debian-12 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
  
-+#ifdef CONFIG_TCG
- static void handle_q_memtag(GArray *params, void *user_ctx)
- {
-     ARMCPU *cpu = ARM_CPU(user_ctx);
-@@ -600,13 +602,13 @@ static const GdbCmdParseEntry cmd_handler_table[NUM_CMDS] = {
-         .need_cpu_context = true
-     },
- };
--#endif /* CONFIG_USER_ONLY */
-+#endif /* CONFIG_TCG */
+-FROM docker.io/library/debian:11-slim
++FROM docker.io/library/debian:12-slim
  
- void aarch64_cpu_register_gdb_commands(ARMCPU *cpu, GString *qsupported,
-                                        GPtrArray *qtable, GPtrArray *stable)
- {
--#ifdef CONFIG_USER_ONLY
-     /* MTE */
-+#ifdef CONFIG_TCG
-     if (cpu_isar_feature(aa64_mte, cpu)) {
-         g_string_append(qsupported, ";memory-tagging+");
+ RUN export DEBIAN_FRONTEND=noninteractive && \
+     apt-get update && \
+@@ -48,16 +48,15 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-opencv \
+                       python3-pillow \
+                       python3-pip \
+-                      python3-setuptools \
+                       python3-sphinx \
+                       python3-sphinx-rtd-theme \
+                       python3-venv \
+-                      python3-wheel \
+                       python3-yaml \
+                       rpm2cpio \
+                       sed \
+                       socat \
+                       sparse \
++                      swtpm \
+                       tar \
+                       tesseract-ocr \
+                       tesseract-ocr-eng \
+@@ -69,8 +68,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     dpkg-reconfigure locales && \
+     rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
  
+-RUN /usr/bin/pip3 install tomli
+-
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+ ENV MAKE "/usr/bin/make"
+@@ -145,6 +142,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       libvdeplug-dev:i386 \
+                       libvirglrenderer-dev:i386 \
+                       libvte-2.91-dev:i386 \
++                      libxdp-dev:i386 \
+                       libzstd-dev:i386 \
+                       nettle-dev:i386 \
+                       systemtap-sdt-dev:i386 \
+diff --git a/tests/docker/dockerfiles/debian-mipsel-cross.docker b/tests/docker/dockerfiles/debian-mipsel-cross.docker
+index 0d559ae4ba..4ac314e22e 100644
+--- a/tests/docker/dockerfiles/debian-mipsel-cross.docker
++++ b/tests/docker/dockerfiles/debian-mipsel-cross.docker
+@@ -1,10 +1,10 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all --cross-arch mipsel debian-11 qemu
++#  $ lcitool dockerfile --layers all --cross-arch mipsel debian-12 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
+ 
+-FROM docker.io/library/debian:11-slim
++FROM docker.io/library/debian:12-slim
+ 
+ RUN export DEBIAN_FRONTEND=noninteractive && \
+     apt-get update && \
+@@ -48,16 +48,15 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-opencv \
+                       python3-pillow \
+                       python3-pip \
+-                      python3-setuptools \
+                       python3-sphinx \
+                       python3-sphinx-rtd-theme \
+                       python3-venv \
+-                      python3-wheel \
+                       python3-yaml \
+                       rpm2cpio \
+                       sed \
+                       socat \
+                       sparse \
++                      swtpm \
+                       tar \
+                       tesseract-ocr \
+                       tesseract-ocr-eng \
+@@ -69,8 +68,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     dpkg-reconfigure locales && \
+     rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
+ 
+-RUN /usr/bin/pip3 install tomli
+-
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+ ENV MAKE "/usr/bin/make"
+@@ -143,6 +140,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       libvdeplug-dev:mipsel \
+                       libvirglrenderer-dev:mipsel \
+                       libvte-2.91-dev:mipsel \
++                      libxdp-dev:mipsel \
+                       libzstd-dev:mipsel \
+                       nettle-dev:mipsel \
+                       systemtap-sdt-dev:mipsel \
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 199d5fad87..c60490a7fa 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -159,7 +159,7 @@ try:
+                         trailer=cross_build("arm-linux-gnueabihf-",
+                                             "arm-softmmu,arm-linux-user"))
+ 
+-    generate_dockerfile("debian-i686-cross", "debian-11",
++    generate_dockerfile("debian-i686-cross", "debian-12",
+                         cross="i686",
+                         trailer=cross_build("i686-linux-gnu-",
+                                             "x86_64-softmmu,"
+@@ -171,7 +171,7 @@ try:
+                         trailer=cross_build("mips64el-linux-gnuabi64-",
+                                             "mips64el-softmmu,mips64el-linux-user"))
+ 
+-    generate_dockerfile("debian-mipsel-cross", "debian-11",
++    generate_dockerfile("debian-mipsel-cross", "debian-12",
+                         cross="mipsel",
+                         trailer=cross_build("mipsel-linux-gnu-",
+                                             "mipsel-softmmu,mipsel-linux-user"))
 -- 
 2.39.2
 
