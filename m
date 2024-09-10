@@ -4,51 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75EF2ECE564
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:40:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9857ECE564
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Sep 2024 12:41:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1so07x-0000aQ-4Q; Tue, 10 Sep 2024 08:37:49 -0400
+	id 1so08d-0005ZO-DB; Tue, 10 Sep 2024 08:38:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so07p-0008EL-If
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:37:43 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so08X-0004kU-96
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:38:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so07n-00057p-8h
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:37:41 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1so08S-0005CC-Ln
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 08:38:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1725971855;
+ s=mimecast20190719; t=1725971895;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=HUrgObl7l+Inj2aohUs0WZIP8H77ZLJ3shuYKBV0wvM=;
- b=fPCJWRX2thyjYjDipRyhEUSkLzcevjxmZ97ZWDqh6eDdhEne4PpgjFsn8u7U9LRwydGxhf
- VRoiibTuVvYlnHKfYOx9yj/B6dWBj5cPel6zsdEJF4nl3oBNarusmfxMkdfRfMkRXkxpqY
- alMrLVLaNs7R2Vqk8s2+k0NYEQ6VUTI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ml1r1n6NPK0zJab7LZ/SZK7JH5cfPmS5xxctirOPnCI=;
+ b=CWjsHIeMiBClwsCcdrIyfRf1pV0Xo3gW0cCtXlwzsDV6J4mzYCUIkbCKTMcyw3IqmEuoM0
+ 4bJjdKutSlpqdChuObA6yTwPOxInx0Pgo22+EzIRaFo5VNcCBowDzWaV7tIm/6E7g4RDNv
+ D/BxlnrtVx37QJo1SglTvyhmFzRbzk4=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-375-IeSKD3zTO8-YsArYV0sk4Q-1; Tue,
- 10 Sep 2024 08:37:32 -0400
-X-MC-Unique: IeSKD3zTO8-YsArYV0sk4Q-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-247-_3f_rzHFOFu1uk_2fs5plg-1; Tue,
+ 10 Sep 2024 08:38:13 -0400
+X-MC-Unique: _3f_rzHFOFu1uk_2fs5plg-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D81A0193E8D2; Tue, 10 Sep 2024 12:37:30 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 068EE1944D24; Tue, 10 Sep 2024 12:38:12 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.120])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2B2FC19560AB; Tue, 10 Sep 2024 12:37:28 +0000 (UTC)
+ id 1C38719560AB; Tue, 10 Sep 2024 12:38:09 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 00/22] Tests and misc patches
-Date: Tue, 10 Sep 2024 14:37:01 +0200
-Message-ID: <20240910123726.182975-1-thuth@redhat.com>
+Subject: [PULL 18/22] tests/functional: Convert the Alpha Clipper Avocado test
+Date: Tue, 10 Sep 2024 14:37:19 +0200
+Message-ID: <20240910123726.182975-19-thuth@redhat.com>
+In-Reply-To: <20240910123726.182975-1-thuth@redhat.com>
+References: <20240910123726.182975-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,103 +80,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 7bbadc60b58b742494555f06cd342311ddab9351:
+Straight forward conversion, just switch to SHA256 hashsum now.
 
-  Merge tag 'crypto-fixes-pull-request' of https://gitlab.com/berrange/qemu into staging (2024-09-09 15:19:32 +0100)
-
-are available in the Git repository at:
-
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2024-09-10
-
-for you to fetch changes up to cc3e005eb22332ba277bff2e39025d0087f3795e:
-
-  tests/functional: Fix bad usage of has_cmd (2024-09-10 13:44:42 +0200)
-
-----------------------------------------------------------------
-* Split --enable-sanitizers to --enable-{asan, ubsan}
-* Build MSYS2 job using multiple CPUs
-* Fix "make distclean" wrt contrib/plugins/
-* Convert more Avocado tests to plain standalone functional tests
-* Fix bug that breaks "make check-functional" when tesseract is missing
-
-----------------------------------------------------------------
-Beraldo Leal (1):
-      MAINTAINERS: Remove myself as reviewer
-
-Philippe Mathieu-Daudé (10):
-      gitlab-ci: Build MSYS2 job using multiple CPUs
-      tests/functional: Convert mips64el Fuloong2e avocado test (2/2)
-      tests/functional: Convert mips64el I6400 Malta avocado tests
-      tests/functional: Convert mips64el 5KEc Malta avocado tests
-      tests/functional: Convert mips32el Malta YAMON avocado test
-      tests/functional: Convert nanomips Malta avocado tests
-      tests/functional: Convert mips32eb 4Kc Malta avocado tests
-      tests/functional: Convert ARM Raspi2 avocado tests
-      tests/functional: Convert Aarch64 Raspi3 avocado tests
-      tests/functional: Convert Aarch64 Raspi4 avocado tests
-
-Richard Henderson (2):
-      meson: Split --enable-sanitizers to --enable-{asan, ubsan}
-      meson: Move -fsanitize=undefined into normal configuraton
-
-Thomas Huth (9):
-      contrib/plugins/Makefile: Add a 'distclean' target
-      MAINTAINERS: Remove myself from the Meson section
-      tests/functional: Add the LinuxKernelTest for testing the Linux boot process
-      tests/functional: Convert the m68k Q800 Avocado test into a functional test
-      tests/functional: Convert the Alpha Clipper Avocado test
-      tests/functional: Convert the m68k MCF5208EVB Avocado test
-      tests/functional: Convert the or1k-sim Avocado test
-      tests/functional: Convert the multiprocess avocado test into a standalone test
-      tests/functional: Fix bad usage of has_cmd
-
- MAINTAINERS                                        |  12 +-
- docs/devel/testing/fuzzing.rst                     |   4 +-
- meson.build                                        |  26 +-
- tests/qtest/fdc-test.c                             |   2 +-
- .gitlab-ci.d/buildtest.yml                         |  12 +-
- .../custom-runners/ubuntu-22.04-aarch64.yml        |   2 +-
- .gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml |   2 +-
- .gitlab-ci.d/windows.yml                           |   3 +-
- contrib/plugins/Makefile                           |   2 +-
- meson_options.txt                                  |   6 +-
- scripts/meson-buildoptions.sh                      |   9 +-
- tests/avocado/avocado_qemu/__init__.py             |  10 -
- tests/avocado/boot_linux_console.py                | 483 ---------------------
- tests/avocado/machine_mips_malta.py                | 162 -------
- tests/avocado/multiprocess.py                      | 102 -----
- tests/docker/test-debug                            |   4 +-
- tests/functional/meson.build                       |  26 +-
- tests/functional/qemu_test/__init__.py             |   1 +
- tests/functional/qemu_test/cmd.py                  |   6 +-
- tests/functional/qemu_test/linuxkernel.py          |  41 ++
- tests/functional/qemu_test/tesseract.py            |   3 +-
- tests/functional/test_aarch64_raspi3.py            |  41 ++
- tests/functional/test_aarch64_raspi4.py            |  99 +++++
- tests/functional/test_alpha_clipper.py             |  38 ++
- tests/functional/test_arm_raspi2.py                |  95 ++++
- tests/functional/test_m68k_mcf5208evb.py           |  29 ++
- tests/functional/test_m68k_q800.py                 |  37 ++
- tests/functional/test_mips64el_fuloong2e.py        |  25 +-
- tests/functional/test_mips64el_malta.py            | 186 ++++++++
- tests/functional/test_mips_malta.py                |  81 ++++
- tests/functional/test_mipsel_malta.py              |  96 ++++
- tests/functional/test_multiprocess.py              | 100 +++++
- tests/functional/test_or1k_sim.py                  |  29 ++
- 33 files changed, 978 insertions(+), 796 deletions(-)
- delete mode 100644 tests/avocado/machine_mips_malta.py
- delete mode 100644 tests/avocado/multiprocess.py
- create mode 100644 tests/functional/qemu_test/linuxkernel.py
- create mode 100755 tests/functional/test_aarch64_raspi3.py
- create mode 100755 tests/functional/test_aarch64_raspi4.py
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240906180549.792832-13-thuth@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/avocado/boot_linux_console.py    | 21 --------------
+ tests/functional/meson.build           |  4 +++
+ tests/functional/test_alpha_clipper.py | 38 ++++++++++++++++++++++++++
+ 3 files changed, 42 insertions(+), 21 deletions(-)
  create mode 100755 tests/functional/test_alpha_clipper.py
- create mode 100755 tests/functional/test_arm_raspi2.py
- create mode 100755 tests/functional/test_m68k_mcf5208evb.py
- create mode 100755 tests/functional/test_m68k_q800.py
- create mode 100755 tests/functional/test_mips64el_malta.py
- create mode 100755 tests/functional/test_mips_malta.py
- create mode 100755 tests/functional/test_mipsel_malta.py
- create mode 100755 tests/functional/test_multiprocess.py
- create mode 100755 tests/functional/test_or1k_sim.py
+
+diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
+index a8eac44d9f..75aab90320 100644
+--- a/tests/avocado/boot_linux_console.py
++++ b/tests/avocado/boot_linux_console.py
+@@ -882,27 +882,6 @@ def test_arm_orangepi_uboot_netbsd9(self):
+         # Wait for user-space
+         wait_for_console_pattern(self, 'Starting root file system check')
+ 
+-    def test_alpha_clipper(self):
+-        """
+-        :avocado: tags=arch:alpha
+-        :avocado: tags=machine:clipper
+-        """
+-        kernel_url = ('http://archive.debian.org/debian/dists/lenny/main/'
+-                      'installer-alpha/20090123lenny10/images/cdrom/vmlinuz')
+-        kernel_hash = '3a943149335529e2ed3e74d0d787b85fb5671ba3'
+-        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
+-
+-        uncompressed_kernel = archive.uncompress(kernel_path, self.workdir)
+-
+-        self.vm.set_console()
+-        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
+-        self.vm.add_args('-nodefaults',
+-                         '-kernel', uncompressed_kernel,
+-                         '-append', kernel_command_line)
+-        self.vm.launch()
+-        console_pattern = 'Kernel command line: %s' % kernel_command_line
+-        self.wait_for_console_pattern(console_pattern)
+-
+     def do_test_advcal_2018(self, day, tar_hash, kernel_name, console=0):
+         tar_url = ('https://qemu-advcal.gitlab.io'
+                    '/qac-best-of-multiarch/download/day' + day + '.tar.xz')
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index a79083b0f9..e1903132a1 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -41,6 +41,10 @@ tests_aarch64_system_thorough = [
+   'aarch64_virt',
+ ]
+ 
++tests_alpha_system_thorough = [
++  'alpha_clipper',
++]
++
+ tests_arm_system_thorough = [
+   'arm_canona1100',
+   'arm_integratorcp',
+diff --git a/tests/functional/test_alpha_clipper.py b/tests/functional/test_alpha_clipper.py
+new file mode 100755
+index 0000000000..c1fbf0e395
+--- /dev/null
++++ b/tests/functional/test_alpha_clipper.py
+@@ -0,0 +1,38 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots a Linux kernel on an Alpha Clipper machine
++# and checks the console
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import os
++
++from qemu_test import LinuxKernelTest, Asset
++from qemu_test.utils import gzip_uncompress
++
++
++class AlphaClipperTest(LinuxKernelTest):
++
++    ASSET_KERNEL = Asset(
++        ('http://archive.debian.org/debian/dists/lenny/main/'
++         'installer-alpha/20090123lenny10/images/cdrom/vmlinuz'),
++        '34f53da3fa32212e4f00b03cb944b2ad81c06bc8faaf9b7193b2e544ceeca576')
++
++    def test_alpha_clipper(self):
++        self.set_machine('clipper')
++        kernel_path = self.ASSET_KERNEL.fetch()
++
++        uncompressed_kernel = os.path.join(self.workdir, 'vmlinux')
++        gzip_uncompress(kernel_path, uncompressed_kernel)
++
++        self.vm.set_console()
++        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
++        self.vm.add_args('-nodefaults',
++                         '-kernel', uncompressed_kernel,
++                         '-append', kernel_command_line)
++        self.vm.launch()
++        console_pattern = 'Kernel command line: %s' % kernel_command_line
++        self.wait_for_console_pattern(console_pattern)
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
+-- 
+2.46.0
 
 
