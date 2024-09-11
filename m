@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF934EE499D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A9E8EE49A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:37:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMYY-0000Zw-U6; Wed, 11 Sep 2024 08:34:46 -0400
+	id 1soMY1-000650-2F; Wed, 11 Sep 2024 08:34:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1soMYA-0007Sn-HG
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:34:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1soMXy-0005mh-KU
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:34:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1soMY8-00016A-R3
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:34:22 -0400
+ id 1soMXw-00013V-Fe
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:34:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726058060;
+ s=mimecast20190719; t=1726058047;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hs8UEmOhjZhsT4bHEFTB4w8fw7ILBNMs3ZZtiuWZjhk=;
- b=SymLhN/l8B+YEyXVXMZHWZWndRgPPryPiMHYHLYQ2+YAGs+F19Sz6WiFuTRcgP7McCMSG5
- BH9M2iXPyZkwZV2rBE34AXBnrKv+xm09liJC4rBRx1UBb8rYan5cnEAuEJRW/9DIdxgC6e
- ryx2opp0vo/evD8SbcSgIATMT/rZobY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xtYCdte9dWd9oGT6jGVa2VRP3oHQUflr0u1OJvVB2MA=;
+ b=gFtsPBnO0IJ+0Xzyo0Op987NZbZfQuzdC3AYd8fHfgbLaMIbe4MSrZoT0DzcBLu6e31YR4
+ eI16369PiTewo5XQW2pFYgmiTW8XGRaRHUgVw748HU3Zmrk02LoW40Ec8EEkmjpW6GC+uc
+ 0hKmpCjBCbm6Ocfekg9CxfKa8uHR2zM=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-668-ctsUU7D-OEKb0EgCklHc6Q-1; Wed, 11 Sep 2024 08:34:18 -0400
-X-MC-Unique: ctsUU7D-OEKb0EgCklHc6Q-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42cb0ed9072so37261775e9.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:34:17 -0700 (PDT)
+ us-mta-107-Wz8Rcq_KPZ-vB-UsiYMfHQ-1; Wed, 11 Sep 2024 08:34:06 -0400
+X-MC-Unique: Wz8Rcq_KPZ-vB-UsiYMfHQ-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-374b9617ab0so2863216f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:34:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726058056; x=1726662856;
+ d=1e100.net; s=20230601; t=1726058045; x=1726662845;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hs8UEmOhjZhsT4bHEFTB4w8fw7ILBNMs3ZZtiuWZjhk=;
- b=XDy6EtAJHc4ToXdGgOWH4pQ7tISexVlx33AerLGyJvpGxiwhcoytXdcqK02bnu2dKX
- HaKpY9bq4J/eZCzCwp/F8vfkwNIXuX0NySBcTsKiTZTPg8IngnyNWeCraDbs12xkzfRk
- XyFdZe7aaEEcppzYtBHG78at+s6XbW5LZHotQyglfWpUdzcSkXlpLO2E+q2UuMqYOwgz
- xZxA09b1AVDVk3iHql8XB2vNZB60Tu/26OJKFLkXCUTH/0mBeAjqDYcgTc+nIeea5lln
- o7kC8oslfXBDNhA3peG3KuUEl4lEZmglVosGeDfjrrweCtbpgp6hX4+QmGGmnoWSoo0M
- 7DzA==
-X-Gm-Message-State: AOJu0Ywd44SVWFZ/zHGl4vp+0fwPBt2nvC+I2f2UhUky6AVTZUVrWNRl
- 2W+iTIdzzgr7OGnokrtruWhiOOjdKkTFi//AffhFK3b3p5ozrp1hIenwrJqxs3i45LClSZ4fN3r
- gfKmR2qm6eKRq5oolYAAe8lSVz4QtasmhCH4I/IO5dg/5srfGej1A8VhIR4fLlj0Xd3+LDsJAS0
- 7x25W6L/TrkB4cbS1SUDqPKJcVXD5l3I1mTx6WEns=
-X-Received: by 2002:a7b:ce88:0:b0:42c:b5a6:69bd with SMTP id
- 5b1f17b1804b1-42cb5a66a1bmr110846955e9.30.1726058056092; 
- Wed, 11 Sep 2024 05:34:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFblVRHWzCmeAHkkx+rNUIyfCodyCiWqadaArE3l2Kzb8cyVFAv7/F7oJOuz01wEQ6Wvhsb8g==
-X-Received: by 2002:a7b:ce88:0:b0:42c:b5a6:69bd with SMTP id
- 5b1f17b1804b1-42cb5a66a1bmr110846665e9.30.1726058055506; 
- Wed, 11 Sep 2024 05:34:15 -0700 (PDT)
+ bh=xtYCdte9dWd9oGT6jGVa2VRP3oHQUflr0u1OJvVB2MA=;
+ b=EMWfj5453TfceR7FqnzMGLvHtDveZJ+O2g6XYRq6jAytjCGxOsOUBgyaWMRfGrIHip
+ QvqD2Mcqt5MffhMUKg8aCLT195OHS/10F/pLvZPxlmwT5++pKStq2XECHAzgqDv26Dcz
+ lrK8tD4+5kS1/6yuW8kBKiWHP20MIY/omdxCI6sufzPs2KmIBHbpGkbc6AsWWmwSXkZF
+ YVB08pz8I7TGUewLLDrE52hRcB5343q+jzlTLC4a+1O3FkuQBjWnaKhhVYtPR+AaS8xQ
+ m+cZw5ha5gCijJC2o1HSKdlNhdLy2SMmBa+n1mPuDf2eaNS1xF/9RV6F+mpHx9VGIgot
+ 0Ong==
+X-Gm-Message-State: AOJu0Yxevt1BqPXTBjzJbL/WRQZtb9DLzmIQfzUBV7no4QLJ8aSFIJBq
+ WE373ObNVlMhn4k0zETJ9E4Yoe9EPJHHJo7rbgRDuNH2wK138CJewamGSge0T71pk7TQccrBx3p
+ c7Up3i7lf2rBVcPLPb89/OoYiLmUAMkqYLXDEQsP3EoukJIRxd6wCQQtKRI7TgGuKgmalOutm7d
+ uDfc2q71rIC75Jo1LIlnGtJg2KmK53aHaEQDMYTLU=
+X-Received: by 2002:a5d:4991:0:b0:368:5bb4:169b with SMTP id
+ ffacd0b85a97d-378926858b2mr7941981f8f.4.1726058044579; 
+ Wed, 11 Sep 2024 05:34:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFNafR3vo7C/29BOJu4tasZKxMizFSJ9u+6mePFyBtocHZYI8Q8jgAoAWHtyi+3mSLgGSQK9w==
+X-Received: by 2002:a5d:4991:0:b0:368:5bb4:169b with SMTP id
+ ffacd0b85a97d-378926858b2mr7941958f8f.4.1726058044030; 
+ Wed, 11 Sep 2024 05:34:04 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-378956ddaf3sm11490519f8f.96.2024.09.11.05.34.13
+ ffacd0b85a97d-378956d35b9sm11476718f8f.70.2024.09.11.05.34.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 05:34:13 -0700 (PDT)
+ Wed, 11 Sep 2024 05:34:03 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 10/17] kvm/i386: replace identity_base variable with a constant
-Date: Wed, 11 Sep 2024 14:33:35 +0200
-Message-ID: <20240911123342.339482-11-pbonzini@redhat.com>
+Subject: [PULL 07/17] kvm/i386: fix return values of is_host_cpu_intel()
+Date: Wed, 11 Sep 2024 14:33:32 +0200
+Message-ID: <20240911123342.339482-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240911123342.339482-1-pbonzini@redhat.com>
 References: <20240911123342.339482-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -103,103 +103,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-identity_base variable is first initialzied to address 0xfffbc000 and then
-kvm_vm_set_identity_map_addr() overrides this value to address 0xfeffc000.
-The initial address to which the variable was initialized was never used. Clean
-everything up, placing 0xfeffc000 in a preprocessor constant.
+From: Ani Sinha <anisinha@redhat.com>
 
-Reported-by: Ani Sinha <anisinha@redhat.com>
+is_host_cpu_intel() should return TRUE if the host cpu in Intel based, otherwise
+it should return FALSE. Currently, it returns zero (FALSE) when the host CPU
+is INTEL and non-zero otherwise. Fix the function so that it agrees more with
+the semantics. Adjust the calling logic accordingly. RAPL needs Intel host cpus.
+If the host CPU is not Intel baseed, we should report error.
+
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+Link: https://lore.kernel.org/r/20240903080004.33746-1-anisinha@redhat.com
+[While touching the code remove too many spaces from the second part of the
+ error. - Paolo]
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/kvm.c | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ target/i386/kvm/kvm.c         | 6 +++---
+ target/i386/kvm/vmsr_energy.c | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 599faf0ac6e..5422fd7fa7d 100644
+index d95013a2ce6..7c491378026 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
-@@ -81,6 +81,16 @@
-     do { } while (0)
- #endif
- 
-+/*
-+ * On older Intel CPUs, KVM uses vm86 mode to emulate 16-bit code directly.
-+ * In order to use vm86 mode, an EPT identity map and a TSS  are needed.
-+ * Since these must be part of guest physical memory, we need to allocate
-+ * them, both by setting their start addresses in the kernel and by
-+ * creating a corresponding e820 entry. We need 4 pages before the BIOS,
-+ * so this value allows up to 16M BIOSes.
-+ */
-+#define KVM_IDENTITY_BASE 0xfeffc000
-+
- /* From arch/x86/kvm/lapic.h */
- #define KVM_APIC_BUS_CYCLE_NS       1
- #define KVM_APIC_BUS_FREQUENCY      (1000000000ULL / KVM_APIC_BUS_CYCLE_NS)
-@@ -3036,18 +3046,9 @@ static int kvm_vm_enable_triple_fault_event(KVMState *s)
-     return ret;
- }
- 
--static int kvm_vm_set_identity_map_addr(KVMState *s, uint64_t *identity_base)
-+static int kvm_vm_set_identity_map_addr(KVMState *s, uint64_t identity_base)
- {
--    /*
--     * On older Intel CPUs, KVM uses vm86 mode to emulate 16-bit code directly.
--     * In order to use vm86 mode, an EPT identity map and a TSS  are needed.
--     * Since these must be part of guest physical memory, we need to allocate
--     * them, both by setting their start addresses in the kernel and by
--     * creating a corresponding e820 entry. We need 4 pages before the BIOS,
--     * so this value allows up to 16M BIOSes.
--     */
--    *identity_base = 0xfeffc000;
--    return kvm_vm_ioctl(s, KVM_SET_IDENTITY_MAP_ADDR, identity_base);
-+    return kvm_vm_ioctl(s, KVM_SET_IDENTITY_MAP_ADDR, &identity_base);
- }
- 
- static int kvm_vm_set_nr_mmu_pages(KVMState *s)
-@@ -3064,10 +3065,9 @@ static int kvm_vm_set_nr_mmu_pages(KVMState *s)
-     return ret;
- }
- 
--static int kvm_vm_set_tss_addr(KVMState *s, uint64_t identity_base)
-+static int kvm_vm_set_tss_addr(KVMState *s, uint64_t tss_base)
- {
--    /* Set TSS base one page after EPT identity map. */
--    return kvm_vm_ioctl(s, KVM_SET_TSS_ADDR, identity_base);
-+    return kvm_vm_ioctl(s, KVM_SET_TSS_ADDR, tss_base);
- }
- 
- static int kvm_vm_enable_disable_exits(KVMState *s)
-@@ -3195,7 +3195,6 @@ static void kvm_vm_enable_energy_msrs(KVMState *s)
- 
- int kvm_arch_init(MachineState *ms, KVMState *s)
- {
--    uint64_t identity_base = 0xfffbc000;
-     int ret;
-     struct utsname utsname;
-     Error *local_err = NULL;
-@@ -3263,18 +3262,19 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-     uname(&utsname);
-     lm_capable_kernel = strcmp(utsname.machine, "x86_64") == 0;
- 
--    ret = kvm_vm_set_identity_map_addr(s, &identity_base);
-+    ret = kvm_vm_set_identity_map_addr(s, KVM_IDENTITY_BASE);
-     if (ret < 0) {
-         return ret;
+@@ -2906,9 +2906,9 @@ static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
+      * 1. Host cpu must be Intel cpu
+      * 2. RAPL must be enabled on the Host
+      */
+-    if (is_host_cpu_intel()) {
+-        error_report("The RAPL feature can only be enabled on hosts\
+-                      with Intel CPU models");
++    if (!is_host_cpu_intel()) {
++        error_report("The RAPL feature can only be enabled on hosts "
++                     "with Intel CPU models");
+         ret = 1;
+         goto out;
      }
+diff --git a/target/i386/kvm/vmsr_energy.c b/target/i386/kvm/vmsr_energy.c
+index 7e064c5aef3..31508d4e77a 100644
+--- a/target/i386/kvm/vmsr_energy.c
++++ b/target/i386/kvm/vmsr_energy.c
+@@ -34,7 +34,7 @@ bool is_host_cpu_intel(void)
  
--    ret = kvm_vm_set_tss_addr(s, identity_base + 0x1000);
-+    /* Set TSS base one page after EPT identity map. */
-+    ret = kvm_vm_set_tss_addr(s, KVM_IDENTITY_BASE + 0x1000);
-     if (ret < 0) {
-         return ret;
-     }
+     host_cpu_vendor_fms(vendor, &family, &model, &stepping);
  
-     /* Tell fw_cfg to notify the BIOS to reserve the range. */
--    e820_add_entry(identity_base, 0x4000, E820_RESERVED);
-+    e820_add_entry(KVM_IDENTITY_BASE, 0x4000, E820_RESERVED);
+-    return strcmp(vendor, CPUID_VENDOR_INTEL);
++    return g_str_equal(vendor, CPUID_VENDOR_INTEL);
+ }
  
-     ret = kvm_vm_set_nr_mmu_pages(s);
-     if (ret < 0) {
+ int is_rapl_enabled(void)
 -- 
 2.46.0
 
