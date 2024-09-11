@@ -4,132 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E403EE49BC
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:26:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5EAAEE0213
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:28:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soPEC-0003xW-FN; Wed, 11 Sep 2024 11:25:56 -0400
+	id 1soPG6-0003eB-Le; Wed, 11 Sep 2024 11:27:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1soPEA-0003nW-Qs
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:25:54 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1soPG5-0003b5-NW
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:27:53 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1soPE5-0002zl-Pz
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:25:54 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2068acc8b98so64256445ad.3
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 08:25:49 -0700 (PDT)
+ id 1soPG2-00038w-6S
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:27:53 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-71790ed8c2dso6012935b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 08:27:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726068348; x=1726673148; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1726068468; x=1726673268; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=KOIqyxflpQF2OIgg5Cs8RejsCarR4kHtT8bNPVM50WU=;
- b=XY4s2CpwAMYjd0V2j4W8Uc9lW/PfzT3RelJzz3qDWrIEunvwOiUfQBZVsesfCou5Eq
- xIoKoAxQwbewylV76XQp7mTUiZgnnFXIll2EEZrHIjmQ3FaQT7MWv7+3xpPdPAw5GPlC
- q7ves2KsemFRQg7y6yeXE2tGmEsBxna2s9icG/mutNbJ34KtEPFzR3OAK4WLDqavFdLy
- oevboxTTHDRxN2mHQ1DO/FR2/dKNQmkPfU0b88vCbCYh9w0kdC5WJY8XHnE/Het9dBbU
- yQK3KV1d7iOhRqfyxLgIMJM5BBFO5cYQuc2zqlWlAEvY0mzULJ71m7ZPtdxQ+b0OGH8D
- WiTw==
+ bh=X3MtBeUHgye42AOXvjIp7egSBQXEEcQsnrIgj2jL0eM=;
+ b=fbrqyf+XyesPwjkwLk3sDkYpBMgcYZ3fhxSmTU2eL1xVs0/U6aDfe/HjxgG80fmmkp
+ BXACnMY3+H344+Am87GdXG1wEo35PdvkjvAWlgXmXaihCXEo2O5X7LTlb0Z9c2awSRrz
+ 2KwsNA/pAQxLuMtmTpmtAbGhOEMMbXP63+jrIZpuS4JQjaWuhmVv+6j7EOmuMnCUNW7e
+ iPhhq3lsrf3vyYOaKiEVzy878oQSEm0sCqztqqt38YGc9E0a/txMKLyQNwgGWp3bRB7F
+ hM5xvSKgLculxpiJQvjmeoyCskj5ub64jJpC2FYMslMnO0IAZqFHg6vrRtB7y0nYixSw
+ RVGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726068348; x=1726673148;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1726068468; x=1726673268;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KOIqyxflpQF2OIgg5Cs8RejsCarR4kHtT8bNPVM50WU=;
- b=JglXLI8Cb8WO2pOQ1ATE60a8jtmaJqcpqlVrChsVAmIamzwxD3YhCjEqIzagyikEDE
- zCx1TA9LWtbxroUDsGq9gj899O3jxiVIGcuvDKvS4jbW0xUceYbAehdqJOMeIb01MdJs
- ouAEqTnkOAc0jWM0LOTpqGmI6FxeMveFvzPI9eih2o6eqdHNp8or/fc8viE8Pkx/I5cH
- j7b09ACVW2/tf6KPs68XqTjp00Kzu4z/5ZrWpUvljq1UvJ7Aa8ktM4jpR4EjLbM88NFf
- y072YCXo9/ZVCwEE3JC6c9WM3AwXZioegs5ddWPPqQm17z0H7AMjLXD14jf6gp6AAimM
- D2og==
+ bh=X3MtBeUHgye42AOXvjIp7egSBQXEEcQsnrIgj2jL0eM=;
+ b=sjV9BANTlOkRShZnQlhKMubgBhi3urLImiPBqeGO//EfSUTekrC1//tOWJjP5Q3zAs
+ MEsqfIZ9gdzTfRhrzCimDxKagKCaVUAehIYF6B8Cg4CJqmk2aL/FlltkIigesu1mC/9q
+ +wggNR9ya5pwOjF1sDB7NuBzzAGJk5YHkXiPZme5LhVbMZ1aVaudXP4vgwxrVPi32Mx4
+ yJm4w1i09mRZeOkG8un8mnTLjWUpxB1Jbjk3vhlCsFbu7jbl5/uJge9E4CmswMCkSg0Y
+ uC26dxHS4SUYG6oZVvQJkH3Y+XZP+Z6aPzbgpDNQxv+/1qFeNHX9CPWqFp7BkdZWq0Jn
+ 206Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX0w+UQqU5+gu3O5zM/b/W/9mLmusQSZIFmh9/gMXJEzhAQ+7ixv0YcwVjpXJn0A/UkA4+FZY9HWI3s@nongnu.org
-X-Gm-Message-State: AOJu0YwVU9LMTg2OFEKi7m0Gx2uexNJD1ELMKZn0KHGp20dPNn6fmBv8
- yjN7kyH4lD91mPFHoneL4VqkfNxJPBN6PBSXNnos3WTPsf+hmvS8apf+wh5r/iM=
-X-Google-Smtp-Source: AGHT+IEo3j0LjjLmX6e/pgB28NMglTb3qohZUhTxnnknsMeupJHRg8k/VIdzXloihGE5TJFpijhPog==
-X-Received: by 2002:a17:902:d54f:b0:207:db0:cb6c with SMTP id
- d9443c01a7336-2074c612765mr72854645ad.34.1726068347907; 
- Wed, 11 Sep 2024 08:25:47 -0700 (PDT)
+ AJvYcCVpSh7XGi9Ysu7KyTt/pBVD7EM8eFNd7F/PnvQQ5rp3dqhmTUUQ5xudLL5cEXs8iu21S0xteu8lT4nt@nongnu.org
+X-Gm-Message-State: AOJu0YzGGA1leNdS/gwFFyCXRH+mOgZH5mGiNa2G8wyxCueeV4kQw0FI
+ 3kbT0tmlcbKRThKzMdgK0jTLZr0Vyy8t2GEycL8jey96eT6ShD/pDdTrRw86iu8=
+X-Google-Smtp-Source: AGHT+IHm3hHqHQ17jrSMNdBdjdufkA6GdS3qwTQk70IwH2tDgXNiglWaYqVeQj9CGVO5VeN+B1P2FQ==
+X-Received: by 2002:a05:6a20:cf8c:b0:1cf:4569:ffb0 with SMTP id
+ adf61e73a8af0-1cf5de118dbmr8887717637.0.1726068468472; 
+ Wed, 11 Sep 2024 08:27:48 -0700 (PDT)
 Received: from ?IPV6:2604:3d08:9384:1d00::9633? ([2604:3d08:9384:1d00::9633])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2076af25407sm1022925ad.41.2024.09.11.08.25.45
+ d2e1a72fcca58-719117257b9sm2589471b3a.13.2024.09.11.08.27.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Sep 2024 08:25:47 -0700 (PDT)
-Message-ID: <6818337d-ba58-4051-8105-05f679f71b88@linaro.org>
-Date: Wed, 11 Sep 2024 08:25:44 -0700
+ Wed, 11 Sep 2024 08:27:48 -0700 (PDT)
+Message-ID: <75062fa2-db67-4136-a7bb-d9d3709b7229@linaro.org>
+Date: Wed, 11 Sep 2024 08:27:47 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/39] docs/spin: replace assert(0) with
+Subject: Re: [PATCH 11/39] target/ppc: replace assert(0) with
  g_assert_not_reached()
 Content-Language: en-US
-To: "Richard W.M. Jones" <rjones@redhat.com>,
- "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>, Joel Stanley <joel@jms.id.au>,
- Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-arm@nongnu.org, Corey Minyard <minyard@acm.org>,
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Keith Busch <kbusch@kernel.org>, WANG Xuerui <git@xen0n.name>,
- Hyman Huang <yong.huang@smartx.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Michael Rolnik <mrolnik@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
- Ani Sinha <anisinha@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Jesper Devantier <foss@defmacro.it>, Laurent Vivier <laurent@vivier.eu>,
- Peter Maydell <peter.maydell@linaro.org>, Igor Mammedov
- <imammedo@redhat.com>, kvm@vger.kernel.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, Fam Zheng
- <fam@euphon.net>, qemu-s390x@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, Eduardo Habkost <eduardo@habkost.net>,
- Laurent Vivier <lvivier@redhat.com>, Rob Herring <robh@kernel.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org,
- qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Helge Deller <deller@gmx.de>, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Yanan Wang <wangyanan55@huawei.com>, Peter Xu <peterx@redhat.com>,
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- Klaus Jensen <its@irrelevant.dk>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Jason Wang <jasowang@redhat.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20240910221606.1817478-1-pierrick.bouvier@linaro.org>
- <20240910221606.1817478-2-pierrick.bouvier@linaro.org>
- <zkyoryho5alnyirnl7ulvh5y6tkty6koccgeygmve42uml7glu@37rkdodtlx4f>
- <bwo43ms2wi6vbeqhlc7qjwmw5jyt2btxvpph3lqn7tfol4srjf@77yusngzs6wh>
- <10d6d67a-32f6-40fc-aba9-c62a74d9d98d@maciej.szmigiero.name>
- <20240911125126.GS1450@redhat.com>
+ <20240910221606.1817478-12-pierrick.bouvier@linaro.org>
+ <b26aeb05-4d26-4949-b43e-7f6320f4bfac@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240911125126.GS1450@redhat.com>
+In-Reply-To: <b26aeb05-4d26-4949-b43e-7f6320f4bfac@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,51 +99,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/11/24 05:51, Richard W.M. Jones wrote:
-> On Wed, Sep 11, 2024 at 02:46:18PM +0200, Maciej S. Szmigiero wrote:
->> On 11.09.2024 14:37, Eric Blake wrote:
->>> On Wed, Sep 11, 2024 at 07:33:59AM GMT, Eric Blake wrote:
->>>> On Tue, Sep 10, 2024 at 03:15:28PM GMT, Pierrick Bouvier wrote:
->>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>>> ---
->>>>
->>>> A general suggestion for the entire series: please use a commit
->>>> message that explains why this is a good idea.  Even something as
->>>> boiler-plate as "refer to commit XXX for rationale" that can be
->>>> copy-pasted into all the other commits is better than nothing,
->>>> although a self-contained message is best.  Maybe:
->>>>
->>>> This patch is part of a series that moves towards a consistent use of
->>>> g_assert_not_reached() rather than an ad hoc mix of different
->>>> assertion mechanisms.
->>>
->>> Or summarize your cover letter:
->>>
->>> Use of assert(false) can trip spurious control flow warnings from some
->>> versions of gcc:
->>> https://lore.kernel.org/qemu-devel/54bb02a6-1b12-460a-97f6-3f478ef766c6@linaro.org/
->>> Solve that by unifying the code base on g_assert_not_reached()
->>> instead.
->>>
+On 9/10/24 20:14, Richard Henderson wrote:
+> On 9/10/24 15:15, Pierrick Bouvier wrote:
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    target/ppc/dfp_helper.c | 8 ++++----
+>>    target/ppc/mmu_helper.c | 2 +-
+>>    2 files changed, 5 insertions(+), 5 deletions(-)
 >>
->> If using g_assert_not_reached() instead of assert(false) silences
->> the warning about missing return value in such impossible to reach
->> locations should we also be deleting the now-unnecessary "return"
->> statements after g_assert_not_reached()?
+>> diff --git a/target/ppc/dfp_helper.c b/target/ppc/dfp_helper.c
+>> index 5967ea07a92..6ef31a480b7 100644
+>> --- a/target/ppc/dfp_helper.c
+>> +++ b/target/ppc/dfp_helper.c
+>> @@ -249,7 +249,7 @@ static void dfp_set_FPRF_from_FRT_with_context(struct PPC_DFP *dfp,
+>>            fprf = 0x05;
+>>            break;
+>>        default:
+>> -        assert(0); /* should never get here */
+>> +        g_assert_not_reached(); /* should never get here */
+>>        }
+>>        dfp->env->fpscr &= ~FP_FPRF;
+>>        dfp->env->fpscr |= (fprf << FPSCR_FPRF);
+>> @@ -1243,7 +1243,7 @@ void helper_##op(CPUPPCState *env, ppc_fprp_t *t, ppc_fprp_t *b) \
+>>            } else if (decNumberIsQNaN(&dfp.b)) {                  \
+>>                vt.VsrD(1) = -2;                                   \
+>>            } else {                                               \
+>> -            assert(0);                                         \
+>> +            g_assert_not_reached();                                         \
+>>            }                                                      \
 > 
-> Although it's unlikely to be used on any compiler that can also
-> compile qemu, there is a third implementation of g_assert_not_reached
-> that does nothing, see:
+> Backslashes should ideally be kept aligned.
 > 
-> https://gitlab.gnome.org/GNOME/glib/-/blob/927683ebd94eb66c0d7868b77863f57ce9c5bc76/glib/gtestutils.h#L269
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > 
-> Rich.
 > 
+> r~
 
-Interesting.
-At least gcc, clang and msvc are covered, this should be ok for most of 
-the builds.
-
-Thanks for sharing,
+I'll align those.
+Thanks,
 Pierrick
 
