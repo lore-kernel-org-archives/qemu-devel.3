@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38CEDEE499E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 164C7EE499D
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:16:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMGY-0001ig-AR; Wed, 11 Sep 2024 08:16:10 -0400
+	id 1soMGk-0003bo-VU; Wed, 11 Sep 2024 08:16:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMGO-0000jL-M3
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:16:03 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMGj-0003PJ-Ha
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:16:21 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMGM-0007Rv-Bh
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:16:00 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a8d0d0aea3cso673119266b.3
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:15:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMGf-0007SQ-LR
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:16:21 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4280ca0791bso62779085e9.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:16:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726056956; x=1726661756; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726056976; x=1726661776; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0CfTxtjQXBmzI0CDOG+LMdjpMnlfgUIKoZqJnL/i42k=;
- b=Y93xIz3MmW7rkQglJRHmSR3Ln9rFAN/I8Hg1rR6nWwEmUK5d6Jm+skYsKrrcd4rLuD
- Sq4RDhO6jwIUtMfV7aHq/h6aiWSrdhkWjIWZ7JvIfsC98cPfwGPl5B8vN72+OMDSETqi
- 3VSAwWggIzJj96g6uEneo5eJiUnQ6vuazylGpnuPtU1y9kvPNuo1zkYjuBUBic1Ot3J+
- mBdBYiyWxEO51w9bR83kHbRkDu97wzFZZZYZhLbdxDInfBOPCtIp43oGyrQPihdTprnm
- Q1aFQEKI7OzdM+zRRDSulXcqY7ssDz1yBScUL5PpAPCzxvVoD/whh4SJ1KAgEmx9xdn8
- +GEQ==
+ bh=CuMKQ+59Xn2wuuket10RZoe/HRBoPomWd1PCNG2H4lE=;
+ b=lZgfj1er6v7s3ZU1Ii/fXITd38tSp5lOMQlzFjEv+TrcVUAVG5MKGHS4lHeJVCqjj+
+ QP99VFEojMt3masTtQE1X5CNLyw1LhwwtofWokPZBxsQkAPIiEYlyGWkGIDsC5n0mTAo
+ Z3ReoFtBwN/mEXKCyqX3lRyGQ1Ks7kK0LGgMRN76zWg+oL18tFxswwU/6gQEEzrhpqLw
+ IrACxfiWRaNeU4QntZIXx95z4W8yfvgj/6SlvvyHS6yWurzbRcEifc8V45mKUv87+Wj4
+ JTohX2gdjUvHPnIw9rm5OVbk03qcgpb0vLTuscqW/I57ZVeP5zhAUVtFX+wZgZF+kY9D
+ IJbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726056956; x=1726661756;
+ d=1e100.net; s=20230601; t=1726056976; x=1726661776;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0CfTxtjQXBmzI0CDOG+LMdjpMnlfgUIKoZqJnL/i42k=;
- b=Z4mvpGCIXkPukvn9cxsWywrQ9T+0cGi6Tw/D6vCKQqTl8XZtW7YB5vZ7qiRp40N+cT
- t0G6xjEWBobkcRbTxr9opITSlC+Bno9atXOkHwPuk6pBWP7DFvPVEDjOOYafCSjXWOox
- I0vm1M98BEzL67mxaXeKY+4VheglHVX3bJNcfgyPGbp5+V6zMtm/o7x8P2q3V1/9fu5c
- cLhCS827w0fk6a58G9mc4iu/UTcnQpYXiFpWt7M02eP5de+ekv973nMlteVxSoDEi9ai
- WT9PC7/BxbYlqNKqcXfYjUrubDcpp/jSuWG9gHSmhNc4Mcy5nAdxgKE1KyQvnoEzejdH
- fdiA==
-X-Gm-Message-State: AOJu0YxQQPsRf4EPVzMz612tcDsFkovBDdW2/2VEnzzV+4ILPA3KVc1h
- fPivlYKTFtGmbgQbI55+ASSxs4/lYgLf/X2D0TmZ9fk46n4Oell5no/Gsz+Ij5G4VBlJdc2eOm1
- e
-X-Google-Smtp-Source: AGHT+IEap6OxGFXEKh1xN9MbxWtP6JGbrVThJKoccc9I4zSR38jL+PaNm9eReF9wfD8nLJktTZ93Sw==
-X-Received: by 2002:a17:907:3f27:b0:a7a:b561:3575 with SMTP id
- a640c23a62f3a-a8ffae05028mr423537466b.56.1726056956293; 
- Wed, 11 Sep 2024 05:15:56 -0700 (PDT)
+ bh=CuMKQ+59Xn2wuuket10RZoe/HRBoPomWd1PCNG2H4lE=;
+ b=mA/s6fq5D8TquVcZEgqv/ViTGFxiVZ7mkTLHZMdRe7xsI98+th+qD5cmVnRplMYGYP
+ oXuMFs/4pVoN7+e7nH0rSOywz4MofaR0nVKLbQP+4/xCR4RYaVlg2KhWfAiiOfwcKRU8
+ 3MDg4ESeTj/WRG2OKVeLcU913GxHmILY/gIx0yvthr1F3gwFNAVUKSr6l/q2g1FzIuMp
+ nh8OPdhI56uIciSD/vbSwDXtEadxTZsFAjcmjieKeM2OTl8yt8E9N/aQ4RWE2zs+6r7/
+ tjIw7jZVlQtF7CeYjxosWPdf/nV5iM6BhT9jNpsPFhPFC6zNk+DazUL9pUemyMqGOTWx
+ BVgw==
+X-Gm-Message-State: AOJu0YzLnWoopBg9I9B0O1UDFRvvLxMPdOt8SlZi5B5OLV71sEbrVYWU
+ 4Dpbuhaq8PWmka90iRhhTCuhbRt027Rxr2dlLSLrnm4o20xk9V+/dsTkt4cmLqRjmiQ6Oy7Thay
+ h
+X-Google-Smtp-Source: AGHT+IGmKP1V7ca2khWkwLTeAze7J5CQoSMIne7reKUzAui5zbpdVU+9GoP0Lnn+Qvp4NUySSvFb6w==
+X-Received: by 2002:a05:600c:54e7:b0:42c:acb0:ddb6 with SMTP id
+ 5b1f17b1804b1-42cacb0e00bmr116496205e9.9.1726056975271; 
+ Wed, 11 Sep 2024 05:16:15 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.196.107])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25d5dc74sm605433266b.208.2024.09.11.05.15.54
+ 5b1f17b1804b1-42caeb8120asm139558285e9.37.2024.09.11.05.16.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Sep 2024 05:15:55 -0700 (PDT)
+ Wed, 11 Sep 2024 05:16:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [PULL 13/56] hw/intc: Remove TYPE_ETRAX_FS_PIC device
-Date: Wed, 11 Sep 2024 14:13:38 +0200
-Message-ID: <20240911121422.52585-14-philmd@linaro.org>
+Subject: [PULL 16/56] hw/dma: Remove ETRAX_FS DMA device
+Date: Wed, 11 Sep 2024 14:13:41 +0200
+Message-ID: <20240911121422.52585-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240911121422.52585-1-philmd@linaro.org>
 References: <20240911121422.52585-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,27 +96,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We just removed the single machine using it (axis-dev88).
+We just removed the single machine calling etraxfs_dmac_init()
+(the axis-dev88 machine).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Acked-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Message-ID: <20240904143603.52934-8-philmd@linaro.org>
+Message-ID: <20240904143603.52934-11-philmd@linaro.org>
 ---
- hw/intc/etraxfs_pic.c | 172 ------------------------------------------
- hw/intc/meson.build   |   1 -
- 2 files changed, 173 deletions(-)
- delete mode 100644 hw/intc/etraxfs_pic.c
+ MAINTAINERS                         |   1 -
+ include/hw/cris/etraxfs_dma.h       |  36 --
+ hw/dma/etraxfs_dma.c                | 781 ----------------------------
+ hw/dma/meson.build                  |   1 -
+ scripts/coverity-scan/COMPONENTS.md |   2 +-
+ 5 files changed, 1 insertion(+), 820 deletions(-)
+ delete mode 100644 include/hw/cris/etraxfs_dma.h
+ delete mode 100644 hw/dma/etraxfs_dma.c
 
-diff --git a/hw/intc/etraxfs_pic.c b/hw/intc/etraxfs_pic.c
+diff --git a/MAINTAINERS b/MAINTAINERS
+index e64a3206d9..2f505be253 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -229,7 +229,6 @@ M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+ S: Maintained
+ F: target/cris/
+ F: hw/cris/
+-F: include/hw/cris/
+ F: disas/cris.c
+ 
+ Hexagon TCG CPUs
+diff --git a/include/hw/cris/etraxfs_dma.h b/include/hw/cris/etraxfs_dma.h
 deleted file mode 100644
-index bd37d1cca0..0000000000
---- a/hw/intc/etraxfs_pic.c
+index 095d76b956..0000000000
+--- a/include/hw/cris/etraxfs_dma.h
 +++ /dev/null
-@@ -1,172 +0,0 @@
+@@ -1,36 +0,0 @@
+-#ifndef HW_ETRAXFS_DMA_H
+-#define HW_ETRAXFS_DMA_H
+-
+-#include "exec/hwaddr.h"
+-
+-struct dma_context_metadata {
+-	/* data descriptor md */
+-	uint16_t metadata;
+-};
+-
+-struct etraxfs_dma_client
+-{
+-	/* DMA controller. */
+-	int channel;
+-	void *ctrl;
+-
+-	/* client.  */
+-	struct {
+-		int (*push)(void *opaque, unsigned char *buf,
+-		            int len, bool eop);
+-		void (*pull)(void *opaque);
+-		void (*metadata_push)(void *opaque,
+-		                      const struct dma_context_metadata *md);
+-		void *opaque;
+-	} client;
+-};
+-
+-void *etraxfs_dmac_init(hwaddr base, int nr_channels);
+-void etraxfs_dmac_connect(void *opaque, int channel, qemu_irq *line,
+-			  int input);
+-void etraxfs_dmac_connect_client(void *opaque, int c, 
+-				 struct etraxfs_dma_client *cl);
+-int etraxfs_dmac_input(struct etraxfs_dma_client *client, 
+-		       void *buf, int len, int eop);
+-
+-#endif
+diff --git a/hw/dma/etraxfs_dma.c b/hw/dma/etraxfs_dma.c
+deleted file mode 100644
+index 9c0003de51..0000000000
+--- a/hw/dma/etraxfs_dma.c
++++ /dev/null
+@@ -1,781 +0,0 @@
 -/*
-- * QEMU ETRAX Interrupt Controller.
+- * QEMU ETRAX DMA Controller.
 - *
 - * Copyright (c) 2008 Edgar E. Iglesias, Axis Communications AB.
 - *
@@ -140,165 +199,787 @@ index bd37d1cca0..0000000000
 - */
 -
 -#include "qemu/osdep.h"
--#include "hw/sysbus.h"
--#include "qemu/module.h"
+-#include "hw/hw.h"
 -#include "hw/irq.h"
--#include "hw/qdev-properties.h"
--#include "qom/object.h"
+-#include "qemu/main-loop.h"
+-#include "sysemu/runstate.h"
+-#include "exec/address-spaces.h"
+-#include "exec/memory.h"
+-
+-#include "hw/cris/etraxfs_dma.h"
 -
 -#define D(x)
 -
--#define R_RW_MASK   0
--#define R_R_VECT    1
--#define R_R_MASKED_VECT 2
--#define R_R_NMI     3
--#define R_R_GURU    4
--#define R_MAX       5
+-#define RW_DATA           (0x0 / 4)
+-#define RW_SAVED_DATA     (0x58 / 4)
+-#define RW_SAVED_DATA_BUF (0x5c / 4)
+-#define RW_GROUP          (0x60 / 4)
+-#define RW_GROUP_DOWN     (0x7c / 4)
+-#define RW_CMD            (0x80 / 4)
+-#define RW_CFG            (0x84 / 4)
+-#define RW_STAT           (0x88 / 4)
+-#define RW_INTR_MASK      (0x8c / 4)
+-#define RW_ACK_INTR       (0x90 / 4)
+-#define R_INTR            (0x94 / 4)
+-#define R_MASKED_INTR     (0x98 / 4)
+-#define RW_STREAM_CMD     (0x9c / 4)
 -
--#define TYPE_ETRAX_FS_PIC "etraxfs-pic"
--DECLARE_INSTANCE_CHECKER(struct etrax_pic, ETRAX_FS_PIC,
--                         TYPE_ETRAX_FS_PIC)
+-#define DMA_REG_MAX       (0x100 / 4)
 -
--struct etrax_pic
--{
--    SysBusDevice parent_obj;
+-/* descriptors */
 -
--    MemoryRegion mmio;
--    qemu_irq parent_irq;
--    qemu_irq parent_nmi;
--    uint32_t regs[R_MAX];
+-// ------------------------------------------------------------ dma_descr_group
+-typedef struct dma_descr_group {
+-  uint32_t                      next;
+-  unsigned                      eol        : 1;
+-  unsigned                      tol        : 1;
+-  unsigned                      bol        : 1;
+-  unsigned                                 : 1;
+-  unsigned                      intr       : 1;
+-  unsigned                                 : 2;
+-  unsigned                      en         : 1;
+-  unsigned                                 : 7;
+-  unsigned                      dis        : 1;
+-  unsigned                      md         : 16;
+-  struct dma_descr_group       *up;
+-  union {
+-    struct dma_descr_context   *context;
+-    struct dma_descr_group     *group;
+-  }                             down;
+-} dma_descr_group;
+-
+-// ---------------------------------------------------------- dma_descr_context
+-typedef struct dma_descr_context {
+-  uint32_t                      next;
+-  unsigned                      eol        : 1;
+-  unsigned                                 : 3;
+-  unsigned                      intr       : 1;
+-  unsigned                                 : 1;
+-  unsigned                      store_mode : 1;
+-  unsigned                      en         : 1;
+-  unsigned                                 : 7;
+-  unsigned                      dis        : 1;
+-  unsigned                      md0        : 16;
+-  unsigned                      md1;
+-  unsigned                      md2;
+-  unsigned                      md3;
+-  unsigned                      md4;
+-  uint32_t                      saved_data;
+-  uint32_t                      saved_data_buf;
+-} dma_descr_context;
+-
+-// ------------------------------------------------------------- dma_descr_data
+-typedef struct dma_descr_data {
+-  uint32_t                      next;
+-  uint32_t                      buf;
+-  unsigned                      eol        : 1;
+-  unsigned                                 : 2;
+-  unsigned                      out_eop    : 1;
+-  unsigned                      intr       : 1;
+-  unsigned                      wait       : 1;
+-  unsigned                                 : 2;
+-  unsigned                                 : 3;
+-  unsigned                      in_eop     : 1;
+-  unsigned                                 : 4;
+-  unsigned                      md         : 16;
+-  uint32_t                      after;
+-} dma_descr_data;
+-
+-/* Constants */
+-enum {
+-  regk_dma_ack_pkt                         = 0x00000100,
+-  regk_dma_anytime                         = 0x00000001,
+-  regk_dma_array                           = 0x00000008,
+-  regk_dma_burst                           = 0x00000020,
+-  regk_dma_client                          = 0x00000002,
+-  regk_dma_copy_next                       = 0x00000010,
+-  regk_dma_copy_up                         = 0x00000020,
+-  regk_dma_data_at_eol                     = 0x00000001,
+-  regk_dma_dis_c                           = 0x00000010,
+-  regk_dma_dis_g                           = 0x00000020,
+-  regk_dma_idle                            = 0x00000001,
+-  regk_dma_intern                          = 0x00000004,
+-  regk_dma_load_c                          = 0x00000200,
+-  regk_dma_load_c_n                        = 0x00000280,
+-  regk_dma_load_c_next                     = 0x00000240,
+-  regk_dma_load_d                          = 0x00000140,
+-  regk_dma_load_g                          = 0x00000300,
+-  regk_dma_load_g_down                     = 0x000003c0,
+-  regk_dma_load_g_next                     = 0x00000340,
+-  regk_dma_load_g_up                       = 0x00000380,
+-  regk_dma_next_en                         = 0x00000010,
+-  regk_dma_next_pkt                        = 0x00000010,
+-  regk_dma_no                              = 0x00000000,
+-  regk_dma_only_at_wait                    = 0x00000000,
+-  regk_dma_restore                         = 0x00000020,
+-  regk_dma_rst                             = 0x00000001,
+-  regk_dma_running                         = 0x00000004,
+-  regk_dma_rw_cfg_default                  = 0x00000000,
+-  regk_dma_rw_cmd_default                  = 0x00000000,
+-  regk_dma_rw_intr_mask_default            = 0x00000000,
+-  regk_dma_rw_stat_default                 = 0x00000101,
+-  regk_dma_rw_stream_cmd_default           = 0x00000000,
+-  regk_dma_save_down                       = 0x00000020,
+-  regk_dma_save_up                         = 0x00000020,
+-  regk_dma_set_reg                         = 0x00000050,
+-  regk_dma_set_w_size1                     = 0x00000190,
+-  regk_dma_set_w_size2                     = 0x000001a0,
+-  regk_dma_set_w_size4                     = 0x000001c0,
+-  regk_dma_stopped                         = 0x00000002,
+-  regk_dma_store_c                         = 0x00000002,
+-  regk_dma_store_descr                     = 0x00000000,
+-  regk_dma_store_g                         = 0x00000004,
+-  regk_dma_store_md                        = 0x00000001,
+-  regk_dma_sw                              = 0x00000008,
+-  regk_dma_update_down                     = 0x00000020,
+-  regk_dma_yes                             = 0x00000001
 -};
 -
--static void pic_update(struct etrax_pic *fs)
--{   
--    uint32_t vector = 0;
--    int i;
+-enum dma_ch_state
+-{
+-    RST = 1,
+-    STOPPED = 2,
+-    RUNNING = 4
+-};
 -
--    fs->regs[R_R_MASKED_VECT] = fs->regs[R_R_VECT] & fs->regs[R_RW_MASK];
+-struct fs_dma_channel
+-{
+-    qemu_irq irq;
+-    struct etraxfs_dma_client *client;
 -
--    /* The ETRAX interrupt controller signals interrupts to the core
--       through an interrupt request wire and an irq vector bus. If 
--       multiple interrupts are simultaneously active it chooses vector 
--       0x30 and lets the sw choose the priorities.  */
--    if (fs->regs[R_R_MASKED_VECT]) {
--        uint32_t mv = fs->regs[R_R_MASKED_VECT];
--        for (i = 0; i < 31; i++) {
--            if (mv & 1) {
--                vector = 0x31 + i;
--                /* Check for multiple interrupts.  */
--                if (mv > 1)
--                    vector = 0x30;
--                break;
+-    /* Internal status.  */
+-    int stream_cmd_src;
+-    enum dma_ch_state state;
+-
+-    unsigned int input : 1;
+-    unsigned int eol : 1;
+-
+-    struct dma_descr_group current_g;
+-    struct dma_descr_context current_c;
+-    struct dma_descr_data current_d;
+-
+-    /* Control registers.  */
+-    uint32_t regs[DMA_REG_MAX];
+-};
+-
+-struct fs_dma_ctrl
+-{
+-    MemoryRegion mmio;
+-    int nr_channels;
+-    struct fs_dma_channel *channels;
+-
+-    QEMUBH *bh;
+-};
+-
+-static void DMA_run(void *opaque);
+-static int channel_out_run(struct fs_dma_ctrl *ctrl, int c);
+-
+-static inline uint32_t channel_reg(struct fs_dma_ctrl *ctrl, int c, int reg)
+-{
+-    return ctrl->channels[c].regs[reg];
+-}
+-
+-static inline int channel_stopped(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    return channel_reg(ctrl, c, RW_CFG) & 2;
+-}
+-
+-static inline int channel_en(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    return (channel_reg(ctrl, c, RW_CFG) & 1)
+-            && ctrl->channels[c].client;
+-}
+-
+-static inline int fs_channel(hwaddr addr)
+-{
+-    /* Every channel has a 0x2000 ctrl register map.  */
+-    return addr >> 13;
+-}
+-
+-#ifdef USE_THIS_DEAD_CODE
+-static void channel_load_g(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    hwaddr addr = channel_reg(ctrl, c, RW_GROUP);
+-
+-    /* Load and decode. FIXME: handle endianness.  */
+-    cpu_physical_memory_read(addr, &ctrl->channels[c].current_g,
+-                             sizeof(ctrl->channels[c].current_g));
+-}
+-
+-static void dump_c(int ch, struct dma_descr_context *c)
+-{
+-    printf("%s ch=%d\n", __func__, ch);
+-    printf("next=%x\n", c->next);
+-    printf("saved_data=%x\n", c->saved_data);
+-    printf("saved_data_buf=%x\n", c->saved_data_buf);
+-    printf("eol=%x\n", (uint32_t) c->eol);
+-}
+-
+-static void dump_d(int ch, struct dma_descr_data *d)
+-{
+-    printf("%s ch=%d\n", __func__, ch);
+-    printf("next=%x\n", d->next);
+-    printf("buf=%x\n", d->buf);
+-    printf("after=%x\n", d->after);
+-    printf("intr=%x\n", (uint32_t) d->intr);
+-    printf("out_eop=%x\n", (uint32_t) d->out_eop);
+-    printf("in_eop=%x\n", (uint32_t) d->in_eop);
+-    printf("eol=%x\n", (uint32_t) d->eol);
+-}
+-#endif
+-
+-static void channel_load_c(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    hwaddr addr = channel_reg(ctrl, c, RW_GROUP_DOWN);
+-
+-    /* Load and decode. FIXME: handle endianness.  */
+-    cpu_physical_memory_read(addr, &ctrl->channels[c].current_c,
+-                             sizeof(ctrl->channels[c].current_c));
+-
+-    D(dump_c(c, &ctrl->channels[c].current_c));
+-    /* I guess this should update the current pos.  */
+-    ctrl->channels[c].regs[RW_SAVED_DATA] =
+-        (uint32_t)(unsigned long)ctrl->channels[c].current_c.saved_data;
+-    ctrl->channels[c].regs[RW_SAVED_DATA_BUF] =
+-        (uint32_t)(unsigned long)ctrl->channels[c].current_c.saved_data_buf;
+-}
+-
+-static void channel_load_d(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    hwaddr addr = channel_reg(ctrl, c, RW_SAVED_DATA);
+-
+-    /* Load and decode. FIXME: handle endianness.  */
+-    D(printf("%s ch=%d addr=" HWADDR_FMT_plx "\n", __func__, c, addr));
+-    cpu_physical_memory_read(addr, &ctrl->channels[c].current_d,
+-                             sizeof(ctrl->channels[c].current_d));
+-
+-    D(dump_d(c, &ctrl->channels[c].current_d));
+-    ctrl->channels[c].regs[RW_DATA] = addr;
+-}
+-
+-static void channel_store_c(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    hwaddr addr = channel_reg(ctrl, c, RW_GROUP_DOWN);
+-
+-    /* Encode and store. FIXME: handle endianness.  */
+-    D(printf("%s ch=%d addr=" HWADDR_FMT_plx "\n", __func__, c, addr));
+-    D(dump_d(c, &ctrl->channels[c].current_d));
+-    cpu_physical_memory_write(addr, &ctrl->channels[c].current_c,
+-                              sizeof(ctrl->channels[c].current_c));
+-}
+-
+-static void channel_store_d(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    hwaddr addr = channel_reg(ctrl, c, RW_SAVED_DATA);
+-
+-    /* Encode and store. FIXME: handle endianness.  */
+-    D(printf("%s ch=%d addr=" HWADDR_FMT_plx "\n", __func__, c, addr));
+-    cpu_physical_memory_write(addr, &ctrl->channels[c].current_d,
+-                              sizeof(ctrl->channels[c].current_d));
+-}
+-
+-static inline void channel_stop(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    /* FIXME:  */
+-}
+-
+-static inline void channel_start(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    if (ctrl->channels[c].client)
+-    {
+-        ctrl->channels[c].eol = 0;
+-        ctrl->channels[c].state = RUNNING;
+-        if (!ctrl->channels[c].input)
+-            channel_out_run(ctrl, c);
+-    } else
+-        printf("WARNING: starting DMA ch %d with no client\n", c);
+-
+-    qemu_bh_schedule_idle(ctrl->bh);
+-}
+-
+-static void channel_continue(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    if (!channel_en(ctrl, c)
+-        || channel_stopped(ctrl, c)
+-        || ctrl->channels[c].state != RUNNING
+-        /* Only reload the current data descriptor if it has eol set.  */
+-        || !ctrl->channels[c].current_d.eol) {
+-        D(printf("continue failed ch=%d state=%d stopped=%d en=%d eol=%d\n",
+-                 c, ctrl->channels[c].state,
+-                 channel_stopped(ctrl, c),
+-                 channel_en(ctrl,c),
+-                 ctrl->channels[c].eol));
+-        D(dump_d(c, &ctrl->channels[c].current_d));
+-        return;
+-    }
+-
+-    /* Reload the current descriptor.  */
+-    channel_load_d(ctrl, c);
+-
+-    /* If the current descriptor cleared the eol flag and we had already
+-       reached eol state, do the continue.  */
+-    if (!ctrl->channels[c].current_d.eol && ctrl->channels[c].eol) {
+-        D(printf("continue %d ok %x\n", c,
+-                 ctrl->channels[c].current_d.next));
+-        ctrl->channels[c].regs[RW_SAVED_DATA] =
+-            (uint32_t)(unsigned long)ctrl->channels[c].current_d.next;
+-        channel_load_d(ctrl, c);
+-        ctrl->channels[c].regs[RW_SAVED_DATA_BUF] =
+-            (uint32_t)(unsigned long)ctrl->channels[c].current_d.buf;
+-
+-        channel_start(ctrl, c);
+-    }
+-    ctrl->channels[c].regs[RW_SAVED_DATA_BUF] =
+-        (uint32_t)(unsigned long)ctrl->channels[c].current_d.buf;
+-}
+-
+-static void channel_stream_cmd(struct fs_dma_ctrl *ctrl, int c, uint32_t v)
+-{
+-    unsigned int cmd = v & ((1 << 10) - 1);
+-
+-    D(printf("%s ch=%d cmd=%x\n",
+-             __func__, c, cmd));
+-    if (cmd & regk_dma_load_d) {
+-        channel_load_d(ctrl, c);
+-        if (cmd & regk_dma_burst)
+-            channel_start(ctrl, c);
+-    }
+-
+-    if (cmd & regk_dma_load_c) {
+-        channel_load_c(ctrl, c);
+-    }
+-}
+-
+-static void channel_update_irq(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    D(printf("%s %d\n", __func__, c));
+-    ctrl->channels[c].regs[R_INTR] &=
+-        ~(ctrl->channels[c].regs[RW_ACK_INTR]);
+-
+-    ctrl->channels[c].regs[R_MASKED_INTR] =
+-        ctrl->channels[c].regs[R_INTR]
+-        & ctrl->channels[c].regs[RW_INTR_MASK];
+-
+-    D(printf("%s: chan=%d masked_intr=%x\n", __func__,
+-             c,
+-             ctrl->channels[c].regs[R_MASKED_INTR]));
+-
+-    qemu_set_irq(ctrl->channels[c].irq,
+-                 !!ctrl->channels[c].regs[R_MASKED_INTR]);
+-}
+-
+-static int channel_out_run(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    uint32_t len;
+-    uint32_t saved_data_buf;
+-    unsigned char buf[2 * 1024];
+-
+-    struct dma_context_metadata meta;
+-    bool send_context = true;
+-
+-    if (ctrl->channels[c].eol)
+-        return 0;
+-
+-    do {
+-        bool out_eop;
+-        D(printf("ch=%d buf=%x after=%x\n",
+-                 c,
+-                 (uint32_t)ctrl->channels[c].current_d.buf,
+-                 (uint32_t)ctrl->channels[c].current_d.after));
+-
+-        if (send_context) {
+-            if (ctrl->channels[c].client->client.metadata_push) {
+-                meta.metadata = ctrl->channels[c].current_d.md;
+-                ctrl->channels[c].client->client.metadata_push(
+-                    ctrl->channels[c].client->client.opaque,
+-                    &meta);
 -            }
--            mv >>= 1;
+-            send_context = false;
+-        }
+-
+-        channel_load_d(ctrl, c);
+-        saved_data_buf = channel_reg(ctrl, c, RW_SAVED_DATA_BUF);
+-        len = (uint32_t)(unsigned long)
+-            ctrl->channels[c].current_d.after;
+-        len -= saved_data_buf;
+-
+-        if (len > sizeof buf)
+-            len = sizeof buf;
+-        cpu_physical_memory_read (saved_data_buf, buf, len);
+-
+-        out_eop = ((saved_data_buf + len) ==
+-                   ctrl->channels[c].current_d.after) &&
+-                   ctrl->channels[c].current_d.out_eop;
+-
+-        D(printf("channel %d pushes %x %u bytes eop=%u\n", c,
+-                 saved_data_buf, len, out_eop));
+-
+-        if (ctrl->channels[c].client->client.push) {
+-            if (len > 0) {
+-                ctrl->channels[c].client->client.push(
+-                    ctrl->channels[c].client->client.opaque,
+-                    buf, len, out_eop);
+-            }
+-        } else {
+-            printf("WARNING: DMA ch%d dataloss,"
+-                   " no attached client.\n", c);
+-        }
+-
+-        saved_data_buf += len;
+-
+-        if (saved_data_buf == (uint32_t)(unsigned long)
+-                ctrl->channels[c].current_d.after) {
+-            /* Done. Step to next.  */
+-            if (ctrl->channels[c].current_d.out_eop) {
+-                send_context = true;
+-            }
+-            if (ctrl->channels[c].current_d.intr) {
+-                /* data intr.  */
+-                D(printf("signal intr %d eol=%d\n",
+-                         len, ctrl->channels[c].current_d.eol));
+-                ctrl->channels[c].regs[R_INTR] |= (1 << 2);
+-                channel_update_irq(ctrl, c);
+-            }
+-            channel_store_d(ctrl, c);
+-            if (ctrl->channels[c].current_d.eol) {
+-                D(printf("channel %d EOL\n", c));
+-                ctrl->channels[c].eol = 1;
+-
+-                /* Mark the context as disabled.  */
+-                ctrl->channels[c].current_c.dis = 1;
+-                channel_store_c(ctrl, c);
+-
+-                channel_stop(ctrl, c);
+-            } else {
+-                ctrl->channels[c].regs[RW_SAVED_DATA] =
+-                    (uint32_t)(unsigned long)ctrl->
+-                        channels[c].current_d.next;
+-                /* Load new descriptor.  */
+-                channel_load_d(ctrl, c);
+-                saved_data_buf = (uint32_t)(unsigned long)
+-                    ctrl->channels[c].current_d.buf;
+-            }
+-
+-            ctrl->channels[c].regs[RW_SAVED_DATA_BUF] =
+-                            saved_data_buf;
+-            D(dump_d(c, &ctrl->channels[c].current_d));
+-        }
+-        ctrl->channels[c].regs[RW_SAVED_DATA_BUF] = saved_data_buf;
+-    } while (!ctrl->channels[c].eol);
+-    return 1;
+-}
+-
+-static int channel_in_process(struct fs_dma_ctrl *ctrl, int c, 
+-                              unsigned char *buf, int buflen, int eop)
+-{
+-    uint32_t len;
+-    uint32_t saved_data_buf;
+-
+-    if (ctrl->channels[c].eol == 1)
+-        return 0;
+-
+-    channel_load_d(ctrl, c);
+-    saved_data_buf = channel_reg(ctrl, c, RW_SAVED_DATA_BUF);
+-    len = (uint32_t)(unsigned long)ctrl->channels[c].current_d.after;
+-    len -= saved_data_buf;
+-
+-    if (len > buflen)
+-        len = buflen;
+-
+-    cpu_physical_memory_write (saved_data_buf, buf, len);
+-    saved_data_buf += len;
+-
+-    if (saved_data_buf ==
+-        (uint32_t)(unsigned long)ctrl->channels[c].current_d.after
+-        || eop) {
+-        uint32_t r_intr = ctrl->channels[c].regs[R_INTR];
+-
+-        D(printf("in dscr end len=%d\n",
+-                 ctrl->channels[c].current_d.after
+-                 - ctrl->channels[c].current_d.buf));
+-        ctrl->channels[c].current_d.after = saved_data_buf;
+-
+-        /* Done. Step to next.  */
+-        if (ctrl->channels[c].current_d.intr) {
+-            /* TODO: signal eop to the client.  */
+-            /* data intr.  */
+-            ctrl->channels[c].regs[R_INTR] |= 3;
+-        }
+-        if (eop) {
+-            ctrl->channels[c].current_d.in_eop = 1;
+-            ctrl->channels[c].regs[R_INTR] |= 8;
+-        }
+-        if (r_intr != ctrl->channels[c].regs[R_INTR])
+-            channel_update_irq(ctrl, c);
+-
+-        channel_store_d(ctrl, c);
+-        D(dump_d(c, &ctrl->channels[c].current_d));
+-
+-        if (ctrl->channels[c].current_d.eol) {
+-            D(printf("channel %d EOL\n", c));
+-            ctrl->channels[c].eol = 1;
+-
+-            /* Mark the context as disabled.  */
+-            ctrl->channels[c].current_c.dis = 1;
+-            channel_store_c(ctrl, c);
+-
+-            channel_stop(ctrl, c);
+-        } else {
+-            ctrl->channels[c].regs[RW_SAVED_DATA] =
+-                (uint32_t)(unsigned long)ctrl->
+-                    channels[c].current_d.next;
+-            /* Load new descriptor.  */
+-            channel_load_d(ctrl, c);
+-            saved_data_buf = (uint32_t)(unsigned long)
+-                ctrl->channels[c].current_d.buf;
 -        }
 -    }
 -
--    qemu_set_irq(fs->parent_irq, vector);
+-    ctrl->channels[c].regs[RW_SAVED_DATA_BUF] = saved_data_buf;
+-    return len;
+-}
+-
+-static inline int channel_in_run(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    if (ctrl->channels[c].client->client.pull) {
+-        ctrl->channels[c].client->client.pull(
+-            ctrl->channels[c].client->client.opaque);
+-        return 1;
+-    } else
+-        return 0;
+-}
+-
+-static uint32_t dma_rinvalid (void *opaque, hwaddr addr)
+-{
+-    hw_error("Unsupported short raccess. reg=" HWADDR_FMT_plx "\n", addr);
+-    return 0;
 -}
 -
 -static uint64_t
--pic_read(void *opaque, hwaddr addr, unsigned int size)
+-dma_read(void *opaque, hwaddr addr, unsigned int size)
 -{
--    struct etrax_pic *fs = opaque;
--    uint32_t rval;
+-    struct fs_dma_ctrl *ctrl = opaque;
+-    int c;
+-    uint32_t r = 0;
 -
--    rval = fs->regs[addr >> 2];
--    D(printf("%s %x=%x\n", __func__, addr, rval));
--    return rval;
+-    if (size != 4) {
+-        dma_rinvalid(opaque, addr);
+-    }
+-
+-    /* Make addr relative to this channel and bounded to nr regs.  */
+-    c = fs_channel(addr);
+-    addr &= 0xff;
+-    addr >>= 2;
+-    switch (addr)
+-    {
+-    case RW_STAT:
+-        r = ctrl->channels[c].state & 7;
+-        r |= ctrl->channels[c].eol << 5;
+-        r |= ctrl->channels[c].stream_cmd_src << 8;
+-        break;
+-
+-    default:
+-        r = ctrl->channels[c].regs[addr];
+-        D(printf("%s c=%d addr=" HWADDR_FMT_plx "\n",
+-                 __func__, c, addr));
+-        break;
+-    }
+-    return r;
 -}
 -
--static void pic_write(void *opaque, hwaddr addr,
--                      uint64_t value, unsigned int size)
+-static void
+-dma_winvalid (void *opaque, hwaddr addr, uint32_t value)
 -{
--    struct etrax_pic *fs = opaque;
--    D(printf("%s addr=%x val=%x\n", __func__, addr, value));
+-    hw_error("Unsupported short waccess. reg=" HWADDR_FMT_plx "\n", addr);
+-}
 -
--    if (addr == R_RW_MASK) {
--        fs->regs[R_RW_MASK] = value;
--        pic_update(fs);
+-static void
+-dma_update_state(struct fs_dma_ctrl *ctrl, int c)
+-{
+-    if (ctrl->channels[c].regs[RW_CFG] & 2)
+-        ctrl->channels[c].state = STOPPED;
+-    if (!(ctrl->channels[c].regs[RW_CFG] & 1))
+-        ctrl->channels[c].state = RST;
+-}
+-
+-static void
+-dma_write(void *opaque, hwaddr addr,
+-          uint64_t val64, unsigned int size)
+-{
+-    struct fs_dma_ctrl *ctrl = opaque;
+-    uint32_t value = val64;
+-    int c;
+-
+-    if (size != 4) {
+-        dma_winvalid(opaque, addr, value);
+-    }
+-
+-        /* Make addr relative to this channel and bounded to nr regs.  */
+-    c = fs_channel(addr);
+-    addr &= 0xff;
+-    addr >>= 2;
+-    switch (addr)
+-    {
+-    case RW_DATA:
+-        ctrl->channels[c].regs[addr] = value;
+-        break;
+-
+-    case RW_CFG:
+-        ctrl->channels[c].regs[addr] = value;
+-        dma_update_state(ctrl, c);
+-        break;
+-    case RW_CMD:
+-        /* continue.  */
+-        if (value & ~1)
+-            printf("Invalid store to ch=%d RW_CMD %x\n",
+-                   c, value);
+-        ctrl->channels[c].regs[addr] = value;
+-        channel_continue(ctrl, c);
+-        break;
+-
+-    case RW_SAVED_DATA:
+-    case RW_SAVED_DATA_BUF:
+-    case RW_GROUP:
+-    case RW_GROUP_DOWN:
+-        ctrl->channels[c].regs[addr] = value;
+-        break;
+-
+-    case RW_ACK_INTR:
+-    case RW_INTR_MASK:
+-        ctrl->channels[c].regs[addr] = value;
+-        channel_update_irq(ctrl, c);
+-        if (addr == RW_ACK_INTR)
+-            ctrl->channels[c].regs[RW_ACK_INTR] = 0;
+-        break;
+-
+-    case RW_STREAM_CMD:
+-        if (value & ~1023)
+-            printf("Invalid store to ch=%d "
+-                   "RW_STREAMCMD %x\n",
+-                   c, value);
+-        ctrl->channels[c].regs[addr] = value;
+-        D(printf("stream_cmd ch=%d\n", c));
+-        channel_stream_cmd(ctrl, c, value);
+-        break;
+-
+-    default:
+-        D(printf("%s c=%d " HWADDR_FMT_plx "\n",
+-                 __func__, c, addr));
+-        break;
 -    }
 -}
 -
--static const MemoryRegionOps pic_ops = {
--    .read = pic_read,
--    .write = pic_write,
+-static const MemoryRegionOps dma_ops = {
+-    .read = dma_read,
+-    .write = dma_write,
 -    .endianness = DEVICE_NATIVE_ENDIAN,
 -    .valid = {
--        .min_access_size = 4,
+-        .min_access_size = 1,
 -        .max_access_size = 4
 -    }
 -};
 -
--static void nmi_handler(void *opaque, int irq, int level)
--{   
--    struct etrax_pic *fs = (void *)opaque;
--    uint32_t mask;
--
--    mask = 1 << irq;
--    if (level)
--        fs->regs[R_R_NMI] |= mask;
--    else
--        fs->regs[R_R_NMI] &= ~mask;
--
--    qemu_set_irq(fs->parent_nmi, !!fs->regs[R_R_NMI]);
--}
--
--static void irq_handler(void *opaque, int irq, int level)
+-static int etraxfs_dmac_run(void *opaque)
 -{
--    struct etrax_pic *fs = (void *)opaque;
+-    struct fs_dma_ctrl *ctrl = opaque;
+-    int i;
+-    int p = 0;
 -
--    if (irq >= 30) {
--        nmi_handler(opaque, irq, level);
--        return;
+-    for (i = 0;
+-         i < ctrl->nr_channels;
+-         i++)
+-    {
+-        if (ctrl->channels[i].state == RUNNING)
+-        {
+-            if (ctrl->channels[i].input) {
+-                p += channel_in_run(ctrl, i);
+-            } else {
+-                p += channel_out_run(ctrl, i);
+-            }
+-        }
 -    }
--
--    irq -= 1;
--    fs->regs[R_R_VECT] &= ~(1 << irq);
--    fs->regs[R_R_VECT] |= (!!level << irq);
--    pic_update(fs);
+-    return p;
 -}
 -
--static void etraxfs_pic_init(Object *obj)
+-int etraxfs_dmac_input(struct etraxfs_dma_client *client, 
+-                       void *buf, int len, int eop)
 -{
--    DeviceState *dev = DEVICE(obj);
--    struct etrax_pic *s = ETRAX_FS_PIC(obj);
--    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
--
--    qdev_init_gpio_in(dev, irq_handler, 32);
--    sysbus_init_irq(sbd, &s->parent_irq);
--    sysbus_init_irq(sbd, &s->parent_nmi);
--
--    memory_region_init_io(&s->mmio, obj, &pic_ops, s,
--                          "etraxfs-pic", R_MAX * 4);
--    sysbus_init_mmio(sbd, &s->mmio);
+-    return channel_in_process(client->ctrl, client->channel,
+-                              buf, len, eop);
 -}
 -
--static const TypeInfo etraxfs_pic_info = {
--    .name          = TYPE_ETRAX_FS_PIC,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(struct etrax_pic),
--    .instance_init = etraxfs_pic_init,
--};
--
--static void etraxfs_pic_register_types(void)
+-/* Connect an IRQ line with a channel.  */
+-void etraxfs_dmac_connect(void *opaque, int c, qemu_irq *line, int input)
 -{
--    type_register_static(&etraxfs_pic_info);
+-    struct fs_dma_ctrl *ctrl = opaque;
+-    ctrl->channels[c].irq = *line;
+-    ctrl->channels[c].input = input;
 -}
 -
--type_init(etraxfs_pic_register_types)
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index f4d81eb8e4..6bfdc4eb33 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -15,7 +15,6 @@ system_ss.add(when: 'CONFIG_ARM_GICV3_TCG', if_true: files(
- system_ss.add(when: 'CONFIG_ALLWINNER_A10_PIC', if_true: files('allwinner-a10-pic.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_vic.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_intc.c'))
--system_ss.add(when: 'CONFIG_ETRAXFS', if_true: files('etraxfs_pic.c'))
- system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_gic.c', 'exynos4210_combiner.c'))
- system_ss.add(when: 'CONFIG_GOLDFISH_PIC', if_true: files('goldfish_pic.c'))
- system_ss.add(when: 'CONFIG_HEATHROW_PIC', if_true: files('heathrow_pic.c'))
+-void etraxfs_dmac_connect_client(void *opaque, int c, 
+-                                 struct etraxfs_dma_client *cl)
+-{
+-    struct fs_dma_ctrl *ctrl = opaque;
+-    cl->ctrl = ctrl;
+-    cl->channel = c;
+-    ctrl->channels[c].client = cl;
+-}
+-
+-
+-static void DMA_run(void *opaque)
+-{
+-    struct fs_dma_ctrl *etraxfs_dmac = opaque;
+-    int p = 1;
+-
+-    if (runstate_is_running())
+-        p = etraxfs_dmac_run(etraxfs_dmac);
+-
+-    if (p)
+-        qemu_bh_schedule_idle(etraxfs_dmac->bh);
+-}
+-
+-void *etraxfs_dmac_init(hwaddr base, int nr_channels)
+-{
+-    struct fs_dma_ctrl *ctrl = NULL;
+-
+-    ctrl = g_malloc0(sizeof *ctrl);
+-
+-    ctrl->bh = qemu_bh_new(DMA_run, ctrl);
+-
+-    ctrl->nr_channels = nr_channels;
+-    ctrl->channels = g_malloc0(sizeof ctrl->channels[0] * nr_channels);
+-
+-    memory_region_init_io(&ctrl->mmio, NULL, &dma_ops, ctrl, "etraxfs-dma",
+-                          nr_channels * 0x2000);
+-    memory_region_add_subregion(get_system_memory(), base, &ctrl->mmio);
+-
+-    return ctrl;
+-}
+diff --git a/hw/dma/meson.build b/hw/dma/meson.build
+index a96c1be2c8..dd7781961e 100644
+--- a/hw/dma/meson.build
++++ b/hw/dma/meson.build
+@@ -5,7 +5,6 @@ system_ss.add(when: 'CONFIG_I82374', if_true: files('i82374.c'))
+ system_ss.add(when: 'CONFIG_I8257', if_true: files('i8257.c'))
+ system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('xilinx_axidma.c'))
+ system_ss.add(when: 'CONFIG_ZYNQ_DEVCFG', if_true: files('xlnx-zynq-devcfg.c'))
+-system_ss.add(when: 'CONFIG_ETRAXFS', if_true: files('etraxfs_dma.c'))
+ system_ss.add(when: 'CONFIG_STP2000', if_true: files('sparc32_dma.c'))
+ system_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx_dpdma.c'))
+ system_ss.add(when: 'CONFIG_XLNX_ZDMA', if_true: files('xlnx-zdma.c'))
+diff --git a/scripts/coverity-scan/COMPONENTS.md b/scripts/coverity-scan/COMPONENTS.md
+index 858190be09..5851df5b56 100644
+--- a/scripts/coverity-scan/COMPONENTS.md
++++ b/scripts/coverity-scan/COMPONENTS.md
+@@ -10,7 +10,7 @@ avr
+   ~ .*/qemu((/include)?/hw/avr/.*|/target/avr/.*)
+ 
+ cris
+-  ~ .*/qemu((/include)?/hw/cris/.*|/target/cris/.*)
++  ~ .*/qemu(/hw/cris/.*|/target/cris/.*)
+ 
+ hexagon-gen (component should be ignored in analysis)
+   ~ .*/qemu(/target/hexagon/.*generated.*)
 -- 
 2.45.2
 
