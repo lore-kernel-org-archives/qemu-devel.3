@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35462EE49BC
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15885EE49BC
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:14:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soOmA-0008Dx-6D; Wed, 11 Sep 2024 10:57:07 -0400
+	id 1soOqc-0000Xd-2f; Wed, 11 Sep 2024 11:01:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1soOjm-0007AS-OC
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:54:33 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1soOjj-0007LX-BI
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:54:30 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-27051f63018so3673530fac.3
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 07:54:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726066466; x=1726671266; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=R6hGB0vw7ZUbECqaNkS6H7FihAxNqyKbWTvXGArpq6U=;
- b=gernRcD/noecKJd2MeqfkdZOSSmnKwV2vmSfDtt1L0haBxccCGc1m840TFR623YsCD
- AwkCLUH/PPhz3UrGUblF5sQw8hkOsAqPqvzEPIoknmPWk1wv1cloc7miU/UCNAwjyXQH
- UDra3PMcZGDxMHZ41x+cntzCeXYeU7kG4OPq/avnNbCNgjdG2O5S4CGDAC3gJGhkW4kt
- aHKbAQdpPEDBleM5FQLSP/ls5OhSyBCCxb2KLwQHuytVPNos4Jv0h3aWZQztHkTgXz9X
- vwO+7x0Yw3/LRWmpMa8J7/b5qb2vEB03Oucq4SVBiIvr2Och/90TNJYPd9g4MXdp0+jJ
- 30bQ==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOjO-0005Zg-Nc
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:54:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOjM-0007Kf-8I
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:54:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1726066443;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2Jbb3zSd/FAyigLmm8Lyz5T3+QqcWo7wpMZLcIaqupo=;
+ b=dkR4Fz7kS0LBnYfMQ7eUyVsUd6ibCM8UOiIzWtLPX5MAS7N7a2JDr+7XfZgvhgDto3kGCS
+ 0EXDngq7++dDYeUvi2VzS0HaGD/8bA9DpGVb/jcJHL71t81VcswPSvLtKHkX1Dk8MUS4Qn
+ Cns+RXr86+X67sj1zmnqFeuxcddyb9o=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-628-U_Vu12O9MAaTryrxCbcBUA-1; Wed, 11 Sep 2024 09:52:27 -0400
+X-MC-Unique: U_Vu12O9MAaTryrxCbcBUA-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5c3c398b511so5902301a12.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 06:52:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726066466; x=1726671266;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=R6hGB0vw7ZUbECqaNkS6H7FihAxNqyKbWTvXGArpq6U=;
- b=fxXqZC1KKrFGlwbrEzognGfarekhp0TPa5X7kZYM3IaqS56uCeE7MQqY+arFCE+XHk
- hCX8LXDVJhamv9UWO4aLKNqM3+tLQLqP6m8unmsHRqt/hJmjSqwOsWeK0jSzdzqQvIwx
- t62C7Trx2vNSk2jyDqYjQNTPVJhH+0nIUJnb2Kgqn2K/EdNlFEsoFpTHtpsAnPQMyHcc
- pQvyggpbj2hqyKBZJXmFgjaGb3NoQ0n5e6SLi5VYXW4ZGJnAOiiTmdQ/5s/NLSaCuTPr
- 53G5FpWlTBxG6JN03GgIy8wqwV0mhIQhgCwFYJ45T0WcrUw5yiukajnFvzf3sP3g8Dyx
- +FVg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV7ypoZeiLDExUXabNkL6kKT3Qi17foANA/w5Aw9UdkrurmjLFKkEhlfSZkSKqpaqCk7/fZfclIU2+b@nongnu.org
-X-Gm-Message-State: AOJu0YzkQ7zE1qPk/LWCxH2HdErBDhX7cBrCCUd2HxxukanXgLXMxuF4
- 51CYgU1+VHM4gw3ESV1ypqHPi2/ZASDOC1BJJRCkYzHbmd9BoAp737DsTfWweWPSa8YrAkOpGhW
- C4m/rJ5U3gANuy2tsnJKCqHgfyxs=
-X-Google-Smtp-Source: AGHT+IGnTlKtakcBVdyJDFHvbBGXgCkPGU7Ctq50CXhC+sMHYd0ux4Lcr+vcvRess5fJwoFtcJle7BJhGPhIMYykbdg=
-X-Received: by 2002:a05:6870:5494:b0:254:bd24:de83 with SMTP id
- 586e51a60fabf-27b82e5d798mr18543680fac.12.1726066465380; Wed, 11 Sep 2024
- 07:54:25 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726062745; x=1726667545;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2Jbb3zSd/FAyigLmm8Lyz5T3+QqcWo7wpMZLcIaqupo=;
+ b=klS0f7B4hHHqs0K5I6tzo3JKoyf0V4oDB3tOUfCxfZhHoe8dwLAgXRm0c+pWGB2zzp
+ JB1oqRajKo0dbq4YYl1GRude0cLaITDzUvOmtglQcKiJQ8DFKKvpX2nX2HimejMPsLcP
+ m9rZx4XjQRcaZJJ3k3uxncuIU+N8Qr9guhbSaJrShMvCyyI2dPYn1gizJjSyjWRI6vO1
+ +XiSl1vxA3bLihPO3riQU1pserOHSubkQZDg3mC/rJOiSUisiHTeKl5ZJCH8TtoBIQ5N
+ wrcHqOdLFLjqM1UKIaxwitTuLr3kq82gZ/hWqiB1lJT7FJEw1h9S8WSPDaP2qK7sNw+v
+ od9A==
+X-Gm-Message-State: AOJu0YwnG5Ki1YMhlqP9VXmDSzQwT4U34QaaCXoKHngEnv2+OVtbZT1l
+ YjSiX4L2XL+b+frU/d6HtKNhEqTzPyoaS/lqvPXudlLRU83wd6TtdpE2+95vDMWfc0BUkNYA5y8
+ 59B0xNw5KZ/tYtx1UcxxZvfTm4GI6ruKhDcM80ZZ8ISFVGKUjEISLVF9ykz6xzVmKuSArK2A9qR
+ gbsdV5KmLUu8fargOkkVqpiE2ojcBbOw==
+X-Received: by 2002:a05:6402:5188:b0:5c3:9fa9:1b72 with SMTP id
+ 4fb4d7f45d1cf-5c3e95335d1mr13501485a12.6.1726062745174; 
+ Wed, 11 Sep 2024 06:52:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEYbuGXOLRVFU4WvXWJNIWM/47EeOtk49Kxsno0na54m4y3am4dPgDW5XboDfLP1T0Ph57CpA==
+X-Received: by 2002:a05:6402:5188:b0:5c3:9fa9:1b72 with SMTP id
+ 4fb4d7f45d1cf-5c3e95335d1mr13501446a12.6.1726062744563; 
+ Wed, 11 Sep 2024 06:52:24 -0700 (PDT)
+Received: from redhat.com ([2.55.9.133]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5c3ebd8cdf7sm5424056a12.92.2024.09.11.06.52.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Sep 2024 06:52:24 -0700 (PDT)
+Date: Wed, 11 Sep 2024 09:52:21 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Dominic Prinz <git@dprinz.de>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 18/18] hw/acpi/ich9: Add periodic and swsmi timer
+Message-ID: <6e3c2d58e967cde3dadae298e81c5e8eb9fb9080.1726062663.git.mst@redhat.com>
+References: <cover.1726062663.git.mst@redhat.com>
 MIME-Version: 1.0
-References: <20240628145710.1516121-1-aesteve@redhat.com>
- <20240628145710.1516121-2-aesteve@redhat.com>
- <20240711074510.GC563880@dynamic-pd01.res.v6.highway.a1.net>
- <CADSE00+HWkP9FQTuA-xNtExS-FSieh7DJ4D3zzrtJi3a6=PP1Q@mail.gmail.com>
- <CADSE00JWvq7HYibVymewoKwuo1T1-W6ZJ1fJEB3ofiS1iOyf1w@mail.gmail.com>
- <20240905164525.GF1922502@fedora>
- <CADSE00JgC5fyax-foLqo__6ejupBuSaKU4tDbJ-9aJF1VhS5kA@mail.gmail.com>
-In-Reply-To: <CADSE00JgC5fyax-foLqo__6ejupBuSaKU4tDbJ-9aJF1VhS5kA@mail.gmail.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Wed, 11 Sep 2024 10:54:13 -0400
-Message-ID: <CAJSP0QVineYfzF1CURq02oy9r4HvAQZF0ow4Gx7CowGUMcng9Q@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 1/5] vhost-user: Add VIRTIO Shared Memory map
- request
-To: Albert Esteve <aesteve@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
- jasowang@redhat.com, david@redhat.com, slp@redhat.com,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=stefanha@gmail.com; helo=mail-oa1-x2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1726062663.git.mst@redhat.com>
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,661 +105,328 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 11 Sept 2024 at 07:58, Albert Esteve <aesteve@redhat.com> wrote:
-> On Thu, Sep 5, 2024 at 6:45=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.c=
-om> wrote:
->>
->> On Tue, Sep 03, 2024 at 01:54:12PM +0200, Albert Esteve wrote:
->> > On Tue, Sep 3, 2024 at 11:54=E2=80=AFAM Albert Esteve <aesteve@redhat.=
-com> wrote:
->> >
->> > >
->> > >
->> > > On Thu, Jul 11, 2024 at 9:45=E2=80=AFAM Stefan Hajnoczi <stefanha@re=
-dhat.com>
->> > > wrote:
->> > >
->> > >> On Fri, Jun 28, 2024 at 04:57:06PM +0200, Albert Esteve wrote:
->> > >> > Add SHMEM_MAP/UNMAP requests to vhost-user to
->> > >> > handle VIRTIO Shared Memory mappings.
->> > >> >
->> > >> > This request allows backends to dynamically map
->> > >> > fds into a VIRTIO Shared Memory Region indentified
->> > >> > by its `shmid`. Then, the fd memory is advertised
->> > >> > to the driver as a base addres + offset, so it
->> > >> > can be read/written (depending on the mmap flags
->> > >> > requested) while its valid.
->> > >> >
->> > >> > The backend can munmap the memory range
->> > >> > in a given VIRTIO Shared Memory Region (again,
->> > >> > identified by its `shmid`), to free it. Upon
->> > >> > receiving this message, the front-end must
->> > >> > mmap the regions with PROT_NONE to reserve
->> > >> > the virtual memory space.
->> > >> >
->> > >> > The device model needs to create MemoryRegion
->> > >> > instances for the VIRTIO Shared Memory Regions
->> > >> > and add them to the `VirtIODevice` instance.
->> > >> >
->> > >> > Signed-off-by: Albert Esteve <aesteve@redhat.com>
->> > >> > ---
->> > >> >  docs/interop/vhost-user.rst               |  27 +++++
->> > >> >  hw/virtio/vhost-user.c                    | 122 ++++++++++++++++=
-++++++
->> > >> >  hw/virtio/virtio.c                        |  12 +++
->> > >> >  include/hw/virtio/virtio.h                |   5 +
->> > >> >  subprojects/libvhost-user/libvhost-user.c |  65 ++++++++++++
->> > >> >  subprojects/libvhost-user/libvhost-user.h |  53 ++++++++++
->> > >> >  6 files changed, 284 insertions(+)
->> > >> >
->> > >> > diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-use=
-r.rst
->> > >> > index d8419fd2f1..d52ba719d5 100644
->> > >> > --- a/docs/interop/vhost-user.rst
->> > >> > +++ b/docs/interop/vhost-user.rst
->> > >> > @@ -1859,6 +1859,33 @@ is sent by the front-end.
->> > >> >    when the operation is successful, or non-zero otherwise. Note =
-that
->> > >> if the
->> > >> >    operation fails, no fd is sent to the backend.
->> > >> >
->> > >> > +``VHOST_USER_BACKEND_SHMEM_MAP``
->> > >> > +  :id: 9
->> > >> > +  :equivalent ioctl: N/A
->> > >> > +  :request payload: fd and ``struct VhostUserMMap``
->> > >> > +  :reply payload: N/A
->> > >> > +
->> > >> > +  This message can be submitted by the backends to advertise a n=
-ew
->> > >> mapping
->> > >> > +  to be made in a given VIRTIO Shared Memory Region. Upon receiv=
-ing
->> > >> the message,
->> > >> > +  The front-end will mmap the given fd into the VIRTIO Shared Me=
-mory
->> > >> Region
->> > >> > +  with the requested ``shmid``. A reply is generated indicating
->> > >> whether mapping
->> > >> > +  succeeded.
->> > >> > +
->> > >> > +  Mapping over an already existing map is not allowed and reques=
-t
->> > >> shall fail.
->> > >> > +  Therefore, the memory range in the request must correspond wit=
-h a
->> > >> valid,
->> > >> > +  free region of the VIRTIO Shared Memory Region.
->> > >> > +
->> > >> > +``VHOST_USER_BACKEND_SHMEM_UNMAP``
->> > >> > +  :id: 10
->> > >> > +  :equivalent ioctl: N/A
->> > >> > +  :request payload: ``struct VhostUserMMap``
->> > >> > +  :reply payload: N/A
->> > >> > +
->> > >> > +  This message can be submitted by the backends so that the fron=
-t-end
->> > >> un-mmap
->> > >> > +  a given range (``offset``, ``len``) in the VIRTIO Shared Memor=
-y
->> > >> Region with
->> > >>
->> > >> s/offset/shm_offset/
->> > >>
->> > >> > +  the requested ``shmid``.
->> > >>
->> > >> Please clarify that <offset, len> must correspond to the entirety o=
-f a
->> > >> valid mapped region.
->> > >>
->> > >> By the way, the VIRTIO 1.3 gives the following behavior for the vir=
-tiofs
->> > >> DAX Window:
->> > >>
->> > >>   When a FUSE_SETUPMAPPING request perfectly overlaps a previous
->> > >>   mapping, the previous mapping is replaced. When a mapping partial=
-ly
->> > >>   overlaps a previous mapping, the previous mapping is split into o=
-ne or
->> > >>   two smaller mappings. When a mapping is partially unmapped it is =
-also
->> > >>   split into one or two smaller mappings.
->> > >>
->> > >>   Establishing new mappings or splitting existing mappings consumes
->> > >>   resources. If the device runs out of resources the FUSE_SETUPMAPP=
-ING
->> > >>   request fails until resources are available again following
->> > >>   FUSE_REMOVEMAPPING.
->> > >>
->> > >> I think SETUPMAPPING/REMOVMAPPING can be implemented using
->> > >> SHMEM_MAP/UNMAP. SHMEM_MAP/UNMAP do not allow atomically replacing
->> > >> partial ranges, but as far as I know that's not necessary for virti=
-ofs
->> > >> in practice.
->> > >>
->> > >> It's worth mentioning that mappings consume resources and that SHME=
-M_MAP
->> > >> can fail when there are no resources available. The process-wide li=
-mit
->> > >> is vm.max_map_count on Linux although a vhost-user frontend may red=
-uce
->> > >> it further to control vhost-user resource usage.
->> > >>
->> > >> > +  A reply is generated indicating whether unmapping succeeded.
->> > >> > +
->> > >> >  .. _reply_ack:
->> > >> >
->> > >> >  VHOST_USER_PROTOCOL_F_REPLY_ACK
->> > >> > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
->> > >> > index cdf9af4a4b..7ee8a472c6 100644
->> > >> > --- a/hw/virtio/vhost-user.c
->> > >> > +++ b/hw/virtio/vhost-user.c
->> > >> > @@ -115,6 +115,8 @@ typedef enum VhostUserBackendRequest {
->> > >> >      VHOST_USER_BACKEND_SHARED_OBJECT_ADD =3D 6,
->> > >> >      VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE =3D 7,
->> > >> >      VHOST_USER_BACKEND_SHARED_OBJECT_LOOKUP =3D 8,
->> > >> > +    VHOST_USER_BACKEND_SHMEM_MAP =3D 9,
->> > >> > +    VHOST_USER_BACKEND_SHMEM_UNMAP =3D 10,
->> > >> >      VHOST_USER_BACKEND_MAX
->> > >> >  }  VhostUserBackendRequest;
->> > >> >
->> > >> > @@ -192,6 +194,24 @@ typedef struct VhostUserShared {
->> > >> >      unsigned char uuid[16];
->> > >> >  } VhostUserShared;
->> > >> >
->> > >> > +/* For the flags field of VhostUserMMap */
->> > >> > +#define VHOST_USER_FLAG_MAP_R (1u << 0)
->> > >> > +#define VHOST_USER_FLAG_MAP_W (1u << 1)
->> > >> > +
->> > >> > +typedef struct {
->> > >> > +    /* VIRTIO Shared Memory Region ID */
->> > >> > +    uint8_t shmid;
->> > >> > +    uint8_t padding[7];
->> > >> > +    /* File offset */
->> > >> > +    uint64_t fd_offset;
->> > >> > +    /* Offset within the VIRTIO Shared Memory Region */
->> > >> > +    uint64_t shm_offset;
->> > >> > +    /* Size of the mapping */
->> > >> > +    uint64_t len;
->> > >> > +    /* Flags for the mmap operation, from VHOST_USER_FLAG_* */
->> > >> > +    uint64_t flags;
->> > >> > +} VhostUserMMap;
->> > >> > +
->> > >> >  typedef struct {
->> > >> >      VhostUserRequest request;
->> > >> >
->> > >> > @@ -224,6 +244,7 @@ typedef union {
->> > >> >          VhostUserInflight inflight;
->> > >> >          VhostUserShared object;
->> > >> >          VhostUserTransferDeviceState transfer_state;
->> > >> > +        VhostUserMMap mmap;
->> > >> >  } VhostUserPayload;
->> > >> >
->> > >> >  typedef struct VhostUserMsg {
->> > >> > @@ -1748,6 +1769,100 @@
->> > >> vhost_user_backend_handle_shared_object_lookup(struct vhost_user *u=
-,
->> > >> >      return 0;
->> > >> >  }
->> > >> >
->> > >> > +static int
->> > >> > +vhost_user_backend_handle_shmem_map(struct vhost_dev *dev,
->> > >> > +                                    VhostUserMMap *vu_mmap,
->> > >> > +                                    int fd)
->> > >> > +{
->> > >> > +    void *addr =3D 0;
->> > >> > +    MemoryRegion *mr =3D NULL;
->> > >> > +
->> > >> > +    if (fd < 0) {
->> > >> > +        error_report("Bad fd for map");
->> > >> > +        return -EBADF;
->> > >> > +    }
->> > >> > +
->> > >> > +    if (!dev->vdev->shmem_list ||
->> > >> > +        dev->vdev->n_shmem_regions <=3D vu_mmap->shmid) {
->> > >> > +        error_report("Device only has %d VIRTIO Shared Memory Re=
-gions.
->> > >> "
->> > >> > +                     "Requested ID: %d",
->> > >> > +                     dev->vdev->n_shmem_regions, vu_mmap->shmid)=
-;
->> > >> > +        return -EFAULT;
->> > >> > +    }
->> > >> > +
->> > >> > +    mr =3D &dev->vdev->shmem_list[vu_mmap->shmid];
->> > >> > +
->> > >> > +    if (!mr) {
->> > >> > +        error_report("VIRTIO Shared Memory Region at "
->> > >> > +                     "ID %d unitialized", vu_mmap->shmid);
->> > >> > +        return -EFAULT;
->> > >> > +    }
->> > >> > +
->> > >> > +    if ((vu_mmap->shm_offset + vu_mmap->len) < vu_mmap->len ||
->> > >> > +        (vu_mmap->shm_offset + vu_mmap->len) > mr->size) {
->> > >> > +        error_report("Bad offset/len for mmap %" PRIx64 "+%" PRI=
-x64,
->> > >> > +                     vu_mmap->shm_offset, vu_mmap->len);
->> > >> > +        return -EFAULT;
->> > >> > +    }
->> > >> > +
->> > >> > +    void *shmem_ptr =3D memory_region_get_ram_ptr(mr);
->> > >> > +
->> > >> > +    addr =3D mmap(shmem_ptr + vu_mmap->shm_offset, vu_mmap->len,
->> > >>
->> > >> Missing check for overlap between range [shm_offset, shm_offset + l=
-en)
->> > >> and existing mappings.
->> > >>
->> > >
->> > > Not sure how to do this check. Specifically, I am not sure how previ=
-ous
->> > > ranges are stored within the MemoryRegion. Is looping through
->> > > mr->subregions
->> > > a valid option?
->> > >
->> >
->> > Maybe something like this would do?
->> > ```
->> >      if (memory_region_find(mr, vu_mmap->shm_offset, vu_mmap->len).mr)=
+From: Dominic Prinz <git@dprinz.de>
+
+This patch implements the periodic and the swsmi ICH9 chipset timers. They are
+especially useful when prototyping UEFI firmware (e.g. with EDK2's OVMF)
+using QEMU.
+
+For backwards compatibility, the compat properties "x-smi-swsmi-timer",
+and "x-smi-periodic-timer" are introduced.
+
+Additionally, writes to the SMI_STS register are enabled for the
+corresponding two bits using a write mask to make future work easier.
+
+Signed-off-by: Dominic Prinz <git@dprinz.de>
+Message-Id: <1d90ea69e01ab71a0f2ced116801dc78e04f4448.1725991505.git.git@dprinz.de>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ include/hw/acpi/ich9.h        |  6 +++
+ include/hw/acpi/ich9_timer.h  | 23 +++++++++
+ include/hw/southbridge/ich9.h |  4 ++
+ hw/acpi/ich9.c                | 23 +++++++++
+ hw/acpi/ich9_timer.c          | 93 +++++++++++++++++++++++++++++++++++
+ hw/i386/pc.c                  |  5 +-
+ hw/isa/lpc_ich9.c             | 14 ++++++
+ hw/acpi/meson.build           |  2 +-
+ 8 files changed, 168 insertions(+), 2 deletions(-)
+ create mode 100644 include/hw/acpi/ich9_timer.h
+ create mode 100644 hw/acpi/ich9_timer.c
+
+diff --git a/include/hw/acpi/ich9.h b/include/hw/acpi/ich9.h
+index 2faf7f0cae..245fe08dc2 100644
+--- a/include/hw/acpi/ich9.h
++++ b/include/hw/acpi/ich9.h
+@@ -46,6 +46,7 @@ typedef struct ICH9LPCPMRegs {
+     uint32_t smi_en;
+     uint32_t smi_en_wmask;
+     uint32_t smi_sts;
++    uint32_t smi_sts_wmask;
+ 
+     qemu_irq irq;      /* SCI */
+ 
+@@ -68,6 +69,11 @@ typedef struct ICH9LPCPMRegs {
+     bool smm_compat;
+     bool enable_tco;
+     TCOIORegs tco_regs;
++
++    bool swsmi_timer_enabled;
++    bool periodic_timer_enabled;
++    QEMUTimer *swsmi_timer;
++    QEMUTimer *periodic_timer;
+ } ICH9LPCPMRegs;
+ 
+ #define ACPI_PM_PROP_TCO_ENABLED "enable_tco"
+diff --git a/include/hw/acpi/ich9_timer.h b/include/hw/acpi/ich9_timer.h
+new file mode 100644
+index 0000000000..5112df4385
+--- /dev/null
++++ b/include/hw/acpi/ich9_timer.h
+@@ -0,0 +1,23 @@
++/*
++ * QEMU ICH9 Timer emulation
++ *
++ * Copyright (c) 2024 Dominic Prinz <git@dprinz.de>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#ifndef HW_ACPI_ICH9_TIMER_H
++#define HW_ACPI_ICH9_TIMER_H
++
++#include "hw/acpi/ich9.h"
++
++void ich9_pm_update_swsmi_timer(ICH9LPCPMRegs *pm, bool enable);
++
++void ich9_pm_swsmi_timer_init(ICH9LPCPMRegs *pm);
++
++void ich9_pm_update_periodic_timer(ICH9LPCPMRegs *pm, bool enable);
++
++void ich9_pm_periodic_timer_init(ICH9LPCPMRegs *pm);
++
++#endif
+diff --git a/include/hw/southbridge/ich9.h b/include/hw/southbridge/ich9.h
+index fd01649d04..6c60017024 100644
+--- a/include/hw/southbridge/ich9.h
++++ b/include/hw/southbridge/ich9.h
+@@ -196,8 +196,12 @@ struct ICH9LPCState {
+ #define ICH9_PMIO_GPE0_LEN                      16
+ #define ICH9_PMIO_SMI_EN                        0x30
+ #define ICH9_PMIO_SMI_EN_APMC_EN                (1 << 5)
++#define ICH9_PMIO_SMI_EN_SWSMI_EN               (1 << 6)
+ #define ICH9_PMIO_SMI_EN_TCO_EN                 (1 << 13)
++#define ICH9_PMIO_SMI_EN_PERIODIC_EN            (1 << 14)
+ #define ICH9_PMIO_SMI_STS                       0x34
++#define ICH9_PMIO_SMI_STS_SWSMI_STS             (1 << 6)
++#define ICH9_PMIO_SMI_STS_PERIODIC_STS          (1 << 14)
+ #define ICH9_PMIO_TCO_RLD                       0x60
+ #define ICH9_PMIO_TCO_LEN                       32
+ 
+diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
+index 02d8546bd3..c15e5b8281 100644
+--- a/hw/acpi/ich9.c
++++ b/hw/acpi/ich9.c
+@@ -35,6 +35,7 @@
+ #include "sysemu/runstate.h"
+ #include "hw/acpi/acpi.h"
+ #include "hw/acpi/ich9_tco.h"
++#include "hw/acpi/ich9_timer.h"
+ 
+ #include "hw/southbridge/ich9.h"
+ #include "hw/mem/pc-dimm.h"
+@@ -108,6 +109,18 @@ static void ich9_smi_writel(void *opaque, hwaddr addr, uint64_t val,
+         }
+         pm->smi_en &= ~pm->smi_en_wmask;
+         pm->smi_en |= (val & pm->smi_en_wmask);
++        if (pm->swsmi_timer_enabled) {
++            ich9_pm_update_swsmi_timer(pm, pm->smi_en &
++                                               ICH9_PMIO_SMI_EN_SWSMI_EN);
++        }
++        if (pm->periodic_timer_enabled) {
++            ich9_pm_update_periodic_timer(pm, pm->smi_en &
++                                                  ICH9_PMIO_SMI_EN_PERIODIC_EN);
++        }
++        break;
++    case 4:
++        pm->smi_sts &= ~pm->smi_sts_wmask;
++        pm->smi_sts |= (val & pm->smi_sts_wmask);
+         break;
+     }
+ }
+@@ -286,6 +299,8 @@ static void pm_powerdown_req(Notifier *n, void *opaque)
+ 
+ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
  {
->> >         error_report("Requested memory (%" PRIx64 "+%" PRIx64 " overal=
-ps "
->> >                      "with previously mapped memory",
->> >                      vu_mmap->shm_offset, vu_mmap->len);
->> >         return -EFAULT;
->> >     }
->> > ```
->>
->> I don't think that works because the QEMU MemoryRegion covers the entire
->> range, some of which contains mappings and some of which is empty. It
->> would be necessary to track mappings that have been made.
->>
->> I'm not aware of a security implication if the overlap check is missing,
->> so I guess it may be okay to skip it and rely on the vhost-user back-end
->> author to honor the spec. I'm not totally against that because it's
->> faster and less code, but it feels a bit iffy to not enforce the input
->> validation that the spec requires.
->>
->> Maintain a list of mappings so this check can be performed?
->>
->
-> Ok, I prefer to aim for the better solution and see where that takes us.
-> So I will add a mapped_regions list or something like that to the
-> MemoryRegion struct in a new commit, so that it can be reviewed
-> independently. With the infrastructure's code in the patch we can decide =
-if
-> it is worth to have it.
++    pm->smi_sts_wmask = 0;
++
+     memory_region_init(&pm->io, OBJECT(lpc_pci), "ich9-pm", ICH9_PMIO_SIZE);
+     memory_region_set_enabled(&pm->io, false);
+     memory_region_add_subregion(pci_address_space_io(lpc_pci),
+@@ -305,6 +320,14 @@ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
+                           "acpi-smi", 8);
+     memory_region_add_subregion(&pm->io, ICH9_PMIO_SMI_EN, &pm->io_smi);
+ 
++    if (pm->swsmi_timer_enabled) {
++        ich9_pm_swsmi_timer_init(pm);
++    }
++
++    if (pm->periodic_timer_enabled) {
++        ich9_pm_periodic_timer_init(pm);
++    }
++
+     if (pm->enable_tco) {
+         acpi_pm_tco_init(&pm->tco_regs, &pm->io);
+     }
+diff --git a/hw/acpi/ich9_timer.c b/hw/acpi/ich9_timer.c
+new file mode 100644
+index 0000000000..5b1c910156
+--- /dev/null
++++ b/hw/acpi/ich9_timer.c
+@@ -0,0 +1,93 @@
++/*
++ * QEMU ICH9 Timer emulation
++ *
++ * Copyright (c) 2024 Dominic Prinz <git@dprinz.de>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#include "qemu/osdep.h"
++#include "hw/core/cpu.h"
++#include "hw/pci/pci.h"
++#include "hw/southbridge/ich9.h"
++#include "qemu/timer.h"
++
++#include "hw/acpi/ich9_timer.h"
++
++void ich9_pm_update_swsmi_timer(ICH9LPCPMRegs *pm, bool enable)
++{
++    uint16_t swsmi_rate_sel;
++    int64_t expire_time;
++    ICH9LPCState *lpc;
++
++    if (enable) {
++        lpc = container_of(pm, ICH9LPCState, pm);
++        swsmi_rate_sel =
++            (pci_get_word(lpc->d.config + ICH9_LPC_GEN_PMCON_3) & 0xc0) >> 6;
++
++        if (swsmi_rate_sel == 0) {
++            expire_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + 1500000LL;
++        } else {
++            expire_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
++                          8 * (1 << swsmi_rate_sel) * 1000000LL;
++        }
++
++        timer_mod(pm->swsmi_timer, expire_time);
++    } else {
++        timer_del(pm->swsmi_timer);
++    }
++}
++
++static void ich9_pm_swsmi_timer_expired(void *opaque)
++{
++    ICH9LPCPMRegs *pm = opaque;
++
++    pm->smi_sts |= ICH9_PMIO_SMI_STS_SWSMI_STS;
++    ich9_generate_smi();
++
++    ich9_pm_update_swsmi_timer(pm, pm->smi_en & ICH9_PMIO_SMI_EN_SWSMI_EN);
++}
++
++void ich9_pm_swsmi_timer_init(ICH9LPCPMRegs *pm)
++{
++    pm->smi_sts_wmask |= ICH9_PMIO_SMI_STS_SWSMI_STS;
++    pm->swsmi_timer =
++        timer_new_ns(QEMU_CLOCK_VIRTUAL, ich9_pm_swsmi_timer_expired, pm);
++}
++
++void ich9_pm_update_periodic_timer(ICH9LPCPMRegs *pm, bool enable)
++{
++    uint16_t per_smi_sel;
++    int64_t expire_time;
++    ICH9LPCState *lpc;
++
++    if (enable) {
++        lpc = container_of(pm, ICH9LPCState, pm);
++        per_smi_sel = pci_get_word(lpc->d.config + ICH9_LPC_GEN_PMCON_1) & 3;
++        expire_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
++                      8 * (1 << (3 - per_smi_sel)) * NANOSECONDS_PER_SECOND;
++
++        timer_mod(pm->periodic_timer, expire_time);
++    } else {
++        timer_del(pm->periodic_timer);
++    }
++}
++
++static void ich9_pm_periodic_timer_expired(void *opaque)
++{
++    ICH9LPCPMRegs *pm = opaque;
++
++    pm->smi_sts = ICH9_PMIO_SMI_STS_PERIODIC_STS;
++    ich9_generate_smi();
++
++    ich9_pm_update_periodic_timer(pm,
++                                  pm->smi_en & ICH9_PMIO_SMI_EN_PERIODIC_EN);
++}
++
++void ich9_pm_periodic_timer_init(ICH9LPCPMRegs *pm)
++{
++    pm->smi_sts_wmask |= ICH9_PMIO_SMI_STS_PERIODIC_STS;
++    pm->periodic_timer =
++        timer_new_ns(QEMU_CLOCK_VIRTUAL, ich9_pm_periodic_timer_expired, pm);
++}
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index ba0ff51183..8d84c22458 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -79,7 +79,10 @@
+     { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
+     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
+ 
+-GlobalProperty pc_compat_9_1[] = {};
++GlobalProperty pc_compat_9_1[] = {
++    { "ICH9-LPC", "x-smi-swsmi-timer", "off" },
++    { "ICH9-LPC", "x-smi-periodic-timer", "off" },
++};
+ const size_t pc_compat_9_1_len = G_N_ELEMENTS(pc_compat_9_1);
+ 
+ GlobalProperty pc_compat_9_0[] = {
+diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
+index bd727b2320..ab17b76f54 100644
+--- a/hw/isa/lpc_ich9.c
++++ b/hw/isa/lpc_ich9.c
+@@ -43,6 +43,7 @@
+ #include "hw/southbridge/ich9.h"
+ #include "hw/acpi/acpi.h"
+ #include "hw/acpi/ich9.h"
++#include "hw/acpi/ich9_timer.h"
+ #include "hw/pci/pci_bus.h"
+ #include "hw/qdev-properties.h"
+ #include "sysemu/runstate.h"
+@@ -531,6 +532,15 @@ ich9_lpc_pmcon_update(ICH9LPCState *lpc)
+     uint16_t gen_pmcon_1 = pci_get_word(lpc->d.config + ICH9_LPC_GEN_PMCON_1);
+     uint16_t wmask;
+ 
++    if (lpc->pm.swsmi_timer_enabled) {
++        ich9_pm_update_swsmi_timer(
++            &lpc->pm, lpc->pm.smi_en & ICH9_PMIO_SMI_EN_SWSMI_EN);
++    }
++    if (lpc->pm.periodic_timer_enabled) {
++        ich9_pm_update_periodic_timer(
++            &lpc->pm, lpc->pm.smi_en & ICH9_PMIO_SMI_EN_PERIODIC_EN);
++    }
++
+     if (gen_pmcon_1 & ICH9_LPC_GEN_PMCON_1_SMI_LOCK) {
+         wmask = pci_get_word(lpc->d.wmask + ICH9_LPC_GEN_PMCON_1);
+         wmask &= ~ICH9_LPC_GEN_PMCON_1_SMI_LOCK;
+@@ -826,6 +836,10 @@ static Property ich9_lpc_properties[] = {
+                       ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT, true),
+     DEFINE_PROP_BIT64("x-smi-cpu-hotunplug", ICH9LPCState, smi_host_features,
+                       ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT, true),
++    DEFINE_PROP_BOOL("x-smi-swsmi-timer", ICH9LPCState,
++                     pm.swsmi_timer_enabled, true),
++    DEFINE_PROP_BOOL("x-smi-periodic-timer", ICH9LPCState,
++                     pm.periodic_timer_enabled, true),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
+index fa5c07db90..7f8ccc9b7a 100644
+--- a/hw/acpi/meson.build
++++ b/hw/acpi/meson.build
+@@ -24,7 +24,7 @@ acpi_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_true: files('pci-bridge.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_true: files('pcihp.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_false: files('acpi-pci-hotplug-stub.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_VIOT', if_true: files('viot.c'))
+-acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c'))
++acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c', 'ich9_timer.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_ERST', if_true: files('erst.c'))
+ acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'), if_false: files('ipmi-stub.c'))
+ acpi_ss.add(when: 'CONFIG_PC', if_false: files('acpi-x86-stub.c'))
+-- 
+MST
 
-Great. MemoryRegion is a core struct that's not related to vhost-user.
-I don't think anything else needs a mappings list. Maybe add the
-mappings list to shmem_list[] elements instead so that each VIRTIO
-Shared Memory Region has a mappings list? Each element could be a
-struct with a MemoryRegion field and a mappings list.
-
-Stefan
-
->
-> Thank you!
->
->>
->> >
->> > >
->> > >
->> > >>
->> > >> > +        ((vu_mmap->flags & VHOST_USER_FLAG_MAP_R) ? PROT_READ : =
-0) |
->> > >> > +        ((vu_mmap->flags & VHOST_USER_FLAG_MAP_W) ? PROT_WRITE :=
- 0),
->> > >> > +        MAP_SHARED | MAP_FIXED, fd, vu_mmap->fd_offset);
->> > >> > +
->> > >> > +    if (addr =3D=3D MAP_FAILED) {
->> > >> > +        error_report("Failed to mmap mem fd");
->> > >> > +        return -EFAULT;
->> > >> > +    }
->> > >> > +
->> > >> > +    return 0;
->> > >> > +}
->> > >> > +
->> > >> > +static int
->> > >> > +vhost_user_backend_handle_shmem_unmap(struct vhost_dev *dev,
->> > >> > +                                      VhostUserMMap *vu_mmap)
->> > >> > +{
->> > >> > +    void *addr =3D 0;
->> > >> > +    MemoryRegion *mr =3D NULL;
->> > >> > +
->> > >> > +    if (!dev->vdev->shmem_list ||
->> > >> > +        dev->vdev->n_shmem_regions <=3D vu_mmap->shmid) {
->> > >> > +        error_report("Device only has %d VIRTIO Shared Memory Re=
-gions.
->> > >> "
->> > >> > +                     "Requested ID: %d",
->> > >> > +                     dev->vdev->n_shmem_regions, vu_mmap->shmid)=
-;
->> > >> > +        return -EFAULT;
->> > >> > +    }
->> > >> > +
->> > >> > +    mr =3D &dev->vdev->shmem_list[vu_mmap->shmid];
->> > >> > +
->> > >> > +    if (!mr) {
->> > >> > +        error_report("VIRTIO Shared Memory Region at "
->> > >> > +                     "ID %d unitialized", vu_mmap->shmid);
->> > >> > +        return -EFAULT;
->> > >> > +    }
->> > >> > +
->> > >> > +    if ((vu_mmap->shm_offset + vu_mmap->len) < vu_mmap->len ||
->> > >> > +        (vu_mmap->shm_offset + vu_mmap->len) > mr->size) {
->> > >> > +        error_report("Bad offset/len for mmap %" PRIx64 "+%" PRI=
-x64,
->> > >> > +                     vu_mmap->shm_offset, vu_mmap->len);
->> > >> > +        return -EFAULT;
->> > >> > +    }
->> > >> > +
->> > >> > +    void *shmem_ptr =3D memory_region_get_ram_ptr(mr);
->> > >> > +
->> > >> > +    addr =3D mmap(shmem_ptr + vu_mmap->shm_offset, vu_mmap->len,
->> > >>
->> > >> Missing check for existing mapping with exact range [shm_offset, le=
-n)
->> > >> match.
->> > >>
->> > >> > +                PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIX=
-ED,
->> > >> -1, 0);
->> > >> > +
->> > >> > +    if (addr =3D=3D MAP_FAILED) {
->> > >> > +        error_report("Failed to unmap memory");
->> > >> > +        return -EFAULT;
->> > >> > +    }
->> > >> > +
->> > >> > +    return 0;
->> > >> > +}
->> > >> > +
->> > >> >  static void close_backend_channel(struct vhost_user *u)
->> > >> >  {
->> > >> >      g_source_destroy(u->backend_src);
->> > >> > @@ -1816,6 +1931,13 @@ static gboolean backend_read(QIOChannel *i=
-oc,
->> > >> GIOCondition condition,
->> > >> >          ret =3D
->> > >> vhost_user_backend_handle_shared_object_lookup(dev->opaque, ioc,
->> > >> >                                                               &hd=
-r,
->> > >> &payload);
->> > >> >          break;
->> > >> > +    case VHOST_USER_BACKEND_SHMEM_MAP:
->> > >> > +        ret =3D vhost_user_backend_handle_shmem_map(dev, &payloa=
-d.mmap,
->> > >> > +                                                  fd ? fd[0] : -=
-1);
->> > >> > +        break;
->> > >> > +    case VHOST_USER_BACKEND_SHMEM_UNMAP:
->> > >> > +        ret =3D vhost_user_backend_handle_shmem_unmap(dev,
->> > >> &payload.mmap);
->> > >> > +        break;
->> > >> >      default:
->> > >> >          error_report("Received unexpected msg type: %d.", hdr.re=
-quest);
->> > >> >          ret =3D -EINVAL;
->> > >> > diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
->> > >> > index 893a072c9d..9f2da5b11e 100644
->> > >> > --- a/hw/virtio/virtio.c
->> > >> > +++ b/hw/virtio/virtio.c
->> > >> > @@ -2856,6 +2856,16 @@ int virtio_save(VirtIODevice *vdev, QEMUFi=
-le *f)
->> > >> >      return vmstate_save_state(f, &vmstate_virtio, vdev, NULL);
->> > >> >  }
->> > >> >
->> > >> > +MemoryRegion *virtio_new_shmem_region(VirtIODevice *vdev)
->> > >> > +{
->> > >> > +    MemoryRegion *mr =3D g_new0(MemoryRegion, 1);
->> > >> > +    ++vdev->n_shmem_regions;
->> > >> > +    vdev->shmem_list =3D g_renew(MemoryRegion, vdev->shmem_list,
->> > >> > +                               vdev->n_shmem_regions);
->> > >>
->> > >> Where is shmem_list freed?
->> > >>
->> > >> The name "list" is misleading since this is an array, not a list.
->> > >>
->> > >> > +    vdev->shmem_list[vdev->n_shmem_regions - 1] =3D *mr;
->> > >> > +    return mr;
->> > >> > +}
->> > >>
->> > >> This looks weird. The contents of mr are copied into shmem_list[] a=
-nd
->> > >> then the pointer to mr is returned? Did you mean for the field's ty=
-pe to
->> > >> be MemoryRegion **shmem_list and then vdev->shmem_list[...] =3D mr =
-would
->> > >> stash the pointer?
->> > >>
->> > >> > +
->> > >> >  /* A wrapper for use as a VMState .put function */
->> > >> >  static int virtio_device_put(QEMUFile *f, void *opaque, size_t s=
-ize,
->> > >> >                                const VMStateField *field, JSONWri=
-ter
->> > >> *vmdesc)
->> > >> > @@ -3264,6 +3274,8 @@ void virtio_init(VirtIODevice *vdev, uint16=
-_t
->> > >> device_id, size_t config_size)
->> > >> >              virtio_vmstate_change, vdev);
->> > >> >      vdev->device_endian =3D virtio_default_endian();
->> > >> >      vdev->use_guest_notifier_mask =3D true;
->> > >> > +    vdev->shmem_list =3D NULL;
->> > >> > +    vdev->n_shmem_regions =3D 0;
->> > >> >  }
->> > >> >
->> > >> >  /*
->> > >> > diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virti=
-o.h
->> > >> > index 7d5ffdc145..16d598aadc 100644
->> > >> > --- a/include/hw/virtio/virtio.h
->> > >> > +++ b/include/hw/virtio/virtio.h
->> > >> > @@ -165,6 +165,9 @@ struct VirtIODevice
->> > >> >       */
->> > >> >      EventNotifier config_notifier;
->> > >> >      bool device_iotlb_enabled;
->> > >> > +    /* Shared memory region for vhost-user mappings. */
->> > >> > +    MemoryRegion *shmem_list;
->> > >> > +    int n_shmem_regions;
->> > >> >  };
->> > >> >
->> > >> >  struct VirtioDeviceClass {
->> > >> > @@ -280,6 +283,8 @@ void virtio_notify(VirtIODevice *vdev, VirtQu=
-eue
->> > >> *vq);
->> > >> >
->> > >> >  int virtio_save(VirtIODevice *vdev, QEMUFile *f);
->> > >> >
->> > >> > +MemoryRegion *virtio_new_shmem_region(VirtIODevice *vdev);
->> > >> > +
->> > >> >  extern const VMStateInfo virtio_vmstate_info;
->> > >> >
->> > >> >  #define VMSTATE_VIRTIO_DEVICE \
->> > >> > diff --git a/subprojects/libvhost-user/libvhost-user.c
->> > >> b/subprojects/libvhost-user/libvhost-user.c
->> > >> > index a879149fef..28556d183a 100644
->> > >> > --- a/subprojects/libvhost-user/libvhost-user.c
->> > >> > +++ b/subprojects/libvhost-user/libvhost-user.c
->> > >> > @@ -1586,6 +1586,71 @@ vu_rm_shared_object(VuDev *dev, unsigned c=
-har
->> > >> uuid[UUID_LEN])
->> > >> >      return vu_send_message(dev, &msg);
->> > >> >  }
->> > >> >
->> > >> > +bool
->> > >> > +vu_shmem_map(VuDev *dev, uint8_t shmid, uint64_t fd_offset,
->> > >> > +             uint64_t shm_offset, uint64_t len, uint64_t flags)
->> > >> > +{
->> > >> > +    bool result =3D false;
->> > >> > +    VhostUserMsg msg_reply;
->> > >> > +    VhostUserMsg vmsg =3D {
->> > >> > +        .request =3D VHOST_USER_BACKEND_SHMEM_MAP,
->> > >> > +        .size =3D sizeof(vmsg.payload.mmap),
->> > >> > +        .flags =3D VHOST_USER_VERSION,
->> > >> > +        .payload.mmap =3D {
->> > >> > +            .shmid =3D shmid,
->> > >> > +            .fd_offset =3D fd_offset,
->> > >> > +            .shm_offset =3D shm_offset,
->> > >> > +            .len =3D len,
->> > >> > +            .flags =3D flags,
->> > >> > +        },
->> > >> > +    };
->> > >> > +
->> > >> > +    if (vu_has_protocol_feature(dev, VHOST_USER_PROTOCOL_F_REPLY=
-_ACK))
->> > >> {
->> > >> > +        vmsg.flags |=3D VHOST_USER_NEED_REPLY_MASK;
->> > >> > +    }
->> > >> > +
->> > >> > +    pthread_mutex_lock(&dev->backend_mutex);
->> > >> > +    if (!vu_message_write(dev, dev->backend_fd, &vmsg)) {
->> > >> > +        pthread_mutex_unlock(&dev->backend_mutex);
->> > >> > +        return false;
->> > >> > +    }
->> > >> > +
->> > >> > +    /* Also unlocks the backend_mutex */
->> > >> > +    return vu_process_message_reply(dev, &vmsg);
->> > >> > +}
->> > >> > +
->> > >> > +bool
->> > >> > +vu_shmem_unmap(VuDev *dev, uint8_t shmid, uint64_t fd_offset,
->> > >> > +               uint64_t shm_offset, uint64_t len)
->> > >> > +{
->> > >> > +    bool result =3D false;
->> > >> > +    VhostUserMsg msg_reply;
->> > >> > +    VhostUserMsg vmsg =3D {
->> > >> > +        .request =3D VHOST_USER_BACKEND_SHMEM_UNMAP,
->> > >> > +        .size =3D sizeof(vmsg.payload.mmap),
->> > >> > +        .flags =3D VHOST_USER_VERSION,
->> > >> > +        .payload.mmap =3D {
->> > >> > +            .shmid =3D shmid,
->> > >> > +            .fd_offset =3D fd_offset,
->> > >>
->> > >> What is the meaning of this field? I expected it to be set to 0.
->> > >>
->> > >> > +            .shm_offset =3D shm_offset,
->> > >> > +            .len =3D len,
->> > >> > +        },
->> > >> > +    };
->> > >> > +
->> > >> > +    if (vu_has_protocol_feature(dev, VHOST_USER_PROTOCOL_F_REPLY=
-_ACK))
->> > >> {
->> > >> > +        vmsg.flags |=3D VHOST_USER_NEED_REPLY_MASK;
->> > >> > +    }
->> > >> > +
->> > >> > +    pthread_mutex_lock(&dev->backend_mutex);
->> > >> > +    if (!vu_message_write(dev, dev->backend_fd, &vmsg)) {
->> > >> > +        pthread_mutex_unlock(&dev->backend_mutex);
->> > >> > +        return false;
->> > >> > +    }
->> > >> > +
->> > >> > +    /* Also unlocks the backend_mutex */
->> > >> > +    return vu_process_message_reply(dev, &vmsg);
->> > >> > +}
->> > >> > +
->> > >> >  static bool
->> > >> >  vu_set_vring_call_exec(VuDev *dev, VhostUserMsg *vmsg)
->> > >> >  {
->> > >> > diff --git a/subprojects/libvhost-user/libvhost-user.h
->> > >> b/subprojects/libvhost-user/libvhost-user.h
->> > >> > index deb40e77b3..7f6c22cc1a 100644
->> > >> > --- a/subprojects/libvhost-user/libvhost-user.h
->> > >> > +++ b/subprojects/libvhost-user/libvhost-user.h
->> > >> > @@ -127,6 +127,8 @@ typedef enum VhostUserBackendRequest {
->> > >> >      VHOST_USER_BACKEND_SHARED_OBJECT_ADD =3D 6,
->> > >> >      VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE =3D 7,
->> > >> >      VHOST_USER_BACKEND_SHARED_OBJECT_LOOKUP =3D 8,
->> > >> > +    VHOST_USER_BACKEND_SHMEM_MAP =3D 9,
->> > >> > +    VHOST_USER_BACKEND_SHMEM_UNMAP =3D 10,
->> > >> >      VHOST_USER_BACKEND_MAX
->> > >> >  }  VhostUserBackendRequest;
->> > >> >
->> > >> > @@ -186,6 +188,24 @@ typedef struct VhostUserShared {
->> > >> >      unsigned char uuid[UUID_LEN];
->> > >> >  } VhostUserShared;
->> > >> >
->> > >> > +/* For the flags field of VhostUserMMap */
->> > >> > +#define VHOST_USER_FLAG_MAP_R (1u << 0)
->> > >> > +#define VHOST_USER_FLAG_MAP_W (1u << 1)
->> > >> > +
->> > >> > +typedef struct {
->> > >> > +    /* VIRTIO Shared Memory Region ID */
->> > >> > +    uint8_t shmid;
->> > >> > +    uint8_t padding[7];
->> > >> > +    /* File offset */
->> > >> > +    uint64_t fd_offset;
->> > >> > +    /* Offset within the VIRTIO Shared Memory Region */
->> > >> > +    uint64_t shm_offset;
->> > >> > +    /* Size of the mapping */
->> > >> > +    uint64_t len;
->> > >> > +    /* Flags for the mmap operation, from VHOST_USER_FLAG_* */
->> > >> > +    uint64_t flags;
->> > >> > +} VhostUserMMap;
->> > >> > +
->> > >> >  #if defined(_WIN32) && (defined(__x86_64__) || defined(__i386__)=
-)
->> > >> >  # define VU_PACKED __attribute__((gcc_struct, packed))
->> > >> >  #else
->> > >> > @@ -214,6 +234,7 @@ typedef struct VhostUserMsg {
->> > >> >          VhostUserVringArea area;
->> > >> >          VhostUserInflight inflight;
->> > >> >          VhostUserShared object;
->> > >> > +        VhostUserMMap mmap;
->> > >> >      } payload;
->> > >> >
->> > >> >      int fds[VHOST_MEMORY_BASELINE_NREGIONS];
->> > >> > @@ -597,6 +618,38 @@ bool vu_add_shared_object(VuDev *dev, unsign=
-ed
->> > >> char uuid[UUID_LEN]);
->> > >> >   */
->> > >> >  bool vu_rm_shared_object(VuDev *dev, unsigned char uuid[UUID_LEN=
-]);
->> > >> >
->> > >> > +/**
->> > >> > + * vu_shmem_map:
->> > >> > + * @dev: a VuDev context
->> > >> > + * @shmid: VIRTIO Shared Memory Region ID
->> > >> > + * @fd_offset: File offset
->> > >> > + * @shm_offset: Offset within the VIRTIO Shared Memory Region
->> > >> > + * @len: Size of the mapping
->> > >> > + * @flags: Flags for the mmap operation
->> > >> > + *
->> > >> > + * Advertises a new mapping to be made in a given VIRTIO Shared =
-Memory
->> > >> Region.
->> > >> > + *
->> > >> > + * Returns: TRUE on success, FALSE on failure.
->> > >> > + */
->> > >> > +bool vu_shmem_map(VuDev *dev, uint8_t shmid, uint64_t fd_offset,
->> > >> > +                  uint64_t shm_offset, uint64_t len, uint64_t fl=
-ags);
->> > >> > +
->> > >> > +/**
->> > >> > + * vu_shmem_map:
->> > >> > + * @dev: a VuDev context
->> > >> > + * @shmid: VIRTIO Shared Memory Region ID
->> > >> > + * @fd_offset: File offset
->> > >> > + * @shm_offset: Offset within the VIRTIO Shared Memory Region
->> > >> > + * @len: Size of the mapping
->> > >> > + *
->> > >> > + * The front-end un-mmaps a given range in the VIRTIO Shared Mem=
-ory
->> > >> Region
->> > >> > + * with the requested `shmid`.
->> > >> > + *
->> > >> > + * Returns: TRUE on success, FALSE on failure.
->> > >> > + */
->> > >> > +bool vu_shmem_unmap(VuDev *dev, uint8_t shmid, uint64_t fd_offse=
-t,
->> > >> > +                  uint64_t shm_offset, uint64_t len);
->> > >> > +
->> > >> >  /**
->> > >> >   * vu_queue_set_notification:
->> > >> >   * @dev: a VuDev context
->> > >> > --
->> > >> > 2.45.2
->> > >> >
->> > >>
->> > >
 
