@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA0FDEE49BC
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:06:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A937EEE49BD
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:06:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soOjN-000488-Kr; Wed, 11 Sep 2024 10:54:09 -0400
+	id 1soOmg-0001My-8V; Wed, 11 Sep 2024 10:57:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOiS-0001fb-G1
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:53:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOhi-00070k-Be
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:52:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOiP-0007HI-Jt
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:53:07 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOhX-0007Dd-73
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:52:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726066383;
+ s=mimecast20190719; t=1726066329;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=H3/RbhQGQ6+o6xoRvkRMHa82wsOC3BKipqBPf5VTk9U=;
- b=QMF+C6SXSVE0pa9s6W1VyOtHDYEy/KPVtWBzqhdDV+1Bg3W5JbB/9zl7AhCmTO3aAxhGEN
- ojQrmZjntMkHCY45wy+D32Qe56QfrgorgxbFPJa40AZUJMT0DjqQwU8CRQURwpSQ/KHT7d
- IG7wXbDGe8jZKFEQAZychwYdn/u9EEE=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cW6rJsKhPMN4DAXnpRk9aJejhnXYOKSdkgv1oLepLKc=;
+ b=UOzKZ/LkrVY2P0xxqap6GqTzzhVJfUEyCR5O9WnyYM/hYdutN79nbugmOSRosPxLBPcdiJ
+ 3aAY84fHcvs6idYVd+FJe2fgS4YMqoK1Oo90TD0WYRO1Yh4T6Lk+rvRixYSZqK6g71Mck1
+ Wzt4GJFe36rDGTw545bhb3q1w5KDauU=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-250-xX71cbeAMSaKl3xvr-KG7A-1; Wed, 11 Sep 2024 09:51:34 -0400
-X-MC-Unique: xX71cbeAMSaKl3xvr-KG7A-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-536589936d3so1813392e87.0
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 06:51:34 -0700 (PDT)
+ us-mta-550-uku9yfBzMNqmtwfAvz6AZA-1; Wed, 11 Sep 2024 09:51:37 -0400
+X-MC-Unique: uku9yfBzMNqmtwfAvz6AZA-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-5c25c45afb2so4829182a12.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 06:51:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726062693; x=1726667493;
+ d=1e100.net; s=20230601; t=1726062695; x=1726667495;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=H3/RbhQGQ6+o6xoRvkRMHa82wsOC3BKipqBPf5VTk9U=;
- b=kNT1yLa5UkyETYzsCfAZiH2akdmB6GlxcZxOHvBlMwTzDuIIQB0guCy4be2J5ZvdcT
- yaLZcIQy/IZEFrptZi7CYiOvAxLElzRXtHLg+vIdNBpQE/a1PR1pI02GWzye0Da2kGjH
- fXzukTo9pJ3Vhs97edLavWjKBIKRzphSEKa6KRElDeLM4ZgcAu+ao8vfTVWSJnMhhniG
- ZExSroEnmKiv6vo7mjbHMuEIfTV0fJrD+HvqQV0i0QWapzmb7Bpa8NNE5ZQ613eJMiZU
- NA08VSTUUHZckv78S09UATUWy1hq0IdslPiqL75S9UaSzK/ohVSe/7n/guHQWaam66Lw
- pXRQ==
-X-Gm-Message-State: AOJu0YxKvpErl8AINKOpLYwnx6YDZ9TtQIUWrqX/D7ZSMCvAFjZwazYk
- T2HNnbL1+wW77PJwm8jv7DdJEIqHX2aswqfNMJOqODsA35QWwQyHTnEZbdiFc/qGhHBnlp3EXGR
- HmFHd0p760Lo4BFu6IvmfI7TPumectNK2NOREC9DINWdpwifQAr6Dt02phhhz+U/BTlmDW5N0Dh
- eG+eC9ddiNp0fdBjPwxvMA2nY17h8XWw==
-X-Received: by 2002:a05:6512:b1c:b0:52c:dfa2:5ac1 with SMTP id
- 2adb3069b0e04-53673b5fa9bmr1671326e87.24.1726062692846; 
- Wed, 11 Sep 2024 06:51:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFYvyO7rDO2vQrMeqXdTh83xQG9qGuW9kbCIlblfYqUWqLcu2QsOKRrsj/bTuarXyVcehKXBg==
-X-Received: by 2002:a05:6512:b1c:b0:52c:dfa2:5ac1 with SMTP id
- 2adb3069b0e04-53673b5fa9bmr1671271e87.24.1726062691756; 
- Wed, 11 Sep 2024 06:51:31 -0700 (PDT)
+ bh=cW6rJsKhPMN4DAXnpRk9aJejhnXYOKSdkgv1oLepLKc=;
+ b=U6edi+VD2seSGOTusjonRapM/ryDqo+ePL252+7kyZh5am2rv9KY9asmiCIPswb4Yj
+ n+9acIwUU2+7dna2CGRgUlYYqd0iDYEGIKnKd7PgvrPXM/OC2F74ea0ViWHUlqi2bBRx
+ j2GNnlKT09IwrOqSGfYAndUqXYzKneqkGJESZEHpJaNATMHus7IvCb7/WHI6G8uj78zf
+ RCEybm+g2+LrZbvpXtrYqTi7YeZkKR4FP65Nw/NO2GcXlQDLMQ5D6rQ0X68FTzC23Ldo
+ QDeB9r1tcTl3KGwABkHnX2oGE2g49ivTzKtbxKoWfkiKcLQpiQKGOM4pE5+F40pcx95G
+ XtzA==
+X-Gm-Message-State: AOJu0Ywhjg/IbJiikg4ThA+/m5Yttblo+beeTo5MeJtoEmyJReDiT1L9
+ lyEPGNku6A3pTGYmpsSwNjBXTp8M0pSg5gPHwsg+BKBw4Cnyw/W1C7kasvsN9bGoTtXBAdYgEt1
+ SYnBm7ZsA8LDs+jA2CY1PHzpC+zVD+AN+KSxukGSoQtkBXRENzHp6EbPVO8YIPBuFRrytP19Vuo
+ 5HZNt/FPQBt7Oggh64v48RE0mDza777A==
+X-Received: by 2002:a17:907:7f10:b0:a8b:6ee7:ba25 with SMTP id
+ a640c23a62f3a-a8ffadb0612mr405072366b.47.1726062695518; 
+ Wed, 11 Sep 2024 06:51:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGlSiPBnTtHcvdwGtlu9vE+aMb07EQGcKjwLV6c8rHV3ngBWdOtgs2ai/xRWXpg0D8Crxxr8w==
+X-Received: by 2002:a17:907:7f10:b0:a8b:6ee7:ba25 with SMTP id
+ a640c23a62f3a-a8ffadb0612mr405067566b.47.1726062694589; 
+ Wed, 11 Sep 2024 06:51:34 -0700 (PDT)
 Received: from redhat.com ([2.55.9.133]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25835b0bsm625639466b.12.2024.09.11.06.51.30
+ a640c23a62f3a-a8d259c1fa3sm616631166b.80.2024.09.11.06.51.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 06:51:31 -0700 (PDT)
-Date: Wed, 11 Sep 2024 09:51:29 -0400
+ Wed, 11 Sep 2024 06:51:34 -0700 (PDT)
+Date: Wed, 11 Sep 2024 09:51:32 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 02/18] virtio: Always reset vhost devices
-Message-ID: <2688e8df60f5a655dc34c5e38523e425556f8483.1726062663.git.mst@redhat.com>
+ BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PULL 03/18] hw: Move declaration of IRQState to header and add init
+ function
+Message-ID: <e72a7f65c11565d2f216711588a4e767a1f6cd80.1726062663.git.mst@redhat.com>
 References: <cover.1726062663.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -76,7 +77,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1726062663.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -101,63 +102,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Requiring `vhost_started` to be true for resetting vhost devices in
-`virtio_reset()` seems like the wrong condition: Most importantly, the
-preceding `virtio_set_status(vdev, 0)` call will (for vhost devices) end
-up in `vhost_dev_stop()` (through vhost devices' `.set_status`
-implementations), setting `vdev->vhost_started = false`.  Therefore, the
-gated `vhost_reset_device()` call is unreachable.
+To allow embedding a qemu_irq in a struct move its definition to the
+header and add a function to init it in place without allocating it.
 
-`vhost_started` is not documented, so it is hard to say what exactly it
-is supposed to mean, but judging from the fact that `vhost_dev_start()`
-sets it and `vhost_dev_stop()` clears it, it seems like it indicates
-whether there is a vhost back-end, and whether that back-end is
-currently running and processing virtio requests.
-
-Making a reset conditional on whether the vhost back-end is processing
-virtio requests seems wrong; in fact, it is probably better to reset it
-only when it is not currently processing requests, which is exactly the
-current order of operations in `virtio_reset()`: First, the back-end is
-stopped through `virtio_set_status(vdev, 0)`, then we want to send a
-reset.
-
-Therefore, we should drop the `vhost_started` condition, but in its
-stead we then have to verify that we can indeed send a reset to this
-vhost device, by not just checking `k->get_vhost != NULL` (introduced by
-commit 95e1019a4a9), but also that the vhost back-end is connected
-(`hdev = k->get_vhost(); hdev != NULL && hdev->vhost_ops != NULL`).
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-Id: <20240723163941.48775-3-hreitz@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Message-Id: <e3ffd0f6ef8845d0f7247c9b6ff33f7ee8b432cf.1719690591.git.balaton@eik.bme.hu>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/virtio/virtio.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/hw/irq.h | 18 ++++++++++++++++++
+ hw/core/irq.c    | 25 +++++++++++--------------
+ 2 files changed, 29 insertions(+), 14 deletions(-)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 9e10cbc058..42589adf2c 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -2331,8 +2331,12 @@ void virtio_reset(void *opaque)
-         vdev->device_endian = virtio_default_endian();
-     }
+diff --git a/include/hw/irq.h b/include/hw/irq.h
+index 645b73d251..c861c1debd 100644
+--- a/include/hw/irq.h
++++ b/include/hw/irq.h
+@@ -1,9 +1,20 @@
+ #ifndef QEMU_IRQ_H
+ #define QEMU_IRQ_H
  
--    if (vdev->vhost_started && k->get_vhost) {
--        vhost_reset_device(k->get_vhost(vdev));
-+    if (k->get_vhost) {
-+        struct vhost_dev *hdev = k->get_vhost(vdev);
-+        /* Only reset when vhost back-end is connected */
-+        if (hdev && hdev->vhost_ops) {
-+            vhost_reset_device(hdev);
-+        }
-     }
++#include "qom/object.h"
++
+ /* Generic IRQ/GPIO pin infrastructure.  */
  
-     if (k->reset) {
+ #define TYPE_IRQ "irq"
++OBJECT_DECLARE_SIMPLE_TYPE(IRQState, IRQ)
++
++struct IRQState {
++    Object parent_obj;
++
++    qemu_irq_handler handler;
++    void *opaque;
++    int n;
++};
+ 
+ void qemu_set_irq(qemu_irq irq, int level);
+ 
+@@ -23,6 +34,13 @@ static inline void qemu_irq_pulse(qemu_irq irq)
+     qemu_set_irq(irq, 0);
+ }
+ 
++/*
++ * Init a single IRQ. The irq is assigned with a handler, an opaque data
++ * and the interrupt number.
++ */
++void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
++                   int n);
++
+ /* Returns an array of N IRQs. Each IRQ is assigned the argument handler and
+  * opaque data.
+  */
+diff --git a/hw/core/irq.c b/hw/core/irq.c
+index 3f14e2dda7..db95ffc18f 100644
+--- a/hw/core/irq.c
++++ b/hw/core/irq.c
+@@ -26,16 +26,6 @@
+ #include "hw/irq.h"
+ #include "qom/object.h"
+ 
+-OBJECT_DECLARE_SIMPLE_TYPE(IRQState, IRQ)
+-
+-struct IRQState {
+-    Object parent_obj;
+-
+-    qemu_irq_handler handler;
+-    void *opaque;
+-    int n;
+-};
+-
+ void qemu_set_irq(qemu_irq irq, int level)
+ {
+     if (!irq)
+@@ -44,6 +34,15 @@ void qemu_set_irq(qemu_irq irq, int level)
+     irq->handler(irq->opaque, irq->n, level);
+ }
+ 
++void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
++                   int n)
++{
++    object_initialize(irq, sizeof(*irq), TYPE_IRQ);
++    irq->handler = handler;
++    irq->opaque = opaque;
++    irq->n = n;
++}
++
+ qemu_irq *qemu_extend_irqs(qemu_irq *old, int n_old, qemu_irq_handler handler,
+                            void *opaque, int n)
+ {
+@@ -69,10 +68,8 @@ qemu_irq qemu_allocate_irq(qemu_irq_handler handler, void *opaque, int n)
+ {
+     IRQState *irq;
+ 
+-    irq = IRQ(object_new(TYPE_IRQ));
+-    irq->handler = handler;
+-    irq->opaque = opaque;
+-    irq->n = n;
++    irq = g_new(IRQState, 1);
++    qemu_init_irq(irq, handler, opaque, n);
+ 
+     return irq;
+ }
 -- 
 MST
 
