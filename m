@@ -4,96 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF8EBEE57CF
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 20:39:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35173EE57D7
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 21:12:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soU6Q-0003Jj-1b; Wed, 11 Sep 2024 16:38:14 -0400
+	id 1soUcz-0004mu-PF; Wed, 11 Sep 2024 17:11:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1soU6L-0003J9-NR
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 16:38:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1soUcp-0004kY-ET; Wed, 11 Sep 2024 17:11:44 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1soU6I-0006dD-W1
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 16:38:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726087084;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=tc98jv/dNqMzj3rxpwSFCUvva+Qaw++yugHRtISXi1E=;
- b=QapkDjKB2uidCJ6SFshsHsHerRNJwiU8yUhK717JGtSBLutq9SrVFaqyPKJBFQrZCmSamJ
- HVY2voFGsZZOwEn+aE74DkYaUi3mWDCI8takf24LhJlGkvvDLmymPpkbNTykLFzTbEqiKE
- 6lU+i8mR0C1ap/mY+2qz6Fiq5n20AYE=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-314-afQDSXSqNjSjFthFzLggoA-1; Wed, 11 Sep 2024 16:38:03 -0400
-X-MC-Unique: afQDSXSqNjSjFthFzLggoA-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6c353a05885so2589206d6.2
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 13:38:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726087083; x=1726691883;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tc98jv/dNqMzj3rxpwSFCUvva+Qaw++yugHRtISXi1E=;
- b=EyFiTfpBJprcMMME4i4kBc/Gv2RjaUnWOVyVX0+Q1EhwYBdcgBbP4mvpeCv0Z4oCGR
- +g/N35KEG8PPadCv2x68w6EHuYlT4xe+ojYuVbdZMR/a75eXU5kmKGyFxXAOA3JTKKI6
- 5DODUJzqIVY4HdWJEs3U22Pavg8yAhwGnfGwy8nXRyjJ3Ks2Up3HdEZCF4JUampi2a90
- 9Yk9eOY4iPUbZqAFPi/GWMT1sAL2n9HauQb9IWJSxu2JDl8HXbwudW+GjH1Jf7ph/ahD
- DGn7wPuURmdCnqgnMHJY3bXURC0xpZbYay1koPJDVPlmh0qVukvkeWHYnYCC42cjdOsO
- 95hw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUPde0TKRReynpxBqNaoVruFrJwjTQfV+I4O8IqjGJhccERfZ/bzfk6wUpcldLIbGxzDBi5r6elb/lY@nongnu.org
-X-Gm-Message-State: AOJu0YxSJtMfghKPzybIi7bqY4pxWh2vyAWXsw6lKeoOdBmrFhGKbweB
- ciE8hTeSv68fcqB48MlyKULQn4xRNKGxQW48TEib9A4O30MKVs/GIFmdhmpzvyvjAOs0G0xa6Vp
- PL4YVKT9Z44o7L3kV8lCBNn7S01Tukztk/aoYLz+/5DEivCR+NOPb
-X-Received: by 2002:a05:6214:588a:b0:6c3:6de3:fa06 with SMTP id
- 6a1803df08f44-6c57350c8d2mr9899956d6.9.1726087082569; 
- Wed, 11 Sep 2024 13:38:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE9t60/58VzyNtkvMbVc5fMVd9A52A/oEPO3Vhw95qyY0Z4oqk1elEO0bON0JOgtAAc8QI0tA==
-X-Received: by 2002:a05:6214:588a:b0:6c3:6de3:fa06 with SMTP id
- 6a1803df08f44-6c57350c8d2mr9899466d6.9.1726087082003; 
- Wed, 11 Sep 2024 13:38:02 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c53474d749sm46012376d6.92.2024.09.11.13.38.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 13:38:01 -0700 (PDT)
-Date: Wed, 11 Sep 2024 16:37:58 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Hyman Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH RFC 10/10] tests/migration-tests: Add test case for
- responsive CPU throttle
-Message-ID: <ZuH_pvnTCumKuXTh@x1n>
-References: <cover.1725889277.git.yong.huang@smartx.com>
- <96eeea4efd3417212d6e2639bc118b90d4dcf926.1725889277.git.yong.huang@smartx.com>
- <CAFEAcA99=bn4x_BjgsAsrVitXNxOUSNviz=TGezJEB+=Zj603w@mail.gmail.com>
- <Zt8H6pC2yQ2DD7DV@x1n> <87frq8lcgp.fsf@suse.de>
- <ZuC4pYT-atQwWePv@x1n> <87seu7qhao.fsf@suse.de>
- <ZuG-SijLg8Q27boE@x1n> <87ed5qq8e2.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1soUcj-0003Ar-OL; Wed, 11 Sep 2024 17:11:39 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48BDQC47027443;
+ Wed, 11 Sep 2024 21:11:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=f
+ CtVPr6cEJWU3bZrxTX7PzZzvkXd/QKPDcIB9J5Ofu8=; b=UcN6Sewgt4HKx0uek
+ r4ceJ71XOo9au984+RpzI50spPFZCynvPTmDPX8HZNdG1sNrIAiQ0WNKb70D2nd6
+ fLx87weppD4V1coPHtZFiNEJrCyLlaEL5nFB2xbCWvPZv874HUidPGyf4xUsGAa/
+ KmIJ+dnpfXuORsXYgOGSTjIT7LLyehHcpEMhrGGXXnLE+dxnHP/wfNih681LCaSr
+ I3KQvOUDyyrRj4eMA5UHrKuNPC+mS7F74AJn2VCodhhNhvNogjF/acqLpOl+oyXa
+ 52ua2co7lsspXms34iMA3bYyy+QJ0iC1s9DNOFRmoLFgru7PD+6WrhCpK1cbke4O
+ I82/w==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gejar6ra-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 11 Sep 2024 21:11:21 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48BLBLXM015168;
+ Wed, 11 Sep 2024 21:11:21 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gejar6r7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 11 Sep 2024 21:11:21 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48BIWCxd019843;
+ Wed, 11 Sep 2024 21:11:19 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41h25q41v2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 11 Sep 2024 21:11:19 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48BLBIDW46662334
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 11 Sep 2024 21:11:18 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AFFED5805A;
+ Wed, 11 Sep 2024 21:11:18 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4605C58056;
+ Wed, 11 Sep 2024 21:11:17 +0000 (GMT)
+Received: from [9.61.185.100] (unknown [9.61.185.100])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 11 Sep 2024 21:11:17 +0000 (GMT)
+Message-ID: <a58519cf-90ce-4bdf-aa5a-04c3526d7192@linux.ibm.com>
+Date: Wed, 11 Sep 2024 17:11:16 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87ed5qq8e2.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.2 v15 04/11] s390x/pci: Check for multifunction
+ after device realization
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <20240823-reuse-v15-0-eddcb960e289@daynix.com>
+ <20240823-reuse-v15-4-eddcb960e289@daynix.com>
+ <2b5d2fce-8a1e-4f50-a5d2-0c4aaa2880af@redhat.com>
+ <eaebda7d-c61e-4ed8-a6b9-98e5f48f26ff@daynix.com>
+ <8dbc553b-c3ae-4f11-accb-6dee10e9758e@linux.ibm.com>
+ <8127d7f8-4917-4545-be66-62688157224a@daynix.com>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <8127d7f8-4917-4545-be66-62688157224a@daynix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 9dJ5EJKoAqD9ocdPvWCXNym8StBtxtT4
+X-Proofpoint-GUID: 6SHdP3qSHm6KXPxGuGq2j_vc-_XsJv0g
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-11_02,2024-09-09_02,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 mlxscore=0
+ phishscore=0 mlxlogscore=999 spamscore=0 impostorscore=0 adultscore=0
+ bulkscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2409110161
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -111,370 +132,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 11, 2024 at 04:48:21PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
+On 9/11/24 11:15 AM, Akihiko Odaki wrote:
+> On 2024/09/11 22:53, Matthew Rosato wrote:
+>> On 9/11/24 6:58 AM, Akihiko Odaki wrote:
+>>> On 2024/09/11 18:38, Cédric Le Goater wrote:
+>>>> +Matthew +Eric
+>>>>
+>>>> Side note for the maintainers :
+>>>>
+>>>> Before this change, the igb device, which is multifunction, was working
+>>>> fine under Linux.
+>>>>
+>>>> Was there a fix in Linux since :
+>>>>
+>>>>     57da367b9ec4 ("s390x/pci: forbid multifunction pci device")
+>>>>     6069bcdeacee ("s390x/pci: Move some hotplug checks to the pre_plug handler")
+>>>>
+>>>> ?
+>> The timing of those particular commits predates the linux s390 kernel support of multifunction/SR-IOV.  At that time it was simply not possible on s390.
 > 
-> > On Tue, Sep 10, 2024 at 07:23:43PM -0300, Fabiano Rosas wrote:
-> >> Peter Xu <peterx@redhat.com> writes:
-> >> 
-> >> > On Mon, Sep 09, 2024 at 06:54:46PM -0300, Fabiano Rosas wrote:
-> >> >> Peter Xu <peterx@redhat.com> writes:
-> >> >> 
-> >> >> > On Mon, Sep 09, 2024 at 03:02:57PM +0100, Peter Maydell wrote:
-> >> >> >> On Mon, 9 Sept 2024 at 14:51, Hyman Huang <yong.huang@smartx.com> wrote:
-> >> >> >> >
-> >> >> >> > Despite the fact that the responsive CPU throttle is enabled,
-> >> >> >> > the dirty sync count may not always increase because this is
-> >> >> >> > an optimization that might not happen in any situation.
-> >> >> >> >
-> >> >> >> > This test case just making sure it doesn't interfere with any
-> >> >> >> > current functionality.
-> >> >> >> >
-> >> >> >> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
-> >> >> >> 
-> >> >> >> tests/qtest/migration-test already runs 75 different
-> >> >> >> subtests, takes up a massive chunk of our "make check"
-> >> >> >> time, and is very commonly a "times out" test on some
-> >> >> >> of our CI jobs. It runs on five different guest CPU
-> >> >> >> architectures, each one of which takes between 2 and
-> >> >> >> 5 minutes to complete the full migration-test.
-> >> >> >> 
-> >> >> >> Do we really need to make it even bigger?
-> >> >> >
-> >> >> > I'll try to find some time in the next few weeks looking into this to see
-> >> >> > whether we can further shrink migration test times after previous attemps
-> >> >> > from Dan.  At least a low hanging fruit is we should indeed put some more
-> >> >> > tests into g_test_slow(), and this new test could also be a candidate (then
-> >> >> > we can run "-m slow" for migration PRs only).
-> >> >> 
-> >> >> I think we could (using -m slow or any other method) separate tests
-> >> >> that are generic enough that every CI run should benefit from them
-> >> >> vs. tests that are only useful once someone starts touching migration
-> >> >> code. I'd say very few in the former category and most of them in the
-> >> >> latter.
-> >> >> 
-> >> >> For an idea of where migration bugs lie, I took a look at what was
-> >> >> fixed since 2022:
-> >> >> 
-> >> >> # bugs | device/subsystem/arch
-> >> >> ----------------------------------
-> >> >>     54 | migration
-> >> >>     10 | vfio
-> >> >>      6 | ppc
-> >> >>      3 | virtio-gpu
-> >> >>      2 | pcie_sriov, tpm_emulator,
-> >> >>           vdpa, virtio-rng-pci
-> >> >>      1 | arm, block, gpio, lasi,
-> >> >>           pci, s390, scsi-disk,
-> >> >>           virtio-mem, TCG
-> >> >
-> >> > Just curious; how did you collect these?
-> >> 
-> >> git log --since=2022 and then squinted at it. I wrote a warning to take
-> >> this with a grain of salt, but it missed the final version.
-> >> 
-> >> >
-> >> >> 
-> >> >> From these, ignoring the migration bugs, the migration-tests cover some
-> >> >> of: arm, ppc, s390, TCG. The device_opts[1] patch hasn't merged yet, but
-> >> >> once it is, then virtio-gpu would be covered and we could investigate
-> >> >> adding some of the others.
-> >> >> 
-> >> >> For actual migration code issues:
-> >> >> 
-> >> >> # bugs | (sub)subsystem | kind
-> >> >> ----------------------------------------------
-> >> >>     13 | multifd        | correctness/races
-> >> >>      8 | ram            | correctness
-> >> >>      8 | rdma:          | general programming
-> >> >
-> >> > 8 rdma bugs??? ouch..
-> >> 
-> >> Mostly caught by a cleanup from Markus. Silly stuff like of mixed signed
-> >> integer comparisons and bugs in error handling. I don't even want to
-> >> look too much at it.
-> >> 
-> >> ...hopefully this release we'll manage to resolve that situation.
-> >> 
-> >> >
-> >> >>      7 | qmp            | new api bugs
-> >> >>      5 | postcopy       | races
-> >> >>      4 | file:          | leaks
-> >> >>      3 | return path    | races
-> >> >>      3 | fd_cleanup     | races
-> >> >>      2 | savevm, aio/coroutines
-> >> >>      1 | xbzrle, colo, dirtyrate, exec:,
-> >> >>           windows, iochannel, qemufile,
-> >> >>           arch (ppc64le)
-> >> >> 
-> >> >> Here, the migration-tests cover well: multifd, ram, qmp, postcopy,
-> >> >> file, rp, fd_cleanup, iochannel, qemufile, xbzrle.
-> >> >> 
-> >> >> My suggestion is we run per arch:
-> >> >> 
-> >> >> "/precopy/tcp/plain"
-> >> >> "/precopy/tcp/tls/psk/match",
-> >> >> "/postcopy/plain"
-> >> >> "/postcopy/preempt/plain"
-> >> >> "/postcopy/preempt/recovery/plain"
-> >> >> "/multifd/tcp/plain/cancel"
-> >> >> "/multifd/tcp/uri/plain/none"
-> >> >
-> >> > Don't you want to still keep a few multifd / file tests?
-> >> 
-> >> Not really, but I won't object if you want to add some more in there. To
-> >> be honest, I want to get out of people's way as much as I can because
-> >> having to revisit this every couple of months is stressful to me.
-> >
-> > I hope migration tests are not too obstructive yet so far :) - this
-> > discussion is still within a context where we might add one more slow test
-> > in CI, and we probably simply should make it a -m slow test.
-> >
-> >> 
-> >> My rationale for those is:
-> >> 
-> >> "/precopy/tcp/plain":
-> >>  Smoke test, the most common migration
-> >
-> > E.g. unix is missing, and I'm not sure which we use for e.g. kubevirt.
-> >
-> > And note that even if unix shares the socket iochannel with tcp, it may not
-> > work the same.  For example, if you remember I mentioned I was looking at
-> > threadify the dest qemu receive side, i have a draft there but currently it
-> > has a bug to hang a unix migration, not tcp..
-> 
-> Ok, let's add a unix one, no problem.
-> 
-> >
-> > So IMHO it's not easy to justify which we can simply drop, if we still want
-> > to provide some good gating in CI.
-> 
-> It's not exactly about dropping, it's about which ones need to be run at
-> *every* invocation of make check (x5 because of the multiple archs) and
+> Is it OK to remove this check of multifunction now?
 
-Yeah, indeed we could consider reducing the number of runs, maybe.  However
-I do remember we used to have migration-test bugs only reproduced with some
-specific distro, well..
-
-Now I'm looking at the pipelines..
-
-Why 5x, btw?  I saw alphine, centos, debian, fedora, opensuse, ubuntu,
-cfi-x86_64, then compat-x86_64.  So that's 8x?  They're for the same arch
-(amd64) so far.
-
-Maybe we can skip some indeed.
-
-> at every git branch push in CI (unless -o ci.skip). For gating we don't
-> need all the tests. Many of them are testing the same core code with
-> just a few differences at the margins.
-> 
-> >  And I won't be 100% surprised if some
-> > other non-migration PR (e.g. io/) changed some slight bit that unix is
-> > broken and tcp keeps working, for example, then we loose some CI benefits.
-> 
-> IMO, these non-migration PRs are exactly what we have to worry
-> about. Because migration PRs would run with -m slow and we'd catch the
-> issue there.
-> 
-> >
-> >> 
-> >> "/precopy/tcp/tls/psk/match":
-> >>  Something might change in the distro regarding tls. Such as:
-> >>  https://gitlab.com/qemu-project/qemu/-/issues/1937
-> >> 
-> >> "/postcopy/plain":
-> >>  Smoke test for postcopy
-> >> 
-> >> "/postcopy/preempt/plain":
-> >>  Just to exercise the preempt thread
-> >> 
-> >> "/postcopy/preempt/recovery/plain":
-> >>  Recovery has had some issues with races in the past
-> >> 
-> >> "/multifd/tcp/plain/cancel":
-> >>  The MVP of catching concurrency issues
-> >> 
-> >> "/multifd/tcp/uri/plain/none":
-> >>  Smoke test for multifd
-> >> 
-> >> All in all, these will test basic funcionality and run very often. The
-> >> more tests we add to this set, the less return we get in relation to the
-> >> time they take.
-> >
-> > This is true.  We can try to discuss more on which is more important; I
-> > still think something might be good to be added on top of above.
-> 
-> Sure, just add what you think we need.
-
-Let's leave the detailed discussion on what to choose until the patch
-phase.  IIUC this can be the last we do.
-
-We've just queued your other patch to "slow down" the two time consuming
-tests, we save 40s for each CI kick (total ~90s now locally, so that's 30%
-cut already all acrosss!), not so bad as a start.
-
-Then if we can remove some out of 8 (e.g., we can choose 2-3), then if it's
-3 system runs, it'll be another 62% cut, a total of:
-
-  1.0 - 9/13 * 3/8 = ~75%
-
-So if we keep removing 5 system running it we can reduce it to only a
-quarter time comparing to before for each CI run.
-
-Would that be good enough already for us to live for quite a few more
-releases?  They're so far all low hanging fruits.
-
-If we want to move further (and you think we should then start with
-reducing test case, rather than profiling the test cases), then feel free
-to go ahead and send a patch when you're ready.  But maybe you don't want
-to bother after you notice that we can already shrink 75% of runtime even
-without dropping anything.  Your call!
+Yes, I think removing the check (which AFAIU was broken since 6069bcdeacee) will get us back to the behavior Cedric was seeing, where a device that reports multifunction in the config space is still allowed through but only the PF will be usable in the guest.
 
 > 
-> >
-> > There's also the other way - at some point, I still want to improve
-> > migration-test run speed, and please have a look if you like too at some
-> > point: so there's still chance (average is ~2sec as of now), IMHO, we don't
-> > lose anything in CI but runs simply faster.
+> This code is not working properly with SR-IOV and misleading. It is better to remove the code if it does no good.
 > 
-> My only idea, but it requires a bit of work, is to do unit testing on
-> the interfaces. Anything before migration_fd_connect(). Then we could
-> stop doing a full migration for those.
+> It would be nice if anyone confirms multifunction works for s390x with the code removed.
 
-What I'm thinking is some further profiling, like what Dan used to do.  I
-feel like we still have chance, considering what we run as guest image is
-simply a loop.. so basically zero boot time logically.
+Even if you remove the check, multifunction itself won't work in the s390x guest without these missing CLP pieces too.  When I have some time I'll hack something together to fabricate some CLP data and try it out, but it sounds like Cedric could use his setup to right now at least verify that the PF itself should remain usable in the guest (current behavior).
 
 > 
-> >
-> >> 
-> >> >
-> >> > IIUC some file ops can still be relevant to archs.  Multifd still has one
-> >> > bug that can only reproduce on arm64.. but not x86_64.  I remember it's a
-> >> > race condition when migration finishes, and the issue could be memory
-> >> > ordering relevant, but maybe not.
-> >> 
-> >> I'm not aware of anything. I believe the last arm64 bug we had was the
-> >> threadinfo stuff[1]. If you remember what it's about, let me know.
-> >> 
-> >> 1- 01ec0f3a92 ("migration/multifd: Protect accesses to migration_threads").
-> >
-> > https://issues.redhat.com/browse/RHEL-45628
+>>
+>>>>
+>>>> s390 PCI devices do not have extended capabilities, so the igb device
+>>>> does not expose the SRIOV capability and only the PF is accessible but
+>>>> it doesn't seem to be an issue. (Btw, CONFIG_PCI_IOV is set to y in the
+>>>> default Linux config which is unexpected)
+>>
+>> The linux config option makes sense because the s390 kernel now supports SR-IOV/multifunction.
+>>
+>>>
+>>> Doesn't s390x really see extended capabilities? hw/s390x/s390-pci-inst.c has a call pci_config_size() and pci_host_config_write_common(), which means it is exposing the whole PCI Express configuration space. Why can't s390x use extended capabilities then?
+>>>
+>>
+>> So, rather than poking around in config space, s390 (and thus the s390 kernel) has an extra layer of 'capabilities' that it generally relies on to determine device functionality called 'CLP'.  Basically, there are pieces of CLP that are not currently generated (or forwarded from the host in the case of passthrough) by QEMU that would be needed by the guest to recognize the SRIOV/multifunction capability of a device, despite what config space has in it.  I suspect this is exactly why only the PF was available to your igb device then (missing CLP info made the device appear to not have multifunction capability as far as the s390 guest is concerned - fwiw adding CLP emulation to enable that is on our todo list).
 > 
-> Interesting. But if multifd/tcp/plain/cancel doesn't catch this I don't
-> think other tests will. Also, we don't have tests for zerocopy AFAIK.
+> What is expected to happen if you poke the configuration space anyway? I also wonder if there is some public documentation of CLP and relevant aspect of PCI support in s390x.
 
-That'll be challenging as it requires locked_vm limit.
+On s390, the contents of config space might be what is directly reported by the device or may have been modified by a firmware layer in between the device and the LPAR (logical partition that is the closest thing to bare-metal on s390 where you could run a linux host).  It's not that config space can't be read on s390 or anything like that, rather that the base s390 PCI kernel layer makes its decisions about multifunction based specifically on what is reported via CLP.  If CLP doesn't report that the device is multifunction capable (which it never does for a s390x QEMU guest today) then it is treated as not having multifunction support.
 
-> 
-> >
-> > On RH side Bandan is looking at it, but he's during a long holidays
-> > recently.
-> 
-> Good luck to him.
-> 
-> >
-> >> 
-> >> >
-> >> >> 
-> >> >> and x86 gets extra:
-> >> >> 
-> >> >> "/precopy/unix/suspend/live"
-> >> >> "/precopy/unix/suspend/notlive"
-> >> >> "/dirty_ring"
-> >> >
-> >> > dirty ring will be disabled anyway when !x86, so probably not a major
-> >> > concern.
-> >> >
-> >> >> 
-> >> >> (the other dirty_* tests are too slow)
-> >> >
-> >> > These are the 10 slowest tests when I run locally:
-> >> >
-> >> > /x86_64/migration/multifd/tcp/tls/x509/allow-anon-client 2.41
-> >> > /x86_64/migration/postcopy/recovery/plain 2.43
-> >> > /x86_64/migration/multifd/tcp/tls/x509/default-host 2.66
-> >> > /x86_64/migration/multifd/tcp/tls/x509/override-host 2.86
-> >> > /x86_64/migration/postcopy/tls/psk 2.91
-> >> > /x86_64/migration/postcopy/preempt/recovery/tls/psk 3.08
-> >> > /x86_64/migration/postcopy/preempt/tls/psk 3.30
-> >> > /x86_64/migration/postcopy/recovery/tls/psk 3.81
-> >> > /x86_64/migration/vcpu_dirty_limit 13.29
-> >> > /x86_64/migration/precopy/unix/xbzrle 27.55
-> >> >
-> >> > Are you aware of people using xbzrle at all?
-> >> 
-> >> Nope.
-> >> 
-> >> >
-> >> >> 
-> >> >> All the rest go behind a knob that people touching migration code will
-> >> >> enable.
-> >> >> 
-> >> >> wdyt?
-> >> >
-> >> > Agree with the general idea, but I worry above exact list can be too small.
-> >> 
-> >> We won't stop running the full set of tests. We can run them in our
-> >> forks' CI as much as we want. There are no cases of people reporting a
-> >> migration bug because their 'make check' caught something that ours
-> >> didn't.
-> >
-> > IIUC it's hard to say - when the test is in CI maintainers can catch them
-> > already before sending a formal PR.
-> >
-> > If the test is run by default in make check, a developer can trigger a
-> > migration issue (with his/her patch applied) then one can notice it
-> > introduced a bug, fix it, then post the patches.  We won't know whether
-> > that happened.
-> 
-> Good point.
-> 
-> >
-> > So one thing we can do (if you think worthwhile to do it now) is we shrink
-> > the default test case a lot as you proposed, then we wait and see what
-> > breaks, and then we gradually add tests back when it can be used to find
-> > breakages.  But that'll also take time if it really can find such tests,
-> > because then we'll need to debug them one by one (instead of developer /
-> > maintainer looking into them with their expertise knowledge..).  I'm not
-> > sure whether it's worthwhile to do it now, but I don't feel strongly if we
-> > can still have a reliable set of default test cases.
-> 
-> We first need a way to enable them for the migration CI. Do we have a
-> variable that CI understands that can be used to enable slow tests?
-
-I'm not aware of.  Yes sounds like we should have one if it doesn't exist.
+Unfortunately, the CLP details are not publicly documented.
 
 > 
-> >
-> >> 
-> >> Besides, the main strength of CI is to catch bugs when someone makes a
-> >> code change. If people touch migration code, then we'll run it in our CI
-> >> anyway. If they touch device code and that device is migrated by default
-> >> then any one of the simple tests will catch the issue when it runs via
-> >> the migration-compat job. If the device is not enabled by default, then
-> >> no tests will catch it.
-> >> 
-> >> The worst case scenario is they touch some code completely unrelated and
-> >> their 'make check' or CI run breaks because of some race in the
-> >> migration code. That's not what CI is for, that's just an annoyance for
-> >> everyone. I'd rather it breaks in our hands and then we'll go fix it.
-> >> 
-> >> >
-> >> > IMHO we can definitely, at least, move the last two into slow list
-> >> > (vcpu_dirty_limit and xbzrle), then it'll already save us 40sec each run..
-> >> 
-> >> Agreed. I'll send a patch once I get out from under downstream stuff.
-> >> 
-> >> >
-> >> >> 
-> >> >> 1- allows adding devices to QEMU cmdline for migration-test
-> >> >> https://lore.kernel.org/r/20240523201922.28007-4-farosas@suse.de
-> >> >> 
-> >> 
+>>
+>> Sounds like the short-term solution here would be to continue allowing the PF without multifunction being visible to the guest (so as to not regress prior functionality) and then aim for proper support after with the necessary CLP pieces.
 > 
+> I agree; we can keep the PF working.
 
--- 
-Peter Xu
+Thanks!
+
+Matt
 
 
