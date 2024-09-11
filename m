@@ -4,77 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60E3FEE49BC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75F25EE57C1
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:24:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soP1J-0003R7-2b; Wed, 11 Sep 2024 11:12:42 -0400
+	id 1soP4k-0001xg-Bo; Wed, 11 Sep 2024 11:16:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soP0x-00027r-CR
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:12:18 -0400
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1soP4T-0000tA-TZ
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:16:00 -0400
+Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soP0v-0001Gy-4e
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:12:15 -0400
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-2f74e613a10so20839421fa.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 08:12:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1soP4N-0001Xf-SS
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:15:51 -0400
+Received: by mail-oa1-x2c.google.com with SMTP id
+ 586e51a60fabf-2689e7a941fso1068507fac.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 08:15:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726067530; x=1726672330; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=B9oM8Ne18x0eSKs2eGImbQDt47h4Zb8ccSIXYvNWAjg=;
- b=mJayO/a+c0eoCtZDpCGhPu0tdGJGeqTmcETQT/+kgNqKFlGSasEKtSvZeXJ1tZ5b6H
- Wr7K6EQE4s2lrFG9C5MF36prCP/aW2QsF7VLFYsf+Ti42xSBqsDPvKOx+8WNsgwL65NF
- R8mQPj61QPDOnsat8zw0Tc3WgWIwrSGnOSWJXrrOTBZIEtdm9HlEFEb48xKedSAKP+q6
- RZD61Mr7Eky56b70mgb5DOo6sZ/3T+30JjtH8BH9CxGlN7InQ/0jZDzvr0V9oiW/4hqh
- 6T1s2VsRZAZHypRuZRb914NBCcsi4rUdaO6pTooWezAxSjStr8u8KOaMMvM6mj77sCgP
- +GUA==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726067746; x=1726672546;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rNfBsIsefW8T3up2+JXDHYhN3Cq6xtXbQYfb2BK+Q6Y=;
+ b=cSZf3GfXLDjpZ7BgY9KpmbJYgNOsJFELSqP0rcVJiDJwfaJdyKUDNe3BdJwudMceoN
+ kBPFFwshV5AR3gJZr5QqPaKd8S8r5fEhXurpsAA6XLZ/7vD7hmvCurxJBDwouBtwcV3w
+ JWI4ee2RjHwIHGwJOobMIoELn/ZANTZQ2iEzL5xeqvif7OdaKRybV8bZWfgsKs+V12It
+ gXCYMRaLIgMfo9USGrFenFgUjnTv3atMLG0vA7cNp4VtGkkSjD9R93NT5LZln6CDlfCD
+ php4wN40CwpGeE1PWY4m96cEpIkgdVEVFoSKRnzTsE0lexa5xf/54ziMmr8RO+6aTS0R
+ ns3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726067530; x=1726672330;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=B9oM8Ne18x0eSKs2eGImbQDt47h4Zb8ccSIXYvNWAjg=;
- b=mK2P5IBzHuj9WNV2eCtyFvDf8tcvtranRpEYJaQgRjLri7rbOkGSeudIlVP/iD+ypd
- zSF6S7Fvv1ndL2jQbTQ5/e1CwY+KP+57AHBIipqn3gesd/BjK1sBbWpEsvvl/sjBWLoB
- +WVlGUwUAhv4z2DZjaHgwphSWw8xTxhIx5axPvvSF7GCoPg4iF7+zy7ggttqTyxHtsFe
- DGxoouwDJ0KUgqjWLfDLFWxjteD67/zKEZ4BhTz6uxo8hnoQDhRyiEdzqtryU/8ze3yF
- 2uxLp77NYslUuJhOR5E0PUJqCGCXEqUxD1kx1ivKfwWVtzf/oZb/5L5arnFFxEP5dRh9
- 6cMg==
-X-Gm-Message-State: AOJu0YyfXJ2wzS+RWrBYPXW29E5/EoSxVhQtqb8ULY5SqS09exKzz0DS
- 2YIgWuvxYK/KWoW8GWAGeAb0EpwaQO/gZzAOkD5oGBDo51negcSKcDkogMVUIMQBzQGtQSHHfpU
- t
-X-Google-Smtp-Source: AGHT+IHPRcLm4FnWUA6AOh9rEKiut+/J70ZAHoCbo9uxNzlNuI1UUKqrSPh76VqbQXTu9EOvwVKwPg==
-X-Received: by 2002:a05:6512:3b10:b0:533:c9d:a01f with SMTP id
- 2adb3069b0e04-536587a6704mr14952557e87.4.1726067529788; 
- Wed, 11 Sep 2024 08:12:09 -0700 (PDT)
-Received: from m1x-phil.lan ([176.187.196.107])
+ d=1e100.net; s=20230601; t=1726067746; x=1726672546;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rNfBsIsefW8T3up2+JXDHYhN3Cq6xtXbQYfb2BK+Q6Y=;
+ b=FLEnJLsow6n4j5aOZO0VlMg0CqiwGoNIGAr/BimXcJIWvVq+mAeQDzrBpq14PA43EL
+ co+MpPxQl3IBSNjvy8WirO/9PB/YRKNMCPZmDYnLWnBLtlV1iEjAZB0ZbmNWO8ZdyiyV
+ w3G3q0XYg7CXtkzFEo438Sqs0EntRe8T8+gBXV/d049AnmX1SuX+rPoRFs4+r8yGluf1
+ leZL7aUCnGKxGyW4RZAZ2w/B++9Dcen7pqW333yGOmUhfT7kV7VJRFPzNHFqpahrNEdn
+ XaNy6jNBGS0BLWHuqApFujr1DpD6jegaU4FKyZ+wz9JFHy6Dxmvih1r6sWWNYzRRL9+f
+ 6DvQ==
+X-Gm-Message-State: AOJu0YyNdvjIJyK8Pugp7Xe/NlqAwKEZZUbvrAc8HDksH97aK7+9vOx3
+ j1b8RNbU823TzE2QllHtTNPPhaRyMuER5dDcbERfq9AemwiLkniGxiZfjhMmsUY=
+X-Google-Smtp-Source: AGHT+IGw3oK0jVGSyPxmvx7NJPi5+ULQlBJkVWIq6OMAGMaOVLfS1qB8AtVWf1ukgLWYewYF7cG44g==
+X-Received: by 2002:a05:6871:829:b0:260:e36f:ef4f with SMTP id
+ 586e51a60fabf-27c1b4b015dmr2503365fac.3.1726067746129; 
+ Wed, 11 Sep 2024 08:15:46 -0700 (PDT)
+Received: from ?IPV6:2400:4050:a840:1e00:32ed:25ae:21b1:72d6?
+ ([2400:4050:a840:1e00:32ed:25ae:21b1:72d6])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25926ee8sm627279466b.50.2024.09.11.08.12.08
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Sep 2024 08:12:09 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org
-Subject: [PATCH v3 0/5] license: Fix typos and update SPDX tags
-Date: Wed, 11 Sep 2024 17:12:01 +0200
-Message-ID: <20240911151206.60368-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
+ 41be03b00d2f7-7db1fe11ad7sm83191a12.94.2024.09.11.08.15.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Sep 2024 08:15:45 -0700 (PDT)
+Message-ID: <8127d7f8-4917-4545-be66-62688157224a@daynix.com>
+Date: Thu, 12 Sep 2024 00:15:40 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.2 v15 04/11] s390x/pci: Check for multifunction
+ after device realization
+To: Matthew Rosato <mjrosato@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <20240823-reuse-v15-0-eddcb960e289@daynix.com>
+ <20240823-reuse-v15-4-eddcb960e289@daynix.com>
+ <2b5d2fce-8a1e-4f50-a5d2-0c4aaa2880af@redhat.com>
+ <eaebda7d-c61e-4ed8-a6b9-98e5f48f26ff@daynix.com>
+ <8dbc553b-c3ae-4f11-accb-6dee10e9758e@linux.ibm.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <8dbc553b-c3ae-4f11-accb-6dee10e9758e@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: none client-ip=2001:4860:4864:20::2c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oa1-x2c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,94 +111,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Series fully reviewed (thanks Thomas & Richard)
+On 2024/09/11 22:53, Matthew Rosato wrote:
+> On 9/11/24 6:58 AM, Akihiko Odaki wrote:
+>> On 2024/09/11 18:38, Cédric Le Goater wrote:
+>>> +Matthew +Eric
+>>>
+>>> Side note for the maintainers :
+>>>
+>>> Before this change, the igb device, which is multifunction, was working
+>>> fine under Linux.
+>>>
+>>> Was there a fix in Linux since :
+>>>
+>>>     57da367b9ec4 ("s390x/pci: forbid multifunction pci device")
+>>>     6069bcdeacee ("s390x/pci: Move some hotplug checks to the pre_plug handler")
+>>>
+>>> ?
+> The timing of those particular commits predates the linux s390 kernel support of multifunction/SR-IOV.  At that time it was simply not possible on s390.
 
-Since v2:
-. Updated few missed "2 | 3+" expressions
+Is it OK to remove this check of multifunction now?
 
-Since v1:
-. Updated regex to cover all GPL-2.0* cases.
+This code is not working properly with SR-IOV and misleading. It is 
+better to remove the code if it does no good.
 
-- Fix a pair of typos
-- Upgrade the deprecated GPL-2.0+/LGPL-2.0+ SPDX tags
-  to GPL-2.0-only / GPL-2.0-or-later / LGPL-2.0-or-later.
+It would be nice if anyone confirms multifunction works for s390x with 
+the code removed.
 
-Philippe Mathieu-Daudé (5):
-  tests/functional: Correct typo in test_netdev_ethtool.py SPDX tag
-  license: Simplify GPL-2.0-or-later license descriptions
-  license: Update deprecated SPDX tag LGPL-2.0+ to LGPL-2.0-or-later
-  license: Update deprecated SPDX tag GPL-2.0+ to GPL-2.0-or-later
-  license: Update deprecated SPDX tag GPL-2.0 to GPL-2.0-only
+> 
+>>>
+>>> s390 PCI devices do not have extended capabilities, so the igb device
+>>> does not expose the SRIOV capability and only the PF is accessible but
+>>> it doesn't seem to be an issue. (Btw, CONFIG_PCI_IOV is set to y in the
+>>> default Linux config which is unexpected)
+> 
+> The linux config option makes sense because the s390 kernel now supports SR-IOV/multifunction.
+> 
+>>
+>> Doesn't s390x really see extended capabilities? hw/s390x/s390-pci-inst.c has a call pci_config_size() and pci_host_config_write_common(), which means it is exposing the whole PCI Express configuration space. Why can't s390x use extended capabilities then?
+>>
+> 
+> So, rather than poking around in config space, s390 (and thus the s390 kernel) has an extra layer of 'capabilities' that it generally relies on to determine device functionality called 'CLP'.  Basically, there are pieces of CLP that are not currently generated (or forwarded from the host in the case of passthrough) by QEMU that would be needed by the guest to recognize the SRIOV/multifunction capability of a device, despite what config space has in it.  I suspect this is exactly why only the PF was available to your igb device then (missing CLP info made the device appear to not have multifunction capability as far as the s390 guest is concerned - fwiw adding CLP emulation to enable that is on our todo list).
 
- hw/core/uboot_image.h                   | 2 +-
- hw/m68k/bootinfo.h                      | 2 +-
- hw/net/igb_regs.h                       | 2 +-
- include/gdbstub/syscalls.h              | 2 +-
- include/gdbstub/user.h                  | 2 +-
- include/hw/nvram/fw_cfg_acpi.h          | 2 +-
- include/hw/usb/dwc2-regs.h              | 2 +-
- include/hw/virtio/virtio-acpi.h         | 2 +-
- include/qemu/crc-ccitt.h                | 2 +-
- include/qemu/timed-average.h            | 4 +++-
- target/alpha/cpu-param.h                | 2 +-
- target/arm/cpu-param.h                  | 2 +-
- target/cris/cpu-param.h                 | 2 +-
- target/hppa/cpu-param.h                 | 2 +-
- target/i386/cpu-param.h                 | 2 +-
- target/m68k/cpu-param.h                 | 2 +-
- target/microblaze/cpu-param.h           | 2 +-
- target/mips/cpu-param.h                 | 2 +-
- target/openrisc/cpu-param.h             | 2 +-
- target/ppc/cpu-param.h                  | 2 +-
- target/riscv/cpu-param.h                | 2 +-
- target/s390x/cpu-param.h                | 2 +-
- target/sh4/cpu-param.h                  | 2 +-
- target/sparc/cpu-param.h                | 2 +-
- tests/tcg/loongarch64/system/regdef.h   | 2 +-
- target/sparc/insns.decode               | 2 +-
- block/vdi.c                             | 4 +++-
- gdbstub/gdbstub.c                       | 2 +-
- gdbstub/syscalls.c                      | 2 +-
- gdbstub/system.c                        | 2 +-
- gdbstub/user-target.c                   | 2 +-
- gdbstub/user.c                          | 2 +-
- hw/net/eepro100.c                       | 4 +++-
- hw/nvram/fw_cfg-acpi.c                  | 2 +-
- hw/ppc/rs6000_mc.c                      | 4 +++-
- hw/virtio/virtio-acpi.c                 | 2 +-
- util/timed-average.c                    | 4 +++-
- linux-user/alpha/syscall.tbl            | 2 +-
- linux-user/alpha/syscallhdr.sh          | 2 +-
- linux-user/arm/syscallhdr.sh            | 2 +-
- linux-user/hppa/syscall.tbl             | 2 +-
- linux-user/hppa/syscallhdr.sh           | 2 +-
- linux-user/i386/syscallhdr.sh           | 2 +-
- linux-user/m68k/syscall.tbl             | 2 +-
- linux-user/m68k/syscallhdr.sh           | 2 +-
- linux-user/microblaze/syscall.tbl       | 2 +-
- linux-user/microblaze/syscallhdr.sh     | 2 +-
- linux-user/mips/syscall_o32.tbl         | 2 +-
- linux-user/mips/syscallhdr.sh           | 2 +-
- linux-user/mips64/syscall_n32.tbl       | 2 +-
- linux-user/mips64/syscall_n64.tbl       | 2 +-
- linux-user/mips64/syscallhdr.sh         | 2 +-
- linux-user/ppc/syscall.tbl              | 2 +-
- linux-user/ppc/syscallhdr.sh            | 2 +-
- linux-user/s390x/syscall.tbl            | 2 +-
- linux-user/s390x/syscallhdr.sh          | 2 +-
- linux-user/sh4/syscall.tbl              | 2 +-
- linux-user/sh4/syscallhdr.sh            | 2 +-
- linux-user/sparc/syscall.tbl            | 2 +-
- linux-user/sparc/syscallhdr.sh          | 2 +-
- linux-user/x86_64/syscallhdr.sh         | 2 +-
- linux-user/xtensa/syscall.tbl           | 2 +-
- linux-user/xtensa/syscallhdr.sh         | 2 +-
- qemu.nsi                                | 4 +++-
- scripts/kernel-doc                      | 2 +-
- tests/functional/test_netdev_ethtool.py | 2 +-
- 66 files changed, 78 insertions(+), 66 deletions(-)
+What is expected to happen if you poke the configuration space anyway? I 
+also wonder if there is some public documentation of CLP and relevant 
+aspect of PCI support in s390x.
 
--- 
-2.45.2
+> 
+> Sounds like the short-term solution here would be to continue allowing the PF without multifunction being visible to the guest (so as to not regress prior functionality) and then aim for proper support after with the necessary CLP pieces.
 
+I agree; we can keep the PF working.
+
+Regards,
+Akihiko Odaki
 
