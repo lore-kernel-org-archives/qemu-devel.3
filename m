@@ -4,71 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5010EE49B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 14:30:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25227EE49B3
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 14:30:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soOLZ-000706-2U; Wed, 11 Sep 2024 10:29:29 -0400
+	id 1soOM0-0000vC-QO; Wed, 11 Sep 2024 10:29:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1soOLT-0006dw-Pc
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:29:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1soOLn-0000Cb-Sb; Wed, 11 Sep 2024 10:29:46 -0400
+Received: from out30-131.freemail.mail.aliyun.com ([115.124.30.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1soOLR-0003ji-U1
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:29:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726064961;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cWqhNUxKNuGKSWjcQvj0wVltCiBkhO0mamxyGZql5nY=;
- b=i3iR8U12JKNQqBb6AlYNTLTw6Mz8F2+iFPd4Bp8Zxr2NVsN3Pq3NsWKUsGHYcLkKaCMW40
- qlgSzi1wlX2bnE1+pTgMOgnnfYxq+Z/0vyf1kqs4PuspF0ft3SVExHIf1DKYv8v16PEGWs
- 2bWVAlpRXEISw0vqErUQKQBKwiFIgMU=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-501-gd4NsPC0O3eslrhjYJb64g-1; Wed,
- 11 Sep 2024 09:12:10 -0400
-X-MC-Unique: gd4NsPC0O3eslrhjYJb64g-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B1AD1944D24; Wed, 11 Sep 2024 13:12:09 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.112])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 893C219560AD; Wed, 11 Sep 2024 13:12:08 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2F49221E692E; Wed, 11 Sep 2024 15:12:06 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1soOLj-0003k7-IM; Wed, 11 Sep 2024 10:29:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1726064963; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=Yl3M8354kVippAK6RwD1b21gob2GALUsjhbptMflEpM=;
+ b=NMb+lJFUktss4zjcOv2DnXkdpdmmqRgPsP58/Xty9gxIQCC6A4AH7+5fzPoKHZi+SBZATUyot3f3o3XlDObVJqRkxJHmwybbRumTyOv0nZ4THFvccsND+trSOKlKFCh5/t35V8xMH8SAZ70wlrgFv9mGBWN1SoXLPFxN55mkSBw=
+Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WEoCEuP_1726061627) by smtp.aliyun-inc.com;
+ Wed, 11 Sep 2024 21:33:48 +0800
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
-Cc: kkostiuk@redhat.com, michael.roth@amd.com, eblake@redhat.com,
- philmd@linaro.org
-Subject: [PATCH 2/2] qga: Improve error for guest-set-user-password parameter
- @crypted
-Date: Wed, 11 Sep 2024 15:12:06 +0200
-Message-ID: <20240911131206.2503035-3-armbru@redhat.com>
-In-Reply-To: <20240911131206.2503035-1-armbru@redhat.com>
-References: <20240911131206.2503035-1-armbru@redhat.com>
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ zhiwei_liu@linux.alibaba.com, richard.henderson@linaro.org,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+Subject: [PATCH v4 12/12] tcg/riscv: Enable native vector support for TCG host
+Date: Wed, 11 Sep 2024 21:26:30 +0800
+Message-Id: <20240911132630.461-13-zhiwei_liu@linux.alibaba.com>
+X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20240911132630.461-1-zhiwei_liu@linux.alibaba.com>
+References: <20240911132630.461-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.131;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-131.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,45 +67,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Windows version of guest-set-user-password rejects argument
-"crypted": true with the rather useless "this feature or command is
-not currently supported".  Improve to "'crypted' must be off on this
-host".
+From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 
-QERR_UNSUPPORTED is now unused.  Drop.
-
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/qapi/qmp/qerror.h | 3 ---
- qga/commands-win32.c      | 2 +-
- 2 files changed, 1 insertion(+), 4 deletions(-)
+ tcg/riscv/tcg-target.h | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/include/qapi/qmp/qerror.h b/include/qapi/qmp/qerror.h
-index 38e89762b3..101c1141b9 100644
---- a/include/qapi/qmp/qerror.h
-+++ b/include/qapi/qmp/qerror.h
-@@ -26,7 +26,4 @@
- #define QERR_PROPERTY_VALUE_OUT_OF_RANGE \
-     "Property %s.%s doesn't take value %" PRId64 " (minimum: %" PRId64 ", maximum: %" PRId64 ")"
+diff --git a/tcg/riscv/tcg-target.h b/tcg/riscv/tcg-target.h
+index e6d66cd1b9..d27007f2e6 100644
+--- a/tcg/riscv/tcg-target.h
++++ b/tcg/riscv/tcg-target.h
+@@ -143,9 +143,11 @@ typedef enum {
+ #define TCG_TARGET_HAS_tst              0
  
--#define QERR_UNSUPPORTED \
--    "this feature or command is not currently supported"
--
- #endif /* QERROR_H */
-diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-index 61b36da469..038beb8cfa 100644
---- a/qga/commands-win32.c
-+++ b/qga/commands-win32.c
-@@ -1914,7 +1914,7 @@ void qmp_guest_set_user_password(const char *username,
-     GError *gerr = NULL;
- 
-     if (crypted) {
--        error_setg(errp, QERR_UNSUPPORTED);
-+        error_setg(errp, "'crypted' must be off on this host");
-         return;
-     }
- 
+ /* vector instructions */
+-#define TCG_TARGET_HAS_v64              0
+-#define TCG_TARGET_HAS_v128             0
+-#define TCG_TARGET_HAS_v256             0
++#define have_rvv    (cpuinfo & CPUINFO_ZVE64X)
++
++#define TCG_TARGET_HAS_v64              have_rvv
++#define TCG_TARGET_HAS_v128             have_rvv
++#define TCG_TARGET_HAS_v256             have_rvv
+ #define TCG_TARGET_HAS_andc_vec         0
+ #define TCG_TARGET_HAS_orc_vec          0
+ #define TCG_TARGET_HAS_nand_vec         0
 -- 
-2.46.0
+2.43.0
 
 
