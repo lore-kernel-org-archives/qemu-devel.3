@@ -4,58 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF025EE4983
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 09:37:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43F8CEE4985
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 09:40:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soJkN-00013S-BK; Wed, 11 Sep 2024 05:34:47 -0400
+	id 1soJoL-0004zz-SZ; Wed, 11 Sep 2024 05:38:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1soJkH-00011S-I7
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 05:34:45 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1soJoK-0004tW-7V
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 05:38:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1soJkF-0005UP-7i
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 05:34:40 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1soJoI-00061b-MN
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 05:38:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726047277;
+ s=mimecast20190719; t=1726047529;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ciQyjQXv4U7Df3Kmeuwt/Nq0goyg/n1Yw3B6sPnXaH0=;
- b=OtLEQlYXcFPcoW4wFSPeZwu/pr7/Pd6sTuCdDHlvU513AUPobRn7FX+V0ox706Zaf5Ij1t
- nry39BA3rruy69FBQwKf65TyTu10GeZ4hEucydNsphBs1lLAXUdVZrAfXXRzpu8HlblBe8
- tbrh4a9fThZDrhQbXyxzyXrDs75iRlI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-41-1AUjSHjLPgOVK72u3l5G-g-1; Wed,
- 11 Sep 2024 05:34:35 -0400
-X-MC-Unique: 1AUjSHjLPgOVK72u3l5G-g-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A86131955D42; Wed, 11 Sep 2024 09:34:34 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.193.18])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9AFFB19560AD; Wed, 11 Sep 2024 09:34:32 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL v2 24/24] Update FreeBSD CI jobs FreeBSD 14.1
-Date: Wed, 11 Sep 2024 11:34:26 +0200
-Message-ID: <20240911093426.287808-3-thuth@redhat.com>
-In-Reply-To: <20240911093426.287808-1-thuth@redhat.com>
-References: <20240911093426.287808-1-thuth@redhat.com>
+ bh=QcwHyRoX9Qf99oFktbEaCvxy+3kxDGx0d9Tm7HWdpoA=;
+ b=ET7VXXYFBxWjc6/S8zvqAtT0HB+Tb1nOEPd5bd0xhn0glk2V9t0+4DB0bhap7U4yNHGpvW
+ GRunpX5ud1RyYZ6KGbgc4sBYvUSvN+2mMxNT63roAAGLNg/EJ69xLDqS4RYm6HphicUzuO
+ em0wW0/+tGFyvovvQRfawD54JcGjBwo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-609-1uft8V4ZMp-l40y5sSUyQw-1; Wed, 11 Sep 2024 05:38:48 -0400
+X-MC-Unique: 1uft8V4ZMp-l40y5sSUyQw-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-42cb830ea86so13838195e9.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 02:38:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726047527; x=1726652327;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QcwHyRoX9Qf99oFktbEaCvxy+3kxDGx0d9Tm7HWdpoA=;
+ b=tIq3j6P8KpmqptkWnW1OSuNYjVAQQuvp7M2faW2bWXrcZFmdNmjaVzWWIYcagFNJd1
+ 39oOumppizt7hke2YOQi7oijRDos8Bi5mT9Ov9WinmrtX1JDnv9MIQ/8sW0Ubb87pu+H
+ ehTC85oW8bM5cXBmJHVgBnLFziPqDgJ6vx2JmC0knjoyfb5ixNnvAH8ZIGhSvNFAg8SO
+ oYtUZpmj1yQewJjKrILID3XjAWgauXsMFfaRbD+rLPqkoUxkEfaZJ+J02sj0JA/HTb2Y
+ JIjPZbYpGZqZotZ3epncXVW/yAxBVidTwM5JzK6NWIXBHcAQ4H1ipsheZUUjXQS3/wkq
+ xJmQ==
+X-Gm-Message-State: AOJu0YzYjZQV48ESYJe9+IowmyzVOHDzbGKN56XD6t2C9RawqXfGUhgq
+ UvA1Ql/IvzmGNdZ+xkz/qJJ2cWsoaReUE2SfSroOW+WTRu+0dVdLkpEDiwhS+KaeLtZ/YlGLTwl
+ H5rRpbcnfGVwMNvOHHxb6BYlqGewyQ6mcvzf6cIncZ2nYA6MCWuSQ
+X-Received: by 2002:a5d:4306:0:b0:374:c50e:377b with SMTP id
+ ffacd0b85a97d-378b080cf8cmr1337814f8f.57.1726047527105; 
+ Wed, 11 Sep 2024 02:38:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH7dDiasvKV1MpBB8pdnZ6G9IdZCrCyjchhgSWkYs+B86kvFZ7PcBytDBCLFT7eSh6aasNVJw==
+X-Received: by 2002:a5d:4306:0:b0:374:c50e:377b with SMTP id
+ ffacd0b85a97d-378b080cf8cmr1337802f8f.57.1726047526603; 
+ Wed, 11 Sep 2024 02:38:46 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-378956650f2sm11000203f8f.26.2024.09.11.02.38.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Sep 2024 02:38:46 -0700 (PDT)
+Message-ID: <2b5d2fce-8a1e-4f50-a5d2-0c4aaa2880af@redhat.com>
+Date: Wed, 11 Sep 2024 11:38:44 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.2 v15 04/11] s390x/pci: Check for multifunction
+ after device realization
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <20240823-reuse-v15-0-eddcb960e289@daynix.com>
+ <20240823-reuse-v15-4-eddcb960e289@daynix.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240823-reuse-v15-4-eddcb960e289@daynix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -79,103 +113,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current FreeBSD CI jobs are failing installation since the
-"opencv" package is now missing there. Updating to 14.1 fixes
-the issue.
++Matthew +Eric
 
-Message-Id: <20240911090149.286257-1-thuth@redhat.com>
-Reviewed-by: Li-Wen Hsu <lwhsu@FreeBSD.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- .gitlab-ci.d/cirrus.yml                                  | 6 +++---
- .gitlab-ci.d/cirrus/{freebsd-13.vars => freebsd-14.vars} | 2 +-
- tests/lcitool/refresh                                    | 4 ++--
- tests/vm/freebsd                                         | 6 +++---
- 4 files changed, 9 insertions(+), 9 deletions(-)
- rename .gitlab-ci.d/cirrus/{freebsd-13.vars => freebsd-14.vars} (95%)
+Side note for the maintainers :
 
-diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
-index 75df1273bc..92c97eefc1 100644
---- a/.gitlab-ci.d/cirrus.yml
-+++ b/.gitlab-ci.d/cirrus.yml
-@@ -46,13 +46,13 @@
-   variables:
-     QEMU_JOB_CIRRUS: 1
- 
--x64-freebsd-13-build:
-+x64-freebsd-14-build:
-   extends: .cirrus_build_job
-   variables:
--    NAME: freebsd-13
-+    NAME: freebsd-14
-     CIRRUS_VM_INSTANCE_TYPE: freebsd_instance
-     CIRRUS_VM_IMAGE_SELECTOR: image_family
--    CIRRUS_VM_IMAGE_NAME: freebsd-13-3
-+    CIRRUS_VM_IMAGE_NAME: freebsd-14-1
-     CIRRUS_VM_CPUS: 8
-     CIRRUS_VM_RAM: 8G
-     UPDATE_COMMAND: pkg update; pkg upgrade -y
-diff --git a/.gitlab-ci.d/cirrus/freebsd-13.vars b/.gitlab-ci.d/cirrus/freebsd-14.vars
-similarity index 95%
-rename from .gitlab-ci.d/cirrus/freebsd-13.vars
-rename to .gitlab-ci.d/cirrus/freebsd-14.vars
-index 69c948b503..aba0eff4b9 100644
---- a/.gitlab-ci.d/cirrus/freebsd-13.vars
-+++ b/.gitlab-ci.d/cirrus/freebsd-14.vars
-@@ -1,6 +1,6 @@
- # THIS FILE WAS AUTO-GENERATED
- #
--#  $ lcitool variables freebsd-13 qemu
-+#  $ lcitool variables freebsd-14 qemu
- #
- # https://gitlab.com/libvirt/libvirt-ci
- 
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index ac803e34f1..290804f6be 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -207,14 +207,14 @@ try:
-     #
-     # Cirrus packages lists for GitLab
-     #
--    generate_cirrus("freebsd-13")
-+    generate_cirrus("freebsd-14")
-     generate_cirrus("macos-13")
-     generate_cirrus("macos-14")
- 
-     #
-     # VM packages lists
-     #
--    generate_pkglist("freebsd", "freebsd-13")
-+    generate_pkglist("freebsd", "freebsd-14")
- 
-     #
-     # Ansible package lists
-diff --git a/tests/vm/freebsd b/tests/vm/freebsd
-index 1247f40a38..74b3b1e520 100755
---- a/tests/vm/freebsd
-+++ b/tests/vm/freebsd
-@@ -28,8 +28,8 @@ class FreeBSDVM(basevm.BaseVM):
-     name = "freebsd"
-     arch = "x86_64"
- 
--    link = "https://download.freebsd.org/releases/CI-IMAGES/13.2-RELEASE/amd64/Latest/FreeBSD-13.2-RELEASE-amd64-BASIC-CI.raw.xz"
--    csum = "a4fb3b6c7b75dd4d58fb0d75e4caf72844bffe0ca00e66459c028b198ffb3c0e"
-+    link = "https://download.freebsd.org/releases/CI-IMAGES/14.1-RELEASE/amd64/Latest/FreeBSD-14.1-RELEASE-amd64-BASIC-CI.raw.xz"
-+    csum = "202fe27a05427f0a86d3ebb97712745186f2776ccc4f70d95466dd99a0238ba5"
-     size = "20G"
- 
-     BUILD_SCRIPT = """
-@@ -39,7 +39,7 @@ class FreeBSDVM(basevm.BaseVM):
-         mkdir src build; cd src;
-         tar -xf /dev/vtbd1;
-         cd ../build;
--        ../src/configure --python=python3.9  --extra-ldflags=-L/usr/local/lib \
-+        ../src/configure --extra-ldflags=-L/usr/local/lib \
-                          --extra-cflags=-I/usr/local/include {configure_opts};
-         gmake --output-sync -j{jobs} {target} {verbose};
-     """
--- 
-2.46.0
+Before this change, the igb device, which is multifunction, was working
+fine under Linux.
+
+Was there a fix in Linux since :
+
+   57da367b9ec4 ("s390x/pci: forbid multifunction pci device")
+   6069bcdeacee ("s390x/pci: Move some hotplug checks to the pre_plug handler")
+
+?
+
+s390 PCI devices do not have extended capabilities, so the igb device
+does not expose the SRIOV capability and only the PF is accessible but
+it doesn't seem to be an issue. (Btw, CONFIG_PCI_IOV is set to y in the
+default Linux config which is unexpected)
+
+Thanks,
+
+C.
+
+
+
+On 8/23/24 07:00, Akihiko Odaki wrote:
+> The SR-IOV PFs set the multifunction bits during device realization so
+> check them after that. This forbids adding SR-IOV devices to s390x.
+> 
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>   hw/s390x/s390-pci-bus.c | 14 ++++++--------
+>   1 file changed, 6 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+> index 3e57d5faca18..00b2c1f6157b 100644
+> --- a/hw/s390x/s390-pci-bus.c
+> +++ b/hw/s390x/s390-pci-bus.c
+> @@ -971,14 +971,7 @@ static void s390_pcihost_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+>                       "this device");
+>       }
+>   
+> -    if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
+> -        PCIDevice *pdev = PCI_DEVICE(dev);
+> -
+> -        if (pdev->cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
+> -            error_setg(errp, "multifunction not supported in s390");
+> -            return;
+> -        }
+> -    } else if (object_dynamic_cast(OBJECT(dev), TYPE_S390_PCI_DEVICE)) {
+> +    if (object_dynamic_cast(OBJECT(dev), TYPE_S390_PCI_DEVICE)) {
+>           S390PCIBusDevice *pbdev = S390_PCI_DEVICE(dev);
+>   
+>           if (!s390_pci_alloc_idx(s, pbdev)) {
+> @@ -1069,6 +1062,11 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+>       } else if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
+>           pdev = PCI_DEVICE(dev);
+>   
+> +        if (pdev->cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
+> +            error_setg(errp, "multifunction not supported in s390");
+> +            return;
+> +        }
+> +
+>           if (!dev->id) {
+>               /* In the case the PCI device does not define an id */
+>               /* we generate one based on the PCI address         */
+> 
 
 
