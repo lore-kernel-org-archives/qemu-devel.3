@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C67C9EDE997
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 03:55:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0173EDE997
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 04:33:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soEQj-0006iR-3A; Tue, 10 Sep 2024 23:54:09 -0400
+	id 1soF2Y-000784-A8; Wed, 11 Sep 2024 00:33:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1soEQh-0006hI-A4; Tue, 10 Sep 2024 23:54:07 -0400
-Received: from mail-vk1-xa35.google.com ([2607:f8b0:4864:20::a35])
+ (Exim 4.90_1) (envelope-from <satur9nine@gmail.com>)
+ id 1soF2W-00077Z-TH
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 00:33:13 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1soEQf-0003bR-KE; Tue, 10 Sep 2024 23:54:07 -0400
-Received: by mail-vk1-xa35.google.com with SMTP id
- 71dfb90a1353d-502af8a83daso1517255e0c.1; 
- Tue, 10 Sep 2024 20:54:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <satur9nine@gmail.com>)
+ id 1soF2S-0007oj-11
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 00:33:12 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-6e7b121be30so4021407a12.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 21:33:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726026844; x=1726631644; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=n8I4r16otTzXYVh16RMJp0XYHDPiIoYT82Sd4n8rVgE=;
- b=FLb76FU2ZQ1MGTeQV46skQmTrHEpVWN6QjJwSVsqubFXhONAK89WA7LHhI3ZcEbzLD
- CEBfL2Tn7StikYjZ71ALUWFYwARpipuG168mAHARj5Nr9t3NuHDk/NtyTTw98BdG5iQC
- ktS9dCBII+2NQ/Q/axvytKg/R+WCMsiupktXhYCtmWoz7qYdvADjlCuqphQeR8OTCI8v
- 6imQy6LGJTQSmqiYRNQfHBhQmvz9szjrC6+c4+6H3jJXyDhv5Gfo3MX5gw+2RQqcm+dC
- hKH+EakadoxxftHdpHXLm7gSt0qN7aLfe4oIseQ+jn0DPClTC1iVcYvz4IN2jgvEuoBJ
- hz/A==
+ d=gmail.com; s=20230601; t=1726029186; x=1726633986; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=YcUwxdhEJk5+b6O6bHWWTFLCBALOoRPwHKekSWBLJfQ=;
+ b=EY2DT3iogj/8NgWw5TzmXqwaqSwqTEn1FnyGze/gjrpXm1Byf3w/HQrlbeIxRELeM3
+ F/I/Bxr39oy/CTdKOLifQrO0O51EC/fbeChNl5J38ugA+NXhOsOMa0flVxuiRjqc/o+8
+ hgTV5Dbry7wncBqVcoZE/PWhZALLZtkB5TokGBRqbKNtcxQK84nPAO3F6d0LVFQ5KQy2
+ HIoJmnSQkFUjM+VN9zSvOA+eQ/SLUI4qssyVvPOR7C3YioenR7nuFft3X0NHLskC0ULo
+ ldVbCM60QcOsVJxWOHSF42XPn4iXCqHjS8mJNrcih4TorUJ0OHE91cQCrDm2jidQKGkv
+ LpZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726026844; x=1726631644;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=n8I4r16otTzXYVh16RMJp0XYHDPiIoYT82Sd4n8rVgE=;
- b=YBOeq7h6eqPYrGdGjwoMN0MFZjanuwY22p05yGV2i/yUiUZYTQJkpvJ4hBzJBMAuaS
- l/nmyiPpgYbu6msiX4M7cgP1FkGDN9i8JkNCY/QBnIDreA79ggchNlriDe3ZCXzTc2pb
- 18QG/fSTEebIFnAGz/EOeYCREQFbvzuNyAhNu3Bxp20M7JDg9L4N9fUY4nckndX1xS+j
- Hf8zSrxds1dSQE3x/iTZ/PrLQMed3CAWYJwz/ldvMNdxu3VrU5l1olYb3J5WKSIHqvGN
- QfyamR4hvvWa9mfN0AgNXC2bjm6V8yosIaYuz74C4BzCoJL8WD/jhKzN9Z9jqoSVAMZv
- slXg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWI+S9gbJt3iDCFqKvekJlWYfKXF8Z/gWHHy3CgSq+x4j96umIRTsFoYryIYZ9cdtls0e2JrSQqzb2k@nongnu.org
-X-Gm-Message-State: AOJu0YxjJ2E3nPRlIlIUA7AHs/41jnQOqTuVVNi7cz/d0aIKXkrezykD
- BzMU7Q9LkWpnStNIT3F5HAzc4J/0bcEXL6+SevknqnkFsOGO4iZ8GRi/Uazyvc8olpsEvAz3tyB
- UF0XD5Bj6kkkSit/etzOIRMHiGRA=
-X-Google-Smtp-Source: AGHT+IEonoeAPJpsIVdDNSaiNRJ6B63N4XEQ+H1A/rPaVXq1bp0rPwldylSk6j153tBExldVT7tPFETqHusaAzVQ4dk=
-X-Received: by 2002:a05:6122:a14:b0:4f5:1363:845b with SMTP id
- 71dfb90a1353d-502214235c1mr14890518e0c.9.1726026843560; Tue, 10 Sep 2024
- 20:54:03 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726029186; x=1726633986;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YcUwxdhEJk5+b6O6bHWWTFLCBALOoRPwHKekSWBLJfQ=;
+ b=a+aWKeAOKhZxhKD1LSNva9cELRciyj+lev66pZkTfr7e2kur4uABRBQ0HPthdTedfO
+ RrB7o7i59Lv7QTwKbH1As+ywxk6tXPwpYqdlWCHyWB6/X5LYbPP7DIjqsRVL1kV69DsR
+ f6+hST7bQaOWb6SssdmWCv9N9z5awQtUvCTcrvUDgjsS4yku75gUr42a83dWWyXODscE
+ YqW2Vb/pNKE66bFfPeNkVb0JF3nzJD9zs3nZhFVt3QzJMZL3aEHCQltYm2AUWx2Fbd8V
+ T6CR1xs0HxX2U2Gu6fqgBil4BDzbNtyfW5ntG36ibBY6NyI0vjkx2GAg2K3F+dswYXAb
+ AqlA==
+X-Gm-Message-State: AOJu0Yxd5QQDS0oo7tl5clWZTJGavgSt3LaC2zLPr3qJAmJLHaL1IZaS
+ 7aVZ5e8BtiOpR4V5VrgslGQ53p2mjlK4509jgC3B+OT1caCC9kkQHEymDa/6Szk=
+X-Google-Smtp-Source: AGHT+IE/oy91I9NnW8KOAwzV4S3xUuX7XYtPLejJooQCzAjCb1tfx4f4PEP/zZAuY2FmW5epY+mRzw==
+X-Received: by 2002:a17:902:f648:b0:206:a1ea:f4fe with SMTP id
+ d9443c01a7336-2074c4afc77mr44005135ad.10.1726029185759; 
+ Tue, 10 Sep 2024 21:33:05 -0700 (PDT)
+Received: from jacob-pop23u.lan ([2600:1700:88b2:a50:6e2b:9045:bc15:3220])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20710f32611sm55228285ad.270.2024.09.10.21.33.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Sep 2024 21:33:04 -0700 (PDT)
+From: Jacob Abrams <satur9nine@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org, peter.maydell@linaro.org,
+ Jacob Abrams <satur9nine@gmail.com>
+Subject: [PATCH] hw/char/stm32l4x5_usart.c: Enable USART ACK bit response
+Date: Tue, 10 Sep 2024 21:32:55 -0700
+Message-ID: <20240911043255.51966-1-satur9nine@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20240805210444.497723-1-gregorhaas1997@gmail.com>
- <CAKmqyKM_qgc+wwrDRzZM1yda=dZziM=1rGU2_SDeJU9PTnacVg@mail.gmail.com>
- <CAMqWt3oWGLaXBsM7inQkird0+VQcdbaQoZ-uF2Okmg4B2Q8uqg@mail.gmail.com>
-In-Reply-To: <CAMqWt3oWGLaXBsM7inQkird0+VQcdbaQoZ-uF2Okmg4B2Q8uqg@mail.gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 11 Sep 2024 13:53:37 +1000
-Message-ID: <CAKmqyKPfgUmUnHbYjEViBUoJQn_bZOoHyus17w4Sg9dRykA8ew@mail.gmail.com>
-Subject: Re: [PATCH v3 0/1] Add support for generating OpenSBI domains in the
- device tree
-To: Gregor Haas <gregorhaas1997@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, atishp@rivosinc.com, 
- dbarboza@ventanamicro.com, alistair.francis@wdc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a35;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa35.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=satur9nine@gmail.com; helo=mail-pg1-x534.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,83 +91,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 11, 2024 at 7:08=E2=80=AFAM Gregor Haas <gregorhaas1997@gmail.c=
-om> wrote:
->
-> Hi Alistair!
->
-> On Sun, Sep 8, 2024 at 8:27=E2=80=AFPM Alistair Francis <alistair23@gmail=
-.com> wrote:
->>
->> On Tue, Aug 6, 2024 at 7:05=E2=80=AFAM Gregor Haas <gregorhaas1997@gmail=
-.com> wrote:
->> >
->> > This patch series adds support for specifying OpenSBI domains on the Q=
-EMU
->> > command line. A simple example of what this looks like is below, inclu=
-ding
->> > mapping the board's UART into the secondary domain:
->>
->> Thanks for the patch, sorry it took me so long to look into this
->
->
-> No worries -- thanks for your review!
->
->>
->>
->> >
->> > qemu-system-riscv64 -machine virt -bios fw_jump.bin -cpu max -smp 2 -m=
- 4G -nographic \
->> >         -device opensbi-memregion,id=3Dmem,base=3D0xBC000000,order=3D2=
-6,mmio=3Dfalse \
->> >         -device opensbi-memregion,id=3Duart,base=3D0x10000000,order=3D=
-12,mmio=3Dtrue,device0=3D"/soc/serial@10000000" \
->> >         -device opensbi-domain,id=3Ddomain,possible-harts=3D0-1,boot-h=
-art=3D0x0,next-addr=3D0xBC000000,next-mode=3D1,region0=3Dmem,perms0=3D0x3f,=
-region1=3Duart,perms1=3D0x3f
->>
->> This will need documentation added under docs (probably under
->> docs/system/riscv) of how this should be used.
->
->
-> I've just sent a v4 patch series which includes documentation! Please let
-> me know what you think.
->
->>
->> I'm not convinced this is something we want though. A user can dump
->> the QEMU DTB and edit it to support OpenSBI domains if they want.
->>
->> My worry is that the command line method is complex for users to get
->> right and will be fragile and prone to breakage as parts of QEMU's DTB
->> changes.
->
->
-> I've found this patch series really useful for programmatically generatin=
-g test
-> fixtures in an isolation system I'm working on, which is built on top of =
-OpenSBI
-> domains. In that sense, I've found generating the correct flags is easier=
- rather
-> than manually editing or generating several dozen device tree files for e=
-ach
-> test configuration.
+SW modifying USART_CR1 TE bit should cuase HW to respond by altering
+USART_ISR TEACK bit, and likewise for RE and REACK bit.
 
-That's fair
+This resolves some but not all issues necessary for the official STM USART
+HAL driver to function as is.
 
->
-> I take your point that these flags are hard to get right, and there may b=
-e more
-> user-friendly ways to do this. FWIW, I that this will only rarely break i=
-f QEMU's
-> DTB changes -- the only part that really depends on QEMU's DTB (rather th=
-an
-> just adding new information to it) is the device-linking part for memregi=
-ons, and
-> it gives a loud, direct error if it cannot find the user-specified device=
-.
+Fixes: 87b77e6e01ca ("hw/char/stm32l4x5_usart: Enable serial read and write")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2540
+Signed-off-by: Jacob Abrams <satur9nine@gmail.com>
+---
+ hw/char/stm32l4x5_usart.c          | 16 +++++++++++++
+ tests/qtest/stm32l4x5_usart-test.c | 36 +++++++++++++++++++++++++++++-
+ 2 files changed, 51 insertions(+), 1 deletion(-)
 
-Maybe some unit tests would help here as well, to make sure we catch
-the error when the change happens.
+diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
+index fc5dcac0c4..3cf200c080 100644
+--- a/hw/char/stm32l4x5_usart.c
++++ b/hw/char/stm32l4x5_usart.c
+@@ -154,6 +154,21 @@ REG32(RDR, 0x24)
+ REG32(TDR, 0x28)
+     FIELD(TDR, TDR, 0, 9)
+ 
++static void stm32l4x5_update_isr(Stm32l4x5UsartBaseState *s)
++{
++    if (s->cr1 & R_CR1_TE_MASK) {
++        s->isr |= R_ISR_TEACK_MASK;
++    } else {
++        s->isr &= ~R_ISR_TEACK_MASK;
++    }
++
++    if (s->cr1 & R_CR1_RE_MASK) {
++        s->isr |= R_ISR_REACK_MASK;
++    } else {
++        s->isr &= ~R_ISR_REACK_MASK;
++    }
++}
++
+ static void stm32l4x5_update_irq(Stm32l4x5UsartBaseState *s)
+ {
+     if (((s->isr & R_ISR_WUF_MASK) && (s->cr3 & R_CR3_WUFIE_MASK))        ||
+@@ -456,6 +471,7 @@ static void stm32l4x5_usart_base_write(void *opaque, hwaddr addr,
+     case A_CR1:
+         s->cr1 = value;
+         stm32l4x5_update_params(s);
++        stm32l4x5_update_isr(s);
+         stm32l4x5_update_irq(s);
+         return;
+     case A_CR2:
+diff --git a/tests/qtest/stm32l4x5_usart-test.c b/tests/qtest/stm32l4x5_usart-test.c
+index c175ff3064..64cebda60f 100644
+--- a/tests/qtest/stm32l4x5_usart-test.c
++++ b/tests/qtest/stm32l4x5_usart-test.c
+@@ -36,6 +36,8 @@ REG32(GTPR, 0x10)
+ REG32(RTOR, 0x14)
+ REG32(RQR, 0x18)
+ REG32(ISR, 0x1C)
++    FIELD(ISR, REACK, 22, 1)
++    FIELD(ISR, TEACK, 21, 1)
+     FIELD(ISR, TXE, 7, 1)
+     FIELD(ISR, RXNE, 5, 1)
+     FIELD(ISR, ORE, 3, 1)
+@@ -191,7 +193,7 @@ static void init_uart(QTestState *qts)
+ 
+     /* Enable the transmitter, the receiver and the USART. */
+     qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
+-        R_CR1_UE_MASK | R_CR1_RE_MASK | R_CR1_TE_MASK);
++        cr1 | R_CR1_UE_MASK | R_CR1_RE_MASK | R_CR1_TE_MASK);
+ }
+ 
+ static void test_write_read(void)
+@@ -298,6 +300,37 @@ static void test_send_str(void)
+     qtest_quit(qts);
+ }
+ 
++static void test_ack(void)
++{
++    uint32_t cr1;
++    uint32_t isr;
++    QTestState *qts = qtest_init("-M b-l475e-iot01a");
++
++    init_uart(qts);
++
++    cr1 = qtest_readl(qts, (USART1_BASE_ADDR + A_CR1));
++
++    /* Disable the transmitter and receiver. */
++    qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
++        cr1 & ~(R_CR1_RE_MASK | R_CR1_TE_MASK));
++
++    /* Test ISR ACK for transmitter and receiver disabled */
++    isr = qtest_readl(qts, (USART1_BASE_ADDR + A_ISR));
++    g_assert_false(isr & R_ISR_TEACK_MASK);
++    g_assert_false(isr & R_ISR_REACK_MASK);
++
++    /* Enable the transmitter and receiver. */
++    qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
++        cr1 | (R_CR1_RE_MASK | R_CR1_TE_MASK));
++
++    /* Test ISR ACK for transmitter and receiver disabled */
++    isr = qtest_readl(qts, (USART1_BASE_ADDR + A_ISR));
++    g_assert_true(isr & R_ISR_TEACK_MASK);
++    g_assert_true(isr & R_ISR_REACK_MASK);
++
++    qtest_quit(qts);
++}
++
+ int main(int argc, char **argv)
+ {
+     int ret;
+@@ -310,6 +343,7 @@ int main(int argc, char **argv)
+     qtest_add_func("stm32l4x5/usart/send_char", test_send_char);
+     qtest_add_func("stm32l4x5/usart/receive_str", test_receive_str);
+     qtest_add_func("stm32l4x5/usart/send_str", test_send_str);
++    qtest_add_func("stm32l4x5/usart/ack", test_ack);
+     ret = g_test_run();
+ 
+     return ret;
+-- 
+2.43.0
 
-Alistair
 
