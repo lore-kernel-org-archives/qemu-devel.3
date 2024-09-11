@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94336EE49B8
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 14:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 110A2EE49B9
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 14:32:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soOKF-0000p7-OY; Wed, 11 Sep 2024 10:28:07 -0400
+	id 1soOKA-0000Ao-KU; Wed, 11 Sep 2024 10:28:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOJR-00079d-Tr
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:27:27 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOJR-00079c-S1
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:27:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOJN-0003NJ-A1
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOJN-0003NL-9A
  for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:27:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1726064832;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=R5ePHMPfQwBzPpsGte/yR9q9ulk7hoKYYN7lCYMftAw=;
- b=hact8nxCQRbz/LW1pUfuNLnCNHF9q7LiOsihXR0nvrzY/Z408PCtPu0CQybB9TE45hxKaJ
- NUoTx6i+7SmLmSO8dR/0qV8g+edDBmK1krMe9bMcxEmZD/x+P1HpRAqDTKFa/QHMJaS5lg
- STXLN0UPv5sqhKECkCh1FMMsj8VfoOM=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DB9NGbeaAbvfzy7mNKPYp8OuO5yV58WQSC8D88JNFOQ=;
+ b=eotXh7+4MPPvOD4EKTyVDdEgp3MYOHNK2m+0SbRwXUQ+wueZGqOPfF3aOwYbmC2PsQg5MB
+ E2s+TT/SCsH+A4N3+AsB01uSd2U9KjACa051zXub8k9FhkNnbZKMmSPesrLKbup3hhgtoz
+ t8qFZpe2tmK4G9a+4AjkY0x/Bzw7Yeg=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-316-BiHTkPcBPKySs71RUCzzFQ-1; Wed, 11 Sep 2024 09:51:32 -0400
-X-MC-Unique: BiHTkPcBPKySs71RUCzzFQ-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a870f3a65a0so490938166b.0
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 06:51:31 -0700 (PDT)
+ us-mta-214-UrGgz0SqPeKAk9b-vi0G1A-1; Wed, 11 Sep 2024 09:52:21 -0400
+X-MC-Unique: UrGgz0SqPeKAk9b-vi0G1A-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a8d2e6a6989so251058666b.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 06:52:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726062689; x=1726667489;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=R5ePHMPfQwBzPpsGte/yR9q9ulk7hoKYYN7lCYMftAw=;
- b=sZOcBhElDOcYQociXdLEyLkJq8si2HMPuZf+B6Bsag9wFrMGYhJDKqDpvUe7INTi3Y
- O8dLBZtCLiDQl+ai/gGzmorI3j7QCasFWCb3I1a1kjdxg7eQ/N25mDQi6u2E48Y8wK/D
- +yGFbcc06wn7TorBCE+MRMLWN7f1AhgeDgwrhneO0QnVDrnuo9Rvgq5hzIaGmf3DMlvv
- r3TnZ9trUZ/aDJ/pxJRhBXimmdK1KDu7waMMrcOfXUcRbfKMofgcg+iLUjWeuSCXQfw9
- mqBaEKE4NkTcZSaG7I4Hi+ZEmsEbX/J1/8Sb5nXPvlilFt9k6YMoJb+J7ZVqs+pSq7X2
- NGQw==
-X-Gm-Message-State: AOJu0YzVjuha4S+PI/Ygj+4qAz46ho8NxdThQYQSAy54hyKKpbdT3kr3
- uC7W9gCjA8nmr8l/ZD3soRiWDD//xZ3lsMGEiYSM1jv2Nn/ikUjw2GiNII+K+D7yI+mwwTT5vRA
- x6JIIjSVFzuCNJppKZ2pE4voeW3CJ1tfes+rtDxjjcqEy25cQI7MRNPULpCyUDstKigBKrPiFPn
- uZDmyVOvqG0kxSFEjNK+tc+dNZR25KnA==
-X-Received: by 2002:a17:907:9487:b0:a86:7924:11bd with SMTP id
- a640c23a62f3a-a8ffad9d1a8mr452160566b.41.1726062689271; 
- Wed, 11 Sep 2024 06:51:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFY+bWB+IztdPuwAyYLrFzsLbCvl61KtjpyJeZQfkrPuLoif8uHr5PqRAsy2azdqO7WXIAXmA==
-X-Received: by 2002:a17:907:9487:b0:a86:7924:11bd with SMTP id
- a640c23a62f3a-a8ffad9d1a8mr452156966b.41.1726062688686; 
- Wed, 11 Sep 2024 06:51:28 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726062738; x=1726667538;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DB9NGbeaAbvfzy7mNKPYp8OuO5yV58WQSC8D88JNFOQ=;
+ b=hhD829JtsUSXq5Z2l1GvS/8MAJIFgm0/nuSyp8uK1MpsrxoGE7yhGnOl+kCw5UPeuo
+ dU8Gcjnq4Xja1xKm5YaLc8xcvKQbtucGpkY6RD/x0NYfDI8/17G21mEqE9ndqruX5FNA
+ fg4aWy894wXgpB1dL6PbfLFLSVJ3tRhMA37FB0RGCQ7iwvtFhaVBjVGCGMZH2ksqgUd8
+ qHjyWF7/xK2UKPLV2gJNjQzovRiSRIkZediTlE4Fg582N+GXJD+YOl3Hi+j6c+03jeTU
+ hL6a6km7kKN4mP2NfNSPVZQcbNMn5/Jy6JLqsCajb9q6cCxCCA6KkAkPCpF5KQymtx4b
+ 65ew==
+X-Gm-Message-State: AOJu0YxkbOexp//ys0yxBwvU8DbO9SqjqwRZUkYpQvMCIhBQM3nunXX0
+ Zyd5Zt+ruTbdb7jENW+9Iaz2OufPV6LX5Dvgeue45C4pZy2UDoxwPsefSZiEp39AKV2+50T2Pci
+ eNr1MnOiW1laCY5o0OhCcatwuEClZ7Dw3S0XVnAqR3o3k/uTEbhTNQjVu5n7LFnWwvWi0orPnoa
+ ec0O2SpKe9KGki2SEFp+Q5sp79xba2bw==
+X-Received: by 2002:a17:907:60ca:b0:a8d:3e29:a82d with SMTP id
+ a640c23a62f3a-a8ffab771b9mr459881066b.37.1726062738367; 
+ Wed, 11 Sep 2024 06:52:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEyRf5v+DYP/9JUh8QHbJzGLb2wgjxLVIaqhTZr6pP7FjtSjnlbJet8bU6YApEOMBOSO/qlgQ==
+X-Received: by 2002:a17:907:60ca:b0:a8d:3e29:a82d with SMTP id
+ a640c23a62f3a-a8ffab771b9mr459877466b.37.1726062737792; 
+ Wed, 11 Sep 2024 06:52:17 -0700 (PDT)
 Received: from redhat.com ([2.55.9.133]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25cec10asm613690266b.160.2024.09.11.06.51.26
+ a640c23a62f3a-a8d25c727e4sm614180366b.126.2024.09.11.06.52.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 06:51:28 -0700 (PDT)
-Date: Wed, 11 Sep 2024 09:51:25 -0400
+ Wed, 11 Sep 2024 06:52:17 -0700 (PDT)
+Date: Wed, 11 Sep 2024 09:52:15 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>
-Subject: [PULL 01/18] virtio: Allow .get_vhost() without vhost_started
-Message-ID: <00adced5c3166ee65b6880b48c1e0826b7304f76.1726062663.git.mst@redhat.com>
+ Volker =?utf-8?Q?R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PULL 16/18] hw/audio/virtio-sound: fix heap buffer overflow
+Message-ID: <7fc6611cad3e9627b23ce83e550b668abba6c886.1726062663.git.mst@redhat.com>
 References: <cover.1726062663.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1726062663.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -104,115 +105,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+From: Volker Rümelin <vr_qemu@t-online.de>
 
-Historically, .get_vhost() was probably only called when
-vdev->vhost_started is true.  However, we now decidedly want to call it
-also when vhost_started is false, specifically so we can issue a reset
-to the vhost back-end while device operation is stopped.
+Currently, the guest may write to the device configuration space,
+whereas the virtio sound device specification in chapter 5.14.4
+clearly states that the fields in the device configuration space
+are driver-read-only.
 
-Some .get_vhost() implementations dereference some pointers (or return
-offsets from them) that are probably guaranteed to be non-NULL when
-vhost_started is true, but not necessarily otherwise.  This patch makes
-all such implementations check all such pointers, returning NULL if any
-is NULL.
+Remove the set_config function from the virtio_snd class.
 
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-Id: <20240723163941.48775-2-hreitz@redhat.com>
+This also prevents a heap buffer overflow. See QEMU issue #2296.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2296
+Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+Message-Id: <20240901130112.8242-1-vr_qemu@t-online.de>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- include/hw/virtio/virtio.h  |  1 +
- hw/display/vhost-user-gpu.c |  2 +-
- hw/net/virtio-net.c         | 19 +++++++++++++++++--
- hw/virtio/virtio-crypto.c   | 18 +++++++++++++++---
- 4 files changed, 34 insertions(+), 6 deletions(-)
+ hw/audio/virtio-snd.c | 24 ------------------------
+ hw/audio/trace-events |  1 -
+ 2 files changed, 25 deletions(-)
 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 0fcbc5c0c6..f526ecc8fc 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -223,6 +223,7 @@ struct VirtioDeviceClass {
-     int (*post_load)(VirtIODevice *vdev);
-     const VMStateDescription *vmsd;
-     bool (*primary_unplug_pending)(void *opaque);
-+    /* May be called even when vdev->vhost_started is false */
-     struct vhost_dev *(*get_vhost)(VirtIODevice *vdev);
-     void (*toggle_device_iotlb)(VirtIODevice *vdev);
- };
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index c0c66910f1..14548f1a57 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -642,7 +642,7 @@ vhost_user_gpu_device_realize(DeviceState *qdev, Error **errp)
- static struct vhost_dev *vhost_user_gpu_get_vhost(VirtIODevice *vdev)
- {
-     VhostUserGPU *g = VHOST_USER_GPU(vdev);
--    return &g->vhost->dev;
-+    return g->vhost ? &g->vhost->dev : NULL;
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index d1cf5eb445..69838181dd 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -107,29 +107,6 @@ virtio_snd_get_config(VirtIODevice *vdev, uint8_t *config)
+ 
  }
  
- static Property vhost_user_gpu_properties[] = {
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index ed33a32877..fb84d142ee 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -3896,8 +3896,23 @@ static bool dev_unplug_pending(void *opaque)
- static struct vhost_dev *virtio_net_get_vhost(VirtIODevice *vdev)
+-static void
+-virtio_snd_set_config(VirtIODevice *vdev, const uint8_t *config)
+-{
+-    VirtIOSound *s = VIRTIO_SND(vdev);
+-    const virtio_snd_config *sndconfig =
+-        (const virtio_snd_config *)config;
+-
+-
+-   trace_virtio_snd_set_config(vdev,
+-                               s->snd_conf.jacks,
+-                               sndconfig->jacks,
+-                               s->snd_conf.streams,
+-                               sndconfig->streams,
+-                               s->snd_conf.chmaps,
+-                               sndconfig->chmaps);
+-
+-    memcpy(&s->snd_conf, sndconfig, sizeof(virtio_snd_config));
+-    le32_to_cpus(&s->snd_conf.jacks);
+-    le32_to_cpus(&s->snd_conf.streams);
+-    le32_to_cpus(&s->snd_conf.chmaps);
+-
+-}
+-
+ static void
+ virtio_snd_pcm_buffer_free(VirtIOSoundPCMBuffer *buffer)
  {
-     VirtIONet *n = VIRTIO_NET(vdev);
--    NetClientState *nc = qemu_get_queue(n->nic);
--    struct vhost_net *net = get_vhost_net(nc->peer);
-+    NetClientState *nc;
-+    struct vhost_net *net;
-+
-+    if (!n->nic) {
-+        return NULL;
-+    }
-+
-+    nc = qemu_get_queue(n->nic);
-+    if (!nc) {
-+        return NULL;
-+    }
-+
-+    net = get_vhost_net(nc->peer);
-+    if (!net) {
-+        return NULL;
-+    }
-+
-     return &net->dev;
- }
+@@ -1400,7 +1377,6 @@ static void virtio_snd_class_init(ObjectClass *klass, void *data)
+     vdc->realize = virtio_snd_realize;
+     vdc->unrealize = virtio_snd_unrealize;
+     vdc->get_config = virtio_snd_get_config;
+-    vdc->set_config = virtio_snd_set_config;
+     vdc->get_features = get_features;
+     vdc->reset = virtio_snd_reset;
+     vdc->legacy_features = 0;
+diff --git a/hw/audio/trace-events b/hw/audio/trace-events
+index b1870ff224..b8ef572767 100644
+--- a/hw/audio/trace-events
++++ b/hw/audio/trace-events
+@@ -41,7 +41,6 @@ asc_update_irq(int irq, int a, int b) "set IRQ to %d (A: 0x%x B: 0x%x)"
  
-diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c
-index 5034768bff..0793f56965 100644
---- a/hw/virtio/virtio-crypto.c
-+++ b/hw/virtio/virtio-crypto.c
-@@ -1247,9 +1247,21 @@ static bool virtio_crypto_guest_notifier_pending(VirtIODevice *vdev, int idx)
- static struct vhost_dev *virtio_crypto_get_vhost(VirtIODevice *vdev)
- {
-     VirtIOCrypto *vcrypto = VIRTIO_CRYPTO(vdev);
--    CryptoDevBackend *b = vcrypto->cryptodev;
--    CryptoDevBackendClient *cc = b->conf.peers.ccs[0];
--    CryptoDevBackendVhost *vhost_crypto = cryptodev_get_vhost(cc, b, 0);
-+    CryptoDevBackend *b;
-+    CryptoDevBackendClient *cc;
-+    CryptoDevBackendVhost *vhost_crypto;
-+
-+    b = vcrypto->cryptodev;
-+    if (!b) {
-+        return NULL;
-+    }
-+
-+    cc = b->conf.peers.ccs[0];
-+    vhost_crypto = cryptodev_get_vhost(cc, b, 0);
-+    if (!vhost_crypto) {
-+        return NULL;
-+    }
-+
-     return &vhost_crypto->dev;
- }
- 
+ #virtio-snd.c
+ virtio_snd_get_config(void *vdev, uint32_t jacks, uint32_t streams, uint32_t chmaps) "snd %p: get_config jacks=%"PRIu32" streams=%"PRIu32" chmaps=%"PRIu32""
+-virtio_snd_set_config(void *vdev, uint32_t jacks, uint32_t new_jacks, uint32_t streams, uint32_t new_streams, uint32_t chmaps, uint32_t new_chmaps) "snd %p: set_config jacks from %"PRIu32"->%"PRIu32", streams from %"PRIu32"->%"PRIu32", chmaps from %"PRIu32"->%"PRIu32
+ virtio_snd_get_features(void *vdev, uint64_t features) "snd %p: get_features 0x%"PRIx64
+ virtio_snd_vm_state_running(void) "vm state running"
+ virtio_snd_vm_state_stopped(void) "vm state stopped"
 -- 
 MST
 
