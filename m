@@ -4,89 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A937EEE49BD
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:06:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65767EE49BD
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:08:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soOmg-0001My-8V; Wed, 11 Sep 2024 10:57:34 -0400
+	id 1soOhP-0005RT-AH; Wed, 11 Sep 2024 10:52:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOhi-00070k-Be
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:52:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOhX-0007Dd-73
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:52:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726066329;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cW6rJsKhPMN4DAXnpRk9aJejhnXYOKSdkgv1oLepLKc=;
- b=UOzKZ/LkrVY2P0xxqap6GqTzzhVJfUEyCR5O9WnyYM/hYdutN79nbugmOSRosPxLBPcdiJ
- 3aAY84fHcvs6idYVd+FJe2fgS4YMqoK1Oo90TD0WYRO1Yh4T6Lk+rvRixYSZqK6g71Mck1
- Wzt4GJFe36rDGTw545bhb3q1w5KDauU=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-550-uku9yfBzMNqmtwfAvz6AZA-1; Wed, 11 Sep 2024 09:51:37 -0400
-X-MC-Unique: uku9yfBzMNqmtwfAvz6AZA-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5c25c45afb2so4829182a12.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 06:51:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
+ id 1soOfx-0007yG-4c
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:50:47 -0400
+Received: from mail-il1-x12b.google.com ([2607:f8b0:4864:20::12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
+ id 1soOfs-0006zz-3A
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:50:32 -0400
+Received: by mail-il1-x12b.google.com with SMTP id
+ e9e14a558f8ab-39f4827a07aso28387295ab.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 07:50:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1726066226; x=1726671026; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=rmKQtVhFV+qmrPC+l2g1n7XwgI++OK9zklf0cT8kpAU=;
+ b=VwS4kPsMw9C07krL6of7fZC+9Tmn0pabNxN1mKXaGupIObuqskCYvyyHBtq/5TA/T0
+ Rv7Yzs2OXAj2UVq774j6TEuOmKTyPxQlPt8xu0VCzjDjZjN3HVtVPZI9wspSVZloNgY1
+ Jt6/1HuZYkleAYomF7jN3e2J9WPuz/DyDWZWrJisby4grdRei7h8k4vWmOMmsqH09ryS
+ Q7JquOTvkBVsxehpk/f1fiDS4GgyfCjq98IvfoqXdsdbIcjHFaYLylJlcRP7YgRJZKcD
+ k21MuHiDe/IrOcapwCh87PPzIEvMaRE2QJndt+Xca1njio4XDwpHrALLsSbn0E6H6YJG
+ kiKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726062695; x=1726667495;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cW6rJsKhPMN4DAXnpRk9aJejhnXYOKSdkgv1oLepLKc=;
- b=U6edi+VD2seSGOTusjonRapM/ryDqo+ePL252+7kyZh5am2rv9KY9asmiCIPswb4Yj
- n+9acIwUU2+7dna2CGRgUlYYqd0iDYEGIKnKd7PgvrPXM/OC2F74ea0ViWHUlqi2bBRx
- j2GNnlKT09IwrOqSGfYAndUqXYzKneqkGJESZEHpJaNATMHus7IvCb7/WHI6G8uj78zf
- RCEybm+g2+LrZbvpXtrYqTi7YeZkKR4FP65Nw/NO2GcXlQDLMQ5D6rQ0X68FTzC23Ldo
- QDeB9r1tcTl3KGwABkHnX2oGE2g49ivTzKtbxKoWfkiKcLQpiQKGOM4pE5+F40pcx95G
- XtzA==
-X-Gm-Message-State: AOJu0Ywhjg/IbJiikg4ThA+/m5Yttblo+beeTo5MeJtoEmyJReDiT1L9
- lyEPGNku6A3pTGYmpsSwNjBXTp8M0pSg5gPHwsg+BKBw4Cnyw/W1C7kasvsN9bGoTtXBAdYgEt1
- SYnBm7ZsA8LDs+jA2CY1PHzpC+zVD+AN+KSxukGSoQtkBXRENzHp6EbPVO8YIPBuFRrytP19Vuo
- 5HZNt/FPQBt7Oggh64v48RE0mDza777A==
-X-Received: by 2002:a17:907:7f10:b0:a8b:6ee7:ba25 with SMTP id
- a640c23a62f3a-a8ffadb0612mr405072366b.47.1726062695518; 
- Wed, 11 Sep 2024 06:51:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGlSiPBnTtHcvdwGtlu9vE+aMb07EQGcKjwLV6c8rHV3ngBWdOtgs2ai/xRWXpg0D8Crxxr8w==
-X-Received: by 2002:a17:907:7f10:b0:a8b:6ee7:ba25 with SMTP id
- a640c23a62f3a-a8ffadb0612mr405067566b.47.1726062694589; 
- Wed, 11 Sep 2024 06:51:34 -0700 (PDT)
-Received: from redhat.com ([2.55.9.133]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d259c1fa3sm616631166b.80.2024.09.11.06.51.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 06:51:34 -0700 (PDT)
-Date: Wed, 11 Sep 2024 09:51:32 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
+ d=1e100.net; s=20230601; t=1726066226; x=1726671026;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rmKQtVhFV+qmrPC+l2g1n7XwgI++OK9zklf0cT8kpAU=;
+ b=KJ/4cCVaUTq32ssXASLKq3OPXFjWZIK2q8MNGo3Cv94oIMgNJdZO7slvfJJbFHMlju
+ kWWss0/SmWb2fAXrr57N7Hhy/kQWhqkjs+gkRgOApHI22kKxO/bMREujTDwBlAupgwnG
+ Y7S5lALyjeWM3/lPQIfzWNP9rCDRaB1kgNUEcZCLMXs2u8wf6rT3OkXXCkH98gmw32NM
+ o4imFQO/RULlIFiWg7J0+mwxszeS/usmxmVabC5Qdn4Bxalw5/Boo+aRGRCnnCxZMmu1
+ e60JqctGjl8gOIe/t/LZkt14l3hAq8CwOhe9K6RoPG0fmVBl4Fcz+9CoC4Wg/ghXiCSL
+ SxmA==
+X-Gm-Message-State: AOJu0YwvOAvQccHz2rcfdIoa1PVB1KLG6fSnHCxabrbRAgXgo8aQkdnp
+ QNTPDPmqemj+ZqNjpNS4wxor5D8XkhP2LfVT7xohBZwdox4NIgYIxO6a8sZj7C5jHqmVssL8qDz
+ Au/k=
+X-Google-Smtp-Source: AGHT+IHXr3IZsOEjxikd8VYTgBy8kSiVkjgZmrEuf9VMQ2p6HTO/mymVWukb5slblThbHek9iy3deg==
+X-Received: by 2002:a17:90a:fd13:b0:2d3:c34e:2fda with SMTP id
+ 98e67ed59e1d1-2dad4efe241mr17138136a91.14.1726062856861; 
+ Wed, 11 Sep 2024 06:54:16 -0700 (PDT)
+Received: from MacBook-Pro-2.local.bytedance.net ([124.90.41.66])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2dadc1105fesm10535966a91.43.2024.09.11.06.54.13
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 11 Sep 2024 06:54:16 -0700 (PDT)
+From: Chuang Xu <xuchuangxclwt@bytedance.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 03/18] hw: Move declaration of IRQState to header and add init
- function
-Message-ID: <e72a7f65c11565d2f216711588a4e767a1f6cd80.1726062663.git.mst@redhat.com>
-References: <cover.1726062663.git.mst@redhat.com>
+Cc: pbonzini@redhat.com, xieyongji@bytedance.com, chaiwen.cc@bytedance.com,
+ zhao1.liu@intel.com, qemu-stable@nongnu.org,
+ Chuang Xu <xuchuangxclwt@bytedance.com>,
+ Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>
+Subject: [PATCH] i386/cpu: fixup number of addressable IDs for logical
+ processors in the physical package
+Date: Wed, 11 Sep 2024 21:52:57 +0800
+Message-Id: <20240911135257.16278-1-xuchuangxclwt@bytedance.com>
+X-Mailer: git-send-email 2.24.3 (Apple Git-128)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1726062663.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12b;
+ envelope-from=xuchuangxclwt@bytedance.com; helo=mail-il1-x12b.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,109 +97,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+As (1+CPUID.04H.EAX[31:26]) round up to the nearest power-of-2 integer,
+we'd beter round up CPUID.01H.EBX[23:16] to the nearest power-of-2
+integer too. Otherwise we may encounter unexpected results in guest.
 
-To allow embedding a qemu_irq in a struct move its definition to the
-header and add a function to init it in place without allocating it.
+For example, some guest os uses CPUID.01H.EBX[23:16]/(1+CPUID.04H.EAX[31:26])
+to calculate threads-per-core, if we have 90 ht (45 core) in the
+package, we'll get "90/(1+63)=1" as the result, even though
+theads-per-core should actually be 2.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Message-Id: <e3ffd0f6ef8845d0f7247c9b6ff33f7ee8b432cf.1719690591.git.balaton@eik.bme.hu>
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+So let us round up CPUID.01H.EBX[23:16] to the nearest power-of-2 integer
+to solve the unexpected result.
+
+Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
+Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
 ---
- include/hw/irq.h | 18 ++++++++++++++++++
- hw/core/irq.c    | 25 +++++++++++--------------
- 2 files changed, 29 insertions(+), 14 deletions(-)
+ target/i386/cpu.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/irq.h b/include/hw/irq.h
-index 645b73d251..c861c1debd 100644
---- a/include/hw/irq.h
-+++ b/include/hw/irq.h
-@@ -1,9 +1,20 @@
- #ifndef QEMU_IRQ_H
- #define QEMU_IRQ_H
- 
-+#include "qom/object.h"
-+
- /* Generic IRQ/GPIO pin infrastructure.  */
- 
- #define TYPE_IRQ "irq"
-+OBJECT_DECLARE_SIMPLE_TYPE(IRQState, IRQ)
-+
-+struct IRQState {
-+    Object parent_obj;
-+
-+    qemu_irq_handler handler;
-+    void *opaque;
-+    int n;
-+};
- 
- void qemu_set_irq(qemu_irq irq, int level);
- 
-@@ -23,6 +34,13 @@ static inline void qemu_irq_pulse(qemu_irq irq)
-     qemu_set_irq(irq, 0);
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 4c2e6f3a71..24d60ead9e 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -261,6 +261,12 @@ static uint32_t max_thread_ids_for_cache(X86CPUTopoInfo *topo_info,
+     return num_ids - 1;
  }
  
-+/*
-+ * Init a single IRQ. The irq is assigned with a handler, an opaque data
-+ * and the interrupt number.
-+ */
-+void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
-+                   int n);
-+
- /* Returns an array of N IRQs. Each IRQ is assigned the argument handler and
-  * opaque data.
-  */
-diff --git a/hw/core/irq.c b/hw/core/irq.c
-index 3f14e2dda7..db95ffc18f 100644
---- a/hw/core/irq.c
-+++ b/hw/core/irq.c
-@@ -26,16 +26,6 @@
- #include "hw/irq.h"
- #include "qom/object.h"
- 
--OBJECT_DECLARE_SIMPLE_TYPE(IRQState, IRQ)
--
--struct IRQState {
--    Object parent_obj;
--
--    qemu_irq_handler handler;
--    void *opaque;
--    int n;
--};
--
- void qemu_set_irq(qemu_irq irq, int level)
- {
-     if (!irq)
-@@ -44,6 +34,15 @@ void qemu_set_irq(qemu_irq irq, int level)
-     irq->handler(irq->opaque, irq->n, level);
- }
- 
-+void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
-+                   int n)
++static uint32_t max_thread_number_in_package(X86CPUTopoInfo *topo_info)
 +{
-+    object_initialize(irq, sizeof(*irq), TYPE_IRQ);
-+    irq->handler = handler;
-+    irq->opaque = opaque;
-+    irq->n = n;
++    uint32_t num_threads = 1 << apicid_pkg_offset(topo_info);
++    return num_threads;
 +}
 +
- qemu_irq *qemu_extend_irqs(qemu_irq *old, int n_old, qemu_irq_handler handler,
-                            void *opaque, int n)
+ static uint32_t max_core_ids_in_package(X86CPUTopoInfo *topo_info)
  {
-@@ -69,10 +68,8 @@ qemu_irq qemu_allocate_irq(qemu_irq_handler handler, void *opaque, int n)
- {
-     IRQState *irq;
- 
--    irq = IRQ(object_new(TYPE_IRQ));
--    irq->handler = handler;
--    irq->opaque = opaque;
--    irq->n = n;
-+    irq = g_new(IRQState, 1);
-+    qemu_init_irq(irq, handler, opaque, n);
- 
-     return irq;
- }
+     uint32_t num_cores = 1 << (apicid_pkg_offset(topo_info) -
+@@ -6417,7 +6423,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         }
+         *edx = env->features[FEAT_1_EDX];
+         if (threads_per_pkg > 1) {
+-            *ebx |= threads_per_pkg << 16;
++            *ebx |= max_thread_number_in_package(&topo_info) << 16;
+             *edx |= CPUID_HT;
+         }
+         if (!cpu->enable_pmu) {
 -- 
-MST
+2.20.1
 
 
