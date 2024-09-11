@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD2FBEE499D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:27:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4245FEE49A1
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:27:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMK3-0004NS-Eu; Wed, 11 Sep 2024 08:19:47 -0400
+	id 1soMKt-00089Q-Eh; Wed, 11 Sep 2024 08:20:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMK1-0004Ce-Ln
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:19:45 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMKq-0007xV-EH
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:20:36 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMK0-0007j4-0K
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:19:45 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-374d29ad8a7so4296125f8f.2
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:19:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMKo-0007ya-Lu
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:20:36 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-42cb6f3a5bcso1259085e9.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:20:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726057182; x=1726661982; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726057233; x=1726662033; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=C4ODDkRuTQd4wN0i3JOMpaQJDlIDNPjXst/vtGiwOCw=;
- b=WmzW3iGJVDjy7SlD84HYR5Lt4+f+VsxRjoC2BBpro91nycvZcqP77OMQfqK0fQI5Ej
- B7TlQI7rKDTKeml8lYN2mPIpUTLB8dIU/TyI/cWpf4ZwkrNbWX805FVVlu1OODvEygml
- Xg88O2ymEJE1IbcfeUeQsI+Wc6HYyLaTMDSIvhj+rjsK5XlhJsHfrqIe7RXFn0b7AYqK
- AdYEZVVtsI3/Cf3xXdhD1jCvvHhUS7R6ZZFLOB/kTxyxYAEohH6vfFdq1gwxUXD/8eZg
- Y8np8FEEQ39KrxNiS47XiJ7MskfTqYcygPp4cTRQrQydqiSx/f8x6eJQzWc7LNdcEice
- EHyQ==
+ bh=o+JN/C2X36G3NaCEpwwdK6lpAZCWVIpHedYNQuIYeRc=;
+ b=vH01775qbAoJQyzrg+fm5w0Xq19piPY8XC0DLg/8iav/ewhjs8ypjmQGQSEJTq+Eq8
+ /wFr/qp9mkoGz9q+JJ4CUnBBvk+MYecIK7qyqJ9318j2uNPT8zydbr3LTkT3h/ivXT/Z
+ Vi15fb6sXyNh7M62M2Yt9d5ElIJCbwi+qhLU2wL0ZYpCFZCg5xe6wLICiAt7T9Vfb2z9
+ IKUmK0EzL8Dz8CFbYacK7ntuQbakQDRWRzHz3fRovxWVCQZL1MqrrksiyduEHvU3E/J3
+ +dqRmlYB7FLqg1xOZa1i+UT/mMh8so8t4cXmmPhLYxsod3iQRrSlfT5ZTi30FxJe0VDQ
+ bVYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726057182; x=1726661982;
+ d=1e100.net; s=20230601; t=1726057233; x=1726662033;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C4ODDkRuTQd4wN0i3JOMpaQJDlIDNPjXst/vtGiwOCw=;
- b=XBw+T3U0xXOl2qAiC9Rx8QWcBoikCYWSBk+Ty618I8L0gKB0Jvcn+afCUDYrDkDwQk
- Nvf9o+hBOkEQVw8v0g7ZY3Y4afpr1E3HiQGyBC1+Fi7W1dl+5YuHsBjyHMc3KYbLsVZw
- pMy+pVx5D0OOCNquNZyxANKP5Fxd7lRsZqbdLeOHAC4llrsB3fSFbU4XL4OLb304QesH
- ZsoXRPYoMtqMp0XLEzEAhIJE4TSFuSQ3GDXXEu59LcTDrNjsInTDkQ0M0A9IRFSXcaMg
- 0YGcWn1zadUSwTdHjZj6c2Y5mgAltC56ukRDIWFMhZTOWNYyRVSHSowa2WEU/UoSJDR/
- abYA==
-X-Gm-Message-State: AOJu0YzvBpaiEPwuUD0v1410vuGSu/nWRDZ9VKiWWES90j+6SVqhG2G9
- cfzESa6lSWp9iRCIkKCXYnn8d1Q36WCxwLrhYPnxYBhqWpzYLH6koZ9Jbks/KtxeVNFZAXLbXzf
- P
-X-Google-Smtp-Source: AGHT+IGB2U0vT/TYFE9Fd5sua7ehIwEN73KuDwPKCelkuNd7bYncrXm4LHePegnBVZ/k99ruEirrcg==
-X-Received: by 2002:a5d:68cc:0:b0:374:c56e:1d4d with SMTP id
- ffacd0b85a97d-3788968c7f8mr9008437f8f.54.1726057181894; 
- Wed, 11 Sep 2024 05:19:41 -0700 (PDT)
+ bh=o+JN/C2X36G3NaCEpwwdK6lpAZCWVIpHedYNQuIYeRc=;
+ b=rhBf9Kw7gHi89Wz0UKWEgwanxZ7YSlGmA27RI0Ic9fwlha74xp+0bT+Z3XthfCtn5r
+ RpuvMLf2jcib0imRei4BzWJoHxv1mqr287Dn0RIyq2k9vWRAUzkFW6o5N8eL7r6uHNkh
+ rB18P8wMS3lyQAHXr3FTmeCqOQRpon3UdJF8WtPJS2kDGsvdArwZZQQPZNQEHmhWSoLU
+ yHEogF06YBSeU34LbH/QuO/F+nEj5Z9uiPIVbR/ZFLCa2NAAE+Fsb7hCC198VN71VGoW
+ eprTlhLnuwe+Se2JOtyGVGOHbYzPA2/DgF1IFej+eZcg0Hzhd9AhYjQC+eQYxPRPBbtg
+ +0Bg==
+X-Gm-Message-State: AOJu0Ywt48d8PgO8H+0AzotIlp3hmsOBAEuQoXGWVa60mg3g6ZcIiDGP
+ 6ku6IrpPjPGMsHf0KSIBBGEin8qboKoVr2LEPfzLkauX5wS2dioy59m3a5BCRWBdnhTDYrXbtQp
+ v
+X-Google-Smtp-Source: AGHT+IEsHm6k0wHQzFIjrIhS7ROfNn4bzBH2DHWc7ffWYTzroXlzFEoug0UgZvcgC0Cmaaideqo1wA==
+X-Received: by 2002:adf:fcca:0:b0:374:c90e:990c with SMTP id
+ ffacd0b85a97d-378922b7aefmr11604959f8f.33.1726057232798; 
+ Wed, 11 Sep 2024 05:20:32 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.196.107])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3789556aa7dsm11817122f8f.0.2024.09.11.05.19.40
+ ffacd0b85a97d-37895675cb5sm11487134f8f.53.2024.09.11.05.20.31
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Sep 2024 05:19:41 -0700 (PDT)
+ Wed, 11 Sep 2024 05:20:32 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: Gert Wollny <gert.wollny@collabora.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 46/56] hw/char: replace assert(0) with g_assert_not_reached()
-Date: Wed, 11 Sep 2024 14:14:11 +0200
-Message-ID: <20240911121422.52585-47-philmd@linaro.org>
+Subject: [PULL 55/56] ui/sdl2: set swap interval explicitly when OpenGL is
+ enabled
+Date: Wed, 11 Sep 2024 14:14:20 +0200
+Message-ID: <20240911121422.52585-56-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240911121422.52585-1-philmd@linaro.org>
 References: <20240911121422.52585-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,30 +96,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Gert Wollny <gert.wollny@collabora.com>
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240910221606.1817478-5-pierrick.bouvier@linaro.org>
+Before 176e3783f2ab (ui/sdl2: OpenGL window context)
+SDL_CreateRenderer was called unconditionally setting
+the swap interval to 0. Since SDL_CreateRenderer is now no
+longer called when OpenGL is enabled, the swap interval is
+no longer set explicitly and vsync handling depends on
+the environment settings which may lead to a performance
+regression with virgl as reported in
+   https://gitlab.com/qemu-project/qemu/-/issues/2565
+
+Restore the old vsync handling by explicitly calling
+SDL_GL_SetSwapInterval if OpenGL is enabled.
+
+Fixes: 176e3783f2ab (ui/sdl2: OpenGL window context)
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/2565
+
+Signed-off-by: Gert Wollny <gert.wollny@collabora.com>
+Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <01020191e05ce6df-84da6386-62c2-4ce8-840e-ad216ac253dd-000000@eu-west-1.amazonses.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/char/avr_usart.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ ui/sdl2.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/char/avr_usart.c b/hw/char/avr_usart.c
-index 5bcf9db0b7..e738a2ca97 100644
---- a/hw/char/avr_usart.c
-+++ b/hw/char/avr_usart.c
-@@ -86,7 +86,7 @@ static void update_char_mask(AVRUsartState *usart)
-         usart->char_mask = 0b11111111;
-         break;
-     default:
--        assert(0);
-+        g_assert_not_reached();
-     }
- }
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index 574a22306d..51b7aa82ea 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -115,6 +115,7 @@ void sdl2_window_create(struct sdl2_console *scon)
+         SDL_SetHint(SDL_HINT_RENDER_BATCHING, "1");
  
+         scon->winctx = SDL_GL_CreateContext(scon->real_window);
++        SDL_GL_SetSwapInterval(0);
+     } else {
+         /* The SDL renderer is only used by sdl2-2D, when OpenGL is disabled */
+         scon->real_renderer = SDL_CreateRenderer(scon->real_window, -1, 0);
 -- 
 2.45.2
 
