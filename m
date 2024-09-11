@@ -4,79 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5044EE499F
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 13:05:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AAB6EE49B8
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 14:27:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soN1I-0000X4-2g; Wed, 11 Sep 2024 09:04:28 -0400
+	id 1soOI2-0004fo-Vh; Wed, 11 Sep 2024 10:25:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1soN1H-0000Tk-4S
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 09:04:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1soN1F-000571-5r
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 09:04:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726059863;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VOQ5X5Pet4QkIz43Am/IGNG5UMJbHehN0WxoN3pegpE=;
- b=FWJX8AJOG8j//KDGa6GUUoKViuucYV3bXVuI89nspr4jJqosu1Prj1jvFUkEd3eZn+5aP5
- dn0I/EaZgcmhkp81w/4Jbwi8q5iGKySF6ttljnHSfEz11VoJ/qS6fNxbok3mtG2evx+zEh
- rkf9bC+/8edAIbKzg+iFXSx1KKWZ/Oo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-f6YVEfzDMBScGq2tFF5QlQ-1; Wed,
- 11 Sep 2024 09:04:20 -0400
-X-MC-Unique: f6YVEfzDMBScGq2tFF5QlQ-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1soOHS-0004Eq-Vy; Wed, 11 Sep 2024 10:25:21 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1soOGt-0008FS-ST; Wed, 11 Sep 2024 10:25:14 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 32E451955BF8; Wed, 11 Sep 2024 13:04:18 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.112])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DCCA930001AB; Wed, 11 Sep 2024 13:04:16 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 624F921E6A28; Wed, 11 Sep 2024 15:04:14 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org,  eblake@redhat.com,  marcandre.lureau@redhat.com,
- pbonzini@redhat.com,  berrange@redhat.com,  arei.gonglei@huawei.com,
- pizhenwei@bytedance.com,  jonathan.cameron@huawei.com,
- fan.ni@samsung.com,  marcel.apfelbaum@gmail.com,  jiri@resnulli.us,
- jsnow@redhat.com,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Subject: Re: [PATCH v2 5/8] qapi/pci: Supply missing member documentation
-In-Reply-To: <20240911072927-mutt-send-email-mst@kernel.org> (Michael
- S. Tsirkin's message of "Wed, 11 Sep 2024 07:29:45 -0400")
-References: <20240911112545.2248881-1-armbru@redhat.com>
- <20240911112545.2248881-6-armbru@redhat.com>
- <20240911072927-mutt-send-email-mst@kernel.org>
-Date: Wed, 11 Sep 2024 15:04:14 +0200
-Message-ID: <87y13ymje9.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 1F4DC219EA;
+ Wed, 11 Sep 2024 14:16:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726064215; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=GPyTDcszhoeWdCN/K5slNupruBYEwdvgfkSRmPx2RVM=;
+ b=Qx2gfTqlQD6J+pLrr70ungu9P82jluubzT3mTLx1IMpVYZ8HMoxJ9O6Jve0APpFWt+9GgP
+ +J2+kMn1UUaW+PLNXUfuH7GPx0an+bsUG62oWfgVI7EL1m/zURyqy4hHOpPQ7S6kUJ5/FG
+ NIokYSBugpFwrtzB+MllCrGxEGlOAEk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726064215;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=GPyTDcszhoeWdCN/K5slNupruBYEwdvgfkSRmPx2RVM=;
+ b=E0BCvly8WGO6t7/uJngp80xKTcM8wMrTJiSdV/9VPtUgN21IuXDM9KKwKJcs0Yn+5akt29
+ AwISTjj9/6wAP1BA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726064215; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=GPyTDcszhoeWdCN/K5slNupruBYEwdvgfkSRmPx2RVM=;
+ b=Qx2gfTqlQD6J+pLrr70ungu9P82jluubzT3mTLx1IMpVYZ8HMoxJ9O6Jve0APpFWt+9GgP
+ +J2+kMn1UUaW+PLNXUfuH7GPx0an+bsUG62oWfgVI7EL1m/zURyqy4hHOpPQ7S6kUJ5/FG
+ NIokYSBugpFwrtzB+MllCrGxEGlOAEk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726064215;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=GPyTDcszhoeWdCN/K5slNupruBYEwdvgfkSRmPx2RVM=;
+ b=E0BCvly8WGO6t7/uJngp80xKTcM8wMrTJiSdV/9VPtUgN21IuXDM9KKwKJcs0Yn+5akt29
+ AwISTjj9/6wAP1BA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AFE3B13A7C;
+ Wed, 11 Sep 2024 14:16:53 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id dp5jHVWm4WaXVQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 11 Sep 2024 14:16:53 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+Subject: [PATCH] target/ppc: Fix lxvx/stxvx facility check
+Date: Wed, 11 Sep 2024 11:16:51 -0300
+Message-Id: <20240911141651.6914-1-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-0.32 / 50.00]; MID_CONTAINS_FROM(1.00)[];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ BAYES_HAM(-0.02)[52.29%]; MIME_TRACE(0.00)[0:+];
+ RCVD_TLS_ALL(0.00)[]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[nongnu.org,gmail.com];
+ RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ suse.de:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,21 +114,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+The XT check for the lxvx/stxvx instructions is currently
+inverted. This was introduced during the move to decodetree.
 
-> On Wed, Sep 11, 2024 at 01:25:42PM +0200, Markus Armbruster wrote:
->> Since we neglect to document a member of PciMemoryRegion, its
->> description in the QEMU QMP Reference manual is "Not documented".  Fix
->> that.
->>=20
->> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
->
->
-> can you merge this?
+From the ISA:
+  Chapter 7. Vector-Scalar Extension Facility
+  Load VSX Vector Indexed X-form
 
-Gladly!
+  lxvx XT,RA,RB
+  if TX=0 & MSR.VSX=0 then VSX_Unavailable()
+  if TX=1 & MSR.VEC=0 then Vector_Unavailable()
+  ...
+  Let XT be the value 32×TX + T.
+
+The code currently does the opposite:
+
+    if (paired || a->rt >= 32) {
+        REQUIRE_VSX(ctx);
+    } else {
+        REQUIRE_VECTOR(ctx);
+    }
+
+This was already fixed for lxv/stxv at commit "2cc0e449d1 (target/ppc:
+Fix lxv/stxv MSR facility check)", but the indexed forms were missed.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 70426b5bb7 ("target/ppc: moved stxvx and lxvx from legacy to decodtree")
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ target/ppc/translate/vsx-impl.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
+index 40a87ddc4a..a869f30e86 100644
+--- a/target/ppc/translate/vsx-impl.c.inc
++++ b/target/ppc/translate/vsx-impl.c.inc
+@@ -2244,7 +2244,7 @@ static bool do_lstxv_PLS_D(DisasContext *ctx, arg_PLS_D *a,
+ 
+ static bool do_lstxv_X(DisasContext *ctx, arg_X *a, bool store, bool paired)
+ {
+-    if (paired || a->rt >= 32) {
++    if (paired || a->rt < 32) {
+         REQUIRE_VSX(ctx);
+     } else {
+         REQUIRE_VECTOR(ctx);
+-- 
+2.35.3
 
 
