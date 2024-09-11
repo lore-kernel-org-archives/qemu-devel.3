@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D53F5EE499F
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:25:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDE15EE499E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:26:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMJp-0001ox-SD; Wed, 11 Sep 2024 08:19:33 -0400
+	id 1soMK8-0004gY-FK; Wed, 11 Sep 2024 08:19:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMJD-0006rN-L9
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:19:05 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMK6-0004bT-WF
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:19:51 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMJA-0007er-OZ
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:18:54 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-42cb1e623d1so19092625e9.0
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:18:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMK5-0007jL-FD
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:19:50 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4280ca0791bso62816645e9.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:19:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726057130; x=1726661930; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726057188; x=1726661988; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JGgy78gvcc3jMmF3sOv2NVPvQFdbhvqBJ1whFt/CWgE=;
- b=efwmZZqs30WofrBfABHfrfbvnJg115LhCzhRO0WfMQ9MDN4nMuKP29xrMtdUkEdpYQ
- MTZWKYgFZd/8a90GY2pRDJKJrDW3MpYMpY/YOwnL1AOS/Rz5UxnXuV7y4NQQxetj2ShD
- XTducv+yp1NKk66qhkcLyb7T1SDuN4hd8ne4O9ezKjPfDJLNdlTSzoQPCXAyqktRm6xQ
- Wrc9bSgD2VVWtdF+Tk9exTyiwO23oDpu0nbmW0Dy4qVfh/81bmIBOxhniy6g92bcpZyL
- heC4/gU+9wlqCFK4QGrgXgMxKPU2PV3+CavFQBW/hJrcq5hnz33+9ddEI4NsPPxj7G7p
- bUgA==
+ bh=ZUo8rGZSom7mlAfCU5Z2bDlbbhMhxBWW2+c4LGYwQ+E=;
+ b=jhgSymHRtJweLm4rOEYW4zXS5jqZU/ehAKsteK6I4Gi1tuPTlcIndQXbNmJ7+rx6Tq
+ fZ5y0MZA3jgp0D3UEKKDLAunXE/2egDCFg1ho+kgxfseiPBeSNhBXus6CjYVizXSZFoV
+ fgXFYCsPn/T4FTJCkiigAd5wAT8gTn4Ue8aSsyzZqvIuoh4nUdHKGrvHu2lEICiz0rcy
+ 3pFuFHfhkvvLrIZZ9vsTICujJwrkYj3HK3iG1TzfFxr2xaQzrG78FJ5hs1vZY5RBI7YM
+ Dwn51LkY9N1SekT60GcKDgwI/pSFszZY2uljSKDQgm2GCX+OQkLElocDbheDagqQUvZH
+ jdlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726057130; x=1726661930;
+ d=1e100.net; s=20230601; t=1726057188; x=1726661988;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JGgy78gvcc3jMmF3sOv2NVPvQFdbhvqBJ1whFt/CWgE=;
- b=wxBaa2LybUrtoLZOAlvbe8Px90SOwk+7ID1EVk0WfOIA4zccQg7q4Tbtw0JtEG5pcc
- jaw3ZupOcvpewwObqE7K95739lSrZIYAVS1M1YjFHjy1Atwp1mnjfN49bG8MB2mkrb6V
- HZLmn9CylFVpEVA5TzpeQLN2LpR5ZKfow8GOV6X+t4RHtia2oOztIlvdr2WEDjQ2jCrE
- 1lCUN9BKiCAWzG2NOZ8JNVtZyensTk5bxS/oFli21Zy5/HyDOThxG2nnEamQ71IpnmW/
- S3rogmRgab7xuKk8tp+uYd0yJUgLb+XlmEvOQkQb8fr4G1fcsSgOi3dWFoAk1tckKdJt
- Kajw==
-X-Gm-Message-State: AOJu0YzJMBJUZIGK2UkU5jZbmgpvOGjRdMjIOk4SDTXGtgV6ga8j+XCC
- TTIKvC1ZPlugcwOnKvwDq0INdGIIH+Mt88TUDeaiHuwU3aglD3u2wieWhC3g41/C7OLkHdTRwoB
- Y
-X-Google-Smtp-Source: AGHT+IFrKM3HpuL5U113y0wdP82Iwwbb/s7kyptaQXQZ+1cVSI1gbLkFMo0n5xtXfA/qZ78l32fRAg==
-X-Received: by 2002:a05:600c:4fc5:b0:42c:b22e:fc2e with SMTP id
- 5b1f17b1804b1-42ccd32cdb4mr22693415e9.15.1726057130295; 
- Wed, 11 Sep 2024 05:18:50 -0700 (PDT)
+ bh=ZUo8rGZSom7mlAfCU5Z2bDlbbhMhxBWW2+c4LGYwQ+E=;
+ b=I5eW7BIQYtAMA2oFZCP0PQo91shd+CEfdsiKnix70ueUHJW/coIVvSF0EsrJ8uIwe2
+ YDpPCYvIgkr0QjycyhXemWuEjg8tgppu7c4nwGLVdDdrhZ0wDtBMdLpe20lgFaC3b3wO
+ HdQ9MXfG6haSATSm1EZ5SwR113CRmCFRmWu0yFtqJ0nnqA1H+BfB86+M7tsR39/eKJXe
+ 8APl2WE5ofH2PrUxTz0Kd+yAhCEyX2J/JbGI1tYOhTLVVVU2uVeiC874CJKlx/cHiffB
+ gC2brljanwiAQdGYrGnymFz2mMrIVsotF8S4cRFq/ggLBD+dHYDycvSBlQJktBKSotwP
+ zf7g==
+X-Gm-Message-State: AOJu0YwTr8XOW0wp8HDpxsSBOvlqLkZd9lJl1jBZ3k8c1O+YN1iu26K0
+ AKuBfEGpwwIIR/+B1DqSKxwsY25ll9w6xGTdE79t+C64ET9gSXXy0zze2nzm1vNMvYXNF9rFEHb
+ o
+X-Google-Smtp-Source: AGHT+IGgAFDjM2lpLym7EF1EulrqmgGPrdtcIvf4+b5Fgc7dUWijLaOrSSIaRIxMLDJAngB6O6qF0Q==
+X-Received: by 2002:a05:600c:4798:b0:42c:a574:6364 with SMTP id
+ 5b1f17b1804b1-42ca574664amr121721125e9.12.1726057187581; 
+ Wed, 11 Sep 2024 05:19:47 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.196.107])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42cc8be465csm35399005e9.28.2024.09.11.05.18.48
+ 5b1f17b1804b1-42caeb4444asm140843695e9.22.2024.09.11.05.19.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Sep 2024 05:18:49 -0700 (PDT)
+ Wed, 11 Sep 2024 05:19:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Alistair Francis <alistair.francis@wdc.com>,
- Octavian Purdila <tavip@google.com>,
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 37/56] fifo8: honour do_pop argument in fifo8_peekpop_buf()
-Date: Wed, 11 Sep 2024 14:14:02 +0200
-Message-ID: <20240911121422.52585-38-philmd@linaro.org>
+Subject: [PULL 47/56] hw/core: replace assert(0) with g_assert_not_reached()
+Date: Wed, 11 Sep 2024 14:14:12 +0200
+Message-ID: <20240911121422.52585-48-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240911121422.52585-1-philmd@linaro.org>
 References: <20240911121422.52585-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,45 +95,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Pass the do_pop value from fifo8_peekpop_buf() to fifo8_peekpop_bufptr()
-to allow peeks to the FIFO buffer, including adjusting the skip parameter
-to handle the case where the internal FIFO buffer wraps around.
-
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Octavian Purdila <tavip@google.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240828122258.928947-7-mark.cave-ayland@ilande.co.uk>
+Message-ID: <20240910221606.1817478-6-pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- util/fifo8.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/core/numa.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/util/fifo8.c b/util/fifo8.c
-index 5453cbc1b0..1031ffbe7e 100644
---- a/util/fifo8.c
-+++ b/util/fifo8.c
-@@ -117,7 +117,7 @@ static uint32_t fifo8_peekpop_buf(Fifo8 *fifo, uint8_t *dest, uint32_t destlen,
+diff --git a/hw/core/numa.c b/hw/core/numa.c
+index f8ce332cfe..14283293b4 100644
+--- a/hw/core/numa.c
++++ b/hw/core/numa.c
+@@ -380,7 +380,7 @@ void parse_numa_hmat_lb(NumaState *numa_state, NumaHmatLBOptions *node,
+         }
+         lb_data.data = node->bandwidth;
+     } else {
+-        assert(0);
++        g_assert_not_reached();
      }
  
-     len = destlen;
--    buf = fifo8_peekpop_bufptr(fifo, len, 0, &n1, true);
-+    buf = fifo8_peekpop_bufptr(fifo, len, 0, &n1, do_pop);
-     if (dest) {
-         memcpy(dest, buf, n1);
-     }
-@@ -126,7 +126,7 @@ static uint32_t fifo8_peekpop_buf(Fifo8 *fifo, uint8_t *dest, uint32_t destlen,
-     len -= n1;
-     len = MIN(len, fifo8_num_used(fifo));
-     if (len) {
--        buf = fifo8_peekpop_bufptr(fifo, len, 0, &n2, true);
-+        buf = fifo8_peekpop_bufptr(fifo, len, do_pop ? 0 : n1, &n2, do_pop);
-         if (dest) {
-             memcpy(&dest[n1], buf, n2);
-         }
+     g_array_append_val(hmat_lb->list, lb_data);
 -- 
 2.45.2
 
