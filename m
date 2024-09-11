@@ -4,82 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54CDDEE499D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:44:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09806EE499D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:46:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMYZ-0000f5-C6; Wed, 11 Sep 2024 08:34:47 -0400
+	id 1soMjj-0003wi-RT; Wed, 11 Sep 2024 08:46:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1soMY7-000771-6c
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:34:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1soMji-0003qF-5c
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:46:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1soMY3-00015P-DK
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:34:17 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1soMjf-0002bY-PI
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:46:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726058054;
+ s=mimecast20190719; t=1726058774;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zGeZgIGKohb2btdPq5ZukYQwzEejnWvtto4cnM/cPhk=;
- b=baZkaaoB72HG02dmQhJgKLKtrDKYWEi+H88Hd1OZDxLgtUOD6yLjA7H+e3kVNGrbHP4FUG
- ehC/g91QJbGcQ5vXQRMDrjAaqrSVxgLmCC24qm5zrEnC96FK4VjCjyqXcw5CjGxFcOT+XW
- AMXdaiB4KSsnrnmCZi1dwFtfipv9318=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=M9OxMBb/zyCtLVWCtD7PkUAgTp3zyh//27cZ3fgxrz0=;
+ b=axOEKNg9jaF2Gl9fKoXAHXczWjJ4F6fFLpHKKbEzNcisEVbl8YVV9CSrsoymACJrSmezNz
+ FpdyNmmPANLdRqqdJ2hv9YBmqa1XdmqVQK44LG/8kWitGvNPSByTf0/5CDhE2pxIbC7biM
+ wmUypC3xw96xsYIrKao8u7pKkPPoeWU=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-568-_DtppuHhOOKE2PVoQ8bmGQ-1; Wed, 11 Sep 2024 08:34:13 -0400
-X-MC-Unique: _DtppuHhOOKE2PVoQ8bmGQ-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3730b54347cso743182f8f.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:34:13 -0700 (PDT)
+ us-mta-441-eToZs7MsOWaaK6LL6BNZ-A-1; Wed, 11 Sep 2024 08:46:13 -0400
+X-MC-Unique: eToZs7MsOWaaK6LL6BNZ-A-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7a9b6181a99so842760985a.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:46:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726058052; x=1726662852;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zGeZgIGKohb2btdPq5ZukYQwzEejnWvtto4cnM/cPhk=;
- b=gi5aJpaF6PywR8FYm/WMVZ1V1cR3vp+BP7Ah3Hg/zyH82Jr+EyWK/0ofEWXb/02g5s
- KiiVaAsO8RaaOUsVxpLEkk7fxZlfHnQEW4Nk4bLy3MPwzJ3SSzTnLumpE5kzJKse1SV9
- HrOWHuTEFUTpaYxCCTNtvgcxl8FB2busZ2tSuJUtQKk+kaYH2o+rb9PrGrPPFnI858ks
- y96PxjpPA4HQtGPJ1jTooJBphT2ZegilyL805hqsfZqHdEFSVJQXUasyWZyYVNtByixa
- +PgOr3Hk6tRIr+4F8CQSWdQbtbrmV6XT+DJE+xPHpd7klLQBFitRs9rXJBCtvFjsEGoT
- czfg==
-X-Gm-Message-State: AOJu0YwhxQBie/BOgCjjgKeTaCMO7BnByf7Kk4CpBupG4DfRalH8SH/P
- /30xuc28x8fp9N900eeJJFKT0AqTIVTViMnDcINg5T2VBTLKo6sU0nKyn2nTzCabgwVWK6b5GrL
- jiuZaDi4YmOpP2+AGhaWUykfs0umiSsPblvTvhPt5J4prarQ/4awez40/S5lOabtScfpDOpGj65
- Z6UtmbCt9RtmjA2gLI65MkITpy5I5F571zDgDUjyo=
-X-Received: by 2002:a5d:4528:0:b0:378:7de9:3716 with SMTP id
- ffacd0b85a97d-378b0796de0mr1566269f8f.8.1726058051905; 
- Wed, 11 Sep 2024 05:34:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG5El2h0ECUDnYNIOrPZx+M4cFwrid5q6KZ2OdgmX6YxVWkLoCgOpuUuG4i0GJXPcYgn2dcZg==
-X-Received: by 2002:a5d:4528:0:b0:378:7de9:3716 with SMTP id
- ffacd0b85a97d-378b0796de0mr1566255f8f.8.1726058051349; 
- Wed, 11 Sep 2024 05:34:11 -0700 (PDT)
-Received: from avogadro.local ([151.95.101.29])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42cb1e3a5fdsm127851555e9.48.2024.09.11.05.34.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 05:34:09 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 09/17] kvm/i386: refactor kvm_arch_init and split it into
- smaller functions
-Date: Wed, 11 Sep 2024 14:33:34 +0200
-Message-ID: <20240911123342.339482-10-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240911123342.339482-1-pbonzini@redhat.com>
-References: <20240911123342.339482-1-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1726058773; x=1726663573;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=M9OxMBb/zyCtLVWCtD7PkUAgTp3zyh//27cZ3fgxrz0=;
+ b=ImAj60lHJJFeOmgorhPmkqDKUu3fqYPt5u7XdZkMadPtHZT4eQDqlmT2aNLTtrnpcJ
+ WjihommsvGnx8RMc+pGs6h+V0Qi6uAJaDr1z0NO/pcBMBQIQYzpuFG1jEostvyCKQkSi
+ hq1ngL7SWZsglFO+WEXJgTx+5LrC1ZHRQZiKTkkkdSgRWUI4oT1q0B2Q28zceAWFtddR
+ Sut4tNkZNXVX2FWEYESitRIuBVNlmOPZErhLIDd8KvXUUGxsYDUj1oyi6HmaorK65orw
+ Ox2vE4xjaFx4MV8jOg5P34vvu1sW66yiV1mLci7vxg0ITPqDlj89Pk+J8OuODmmTQeMI
+ Nc3g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU87Fpb/KyvoL4X7auKExGArrzv4v0OQlkjuebvlpqB/qjHSgdwQA9Yfle1sK8+V2hcxj+M/amjJkD6@nongnu.org
+X-Gm-Message-State: AOJu0Yxdw8gjkle4EGBuEv2elFL+r4e2zEgQDGGX7s1xFywy1hOE+ENH
+ pnB3imQc52z/G7DcKoJGuchBSDlRTMSeotcwV36KIIw7iwMBqvKoK3xceP4ZLePwXxB5Ma3JPs2
+ dlwgRBT0VjY6NuztWBImHk+kAyl2+dwDTZOaNUZvpbS9LnBEYUgH3
+X-Received: by 2002:a05:620a:28d0:b0:7a9:aeb1:388b with SMTP id
+ af79cd13be357-7a9aeb13b0cmr1760214885a.40.1726058773153; 
+ Wed, 11 Sep 2024 05:46:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGz2FlaY1g7YXDwVb8E/xw9mMX882T3fLYzxDET3AijFQ1DVSUk773InTfS9kT0YZhAXAAOWA==
+X-Received: by 2002:a05:620a:28d0:b0:7a9:aeb1:388b with SMTP id
+ af79cd13be357-7a9aeb13b0cmr1760211185a.40.1726058772751; 
+ Wed, 11 Sep 2024 05:46:12 -0700 (PDT)
+Received: from [192.168.0.6] (ip-109-43-178-122.web.vodafone.de.
+ [109.43.178.122]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a9a7a27300sm418225685a.128.2024.09.11.05.46.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Sep 2024 05:46:12 -0700 (PDT)
+Message-ID: <973bb16d-7143-40f1-ad2a-b37c0cacd5e7@redhat.com>
+Date: Wed, 11 Sep 2024 14:46:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 01/14] s390x/s390-virtio-ccw: don't crash on weird RAM
+ sizes
+To: David Hildenbrand <david@redhat.com>,
+ Janosch Frank <frankja@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>
+References: <20240910175809.2135596-1-david@redhat.com>
+ <20240910175809.2135596-2-david@redhat.com>
+ <df04fd44-de71-4616-86fe-a9ae5fe9af08@linux.ibm.com>
+ <b3739492-6f80-4dba-bfec-466ca2e12513@redhat.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <b3739492-6f80-4dba-bfec-466ca2e12513@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -88,7 +141,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,427 +157,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ani Sinha <anisinha@redhat.com>
+On 11/09/2024 14.38, David Hildenbrand wrote:
+> On 11.09.24 13:28, Janosch Frank wrote:
+>> On 9/10/24 7:57 PM, David Hildenbrand wrote:
+>>> KVM is not happy when starting a VM with weird RAM sizes:
+>>>
+>>>     # qemu-system-s390x --enable-kvm --nographic -m 1234K
+>>>     qemu-system-s390x: kvm_set_user_memory_region: 
+>>> KVM_SET_USER_MEMORY_REGION
+>>>       failed, slot=0, start=0x0, size=0x244000: Invalid argument
+>>>     kvm_set_phys_mem: error registering slot: Invalid argument
+>>>     Aborted (core dumped)
+>>>
+>>> Let's handle that in a better way by rejecting such weird RAM sizes
+>>> right from the start:
+>>>
+>>
+>> Huh, I always assumed that ram is handled in multiples of 1MB in QEMU.
+> 
+> Me as well, I did not dig if that changed at some point ... or why such odd 
+> sizes would even be required :)
 
-kvm_arch_init() enables a lot of vm capabilities. Refactor them into separate
-smaller functions. Energy MSR related operations also moved to its own
-function. There should be no functional impact.
+I guess it's there for some old PC hardware ... Remember, 640K ought to be 
+enough for anybody.
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Link: https://lore.kernel.org/r/20240903124143.39345-2-anisinha@redhat.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/kvm/kvm.c | 337 ++++++++++++++++++++++++++----------------
- 1 file changed, 211 insertions(+), 126 deletions(-)
-
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 7c491378026..599faf0ac6e 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -3005,10 +3005,197 @@ int kvm_arch_get_default_type(MachineState *ms)
-     return 0;
- }
- 
-+static int kvm_vm_enable_exception_payload(KVMState *s)
-+{
-+    int ret = 0;
-+    has_exception_payload = kvm_check_extension(s, KVM_CAP_EXCEPTION_PAYLOAD);
-+    if (has_exception_payload) {
-+        ret = kvm_vm_enable_cap(s, KVM_CAP_EXCEPTION_PAYLOAD, 0, true);
-+        if (ret < 0) {
-+            error_report("kvm: Failed to enable exception payload cap: %s",
-+                         strerror(-ret));
-+        }
-+    }
-+
-+    return ret;
-+}
-+
-+static int kvm_vm_enable_triple_fault_event(KVMState *s)
-+{
-+    int ret = 0;
-+    has_triple_fault_event = \
-+        kvm_check_extension(s,
-+                            KVM_CAP_X86_TRIPLE_FAULT_EVENT);
-+    if (has_triple_fault_event) {
-+        ret = kvm_vm_enable_cap(s, KVM_CAP_X86_TRIPLE_FAULT_EVENT, 0, true);
-+        if (ret < 0) {
-+            error_report("kvm: Failed to enable triple fault event cap: %s",
-+                         strerror(-ret));
-+        }
-+    }
-+    return ret;
-+}
-+
-+static int kvm_vm_set_identity_map_addr(KVMState *s, uint64_t *identity_base)
-+{
-+    /*
-+     * On older Intel CPUs, KVM uses vm86 mode to emulate 16-bit code directly.
-+     * In order to use vm86 mode, an EPT identity map and a TSS  are needed.
-+     * Since these must be part of guest physical memory, we need to allocate
-+     * them, both by setting their start addresses in the kernel and by
-+     * creating a corresponding e820 entry. We need 4 pages before the BIOS,
-+     * so this value allows up to 16M BIOSes.
-+     */
-+    *identity_base = 0xfeffc000;
-+    return kvm_vm_ioctl(s, KVM_SET_IDENTITY_MAP_ADDR, identity_base);
-+}
-+
-+static int kvm_vm_set_nr_mmu_pages(KVMState *s)
-+{
-+    uint64_t shadow_mem;
-+    int ret = 0;
-+    shadow_mem = object_property_get_int(OBJECT(s),
-+                                         "kvm-shadow-mem",
-+                                         &error_abort);
-+    if (shadow_mem != -1) {
-+        shadow_mem /= 4096;
-+        ret = kvm_vm_ioctl(s, KVM_SET_NR_MMU_PAGES, shadow_mem);
-+    }
-+    return ret;
-+}
-+
-+static int kvm_vm_set_tss_addr(KVMState *s, uint64_t identity_base)
-+{
-+    /* Set TSS base one page after EPT identity map. */
-+    return kvm_vm_ioctl(s, KVM_SET_TSS_ADDR, identity_base);
-+}
-+
-+static int kvm_vm_enable_disable_exits(KVMState *s)
-+{
-+    int disable_exits = kvm_check_extension(s, KVM_CAP_X86_DISABLE_EXITS);
-+/* Work around for kernel header with a typo. TODO: fix header and drop. */
-+#if defined(KVM_X86_DISABLE_EXITS_HTL) && !defined(KVM_X86_DISABLE_EXITS_HLT)
-+#define KVM_X86_DISABLE_EXITS_HLT KVM_X86_DISABLE_EXITS_HTL
-+#endif
-+    if (disable_exits) {
-+        disable_exits &= (KVM_X86_DISABLE_EXITS_MWAIT |
-+                          KVM_X86_DISABLE_EXITS_HLT |
-+                          KVM_X86_DISABLE_EXITS_PAUSE |
-+                          KVM_X86_DISABLE_EXITS_CSTATE);
-+    }
-+
-+    return kvm_vm_enable_cap(s, KVM_CAP_X86_DISABLE_EXITS, 0,
-+                             disable_exits);
-+}
-+
-+static int kvm_vm_enable_bus_lock_exit(KVMState *s)
-+{
-+    int ret = 0;
-+    ret = kvm_check_extension(s, KVM_CAP_X86_BUS_LOCK_EXIT);
-+    if (!(ret & KVM_BUS_LOCK_DETECTION_EXIT)) {
-+        error_report("kvm: bus lock detection unsupported");
-+        return -ENOTSUP;
-+    }
-+    ret = kvm_vm_enable_cap(s, KVM_CAP_X86_BUS_LOCK_EXIT, 0,
-+                            KVM_BUS_LOCK_DETECTION_EXIT);
-+    if (ret < 0) {
-+        error_report("kvm: Failed to enable bus lock detection cap: %s",
-+                     strerror(-ret));
-+    }
-+
-+    return ret;
-+}
-+
-+static int kvm_vm_enable_notify_vmexit(KVMState *s)
-+{
-+    int ret = 0;
-+    if (!kvm_check_extension(s, KVM_CAP_X86_NOTIFY_VMEXIT)) {
-+        error_report("kvm: notify vmexit unsupported");
-+        return -ENOTSUP;
-+    }
-+
-+    if (s->notify_vmexit != NOTIFY_VMEXIT_OPTION_DISABLE) {
-+        uint64_t notify_window_flags =
-+            ((uint64_t)s->notify_window << 32) |
-+            KVM_X86_NOTIFY_VMEXIT_ENABLED |
-+            KVM_X86_NOTIFY_VMEXIT_USER;
-+        ret = kvm_vm_enable_cap(s, KVM_CAP_X86_NOTIFY_VMEXIT, 0,
-+                                notify_window_flags);
-+        if (ret < 0) {
-+            error_report("kvm: Failed to enable notify vmexit cap: %s",
-+                         strerror(-ret));
-+        }
-+    }
-+    return ret;
-+}
-+
-+static int kvm_vm_enable_userspace_msr(KVMState *s)
-+{
-+    int ret;
-+
-+    if (!kvm_vm_check_extension(s, KVM_CAP_X86_USER_SPACE_MSR)) {
-+        error_report("kvm: userspace MSR not supported");
-+        return -ENOTSUP;
-+    }
-+
-+    ret = kvm_vm_enable_cap(s, KVM_CAP_X86_USER_SPACE_MSR, 0,
-+                            KVM_MSR_EXIT_REASON_FILTER);
-+    if (ret < 0) {
-+        error_report("Could not enable user space MSRs: %s",
-+                     strerror(-ret));
-+        exit(1);
-+    }
-+
-+    if (!kvm_filter_msr(s, MSR_CORE_THREAD_COUNT,
-+                        kvm_rdmsr_core_thread_count, NULL)) {
-+        error_report("Could not install MSR_CORE_THREAD_COUNT handler!");
-+        exit(1);
-+    }
-+
-+    return 0;
-+}
-+
-+static void kvm_vm_enable_energy_msrs(KVMState *s)
-+{
-+    bool r;
-+    if (s->msr_energy.enable == true) {
-+        r = kvm_filter_msr(s, MSR_RAPL_POWER_UNIT,
-+                           kvm_rdmsr_rapl_power_unit, NULL);
-+        if (!r) {
-+            error_report("Could not install MSR_RAPL_POWER_UNIT \
-+                                handler");
-+            exit(1);
-+        }
-+
-+        r = kvm_filter_msr(s, MSR_PKG_POWER_LIMIT,
-+                           kvm_rdmsr_pkg_power_limit, NULL);
-+        if (!r) {
-+            error_report("Could not install MSR_PKG_POWER_LIMIT \
-+                                handler");
-+            exit(1);
-+        }
-+
-+        r = kvm_filter_msr(s, MSR_PKG_POWER_INFO,
-+                           kvm_rdmsr_pkg_power_info, NULL);
-+        if (!r) {
-+            error_report("Could not install MSR_PKG_POWER_INFO \
-+                                handler");
-+            exit(1);
-+        }
-+        r = kvm_filter_msr(s, MSR_PKG_ENERGY_STATUS,
-+                           kvm_rdmsr_pkg_energy_status, NULL);
-+        if (!r) {
-+            error_report("Could not install MSR_PKG_ENERGY_STATUS \
-+                                handler");
-+            exit(1);
-+        }
-+    }
-+    return;
-+}
-+
- int kvm_arch_init(MachineState *ms, KVMState *s)
- {
-     uint64_t identity_base = 0xfffbc000;
--    uint64_t shadow_mem;
-     int ret;
-     struct utsname utsname;
-     Error *local_err = NULL;
-@@ -3038,24 +3225,14 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
- 
-     hv_vpindex_settable = kvm_check_extension(s, KVM_CAP_HYPERV_VP_INDEX);
- 
--    has_exception_payload = kvm_check_extension(s, KVM_CAP_EXCEPTION_PAYLOAD);
--    if (has_exception_payload) {
--        ret = kvm_vm_enable_cap(s, KVM_CAP_EXCEPTION_PAYLOAD, 0, true);
--        if (ret < 0) {
--            error_report("kvm: Failed to enable exception payload cap: %s",
--                         strerror(-ret));
--            return ret;
--        }
-+    ret = kvm_vm_enable_exception_payload(s);
-+    if (ret < 0) {
-+        return ret;
-     }
- 
--    has_triple_fault_event = kvm_check_extension(s, KVM_CAP_X86_TRIPLE_FAULT_EVENT);
--    if (has_triple_fault_event) {
--        ret = kvm_vm_enable_cap(s, KVM_CAP_X86_TRIPLE_FAULT_EVENT, 0, true);
--        if (ret < 0) {
--            error_report("kvm: Failed to enable triple fault event cap: %s",
--                         strerror(-ret));
--            return ret;
--        }
-+    ret = kvm_vm_enable_triple_fault_event(s);
-+    if (ret < 0) {
-+        return ret;
-     }
- 
-     if (s->xen_version) {
-@@ -3086,22 +3263,12 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-     uname(&utsname);
-     lm_capable_kernel = strcmp(utsname.machine, "x86_64") == 0;
- 
--    /*
--     * On older Intel CPUs, KVM uses vm86 mode to emulate 16-bit code directly.
--     * In order to use vm86 mode, an EPT identity map and a TSS  are needed.
--     * Since these must be part of guest physical memory, we need to allocate
--     * them, both by setting their start addresses in the kernel and by
--     * creating a corresponding e820 entry. We need 4 pages before the BIOS,
--     * so this value allows up to 16M BIOSes.
--     */
--    identity_base = 0xfeffc000;
--    ret = kvm_vm_ioctl(s, KVM_SET_IDENTITY_MAP_ADDR, &identity_base);
-+    ret = kvm_vm_set_identity_map_addr(s, &identity_base);
-     if (ret < 0) {
-         return ret;
-     }
- 
--    /* Set TSS base one page after EPT identity map. */
--    ret = kvm_vm_ioctl(s, KVM_SET_TSS_ADDR, identity_base + 0x1000);
-+    ret = kvm_vm_set_tss_addr(s, identity_base + 0x1000);
-     if (ret < 0) {
-         return ret;
-     }
-@@ -3109,13 +3276,9 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-     /* Tell fw_cfg to notify the BIOS to reserve the range. */
-     e820_add_entry(identity_base, 0x4000, E820_RESERVED);
- 
--    shadow_mem = object_property_get_int(OBJECT(s), "kvm-shadow-mem", &error_abort);
--    if (shadow_mem != -1) {
--        shadow_mem /= 4096;
--        ret = kvm_vm_ioctl(s, KVM_SET_NR_MMU_PAGES, shadow_mem);
--        if (ret < 0) {
--            return ret;
--        }
-+    ret = kvm_vm_set_nr_mmu_pages(s);
-+    if (ret < 0) {
-+        return ret;
-     }
- 
-     if (kvm_check_extension(s, KVM_CAP_X86_SMM) &&
-@@ -3126,20 +3289,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-     }
- 
-     if (enable_cpu_pm) {
--        int disable_exits = kvm_check_extension(s, KVM_CAP_X86_DISABLE_EXITS);
--/* Work around for kernel header with a typo. TODO: fix header and drop. */
--#if defined(KVM_X86_DISABLE_EXITS_HTL) && !defined(KVM_X86_DISABLE_EXITS_HLT)
--#define KVM_X86_DISABLE_EXITS_HLT KVM_X86_DISABLE_EXITS_HTL
--#endif
--        if (disable_exits) {
--            disable_exits &= (KVM_X86_DISABLE_EXITS_MWAIT |
--                              KVM_X86_DISABLE_EXITS_HLT |
--                              KVM_X86_DISABLE_EXITS_PAUSE |
--                              KVM_X86_DISABLE_EXITS_CSTATE);
--        }
--
--        ret = kvm_vm_enable_cap(s, KVM_CAP_X86_DISABLE_EXITS, 0,
--                                disable_exits);
-+        ret = kvm_vm_enable_disable_exits(s);
-         if (ret < 0) {
-             error_report("kvm: guest stopping CPU not supported: %s",
-                          strerror(-ret));
-@@ -3150,16 +3300,8 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         X86MachineState *x86ms = X86_MACHINE(ms);
- 
-         if (x86ms->bus_lock_ratelimit > 0) {
--            ret = kvm_check_extension(s, KVM_CAP_X86_BUS_LOCK_EXIT);
--            if (!(ret & KVM_BUS_LOCK_DETECTION_EXIT)) {
--                error_report("kvm: bus lock detection unsupported");
--                return -ENOTSUP;
--            }
--            ret = kvm_vm_enable_cap(s, KVM_CAP_X86_BUS_LOCK_EXIT, 0,
--                                    KVM_BUS_LOCK_DETECTION_EXIT);
-+            ret = kvm_vm_enable_bus_lock_exit(s);
-             if (ret < 0) {
--                error_report("kvm: Failed to enable bus lock detection cap: %s",
--                             strerror(-ret));
-                 return ret;
-             }
-             ratelimit_init(&bus_lock_ratelimit_ctrl);
-@@ -3168,80 +3310,23 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         }
-     }
- 
--    if (s->notify_vmexit != NOTIFY_VMEXIT_OPTION_DISABLE &&
--        kvm_check_extension(s, KVM_CAP_X86_NOTIFY_VMEXIT)) {
--            uint64_t notify_window_flags =
--                ((uint64_t)s->notify_window << 32) |
--                KVM_X86_NOTIFY_VMEXIT_ENABLED |
--                KVM_X86_NOTIFY_VMEXIT_USER;
--            ret = kvm_vm_enable_cap(s, KVM_CAP_X86_NOTIFY_VMEXIT, 0,
--                                    notify_window_flags);
--            if (ret < 0) {
--                error_report("kvm: Failed to enable notify vmexit cap: %s",
--                             strerror(-ret));
--                return ret;
--            }
-+    ret = kvm_vm_enable_notify_vmexit(s);
-+    if (ret < 0) {
-+        return ret;
-     }
-+
-     if (kvm_vm_check_extension(s, KVM_CAP_X86_USER_SPACE_MSR)) {
--        bool r;
--
--        ret = kvm_vm_enable_cap(s, KVM_CAP_X86_USER_SPACE_MSR, 0,
--                                KVM_MSR_EXIT_REASON_FILTER);
--        if (ret) {
--            error_report("Could not enable user space MSRs: %s",
--                         strerror(-ret));
--            exit(1);
--        }
--
--        r = kvm_filter_msr(s, MSR_CORE_THREAD_COUNT,
--                           kvm_rdmsr_core_thread_count, NULL);
--        if (!r) {
--            error_report("Could not install MSR_CORE_THREAD_COUNT handler: %s",
--                         strerror(-ret));
--            exit(1);
-+        ret = kvm_vm_enable_userspace_msr(s);
-+        if (ret < 0) {
-+            return ret;
-         }
- 
-         if (s->msr_energy.enable == true) {
--            r = kvm_filter_msr(s, MSR_RAPL_POWER_UNIT,
--                               kvm_rdmsr_rapl_power_unit, NULL);
--            if (!r) {
--                error_report("Could not install MSR_RAPL_POWER_UNIT \
--                                handler: %s",
--                             strerror(-ret));
-+            kvm_vm_enable_energy_msrs(s);
-+            if (kvm_msr_energy_thread_init(s, ms)) {
-+                error_report("kvm : error RAPL feature requirement not met");
-                 exit(1);
-             }
--
--            r = kvm_filter_msr(s, MSR_PKG_POWER_LIMIT,
--                               kvm_rdmsr_pkg_power_limit, NULL);
--            if (!r) {
--                error_report("Could not install MSR_PKG_POWER_LIMIT \
--                                handler: %s",
--                             strerror(-ret));
--                exit(1);
--            }
--
--            r = kvm_filter_msr(s, MSR_PKG_POWER_INFO,
--                               kvm_rdmsr_pkg_power_info, NULL);
--            if (!r) {
--                error_report("Could not install MSR_PKG_POWER_INFO \
--                                handler: %s",
--                             strerror(-ret));
--                exit(1);
--            }
--            r = kvm_filter_msr(s, MSR_PKG_ENERGY_STATUS,
--                               kvm_rdmsr_pkg_energy_status, NULL);
--            if (!r) {
--                error_report("Could not install MSR_PKG_ENERGY_STATUS \
--                                handler: %s",
--                             strerror(-ret));
--                exit(1);
--            }
--            r = kvm_msr_energy_thread_init(s, ms);
--            if (r) {
--                error_report("kvm : error RAPL feature requirement not meet");
--                exit(1);
--            }
--
-         }
-     }
- 
--- 
-2.46.0
+  Thomas
 
 
