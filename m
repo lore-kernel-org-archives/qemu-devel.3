@@ -4,111 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 786C8EE57C0
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 16:35:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B672CEE57C7
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 16:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soQIm-0003FW-M5; Wed, 11 Sep 2024 12:34:44 -0400
+	id 1soQYa-0002U8-Is; Wed, 11 Sep 2024 12:51:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1soQIl-0003F3-JU
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 12:34:43 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1soQYX-0002Ft-1q
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 12:51:01 -0400
+Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1soQIj-00021S-QG
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 12:34:43 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 0AF4F219C6;
- Wed, 11 Sep 2024 16:34:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1726072480; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=baI3j+yii4Q4jrF2Hp7eJpLnCPfHXMRUDqATcjO+O5A=;
- b=03gs9T+tBBAGQzNJ18DzsgcMA0ASSbVVlufL0X/1AubGBhGXTLfybwLFkrvmWxc16UXTJV
- xhGSei1F6b4yqKJWSRlffMSW2dMRNxhhuylLpITPfukxn//NmHIgc1CEJZLkyYQrnuulZI
- o0RrwshmtFzMysu495KXTqwmT9KzoPY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1726072480;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=baI3j+yii4Q4jrF2Hp7eJpLnCPfHXMRUDqATcjO+O5A=;
- b=teRpR1TdYPsWmP1NqAfHpS3Qs/5Gf597p7yx3a6NoSyEv6SFOhzCI3kyulzuDGskc67D0M
- fdTc6bXVjGVbRiAw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1726072480; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=baI3j+yii4Q4jrF2Hp7eJpLnCPfHXMRUDqATcjO+O5A=;
- b=03gs9T+tBBAGQzNJ18DzsgcMA0ASSbVVlufL0X/1AubGBhGXTLfybwLFkrvmWxc16UXTJV
- xhGSei1F6b4yqKJWSRlffMSW2dMRNxhhuylLpITPfukxn//NmHIgc1CEJZLkyYQrnuulZI
- o0RrwshmtFzMysu495KXTqwmT9KzoPY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1726072480;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=baI3j+yii4Q4jrF2Hp7eJpLnCPfHXMRUDqATcjO+O5A=;
- b=teRpR1TdYPsWmP1NqAfHpS3Qs/5Gf597p7yx3a6NoSyEv6SFOhzCI3kyulzuDGskc67D0M
- fdTc6bXVjGVbRiAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C82C213A7C;
- Wed, 11 Sep 2024 16:34:39 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id +Dw7L5/G4WZHBQAAD6G6ig
- (envelope-from <cfontana@suse.de>); Wed, 11 Sep 2024 16:34:39 +0000
-Message-ID: <13967315-4b50-4e66-9e46-02e44d0d6243@suse.de>
-Date: Wed, 11 Sep 2024 18:34:39 +0200
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1soQYV-0003fk-D8
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 12:51:00 -0400
+Received: by mail-oa1-x33.google.com with SMTP id
+ 586e51a60fabf-277c742307fso761038fac.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 09:50:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726073458; x=1726678258; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+zeN6h7OSkzIznAtGXkS2TM05Vzv6xYEK4cYNsvDB5Y=;
+ b=aSuj+BuU9IXLkS1fISfjs6vBo67MaHDFyv2kTvaGry/gL/ML4xgQKUXXvbjWLDgm3j
+ huoCk8RY37Gz7AKisSAe2hPCBr4rtXeLZuVVXNMbdAf6p5Nj98v7HMOlo7L806nJ7DSa
+ F7+NMGqF89SQBb2Dm3TdZwXqhbqdMnmB+U4Sn9ZdNg9RWV6glagu794uU9FT8DTA0oRd
+ yTpQO9l+vSKR0Dy2yDiYTrmTn9as1wMEP6N9GgT3Tzmeq/hapUcCl/EXsJcnVYLTnH57
+ zm2zLmUbUTOnNlf+XvYyFIM2c0AJIro/qg2tCrXpDiDTdS1yKQxiZFw61TiQuj49FjK4
+ wxdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726073458; x=1726678258;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+zeN6h7OSkzIznAtGXkS2TM05Vzv6xYEK4cYNsvDB5Y=;
+ b=WR2vAofLfQ5Zv9xZ8sT2P60XbQm5J6igtIfpAOx9pmkQHw4446+UmVcq2339K62UOy
+ wS/yD7jls7KO3+x0ATmz5V6LcnQAs4HNx+GhY7EMUF0VgeXD9N6zDHWB3bvWiebhLlOl
+ 7QNlBM1YK2jkUS3W9Gtr7pnwHzkW7ut6gYSZI5EI+wwYx+94fC0FsOoiP3OMpfbK3dp6
+ 3toaLbGmX3eJRTWy8c2Qo0zP4sSQtTJw3x13lJItpcU0yfscmK0DEq+s/N5YC9dkSx3K
+ BEZQ5he+Z31uoi/B2mkuHevH+ZZnqhc6pXFepzmqstcWv6LGl2kV+l5W3LwvdnCGhzQc
+ RtXA==
+X-Gm-Message-State: AOJu0YwYLgsb1gzkPD+KDgAhWpXHsclCfa8k76yCEjgjvIJ/DdeNrUBt
+ kOH+p5XdOcsxDnJntS8Lho6sDDCGJ3t3ZGe2NtbFbpaswuNJcXHmVFijUiUXqiO0WnQDc8MBhAB
+ 1
+X-Google-Smtp-Source: AGHT+IHuRXHhtD77WFfmeAFubyLtFkBWZJiGbfZsyo4rs84lAxbagniW6JV/l62Eq+sNyVxProCHuA==
+X-Received: by 2002:a05:6870:288e:b0:278:234e:6e3f with SMTP id
+ 586e51a60fabf-27c1b53e12emr2798404fac.25.1726073457524; 
+ Wed, 11 Sep 2024 09:50:57 -0700 (PDT)
+Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-71908fe4e7esm3186947b3a.80.2024.09.11.09.50.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Sep 2024 09:50:57 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: zhiwei_liu@linux.alibaba.com, tangtiancheng.ttc@alibaba-inc.com,
+ philmd@linaro.org
+Subject: [PATCH v2 09/18] tcg/optimize: Optimize bitsel_vec
+Date: Wed, 11 Sep 2024 09:50:38 -0700
+Message-ID: <20240911165047.1035764-10-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240911165047.1035764-1-richard.henderson@linaro.org>
+References: <20240911165047.1035764-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Remove unnecessary code in the interface
- accel_system_init_ops_interfaces
-From: Claudio Fontana <cfontana@suse.de>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- "Andrew.Yuan" <andrew.yuan@jaguarmicro.com>, philmd@linaro.org,
- alistair.francis@wdc.com, pbonzini@redhat.com, qemu-devel@nongnu.org
-References: <20240909031736.1881-1-andrew.yuan@jaguarmicro.com>
- <e93d6ed4-8fe2-434b-9d84-997bae44847f@ventanamicro.com>
- <0cbe47a3-5572-4f74-b2ba-69abd8d3b448@suse.de>
-Content-Language: en-US
-In-Reply-To: <0cbe47a3-5572-4f74-b2ba-69abd8d3b448@suse.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.997]; MIME_GOOD(-0.10)[text/plain];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, gnu.org:url,
- suse.de:email, suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=cfontana@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::33;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x33.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,65 +95,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/9/24 12:07, Claudio Fontana wrote:
-> On 9/9/24 11:54, Daniel Henrique Barboza wrote:
->>
->>
->> On 9/9/24 12:17 AM, Andrew.Yuan wrote:
->>> The code 'ops = ACCEL_OPS_CLASS(module_object_class_by_name(ops_name));' is unnecessary;
->>>
->>> And, the following code :
->>> 1.has the same functionality;
->>> 2.includes error checking;
->>>
->>> Signed-off-by: Andrew.Yuan <andrew.yuan@jaguarmicro.com>
->>> ---
->>>   accel/accel-system.c | 2 +-
->>>   1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/accel/accel-system.c b/accel/accel-system.c
->>> index f6c947dd82..5d502c8fd8 100644
->>> --- a/accel/accel-system.c
->>> +++ b/accel/accel-system.c
->>> @@ -73,7 +73,7 @@ void accel_system_init_ops_interfaces(AccelClass *ac)
->>>       g_assert(ac_name != NULL);
->>>   
->>>       ops_name = g_strdup_printf("%s" ACCEL_OPS_SUFFIX, ac_name);
->>> -    ops = ACCEL_OPS_CLASS(module_object_class_by_name(ops_name));
->>> +
->>
->> The code you're changing was added by 5141e9a23f ("accel: abort if we fail to
->> load the accelerator plugin") and I think this repetition is intended. If I have
->> to guess (first time looking at this code), ACCEL_OPS_CLASS() is creating the class
->> type QOM functions that the the second module_object_class_by_name() relies on to
->> catch the module load error the commit is trying to address.
->>
->> I'm CCing Claudio to get a better idea of the intention here. At the very least we
->> should add a code comment explaining the reasoning behind initing 'ops' two times
->> in a row and so on.
->>
->>
->> Thanks,
->>
->> Daniel
-> 
-> Hi Daniel, just to signal that I've seen this message and will get to it when I am back to work later this week.
-> 
-> Ciao,
-> 
-> Claudio
-> 
+Fold matching true/false operands.
+Fold true/false operands with 0/-1 to simpler logicals.
 
-Hi all, I think it was my mistake. I already detected it during the PULL request, but my message was missed at the time I think:
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/optimize.c | 58 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 58 insertions(+)
 
-https://lists.gnu.org/archive/html/qemu-devel/2022-11/msg01056.html
-
-So
-
-Reviewed-by: Claudio Fontana <cfontana@suse.de>
-
-Thanks,
-
-CLaudio
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index f11f576fd4..e9ef16b3c6 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2737,6 +2737,61 @@ static bool fold_xor(OptContext *ctx, TCGOp *op)
+     return fold_masks(ctx, op);
+ }
+ 
++static bool fold_bitsel_vec(OptContext *ctx, TCGOp *op)
++{
++    /* If true and false values are the same, eliminate the cmp. */
++    if (args_are_copies(op->args[2], op->args[3])) {
++        return tcg_opt_gen_mov(ctx, op, op->args[0], op->args[2]);
++    }
++
++    if (arg_is_const(op->args[2]) && arg_is_const(op->args[3])) {
++        uint64_t tv = arg_info(op->args[2])->val;
++        uint64_t fv = arg_info(op->args[3])->val;
++
++        if (tv == -1 && fv == 0) {
++            return tcg_opt_gen_mov(ctx, op, op->args[0], op->args[1]);
++        }
++        if (tv == 0 && fv == -1) {
++            if (TCG_TARGET_HAS_not_vec) {
++                op->opc = INDEX_op_not_vec;
++                return fold_not(ctx, op);
++            } else {
++                op->opc = INDEX_op_xor_vec;
++                op->args[2] = arg_new_constant(ctx, -1);
++                return fold_xor(ctx, op);
++            }
++        }
++    }
++    if (arg_is_const(op->args[2])) {
++        uint64_t tv = arg_info(op->args[2])->val;
++        if (tv == -1) {
++            op->opc = INDEX_op_or_vec;
++            op->args[2] = op->args[3];
++            return fold_or(ctx, op);
++        }
++        if (tv == 0 && TCG_TARGET_HAS_andc_vec) {
++            op->opc = INDEX_op_andc_vec;
++            op->args[2] = op->args[1];
++            op->args[1] = op->args[3];
++            return fold_andc(ctx, op);
++        }
++    }
++    if (arg_is_const(op->args[3])) {
++        uint64_t fv = arg_info(op->args[3])->val;
++        if (fv == 0) {
++            op->opc = INDEX_op_and_vec;
++            return fold_and(ctx, op);
++        }
++        if (fv == -1 && TCG_TARGET_HAS_orc_vec) {
++            op->opc = INDEX_op_orc_vec;
++            op->args[2] = op->args[1];
++            op->args[1] = op->args[3];
++            return fold_orc(ctx, op);
++        }
++    }
++    return false;
++}
++
+ /* Propagate constants and copies, fold constant expressions. */
+ void tcg_optimize(TCGContext *s)
+ {
+@@ -2964,6 +3019,9 @@ void tcg_optimize(TCGContext *s)
+         case INDEX_op_cmpsel_vec:
+             done = fold_cmpsel_vec(&ctx, op);
+             break;
++        case INDEX_op_bitsel_vec:
++            done = fold_bitsel_vec(&ctx, op);
++            break;
+         CASE_OP_32_64(sextract):
+             done = fold_sextract(&ctx, op);
+             break;
+-- 
+2.43.0
 
 
