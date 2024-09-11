@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2E68EE4998
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:16:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB503EE499D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:16:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMFo-0006SO-Ir; Wed, 11 Sep 2024 08:15:29 -0400
+	id 1soMGD-0007wb-3c; Wed, 11 Sep 2024 08:15:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMFQ-0005oP-LL
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:15:02 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMFl-0006QE-Gq
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:15:22 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMFL-0007BC-Dr
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:14:58 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5c3c30e663fso2326277a12.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:14:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMFf-0007Ng-RI
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:15:20 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a8d13b83511so573518566b.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:15:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726056893; x=1726661693; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726056914; x=1726661714; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SHZtT0Mi6mfq4oAIqM+FpgWwIHkjDwma5fbBIgU2sjA=;
- b=WnV1x3cMoPwzGKEkNLT93C3ljGQ4/j/4kP+pGg+6kZnkWfSa/tKSI16Oyrisb/lkMT
- r2P6xQxK1uwcsBy/ZVqfyck7USsuP8JDTvKaaJdLqGJ6bFRwM2j2eHO0crhjZXSGoPyJ
- txnxHy5DRyX+UNPe//y3UJrFz+cDLUxEnFNSBil8osJFeytarY5he3ssMIG94QnlO3/G
- ywJlv5Fc5aBe8GuR+UGjgTcUMLmhKNXi4vRuENWBUYQUq+tjNBlIR3C7vKba+Odo5T/6
- fdiMRY8m+2jHs00cjWzTk/xR0E4mxrQHLjJFi6dOqmihpD2z9dlLNvQhQOlqzx88ARnW
- T0nA==
+ bh=eN7NySazNLSdpdsZ4Pza+unVS9nZj8RBDaL7uHZqkL8=;
+ b=opI/xnGhKf/lHLjeWZa6OmfdHwldw3GG9pdnw6E+FsU4BdcrqZdVdXjf0xpGrAMkLk
+ OILNy+t31uV7JF0wjsVTdj6aBd08rEntyz//biVbDHqmOi0IINyweVtQE7D0iXzgUb5o
+ 6zwom/Vg26aC/yqWdCI3hR5vRn5NwkovtOeqcHySXfYGJXps6UzRGuMlxyivpU5F+qPL
+ S/vu2pQtHFyo/HTIqoXLbUYACrSR8SVUnE9i8GCYfnfxYwbLaO6FjGgt1urZcOkNs4ow
+ WdJilLGnOI+dpGc9Yik/yicvnQ7cjTwGEoH5ZbJzO+zkKBLD4AhffgW348gScvEB6k5D
+ amDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726056893; x=1726661693;
+ d=1e100.net; s=20230601; t=1726056914; x=1726661714;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SHZtT0Mi6mfq4oAIqM+FpgWwIHkjDwma5fbBIgU2sjA=;
- b=Ks6kwYJFFayIdWR9/fEef1t0KL7IQmlMGXhrbGNVbKMaiHPi2ynIcENKQdj0OTcppC
- JoNvY/G1GkKwQemXn35cOkQSuSsKO3sGWEbL3bBpJPYrnmwLxgWSzudktrjsKh6rMZU8
- Wszdsc9GTQz0fj+xYhkmJOQ8O/ROKZK8i6m14lfupuVBNl6qE3+nQzaeCWsFfBhcMFmW
- 8O4MZqp5ObDk5FE77mCXqAVuOdfmEewoqG/AfYsNt/h39kbMO8e4x+TAjOEckk3Txn+P
- GvtnzHj5YWyB4iNIhL1T4bTB4pQjXZsXCR7eBXgWbt1SlXztSbGWwedDW2ZOwPIHwtbg
- 9kRQ==
-X-Gm-Message-State: AOJu0YwrZpjvkpbp5vbrnxLOg3R2TiwZJBSXA5Eb2QOQob8urUOxHCxC
- ordNt+GjIC2XSTTZ8QXQiAJWpmBfeq3gisEeDBOl00ihbR88LBRbdRu9Zs1GKIUJcTs5OET5v6h
- Q
-X-Google-Smtp-Source: AGHT+IG435OQch8dkX2kqi3xCqE7+ZfCaTp0s7Gk4gRiC1quouzVQO+nY/c61h6A3M6iuVhWU4WV8w==
-X-Received: by 2002:a05:6402:1d56:b0:5c0:aa23:e1c1 with SMTP id
- 4fb4d7f45d1cf-5c40bc24f9emr2553700a12.14.1726056892972; 
- Wed, 11 Sep 2024 05:14:52 -0700 (PDT)
+ bh=eN7NySazNLSdpdsZ4Pza+unVS9nZj8RBDaL7uHZqkL8=;
+ b=I3R5fwoC0IzpX4BSAxBHF7FApidcVKhmOXjG6YjJ7+b50BCHOvrXU8D9GLpG+JDigP
+ /OleeegkQ7yuRTZcEUQLXzuEsubdliUbeDXl4plxncOSeM2RPGF6p89DaLEYuHJ8h3GV
+ S00p1+ke9ejOjZZ+PAne5JY5e56wVL4qWktC+CNnlpIWPKBcNJtYpWnOFXAucZAYyJ8m
+ sC0awYa/sr8KeNLo0K7m8QdvysFX/di6ASiUudQnIOKDrwTjlwvft2sWlY7/SKF0f++l
+ dd+h25J0EonAsfrdKRqkMe4nnPc2VgSpZh4car1X1vxhL2tI8nGIOWhn2lxMNyxt+Z/6
+ C5pQ==
+X-Gm-Message-State: AOJu0YxsqRcK1GpF07wdc78gqKMocRIoHrtuGxI8w0770GDA4bwIysGX
+ azRrFiBuub7Qjt9rIzKDzG3o77z5NIE7Ua2ZIQZIIfegzQxk11pNR58k2WQzjFro+7K3l2ucJDF
+ L
+X-Google-Smtp-Source: AGHT+IFMjgJ6wRh+19m++A6U0U81D8ae7s48/+AZAjJOdDEL6F/hnofIIOJJ+/Od1UbfA37XJO+pjQ==
+X-Received: by 2002:a17:907:9483:b0:a8d:4db5:529 with SMTP id
+ a640c23a62f3a-a8ffadc8cacmr408266866b.48.1726056912980; 
+ Wed, 11 Sep 2024 05:15:12 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.196.107])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd8cef8sm5394449a12.89.2024.09.11.05.14.51
+ a640c23a62f3a-a8d258339a2sm615760566b.19.2024.09.11.05.15.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Sep 2024 05:14:52 -0700 (PDT)
+ Wed, 11 Sep 2024 05:15:12 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Yoshinori Sato <ysato@users.sourceforge.jp>
-Subject: [PULL 04/56] hw/sh4: Remove the deprecated SHIX machine
-Date: Wed, 11 Sep 2024 14:13:29 +0200
-Message-ID: <20240911121422.52585-5-philmd@linaro.org>
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>
+Subject: [PULL 07/56] tests/tcg: Remove CRIS libc test files
+Date: Wed, 11 Sep 2024 14:13:32 +0200
+Message-ID: <20240911121422.52585-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240911121422.52585-1-philmd@linaro.org>
 References: <20240911121422.52585-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,210 +96,1777 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SHIX machine is deprecated since v9.0 (commit
-322b038c94 "target/sh4: Deprecate the shix machine").
-Time to remove it.
+We never compiled / ran these tests.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
-Message-ID: <20240903153959.18392-2-philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Message-ID: <20240904143603.52934-2-philmd@linaro.org>
 ---
- MAINTAINERS                             |  7 +-
- docs/about/deprecated.rst               |  6 --
- docs/about/removed-features.rst         |  5 ++
- configs/devices/sh4-softmmu/default.mak |  1 -
- hw/sh4/shix.c                           | 86 -------------------------
- hw/sh4/Kconfig                          |  7 --
- hw/sh4/meson.build                      |  1 -
- 7 files changed, 6 insertions(+), 107 deletions(-)
- delete mode 100644 hw/sh4/shix.c
+ tests/tcg/cris/libc/crisutils.h               |  76 ----------
+ tests/tcg/cris/libc/sys.h                     |  18 ---
+ tests/tcg/cris/libc/check_abs.c               |  40 -----
+ tests/tcg/cris/libc/check_addc.c              |  58 -------
+ tests/tcg/cris/libc/check_addcm.c             |  85 -----------
+ tests/tcg/cris/libc/check_addo.c              | 125 ---------------
+ tests/tcg/cris/libc/check_addoq.c             |  44 ------
+ tests/tcg/cris/libc/check_bound.c             | 142 ------------------
+ tests/tcg/cris/libc/check_ftag.c              |  37 -----
+ .../cris/libc/check_gcctorture_pr28634-1.c    |  15 --
+ .../tcg/cris/libc/check_gcctorture_pr28634.c  |  15 --
+ .../tcg/cris/libc/check_glibc_kernelversion.c | 116 --------------
+ tests/tcg/cris/libc/check_hello.c             |   7 -
+ tests/tcg/cris/libc/check_int64.c             |  47 ------
+ tests/tcg/cris/libc/check_lz.c                |  49 ------
+ tests/tcg/cris/libc/check_mapbrk.c            |  39 -----
+ tests/tcg/cris/libc/check_mmap1.c             |  48 ------
+ tests/tcg/cris/libc/check_mmap2.c             |  48 ------
+ tests/tcg/cris/libc/check_mmap3.c             |  33 ----
+ tests/tcg/cris/libc/check_moveq.c             |  51 -------
+ tests/tcg/cris/libc/check_openpf1.c           |  38 -----
+ tests/tcg/cris/libc/check_openpf2.c           |  16 --
+ tests/tcg/cris/libc/check_openpf3.c           |  49 ------
+ tests/tcg/cris/libc/check_openpf5.c           |  56 -------
+ tests/tcg/cris/libc/check_settls1.c           |  45 ------
+ tests/tcg/cris/libc/check_sigalrm.c           |  26 ----
+ tests/tcg/cris/libc/check_stat1.c             |  16 --
+ tests/tcg/cris/libc/check_stat2.c             |  20 ---
+ tests/tcg/cris/libc/check_stat3.c             |  25 ---
+ tests/tcg/cris/libc/check_stat4.c             |  27 ----
+ tests/tcg/cris/libc/check_swap.c              |  76 ----------
+ tests/tcg/cris/libc/check_time2.c             |  18 ---
+ 32 files changed, 1505 deletions(-)
+ delete mode 100644 tests/tcg/cris/libc/crisutils.h
+ delete mode 100644 tests/tcg/cris/libc/sys.h
+ delete mode 100644 tests/tcg/cris/libc/check_abs.c
+ delete mode 100644 tests/tcg/cris/libc/check_addc.c
+ delete mode 100644 tests/tcg/cris/libc/check_addcm.c
+ delete mode 100644 tests/tcg/cris/libc/check_addo.c
+ delete mode 100644 tests/tcg/cris/libc/check_addoq.c
+ delete mode 100644 tests/tcg/cris/libc/check_bound.c
+ delete mode 100644 tests/tcg/cris/libc/check_ftag.c
+ delete mode 100644 tests/tcg/cris/libc/check_gcctorture_pr28634-1.c
+ delete mode 100644 tests/tcg/cris/libc/check_gcctorture_pr28634.c
+ delete mode 100644 tests/tcg/cris/libc/check_glibc_kernelversion.c
+ delete mode 100644 tests/tcg/cris/libc/check_hello.c
+ delete mode 100644 tests/tcg/cris/libc/check_int64.c
+ delete mode 100644 tests/tcg/cris/libc/check_lz.c
+ delete mode 100644 tests/tcg/cris/libc/check_mapbrk.c
+ delete mode 100644 tests/tcg/cris/libc/check_mmap1.c
+ delete mode 100644 tests/tcg/cris/libc/check_mmap2.c
+ delete mode 100644 tests/tcg/cris/libc/check_mmap3.c
+ delete mode 100644 tests/tcg/cris/libc/check_moveq.c
+ delete mode 100644 tests/tcg/cris/libc/check_openpf1.c
+ delete mode 100644 tests/tcg/cris/libc/check_openpf2.c
+ delete mode 100644 tests/tcg/cris/libc/check_openpf3.c
+ delete mode 100644 tests/tcg/cris/libc/check_openpf5.c
+ delete mode 100644 tests/tcg/cris/libc/check_settls1.c
+ delete mode 100644 tests/tcg/cris/libc/check_sigalrm.c
+ delete mode 100644 tests/tcg/cris/libc/check_stat1.c
+ delete mode 100644 tests/tcg/cris/libc/check_stat2.c
+ delete mode 100644 tests/tcg/cris/libc/check_stat3.c
+ delete mode 100644 tests/tcg/cris/libc/check_stat4.c
+ delete mode 100644 tests/tcg/cris/libc/check_swap.c
+ delete mode 100644 tests/tcg/cris/libc/check_time2.c
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0c1bc69828..ff5b3d1afd 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1682,16 +1682,11 @@ F: hw/timer/sh_timer.c
- F: include/hw/sh4/sh_intc.h
- F: include/hw/timer/tmu012.h
- 
--Shix
-+TC58128 NAND EEPROM
- R: Yoshinori Sato <ysato@users.sourceforge.jp>
- R: Magnus Damm <magnus.damm@gmail.com>
- S: Odd Fixes
- F: hw/block/tc58128.c
--F: hw/char/sh_serial.c
--F: hw/sh4/shix.c
--F: hw/intc/sh_intc.c
--F: hw/timer/sh_timer.c
--F: include/hw/sh4/sh_intc.h
- 
- SPARC Machines
- --------------
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 88f0f03786..2020542a6b 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -232,12 +232,6 @@ These old machine types are quite neglected nowadays and thus might have
- various pitfalls with regards to live migration. Use a newer machine type
- instead.
- 
--``shix`` (since 9.0)
--''''''''''''''''''''
--
--The machine is no longer in existence and has been long unmaintained
--in QEMU. This also holds for the TC51828 16MiB flash that it uses.
--
- ``pseries-2.1`` up to ``pseries-2.12`` (since 9.0)
- ''''''''''''''''''''''''''''''''''''''''''''''''''
- 
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index fc7b28e637..9eaf864004 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -978,6 +978,11 @@ Nios II ``10m50-ghrd`` and ``nios2-generic-nommu`` machines (removed in 9.1)
- 
- The Nios II architecture was orphan.
- 
-+``shix`` (removed in 9.2)
-+'''''''''''''''''''''''''
-+
-+The machine was unmaintained.
-+
- linux-user mode CPUs
- --------------------
- 
-diff --git a/configs/devices/sh4-softmmu/default.mak b/configs/devices/sh4-softmmu/default.mak
-index c06a427053..aa821e4b60 100644
---- a/configs/devices/sh4-softmmu/default.mak
-+++ b/configs/devices/sh4-softmmu/default.mak
-@@ -7,4 +7,3 @@
- 
- # Boards are selected by default, uncomment to keep out of the build.
- # CONFIG_R2D=n
--# CONFIG_SHIX=n
-diff --git a/hw/sh4/shix.c b/hw/sh4/shix.c
+diff --git a/tests/tcg/cris/libc/crisutils.h b/tests/tcg/cris/libc/crisutils.h
 deleted file mode 100644
-index eb3150b5bc..0000000000
---- a/hw/sh4/shix.c
+index bbbe6c5540..0000000000
+--- a/tests/tcg/cris/libc/crisutils.h
 +++ /dev/null
-@@ -1,86 +0,0 @@
--/*
-- * SHIX 2.0 board description
-- *
-- * Copyright (c) 2005 Samuel Tardieu
-- *
-- * Permission is hereby granted, free of charge, to any person obtaining a copy
-- * of this software and associated documentation files (the "Software"), to deal
-- * in the Software without restriction, including without limitation the rights
-- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-- * copies of the Software, and to permit persons to whom the Software is
-- * furnished to do so, subject to the following conditions:
-- *
-- * The above copyright notice and this permission notice shall be included in
-- * all copies or substantial portions of the Software.
-- *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-- * THE SOFTWARE.
-- */
--/*
-- * Shix 2.0 board by Alexis Polti, described at
-- * https://web.archive.org/web/20070917001736/perso.enst.fr/~polti/realisations/shix20
-- *
-- * More information in target/sh4/README.sh4
-- */
--#include "qemu/osdep.h"
--#include "qapi/error.h"
--#include "cpu.h"
--#include "hw/sh4/sh.h"
--#include "sysemu/qtest.h"
--#include "hw/boards.h"
--#include "hw/loader.h"
--#include "qemu/error-report.h"
+@@ -1,76 +0,0 @@
+-#ifndef CRISUTILS_H
+-#define CRISUTILS_H 1
 -
--#define BIOS_FILENAME "shix_bios.bin"
--#define BIOS_ADDRESS 0xA0000000
+-static char *tst_cc_loc = NULL;
 -
--static void shix_init(MachineState *machine)
+-#define cris_tst_cc_init() \
+-do { tst_cc_loc = "test_cc failed at " CURRENT_LOCATION; } while(0)
+-
+-/* We need a real symbol to signal error.  */
+-void _err(void) {
+-	if (!tst_cc_loc)
+-		tst_cc_loc = "tst_cc_failed\n";
+-	_fail(tst_cc_loc);
+-}
+-
+-static always_inline void cris_tst_cc_n1(void)
 -{
--    int ret;
--    SuperHCPU *cpu;
--    struct SH7750State *s;
--    MemoryRegion *sysmem = get_system_memory();
--    MemoryRegion *rom = g_new(MemoryRegion, 1);
--    MemoryRegion *sdram = g_new(MemoryRegion, 2);
--    const char *bios_name = machine->firmware ?: BIOS_FILENAME;
+-	asm volatile ("bpl _err\n"
+-		      "nop\n");
+-}
+-static always_inline void cris_tst_cc_n0(void)
+-{
+-	asm volatile ("bmi _err\n"
+-		      "nop\n");
+-}
 -
--    cpu = SUPERH_CPU(cpu_create(machine->cpu_type));
+-static always_inline void cris_tst_cc_z1(void)
+-{
+-	asm volatile ("bne _err\n"
+-		      "nop\n");
+-}
+-static always_inline void cris_tst_cc_z0(void)
+-{
+-	asm volatile ("beq _err\n"
+-		      "nop\n");
+-}
+-static always_inline void cris_tst_cc_v1(void)
+-{
+-	asm volatile ("bvc _err\n"
+-		      "nop\n");
+-}
+-static always_inline void cris_tst_cc_v0(void)
+-{
+-	asm volatile ("bvs _err\n"
+-		      "nop\n");
+-}
 -
--    /* Allocate memory space */
--    memory_region_init_rom(rom, NULL, "shix.rom", 0x4000, &error_fatal);
--    memory_region_add_subregion(sysmem, 0x00000000, rom);
--    memory_region_init_ram(&sdram[0], NULL, "shix.sdram1", 0x01000000,
--                           &error_fatal);
--    memory_region_add_subregion(sysmem, 0x08000000, &sdram[0]);
--    memory_region_init_ram(&sdram[1], NULL, "shix.sdram2", 0x01000000,
--                           &error_fatal);
--    memory_region_add_subregion(sysmem, 0x0c000000, &sdram[1]);
+-static always_inline void cris_tst_cc_c1(void)
+-{
+-	asm volatile ("bcc _err\n"
+-		      "nop\n");
+-}
+-static always_inline void cris_tst_cc_c0(void)
+-{
+-	asm volatile ("bcs _err\n"
+-		      "nop\n");
+-}
 -
--    /* Load BIOS in 0 (and access it through P2, 0xA0000000) */
--    ret = load_image_targphys(bios_name, 0, 0x4000);
--    if (ret < 0 && !qtest_enabled()) {
--        error_report("Could not load SHIX bios '%s'", bios_name);
--        exit(1);
+-static always_inline void cris_tst_mov_cc(int n, int z)
+-{
+-	if (n) cris_tst_cc_n1(); else cris_tst_cc_n0();
+-	if (z) cris_tst_cc_z1(); else cris_tst_cc_z0();
+-	asm volatile ("" : : "g" (_err));
+-}
+-
+-static always_inline void cris_tst_cc(const int n, const int z,
+-			       const int v, const int c)
+-{
+-	if (n) cris_tst_cc_n1(); else cris_tst_cc_n0();
+-	if (z) cris_tst_cc_z1(); else cris_tst_cc_z0();
+-	if (v) cris_tst_cc_v1(); else cris_tst_cc_v0();
+-	if (c) cris_tst_cc_c1(); else cris_tst_cc_c0();
+-	asm volatile ("" : : "g" (_err));
+-}
+-
+-#endif
+diff --git a/tests/tcg/cris/libc/sys.h b/tests/tcg/cris/libc/sys.h
+deleted file mode 100644
+index 3dd47bb673..0000000000
+--- a/tests/tcg/cris/libc/sys.h
++++ /dev/null
+@@ -1,18 +0,0 @@
+-#include <unistd.h>
+-
+-#define STRINGIFY(x) #x
+-#define TOSTRING(x) STRINGIFY(x)
+-
+-#define always_inline inline __attribute__((always_inline))
+-
+-#define CURRENT_LOCATION __FILE__ ":" TOSTRING(__LINE__)
+-
+-#define err()                         \
+-{                                     \
+-  _fail("at " CURRENT_LOCATION " ");  \
+-}
+-
+-#define mb() asm volatile ("" : : : "memory")
+-
+-void pass(void);
+-void _fail(char *reason);
+diff --git a/tests/tcg/cris/libc/check_abs.c b/tests/tcg/cris/libc/check_abs.c
+deleted file mode 100644
+index 08b67b6ef0..0000000000
+--- a/tests/tcg/cris/libc/check_abs.c
++++ /dev/null
+@@ -1,40 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-static always_inline int cris_abs(int n)
+-{
+-	int r;
+-	asm ("abs\t%1, %0\n" : "=r" (r) : "r" (n));
+-	return r;
+-}
+-
+-static always_inline void
+-verify_abs(int val, int res,
+-	   const int n, const int z, const int v, const int c)
+-{
+-	int r;
+-
+-	cris_tst_cc_init();
+-	r = cris_abs(val);
+-	cris_tst_cc(n, z, v, c);
+-	if (r != res)
+-		err();
+-}
+-
+-int main(void)
+-{
+-	verify_abs(-1, 1, 0, 0, 0, 0);
+-	verify_abs(0x80000000, 0x80000000, 1, 0, 0, 0);
+-	verify_abs(0x7fffffff, 0x7fffffff, 0, 0, 0, 0);
+-	verify_abs(42, 42, 0, 0, 0, 0);
+-	verify_abs(1, 1, 0, 0, 0, 0);
+-	verify_abs(0xffff, 0xffff, 0, 0, 0, 0);
+-	verify_abs(0xffff, 0xffff, 0, 0, 0, 0);
+-	verify_abs(-31, 0x1f, 0, 0, 0, 0);
+-	verify_abs(0, 0, 0, 1, 0, 0);
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_addc.c b/tests/tcg/cris/libc/check_addc.c
+deleted file mode 100644
+index fc3fb1faa8..0000000000
+--- a/tests/tcg/cris/libc/check_addc.c
++++ /dev/null
+@@ -1,58 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-static always_inline int cris_addc(int a, const int b)
+-{
+-	asm ("addc\t%1, %0\n" : "+r" (a) : "r" (b));
+-	return a;
+-}
+-
+-#define verify_addc(a, b, res, n, z, v, c)  \
+-{                                           \
+-	int r;                              \
+-	r = cris_addc((a), (b));            \
+-	cris_tst_cc((n), (z), (v), (c));    \
+-	if (r != (res))                     \
+-		err();                      \
+-}
+-
+-int main(void)
+-{
+-	cris_tst_cc_init();
+-	asm volatile ("clearf cz");
+-	verify_addc(0, 0, 0, 0, 0, 0, 0);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf z");
+-	verify_addc(0, 0, 0, 0, 1, 0, 0);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf cz");
+-	verify_addc(0, 0, 1, 0, 0, 0, 0);
+-	cris_tst_cc_init();
+-	asm volatile ("clearf c");
+-	verify_addc(-1, 2, 1, 0, 0, 0, 1);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("clearf nzv");
+-	asm volatile ("setf c");
+-	verify_addc(-1, 2, 2, 0, 0, 0, 1);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf c");
+-	verify_addc(0xffff, 0xffff, 0x1ffff, 0, 0, 0, 0);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("clearf nzvc");
+-	verify_addc(-1, -1, 0xfffffffe, 1, 0, 0, 1);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf c");
+-	verify_addc(0x78134452, 0x5432f789, 0xcc463bdc, 1, 0, 1, 0);
+-
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_addcm.c b/tests/tcg/cris/libc/check_addcm.c
+deleted file mode 100644
+index b355ba164f..0000000000
+--- a/tests/tcg/cris/libc/check_addcm.c
++++ /dev/null
+@@ -1,85 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-/* need to avoid acr as source here.  */
+-static always_inline int cris_addc_m(int a, const int *b)
+-{
+-	asm volatile ("addc [%1], %0\n" : "+r" (a) : "r" (b));
+-	return a;
+-}
+-
+-/* 'b' is a crisv32 constrain to avoid postinc with $acr.  */
+-static always_inline int cris_addc_pi_m(int a, int **b)
+-{
+-	asm volatile ("addc [%1+], %0\n" : "+r" (a), "+b" (*b));
+-	return a;
+-}
+-
+-#define verify_addc_m(a, b, res, n, z, v, c)  \
+-{                                           \
+-	int r;                              \
+-	r = cris_addc_m((a), (b));            \
+-	cris_tst_cc((n), (z), (v), (c));    \
+-	if (r != (res))                     \
+-		err();                      \
+-}
+-
+-#define verify_addc_pi_m(a, b, res, n, z, v, c)  \
+-{                                           \
+-	int r;                              \
+-	r = cris_addc_pi_m((a), (b));            \
+-	cris_tst_cc((n), (z), (v), (c));    \
+-	if (r != (res))                     \
+-		err();                      \
+-}
+-
+-int x[] = { 0, 0, 2, -1, 0xffff, -1, 0x5432f789};
+-
+-int main(void)
+-{
+-	int *p = (void *)&x[0];
+-#if 1
+-	cris_tst_cc_init();
+-	asm volatile ("clearf cz");
+-	verify_addc_m(0, p, 0, 0, 0, 0, 0);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf z");
+-	verify_addc_m(0, p, 0, 0, 1, 0, 0);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf c");
+-	verify_addc_m(0, p, 1, 0, 0, 0, 0);
+-
+-	cris_tst_cc_init();
+-	asm volatile ("clearf c");
+-	verify_addc_pi_m(0, &p, 0, 0, 1, 0, 0);
+-
+-	p = &x[1];
+-	cris_tst_cc_init();
+-	asm volatile ("setf c");
+-	verify_addc_pi_m(0, &p, 1, 0, 0, 0, 0);
+-
+-	if (p != &x[2])
+-		err();
+-
+-	cris_tst_cc_init();
+-	asm volatile ("clearf c");
+-	verify_addc_pi_m(-1, &p, 1, 0, 0, 0, 1);
+-
+-	if (p != &x[3])
+-		err();
+-#endif
+-	p = &x[3];
+-	/* TODO: investigate why this one fails.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf c");
+-	verify_addc_m(2, p, 2, 0, 0, 0, 1);
+-	p += 4;
+-
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_addo.c b/tests/tcg/cris/libc/check_addo.c
+deleted file mode 100644
+index 4235e5fc65..0000000000
+--- a/tests/tcg/cris/libc/check_addo.c
++++ /dev/null
+@@ -1,125 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-/* this would be better to do in asm, it's an orgy in GCC inline asm now.  */
+-
+-#define cris_addo_b(o, v) \
+-	asm volatile ("addo.b\t[%0], %1, $acr\n" : : "r" (o), "r" (v) : "acr");
+-#define cris_addo_w(o, v) \
+-	asm volatile ("addo.w\t[%0], %1, $acr\n" : : "r" (o), "r" (v) : "acr");
+-#define cris_addo_d(o, v) \
+-	asm volatile ("addo.d\t[%0], %1, $acr\n" : : "r" (o), "r" (v) : "acr");
+-#define cris_addo_pi_b(o, v) \
+-	asm volatile ("addo.b\t[%0+], %1, $acr\n" \
+-                         : "+b" (o): "r" (v) : "acr");
+-#define cris_addo_pi_w(o, v) \
+-	asm volatile ("addo.w\t[%0+], %1, $acr\n" \
+-                         : "+b" (o): "r" (v) : "acr");
+-#define cris_addo_pi_d(o, v) \
+-	asm volatile ("addo.d\t[%0+], %1, $acr\n" \
+-                         : "+b" (o): "r" (v) : "acr");
+-
+-struct {
+-	uint32_t v1;
+-	uint16_t v2;
+-	uint32_t v3;
+-	uint8_t v4;
+-	uint8_t v5;
+-	uint16_t v6;
+-	uint32_t v7;
+-} y = {
+-	32769,
+-	-1,
+-	5,
+-	3, -4,
+-	2,
+-	-76789887
+-};
+-
+-static int x[3] = {0x55aa77ff, 0xccff2244, 0x88ccee19};
+-
+-int main(void)
+-{
+-	int *r;
+-	unsigned char *t, *p;
+-
+-	/* Note, this test-case will trig an unaligned access, partly
+-	   to x[0] and to [x1].  */
+-	t = (unsigned char *)x;
+-	t -= 32768;
+-	p = (unsigned char *) &y.v1;
+-	mb(); /* don't reorder anything beyond here.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addo_pi_d(p, t);
+-	cris_tst_cc(1, 1, 1, 1);
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (r));
+-	if (*r != 0x4455aa77)
+-		err();
+-
+-
+-	t += 32770;
+-	mb(); /* don't reorder anything beyond here.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addo_pi_w(p, t);
+-	cris_tst_cc(1, 1, 1, 1);
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (r));
+-	if (*r != 0x4455aa77)
+-		err();
+-
+-	mb(); /* don't reorder anything beyond here.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addo_d(p, r);
+-	cris_tst_cc(1, 1, 1, 1);
+-	p += 4;
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (r));
+-	if (*r != 0xee19ccff)
+-		err();
+-
+-	mb(); /* don't reorder anything beyond here.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addo_pi_b(p, t);
+-	cris_tst_cc(0, 0, 0, 0);
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (r));
+-	if (*(uint16_t*)r != 0xff22)
+-		err();
+-
+-	mb(); /* don't reorder anything beyond here.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addo_b(p, r);
+-	cris_tst_cc(1, 1, 1, 1);
+-	p += 1;
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (r));
+-	if (*r != 0x4455aa77)
+-		err();
+-
+-	mb(); /* don't reorder anything beyond here.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addo_w(p, r);
+-	cris_tst_cc(1, 1, 1, 1);
+-	p += 2;
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (r));
+-	if (*r != 0xff224455)
+-		err();
+-
+-	mb(); /* don't reorder anything beyond here.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addo_pi_d(p, t);
+-	cris_tst_cc(0, 0, 0, 0);
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (r));
+-	r = (void*)(((char *)r) + 76789885);
+-	if (*r != 0x55aa77ff)
+-		err();
+-
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_addoq.c b/tests/tcg/cris/libc/check_addoq.c
+deleted file mode 100644
+index ed509e27e0..0000000000
+--- a/tests/tcg/cris/libc/check_addoq.c
++++ /dev/null
+@@ -1,44 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-/* this would be better to do in asm, it's an orgy in GCC inline asm now.  */
+-
+-/* ACR will be clobbered.  */
+-#define cris_addoq(o, v) \
+-	asm volatile ("addoq\t%1, %0, $acr\n" : : "r" (v), "i" (o) : "acr");
+-
+-
+-int main(void)
+-{
+-	int x[3] = {0x55aa77ff, 0xccff2244, 0x88ccee19};
+-	int *p, *t = x + 1;
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addoq(0, t);
+-	cris_tst_cc(1, 1, 1, 1);
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (p));
+-	if (*p != 0xccff2244)
+-		err();
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_addoq(4, t);
+-	cris_tst_cc(0, 0, 0, 0);
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (p));
+-	if (*p != 0x88ccee19)
+-		err();
+-
+-	cris_tst_cc_init();
+-	asm volatile ("clearf\tzvnc\n");
+-	cris_addoq(-8, t + 1);
+-	cris_tst_cc(0, 0, 0, 0);
+-	asm volatile ("move.d\t$acr, %0\n" : "=r" (p));
+-	if (*p != 0x55aa77ff)
+-		err();
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_bound.c b/tests/tcg/cris/libc/check_bound.c
+deleted file mode 100644
+index d956ab9ade..0000000000
+--- a/tests/tcg/cris/libc/check_bound.c
++++ /dev/null
+@@ -1,142 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-static always_inline int cris_bound_b(int v, int b)
+-{
+-	int r = v;
+-	asm ("bound.b\t%1, %0\n" : "+r" (r) : "ri" (b));
+-	return r;
+-}
+-
+-static always_inline int cris_bound_w(int v, int b)
+-{
+-	int r = v;
+-	asm ("bound.w\t%1, %0\n" : "+r" (r) : "ri" (b));
+-	return r;
+-}
+-
+-static always_inline int cris_bound_d(int v, int b)
+-{
+-	int r = v;
+-	asm ("bound.d\t%1, %0\n" : "+r" (r) : "ri" (b));
+-	return r;
+-}
+-
+-int main(void)
+-{
+-	int r;
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_d(-1, 2);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 2)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_d(2, 0xffffffff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 2)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_d(0xffff, 0xffff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0xffff)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_d(-1, 0xffffffff);
+-	cris_tst_cc(1, 0, 0, 0);
+-	if (r != 0xffffffff)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_d(0x78134452, 0x5432f789);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0x5432f789)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_w(-1, 2);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 2)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_w(-1, 0xffff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0xffff)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_w(2, 0xffff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 2)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_w(0xfedaffff, 0xffff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0xffff)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_w(0x78134452, 0xf789);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0xf789)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_b(-1, 2);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 2)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_b(2, 0xff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 2)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_b(-1, 0xff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0xff)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_b(0xff, 0xff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0xff)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_b(0xfeda49ff, 0xff);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0xff)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_b(0x78134452, 0x89);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0x89)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_w(0x78134452, 0);
+-	cris_tst_cc(0, 1, 0, 0);
+-	if (r != 0)
+-		err();
+-
+-	cris_tst_cc_init();
+-	r = cris_bound_b(0xffff, -1);
+-	cris_tst_cc(0, 0, 0, 0);
+-	if (r != 0xff)
+-		err();
+-
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_ftag.c b/tests/tcg/cris/libc/check_ftag.c
+deleted file mode 100644
+index aaa5c97115..0000000000
+--- a/tests/tcg/cris/libc/check_ftag.c
++++ /dev/null
+@@ -1,37 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-static always_inline void cris_ftag_i(unsigned int x)
+-{
+-	register unsigned int v asm("$r10") = x;
+-	asm ("ftagi\t[%0]\n" : : "r" (v) );
+-}
+-static always_inline void cris_ftag_d(unsigned int x)
+-{
+-	register unsigned int v asm("$r10") = x;
+-	asm ("ftagd\t[%0]\n" : : "r" (v) );
+-}
+-static always_inline void cris_fidx_i(unsigned int x)
+-{
+-	register unsigned int v asm("$r10") = x;
+-	asm ("fidxi\t[%0]\n" : : "r" (v) );
+-}
+-static always_inline void cris_fidx_d(unsigned int x)
+-{
+-	register unsigned int v asm("$r10") = x;
+-	asm ("fidxd\t[%0]\n" : : "r" (v) );
+-}
+-
+-
+-int main(void)
+-{
+-	cris_ftag_i(0);
+-	cris_ftag_d(0);
+-	cris_fidx_i(0);
+-	cris_fidx_d(0);
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_gcctorture_pr28634-1.c b/tests/tcg/cris/libc/check_gcctorture_pr28634-1.c
+deleted file mode 100644
+index 45ecd159b3..0000000000
+--- a/tests/tcg/cris/libc/check_gcctorture_pr28634-1.c
++++ /dev/null
+@@ -1,15 +0,0 @@
+-/* PR rtl-optimization/28634.  On targets with delayed branches,
+-   dbr_schedule could do the next iteration's addition in the
+-   branch delay slot, then subtract the value again if the branch
+-   wasn't taken.  This can lead to rounding errors.  */
+-int x = -1;
+-int y = 1;
+-int
+-main (void)
+-{
+-  while (y > 0)
+-    y += x;
+-  if (y != x + 1)
+-    abort ();
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_gcctorture_pr28634.c b/tests/tcg/cris/libc/check_gcctorture_pr28634.c
+deleted file mode 100644
+index a0c525497d..0000000000
+--- a/tests/tcg/cris/libc/check_gcctorture_pr28634.c
++++ /dev/null
+@@ -1,15 +0,0 @@
+-/* PR rtl-optimization/28634.  On targets with delayed branches,
+-   dbr_schedule could do the next iteration's addition in the
+-   branch delay slot, then subtract the value again if the branch
+-   wasn't taken.  This can lead to rounding errors.  */
+-double x = -0x1.0p53;
+-double y = 1;
+-int
+-main (void)
+-{
+-  while (y > 0)
+-    y += x;
+-  if (y != x + 1)
+-    abort ();
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_glibc_kernelversion.c b/tests/tcg/cris/libc/check_glibc_kernelversion.c
+deleted file mode 100644
+index 7aada89911..0000000000
+--- a/tests/tcg/cris/libc/check_glibc_kernelversion.c
++++ /dev/null
+@@ -1,116 +0,0 @@
+-/*
+- * Check the lz insn.
+- */
+-
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-
+-#define __LINUX_KERNEL_VERSION 131584
+-
+-#define DL_SYSDEP_OSCHECK(FATAL) \
+-  do {                                                                        \
+-    /* Test whether the kernel is new enough.  This test is only              \
+-       performed if the library is not compiled to run on all                 \
+-       kernels.  */                                                           \
+-    if (__LINUX_KERNEL_VERSION > 0)                                           \
+-      {                                                                       \
+-        char bufmem[64];                                                      \
+-        char *buf = bufmem;                                                   \
+-        unsigned int version;                                                 \
+-        int parts;                                                            \
+-        char *cp;                                                             \
+-        struct utsname uts;                                                   \
+-                                                                              \
+-        /* Try the uname syscall */                                           \
+-        if (__uname (&uts))                                                   \
+-          {                                                                   \
+-            /* This was not successful.  Now try reading the /proc            \
+-               filesystem.  */                                                \
+-            ssize_t reslen;                                                   \
+-            int fd = __open ("/proc/sys/kernel/osrelease", O_RDONLY);         \
+-            if (fd == -1                                                      \
+-                || (reslen = __read (fd, bufmem, sizeof (bufmem))) <= 0)      \
+-              /* This also didn't work.  We give up since we cannot           \
+-                 make sure the library can actually work.  */                 \
+-              FATAL ("FATAL: cannot determine library version\n");            \
+-            __close (fd);                                                     \
+-            buf[MIN (reslen, (ssize_t) sizeof (bufmem) - 1)] = '\0';          \
+-          }                                                                   \
+-        else                                                                  \
+-          buf = uts.release;                                                  \
+-                                                                              \
+-        /* Now convert it into a number.  The string consists of at most      \
+-           three parts.  */                                                   \
+-        version = 0;                                                          \
+-        parts = 0;                                                            \
+-        cp = buf;                                                             \
+-        while ((*cp >= '0') && (*cp <= '9'))                                  \
+-          {                                                                   \
+-            unsigned int here = *cp++ - '0';                                  \
+-                                                                              \
+-            while ((*cp >= '0') && (*cp <= '9'))                              \
+-              {                                                               \
+-                here *= 10;                                                   \
+-                here += *cp++ - '0';                                          \
+-              }                                                               \
+-                                                                              \
+-            ++parts;                                                          \
+-            version <<= 8;                                                    \
+-            version |= here;                                                  \
+-                                                                              \
+-            if (*cp++ != '.')                                                 \
+-              /* Another part following?  */                                  \
+-              break;                                                          \
+-          }                                                                   \
+-                                                                              \
+-        if (parts < 3)                                                        \
+-          version <<= 8 * (3 - parts);                                        \
+-                                                                              \
+-        /* Now we can test with the required version.  */                     \
+-        if (version < __LINUX_KERNEL_VERSION)                                 \
+-          /* Not sufficient.  */                                               \
+-          FATAL ("FATAL: kernel too old\n");                                  \
+-                                                                              \
+-        _dl_osversion = version;                                              \
+-      }                                                                       \
+-  } while (0)
+-
+-int main(void)
+-{
+-        char bufmem[64] = "2.6.22";
+-        char *buf = bufmem;
+-        unsigned int version;
+-        int parts;
+-        char *cp;
+-
+-        version = 0;
+-        parts = 0;
+-        cp = buf;
+-        while ((*cp >= '0') && (*cp <= '9'))
+-          {
+-            unsigned int here = *cp++ - '0';
+-
+-            while ((*cp >= '0') && (*cp <= '9'))
+-              {
+-                here *= 10;
+-                here += *cp++ - '0';
+-              }
+-
+-            ++parts;
+-            version <<= 8;
+-            version |= here;
+-
+-            if (*cp++ != '.')
+-              /* Another part following?  */
+-              break;
+-          }
+-
+-        if (parts < 3)
+-          version <<= 8 * (3 - parts);
+-        if (version < __LINUX_KERNEL_VERSION)
+-                err();
+-        pass();
+-        exit(0);
+-}
+diff --git a/tests/tcg/cris/libc/check_hello.c b/tests/tcg/cris/libc/check_hello.c
+deleted file mode 100644
+index fb403ba996..0000000000
+--- a/tests/tcg/cris/libc/check_hello.c
++++ /dev/null
+@@ -1,7 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-int main ()
+-{
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_int64.c b/tests/tcg/cris/libc/check_int64.c
+deleted file mode 100644
+index 69caec1bb2..0000000000
+--- a/tests/tcg/cris/libc/check_int64.c
++++ /dev/null
+@@ -1,47 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-
+-static always_inline int64_t add64(const int64_t a, const int64_t b)
+-{
+-	return a + b;
+-}
+-
+-static always_inline int64_t sub64(const int64_t a, const int64_t b)
+-{
+-	return a - b;
+-}
+-
+-int main(void)
+-{
+-	int64_t a = 1;
+-	int64_t b = 2;
+-
+-	/* FIXME: add some tests.  */
+-	a = add64(a, b);
+-	if (a != 3)
+-		err();
+-
+-	a = sub64(a, b);
+-	if (a != 1)
+-		err();
+-
+-	a = add64(a, -4);
+-	if (a != -3)
+-		err();
+-
+-	a = add64(a, 3);
+-	if (a != 0)
+-		err();
+-
+-	a = 0;
+-	a = sub64(a, 1);
+-	if (a != -1)
+-		err();
+-
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_lz.c b/tests/tcg/cris/libc/check_lz.c
+deleted file mode 100644
+index bf051a6b55..0000000000
+--- a/tests/tcg/cris/libc/check_lz.c
++++ /dev/null
+@@ -1,49 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-
+-static always_inline int cris_lz(int x)
+-{
+-	int r;
+-	asm ("lz\t%1, %0\n" : "=r" (r) : "r" (x));
+-	return r;
+-}
+-
+-void check_lz(void)
+-{
+-	int i;
+-
+-	if (cris_lz(0) != 32)
+-		err();
+-	if (cris_lz(1) != 31)
+-		err();
+-	if (cris_lz(2) != 30)
+-		err();
+-	if (cris_lz(4) != 29)
+-		err();
+-	if (cris_lz(8) != 28)
+-		err();
+-
+-	/* try all positions with a single bit.  */
+-	for (i = 1; i < 32; i++) {
+-		if (cris_lz(1 << (i-1)) != (32 - i))
+-			err();
+-	}
+-
+-	/* try all positions with all bits.  */
+-	for (i = 1; i < 32; i++) {
+-		/* split up this computation to clarify it.  */
+-		uint32_t val;
+-		val = (unsigned int)-1 >> (32 - i);
+-		if (cris_lz(val) != (32 - i))
+-			err();
+-	}
+-}
+-
+-int main(void)
+-{
+-	check_lz();
+-	pass();
+-	exit(0);
+-}
+diff --git a/tests/tcg/cris/libc/check_mapbrk.c b/tests/tcg/cris/libc/check_mapbrk.c
+deleted file mode 100644
+index 1aff7622bc..0000000000
+--- a/tests/tcg/cris/libc/check_mapbrk.c
++++ /dev/null
+@@ -1,39 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-
+-/* Basic sanity check that syscalls to implement malloc (brk, mmap2,
+-   munmap) are trivially functional.  */
+-
+-int main ()
+-{
+-  void *p1, *p2, *p3, *p4, *p5, *p6;
+-
+-  if ((p1 = malloc (8100)) == NULL
+-      || (p2 = malloc (16300)) == NULL
+-      || (p3 = malloc (4000)) == NULL
+-      || (p4 = malloc (500)) == NULL
+-      || (p5 = malloc (1023*1024)) == NULL
+-      || (p6 = malloc (8191*1024)) == NULL)
+-  {
+-    printf ("fail\n");
+-    exit (1);
+-  }
+-
+-  free (p1);
+-  free (p2);
+-  free (p3);
+-  free (p4);
+-  free (p5);
+-  free (p6);
+-
+-  p1 = malloc (64000);
+-  if (p1 == NULL)
+-  {
+-    printf ("fail\n");
+-    exit (1);
+-  }
+-  free (p1);
+-
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_mmap1.c b/tests/tcg/cris/libc/check_mmap1.c
+deleted file mode 100644
+index b803f0c431..0000000000
+--- a/tests/tcg/cris/libc/check_mmap1.c
++++ /dev/null
+@@ -1,48 +0,0 @@
+-/*
+-#notarget: cris*-*-elf
+-*/
+-
+-#define _GNU_SOURCE
+-#include <string.h>
+-#include <stdlib.h>
+-#include <stdio.h>
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <fcntl.h>
+-#include <unistd.h>
+-#include <sys/mman.h>
+-
+-int main (int argc, char *argv[])
+-{
+-  int fd = open (argv[0], O_RDONLY);
+-  struct stat sb;
+-  int size;
+-  void *a;
+-  const char *str = "a string you'll only find in the program";
+-
+-  if (fd == -1)
+-    {
+-      perror ("open");
+-      abort ();
 -    }
 -
--    /* Register peripherals */
--    s = sh7750_init(cpu, sysmem);
--    /* XXXXX Check success */
--    tc58128_init(s, "shix_linux_nand.bin", NULL);
--}
+-  if (fstat (fd, &sb) < 0)
+-    {
+-      perror ("fstat");
+-      abort ();
+-    }
 -
--static void shix_machine_init(MachineClass *mc)
+-  size = sb.st_size;
+-
+-  /* We want to test mmapping a size that isn't exactly a page.  */
+-  if ((size & 8191) == 0)
+-    size--;
+-
+-  a = mmap (NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
+-
+-  if (memmem (a, size, str, strlen (str) + 1) == NULL)
+-    abort ();
+-
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_mmap2.c b/tests/tcg/cris/libc/check_mmap2.c
+deleted file mode 100644
+index 35139a0ed9..0000000000
+--- a/tests/tcg/cris/libc/check_mmap2.c
++++ /dev/null
+@@ -1,48 +0,0 @@
+-/*
+-#notarget: cris*-*-elf
+-*/
+-
+-#define _GNU_SOURCE
+-#include <string.h>
+-#include <stdlib.h>
+-#include <stdio.h>
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <fcntl.h>
+-#include <unistd.h>
+-#include <sys/mman.h>
+-
+-int main (int argc, char *argv[])
 -{
--    mc->desc = "shix card";
--    mc->init = shix_init;
--    mc->is_default = true;
--    mc->default_cpu_type = TYPE_SH7750R_CPU;
--    mc->deprecation_reason = "old and unmaintained";
+-  int fd = open (argv[0], O_RDONLY);
+-  struct stat sb;
+-  int size;
+-  void *a;
+-  const char *str = "a string you'll only find in the program";
+-
+-  if (fd == -1)
+-    {
+-      perror ("open");
+-      abort ();
+-    }
+-
+-  if (fstat (fd, &sb) < 0)
+-    {
+-      perror ("fstat");
+-      abort ();
+-    }
+-
+-  size = sb.st_size;
+-
+-  /* We want to test mmapping a size that isn't exactly a page.  */
+-  if ((size & 8191) == 0)
+-    size--;
+-
+-  a = mmap (NULL, size, PROT_READ, MAP_SHARED, fd, 0);
+-
+-  if (memmem (a, size, str, strlen (str) + 1) == NULL)
+-    abort ();
+-
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_mmap3.c b/tests/tcg/cris/libc/check_mmap3.c
+deleted file mode 100644
+index cb890ef120..0000000000
+--- a/tests/tcg/cris/libc/check_mmap3.c
++++ /dev/null
+@@ -1,33 +0,0 @@
+-/*
+-#notarget: cris*-*-elf
+-*/
+-
+-#define _GNU_SOURCE
+-#include <string.h>
+-#include <stdlib.h>
+-#include <stdio.h>
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <unistd.h>
+-#include <sys/mman.h>
+-
+-int main (int argc, char *argv[])
+-{
+-  volatile unsigned char *a;
+-
+-  /* Check that we can map a non-multiple of a page and still get a full page.  */
+-  a = mmap (NULL, 0x4c, PROT_READ | PROT_WRITE | PROT_EXEC,
+-            MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+-  if (a == NULL || a == (unsigned char *) -1)
+-    abort ();
+-
+-  a[0] = 0xbe;
+-  a[8191] = 0xef;
+-  memset ((char *) a + 1, 0, 8190);
+-
+-  if (a[0] != 0xbe || a[8191] != 0xef)
+-    abort ();
+-
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_moveq.c b/tests/tcg/cris/libc/check_moveq.c
+deleted file mode 100644
+index 80f2dff6ab..0000000000
+--- a/tests/tcg/cris/libc/check_moveq.c
++++ /dev/null
+@@ -1,51 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-#define cris_moveq(dst, src) \
+-               asm volatile ("moveq %1, %0\n" : "=r" (dst) : "i" (src));
+-
+-
+-
+-int main(void)
+-{
+-	int t;
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf\tzvnc\n");
+-	cris_moveq(t, 10);
+-	cris_tst_cc(1, 1, 1, 1);
+-	if (t != 10)
+-		err();
+-
+-	/* make sure moveq doesn't clobber the zflag.  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf vnc\n");
+-	asm volatile ("clearf z\n");
+-	cris_moveq(t, 0);
+-	cris_tst_cc(1, 0, 1, 1);
+-	if (t != 0)
+-		err();
+-
+-	/* make sure moveq doesn't clobber the nflag.
+-	   Also check large immediates  */
+-	cris_tst_cc_init();
+-	asm volatile ("setf zvc\n");
+-	asm volatile ("clearf n\n");
+-	cris_moveq(t, -31);
+-	cris_tst_cc(0, 1, 1, 1);
+-	if (t != -31)
+-		err();
+-
+-	cris_tst_cc_init();
+-	asm volatile ("setf nzvc\n");
+-	cris_moveq(t, 31);
+-	cris_tst_cc(1, 1, 1, 1);
+-	if (t != 31)
+-		err();
+-
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_openpf1.c b/tests/tcg/cris/libc/check_openpf1.c
+deleted file mode 100644
+index 251d26eec2..0000000000
+--- a/tests/tcg/cris/libc/check_openpf1.c
++++ /dev/null
+@@ -1,38 +0,0 @@
+-/* Check that --sysroot is applied to open(2).
+-#sim: --sysroot=@exedir@
+-
+-   We assume, with EXE being the name of the executable:
+-   - The simulator executes with cwd the same directory where the executable
+-     is located (so argv[0] contains a plain filename without directory
+-     components).
+-   - There's no /EXE on the host file system.  */
+-
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <string.h>
+-#include <errno.h>
+-int main (int argc, char *argv[])
+-{
+-  char *fnam = argv[0];
+-  FILE *f;
+-  if (argv[0][0] != '/')
+-    {
+-      fnam = malloc (strlen (argv[0]) + 2);
+-      if (fnam == NULL)
+-        abort ();
+-      strcpy (fnam, "/");
+-      strcat (fnam, argv[0]);
+-    }
+-
+-  f = fopen (fnam, "rb");
+-  if (f == NULL)
+-    abort ();
+-  fclose(f);
+-
+-  /* Cover another execution path.  */
+-  if (fopen ("/nonexistent", "rb") != NULL
+-      || errno != ENOENT)
+-    abort ();
+-  printf ("pass\n");
+-  return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_openpf2.c b/tests/tcg/cris/libc/check_openpf2.c
+deleted file mode 100644
+index 5d56189f8e..0000000000
+--- a/tests/tcg/cris/libc/check_openpf2.c
++++ /dev/null
+@@ -1,16 +0,0 @@
+-/* Check that the simulator has chdir:ed to the --sysroot argument
+-#sim: --sysroot=@srcdir@
+-   (or that  --sysroot is applied to relative file paths).  */
+-
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <errno.h>
+-int main (int argc, char *argv[])
+-{
+-  FILE *f = fopen ("check_openpf2.c", "rb");
+-  if (f == NULL)
+-    abort ();
+-  fclose(f);
+-  printf ("pass\n");
+-  return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_openpf3.c b/tests/tcg/cris/libc/check_openpf3.c
+deleted file mode 100644
+index 557adee92d..0000000000
+--- a/tests/tcg/cris/libc/check_openpf3.c
++++ /dev/null
+@@ -1,49 +0,0 @@
+-/* Basic file operations (rename, unlink); once without sysroot.  We
+-   also test that the simulator has chdir:ed to PREFIX, when defined.  */
+-
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <errno.h>
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <unistd.h>
+-
+-#ifndef PREFIX
+-#define PREFIX
+-#endif
+-
+-void err (const char *s)
+-{
+-  perror (s);
+-  abort ();
 -}
 -
--DEFINE_MACHINE("shix", shix_machine_init)
-diff --git a/hw/sh4/Kconfig b/hw/sh4/Kconfig
-index 99a76a94c3..1660d292d5 100644
---- a/hw/sh4/Kconfig
-+++ b/hw/sh4/Kconfig
-@@ -13,13 +13,6 @@ config R2D
-     select SH7750
-     select SH_PCI
- 
--config SHIX
--    bool
--    default y
--    depends on SH4
--    select SH7750
--    select TC58128
+-int main (int argc, char *argv[])
+-{
+-  FILE *f;
+-  struct stat buf;
 -
- config SH7750
-     bool
-     select SH_INTC
-diff --git a/hw/sh4/meson.build b/hw/sh4/meson.build
-index 70e814c3a2..7d27839fee 100644
---- a/hw/sh4/meson.build
-+++ b/hw/sh4/meson.build
-@@ -4,6 +4,5 @@ sh4_ss.add(when: 'CONFIG_SH7750', if_true: files(
-   'sh7750_regnames.c',
- ))
- sh4_ss.add(when: 'CONFIG_R2D', if_true: files('r2d.c'))
--sh4_ss.add(when: 'CONFIG_SHIX', if_true: files('shix.c'))
- 
- hw_arch += {'sh4': sh4_ss}
+-  unlink (PREFIX "testfoo2.tmp");
+-
+-  f = fopen ("testfoo1.tmp", "w");
+-  if (f == NULL)
+-    err ("open");
+-  fclose (f);
+-
+-  if (rename (PREFIX "testfoo1.tmp", PREFIX "testfoo2.tmp") != 0)
+-    err ("rename");
+-
+-  if (stat (PREFIX "testfoo2.tmp", &buf) != 0
+-      || !S_ISREG (buf.st_mode))
+-    err ("stat 1");
+-
+-  if (stat ("testfoo2.tmp", &buf) != 0
+-      || !S_ISREG (buf.st_mode))
+-    err ("stat 2");
+-
+-  if (unlink (PREFIX "testfoo2.tmp") != 0)
+-    err ("unlink");
+-
+-  printf ("pass\n");
+-  return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_openpf5.c b/tests/tcg/cris/libc/check_openpf5.c
+deleted file mode 100644
+index 1f86ea283d..0000000000
+--- a/tests/tcg/cris/libc/check_openpf5.c
++++ /dev/null
+@@ -1,56 +0,0 @@
+-/* Check that TRT happens when error on too many opened files.
+-#notarget: cris*-*-elf
+-#sim: --sysroot=@exedir@
+-*/
+-#include <stddef.h>
+-#include <stdlib.h>
+-#include <stdio.h>
+-#include <unistd.h>
+-#include <errno.h>
+-#include <limits.h>
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <fcntl.h>
+-#include <string.h>
+-
+-int main (int argc, char *argv[])
+-{
+-  int i;
+-  int filemax;
+-
+-#ifdef OPEN_MAX
+-  filemax = OPEN_MAX;
+-#else
+-  filemax = sysconf (_SC_OPEN_MAX);
+-#endif
+-
+-  char *fn = malloc (strlen (argv[0]) + 2);
+-  if (fn == NULL)
+-    abort ();
+-  strcpy (fn, "/");
+-  strcat (fn, argv[0]);
+-
+-  for (i = 0; i < filemax + 1; i++)
+-    {
+-      if (open (fn, O_RDONLY) < 0)
+-	{
+-	  /* Shouldn't happen too early.  */
+-	  if (i < filemax - 3 - 1)
+-	    {
+-	      fprintf (stderr, "i: %d\n", i);
+-	      abort ();
+-	    }
+-	  if (errno != EMFILE)
+-	    {
+-	      perror ("open");
+-	      abort ();
+-	    }
+-	  goto ok;
+-	}
+-    }
+-  abort ();
+-
+-ok:
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_settls1.c b/tests/tcg/cris/libc/check_settls1.c
+deleted file mode 100644
+index 3abc3a9ea8..0000000000
+--- a/tests/tcg/cris/libc/check_settls1.c
++++ /dev/null
+@@ -1,45 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <errno.h>
+-#include <unistd.h>
+-
+-#include <sys/syscall.h>
+-
+-#ifndef SYS_set_thread_area
+-#define SYS_set_thread_area 243
+-#endif
+-
+-int main (void)
+-{
+-    unsigned long tp, old_tp;
+-    int ret;
+-
+-    asm volatile ("move $pid,%0" : "=r" (old_tp));
+-    old_tp &= ~0xff;
+-
+-    ret = syscall (SYS_set_thread_area, 0xf0);
+-    if (ret != -1 || errno != EINVAL) {
+-        syscall (SYS_set_thread_area, old_tp);
+-        perror ("Invalid thread area accepted:");
+-        abort();
+-    }
+-
+-    ret = syscall (SYS_set_thread_area, 0xeddeed00);
+-    if (ret != 0) {
+-        perror ("Valid thread area not accepted: ");
+-        abort ();
+-    }
+-
+-    asm volatile ("move $pid,%0" : "=r" (tp));
+-    tp &= ~0xff;
+-    syscall (SYS_set_thread_area, old_tp);
+-
+-    if (tp != 0xeddeed00) {
+-        * (volatile int *) 0 = 0;
+-        perror ("tls2");
+-        abort ();
+-    }
+-
+-    printf ("pass\n");
+-    return EXIT_SUCCESS;
+-}
+diff --git a/tests/tcg/cris/libc/check_sigalrm.c b/tests/tcg/cris/libc/check_sigalrm.c
+deleted file mode 100644
+index 39fa8d9bac..0000000000
+--- a/tests/tcg/cris/libc/check_sigalrm.c
++++ /dev/null
+@@ -1,26 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <signal.h>
+-#include <unistd.h>
+-
+-#define MAGIC (0xdeadbeef)
+-
+-int s = 0;
+-void sighandler(int sig)
+-{
+-	s = MAGIC;
+-}
+-
+-int main(int argc, char **argv)
+-{
+-	int p;
+-
+-	p = getpid();
+-	signal(SIGALRM, sighandler);
+-	kill(p, SIGALRM);
+-	if (s != MAGIC)
+-		return EXIT_FAILURE;
+-
+-	printf ("passed\n");
+-	return EXIT_SUCCESS;
+-}
+diff --git a/tests/tcg/cris/libc/check_stat1.c b/tests/tcg/cris/libc/check_stat1.c
+deleted file mode 100644
+index 2e2cae51df..0000000000
+--- a/tests/tcg/cris/libc/check_stat1.c
++++ /dev/null
+@@ -1,16 +0,0 @@
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <unistd.h>
+-#include <stdio.h>
+-#include <stdlib.h>
+-
+-int main (void)
+-{
+-  struct stat buf;
+-
+-  if (stat (".", &buf) != 0
+-      || !S_ISDIR (buf.st_mode))
+-    abort ();
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_stat2.c b/tests/tcg/cris/libc/check_stat2.c
+deleted file mode 100644
+index e36172ed25..0000000000
+--- a/tests/tcg/cris/libc/check_stat2.c
++++ /dev/null
+@@ -1,20 +0,0 @@
+-/*
+-#notarget: cris*-*-elf
+-*/
+-
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <unistd.h>
+-#include <stdio.h>
+-#include <stdlib.h>
+-
+-int main (void)
+-{
+-  struct stat buf;
+-
+-  if (lstat (".", &buf) != 0
+-      || !S_ISDIR (buf.st_mode))
+-    abort ();
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_stat3.c b/tests/tcg/cris/libc/check_stat3.c
+deleted file mode 100644
+index 36a9d5d274..0000000000
+--- a/tests/tcg/cris/libc/check_stat3.c
++++ /dev/null
+@@ -1,25 +0,0 @@
+-/* Simulator options:
+-#sim: --sysroot=@exedir@
+-*/
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <unistd.h>
+-#include <stdio.h>
+-#include <string.h>
+-#include <stdlib.h>
+-
+-int main (int argc, char *argv[])
+-{
+-  char path[1024] = "/";
+-  struct stat buf;
+-
+-  strncat(path, argv[0], sizeof(path) - 2);
+-  if (stat (".", &buf) != 0
+-      || !S_ISDIR (buf.st_mode))
+-    abort ();
+-  if (stat (path, &buf) != 0
+-      || !S_ISREG (buf.st_mode))
+-    abort ();
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_stat4.c b/tests/tcg/cris/libc/check_stat4.c
+deleted file mode 100644
+index 04f21fe7c4..0000000000
+--- a/tests/tcg/cris/libc/check_stat4.c
++++ /dev/null
+@@ -1,27 +0,0 @@
+-/* Simulator options:
+-#notarget: cris*-*-elf
+-#sim: --sysroot=@exedir@
+-*/
+-
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <unistd.h>
+-#include <stdio.h>
+-#include <string.h>
+-#include <stdlib.h>
+-
+-int main (int argc, char *argv[])
+-{
+-  char path[1024] = "/";
+-  struct stat buf;
+-
+-  strncat(path, argv[0], sizeof(path) - 2);
+-  if (lstat (".", &buf) != 0
+-      || !S_ISDIR (buf.st_mode))
+-    abort ();
+-  if (lstat (path, &buf) != 0
+-      || !S_ISREG (buf.st_mode))
+-    abort ();
+-  printf ("pass\n");
+-  exit (0);
+-}
+diff --git a/tests/tcg/cris/libc/check_swap.c b/tests/tcg/cris/libc/check_swap.c
+deleted file mode 100644
+index 9a68c1e5d7..0000000000
+--- a/tests/tcg/cris/libc/check_swap.c
++++ /dev/null
+@@ -1,76 +0,0 @@
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <stdint.h>
+-#include "sys.h"
+-#include "crisutils.h"
+-
+-#define N 8
+-#define W 4
+-#define B 2
+-#define R 1
+-
+-static always_inline int cris_swap(const int mode, int x)
+-{
+-	switch (mode)
+-	{
+-		case N: asm ("swapn\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case W: asm ("swapw\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case B: asm ("swapb\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case R: asm ("swapr\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case B|R: asm ("swapbr\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case W|R: asm ("swapwr\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case W|B: asm ("swapwb\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case W|B|R: asm ("swapwbr\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case N|R: asm ("swapnr\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case N|B: asm ("swapnb\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case N|B|R: asm ("swapnbr\t%0\n" : "+r" (x) : "0" (x)); break;
+-		case N|W: asm ("swapnw\t%0\n" : "+r" (x) : "0" (x)); break;
+-		default:
+-			err();
+-			break;
+-	}
+-	return x;
+-}
+-
+-/* Made this a macro to be able to pick up the location of the errors.  */
+-#define verify_swap(mode, val, expected, n, z)          \
+-do {                                                    \
+-        int r;                                          \
+-        cris_tst_cc_init();                             \
+-	r = cris_swap(mode, val);                       \
+-        cris_tst_mov_cc(n, z);                          \
+-	if (r != expected)                              \
+-		err();                                  \
+-} while(0)
+-
+-void check_swap(void)
+-{
+-	/* Some of these numbers are borrowed from GDB's cris sim
+-	   testsuite.  */
+-	if (cris_swap(N, 0) != 0xffffffff)
+-		err();
+-	if (cris_swap(W, 0x12345678) != 0x56781234)
+-		err();
+-	if (cris_swap(B, 0x12345678) != 0x34127856)
+-		err();
+-
+-	verify_swap(R, 0x78134452, 0x1ec8224a, 0, 0);
+-	verify_swap(B, 0x78134452, 0x13785244, 0, 0);
+-	verify_swap(B|R, 0x78134452, 0xc81e4a22, 1, 0);
+-	verify_swap(W, 0x78134452, 0x44527813, 0, 0);
+-	verify_swap(W|R, 0x78134452, 0x224a1ec8, 0, 0);
+-	verify_swap(W|B|R, 0x78134452, 0x4a22c81e, 0, 0);
+-	verify_swap(N, 0x78134452, 0x87ecbbad, 1, 0);
+-	verify_swap(N|R, 0x78134452, 0xe137ddb5, 1, 0);
+-	verify_swap(N|B, 0x78134452, 0xec87adbb, 1, 0);
+-	verify_swap(N|B|R, 0x78134452, 0x37e1b5dd, 0, 0);
+-	verify_swap(N|W, 0x78134452, 0xbbad87ec, 1, 0);
+-	verify_swap(N|B|R, 0xffffffff, 0, 0, 1);
+-}
+-
+-int main(void)
+-{
+-	check_swap();
+-	pass();
+-	return 0;
+-}
+diff --git a/tests/tcg/cris/libc/check_time2.c b/tests/tcg/cris/libc/check_time2.c
+deleted file mode 100644
+index 20b69b4f60..0000000000
+--- a/tests/tcg/cris/libc/check_time2.c
++++ /dev/null
+@@ -1,18 +0,0 @@
+-/* CB_SYS_time doesn't implement the Linux time syscall; the return
+-   value isn't written to the argument.  */
+-
+-#include <time.h>
+-#include <stdio.h>
+-#include <stdlib.h>
+-
+-int
+-main (void)
+-{
+-  time_t x = (time_t) -1;
+-  time_t t = time (&x);
+-
+-  if (t == (time_t) -1 || t != x)
+-    abort ();
+-  printf ("pass\n");
+-  exit (0);
+-}
 -- 
 2.45.2
 
