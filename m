@@ -4,74 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D6BAEE49BC
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:22:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60E3FEE49BC
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:24:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soP3K-0003ri-FS; Wed, 11 Sep 2024 11:14:47 -0400
+	id 1soP1J-0003R7-2b; Wed, 11 Sep 2024 11:12:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soP1J-0003gl-MV
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:12:44 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soP0x-00027r-CR
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:12:18 -0400
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soP1H-0001Jz-1e
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:12:37 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a8d6d0fe021so466236766b.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 08:12:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soP0v-0001Gy-4e
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:12:15 -0400
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2f74e613a10so20839421fa.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 08:12:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726067553; x=1726672353; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RnEXofH39QOzGuHkMNSmPSGC7FdtUJnuQkfgBew8Hmo=;
- b=ad0jAWSaIy+wC9VaW8KbeWayvvHqsN0/KTX5x9Jsqh6aVIzN0OkXqfv7fVTI7OWroG
- jj2qCVSVMcLiQCj1jGatGp5DyQnMbL92uqKYsBrxYQGolS/N2QfPULV4XZ/ZwPG+X55I
- 3sXDzyXvVEYbhtuQxoVmw+c7iseB3fmT0zSd1oaGi3lbPF7/hzQsONBpMkvud8KkzDk5
- /2GGF2hYBTsvEygttK7DRGDR1q3WR+sP7Hw7Ho4epM7jSM04sCA4WJPfSzUx5THPUpSe
- lXqUgBpXeFZFNhYbQy7uFj4Bu0bxa00OGEigze6g/d42YEXYNjbRNV7OeJED9dTh7BWC
- /nfg==
+ d=linaro.org; s=google; t=1726067530; x=1726672330; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=B9oM8Ne18x0eSKs2eGImbQDt47h4Zb8ccSIXYvNWAjg=;
+ b=mJayO/a+c0eoCtZDpCGhPu0tdGJGeqTmcETQT/+kgNqKFlGSasEKtSvZeXJ1tZ5b6H
+ Wr7K6EQE4s2lrFG9C5MF36prCP/aW2QsF7VLFYsf+Ti42xSBqsDPvKOx+8WNsgwL65NF
+ R8mQPj61QPDOnsat8zw0Tc3WgWIwrSGnOSWJXrrOTBZIEtdm9HlEFEb48xKedSAKP+q6
+ RZD61Mr7Eky56b70mgb5DOo6sZ/3T+30JjtH8BH9CxGlN7InQ/0jZDzvr0V9oiW/4hqh
+ 6T1s2VsRZAZHypRuZRb914NBCcsi4rUdaO6pTooWezAxSjStr8u8KOaMMvM6mj77sCgP
+ +GUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726067553; x=1726672353;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RnEXofH39QOzGuHkMNSmPSGC7FdtUJnuQkfgBew8Hmo=;
- b=jikxtt34w3ra0PuOCo0ZuHK51CZY5IEodd4xSKk6ZmT9ZPI0GlLp4O3BASFNCZaHkU
- Liv0OvHRTEu/6ggEyYiiarPEvI/FCY/8lUItQIBKJ+c4CreUrpoXciwl0mv2WC7FnmYQ
- 8T9bglHWrBn38GT+UiCCRVf8GFQvqnOiCJfNrytCAFJIKPrsBgcStB+P7RkFDmwR8Ans
- PPPM4ynJuCtLZOB3yCMULSjexqJLwLualEjCRngYgUttEwUp4puS/4AI9tutU3mwTFep
- zFCQn1gvNxjGWiP9F8EVpRm1HmmWfrG5yhV23MCDmjWUqBdLA5DVgwtqI3WzxGUdivjZ
- Fq9g==
-X-Gm-Message-State: AOJu0Yy/D+eHeG00xul/hQLMDYkIuELRS/ZIgxfpWaQHBGoUdQtmxbB+
- dabUro8bdlIONfL7DB4HQME9yRzxodb9dYxawzwnsGlmJQII7T0Al7/zW8IN1jEB9phXM1uKv8M
- L
-X-Google-Smtp-Source: AGHT+IEROw3Lzxj5s8aJR0x8RAiR6/KmarGjwk3SRoYGuKsUijTzfPw1jSdD7eW01NEVjpBYKvyGBA==
-X-Received: by 2002:a17:906:d552:b0:a8d:555f:eed1 with SMTP id
- a640c23a62f3a-a8ffab6d5f6mr466952166b.31.1726067552890; 
- Wed, 11 Sep 2024 08:12:32 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726067530; x=1726672330;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=B9oM8Ne18x0eSKs2eGImbQDt47h4Zb8ccSIXYvNWAjg=;
+ b=mK2P5IBzHuj9WNV2eCtyFvDf8tcvtranRpEYJaQgRjLri7rbOkGSeudIlVP/iD+ypd
+ zSF6S7Fvv1ndL2jQbTQ5/e1CwY+KP+57AHBIipqn3gesd/BjK1sBbWpEsvvl/sjBWLoB
+ +WVlGUwUAhv4z2DZjaHgwphSWw8xTxhIx5axPvvSF7GCoPg4iF7+zy7ggttqTyxHtsFe
+ DGxoouwDJ0KUgqjWLfDLFWxjteD67/zKEZ4BhTz6uxo8hnoQDhRyiEdzqtryU/8ze3yF
+ 2uxLp77NYslUuJhOR5E0PUJqCGCXEqUxD1kx1ivKfwWVtzf/oZb/5L5arnFFxEP5dRh9
+ 6cMg==
+X-Gm-Message-State: AOJu0YyfXJ2wzS+RWrBYPXW29E5/EoSxVhQtqb8ULY5SqS09exKzz0DS
+ 2YIgWuvxYK/KWoW8GWAGeAb0EpwaQO/gZzAOkD5oGBDo51negcSKcDkogMVUIMQBzQGtQSHHfpU
+ t
+X-Google-Smtp-Source: AGHT+IHPRcLm4FnWUA6AOh9rEKiut+/J70ZAHoCbo9uxNzlNuI1UUKqrSPh76VqbQXTu9EOvwVKwPg==
+X-Received: by 2002:a05:6512:3b10:b0:533:c9d:a01f with SMTP id
+ 2adb3069b0e04-536587a6704mr14952557e87.4.1726067529788; 
+ Wed, 11 Sep 2024 08:12:09 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.196.107])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25835a76sm625728966b.39.2024.09.11.08.12.31
+ a640c23a62f3a-a8d25926ee8sm627279466b.50.2024.09.11.08.12.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Sep 2024 08:12:32 -0700 (PDT)
+ Wed, 11 Sep 2024 08:12:09 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org
-Subject: [PATCH v3 4/5] license: Update deprecated SPDX tag GPL-2.0+ to
- GPL-2.0-or-later
-Date: Wed, 11 Sep 2024 17:12:05 +0200
-Message-ID: <20240911151206.60368-5-philmd@linaro.org>
+Subject: [PATCH v3 0/5] license: Fix typos and update SPDX tags
+Date: Wed, 11 Sep 2024 17:12:01 +0200
+Message-ID: <20240911151206.60368-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240911151206.60368-1-philmd@linaro.org>
-References: <20240911151206.60368-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,119 +90,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'GPL-2.0+' license identifier has been deprecated since license
-list version 2.0rc2 [1] and replaced by the 'GPL-2.0-or-later' [2]
-tag.
+Series fully reviewed (thanks Thomas & Richard)
 
-[1] https://spdx.org/licenses/GPL-2.0+.html
-[2] https://spdx.org/licenses/GPL-2.0-or-later.html
+Since v2:
+. Updated few missed "2 | 3+" expressions
 
-Mechanical patch running:
+Since v1:
+. Updated regex to cover all GPL-2.0* cases.
 
-  $ sed -i -e s/GPL-2.0+/GPL-2.0-or-later/ \
-    $(git grep -lP 'SPDX-License-Identifier: \W+GPL-2.0\+[ $]' \
-        | egrep -v '^linux-headers|^include/standard-headers')
+- Fix a pair of typos
+- Upgrade the deprecated GPL-2.0+/LGPL-2.0+ SPDX tags
+  to GPL-2.0-only / GPL-2.0-or-later / LGPL-2.0-or-later.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- hw/core/uboot_image.h           | 2 +-
- include/hw/nvram/fw_cfg_acpi.h  | 2 +-
- include/hw/usb/dwc2-regs.h      | 2 +-
- include/hw/virtio/virtio-acpi.h | 2 +-
- target/riscv/cpu-param.h        | 2 +-
- target/s390x/cpu-param.h        | 2 +-
- hw/nvram/fw_cfg-acpi.c          | 2 +-
- hw/virtio/virtio-acpi.c         | 2 +-
- 8 files changed, 8 insertions(+), 8 deletions(-)
+Philippe Mathieu-Daudé (5):
+  tests/functional: Correct typo in test_netdev_ethtool.py SPDX tag
+  license: Simplify GPL-2.0-or-later license descriptions
+  license: Update deprecated SPDX tag LGPL-2.0+ to LGPL-2.0-or-later
+  license: Update deprecated SPDX tag GPL-2.0+ to GPL-2.0-or-later
+  license: Update deprecated SPDX tag GPL-2.0 to GPL-2.0-only
 
-diff --git a/hw/core/uboot_image.h b/hw/core/uboot_image.h
-index 18ac293359..e4dcfb08f0 100644
---- a/hw/core/uboot_image.h
-+++ b/hw/core/uboot_image.h
-@@ -1,4 +1,4 @@
--/* SPDX-License-Identifier: GPL-2.0+ */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
- /*
-  * (C) Copyright 2008 Semihalf
-  *
-diff --git a/include/hw/nvram/fw_cfg_acpi.h b/include/hw/nvram/fw_cfg_acpi.h
-index b39eb0490f..dfd2a44ef0 100644
---- a/include/hw/nvram/fw_cfg_acpi.h
-+++ b/include/hw/nvram/fw_cfg_acpi.h
-@@ -1,4 +1,4 @@
--/* SPDX-License-Identifier: GPL-2.0+ */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
- /*
-  * ACPI support for fw_cfg
-  *
-diff --git a/include/hw/usb/dwc2-regs.h b/include/hw/usb/dwc2-regs.h
-index 0bf3f2aa17..523b112c5e 100644
---- a/include/hw/usb/dwc2-regs.h
-+++ b/include/hw/usb/dwc2-regs.h
-@@ -1,4 +1,4 @@
--/* SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause) */
-+/* SPDX-License-Identifier: (GPL-2.0-or-later OR BSD-3-Clause) */
- /*
-  * Imported from the Linux kernel file drivers/usb/dwc2/hw.h, commit
-  * a89bae709b3492b478480a2c9734e7e9393b279c ("usb: dwc2: Move
-diff --git a/include/hw/virtio/virtio-acpi.h b/include/hw/virtio/virtio-acpi.h
-index cace2a315f..cdfbd943ae 100644
---- a/include/hw/virtio/virtio-acpi.h
-+++ b/include/hw/virtio/virtio-acpi.h
-@@ -1,4 +1,4 @@
--/* SPDX-License-Identifier: GPL-2.0+ */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
- /*
-  * ACPI support for virtio
-  */
-diff --git a/target/riscv/cpu-param.h b/target/riscv/cpu-param.h
-index 1fbd64939d..25686192c0 100644
---- a/target/riscv/cpu-param.h
-+++ b/target/riscv/cpu-param.h
-@@ -2,7 +2,7 @@
-  * RISC-V cpu parameters for qemu.
-  *
-  * Copyright (c) 2017-2018 SiFive, Inc.
-- * SPDX-License-Identifier: GPL-2.0+
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #ifndef RISCV_CPU_PARAM_H
-diff --git a/target/s390x/cpu-param.h b/target/s390x/cpu-param.h
-index 11d23b600d..a05ffcf78d 100644
---- a/target/s390x/cpu-param.h
-+++ b/target/s390x/cpu-param.h
-@@ -2,7 +2,7 @@
-  * S/390 cpu parameters for qemu.
-  *
-  * Copyright (c) 2009 Ulrich Hecht
-- * SPDX-License-Identifier: GPL-2.0+
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #ifndef S390_CPU_PARAM_H
-diff --git a/hw/nvram/fw_cfg-acpi.c b/hw/nvram/fw_cfg-acpi.c
-index 58cdcd3121..2e6ef89b98 100644
---- a/hw/nvram/fw_cfg-acpi.c
-+++ b/hw/nvram/fw_cfg-acpi.c
-@@ -1,4 +1,4 @@
--// SPDX-License-Identifier: GPL-2.0+
-+// SPDX-License-Identifier: GPL-2.0-or-later
- /*
-  * Add fw_cfg device in DSDT
-  *
-diff --git a/hw/virtio/virtio-acpi.c b/hw/virtio/virtio-acpi.c
-index 230a669500..85becef03c 100644
---- a/hw/virtio/virtio-acpi.c
-+++ b/hw/virtio/virtio-acpi.c
-@@ -1,4 +1,4 @@
--// SPDX-License-Identifier: GPL-2.0+
-+// SPDX-License-Identifier: GPL-2.0-or-later
- /*
-  * virtio ACPI Support
-  *
+ hw/core/uboot_image.h                   | 2 +-
+ hw/m68k/bootinfo.h                      | 2 +-
+ hw/net/igb_regs.h                       | 2 +-
+ include/gdbstub/syscalls.h              | 2 +-
+ include/gdbstub/user.h                  | 2 +-
+ include/hw/nvram/fw_cfg_acpi.h          | 2 +-
+ include/hw/usb/dwc2-regs.h              | 2 +-
+ include/hw/virtio/virtio-acpi.h         | 2 +-
+ include/qemu/crc-ccitt.h                | 2 +-
+ include/qemu/timed-average.h            | 4 +++-
+ target/alpha/cpu-param.h                | 2 +-
+ target/arm/cpu-param.h                  | 2 +-
+ target/cris/cpu-param.h                 | 2 +-
+ target/hppa/cpu-param.h                 | 2 +-
+ target/i386/cpu-param.h                 | 2 +-
+ target/m68k/cpu-param.h                 | 2 +-
+ target/microblaze/cpu-param.h           | 2 +-
+ target/mips/cpu-param.h                 | 2 +-
+ target/openrisc/cpu-param.h             | 2 +-
+ target/ppc/cpu-param.h                  | 2 +-
+ target/riscv/cpu-param.h                | 2 +-
+ target/s390x/cpu-param.h                | 2 +-
+ target/sh4/cpu-param.h                  | 2 +-
+ target/sparc/cpu-param.h                | 2 +-
+ tests/tcg/loongarch64/system/regdef.h   | 2 +-
+ target/sparc/insns.decode               | 2 +-
+ block/vdi.c                             | 4 +++-
+ gdbstub/gdbstub.c                       | 2 +-
+ gdbstub/syscalls.c                      | 2 +-
+ gdbstub/system.c                        | 2 +-
+ gdbstub/user-target.c                   | 2 +-
+ gdbstub/user.c                          | 2 +-
+ hw/net/eepro100.c                       | 4 +++-
+ hw/nvram/fw_cfg-acpi.c                  | 2 +-
+ hw/ppc/rs6000_mc.c                      | 4 +++-
+ hw/virtio/virtio-acpi.c                 | 2 +-
+ util/timed-average.c                    | 4 +++-
+ linux-user/alpha/syscall.tbl            | 2 +-
+ linux-user/alpha/syscallhdr.sh          | 2 +-
+ linux-user/arm/syscallhdr.sh            | 2 +-
+ linux-user/hppa/syscall.tbl             | 2 +-
+ linux-user/hppa/syscallhdr.sh           | 2 +-
+ linux-user/i386/syscallhdr.sh           | 2 +-
+ linux-user/m68k/syscall.tbl             | 2 +-
+ linux-user/m68k/syscallhdr.sh           | 2 +-
+ linux-user/microblaze/syscall.tbl       | 2 +-
+ linux-user/microblaze/syscallhdr.sh     | 2 +-
+ linux-user/mips/syscall_o32.tbl         | 2 +-
+ linux-user/mips/syscallhdr.sh           | 2 +-
+ linux-user/mips64/syscall_n32.tbl       | 2 +-
+ linux-user/mips64/syscall_n64.tbl       | 2 +-
+ linux-user/mips64/syscallhdr.sh         | 2 +-
+ linux-user/ppc/syscall.tbl              | 2 +-
+ linux-user/ppc/syscallhdr.sh            | 2 +-
+ linux-user/s390x/syscall.tbl            | 2 +-
+ linux-user/s390x/syscallhdr.sh          | 2 +-
+ linux-user/sh4/syscall.tbl              | 2 +-
+ linux-user/sh4/syscallhdr.sh            | 2 +-
+ linux-user/sparc/syscall.tbl            | 2 +-
+ linux-user/sparc/syscallhdr.sh          | 2 +-
+ linux-user/x86_64/syscallhdr.sh         | 2 +-
+ linux-user/xtensa/syscall.tbl           | 2 +-
+ linux-user/xtensa/syscallhdr.sh         | 2 +-
+ qemu.nsi                                | 4 +++-
+ scripts/kernel-doc                      | 2 +-
+ tests/functional/test_netdev_ethtool.py | 2 +-
+ 66 files changed, 78 insertions(+), 66 deletions(-)
+
 -- 
 2.45.2
 
