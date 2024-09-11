@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52D99EE49A0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC08AEE499F
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:32:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMJr-00026P-Ir; Wed, 11 Sep 2024 08:19:35 -0400
+	id 1soMJj-0000ij-Pl; Wed, 11 Sep 2024 08:19:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMJc-0008Sp-Pv
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:19:22 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMHu-0001Fo-UB
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:17:35 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMJN-0007fP-E2
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:19:12 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-42cc43454d5so14071795e9.3
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:19:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMHn-0007YS-Nf
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:17:34 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-374c4c6cb29so5962214f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:17:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726057142; x=1726661942; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726057042; x=1726661842; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rvh1RZxcP1nInMdaaa2bCvNT6U7BxgYnTGGeSM1aBGg=;
- b=WNPodAmIQ5yvfz/ps6N0wgaBW7mCRlsrHsZZCrFqVjSZYmBr3W1KHA6/BUSvSrpWkV
- d2n5lq1i/ReqRiTrUUNiVotW1jdPoU7NrNacslX+wTWLaEoUuHPKzBPqFvEVZiNQRYuY
- R05Z1M4c2roiHgwxnc64dlrrP9gxfcIuN+jPIyok5ezoibWX8fZMAv39llIkskDWH+WD
- QKL19pT3/X/kIUuo2tv9f0StxnbCMyIH5ezg/f5+VGgV7NXJ+deacO6qpjXaXAq/VgKR
- bPEAxb+UqImrgQdfTL6YLzXEMlf4heiU2Ii+R8Us9HJPFUAi2K74j8SwGin9fmjlE2lO
- SkEg==
+ bh=pNwBUYcUVU1y0Bv9EZ1zPpKAjm6wshMLuOdapkK29TA=;
+ b=Hb5yUF6QOavms4ZyYKtF7GQvFclaVEiRrajADqRVZzepTm4GOMgr635MD25jPKeB13
+ AzHSiY7uEEjKp2ulFFFyrdOojB5RWz7rWubltbOsOQECLlI6wxe60QvWeu/MB9qSQGaK
+ DEPerup0Oo8fTHHrGpTuVnyOBzC/FKrNT5ljQ4ZsDV+E37vcvVZSKHHlwpGQEpsxd7Aw
+ FeSPPYnl1AQZN3SGMgW7KGBESrg9JrhI8+cuv4Zw0CLeRPmIuYnoUyndGU5J5p42DeWe
+ KsjSwdDVNqIzpKOBG+ef3H6nFrXyYks8WxHRltma0p9eNIdzhB6taEH3V8Nwc0bnOx9l
+ Nz3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726057142; x=1726661942;
+ d=1e100.net; s=20230601; t=1726057042; x=1726661842;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rvh1RZxcP1nInMdaaa2bCvNT6U7BxgYnTGGeSM1aBGg=;
- b=Nnaczw8r1/IF0eXVuXgA4ypQmqbbrQsAHZe2mxK6bTnccjBCk0GDov+JVzTtd5s4uC
- gOGD4I/gO5ateAskEAGoFnWCrNwaoypTncxj533ZI6sIdU0XZqsjGAATfFP3DzpRjvrn
- JxfDOAGOJOIMbSLXa5zSFTFDr4bQBJoaQ89zhe1mmPXeIHkyGvQfdaOk/B8XGvYPC5EY
- Pazz++w64SyQwCrZ9WB8ZPlqX3urGNfvJ1SeRYV/tDkzuaBA2GAVPZs7VT09WBYEpZ3z
- OKO6sgf5wL2T62PvEwZYxnkPR9mqvqz30idomjzalEijOTmMMjj6TlzjNg69UGrYRct2
- RFUg==
-X-Gm-Message-State: AOJu0YzFjvc+W5DUNN21R1BIURs893hLhu2pvmAJfUP74m+fEtzKn1EZ
- NibpioUjf7qLy9KOFTnkKrzZcbdk7vLyNjJzRvN3ohLvJUFlr703tBQUhH6MPLTzoeNChu4cORF
- H
-X-Google-Smtp-Source: AGHT+IEEqh1WoVk+XR1EWp/krOnJXA+st6hlev26WURvT5HVRX8LnBjlxLc1ymQ1BEh+0469mIsnvw==
-X-Received: by 2002:a7b:c4d6:0:b0:42c:ad30:678 with SMTP id
- 5b1f17b1804b1-42cae76d028mr98544355e9.28.1726057141747; 
- Wed, 11 Sep 2024 05:19:01 -0700 (PDT)
+ bh=pNwBUYcUVU1y0Bv9EZ1zPpKAjm6wshMLuOdapkK29TA=;
+ b=aTyLR/di61fTjmF8dUrb5qVUPM2vmKwXOMjNEC+OINRTIHTN6KhmMPsH8SWFBTMjch
+ Bfzg7OZAMISDgS9TvzeBzgHYD3mrDFWmsujzLtAeaIahd2eoFPql7+aML+UW1DjfpaFR
+ z+WvRnvjPvhJeX4vE+3JG1wdib6veAdx8Dof+QUd8Rj7esWKAtgdjDi9PAptFysP1DhG
+ aPhxjy5XBLYK/qPfgxukfIio61i2aBzCR/LNQp9Vkjj9siUbWQvh726HSV2iCjOzMOjP
+ qvqh7ljat/+v90lv06s9Ujyxm9GDptf97Nb95aGY+WF6XwBMJGLS0z5/amIVwjjTM3hu
+ nxKQ==
+X-Gm-Message-State: AOJu0Yxo1atMGbQtLydUK/jXHRN3CvC1buqcND/6rF/12pOh2NtAZm1W
+ IPZHtf3TqSHSR5a1D5H+zalra+VckRFoQWHBE2diLOqQcKOw3RxLIlnzX+6Vx2VmfaSiSrtaiGM
+ 2
+X-Google-Smtp-Source: AGHT+IEc4MkNI3BBdLfijH7VXlkaKenkXNtS5GfXMjoofQvRIo3w2tvsxiNLKXdE9T5eioZj52Zifg==
+X-Received: by 2002:adf:f850:0:b0:374:bf18:6092 with SMTP id
+ ffacd0b85a97d-3789243fd5bmr11325206f8f.38.1726057041662; 
+ Wed, 11 Sep 2024 05:17:21 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.196.107])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42caeb45c81sm142098365e9.28.2024.09.11.05.19.00
+ ffacd0b85a97d-378956d372dsm11439657f8f.73.2024.09.11.05.17.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Sep 2024 05:19:01 -0700 (PDT)
+ Wed, 11 Sep 2024 05:17:21 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Alistair Francis <alistair.francis@wdc.com>,
- Octavian Purdila <tavip@google.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 39/56] fifo8: introduce fifo8_peek() function
-Date: Wed, 11 Sep 2024 14:14:04 +0200
-Message-ID: <20240911121422.52585-40-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 26/56] hw/char/pl011: Split RX/TX path of pl011_reset_fifo()
+Date: Wed, 11 Sep 2024 14:13:51 +0200
+Message-ID: <20240911121422.52585-27-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240911121422.52585-1-philmd@linaro.org>
 References: <20240911121422.52585-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,61 +95,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To be able to reset the RX or TX FIFO separately,
+split pl011_reset_fifo() in two.
 
-This allows uses to peek the byte at the current head of the FIFO.
-
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Octavian Purdila <tavip@google.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240828122258.928947-9-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240719181041.49545-6-philmd@linaro.org>
 ---
- include/qemu/fifo8.h | 11 +++++++++++
- util/fifo8.c         |  6 ++++++
- 2 files changed, 17 insertions(+)
+ hw/char/pl011.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/include/qemu/fifo8.h b/include/qemu/fifo8.h
-index d09984b146..4f768d4ee3 100644
---- a/include/qemu/fifo8.h
-+++ b/include/qemu/fifo8.h
-@@ -62,6 +62,17 @@ void fifo8_push_all(Fifo8 *fifo, const uint8_t *data, uint32_t num);
-  */
- uint8_t fifo8_pop(Fifo8 *fifo);
- 
-+/**
-+ * fifo8_peek:
-+ * @fifo: fifo to peek from
-+ *
-+ * Peek the data byte at the current head of the FIFO. Clients are responsible
-+ * for checking for emptyness using fifo8_is_empty().
-+ *
-+ * Returns: The peeked data byte.
-+ */
-+uint8_t fifo8_peek(Fifo8 *fifo);
-+
- /**
-  * fifo8_pop_buf:
-  * @fifo: FIFO to pop from
-diff --git a/util/fifo8.c b/util/fifo8.c
-index a8f5cea158..a26da66ad2 100644
---- a/util/fifo8.c
-+++ b/util/fifo8.c
-@@ -71,6 +71,12 @@ uint8_t fifo8_pop(Fifo8 *fifo)
-     return ret;
+diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+index 22195ead7b..3d294c3b52 100644
+--- a/hw/char/pl011.c
++++ b/hw/char/pl011.c
+@@ -154,14 +154,21 @@ static inline unsigned pl011_get_fifo_depth(PL011State *s)
+     return pl011_is_fifo_enabled(s) ? PL011_FIFO_DEPTH : 1;
  }
  
-+uint8_t fifo8_peek(Fifo8 *fifo)
-+{
-+    assert(fifo->num > 0);
-+    return fifo->data[fifo->head];
+-static inline void pl011_reset_fifo(PL011State *s)
++static inline void pl011_reset_rx_fifo(PL011State *s)
+ {
+     s->read_count = 0;
+     s->read_pos = 0;
+ 
+     /* Reset FIFO flags */
+-    s->flags &= ~(PL011_FLAG_RXFF | PL011_FLAG_TXFF);
+-    s->flags |= PL011_FLAG_RXFE | PL011_FLAG_TXFE;
++    s->flags &= ~PL011_FLAG_RXFF;
++    s->flags |= PL011_FLAG_RXFE;
 +}
 +
- static const uint8_t *fifo8_peekpop_bufptr(Fifo8 *fifo, uint32_t max,
-                                            uint32_t skip, uint32_t *numptr,
-                                            bool do_pop)
++static inline void pl011_reset_tx_fifo(PL011State *s)
++{
++    /* Reset FIFO flags */
++    s->flags &= ~PL011_FLAG_TXFF;
++    s->flags |= PL011_FLAG_TXFE;
+ }
+ 
+ static void pl011_put_fifo(void *opaque, uint32_t value)
+@@ -410,7 +417,8 @@ static void pl011_write(void *opaque, hwaddr offset,
+     case 11: /* UARTLCR_H */
+         /* Reset the FIFO state on FIFO enable or disable */
+         if ((s->lcr ^ value) & LCR_FEN) {
+-            pl011_reset_fifo(s);
++            pl011_reset_rx_fifo(s);
++            pl011_reset_tx_fifo(s);
+         }
+         if ((s->lcr ^ value) & LCR_BRK) {
+             int break_enable = value & LCR_BRK;
+@@ -619,7 +627,8 @@ static void pl011_reset(DeviceState *dev)
+     s->ifl = 0x12;
+     s->cr = 0x300;
+     s->flags = 0;
+-    pl011_reset_fifo(s);
++    pl011_reset_rx_fifo(s);
++    pl011_reset_tx_fifo(s);
+ }
+ 
+ static void pl011_class_init(ObjectClass *oc, void *data)
 -- 
 2.45.2
 
