@@ -4,87 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63E96EE499F
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:34:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88549EE499D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:34:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMXp-0004hG-TG; Wed, 11 Sep 2024 08:34:01 -0400
+	id 1soMJv-0002nF-AL; Wed, 11 Sep 2024 08:19:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1soMXg-00040X-W4
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:33:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1soMXd-00010Z-FD
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:33:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726058028;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=TxqMjBf0hhsky+HtnVAPJEta79bmURp31k7Ir/mM51U=;
- b=TaaMP1DhQndeYPByM5wbNgwkrOerR7wPJTuCFLyOG0t2Nqe3SU26tq6J6+UORVroe3Uthn
- iWFEBvAWlqQX17P+wgHDtPqmVjMeKriFy1fqBv/Tb0ySgFKzYRAM0Swh7WPrKnCwBXpaxx
- Siw/MhQ/AMcQqF4fakhxCtqCxFO8Q4E=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-279-r62jHO_2MI6kbdwI5Gs0eA-1; Wed, 11 Sep 2024 08:33:47 -0400
-X-MC-Unique: r62jHO_2MI6kbdwI5Gs0eA-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-374c3402d93so3586025f8f.0
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:33:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMJl-00015M-4a
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:19:29 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMJi-0007ha-LS
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:19:28 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-374c6187b6eso4192154f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:19:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726057165; x=1726661965; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CpGirFJS1hiVzWB+YvlZwSrjHOF2ym8zGg1RtGSITz4=;
+ b=iCKJJfl3G83xj+NG2BfGWhNTxewFy6+bG8gGG6wfUfj6rQTJGgTYuIGgkeRkcC+dzF
+ CLamP6Au7UKqu1kFijeNpSGp7iIb2n5xEmdpJ//ozGv3ZnsDSSLSTnNjVt99g6tao41h
+ fbpcgc8ynZaH1iAiQj+wEOEXP1803SyjqhZJNjB3uHP+2TcVehM7C5wrrrIZ+Nd/Qsv2
+ yxSTzLle23nEqwkaoGcqqv+a2g59wRxoz8HP5Qq1qLDLpiRm328i8pFEMSIemfyB8a8s
+ Qc9Ut6gFrl+yO+r3soAoZcO3vO76rnZfwUHqqMNN59jt4CiCT3DLvESD2kKaywkEqjud
+ ZDow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726058025; x=1726662825;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TxqMjBf0hhsky+HtnVAPJEta79bmURp31k7Ir/mM51U=;
- b=AiDVK457IqxcR/D0J0UxVeqAzfAyPegk0ZYbJLy14BKggV1mkU26JVNObe3Dgd48wp
- hR3K9wWs3gthShp85aWxJk0R/n8ZXF+Bk0VMLE6ThMKOklmzqMx7UOAJ70ZPfuZwimc9
- PLUDDtfYotiCwtXhvdid/6sb0FQBtiyipiAkk2d2+d4akOgal5Pr2HA2I763dxgtHQ2O
- w5678zgH9VclBpnrFfpPtM6C2SeaXw05G35tlHW8x47FFqQLaJ0si8oMNVZmiOQjTtn8
- NkwwNCTMSLRzf5+i6xsQJWp5Etp4wZNXUU357yeu/vb/UXSu3d8Z1CvcFSfu8uRiueC/
- GKRw==
-X-Gm-Message-State: AOJu0YxlXY5F9Z0aNql+GYaXbcASk++kFI33BtkcCibe5qd+id63b8+e
- 4wyjirDV76FIPUM5LZW/nR/1rsq1Qnx02uYbKimVP3uJnEKUoYdBJ1DT1pakuNOZyfF1O4ZvPlR
- SEDNScmpCe7gDhj7erNIAAS+g+9U7MtxgiI+4FgYK5nmrnNsYDu32tEyeQmrQDrPp4o1VJaGlfy
- 38vloRmicDjiH7UwIcRDX8+TGxmgA7miHsEZCzLow=
-X-Received: by 2002:adf:ed0b:0:b0:374:c1c5:859e with SMTP id
- ffacd0b85a97d-3788967e478mr12118189f8f.42.1726058025439; 
- Wed, 11 Sep 2024 05:33:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEMdjLBTelPMSRSvJiObwLv/V9Uv5OFv36hoJ8uZurTbWb/2JvGExnBvA/1Vr5YZTisvg/uBw==
-X-Received: by 2002:adf:ed0b:0:b0:374:c1c5:859e with SMTP id
- ffacd0b85a97d-3788967e478mr12118169f8f.42.1726058024789; 
- Wed, 11 Sep 2024 05:33:44 -0700 (PDT)
-Received: from avogadro.local ([151.95.101.29])
+ d=1e100.net; s=20230601; t=1726057165; x=1726661965;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CpGirFJS1hiVzWB+YvlZwSrjHOF2ym8zGg1RtGSITz4=;
+ b=WjBD6jF+xGOmIZYP/wOdGgzsCXc4lpL+IW2SizOG5wITd4cp7m5s1Fzpqilulmcupl
+ YPKqWGNpN8Ukgg6ia/G/J91olBkrMXIfTQyuZPhiYeAn3vu5k+gsrAlHd657xZEzJagb
+ PSbpv55nST3eE+kEq4Ww/tOdpu3XxVQR8qpwLbBdm2WokIUKEN2i1C/WEtjAtFkejwR6
+ 4qGVqSyoAvyvltCqxTyzt9MMsRuOt1zi3XDoxn+7eXz9wBfsa12znzxUPrtdwmnhLUOe
+ D9UlnyGoT3zp9OKeQZ5faFSBiCsc6W2YMb1NGsBBiFIl1rXWvbJyw7awRW4uFGgbgpHI
+ CWkg==
+X-Gm-Message-State: AOJu0YzwUDjEHQkdjShv8jTBzyLlD9/2ZikL2i9ONiFso56LhhVF9qFQ
+ /eD2HwGy7PHdfFdOfuF4IQ7IERgvlpyphHTv18g+epcLIiFVSnlM23/qpjHN/sTRi92RUyji4yZ
+ 3
+X-Google-Smtp-Source: AGHT+IEUFDLgWmfIfyvZLvoZDG4wQJB1LpuWZJRXg4f/bmVHsmIsw/RxjmEpEHtdWL804ZKzbYpiQg==
+X-Received: by 2002:adf:f6c2:0:b0:374:cbc4:53b1 with SMTP id
+ ffacd0b85a97d-3788967e494mr12571511f8f.40.1726057164608; 
+ Wed, 11 Sep 2024 05:19:24 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.196.107])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42caeb21a73sm142142185e9.3.2024.09.11.05.33.44
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 05:33:44 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ ffacd0b85a97d-378956d3765sm11464880f8f.74.2024.09.11.05.19.23
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 11 Sep 2024 05:19:24 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/17] Misc patches for 2024-09-11
-Date: Wed, 11 Sep 2024 14:33:25 +0200
-Message-ID: <20240911123342.339482-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.0
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PULL 43/56] tests/unit: Comment FIFO8 tests
+Date: Wed, 11 Sep 2024 14:14:08 +0200
+Message-ID: <20240911121422.52585-44-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240911121422.52585-1-philmd@linaro.org>
+References: <20240911121422.52585-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,158 +94,347 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 7b87a25f49a301d3377f3e71e0b4a62540c6f6e4:
+Add comments describing how the FIFO evolves during each test.
 
-  Merge tag 'edgar/xen-queue-2024-09-04.for-upstream' of https://gitlab.com/edgar.iglesias/qemu into staging (2024-09-05 13:02:26 +0100)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Message-Id: <20240906132909.78886-4-philmd@linaro.org>
+---
+ tests/unit/test-fifo.c | 188 ++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 187 insertions(+), 1 deletion(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
-
-for you to fetch changes up to bcc39835be0c3dfb375172e027cb7b29d08f8abd:
-
-  minikconf: print error entirely on stderr (2024-09-06 10:18:29 +0200)
-
-----------------------------------------------------------------
-* pc: Add a description for the i8042 property
-* kvm: support for nested FRED
-* tests/unit: fix warning when compiling test-nested-aio-poll with LTO
-* kvm: refactoring of VM creation
-* target/i386: expose IBPB-BRTYPE and SBPB CPUID bits to the guest
-* hw/char: clean up serial
-* remove virtfs-proxy-helper
-
-----------------------------------------------------------------
-Ani Sinha (5):
-      kvm/i386: make kvm_filter_msr() and related definitions private to kvm module
-      kvm/i386: fix return values of is_host_cpu_intel()
-      kvm: replace fprintf with error_report()/printf() in kvm_init()
-      kvm/i386: refactor kvm_arch_init and split it into smaller functions
-      kvm: refactor core virtual machine creation into its own function
-
-Bernhard Beschow (3):
-      hw: Remove unused inclusion of hw/char/serial.h
-      hw/char/serial.h: Extract serial-isa.h
-      hw/char: Extract serial-mm
-
-Fabiano Rosas (1):
-      target/i386: Expose IBPB-BRTYPE and SBPB CPUID bits to the guest
-
-Kamil Szczęk (1):
-      hw/i386/pc: Add a description for the i8042 property
-
-Lei Wang (1):
-      target/i386: Raise the highest index value used for any VMCS encoding
-
-Paolo Bonzini (4):
-      tests/unit: remove block layer code from test-nested-aio-poll
-      kvm/i386: replace identity_base variable with a constant
-      virtio-9p: remove virtfs-proxy-helper
-      minikconf: print error entirely on stderr
-
-Xin Li (Intel) (2):
-      target/i386: Delete duplicated macro definition CR4_FRED_MASK
-      target/i386: Add VMX control bits for nested FRED support
-
- MAINTAINERS                         |    8 -
- docs/about/deprecated.rst           |   23 -
- docs/about/removed-features.rst     |   14 +
- docs/conf.py                        |    3 -
- docs/meson.build                    |    1 -
- docs/tools/index.rst                |    1 -
- docs/tools/virtfs-proxy-helper.rst  |   75 --
- meson.build                         |    8 -
- fsdev/qemu-fsdev.h                  |    1 -
- hw/9pfs/9p-proxy.h                  |  101 ---
- include/hw/arm/aspeed_soc.h         |    2 +-
- include/hw/char/mchp_pfsoc_mmuart.h |    2 +-
- include/hw/char/serial-isa.h        |   38 ++
- include/hw/char/serial-mm.h         |   52 ++
- include/hw/char/serial.h            |   28 -
- target/i386/cpu.h                   |    7 +-
- target/i386/kvm/kvm_i386.h          |   11 -
- accel/kvm/kvm-all.c                 |  109 +--
- fsdev/qemu-fsdev.c                  |   19 -
- fsdev/virtfs-proxy-helper.c         | 1193 --------------------------------
- hw/9pfs/9p-proxy.c                  | 1279 -----------------------------------
- hw/arm/allwinner-a10.c              |    2 +-
- hw/arm/allwinner-h3.c               |    2 +-
- hw/arm/allwinner-r40.c              |    2 +-
- hw/arm/aspeed_ast2400.c             |    2 +-
- hw/arm/aspeed_soc_common.c          |    2 +-
- hw/arm/kzm.c                        |    2 +-
- hw/arm/msf2-soc.c                   |    2 +-
- hw/arm/musicpal.c                   |    2 +-
- hw/arm/npcm7xx.c                    |    2 +-
- hw/arm/pxa2xx.c                     |    2 +-
- hw/char/omap_uart.c                 |    2 +-
- hw/char/riscv_htif.c                |    1 -
- hw/char/serial-isa.c                |    1 +
- hw/char/serial-mm.c                 |  157 +++++
- hw/char/serial.c                    |  126 ----
- hw/display/sm501.c                  |    2 +-
- hw/hppa/machine.c                   |    2 +-
- hw/i386/microvm-dt.c                |    2 +-
- hw/i386/microvm.c                   |    2 +-
- hw/i386/pc.c                        |    4 +-
- hw/isa/isa-superio.c                |    2 +-
- hw/isa/vt82c686.c                   |    2 +-
- hw/loongarch/virt.c                 |    2 +-
- hw/microblaze/petalogix_ml605_mmu.c |    2 +-
- hw/mips/boston.c                    |    2 +-
- hw/mips/jazz.c                      |    2 +-
- hw/mips/loongson3_virt.c            |    2 +-
- hw/mips/malta.c                     |    2 +-
- hw/mips/mipssim.c                   |    2 +-
- hw/openrisc/openrisc_sim.c          |    2 +-
- hw/openrisc/virt.c                  |    2 +-
- hw/ppc/e500.c                       |    2 +-
- hw/ppc/pnv.c                        |    2 +-
- hw/ppc/ppc405_uc.c                  |    2 +-
- hw/ppc/ppc440_bamboo.c              |    2 +-
- hw/ppc/prep.c                       |    1 -
- hw/ppc/sam460ex.c                   |    2 +-
- hw/ppc/virtex_ml507.c               |    2 +-
- hw/riscv/sifive_e.c                 |    1 -
- hw/riscv/sifive_u.c                 |    1 -
- hw/riscv/virt.c                     |    2 +-
- hw/sparc64/niagara.c                |    2 +-
- hw/sparc64/sun4u.c                  |    3 +-
- hw/xtensa/xtfpga.c                  |    2 +-
- target/i386/cpu.c                   |    8 +-
- target/i386/kvm/kvm.c               |  366 ++++++----
- target/i386/kvm/vmsr_energy.c       |    2 +-
- fsdev/meson.build                   |    8 -
- hw/9pfs/meson.build                 |    1 -
- hw/arm/Kconfig                      |   20 +-
- hw/char/Kconfig                     |    4 +
- hw/char/meson.build                 |    1 +
- hw/display/Kconfig                  |    2 +-
- hw/hppa/Kconfig                     |    2 +-
- hw/loongarch/Kconfig                |    2 +-
- hw/microblaze/Kconfig               |    2 +-
- hw/mips/Kconfig                     |   10 +-
- hw/openrisc/Kconfig                 |    4 +-
- hw/ppc/Kconfig                      |   10 +-
- hw/riscv/Kconfig                    |    2 +-
- hw/sparc64/Kconfig                  |    1 +
- hw/xtensa/Kconfig                   |    2 +-
- meson_options.txt                   |    2 -
- qemu-options.hx                     |   46 --
- scripts/meson-buildoptions.         |    0
- scripts/meson-buildoptions.sh       |    4 -
- scripts/minikconf.py                |    2 +-
- tests/unit/meson.build              |    2 +-
- 89 files changed, 644 insertions(+), 3199 deletions(-)
- delete mode 100644 docs/tools/virtfs-proxy-helper.rst
- delete mode 100644 hw/9pfs/9p-proxy.h
- create mode 100644 include/hw/char/serial-isa.h
- create mode 100644 include/hw/char/serial-mm.h
- delete mode 100644 fsdev/virtfs-proxy-helper.c
- delete mode 100644 hw/9pfs/9p-proxy.c
- create mode 100644 hw/char/serial-mm.c
- create mode 100644 scripts/meson-buildoptions.
+diff --git a/tests/unit/test-fifo.c b/tests/unit/test-fifo.c
+index fada526b6c..14153c41fa 100644
+--- a/tests/unit/test-fifo.c
++++ b/tests/unit/test-fifo.c
+@@ -27,14 +27,36 @@ static void test_fifo8_pop_bufptr_wrap(void)
+     uint32_t count;
+ 
+     fifo8_create(&fifo, 8);
++    /*
++     *  head --v-- tail             used = 0
++     * FIFO: [ . . . . . . . . ]
++     */
+ 
+     fifo8_push_all(&fifo, data_in1, sizeof(data_in1));
++    /*
++     *  head --v      ]-- tail      used = 4
++     * FIFO: [ 1 2 3 4 . . . . ]
++     */
+     buf = fifo8_pop_bufptr(&fifo, 2, &count);
++    /*
++     *      head --v  ]-- tail      used = 2
++     * FIFO: [ 1 2 3 4 . . . . ]
++     *  buf  --^                    count = 2
++     */
+     g_assert(count == 2);
+     g_assert(buf[0] == 0x1 && buf[1] == 0x2);
+ 
+     fifo8_push_all(&fifo, data_in2, sizeof(data_in2));
++    /*
++     *     tail --]v-- head         used = 8
++     * FIFO: [ 9 a 3 4 5 6 7 8 ]
++     */
+     buf = fifo8_pop_bufptr(&fifo, 8, &count);
++    /*
++     *  head --v  ]-- tail          used = 2
++     * FIFO: [ 9 a 3 4 5 6 7 8 ]
++     *  buf      --^                count = 6
++     */
+     g_assert(count == 6);
+     g_assert(buf[0] == 0x3 && buf[1] == 0x4 && buf[2] == 0x5 &&
+              buf[3] == 0x6 && buf[4] == 0x7 && buf[5] == 0x8);
+@@ -51,9 +73,22 @@ static void test_fifo8_pop_bufptr(void)
+     uint32_t count;
+ 
+     fifo8_create(&fifo, 8);
++    /*
++     *  head --v-- tail             used = 0
++     * FIFO: [ . . . . . . . . ]
++     */
+ 
+     fifo8_push_all(&fifo, data_in, sizeof(data_in));
++    /*
++     *  head --v      ]-- tail      used = 4
++     * FIFO: [ 1 2 3 4 . . . . ]
++     */
+     buf = fifo8_pop_bufptr(&fifo, 2, &count);
++    /*
++     *      head --v  ]-- tail      used = 2
++     * FIFO: [ 1 2 3 4 . . . . ]
++     *  buf  --^                    count = 2
++     */
+     g_assert(count == 2);
+     g_assert(buf[0] == 0x1 && buf[1] == 0x2);
+ 
+@@ -70,18 +105,45 @@ static void test_fifo8_peek_bufptr_wrap(void)
+     uint32_t count;
+ 
+     fifo8_create(&fifo, 8);
++    /*
++     *  head --v-- tail             used = 0
++     * FIFO: { . . . . . . . . }
++     */
+ 
+     fifo8_push_all(&fifo, data_in1, sizeof(data_in1));
++    /*
++     *  head --v      ]-- tail      used = 4
++     * FIFO: { 1 2 3 4 . . . . }
++     */
+     buf = fifo8_peek_bufptr(&fifo, 2, &count);
++    /*
++     *  head --v      ]-- tail      used = 4
++     * FIFO: { 1 2 3 4 . . . . }
++     *  buf: [ 1 2 ]                count = 2
++     */
+     g_assert(count == 2);
+     g_assert(buf[0] == 0x1 && buf[1] == 0x2);
+ 
+     buf = fifo8_pop_bufptr(&fifo, 2, &count);
++    /*
++     *     head  --v  ]-- tail      used = 2
++     * FIFO: { 1 2 3 4 . . . . }
++     *  buf: [ 1 2 ]                count = 2
++     */
+     g_assert(count == 2);
+     g_assert(buf[0] == 0x1 && buf[1] == 0x2);
+     fifo8_push_all(&fifo, data_in2, sizeof(data_in2));
++    /*
++     *  tail   ---]v-- head         used = 8
++     * FIFO: { 9 a 3 4 5 6 7 8 }
++     */
+ 
+     buf = fifo8_peek_bufptr(&fifo, 8, &count);
++    /*
++     *     tail --]v-- head         used = 8
++     * FIFO: { 9 a 3 4 5 6 7 8 }
++     *  buf:     [ 3 4 5 6 7 8 ]    count = 6
++     */
+     g_assert(count == 6);
+     g_assert(buf[0] == 0x3 && buf[1] == 0x4 && buf[2] == 0x5 &&
+              buf[3] == 0x6 && buf[4] == 0x7 && buf[5] == 0x8);
+@@ -98,9 +160,22 @@ static void test_fifo8_peek_bufptr(void)
+     uint32_t count;
+ 
+     fifo8_create(&fifo, 8);
++    /*
++     *  head --v-- tail             used = 0
++     * FIFO: { . . . . . . . . }
++     */
+ 
+     fifo8_push_all(&fifo, data_in, sizeof(data_in));
++    /*
++     *  head --v      ]-- tail      used = 4
++     * FIFO: { 1 2 3 4 . . . . }
++     */
+     buf = fifo8_peek_bufptr(&fifo, 2, &count);
++    /*
++     *  head --v      ]-- tail      used = 4
++     * FIFO: { 1 2 3 4 . . . . }
++     *  buf: [ 1 2 ]                count = 2
++     */
+     g_assert(count == 2);
+     g_assert(buf[0] == 0x1 && buf[1] == 0x2);
+ 
+@@ -117,14 +192,38 @@ static void test_fifo8_pop_buf_wrap(void)
+     int count;
+ 
+     fifo8_create(&fifo, 8);
++    /*
++     *  head --v-- tail             used = 0
++     * FIFO: { . . . . . . . . }
++     */
+ 
+     fifo8_push_all(&fifo, data_in1, sizeof(data_in1));
++    /*
++     *  head --v      ]-- tail      used = 4
++     * FIFO: { 1 2 3 4 . . . . }
++     */
+     fifo8_pop_buf(&fifo, NULL, 4);
++    /*
++     *         tail --]v-- head     used = 0
++     * FIFO: [ 1 2 3 4 . . . . ]
++     */
+ 
+     fifo8_push_all(&fifo, data_in2, sizeof(data_in2));
++    /*
++     *         tail --]v-- head     used = 8
++     * FIFO: { 9 a b c 5 6 7 8 }
++     */
+     count = fifo8_pop_buf(&fifo, NULL, 4);
++    /*
++     * head  --v      ]-- tail      used = 4
++     * FIFO: { 9 a b c 5 6 7 8 }
++     */
+     g_assert(count == 4);
+     count = fifo8_pop_buf(&fifo, data_out, 4);
++    /*
++     *         tail --]v-- head     used = 0
++     * FIFO: { 9 a b c 5 6 7 8 }
++     */
+     g_assert(count == 4);
+     g_assert(data_out[0] == 0x9 && data_out[1] == 0xa &&
+              data_out[2] == 0xb && data_out[3] == 0xc);
+@@ -141,9 +240,21 @@ static void test_fifo8_pop_buf(void)
+     int count;
+ 
+     fifo8_create(&fifo, 8);
++    /*
++     *  head --v-- tail             used = 0
++     * FIFO: { . . . . . . . . }
++     */
+ 
+     fifo8_push_all(&fifo, data_in, sizeof(data_in));
++    /*
++     *  head --v      ]-- tail      used = 4
++     * FIFO: { 1 2 3 4 . . . . }
++     */
+     count = fifo8_pop_buf(&fifo, NULL, 4);
++    /*
++     *         tail --]v-- head     used = 0
++     * FIFO: { 1 2 3 4 . . . . }
++     */
+     g_assert(count == 4);
+     count = fifo8_pop_buf(&fifo, data_out, 4);
+     g_assert(data_out[0] == 0x5 && data_out[1] == 0x6 &&
+@@ -162,19 +273,45 @@ static void test_fifo8_peek_buf_wrap(void)
+     int count;
+ 
+     fifo8_create(&fifo, 8);
++    /*
++     *  head --v-- tail             used = 0
++     * FIFO: { . . . . . . . . }
++     */
+ 
+     fifo8_push_all(&fifo, data_in1, sizeof(data_in1));
++    /*
++     *  head --v      ]-- tail      used = 4
++     * FIFO: { 1 2 3 4 . . . . }
++     */
+     fifo8_pop_buf(&fifo, NULL, 4);
++    /*
++     *         tail --]v-- head     used = 0
++     * FIFO: { 1 2 3 4 . . . . }
++     */
+ 
+     fifo8_push_all(&fifo, data_in2, sizeof(data_in2));
++    /*
++     *         tail --]v-- head     used = 8
++     * FIFO: { 9 a b c 5 6 7 8 }
++     */
+     count = fifo8_peek_buf(&fifo, NULL, 4);
+     g_assert(count == 4);
+     count = fifo8_peek_buf(&fifo, data_out, 4);
++    /*
++     *         tail --]v-- head     used = 8
++     * FIFO: { 9 a b c 5 6 7 8 }
++     *  buf:         [ 5 6 7 8 ]    count = 4
++     */
+     g_assert(count == 4);
+     g_assert(data_out[0] == 0x5 && data_out[1] == 0x6 &&
+              data_out[2] == 0x7 && data_out[3] == 0x8);
+ 
+     count = fifo8_peek_buf(&fifo, data_out, 8);
++    /*
++     *         tail --]v-- head     used = 8
++     * FIFO: { 9 a b c 5 6 7 8 }
++     *  buf:         [ 5 6 7 8 9 a b c ] count = 8
++     */
+     g_assert(count == 8);
+     g_assert(data_out[0] == 0x5 && data_out[1] == 0x6 &&
+              data_out[2] == 0x7 && data_out[3] == 0x8);
+@@ -193,14 +330,27 @@ static void test_fifo8_peek_buf(void)
+     int count;
+ 
+     fifo8_create(&fifo, 8);
++    /*
++     *  head --v-- tail             used = 0
++     * FIFO: { . . . . . . . . }
++     */
+ 
+     fifo8_push_all(&fifo, data_in, sizeof(data_in));
++    /*
++     *  head --v      ]-- tail      used = 4
++     * FIFO: { 1 2 3 4 . . . . }
++     */
+     count = fifo8_peek_buf(&fifo, NULL, 4);
+     g_assert(count == 4);
++
+     g_assert(data_out[0] == 0xff && data_out[1] == 0xff &&
+              data_out[2] == 0xff && data_out[3] == 0xff);
+-
+     count = fifo8_peek_buf(&fifo, data_out, 4);
++    /*
++     *  head --v      ]-- tail      used = 4
++     * FIFO: { 1 2 3 4 . . . . }
++     *  buf: [ 1 2 3 4 ]            count = 4
++     */
+     g_assert(count == 4);
+     g_assert(data_out[0] == 0x1 && data_out[1] == 0x2 &&
+              data_out[2] == 0x3 && data_out[3] == 0x4);
+@@ -215,12 +365,28 @@ static void test_fifo8_peek(void)
+     uint8_t c;
+ 
+     fifo8_create(&fifo, 8);
++    /*
++     *  head --v-- tail             used = 0
++     * FIFO: { . . . . . . . . }
++     */
+     fifo8_push(&fifo, 0x1);
++    /*
++     *  head --v]-- tail            used = 1
++     * FIFO: { 1 . . . . . . . }
++     */
+     fifo8_push(&fifo, 0x2);
++    /*
++     *  head --v  ]-- tail          used = 2
++     * FIFO: { 1 2 . . . . . . }
++     */
+ 
+     c = fifo8_peek(&fifo);
+     g_assert(c == 0x1);
+     fifo8_pop(&fifo);
++    /*
++     *    head --v]-- tail          used = 1
++     * FIFO: { 1 2 . . . . . . }
++     */
+     c = fifo8_peek(&fifo);
+     g_assert(c == 0x2);
+ 
+@@ -234,12 +400,32 @@ static void test_fifo8_pushpop(void)
+     uint8_t c;
+ 
+     fifo8_create(&fifo, 8);
++    /*
++     *  head --v-- tail             used = 0
++     * FIFO: { . . . . . . . . }
++     */
+     fifo8_push(&fifo, 0x1);
++    /*
++     *  head --v]-- tail            used = 1
++     * FIFO: { 1 . . . . . . . }
++     */
+     fifo8_push(&fifo, 0x2);
++    /*
++     *  head --v  ]-- tail          used = 2
++     * FIFO: { 1 2 . . . . . . }
++     */
+ 
+     c = fifo8_pop(&fifo);
++    /*
++     *    head --v]-- tail          used = 1
++     * FIFO: { 1 2 . . . . . . }
++     */
+     g_assert(c == 0x1);
+     c = fifo8_pop(&fifo);
++    /*
++     *     tail --]v-- head         used = 0
++     * FIFO: { 1 2 . . . . . . }
++     */
+     g_assert(c == 0x2);
+ 
+     g_assert(fifo8_num_used(&fifo) == 0);
 -- 
-2.46.0
+2.45.2
 
 
