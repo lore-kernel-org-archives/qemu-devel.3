@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 110A2EE49B9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FC64EE49B7
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 14:32:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soOKA-0000Ao-KU; Wed, 11 Sep 2024 10:28:02 -0400
+	id 1soOMk-00052k-Cm; Wed, 11 Sep 2024 10:30:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOJR-00079c-S1
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:27:25 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOMh-0004tQ-Cz
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:30:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOJN-0003NL-9A
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:27:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOMf-00044c-9f
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:30:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726064832;
+ s=mimecast20190719; t=1726065036;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DB9NGbeaAbvfzy7mNKPYp8OuO5yV58WQSC8D88JNFOQ=;
- b=eotXh7+4MPPvOD4EKTyVDdEgp3MYOHNK2m+0SbRwXUQ+wueZGqOPfF3aOwYbmC2PsQg5MB
- E2s+TT/SCsH+A4N3+AsB01uSd2U9KjACa051zXub8k9FhkNnbZKMmSPesrLKbup3hhgtoz
- t8qFZpe2tmK4G9a+4AjkY0x/Bzw7Yeg=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=s7eWEC+J3I9Lev0M7HtiUi/IanEUkElHv0I4GaiCIw8=;
+ b=eISEn2qVf62ZM2n5aB8zkDG75esudLUoEsfGXjIE/wtIlmAxURar5yHVvCEMHhOsaJ+G8s
+ VHk5o9SRmp1zCpVt/T+U7Kh7AHyhFZing5eFtEXTII8SThdGZJ4b/4A2DEwQ8L10kKhrbM
+ jD6aTv1pJ2iDxYnerS+eule4ZydXg1g=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-214-UrGgz0SqPeKAk9b-vi0G1A-1; Wed, 11 Sep 2024 09:52:21 -0400
-X-MC-Unique: UrGgz0SqPeKAk9b-vi0G1A-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a8d2e6a6989so251058666b.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 06:52:19 -0700 (PDT)
+ us-mta-68-RJmG23MwOHSOHOvb3rg9Qg-1; Wed, 11 Sep 2024 09:52:17 -0400
+X-MC-Unique: RJmG23MwOHSOHOvb3rg9Qg-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5c25c45afb2so4829621a12.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 06:52:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726062738; x=1726667538;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DB9NGbeaAbvfzy7mNKPYp8OuO5yV58WQSC8D88JNFOQ=;
- b=hhD829JtsUSXq5Z2l1GvS/8MAJIFgm0/nuSyp8uK1MpsrxoGE7yhGnOl+kCw5UPeuo
- dU8Gcjnq4Xja1xKm5YaLc8xcvKQbtucGpkY6RD/x0NYfDI8/17G21mEqE9ndqruX5FNA
- fg4aWy894wXgpB1dL6PbfLFLSVJ3tRhMA37FB0RGCQ7iwvtFhaVBjVGCGMZH2ksqgUd8
- qHjyWF7/xK2UKPLV2gJNjQzovRiSRIkZediTlE4Fg582N+GXJD+YOl3Hi+j6c+03jeTU
- hL6a6km7kKN4mP2NfNSPVZQcbNMn5/Jy6JLqsCajb9q6cCxCCA6KkAkPCpF5KQymtx4b
- 65ew==
-X-Gm-Message-State: AOJu0YxkbOexp//ys0yxBwvU8DbO9SqjqwRZUkYpQvMCIhBQM3nunXX0
- Zyd5Zt+ruTbdb7jENW+9Iaz2OufPV6LX5Dvgeue45C4pZy2UDoxwPsefSZiEp39AKV2+50T2Pci
- eNr1MnOiW1laCY5o0OhCcatwuEClZ7Dw3S0XVnAqR3o3k/uTEbhTNQjVu5n7LFnWwvWi0orPnoa
- ec0O2SpKe9KGki2SEFp+Q5sp79xba2bw==
-X-Received: by 2002:a17:907:60ca:b0:a8d:3e29:a82d with SMTP id
- a640c23a62f3a-a8ffab771b9mr459881066b.37.1726062738367; 
- Wed, 11 Sep 2024 06:52:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEyRf5v+DYP/9JUh8QHbJzGLb2wgjxLVIaqhTZr6pP7FjtSjnlbJet8bU6YApEOMBOSO/qlgQ==
-X-Received: by 2002:a17:907:60ca:b0:a8d:3e29:a82d with SMTP id
- a640c23a62f3a-a8ffab771b9mr459877466b.37.1726062737792; 
- Wed, 11 Sep 2024 06:52:17 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726062735; x=1726667535;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=s7eWEC+J3I9Lev0M7HtiUi/IanEUkElHv0I4GaiCIw8=;
+ b=ufvTDFT8p+uem6p/jSuqxLqNhECafJ0omcHXyLC9RKReXkD0ODlxlM5dG6QgCNLzed
+ 2Ty7OtTVdWfBArNqWHzNF17w9bpqLAjSPw6i9wNwRkA119tqrWsTnHYPt31pKLgpB2HD
+ alB3YwVWjJK98L7YpaM4+f8zj9ZJEf4UpTpvp96M98iZw2QiGu6TTlx9mGGSTiWBhTkV
+ ClylMeDGRNeXAx++Mzqk6J4z2zjogQEenTeOmZUDHjneR/J0ydX+ZTscqHFiniW99W1k
+ MIvSjof5rmsQP5c5/B3J6K40mIcyBCrmIHiHHCIPrLVQGnfW/IcwmBrcVvBh6Wx96XCv
+ CUvg==
+X-Gm-Message-State: AOJu0YzxMOlEUki71X4br/AsIcSMp9flIeQEON2Q0xiqbUuzHAIedKpc
+ yNx3kSu7kcZ21GNnGgvRBAhsYfSRUT6sX529W7eHpGbFy0sMlR5rtkdWs1uRVc0hYQ+OF2IN1br
+ KEybP6AhESmn05rNzA3STt42iX0QocEnZDFS8CZPKWxCIYrn4QGyQxaSeE6+BB5MhB7DQnDfmK9
+ gKIJvcNg3yiaucu0rXW8+UOsV/LyXSng==
+X-Received: by 2002:a05:6402:528d:b0:5be:fd66:edf3 with SMTP id
+ 4fb4d7f45d1cf-5c3dc79b7a6mr12720156a12.18.1726062735419; 
+ Wed, 11 Sep 2024 06:52:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzLNZKPzU44WOHzWzxWuIOTk/S6psIjrahnWH+D/HwRtJ/7DEgGqSrj3xM9gxcltyj57xeeA==
+X-Received: by 2002:a05:6402:528d:b0:5be:fd66:edf3 with SMTP id
+ 4fb4d7f45d1cf-5c3dc79b7a6mr12720129a12.18.1726062734725; 
+ Wed, 11 Sep 2024 06:52:14 -0700 (PDT)
 Received: from redhat.com ([2.55.9.133]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25c727e4sm614180366b.126.2024.09.11.06.52.16
+ 4fb4d7f45d1cf-5c3ebd41be4sm5361685a12.18.2024.09.11.06.52.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 06:52:17 -0700 (PDT)
-Date: Wed, 11 Sep 2024 09:52:15 -0400
+ Wed, 11 Sep 2024 06:52:14 -0700 (PDT)
+Date: Wed, 11 Sep 2024 09:52:11 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Volker =?utf-8?Q?R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PULL 16/18] hw/audio/virtio-sound: fix heap buffer overflow
-Message-ID: <7fc6611cad3e9627b23ce83e550b668abba6c886.1726062663.git.mst@redhat.com>
+ peng guo <engguopeng@buaa.edu.cn>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
+Subject: [PULL 15/18] hw/cxl: fix physical address field in get scan media
+ results output
+Message-ID: <d29b7f3dd4f95da7173b3f0fb58a7d4dbb093f92.1726062663.git.mst@redhat.com>
 References: <cover.1726062663.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1726062663.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -105,81 +103,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Volker Rümelin <vr_qemu@t-online.de>
+From: peng guo <engguopeng@buaa.edu.cn>
 
-Currently, the guest may write to the device configuration space,
-whereas the virtio sound device specification in chapter 5.14.4
-clearly states that the fields in the device configuration space
-are driver-read-only.
+When using the mailbox command get scan media results, the scan media
+restart physical address field in the ouput palyload is not 64-byte
+aligned.
 
-Remove the set_config function from the virtio_snd class.
+This patch removed the error source of the restart physical address.
 
-This also prevents a heap buffer overflow. See QEMU issue #2296.
+The Scan Media Restart Physical Address is the location from which the
+host should restart the Scan Media operation. [5:0] bits are reserved.
+Refer to CXL spec r3.1 Table 8-146
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2296
-Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
-Message-Id: <20240901130112.8242-1-vr_qemu@t-online.de>
+Fixes: 89b5cfcc31e6 ("hw/cxl: Add get scan media results cmd support")
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/linux-cxl/20240819154206.16456-1-engguopeng@buaa.edu.cn/
+Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
+Message-Id: <20240825102212.3871-1-engguopeng@buaa.edu.cn>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/audio/virtio-snd.c | 24 ------------------------
- hw/audio/trace-events |  1 -
- 2 files changed, 25 deletions(-)
+ hw/cxl/cxl-mailbox-utils.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index d1cf5eb445..69838181dd 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -107,29 +107,6 @@ virtio_snd_get_config(VirtIODevice *vdev, uint8_t *config)
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 3ebbd32e10..9258e48f95 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -2076,7 +2076,7 @@ static CXLRetCode cmd_media_get_scan_media_results(const struct cxl_cmd *cmd,
  
- }
+         start = ROUND_DOWN(ent->start, 64ull);
+         stop = ROUND_DOWN(ent->start, 64ull) + ent->length;
+-        stq_le_p(&out->records[i].addr, start | (ent->type & 0x7));
++        stq_le_p(&out->records[i].addr, start);
+         stl_le_p(&out->records[i].length, (stop - start) / CXL_CACHE_LINE_SIZE);
+         i++;
  
--static void
--virtio_snd_set_config(VirtIODevice *vdev, const uint8_t *config)
--{
--    VirtIOSound *s = VIRTIO_SND(vdev);
--    const virtio_snd_config *sndconfig =
--        (const virtio_snd_config *)config;
--
--
--   trace_virtio_snd_set_config(vdev,
--                               s->snd_conf.jacks,
--                               sndconfig->jacks,
--                               s->snd_conf.streams,
--                               sndconfig->streams,
--                               s->snd_conf.chmaps,
--                               sndconfig->chmaps);
--
--    memcpy(&s->snd_conf, sndconfig, sizeof(virtio_snd_config));
--    le32_to_cpus(&s->snd_conf.jacks);
--    le32_to_cpus(&s->snd_conf.streams);
--    le32_to_cpus(&s->snd_conf.chmaps);
--
--}
--
- static void
- virtio_snd_pcm_buffer_free(VirtIOSoundPCMBuffer *buffer)
- {
-@@ -1400,7 +1377,6 @@ static void virtio_snd_class_init(ObjectClass *klass, void *data)
-     vdc->realize = virtio_snd_realize;
-     vdc->unrealize = virtio_snd_unrealize;
-     vdc->get_config = virtio_snd_get_config;
--    vdc->set_config = virtio_snd_set_config;
-     vdc->get_features = get_features;
-     vdc->reset = virtio_snd_reset;
-     vdc->legacy_features = 0;
-diff --git a/hw/audio/trace-events b/hw/audio/trace-events
-index b1870ff224..b8ef572767 100644
---- a/hw/audio/trace-events
-+++ b/hw/audio/trace-events
-@@ -41,7 +41,6 @@ asc_update_irq(int irq, int a, int b) "set IRQ to %d (A: 0x%x B: 0x%x)"
- 
- #virtio-snd.c
- virtio_snd_get_config(void *vdev, uint32_t jacks, uint32_t streams, uint32_t chmaps) "snd %p: get_config jacks=%"PRIu32" streams=%"PRIu32" chmaps=%"PRIu32""
--virtio_snd_set_config(void *vdev, uint32_t jacks, uint32_t new_jacks, uint32_t streams, uint32_t new_streams, uint32_t chmaps, uint32_t new_chmaps) "snd %p: set_config jacks from %"PRIu32"->%"PRIu32", streams from %"PRIu32"->%"PRIu32", chmaps from %"PRIu32"->%"PRIu32
- virtio_snd_get_features(void *vdev, uint64_t features) "snd %p: get_features 0x%"PRIx64
- virtio_snd_vm_state_running(void) "vm state running"
- virtio_snd_vm_state_stopped(void) "vm state stopped"
 -- 
 MST
 
