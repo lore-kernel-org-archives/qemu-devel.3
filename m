@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD70CEE57C0
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:25:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 587F2EE49BC
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:25:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soOyo-0001CV-5h; Wed, 11 Sep 2024 11:10:03 -0400
+	id 1soP21-0006PQ-1Z; Wed, 11 Sep 2024 11:13:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1soOuP-00009b-IQ
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:05:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1soOuN-0000lW-JE
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:05:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726067122;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uoUZeC6LRc7rq1WSj0H2PhIHrG20erxXeEpQDJ7AxZE=;
- b=DSt7vpg/TCrg18g7AgCmpnrmSVg2FmvGNsSpmZt2UuuKqyGvEi5suTM43LnimJ5ByAHBhu
- XPDaIa7NAsVgh/2taCQQUyCk2g7BM0nBAKKKWW7cUTFnZeNU0qkKge18t7Q9S8MpCIbljV
- iFQezALMfaMGa76euw60xQRbW2gL4ds=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-220-P5rGcSv9PbqPrnMx-8TksQ-1; Wed, 11 Sep 2024 11:05:21 -0400
-X-MC-Unique: P5rGcSv9PbqPrnMx-8TksQ-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7a99fdae7bbso1027986485a.3
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 08:05:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726067120; x=1726671920;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soP18-0002u9-04
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:12:28 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soP0z-0001Hp-Ko
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:12:20 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a8d51a7d6f5so444260866b.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 08:12:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726067535; x=1726672335; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uoUZeC6LRc7rq1WSj0H2PhIHrG20erxXeEpQDJ7AxZE=;
- b=UQ+xNKUpWwaPR9hxswiDaC5BSumOr5X2QtF6fH0es0/fWIyYFexkzX/NbkCXnbiQG/
- 5XPtr35yb8GB6ZPxsHI9NLMvO283ziHH9XqPSc4tpGu6oqRPJT1A28u4Pi1r8xyJqqVa
- 0vuOfvsMIgu82xbqD6PMNsNm60Sf67NiVdqocd+GnMeD0kUBVoeEOfGQBB59kQXjM0Cl
- vJMLRQ+uq6n6L76MoPm5hqYe2XdMIPn4FaZvKIqPqOz1pieRP56NKaTBeWJvuo9dLx82
- IsZHP/VQ1bI6KJWLE0IUvHdoSrCV/sYoQAnYzUPbhiccBnUSRxPYhVti46/360kebejf
- jv1A==
-X-Gm-Message-State: AOJu0YwLU4bmnwlGci0p8iwTB+L4g5+5Kc60yvq5IbRyI3DgtAZMxgSp
- llODCx54fpN8GxQntG53YM2LCa8HR2DXv8AJjEne1ymTPZKgimGs/ffsbolcS11mK90mCKKnIcI
- lW3IQP8LFxVkOwMcsJJv86BC2YiFN59EIkG9UA1fYLIL50EvMAjWDeWEhkTGSYQ0=
-X-Received: by 2002:a05:620a:2916:b0:7a9:c04a:f50 with SMTP id
- af79cd13be357-7a9c04a137cmr1153467085a.34.1726067120416; 
- Wed, 11 Sep 2024 08:05:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF7DkCElsWpQR12tgGU+UPxAWubks45EE+ygNJkSE6Jnrs99zzpLwHCjsbXhr0P9R8lA/W2bQ==
-X-Received: by 2002:a05:620a:2916:b0:7a9:c04a:f50 with SMTP id
- af79cd13be357-7a9c04a137cmr1153462985a.34.1726067120044; 
- Wed, 11 Sep 2024 08:05:20 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a9a796cc87sm431365385a.46.2024.09.11.08.05.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 08:05:19 -0700 (PDT)
-Date: Wed, 11 Sep 2024 11:05:17 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] tests/qtest/migration: Move a couple of slow tests under
- g_test_slow
-Message-ID: <ZuGxrSLgDt5aPPB_@x1n>
-References: <20240911145204.17692-1-farosas@suse.de>
+ bh=C6fs1IUTb9TPohRF9BBRWmVTfcqz5qZnUo2BPeCal4E=;
+ b=f8caxWHhJZiWO7x9aCSYJxqZOjGtYytgOrWhNGzWIvTVTC3yP0iO7+XgpFMdkGjxOY
+ mDUn+TuLNxXPS6Sw1X5gpSqmxbQMd6m1ku6aus/jOj3AKKmldvtjrM6KDEIZeT/Xa/QN
+ CORcRIa1jgZlFFOwv6zT6RB5XSLzZ0rIO261AVr6CUObbMya+h7d56Kfa7MkDqiF4Wtm
+ L05pBv2r48fEOT1QERvmlspC08Ofo078Ag2B97NzIyEAlAUfvQz1ha9thRFHQfF/YRYM
+ 2SoFqON8qS086BqJNaheQlijlRal6RT1IWfOJyVGQkA9Z2rUHpvHDOpyHLY5+f0AjeEw
+ CK9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726067535; x=1726672335;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=C6fs1IUTb9TPohRF9BBRWmVTfcqz5qZnUo2BPeCal4E=;
+ b=X7vKdwBbI8WgqbKMd0D/Et30XSsKzMWeovqguOHf6vNDfNcsrRxAwe7bQ73EfJOSDu
+ MuqEsi/SH0QTL9dr7lOkOrh3IKwSydUJJ2a+UdJu5jpMBi7e5Ha7a3RTW5Wclcio20B5
+ pFEc9Z/5EARXOS66Zuza02c4h4+V6OwtaGZm5EbpcXWnzfdOzbUDxEPqhd9ErWhww8LN
+ xLl6ovl8gAW4ojllZv271gbul6oGg1RJmMXZM2LHwTcV/lB3zgyL/1sPcrGF6nlYP+4N
+ 69GBmspEM7qBQdLaCm2mvYvVHEaDUDy4KAweLGlB4WKloQKJ8/FXQuPaeBqjg93eAxLZ
+ 46ZA==
+X-Gm-Message-State: AOJu0YwDU9VB10Gbok0xYn1K4BQCvbEBNslgdMFzKyAHeV9U0OI616Hi
+ 4tBmoECkSzgREsYhqW12GyFHeSO/JKysnE3FqDYIM3gwQGEN5W2Yewc3KQwiIyytQlwRU8N+c4R
+ N
+X-Google-Smtp-Source: AGHT+IGo6R2XSv1js1cRDObLgzNHOxBnfDzrJwBvvPiW2xMsHCcXyzA1FX1VYQwBzdRID1Rmn8nBPg==
+X-Received: by 2002:a17:907:7294:b0:a86:96d1:d1f with SMTP id
+ a640c23a62f3a-a8ffaadafdbmr488357866b.26.1726067535402; 
+ Wed, 11 Sep 2024 08:12:15 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.196.107])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a8d258338a2sm626940566b.43.2024.09.11.08.12.14
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 11 Sep 2024 08:12:15 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org
+Subject: [PATCH v3 1/5] tests/functional: Correct typo in
+ test_netdev_ethtool.py SPDX tag
+Date: Wed, 11 Sep 2024 17:12:02 +0200
+Message-ID: <20240911151206.60368-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240911151206.60368-1-philmd@linaro.org>
+References: <20240911151206.60368-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240911145204.17692-1-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,16 +94,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 11, 2024 at 11:52:04AM -0300, Fabiano Rosas wrote:
-> The xbzrel and vcpu_dirty_limit are the two slowest tests from
-> migration-test. Move them under g_test_slow() to save about 40s per
-> run.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Fixes: 9f95111474 ("tests/avocado: re-factor igb test to avoid timeouts")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tests/functional/test_netdev_ethtool.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-queued.
-
+diff --git a/tests/functional/test_netdev_ethtool.py b/tests/functional/test_netdev_ethtool.py
+index d5b911c918..ee1a397bd2 100755
+--- a/tests/functional/test_netdev_ethtool.py
++++ b/tests/functional/test_netdev_ethtool.py
+@@ -5,7 +5,7 @@
+ # This test leverages ethtool's --test sequence to validate network
+ # device behaviour.
+ #
+-# SPDX-License-Identifier: GPL-2.0-or-late
++# SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ from unittest import skip
+ from qemu_test import QemuSystemTest, Asset
 -- 
-Peter Xu
+2.45.2
 
 
