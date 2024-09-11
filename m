@@ -4,96 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 222A2EE4991
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 10:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1961EE4995
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 11:19:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soL3R-0001bv-W3; Wed, 11 Sep 2024 06:58:34 -0400
+	id 1soLML-0005Fd-JS; Wed, 11 Sep 2024 07:18:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1soL3K-0001ZO-Jr
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 06:58:26 -0400
-Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1soLMJ-0005Er-WF
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 07:18:04 -0400
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1soL3F-0005Qs-Up
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 06:58:24 -0400
-Received: by mail-oi1-x229.google.com with SMTP id
- 5614622812f47-3e0510b6647so738935b6e.0
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 03:58:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1soLMH-0008Ad-Gw
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 07:18:03 -0400
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-710da8668b3so706447a34.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 04:18:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726052300; x=1726657100;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1726053479; x=1726658279;
  darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=A9xroaeEdzFAovweYcWBZQ4gfW9MaxGeWewKuyk2Zjo=;
- b=h6eZkgDk3RxRkyZ7Fa5IzGhJZRNaON5N5IAChIKVjTYeDynDOPS7/njTEzf0GtqnWB
- xjd8Jqsoeq38Q5A7OyoZ4KMreVVwEJxtHkUOCschEwEgKyOwhSnE/cPw4Z191p3rvBq0
- GIAm+vRVZNaQyeAGThpFuXWNH+qmrQ1Awvq5ixjZifZgQPBDB9HICO7PjkTh4/PyPQxY
- DI7kYU9RAcz4nPBymJPb1I67N8g9Z5wgAqg2+IYq6DnhZJny8/q6cl4mt4nKNYKrGo/t
- 3H7gRiWB3iW550Yb/7VFrmbcqyjKI65/7r7m+1jIirDCizLwxOxn26KZTfgh/nV1RBw9
- wmKA==
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XOfVESvvvwO8VkglR5RUtmi7/BPLzKTG1nOdgAriQjI=;
+ b=BgsajU5glRn5wQe919to5H0ZhH27eghVa3HXvtbAJ8Uhh9FkHyAw9M2HYbzUWkhk4z
+ fkQVMMXeJTHxIf/h2nSp+8FFbyE7f+/yt+HpGPGiXLc89X7ZNlIofZNvffu2nvYn/HKv
+ cttf7AcXRWRV1n6NUi/5ed1pUQBUeT+pUToN4CiHBZKmIr3TlLBP+tUh4ouPSHtSV3sI
+ TiZJclYR08qWRN3TdFz9pMh1WDDAVmtRw3ZIEKr7UTu6c/wsyMQH1p/1JgeaAKgZQDIa
+ 5JbdiH2yG9f0p8Ur45XGLmhp0/FOZ+kFOtZis2y64QIvebdOWkkSFrK2/1i1ioP8FoXG
+ nExQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726052300; x=1726657100;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=A9xroaeEdzFAovweYcWBZQ4gfW9MaxGeWewKuyk2Zjo=;
- b=ACXZOipIyAgz+9UzF0FPkrd62qoT1GmQDJ01oYhWvd7C/HNAeGcbvmqKLqP9Wb7/jj
- huhy+ufayerLU4dkOjV/PLFxJPnpmxLmEZGgsm2edazAiAiNiJPxfi1tqKXLE4GPUmsw
- NCpUp/LEh+deC3Hov4toOes8Wu/zC97r3Ce9tV0ihfnMMsCwhOUOM21ttt7qRFvfb/tE
- xM8KOTIjBqVPQNN8g728c2PF70m8xcBOwLHOjNovn81UtuU1nI5B4m8WhuS+SLKZZd2+
- nLWIYKiZGAnjehaR+rDHG2OaCK9h9yqPkqCibt+CqbrYMmw+vRqanZoPtAR4ZWte3iVV
- OBnw==
-X-Gm-Message-State: AOJu0Yyn+YaC9pQe1Ri1cMHV4TULL/HBHT8kH4oucoY6LVyTUBshL+B3
- yh9TZCiN0vrDwqVAnidEFSFtpF1WKVM8TFFSmtrBnRU9yKuR4od1Y7jTK4KIvx0=
-X-Google-Smtp-Source: AGHT+IHA1QKBWUlOROP6NXJ8lCzXjYte88kEOfPYYbpBDLy7J+a+40KjXlGpsGuBS9kDoDWLNxQR1g==
-X-Received: by 2002:a05:6808:f10:b0:3e0:4057:6df9 with SMTP id
- 5614622812f47-3e04057714fmr9347569b6e.16.1726052300151; 
- Wed, 11 Sep 2024 03:58:20 -0700 (PDT)
-Received: from ?IPV6:2400:4050:a840:1e00:32ed:25ae:21b1:72d6?
- ([2400:4050:a840:1e00:32ed:25ae:21b1:72d6])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7db191eb8f4sm667411a12.74.2024.09.11.03.58.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Sep 2024 03:58:19 -0700 (PDT)
-Message-ID: <eaebda7d-c61e-4ed8-a6b9-98e5f48f26ff@daynix.com>
-Date: Wed, 11 Sep 2024 19:58:15 +0900
+ d=1e100.net; s=20230601; t=1726053479; x=1726658279;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XOfVESvvvwO8VkglR5RUtmi7/BPLzKTG1nOdgAriQjI=;
+ b=blvUExxcYURsL4+J5J9L4PKmyzTqCZ5aJ5dGdFDqoZu+jtsyuo0zJkY+mVDxwXug1w
+ zsdoeXIbkpadFjB6L05l7/QTFaHjD8hfYqPUacGUHofMZD/4fLKo7VzRIB5R913LKid7
+ 13+rcjeWYlQIiQFOKqGRXGkPmQ5gMIP8kV5pGPXO81pL7dneRR8TDWbUSM2GhFkJkhvw
+ Z0R6eI+5nGHp5mflYG+q+cuNgJk+Z7htpypNXzA1U7BLVmD3E61Fap/L9l8XjMyKldRW
+ SW6uVtK1xG7n1cTkqlOVkn11MChOHj21NBN1Db1XyWlZ3sAsZaDMEO/plmqlNowEDnVq
+ gYBA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU7RiN2FQ+rW6q18S2Y/Q0eTpjlylIZ9oWK98QU8Wh/vSl7iIswhSKwOdSohJbk/wznmErsGdCPAb6k@nongnu.org
+X-Gm-Message-State: AOJu0Yw5JuD6jyV+ncBL558JbCtNLaxwxrakwaKzNxjYBIQqyi+Vhv2T
+ ok6GXiNdsmKepXfqJNVl8MrQF1hUK+Kr6rTGGHyCnjtNFnynC9XpMa/81VGlVBybOSGQitzaMB3
+ pblhZe1BrT8zR+aBMTSiBBqPzBmKCqwT9BjtTSA==
+X-Google-Smtp-Source: AGHT+IFAGdDwS/BClSYa/4ctxJ/+FYXkfZqXZgWOd5c9lS8xP3nZNSdl8gyxxj+I7c64bih2Yb9QN6fJwPzDkO7NVn8=
+X-Received: by 2002:a05:6830:2b13:b0:710:ed53:7e4e with SMTP id
+ 46e09a7af769-710fe75fdbfmr1635087a34.22.1726053479373; Wed, 11 Sep 2024
+ 04:17:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 v15 04/11] s390x/pci: Check for multifunction
- after device realization
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20240823-reuse-v15-0-eddcb960e289@daynix.com>
- <20240823-reuse-v15-4-eddcb960e289@daynix.com>
- <2b5d2fce-8a1e-4f50-a5d2-0c4aaa2880af@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <2b5d2fce-8a1e-4f50-a5d2-0c4aaa2880af@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::229;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x229.google.com
+References: <20240819135455.2957406-1-mnissler@rivosinc.com>
+ <20240910105002-mutt-send-email-mst@kernel.org>
+ <CAFEAcA9dxdKmU-SPg1QGUbziKeydVB=i8BZUaKqMZvMSTr8RVw@mail.gmail.com>
+ <CAGNS4Ta7RbLNCk3ffaS7fpqDJDjAUwnCXsVvjawSb6F7+inYxg@mail.gmail.com>
+ <20240910123810-mutt-send-email-mst@kernel.org>
+ <CAGNS4Tb9=H=c4=nihUYQH6oB8as++r8nG8SyOZtLo0XuiJR6kQ@mail.gmail.com>
+ <20240911062402-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240911062402-mutt-send-email-mst@kernel.org>
+From: Mattias Nissler <mnissler@rivosinc.com>
+Date: Wed, 11 Sep 2024 13:17:48 +0200
+Message-ID: <CAGNS4TaD35BpONFJc9UQGMmUX_1YJmCEMhxqQ-BP_frec6whBg@mail.gmail.com>
+Subject: Re: [PATCH] softmmu: Support concurrent bounce buffers
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, stefanha@redhat.com, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ David Hildenbrand <david@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
+ envelope-from=mnissler@rivosinc.com; helo=mail-ot1-x334.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,88 +101,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/09/11 18:38, Cédric Le Goater wrote:
-> +Matthew +Eric
-> 
-> Side note for the maintainers :
-> 
-> Before this change, the igb device, which is multifunction, was working
-> fine under Linux.
-> 
-> Was there a fix in Linux since :
-> 
->    57da367b9ec4 ("s390x/pci: forbid multifunction pci device")
->    6069bcdeacee ("s390x/pci: Move some hotplug checks to the pre_plug 
-> handler")
-> 
-> ?
-> 
-> s390 PCI devices do not have extended capabilities, so the igb device
-> does not expose the SRIOV capability and only the PF is accessible but
-> it doesn't seem to be an issue. (Btw, CONFIG_PCI_IOV is set to y in the
-> default Linux config which is unexpected)
+On Wed, Sep 11, 2024 at 12:24=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com=
+> wrote:
+>
+> On Tue, Sep 10, 2024 at 11:36:08PM +0200, Mattias Nissler wrote:
+> > On Tue, Sep 10, 2024 at 6:40=E2=80=AFPM Michael S. Tsirkin <mst@redhat.=
+com> wrote:
+> > >
+> > > On Tue, Sep 10, 2024 at 06:10:50PM +0200, Mattias Nissler wrote:
+> > > > On Tue, Sep 10, 2024 at 5:44=E2=80=AFPM Peter Maydell <peter.maydel=
+l@linaro.org> wrote:
+> > > > >
+> > > > > On Tue, 10 Sept 2024 at 15:53, Michael S. Tsirkin <mst@redhat.com=
+> wrote:
+> > > > > >
+> > > > > > On Mon, Aug 19, 2024 at 06:54:54AM -0700, Mattias Nissler wrote=
+:
+> > > > > > > When DMA memory can't be directly accessed, as is the case wh=
+en
+> > > > > > > running the device model in a separate process without sharea=
+ble DMA
+> > > > > > > file descriptors, bounce buffering is used.
+> > > > > > >
+> > > > > > > It is not uncommon for device models to request mapping of se=
+veral DMA
+> > > > > > > regions at the same time. Examples include:
+> > > > > > >  * net devices, e.g. when transmitting a packet that is split=
+ across
+> > > > > > >    several TX descriptors (observed with igb)
+> > > > > > >  * USB host controllers, when handling a packet with multiple=
+ data TRBs
+> > > > > > >    (observed with xhci)
+> > > > > > >
+> > > > > > > Previously, qemu only provided a single bounce buffer per Add=
+ressSpace
+> > > > > > > and would fail DMA map requests while the buffer was already =
+in use. In
+> > > > > > > turn, this would cause DMA failures that ultimately manifest =
+as hardware
+> > > > > > > errors from the guest perspective.
+> > > > > > >
+> > > > > > > This change allocates DMA bounce buffers dynamically instead =
+of
+> > > > > > > supporting only a single buffer. Thus, multiple DMA mappings =
+work
+> > > > > > > correctly also when RAM can't be mmap()-ed.
+> > > > > > >
+> > > > > > > The total bounce buffer allocation size is limited individual=
+ly for each
+> > > > > > > AddressSpace. The default limit is 4096 bytes, matching the p=
+revious
+> > > > > > > maximum buffer size. A new x-max-bounce-buffer-size parameter=
+ is
+> > > > > > > provided to configure the limit for PCI devices.
+> > > > > > >
+> > > > > > > Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+> > > > > > > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> > > > > > > Acked-by: Peter Xu <peterx@redhat.com>
+> > > > > > > ---
+> > > > > > > This patch is split out from my "Support message-based DMA in=
+ vfio-user server"
+> > > > > > > series. With the series having been partially applied, I'm sp=
+litting this one
+> > > > > > > out as the only remaining patch to system emulation code in t=
+he hope to
+> > > > > > > simplify getting it landed. The code has previously been revi=
+ewed by Stefan
+> > > > > > > Hajnoczi and Peter Xu. This latest version includes changes t=
+o switch the
+> > > > > > > bounce buffer size bookkeeping to `size_t` as requested and L=
+GTM'd by Phil in
+> > > > > > > v9.
+> > > > > > > ---
+> > > > > > >  hw/pci/pci.c                |  8 ++++
+> > > > > > >  include/exec/memory.h       | 14 +++----
+> > > > > > >  include/hw/pci/pci_device.h |  3 ++
+> > > > > > >  system/memory.c             |  5 ++-
+> > > > > > >  system/physmem.c            | 82 ++++++++++++++++++++++++++-=
+----------
+> > > > > > >  5 files changed, 76 insertions(+), 36 deletions(-)
+> > > > > > >
+> > > > > > > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> > > > > > > index fab86d0567..d2caf3ee8b 100644
+> > > > > > > --- a/hw/pci/pci.c
+> > > > > > > +++ b/hw/pci/pci.c
+> > > > > > > @@ -85,6 +85,8 @@ static Property pci_props[] =3D {
+> > > > > > >                      QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
+> > > > > > >      DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_pr=
+esent,
+> > > > > > >                      QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
+> > > > > > > +    DEFINE_PROP_SIZE32("x-max-bounce-buffer-size", PCIDevice=
+,
+> > > > > > > +                     max_bounce_buffer_size, DEFAULT_MAX_BOU=
+NCE_BUFFER_SIZE),
+> > > > > > >      DEFINE_PROP_END_OF_LIST()
+> > > > > > >  };
+> > > > > > >
+> > > > > >
+> > > > > > I'm a bit puzzled by now there being two fields named
+> > > > > > max_bounce_buffer_size, one directly controllable by
+> > > > > > a property.
+> > > >
+> > > > One is one the pci device, the other is on the address space. The
+> > > > former can be set via a command line parameter, and that value is u=
+sed
+> > > > to initialize the field on the address space, which is then consult=
+ed
+> > > > when allocating bounce buffers.
+> > > >
+> > > > I'm not sure which aspect of this is unclear and/or deserves
+> > > > additional commenting - let me know and I'll be happy to send a pat=
+ch.
+> > >
+> > > I'd document what does each field do.
+> >
+> > I have just sent a patch to expand the comments, let's discuss details =
+there.
+> >
+> > >
+> > > > > >
+> > > > > > Pls add code comments explaining how they are related.
+> > > > > >
+> > > > > >
+> > > > > > Also, what is the point of adding a property without
+> > > > > > making it part of an API? No one will be able to rely on
+> > > > > > it working.
+> >
+> > All I needed was a practical way to allow the bounce buffer size limit
+> > to be adjusted in the somewhat exotic situations where we're making
+> > DMA requests to indirect memory regions (in my case it is a qemu
+> > vfio-user server accessed by a client that can't or doesn't want to
+> > provide direct memory-mapped access to its RAM). There was some
+> > discussion about the nature of the parameter when I first proposed the
+> > patch, see https://lore.kernel.org/qemu-devel/20230823092905.2259418-2-=
+mnissler@rivosinc.com/
+> > - an x-prefixed experimental command-line parameter was suggested
+> > there as a practical way to allow this without qemu committing to
+> > supporting this forever. For the unlikely case that this parameter
+> > proves popular, it can still be added to a stable API (or
+> > alternatively we could discuss whether a large-enough limit is
+> > feasible after all, or even consider DMA API changes to obviate the
+> > need for bounce buffering).
+>
+>
+> Yes but how happy will you be if we rename the parameter in the
+> future? All your scripts will break.
 
-Doesn't s390x really see extended capabilities? hw/s390x/s390-pci-inst.c 
-has a call pci_config_size() and pci_host_config_write_common(), which 
-means it is exposing the whole PCI Express configuration space. Why 
-can't s390x use extended capabilities then?
+It's not that I'm running random qemu versions in production, in fact
+I'm using this for semi-automated testing of hardware designs. We'd
+find out when upgrading our qemu, and adjust. In fact, if you come up
+with a better way to handle this bounce buffering kludge, I'd be
+willing to not only adjust, but even help implement.
 
-The best option for fix would be to replace the SR-IOV implementation 
-with stub if s390x cannot use the SR-IOV capability. However I still 
-need to know at what level I should change the implementation (e.g., is 
-it fine to remove the entire capability, or should I keep the capability 
-while writes to its registers no-op?)
-
-Regards,
-Akihiko Odaki
-
-> 
-> Thanks,
-> 
-> C.
-> 
-> 
-> 
-> On 8/23/24 07:00, Akihiko Odaki wrote:
->> The SR-IOV PFs set the multifunction bits during device realization so
->> check them after that. This forbids adding SR-IOV devices to s390x.
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   hw/s390x/s390-pci-bus.c | 14 ++++++--------
->>   1 file changed, 6 insertions(+), 8 deletions(-)
->>
->> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
->> index 3e57d5faca18..00b2c1f6157b 100644
->> --- a/hw/s390x/s390-pci-bus.c
->> +++ b/hw/s390x/s390-pci-bus.c
->> @@ -971,14 +971,7 @@ static void s390_pcihost_pre_plug(HotplugHandler 
->> *hotplug_dev, DeviceState *dev,
->>                       "this device");
->>       }
->> -    if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
->> -        PCIDevice *pdev = PCI_DEVICE(dev);
->> -
->> -        if (pdev->cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
->> -            error_setg(errp, "multifunction not supported in s390");
->> -            return;
->> -        }
->> -    } else if (object_dynamic_cast(OBJECT(dev), TYPE_S390_PCI_DEVICE)) {
->> +    if (object_dynamic_cast(OBJECT(dev), TYPE_S390_PCI_DEVICE)) {
->>           S390PCIBusDevice *pbdev = S390_PCI_DEVICE(dev);
->>           if (!s390_pci_alloc_idx(s, pbdev)) {
->> @@ -1069,6 +1062,11 @@ static void s390_pcihost_plug(HotplugHandler 
->> *hotplug_dev, DeviceState *dev,
->>       } else if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
->>           pdev = PCI_DEVICE(dev);
->> +        if (pdev->cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
->> +            error_setg(errp, "multifunction not supported in s390");
->> +            return;
->> +        }
->> +
->>           if (!dev->id) {
->>               /* In the case the PCI device does not define an id */
->>               /* we generate one based on the PCI address         */
->>
-> 
+>
+> > > > >
+> > > > > Note that this patch is already upstream as commit 637b0aa13.
+> > > > >
+> > > > > thanks
+> > > > > -- PMM
+> > >
+> > > Maybe you can answer this?
+> > >
+>
 
