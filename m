@@ -4,71 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E84FEE499D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 852A8EE499E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:27:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMKY-0006lI-Uc; Wed, 11 Sep 2024 08:20:18 -0400
+	id 1soMIO-000202-Id; Wed, 11 Sep 2024 08:18:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1soMKX-0006b2-7C
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:20:17 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMHG-0007Ay-6G
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:17:11 -0400
 Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1soMKV-0007xJ-Ck
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:20:16 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMHB-0007WT-6I
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:16:50 -0400
 Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-374c4d4f219so1133795f8f.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:20:14 -0700 (PDT)
+ ffacd0b85a97d-374c962e5adso547357f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:16:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726057214; x=1726662014; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1726057007; x=1726661807; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=titgfk+Bz5dLoawseTkpqwiImX9LHrftar/isSFcAD0=;
- b=leubrYkPQcUhVyUsU/jODCpE6o2/EQpqwfTyWLikiIwQPHewCs0nRsFcNPpx6M9g1z
- YPd+lth6SWPZERWuQ5puV9zc7lDnFdWmOZF4og53ARDYTYmmVpZSr2w9s9XNGEJWv7Qv
- dn6DOCV1q67hUz1IM/5tFsSjAbPQXukYdocW91v++TxkNy7JO+NdwoCJQY2ouawyn2st
- mlP3rICbhUo99JL0FaSS6mg8ze3m+soZwrqb+Z7ftBu+XjeOXfs4iODkUeIv9tzFYMQv
- 4trPOuPlO/miaQyQ0J05PY/TTzfxRNdiiT79/LGDiKTuj+cHpeyC9mbVBbamj0LUc2fx
- 6+/Q==
+ bh=m4I+NOD0wib/I9pEA/OFAtVljb4eFRTvTggSagE3YZw=;
+ b=dRuK0qY+wBFICSNS/84Hd/dQIOcxCiNyF08zCcjsA//g3GikAeCqX4d7C4dWME2mSo
+ O2aovxjLh3/q3eDl669KQ4sJY7F6QQGe2Q5Ryb2p9hCxDT7Rpd4uFF49xNzZ9cc/JVtb
+ PRiMkL6gJ9OUDDEhtN7a0RVgOgS5NJQWTT/+H0O0KZne/o3mwWj9tTmYTrpx3pJJlivH
+ 89zGWPAM+zUTtKQGcDFmmrxgnlElYpU6sPLrFxp1ZD84sKpHLfUTEOfINfUQBgC6bIFx
+ EQhdvVT87DzKlPRNmnCcbYF4zK/oudStPLqi7313gZkQaD9SqFqnKb0QfvVGMXZoj2tO
+ wKXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726057214; x=1726662014;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1726057007; x=1726661807;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=titgfk+Bz5dLoawseTkpqwiImX9LHrftar/isSFcAD0=;
- b=Tx6t/L+tVGhQS8K8aLpkI9SPFBGCZBDUpKnU0B1eh4BqtYqyiSVttqkOGCMT7ZsA/y
- KjbsGh1uW7zMksm0hk4qPNVXKtqr2TY5QK2jQZfGn2O6gjCiNl/7rSQRe550Y54lWT5Y
- jb2qbwWqJ+IiSsj+ylGZl7zgD3Ulu11Zk5rcc3Ta+oOeymZauIwm6vQX2U3U704aetVf
- LyHdAaASe8nCLHDZc8cJReKkAdZ/m4brsWVykHQP7QC+I5ezHWm9qvo0/GUwptXvpR0C
- VSc6ewkcM7k8mzVi1Dfo991NjaluQ+tvfCpoKfnrhrOW+1DeSvhz+ipuWfonguzPF/6x
- FoiQ==
-X-Gm-Message-State: AOJu0YxFpm4gUkpDhImrFNA/1ovfDtUBw4tglQm1jyLaQkZDo0MoRlKy
- 2M5K2+2ZqaRcbj6RCudOc0LTOt3e84dMDZkNE/xD/1lly7HWFS3xrRvLA/7iL1EWcCAX3ZvBGgh
- bIJXMBa5QqzVbfileUh8Gj6/YyOE+/myK++sBdw==
-X-Google-Smtp-Source: AGHT+IEZdTOhk+I/l754eUl7J21ppa4WZmpAyC7wEay2FjzV4l6GgbZfhLKTDEboSrTc8N8bETXd67Sro9rY91Dclb8=
-X-Received: by 2002:adf:f14f:0:b0:374:ca4f:bd78 with SMTP id
- ffacd0b85a97d-378b07965f2mr1891238f8f.10.1726057213662; Wed, 11 Sep 2024
- 05:20:13 -0700 (PDT)
+ bh=m4I+NOD0wib/I9pEA/OFAtVljb4eFRTvTggSagE3YZw=;
+ b=tQE4HHoWxpmCYvIPXFV/clTncCO3ZLJpkppjj3OeJWSaXpvCaXi3aEkbPq9ICk7GTv
+ m5MDdCa22yCdk5gLCQ1iwiOXQyt2wtpz+Wwg5lXbUy+GXkVbptlNmniVIoytcPs3VzM4
+ f6L/OvZ2RtU5NPM2fC3wF50N/y1b5u6toC//hNA6m8KCCSGMEOuvnJglOfy0sXO2eF13
+ U/whH0SusWoTrnq1NySUzdTwXKdc0CdQLFV4B58hxQQSW89+ybrmB+AtzroIpKLhzNND
+ 0lkQ+zBGInLp4WgiBfhO7a+7ey1rdt+tNu+pmN0RXpqUsZr8vM2U/WzethVxwljXSdLE
+ 5Gwg==
+X-Gm-Message-State: AOJu0YxfOQ5OguuYTiRpb6ESi+xw90jotX04Y6OGJjgHFh5jG0P+WrHk
+ Yr9MUjA6IGhiYn2f7e0Skg12St5teapjBUL5o7b/ozYGr94vNt0xxPjqfqjqE5SfK6L2wCHZ/mx
+ z
+X-Google-Smtp-Source: AGHT+IH1SDyCdUvrD6dV+ZITXfradAISlhEfY9S0XlQ1vLz1F+ySDrY3mt+aQlg4RqC6cnoERw5w+Q==
+X-Received: by 2002:a5d:5f87:0:b0:374:c400:8556 with SMTP id
+ ffacd0b85a97d-378a8a1b6a6mr4856670f8f.11.1726057007001; 
+ Wed, 11 Sep 2024 05:16:47 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.196.107])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-378956d374fsm11482382f8f.86.2024.09.11.05.16.45
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 11 Sep 2024 05:16:46 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>
+Subject: [PULL 20/56] seccomp: Remove check for CRIS host
+Date: Wed, 11 Sep 2024 14:13:45 +0200
+Message-ID: <20240911121422.52585-21-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240911121422.52585-1-philmd@linaro.org>
+References: <20240911121422.52585-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20240902123038.1135412-1-jan.kloetzke@kernkonzept.com>
- <CAFEAcA-tK24wCPKZwig1iDPSOiHKqZMU4WH99ZZEG-awveEvag@mail.gmail.com>
- <f53a98c763f55f56e189fcf7822d203872870eee.camel@kernkonzept.com>
-In-Reply-To: <f53a98c763f55f56e189fcf7822d203872870eee.camel@kernkonzept.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 11 Sep 2024 13:20:02 +0100
-Message-ID: <CAFEAcA9yLJg7smf-e52wRohHYVz00yzHz_6pM9qzSjhw41tj-Q@mail.gmail.com>
-Subject: Re: [PATCH] hw/intc/arm_gic: fix spurious level triggered interrupts
-To: =?UTF-8?B?SmFuIEtsw7Z0emtl?= <jan.kloetzke@kernkonzept.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,69 +96,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 11 Sept 2024 at 11:54, Jan Kl=C3=B6tzke <jan.kloetzke@kernkonzept.c=
-om> wrote:
->
-> On Fri, 2024-09-06 at 13:50 +0100, Peter Maydell wrote:
-> > On Mon, 2 Sept 2024 at 13:32, Jan Kl=C3=B6tzke <jan.kloetzke@kernkonzep=
-t.com> wrote:
-> > >
-> > > Level triggered interrupts are pending when either the interrupt line
-> > > is asserted or the interrupt was made pending by a GICD_ISPENDRn writ=
-e.
-> > > Making a level triggered interrupt pending by software persists until
-> > > either the interrupt is acknowledged or cleared by writing
-> > > GICD_ICPENDRn. As long as the interrupt line is asserted, the interru=
-pt
-> > > is pending in any case.
-> > >
-> > > This logic is transparently implemented in gic_test_pending(). The
-> > > function combines the "pending" irq_state flag (used for edge trigger=
-ed
-> > > interrupts and software requests) and the line status (tracked in the
-> > > "level" field). Now, writing GICD_ISENABLERn incorrectly set the
-> > > pending flag if the line of a level triggered interrupt was asserted.
-> > > This keeps the interrupt pending even if the line is de-asserted afte=
-r
-> > > some time.
-> > >
-> > > Fix this by simply removing the code. The pending status is fully
-> > > handled by gic_test_pending() and does not need any special treatment
-> > > when enabling the level interrupt.
-> > >
-> > > Signed-off-by: Jan Kl=C3=B6tzke <jan.kloetzke@kernkonzept.com>
-> >
-> > Thanks for this patch. I agree that this is wrong for the
-> > GICv2 -- I think this is a bit we missed in commit 8d999995e45c
-> > back in 2013 where we fixed most other places that were not
-> > correctly making this distinction of "pending because of
-> > ISPENDR write" and "pending because level triggered and
-> > line is held high".
-> >
-> > However I think for consistency with that commit, we should
-> > retain the current behaviour here for the s->revision =3D=3D REV_11MPCO=
-RE
-> > case. (This is basically saying "we don't really know exactly
-> > how the 11MPCore GIC behaved and we don't much care to try to
-> > find out, so leave it alone", which is the stance we were
-> > already taking in 2013...) In particular, notice that
-> > gic_test_pending() only does the "pending if level triggered
-> > and held high" logic for the not-REV_11MPCORE case.
->
-> Right. Thanks for catching this. I'll send a V2 shortly.
->
-> Actually, I tried to make sense out of the ARM11 MPCore TRM but gave
-> up. At least, I could not come with a consistent idea how the hardware
-> is supposed to behave. Keeping the old behavior really looks like the
-> most sensible option here.
+As per the deprecation notice in commit c7bbef4023:
 
-Yeah. To be honest, I wouldn't be surprised if actually the
-11mpcore and the GICv2 behave the same and the behaviour
-we have under REV_11MPCORE is just "what the person who
-implemented the QEMU model guessed at based on the rather
-nonspecific 11mpcore TRM documentation". But at this late date
-there's really no benefit in trying to find out :-)
+  The CRIS architecture was pulled from Linux in 4.17 and
+  the compiler is no longer packaged in any distro [...].
 
-thanks
--- PMM
+It is now unlikely QEMU is build on CRIS host.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Message-ID: <20240904143603.52934-16-philmd@linaro.org>
+---
+ system/qemu-seccomp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/system/qemu-seccomp.c b/system/qemu-seccomp.c
+index 98ffce075c..71ac444802 100644
+--- a/system/qemu-seccomp.c
++++ b/system/qemu-seccomp.c
+@@ -47,10 +47,10 @@ const struct scmp_arg_cmp sched_setscheduler_arg[] = {
+ };
+ 
+ /*
+- * See 'NOTES' in 'man 2 clone' - s390 & cross have 'flags' in
++ * See 'NOTES' in 'man 2 clone' - s390 has 'flags' in
+  *  different position to other architectures
+  */
+-#if defined(HOST_S390X) || defined(HOST_S390) || defined(HOST_CRIS)
++#if defined(HOST_S390X) || defined(HOST_S390)
+ #define CLONE_FLAGS_ARG 1
+ #else
+ #define CLONE_FLAGS_ARG 0
+-- 
+2.45.2
+
 
