@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0173EDE997
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 04:33:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0703EE0209
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 05:26:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soF2Y-000784-A8; Wed, 11 Sep 2024 00:33:14 -0400
+	id 1soFrh-0001P5-EB; Wed, 11 Sep 2024 01:26:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <satur9nine@gmail.com>)
- id 1soF2W-00077Z-TH
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 00:33:13 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <satur9nine@gmail.com>)
- id 1soF2S-0007oj-11
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 00:33:12 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-6e7b121be30so4021407a12.1
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 21:33:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726029186; x=1726633986; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=YcUwxdhEJk5+b6O6bHWWTFLCBALOoRPwHKekSWBLJfQ=;
- b=EY2DT3iogj/8NgWw5TzmXqwaqSwqTEn1FnyGze/gjrpXm1Byf3w/HQrlbeIxRELeM3
- F/I/Bxr39oy/CTdKOLifQrO0O51EC/fbeChNl5J38ugA+NXhOsOMa0flVxuiRjqc/o+8
- hgTV5Dbry7wncBqVcoZE/PWhZALLZtkB5TokGBRqbKNtcxQK84nPAO3F6d0LVFQ5KQy2
- HIoJmnSQkFUjM+VN9zSvOA+eQ/SLUI4qssyVvPOR7C3YioenR7nuFft3X0NHLskC0ULo
- ldVbCM60QcOsVJxWOHSF42XPn4iXCqHjS8mJNrcih4TorUJ0OHE91cQCrDm2jidQKGkv
- LpZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726029186; x=1726633986;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YcUwxdhEJk5+b6O6bHWWTFLCBALOoRPwHKekSWBLJfQ=;
- b=a+aWKeAOKhZxhKD1LSNva9cELRciyj+lev66pZkTfr7e2kur4uABRBQ0HPthdTedfO
- RrB7o7i59Lv7QTwKbH1As+ywxk6tXPwpYqdlWCHyWB6/X5LYbPP7DIjqsRVL1kV69DsR
- f6+hST7bQaOWb6SssdmWCv9N9z5awQtUvCTcrvUDgjsS4yku75gUr42a83dWWyXODscE
- YqW2Vb/pNKE66bFfPeNkVb0JF3nzJD9zs3nZhFVt3QzJMZL3aEHCQltYm2AUWx2Fbd8V
- T6CR1xs0HxX2U2Gu6fqgBil4BDzbNtyfW5ntG36ibBY6NyI0vjkx2GAg2K3F+dswYXAb
- AqlA==
-X-Gm-Message-State: AOJu0Yxd5QQDS0oo7tl5clWZTJGavgSt3LaC2zLPr3qJAmJLHaL1IZaS
- 7aVZ5e8BtiOpR4V5VrgslGQ53p2mjlK4509jgC3B+OT1caCC9kkQHEymDa/6Szk=
-X-Google-Smtp-Source: AGHT+IE/oy91I9NnW8KOAwzV4S3xUuX7XYtPLejJooQCzAjCb1tfx4f4PEP/zZAuY2FmW5epY+mRzw==
-X-Received: by 2002:a17:902:f648:b0:206:a1ea:f4fe with SMTP id
- d9443c01a7336-2074c4afc77mr44005135ad.10.1726029185759; 
- Tue, 10 Sep 2024 21:33:05 -0700 (PDT)
-Received: from jacob-pop23u.lan ([2600:1700:88b2:a50:6e2b:9045:bc15:3220])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20710f32611sm55228285ad.270.2024.09.10.21.33.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2024 21:33:04 -0700 (PDT)
-From: Jacob Abrams <satur9nine@gmail.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1soFrf-0001I9-M9
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 01:26:03 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1soFre-0004Mp-3M
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 01:26:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1726032362; x=1757568362;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=fdLaeQ2wJhUQtZInKCRoy8xQWv0CTlYap8gAOZpipm4=;
+ b=VAjdTk5t7SG7Y2Bpr+3yhVwBsIYaUCLpWsoZDa09EeXfy5LP9MwENRch
+ nUca63kwi9vcWs/+bPGrEVmEsHV8s1T+GbD4vtYemyICtVb7MCCpvee7Z
+ cIRtO5PmmMets5CIRIRH32sfQKvWX6YJJv8fIjXulfA1u1fKR2aGxEuax
+ eUWhfolApTg0CILXt4VCiJCUf63C0F+ylK4z59xBkalgxIxXAKZ2S/s+r
+ KgOFGP9mdA5UexLtwnVJ2A9VjsNQKzhTfoUqAgFgjW8X46/HBy8Z64OWX
+ c3gFBmJvfZHW6Inf1bfA5wy7k8ri4s3ByIlrndiKN3577tp5Soz0JOT34 A==;
+X-CSE-ConnectionGUID: d9orO9x6TRW8BSKAKCXLOA==
+X-CSE-MsgGUID: R4esBhImTfqkURV2tDzcBQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11191"; a="35403480"
+X-IronPort-AV: E=Sophos;i="6.10,219,1719903600"; d="scan'208";a="35403480"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Sep 2024 22:26:01 -0700
+X-CSE-ConnectionGUID: zXCswvAPSVCCI3S2FzOrGA==
+X-CSE-MsgGUID: LO8D1lGASay+5ncPnJJxWw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,219,1719903600"; d="scan'208";a="67536380"
+Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
+ by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Sep 2024 22:25:56 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org, peter.maydell@linaro.org,
- Jacob Abrams <satur9nine@gmail.com>
-Subject: [PATCH] hw/char/stm32l4x5_usart.c: Enable USART ACK bit response
-Date: Tue, 10 Sep 2024 21:32:55 -0700
-Message-ID: <20240911043255.51966-1-satur9nine@gmail.com>
-X-Mailer: git-send-email 2.43.0
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH v3 02/17] intel_iommu: Make pasid entry type check accurate
+Date: Wed, 11 Sep 2024 13:22:40 +0800
+Message-Id: <20240911052255.1294071-3-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240911052255.1294071-1-zhenzhong.duan@intel.com>
+References: <20240911052255.1294071-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=satur9nine@gmail.com; helo=mail-pg1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.11;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,123 +90,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SW modifying USART_CR1 TE bit should cuase HW to respond by altering
-USART_ISR TEACK bit, and likewise for RE and REACK bit.
+When guest configures Nested Translation(011b) or First-stage Translation only
+(001b), type check passed unaccurately.
 
-This resolves some but not all issues necessary for the official STM USART
-HAL driver to function as is.
+Fails the type check in those cases as their simulation isn't supported yet.
 
-Fixes: 87b77e6e01ca ("hw/char/stm32l4x5_usart: Enable serial read and write")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2540
-Signed-off-by: Jacob Abrams <satur9nine@gmail.com>
+Fixes: fb43cf739e1 ("intel_iommu: scalable mode emulation")
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 ---
- hw/char/stm32l4x5_usart.c          | 16 +++++++++++++
- tests/qtest/stm32l4x5_usart-test.c | 36 +++++++++++++++++++++++++++++-
- 2 files changed, 51 insertions(+), 1 deletion(-)
+ hw/i386/intel_iommu.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
-index fc5dcac0c4..3cf200c080 100644
---- a/hw/char/stm32l4x5_usart.c
-+++ b/hw/char/stm32l4x5_usart.c
-@@ -154,6 +154,21 @@ REG32(RDR, 0x24)
- REG32(TDR, 0x28)
-     FIELD(TDR, TDR, 0, 9)
- 
-+static void stm32l4x5_update_isr(Stm32l4x5UsartBaseState *s)
-+{
-+    if (s->cr1 & R_CR1_TE_MASK) {
-+        s->isr |= R_ISR_TEACK_MASK;
-+    } else {
-+        s->isr &= ~R_ISR_TEACK_MASK;
-+    }
-+
-+    if (s->cr1 & R_CR1_RE_MASK) {
-+        s->isr |= R_ISR_REACK_MASK;
-+    } else {
-+        s->isr &= ~R_ISR_REACK_MASK;
-+    }
-+}
-+
- static void stm32l4x5_update_irq(Stm32l4x5UsartBaseState *s)
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index c52912f593..e3465fc27d 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -759,20 +759,16 @@ static inline bool vtd_pe_type_check(X86IOMMUState *x86_iommu,
+                                      VTDPASIDEntry *pe)
  {
-     if (((s->isr & R_ISR_WUF_MASK) && (s->cr3 & R_CR3_WUFIE_MASK))        ||
-@@ -456,6 +471,7 @@ static void stm32l4x5_usart_base_write(void *opaque, hwaddr addr,
-     case A_CR1:
-         s->cr1 = value;
-         stm32l4x5_update_params(s);
-+        stm32l4x5_update_isr(s);
-         stm32l4x5_update_irq(s);
-         return;
-     case A_CR2:
-diff --git a/tests/qtest/stm32l4x5_usart-test.c b/tests/qtest/stm32l4x5_usart-test.c
-index c175ff3064..64cebda60f 100644
---- a/tests/qtest/stm32l4x5_usart-test.c
-+++ b/tests/qtest/stm32l4x5_usart-test.c
-@@ -36,6 +36,8 @@ REG32(GTPR, 0x10)
- REG32(RTOR, 0x14)
- REG32(RQR, 0x18)
- REG32(ISR, 0x1C)
-+    FIELD(ISR, REACK, 22, 1)
-+    FIELD(ISR, TEACK, 21, 1)
-     FIELD(ISR, TXE, 7, 1)
-     FIELD(ISR, RXNE, 5, 1)
-     FIELD(ISR, ORE, 3, 1)
-@@ -191,7 +193,7 @@ static void init_uart(QTestState *qts)
- 
-     /* Enable the transmitter, the receiver and the USART. */
-     qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
--        R_CR1_UE_MASK | R_CR1_RE_MASK | R_CR1_TE_MASK);
-+        cr1 | R_CR1_UE_MASK | R_CR1_RE_MASK | R_CR1_TE_MASK);
+     switch (VTD_PE_GET_TYPE(pe)) {
+-    case VTD_SM_PASID_ENTRY_FLT:
+     case VTD_SM_PASID_ENTRY_SLT:
+-    case VTD_SM_PASID_ENTRY_NESTED:
+-        break;
++        return true;
+     case VTD_SM_PASID_ENTRY_PT:
+-        if (!x86_iommu->pt_supported) {
+-            return false;
+-        }
+-        break;
++        return x86_iommu->pt_supported;
++    case VTD_SM_PASID_ENTRY_FLT:
++    case VTD_SM_PASID_ENTRY_NESTED:
+     default:
+         /* Unknown type */
+         return false;
+     }
+-    return true;
  }
  
- static void test_write_read(void)
-@@ -298,6 +300,37 @@ static void test_send_str(void)
-     qtest_quit(qts);
- }
- 
-+static void test_ack(void)
-+{
-+    uint32_t cr1;
-+    uint32_t isr;
-+    QTestState *qts = qtest_init("-M b-l475e-iot01a");
-+
-+    init_uart(qts);
-+
-+    cr1 = qtest_readl(qts, (USART1_BASE_ADDR + A_CR1));
-+
-+    /* Disable the transmitter and receiver. */
-+    qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
-+        cr1 & ~(R_CR1_RE_MASK | R_CR1_TE_MASK));
-+
-+    /* Test ISR ACK for transmitter and receiver disabled */
-+    isr = qtest_readl(qts, (USART1_BASE_ADDR + A_ISR));
-+    g_assert_false(isr & R_ISR_TEACK_MASK);
-+    g_assert_false(isr & R_ISR_REACK_MASK);
-+
-+    /* Enable the transmitter and receiver. */
-+    qtest_writel(qts, (USART1_BASE_ADDR + A_CR1),
-+        cr1 | (R_CR1_RE_MASK | R_CR1_TE_MASK));
-+
-+    /* Test ISR ACK for transmitter and receiver disabled */
-+    isr = qtest_readl(qts, (USART1_BASE_ADDR + A_ISR));
-+    g_assert_true(isr & R_ISR_TEACK_MASK);
-+    g_assert_true(isr & R_ISR_REACK_MASK);
-+
-+    qtest_quit(qts);
-+}
-+
- int main(int argc, char **argv)
- {
-     int ret;
-@@ -310,6 +343,7 @@ int main(int argc, char **argv)
-     qtest_add_func("stm32l4x5/usart/send_char", test_send_char);
-     qtest_add_func("stm32l4x5/usart/receive_str", test_receive_str);
-     qtest_add_func("stm32l4x5/usart/send_str", test_send_str);
-+    qtest_add_func("stm32l4x5/usart/ack", test_ack);
-     ret = g_test_run();
- 
-     return ret;
+ static inline bool vtd_pdire_present(VTDPASIDDirEntry *pdire)
 -- 
-2.43.0
+2.34.1
 
 
