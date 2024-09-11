@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D891EE57CE
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 18:45:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2883FEE57CE
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 18:59:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soSL2-0007Cu-EV; Wed, 11 Sep 2024 14:45:12 -0400
+	id 1soSXw-0004rf-0i; Wed, 11 Sep 2024 14:58:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1soSL0-0007Am-06
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 14:45:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1soSXu-0004r7-OE
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 14:58:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1soSKy-0003GL-2v
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 14:45:09 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1soSXt-0005HU-8W
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 14:58:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726080306;
+ s=mimecast20190719; t=1726081106;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=KlZJrnTUQHtJz7LkJ7OovI/PzRPTj056Fhwk0ZhTTe4=;
- b=TxqnfeO8/BYnj1OxqkFLbYtucoVeDX3nGrOGN9T564H2JLI/ASU20dScRfIkHk/YI5Pgzz
- PWPr2gMgawoowreXEM4SbvuB8p06Ky7BwMI6IId40QCBmI07ttTwDXYppPgv5y7Mzk54L6
- IqmN3YFqtp4Zf1l3+dWlwV1hEM+sH9g=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Vfa3kbnlzQStc5sVV8TNOhEMIfyHp+YyqWBkA/IhNEw=;
+ b=i5speplcOdH2JJXd7FZwOf5ljv+lSl9/T+/sfV+nsSDnzJz07PH8KLSQj6jWhFlOWyrzE6
+ 4MLpBl1oBHmlwtt/EoIZ5YLVQ0LwGYK77YraKamI8XQ9qweQx7DyNtgtXAn2PKn8OrIZFp
+ Gw83T5H8r0zccwR6+8teGKPdJZu5NDc=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-404-uDaYs1vKMGis_Dr2tfeZYQ-1; Wed, 11 Sep 2024 14:43:24 -0400
-X-MC-Unique: uDaYs1vKMGis_Dr2tfeZYQ-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7a9b86db6cdso27832385a.2
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 11:43:24 -0700 (PDT)
+ us-mta-133-v5Foaw07OXyNITUpYydObw-1; Wed, 11 Sep 2024 14:58:24 -0400
+X-MC-Unique: v5Foaw07OXyNITUpYydObw-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6c3554020afso1620806d6.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 11:58:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726080204; x=1726685004;
+ d=1e100.net; s=20230601; t=1726081103; x=1726685903;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KlZJrnTUQHtJz7LkJ7OovI/PzRPTj056Fhwk0ZhTTe4=;
- b=LA0yDQ6Gb5HJdtxQo/luLlUuqtFS8Uh+APz4vVDBTsZdrmEbqf6Xz/eKpIvjOL3Y1G
- 7AnwHLLNsmL4/OC/QZpYsFgpuHAG8ffweGACzKg+ooajT5JvFkYnLCpl0XW3JRR3kN8Z
- s9mqr//lRAJjRRsYT7Wk1o+Arorzvcjf0wcs6g4Fzr7AH+Bngl+DHY+VrLkBGEgw/sfD
- F1eQ/dgGWdAu2Yg8G+Ru9I7GqWmpLenk8rLkL5fCk8dj6F3RIt+scWokjZyvkj6kJo1w
- NWBQltdIyCLJPkBjjOgREiSbCE4GqlupcEFKrS2sPiK6JRUaqORr3p2+QbBjyz66+d6Y
- 8xaQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXEQvcqP4WjavNR/Uv0r7pTc0tUXEbu8kt2g9h7y/ptZrH38jnIRPb9XT20hDT8lfPihJKUJOMGgI4p@nongnu.org
-X-Gm-Message-State: AOJu0Yxw4bJRvY2pMp/KT28hPBjbimyO4FUuIr7F38AXdXDoZypzSSdR
- aoQTkJFHnsaI2SoQF1PpbkxsRSfE9JHYOSMSaZBh23o/tFLebZialjcuz/MNR2FGpu6lTPwj7AK
- RHdbDntArICGuzfHOaOei4Aq/Xgmxo9Lar88bviaKEl+4z9LjhT7G
-X-Received: by 2002:a05:620a:2485:b0:7a9:c8a1:5d94 with SMTP id
- af79cd13be357-7a9e5f03c86mr54688085a.19.1726080204270; 
- Wed, 11 Sep 2024 11:43:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG1IwGEGxKC6UEKeDmr3DEWgJahrKKLdfrHynj8gmVGfrRNkbI6V/3295L+2THGe1lQsvcZiw==
-X-Received: by 2002:a05:620a:2485:b0:7a9:c8a1:5d94 with SMTP id
- af79cd13be357-7a9e5f03c86mr54684685a.19.1726080203861; 
- Wed, 11 Sep 2024 11:43:23 -0700 (PDT)
+ bh=Vfa3kbnlzQStc5sVV8TNOhEMIfyHp+YyqWBkA/IhNEw=;
+ b=hQCp/EPQP+kEhzx6EVocPYrq5qbgx2AsWMXbO0+K/VXIv6it475NEv6SoGpuWML5V1
+ wRG7L57YVp4XJNPwjMH6uVRtHvQYhAGUgwdowqTiNrbGuPT3+dqi3iSljxhUgB0Dv7va
+ 3Y8PKHr8iFf9joXx2CVJNa5GHjfMfU1VZKDjVoD891gV5gh3Rsvf+ENkIbLtvG17T71F
+ 5O6gWZMFdax8aD7YgWoO2vqrfmPe7KgjgwsippOoK39J8tcHqGLf5o5S56fm6LeH3oBh
+ RV7p9IOIcbASX91ScBlDEQqNCpl4jIMMeQHqmOdy6oiXB9EuqXWnh/rOyu7YwcH2iGUp
+ Lwiw==
+X-Gm-Message-State: AOJu0YyitA0hKf16Ad/z/dynjaa0sy3B0bn1YfxC2DKOgx4d1QHZXhni
+ 7Jeze3KpoxgfIUdTraJf09BtzN5ueNBUWgRWukIZ1qvIbjuawAwx8RY4AUxSORBPv30qE3fnDOl
+ eL2K761KBHLEozhi8ZykxvfDAvc2iAFWzYbqxB4OJ1oyb18CF+mxK
+X-Received: by 2002:a05:6214:3d13:b0:6c5:64b2:f4d5 with SMTP id
+ 6a1803df08f44-6c573532d57mr7730866d6.22.1726081103540; 
+ Wed, 11 Sep 2024 11:58:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEo2uSI5Et1lynQpd7EcidHhSd6rh79Cj9JVNIU0jprE8UktciqN+/3+MkkZWd0Bt+X2OQjvg==
+X-Received: by 2002:a05:6214:3d13:b0:6c5:64b2:f4d5 with SMTP id
+ 6a1803df08f44-6c573532d57mr7730746d6.22.1726081103268; 
+ Wed, 11 Sep 2024 11:58:23 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a9a7968ed5sm451972385a.42.2024.09.11.11.43.22
+ 6a1803df08f44-6c534339992sm44970076d6.45.2024.09.11.11.58.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 11:43:23 -0700 (PDT)
-Date: Wed, 11 Sep 2024 14:43:20 -0400
+ Wed, 11 Sep 2024 11:58:22 -0700 (PDT)
+Date: Wed, 11 Sep 2024 14:58:20 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Stefan Weil <sw@weilnetz.de>
-Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH] migration/multifd: Fix loop conditions in
- multifd_zstd_send_prepare and multifd_zstd_recv
-Message-ID: <ZuHkyBeEqdsfOu1-@x1n>
-References: <20240910054138.1458555-1-sw@weilnetz.de>
+To: Mattias Nissler <mnissler@rivosinc.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH] softmmu: Expand comments describing max_bounce_buffer_size
+Message-ID: <ZuHoTOes7__1yUPl@x1n>
+References: <20240910213512.843130-1-mnissler@rivosinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240910054138.1458555-1-sw@weilnetz.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20240910213512.843130-1-mnissler@rivosinc.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -102,28 +102,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 10, 2024 at 07:41:38AM +0200, Stefan Weil wrote:
-> GitHub's CodeQL reports four critical errors which are fixed by this commit:
+On Tue, Sep 10, 2024 at 02:35:12PM -0700, Mattias Nissler wrote:
+> Clarify how the parameter gets configured and how it is used when
+> servicing DMA mapping requests targeting indirect memory regions.
 > 
->     Unsigned difference expression compared to zero
-> 
-> An expression (u - v > 0) with unsigned values u, v is only false if u == v,
-> so all changed expressions did not work as expected.
-> 
-> Signed-off-by: Stefan Weil <sw@weilnetz.de>
-> ---
-> 
-> I don't know what effect the errors will have.
-> Please check whether the fix should be backported to existing versions of QEMU.
-> 
-> And I think that it might be a good idea to add the security check to
-> https://github.com/qemu/qemu, too. The critical errors here and in net/colo-compare.c
-> were not reported by other static code analyzers as far as I know.
-> Paolo, if desired, I can send a patch for CodeQL.
+> Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
 
-I hope Paolo can see these lines.
-
-Patch queued, thanks.
+Acked-by: Peter Xu <peterx@redhat.com>
 
 -- 
 Peter Xu
