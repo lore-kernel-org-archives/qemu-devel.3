@@ -4,78 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99FF8EE01FD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96693EE01FA
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 02:07:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soCkT-0002zO-Ot; Tue, 10 Sep 2024 22:06:26 -0400
+	id 1soCkf-00039l-2h; Tue, 10 Sep 2024 22:06:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1soCkR-0002ye-0y
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 22:06:23 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1soCkN-0000g3-W0
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 22:06:22 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-7d7a9200947so2560476a12.3
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 19:06:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726020378; x=1726625178; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=NWgVOdvybBWNmfXjZpUQna1coAtugbOITXrm7KFf4h8=;
- b=LVuMp/Wgp4w7PP5sp7CU1Dz3V0WqBGM/+NIgA8i2Gh/hLUj1fVVQ0FXcduAM8vNMQZ
- LSnP9AAfTYe+1vASji1O0n20aIbd0aOwzeXCLivHRJ3j7a99uFc22dDdHRtXfinkfIuH
- eWl5d7zVITMU7bb6zhmmBrpmSih1Tswj4GB78fyt4MtWDUkNjWaz7xaDuhgctLZxndt3
- 29IWNIEJsliSWzsXukutzzAIFhIZ9d/MOJdHYXjAi18MVKgikLkknguC/KjtvuCcnjlM
- Cc1U3rsivjgqTcfFAicmY+zqrHil7rRUk8L3nemLoJ+3OsexNY01GCCEf81rVpXZP0sC
- hW2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726020378; x=1726625178;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NWgVOdvybBWNmfXjZpUQna1coAtugbOITXrm7KFf4h8=;
- b=Eop8H2/8GPbkLZ02l2XgE8faI3E5wfiTnzuFwJJnMNeudbCJkd7XYtJL4Ur+K972q9
- me0L7YzQyA5iJ1LGIfIBF19Emhyr+DWmVmjbpQU/jIkuENR6VIbVUTEZeHL3AguH+Aq/
- 9SOcLBoI6K6z+IZpgjb1d69832BFaGhSFHbu1cqbHBzS6wki0DqtZBp5UzLtrvuLZVWG
- fzg8aa1lcN0iAbIzZl19m1Qsz4GmDlyEipB+GJ5yZGJ2g/6ArKPynOnQKu/BliNBPhNo
- i23Npjit2Zf34j+k/d4GljfiH74ClBBb4sZasq1bgA0/ZtCISp9jAgoHlIXhQOoc6+w6
- EpMA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVLY0LqNqCDfbP0iR7oE7IXaf/xWybdkJ2butpYRPV6tjTc0Cjy+rR38Eku08coSExUIIHbxHFBCiKn@nongnu.org
-X-Gm-Message-State: AOJu0YzMcL4Xd0lXLjJmPBCK3lrJOk49N+3gbUcm0a1kjHZcOrlnqrvX
- NgSW82lVqyV8S9S4kYsZL1ydsArVtecxkHDFJnoMKOeRsA7FuJ9GCIXwOJPnOIM=
-X-Google-Smtp-Source: AGHT+IE7eInnUXsTvN5Lxp3eERwqAUfQiRhMwfhaUjpkqjKVTIaVzdwbMmI83TK1aP0G0punihbu0Q==
-X-Received: by 2002:a17:902:dac9:b0:206:e2e4:57c6 with SMTP id
- d9443c01a7336-2074c623321mr37291865ad.36.1726020377598; 
- Tue, 10 Sep 2024 19:06:17 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2073cfa19ccsm24912505ad.16.2024.09.10.19.06.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 19:06:17 -0700 (PDT)
-Message-ID: <8cbd1448-7c8e-4257-ae6c-da5bbbc5e4ff@linaro.org>
-Date: Tue, 10 Sep 2024 19:06:15 -0700
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1soCkc-00038h-Sa
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 22:06:34 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1soCka-0000gO-P3
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 22:06:34 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48AEhwu9023785;
+ Wed, 11 Sep 2024 02:06:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ gOyZAa7mqyOulDwtgkSvzl8RqxVpG52gJgOqat7KzU0=; b=G38gmK7LXAvbCZhj
+ CRmNxgKwQcDLv/xehmf9QcMaVOTnaA4M2xC6/RNigay9Y59oTT4HWPUmykJCduCX
+ mXPzBP0PPBlAGzdy92qjYPCH8npoKdc4lFxH934FGuxt+RYd2jEO/k9AX1c9fa/J
+ XDVw+IzCz8qIUMnXMoktJjFtFwhZRD/SlCaGgGvVl8Fnqnh8nN9osv9Z7HCRv9Js
+ D5xeRdjqzWGeYr2eg3Gp3EhQobUig23vNrw3w5x/avfNf4tjRaEhlkA/30cKvVXz
+ V71cDAzjgq6lbyqUJUD2vQeWwYjcjQIl70Ws1IXmpg/eS0ptA61wAOq+14vHdQ2p
+ kZQW7A==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41gy6p7xux-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 11 Sep 2024 02:06:21 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
+ [10.47.97.35])
+ by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48B26LLU026474
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 11 Sep 2024 02:06:21 GMT
+Received: from [10.110.112.8] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Sep
+ 2024 19:06:20 -0700
+Message-ID: <ce4daa98-0b3c-426d-95e0-59320eb29be8@quicinc.com>
+Date: Tue, 10 Sep 2024 21:06:18 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/39] hw/net: replace assert(0) with
- g_assert_not_reached()
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-References: <20240910221606.1817478-1-pierrick.bouvier@linaro.org>
- <20240910221606.1817478-7-pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH] tests/functional/qemu_test: Use Python hashlib instead of
+ external programs
+To: Brad Smith <brad@comstyle.com>, Thomas Huth <thuth@redhat.com>,
+ <qemu-devel@nongnu.org>
+CC: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Peter Maydell
+ <peter.maydell@linaro.org>
+References: <20240910201742.239559-1-thuth@redhat.com>
+ <1823ff97-b305-453b-b3a6-b24cc1987002@comstyle.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240910221606.1817478-7-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+From: Brian Cain <quic_bcain@quicinc.com>
+In-Reply-To: <1823ff97-b305-453b-b3a6-b24cc1987002@comstyle.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-ORIG-GUID: zs7TwOxrxOrByV9-Ic0H0K2wqtI7s-HF
+X-Proofpoint-GUID: zs7TwOxrxOrByV9-Ic0H0K2wqtI7s-HF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 adultscore=0
+ bulkscore=0 lowpriorityscore=0 mlxlogscore=810 spamscore=0 phishscore=0
+ impostorscore=0 suspectscore=0 mlxscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409110015
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_bcain@quicinc.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,30 +105,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/10/24 15:15, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   hw/net/i82596.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/net/i82596.c b/hw/net/i82596.c
-> index 6cc8292a65a..cd416a00ffa 100644
-> --- a/hw/net/i82596.c
-> +++ b/hw/net/i82596.c
-> @@ -282,7 +282,7 @@ static void command_loop(I82596State *s)
->           case CmdDump:
->           case CmdDiagnose:
->               printf("FIXME Command %d !!\n", cmd & 7);
-> -            assert(0);
-> +            g_assert_not_reached();
->           }
->   
->           /* update status */
 
-Ug, printf.  Anyway,
+On 9/10/2024 5:26 PM, Brad Smith wrote:
+> On 2024-09-10 4:17 p.m., Thomas Huth wrote:
+>> Some systems (like OpenBSD) do not have the sha256sum or sha512sum 
+>> programs
+>> installed by default. Use the Python hashlib instead so we don't have to
+>> rely on the external programs.
+>
+> On OpenBSD they're named sha256 and sha512.
+>
+Rather than port the test to each OS's particular program names, we 
+should use the portable solution that's included w/Python.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
 
 
-r~
+Reviewed-by: Brian Cain <bcain@quicinc.com>
+
+>>   tests/functional/qemu_test/asset.py | 16 +++++++++++-----
+>>   1 file changed, 11 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/tests/functional/qemu_test/asset.py 
+>> b/tests/functional/qemu_test/asset.py
+>> index d3be2aff82..3ec429217e 100644
+>> --- a/tests/functional/qemu_test/asset.py
+>> +++ b/tests/functional/qemu_test/asset.py
+>> @@ -43,15 +43,21 @@ def _check(self, cache_file):
+>>           if self.hash is None:
+>>               return True
+>>           if len(self.hash) == 64:
+>> -            sum_prog = 'sha256sum'
+>> +            hl = hashlib.sha256()
+>>           elif len(self.hash) == 128:
+>> -            sum_prog = 'sha512sum'
+>> +            hl = hashlib.sha512()
+>>           else:
+>>               raise Exception("unknown hash type")
+>>   -        checksum = subprocess.check_output(
+>> -            [sum_prog, str(cache_file)]).split()[0]
+>> -        return self.hash == checksum.decode("utf-8")
+>> +        # Calculate the hash of the file:
+>> +        with open(cache_file, 'rb') as file:
+>> +            while True:
+>> +                chunk = file.read(1 << 20)
+>> +                if not chunk:
+>> +                    break
+>> +                hl.update(chunk)
+>> +
+>> +        return  hl.hexdigest()
+>>         def valid(self):
+>>           return self.cache_file.exists() and 
+>> self._check(self.cache_file)
+>
 
