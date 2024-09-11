@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1804EE0209
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 05:28:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C83CEE020B
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 05:28:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soFre-0001Cz-H5; Wed, 11 Sep 2024 01:26:02 -0400
+	id 1soFst-0006Ye-1I; Wed, 11 Sep 2024 01:27:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1soFrc-00019Q-PF
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 01:26:00 -0400
+ id 1soFsq-0006Dl-Lb
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 01:27:16 -0400
 Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1soFrY-0004MK-RO
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 01:25:59 -0400
+ id 1soFso-0004Mp-Ef
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 01:27:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1726032357; x=1757568357;
+ t=1726032435; x=1757568435;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=WBGd7s08GsIV9E35orrU72LSBIrn/mf1CKQqNso5sGc=;
- b=k5cE8Z7pGqOXmtHCBY1mMDbkkcUMNSRA43Fm7HtZXYBy58bLt8+4/c2M
- oNW/GIGdmcQLO3T9Alw8AFbuXcRuZON7NXfVE6dglYG2c35kJ2TJFI1x+
- OzKLdIS5OULKEo9/NQlVBdc30mHGTu6NlJNB1pj0yGSbgfHX8g+bTMUdO
- Np4qYFhmt7DX1QuymstfoA58gSBSoe+u6gClOeRitLNRlyzPJ3bZvc0lt
- jjYJl+k9eUOxOl4aV9J153/nHlHb/3mVkmFilj5Zoa8yUbrLtrRDNXknD
- YHi9JgbN76mJsMw5G6MiKvhclK6n4TbdodlqBSmSEi6ygqgFaM1aZ7U1i w==;
-X-CSE-ConnectionGUID: w+wHqQhaSiKo5A+MdqNKOg==
-X-CSE-MsgGUID: qEE13Yo0RkWdg/XbrElRTw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11191"; a="35403466"
-X-IronPort-AV: E=Sophos;i="6.10,219,1719903600"; d="scan'208";a="35403466"
+ bh=bZWcEWPUvXrW2dfLoI2QO7d604JqxTuRIvII2jmDh/U=;
+ b=dGLQbRcRLy94vD82Eod0NZXJBopqwgUmZdq181tcVc0Oas0Mx5zfxNvz
+ 46+qcbOfBbrt6Lpu121rLfIlM8NwcTEFXNQtdYuAxNJpgkX7J4zohwCvm
+ SYphcz2yns1bAaCLDnm2rWma1n1zOWVGp6GlUwGOD+9r4N+gDOp3yh62z
+ PXQNN1Zvur7PdXHHCJDiX329RxFGIMRYj9R+5J2OHlP4iBmvmLdCnVBIW
+ dpNqjEQ0jitzQeGlA/Dd1lTxWAkuSpWL6bZdI7cMG00LP6HE1xfC2gTST
+ 2MgsHaTn0zP1xs/kYgdetQWncRH57XqrCHVnbskUmcEMwwxjhG5I9sWhk Q==;
+X-CSE-ConnectionGUID: rz0e0roqRr2XSeO31Js2kA==
+X-CSE-MsgGUID: bTPJ1ESET2ypAujKjxtj/A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11191"; a="35403642"
+X-IronPort-AV: E=Sophos;i="6.10,219,1719903600"; d="scan'208";a="35403642"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Sep 2024 22:25:56 -0700
-X-CSE-ConnectionGUID: KVYrI+CvQG2TQXzLxDu9wQ==
-X-CSE-MsgGUID: J7cmToV8Rl2w+6ptQ8vKAg==
+ 10 Sep 2024 22:27:14 -0700
+X-CSE-ConnectionGUID: eAjBiPkUSeuEObiY7mJ7Rg==
+X-CSE-MsgGUID: hCxTUM93R2KKiMoGQKT9UQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,219,1719903600"; d="scan'208";a="67536368"
+X-IronPort-AV: E=Sophos;i="6.10,219,1719903600"; d="scan'208";a="67536578"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Sep 2024 22:25:51 -0700
+ 10 Sep 2024 22:27:09 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -53,14 +53,12 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Thomas Huth <thuth@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v3 01/17] intel_iommu: Use the latest fault reasons defined by
- spec
-Date: Wed, 11 Sep 2024 13:22:39 +0800
-Message-Id: <20240911052255.1294071-2-zhenzhong.duan@intel.com>
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v3 17/17] tests/qtest: Add intel-iommu test
+Date: Wed, 11 Sep 2024 13:22:55 +0800
+Message-Id: <20240911052255.1294071-18-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240911052255.1294071-1-zhenzhong.duan@intel.com>
 References: <20240911052255.1294071-1-zhenzhong.duan@intel.com>
@@ -91,132 +89,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yu Zhang <yu.c.zhang@linux.intel.com>
+Add the framework to test the intel-iommu device.
 
-Spec revision 3.0 or above defines more detailed fault reasons for
-scalable mode. So introduce them into emulation code, see spec
-section 7.1.2 for details.
+Currently only tested cap/ecap bits correctness in scalable
+modern mode. Also tested cap/ecap bits consistency before
+and after system reset.
 
-Note spec revision has no relation with VERSION register, Guest
-kernel should not use that register to judge what features are
-supported. Instead cap/ecap bits should be checked.
-
-Signed-off-by: Yu Zhang <yu.c.zhang@linux.intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Acked-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 ---
- hw/i386/intel_iommu_internal.h |  9 ++++++++-
- hw/i386/intel_iommu.c          | 25 ++++++++++++++++---------
- 2 files changed, 24 insertions(+), 10 deletions(-)
+ MAINTAINERS                    |  1 +
+ include/hw/i386/intel_iommu.h  |  1 +
+ tests/qtest/intel-iommu-test.c | 70 ++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build        |  1 +
+ 4 files changed, 73 insertions(+)
+ create mode 100644 tests/qtest/intel-iommu-test.c
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index 5f32c36943..8fa27c7f3b 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -311,7 +311,14 @@ typedef enum VTDFaultReason {
-                                   * request while disabled */
-     VTD_FR_IR_SID_ERR = 0x26,   /* Invalid Source-ID */
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 0c1bc69828..120e8b86e5 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3690,6 +3690,7 @@ S: Supported
+ F: hw/i386/intel_iommu.c
+ F: hw/i386/intel_iommu_internal.h
+ F: include/hw/i386/intel_iommu.h
++F: tests/qtest/intel-iommu-test.c
  
--    VTD_FR_PASID_TABLE_INV = 0x58,  /*Invalid PASID table entry */
-+    /* PASID directory entry access failure */
-+    VTD_FR_PASID_DIR_ACCESS_ERR = 0x50,
-+    /* The Present(P) field of pasid directory entry is 0 */
-+    VTD_FR_PASID_DIR_ENTRY_P = 0x51,
-+    VTD_FR_PASID_TABLE_ACCESS_ERR = 0x58, /* PASID table entry access failure */
-+    /* The Present(P) field of pasid table entry is 0 */
-+    VTD_FR_PASID_ENTRY_P = 0x59,
-+    VTD_FR_PASID_TABLE_ENTRY_INV = 0x5b,  /*Invalid PASID table entry */
+ AMD-Vi Emulation
+ S: Orphan
+diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+index f6d9b41b80..0c9bb8eab6 100644
+--- a/include/hw/i386/intel_iommu.h
++++ b/include/hw/i386/intel_iommu.h
+@@ -47,6 +47,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(IntelIOMMUState, INTEL_IOMMU_DEVICE)
+ #define VTD_HOST_AW_48BIT           48
+ #define VTD_HOST_AW_AUTO            0xff
+ #define VTD_HAW_MASK(aw)            ((1ULL << (aw)) - 1)
++#define VTD_MGAW_FROM_CAP(cap)      ((cap >> 16) & 0x3fULL)
  
-     /* Output address in the interrupt address range for scalable mode */
-     VTD_FR_SM_INTERRUPT_ADDR = 0x87,
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 16d2885fcc..c52912f593 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -796,7 +796,7 @@ static int vtd_get_pdire_from_pdir_table(dma_addr_t pasid_dir_base,
-     addr = pasid_dir_base + index * entry_size;
-     if (dma_memory_read(&address_space_memory, addr,
-                         pdire, entry_size, MEMTXATTRS_UNSPECIFIED)) {
--        return -VTD_FR_PASID_TABLE_INV;
-+        return -VTD_FR_PASID_DIR_ACCESS_ERR;
-     }
+ #define DMAR_REPORT_F_INTR          (1)
  
-     pdire->val = le64_to_cpu(pdire->val);
-@@ -814,6 +814,7 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
-                                           dma_addr_t addr,
-                                           VTDPASIDEntry *pe)
- {
-+    uint8_t pgtt;
-     uint32_t index;
-     dma_addr_t entry_size;
-     X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
-@@ -823,7 +824,7 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
-     addr = addr + index * entry_size;
-     if (dma_memory_read(&address_space_memory, addr,
-                         pe, entry_size, MEMTXATTRS_UNSPECIFIED)) {
--        return -VTD_FR_PASID_TABLE_INV;
-+        return -VTD_FR_PASID_TABLE_ACCESS_ERR;
-     }
-     for (size_t i = 0; i < ARRAY_SIZE(pe->val); i++) {
-         pe->val[i] = le64_to_cpu(pe->val[i]);
-@@ -831,11 +832,13 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
- 
-     /* Do translation type check */
-     if (!vtd_pe_type_check(x86_iommu, pe)) {
--        return -VTD_FR_PASID_TABLE_INV;
-+        return -VTD_FR_PASID_TABLE_ENTRY_INV;
-     }
- 
--    if (!vtd_is_level_supported(s, VTD_PE_GET_LEVEL(pe))) {
--        return -VTD_FR_PASID_TABLE_INV;
-+    pgtt = VTD_PE_GET_TYPE(pe);
-+    if (pgtt == VTD_SM_PASID_ENTRY_SLT &&
-+        !vtd_is_level_supported(s, VTD_PE_GET_LEVEL(pe))) {
-+            return -VTD_FR_PASID_TABLE_ENTRY_INV;
-     }
- 
-     return 0;
-@@ -876,7 +879,7 @@ static int vtd_get_pe_from_pasid_table(IntelIOMMUState *s,
-     }
- 
-     if (!vtd_pdire_present(&pdire)) {
--        return -VTD_FR_PASID_TABLE_INV;
-+        return -VTD_FR_PASID_DIR_ENTRY_P;
-     }
- 
-     ret = vtd_get_pe_from_pdire(s, pasid, &pdire, pe);
-@@ -885,7 +888,7 @@ static int vtd_get_pe_from_pasid_table(IntelIOMMUState *s,
-     }
- 
-     if (!vtd_pe_present(pe)) {
--        return -VTD_FR_PASID_TABLE_INV;
-+        return -VTD_FR_PASID_ENTRY_P;
-     }
- 
-     return 0;
-@@ -938,7 +941,7 @@ static int vtd_ce_get_pasid_fpd(IntelIOMMUState *s,
-     }
- 
-     if (!vtd_pdire_present(&pdire)) {
--        return -VTD_FR_PASID_TABLE_INV;
-+        return -VTD_FR_PASID_DIR_ENTRY_P;
-     }
- 
-     /*
-@@ -1795,7 +1798,11 @@ static const bool vtd_qualified_faults[] = {
-     [VTD_FR_ROOT_ENTRY_RSVD] = false,
-     [VTD_FR_PAGING_ENTRY_RSVD] = true,
-     [VTD_FR_CONTEXT_ENTRY_TT] = true,
--    [VTD_FR_PASID_TABLE_INV] = false,
-+    [VTD_FR_PASID_DIR_ACCESS_ERR] = false,
-+    [VTD_FR_PASID_DIR_ENTRY_P] = true,
-+    [VTD_FR_PASID_TABLE_ACCESS_ERR] = false,
-+    [VTD_FR_PASID_ENTRY_P] = true,
-+    [VTD_FR_PASID_TABLE_ENTRY_INV] = true,
-     [VTD_FR_SM_INTERRUPT_ADDR] = true,
-     [VTD_FR_MAX] = false,
- };
+diff --git a/tests/qtest/intel-iommu-test.c b/tests/qtest/intel-iommu-test.c
+new file mode 100644
+index 0000000000..fa9169f1a3
+--- /dev/null
++++ b/tests/qtest/intel-iommu-test.c
+@@ -0,0 +1,70 @@
++/*
++ * QTest testcase for intel-iommu
++ *
++ * Copyright (c) 2024 Intel, Inc.
++ *
++ * Author: Zhenzhong Duan <zhenzhong.duan@intel.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#include "qemu/osdep.h"
++#include "libqtest.h"
++#include "hw/i386/intel_iommu_internal.h"
++
++#define CAP_MODERN_FIXED1    (VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND | \
++                              VTD_CAP_MAMV | VTD_CAP_PSI | VTD_CAP_SLLPS)
++#define ECAP_MODERN_FIXED1   (VTD_ECAP_QI |  VTD_ECAP_IR | VTD_ECAP_IRO | \
++                              VTD_ECAP_MHMV | VTD_ECAP_SMTS | VTD_ECAP_FLTS)
++
++static inline uint32_t vtd_reg_readl(QTestState *s, uint64_t offset)
++{
++    return qtest_readl(s, Q35_HOST_BRIDGE_IOMMU_ADDR + offset);
++}
++
++static inline uint64_t vtd_reg_readq(QTestState *s, uint64_t offset)
++{
++    return qtest_readq(s, Q35_HOST_BRIDGE_IOMMU_ADDR + offset);
++}
++
++static void test_intel_iommu_modern(void)
++{
++    uint8_t init_csr[DMAR_REG_SIZE];     /* register values */
++    uint8_t post_reset_csr[DMAR_REG_SIZE];     /* register values */
++    uint64_t cap, ecap, tmp;
++    QTestState *s;
++
++    s = qtest_init("-M q35 -device intel-iommu,x-scalable-mode=modern");
++
++    cap = vtd_reg_readq(s, DMAR_CAP_REG);
++    g_assert((cap & CAP_MODERN_FIXED1) == CAP_MODERN_FIXED1);
++
++    tmp = cap & VTD_CAP_SAGAW_MASK;
++    g_assert(tmp == (VTD_CAP_SAGAW_39bit | VTD_CAP_SAGAW_48bit));
++
++    tmp = VTD_MGAW_FROM_CAP(cap);
++    g_assert(tmp == VTD_HOST_AW_48BIT - 1);
++
++    ecap = vtd_reg_readq(s, DMAR_ECAP_REG);
++    g_assert((ecap & ECAP_MODERN_FIXED1) == ECAP_MODERN_FIXED1);
++
++    qtest_memread(s, Q35_HOST_BRIDGE_IOMMU_ADDR, init_csr, DMAR_REG_SIZE);
++
++    qobject_unref(qtest_qmp(s, "{ 'execute': 'system_reset' }"));
++    qtest_qmp_eventwait(s, "RESET");
++
++    qtest_memread(s, Q35_HOST_BRIDGE_IOMMU_ADDR, post_reset_csr, DMAR_REG_SIZE);
++    /* Ensure registers are consistent after hard reset */
++    g_assert(!memcmp(init_csr, post_reset_csr, DMAR_REG_SIZE));
++
++    qtest_quit(s);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    qtest_add_func("/q35/intel-iommu/modern", test_intel_iommu_modern);
++
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index fc852f3d8b..826e967a81 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -80,6 +80,7 @@ qtests_i386 = \
+   (config_all_devices.has_key('CONFIG_SB16') ? ['fuzz-sb16-test'] : []) +                   \
+   (config_all_devices.has_key('CONFIG_SDHCI_PCI') ? ['fuzz-sdcard-test'] : []) +            \
+   (config_all_devices.has_key('CONFIG_ESP_PCI') ? ['am53c974-test'] : []) +                 \
++  (config_all_devices.has_key('CONFIG_VTD') ? ['intel-iommu-test'] : []) +                 \
+   (host_os != 'windows' and                                                                \
+    config_all_devices.has_key('CONFIG_ACPI_ERST') ? ['erst-test'] : []) +                   \
+   (config_all_devices.has_key('CONFIG_PCIE_PORT') and                                       \
 -- 
 2.34.1
 
