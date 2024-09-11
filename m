@@ -4,109 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB109EE499D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6899EEE499D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:55:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMp5-0000Tx-6u; Wed, 11 Sep 2024 08:51:52 -0400
+	id 1soMra-0003Fj-QF; Wed, 11 Sep 2024 08:54:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1soMp1-0000JA-O7
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:51:48 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1soMrZ-00039d-8S
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:54:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1soMoz-00039k-9L
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:51:46 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1soMrX-0003UM-Jm
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:54:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726059101;
+ s=mimecast20190719; t=1726059262;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mFTkfxZe8Y3KC8+GnCo7YhR64xl+MhtnbrQRYDpeikY=;
- b=WnCuUegknep5HUo4gzjiXh2YieF6mAPvg86y+eWZH/sSAyIktS6Wb+HTJ4gBiKpskkmC68
- 6/6OHH3xg+GbJc88WjphSFCpPiUhToJKm6JpfwT85kB8dajaKaqk5cmS9RW4V8Fd/3/EHp
- 0BaW3o5SspEFfrFptR+TtqscOi27WVo=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-iUWjuNGROCO2yRVTK23Trg-1; Wed,
- 11 Sep 2024 08:51:40 -0400
-X-MC-Unique: iUWjuNGROCO2yRVTK23Trg-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F906193584D; Wed, 11 Sep 2024 12:51:31 +0000 (UTC)
-Received: from localhost (unknown [10.42.28.10])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E3A1319560AB; Wed, 11 Sep 2024 12:51:27 +0000 (UTC)
-Date: Wed, 11 Sep 2024 13:51:26 +0100
-From: "Richard W.M. Jones" <rjones@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Eric Blake <eblake@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Joel Stanley <joel@jms.id.au>, Kevin Wolf <kwolf@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- Corey Minyard <minyard@acm.org>, Eric Farman <farman@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Keith Busch <kbusch@kernel.org>,
- WANG Xuerui <git@xen0n.name>, Hyman Huang <yong.huang@smartx.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Michael Rolnik <mrolnik@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
- Ani Sinha <anisinha@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Jesper Devantier <foss@defmacro.it>, Laurent Vivier <laurent@vivier.eu>,
- Peter Maydell <peter.maydell@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>, kvm@vger.kernel.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Fam Zheng <fam@euphon.net>, qemu-s390x@nongnu.org,
- Hanna Reitz <hreitz@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Laurent Vivier <lvivier@redhat.com>, Rob Herring <robh@kernel.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Helge Deller <deller@gmx.de>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Yanan Wang <wangyanan55@huawei.com>, Peter Xu <peterx@redhat.com>,
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- Klaus Jensen <its@irrelevant.dk>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH 01/39] docs/spin: replace assert(0) with
- g_assert_not_reached()
-Message-ID: <20240911125126.GS1450@redhat.com>
-References: <20240910221606.1817478-1-pierrick.bouvier@linaro.org>
- <20240910221606.1817478-2-pierrick.bouvier@linaro.org>
- <zkyoryho5alnyirnl7ulvh5y6tkty6koccgeygmve42uml7glu@37rkdodtlx4f>
- <bwo43ms2wi6vbeqhlc7qjwmw5jyt2btxvpph3lqn7tfol4srjf@77yusngzs6wh>
- <10d6d67a-32f6-40fc-aba9-c62a74d9d98d@maciej.szmigiero.name>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=z+4ZC1CwbWGjVgpaFSRDqeWKMvdFmsfE3BcY7VBWDLU=;
+ b=GJO2NDkw+DJ5UHMd1BhVUOiRIpae98jyhLmQeQXxdqr3BSdODCMpOVcmLAa9+Ajfl4IIEg
+ g6vt8/X65xv3YnXvRQebL5I2IgZhoIc0uZaL2qWXwgJSd3CRPxnmkp8CEtDd641rJ3ys5i
+ ur8v5f67zI/4mhGt9vm1oSlRDzp8T0s=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-324-Mhk_0Hg3Pse7uXOJrLGx4g-1; Wed, 11 Sep 2024 08:54:20 -0400
+X-MC-Unique: Mhk_0Hg3Pse7uXOJrLGx4g-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-374b385b146so2979895f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:54:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726059259; x=1726664059;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=z+4ZC1CwbWGjVgpaFSRDqeWKMvdFmsfE3BcY7VBWDLU=;
+ b=b4CLw0t14j7UTHtjM8UgGef3bbBUCpIQrGqLmVU4MyKpBxY3SPFkudLuuSRLbh4wWC
+ 2S/3rfgtn9rXA6mohidlYrOX5ptHX5+WfNF/VZ7Un1IkQGAPwYLyjZ1zoGVi/PhQM23h
+ 49t8cBHuGBLL0Y77M1KirjaSIbyO3spB9lnfBRv16jDtvrnokN5mIzgNEU6Gjvr5Yglj
+ hgYf2z3cpoUvjyDKNA70+T1LeqSD/VWvNh2/ymePZKxp0cU5bEWIaC1MkgQvSqPsaf8O
+ 5zmBjusnCUKC7tETp6yE/BCwG7bZrTBoXrsvvbZvJRzmwPHtWp1ZRuVt8vqkPWPFCFyY
+ btNg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUWTtAlgYnA1ENJzmDvGa6x1NQpRk25pz05mXpC5KA0qpxo4pf/CmNFVDwYjVjq9Z/EN8yLgkdA1OrU@nongnu.org
+X-Gm-Message-State: AOJu0YyHOI7j97c7vMXAwGwjKTrlUZp3wC+FZ/1xBBjdsLRWU4UiB9aY
+ 2O9426/cOr+SSGnLLmtP/MHxISCABkCRSfC/DjRGxGMwGNgTWgSg/ExX9JV3ngNl5qQb+a0wHmp
+ 2bOlceAu6bQAxM+gkizcG5Gm1QFOywnpxJB1MkwBjUvLoByYCCDnC
+X-Received: by 2002:a5d:5449:0:b0:374:c0f5:79f4 with SMTP id
+ ffacd0b85a97d-378895c5457mr11658000f8f.7.1726059259085; 
+ Wed, 11 Sep 2024 05:54:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEAIW4zIaVeL5PzqdhmHWgNAgR3WEa0/37UebPNFRTvv6uSrzhNZ5PkA+/ti0OS6CLXHINnIQ==
+X-Received: by 2002:a5d:5449:0:b0:374:c0f5:79f4 with SMTP id
+ ffacd0b85a97d-378895c5457mr11657976f8f.7.1726059258462; 
+ Wed, 11 Sep 2024 05:54:18 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c700:7e00:c672:608:5b3e:df8c?
+ (p200300cbc7007e00c67206085b3edf8c.dip0.t-ipconnect.de.
+ [2003:cb:c700:7e00:c672:608:5b3e:df8c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3789564a52csm11550920f8f.11.2024.09.11.05.54.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Sep 2024 05:54:17 -0700 (PDT)
+Message-ID: <7273e9a2-c80c-438d-98e8-e2c871842edc@redhat.com>
+Date: Wed, 11 Sep 2024 14:54:16 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <10d6d67a-32f6-40fc-aba9-c62a74d9d98d@maciej.szmigiero.name>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=rjones@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 01/14] s390x/s390-virtio-ccw: don't crash on weird RAM
+ sizes
+To: Thomas Huth <thuth@redhat.com>, Janosch Frank <frankja@linux.ibm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>
+References: <20240910175809.2135596-1-david@redhat.com>
+ <20240910175809.2135596-2-david@redhat.com>
+ <df04fd44-de71-4616-86fe-a9ae5fe9af08@linux.ibm.com>
+ <b3739492-6f80-4dba-bfec-466ca2e12513@redhat.com>
+ <973bb16d-7143-40f1-ad2a-b37c0cacd5e7@redhat.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <973bb16d-7143-40f1-ad2a-b37c0cacd5e7@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -131,49 +163,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 11, 2024 at 02:46:18PM +0200, Maciej S. Szmigiero wrote:
-> On 11.09.2024 14:37, Eric Blake wrote:
-> >On Wed, Sep 11, 2024 at 07:33:59AM GMT, Eric Blake wrote:
-> >>On Tue, Sep 10, 2024 at 03:15:28PM GMT, Pierrick Bouvier wrote:
-> >>>Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> >>>---
-> >>
-> >>A general suggestion for the entire series: please use a commit
-> >>message that explains why this is a good idea.  Even something as
-> >>boiler-plate as "refer to commit XXX for rationale" that can be
-> >>copy-pasted into all the other commits is better than nothing,
-> >>although a self-contained message is best.  Maybe:
-> >>
-> >>This patch is part of a series that moves towards a consistent use of
-> >>g_assert_not_reached() rather than an ad hoc mix of different
-> >>assertion mechanisms.
-> >
-> >Or summarize your cover letter:
-> >
-> >Use of assert(false) can trip spurious control flow warnings from some
-> >versions of gcc:
-> >https://lore.kernel.org/qemu-devel/54bb02a6-1b12-460a-97f6-3f478ef766c6@linaro.org/
-> >Solve that by unifying the code base on g_assert_not_reached()
-> >instead.
-> >
+On 11.09.24 14:46, Thomas Huth wrote:
+> On 11/09/2024 14.38, David Hildenbrand wrote:
+>> On 11.09.24 13:28, Janosch Frank wrote:
+>>> On 9/10/24 7:57 PM, David Hildenbrand wrote:
+>>>> KVM is not happy when starting a VM with weird RAM sizes:
+>>>>
+>>>>      # qemu-system-s390x --enable-kvm --nographic -m 1234K
+>>>>      qemu-system-s390x: kvm_set_user_memory_region:
+>>>> KVM_SET_USER_MEMORY_REGION
+>>>>        failed, slot=0, start=0x0, size=0x244000: Invalid argument
+>>>>      kvm_set_phys_mem: error registering slot: Invalid argument
+>>>>      Aborted (core dumped)
+>>>>
+>>>> Let's handle that in a better way by rejecting such weird RAM sizes
+>>>> right from the start:
+>>>>
+>>>
+>>> Huh, I always assumed that ram is handled in multiples of 1MB in QEMU.
+>>
+>> Me as well, I did not dig if that changed at some point ... or why such odd
+>> sizes would even be required :)
 > 
-> If using g_assert_not_reached() instead of assert(false) silences
-> the warning about missing return value in such impossible to reach
-> locations should we also be deleting the now-unnecessary "return"
-> statements after g_assert_not_reached()?
+> I guess it's there for some old PC hardware ... Remember, 640K ought to be
+> enough for anybody.
 
-Although it's unlikely to be used on any compiler that can also
-compile qemu, there is a third implementation of g_assert_not_reached
-that does nothing, see:
+True, maybe the "default to MiB" made some of us believe that something
+smaller is impossible :)
 
-https://gitlab.gnome.org/GNOME/glib/-/blob/927683ebd94eb66c0d7868b77863f57ce9c5bc76/glib/gtestutils.h#L269
+And in fact, I think suffix support was added in
 
-Rich.
+commit 6e1d3c1c855818a6d1399698572afae0d11b872b
+Author: Igor Mammedov <imammedo@redhat.com>
+Date:   Wed Nov 27 01:27:35 2013 +0100
+
+     vl: convert -m to QemuOpts
+     
+     Adds option to -m
+      "size" - startup memory amount
+     
+     For compatibility with legacy CLI if suffix-less number is passed,
+     it assumes amount in Mb.
+     
+     Otherwise user is free to use suffixed number using suffixes b,k/K,M,G
+
 
 -- 
-Richard Jones, Virtualization Group, Red Hat http://people.redhat.com/~rjones
-Read my programming and virtualization blog: http://rwmj.wordpress.com
-virt-builder quickly builds VMs from scratch
-http://libguestfs.org/virt-builder.1.html
+Cheers,
+
+David / dhildenb
 
 
