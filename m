@@ -4,81 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FB8AEE49BC
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:00:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED8F0EE49BD
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:00:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soOli-0006Zz-8z; Wed, 11 Sep 2024 10:56:38 -0400
+	id 1soOnZ-00066F-Ke; Wed, 11 Sep 2024 10:58:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOig-0002ck-KS
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:53:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOhn-0007Kz-Sc
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:52:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOid-0007IU-1t
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:53:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOhi-0007EO-4A
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:52:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726066398;
+ s=mimecast20190719; t=1726066336;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4veiozMEGfv+9OEJSb+cGyfH7FXaz+7Wyk7isIZPzXI=;
- b=VBZloT7g8sNtsVS+csbWn3h0Zy6zGrhaVDLTSaTHcnVNRgaTMvRnRgq/gjJwVvD8pbiO8H
- Y7KBftllqj8H9wL3GBEnw4L+tbG06lXsag569BW4YfcKfjAl3g/FFvgrHLpe283QdgrdnN
- SfAN22RyhJRwKcPw383LpNJhoAj4dFM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3Zv+AcVES8CQaHrznfI8esSyWVUaPQBotZar40Wzxw0=;
+ b=K5Xwx0VyTDzfewXyWrnj+5dPpjk0I8w65d4moWpE3UW8Vz31QxrxdfNGzdKege/393IQ/7
+ K9Apx9h/+VKfyzRNioBd48LJShneBouA2jSiznmD4EXsUYV+KZyaKFNINtkrTVPFKVNG/S
+ LEGcb61N6B8hCoIuzfNFNkfsLoAJaNk=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-76-JNxwyFy8OGS6N0S9wd4tQA-1; Wed, 11 Sep 2024 09:52:23 -0400
-X-MC-Unique: JNxwyFy8OGS6N0S9wd4tQA-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-374b981dd62so1079003f8f.3
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 06:52:23 -0700 (PDT)
+ us-mta-617-L2d2ENr7OYmhmroUZu_fjw-1; Wed, 11 Sep 2024 09:51:56 -0400
+X-MC-Unique: L2d2ENr7OYmhmroUZu_fjw-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a868b6d6882so96312266b.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 06:51:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726062742; x=1726667542;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4veiozMEGfv+9OEJSb+cGyfH7FXaz+7Wyk7isIZPzXI=;
- b=YuGQU+Y439gQWsqF1oLI37OSiObE1Te/gi8Ih/q49GvZXVvnA8s5ACtzS+1CipTwtw
- FjaWI8Bov6utRAjqWLz95an+xiB9GTEklaB+894hP0bcfX+uysog8EdbUmdwo0VAC6eN
- 4zAdSKOMw5Q5i0A8PFbBBe2F97ubiJdHoG0AcaO+HLHkkV/PX2Q3vWx+gcqfr3VHASiy
- kmoQpnEh/y8sCQ9+68G6ZL2rVQuf1u2XYnprF/NfamLCTqRzLa8ESxM5kAAWhf+QU0C5
- UXlxOi7zzwkuk/QU5xgikXhKgaxiZomaeFJ4+XrKbTqiqqI8RB+oedD/vFDIG9evv86V
- dq5Q==
-X-Gm-Message-State: AOJu0YxkaoLhlzxiIwTkHUxyfXOVaLkY5UBLgiCJC1kc03cxh4ayD4r0
- Zlef37Yh/EPGavQ4NhEpqXR7Clx5u+1yPhwFdeboNfKYYd+HkxfgV1F+QzluzWZqbbpOgbaasWC
- 7G/oBccmt8sYYlo15KHtXtcx0cRrvCE27GI5IRkrwhkaAmjB52dPL5ZPJ/8oVZqPtWtrkIbZOfa
- D9tgeWAyKXWaQpxYp+aRBHU8x1CI2NKg==
-X-Received: by 2002:a05:6000:156e:b0:378:7e94:d613 with SMTP id
- ffacd0b85a97d-378b07f6ad8mr2411386f8f.42.1726062741683; 
- Wed, 11 Sep 2024 06:52:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE3fvnhE/laytZOuXh9GtvogEZU9g8iP2CK+EAn9uPy3+gHAc7EKj5dFV1iyfaiUOt7pcxJ0Q==
-X-Received: by 2002:a05:6000:156e:b0:378:7e94:d613 with SMTP id
- ffacd0b85a97d-378b07f6ad8mr2411344f8f.42.1726062740959; 
- Wed, 11 Sep 2024 06:52:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726062715; x=1726667515;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3Zv+AcVES8CQaHrznfI8esSyWVUaPQBotZar40Wzxw0=;
+ b=xQfMshW0+XC+exFHH4UuMgmDJ1G+xZUNj6iTKHFK2AM5GNMV4g/B00mPma9GeXLZkx
+ yW/1xaYkXKO3kMOjZ4cYkUb+YLM8oUNek54LyhVGnrTO9rRu9tkY/22PR1tBTvv3TZO8
+ wLYs/fr/0usNEHx8MjO+ovIapVSkdRqehlO4nVGy/rnX09UIWEEA0YqfJ74ILmEXUwm9
+ GEGRt913ZNjyq5CP6KRIDQobo/mbZW4/HeGyML7Psb0LJUMc4PgtF0EedJKyUJFzcEGc
+ 4r/0BETJ7fs42B/lFCWcUNG2grQHAHHF/zNPppL0lhx6y/J/PQoBe4F6Pt1NhAW/iOzx
+ DpGA==
+X-Gm-Message-State: AOJu0Yysixc2YAmn+DPr6VPnLldPG5qTpwJMNmsG44w8ezxZb2y6zP67
+ OVDioBr3Bz6y/PSunsl7rwqflAv4Gblvm+npn8/84gFDd1wKx7BQmWLQdmyJjgp3Xdy3nJNfirc
+ g39lZsPTJUUe5ld2jyf7cNyBkmMbaPjZEQBnmAVjKQklhaVRswphv1g0YwqfNcN+sxa2lZs1n1O
+ phVxwYx7HUg7A8wBI705KfT8GRvUZI1w==
+X-Received: by 2002:a17:907:7f16:b0:a8a:6db7:6659 with SMTP id
+ a640c23a62f3a-a8ffab6cbbfmr442551866b.9.1726062715335; 
+ Wed, 11 Sep 2024 06:51:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEQ563Z43scq9UThhGmH4KPDKOFBk+Lb1vsH7g6KkuYMmRsuy+k/OUdBc9E6TCx/appZJrk3Q==
+X-Received: by 2002:a17:907:7f16:b0:a8a:6db7:6659 with SMTP id
+ a640c23a62f3a-a8ffab6cbbfmr442545666b.9.1726062714737; 
+ Wed, 11 Sep 2024 06:51:54 -0700 (PDT)
 Received: from redhat.com ([2.55.9.133]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd46886sm5388659a12.34.2024.09.11.06.52.19
+ a640c23a62f3a-a8d25c82eaesm619003566b.118.2024.09.11.06.51.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 06:52:20 -0700 (PDT)
-Date: Wed, 11 Sep 2024 09:52:18 -0400
+ Wed, 11 Sep 2024 06:51:54 -0700 (PDT)
+Date: Wed, 11 Sep 2024 09:51:51 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- David Hildenbrand <david@redhat.com>, Gavin Shan <gshan@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: [PULL 17/18] virtio-mem: don't warn about THP sizes on a kernel
- without THP support
-Message-ID: <95b717a8154b955de2782305f305b63f357b0576.1726062663.git.mst@redhat.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, Yi Liu <yi.l.liu@intel.com>,
+ =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 09/18] intel_iommu: Make PASID-cache and PIOTLB type invalid
+ in legacy mode
+Message-ID: <3b52cea829d873706ff86913ae99b4bd621c20e6.1726062663.git.mst@redhat.com>
 References: <cover.1726062663.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1726062663.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -103,49 +109,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Hildenbrand <david@redhat.com>
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-If the config directory in sysfs does not exist at all, we are dealing
-with a system that does not support THPs. Simply use 1 MiB block size
-then, instead of warning "Could not detect THP size, falling back to
-..." and falling back to the default THP size.
+In vtd_process_inv_desc(), VTD_INV_DESC_PC and VTD_INV_DESC_PIOTLB are
+bypassed without scalable mode check. These two types are not valid
+in legacy mode and we should report error.
 
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Gavin Shan <gshan@redhat.com>
-Cc: Juraj Marcin <jmarcin@redhat.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Message-Id: <20240910163433.2100295-1-david@redhat.com>
+Fixes: 4a4f219e8a10 ("intel_iommu: add scalable-mode option to make scalable mode work")
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Message-Id: <20240814071321.2621384-3-zhenzhong.duan@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio-mem.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/i386/intel_iommu.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index ef64bf1b4a..4075f3d4ce 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -88,6 +88,7 @@ static uint32_t virtio_mem_default_thp_size(void)
- static uint32_t thp_size;
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 68cb72a481..90cd4e5044 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -2763,17 +2763,6 @@ static bool vtd_process_inv_desc(IntelIOMMUState *s)
+         }
+         break;
  
- #define HPAGE_PMD_SIZE_PATH "/sys/kernel/mm/transparent_hugepage/hpage_pmd_size"
-+#define HPAGE_PATH "/sys/kernel/mm/transparent_hugepage/"
- static uint32_t virtio_mem_thp_size(void)
- {
-     gchar *content = NULL;
-@@ -98,6 +99,12 @@ static uint32_t virtio_mem_thp_size(void)
-         return thp_size;
-     }
+-    /*
+-     * TODO: the entity of below two cases will be implemented in future series.
+-     * To make guest (which integrates scalable mode support patch set in
+-     * iommu driver) work, just return true is enough so far.
+-     */
+-    case VTD_INV_DESC_PC:
+-        break;
+-
+-    case VTD_INV_DESC_PIOTLB:
+-        break;
+-
+     case VTD_INV_DESC_WAIT:
+         trace_vtd_inv_desc("wait", inv_desc.hi, inv_desc.lo);
+         if (!vtd_process_wait_desc(s, &inv_desc)) {
+@@ -2795,6 +2784,17 @@ static bool vtd_process_inv_desc(IntelIOMMUState *s)
+         }
+         break;
  
-+    /* No THP -> no restrictions. */
-+    if (!g_file_test(HPAGE_PATH, G_FILE_TEST_EXISTS)) {
-+        thp_size = VIRTIO_MEM_MIN_BLOCK_SIZE;
-+        return thp_size;
-+    }
-+
-     /*
-      * Try to probe the actual THP size, fallback to (sane but eventually
-      * incorrect) default sizes.
++    /*
++     * TODO: the entity of below two cases will be implemented in future series.
++     * To make guest (which integrates scalable mode support patch set in
++     * iommu driver) work, just return true is enough so far.
++     */
++    case VTD_INV_DESC_PC:
++    case VTD_INV_DESC_PIOTLB:
++        if (s->scalable_mode) {
++            break;
++        }
++    /* fallthrough */
+     default:
+         error_report_once("%s: invalid inv desc: hi=%"PRIx64", lo=%"PRIx64
+                           " (unknown type)", __func__, inv_desc.hi,
 -- 
 MST
 
