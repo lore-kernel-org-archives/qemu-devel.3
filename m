@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4800EE499F
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 640E2EE499D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:29:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMJh-0000NB-Nk; Wed, 11 Sep 2024 08:19:25 -0400
+	id 1soMJh-0000CU-4e; Wed, 11 Sep 2024 08:19:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMHO-0007jF-3S
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:17:11 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMIv-0005Vu-EB
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:18:37 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMHI-0007Wi-NS
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:17:01 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-374c7d14191so524836f8f.0
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:16:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMIt-0007d7-GF
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:18:37 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-42cb6f3a5bcso1235465e9.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:18:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726057013; x=1726661813; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726057112; x=1726661912; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DOoLq1zQk/j+9ceACLoOgrYgbVOONfVhPAuu+Xp6jGY=;
- b=o48u0vLAsJkL3TT2VROyUZCnGNbl2TBywv6GbFAVeFQY72og2OGQDAYkxRDzPWSIXU
- 8c79lsIBRO+LgG8C3l3Iqkh3etzJ95pfcWMqQ5nwqfG3GpyRp5LByzR+Tx48tI1Jb39L
- 2RsrY5hyZiyL8yEWidTD5TYhP9yiwe5tdniSbXE+Lg9zYtRxx/jij0HuzNgQAAfGZ35K
- nhT9MCAIGv0VH65qR0VG2nrjeOCMO8TxzevZMEI7DLqqPCnhUq+Ka0eLk7IFThao3mrp
- cQLBMRDn0vWyP32LfExNuuoFHlNIkIu2wH2aMJ71uTJ/Haalq5Qz3yUvcl1IrvQ6kA2s
- 1/QQ==
+ bh=IjC/62EZVazJYeQw2M6RGzr8NQkf0Ibb5BD/Lj2iJ4w=;
+ b=uVKStR93J3SDrbuKqgz2blhMQwrfsJt/xWFhc/B+OF5yDejnB95fIMGyB6eVnj+2VF
+ A/F/NUdaVdl/UItsD/m3piZe2Yl+wEzOBCdzz9eeO4LjkrS9kkbMpcSLa2eJStXsKr5R
+ WSY0YsQpKcjwrTebNvoLRSKLocLpy2318RpbH4DVrcgD+K6U22AuS8IF82I8LxQplvIJ
+ GMyEI/uVql4VGYrma5tODEWrtWpajd/7hp8nPejFPFEIRe6ZKnUgPmVoQHxz7qQeK+jc
+ /AYmvBSVN29KziBSfnOjpvbVUbRy/iEwgKXtOmV1gjQUEwVkcbKqM7JEGNL+rBCMBESt
+ Dv3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726057013; x=1726661813;
+ d=1e100.net; s=20230601; t=1726057112; x=1726661912;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DOoLq1zQk/j+9ceACLoOgrYgbVOONfVhPAuu+Xp6jGY=;
- b=nUaBra26p509R/DeONozEoAIcJr8tPKRXJtxayybNcnU5fwEJJciWnHvz7MNKzTDyT
- F4lrws7KmgMaYipxoBF3q5NVea9MHcClZ5e55+AKwiSDEL8Lpcf97BbmxHKDxIdS2EM5
- 2tq9OXlolPKxzaQy28DLVwlIhqCIr2FMDtCxorHXuGrCEVLoMVKclypZ1SOSoaJG4dsX
- oZi/GOqVJNjcvSYeoRcUin6H/LruWaagD/hErqPuHngFu2LEA5mPV3heo8xB7cuMoXqF
- in7yG8sm970WdvZ8eMAjuAOjHFGquxIDa/LDh1DkBLRIsLwfy/II5fQ0kXgUg0mBNim9
- rnkg==
-X-Gm-Message-State: AOJu0YxXqFww6KfzYlE8UO7QsmHqmJPf3I85fD1mLjNtyFFe2+7Z8k5Z
- IGAwSt6Xts/2b/+7ds3oQJSvZBz/1eWP2S7yMGqzEntLAay0ul+59z0341sCCRuPZX4BohCeCuk
- 1
-X-Google-Smtp-Source: AGHT+IGqfdu74IjOVB5tHXbUpKP+6YvXuN0u7CWSs6reMaEih2ynxXnmB5s813/5OvBpWXW8ntnynA==
-X-Received: by 2002:adf:ed12:0:b0:374:be11:22d7 with SMTP id
- ffacd0b85a97d-378a8a1c2c2mr4010623f8f.13.1726057012895; 
- Wed, 11 Sep 2024 05:16:52 -0700 (PDT)
+ bh=IjC/62EZVazJYeQw2M6RGzr8NQkf0Ibb5BD/Lj2iJ4w=;
+ b=Jsw/ErfM9Cv3Obj1YhGjpT2bkm8xp493A+Xc7S9Z2uat99CmYQtMUqWhE43SdPcsd5
+ 2G3LiWo1cBpBEYF/mtFtIIDcENh2SCP/BPq2FyfemeAeaBR8TtzFAfQnzYzW1d3q15Ra
+ VhL85xeNcz0jA+GNIozc8WuzUTyk75ffvLB1G8NkyMGzqpFJpGQOuMPPxyDKBkdcEOks
+ UGK8E9Fss1/ZyZEC9sQbqukkq6mXvag0sEuSIqqi9rwonQvgiSyjyX/dWHN1K2dQrsSv
+ NogVy2WDc17ZAkGDPvVnd8SHMrqmEGIeePit4TGQ7WAfWmMEwhfpga9EeYLu5GAa+uNX
+ 3LbA==
+X-Gm-Message-State: AOJu0YzhOhietz3cFJo5NApU/iB8cTBFN5f5Dt1N9Zq0cEVocDyd2l3C
+ ryCyGwmDyvrmo2xiSxN0r0/+y3EC09T+y/88bIJK2c+phbW1YenLz7osSiUTWvpKoxvNBBeobA7
+ S
+X-Google-Smtp-Source: AGHT+IEwZ8ub/zG+WTc1oVNFNPN0T22cK2V/i4z1+K3dlcahBoc6CFYvXJHoyWK5wOrBiFC5wjBUyA==
+X-Received: by 2002:a5d:4387:0:b0:374:c160:269e with SMTP id
+ ffacd0b85a97d-378922a6d58mr12019583f8f.22.1726057112444; 
+ Wed, 11 Sep 2024 05:18:32 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.196.107])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-378956650f2sm11372417f8f.26.2024.09.11.05.16.51
+ ffacd0b85a97d-37895649733sm11448859f8f.8.2024.09.11.05.18.31
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Sep 2024 05:16:52 -0700 (PDT)
+ Wed, 11 Sep 2024 05:18:32 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 21/56] target/riscv: Remove the deprecated 'any' CPU type
-Date: Wed, 11 Sep 2024 14:13:46 +0200
-Message-ID: <20240911121422.52585-22-philmd@linaro.org>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Octavian Purdila <tavip@google.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 34/56] fifo8: add skip parameter to fifo8_peekpop_bufptr()
+Date: Wed, 11 Sep 2024 14:13:59 +0200
+Message-ID: <20240911121422.52585-35-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240911121422.52585-1-philmd@linaro.org>
 References: <20240911121422.52585-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,136 +96,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'any' CPU is deprecated since commit f57d5f8004b
-("target/riscv: deprecate the 'any' CPU type"). Users
-are better off using the default CPUs or the 'max' CPU.
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+The skip parameter specifies the number of bytes to be skipped
+from the current FIFO head before the peek or pop operation.
+
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-Id: <20240724130717.95629-1-philmd@linaro.org>
+Reviewed-by: Octavian Purdila <tavip@google.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240828122258.928947-4-mark.cave-ayland@ilande.co.uk>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- docs/about/deprecated.rst       | 13 -------------
- docs/about/removed-features.rst |  8 ++++++++
- target/riscv/cpu-qom.h          |  1 -
- target/riscv/cpu.c              | 28 ----------------------------
- 4 files changed, 8 insertions(+), 42 deletions(-)
+ util/fifo8.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index dc4b6849a9..ed31d4b0b2 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -333,19 +333,6 @@ QEMU's ``vhost`` feature, which would eliminate the high latency costs under
- which the 9p ``proxy`` backend currently suffers. However as of to date nobody
- has indicated plans for such kind of reimplementation unfortunately.
- 
--RISC-V 'any' CPU type ``-cpu any`` (since 8.2)
--^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
--
--The 'any' CPU type was introduced back in 2018 and has been around since the
--initial RISC-V QEMU port. Its usage has always been unclear: users don't know
--what to expect from a CPU called 'any', and in fact the CPU does not do anything
--special that isn't already done by the default CPUs rv32/rv64.
--
--After the introduction of the 'max' CPU type, RISC-V now has a good coverage
--of generic CPUs: rv32 and rv64 as default CPUs and 'max' as a feature complete
--CPU for both 32 and 64 bit builds. Users are then discouraged to use the 'any'
--CPU type starting in 8.2.
--
- RISC-V CPU properties which start with capital 'Z' (since 8.2)
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index b850a24233..06f8cc1b73 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -850,6 +850,14 @@ The RISC-V no MMU cpus have been removed. The two CPUs: ``rv32imacu-nommu`` and
- ``rv64imacu-nommu`` can no longer be used. Instead the MMU status can be specified
- via the CPU ``mmu`` option when using the ``rv32`` or ``rv64`` CPUs.
- 
-+RISC-V 'any' CPU type ``-cpu any`` (removed in 9.2)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+The 'any' CPU type was introduced back in 2018 and was around since the
-+initial RISC-V QEMU port. Its usage was always been unclear: users don't know
-+what to expect from a CPU called 'any', and in fact the CPU does not do anything
-+special that isn't already done by the default CPUs rv32/rv64.
-+
- ``compat`` property of server class POWER CPUs (removed in 6.0)
- '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
- 
-diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-index 3670cfe6d9..4464c0fd7a 100644
---- a/target/riscv/cpu-qom.h
-+++ b/target/riscv/cpu-qom.h
-@@ -29,7 +29,6 @@
- #define RISCV_CPU_TYPE_SUFFIX "-" TYPE_RISCV_CPU
- #define RISCV_CPU_TYPE_NAME(name) (name RISCV_CPU_TYPE_SUFFIX)
- 
--#define TYPE_RISCV_CPU_ANY              RISCV_CPU_TYPE_NAME("any")
- #define TYPE_RISCV_CPU_MAX              RISCV_CPU_TYPE_NAME("max")
- #define TYPE_RISCV_CPU_BASE32           RISCV_CPU_TYPE_NAME("rv32")
- #define TYPE_RISCV_CPU_BASE64           RISCV_CPU_TYPE_NAME("rv64")
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index a90808a3ba..4bda754b01 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -438,27 +438,6 @@ static void set_satp_mode_default_map(RISCVCPU *cpu)
+diff --git a/util/fifo8.c b/util/fifo8.c
+index 5faa814a6e..62d6430b05 100644
+--- a/util/fifo8.c
++++ b/util/fifo8.c
+@@ -72,18 +72,20 @@ uint8_t fifo8_pop(Fifo8 *fifo)
  }
- #endif
  
--static void riscv_any_cpu_init(Object *obj)
--{
--    RISCVCPU *cpu = RISCV_CPU(obj);
--    CPURISCVState *env = &cpu->env;
--    riscv_cpu_set_misa_ext(env, RVI | RVM | RVA | RVF | RVD | RVC | RVU);
--
--#ifndef CONFIG_USER_ONLY
--    set_satp_mode_max_supported(RISCV_CPU(obj),
--        riscv_cpu_mxl(&RISCV_CPU(obj)->env) == MXL_RV32 ?
--        VM_1_10_SV32 : VM_1_10_SV57);
--#endif
--
--    env->priv_ver = PRIV_VERSION_LATEST;
--
--    /* inherited from parent obj via riscv_cpu_init() */
--    cpu->cfg.ext_zifencei = true;
--    cpu->cfg.ext_zicsr = true;
--    cpu->cfg.mmu = true;
--    cpu->cfg.pmp = true;
--}
--
- static void riscv_max_cpu_init(Object *obj)
+ static const uint8_t *fifo8_peekpop_bufptr(Fifo8 *fifo, uint32_t max,
+-                                           uint32_t *numptr, bool do_pop)
++                                           uint32_t skip, uint32_t *numptr,
++                                           bool do_pop)
  {
-     RISCVCPU *cpu = RISCV_CPU(obj);
-@@ -1161,11 +1140,6 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
-     RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(dev);
-     Error *local_err = NULL;
+     uint8_t *ret;
+     uint32_t num, head;
  
--    if (object_dynamic_cast(OBJECT(dev), TYPE_RISCV_CPU_ANY) != NULL) {
--        warn_report("The 'any' CPU is deprecated and will be "
--                    "removed in the future.");
--    }
--
-     cpu_exec_realizefn(cs, &local_err);
-     if (local_err != NULL) {
-         error_propagate(errp, local_err);
-@@ -2952,7 +2926,6 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .abstract = true,
-     },
- #if defined(TARGET_RISCV32)
--    DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_ANY,       MXL_RV32,  riscv_any_cpu_init),
-     DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_MAX,       MXL_RV32,  riscv_max_cpu_init),
-     DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE32,    MXL_RV32,  rv32_base_cpu_init),
-     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_IBEX,       MXL_RV32,  rv32_ibex_cpu_init),
-@@ -2962,7 +2935,6 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-     DEFINE_BARE_CPU(TYPE_RISCV_CPU_RV32I,        MXL_RV32,  rv32i_bare_cpu_init),
-     DEFINE_BARE_CPU(TYPE_RISCV_CPU_RV32E,        MXL_RV32,  rv32e_bare_cpu_init),
- #elif defined(TARGET_RISCV64)
--    DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_ANY,       MXL_RV64,  riscv_any_cpu_init),
-     DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_MAX,       MXL_RV64,  riscv_max_cpu_init),
-     DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE64,    MXL_RV64,  rv64_base_cpu_init),
-     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_E51, MXL_RV64,  rv64_sifive_e_cpu_init),
+     assert(max > 0 && max <= fifo->num);
+-    head = fifo->head;
++    assert(skip <= fifo->num);
++    head = (fifo->head + skip) % fifo->capacity;
+     num = MIN(fifo->capacity - head, max);
+     ret = &fifo->data[head];
+ 
+     if (do_pop) {
+-        fifo->head += num;
++        fifo->head = head + num;
+         fifo->head %= fifo->capacity;
+         fifo->num -= num;
+     }
+@@ -95,12 +97,12 @@ static const uint8_t *fifo8_peekpop_bufptr(Fifo8 *fifo, uint32_t max,
+ 
+ const uint8_t *fifo8_peek_bufptr(Fifo8 *fifo, uint32_t max, uint32_t *numptr)
+ {
+-    return fifo8_peekpop_bufptr(fifo, max, numptr, false);
++    return fifo8_peekpop_bufptr(fifo, max, 0, numptr, false);
+ }
+ 
+ const uint8_t *fifo8_pop_bufptr(Fifo8 *fifo, uint32_t max, uint32_t *numptr)
+ {
+-    return fifo8_peekpop_bufptr(fifo, max, numptr, true);
++    return fifo8_peekpop_bufptr(fifo, max, 0, numptr, true);
+ }
+ 
+ uint32_t fifo8_pop_buf(Fifo8 *fifo, uint8_t *dest, uint32_t destlen)
 -- 
 2.45.2
 
