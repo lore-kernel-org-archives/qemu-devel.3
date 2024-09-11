@@ -4,75 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93A63EE4997
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 11:20:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EC99EE4995
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 11:24:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soLOQ-0001qQ-0U; Wed, 11 Sep 2024 07:20:14 -0400
+	id 1soLRj-0000wS-Bk; Wed, 11 Sep 2024 07:23:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soLOL-0001lj-4x
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 07:20:09 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soLRh-0000vV-Uo
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 07:23:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soLOI-00006a-C8
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 07:20:08 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soLRf-0000Xh-Cz
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 07:23:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726053605;
+ s=mimecast20190719; t=1726053814;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pnkS05BRUyyEXgt9lXRphLEG8xWP3Lkyw39IXABWMMI=;
- b=dp+kilG/dj5GXIS806VSMh+ClY0tKFLAKI/rXr/NuNgbuKhBcTQnQILpy0KQqGkU6R27/u
- R/XWKKgDb/4xdNacg0hYKUhmsw1mupSj4Z9FY7NiRAqZh4Y9/3fZFmTTAsfj55tSR5g6/b
- 93TwjVil56nqT/v/O5rCuLI6E2Z34i4=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cZFoPmPpuO2DfEM0+eD4RlAlvohcJa8kYLUAaptsotU=;
+ b=jAQWNIQ1eQRc96KYRq49tbSc1o/bbkH0Xwp56rehQ6/lCrCGlXNH+GzU8ldFnH3PVr36w9
+ Gry+EgAcTwpTwOUYXPfVmZ/OFowFcQUaL9pafoRnlqrv5400Dek0W9DXb6S6C5QR2pDcZ8
+ Vqp8dr4C2/MwoxfcCBKZZxtDU5dBknU=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-348-WnWALfXxNVm4P5KFp6pDqA-1; Wed, 11 Sep 2024 07:20:03 -0400
-X-MC-Unique: WnWALfXxNVm4P5KFp6pDqA-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5c3c27141c9so1180923a12.0
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 04:20:03 -0700 (PDT)
+ us-mta-50-cAkwD8V1O7KqTkBOFqjYpg-1; Wed, 11 Sep 2024 07:23:33 -0400
+X-MC-Unique: cAkwD8V1O7KqTkBOFqjYpg-1
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-2f75ec1ddb3so36939681fa.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 04:23:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726053601; x=1726658401;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pnkS05BRUyyEXgt9lXRphLEG8xWP3Lkyw39IXABWMMI=;
- b=ZJ/L0i2X2glUMXh9o5TU7FFciz+zO8ABRnd89yncFwtONAazoRyYYweqqtIv0ymrJ6
- ELRH+l6DJUS+8jBs85Zxe1odVu0hGe9T++al8FaetTnge4KCOWlub1O1jCjgSchefwu9
- TMOlBqeJNTLRNtg+/OOrppV1DoT2MlBC+38/HwmliE274C4CVkRuLwZ8YMggq+WuZO2z
- xVc1U1ZOLxffODeGzihCfSxXgZqmPSf5mZuIt08mKuXnAaB1TJcR7USwgJB5h+ao+9E6
- fimSx/ZGxGtIWp6gLN1HmUV2KypcKFf3TL4ilu76mqOisZP1ZNBBAUak3ZxHiSRdfpOQ
- qtng==
-X-Gm-Message-State: AOJu0YyOsQQ4UgEU+oRmu3DgmPxlcORiAWRBwnru084Dcq1BNWUl4KcN
- pUQ5hctLxDplTjnfCXSxwz9XEVt72VkS7bCDwDAYY9bKMExlUx7A36hmtGroZ3jlPMhJiHDk7pN
- uoZJy1l5AdGn/wPBgeh+ndT2bzYzUM0WJLFZs+B56LOJsFQTpUKFZuCM1gLRI
-X-Received: by 2002:a05:6402:27d3:b0:5c0:8ea7:3deb with SMTP id
- 4fb4d7f45d1cf-5c40bc50412mr1896049a12.22.1726053600981; 
- Wed, 11 Sep 2024 04:20:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHVHY1t9S+NiRwCQ1jMlvwfPQ4DSrTv6u46sALcF6vok/ScZNAKdbCAf5I4b6CTAg4kcgEBlg==
-X-Received: by 2002:a05:6402:27d3:b0:5c0:8ea7:3deb with SMTP id
- 4fb4d7f45d1cf-5c40bc50412mr1896019a12.22.1726053600078; 
- Wed, 11 Sep 2024 04:20:00 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726053811; x=1726658611;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cZFoPmPpuO2DfEM0+eD4RlAlvohcJa8kYLUAaptsotU=;
+ b=nSqTcXtpm7cT8Qtj9gfai+UqcNhjHp5LfmYzXYXI1HxcRmcHd5t2STLqpDRfD2nQfT
+ 8V74PATaIActIF8Pmc2AhRq18L7foVsYt5lXw5JR1mFHhGe5GKowr8yboC5uzcMVwmov
+ VYdMwXpo4in77moR6WlbBmXwMYUcvsddU81GPqWrONHH0zU/avfjU8nGJ6sUO2ydHz0y
+ WCB4/ShncB+2CxVXwCF1H69GacIZLdMPIoQtM+zub2Oc6mQ2rKo8baGXIHBiwA4kM9JX
+ iJ8hWAaxPgKlc653GtudbwNCdXW+K8yDyTx0lL2/HQIs1PswyvRiYZWL9e/GVILduPO8
+ qQXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUmSi1kpTPNa/96Sbg3JUxIZfC5V8UMAhxcTy6V6UKcqsnsAO75Zb3AWAXgJ51KA1SDLVl31ceRfVym@nongnu.org
+X-Gm-Message-State: AOJu0YxZrqvOj9B82aX1OipYR5C3zBxpRQ5OBy4JmJG07RZuVaCJn+3q
+ SRUUMa8jS6/84+JdPh/qmFpHdFO1xDRtRBIaxGv6IFRIkb6ventvUpjNsuec/vw25i4v+k+KlwH
+ n9zfRttkeuvhrk7YDLX/g9z+lpd1WMimA+h+i9drnatATUbInITOh
+X-Received: by 2002:ac2:4e08:0:b0:536:5509:8862 with SMTP id
+ 2adb3069b0e04-536587dba89mr12260809e87.36.1726053811265; 
+ Wed, 11 Sep 2024 04:23:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFEE0yMEldjnbn8heTlngCRqSTG+S20kUlnROZvV7HxWQ87OJ+5H2yav9XcertmE+AFy5UUWw==
+X-Received: by 2002:ac2:4e08:0:b0:536:5509:8862 with SMTP id
+ 2adb3069b0e04-536587dba89mr12260768e87.36.1726053810217; 
+ Wed, 11 Sep 2024 04:23:30 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1ec:a3d1:80b4:b3a2:70bf:9d18])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd8cef8sm5352108a12.89.2024.09.11.04.19.58
+ a640c23a62f3a-a8d25d547e5sm603072366b.201.2024.09.11.04.23.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 04:19:59 -0700 (PDT)
-Date: Wed, 11 Sep 2024 07:19:55 -0400
+ Wed, 11 Sep 2024 04:23:29 -0700 (PDT)
+Date: Wed, 11 Sep 2024 07:23:25 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Hal Martin <hal.martin@gmail.com>
-Cc: qemu-devel@nongnu.org, imammedo@redhat.com, anisinha@redhat.com
-Subject: Re: [PATCH] hw/smbios: support for type 7 (cache information)
-Message-ID: <20240911071848-mutt-send-email-mst@kernel.org>
-References: <20240811104538.14223-1-hal.martin@gmail.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH for-9.2 v15 04/11] s390x/pci: Check for multifunction
+ after device realization
+Message-ID: <20240911072301-mutt-send-email-mst@kernel.org>
+References: <20240823-reuse-v15-0-eddcb960e289@daynix.com>
+ <20240823-reuse-v15-4-eddcb960e289@daynix.com>
+ <2b5d2fce-8a1e-4f50-a5d2-0c4aaa2880af@redhat.com>
+ <eaebda7d-c61e-4ed8-a6b9-98e5f48f26ff@daynix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20240811104538.14223-1-hal.martin@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <eaebda7d-c61e-4ed8-a6b9-98e5f48f26ff@daynix.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -98,176 +118,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Aug 11, 2024 at 10:45:38AM +0000, Hal Martin wrote:
-> This patch adds support for SMBIOS type 7 (Cache Information) to qemu.
+On Wed, Sep 11, 2024 at 07:58:15PM +0900, Akihiko Odaki wrote:
+> On 2024/09/11 18:38, Cédric Le Goater wrote:
+> > +Matthew +Eric
+> > 
+> > Side note for the maintainers :
+> > 
+> > Before this change, the igb device, which is multifunction, was working
+> > fine under Linux.
+> > 
+> > Was there a fix in Linux since :
+> > 
+> >    57da367b9ec4 ("s390x/pci: forbid multifunction pci device")
+> >    6069bcdeacee ("s390x/pci: Move some hotplug checks to the pre_plug
+> > handler")
+> > 
+> > ?
+> > 
+> > s390 PCI devices do not have extended capabilities, so the igb device
+> > does not expose the SRIOV capability and only the PF is accessible but
+> > it doesn't seem to be an issue. (Btw, CONFIG_PCI_IOV is set to y in the
+> > default Linux config which is unexpected)
 > 
-> level: cache level (1-8)
-> size: cache size in bytes
+> Doesn't s390x really see extended capabilities? hw/s390x/s390-pci-inst.c has
+> a call pci_config_size() and pci_host_config_write_common(), which means it
+> is exposing the whole PCI Express configuration space. Why can't s390x use
+> extended capabilities then?
 > 
-> Example usage:
-> -smbios type=7,level=1,size=0x8000
+> The best option for fix would be to replace the SR-IOV implementation with
+> stub if s390x cannot use the SR-IOV capability. However I still need to know
+> at what level I should change the implementation (e.g., is it fine to remove
+> the entire capability, or should I keep the capability while writes to its
+> registers no-op?)
 > 
-> Signed-off-by: Hal Martin <hal.martin@gmail.com>
+> Regards,
+> Akihiko Odaki
 
-A bunch of style issues here:
+Note changing caps needs compat hacks for cross version migration to work.
 
-> ---
->  hw/smbios/smbios.c           | 63 ++++++++++++++++++++++++++++++++++++
->  include/hw/firmware/smbios.h | 18 +++++++++++
->  qemu-options.hx              |  2 ++
->  3 files changed, 83 insertions(+)
-> 
-> diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-> index a394514264..65942f2354 100644
-> --- a/hw/smbios/smbios.c
-> +++ b/hw/smbios/smbios.c
-> @@ -83,6 +83,12 @@ static struct {
->      .processor_family = 0x01, /* Other */
->  };
->  
-> +struct type7_instance {
-> +    uint16_t level, size;
-> +    QTAILQ_ENTRY(type7_instance) next;
-> +};
-> +static QTAILQ_HEAD(, type7_instance) type7 = QTAILQ_HEAD_INITIALIZER(type7);
-> +
->  struct type8_instance {
->      const char *internal_reference, *external_reference;
->      uint8_t connector_type, port_type;
-> @@ -330,6 +336,23 @@ static const QemuOptDesc qemu_smbios_type4_opts[] = {
->      { /* end of list */ }
->  };
->  
-> +static const QemuOptDesc qemu_smbios_type7_opts[] = {
-> +    {
-> +        .name = "type",
-> +        .type = QEMU_OPT_NUMBER,
-> +        .help = "SMBIOS element type",
-> +    },{
-> +        .name = "level",
-> +        .type = QEMU_OPT_NUMBER,
-> +        .help = "cache level",
-> +    },{
-> +        .name = "size",
-> +        .type = QEMU_OPT_NUMBER,
-> +        .help = "cache size",
-> +    },
-> +    { /* end of list */ }
-> +};
-> +
->  static const QemuOptDesc qemu_smbios_type8_opts[] = {
->      {
->          .name = "type",
-> @@ -733,6 +756,32 @@ static void smbios_build_type_4_table(MachineState *ms, unsigned instance,
->      smbios_type4_count++;
->  }
->  
-> +static void smbios_build_type_7_table(void)
-> +{
-> +    unsigned instance = 0;
-> +    struct type7_instance *t7;
-> +    char designation[20];
-> +
-> +    QTAILQ_FOREACH(t7, &type7, next) {
-> +        SMBIOS_BUILD_TABLE_PRE(7, T0_BASE + instance, true);
-> +        sprintf(designation, "CPU Internal L%d", t7->level);
-> +        SMBIOS_TABLE_SET_STR(7, socket_designation, designation);
-> +        t->cache_configuration =  0x180 | (t7->level-1); /* not socketed, enabled, write back*/
-
-bad comment style, line too long, bad math style
-
-> +        t->installed_size =  t7->size;
-> +        t->maximum_cache_size =  t7->size; /* set max to installed */
-> +        t->supported_sram_type = 0x10; /* pipeline burst */
-> +        t->current_sram_type = 0x10; /* pipeline burst */
-> +        t->cache_speed = 0x1; /* 1 ns */
-> +        t->error_correction_type = 0x6; /* Multi-bit ECC */
-> +        t->system_cache_type = 0x05; /* Unified */
-> +        t->associativity = 0x6; /* Fully Associative */
-> +        t->maximum_cache_size2 = t7->size;
-> +        t->installed_cache_size2 = t7->size;
-> +        SMBIOS_BUILD_TABLE_POST;
-> +        instance++;
-> +    }
-> +}
-> +
->  static void smbios_build_type_8_table(void)
->  {
->      unsigned instance = 0;
-> @@ -1120,6 +1169,7 @@ static bool smbios_get_tables_ep(MachineState *ms,
->          }
->      }
->  
-> +    smbios_build_type_7_table();
->      smbios_build_type_8_table();
->      smbios_build_type_9_table(errp);
->      smbios_build_type_11_table();
-> @@ -1478,6 +1528,19 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
->                             UINT16_MAX);
->              }
->              return;
-> +        case 7:
-> +            if (!qemu_opts_validate(opts, qemu_smbios_type7_opts, errp)) {
-> +                return;
-> +            }
-> +            struct type7_instance *t7_i;
-> +            t7_i = g_new0(struct type7_instance, 1);
-> +            t7_i->level = qemu_opt_get_number(opts,"level", 0x0);
-
-bad comma style
-
-> +            t7_i->size = qemu_opt_get_number(opts, "size", 0x0200);
-> +            /* Only cache levels 1-8 are permitted */
-> +            if (t7_i->level > 0 && t7_i->level < 9) {
-> +                QTAILQ_INSERT_TAIL(&type7, t7_i, next);
-> +            }
-> +            return;
->          case 8:
->              if (!qemu_opts_validate(opts, qemu_smbios_type8_opts, errp)) {
->                  return;
-> diff --git a/include/hw/firmware/smbios.h b/include/hw/firmware/smbios.h
-> index f066ab7262..1ea1506b46 100644
-> --- a/include/hw/firmware/smbios.h
-> +++ b/include/hw/firmware/smbios.h
-> @@ -220,6 +220,24 @@ typedef enum smbios_type_4_len_ver {
->      SMBIOS_TYPE_4_LEN_V30 = offsetofend(struct smbios_type_4, thread_count2),
->  } smbios_type_4_len_ver;
->  
-> +/* SMBIOS type 7 - Cache Information (v2.0+) */
-> +struct smbios_type_7 {
-> +    struct smbios_structure_header header;
-> +    uint8_t socket_designation;
-> +    uint16_t cache_configuration;
-> +    uint16_t maximum_cache_size;
-> +    uint16_t installed_size;
-> +    uint16_t supported_sram_type;
-> +    uint16_t current_sram_type;
-> +    uint8_t cache_speed;
-> +    uint8_t error_correction_type;
-> +    uint8_t system_cache_type;
-> +    uint8_t associativity;
-> +    uint32_t maximum_cache_size2;
-> +    uint32_t installed_cache_size2;
-> +    /* contained elements follow */
-> +} QEMU_PACKED;
-> +
->  /* SMBIOS type 8 - Port Connector Information */
->  struct smbios_type_8 {
->      struct smbios_structure_header header;
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index cee0da2014..3b49813fcc 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -2706,6 +2706,8 @@ DEF("smbios", HAS_ARG, QEMU_OPTION_smbios,
->      "              [,asset=str][,part=str][,max-speed=%d][,current-speed=%d]\n"
->      "              [,processor-family=%d,processor-id=%d]\n"
->      "                specify SMBIOS type 4 fields\n"
-> +    "-smbios type=7[,level=%d][,size=%d]\n"
-> +    "                specify SMBIOS type 7 fields\n"
->      "-smbios type=8[,external_reference=str][,internal_reference=str][,connector_type=%d][,port_type=%d]\n"
->      "                specify SMBIOS type 8 fields\n"
->      "-smbios type=11[,value=str][,path=filename]\n"
-> -- 
-> 2.42.0
+> > 
+> > Thanks,
+> > 
+> > C.
+> > 
+> > 
+> > 
+> > On 8/23/24 07:00, Akihiko Odaki wrote:
+> > > The SR-IOV PFs set the multifunction bits during device realization so
+> > > check them after that. This forbids adding SR-IOV devices to s390x.
+> > > 
+> > > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > > ---
+> > >   hw/s390x/s390-pci-bus.c | 14 ++++++--------
+> > >   1 file changed, 6 insertions(+), 8 deletions(-)
+> > > 
+> > > diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+> > > index 3e57d5faca18..00b2c1f6157b 100644
+> > > --- a/hw/s390x/s390-pci-bus.c
+> > > +++ b/hw/s390x/s390-pci-bus.c
+> > > @@ -971,14 +971,7 @@ static void
+> > > s390_pcihost_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+> > >                       "this device");
+> > >       }
+> > > -    if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
+> > > -        PCIDevice *pdev = PCI_DEVICE(dev);
+> > > -
+> > > -        if (pdev->cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
+> > > -            error_setg(errp, "multifunction not supported in s390");
+> > > -            return;
+> > > -        }
+> > > -    } else if (object_dynamic_cast(OBJECT(dev), TYPE_S390_PCI_DEVICE)) {
+> > > +    if (object_dynamic_cast(OBJECT(dev), TYPE_S390_PCI_DEVICE)) {
+> > >           S390PCIBusDevice *pbdev = S390_PCI_DEVICE(dev);
+> > >           if (!s390_pci_alloc_idx(s, pbdev)) {
+> > > @@ -1069,6 +1062,11 @@ static void s390_pcihost_plug(HotplugHandler
+> > > *hotplug_dev, DeviceState *dev,
+> > >       } else if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
+> > >           pdev = PCI_DEVICE(dev);
+> > > +        if (pdev->cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
+> > > +            error_setg(errp, "multifunction not supported in s390");
+> > > +            return;
+> > > +        }
+> > > +
+> > >           if (!dev->id) {
+> > >               /* In the case the PCI device does not define an id */
+> > >               /* we generate one based on the PCI address         */
+> > > 
+> > 
 
 
