@@ -4,138 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 893A6EE499F
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:41:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79E10EE499F
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:42:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMcr-0004hX-R3; Wed, 11 Sep 2024 08:39:13 -0400
+	id 1soMYZ-0000hB-Rq; Wed, 11 Sep 2024 08:34:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1soMcF-0002V7-CQ
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:38:39 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1soMYB-0007XT-P9
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:34:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1soMcD-0001ge-Ux
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:38:35 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1soMY9-00016J-Ur
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:34:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726058313;
+ s=mimecast20190719; t=1726058061;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZufLGoVcZlw07Ie5c/yHLAsSswxHhYc4h/+J6X2SOFM=;
- b=a/Uodwd1soO10gVwWmDeqMTlStvXOu1d3q0MkER7iztVuCT1s0po04vDEBbsWKOAO3M8bj
- NkxDvxEImSmYpv0IWgUfy3nWYy/B6l0RW9RCnQch2Q09rxSasXCyKellaDC9X7Khk5WlzG
- i3Qtmb7Q5gsUhOQlgdstA92EvrXd+PE=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=gU4vA1l3j7vpb6U9RGVZr3j7o9V0Y0q871++U1XS99U=;
+ b=iWyq6cK4B3Tgix9WnlnoChny3MjXgJdMIakpyUr9tybvHzBoZeAB4QcmKgYFbDSOqXV0sp
+ ze6aOfhb7QoRZu74fExFN2Pb9f2xoLlcB0QqB6+5vZJdpzXOMEHnWhGq4e0IsCaVARahGp
+ kCmACmWE0gCOWe44u4xnQsA25TqY0bM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618--dRt4mgoP_ydFNHYCjwpkg-1; Wed, 11 Sep 2024 08:38:32 -0400
-X-MC-Unique: -dRt4mgoP_ydFNHYCjwpkg-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-374aef640a4so2747167f8f.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:38:31 -0700 (PDT)
+ us-mta-684-WctiAn0ANhyw_cS2vb2miA-1; Wed, 11 Sep 2024 08:34:20 -0400
+X-MC-Unique: WctiAn0ANhyw_cS2vb2miA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42cb6ed7f9dso30852565e9.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:34:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726058311; x=1726663111;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=ZufLGoVcZlw07Ie5c/yHLAsSswxHhYc4h/+J6X2SOFM=;
- b=iorInUSdxT4QUNFr+P0MeWueZqCO2aieZhKKJSn4SuWQtp9UhUlHBSffK0WaHs3TYj
- QZXURE9/Zr7jw+sCvCrUCToya0k/yWzNN1mvyp1T/Hih7R3I8MniEXgrralSUMQGXHkM
- FE15lP/b24vSyeFF+D9U3OKQIAo/tSrmH173LniDngV+EvxgDa4PResuQF1nTc1ndMz1
- jB1G54jFSNSIhe+Eqh2IXp4+A/PiTllvmC/MdRpEplZ7JtChKysmjxdUzIQpR9077a9w
- zfzZBDME8jE7eUfva245DleQDwdhbLZ4uw2twOcoAGMLT8oIeLJ8TVLqco2GlT5tVOg1
- ZLAg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU5f+f4iTKOFHmCVQjQaSZDUoCu1ntlmQZvLOZQM+F3TFRcfnFCmKva7jefhEYDykRx2zpLAyN+Du9J@nongnu.org
-X-Gm-Message-State: AOJu0YxS9Q2e8H5O7RZCFQwxi++uJsYkCeqJ1T1Ln5wUBPnI40uws0js
- hBO2CJmFblg/O4F1CpWG417zSFw/t0sWdF9Lf3PeGuLBOrM+ye3NK45YxzHLZKmM++OhTJwyh0/
- 1tNR4nhE+kdQ0lKx80ru08bLzZ3hFGDU5P1oIJG+tabFtCYAi6ARB
-X-Received: by 2002:a05:6000:1249:b0:376:efb7:d19a with SMTP id
- ffacd0b85a97d-37892703efcmr8553131f8f.44.1726058310845; 
- Wed, 11 Sep 2024 05:38:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEXuTh5THzoFoQiMGVGaV9mgLV7XLaVvE8dlcnAHCC9X2izAfQs9QKF5lSJmwNHLx/3UL9aHg==
-X-Received: by 2002:a05:6000:1249:b0:376:efb7:d19a with SMTP id
- ffacd0b85a97d-37892703efcmr8553089f8f.44.1726058309911; 
- Wed, 11 Sep 2024 05:38:29 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c700:7e00:c672:608:5b3e:df8c?
- (p200300cbc7007e00c67206085b3edf8c.dip0.t-ipconnect.de.
- [2003:cb:c700:7e00:c672:608:5b3e:df8c])
+ d=1e100.net; s=20230601; t=1726058059; x=1726662859;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gU4vA1l3j7vpb6U9RGVZr3j7o9V0Y0q871++U1XS99U=;
+ b=Ba8PfAu7Ur2/IbYGWDCeo8fvPt31SS4IXdHeEz+isu0Cb4edf0SBhz7a9I2jsPu7zx
+ 6aVHbQG7GPIHcpbDGHEiTgq0wb32cfqB1zIrhq8b4Nn3JD0jfygtFP0GLjRzhVwBr/Wv
+ kINUUBP6F8aUo55gupoGO+bMwCqHOKrZa8UF1VQ4yKrq66Ij67T57+oSVawkjyNi5FzR
+ y0h7EJjQPJGgMruM6D1JTYS5NuGl5HEzI/szL82TcxmM5SiE1V/VnFqR/VwGvObqavwm
+ 9se4oF1Q/RaE1J+4H8PedMnEFFfFx/p4dqtD9nLxkYsazIQJmxsHqudEMAFBJ740l/df
+ sCGA==
+X-Gm-Message-State: AOJu0YzU9DtWCRhROq900akTSVc8o2ZUL9V+vMgIplIHcZQ7g0jbvJ1u
+ QeFZ8PitRbW4+8P/2rjVO2LO/GyOZ56xBNWbmBC/5xKyD7Ylv7GB6VSW3Vm9A/SdgTbdTIHLgET
+ VROcI5auksN/4gQza2/l4dymvsemdN2Tu/fc0nutLX0lkuFFJjBt+hkyH0Fw4tfZOiOh5QHdjb0
+ GDMBbrEakkVYY8TnCkXeDLNteN/au0EvQtxdTLeM8=
+X-Received: by 2002:a5d:4387:0:b0:374:c160:269e with SMTP id
+ ffacd0b85a97d-378922a6d58mr12067515f8f.22.1726058058769; 
+ Wed, 11 Sep 2024 05:34:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF1syhIqZn9kkdR5trZlf4NlSE5E+KBXO4xNaw8uzj3xmc6XFKG/brCDEo8NOohUZZrfsloHw==
+X-Received: by 2002:a5d:4387:0:b0:374:c160:269e with SMTP id
+ ffacd0b85a97d-378922a6d58mr12067493f8f.22.1726058058284; 
+ Wed, 11 Sep 2024 05:34:18 -0700 (PDT)
+Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3789567625esm11549657f8f.64.2024.09.11.05.38.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Sep 2024 05:38:29 -0700 (PDT)
-Message-ID: <b3739492-6f80-4dba-bfec-466ca2e12513@redhat.com>
-Date: Wed, 11 Sep 2024 14:38:28 +0200
+ ffacd0b85a97d-3789564aea0sm11454160f8f.20.2024.09.11.05.34.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Sep 2024 05:34:17 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Ani Sinha <anisinha@redhat.com>, pbonzini@redhat.com, zhao1.liu@intel.com
+Subject: [PULL 11/17] kvm: refactor core virtual machine creation into its own
+ function
+Date: Wed, 11 Sep 2024 14:33:36 +0200
+Message-ID: <20240911123342.339482-12-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240911123342.339482-1-pbonzini@redhat.com>
+References: <20240911123342.339482-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 01/14] s390x/s390-virtio-ccw: don't crash on weird RAM
- sizes
-To: Janosch Frank <frankja@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>
-References: <20240910175809.2135596-1-david@redhat.com>
- <20240910175809.2135596-2-david@redhat.com>
- <df04fd44-de71-4616-86fe-a9ae5fe9af08@linux.ibm.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <df04fd44-de71-4616-86fe-a9ae5fe9af08@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -160,30 +104,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11.09.24 13:28, Janosch Frank wrote:
-> On 9/10/24 7:57 PM, David Hildenbrand wrote:
->> KVM is not happy when starting a VM with weird RAM sizes:
->>
->>     # qemu-system-s390x --enable-kvm --nographic -m 1234K
->>     qemu-system-s390x: kvm_set_user_memory_region: KVM_SET_USER_MEMORY_REGION
->>       failed, slot=0, start=0x0, size=0x244000: Invalid argument
->>     kvm_set_phys_mem: error registering slot: Invalid argument
->>     Aborted (core dumped)
->>
->> Let's handle that in a better way by rejecting such weird RAM sizes
->> right from the start:
->>
-> 
-> Huh, I always assumed that ram is handled in multiples of 1MB in QEMU.
+From: Ani Sinha <anisinha@redhat.com>
 
-Me as well, I did not dig if that changed at some point ... or why such 
-odd sizes would even be required :)
+Refactoring the core logic around KVM_CREATE_VM into its own separate function
+so that it can be called from other functions in subsequent patches. There is
+no functional change in this patch.
 
-Thanks!
+CC: pbonzini@redhat.com
+CC: zhao1.liu@intel.com
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+Link: https://lore.kernel.org/r/20240808113838.1697366-1-anisinha@redhat.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ accel/kvm/kvm-all.c | 89 ++++++++++++++++++++++++++++-----------------
+ 1 file changed, 56 insertions(+), 33 deletions(-)
 
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index fcc157f0e60..ebaa632a21e 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2385,6 +2385,60 @@ uint32_t kvm_dirty_ring_size(void)
+     return kvm_state->kvm_dirty_ring_size;
+ }
+ 
++static int do_kvm_create_vm(MachineState *ms, int type)
++{
++    KVMState *s;
++    int ret;
++
++    s = KVM_STATE(ms->accelerator);
++
++    do {
++        ret = kvm_ioctl(s, KVM_CREATE_VM, type);
++    } while (ret == -EINTR);
++
++    if (ret < 0) {
++        error_report("ioctl(KVM_CREATE_VM) failed: %s", strerror(-ret));
++
++#ifdef TARGET_S390X
++        if (ret == -EINVAL) {
++            error_printf("Host kernel setup problem detected."
++                         " Please verify:\n");
++            error_printf("- for kernels supporting the"
++                        " switch_amode or user_mode parameters, whether");
++            error_printf(" user space is running in primary address space\n");
++            error_printf("- for kernels supporting the vm.allocate_pgste"
++                         " sysctl, whether it is enabled\n");
++        }
++#elif defined(TARGET_PPC)
++        if (ret == -EINVAL) {
++            error_printf("PPC KVM module is not loaded. Try modprobe kvm_%s.\n",
++                         (type == 2) ? "pr" : "hv");
++        }
++#endif
++    }
++
++    return ret;
++}
++
++static int find_kvm_machine_type(MachineState *ms)
++{
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
++    int type;
++
++    if (object_property_find(OBJECT(current_machine), "kvm-type")) {
++        g_autofree char *kvm_type;
++        kvm_type = object_property_get_str(OBJECT(current_machine),
++                                           "kvm-type",
++                                           &error_abort);
++        type = mc->kvm_type(ms, kvm_type);
++    } else if (mc->kvm_type) {
++        type = mc->kvm_type(ms, NULL);
++    } else {
++        type = kvm_arch_get_default_type(ms);
++    }
++    return type;
++}
++
+ static int kvm_init(MachineState *ms)
+ {
+     MachineClass *mc = MACHINE_GET_CLASS(ms);
+@@ -2467,45 +2521,14 @@ static int kvm_init(MachineState *ms)
+     }
+     s->as = g_new0(struct KVMAs, s->nr_as);
+ 
+-    if (object_property_find(OBJECT(current_machine), "kvm-type")) {
+-        g_autofree char *kvm_type = object_property_get_str(OBJECT(current_machine),
+-                                                            "kvm-type",
+-                                                            &error_abort);
+-        type = mc->kvm_type(ms, kvm_type);
+-    } else if (mc->kvm_type) {
+-        type = mc->kvm_type(ms, NULL);
+-    } else {
+-        type = kvm_arch_get_default_type(ms);
+-    }
+-
++    type = find_kvm_machine_type(ms);
+     if (type < 0) {
+         ret = -EINVAL;
+         goto err;
+     }
+ 
+-    do {
+-        ret = kvm_ioctl(s, KVM_CREATE_VM, type);
+-    } while (ret == -EINTR);
+-
++    ret = do_kvm_create_vm(ms, type);
+     if (ret < 0) {
+-        error_report("ioctl(KVM_CREATE_VM) failed: %s", strerror(-ret));
+-
+-#ifdef TARGET_S390X
+-        if (ret == -EINVAL) {
+-            error_printf("Host kernel setup problem detected."
+-                         " Please verify:\n");
+-            error_printf("- for kernels supporting the"
+-                        " switch_amode or user_mode parameters, whether");
+-            error_printf(" user space is running in primary address space\n");
+-            error_printf("- for kernels supporting the vm.allocate_pgste"
+-                         " sysctl, whether it is enabled\n");
+-        }
+-#elif defined(TARGET_PPC)
+-        if (ret == -EINVAL) {
+-            error_printf("PPC KVM module is not loaded. Try modprobe kvm_%s.\n",
+-                         (type == 2) ? "pr" : "hv");
+-        }
+-#endif
+         goto err;
+     }
+ 
 -- 
-Cheers,
-
-David / dhildenb
+2.46.0
 
 
