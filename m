@@ -4,80 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEE4FEE49A1
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:34:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63E96EE499F
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:34:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMXs-0004wV-FA; Wed, 11 Sep 2024 08:34:04 -0400
+	id 1soMXp-0004hG-TG; Wed, 11 Sep 2024 08:34:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1soMXo-0004Zc-Ej
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:34:00 -0400
+ id 1soMXg-00040X-W4
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:33:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1soMXl-00011w-Ud
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:34:00 -0400
+ id 1soMXd-00010Z-FD
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:33:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726058037;
+ s=mimecast20190719; t=1726058028;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=C/bQlCWHRUXU1TzSq1fa/WJJq3aN/po0ArhGdFaRGLw=;
- b=S0XrpTuT3OZjPuqU7ax4W0lMs9v01HOO7slMXyWpiJOTOmQIGqErBBzPtDHQiAJ42Li7rO
- p2oRGyYAbLdx/B+Hu4cfXFyPjajCNM95x5bQyOBHZQs0tKeAEyc8Up7aLLshsb919LE3Ck
- 6nk7TtE+CSLzEzfQ65+9npc9n580yx8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=TxqMjBf0hhsky+HtnVAPJEta79bmURp31k7Ir/mM51U=;
+ b=TaaMP1DhQndeYPByM5wbNgwkrOerR7wPJTuCFLyOG0t2Nqe3SU26tq6J6+UORVroe3Uthn
+ iWFEBvAWlqQX17P+wgHDtPqmVjMeKriFy1fqBv/Tb0ySgFKzYRAM0Swh7WPrKnCwBXpaxx
+ Siw/MhQ/AMcQqF4fakhxCtqCxFO8Q4E=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-271-LlSaepYHOo-j9zdcuSFMrg-1; Wed, 11 Sep 2024 08:33:55 -0400
-X-MC-Unique: LlSaepYHOo-j9zdcuSFMrg-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-374bb2f100fso2896713f8f.0
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:33:55 -0700 (PDT)
+ us-mta-279-r62jHO_2MI6kbdwI5Gs0eA-1; Wed, 11 Sep 2024 08:33:47 -0400
+X-MC-Unique: r62jHO_2MI6kbdwI5Gs0eA-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-374c3402d93so3586025f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:33:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726058034; x=1726662834;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=C/bQlCWHRUXU1TzSq1fa/WJJq3aN/po0ArhGdFaRGLw=;
- b=WePwxSMdMg7xHvoFAWlgeEIatBixMwmBPWLvJ3IoIWZcgvTk56f9vG8NPb4O+ZLUzd
- RK/4PMGhQzp4fkgyVGDRUlYC9KxJe/tLioNMkVdz+HY2nTx6BDIxdYM05zRjXZQFRVtn
- luTUKgX3jtPa45ZhJ/rKXZXYgthgScsCuIQPYreSAryE25/NUs0qhDr+UPuVIqxDiAyn
- Xi1EKtFQuozmEM8s8TBka1XA4XmgDG0he5GYrw0N9ZZNJBH/Vj0mIxLbYTw0yYsBQyFD
- nuh19vEt2mepGR0sZGbSsRdeC4P5cO0GzKOP9NO236cGKCnvjjFOzUJ2tqPKADyMKWNX
- DADA==
-X-Gm-Message-State: AOJu0YxswO1uxUQEZmGnyc+Z/AuHjhC5ZfH2RYHoRya2kou8HZNjoICw
- LgVMVYkZluTN856GJPhbbkzkMqr93/dHaW7lwvfgBoLEDv1R7oyufpnYTjLyGoLEyhKXOVx2k/4
- /5zgyDZz22yQGHem6lUIp+MeziPHRIoM8gYN60aPCXw0yjCEcJhaDQSFYk6s0ilYJOE+3aCc3Du
- ufS2EwBr2Xza49RoJ74AjfLCEQaOp6piTf8P//Oc0=
-X-Received: by 2002:a5d:58d5:0:b0:374:fa15:a8b6 with SMTP id
- ffacd0b85a97d-378895ca2f8mr10905567f8f.18.1726058033894; 
- Wed, 11 Sep 2024 05:33:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFGJVF8zBIN7L71MwlWFNzon39T5/XJjASYYZ/v56EQTQLyNfph/jJ87Yzi9MocTAA9cQWD9w==
-X-Received: by 2002:a5d:58d5:0:b0:374:fa15:a8b6 with SMTP id
- ffacd0b85a97d-378895ca2f8mr10905536f8f.18.1726058033374; 
- Wed, 11 Sep 2024 05:33:53 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726058025; x=1726662825;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TxqMjBf0hhsky+HtnVAPJEta79bmURp31k7Ir/mM51U=;
+ b=AiDVK457IqxcR/D0J0UxVeqAzfAyPegk0ZYbJLy14BKggV1mkU26JVNObe3Dgd48wp
+ hR3K9wWs3gthShp85aWxJk0R/n8ZXF+Bk0VMLE6ThMKOklmzqMx7UOAJ70ZPfuZwimc9
+ PLUDDtfYotiCwtXhvdid/6sb0FQBtiyipiAkk2d2+d4akOgal5Pr2HA2I763dxgtHQ2O
+ w5678zgH9VclBpnrFfpPtM6C2SeaXw05G35tlHW8x47FFqQLaJ0si8oMNVZmiOQjTtn8
+ NkwwNCTMSLRzf5+i6xsQJWp5Etp4wZNXUU357yeu/vb/UXSu3d8Z1CvcFSfu8uRiueC/
+ GKRw==
+X-Gm-Message-State: AOJu0YxlXY5F9Z0aNql+GYaXbcASk++kFI33BtkcCibe5qd+id63b8+e
+ 4wyjirDV76FIPUM5LZW/nR/1rsq1Qnx02uYbKimVP3uJnEKUoYdBJ1DT1pakuNOZyfF1O4ZvPlR
+ SEDNScmpCe7gDhj7erNIAAS+g+9U7MtxgiI+4FgYK5nmrnNsYDu32tEyeQmrQDrPp4o1VJaGlfy
+ 38vloRmicDjiH7UwIcRDX8+TGxmgA7miHsEZCzLow=
+X-Received: by 2002:adf:ed0b:0:b0:374:c1c5:859e with SMTP id
+ ffacd0b85a97d-3788967e478mr12118189f8f.42.1726058025439; 
+ Wed, 11 Sep 2024 05:33:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEMdjLBTelPMSRSvJiObwLv/V9Uv5OFv36hoJ8uZurTbWb/2JvGExnBvA/1Vr5YZTisvg/uBw==
+X-Received: by 2002:adf:ed0b:0:b0:374:c1c5:859e with SMTP id
+ ffacd0b85a97d-3788967e478mr12118169f8f.42.1726058024789; 
+ Wed, 11 Sep 2024 05:33:44 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37895649b93sm11471612f8f.3.2024.09.11.05.33.52
+ 5b1f17b1804b1-42caeb21a73sm142142185e9.3.2024.09.11.05.33.44
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 05:33:52 -0700 (PDT)
+ Wed, 11 Sep 2024 05:33:44 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Lei Wang <lei4.wang@intel.com>, Xin Li <xin3.li@intel.com>,
- "Xin Li (Intel)" <xin@zytor.com>
-Subject: [PULL 03/17] target/i386: Raise the highest index value used for any
- VMCS encoding
-Date: Wed, 11 Sep 2024 14:33:28 +0200
-Message-ID: <20240911123342.339482-4-pbonzini@redhat.com>
+Subject: [PULL 00/17] Misc patches for 2024-09-11
+Date: Wed, 11 Sep 2024 14:33:25 +0200
+Message-ID: <20240911123342.339482-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240911123342.339482-1-pbonzini@redhat.com>
-References: <20240911123342.339482-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -105,60 +100,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Lei Wang <lei4.wang@intel.com>
+The following changes since commit 7b87a25f49a301d3377f3e71e0b4a62540c6f6e4:
 
-Because the index value of the VMCS field encoding of FRED injected-event
-data (one of the newly added VMCS fields for FRED transitions), 0x52, is
-larger than any existing index value, raise the highest index value used
-for any VMCS encoding to 0x52.
+  Merge tag 'edgar/xen-queue-2024-09-04.for-upstream' of https://gitlab.com/edgar.iglesias/qemu into staging (2024-09-05 13:02:26 +0100)
 
-Because the index value of the VMCS field encoding of Secondary VM-exit
-controls, 0x44, is larger than any existing index value, raise the highest
-index value used for any VMCS encoding to 0x44.
+are available in the Git repository at:
 
-Co-developed-by: Xin Li <xin3.li@intel.com>
-Signed-off-by: Xin Li <xin3.li@intel.com>
-Signed-off-by: Lei Wang <lei4.wang@intel.com>
-Signed-off-by: Xin Li (Intel) <xin@zytor.com>
-Link: https://lore.kernel.org/r/20240807081813.735158-4-xin@zytor.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/cpu.h     | 1 +
- target/i386/kvm/kvm.c | 9 ++++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 2bf37dd15e0..9c39384ac0a 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1186,6 +1186,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- #define VMX_VM_EXIT_PT_CONCEAL_PIP                  0x01000000
- #define VMX_VM_EXIT_CLEAR_IA32_RTIT_CTL             0x02000000
- #define VMX_VM_EXIT_LOAD_IA32_PKRS                  0x20000000
-+#define VMX_VM_EXIT_ACTIVATE_SECONDARY_CONTROLS     0x80000000
- 
- #define VMX_VM_ENTRY_LOAD_DEBUG_CONTROLS            0x00000004
- #define VMX_VM_ENTRY_IA32E_MODE                     0x00000200
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 2fa88ef1e37..381f414d1e0 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -3694,7 +3694,14 @@ static void kvm_msr_entry_add_vmx(X86CPU *cpu, FeatureWordArray f)
-     kvm_msr_entry_add(cpu, MSR_IA32_VMX_CR4_FIXED0,
-                       CR4_VMXE_MASK);
- 
--    if (f[FEAT_VMX_SECONDARY_CTLS] & VMX_SECONDARY_EXEC_TSC_SCALING) {
-+    if (f[FEAT_7_1_EAX] & CPUID_7_1_EAX_FRED) {
-+        /* FRED injected-event data (0x2052).  */
-+        kvm_msr_entry_add(cpu, MSR_IA32_VMX_VMCS_ENUM, 0x52);
-+    } else if (f[FEAT_VMX_EXIT_CTLS] &
-+               VMX_VM_EXIT_ACTIVATE_SECONDARY_CONTROLS) {
-+        /* Secondary VM-exit controls (0x2044).  */
-+        kvm_msr_entry_add(cpu, MSR_IA32_VMX_VMCS_ENUM, 0x44);
-+    } else if (f[FEAT_VMX_SECONDARY_CTLS] & VMX_SECONDARY_EXEC_TSC_SCALING) {
-         /* TSC multiplier (0x2032).  */
-         kvm_msr_entry_add(cpu, MSR_IA32_VMX_VMCS_ENUM, 0x32);
-     } else {
+for you to fetch changes up to bcc39835be0c3dfb375172e027cb7b29d08f8abd:
+
+  minikconf: print error entirely on stderr (2024-09-06 10:18:29 +0200)
+
+----------------------------------------------------------------
+* pc: Add a description for the i8042 property
+* kvm: support for nested FRED
+* tests/unit: fix warning when compiling test-nested-aio-poll with LTO
+* kvm: refactoring of VM creation
+* target/i386: expose IBPB-BRTYPE and SBPB CPUID bits to the guest
+* hw/char: clean up serial
+* remove virtfs-proxy-helper
+
+----------------------------------------------------------------
+Ani Sinha (5):
+      kvm/i386: make kvm_filter_msr() and related definitions private to kvm module
+      kvm/i386: fix return values of is_host_cpu_intel()
+      kvm: replace fprintf with error_report()/printf() in kvm_init()
+      kvm/i386: refactor kvm_arch_init and split it into smaller functions
+      kvm: refactor core virtual machine creation into its own function
+
+Bernhard Beschow (3):
+      hw: Remove unused inclusion of hw/char/serial.h
+      hw/char/serial.h: Extract serial-isa.h
+      hw/char: Extract serial-mm
+
+Fabiano Rosas (1):
+      target/i386: Expose IBPB-BRTYPE and SBPB CPUID bits to the guest
+
+Kamil Szczęk (1):
+      hw/i386/pc: Add a description for the i8042 property
+
+Lei Wang (1):
+      target/i386: Raise the highest index value used for any VMCS encoding
+
+Paolo Bonzini (4):
+      tests/unit: remove block layer code from test-nested-aio-poll
+      kvm/i386: replace identity_base variable with a constant
+      virtio-9p: remove virtfs-proxy-helper
+      minikconf: print error entirely on stderr
+
+Xin Li (Intel) (2):
+      target/i386: Delete duplicated macro definition CR4_FRED_MASK
+      target/i386: Add VMX control bits for nested FRED support
+
+ MAINTAINERS                         |    8 -
+ docs/about/deprecated.rst           |   23 -
+ docs/about/removed-features.rst     |   14 +
+ docs/conf.py                        |    3 -
+ docs/meson.build                    |    1 -
+ docs/tools/index.rst                |    1 -
+ docs/tools/virtfs-proxy-helper.rst  |   75 --
+ meson.build                         |    8 -
+ fsdev/qemu-fsdev.h                  |    1 -
+ hw/9pfs/9p-proxy.h                  |  101 ---
+ include/hw/arm/aspeed_soc.h         |    2 +-
+ include/hw/char/mchp_pfsoc_mmuart.h |    2 +-
+ include/hw/char/serial-isa.h        |   38 ++
+ include/hw/char/serial-mm.h         |   52 ++
+ include/hw/char/serial.h            |   28 -
+ target/i386/cpu.h                   |    7 +-
+ target/i386/kvm/kvm_i386.h          |   11 -
+ accel/kvm/kvm-all.c                 |  109 +--
+ fsdev/qemu-fsdev.c                  |   19 -
+ fsdev/virtfs-proxy-helper.c         | 1193 --------------------------------
+ hw/9pfs/9p-proxy.c                  | 1279 -----------------------------------
+ hw/arm/allwinner-a10.c              |    2 +-
+ hw/arm/allwinner-h3.c               |    2 +-
+ hw/arm/allwinner-r40.c              |    2 +-
+ hw/arm/aspeed_ast2400.c             |    2 +-
+ hw/arm/aspeed_soc_common.c          |    2 +-
+ hw/arm/kzm.c                        |    2 +-
+ hw/arm/msf2-soc.c                   |    2 +-
+ hw/arm/musicpal.c                   |    2 +-
+ hw/arm/npcm7xx.c                    |    2 +-
+ hw/arm/pxa2xx.c                     |    2 +-
+ hw/char/omap_uart.c                 |    2 +-
+ hw/char/riscv_htif.c                |    1 -
+ hw/char/serial-isa.c                |    1 +
+ hw/char/serial-mm.c                 |  157 +++++
+ hw/char/serial.c                    |  126 ----
+ hw/display/sm501.c                  |    2 +-
+ hw/hppa/machine.c                   |    2 +-
+ hw/i386/microvm-dt.c                |    2 +-
+ hw/i386/microvm.c                   |    2 +-
+ hw/i386/pc.c                        |    4 +-
+ hw/isa/isa-superio.c                |    2 +-
+ hw/isa/vt82c686.c                   |    2 +-
+ hw/loongarch/virt.c                 |    2 +-
+ hw/microblaze/petalogix_ml605_mmu.c |    2 +-
+ hw/mips/boston.c                    |    2 +-
+ hw/mips/jazz.c                      |    2 +-
+ hw/mips/loongson3_virt.c            |    2 +-
+ hw/mips/malta.c                     |    2 +-
+ hw/mips/mipssim.c                   |    2 +-
+ hw/openrisc/openrisc_sim.c          |    2 +-
+ hw/openrisc/virt.c                  |    2 +-
+ hw/ppc/e500.c                       |    2 +-
+ hw/ppc/pnv.c                        |    2 +-
+ hw/ppc/ppc405_uc.c                  |    2 +-
+ hw/ppc/ppc440_bamboo.c              |    2 +-
+ hw/ppc/prep.c                       |    1 -
+ hw/ppc/sam460ex.c                   |    2 +-
+ hw/ppc/virtex_ml507.c               |    2 +-
+ hw/riscv/sifive_e.c                 |    1 -
+ hw/riscv/sifive_u.c                 |    1 -
+ hw/riscv/virt.c                     |    2 +-
+ hw/sparc64/niagara.c                |    2 +-
+ hw/sparc64/sun4u.c                  |    3 +-
+ hw/xtensa/xtfpga.c                  |    2 +-
+ target/i386/cpu.c                   |    8 +-
+ target/i386/kvm/kvm.c               |  366 ++++++----
+ target/i386/kvm/vmsr_energy.c       |    2 +-
+ fsdev/meson.build                   |    8 -
+ hw/9pfs/meson.build                 |    1 -
+ hw/arm/Kconfig                      |   20 +-
+ hw/char/Kconfig                     |    4 +
+ hw/char/meson.build                 |    1 +
+ hw/display/Kconfig                  |    2 +-
+ hw/hppa/Kconfig                     |    2 +-
+ hw/loongarch/Kconfig                |    2 +-
+ hw/microblaze/Kconfig               |    2 +-
+ hw/mips/Kconfig                     |   10 +-
+ hw/openrisc/Kconfig                 |    4 +-
+ hw/ppc/Kconfig                      |   10 +-
+ hw/riscv/Kconfig                    |    2 +-
+ hw/sparc64/Kconfig                  |    1 +
+ hw/xtensa/Kconfig                   |    2 +-
+ meson_options.txt                   |    2 -
+ qemu-options.hx                     |   46 --
+ scripts/meson-buildoptions.         |    0
+ scripts/meson-buildoptions.sh       |    4 -
+ scripts/minikconf.py                |    2 +-
+ tests/unit/meson.build              |    2 +-
+ 89 files changed, 644 insertions(+), 3199 deletions(-)
+ delete mode 100644 docs/tools/virtfs-proxy-helper.rst
+ delete mode 100644 hw/9pfs/9p-proxy.h
+ create mode 100644 include/hw/char/serial-isa.h
+ create mode 100644 include/hw/char/serial-mm.h
+ delete mode 100644 fsdev/virtfs-proxy-helper.c
+ delete mode 100644 hw/9pfs/9p-proxy.c
+ create mode 100644 hw/char/serial-mm.c
+ create mode 100644 scripts/meson-buildoptions.
 -- 
 2.46.0
 
