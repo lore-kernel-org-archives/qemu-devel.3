@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6279DEE49BC
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 14:57:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FB8AEE49BC
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:00:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soOjv-00078Q-Mu; Wed, 11 Sep 2024 10:54:47 -0400
+	id 1soOli-0006Zz-8z; Wed, 11 Sep 2024 10:56:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOhk-00079M-P3
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:52:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOig-0002ck-KS
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:53:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOhc-0007Dw-N9
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:52:24 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1soOid-0007IU-1t
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 10:53:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726066332;
+ s=mimecast20190719; t=1726066398;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Hje9oGIw2otX3n3e6GR0YuFJNQxqhspv7J1M4mo3f28=;
- b=iXgLLhbpWthxegEe79bIE076DuOoVSiaWIJ62txPcBAK90mTl+aCUgEiqmnU+KJwmPhhMX
- bNPKmCznPjS5y1nv1/S5PD1Co1DThT02fJTVnw5JuKIwYXQd8LmU/U3NvNXe+Q1lgLEG2t
- cUEtIISt7Pik0cnZLY6APkPnDuMxzt0=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4veiozMEGfv+9OEJSb+cGyfH7FXaz+7Wyk7isIZPzXI=;
+ b=VBZloT7g8sNtsVS+csbWn3h0Zy6zGrhaVDLTSaTHcnVNRgaTMvRnRgq/gjJwVvD8pbiO8H
+ Y7KBftllqj8H9wL3GBEnw4L+tbG06lXsag569BW4YfcKfjAl3g/FFvgrHLpe283QdgrdnN
+ SfAN22RyhJRwKcPw383LpNJhoAj4dFM=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-524-VH3gesR8PkCYoMjLDScvAw-1; Wed, 11 Sep 2024 09:51:40 -0400
-X-MC-Unique: VH3gesR8PkCYoMjLDScvAw-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a8a877c1d22so330361966b.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 06:51:40 -0700 (PDT)
+ us-mta-76-JNxwyFy8OGS6N0S9wd4tQA-1; Wed, 11 Sep 2024 09:52:23 -0400
+X-MC-Unique: JNxwyFy8OGS6N0S9wd4tQA-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-374b981dd62so1079003f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 06:52:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726062698; x=1726667498;
+ d=1e100.net; s=20230601; t=1726062742; x=1726667542;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Hje9oGIw2otX3n3e6GR0YuFJNQxqhspv7J1M4mo3f28=;
- b=SGUB0kLBwIocZ/v9yq5xJXf4XGzAMZu74r5STeebOySSnTGBZMhv6/nyl5CTgk6PE7
- oGdTWh+PlTYT8maeUxrkOBgjZduXMveW2HhCP5xmcA332onxg3zLoDiBEzWyZG85WYg9
- L/j+AVdpAROd3ikFJH6t49dHF//rMunqTrsUwfrEiMiPuMEf8iQo8xlRrKTkIWCZMKcE
- A0isqGjjSMJjjcEhiroShtOccqY7TUI8b4uq8DR38fb3Qbe/BaF0rUsHSbRFOiCtnD+y
- 0egNrQyFEqgzs6JoO9/v3V2xBClxoGMAM65zfl65lEVRnKB0QZWNGA8z7jKayjoKuctq
- mc4w==
-X-Gm-Message-State: AOJu0YwjVcjebpPGkLDmbbWNJPMJQXeR2Gakrynm3pH0T7VZQUUkV5q+
- aBrrsQ/yOjQiYEcs02/f8MNAq9Oatg+z/b2UI6or0UQFT/5p18N09vQ0iuMXb9fLxkhJf/WhNOo
- V23D2kzsLh5BUPxzB2Ky3ovjGtNeeqZKjznlzTDPBBOzgdXtuHOGleARVH4PgqQtjG/HCRUH9Tn
- TbIDnjvfhj6Ud287gkK04DqSz/rh87PA==
-X-Received: by 2002:a17:907:6d0e:b0:a8a:835f:4cb9 with SMTP id
- a640c23a62f3a-a8ffadf04ffmr336003966b.46.1726062698536; 
- Wed, 11 Sep 2024 06:51:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF6bD5XcAmB/xGWz6Ei3wFwoAeoEQsyQsfXaF1vCQ+x21OsHGZC9dt/pUD5oEbtl1oNshF04w==
-X-Received: by 2002:a17:907:6d0e:b0:a8a:835f:4cb9 with SMTP id
- a640c23a62f3a-a8ffadf04ffmr336000366b.46.1726062698036; 
- Wed, 11 Sep 2024 06:51:38 -0700 (PDT)
+ bh=4veiozMEGfv+9OEJSb+cGyfH7FXaz+7Wyk7isIZPzXI=;
+ b=YuGQU+Y439gQWsqF1oLI37OSiObE1Te/gi8Ih/q49GvZXVvnA8s5ACtzS+1CipTwtw
+ FjaWI8Bov6utRAjqWLz95an+xiB9GTEklaB+894hP0bcfX+uysog8EdbUmdwo0VAC6eN
+ 4zAdSKOMw5Q5i0A8PFbBBe2F97ubiJdHoG0AcaO+HLHkkV/PX2Q3vWx+gcqfr3VHASiy
+ kmoQpnEh/y8sCQ9+68G6ZL2rVQuf1u2XYnprF/NfamLCTqRzLa8ESxM5kAAWhf+QU0C5
+ UXlxOi7zzwkuk/QU5xgikXhKgaxiZomaeFJ4+XrKbTqiqqI8RB+oedD/vFDIG9evv86V
+ dq5Q==
+X-Gm-Message-State: AOJu0YxkaoLhlzxiIwTkHUxyfXOVaLkY5UBLgiCJC1kc03cxh4ayD4r0
+ Zlef37Yh/EPGavQ4NhEpqXR7Clx5u+1yPhwFdeboNfKYYd+HkxfgV1F+QzluzWZqbbpOgbaasWC
+ 7G/oBccmt8sYYlo15KHtXtcx0cRrvCE27GI5IRkrwhkaAmjB52dPL5ZPJ/8oVZqPtWtrkIbZOfa
+ D9tgeWAyKXWaQpxYp+aRBHU8x1CI2NKg==
+X-Received: by 2002:a05:6000:156e:b0:378:7e94:d613 with SMTP id
+ ffacd0b85a97d-378b07f6ad8mr2411386f8f.42.1726062741683; 
+ Wed, 11 Sep 2024 06:52:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE3fvnhE/laytZOuXh9GtvogEZU9g8iP2CK+EAn9uPy3+gHAc7EKj5dFV1iyfaiUOt7pcxJ0Q==
+X-Received: by 2002:a05:6000:156e:b0:378:7e94:d613 with SMTP id
+ ffacd0b85a97d-378b07f6ad8mr2411344f8f.42.1726062740959; 
+ Wed, 11 Sep 2024 06:52:20 -0700 (PDT)
 Received: from redhat.com ([2.55.9.133]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25a073b1sm612326266b.82.2024.09.11.06.51.36
+ 4fb4d7f45d1cf-5c3ebd46886sm5388659a12.34.2024.09.11.06.52.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 06:51:37 -0700 (PDT)
-Date: Wed, 11 Sep 2024 09:51:34 -0400
+ Wed, 11 Sep 2024 06:52:20 -0700 (PDT)
+Date: Wed, 11 Sep 2024 09:52:18 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PULL 04/18] hw/isa/vt82c686.c: Embed i8259 irq in device state
- instead of allocating
-Message-ID: <2225dc562a93dc191c3b2a43f273639bebad5d9a.1726062663.git.mst@redhat.com>
+ David Hildenbrand <david@redhat.com>, Gavin Shan <gshan@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: [PULL 17/18] virtio-mem: don't warn about THP sizes on a kernel
+ without THP support
+Message-ID: <95b717a8154b955de2782305f305b63f357b0576.1726062663.git.mst@redhat.com>
 References: <cover.1726062663.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -79,7 +78,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1726062663.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -104,55 +103,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: David Hildenbrand <david@redhat.com>
 
-To avoid a warning about unfreed qemu_irq embed the i8259 irq in the
-device state instead of allocating it.
+If the config directory in sysfs does not exist at all, we are dealing
+with a system that does not support THPs. Simply use 1 MiB block size
+then, instead of warning "Could not detect THP size, falling back to
+..." and falling back to the default THP size.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Message-Id: <b70b9e72063b4dd4005bf4bc040b84f2bb617bf4.1719690591.git.balaton@eik.bme.hu>
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Gavin Shan <gshan@redhat.com>
+Cc: Juraj Marcin <jmarcin@redhat.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Message-Id: <20240910163433.2100295-1-david@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/isa/vt82c686.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ hw/virtio/virtio-mem.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
-index 505b44c4e6..82591e3e07 100644
---- a/hw/isa/vt82c686.c
-+++ b/hw/isa/vt82c686.c
-@@ -592,6 +592,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(ViaISAState, VIA_ISA)
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index ef64bf1b4a..4075f3d4ce 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -88,6 +88,7 @@ static uint32_t virtio_mem_default_thp_size(void)
+ static uint32_t thp_size;
  
- struct ViaISAState {
-     PCIDevice dev;
-+
-+    IRQState i8259_irq;
-     qemu_irq cpu_intr;
-     qemu_irq *isa_irqs_in;
-     uint16_t irq_state[ISA_NUM_IRQS];
-@@ -715,13 +717,12 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
-     ViaISAState *s = VIA_ISA(d);
-     DeviceState *dev = DEVICE(d);
-     PCIBus *pci_bus = pci_get_bus(d);
--    qemu_irq *isa_irq;
-     ISABus *isa_bus;
-     int i;
- 
-     qdev_init_gpio_out_named(dev, &s->cpu_intr, "intr", 1);
-     qdev_init_gpio_in_named(dev, via_isa_pirq, "pirq", PCI_NUM_PINS);
--    isa_irq = qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
-+    qemu_init_irq(&s->i8259_irq, via_isa_request_i8259_irq, s, 0);
-     isa_bus = isa_bus_new(dev, pci_address_space(d), pci_address_space_io(d),
-                           errp);
- 
-@@ -729,7 +730,7 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
-         return;
+ #define HPAGE_PMD_SIZE_PATH "/sys/kernel/mm/transparent_hugepage/hpage_pmd_size"
++#define HPAGE_PATH "/sys/kernel/mm/transparent_hugepage/"
+ static uint32_t virtio_mem_thp_size(void)
+ {
+     gchar *content = NULL;
+@@ -98,6 +99,12 @@ static uint32_t virtio_mem_thp_size(void)
+         return thp_size;
      }
  
--    s->isa_irqs_in = i8259_init(isa_bus, *isa_irq);
-+    s->isa_irqs_in = i8259_init(isa_bus, &s->i8259_irq);
-     isa_bus_register_input_irqs(isa_bus, s->isa_irqs_in);
-     i8254_pit_init(isa_bus, 0x40, 0, NULL);
-     i8257_dma_init(OBJECT(d), isa_bus, 0);
++    /* No THP -> no restrictions. */
++    if (!g_file_test(HPAGE_PATH, G_FILE_TEST_EXISTS)) {
++        thp_size = VIRTIO_MEM_MIN_BLOCK_SIZE;
++        return thp_size;
++    }
++
+     /*
+      * Try to probe the actual THP size, fallback to (sane but eventually
+      * incorrect) default sizes.
 -- 
 MST
 
