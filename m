@@ -4,83 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC1ACEE499F
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:37:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF934EE499D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:37:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMKq-0007xG-Gc; Wed, 11 Sep 2024 08:20:37 -0400
+	id 1soMYY-0000Zw-U6; Wed, 11 Sep 2024 08:34:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMKk-0007cY-P2
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:20:33 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMKi-0007yB-Pl
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:20:30 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-42cbaf9bfdbso23686595e9.0
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:20:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726057227; x=1726662027; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vsK0mdY5OlPxji3PY5r+h72YwQWFU0AxW9NvQTZMW7U=;
- b=u7+MSQb2UDgsa7MXNtwayQKUqEvYsdRjrM+1fOCjckgOwjzE3cfKumnYfMNf7ey3Hh
- GY/5x7gC/noYYvciqOiiBtxwCk5O3sa8G479CLc6oGpy+Zh63R6Tr720Oj2gAHHnJ5p4
- 7WVdB8tKxevXtp4cPsvVI4NEF3HIv1sIJIhmOWYKw2tHKyam49gVC+8+vN6yMrNDR6ng
- eCIpi/8ZLEtXsaQQymw8wVl2zmXUtBobzuqRx2WgOa2PLlVsqy2ZRULLd391tqFwD6+M
- k+etd1yzDx8mFFEEMKkCtNSZxVnrltzHdEvmbfBMkdIdIOQSu5rbrj1KpQSnvaqqnN3Y
- v2fA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1soMYA-0007Sn-HG
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:34:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1soMY8-00016A-R3
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:34:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1726058060;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hs8UEmOhjZhsT4bHEFTB4w8fw7ILBNMs3ZZtiuWZjhk=;
+ b=SymLhN/l8B+YEyXVXMZHWZWndRgPPryPiMHYHLYQ2+YAGs+F19Sz6WiFuTRcgP7McCMSG5
+ BH9M2iXPyZkwZV2rBE34AXBnrKv+xm09liJC4rBRx1UBb8rYan5cnEAuEJRW/9DIdxgC6e
+ ryx2opp0vo/evD8SbcSgIATMT/rZobY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-668-ctsUU7D-OEKb0EgCklHc6Q-1; Wed, 11 Sep 2024 08:34:18 -0400
+X-MC-Unique: ctsUU7D-OEKb0EgCklHc6Q-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42cb0ed9072so37261775e9.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:34:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726057227; x=1726662027;
+ d=1e100.net; s=20230601; t=1726058056; x=1726662856;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vsK0mdY5OlPxji3PY5r+h72YwQWFU0AxW9NvQTZMW7U=;
- b=tXBpFoGNdDkLW8mNXUY4dPXxX2kSvvfrizO8shXtPuYvDQzn4l6vvW5KHkfTfegE+i
- G5hvCsSdQ486xtDVQq1evcVGH6mySYurpJmK1kdfOony9BYfMDsYClUhllblhLUGp5o5
- gkyUjNT8BGjaYgevDQnIpdqBJaoPr723r0TlqwvcUnZ00HaEwP7uzZ/6YXUmBR9YUiVV
- dhyAKAHK2v2lXjsIyR9APP7ZkTTPaFSHTTlsyX5/NRk1YgBqsurNfTSIwCKZYYgSN0u2
- rIwSCLU3muAth72RSELzjz75EkT1qHHqHfxQm+DjZmsjW8yZk6ofDJfsV262kjY9JDLx
- BYfw==
-X-Gm-Message-State: AOJu0YwHcAHO0MtDQ+Kcq6lzMaX26r2rDnwtGRRwTe1xzEQUWC3NfP+6
- 4XJN76ShbTT80eDqJ/2ymSUjilcmgC/W/CGLa2SbwBJqbPyCBaQkG513BaBbwL2UdUqnORoMSZu
- h
-X-Google-Smtp-Source: AGHT+IEI8tLAsTrL3BEevsqzMIXSEz/dFFBNMk7axa+KxsHZhPQhB/HVcNvzCXfCOIqq3LbeC1R1dw==
-X-Received: by 2002:a7b:c858:0:b0:42c:af06:71b with SMTP id
- 5b1f17b1804b1-42caf060978mr98192025e9.28.1726057226929; 
- Wed, 11 Sep 2024 05:20:26 -0700 (PDT)
-Received: from m1x-phil.lan ([176.187.196.107])
+ bh=hs8UEmOhjZhsT4bHEFTB4w8fw7ILBNMs3ZZtiuWZjhk=;
+ b=XDy6EtAJHc4ToXdGgOWH4pQ7tISexVlx33AerLGyJvpGxiwhcoytXdcqK02bnu2dKX
+ HaKpY9bq4J/eZCzCwp/F8vfkwNIXuX0NySBcTsKiTZTPg8IngnyNWeCraDbs12xkzfRk
+ XyFdZe7aaEEcppzYtBHG78at+s6XbW5LZHotQyglfWpUdzcSkXlpLO2E+q2UuMqYOwgz
+ xZxA09b1AVDVk3iHql8XB2vNZB60Tu/26OJKFLkXCUTH/0mBeAjqDYcgTc+nIeea5lln
+ o7kC8oslfXBDNhA3peG3KuUEl4lEZmglVosGeDfjrrweCtbpgp6hX4+QmGGmnoWSoo0M
+ 7DzA==
+X-Gm-Message-State: AOJu0Ywd44SVWFZ/zHGl4vp+0fwPBt2nvC+I2f2UhUky6AVTZUVrWNRl
+ 2W+iTIdzzgr7OGnokrtruWhiOOjdKkTFi//AffhFK3b3p5ozrp1hIenwrJqxs3i45LClSZ4fN3r
+ gfKmR2qm6eKRq5oolYAAe8lSVz4QtasmhCH4I/IO5dg/5srfGej1A8VhIR4fLlj0Xd3+LDsJAS0
+ 7x25W6L/TrkB4cbS1SUDqPKJcVXD5l3I1mTx6WEns=
+X-Received: by 2002:a7b:ce88:0:b0:42c:b5a6:69bd with SMTP id
+ 5b1f17b1804b1-42cb5a66a1bmr110846955e9.30.1726058056092; 
+ Wed, 11 Sep 2024 05:34:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFblVRHWzCmeAHkkx+rNUIyfCodyCiWqadaArE3l2Kzb8cyVFAv7/F7oJOuz01wEQ6Wvhsb8g==
+X-Received: by 2002:a7b:ce88:0:b0:42c:b5a6:69bd with SMTP id
+ 5b1f17b1804b1-42cb5a66a1bmr110846665e9.30.1726058055506; 
+ Wed, 11 Sep 2024 05:34:15 -0700 (PDT)
+Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42caeb815f4sm142611685e9.30.2024.09.11.05.20.25
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Sep 2024 05:20:26 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ ffacd0b85a97d-378956ddaf3sm11490519f8f.96.2024.09.11.05.34.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Sep 2024 05:34:13 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Howard Spoelstra <hsp.cat7@gmail.com>,
- Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 54/56] ui/sdl2: ignore GUI keys in SDL_TEXTINPUT handler
-Date: Wed, 11 Sep 2024 14:14:19 +0200
-Message-ID: <20240911121422.52585-55-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240911121422.52585-1-philmd@linaro.org>
-References: <20240911121422.52585-1-philmd@linaro.org>
+Cc: Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 10/17] kvm/i386: replace identity_base variable with a constant
+Date: Wed, 11 Sep 2024 14:33:35 +0200
+Message-ID: <20240911123342.339482-11-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240911123342.339482-1-pbonzini@redhat.com>
+References: <20240911123342.339482-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,111 +103,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Volker Rümelin <vr_qemu@t-online.de>
+identity_base variable is first initialzied to address 0xfffbc000 and then
+kvm_vm_set_identity_map_addr() overrides this value to address 0xfeffc000.
+The initial address to which the variable was initialized was never used. Clean
+everything up, placing 0xfeffc000 in a preprocessor constant.
 
-Ignore GUI keys for SDL_TEXTINPUT events, just like GUI keys are
-ignored for SDL_KEYDOWN events. This prevents unintended text input
-in a text console when hiding the text console with the GUI keys.
-
-The SDL_TEXTINPUT event always comes after the SDL_KEYDOWN event.
-See https://github.com/libsdl-org/SDL/issues/1659.
-
-Tested-by: Howard Spoelstra <hsp.cat7@gmail.com>
-Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
-Tested-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <20240909061552.6122-3-vr_qemu@t-online.de>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reported-by: Ani Sinha <anisinha@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/ui/sdl2.h |  1 +
- ui/sdl2.c         | 17 +++++++++--------
- 2 files changed, 10 insertions(+), 8 deletions(-)
+ target/i386/kvm/kvm.c | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/include/ui/sdl2.h b/include/ui/sdl2.h
-index 6907115809..dbe6e3d973 100644
---- a/include/ui/sdl2.h
-+++ b/include/ui/sdl2.h
-@@ -42,6 +42,7 @@ struct sdl2_console {
-     int updates;
-     int idle_counter;
-     int ignore_hotkeys;
-+    bool gui_keysym;
-     SDL_GLContext winctx;
-     QKbdState *kbd;
- #ifdef CONFIG_OPENGL
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index bf6868f204..574a22306d 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -388,12 +388,13 @@ static void handle_keydown(SDL_Event *ev)
-     int win;
-     struct sdl2_console *scon = get_scon_from_window(ev->key.windowID);
-     int gui_key_modifier_pressed = get_mod_state();
--    int gui_keysym = 0;
- 
-     if (!scon) {
-         return;
-     }
- 
-+    scon->gui_keysym = false;
-+
-     if (!scon->ignore_hotkeys && gui_key_modifier_pressed && !ev->key.repeat) {
-         switch (ev->key.keysym.scancode) {
-         case SDL_SCANCODE_2:
-@@ -419,15 +420,15 @@ static void handle_keydown(SDL_Event *ev)
-                     }
-                 }
-                 sdl2_release_modifiers(scon);
--                gui_keysym = 1;
-+                scon->gui_keysym = true;
-             }
-             break;
-         case SDL_SCANCODE_F:
-             toggle_full_screen(scon);
--            gui_keysym = 1;
-+            scon->gui_keysym = true;
-             break;
-         case SDL_SCANCODE_G:
--            gui_keysym = 1;
-+            scon->gui_keysym = true;
-             if (!gui_grab) {
-                 sdl_grab_start(scon);
-             } else if (!gui_fullscreen) {
-@@ -440,7 +441,7 @@ static void handle_keydown(SDL_Event *ev)
-                 /* re-create scon->texture */
-                 sdl2_2d_switch(&scon->dcl, scon->surface);
-             }
--            gui_keysym = 1;
-+            scon->gui_keysym = true;
-             break;
- #if 0
-         case SDL_SCANCODE_KP_PLUS:
-@@ -459,14 +460,14 @@ static void handle_keydown(SDL_Event *ev)
-                         __func__, width, height);
-                 sdl_scale(scon, width, height);
-                 sdl2_redraw(scon);
--                gui_keysym = 1;
-+                scon->gui_keysym = true;
-             }
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 599faf0ac6e..5422fd7fa7d 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -81,6 +81,16 @@
+     do { } while (0)
  #endif
-         default:
-             break;
-         }
-     }
--    if (!gui_keysym) {
-+    if (!scon->gui_keysym) {
-         sdl2_process_key(scon, &ev->key);
-     }
+ 
++/*
++ * On older Intel CPUs, KVM uses vm86 mode to emulate 16-bit code directly.
++ * In order to use vm86 mode, an EPT identity map and a TSS  are needed.
++ * Since these must be part of guest physical memory, we need to allocate
++ * them, both by setting their start addresses in the kernel and by
++ * creating a corresponding e820 entry. We need 4 pages before the BIOS,
++ * so this value allows up to 16M BIOSes.
++ */
++#define KVM_IDENTITY_BASE 0xfeffc000
++
+ /* From arch/x86/kvm/lapic.h */
+ #define KVM_APIC_BUS_CYCLE_NS       1
+ #define KVM_APIC_BUS_FREQUENCY      (1000000000ULL / KVM_APIC_BUS_CYCLE_NS)
+@@ -3036,18 +3046,9 @@ static int kvm_vm_enable_triple_fault_event(KVMState *s)
+     return ret;
  }
-@@ -492,7 +493,7 @@ static void handle_textinput(SDL_Event *ev)
-         return;
+ 
+-static int kvm_vm_set_identity_map_addr(KVMState *s, uint64_t *identity_base)
++static int kvm_vm_set_identity_map_addr(KVMState *s, uint64_t identity_base)
+ {
+-    /*
+-     * On older Intel CPUs, KVM uses vm86 mode to emulate 16-bit code directly.
+-     * In order to use vm86 mode, an EPT identity map and a TSS  are needed.
+-     * Since these must be part of guest physical memory, we need to allocate
+-     * them, both by setting their start addresses in the kernel and by
+-     * creating a corresponding e820 entry. We need 4 pages before the BIOS,
+-     * so this value allows up to 16M BIOSes.
+-     */
+-    *identity_base = 0xfeffc000;
+-    return kvm_vm_ioctl(s, KVM_SET_IDENTITY_MAP_ADDR, identity_base);
++    return kvm_vm_ioctl(s, KVM_SET_IDENTITY_MAP_ADDR, &identity_base);
+ }
+ 
+ static int kvm_vm_set_nr_mmu_pages(KVMState *s)
+@@ -3064,10 +3065,9 @@ static int kvm_vm_set_nr_mmu_pages(KVMState *s)
+     return ret;
+ }
+ 
+-static int kvm_vm_set_tss_addr(KVMState *s, uint64_t identity_base)
++static int kvm_vm_set_tss_addr(KVMState *s, uint64_t tss_base)
+ {
+-    /* Set TSS base one page after EPT identity map. */
+-    return kvm_vm_ioctl(s, KVM_SET_TSS_ADDR, identity_base);
++    return kvm_vm_ioctl(s, KVM_SET_TSS_ADDR, tss_base);
+ }
+ 
+ static int kvm_vm_enable_disable_exits(KVMState *s)
+@@ -3195,7 +3195,6 @@ static void kvm_vm_enable_energy_msrs(KVMState *s)
+ 
+ int kvm_arch_init(MachineState *ms, KVMState *s)
+ {
+-    uint64_t identity_base = 0xfffbc000;
+     int ret;
+     struct utsname utsname;
+     Error *local_err = NULL;
+@@ -3263,18 +3262,19 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+     uname(&utsname);
+     lm_capable_kernel = strcmp(utsname.machine, "x86_64") == 0;
+ 
+-    ret = kvm_vm_set_identity_map_addr(s, &identity_base);
++    ret = kvm_vm_set_identity_map_addr(s, KVM_IDENTITY_BASE);
+     if (ret < 0) {
+         return ret;
      }
  
--    if (QEMU_IS_TEXT_CONSOLE(con)) {
-+    if (!scon->gui_keysym && QEMU_IS_TEXT_CONSOLE(con)) {
-         qemu_text_console_put_string(QEMU_TEXT_CONSOLE(con), ev->text.text, strlen(ev->text.text));
+-    ret = kvm_vm_set_tss_addr(s, identity_base + 0x1000);
++    /* Set TSS base one page after EPT identity map. */
++    ret = kvm_vm_set_tss_addr(s, KVM_IDENTITY_BASE + 0x1000);
+     if (ret < 0) {
+         return ret;
      }
- }
+ 
+     /* Tell fw_cfg to notify the BIOS to reserve the range. */
+-    e820_add_entry(identity_base, 0x4000, E820_RESERVED);
++    e820_add_entry(KVM_IDENTITY_BASE, 0x4000, E820_RESERVED);
+ 
+     ret = kvm_vm_set_nr_mmu_pages(s);
+     if (ret < 0) {
 -- 
-2.45.2
+2.46.0
 
 
