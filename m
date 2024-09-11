@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06A0BEE01FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 01:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ABDBEE01FB
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 01:54:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soCOL-0000HF-Vq; Tue, 10 Sep 2024 21:43:34 -0400
+	id 1soCYJ-0005PL-JL; Tue, 10 Sep 2024 21:53:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1soCOK-0000G9-06
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 21:43:32 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1soCYH-0005Lf-Oa; Tue, 10 Sep 2024 21:53:49 -0400
+Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1soCOH-0005Ef-Ps
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 21:43:31 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-7cd8803fe0aso4417068a12.0
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 18:43:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1soCYG-0007sf-5Q; Tue, 10 Sep 2024 21:53:49 -0400
+Received: by mail-vk1-xa2b.google.com with SMTP id
+ 71dfb90a1353d-502bb8ebd2aso917146e0c.1; 
+ Tue, 10 Sep 2024 18:53:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726019008; x=1726623808; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=YQWpPexpBS2I0pThjgcD6HLRrYJV4ps+4McuEYnewnw=;
- b=Ursz3VYcf9tXdEwhZi9J9mI7I1wnPzJeyBg6E2p8uToAMzhpPgh1e46CROSzoakWvr
- SKh7T1bamr+C9MBUHuErcs8y9kL642UST8ldqWO//NmdZ+KGJhUE8hCtW1Gr/8J2B+82
- Pic6jpboNQVyH8W3eb2yUox4S6bXIFW0nlAn7BHJ2Hrl3vYqsA3AojaoVQPlytWmhmz0
- 5qPlVIB4ZskqD8GBFsIE7z7WH5CwvREcXeeX6GZKW0sutt5r+21bzifz0fpVMzSBpZ4B
- cuv1S4xk7yP8mHNB4uzEBSuKtdSjq6efgzMmYdD0ZvBLzpgauhBuEmg1evFBU18aEYWx
- pP9w==
+ d=gmail.com; s=20230601; t=1726019626; x=1726624426; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TW3BqcGPjNt7Mw09dd8OMaaE8b0rwQoc8fos8Revnj8=;
+ b=Disec7VXFsf0Cq57BpTLED30JTMC6en5FkJ5s+EAJpc+yxQCr2RCllUvtJqDlDajK1
+ XOQpjLyu+5NZhuFgZtH9TN8sJtn5qiNzCVOAANQW54sM6RvsbgrZqUyEdZDgFx+VEymZ
+ bpBWitBIWKiVfyykDBFbMATtcY3p6gA/Vg+OAvxT+ZonyDDqe86pTiq0weARwLEwfm6Y
+ GTNvarTU/ulcy8M7dL0phdpYVcezB0sUT2ounrMx/HI3yuzJxcL/VF+y24T9PzBTlBVY
+ +XxkgJkojim1wNxbs0Mhh3K97MTlmGLEgJkfoCe15e4hJi8PkLNsHW3D7DzxvN+43gzs
+ U8oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726019008; x=1726623808;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YQWpPexpBS2I0pThjgcD6HLRrYJV4ps+4McuEYnewnw=;
- b=OB8mPkKP+/j4rDA/8E/R+Oz4QIOS6v1YFn6uWOHU84onx78SEkEDb2cHaaJzOwdWro
- Ddssp7Vpj8/I9grpsS2Twz4Du9J4y0U0LQnew5Eu/F54edmctRMc2TnvTo6CWw2uiP9Z
- 7LjzNQ/YeFkBy2Ureo8bEn2/iSzL5FqHLkK5GXKgAraDgiUx4qTfOZpKheEgMFpG46Id
- dSPykitf/B6FhgJfzQArqV6rJjzC+A5vNmpRkRjcDno7YrXmM4zFUyTSrAqxhHk40XQB
- dCHX4crrrIiG03tMI4r9sEakvnBC3ibu+4Ar58Ie3IZRsZkt20eiU8D+S/ITm7alpZQi
- Z68w==
+ d=1e100.net; s=20230601; t=1726019626; x=1726624426;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TW3BqcGPjNt7Mw09dd8OMaaE8b0rwQoc8fos8Revnj8=;
+ b=RTzAWDj8s29Ptxd773BU8cmAlsesZgIv8rVeRNXuGr6eLue4yhYcA2FROvgaq5xo3I
+ kUS95uhytfeoz8Pq0emia8dnp5IvLOqRbOXRdm+WqwUFrV6XSnuqnNZaX+IlRtrf/sLp
+ OhnhzALFlF7nzEwJ1oi/XpXpbGYcf7TBlPu2fAlWWaDFWRC1lEnZFHNikOmG5tDSSlTK
+ od0LhYuUS9QW/7YbB8caJPYJk1q1GUQB66BDoW2VZ9cOkx8U3SsBTs13SdrvFb9E11Ph
+ 6voIK/CrkbEccV+NKM5PqXvivuDg2kCBqLy4Xjt0Gpexrkj1U80s71g9mrOynZOrvQ63
+ Fn2g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUhOv1WVr7BrU4Sk5Gbrp1YB0c20LyzEe1Bz5VVbRC2/MFybb2em4lM35FuAQbEeQ01F7byvvBp7WUU@nongnu.org
-X-Gm-Message-State: AOJu0YzDneXfqPJIdhHHcutViQ9fIplp+nA5I8w5zHQr0du8J+82gUCS
- Hb9R2tfOuiyGZUbXUKG+ilOOgSkA20NWvL0K8ELf9dhrkBF1SDRpdS14nUmFfj401lE4BXGmOhX
- D
-X-Google-Smtp-Source: AGHT+IFgATdbhdesoPUsWdjylIGm7LVjdm2WoEvSJRE9gVy7oBmhMTNDQOs9YNUbACRygmrbsLtdkw==
-X-Received: by 2002:a17:90b:2644:b0:2da:8730:5683 with SMTP id
- 98e67ed59e1d1-2daffe292a1mr13988335a91.39.1726019007856; 
- Tue, 10 Sep 2024 18:43:27 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2dadc014a58sm9213686a91.17.2024.09.10.18.43.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 18:43:27 -0700 (PDT)
-Message-ID: <28a6a09a-c288-4b89-8d00-4f6a307e0bf2@linaro.org>
-Date: Tue, 10 Sep 2024 18:43:25 -0700
+ AJvYcCX4Wokp8Zn2eko633LsP97zN2pAzFbwZY4CO28cg25vObfy1iDpy2cDn7Buh/I45cZqDuYlicxCI3Fb@nongnu.org
+X-Gm-Message-State: AOJu0YxdOEpoPX176IWomg6aLBWXxa48gvhUyhYaKYMTd+HnXDym7QV7
+ UNcljRqlFsEKJiyz/6iQr5vjSgUcbhU/3aRsFtastr+wUv0+jVng0a8doi2EX5vsHjGmNZQlwmp
+ 49k9/lLgjEej7hM8HvjRdlmZ3YV4=
+X-Google-Smtp-Source: AGHT+IF7Ye2EBHmgZiZHfb/YixxlOF3ngj6WyD8mVLZXY/WaJuXIEe24MvQMZ0QnHjDYBVD28Y1AKspvsXuWlgncywU=
+X-Received: by 2002:a05:6122:3d13:b0:4f5:254e:e111 with SMTP id
+ 71dfb90a1353d-50207c86218mr11245316e0c.7.1726019626480; Tue, 10 Sep 2024
+ 18:53:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/39] hw/core: replace assert(0) with
- g_assert_not_reached()
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-References: <20240910221606.1817478-1-pierrick.bouvier@linaro.org>
- <20240910221606.1817478-6-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240910221606.1817478-6-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240910045419.1252277-1-alistair.francis@wdc.com>
+ <20240910045419.1252277-3-alistair.francis@wdc.com>
+ <1eadf79e-ffe3-4d46-93a8-bebebf38e03c@ilande.co.uk>
+In-Reply-To: <1eadf79e-ffe3-4d46-93a8-bebebf38e03c@ilande.co.uk>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 11 Sep 2024 11:53:19 +1000
+Message-ID: <CAKmqyKP4zBLKdPzFQ2Z136y3zztGOWYLCWAcB0St+9PNyrGPtg@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] hw/char: sifive_uart: Print uart characters async
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org, 
+ Bin Meng <bmeng.cn@gmail.com>, palmer@dabbelt.com, liwei1518@gmail.com, 
+ zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org, 
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ atishp@rivosinc.com, dbarboza@ventanamicro.com, 
+ Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,27 +99,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/10/24 15:15, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   hw/core/numa.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/core/numa.c b/hw/core/numa.c
-> index f8ce332cfe9..14283293b42 100644
-> --- a/hw/core/numa.c
-> +++ b/hw/core/numa.c
-> @@ -380,7 +380,7 @@ void parse_numa_hmat_lb(NumaState *numa_state, NumaHmatLBOptions *node,
->           }
->           lb_data.data = node->bandwidth;
->       } else {
-> -        assert(0);
-> +        g_assert_not_reached();
->       }
->   
->       g_array_append_val(hmat_lb->list, lb_data);
+On Wed, Sep 11, 2024 at 6:35=E2=80=AFAM Mark Cave-Ayland
+<mark.cave-ayland@ilande.co.uk> wrote:
+>
+> On 10/09/2024 05:54, Alistair Francis wrote:
+>
+> > The current approach of using qemu_chr_fe_write() and ignoring the
+> > return values results in dropped characters [1].
+> >
+> > Let's update the SiFive UART to use a async sifive_uart_xmit() function
+> > to transmit the characters and apply back pressure to the guest with
+> > the SIFIVE_UART_TXFIFO_FULL status.
+> >
+> > This should avoid dropped characters and more realisticly model the
+> > hardware.
+>
+> Does the UART work reliably using the fifo8_*_bufptr() functions? One of =
+the
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+I haven't noticed any issues.
 
-r~
+> motivations for my recent Fifo8 series is that these functions don't hand=
+le the
+> wraparound correctly, unlike the fifo8_*_buf() functions in my recent Fif=
+o8 series
+> which do. This was the cause of Phil's async issue in
+> https://mail.gnu.org/archive/html/qemu-devel/2024-07/msg05028.html.
+
+I'm not sure if it matters here
+
+    characters =3D fifo8_peek_bufptr(&s->tx_fifo,
+                                   fifo8_num_used(&s->tx_fifo), &numptr);
+    ret =3D qemu_chr_fe_write(&s->chr, characters, numptr);
+
+    if (ret >=3D 0) {
+        /* We wrote the data, actually pop the fifo */
+        fifo8_pop_bufptr(&s->tx_fifo, ret, NULL);
+    }
+
+I don't care how many characters are returned from
+fifo8_peek_bufptr(), I'll just write them and then pop that number
+with fifo8_pop_bufptr()
+
+If fifo8_is_empty() isn't empty I re-add the watcher for qemu_chr_fe_add_wa=
+tch()
+
+Alistair
 
