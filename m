@@ -4,94 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 524C4EE0206
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 17:34:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5079AEE0206
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 17:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soREB-0007tJ-J3; Wed, 11 Sep 2024 13:34:03 -0400
+	id 1soRUv-0008Fn-Dc; Wed, 11 Sep 2024 13:51:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1soRE9-0007me-Ri
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 13:34:01 -0400
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1soRUu-0008FE-1C
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 13:51:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1soRE7-0001VG-V0
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 13:34:01 -0400
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1soRUl-00033d-EW
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 13:51:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726076036;
+ s=mimecast20190719; t=1726076936;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nob6LzqNR+EH7hgFBFB/TQv0U03b1zvd3bdL6La4bdc=;
- b=iY7sCmFPjCTgt0OLp/f4eJ0HdL/WLgA8hloa6cZ9pi2WyC9EOKhIszgUidhQGnWOE0HZUV
- D0Wbkj6EL/baN3pai6xmobF83hUR6F6E0mwlDhs6eDmjcjPp7J6tT7AWBBxfrlaKyCGdir
- aNMvGuNzu/LtQqRq1t1mucH96notLic=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NtRyoT8imVfWHUxxNaEqmS41NCXM90jR3LO6HC7znm0=;
+ b=UDj/BggGyOgVSpBYaAY50spSytv1ooihnUGPmEEhBgjxNdNxCRGnuXMCP2wclXMXAqYqRy
+ cwz7CNHcd/kSgOC73AB8tIpVKDiuSB3UUxahYA+sGQsJ2zv4edIWKKJuIp/DOF+brK5oYa
+ 1t1DHHJ+/EjiSM1VXzieDDzgVPdmVWw=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-577-giZIKKqsNxytzHW1IcmGlg-1; Wed, 11 Sep 2024 13:33:54 -0400
-X-MC-Unique: giZIKKqsNxytzHW1IcmGlg-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7a9b41d95efso17636185a.2
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 10:33:54 -0700 (PDT)
+ us-mta-657-W_qfDstXM1KWq0tqAAT8ow-1; Wed, 11 Sep 2024 13:48:55 -0400
+X-MC-Unique: W_qfDstXM1KWq0tqAAT8ow-1
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-6d73dd8ac65so4004087b3.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 10:48:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726076034; x=1726680834;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nob6LzqNR+EH7hgFBFB/TQv0U03b1zvd3bdL6La4bdc=;
- b=UnbUpx5XFDgjPQavLmlAtYiVQRzNoeSGeq4zCLMnergXUo1O4lOejfiI36aO2D8COg
- O554jbJpO1nmv7DUIciN+k+mAnLfRhEudzI/DmQ9exK7XG7kFyq6T2tVNbLhfb1OpYMZ
- tBVa6HV1lJKBysk8VUHe7ntzyMk95BT0Q/zHRKta3p3QkNENF4N4E1oHYUHZ0ZJSlY62
- ntkOaI5LsiA07NGJGVns5DWhtfzbdQAZ+ytadI9BBsvreyhiLxYFUPSMU1uQEjP0bgvg
- OgjQPdHQLVqpvYXvmG1PdOJHZKQE1YvGT6f8t6+OcJ5DHpMQv4S8e7c9PL8zV4tT1TPZ
- mIDg==
+ d=1e100.net; s=20230601; t=1726076935; x=1726681735;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NtRyoT8imVfWHUxxNaEqmS41NCXM90jR3LO6HC7znm0=;
+ b=J/4CvmEIkvrXo6ijqFvkpkRjPxLU+HpDLRY11vz1HSar4dPSpjTR7sEjp5U4mFKshm
+ HgL/WWhGcbCI3BNedML11OboGG22tuzIjPvWssRMw4/Hq1pIUQFQ2jk8aYO6H7jgNHHw
+ Sf+kuOYWrda9tZR5ZVlh1okWFv7BJ92L4dUSp6rdfLa5b/ALbmDpRQZGH3ZvIgVJSZSS
+ mvo8qA7cUS4D5RGLC7xcvcc2iykHQxbhN4LM+LGx3LaRAkuooJ4kzLd3HjWAi1fsAB3/
+ +y9C7tSMe1+kO+ZctGPYtx1rfYQ9V1uJLO6T59r2LiIhu0Or35dEYXPvRvkuUdBnAISR
+ Hz8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWHAioDPUDaZT2M/V+KAVZ80qoSXkY60Oxra8TLutOa46f/sXFoB22ZzKDiqlecvfyRHFSAg8H07v23@nongnu.org
-X-Gm-Message-State: AOJu0Yy9cQVammDfcPEVl1adiVGQ3LERjecTHxjjXv5goCnBXAci1oIt
- 2MKpK/6IqqsZmVRG9RVojJYFVdptsWixp4Hyrc81tlAufXRvUquF9K6Sfwf8hk0Ok0p7nNYp7S3
- cGiIhWNBjx/BIQ2OXL2iGd16XHj2x905zE5jdQLM8jqBAVjeEVD0t
-X-Received: by 2002:a05:620a:2905:b0:7a1:c44d:eb32 with SMTP id
- af79cd13be357-7a9e5f7c58amr11628185a.54.1726076034222; 
- Wed, 11 Sep 2024 10:33:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGDf9Hal+g0kexb6IG/T7tA1nMJ0N1dxN8ucvuVFSG1mYVI6LnUXD2EKs8KvAKo5kvzkQgpkA==
-X-Received: by 2002:a05:620a:2905:b0:7a1:c44d:eb32 with SMTP id
- af79cd13be357-7a9e5f7c58amr11626085a.54.1726076033886; 
- Wed, 11 Sep 2024 10:33:53 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a9a7946b0csm446483385a.23.2024.09.11.10.33.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Sep 2024 10:33:53 -0700 (PDT)
-Message-ID: <6beb87db-d963-48fe-88ee-abc4f55dd3d9@redhat.com>
-Date: Wed, 11 Sep 2024 19:33:51 +0200
+ AJvYcCUsWIKkt5h9vw8XcLKNLBkIYU5LbhyqWky0rQ/lZOKSqzPmv8E/5jTr/+FcYlgIfDJdlvv7NRhCxuw6@nongnu.org
+X-Gm-Message-State: AOJu0Yxbwu0c+UHQm9leBhZ5DcJpJ7ltydwJvlQqEgryMFoVMxWopFyW
+ WRD/GsW3zS7FCjq6Rzno5bhhDj8LLCNqry1QAPZFGl8sNG6G6f6BWnlCe+zqcaLA1NmoOHu+3D8
+ BsymUPZ2W2r8Xd7UTzYWo/S9x/WkL1U4wUYa3A8omvAN1J1eyXZktNmeVRxbAZz9dIO1jkhcoQz
+ PvxoXcekapYtp6CHGJRULcqUbdVQE=
+X-Received: by 2002:a05:690c:385:b0:6db:aef5:aff2 with SMTP id
+ 00721157ae682-6dbb6b44984mr3607397b3.25.1726076935156; 
+ Wed, 11 Sep 2024 10:48:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF2opakMN+Ym5jUi2zG14/8thiXhlS9JZKuwpg4ZxKTg4CN9FSWbcAkrf75joPztLMUpFpF0ivpWOAD8iGLoo8=
+X-Received: by 2002:a05:690c:385:b0:6db:aef5:aff2 with SMTP id
+ 00721157ae682-6dbb6b44984mr3607217b3.25.1726076934844; Wed, 11 Sep 2024
+ 10:48:54 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] aspeed: Deprecate the tacoma-bmc machine
-To: Guenter Roeck <linux@roeck-us.net>, Joel Stanley <joel@jms.id.au>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240625070830.492251-1-clg@redhat.com>
- <4e04f930-e7af-4084-99a8-2a3139e2bf43@roeck-us.net>
- <5fb7342b-fa67-4cb2-b6fd-2241b7b76d03@redhat.com>
- <f70cb39f-3567-4322-b1c4-1bc5991d91fa@roeck-us.net>
- <8d1fd867-647b-4827-a2b2-a239618a7743@redhat.com>
- <014b83a8-d733-442b-ba33-a24c35e46f3f@roeck-us.net>
- <bdb443f9-376e-4d4e-8c06-9ba0c5482c5e@redhat.com>
- <09457da7-e692-4d9f-92b8-361f14b7a1c2@roeck-us.net>
- <CACPK8XfqOE-GJWgUwC+Kh5r9nT2Jo42R2zdka54sURDiR70j5A@mail.gmail.com>
- <b9b2d800-38d6-4fa6-9ac3-9604fb6f9ff2@roeck-us.net>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <b9b2d800-38d6-4fa6-9ac3-9604fb6f9ff2@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+References: <20240129132407.1474202-1-eperezma@redhat.com>
+ <CACGkMEvXNSkMy=WAv-Eiy4M_7kmqJFkv7RgDwqrgry_O2eT2hA@mail.gmail.com>
+ <1559bdcb-315e-4411-a996-89c6be430d4f@oracle.com>
+ <CACGkMEveP-MMN0qGRZEL_VwtJeA+9qiYq_5X9CsOpzTsCLNEuw@mail.gmail.com>
+ <CAJaqyWecQRN_2JX0Wef+JOhyfcrAsvi36d=48z4OT55ga-UZCA@mail.gmail.com>
+In-Reply-To: <CAJaqyWecQRN_2JX0Wef+JOhyfcrAsvi36d=48z4OT55ga-UZCA@mail.gmail.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Wed, 11 Sep 2024 19:48:19 +0200
+Message-ID: <CAJaqyWeUZ=R-nPsLhDCV4nsA9d7=3c14SOOU3Mr8_0JEe6fSPw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Move net backend cleanup to NIC cleanup
+To: Jason Wang <jasowang@redhat.com>
+Cc: Si-Wei Liu <si-wei.liu@oracle.com>, qemu-devel@nongnu.org, mst@redhat.com, 
+ leiyang@redhat.com, yajunw@nvidia.com, Ani Sinha <anisinha@redhat.com>, 
+ dtatulea@nvidia.com, mcoqueli@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -116,44 +105,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/9/24 17:10, Guenter Roeck wrote:
-> On 9/9/24 04:20, Joel Stanley wrote:
->> On Sat, 31 Aug 2024 at 05:41, Guenter Roeck <linux@roeck-us.net> wrote:
->>>
->>> On Fri, Aug 30, 2024 at 10:09:25AM +0200, Cédric Le Goater wrote:
->>>> Hello,
->>>>
->>>>
->>>>>>> I solved the problem by adding support for IBM Bonnell (which instantiates
->>>>>>> the TPM chip through its devicetree file, similar to tacoma-bmc) to my local
->>>>>>> copy of qemu.
->>>>>>
->>>>>> Hmm, did you copy the rainier-bmc machine definition ?
->>>>>>
->>>>> For aspeed_machine_bonnell_class_init(), pretty much yes, since I don't know
->>>>> the actual hardware. For I2C initialization I used the devicetree file.
->>>>> You can find the patch in the master-local or v9.1.0-local branches
->>>>> of my qemu clone at https://github.com/groeck/qemu if you are interested.
->>>>
->>>> Oh nice ! Let's merge the IBM Bonnell machine. We can ask IBM to help fixing
->>>> the definitions (strapping). Enabling the PCA9554 is good to have too.
->>
->> Instead of adding Bonnell to qemu, could we use the Rainier machine? I
->> know the kernel device tree removed the i2c tpm, but there's no harm
->> in it being present in the qemu machine.
->>
->> The bonnell device tree should boot fine on the rainier machine for
->> your purposes.
->>
-> 
-> Yes, I confirmed that works. Ok, I'll do that.
+On Wed, Sep 11, 2024 at 11:04=E2=80=AFAM Eugenio Perez Martin
+<eperezma@redhat.com> wrote:
+>
+> On Tue, Sep 10, 2024 at 5:46=E2=80=AFAM Jason Wang <jasowang@redhat.com> =
+wrote:
+> >
+> > On Tue, Sep 10, 2024 at 11:41=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.=
+com> wrote:
+> > >
+> > > Hi Jason,
+> > >
+> > > It seems this series wasn't applied successfully, I still cannot see =
+it
+> > > from the latest tree. Any idea?
+> >
+> > It breaks make check.
+> >
+> > Eugenio, would you want to fix and resend the series?
+> >
+>
+> I'm trying to reproduce but with no luck :(.
+>
 
-So I will drop the bonnell to avoid redundancy. Is that OK ?
+I'm able to reproduce consistently now.
 
-
-Thanks,
-
-C.
-
+> For the record this is the failed log. Is it possible to try to
+> reproduce it again in the machine / env it crashed?
+>
+> =E2=96=B6  10/354 ERROR:../tests/qtest/qos-test.
+> c:191:subprocess_run_one_test:
+> child process (/x86_64/pc/i440FX-pcihost/pci-bus-pc/pci-bus/virtio-net-pc=
+i/virtio-net/virtio-net-tests/vhost-user/migrate/subprocess
+> [1494462]) failed unexpectedly ERROR
+>  10/354 qemu:qtest+qtest-x86_64 / qtest-x86_64/qos-test
+>         ERROR           14.19s   killed by signal 6 SIGABRT
+> >>> PYTHON=3D/home/devel/git/qemu/build/pyvenv/bin/python3 G_TEST_DBUS_DA=
+EMON=3D/home/devel/git/qemu/tests/dbus-vmstate-daemon.sh QTEST_QEMU_STORAGE=
+_DAEMON_BINARY=3D./storage-daemon/qemu-storage-daemon QTEST_QEMU_IMG=3D./qe=
+mu-img QTEST_QEMU_BINARY=3D./qemu-system-x86_64 MALLOC_PERTURB_=3D82 /home/=
+devel/git/qemu/build/tests/qtest/qos-test --tap -k
+> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95
+> =E2=9C=80  =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95
+> stderr:
+> Vhost user backend fails to broadcast fake RARP
+> ../tests/qtest/libqtest.c:204: kill_qemu() detected QEMU death from
+> signal 11 (Segmentation fault) (core dumped)
+> ../tests/qtest/libqtest.c:204: kill_qemu() detected QEMU death from
+> signal 11 (Segmentation fault) (core dumped)
+> **
+> ERROR:../tests/qtest/qos-test.c:191:subprocess_run_one_test: child
+> process (/x86_64/pc/i440FX-pcihost/pci-bus-pc/pci-bus/virtio-net-pci/virt=
+io-net/virtio-net-tests/vhost-user/migrate/subprocess
+> [1494462]) failed unexpectedly
+> > Thanks
+> >
+> > >
+> > > In any case the fix LGTM.
+> > >
+> > > Reviewed-by: Si-Wei Liu <si-wei.liu@oracle.com>
+> > >
+> > > Thanks,
+> > > -Siwei
+> > >
+> > > On 1/31/2024 9:43 PM, Jason Wang wrote:
+> > > > On Mon, Jan 29, 2024 at 9:24=E2=80=AFPM Eugenio P=C3=A9rez <eperezm=
+a@redhat.com> wrote:
+> > > >> Commit a0d7215e33 ("vhost-vdpa: do not cleanup the vdpa/vhost-net
+> > > >> structures if peer nic is present") effectively delayed the backen=
+d
+> > > >> cleanup, allowing the frontend or the guest to access it resources=
+ as
+> > > >> long as the frontend NIC is still visible to the guest.
+> > > >>
+> > > >> However it does not clean up the resources until the qemu process =
+is
+> > > >> over.  This causes an effective leak if the device is deleted with
+> > > >> device_del, as there is no way to close the vdpa device.  This mak=
+es
+> > > >> impossible to re-add that device to this or other QEMU instances u=
+ntil
+> > > >> the first instance of QEMU is finished.
+> > > >>
+> > > >> Move the cleanup from qemu_cleanup to the NIC deletion.
+> > > >>
+> > > >> Fixes: a0d7215e33 ("vhost-vdpa: do not cleanup the vdpa/vhost-net =
+structures if peer nic is present")
+> > > >> Acked-by: Jason Wang <jasowang@redhat.com>
+> > > >> Reported-by: Lei Yang <leiyang@redhat.com>
+> > > >> Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+> > > >>
+> > > >> Eugenio P=C3=A9rez (2):
+> > > >>    net: parameterize the removing client from nc list
+> > > >>    net: move backend cleanup to NIC cleanup
+> > > >>
+> > > >>   net/net.c        | 30 ++++++++++++++++++++----------
+> > > >>   net/vhost-vdpa.c |  8 --------
+> > > >>   2 files changed, 20 insertions(+), 18 deletions(-)
+> > > >>
+> > > >> --
+> > > > Queued.
+> > > >
+> > > > Thanks
+> > > >
+> > >
+> >
 
 
