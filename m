@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FFA9EE499D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:16:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56A74EE4998
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:16:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMGB-0007ml-PA; Wed, 11 Sep 2024 08:15:47 -0400
+	id 1soMFE-000512-D6; Wed, 11 Sep 2024 08:14:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMFa-0006CL-BN
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:15:12 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMFB-0004ky-0A
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:14:45 -0400
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMFX-0007Bv-Vr
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:15:09 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a8d100e9ce0so677706366b.2
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:15:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMF9-00079X-9r
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:14:44 -0400
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-5365b6bd901so6074774e87.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:14:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726056905; x=1726661705; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726056881; x=1726661681; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LLvbZKUD4kZ8okDx/zMPvNVTVHxXSANES/l3IRefTcE=;
- b=y2qLZM3EIhcC2/G3vRZfpvVY71AXaQWP3ZkBzyo0UrBAPkcH7QC1q+A9mDGKUssvyx
- SL3LX/5FnCYl2+c122ycduY8ZznVkPBygOIzEapn8LfH8y64neK1+IUaaqhaBMDLfKya
- VU2lgQFT6aSqhUHkILymVA2/ils0UVTFghWBgrCilbAM8c7GpM6m6XT3wckNs/Jz5k7S
- bFg2VEb/lJGxB+ZEblmypaQNNUfLT20O2WK5KenV+VutMPCW9Eqq46IMa2YANWGYC9Sj
- IVHyhiltlY4XEFxO5GmJNPrb3Ppc1UktAHUBHLnSH1PM/GwSU+UaiSANgEjJISeLRJ8g
- K1BQ==
+ bh=l5xvJFVBKMvbpa6Bm2hjf4HSkH6PCdIPkm949TYXsgc=;
+ b=WLUN4V16Qd4ViDhOWGHZ6l92XH1kvxbSkfLple7g/EDomlwl2ZmALh1bFDTvThLwgE
+ JrDd9vPZfLTbgYZj0Em1CfWOxyKoeHwGzX4BEEQ87Et69GITUNaEMWtqYJbQGMBxzZT4
+ ucGIVVtsCCTaXAQdrm9b1ODB4Wuk6kxfg/tRmN61RQy19LxTLQAI5pxc2NYPbys3lIHR
+ OSvHiG45aP76a8ug/V1HG0oAGl3eCuQzDLJ65VvlS4OvRpHl4C6C3S+wU1quL2My1clk
+ BHb7cCG7ccUkgVeOucmeJJkkWBdocCYwCbeIsBVVNDHOK0kEOVAn7rgm/c6YngaECzwv
+ Fdfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726056905; x=1726661705;
+ d=1e100.net; s=20230601; t=1726056881; x=1726661681;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LLvbZKUD4kZ8okDx/zMPvNVTVHxXSANES/l3IRefTcE=;
- b=DFNTZszItmFRwnYnDr559JvW1U1TnQ6NEkcbuQGn/zIfovqvjhcBk2K7R5IYMhuk4U
- YKpcER3yFrVmSzSf2AzFx6EkRS4JjncldlQvLR15T/OhB4KFvCYJX4H2tiYuyLSx+91L
- EzY1f1l/oBlGS4EpZyGFu+3GEpGBifCbSwJAsGznxdVlbkIJZJmgCW2IUhLC343JNUm6
- wuNWFUWYaWyjH4wFk9F3nothEeXVjXlJSasXC2wAE/uN996aJC41vuGn2k76NpXIQfPc
- sc+xZaYAe0F++A4qNN4jsX2hTEYpTdD1PRXLQp5Cx0wfR/0vXQ2CZ0AArHuEHoREIb/y
- WQJg==
-X-Gm-Message-State: AOJu0YwHj3Rl2dqHsYR2HqQeP3abP2P7uJXqinIJd5QyJntJaJ34Vq7M
- ZzPHudbMkEObUSXEV2VnllvaCphA2fTDw+Miwp8dIjqSYykykJJYFZAhJcsWpamPvDMaRwBw6G9
- r
-X-Google-Smtp-Source: AGHT+IF2Q5CuHHBXJukvBm2j1TyGifhmEe3Rk6jBgnBEDsC0zZJ4/pMjoTuTR5SvYpr8EkYyFixPvg==
-X-Received: by 2002:a17:907:961f:b0:a8d:2faf:d333 with SMTP id
- a640c23a62f3a-a8ffab83475mr394432266b.35.1726056905184; 
- Wed, 11 Sep 2024 05:15:05 -0700 (PDT)
+ bh=l5xvJFVBKMvbpa6Bm2hjf4HSkH6PCdIPkm949TYXsgc=;
+ b=bQegbZ2279hfLAD99kVogQM82CoOI/0I0xCauNzF9/KH+XRN0MRha0hKdP8SteHQRw
+ /0FA7PeYzebjNnBKQivIhNOgqv6xO1MxycD/zF21vxQjsFovJK5SqbSJA5QMm/TfIDKB
+ 1wJIiH8mVmYmixw/1ljSESBUmZKx32xh2bl7qC/aMvt3hKH8HxG3SvvQRRYfpcAjrxde
+ dh/jMgf1X0BcWzzWpOBrsi2Op29i4vI/xBI6LCvskLGvkMknkvNy3nOJYUUv8i9aQZ/2
+ mPDRaBvVSvSOWlPT2CBG6zEF8PrRutck5y6o0uzBah9Qo0O3u7IazEkIDSGsnucyIzaF
+ 5znQ==
+X-Gm-Message-State: AOJu0YwPZ8dWtQVUg0iKid8+Qc9LKWSf1QtotnJDLj+QDklyxtosAMt/
+ VurEwK9+zpg3xjaM27an70GeGqIBULYU0o/4IC3RNqf5vmzNMOHudIQPbRj7GcqNcf6a4vdQp+O
+ u
+X-Google-Smtp-Source: AGHT+IHkpOfAS8u5OKPiEwoGL9JPx1etr54IbWhS+ZkiktgkVMP/D1KeIv4b31EoSyMVA86RU0PKSQ==
+X-Received: by 2002:a05:6512:3989:b0:52c:d6a1:5734 with SMTP id
+ 2adb3069b0e04-536587b2bf7mr11723296e87.14.1726056880912; 
+ Wed, 11 Sep 2024 05:14:40 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.196.107])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25cf4a1fsm602958066b.181.2024.09.11.05.15.03
+ a640c23a62f3a-a8d25d657fesm610095966b.221.2024.09.11.05.14.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Sep 2024 05:15:04 -0700 (PDT)
+ Wed, 11 Sep 2024 05:14:40 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
- Yoshinori Sato <ysato@users.sourceforge.jp>
-Subject: [PULL 06/56] hw/sh4: Remove sh7750_register_io_device() helper
-Date: Wed, 11 Sep 2024 14:13:31 +0200
-Message-ID: <20240911121422.52585-7-philmd@linaro.org>
+ Gustavo Romero <gustavo.romero@linaro.org>
+Subject: [PULL 02/56] hw/pci-host/designware: Add 'host_mem' variable for
+ clarity
+Date: Wed, 11 Sep 2024 14:13:27 +0200
+Message-ID: <20240911121422.52585-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240911121422.52585-1-philmd@linaro.org>
 References: <20240911121422.52585-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,153 +96,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sh7750_register_io_device() was only used by the TC58128
-NAND EEPROM which has been removed in the previous commit.
-Remove it as unused code.
+designware_pcie_root_realize() uses get_system_memory()
+as the "host side memory region", as opposed to the "PCI
+side" one. Introduce the 'host_mem' variable for clarity.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
-Message-ID: <20240903153959.18392-4-philmd@linaro.org>
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Message-Id: <20231012121857.31873-4-philmd@linaro.org>
 ---
- include/hw/sh4/sh.h | 16 -------------
- hw/sh4/sh7750.c     | 57 ++-------------------------------------------
- 2 files changed, 2 insertions(+), 71 deletions(-)
+ hw/pci-host/designware.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/sh4/sh.h b/include/hw/sh4/sh.h
-index b726b987cc..c82feef8d0 100644
---- a/include/hw/sh4/sh.h
-+++ b/include/hw/sh4/sh.h
-@@ -38,22 +38,6 @@ struct SH7750State;
- 
- struct SH7750State *sh7750_init(SuperHCPU *cpu, MemoryRegion *sysmem);
- 
--typedef struct {
--    /* The callback will be triggered if any of the designated lines change */
--    uint16_t portamask_trigger;
--    uint16_t portbmask_trigger;
--    /* Return 0 if no action was taken */
--    int (*port_change_cb) (uint16_t porta, uint16_t portb,
--                           uint16_t *periph_pdtra,
--                           uint16_t *periph_portdira,
--                           uint16_t *periph_pdtrb,
--                           uint16_t *periph_portdirb);
--} sh7750_io_device;
--
--int sh7750_register_io_device(struct SH7750State *s,
--                              sh7750_io_device *device);
--
--/* sh_serial.c */
- #define TYPE_SH_SERIAL "sh-serial"
- #define SH_SERIAL_FEAT_SCIF (1 << 0)
- 
-diff --git a/hw/sh4/sh7750.c b/hw/sh4/sh7750.c
-index ebe0fd96d9..8041b3b651 100644
---- a/hw/sh4/sh7750.c
-+++ b/hw/sh4/sh7750.c
-@@ -38,8 +38,6 @@
- #include "exec/exec-all.h"
- #include "trace.h"
- 
--#define NB_DEVICES 4
--
- typedef struct SH7750State {
-     MemoryRegion iomem;
-     MemoryRegion iomem_1f0;
-@@ -75,7 +73,6 @@ typedef struct SH7750State {
-     uint16_t periph_portdira; /* Direction seen from the peripherals */
-     uint16_t periph_pdtrb;    /* Imposed by the peripherals */
-     uint16_t periph_portdirb; /* Direction seen from the peripherals */
--    sh7750_io_device *devices[NB_DEVICES]; /* External peripherals */
- 
-     /* Cache */
-     uint32_t ccr;
-@@ -92,19 +89,6 @@ static inline int has_bcr3_and_bcr4(SH7750State *s)
-  * I/O ports
-  */
- 
--int sh7750_register_io_device(SH7750State *s, sh7750_io_device *device)
--{
--    int i;
--
--    for (i = 0; i < NB_DEVICES; i++) {
--        if (s->devices[i] == NULL) {
--            s->devices[i] = device;
--            return 0;
--        }
--    }
--    return -1;
--}
--
- static uint16_t portdir(uint32_t v)
+diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
+index c8ec5e8ba9..5d0f2ad703 100644
+--- a/hw/pci-host/designware.c
++++ b/hw/pci-host/designware.c
+@@ -395,6 +395,7 @@ static void designware_pcie_root_realize(PCIDevice *dev, Error **errp)
  {
- #define EVENPORTMASK(n) ((v & (1 << ((n) << 1))) >> (n))
-@@ -142,63 +126,26 @@ static uint16_t portb_lines(SH7750State *s)
-         (~(s->portdirb | s->periph_portdirb) & s->portpullupb); /* Pullups */
- }
+     DesignwarePCIERoot *root = DESIGNWARE_PCIE_ROOT(dev);
+     DesignwarePCIEHost *host = designware_pcie_root_to_host(root);
++    MemoryRegion *host_mem = get_system_memory();
+     MemoryRegion *address_space = &host->pci.memory;
+     PCIBridge *br = PCI_BRIDGE(dev);
+     DesignwarePCIEViewport *viewport;
+@@ -435,7 +436,7 @@ static void designware_pcie_root_realize(PCIDevice *dev, Error **errp)
+         viewport->cr[0]   = DESIGNWARE_PCIE_ATU_TYPE_MEM;
  
--static void gen_port_interrupts(SH7750State *s)
--{
--    /* XXXXX interrupts not generated */
--}
--
- static void porta_changed(SH7750State *s, uint16_t prev)
- {
--    uint16_t currenta, changes;
--    int i, r = 0;
-+    uint16_t currenta;
+         source      = &host->pci.address_space_root;
+-        destination = get_system_memory();
++        destination = host_mem;
+         direction   = "Inbound";
  
-     currenta = porta_lines(s);
-     if (currenta == prev) {
-         return;
-     }
-     trace_sh7750_porta(prev, currenta, s->pdtra, s->pctra);
--    changes = currenta ^ prev;
--
--    for (i = 0; i < NB_DEVICES; i++) {
--        if (s->devices[i] && (s->devices[i]->portamask_trigger & changes)) {
--            r |= s->devices[i]->port_change_cb(currenta, portb_lines(s),
--                                               &s->periph_pdtra,
--                                               &s->periph_portdira,
--                                               &s->periph_pdtrb,
--                                               &s->periph_portdirb);
--        }
--    }
--
--    if (r) {
--        gen_port_interrupts(s);
--    }
- }
+         /*
+@@ -460,7 +461,7 @@ static void designware_pcie_root_realize(PCIDevice *dev, Error **errp)
  
- static void portb_changed(SH7750State *s, uint16_t prev)
- {
--    uint16_t currentb, changes;
--    int i, r = 0;
-+    uint16_t currentb;
+         destination = &host->pci.memory;
+         direction   = "Outbound";
+-        source      = get_system_memory();
++        source      = host_mem;
  
-     currentb = portb_lines(s);
-     if (currentb == prev) {
-         return;
-     }
-     trace_sh7750_portb(prev, currentb, s->pdtrb, s->pctrb);
--    changes = currentb ^ prev;
--
--    for (i = 0; i < NB_DEVICES; i++) {
--        if (s->devices[i] && (s->devices[i]->portbmask_trigger & changes)) {
--            r |= s->devices[i]->port_change_cb(portb_lines(s), currentb,
--                                               &s->periph_pdtra,
--                                               &s->periph_portdira,
--                                               &s->periph_pdtrb,
--                                               &s->periph_portdirb);
--        }
--    }
--
--    if (r) {
--        gen_port_interrupts(s);
--    }
- }
- 
- /*
+         /*
+          * Configure MemoryRegion implementing CPU -> PCI memory
 -- 
 2.45.2
 
