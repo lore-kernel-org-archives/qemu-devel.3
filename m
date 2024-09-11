@@ -4,115 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CC3CEE57DB
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 21:27:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F81FEE57DB
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 22:08:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soUqv-00036h-OG; Wed, 11 Sep 2024 17:26:17 -0400
+	id 1soVVK-0006ha-KO; Wed, 11 Sep 2024 18:08:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1soUqp-00035e-SK
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 17:26:11 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1soUql-0006iJ-LP
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 17:26:10 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 346201FB3D;
- Wed, 11 Sep 2024 21:26:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1726089964; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KTv2JVRfuInRFkCwXABd+66HPgVwOzXht3ZAWPcc6xI=;
- b=f1tfkMY/+Q/Euzzx+RL0bq/Aapo8dLQmwi+5F2FvfTT1xPIxB6FEKm0y8j8zj+gtxaJlkT
- QS1hB/Qn2vA+ep0a+rFZfkmhTHPefvKuUGSe15WVsnxiosVgOF1U/+J9xQOIVVy0OBIIVk
- 8hd/NsNdHJZg49IAyJwJSXQrsy5bClw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1726089964;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KTv2JVRfuInRFkCwXABd+66HPgVwOzXht3ZAWPcc6xI=;
- b=BvH4gMyHvnJNiO7TRG+kKRbFwbBq/lPwt8s9h6VyoA6jaW+B+U7de2tiKFy0XJMNLA25fy
- I8WEvvsDD9MJaeCw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="f1tfkMY/";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=BvH4gMyH
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1726089964; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KTv2JVRfuInRFkCwXABd+66HPgVwOzXht3ZAWPcc6xI=;
- b=f1tfkMY/+Q/Euzzx+RL0bq/Aapo8dLQmwi+5F2FvfTT1xPIxB6FEKm0y8j8zj+gtxaJlkT
- QS1hB/Qn2vA+ep0a+rFZfkmhTHPefvKuUGSe15WVsnxiosVgOF1U/+J9xQOIVVy0OBIIVk
- 8hd/NsNdHJZg49IAyJwJSXQrsy5bClw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1726089964;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KTv2JVRfuInRFkCwXABd+66HPgVwOzXht3ZAWPcc6xI=;
- b=BvH4gMyHvnJNiO7TRG+kKRbFwbBq/lPwt8s9h6VyoA6jaW+B+U7de2tiKFy0XJMNLA25fy
- I8WEvvsDD9MJaeCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B0907132CB;
- Wed, 11 Sep 2024 21:26:03 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 1e96HesK4manVgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 11 Sep 2024 21:26:03 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, Hyman Huang
- <yong.huang@smartx.com>, qemu-devel@nongnu.org, Eric Blake
- <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, David
- Hildenbrand <david@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH RFC 10/10] tests/migration-tests: Add test case for
- responsive CPU throttle
-In-Reply-To: <ZuH_pvnTCumKuXTh@x1n>
-References: <cover.1725889277.git.yong.huang@smartx.com>
- <96eeea4efd3417212d6e2639bc118b90d4dcf926.1725889277.git.yong.huang@smartx.com>
- <CAFEAcA99=bn4x_BjgsAsrVitXNxOUSNviz=TGezJEB+=Zj603w@mail.gmail.com>
- <Zt8H6pC2yQ2DD7DV@x1n> <87frq8lcgp.fsf@suse.de> <ZuC4pYT-atQwWePv@x1n>
- <87seu7qhao.fsf@suse.de> <ZuG-SijLg8Q27boE@x1n> <87ed5qq8e2.fsf@suse.de>
- <ZuH_pvnTCumKuXTh@x1n>
-Date: Wed, 11 Sep 2024 18:26:01 -0300
-Message-ID: <87bk0trifq.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1soVVI-0006h5-Sr
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 18:08:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1soVVG-0004P0-AS
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 18:08:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1726092476;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=qPv18UJlJ1AtcMakcGZBSmFd7ZNQdnu0Fu6/erRRIEI=;
+ b=fEeQ1U7G/ikqVk4rPfAV/ruOGA+4ElgeaWZ1kcPHDbjtfTqOEVs/JQhB9baRSFJhcVTczS
+ 7bgWChOU/u2j+YnbzSVAt6b7hIBXk/op7b55qP3aKNUevb5wtqYjdFxECV5KAuHJySV6mx
+ 9eQsxp5p32V7HiUzbUqmA+Cx8N4/B9g=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-393-flFY_fypOeaaxfNUAYANAg-1; Wed, 11 Sep 2024 18:07:55 -0400
+X-MC-Unique: flFY_fypOeaaxfNUAYANAg-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-374beb23f35so158056f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 15:07:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726092474; x=1726697274;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qPv18UJlJ1AtcMakcGZBSmFd7ZNQdnu0Fu6/erRRIEI=;
+ b=f7tSvYTT7wMmcB3+OQZlOqLA5cajrceLwwqWlMY987/IrbSu2wy1JOgZWqbf9r6zVu
+ XRcNmi0v/az7X75vyKT98K0kof8BQGz+XmKC/JQnWE6IBNShLa9Trw30IEqzhILT2b6t
+ LSa2Fr6V5QIoUepNFE97aAEqSRaDrH8qG/Fp9jrB7FPFPHmVQtvTLL5LVQISaMlyStDQ
+ xZCPsKZdB4pGU3Dz5vvxFS+/LudY5nIeDo7E4+qcRK6iLbWcUZhNwBSpRfUYn43lbNU8
+ S/lmyW32A7QSuGU0qvvPeptb54hA8z/seh3cELnE2QNubQEW+S0WCepvTOSY4gEsVBn8
+ u89A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWYoeWhm9YKUAkZPemWI+1v2mkihlaymXV4SiPt8dsTDG2vPORAmLUKmX16eW6REe8ArAz3fxFeE61E@nongnu.org
+X-Gm-Message-State: AOJu0Yz5f48V3UKdj/JZPBCYC1wLNw0xsjsBwXauLlm/ZDMrgsxyYREl
+ 92QuXBBQ10Fm9czjI4kwaw7XUReRmCMfUwKzr0hD69flVQKh56y8ZeEgmLI/ltDPS8rOv/rqvPD
+ HIex7yNSZJRDx5D6iA9DuB3gA7zgOEFCywyWzR8iCzFpPKaw2Ov8B
+X-Received: by 2002:adf:9b92:0:b0:371:87af:c88a with SMTP id
+ ffacd0b85a97d-378c2d4d7e5mr369981f8f.45.1726092473852; 
+ Wed, 11 Sep 2024 15:07:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEaYRRHD1jY22/i7oTAzVTJ734TcisQhWrmAF4DsRLiAb3ee+Ki3SXogOD8Ci/m6qeMHIP46A==
+X-Received: by 2002:adf:9b92:0:b0:371:87af:c88a with SMTP id
+ ffacd0b85a97d-378c2d4d7e5mr369955f8f.45.1726092472849; 
+ Wed, 11 Sep 2024 15:07:52 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c700:7e00:c672:608:5b3e:df8c?
+ (p200300cbc7007e00c67206085b3edf8c.dip0.t-ipconnect.de.
+ [2003:cb:c700:7e00:c672:608:5b3e:df8c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42caeb4444asm152958595e9.22.2024.09.11.15.07.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Sep 2024 15:07:52 -0700 (PDT)
+Message-ID: <cf587c8b-3894-4589-bfea-be5db70e81f3@redhat.com>
+Date: Thu, 12 Sep 2024 00:07:51 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 346201FB3D
-X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; RCPT_COUNT_SEVEN(0.00)[9];
- RCVD_TLS_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC RESEND 0/6] hugetlbfs largepage RAS project
+To: William Roche <william.roche@oracle.com>, pbonzini@redhat.com,
+ peterx@redhat.com, philmd@linaro.org, marcandre.lureau@redhat.com,
+ berrange@redhat.com, thuth@redhat.com, richard.henderson@linaro.org,
+ peter.maydell@linaro.org, mtosatti@redhat.com, qemu-devel@nongnu.org
+Cc: kvm@vger.kernel.org, qemu-arm@nongnu.org, joao.m.martins@oracle.com
+References: <20240910090747.2741475-1-william.roche@oracle.com>
+ <20240910100216.2744078-1-william.roche@oracle.com>
+ <ec3337f7-3906-4a1b-b153-e3d5b16685b6@redhat.com>
+ <9f9a975e-3a04-4923-b8a5-f1edbed945e6@oracle.com>
+Content-Language: en-US
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <9f9a975e-3a04-4923-b8a5-f1edbed945e6@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,405 +157,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Hi again,
 
-> On Wed, Sep 11, 2024 at 04:48:21PM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > On Tue, Sep 10, 2024 at 07:23:43PM -0300, Fabiano Rosas wrote:
->> >> Peter Xu <peterx@redhat.com> writes:
->> >> 
->> >> > On Mon, Sep 09, 2024 at 06:54:46PM -0300, Fabiano Rosas wrote:
->> >> >> Peter Xu <peterx@redhat.com> writes:
->> >> >> 
->> >> >> > On Mon, Sep 09, 2024 at 03:02:57PM +0100, Peter Maydell wrote:
->> >> >> >> On Mon, 9 Sept 2024 at 14:51, Hyman Huang <yong.huang@smartx.com> wrote:
->> >> >> >> >
->> >> >> >> > Despite the fact that the responsive CPU throttle is enabled,
->> >> >> >> > the dirty sync count may not always increase because this is
->> >> >> >> > an optimization that might not happen in any situation.
->> >> >> >> >
->> >> >> >> > This test case just making sure it doesn't interfere with any
->> >> >> >> > current functionality.
->> >> >> >> >
->> >> >> >> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
->> >> >> >> 
->> >> >> >> tests/qtest/migration-test already runs 75 different
->> >> >> >> subtests, takes up a massive chunk of our "make check"
->> >> >> >> time, and is very commonly a "times out" test on some
->> >> >> >> of our CI jobs. It runs on five different guest CPU
->> >> >> >> architectures, each one of which takes between 2 and
->> >> >> >> 5 minutes to complete the full migration-test.
->> >> >> >> 
->> >> >> >> Do we really need to make it even bigger?
->> >> >> >
->> >> >> > I'll try to find some time in the next few weeks looking into this to see
->> >> >> > whether we can further shrink migration test times after previous attemps
->> >> >> > from Dan.  At least a low hanging fruit is we should indeed put some more
->> >> >> > tests into g_test_slow(), and this new test could also be a candidate (then
->> >> >> > we can run "-m slow" for migration PRs only).
->> >> >> 
->> >> >> I think we could (using -m slow or any other method) separate tests
->> >> >> that are generic enough that every CI run should benefit from them
->> >> >> vs. tests that are only useful once someone starts touching migration
->> >> >> code. I'd say very few in the former category and most of them in the
->> >> >> latter.
->> >> >> 
->> >> >> For an idea of where migration bugs lie, I took a look at what was
->> >> >> fixed since 2022:
->> >> >> 
->> >> >> # bugs | device/subsystem/arch
->> >> >> ----------------------------------
->> >> >>     54 | migration
->> >> >>     10 | vfio
->> >> >>      6 | ppc
->> >> >>      3 | virtio-gpu
->> >> >>      2 | pcie_sriov, tpm_emulator,
->> >> >>           vdpa, virtio-rng-pci
->> >> >>      1 | arm, block, gpio, lasi,
->> >> >>           pci, s390, scsi-disk,
->> >> >>           virtio-mem, TCG
->> >> >
->> >> > Just curious; how did you collect these?
->> >> 
->> >> git log --since=2022 and then squinted at it. I wrote a warning to take
->> >> this with a grain of salt, but it missed the final version.
->> >> 
->> >> >
->> >> >> 
->> >> >> From these, ignoring the migration bugs, the migration-tests cover some
->> >> >> of: arm, ppc, s390, TCG. The device_opts[1] patch hasn't merged yet, but
->> >> >> once it is, then virtio-gpu would be covered and we could investigate
->> >> >> adding some of the others.
->> >> >> 
->> >> >> For actual migration code issues:
->> >> >> 
->> >> >> # bugs | (sub)subsystem | kind
->> >> >> ----------------------------------------------
->> >> >>     13 | multifd        | correctness/races
->> >> >>      8 | ram            | correctness
->> >> >>      8 | rdma:          | general programming
->> >> >
->> >> > 8 rdma bugs??? ouch..
->> >> 
->> >> Mostly caught by a cleanup from Markus. Silly stuff like of mixed signed
->> >> integer comparisons and bugs in error handling. I don't even want to
->> >> look too much at it.
->> >> 
->> >> ...hopefully this release we'll manage to resolve that situation.
->> >> 
->> >> >
->> >> >>      7 | qmp            | new api bugs
->> >> >>      5 | postcopy       | races
->> >> >>      4 | file:          | leaks
->> >> >>      3 | return path    | races
->> >> >>      3 | fd_cleanup     | races
->> >> >>      2 | savevm, aio/coroutines
->> >> >>      1 | xbzrle, colo, dirtyrate, exec:,
->> >> >>           windows, iochannel, qemufile,
->> >> >>           arch (ppc64le)
->> >> >> 
->> >> >> Here, the migration-tests cover well: multifd, ram, qmp, postcopy,
->> >> >> file, rp, fd_cleanup, iochannel, qemufile, xbzrle.
->> >> >> 
->> >> >> My suggestion is we run per arch:
->> >> >> 
->> >> >> "/precopy/tcp/plain"
->> >> >> "/precopy/tcp/tls/psk/match",
->> >> >> "/postcopy/plain"
->> >> >> "/postcopy/preempt/plain"
->> >> >> "/postcopy/preempt/recovery/plain"
->> >> >> "/multifd/tcp/plain/cancel"
->> >> >> "/multifd/tcp/uri/plain/none"
->> >> >
->> >> > Don't you want to still keep a few multifd / file tests?
->> >> 
->> >> Not really, but I won't object if you want to add some more in there. To
->> >> be honest, I want to get out of people's way as much as I can because
->> >> having to revisit this every couple of months is stressful to me.
->> >
->> > I hope migration tests are not too obstructive yet so far :) - this
->> > discussion is still within a context where we might add one more slow test
->> > in CI, and we probably simply should make it a -m slow test.
->> >
->> >> 
->> >> My rationale for those is:
->> >> 
->> >> "/precopy/tcp/plain":
->> >>  Smoke test, the most common migration
->> >
->> > E.g. unix is missing, and I'm not sure which we use for e.g. kubevirt.
->> >
->> > And note that even if unix shares the socket iochannel with tcp, it may not
->> > work the same.  For example, if you remember I mentioned I was looking at
->> > threadify the dest qemu receive side, i have a draft there but currently it
->> > has a bug to hang a unix migration, not tcp..
->> 
->> Ok, let's add a unix one, no problem.
->> 
->> >
->> > So IMHO it's not easy to justify which we can simply drop, if we still want
->> > to provide some good gating in CI.
->> 
->> It's not exactly about dropping, it's about which ones need to be run at
->> *every* invocation of make check (x5 because of the multiple archs) and
->
-> Yeah, indeed we could consider reducing the number of runs, maybe.  However
-> I do remember we used to have migration-test bugs only reproduced with some
-> specific distro, well..
->
-> Now I'm looking at the pipelines..
->
-> Why 5x, btw?
+>>> This is a Qemu RFC to introduce the possibility to deal with hardware
+>>> memory errors impacting hugetlbfs memory backed VMs. When using
+>>> hugetlbfs large pages, any large page location being impacted by an
+>>> HW memory error results in poisoning the entire page, suddenly making
+>>> a large chunk of the VM memory unusable.
+>>>
+>>> The implemented proposal is simply a memory mapping change when an HW
+>>> error
+>>> is reported to Qemu, to transform a hugetlbfs large page into a set of
+>>> standard sized pages. The failed large page is unmapped and a set of
+>>> standard sized pages are mapped in place.
+>>> This mechanism is triggered when a SIGBUS/MCE_MCEERR_Ax signal is
+>>> received
+>>> by qemu and the reported location corresponds to a large page.
 
-5x because migration-test supports 5 architectures (i386, x86_64, ppc64,
-aarch64, s390x), so if your build includes all of those, make check will
-run migration-test five times.
+One clarifying question: you simply replace the hugetlb page by multiple 
+small pages using mmap(MAP_FIXED). So you
 
->  I saw alphine, centos, debian, fedora, opensuse, ubuntu,
-> cfi-x86_64, then compat-x86_64.  So that's 8x?  They're for the same arch
-> (amd64) so far.
+(a) are not able to recover any memory of the original page (as of now)
+(b) no longer have a hugetlb page and, therefore, possibly a performance
+     degradation, relevant in low-latency applications that really care
+     about the usage of hugetlb pages.
+(c) run into the described inconsistency issues
 
-I agree we should fine tune this in CI, but this is a different
-discussion. We can't currently skip migration-test without skipping make
-check-qtest. I proposed a while ago to have a separate make
-check-migration, but people didn't like that, maybe we should revisit
-the idea.
+Why is what you propose beneficial over just fallocate(PUNCH_HOLE) the 
+full page and get a fresh, non-poisoned page instead?
 
->
-> Maybe we can skip some indeed.
->
->> at every git branch push in CI (unless -o ci.skip). For gating we don't
->> need all the tests. Many of them are testing the same core code with
->> just a few differences at the margins.
->> 
->> >  And I won't be 100% surprised if some
->> > other non-migration PR (e.g. io/) changed some slight bit that unix is
->> > broken and tcp keeps working, for example, then we loose some CI benefits.
->> 
->> IMO, these non-migration PRs are exactly what we have to worry
->> about. Because migration PRs would run with -m slow and we'd catch the
->> issue there.
->> 
->> >
->> >> 
->> >> "/precopy/tcp/tls/psk/match":
->> >>  Something might change in the distro regarding tls. Such as:
->> >>  https://gitlab.com/qemu-project/qemu/-/issues/1937
->> >> 
->> >> "/postcopy/plain":
->> >>  Smoke test for postcopy
->> >> 
->> >> "/postcopy/preempt/plain":
->> >>  Just to exercise the preempt thread
->> >> 
->> >> "/postcopy/preempt/recovery/plain":
->> >>  Recovery has had some issues with races in the past
->> >> 
->> >> "/multifd/tcp/plain/cancel":
->> >>  The MVP of catching concurrency issues
->> >> 
->> >> "/multifd/tcp/uri/plain/none":
->> >>  Smoke test for multifd
->> >> 
->> >> All in all, these will test basic funcionality and run very often. The
->> >> more tests we add to this set, the less return we get in relation to the
->> >> time they take.
->> >
->> > This is true.  We can try to discuss more on which is more important; I
->> > still think something might be good to be added on top of above.
->> 
->> Sure, just add what you think we need.
->
-> Let's leave the detailed discussion on what to choose until the patch
-> phase.  IIUC this can be the last we do.
+Sure, you have to reserve some pages if that ever happens, but what is 
+the big selling point over PUNCH_HOLE + realloc? (sorry if I missed it 
+and it was spelled out)
 
-ok
+>>>
+>>> This gives the possibility to:
+>>> - Take advantage of newer hypervisor kernel providing a way to retrieve
+>>> still valid data on the impacted hugetlbfs poisoned large page.
 
->
-> We've just queued your other patch to "slow down" the two time consuming
-> tests, we save 40s for each CI kick (total ~90s now locally, so that's 30%
-> cut already all acrosss!), not so bad as a start.
->
-> Then if we can remove some out of 8 (e.g., we can choose 2-3), then if it's
-> 3 system runs, it'll be another 62% cut, a total of:
->
->   1.0 - 9/13 * 3/8 = ~75%
->
-> So if we keep removing 5 system running it we can reduce it to only a
-> quarter time comparing to before for each CI run.
->
-> Would that be good enough already for us to live for quite a few more
-> releases?  They're so far all low hanging fruits.
+Reading that again, that shouldn't have to be hypervisor-specific. 
+Really, if someone were to extract data from a poisoned hugetlb folio, 
+it shouldn't be hypervisor-specific. The kernel should be able to know 
+which regions are accessible and could allow ways for reading these, one 
+way or the other.
 
-Reducing the runs in CI is not a low hanging fruit. We'd need to first
-split migration-test from check-qtest somehow. But that would mean not
-running migration-test at all during make check, which is worse than
-just reducing migration-test while keeping it in make check.
+It could just be a fairly hugetlb-special feature that would replace the 
+poisoned page by a fresh hugetlb page where as much page content as 
+possible has been recoverd from the old one.
 
->
-> If we want to move further (and you think we should then start with
-> reducing test case, rather than profiling the test cases), then feel free
-> to go ahead and send a patch when you're ready.  But maybe you don't want
-> to bother after you notice that we can already shrink 75% of runtime even
-> without dropping anything.  Your call!
+>>> If the backend file is MAP_SHARED, we can copy the valid data into the
+> 
+> 
+> Thank you David for this first reaction on this proposal.
+> 
+> 
+>> How are you dealing with other consumers of the shared memory,
+>> such as vhost-user processes,
+> 
+> 
+> In the current proposal, I don't deal with this aspect.
+> In fact, any other process sharing the changed memory will
+> continue to map the poisoned large page. So any access to
+> this page will generate a SIGBUS to this other process.
+> 
+> In this situation vhost-user processes should continue to receive
+> SIGBUS signals (and probably continue to die because of that).
 
-I don't think we're discussing total CI time at this point, so the math
-doesn't really add up. We're not looking into making the CI finish
-faster. We're looking into making migration-test finish faster. That
-would reduce timeouts in CI, speed-up make check and reduce the chance
-of random race conditions* affecting other people/staging runs.
+That's ... suboptimal. :)
 
-*- like the one I'm debugging at this very moment in multifd+ppc, are
-   you aware of that btw?
+Assume you have a 1 GiB page. The guest OS can happily allocate buffers 
+in there so they can end up in vhost-user and crash that process. 
+Without any warning.
 
->
->> 
->> >
->> > There's also the other way - at some point, I still want to improve
->> > migration-test run speed, and please have a look if you like too at some
->> > point: so there's still chance (average is ~2sec as of now), IMHO, we don't
->> > lose anything in CI but runs simply faster.
->> 
->> My only idea, but it requires a bit of work, is to do unit testing on
->> the interfaces. Anything before migration_fd_connect(). Then we could
->> stop doing a full migration for those.
->
-> What I'm thinking is some further profiling, like what Dan used to do.  I
-> feel like we still have chance, considering what we run as guest image is
-> simply a loop.. so basically zero boot time logically.
+> 
+> So I do see a real problem if 2 qemu processes are sharing the
+> same hugetlbfs segment -- in this case, error recovery should not
+> occur on this piece of the memory. Maybe dealing with this situation
+> with "ivshmem" options is doable (marking the shared segment
+> "not eligible" to hugetlbfs recovery, just like not "share=on"
+> hugetlbfs entries are not eligible)
+> -- I need to think about this specific case.
+> 
+> Please let me know if there is a better way to deal with this
+> shared memory aspect and have a better system reaction.
 
-I started looking again today into code coverage tools to see if we can
-trim the tests that are redundant. But no promises, I already have a
-queue of stuff that's pending.
+Not creating the inconsistency in the first place :)
 
->
->> 
->> >
->> >> 
->> >> >
->> >> > IIUC some file ops can still be relevant to archs.  Multifd still has one
->> >> > bug that can only reproduce on arm64.. but not x86_64.  I remember it's a
->> >> > race condition when migration finishes, and the issue could be memory
->> >> > ordering relevant, but maybe not.
->> >> 
->> >> I'm not aware of anything. I believe the last arm64 bug we had was the
->> >> threadinfo stuff[1]. If you remember what it's about, let me know.
->> >> 
->> >> 1- 01ec0f3a92 ("migration/multifd: Protect accesses to migration_threads").
->> >
->> > https://issues.redhat.com/browse/RHEL-45628
->> 
->> Interesting. But if multifd/tcp/plain/cancel doesn't catch this I don't
->> think other tests will. Also, we don't have tests for zerocopy AFAIK.
->
-> That'll be challenging as it requires locked_vm limit.
->
->> 
->> >
->> > On RH side Bandan is looking at it, but he's during a long holidays
->> > recently.
->> 
->> Good luck to him.
->> 
->> >
->> >> 
->> >> >
->> >> >> 
->> >> >> and x86 gets extra:
->> >> >> 
->> >> >> "/precopy/unix/suspend/live"
->> >> >> "/precopy/unix/suspend/notlive"
->> >> >> "/dirty_ring"
->> >> >
->> >> > dirty ring will be disabled anyway when !x86, so probably not a major
->> >> > concern.
->> >> >
->> >> >> 
->> >> >> (the other dirty_* tests are too slow)
->> >> >
->> >> > These are the 10 slowest tests when I run locally:
->> >> >
->> >> > /x86_64/migration/multifd/tcp/tls/x509/allow-anon-client 2.41
->> >> > /x86_64/migration/postcopy/recovery/plain 2.43
->> >> > /x86_64/migration/multifd/tcp/tls/x509/default-host 2.66
->> >> > /x86_64/migration/multifd/tcp/tls/x509/override-host 2.86
->> >> > /x86_64/migration/postcopy/tls/psk 2.91
->> >> > /x86_64/migration/postcopy/preempt/recovery/tls/psk 3.08
->> >> > /x86_64/migration/postcopy/preempt/tls/psk 3.30
->> >> > /x86_64/migration/postcopy/recovery/tls/psk 3.81
->> >> > /x86_64/migration/vcpu_dirty_limit 13.29
->> >> > /x86_64/migration/precopy/unix/xbzrle 27.55
->> >> >
->> >> > Are you aware of people using xbzrle at all?
->> >> 
->> >> Nope.
->> >> 
->> >> >
->> >> >> 
->> >> >> All the rest go behind a knob that people touching migration code will
->> >> >> enable.
->> >> >> 
->> >> >> wdyt?
->> >> >
->> >> > Agree with the general idea, but I worry above exact list can be too small.
->> >> 
->> >> We won't stop running the full set of tests. We can run them in our
->> >> forks' CI as much as we want. There are no cases of people reporting a
->> >> migration bug because their 'make check' caught something that ours
->> >> didn't.
->> >
->> > IIUC it's hard to say - when the test is in CI maintainers can catch them
->> > already before sending a formal PR.
->> >
->> > If the test is run by default in make check, a developer can trigger a
->> > migration issue (with his/her patch applied) then one can notice it
->> > introduced a bug, fix it, then post the patches.  We won't know whether
->> > that happened.
->> 
->> Good point.
->> 
->> >
->> > So one thing we can do (if you think worthwhile to do it now) is we shrink
->> > the default test case a lot as you proposed, then we wait and see what
->> > breaks, and then we gradually add tests back when it can be used to find
->> > breakages.  But that'll also take time if it really can find such tests,
->> > because then we'll need to debug them one by one (instead of developer /
->> > maintainer looking into them with their expertise knowledge..).  I'm not
->> > sure whether it's worthwhile to do it now, but I don't feel strongly if we
->> > can still have a reliable set of default test cases.
->> 
->> We first need a way to enable them for the migration CI. Do we have a
->> variable that CI understands that can be used to enable slow tests?
->
-> I'm not aware of.  Yes sounds like we should have one if it doesn't exist.
->
->> 
->> >
->> >> 
->> >> Besides, the main strength of CI is to catch bugs when someone makes a
->> >> code change. If people touch migration code, then we'll run it in our CI
->> >> anyway. If they touch device code and that device is migrated by default
->> >> then any one of the simple tests will catch the issue when it runs via
->> >> the migration-compat job. If the device is not enabled by default, then
->> >> no tests will catch it.
->> >> 
->> >> The worst case scenario is they touch some code completely unrelated and
->> >> their 'make check' or CI run breaks because of some race in the
->> >> migration code. That's not what CI is for, that's just an annoyance for
->> >> everyone. I'd rather it breaks in our hands and then we'll go fix it.
->> >> 
->> >> >
->> >> > IMHO we can definitely, at least, move the last two into slow list
->> >> > (vcpu_dirty_limit and xbzrle), then it'll already save us 40sec each run..
->> >> 
->> >> Agreed. I'll send a patch once I get out from under downstream stuff.
->> >> 
->> >> >
->> >> >> 
->> >> >> 1- allows adding devices to QEMU cmdline for migration-test
->> >> >> https://lore.kernel.org/r/20240523201922.28007-4-farosas@suse.de
->> >> >> 
->> >> 
->> 
+>> vm migration whereby RAM is migrated using file content,
+> 
+> 
+> Migration doesn't currently work with memory poisoning.
+> You can give a look at the already integrated following commit:
+> 
+> 06152b89db64 migration: prevent migration when VM has poisoned memory
+> 
+> This proposal doesn't change anything on this side.
+
+That commit is fairly fresh and likely missed the option to *not* 
+migrate RAM by reading it, but instead by migrating it through a shared 
+file. For example, VM life-upgrade (CPR) wants to use that (or is 
+already using that), to avoid RAM migration completely.
+
+> 
+>> vfio that might have these pages pinned?
+> 
+> AFAIK even pinned memory can be impacted by memory error and poisoned
+> by the kernel. Now as I said in the cover letter, I'd like to know if
+> we should take extra care for IO memory, vfio configured memory buffers...
+
+Assume your GPU has a hugetlb folio pinned via vfio. As soon as you make 
+the guest RAM point at anything else as VFIO is aware of, we end up in 
+the same problem we had when we learned about having to disable balloon 
+inflation (MADVISE_DONTNEED) as soon as VFIO pinned pages.
+
+We'd have to inform VFIO that the mapping is now different. Otherwise 
+it's really better to crash the VM than having your GPU read/write 
+different data than your CPU reads/writes,
+
+> 
+> 
+>> In general, you cannot simply replace pages by private copies
+>> when somebody else might be relying on these pages to go to
+>> actual guest RAM.
+> 
+> This is correct, but the current proposal is dealing with a specific
+> shared memory type: poisoned large pages. So any other process mapping
+> this type of page can't access it without generating a SIGBUS.
+
+Right, and that's the issue. Because, for example, how should the VM be 
+aware that this memory is now special and must not be used for some 
+purposes without leading to problems elsewhere?
+
+> 
+> 
+>> It sounds very hacky and incomplete at first.
+> 
+> As you can see, RAS features need to be completed.
+> And if this proposal is incomplete, what other changes should be
+> done to complete it ?
+> 
+> I do hope we can discuss this RFC to adapt what is incorrect, or
+> find a better way to address this situation.
+
+One long-term goal people are working on is to allow remapping the 
+hugetlb folios in smaller granularity, such that only a single affected 
+PTE can be marked as poisoned. (used to be called high-granularity-mapping)
+
+However, at the same time, the focus hseems to shift towards using 
+guest_memfd instead of hugetlb, once it supports 1 GiB pages and shared 
+memory. It will likely be easier to support mapping 1 GiB pages using 
+PTEs that way, and there are ongoing discussions how that can be 
+achieved more easily.
+
+There are also discussions [1] about not poisoning the mappings at all 
+and handling it differently. But I haven't yet digested how exactly that 
+could look like in reality.
+
+
+[1] https://lkml.kernel.org/r/20240828234958.GE3773488@nvidia.com
+
+-- 
+Cheers,
+
+David / dhildenb
+
 
