@@ -4,124 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8444EEE01F3
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 05:51:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C493EE01F3
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 05:52:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soGFg-0001f7-Qy; Wed, 11 Sep 2024 01:50:52 -0400
+	id 1soGHA-0007Xr-42; Wed, 11 Sep 2024 01:52:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soGFR-0001WY-Ct
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 01:50:40 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soGH8-0007Rt-Gi
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 01:52:22 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soGFL-0006KH-PX
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 01:50:34 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5c3d87dd4c3so3238617a12.3
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 22:50:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soGH6-0006Pk-Tn
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 01:52:22 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5c3cdbe4728so6533286a12.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 22:52:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726033829; x=1726638629; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726033939; x=1726638739; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JRpJ0yC+pw08bpum2VqRCaGzVKgHygWh66dJBO5C4+I=;
- b=EJbvcjWsaPi7ahzwJ1q3JwErIFxLGtrFW7BrkXnlwXc6orFdtAu8bnWXhRXeRW4jgu
- 2eTCzJx+0gG80wYd8CeDfSIFcducqb2y+OQDSaSnQDP3Tz6kq0k64c/ld0lXyrbOj+/q
- DO5I1vbVrX4zN7YQmQfHX9yPRUUfkbqN/LNomeEmEP+uOBykVTBlJt0eLpMmJ/0lqx2A
- DqSGNfx/WbP0dBDiO1+8AWBCH3bXMKIeqPB1lADC4JX8LhjvZ6jkPlOdaN8sncaqu1aZ
- 5kCyo3oLYSDqHx8Q8foCcw2LoRaeWXINplQuaZdJG8A5T6Z+GlHlQxYIOBO3fhO/BX1o
- ZfWw==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3r6mSXGLBbRapn0yIBRKRM9UfT3yGLKlP3O/6Mg/4iE=;
+ b=ImMyogCDKEULihDYu8QsdZ1UVsDPk6eoHJd+Yez2u9B9NT6FssQFqR+s+23mQTruHE
+ fQQD5bpVRKrExiNyded82yKsIVxCuWubGVludfTPdgohfgdSYnLg8oS4ppnZiFxJoh63
+ tT7M8Ci5g0ILXog3is2jd5EjpdhrSVMr/AmhaRnEyeTQrx6SHN1he7NgO8LBD2lqqMNG
+ KhsubzMWhXGxROZfRbexuPqaHJi3nn0Dd2JGs+XIR16+hSAxf2rh9Rg/ELD/M4Z9cO7c
+ YI/wiIDgBtMh3IAfpi6RZRUAnn+WALKHm1/Edx66ABDI7pSfvApKyRQpp4/CSjH2pB10
+ kCFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726033829; x=1726638629;
+ d=1e100.net; s=20230601; t=1726033939; x=1726638739;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JRpJ0yC+pw08bpum2VqRCaGzVKgHygWh66dJBO5C4+I=;
- b=JsF+A07WsR6tVCdCKZathrxW1sgjINUSZZ6sv355zrQjNfAqNCGA/4bUWOcxdcGKzy
- 2Ia5vmutauklOn2kA+IowcE84oWvzrZOzb9ZKTURvFuOI2lHsSd7eemvfirTn99F8IYf
- IG0cpy8Ka6WzVwIHhKizFQtv1gRwXEsuQVcf73BbMbY9SPRDRlHsdJCyIqLvK8jDmrin
- BgxlS41atKvUej6croKBRT5LmBkzRKtqeJk0Yei4YcS12JP/IOEby4Rx9myzScXKhPKl
- YGoTMdXOTT1F6dCAM92DJJIG70YkvN9s+u7/mYaNOkEbIZ+ROkVmxJFhGvg7E4sAoZtF
- j8xQ==
+ bh=3r6mSXGLBbRapn0yIBRKRM9UfT3yGLKlP3O/6Mg/4iE=;
+ b=fH5AWe/ibvSs73Kte9QyxWYKlzWBzW5rByzgUm3HBQay09wL14ZH+kuRIvcL5VU2ZD
+ 1+Vt6j2ZUt2nVb1FcSUHxthVIMrrXhMkqSukqFJ2UISN77/S6+hNRg+WPv37e5wZpAs/
+ GNWVwKdVZuc1eOsdvPmm7M/QiqmBu4Z7tAaLqHvKtgB63x1eSeMG73ERTaF5uSUUm8h5
+ Zm5RaKinWJb+d/NknT774e5WhqjJUPOBjnowWUP5hTQN02YPu4WZ3glSReu6sd2F5HAO
+ 6qDtiW4HKeEIDzO4GuAOCuOg1t8CCZYZp7CTxSzWVsQvpFlabe84SbALUf22twSyEWwY
+ VzOw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUiNHAERJnKn5aBO6nEX4QPs5jkSAKaA0wRLJAZDrNSXRCRTDiOIaDA8/IWOFE44QXvHm43nEAWgZqQ@nongnu.org
-X-Gm-Message-State: AOJu0YwJPL7C9Ln+n8SD4CFGDJ3co6Ag3ytuuJW6caRSMUCxp+q03o8j
- /SyqZHZbHh/KjiHcFri73teavVBVD9edZlRyZU6Txfu+XFcZdYHyhUBX+Jf5JUw=
-X-Google-Smtp-Source: AGHT+IHtNdz3JGktS1H6wUw6Ej9fupOVxu56YnjbGwav8RYfVLrdhTufWQK43MuqJkz8VsNhlc+DKQ==
-X-Received: by 2002:a05:6402:35d5:b0:5c2:70a2:9418 with SMTP id
- 4fb4d7f45d1cf-5c3dc77adc4mr16028699a12.6.1726033829158; 
- Tue, 10 Sep 2024 22:50:29 -0700 (PDT)
+ AJvYcCVdBE6VONsKPHXlFULpRtRWJgme4tRqqeL3jPHEMT/82r5PkoOBF/6OGCPbvqMhvcYYiURsLFwbrGD5@nongnu.org
+X-Gm-Message-State: AOJu0YxwCbrw0uX7tuOln92+SCzksI8Htb9fGH1ol86QV8ZHzYRm+sJ1
+ ZDOoj586boy2C2EXkhbhAwKvqYf+AkV+uyY3cbRX9c7K10jUD/UZuY4EZEddLtY=
+X-Google-Smtp-Source: AGHT+IH+dwUhChWSNrsblya0tptazg0YeYH3thG0MdJGrWDu8vCXEta/+B1wIIbhRgXP8V7aCpIvxw==
+X-Received: by 2002:a17:907:3d8a:b0:a88:b90a:ff30 with SMTP id
+ a640c23a62f3a-a8ffad98911mr290199566b.50.1726033939167; 
+ Tue, 10 Sep 2024 22:52:19 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.196.107])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd8cc1dsm5033853a12.94.2024.09.10.22.50.22
+ a640c23a62f3a-a8d2583fc73sm568014566b.34.2024.09.10.22.52.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 22:50:28 -0700 (PDT)
-Message-ID: <3a7fc1f2-1468-46a8-9075-7b1bf1bd6149@linaro.org>
-Date: Wed, 11 Sep 2024 07:50:20 +0200
+ Tue, 10 Sep 2024 22:52:18 -0700 (PDT)
+Message-ID: <f0442712-8e4e-4790-94b5-458b67fda15a@linaro.org>
+Date: Wed, 11 Sep 2024 07:52:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 19/39] hw/pci: replace assert(false) with
- g_assert_not_reached()
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, "Richard W.M. Jones" <rjones@redhat.com>, 
- Joel Stanley <joel@jms.id.au>, Kevin Wolf <kwolf@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- Corey Minyard <minyard@acm.org>, Eric Farman <farman@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Keith Busch <kbusch@kernel.org>,
- WANG Xuerui <git@xen0n.name>, Hyman Huang <yong.huang@smartx.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Michael Rolnik <mrolnik@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
- Ani Sinha <anisinha@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Jesper Devantier <foss@defmacro.it>, Laurent Vivier <laurent@vivier.eu>,
- Peter Maydell <peter.maydell@linaro.org>, Igor Mammedov
- <imammedo@redhat.com>, kvm@vger.kernel.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, Fam Zheng
- <fam@euphon.net>, qemu-s390x@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, Eduardo Habkost <eduardo@habkost.net>,
- Laurent Vivier <lvivier@redhat.com>, Rob Herring <robh@kernel.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>, qemu-ppc@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Helge Deller <deller@gmx.de>, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Yanan Wang <wangyanan55@huawei.com>, Peter Xu <peterx@redhat.com>,
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- Klaus Jensen <its@irrelevant.dk>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Jason Wang <jasowang@redhat.com>
-References: <20240910221606.1817478-1-pierrick.bouvier@linaro.org>
- <20240910221606.1817478-20-pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v2] adb-mouse: convert to use QemuInputHandler
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, hsp.cat7@gmail.com
+References: <20240907173700.348818-1-mark.cave-ayland@ilande.co.uk>
+ <970cfa94-c8e8-4fa5-96a7-45b964e4bef3@linaro.org>
+ <5a28f05c-c90c-419e-9d23-8c3a3e6fcf72@ilande.co.uk>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240910221606.1817478-20-pierrick.bouvier@linaro.org>
+In-Reply-To: <5a28f05c-c90c-419e-9d23-8c3a3e6fcf72@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,37 +97,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Pierrick,
-
-On 11/9/24 00:15, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   hw/pci/pci-stub.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+On 10/9/24 22:36, Mark Cave-Ayland wrote:
+> On 10/09/2024 15:48, Philippe Mathieu-Daudé wrote:
 > 
-> diff --git a/hw/pci/pci-stub.c b/hw/pci/pci-stub.c
-> index f0508682d2b..c6950e21bd4 100644
-> --- a/hw/pci/pci-stub.c
-> +++ b/hw/pci/pci-stub.c
-> @@ -46,13 +46,13 @@ void hmp_pcie_aer_inject_error(Monitor *mon, const QDict *qdict)
->   /* kvm-all wants this */
->   MSIMessage pci_get_msi_message(PCIDevice *dev, int vector)
->   {
-> -    g_assert(false);
-> +    g_assert_not_reached();
->       return (MSIMessage){};
+>> Hi Mark,
+>>
+>> On 7/9/24 19:37, Mark Cave-Ayland wrote:
+>>> Update the ADB mouse implementation to use QemuInputHandler instead 
+>>> of the
+>>> legacy qemu_add_mouse_event_handler() function.
+>>>
+>>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>>> ---
+>>>   hw/input/adb-mouse.c | 56 ++++++++++++++++++++++++++++++++++++--------
+>>>   1 file changed, 46 insertions(+), 10 deletions(-)
+>>>
+>>> v2:
+>>> - Rebase onto master
+>>>
+>>> - Replace (DeviceState *)s with dev in adb_mouse_realize() as 
+>>> suggested by
+>>>    Phil
+>>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>
+>>> +static const QemuInputHandler adb_mouse_handler = {
+>>> +    .name  = "QEMU ADB Mouse",
+>>> +    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
+>>> +    .event = adb_mouse_handle_event,
+>>> +};
+>>
+>> Do you mind if you amend your comment from v1 for clarity?
+>> I could squash the following and take in my next PR:
+>>
+>> diff --git a/hw/input/adb-mouse.c b/hw/input/adb-mouse.c
+>> index c0e0282fee..15e6e91804 100644
+>> --- a/hw/input/adb-mouse.c
+>> +++ b/hw/input/adb-mouse.c
+>> @@ -97,6 +97,11 @@ static const QemuInputHandler adb_mouse_handler = {
+>>       .name  = "QEMU ADB Mouse",
+>>       .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
+>>       .event = adb_mouse_handle_event,
+>> +    /*
+>> +     * We do not need the .sync handler because unlike e.g. PS/2 
+>> where async
+>> +     * mouse events are sent over the serial port, an ADB mouse is 
+>> constantly
+>> +     * polled by the host via the adb_mouse_poll() callback.
+>> +     */
+>>   };
+>>
+>> Regards,
+>>
+>> Phil.
+> 
+> Sure! If you think it is useful to an external set of eyes, then feel 
+> free to add it in.
 
-The tail of this series remove the unreachable 'break' lines.
-Why 'return' lines aren't problematic? Is that a GCC TSan bug?
-
->   }
->   
->   uint16_t pci_requester_id(PCIDevice *dev)
->   {
-> -    g_assert(false);
-> +    g_assert_not_reached();
->       return 0;
->   }
->   
+Thanks, patch queued then.
 
 
