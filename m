@@ -4,84 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02680EE57C0
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:25:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E403EE49BC
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 15:26:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soP3Z-0005OC-Ve; Wed, 11 Sep 2024 11:14:58 -0400
+	id 1soPEC-0003xW-FN; Wed, 11 Sep 2024 11:25:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soP2N-0008HN-Hb
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:13:44 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1soPEA-0003nW-Qs
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:25:54 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soP2L-0001P4-RJ
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:13:43 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-5365928acd0so6657870e87.2
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 08:13:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1soPE5-0002zl-Pz
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 11:25:54 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2068acc8b98so64256445ad.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 08:25:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726067620; x=1726672420; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1726068348; x=1726673148; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/MkPLXzdBZAJfog27o+b6g3OKiyBb7zWDOK2MNzYaE0=;
- b=UTiBaRcVnq+MdZQOyqM2b+STzowkkoAWhIAEc7CKr0UJD9KRM6Z5gTLQdnzSMYekX8
- 94mmZpJAeoJPkkEIf0ciCTOKzOQtLzhN55cMY3Ssr2Os9VJWgmOaeJvQJMu88tibYr2+
- y37o3KK0JUCzHt8AjrNz4Yk+eudSIB+qR38H9OGM+jYzgk17U/y7jftVqiO031I4xycc
- EG176+zbi6XI7va3fBt11uovoX1XUbVzcT3kEHAKyAS87F+cUnlQBy69ID2wc+Ai8x6+
- 28JAkV25IzuX1HXEk59ox2ixChouiJhFHx1hEiF0mrXfNhqTOmCh698Pys/MwN8F7KLr
- rQFQ==
+ bh=KOIqyxflpQF2OIgg5Cs8RejsCarR4kHtT8bNPVM50WU=;
+ b=XY4s2CpwAMYjd0V2j4W8Uc9lW/PfzT3RelJzz3qDWrIEunvwOiUfQBZVsesfCou5Eq
+ xIoKoAxQwbewylV76XQp7mTUiZgnnFXIll2EEZrHIjmQ3FaQT7MWv7+3xpPdPAw5GPlC
+ q7ves2KsemFRQg7y6yeXE2tGmEsBxna2s9icG/mutNbJ34KtEPFzR3OAK4WLDqavFdLy
+ oevboxTTHDRxN2mHQ1DO/FR2/dKNQmkPfU0b88vCbCYh9w0kdC5WJY8XHnE/Het9dBbU
+ yQK3KV1d7iOhRqfyxLgIMJM5BBFO5cYQuc2zqlWlAEvY0mzULJ71m7ZPtdxQ+b0OGH8D
+ WiTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726067620; x=1726672420;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1726068348; x=1726673148;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/MkPLXzdBZAJfog27o+b6g3OKiyBb7zWDOK2MNzYaE0=;
- b=o1H0vvG8g1s8GH2aBUWR6hxitqsfpdpKW+1y+LwZ6OnmWtTc6mFFE+Rom4z4bErLPW
- n4OodwZ0rDeSIIKCBZXemOPKnAXOJof7koHlvDpbquzPJbp6fT85zOaKoq5CcfuInSqS
- z5o51oJMVRgYyB77aZN862OISdWyUkvdEm3jbG+Mf4Wkm0Jm3k4Z6pWjSJ0mUG5CtDAT
- peBmmneoec17j0xP+Qji2bv+UC2nN1PKv4Odfk9G0RGjF333uKRdSfcp9glGzcc7xXWn
- mRT0Lrpyhm0QvawauKPl477wD45o3b8G0qYJzFKFYZ7e8LGUkxW/Wzi/NUzBtZg+3czE
- 0gow==
+ bh=KOIqyxflpQF2OIgg5Cs8RejsCarR4kHtT8bNPVM50WU=;
+ b=JglXLI8Cb8WO2pOQ1ATE60a8jtmaJqcpqlVrChsVAmIamzwxD3YhCjEqIzagyikEDE
+ zCx1TA9LWtbxroUDsGq9gj899O3jxiVIGcuvDKvS4jbW0xUceYbAehdqJOMeIb01MdJs
+ ouAEqTnkOAc0jWM0LOTpqGmI6FxeMveFvzPI9eih2o6eqdHNp8or/fc8viE8Pkx/I5cH
+ j7b09ACVW2/tf6KPs68XqTjp00Kzu4z/5ZrWpUvljq1UvJ7Aa8ktM4jpR4EjLbM88NFf
+ y072YCXo9/ZVCwEE3JC6c9WM3AwXZioegs5ddWPPqQm17z0H7AMjLXD14jf6gp6AAimM
+ D2og==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVTxWyl1pGsm8r/ZMnVCObtiKXGIc64WF0RYfCRGDFNTFh/RCB+BpNXVCeYI+sbYe63M4i5KCGuxi+i@nongnu.org
-X-Gm-Message-State: AOJu0YwxMavrEo6m+vKH4P2tXHdUYB/k68gyGK6mrRYnY+wNiwK6xUg5
- MQy1bhRZpsQK88BN6mqv98N4+rAZgrTk4jEfTDtPUrA6YU5igZ5Wm8xbZHTZzPM=
-X-Google-Smtp-Source: AGHT+IHf3fQc5jOkuczKukJz+sKxAc8jtWXpk4l0N1z8V/5hahwsY92N4TXi25BbV3ohl+BvvaFpsw==
-X-Received: by 2002:a05:6512:3f15:b0:52e:f2a6:8e1a with SMTP id
- 2adb3069b0e04-536587b51f7mr14479490e87.29.1726067619785; 
- Wed, 11 Sep 2024 08:13:39 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.196.107])
+ AJvYcCX0w+UQqU5+gu3O5zM/b/W/9mLmusQSZIFmh9/gMXJEzhAQ+7ixv0YcwVjpXJn0A/UkA4+FZY9HWI3s@nongnu.org
+X-Gm-Message-State: AOJu0YwVU9LMTg2OFEKi7m0Gx2uexNJD1ELMKZn0KHGp20dPNn6fmBv8
+ yjN7kyH4lD91mPFHoneL4VqkfNxJPBN6PBSXNnos3WTPsf+hmvS8apf+wh5r/iM=
+X-Google-Smtp-Source: AGHT+IEo3j0LjjLmX6e/pgB28NMglTb3qohZUhTxnnknsMeupJHRg8k/VIdzXloihGE5TJFpijhPog==
+X-Received: by 2002:a17:902:d54f:b0:207:db0:cb6c with SMTP id
+ d9443c01a7336-2074c612765mr72854645ad.34.1726068347907; 
+ Wed, 11 Sep 2024 08:25:47 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::9633? ([2604:3d08:9384:1d00::9633])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25ce96a7sm623444966b.158.2024.09.11.08.13.38
+ d9443c01a7336-2076af25407sm1022925ad.41.2024.09.11.08.25.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Sep 2024 08:13:39 -0700 (PDT)
-Message-ID: <bbcd989b-be54-41eb-8c8f-7d79c9ee8e2b@linaro.org>
-Date: Wed, 11 Sep 2024 17:13:36 +0200
+ Wed, 11 Sep 2024 08:25:47 -0700 (PDT)
+Message-ID: <6818337d-ba58-4051-8105-05f679f71b88@linaro.org>
+Date: Wed, 11 Sep 2024 08:25:44 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] qga: Improve error for guest-set-user-password
- parameter @crypted
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: kkostiuk@redhat.com, michael.roth@amd.com, eblake@redhat.com
-References: <20240911131206.2503035-1-armbru@redhat.com>
- <20240911131206.2503035-3-armbru@redhat.com>
+Subject: Re: [PATCH 01/39] docs/spin: replace assert(0) with
+ g_assert_not_reached()
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240911131206.2503035-3-armbru@redhat.com>
+To: "Richard W.M. Jones" <rjones@redhat.com>,
+ "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>, Joel Stanley <joel@jms.id.au>,
+ Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, Corey Minyard <minyard@acm.org>,
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Keith Busch <kbusch@kernel.org>, WANG Xuerui <git@xen0n.name>,
+ Hyman Huang <yong.huang@smartx.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Michael Rolnik <mrolnik@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
+ Ani Sinha <anisinha@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Jesper Devantier <foss@defmacro.it>, Laurent Vivier <laurent@vivier.eu>,
+ Peter Maydell <peter.maydell@linaro.org>, Igor Mammedov
+ <imammedo@redhat.com>, kvm@vger.kernel.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, Fam Zheng
+ <fam@euphon.net>, qemu-s390x@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Laurent Vivier <lvivier@redhat.com>, Rob Herring <robh@kernel.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org,
+ qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Helge Deller <deller@gmx.de>, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Peter Xu <peterx@redhat.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
+ Klaus Jensen <its@irrelevant.dk>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Jason Wang <jasowang@redhat.com>
+References: <20240910221606.1817478-1-pierrick.bouvier@linaro.org>
+ <20240910221606.1817478-2-pierrick.bouvier@linaro.org>
+ <zkyoryho5alnyirnl7ulvh5y6tkty6koccgeygmve42uml7glu@37rkdodtlx4f>
+ <bwo43ms2wi6vbeqhlc7qjwmw5jyt2btxvpph3lqn7tfol4srjf@77yusngzs6wh>
+ <10d6d67a-32f6-40fc-aba9-c62a74d9d98d@maciej.szmigiero.name>
+ <20240911125126.GS1450@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20240911125126.GS1450@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,22 +145,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/9/24 15:12, Markus Armbruster wrote:
-> The Windows version of guest-set-user-password rejects argument
-> "crypted": true with the rather useless "this feature or command is
-> not currently supported".  Improve to "'crypted' must be off on this
-> host".
+On 9/11/24 05:51, Richard W.M. Jones wrote:
+> On Wed, Sep 11, 2024 at 02:46:18PM +0200, Maciej S. Szmigiero wrote:
+>> On 11.09.2024 14:37, Eric Blake wrote:
+>>> On Wed, Sep 11, 2024 at 07:33:59AM GMT, Eric Blake wrote:
+>>>> On Tue, Sep 10, 2024 at 03:15:28PM GMT, Pierrick Bouvier wrote:
+>>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>>> ---
+>>>>
+>>>> A general suggestion for the entire series: please use a commit
+>>>> message that explains why this is a good idea.  Even something as
+>>>> boiler-plate as "refer to commit XXX for rationale" that can be
+>>>> copy-pasted into all the other commits is better than nothing,
+>>>> although a self-contained message is best.  Maybe:
+>>>>
+>>>> This patch is part of a series that moves towards a consistent use of
+>>>> g_assert_not_reached() rather than an ad hoc mix of different
+>>>> assertion mechanisms.
+>>>
+>>> Or summarize your cover letter:
+>>>
+>>> Use of assert(false) can trip spurious control flow warnings from some
+>>> versions of gcc:
+>>> https://lore.kernel.org/qemu-devel/54bb02a6-1b12-460a-97f6-3f478ef766c6@linaro.org/
+>>> Solve that by unifying the code base on g_assert_not_reached()
+>>> instead.
+>>>
+>>
+>> If using g_assert_not_reached() instead of assert(false) silences
+>> the warning about missing return value in such impossible to reach
+>> locations should we also be deleting the now-unnecessary "return"
+>> statements after g_assert_not_reached()?
 > 
-> QERR_UNSUPPORTED is now unused.  Drop.
+> Although it's unlikely to be used on any compiler that can also
+> compile qemu, there is a third implementation of g_assert_not_reached
+> that does nothing, see:
 > 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->   include/qapi/qmp/qerror.h | 3 ---
->   qga/commands-win32.c      | 2 +-
->   2 files changed, 1 insertion(+), 4 deletions(-)
+> https://gitlab.gnome.org/GNOME/glib/-/blob/927683ebd94eb66c0d7868b77863f57ce9c5bc76/glib/gtestutils.h#L269
+> 
+> Rich.
+> 
 
-\o/
+Interesting.
+At least gcc, clang and msvc are covered, this should be ok for most of 
+the builds.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+Thanks for sharing,
+Pierrick
 
