@@ -4,88 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49735EE499E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D53F5EE499F
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:25:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMIT-0002pi-5D; Wed, 11 Sep 2024 08:18:09 -0400
+	id 1soMJp-0001ox-SD; Wed, 11 Sep 2024 08:19:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1soMHP-0007pJ-NF
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:17:11 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMJD-0006rN-L9
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:19:05 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1soMHN-0007XI-RQ
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:17:03 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a8d64b27c45so450686766b.3
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:17:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMJA-0007er-OZ
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:18:54 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-42cb1e623d1so19092625e9.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:18:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726057020; x=1726661820; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1726057130; x=1726661930; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+AwwrO7AexIBn5UzkGBUXAL6NYrI5jimiZLN5RSW2Xo=;
- b=mz2W7+zy1uVx5XRRsEX6vbW+McOBvxyqXFZG0g4YRA0m33SbjWsmeDrxZMOv82qy2Z
- XzpBMb/82ptBck9x/UXcmTJTEz6vIpP7SNUNOrMLtr7MMGxRnIHGyt5zGqjdWiIgi7ZH
- +TmBAccZ6n/B0U0lvOS5f6lrR1yJj6JhlHM/XkjoyRRiFH+IEuenmd/fNVFdMMDmeqCN
- potJmJkT5w9zNQsc9Z+V3OKXHhcvvrH3JAxLOimCzz7Dly9QmMkVcL2wU2dOCVkUtVMR
- Mk2Q6fQJ9gsePaT4NlgG59drzrHWP6aEi91xsfWwtTqTGG5pyJwCqiPOM6uaieV/rwxT
- Q8Ug==
+ bh=JGgy78gvcc3jMmF3sOv2NVPvQFdbhvqBJ1whFt/CWgE=;
+ b=efwmZZqs30WofrBfABHfrfbvnJg115LhCzhRO0WfMQ9MDN4nMuKP29xrMtdUkEdpYQ
+ MTZWKYgFZd/8a90GY2pRDJKJrDW3MpYMpY/YOwnL1AOS/Rz5UxnXuV7y4NQQxetj2ShD
+ XTducv+yp1NKk66qhkcLyb7T1SDuN4hd8ne4O9ezKjPfDJLNdlTSzoQPCXAyqktRm6xQ
+ Wrc9bSgD2VVWtdF+Tk9exTyiwO23oDpu0nbmW0Dy4qVfh/81bmIBOxhniy6g92bcpZyL
+ heC4/gU+9wlqCFK4QGrgXgMxKPU2PV3+CavFQBW/hJrcq5hnz33+9ddEI4NsPPxj7G7p
+ bUgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726057020; x=1726661820;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1726057130; x=1726661930;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+AwwrO7AexIBn5UzkGBUXAL6NYrI5jimiZLN5RSW2Xo=;
- b=hlWK7l+Y+6X3VtONoYP9XM160XiyEZlpzYdlCdmagKmkKvqPUecglU846MxDKxJwmO
- 9pFHZTVjLF8MuD6SnoOLGsFvb2j6RaIEd2yjWLkXOQh3oqd6ejSyvhEv+1r6ayrSLTPx
- Yv8pky4P8Wn9dwq1vvbEQa1D3QLcyM+mgmforhhzesMS3dAX2coKUcWONZdUyFqgpJ7Z
- pF3cYFgIKyLNgMnNTskUupv9u//kguTH6EtTe6V8s69HQnQJ4+KQtA6JYHnaMBAPPiDQ
- 0/KEtt47oaxQWKQtvAvY8r4+6OuPI4Bqjs0kBw2RcC8FDVlWhjhQC5XXejIoclTTSnaj
- CoqA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWVOnhG4Gz45+0S/92+cwlDNP+lYDwP1wnnDDqOKdcEnNymlbbcVbhY2kgCIakLcAKL4iwTHB+/9rxo@nongnu.org
-X-Gm-Message-State: AOJu0YwUeYfIKc238tP+sJJNFOnZIagYdH483gwU/9yzJtkkbhE1d+JE
- TUWrXo18RhQZdiQ+3xGpRoObxNdQkl2F8gOjhyp/CMFBR96WwoBi
-X-Google-Smtp-Source: AGHT+IFRlxqnYhEIZO2oI77aWYnWRf/ZFuQWw/RutCDhXoQob0sgHJwtjX+G39hy62Nw1AEnvGb8Iw==
-X-Received: by 2002:a17:907:2daa:b0:a8d:3338:a48c with SMTP id
- a640c23a62f3a-a8ffaaacf88mr416697866b.7.1726057018777; 
- Wed, 11 Sep 2024 05:16:58 -0700 (PDT)
-Received: from [127.0.0.1] (dynamic-077-191-102-051.77.191.pool.telefonica.de.
- [77.191.102.51]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25c7277bsm599441766b.102.2024.09.11.05.16.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Sep 2024 05:16:58 -0700 (PDT)
-Date: Wed, 11 Sep 2024 12:16:55 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- =?ISO-8859-1?Q?Volker_R=FCmelin?= <vr_qemu@t-online.de>,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-CC: Stefan Weil <sw@weilnetz.de>, Howard Spoelstra <hsp.cat7@gmail.com>,
- qemu-devel@nongnu.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_1/3=5D_ui/sdl2=3A_reenable_the?=
- =?US-ASCII?Q?_SDL2_Windows_keyboard_hook_procedure?=
-In-Reply-To: <1e160bbe-f16a-4396-9f73-e9a6cab91fd9@linaro.org>
-References: <ae9b2c56-dab2-4b8f-bb5e-2087e9ccaa92@t-online.de>
- <20240909061552.6122-1-vr_qemu@t-online.de>
- <CAMxuvay4vRm6ZYQoUx=cmD5mr-8-qR4Z4iLEJ6-f0m2eUSbdOg@mail.gmail.com>
- <69b15684-0d00-4a74-aeac-2d98f7e88d95@t-online.de>
- <7b536856-3155-432b-95b0-e03f96a0808e@linaro.org>
- <1e160bbe-f16a-4396-9f73-e9a6cab91fd9@linaro.org>
-Message-ID: <6F67E7BA-44A5-4CBE-8678-C4273D6ECC20@gmail.com>
+ bh=JGgy78gvcc3jMmF3sOv2NVPvQFdbhvqBJ1whFt/CWgE=;
+ b=wxBaa2LybUrtoLZOAlvbe8Px90SOwk+7ID1EVk0WfOIA4zccQg7q4Tbtw0JtEG5pcc
+ jaw3ZupOcvpewwObqE7K95739lSrZIYAVS1M1YjFHjy1Atwp1mnjfN49bG8MB2mkrb6V
+ HZLmn9CylFVpEVA5TzpeQLN2LpR5ZKfow8GOV6X+t4RHtia2oOztIlvdr2WEDjQ2jCrE
+ 1lCUN9BKiCAWzG2NOZ8JNVtZyensTk5bxS/oFli21Zy5/HyDOThxG2nnEamQ71IpnmW/
+ S3rogmRgab7xuKk8tp+uYd0yJUgLb+XlmEvOQkQb8fr4G1fcsSgOi3dWFoAk1tckKdJt
+ Kajw==
+X-Gm-Message-State: AOJu0YzJMBJUZIGK2UkU5jZbmgpvOGjRdMjIOk4SDTXGtgV6ga8j+XCC
+ TTIKvC1ZPlugcwOnKvwDq0INdGIIH+Mt88TUDeaiHuwU3aglD3u2wieWhC3g41/C7OLkHdTRwoB
+ Y
+X-Google-Smtp-Source: AGHT+IFrKM3HpuL5U113y0wdP82Iwwbb/s7kyptaQXQZ+1cVSI1gbLkFMo0n5xtXfA/qZ78l32fRAg==
+X-Received: by 2002:a05:600c:4fc5:b0:42c:b22e:fc2e with SMTP id
+ 5b1f17b1804b1-42ccd32cdb4mr22693415e9.15.1726057130295; 
+ Wed, 11 Sep 2024 05:18:50 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.196.107])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42cc8be465csm35399005e9.28.2024.09.11.05.18.48
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 11 Sep 2024 05:18:49 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Octavian Purdila <tavip@google.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 37/56] fifo8: honour do_pop argument in fifo8_peekpop_buf()
+Date: Wed, 11 Sep 2024 14:14:02 +0200
+Message-ID: <20240911121422.52585-38-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240911121422.52585-1-philmd@linaro.org>
+References: <20240911121422.52585-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62f.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,74 +96,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
+Pass the do_pop value from fifo8_peekpop_buf() to fifo8_peekpop_bufptr()
+to allow peeks to the FIFO buffer, including adjusting the skip parameter
+to handle the case where the internal FIFO buffer wraps around.
 
-Am 11=2E September 2024 11:59:25 UTC schrieb "Philippe Mathieu-Daud=C3=A9"=
- <philmd@linaro=2Eorg>:
->On 11/9/24 13:57, Philippe Mathieu-Daud=C3=A9 wrote:
->> Hi Volker,
->>=20
->> On 9/9/24 21:38, Volker R=C3=BCmelin wrote:
->>> Am 09=2E09=2E24 um 09:26 schrieb Marc-Andr=C3=A9 Lureau:
->>>> Hi
->>>>=20
->>>> On Mon, Sep 9, 2024 at 10:22=E2=80=AFAM Volker R=C3=BCmelin <vr_qemu@=
-t-online=2Ede> wrote:
->>>>> Windows only:
->>>>>=20
->>>>> The libSDL2 Windows message loop needs the libSDL2 Windows low
->>>>> level keyboard hook procedure to grab the left and right Windows
->>>>> keys correctly=2E Reenable the SDL2 Windows keyboard hook procedure=
-=2E
->>>>>=20
->>>>> Because the QEMU Windows keyboard hook procedure is still needed
->>>>> to filter out the special left Control key event for every Alt Gr
->>>>> key event, it's important to install the two keyboard hook
->>>>> procedures in the following order=2E First the SDL2 procedure, then
->>>>> the QEMU procedure=2E
->>>>>=20
->>>>> Resolves: https://gitlab=2Ecom/qemu-project/qemu/-/issues/2139
->>>>> Resolves: https://gitlab=2Ecom/qemu-project/qemu/-/issues/2323
->>>>> Tested-by: Howard Spoelstra <hsp=2Ecat7@gmail=2Ecom>
->>>>> Signed-off-by: Volker R=C3=BCmelin <vr_qemu@t-online=2Ede>
->>>>> ---
->>>>> =C2=A0 ui/sdl2=2Ec=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 | 53 ++++++++++++++++++++++++++++++---------------
->>>>> =C2=A0 ui/win32-kbd-hook=2Ec |=C2=A0 3 +++
->>>>> =C2=A0 2 files changed, 38 insertions(+), 18 deletions(-)
->>=20
->>=20
->>>> Note: there is no 2=2E16 release=2E They jumped from 2=2E0=2E22 to 2=
-=2E24 (see
->>>> https://github=2Ecom/libsdl-org/SDL/releases/tag/release-2=2E24=2E0)
->>>=20
->>> Hi Marc-Andr=C3=A9
->>>=20
->>> Oh=2E This means that the comparison I wrote is true for SDL2 versions=
- <
->>> 2=2E24=2E0=2E
->>>=20
->>>>=20
->>>> The windows hook was indeed added in 2=2E0=2E16, released on Aug 10, =
-2021=2E
->>>>=20
->>>> Given the distribution nature of the Windows binaries, I think we
->>>> could simply depend on a much recent version without worrying about
->>>> compatibility with < 2=2E0=2E16=2E This would help reduce the potenti=
-al
->>>> combinations of versions and bugs reports=2E
->>>=20
->>> Okay, I'll send a version 2 patch series=2E
->>=20
->> Queuing patches 2 & 3 meanwhile=2E Please do not bury series within
->> threads, if Bernhard hadn't sent his T-b tag, I'd have missed it=2E
->
->Oh actually this is a series with a cover, but the cover subject
->doesn't contains 'PATCH' which is why my git tool missed it=2E
->
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Octavian Purdila <tavip@google.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240828122258.928947-7-mark.cave-ayland@ilande.co.uk>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ util/fifo8.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-For me, `git am` didn't work after downloading the series' mbox=2E I had t=
-o download each patch mail individually and apply one by one=2E Then I coul=
-d test the series=2E
+diff --git a/util/fifo8.c b/util/fifo8.c
+index 5453cbc1b0..1031ffbe7e 100644
+--- a/util/fifo8.c
++++ b/util/fifo8.c
+@@ -117,7 +117,7 @@ static uint32_t fifo8_peekpop_buf(Fifo8 *fifo, uint8_t *dest, uint32_t destlen,
+     }
+ 
+     len = destlen;
+-    buf = fifo8_peekpop_bufptr(fifo, len, 0, &n1, true);
++    buf = fifo8_peekpop_bufptr(fifo, len, 0, &n1, do_pop);
+     if (dest) {
+         memcpy(dest, buf, n1);
+     }
+@@ -126,7 +126,7 @@ static uint32_t fifo8_peekpop_buf(Fifo8 *fifo, uint8_t *dest, uint32_t destlen,
+     len -= n1;
+     len = MIN(len, fifo8_num_used(fifo));
+     if (len) {
+-        buf = fifo8_peekpop_bufptr(fifo, len, 0, &n2, true);
++        buf = fifo8_peekpop_bufptr(fifo, len, do_pop ? 0 : n1, &n2, do_pop);
+         if (dest) {
+             memcpy(&dest[n1], buf, n2);
+         }
+-- 
+2.45.2
 
 
