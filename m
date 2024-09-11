@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E05CCEE499E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:25:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBF2EEE499D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:25:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMIA-0001Lv-Qq; Wed, 11 Sep 2024 08:17:58 -0400
+	id 1soMJu-0002ga-LG; Wed, 11 Sep 2024 08:19:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMHP-0007oY-HU
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:17:11 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMJr-00026Z-Ax
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:19:35 -0400
 Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMHN-0007X3-1m
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:17:03 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMJo-0007iN-UP
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:19:34 -0400
 Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-42cae4eb026so43486385e9.0
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:17:00 -0700 (PDT)
+ 5b1f17b1804b1-42cb806623eso17434875e9.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:19:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726057018; x=1726661818; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726057171; x=1726661971; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JU4QuyjYj1/UxZRyLrg4rkCW/UKrByK+1gpsauwYgCE=;
- b=IGt0azURt3pYtAwIPgw7+nCKG8krTzixhLMHZkkskIVOu0VatyS3/JJd+EbyXisGvU
- IBRCrPrJ1YyvkPfYE5KSgOvIAYzQ5gYwR1mte/sGOWKd6S10GUG6LkM5wYGPcrjJ++jT
- tTOk0+jC/2nRA2/k2TrfmD2IK6OUb/ReaNOor6Ygmh9GS4v9pA7rY2Q3Q3KWz/ioVFUA
- 4JuysRum5LlS8n7U0atzn3/yFru0qWAzk7aUSBuSWQj5LZ3TEhIQ1o/8UDc2Jp0Wo3/C
- 4WgS81r3+32+cOg/oIYskoPLhjh/Tx+AZQG5i56LX5CPAKFQf8J9p4i3gYMSTA6Nh24n
- eVwg==
+ bh=NssZFsgofzGs2gp8p888uYqHLNroe1f/wyQ4Ij7Swyo=;
+ b=S5X0A8UzOg0fuUQqQq7R+tH6//MUyARhZHOpfK7iy9MbuYU8lzm+v2f0L+a3aRVMNT
+ ht6QkU43zJkgjv4H4PtKuSxMqUEMoDIIczzlha+APvSHCVHA6mdKunYV1zdoYfnndrCO
+ 2I+NEQ7A3FdM6P/1UJRLxckMnUWpEzxv13aPlFd++pqvs6l8HPXgKeXZMSZBmJdW3kZq
+ /xmJsAW3aIsxpAyceTWHlHrlQW6rISDLC6EDF0AY471Fxbv/3OwR9F/6Y44jWjDppbJH
+ eyR29QIqpe0XGtjufBVUlfw58iYnOEpEs4srPmK5bNGsVJJzsjsm6H+VuR6XDhlkfxjU
+ 8nEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726057018; x=1726661818;
+ d=1e100.net; s=20230601; t=1726057171; x=1726661971;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JU4QuyjYj1/UxZRyLrg4rkCW/UKrByK+1gpsauwYgCE=;
- b=w246O6OBslVwrsnJYAqB08/SZsezzWpESAIMnkUJz6CNtFeNojt8BSLTikOw1IuLDq
- qYdMQuOk6QE+FrW1N/qzhe5mX4ydmW3jVRI2Q3gSrQ3IgJZ4XgDS8kgw27SG2+chtcUV
- MR1KtGaB6P26udj3MlBUmc3Y1rdfUWLVfkKHXxgkX7u847/bLxUM6mKR11SuFCVAkWoy
- guKqS/oj46lFfB+O1le0lLjsKKT2i5z3yQEI9tiAxbQLfCv1hUTrfv42hmcqk95QJ95Q
- 3P471sJTNTauX812hW/igB6GMDQcJAcmxu2hjk3xr/yRo5sdgd8/letdu/iQX526teLA
- BCWA==
-X-Gm-Message-State: AOJu0YzU/CUbOMnsUIZJW/V4a7t1p+VDnzni/OsEjhIPk2CD8vFbtQpe
- p4Y40RLRgmX7UwGa3hm8Y6ZEu/FswQho0HdUPvUnZjrwyaaFfMVG2EIeMr4tysmppp7jcpB4NNZ
- f
-X-Google-Smtp-Source: AGHT+IHRYajQB+3qtagMnvYhEPPdMxkgokITfO4p9w1vzIWmBRmHDclNy0NsGbC1r/OFW/DhelZbTQ==
-X-Received: by 2002:a05:600c:4ec9:b0:42c:af06:703 with SMTP id
- 5b1f17b1804b1-42caf060a7cmr110888005e9.31.1726057018470; 
- Wed, 11 Sep 2024 05:16:58 -0700 (PDT)
+ bh=NssZFsgofzGs2gp8p888uYqHLNroe1f/wyQ4Ij7Swyo=;
+ b=UtIX8UdQ1C6M6THIus/6cjKROC+JEoWdxnQzkj7qh2QJV7UdMLY8yncKDTW3wqJQNZ
+ 1mXJETWCdGqkyarIgIlJnWZJRSmxue7kmo4mdRu05UJUky/VDYkdDCXMnpAi2RcaxkJZ
+ nyC3RBHZLuq/rvo4ST+gq2tjtOpgmfUi1NTgRTEyGcc3hMimJ5Uv8MmuHvMt5C8CABlA
+ LNY15wAKcaMjTtYiN8nOYjqG9dK1+n5gxH5AKb29YkSw85LVq+rfoQjChMoz7LT037fM
+ PsjEg4zkcU25MgXOQuaMoFidHinBMD9JRIYHq3H6to4I/VOKHhk8liTchQCUd2GFvVe8
+ jjVw==
+X-Gm-Message-State: AOJu0Yx3G7N5NC2LFzL8//cRl6lZBKnjQKAK2GHo2a2vUH0c7hmD2TYW
+ wBHGdasckRtsvQsGdDgdpgvYBbL9F97kYu49CY1YPzD+xqWIQ6rIVt6ljLlLccBgh9bK1Q8yU+A
+ 0
+X-Google-Smtp-Source: AGHT+IHQKMKWCPgxFOZhmzVhwSUA0KIaoz1nBAg1kItW9iP0BaeZxpyByes+Bf5YG4g4X/L6e9PUTA==
+X-Received: by 2002:a05:600c:46ca:b0:42c:b1f0:f67 with SMTP id
+ 5b1f17b1804b1-42ccd35adf5mr20242215e9.27.1726057170789; 
+ Wed, 11 Sep 2024 05:19:30 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.196.107])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42caeb815e8sm142084885e9.31.2024.09.11.05.16.57
+ 5b1f17b1804b1-42caeb43d73sm146432955e9.24.2024.09.11.05.19.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Sep 2024 05:16:58 -0700 (PDT)
+ Wed, 11 Sep 2024 05:19:30 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Gerd Hoffmann <kraxel@redhat.com>,
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Carl Hauser <chauser@pullman.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 22/56] hw/audio/virtio-sound: fix heap buffer overflow
-Date: Wed, 11 Sep 2024 14:13:47 +0200
-Message-ID: <20240911121422.52585-23-philmd@linaro.org>
+Subject: [PULL 44/56] hw/char/escc: convert Sun mouse to use QemuInputHandler
+Date: Wed, 11 Sep 2024 14:14:09 +0200
+Message-ID: <20240911121422.52585-45-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240911121422.52585-1-philmd@linaro.org>
 References: <20240911121422.52585-1-philmd@linaro.org>
@@ -95,81 +96,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Volker Rümelin <vr_qemu@t-online.de>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-Currently, the guest may write to the device configuration space,
-whereas the virtio sound device specification in chapter 5.14.4
-clearly states that the fields in the device configuration space
-are driver-read-only.
+Update the Sun mouse implementation to use QemuInputHandler instead of the
+legacy qemu_add_mouse_event_handler() function.
 
-Remove the set_config function from the virtio_snd class.
+Note that this conversion adds extra sunmouse_* members to ESCCChannelState
+but they are not added to the migration stream (similar to the Sun keyboard
+members). If this were desired in future, the Sun devices should be split
+into separate devices and added to the migration stream there instead.
 
-This also prevents a heap buffer overflow. See QEMU issue #2296.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2296
-Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20240901130112.8242-1-vr_qemu@t-online.de>
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2518
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Carl Hauser <chauser@pullman.com>
+Message-ID: <20240904102301.175706-1-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/audio/virtio-snd.c | 24 ------------------------
- hw/audio/trace-events |  1 -
- 2 files changed, 25 deletions(-)
+ include/hw/char/escc.h |  3 ++
+ hw/char/escc.c         | 92 +++++++++++++++++++++++++++++++-----------
+ 2 files changed, 71 insertions(+), 24 deletions(-)
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index d1cf5eb445..69838181dd 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -107,29 +107,6 @@ virtio_snd_get_config(VirtIODevice *vdev, uint8_t *config)
+diff --git a/include/hw/char/escc.h b/include/hw/char/escc.h
+index 5669a5b811..8c4c6a7730 100644
+--- a/include/hw/char/escc.h
++++ b/include/hw/char/escc.h
+@@ -46,6 +46,9 @@ typedef struct ESCCChannelState {
+     uint8_t rx, tx;
+     QemuInputHandlerState *hs;
+     char *sunkbd_layout;
++    int sunmouse_dx;
++    int sunmouse_dy;
++    int sunmouse_buttons;
+ } ESCCChannelState;
  
+ struct ESCCState {
+diff --git a/hw/char/escc.c b/hw/char/escc.c
+index d450d70eda..245a7b19d3 100644
+--- a/hw/char/escc.c
++++ b/hw/char/escc.c
+@@ -287,6 +287,7 @@ static void escc_reset_chn(ESCCChannelState *s)
+     s->rxint = s->txint = 0;
+     s->rxint_under_svc = s->txint_under_svc = 0;
+     s->e0_mode = s->led_mode = s->caps_lock_mode = s->num_lock_mode = 0;
++    s->sunmouse_dx = s->sunmouse_dy = s->sunmouse_buttons = 0;
+     clear_queue(s);
  }
  
--static void
--virtio_snd_set_config(VirtIODevice *vdev, const uint8_t *config)
--{
--    VirtIOSound *s = VIRTIO_SND(vdev);
--    const virtio_snd_config *sndconfig =
--        (const virtio_snd_config *)config;
--
--
--   trace_virtio_snd_set_config(vdev,
--                               s->snd_conf.jacks,
--                               sndconfig->jacks,
--                               s->snd_conf.streams,
--                               sndconfig->streams,
--                               s->snd_conf.chmaps,
--                               sndconfig->chmaps);
--
--    memcpy(&s->snd_conf, sndconfig, sizeof(virtio_snd_config));
--    le32_to_cpus(&s->snd_conf.jacks);
--    le32_to_cpus(&s->snd_conf.streams);
--    le32_to_cpus(&s->snd_conf.chmaps);
--
--}
--
- static void
- virtio_snd_pcm_buffer_free(VirtIOSoundPCMBuffer *buffer)
- {
-@@ -1400,7 +1377,6 @@ static void virtio_snd_class_init(ObjectClass *klass, void *data)
-     vdc->realize = virtio_snd_realize;
-     vdc->unrealize = virtio_snd_unrealize;
-     vdc->get_config = virtio_snd_get_config;
--    vdc->set_config = virtio_snd_set_config;
-     vdc->get_features = get_features;
-     vdc->reset = virtio_snd_reset;
-     vdc->legacy_features = 0;
-diff --git a/hw/audio/trace-events b/hw/audio/trace-events
-index b1870ff224..b8ef572767 100644
---- a/hw/audio/trace-events
-+++ b/hw/audio/trace-events
-@@ -41,7 +41,6 @@ asc_update_irq(int irq, int a, int b) "set IRQ to %d (A: 0x%x B: 0x%x)"
+@@ -952,53 +953,96 @@ static void handle_kbd_command(ESCCChannelState *s, int val)
+     }
+ }
  
- #virtio-snd.c
- virtio_snd_get_config(void *vdev, uint32_t jacks, uint32_t streams, uint32_t chmaps) "snd %p: get_config jacks=%"PRIu32" streams=%"PRIu32" chmaps=%"PRIu32""
--virtio_snd_set_config(void *vdev, uint32_t jacks, uint32_t new_jacks, uint32_t streams, uint32_t new_streams, uint32_t chmaps, uint32_t new_chmaps) "snd %p: set_config jacks from %"PRIu32"->%"PRIu32", streams from %"PRIu32"->%"PRIu32", chmaps from %"PRIu32"->%"PRIu32
- virtio_snd_get_features(void *vdev, uint64_t features) "snd %p: get_features 0x%"PRIx64
- virtio_snd_vm_state_running(void) "vm state running"
- virtio_snd_vm_state_stopped(void) "vm state stopped"
+-static void sunmouse_event(void *opaque,
+-                               int dx, int dy, int dz, int buttons_state)
++static void sunmouse_handle_event(DeviceState *dev, QemuConsole *src,
++                                  InputEvent *evt)
+ {
+-    ESCCChannelState *s = opaque;
++    ESCCChannelState *s = (ESCCChannelState *)dev;
++    InputMoveEvent *move;
++    InputBtnEvent *btn;
++    static const int bmap[INPUT_BUTTON__MAX] = {
++        [INPUT_BUTTON_LEFT]   = 0x4,
++        [INPUT_BUTTON_MIDDLE] = 0x2,
++        [INPUT_BUTTON_RIGHT]  = 0x1,
++    };
++
++    switch (evt->type) {
++    case INPUT_EVENT_KIND_REL:
++        move = evt->u.rel.data;
++        if (move->axis == INPUT_AXIS_X) {
++            s->sunmouse_dx += move->value;
++        } else if (move->axis == INPUT_AXIS_Y) {
++            s->sunmouse_dy -= move->value;
++        }
++        break;
++
++    case INPUT_EVENT_KIND_BTN:
++        btn = evt->u.btn.data;
++        if (bmap[btn->button]) {
++            if (btn->down) {
++                s->sunmouse_buttons |= bmap[btn->button];
++            } else {
++                s->sunmouse_buttons &= ~bmap[btn->button];
++            }
++            /* Indicate we have a supported button event */
++            s->sunmouse_buttons |= 0x80;
++        }
++        break;
++
++    default:
++        /* keep gcc happy */
++        break;
++    }
++}
++
++static void sunmouse_sync(DeviceState *dev)
++{
++    ESCCChannelState *s = (ESCCChannelState *)dev;
+     int ch;
+ 
+-    trace_escc_sunmouse_event(dx, dy, buttons_state);
++    if (s->sunmouse_dx == 0 && s->sunmouse_dy == 0 &&
++        (s->sunmouse_buttons & 0x80) == 0) {
++            /* Nothing to do after button event filter */
++            return;
++    }
++
++    /* Clear our button event flag */
++    s->sunmouse_buttons &= ~0x80;
++    trace_escc_sunmouse_event(s->sunmouse_dx, s->sunmouse_dy,
++                              s->sunmouse_buttons);
+     ch = 0x80 | 0x7; /* protocol start byte, no buttons pressed */
+-
+-    if (buttons_state & MOUSE_EVENT_LBUTTON) {
+-        ch ^= 0x4;
+-    }
+-    if (buttons_state & MOUSE_EVENT_MBUTTON) {
+-        ch ^= 0x2;
+-    }
+-    if (buttons_state & MOUSE_EVENT_RBUTTON) {
+-        ch ^= 0x1;
+-    }
+-
++    ch ^= s->sunmouse_buttons;
+     put_queue(s, ch);
+ 
+-    ch = dx;
+-
++    ch = s->sunmouse_dx;
+     if (ch > 127) {
+         ch = 127;
+     } else if (ch < -127) {
+         ch = -127;
+     }
+-
+     put_queue(s, ch & 0xff);
++    s->sunmouse_dx -= ch;
+ 
+-    ch = -dy;
+-
++    ch = s->sunmouse_dy;
+     if (ch > 127) {
+         ch = 127;
+     } else if (ch < -127) {
+         ch = -127;
+     }
+-
+     put_queue(s, ch & 0xff);
++    s->sunmouse_dy -= ch;
+ 
+     /* MSC protocol specifies two extra motion bytes */
+-
+     put_queue(s, 0);
+     put_queue(s, 0);
+ }
+ 
++static const QemuInputHandler sunmouse_handler = {
++    .name  = "QEMU Sun Mouse",
++    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
++    .event = sunmouse_handle_event,
++    .sync  = sunmouse_sync,
++};
++
+ static void escc_init1(Object *obj)
+ {
+     ESCCState *s = ESCC(obj);
+@@ -1036,8 +1080,8 @@ static void escc_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     if (s->chn[0].type == escc_mouse) {
+-        qemu_add_mouse_event_handler(sunmouse_event, &s->chn[0], 0,
+-                                     "QEMU Sun Mouse");
++        s->chn[0].hs = qemu_input_handler_register((DeviceState *)(&s->chn[0]),
++                                                   &sunmouse_handler);
+     }
+     if (s->chn[1].type == escc_kbd) {
+         s->chn[1].hs = qemu_input_handler_register((DeviceState *)(&s->chn[1]),
 -- 
 2.45.2
 
