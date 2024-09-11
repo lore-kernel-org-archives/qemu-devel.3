@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46AF7EE4998
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:16:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1A0BEE4998
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:16:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMGj-0003I4-5k; Wed, 11 Sep 2024 08:16:21 -0400
+	id 1soMG9-0007PT-6l; Wed, 11 Sep 2024 08:15:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMGd-0002di-Rc
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:16:18 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMFz-0006mV-VN
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:15:41 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMGZ-0007SG-40
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:16:14 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-374c1e5fe79so4458952f8f.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:16:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMFt-0007P3-0x
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:15:34 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-53658f30749so6197936e87.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:15:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726056969; x=1726661769; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726056927; x=1726661727; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lejIJU4kxmt+LhgvW+tkuXq4ppkbZk/Bu8HvE1Ri0Rs=;
- b=JjSdvZL8Al3d87vHHWM/CXiOOzT+KKu5K4ZQIkfMRTPPjQAEdOSYiMaph8yeJJdOSK
- Zpnj63J2KicPJxNNk148KRNzQtIL+eUTOU7YbuY+MGU32yys7eQtDEe+yipuP3roPO5y
- eZqLkRWlEjVUnWY3j40CxuYWapNGZGjLyiSNlFm61Af1M4heoAWW8P5M2Vl/5kS/f8CB
- AK79dv7Bk+a0fbSWUGf7M+aZBwDVUNyoATPGihtnAjavvuUliFWptviAp/PS3UlBD8bd
- GJeu+s22U/6z49HdROBIOPekcxonlfjVnOenLZiJwBCKc33t+P7zYL0FJOlQ5ktxkKxN
- hu9w==
+ bh=gypE18RCTnMpzEOhJVWlEbJee3c2WTq09e/PtDSyIt4=;
+ b=QmuUfYuyI0HGkyZTZw6jzzslHNe/1lGQvB8cSUo2LjTpuujRRT3ipSMg0hKqF5ejFl
+ +kqIrpuSeXrNpNMkVnGGDeTNdxUnr24H33rqjoikFSjNWFxzHkZcNzPlidW1OcGOefG2
+ vIUrygw09iicxearELFWNX0y6lc+uvaZtV1PJeR0D9iqvx/ehyFtc03owdJznS3JUvuM
+ XD39VLiQpcHsnZIemcvkzNo6VhF9HUJGHlMdSiC9sjvzAtfROe11A+JV/oNlZRELfJQY
+ KleEzX87L6rYuwJNmvfaG9koKzJ2UHFd59q7TGkC7ql4atmUzS2WYaYjDH3xskEWzsDb
+ 3FmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726056969; x=1726661769;
+ d=1e100.net; s=20230601; t=1726056927; x=1726661727;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lejIJU4kxmt+LhgvW+tkuXq4ppkbZk/Bu8HvE1Ri0Rs=;
- b=de7if7dfeJlXIWU0zTevH9UgR5PutG6Ss8fgmLmD6dzk0OASxvlQRWx2qibpmVE6XB
- omuzoEVr8EyNs8Xm5dNyXOnsJVKiBq6FwPIAA6H/H5E1nPVpltTUoHLVz3WGtewTCa47
- YmSmA5qyozdgAdm6vFFVLhkR1Cc2zJS8c6RkLvty2BoYhH1JxhAdWahuiH8SaPIhEOej
- DgI00Dtq2S147MrEE4+FgljC3831sippuPgY3cWrq6Wbbr7XD1hpjWiXSd6umXiSxxe9
- Fet603tvMP7bwKKW31yygjtn4gC2wHsYwgYhhg5b9EXhODtHQ5mbzjV+SwHM+M6iXObl
- IBRw==
-X-Gm-Message-State: AOJu0YyoaO0lAiAHgpX70NwA88aUuVe+NOtI4TpMKo9DUc0Ft7hc+cpP
- 4zlpFiPFwdZz4jZUnesf1zwxPGZm/d51H9KSIXYRRI9nwxhOGa9ShQhCyYD6IICfW7+UgYZ9yA6
- A
-X-Google-Smtp-Source: AGHT+IFb/bycv8lqSpVB/O3/fFuZpS3l6dAc+H/Dkdpflkitr4JLbT83orpvXjRfOg8ZOvWIrR6rGQ==
-X-Received: by 2002:adf:f602:0:b0:374:c977:7453 with SMTP id
- ffacd0b85a97d-378895d55a3mr10053128f8f.25.1726056968635; 
- Wed, 11 Sep 2024 05:16:08 -0700 (PDT)
+ bh=gypE18RCTnMpzEOhJVWlEbJee3c2WTq09e/PtDSyIt4=;
+ b=lsSYvFTETo1kxEevU/9cU8S4GY5vqZ+ZMmNIW5aM+rPPXXhDdrPN23GFwV/wRpZmv4
+ PVJNwUBowY4s7jc15sxuXEJM8A30Bgmop36DeBwRAlGvItUD4/QGTjbf2H8WPlkeN5Sv
+ 4P1mY1v+MyKOIGoMQWfbYaVEl97A6RUfT2XYeHdRYLfNTtlmKRPjF2LK9LPS/+8LooOW
+ inw7bXOoRK4h39Vt5T0+mZPl4Twh/VA280nWjh2lz6hUnebtFYrh9wfBfZOUXYHb0X8L
+ JIib64NROe6hDZYQ7d25caES46jqjRg3ua/uzmohL24NhGWGjFPWhnt+DYLTsHU3e3im
+ 7irw==
+X-Gm-Message-State: AOJu0YxHVKfkrjFjBDPg0NbiDgxkXfOu+NfGhQRf5vBuMBSRWoJc4NYh
+ pRYEV+GcCNEA38sqSaweCWdOiMILgscbACGKju9dkd+FI8MPapk49I3FYy2lXs+UBPOC36VUVBN
+ L
+X-Google-Smtp-Source: AGHT+IEbfPTSyj16aS5SxwC2XtQt4I7kce8HmGuyJMfd7TtYo75Uu1kqa4UHfgAbi3Co7Nkpxj+B6w==
+X-Received: by 2002:a05:6512:b03:b0:536:55cc:9642 with SMTP id
+ 2adb3069b0e04-536587b44d3mr12384392e87.26.1726056924207; 
+ Wed, 11 Sep 2024 05:15:24 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.196.107])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42caeb8180csm141003815e9.35.2024.09.11.05.16.06
+ a640c23a62f3a-a8d25c61210sm605613466b.113.2024.09.11.05.15.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Sep 2024 05:16:08 -0700 (PDT)
+ Wed, 11 Sep 2024 05:15:23 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [PULL 15/56] hw/net: Remove TYPE_ETRAX_FS_ETH device
-Date: Wed, 11 Sep 2024 14:13:40 +0200
-Message-ID: <20240911121422.52585-16-philmd@linaro.org>
+Subject: [PULL 08/56] tests/tcg: Remove CRIS bare test files
+Date: Wed, 11 Sep 2024 14:13:33 +0200
+Message-ID: <20240911121422.52585-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240911121422.52585-1-philmd@linaro.org>
 References: <20240911121422.52585-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,786 +96,6242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We just removed the single machine using it (axis-dev88).
+We are going to remove the CRIS target.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Acked-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Message-ID: <20240904143603.52934-10-philmd@linaro.org>
+Message-ID: <20240904143603.52934-3-philmd@linaro.org>
 ---
- include/hw/cris/etraxfs.h |  36 --
- hw/net/etraxfs_eth.c      | 688 --------------------------------------
- hw/net/meson.build        |   1 -
- hw/net/trace-events       |   5 -
- 4 files changed, 730 deletions(-)
- delete mode 100644 include/hw/cris/etraxfs.h
- delete mode 100644 hw/net/etraxfs_eth.c
+ MAINTAINERS                           |   1 -
+ tests/tcg/cris/bare/sys.c             |  63 -------
+ scripts/probe-gdb-support.py          |   1 -
+ tests/tcg/cris/.gdbinit               |  11 --
+ tests/tcg/cris/Makefile.target        |  62 -------
+ tests/tcg/cris/README                 |   1 -
+ tests/tcg/cris/bare/check_addcv17.s   |  65 -------
+ tests/tcg/cris/bare/check_addi.s      |  57 ------
+ tests/tcg/cris/bare/check_addiv32.s   |  62 -------
+ tests/tcg/cris/bare/check_addm.s      |  96 ----------
+ tests/tcg/cris/bare/check_addq.s      |  47 -----
+ tests/tcg/cris/bare/check_addr.s      |  96 ----------
+ tests/tcg/cris/bare/check_addxc.s     |  91 ---------
+ tests/tcg/cris/bare/check_addxm.s     | 106 -----------
+ tests/tcg/cris/bare/check_addxr.s     |  96 ----------
+ tests/tcg/cris/bare/check_andc.s      |  80 --------
+ tests/tcg/cris/bare/check_andm.s      |  90 ---------
+ tests/tcg/cris/bare/check_andq.s      |  46 -----
+ tests/tcg/cris/bare/check_andr.s      |  95 ----------
+ tests/tcg/cris/bare/check_asr.s       | 230 -----------------------
+ tests/tcg/cris/bare/check_ba.s        |  93 ----------
+ tests/tcg/cris/bare/check_bas.s       | 102 ----------
+ tests/tcg/cris/bare/check_bcc.s       | 197 --------------------
+ tests/tcg/cris/bare/check_boundc.s    | 101 ----------
+ tests/tcg/cris/bare/check_boundr.s    | 125 -------------
+ tests/tcg/cris/bare/check_btst.s      |  96 ----------
+ tests/tcg/cris/bare/check_clearfv32.s |  19 --
+ tests/tcg/cris/bare/check_clrjmp1.s   |  36 ----
+ tests/tcg/cris/bare/check_cmp-2.s     |  15 --
+ tests/tcg/cris/bare/check_cmpc.s      |  86 ---------
+ tests/tcg/cris/bare/check_cmpm.s      |  96 ----------
+ tests/tcg/cris/bare/check_cmpq.s      |  75 --------
+ tests/tcg/cris/bare/check_cmpr.s      | 102 ----------
+ tests/tcg/cris/bare/check_cmpxc.s     |  92 ---------
+ tests/tcg/cris/bare/check_cmpxm.s     | 106 -----------
+ tests/tcg/cris/bare/check_dstep.s     |  42 -----
+ tests/tcg/cris/bare/check_jsr.s       |  85 ---------
+ tests/tcg/cris/bare/check_lapc.s      |  78 --------
+ tests/tcg/cris/bare/check_lsl.s       | 217 ----------------------
+ tests/tcg/cris/bare/check_lsr.s       | 218 ----------------------
+ tests/tcg/cris/bare/check_mcp.s       |  49 -----
+ tests/tcg/cris/bare/check_movdelsr1.s |  33 ----
+ tests/tcg/cris/bare/check_movecr.s    |  37 ----
+ tests/tcg/cris/bare/check_movei.s     |  50 -----
+ tests/tcg/cris/bare/check_movemr.s    |  78 --------
+ tests/tcg/cris/bare/check_movemrv32.s |  96 ----------
+ tests/tcg/cris/bare/check_mover.s     |  28 ---
+ tests/tcg/cris/bare/check_moverm.s    |  45 -----
+ tests/tcg/cris/bare/check_movmp.s     | 131 -------------
+ tests/tcg/cris/bare/check_movpmv32.s  |  35 ----
+ tests/tcg/cris/bare/check_movpr.s     |  28 ---
+ tests/tcg/cris/bare/check_movprv32.s  |  21 ---
+ tests/tcg/cris/bare/check_movscr.s    |  29 ---
+ tests/tcg/cris/bare/check_movsm.s     |  44 -----
+ tests/tcg/cris/bare/check_movsr.s     |  46 -----
+ tests/tcg/cris/bare/check_movucr.s    |  33 ----
+ tests/tcg/cris/bare/check_movum.s     |  40 ----
+ tests/tcg/cris/bare/check_movur.s     |  45 -----
+ tests/tcg/cris/bare/check_mulv32.s    |  51 -----
+ tests/tcg/cris/bare/check_mulx.s      | 257 --------------------------
+ tests/tcg/cris/bare/check_neg.s       | 104 -----------
+ tests/tcg/cris/bare/check_not.s       |  31 ----
+ tests/tcg/cris/bare/check_orc.s       |  71 -------
+ tests/tcg/cris/bare/check_orm.s       |  75 --------
+ tests/tcg/cris/bare/check_orq.s       |  41 ----
+ tests/tcg/cris/bare/check_orr.s       |  84 ---------
+ tests/tcg/cris/bare/check_ret.s       |  25 ---
+ tests/tcg/cris/bare/check_scc.s       |  95 ----------
+ tests/tcg/cris/bare/check_subc.s      |  87 ---------
+ tests/tcg/cris/bare/check_subm.s      |  96 ----------
+ tests/tcg/cris/bare/check_subq.s      |  52 ------
+ tests/tcg/cris/bare/check_subr.s      | 102 ----------
+ tests/tcg/cris/bare/check_xarith.s    |  72 --------
+ tests/tcg/cris/bare/crt.s             |  13 --
+ tests/tcg/cris/bare/testutils.inc     | 117 ------------
+ 75 files changed, 5618 deletions(-)
+ delete mode 100644 tests/tcg/cris/bare/sys.c
+ delete mode 100644 tests/tcg/cris/.gdbinit
+ delete mode 100644 tests/tcg/cris/Makefile.target
+ delete mode 100644 tests/tcg/cris/README
+ delete mode 100644 tests/tcg/cris/bare/check_addcv17.s
+ delete mode 100644 tests/tcg/cris/bare/check_addi.s
+ delete mode 100644 tests/tcg/cris/bare/check_addiv32.s
+ delete mode 100644 tests/tcg/cris/bare/check_addm.s
+ delete mode 100644 tests/tcg/cris/bare/check_addq.s
+ delete mode 100644 tests/tcg/cris/bare/check_addr.s
+ delete mode 100644 tests/tcg/cris/bare/check_addxc.s
+ delete mode 100644 tests/tcg/cris/bare/check_addxm.s
+ delete mode 100644 tests/tcg/cris/bare/check_addxr.s
+ delete mode 100644 tests/tcg/cris/bare/check_andc.s
+ delete mode 100644 tests/tcg/cris/bare/check_andm.s
+ delete mode 100644 tests/tcg/cris/bare/check_andq.s
+ delete mode 100644 tests/tcg/cris/bare/check_andr.s
+ delete mode 100644 tests/tcg/cris/bare/check_asr.s
+ delete mode 100644 tests/tcg/cris/bare/check_ba.s
+ delete mode 100644 tests/tcg/cris/bare/check_bas.s
+ delete mode 100644 tests/tcg/cris/bare/check_bcc.s
+ delete mode 100644 tests/tcg/cris/bare/check_boundc.s
+ delete mode 100644 tests/tcg/cris/bare/check_boundr.s
+ delete mode 100644 tests/tcg/cris/bare/check_btst.s
+ delete mode 100644 tests/tcg/cris/bare/check_clearfv32.s
+ delete mode 100644 tests/tcg/cris/bare/check_clrjmp1.s
+ delete mode 100644 tests/tcg/cris/bare/check_cmp-2.s
+ delete mode 100644 tests/tcg/cris/bare/check_cmpc.s
+ delete mode 100644 tests/tcg/cris/bare/check_cmpm.s
+ delete mode 100644 tests/tcg/cris/bare/check_cmpq.s
+ delete mode 100644 tests/tcg/cris/bare/check_cmpr.s
+ delete mode 100644 tests/tcg/cris/bare/check_cmpxc.s
+ delete mode 100644 tests/tcg/cris/bare/check_cmpxm.s
+ delete mode 100644 tests/tcg/cris/bare/check_dstep.s
+ delete mode 100644 tests/tcg/cris/bare/check_jsr.s
+ delete mode 100644 tests/tcg/cris/bare/check_lapc.s
+ delete mode 100644 tests/tcg/cris/bare/check_lsl.s
+ delete mode 100644 tests/tcg/cris/bare/check_lsr.s
+ delete mode 100644 tests/tcg/cris/bare/check_mcp.s
+ delete mode 100644 tests/tcg/cris/bare/check_movdelsr1.s
+ delete mode 100644 tests/tcg/cris/bare/check_movecr.s
+ delete mode 100644 tests/tcg/cris/bare/check_movei.s
+ delete mode 100644 tests/tcg/cris/bare/check_movemr.s
+ delete mode 100644 tests/tcg/cris/bare/check_movemrv32.s
+ delete mode 100644 tests/tcg/cris/bare/check_mover.s
+ delete mode 100644 tests/tcg/cris/bare/check_moverm.s
+ delete mode 100644 tests/tcg/cris/bare/check_movmp.s
+ delete mode 100644 tests/tcg/cris/bare/check_movpmv32.s
+ delete mode 100644 tests/tcg/cris/bare/check_movpr.s
+ delete mode 100644 tests/tcg/cris/bare/check_movprv32.s
+ delete mode 100644 tests/tcg/cris/bare/check_movscr.s
+ delete mode 100644 tests/tcg/cris/bare/check_movsm.s
+ delete mode 100644 tests/tcg/cris/bare/check_movsr.s
+ delete mode 100644 tests/tcg/cris/bare/check_movucr.s
+ delete mode 100644 tests/tcg/cris/bare/check_movum.s
+ delete mode 100644 tests/tcg/cris/bare/check_movur.s
+ delete mode 100644 tests/tcg/cris/bare/check_mulv32.s
+ delete mode 100644 tests/tcg/cris/bare/check_mulx.s
+ delete mode 100644 tests/tcg/cris/bare/check_neg.s
+ delete mode 100644 tests/tcg/cris/bare/check_not.s
+ delete mode 100644 tests/tcg/cris/bare/check_orc.s
+ delete mode 100644 tests/tcg/cris/bare/check_orm.s
+ delete mode 100644 tests/tcg/cris/bare/check_orq.s
+ delete mode 100644 tests/tcg/cris/bare/check_orr.s
+ delete mode 100644 tests/tcg/cris/bare/check_ret.s
+ delete mode 100644 tests/tcg/cris/bare/check_scc.s
+ delete mode 100644 tests/tcg/cris/bare/check_subc.s
+ delete mode 100644 tests/tcg/cris/bare/check_subm.s
+ delete mode 100644 tests/tcg/cris/bare/check_subq.s
+ delete mode 100644 tests/tcg/cris/bare/check_subr.s
+ delete mode 100644 tests/tcg/cris/bare/check_xarith.s
+ delete mode 100644 tests/tcg/cris/bare/crt.s
+ delete mode 100644 tests/tcg/cris/bare/testutils.inc
 
-diff --git a/include/hw/cris/etraxfs.h b/include/hw/cris/etraxfs.h
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 26f9310a4f..d0ddbb6bfb 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -230,7 +230,6 @@ S: Maintained
+ F: target/cris/
+ F: hw/cris/
+ F: include/hw/cris/
+-F: tests/tcg/cris/
+ F: disas/cris.c
+ 
+ Hexagon TCG CPUs
+diff --git a/tests/tcg/cris/bare/sys.c b/tests/tcg/cris/bare/sys.c
 deleted file mode 100644
-index 6d23f6f13f..0000000000
---- a/include/hw/cris/etraxfs.h
+index 1644eecc33..0000000000
+--- a/tests/tcg/cris/bare/sys.c
++++ /dev/null
+@@ -1,63 +0,0 @@
+-/*
+- * Helper functions for CRIS system tests
+- *
+- * There is no libc and only a limited set of headers.
+- */
+-
+-#include <stddef.h>
+-
+-void exit(int status)
+-{
+-    register unsigned int callno asm ("r9") = 1; /* NR_exit */
+-
+-    asm volatile ("break 13\n"
+-                  : /* no outputs */
+-                  : "r" (callno)
+-                  : "memory");
+-    while (1) {
+-        /* do nothing */
+-    };
+-}
+-
+-size_t write(int fd, const void *buf, size_t count)
+-{
+-    register unsigned int callno asm ("r9") = 4; /* NR_write */
+-    register unsigned int r10 asm ("r10") = fd;
+-    register const void *r11 asm ("r11") = buf;
+-    register size_t r12 asm ("r12") = count;
+-    register unsigned int r asm ("r10");
+-
+-    asm volatile ("break 13\n"
+-                  : "=r" (r)
+-                  : "r" (callno), "0" (r10), "r" (r11), "r" (r12)
+-                  : "memory");
+-
+-    return r;
+-}
+-
+-static inline int mystrlen(char *s)
+-{
+-    int i = 0;
+-    while (s[i]) {
+-        i++;
+-    }
+-    return i;
+-}
+-
+-
+-void pass(void)
+-{
+-    char s[] = "passed.\n";
+-    write(1, s, sizeof(s) - 1);
+-    exit(0);
+-}
+-
+-void _fail(char *reason)
+-{
+-    char s[] = "\nfailed: ";
+-    int len = mystrlen(reason);
+-    write(1, s, sizeof(s) - 1);
+-    write(1, reason, len);
+-    write(1, "\n", 1);
+-    exit(1);
+-}
+diff --git a/scripts/probe-gdb-support.py b/scripts/probe-gdb-support.py
+index 46d6c00140..6dc58d06c7 100644
+--- a/scripts/probe-gdb-support.py
++++ b/scripts/probe-gdb-support.py
+@@ -28,7 +28,6 @@
+     "armv7": "arm",
+     "armv8-a" : ["aarch64", "aarch64_be"],
+     "avr" : "avr",
+-    "cris" : "cris",
+     # no hexagon in upstream gdb
+     "hppa1.0" : "hppa",
+     "i386" : "i386",
+diff --git a/tests/tcg/cris/.gdbinit b/tests/tcg/cris/.gdbinit
+deleted file mode 100644
+index 5e8c1d32f3..0000000000
+--- a/tests/tcg/cris/.gdbinit
++++ /dev/null
+@@ -1,11 +0,0 @@
+-b main
+-b _fail
+-b exit
+-display /i $pc
+-display /x $srp
+-display /x $r0
+-display /x $r1
+-display /x $r2
+-display /x $r3
+-display /x $r4
+-display /t $ccs
+diff --git a/tests/tcg/cris/Makefile.target b/tests/tcg/cris/Makefile.target
+deleted file mode 100644
+index 713e2a5b6c..0000000000
+--- a/tests/tcg/cris/Makefile.target
++++ /dev/null
+@@ -1,62 +0,0 @@
+-# -*- Mode: makefile -*-
+-#
+-# Cris tests
+-#
+-# Currently we can only build the "bare" tests with the docker
+-# supplied cross-compiler.
+-#
+-
+-CRIS_SRC = $(SRC_PATH)/tests/tcg/cris/bare
+-CRIS_ALL = $(wildcard $(CRIS_SRC)/*.s)
+-CRIS_TESTS = $(patsubst $(CRIS_SRC)/%.s, %, $(CRIS_ALL))
+-# Filter out common blobs and broken tests
+-CRIS_BROKEN_TESTS  = crt check_jsr
+-# upstream GCC doesn't support v32
+-CRIS_BROKEN_TESTS += check_mcp check_mulv32 check_addiv32 check_movpmv32
+-CRIS_BROKEN_TESTS += check_movprv32 check_clearfv32 check_movemrv32 check_bas
+-CRIS_BROKEN_TESTS += check_lapc check_movei
+-# no sure why
+-CRIS_BROKEN_TESTS += check_scc check_xarith
+-
+-CRIS_USABLE_TESTS = $(filter-out $(CRIS_BROKEN_TESTS), $(CRIS_TESTS))
+-CRIS_RUNS = $(patsubst %, run-%, $(CRIS_USABLE_TESTS))
+-
+-# override the list of tests, as we can't build the multiarch tests
+-TESTS = $(CRIS_USABLE_TESTS)
+-EXTRA_RUNS =
+-VPATH = $(CRIS_SRC)
+-
+-AS	= $(CC) -x assembler-with-cpp
+-LD      = $(CC)
+-
+-# we rely on GCC inline:ing the stuff we tell it to in many places here.
+-CFLAGS  = -Winline -Wall -g -O2 -static -fno-stack-protector
+-NOSTDFLAGS = -nostartfiles -nostdlib
+-ASFLAGS += -mcpu=v10 -g -Wa,-I,$(SRC_PATH)/tests/tcg/cris/bare
+-CRT_FILES = crt.o sys.o
+-
+-# stop make deleting crt files if build fails
+-.PRECIOUS: $(CRT_FILES)
+-
+-%.o: %.c
+-	$(CC) -c $< -o $@
+-
+-%.o: %.s
+-	$(AS) $(ASFLAGS) -c $< -o $@
+-
+-%: %.s $(CRT_FILES)
+-	$(CC) $(ASFLAGS) $< -o $@ $(LDFLAGS) $(NOSTDFLAGS) $(CRT_FILES)
+-
+-# The default CPU breaks (possibly as it's max?) so force crisv17
+-QEMU_OPTS=-cpu crisv17
+-
+-# Additional runners to run under GNU SIM
+-CRIS_RUNS_ON_SIM=$(patsubst %, %-on-sim, $(CRIS_RUNS))
+-SIMG:=cris-axis-linux-gnu-run
+-
+-# e.g.: make -f ../../tests/tcg/Makefile run-check_orm-on-sim
+-run-%-on-sim:
+-	$(call run-test, $<, $(SIMG) $<)
+-
+-# We don't currently support the multiarch tests
+-undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/cris/README b/tests/tcg/cris/README
+deleted file mode 100644
+index 2e65a76f10..0000000000
+--- a/tests/tcg/cris/README
++++ /dev/null
+@@ -1 +0,0 @@
+-Test-suite for the cris port. Heavily based on the test-suite for the CRIS port of sim by Hans-Peter Nilsson.
+diff --git a/tests/tcg/cris/bare/check_addcv17.s b/tests/tcg/cris/bare/check_addcv17.s
+deleted file mode 100644
+index 52ef7a9716..0000000000
+--- a/tests/tcg/cris/bare/check_addcv17.s
++++ /dev/null
+@@ -1,65 +0,0 @@
+-# mach:  crisv17
+-
+- .include "testutils.inc"
+-
+- .macro addc Rs Rd inc=0
+-# Create the instruction manually since there is no assembler support yet
+- .word (\Rd << 12) | \Rs | (\inc << 10) | 0x09a0
+- .endm
+-
+- start
+-
+- .data
+-mem1:
+- .dword 0x0
+-mem2:
+- .dword 0x12345678
+-
+- .text
+- move.d mem1,r4
+- clearf nzvc
+- addc 4 3
+- test_cc 0 1 0 0
+- checkr3 0
+-
+- move.d mem1,r4
+- clearf nzvc
+- ax
+- addc 4 3
+- test_cc 0 0 0 0
+- checkr3 0
+-
+- move.d mem1,r4
+- clearf nzvc
+- setf c
+- addc 4 3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d mem2,r4
+- moveq 2, r3
+- clearf nzvc
+- setf c
+- addc 4 3
+- test_cc 0 0 0 0
+- checkr3 1234567b
+-
+- move.d mem2,r5
+- clearf nzvc
+- cmp.d r4,r5
+- test_cc 0 1 0 0
+-
+- move.d mem2,r4
+- moveq 2, r3
+- clearf nzvc
+- addc 4 3 inc=1
+- test_cc 0 0 0 0
+- checkr3 1234567a
+-
+- move.d mem2,r5
+- clearf nzvc
+- addq 4,r5
+- cmp.d r4,r5
+- test_cc 0 1 0 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_addi.s b/tests/tcg/cris/bare/check_addi.s
+deleted file mode 100644
+index a00dec02af..0000000000
+--- a/tests/tcg/cris/bare/check_addi.s
++++ /dev/null
+@@ -1,57 +0,0 @@
+-# mach:  crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 0\n1\n2\n4\nbe02460f\n69d035a6\nc16c14d4\n
+-
+- .include "testutils.inc"
+- start
+- moveq 0,r3
+- moveq 0,r4
+- clearf zcvn
+- addi r4.b,r3
+- test_cc 0 0 0 0
+- checkr3 0
+-
+- moveq 0,r3
+- moveq 1,r4
+- setf zcvn
+- addi r4.b,r3
+- test_cc 1 1 1 1
+- checkr3 1
+-
+- moveq 0,r3
+- moveq 1,r4
+- setf cv
+- clearf zn
+- addi r4.w,r3
+- test_cc 0 0 1 1
+- checkr3 2
+-
+- moveq 0,r3
+- moveq 1,r4
+- clearf cv
+- setf zn
+- addi r4.d,r3
+- test_cc 1 1 0 0
+- checkr3 4
+-
+- move.d 0x12345678,r3
+- move.d 0xabcdef97,r4
+- clearf cn
+- setf zv
+- addi r4.b,r3
+- test_cc 0 1 1 0
+- checkr3 be02460f
+-
+- move.d 0x12345678,r3
+- move.d 0xabcdef97,r4
+- setf cn
+- clearf zv
+- addi r4.w,r3
+- test_cc 1 0 0 1
+- checkr3 69d035a6
+-
+- move.d 0x12345678,r3
+- move.d 0xabcdef97,r4
+- addi r4.d,r3
+- checkr3 c16c14d4
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_addiv32.s b/tests/tcg/cris/bare/check_addiv32.s
+deleted file mode 100644
+index 20ba25d219..0000000000
+--- a/tests/tcg/cris/bare/check_addiv32.s
++++ /dev/null
+@@ -1,62 +0,0 @@
+-# mach: crisv32
+-# output: 4455aa77\n4455aa77\nee19ccff\nff22\n4455aa77\nff224455\n55aa77ff\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .dword 0x55aa77ff
+- .dword 0xccff2244
+- .dword 0x88ccee19
+-
+- start
+- setf cv
+- moveq -1,r0
+- move.d x-32768,r5
+- move.d 32769,r6
+- addi r6.b,r5,acr
+- test_cc 0 0 1 1
+- move.d [acr],r3
+- checkr3 4455aa77
+-
+- addu.w 32771,r5
+- setf znvc
+- moveq -1,r8
+- addi r8.w,r5,acr
+- test_cc 1 1 1 1
+- move.d [acr],r3
+- checkr3 4455aa77
+-
+- moveq 5,r10
+- clearf znvc
+- addi r10.b,acr,acr
+- test_cc 0 0 0 0
+- move.d [acr],r3
+- checkr3 ee19ccff
+-
+- subq 1,r5
+- move.d r5,r8
+- subq 1,r8
+- moveq 1,r9
+- addi r9.d,r8,acr
+- test_cc 0 0 0 0
+- movu.w [acr],r3
+- checkr3 ff22
+-
+- moveq -2,r11
+- addi r11.w,acr,acr
+- move.d [acr],r3
+- checkr3 4455aa77
+-
+- moveq 5,r9
+- addi r9.d,acr,acr
+- subq 18,acr
+- move.d [acr],r3
+- checkr3 ff224455
+-
+- move.d -76789888/4,r12
+- addi r12.d,r5,acr
+- add.d 76789886,acr
+- move.d [acr],r3
+- checkr3 55aa77ff
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_addm.s b/tests/tcg/cris/bare/check_addm.s
+deleted file mode 100644
+index efece9f538..0000000000
+--- a/tests/tcg/cris/bare/check_addm.s
++++ /dev/null
+@@ -1,96 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n1fffe\nfffffffe\ncc463bdb\nffff0001\n1\nfffe\nfedafffe\n78133bdb\nffffff01\n1\nfe\nfeda49fe\n781344db\n781344d0\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .dword 2,-1,0xffff,-1,0x5432f789
+- .word 2,-1,0xffff,0xf789
+- .byte 2,0xff,0x89
+- .byte 0x7e
+-
+- start
+- moveq -1,r3
+- move.d x,r5
+- add.d [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- moveq 2,r3
+- add.d [r5],r3
+- test_cc 0 0 0 1
+- addq 4,r5
+- checkr3 1
+-
+- move.d 0xffff,r3
+- add.d [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 1fffe
+-
+- moveq -1,r3
+- add.d [r5+],r3
+- test_cc 1 0 0 1
+- checkr3 fffffffe
+-
+- move.d 0x78134452,r3
+- add.d [r5+],r3
+- test_cc 1 0 1 0
+- checkr3 cc463bdb
+-
+- moveq -1,r3
+- add.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 ffff0001
+-
+- moveq 2,r3
+- add.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- move.d 0xffff,r3
+- add.w [r5],r3
+- test_cc 1 0 0 1
+- checkr3 fffe
+-
+- move.d 0xfedaffff,r3
+- add.w [r5+],r3
+- test_cc 1 0 0 1
+- checkr3 fedafffe
+-
+- move.d 0x78134452,r3
+- add.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 78133bdb
+-
+- moveq -1,r3
+- add.b [r5],r3
+- test_cc 0 0 0 1
+- addq 1,r5
+- checkr3 ffffff01
+-
+- moveq 2,r3
+- add.b [r5],r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- move.d 0xff,r3
+- add.b [r5],r3
+- test_cc 1 0 0 1
+- checkr3 fe
+-
+- move.d 0xfeda49ff,r3
+- add.b [r5+],r3
+- test_cc 1 0 0 1
+- checkr3 feda49fe
+-
+- move.d 0x78134452,r3
+- add.b [r5+],r3
+- test_cc 1 0 0 0
+- checkr3 781344db
+-
+- move.d 0x78134452,r3
+- add.b [r5],r3
+- test_cc 1 0 1 0
+- checkr3 781344d0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_addq.s b/tests/tcg/cris/bare/check_addq.s
+deleted file mode 100644
+index e6f874f9b2..0000000000
+--- a/tests/tcg/cris/bare/check_addq.s
++++ /dev/null
+@@ -1,47 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: ffffffff\n0\n1\n100\n10000\n47\n67\na6\n80000001\n
+-
+- .include "testutils.inc"
+- start
+- moveq -2,r3
+- addq 1,r3
+- test_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- addq 1,r3
+- test_cc 0 1 0 1
+- checkr3 0
+-
+- addq 1,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xff,r3
+- addq 1,r3
+- test_cc 0 0 0 0
+- checkr3 100
+-
+- move.d 0xffff,r3
+- addq 1,r3
+- test_cc 0 0 0 0
+- checkr3 10000
+-
+- move.d 0x42,r3
+- addq 5,r3
+- test_cc 0 0 0 0
+- checkr3 47
+-
+- addq 32,r3
+- test_cc 0 0 0 0
+- checkr3 67
+-
+- addq 63,r3
+- test_cc 0 0 0 0
+- checkr3 a6
+-
+- move.d 0x7ffffffe,r3
+- addq 3,r3
+- test_cc 1 0 1 0
+- checkr3 80000001
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_addr.s b/tests/tcg/cris/bare/check_addr.s
+deleted file mode 100644
+index 7f55cdc1b5..0000000000
+--- a/tests/tcg/cris/bare/check_addr.s
++++ /dev/null
+@@ -1,96 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n1fffe\nfffffffe\ncc463bdb\nffff0001\n1\nfffe\nfedafffe\n78133bdb\nffffff01\n1\nfe\nfeda49fe\n781344db\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq 2,r4
+- add.d r4,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- moveq 2,r3
+- moveq -1,r4
+- add.d r4,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- add.d r4,r3
+- test_cc 0 0 0 0
+- checkr3 1fffe
+-
+- moveq -1,r4
+- move.d r4,r3
+- add.d r4,r3
+- test_cc 1 0 0 1
+- checkr3 fffffffe
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- add.d r4,r3
+- test_cc 1 0 1 0
+- checkr3 cc463bdb
+-
+- moveq -1,r3
+- moveq 2,r4
+- add.w r4,r3
+- test_cc 0 0 0 1
+- checkr3 ffff0001
+-
+- moveq 2,r3
+- moveq -1,r4
+- add.w r4,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- add.w r4,r3
+- test_cc 1 0 0 1
+- checkr3 fffe
+-
+- move.d 0xfedaffff,r4
+- move.d r4,r3
+- add.w r4,r3
+- test_cc 1 0 0 1
+- checkr3 fedafffe
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- add.w r4,r3
+- test_cc 0 0 0 1
+- checkr3 78133bdb
+-
+- moveq -1,r3
+- moveq 2,r4
+- add.b r4,r3
+- test_cc 0 0 0 1
+- checkr3 ffffff01
+-
+- moveq 2,r3
+- moveq -1,r4
+- add.b r4,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- move.d 0xff,r4
+- move.d r4,r3
+- add.b r4,r3
+- test_cc 1 0 0 1
+- checkr3 fe
+-
+- move.d 0xfeda49ff,r4
+- move.d r4,r3
+- add.b r4,r3
+- test_cc 1 0 0 1
+- checkr3 feda49fe
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- add.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 781344db
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_addxc.s b/tests/tcg/cris/bare/check_addxc.s
+deleted file mode 100644
+index 09c8355bf8..0000000000
+--- a/tests/tcg/cris/bare/check_addxc.s
++++ /dev/null
+@@ -1,91 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n101\n10001\n100fe\n1fffe\nfffe\nfffe\nfffffffe\nfe\nfffffffe\n781344db\n781343db\n78143bdb\n78133bdb\n800000ed\n0\n
+-
+- .include "testutils.inc"
+- start
+- moveq 2,r3
+- adds.b 0xff,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- moveq 2,r3
+- adds.w 0xffff,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- moveq 2,r3
+- addu.b 0xff,r3
+- checkr3 101
+-
+- moveq 2,r3
+- move.d 0xffffffff,r4
+- addu.w -1,r3
+- test_cc 0 0 0 0
+- checkr3 10001
+-
+- move.d 0xffff,r3
+- addu.b -1,r3
+- test_cc 0 0 0 0
+- checkr3 100fe
+-
+- move.d 0xffff,r3
+- addu.w -1,r3
+- test_cc 0 0 0 0
+- checkr3 1fffe
+-
+- move.d 0xffff,r3
+- adds.b 0xff,r3
+- test_cc 0 0 0 1
+- checkr3 fffe
+-
+- move.d 0xffff,r3
+- adds.w 0xffff,r3
+- test_cc 0 0 0 1
+- checkr3 fffe
+-
+- moveq -1,r3
+- adds.b 0xff,r3
+- test_cc 1 0 0 1
+- checkr3 fffffffe
+-
+- moveq -1,r3
+- adds.w 0xff,r3
+- test_cc 0 0 0 1
+- checkr3 fe
+-
+- moveq -1,r3
+- adds.w 0xffff,r3
+- test_cc 1 0 0 1
+- checkr3 fffffffe
+-
+- move.d 0x78134452,r3
+- addu.b 0x89,r3
+- test_cc 0 0 0 0
+- checkr3 781344db
+-
+- move.d 0x78134452,r3
+- adds.b 0x89,r3
+- test_cc 0 0 0 1
+- checkr3 781343db
+-
+- move.d 0x78134452,r3
+- addu.w 0xf789,r3
+- test_cc 0 0 0 0
+- checkr3 78143bdb
+-
+- move.d 0x78134452,r3
+- adds.w 0xf789,r3
+- test_cc 0 0 0 1
+- checkr3 78133bdb
+-
+- move.d 0x7fffffee,r3
+- addu.b 0xff,r3
+- test_cc 1 0 1 0
+- checkr3 800000ed
+-
+- move.d 0x1,r3
+- adds.w 0xffff,r3
+- test_cc 0 1 0 1
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_addxm.s b/tests/tcg/cris/bare/check_addxm.s
+deleted file mode 100644
+index 7563494b99..0000000000
+--- a/tests/tcg/cris/bare/check_addxm.s
++++ /dev/null
+@@ -1,106 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n101\n10001\n100fe\n1fffe\nfffe\nfffe\nfffffffe\nfe\nfffffffe\n781344db\n781343db\n78143bdb\n78133bdb\n800000ed\n0\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .byte 0xff
+- .word 0xffff
+- .word 0xff
+- .word 0xffff
+- .byte 0x89
+- .word 0xf789
+- .byte 0xff
+- .word 0xffff
+-
+- start
+- moveq 2,r3
+- move.d x,r5
+- adds.b [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- moveq 2,r3
+- adds.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- moveq 2,r3
+- subq 3,r5
+- addu.b [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 101
+-
+- moveq 2,r3
+- addu.w [r5+],r3
+- subq 3,r5
+- test_cc 0 0 0 0
+- checkr3 10001
+-
+- move.d 0xffff,r3
+- addu.b [r5],r3
+- test_cc 0 0 0 0
+- checkr3 100fe
+-
+- move.d 0xffff,r3
+- addu.w [r5],r3
+- test_cc 0 0 0 0
+- checkr3 1fffe
+-
+- move.d 0xffff,r3
+- adds.b [r5],r3
+- test_cc 0 0 0 1
+- checkr3 fffe
+-
+- move.d 0xffff,r3
+- adds.w [r5],r3
+- test_cc 0 0 0 1
+- checkr3 fffe
+-
+- moveq -1,r3
+- adds.b [r5],r3
+- test_cc 1 0 0 1
+- addq 3,r5
+- checkr3 fffffffe
+-
+- moveq -1,r3
+- adds.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 fe
+-
+- moveq -1,r3
+- adds.w [r5+],r3
+- test_cc 1 0 0 1
+- checkr3 fffffffe
+-
+- move.d 0x78134452,r3
+- addu.b [r5],r3
+- test_cc 0 0 0 0
+- checkr3 781344db
+-
+- move.d 0x78134452,r3
+- adds.b [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 781343db
+-
+- move.d 0x78134452,r3
+- addu.w [r5],r3
+- test_cc 0 0 0 0
+- checkr3 78143bdb
+-
+- move.d 0x78134452,r3
+- adds.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 78133bdb
+-
+- move.d 0x7fffffee,r3
+- addu.b [r5+],r3
+- test_cc 1 0 1 0
+- checkr3 800000ed
+-
+- move.d 0x1,r3
+- adds.w [r5+],r3
+- test_cc 0 1 0 1
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_addxr.s b/tests/tcg/cris/bare/check_addxr.s
+deleted file mode 100644
+index 7f55cdc1b5..0000000000
+--- a/tests/tcg/cris/bare/check_addxr.s
++++ /dev/null
+@@ -1,96 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n1fffe\nfffffffe\ncc463bdb\nffff0001\n1\nfffe\nfedafffe\n78133bdb\nffffff01\n1\nfe\nfeda49fe\n781344db\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq 2,r4
+- add.d r4,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- moveq 2,r3
+- moveq -1,r4
+- add.d r4,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- add.d r4,r3
+- test_cc 0 0 0 0
+- checkr3 1fffe
+-
+- moveq -1,r4
+- move.d r4,r3
+- add.d r4,r3
+- test_cc 1 0 0 1
+- checkr3 fffffffe
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- add.d r4,r3
+- test_cc 1 0 1 0
+- checkr3 cc463bdb
+-
+- moveq -1,r3
+- moveq 2,r4
+- add.w r4,r3
+- test_cc 0 0 0 1
+- checkr3 ffff0001
+-
+- moveq 2,r3
+- moveq -1,r4
+- add.w r4,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- add.w r4,r3
+- test_cc 1 0 0 1
+- checkr3 fffe
+-
+- move.d 0xfedaffff,r4
+- move.d r4,r3
+- add.w r4,r3
+- test_cc 1 0 0 1
+- checkr3 fedafffe
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- add.w r4,r3
+- test_cc 0 0 0 1
+- checkr3 78133bdb
+-
+- moveq -1,r3
+- moveq 2,r4
+- add.b r4,r3
+- test_cc 0 0 0 1
+- checkr3 ffffff01
+-
+- moveq 2,r3
+- moveq -1,r4
+- add.b r4,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- move.d 0xff,r4
+- move.d r4,r3
+- add.b r4,r3
+- test_cc 1 0 0 1
+- checkr3 fe
+-
+- move.d 0xfeda49ff,r4
+- move.d r4,r3
+- add.b r4,r3
+- test_cc 1 0 0 1
+- checkr3 feda49fe
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- add.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 781344db
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_andc.s b/tests/tcg/cris/bare/check_andc.s
+deleted file mode 100644
+index a947b773c9..0000000000
+--- a/tests/tcg/cris/bare/check_andc.s
++++ /dev/null
+@@ -1,80 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 2\n2\nffff\nffffffff\n50124400\nffff0002\n2\nfffff\nfedaff0f\n78134400\nffffff02\n2\nf02\n78134401\n78134400\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- and.d 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- and.d -1,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- and.d 0xffff,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r3
+- and.d -1,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- and.d 0x5432f789,r3
+- test_move_cc 0 0 0 0
+- checkr3 50124400
+-
+- moveq -1,r3
+- and.w 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff0002
+-
+- moveq 2,r3
+- and.w -1,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xfffff,r3
+- and.w 0xffff,r3
+- test_move_cc 1 0 0 0
+- checkr3 fffff
+-
+- move.d 0xfedaffaf,r3
+- and.w 0xff5f,r3
+- test_move_cc 1 0 0 0
+- checkr3 fedaff0f
+-
+- move.d 0x78134452,r3
+- and.w 0xf789,r3
+- test_move_cc 0 0 0 0
+- checkr3 78134400
+-
+- moveq -1,r3
+- and.b 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffffff02
+-
+- moveq 2,r3
+- and.b -1,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xfa7,r3
+- and.b 0x5a,r3
+- test_move_cc 0 0 0 0
+- checkr3 f02
+-
+- move.d 0x78134453,r3
+- and.b 0x89,r3
+- test_move_cc 0 0 0 0
+- checkr3 78134401
+-
+- and.b 0,r3
+- test_move_cc 0 1 0 0
+- checkr3 78134400
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_andm.s b/tests/tcg/cris/bare/check_andm.s
+deleted file mode 100644
+index 93858863fe..0000000000
+--- a/tests/tcg/cris/bare/check_andm.s
++++ /dev/null
+@@ -1,90 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 2\n2\nffff\nffffffff\n50124400\nffff0002\n2\nfffff\nfedaff0f\n78134400\nffffff02\n2\nf02\n78134401\n78134400\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .dword 2,-1,0xffff,-1,0x5432f789
+- .word 2,-1,0xffff,0xff5f,0xf789
+- .byte 2,-1,0x5a,0x89,0
+-
+- start
+- moveq -1,r3
+- move.d x,r5
+- and.d [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- and.d [r5],r3
+- test_move_cc 0 0 0 0
+- addq 4,r5
+- checkr3 2
+-
+- move.d 0xffff,r3
+- and.d [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r3
+- and.d [r5+],r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- and.d [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 50124400
+-
+- moveq -1,r3
+- and.w [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff0002
+-
+- moveq 2,r3
+- and.w [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xfffff,r3
+- and.w [r5],r3
+- test_move_cc 1 0 0 0
+- addq 2,r5
+- checkr3 fffff
+-
+- move.d 0xfedaffaf,r3
+- and.w [r5+],r3
+- test_move_cc 1 0 0 0
+- checkr3 fedaff0f
+-
+- move.d 0x78134452,r3
+- and.w [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 78134400
+-
+- moveq -1,r3
+- and.b [r5],r3
+- test_move_cc 0 0 0 0
+- addq 1,r5
+- checkr3 ffffff02
+-
+- moveq 2,r3
+- and.b [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xfa7,r3
+- and.b [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 f02
+-
+- move.d 0x78134453,r3
+- and.b [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 78134401
+-
+- and.b [r5],r3
+- test_move_cc 0 1 0 0
+- checkr3 78134400
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_andq.s b/tests/tcg/cris/bare/check_andq.s
+deleted file mode 100644
+index 55aa7b0607..0000000000
+--- a/tests/tcg/cris/bare/check_andq.s
++++ /dev/null
+@@ -1,46 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 2\n2\nffff\nffffffff\n1f\nffffffe0\n78134452\n0\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- andq 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- andq -1,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- andq -1,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r3
+- andq -1,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- andq 31,r3
+- test_move_cc 0 0 0 0
+- checkr3 1f
+-
+- moveq -1,r3
+- andq -32,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffe0
+-
+- move.d 0x78134457,r3
+- andq -14,r3
+- test_move_cc 0 0 0 0
+- checkr3 78134452
+-
+- moveq 0,r3
+- andq -14,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_andr.s b/tests/tcg/cris/bare/check_andr.s
+deleted file mode 100644
+index 61aa1dc32f..0000000000
+--- a/tests/tcg/cris/bare/check_andr.s
++++ /dev/null
+@@ -1,95 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 2\n2\nffff\nffffffff\n50124400\nffff0002\n2\nfffff\nfedaff0f\n78134400\nffffff02\n2\nf02\n78134401\n78134400\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq 2,r4
+- and.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- moveq -1,r4
+- and.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- and.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r4
+- move.d r4,r3
+- and.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- and.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 50124400
+-
+- moveq -1,r3
+- moveq 2,r4
+- and.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff0002
+-
+- moveq 2,r3
+- moveq -1,r4
+- and.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xfffff,r3
+- move.d 0xffff,r4
+- and.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 fffff
+-
+- move.d 0xfedaffaf,r3
+- move.d 0xff5f,r4
+- and.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 fedaff0f
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- and.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 78134400
+-
+- moveq -1,r3
+- moveq 2,r4
+- and.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffffff02
+-
+- moveq 2,r3
+- moveq -1,r4
+- and.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0x5a,r4
+- move.d 0xfa7,r3
+- and.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 f02
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134453,r3
+- and.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 78134401
+-
+- moveq 0,r7
+- and.b r7,r3
+- test_move_cc 0 1 0 0
+- checkr3 78134400
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_asr.s b/tests/tcg/cris/bare/check_asr.s
+deleted file mode 100644
+index 0a02ae6f7e..0000000000
+--- a/tests/tcg/cris/bare/check_asr.s
++++ /dev/null
+@@ -1,230 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: ffffffff\n1\nffffffff\nffffffff\n5a67f\nffffffff\nffffffff\nffffffff\nf699fc67\nffffffff\n1\nffffffff\nffffffff\n5a67f\nda67ffff\nda67ffff\nda67ffff\nda67fc67\nffffffff\nffffffff\n1\nffffffff\nffffffff\n5a670007\nda67f1ff\nda67f1ff\nda67f1ff\nda67f1e7\nffffffff\nffffffff\n1\nffffffff\nffffffff\nffffffff\n5a67f1ff\n5a67f1f9\n0\n5a670000\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- asrq 0,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- asrq 1,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- asrq 31,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- asrq 15,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x5a67f19f,r3
+- asrq 12,r3
+- test_move_cc 0 0 0 0
+- checkr3 5a67f
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- asr.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- asr.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- asr.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- asr.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 f699fc67
+-
+- moveq -1,r3
+- moveq 0,r4
+- asr.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq 1,r4
+- asr.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- moveq 31,r4
+- asr.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 15,r4
+- asr.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- asr.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 5a67f
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- asr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67ffff
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- asr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67ffff
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- asr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67ffff
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- asr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67fc67
+-
+- moveq -1,r3
+- moveq 0,r4
+- asr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 1,r4
+- asr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq 1,r4
+- asr.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- moveq 31,r4
+- asr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 15,r4
+- asr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x5a67719f,r3
+- moveq 12,r4
+- asr.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 5a670007
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67f1ff
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67f1ff
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67f1ff
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67f1e7
+-
+- moveq -1,r3
+- moveq 0,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 1,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq 1,r4
+- asr.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- moveq 31,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 15,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 7,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+-; FIXME: was wrong.
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 5a67f1ff
+-
+-; FIXME: was wrong.
+- move.d 0x5a67f19f,r3
+- moveq 4,r4
+- asr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 5a67f1f9
+-
+- move.d 0x5a67f19f,r3
+- asrq 31,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0x5a67419f,r3
+- moveq 16,r4
+- asr.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 5a670000
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_ba.s b/tests/tcg/cris/bare/check_ba.s
+deleted file mode 100644
+index 873a4086c5..0000000000
+--- a/tests/tcg/cris/bare/check_ba.s
++++ /dev/null
+@@ -1,93 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: a\n
+-
+-
+- .set smalloffset,0
+- .set largeoffset,0
+-
+-
+-	.macro fail
+-	jump _fail
+-	.endm
+-
+-	.global	main
+-main:
+- moveq 0,$r3
+-
+-; Short forward branch.
+- ba 0f
+- addq 1,$r3
+- fail
+-
+-; Max short forward branch.
+-1:
+- ba 2f
+- addq 1,$r3
+- fail
+-
+-; Short backward branch.
+-0:
+- ba 1b
+- addq 1,$r3
+- fail
+-
+- .space 254-2+smalloffset+1b-.,0
+- moveq 0,$r3
+-
+-2:
+-; Transit branch (long).
+- ba 3f
+- addq 1,$r3
+- fail
+-
+- moveq 0,$r3
+-4:
+-; Long forward branch.
+- ba 5f
+- addq 1,$r3
+- fail
+-
+- .space 256-2-smalloffset+4b-.,0
+-
+- moveq 0,$r3
+-
+-; Max short backward branch.
+-3:
+- ba 4b
+- addq 1,$r3
+- fail
+-
+-5:
+-; Max long forward branch.
+- ba 6f
+- addq 1,$r3
+- fail
+-
+- .space 32766+largeoffset-2+5b-.,0
+-
+- moveq 0,$r3
+-6:
+-; Transit branch.
+- ba 7f
+- addq 1,$r3
+- fail
+-
+- moveq 0,$r3
+-9:
+- jsr pass
+- nop
+-
+-; Transit branch.
+- moveq 0,$r3
+-7:
+- ba 8f
+- addq 1,$r3
+- fail
+-
+- .space 32768-largeoffset+9b-.,0
+-
+-8:
+-; Max long backward branch.
+- ba 9b
+- addq 1,$r3
+- fail
+diff --git a/tests/tcg/cris/bare/check_bas.s b/tests/tcg/cris/bare/check_bas.s
+deleted file mode 100644
+index 11929d4202..0000000000
+--- a/tests/tcg/cris/bare/check_bas.s
++++ /dev/null
+@@ -1,102 +0,0 @@
+-# mach: crisv32
+-# output: 0\n0\n0\nfb349abc\n0\n12124243\n0\n0\neab5baad\n0\nefb37832\n
+-
+- .include "testutils.inc"
+- start
+-x:
+- setf zncv
+- bsr 0f
+- nop
+-0:
+- test_cc 1 1 1 1
+- move srp,r3
+- sub.d 0b,r3
+- checkr3 0
+-
+- bas 1f,mof
+- moveq 0,r0
+-6:
+- nop
+- quit
+-
+-2:
+- move srp,r3
+- sub.d 3f,r3
+- checkr3 0
+- move srp,r4
+- subq 4,r4
+- move.d [r4],r3
+- checkr3 fb349abc
+-
+- basc 4f,mof
+- nop
+- .dword 0x12124243
+-7:
+- nop
+- quit
+-
+-8:
+- move mof,r3
+- sub.d 7f,r3
+- checkr3 0
+-
+- move mof,r4
+- subq 4,r4
+- move.d [r4],r3
+- checkr3 eab5baad
+-
+- jasc 9f,mof
+- nop
+- .dword 0xefb37832
+-0:
+- quit
+-
+- quit
+-9:
+- move mof,r3
+- sub.d 0b,r3
+- checkr3 0
+-
+- move mof,r4
+- subq 4,r4
+- move.d [r4],r3
+- checkr3 efb37832
+-
+- quit
+-
+-4:
+- move mof,r3
+- sub.d 7b,r3
+- checkr3 0
+- move mof,r4
+- subq 4,r4
+- move.d [r4],r3
+- checkr3 12124243
+- basc 5f,bz
+- moveq 0,r3
+- .dword 0x7634aeba
+- quit
+-
+- .space 32770,0
+-1:
+- move mof,r3
+- sub.d 6b,r3
+- checkr3 0
+-
+- bsrc 2b
+- nop
+- .dword 0xfb349abc
+-3:
+-
+- quit
+-
+-5:
+- move mof,r3
+- sub.d 7b,r3
+- checkr3 0
+- move.d 8b,r6
+- jasc r6,mof
+- nop
+- .dword 0xeab5baad
+-7:
+- quit
+diff --git a/tests/tcg/cris/bare/check_bcc.s b/tests/tcg/cris/bare/check_bcc.s
+deleted file mode 100644
+index c57ffa6fa3..0000000000
+--- a/tests/tcg/cris/bare/check_bcc.s
++++ /dev/null
+@@ -1,197 +0,0 @@
+-	.global	main
+-	.type	main, @function
+-main:
+-	clearf nzvc
+-	setf   nzv
+-	bcc    0f
+-	addq   1, $r3
+-	jump   dofail
+-
+-0:
+-	clearf nzvc
+-	setf   nzv
+-	bcs    dofail
+-	addq   1,$r3
+-
+-	clearf nzvc
+-	setf   ncv
+-	bne    1f
+-	addq   1, $r3
+-
+-fail:
+-dofail:
+-	jump	_fail
+-
+-1:
+-	clearf nzvc
+-	setf ncv
+-	beq dofail
+-	addq 1,$r3
+-
+-	clearf nzvc
+-	setf ncz
+-	bvc 2f
+-	addq 1,$r3
+-	jump dofail
+-
+-2:
+-	clearf nzvc
+-	setf ncz
+-	bvs dofail
+-	addq 1,$r3
+-
+-	clearf	nzvc
+-	setf	vcz
+-	bpl	3f
+-	addq	1,$r3
+-	jump	fail
+-3:
+-	clearf	nzvc
+-	setf	vcz
+-	bmi	dofail
+-	addq	1,$r3
+-
+-	clearf	nzvc
+-	setf	nv
+-	bls	dofail
+-	addq	1,$r3
+-
+-	clearf	nzvc
+-	setf	nv
+-	bhi	4f
+-	addq	1,$r3
+-	jump	dofail
+-
+-4:
+-	clearf	nzvc
+-	setf	zc
+-	bge	5f
+-	addq	1,$r3
+-	jump	dofail
+-
+-5:
+-	clearf	nzvc
+-	setf zc
+-	blt dofail
+-	addq 1,$r3
+-
+-	clearf nzvc
+-	setf c
+-	bgt 6f
+-	addq 1,$r3
+-	jump  fail
+-
+-6:
+- clearf nzvc
+- setf c
+- ble dofail
+- addq 1,$r3
+-
+-;;;;;;;;;;
+-
+- setf nzvc
+- clearf nzv
+- bcc dofail
+- addq 1,$r3
+-
+- setf nzvc
+- clearf nzv
+- bcs 0f
+- addq 1,$r3
+- jump fail
+-
+-0:
+- setf nzvc
+- clearf ncv
+- bne dofail
+- addq 1,$r3
+-
+- setf nzvc
+- clearf ncv
+- beq 1f
+- addq 1,$r3
+- jump fail
+-
+-1:
+- setf nzvc
+- clearf ncz
+- bvc dofail
+- addq 1,$r3
+-
+- setf nzvc
+- clearf ncz
+- bvs 2f
+- addq 1,$r3
+- jump fail
+-
+-2:
+- setf nzvc
+- clearf vcz
+- bpl dofail
+- addq 1,$r3
+-
+- setf nzvc
+- clearf vcz
+- bmi 3f
+- addq 1,$r3
+- jump fail
+-
+-3:
+- setf nzvc
+- clearf nv
+- bls 4f
+- addq 1,$r3
+- jump fail
+-
+-4:
+- setf nzvc
+- clearf nv
+- bhi dofail
+- addq 1,$r3
+-
+- setf zvc
+- clearf nzc
+- bge dofail
+- addq 1,$r3
+-
+- setf nzc
+- clearf vzc
+- blt 5f
+- addq 1,$r3
+- jump fail
+-
+-5:
+- setf nzvc
+- clearf c
+- bgt dofail
+- addq 1,$r3
+-
+- setf nzvc
+- clearf c
+- ble 6f
+- addq 1,$r3
+- jump fail
+-
+-6:
+-	; do a forward branch.
+-	ba   2f
+-	nop
+-	.fill	100
+-1:
+-	ba	3f
+-	nop
+-	.fill	800
+-2:
+-	ba	1b
+-	nop
+-	.fill	1024
+-3:
+-
+-	moveq	31, $r0
+-1:	bne	1b
+-	subq	1, $r0
+-
+-	jsr	pass
+-	moveq	0, $r10
+-	ret
+-	nop
+diff --git a/tests/tcg/cris/bare/check_boundc.s b/tests/tcg/cris/bare/check_boundc.s
+deleted file mode 100644
+index fb9e5bc905..0000000000
+--- a/tests/tcg/cris/bare/check_boundc.s
++++ /dev/null
+@@ -1,101 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 2\n2\nffff\nffffffff\n5432f789\n2\nffff\n2\nffff\nffff\nf789\n2\n2\nff\nff\nff\n89\n0\nff\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq 2,r4
+- bound.d 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- bound.d 0xffffffff,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- bound.d 0xffff,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r3
+- bound.d 0xffffffff,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- bound.d 0x5432f789,r3
+- test_move_cc 0 0 0 0
+- checkr3 5432f789
+-
+- moveq -1,r3
+- bound.w 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq -1,r3
+- bound.w 0xffff,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq 2,r3
+- bound.w 0xffff,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- bound.w 0xffff,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- move.d 0xfedaffff,r3
+- bound.w 0xffff,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- move.d 0x78134452,r3
+- bound.w 0xf789,r3
+- test_move_cc 0 0 0 0
+- checkr3 f789
+-
+- moveq -1,r3
+- bound.b 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- bound.b 0xff,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq -1,r3
+- bound.b 0xff,r3
+- test_move_cc 0 0 0 0
+- checkr3 ff
+-
+- move.d 0xff,r3
+- bound.b 0xff,r3
+- test_move_cc 0 0 0 0
+- checkr3 ff
+-
+- move.d 0xfeda49ff,r3
+- bound.b 0xff,r3
+- test_move_cc 0 0 0 0
+- checkr3 ff
+-
+- move.d 0x78134452,r3
+- bound.b 0x89,r3
+- test_move_cc 0 0 0 0
+- checkr3 89
+-
+- bound.w 0,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0xffff,r3
+- bound.b -1,r3
+- test_move_cc 0 0 0 0
+- checkr3 ff
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_boundr.s b/tests/tcg/cris/bare/check_boundr.s
+deleted file mode 100644
+index 5c50cc5f6a..0000000000
+--- a/tests/tcg/cris/bare/check_boundr.s
++++ /dev/null
+@@ -1,125 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 2\n2\nffff\nffffffff\n5432f789\n2\n2\nffff\nffff\nffff\nf789\n2\n2\nff\nff\n89\nfeda4953\nfeda4962\n0\n0\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq 2,r4
+- bound.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- moveq -1,r4
+- bound.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- bound.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r4
+- move.d r4,r3
+- bound.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- bound.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 5432f789
+-
+- moveq -1,r3
+- moveq 2,r4
+- bound.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- moveq -1,r4
+- bound.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq -1,r3
+- bound.w r3,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- bound.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- move.d 0xfedaffff,r4
+- move.d r4,r3
+- bound.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- bound.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 f789
+-
+- moveq -1,r3
+- moveq 2,r4
+- bound.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- moveq 2,r3
+- moveq -1,r4
+- bound.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xff,r4
+- move.d r4,r3
+- bound.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ff
+-
+- move.d 0xfeda49ff,r4
+- move.d r4,r3
+- bound.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ff
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- bound.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 89
+-
+- move.d 0xfeda4956,r3
+- move.d 0xfeda4953,r4
+- bound.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 feda4953
+-
+- move.d 0xfeda4962,r3
+- move.d 0xfeda4963,r4
+- bound.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 feda4962
+-
+- move.d 0xfeda4956,r3
+- move.d 0,r4
+- bound.d r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0xfeda4956,r4
+- move.d 0,r3
+- bound.d r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_btst.s b/tests/tcg/cris/bare/check_btst.s
+deleted file mode 100644
+index 485deb2006..0000000000
+--- a/tests/tcg/cris/bare/check_btst.s
++++ /dev/null
+@@ -1,96 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1111\n
+-
+- .include "testutils.inc"
+- start
+- clearf nzvc
+- moveq -1,r3
+- .if 1 ;..asm.arch.cris.v32
+- .else
+- setf vc
+- .endif
+- btstq 0,r3
+- test_cc 1 0 0 0
+-
+- moveq 2,r3
+- btstq 1,r3
+- test_cc 1 0 0 0
+-
+- moveq 4,r3
+- btstq 1,r3
+- test_cc 0 1 0 0
+-
+- moveq -1,r3
+- btstq 31,r3
+- test_cc 1 0 0 0
+-
+- move.d 0x5a67f19f,r3
+- btstq 12,r3
+- test_cc 1 0 0 0
+-
+- move.d 0xda67f19f,r3
+- move.d 29,r4
+- btst r4,r3
+- test_cc 0 0 0 0
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- btst r4,r3
+- test_cc 1 0 0 0
+-
+- move.d 0xda67f191,r3
+- move.d 33,r4
+- btst r4,r3
+- test_cc 0 0 0 0
+-
+- moveq -1,r3
+- moveq 0,r4
+- btst r4,r3
+- test_cc 1 0 0 0
+-
+- moveq 2,r3
+- moveq 1,r4
+- btst r4,r3
+- test_cc 1 0 0 0
+-
+- moveq -1,r3
+- moveq 31,r4
+- btst r4,r3
+- test_cc 1 0 0 0
+-
+- moveq 4,r3
+- btstq 1,r3
+- test_cc 0 1 0 0
+-
+- moveq -1,r3
+- moveq 15,r4
+- btst r4,r3
+- test_cc 1 0 0 0
+-
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- btst r4,r3
+- test_cc 1 0 0 0
+-
+- move.d 0x5a678000,r3
+- moveq 11,r4
+- btst r4,r3
+- test_cc 0 1 0 0
+-
+- move.d 0x5a67f19f,r3
+- btst r3,r3
+- test_cc 0 0 0 0
+-
+- move.d 0x1111,r3
+- checkr3 1111
+-
+- ; check that X gets cleared and that only the NZ flags are touched.
+- ;; move.d	0xff, $r0
+- ;; move $r0, $ccs
+- ;; btst r3,r3
+- ;; move $ccs, $r0
+- ;; and.d 0xff, $r0
+- ;; cmp.d	0xe3, $r0
+- ;; test_cc 0 1 0 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_clearfv32.s b/tests/tcg/cris/bare/check_clearfv32.s
+deleted file mode 100644
+index 4e91360273..0000000000
+--- a/tests/tcg/cris/bare/check_clearfv32.s
++++ /dev/null
+@@ -1,19 +0,0 @@
+-# mach: crisv32
+-# output: ef\nef\n
+-
+-; Check that "clearf x" doesn't trivially fail.
+-
+- .include "testutils.inc"
+- start
+- setf puixnzvc
+- clearf x	; Actually, x would be cleared by almost-all other insns.
+- move ccs,r3
+- and.d 0xff, $r3
+- checkr3 ef
+-
+- setf puixnzvc
+- moveq 0, $r3	; moveq should only clear the xflag.
+- move ccs,r3
+- and.d 0xff, $r3
+- checkr3 ef
+- quit
+diff --git a/tests/tcg/cris/bare/check_clrjmp1.s b/tests/tcg/cris/bare/check_clrjmp1.s
+deleted file mode 100644
+index 45a7005e24..0000000000
+--- a/tests/tcg/cris/bare/check_clrjmp1.s
 +++ /dev/null
 @@ -1,36 +0,0 @@
--/*
-- * QEMU ETRAX System Emulator
-- *
-- * Copyright (c) 2008 Edgar E. Iglesias, Axis Communications AB.
-- *
-- * Permission is hereby granted, free of charge, to any person obtaining a copy
-- * of this software and associated documentation files (the "Software"), to deal
-- * in the Software without restriction, including without limitation the rights
-- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-- * copies of the Software, and to permit persons to whom the Software is
-- * furnished to do so, subject to the following conditions:
-- *
-- * The above copyright notice and this permission notice shall be included in
-- * all copies or substantial portions of the Software.
-- *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-- * THE SOFTWARE.
-- */
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: ffffff00\n
 -
--#ifndef HW_ETRAXFS_H
--#define HW_ETRAXFS_H
+-; A bug resulting in a non-effectual clear.b discovered running the GCC
+-; testsuite; jump actually wrote to p0.
 -
--#include "net/net.h"
--#include "hw/cris/etraxfs_dma.h"
--#include "qapi/error.h"
+- .include "testutils.inc"
 -
--DeviceState *etraxfs_eth_init(hwaddr base, int phyaddr,
--                              struct etraxfs_dma_client *dma_out,
--                              struct etraxfs_dma_client *dma_in);
+- start
+- jump 1f
+- nop
+- .p2align 8
+-1:
+- move.d y,r4
 -
--#endif
-diff --git a/hw/net/etraxfs_eth.c b/hw/net/etraxfs_eth.c
+- .if 0 ;0 == ..asm.arch.cris.v32
+-; There was a bug causing this insn to set special register p0
+-; (byte-clear) to 8 (low 8 bits of location after insn).
+- jump [r4+]
+- .endif
+-
+-1:
+- move.d 0f,r4
+-
+-; The corresponding bug would cause this insn too, to set p0.
+- jump r4
+- nop
+- quit
+-0:
+- moveq -1,r3
+- clear.b r3
+- checkr3 ffffff00
+- quit
+-
+-y:
+- .dword 1b
+diff --git a/tests/tcg/cris/bare/check_cmp-2.s b/tests/tcg/cris/bare/check_cmp-2.s
 deleted file mode 100644
-index 5faf20c782..0000000000
---- a/hw/net/etraxfs_eth.c
+index 414d370517..0000000000
+--- a/tests/tcg/cris/bare/check_cmp-2.s
 +++ /dev/null
-@@ -1,688 +0,0 @@
--/*
-- * QEMU ETRAX Ethernet Controller.
-- *
-- * Copyright (c) 2008 Edgar E. Iglesias, Axis Communications AB.
-- *
-- * Permission is hereby granted, free of charge, to any person obtaining a copy
-- * of this software and associated documentation files (the "Software"), to deal
-- * in the Software without restriction, including without limitation the rights
-- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-- * copies of the Software, and to permit persons to whom the Software is
-- * furnished to do so, subject to the following conditions:
-- *
-- * The above copyright notice and this permission notice shall be included in
-- * all copies or substantial portions of the Software.
-- *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-- * THE SOFTWARE.
-- */
--
--#include "qemu/osdep.h"
--#include "qapi/error.h"
--#include "hw/sysbus.h"
--#include "net/net.h"
--#include "hw/cris/etraxfs.h"
--#include "qemu/error-report.h"
--#include "qemu/module.h"
--#include "trace.h"
--#include "qom/object.h"
--
--#define D(x)
--
--/* Advertisement control register. */
--#define ADVERTISE_10HALF        0x0020  /* Try for 10mbps half-duplex  */
--#define ADVERTISE_10FULL        0x0040  /* Try for 10mbps full-duplex  */
--#define ADVERTISE_100HALF       0x0080  /* Try for 100mbps half-duplex */
--#define ADVERTISE_100FULL       0x0100  /* Try for 100mbps full-duplex */
--
--/*
-- * The MDIO extensions in the TDK PHY model were reversed engineered from the
-- * linux driver (PHYID and Diagnostics reg).
-- * TODO: Add friendly names for the register nums.
-- */
--struct qemu_phy
--{
--    uint32_t regs[32];
--
--    int link;
--
--    unsigned int (*read)(struct qemu_phy *phy, unsigned int req);
--    void (*write)(struct qemu_phy *phy, unsigned int req, unsigned int data);
--};
--
--static unsigned int tdk_read(struct qemu_phy *phy, unsigned int req)
--{
--    int regnum;
--    unsigned r = 0;
--
--    regnum = req & 0x1f;
--
--    switch (regnum) {
--    case 1:
--        if (!phy->link) {
--            break;
--        }
--        /* MR1.     */
--        /* Speeds and modes.  */
--        r |= (1 << 13) | (1 << 14);
--        r |= (1 << 11) | (1 << 12);
--        r |= (1 << 5); /* Autoneg complete.  */
--        r |= (1 << 3); /* Autoneg able.     */
--        r |= (1 << 2); /* link.     */
--        break;
--    case 5:
--        /* Link partner ability.
--           We are kind; always agree with whatever best mode
--           the guest advertises.  */
--        r = 1 << 14; /* Success.  */
--        /* Copy advertised modes.  */
--        r |= phy->regs[4] & (15 << 5);
--        /* Autoneg support.  */
--        r |= 1;
--        break;
--    case 18:
--    {
--        /* Diagnostics reg.  */
--        int duplex = 0;
--        int speed_100 = 0;
--
--        if (!phy->link) {
--            break;
--        }
--
--        /* Are we advertising 100 half or 100 duplex ? */
--        speed_100 = !!(phy->regs[4] & ADVERTISE_100HALF);
--        speed_100 |= !!(phy->regs[4] & ADVERTISE_100FULL);
--
--        /* Are we advertising 10 duplex or 100 duplex ? */
--        duplex = !!(phy->regs[4] & ADVERTISE_100FULL);
--        duplex |= !!(phy->regs[4] & ADVERTISE_10FULL);
--        r = (speed_100 << 10) | (duplex << 11);
--    }
--    break;
--
--    default:
--        r = phy->regs[regnum];
--        break;
--    }
--    trace_mdio_phy_read(regnum, r);
--    return r;
--}
--
--static void
--tdk_write(struct qemu_phy *phy, unsigned int req, unsigned int data)
--{
--    int regnum;
--
--    regnum = req & 0x1f;
--    trace_mdio_phy_write(regnum, data);
--    switch (regnum) {
--    default:
--        phy->regs[regnum] = data;
--        break;
--    }
--}
--
--static void
--tdk_reset(struct qemu_phy *phy)
--{
--    phy->regs[0] = 0x3100;
--    /* PHY Id.  */
--    phy->regs[2] = 0x0300;
--    phy->regs[3] = 0xe400;
--    /* Autonegotiation advertisement reg.  */
--    phy->regs[4] = 0x01E1;
--    phy->link = 1;
--}
--
--struct qemu_mdio
--{
--    /* bus.     */
--    int mdc;
--    int mdio;
--
--    /* decoder.  */
--    enum {
--        PREAMBLE,
--        SOF,
--        OPC,
--        ADDR,
--        REQ,
--        TURNAROUND,
--        DATA
--    } state;
--    unsigned int drive;
--
--    unsigned int cnt;
--    unsigned int addr;
--    unsigned int opc;
--    unsigned int req;
--    unsigned int data;
--
--    struct qemu_phy *devs[32];
--};
--
--static void
--mdio_attach(struct qemu_mdio *bus, struct qemu_phy *phy, unsigned int addr)
--{
--    bus->devs[addr & 0x1f] = phy;
--}
--
--#ifdef USE_THIS_DEAD_CODE
--static void
--mdio_detach(struct qemu_mdio *bus, struct qemu_phy *phy, unsigned int addr)
--{
--    bus->devs[addr & 0x1f] = NULL;
--}
--#endif
--
--static void mdio_read_req(struct qemu_mdio *bus)
--{
--    struct qemu_phy *phy;
--
--    phy = bus->devs[bus->addr];
--    if (phy && phy->read) {
--        bus->data = phy->read(phy, bus->req);
--    } else {
--        bus->data = 0xffff;
--    }
--}
--
--static void mdio_write_req(struct qemu_mdio *bus)
--{
--    struct qemu_phy *phy;
--
--    phy = bus->devs[bus->addr];
--    if (phy && phy->write) {
--        phy->write(phy, bus->req, bus->data);
--    }
--}
--
--static void mdio_cycle(struct qemu_mdio *bus)
--{
--    bus->cnt++;
--
--    trace_mdio_bitbang(bus->mdc, bus->mdio, bus->state, bus->cnt, bus->drive);
--#if 0
--    if (bus->mdc) {
--        printf("%d", bus->mdio);
--    }
--#endif
--    switch (bus->state) {
--    case PREAMBLE:
--        if (bus->mdc) {
--            if (bus->cnt >= (32 * 2) && !bus->mdio) {
--                bus->cnt = 0;
--                bus->state = SOF;
--                bus->data = 0;
--            }
--        }
--        break;
--    case SOF:
--        if (bus->mdc) {
--            if (bus->mdio != 1) {
--                printf("WARNING: no SOF\n");
--            }
--            if (bus->cnt == 1*2) {
--                bus->cnt = 0;
--                bus->opc = 0;
--                bus->state = OPC;
--            }
--        }
--        break;
--    case OPC:
--        if (bus->mdc) {
--            bus->opc <<= 1;
--            bus->opc |= bus->mdio & 1;
--            if (bus->cnt == 2*2) {
--                bus->cnt = 0;
--                bus->addr = 0;
--                bus->state = ADDR;
--            }
--        }
--        break;
--    case ADDR:
--        if (bus->mdc) {
--            bus->addr <<= 1;
--            bus->addr |= bus->mdio & 1;
--
--            if (bus->cnt == 5*2) {
--                bus->cnt = 0;
--                bus->req = 0;
--                bus->state = REQ;
--            }
--        }
--        break;
--    case REQ:
--        if (bus->mdc) {
--            bus->req <<= 1;
--            bus->req |= bus->mdio & 1;
--            if (bus->cnt == 5*2) {
--                bus->cnt = 0;
--                bus->state = TURNAROUND;
--            }
--        }
--        break;
--    case TURNAROUND:
--        if (bus->mdc && bus->cnt == 2*2) {
--            bus->mdio = 0;
--            bus->cnt = 0;
--
--            if (bus->opc == 2) {
--                bus->drive = 1;
--                mdio_read_req(bus);
--                bus->mdio = bus->data & 1;
--            }
--            bus->state = DATA;
--        }
--        break;
--    case DATA:
--        if (!bus->mdc) {
--            if (bus->drive) {
--                bus->mdio = !!(bus->data & (1 << 15));
--                bus->data <<= 1;
--            }
--        } else {
--            if (!bus->drive) {
--                bus->data <<= 1;
--                bus->data |= bus->mdio;
--            }
--            if (bus->cnt == 16 * 2) {
--                bus->cnt = 0;
--                bus->state = PREAMBLE;
--                if (!bus->drive) {
--                    mdio_write_req(bus);
--                }
--                bus->drive = 0;
--            }
--        }
--        break;
--    default:
--        break;
--    }
--}
--
--/* ETRAX-FS Ethernet MAC block starts here.  */
--
--#define RW_MA0_LO      0x00
--#define RW_MA0_HI      0x01
--#define RW_MA1_LO      0x02
--#define RW_MA1_HI      0x03
--#define RW_GA_LO      0x04
--#define RW_GA_HI      0x05
--#define RW_GEN_CTRL      0x06
--#define RW_REC_CTRL      0x07
--#define RW_TR_CTRL      0x08
--#define RW_CLR_ERR      0x09
--#define RW_MGM_CTRL      0x0a
--#define R_STAT          0x0b
--#define FS_ETH_MAX_REGS      0x17
--
--#define TYPE_ETRAX_FS_ETH "etraxfs-eth"
--OBJECT_DECLARE_SIMPLE_TYPE(ETRAXFSEthState, ETRAX_FS_ETH)
--
--struct ETRAXFSEthState {
--    SysBusDevice parent_obj;
--
--    MemoryRegion mmio;
--    NICState *nic;
--    NICConf conf;
--
--    /* Two addrs in the filter.  */
--    uint8_t macaddr[2][6];
--    uint32_t regs[FS_ETH_MAX_REGS];
--
--    struct etraxfs_dma_client *dma_out;
--    struct etraxfs_dma_client *dma_in;
--
--    /* MDIO bus.  */
--    struct qemu_mdio mdio_bus;
--    unsigned int phyaddr;
--    int duplex_mismatch;
--
--    /* PHY.     */
--    struct qemu_phy phy;
--};
--
--static void eth_validate_duplex(ETRAXFSEthState *eth)
--{
--    struct qemu_phy *phy;
--    unsigned int phy_duplex;
--    unsigned int mac_duplex;
--    int new_mm = 0;
--
--    phy = eth->mdio_bus.devs[eth->phyaddr];
--    phy_duplex = !!(phy->read(phy, 18) & (1 << 11));
--    mac_duplex = !!(eth->regs[RW_REC_CTRL] & 128);
--
--    if (mac_duplex != phy_duplex) {
--        new_mm = 1;
--    }
--
--    if (eth->regs[RW_GEN_CTRL] & 1) {
--        if (new_mm != eth->duplex_mismatch) {
--            if (new_mm) {
--                printf("HW: WARNING ETH duplex mismatch MAC=%d PHY=%d\n",
--                       mac_duplex, phy_duplex);
--            } else {
--                printf("HW: ETH duplex ok.\n");
--            }
--        }
--        eth->duplex_mismatch = new_mm;
--    }
--}
--
--static uint64_t
--eth_read(void *opaque, hwaddr addr, unsigned int size)
--{
--    ETRAXFSEthState *eth = opaque;
--    uint32_t r = 0;
--
--    addr >>= 2;
--
--    switch (addr) {
--    case R_STAT:
--        r = eth->mdio_bus.mdio & 1;
--        break;
--    default:
--        r = eth->regs[addr];
--        D(printf("%s %x\n", __func__, addr * 4));
--        break;
--    }
--    return r;
--}
--
--static void eth_update_ma(ETRAXFSEthState *eth, int ma)
--{
--    int reg;
--    int i = 0;
--
--    ma &= 1;
--
--    reg = RW_MA0_LO;
--    if (ma) {
--        reg = RW_MA1_LO;
--    }
--
--    eth->macaddr[ma][i++] = eth->regs[reg];
--    eth->macaddr[ma][i++] = eth->regs[reg] >> 8;
--    eth->macaddr[ma][i++] = eth->regs[reg] >> 16;
--    eth->macaddr[ma][i++] = eth->regs[reg] >> 24;
--    eth->macaddr[ma][i++] = eth->regs[reg + 1];
--    eth->macaddr[ma][i] = eth->regs[reg + 1] >> 8;
--
--    D(printf("set mac%d=%x.%x.%x.%x.%x.%x\n", ma,
--             eth->macaddr[ma][0], eth->macaddr[ma][1],
--             eth->macaddr[ma][2], eth->macaddr[ma][3],
--             eth->macaddr[ma][4], eth->macaddr[ma][5]));
--}
--
--static void
--eth_write(void *opaque, hwaddr addr,
--          uint64_t val64, unsigned int size)
--{
--    ETRAXFSEthState *eth = opaque;
--    uint32_t value = val64;
--
--    addr >>= 2;
--    switch (addr) {
--    case RW_MA0_LO:
--    case RW_MA0_HI:
--        eth->regs[addr] = value;
--        eth_update_ma(eth, 0);
--        break;
--    case RW_MA1_LO:
--    case RW_MA1_HI:
--        eth->regs[addr] = value;
--        eth_update_ma(eth, 1);
--        break;
--
--    case RW_MGM_CTRL:
--        /* Attach an MDIO/PHY abstraction.  */
--        if (value & 2) {
--            eth->mdio_bus.mdio = value & 1;
--        }
--        if (eth->mdio_bus.mdc != (value & 4)) {
--            mdio_cycle(&eth->mdio_bus);
--            eth_validate_duplex(eth);
--        }
--        eth->mdio_bus.mdc = !!(value & 4);
--        eth->regs[addr] = value;
--        break;
--
--    case RW_REC_CTRL:
--        eth->regs[addr] = value;
--        eth_validate_duplex(eth);
--        break;
--
--    default:
--        eth->regs[addr] = value;
--        D(printf("%s %x %x\n", __func__, addr, value));
--        break;
--    }
--}
--
--/* The ETRAX FS has a groupt address table (GAT) which works like a k=1 bloom
--   filter dropping group addresses we have not joined.    The filter has 64
--   bits (m). The has function is a simple nible xor of the group addr.    */
--static int eth_match_groupaddr(ETRAXFSEthState *eth, const unsigned char *sa)
--{
--    unsigned int hsh;
--    int m_individual = eth->regs[RW_REC_CTRL] & 4;
--    int match;
--
--    /* First bit on the wire of a MAC address signals multicast or
--       physical address.  */
--    if (!m_individual && !(sa[0] & 1)) {
--        return 0;
--    }
--
--    /* Calculate the hash index for the GA registers. */
--    hsh = 0;
--    hsh ^= (*sa) & 0x3f;
--    hsh ^= ((*sa) >> 6) & 0x03;
--    ++sa;
--    hsh ^= ((*sa) << 2) & 0x03c;
--    hsh ^= ((*sa) >> 4) & 0xf;
--    ++sa;
--    hsh ^= ((*sa) << 4) & 0x30;
--    hsh ^= ((*sa) >> 2) & 0x3f;
--    ++sa;
--    hsh ^= (*sa) & 0x3f;
--    hsh ^= ((*sa) >> 6) & 0x03;
--    ++sa;
--    hsh ^= ((*sa) << 2) & 0x03c;
--    hsh ^= ((*sa) >> 4) & 0xf;
--    ++sa;
--    hsh ^= ((*sa) << 4) & 0x30;
--    hsh ^= ((*sa) >> 2) & 0x3f;
--
--    hsh &= 63;
--    if (hsh > 31) {
--        match = eth->regs[RW_GA_HI] & (1 << (hsh - 32));
--    } else {
--        match = eth->regs[RW_GA_LO] & (1 << hsh);
--    }
--    D(printf("hsh=%x ga=%x.%x mtch=%d\n", hsh,
--             eth->regs[RW_GA_HI], eth->regs[RW_GA_LO], match));
--    return match;
--}
--
--static ssize_t eth_receive(NetClientState *nc, const uint8_t *buf, size_t size)
--{
--    unsigned char sa_bcast[6] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
--    ETRAXFSEthState *eth = qemu_get_nic_opaque(nc);
--    int use_ma0 = eth->regs[RW_REC_CTRL] & 1;
--    int use_ma1 = eth->regs[RW_REC_CTRL] & 2;
--    int r_bcast = eth->regs[RW_REC_CTRL] & 8;
--
--    if (size < 12) {
--        return -1;
--    }
--
--    D(printf("%x.%x.%x.%x.%x.%x ma=%d %d bc=%d\n",
--         buf[0], buf[1], buf[2], buf[3], buf[4], buf[5],
--         use_ma0, use_ma1, r_bcast));
--
--    /* Does the frame get through the address filters?  */
--    if ((!use_ma0 || memcmp(buf, eth->macaddr[0], 6))
--        && (!use_ma1 || memcmp(buf, eth->macaddr[1], 6))
--        && (!r_bcast || memcmp(buf, sa_bcast, 6))
--        && !eth_match_groupaddr(eth, buf)) {
--        return size;
--    }
--
--    /* FIXME: Find another way to pass on the fake csum.  */
--    etraxfs_dmac_input(eth->dma_in, (void *)buf, size + 4, 1);
--
--    return size;
--}
--
--static int eth_tx_push(void *opaque, unsigned char *buf, int len, bool eop)
--{
--    ETRAXFSEthState *eth = opaque;
--
--    D(printf("%s buf=%p len=%d\n", __func__, buf, len));
--    qemu_send_packet(qemu_get_queue(eth->nic), buf, len);
--    return len;
--}
--
--static void eth_set_link(NetClientState *nc)
--{
--    ETRAXFSEthState *eth = qemu_get_nic_opaque(nc);
--    D(printf("%s %d\n", __func__, nc->link_down));
--    eth->phy.link = !nc->link_down;
--}
--
--static const MemoryRegionOps eth_ops = {
--    .read = eth_read,
--    .write = eth_write,
--    .endianness = DEVICE_LITTLE_ENDIAN,
--    .valid = {
--        .min_access_size = 4,
--        .max_access_size = 4
--    }
--};
--
--static NetClientInfo net_etraxfs_info = {
--    .type = NET_CLIENT_DRIVER_NIC,
--    .size = sizeof(NICState),
--    .receive = eth_receive,
--    .link_status_changed = eth_set_link,
--};
--
--static void etraxfs_eth_reset(DeviceState *dev)
--{
--    ETRAXFSEthState *s = ETRAX_FS_ETH(dev);
--
--    memset(s->regs, 0, sizeof(s->regs));
--    memset(s->macaddr, 0, sizeof(s->macaddr));
--    s->duplex_mismatch = 0;
--
--    s->mdio_bus.mdc = 0;
--    s->mdio_bus.mdio = 0;
--    s->mdio_bus.state = 0;
--    s->mdio_bus.drive = 0;
--    s->mdio_bus.cnt = 0;
--    s->mdio_bus.addr = 0;
--    s->mdio_bus.opc = 0;
--    s->mdio_bus.req = 0;
--    s->mdio_bus.data = 0;
--
--    tdk_reset(&s->phy);
--}
--
--static void etraxfs_eth_realize(DeviceState *dev, Error **errp)
--{
--    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
--    ETRAXFSEthState *s = ETRAX_FS_ETH(dev);
--
--    if (!s->dma_out || !s->dma_in) {
--        error_setg(errp, "Unconnected ETRAX-FS Ethernet MAC");
--        return;
--    }
--
--    s->dma_out->client.push = eth_tx_push;
--    s->dma_out->client.opaque = s;
--    s->dma_in->client.opaque = s;
--    s->dma_in->client.pull = NULL;
--
--    memory_region_init_io(&s->mmio, OBJECT(dev), &eth_ops, s,
--                          "etraxfs-eth", 0x5c);
--    sysbus_init_mmio(sbd, &s->mmio);
--
--    qemu_macaddr_default_if_unset(&s->conf.macaddr);
--    s->nic = qemu_new_nic(&net_etraxfs_info, &s->conf,
--                          object_get_typename(OBJECT(s)), dev->id,
--                          &dev->mem_reentrancy_guard, s);
--    qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a);
--
--    s->phy.read = tdk_read;
--    s->phy.write = tdk_write;
--    mdio_attach(&s->mdio_bus, &s->phy, s->phyaddr);
--}
--
--static Property etraxfs_eth_properties[] = {
--    DEFINE_PROP_UINT32("phyaddr", ETRAXFSEthState, phyaddr, 1),
--    DEFINE_NIC_PROPERTIES(ETRAXFSEthState, conf),
--    DEFINE_PROP_END_OF_LIST(),
--};
--
--static void etraxfs_eth_class_init(ObjectClass *klass, void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(klass);
--
--    dc->realize = etraxfs_eth_realize;
--    dc->reset = etraxfs_eth_reset;
--    device_class_set_props(dc, etraxfs_eth_properties);
--    /* Reason: dma_out, dma_in are not user settable */
--    dc->user_creatable = false;
--}
--
--
--/* Instantiate an ETRAXFS Ethernet MAC.  */
--DeviceState *
--etraxfs_eth_init(hwaddr base, int phyaddr,
--                 struct etraxfs_dma_client *dma_out,
--                 struct etraxfs_dma_client *dma_in)
--{
--    DeviceState *dev;
--
--    dev = qdev_new("etraxfs-eth");
--    qemu_configure_nic_device(dev, true, "fseth");
--    qdev_prop_set_uint32(dev, "phyaddr", phyaddr);
--
--    /*
--     * TODO: QOM design, define a QOM interface for "I am an etraxfs
--     * DMA client" (which replaces the current 'struct
--     * etraxfs_dma_client' ad-hoc interface), implement it on the
--     * ethernet device, and then have QOM link properties on the DMA
--     * controller device so that you can pass the interface
--     * implementations to it.
--     */
--    ETRAX_FS_ETH(dev)->dma_out = dma_out;
--    ETRAX_FS_ETH(dev)->dma_in = dma_in;
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
--    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
--
--    return dev;
--}
--
--static const TypeInfo etraxfs_eth_info = {
--    .name          = TYPE_ETRAX_FS_ETH,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(ETRAXFSEthState),
--    .class_init    = etraxfs_eth_class_init,
--};
--
--static void etraxfs_eth_register_types(void)
--{
--    type_register_static(&etraxfs_eth_info);
--}
--
--type_init(etraxfs_eth_register_types)
-diff --git a/hw/net/meson.build b/hw/net/meson.build
-index b7426870e8..00a9e9dd51 100644
---- a/hw/net/meson.build
-+++ b/hw/net/meson.build
-@@ -40,7 +40,6 @@ system_ss.add(when: 'CONFIG_FTGMAC100', if_true: files('ftgmac100.c'))
- system_ss.add(when: 'CONFIG_SUNGEM', if_true: files('sungem.c'))
- system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_emc.c', 'npcm_gmac.c'))
- 
--system_ss.add(when: 'CONFIG_ETRAXFS', if_true: files('etraxfs_eth.c'))
- system_ss.add(when: 'CONFIG_COLDFIRE', if_true: files('mcf_fec.c'))
- specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_llan.c'))
- system_ss.add(when: 'CONFIG_XILINX_ETHLITE', if_true: files('xilinx_ethlite.c'))
-diff --git a/hw/net/trace-events b/hw/net/trace-events
-index 78efa2ec2c..4c6687923e 100644
---- a/hw/net/trace-events
-+++ b/hw/net/trace-events
-@@ -10,11 +10,6 @@ allwinner_sun8i_emac_set_link(bool active) "Set link: active=%u"
- allwinner_sun8i_emac_read(uint64_t offset, uint64_t val) "MMIO read: offset=0x%" PRIx64 " value=0x%" PRIx64
- allwinner_sun8i_emac_write(uint64_t offset, uint64_t val) "MMIO write: offset=0x%" PRIx64 " value=0x%" PRIx64
- 
--# etraxfs_eth.c
--mdio_phy_read(int regnum, uint16_t value) "read phy_reg:%d value:0x%04x"
--mdio_phy_write(int regnum, uint16_t value) "write phy_reg:%d value:0x%04x"
--mdio_bitbang(bool mdc, bool mdio, int state, uint16_t cnt, unsigned int drive) "bitbang mdc=%u mdio=%u state=%d cnt=%u drv=%d"
--
- # lance.c
- lance_mem_readw(uint64_t addr, uint32_t ret) "addr=0x%"PRIx64"val=0x%04x"
- lance_mem_writew(uint64_t addr, uint32_t val) "addr=0x%"PRIx64"val=0x%04x"
+@@ -1,15 +0,0 @@
+-
+-
+-.include "testutils.inc"
+-
+-	start
+-
+-	move.d	4294967283, $r0
+-	move.d	$r0, $r10
+-	cmp.d	$r0, $r10
+-	beq	1f
+-	move.d $r10, $r3
+-	fail
+-1:
+-	pass
+-	quit
+diff --git a/tests/tcg/cris/bare/check_cmpc.s b/tests/tcg/cris/bare/check_cmpc.s
+deleted file mode 100644
+index 267c9ba8c0..0000000000
+--- a/tests/tcg/cris/bare/check_cmpc.s
++++ /dev/null
+@@ -1,86 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: ffffffff\n2\nffff\nffffffff\n78134452\nffffffff\n2\nffff\nfedaffff\n78134452\nffffffff\n2\nff\nfeda49ff\n78134452\n85649282\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- cmp.d -2,r3
+- test_cc 0 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- cmp.d 1,r3
+- test_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- cmp.d -0xffff,r3
+- test_cc 0 0 0 1
+- checkr3 ffff
+-
+- moveq -1,r3
+- cmp.d 1,r3
+- test_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- cmp.d -0x5432f789,r3
+- test_cc 1 0 1 1
+- checkr3 78134452
+-
+- moveq -1,r3
+- cmp.w -2,r3
+- test_cc 0 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- cmp.w 1,r3
+- test_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- cmp.w 1,r3
+- test_cc 1 0 0 0
+- checkr3 ffff
+-
+- move.d 0xfedaffff,r3
+- cmp.w 1,r3
+- test_cc 1 0 0 0
+- checkr3 fedaffff
+-
+- move.d 0x78134452,r3
+- cmp.w 0x877,r3
+- test_cc 0 0 0 0
+- checkr3 78134452
+-
+- moveq -1,r3
+- cmp.b -2,r3
+- test_cc 0 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- cmp.b 1,r3
+- test_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xff,r3
+- cmp.b 1,r3
+- test_cc 1 0 0 0
+- checkr3 ff
+-
+- move.d 0xfeda49ff,r3
+- cmp.b 1,r3
+- test_cc 1 0 0 0
+- checkr3 feda49ff
+-
+- move.d 0x78134452,r3
+- cmp.b 0x77,r3
+- test_cc 1 0 0 1
+- checkr3 78134452
+-
+- move.d 0x85649282,r3
+- cmp.b 0x82,r3
+- test_cc 0 1 0 0
+- checkr3 85649282
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_cmpm.s b/tests/tcg/cris/bare/check_cmpm.s
+deleted file mode 100644
+index e4dde15b32..0000000000
+--- a/tests/tcg/cris/bare/check_cmpm.s
++++ /dev/null
+@@ -1,96 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: ffffffff\n2\nffff\nffffffff\n78134452\nffffffff\n2\nffff\nfedaffff\n78134452\nffffffff\n2\nff\nfeda49ff\n78134452\n85649222\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .dword -2,1,-0xffff,1,-0x5432f789
+- .word -2,1,1,0x877
+- .byte -2,1,0x77
+- .byte 0x22
+-
+- start
+- moveq -1,r3
+- move.d x,r5
+- cmp.d [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- cmp.d [r5],r3
+- test_cc 0 0 0 0
+- addq 4,r5
+- checkr3 2
+-
+- move.d 0xffff,r3
+- cmp.d [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 ffff
+-
+- moveq -1,r3
+- cmp.d [r5+],r3
+- test_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- cmp.d [r5+],r3
+- test_cc 1 0 1 1
+- checkr3 78134452
+-
+- moveq -1,r3
+- cmp.w [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- cmp.w [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- cmp.w [r5],r3
+- test_cc 1 0 0 0
+- checkr3 ffff
+-
+- move.d 0xfedaffff,r3
+- cmp.w [r5+],r3
+- test_cc 1 0 0 0
+- checkr3 fedaffff
+-
+- move.d 0x78134452,r3
+- cmp.w [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 78134452
+-
+- moveq -1,r3
+- cmp.b [r5],r3
+- test_cc 0 0 0 0
+- addq 1,r5
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- cmp.b [r5],r3
+- test_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xff,r3
+- cmp.b [r5],r3
+- test_cc 1 0 0 0
+- checkr3 ff
+-
+- move.d 0xfeda49ff,r3
+- cmp.b [r5+],r3
+- test_cc 1 0 0 0
+- checkr3 feda49ff
+-
+- move.d 0x78134452,r3
+- cmp.b [r5+],r3
+- test_cc 1 0 0 1
+- checkr3 78134452
+-
+- move.d 0x85649222,r3
+- cmp.b [r5],r3
+- test_cc 0 1 0 0
+- checkr3 85649222
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_cmpq.s b/tests/tcg/cris/bare/check_cmpq.s
+deleted file mode 100644
+index 5469141c91..0000000000
+--- a/tests/tcg/cris/bare/check_cmpq.s
++++ /dev/null
+@@ -1,75 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n1\n1f\n1f\nffffffe1\nffffffe1\nffffffe0\n0\n0\nffffffff\nffffffff\n10000\n100\n5678900\n
+-
+- .include "testutils.inc"
+- start
+- moveq 1,r3
+- cmpq 1,r3
+- test_cc 0 1 0 0
+- checkr3 1
+-
+- cmpq -1,r3
+- test_cc 0 0 0 1
+- checkr3 1
+-
+- cmpq 31,r3
+- test_cc 1 0 0 1
+- checkr3 1
+-
+- moveq 31,r3
+- cmpq 31,r3
+- test_cc 0 1 0 0
+- checkr3 1f
+-
+- cmpq -31,r3
+- test_cc 0 0 0 1
+- checkr3 1f
+-
+- movs.b -31,r3
+- cmpq -31,r3
+- test_cc 0 1 0 0
+- checkr3 ffffffe1
+-
+- cmpq -32,r3
+- test_cc 0 0 0 0
+- checkr3 ffffffe1
+-
+- movs.b -32,r3
+- cmpq -32,r3
+- test_cc 0 1 0 0
+- checkr3 ffffffe0
+-
+- moveq 0,r3
+- cmpq 1,r3
+- test_cc 1 0 0 1
+- checkr3 0
+-
+- cmpq -32,r3
+- test_cc 0 0 0 1
+- checkr3 0
+-
+- moveq -1,r3
+- cmpq 1,r3
+- test_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- cmpq -1,r3
+- test_cc 0 1 0 0
+- checkr3 ffffffff
+-
+- move.d 0x10000,r3
+- cmpq 1,r3
+- test_cc 0 0 0 0
+- checkr3 10000
+-
+- move.d 0x100,r3
+- cmpq 1,r3
+- test_cc 0 0 0 0
+- checkr3 100
+-
+- move.d 0x5678900,r3
+- cmpq 7,r3
+- test_cc 0 0 0 0
+- checkr3 5678900
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_cmpr.s b/tests/tcg/cris/bare/check_cmpr.s
+deleted file mode 100644
+index b30af7a538..0000000000
+--- a/tests/tcg/cris/bare/check_cmpr.s
++++ /dev/null
+@@ -1,102 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: ffffffff\n2\nffff\nffffffff\n78134452\nffffffff\n2\nffff\nfedaffff\n78134452\nffffffff\n2\nff\nfeda49ff\n78134452\n85649222\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq -2,r4
+- cmp.d r4,r3
+- test_cc 0 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq 1,r4
+- cmp.d r4,r3
+- test_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- move.d -0xffff,r4
+- cmp.d r4,r3
+- test_cc 0 0 0 1
+- checkr3 ffff
+-
+- moveq 1,r4
+- moveq -1,r3
+- cmp.d r4,r3
+- test_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d -0x5432f789,r4
+- move.d 0x78134452,r3
+- cmp.d r4,r3
+- test_cc 1 0 1 1
+- checkr3 78134452
+-
+- moveq -1,r3
+- moveq -2,r4
+- cmp.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq 1,r4
+- cmp.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 2
+-
+- move.d 0xffff,r3
+- move.d -0xffff,r4
+- cmp.w r4,r3
+- test_cc 1 0 0 0
+- checkr3 ffff
+-
+- move.d 0xfedaffff,r3
+- move.d -0xfedaffff,r4
+- cmp.w r4,r3
+- test_cc 1 0 0 0
+- checkr3 fedaffff
+-
+- move.d -0x5432f789,r4
+- move.d 0x78134452,r3
+- cmp.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 78134452
+-
+- moveq -1,r3
+- moveq -2,r4
+- cmp.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq 1,r4
+- cmp.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 2
+-
+- move.d -0xff,r4
+- move.d 0xff,r3
+- cmp.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 ff
+-
+- move.d -0xfeda49ff,r4
+- move.d 0xfeda49ff,r3
+- cmp.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 feda49ff
+-
+- move.d -0x5432f789,r4
+- move.d 0x78134452,r3
+- cmp.b r4,r3
+- test_cc 1 0 0 1
+- checkr3 78134452
+-
+- move.d 0x85649222,r3
+- move.d 0x77445622,r4
+- cmp.b r4,r3
+- test_cc 0 1 0 0
+- checkr3 85649222
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_cmpxc.s b/tests/tcg/cris/bare/check_cmpxc.s
+deleted file mode 100644
+index b237a93175..0000000000
+--- a/tests/tcg/cris/bare/check_cmpxc.s
++++ /dev/null
+@@ -1,92 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 2\n2\n2\n2\nffff\nffff\nffff\nffff\nffffffff\nffffffff\nffffffff\n78134452\n78134452\n78134452\n78134452\n4452\n80000032\n
+-
+- .include "testutils.inc"
+- start
+- moveq 2,r3
+- cmps.b 0xff,r3
+- test_cc 0 0 0 1
+- checkr3 2
+-
+- moveq 2,r3
+- cmps.w 0xffff,r3
+- test_cc 0 0 0 1
+- checkr3 2
+-
+- moveq 2,r3
+- cmpu.b 0xff,r3
+- test_cc 1 0 0 1
+- checkr3 2
+-
+- moveq 2,r3
+- move.d 0xffffffff,r4
+- cmpu.w -1,r3
+- test_cc 1 0 0 1
+- checkr3 2
+-
+- move.d 0xffff,r3
+- cmpu.b -1,r3
+- test_cc 0 0 0 0
+- checkr3 ffff
+-
+- move.d 0xffff,r3
+- cmpu.w -1,r3
+- test_cc 0 1 0 0
+- checkr3 ffff
+-
+- move.d 0xffff,r3
+- cmps.b 0xff,r3
+- test_cc 0 0 0 1
+- checkr3 ffff
+-
+- move.d 0xffff,r3
+- cmps.w 0xffff,r3
+- test_cc 0 0 0 1
+- checkr3 ffff
+-
+- moveq -1,r3
+- cmps.b 0xff,r3
+- test_cc 0 1 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- cmps.w 0xff,r3
+- test_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- cmps.w 0xffff,r3
+- test_cc 0 1 0 0
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- cmpu.b 0x89,r3
+- test_cc 0 0 0 0
+- checkr3 78134452
+-
+- move.d 0x78134452,r3
+- cmps.b 0x89,r3
+- test_cc 0 0 0 1
+- checkr3 78134452
+-
+- move.d 0x78134452,r3
+- cmpu.w 0xf789,r3
+- test_cc 0 0 0 0
+- checkr3 78134452
+-
+- move.d 0x78134452,r3
+- cmps.w 0xf789,r3
+- test_cc 0 0 0 1
+- checkr3 78134452
+-
+- move.d 0x4452,r3
+- cmps.w 0x8002,r3
+- test_cc 0 0 0 1
+- checkr3 4452
+-
+- move.d 0x80000032,r3
+- cmpu.w 0x764,r3
+- test_cc 0 0 1 0
+- checkr3 80000032
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_cmpxm.s b/tests/tcg/cris/bare/check_cmpxm.s
+deleted file mode 100644
+index 87ea5bf8e3..0000000000
+--- a/tests/tcg/cris/bare/check_cmpxm.s
++++ /dev/null
+@@ -1,106 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 2\n2\n2\n2\nffff\nffff\nffff\nffff\nffffffff\nffffffff\nffffffff\n78134452\n78134452\n78134452\n78134452\n4452\n80000032\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .byte 0xff
+- .word 0xffff
+- .word 0xff
+- .word 0xffff
+- .byte 0x89
+- .word 0xf789
+- .word 0x8002
+- .word 0x764
+-
+- start
+- moveq 2,r3
+- move.d x,r5
+- cmps.b [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 2
+-
+- moveq 2,r3
+- cmps.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 2
+-
+- moveq 2,r3
+- subq 3,r5
+- cmpu.b [r5+],r3
+- test_cc 1 0 0 1
+- checkr3 2
+-
+- moveq 2,r3
+- cmpu.w [r5+],r3
+- test_cc 1 0 0 1
+- subq 3,r5
+- checkr3 2
+-
+- move.d 0xffff,r3
+- cmpu.b [r5],r3
+- test_cc 0 0 0 0
+- checkr3 ffff
+-
+- move.d 0xffff,r3
+- cmpu.w [r5],r3
+- test_cc 0 1 0 0
+- checkr3 ffff
+-
+- move.d 0xffff,r3
+- cmps.b [r5],r3
+- test_cc 0 0 0 1
+- checkr3 ffff
+-
+- move.d 0xffff,r3
+- cmps.w [r5],r3
+- test_cc 0 0 0 1
+- checkr3 ffff
+-
+- moveq -1,r3
+- cmps.b [r5],r3
+- test_cc 0 1 0 0
+- addq 3,r5
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- cmps.w [r5+],r3
+- test_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- cmps.w [r5+],r3
+- test_cc 0 1 0 0
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- cmpu.b [r5],r3
+- test_cc 0 0 0 0
+- checkr3 78134452
+-
+- move.d 0x78134452,r3
+- cmps.b [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 78134452
+-
+- move.d 0x78134452,r3
+- cmpu.w [r5],r3
+- test_cc 0 0 0 0
+- checkr3 78134452
+-
+- move.d 0x78134452,r3
+- cmps.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 78134452
+-
+- move.d 0x4452,r3
+- cmps.w [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 4452
+-
+- move.d 0x80000032,r3
+- cmpu.w [r5+],r3
+- test_cc 0 0 1 0
+- checkr3 80000032
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_dstep.s b/tests/tcg/cris/bare/check_dstep.s
+deleted file mode 100644
+index bd43b838ea..0000000000
+--- a/tests/tcg/cris/bare/check_dstep.s
++++ /dev/null
+@@ -1,42 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: fffffffc\n4\nffff\nfffffffe\n9bf3911b\n0\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq 2,r4
+- dstep r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 fffffffc
+-
+- moveq 2,r3
+- moveq -1,r4
+- dstep r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 4
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- dstep r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r4
+- move.d r4,r3
+- dstep r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 fffffffe
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- dstep r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 9bf3911b
+-
+- move.d 0xffff,r3
+- move.d 0x1fffe,r4
+- dstep r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_jsr.s b/tests/tcg/cris/bare/check_jsr.s
+deleted file mode 100644
+index 1060237873..0000000000
+--- a/tests/tcg/cris/bare/check_jsr.s
++++ /dev/null
+@@ -1,85 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 0\n0\n0\n0\n0\n0\n
+-
+-# Test that jsr Rn and jsr [PC+] work.
+-
+- .include "testutils.inc"
+- start
+-x:
+- move.d 0f,r6
+- setf nzvc
+- jsr r6
+- .if 1; ..asm.arch.cris.v32
+- nop
+- .endif
+-0:
+- test_move_cc 1 1 1 1
+- move srp,r3
+- sub.d 0b,r3
+- checkr3 0
+-
+- move.d 1f,r0
+- setf nzvc
+- jsr r0
+- .if 1 ; ..asm.arch.cris.v32
+- moveq 0,r0
+- .endif
+-6:
+- nop
+- quit
+-
+-2:
+- test_move_cc 0 0 0 0
+- move srp,r3
+- sub.d 3f,r3
+- checkr3 0
+- jsr 4f
+- .if 1 ; ..asm.arch.cris.v32
+- nop
+- .endif
+-7:
+- nop
+- quit
+-
+-8:
+- move srp,r3
+- sub.d 7b,r3
+- checkr3 0
+- quit
+-
+-4:
+- move srp,r3
+- sub.d 7b,r3
+- checkr3 0
+- move.d 5f,r3
+- jump r3
+- .if 1; ..asm.arch.cris.v32
+- moveq 0,r3
+- .endif
+- quit
+-
+- .space 32770,0
+-1:
+- test_move_cc 1 1 1 1
+- move srp,r3
+- sub.d 6b,r3
+- checkr3 0
+-
+- clearf cznv
+- jsr 2b
+- .if 1; ..asm.arch.cris.v32
+- nop
+- .endif
+-3:
+-
+- quit
+-
+-5:
+- move srp,r3
+- sub.d 7b,r3
+- checkr3 0
+- jump 8b
+- .if 1 ; ..asm.arch.cris.v32
+- nop
+- .endif
+- quit
+diff --git a/tests/tcg/cris/bare/check_lapc.s b/tests/tcg/cris/bare/check_lapc.s
+deleted file mode 100644
+index 9a6150b749..0000000000
+--- a/tests/tcg/cris/bare/check_lapc.s
++++ /dev/null
+@@ -1,78 +0,0 @@
+-# mach: crisv32
+-# output: 0\n0\nfffffffa\nfffffffe\nffffffda\n1e\n1e\n0\n
+-
+-.include "testutils.inc"
+-
+-; To accommodate dumpr3 with more than one instruction, keep it
+-; out of lapc operand ranges and difference calculations.
+-
+- start
+- lapc.d 0f,r3
+-0:
+- sub.d .,r3
+- checkr3 0
+-
+- lapcq 0f,r3
+-0:
+- sub.d .,r3
+- checkr3 0
+-
+- lapc.d .,r3
+- sub.d .,r3
+- checkr3 fffffffa
+-
+- lapcq .,r3
+- sub.d .,r3
+- checkr3 fffffffe
+-
+-0:
+- .rept 16
+- nop
+- .endr
+- lapc.d 0b,r3
+- sub.d .,r3
+- checkr3 ffffffda
+-
+- setf zcvn
+- lapc.d 0f,r3
+- test_cc 1 1 1 1
+- sub.d .,r3
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+-0:
+- checkr3 1e
+-0:
+- lapcq 0f,r3
+- sub.d 0b,r3
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+- nop
+-0:
+- checkr3 1e
+- clearf cn
+- setf zv
+-1:
+- lapcq .,r3
+- test_cc 0 1 1 0
+- sub.d 1b,r3
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_lsl.s b/tests/tcg/cris/bare/check_lsl.s
+deleted file mode 100644
+index 9e2ddd7cd0..0000000000
+--- a/tests/tcg/cris/bare/check_lsl.s
++++ /dev/null
+@@ -1,217 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: ffffffff\n4\n80000000\nffff8000\n7f19f000\n80000000\n0\n0\n699fc67c\nffffffff\n4\n80000000\nffff8000\n7f19f000\nda670000\nda670000\nda670000\nda67c67c\nffffffff\nfffafffe\n4\nffff0000\nffff8000\n5a67f000\nda67f100\nda67f100\nda67f100\nda67f17c\nfff3faff\nfff3fafe\n4\nffffff00\nffffff00\nffffff80\n5a67f100\n5a67f1f0\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- lslq 0,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- lslq 1,r3
+- test_move_cc 0 0 0 0
+- checkr3 4
+-
+- moveq -1,r3
+- lslq 31,r3
+- test_move_cc 1 0 0 0
+- checkr3 80000000
+-
+- moveq -1,r3
+- lslq 15,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffff8000
+-
+- move.d 0x5a67f19f,r3
+- lslq 12,r3
+- test_move_cc 0 0 0 0
+- checkr3 7f19f000
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- lsl.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 80000000
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- lsl.d r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- lsl.d r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- lsl.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 699fc67c
+-
+- moveq -1,r3
+- moveq 0,r4
+- lsl.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq 1,r4
+- lsl.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 4
+-
+- moveq -1,r3
+- moveq 31,r4
+- lsl.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 80000000
+-
+- moveq -1,r3
+- moveq 15,r4
+- lsl.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffff8000
+-
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- lsl.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 7f19f000
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- lsl.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da670000
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- lsl.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da670000
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- lsl.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da670000
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- lsl.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 da67c67c
+-
+- moveq -1,r3
+- moveq 0,r4
+- lsl.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0xfffaffff,r3
+- moveq 1,r4
+- lsl.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 fffafffe
+-
+- moveq 2,r3
+- moveq 1,r4
+- lsl.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 4
+-
+- moveq -1,r3
+- moveq 31,r4
+- lsl.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 ffff0000
+-
+- moveq -1,r3
+- moveq 15,r4
+- lsl.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffff8000
+-
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- lsl.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 5a67f000
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- lsl.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da67f100
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- lsl.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da67f100
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- lsl.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da67f100
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- lsl.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 da67f17c
+-
+- move.d 0xfff3faff,r3
+- moveq 0,r4
+- lsl.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 fff3faff
+-
+- move.d 0xfff3faff,r3
+- moveq 1,r4
+- lsl.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 fff3fafe
+-
+- moveq 2,r3
+- moveq 1,r4
+- lsl.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 4
+-
+- moveq -1,r3
+- moveq 31,r4
+- lsl.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 ffffff00
+-
+- moveq -1,r3
+- moveq 15,r4
+- lsl.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 ffffff00
+-
+- moveq -1,r3
+- moveq 7,r4
+- lsl.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffff80
+-
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- lsl.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 5a67f100
+-
+- move.d 0x5a67f19f,r3
+- moveq 4,r4
+- lsl.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 5a67f1f0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_lsr.s b/tests/tcg/cris/bare/check_lsr.s
+deleted file mode 100644
+index 18fdbef9b2..0000000000
+--- a/tests/tcg/cris/bare/check_lsr.s
++++ /dev/null
+@@ -1,218 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: ffffffff\n1\n1\n1ffff\n5a67f\n1\n0\n0\n3699fc67\nffffffff\n1\n1\n1ffff\n5a67f\nda670000\nda670000\nda670000\nda673c67\nffffffff\nffff7fff\n1\nffff0000\nffff0001\n5a67000f\nda67f100\nda67f100\nda67f100\nda67f127\nffffffff\nffffff7f\n1\nffffff00\nffffff00\nffffff01\n5a67f100\n5a67f109\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- lsrq 0,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- lsrq 1,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- lsrq 31,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- lsrq 15,r3
+- test_move_cc 0 0 0 0
+- checkr3 1ffff
+-
+- move.d 0x5a67f19f,r3
+- lsrq 12,r3
+- test_move_cc 0 0 0 0
+- checkr3 5a67f
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- lsr.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- lsr.d r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- lsr.d r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- lsr.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 3699fc67
+-
+- moveq -1,r3
+- moveq 0,r4
+- lsr.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq 1,r4
+- lsr.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- moveq 31,r4
+- lsr.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- moveq 15,r4
+- lsr.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1ffff
+-
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- lsr.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 5a67f
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- lsr.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da670000
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- lsr.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da670000
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- lsr.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da670000
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- lsr.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 da673c67
+-
+- moveq -1,r3
+- moveq 0,r4
+- lsr.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 1,r4
+- lsr.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff7fff
+-
+- moveq 2,r3
+- moveq 1,r4
+- lsr.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+-;; FIXME: this was wrong. Z should be set.
+- moveq -1,r3
+- moveq 31,r4
+- lsr.w r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 ffff0000
+-
+- moveq -1,r3
+- moveq 15,r4
+- lsr.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff0001
+-
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- lsr.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 5a67000f
+-
+- move.d 0xda67f19f,r3
+- move.d 31,r4
+- lsr.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da67f100
+-
+- move.d 0xda67f19f,r3
+- move.d 32,r4
+- lsr.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da67f100
+-
+- move.d 0xda67f19f,r3
+- move.d 33,r4
+- lsr.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 da67f100
+-
+- move.d 0xda67f19f,r3
+- move.d 66,r4
+- lsr.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 da67f127
+-
+- moveq -1,r3
+- moveq 0,r4
+- lsr.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 1,r4
+- lsr.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffffff7f
+-
+- moveq 2,r3
+- moveq 1,r4
+- lsr.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- moveq -1,r3
+- moveq 31,r4
+- lsr.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 ffffff00
+-
+- moveq -1,r3
+- moveq 15,r4
+- lsr.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 ffffff00
+-
+- moveq -1,r3
+- moveq 7,r4
+- lsr.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffffff01
+-
+- move.d 0x5a67f19f,r3
+- moveq 12,r4
+- lsr.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 5a67f100
+-
+- move.d 0x5a67f19f,r3
+- moveq 4,r4
+- lsr.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 5a67f109
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_mcp.s b/tests/tcg/cris/bare/check_mcp.s
+deleted file mode 100644
+index e65ccddfd4..0000000000
+--- a/tests/tcg/cris/bare/check_mcp.s
++++ /dev/null
+@@ -1,49 +0,0 @@
+-# mach: crisv32
+-# output: fffffffe\n1\n1ffff\nfffffffe\ncc463bdc\n4c463bdc\n0\n
+-
+- .include "testutils.inc"
+- start
+-
+-; Set R, clear C.
+- move 0x100,ccs
+- moveq -5,r3
+- move 2,mof
+- mcp mof,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+-
+- moveq 2,r3
+- move -1,srp
+- mcp srp,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move 0xffff,srp
+- move srp,r3
+- mcp srp,r3
+- test_cc 0 0 0 0
+- checkr3 1ffff
+-
+- move -1,mof
+- move mof,r3
+- mcp mof,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+-
+- move 0x5432f789,mof
+- move.d 0x78134452,r3
+- mcp mof,r3
+- test_cc 1 0 1 0
+- checkr3 cc463bdc
+-
+- move 0x80000000,srp
+- mcp srp,r3
+- test_cc 0 0 1 0
+- checkr3 4c463bdc
+-
+- move 0xb3b9c423,srp
+- mcp srp,r3
+- test_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movdelsr1.s b/tests/tcg/cris/bare/check_movdelsr1.s
+deleted file mode 100644
+index 300cc87742..0000000000
+--- a/tests/tcg/cris/bare/check_movdelsr1.s
++++ /dev/null
+@@ -1,33 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: aa117acd\n
+-# output: eeaabb42\n
+-
+-; Bug with move to special register in delay slot, due to
+-; special flush-insn-cache simulator use.  Ordinary move worked;
+-; special register caused branch to fail.
+-
+- .include "testutils.inc"
+- start
+- move -1,srp
+-
+- move.d 0xaa117acd,r1
+- moveq 3,r9
+- cmpq 1,r9
+- bhi 0f
+- move.d r1,r3
+-
+- fail
+-0:
+- checkr3 aa117acd
+-
+- move.d 0xeeaabb42,r1
+- moveq 3,r9
+- cmpq 1,r9
+- bhi 0f
+- move r1,srp
+-
+- fail
+-0:
+- move srp,r3
+- checkr3 eeaabb42
+- quit
+diff --git a/tests/tcg/cris/bare/check_movecr.s b/tests/tcg/cris/bare/check_movecr.s
+deleted file mode 100644
+index da8ec26284..0000000000
+--- a/tests/tcg/cris/bare/check_movecr.s
++++ /dev/null
+@@ -1,37 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: ffffff42\n94\nffff4321\n9234\n76543210\n76540000\n
+-
+-; Move constant byte, word, dword to register.  Check that no extension is
+-; performed, that only part of the register is set.
+-
+- .include "testutils.inc"
+- startnostack
+- moveq -1,r3
+- move.b 0x42,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffffff42
+-
+- moveq 0,r3
+- move.b 0x94,r3
+- test_move_cc 1 0 0 0
+- checkr3 94
+-
+- moveq -1,r3
+- move.w 0x4321,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff4321
+-
+- moveq 0,r3
+- move.w 0x9234,r3
+- test_move_cc 1 0 0 0
+- checkr3 9234
+-
+- move.d 0x76543210,r3
+- test_move_cc 0 0 0 0
+- checkr3 76543210
+-
+- move.w 0,r3
+- test_move_cc 0 1 0 0
+- checkr3 76540000
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movei.s b/tests/tcg/cris/bare/check_movei.s
+deleted file mode 100644
+index bbfa633373..0000000000
+--- a/tests/tcg/cris/bare/check_movei.s
++++ /dev/null
+@@ -1,50 +0,0 @@
+-# mach: crisv32
+-# output: fffffffe\n
+-# output: fffffffe\n
+-
+-; Check basic integral-write semantics regarding flags.
+-
+- .include "testutils.inc"
+- start
+-
+- move.d 0, $r3	
+-; A write that works.  Check that flags are set correspondingly.
+- move.d d,r4
+- ;; store to bring it into the tlb with the right prot bits
+- move.d r3,[r4]
+- moveq -2,r5
+- setf c
+- clearf p
+- move.d [r4],r3
+- ax
+- move.d r5,[r4]
+- move.d [r4],r3
+-
+- bcc 0f
+- nop
+- fail
+-
+-0:
+- checkr3 fffffffe
+-
+-; A write that fails; check flags too.
+- move.d d,r4
+- moveq 23,r5
+- setf p
+- clearf c
+- move.d [r4],r3
+- ax
+- move.d r5,[r4]
+- move.d [r4],r3
+-
+- bcs 0f
+- nop
+- fail
+-
+-0:
+- checkr3 fffffffe
+- quit
+-
+- .data
+-d:
+- .dword 42424242
+diff --git a/tests/tcg/cris/bare/check_movemr.s b/tests/tcg/cris/bare/check_movemr.s
+deleted file mode 100644
+index 88489dee31..0000000000
+--- a/tests/tcg/cris/bare/check_movemr.s
++++ /dev/null
+@@ -1,78 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 12345678\n10234567\n12345678\n12344567\n12344523\n76543210\nffffffaa\naa\n9911\nffff9911\n78\n56\n3456\n6712\n
+-
+- .include "testutils.inc"
+- start
+-
+- .data
+-mem1:
+- .dword 0x12345678
+-mem2:
+- .word 0x4567
+-mem3:
+- .byte 0x23
+- .dword 0x76543210
+- .byte 0xaa,0x11,0x99
+-
+- .text
+- move.d mem1,r2
+- move.d [r2],r3
+- test_move_cc 0 0 0 0
+- checkr3 12345678
+-
+- move.d mem2,r3
+- move.d [r3],r3
+- test_move_cc 0 0 0 0
+- checkr3 10234567
+-
+- move.d mem1,r2
+- move.d [r2+],r3
+- test_move_cc 0 0 0 0
+- checkr3 12345678
+-
+- move.w [r2+],r3
+- test_move_cc 0 0 0 0
+- checkr3 12344567
+-
+- move.b [r2+],r3
+- test_move_cc 0 0 0 0
+- checkr3 12344523
+-
+- move.d [r2+],r3
+- test_move_cc 0 0 0 0
+- checkr3 76543210
+-
+- movs.b [r2],r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffaa
+-
+- movu.b [r2+],r3
+- test_move_cc 0 0 0 0
+- checkr3 aa
+-
+- movu.w [r2],r3
+- test_move_cc 0 0 0 0
+- checkr3 9911
+-
+- movs.w [r2+],r3
+- test_move_cc 1 0 0 0
+- checkr3 ffff9911
+-
+- move.d mem1,r13
+- movs.b [r13+],r3
+- test_move_cc 0 0 0 0
+- checkr3 78
+-
+- movu.b [r13],r3
+- test_move_cc 0 0 0 0
+- checkr3 56
+-
+- movs.w [r13+],r3
+- test_move_cc 0 0 0 0
+- checkr3 3456
+-
+- movu.w [r13+],r3
+- test_move_cc 0 0 0 0
+- checkr3 6712
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movemrv32.s b/tests/tcg/cris/bare/check_movemrv32.s
+deleted file mode 100644
+index 53950abd5b..0000000000
+--- a/tests/tcg/cris/bare/check_movemrv32.s
++++ /dev/null
+@@ -1,96 +0,0 @@
+-# mach: crisv32
+-# output: 15\n7\n2\nffff1234\nb\n16\nf\n2\nffffffef\nf\nffff1234\nf\nfffffff4\nd\nfffffff2\n10\nfffffff2\nd\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .dword 8,9,10,11
+-y:
+- .dword -12,13,-14,15,16
+-
+- start
+- moveq 7,r0
+- moveq 2,r1
+- move.d 0xffff1234,r2
+- moveq 21,r3
+- move.d x,r4
+- setf zcvn
+- movem r2,[r4+]
+- test_cc 1 1 1 1
+- subq 12,r4
+-
+- checkr3 15
+-
+- move.d [r4+],r3
+- checkr3 7
+-
+- move.d [r4+],r3
+- checkr3 2
+-
+- move.d [r4+],r3
+- checkr3 ffff1234
+-
+- move.d [r4+],r3
+- checkr3 b
+-
+- subq 16,r4
+- moveq 22,r0
+- moveq 15,r1
+- clearf zcvn
+- movem r0,[r4]
+- test_cc 0 0 0 0
+- move.d [r4+],r3
+- checkr3 16
+-
+- move.d r1,r3
+- checkr3 f
+-
+- move.d [r4+],r3
+- checkr3 2
+-
+- subq 8,r4
+- moveq 10,r2
+- moveq -17,r0
+- clearf zc
+- setf vn
+- movem r1,[r4]
+- test_cc 1 0 1 0
+- move.d [r4+],r3
+- checkr3 ffffffef
+-
+- move.d [r4+],r3
+- checkr3 f
+-
+- move.d [r4+],r3
+- checkr3 ffff1234
+-
+- move.d y,r4
+- setf zc
+- clearf vn
+- movem [r4+],r3
+- test_cc 0 1 0 1
+- checkr3 f
+-
+- move.d r0,r3
+- checkr3 fffffff4
+-
+- move.d r1,r3
+- checkr3 d
+-
+- move.d r2,r3
+- checkr3 fffffff2
+-
+- move.d [r4],r3
+- checkr3 10
+-
+- subq 8,r4
+- setf zcvn
+- movem [r4+],r0
+- test_cc 1 1 1 1
+- move.d r0,r3
+- checkr3 fffffff2
+-
+- move.d r1,r3
+- checkr3 d
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_mover.s b/tests/tcg/cris/bare/check_mover.s
+deleted file mode 100644
+index b4db595d64..0000000000
+--- a/tests/tcg/cris/bare/check_mover.s
++++ /dev/null
+@@ -1,28 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: ffffff05\nffff0005\n5\nffffff00\n
+-
+-; Move between registers.  Check that just the subreg is copied.
+-
+- .include "testutils.inc"
+- startnostack
+- moveq -30,r3
+- moveq 5,r4
+- move.b r4,r3
+- test_move_cc 0 0 0 0  		; FIXME
+- checkr3 ffffff05
+-
+- move.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff0005
+-
+- move.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- moveq -1,r3
+- moveq 0,r4
+- move.b r4,r3
+- test_move_cc 0 1 0 0
+- checkr3 ffffff00
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_moverm.s b/tests/tcg/cris/bare/check_moverm.s
+deleted file mode 100644
+index eabc9588d4..0000000000
+--- a/tests/tcg/cris/bare/check_moverm.s
++++ /dev/null
+@@ -1,45 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 7823fec2\n10231879\n102318fe\n
+-
+- .include "testutils.inc"
+- start
+-
+- .data
+-mem1:
+- .dword 0x12345678
+-mem2:
+- .word 0x4567
+-mem3:
+- .byte 0x23
+- .dword 0x76543210
+- .byte 0xaa,0x11,0x99
+-
+- .text
+- move.d mem1,r2
+- move.d 0x7823fec2,r4
+- setf nzvc
+- move.d r4,[r2+]
+- test_cc 1 1 1 1
+- subq 4,r2
+- move.d [r2],r3
+- checkr3 7823fec2
+-
+- move.d mem2,r3
+- move.d 0x45231879,r4
+- clearf nzvc
+- move.w r4,[r3]
+- test_cc 0 0 0 0
+- move.d [r3],r3
+- checkr3 10231879
+-
+- move.d mem2,r2
+- moveq -2,r4
+- clearf nc
+- setf zv
+- move.b r4,[r2+]
+- test_cc 0 1 1 0
+- subq 1,r2
+- move.d [r2],r3
+- checkr3 102318fe
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movmp.s b/tests/tcg/cris/bare/check_movmp.s
+deleted file mode 100644
+index 7fc11f064d..0000000000
+--- a/tests/tcg/cris/bare/check_movmp.s
++++ /dev/null
+@@ -1,131 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: ffffff00\nffff0000\n0\nffffff00\nffff0000\n0\nffffff00\nffff0000\n0\nbb113344\n664433aa\ncc557788\nabcde012\nabcde000\n77880000\n0\n
+-
+-# Test generic "move Ps,[]" and "move [],Pd" insns; the ones with
+-# functionality common to all models.
+-
+- .include "testutils.inc"
+- start
+-
+- .data
+-filler:
+- .byte 0xaa
+- .word 0x4433
+- .dword 0x55778866
+- .byte 0xcc
+-
+- .text
+-; Test that writing to zero-registers is a nop
+- .if 0
+- ; We used to just ignore the writes, but now an error is emitted.  We
+- ; keep the test-code but disabled, in case we need to change this again.
+- move 0xaa,p0
+- move 0x4433,p4
+- move 0x55774433,p8
+- .endif
+-
+- moveq -1,r3
+- setf zcvn
+- clear.b r3
+- test_cc 1 1 1 1
+- checkr3 ffffff00
+-
+- moveq -1,r3
+- clearf zcvn
+- clear.w r3
+- test_cc 0 0 0 0
+- checkr3 ffff0000
+-
+- moveq -1,r3
+- clear.d r3
+- checkr3 0
+-
+-; "Write" using ordinary memory references too.
+- .if 0 ; See ".if 0" above.
+- move.d filler,r6
+- move [r6],p0
+- move [r6],p4
+- move [r6],p8
+- .endif
+-
+-# ffffff00\nffff0000\n0\nffffff00\nffff0000\n0\nbb113344\n664433aa\ncc557788\nabcde012\nabcde000\n77880000\n0\n
+-
+- moveq -1,r3
+- clear.b r3
+- checkr3 ffffff00
+-
+- moveq -1,r3
+- clear.w r3
+- checkr3 ffff0000
+-
+- moveq -1,r3
+- clear.d r3
+- checkr3 0
+-
+-; And postincremented.
+- .if 0 ; See ".if 0" above.
+- move [r6+],p0
+- move [r6+],p4
+- move [r6+],p8
+- .endif
+-
+-# ffffff00\nffff0000\n0\nbb113344\n664433aa\ncc557788\nabcde012\nabcde000\n77880000\n0\n
+-
+- moveq -1,r3
+- clear.b r3
+- checkr3 ffffff00
+-
+- moveq -1,r3
+- clear.w r3
+- checkr3 ffff0000
+-
+- moveq -1,r3
+- clear.d r3
+- checkr3 0
+-
+-; Now see that we can write to the registers too.
+-# bb113344\n664433aa\ncc557788\nabcde012\nabcde000\n77880000\n0\n
+-; [PC+]
+- move.d filler,r9
+- move 0xbb113344,srp
+- move srp,r3
+- checkr3 bb113344
+-
+-; [R+]
+- move [r9+],srp
+- move srp,r3
+- checkr3 664433aa
+-
+-; [R]
+- move [r9],srp
+- move srp,r3
+- checkr3 cc557788
+-
+-; And check writing to memory, clear and srp.
+-
+- move.d filler,r9
+- move 0xabcde012,srp
+- setf zcvn
+- move srp,[r9+]
+- test_cc 1 1 1 1
+- subq 4,r9
+- move.d [r9],r3
+- checkr3 abcde012
+-
+- clearf zcvn
+- clear.b [r9]
+- test_cc 0 0 0 0
+- move.d [r9],r3
+- checkr3 abcde000
+-
+- addq 2,r9
+- clear.w [r9+]
+- subq 2,r9
+- move.d [r9],r3
+- checkr3 77880000
+-
+- clear.d [r9]
+- move.d [r9],r3
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movpmv32.s b/tests/tcg/cris/bare/check_movpmv32.s
+deleted file mode 100644
+index daf0970e4a..0000000000
+--- a/tests/tcg/cris/bare/check_movpmv32.s
++++ /dev/null
+@@ -1,35 +0,0 @@
+-# mach: crisv32
+-# output: 11223320\nbb113344\naa557711\n
+-
+-# Test v32-specific special registers.  FIXME: more registers.
+-
+- .include "testutils.inc"
+- start
+- .data
+-store:
+- .dword 0x11223344
+- .dword 0x77665544
+-
+- .text
+- moveq -1,r3
+- move.d store,r4
+- move vr,[r4]
+- move [r4+],mof
+- move mof,r3
+- checkr3 11223320
+-
+- moveq -1,r3
+- clearf zcvn
+- move 0xbb113344,mof
+- test_cc 0 0 0 0
+- move mof,r3
+- checkr3 bb113344
+-
+- setf zcvn
+- move 0xaa557711,mof
+- test_cc 1 1 1 1
+- move mof,[r4]
+- move.d [r4],r3
+- checkr3 aa557711
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movpr.s b/tests/tcg/cris/bare/check_movpr.s
+deleted file mode 100644
+index eef9bdb4fb..0000000000
+--- a/tests/tcg/cris/bare/check_movpr.s
++++ /dev/null
+@@ -1,28 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: ffffff00\nffff0000\n0\nbb113344\n
+-
+-# Test generic "move Ps,Rd" and "move Rs,Pd" insns; the ones with
+-# functionality common to all models.
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- clear.b r3
+- checkr3 ffffff00
+-
+- moveq -1,r3
+- clear.w r3
+- checkr3 ffff0000
+-
+- moveq -1,r3
+- clear.d r3
+- checkr3 0
+-
+- moveq -1,r3
+- move.d 0xbb113344,r4
+- setf zcvn
+- move r4,srp
+- move srp,r3
+- test_cc 1 1 1 1
+- checkr3 bb113344
+- quit
+diff --git a/tests/tcg/cris/bare/check_movprv32.s b/tests/tcg/cris/bare/check_movprv32.s
+deleted file mode 100644
+index d0d90e1246..0000000000
+--- a/tests/tcg/cris/bare/check_movprv32.s
++++ /dev/null
+@@ -1,21 +0,0 @@
+-# mach: crisv32
+-# output: ffffff20\nbb113344\n
+-
+-# Test v32-specific special registers.  FIXME: more registers.
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- setf zcvn
+- move vr,r3
+- test_cc 1 1 1 1
+- checkr3 ffffff20
+-
+- moveq -1,r3
+- move.d 0xbb113344,r4
+- clearf cvnz
+- move r4,mof
+- test_cc 0 0 0 0
+- move mof,r3
+- checkr3 bb113344
+- quit
+diff --git a/tests/tcg/cris/bare/check_movscr.s b/tests/tcg/cris/bare/check_movscr.s
+deleted file mode 100644
+index 53c8ce6b50..0000000000
+--- a/tests/tcg/cris/bare/check_movscr.s
++++ /dev/null
+@@ -1,29 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 42\nffffff85\n7685\nffff8765\n0\n
+-
+-; Move constant byte, word, dword to register.  Check that sign-extension
+-; is performed.
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- movs.b 0x42,r3
+- checkr3 42
+-
+- movs.b 0x85,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffff85
+-
+- movs.w 0x7685,r3
+- test_move_cc 0 0 0 0
+- checkr3 7685
+-
+- movs.w 0x8765,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffff8765
+-
+- movs.w 0,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movsm.s b/tests/tcg/cris/bare/check_movsm.s
+deleted file mode 100644
+index 7074336e78..0000000000
+--- a/tests/tcg/cris/bare/check_movsm.s
++++ /dev/null
+@@ -1,44 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 5\nfffffff5\n5\nfffffff5\n0\n
+-
+-; Movs between registers.  Check that sign-extension is performed and the
+-; full register is set.
+-
+- .include "testutils.inc"
+-
+- .data
+-x:
+- .byte 5,-11
+- .word 5,-11
+- .word 0
+-
+- start
+- move.d x,r5
+-
+- moveq -1,r3
+- movs.b [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- moveq 0,r3
+- movs.b [r5],r3
+- test_move_cc 1 0 0 0
+- addq 1,r5
+- checkr3 fffffff5
+-
+- moveq -1,r3
+- movs.w [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- moveq 0,r3
+- movs.w [r5],r3
+- test_move_cc 1 0 0 0
+- addq 2,r5
+- checkr3 fffffff5
+-
+- movs.w [r5],r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movsr.s b/tests/tcg/cris/bare/check_movsr.s
+deleted file mode 100644
+index d1889a7a1b..0000000000
+--- a/tests/tcg/cris/bare/check_movsr.s
++++ /dev/null
+@@ -1,46 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 5\nfffffff5\n5\nfffffff5\n0\n
+-
+-; Movs between registers.  Check that sign-extension is performed and the
+-; full register is set.
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r5
+- moveq 5,r4
+- move.b r4,r5
+- moveq -1,r3
+- movs.b r5,r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- moveq 0,r5
+- moveq -11,r4
+- move.b r4,r5
+- moveq 0,r3
+- movs.b r5,r3
+- test_move_cc 1 0 0 0
+- checkr3 fffffff5
+-
+- moveq -1,r5
+- moveq 5,r4
+- move.w r4,r5
+- moveq -1,r3
+- movs.w r5,r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- moveq 0,r5
+- moveq -11,r4
+- move.w r4,r5
+- moveq 0,r3
+- movs.w r5,r3
+- test_move_cc 1 0 0 0
+- checkr3 fffffff5
+-
+- moveq 0,r5
+- movs.b r5,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movucr.s b/tests/tcg/cris/bare/check_movucr.s
+deleted file mode 100644
+index 7c8487d1a2..0000000000
+--- a/tests/tcg/cris/bare/check_movucr.s
++++ /dev/null
+@@ -1,33 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 42\n85\n7685\n8765\n0\n
+-
+-; Move constant byte, word, dword to register.  Check that zero-extension
+-; is performed.
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- movu.b 0x42,r3
+- test_move_cc 0 0 0 0
+- checkr3 42
+-
+- moveq -1,r3
+- movu.b 0x85,r3
+- test_move_cc 0 0 0 0
+- checkr3 85
+-
+- moveq -1,r3
+- movu.w 0x7685,r3
+- test_move_cc 0 0 0 0
+- checkr3 7685
+-
+- moveq -1,r3
+- movu.w 0x8765,r3
+- test_move_cc 0 0 0 0
+- checkr3 8765
+-
+- movu.b 0,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movum.s b/tests/tcg/cris/bare/check_movum.s
+deleted file mode 100644
+index 038e539463..0000000000
+--- a/tests/tcg/cris/bare/check_movum.s
++++ /dev/null
+@@ -1,40 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 5\nf5\n5\nfff5\n0\n
+-
+-; Movu between registers.  Check that zero-extension is performed and the
+-; full register is set.
+-
+- .include "testutils.inc"
+-
+- .data
+-x:
+- .byte 5,-11
+- .word 5,-11
+- .word 0
+-
+- start
+- move.d x,r5
+-
+- movu.b [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- movu.b [r5],r3
+- test_move_cc 0 0 0 0
+- addq 1,r5
+- checkr3 f5
+-
+- movu.w [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- movu.w [r5],r3
+- test_move_cc 0 0 0 0
+- addq 2,r5
+- checkr3 fff5
+-
+- movu.w [r5],r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_movur.s b/tests/tcg/cris/bare/check_movur.s
+deleted file mode 100644
+index 3ecf475f75..0000000000
+--- a/tests/tcg/cris/bare/check_movur.s
++++ /dev/null
+@@ -1,45 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 5\nf5\n5\nfff5\n0\n
+-
+-; Movu between registers.  Check that zero-extension is performed and the
+-; full register is set.
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r5
+- moveq 5,r4
+- move.b r4,r5
+- moveq -1,r3
+- movu.b r5,r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- moveq 0,r5
+- moveq -11,r4
+- move.b r4,r5
+- moveq -1,r3
+- movu.b r5,r3
+- test_move_cc 0 0 0 0
+- checkr3 f5
+-
+- moveq -1,r5
+- moveq 5,r4
+- move.w r4,r5
+- moveq -1,r3
+- movu.w r5,r3
+- test_move_cc 0 0 0 0
+- checkr3 5
+-
+- moveq 0,r5
+- moveq -11,r4
+- move.w r4,r5
+- moveq -1,r3
+- movu.w r5,r3
+- test_move_cc 0 0 0 0
+- checkr3 fff5
+-
+- movu.w 0,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_mulv32.s b/tests/tcg/cris/bare/check_mulv32.s
+deleted file mode 100644
+index f379358765..0000000000
+--- a/tests/tcg/cris/bare/check_mulv32.s
++++ /dev/null
+@@ -1,51 +0,0 @@
+-# mach: crisv32
+-# output: fffffffe\n
+-# output: ffffffff\n
+-# output: fffffffe\n
+-# output: 1\n
+-# output: fffffffe\n
+-# output: ffffffff\n
+-# output: fffffffe\n
+-# output: 1\n
+-
+-; Check that carry is not modified on v32.
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq 2,r4
+- setf c
+- muls.d r4,r3
+- test_cc 1 0 0 1
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 2,r4
+- setf c
+- mulu.d r4,r3
+- test_cc 0 0 1 1
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 1
+-
+- moveq -1,r3
+- moveq 2,r4
+- clearf c
+- muls.d r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 2,r4
+- clearf c
+- mulu.d r4,r3
+- test_cc 0 0 1 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 1
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_mulx.s b/tests/tcg/cris/bare/check_mulx.s
+deleted file mode 100644
+index a7a1f82a82..0000000000
+--- a/tests/tcg/cris/bare/check_mulx.s
++++ /dev/null
+@@ -1,257 +0,0 @@
+-# mach: crisv10 crisv32
+-# output: fffffffe\nffffffff\nfffffffe\n1\nfffffffe\nffffffff\nfffffffe\n1\nfffe0001\n0\nfffe0001\n0\n1\n0\n1\nfffffffe\n193eade2\n277e3a49\n193eade2\n277e3a49\nfffffffe\nffffffff\n1fffe\n0\nfffffffe\nffffffff\n1fffe\n0\n1\n0\nfffe0001\n0\nfdbdade2\nffffffff\n420fade2\n0\nfffffffe\nffffffff\n1fe\n0\nfffffffe\nffffffff\n1fe\n0\n1\n0\nfe01\n0\n1\n0\nfe01\n0\nffffd9e2\nffffffff\n2be2\n0\n0\n0\n0\n0\n
+-
+- .include "testutils.inc"
+- start
+-
+- .align 4
+- moveq -1,r3
+- moveq 2,r4
+- muls.d r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 ffffffff
+-
+- .align 4
+- moveq -1,r3
+- moveq 2,r4
+- mulu.d r4,r3
+- test_cc 0 0 1 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 1
+-
+- .align 4
+- moveq 2,r3
+- moveq -1,r4
+- muls.d r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 ffffffff
+-
+- .align 4
+- moveq 2,r3
+- moveq -1,r4
+- mulu.d r4,r3
+- test_cc 0 0 1 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 1
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- muls.d r4,r3
+- test_cc 0 0 1 0
+- checkr3 fffe0001
+- move mof,r3
+- checkr3 0
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- mulu.d r4,r3
+- test_cc 0 0 0 0
+- checkr3 fffe0001
+- move mof,r3
+- checkr3 0
+-
+- moveq -1,r4
+- move.d r4,r3
+- muls.d r4,r3
+- test_cc 0 0 0 0
+- checkr3 1
+- move mof,r3
+- checkr3 0
+-
+- moveq -1,r4
+- move.d r4,r3
+- mulu.d r4,r3
+- test_cc 1 0 1 0
+- checkr3 1
+- move mof,r3
+- checkr3 fffffffe
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- muls.d r4,r3
+- test_cc 0 0 1 0
+- checkr3 193eade2
+- move mof,r3
+- checkr3 277e3a49
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- mulu.d r4,r3
+- test_cc 0 0 1 0
+- checkr3 193eade2
+- move mof,r3
+- checkr3 277e3a49
+-
+- move.d 0xffff,r3
+- moveq 2,r4
+- muls.w r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 2,r4
+- mulu.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 1fffe
+- move mof,r3
+- checkr3 0
+- nop
+-
+- moveq 2,r3
+- move.d 0xffff,r4
+- muls.w r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq -1,r4
+- mulu.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 1fffe
+- move mof,r3
+- checkr3 0
+-
+- move.d 0xffff,r4
+- move.d r4,r3
+- muls.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 1
+- move mof,r3
+- checkr3 0
+-
+- moveq -1,r4
+- move.d r4,r3
+- mulu.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 fffe0001
+- move mof,r3
+- checkr3 0
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- muls.w r4,r3
+- test_cc 1 0 0 0
+- checkr3 fdbdade2
+- move mof,r3
+- checkr3 ffffffff
+- nop
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- mulu.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 420fade2
+- move mof,r3
+- checkr3 0
+- nop
+-
+- move.d 0xff,r3
+- moveq 2,r4
+- muls.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 ffffffff
+-
+- moveq -1,r3
+- moveq 2,r4
+- mulu.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 1fe
+- move mof,r3
+- checkr3 0
+-
+- moveq 2,r3
+- moveq -1,r4
+- muls.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+- move mof,r3
+- checkr3 ffffffff
+-
+- moveq 2,r3
+- moveq -1,r4
+- mulu.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 1fe
+- move mof,r3
+- checkr3 0
+-
+- move.d 0xff,r4
+- move.d r4,r3
+- muls.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 1
+- move mof,r3
+- checkr3 0
+- nop
+-
+- moveq -1,r4
+- move.d r4,r3
+- mulu.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 fe01
+- move mof,r3
+- checkr3 0
+- nop
+-
+- move.d 0xfeda49ff,r4
+- move.d r4,r3
+- muls.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 1
+- move mof,r3
+- checkr3 0
+- nop
+-
+- move.d 0xfeda49ff,r4
+- move.d r4,r3
+- mulu.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 fe01
+- move mof,r3
+- checkr3 0
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- muls.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 ffffd9e2
+- move mof,r3
+- checkr3 ffffffff
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- mulu.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 2be2
+- move mof,r3
+- checkr3 0
+-
+- moveq 0,r3
+- move.d 0xf87f4aeb,r4
+- muls.d r4,r3
+- test_cc 0 1 0 0
+- checkr3 0
+- move mof,r3
+- checkr3 0
+-
+- move.d 0xf87f4aeb,r3
+- moveq 0,r4
+- mulu.d r4,r3
+- test_cc 0 1 0 0
+- checkr3 0
+- move mof,r3
+- checkr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_neg.s b/tests/tcg/cris/bare/check_neg.s
+deleted file mode 100644
+index 963c4b6f5e..0000000000
+--- a/tests/tcg/cris/bare/check_neg.s
++++ /dev/null
+@@ -1,104 +0,0 @@
+-# mach:  crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: ffffffff\nffffffff\n0\n80000000\n1\nba987655\nffff\nffff\n0\n89ab8000\nffff0001\n45677655\nff\nff\n0\n89abae80\nffffff01\n45678955\n
+-
+- .include "testutils.inc"
+- start
+- moveq 0,r3
+- moveq 1,r4
+- neg.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 1,r3
+- moveq 0,r4
+- neg.d r3,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+-;; FIXME: this was wrong.
+- moveq 0,r3
+- neg.d r3,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0x80000000,r3
+- neg.d r3,r3
+- test_move_cc 1 0 0 0
+- checkr3 80000000
+-
+- moveq -1,r3
+- neg.d r3,r3
+- test_move_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0x456789ab,r3
+- neg.d r3,r3
+- test_move_cc 1 0 0 0
+- checkr3 ba987655
+-
+- moveq 0,r3
+- moveq 1,r4
+- neg.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffff
+-
+- moveq 1,r3
+- moveq 0,r4
+- neg.w r3,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffff
+-
+- moveq 0,r3
+- neg.w r3,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0x89ab8000,r3
+- neg.w r3,r3
+- test_move_cc 1 0 0 0
+- checkr3 89ab8000
+-
+- moveq -1,r3
+- neg.w r3,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff0001
+-
+- move.d 0x456789ab,r3
+- neg.w r3,r3
+- test_move_cc 0 0 0 0
+- checkr3 45677655
+-
+- moveq 0,r3
+- moveq 1,r4
+- neg.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ff
+-
+- moveq 1,r3
+- moveq 0,r4
+- neg.b r3,r3
+- test_move_cc 1 0 0 0
+- checkr3 ff
+-
+- moveq 0,r3
+- neg.b r3,r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+-;; FIXME: was wrong.
+- move.d 0x89abae80,r3
+- neg.b r3,r3
+- test_move_cc 1 0 0 1
+- checkr3 89abae80
+-
+- moveq -1,r3
+- neg.b r3,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffffff01
+-
+- move.d 0x456789ab,r3
+- neg.b r3,r3
+- test_move_cc 0 0 0 0
+- checkr3 45678955
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_not.s b/tests/tcg/cris/bare/check_not.s
+deleted file mode 100644
+index 33bcf155e5..0000000000
+--- a/tests/tcg/cris/bare/check_not.s
++++ /dev/null
+@@ -1,31 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: fffffffe\nfffffffd\nffff0f00\n0\n87ecbbad\n
+-
+- .include "testutils.inc"
+- start
+- moveq 1,r3
+- not r3
+- test_move_cc 1 0 0 0
+- checkr3 fffffffe
+-
+- moveq 2,r3
+- not r3
+- test_move_cc 1 0 0 0
+- checkr3 fffffffd
+-
+- move.d 0xf0ff,r3
+- not r3
+- test_move_cc 1 0 0 0
+- checkr3 ffff0f00
+-
+- moveq -1,r3
+- not r3
+- test_move_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0x78134452,r3
+- not r3
+- test_move_cc 1 0 0 0
+- checkr3 87ecbbad
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_orc.s b/tests/tcg/cris/bare/check_orc.s
+deleted file mode 100644
+index c733f036a2..0000000000
+--- a/tests/tcg/cris/bare/check_orc.s
++++ /dev/null
+@@ -1,71 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 3\n3\nffff\nffffffff\n7c33f7db\nffff0003\n3\nfedaffff\n7813f7db\n3\n3\nfeb\n781344db\n
+-
+- .include "testutils.inc"
+- start
+- moveq 1,r3
+- or.d 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- moveq 2,r3
+- or.d 1,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0xf0ff,r3
+- or.d 0xff0f,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r3
+- or.d -1,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- or.d 0x5432f789,r3
+- test_move_cc 0 0 0 0
+- checkr3 7c33f7db
+-
+- move.d 0xffff0001,r3
+- or.w 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff0003
+-
+- moveq 2,r3
+- or.w 1,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0xfedaffaf,r3
+- or.w 0xff5f,r3
+- test_move_cc 1 0 0 0
+- checkr3 fedaffff
+-
+- move.d 0x78134452,r3
+- or.w 0xf789,r3
+- test_move_cc 1 0 0 0
+- checkr3 7813f7db
+-
+- moveq 1,r3
+- or.b 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- moveq 2,r3
+- or.b 1,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0xfa3,r3
+- or.b 0x4a,r3
+- test_move_cc 1 0 0 0
+- checkr3 feb
+-
+- move.d 0x78134453,r3
+- or.b 0x89,r3
+- test_move_cc 1 0 0 0
+- checkr3 781344db
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_orm.s b/tests/tcg/cris/bare/check_orm.s
+deleted file mode 100644
+index ee723a6aa0..0000000000
+--- a/tests/tcg/cris/bare/check_orm.s
++++ /dev/null
+@@ -1,75 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 3\n3\nffff\nffffffff\n7c33f7db\nffff0003\n3\nfedaffff\n7813f7db\n3\n3\nfeb\n781344db\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .dword 2,1,0xff0f,-1,0x5432f789
+- .word 2,1,0xff5f,0xf789
+- .byte 2,1,0x4a,0x89
+-
+- start
+- moveq 1,r3
+- move.d x,r5
+- or.d [r5+],r3
+- checkr3 3
+-
+- moveq 2,r3
+- or.d [r5],r3
+- addq 4,r5
+- checkr3 3
+-
+- move.d 0xf0ff,r3
+- or.d [r5+],r3
+- checkr3 ffff
+-
+- moveq -1,r3
+- or.d [r5+],r3
+- checkr3 ffffffff
+-
+- move.d 0x78134452,r3
+- or.d [r5+],r3
+- checkr3 7c33f7db
+-
+- move.d 0xffff0001,r3
+- or.w [r5+],r3
+- checkr3 ffff0003
+-
+- moveq 2,r3
+- or.w [r5],r3
+- addq 2,r5
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0xfedaffaf,r3
+- or.w [r5+],r3
+- test_move_cc 1 0 0 0
+- checkr3 fedaffff
+-
+- move.d 0x78134452,r3
+- or.w [r5+],r3
+- test_move_cc 1 0 0 0
+- checkr3 7813f7db
+-
+- moveq 1,r3
+- or.b [r5+],r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- moveq 2,r3
+- or.b [r5],r3
+- addq 1,r5
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0xfa3,r3
+- or.b [r5+],r3
+- test_move_cc 1 0 0 0
+- checkr3 feb
+-
+- move.d 0x78134453,r3
+- or.b [r5],r3
+- test_move_cc 1 0 0 0
+- checkr3 781344db
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_orq.s b/tests/tcg/cris/bare/check_orq.s
+deleted file mode 100644
+index 5060edc72d..0000000000
+--- a/tests/tcg/cris/bare/check_orq.s
++++ /dev/null
+@@ -1,41 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 3\n3\nffffffff\nffffffff\n1f\nffffffe0\n7813445e\n
+-
+- .include "testutils.inc"
+- start
+- moveq 1,r3
+- orq 2,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- moveq 2,r3
+- orq 1,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0xf0ff,r3
+- orq -1,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 0,r3
+- orq -1,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- moveq 0,r3
+- orq 31,r3
+- test_move_cc 0 0 0 0
+- checkr3 1f
+-
+- moveq 0,r3
+- orq -32,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffe0
+-
+- move.d 0x78134452,r3
+- orq 12,r3
+- test_move_cc 0 0 0 0
+- checkr3 7813445e
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_orr.s b/tests/tcg/cris/bare/check_orr.s
+deleted file mode 100644
+index a514c11bc9..0000000000
+--- a/tests/tcg/cris/bare/check_orr.s
++++ /dev/null
+@@ -1,84 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 3\n3\nffff\nffffffff\n7c33f7db\nffff0003\n3\nfedaffff\n7813f7db\n3\n3\nfeb\n781344db\n
+-
+- .include "testutils.inc"
+- start
+- moveq 1,r3
+- moveq 2,r4
+- or.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- moveq 2,r3
+- moveq 1,r4
+- or.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0xff0f,r4
+- move.d 0xf0ff,r3
+- or.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff
+-
+- moveq -1,r4
+- move.d r4,r3
+- or.d r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 ffffffff
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- or.d r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 7c33f7db
+-
+- move.d 0xffff0001,r3
+- moveq 2,r4
+- or.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 ffff0003
+-
+- moveq 2,r3
+- move.d 0xffff0001,r4
+- or.w r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0xfedaffaf,r3
+- move.d 0xffffff5f,r4
+- or.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 fedaffff
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134452,r3
+- or.w r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 7813f7db
+-
+- moveq 1,r3
+- move.d 0xffffff02,r4
+- or.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- moveq 2,r3
+- moveq 1,r4
+- or.b r4,r3
+- test_move_cc 0 0 0 0
+- checkr3 3
+-
+- move.d 0x4a,r4
+- move.d 0xfa3,r3
+- or.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 feb
+-
+- move.d 0x5432f789,r4
+- move.d 0x78134453,r3
+- or.b r4,r3
+- test_move_cc 1 0 0 0
+- checkr3 781344db
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_ret.s b/tests/tcg/cris/bare/check_ret.s
+deleted file mode 100644
+index b44fb25933..0000000000
+--- a/tests/tcg/cris/bare/check_ret.s
++++ /dev/null
+@@ -1,25 +0,0 @@
+-# mach: crisv3 crisv8 crisv10
+-# output: 3\n
+-
+-# Test that ret works.
+-
+- .include "testutils.inc"
+- start
+-x:
+- moveq 0,r3
+- jsr z
+-w:
+- quit
+-y:
+- addq 1,r3
+- checkr3 3
+- quit
+-
+-z:
+- addq 1,r3
+- move srp,r2
+- add.d y-w,r2
+- move r2,srp
+- ret
+- addq 1,r3
+- quit
+diff --git a/tests/tcg/cris/bare/check_scc.s b/tests/tcg/cris/bare/check_scc.s
+deleted file mode 100644
+index 4a8674cc1a..0000000000
+--- a/tests/tcg/cris/bare/check_scc.s
++++ /dev/null
+@@ -1,95 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n0\n1\n0\n1\n0\n1\n0\n0\n1\n1\n0\n1\n0\n1\n0\n1\n0\n0\n1\n0\n1\n1\n0\n1\n0\n0\n1\n1\n0\n1\n1\n0\n
+-
+- .include "testutils.inc"
+-
+- .macro lcheckr3 v
+-	move	 $ccs, $r9
+-	checkr3 \v
+-	move	$r9, $ccs
+- .endm
+-
+- start
+- clearf nzvc
+- scc r3
+- lcheckr3 1
+- scs r3
+- lcheckr3 0
+- sne r3
+- lcheckr3 1
+- seq r3
+- lcheckr3 0
+- svc r3
+- lcheckr3 1
+- svs r3
+- lcheckr3 0
+- spl r3
+- lcheckr3 1
+- smi r3
+- lcheckr3 0
+- sls r3
+- lcheckr3 0
+- shi r3
+- lcheckr3 1
+- sge r3
+- lcheckr3 1
+- slt r3
+- lcheckr3 0
+- sgt r3
+- lcheckr3 1
+- sle r3
+- lcheckr3 0
+- sa r3
+- lcheckr3 1
+- setf nzvc
+- scc r3
+- lcheckr3 0
+- scs r3
+- lcheckr3 1
+- sne r3
+- lcheckr3 0
+- svc r3
+- lcheckr3 0
+- svs r3
+- lcheckr3 1
+- spl r3
+- lcheckr3 0
+- smi r3
+- lcheckr3 1
+- sls r3
+- lcheckr3 1
+- shi r3
+- lcheckr3 0
+- sge r3
+- lcheckr3 1
+- slt r3
+- lcheckr3 0
+- sgt r3
+- lcheckr3 0
+- sle r3
+- lcheckr3 1
+- sa r3
+- lcheckr3 1
+- clearf n
+- sge r3
+- lcheckr3 0
+- slt r3
+- lcheckr3 1
+-
+- .if 1 ;..asm.arch.cris.v32
+- setf p
+- ssb r3
+- .else
+- moveq 1,r3
+- .endif
+- lcheckr3 1
+-
+- .if 1 ;..asm.arch.cris.v32
+- clearf p
+- ssb r3
+- .else
+- moveq 0,r3
+- .endif
+- lcheckr3 0
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_subc.s b/tests/tcg/cris/bare/check_subc.s
+deleted file mode 100644
+index e34b5448e2..0000000000
+--- a/tests/tcg/cris/bare/check_subc.s
++++ /dev/null
+@@ -1,87 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n1fffe\nfffffffe\ncc463bdb\nffff0001\n1\nfffe\nfedafffe\n78133bdb\nffffff01\n1\nfe\nfeda49fe\n781344db\n85649200\n
+-
+- .include "testutils.inc"
+- start
+-
+- moveq -1,r3
+- sub.d -2,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- moveq 2,r3
+- sub.d 1,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xffff,r3
+- sub.d -0xffff,r3
+- test_cc 0 0 0 1
+- checkr3 1fffe
+-
+- moveq -1,r3
+- sub.d 1,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+-
+- move.d 0x78134452,r3
+- sub.d -0x5432f789,r3
+- test_cc 1 0 1 1
+- checkr3 cc463bdb
+-
+- moveq -1,r3
+- sub.w -2,r3
+- test_cc 0 0 0 0
+- checkr3 ffff0001
+-
+- moveq 2,r3
+- sub.w 1,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xffff,r3
+- sub.w 1,r3
+- test_cc 1 0 0 0
+- checkr3 fffe
+-
+- move.d 0xfedaffff,r3
+- sub.w 1,r3
+- test_cc 1 0 0 0
+- checkr3 fedafffe
+-
+- move.d 0x78134452,r3
+- sub.w 0x877,r3
+- test_cc 0 0 0 0
+- checkr3 78133bdb
+-
+- moveq -1,r3
+- sub.b -2,r3
+- test_cc 0 0 0 0
+- checkr3 ffffff01
+-
+- moveq 2,r3
+- sub.b 1,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xff,r3
+- sub.b 1,r3
+- test_cc 1 0 0 0
+- checkr3 fe
+-
+- move.d 0xfeda49ff,r3
+- sub.b 1,r3
+- test_cc 1 0 0 0
+- checkr3 feda49fe
+-
+- move.d 0x78134452,r3
+- sub.b 0x77,r3
+- test_cc 1 0 0 1
+- checkr3 781344db
+-
+- move.d 0x85649282,r3
+- sub.b 0x82,r3
+- test_cc 0 1 0 0
+- checkr3 85649200
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_subm.s b/tests/tcg/cris/bare/check_subm.s
+deleted file mode 100644
+index e07ea02dd4..0000000000
+--- a/tests/tcg/cris/bare/check_subm.s
++++ /dev/null
+@@ -1,96 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n1fffe\nfffffffe\ncc463bdb\nffff0001\n1\nfffe\nfedafffe\n78133bdb\nffffff01\n1\nfe\nfeda49fe\n781344db\n85649200\n
+-
+- .include "testutils.inc"
+- .data
+-x:
+- .dword -2,1,-0xffff,1,-0x5432f789
+- .word -2,1,1,0x877
+- .byte -2,1,0x77
+- .byte 0x22
+-
+- start
+- moveq -1,r3
+- move.d x,r5
+- sub.d [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- moveq 2,r3
+- sub.d [r5],r3
+- test_cc 0 0 0 0
+- addq 4,r5
+- checkr3 1
+-
+- move.d 0xffff,r3
+- sub.d [r5+],r3
+- test_cc 0 0 0 1
+- checkr3 1fffe
+-
+- moveq -1,r3
+- sub.d [r5+],r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+-
+- move.d 0x78134452,r3
+- sub.d [r5+],r3
+- test_cc 1 0 1 1
+- checkr3 cc463bdb
+-
+- moveq -1,r3
+- sub.w [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 ffff0001
+-
+- moveq 2,r3
+- sub.w [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xffff,r3
+- sub.w [r5],r3
+- test_cc 1 0 0 0
+- checkr3 fffe
+-
+- move.d 0xfedaffff,r3
+- sub.w [r5+],r3
+- test_cc 1 0 0 0
+- checkr3 fedafffe
+-
+- move.d 0x78134452,r3
+- sub.w [r5+],r3
+- test_cc 0 0 0 0
+- checkr3 78133bdb
+-
+- moveq -1,r3
+- sub.b [r5],r3
+- test_cc 0 0 0 0
+- addq 1,r5
+- checkr3 ffffff01
+-
+- moveq 2,r3
+- sub.b [r5],r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xff,r3
+- sub.b [r5],r3
+- test_cc 1 0 0 0
+- checkr3 fe
+-
+- move.d 0xfeda49ff,r3
+- sub.b [r5+],r3
+- test_cc 1 0 0 0
+- checkr3 feda49fe
+-
+- move.d 0x78134452,r3
+- sub.b [r5+],r3
+- test_cc 1 0 0 1
+- checkr3 781344db
+-
+- move.d 0x85649222,r3
+- sub.b [r5],r3
+- test_cc 0 1 0 0
+- checkr3 85649200
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_subq.s b/tests/tcg/cris/bare/check_subq.s
+deleted file mode 100644
+index 9e34fa31ab..0000000000
+--- a/tests/tcg/cris/bare/check_subq.s
++++ /dev/null
+@@ -1,52 +0,0 @@
+-# mach: crisv3 crisv8 crisv10 crisv32
+-# output: 0\nffffffff\nfffffffe\nffff\nff\n56788f9\n56788d9\n567889a\n0\n7ffffffc\n
+-
+- .include "testutils.inc"
+- start
+- moveq 1,r3
+- subq 1,r3
+- test_cc 0 1 0 0
+- checkr3 0
+-
+- subq 1,r3
+- test_cc 1 0 0 1
+- checkr3 ffffffff
+-
+- subq 1,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+-
+- move.d 0x10000,r3
+- subq 1,r3
+- test_cc 0 0 0 0
+- checkr3 ffff
+-
+- move.d 0x100,r3
+- subq 1,r3
+- test_cc 0 0 0 0
+- checkr3 ff
+-
+- move.d 0x5678900,r3
+- subq 7,r3
+- test_cc 0 0 0 0
+- checkr3 56788f9
+-
+- subq 32,r3
+- test_cc 0 0 0 0
+- checkr3 56788d9
+-
+- subq 63,r3
+- test_cc 0 0 0 0
+- checkr3 567889a
+-
+- move.d 34,r3
+- subq 34,r3
+- test_cc 0 1 0 0
+- checkr3 0
+-
+- move.d 0x80000024,r3
+- subq 40,r3
+- test_cc 0 0 1 0
+- checkr3 7ffffffc
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_subr.s b/tests/tcg/cris/bare/check_subr.s
+deleted file mode 100644
+index 742fbc8915..0000000000
+--- a/tests/tcg/cris/bare/check_subr.s
++++ /dev/null
+@@ -1,102 +0,0 @@
+-# mach: crisv0 crisv3 crisv8 crisv10 crisv32
+-# output: 1\n1\n1fffe\nfffffffe\ncc463bdb\nffff0001\n1\nfffe\nfedafffe\n78133bdb\nffffff01\n1\nfe\nfeda49fe\n781344db\n85649200\n
+-
+- .include "testutils.inc"
+- start
+- moveq -1,r3
+- moveq -2,r4
+- sub.d r4,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- moveq 2,r3
+- moveq 1,r4
+- sub.d r4,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xffff,r3
+- move.d -0xffff,r4
+- sub.d r4,r3
+- test_cc 0 0 0 1
+- checkr3 1fffe
+-
+- moveq 1,r4
+- moveq -1,r3
+- sub.d r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffffffe
+-
+- move.d -0x5432f789,r4
+- move.d 0x78134452,r3
+- sub.d r4,r3
+- test_cc 1 0 1 1
+- checkr3 cc463bdb
+-
+- moveq -1,r3
+- moveq -2,r4
+- sub.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 ffff0001
+-
+- moveq 2,r3
+- moveq 1,r4
+- sub.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d 0xffff,r3
+- move.d -0xffff,r4
+- sub.w r4,r3
+- test_cc 1 0 0 0
+- checkr3 fffe
+-
+- move.d 0xfedaffff,r3
+- move.d -0xfedaffff,r4
+- sub.w r4,r3
+- test_cc 1 0 0 0
+- checkr3 fedafffe
+-
+- move.d -0x5432f789,r4
+- move.d 0x78134452,r3
+- sub.w r4,r3
+- test_cc 0 0 0 0
+- checkr3 78133bdb
+-
+- moveq -1,r3
+- moveq -2,r4
+- sub.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 ffffff01
+-
+- moveq 2,r3
+- moveq 1,r4
+- sub.b r4,r3
+- test_cc 0 0 0 0
+- checkr3 1
+-
+- move.d -0xff,r4
+- move.d 0xff,r3
+- sub.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 fe
+-
+- move.d -0xfeda49ff,r4
+- move.d 0xfeda49ff,r3
+- sub.b r4,r3
+- test_cc 1 0 0 0
+- checkr3 feda49fe
+-
+- move.d -0x5432f789,r4
+- move.d 0x78134452,r3
+- sub.b r4,r3
+- test_cc 1 0 0 1
+- checkr3 781344db
+-
+- move.d 0x85649222,r3
+- move.d 0x77445622,r4
+- sub.b r4,r3
+- test_cc 0 1 0 0
+- checkr3 85649200
+-
+- quit
+diff --git a/tests/tcg/cris/bare/check_xarith.s b/tests/tcg/cris/bare/check_xarith.s
+deleted file mode 100644
+index 80038b2ab9..0000000000
+--- a/tests/tcg/cris/bare/check_xarith.s
++++ /dev/null
+@@ -1,72 +0,0 @@
+-
+-.include "testutils.inc"
+-
+-	start
+-
+-	moveq	-1, $r0
+-	moveq	0, $r1
+-	addq	1, $r0
+-	ax
+-	addq	0, $r1
+-
+-	move.d	$r0, $r3
+-	checkr3 0
+-	move.d	$r1, $r3
+-	checkr3 1
+-
+-	move.d  0, $r0
+-	moveq	-1, $r1
+-	subq	1, $r0
+-	ax
+-	subq	0, $r1
+-
+-	move.d	$r0, $r3
+-	checkr3 ffffffff
+-	move.d	$r1, $r3
+-	checkr3 fffffffe
+-
+-
+-	moveq	-1, $r0
+-	moveq	-1, $r1
+-	cmpq	-1, $r0
+-	ax
+-	cmpq	-1, $r1
+-	beq	1f
+-	nop
+-	fail
+-1:
+-	cmpq	0, $r0
+-	ax
+-	cmpq	-1, $r1
+-	bne	1f
+-	nop
+-	fail
+-1:
+-
+-	;; test for broken X sequence, run it several times.
+-	moveq	8, $r0
+-1:
+-	moveq	0, $r3
+-	move.d	$r0, $r1
+-	andq	1, $r1
+-	lslq	4, $r1
+-	moveq	1, $r2
+-	or.d	$r1, $r2
+-	ba	2f
+-	move	$r2, $ccs
+-2:
+-	addq	0, $r3
+-	move.d	$r0, $r4
+-	move.d	$r1, $r5
+-	move.d	$r2, $r6
+-	move.d	$r3, $r7
+-	lsrq	4, $r1
+-	move.d	$r1, $r8
+-	xor	$r1, $r3
+-	checkr3	0
+-	subq	1, $r0
+-	bne	1b
+-	nop
+-
+-	pass
+-	quit
+diff --git a/tests/tcg/cris/bare/crt.s b/tests/tcg/cris/bare/crt.s
+deleted file mode 100644
+index af027d7475..0000000000
+--- a/tests/tcg/cris/bare/crt.s
++++ /dev/null
+@@ -1,13 +0,0 @@
+-	.data
+-_stack_start:
+-	.space	8192, 0
+-_stack_end:
+-	.text
+-	.global	_start
+-_start:
+-	move.d	_stack_end, $sp
+-	jsr	main
+-	nop
+-	moveq	0, $r10
+-	jump	exit
+-	nop
+diff --git a/tests/tcg/cris/bare/testutils.inc b/tests/tcg/cris/bare/testutils.inc
+deleted file mode 100644
+index aa1641b2e6..0000000000
+--- a/tests/tcg/cris/bare/testutils.inc
++++ /dev/null
+@@ -1,117 +0,0 @@
+-	.syntax	no_register_prefix
+-
+-	.macro	start
+-	.text
+-	.global	main
+-main:
+-	.endm
+-
+-	.macro	quit
+-	jump	pass
+-	nop
+-	.endm
+-
+-	.macro	pass
+-	jump	pass
+-	nop
+-	.endm
+-
+-	.macro	startnostack
+-	start
+-	.endm
+-
+-	.macro	fail
+-	.data
+-99:
+-	.asciz " checkr3 failed\n"
+-	.text
+-	move.d	99b, $r10
+-	jsr	_fail
+-	nop
+-	.endm
+-
+-	.macro	checkr3 val
+-	cmp.d	0x\val, $r3
+-	beq	100f
+-	nop
+-	.data
+-99:
+-	.asciz "checkr3 failed\n"
+-	.text
+-	move.d	99b, $r10
+-	jsr	_fail
+-	nop
+-100:
+-	.endm
+-
+-; Test the condition codes
+-        .macro test_cc N Z V C
+-        .if \N
+-        bpl 9f
+-        nop
+-        .else
+-        bmi 9f
+-        nop
+-        .endif
+-        .if \Z
+-        bne 9f
+-        nop
+-        .else
+-        beq 9f
+-        nop
+-        .endif
+-        .if \V
+-        bvc 9f
+-        nop
+-        .else
+-        bvs 9f
+-        nop
+-        .endif
+-        .if \C
+-        bcc 9f
+-        nop
+-        .else
+-        bcs 9f
+-        nop
+-        .endif
+-        ba 8f
+-        nop
+-9:
+-	.data
+-99:
+-	.asciz "test_move_cc failed\n"
+-	.text
+-	move.d	99b, $r10
+-	jsr	_fail
+-	nop
+-8:
+-        .endm
+-
+-
+-        .macro test_move_cc N Z V C
+-        .if \N
+-        bpl 9f
+-        nop
+-        .else
+-        bmi 9f
+-        nop
+-        .endif
+-        .if \Z
+-        bne 9f
+-        nop
+-        .else
+-        beq 9f
+-        nop
+-        .endif
+-        ba 8f
+-        nop
+-9:
+-	.data
+-99:
+-	.asciz "test_move_cc failed\n"
+-	.text
+-	move.d	99b, $r10
+-	jsr	_fail
+-	nop
+-8:
+-        .endm
 -- 
 2.45.2
 
