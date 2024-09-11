@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4C6FEE0204
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 03:27:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86CF3EDE997
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 03:27:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soE0S-0001tW-Nu; Tue, 10 Sep 2024 23:27:00 -0400
+	id 1soE0t-0004Mb-8m; Tue, 10 Sep 2024 23:27:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1soE0R-0001ma-0Q
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 23:26:59 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1soE0r-0004CZ-0N
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 23:27:25 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1soE0P-000116-CN
- for qemu-devel@nongnu.org; Tue, 10 Sep 2024 23:26:58 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-718d91eef2eso321900b3a.1
- for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 20:26:57 -0700 (PDT)
+ id 1soE0p-000129-FC
+ for qemu-devel@nongnu.org; Tue, 10 Sep 2024 23:27:24 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-718e6299191so2151914b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Sep 2024 20:27:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726025216; x=1726630016; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726025242; x=1726630042; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
  bh=7eODV1uHjgn2SlGVWkI/yPrh4k94iEPleJQ6XdqYt58=;
- b=HUTIRC8TR7yMIEYuW1oEz6rXgnIfmj3sFb3v3eJYpqRfITPJmIXPoLX8TsvTBJ0TJ+
- PJrg7P+Zus6dydToOGSKgDZ5P254NJ5Qw8UlFdbwS9cPUa+kCR0lfzjkAzFeZZvhvHgY
- 62mHoN2jYF+3WlupHriJagryNQnSSLPM9qi5By1TZBs+lsifXyw1zG2NZNvYSmDmZoCD
- IjCO/6atq664U6l8+O3+O0hHTmaJoll7P7VrwoOhUq0SqBLeb7hurnlaNWrgvw6wEJli
- 0M/14RtVpYe9qzBAh0djWJCEQqeeBJ2lYzkXSGbRlgxO7vCp59auks0qyo/Q2fDmNWuC
- 9iGA==
+ b=Qr9m3ZJ99QhP92H5cZDBKXTiBHfT4te0CfAAL/x1fFsYGnt9l8mJLYs2j8qUQq7OMq
+ LfvOWuNPyNccBO1ioPOZg7eKsCFu1ytfY1TIL4aDl3ZCa7BlD49gCIXFZILDxtS8mU53
+ NmINzVNJvl6x8GjGEGvH5XiXH+wF+GCLy6oqom+Dm+BreEAasSTnb0O3WTOWr2ixaXIZ
+ dR1YIqdCg7TzlnxkxLwhVFN6MT3CBF72lCohRNPwfT51YY1Wyb/N2STwZ9YkJ2PtLyxP
+ ifyUIkJIS7hWZvsUMEIezipPZ8B7vYdfSPX+Nqrc9sZ2vM5oS5PYhEj7/zNt0gtij7Kh
+ i97w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726025216; x=1726630016;
+ d=1e100.net; s=20230601; t=1726025242; x=1726630042;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
  bh=7eODV1uHjgn2SlGVWkI/yPrh4k94iEPleJQ6XdqYt58=;
- b=SCmO+ZkuROKZUf6sT6XDOHOcmtw2gvfJRy2zaEvSAmf2DNvsGYFbUc7K5yXWPSkK+m
- tbv41KUX8LUR0NOK7Fjjvpz4irQtf/uaemFJS0GgdB83GS4i31Z8VCsg4JOvZSR4W1g7
- /gFMvDUsojSwgwo4j0yxLaUei2NGJZCTmoynWDd4JvuYfTAxljbNiuy8cSFKTMfeFmDY
- mN77iPAx/O/2foZyhE0pVTh0o9+jGHt1hMgopi10mfnd2hYftpkGaNozKNTOkl5JAR75
- gyW2dV04U/3cn7wY68PDpjUNJV/O5TUI941bVuXKs0L7hyrrSqYTZgh9fRnZNhRcy7Yl
- vBlQ==
+ b=cH9WC8N9GqnqrZ14F4k7zCpDyasMMVF+ealZ3lSGCTEBIAK+Qd2lnlSJgMl2NSRqFM
+ pNGYRvgSafuiXm1Swza/4KkdSZUlq1x5GuoDfLe/0SsDEyYF/1DgR9YnrWXo47yRC67h
+ 32JpkHhj3q8i/xUoKwcRe+g7bJKBNq8WN1lC3N0Yc8MJSwSk6f65gyIVfOhDYgLdk2QB
+ CG9/GpUlPpZUqXFxtPyQUOyfY0cUwmyyrQOQaNUPQyjurzN2SA0+B8FDnE9EzBpLG/IC
+ 0r5KQFGMrZ4TLL0WtaoVxMMSnn/dJyiKkJZB4gqCBSASOhIFynsWGzMDHzuvIWOIIPeN
+ gFpA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWTJro74bNrZcCo16yB7tvhwfh6Mv/njYLLR9U6LLjYnmp0KD6NLYD7U/rXOVYUQEO7DAmEKBloWLpk@nongnu.org
-X-Gm-Message-State: AOJu0YwiF/040f4m0pLS+HY8M2AhzGGlelKIU8+jMYQDgIdBXg4e49vG
- czBIquDpGc80bIXR3sUzIK0DVlT2KkoyjOu8irLj9ylepHA6DLp0If++5hi4fERzYRsOUMHfYZX
- U
-X-Google-Smtp-Source: AGHT+IGPRA5aLFc160ZMpFeChTHxlC4UlElaOh0z9OZV5Hit0n/NwU3F1CWskohm4kI/nFlHt5klHQ==
-X-Received: by 2002:a62:e717:0:b0:717:8a7c:dd82 with SMTP id
- d2e1a72fcca58-71907f55c29mr7557628b3a.9.1726025215653; 
- Tue, 10 Sep 2024 20:26:55 -0700 (PDT)
+ AJvYcCVI/kzVFoOP94XEipWkIXJU9lEaHjWqfie1bfsqoJjH92vVEq4RwlGdCcir4iJCSSGa+TRHx2ejYQkp@nongnu.org
+X-Gm-Message-State: AOJu0YwyqEq6C3S48ROB37aFWbTNGRmJq8kcBL7vSpScBGAzLf+AORL/
+ djbgNi6+4WAhAVAVA+yaXDx5dQsJpZUj96rdrz/s0L7fAbzezp6fnb6Omr/xj4F8YwXu/eAzJjt
+ l
+X-Google-Smtp-Source: AGHT+IG1toJLkqT+BsX+ht3WtbDQhWDabqJXRt/NFbeu6XLT4RaZzf3EhdHxE2Te9+Rd+XkRtSc1Uw==
+X-Received: by 2002:a05:6300:668c:b0:1cf:38b0:57ff with SMTP id
+ adf61e73a8af0-1cf5e198435mr3695833637.48.1726025241726; 
+ Tue, 10 Sep 2024 20:27:21 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7190909273dsm2058978b3a.107.2024.09.10.20.26.54
+ d2e1a72fcca58-71908fe29f6sm2054908b3a.67.2024.09.10.20.27.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Sep 2024 20:26:55 -0700 (PDT)
-Message-ID: <88e0a280-fe1a-45bb-b245-8ae411512ad7@linaro.org>
-Date: Tue, 10 Sep 2024 20:26:53 -0700
+ Tue, 10 Sep 2024 20:27:21 -0700 (PDT)
+Message-ID: <73ac0f2d-49c0-45fe-90d2-729982a0f90e@linaro.org>
+Date: Tue, 10 Sep 2024 20:27:19 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 21/39] migration: replace assert(false) with
@@ -75,8 +75,8 @@ From: Richard Henderson <richard.henderson@linaro.org>
 In-Reply-To: <20240910221606.1817478-22-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
