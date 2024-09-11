@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0217EE499E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9045AEE499D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:24:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMKb-0006yT-C3; Wed, 11 Sep 2024 08:20:21 -0400
+	id 1soMGZ-0001uA-FF; Wed, 11 Sep 2024 08:16:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMKZ-0006o6-5A
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:20:19 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMGV-0001HM-CN
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:16:07 -0400
 Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMKX-0007xR-CD
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:20:18 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMGS-0007S4-FF
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:16:06 -0400
 Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-42cb9a0c300so17583735e9.0
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:20:16 -0700 (PDT)
+ 5b1f17b1804b1-42cbb08a1a5so18887245e9.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:16:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726057215; x=1726662015; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726056962; x=1726661762; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YPDjaRNSqW+//4MAf7iMwolsYWY7f5O00bu8nr1h9As=;
- b=NWFUa6KEyfPADpUcWqN5ZYy4aoqcUJvLuClSXL7mwCrmKwbCI9VtgN34TAKtpQDp7P
- Ne1GLUSS9Dzq9Qu5x1pgYQ2/d0gCRXrbZAUN/6RoQK5fLQ438Al9RX9VGweXTzRnBtJk
- 515mQLpBBdInU1NcLky8Vt6F27t+I0K95ou0BeTHyPyax8q16+5y9L2WYRr5a4jKqxAC
- u5gQwMyPqwFG8e4rONPRiv6tmbHOSxvY3qIt9K5XWBwaDpnjfoTLM4cdUVJoRPHpRhKw
- yDek/LOJtv2G+KUZz5dzg1HBSLBMpvm42ILPVjquycmSK3C48GZskOK5HulXF00pl4VH
- IGrg==
+ bh=ehgpIQ1ga5NhJNOnil3Gkqp47AV2Ou0lmxV3Z/f+ETo=;
+ b=XMAXn2N9MNhfMYiOeezxhPchnpFAFS4uhOxMlaZmbjeVNkRuvADdE4Y4Vhd1mrmjAj
+ 8Lzec/r3cpR2HjpQEon3SIy7oojwAgt13HuigFhqHkir0NX9Ql/VHRXuF50X6VKxOAV8
+ v2/YrpmvkCoU8+X5x13MzddYMkp2lwbMNzQf1TQUu8fetMRUbRHArhVsgXDXkUG+Na/8
+ QApGuTuHJ+9H0BjGCyHzNAIAOEFK7x7wrBXIVyQo0iPxWvSVi5OpP518ms31tXwFBF3w
+ nHhsuBRIzR2S4N2cA62AnWQRK15V3nfNHKldX97zGoKYhpKbqdWjYlfdxTzR6prUCQoa
+ iJkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726057215; x=1726662015;
+ d=1e100.net; s=20230601; t=1726056962; x=1726661762;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YPDjaRNSqW+//4MAf7iMwolsYWY7f5O00bu8nr1h9As=;
- b=DJlkSqj9E+cosfMoY7WdfKcRCoaM9lKe1Ls5NpiIuD6k4mLtVw/Fd+2ATiVblvz/G+
- FNvZY3h4lDu2ofPRxKUkc+CVFxAGtDWHaAXJRtHdDyGDqNsBWHuIzL2hi4RvPZYj8qSx
- T8kMQMLUs1B7AC2qOj/nCZuJgAb9YaPVQYDEzV6n0onnvNDhOHl7oCfczIERhIlpuOX8
- YzOvQraijFc/mpA/z3Qc+ReGL56rIvQfHNTA3PN84fsBkLg5paYO4qAaZszugrOOEsaU
- qx70W7ZMkxdNl+OBhdvbbq6DGYDE1h885EBbfZX1E0kHXNeJc3m21+apIXruEbtXtGEB
- t6VA==
-X-Gm-Message-State: AOJu0YxyYVoM+7AUvo3YJnEf8KxCBuC6Ii2LSWRVH6DH+G92SIPipfEI
- BmIqYGK+dl3rBXnjOOg1ZsRuAMXbAcKCOVG7LmZTNq5a9cCPt1Cw18PQLct6gDbCQHRl9y3bTrR
- b
-X-Google-Smtp-Source: AGHT+IE4AQtL13Fr3jqHVgR5po9nRxxuLvuJJ1hjMUAMyTm6z2VHhxJuV5Qq7xhB6H3eUnFlnTVetA==
-X-Received: by 2002:a05:600c:4706:b0:42c:c401:6d67 with SMTP id
- 5b1f17b1804b1-42ccd30c292mr21063755e9.6.1726057215394; 
- Wed, 11 Sep 2024 05:20:15 -0700 (PDT)
+ bh=ehgpIQ1ga5NhJNOnil3Gkqp47AV2Ou0lmxV3Z/f+ETo=;
+ b=JR4V2/0EmcCc5C9xkEtvwM/rvKHv7Q8uGntY7eyCl1K4m1uvEhp34AMk3D1cH1Sl+s
+ A9+FR96cHxvCQYsVc1v/JqoERRKQcqeOTrjLeTH2awBubJ4sGATlULf1q+6wxIM18k3B
+ BIdXsUTw109T5Jtc/bRmxcJu70mwK34XiQPwIuyiEdaQA6NEmwIkEkBJ3xTG95/OC8MI
+ ZkdZNZioNKyM3sWauW4qnm7IPODDesYxXVwe+wozYNRvDQB2Xaj0KKudp5feqkgvc8wW
+ GtEr/L3x94EZjTlVQZ//jKyDx6MWp1Y5nzuGIOKd1Rk8rTXymIIkitcccpdYms2fgwek
+ xmVw==
+X-Gm-Message-State: AOJu0YwSV8h9BeXIoWTdd3VFfKXHEFKn/Y8F6JZFAbKKGhm9XC+5Qmvj
+ kJ5n4AQ6TWCFUqdZZ2ZJB2lrdUZR2q8zmPFAWDDw++DaNK35A5jzTG9C3uTNnbZT2jCGTaJ6pTq
+ P
+X-Google-Smtp-Source: AGHT+IGVZ7ces/GqQ3g4JOujFJvvLBCetEahBaeWcuBmbuKGYMtgk1RPk8K9y/aDb824D0qgja4qTw==
+X-Received: by 2002:adf:ea8c:0:b0:374:bb00:31eb with SMTP id
+ ffacd0b85a97d-378b0791c73mr1938276f8f.6.1726056962416; 
+ Wed, 11 Sep 2024 05:16:02 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.196.107])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42cb2f86488sm124364265e9.15.2024.09.11.05.20.14
+ ffacd0b85a97d-378956d3840sm11485844f8f.89.2024.09.11.05.16.00
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Sep 2024 05:20:14 -0700 (PDT)
+ Wed, 11 Sep 2024 05:16:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 52/56] system: replace assert(0) with g_assert_not_reached()
-Date: Wed, 11 Sep 2024 14:14:17 +0200
-Message-ID: <20240911121422.52585-53-philmd@linaro.org>
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>
+Subject: [PULL 14/56] hw/char: Remove TYPE_ETRAX_FS_SERIAL device
+Date: Wed, 11 Sep 2024 14:13:39 +0200
+Message-ID: <20240911121422.52585-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240911121422.52585-1-philmd@linaro.org>
 References: <20240911121422.52585-1-philmd@linaro.org>
@@ -95,30 +96,338 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+We just removed the single machine using it (axis-dev88).
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240910221606.1817478-11-pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Message-ID: <20240904143603.52934-9-philmd@linaro.org>
 ---
- system/rtc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/cris/etraxfs.h |  18 ---
+ hw/char/etraxfs_ser.c     | 267 --------------------------------------
+ hw/char/meson.build       |   1 -
+ 3 files changed, 286 deletions(-)
+ delete mode 100644 hw/char/etraxfs_ser.c
 
-diff --git a/system/rtc.c b/system/rtc.c
-index dc44576686..216d2aee3a 100644
---- a/system/rtc.c
-+++ b/system/rtc.c
-@@ -62,7 +62,7 @@ static time_t qemu_ref_timedate(QEMUClockType clock)
-         }
-         break;
-     default:
--        assert(0);
-+        g_assert_not_reached();
-     }
-     return value;
- }
+diff --git a/include/hw/cris/etraxfs.h b/include/hw/cris/etraxfs.h
+index 012c4e9974..6d23f6f13f 100644
+--- a/include/hw/cris/etraxfs.h
++++ b/include/hw/cris/etraxfs.h
+@@ -27,28 +27,10 @@
+ 
+ #include "net/net.h"
+ #include "hw/cris/etraxfs_dma.h"
+-#include "hw/qdev-properties.h"
+-#include "hw/sysbus.h"
+ #include "qapi/error.h"
+ 
+ DeviceState *etraxfs_eth_init(hwaddr base, int phyaddr,
+                               struct etraxfs_dma_client *dma_out,
+                               struct etraxfs_dma_client *dma_in);
+ 
+-static inline DeviceState *etraxfs_ser_create(hwaddr addr,
+-                                              qemu_irq irq,
+-                                              Chardev *chr)
+-{
+-    DeviceState *dev;
+-    SysBusDevice *s;
+-
+-    dev = qdev_new("etraxfs-serial");
+-    s = SYS_BUS_DEVICE(dev);
+-    qdev_prop_set_chr(dev, "chardev", chr);
+-    sysbus_realize_and_unref(s, &error_fatal);
+-    sysbus_mmio_map(s, 0, addr);
+-    sysbus_connect_irq(s, 0, irq);
+-    return dev;
+-}
+-
+ #endif
+diff --git a/hw/char/etraxfs_ser.c b/hw/char/etraxfs_ser.c
+deleted file mode 100644
+index 8d6422dae4..0000000000
+--- a/hw/char/etraxfs_ser.c
++++ /dev/null
+@@ -1,267 +0,0 @@
+-/*
+- * QEMU ETRAX System Emulator
+- *
+- * Copyright (c) 2007 Edgar E. Iglesias, Axis Communications AB.
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "hw/irq.h"
+-#include "hw/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
+-#include "hw/sysbus.h"
+-#include "chardev/char-fe.h"
+-#include "qemu/log.h"
+-#include "qemu/module.h"
+-#include "qom/object.h"
+-
+-#define D(x)
+-
+-#define RW_TR_CTRL     (0x00 / 4)
+-#define RW_TR_DMA_EN   (0x04 / 4)
+-#define RW_REC_CTRL    (0x08 / 4)
+-#define RW_DOUT        (0x1c / 4)
+-#define RS_STAT_DIN    (0x20 / 4)
+-#define R_STAT_DIN     (0x24 / 4)
+-#define RW_INTR_MASK   (0x2c / 4)
+-#define RW_ACK_INTR    (0x30 / 4)
+-#define R_INTR         (0x34 / 4)
+-#define R_MASKED_INTR  (0x38 / 4)
+-#define R_MAX          (0x3c / 4)
+-
+-#define STAT_DAV     16
+-#define STAT_TR_IDLE 22
+-#define STAT_TR_RDY  24
+-
+-#define TYPE_ETRAX_FS_SERIAL "etraxfs-serial"
+-typedef struct ETRAXSerial ETRAXSerial;
+-DECLARE_INSTANCE_CHECKER(ETRAXSerial, ETRAX_SERIAL,
+-                         TYPE_ETRAX_FS_SERIAL)
+-
+-struct ETRAXSerial {
+-    SysBusDevice parent_obj;
+-
+-    MemoryRegion mmio;
+-    CharBackend chr;
+-    qemu_irq irq;
+-
+-    int pending_tx;
+-
+-    uint8_t rx_fifo[16];
+-    unsigned int rx_fifo_pos;
+-    unsigned int rx_fifo_len;
+-
+-    /* Control registers.  */
+-    uint32_t regs[R_MAX];
+-};
+-
+-static void ser_update_irq(ETRAXSerial *s)
+-{
+-
+-    if (s->rx_fifo_len) {
+-        s->regs[R_INTR] |= 8;
+-    } else {
+-        s->regs[R_INTR] &= ~8;
+-    }
+-
+-    s->regs[R_MASKED_INTR] = s->regs[R_INTR] & s->regs[RW_INTR_MASK];
+-    qemu_set_irq(s->irq, !!s->regs[R_MASKED_INTR]);
+-}
+-
+-static uint64_t
+-ser_read(void *opaque, hwaddr addr, unsigned int size)
+-{
+-    ETRAXSerial *s = opaque;
+-    uint32_t r = 0;
+-
+-    addr >>= 2;
+-    switch (addr)
+-    {
+-        case R_STAT_DIN:
+-            r = s->rx_fifo[(s->rx_fifo_pos - s->rx_fifo_len) & 15];
+-            if (s->rx_fifo_len) {
+-                r |= 1 << STAT_DAV;
+-            }
+-            r |= 1 << STAT_TR_RDY;
+-            r |= 1 << STAT_TR_IDLE;
+-            break;
+-        case RS_STAT_DIN:
+-            r = s->rx_fifo[(s->rx_fifo_pos - s->rx_fifo_len) & 15];
+-            if (s->rx_fifo_len) {
+-                r |= 1 << STAT_DAV;
+-                s->rx_fifo_len--;
+-            }
+-            r |= 1 << STAT_TR_RDY;
+-            r |= 1 << STAT_TR_IDLE;
+-            break;
+-        default:
+-            r = s->regs[addr];
+-            D(qemu_log("%s " HWADDR_FMT_plx "=%x\n", __func__, addr, r));
+-            break;
+-    }
+-    return r;
+-}
+-
+-static void
+-ser_write(void *opaque, hwaddr addr,
+-          uint64_t val64, unsigned int size)
+-{
+-    ETRAXSerial *s = opaque;
+-    uint32_t value = val64;
+-    unsigned char ch = val64;
+-
+-    D(qemu_log("%s " HWADDR_FMT_plx "=%x\n",  __func__, addr, value));
+-    addr >>= 2;
+-    switch (addr)
+-    {
+-        case RW_DOUT:
+-            /* XXX this blocks entire thread. Rewrite to use
+-             * qemu_chr_fe_write and background I/O callbacks */
+-            qemu_chr_fe_write_all(&s->chr, &ch, 1);
+-            s->regs[R_INTR] |= 3;
+-            s->pending_tx = 1;
+-            s->regs[addr] = value;
+-            break;
+-        case RW_ACK_INTR:
+-            if (s->pending_tx) {
+-                value &= ~1;
+-                s->pending_tx = 0;
+-                D(qemu_log("fixedup value=%x r_intr=%x\n",
+-                           value, s->regs[R_INTR]));
+-            }
+-            s->regs[addr] = value;
+-            s->regs[R_INTR] &= ~value;
+-            D(printf("r_intr=%x\n", s->regs[R_INTR]));
+-            break;
+-        default:
+-            s->regs[addr] = value;
+-            break;
+-    }
+-    ser_update_irq(s);
+-}
+-
+-static const MemoryRegionOps ser_ops = {
+-    .read = ser_read,
+-    .write = ser_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-    .valid = {
+-        .min_access_size = 4,
+-        .max_access_size = 4
+-    }
+-};
+-
+-static Property etraxfs_ser_properties[] = {
+-    DEFINE_PROP_CHR("chardev", ETRAXSerial, chr),
+-    DEFINE_PROP_END_OF_LIST(),
+-};
+-
+-static void serial_receive(void *opaque, const uint8_t *buf, int size)
+-{
+-    ETRAXSerial *s = opaque;
+-    int i;
+-
+-    /* Got a byte.  */
+-    if (s->rx_fifo_len >= 16) {
+-        D(qemu_log("WARNING: UART dropped char.\n"));
+-        return;
+-    }
+-
+-    for (i = 0; i < size; i++) { 
+-        s->rx_fifo[s->rx_fifo_pos] = buf[i];
+-        s->rx_fifo_pos++;
+-        s->rx_fifo_pos &= 15;
+-        s->rx_fifo_len++;
+-    }
+-
+-    ser_update_irq(s);
+-}
+-
+-static int serial_can_receive(void *opaque)
+-{
+-    ETRAXSerial *s = opaque;
+-
+-    /* Is the receiver enabled?  */
+-    if (!(s->regs[RW_REC_CTRL] & (1 << 3))) {
+-        return 0;
+-    }
+-
+-    return sizeof(s->rx_fifo) - s->rx_fifo_len;
+-}
+-
+-static void serial_event(void *opaque, QEMUChrEvent event)
+-{
+-
+-}
+-
+-static void etraxfs_ser_reset(DeviceState *d)
+-{
+-    ETRAXSerial *s = ETRAX_SERIAL(d);
+-
+-    /* transmitter begins ready and idle.  */
+-    s->regs[RS_STAT_DIN] |= (1 << STAT_TR_RDY);
+-    s->regs[RS_STAT_DIN] |= (1 << STAT_TR_IDLE);
+-
+-    s->regs[RW_REC_CTRL] = 0x10000;
+-
+-}
+-
+-static void etraxfs_ser_init(Object *obj)
+-{
+-    ETRAXSerial *s = ETRAX_SERIAL(obj);
+-    SysBusDevice *dev = SYS_BUS_DEVICE(obj);
+-
+-    sysbus_init_irq(dev, &s->irq);
+-    memory_region_init_io(&s->mmio, obj, &ser_ops, s,
+-                          "etraxfs-serial", R_MAX * 4);
+-    sysbus_init_mmio(dev, &s->mmio);
+-}
+-
+-static void etraxfs_ser_realize(DeviceState *dev, Error **errp)
+-{
+-    ETRAXSerial *s = ETRAX_SERIAL(dev);
+-
+-    qemu_chr_fe_set_handlers(&s->chr,
+-                             serial_can_receive, serial_receive,
+-                             serial_event, NULL, s, NULL, true);
+-}
+-
+-static void etraxfs_ser_class_init(ObjectClass *klass, void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-
+-    dc->reset = etraxfs_ser_reset;
+-    device_class_set_props(dc, etraxfs_ser_properties);
+-    dc->realize = etraxfs_ser_realize;
+-}
+-
+-static const TypeInfo etraxfs_ser_info = {
+-    .name          = TYPE_ETRAX_FS_SERIAL,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(ETRAXSerial),
+-    .instance_init = etraxfs_ser_init,
+-    .class_init    = etraxfs_ser_class_init,
+-};
+-
+-static void etraxfs_serial_register_types(void)
+-{
+-    type_register_static(&etraxfs_ser_info);
+-}
+-
+-type_init(etraxfs_serial_register_types)
+diff --git a/hw/char/meson.build b/hw/char/meson.build
+index e5b13b6958..a4c4c5ff0f 100644
+--- a/hw/char/meson.build
++++ b/hw/char/meson.build
+@@ -1,7 +1,6 @@
+ system_ss.add(when: 'CONFIG_CADENCE', if_true: files('cadence_uart.c'))
+ system_ss.add(when: 'CONFIG_CMSDK_APB_UART', if_true: files('cmsdk-apb-uart.c'))
+ system_ss.add(when: 'CONFIG_ESCC', if_true: files('escc.c'))
+-system_ss.add(when: 'CONFIG_ETRAXFS', if_true: files('etraxfs_ser.c'))
+ system_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_apbuart.c'))
+ system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_uart.c'))
+ system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_serial.c'))
 -- 
 2.45.2
 
