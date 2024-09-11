@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 516DFEE4995
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 11:26:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8764EE4995
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 11:27:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soLU3-0005vY-J0; Wed, 11 Sep 2024 07:26:03 -0400
+	id 1soLTz-0005fR-45; Wed, 11 Sep 2024 07:25:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1soLU1-0005pl-SY
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 07:26:01 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1soLTv-0005aD-V5
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 07:25:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1soLTz-00013K-Vy
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 07:26:01 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1soLTu-00012I-EG
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 07:25:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726053959;
+ s=mimecast20190719; t=1726053953;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jcDBU4owQbBxkclDor65l8lSzSIuAVoWdS2D2Q1iluo=;
- b=A12P1J93C+zP+g0wBVpXNu8T2bmNCbgRdSbZvr0Kg4/kzGYttmOh1Wl/d6EJQFqTzAkvr3
- zu+vVrA4mt7giIBa8/1hubKaZGm68TR/jLPBJ01AlQ2QBjEH5gvAZi83SsQ1POorsoZHYS
- Kq7kum9AWJrD3hkytHQfp63FVkfdqSg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=jPap5rPhgh2dW/X03TfOVy+09igrDU42hFAAY4BhjBo=;
+ b=BJqRDs1n6jaeFZfYygHP4HQJwZnmYYrIQ9/zcUzOiaaEuct++c3ZSJFs++4SH+CRHHrKH2
+ 7pYU3Hr58W+9NX8heZ1vfNChaTt8eb9VHaoxz88driIDDAjZbZkrmxZE1H8UBkjGkEvMXF
+ kC4tjLvYldPASTSb4U8meFOAiW3/z00=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-501-CdlHh2SYNguXfoWI6xwnPQ-1; Wed,
- 11 Sep 2024 07:25:53 -0400
-X-MC-Unique: CdlHh2SYNguXfoWI6xwnPQ-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-L_UX2JqgOqSPwQTm-vaU2g-1; Wed,
+ 11 Sep 2024 07:25:50 -0400
+X-MC-Unique: L_UX2JqgOqSPwQTm-vaU2g-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9A3021956088; Wed, 11 Sep 2024 11:25:51 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9193219560B1; Wed, 11 Sep 2024 11:25:48 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.112])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1AC0B19560AD; Wed, 11 Sep 2024 11:25:51 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8F63730001A1; Wed, 11 Sep 2024 11:25:47 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2EA3021E68BD; Wed, 11 Sep 2024 13:25:45 +0200 (CEST)
+ id 2183F21E6889; Wed, 11 Sep 2024 13:25:45 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: eblake@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com,
  berrange@redhat.com, arei.gonglei@huawei.com, pizhenwei@bytedance.com,
  jonathan.cameron@huawei.com, fan.ni@samsung.com, mst@redhat.com,
  marcel.apfelbaum@gmail.com, jiri@resnulli.us, jsnow@redhat.com
-Subject: [PATCH v2 8/8] qapi: Document QCryptodevBackendServiceType
-Date: Wed, 11 Sep 2024 13:25:45 +0200
-Message-ID: <20240911112545.2248881-9-armbru@redhat.com>
+Subject: [PATCH v2 4/8] qapi/introspect: Supply missing member documentation
+Date: Wed, 11 Sep 2024 13:25:41 +0200
+Message-ID: <20240911112545.2248881-5-armbru@redhat.com>
 In-Reply-To: <20240911112545.2248881-1-armbru@redhat.com>
 References: <20240911112545.2248881-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -85,55 +85,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: zhenwei pi <pizhenwei@bytedance.com>
+Since we neglect to document the members of JSONType, their
+description in the QEMU QMP Reference manual is "Not documented".  Fix
+that.
 
-QCryptodevBackendServiceType was introduced by
-bc304a6442e (cryptodev: Introduce server type in QAPI). However there
-is a lack of member description.
-
-Reported-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-[Drop QCryptodevBackendServiceType from pragma documentation-exceptions]
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
 ---
- qapi/cryptodev.json | 10 ++++++++++
- qapi/pragma.json    |  1 -
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ qapi/introspect.json | 16 ++++++++++++++++
+ qapi/pragma.json     |  1 -
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/qapi/cryptodev.json b/qapi/cryptodev.json
-index 5e417340dc..04d0e21d20 100644
---- a/qapi/cryptodev.json
-+++ b/qapi/cryptodev.json
-@@ -27,6 +27,16 @@
+diff --git a/qapi/introspect.json b/qapi/introspect.json
+index 14df049580..01bb242947 100644
+--- a/qapi/introspect.json
++++ b/qapi/introspect.json
+@@ -127,6 +127,22 @@
+ # section 1, plus 'int' (split off 'number'), plus the obvious top
+ # type 'value'.
  #
- # The supported service types of a crypto device.
- #
-+# @cipher: Symmetric Key Cipher service
++# @string: JSON string
 +#
-+# @hash: Hash service
++# @number: JSON number
 +#
-+# @mac: Message Authentication Codes service
++# @int: JSON number that is an integer
 +#
-+# @aead: Authenticated Encryption with Associated Data service
++# @boolean: literal ``false`` or ``true``
 +#
-+# @akcipher: Asymmetric Key Cipher service
++# @null: literal ``null``
 +#
- # Since: 8.0
++# @object: JSON object
++#
++# @array: JSON array
++#
++# @value: any JSON value
++#
+ # Since: 2.5
  ##
- { 'enum': 'QCryptodevBackendServiceType',
+ { 'enum': 'JSONType',
 diff --git a/qapi/pragma.json b/qapi/pragma.json
-index 108e574678..023a2ef7bc 100644
+index 625eac99df..7b0e12f42b 100644
 --- a/qapi/pragma.json
 +++ b/qapi/pragma.json
-@@ -61,7 +61,6 @@
+@@ -58,7 +58,6 @@
+         'InputButton',
+         'IscsiHeaderDigest',
+         'IscsiTransport',
+-        'JSONType',
+         'KeyValueKind',
          'MemoryDeviceInfoKind',
          'NetClientDriver',
-         'ObjectType',
--        'QCryptodevBackendServiceType',
-         'QKeyCode',
-         'RbdAuthMode',
-         'RbdImageEncryptionFormat',
 -- 
 2.46.0
 
