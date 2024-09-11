@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B672CEE57C7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4E9EEE57C6
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 16:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soQYa-0002U8-Is; Wed, 11 Sep 2024 12:51:04 -0400
+	id 1soQYd-0002Z2-6o; Wed, 11 Sep 2024 12:51:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1soQYX-0002Ft-1q
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 12:51:01 -0400
-Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
+ id 1soQYZ-0002QR-Jk
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 12:51:03 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1soQYV-0003fk-D8
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 12:51:00 -0400
-Received: by mail-oa1-x33.google.com with SMTP id
- 586e51a60fabf-277c742307fso761038fac.2
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 09:50:59 -0700 (PDT)
+ id 1soQYX-0003gP-UN
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 12:51:03 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-718d8d6af8fso4618040b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 09:51:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726073458; x=1726678258; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726073461; x=1726678261; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+zeN6h7OSkzIznAtGXkS2TM05Vzv6xYEK4cYNsvDB5Y=;
- b=aSuj+BuU9IXLkS1fISfjs6vBo67MaHDFyv2kTvaGry/gL/ML4xgQKUXXvbjWLDgm3j
- huoCk8RY37Gz7AKisSAe2hPCBr4rtXeLZuVVXNMbdAf6p5Nj98v7HMOlo7L806nJ7DSa
- F7+NMGqF89SQBb2Dm3TdZwXqhbqdMnmB+U4Sn9ZdNg9RWV6glagu794uU9FT8DTA0oRd
- yTpQO9l+vSKR0Dy2yDiYTrmTn9as1wMEP6N9GgT3Tzmeq/hapUcCl/EXsJcnVYLTnH57
- zm2zLmUbUTOnNlf+XvYyFIM2c0AJIro/qg2tCrXpDiDTdS1yKQxiZFw61TiQuj49FjK4
- wxdw==
+ bh=Z2ZjvXoH00iViMW0slYpXozl5B8ORorypWDbC2UouOc=;
+ b=kZH4iL8tJSQHUybIcKqziBVg1d4rmlzSVGSlwZDccjvchScW3l97PhDdJiFwVKSJsQ
+ zdNJjTSyyxdNDunMk2lv1dXBQQPpRMxgfH40XNkk/xctk5ZD9e6hDkeo27MROdwwMT2x
+ sDN3Bp13sTFO5upJBuIZbqDObjpTgKGOTE96lJcVsdTb2uZfUh4PvFTF1Bm7znHmHlJ3
+ pyjWJYgynz8eBuC8lGeMspgNy0TsCCp76hsAB8VMoJ4iHDcXUhu8hULkBX4rTw5VEQF/
+ 9+SXqvcHN0yVmWewyY69TORXeT+ul5S6nJnp+v5OVqnMC5gv97eQqfgY1gTnDX3ELhCu
+ D+2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726073458; x=1726678258;
+ d=1e100.net; s=20230601; t=1726073461; x=1726678261;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+zeN6h7OSkzIznAtGXkS2TM05Vzv6xYEK4cYNsvDB5Y=;
- b=WR2vAofLfQ5Zv9xZ8sT2P60XbQm5J6igtIfpAOx9pmkQHw4446+UmVcq2339K62UOy
- wS/yD7jls7KO3+x0ATmz5V6LcnQAs4HNx+GhY7EMUF0VgeXD9N6zDHWB3bvWiebhLlOl
- 7QNlBM1YK2jkUS3W9Gtr7pnwHzkW7ut6gYSZI5EI+wwYx+94fC0FsOoiP3OMpfbK3dp6
- 3toaLbGmX3eJRTWy8c2Qo0zP4sSQtTJw3x13lJItpcU0yfscmK0DEq+s/N5YC9dkSx3K
- BEZQ5he+Z31uoi/B2mkuHevH+ZZnqhc6pXFepzmqstcWv6LGl2kV+l5W3LwvdnCGhzQc
- RtXA==
-X-Gm-Message-State: AOJu0YwYLgsb1gzkPD+KDgAhWpXHsclCfa8k76yCEjgjvIJ/DdeNrUBt
- kOH+p5XdOcsxDnJntS8Lho6sDDCGJ3t3ZGe2NtbFbpaswuNJcXHmVFijUiUXqiO0WnQDc8MBhAB
- 1
-X-Google-Smtp-Source: AGHT+IHuRXHhtD77WFfmeAFubyLtFkBWZJiGbfZsyo4rs84lAxbagniW6JV/l62Eq+sNyVxProCHuA==
-X-Received: by 2002:a05:6870:288e:b0:278:234e:6e3f with SMTP id
- 586e51a60fabf-27c1b53e12emr2798404fac.25.1726073457524; 
- Wed, 11 Sep 2024 09:50:57 -0700 (PDT)
+ bh=Z2ZjvXoH00iViMW0slYpXozl5B8ORorypWDbC2UouOc=;
+ b=VNa+QvUtJBHJEZZviHdZfxU28CEEYYqX6OCEna10QMY8wuo00neR7wtA6K/EVc45E0
+ MfJFnPlqpQHXqrZvwg/9UKDtMug8ow+1QLtLZBT+S93d/yzcVxLD9lHVxqwxqbFXCe+U
+ W7uetsPTRdMty+9NboygFKlfcNM5FJB/PYHCIotFDLkYDY5HlU7MRD+OmQGaanvvmuVT
+ ryqxOHpQtrjIc40bWk2uoMlRsIPWecCWmu/jK/bZNbRKCwg1FKXMNbXHrskBelfk4+rY
+ 4fMD7t6l0mOGvR6nf1fXYNuYM0+CmYH3ifYgFzQzTxgSfFYuGRIUf4gqgHu+4LOz9oLP
+ /e6A==
+X-Gm-Message-State: AOJu0YzGE51dZo4t6QMwolD1kI1xRWdlUCNawCi6mHbbANpMp6xXYta/
+ 9FcK+OXFxTQNhq4yd5i4EhWtWq+3RWL3wt9DowDUgpmfcds5baUEAsCwpBdXmuNv7R0HOmxmOKe
+ V
+X-Google-Smtp-Source: AGHT+IHxAMN52lfCmQ1WCCsDro1k+d4gyvu6q4UOhAPHh7y3SdV5iIfY6ki6stf4RIVFHP84z00Mjg==
+X-Received: by 2002:a05:6a00:b83:b0:70b:a46:7db7 with SMTP id
+ d2e1a72fcca58-719260962c0mr12138b3a.16.1726073460572; 
+ Wed, 11 Sep 2024 09:51:00 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71908fe4e7esm3186947b3a.80.2024.09.11.09.50.56
+ d2e1a72fcca58-71908fe4e7esm3186947b3a.80.2024.09.11.09.50.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 09:50:57 -0700 (PDT)
+ Wed, 11 Sep 2024 09:51:00 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: zhiwei_liu@linux.alibaba.com, tangtiancheng.ttc@alibaba-inc.com,
  philmd@linaro.org
-Subject: [PATCH v2 09/18] tcg/optimize: Optimize bitsel_vec
-Date: Wed, 11 Sep 2024 09:50:38 -0700
-Message-ID: <20240911165047.1035764-10-richard.henderson@linaro.org>
+Subject: [PATCH v2 12/18] tcg/i386: Add predicate parameters to
+ tcg_out_evex_opc
+Date: Wed, 11 Sep 2024 09:50:41 -0700
+Message-ID: <20240911165047.1035764-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240911165047.1035764-1-richard.henderson@linaro.org>
 References: <20240911165047.1035764-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::33;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,90 +97,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fold matching true/false operands.
-Fold true/false operands with 0/-1 to simpler logicals.
+Extend tcg_out_evex_opc to handle the predicate and
+zero-merging parameters of the evex prefix.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/optimize.c | 58 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ tcg/i386/tcg-target.c.inc | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index f11f576fd4..e9ef16b3c6 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -2737,6 +2737,61 @@ static bool fold_xor(OptContext *ctx, TCGOp *op)
-     return fold_masks(ctx, op);
+diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
+index b1d642fc67..f94a2a2385 100644
+--- a/tcg/i386/tcg-target.c.inc
++++ b/tcg/i386/tcg-target.c.inc
+@@ -674,7 +674,7 @@ static void tcg_out_vex_opc(TCGContext *s, int opc, int r, int v,
  }
  
-+static bool fold_bitsel_vec(OptContext *ctx, TCGOp *op)
-+{
-+    /* If true and false values are the same, eliminate the cmp. */
-+    if (args_are_copies(op->args[2], op->args[3])) {
-+        return tcg_opt_gen_mov(ctx, op, op->args[0], op->args[2]);
-+    }
-+
-+    if (arg_is_const(op->args[2]) && arg_is_const(op->args[3])) {
-+        uint64_t tv = arg_info(op->args[2])->val;
-+        uint64_t fv = arg_info(op->args[3])->val;
-+
-+        if (tv == -1 && fv == 0) {
-+            return tcg_opt_gen_mov(ctx, op, op->args[0], op->args[1]);
-+        }
-+        if (tv == 0 && fv == -1) {
-+            if (TCG_TARGET_HAS_not_vec) {
-+                op->opc = INDEX_op_not_vec;
-+                return fold_not(ctx, op);
-+            } else {
-+                op->opc = INDEX_op_xor_vec;
-+                op->args[2] = arg_new_constant(ctx, -1);
-+                return fold_xor(ctx, op);
-+            }
-+        }
-+    }
-+    if (arg_is_const(op->args[2])) {
-+        uint64_t tv = arg_info(op->args[2])->val;
-+        if (tv == -1) {
-+            op->opc = INDEX_op_or_vec;
-+            op->args[2] = op->args[3];
-+            return fold_or(ctx, op);
-+        }
-+        if (tv == 0 && TCG_TARGET_HAS_andc_vec) {
-+            op->opc = INDEX_op_andc_vec;
-+            op->args[2] = op->args[1];
-+            op->args[1] = op->args[3];
-+            return fold_andc(ctx, op);
-+        }
-+    }
-+    if (arg_is_const(op->args[3])) {
-+        uint64_t fv = arg_info(op->args[3])->val;
-+        if (fv == 0) {
-+            op->opc = INDEX_op_and_vec;
-+            return fold_and(ctx, op);
-+        }
-+        if (fv == -1 && TCG_TARGET_HAS_orc_vec) {
-+            op->opc = INDEX_op_orc_vec;
-+            op->args[2] = op->args[1];
-+            op->args[1] = op->args[3];
-+            return fold_orc(ctx, op);
-+        }
-+    }
-+    return false;
-+}
-+
- /* Propagate constants and copies, fold constant expressions. */
- void tcg_optimize(TCGContext *s)
+ static void tcg_out_evex_opc(TCGContext *s, int opc, int r, int v,
+-                             int rm, int index)
++                             int rm, int index, int aaa, bool z)
  {
-@@ -2964,6 +3019,9 @@ void tcg_optimize(TCGContext *s)
-         case INDEX_op_cmpsel_vec:
-             done = fold_cmpsel_vec(&ctx, op);
-             break;
-+        case INDEX_op_bitsel_vec:
-+            done = fold_bitsel_vec(&ctx, op);
-+            break;
-         CASE_OP_32_64(sextract):
-             done = fold_sextract(&ctx, op);
-             break;
+     /* The entire 4-byte evex prefix; with R' and V' set. */
+     uint32_t p = 0x08041062;
+@@ -711,7 +711,9 @@ static void tcg_out_evex_opc(TCGContext *s, int opc, int r, int v,
+     p = deposit32(p, 16, 2, pp);
+     p = deposit32(p, 19, 4, ~v);
+     p = deposit32(p, 23, 1, (opc & P_VEXW) != 0);
++    p = deposit32(p, 24, 3, aaa);
+     p = deposit32(p, 29, 2, (opc & P_VEXL) != 0);
++    p = deposit32(p, 31, 1, z);
+ 
+     tcg_out32(s, p);
+     tcg_out8(s, opc);
+@@ -720,7 +722,7 @@ static void tcg_out_evex_opc(TCGContext *s, int opc, int r, int v,
+ static void tcg_out_vex_modrm(TCGContext *s, int opc, int r, int v, int rm)
+ {
+     if (opc & P_EVEX) {
+-        tcg_out_evex_opc(s, opc, r, v, rm, 0);
++        tcg_out_evex_opc(s, opc, r, v, rm, 0, 0, false);
+     } else {
+         tcg_out_vex_opc(s, opc, r, v, rm, 0);
+     }
 -- 
 2.43.0
 
