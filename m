@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86754EE499E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D348EE499E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Sep 2024 12:23:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soMGK-0008HE-2O; Wed, 11 Sep 2024 08:15:56 -0400
+	id 1soMJ1-0005XV-7G; Wed, 11 Sep 2024 08:18:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMGD-00080l-8g
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:15:49 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMIC-00021K-Dq
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:17:58 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMGA-0007R6-Hb
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:15:48 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a8d2b4a5bf1so267057366b.2
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:15:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soMI9-0007aY-0D
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 08:17:52 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42ca4e0299eso40414745e9.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 05:17:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726056944; x=1726661744; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726057064; x=1726661864; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ld5+s4N2gFpxzgAQK+tVzuINwNRwZ7VY4lSMuZzha4o=;
- b=R5IddsTGZ5VNNPH9pgtyfJEBQLIfnALmdX+5ch1lvT/6s1lMiHZvO9Jc9nUGv5HL7b
- UEQCS5/o66YKqcpB6w4nkKYfA0Jp86i+Y2SDzdKxMMvOVPvtVE58rwmqIjAj1i+b8KgF
- MC8Fy5JdTxlOeTCxNagNoxlpQbKFrOSL4Pd+Dnr3ZAWwOcGMcMSVxwYP743RobQMLMN/
- aSdB+WIP+dsQiQTqj/gtuCiA/PFeH+8FZIetd3rZjztTygwnsoY5ZjhMtu1kgqOlymgI
- sUx6mexsSpZDyjoQdHAg7x36Msc295iX/H0SngAututMsWQHxE4+z5SY5Ebznf0JWsbH
- kkKA==
+ bh=/VR2UR1dthqYJR71A2WcgwFe6vVtppJkQRzukW2+d1s=;
+ b=OBuAiYyHgsBMIkMx0Py7t8Jku/lpMKHLbsCwVey7KAoM4raxaabvDSXP632AhoGlnP
+ C2LLBMz9sfz+Vs3scgjKdyg9CnwcBZtkSz37aGviAQrEhgxYkQfanZ8tmFsPffVopkd8
+ H0hrs/13mmxkPqQfiKdDtI6KrHqWlc8747pwPeL09goQPTV+CXwDz2IDR3gsNLXsQH7A
+ f7ibyabEFQUac+AxNO6BcRuKrDB+JySJxc4Xpq1Mb9aCt3uRc0+E0wGjENYOIXJ0ru4k
+ HHsPgiDwx8avzcAGfzNbkFYdgAEh4gVZg3APpwxNOnrV0MzYArd5otVV2V9QyszEaYif
+ Fpdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726056944; x=1726661744;
+ d=1e100.net; s=20230601; t=1726057064; x=1726661864;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ld5+s4N2gFpxzgAQK+tVzuINwNRwZ7VY4lSMuZzha4o=;
- b=ATdF9HiOf4zqUVFrG46clqOeynodxnisbof47HD3iZwjzlaXKLkqWvqDD1R4PeLWto
- uNjrXGQnmSb0AqsF/SJmiXJ2/psl3syEMjIuX7MhSGfm+QLlPnxnSGSNruDckl6smGNR
- RWojoomaJpJJDxHfw+4x4uDc90R7XRuMhzUH5El6aioKf/w3aQ6TAwWNlVHLZBhHmkF+
- 9JxhFtvASXlDJ/N7AjQsQpc5Df0Tsf4iCptsgz9UXa+dd6Zi+P1Xmc2c7X/dq0vIpmJq
- 45O+X8zEVoJmCrjKO07aRqRWP1s8V7IfLtyBlk0+x4tm/SsXX2eQsWa0tDygueo9TxC0
- z81g==
-X-Gm-Message-State: AOJu0YwB2TIsB3Nz5XCnStWgGNCUD00cUK7adjm/xPZP2+b2ryTcXLMC
- Poksd8S3aWm+AHnWGawj2wLPMDHcKrJmsMmdrIEqYw2M+W9ibeKU1/xLUv7ubq+oS9aoa0NkC3B
- O
-X-Google-Smtp-Source: AGHT+IGhrXoPRJz0FZc2HPQWqqpl7M9KAtBnSpqOhDq81g9FgXG5IQ4dckaH0mCipmCYEHTOh2pPeg==
-X-Received: by 2002:a17:907:7e97:b0:a8d:592d:f76 with SMTP id
- a640c23a62f3a-a9004a66234mr335281766b.48.1726056944299; 
- Wed, 11 Sep 2024 05:15:44 -0700 (PDT)
+ bh=/VR2UR1dthqYJR71A2WcgwFe6vVtppJkQRzukW2+d1s=;
+ b=rDLGfsX0ltOOXUVw+SqJlIRBEBUBWoyzAmE4PB+57YwSYiahVZt5CfXKnWRKseynty
+ lzlOkbi9cOZxXEwIujUW1tUXhPo27GKazdLQ+rkp7C3OKLPh/fRJluI8+Hi+KFwtGpsb
+ tQo8NoOUb4GYVH7bENFXiFw1dA9AudnL04uWbPc+ObtcwwYdeBym+rSvHJR6rL2mj0z2
+ yrLGLpVO+WGNd8mgphBfuybvDVyM0OsZ9y6QQml2DSpAxYwL4biGPUnLN9Dm450EhfSE
+ W40m3Zr3tv2ckUi4kAtLLAaxsRTJn5cbPae7bMDyocpMPN5wvqmAnSzPujbPXDWvGpF/
+ rZlQ==
+X-Gm-Message-State: AOJu0Ywvwy+zmfg434Vu7wqpk5CP/re7xQFiLKfpgKgmnE4cyfE3RRwn
+ N/tmsUsTg1bH88+MUtYVNWsfRnfDYkv/Qiw+/wGGyb1n3aw5xO+SnnEu0LMJBpzb0bg8LxUp5aX
+ L
+X-Google-Smtp-Source: AGHT+IHfZ1TgJsVOLnr0L5y3WPBmQ0dzb5Wem6cC9z0XKTrmzyMVnDQU2TfAVmSa424cj9u/+UKupA==
+X-Received: by 2002:a05:600c:3d93:b0:426:62c5:4742 with SMTP id
+ 5b1f17b1804b1-42cad74649emr110286175e9.7.1726057064145; 
+ Wed, 11 Sep 2024 05:17:44 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.196.107])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25c72757sm606208466b.103.2024.09.11.05.15.42
+ 5b1f17b1804b1-42caeb44473sm140415835e9.26.2024.09.11.05.17.43
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Sep 2024 05:15:43 -0700 (PDT)
+ Wed, 11 Sep 2024 05:17:43 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: [PULL 11/56] hw/cris: Remove the axis-dev88 machine
-Date: Wed, 11 Sep 2024 14:13:36 +0200
-Message-ID: <20240911121422.52585-12-philmd@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 30/56] hw/char/pl011: Rename RX FIFO methods
+Date: Wed, 11 Sep 2024 14:13:55 +0200
+Message-ID: <20240911121422.52585-31-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240911121422.52585-1-philmd@linaro.org>
 References: <20240911121422.52585-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,431 +95,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This machine was deprecated for the v9.0 release in commit
-c7bbef4023 ("docs: mark CRIS support as deprecated").
+In preparation of having a TX FIFO, rename the RX FIFO methods.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Acked-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Message-ID: <20240904143603.52934-6-philmd@linaro.org>
+Message-Id: <20240719181041.49545-12-philmd@linaro.org>
 ---
- MAINTAINERS                              |   3 +-
- configs/devices/cris-softmmu/default.mak |   3 -
- hw/cris/axis_dev88.c                     | 351 -----------------------
- hw/cris/Kconfig                          |   8 -
- hw/cris/meson.build                      |   1 -
- 5 files changed, 1 insertion(+), 365 deletions(-)
- delete mode 100644 hw/cris/axis_dev88.c
+ hw/char/pl011.c      | 12 ++++++------
+ hw/char/trace-events |  4 ++--
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d0ddbb6bfb..e64a3206d9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1213,10 +1213,9 @@ F: hw/avr/arduino.c
+diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+index 9c045d3709..7ac2f39ac2 100644
+--- a/hw/char/pl011.c
++++ b/hw/char/pl011.c
+@@ -173,7 +173,7 @@ static inline void pl011_reset_tx_fifo(PL011State *s)
+     s->flags |= PL011_FLAG_TXFE;
+ }
  
- CRIS Machines
- -------------
--Axis Dev88
-+Etrax hardware
- M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
- S: Maintained
--F: hw/cris/axis_dev88.c
- F: hw/*/etraxfs_*.c
+-static void pl011_put_fifo(void *opaque, uint32_t value)
++static void pl011_fifo_rx_put(void *opaque, uint32_t value)
+ {
+     PL011State *s = (PL011State *)opaque;
+     int slot;
+@@ -184,9 +184,9 @@ static void pl011_put_fifo(void *opaque, uint32_t value)
+     s->read_fifo[slot] = value;
+     s->read_count++;
+     s->flags &= ~PL011_FLAG_RXFE;
+-    trace_pl011_put_fifo(value, s->read_count);
++    trace_pl011_fifo_rx_put(value, s->read_count);
+     if (s->read_count == pipe_depth) {
+-        trace_pl011_put_fifo_full();
++        trace_pl011_fifo_rx_full();
+         s->flags |= PL011_FLAG_RXFF;
+     }
+     if (s->read_count == s->read_trigger) {
+@@ -220,7 +220,7 @@ static void pl011_loopback_tx(PL011State *s, uint32_t value)
+      *
+      * For simplicity, the above described is not emulated.
+      */
+-    pl011_put_fifo(s, value);
++    pl011_fifo_rx_put(s, value);
+ }
  
- HP-PARISC Machines
-diff --git a/configs/devices/cris-softmmu/default.mak b/configs/devices/cris-softmmu/default.mak
-index ff73cd4084..3726699370 100644
---- a/configs/devices/cris-softmmu/default.mak
-+++ b/configs/devices/cris-softmmu/default.mak
-@@ -1,4 +1 @@
- # Default configuration for cris-softmmu
--
--# Boards are selected by default, uncomment to keep out of the build.
--# CONFIG_AXIS=n
-diff --git a/hw/cris/axis_dev88.c b/hw/cris/axis_dev88.c
-deleted file mode 100644
-index 5556634921..0000000000
---- a/hw/cris/axis_dev88.c
-+++ /dev/null
-@@ -1,351 +0,0 @@
--/*
-- * QEMU model for the AXIS devboard 88.
-- *
-- * Copyright (c) 2009 Edgar E. Iglesias, Axis Communications AB.
-- *
-- * Permission is hereby granted, free of charge, to any person obtaining a copy
-- * of this software and associated documentation files (the "Software"), to deal
-- * in the Software without restriction, including without limitation the rights
-- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-- * copies of the Software, and to permit persons to whom the Software is
-- * furnished to do so, subject to the following conditions:
-- *
-- * The above copyright notice and this permission notice shall be included in
-- * all copies or substantial portions of the Software.
-- *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-- * THE SOFTWARE.
-- */
--
--#include "qemu/osdep.h"
--#include "qemu/units.h"
--#include "qapi/error.h"
--#include "cpu.h"
--#include "hw/sysbus.h"
--#include "net/net.h"
--#include "hw/block/flash.h"
--#include "hw/boards.h"
--#include "hw/cris/etraxfs.h"
--#include "hw/loader.h"
--#include "elf.h"
--#include "boot.h"
--#include "sysemu/qtest.h"
--#include "sysemu/sysemu.h"
--
--#define D(x)
--#define DNAND(x)
--
--struct nand_state_t
--{
--    DeviceState *nand;
--    MemoryRegion iomem;
--    unsigned int rdy:1;
--    unsigned int ale:1;
--    unsigned int cle:1;
--    unsigned int ce:1;
--};
--
--static struct nand_state_t nand_state;
--static uint64_t nand_read(void *opaque, hwaddr addr, unsigned size)
--{
--    struct nand_state_t *s = opaque;
--    uint32_t r;
--    int rdy;
--
--    r = nand_getio(s->nand);
--    nand_getpins(s->nand, &rdy);
--    s->rdy = rdy;
--
--    DNAND(printf("%s addr=%x r=%x\n", __func__, addr, r));
--    return r;
--}
--
--static void
--nand_write(void *opaque, hwaddr addr, uint64_t value,
--           unsigned size)
--{
--    struct nand_state_t *s = opaque;
--    int rdy;
--
--    DNAND(printf("%s addr=%x v=%x\n", __func__, addr, (unsigned)value));
--    nand_setpins(s->nand, s->cle, s->ale, s->ce, 1, 0);
--    nand_setio(s->nand, value);
--    nand_getpins(s->nand, &rdy);
--    s->rdy = rdy;
--}
--
--static const MemoryRegionOps nand_ops = {
--    .read = nand_read,
--    .write = nand_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
--};
--
--struct tempsensor_t
--{
--    unsigned int shiftreg;
--    unsigned int count;
--    enum {
--        ST_OUT, ST_IN, ST_Z
--    } state;
--
--    uint16_t regs[3];
--};
--
--static void tempsensor_clkedge(struct tempsensor_t *s,
--                               unsigned int clk, unsigned int data_in)
--{
--    D(printf("%s clk=%d state=%d sr=%x\n", __func__,
--             clk, s->state, s->shiftreg));
--    if (s->count == 0) {
--        s->count = 16;
--        s->state = ST_OUT;
--    }
--    switch (s->state) {
--        case ST_OUT:
--            /* Output reg is clocked at negedge.  */
--            if (!clk) {
--                s->count--;
--                s->shiftreg <<= 1;
--                if (s->count == 0) {
--                    s->shiftreg = 0;
--                    s->state = ST_IN;
--                    s->count = 16;
--                }
--            }
--            break;
--        case ST_Z:
--            if (clk) {
--                s->count--;
--                if (s->count == 0) {
--                    s->shiftreg = 0;
--                    s->state = ST_OUT;
--                    s->count = 16;
--                }
--            }
--            break;
--        case ST_IN:
--            /* Indata is sampled at posedge.  */
--            if (clk) {
--                s->count--;
--                s->shiftreg <<= 1;
--                s->shiftreg |= data_in & 1;
--                if (s->count == 0) {
--                    D(printf("%s cfgreg=%x\n", __func__, s->shiftreg));
--                    s->regs[0] = s->shiftreg;
--                    s->state = ST_OUT;
--                    s->count = 16;
--
--                    if ((s->regs[0] & 0xff) == 0) {
--                        /* 25 degrees celsius.  */
--                        s->shiftreg = 0x0b9f;
--                    } else if ((s->regs[0] & 0xff) == 0xff) {
--                        /* Sensor ID, 0x8100 LM70.  */
--                        s->shiftreg = 0x8100;
--                    } else
--                        printf("Invalid tempsens state %x\n", s->regs[0]);
--                }
--            }
--            break;
--    }
--}
--
--
--#define RW_PA_DOUT    0x00
--#define R_PA_DIN      0x01
--#define RW_PA_OE      0x02
--#define RW_PD_DOUT    0x10
--#define R_PD_DIN      0x11
--#define RW_PD_OE      0x12
--
--static struct gpio_state_t
--{
--    MemoryRegion iomem;
--    struct nand_state_t *nand;
--    struct tempsensor_t tempsensor;
--    uint32_t regs[0x5c / 4];
--} gpio_state;
--
--static uint64_t gpio_read(void *opaque, hwaddr addr, unsigned size)
--{
--    struct gpio_state_t *s = opaque;
--    uint32_t r = 0;
--
--    addr >>= 2;
--    switch (addr)
--    {
--        case R_PA_DIN:
--            r = s->regs[RW_PA_DOUT] & s->regs[RW_PA_OE];
--
--            /* Encode pins from the nand.  */
--            r |= s->nand->rdy << 7;
--            break;
--        case R_PD_DIN:
--            r = s->regs[RW_PD_DOUT] & s->regs[RW_PD_OE];
--
--            /* Encode temp sensor pins.  */
--            r |= (!!(s->tempsensor.shiftreg & 0x10000)) << 4;
--            break;
--
--        default:
--            r = s->regs[addr];
--            break;
--    }
--    return r;
--    D(printf("%s %x=%x\n", __func__, addr, r));
--}
--
--static void gpio_write(void *opaque, hwaddr addr, uint64_t value,
--                       unsigned size)
--{
--    struct gpio_state_t *s = opaque;
--    D(printf("%s %x=%x\n", __func__, addr, (unsigned)value));
--
--    addr >>= 2;
--    switch (addr)
--    {
--        case RW_PA_DOUT:
--            /* Decode nand pins.  */
--            s->nand->ale = !!(value & (1 << 6));
--            s->nand->cle = !!(value & (1 << 5));
--            s->nand->ce  = !!(value & (1 << 4));
--
--            s->regs[addr] = value;
--            break;
--
--        case RW_PD_DOUT:
--            /* Temp sensor clk.  */
--            if ((s->regs[addr] ^ value) & 2)
--                tempsensor_clkedge(&s->tempsensor, !!(value & 2),
--                                   !!(value & 16));
--            s->regs[addr] = value;
--            break;
--
--        default:
--            s->regs[addr] = value;
--            break;
--    }
--}
--
--static const MemoryRegionOps gpio_ops = {
--    .read = gpio_read,
--    .write = gpio_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
--    .valid = {
--        .min_access_size = 4,
--        .max_access_size = 4,
--    },
--};
--
--#define INTMEM_SIZE (128 * KiB)
--
--static struct cris_load_info li;
--
--static
--void axisdev88_init(MachineState *machine)
--{
--    const char *kernel_filename = machine->kernel_filename;
--    const char *kernel_cmdline = machine->kernel_cmdline;
--    CRISCPU *cpu;
--    DeviceState *dev;
--    SysBusDevice *s;
--    DriveInfo *nand;
--    qemu_irq irq[30], nmi[2];
--    void *etraxfs_dmac;
--    struct etraxfs_dma_client *dma_eth;
--    int i;
--    MemoryRegion *address_space_mem = get_system_memory();
--    MemoryRegion *phys_intmem = g_new(MemoryRegion, 1);
--
--    /* init CPUs */
--    cpu = CRIS_CPU(cpu_create(machine->cpu_type));
--
--    memory_region_add_subregion(address_space_mem, 0x40000000, machine->ram);
--
--    /* The ETRAX-FS has 128Kb on chip ram, the docs refer to it as the 
--       internal memory.  */
--    memory_region_init_ram(phys_intmem, NULL, "axisdev88.chipram",
--                           INTMEM_SIZE, &error_fatal);
--    memory_region_add_subregion(address_space_mem, 0x38000000, phys_intmem);
--
--      /* Attach a NAND flash to CS1.  */
--    nand = drive_get(IF_MTD, 0, 0);
--    nand_state.nand = nand_init(nand ? blk_by_legacy_dinfo(nand) : NULL,
--                                NAND_MFR_STMICRO, 0x39);
--    memory_region_init_io(&nand_state.iomem, NULL, &nand_ops, &nand_state,
--                          "nand", 0x05000000);
--    memory_region_add_subregion(address_space_mem, 0x10000000,
--                                &nand_state.iomem);
--
--    gpio_state.nand = &nand_state;
--    memory_region_init_io(&gpio_state.iomem, NULL, &gpio_ops, &gpio_state,
--                          "gpio", 0x5c);
--    memory_region_add_subregion(address_space_mem, 0x3001a000,
--                                &gpio_state.iomem);
--
--
--    dev = qdev_new("etraxfs-pic");
--    s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
--    sysbus_mmio_map(s, 0, 0x3001c000);
--    sysbus_connect_irq(s, 0, qdev_get_gpio_in(DEVICE(cpu), CRIS_CPU_IRQ));
--    sysbus_connect_irq(s, 1, qdev_get_gpio_in(DEVICE(cpu), CRIS_CPU_NMI));
--    for (i = 0; i < 30; i++) {
--        irq[i] = qdev_get_gpio_in(dev, i);
--    }
--    nmi[0] = qdev_get_gpio_in(dev, 30);
--    nmi[1] = qdev_get_gpio_in(dev, 31);
--
--    etraxfs_dmac = etraxfs_dmac_init(0x30000000, 10);
--    for (i = 0; i < 10; i++) {
--        /* On ETRAX, odd numbered channels are inputs.  */
--        etraxfs_dmac_connect(etraxfs_dmac, i, irq + 7 + i, i & 1);
--    }
--
--    /* Add the two ethernet blocks.  */
--    dma_eth = g_malloc0(sizeof dma_eth[0] * 4); /* Allocate 4 channels.  */
--
--    etraxfs_eth_init(0x30034000, 1, &dma_eth[0], &dma_eth[1]);
--    /* The DMA Connector block is missing, hardwire things for now.  */
--    etraxfs_dmac_connect_client(etraxfs_dmac, 0, &dma_eth[0]);
--    etraxfs_dmac_connect_client(etraxfs_dmac, 1, &dma_eth[1]);
--
--    if (qemu_find_nic_info("etraxfs-eth", true, "fseth")) {
--        etraxfs_eth_init(0x30036000, 2, &dma_eth[2], &dma_eth[3]);
--        etraxfs_dmac_connect_client(etraxfs_dmac, 6, &dma_eth[2]);
--        etraxfs_dmac_connect_client(etraxfs_dmac, 7, &dma_eth[3]);
--    }
--
--    /* 2 timers.  */
--    sysbus_create_varargs("etraxfs-timer", 0x3001e000, irq[0x1b], nmi[1], NULL);
--    sysbus_create_varargs("etraxfs-timer", 0x3005e000, irq[0x1b], nmi[1], NULL);
--
--    for (i = 0; i < 4; i++) {
--        etraxfs_ser_create(0x30026000 + i * 0x2000, irq[0x14 + i], serial_hd(i));
--    }
--
--    if (kernel_filename) {
--        li.image_filename = kernel_filename;
--        li.cmdline = kernel_cmdline;
--        li.ram_size = machine->ram_size;
--        cris_load_image(cpu, &li);
--    } else if (!qtest_enabled()) {
--        fprintf(stderr, "Kernel image must be specified\n");
--        exit(1);
--    }
--}
--
--static void axisdev88_machine_init(MachineClass *mc)
--{
--    mc->desc = "AXIS devboard 88";
--    mc->init = axisdev88_init;
--    mc->is_default = true;
--    mc->default_cpu_type = CRIS_CPU_TYPE_NAME("crisv32");
--    mc->default_ram_id = "axisdev88.ram";
--}
--
--DEFINE_MACHINE("axis-dev88", axisdev88_machine_init)
-diff --git a/hw/cris/Kconfig b/hw/cris/Kconfig
-index 26c7eef743..3f0680cf09 100644
---- a/hw/cris/Kconfig
-+++ b/hw/cris/Kconfig
-@@ -1,11 +1,3 @@
--config AXIS
--    bool
--    default y
--    depends on CRIS
--    select ETRAXFS
--    select PFLASH_CFI02
--    select NAND
--
- config ETRAXFS
-    bool
-    select PTIMER
-diff --git a/hw/cris/meson.build b/hw/cris/meson.build
-index dc808a4e0f..dc43251667 100644
---- a/hw/cris/meson.build
-+++ b/hw/cris/meson.build
-@@ -1,5 +1,4 @@
- cris_ss = ss.source_set()
- cris_ss.add(files('boot.c'))
--cris_ss.add(when: 'CONFIG_AXIS', if_true: files('axis_dev88.c'))
+ static void pl011_write_txdata(PL011State *s, uint8_t data)
+@@ -503,13 +503,13 @@ static void pl011_receive(void *opaque, const uint8_t *buf, int size)
+         return;
+     }
  
- hw_arch += {'cris': cris_ss}
+-    pl011_put_fifo(opaque, *buf);
++    pl011_fifo_rx_put(opaque, *buf);
+ }
+ 
+ static void pl011_event(void *opaque, QEMUChrEvent event)
+ {
+     if (event == CHR_EVENT_BREAK && !pl011_loopback_enabled(opaque)) {
+-        pl011_put_fifo(opaque, DR_BE);
++        pl011_fifo_rx_put(opaque, DR_BE);
+     }
+ }
+ 
+diff --git a/hw/char/trace-events b/hw/char/trace-events
+index 8875758076..59e1f734a7 100644
+--- a/hw/char/trace-events
++++ b/hw/char/trace-events
+@@ -58,8 +58,8 @@ pl011_read(uint32_t addr, uint32_t value, const char *regname) "addr 0x%03x valu
+ pl011_read_fifo(int read_count) "FIFO read, read_count now %d"
+ pl011_write(uint32_t addr, uint32_t value, const char *regname) "addr 0x%03x value 0x%08x reg %s"
+ pl011_can_receive(uint32_t lcr, int read_count, int r) "LCR 0x%08x read_count %d returning %d"
+-pl011_put_fifo(uint32_t c, int read_count) "new char 0x%x read_count now %d"
+-pl011_put_fifo_full(void) "FIFO now full, RXFF set"
++pl011_fifo_rx_put(uint32_t c, int read_count) "new char 0x%02x read_count now %d"
++pl011_fifo_rx_full(void) "RX FIFO now full, RXFF set"
+ pl011_baudrate_change(unsigned int baudrate, uint64_t clock, uint32_t ibrd, uint32_t fbrd) "new baudrate %u (clk: %" PRIu64 "hz, ibrd: %" PRIu32 ", fbrd: %" PRIu32 ")"
+ 
+ # cmsdk-apb-uart.c
 -- 
 2.45.2
 
