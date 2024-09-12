@@ -4,101 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5612EEE262
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 20:54:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91DEDEEE270
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 22:53:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soqmH-0002r1-94; Thu, 12 Sep 2024 16:50:57 -0400
+	id 1sosgP-0004MS-9C; Thu, 12 Sep 2024 18:53:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1soqmD-0002b6-7d; Thu, 12 Sep 2024 16:50:53 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1soqmB-00079U-5K; Thu, 12 Sep 2024 16:50:52 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48CCIG0h016037;
- Thu, 12 Sep 2024 20:50:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
- mHsNQeXs4PpWGsaGov1yM8HWLUtZAb/pHCepRuxKe/w=; b=U7KAy/qAWBcAhN58
- adDulneuVAu3x3nxyKD1pUr7QiUpT8XSGsuR9Mu3P1Jik50ath0Da/Kls979RHft
- 6XD8t8pwFfYgryv3eGZLOxCfCLLDpJWNwCD35DI9YNTBCU67w4UIsBXqq8on5ybi
- o+VP2sI6kGJoydcBRSRPMlCtL1k19XlSMgyH3mf6HzwuXUwGOzmINa6TaUoZL9Ep
- lWUeMyoFDp8BaM/9d0flxOtERTtAGDEbet1QlwVxGg6k9A/tOXIPwKKnbN6NqQae
- +aw/r4UqHDXrL4yvfxRSKQAX4yQuASnaM/XdCKvZMyZ2bgiL0RBFyKRCV1moK3k6
- uo4nPw==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gc8qpab2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Sep 2024 20:50:42 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48CKjjpN022500;
- Thu, 12 Sep 2024 20:50:41 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gc8qpaax-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Sep 2024 20:50:41 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48CI8Fxa032099;
- Thu, 12 Sep 2024 20:50:41 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41h2nn277w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Sep 2024 20:50:41 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48CKob3E34406814
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 12 Sep 2024 20:50:37 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4031820049;
- Thu, 12 Sep 2024 20:50:37 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0FAF820040;
- Thu, 12 Sep 2024 20:50:36 +0000 (GMT)
-Received: from gfwr518.rchland.ibm.com (unknown [9.10.239.106])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 12 Sep 2024 20:50:35 +0000 (GMT)
-From: Michael Kowal <kowal@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
- npiggin@gmail.com, milesg@linux.ibm.com
-Subject: [PATCH v3 01/14] pnv/xive: TIMA patch sets pre-req alignment and
- formatting changes
-Date: Thu, 12 Sep 2024 15:50:15 -0500
-Message-Id: <20240912205028.15854-2-kowal@linux.ibm.com>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20240912205028.15854-1-kowal@linux.ibm.com>
-References: <20240912205028.15854-1-kowal@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sosgO-0004LS-0k
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 18:53:00 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sosgL-0002Xr-Mv
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 18:52:59 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 006EC219B6;
+ Thu, 12 Sep 2024 22:52:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726181576; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=W+trwBjztCaptv/0nlcyI7tiWJTQfzmABpqo2c0QfPo=;
+ b=bg+fYZiQp2EU2Qihcq8gtChVGiigQs4sBsFE9B6vUQdKpghZr/CIJ+79gmWpG93qJDjQ4z
+ 0XgVT7HFO0s7ddaS9/SEeflrmZ1T7B2dslShfDZwiIGcOJUUY8aTE91TzB8DsxWnSm3VIk
+ BkBB2KyJgSj/U64aGms1lEkiM4cyeQY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726181576;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=W+trwBjztCaptv/0nlcyI7tiWJTQfzmABpqo2c0QfPo=;
+ b=WltyHN8B4AWuXuffsWiTrOBNWMFOSSGjwyHWStkhzFqYMV+inv/01p4N6m2vCe3jtEoUZD
+ hga7hjpLZmDbePCA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726181576; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=W+trwBjztCaptv/0nlcyI7tiWJTQfzmABpqo2c0QfPo=;
+ b=bg+fYZiQp2EU2Qihcq8gtChVGiigQs4sBsFE9B6vUQdKpghZr/CIJ+79gmWpG93qJDjQ4z
+ 0XgVT7HFO0s7ddaS9/SEeflrmZ1T7B2dslShfDZwiIGcOJUUY8aTE91TzB8DsxWnSm3VIk
+ BkBB2KyJgSj/U64aGms1lEkiM4cyeQY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726181576;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=W+trwBjztCaptv/0nlcyI7tiWJTQfzmABpqo2c0QfPo=;
+ b=WltyHN8B4AWuXuffsWiTrOBNWMFOSSGjwyHWStkhzFqYMV+inv/01p4N6m2vCe3jtEoUZD
+ hga7hjpLZmDbePCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7AEBE13A73;
+ Thu, 12 Sep 2024 22:52:55 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id k5Q+EMdw42bXGQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 12 Sep 2024 22:52:55 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: Hyman Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org, Eric Blake
+ <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, David
+ Hildenbrand <david@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH RFC 10/10] tests/migration-tests: Add test case for
+ responsive CPU throttle
+In-Reply-To: <877cbghoi9.fsf@suse.de>
+References: <CAFEAcA99=bn4x_BjgsAsrVitXNxOUSNviz=TGezJEB+=Zj603w@mail.gmail.com>
+ <Zt8H6pC2yQ2DD7DV@x1n> <87frq8lcgp.fsf@suse.de> <ZuC4pYT-atQwWePv@x1n>
+ <87seu7qhao.fsf@suse.de> <ZuG-SijLg8Q27boE@x1n> <87ed5qq8e2.fsf@suse.de>
+ <ZuH_pvnTCumKuXTh@x1n> <87bk0trifq.fsf@suse.de>
+ <CAFEAcA9YkZiSSOAj0zH2OwF9AcziJT-zpnNVQn8BXizhSXHVOA@mail.gmail.com>
+ <ZuMEF99PF0q0U9G-@x1n> <877cbghoi9.fsf@suse.de>
+Date: Thu, 12 Sep 2024 19:52:48 -0300
+Message-ID: <87ttek1o3j.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: QAxPqBO78LrkdhUG8zx7J2yzWN8hJGfv
-X-Proofpoint-ORIG-GUID: gOcjgsaqKaWQaytsnpyw3pixn2Pd3THY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-12_07,2024-09-12_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 impostorscore=0 priorityscore=1501
- malwarescore=0 adultscore=0 clxscore=1015 mlxlogscore=722 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409120149
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=kowal@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[9]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,173 +127,236 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Kowal <kowal@linux.vnet.ibm.com>
+Fabiano Rosas <farosas@suse.de> writes:
 
-Making some pre-requisite alignment changes ahead of the following patch
-sets.  Making these changes now will ease the review of the patch sets.
+> Peter Xu <peterx@redhat.com> writes:
+>
+>> On Thu, Sep 12, 2024 at 09:13:16AM +0100, Peter Maydell wrote:
+>>> On Wed, 11 Sept 2024 at 22:26, Fabiano Rosas <farosas@suse.de> wrote:
+>>> > I don't think we're discussing total CI time at this point, so the ma=
+th
+>>> > doesn't really add up. We're not looking into making the CI finish
+>>> > faster. We're looking into making migration-test finish faster. That
+>>> > would reduce timeouts in CI, speed-up make check and reduce the chance
+>>> > of random race conditions* affecting other people/staging runs.
+>>>=20
+>>> Right. The reason migration-test appears on my radar is because
+>>> it is very frequently the thing that shows up as "this sometimes
+>>> just fails or just times out and if you hit retry it goes away
+>>> again". That might not be migration-test's fault specifically,
+>>> because those retries tend to be certain CI configs (s390,
+>>> the i686-tci one), and I have some theories about what might be
+>>> causing it (e.g. build system runs 4 migration-tests in parallel,
+>>> which means 8 QEMU processes which is too many for the number
+>>> of host CPUs). But right now I look at CI job failures and my reaction
+>>> is "oh, it's the migration-test failing yet again" :-(
+>>>=20
+>>> For some examples from this week:
+>>>=20
+>>> https://gitlab.com/qemu-project/qemu/-/jobs/7802183144
+>>> https://gitlab.com/qemu-project/qemu/-/jobs/7799842373  <--------[1]
+>>> https://gitlab.com/qemu-project/qemu/-/jobs/7786579152  <--------[2]
+>>> https://gitlab.com/qemu-project/qemu/-/jobs/7786579155
+>>
+>> Ah right, the TIMEOUT is unfortunate, especially if tests can be run in
+>> parallel.  It indeed sounds like no good way to finally solve.. I don't
+>> also see how speeding up / reducing tests in migration test would help, =
+as
+>> that's (from some degree..) is the same as tuning the timeout value bigg=
+er.
+>> When the tests are less it'll fit into 480s window, but maybe it's too
+>> quick now we wonder whether we should shrink it to e.g. 90s, but then it
+>> can timeout again when on a busy host with less capability of concurrenc=
+y.
+>>
+>> But indeed there're two ERRORs ([1,2] above)..  I collected some more in=
+fo
+>> here before the log expires:
+>>
+>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D8<=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>>
+>> *** /i386/migration/multifd/tcp/plain/cancel, qtest-i386 on s390 host
+>>
+>> https://gitlab.com/qemu-project/qemu/-/jobs/7799842373
+>>
+>> 101/953 qemu:qtest+qtest-i386 / qtest-i386/migration-test               =
+          ERROR          144.32s   killed by signal 6 SIGABRT
+>>>>> QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-storage-daem=
+on G_TEST_DBUS_DAEMON=3D/home/gitlab-runner/builds/zEr9wY_L/0/qemu-project/=
+qemu/tests/dbus-vmstate-daemon.sh PYTHON=3D/home/gitlab-runner/builds/zEr9w=
+Y_L/0/qemu-project/qemu/build/pyvenv/bin/python3 QTEST_QEMU_IMG=3D./qemu-im=
+g MALLOC_PERTURB_=3D144 QTEST_QEMU_BINARY=3D./qemu-system-i386 /home/gitlab=
+-runner/builds/zEr9wY_L/0/qemu-project/qemu/build/tests/qtest/migration-tes=
+t --tap -k
+>> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80  =E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95
+>> stderr:
+>> warning: fd: migration to a file is deprecated. Use file: instead.
+>> warning: fd: migration to a file is deprecated. Use file: instead.
+>> ../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from sign=
+al 11 (Segmentation fault) (core dumped)
+>> (test program exited with status code -6)
+>> TAP parsing error: Too few tests run (expected 53, got 39)
+>> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95
+>>
+>> # Start of plain tests
+>> # Running /i386/migration/multifd/tcp/plain/cancel
+>> # Using machine type: pc-i440fx-9.2
+>> # starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-3273509.=
+sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-3273509.qmp,id=
+=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -acc=
+el kvm -accel tcg -machine pc-i440fx-9.2, -name source,debug-threads=3Don -=
+m 150M -serial file:/tmp/migration-test-4112T2/src_serial -drive if=3Dnone,=
+id=3Dd0,file=3D/tmp/migration-test-4112T2/bootsect,format=3Draw -device ide=
+-hd,drive=3Dd0,secs=3D1,cyls=3D1,heads=3D1    2>/dev/null -accel qtest
+>> # starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-3273509.=
+sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-3273509.qmp,id=
+=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -acc=
+el kvm -accel tcg -machine pc-i440fx-9.2, -name target,debug-threads=3Don -=
+m 150M -serial file:/tmp/migration-test-4112T2/dest_serial -incoming defer =
+-drive if=3Dnone,id=3Dd0,file=3D/tmp/migration-test-4112T2/bootsect,format=
+=3Draw -device ide-hd,drive=3Dd0,secs=3D1,cyls=3D1,heads=3D1    2>/dev/null=
+ -accel qtest
+>> ----------------------------------- stderr -----------------------------=
+------
+>> warning: fd: migration to a file is deprecated. Use file: instead.
+>> warning: fd: migration to a file is deprecated. Use file: instead.
+>> ../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from sign=
+al 11 (Segmentation fault) (core dumped)
+>>
+>> *** /ppc64/migration/multifd/tcp/plain/cancel, qtest-ppc64 on i686 host
+>>
+>> https://gitlab.com/qemu-project/qemu/-/jobs/7786579152
+>>
+>> 174/315 qemu:qtest+qtest-ppc64 / qtest-ppc64/migration-test             =
+          ERROR          381.00s   killed by signal 6 SIGABRT
+>>>>> PYTHON=3D/builds/qemu-project/qemu/build/pyvenv/bin/python3 QTEST_QEM=
+U_IMG=3D./qemu-img G_TEST_DBUS_DAEMON=3D/builds/qemu-project/qemu/tests/dbu=
+s-vmstate-daemon.sh QTEST_QEMU_BINARY=3D./qemu-system-ppc64 MALLOC_PERTURB_=
+=3D178 QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-storage-dae=
+mon /builds/qemu-project/qemu/build/tests/qtest/migration-test --tap -k
+>> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80  =E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95
+>> stderr:
+>> qemu-system-ppc64: Cannot read from TLS channel: The TLS connection was =
+non-properly terminated.
+>> warning: fd: migration to a file is deprecated. Use file: instead.
+>> warning: fd: migration to a file is deprecated. Use file: instead.
+>> ../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from sign=
+al 11 (Segmentation fault) (core dumped)
+>> (test program exited with status code -6)
+>> TAP parsing error: Too few tests run (expected 61, got 47)
+>> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95
+>>
+>> # Start of plain tests
+>> # Running /ppc64/migration/multifd/tcp/plain/cancel
+>> # Using machine type: pseries-9.2
+>> # starting QEMU: exec ./qemu-system-ppc64 -qtest unix:/tmp/qtest-40766.s=
+ock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-40766.qmp,id=3Dc=
+har0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -accel k=
+vm -accel tcg -machine pseries-9.2,vsmt=3D8 -name source,debug-threads=3Don=
+ -m 256M -serial file:/tmp/migration-test-H0Z1T2/src_serial -nodefaults -ma=
+chine cap-cfpc=3Dbroken,cap-sbbc=3Dbroken,cap-ibs=3Dbroken,cap-ccf-assist=
+=3Doff, -bios /tmp/migration-test-H0Z1T2/bootsect    2>/dev/null -accel qte=
+st
+>> # starting QEMU: exec ./qemu-system-ppc64 -qtest unix:/tmp/qtest-40766.s=
+ock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-40766.qmp,id=3Dc=
+har0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -accel k=
+vm -accel tcg -machine pseries-9.2,vsmt=3D8 -name target,debug-threads=3Don=
+ -m 256M -serial file:/tmp/migration-test-H0Z1T2/dest_serial -incoming defe=
+r -nodefaults -machine cap-cfpc=3Dbroken,cap-sbbc=3Dbroken,cap-ibs=3Dbroken=
+,cap-ccf-assist=3Doff, -bios /tmp/migration-test-H0Z1T2/bootsect    2>/dev/=
+null -accel qtest
+>> ----------------------------------- stderr -----------------------------=
+------
+>> qemu-system-ppc64: Cannot read from TLS channel: The TLS connection was =
+non-properly terminated.
+>> warning: fd: migration to a file is deprecated. Use file: instead.
+>> warning: fd: migration to a file is deprecated. Use file: instead.
+>> ../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from sign=
+al 11 (Segmentation fault) (core dumped)
+>>
+>> (test program exited with status code -6)
+>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D8<=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>>
+>> So.. it's the same test (multifd/tcp/plain/cancel) that is failing on
+>> different host / arch being tested.  What is more weird is the two failu=
+res
+>> are different, the 2nd failure throw out a TLS error even though the test
+>> doesn't yet have tls involved.
+>
+> I think that's just a parallel test being cancelled prematurely, either
+> due to the crash or due to the timeout.
+>
+>>
+>> Fabiano, is this the issue you're looking at?
+>
+> Yes. I can reproduce locally by running 2 processes in parallel: 1 loop
+> with make -j$(nproc) check and another loop with tcp/plain/cancel. It
+> takes ~1h to hit. I've seen crashes with ppc64, s390 and
+> aarch64.
+>
 
-Checkpatch wants the closing comment '*/' on a separate line, unless it is
-on the same line as the starting comment '/*'.
+Ok, the issue is that after commit 5ef7e26bdb ("migration/multifd: solve
+zero page causing multiple page faults"), the multifd code started using
+the rb->receivedmap bitmap, which belongs to the ram code and is
+initialized and *freed* from the ram SaveVMHandlers.
 
-There are also changes to prevent lines from spanning 80 columns.
+process_incoming_migration_co()        ...
+  qemu_loadvm_state()                  multifd_nocomp_recv()
+    qemu_loadvm_state_cleanup()          ramblock_recv_bitmap_set_offset()
+      rb->receivedmap =3D NULL               set_bit_atomic(..., rb->receiv=
+edmap)
+  ...
+  migration_incoming_state_destroy()
+    multifd_recv_cleanup()
+      multifd_recv_terminate_threads(NULL)
 
-Changed block of defines from:
-   #define A 1  /* original define comment is not
-                 * preferred, but not flagged... */
-   #define B 2  /* Newly added define comment
-                 * is flagged with a warning */
-To:
-   #define A 1  /* original define comment is */
-                /* now fine, no warning...    */
-   #define B 2  /* Newly added define comment */
-                /* is fine...                 */
+Multifd threads are live until migration_incoming_state_destroy(), which
+is called some time later.
 
-Signed-off-by: Michael Kowal <kowal@linux.vnet.ibm.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/ppc/xive_regs.h | 32 ++++++++---------
- hw/intc/xive.c             | 72 +++++++++++++++++++++++++-------------
- 2 files changed, 64 insertions(+), 40 deletions(-)
-
-diff --git a/include/hw/ppc/xive_regs.h b/include/hw/ppc/xive_regs.h
-index b9db7abc2e..9d52d464d9 100644
---- a/include/hw/ppc/xive_regs.h
-+++ b/include/hw/ppc/xive_regs.h
-@@ -114,23 +114,23 @@
-  * Then we have all these "special" CI ops at these offset that trigger
-  * all sorts of side effects:
-  */
--#define TM_SPC_ACK_EBB          0x800   /* Load8 ack EBB to reg*/
--#define TM_SPC_ACK_OS_REG       0x810   /* Load16 ack OS irq to reg */
-+#define TM_SPC_ACK_EBB          0x800   /* Load8 ack EBB to reg               */
-+#define TM_SPC_ACK_OS_REG       0x810   /* Load16 ack OS irq to reg           */
- #define TM_SPC_PUSH_USR_CTX     0x808   /* Store32 Push/Validate user context */
--#define TM_SPC_PULL_USR_CTX     0x808   /* Load32 Pull/Invalidate user
--                                         * context */
--#define TM_SPC_SET_OS_PENDING   0x812   /* Store8 Set OS irq pending bit */
--#define TM_SPC_PULL_OS_CTX      0x818   /* Load32/Load64 Pull/Invalidate OS
--                                         * context to reg */
--#define TM_SPC_PULL_POOL_CTX    0x828   /* Load32/Load64 Pull/Invalidate Pool
--                                         * context to reg*/
--#define TM_SPC_ACK_HV_REG       0x830   /* Load16 ack HV irq to reg */
--#define TM_SPC_PULL_USR_CTX_OL  0xc08   /* Store8 Pull/Inval usr ctx to odd
--                                         * line */
--#define TM_SPC_ACK_OS_EL        0xc10   /* Store8 ack OS irq to even line */
--#define TM_SPC_ACK_HV_POOL_EL   0xc20   /* Store8 ack HV evt pool to even
--                                         * line */
--#define TM_SPC_ACK_HV_EL        0xc30   /* Store8 ack HV irq to even line */
-+#define TM_SPC_PULL_USR_CTX     0x808   /* Load32 Pull/Invalidate user        */
-+                                        /* context                            */
-+#define TM_SPC_SET_OS_PENDING   0x812   /* Store8 Set OS irq pending bit      */
-+#define TM_SPC_PULL_OS_CTX      0x818   /* Load32/Load64 Pull/Invalidate OS   */
-+                                        /* context to reg                     */
-+#define TM_SPC_PULL_POOL_CTX    0x828   /* Load32/Load64 Pull/Invalidate Pool */
-+                                        /* context to reg                     */
-+#define TM_SPC_ACK_HV_REG       0x830   /* Load16 ack HV irq to reg           */
-+#define TM_SPC_PULL_USR_CTX_OL  0xc08   /* Store8 Pull/Inval usr ctx to odd   */
-+                                        /* line                               */
-+#define TM_SPC_ACK_OS_EL        0xc10   /* Store8 ack OS irq to even line     */
-+#define TM_SPC_ACK_HV_POOL_EL   0xc20   /* Store8 ack HV evt pool to even     */
-+                                        /* line                               */
-+#define TM_SPC_ACK_HV_EL        0xc30   /* Store8 ack HV irq to even line     */
- /* XXX more... */
- 
- /* NSR fields for the various QW ack types */
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index 5a02dd8e02..2fb38e2102 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -488,20 +488,32 @@ static const XiveTmOp xive_tm_operations[] = {
-      * MMIOs below 2K : raw values and special operations without side
-      * effects
-      */
--    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_CPPR,   1, xive_tm_set_os_cppr, NULL },
--    { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,     4, xive_tm_push_os_ctx, NULL },
--    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR, 1, xive_tm_set_hv_cppr, NULL },
--    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, xive_tm_vt_push, NULL },
--    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, NULL, xive_tm_vt_poll },
-+    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_CPPR,       1, xive_tm_set_os_cppr,
-+                                                     NULL },
-+    { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,      4, xive_tm_push_os_ctx,
-+                                                     NULL },
-+    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, xive_tm_set_hv_cppr,
-+                                                     NULL },
-+    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, xive_tm_vt_push,
-+                                                     NULL },
-+    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, NULL,
-+                                                     xive_tm_vt_poll },
- 
-     /* MMIOs above 2K : special operations with side effects */
--    { XIVE_TM_OS_PAGE, TM_SPC_ACK_OS_REG,     2, NULL, xive_tm_ack_os_reg },
--    { XIVE_TM_OS_PAGE, TM_SPC_SET_OS_PENDING, 1, xive_tm_set_os_pending, NULL },
--    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,    4, NULL, xive_tm_pull_os_ctx },
--    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,    8, NULL, xive_tm_pull_os_ctx },
--    { XIVE_TM_HV_PAGE, TM_SPC_ACK_HV_REG,     2, NULL, xive_tm_ack_hv_reg },
--    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,  4, NULL, xive_tm_pull_pool_ctx },
--    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,  8, NULL, xive_tm_pull_pool_ctx },
-+    { XIVE_TM_OS_PAGE, TM_SPC_ACK_OS_REG,         2, NULL,
-+                                                     xive_tm_ack_os_reg },
-+    { XIVE_TM_OS_PAGE, TM_SPC_SET_OS_PENDING,     1, xive_tm_set_os_pending,
-+                                                     NULL },
-+    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        4, NULL,
-+                                                     xive_tm_pull_os_ctx },
-+    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        8, NULL,
-+                                                     xive_tm_pull_os_ctx },
-+    { XIVE_TM_HV_PAGE, TM_SPC_ACK_HV_REG,         2, NULL,
-+                                                     xive_tm_ack_hv_reg },
-+    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      4, NULL,
-+                                                     xive_tm_pull_pool_ctx },
-+    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      8, NULL,
-+                                                     xive_tm_pull_pool_ctx },
- };
- 
- static const XiveTmOp xive2_tm_operations[] = {
-@@ -509,20 +521,32 @@ static const XiveTmOp xive2_tm_operations[] = {
-      * MMIOs below 2K : raw values and special operations without side
-      * effects
-      */
--    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_CPPR,   1, xive_tm_set_os_cppr, NULL },
--    { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,  4, xive2_tm_push_os_ctx, NULL },
--    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR, 1, xive_tm_set_hv_cppr, NULL },
--    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, xive_tm_vt_push, NULL },
--    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, NULL, xive_tm_vt_poll },
-+    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_CPPR,       1, xive_tm_set_os_cppr,
-+                                                     NULL },
-+    { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,      4, xive2_tm_push_os_ctx,
-+                                                     NULL },
-+    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, xive_tm_set_hv_cppr,
-+                                                     NULL },
-+    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, xive_tm_vt_push,
-+                                                     NULL },
-+    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, NULL,
-+                                                     xive_tm_vt_poll },
- 
-     /* MMIOs above 2K : special operations with side effects */
--    { XIVE_TM_OS_PAGE, TM_SPC_ACK_OS_REG,     2, NULL, xive_tm_ack_os_reg },
--    { XIVE_TM_OS_PAGE, TM_SPC_SET_OS_PENDING, 1, xive_tm_set_os_pending, NULL },
--    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,    4, NULL, xive2_tm_pull_os_ctx },
--    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,    8, NULL, xive2_tm_pull_os_ctx },
--    { XIVE_TM_HV_PAGE, TM_SPC_ACK_HV_REG,     2, NULL, xive_tm_ack_hv_reg },
--    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,  4, NULL, xive_tm_pull_pool_ctx },
--    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,  8, NULL, xive_tm_pull_pool_ctx },
-+    { XIVE_TM_OS_PAGE, TM_SPC_ACK_OS_REG,         2, NULL,
-+                                                     xive_tm_ack_os_reg },
-+    { XIVE_TM_OS_PAGE, TM_SPC_SET_OS_PENDING,     1, xive_tm_set_os_pending,
-+                                                     NULL },
-+    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        4, NULL,
-+                                                     xive2_tm_pull_os_ctx },
-+    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        8, NULL,
-+                                                     xive2_tm_pull_os_ctx },
-+    { XIVE_TM_HV_PAGE, TM_SPC_ACK_HV_REG,         2, NULL,
-+                                                     xive_tm_ack_hv_reg },
-+    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      4, NULL,
-+                                                     xive_tm_pull_pool_ctx },
-+    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      8, NULL,
-+                                                     xive_tm_pull_pool_ctx },
- };
- 
- static const XiveTmOp *xive_tm_find_op(XivePresenter *xptr, hwaddr offset,
--- 
-2.43.0
-
+>> Peter, do you think it'll be helpful if we temporarily mark this test as
+>> "slow" too so it's not run in CI (so we still run it ourselves when prep=
+are
+>> migration PR, with the hope that it can reproduce)?
+>>
+>> Thanks,
 
