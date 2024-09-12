@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E490EE6451
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 06:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BD27EE6452
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 06:53:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sodhQ-0005VD-D3; Thu, 12 Sep 2024 02:53:04 -0400
+	id 1sodhW-00068g-Tv; Thu, 12 Sep 2024 02:53:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sodhO-0005ME-Iv
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 02:53:02 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sodhU-0005qx-RX
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 02:53:08 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sodhM-0003RX-Td
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 02:53:02 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-428e1915e18so4373065e9.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 23:53:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sodhS-0003SY-S6
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 02:53:08 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-42cde6b5094so3336545e9.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 23:53:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726123979; x=1726728779; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726123984; x=1726728784; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=vlRmpnbCbgSErzwwLA97yhTv9fMzKif0TAzO/KO/JOk=;
- b=WtR5X7Kr61e7FTeTtdt7RHjLuhvm9ZcmZAHx8w4m6CU6T3DFKZILu1/6UqxxC1Yuua
- d/+lnh1TXhcIOCYNaho7D2YMvbKoxYUVfXkAkhpudVuyl+Ag7LAohwfQrU59ivFnKwp8
- GgsgIaVL5InyxlcNsXp5NitxHdAFnjAAq3E3ujGLUtkSqKtXe4I+sdPq1VG4XJ5vT9ky
- NU/zhc33vfvNtg+YmBr3SbBGi1C5lEY0j37LlBRMwHUvgRGLRmW72I59tLbHjdEkxRWD
- UYaoAxla3/FdDKSfIHf/8w4X+nQ8VUBXNjwGFuAGyiKeO5S9REujHpGuWjCJ0YsvG6Cg
- tXdw==
+ :reply-to; bh=eioWWeRgyOaY5sg2V+9HU3V0/ONJkXh1P/1QORE0Zbo=;
+ b=BLBofvVcZdlCbH+iihUUPlP7+Xv5cUkvHl+uwPx2tiIpHgXIk4K86NgkzbkjsHTsx3
+ QKmBDhUeyb+ski4bjS739QZMQ13MY0/wveoDErXtwtSSq3c5MFQSH2cSoKzGMNUTjbjK
+ mNLp+87yEgHrism6U0ZMxlFSdqDmVDFwiu/K5S78Qoh72NjaGDsUeFMpxiwAMlSadb+y
+ v4W2kPDo+XhsVJON8lTStWxXEVSGmCd8gQK9EmNlD+Y+8cHsm0ofRNkK96x1Bczs14Pu
+ NQfEcgsooBzdsayWvlc9elSlvXqjjIhGlfOUe9V2o7cdyQdw3JeT7hfLHuut6QhysaKA
+ DWlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726123979; x=1726728779;
+ d=1e100.net; s=20230601; t=1726123984; x=1726728784;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vlRmpnbCbgSErzwwLA97yhTv9fMzKif0TAzO/KO/JOk=;
- b=sCkJZkxp7qQeFecb0R7g98aftutTAxL20Cb0nDpyy5XlEsWmunYEIK1VytQ2QTYqel
- xgAkd8nCP5jsBzbgK/MABAOOXTvSBW99mXHhswVCxiQIELrbfSR0j5KS0PSV9jMrxUSn
- 8NGOCQAzdUDLFtdElklKJoID8odJpEDLTkIAICW6zOzGxMclzMwGGEE7AUlhvEX3wgj4
- TYRN0QOvMHYlqlkQPP7HbhRMSdAKXw25f8yc0blkl5RDajsQK7G6fITCI4VYsueWLTOy
- TXiSP/+LeAjGX9bQqoSFM6nRUeK1tBFzSyeBefR9Ky1eD4U/EAQUOhR7ZIemURflIpAd
- O4ng==
-X-Gm-Message-State: AOJu0YzyBCoNl8mTtZhUiysH7fC8BLEKiYOp0bgis3XlhqaO0v6ldCJu
- K0faU51rqrArw4bmtrIe+IfCjEnKpAdf5dzwj7dJGh4HYvbfkgyF/rWPsihzw+5/98Fr253tdqi
- 4
-X-Google-Smtp-Source: AGHT+IGGtZ/zMnYkWwPixxjcn4uYI/2wK63nJJqTbjum7r4iqYgemDIaPQUyc/MzYToGLQaGuaHcPg==
-X-Received: by 2002:a05:600c:1c1f:b0:42c:b6e4:e3ac with SMTP id
- 5b1f17b1804b1-42cdb531d35mr12560495e9.3.1726123978958; 
- Wed, 11 Sep 2024 23:52:58 -0700 (PDT)
+ bh=eioWWeRgyOaY5sg2V+9HU3V0/ONJkXh1P/1QORE0Zbo=;
+ b=B8KHIKqveLlaXrnVTRqcpfoUfvkHUqllDFOipmn/LxUNIk/MNNkYGt9zm9JDy2a5eI
+ a58jo6rvtbpXw6LnVf17jtfFG6fogQHccN509RSg4lAQByopnUWfHiGXyPDcVDSEw+o4
+ WxwqWtKVdnHzJ7j0lMAZz2yaJNQv7Qj/CypGTpQlxvtJRz2Zi4a1tBlyw+cSuHs92F0o
+ IyQYj4VnN66372SEWJE1IbkVaOvgLsFkOkcmXQwcswoY2BrfQQxiB2UD2xDREqJ5IwbK
+ /PxTL2QmWXWK546QitlTcbgauSeR4oSbOO6mhwBvmB7rYECpYuxw2tb81gMlNhammP7L
+ OeBw==
+X-Gm-Message-State: AOJu0Yw04lCnelxoHKq7fAMp6n4jlqRgcWne33PvrTmwVt8hqniHI4o1
+ JrNY8A8geO5XCNNsfchAtjdawOJdakgZ78r/usMbnjGCPY5e81x6khERtCCj7FQcQhH2z/ksvir
+ b
+X-Google-Smtp-Source: AGHT+IHBZ3PKFWiZq9ZfWFSaoYJHdU6azIGsxv62XiZT0oOGNJtbGXli8k8VAFsCGgRYwjh240dnHA==
+X-Received: by 2002:a05:600c:4ed1:b0:42c:aeaa:6aff with SMTP id
+ 5b1f17b1804b1-42cdb54078dmr13652955e9.10.1726123984467; 
+ Wed, 11 Sep 2024 23:53:04 -0700 (PDT)
 Received: from m1x-phil.lan (mic92-h03-176-184-33-210.dsl.sta.abo.bbox.fr.
  [176.184.33.210]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42caeb444b0sm163333205e9.21.2024.09.11.23.52.58
+ 5b1f17b1804b1-42ca87acf26sm181419795e9.10.2024.09.11.23.53.03
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Sep 2024 23:52:58 -0700 (PDT)
+ Wed, 11 Sep 2024 23:53:04 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL v2 48/61] hw/sensor/tmp105: Lower 4 bit of limit registers are
- always 0
-Date: Thu, 12 Sep 2024 08:52:19 +0200
-Message-ID: <20240912065227.67848-6-philmd@linaro.org>
+Subject: [PULL v2 51/61] hw/char: replace assert(0) with g_assert_not_reached()
+Date: Thu, 12 Sep 2024 08:52:20 +0200
+Message-ID: <20240912065227.67848-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240912065227.67848-1-philmd@linaro.org>
 References: <20240912065227.67848-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,35 +92,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Per datasheet, "HIGH AND LOW LIMIT REGISTERS", the lower 4 bit
-of the limit registers are unused and always report 0.
-The lower 4 bit should not be used for temperature comparisons,
-so mask the unused bits before storing the limits.
+Use of assert(false) can trip spurious control flow warnings from
+some versions of GCC (i.e. using -fsanitize=thread with gcc-12):
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+  error: control reaches end of non-void function [-Werror=return-type]
+        default:
+            assert(0);
+      | }
+      | ^
+
+Solve that by unifying the code base on g_assert_not_reached() instead.
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Message-Id: <20240906154911.86803-6-philmd@linaro.org>
+Message-ID: <20240910221606.1817478-5-pierrick.bouvier@linaro.org>
+[PMD: Add description suggested by Eric Blake]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sensor/tmp105.c | 2 +-
+ hw/char/avr_usart.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/sensor/tmp105.c b/hw/sensor/tmp105.c
-index f5101af919..9d7b911f59 100644
---- a/hw/sensor/tmp105.c
-+++ b/hw/sensor/tmp105.c
-@@ -171,7 +171,7 @@ static void tmp105_write(TMP105State *s)
-     case TMP105_REG_T_HIGH:
-         if (s->len >= 3) {
-             s->limit[s->pointer & 1] = (int16_t)
--                    ((((uint16_t) s->buf[0]) << 8) | s->buf[1]);
-+                    ((((uint16_t) s->buf[0]) << 8) | (s->buf[1] & 0xf0));
-         }
-         tmp105_alarm_update(s, false);
+diff --git a/hw/char/avr_usart.c b/hw/char/avr_usart.c
+index 5bcf9db0b7..e738a2ca97 100644
+--- a/hw/char/avr_usart.c
++++ b/hw/char/avr_usart.c
+@@ -86,7 +86,7 @@ static void update_char_mask(AVRUsartState *usart)
+         usart->char_mask = 0b11111111;
          break;
+     default:
+-        assert(0);
++        g_assert_not_reached();
+     }
+ }
+ 
 -- 
 2.45.2
 
