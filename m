@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03D28EE644A
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 05:32:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D60A6EE6442
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 05:32:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1socQ0-0002Xz-Sz; Thu, 12 Sep 2024 01:31:00 -0400
+	id 1socPZ-0000xk-Px; Thu, 12 Sep 2024 01:30:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1socPx-0002Ix-2O
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:57 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1socPU-0000hk-72
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:28 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1socPu-00033W-Na
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:56 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-718d91eef2eso324443b3a.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:30:54 -0700 (PDT)
+ id 1socPS-000300-JZ
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:27 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-7db1f13b14aso547643a12.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:30:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726119053; x=1726723853; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1726119025; x=1726723825; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YbZqF++ZhMtcJDIF2/NlKZuD8jEV76FLyT7OsIr+hLI=;
- b=MBla3g1hGX+Hqp8tnTAu2XBAVYzKnh2vpP9u7iWpYN19EEqAs26izWm7Ols7AIkpeN
- aG6oWo8MsJy5GpcG1PamASCr9Vojp4QFXQlUF6EvSvMAmecbBy0IG/UHYfCswNqxzxBY
- XWLROiCEjYSwaVyl2pRpSumIKS9queihYN/j1tgfOyUC9pOJyymgdfxfTgsvpDajhSB8
- x4sA5TKo4dNoL4zaAhMEIIZve5x6kTCI3+T3pJQbOAawTZbBllvcXqMTvt1Y/kFKzqDA
- UadDYqrlwjEx/nl/qScJeC+F+W7NGwi3wDV13h59JExIhwssSzlfIkhXz3dc+B19oAqo
- VGLw==
+ bh=WQnac83Zqcp2GhG5unJHuaV5QZRaiVQQMbeeoAzBig4=;
+ b=DBK8EvsGJnADp79LD5dc9lZrc+krUqJFgVx+AtdCjQJztC3VccJ9hqmGKJAkQjELIX
+ S42jJV3s9ipyxcvkz3ZtEaxE4LeJ6sh39M6Jec+b3xSKCXwQxM4Kv441488Hulm6s1rM
+ ZGUopzwV3jYGAedgG1YveucLz9vAwy3p065zdURbOfTsqdv1Fs8UIweKjI6KaWVXCn+L
+ iZXY0n/xAakFesKZCuj56egCot1N73kn7BvYShCw1oauxs7/azlWfSywfe3+iK8mtLyS
+ ZvDiowRtVPKIajytVDQUi8iFdzIJomNwnNXu4SBjz+EnTajixlbUUpA03NBTZvkNDKpf
+ I3yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726119053; x=1726723853;
+ d=1e100.net; s=20230601; t=1726119025; x=1726723825;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YbZqF++ZhMtcJDIF2/NlKZuD8jEV76FLyT7OsIr+hLI=;
- b=aKonrkjPZuXLIRYEtVMuYjefi/ilWYPhs48DZhQ319HT2UmHcrJ+LbXiVih0mCxNCU
- ur5b1dPcNRCWZvZINWCjNGt91Cagx/qFDWpsZgDY4549hiFdcNiyxygbfC8c1xZXMwgY
- ujfLIPocYemnO/DPRn//wKz5NFV/TJp01rGPtE74VLtkaSSldyLSFBlLSCrwlI+frc4v
- 1q7Vedjv8wGR94xSrjiF8IS6gLE3sRswTPq5snSnuz+l4a0Jg8PtytSfYBG8vLqvIaaL
- SPyseDS0wYEA/rZs56xi3RxzClsftwQqJfRsnBjBr2MFQQEyFijHi1LqFQftXzik3wsW
- KRjA==
-X-Gm-Message-State: AOJu0Yx4Ax0zPUPap8wORj3gyulYZcGokFW19mQtlT9huOsZTGWZRokO
- iRdlEveJpCW3b6dST8ICQe6q0s/AaY+acqNRU28JQIAOZrKffj8vzdIu5g==
-X-Google-Smtp-Source: AGHT+IHcWfo7Ib/qebmo2el2FLgk2tKIMEkpmiqAaKFM3ItvbYl1aiFIkUgovc8jiOgrJlO/g7heuw==
-X-Received: by 2002:a05:6a00:194b:b0:704:151d:dcce with SMTP id
- d2e1a72fcca58-719263cb4e2mr2662724b3a.5.1726119052670; 
- Wed, 11 Sep 2024 22:30:52 -0700 (PDT)
+ bh=WQnac83Zqcp2GhG5unJHuaV5QZRaiVQQMbeeoAzBig4=;
+ b=L/nKHWreqFWkRof9E4C1mE5Ml56cOqie+k/ZWqBc5V7R8qv8hYi6HKukbkqyhbTNQb
+ x3lSi3Ud7bjHrDd/B1uiOZqFHQiFMCwMTL422w2ZqAPE8ci3weHO7K1U0O1aVwCqs8DR
+ /7tgzmSzBL2veTrO7f3tmJ/8NZChmW7xHJ9+qJWYq0x+MFO3Xa8Nak8BEtPvev/DMbrP
+ clwzzPVVJaVUYGo4Cnys+8Nz4Q+7/prNkobfQFt5owei9bNLUSN/apaj4OV5VPhoWwmn
+ 8I7ahPaPnaKcZW9TZWLmAC4gKokyLF13r8z1Cm0Dcf7S+mpCvrT98nUXlumGkIbP72r7
+ 47Fg==
+X-Gm-Message-State: AOJu0Ywh3D/hmu1muHGaCQ+B9X+UBk4A2w5xdt9w1bzw5RvQ5bV4unj6
+ sUsImMgxGdpZcqOjJsUKclnD8o/sPMgJ+I/1WulQ22yprRuhBXg8X8bu+w==
+X-Google-Smtp-Source: AGHT+IGF4P8QUwHTPeY1tI2ZnWRstojX2l8j2ecq3mx/qDIU07LFjioXOdjTgKVh1dFjKtBVj8boxA==
+X-Received: by 2002:a05:6a21:4581:b0:1cf:4458:8b27 with SMTP id
+ adf61e73a8af0-1cf764afde6mr2387755637.46.1726119024894; 
+ Wed, 11 Sep 2024 22:30:24 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71908fc8fdesm3833034b3a.1.2024.09.11.22.30.49
+ d2e1a72fcca58-71908fc8fdesm3833034b3a.1.2024.09.11.22.30.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 22:30:52 -0700 (PDT)
+ Wed, 11 Sep 2024 22:30:24 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Frank Chang <frank.chang@sifive.com>,
+Cc: alistair23@gmail.com, Andrew Jones <ajones@ventanamicro.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 17/47] pci-ids.rst: add Red Hat pci-id for RISC-V IOMMU device
-Date: Thu, 12 Sep 2024 15:29:22 +1000
-Message-ID: <20240912052953.2552501-18-alistair.francis@wdc.com>
+Subject: [PULL 08/47] target/riscv/kvm: Fix the group bit setting of AIA
+Date: Thu, 12 Sep 2024 15:29:13 +1000
+Message-ID: <20240912052953.2552501-9-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240912052953.2552501-1-alistair.francis@wdc.com>
 References: <20240912052953.2552501-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,62 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Andrew Jones <ajones@ventanamicro.com>
 
-The RISC-V IOMMU PCI device we're going to add next is a reference
-implementation of the riscv-iommu spec [1], which predicts that the
-IOMMU can be implemented as a PCIe device.
+Just as the hart bit setting of the AIA should be calculated as
+ceil(log2(max_hart_id + 1)) the group bit setting should be
+calculated as ceil(log2(max_group_id + 1)). The hart bits are
+implemented by passing max_hart_id to find_last_bit() and adding
+one to the result. Do the same for the group bit setting.
 
-However, RISC-V International (RVI), the entity that ratified the
-riscv-iommu spec, didn't bother assigning a PCI ID for this IOMMU PCIe
-implementation that the spec predicts. This puts us in an uncommon
-situation because we want to add the reference IOMMU PCIe implementation
-but we don't have a PCI ID for it.
-
-Given that RVI doesn't provide a PCI ID for it we reached out to Red Hat
-and Gerd Hoffman, and they were kind enough to give us a PCI ID for the
-RISC-V IOMMU PCI reference device.
-
-Thanks Red Hat and Gerd for this RISC-V IOMMU PCIe device ID.
-
-[1] https://github.com/riscv-non-isa/riscv-iommu/releases/tag/v1.0.0
-
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20240903201633.93182-5-dbarboza@ventanamicro.com>
+Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20240821075040.498945-2-ajones@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- docs/specs/pci-ids.rst | 2 ++
- include/hw/pci/pci.h   | 1 +
- 2 files changed, 3 insertions(+)
+ target/riscv/kvm/kvm-cpu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
-index 328ab31fe8..261b0f359f 100644
---- a/docs/specs/pci-ids.rst
-+++ b/docs/specs/pci-ids.rst
-@@ -98,6 +98,8 @@ PCI devices (other than virtio):
-   PCI ACPI ERST device (``-device acpi-erst``)
- 1b36:0013
-   PCI UFS device (``-device ufs``)
-+1b36:0014
-+  PCI RISC-V IOMMU device
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index f6e3156b8d..341af901c5 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1695,6 +1695,7 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+     uint64_t max_hart_per_socket = 0;
+     uint64_t socket, base_hart, hart_count, socket_imsic_base, imsic_addr;
+     uint64_t socket_bits, hart_bits, guest_bits;
++    uint64_t max_group_id;
  
- All these devices are documented in :doc:`index`.
+     aia_fd = kvm_create_device(kvm_state, KVM_DEV_TYPE_RISCV_AIA, false);
  
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index eb26cac810..35d4fe0bbf 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -116,6 +116,7 @@ extern bool pci_available;
- #define PCI_DEVICE_ID_REDHAT_PVPANIC     0x0011
- #define PCI_DEVICE_ID_REDHAT_ACPI_ERST   0x0012
- #define PCI_DEVICE_ID_REDHAT_UFS         0x0013
-+#define PCI_DEVICE_ID_REDHAT_RISCV_IOMMU 0x0014
- #define PCI_DEVICE_ID_REDHAT_QXL         0x0100
+@@ -1742,7 +1743,8 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
  
- #define FMT_PCIBUS                      PRIx64
+ 
+     if (socket_count > 1) {
+-        socket_bits = find_last_bit(&socket_count, BITS_PER_LONG) + 1;
++        max_group_id = socket_count - 1;
++        socket_bits = find_last_bit(&max_group_id, BITS_PER_LONG) + 1;
+         ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
+                                 KVM_DEV_RISCV_AIA_CONFIG_GROUP_BITS,
+                                 &socket_bits, true, NULL);
 -- 
 2.46.0
 
