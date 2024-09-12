@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C69EEE645D
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 08:15:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7649EE645E
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 08:16:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soezF-0008SV-7S; Thu, 12 Sep 2024 04:15:34 -0400
+	id 1soezg-00026p-5J; Thu, 12 Sep 2024 04:16:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1soez3-0007vz-8X
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 04:15:24 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1soeyz-0005Pm-1t
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 04:15:20 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5c3ed267a7bso681677a12.3
- for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 01:15:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726128913; x=1726733713; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=xkRilJv4e/a1Ti2tuyYvCRNcUjVu4CEYZbKytwNv5Kk=;
- b=mUGobJ/wLMy1uhShg1GFPVowkD40ivgReV3zw9I1I0Cz8C/oXL8g724NlcSAnSk0SB
- 8c/4iQnacOblDTsdQJbv6wPuIOuoLY2dRz2rdUO1HUpZKzq2fiEIsxeJTWu/sqsikKqm
- Jx6BD1BsEV6R+s4joiGk7mX1FmVNI4WiGyl9WMCiWqRz80Y6OPKubP5P6+2iR0rXA3ga
- h+ouqgXKD7xDeIMxbfQWSisFKsWa17tpfQeki1VcPm2SQ2R/jyI9VSbtLJoJ+cb3vfBh
- 2gPOXs6rxnw+ZoeHpw1/QR9P+G6AEmaJhZKG48OIaUVDRnocvWybbF2HPD7+TX28+ado
- EZVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726128913; x=1726733713;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xkRilJv4e/a1Ti2tuyYvCRNcUjVu4CEYZbKytwNv5Kk=;
- b=Uuin58ex7jmUvNYtENvakcT6AxGNvgCdOkVT1sR+crGB1Y7pIK3/hdupZn7SkYQ6Fb
- jrPdLCYXaIESWi6NXD9rnJmxQgq7zHSuBQMrmL4fWqyjJ+mXpJtaMS/SsP2G6Acj0AUT
- aalce6yJ8nTqNZOM0WMt8zwUsbl+5gIM6ROSO3ruM6O9i6O6hyqEOvPupyurf0H8P70G
- EWfNsPryhCBKi/OVApDhgl8Mb+wdYewE3ZNupuIAXKUMbTbiVB5COJHImFwk3O/hMifY
- T7vx04xLhEHdJZldqQIbD3BTML6fImcGCbjKNsWgQON4u/Y/oA031RjwuCAxqeUeKFoN
- MkDw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXXD8u1E/GZzBnAPhZTRlNJbhtLRHqMX1MUoWr4c8iRmLn32/IMegGieb04SzPq6WWbBaF6z0D57Q+5@nongnu.org
-X-Gm-Message-State: AOJu0YxOCHNKtqOXBRn9vWRwtAfZUWKg+qLl0UQwcFa7EuYf4Ni/pEuG
- PRThLCzPFkou8oRhnsBisip2HSHKHkpUdfXQflzkzRXAMJb9Bp8lQQ4LDrkkScf0iaAcgThufaf
- a8bcyFlKir7tYeLidY10hRvPzBnQejle3v8fNuw==
-X-Google-Smtp-Source: AGHT+IFO3NV0LLaYtcciD71+ZunIO8XL6pgHJuYTqnYNVAC5lyMjqn/g2JpUHpOLEaMhXQwg7g9ULHXFD83SPIJskBM=
-X-Received: by 2002:a05:6402:3553:b0:5be:fdc0:e704 with SMTP id
- 4fb4d7f45d1cf-5c413e1222fmr1299604a12.10.1726128913150; Thu, 12 Sep 2024
- 01:15:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1soeze-00020n-FC
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 04:15:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1soezb-0005TS-BH
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 04:15:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1726128952;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=tBTOpSj9XzXopRs7HSMWkd5Cs4lRNHskPcrYAmS58Iw=;
+ b=P2gZm6Nu8DVbTGfGo20OF10+t55PcARJ5+Cs9SSzJ4KzynmlLgBWAMDgp/JJfr1TLSXNwA
+ YtQeci+ra6FIP5bUn7Cxd4VRJpJFBX36s03txwqIpgNtuwEuKW4AW9gl3Oi3ns8s6VMETy
+ T+ycRl0k3WZvsPq0RPhBNT+eQpoPvSw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-113-bOJHhm1ZMyOOIxpTkPzBAg-1; Thu,
+ 12 Sep 2024 04:15:48 -0400
+X-MC-Unique: bOJHhm1ZMyOOIxpTkPzBAg-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BF16F1945105; Thu, 12 Sep 2024 08:15:47 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.140])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 045E51956086; Thu, 12 Sep 2024 08:15:44 +0000 (UTC)
+Date: Thu, 12 Sep 2024 09:15:41 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ QEMU Developers <qemu-devel@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: Gitlab CI caching is not working
+Message-ID: <ZuKjG6YuE3PDf3V6@redhat.com>
+References: <d88511da-de21-4260-bf69-2b68f92a37b9@redhat.com>
 MIME-Version: 1.0
-References: <20240911131900.179648-1-s.makarov@syntacore.com>
-In-Reply-To: <20240911131900.179648-1-s.makarov@syntacore.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Sep 2024 09:15:02 +0100
-Message-ID: <CAFEAcA_RsAeh-9bAkAX0heMb1PcqqbVe4m0FPDhq8KqiKE9YDA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Fixes for standard conformance
-To: Sergey Makarov <s.makarov@syntacore.com>
-Cc: Alistar.Francis@wdc.com, bmeng@gmail.com, palmer@dabbelt.com, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <d88511da-de21-4260-bf69-2b68f92a37b9@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,46 +84,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 11 Sept 2024 at 23:30, Sergey Makarov <s.makarov@syntacore.com> wrote:
->
-> *** Patchset goal ***
->
-> This patchset aims to improve standard conformance for SiFive PLIC
-> implementation.
->
-> *** Testing cases ***
->
-> Currently there are no automated tests for these changes, but there
-> are several test cases, with which these changes may be checked:
-> 1. Zeroth priority register can be checked by reading it after
->    writing to it. Without patch its value would be the same which
->    is written there, but with it it would be zero;
-> 2. Trigger call of `sifive_plic_irq_request` with level 0.
->    Without second patch it will clear pending bit, but with it
->    pending bit won't be cleared.
-> If anyone knows how this can be turned into automated test, help
-> would be appreciated.
->
-> Sergey Makarov (2):
->   hw/intc: Make zeroth priority register read-only
->   hw/intc: Don't clear pending bits on IRQ lowering
->
->  hw/intc/sifive_plic.c | 15 +++++++++++----
->  1 file changed, 11 insertions(+), 4 deletions(-)
+On Thu, Sep 12, 2024 at 07:38:37AM +0200, Thomas Huth wrote:
+> 
+>  Hi!
+> 
+> While looking at some recent CI jobs, I noticed that the caching of the
+> Gitlab-CI jobs is not working at all anymore. In the build jobs, the ccache
+> saving is not working and causing a complete cache miss of each compile:
+> 
+>  https://gitlab.com/qemu-project/qemu/-/jobs/7802183187#L5328
+> 
+> And, maybe more important, in the avocado/functional jobs we don't cache the
+> assets anymore, causing a re-download of multiple gigabytes each time:
+> 
+>  https://gitlab.com/qemu-project/qemu/-/jobs/7802183251#L29
+> 
+> (the du -chs in line 35 is not executed, thus the cache is nonexistent)
+> 
+> The problem is not new, it's been there for some weeks already, e.g. here's
+> a run from the last freeze period (when the job was only running avocado
+> tests):
+> 
+>  https://gitlab.com/qemu-project/qemu/-/jobs/7753544153#L86
+> 
+> There is a suspicious message at the beginning of the logs:
+> 
+>  "No URL provided, cache will not be downloaded from shared cache server.
+> Instead a local version of cache will be extracted."
+> 
+> ... but since we use throw-away containers for building, I guess there is no
+> local version of the cache?
+> 
+> Anyway, the problem only exists for the k8s runners, in my private clone of
+> the repository that uses shared runners from gitlab, the caching is working
+> right.
 
-When you're writing cover letter and patch subject lines,
-please can you make them say what part of the codebase
-they're touching? This cover letter doesn't say anything in
-the subject line that would tell the reader it's about riscv,
-for instance, and nor do the patch line subjects.
+Right, by default caches are local to the runner's execution environment.
+If you want a distributed cache, that has to be turned on in the runner
+configuration:
 
-This is helpful because people scan subject lines to see
-whether the patchset is something they're interested in
-or not.
+  https://docs.gitlab.com/runner/configuration/autoscale.html#distributed-runners-caching
 
-thanks
--- PMM
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
