@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC8B0EE645D
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 07:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F000EE645E
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 07:52:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soeVX-0007E3-KD; Thu, 12 Sep 2024 03:44:53 -0400
+	id 1soeSV-0003eu-0T; Thu, 12 Sep 2024 03:41:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1soeRj-0006js-MX
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:40:55 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1soeRQ-0004pX-S2
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:40:36 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1soeRg-0000tZ-1h
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:40:55 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-718da0821cbso490466b3a.0
- for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 00:40:51 -0700 (PDT)
+ id 1soeRK-0000e0-PW
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:40:34 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-7db238d07b3so385038a12.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 00:40:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726126850; x=1726731650; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726126822; x=1726731622; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Rh7of/t1MbINnko2jvt6jPS7AWm2aGYUlEka7psebCY=;
- b=F3Yz36Nte7833vfwUWjQQZuMP01+hMmOtZAUKpp526E4zZO9BtAdd8KnMk0Xjb/H1I
- W+nmwbZ+1sLqiJXLUzUwEeQUgrDwP5OXRBU79EaRs9xrQ6cST1hejhnAX3XL8K0XU1R0
- raKHEa0I6nCYHt6WO7eTRisok+lGobma1BEOY2EesDzoUXD6rSxaIzFz6GRZ7N6UTC8Q
- Dh8+t3VirzTR+ozxCYkK8ito4tjOyiFpB6DP/1U+3/L3s352ou9JrnR1uwI+e/co4c5v
- uIMZSbdpBAJu27tTEpc93Q5V68OrVdC/AJ4VubsrnwiY/DLUZQ0SQ4/ixknMC3lfw3vz
- Hwvw==
+ bh=MAqUDAXH2RLxvOYkCD7ynjvzkI7+hLAzyNaEnllXZKU=;
+ b=SsmZtAO+hm6xa04IGb8mfvXua/jo8gvZa2HlocI9hscELjqgw9lUXufK0q0ht9jI54
+ SSkrDo0gagwyhxJiw5SykbZqSnotK/fE6bfHQCsXvMNxyifLcMh5XYEpIHYhJVKeCAyi
+ Vw6VNEDZU/8SjxrYedl/OPo9ugS8Cnvp70ocjSoYSJdTLV4FBFhIhxd0dnyus+XuSdFK
+ Gm6vrejQ49dr1+/SYb7n8wEG2cTsu/ERbAoQUX3ATcLNSflbkbdoK7GBFzMWcDFZ2fJV
+ xcfL48fYKV6bxHDJ68TxjyNzHEeqbJzXJrKcXY46feXqotkwCoy5+Oul/TlfdHcS6oFi
+ K8ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726126850; x=1726731650;
+ d=1e100.net; s=20230601; t=1726126822; x=1726731622;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Rh7of/t1MbINnko2jvt6jPS7AWm2aGYUlEka7psebCY=;
- b=U3Kp46AY/jN87LONUoifSxpTNcD/YgFnqnSfTksI10nRaZuKsytzlNNC0HMQK2YGmM
- TIcFp/688Ey7+42UuiFbQA9S8otWkN77UoP1pEhXe05MgQ70towlvbx9xT0Ar6GtK8A4
- DGiHNE/T7bEvKnBdUzIiN3++q8uOE+3mGble9DLL95q4qY4Z/w1yM2b0IZIV8h+LJZwk
- ncA1fcVTEvnLKUu2dUpHodARJiGeSBryGZ/HFuY487Gxdi5ZhkpN3z8JKqHRwgEg3XFi
- fZYY3fqOagLnkeYCiIGJSWkjmJzh59KpXoBs985FZnnUMAwEyFIAdPOi1Vw6OiITY4Bj
- d1rg==
-X-Gm-Message-State: AOJu0YxAaSSE4VvbIocEdp7qbtNXDlrPrRYmZ6fO7P1E76FhHRIp+ljs
- KmdXugQXtv9+l4nVv1Zx/G0i7Sw5Pb6QrK2YeEvHuNh2R+MVczd3dh9Fk9E19nA/UIvjPFFvCIb
- +AfE9mv8l
-X-Google-Smtp-Source: AGHT+IE/Mzhsmhy28ucIa8utEKYRtipx+MoivQXHJ4uIjGCaMxhEkc7uFeHW+uTK+aUE2aAYgUkm3Q==
-X-Received: by 2002:a05:6a20:2d0a:b0:1cf:2513:8a01 with SMTP id
- adf61e73a8af0-1cf75f0f0cfmr2364705637.26.1726126850599; 
- Thu, 12 Sep 2024 00:40:50 -0700 (PDT)
+ bh=MAqUDAXH2RLxvOYkCD7ynjvzkI7+hLAzyNaEnllXZKU=;
+ b=W8pwuf6dEkV3+78J2AcIJ4u3Rzw9hpuxYwvh8jGBKTWrOhyyq8ZTWQEPUGjLYO+glX
+ 7x2yKIQrsvWrVl/3gYlbWH4D5waMZ9fSRhjLMzSCtP9NnyNSfkM82Pvq8/tYdGlYZCH5
+ NozaAelZhQVjCGsyRa70p0bOSOqpaQ5FGM3H2HyeRxkIWtgB891IsqBYmIVaoyuYV/cX
+ XAUF2A25wVY7XiEuqNiwbqsLU8YsMw8Q1CfB8Q4KJtCmw/AWu2cuym6R6nulGLslSTPD
+ scIYMRUEUIdDdZo/bC7Fa3rj8ARLtKRbFpzZQr23hzKOAV/6ALanp5gZG5jz99eHxxo3
+ jziQ==
+X-Gm-Message-State: AOJu0Yzq7Rhm1Kiss5Nt+Qkgh2ZUKaSiQAEgDpscCPdZeY43PUpeM6iA
+ DV6Fwf5IFTuCkf+tCMzRO5UObru9WtaB6p5SqReDxbQsM6LicwJzFYw/Ai2i8KyvAc4lRawX+fW
+ CE9gG7OVl
+X-Google-Smtp-Source: AGHT+IE8CKjJgw0N7WrqC34he8rsJ6HMZ4DWnrxVglrTgBMS33CPmFB26J4BB54F9WE+apv1XwnjUQ==
+X-Received: by 2002:a05:6a21:3982:b0:1cf:2931:727f with SMTP id
+ adf61e73a8af0-1cf75f005demr2867169637.18.1726126822148; 
+ Thu, 12 Sep 2024 00:40:22 -0700 (PDT)
 Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::9633])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7db1fb9ad87sm983458a12.6.2024.09.12.00.40.48
+ 41be03b00d2f7-7db1fb9ad87sm983458a12.6.2024.09.12.00.40.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Sep 2024 00:40:50 -0700 (PDT)
+ Thu, 12 Sep 2024 00:40:21 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>,
@@ -105,16 +105,17 @@ Cc: Jason Wang <jasowang@redhat.com>,
  David Gibson <david@gibson.dropbear.id.au>, Fam Zheng <fam@euphon.net>,
  Weiwei Li <liwei1518@gmail.com>, Markus Armbruster <armbru@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 32/48] hw/tpm: remove break after g_assert_not_reached()
-Date: Thu, 12 Sep 2024 00:39:05 -0700
-Message-Id: <20240912073921.453203-33-pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 21/48] migration: replace assert(false) with
+ g_assert_not_reached()
+Date: Thu, 12 Sep 2024 00:38:54 -0700
+Message-Id: <20240912073921.453203-22-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240912073921.453203-1-pierrick.bouvier@linaro.org>
 References: <20240912073921.453203-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -141,24 +142,27 @@ This patch is part of a series that moves towards a consistent use of
 g_assert_not_reached() rather than an ad hoc mix of different
 assertion mechanisms.
 
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/tpm/tpm_spapr.c | 1 -
- 1 file changed, 1 deletion(-)
+ migration/dirtyrate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/tpm/tpm_spapr.c b/hw/tpm/tpm_spapr.c
-index e084e987e6e..5f7a0dfc617 100644
---- a/hw/tpm/tpm_spapr.c
-+++ b/hw/tpm/tpm_spapr.c
-@@ -206,7 +206,6 @@ static int tpm_spapr_do_crq(struct SpaprVioDevice *dev, uint8_t *crq_data)
-                 break;
-             default:
-                 g_assert_not_reached();
--                break;
-             }
-             trace_tpm_spapr_do_crq_get_version(be32_to_cpu(local_crq.data));
-             spapr_tpm_send_crq(dev, &local_crq);
+diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c
+index 1d9db812990..c03b13b624f 100644
+--- a/migration/dirtyrate.c
++++ b/migration/dirtyrate.c
+@@ -228,7 +228,7 @@ static int time_unit_to_power(TimeUnit time_unit)
+     case TIME_UNIT_MILLISECOND:
+         return -3;
+     default:
+-        assert(false); /* unreachable */
++        g_assert_not_reached();
+         return 0;
+     }
+ }
 -- 
 2.39.2
 
