@@ -4,91 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DB27EEE266
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A324EEE25C
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 20:52:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soqmF-0002ip-9o; Thu, 12 Sep 2024 16:50:55 -0400
+	id 1soqmF-0002lE-TK; Thu, 12 Sep 2024 16:50:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1soqmB-0002W7-NU; Thu, 12 Sep 2024 16:50:51 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1soqmC-0002Yn-KN; Thu, 12 Sep 2024 16:50:52 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1soqm9-000794-Ni; Thu, 12 Sep 2024 16:50:51 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48CDZwFq017225;
- Thu, 12 Sep 2024 20:50:41 GMT
+ id 1soqmB-00079L-0b; Thu, 12 Sep 2024 16:50:52 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48CDIt6n032364;
+ Thu, 12 Sep 2024 20:50:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:mime-version:content-type
- :content-transfer-encoding; s=pp1; bh=7i03KAO3iFahcGjICZop6eRU1a
- sFJx/N9jV4+7ISNr4=; b=Gu6F8attei2bMJRBev5AoWMX0sPsR6bKkYKweuHzJ0
- POw2DmJ9w+C5x0RZ96Bri/sAXacD+mGjLluCKwDG7FLkrcqbaOF/pPHFW9MRDeZN
- oNEDI9DwVCMT08A/8gpxcCyrKDKCkxkNMAL22LQIq89AC26pK9LxglvCoio49u8o
- Oo1WScke7sbBDjdKLdJUA8S6pvqQvWtQQ/VlG2OzrI8bqhDAaLXyMx5LJNHbA5cy
- HSve9hUQGLg5I20MixhmRsF020kPSHkgFEzGmfrZNKsa02iP/K745Rw/bZDdgK40
- ac/uixNlJFBquWDVN/k9ZCvXs2bO9qHxw8raYCkFutnA==
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
+ Ux3PaV9CR8zvtRb9DC4RrYkLwh3J7d329aJIVOBjfIM=; b=ZgdEoph6PO9CBxzI
+ iDnAgevODdQYQs9IZJqkA+yRqB0smZzG4UQjl/5MtGhjt9TD3rfVh2kAfoLpsrsd
+ pz96omQ1cIdAvZW9tlPpP1jShlkyeo1P8D98eZLYmolcwRjLxkjt0pW6JTVW16zx
+ HicEXNA4KJCamphu9Muy3chWg3k/WglfbSULfxYkWQRKiYYXkF/Y3vvYDAjHh2AU
+ XFZ71HgiSZysZiWgXIM+d9cET5yj40bQot/9yv77TDY4PAdpEB1pdjGjIM4JMMpe
+ 84SSJ9XVYoPCgltNpzur4oW3L9HX5boqoSmzZnBuEyp4KKD2fVGo4mQF2/kQnWFB
+ qRzWIA==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gefywtt6-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gegx6434-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Sep 2024 20:50:40 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48CKoeCq023031;
- Thu, 12 Sep 2024 20:50:40 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gefywtt2-1
+ Thu, 12 Sep 2024 20:50:47 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48CKok4W024083;
+ Thu, 12 Sep 2024 20:50:46 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gegx6432-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Sep 2024 20:50:40 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48CIZcaY010811;
- Thu, 12 Sep 2024 20:50:39 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41kmb6wwjr-1
+ Thu, 12 Sep 2024 20:50:46 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48CHmSiB032069;
+ Thu, 12 Sep 2024 20:50:45 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41h2nn2784-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Sep 2024 20:50:39 +0000
+ Thu, 12 Sep 2024 20:50:45 +0000
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48CKoZq650332116
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48CKofro20185532
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 12 Sep 2024 20:50:35 GMT
+ Thu, 12 Sep 2024 20:50:41 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BD75120040;
- Thu, 12 Sep 2024 20:50:35 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id AF47420049;
+ Thu, 12 Sep 2024 20:50:41 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8C7B220049;
- Thu, 12 Sep 2024 20:50:34 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7FD2520040;
+ Thu, 12 Sep 2024 20:50:40 +0000 (GMT)
 Received: from gfwr518.rchland.ibm.com (unknown [9.10.239.106])
  by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 12 Sep 2024 20:50:34 +0000 (GMT)
+ Thu, 12 Sep 2024 20:50:40 +0000 (GMT)
 From: Michael Kowal <kowal@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
  npiggin@gmail.com, milesg@linux.ibm.com
-Subject: [PATCH v3 00/14] XIVE2 changes for TIMA operations
-Date: Thu, 12 Sep 2024 15:50:14 -0500
-Message-Id: <20240912205028.15854-1-kowal@linux.ibm.com>
+Subject: [PATCH v3 04/14] pnv/xive2: Support for "OS LGS Push" TIMA operation
+Date: Thu, 12 Sep 2024 15:50:18 -0500
+Message-Id: <20240912205028.15854-5-kowal@linux.ibm.com>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20240912205028.15854-1-kowal@linux.ibm.com>
+References: <20240912205028.15854-1-kowal@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: nIVUqrtPntlvze7do_H-CyENTb8r3AlO
-X-Proofpoint-ORIG-GUID: w8BrSpA3BZ8r52C1BxClqOSVS3C0QItQ
+X-Proofpoint-GUID: 29ZI6G-ZN4YoLZo0dDM40MoI32dzQ66u
+X-Proofpoint-ORIG-GUID: gpdLK75-p8daXMXMguU8LzwDTbi6xlje
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-12_07,2024-09-12_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 malwarescore=0
- lowpriorityscore=0 suspectscore=0 mlxlogscore=792 priorityscore=1501
- adultscore=0 clxscore=1015 spamscore=0 bulkscore=0 phishscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ phishscore=0 mlxlogscore=988
+ lowpriorityscore=0 suspectscore=0 priorityscore=1501 bulkscore=0
+ adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2408220000 definitions=main-2409120149
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=kowal@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -111,108 +114,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In XIVE Gen 2 there are many operations that were not modeled and are
-needed for PowerVM.  These changes are associated with the following Thread
-Interrupt Management Area subjects:
- - OS context
- - Thread context
- - Pulling contexts to 'cache lines'
- - Pool targets
- - Enhaced trace data for XIVE Gen2
+From: Glenn Miles <milesg@linux.vnet.ibm.com>
 
-version 3:
-- moved some of ring functions from patch set 9 to 10
-- version 2 reviewed-by tags:
-$ b4 am 20240909211038.27440-1-kowal@linux.ibm.com
-Grabbing thread from lore.kernel.org/all/20240909211038.27440-1-kowal@linux.ibm.com/t.mbox.gz
-Analyzing 23 messages in the thread
-Looking for additional code-review trailers on lore.kernel.org
+Adds support for single byte writes to offset 0x15 of the TIMA address
+space.  This offset holds the Logical Server Group Size (LGS) field.
+The field is used to evenly distribute the interrupt load among the
+members of a group, but is unused in the current implementation so we
+just support the writing of the value for now.
+
+Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
-  [PATCH v2 1/14] pnv/xive: TIMA patch sets pre-req alignment and formatting changes
-  [PATCH v2 2/14] pnv/xive2: Define OGEN field in the TIMA
-  [PATCH v2 3/14] ppc/xive2: Support TIMA "Pull OS Context to Odd Thread Reporting Line"
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH v2 4/14] pnv/xive2: Support for "OS LGS Push" TIMA operation
-  [PATCH v2 5/14] ppc/xive2: Dump more NVP state with 'info pic'
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH v2 6/14] ppc/xive2: Dump the VP-group and crowd tables with 'info pic'
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH v2 7/14] ppc/xive2: Allow 1-byte write of Target field in TIMA
-  [PATCH v2 8/14] ppc/xive2: Support "Pull Thread Context to Register" operation
-  [PATCH v2 9/14] ppc/xive2: Change context/ring specific functions to be generic
-  [PATCH v2 10/14] ppc/xive2: Support "Pull Thread Context to Odd Thread Reporting Line"
-  [PATCH v2 11/14] pnv/xive: Add special handling for pool targets
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH v2 12/14] pnv/xive: Update PIPR when updating CPPR
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH v2 13/14] pnv/xive2: TIMA support for 8-byte OS context push for PHYP
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH v2 14/14] pnv/xive2: TIMA CI ops using alternative offsets or byte lengths
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
+ hw/intc/xive.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-version 2:
-- use dma_memory_write() instead of cpu_physical_memory_write()
-- use ternery operator in NVG/NVC pnv_xive2_vst_read/write()
-- removed xive2_nvgc_set_backlog() until it is needed
-- re-defined word 2 valid bits since it is the same in each Reporting
-- provided better fix for possible NSR operation overflow
-- moved changes for operations that can occur on ring, in a new patch set (10/13)
-- version 1 reviewed-by tags:
-$b4 am 20240801203008.11224-1-kowal@linux.ibm.com
-Analyzing 35 messages in the thread
-Analyzing 0 code-review messages
----
-  [PATCH 1/13] pnv/xive: TIMA patch sets pre-req alignment and formatting changes
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH 2/13] pnv/xive2: Define OGEN field in the TIMA
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH 3/13] ppc/xive2: Support TIMA "Pull OS Context to Odd Thread Reporting Line"
-  [PATCH 4/13] pnv/xive2: Support for "OS LGS Push" TIMA operation
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH 5/13] ppc/xive2: Dump more NVP state with 'info pic'
-  [PATCH 6/13] ppc/xive2: Dump the VP-group and crowd tables with 'info pic'
-  [PATCH 7/13] ppc/xive2: Allow 1-byte write of Target field in TIMA
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH 8/13] ppc/xive2: Support "Pull Thread Context to Register" operation
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH 9/13] ppc/xive2: Support "Pull Thread Context to Odd Thread Reporting Line"
-  [PATCH 10/13] pnv/xive: Add special handling for pool targets
-  [PATCH 11/13] pnv/xive: Update PIPR when updating CPPR
-  [PATCH 12/13] pnv/xive2: TIMA support for 8-byte OS context push for PHYP
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-  [PATCH 13/13] pnv/xive2: TIMA CI ops using alternative offsets or byte lengths
-    + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Frederic Barrat (4):
-  pnv/xive2: Define OGEN field in the TIMA
-  ppc/xive2: Support TIMA "Pull OS Context to Odd Thread Reporting Line"
-  ppc/xive2: Dump more NVP state with 'info pic'
-  ppc/xive2: Dump the VP-group and crowd tables with 'info pic'
-
-Glenn Miles (7):
-  pnv/xive2: Support for "OS LGS Push" TIMA operation
-  ppc/xive2: Allow 1-byte write of Target field in TIMA
-  ppc/xive2: Support "Pull Thread Context to Register" operation
-  ppc/xive2: Support "Pull Thread Context to Odd Thread Reporting Line"
-  pnv/xive: Add special handling for pool targets
-  pnv/xive: Update PIPR when updating CPPR
-  pnv/xive2: TIMA support for 8-byte OS context push for PHYP
-
-Michael Kowal (3):
-  pnv/xive: TIMA patch sets pre-req alignment and formatting changes
-  ppc/xive2: Change context/ring specific functions to be generic
-  pnv/xive2: TIMA CI ops using alternative offsets or byte lengths
-
- include/hw/ppc/xive.h       |   2 +-
- include/hw/ppc/xive2.h      |  18 ++
- include/hw/ppc/xive2_regs.h |  25 ++-
- include/hw/ppc/xive_regs.h  |  45 +++--
- hw/intc/pnv_xive2.c         |  44 ++++-
- hw/intc/xive.c              | 201 ++++++++++++++++++-----
- hw/intc/xive2.c             | 317 ++++++++++++++++++++++++++++++------
- 7 files changed, 537 insertions(+), 115 deletions(-)
-
---
+diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+index 8e62c7e75f..8605dd618f 100644
+--- a/hw/intc/xive.c
++++ b/hw/intc/xive.c
+@@ -341,6 +341,19 @@ static void xive_tm_set_os_cppr(XivePresenter *xptr, XiveTCTX *tctx,
+     xive_tctx_set_cppr(tctx, TM_QW1_OS, value & 0xff);
+ }
+ 
++static void xive_tctx_set_lgs(XiveTCTX *tctx, uint8_t ring, uint8_t lgs)
++{
++    uint8_t *regs = &tctx->regs[ring];
++
++    regs[TM_LGS] = lgs;
++}
++
++static void xive_tm_set_os_lgs(XivePresenter *xptr, XiveTCTX *tctx,
++                          hwaddr offset, uint64_t value, unsigned size)
++{
++    xive_tctx_set_lgs(tctx, TM_QW1_OS, value & 0xff);
++}
++
+ /*
+  * Adjust the IPB to allow a CPU to process event queues of other
+  * priorities during one physical interrupt cycle.
+@@ -525,6 +538,8 @@ static const XiveTmOp xive2_tm_operations[] = {
+                                                      NULL },
+     { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,      4, xive2_tm_push_os_ctx,
+                                                      NULL },
++    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_LGS,        1, xive_tm_set_os_lgs,
++                                                     NULL },
+     { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, xive_tm_set_hv_cppr,
+                                                      NULL },
+     { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, xive_tm_vt_push,
+-- 
 2.43.0
 
 
