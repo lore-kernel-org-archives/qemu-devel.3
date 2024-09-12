@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8C14EE644C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D887EEE644B
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 05:41:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1socPC-0008CY-2F; Thu, 12 Sep 2024 01:30:10 -0400
+	id 1socSo-0007zj-BN; Thu, 12 Sep 2024 01:33:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1socP9-00087O-6q
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:07 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1socRE-0000EB-8l
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:32:20 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1socP7-0002xx-I3
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:06 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-7191df6b5f5so395603b3a.0
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:30:05 -0700 (PDT)
+ id 1socRC-0003Az-Gz
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:32:15 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7179069d029so372729b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:32:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726119003; x=1726723803; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1726119133; x=1726723933; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=98jPE8Nm5XmnYTmie79vaM5ax8offv0h+SJp0+g/oio=;
- b=Afxv0VCtUYpmGXE+E3xiFi4twTPhNAMzS/Dd4zPkG518f6FGPYPoMz75hS2RwbiUXU
- AbinH5gBzwMyHs7bZ9NNyN6oC7Yhcby1JJ18/BTDVkf/iBOE6YhpJXGk3Y7Bvk6uS1s6
- eWJx3C6tN6vX2B5RD+1pJITYt4uMyiXei9vJS9tWZFU+Ff0dljdA7GAea+Tx+hBZuMvo
- Caf+tF4aPrI6kKw+gMY7WREpfdNsVI5sB3lNQmE+Td3DyI5hJrV2Zk1ET4ZsbYjvkHxy
- MiiqAWtWtzJZRzyX/6KTlsiX9h7fMzdkHsHOzMAtYdRV2HlWipxVVylzLOI0f3vOloch
- V5mg==
+ bh=8/idt6rpfEFMkn6tMIzI2R9hwW9xCaF2jjdNSxMJKJY=;
+ b=IabP3aUirkMx/eqiTfkb3sY5Zw+9liPk2KO8Qz1OtLVehckTt7syYCjfoPM6rghCK7
+ 6ROMk+bvH53jI9FkoLyxlOs1w3iUTuCRgTvLkNe07vZljObF0681ucNKzyRo7KSsa767
+ fLHE5yF5zkGHE0P7pNzjqXoAPqBoLQaK40LOShZyssq8UQ7e7a19DEWgmojVLOD4b9cJ
+ aoC5R7U/cVyDP4CZN3sxSe3oJUlFOm50M0epmh8Tgse3CbsVj3UnC9HlK0NueaxfNRQT
+ ZHRpsd6VRDmO7own92RWEL5SUJc7kbhi1XeBWDcEnUvYSmkk9PlCmL73bkXU4IfQxrLf
+ XABw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726119003; x=1726723803;
+ d=1e100.net; s=20230601; t=1726119133; x=1726723933;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=98jPE8Nm5XmnYTmie79vaM5ax8offv0h+SJp0+g/oio=;
- b=SIiqhGzesIHAYDLQ6KJDiv1EUpgNGxOkMWWkjXkmYPQ1MN6WYROIwPaNE5nIwF/+7P
- np70AFgmy45YN8XBKMLfkRP0ayYeyByIWsnplcjftSc46JXjL6dWkcbB6+faZXbhE3Rf
- QXIwzOlTKGpgAgtHjEHYn0JUHswVgrINjpixl+h3m4Bhd2Z7d2ezPrRu86qfkXDCF5WY
- 0EJ45l+/tUV3eg6w3irrj9My1MlfLOYlMJaP6xD3PHUgdTaR1pEt9nbwRBjyEw3e1toA
- QJor2ieJ1+r5EJCOJKisxfgSlDs28SBfmQvyeKoc61DHV0irlmM0Tt/I6oQcAcGZg2x2
- mI5A==
-X-Gm-Message-State: AOJu0Yw0l7+eRclvHqKXrobKt4wFYsXJrTPjQCtR6GXOiOtIIW/Uo2ct
- swfjxKQA0viEpGoWGUTNIf6htD1Qd7MsmvrpSwM/HTGrRd6vEDM0ItWRKQ==
-X-Google-Smtp-Source: AGHT+IHFJpVoqRTRqJDN/lRzeXEUecBDgoyLc/B9teFup1hMsYS91/uIyJP48qIzncqFu24UBz+plg==
-X-Received: by 2002:a05:6a00:2d17:b0:714:2d05:60df with SMTP id
- d2e1a72fcca58-71926091d24mr2537578b3a.15.1726119003315; 
- Wed, 11 Sep 2024 22:30:03 -0700 (PDT)
+ bh=8/idt6rpfEFMkn6tMIzI2R9hwW9xCaF2jjdNSxMJKJY=;
+ b=Na/l5iEOp1d+TIo03iI2/GNKJWa2g7qiriKkyBRF0KpJ0r6jpWso7JEyJTXmCbHYw4
+ YurXGJYEIZQLA5uPkQKSI4fZSqGb/9I57vqtTLSHKYnbx2LmqWqRw3aRhD60KLUILWVH
+ boGuJ3yeR0ETXab1Sn5I8fUAUC6NOefgddsMSEpaI3TeufpZEUpJpyytMEOqg0YmVgP4
+ kYVaFnRpFcc28+BNgzh+j7iFCbGZmzyodnQ5JJbiu0Ev7WXHOCcoUQVXG5WKUmYDtbTn
+ N8ErvO2J0IqCOP4c1BP65zKEgU88j1m5eLpgoUh1h8MOhioH/Q6wuXRkSwEuUqqbTN0Z
+ B14w==
+X-Gm-Message-State: AOJu0YyvBnrl/iJ34kSrOhnju5eI2xwuN+JaEfBG+9rv0QCueC1q/CBI
+ ewiXQ/DhHAATphBaDIcQoOLewCe/UVesMdq3VsbAOuZV3lEI7xDfLJK2MA==
+X-Google-Smtp-Source: AGHT+IERbovb4KSavIPg1/NElBDZnMmD8Lhw7B+wUkVOy4ZmcC/MEV9digp73m/NozXLiQdZPQdNyA==
+X-Received: by 2002:aa7:9e05:0:b0:717:8d9f:2dbc with SMTP id
+ d2e1a72fcca58-719261fb115mr2147810b3a.23.1726119132697; 
+ Wed, 11 Sep 2024 22:32:12 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71908fc8fdesm3833034b3a.1.2024.09.11.22.30.00
+ d2e1a72fcca58-71908fc8fdesm3833034b3a.1.2024.09.11.22.32.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 22:30:02 -0700 (PDT)
+ Wed, 11 Sep 2024 22:32:12 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Jason Chien <jason.chien@sifive.com>,
- Frank Chang <frank.chang@sifive.com>,
+Cc: alistair23@gmail.com, Mark Corbin <mark@dibsco.co.uk>,
+ Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@FreeBSD.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 01/47] target/riscv: Add a property to set vl to ceil(AVL/2)
-Date: Thu, 12 Sep 2024 15:29:06 +1000
-Message-ID: <20240912052953.2552501-2-alistair.francis@wdc.com>
+Subject: [PULL 41/47] bsd-user: Implement set_mcontext and
+ get_ucontext_sigreturn for RISCV
+Date: Thu, 12 Sep 2024 15:29:46 +1000
+Message-ID: <20240912052953.2552501-42-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240912052953.2552501-1-alistair.francis@wdc.com>
 References: <20240912052953.2552501-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,60 +101,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jason Chien <jason.chien@sifive.com>
+From: Mark Corbin <mark@dibsco.co.uk>
 
-RVV spec allows implementations to set vl with values within
-[ceil(AVL/2),VLMAX] when VLMAX < AVL < 2*VLMAX. This commit adds a
-property "rvv_vl_half_avl" to enable setting vl = ceil(AVL/2). This
-behavior helps identify compiler issues and bugs.
+Added implementations for 'set_mcontext' and 'get_ucontext_sigreturn'
+functions for RISC-V architecture,
+Both functions ensure that the CPU state and user context are properly
+managed.
 
-Signed-off-by: Jason Chien <jason.chien@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Message-ID: <20240722175004.23666-1-jason.chien@sifive.com>
+Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
+Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Co-authored-by: Warner Losh <imp@bsdimp.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240907031927.1908-17-itachis@FreeBSD.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu_cfg.h       | 1 +
- target/riscv/cpu.c           | 1 +
- target/riscv/vector_helper.c | 2 ++
- 3 files changed, 4 insertions(+)
+ bsd-user/riscv/signal.c | 54 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
 
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 8b272fb826..96fe26d4ea 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -127,6 +127,7 @@ struct RISCVCPUConfig {
-     bool ext_smepmp;
-     bool rvv_ta_all_1s;
-     bool rvv_ma_all_1s;
-+    bool rvv_vl_half_avl;
+diff --git a/bsd-user/riscv/signal.c b/bsd-user/riscv/signal.c
+index 072ad821d2..10c940cd49 100644
+--- a/bsd-user/riscv/signal.c
++++ b/bsd-user/riscv/signal.c
+@@ -114,3 +114,57 @@ abi_long get_mcontext(CPURISCVState *regs, target_mcontext_t *mcp,
  
-     uint32_t mvendorid;
-     uint64_t marchid;
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index a90808a3ba..8f21171ffa 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2687,6 +2687,7 @@ static Property riscv_cpu_properties[] = {
- 
-     DEFINE_PROP_BOOL("rvv_ta_all_1s", RISCVCPU, cfg.rvv_ta_all_1s, false),
-     DEFINE_PROP_BOOL("rvv_ma_all_1s", RISCVCPU, cfg.rvv_ma_all_1s, false),
-+    DEFINE_PROP_BOOL("rvv_vl_half_avl", RISCVCPU, cfg.rvv_vl_half_avl, false),
- 
-     /*
-      * write_misa() is marked as experimental for now so mark
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 10a52ceb5b..072bd444b1 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -75,6 +75,8 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-     vlmax = vext_get_vlmax(cpu->cfg.vlenb, vsew, lmul);
-     if (s1 <= vlmax) {
-         vl = s1;
-+    } else if (s1 < 2 * vlmax && cpu->cfg.rvv_vl_half_avl) {
-+        vl = (s1 + 1) >> 1;
-     } else {
-         vl = vlmax;
-     }
+     return 0;
+ }
++
++/* Compare with set_mcontext() in riscv/riscv/exec_machdep.c */
++abi_long set_mcontext(CPURISCVState *regs, target_mcontext_t *mcp,
++        int srflag)
++{
++
++    regs->gpr[5] = tswap64(mcp->mc_gpregs.gp_t[0]);
++    regs->gpr[6] = tswap64(mcp->mc_gpregs.gp_t[1]);
++    regs->gpr[7] = tswap64(mcp->mc_gpregs.gp_t[2]);
++    regs->gpr[28] = tswap64(mcp->mc_gpregs.gp_t[3]);
++    regs->gpr[29] = tswap64(mcp->mc_gpregs.gp_t[4]);
++    regs->gpr[30] = tswap64(mcp->mc_gpregs.gp_t[5]);
++    regs->gpr[31] = tswap64(mcp->mc_gpregs.gp_t[6]);
++
++    regs->gpr[8] = tswap64(mcp->mc_gpregs.gp_s[0]);
++    regs->gpr[9] = tswap64(mcp->mc_gpregs.gp_s[1]);
++    regs->gpr[18] = tswap64(mcp->mc_gpregs.gp_s[2]);
++    regs->gpr[19] = tswap64(mcp->mc_gpregs.gp_s[3]);
++    regs->gpr[20] = tswap64(mcp->mc_gpregs.gp_s[4]);
++    regs->gpr[21] = tswap64(mcp->mc_gpregs.gp_s[5]);
++    regs->gpr[22] = tswap64(mcp->mc_gpregs.gp_s[6]);
++    regs->gpr[23] = tswap64(mcp->mc_gpregs.gp_s[7]);
++    regs->gpr[24] = tswap64(mcp->mc_gpregs.gp_s[8]);
++    regs->gpr[25] = tswap64(mcp->mc_gpregs.gp_s[9]);
++    regs->gpr[26] = tswap64(mcp->mc_gpregs.gp_s[10]);
++    regs->gpr[27] = tswap64(mcp->mc_gpregs.gp_s[11]);
++
++    regs->gpr[10] = tswap64(mcp->mc_gpregs.gp_a[0]);
++    regs->gpr[11] = tswap64(mcp->mc_gpregs.gp_a[1]);
++    regs->gpr[12] = tswap64(mcp->mc_gpregs.gp_a[2]);
++    regs->gpr[13] = tswap64(mcp->mc_gpregs.gp_a[3]);
++    regs->gpr[14] = tswap64(mcp->mc_gpregs.gp_a[4]);
++    regs->gpr[15] = tswap64(mcp->mc_gpregs.gp_a[5]);
++    regs->gpr[16] = tswap64(mcp->mc_gpregs.gp_a[6]);
++    regs->gpr[17] = tswap64(mcp->mc_gpregs.gp_a[7]);
++
++
++    regs->gpr[1] = tswap64(mcp->mc_gpregs.gp_ra);
++    regs->gpr[2] = tswap64(mcp->mc_gpregs.gp_sp);
++    regs->gpr[3] = tswap64(mcp->mc_gpregs.gp_gp);
++    regs->gpr[4] = tswap64(mcp->mc_gpregs.gp_tp);
++    regs->pc = tswap64(mcp->mc_gpregs.gp_sepc);
++
++    return 0;
++}
++
++/* Compare with sys_sigreturn() in riscv/riscv/machdep.c */
++abi_long get_ucontext_sigreturn(CPURISCVState *regs,
++                        abi_ulong target_sf, abi_ulong *target_uc)
++{
++
++    *target_uc = target_sf;
++    return 0;
++}
 -- 
 2.46.0
 
