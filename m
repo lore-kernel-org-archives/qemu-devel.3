@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 296EEEE644C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 05:43:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3F8AEE644B
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 05:43:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1socPy-0002O9-AP; Thu, 12 Sep 2024 01:30:58 -0400
+	id 1socRn-0002ct-W1; Thu, 12 Sep 2024 01:32:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1socPu-00024s-2X
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:54 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1socR3-0007Pw-IO
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:32:05 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1socPr-00032r-SV
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:53 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2053a0bd0a6so6323025ad.3
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:30:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1socR1-0003AQ-Mq
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:32:05 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2054e22ce3fso6251825ad.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:32:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726119050; x=1726723850; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1726119122; x=1726723922; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gyCgL5sYQmLP8iWekZZGySR80jy81UllqXHME1HXjT0=;
- b=AR5QqS4qRv9N1tKCSruXkGRUDfr6cKbnT44cvOvLmqbAea+j8+38mWysh/iCNmeWzv
- fYDMshqwoBbd9FX3UITyK72QLl8phF4Gx5fWg5G9fNawucl1jgWEmBUYeVpizZw6hbui
- NpqPH0Vg5dGyqcSNkbC5MoUA7/I7Rd4B9do4OAXK6Xx6wUGSbvsrymR/GrpxSw9hOeNk
- n4HKlxGOYOOvhWI35h8kimxVos+bqAtvJzgPWEMaEOHmKnSj0GrcK+CWWClVMCxXL/jz
- ImorBJnzDQEsSo5qUasIYh0wvitWs7s2A1HDaKfvXv/AuEnJTERMhhk8lGp9V3JUUK2+
- G7zg==
+ bh=00k0Mqx/EpFUnR82ExpzBJkLkNZLP5MDHD2q8XNb0eY=;
+ b=PIyG4vwvhQ5+Vl770jNqy5xp56ACpiJLSYvkM4o0MLGXuRex3X31ThQ/B0AA8j0PS1
+ qiHOm1feSNQJQW7vCyfV3cmAF5V80QqHRAl3gLlLzoqw7m98Krlvfl4M9Q23UXxeD62e
+ cqEYe4DxIHCaw/WdGJkct9unyV/jNMGVa356mMGiD5951VBlgPpvJUXs+WthOtLBFw5D
+ fWQ8yR8BYVzzdBBF3fU+bp4UrpGuMc9REETV9ihPtVoZF84JM02vUo+eEuTQXAWdtmiP
+ 9KnapWoDakx1dzsyWlV9zG3WVpVE2exDCNAyYBcorb/yjDX6kozQLWIYEOTz/Lh9R6jW
+ bPGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726119050; x=1726723850;
+ d=1e100.net; s=20230601; t=1726119122; x=1726723922;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gyCgL5sYQmLP8iWekZZGySR80jy81UllqXHME1HXjT0=;
- b=d6Dr+U9brgyCme5eP04ZfkXu2sAsayKT07iW4a9uG/LGz8sHTRqs1AFUYqu7sBoPh6
- N+X4A7iXeQUN6eK+zoubQM1KSOQdwdoThuB3RQHj0dwJBXw6ZCK9/dH6CKwhFuM0rm+v
- 7cbyg+iDSPLaX9neRgzn+PzqlTqKekTg/XSE4rFXGy50mAk4xAs/DNl3DHl/v4hEzD8O
- IHN903LYhhUWgopi2SAmcbdDiy8PTZY/5D05u9AtBTH/v2Z+UM9WY1k/pAoqczymu6sZ
- fCIADDz9l0BDXxAkfeTMJzn/GVFUIr/x9HuJA+coKSlvQ4horiR2KlNKHAuO9TZ0oOF/
- BKew==
-X-Gm-Message-State: AOJu0YzWD4Ww0qhgaalN8Q0GuIJPGB2OvPi6gR808Gk4wZPWOpm1Qkkx
- jx11J6U6pdwfTcUrQKP5Tpm6iuIs/uA7tNAmqGczJVrTpzehhRoPMSQfR35xVGLfAnEZM5eQ4Dm
- o
-X-Google-Smtp-Source: AGHT+IHL2QeP5x+A7xtt/7tOaIU3jt924OoNoaaZ170oHDZF2Si+dUDff9kJv4V3BMFPOoeGdFIu/A==
-X-Received: by 2002:a17:902:e5c5:b0:1fc:6cf5:df4b with SMTP id
- d9443c01a7336-2076e428114mr23385465ad.49.1726119050015; 
- Wed, 11 Sep 2024 22:30:50 -0700 (PDT)
-Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ bh=00k0Mqx/EpFUnR82ExpzBJkLkNZLP5MDHD2q8XNb0eY=;
+ b=uDFu8b5AMlo/5PlWhZZy2kFa2QfYp5RI4Y0eFnSfMH01Ovhs1ZJgn7L21FI3bZ/tQk
+ rNQPdekwtGavw3hF8cw45gv7YoJ6NBnC4Lmrr9+OKAoxzOHezbJp4fTrasx95Hmm8WkG
+ eMjuPGn9tkhMJKbHtkvdVFp1g16mVg/GegdUmjwJbiGVlvKppQWIkHQ94Vl/qR82BEmn
+ jDL5hZZQPCKZ8Q9zSDFAX8NSAhKMbGNyGOLwhWYbxWgXhdY71v6KfGYj4IZytGCCOVoJ
+ 52NvUmoiD/jVu0HNYB0GTQsZ57gzuXgZ1h6irhiVjy3S/RQb3ZnHsD0c/uT4LvWwDHso
+ NsZQ==
+X-Gm-Message-State: AOJu0Yz3jBbEsz042Fxc2bQyNU61bkQf+7zXQGYn/q2H7Bw7USjhLPY5
+ AvNXLq5mpUnMk7NJd3UhxW5ReUoOfmmAdc8MrECvzBkc8wRF8R0iQHzbjA==
+X-Google-Smtp-Source: AGHT+IGokXQU+krw4BySG5/0ZY/OlN9RfUUfqek2zBZGxtavXhP2vT/OfN8M9VuIlnIfmnNRx4YXhg==
+X-Received: by 2002:a05:6a21:3318:b0:1c8:fdc7:8813 with SMTP id
+ adf61e73a8af0-1cf75f2a590mr2135044637.23.1726119122017; 
+ Wed, 11 Sep 2024 22:32:02 -0700 (PDT)
+Received: from toolbox.alistair23.me
+ (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
+ [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2076afe9e1dsm7513155ad.236.2024.09.11.22.30.49
+ d2e1a72fcca58-71908fc8fdesm3833034b3a.1.2024.09.11.22.31.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 22:30:49 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Wed, 11 Sep 2024 22:32:01 -0700 (PDT)
+From: Alistair Francis <alistair23@gmail.com>
+X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Carl Hauser <chauser@pullman.com>
-Subject: [PULL 5/5] target/sparc: Add gen_trap_if_nofpu_fpexception
-Date: Wed, 11 Sep 2024 22:30:43 -0700
-Message-ID: <20240912053043.1131626-6-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240912053043.1131626-1-richard.henderson@linaro.org>
-References: <20240912053043.1131626-1-richard.henderson@linaro.org>
+Cc: alistair23@gmail.com, Mark Corbin <mark@dibsco.co.uk>,
+ Ajeet Singh <itachis@FreeBSD.org>, Warner Losh <imp@bsdimp.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 38/47] bsd-user: Define RISC-V signal handling structures and
+ constants
+Date: Thu, 12 Sep 2024 15:29:43 +1000
+Message-ID: <20240912052953.2552501-39-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240912052953.2552501-1-alistair.francis@wdc.com>
+References: <20240912052953.2552501-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,299 +101,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Model fp_exception state, in which only fp stores are allowed
-until such time as the FQ has been flushed.
+From: Mark Corbin <mark@dibsco.co.uk>
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Tested-by: Carl Hauser <chauser@pullman.com>
+Added definitions for RISC-V signal handling, including structures
+and constants for managing signal frames and context
+
+Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
+Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Co-authored-by: Warner Losh <imp@bsdimp.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240907031927.1908-14-itachis@FreeBSD.org>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/sparc/translate.c | 90 +++++++++++++++++++++++++++-------------
- 1 file changed, 61 insertions(+), 29 deletions(-)
+ bsd-user/riscv/target_arch_signal.h | 75 +++++++++++++++++++++++++++++
+ 1 file changed, 75 insertions(+)
+ create mode 100644 bsd-user/riscv/target_arch_signal.h
 
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index b80f071533..cdd0a95c03 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -1465,15 +1465,48 @@ static void gen_op_fpexception_im(DisasContext *dc, int ftt)
-     gen_exception(dc, TT_FP_EXCP);
- }
- 
--static int gen_trap_ifnofpu(DisasContext *dc)
-+static bool gen_trap_ifnofpu(DisasContext *dc)
- {
- #if !defined(CONFIG_USER_ONLY)
-     if (!dc->fpu_enabled) {
-         gen_exception(dc, TT_NFPU_INSN);
--        return 1;
-+        return true;
-     }
- #endif
--    return 0;
-+    return false;
-+}
+diff --git a/bsd-user/riscv/target_arch_signal.h b/bsd-user/riscv/target_arch_signal.h
+new file mode 100644
+index 0000000000..1a634b865b
+--- /dev/null
++++ b/bsd-user/riscv/target_arch_signal.h
+@@ -0,0 +1,75 @@
++/*
++ *  RISC-V signal definitions
++ *
++ *  Copyright (c) 2019 Mark Corbin
++ *
++ *  This program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2 of the License, or
++ *  (at your option) any later version.
++ *
++ *  This program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
 +
-+static bool gen_trap_iffpexception(DisasContext *dc)
-+{
-+#if !defined(TARGET_SPARC64) && !defined(CONFIG_USER_ONLY)
-+    /*
-+     * There are 3 states for the sparc32 fpu:
-+     * Normally the fpu is in fp_execute, and all insns are allowed.
-+     * When an exception is signaled, it moves to fp_exception_pending state.
-+     * Upon seeing the next FPop, the fpu moves to fp_exception state,
-+     * populates the FQ, and generates an fp_exception trap.
-+     * The fpu remains in fp_exception state until FQ becomes empty
-+     * after execution of a STDFQ instruction.  While the fpu is in
-+     * fp_exception state, and FPop, fp load or fp branch insn will
-+     * return to fp_exception_pending state, set FSR.FTT to sequence_error,
-+     * and the insn will not be entered into the FQ.
-+     *
-+     * In QEMU, we do not model the fp_exception_pending state and
-+     * instead populate FQ and raise the exception immediately.
-+     * But we can still honor fp_exception state by noticing when
-+     * the FQ is not empty.
-+     */
-+    if (dc->fsr_qne) {
-+        gen_op_fpexception_im(dc, FSR_FTT_SEQ_ERROR);
-+        return true;
-+    }
-+#endif
-+    return false;
-+}
++#ifndef TARGET_ARCH_SIGNAL_H
++#define TARGET_ARCH_SIGNAL_H
 +
-+static bool gen_trap_if_nofpu_fpexception(DisasContext *dc)
-+{
-+    return gen_trap_ifnofpu(dc) || gen_trap_iffpexception(dc);
- }
- 
- /* asi moves */
-@@ -2643,7 +2676,7 @@ static bool do_fbpfcc(DisasContext *dc, arg_bcc *a)
- {
-     DisasCompare cmp;
- 
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
-     gen_fcompare(&cmp, a->cc, a->cond);
-@@ -4482,7 +4515,7 @@ static bool do_ld_fpr(DisasContext *dc, arg_r_r_ri_asi *a, MemOp sz)
-     if (addr == NULL) {
-         return false;
-     }
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
-     if (sz == MO_128 && gen_trap_float128(dc)) {
-@@ -4510,6 +4543,7 @@ static bool do_st_fpr(DisasContext *dc, arg_r_r_ri_asi *a, MemOp sz)
-     if (addr == NULL) {
-         return false;
-     }
-+    /* Store insns are ok in fp_exception_pending state. */
-     if (gen_trap_ifnofpu(dc)) {
-         return true;
-     }
-@@ -4576,7 +4610,7 @@ static bool trans_LDFSR(DisasContext *dc, arg_r_r_ri *a)
-     if (addr == NULL) {
-         return false;
-     }
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
- 
-@@ -4600,7 +4634,7 @@ static bool do_ldxfsr(DisasContext *dc, arg_r_r_ri *a, bool entire)
-     if (addr == NULL) {
-         return false;
-     }
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
- 
-@@ -4637,6 +4671,7 @@ static bool do_stfsr(DisasContext *dc, arg_r_r_ri *a, MemOp mop)
-     if (addr == NULL) {
-         return false;
-     }
-+    /* Store insns are ok in fp_exception_pending state. */
-     if (gen_trap_ifnofpu(dc)) {
-         return true;
-     }
-@@ -4679,7 +4714,7 @@ static bool do_ff(DisasContext *dc, arg_r_r *a,
- {
-     TCGv_i32 tmp;
- 
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
- 
-@@ -4720,7 +4755,7 @@ static bool do_env_ff(DisasContext *dc, arg_r_r *a,
- {
-     TCGv_i32 tmp;
- 
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
- 
-@@ -4740,7 +4775,7 @@ static bool do_env_fd(DisasContext *dc, arg_r_r *a,
-     TCGv_i32 dst;
-     TCGv_i64 src;
- 
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
- 
-@@ -4760,7 +4795,7 @@ static bool do_dd(DisasContext *dc, arg_r_r *a,
- {
-     TCGv_i64 dst, src;
- 
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
- 
-@@ -4782,7 +4817,7 @@ static bool do_env_dd(DisasContext *dc, arg_r_r *a,
- {
-     TCGv_i64 dst, src;
- 
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
- 
-@@ -4822,7 +4857,7 @@ static bool do_env_df(DisasContext *dc, arg_r_r *a,
-     TCGv_i64 dst;
-     TCGv_i32 src;
- 
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
- 
-@@ -4865,7 +4900,7 @@ static bool do_env_qq(DisasContext *dc, arg_r_r *a,
- {
-     TCGv_i128 t;
- 
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
-     if (gen_trap_float128(dc)) {
-@@ -4886,7 +4921,7 @@ static bool do_env_fq(DisasContext *dc, arg_r_r *a,
-     TCGv_i128 src;
-     TCGv_i32 dst;
- 
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
-     if (gen_trap_float128(dc)) {
-@@ -4909,7 +4944,7 @@ static bool do_env_dq(DisasContext *dc, arg_r_r *a,
-     TCGv_i128 src;
-     TCGv_i64 dst;
- 
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
-     if (gen_trap_float128(dc)) {
-@@ -4932,7 +4967,7 @@ static bool do_env_qf(DisasContext *dc, arg_r_r *a,
-     TCGv_i32 src;
-     TCGv_i128 dst;
- 
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
-     if (gen_trap_float128(dc)) {
-@@ -4955,10 +4990,7 @@ static bool do_env_qd(DisasContext *dc, arg_r_r *a,
-     TCGv_i64 src;
-     TCGv_i128 dst;
- 
--    if (gen_trap_ifnofpu(dc)) {
--        return true;
--    }
--    if (gen_trap_float128(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
- 
-@@ -5015,7 +5047,7 @@ static bool do_env_fff(DisasContext *dc, arg_r_r_r *a,
- {
-     TCGv_i32 src1, src2;
- 
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
- 
-@@ -5224,7 +5256,7 @@ static bool do_env_ddd(DisasContext *dc, arg_r_r_r *a,
- {
-     TCGv_i64 dst, src1, src2;
- 
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
- 
-@@ -5248,7 +5280,7 @@ static bool trans_FsMULd(DisasContext *dc, arg_r_r_r *a)
-     TCGv_i64 dst;
-     TCGv_i32 src1, src2;
- 
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
-     if (!(dc->def->features & CPU_FEATURE_FSMULD)) {
-@@ -5357,7 +5389,7 @@ static bool do_env_qqq(DisasContext *dc, arg_r_r_r *a,
- {
-     TCGv_i128 src1, src2;
- 
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
-     if (gen_trap_float128(dc)) {
-@@ -5381,7 +5413,7 @@ static bool trans_FdMULq(DisasContext *dc, arg_r_r_r *a)
-     TCGv_i64 src1, src2;
-     TCGv_i128 dst;
- 
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
-     if (gen_trap_float128(dc)) {
-@@ -5471,7 +5503,7 @@ static bool do_fcmps(DisasContext *dc, arg_FCMPs *a, bool e)
-     if (avail_32(dc) && a->cc != 0) {
-         return false;
-     }
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
- 
-@@ -5495,7 +5527,7 @@ static bool do_fcmpd(DisasContext *dc, arg_FCMPd *a, bool e)
-     if (avail_32(dc) && a->cc != 0) {
-         return false;
-     }
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
- 
-@@ -5519,7 +5551,7 @@ static bool do_fcmpq(DisasContext *dc, arg_FCMPq *a, bool e)
-     if (avail_32(dc) && a->cc != 0) {
-         return false;
-     }
--    if (gen_trap_ifnofpu(dc)) {
-+    if (gen_trap_if_nofpu_fpexception(dc)) {
-         return true;
-     }
-     if (gen_trap_float128(dc)) {
++#include "cpu.h"
++
++
++#define TARGET_INSN_SIZE     4  /* riscv instruction size */
++
++/* Size of the signal trampoline code placed on the stack. */
++#define TARGET_SZSIGCODE    ((abi_ulong)(7 * TARGET_INSN_SIZE))
++
++/* Compare with riscv/include/_limits.h */
++#define TARGET_MINSIGSTKSZ  (1024 * 4)
++#define TARGET_SIGSTKSZ     (TARGET_MINSIGSTKSZ + 32768)
++
++struct target_gpregs {
++    uint64_t    gp_ra;
++    uint64_t    gp_sp;
++    uint64_t    gp_gp;
++    uint64_t    gp_tp;
++    uint64_t    gp_t[7];
++    uint64_t    gp_s[12];
++    uint64_t    gp_a[8];
++    uint64_t    gp_sepc;
++    uint64_t    gp_sstatus;
++};
++
++struct target_fpregs {
++    uint64_t        fp_x[32][2];
++    uint64_t        fp_fcsr;
++    uint32_t        fp_flags;
++    uint32_t        pad;
++};
++
++typedef struct target_mcontext {
++    struct target_gpregs   mc_gpregs;
++    struct target_fpregs   mc_fpregs;
++    uint32_t               mc_flags;
++#define TARGET_MC_FP_VALID 0x01
++    uint32_t               mc_pad;
++    uint64_t               mc_spare[8];
++} target_mcontext_t;
++
++#define TARGET_MCONTEXT_SIZE 864
++#define TARGET_UCONTEXT_SIZE 936
++
++#include "target_os_ucontext.h"
++
++struct target_sigframe {
++    target_ucontext_t   sf_uc; /* = *sf_uncontext */
++    target_siginfo_t    sf_si; /* = *sf_siginfo (SA_SIGINFO case)*/
++};
++
++#define TARGET_SIGSTACK_ALIGN 16
++
++#endif /* TARGET_ARCH_SIGNAL_H */
 -- 
-2.43.0
+2.46.0
 
 
