@@ -4,52 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1951CEED628
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 17:21:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D33F0EEB59E
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 18:03:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sonUg-0005Qr-VF; Thu, 12 Sep 2024 13:20:35 -0400
+	id 1soo9Q-0002Rf-Pr; Thu, 12 Sep 2024 14:02:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=071a=QK=kaod.org=clg@ozlabs.org>)
- id 1sonUf-0005Pj-JD; Thu, 12 Sep 2024 13:20:33 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1soo9K-0002QY-Ni; Thu, 12 Sep 2024 14:02:34 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=071a=QK=kaod.org=clg@ozlabs.org>)
- id 1sonUb-0003KY-Vs; Thu, 12 Sep 2024 13:20:33 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4X4PMq447kz4wy9;
- Fri, 13 Sep 2024 03:20:23 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4X4PMl2pXhz4wd6;
- Fri, 13 Sep 2024 03:20:18 +1000 (AEST)
-Message-ID: <c04e7386-570d-4819-9236-0a8b2593573b@kaod.org>
-Date: Thu, 12 Sep 2024 19:20:17 +0200
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1soo9H-0007Q2-4U; Thu, 12 Sep 2024 14:02:34 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48CCj3ms022644;
+ Thu, 12 Sep 2024 18:02:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=9
+ mFfEIffTD4HIT0avRmiN6uUNJk2o3u2z15chIMJJ78=; b=DoKJj/RgCLNwnilDk
+ 1VhHtDmcWGTqY0U3NZYuH8qBCihs00KY8h3I6pVW+MtD/A639HvALvV9a3yE0QrB
+ 9HCNVO/bUHdF2lV1JUvOxILVC9aXZuf5diwyQjCfc4i8mP76fmJBlXj3t3/uAtqh
+ YoFtjZ96heKtsnPnzmvI6E1CZq7gXNtoNefElXHFd3dVzSYTQnX3pcQdFGlwnpT5
+ gZWCFCTc/SVFvqsHPdujqxQTAZiq8+i+JsuqvUVx/OHrPKRgnQJVbJTe0AMzOGMn
+ MBeniVlOm7SZK0I03MX0PdmfBCRzAz+9DCJ0LEaBPVZkRkWy+6r0IoTJzMvTDdM2
+ 8BKEA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gebanatm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Sep 2024 18:02:18 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48CI2ILe011465;
+ Thu, 12 Sep 2024 18:02:18 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gebanath-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Sep 2024 18:02:18 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48CGQpFl027315;
+ Thu, 12 Sep 2024 18:02:17 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 41h3v3h8gd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Sep 2024 18:02:17 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48CI2Gn213238990
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 12 Sep 2024 18:02:16 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C303E58052;
+ Thu, 12 Sep 2024 18:02:16 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0944858068;
+ Thu, 12 Sep 2024 18:02:16 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 12 Sep 2024 18:02:15 +0000 (GMT)
+Message-ID: <e85c17d6-296c-47b4-b2f3-63a674713dc4@linux.ibm.com>
+Date: Thu, 12 Sep 2024 14:02:15 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] ppc/pnv: Add support for TPM with SPI interface
 To: dan tan <dantan@linux.vnet.ibm.com>, qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, pbonzini@redhat.com, stefanb@linux.vnet.ibm.com,
- thuth@redhat.com, lvivier@redhat.com, npiggin@gmail.com,
+ thuth@redhat.com, lvivier@redhat.com, clg@kaod.org, npiggin@gmail.com,
  fbarrat@linux.ibm.com
 References: <20240912160959.25885-1-dantan@linux.vnet.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
 In-Reply-To: <20240912160959.25885-1-dantan@linux.vnet.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=071a=QK=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: RGx8-yV6dui9_Ve3TzLslZKjDa3vHCe-
+X-Proofpoint-GUID: kQlBKzdakJTSZqUAapvpKXaB6v3TlTV3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-12_05,2024-09-12_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0
+ priorityscore=1501 bulkscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
+ mlxscore=0 mlxlogscore=999 impostorscore=0 clxscore=1011 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2409120130
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,26 +116,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Dan,
 
-On 9/12/24 18:09, dan tan wrote:
+
+On 9/12/24 12:09 PM, dan tan wrote:
 > From: dan tan <dantan@linux.ibm.com>
 > 
 > SPI interface to TPM TIS implementation via swtpm
 
-I would split this patch in 3 :
+Apart from Cedric's comments:
 
-1. device model
-2. activation for the PowerNV machines
-3. unit tests
+Can you say a bit more about the specs you followed and details how many 
+localities are supported etc. Is this device pnv-specific or can it be 
+used on other platforms as well? If it can then the 'pnv' prefix/suffix 
+should probably disappear from functions in the test code because we 
+could probably start an aarch or x86_64 VM then and call them as well.
 
-Each with a slightly more detailed commit log please. one line
-is very minimal for a full device model :)
-
-Also, I wonder if this TPM device is designed by IBM or by some
-other HW vendor. It would be good to know for a possible reuse.
-
-Some more comments below,
+Also, an entry in docs/specs/tpm.rst would be great.
 
 > 
 > Signed-off-by: dan tan <dantan@linux.ibm.com>
@@ -172,9 +219,7 @@ Some more comments below,
 > +#else
 > +#define SPI_DEBUG(x)
 > +#endif
-
-Please use trace events instead.
-
+> +
 > +DECLARE_INSTANCE_CHECKER(TPMStateSPI, TPM_TIS_SPI, TYPE_TPM_TIS_SPI)
 > +
 > +static inline void tpm_tis_spi_clear_data(TPMStateSPI *spist)
@@ -219,6 +264,9 @@ Please use trace events instead.
 > +    SPI_DEBUG(qemu_log("tpm_tis_spi_write addr:0x%8.8x, value:%2.2x\n",
 > +                       addr, val));
 > +    TPMState *tpm_st = &spist->tpm_state;
+
+First variable declation then empty line and then the SPI_DEBUG.
+
 > +    tpm_tis_write_data(tpm_st, addr, val, 1);
 > +}
 > +
@@ -233,6 +281,10 @@ Please use trace events instead.
 > +    if (offset == TPM_TIS_REG_DID_VID) {
 > +        did_vid = (TPM_TIS_TPM_DID << 16) | TPM_TIS_TPM_VID;
 > +        data = (did_vid >> ((addr & 0x3) * 8)) & 0xff;
+
+Why does this register need special handling? This function could just 
+be a 'return tpm_tis_read_data(tpm_st, addr, 1);' at this point, no?
+
 > +    } else {
 > +        data = tpm_tis_read_data(tpm_st, addr, 1);
 > +    }
@@ -267,9 +319,12 @@ Please use trace events instead.
 > +    static uint8_t xfer_size;         /* data size of transfer */
 > +    static uint32_t reg_addr;         /* register address of transfer */
 
-Please don't use static globals. Can't you use the TPMStateSPI
-struct instead ?
+Shouldn't these statics be part of the TPMStateSPI so that they can be 
+saved if the VM was to suspend in the middle of a transfer. If this 
+cannot happen because you will always get all bytes passed to this 
+function then why are these static's?
 
+> +
 > +    TPMStateSPI *spist = TPM_TIS_SPI(ss);
 > +
 > +    uint8_t byte;       /* reversed byte value */
@@ -328,16 +383,30 @@ struct instead ?
 > +        switch (byte_offset) {
 > +        case 0:    /* command byte */
 > +            if ((byte >> 7) == 0) {    /* bit-7 */
+
+I think checking for bit 7 would be better like this:
+
+#define CMD_BYTE_WRITE (1 << 7)
+if ((byte & CMD_BYTE_WRITE) == 0)
+
 > +                spist->spi_state = SPI_STATE_WRITE;
 > +                SPI_DEBUG(qemu_log("spi write\n"));
 > +            } else {
 > +                spist->spi_state = SPI_STATE_READ;
 > +                SPI_DEBUG(qemu_log("spi read\n"));
 > +            }
+
+# define CMD_BYTE_XFER_SZ_MASK  0x1f
+xfter_size = (byte & CMD_BYTE_XFER_SZ_MASK)
+
+
 > +            xfer_size = (byte & 0x1f) + 1;  /* bits 5:0 */
 > +            SPI_DEBUG(qemu_log("xfer_size=%d\n", xfer_size));
 > +            break;
 > +        case 1:     /* 1st address byte */
+
+This is the from the TIS address 0fe >d4< 00 00.
+
 > +            if (byte != 0xd4) {
 > +                qemu_log_mask(LOG_GUEST_ERROR, "incorrect high address 0x%x\n",
 > +                              byte);
@@ -379,6 +448,9 @@ struct instead ?
 > +                    /*
 > +                     * SPI SSI framework limits both rx and tx
 > +                     * to fixed 4-byte with each xfer
+
+Per the setting of xfer_size above it can be up to 32 bytes?
+
 > +                     */
 > +                    SPI_DEBUG(qemu_log("data exceeds expected amount %u\n",
 > +                              xfer_size));
@@ -397,6 +469,17 @@ struct instead ?
 > +            break;
 > +        }
 > +        if ((wait_state_count == 0) || (wait_state_count == 4)) {
+
+Is there not a more obvious relationship between having to increase 
+offset and byte_offset other than making this depend on the wait_states? 
+Like make it depend on the byte_offset.
+
+/*
+  * advance offsets while handling command and address bytes and once
+  * 4 wait states have been reached.
+  */
+if (byte_offset <= 3 || wait_state_count == 4)
+
 > +            offset++;
 > +            byte_offset++;
 > +        } else {
@@ -409,6 +492,9 @@ struct instead ?
 > +static int tpm_cs(SSIPeripheral *ss, bool select)
 > +{
 > +    TPMStateSPI *spist = TPM_TIS_SPI(ss);
+
+add empty line
+
 > +    if (select) {
 > +        spist->command = false;
 > +        spist->spi_state = SPI_STATE_IDLE;
@@ -419,6 +505,8 @@ struct instead ?
 > +}
 > +
 > +
+one too many empty lines
+
 > +static void tpm_realize(SSIPeripheral *dev, Error **errp)
 > +{
 > +    TPMStateSPI *spist = TPM_TIS_SPI(dev);
@@ -456,6 +544,9 @@ struct instead ?
 > +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
 > +
 > +    dc->desc = "PowerNV SPI TPM";
+
+Is it really a PowerNV specific device?
+
 > +
 > +    tc->model = TPM_MODEL_TPM_TIS;
 > +    tc->request_completed = tpm_tis_spi_request_completed;
@@ -484,12 +575,14 @@ struct instead ?
 > index 0000000000..395c944044
 > --- /dev/null
 > +++ b/tests/qtest/pnv-tpm-tis-spi-test.c
+
+Call it tpm-tis-spi-pnv-test.c ? with functions in namespace 
+tpm_tis_spi_pnv_...  If this device is not PNV specific you should 
+probably drop pnv from the name.
+
 > @@ -0,0 +1,223 @@
 > +/*
 > + * QTest testcase for PowerNV 10 TPM with SPI interface
-
-This title is different from the model.
-
 > + *
 > + * Copyright (c) 2024, IBM Corporation.
 > + *
@@ -518,12 +611,16 @@ This title is different from the model.
 > +                              uint64_t val)
 > +{
 > +    uint32_t pcba = SPI_TPM_BASE + reg;
-> +    qtest_writeq(global_qtest, pnv_xscom_addr(chip, pcba), val);
+> 
+add empty line
++    qtest_writeq(global_qtest, pnv_xscom_addr(chip, pcba), val);
 > +}
 > +
 > +static uint64_t pnv_spi_tpm_read(const PnvChip *chip, uint32_t reg)
 > +{
 > +    uint32_t pcba = SPI_TPM_BASE + reg;
+add empty line
+
 > +    return qtest_readq(global_qtest, pnv_xscom_addr(chip, pcba));
 > +}
 > +
@@ -540,15 +637,17 @@ This title is different from the model.
 > +    cfg_reg = pnv_spi_tpm_read(chip, SPI_CLK_CFG_REG);
 > +    if (cfg_reg != CFG_COUNT_COMPARE_1) {
 > +        pnv_spi_tpm_write(chip, SPI_CLK_CFG_REG, CFG_COUNT_COMPARE_1);
-> +    }
-> +    if (n2) {
+> +    } > +    if (n2) {
+
+What does 'n2' mean?
+
 > +        seq_op |= 0x40000000 | (bytes << 0x18);
+
+Any comment about these hex values that you are shifting the 'bytes' into?
+
 > +    } else {
 > +        seq_op |= 0x30000000 | (bytes << 0x18);
 > +    }
-
-The | operands will overlap. Is that OK.
-
 > +    pnv_spi_tpm_write(chip, SPI_SEQ_OP_REG, seq_op);
 > +    pnv_spi_tpm_write(chip, SPI_MM_REG, MM_REG_RDR_MATCH);
 > +    pnv_spi_tpm_write(chip, SPI_CTR_CFG_REG, (uint64_t)0);
@@ -629,11 +728,30 @@ The | operands will overlap. Is that OK.
 > +    g_test_message("TPM locality 0 test");
 > +    spi_access_start(chip, false, 1, 0, TPM_REG_LOC_0 | TPM_TIS_REG_ACCESS);
 > +    spi_write_reg(chip, 0);
+
+Looking at the other test cases for the I2C and 'regular' TIS it should 
+be possible to abstract this here also to something like the following 
+so that those test cases could be easily transferred here:
+
+tpm_tis_spi_pnv_writeb(chip, TIS_REG(locty, TPM_TIS_REG_ACCESS), 0);
+
+
 > +    spi_access_start(chip, false, 1, 0, TPM_REG_LOC_0 | TPM_TIS_REG_ACCESS);
 > +    spi_write_reg(chip, bswap64(TPM_TIS_ACCESS_REQUEST_USE));
+
+tpm_tis_spi_pnv_writeb(chip, TIS_REG(locty, TPM_TIS_REG_ACCESS), 
+TPM_TIS_ACCESS_REQUEST_USE);
+
 > +
 > +    spi_access_start(chip, true, 1, 0x80, TPM_REG_LOC_0 | TPM_TIS_REG_ACCESS);
 > +    access = (uint8_t)spi_read_reg(chip);
+
+
+access = tpm_tis_spi_pnv_readb(chip, TIS_REG(locty, TPM_TIS_REG_ACCESS));
+
+
+
+
 > +    g_assert_cmpint(access, ==, TPM_TIS_ACCESS_TPM_REG_VALID_STS |
 > +                                TPM_TIS_ACCESS_ACTIVE_LOCALITY |
 > +                                TPM_TIS_ACCESS_TPM_ESTABLISHMENT);
@@ -649,11 +767,24 @@ The | operands will overlap. Is that OK.
 > +    spi_access_start(chip, true, 4, 0x83, TPM_REG_LOC_0 | TPM_TIS_REG_DID_VID);
 > +    g_test_message("DID_VID = 0x%lx", spi_read_reg(chip));
 
-Please use the PRIx macros.
+I2C has this assert here:
+         didvid = tpm_tis_i2c_readl(locty, TPM_I2C_REG_DID_VID);
+         g_assert_cmpint(didvid, ==, (1 << 16) | PCI_VENDOR_ID_IBM);
+
+->
+	didvid = tpm_tis_spi_pnv_readl(chip, TIS_REG(locty, TPM_TIS_REG_DID_VID))
 
 > +
 > +    /* set locality 0 */
 > +    tpm_set_verify_loc0(chip);
+
+->
+	tpm_tis_spi_pnv_writeb(chip, TIS_REG(0, TPM_TIS_REG_ACCESS), 
+TPM_TIS_ACCESS_REQUEST_USE);
+
+I would try to recycle as much of the normal and/or I2C test case here. 
+They all should be easy to transfer.
+
 > +
 > +    g_test_message("TPM status register tests");
 > +    /* test tpm status register */
@@ -704,6 +835,13 @@ Please use the PRIx macros.
 > +                      "-tpmdev emulator,id=tpm0,chardev=chrtpm "
 > +                      "-device tpm-tis-spi,tpmdev=tpm0,bus=pnv-spi-bus.4",
 > +                      test.addr->u.q_unix.path);
+
+all other test cases use :
+
+args = g_strdup_printf(..)
+...
+g_free(args);
+
 > +    qtest_start(args);
 > +    qtest_add_data_func(tname, &pnv_chips[3], test_spi_tpm);
 > +    ret = g_test_run();
@@ -778,5 +916,4 @@ Please use the PRIx macros.
 >     'virtio-net-failover': files('migration-helpers.c'),
 >     'vmgenid-test': files('boot-sector.c', 'acpi-utils.c'),
 >     'netdev-socket': files('netdev-socket.c', '../unit/socket-helpers.c'),
-
 
