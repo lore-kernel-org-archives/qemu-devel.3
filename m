@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39696EED617
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 16:13:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF978EED618
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 16:13:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1somQa-0000zs-VY; Thu, 12 Sep 2024 12:12:16 -0400
+	id 1somQh-0001VC-15; Thu, 12 Sep 2024 12:12:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1somQZ-0000ou-1s
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 12:12:15 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1somQc-00018n-5z
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 12:12:18 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1somQV-0007TC-IF
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 12:12:14 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2d88690837eso964923a91.2
- for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 09:12:11 -0700 (PDT)
+ id 1somQa-0007Vm-E1
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 12:12:17 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-7db19de6346so839486a12.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 09:12:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726157530; x=1726762330; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726157535; x=1726762335; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BppHFYoQrx4qC3DO9Sb1ugevP84fPlKPBSZdTDngGiU=;
- b=NYxM+ZNe1LWd1ZWDPQSCuNtUtcVipevVUwUpDd9l/HofKvRGu3pPziBJbVD1tcp+9k
- 1s4D7IHxiMLkMPXBja1NHxM0y63ftWx5XPjNBxkoUJAOzRxYgoRSpbXOLp/1GQtc97bN
- Sw9WL9PLmbg/mAln3+yWzD+JZTqM/NbTF2jWylTCR+mTtwWSvk6E/P4fVl2C4XPxY/TU
- kyHXatDgGpt5UcgYlT8uDXyYdX9KkEXNP3wjBOYpCNe3sjNta4K+ci1Z6hHtaCZ7AsMn
- k8uaIa2L6RKfl/Az8UisJCliF5T00rxpHrVAg+7kMkhMWhElKN5HhqKZ27+zLdO9sHWe
- d/Lg==
+ bh=HWN+Oy9HOzHEP1zqC69VZ8fDvc5xR6kboU5Mz4xPMnU=;
+ b=qliJfrYWjg9UCQEjJ/2fj5MgAM67NRso0rLrm660LjwhmRDC2ygYSZLO0MdAOhZLkm
+ tBE6SMfcNoOXrtbdVGHJA3NMRmL59t0dmB/IJ6+/0vxlYD+UBA/xVSRCArPRzLRNCRMx
+ kCYUMvfJq6o70EMpqu+g5dmGkcJRdACfz+McdEB/U7YkREMM9hRpOuX1L2l8KczvBO7P
+ KKBvrIEc2actiK7SFCxYDJq4nLEu/KO6oU30Lcutp2C1wBbOFt0tv+9NRmQ5IrCL5q0E
+ CdcMex/H3y0XJ3hY9OXonjj4N0KdG9pz32SLwT7CWnKdPYbWuz9yaf4DKAVpmHvSFPH+
+ G91g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726157530; x=1726762330;
+ d=1e100.net; s=20230601; t=1726157535; x=1726762335;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BppHFYoQrx4qC3DO9Sb1ugevP84fPlKPBSZdTDngGiU=;
- b=pwDCjbEEMZh5k53/9UFXsD/rlUoyZekubq5TZ/HUCSAFbv01Su85Xl+xtPT7Agr1ry
- Cnl21LYPR0E1aYQoWm9lHIIqt5ygnzb3qxAhsxceDpwviF/NVpJ9488BRWGTOBnKuDPw
- debrmXb5qLHedrUZyMLB8R5npwE/EgHKXW2+zGKBNuxphMUJJSxAv/kZfoeuoDR1m7Uq
- r0n/GZUU/CGwAVptkRtjNmQyDW74o+3AOImcjexCLpH/MbLgYn72zqXzvOQUUxlIKm+s
- Q+mR4em4A5UUMl70vjkcF614zQCoVdm/9VoSfi9u8ShxBSLX4rMr/8KHgzenhNCHblSk
- ZP3g==
-X-Gm-Message-State: AOJu0YzugMnRIZ9BW4RUy+SvnEb+jt61+HuiqSmlfAMbjcnMdrKHrGNE
- 8GUYzvACH1uOm7Aqw1i3Enazvl6mZf8akgQLiDwYoF6YEjovZ04mCiZ/LLSeWtxDuVPONa0APoC
- dTTjGFiW5
-X-Google-Smtp-Source: AGHT+IFXZnFHApOhxp7HbQT8QxnSQy+ag97AShW2GHgmcSAhB2K9e6P9OwzQbkNk0mR6Kpm6KHVR+g==
-X-Received: by 2002:a17:90b:4b48:b0:2d1:bf4b:4a6d with SMTP id
- 98e67ed59e1d1-2db9ffa1590mr3873451a91.1.1726157529892; 
- Thu, 12 Sep 2024 09:12:09 -0700 (PDT)
+ bh=HWN+Oy9HOzHEP1zqC69VZ8fDvc5xR6kboU5Mz4xPMnU=;
+ b=nj4q+Xv6zDjzdJLh5+JAIBmkf6FAzgsI0F/Bwpw4xn2eCkqbR31welaR4jQIpgDiYV
+ hFNCtCrvGwqsPEOXzEhoWmzDpsIn00dFv2FFkPyQDznLq8BLdfHSjOghSP+woAsdJVF3
+ sSGdLSihH8GuanVm+rEFbMpcOft+jyi/1410okdHEFdLHeiYQ355xP8NSTFUtY/GtTDC
+ 8ErUjzS632q3jEIgUnCoTc81pHtobKrbGs8HiRW4TznQUOajgwnZ6Woj2J3SuZPuM+3J
+ Z11TtZPuGNOjP+xiu6s4Hc0HY7gbpXqTPBw2UuQp9+QTxSs6kcjHZrmk2wMQRT+OtAEV
+ j+cA==
+X-Gm-Message-State: AOJu0YypN1wOIcKzU8ASw7zzCbc5h25M/TcTfSpM9Bt6f6mvep5JKA5q
+ zdjvlsPqTyXplrJ2IMtofD436QFSSNIFRrjWgSLuSFuXGekiCY4GKlbsqWJBANL4z3NyiubCNXN
+ P+bqvXP4T
+X-Google-Smtp-Source: AGHT+IEudqjJEaJGfdkYpDawDooI9CPu9lOGv3V8EFCc9McG20NJHsadE1XKePiqdhT+Fnpsv3OOxg==
+X-Received: by 2002:a17:90b:4c41:b0:2c9:3370:56e3 with SMTP id
+ 98e67ed59e1d1-2dba008304amr3540812a91.34.1726157534900; 
+ Thu, 12 Sep 2024 09:12:14 -0700 (PDT)
 Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::9633])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2db0419aab4sm10868139a91.15.2024.09.12.09.12.07
+ 98e67ed59e1d1-2db0419aab4sm10868139a91.15.2024.09.12.09.12.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Sep 2024 09:12:09 -0700 (PDT)
+ Thu, 12 Sep 2024 09:12:14 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -104,23 +104,24 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Corey Minyard <minyard@acm.org>,
  Alistair Francis <alistair.francis@wdc.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 46/48] qom: remove return after g_assert_not_reached()
-Date: Thu, 12 Sep 2024 09:11:48 -0700
-Message-Id: <20240912161150.483515-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 48/48] scripts/checkpatch.pl: emit error when using
+ assert(false)
+Date: Thu, 12 Sep 2024 09:11:50 -0700
+Message-Id: <20240912161150.483515-5-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240912161150.483515-1-pierrick.bouvier@linaro.org>
 References: <20240912161150.483515-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,23 +141,26 @@ This patch is part of a series that moves towards a consistent use of
 g_assert_not_reached() rather than an ad hoc mix of different
 assertion mechanisms.
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- qom/object.c | 1 -
- 1 file changed, 1 deletion(-)
+ scripts/checkpatch.pl | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/qom/object.c b/qom/object.c
-index 157a45c5f8b..28c5b66eab5 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -2079,7 +2079,6 @@ const char *object_get_canonical_path_component(const Object *obj)
- 
-     /* obj had a parent but was not a child, should never happen */
-     g_assert_not_reached();
--    return NULL;
- }
- 
- char *object_get_canonical_path(const Object *obj)
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 65b6f46f905..fa9c12230eb 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -3102,6 +3102,9 @@ sub process {
+ 		if ($line =~ /\b(g_)?assert\(0\)/) {
+ 			ERROR("use g_assert_not_reached() instead of assert(0)\n" . $herecurr);
+ 		}
++		if ($line =~ /\b(g_)?assert\(false\)/) {
++			ERROR("use g_assert_not_reached() instead of assert(false)\n" . $herecurr);
++		}
+ 		if ($line =~ /\bstrerrorname_np\(/) {
+ 			ERROR("use strerror() instead of strerrorname_np()\n" . $herecurr);
+ 		}
 -- 
 2.39.2
 
