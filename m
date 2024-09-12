@@ -4,82 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0858EE6452
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 06:51:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAF8AEE6452
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 06:52:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sodet-0007Tf-PZ; Thu, 12 Sep 2024 02:50:27 -0400
+	id 1sodgn-0003Aq-0J; Thu, 12 Sep 2024 02:52:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1soden-0007T4-VI
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 02:50:23 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sodem-0003FR-C2
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 02:50:21 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-374d29ad870so438073f8f.3
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 23:50:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726123818; x=1726728618; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nVSUj3R95K8t6PeOD2M0KRTlKOyHX3H5OXK2LQdA+2k=;
- b=D/qHrCJ0mDz/vI0lNkr0UBNEYcFKioijhAqelhIwRnndePfX4hYA8UjRTKlD7aXdNg
- +7IaAG+ihXorvtUByNiBvOuYa3IlF6xYuk55DxeG1uWeiQNpbTe0GE6XbV1rnqeSGOXu
- wX/y16tjxx1f+gxF7bf844d/Pt5cuo/Tp3zSXVCGpPNB1FzwvwUTfdXGYDQlnlZMaio1
- KC9j9H99uLc1hLHdEM3aw0T7AN1t04oFS/LDBR2+AzcPoh8ux4mKEr2xZ/ZjzjDy3FDO
- nS2+VVnsyZC/UfBnNjAo+4sA8NVzVI+CBWscgsyMkIoBmF4lCxnCkGOhfwk4iJ6HFtnN
- M/aQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726123818; x=1726728618;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nVSUj3R95K8t6PeOD2M0KRTlKOyHX3H5OXK2LQdA+2k=;
- b=V03OZLdaNUUWG9gRvV9GmxiJpKYukyFqKSSn1JGb83qwWXLAoYOSrh5qJ2vH1jT0Rg
- g+CUnI68+WZsDtP50S+4Fi2uO/HPIntznnV2k4xOt7SPWP/1sJ/C55C1hOqK6Sl9zReI
- 2FJsOSXuo6d6pIcHyA3BW/6RjPFEIAm9cuZq1DdFXCOdF4/Iv3LCehdQkRwVaD3OeyXq
- 3NNm+ZTq6W0zGB+NZoh1WhPaqL9Lutuc6YMNrsIEzYpA1EkJWmwNS469Bpgv8aursWpX
- T+wQnjfOdFWFNTEJhruJ8o6SZYb6gU5cKXz3VjINRncAPiHOucjbjGbRHDV9ETzJBLZz
- Q2FQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWjAxgpH017N3O9y4RI1PgvrZJOGSpdJhZghclr+tRMDZx4gNtD1utAeiJc2NsYGGeJY5E8OSl5CN3Y@nongnu.org
-X-Gm-Message-State: AOJu0YxuxhrXRQgATdZpXqYh4ow620aVf6uoOz5GNgbq8H475hfVoGl+
- SU538iRDcGgr6fPXuSGlM5OTUWJklqdzQeGa5HKLXbHHLEXlqZRGkgum84e5ZF8=
-X-Google-Smtp-Source: AGHT+IFFxtwPMaA6TMJqr507XktFFGFxeY1fg+nM8ne9pb01DF+yXPmGXAeedMMy/uvDow5M8godTg==
-X-Received: by 2002:a5d:564b:0:b0:375:f59f:221 with SMTP id
- ffacd0b85a97d-378c2cf3c6fmr789944f8f.14.1726123817790; 
- Wed, 11 Sep 2024 23:50:17 -0700 (PDT)
-Received: from [192.168.69.100] (mic92-h03-176-184-33-210.dsl.sta.abo.bbox.fr.
- [176.184.33.210]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37895665632sm13346351f8f.37.2024.09.11.23.50.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Sep 2024 23:50:17 -0700 (PDT)
-Message-ID: <627641ae-f3f8-46ce-b7a9-64aa6179694e@linaro.org>
-Date: Thu, 12 Sep 2024 08:50:15 +0200
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sodgk-00039m-GS; Thu, 12 Sep 2024 02:52:22 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sodgi-0003K2-Ea; Thu, 12 Sep 2024 02:52:22 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48C4YLbK013986;
+ Thu, 12 Sep 2024 06:52:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=pp1; bh=YGtV8ueEtC9ssWq9VH/Yd2qSia
+ PyYqo1EXcB7B24l+8=; b=oM956HJ0Pj6YPvsPSMPbX5Zb1OHE4tB3+/RywKMhOy
+ GEE7/itMMmSBxFYKmcW7tZOHoBDp2RPAwDBzRk/EgamqaPKQxvOoyLxruX2Q+5tv
+ S6sW6aMEKGELEVQGhjCWwR+vAXFPW9p7s8F7GNtIlXOmZC5yitpIo4L6RZu6FZUl
+ B+3wzb1y+YqmyMhLbFBPjjRg7ny9NPPWjU7tsxJZ3HXZv/KyqkGW1Kw0bw90AAvG
+ mC+DFbd/lTJMltDOWN+JN3Xa42Sbp/lo7Qqc1rB9MLmdMTRkixE3R1fHSVD7FvRE
+ DKZl46tgy0yF9FfyxQzQAQcG7bWH478LC9PjWCLAO0EA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gc8qj3rn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Sep 2024 06:52:17 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48C6qH0f016621;
+ Thu, 12 Sep 2024 06:52:17 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gc8qj3rm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Sep 2024 06:52:17 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48C3UIar027308;
+ Thu, 12 Sep 2024 06:52:16 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 41h3v3dvqv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Sep 2024 06:52:16 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48C6qC9p49807620
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 12 Sep 2024 06:52:12 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C5F992004B;
+ Thu, 12 Sep 2024 06:52:12 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 24F8E20040;
+ Thu, 12 Sep 2024 06:52:11 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.in.ibm.com (unknown
+ [9.109.199.38]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 12 Sep 2024 06:52:10 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [RFC PATCH] ppc/spapr: Change printf format to %HWADDR_PRId for
+ MIN_RMA_SLOF
+Date: Thu, 12 Sep 2024 12:22:07 +0530
+Message-ID: <20240912065207.508808-1-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.46.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/5] tmp105: Improvements and fixes
-To: Guenter Roeck <linux@roeck-us.net>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-References: <20240906154911.86803-1-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240906154911.86803-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: seTXPsSa13aeGRrUsA-zoR4eEIM39HSB
+X-Proofpoint-ORIG-GUID: QAerPMoKDfdEikukXvoZy90BmxueD1vF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-11_02,2024-09-09_02,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0
+ mlxscore=0 lowpriorityscore=0 impostorscore=0 priorityscore=1501
+ malwarescore=0 adultscore=0 clxscore=1015 mlxlogscore=569 suspectscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409120045
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,22 +112,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/9/24 17:49, Philippe Mathieu-Daudé wrote:
-> Respin of Guenter fixes with:
-> - Use registerfields API
-> - Clear OS bit in WRITE path
-> 
-> Supersedes: <20240906132912.3826089-1-linux@roeck-us.net>
-> 
-> Guenter Roeck (2):
->    hw/sensor/tmp105: Coding style fixes
->    hw/sensor/tmp105: Lower 4 bit of limit registers are always 0
-> 
-> Philippe Mathieu-Daudé (3):
->    hw/sensor/tmp105: Use registerfields API
->    hw/sensor/tmp105: Pass 'oneshot' argument to tmp105_alarm_update()
->    hw/sensor/tmp105: OS (one-shot) bit in config register always returns
->      0
+Currently starting a pSeries machine, with lesser than 128MiB shows
+below error:
 
-Series queued, thanks!
+    qemu-system-ppc64: pSeries SLOF firmware requires >= 80ldMiB guest RMA (Real Mode Area memory)
+
+Above '80ldMib' is in hex, and it means 0x80 MiB = 128 MiB.
+
+Change format specifier for this value to use 'HWADDR_PRId', instead of
+'HWADDR_PRIx' thus showing decimal value instead of hex.
+
+Thus, change the message to below error:
+
+    qemu-system-ppc64: pSeries SLOF firmware requires >= 128MiB guest RMA (Real Mode Area memory)
+
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+
+---
+This is an RFC, as it confused me why does QEMU print that error even with '-m' >80 MB.
+
+This patch can also be considered a personal preference to see it as a decimal value instead of hex.
+
+Or maybe we can have '0x80 MiB' instead ?
+
+Does the 'ldMiB' actually mean that the value is in hexadecimal ? I did not find a reason in git history.
+---
+---
+ hw/ppc/spapr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 8aa3ce7449be..b2ddacc6dd01 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -2819,8 +2819,8 @@ static hwaddr spapr_rma_size(SpaprMachineState *spapr, Error **errp)
+ 
+     if (rma_size < MIN_RMA_SLOF) {
+         error_setg(errp,
+-                   "pSeries SLOF firmware requires >= %" HWADDR_PRIx
+-                   "ldMiB guest RMA (Real Mode Area memory)",
++                   "pSeries SLOF firmware requires >= %" HWADDR_PRId
++                   "MiB guest RMA (Real Mode Area memory)",
+                    MIN_RMA_SLOF / MiB);
+         return 0;
+     }
+-- 
+2.46.0
+
 
