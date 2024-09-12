@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75F62EE645B
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 07:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEA6DEE645B
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 07:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soeUq-0002cG-1c; Thu, 12 Sep 2024 03:44:08 -0400
+	id 1soeXR-0001sc-6q; Thu, 12 Sep 2024 03:46:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1soeRs-0007WG-20
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:41:04 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ id 1soeSB-0001H1-Cx
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:41:23 -0400
+Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1soeRo-0000xG-Bq
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:41:03 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-710d5d9aac1so264763a34.3
- for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 00:40:59 -0700 (PDT)
+ id 1soeS9-000178-Nf
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:41:23 -0400
+Received: by mail-oi1-x22e.google.com with SMTP id
+ 5614622812f47-3e0438e81aaso388875b6e.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 00:41:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726126859; x=1726731659; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726126880; x=1726731680; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UU43OuMIYQY5gzBd9N0OsX2nGrNJ5ON22GSd3bl0bUA=;
- b=UoJ7fUdiBgVgXNmI4zA4bj+aBo5hVNJuu1Q+RL7QhilGvRAp9h4GtWbeqGA4laeCod
- 485hphwQsb8jWqTB36TVx5YTsqA+yNpHsytvbG62tUjEHkA3phC3mPR/S4GgZ5/jVlbl
- D61QcSt/yOl5qo/YUTj5FpgR8yk+8ypnKjZQcWKHfPeiCDwKSf7vtdjroCBQEmR4o+Y+
- tN9lpiyDtLh94fPlrCVhPxz06EzKI2URyAWK4iXuhoXTLJTXwCUMZ8BM5mD8LbdqfDlM
- zbcDSw8KzzKEG9Sgfan2hyxS7UfD6V8lkRdzhkA0P1m+sNw3fAOxaukCmPiUlafnmGMb
- LOXQ==
+ bh=ufez9dB+YBOc+7iflBPh4kX/ooB3/U9U7kq4P7lOFRo=;
+ b=W9T+xQefqZW2iJPzY7Yi866VhWXeH2R0CKurj7+FYdhREkUF3VMXpGcsmghFuhFa1l
+ T3mexpIEiR5+hf1ns3KLYT+w9RgO/DgzBvbOqgkK5uSXhi0//MovGtwwUQCWftxxzloo
+ 2vpIQ34H+5I96p70j4JDj/aMlqwAvMkUAAXgvLkcW2WXB5RIPzshMVvSOM+9tNscETQQ
+ +8PF3dyavH23HL0ueSbOYwR8J9jWxaiQ1htxSnzGYqM7bzzkJ8CfVH9TfnaLarG+QEvJ
+ mJoxayoMRipyqhf/f0dWa229+rXOPYgfhg3J9DOI5UxmO2tWGUNkqcyxCV6MxZfsxDZk
+ m4ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726126859; x=1726731659;
+ d=1e100.net; s=20230601; t=1726126880; x=1726731680;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UU43OuMIYQY5gzBd9N0OsX2nGrNJ5ON22GSd3bl0bUA=;
- b=D/ecol+r6sPaacCMGYxD21hpKryyOTy//x1+br+ZPdSMNAagSCcwLQbV3+bJiO0Guz
- u/mWu+5dLYoW9igSFW/9R2R9ldEkpO0xylbao6IGhGudRbSmSi3yJfFyKPmddneLIlig
- fSvLfZqoS8cqIeGe2ocmdytRZqZRGFZpxA8GcREkqqE4W8kfc5I83emtCtTmeIwBxvkd
- YGVFjgYuIvOE8Px3sKyiNLSxl3IYAuDHXzmBUm3VMwFGffKPvsbikOslyx+wh1BsbHSS
- 5mQPrtNzd/dU3MtPBdYqDfkfB+sTyx1dqlN0UUcb6psKHupaDsycm5oY4lgmOLfeVjvW
- dQUA==
-X-Gm-Message-State: AOJu0YwsZwt7iaM97jjEt0gYJR3GDBft6idQtX2kJkiDmhixxQUB9Zfu
- XzCHr+YzejIaN38BCN9n0sddDluxQTWRPXMvZBzX87KkZhlaabAYYwyGXoTJbNI8mcyQdEnrcW2
- TRZojUQZg
-X-Google-Smtp-Source: AGHT+IF2wNn0ur0oT/D0x/ryrXGcpmcSlu4jLOalBhzoC7Sb43ZM6r5tgiThqhwY6bCeeW8Z+2hNyg==
-X-Received: by 2002:a05:6830:3107:b0:70f:36ff:ed09 with SMTP id
- 46e09a7af769-71109571674mr1236876a34.28.1726126858602; 
- Thu, 12 Sep 2024 00:40:58 -0700 (PDT)
+ bh=ufez9dB+YBOc+7iflBPh4kX/ooB3/U9U7kq4P7lOFRo=;
+ b=Qyq443qRStL97DbZ5IQqXryumiqXqYDJuhxq7Hc7gNPm0i0qJ9DhLd3S3mBoYnChzW
+ OAD/fzqRvY726u2dFsd41wlfrQcK5hKFNyqGxjXsTekmNw+2hTQefg7rZm+wKC0opkmr
+ i4F6Spm1Qev16RpVUVmBR0O3bYSQoA60knqMxBPHi2RcOUS8MofP3FKOesjFTnCSKSqp
+ sbA5d+C1D9Ujs1rC8Mb/OCsTIJIAbtqjC/ZAnWwxcB8w2r5USgP2r/JvRnjv2Wghvh0d
+ eAJSN8XFqkyC6N+wBmSHvQiQn9Rgq94SmKe9125ozGjL28ySDTo51GeuJpagJTa/VIZR
+ LnMA==
+X-Gm-Message-State: AOJu0YxgfQ9B0xIH0JWF3NEhnkkA8zvA7gEzlaLPcblBJmv1L6AaQEoZ
+ ZSz6V6ddOcCZwIjqYcE+RVQshAio4JRcCq1GYKcEgu9VklMaa6eU0kyPGw4Ms2d3DBcUODZDemb
+ +KOBsREWN
+X-Google-Smtp-Source: AGHT+IEahP6jvi2FuHplutVqQN81TXossfZA34JXn70LhsQgJakrG7hFdv/bnJa3CeA2ta6y/uKqJg==
+X-Received: by 2002:a05:6808:159f:b0:3e0:4faf:242 with SMTP id
+ 5614622812f47-3e071a9a5fdmr1180584b6e.19.1726126880116; 
+ Thu, 12 Sep 2024 00:41:20 -0700 (PDT)
 Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::9633])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7db1fb9ad87sm983458a12.6.2024.09.12.00.40.56
+ 41be03b00d2f7-7db1fb9ad87sm983458a12.6.2024.09.12.00.41.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Sep 2024 00:40:58 -0700 (PDT)
+ Thu, 12 Sep 2024 00:41:19 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>,
@@ -105,17 +105,16 @@ Cc: Jason Wang <jasowang@redhat.com>,
  David Gibson <david@gibson.dropbear.id.au>, Fam Zheng <fam@euphon.net>,
  Weiwei Li <liwei1518@gmail.com>, Markus Armbruster <armbru@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 35/48] tests/qtest: remove break after
- g_assert_not_reached()
-Date: Thu, 12 Sep 2024 00:39:08 -0700
-Message-Id: <20240912073921.453203-36-pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 43/48] hw/ppc: remove return after g_assert_not_reached()
+Date: Thu, 12 Sep 2024 00:39:16 -0700
+Message-Id: <20240912073921.453203-44-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240912073921.453203-1-pierrick.bouvier@linaro.org>
 References: <20240912073921.453203-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-ot1-x331.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-oi1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -142,24 +141,36 @@ This patch is part of a series that moves towards a consistent use of
 g_assert_not_reached() rather than an ad hoc mix of different
 assertion mechanisms.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- tests/qtest/migration-helpers.c | 1 -
- 1 file changed, 1 deletion(-)
+ hw/ppc/ppc.c          | 1 -
+ hw/ppc/spapr_events.c | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
-index a43d180c807..00259338833 100644
---- a/tests/qtest/migration-helpers.c
-+++ b/tests/qtest/migration-helpers.c
-@@ -76,7 +76,6 @@ static QDict *SocketAddress_to_qdict(SocketAddress *addr)
+diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+index e6fa5580c01..fde46194122 100644
+--- a/hw/ppc/ppc.c
++++ b/hw/ppc/ppc.c
+@@ -267,7 +267,6 @@ static void power9_set_irq(void *opaque, int pin, int level)
          break;
      default:
          g_assert_not_reached();
--        break;
+-        return;
+     }
+ }
+ 
+diff --git a/hw/ppc/spapr_events.c b/hw/ppc/spapr_events.c
+index 38ac1cb7866..4dbf8e2e2ef 100644
+--- a/hw/ppc/spapr_events.c
++++ b/hw/ppc/spapr_events.c
+@@ -646,7 +646,6 @@ static void spapr_hotplug_req_event(uint8_t hp_id, uint8_t hp_action,
+          * that don't support them
+          */
+         g_assert_not_reached();
+-        return;
      }
  
-     return dict;
+     if (hp_id == RTAS_LOG_V6_HP_ID_DRC_COUNT) {
 -- 
 2.39.2
 
