@@ -4,53 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6989EE644D
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 06:28:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A12EE644D
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 06:38:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sodJB-00058i-Qh; Thu, 12 Sep 2024 02:28:01 -0400
+	id 1sodSO-0004Gy-Ug; Thu, 12 Sep 2024 02:37:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=071a=QK=kaod.org=clg@ozlabs.org>)
- id 1sodJA-00053L-CW; Thu, 12 Sep 2024 02:28:00 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=071a=QK=kaod.org=clg@ozlabs.org>)
- id 1sodJ8-0000Gg-1N; Thu, 12 Sep 2024 02:28:00 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4X46tx1QP9z4x0K;
- Thu, 12 Sep 2024 16:27:53 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4X46tt5xtHz4wx5;
- Thu, 12 Sep 2024 16:27:50 +1000 (AEST)
-Message-ID: <97ef9605-0acf-4296-aa7e-0d83a054e738@kaod.org>
-Date: Thu, 12 Sep 2024 08:27:48 +0200
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1sodRr-0004Ea-KJ
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 02:37:29 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1sodRq-0001SV-0t
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 02:36:59 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5c241feb80dso3280730a12.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 23:36:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1726123016; x=1726727816; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=o5PpMTVZmsH4A0nmqAUW4SaOdSqOpVsbmAvPUPKayQI=;
+ b=SdZYEnpnmszCCAGG9yIs17/j4O4u3sZzwanXudFcdoBCI7cUyQodDv7oNEn73L8evW
+ X+Rck6XQNLAO2lM9aNo96nZKT43NwD3xCMOuEhApMO6DkDIaV7JrNHB01r9wMeabcbtJ
+ Y9hpCO1QwR3LDO934V2rp0zpcOW6NoObtA+jG/RJJ0OEax5eankZZT63gnvhDbSk5X9G
+ mOJKTKYxk6dr7qkR9uxMx04oCh/UrsWEiTHeTQFdB121H8Xwtbu7JqQ1fUs1Ec9nHm8I
+ nVp6fgfPwUkvPpmOu2tcrkJ0VsZqOWFm9Jt6WqG0BZbHBY2e4HhmtetKyouNPmgBc1SD
+ rNFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726123016; x=1726727816;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=o5PpMTVZmsH4A0nmqAUW4SaOdSqOpVsbmAvPUPKayQI=;
+ b=YFkDhEgwzz7bIrwzbE3PU9QJUZpRIDYyyvecK8Zn0xEAFNpyXTTHWtTZtwpm7ncK3e
+ 4e1crpatCx8dqqly+NxiYqSl9G2/z7K+6P5WoezXlzvE+F95EefUEk7zgGArMdyBleB3
+ wET0zJw+5oG8OjXvhDh7WND3pGXdW0uRY9xl/vWpo38GjH2r/Cm5DnT2RA490JxUfwHQ
+ YyZC2DGzLPDTXwphXrTkHv6uwwte4KVr/D+bVCigxypvbLMXDdREFw7BKzUQzp5zi1nT
+ PAbRRMc2Po0vtzn0QeQpyEips1YVOMJifrN8bnNq6zml4kHO4JVBb3n2J3KgPLFW7SrO
+ cI/A==
+X-Gm-Message-State: AOJu0YwfAB6RBKD/ZVC5dKun3PHNNgb4dWihkaV2KzrC60IyHJUuYdSu
+ FET+njAUq70l1WXd7FQmZGESMw2RJWhSlOfDdVJuSEuZ+yUB6yBMVayYtuSHJ330yUJrolb5BYx
+ g9vyhnB79wPA2gY5/zWft7BfBJb+8WvmsroIZZqdf7Bax2JgEFIQ=
+X-Google-Smtp-Source: AGHT+IFkW88/qo8o3RlCJI31hcV02l0IVMw8/XAYSXBJzejmBKtghUT4uhibqQcv/3Mr0XOUNTIpYgXD6btlIcic1q8=
+X-Received: by 2002:a05:6402:51d3:b0:5c2:1014:295a with SMTP id
+ 4fb4d7f45d1cf-5c4015cc7b8mr10368432a12.2.1726123015061; Wed, 11 Sep 2024
+ 23:36:55 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/14] ppc/xive2: Change context/ring specific
- functions to be generic
-To: Michael Kowal <kowal@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
- milesg@linux.ibm.com
-References: <20240909211038.27440-1-kowal@linux.ibm.com>
- <20240909211038.27440-10-kowal@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240909211038.27440-10-kowal@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=071a=QK=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240912051734.5298-1-jim.shu@sifive.com>
+ <5fca8390-33c8-4139-8238-caef3e3f1dbe@redhat.com>
+In-Reply-To: <5fca8390-33c8-4139-8238-caef3e3f1dbe@redhat.com>
+From: Jim Shu <jim.shu@sifive.com>
+Date: Thu, 12 Sep 2024 14:36:42 +0800
+Message-ID: <CALw707pkot65Zh_kpmKjZoQcm5f=VLLAFZwGbgR3D1qoDmiUGg@mail.gmail.com>
+Subject: Re: [PATCH] vfio/pci: Fix null pointer deference from error API
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=jim.shu@sifive.com; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,219 +90,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/9/24 23:10, Michael Kowal wrote:
-> Some the functions that have been created are specific to a ring or context. Some
-> of these same functions are being changed to operate on any ring/context. This  will
-> simplify the next patch sets that are adding additional ring/context operations.
->
-> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
-> ---
->   include/hw/ppc/xive.h |  2 +-
->   hw/intc/xive.c        |  6 ++--
->   hw/intc/xive2.c       | 77 ++++++++++++++++++++++++++++---------------
->   3 files changed, 55 insertions(+), 30 deletions(-)
-> 
-> diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
-> index 28c181faa2..31242f0406 100644
-> --- a/include/hw/ppc/xive.h
-> +++ b/include/hw/ppc/xive.h
-> @@ -533,7 +533,7 @@ Object *xive_tctx_create(Object *cpu, XivePresenter *xptr, Error **errp);
->   void xive_tctx_reset(XiveTCTX *tctx);
->   void xive_tctx_destroy(XiveTCTX *tctx);
->   void xive_tctx_ipb_update(XiveTCTX *tctx, uint8_t ring, uint8_t ipb);
-> -void xive_tctx_reset_os_signal(XiveTCTX *tctx);
-> +void xive_tctx_reset_signal(XiveTCTX *tctx, uint8_t ring);
->   
->   /*
->    * KVM XIVE device helpers
-> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-> index 5b66a3aec5..f1d007d9a6 100644
-> --- a/hw/intc/xive.c
-> +++ b/hw/intc/xive.c
-> @@ -114,7 +114,7 @@ static void xive_tctx_notify(XiveTCTX *tctx, uint8_t ring)
->       }
->   }
->   
-> -void xive_tctx_reset_os_signal(XiveTCTX *tctx)
-> +void xive_tctx_reset_signal(XiveTCTX *tctx, uint8_t ring)
->   {
->       /*
->        * Lower the External interrupt. Used when pulling an OS
-> @@ -122,7 +122,7 @@ void xive_tctx_reset_os_signal(XiveTCTX *tctx)
->        * context. It should be raised again when re-pushing the OS
->        * context.
->        */
-> -    qemu_irq_lower(xive_tctx_output(tctx, TM_QW1_OS));
-> +    qemu_irq_lower(xive_tctx_output(tctx, ring));
->   }
->   
->   static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
-> @@ -424,7 +424,7 @@ static uint64_t xive_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
->       qw1w2_new = xive_set_field32(TM_QW1W2_VO, qw1w2, 0);
->       xive_tctx_set_os_cam(tctx, qw1w2_new);
->   
-> -    xive_tctx_reset_os_signal(tctx);
-> +    xive_tctx_reset_signal(tctx, TM_QW1_OS);
->       return qw1w2;
->   }
->   
-> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-> index 8d3d69a0db..38a4b0ff68 100644
-> --- a/hw/intc/xive2.c
-> +++ b/hw/intc/xive2.c
-> @@ -270,13 +270,14 @@ static void xive2_end_enqueue(Xive2End *end, uint32_t data)
->    *     the NVP by changing the H bit while the context is enabled
->    */
->   
-> -static void xive2_tctx_save_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
-> -                                   uint8_t nvp_blk, uint32_t nvp_idx)
-> +static void xive2_tctx_save_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
-> +                                uint8_t nvp_blk, uint32_t nvp_idx,
-> +                                uint8_t ring)
->   {
->       CPUPPCState *env = &POWERPC_CPU(tctx->cs)->env;
->       uint32_t pir = env->spr_cb[SPR_PIR].default_value;
->       Xive2Nvp nvp;
-> -    uint8_t *regs = &tctx->regs[TM_QW1_OS];
-> +    uint8_t *regs = &tctx->regs[ring];
->   
->       if (xive2_router_get_nvp(xrtr, nvp_blk, nvp_idx, &nvp)) {
->           qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVP %x/%x\n",
-> @@ -321,13 +322,13 @@ static void xive2_tctx_save_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
->       xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, &nvp, 1);
->   }
->   
-> -static void xive2_os_cam_decode(uint32_t cam, uint8_t *nvp_blk,
-> -                                uint32_t *nvp_idx, bool *vo, bool *ho)
-> +static void xive2_cam_decode(uint32_t cam, uint8_t *nvp_blk,
-> +                             uint32_t *nvp_idx, bool *valid, bool *hw)
->   {
->       *nvp_blk = xive2_nvp_blk(cam);
->       *nvp_idx = xive2_nvp_idx(cam);
-> -    *vo = !!(cam & TM2_QW1W2_VO);
-> -    *ho = !!(cam & TM2_QW1W2_HO);
-> +    *valid = !!(cam & TM2_QW1W2_VO);
-> +    *hw = !!(cam & TM2_QW1W2_HO);
->   }
->   
->   
-> @@ -351,37 +352,54 @@ static uint32_t xive2_tctx_hw_cam_line(XivePresenter *xptr, XiveTCTX *tctx)
->       return xive2_nvp_cam_line(blk, 1 << tid_shift | (pir & tid_mask));
->   }
->   
-> -uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
-> -                              hwaddr offset, unsigned size)
-> +static uint64_t xive2_tm_pull_ctx(XivePresenter *xptr, XiveTCTX *tctx,
-> +                                  hwaddr offset, unsigned size, uint8_t ring)
+Hi C=C3=A9dric,
 
-The changes below are not strictly adding a ring parameter. Some belong
-to another patch.
+Thank you very much for the quick response!
 
+I have checked the error API again. It seems to be my porting issue of
+set_iommu_device() callback.
+I think "pci_device_set_iommu_device(..., *errp)" should set 'errp' if
+this function returns false, right?
 
 Thanks,
+Jim
 
-C.
-
-
-
->   {
->       Xive2Router *xrtr = XIVE2_ROUTER(xptr);
-> -    uint32_t qw1w2 = xive_tctx_word2(&tctx->regs[TM_QW1_OS]);
-> -    uint32_t qw1w2_new;
-> -    uint32_t cam = be32_to_cpu(qw1w2);
-> +    uint32_t target_ringw2 = xive_tctx_word2(&tctx->regs[ring]);
-> +    uint32_t cam = be32_to_cpu(target_ringw2);
->       uint8_t nvp_blk;
->       uint32_t nvp_idx;
-> -    bool vo;
-> +    uint8_t cur_ring;
-> +    bool valid;
->       bool do_save;
->   
-> -    xive2_os_cam_decode(cam, &nvp_blk, &nvp_idx, &vo, &do_save);
-> +    xive2_cam_decode(cam, &nvp_blk, &nvp_idx, &valid, &do_save);
->   
-> -    if (!vo) {
-> +    if (!valid) {
->           qemu_log_mask(LOG_GUEST_ERROR, "XIVE: pulling invalid NVP %x/%x !?\n",
->                         nvp_blk, nvp_idx);
->       }
->   
-> -    /* Invalidate CAM line */
-> -    qw1w2_new = xive_set_field32(TM2_QW1W2_VO, qw1w2, 0);
-> -    memcpy(&tctx->regs[TM_QW1_OS + TM_WORD2], &qw1w2_new, 4);
-> +    /* Invalidate CAM line of requested ring and all lower rings */
-> +    for (cur_ring = TM_QW0_USER; cur_ring <= ring;
-> +         cur_ring += XIVE_TM_RING_SIZE) {
-> +        uint32_t ringw2 = xive_tctx_word2(&tctx->regs[cur_ring]);
-> +        uint32_t ringw2_new = xive_set_field32(TM2_QW1W2_VO, ringw2, 0);
-> +        memcpy(&tctx->regs[cur_ring + TM_WORD2], &ringw2_new, 4);
-> +    }
->   
->       if (xive2_router_get_config(xrtr) & XIVE2_VP_SAVE_RESTORE && do_save) {
-> -        xive2_tctx_save_os_ctx(xrtr, tctx, nvp_blk, nvp_idx);
-> +        xive2_tctx_save_ctx(xrtr, tctx, nvp_blk, nvp_idx, ring);
->       }
->   
-> -    xive_tctx_reset_os_signal(tctx);
-> -    return qw1w2;
-> +    /*
-> +     * Lower external interrupt line of requested ring and below except for
-> +     * USER, which doesn't exist.
-> +     */
-> +    for (cur_ring = TM_QW1_OS; cur_ring <= ring;
-> +         cur_ring += XIVE_TM_RING_SIZE) {
-> +        xive_tctx_reset_signal(tctx, cur_ring);
-> +    }
-> +    return target_ringw2;
->   }
->   
-> +uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
-> +                              hwaddr offset, unsigned size)
-> +{
-> +    return xive2_tm_pull_ctx(xptr, tctx, offset, size, TM_QW1_OS);
-> + }
-> +
->   #define REPORT_LINE_GEN1_SIZE       16
->   
->   static void xive2_tm_report_line_gen1(XiveTCTX *tctx, uint8_t *data,
-> @@ -424,8 +442,9 @@ static void xive2_tm_report_line_gen1(XiveTCTX *tctx, uint8_t *data,
->       }
->   }
->   
-> -void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
-> -                             hwaddr offset, uint64_t value, unsigned size)
-> +static void xive2_tm_pull_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
-> +                                 hwaddr offset, uint64_t value,
-> +                                 unsigned size, uint8_t ring)
->   {
->       Xive2Router *xrtr = XIVE2_ROUTER(xptr);
->       uint32_t hw_cam, nvp_idx, xive2_cfg, reserved;
-> @@ -473,8 +492,14 @@ void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
->           assert(result == MEMTX_OK);
->       }
->   
-> -    /* the rest is similar to pull OS context to registers */
-> -    xive2_tm_pull_os_ctx(xptr, tctx, offset, size);
-> +    /* the rest is similar to pull context to registers */
-> +    xive2_tm_pull_ctx(xptr, tctx, offset, size, ring);
-> +}
-> +
-> +void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
-> +                             hwaddr offset, uint64_t value, unsigned size)
-> +{
-> +    xive2_tm_pull_ctx_ol(xptr, tctx, offset, value, size, TM_QW1_OS);
->   }
->   
->   static uint8_t xive2_tctx_restore_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
-> @@ -573,7 +598,7 @@ void xive2_tm_push_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
->       bool vo;
->       bool do_restore;
->   
-> -    xive2_os_cam_decode(cam, &nvp_blk, &nvp_idx, &vo, &do_restore);
-> +    xive2_cam_decode(cam, &nvp_blk, &nvp_idx, &vo, &do_restore);
->   
->       /* First update the thead context */
->       memcpy(&tctx->regs[TM_QW1_OS + TM_WORD2], &qw1w2, 4);
-
+On Thu, Sep 12, 2024 at 2:18=E2=80=AFPM C=C3=A9dric Le Goater <clg@redhat.c=
+om> wrote:
+>
+> Hello Jim,
+>
+> On 9/12/24 07:17, Jim Shu wrote:
+> > pci_dev_realize() use the local error variable, which requires
+> > `error_setg()` API to allocate the error object at first.
+> >
+> > Signed-off-by: Jim Shu <jim.shu@sifive.com>
+> > ---
+> >   hw/vfio/pci.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> > index 0a99e55247..d994ad8bb9 100644
+> > --- a/hw/vfio/pci.c
+> > +++ b/hw/vfio/pci.c
+> > @@ -3117,7 +3117,7 @@ static void vfio_realize(PCIDevice *pdev, Error *=
+*errp)
+> >
+> >       if (!vbasedev->mdev &&
+> >           !pci_device_set_iommu_device(pdev, vbasedev->hiod, errp)) {
+>
+> 'errp' will be set by pci_device_set_iommu_device() in case of
+> failure and, in this case, calling error_prepend() is a valid
+> thing to do. I think we are fine.
+>
+> Thanks,
+>
+> C.
+>
+>
+>
+> > -        error_prepend(errp, "Failed to set iommu_device: ");
+> > +        error_setg(errp, "Failed to set iommu_device: ");
+> >           goto out_teardown;
+> >       }
+> >
+>
 
