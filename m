@@ -4,96 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9BADEEB57D
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 09:42:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5F01EEB582
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 09:56:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sogKg-0004QY-VH; Thu, 12 Sep 2024 05:41:48 -0400
+	id 1sogXi-0001sI-2e; Thu, 12 Sep 2024 05:55:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sogKV-0004LS-PV
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 05:41:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sogXf-0001rj-V5
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 05:55:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sogKT-0005Sl-38
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 05:41:35 -0400
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sogXc-0006lF-K4
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 05:55:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726134090;
+ s=mimecast20190719; t=1726134905;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6Zr8kufktr1o3Cl+fOU8CGDBtI5DWzJq8O/WDBxYKqM=;
- b=flPktSvxx54yz0ww6k3h6WvBrUwGqn7oo0tNoIxKHaIl3ZYiMMG6Mnen+YdIZGo3IS9Fv1
- 3fM8jwB1MEZ3qPFZPRo8TsqkN/zYj9iTkRZ87/hUctKXF5W/dU3cLEh1pH3zorOaEEX1Ac
- j/zYNjEGrskdZVutPUsom6gECrsyvLQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=LaUP1IFw6sSo124hoNn8s+RyeJ17BILV9+y+FlVqXyE=;
+ b=hnqOCcg5/1ZHhUeMOS/1cPwNH/8lI1gzUo2FD++i6OnXss2GVsCEgLRHchFMRO5JF1j+Aa
+ YV8NPIHxoSD8pr8Fp92RAB+O1cNnbT6OelqfKSgV7lrSrsNIENzJ9z4io6+fi1PZBh04mE
+ Fy6nXeyYdglZgMmpj6GpYfVKwqnNNIQ=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-64-dCiwYCqhOVK0MWxC9T8MHA-1; Thu, 12 Sep 2024 05:41:29 -0400
-X-MC-Unique: dCiwYCqhOVK0MWxC9T8MHA-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42caf073db8so5664865e9.3
- for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 02:41:29 -0700 (PDT)
+ us-mta-205-AHrQiejiMiixHHIqJoIsfw-1; Thu, 12 Sep 2024 05:55:04 -0400
+X-MC-Unique: AHrQiejiMiixHHIqJoIsfw-1
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-6886cd07673so21366847b3.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 02:55:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726134088; x=1726738888;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6Zr8kufktr1o3Cl+fOU8CGDBtI5DWzJq8O/WDBxYKqM=;
- b=wotpoKM9F9jf0R1kXz1p2jmGw93L/Oh1mX2xnH+aOP2OAiaN7zYsajimXyyyU7JKM2
- 0LfBMrtEYm8ifzfz049GZ8F2Xp39r4z6RnF23RgdQsgLVsuexbnLnix/DiWeNEJTFwpm
- 5WzTgcgVuDZQAm/+StFQulIL3MkOd21I8cET92AHhmQJfJhOLeW79yv+cR6u/jLYqib8
- O+pJQG8Yt+A2lGgP67qlVErCwOjYq0Qf8f3HCSwtvLONSlxWyHeMlydUA6en79AczSTd
- B2YM1l46OARj4H6nf+ql1+ZXHsnRWCJheVnRj/DtuvZ2zEvAlh9vxSx2XQjBTlJl5yZh
- 6ZJA==
-X-Gm-Message-State: AOJu0Yw8eo6OdL5gJDZvqSpOhRNx9XBj5IQEAD+lHrataDQzquVRRdcW
- tehFgOqdKjXLifSLA0spTL5BldLsk0t2NF5s7HbAqvtre9DaGY5N5SIH8m2y9iD7BJLotPA+420
- XEf3Aga+IKt7zfKQxXB5N0yp87k53faIX/FIEo/yAyCj3DOHlPKui
-X-Received: by 2002:a05:600c:3b88:b0:42c:b750:1a1e with SMTP id
- 5b1f17b1804b1-42cdb45d836mr18860665e9.0.1726134088142; 
- Thu, 12 Sep 2024 02:41:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGaBRYP2j6pv6e1yaCpEYNJIPhXnwQzHOkh+mX4XiIqmmh8hKUIN9NBcgVptBl5lWIQ74t/YA==
-X-Received: by 2002:a05:600c:3b88:b0:42c:b750:1a1e with SMTP id
- 5b1f17b1804b1-42cdb45d836mr18860245e9.0.1726134087563; 
- Thu, 12 Sep 2024 02:41:27 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42caeb81ac0sm169096755e9.34.2024.09.12.02.41.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Sep 2024 02:41:27 -0700 (PDT)
-Message-ID: <600d8239-3066-4792-a414-0c36761b2beb@redhat.com>
-Date: Thu, 12 Sep 2024 11:41:25 +0200
+ d=1e100.net; s=20230601; t=1726134904; x=1726739704;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LaUP1IFw6sSo124hoNn8s+RyeJ17BILV9+y+FlVqXyE=;
+ b=Womyjup5vDrl74HgcpDlk+1h2UjBNpabYApcC8SG8vjP6eoQ0FFH5mjuQCzHpyTytx
+ i50akm4ubBlt0QOiHVstR61l8tU9rfWxJVu7OtkF3229K3UXkoaarQybicynnehkFM9r
+ idJytPCxxHSds+CMyAuuPYLLUXo1uh4ea/rDUOQAG+EaQhI2D82/nhoJQFP7cZTme+L6
+ DnwK+f76Tiqlbi+nA0awFJAZKQWIS0tlR+EQRCwaBMsYu7lRVwu9jKBnRylPAl3tn0Q7
+ 16EqkSYFUFsCSSBF6Z460xyq8Q572bC2gOYkP7Nj/ti3VK8zmRu8ezZdqolhvSN/DTLY
+ dqRg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV9uQJL3xHITpAmBYNd9dC5QeDw7c1oQYHfo3/sUJpqperCy3h0bjqGZS+i+59XC6mXmmKAeFgJTCSB@nongnu.org
+X-Gm-Message-State: AOJu0YzvFI/bCXgJVFLiK9oIi2ChY7kW4SxsVhxyHuZKsCZNdPQ6x544
+ lgXvJayDZgBN5fYlesE601P+87hiy663Slv8knnMb0zvBNXAsLPpQrzi1RHz71qfWiIebYYcf7j
+ faUNmOheCJrBOZzDrQ+RG+lqd5k/0ATnxuYCROvdd5gAyFrchpx6sEVVrqMiHgrXdxIlYbTqmSd
+ L5J92F4VMyCtgMO8myOn0ldeykz3c=
+X-Received: by 2002:a05:690c:2c85:b0:6d9:c367:5486 with SMTP id
+ 00721157ae682-6dbb6bb923bmr18074517b3.42.1726134903655; 
+ Thu, 12 Sep 2024 02:55:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFDkHZjOtaCfmJPuq6Q9ILL7jnJUq3Iuwt0QK9ohNZIsYU9djE6wVQsh04typ0IxOr/bLZlGu3RwjgsJ1AdK+c=
+X-Received: by 2002:a05:690c:2c85:b0:6d9:c367:5486 with SMTP id
+ 00721157ae682-6dbb6bb923bmr18074417b3.42.1726134903316; Thu, 12 Sep 2024
+ 02:55:03 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 08/11] vfio/migration: Implement VFIO migration
- protocol v2
-To: Avihai Horon <avihaih@nvidia.com>, Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Juan Quintela <quintela@redhat.com>,
- "Dr. David Alan Gilbert" <dgilbert@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Yishai Hadas <yishaih@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
- Maor Gottlieb <maorg@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>,
- Tarun Gupta <targupta@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- Fabiano Rosas <farosas@suse.de>, Zhiyi Guo <zhguo@redhat.com>
-References: <ZthZ1aW_JmO3V9dr@x1n>
- <95d10ed3-33ef-48a9-9684-3a8c402c5db9@nvidia.com> <ZtiHzQHJ4PgWc21e@x1n>
- <b8807171-567b-4e21-af83-bc2f6dbbf606@nvidia.com> <ZtnLhW-2eo8hA7bQ@x1n>
- <812e89c4-35d8-4fc0-ac10-ec36d57f215c@nvidia.com> <ZtnbD69EeXhR6FFc@x1n>
- <22f013dc-6c47-4902-9b28-08e916c3cf54@nvidia.com> <Ztn5CcxhzYR-SFfE@x1n>
- <c4eebbbd-00aa-4893-90f8-e6faeb08db90@nvidia.com> <Zt8QKPZiw6BXgh-5@x1n>
- <bc31b6c4-89c8-4e04-b74d-e84422eb9901@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <bc31b6c4-89c8-4e04-b74d-e84422eb9901@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+References: <20240802112138.46831-1-sahilcdq@proton.me>
+ <9355562.CDJkKcVGEf@valdaarhun>
+ <CAJaqyWdFB=UfxV8LNoajP2+CC=8h98Wuow6oaiHcfjU8d69hpg@mail.gmail.com>
+ <1803917.VLH7GnMWUR@valdaarhun>
+In-Reply-To: <1803917.VLH7GnMWUR@valdaarhun>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Thu, 12 Sep 2024 11:54:27 +0200
+Message-ID: <CAJaqyWeCYrMW8zbLh=kHx_qQWAdXyR8oGpDgfopNeBabXrPovA@mail.gmail.com>
+Subject: Re: [RFC v3 3/3] vhost: Allocate memory for packed vring
+To: Sahil <icegambit91@gmail.com>
+Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
+ Sahil Siddiq <sahilcdq@proton.me>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -118,80 +103,262 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/12/24 10:09, Avihai Horon wrote:
-> 
-> On 09/09/2024 18:11, Peter Xu wrote:
->> External email: Use caution opening links or attachments
->>
->>
->> On Mon, Sep 09, 2024 at 03:52:39PM +0300, Avihai Horon wrote:
->>> On 05/09/2024 21:31, Peter Xu wrote:
->>>> External email: Use caution opening links or attachments
->>>>
->>>>
->>>> On Thu, Sep 05, 2024 at 07:45:43PM +0300, Avihai Horon wrote:
->>>>>> Does it also mean then that the currently reported stop-size - precopy-size
->>>>>> will be very close to the constant non-iterable data size?
->>>>> It's not constant, while the VM is running it can change.
->>>> I wonder how heavy is VFIO_DEVICE_FEATURE_MIG_DATA_SIZE ioctl.
->>>>
->>>> I just gave it a quick shot with a busy VM migrating and estimate() is
->>>> invoked only every ~100ms.
->>>>
->>>> VFIO might be different, but I wonder whether we can fetch stop-size in
->>>> estimate() somehow, so it's still a pretty fast estimate() meanwhile we
->>>> avoid the rest of exact() calls (which are destined to be useless without
->>>> VFIO).
->>>>
->>>> IIUC so far the estimate()/exact() was because ram sync is heavy when
->>>> exact().  When idle it's 80+ms now for 32G VM with current master (which
->>>> has a bug and I'm fixing it up [1]..), even if after the fix it's 3ms (I
->>>> think both numbers contain dirty bitmap sync for both vfio and kvm).  So in
->>>> that case maybe we can still try fetching stop-size only for both
->>>> estimate() and exact(), but only sync bitmap in exact().
->>> IIUC, the end goal is to prevent migration thread spinning uselessly in
->>> pre-copy in such scenarios, right?
->>> If eventually we do call get stop-copy-size in estimate(), we will move the
->>> spinning from "exact() -> estimate() -> exact() -> estimate() ..." to
->>> "estimate() -> estimate() -> ...".
->>> If so, what benefit would we get from this? We only move the useless work to
->>> other place.
->> We can avoid exact() calls invoked for other vmstate handlers, e.g. RAM,
->> which can be much heavier and can require BQL during the slow process,
->> which can further block more vcpu operations during migration.
->>
->> And as mentioned previously, VFIO is, AFAIK, the only handler that provide
->> different definitions of estimate() and exact(), which can be confusing,
->> and it's against the "estimate() is the fast-path" logic.
->>
->> But I agree it's not fundamentally changing much..
->>
->>> Shouldn't we directly go for the non precopy-able vs precopy-able report
->>> that you suggested?
->> Yep, I just thought the previous one would be much easier to achieve.
-> 
-> Yes, though I prefer not to add the get stop-copy-size ioctl in the estimate() flow because: a) it's guaranteed to be called (possibly many times) in every migration (either well configured which is the probable case or misconfigured which spins), and b) because how "heavy" get stop-copy-size is may differ from VFIO device to the other.
-> 
-> Maybe I am being a bit overcautious here, but let's explore other options first :)
-> 
->> And
->> as you said, VFIO is still pretty special that the user will need manual
->> involvements anyway to specify e.g. very large downtimes, so this condition
->> shouldn't be a major case to happen.  Said that, if you have a solid idea
->> on this please feel free to go ahead directly with a complete solution.
-> 
-> I think it's possible to do it with what we currently have (VFIO uAPI-wise), I will try to think of one.
-> 
-> BTW, I checked again and I think we should drop this line from vfio_state_pending_exact():
->      *must_precopy += migration->precopy_init_size + migration->precopy_dirty_size;
-> 
-> I can send a patch for that.
+On Wed, Sep 11, 2024 at 9:36=E2=80=AFPM Sahil <icegambit91@gmail.com> wrote=
+:
+>
+> Hi,
+>
+> On Monday, September 9, 2024 6:04:45=E2=80=AFPM GMT+5:30 Eugenio Perez Ma=
+rtin wrote:
+> > On Sun, Sep 8, 2024 at 9:47=E2=80=AFPM Sahil <icegambit91@gmail.com> wr=
+ote:
+> > > On Friday, August 30, 2024 4:18:31=E2=80=AFPM GMT+5:30 Eugenio Perez =
+Martin wrote:
+> > > > On Fri, Aug 30, 2024 at 12:20=E2=80=AFPM Sahil <icegambit91@gmail.c=
+om> wrote:
+> > > > [...]
+> > > > vdpa_sim does not support packed vq at the moment. You need to buil=
+d
+> > > > the use case #3 of the second part of that blog [1]. It's good that
+> > > > you build the vdpa_sim earlier as it is a simpler setup.
+> > > >
+> > > > If you have problems with the vp_vdpa environment please let me kno=
+w
+> > > > so we can find alternative setups.
+> > >
+> > > Thank you for the clarification. I tried setting up the vp_vdpa
+> > > environment (scenario 3) but I ended up running into a problem
+> > > in the L1 VM.
+> > >
+> > > I verified that nesting is enabled in KVM (L0):
+> > >
+> > > $ grep -oE "(vmx|svm)" /proc/cpuinfo | sort | uniq
+> > > vmx
+> > >
+> > > $ cat /sys/module/kvm_intel/parameters/nested
+> > > Y
+> > >
+> > > There are no issues when booting L1. I start the VM by running:
+> > >
+> > > $ sudo ./qemu/build/qemu-system-x86_64 \
+> > > -enable-kvm \
+> > > -drive file=3D//home/ig91/fedora_qemu_test_vm/L1.qcow2,media=3Ddisk,i=
+f=3Dvirtio
+> > > \
+> > > -net nic,model=3Dvirtio \
+> > > -net user,hostfwd=3Dtcp::2222-:22 \
+> > > -device intel-iommu,snoop-control=3Don \
+> > > -device
+> > > virtio-net-pci,netdev=3Dnet0,disable-legacy=3Don,disable-modern=3Doff=
+,iommu_pla
+> > > tform=3Don,event_idx=3Doff,packed=3Don,bus=3Dpcie.0,addr=3D0x4 \ -net=
+dev
+> > > tap,id=3Dnet0,script=3Dno,downscript=3Dno \
+> > > -nographic \
+> > > -m 2G \
+> > > -smp 2 \
+> > > -M q35 \
+> > > -cpu host \
+> > > 2>&1 | tee vm.log
+> > >
+> > > Kernel version in L1:
+> > >
+> > > # uname -a
+> > > Linux fedora 6.8.5-201.fc39.x86_64 #1 SMP PREEMPT_DYNAMIC Thu Apr 11
+> > > 18:25:26 UTC 2024 x86_64 GNU/Linux
+> > Did you run the kernels with the arguments "iommu=3Dpt intel_iommu=3Don=
+"?
+> > You can print them with cat /proc/cmdline.
+>
+> I missed this while setting up the environment. After setting the kernel
+> params I managed to move past this issue but my environment in virtualbox
+> was very unstable and it kept crashing.
+>
 
-Please do. We can then provide a scratch build for further testing
-and experiments with vGPUs.
+I've no experience with virtualbox+vdpa, sorry :). Why not use QEMU also fo=
+r L1?
 
-Thanks,
+> I managed to get L1 to run on my host OS, so scenario 3 is now up and
+> running. However, the packed bit seems to be disabled in this scenario to=
+o.
+>
+> L0 (host machine) specs:
+> - kernel version:
+>   6.6.46-1-lts
+>
+> - QEMU version:
+>   9.0.50 (v8.2.0-5536-g16514611dc)
+>
+> - vDPA version:
+>   iproute2-6.10.0
+>
+> L1 specs:
+>
+> - kernel version:
+>   6.8.5-201.fc39.x86_64
+>
+> - QEMU version:
+>   9.0.91
+>
+> - vDPA version:
+>   iproute2-6.10.0
+>
+> L2 specs:
+> - kernel version
+>   6.8.7-200.fc39.x86_64
+>
+> I followed the following steps to set up scenario 3:
+>
+> =3D=3D=3D=3D In L0 =3D=3D=3D=3D
+>
+> $ grep -oE "(vmx|svm)" /proc/cpuinfo | sort | uniq
+> vmx
+>
+> $ cat /sys/module/kvm_intel/parameters/nested
+> Y
+>
+> $ sudo ./qemu/build/qemu-system-x86_64 \
+> -enable-kvm \
+> -drive file=3D//home/valdaarhun/valdaarhun/qcow2_img/L1.qcow2,media=3Ddis=
+k,if=3Dvirtio \
+> -net nic,model=3Dvirtio \
+> -net user,hostfwd=3Dtcp::2222-:22 \
+> -device intel-iommu,snoop-control=3Don \
+> -device virtio-net-pci,netdev=3Dnet0,disable-legacy=3Don,disable-modern=
+=3Doff,iommu_platform=3Don,event_idx=3Doff,packed=3Don,bus=3Dpcie.0,addr=3D=
+0x4 \
+> -netdev tap,id=3Dnet0,script=3Dno,downscript=3Dno \
+> -nographic \
+> -m 8G \
+> -smp 4 \
+> -M q35 \
+> -cpu host \
+> 2>&1 | tee vm.log
+>
+> =3D=3D=3D=3D In L1 =3D=3D=3D=3D
+>
+> I verified that the following config variables are set as decribed in the=
+ blog [1].
+>
+> CONFIG_VIRTIO_VDPA=3Dm
+> CONFIG_VDPA=3Dm
+> CONFIG_VP_VDPA=3Dm
+> CONFIG_VHOST_VDPA=3Dm
+>
+> # modprobe vdpa
+> # modprobe vhost_vdpa
+> # modprobe vp_vdpa
+>
+> # lsmod | grep -i vdpa
+> vp_vdpa                 20480  0
+> vhost_vdpa              32768  0
+> vhost                   65536  1 vhost_vdpa
+> vhost_iotlb             16384  2 vhost_vdpa,vhost
+> vdpa                    36864  2 vp_vdpa,vhost_vdpa
+> irqbypass               12288  2 vhost_vdpa,kvm
+>
+> # lspci | grep -i ethernet
+> 00:04.0 Ethernet controller: Red Hat, Inc. Virtio 1.0 network device (rev=
+ 01)
+>
+> # lspci -nn | grep 00:04.0
+> 00:04.0 Ethernet controller [0200]: Red Hat, Inc. Virtio 1.0 network devi=
+ce [1af4:1041] (rev 01)
+>
+> # echo 0000:00:04.0 > /sys/bus/pci/drivers/virtio-pci/unbind
+> # echo 1af4 1041 > /sys/bus/pci/drivers/vp-vdpa/new_id
+>
+> # vdpa mgmtdev show
+> pci/0000:00:04.0:
+>   supported_classes net < unknown class >
+>   max_supported_vqs 3
+>   dev_features  CSUM  GUEST_CSUM  CTRL_GUEST_OFFLOADS  MAC  GUEST_TSO4
+>   GUEST_TSO6  GUEST_ECN  GUEST_UFO  HOST_TSO4  HOST_TSO6  HOST_ECN
+>   HOST_UFO  MRG_RXBUF  STATUS  CTRL_VQ  CTRL_RX  CTRL_VLAN  CTRL_RX_EXTRA
+>   GUEST_ANNOUNCE  CTRL_MAC_ADDR  RING_INDIRECT_DESC  RING_EVENT_IDX
+>   VERSION_1  ACCESS_PLATFORM  bit_40  bit_54  bit_55  bit_56
+>
+> # vdpa dev add name vdpa0 mgmtdev pci/0000:00:04.0
+> # vdpa dev show -jp
+> {
+>     "dev": {
+>         "vdpa0": {
+>             "type": "network",
+>             "mgmtdev": "pci/0000:00:04.0",
+>             "vendor_id": 6900,
+>             "max_vqs": 3,
+>             "max_vq_size": 256
+>         }
+>     }
+> }
+>
+> # ls -l /sys/bus/vdpa/devices/vdpa0/driver
+> lrwxrwxrwx. 1 root root 0 Sep 11 17:07 /sys/bus/vdpa/devices/vdpa0/driver=
+ -> ../../../../bus/vdpa/drivers/vhost_vdpa
+>
+> # ls -l /dev/ |grep vdpa
+> crw-------. 1 root root    239,   0 Sep 11 17:07 vhost-vdpa-0
+>
+> # driverctl -b vdpa
+> vdpa0 vhost_vdpa [*]
+>
+> Booting L2:
+>
+> # ./qemu/build/qemu-system-x86_64 \
+> -nographic \
+> -m 4G \
+> -enable-kvm \
+> -M q35 \
+> -drive file=3D//root/L2.qcow2,media=3Ddisk,if=3Dvirtio \
+> -netdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-0,id=3Dvhost-vdpa0 \
+> -device virtio-net-pci,netdev=3Dvhost-vdpa0,disable-legacy=3Don,disable-m=
+odern=3Doff,event_idx=3Doff,packed=3Don,bus=3Dpcie.0,addr=3D0x7 \
+> -smp 4 \
+> -cpu host \
+> 2>&1 | tee vm.log
+>
+> =3D=3D=3D=3D In L2 =3D=3D=3D=3D
+>
+> # cut -c 35 /sys/devices/pci0000:00/0000:00:07.0/virtio1/features
+> 0
+>
+> Based on what I have understood from the kernel's source, vhost-vdpa and
+> vp-vdpa both support packed vqs and v6.6.46 is more recent than the
+> minimum required kernel version. I am not sure where I am going wrong.
+>
+> > > However, I managed to set up scenario 4 successfully
+> > > and I see that packed vq is enabled in this case.
+> > >
+> > > # cut -c 35 /sys/devices/pci0000:00/0000:00:04.0/virtio1/features
+> > > 1
+>
+> So far scenario 4 is the only scenario where the virtio-net device has th=
+e packed
+> feature enabled. The difference between scenarios 3 and 4 in terms of the=
+ kernel
+> modules loaded is that scenario 4 uses virtio_vdpa while scenario 3 uses =
+vdpa and
+> vhost_vdpa.
+>
 
-C.
+We're pretty close then :). But I don't see anything obviously wrong here.
+
+I guess it is the same L1 VM in both cases, isn't it?
+
+The function that gets the features from vhost-vdpa in QEMU is
+hw/virtio/vhost-vdpa.c:vhost_vdpa_get_features. Can you check that it
+returns bit 34 (offset starts with 0 here)? If it returns it, can you
+keep debugging until you see what clears it?
+
+If it comes clear, then we need to check the kernel.
+
+If you don't see anything wrong there, we can keep debugging the
+function that handles getting the features through L2 guest PCI read,
+hw/virtio/virtio-pci.c:virtio_pci_common_read. VIRTIO_PCI_COMMON_DF
+case when proxy->dfselect=3D=3D1.
+
+Let me know what you find.
+
+Thanks!
 
 
