@@ -4,84 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19A11EE6442
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 05:32:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14CB2EE644A
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 05:32:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1socPO-0000OM-L7; Thu, 12 Sep 2024 01:30:22 -0400
+	id 1socPv-00028B-IR; Thu, 12 Sep 2024 01:30:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1socPI-00006f-VP
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:17 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1socPo-0001kj-UI
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:49 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1socPG-0002yu-MA
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:16 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-7179069d029so371580b3a.2
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:30:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1socPm-00031i-VC
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:48 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2d8b96c18f0so471397a91.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:30:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726119012; x=1726723812; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=v4PEFDsxpFWW8kLI+VribdFRqFddzL93mbYGJkbVr8k=;
- b=JQRbgHwLmR0fDpJaBcdOMNmcVRlkyfyz4gVRqJ7+3B2ipVQRHrl2Z3HyEkAUrJhC/z
- q3DiV00DeEDpz/dVe3ElKcv4Y1fTsfqyj+UsSiMXFmw08jJaDd9Nk8ti4Cyoj9FrkY/2
- 1E74xVTtQRD91wzs62Z4RtYwZn2Yirju6pqhhaiKjXGgjTdUARORLrD9uSXES2S9GwY2
- 1JljZbrZMbr09lJu4ypRKSXSsko0/XctkIGu1dnk2ttMMQEFAW6Y0RkbeH3cjgptaae9
- t+EhWC9RE1eRJytpq67yvSpt7WHqJKh1F3sqB63zQfZStxjnMQvNYk/g9g8gHg98yVqB
- YJFQ==
+ d=linaro.org; s=google; t=1726119045; x=1726723845; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=UiB/B0HBQEMZJrJaUv8xnnERBGFR1KfLn2YlSKLbxxc=;
+ b=kk78ZFKln8mfYVGkjEGlg89E8C90VOk/fj8bS5X7sPt4XPaTgY6HqJQ1IagQdsOgm/
+ l5hOzO54kLT0Qy1eRV6wPoszzD9+qWTYPpuSoid6TWb7/u1wo9wXEd8WmFeTLjSqQQ9P
+ mGsiOAO2O4X1fL0tR8YQ8L8fgNICNtkHyP6nziRWLVxwmzU5MNliWqiaOLVBx69gSaLt
+ cAjNDYanzLoAEL6Ox7V9/SbGZeYbaHXiYDPgaDPfChrbqwujtsYJRTHm9q1eGhjArPff
+ kU66JwRya+g3xHlR6n8E5tpVt9gNHXzn1hxJCvQOJa9tEBPnNTxYWEzmGbvuA/6TtKrD
+ A3EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726119012; x=1726723812;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=v4PEFDsxpFWW8kLI+VribdFRqFddzL93mbYGJkbVr8k=;
- b=TL7YsRJdMkMG3IPaRkBiVin1B0BA9OU+wA9XrIupcIZzWLzcBRdhiqR1AgKMeZGX0W
- xoSsH1TMaN7ncseAR52mDK3l1r3DHt+H8mla5wJTdePJkOCT1PrOlIcGjdsh+mW1/YlP
- fmzbG9MGV0mIiaODeFoPd3S+RiNVBuVJ1kSCPYoG9eacnWLZkh+0lg+lJe1gWAYRre2N
- LMGpSPAz/1GYtuVB0kLg5kxK4IfFcbu1rbJdb2yHkTzLDhhxsslz2Iq30CfWLvsCHV2g
- asdrNgzVPZIfeBSpsN7o4RxXH1MSz1WHu6Thx4LMPNc5gM4FZe5jJ4WB2vJAzyv0GXBs
- 1Jyw==
-X-Gm-Message-State: AOJu0YxdiRGuqEfs1FPn+C/SL4VWxrZRP8+o0ZaZ6ZUV4QJgRzH6+1Bl
- JU49zyhum+SaF4RWQtI8FdfU3gVQjrYGos7GWtstopEabd8tvnLH/SRKpA==
-X-Google-Smtp-Source: AGHT+IHKmeMejQanCM8WgDJNCvfYuc55K30yq64yaCKbXtrxVCOjfWNYr3790hkO1lWo7stY1b6FNg==
-X-Received: by 2002:a05:6a00:198d:b0:70d:2583:7227 with SMTP id
- d2e1a72fcca58-7192605871fmr2939725b3a.6.1726119012475; 
- Wed, 11 Sep 2024 22:30:12 -0700 (PDT)
-Received: from toolbox.alistair23.me
- (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
- [2403:580b:97e8:0:82ce:f179:8a79:69f4])
+ d=1e100.net; s=20230601; t=1726119045; x=1726723845;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UiB/B0HBQEMZJrJaUv8xnnERBGFR1KfLn2YlSKLbxxc=;
+ b=mZAODzqyGhPl5bcAiluOG8T+Cqo5yIqnBRHUGj+qzA00bu9haY4xZ/7czyuDCYwGcg
+ ATKvANGKE6EvxCSU+04YKJDvE0yrZ+f+ziu1oQwBYswMxnPJCEsNmS5XqxUgqfx3yZEF
+ oY5BW/9VNvRL/TjnaKS6K8RcR1qV4VdyaCoc5QXEbE9FwnAIdpAiVU132/nH6rhKy3Rr
+ WemnyaWjKxIpVNfYnazUT8zF5bS5tuK1E5amg8zHSyyHUnk+tEy77Zk9dvsdQe+k0XwD
+ Cr1YRp6FKSoSWZP35COA+RHUomk1HCApMjxOvcH9aIVI161h+ChIgfvcnbqBdoNREbjM
+ AFOw==
+X-Gm-Message-State: AOJu0YzerAwaa0LVjkwDpRSrdkEVxQCAKWXu0tG1ZQLj2QA5RhHtPzQE
+ xXaVFoC7mgOoEm7Wbc72cSNibIjHFAuyn1eJRaYtmmF4Gs3NI8JHt6gg3IvFDuieFZfvWhx4+CY
+ Q
+X-Google-Smtp-Source: AGHT+IEJ8FB5fBJhunOOntuumvhiHc5p6OBQHpQ1BvQQbs7EjiOpFhkvDGRxUPh4D0bzW2olgej6Sg==
+X-Received: by 2002:a17:90a:a118:b0:2d8:9506:5dfd with SMTP id
+ 98e67ed59e1d1-2dba0065973mr2056737a91.35.1726119044827; 
+ Wed, 11 Sep 2024 22:30:44 -0700 (PDT)
+Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71908fc8fdesm3833034b3a.1.2024.09.11.22.30.09
+ d9443c01a7336-2076afe9e1dsm7513155ad.236.2024.09.11.22.30.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 22:30:12 -0700 (PDT)
-From: Alistair Francis <alistair23@gmail.com>
-X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
+ Wed, 11 Sep 2024 22:30:44 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Haibo Xu <haibo1.xu@intel.com>,
- Sunil V L <sunilvl@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 04/47] tests/acpi: Add expected ACPI SRAT AML file for RISC-V
-Date: Thu, 12 Sep 2024 15:29:09 +1000
-Message-ID: <20240912052953.2552501-5-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240912052953.2552501-1-alistair.francis@wdc.com>
-References: <20240912052953.2552501-1-alistair.francis@wdc.com>
+Cc: peter.maydell@linaro.org
+Subject: [PULL 0/5] target/sparc patch queue
+Date: Wed, 11 Sep 2024 22:30:38 -0700
+Message-ID: <20240912053043.1131626-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,37 +92,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haibo Xu <haibo1.xu@intel.com>
+The following changes since commit a4eb31c678400472de0b4915b9154a7c20d8332f:
 
-As per the step 5 in the process documented in bios-tables-test.c,
-generate the expected ACPI SRAT AML data file for RISC-V using the
-rebuild-expected-aml.sh script and update the
-bios-tables-test-allowed-diff.h.
+  Merge tag 'pull-testing-gdbstub-oct-100924-1' of https://gitlab.com/stsquad/qemu into staging (2024-09-11 13:17:29 +0100)
 
-This is a new file being added for the first time. Hence, iASL diff
-output is not added.
+are available in the Git repository at:
 
-Signed-off-by: Haibo Xu <haibo1.xu@intel.com>
-Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <a667480203b35508038176c8ce4722370294cc57.1723172696.git.haibo1.xu@intel.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- tests/qtest/bios-tables-test-allowed-diff.h |   1 -
- tests/data/acpi/riscv64/virt/SRAT.numamem   | Bin 0 -> 108 bytes
- 2 files changed, 1 deletion(-)
+  https://gitlab.com/rth7680/qemu.git tags/pull-sparc-20240911
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index a3e01d2eb7..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/riscv64/virt/SRAT.numamem",
-diff --git a/tests/data/acpi/riscv64/virt/SRAT.numamem b/tests/data/acpi/riscv64/virt/SRAT.numamem
-index e69de29bb2..2b6467364b 100644
-Binary files a/tests/data/acpi/riscv64/virt/SRAT.numamem and b/tests/data/acpi/riscv64/virt/SRAT.numamem differ
--- 
-2.46.0
+for you to fetch changes up to d2a0c3a7f7740a3d563c8c3ef1fffcc87a36213d:
 
+  target/sparc: Add gen_trap_if_nofpu_fpexception (2024-09-11 19:54:55 -0700)
+
+----------------------------------------------------------------
+target/sparc: Implement single entry FP Queue
+
+----------------------------------------------------------------
+Carl Hauser (2):
+      target/sparc: Add FQ and FSR.QNE
+      target/sparc: Populate sparc32 FQ when raising fp exception
+
+Richard Henderson (3):
+      target/sparc: Add FSR_QNE to tb_flags
+      target/sparc: Implement STDFQ
+      target/sparc: Add gen_trap_if_nofpu_fpexception
+
+ target/sparc/cpu.h          |  30 ++++++++++-
+ target/sparc/fop_helper.c   |   4 ++
+ target/sparc/int32_helper.c |  40 ++++++++------
+ target/sparc/machine.c      |  25 +++++++++
+ target/sparc/translate.c    | 128 ++++++++++++++++++++++++++++++++------------
+ target/sparc/insns.decode   |   2 +-
+ 6 files changed, 178 insertions(+), 51 deletions(-)
 
