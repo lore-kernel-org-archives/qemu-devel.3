@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 881C1EED60D
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 14:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48CB9EED60D
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 14:55:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1solD1-00015V-VV; Thu, 12 Sep 2024 10:54:11 -0400
+	id 1solD5-0001Fm-5A; Thu, 12 Sep 2024 10:54:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1solD0-00014t-Ce
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 10:54:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1solD2-00016M-7T
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 10:54:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1solCx-0000Ha-2y
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 10:54:09 -0400
+ id 1solD0-0000Hq-KZ
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 10:54:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726152846;
+ s=mimecast20190719; t=1726152850;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xG4rr6587vwjGLOmp2PGDY77mR8V0+e64UiAhyqmV34=;
- b=CGs/kq5/2xmAVBE+qdRqWLVG8tdjRlC255Rzmoqh70w+t1+vGj111Ozbr7HJtKtwgK22mr
- WsCUdIcTs88QSSXql4vjBuG8LEyqsSGOd9beVaCi30AGsU0UVkypnhTnM6HlrYIgTkqIPV
- zttyj/p6zt7klVWEWRpZ9jOeTd7nK68=
+ bh=U+t26Tfe5xUE4swJAtZl77olEp6lICr9c8g8Yyw6mWE=;
+ b=f9EFS44AFQZgD6bhtC7gX1VZXRA3htnMA9Y/YrxNGOn0kblle1cwGE39Dlw5d0qLRvjjbt
+ z1RXX/Gx046sGOccXGBjDjaHRDRW8d179QvlQBRGeslT3gc6ClkAWbFiq2hN3TcAMDqSiW
+ nPMlK6ZX4ND6Wmk9qUioQGNeBF67+5w=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-115-UJsyyt2hOBqVSeMHn1NgHg-1; Thu,
- 12 Sep 2024 10:54:02 -0400
-X-MC-Unique: UJsyyt2hOBqVSeMHn1NgHg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-rpiAWRn6M16nReWyuTPQig-1; Thu,
+ 12 Sep 2024 10:54:07 -0400
+X-MC-Unique: rpiAWRn6M16nReWyuTPQig-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 38D601955D59; Thu, 12 Sep 2024 14:54:01 +0000 (UTC)
+ id 1E5BE19560BD; Thu, 12 Sep 2024 14:54:06 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.45.224.195])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B63461956052; Thu, 12 Sep 2024 14:53:56 +0000 (UTC)
+ id B179C1956052; Thu, 12 Sep 2024 14:54:01 +0000 (UTC)
 From: Albert Esteve <aesteve@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>, slp@redhat.com,
  hi@alyssa.is, mst@redhat.com, david@redhat.com, jasowang@redhat.com,
  stefanha@redhat.com, Stefano Garzarella <sgarzare@redhat.com>,
  stevensd@chromium.org, Albert Esteve <aesteve@redhat.com>
-Subject: [PATCH v3 2/5] virtio: Track shared memory mappings
-Date: Thu, 12 Sep 2024 16:53:32 +0200
-Message-ID: <20240912145335.129447-3-aesteve@redhat.com>
+Subject: [PATCH v3 3/5] vhost_user: Add frontend command for shmem config
+Date: Thu, 12 Sep 2024 16:53:33 +0200
+Message-ID: <20240912145335.129447-4-aesteve@redhat.com>
 In-Reply-To: <20240912145335.129447-1-aesteve@redhat.com>
 References: <20240912145335.129447-1-aesteve@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -84,254 +84,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update shmem_list to be able to track
-active mappings on VIRTIO shared memory
-regions. This allows to verify that new
-mapping request received from backends
-do not overlap. If they do, the request
-shall fail in order to adhere to the specs.
+The frontend can use this command to retrieve
+VIRTIO Shared Memory Regions configuration from
+the backend. The response contains the number of
+shared memory regions, their size, and shmid.
+
+This is useful when the frontend is unaware of
+specific backend type and configuration,
+for example, in the `vhost-user-device` case.
 
 Signed-off-by: Albert Esteve <aesteve@redhat.com>
 ---
- hw/virtio/vhost-user.c     | 31 +++++++++++++-------
- hw/virtio/virtio.c         | 58 ++++++++++++++++++++++++++++++++++----
- include/hw/virtio/virtio.h | 25 ++++++++++++++--
- 3 files changed, 96 insertions(+), 18 deletions(-)
+ hw/virtio/vhost-user.c            | 45 +++++++++++++++++++++++++++++++
+ include/hw/virtio/vhost-backend.h |  6 +++++
+ include/hw/virtio/vhost-user.h    |  1 +
+ 3 files changed, 52 insertions(+)
 
 diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 338cc942ec..de0bb35257 100644
+index de0bb35257..83f5c02bea 100644
 --- a/hw/virtio/vhost-user.c
 +++ b/hw/virtio/vhost-user.c
-@@ -1776,7 +1776,7 @@ vhost_user_backend_handle_shmem_map(struct vhost_dev *dev,
-                                     int fd)
- {
-     void *addr = 0;
--    MemoryRegion *mr = NULL;
-+    VirtSharedMemory *shmem = NULL;
+@@ -57,6 +57,8 @@
+  */
+ #define VHOST_USER_MAX_CONFIG_SIZE 256
  
-     if (fd < 0) {
-         error_report("Bad fd for map");
-@@ -1791,22 +1791,29 @@ vhost_user_backend_handle_shmem_map(struct vhost_dev *dev,
-         return -EFAULT;
-     }
- 
--    mr = &dev->vdev->shmem_list[vu_mmap->shmid];
-+    shmem = &dev->vdev->shmem_list[vu_mmap->shmid];
- 
--    if (!mr) {
-+    if (!shmem) {
-         error_report("VIRTIO Shared Memory Region at "
-                      "ID %d unitialized", vu_mmap->shmid);
-         return -EFAULT;
-     }
- 
-     if ((vu_mmap->shm_offset + vu_mmap->len) < vu_mmap->len ||
--        (vu_mmap->shm_offset + vu_mmap->len) > mr->size) {
-+        (vu_mmap->shm_offset + vu_mmap->len) > shmem->mr->size) {
-         error_report("Bad offset/len for mmap %" PRIx64 "+%" PRIx64,
-                      vu_mmap->shm_offset, vu_mmap->len);
-         return -EFAULT;
-     }
- 
--    void *shmem_ptr = memory_region_get_ram_ptr(mr);
-+    if (virtio_shmem_map_overlaps(shmem, vu_mmap->shm_offset, vu_mmap->len)) {
-+        error_report("Requested memory (%" PRIx64 "+%" PRIx64 ") overalps "
-+                     "with previously mapped memory",
-+                     vu_mmap->shm_offset, vu_mmap->len);
-+        return -EFAULT;
-+    }
++#define VHOST_USER_MAX_SHMEM_REGIONS 256
 +
-+    void *shmem_ptr = memory_region_get_ram_ptr(shmem->mr);
+ #define VHOST_USER_PROTOCOL_FEATURE_MASK ((1 << VHOST_USER_PROTOCOL_F_MAX) - 1)
  
-     addr = mmap(shmem_ptr + vu_mmap->shm_offset, vu_mmap->len,
-         ((vu_mmap->flags & VHOST_USER_FLAG_MAP_R) ? PROT_READ : 0) |
-@@ -1818,6 +1825,8 @@ vhost_user_backend_handle_shmem_map(struct vhost_dev *dev,
-         return -EFAULT;
-     }
+ typedef enum VhostUserRequest {
+@@ -104,6 +106,7 @@ typedef enum VhostUserRequest {
+     VHOST_USER_GET_SHARED_OBJECT = 41,
+     VHOST_USER_SET_DEVICE_STATE_FD = 42,
+     VHOST_USER_CHECK_DEVICE_STATE = 43,
++    VHOST_USER_GET_SHMEM_CONFIG = 44,
+     VHOST_USER_MAX
+ } VhostUserRequest;
  
-+    virtio_add_shmem_map(shmem, vu_mmap->shm_offset, vu_mmap->len);
+@@ -138,6 +141,12 @@ typedef struct VhostUserMemRegMsg {
+     VhostUserMemoryRegion region;
+ } VhostUserMemRegMsg;
+ 
++typedef struct VhostUserShMemConfig {
++    uint32_t nregions;
++    uint32_t padding;
++    uint64_t memory_sizes[VHOST_MEMORY_BASELINE_NREGIONS];
++} VhostUserShMemConfig;
 +
+ typedef struct VhostUserLog {
+     uint64_t mmap_size;
+     uint64_t mmap_offset;
+@@ -245,6 +254,7 @@ typedef union {
+         VhostUserShared object;
+         VhostUserTransferDeviceState transfer_state;
+         VhostUserMMap mmap;
++        VhostUserShMemConfig shmem;
+ } VhostUserPayload;
+ 
+ typedef struct VhostUserMsg {
+@@ -3134,6 +3144,40 @@ static int vhost_user_check_device_state(struct vhost_dev *dev, Error **errp)
      return 0;
  }
  
-@@ -1826,7 +1835,7 @@ vhost_user_backend_handle_shmem_unmap(struct vhost_dev *dev,
-                                       VhostUserMMap *vu_mmap)
- {
-     void *addr = 0;
--    MemoryRegion *mr = NULL;
-+    VirtSharedMemory *shmem = NULL;
- 
-     if (!dev->vdev->shmem_list ||
-         dev->vdev->n_shmem_regions <= vu_mmap->shmid) {
-@@ -1836,22 +1845,22 @@ vhost_user_backend_handle_shmem_unmap(struct vhost_dev *dev,
-         return -EFAULT;
-     }
- 
--    mr = &dev->vdev->shmem_list[vu_mmap->shmid];
-+    shmem = &dev->vdev->shmem_list[vu_mmap->shmid];
- 
--    if (!mr) {
-+    if (!shmem) {
-         error_report("VIRTIO Shared Memory Region at "
-                      "ID %d unitialized", vu_mmap->shmid);
-         return -EFAULT;
-     }
- 
-     if ((vu_mmap->shm_offset + vu_mmap->len) < vu_mmap->len ||
--        (vu_mmap->shm_offset + vu_mmap->len) > mr->size) {
-+        (vu_mmap->shm_offset + vu_mmap->len) > shmem->mr->size) {
-         error_report("Bad offset/len for mmap %" PRIx64 "+%" PRIx64,
-                      vu_mmap->shm_offset, vu_mmap->len);
-         return -EFAULT;
-     }
- 
--    void *shmem_ptr = memory_region_get_ram_ptr(mr);
-+    void *shmem_ptr = memory_region_get_ram_ptr(shmem->mr);
- 
-     addr = mmap(shmem_ptr + vu_mmap->shm_offset, vu_mmap->len,
-                 PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, -1, 0);
-@@ -1861,6 +1870,8 @@ vhost_user_backend_handle_shmem_unmap(struct vhost_dev *dev,
-         return -EFAULT;
-     }
- 
-+    virtio_del_shmem_map(shmem, vu_mmap->shm_offset, vu_mmap->len);
-+
-     return 0;
- }
- 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index ccc4f2cd75..0e2cd62a15 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3059,15 +3059,52 @@ int virtio_save(VirtIODevice *vdev, QEMUFile *f)
-     return vmstate_save_state(f, &vmstate_virtio, vdev, NULL);
- }
- 
--MemoryRegion *virtio_new_shmem_region(VirtIODevice *vdev)
-+VirtSharedMemory *virtio_new_shmem_region(VirtIODevice *vdev)
- {
--    MemoryRegion *mr;
-+    VirtSharedMemory *shmem = NULL;
-     ++vdev->n_shmem_regions;
--    vdev->shmem_list = g_renew(MemoryRegion, vdev->shmem_list,
-+    vdev->shmem_list = g_renew(VirtSharedMemory, vdev->shmem_list,
-                                vdev->n_shmem_regions);
--    mr = &vdev->shmem_list[vdev->n_shmem_regions - 1];
--    mr = g_new0(MemoryRegion, 1);
--    return mr;
-+    shmem = &vdev->shmem_list[vdev->n_shmem_regions - 1];
-+    shmem = g_new0(VirtSharedMemory, 1);
-+    QTAILQ_INIT(&shmem->mapped_regions);
-+    return shmem;
-+}
-+
-+void virtio_add_shmem_map(VirtSharedMemory *shmem, hwaddr offset,
-+                          uint64_t size)
++static int vhost_user_get_shmem_config(struct vhost_dev *dev,
++                                       int *nregions,
++                                       uint64_t *memory_sizes,
++                                       Error **errp)
 +{
-+    MappedMemoryRegion *mmap = g_new0(MappedMemoryRegion, 1);
-+    mmap->offset = offset;
-+    mmap->size = int128_make64(size);
-+    QTAILQ_REMOVE(&shmem->mapped_regions, mmap, link);
-+    g_free(mmap);
-+}
++    int ret;
++    VhostUserMsg msg = {
++        .hdr.request = VHOST_USER_GET_SHMEM_CONFIG,
++        .hdr.flags = VHOST_USER_VERSION,
++    };
 +
-+void virtio_del_shmem_map(VirtSharedMemory *shmem, hwaddr offset,
-+                          uint64_t size)
-+{
-+    MappedMemoryRegion *mmap = g_new0(MappedMemoryRegion, 1);
-+    mmap->offset = offset;
-+    mmap->size = int128_make64(size);
-+    QTAILQ_INSERT_TAIL(&shmem->mapped_regions, mmap, link);
-+    g_free(mmap);
-+}
-+
-+bool virtio_shmem_map_overlaps(VirtSharedMemory *shmem, hwaddr offset,
-+                               uint64_t size)
-+{
-+    MappedMemoryRegion *map_reg;
-+    hwaddr new_reg_end = offset + size;
-+    QTAILQ_FOREACH(map_reg, &shmem->mapped_regions, link) {
-+        hwaddr region_end = map_reg->offset + map_reg->size;
-+        if ((map_reg->offset == offset) ||
-+            (map_reg->offset < offset && region_end >= offset) ||
-+            (offset < map_reg->offset && new_reg_end >= map_reg->offset )) {
-+            return true;
-+        }
++    if (!virtio_has_feature(dev->protocol_features,
++                            VHOST_USER_PROTOCOL_F_SHMEM)) {
++        return 0;
 +    }
-+    return false;   
- }
- 
- /* A wrapper for use as a VMState .put function */
-@@ -4007,11 +4044,20 @@ static void virtio_device_free_virtqueues(VirtIODevice *vdev)
- static void virtio_device_instance_finalize(Object *obj)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(obj);
-+    VirtSharedMemory *shmem = NULL;
-+    int i;
- 
-     virtio_device_free_virtqueues(vdev);
- 
-     g_free(vdev->config);
-     g_free(vdev->vector_queues);
-+    for (i = 0; i< vdev->n_shmem_regions; i++) {
-+        shmem = &vdev->shmem_list[i];
-+        while (!QTAILQ_EMPTY(&shmem->mapped_regions)) {
-+            MappedMemoryRegion *mmap_reg = QTAILQ_FIRST(&shmem->mapped_regions);
-+            QTAILQ_REMOVE(&shmem->mapped_regions, mmap_reg, link);
-+        }
++
++    ret = vhost_user_write(dev, &msg, NULL, 0);
++    if (ret < 0) {
++        return ret;
 +    }
- }
- 
- static Property virtio_properties[] = {
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index d4a2f664d9..5b801f33f5 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -98,6 +98,21 @@ enum virtio_device_endian {
-     VIRTIO_DEVICE_ENDIAN_BIG,
++
++    ret = vhost_user_read(dev, &msg);
++    if (ret < 0) {
++        return ret;
++    }
++
++    assert(msg.payload.shmem.nregions <= VHOST_USER_MAX_SHMEM_REGIONS);
++    *nregions = msg.payload.shmem.nregions;
++    memcpy(memory_sizes,
++           &msg.payload.shmem.memory_sizes,
++           sizeof(uint64_t) * VHOST_MEMORY_BASELINE_NREGIONS);
++    return 0;
++}
++
+ const VhostOps user_ops = {
+         .backend_type = VHOST_BACKEND_TYPE_USER,
+         .vhost_backend_init = vhost_user_backend_init,
+@@ -3172,4 +3216,5 @@ const VhostOps user_ops = {
+         .vhost_supports_device_state = vhost_user_supports_device_state,
+         .vhost_set_device_state_fd = vhost_user_set_device_state_fd,
+         .vhost_check_device_state = vhost_user_check_device_state,
++        .vhost_get_shmem_config = vhost_user_get_shmem_config,
  };
+diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
+index 70c2e8ffee..f9c2955420 100644
+--- a/include/hw/virtio/vhost-backend.h
++++ b/include/hw/virtio/vhost-backend.h
+@@ -159,6 +159,11 @@ typedef int (*vhost_set_device_state_fd_op)(struct vhost_dev *dev,
+                                             int *reply_fd,
+                                             Error **errp);
+ typedef int (*vhost_check_device_state_op)(struct vhost_dev *dev, Error **errp);
++typedef int (*vhost_get_shmem_config_op)(struct vhost_dev *dev,
++                                         int *nregions,
++                                         uint64_t *memory_sizes,
++                                         Error **errp);
++
  
-+struct MappedMemoryRegion {
-+    Int128 size;
-+    hwaddr offset;
-+    QTAILQ_ENTRY(MappedMemoryRegion) link;
-+};
-+
-+typedef struct MappedMemoryRegion MappedMemoryRegion;
-+
-+struct VirtSharedMemory {
-+    MemoryRegion *mr;
-+    QTAILQ_HEAD(, MappedMemoryRegion) mapped_regions;
-+};
-+
-+typedef struct VirtSharedMemory VirtSharedMemory;
-+
- /**
-  * struct VirtIODevice - common VirtIO structure
-  * @name: name of the device
-@@ -168,7 +183,7 @@ struct VirtIODevice
-     EventNotifier config_notifier;
-     bool device_iotlb_enabled;
-     /* Shared memory region for vhost-user mappings. */
--    MemoryRegion *shmem_list;
-+    VirtSharedMemory *shmem_list;
-     int n_shmem_regions;
+ typedef struct VhostOps {
+     VhostBackendType backend_type;
+@@ -214,6 +219,7 @@ typedef struct VhostOps {
+     vhost_supports_device_state_op vhost_supports_device_state;
+     vhost_set_device_state_fd_op vhost_set_device_state_fd;
+     vhost_check_device_state_op vhost_check_device_state;
++    vhost_get_shmem_config_op vhost_get_shmem_config;
+ } VhostOps;
+ 
+ int vhost_backend_update_device_iotlb(struct vhost_dev *dev,
+diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
+index 324cd8663a..d4bb2c3958 100644
+--- a/include/hw/virtio/vhost-user.h
++++ b/include/hw/virtio/vhost-user.h
+@@ -32,6 +32,7 @@ enum VhostUserProtocolFeature {
+     /* Feature 17 reserved for VHOST_USER_PROTOCOL_F_XEN_MMAP. */
+     VHOST_USER_PROTOCOL_F_SHARED_OBJECT = 18,
+     VHOST_USER_PROTOCOL_F_DEVICE_STATE = 19,
++    VHOST_USER_PROTOCOL_F_SHMEM = 20,
+     VHOST_USER_PROTOCOL_F_MAX
  };
- 
-@@ -289,7 +304,13 @@ void virtio_notify(VirtIODevice *vdev, VirtQueue *vq);
- 
- int virtio_save(VirtIODevice *vdev, QEMUFile *f);
- 
--MemoryRegion *virtio_new_shmem_region(VirtIODevice *vdev);
-+VirtSharedMemory *virtio_new_shmem_region(VirtIODevice *vdev);
-+void virtio_add_shmem_map(VirtSharedMemory *shmem, hwaddr offset,
-+                          uint64_t size);
-+void virtio_del_shmem_map(VirtSharedMemory *shmem, hwaddr offset,
-+                          uint64_t size);
-+bool virtio_shmem_map_overlaps(VirtSharedMemory *shmem, hwaddr offset,
-+                               uint64_t size);
- 
- extern const VMStateInfo virtio_vmstate_info;
  
 -- 
 2.45.2
