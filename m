@@ -4,72 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C186DEED611
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 15:10:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0165EEED613
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 15:15:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1solSV-00043q-Ak; Thu, 12 Sep 2024 11:10:11 -0400
+	id 1solWo-0004Zc-A4; Thu, 12 Sep 2024 11:14:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1solST-00042r-BU
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 11:10:09 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ id 1solWm-0004Yz-6q
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 11:14:36 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1solSR-0001vi-9K
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 11:10:09 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-53660856a21so1020322e87.2
- for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 08:10:06 -0700 (PDT)
+ id 1solWk-0002F7-8q
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 11:14:35 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-2f75c205e4aso13446921fa.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 08:14:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726153805; x=1726758605; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HO3ngKL1dLT7a/AYyUnoAkQsd/9xDLmkhgh8xHEpfok=;
- b=UKC+C9lcrIIccFaa2GZUnZlv0COeHUWTvsDRAakXz9x3wvAQmqQADCnsuULHcjj39j
- kyr8GoUXRv5qFO2MuIv8vOaBKnQIpIJrDjY/2lGjcAzpVXoWjShF5BFCUOKtNOEAWEm3
- EEgV88uVTadF9AvWmuu7uLwhEW8Y5XDD8Q4FbN8bBs5t6ObdQWz8e74rzE1pNywKeyI7
- oWqNvgwkTrUYx45xNOigvtrAENqblRIsbveJnT1PDAiblhw1+cYjkCKdxPLP4z4WF81J
- IREAbxHyuDyoCDgunuXMvWaN206Uydg2PvzGARV00RbctVj1hrCnsLMMpOJmtqTaU8Sf
- AR4g==
+ d=linaro.org; s=google; t=1726154072; x=1726758872; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=6YbNKbLEEV6GXJyOor5pZ7T3TCUvobFoRllN/rySyFc=;
+ b=NMJ5csVHGJ1EX1rB1xnCftkzkaHyqIr6IYmFxRZ4Oly5pt3tMDPCl/f0E9CS+8jd5m
+ 3Ppy8oS5SeA7oVf6JhsUH3RU3FsJ6QsBS5jl4eY/nbzM5wBp1+C7FK/UKw3TLXwlTJ7J
+ huSpnvZoW8h5r2ns130B+PF8baS1S1Rjyx4zdCbx31X987r4gVXkWK5oO9LVOludCVjS
+ VBwbAx8oKou44B7M6Wtj5STYGOwxxTfsxDcfi7Dtlhwh/SSMSZ+aCxm0Z+aR+6BpLqhO
+ t78Fn4EyGLN6wLxnrKMf7fY9qwoDevRASCY0QUD2FjKRsSxGGCvWmP5WrqhYs/+CPsNg
+ mWNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726153805; x=1726758605;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1726154072; x=1726758872;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=HO3ngKL1dLT7a/AYyUnoAkQsd/9xDLmkhgh8xHEpfok=;
- b=t+IV08yMBEjPuZvEf8bsrv6rRwtyf+lCJVfVE8lk4cpzeXofWOH05yrv53fHUAdDbT
- u6xTp1PJttUAY/l9bSGD5wG7d96RJ54VBO9rl6hTZZ/mzc7JfRi5QjFc28mYVRuadugE
- VIQ8MhZ8KAdgQyki98DyAgCqH/4cyVLvQcVDgfKQe9eNS67wwahPkPAL+gda68UVvbaX
- efqsV0nldnqKoUNW89qcHu9ZgwkiQSbrGBeMZBbIb/Han6ZiXdRdNcxSEtp7qv+CRmw6
- SHcnyBtn23KDf4q+ngtw6RGJ6eYzqsWDryVvwmYO0WcX4nHvDCKz7wlSv+KIeHhczH3e
- heXw==
-X-Gm-Message-State: AOJu0YwMcC94H9NlOUQhULgSeflREI6NNdduYznVCsZGf10qNDYIj6vo
- AprK8Zz0zsXT/69lY7HA8fdo6S+F3hUJGM9isPutlbqnkyjxGmnfWD4tBsq4Bl1qZo1Y1Dk2Vut
- k
-X-Google-Smtp-Source: AGHT+IEmRglQ3VgRLkHsoNxdhOfQNv8Xmgnlz80ul5URJgTkYDbcgyB05SmyP0gvIgr5xktUXJhhuQ==
-X-Received: by 2002:a05:6512:ac5:b0:533:4652:983a with SMTP id
- 2adb3069b0e04-53678fc233fmr2396275e87.35.1726153804874; 
- Thu, 12 Sep 2024 08:10:04 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42cc1375189sm92228915e9.1.2024.09.12.08.10.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Sep 2024 08:10:04 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2] .gitlab-ci.d/crossbuilds.yml: Force 'make check'
- single-threaded for cross-i686-tci
-Date: Thu, 12 Sep 2024 16:10:03 +0100
-Message-Id: <20240912151003.2045031-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ bh=6YbNKbLEEV6GXJyOor5pZ7T3TCUvobFoRllN/rySyFc=;
+ b=wrws7oKuTs7xwz4omTxkqGUPa3C8wmu8xcvnU/7Wf/7cmevoSdloPnxAdh/giEWhc0
+ jG0gD5j0ANDSoBM0uirfwPqwNOFOAQF2xM68kSNBFUH7NPsfRwZ213WjVZfWFYX8HuPK
+ Zz4qXaWF2xvEz6PSbNUBAaxwgJk0lU81ga4xmZr6mN59X/CvE1fauDmage+EJuOWEbdJ
+ uqCYZx2rx4ghkz9mnrx0Y3M+/x1J6fKJKjAaBylldOHur81gHMYzuU0+/CBMH2PSeg1i
+ Qhb0/DKUaSD9bMYjFjc47wXn5Ap/4ATVIQw6PhtVqmyY+vor0Zyr9vxqtD8td/1Z3rtO
+ jwkw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXGWJlZqF5FRbBuD82NMk17gJSJRy9gKB+0GwkjEdZkm5GN8AHpU1Gm/p19kIQbWzKYLfqtwOKZxB0E@nongnu.org
+X-Gm-Message-State: AOJu0YwqYv0J7YMTN+gBwZAP+760A7H4iEj02K/dg6/ByAXmUUzT49ax
+ 1c2Cw2dHY6JxKnvrUZVCmw/10y601/6ulOF/f7zRq8DNrkscVHhz9tuCxZ9LEO9IB5eXNDSFmE3
+ 2Sl5nzB9FPZuiV01bpkMParaspD4cQDzlWstn2w==
+X-Google-Smtp-Source: AGHT+IE6zhyNEsHXk2iZCDz3qMvrUcUW6ZwOwEAw3Y2r7Roiqgjxb0ZHa73QLvSN66PS/6g+HtTfGyc9tJlSkLlYTCc=
+X-Received: by 2002:a05:6512:15a9:b0:536:554a:24c2 with SMTP id
+ 2adb3069b0e04-53678fb6adbmr2127272e87.13.1726154071800; Thu, 12 Sep 2024
+ 08:14:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12e.google.com
+References: <CAFEAcA99=bn4x_BjgsAsrVitXNxOUSNviz=TGezJEB+=Zj603w@mail.gmail.com>
+ <Zt8H6pC2yQ2DD7DV@x1n> <87frq8lcgp.fsf@suse.de> <ZuC4pYT-atQwWePv@x1n>
+ <87seu7qhao.fsf@suse.de> <ZuG-SijLg8Q27boE@x1n> <87ed5qq8e2.fsf@suse.de>
+ <ZuH_pvnTCumKuXTh@x1n> <87bk0trifq.fsf@suse.de>
+ <CAFEAcA9YkZiSSOAj0zH2OwF9AcziJT-zpnNVQn8BXizhSXHVOA@mail.gmail.com>
+ <ZuMEF99PF0q0U9G-@x1n>
+In-Reply-To: <ZuMEF99PF0q0U9G-@x1n>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 12 Sep 2024 16:14:20 +0100
+Message-ID: <CAFEAcA9Bevk6Go_AgvjAhzyE-P_u6W0JS8deau09cU5zrPJkgg@mail.gmail.com>
+Subject: Re: [PATCH RFC 10/10] tests/migration-tests: Add test case for
+ responsive CPU throttle
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Hyman Huang <yong.huang@smartx.com>,
+ qemu-devel@nongnu.org, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,40 +100,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The cross-i686-tci CI job is persistently flaky with various tests
-hitting timeouts.  One theory for why this is happening is that we're
-running too many tests in parallel and so sometimes a test gets
-starved of CPU and isn't able to complete within the timeout.
+On Thu, 12 Sept 2024 at 16:09, Peter Xu <peterx@redhat.com> wrote:
+>
+> On Thu, Sep 12, 2024 at 09:13:16AM +0100, Peter Maydell wrote:
+> > On Wed, 11 Sept 2024 at 22:26, Fabiano Rosas <farosas@suse.de> wrote:
+> > > I don't think we're discussing total CI time at this point, so the math
+> > > doesn't really add up. We're not looking into making the CI finish
+> > > faster. We're looking into making migration-test finish faster. That
+> > > would reduce timeouts in CI, speed-up make check and reduce the chance
+> > > of random race conditions* affecting other people/staging runs.
+> >
+> > Right. The reason migration-test appears on my radar is because
+> > it is very frequently the thing that shows up as "this sometimes
+> > just fails or just times out and if you hit retry it goes away
+> > again". That might not be migration-test's fault specifically,
+> > because those retries tend to be certain CI configs (s390,
+> > the i686-tci one), and I have some theories about what might be
+> > causing it (e.g. build system runs 4 migration-tests in parallel,
+> > which means 8 QEMU processes which is too many for the number
+> > of host CPUs). But right now I look at CI job failures and my reaction
+> > is "oh, it's the migration-test failing yet again" :-(
+> >
+> > For some examples from this week:
+> >
+> > https://gitlab.com/qemu-project/qemu/-/jobs/7802183144
+> > https://gitlab.com/qemu-project/qemu/-/jobs/7799842373  <--------[1]
+> > https://gitlab.com/qemu-project/qemu/-/jobs/7786579152  <--------[2]
+> > https://gitlab.com/qemu-project/qemu/-/jobs/7786579155
+>
+> Ah right, the TIMEOUT is unfortunate, especially if tests can be run in
+> parallel.  It indeed sounds like no good way to finally solve.. I don't
+> also see how speeding up / reducing tests in migration test would help, as
+> that's (from some degree..) is the same as tuning the timeout value bigger.
+> When the tests are less it'll fit into 480s window, but maybe it's too
+> quick now we wonder whether we should shrink it to e.g. 90s, but then it
+> can timeout again when on a busy host with less capability of concurrency.
 
-(The environment this CI job runs in seems to cause us to default
-to a parallelism of 9 in the main CI.)
+For the TIMEOUT part on cross-i686-tci I plan to try this patch:
+https://patchew.org/QEMU/20240912151003.2045031-1-peter.maydell@linaro.org/
+which makes 'make check' single-threaded; that will help to see
+if the parallelism is a problem. (If it is then we might want
+to do a more generalised approach rather than just for that one
+CI job.)
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-If this works we might be able to wind this up to -j2 or -j3,
-and/or consider whether other CI jobs need something similar.
----
- .gitlab-ci.d/crossbuilds.yml | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+> But indeed there're two ERRORs ([1,2] above)..  I collected some more info
+> here before the log expires:
 
-diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
-index 459273f9da5..1e21d082aa4 100644
---- a/.gitlab-ci.d/crossbuilds.yml
-+++ b/.gitlab-ci.d/crossbuilds.yml
-@@ -62,7 +62,11 @@ cross-i686-tci:
-     IMAGE: debian-i686-cross
-     ACCEL: tcg-interpreter
-     EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,aarch64-softmmu,aarch64-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins --disable-kvm
--    MAKE_CHECK_ARGS: check check-tcg
-+    # Force tests to run in series, to see whether this
-+    # reduces the flakiness of this CI job. The CI
-+    # environment by default shows us 8 CPUs and so we
-+    # would otherwise be using a parallelism of 9.
-+    MAKE_CHECK_ARGS: check check-tcg -j1
- 
- cross-mipsel-system:
-   extends: .cross_system_build_job
--- 
-2.34.1
+> So.. it's the same test (multifd/tcp/plain/cancel) that is failing on
+> different host / arch being tested.  What is more weird is the two failures
+> are different, the 2nd failure throw out a TLS error even though the test
+> doesn't yet have tls involved.
+>
+> Fabiano, is this the issue you're looking at?
+>
+> Peter, do you think it'll be helpful if we temporarily mark this test as
+> "slow" too so it's not run in CI (so we still run it ourselves when prepare
+> migration PR, with the hope that it can reproduce)?
 
+If you think that specific test is flaky then I think that's
+probably a good idea. As usual with this kind of thing,
+probably best to have a comment next to the test noting
+why and with a URL to a gitlab issue for it, so we don't
+forget why we disabled the test.
+
+-- PMM
 
