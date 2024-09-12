@@ -4,77 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A12EE644D
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 06:38:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B41D1EE57C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 06:42:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sodSO-0004Gy-Ug; Thu, 12 Sep 2024 02:37:32 -0400
+	id 1sodWI-0001FU-Oa; Thu, 12 Sep 2024 02:41:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1sodRr-0004Ea-KJ
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 02:37:29 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sodVQ-0000sk-Lv
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 02:40:42 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1sodRq-0001SV-0t
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 02:36:59 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5c241feb80dso3280730a12.0
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 23:36:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sodVM-0001zy-TK
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 02:40:38 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-7db174f9050so208338a12.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 23:40:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1726123016; x=1726727816; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=o5PpMTVZmsH4A0nmqAUW4SaOdSqOpVsbmAvPUPKayQI=;
- b=SdZYEnpnmszCCAGG9yIs17/j4O4u3sZzwanXudFcdoBCI7cUyQodDv7oNEn73L8evW
- X+Rck6XQNLAO2lM9aNo96nZKT43NwD3xCMOuEhApMO6DkDIaV7JrNHB01r9wMeabcbtJ
- Y9hpCO1QwR3LDO934V2rp0zpcOW6NoObtA+jG/RJJ0OEax5eankZZT63gnvhDbSk5X9G
- mOJKTKYxk6dr7qkR9uxMx04oCh/UrsWEiTHeTQFdB121H8Xwtbu7JqQ1fUs1Ec9nHm8I
- nVp6fgfPwUkvPpmOu2tcrkJ0VsZqOWFm9Jt6WqG0BZbHBY2e4HhmtetKyouNPmgBc1SD
- rNFQ==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726123235; x=1726728035;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=AEk3TNqDrtgAr9xqiFpmkkws7Z6jxQQ9KRqsWJM80X0=;
+ b=05FJCca3X40bFgz6Q76SbzRnug66l9ixLuFAnjMYd9xwmW8ta7EGry84enEtjiW3qf
+ bnmN/26vjisNVWM0g3fInNhaEr4xuqWKY0qUl+c951WrMi9v8TXPsV9hx9b5owlkLtqT
+ Yw5ErTSY56nxximMN14ayVtvibaGRouUfCVQySFu77sf7frO0t8V+nnZQw55y3oU26VO
+ T049LzeyYx1jb2Oh5ze18oqo28gje2Vvf/sFyrNsoKfEWdKlcPU424sbpD3yP45qQ9tL
+ vprfJ6uHoAvKr3EBr9uLJjJbh0YCgkExDmajNmVDFqomznOqbEU3CKhP4GkL+Ug+VG7F
+ qrHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726123016; x=1726727816;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=o5PpMTVZmsH4A0nmqAUW4SaOdSqOpVsbmAvPUPKayQI=;
- b=YFkDhEgwzz7bIrwzbE3PU9QJUZpRIDYyyvecK8Zn0xEAFNpyXTTHWtTZtwpm7ncK3e
- 4e1crpatCx8dqqly+NxiYqSl9G2/z7K+6P5WoezXlzvE+F95EefUEk7zgGArMdyBleB3
- wET0zJw+5oG8OjXvhDh7WND3pGXdW0uRY9xl/vWpo38GjH2r/Cm5DnT2RA490JxUfwHQ
- YyZC2DGzLPDTXwphXrTkHv6uwwte4KVr/D+bVCigxypvbLMXDdREFw7BKzUQzp5zi1nT
- PAbRRMc2Po0vtzn0QeQpyEips1YVOMJifrN8bnNq6zml4kHO4JVBb3n2J3KgPLFW7SrO
- cI/A==
-X-Gm-Message-State: AOJu0YwfAB6RBKD/ZVC5dKun3PHNNgb4dWihkaV2KzrC60IyHJUuYdSu
- FET+njAUq70l1WXd7FQmZGESMw2RJWhSlOfDdVJuSEuZ+yUB6yBMVayYtuSHJ330yUJrolb5BYx
- g9vyhnB79wPA2gY5/zWft7BfBJb+8WvmsroIZZqdf7Bax2JgEFIQ=
-X-Google-Smtp-Source: AGHT+IFkW88/qo8o3RlCJI31hcV02l0IVMw8/XAYSXBJzejmBKtghUT4uhibqQcv/3Mr0XOUNTIpYgXD6btlIcic1q8=
-X-Received: by 2002:a05:6402:51d3:b0:5c2:1014:295a with SMTP id
- 4fb4d7f45d1cf-5c4015cc7b8mr10368432a12.2.1726123015061; Wed, 11 Sep 2024
- 23:36:55 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726123235; x=1726728035;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AEk3TNqDrtgAr9xqiFpmkkws7Z6jxQQ9KRqsWJM80X0=;
+ b=VVOClkce+SUDYxRecWkx6Rn8OVPKbE8WZBs2OX+anSghBt5ekAakLPnEIjgaxwGOVv
+ N0/lKTthwch6DzW0X7VHIZulLDm4p6BgiDsmXJunmYpoXr51pHeyR031AIWyZAKvI8NJ
+ BfPkfXeMBTnPl6SyBiL4ZnMpR6U2aEnnAg4tCfUMnYMo8gV6vEXlbNgLrvAxP9exsGd9
+ tCDUFNgjnufI75hKP/PNisaahj4cPM2Y5egCF7vcNxwskEAjWFNeTopXrXE+UoDFDmHH
+ EllkiMhnyPR0sA23MVaxcs6WMY335hMYnD0AE5Lg3q0UeM6t/mj7ODYz/UD65BFYhmp2
+ gpKQ==
+X-Gm-Message-State: AOJu0Yyxhw577faHCW2YNnTEK1Cx3LTniYI4o749X7Wwo2cVl4CdCfWc
+ bww7h9M3dO1Z2/KUh/0xiN2oGbrZ1OOV6N3Sj0Yhh6G2d9weCK+tAn9iWDFXEA8=
+X-Google-Smtp-Source: AGHT+IGHgEnACTF/mEihj3HBHr7VJXtGYbn6bs+5iejj1h1NPEkAXUT5Z3bvP3JFtZMCTHNrjN7I7w==
+X-Received: by 2002:a05:6a21:164a:b0:1cf:54bd:393a with SMTP id
+ adf61e73a8af0-1cf7620c101mr2100631637.37.1726123234449; 
+ Wed, 11 Sep 2024 23:40:34 -0700 (PDT)
+Received: from ?IPV6:2400:4050:a840:1e00:32ed:25ae:21b1:72d6?
+ ([2400:4050:a840:1e00:32ed:25ae:21b1:72d6])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-719090926fcsm4075644b3a.99.2024.09.11.23.40.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Sep 2024 23:40:34 -0700 (PDT)
+Message-ID: <3ea67905-fa37-448d-9872-d8fc70613ed0@daynix.com>
+Date: Thu, 12 Sep 2024 15:40:29 +0900
 MIME-Version: 1.0
-References: <20240912051734.5298-1-jim.shu@sifive.com>
- <5fca8390-33c8-4139-8238-caef3e3f1dbe@redhat.com>
-In-Reply-To: <5fca8390-33c8-4139-8238-caef3e3f1dbe@redhat.com>
-From: Jim Shu <jim.shu@sifive.com>
-Date: Thu, 12 Sep 2024 14:36:42 +0800
-Message-ID: <CALw707pkot65Zh_kpmKjZoQcm5f=VLLAFZwGbgR3D1qoDmiUGg@mail.gmail.com>
-Subject: Re: [PATCH] vfio/pci: Fix null pointer deference from error API
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=jim.shu@sifive.com; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.2 v15 04/11] s390x/pci: Check for multifunction
+ after device realization
+To: Matthew Rosato <mjrosato@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <20240823-reuse-v15-0-eddcb960e289@daynix.com>
+ <20240823-reuse-v15-4-eddcb960e289@daynix.com>
+ <2b5d2fce-8a1e-4f50-a5d2-0c4aaa2880af@redhat.com>
+ <eaebda7d-c61e-4ed8-a6b9-98e5f48f26ff@daynix.com>
+ <8dbc553b-c3ae-4f11-accb-6dee10e9758e@linux.ibm.com>
+ <8127d7f8-4917-4545-be66-62688157224a@daynix.com>
+ <a58519cf-90ce-4bdf-aa5a-04c3526d7192@linux.ibm.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <a58519cf-90ce-4bdf-aa5a-04c3526d7192@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,56 +113,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi C=C3=A9dric,
+On 2024/09/12 6:11, Matthew Rosato wrote:
+> On 9/11/24 11:15 AM, Akihiko Odaki wrote:
+>> On 2024/09/11 22:53, Matthew Rosato wrote:
+>>> On 9/11/24 6:58 AM, Akihiko Odaki wrote:
+>>>> On 2024/09/11 18:38, Cédric Le Goater wrote:
+>>>>> +Matthew +Eric
+>>>>>
+>>>>> Side note for the maintainers :
+>>>>>
+>>>>> Before this change, the igb device, which is multifunction, was working
+>>>>> fine under Linux.
+>>>>>
+>>>>> Was there a fix in Linux since :
+>>>>>
+>>>>>      57da367b9ec4 ("s390x/pci: forbid multifunction pci device")
+>>>>>      6069bcdeacee ("s390x/pci: Move some hotplug checks to the pre_plug handler")
+>>>>>
+>>>>> ?
+>>> The timing of those particular commits predates the linux s390 kernel support of multifunction/SR-IOV.  At that time it was simply not possible on s390.
+>>
+>> Is it OK to remove this check of multifunction now?
+> 
+> Yes, I think removing the check (which AFAIU was broken since 6069bcdeacee) will get us back to the behavior Cedric was seeing, where a device that reports multifunction in the config space is still allowed through but only the PF will be usable in the guest.
 
-Thank you very much for the quick response!
+Commit 6069bcdeacee predates the introduction of SR-IOV (commit 
+7c0fa8dff811 ["pcie: Add support for Single Root I/O Virtualization 
+(SR/IOV)"]) so it did not break anything, strictly speaking. Ideally, we 
+should have taken care of the check when introducing SR-IOV.
 
-I have checked the error API again. It seems to be my porting issue of
-set_iommu_device() callback.
-I think "pci_device_set_iommu_device(..., *errp)" should set 'errp' if
-this function returns false, right?
+> 
+>>
+>> This code is not working properly with SR-IOV and misleading. It is better to remove the code if it does no good.
+>>
+>> It would be nice if anyone confirms multifunction works for s390x with the code removed.
+> 
+> Even if you remove the check, multifunction itself won't work in the s390x guest without these missing CLP pieces too.  When I have some time I'll hack something together to fabricate some CLP data and try it out, but it sounds like Cedric could use his setup to right now at least verify that the PF itself should remain usable in the guest (current behavior).
 
-Thanks,
-Jim
+Well, it seems better to keep the check for non-SR-IOV multifunction 
+devices while not enforcing the restriction for SR-IOV.
 
-On Thu, Sep 12, 2024 at 2:18=E2=80=AFPM C=C3=A9dric Le Goater <clg@redhat.c=
-om> wrote:
->
-> Hello Jim,
->
-> On 9/12/24 07:17, Jim Shu wrote:
-> > pci_dev_realize() use the local error variable, which requires
-> > `error_setg()` API to allocate the error object at first.
-> >
-> > Signed-off-by: Jim Shu <jim.shu@sifive.com>
-> > ---
-> >   hw/vfio/pci.c | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> > index 0a99e55247..d994ad8bb9 100644
-> > --- a/hw/vfio/pci.c
-> > +++ b/hw/vfio/pci.c
-> > @@ -3117,7 +3117,7 @@ static void vfio_realize(PCIDevice *pdev, Error *=
-*errp)
-> >
-> >       if (!vbasedev->mdev &&
-> >           !pci_device_set_iommu_device(pdev, vbasedev->hiod, errp)) {
->
-> 'errp' will be set by pci_device_set_iommu_device() in case of
-> failure and, in this case, calling error_prepend() is a valid
-> thing to do. I think we are fine.
->
-> Thanks,
->
-> C.
->
->
->
-> > -        error_prepend(errp, "Failed to set iommu_device: ");
-> > +        error_setg(errp, "Failed to set iommu_device: ");
-> >           goto out_teardown;
-> >       }
-> >
->
+Multifunction devices without SR-IOV are created with explicit requests 
+by specifying multifunction=on for PCI devices. Such requests cannot be 
+fulfilled without multifunction CLP so we should reject them.
+
+The situation is different for SR-IOV. SR-IOV is a feature inherent to 
+specific type of devices and gets automatically enabled for these 
+devices. It may make more sense to ignore just the SR-IOV part of such 
+devices and keep the other functionalities working.
+
+The current code implements such a behavior, but it is accidental and 
+semantically wrong. I will correct the code to explicitly allow 
+multifunction for SR-IOV.
+
+Regards,
+Akihiko Odaki
 
