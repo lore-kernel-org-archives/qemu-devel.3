@@ -4,124 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C70EEB59D
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 12:13:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53701EEB59D
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 12:25:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soigp-0003n6-97; Thu, 12 Sep 2024 08:12:47 -0400
+	id 1soirx-0002pN-EN; Thu, 12 Sep 2024 08:24:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1soigb-0003am-1h
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 08:12:33 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1soiru-0002oZ-CM
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 08:24:14 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1soigX-00062y-Ez
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 08:12:32 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5c25f01879fso941637a12.1
- for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 05:12:28 -0700 (PDT)
+ id 1soirq-0007aC-RU
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 08:24:13 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-374cacf18b1so656583f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 05:24:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726143147; x=1726747947; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pSke8FlFE4N6exTtc6EKOjb2LrZxkDR+LzQcBycp73g=;
- b=p/OKdYJZgFGpFyEQag1stIvoDStfVqwgk8IuUbySBy20Oljgm3519odDMbzhDJex/+
- 0S62bG2rLNGjRtcPVDb3Ke069BWe08fb8ne3Jh/eGwuePSQHnJoog+G+OMhImLOwywP1
- iBJfQka+mebLNtDGdArRbmTKp47Xk8BIjfAyRIlws7PPmYslD1+tkKDq9b6WKvttcX26
- Nxa3V4AUvNBKB3SEUVXJYqR3349c9eySXDzV13GbCh2sCq/698l/v1MwvV9ecEyO+4Zh
- rVKV02NXppM6F3p8AaBfYkIrDZGZSGRTRtQWQaxche2RWxYuFJY9yJPQ68cBW8G0+Qr8
- +64A==
+ d=linaro.org; s=google; t=1726143847; x=1726748647; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=6wyRHVhxtcRH9lI1hIIWLnLmUXTRghP4aR+V0jfmXMU=;
+ b=uYJel1K5PylCJ01nP9lVDI13hPWXb4L1zIFI9Pjy19auySygsT05pnZkROl7Do69eI
+ N5tATtK/ttF+AP9emmeaif3xskr75ip8d6oSn7v4Y/Ffb4OxVU59IZQIvpp7fYCIiBJ/
+ F0syF+Z7qkv7uH3F9yW+EfMki+rmNe5aO7wfgt4VIHDde0tqCqw7SBwJRv5njxDuOcBW
+ xdy+f2uqvO2VK0fvH2HTbuT/BqV9YUWqaWsvJ/6ydn+RpYV0H+l/+kpUfY9itGe3fF5W
+ fXZf66iLfVZmXb+BypLNT7FnmH8clamabrl3ZaGEJBy+mp0w0Gwhny0TRLAZVU0ixKMB
+ zDsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726143147; x=1726747947;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pSke8FlFE4N6exTtc6EKOjb2LrZxkDR+LzQcBycp73g=;
- b=Q+PSu2xDXFmrGTlOZkMu/PhKV80o0qs8PTiTfQ8o0nxItLTTkzY0UtsEybinOFLYFb
- 58qMf8Q55c7tF4geiEZr63xJYd8v5ifSCYw9YQOEe/7qjj4coEXT1aeV0XUwn9o8qnlh
- ktwMho2/dUEh20UMYCxr/FjIuMsoyxO4DBNJNwP4ok374pjZr/QttSqC8T1y27d/I7Po
- M+0DvX/ifHBmXKJnvwK3W/ryO570T2M1leC9vPhOeuV1PYOFId2RC5BMA3Ldc5TYSUxJ
- imuSUlc3cPqk+a8ByKRxVasFimdag5LgxbaJ5dZujQuYRMFaaVWUmuLsPvwAzyuevg+7
- 7q5Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW9trfDR5s3ktlFI7wAxfgW6uwnfjSkGTMXekuckGHzPzvtNgJnbeNtwmcFfZVYvA1MGenNhs8J9sAG@nongnu.org
-X-Gm-Message-State: AOJu0YycsiDK31/rFcHWNaFdjoWc0y+oYqFByyEJQhtviDpLNfxlylQ3
- jFkV/2QczwSvcnZP2ajdFgdx2LAvWFYZJQUAkqD7nuXfmgZTzkCcpVa6FCDyz6ToTx2oZvIc7yz
- tQHoQCbKgPVrBuOdM/GM2iDo5NupV3lWk7WI/BA==
-X-Google-Smtp-Source: AGHT+IETQd/3dKE+DCudKgky7MhTcKDOjT4e304Trb0+62Sgjre9CoznMfjV51Zt3iOwKhpGntAfXRHw7wfNzHrHWeQ=
-X-Received: by 2002:a05:6402:3881:b0:5c0:8ea7:3deb with SMTP id
- 4fb4d7f45d1cf-5c413e4c748mr1736077a12.22.1726143147135; Thu, 12 Sep 2024
- 05:12:27 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726143847; x=1726748647;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6wyRHVhxtcRH9lI1hIIWLnLmUXTRghP4aR+V0jfmXMU=;
+ b=RHz78zgheGfZdlPhe4haboWMeehKMrQqpqtZeTqvu7QCiXzNv9oG8a/mGps0hooWi9
+ F+u0AD2MxG9Jkp7Tj4k5kqAie21PgSdqp34uzu7MgfM3CYFHblgz9nKPJkJBIhe5LPUl
+ mRVr+ZfP0pfqvXlAbWoywalAYpBiSxlerVEWSJ3vS2kwi4qGFrHkKcbI8mhnp2E0zH/U
+ JvMDFvlphTVvM2ubL+4wmhIz6XlKgvMdia0h6ktH4hBwD0lbnCSXrxs9mkoWATg9ujHi
+ Q2Bvm34tFOAW20Gr9vkEnlkymRMYY3FfPv44dEBaCtPR1pCajd9PfppGwFPFiHwb8EB1
+ 5Nxg==
+X-Gm-Message-State: AOJu0YwiSmoJjwPlZU6e9yLulCY2Fz58y3+LdqNRK6SdQkcHll0+kYKb
+ LBDJCa+X4C3Y2hbe2LLQqDBR99FHWNSXcR7XJJdlSBMp/dylvP5xohHXf7G7wQehu5KGhWBMDp8
+ DxJ6q4fZHcq6qz79C0LWoO/BycgKNx4O+1pkZGA==
+X-Google-Smtp-Source: AGHT+IEsIi74XZV72x3sJPZPhYyIN1xvrZm8lFhwysRlXwMZ2anjtX0YuHo3+/maeYoBMhZefnfm15Z4Y/JX1yTNlbY=
+X-Received: by 2002:a5d:4983:0:b0:368:7f4f:9ead with SMTP id
+ ffacd0b85a97d-378c2cd546fmr1517198f8f.7.1726143847166; Thu, 12 Sep 2024
+ 05:24:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240912073921.453203-1-pierrick.bouvier@linaro.org>
- <20240912073921.453203-15-pierrick.bouvier@linaro.org>
- <a0608783-d6d8-4ccc-a431-5fc1e96e0021@linaro.org>
-In-Reply-To: <a0608783-d6d8-4ccc-a431-5fc1e96e0021@linaro.org>
+References: <20240906181645.40359-1-francisco.iglesias@amd.com>
+In-Reply-To: <20240906181645.40359-1-francisco.iglesias@amd.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Sep 2024 13:12:16 +0100
-Message-ID: <CAFEAcA9rx6jSZ3SHa1=H+-r6H4KopK3dUG=qmqRgt=nVcs5ueA@mail.gmail.com>
-Subject: Re: [PATCH v2 14/48] include/hw/s390x: replace assert(false) with
- g_assert_not_reached()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org, 
- Jason Wang <jasowang@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Laurent Vivier <lvivier@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
- Nicholas Piggin <npiggin@gmail.com>, Klaus Jensen <its@irrelevant.dk>,
- WANG Xuerui <git@xen0n.name>, 
- Halil Pasic <pasic@linux.ibm.com>, Rob Herring <robh@kernel.org>, 
- Michael Rolnik <mrolnik@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, 
- Corey Minyard <minyard@acm.org>, Keith Busch <kbusch@kernel.org>,
- Thomas Huth <thuth@redhat.com>, 
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Jesper Devantier <foss@defmacro.it>, Hyman Huang <yong.huang@smartx.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-s390x@nongnu.org, 
- Laurent Vivier <laurent@vivier.eu>, qemu-riscv@nongnu.org, 
- "Richard W.M. Jones" <rjones@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Aurelien Jarno <aurelien@aurel32.net>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, kvm@vger.kernel.org, 
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Hanna Reitz <hreitz@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, qemu-ppc@nongnu.org, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Helge Deller <deller@gmx.de>,
- Peter Xu <peterx@redhat.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Yanan Wang <wangyanan55@huawei.com>, qemu-arm@nongnu.org, 
- Igor Mammedov <imammedo@redhat.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>, 
- Eric Farman <farman@linux.ibm.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- qemu-block@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>, 
- Joel Stanley <joel@jms.id.au>, Eduardo Habkost <eduardo@habkost.net>, 
- David Gibson <david@gibson.dropbear.id.au>, Fam Zheng <fam@euphon.net>, 
- Weiwei Li <liwei1518@gmail.com>, Markus Armbruster <armbru@redhat.com>
+Date: Thu, 12 Sep 2024 13:23:52 +0100
+Message-ID: <CAFEAcA_1vD5D=jvY2AZJioU8VAJ=zJkdF20XyY-gFuifBY6_ng@mail.gmail.com>
+Subject: Re: [PATCH v1 0/3] CAN & Xilinx OSPI maintainer updates
+To: Francisco Iglesias <francisco.iglesias@amd.com>
+Cc: qemu-devel@nongnu.org, frasse.iglesias@gmail.com, alistair@alistair23.me, 
+ edgar.iglesias@gmail.com, pisa@cmp.felk.cvut.cz
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,30 +88,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Sept 2024 at 12:59, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.o=
-rg> wrote:
+On Fri, 6 Sept 2024 at 19:16, Francisco Iglesias
+<francisco.iglesias@amd.com> wrote:
 >
-> On 12/9/24 09:38, Pierrick Bouvier wrote:
-> > This patch is part of a series that moves towards a consistent use of
-> > g_assert_not_reached() rather than an ad hoc mix of different
-> > assertion mechanisms.
-> >
-> > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> > Reviewed-by: Thomas Huth <thuth@redhat.com>
-> > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> > ---
-> >   include/hw/s390x/cpu-topology.h | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> Hi all,
 >
-> We usually don't precise "include/" in patch subject:
-> we treat include/FOO as part of FOO area.
+> I'm not in possesion of Vikram's new email address at his new job, because of
+> this the first patch in the series suggest's to remove Vikram as maintainer for
+> the Xilinx CAN models and also the CAN bus subsystem. The second patch in the
+> series updates my email address to the amd.com one on the Xilinx Versal
+> OSPI maintaintership section. In the third I volunteer to replace Vikram as
+> maintainer for the CAN bus subsystem.
+>
+> Best regards,
+> Francisco
+>
+> Francisco Iglesias (3):
+>   MAINTAINERS: Remove Vikram Garhwal as maintainer
+>   MAINTAINERS: Update Xilinx Versal OSPI maintainer's email address
+>   MAINTAINERS: Add my-self as CAN maintainer
 
-I would say either is OK -- if you do
-git log --oneline | grep ' include' |less
 
-you can see plenty of examples where 'include' was used in
-the subject-area prefix, especially if, as here, we're changing
-just one file.
+
+Applied to target-arm.next, thanks.
 
 -- PMM
 
