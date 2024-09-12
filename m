@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 002E0EED635
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 18:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5BFFEED635
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 18:13:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sooIW-0005La-Mm; Thu, 12 Sep 2024 14:12:04 -0400
+	id 1sooJl-0003KU-Sq; Thu, 12 Sep 2024 14:13:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sooIT-00058j-FO
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 14:12:01 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1sooJj-00039a-7V
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 14:13:19 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sooIR-0008HN-Tc
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 14:12:01 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-20696938f86so11677525ad.3
- for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 11:11:59 -0700 (PDT)
+ id 1sooJe-0008Kb-R2
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 14:13:16 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-205659dc63aso14754885ad.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 11:13:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726164718; x=1726769518; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726164793; x=1726769593; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=MKHvgWUVJ+01jgoQFW8d322vT3mQt2FziRAouxUiYk0=;
- b=QRVJXIbEYzUcB8POATI402KWNktwVlwcs6V/HsK3HF5LqX+1M0P85UHLHJPtqB7eF6
- piG2Kz04LiSY23vZl2SM02zzD1wcOl6klCrWOpu+yREPFy6G2gOqwF6spVvD2+T90SlW
- o2EMpJ1wSUQmGnz0b4OtIXi9WIBzbvLINlh7jW8zczWNyZmVjzz23fqxqkViifCNufH7
- SgvOJAITyKkL3IRXuS3Ag7phdI2DG2/3mKOfXQUBObJXih7FAJ/qXw4pj3gF43wh2bEW
- 32466VJ4rkI2mHNgDfc7USjRhPLkRgoqIYPs8K/4TpPIeptcm+oiyz4CXLIQpLtThBFP
- ehmw==
+ bh=oN+UHox9OSM50ZXKK3Fq1bLThxL2Wq7pbmqMBNgBMwg=;
+ b=qh8HpVZ2Ojkq7SnSfD11NLhHS1OUhTzuFnd7m8GRLhyTwkTjwrPwp6dNbUpSYyDced
+ 0jz6W7hvAu5euZEDYq9wg7dlv4Wky1l8w5ulnSbsphPANOv2BJ7h4haRHEDHF2CfO8a+
+ bCOoJJRr0o6hKSArdo4uUDJ/FpgRJGZqCBC5duKChWg4B291DYNrYA8IgpUHvePKQSRV
+ QqCs2n9N5P7h+F5kB8vI23Ls2El9RKiyzKKuYfHXq4je3t9fcoVDRCgsTKlm/nCqEPpK
+ 0XP2I59FMNjmUkkTakse1jANMONnnGXhZ4W2Xi+ftS0SEI/rz16SbKMc4/E0HlKTBgT1
+ imTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726164718; x=1726769518;
+ d=1e100.net; s=20230601; t=1726164793; x=1726769593;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MKHvgWUVJ+01jgoQFW8d322vT3mQt2FziRAouxUiYk0=;
- b=tpu+amvsKTmI3zRecndlwYjmF9wPuqTL11AogFx5PKWXHe5oN4ZqhhVEjkC1WAaaS7
- 7UhM5fB5DoCVI1R+KSGw1Z/Hby5i0+m5xL5fP3MBoYNMxdLoQkrvafZG+gxt2F2rn808
- a5vEog9FSmsVRaS6Qem9rB2Daxd2BOHxh8GvJp0iUHpDxUJEGf1tLP1tv8T74Q2WOu8i
- PPvhiMkoWUR58zObyZrmA2QgVOP3ZByqKsJcHc0pBaz5kcm/aOHzXCiIfJPl3u0j3GcG
- bnA4E2TCOhtthU+Mw2sdS486XgJmKLTsD3exIpnQCRX/yW0AYRSgLQM72aTfk76U8VRX
- cbqQ==
+ bh=oN+UHox9OSM50ZXKK3Fq1bLThxL2Wq7pbmqMBNgBMwg=;
+ b=pnxTajypLQsvCvGuDaJIQV8aqg1MdI5PnS31GyA/uFdyZzirvvqPxg9EmBcTbcHa0N
+ A0+qnmeW9Pz3n+37E1pEryCtbpYP0u2vrv4uEuPibvpNLdDo1w35+5GzYZ2841DzI0s9
+ Kox6mjQvLqEPLd16sMyAk+I7yVhcjGKhpZgfVS01xgCSLuJbU3AQIyIxfhXokRzEqoSs
+ /aACxAWrHf65A5X05N/M2Bo3WGVceDBB4aCAO6Eab3gnTeE64mA4QUiwereFoGgizzxA
+ Lu9jFCx0Kw1NnTAaFaZ+0A17FV06b2IYssP95/wgsRTods4aFssB4JuGTyAtsJdBOs+f
+ LsLA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVi+YuHpdv6tSgAcU22TWDrU/Nz22EeJMMp/tzn0Vh6I0ZNowxXba4rIB6qr7aUDMHEBpM4uuQ8Xi6h@nongnu.org
-X-Gm-Message-State: AOJu0Yz3rbU6hR6wUXV8GR9U41aHr9GYFF4lM6qjzr2fVupE0mWm9vsD
- dOxNoKmpgSqC34YFzrn6dml0PPdT0rRCrd7ayPTJN+ys534jN4E2tDcIC/FjprI=
-X-Google-Smtp-Source: AGHT+IHuBTKGELVgJqCkxIsAP1L0AqSCuv9yB2TQb7AVEwkIXTnlrjE3FuVIEc+ZQzdP8G2NgEggGA==
-X-Received: by 2002:a17:903:1c2:b0:206:8acd:ef7d with SMTP id
- d9443c01a7336-2076e44b8a4mr57169375ad.52.1726164718402; 
- Thu, 12 Sep 2024 11:11:58 -0700 (PDT)
+ AJvYcCVfBEIOsLQn0EvCCBhjlJeftNZtq8XJe4LqbjDStjdi7dfxIrVhkVNrWpfSPh9B38XoDDCfNq3CvAeP@nongnu.org
+X-Gm-Message-State: AOJu0YwUra1Mj5wjF1vLnQcGLXoY8z7kCvdtywnwP+ECA9q7QVJBO7Kl
+ iREb1fTJJhdLqvFKko+M9hs4HMyIoo1OgNlh1iTOcSxqfvlAW9+X/X3SxJVszKE=
+X-Google-Smtp-Source: AGHT+IFKFqbRKD1gw5kaZP0cG7tfW4CgiZaO8lFKi14x13nLvy5KJya7wOBTBfIU/U661Uyl0JLubQ==
+X-Received: by 2002:a17:902:f70d:b0:207:1842:8c5c with SMTP id
+ d9443c01a7336-2076e4614c3mr65401095ad.46.1726164792807; 
+ Thu, 12 Sep 2024 11:13:12 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2076b01a093sm16881375ad.276.2024.09.12.11.11.57
+ d9443c01a7336-2076afe9a16sm16868095ad.207.2024.09.12.11.13.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Sep 2024 11:11:58 -0700 (PDT)
-Message-ID: <00d8613e-8f2a-41b9-a726-11a1fd4b2d49@linaro.org>
-Date: Thu, 12 Sep 2024 11:11:56 -0700
+ Thu, 12 Sep 2024 11:13:12 -0700 (PDT)
+Message-ID: <41bd93cc-6b6d-4fcf-816c-c212936eff09@linaro.org>
+Date: Thu, 12 Sep 2024 11:13:10 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 42/48] hw/pci: remove return after
+Subject: Re: [PATCH v2 43/48] hw/ppc: remove return after
  g_assert_not_reached()
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 References: <20240912073921.453203-1-pierrick.bouvier@linaro.org>
- <20240912073921.453203-43-pierrick.bouvier@linaro.org>
+ <20240912073921.453203-44-pierrick.bouvier@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240912073921.453203-43-pierrick.bouvier@linaro.org>
+In-Reply-To: <20240912073921.453203-44-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,8 +105,9 @@ On 9/12/24 00:39, Pierrick Bouvier wrote:
 > 
 > Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
 > ---
->   hw/pci/pci-stub.c | 2 --
->   1 file changed, 2 deletions(-)
+>   hw/ppc/ppc.c          | 1 -
+>   hw/ppc/spapr_events.c | 1 -
+>   2 files changed, 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
