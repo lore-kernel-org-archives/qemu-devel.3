@@ -4,79 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 784FEEED609
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 14:29:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B4B6EED60A
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 14:29:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sokoE-0003gj-UH; Thu, 12 Sep 2024 10:28:35 -0400
+	id 1sokos-0004Bt-4q; Thu, 12 Sep 2024 10:29:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sokns-0003Qd-96
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 10:28:15 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sokoi-0004BA-9v
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 10:29:04 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1soknp-0005l8-Sm
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 10:28:12 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5bef295a45bso580191a12.0
- for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 07:28:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726151288; x=1726756088; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XFZGkWmcdUAJu1BIOh4B6rVCtq63JMjYOuTjP/B4fh8=;
- b=v+FEdNNSF6o+JBIhdmbCQ6G86HOEERNPN2q9H//80uQ31lFwqKISxIDvMhBGaaaJqO
- mkgSQyRuWpVrGh3/3f+CxToOD3s9xQCr898IigRIX3nIHmlRp5DzPsBKpVg1Y5lcq8od
- ITUPEuLSn2rNR/ZeDXMgtTNC9qWv5RqY0rKVxeGBe16RqN9neiQ2sLuY9aLV+iJRdj7d
- CUaHIcuWIPalm13CFt+t07RIRPSCwTnfMTXqVpbKokXccc2D3gXK4h8VhRLiuaHxHfj8
- G5fDmeXuV2uAtOxNmFGAKsH6niEbRGzjblM8bB5Rf0aUzv+1CbIHKnu4In9+C7XAIOqv
- 3gWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726151288; x=1726756088;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XFZGkWmcdUAJu1BIOh4B6rVCtq63JMjYOuTjP/B4fh8=;
- b=WZfFzgM+il6lky8cpdlEf4KfPfW5RxIk7eY3gAjgCjCkQrhz8r1g5C6j2/b0ZMRyzk
- hMEukBlNQwWSgS70Y/GCMqKbjhEG6P7eOFI/sRVd78q5GPXd/Y1boc0qIeMz89zq+V1r
- 7uvgMTKn+4LgUf1899nAjjaeS1v1PEzYp+n75ZG2r7P9zoxQpNC7/RaXFDJD2sMs5+67
- vMsWU7fR47wlQG85YJ3DYxvDWazMe5QO8OABfH2DenAknZVymRwuHCjIFy0+oymc6ohP
- VG6e4DehgdR0RXLULTQwFh/7k76PSgX9LZB2Vzbhfz+18ORb6aVcUCJKv0RbPgEZpkzd
- KFAQ==
-X-Gm-Message-State: AOJu0YwfJ3db7MdujXnFpdZNUiKojsKkTq8ySat0WKmKwqdMEhf3Bp3o
- A7snJdByceQbqZaXThFl3R/GTAJ3XtAzvtLa+EHzlgniRDqV4JtP2IkEQyG3O2P3plRi6ocMJEJ
- 9NiZ6OQ8/1/BP3kZX28cf0rZd9yr6DNWvyApBqHhYOS3Z9ASP
-X-Google-Smtp-Source: AGHT+IEdzCOFVrEU6flzf5WLA8wBqbaUeUvRM2B21EvHgllq4IbyL0ixKk7kbvR+BMmPYfAq6RxEj+uELib943fA774=
-X-Received: by 2002:a05:6402:40cb:b0:5c4:14b7:b3bf with SMTP id
- 4fb4d7f45d1cf-5c414b7b7e6mr2708204a12.8.1726151287701; Thu, 12 Sep 2024
- 07:28:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sokoX-0005sh-9H
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 10:28:54 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 1199521AF6;
+ Thu, 12 Sep 2024 14:28:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726151331; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=d2y8nHnoOvadOR8RkA6QN75stcmY3OY4Df7HDEkxBDI=;
+ b=cAS2huPenATV01k4ChgAi+lo/OjVXc648mXuyzn9Me4ou8V1QJu7sbXL83U1R5TD+LtB+f
+ h9LKZ7OsOZ3zt1/k0N3+lpN5dLfYg4pBimM7/2I2LT2CofgHB3utt+B1XPOuG0MZfbJ4ir
+ TEqAxBKZhvyBE9Xfu5SwqwjSqqPgNXg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726151331;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=d2y8nHnoOvadOR8RkA6QN75stcmY3OY4Df7HDEkxBDI=;
+ b=gjLal4D+Sd/GU+8gfQtwAofOyLySTInIS1lhJXKtmoxTRawnD5QQdxOf0rcWqfdOtSq/Y0
+ P7dtoqtFRfM4zzBA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726151331; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=d2y8nHnoOvadOR8RkA6QN75stcmY3OY4Df7HDEkxBDI=;
+ b=cAS2huPenATV01k4ChgAi+lo/OjVXc648mXuyzn9Me4ou8V1QJu7sbXL83U1R5TD+LtB+f
+ h9LKZ7OsOZ3zt1/k0N3+lpN5dLfYg4pBimM7/2I2LT2CofgHB3utt+B1XPOuG0MZfbJ4ir
+ TEqAxBKZhvyBE9Xfu5SwqwjSqqPgNXg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726151331;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=d2y8nHnoOvadOR8RkA6QN75stcmY3OY4Df7HDEkxBDI=;
+ b=gjLal4D+Sd/GU+8gfQtwAofOyLySTInIS1lhJXKtmoxTRawnD5QQdxOf0rcWqfdOtSq/Y0
+ P7dtoqtFRfM4zzBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 901D013AD8;
+ Thu, 12 Sep 2024 14:28:50 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id EfeVFaL64mbZBAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 12 Sep 2024 14:28:50 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Peter Xu <peterx@redhat.com>, Hyman Huang <yong.huang@smartx.com>,
+ qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, David Hildenbrand <david@redhat.com>, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>
+Subject: Re: [PATCH RFC 10/10] tests/migration-tests: Add test case for
+ responsive CPU throttle
+In-Reply-To: <CAFEAcA8Xrgf3nYYaOjaV_2+rtnLahMOdcBGReXpLKxyPm4u_pQ@mail.gmail.com>
+References: <cover.1725889277.git.yong.huang@smartx.com>
+ <96eeea4efd3417212d6e2639bc118b90d4dcf926.1725889277.git.yong.huang@smartx.com>
+ <CAFEAcA99=bn4x_BjgsAsrVitXNxOUSNviz=TGezJEB+=Zj603w@mail.gmail.com>
+ <Zt8H6pC2yQ2DD7DV@x1n> <87frq8lcgp.fsf@suse.de> <ZuC4pYT-atQwWePv@x1n>
+ <87seu7qhao.fsf@suse.de> <ZuG-SijLg8Q27boE@x1n> <87ed5qq8e2.fsf@suse.de>
+ <ZuH_pvnTCumKuXTh@x1n> <87bk0trifq.fsf@suse.de>
+ <CAFEAcA9YkZiSSOAj0zH2OwF9AcziJT-zpnNVQn8BXizhSXHVOA@mail.gmail.com>
+ <87wmjhvv7e.fsf@suse.de>
+ <CAFEAcA8Xrgf3nYYaOjaV_2+rtnLahMOdcBGReXpLKxyPm4u_pQ@mail.gmail.com>
+Date: Thu, 12 Sep 2024 11:28:48 -0300
+Message-ID: <87a5gdgd3z.fsf@suse.de>
 MIME-Version: 1.0
-References: <20240819135455.2957406-1-mnissler@rivosinc.com>
-In-Reply-To: <20240819135455.2957406-1-mnissler@rivosinc.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Sep 2024 15:27:55 +0100
-Message-ID: <CAFEAcA-pVJozMoPnUU9TO=0KKH3iR95rf7XLj9EuaM7+Q-VZoQ@mail.gmail.com>
-Subject: Re: [PATCH] softmmu: Support concurrent bounce buffers
-To: Mattias Nissler <mnissler@rivosinc.com>
-Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- stefanha@redhat.com, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[9]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,96 +126,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 19 Aug 2024 at 14:56, Mattias Nissler <mnissler@rivosinc.com> wrote=
-:
->
-> When DMA memory can't be directly accessed, as is the case when
-> running the device model in a separate process without shareable DMA
-> file descriptors, bounce buffering is used.
->
-> It is not uncommon for device models to request mapping of several DMA
-> regions at the same time. Examples include:
->  * net devices, e.g. when transmitting a packet that is split across
->    several TX descriptors (observed with igb)
->  * USB host controllers, when handling a packet with multiple data TRBs
->    (observed with xhci)
->
-> Previously, qemu only provided a single bounce buffer per AddressSpace
-> and would fail DMA map requests while the buffer was already in use. In
-> turn, this would cause DMA failures that ultimately manifest as hardware
-> errors from the guest perspective.
->
-> This change allocates DMA bounce buffers dynamically instead of
-> supporting only a single buffer. Thus, multiple DMA mappings work
-> correctly also when RAM can't be mmap()-ed.
->
-> The total bounce buffer allocation size is limited individually for each
-> AddressSpace. The default limit is 4096 bytes, matching the previous
-> maximum buffer size. A new x-max-bounce-buffer-size parameter is
-> provided to configure the limit for PCI devices.
->
-> Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Acked-by: Peter Xu <peterx@redhat.com>
-> ---
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-> @@ -3251,28 +3265,40 @@ void *address_space_map(AddressSpace *as,
->      mr =3D flatview_translate(fv, addr, &xlat, &l, is_write, attrs);
+> On Thu, 12 Sept 2024 at 14:48, Fabiano Rosas <farosas@suse.de> wrote:
+>> Peter Maydell <peter.maydell@linaro.org> writes:
+>> > For some examples from this week:
+>> >
+>> > https://gitlab.com/qemu-project/qemu/-/jobs/7802183144
+>> > https://gitlab.com/qemu-project/qemu/-/jobs/7799842373
+>> > https://gitlab.com/qemu-project/qemu/-/jobs/7786579152
+>> > https://gitlab.com/qemu-project/qemu/-/jobs/7786579155
+>>
+>> About these:
+>>
+>> There are 2 instances of plain-old-SIGSEGV here. Both happen in
+>> non-x86_64 runs and on the /multifd/tcp/plain/cancel test, which means
+>> they're either races or memory ordering issues. Having i386 crashing
+>> points to the former. So having the CI loaded and causing timeouts is
+>> probably what exposed the issue.
 >
->      if (!memory_access_is_direct(mr, is_write)) {
-> -        if (qatomic_xchg(&as->bounce.in_use, true)) {
-> +        size_t used =3D qatomic_read(&as->bounce_buffer_size);
-> +        for (;;) {
-> +            hwaddr alloc =3D MIN(as->max_bounce_buffer_size - used, l);
-> +            size_t new_size =3D used + alloc;
-> +            size_t actual =3D
-> +                qatomic_cmpxchg(&as->bounce_buffer_size, used, new_size)=
-;
-> +            if (actual =3D=3D used) {
-> +                l =3D alloc;
-> +                break;
-> +            }
-> +            used =3D actual;
-> +        }
-> +
-> +        if (l =3D=3D 0) {
->              *plen =3D 0;
->              return NULL;
->          }
-> -        /* Avoid unbounded allocations */
-> -        l =3D MIN(l, TARGET_PAGE_SIZE);
-> -        as->bounce.buffer =3D qemu_memalign(TARGET_PAGE_SIZE, l);
-> -        as->bounce.addr =3D addr;
-> -        as->bounce.len =3D l;
->
-> +        BounceBuffer *bounce =3D g_malloc0(l + sizeof(BounceBuffer));
-> +        bounce->magic =3D BOUNCE_BUFFER_MAGIC;
->          memory_region_ref(mr);
-> -        as->bounce.mr =3D mr;
-> +        bounce->mr =3D mr;
-> +        bounce->addr =3D addr;
-> +        bounce->len =3D l;
-> +
->          if (!is_write) {
->              flatview_read(fv, addr, MEMTXATTRS_UNSPECIFIED,
-> -                          as->bounce.buffer, l);
-> +                          bounce->buffer, l);
->          }
->
->          *plen =3D l;
-> -        return as->bounce.buffer;
-> +        return bounce->buffer;
+> They're also both TCI. Would these tests be relying on
+> specific atomic-access behaviour in the guest code that's
+> running, or is all the avoidance-of-races in the migration
+> code in QEMU itself?
 
-Coverity is pretty unhappy about this trick, because it isn't able
-to recognise that we can figure out the address of 'bounce'
-from the address of 'bounce->buffer' and free it in the
-address_space_unmap() code, so it thinks that every use
-of address_space_map(), pci_dma_map(), etc, is a memory leak.
-We can mark all those as false positives, of course, but it got
-me wondering whether maybe we should have this function return
-a struct that has all the information address_space_unmap()
-needs rather than relying on it being able to figure it out
-from the host memory pointer...
+I misspoke about memory ordering, this is all just the x86 host and the
+multifd threads in QEMU having synchronization issues.
 
--- PMM
+>
+> (I don't know of any particular problems with TCI's
+> implementation of atomic accesses, so this is just a stab
+> in the dark.)
+>
+> thanks
+> -- PMM
 
