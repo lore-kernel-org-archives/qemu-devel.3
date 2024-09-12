@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9585EED608
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 13:39:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6873CEED608
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 13:40:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sok2i-0002Cb-Q5; Thu, 12 Sep 2024 09:39:28 -0400
+	id 1sok3A-0004RE-Ew; Thu, 12 Sep 2024 09:39:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1sok2c-0001uX-Vd; Thu, 12 Sep 2024 09:39:24 -0400
+ id 1sok35-00045a-Ot; Thu, 12 Sep 2024 09:39:52 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1sok2a-0008Uo-DA; Thu, 12 Sep 2024 09:39:21 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4X4JM61QcPz6K75P;
- Thu, 12 Sep 2024 21:34:26 +0800 (CST)
+ id 1sok34-00005X-8j; Thu, 12 Sep 2024 09:39:51 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4X4JMj63RKz6K6lR;
+ Thu, 12 Sep 2024 21:34:57 +0800 (CST)
 Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id D52B91400C9;
- Thu, 12 Sep 2024 21:39:16 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 915F2140B38;
+ Thu, 12 Sep 2024 21:39:48 +0800 (CST)
 Received: from a2303103017.china.huawei.com (10.48.147.42) by
  frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 12 Sep 2024 15:39:15 +0200
+ 15.1.2507.39; Thu, 12 Sep 2024 15:39:47 +0200
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <zhao1.liu@intel.com>, <zhenyu.z.wang@intel.com>,
  <dapeng1.mi@linux.intel.com>, <yongwei.ma@intel.com>, <armbru@redhat.com>,
@@ -36,9 +36,9 @@ CC: <zhao1.liu@intel.com>, <zhenyu.z.wang@intel.com>,
  <mtosatti@redhat.com>, <berrange@redhat.com>, <richard.henderson@linaro.org>, 
  <linuxarm@huwei.com>, <shameerali.kolothum.thodi@huawei.com>,
  <Jonathan.Cameron@Huawei.com>, <jiangkunkun@huawei.com>
-Subject: [PATCH 1/5] bios-tables-test: prepare to change ARM ACPI virt PPTT
-Date: Thu, 12 Sep 2024 14:38:25 +0100
-Message-ID: <20240912133829.400-2-alireza.sanaee@huawei.com>
+Subject: [PATCH 2/5] i386/cpu: add IsDefined flag to smp-cache property
+Date: Thu, 12 Sep 2024 14:38:26 +0100
+Message-ID: <20240912133829.400-3-alireza.sanaee@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240912133829.400-1-alireza.sanaee@huawei.com>
 References: <20240912133829.400-1-alireza.sanaee@huawei.com>
@@ -73,23 +73,40 @@ From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prepare to update `build_pptt` function to add cache description
-functionalities, thus add binaries in this patch.
+This commit adds IsDefined flag to the object and this helps in avoiding
+extra checks for every single layer of caches in both x86 and ARM.
 
 Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/core/machine-smp.c | 2 ++
+ include/hw/boards.h   | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..e84d6c6955 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,4 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/aarch64/virt/PPTT",
-+"tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt",
-+"tests/data/acpi/aarch64/virt/PPTT.topology",
+diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+index 9a28194676..5a02bbf584 100644
+--- a/hw/core/machine-smp.c
++++ b/hw/core/machine-smp.c
+@@ -371,6 +371,8 @@ bool machine_parse_smp_cache(MachineState *ms,
+         return false;
+     }
+ 
++    ms->smp_cache.IsDefined = true;
++
+     return true;
+ }
+ 
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index db2aa2b706..2883a57084 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -373,6 +373,7 @@ typedef struct CpuTopology {
+ 
+ typedef struct SmpCache {
+     SmpCacheProperties props[CACHE_LEVEL_AND_TYPE__MAX];
++    bool IsDefined;
+ } SmpCache;
+ 
+ /**
 -- 
 2.34.1
 
