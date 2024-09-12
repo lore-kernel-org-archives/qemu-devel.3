@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A64DEE6442
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEB23EE644A
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 05:34:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1socQ5-0002qT-TK; Thu, 12 Sep 2024 01:31:06 -0400
+	id 1socSQ-0005Xj-L6; Thu, 12 Sep 2024 01:33:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1socQ2-0002g2-Gj
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:31:02 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1socRB-0008LX-2w
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:32:13 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1socQ0-00034R-SF
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:31:02 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-6e7b121be30so426774a12.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:31:00 -0700 (PDT)
+ id 1socR8-0003Ao-TB
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:32:12 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-71790ed8c2dso431779b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:32:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726119059; x=1726723859; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1726119129; x=1726723929; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Vpqv3/ZDv8FKVW4tPIQmJ+l/8/cnMP9HRshZ49Evbfs=;
- b=JZYHhL3MjaA4SvQbN1ol2cVM52HsBLWJs2e3DlJafZlrAP/pnB4h936KQqfJ6FWiqt
- odYPvfc3odLd8DjZ4RY2QZHyH0oEPlz7BEdeCr43oan3IXPZGAZY9v7WydUBpL0EzBee
- rMHHXLyQOT4xSY9j+P/nSWvkf77LmxmBxr6rNu4n6YgWVtJTXVsvadDjZqjCuA9iM2fi
- KkmcBAebrpzm4GDHpQ70ppcG8joI86oiEP3GoJ+nMLpGsM/2vOmkH4pBR82YuPDBPx8f
- o1pwsAlwKgecjzh50+GwAL5LnJydJsRXIPqZysVAzTKJcNhr5pd0fE77BYlALYZsajsc
- virQ==
+ bh=ZObrB5tvafThUxGiM5moLAEXEy58t5ZXPielg0jlmmc=;
+ b=XtDiqGkkAD7YxpzHCY5467ZSgaXaaq2CcQQkfdRvGkJ1zZr4pW9HAVKjnCdpNv8gzq
+ jWgNBzTCUoDG9r4GseRxihFHgXn7ImMKr72IyqMvWQvuq4rxFmhFTq3TAqyl3MD0qKAp
+ mBRnpV/6i6PcuvAHtd22zwSwC0NbUnaDUZ78MWfAL6kz92i907DNPdLt0foroDB25tvt
+ IsTEHBdQ5OevnfEg6h+BRuSlkpPC+T0U9pUsEG0oUoNZ5rF3LKSgt7ne6cQaGiwSOSyY
+ XR5AvjUkNnarQ8YMes8JTb7qVY8MryRbcVWeYk3fxL+1/UEX94oMler2BrzZ8kwSHaYm
+ WmyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726119059; x=1726723859;
+ d=1e100.net; s=20230601; t=1726119129; x=1726723929;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Vpqv3/ZDv8FKVW4tPIQmJ+l/8/cnMP9HRshZ49Evbfs=;
- b=dn3sPnWTvDbdQaV8Qn2saTgBUNCvgLR2+1z0qg9ccgvJjqIxdVYjJdKxDiCgtxbCjQ
- CFnQfUCd2S5vUim+N5DsfcZUyo1gJb4R1xREonZn+3rANGehXXTV7o63RoIxQ9pEiRdb
- rr0VKWNrYi+JtpFazGGgV7ag+FWnj3ace3Ms+YlNrc79bBqTp67jrw2IWz++/YP67Ndn
- E0rsPKD6iAuGJjakPvrBrFNsR5rTpnwu3ff1lncY56BzF0wGA+p42A0vd5LXDdxm6iXp
- gzwML1Arx9cOjDs5QNUphb67uHB18UMiWinwDOhjBLf4BK1RT77qM/fs83G18lxII1Az
- E9eA==
-X-Gm-Message-State: AOJu0YxeDD/ZRNMG99ShrIbWRTEIHDvN14yb2i7JyHPYKFmeQBPkC6Ra
- MHaQsNK+4A954rgjoLnecv629v8NmZfigawTlRAwLjOEyNdRbbMRaaqF7g==
-X-Google-Smtp-Source: AGHT+IHf8FkB6NGoluqROlaJ9C25MESz/rQvijfbYgANNpA7nFr+eWPIRZErViKtG0UFF6hpS3H0aQ==
-X-Received: by 2002:a05:6a21:398b:b0:1cf:506a:cdd8 with SMTP id
- adf61e73a8af0-1cf75ee48bemr2266487637.12.1726119059207; 
- Wed, 11 Sep 2024 22:30:59 -0700 (PDT)
+ bh=ZObrB5tvafThUxGiM5moLAEXEy58t5ZXPielg0jlmmc=;
+ b=sYmFqQ3ZzRsdZkYi/NbKa3/HNrz8bo4PC20Wk5HGUDVTbsTDofgCVzv5Sy7BskJwKl
+ sCaPeIY9Gl/8YaIi57+ZoiQDJJpfqb3L0t4sESzgAv6Dbxro8qXiliXmqduWlWtbsS7b
+ Imf4W+UayYiXluc3BNGxaXpXrJFbR/IfUoPUZoYbmxfa9AsWa5D3tRkeDZaWcMsEEX64
+ 1Q/oDnCvlXgz/52utpuuU+O8YJzsV1c4S2EXmqZZw06osob22A8wqjQryTbwG0/3tlgh
+ y5/cwOEwp6llO4HKLMtTVrMiISujc6C7i0NQQXPkqBNQLdiO6YXrB0VudoodL2PI1mdu
+ QW3Q==
+X-Gm-Message-State: AOJu0YyUjgrunMndPZYHwcx6vuOPpKoLuojgCri4eXKpnQIY5ZMUfqCq
+ mjs7JGdhbeXYI2Hw5MM4/TWhZwKEBZfSBtelbaMdny5UfZ9oErrUDkz7mw==
+X-Google-Smtp-Source: AGHT+IHY0au5VgUruQMMWXc3yC2PXQEJVTUWzfy9Pa7PUPHdXIATVY3wH3wXqi1ZUcwtVWQQGNyIOQ==
+X-Received: by 2002:a05:6a00:acd:b0:717:8a87:7d02 with SMTP id
+ d2e1a72fcca58-71926210f14mr3337769b3a.23.1726119129227; 
+ Wed, 11 Sep 2024 22:32:09 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71908fc8fdesm3833034b3a.1.2024.09.11.22.30.56
+ d2e1a72fcca58-71908fc8fdesm3833034b3a.1.2024.09.11.22.32.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 22:30:58 -0700 (PDT)
+ Wed, 11 Sep 2024 22:32:08 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Tomasz Jeznach <tjeznach@rivosinc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Frank Chang <frank.chang@sifive.com>,
+Cc: alistair23@gmail.com, Mark Corbin <mark@dibsco.co.uk>,
+ Ajeet Singh <itachis@FreeBSD.org>, Warner Losh <imp@bsdimp.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 19/47] hw/riscv/virt.c: support for RISC-V IOMMU PCIDevice
- hotplug
-Date: Thu, 12 Sep 2024 15:29:24 +1000
-Message-ID: <20240912052953.2552501-20-alistair.francis@wdc.com>
+Subject: [PULL 40/47] bsd-user: Implement 'get_mcontext' for RISC-V
+Date: Thu, 12 Sep 2024 15:29:45 +1000
+Message-ID: <20240912052953.2552501-41-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240912052953.2552501-1-alistair.francis@wdc.com>
 References: <20240912052953.2552501-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,88 +100,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
+From: Mark Corbin <mark@dibsco.co.uk>
 
-Generate device tree entry for riscv-iommu PCI device, along with
-mapping all PCI device identifiers to the single IOMMU device instance.
+Added the 'get_mcontext' function to extract and populate
+the RISC-V machine context from the CPU state.
+This function is used to gather the current state of the
+general-purpose registers and store it in a 'target_mcontext_'
+structure.
 
-Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240903201633.93182-7-dbarboza@ventanamicro.com>
+Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
+Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
+Co-authored-by: Warner Losh <imp@bsdimp.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240907031927.1908-16-itachis@FreeBSD.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/virt.c | 33 ++++++++++++++++++++++++++++++++-
- 1 file changed, 32 insertions(+), 1 deletion(-)
+ bsd-user/riscv/signal.c | 53 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index cef41c150a..63d553ac98 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -32,6 +32,7 @@
- #include "hw/core/sysbus-fdt.h"
- #include "target/riscv/pmu.h"
- #include "hw/riscv/riscv_hart.h"
-+#include "hw/riscv/iommu.h"
- #include "hw/riscv/virt.h"
- #include "hw/riscv/boot.h"
- #include "hw/riscv/numa.h"
-@@ -1032,6 +1033,30 @@ static void create_fdt_virtio_iommu(RISCVVirtState *s, uint16_t bdf)
-                            bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
+diff --git a/bsd-user/riscv/signal.c b/bsd-user/riscv/signal.c
+index 2597fec2fd..072ad821d2 100644
+--- a/bsd-user/riscv/signal.c
++++ b/bsd-user/riscv/signal.c
+@@ -61,3 +61,56 @@ abi_long setup_sigframe_arch(CPURISCVState *env, abi_ulong frame_addr,
+     get_mcontext(env, mcp, flags);
+     return 0;
  }
- 
-+static void create_fdt_iommu(RISCVVirtState *s, uint16_t bdf)
++
++/*
++ * Compare with get_mcontext() in riscv/riscv/machdep.c
++ * Assumes that the memory is locked if mcp points to user memory.
++ */
++abi_long get_mcontext(CPURISCVState *regs, target_mcontext_t *mcp,
++        int flags)
 +{
-+    const char comp[] = "riscv,pci-iommu";
-+    void *fdt = MACHINE(s)->fdt;
-+    uint32_t iommu_phandle;
-+    g_autofree char *iommu_node = NULL;
-+    g_autofree char *pci_node = NULL;
 +
-+    pci_node = g_strdup_printf("/soc/pci@%lx",
-+                               (long) virt_memmap[VIRT_PCIE_ECAM].base);
-+    iommu_node = g_strdup_printf("%s/iommu@%x", pci_node, bdf);
-+    iommu_phandle = qemu_fdt_alloc_phandle(fdt);
-+    qemu_fdt_add_subnode(fdt, iommu_node);
++    mcp->mc_gpregs.gp_t[0] = tswap64(regs->gpr[5]);
++    mcp->mc_gpregs.gp_t[1] = tswap64(regs->gpr[6]);
++    mcp->mc_gpregs.gp_t[2] = tswap64(regs->gpr[7]);
++    mcp->mc_gpregs.gp_t[3] = tswap64(regs->gpr[28]);
++    mcp->mc_gpregs.gp_t[4] = tswap64(regs->gpr[29]);
++    mcp->mc_gpregs.gp_t[5] = tswap64(regs->gpr[30]);
++    mcp->mc_gpregs.gp_t[6] = tswap64(regs->gpr[31]);
 +
-+    qemu_fdt_setprop(fdt, iommu_node, "compatible", comp, sizeof(comp));
-+    qemu_fdt_setprop_cell(fdt, iommu_node, "#iommu-cells", 1);
-+    qemu_fdt_setprop_cell(fdt, iommu_node, "phandle", iommu_phandle);
-+    qemu_fdt_setprop_cells(fdt, iommu_node, "reg",
-+                           bdf << 8, 0, 0, 0, 0);
-+    qemu_fdt_setprop_cells(fdt, pci_node, "iommu-map",
-+                           0, iommu_phandle, 0, bdf,
-+                           bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
-+}
++    mcp->mc_gpregs.gp_s[0] = tswap64(regs->gpr[8]);
++    mcp->mc_gpregs.gp_s[1] = tswap64(regs->gpr[9]);
++    mcp->mc_gpregs.gp_s[2] = tswap64(regs->gpr[18]);
++    mcp->mc_gpregs.gp_s[3] = tswap64(regs->gpr[19]);
++    mcp->mc_gpregs.gp_s[4] = tswap64(regs->gpr[20]);
++    mcp->mc_gpregs.gp_s[5] = tswap64(regs->gpr[21]);
++    mcp->mc_gpregs.gp_s[6] = tswap64(regs->gpr[22]);
++    mcp->mc_gpregs.gp_s[7] = tswap64(regs->gpr[23]);
++    mcp->mc_gpregs.gp_s[8] = tswap64(regs->gpr[24]);
++    mcp->mc_gpregs.gp_s[9] = tswap64(regs->gpr[25]);
++    mcp->mc_gpregs.gp_s[10] = tswap64(regs->gpr[26]);
++    mcp->mc_gpregs.gp_s[11] = tswap64(regs->gpr[27]);
 +
- static void finalize_fdt(RISCVVirtState *s)
- {
-     uint32_t phandle = 1, irq_mmio_phandle = 1, msi_pcie_phandle = 1;
-@@ -1738,9 +1763,11 @@ static HotplugHandler *virt_machine_get_hotplug_handler(MachineState *machine,
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
- 
-     if (device_is_dynamic_sysbus(mc, dev) ||
--        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
-+        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
-+        object_dynamic_cast(OBJECT(dev), TYPE_RISCV_IOMMU_PCI)) {
-         return HOTPLUG_HANDLER(machine);
-     }
++    mcp->mc_gpregs.gp_a[0] = tswap64(regs->gpr[10]);
++    mcp->mc_gpregs.gp_a[1] = tswap64(regs->gpr[11]);
++    mcp->mc_gpregs.gp_a[2] = tswap64(regs->gpr[12]);
++    mcp->mc_gpregs.gp_a[3] = tswap64(regs->gpr[13]);
++    mcp->mc_gpregs.gp_a[4] = tswap64(regs->gpr[14]);
++    mcp->mc_gpregs.gp_a[5] = tswap64(regs->gpr[15]);
++    mcp->mc_gpregs.gp_a[6] = tswap64(regs->gpr[16]);
++    mcp->mc_gpregs.gp_a[7] = tswap64(regs->gpr[17]);
 +
-     return NULL;
- }
- 
-@@ -1761,6 +1788,10 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
-     if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
-         create_fdt_virtio_iommu(s, pci_get_bdf(PCI_DEVICE(dev)));
-     }
-+
-+    if (object_dynamic_cast(OBJECT(dev), TYPE_RISCV_IOMMU_PCI)) {
-+        create_fdt_iommu(s, pci_get_bdf(PCI_DEVICE(dev)));
++    if (flags & TARGET_MC_GET_CLEAR_RET) {
++        mcp->mc_gpregs.gp_a[0] = 0; /* a0 */
++        mcp->mc_gpregs.gp_a[1] = 0; /* a1 */
++        mcp->mc_gpregs.gp_t[0] = 0; /* clear syscall error */
 +    }
- }
- 
- static void virt_machine_class_init(ObjectClass *oc, void *data)
++
++    mcp->mc_gpregs.gp_ra = tswap64(regs->gpr[1]);
++    mcp->mc_gpregs.gp_sp = tswap64(regs->gpr[2]);
++    mcp->mc_gpregs.gp_gp = tswap64(regs->gpr[3]);
++    mcp->mc_gpregs.gp_tp = tswap64(regs->gpr[4]);
++    mcp->mc_gpregs.gp_sepc = tswap64(regs->pc);
++
++    return 0;
++}
 -- 
 2.46.0
 
