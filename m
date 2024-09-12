@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F06EE6454
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 07:01:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93C96EE6454
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 07:05:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sodoo-0001h4-VC; Thu, 12 Sep 2024 03:00:42 -0400
+	id 1sodso-0004HW-Fg; Thu, 12 Sep 2024 03:04:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
- id 1sodon-0001dS-Ui
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:00:41 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sodsl-000492-O3
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:04:47 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
- id 1sodom-0004LH-AQ
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:00:41 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-718e11e4186so545199b3a.2
- for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 00:00:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sodsi-0004Ys-59
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:04:46 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-5365c060f47so676236e87.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 00:04:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1726124438; x=1726729238; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lkmTzubpfXWhOndmnlWoFaXYzXRHYYUSg1UDMNDwHU0=;
- b=nt7tWcBwTylEo6reXiyf32iBvDd9+JLhXG7ndTxfYGr6cPc7q3Ybfhaeld/FUuHZ3j
- OVZbJxZPTZ4lJWbvHMpB8Xi/U2uhsVCHpSi0Ni9PlNIhJiWgagUSNegvIHk4XAmpRiE9
- 5CINU7QYQdCT7H7jBDbOh7oFwbCbrh56XzH5MWbfwHlDUyKmWhA4x5AjGdfNxdH0Vah9
- 0RP4PtSorkDE4K5dJwa1f5FMbxGpJJa6uKxTPQF4IEvO0QTT3FpZgKrgCShmvm9rDxex
- 348nZxJ+pSBlHhKoZ+gh9a0nRkvWTTFlOKsW39c1sVK7TKOigAfdmX87yZhk4d1JL/Qs
- gGhQ==
+ d=linaro.org; s=google; t=1726124681; x=1726729481; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=R3800ssKlSFEL/DlCAjvOpVLu3RW/04U/A/En3T/kj4=;
+ b=b47GkFxdpB4D5SskEBjj7K2VmjegrDFoIwdHtnDbfVbOlKDJSfoLadjVCnbLR6UBf2
+ L46WNqH/2+ZeDSMCiotSrpsx2Kb9cILa2E+jWJjC3EQo3IMYs7dBlM1MkAfyNzyLPhc/
+ MgiIcHV6Mre46LN+Mj/rpQwib8mhSkiVaAqq8Vzz2yJWVkE+QEtzoDcYb1r23aXuT5Sy
+ xn8Rse1Zlv+NUL9HIlfeB1uA1ZK6j8tUIn4rciaFSYKqQ0Id1qZeo4OJaCLu4A/v8KeW
+ x2cj8WQVRmUB4690MpDMu/BUDQWveOjPGXaPC6V5nrlZEP/3b67gXwhU42ApJojL8gpD
+ chmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726124438; x=1726729238;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lkmTzubpfXWhOndmnlWoFaXYzXRHYYUSg1UDMNDwHU0=;
- b=PCjLmwqbx5fe/SoPLJdFiYwR8q+Uj2luIbX3nh0YgaLmAIp3lXXZ5nuC+A/4tfc7Cv
- yWQyKx8IHsUjDs2seGi+eTAqOKQz087le5jlhhukvVwvbC55vPvPvg6wyLciZF2og6by
- ofdGpsK9a5G2EhKewbn85b+sLbhezYolWKIl4e/DB37NwaKPIRc2Ff6+SjNLD+oMsdMC
- mOykWE991sCnHXZVrzUF8Lxo5xXR62rE4kvVeMyr0PRZ9GkJjMRmT54TutyuhqVORMFg
- Hhjt+nXCQPwJrC93DyPi//4HkUK0ztVfm0BBrjZlWe6PLN3r+pJQc14VRWAysm5BgPDb
- Ledg==
-X-Gm-Message-State: AOJu0Yxcc7s+FFaOcgtaQmzzfhaZjhF4ZfrW/zR9PDXcAPobH/7yyoE0
- 4JIgp5S8PILIWITRnxy4bsdcICJPoGHfgr1J8NO7p8DKI8yqwXkmWps9DoB1yW9rD6cdhpaV6Tx
- BzmvOn3LIb23eqOVfJFFei0JDLaR0ZhjtPXRiKuTGYcKhp7MegmDRdz72O0m64VFVwOu/aQIj8L
- Rw+cM7Dcf9Ww0sHibRhwHM3D0xcwz79KIsniA=
-X-Google-Smtp-Source: AGHT+IE7YwfdSbwkgECmNrglp+39irURHKgvc0yTYl89/G5bju5A8IfA7CFEkuvDDpndZQZ4caOL9w==
-X-Received: by 2002:a05:6a00:1790:b0:706:a931:20da with SMTP id
- d2e1a72fcca58-719260654f6mr3520676b3a.3.1726124438332; 
- Thu, 12 Sep 2024 00:00:38 -0700 (PDT)
-Received: from hsinchu36-syssw02.internal.sifive.com
- (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71908fe5309sm4001479b3a.84.2024.09.12.00.00.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Sep 2024 00:00:37 -0700 (PDT)
-From: "Fea.Wang" <fea.wang@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Fea.Wang" <fea.wang@sifive.com>
-Subject: [PATCH 1/1] softmmu/physmem.c: Keep transaction attribute in
- address_space_map()
-Date: Thu, 12 Sep 2024 15:04:04 +0800
-Message-Id: <20240912070404.2993976-2-fea.wang@sifive.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240912070404.2993976-1-fea.wang@sifive.com>
-References: <20240912070404.2993976-1-fea.wang@sifive.com>
+ d=1e100.net; s=20230601; t=1726124681; x=1726729481;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=R3800ssKlSFEL/DlCAjvOpVLu3RW/04U/A/En3T/kj4=;
+ b=bzIsJsmrhSkodApPwQlgNQcypw0IPVpgbYE9QTEkWCLl0ZH69wO7gYhPUfTvTEVPDF
+ ArpGtQ+Uu5e6k23AGuTp6yawBs3I0ymZ2Mr+cqsxgu0FSC7BduEziI4XLeIx+mW4hhWz
+ 2fmxpcTPCw4aqjtkqlCwGaB1pQTyK1PBOB5ficI3ZMpQyZb5NPQ1/yRaRCps7qEhh3PE
+ PydB9F7/MOtMcQjzKX+x4gEdfyDIwIKB/k0ip+TPbW0pSzcFZsrT2o0csqReHN3dJfGK
+ IQKmcOsAiuSjpcP4AtkfjBX0Kyb7Zudxo28vBoGpAefcEfSd5+5iq8/OKQ6W7kKh194K
+ VJMQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVvfrC48rKfmuWwd92nIpJleAF8z5uuxLuMYu4QabOzdhT8od73WFLbXUvmvTukdBZZV09f1Rj8zI+Z@nongnu.org
+X-Gm-Message-State: AOJu0Ywwe3Yr9j48yBff7jDyQz6Cykjd0bDRRs1xLPTR9yQv+Kasz9FZ
+ OqYqEkZlEeVojVGGbxWtJw5tPJDL6CXDBQYcWGbdHiYdLgwfoAQaWwtMTbYwHe04+Hbd3uB0Dfx
+ Q
+X-Google-Smtp-Source: AGHT+IF/gsrMrLHWxrgMkJVqXxofdhvOmajcHzSiTigEZ+oKZwWdSOXH54RrTY8LUbrHKjU8MfTIjA==
+X-Received: by 2002:a05:6512:2384:b0:533:1cb8:ec6e with SMTP id
+ 2adb3069b0e04-53678fd1244mr932234e87.33.1726124681269; 
+ Thu, 12 Sep 2024 00:04:41 -0700 (PDT)
+Received: from [192.168.69.100] (mic92-h03-176-184-33-210.dsl.sta.abo.bbox.fr.
+ [176.184.33.210]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5c3ebd41cedsm6250807a12.5.2024.09.12.00.04.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Sep 2024 00:04:40 -0700 (PDT)
+Message-ID: <c960cbd9-dc19-4f96-b5f4-cbd3c5c9bcf2@linaro.org>
+Date: Thu, 12 Sep 2024 09:04:38 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=fea.wang@sifive.com; helo=mail-pf1-x42e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] ppc/spapr: Change printf format to %HWADDR_PRId for
+ MIN_RMA_SLOF
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>
+References: <20240912065207.508808-1-adityag@linux.ibm.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240912065207.508808-1-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,29 +99,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The follow-up transactions may use the data in the attribution, so keep
-the value of attribution from the function parameter just as
-flatview_translate() above.
+Hi Aditya,
 
-Signed-off-by: Fea.Wang <fea.wang@sifive.com>
----
- system/physmem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 12/9/24 08:52, Aditya Gupta wrote:
+> Currently starting a pSeries machine, with lesser than 128MiB shows
+> below error:
+> 
+>      qemu-system-ppc64: pSeries SLOF firmware requires >= 80ldMiB guest RMA (Real Mode Area memory)
+> 
+> Above '80ldMib' is in hex, and it means 0x80 MiB = 128 MiB.
+> 
+> Change format specifier for this value to use 'HWADDR_PRId', instead of
+> 'HWADDR_PRIx' thus showing decimal value instead of hex.
+> 
+> Thus, change the message to below error:
+> 
+>      qemu-system-ppc64: pSeries SLOF firmware requires >= 128MiB guest RMA (Real Mode Area memory)
+> 
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> 
+> ---
+> This is an RFC, as it confused me why does QEMU print that error even with '-m' >80 MB.
+> 
+> This patch can also be considered a personal preference to see it as a decimal value instead of hex.
+> 
+> Or maybe we can have '0x80 MiB' instead ?
 
-diff --git a/system/physmem.c b/system/physmem.c
-index d71a2b1bbd..dc1db3a384 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3274,7 +3274,7 @@ void *address_space_map(AddressSpace *as,
-         bounce->len = l;
- 
-         if (!is_write) {
--            flatview_read(fv, addr, MEMTXATTRS_UNSPECIFIED,
-+            flatview_read(fv, addr, attrs,
-                           bounce->buffer, l);
-         }
- 
--- 
-2.34.1
+Simply use size_to_str(), see hw/ppc/pnv.c:
 
+     /* allocate RAM */
+     if (machine->ram_size < mc->default_ram_size) {
+         char *sz = size_to_str(mc->default_ram_size);
+         error_report("Invalid RAM size, should be bigger than %s", sz);
+         g_free(sz);
+         exit(EXIT_FAILURE);
+     }
+
+> Does the 'ldMiB' actually mean that the value is in hexadecimal ? I did not find a reason in git history.
+> ---
+> ---
+>   hw/ppc/spapr.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index 8aa3ce7449be..b2ddacc6dd01 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -2819,8 +2819,8 @@ static hwaddr spapr_rma_size(SpaprMachineState *spapr, Error **errp)
+>   
+>       if (rma_size < MIN_RMA_SLOF) {
+>           error_setg(errp,
+> -                   "pSeries SLOF firmware requires >= %" HWADDR_PRIx
+> -                   "ldMiB guest RMA (Real Mode Area memory)",
+> +                   "pSeries SLOF firmware requires >= %" HWADDR_PRId
+> +                   "MiB guest RMA (Real Mode Area memory)",
+>                      MIN_RMA_SLOF / MiB);
+>           return 0;
+>       }
+
+Amusingly MIN_RMA_SLOF is a constant:
+
+#define MIN_RMA_SLOF            (128 * MiB)
+
+Anyhow it could be changed, so better not hard-code the value in the
+error message. Your patch becomes:
+
+      if (rma_size < MIN_RMA_SLOF) {
+-        error_setg(errp,
+-                   "pSeries SLOF firmware requires >= %" HWADDR_PRIx
+-                   "ldMiB guest RMA (Real Mode Area memory)",
+-                   MIN_RMA_SLOF / MiB);
++        g_autofree char *min_rma_size_str = size_to_str(MIN_RMA_SLOF);
++
++        error_setg(errp, "pSeries SLOF firmware requires >= %s guest"
++                         "RMA (Real Mode Area memory)", min_rma_size_str);
+          return 0;
+      }
+
+Regards,
+
+Phil.
 
