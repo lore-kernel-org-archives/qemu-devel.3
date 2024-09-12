@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9277EE645B
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 07:47:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA724EE645C
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 07:47:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soeRy-0008Aq-Ba; Thu, 12 Sep 2024 03:41:10 -0400
+	id 1soeTR-0001dB-80; Thu, 12 Sep 2024 03:42:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1soeRO-0004hb-CB
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:40:36 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1soeRR-0004qB-2X
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:40:37 -0400
+Received: from mail-il1-x12f.google.com ([2607:f8b0:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1soeRK-0000f0-PG
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:40:33 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-7191901abd6so394219b3a.3
- for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 00:40:25 -0700 (PDT)
+ id 1soeRK-0000gN-Pa
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:40:34 -0400
+Received: by mail-il1-x12f.google.com with SMTP id
+ e9e14a558f8ab-37636c3872bso2430305ab.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 00:40:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726126825; x=1726731625; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726126827; x=1726731627; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RMRZaTd/BH/1FKFl6y3cyJgui1+s3Png+hpoiCgGZ2o=;
- b=tCF2DuAK41L8eQ7j8iQVd333t+0/ImnRTp9RVb5918Wa91Si+wWOwb6APK+4ZdGxtS
- siDH5R+E0V4QDrixHRvlz5dh8V5DK2SRjsGL7F/8jk32mq5K/V1lV1xewZN2v7EgWrnK
- 0hEGl9EuSQtZFGklG8kA88vvHtv/6UTmtIUKBFh6UTTb5KupPDoOHrnMMTnc1f5/aXwh
- jeSo84p9l1sTpANztSCewcAs4ed/5HRTzcyFJZB1Hw5oqnEuDx39VEChGOlM+UnEZKb0
- iIsoAOpTIvfGpZHUudt3Prr2SVfMgKfP6zfUZ/ah13f3S6rAUitoyeej0RIGCEftAb1X
- /X8A==
+ bh=lAgxsGkzSX6UIjZ+akO+9hnbz8NplQ6SsHLnjF/2omU=;
+ b=ZM5hy7ACFMjNG/zZDPBHMwW5cZe+RA8zsNBTYf0ivTTN4jGKlPVoO2AFvY6RsL6Pvd
+ 9Z+3Be5YN0yVGqlZBBF1Ffh3CrIHlCUFH85P6yUvuLEjA3FA9te1xZY9SDr73EnIsDU9
+ mutI0+YrqBfkxpsPFeMViqMB2FXKThPaCcdYy9VgjVeojxRQqE48+cej5jbH1l6S/tVc
+ dF8WEbm0YFXC7HlWmYJPq118IK2KF/IBJFwoAYZ3KiMTLy3vhkc+FHlj7PuCkbRaTeqh
+ OzuXIh8hPfjsEaoxdvs/nT8TBaTeN8HhzO6z/iha0Z7fo5JbrfmNk2mlMk26QROWdT+5
+ sdsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726126825; x=1726731625;
+ d=1e100.net; s=20230601; t=1726126827; x=1726731627;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RMRZaTd/BH/1FKFl6y3cyJgui1+s3Png+hpoiCgGZ2o=;
- b=p5Z0bsTi6MVoP5Dy7pmRNeeDJdQjsUSGePhwPqtEJF7hEsL7ZF2bhP3j3NOZ3ZGdoj
- 3jVSpVocHEv1D4blazRyii2O8UM9+iTMd3twF5zN8oc6dniPA0hrc1/ekQs03dNAHelf
- lNsSiftEhzcxfwZQg/cgS+6HBAhoJZ1u1U0NFx7x2Z13LwCs5Bt9+Tn2C7yLnme80IsN
- pbFqbml9RhAKSrdyknD54WpmCMvxdjwcXXwR03fagNab/4cz8rvecRxGJp5sRenYDOAW
- xuccT12035jyz64uuq2eoddstMsFwyH/jS3OtVZHhtCGIjRfEi97jP8nRRMW3d6syvrT
- bgYQ==
-X-Gm-Message-State: AOJu0Yx/1uLVg69CeJpd2oR9U4o0nLtQMx6fFmDAYmEL7gsmPQtryhdm
- VWBwf0zR0SuG1j7OfPGiYMucDrZvrvBU56T/yp74QmDcgCVMrGVP32LYSBb27mrdV3R3hjjMvSu
- PEAQxNifM
-X-Google-Smtp-Source: AGHT+IEh7gXd2tJ0hOhx7ECr2lFSn+He2Xm0+RoHd0qt3Za4kg2n+HCrillfNzzhgQolscqSmg6E/Q==
-X-Received: by 2002:a05:6a21:1813:b0:1cf:6c87:89e5 with SMTP id
- adf61e73a8af0-1cf764c2b90mr2176703637.48.1726126824706; 
- Thu, 12 Sep 2024 00:40:24 -0700 (PDT)
+ bh=lAgxsGkzSX6UIjZ+akO+9hnbz8NplQ6SsHLnjF/2omU=;
+ b=LYH0ZlEi9AdacTFAapnxhh1j/jWQ2+ZoBoZaJrLDYWMOK1apwvMiy3F8BREN3GOtNy
+ Qx1445EI6UsXCWBkqwCf3kU+JYL9BEQ6Ddqdfg3FykXi3BMOT0fYbscmAvkEUJKNr7x2
+ y/mHHAootM4VNjHN+KOlXqARt9WjQwPQAknqHs73UfF5KRUVILMJsTjBGHYXwIM4HeiL
+ lw5bIU3SD4JocLVqrP2QJ6YkKgQazVt0DS0VmZ9vZjvb+ZGG8CwDk8q3VHRtLMWhTUd7
+ k6r3zG6ysvx2N8CtYPofgIFO9TcgU2u7OGLRFn82TTywR8oUxD37Cr8Y7Gx9Y9G8XdeI
+ YVPw==
+X-Gm-Message-State: AOJu0Yyi3WURPu4H8hyIIM+z6zKjchePVhCJMFIrpn9xLfZgYselBTo9
+ hOyxqmgcxMXigGZheQA6+Fe2OhJ0uomTnZUI1t/8KbKpIhYoWH+/edtSC/yAiAglGNedLcdO5Xj
+ sGKG6IPoZ
+X-Google-Smtp-Source: AGHT+IEyvhxwwfs3O4zBogJKiJanB1/6FwZWrxSk8P1iezRQ+YaRZrKbsv+G1dKwphxUzMpD10O4JQ==
+X-Received: by 2002:a05:6e02:180c:b0:39f:709d:72b5 with SMTP id
+ e9e14a558f8ab-3a0848fc3ddmr16439855ab.10.1726126827207; 
+ Thu, 12 Sep 2024 00:40:27 -0700 (PDT)
 Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::9633])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7db1fb9ad87sm983458a12.6.2024.09.12.00.40.22
+ 41be03b00d2f7-7db1fb9ad87sm983458a12.6.2024.09.12.00.40.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Sep 2024 00:40:24 -0700 (PDT)
+ Thu, 12 Sep 2024 00:40:26 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>,
@@ -105,18 +105,17 @@ Cc: Jason Wang <jasowang@redhat.com>,
  David Gibson <david@gibson.dropbear.id.au>, Fam Zheng <fam@euphon.net>,
  Weiwei Li <liwei1518@gmail.com>, Markus Armbruster <armbru@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 22/48] target/i386/kvm: replace assert(false) with
+Subject: [PATCH v2 23/48] tests/qtest: replace assert(false) with
  g_assert_not_reached()
-Date: Thu, 12 Sep 2024 00:38:55 -0700
-Message-Id: <20240912073921.453203-23-pierrick.bouvier@linaro.org>
+Date: Thu, 12 Sep 2024 00:38:56 -0700
+Message-Id: <20240912073921.453203-24-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240912073921.453203-1-pierrick.bouvier@linaro.org>
 References: <20240912073921.453203-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-il1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -143,35 +142,61 @@ This patch is part of a series that moves towards a consistent use of
 g_assert_not_reached() rather than an ad hoc mix of different
 assertion mechanisms.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/i386/kvm/kvm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tests/qtest/numa-test.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 2fa88ef1e37..308b0e1cb37 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5770,7 +5770,7 @@ static int kvm_handle_rdmsr(X86CPU *cpu, struct kvm_run *run)
+diff --git a/tests/qtest/numa-test.c b/tests/qtest/numa-test.c
+index ede418963cb..6d92baee860 100644
+--- a/tests/qtest/numa-test.c
++++ b/tests/qtest/numa-test.c
+@@ -162,7 +162,7 @@ static void pc_numa_cpu(const void *data)
+         } else if (socket == 1 && core == 1 && thread == 1) {
+             g_assert_cmpint(node, ==, 1);
+         } else {
+-            g_assert(false);
++            g_assert_not_reached();
          }
+         qobject_unref(e);
      }
- 
--    assert(false);
-+    g_assert_not_reached();
- }
- 
- static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
-@@ -5789,7 +5789,7 @@ static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
+@@ -207,7 +207,7 @@ static void spapr_numa_cpu(const void *data)
+         } else if (core == 3) {
+             g_assert_cmpint(node, ==, 1);
+         } else {
+-            g_assert(false);
++            g_assert_not_reached();
          }
+         qobject_unref(e);
      }
- 
--    assert(false);
-+    g_assert_not_reached();
- }
- 
- static bool has_sgx_provisioning;
+@@ -257,7 +257,7 @@ static void aarch64_numa_cpu(const void *data)
+         } else if (socket == 1 && cluster == 0 && core == 0 && thread == 0) {
+             g_assert_cmpint(node, ==, 0);
+         } else {
+-            g_assert(false);
++            g_assert_not_reached();
+         }
+         qobject_unref(e);
+     }
+@@ -305,7 +305,7 @@ static void loongarch64_numa_cpu(const void *data)
+         } else if (socket == 1 && core == 0 && thread == 0) {
+             g_assert_cmpint(node, ==, 0);
+         } else {
+-            g_assert(false);
++            g_assert_not_reached();
+         }
+         qobject_unref(e);
+     }
+@@ -367,7 +367,7 @@ static void pc_dynamic_cpu_cfg(const void *data)
+         } else if (socket == 1) {
+             g_assert_cmpint(node, ==, 0);
+         } else {
+-            g_assert(false);
++            g_assert_not_reached();
+         }
+         qobject_unref(e);
+     }
 -- 
 2.39.2
 
