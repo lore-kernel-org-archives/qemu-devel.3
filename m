@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4823AEE644A
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 05:35:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0032FEE644B
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 05:37:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1socPh-0001I6-No; Thu, 12 Sep 2024 01:30:41 -0400
+	id 1socRm-0002P8-K6; Thu, 12 Sep 2024 01:32:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1socPd-0001Am-Af
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:39 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1socRJ-0000cP-F5
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:32:31 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1socPa-00030Z-Lx
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:36 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-71798661a52so407263b3a.0
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:30:34 -0700 (PDT)
+ id 1socRG-0003BH-Vp
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:32:21 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-7db12af2f31so572311a12.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:32:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726119033; x=1726723833; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1726119136; x=1726723936; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w6UpgoFiKeN8rhCeeJc9Ofq22Ni9JUy4zXN5XGaW1OM=;
- b=F4BzFmiKqWDxhZUDUpV+i2b6FvkRWR+vRXkkXIsgejbOUadY81zBTs6ZldK0nTwisK
- CQj5piW4oihjwrNfULGzPWfWqO4oInNJDzQvV5+KtUWIgIrbTmPNwcz7dulSMtOLRwcu
- aRXurMtbUZP/Nr6oF9vm0dfFK49DgDVLfintyj5vLocOQaalY7/L9xcVZnviqDPLekwh
- iw+F5pdC/OFXCnDXGIe55j6ROxCVlBtP40kkErlK6TEHUEI1zV9mx6Q0BvHtGE9xt+aj
- Ml5J6pQeasU0Q0Rqh4LoDpJWR2bb7nPlrZkxhbor6r/O1YwSByYLPPIwC4wmmChLy6CW
- iFnw==
+ bh=1OZtUQ3CFcWEdjE0VCal/gtVrOv/C/IET7Ot8GrKz+4=;
+ b=CeSVFWOcB1opvsk9a70AkSaaTkGY+PGoJkw+J2kRj7R/CO7gxPtX4YEnAyLjJr2rSU
+ TvHcv16jAEKLhE+ufLeXixvX5QRItXwXjf6BtTzsxHKHCq+wNYoSm8pik5fB8HeNDlFt
+ 12/9/RfnBSJBm+AedElOYvvihIJdk3sOpnrhjAj16GaI+AoXIMJmzdkLIxQJXHpyCvFN
+ EEBeJRwFhGLT4azoWCTKr0EumkAVM826C63twE/Kl7NeXbINrukIKiIftZ8Gnk1v5f/O
+ fliigwwoxOrzi5SkY7AJNwDaHfW4DrJNW6/TmBOGq6GCRgG3laayBv8RGlhq1LRprbtK
+ um/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726119033; x=1726723833;
+ d=1e100.net; s=20230601; t=1726119136; x=1726723936;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=w6UpgoFiKeN8rhCeeJc9Ofq22Ni9JUy4zXN5XGaW1OM=;
- b=TWCSDTuBzoj2kl5jji7eAx/j4NUSzEfxIf31gAistJCZR03yMhXDsp4og/Dn87tWDj
- dAiJqGY3thCgkA6SxFngQiNF26A3gyyF0VRyAlthPEgrj6eRJ27CcH16Mz+FQst4J0jf
- Msu4kM8qRmX6z9rtzNqrXBClPahKa/FrvKMGyi00XVNZ0vXW8CtZ7YdJ2madGpPjWkHJ
- fcRYZnsgnLDLLLtfwhaUMkaGpwXkipUufUjjvhGKa5wd6+Y8FtQs0bOX+inJiOEU/Nke
- nDbcO9mPGAm7FyegWA2gunmt6gkyGG6hK/yah80qUUvUwAqb2hLh6WiIn4XGf15Typuq
- Iqow==
-X-Gm-Message-State: AOJu0Yxx+Dm583DY0JgIStWSvyOlCvUywmWeDIUZkTd32DA42Xvmoplr
- shpYcluF83UEJsUZPuxbQGhXULmWS81UAsFC2YNeoVzocsDfUtEL1m0fyg==
-X-Google-Smtp-Source: AGHT+IG+nsL9jDo7QpCt5svL9WkhA3cNcUrR3X2kL4n5NQ4w9dSQva4SR3emVNUpcaFYdGE6A1wAfw==
-X-Received: by 2002:a05:6a00:8805:b0:717:9340:a9d0 with SMTP id
- d2e1a72fcca58-71907eb816bmr11989839b3a.6.1726119033132; 
- Wed, 11 Sep 2024 22:30:33 -0700 (PDT)
+ bh=1OZtUQ3CFcWEdjE0VCal/gtVrOv/C/IET7Ot8GrKz+4=;
+ b=SkGBp5VPb/ijBKmuCJXR8Dno/UEFroM2g4bw9XIzYsEelTMKFFV0Or3cpP9p4nEXEd
+ Wyy0mxp5Br3Fc74LASOh8djYPk/r1pJDBKzmgC2gdIswn84qNmgoOreTDOHpdp86huCw
+ UCnPuQnI2cdipadMBNbM5zuC+p1PL+OmFzyFx3n7mBP3OAlXaVIWv/rPF+UBMaK7vWsP
+ 9n751ip/1Ym6uV5Z0pky71XtLSzw80Xy3aRgZthPYNwMTNd/AXNV3MxI/PJIvv0EdAB6
+ 57MtdAyqNKkT/uEcsMtQfWKqOxdOx25OtXoSrANpNtqnLNmWgQX30ZuWYWZWst6XKGzP
+ FLXg==
+X-Gm-Message-State: AOJu0Yx5sPwRNVhBdDN/Qp1ZwHUq4+YR93epiMUYPY8693XMwbuoKkJL
+ RUd3d8ZUfLI2hTsYVw75QfjEngPV9k+XSQ947S5QrV6xlm84j/dE8qVcBA==
+X-Google-Smtp-Source: AGHT+IFsQlaTs7tmehCRGLmNP+gJRUcmESzbmKM8Xlz3o67pu+czUHJT2gMXsEN79W5HT0VCh75tNg==
+X-Received: by 2002:a05:6a21:458b:b0:1cc:e3a1:b9e3 with SMTP id
+ adf61e73a8af0-1cf75f2a66cmr2496240637.25.1726119135921; 
+ Wed, 11 Sep 2024 22:32:15 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71908fc8fdesm3833034b3a.1.2024.09.11.22.30.30
+ d2e1a72fcca58-71908fc8fdesm3833034b3a.1.2024.09.11.22.32.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 22:30:32 -0700 (PDT)
+ Wed, 11 Sep 2024 22:32:15 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
- =?UTF-8?q?Milan=20P=2E=20Stani=C4=87?= <mps@arvanta.net>,
+Cc: alistair23@gmail.com, Warner Losh <imp@bsdimp.com>,
+ Ajeet Singh <itachis@FreeBSD.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 11/47] util/util/cpuinfo-riscv.c: fix riscv64 build on musl libc
-Date: Thu, 12 Sep 2024 15:29:16 +1000
-Message-ID: <20240912052953.2552501-12-alistair.francis@wdc.com>
+Subject: [PULL 42/47] bsd-user: Add RISC-V 64-bit Target Configuration and
+ Debug XML Files
+Date: Thu, 12 Sep 2024 15:29:47 +1000
+Message-ID: <20240912052953.2552501-43-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240912052953.2552501-1-alistair.francis@wdc.com>
 References: <20240912052953.2552501-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,40 +101,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Milan P. Stanić <mps@arvanta.net>
+From: Warner Losh <imp@bsdimp.com>
 
-build fails on musl libc (alpine linux) with this error:
+Added configuration for RISC-V 64-bit target to the build system.
 
-../util/cpuinfo-riscv.c: In function 'cpuinfo_init':
-../util/cpuinfo-riscv.c:63:21: error: '__NR_riscv_hwprobe' undeclared (first use in this function); did you mean 'riscv_hwprobe'?
-   63 |         if (syscall(__NR_riscv_hwprobe, &pair, 1, 0, NULL, 0) == 0
-      |                     ^~~~~~~~~~~~~~~~~~
-      |                     riscv_hwprobe
-../util/cpuinfo-riscv.c:63:21: note: each undeclared identifier is reported only once for each function it appears in
-ninja: subcommand failed
-
-add '#include "asm/unistd.h"' to util/cpuinfo-riscv.c fixes build
-
-Signed-off-by: Milan P. Stanić <mps@arvanta.net>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240905150702.2484-1-mps@arvanta.net>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
+Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240907031927.1908-18-itachis@FreeBSD.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- util/cpuinfo-riscv.c | 1 +
- 1 file changed, 1 insertion(+)
+ configs/targets/riscv64-bsd-user.mak | 4 ++++
+ 1 file changed, 4 insertions(+)
+ create mode 100644 configs/targets/riscv64-bsd-user.mak
 
-diff --git a/util/cpuinfo-riscv.c b/util/cpuinfo-riscv.c
-index 497ce12680..8cacc67645 100644
---- a/util/cpuinfo-riscv.c
-+++ b/util/cpuinfo-riscv.c
-@@ -9,6 +9,7 @@
- #ifdef CONFIG_ASM_HWPROBE_H
- #include <asm/hwprobe.h>
- #include <sys/syscall.h>
-+#include <asm/unistd.h>
- #endif
- 
- unsigned cpuinfo;
+diff --git a/configs/targets/riscv64-bsd-user.mak b/configs/targets/riscv64-bsd-user.mak
+new file mode 100644
+index 0000000000..191c2c483f
+--- /dev/null
++++ b/configs/targets/riscv64-bsd-user.mak
+@@ -0,0 +1,4 @@
++TARGET_ARCH=riscv64
++TARGET_BASE_ARCH=riscv
++TARGET_ABI_DIR=riscv
++TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml
 -- 
 2.46.0
 
