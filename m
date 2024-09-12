@@ -4,93 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D67CEED606
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 13:35:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB09EED608
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 13:39:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sojyM-0004yr-94; Thu, 12 Sep 2024 09:34:58 -0400
+	id 1sok2H-0001Vv-RY; Thu, 12 Sep 2024 09:39:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sojyI-0004xK-W0
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 09:34:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1sok2G-0001UX-0i; Thu, 12 Sep 2024 09:39:00 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sojyH-0007tb-Kv
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 09:34:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726148092;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=M5rcG9lzD4F05sYwu5eA1U+Vp3lpTYiZKcFNxAMkStY=;
- b=FVZ1Y+S/A4fls+tA2eIwuJsNWj3CiUhBODxU40Rxd324wB/3sg15fHb4G37054NKTMnycN
- PXddfONwI6dnNo8d6rmGSt47ZL/Xpy+wo3gWxM1DaKWd/xxjNDcxIrNnJiCnUrv7JZd9CP
- hGh5hk3LEENxPPFkJunfYJWL6b4d2Jk=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-372-PawLmpc4MCSkMAi-elmbMw-1; Thu, 12 Sep 2024 09:34:50 -0400
-X-MC-Unique: PawLmpc4MCSkMAi-elmbMw-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4585eba9b52so24962621cf.3
- for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 06:34:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726148090; x=1726752890;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=M5rcG9lzD4F05sYwu5eA1U+Vp3lpTYiZKcFNxAMkStY=;
- b=Y4sHJqCJh5IqY1wqCECwU1a7yOLvN5C9JIpu1/JRvtfCsrqWCP0yjHUQB9ShhKC32O
- ZJq51TEFd/PFeB5Lguf7ycKCFJUOq6zpHlueLZdLmsbVL5aUmZnRE18/5ZzGBG3ql/Yl
- E/1y49kwmIfZMFmNwamwmDBeh3PXR+ceEFBP34Zkpn4eyGZyE64QUALmqy7+kz45zGit
- VX6FfMh+w+yXOkgTdEDq1AM5U1zypRXHDm25Pp/XzJpnAmOsgG1XDAqQSxN10fCbUKOv
- MvyxRaXY6JB0WaZvSZEyOegaDNDGHpKkDTSZjQUOLWEGRCbXRm9TFnxKFkY1qC8XkQn4
- pkMw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVkTKxL5R0qEn+CR18LszsxoH9DMD9BI3KSVF5wK2/YWlLDvaDzJ6hZb/ZKf8Y5ymJqQj2HOcWCaN6z@nongnu.org
-X-Gm-Message-State: AOJu0YzstdbbEskvk+g1GcLaaRRpHJW5CebVDkVAzE21dFIT48AupIsP
- cCerjzIJ7m8R6iUCPyjlF2BJ1QLAPaD43I5TZQJM3ONRdw6D7KuepMtpx142IR3PWx1a+Ov8WMs
- ui4kddVAJVGO6XiirJZpkSfUqrXzpFZm0YkiN9HXrF840Veah1c4G
-X-Received: by 2002:ac8:5d94:0:b0:458:156f:965c with SMTP id
- d75a77b69052e-458602de102mr45427391cf.22.1726148089981; 
- Thu, 12 Sep 2024 06:34:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFLmm/DxJ65yRHOiD4VWdc/MylUpsQX+KMLJTCpwrDneBOgcnrBMqj+57SrU2QpuXZYBzdjWw==
-X-Received: by 2002:ac8:5d94:0:b0:458:156f:965c with SMTP id
- d75a77b69052e-458602de102mr45427011cf.22.1726148089600; 
- Thu, 12 Sep 2024 06:34:49 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-45822e9b207sm53312581cf.49.2024.09.12.06.34.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Sep 2024 06:34:47 -0700 (PDT)
-Date: Thu, 12 Sep 2024 09:34:45 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: "Fea.Wang" <fea.wang@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>
-Subject: Re: [PATCH 1/1] softmmu/physmem.c: Keep transaction attribute in
- address_space_map()
-Message-ID: <ZuLt9fDgA9C_nNZ6@x1n>
-References: <20240912070404.2993976-1-fea.wang@sifive.com>
- <20240912070404.2993976-2-fea.wang@sifive.com>
- <444dbb46-bee5-4983-aa90-4d88f005c5eb@linaro.org>
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1sok2D-0008Pk-Ik; Thu, 12 Sep 2024 09:38:59 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4X4JLV1hn9z6K6lM;
+ Thu, 12 Sep 2024 21:33:54 +0800 (CST)
+Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
+ by mail.maildlp.com (Postfix) with ESMTPS id F149A1400C9;
+ Thu, 12 Sep 2024 21:38:44 +0800 (CST)
+Received: from a2303103017.china.huawei.com (10.48.147.42) by
+ frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Thu, 12 Sep 2024 15:38:43 +0200
+To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: <zhao1.liu@intel.com>, <zhenyu.z.wang@intel.com>,
+ <dapeng1.mi@linux.intel.com>, <yongwei.ma@intel.com>, <armbru@redhat.com>,
+ <farman@linux.ibm.com>, <peter.maydell@linaro.org>, <mst@redhat.com>,
+ <anisinha@redhat.com>, <shannon.zhaosl@gmail.com>, <imammedo@redhat.com>,
+ <mtosatti@redhat.com>, <berrange@redhat.com>, <richard.henderson@linaro.org>, 
+ <linuxarm@huwei.com>, <shameerali.kolothum.thodi@huawei.com>,
+ <Jonathan.Cameron@Huawei.com>, <jiangkunkun@huawei.com>
+Subject: [RFC PATCH 0/5] Specifying cache topology on ARM
+Date: Thu, 12 Sep 2024 14:38:24 +0100
+Message-ID: <20240912133829.400-1-alireza.sanaee@huawei.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <444dbb46-bee5-4983-aa90-4d88f005c5eb@linaro.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.48.147.42]
+X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
+ frapeml500003.china.huawei.com (7.182.85.28)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,25 +66,111 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 12, 2024 at 09:13:40AM +0200, Philippe Mathieu-Daudé wrote:
-> On 12/9/24 09:04, Fea.Wang wrote:
-> > The follow-up transactions may use the data in the attribution, so keep
-> > the value of attribution from the function parameter just as
-> > flatview_translate() above.
-> > 
-> 
-> Doh, long standing bug...
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: f26404fbee ("Make address_space_map() take a MemTxAttrs argument")
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Specifying the cache layout in virtual machines is useful for
+applications and operating systems to fetch accurate information about
+the cache structure and make appropriate adjustments. Enforcing correct
+sharing information can lead to better optimizations. This patch enables
+the specification of cache layout through a command line parameter,
+building on a patch set by Intel [1,2]. It uses this set as a foundation.
+The ACPI/PPTT table is populated based on user-provided information and
+CPU topology.
 
-Thanks, queued with these attached.
+Example:
+
+
++----------------+                            +----------------+
+|    Socket 0    |                            |    Socket 1    |
+|    (L3 Cache)  |                            |    (L3 Cache)  |
++--------+-------+                            +--------+-------+
+         |                                             |
++--------+--------+                            +--------+--------+
+|   Cluster 0     |                            |   Cluster 0     |
+|   (L2 Cache)    |                            |   (L2 Cache)    |
++--------+--------+                            +--------+--------+
+         |                                             |
++--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
+|   Core 0         | |   Core 1        |    |   Core 0        |  |   Core 1    |
+|   (L1i, L1d)     | |   (L1i, L1d)    |    |   (L1i, L1d)    |  |   (L1i, L1d)|
++--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
+         |                   |                       |                   |
++--------+              +--------+              +--------+          +--------+
+|Thread 0|              |Thread 1|              |Thread 1|          |Thread 0|
++--------+              +--------+              +--------+          +--------+
+|Thread 1|              |Thread 0|              |Thread 0|          |Thread 1|
++--------+              +--------+              +--------+          +--------+
+
+
+The following command will represent the system.
+
+./qemu-system-aarch64 \
+ -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
+ -cpu max \
+ -m 2048 \
+ -smp sockets=2,clusters=1,cores=2,threads=2 \
+ -kernel ./Image.gz \
+ -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=force" \
+ -initrd rootfs.cpio.gz \
+ -bios ./edk2-aarch64-code.fd \
+ -nographic
+
+Failure cases:
+    1) there are cases where QEMU might not have any clusters selected in the
+    -smp option, while user specifies caches to be shared at cluster level. In
+    this situations, qemu returns error.
+
+    2) There are other scenarios where caches exist in systems' registers but
+    not left unspecified by users. In this case qemu returns failure.
+
+Currently only three levels of caches are supported to be specified from
+the command line. However, increasing the value does not require
+significant changes. Further, this patch assumes l2 and l3 unified
+caches and does not allow l(2/3)(i/d). The level terminology is
+thread/core/cluster/socket right now.
+
+Here is the hierarchy assumed in this patch:
+Socket level = Cluster level + 1 = Core level + 2 = Thread level + 3;
+
+[1] https://lore.kernel.org/kvm/20240908125920.1160236-1-zhao1.liu@intel.com/
+[2] https://lore.kernel.org/qemu-devel/20240704031603.1744546-1-zhao1.liu@intel.com/
+
+TODO:
+1) Making the code to work with arbitrary levels
+2) Separated data and instruction cache at L2 and L3.
+3) Allow for different Data or Instruction only at a particular level.
+4) Additional cache controls.  e.g. size of L3 may not want to just
+match the underlying system, because only some of the associated host
+CPUs may be bound to this VM.
+5) Add device tree related code to generate info related to caches.
+
+Depends-on: target/arm/tcg: refine cache descriptions with a wrapper
+Depends-on: Msg-id: 20240903144550.280-1-alireza.sanaee@huawei.com
+
+Alireza Sanaee (5):
+  bios-tables-test: prepare to change ARM ACPI virt PPTT
+  i386/cpu: add IsDefined flag to smp-cache property
+  target/arm/tcg: increase cache level for cpu=max
+  hw/acpi: add cache hierarchy node to pptt table
+  tests/acpi/arm/virt/PPTT: update golden masters for PPTT update
+
+ hw/acpi/aml-build.c                           | 312 +++++++++++++++++-
+ hw/arm/virt-acpi-build.c                      | 137 +++++++-
+ hw/arm/virt.c                                 |   5 +
+ hw/core/machine-smp.c                         |   2 +
+ hw/loongarch/acpi-build.c                     |   3 +-
+ include/hw/acpi/aml-build.h                   |  20 +-
+ include/hw/boards.h                           |   1 +
+ target/arm/tcg/cpu64.c                        |  13 +
+ tests/data/acpi/aarch64/virt/PPTT             | Bin 76 -> 76 bytes
+ .../data/acpi/aarch64/virt/PPTT.acpihmatvirt  | Bin 156 -> 156 bytes
+ tests/data/acpi/aarch64/virt/PPTT.topology    | Bin 336 -> 336 bytes
+ 11 files changed, 484 insertions(+), 9 deletions(-)
 
 -- 
-Peter Xu
+2.34.1
 
 
