@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF4ECEE6457
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 07:43:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F23FEE6457
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 07:43:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soeRe-0006CW-Uh; Thu, 12 Sep 2024 03:40:50 -0400
+	id 1soeSr-0006Iq-WD; Thu, 12 Sep 2024 03:42:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1soeQu-0002ov-91
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:40:09 -0400
-Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
+ id 1soeRN-0004fT-Bn
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:40:35 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1soeQs-0000K0-2w
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:40:03 -0400
-Received: by mail-ot1-x332.google.com with SMTP id
- 46e09a7af769-710daaadd9bso335233a34.2
- for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 00:40:01 -0700 (PDT)
+ id 1soeRI-0000av-BO
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 03:40:31 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-718e6299191so345625b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 00:40:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726126800; x=1726731600; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726126815; x=1726731615; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=F+rVp3/BLJYyjxO33P6GwzzAqjbQ85NDH2br5JtXUaQ=;
- b=LGSkZnRljWDM7uymPWgDkrJXtxwNpgUSYPeRnmsHK+vvxl2kTaQyV/jv61LzjM3tEA
- tAUGB2JijT8NPhnWRRAi5Lhj2m4PiJxbR7VePAVRdr5mYp2j21eYHlXzfsUNrfd+cmKL
- VhiT+Lr92Rc//ATeNXAbzqCGqcWFixArz8R+CBX2vbMeXG+ZUhaGVferKu7E7GpAH4EQ
- KjnfGOvnowDsy6A9t1X7ira9Wa3Y/aKyyvkvuc0o/Ps9V1uuKVlXvM8MXJ7gEu+fgKRM
- TafiyXnnCArKWX8OVIxvbf2uhFoBwz7AOM73kFxWMwCdnZYEsacjpgL+8KiBR/DSBnOb
- 6hew==
+ bh=TcrlVQ2BBzTTTXSH1b4iRRRxuNhgYzpbZvccV8dHuB8=;
+ b=MNFoebF455KIF/Qh7ZBWwZIWTmo+9cRHjMOwkNC+q6dcosSRJ1bVLUoESpJix0oJHc
+ CAEQdJSDUrlixx3rzHmBgxti9AWVVd2yVl4IXwPEWLPPso7h8wqGbNHfffR000LuHQFV
+ ww3CxesiSsAziFRboTNQW+GlXPsC5/t1GjmdERjOCGJteCEQdEOnRwVD//XWWGpDhcz3
+ SiyuW0R685mbtrhvaxTXMMBkwvt9f8Ty1GBMyZzCY6lrvd30lDojb2LD9MUxIjYlOk6A
+ UbC/V54ZHuubVN1TqimOfiwxDSiJE9CU+06sCQTfJ4TJyr+lkMHa56h2PFzf8dvmQE+H
+ tBMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726126800; x=1726731600;
+ d=1e100.net; s=20230601; t=1726126815; x=1726731615;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=F+rVp3/BLJYyjxO33P6GwzzAqjbQ85NDH2br5JtXUaQ=;
- b=Op6h9VDvef7XCxHzBP6LaGWMvjjFi7TRD0kJ3pBeUF5sH5nnoNZsetcpq23PwhZG+r
- bMVQq/QeXIg5Z7qz6RgBdul4ES/GfCH9QBd4rEUDGrwJkpB6fedkaPeZkvV9koYlhZ4R
- A2/GL2pNP9KHHfNKeos/gRzvcGP6VWAflErO6nUnTt4a5/r31JNbVOK2qrR61ZjqthAG
- bO1LL0rEPI3hJDm2zfqXJrp5FmumHMvcj0W+TuJ142RVSNt5TPqUNwB96Hij/X+J0Quu
- bSZyt4hAfWVWRtGCl/EZk6tIQd6WXIx80DpnEQOlc/WzZr7FbYIkYMjunfLZQ3PjHSnV
- HfoA==
-X-Gm-Message-State: AOJu0Yy9fnrq/ukR+DKtswT/2VAD7OnAOSvNFMSfO9tPDtfgR39qjmXE
- yBpsuF9JuM1XEz7gtqCqw1bD1gYfqW7uVqYmrK1kA/ff309lGXLRq3nRpyqC2g+W9WjNDx4EjIS
- odiYW6lZM
-X-Google-Smtp-Source: AGHT+IG6+n9GSh9VOQuGu9AiTjxnE8dPu+UEy8HMFEQWjdljbFKlQEVbTyzIuHmcncyWJBtD1Vjx6g==
-X-Received: by 2002:a05:6830:4994:b0:710:b19a:cea3 with SMTP id
- 46e09a7af769-711094727c0mr2302235a34.13.1726126800291; 
- Thu, 12 Sep 2024 00:40:00 -0700 (PDT)
+ bh=TcrlVQ2BBzTTTXSH1b4iRRRxuNhgYzpbZvccV8dHuB8=;
+ b=A6S7XNvXZhOFxov62f3YEWirn23BJgr0FTkk1wPNNdxhzcfyQgUUQYaxbYj6qTCBi1
+ RK25w6DihXlCyIFiREZLodmbi5mEY6EVfT/HOlKOUiMjNXk18kxr2rEJaaVIxTIxRJl6
+ A15ITAmnTSDfItQUphy1j5mMewdYP/s3+Jukv+fIdytblRs/lTPB9VN9of45sPIsMRRN
+ B8tl+xOT/y7u+D65xCZhw2NXNCaS4krf+kzwSM6S/tA75NyjmGtYi2ze2//qgVq5pgJ0
+ KL4ObCNz9sjqgqamvUQVxHbxI89MpmKjfnr0C81LH4washycEMzl5GvXCX1hN/o8bzkV
+ IEmw==
+X-Gm-Message-State: AOJu0Yy37tVDX/PTn6wP0H4BQck/9JA7msxDi3HYqoxmzi7XzXM5uqZw
+ 8qH3102ccUzWhQCleHrIsENdMTiY8sHZv/51bIH5YrI6S5MsJG1JGWW3FPX5LTYwFrh7fiYgbXG
+ Be+wJuYvt
+X-Google-Smtp-Source: AGHT+IFAZ1Pk4eCCVsZPvVoIoG/IsRq4YVcZJLHNGvieq8Ne31Y/ZKtRMM5/ZNOtWgduAu3UbqRH6w==
+X-Received: by 2002:a05:6a00:4f90:b0:714:1849:2503 with SMTP id
+ d2e1a72fcca58-71926055cfamr3299082b3a.6.1726126814532; 
+ Thu, 12 Sep 2024 00:40:14 -0700 (PDT)
 Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::9633])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7db1fb9ad87sm983458a12.6.2024.09.12.00.39.58
+ 41be03b00d2f7-7db1fb9ad87sm983458a12.6.2024.09.12.00.40.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Sep 2024 00:39:59 -0700 (PDT)
+ Thu, 12 Sep 2024 00:40:14 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>,
@@ -105,17 +105,17 @@ Cc: Jason Wang <jasowang@redhat.com>,
  David Gibson <david@gibson.dropbear.id.au>, Fam Zheng <fam@euphon.net>,
  Weiwei Li <liwei1518@gmail.com>, Markus Armbruster <armbru@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 13/48] tests/unit: replace assert(0) with
+Subject: [PATCH v2 18/48] hw/nvme: replace assert(false) with
  g_assert_not_reached()
-Date: Thu, 12 Sep 2024 00:38:46 -0700
-Message-Id: <20240912073921.453203-14-pierrick.bouvier@linaro.org>
+Date: Thu, 12 Sep 2024 00:38:51 -0700
+Message-Id: <20240912073921.453203-19-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240912073921.453203-1-pierrick.bouvier@linaro.org>
 References: <20240912073921.453203-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-ot1-x332.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -145,31 +145,49 @@ assertion mechanisms.
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- tests/unit/test-xs-node.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/nvme/ctrl.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tests/unit/test-xs-node.c b/tests/unit/test-xs-node.c
-index ac94e7ed6c2..2f447a73fb8 100644
---- a/tests/unit/test-xs-node.c
-+++ b/tests/unit/test-xs-node.c
-@@ -212,7 +212,7 @@ static void compare_tx(gpointer key, gpointer val, gpointer opaque)
-         printf("Comparison failure in TX %u after serdes:\n", tx_id);
-         dump_ref("Original", t1->root, 0);
-         dump_ref("Deserialised", t2->root, 0);
--        g_assert(0);
-+        g_assert_not_reached();
-     }
-     g_assert(t1->nr_nodes == t2->nr_nodes);
- }
-@@ -257,7 +257,7 @@ static void check_serdes(XenstoreImplState *s)
-         printf("Comparison failure in main tree after serdes:\n");
-         dump_ref("Original", s->root, 0);
-         dump_ref("Deserialised", s2->root, 0);
--        g_assert(0);
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 9f277b81d83..fc3b27c031e 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -1816,7 +1816,7 @@ static uint16_t nvme_check_zone_state_for_write(NvmeZone *zone)
+         trace_pci_nvme_err_zone_is_read_only(zslba);
+         return NVME_ZONE_READ_ONLY;
+     default:
+-        assert(false);
 +        g_assert_not_reached();
      }
  
-     nr_transactions1 = g_hash_table_size(s->transactions);
+     return NVME_INTERNAL_DEV_ERROR;
+@@ -1870,7 +1870,7 @@ static uint16_t nvme_check_zone_state_for_read(NvmeZone *zone)
+         trace_pci_nvme_err_zone_is_offline(zone->d.zslba);
+         return NVME_ZONE_OFFLINE;
+     default:
+-        assert(false);
++        g_assert_not_reached();
+     }
+ 
+     return NVME_INTERNAL_DEV_ERROR;
+@@ -4654,7 +4654,7 @@ static uint16_t nvme_io_cmd(NvmeCtrl *n, NvmeRequest *req)
+     case NVME_CMD_IO_MGMT_SEND:
+         return nvme_io_mgmt_send(n, req);
+     default:
+-        assert(false);
++        g_assert_not_reached();
+     }
+ 
+     return NVME_INVALID_OPCODE | NVME_DNR;
+@@ -7205,7 +7205,7 @@ static uint16_t nvme_admin_cmd(NvmeCtrl *n, NvmeRequest *req)
+     case NVME_ADM_CMD_DIRECTIVE_RECV:
+         return nvme_directive_receive(n, req);
+     default:
+-        assert(false);
++        g_assert_not_reached();
+     }
+ 
+     return NVME_INVALID_OPCODE | NVME_DNR;
 -- 
 2.39.2
 
