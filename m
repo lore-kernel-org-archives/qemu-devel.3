@@ -4,169 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA8C3EED618
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 16:14:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CDE6EED617
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 16:42:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1somSg-00066h-BS; Thu, 12 Sep 2024 12:14:26 -0400
+	id 1somsl-0005D2-CG; Thu, 12 Sep 2024 12:41:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1somSe-0005v8-4h
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 12:14:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1somsi-0005C2-UP; Thu, 12 Sep 2024 12:41:21 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1somSc-000815-Gc
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 12:14:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726157660;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=f0b6ry8Ezr/LJuQPzt/4qKls+i9F57WWKFMYh7hwV6o=;
- b=LMU+7qualFBUPqPAylN2T6mQId3riwpxtU8cyPlY81F+pAaaG1RROgvfNXp53TDcovwyWW
- oM5qdMr+CsM9dOZ//HsM87n+yTI3BEk+8MvxMf6HjMSwXUQ1HnGH7fV43pwqC9V1GzmoD/
- jqfdrhtypKWQopeztSBWt9bcSkRduSw=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-rqTXYDdPORic9k3aVAmrHQ-1; Thu, 12 Sep 2024 12:14:19 -0400
-X-MC-Unique: rqTXYDdPORic9k3aVAmrHQ-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5c24c92db25so2820571a12.0
- for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 09:14:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726157658; x=1726762458;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=f0b6ry8Ezr/LJuQPzt/4qKls+i9F57WWKFMYh7hwV6o=;
- b=gEIOzkrMZwbilnqhfQdC7LSVrZfrfn+NvJxeUxvgd9fVW/FuyConkAxF14RVuBpt0W
- 7WPmS108d98O/n5KZf6XxkjIwUijDAt17LCwuRfTSiYvl+GOkvi+4s5OW+xs2aECgP2Q
- mz3RzdSrvS3v25rz079H+t0GAFDXoZu26QdlYWoW4o2srIKW0GAukHAcQlQvZM4aPyJo
- mLt18ZPo9t+4FAt2xFBEAL8ia7qLADAFgEbxwd/B2+7CLHJf6qAL27OR0w1fbkoEEAd9
- pXJYhXXvgnIyEUQH2/e5tDXNXmMr6mnHPYvSru+rGC/h+997Rwth9suzEnKepkDW+i03
- 04fA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXBzIJu6IffkRJ/bF3cfJyBe19JLCVRy1UEqBVjuAuk7BHdkIvJWySai83aMFI+m8NDmO+EeZX3Cj1/@nongnu.org
-X-Gm-Message-State: AOJu0Yw8/fwVHByJdQfpsOXPsBc0TTPnqvACxemUVG+TQejeBqQ/hYfC
- bE48UqdQZ4eIWtF5LS67d3I8GCorHiTJJR0qwzDuJg8z5gvoxZemf6pR7ktu8NX+OKZ3GdyYLKY
- vYuVmEhVOvFNLYmdV7FvIOM+PFnJXapp2LF4ZnntsTXqJtdUYZwFL
-X-Received: by 2002:a05:6402:2546:b0:5c2:7741:7d82 with SMTP id
- 4fb4d7f45d1cf-5c4143626camr3319207a12.11.1726157657980; 
- Thu, 12 Sep 2024 09:14:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEW4s9xI2m+gPSP+KOKW2/eT/+C5yDBiqcOeWUmuDrQx9C2HWrZ1Da9f6NGDiY2kJx0xpd05g==
-X-Received: by 2002:a05:6402:2546:b0:5c2:7741:7d82 with SMTP id
- 4fb4d7f45d1cf-5c4143626camr3319143a12.11.1726157657432; 
- Thu, 12 Sep 2024 09:14:17 -0700 (PDT)
-Received: from [192.168.55.123] (93-55-14-26.ip261.fastwebnet.it.
- [93.55.14.26]) by smtp.googlemail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c3ebd41c7dsm6671900a12.13.2024.09.12.09.14.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Sep 2024 09:14:16 -0700 (PDT)
-Message-ID: <cf9642be-8169-496d-81ca-203ffa0f8edd@redhat.com>
-Date: Thu, 12 Sep 2024 18:14:07 +0200
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1somsg-000689-5S; Thu, 12 Sep 2024 12:41:20 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48CAkqID013563;
+ Thu, 12 Sep 2024 16:41:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=N
+ 4wB5bSnHFVFWu1mexAEZIK8v75/jIp76U8vhFcrWdo=; b=YJHRUOZLnopi/09No
+ +3dE55ugBvEpc8vXfTicAcTs56698Ql/foZV6IIIHsACiMKUxIz2Zs+qxW30usA3
+ YjSh4m5fZYiu4KFq2hJTbSJ5gCTHXO2lWWluW0AXahgY7N1Ewjg6NdPW6jMPPtsm
+ YZyJ4j2SiXeh6bFHAUpEgRheHi3CJ7I8/YUfXkNcEsz7uV6GFvJdkuhrxnCtDQAi
+ KMGKg2k5e/qsjcb+NfKM37E/w1ahDu2ADixfD42jAOpCZzAHPyC+ZOqCCt25+VdO
+ p3e98DN/m4LZoXhrZpx3fuHvDV21Aex/4M+r2vPcx/AvsRKC/dzoqvDDO7NY6UlG
+ NxJzw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gegx4w7s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Sep 2024 16:41:11 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48CGfAq5024501;
+ Thu, 12 Sep 2024 16:41:10 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gegx4w7p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Sep 2024 16:41:10 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48CFUaU2010729;
+ Thu, 12 Sep 2024 16:41:09 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41kmb6vr56-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Sep 2024 16:41:09 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48CGf8S443450772
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 12 Sep 2024 16:41:08 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 29DDA5805F;
+ Thu, 12 Sep 2024 16:41:08 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D861258060;
+ Thu, 12 Sep 2024 16:41:07 +0000 (GMT)
+Received: from [9.10.80.165] (unknown [9.10.80.165])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 12 Sep 2024 16:41:07 +0000 (GMT)
+Message-ID: <672a1dd6-e59e-4b8c-b94e-840f28554adb@linux.ibm.com>
+Date: Thu, 12 Sep 2024 11:41:06 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/48] docs/spin: replace assert(0) with
- g_assert_not_reached()
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Laurent Vivier <lvivier@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Klaus Jensen <its@irrelevant.dk>, WANG Xuerui <git@xen0n.name>,
- Halil Pasic <pasic@linux.ibm.com>, Rob Herring <robh@kernel.org>,
- Michael Rolnik <mrolnik@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Corey Minyard <minyard@acm.org>,
- Keith Busch <kbusch@kernel.org>, Thomas Huth <thuth@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Kevin Wolf <kwolf@redhat.com>,
- Jesper Devantier <foss@defmacro.it>, Hyman Huang <yong.huang@smartx.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-s390x@nongnu.org,
- Laurent Vivier <laurent@vivier.eu>, qemu-riscv@nongnu.org,
- "Richard W.M. Jones" <rjones@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, kvm@vger.kernel.org,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Hanna Reitz <hreitz@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- qemu-ppc@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bmeng.cn@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Helge Deller <deller@gmx.de>, Peter Xu <peterx@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Yanan Wang <wangyanan55@huawei.com>, qemu-arm@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Eric Farman <farman@linux.ibm.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, qemu-block@nongnu.org,
- Stefan Berger <stefanb@linux.vnet.ibm.com>, Joel Stanley <joel@jms.id.au>,
- Eduardo Habkost <eduardo@habkost.net>,
- David Gibson <david@gibson.dropbear.id.au>, Fam Zheng <fam@euphon.net>,
- Weiwei Li <liwei1518@gmail.com>, Markus Armbruster <armbru@redhat.com>
-References: <20240912073921.453203-1-pierrick.bouvier@linaro.org>
- <20240912073921.453203-2-pierrick.bouvier@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 09/14] ppc/xive2: Change context/ring specific
+ functions to be generic
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ milesg@linux.ibm.com
+References: <20240909211038.27440-1-kowal@linux.ibm.com>
+ <20240909211038.27440-10-kowal@linux.ibm.com>
+ <97ef9605-0acf-4296-aa7e-0d83a054e738@kaod.org>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20240912073921.453203-2-pierrick.bouvier@linaro.org>
+From: Mike Kowal <kowal@linux.ibm.com>
+In-Reply-To: <97ef9605-0acf-4296-aa7e-0d83a054e738@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: lA2v6VzNRLNlZteMmGLKSC6sa6mX0IE_
+X-Proofpoint-ORIG-GUID: JZM0cm-dV0ucwgQ5zBrvLanWETe2umnD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-12_05,2024-09-12_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 mlxlogscore=997
+ lowpriorityscore=0 suspectscore=0 priorityscore=1501 bulkscore=0
+ adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409120122
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -182,78 +118,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/12/24 09:38, Pierrick Bouvier wrote:
-> This patch is part of a series that moves towards a consistent use of
-> g_assert_not_reached() rather than an ad hoc mix of different
-> assertion mechanisms.
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-This is not C code, so please drop this patch.
+On 9/12/2024 1:27 AM, Cédric Le Goater wrote:
+> On 9/9/24 23:10, Michael Kowal wrote:
+>> Some the functions that have been created are specific to a ring or 
+>> context. Some
+>> of these same functions are being changed to operate on any 
+>> ring/context. This  will
+>> simplify the next patch sets that are adding additional ring/context 
+>> operations.
+>>
+>> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+>> ---
+>>   include/hw/ppc/xive.h |  2 +-
+>>   hw/intc/xive.c        |  6 ++--
+>>   hw/intc/xive2.c       | 77 ++++++++++++++++++++++++++++---------------
+>>   3 files changed, 55 insertions(+), 30 deletions(-)
+>>
+>> diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
+>> index 28c181faa2..31242f0406 100644
+>> --- a/include/hw/ppc/xive.h
+>> +++ b/include/hw/ppc/xive.h
+>> @@ -533,7 +533,7 @@ Object *xive_tctx_create(Object *cpu, 
+>> XivePresenter *xptr, Error **errp);
+>>   void xive_tctx_reset(XiveTCTX *tctx);
+>>   void xive_tctx_destroy(XiveTCTX *tctx);
+>>   void xive_tctx_ipb_update(XiveTCTX *tctx, uint8_t ring, uint8_t ipb);
+>> -void xive_tctx_reset_os_signal(XiveTCTX *tctx);
+>> +void xive_tctx_reset_signal(XiveTCTX *tctx, uint8_t ring);
+>>     /*
+>>    * KVM XIVE device helpers
+>> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+>> index 5b66a3aec5..f1d007d9a6 100644
+>> --- a/hw/intc/xive.c
+>> +++ b/hw/intc/xive.c
+>> @@ -114,7 +114,7 @@ static void xive_tctx_notify(XiveTCTX *tctx, 
+>> uint8_t ring)
+>>       }
+>>   }
+>>   -void xive_tctx_reset_os_signal(XiveTCTX *tctx)
+>> +void xive_tctx_reset_signal(XiveTCTX *tctx, uint8_t ring)
+>>   {
+>>       /*
+>>        * Lower the External interrupt. Used when pulling an OS
+>> @@ -122,7 +122,7 @@ void xive_tctx_reset_os_signal(XiveTCTX *tctx)
+>>        * context. It should be raised again when re-pushing the OS
+>>        * context.
+>>        */
+>> -    qemu_irq_lower(xive_tctx_output(tctx, TM_QW1_OS));
+>> +    qemu_irq_lower(xive_tctx_output(tctx, ring));
+>>   }
+>>     static void xive_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, 
+>> uint8_t cppr)
+>> @@ -424,7 +424,7 @@ static uint64_t xive_tm_pull_os_ctx(XivePresenter 
+>> *xptr, XiveTCTX *tctx,
+>>       qw1w2_new = xive_set_field32(TM_QW1W2_VO, qw1w2, 0);
+>>       xive_tctx_set_os_cam(tctx, qw1w2_new);
+>>   -    xive_tctx_reset_os_signal(tctx);
+>> +    xive_tctx_reset_signal(tctx, TM_QW1_OS);
+>>       return qw1w2;
+>>   }
+>>   diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+>> index 8d3d69a0db..38a4b0ff68 100644
+>> --- a/hw/intc/xive2.c
+>> +++ b/hw/intc/xive2.c
+>> @@ -270,13 +270,14 @@ static void xive2_end_enqueue(Xive2End *end, 
+>> uint32_t data)
+>>    *     the NVP by changing the H bit while the context is enabled
+>>    */
+>>   -static void xive2_tctx_save_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+>> -                                   uint8_t nvp_blk, uint32_t nvp_idx)
+>> +static void xive2_tctx_save_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+>> +                                uint8_t nvp_blk, uint32_t nvp_idx,
+>> +                                uint8_t ring)
+>>   {
+>>       CPUPPCState *env = &POWERPC_CPU(tctx->cs)->env;
+>>       uint32_t pir = env->spr_cb[SPR_PIR].default_value;
+>>       Xive2Nvp nvp;
+>> -    uint8_t *regs = &tctx->regs[TM_QW1_OS];
+>> +    uint8_t *regs = &tctx->regs[ring];
+>>         if (xive2_router_get_nvp(xrtr, nvp_blk, nvp_idx, &nvp)) {
+>>           qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVP %x/%x\n",
+>> @@ -321,13 +322,13 @@ static void xive2_tctx_save_os_ctx(Xive2Router 
+>> *xrtr, XiveTCTX *tctx,
+>>       xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, &nvp, 1);
+>>   }
+>>   -static void xive2_os_cam_decode(uint32_t cam, uint8_t *nvp_blk,
+>> -                                uint32_t *nvp_idx, bool *vo, bool *ho)
+>> +static void xive2_cam_decode(uint32_t cam, uint8_t *nvp_blk,
+>> +                             uint32_t *nvp_idx, bool *valid, bool *hw)
+>>   {
+>>       *nvp_blk = xive2_nvp_blk(cam);
+>>       *nvp_idx = xive2_nvp_idx(cam);
+>> -    *vo = !!(cam & TM2_QW1W2_VO);
+>> -    *ho = !!(cam & TM2_QW1W2_HO);
+>> +    *valid = !!(cam & TM2_QW1W2_VO);
+>> +    *hw = !!(cam & TM2_QW1W2_HO);
+>>   }
+>>     @@ -351,37 +352,54 @@ static uint32_t 
+>> xive2_tctx_hw_cam_line(XivePresenter *xptr, XiveTCTX *tctx)
+>>       return xive2_nvp_cam_line(blk, 1 << tid_shift | (pir & tid_mask));
+>>   }
+>>   -uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+>> -                              hwaddr offset, unsigned size)
+>> +static uint64_t xive2_tm_pull_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+>> +                                  hwaddr offset, unsigned size, 
+>> uint8_t ring)
+>
+> The changes below are not strictly adding a ring parameter. Some belong
+> to another patch.
+>
+>
+> Thanks,
+>
+> C.
+>
+The two patch sets go together and the functions added the ring parm so 
+I included those changes here.   I can move some of the changes from 
+here to patch set 10.
 
-Paolo
+MAK
 
-> ---
->   docs/spin/aio_notify_accept.promela | 6 +++---
->   docs/spin/aio_notify_bug.promela    | 6 +++---
->   2 files changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/docs/spin/aio_notify_accept.promela b/docs/spin/aio_notify_accept.promela
-> index 9cef2c955dd..f929d303281 100644
-> --- a/docs/spin/aio_notify_accept.promela
-> +++ b/docs/spin/aio_notify_accept.promela
-> @@ -118,7 +118,7 @@ accept_if_req_not_eventually_false:
->       if
->           :: req -> goto accept_if_req_not_eventually_false;
->       fi;
-> -    assert(0);
-> +    g_assert_not_reached();
->   }
->   
->   #else
-> @@ -141,12 +141,12 @@ accept_if_event_not_eventually_true:
->           :: !event && notifier_done  -> do :: true -> skip; od;
->           :: !event && !notifier_done -> goto accept_if_event_not_eventually_true;
->       fi;
-> -    assert(0);
-> +    g_assert_not_reached();
->   
->   accept_if_event_not_eventually_false:
->       if
->           :: event     -> goto accept_if_event_not_eventually_false;
->       fi;
-> -    assert(0);
-> +    g_assert_not_reached();
->   }
->   #endif
-> diff --git a/docs/spin/aio_notify_bug.promela b/docs/spin/aio_notify_bug.promela
-> index b3bfca1ca4f..ce6f5177ed5 100644
-> --- a/docs/spin/aio_notify_bug.promela
-> +++ b/docs/spin/aio_notify_bug.promela
-> @@ -106,7 +106,7 @@ accept_if_req_not_eventually_false:
->       if
->           :: req -> goto accept_if_req_not_eventually_false;
->       fi;
-> -    assert(0);
-> +    g_assert_not_reached();
->   }
->   
->   #else
-> @@ -129,12 +129,12 @@ accept_if_event_not_eventually_true:
->           :: !event && notifier_done  -> do :: true -> skip; od;
->           :: !event && !notifier_done -> goto accept_if_event_not_eventually_true;
->       fi;
-> -    assert(0);
-> +    g_assert_not_reached();
->   
->   accept_if_event_not_eventually_false:
->       if
->           :: event     -> goto accept_if_event_not_eventually_false;
->       fi;
-> -    assert(0);
-> +    g_assert_not_reached();
->   }
->   #endif
 
+>
+>>   {
+>>       Xive2Router *xrtr = XIVE2_ROUTER(xptr);
+>> -    uint32_t qw1w2 = xive_tctx_word2(&tctx->regs[TM_QW1_OS]);
+>> -    uint32_t qw1w2_new;
+>> -    uint32_t cam = be32_to_cpu(qw1w2);
+>> +    uint32_t target_ringw2 = xive_tctx_word2(&tctx->regs[ring]);
+>> +    uint32_t cam = be32_to_cpu(target_ringw2);
+>>       uint8_t nvp_blk;
+>>       uint32_t nvp_idx;
+>> -    bool vo;
+>> +    uint8_t cur_ring;
+>> +    bool valid;
+>>       bool do_save;
+>>   -    xive2_os_cam_decode(cam, &nvp_blk, &nvp_idx, &vo, &do_save);
+>> +    xive2_cam_decode(cam, &nvp_blk, &nvp_idx, &valid, &do_save);
+>>   -    if (!vo) {
+>> +    if (!valid) {
+>>           qemu_log_mask(LOG_GUEST_ERROR, "XIVE: pulling invalid NVP 
+>> %x/%x !?\n",
+>>                         nvp_blk, nvp_idx);
+>>       }
+>>   -    /* Invalidate CAM line */
+>> -    qw1w2_new = xive_set_field32(TM2_QW1W2_VO, qw1w2, 0);
+>> -    memcpy(&tctx->regs[TM_QW1_OS + TM_WORD2], &qw1w2_new, 4);
+>> +    /* Invalidate CAM line of requested ring and all lower rings */
+>> +    for (cur_ring = TM_QW0_USER; cur_ring <= ring;
+>> +         cur_ring += XIVE_TM_RING_SIZE) {
+>> +        uint32_t ringw2 = xive_tctx_word2(&tctx->regs[cur_ring]);
+>> +        uint32_t ringw2_new = xive_set_field32(TM2_QW1W2_VO, ringw2, 
+>> 0);
+>> +        memcpy(&tctx->regs[cur_ring + TM_WORD2], &ringw2_new, 4);
+>> +    }
+>>         if (xive2_router_get_config(xrtr) & XIVE2_VP_SAVE_RESTORE && 
+>> do_save) {
+>> -        xive2_tctx_save_os_ctx(xrtr, tctx, nvp_blk, nvp_idx);
+>> +        xive2_tctx_save_ctx(xrtr, tctx, nvp_blk, nvp_idx, ring);
+>>       }
+>>   -    xive_tctx_reset_os_signal(tctx);
+>> -    return qw1w2;
+>> +    /*
+>> +     * Lower external interrupt line of requested ring and below 
+>> except for
+>> +     * USER, which doesn't exist.
+>> +     */
+>> +    for (cur_ring = TM_QW1_OS; cur_ring <= ring;
+>> +         cur_ring += XIVE_TM_RING_SIZE) {
+>> +        xive_tctx_reset_signal(tctx, cur_ring);
+>> +    }
+>> +    return target_ringw2;
+>>   }
+>>   +uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+>> +                              hwaddr offset, unsigned size)
+>> +{
+>> +    return xive2_tm_pull_ctx(xptr, tctx, offset, size, TM_QW1_OS);
+>> + }
+>> +
+>>   #define REPORT_LINE_GEN1_SIZE       16
+>>     static void xive2_tm_report_line_gen1(XiveTCTX *tctx, uint8_t *data,
+>> @@ -424,8 +442,9 @@ static void xive2_tm_report_line_gen1(XiveTCTX 
+>> *tctx, uint8_t *data,
+>>       }
+>>   }
+>>   -void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+>> -                             hwaddr offset, uint64_t value, unsigned 
+>> size)
+>> +static void xive2_tm_pull_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+>> +                                 hwaddr offset, uint64_t value,
+>> +                                 unsigned size, uint8_t ring)
+>>   {
+>>       Xive2Router *xrtr = XIVE2_ROUTER(xptr);
+>>       uint32_t hw_cam, nvp_idx, xive2_cfg, reserved;
+>> @@ -473,8 +492,14 @@ void xive2_tm_pull_os_ctx_ol(XivePresenter 
+>> *xptr, XiveTCTX *tctx,
+>>           assert(result == MEMTX_OK);
+>>       }
+>>   -    /* the rest is similar to pull OS context to registers */
+>> -    xive2_tm_pull_os_ctx(xptr, tctx, offset, size);
+>> +    /* the rest is similar to pull context to registers */
+>> +    xive2_tm_pull_ctx(xptr, tctx, offset, size, ring);
+>> +}
+>> +
+>> +void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+>> +                             hwaddr offset, uint64_t value, unsigned 
+>> size)
+>> +{
+>> +    xive2_tm_pull_ctx_ol(xptr, tctx, offset, value, size, TM_QW1_OS);
+>>   }
+>>     static uint8_t xive2_tctx_restore_os_ctx(Xive2Router *xrtr, 
+>> XiveTCTX *tctx,
+>> @@ -573,7 +598,7 @@ void xive2_tm_push_os_ctx(XivePresenter *xptr, 
+>> XiveTCTX *tctx,
+>>       bool vo;
+>>       bool do_restore;
+>>   -    xive2_os_cam_decode(cam, &nvp_blk, &nvp_idx, &vo, &do_restore);
+>> +    xive2_cam_decode(cam, &nvp_blk, &nvp_idx, &vo, &do_restore);
+>>         /* First update the thead context */
+>>       memcpy(&tctx->regs[TM_QW1_OS + TM_WORD2], &qw1w2, 4);
+>
 
