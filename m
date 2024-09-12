@@ -4,77 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87DE9EE644A
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 05:18:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95458EE644B
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 05:30:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1socDJ-00062k-Qj; Thu, 12 Sep 2024 01:17:53 -0400
+	id 1socPF-0008KR-6w; Thu, 12 Sep 2024 01:30:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1socDC-00061r-IZ
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:17:46 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1socPC-0008DW-56
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:10 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1socD9-0001hU-IL
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:17:45 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2da55ea8163so388683a91.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:17:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1socPA-0002yG-F3
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:09 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-7cf5e179b68so426685a12.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:30:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1726118260; x=1726723060; darn=nongnu.org;
- h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1726119007; x=1726723807; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aijQxr7Ge2hZ58EmONkflCCjak9k0oktLgzSSHNPzh8=;
- b=JgjPeTX65qM/S+3UDnsYuq2dwesjOToAkljk5Xc90U+jWbx7X9Nn7t1AOUP6bUeaN8
- ndDyG1aY8gMn0SlEsKhY1yIBGCn6K+jwv4X/0Q/KniMCagF/Yd48X52rBahFblEY/FI0
- QUf7+KiIVUUDxnybUwO29KfAWppTgpyu2zuwljDMS1hfZSNYdNIFzSYFD2j0HPVNK/RU
- tPuocDYGBAlcSoSfpcoDG7o0Lw7KbD7uW3mUB60advN2gVy/HMvy6iRaYHNYxexvXlp2
- D26DJcP49Z5WLIKgCSt4R71u1hiH68BSMsu2WNgPsCNIEIxb8mU/SNYxQLswXe6IJMg/
- vCpQ==
+ bh=qKFK7bfzo9lztBPhZCSDP1XR7U4NGQvb7cgLHvUq4Qk=;
+ b=BljB+s7k+nxPgTKRuIuf1WhPdQROXb5sJD/7n6vZ5KRPM02Jq2DLM4MM1jNpQusaLo
+ /uIgukx996c1RgFPdeD2EuP7Rg40VnevBgeQntMfUQaojr7+W4df2OPSpMeG7erx8/V6
+ hF+s6KVpkI1R8UffSYgMU8RQ1jpNa5Pj2tAyoK1lQuWljkPRA3E+UO7N+tA9csnfAN2t
+ hDGizk+dIjHH2EKl1gU3BH/AMyxd+u4eqNdGirOMzMftKVz92TBDYAfU3NHxsDRMTpew
+ +p044O1DIaGEHN4N9iwKSUiNLGVr41vW0vO5vqPPoQApw3ZM7SdtqiekJ1Dr/NHU6nbR
+ zkPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726118260; x=1726723060;
- h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1726119007; x=1726723807;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aijQxr7Ge2hZ58EmONkflCCjak9k0oktLgzSSHNPzh8=;
- b=MZ2ALoAo2d2vFXzY9Az2lPJkoB3JEqnG5Q1XT8/sPr8bRLU2DLRuEOl+4vrzZ4wW2P
- 6D+7tgFx9NnayHVCRQM0ynYEQOJxyM7yzHwnKzl4LubcpMHH/NDtm6zczaLqBedH+Alm
- JgAI5fVKo0CsBOU9smE113uS+HYwIdscG+thcwVuTMi4XBh4Jjala73st7ZTdHJMbedF
- 7wQwsPTAcQaoOUbsWODhlgE2rTN4lVJSVyG2QmRNOQ1hIzNeGD64lBvc8D0ob+tzWziO
- C3Vf6iQYWeB6klWG2lG9g6jQq97MaFfIYyegjLYFBOa8YIJuxTDLwxy7ARFSqNvDzF8o
- j/qw==
-X-Gm-Message-State: AOJu0YzJb63+iFjKmw2qB9X/B7Ug3WfDrFrFTm5+c1meXazs0bo10Nfa
- dhCUEkE+pgf1nKyGZg0ui0bfRm7i5vXEGFxMVpDu1r7iU/Zhs+64eDyLF8IQHhyTtxpYeV9LwCr
- tA7T8eApyVzsqTUID6k8V8I46nDaVpR6tSgVWzjKzpa4CeB2C4vAGJO8zduqdMlImqYC9cbvFRU
- 5VXU4C/UPRuotGMmD3hdYN17ZLUgNXAbKrrg==
-X-Google-Smtp-Source: AGHT+IHaktDKId+1qqO8wUF2VuL73OprXZG+imHQ9urlYMVAzhMunTEtwrZ9mgVIaGm9QsaHjuW/Fg==
-X-Received: by 2002:a17:90a:114f:b0:2c8:64a:5f77 with SMTP id
- 98e67ed59e1d1-2dba0084dabmr1924928a91.37.1726118259769; 
- Wed, 11 Sep 2024 22:17:39 -0700 (PDT)
-Received: from hsinchu26.internal.sifive.com
- (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
+ bh=qKFK7bfzo9lztBPhZCSDP1XR7U4NGQvb7cgLHvUq4Qk=;
+ b=TT30/bWmzU6DD3KhPcxpEboH2Wamef+F1nuT4ilSrsUdih7fzCl7eAUvtCUL6ST27C
+ PCDshkqQ1M/Cs5WkSHFdtLytFhOn7d3roZTxoJ0wCcvdo5rxkphymcTSk1KjPGVttqLY
+ kLrkoJlQXahmBCh6lyZs5jX2RqXY/PaC//nwE25WlV8Lfil8V7+0KGl+uRNwi1bNXthw
+ qDg+X1cB51nvHV4K9WIWf2yihc0psR6IxJQhyHwPxUBBs4Rh5Baz830rPfu46iPBu9dB
+ nw7pYrt0Soyv+M7m0/4eZOUDwxfpIqdkMpvzZnpoMQHdicaJEZZY9G85kLdJFwIlyj1Q
+ azGA==
+X-Gm-Message-State: AOJu0Yy9ehXRaviX0eSf85RSl1aGGYWYbwvLsacSBlSyRaAGEtIqiSPD
+ efEt0j3y3XOcBn9KA4f3zWQ99sG9uHulCdlAhVs5BBU1hYvzFjcDSzPgtQ==
+X-Google-Smtp-Source: AGHT+IFIojT6DO00nECHxhJaDgiZMy5EGf9SBLIQjAxWI0X9jVG7o8oA3/I/pqGPGMYdyEcQXCvntQ==
+X-Received: by 2002:a05:6a21:6e41:b0:1cf:3338:a475 with SMTP id
+ adf61e73a8af0-1cf755c7824mr2727457637.9.1726119006381; 
+ Wed, 11 Sep 2024 22:30:06 -0700 (PDT)
+Received: from toolbox.alistair23.me
+ (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
+ [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2db04966d3asm9452185a91.38.2024.09.11.22.17.38
+ d2e1a72fcca58-71908fc8fdesm3833034b3a.1.2024.09.11.22.30.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 22:17:39 -0700 (PDT)
-From: Jim Shu <jim.shu@sifive.com>
+ Wed, 11 Sep 2024 22:30:05 -0700 (PDT)
+From: Alistair Francis <alistair23@gmail.com>
+X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH] vfio/pci: Fix null pointer deference from error API
-Date: Thu, 12 Sep 2024 13:17:34 +0800
-Message-Id: <20240912051734.5298-1-jim.shu@sifive.com>
-X-Mailer: git-send-email 2.17.1
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=jim.shu@sifive.com; helo=mail-pj1-x1033.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Cc: alistair23@gmail.com, Haibo Xu <haibo1.xu@intel.com>,
+ Sunil V L <sunilvl@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 02/47] tests/acpi: Add empty ACPI SRAT data file for RISC-V
+Date: Thu, 12 Sep 2024 15:29:07 +1000
+Message-ID: <20240912052953.2552501-3-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240912052953.2552501-1-alistair.francis@wdc.com>
+References: <20240912052953.2552501-1-alistair.francis@wdc.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x529.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,28 +99,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-pci_dev_realize() use the local error variable, which requires
-`error_setg()` API to allocate the error object at first.
+From: Haibo Xu <haibo1.xu@intel.com>
 
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
+As per process documented (steps 1-3) in bios-tables-test.c, add
+empty AML data file for RISC-V ACPI SRAT table and add the entry
+in bios-tables-test-allowed-diff.h.
+
+Signed-off-by: Haibo Xu <haibo1.xu@intel.com>
+Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <0e30216273f2f59916bc651350578d8e8bc3a75f.1723172696.git.haibo1.xu@intel.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/vfio/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+ tests/data/acpi/riscv64/virt/SRAT.numamem   | 0
+ 2 files changed, 1 insertion(+)
+ create mode 100644 tests/data/acpi/riscv64/virt/SRAT.numamem
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 0a99e55247..d994ad8bb9 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3117,7 +3117,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
- 
-     if (!vbasedev->mdev &&
-         !pci_device_set_iommu_device(pdev, vbasedev->hiod, errp)) {
--        error_prepend(errp, "Failed to set iommu_device: ");
-+        error_setg(errp, "Failed to set iommu_device: ");
-         goto out_teardown;
-     }
- 
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..a3e01d2eb7 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,2 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/riscv64/virt/SRAT.numamem",
+diff --git a/tests/data/acpi/riscv64/virt/SRAT.numamem b/tests/data/acpi/riscv64/virt/SRAT.numamem
+new file mode 100644
+index 0000000000..e69de29bb2
 -- 
-2.17.1
+2.46.0
 
 
