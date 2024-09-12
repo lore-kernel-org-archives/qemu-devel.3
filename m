@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D289AEE644B
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 05:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D08C7EE644C
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 05:45:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1socPy-0002Ny-AG; Thu, 12 Sep 2024 01:30:58 -0400
+	id 1socS1-0003Zo-1S; Thu, 12 Sep 2024 01:33:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1socPq-0001s8-LB
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:52 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1socRP-0000ys-9s
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:32:32 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1socPo-000329-HC
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:50 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-20573eb852aso11269435ad.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:30:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1socRN-0003Bw-OR
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:32:27 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-7191fb54147so363088b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:32:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726119047; x=1726723847; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1726119144; x=1726723944; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eaeJ4vIVtml8YIdsCzBuc3r44GRxLtYAklX7iK/54rg=;
- b=RPnO9Y6WVQp+IDb2aOOYIq/38m/QnyITREaZSeVOAKzxK8LcDs31D9mm2pp0ZXbPjG
- 6ebHfl/ngkEjMTpAGukih+s8fNvHaxp9EFTYhjRgC+xhzEbX1byBDRQTfgyTON9lrn/0
- zR/rCf95Id3IVEua9zhBseqxlr6T2M/tINyKD1tVP7sVni889h503Em3nTFgkMoKjPYe
- v9eJg14YeFa7hYFgrygRyaQq3fuXQSmu+sbRHjERcVWUZK/JwLNhY4hW9X+3s7XmYsmO
- 6A3258VM9bhN9WGyJsEw2Oh4bQdNajcSVDhe9f9OX0lmBwa/1mjd0AAp+bl9B4Zx8C4a
- WrQw==
+ bh=GWryAgOwLMSF+r/4gq1tiWKnxg+KJOz4OtvMHYQlMIk=;
+ b=PRQkvqtvZA4QDr1FYdRPIVC9c0PIqy5QChaNPk533IlDn+lp/K0cdkQOaUjs5WDKSE
+ 9wZOBbRfR/YUGmm4zWyJyALfnqGz7aMEf5VfFxC46y3QuF5Nwoscfq5hzihSzGsWbyz/
+ QfkRwsb/SKEba8a9Pkj66IkLL3/AAnZMQsGUuivdYTGNCllqn/EUUZ9rWTHytx6/rs4d
+ LonDKKOE5srGANJEv9pbfvPvbbaqjSDDn4LjUH9DxZzoFqXUdbeAB/Y9+FrTrgUKb6Ta
+ XA52jfe94eVrbPsAcThqzpONhMYt4MBrFxnGm1Mb8wJE44egd0DD0m04P3aOkEhnxcDa
+ vrIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726119047; x=1726723847;
+ d=1e100.net; s=20230601; t=1726119144; x=1726723944;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eaeJ4vIVtml8YIdsCzBuc3r44GRxLtYAklX7iK/54rg=;
- b=rKVq0g7XoJmbf9F3BdofPDp8zj3v2QP6B7xd1Ez5HtruqhiEpx5+tm2fF8jWoX2Khn
- jNfmswNnEs5xtSb+42Lnw/x1gie9wa9pVVgTjxsVjFATrqb0VMrVlcgtH189ntt4Qw+3
- xNXBDlR/85i37ad05ykus6cOU97F6PXI0IvecCffNcdH6uwabwwIUNmzc1/mtAI8cGb2
- nvGkm+jTlYvR3dJXnbwUtRFGW4QkiAHirIQMxmwzxhqY4ejGcH+0lb5iDHMK22HozyyP
- C/dCCqFYooXpOAb8iTQQQ7lJhPW07Wsrkfak74eJWond4p5WqJsX6NJOzwd7BOVnQUDH
- EUfw==
-X-Gm-Message-State: AOJu0Yxq2FJgfvPQMqWgJB9Z0sKOXUzYCLZ9yGKt1NrPm2Mi9m3msU2h
- JpbHkrDPWht0Qi+6YAwYPCzmPs9yEEvgGyCi7tVfjqnV0jhBcAhmjVL3NKXNli+5MfxORr2ZI/b
- O
-X-Google-Smtp-Source: AGHT+IFDyoVjkdrLl/yKyQ8Yo/6A0CMeygj2kLAUG00J5ENRuLr4OWzAy5XCGBDDQsdP+d4PTBoA2w==
-X-Received: by 2002:a17:902:e545:b0:206:8f25:a4f with SMTP id
- d9443c01a7336-2074c624134mr106942425ad.16.1726119046784; 
- Wed, 11 Sep 2024 22:30:46 -0700 (PDT)
-Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ bh=GWryAgOwLMSF+r/4gq1tiWKnxg+KJOz4OtvMHYQlMIk=;
+ b=ktub0fYtutL/2yhr0wfnSWc7PtKZ8ACIyXpYDxFXnJtw8jUsHMFPjqtFid9Xh+I1cK
+ S0Ck4+HMnPjrVrYfSMVr4vil9iZxt3I45qTQASOoEoQP0vhBhKP8dKYh/tU2f6wSl4Jd
+ p9Tm19HL3pHxeyu+1wZWauvjhjoMBviueutA9zmEoStFjSt8Q/m+OmjAH3mQmbKde1uE
+ msDaMuyTYBRZaJvgURJMmcjJ9Pt4jctDYWl4D28xlw2EVwcNdgQpvPHsOltwyfA4Ef+l
+ gPmPHsj257YZt8XTOPYP+CjiV5oBjk69UBBshfWH+E1VwVgyX4woraFVPBwJ9cTswI1t
+ TF4A==
+X-Gm-Message-State: AOJu0YxBPCvjCA9mp9yREff781/xjEaPtzc6tvr7s6HuPu2Dc2kNKk1S
+ Err4LJbwGcYlQhd4bIWQlAIyKKdbXhsbwM04AbjgbMqg/gQn6gV1EX640g==
+X-Google-Smtp-Source: AGHT+IGIl5jveHVwWGuuFk+fS1DwvPJL8BUDe40YpjoHbyqVXsfzosIGklU55xRNDILGJdR3WFW/rg==
+X-Received: by 2002:a05:6a00:3e29:b0:70d:2b95:d9c0 with SMTP id
+ d2e1a72fcca58-71926090ecdmr2621079b3a.14.1726119144174; 
+ Wed, 11 Sep 2024 22:32:24 -0700 (PDT)
+Received: from toolbox.alistair23.me
+ (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
+ [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2076afe9e1dsm7513155ad.236.2024.09.11.22.30.46
+ d2e1a72fcca58-71908fc8fdesm3833034b3a.1.2024.09.11.22.32.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 22:30:46 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Wed, 11 Sep 2024 22:32:23 -0700 (PDT)
+From: Alistair Francis <alistair23@gmail.com>
+X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Carl Hauser <chauser@pullman.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PULL 2/5] target/sparc: Populate sparc32 FQ when raising fp exception
-Date: Wed, 11 Sep 2024 22:30:40 -0700
-Message-ID: <20240912053043.1131626-3-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240912053043.1131626-1-richard.henderson@linaro.org>
-References: <20240912053043.1131626-1-richard.henderson@linaro.org>
+Cc: alistair23@gmail.com, Andrew Jones <ajones@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 45/47] target/riscv32: Fix masking of physical address
+Date: Thu, 12 Sep 2024 15:29:50 +1000
+Message-ID: <20240912052953.2552501-46-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240912052953.2552501-1-alistair.francis@wdc.com>
+References: <20240912052953.2552501-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,91 +99,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Carl Hauser <chauser@pullman.com>
+From: Andrew Jones <ajones@ventanamicro.com>
 
-Implement a single instruction floating point queue,
-populated while delivering an fp exception.
+C doesn't extend the sign bit for unsigned types since there isn't a
+sign bit to extend. This means a promotion of a u32 to a u64 results
+in the upper 32 bits of the u64 being zero. If that result is then
+used as a mask on another u64 the upper 32 bits will be cleared. rv32
+physical addresses may be up to 34 bits wide, so we don't want to
+clear the high bits while page aligning the address. The fix is to
+use hwaddr for the mask, which, even on rv32, is 64-bits wide.
 
-Signed-off-by: Carl Hauser <chauser@pullman.com>
-[rth: Split from a larger patch]
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Tested-by: Carl Hauser <chauser@pullman.com>
+Fixes: af3fc195e3c8 ("target/riscv: Change the TLB page size depends on PMP entries.")
+Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240909083241.43836-2-ajones@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/sparc/int32_helper.c | 40 +++++++++++++++++++++++--------------
- 1 file changed, 25 insertions(+), 15 deletions(-)
+ target/riscv/cpu_helper.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
-index 6b7d65b031..f2dd8bcb2e 100644
---- a/target/sparc/int32_helper.c
-+++ b/target/sparc/int32_helper.c
-@@ -21,10 +21,10 @@
- #include "qemu/main-loop.h"
- #include "cpu.h"
- #include "trace.h"
-+#include "exec/cpu_ldst.h"
- #include "exec/log.h"
- #include "sysemu/runstate.h"
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 395a1d9140..4b2c72780c 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1323,7 +1323,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     int ret = TRANSLATE_FAIL;
+     int mode = mmuidx_priv(mmu_idx);
+     /* default TLB page size */
+-    target_ulong tlb_size = TARGET_PAGE_SIZE;
++    hwaddr tlb_size = TARGET_PAGE_SIZE;
  
--
- static const char * const excp_names[0x80] = {
-     [TT_TFAULT] = "Instruction Access Fault",
-     [TT_ILL_INSN] = "Illegal Instruction",
-@@ -116,22 +116,9 @@ void sparc_cpu_do_interrupt(CPUState *cs)
+     env->guest_phys_fault_addr = 0;
  
-         qemu_log("%6d: %s (v=%02x)\n", count, name, intno);
-         log_cpu_state(cs, 0);
--#if 0
--        {
--            int i;
--            uint8_t *ptr;
--
--            qemu_log("       code=");
--            ptr = (uint8_t *)env->pc;
--            for (i = 0; i < 16; i++) {
--                qemu_log(" %02x", ldub(ptr + i));
--            }
--            qemu_log("\n");
--        }
--#endif
-         count++;
-     }
--#if !defined(CONFIG_USER_ONLY)
-+#ifndef CONFIG_USER_ONLY
-     if (env->psret == 0) {
-         if (cs->exception_index == 0x80 &&
-             env->def.features & CPU_FEATURE_TA0_SHUTDOWN) {
-@@ -143,6 +130,29 @@ void sparc_cpu_do_interrupt(CPUState *cs)
-         }
-         return;
-     }
-+    if (intno == TT_FP_EXCP) {
-+        /*
-+         * The sparc32 fpu has three states related to exception handling.
-+         * The FPop that signals an exception transitions from fp_execute
-+         * to fp_exception_pending.  A subsequent FPop transitions from
-+         * fp_exception_pending to fp_exception, which forces the trap.
-+         *
-+         * If the queue is not empty, this trap is due to execution of an
-+         * illegal FPop while in fp_exception state.  Here we are to
-+         * re-enter fp_exception_pending state without queuing the insn.
-+         *
-+         * We do not model the fp_exception_pending state, but instead
-+         * skip directly to fp_exception state.  We advance pc/npc to
-+         * mimic delayed trap delivery as if by the subsequent insn.
-+         */
-+        if (!env->fsr_qne) {
-+            env->fsr_qne = FSR_QNE;
-+            env->fq.s.addr = env->pc;
-+            env->fq.s.insn = cpu_ldl_code(env, env->pc);
-+        }
-+        env->pc = env->npc;
-+        env->npc = env->npc + 4;
-+    }
- #endif
-     env->psret = 0;
-     cwp = cpu_cwp_dec(env, env->cwp - 1);
+@@ -1375,7 +1375,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+ 
+                 qemu_log_mask(CPU_LOG_MMU,
+                               "%s PMP address=" HWADDR_FMT_plx " ret %d prot"
+-                              " %d tlb_size " TARGET_FMT_lu "\n",
++                              " %d tlb_size %" HWADDR_PRIu "\n",
+                               __func__, pa, ret, prot_pmp, tlb_size);
+ 
+                 prot &= prot_pmp;
+@@ -1409,7 +1409,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+ 
+             qemu_log_mask(CPU_LOG_MMU,
+                           "%s PMP address=" HWADDR_FMT_plx " ret %d prot"
+-                          " %d tlb_size " TARGET_FMT_lu "\n",
++                          " %d tlb_size %" HWADDR_PRIu "\n",
+                           __func__, pa, ret, prot_pmp, tlb_size);
+ 
+             prot &= prot_pmp;
 -- 
-2.43.0
+2.46.0
 
 
