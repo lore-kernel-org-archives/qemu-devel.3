@@ -4,85 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43F91EED613
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 15:00:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCA35EED614
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 15:10:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1solIt-0003U2-AC; Thu, 12 Sep 2024 11:00:15 -0400
+	id 1solRx-0003lW-LB; Thu, 12 Sep 2024 11:09:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1solIr-0003Nq-HS
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 11:00:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1solRl-0003ke-Uu
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 11:09:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1solIp-00015P-DT
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 11:00:13 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1solRi-0001h6-Rq
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 11:09:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726153210;
+ s=mimecast20190719; t=1726153760;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=o8QHQlei/5e8WLXoN1kQ0dOp6fN9SwQAn9QR08rpEac=;
- b=Vh+CpMM8RyLPb7ZXD83bEjlEEPmlipdZkTyaUGgJpTXVXoT+GiXI5HGzszsN88sl6zIV0p
- TTJC/4zVt0ysjnHbcS3uZ0/nb3nPiv0seikl64N0r58lEXBvDWnTysaK3KHJnbX2K7W6tC
- lBWydJVaxn6657YqwFXtqOLKKm5cI9o=
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
- [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=F1pN0nC8Ypx/EUYIHVOzIS1TLTNJBs12MSepxD6WlDI=;
+ b=CFHekQjS6EMo8qKaQS2Qnky67GtNowyHUQ3oeLR6sNa+NRs6wTBLEn97Fq6p3/HXFFScv4
+ 8IFMHjy11EhIDDd99bJf2PCxsXTUgT6segdtU+oEvb24QqEs9BAcD/RYpNzksUIt2Q4m1u
+ 5pNMx4Snvh3rHKu0tT9iL8r/DzAmuCc=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-228-IrlSQHvjMMm9TmBtbE-qjw-1; Thu, 12 Sep 2024 11:00:07 -0400
-X-MC-Unique: IrlSQHvjMMm9TmBtbE-qjw-1
-Received: by mail-pf1-f198.google.com with SMTP id
- d2e1a72fcca58-718d6ad6105so1719440b3a.1
- for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 08:00:07 -0700 (PDT)
+ us-mta-459-FK-T9j46Pu2IhFYeIwoBrA-1; Thu, 12 Sep 2024 11:09:16 -0400
+X-MC-Unique: FK-T9j46Pu2IhFYeIwoBrA-1
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7a9acb45d8cso168904185a.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 08:09:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726153206; x=1726758006;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=o8QHQlei/5e8WLXoN1kQ0dOp6fN9SwQAn9QR08rpEac=;
- b=PV1LQecEp18jZbUl9fVO4unzROP04yIsmIdzmNLQaf3z2z7P565JtCdVPCz2fcBxmc
- Mp5Z4ULykRCMbe19pVEvSMhTm8PeQppyxV/FY5yCrbVMLOniBqHNlncE5uIXfAoGu035
- f/GhmYzmIwFwfVZ5OBAHXZLjf3qMsaam0xsKgi0LvL44lXYZxVh6sZjyzLPJ1smTjdZC
- DUoxRiJznPUzSdrC596SL906XU3RBFH8r7lhIvoQ3s+QPXuBg9r3pR/e4uU6pXFzCdCR
- bCGr387/rwETFnyvu+nLjM3MHfPDHJLLK3OPSc4kuax7RVFD1twzj6TdFNpIlrc2ZHwD
- vn4w==
-X-Gm-Message-State: AOJu0YzjX04G0Ve6xdbSf8qCN40fbnW0hj4yT6olGsyYfGei5oO46CJa
- ennQ4PzRMq2ef2zLht5l2xqnnFohUxrsQ/u8N2hz/T/8/MM8LlRp2d4itOGfSKeECpn3Au7IGkN
- AyGNzV4fmRfaTTd62iU7Vx7gkCynwk9RT6fhT4Gk7rnTIVBRa+5ZFBZWkwuV74GRaNheImoAGKh
- 6BNMWGHpsfNizVl4w+mZnIBDASA4w9FVzmXAAckw==
-X-Received: by 2002:a05:6300:668b:b0:1cf:1b7d:8481 with SMTP id
- adf61e73a8af0-1cf7620cbd2mr4326364637.32.1726153204128; 
- Thu, 12 Sep 2024 08:00:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFpZFucGUqOYotRDsYYZ+nF1tg+hoLxfWMXHz3p0ThEqxLt4E5E5zyiv98prVvnvJNjp8VqsbjjdX3cI0SHbyQ=
-X-Received: by 2002:a05:6300:668b:b0:1cf:1b7d:8481 with SMTP id
- adf61e73a8af0-1cf7620cbd2mr4326319637.32.1726153203634; Thu, 12 Sep 2024
- 08:00:03 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726153755; x=1726758555;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=F1pN0nC8Ypx/EUYIHVOzIS1TLTNJBs12MSepxD6WlDI=;
+ b=f6zyqKS4Gjr4U700S9JggTcXtP0VXYkGpWHjeQ3EqtDhFzVQ8kqyaCJOFtaGlzg+Ku
+ 9yv1Va3PicFKiQpM8vUvVSrMeICemEVFtVIHIA9EYzTrTDuDlBn7/EPRL8P7gstN4GYz
+ cHdq/hXWoY3IDL5SZTiOroT3pIV/Wt6LZI4Sfc67/yX4feoiwPphXyphUH+23dPHcf+t
+ nPsI3vNmqaz/yR3Hq/7MgrASvQCiUppTfMJuoHmHqdrxoSJL3GwN+b6LSH3A6T6z5TnM
+ JrANr4C2cRwSNQxeml06ObYfwU/w1cDxg/sUX1pKkrGIX3B/VypV3aoiFd4EGyoU+WHn
+ D0IQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUz3b7oQtr11cm42tFcN3EpnV9gUhdrZ+4DomEGSh8sOyei7furI6vqpMuaSYzg9axgyjsrTTYi7VXw@nongnu.org
+X-Gm-Message-State: AOJu0YyPIopwmT+C/aK1OdYJXxy4rxG6DBc2m2/zvfusM+djmHmKbnUX
+ bbNF6dAT3V1198AOuZ9SsX5kbeSeIfrWJNFmQ5Jqpj/iTXmUE6hv94NBV6Isx9jdpE8Y7CDDdwj
+ cMYgnJEjwCxwzViRXHcfMQEfdwCG0PokamiJW4V11K/d7BqMgLwKB
+X-Received: by 2002:a05:620a:2485:b0:7a9:bcd1:527a with SMTP id
+ af79cd13be357-7a9e5f7aeabmr493336385a.55.1726153755009; 
+ Thu, 12 Sep 2024 08:09:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHUCD9pPyy+O7P5N7Ltg95+aFSGCVCJJhprPuBuitUhN+T3f5xlzMHHYrt7iBpqAR6aDL+Vcg==
+X-Received: by 2002:a05:620a:2485:b0:7a9:bcd1:527a with SMTP id
+ af79cd13be357-7a9e5f7aeabmr493331785a.55.1726153754449; 
+ Thu, 12 Sep 2024 08:09:14 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a9a7a0369bsm551522985a.92.2024.09.12.08.09.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Sep 2024 08:09:13 -0700 (PDT)
+Date: Thu, 12 Sep 2024 11:09:11 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Fabiano Rosas <farosas@suse.de>, Hyman Huang <yong.huang@smartx.com>,
+ qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH RFC 10/10] tests/migration-tests: Add test case for
+ responsive CPU throttle
+Message-ID: <ZuMEF99PF0q0U9G-@x1n>
+References: <CAFEAcA99=bn4x_BjgsAsrVitXNxOUSNviz=TGezJEB+=Zj603w@mail.gmail.com>
+ <Zt8H6pC2yQ2DD7DV@x1n> <87frq8lcgp.fsf@suse.de>
+ <ZuC4pYT-atQwWePv@x1n> <87seu7qhao.fsf@suse.de>
+ <ZuG-SijLg8Q27boE@x1n> <87ed5qq8e2.fsf@suse.de>
+ <ZuH_pvnTCumKuXTh@x1n> <87bk0trifq.fsf@suse.de>
+ <CAFEAcA9YkZiSSOAj0zH2OwF9AcziJT-zpnNVQn8BXizhSXHVOA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20240912145335.129447-1-aesteve@redhat.com>
-In-Reply-To: <20240912145335.129447-1-aesteve@redhat.com>
-From: Albert Esteve <aesteve@redhat.com>
-Date: Thu, 12 Sep 2024 16:59:52 +0200
-Message-ID: <CADSE00JBa2Z4RmezL3h7Pc0gXjNBy8YEA4Gn7J_2xjG9h6MkuQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] vhost-user: Add SHMEM_MAP/UNMAP requests
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, slp@redhat.com, 
- hi@alyssa.is, mst@redhat.com, david@redhat.com, jasowang@redhat.com, 
- stefanha@redhat.com, Stefano Garzarella <sgarzare@redhat.com>,
- stevensd@chromium.org
-Content-Type: multipart/alternative; boundary="00000000000087f4ac0621ed5c03"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEAcA9YkZiSSOAj0zH2OwF9AcziJT-zpnNVQn8BXizhSXHVOA@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,186 +112,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000087f4ac0621ed5c03
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Thu, Sep 12, 2024 at 09:13:16AM +0100, Peter Maydell wrote:
+> On Wed, 11 Sept 2024 at 22:26, Fabiano Rosas <farosas@suse.de> wrote:
+> > I don't think we're discussing total CI time at this point, so the math
+> > doesn't really add up. We're not looking into making the CI finish
+> > faster. We're looking into making migration-test finish faster. That
+> > would reduce timeouts in CI, speed-up make check and reduce the chance
+> > of random race conditions* affecting other people/staging runs.
+> 
+> Right. The reason migration-test appears on my radar is because
+> it is very frequently the thing that shows up as "this sometimes
+> just fails or just times out and if you hit retry it goes away
+> again". That might not be migration-test's fault specifically,
+> because those retries tend to be certain CI configs (s390,
+> the i686-tci one), and I have some theories about what might be
+> causing it (e.g. build system runs 4 migration-tests in parallel,
+> which means 8 QEMU processes which is too many for the number
+> of host CPUs). But right now I look at CI job failures and my reaction
+> is "oh, it's the migration-test failing yet again" :-(
+> 
+> For some examples from this week:
+> 
+> https://gitlab.com/qemu-project/qemu/-/jobs/7802183144
+> https://gitlab.com/qemu-project/qemu/-/jobs/7799842373  <--------[1]
+> https://gitlab.com/qemu-project/qemu/-/jobs/7786579152  <--------[2]
+> https://gitlab.com/qemu-project/qemu/-/jobs/7786579155
 
-Link to the documentation:
-https://lore.kernel.org/all/20240912144432.126717-1-aesteve@redhat.com/T/#t
+Ah right, the TIMEOUT is unfortunate, especially if tests can be run in
+parallel.  It indeed sounds like no good way to finally solve.. I don't
+also see how speeding up / reducing tests in migration test would help, as
+that's (from some degree..) is the same as tuning the timeout value bigger.
+When the tests are less it'll fit into 480s window, but maybe it's too
+quick now we wonder whether we should shrink it to e.g. 90s, but then it
+can timeout again when on a busy host with less capability of concurrency.
 
-On Thu, Sep 12, 2024 at 4:53=E2=80=AFPM Albert Esteve <aesteve@redhat.com> =
-wrote:
+But indeed there're two ERRORs ([1,2] above)..  I collected some more info
+here before the log expires:
 
-> Hi all,
->
-> v2->v3:
-> - Add track for mapped memory in VIRTIO
->   Shared memory regions, so that boundaries
->   can be verified when a request for
->   new mmap is received
-> - Use address_space_read/write() for
->   MEM_READ/_WRITE handling methods.
-> - Improve/fix support for flexible
->   array members for MEM_READ/_WRITE requests.
-> - Split documentation into a separate patch.
-> - Various small fixes from previous review.
->
-> The usecase for this patch is, e.g., to support
-> vhost-user-gpu RESOURCE_BLOB operations,
-> or DAX Window request for virtio-fs. In
-> general, any operation where a backend
-> need to request the frontend to mmap an
-> fd into a VIRTIO Shared Memory Region,
-> so that the guest can then access it.
->
-> After receiving the SHMEM_MAP/UNMAP request,
-> the frontend will perform the mmap with the
-> instructed parameters (i.e., shmid, shm_offset,
-> fd_offset, fd, lenght).
->
-> As there are already a couple devices
-> that could benefit of such a feature,
-> and more could require it in the future,
-> the goal is to make the implementation
-> generic.
->
-> To that end, the VIRTIO Shared Memory
-> Region list is declared in the `VirtIODevice`
-> struct.
->
-> This patch also includes:
-> SHMEM_CONFIG frontend request that is
-> specifically meant to allow generic
-> vhost-user-device frontend to be able to
-> query VIRTIO Shared Memory settings from the
-> backend (as this device is generic and agnostic
-> of the actual backend configuration).
->
-> Finally, MEM_READ/WRITE backend requests are
-> added to deal with a potential issue when having
-> any backend sharing a descriptor that references
-> a mapping to another backend. The first
-> backend will not be able to see these
-> mappings. So these requests are a fallback
-> for vhost-user memory translation fails.
->
-> Albert Esteve (5):
->   vhost-user: Add VIRTIO Shared Memory map request
->   virtio: Track shared memory mappings
->   vhost_user: Add frontend command for shmem config
->   vhost-user-dev: Add cache BAR
->   vhost_user: Add MEM_READ/WRITE backend requests
->
->  hw/virtio/vhost-user-base.c               |  37 ++-
->  hw/virtio/vhost-user-device-pci.c         |  39 +++-
->  hw/virtio/vhost-user.c                    | 273 ++++++++++++++++++++--
->  hw/virtio/virtio.c                        |  59 +++++
->  include/hw/virtio/vhost-backend.h         |   6 +
->  include/hw/virtio/vhost-user.h            |   1 +
->  include/hw/virtio/virtio.h                |  26 +++
->  subprojects/libvhost-user/libvhost-user.c | 144 ++++++++++++
->  subprojects/libvhost-user/libvhost-user.h |  90 +++++++
->  9 files changed, 648 insertions(+), 27 deletions(-)
->
-> --
-> 2.45.2
->
->
+=================================8<================================
 
---00000000000087f4ac0621ed5c03
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+*** /i386/migration/multifd/tcp/plain/cancel, qtest-i386 on s390 host
 
-<div dir=3D"ltr">Link to the documentation:=C2=A0<a href=3D"https://lore.ke=
-rnel.org/all/20240912144432.126717-1-aesteve@redhat.com/T/#t">https://lore.=
-kernel.org/all/20240912144432.126717-1-aesteve@redhat.com/T/#t</a></div><br=
-><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, S=
-ep 12, 2024 at 4:53=E2=80=AFPM Albert Esteve &lt;<a href=3D"mailto:aesteve@=
-redhat.com">aesteve@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D=
-"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(2=
-04,204,204);padding-left:1ex">Hi all,<br>
-<br>
-v2-&gt;v3:<br>
-- Add track for mapped memory in VIRTIO<br>
-=C2=A0 Shared memory regions, so that boundaries<br>
-=C2=A0 can be verified when a request for<br>
-=C2=A0 new mmap is received<br>
-- Use address_space_read/write() for<br>
-=C2=A0 MEM_READ/_WRITE handling methods.<br>
-- Improve/fix support for flexible<br>
-=C2=A0 array members for MEM_READ/_WRITE requests.<br>
-- Split documentation into a separate patch.<br>
-- Various small fixes from previous review.<br>
-<br>
-The usecase for this patch is, e.g., to support<br>
-vhost-user-gpu RESOURCE_BLOB operations,<br>
-or DAX Window request for virtio-fs. In<br>
-general, any operation where a backend<br>
-need to request the frontend to mmap an<br>
-fd into a VIRTIO Shared Memory Region,<br>
-so that the guest can then access it.<br>
-<br>
-After receiving the SHMEM_MAP/UNMAP request,<br>
-the frontend will perform the mmap with the<br>
-instructed parameters (i.e., shmid, shm_offset,<br>
-fd_offset, fd, lenght).<br>
-<br>
-As there are already a couple devices<br>
-that could benefit of such a feature,<br>
-and more could require it in the future,<br>
-the goal is to make the implementation<br>
-generic.<br>
-<br>
-To that end, the VIRTIO Shared Memory<br>
-Region list is declared in the `VirtIODevice`<br>
-struct.<br>
-<br>
-This patch also includes:<br>
-SHMEM_CONFIG frontend request that is<br>
-specifically meant to allow generic<br>
-vhost-user-device frontend to be able to<br>
-query VIRTIO Shared Memory settings from the<br>
-backend (as this device is generic and agnostic<br>
-of the actual backend configuration).<br>
-<br>
-Finally, MEM_READ/WRITE backend requests are<br>
-added to deal with a potential issue when having<br>
-any backend sharing a descriptor that references<br>
-a mapping to another backend. The first<br>
-backend will not be able to see these<br>
-mappings. So these requests are a fallback<br>
-for vhost-user memory translation fails.<br>
-<br>
-Albert Esteve (5):<br>
-=C2=A0 vhost-user: Add VIRTIO Shared Memory map request<br>
-=C2=A0 virtio: Track shared memory mappings<br>
-=C2=A0 vhost_user: Add frontend command for shmem config<br>
-=C2=A0 vhost-user-dev: Add cache BAR<br>
-=C2=A0 vhost_user: Add MEM_READ/WRITE backend requests<br>
-<br>
-=C2=A0hw/virtio/vhost-user-base.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0|=C2=A0 37 ++-<br>
-=C2=A0hw/virtio/vhost-user-device-pci.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=
-=C2=A0 39 +++-<br>
-=C2=A0hw/virtio/vhost-user.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 | 273 ++++++++++++++++++++--<br>
-=C2=A0hw/virtio/virtio.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 59 +++++<br>
-=C2=A0include/hw/virtio/vhost-backend.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=
-=C2=A0 =C2=A06 +<br>
-=C2=A0include/hw/virtio/vhost-user.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 |=C2=A0 =C2=A01 +<br>
-=C2=A0include/hw/virtio/virtio.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 |=C2=A0 26 +++<br>
-=C2=A0subprojects/libvhost-user/libvhost-user.c | 144 ++++++++++++<br>
-=C2=A0subprojects/libvhost-user/libvhost-user.h |=C2=A0 90 +++++++<br>
-=C2=A09 files changed, 648 insertions(+), 27 deletions(-)<br>
-<br>
--- <br>
-2.45.2<br>
-<br>
-</blockquote></div>
+https://gitlab.com/qemu-project/qemu/-/jobs/7799842373
 
---00000000000087f4ac0621ed5c03--
+101/953 qemu:qtest+qtest-i386 / qtest-i386/migration-test                         ERROR          144.32s   killed by signal 6 SIGABRT
+>>> QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon G_TEST_DBUS_DAEMON=/home/gitlab-runner/builds/zEr9wY_L/0/qemu-project/qemu/tests/dbus-vmstate-daemon.sh PYTHON=/home/gitlab-runner/builds/zEr9wY_L/0/qemu-project/qemu/build/pyvenv/bin/python3 QTEST_QEMU_IMG=./qemu-img MALLOC_PERTURB_=144 QTEST_QEMU_BINARY=./qemu-system-i386 /home/gitlab-runner/builds/zEr9wY_L/0/qemu-project/qemu/build/tests/qtest/migration-test --tap -k
+――――――――――――――――――――――――――――――――――――― ✀  ―――――――――――――――――――――――――――――――――――――
+stderr:
+warning: fd: migration to a file is deprecated. Use file: instead.
+warning: fd: migration to a file is deprecated. Use file: instead.
+../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from signal 11 (Segmentation fault) (core dumped)
+(test program exited with status code -6)
+TAP parsing error: Too few tests run (expected 53, got 39)
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+# Start of plain tests
+# Running /i386/migration/multifd/tcp/plain/cancel
+# Using machine type: pc-i440fx-9.2
+# starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-3273509.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-3273509.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine pc-i440fx-9.2, -name source,debug-threads=on -m 150M -serial file:/tmp/migration-test-4112T2/src_serial -drive if=none,id=d0,file=/tmp/migration-test-4112T2/bootsect,format=raw -device ide-hd,drive=d0,secs=1,cyls=1,heads=1    2>/dev/null -accel qtest
+# starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-3273509.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-3273509.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine pc-i440fx-9.2, -name target,debug-threads=on -m 150M -serial file:/tmp/migration-test-4112T2/dest_serial -incoming defer -drive if=none,id=d0,file=/tmp/migration-test-4112T2/bootsect,format=raw -device ide-hd,drive=d0,secs=1,cyls=1,heads=1    2>/dev/null -accel qtest
+----------------------------------- stderr -----------------------------------
+warning: fd: migration to a file is deprecated. Use file: instead.
+warning: fd: migration to a file is deprecated. Use file: instead.
+../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from signal 11 (Segmentation fault) (core dumped)
+
+*** /ppc64/migration/multifd/tcp/plain/cancel, qtest-ppc64 on i686 host
+
+https://gitlab.com/qemu-project/qemu/-/jobs/7786579152
+
+174/315 qemu:qtest+qtest-ppc64 / qtest-ppc64/migration-test                       ERROR          381.00s   killed by signal 6 SIGABRT
+>>> PYTHON=/builds/qemu-project/qemu/build/pyvenv/bin/python3 QTEST_QEMU_IMG=./qemu-img G_TEST_DBUS_DAEMON=/builds/qemu-project/qemu/tests/dbus-vmstate-daemon.sh QTEST_QEMU_BINARY=./qemu-system-ppc64 MALLOC_PERTURB_=178 QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon /builds/qemu-project/qemu/build/tests/qtest/migration-test --tap -k
+――――――――――――――――――――――――――――――――――――― ✀  ―――――――――――――――――――――――――――――――――――――
+stderr:
+qemu-system-ppc64: Cannot read from TLS channel: The TLS connection was non-properly terminated.
+warning: fd: migration to a file is deprecated. Use file: instead.
+warning: fd: migration to a file is deprecated. Use file: instead.
+../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from signal 11 (Segmentation fault) (core dumped)
+(test program exited with status code -6)
+TAP parsing error: Too few tests run (expected 61, got 47)
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+# Start of plain tests
+# Running /ppc64/migration/multifd/tcp/plain/cancel
+# Using machine type: pseries-9.2
+# starting QEMU: exec ./qemu-system-ppc64 -qtest unix:/tmp/qtest-40766.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-40766.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine pseries-9.2,vsmt=8 -name source,debug-threads=on -m 256M -serial file:/tmp/migration-test-H0Z1T2/src_serial -nodefaults -machine cap-cfpc=broken,cap-sbbc=broken,cap-ibs=broken,cap-ccf-assist=off, -bios /tmp/migration-test-H0Z1T2/bootsect    2>/dev/null -accel qtest
+# starting QEMU: exec ./qemu-system-ppc64 -qtest unix:/tmp/qtest-40766.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-40766.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine pseries-9.2,vsmt=8 -name target,debug-threads=on -m 256M -serial file:/tmp/migration-test-H0Z1T2/dest_serial -incoming defer -nodefaults -machine cap-cfpc=broken,cap-sbbc=broken,cap-ibs=broken,cap-ccf-assist=off, -bios /tmp/migration-test-H0Z1T2/bootsect    2>/dev/null -accel qtest
+----------------------------------- stderr -----------------------------------
+qemu-system-ppc64: Cannot read from TLS channel: The TLS connection was non-properly terminated.
+warning: fd: migration to a file is deprecated. Use file: instead.
+warning: fd: migration to a file is deprecated. Use file: instead.
+../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from signal 11 (Segmentation fault) (core dumped)
+
+(test program exited with status code -6)
+=================================8<================================
+
+So.. it's the same test (multifd/tcp/plain/cancel) that is failing on
+different host / arch being tested.  What is more weird is the two failures
+are different, the 2nd failure throw out a TLS error even though the test
+doesn't yet have tls involved.
+
+Fabiano, is this the issue you're looking at?
+
+Peter, do you think it'll be helpful if we temporarily mark this test as
+"slow" too so it's not run in CI (so we still run it ourselves when prepare
+migration PR, with the hope that it can reproduce)?
+
+Thanks,
+
+-- 
+Peter Xu
 
 
