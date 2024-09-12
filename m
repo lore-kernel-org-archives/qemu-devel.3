@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0543EE6452
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 06:55:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FE8DEE6451
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 06:56:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sodjN-0000qv-JL; Thu, 12 Sep 2024 02:55:06 -0400
+	id 1sodhs-0008GE-6z; Thu, 12 Sep 2024 02:53:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sodjJ-0000Xe-E1
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 02:55:01 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sodhm-0007my-65
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 02:53:28 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sodjH-0003Zl-Is
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 02:55:01 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-374c84dcc90so434231f8f.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 23:54:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sodhk-0003U2-0W
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 02:53:25 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-5365aec6fc1so649599e87.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 23:53:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726124098; x=1726728898; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jCvXOJb3M0UmkUBLMSdgaYUO7s0+K5lztCSk4YluA/o=;
- b=ifAOaWaonelBdCmsyM0NuOrnSJ5qXY6FJ9hNKMtMmvfab6SRFg9BshuwBJU4aLrkwb
- B703UEKOJGFzSsVe8GJRj7nZeAywDEjTd/gd1aA3yfo3hDvaPkO24TMcym3fXh9A8622
- /u5R+bLPXya20KqEAF32WvXCGBJ0BNwLL2A5cmo0kSnCyq0VQnFbyT9k+tHp5vG/S7nY
- PHN0krrLHU8qw/AoQbaOfDsyxMNc82JjzdLos9WPj27pXVXTG9JyJNWWSFxPL/UxnTja
- XxlxwVHg4c8L1EAp9CTECGbXIhtyojc7WDykK6+Io+v6zaiz0QYkEUYvbXkv5dHVfChL
- ZuzA==
+ d=linaro.org; s=google; t=1726124001; x=1726728801; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=5FoqK1kIA8mj7Qd/lvT8K/kPhvh2nZqcUgQPUn/2U+o=;
+ b=XTNUFyTu2lmpzZsAWtv4mo0RQoaEe73o3W79l6tiGW87w4Hyeh2w5Dxh8GaUHpncsr
+ yYRlXQSFFMKlrzZ9Aqwkl7+RyekhMQs13vG8d6BtLLBUrV1rLdm9KmgDob4TdgUohpMZ
+ 5s/hCNRNfW8eyftk2Q8CblTZrRzKW27sASEXZRaDI7z3g6a+mjJcHFDi1cnEi28mdhiV
+ KZSPzyIRynZqX1R6zsqTCCCJs3YmZZqcINXT0kk4TNKka2hhJzSf8VN3Qc8kyRvoxwsa
+ jy7PpFrQjsBwON9QYzrEF08xu9ODcizc5htKwZ4+nXBVNLm59gZi8CJN6W+Fj8Uf/rZt
+ /HUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726124098; x=1726728898;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jCvXOJb3M0UmkUBLMSdgaYUO7s0+K5lztCSk4YluA/o=;
- b=E1rUCOGkbP0VAuSo4GQMSGhiAD1A8+wDZRXTCf6KVBMrypuj6CZG2LGFeEIcdaXE0j
- UKPQM0T+s5g4HDi1MjXKAg3Z9HbZRvtDIsVoagicA51RmNEa2AEo5XQ+n/GfVHTbGiML
- sj2xCVGjYxv4EMDref+XHFtXZUKnykfobaqhYywR7ILfNWHfC7Cq6GJOtfvkUss9al1q
- jqLWTRO5/tDCp8NbRWHeqm+CuzxwNt9BWM7F51B4VmBV4HZwX5Aw+2yqpxOVX41GxRHa
- lC0bVlXBdc1HrNyL/7XOoCIwHPn7BuARG/hkJavM7MlN3R+wr4mPFcnARrLnR0AzcKgG
- nm7Q==
-X-Gm-Message-State: AOJu0YzFiiBITFLr0a15rgWtEaUHtXe1JQmmWJmU8G7RvYY/dqpiqeoJ
- pFR6gy1t/d/uLCXyzEUFplqx99P61pD06RS3bacQ7Ss5nmqchsw7zwFH0DlHbfc=
-X-Google-Smtp-Source: AGHT+IF25n7Sa6TfJZUDzd53iQPcZpqE+4Xyhb+Rkk3OlRpJDDENF57nMsrRIboWoIlVu8+ZeV6gbQ==
-X-Received: by 2002:adf:ebc6:0:b0:377:6073:48df with SMTP id
- ffacd0b85a97d-378c2d5b42emr757111f8f.58.1726124097757; 
- Wed, 11 Sep 2024 23:54:57 -0700 (PDT)
-Received: from [192.168.69.100] (mic92-h03-176-184-33-210.dsl.sta.abo.bbox.fr.
+ d=1e100.net; s=20230601; t=1726124001; x=1726728801;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5FoqK1kIA8mj7Qd/lvT8K/kPhvh2nZqcUgQPUn/2U+o=;
+ b=QXukNxIxYcmSk+XrOzuT+TNvdXgpQr+l8QMI5nLzIv5oORJQKyUWctvZHsytZ151vF
+ 54GW3u/wZqV5vsB5xbFhWjxthEvBH4+aNmVXLZTGzwAXjpwkWfWBFN8YNS4KeQZzqC9c
+ CWPGHdmAYU64BjPsWKbxJ2cplU7IMWxIg05ohz6XVOVEUqzuYYUMJoRJ26BrTZqtQ4Om
+ yVmD/Fiklz3QBHyHBq8fiEJA5Or1ko1jvDXJVsWOTAbb4nS0N6ETTfg4mQl1DzBHt1Ng
+ z7ccJBvygkJhB3Wqazt8xv0vCMrPiWqrYpSItVl4AUPriOKllsJseKjJXX6GC1n99NWJ
+ KHFA==
+X-Gm-Message-State: AOJu0YxX5W3AAUr63Lt2J/1zIKDzgiMmjorxiDM8oQehADgAqdQXw4Kr
+ mHm7VjC9KPOVTA6ET/xxLgkcWGKg9zSKxtRnR6mR59gTQYMa0MgTxGjwnHrAJoLUwdYLsWT5Glt
+ A
+X-Google-Smtp-Source: AGHT+IGTZz+aE0ePcdX6QJ6/iPOF2WktjT1byifudGhS+2Npuc2quXQnM14oA4oRs2REobN6uHhvDA==
+X-Received: by 2002:a05:6512:4019:b0:52e:fc7b:39cb with SMTP id
+ 2adb3069b0e04-53678fce759mr917978e87.26.1726124000681; 
+ Wed, 11 Sep 2024 23:53:20 -0700 (PDT)
+Received: from m1x-phil.lan (mic92-h03-176-184-33-210.dsl.sta.abo.bbox.fr.
  [176.184.33.210]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-378956d3796sm13419498f8f.80.2024.09.11.23.54.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Sep 2024 23:54:57 -0700 (PDT)
-Message-ID: <d832e49f-478b-4b7f-93a4-a3d00d5439fb@linaro.org>
-Date: Thu, 12 Sep 2024 08:54:55 +0200
+ 5b1f17b1804b1-42caf016a08sm161947705e9.16.2024.09.11.23.53.19
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 11 Sep 2024 23:53:20 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL v2 54/61] hw/gpio: remove break after g_assert_not_reached()
+Date: Thu, 12 Sep 2024 08:52:23 +0200
+Message-ID: <20240912065227.67848-10-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240912065227.67848-1-philmd@linaro.org>
+References: <20240912065227.67848-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/56] Misc HW & UI patches
-To: Peter Maydell <peter.maydell@linaro.org>
-References: <20240911121422.52585-1-philmd@linaro.org>
-Content-Language: en-US
-Cc: QEMU Developers <qemu-devel@nongnu.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240911121422.52585-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,42 +92,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-On 11/9/24 14:13, Philippe Mathieu-Daudé wrote:
-> The following changes since commit a66f28df650166ae8b50c992eea45e7b247f4143:
-> 
->    Merge tag 'migration-20240909-pull-request' of https://gitlab.com/peterx/qemu into staging (2024-09-10 11:19:22 +0100)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/philmd/qemu.git tags/hw-misc-20240911
-> 
-> for you to fetch changes up to d6bda15a00b46778e577c95c77f066f95ed58e07:
-> 
->    ui: remove break after g_assert_not_reached() (2024-09-11 13:54:06 +0200)
-> 
-> ----------------------------------------------------------------
-> Misc HW & UI patches
-> 
-> - Remove deprecated SH4 SHIX machine TC58128 NAND EEPROM (Phil)
-> - Remove deprecated CRIS target (Phil)
-> - Remove deprecated RISC-V 'any' CPU type (Phil)
-> - Add fifo8_peek_buf() to correctly handle FIFO wraparound (Mark)
-> - Minor cleanups in Designware PCIe, PL011 and loongson IPI models (Phil)
-> - Convert Sun ESCC and ADB mouses to QemuInputHandler (Mark)
-> - Prevent heap overflow in VIRTIO sound device (Volker)
-> - Cleanups around g_assert_not_reached() call (Pierrick)
-> - Add Clément as VT-d reviewer (Clément)
-> - Prevent stuck modifier keys and unexpected text input on Windows (Volker)
-> - Explicitly set SDL2 swap interval when OpenGL is enabled (Gert)
-> 
-> ----------------------------------------------------------------
+Use of assert(false) can trip spurious control flow warnings from
+some versions of GCC (i.e. using -fsanitize=thread with gcc-12):
 
-FYI I posted a v2 updating Pierrick's commit descriptions:
-https://lore.kernel.org/qemu-devel/20240912065227.67848-1-philmd@linaro.org/
+  error: control reaches end of non-void function [-Werror=return-type]
+        default:
+            g_assert_not_reached();
+            break;
+          | ^^^^^
 
-Regards,
+Solve that by removing the unreachable 'break' statement, unifying
+the code base on g_assert_not_reached() instead.
 
-Phil.
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240910221606.1817478-28-pierrick.bouvier@linaro.org>
+[PMD: Add description suggested by Eric Blake]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/gpio/nrf51_gpio.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/hw/gpio/nrf51_gpio.c b/hw/gpio/nrf51_gpio.c
+index ffc7dff796..f259be651e 100644
+--- a/hw/gpio/nrf51_gpio.c
++++ b/hw/gpio/nrf51_gpio.c
+@@ -40,7 +40,6 @@ static bool is_connected(uint32_t config, uint32_t level)
+         break;
+     default:
+         g_assert_not_reached();
+-        break;
+     }
+ 
+     return state;
+-- 
+2.45.2
+
 
