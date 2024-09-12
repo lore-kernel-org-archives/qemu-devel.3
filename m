@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79BE2EE644B
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 05:42:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51E90EE644A
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 05:43:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1socPp-0001mm-IN; Thu, 12 Sep 2024 01:30:52 -0400
+	id 1socRq-00031q-Nj; Thu, 12 Sep 2024 01:32:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1socPn-0001c9-6p
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:47 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1socQz-0006uq-MP
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:32:01 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1socPk-00031P-8j
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:30:46 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-206aee4073cso6393075ad.1
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:30:43 -0700 (PDT)
+ id 1socQy-0003AA-5L
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 01:32:01 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-718e6299191so292286b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 22:31:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726119042; x=1726723842; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1726119118; x=1726723918; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=afEpHTThU9gcnAC+v8AUAUMqHz1ovSP2re97I4R4gXU=;
- b=KgglOKSIg2MmI2waqSM3mGr8nm36QuJndYnw1ySGxAPdzDSjnVf6/QzbjO1PbgXPNN
- Wbvl+xuHqEanhpAqhAqVldByOid6dvDK7VORw7fuNSRRLPr37jI9/Egy+LsZjgOHp+Am
- IJNLZjqsamyWLi1cqmqS9ZxIiyRi+cT1KrUQXowiRS/lZy80Cv/1mz07or6uUb20M8vK
- AjBYD+AoKvrD943OU+SRnHS3aDJBg9+qlyrfdO+9V3Rugfa56XITi1pBHxKK4LwvH/55
- biqNrs/L68a0p3S6cha5NVjsDyTca7Be+Ds0kgVhkEk/C0mJiBt7ggOgAkOp+j2cjdT+
- 9Vpg==
+ bh=/tNX42OJCNCOILNqFAqiVHWCMdtEBvk2w09U2xNMBqo=;
+ b=APpB4KzfUdbQFWfub0v/CtfLWJm+mzlwHLMMePUM8ZEMeXAeU6v2yhjSzTV8gzPTQD
+ Amtw+s3r0/OSOUrKmd7cwTLODfvqaKf0C5E71GDLDupwBOUV+qvsjpnQhWjiQHv81Mry
+ ReefqHQDBzhU9wVQUX6Gz3vyLp2YtAERhFHSAzM6AgybXLymZqIJwmesNIb2hpJIXgqe
+ aFSN0yqWDrqiDf5YtIS3n6aYEnB5JspRsv7Y15HStv75oTpb4Zium5vUVFk4a0RuuFL7
+ KS2hnluysv/c/qtvi5cUfnYmrj2Jo42ejOCkHWfhkA4r1Ag/+jTRyFzyvVhF6Xx3etsV
+ sleQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726119042; x=1726723842;
+ d=1e100.net; s=20230601; t=1726119118; x=1726723918;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=afEpHTThU9gcnAC+v8AUAUMqHz1ovSP2re97I4R4gXU=;
- b=Ytmknq8YvC/EQF6dIIyljbh9CTmzv5kftb6s3hL0+mP8hzoMHUAsZKEP8ueb9xKbjH
- +OtOooglyMXnmK3MScwJLyu9M34yAopDYptUzbcu40h5Ytb72+KZE9+uqAmRPEma1ShA
- zlr908+j7dwBr5s6pJw5/B4O/+wvhkqiCll3YKh5ePPl88qJCkOsYicNo2YZyWJRJKIA
- JCbbwjoRMlf1C3jd4HQwzH8Qoco4KmyuNuINZGMFZo3OYeZM7aR3zLdja9gu7sVFbgT3
- qmWG4QlphtiINCp+jp74bBH+2x6Eqich9EDO8atOyF1z9RRxPBrRv+IxRLyxWQxG3D+E
- JSig==
-X-Gm-Message-State: AOJu0Yy/PsxK/nZFTxxmp/3c/JrESgkaSogGvKPxjAQjQnfqUGInPmMn
- aRSJnDkoqA2NIs7oZEMfv5YXjCh3MrC42G5DFvR+XvX9NdPo2a2mOv1/DQ==
-X-Google-Smtp-Source: AGHT+IFLkyOPvfMxjuwvzIVQiGo14LpK/PsBzTt6ydSwAGkRuQrl6vuJ2lPB1avNUzCiZ++8QivwFA==
-X-Received: by 2002:a05:6a21:3a41:b0:1cf:5aba:eac4 with SMTP id
- adf61e73a8af0-1cf76493e8emr2272974637.41.1726119042105; 
- Wed, 11 Sep 2024 22:30:42 -0700 (PDT)
+ bh=/tNX42OJCNCOILNqFAqiVHWCMdtEBvk2w09U2xNMBqo=;
+ b=pvIk4xkRxtUPxHXCiBErNxHCKHtFUucJpuwOP4hiYzWb6SRtL00IdKp8lwcvuC7uRB
+ Gy/AezOUGg/tVHuD5wf6/XgwZE78I5E2iHli/qZ89GoT++ba/edE5fngSblY7KuQ8viF
+ Y5jdmQ8SaNhDIbddT7jc438/1WFHcm6B6+a0D2Tb+jWIydWr2i4LqZek/H7Imq0K7WdB
+ 5HeLe48VQFiyTkmEULcdFl0YzRlskPYsB72g4lCKafBOW1dlHamGcgEGSZcmOiblwM2q
+ OmAhoSEENquw5YQ3Zm+4PRkYAsCL1Imqx8WKC72UoUCVaB42aDxJ1hBiQWdxPQ7cs445
+ YreQ==
+X-Gm-Message-State: AOJu0YzYMC7fKsy1hAEIYq8WsNDEl8mPOdmsj1VA0N5L4MtAu+c0dpf4
+ JIST1HGpkW4TzhptmoC+nruGH4NBmuSg/wnzntyPcTTZPZFP0ROmmOBL7g==
+X-Google-Smtp-Source: AGHT+IGiLlzFQNAE6LALOsuccmAY5P48mDoZEkcjl8k0rBu2eFCrtgtGtUelaN1hi+GZHZzmB+dpLw==
+X-Received: by 2002:a05:6a00:993:b0:714:157a:bfc7 with SMTP id
+ d2e1a72fcca58-71926084bb4mr2756081b3a.15.1726119118533; 
+ Wed, 11 Sep 2024 22:31:58 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71908fc8fdesm3833034b3a.1.2024.09.11.22.30.39
+ d2e1a72fcca58-71908fc8fdesm3833034b3a.1.2024.09.11.22.31.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 22:30:41 -0700 (PDT)
+ Wed, 11 Sep 2024 22:31:58 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Tomasz Jeznach <tjeznach@rivosinc.com>,
- Frank Chang <frank.chang@sifive.com>, Jason Chien <jason.chien@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PULL 14/47] exec/memtxattr: add process identifier to the
- transaction attributes
-Date: Thu, 12 Sep 2024 15:29:19 +1000
-Message-ID: <20240912052953.2552501-15-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Warner Losh <imp@bsdimp.com>,
+ Ajeet Singh <itachis@FreeBSD.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 37/47] bsd-user: Add generic RISC-V64 target definitions
+Date: Thu, 12 Sep 2024 15:29:42 +1000
+Message-ID: <20240912052953.2552501-38-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240912052953.2552501-1-alistair.francis@wdc.com>
 References: <20240912052953.2552501-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,39 +100,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
+From: Warner Losh <imp@bsdimp.com>
 
-Extend memory transaction attributes with process identifier to allow
-per-request address translation logic to use requester_id / process_id
-to identify memory mapping (e.g. enabling IOMMU w/ PASID translations).
+Added a generic definition for RISC-V64 target-specific details.
+Implemented the 'regpairs_aligned' function,which returns 'false'
+to indicate that register pairs are not aligned in the RISC-V64 ABI.
 
-Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Jason Chien <jason.chien@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20240903201633.93182-2-dbarboza@ventanamicro.com>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
+Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240907031927.1908-13-itachis@FreeBSD.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/exec/memattrs.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ bsd-user/riscv/target.h | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+ create mode 100644 bsd-user/riscv/target.h
 
-diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
-index 14cdd8d582..e27c18f3dc 100644
---- a/include/exec/memattrs.h
-+++ b/include/exec/memattrs.h
-@@ -52,6 +52,11 @@ typedef struct MemTxAttrs {
-     unsigned int memory:1;
-     /* Requester ID (for MSI for example) */
-     unsigned int requester_id:16;
+diff --git a/bsd-user/riscv/target.h b/bsd-user/riscv/target.h
+new file mode 100644
+index 0000000000..036ddd185e
+--- /dev/null
++++ b/bsd-user/riscv/target.h
+@@ -0,0 +1,20 @@
++/*
++ * Riscv64 general target stuff that's common to all aarch details
++ *
++ * Copyright (c) 2022 M. Warner Losh <imp@bsdimp.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+    /*
-+     * PID (PCI PASID) support: Limited to 8 bits process identifier.
-+     */
-+    unsigned int pid:8;
- } MemTxAttrs;
- 
- /* Bus masters which don't specify any attributes will get this,
++#ifndef TARGET_H
++#define TARGET_H
++
++/*
++ * riscv64 ABI does not 'lump' the registers for 64-bit args.
++ */
++static inline bool regpairs_aligned(void *cpu_env)
++{
++    return false;
++}
++
++#endif /* TARGET_H */
 -- 
 2.46.0
 
