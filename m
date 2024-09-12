@@ -4,62 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48CB9EED60D
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 14:55:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC18EED610
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 14:58:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1solD5-0001Fm-5A; Thu, 12 Sep 2024 10:54:15 -0400
+	id 1solGt-0003ID-O4; Thu, 12 Sep 2024 10:58:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1solD2-00016M-7T
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 10:54:12 -0400
+ id 1solGs-0003Cd-CX
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 10:58:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1solD0-0000Hq-KZ
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 10:54:11 -0400
+ id 1solGq-0000fn-0s
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 10:58:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726152850;
+ s=mimecast20190719; t=1726153086;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=U+t26Tfe5xUE4swJAtZl77olEp6lICr9c8g8Yyw6mWE=;
- b=f9EFS44AFQZgD6bhtC7gX1VZXRA3htnMA9Y/YrxNGOn0kblle1cwGE39Dlw5d0qLRvjjbt
- z1RXX/Gx046sGOccXGBjDjaHRDRW8d179QvlQBRGeslT3gc6ClkAWbFiq2hN3TcAMDqSiW
- nPMlK6ZX4ND6Wmk9qUioQGNeBF67+5w=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-rpiAWRn6M16nReWyuTPQig-1; Thu,
- 12 Sep 2024 10:54:07 -0400
-X-MC-Unique: rpiAWRn6M16nReWyuTPQig-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1E5BE19560BD; Thu, 12 Sep 2024 14:54:06 +0000 (UTC)
-Received: from localhost.localdomain (unknown [10.45.224.195])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B179C1956052; Thu, 12 Sep 2024 14:54:01 +0000 (UTC)
-From: Albert Esteve <aesteve@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>, slp@redhat.com,
- hi@alyssa.is, mst@redhat.com, david@redhat.com, jasowang@redhat.com,
- stefanha@redhat.com, Stefano Garzarella <sgarzare@redhat.com>,
- stevensd@chromium.org, Albert Esteve <aesteve@redhat.com>
-Subject: [PATCH v3 3/5] vhost_user: Add frontend command for shmem config
-Date: Thu, 12 Sep 2024 16:53:33 +0200
-Message-ID: <20240912145335.129447-4-aesteve@redhat.com>
-In-Reply-To: <20240912145335.129447-1-aesteve@redhat.com>
-References: <20240912145335.129447-1-aesteve@redhat.com>
+ bh=yiaF6YbBEEYgEPOkC10G125/ABbORWnXTlGjCulEEH4=;
+ b=SU8d78I1EpUPqc66x51BzefqNSjKs+2WwCeQaiZm0O3E0MFtE4yWlo/HtbpIo7h0Ak503F
+ NaU/2EaFVsfRvgiKGTo+JuIf5enRUsJIIamRDGzSBK6nzfalJo6OnT+IwQv+zZvNtPcOgs
+ 5oYvm2SfWemS6gTK5PGV2cwKLZMS1mw=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-114-UukOprS9Ouyz2IwRUOJKAQ-1; Thu, 12 Sep 2024 10:58:05 -0400
+X-MC-Unique: UukOprS9Ouyz2IwRUOJKAQ-1
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-7d4fc1a2bb7so1184689a12.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 07:58:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726153083; x=1726757883;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yiaF6YbBEEYgEPOkC10G125/ABbORWnXTlGjCulEEH4=;
+ b=WOul5eXnopVtsTKHI75u3XHsM89FT5Lu5N0+OCyWgSCtvTyybUn2sBFofOCPtk6hBs
+ sSVgFPxFMX+v2RMMJzC4I5HGNhtLxkTt6ZMg5/Xz6m9Sx59OftGuyrTCrAIeS8L3VV54
+ hm11P0ii58zzWWebRBkKAngcs/TKKNU/KjAAKm0pPI2c37+2TPJhKCIpsBUxvTJL+lQ4
+ NxCsbK0MJYomZI8Zbm1844Po7UgxlEreFCqonqk7xTRc9MTG3/aPd4IVoImNXIUqnhNO
+ q67nDvVFH1gu74mO7bxPQIpDTcqCOANPwTFiYE5M3BEr5k/XYGZHGYeC33sZiaTqSVlm
+ Gl4Q==
+X-Gm-Message-State: AOJu0YwkBL1sd0/kkD6GYTEpkpnzcRmT++RdJZYH5V7Gb7wiwltMOkFh
+ MF2g6Qq+DgVByL5rWEzpi2tod2i6zuZLJVE1GaFIdeGbLXgyp3/r+jK/1vDW+d6PjLfCDzAUjW0
+ k0ZrviRZJtvUahHD/JIkjPiW0DPpGC0jKtye3+9kit5dgFPDNjO/RPBRZD11UVa1G/QdNHaFgDY
+ DimRvy69RfCtW8igPfg0Hrnz0TzcnriA+5AORB5g==
+X-Received: by 2002:a17:90a:684a:b0:2d3:babf:f9a3 with SMTP id
+ 98e67ed59e1d1-2db9ff79c75mr3031981a91.2.1726153083323; 
+ Thu, 12 Sep 2024 07:58:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH1m6DzFvyoyn7JI5aZOHibTnOUbW2h39QLW2DsOPNhTEYkDAE0JOhdHAr466EVCMSOkuzklKjWsJbZW8ToeSs=
+X-Received: by 2002:a17:90a:684a:b0:2d3:babf:f9a3 with SMTP id
+ 98e67ed59e1d1-2db9ff79c75mr3031966a91.2.1726153082939; Thu, 12 Sep 2024
+ 07:58:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+References: <20240912144432.126717-1-aesteve@redhat.com>
+In-Reply-To: <20240912144432.126717-1-aesteve@redhat.com>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Thu, 12 Sep 2024 16:57:51 +0200
+Message-ID: <CADSE00LDwjaifs_Wc9Q-6MH2932BPKny=NeKkiSuBycZVwxg4w@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Document SHMEM vhost-user requests
+To: qemu-devel@nongnu.org
+Cc: slp@redhat.com, hi@alyssa.is, mst@redhat.com, stefanha@redhat.com, 
+ Stefano Garzarella <sgarzare@redhat.com>, david@redhat.com,
+ stevensd@chromium.org, jasowang@redhat.com
+Content-Type: multipart/alternative; boundary="0000000000005662910621ed552a"
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -67,8 +79,9 @@ X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,148 +97,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The frontend can use this command to retrieve
-VIRTIO Shared Memory Regions configuration from
-the backend. The response contains the number of
-shared memory regions, their size, and shmid.
+--0000000000005662910621ed552a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This is useful when the frontend is unaware of
-specific backend type and configuration,
-for example, in the `vhost-user-device` case.
+Link to the implementation:
+https://lore.kernel.org/all/20240912145335.129447-1-aesteve@redhat.com/T/#t
 
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
----
- hw/virtio/vhost-user.c            | 45 +++++++++++++++++++++++++++++++
- include/hw/virtio/vhost-backend.h |  6 +++++
- include/hw/virtio/vhost-user.h    |  1 +
- 3 files changed, 52 insertions(+)
 
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index de0bb35257..83f5c02bea 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -57,6 +57,8 @@
-  */
- #define VHOST_USER_MAX_CONFIG_SIZE 256
- 
-+#define VHOST_USER_MAX_SHMEM_REGIONS 256
-+
- #define VHOST_USER_PROTOCOL_FEATURE_MASK ((1 << VHOST_USER_PROTOCOL_F_MAX) - 1)
- 
- typedef enum VhostUserRequest {
-@@ -104,6 +106,7 @@ typedef enum VhostUserRequest {
-     VHOST_USER_GET_SHARED_OBJECT = 41,
-     VHOST_USER_SET_DEVICE_STATE_FD = 42,
-     VHOST_USER_CHECK_DEVICE_STATE = 43,
-+    VHOST_USER_GET_SHMEM_CONFIG = 44,
-     VHOST_USER_MAX
- } VhostUserRequest;
- 
-@@ -138,6 +141,12 @@ typedef struct VhostUserMemRegMsg {
-     VhostUserMemoryRegion region;
- } VhostUserMemRegMsg;
- 
-+typedef struct VhostUserShMemConfig {
-+    uint32_t nregions;
-+    uint32_t padding;
-+    uint64_t memory_sizes[VHOST_MEMORY_BASELINE_NREGIONS];
-+} VhostUserShMemConfig;
-+
- typedef struct VhostUserLog {
-     uint64_t mmap_size;
-     uint64_t mmap_offset;
-@@ -245,6 +254,7 @@ typedef union {
-         VhostUserShared object;
-         VhostUserTransferDeviceState transfer_state;
-         VhostUserMMap mmap;
-+        VhostUserShMemConfig shmem;
- } VhostUserPayload;
- 
- typedef struct VhostUserMsg {
-@@ -3134,6 +3144,40 @@ static int vhost_user_check_device_state(struct vhost_dev *dev, Error **errp)
-     return 0;
- }
- 
-+static int vhost_user_get_shmem_config(struct vhost_dev *dev,
-+                                       int *nregions,
-+                                       uint64_t *memory_sizes,
-+                                       Error **errp)
-+{
-+    int ret;
-+    VhostUserMsg msg = {
-+        .hdr.request = VHOST_USER_GET_SHMEM_CONFIG,
-+        .hdr.flags = VHOST_USER_VERSION,
-+    };
-+
-+    if (!virtio_has_feature(dev->protocol_features,
-+                            VHOST_USER_PROTOCOL_F_SHMEM)) {
-+        return 0;
-+    }
-+
-+    ret = vhost_user_write(dev, &msg, NULL, 0);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    ret = vhost_user_read(dev, &msg);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    assert(msg.payload.shmem.nregions <= VHOST_USER_MAX_SHMEM_REGIONS);
-+    *nregions = msg.payload.shmem.nregions;
-+    memcpy(memory_sizes,
-+           &msg.payload.shmem.memory_sizes,
-+           sizeof(uint64_t) * VHOST_MEMORY_BASELINE_NREGIONS);
-+    return 0;
-+}
-+
- const VhostOps user_ops = {
-         .backend_type = VHOST_BACKEND_TYPE_USER,
-         .vhost_backend_init = vhost_user_backend_init,
-@@ -3172,4 +3216,5 @@ const VhostOps user_ops = {
-         .vhost_supports_device_state = vhost_user_supports_device_state,
-         .vhost_set_device_state_fd = vhost_user_set_device_state_fd,
-         .vhost_check_device_state = vhost_user_check_device_state,
-+        .vhost_get_shmem_config = vhost_user_get_shmem_config,
- };
-diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
-index 70c2e8ffee..f9c2955420 100644
---- a/include/hw/virtio/vhost-backend.h
-+++ b/include/hw/virtio/vhost-backend.h
-@@ -159,6 +159,11 @@ typedef int (*vhost_set_device_state_fd_op)(struct vhost_dev *dev,
-                                             int *reply_fd,
-                                             Error **errp);
- typedef int (*vhost_check_device_state_op)(struct vhost_dev *dev, Error **errp);
-+typedef int (*vhost_get_shmem_config_op)(struct vhost_dev *dev,
-+                                         int *nregions,
-+                                         uint64_t *memory_sizes,
-+                                         Error **errp);
-+
- 
- typedef struct VhostOps {
-     VhostBackendType backend_type;
-@@ -214,6 +219,7 @@ typedef struct VhostOps {
-     vhost_supports_device_state_op vhost_supports_device_state;
-     vhost_set_device_state_fd_op vhost_set_device_state_fd;
-     vhost_check_device_state_op vhost_check_device_state;
-+    vhost_get_shmem_config_op vhost_get_shmem_config;
- } VhostOps;
- 
- int vhost_backend_update_device_iotlb(struct vhost_dev *dev,
-diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-index 324cd8663a..d4bb2c3958 100644
---- a/include/hw/virtio/vhost-user.h
-+++ b/include/hw/virtio/vhost-user.h
-@@ -32,6 +32,7 @@ enum VhostUserProtocolFeature {
-     /* Feature 17 reserved for VHOST_USER_PROTOCOL_F_XEN_MMAP. */
-     VHOST_USER_PROTOCOL_F_SHARED_OBJECT = 18,
-     VHOST_USER_PROTOCOL_F_DEVICE_STATE = 19,
-+    VHOST_USER_PROTOCOL_F_SHMEM = 20,
-     VHOST_USER_PROTOCOL_F_MAX
- };
- 
--- 
-2.45.2
+On Thu, Sep 12, 2024 at 4:44=E2=80=AFPM Albert Esteve <aesteve@redhat.com> =
+wrote:
+
+> As a continuation of the
+> "Add SHMEM_MAP/UNMAP requests" patch [1],
+> I wanted to split vhost-user spec
+> parts into a separate patch, so that
+> it could be reviewed and integrated
+> separately. Having the specs upstreamed
+> would help others to add support for
+> these new vhost-user requests on
+> their systems.
+>
+> This is such documentation-only patch.
+>
+> [1] -
+> https://lore.kernel.org/all/20240628145710.1516121-1-aesteve@redhat.com/T=
+/
+>
+> Albert Esteve (3):
+>   vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
+>   vhost_user.rst: Align VhostUserMsg excerpt members
+>   vhost_user.rst: Add GET_SHMEM_CONFIG message
+>
+>  docs/interop/vhost-user.rst | 72 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 72 insertions(+)
+>
+> --
+> 2.45.2
+>
+>
+
+--0000000000005662910621ed552a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><div dir=3D"ltr" class=3D"gmail_signature" data-smart=
+mail=3D"gmail_signature"><div>Link to the implementation:=C2=A0<a href=3D"h=
+ttps://lore.kernel.org/all/20240912145335.129447-1-aesteve@redhat.com/T/#t"=
+>https://lore.kernel.org/all/20240912145335.129447-1-aesteve@redhat.com/T/#=
+t</a></div></div></div><br></div><br><div class=3D"gmail_quote"><div dir=3D=
+"ltr" class=3D"gmail_attr">On Thu, Sep 12, 2024 at 4:44=E2=80=AFPM Albert E=
+steve &lt;<a href=3D"mailto:aesteve@redhat.com">aesteve@redhat.com</a>&gt; =
+wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
+px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">As a cont=
+inuation of the<br>
+&quot;Add SHMEM_MAP/UNMAP requests&quot; patch [1],<br>
+I wanted to split vhost-user spec<br>
+parts into a separate patch, so that<br>
+it could be reviewed and integrated<br>
+separately. Having the specs upstreamed<br>
+would help others to add support for<br>
+these new vhost-user requests on<br>
+their systems.<br>
+<br>
+This is such documentation-only patch.<br>
+<br>
+[1] - <a href=3D"https://lore.kernel.org/all/20240628145710.1516121-1-aeste=
+ve@redhat.com/T/" rel=3D"noreferrer" target=3D"_blank">https://lore.kernel.=
+org/all/20240628145710.1516121-1-aesteve@redhat.com/T/</a><br>
+<br>
+Albert Esteve (3):<br>
+=C2=A0 vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec<br>
+=C2=A0 vhost_user.rst: Align VhostUserMsg excerpt members<br>
+=C2=A0 vhost_user.rst: Add GET_SHMEM_CONFIG message<br>
+<br>
+=C2=A0docs/interop/vhost-user.rst | 72 ++++++++++++++++++++++++++++++++++++=
++<br>
+=C2=A01 file changed, 72 insertions(+)<br>
+<br>
+-- <br>
+2.45.2<br>
+<br>
+</blockquote></div>
+
+--0000000000005662910621ed552a--
 
 
