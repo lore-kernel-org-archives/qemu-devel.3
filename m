@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E530EE6423
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66679EE57FD
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 02:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soZm2-00039n-1b; Wed, 11 Sep 2024 22:41:34 -0400
+	id 1soZmt-0007ct-6Y; Wed, 11 Sep 2024 22:42:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1soZlz-0002wI-54
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 22:41:31 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1soZm8-0003cv-IP
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 22:41:40 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1soZlw-0004Ar-Ob
- for qemu-devel@nongnu.org; Wed, 11 Sep 2024 22:41:30 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-207115e3056so4980215ad.2
- for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 19:41:28 -0700 (PDT)
+ id 1soZm6-0004FI-DV
+ for qemu-devel@nongnu.org; Wed, 11 Sep 2024 22:41:40 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2053f6b8201so4518325ad.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Sep 2024 19:41:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726108887; x=1726713687; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726108897; x=1726713697; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yy21jKPf3BqO69GaSde9b1IniNH9kQ/Ki9NWW9VeFKU=;
- b=sPQBhYyXGGtBdZrvwuincdjwGKs2tc5ovwAOKGBzPLipNZqhuR5Hh4sUSScKj4xFMR
- y5msrV8s1MCsC1z4BzekSuC4nQtW4j88DKci578c1J8EupNpS8W5X0s4uJCb1YIIZ8Uy
- nomMaCw/Xg0KBkJBR39m/TA+gSsvoKvGMbXsELzuqu5J8KuNwOIlA07kIENCorETc2d9
- DbCiZqjS3wU1Q/3K8djo4ZvMcMBXve9tuaCeDq8mlUXgF5eq5Zur7geCjEimb6iG9r6M
- h3hVhoHPQvSL9Ww/zZTFkoKp0rZLVAkxybeASdbhzE5eA6E2oMnmJaRtANb/dFnJP7q2
- INJg==
+ bh=8xeiwUHFVZW2oDMUKIdwXlsFGkOBW4OXICqeXY8hybQ=;
+ b=W/dFbiPyvXJ65T5Rxv6a5RF5HYhbV+RG+lKuARRqCI4t/tW7HnypJgjbGEIoiDCKtD
+ ahv78mlhSeLrezyodSeKPkybLuZNUGRLRp9yTRw8JbdiI1fvz+9p3G/do4TmScuEUr6W
+ hHbXvG09nxLC78XCjICTEC+Wh13I99uxwtoteIKQnsOUG6oI6cDlXKjhqTH+4btXlV7F
+ zpDtGvIE2vNENtRjgMn6BRrMoGYQPEJkrNvC4doxdLDAxE4BpqKWwFOu/gnjlLZxQbWu
+ gCP7pkmN+NSA7qM0LcP8PAqItYJ3GfCobDrpSb81kXxGrMT9EvassOgfoUlIk/buFeAb
+ G8yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726108887; x=1726713687;
+ d=1e100.net; s=20230601; t=1726108897; x=1726713697;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yy21jKPf3BqO69GaSde9b1IniNH9kQ/Ki9NWW9VeFKU=;
- b=T2mGDdGNO0t930F68eqiFl6qTmv45s3qzV4LCp506ht+T7ODDY6WE74VLCVbQ02F0G
- eq91V+gNHYPgyZOWJV9n/fwbsPIMdMGCHhxmbHlgfIhPvUuxv7qLvAqBXlJFUBYMXMjh
- RJN7aNqB2UxjjLa7jvup/qhU2ZftBT9FKf+CvdeG4MeeSb4Vn3CyCxYScEIeieoP3HY0
- x5JCDh88ho6IN9KAfsNMvMyBwd0tlflzO0hoXzza54ic9cN2fvlMjj5vg5xOkLldeCWg
- apiLCmZxpHIRnXFECLP7Dpv1SvmJBSvxr1LjmzZlmHHR+dGbpr8pFVFJS2kgMMIXicng
- uZYA==
-X-Gm-Message-State: AOJu0Yy0Q0EXsb90XPOQTGtnPgcRaIQXMAYKPhTjJVtjZTDmic6XQe9b
- W2vG/FmlhLriU1/ZDn+RM2qzIAp86ZAWgvGSXMNGfnHC9ueBY+RFOgJZlZdQJYRA996/tdanhNF
- +
-X-Google-Smtp-Source: AGHT+IGy+YEuvDQVvv6/kRQL5CdYfSIg4JviMH60DtRgVZ5v7ux0gTjM/if+hK4bI3FxyotqoWCPBw==
-X-Received: by 2002:a17:902:f78d:b0:205:968b:31cf with SMTP id
- d9443c01a7336-2076e3f6207mr18840995ad.33.1726108887158; 
- Wed, 11 Sep 2024 19:41:27 -0700 (PDT)
+ bh=8xeiwUHFVZW2oDMUKIdwXlsFGkOBW4OXICqeXY8hybQ=;
+ b=Gp76/FfYiR1F0e6jj0JpDgzogUMgxD0KJOSCkIErF9fFHO0ydIYpwbyjMxnn0cmwWo
+ Umqp3xX+THWfDScEGfDzVIvWQ4UAF4laXk/O8MEuq4cqYP+F+ShZeY/Cn+UefXiUIDib
+ YfrCp4aIiZbRcGSxRbS1BvOBv3J/yf++oj5mZI7QWArwbTU2tbFIbZ/OtnOrNEFc49AH
+ y0bcvj+nNBXtIuTvSYKs8CB4ruCJxjaP0wHxM3AXG5P7DPK3JQ6cW8Xry5f9PTgSdbHQ
+ Bg2ZGGW21h5P9TxvPJX+hFN1tuSgTO4oAC4mHY6GcHG8sSoBUDCuYuAdLUd8BrN4tm9F
+ x3rg==
+X-Gm-Message-State: AOJu0Yy5PgVicdfUStXa6ulglV+pjKfSP+Wru+nwu569Lw1oGUerrzXc
+ ow3UtGmzFqvTLTNDKiG74a22asJJC/r8nSoYAxLztxAVYgThF3PQeeEoJ9nciNDu3d+zhOO/Gdt
+ l
+X-Google-Smtp-Source: AGHT+IGqp8UYi6RgUedxZhHxfJ5FSLns3bWV0aJaQWbJsQXc4f5G9f4tnGmxVRLwwQCyexOg2oxR5Q==
+X-Received: by 2002:a17:902:db05:b0:206:c12d:abad with SMTP id
+ d9443c01a7336-2076e393e31mr24548035ad.34.1726108897119; 
+ Wed, 11 Sep 2024 19:41:37 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2076afe9c61sm5635915ad.231.2024.09.11.19.41.26
+ d9443c01a7336-2076afe9c61sm5635915ad.231.2024.09.11.19.41.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2024 19:41:26 -0700 (PDT)
+ Wed, 11 Sep 2024 19:41:36 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3 12/29] target/arm: Convert FMOVI (scalar,
- immediate) to decodetree
-Date: Wed, 11 Sep 2024 19:40:57 -0700
-Message-ID: <20240912024114.1097832-13-richard.henderson@linaro.org>
+Subject: [PATCH v3 23/29] target/arm: Convert handle_scalar_simd_shri to
+ decodetree
+Date: Wed, 11 Sep 2024 19:41:08 -0700
+Message-ID: <20240912024114.1097832-24-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240912024114.1097832-1-richard.henderson@linaro.org>
 References: <20240912024114.1097832-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,88 +96,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This includes SSHR, USHR, SSRA, USRA, SRSHR, URSHR,
+SRSRA, URSRA, SRI.
+
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 74 ++++++++++++----------------------
- target/arm/tcg/a64.decode      |  4 ++
- 2 files changed, 30 insertions(+), 48 deletions(-)
+ target/arm/tcg/translate-a64.c | 140 ++++++++++++++++-----------------
+ target/arm/tcg/a64.decode      |  16 ++++
+ 2 files changed, 86 insertions(+), 70 deletions(-)
 
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index aec2f6a542..0e290062ef 100644
+index 8871087af0..efd93a7f23 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -6888,6 +6888,31 @@ TRANS(FMINNMV_s, do_fp_reduction, a, gen_helper_vfp_minnums)
- TRANS(FMAXV_s, do_fp_reduction, a, gen_helper_vfp_maxs)
- TRANS(FMINV_s, do_fp_reduction, a, gen_helper_vfp_mins)
+@@ -7035,6 +7035,18 @@ static void gen_ushr_d(TCGv_i64 dst, TCGv_i64 src, int64_t shift)
+     }
+ }
+ 
++static void gen_ssra_d(TCGv_i64 dst, TCGv_i64 src, int64_t shift)
++{
++    gen_sshr_d(src, src, shift);
++    tcg_gen_add_i64(dst, dst, src);
++}
++
++static void gen_usra_d(TCGv_i64 dst, TCGv_i64 src, int64_t shift)
++{
++    gen_ushr_d(src, src, shift);
++    tcg_gen_add_i64(dst, dst, src);
++}
++
+ static void gen_srshr_bhs(TCGv_i64 dst, TCGv_i64 src, int64_t shift)
+ {
+     assert(shift >= 0 && shift <= 32);
+@@ -7091,6 +7103,27 @@ static void gen_urshr_d(TCGv_i64 dst, TCGv_i64 src, int64_t shift)
+     }
+ }
+ 
++static void gen_srsra_d(TCGv_i64 dst, TCGv_i64 src, int64_t shift)
++{
++    gen_srshr_d(src, src, shift);
++    tcg_gen_add_i64(dst, dst, src);
++}
++
++static void gen_ursra_d(TCGv_i64 dst, TCGv_i64 src, int64_t shift)
++{
++    gen_urshr_d(src, src, shift);
++    tcg_gen_add_i64(dst, dst, src);
++}
++
++static void gen_sri_d(TCGv_i64 dst, TCGv_i64 src, int64_t shift)
++{
++    /* If shift is 64, dst is unchanged. */
++    if (shift != 64) {
++        tcg_gen_shri_i64(src, src, shift);
++        tcg_gen_deposit_i64(dst, dst, src, 0, 64 - shift);
++    }
++}
++
+ static bool do_vec_shift_imm_narrow(DisasContext *s, arg_qrri_e *a,
+                                     WideShiftImmFn * const fns[3], MemOp sign)
+ {
+@@ -7136,6 +7169,38 @@ static WideShiftImmFn * const rshrn_fns[] = {
+ };
+ TRANS(RSHRN_v, do_vec_shift_imm_narrow, a, rshrn_fns, 0)
  
 +/*
-+ * Floating-point Immediate
++ * Advanced SIMD Scalar Shift by Immediate
 + */
 +
-+static bool trans_FMOVI_s(DisasContext *s, arg_FMOVI_s *a)
++static bool do_scalar_shift_imm(DisasContext *s, arg_rri_e *a,
++                                WideShiftImmFn *fn, bool accumulate,
++                                MemOp sign)
 +{
-+    switch (a->esz) {
-+    case MO_32:
-+    case MO_64:
-+        break;
-+    case MO_16:
-+        if (!dc_isar_feature(aa64_fp16, s)) {
-+            return false;
-+        }
-+        break;
-+    default:
-+        return false;
-+    }
 +    if (fp_access_check(s)) {
-+        uint64_t imm = vfp_expand_imm(a->esz, a->imm);
-+        write_fp_dreg(s, a->rd, tcg_constant_i64(imm));
++        TCGv_i64 rd = tcg_temp_new_i64();
++        TCGv_i64 rn = tcg_temp_new_i64();
++
++        read_vec_element(s, rn, a->rn, 0, a->esz | sign);
++        if (accumulate) {
++            read_vec_element(s, rd, a->rd, 0, a->esz | sign);
++        }
++        fn(rd, rn, a->imm);
++        write_fp_dreg(s, a->rd, rd);
 +    }
 +    return true;
 +}
 +
++TRANS(SSHR_s, do_scalar_shift_imm, a, gen_sshr_d, false, 0)
++TRANS(USHR_s, do_scalar_shift_imm, a, gen_ushr_d, false, 0)
++TRANS(SSRA_s, do_scalar_shift_imm, a, gen_ssra_d, true, 0)
++TRANS(USRA_s, do_scalar_shift_imm, a, gen_usra_d, true, 0)
++TRANS(SRSHR_s, do_scalar_shift_imm, a, gen_srshr_d, false, 0)
++TRANS(URSHR_s, do_scalar_shift_imm, a, gen_urshr_d, false, 0)
++TRANS(SRSRA_s, do_scalar_shift_imm, a, gen_srsra_d, true, 0)
++TRANS(URSRA_s, do_scalar_shift_imm, a, gen_ursra_d, true, 0)
++TRANS(SRI_s, do_scalar_shift_imm, a, gen_sri_d, true, 0)
++
  /* Shift a TCGv src by TCGv shift_amount, put result in dst.
   * Note that it is the caller's responsibility to ensure that the
   * shift amount is in range (ie 0..31 or 0..63) and provide the ARM
-@@ -8625,53 +8650,6 @@ static void disas_fp_1src(DisasContext *s, uint32_t insn)
+@@ -9352,64 +9417,6 @@ static void handle_shri_with_rndacc(TCGv_i64 tcg_res, TCGv_i64 tcg_src,
      }
  }
  
--/* Floating point immediate
-- *   31  30  29 28       24 23  22  21 20        13 12   10 9    5 4    0
-- * +---+---+---+-----------+------+---+------------+-------+------+------+
-- * | M | 0 | S | 1 1 1 1 0 | type | 1 |    imm8    | 1 0 0 | imm5 |  Rd  |
-- * +---+---+---+-----------+------+---+------------+-------+------+------+
-- */
--static void disas_fp_imm(DisasContext *s, uint32_t insn)
+-/* SSHR[RA]/USHR[RA] - Scalar shift right (optional rounding/accumulate) */
+-static void handle_scalar_simd_shri(DisasContext *s,
+-                                    bool is_u, int immh, int immb,
+-                                    int opcode, int rn, int rd)
 -{
--    int rd = extract32(insn, 0, 5);
--    int imm5 = extract32(insn, 5, 5);
--    int imm8 = extract32(insn, 13, 8);
--    int type = extract32(insn, 22, 2);
--    int mos = extract32(insn, 29, 3);
--    uint64_t imm;
--    MemOp sz;
+-    const int size = 3;
+-    int immhb = immh << 3 | immb;
+-    int shift = 2 * (8 << size) - immhb;
+-    bool accumulate = false;
+-    bool round = false;
+-    bool insert = false;
+-    TCGv_i64 tcg_rn;
+-    TCGv_i64 tcg_rd;
 -
--    if (mos || imm5) {
--        unallocated_encoding(s);
--        return;
--    }
--
--    switch (type) {
--    case 0:
--        sz = MO_32;
--        break;
--    case 1:
--        sz = MO_64;
--        break;
--    case 3:
--        sz = MO_16;
--        if (dc_isar_feature(aa64_fp16, s)) {
--            break;
--        }
--        /* fallthru */
--    default:
+-    if (!extract32(immh, 3, 1)) {
 -        unallocated_encoding(s);
 -        return;
 -    }
@@ -186,34 +223,106 @@ index aec2f6a542..0e290062ef 100644
 -        return;
 -    }
 -
--    imm = vfp_expand_imm(sz, imm8);
--    write_fp_dreg(s, rd, tcg_constant_i64(imm));
+-    switch (opcode) {
+-    case 0x02: /* SSRA / USRA (accumulate) */
+-        accumulate = true;
+-        break;
+-    case 0x04: /* SRSHR / URSHR (rounding) */
+-        round = true;
+-        break;
+-    case 0x06: /* SRSRA / URSRA (accum + rounding) */
+-        accumulate = round = true;
+-        break;
+-    case 0x08: /* SRI */
+-        insert = true;
+-        break;
+-    }
+-
+-    tcg_rn = read_fp_dreg(s, rn);
+-    tcg_rd = (accumulate || insert) ? read_fp_dreg(s, rd) : tcg_temp_new_i64();
+-
+-    if (insert) {
+-        /* shift count same as element size is valid but does nothing;
+-         * special case to avoid potential shift by 64.
+-         */
+-        int esize = 8 << size;
+-        if (shift != esize) {
+-            tcg_gen_shri_i64(tcg_rn, tcg_rn, shift);
+-            tcg_gen_deposit_i64(tcg_rd, tcg_rd, tcg_rn, 0, esize - shift);
+-        }
+-    } else {
+-        handle_shri_with_rndacc(tcg_rd, tcg_rn, round,
+-                                accumulate, is_u, size, shift);
+-    }
+-
+-    write_fp_dreg(s, rd, tcg_rd);
 -}
 -
- /* Handle floating point <=> fixed point conversions. Note that we can
-  * also deal with fp <=> integer conversions as a special case (scale == 64)
-  * OPTME: consider handling that special case specially or at least skipping
-@@ -9091,7 +9069,7 @@ static void disas_data_proc_fp(DisasContext *s, uint32_t insn)
-             switch (ctz32(extract32(insn, 12, 4))) {
-             case 0: /* [15:12] == xxx1 */
-                 /* Floating point immediate */
--                disas_fp_imm(s, insn);
-+                unallocated_encoding(s); /* in decodetree */
-                 break;
-             case 1: /* [15:12] == xx10 */
-                 /* Floating point compare */
+ /* SHL/SLI - Scalar shift left */
+ static void handle_scalar_simd_shli(DisasContext *s, bool insert,
+                                     int immh, int immb, int opcode,
+@@ -9893,18 +9900,6 @@ static void disas_simd_scalar_shift_imm(DisasContext *s, uint32_t insn)
+     }
+ 
+     switch (opcode) {
+-    case 0x08: /* SRI */
+-        if (!is_u) {
+-            unallocated_encoding(s);
+-            return;
+-        }
+-        /* fall through */
+-    case 0x00: /* SSHR / USHR */
+-    case 0x02: /* SSRA / USRA */
+-    case 0x04: /* SRSHR / URSHR */
+-    case 0x06: /* SRSRA / URSRA */
+-        handle_scalar_simd_shri(s, is_u, immh, immb, opcode, rn, rd);
+-        break;
+     case 0x0a: /* SHL / SLI */
+         handle_scalar_simd_shli(s, is_u, immh, immb, opcode, rn, rd);
+         break;
+@@ -9940,6 +9935,11 @@ static void disas_simd_scalar_shift_imm(DisasContext *s, uint32_t insn)
+         handle_simd_shift_fpint_conv(s, true, false, is_u, immh, immb, rn, rd);
+         break;
+     default:
++    case 0x00: /* SSHR / USHR */
++    case 0x02: /* SSRA / USRA */
++    case 0x04: /* SRSHR / URSHR */
++    case 0x06: /* SRSRA / URSRA */
++    case 0x08: /* SRI */
+         unallocated_encoding(s);
+         break;
+     }
 diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index c77f9fc987..e11e293631 100644
+index 164ed575b9..6c2362b3bb 100644
 --- a/target/arm/tcg/a64.decode
 +++ b/target/arm/tcg/a64.decode
-@@ -1180,3 +1180,7 @@ FMAXV_s         0110 1110 00 11000 01111 10 ..... .....     @rr_q1e2
- 
- FMINV_h         0.00 1110 10 11000 01111 10 ..... .....     @qrr_h
- FMINV_s         0110 1110 10 11000 01111 10 ..... .....     @rr_q1e2
+@@ -30,6 +30,7 @@
+ &rri_sf         rd rn imm sf
+ &i              imm
+ &rr_e           rd rn esz
++&rri_e          rd rn imm esz
+ &rrr_e          rd rn rm esz
+ &rrx_e          rd rn rm idx esz
+ &rrrr_e         rd rn rm ra esz
+@@ -1285,3 +1286,18 @@ SHRN_v          0.00 11110 .... ... 10000 1 ..... .....     @q_shri_s
+ RSHRN_v         0.00 11110 .... ... 10001 1 ..... .....     @q_shri_b
+ RSHRN_v         0.00 11110 .... ... 10001 1 ..... .....     @q_shri_h
+ RSHRN_v         0.00 11110 .... ... 10001 1 ..... .....     @q_shri_s
 +
-+# Floating-point Immediate
++# Advanced SIMD scalar shift by immediate
 +
-+FMOVI_s         0001 1110 .. 1 imm:8 100 00000 rd:5         esz=%esz_hsd
++@shri_d         .... ..... 1 ...... ..... . rn:5 rd:5   \
++                &rri_e esz=3 imm=%neon_rshift_i6
++
++SSHR_s          0101 11110 .... ... 00000 1 ..... .....     @shri_d
++USHR_s          0111 11110 .... ... 00000 1 ..... .....     @shri_d
++SSRA_s          0101 11110 .... ... 00010 1 ..... .....     @shri_d
++USRA_s          0111 11110 .... ... 00010 1 ..... .....     @shri_d
++SRSHR_s         0101 11110 .... ... 00100 1 ..... .....     @shri_d
++URSHR_s         0111 11110 .... ... 00100 1 ..... .....     @shri_d
++SRSRA_s         0101 11110 .... ... 00110 1 ..... .....     @shri_d
++URSRA_s         0111 11110 .... ... 00110 1 ..... .....     @shri_d
++SRI_s           0111 11110 .... ... 01000 1 ..... .....     @shri_d
 -- 
 2.43.0
 
