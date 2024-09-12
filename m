@@ -4,37 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09691EE57F8
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 13:11:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE36EEED601
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Sep 2024 13:11:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sojZa-0002qi-EN; Thu, 12 Sep 2024 09:09:22 -0400
+	id 1sojZm-0003K9-GH; Thu, 12 Sep 2024 09:09:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sojZO-0002oi-JQ
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 09:09:13 -0400
+ id 1sojZj-00039M-KB
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 09:09:31 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sojZM-0004nA-1E
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 09:09:10 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1sojZg-0004q3-Qw
+ for qemu-devel@nongnu.org; Thu, 12 Sep 2024 09:09:31 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Dxleju5+Jm0+QFAA--.12597S3;
- Thu, 12 Sep 2024 21:09:02 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxSOkE6OJm8eQFAA--.12716S3;
+ Thu, 12 Sep 2024 21:09:24 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front2 (Coremail) with SMTP id qciowMDxl8Xr5+JmR8MFAA--.9219S2;
- Thu, 12 Sep 2024 21:09:01 +0800 (CST)
+ by front2 (Coremail) with SMTP id qciowMDxl8Xr5+JmR8MFAA--.9219S8;
+ Thu, 12 Sep 2024 21:09:24 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PULL 0/7] loongarch-to-apply queue
-Date: Thu, 12 Sep 2024 20:51:25 +0800
-Message-Id: <20240912125132.268802-1-gaosong@loongson.cn>
+Cc: peter.maydell@linaro.org,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [PULL 6/7] hw/loongarch: virt: pass random seed to fdt
+Date: Thu, 12 Sep 2024 20:51:31 +0800
+Message-Id: <20240912125132.268802-7-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20240912125132.268802-1-gaosong@loongson.cn>
+References: <20240912125132.268802-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qciowMDxl8Xr5+JmR8MFAA--.9219S2
+X-CM-TRANSID: qciowMDxl8Xr5+JmR8MFAA--.9219S8
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -61,44 +64,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 4b7ea33074450bc6148c8e1545d78f179e64adb4:
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 
-  Merge tag 'pull-request-2024-09-11' of https://gitlab.com/thuth/qemu into staging (2024-09-11 19:28:23 +0100)
+If the FDT contains /chosen/rng-seed, then the Linux RNG will use it to
+initialize early. Set this using the usual guest random number
+generation function.
 
-are available in the Git repository at:
+This is the same procedure that's done in b91b6b5a2c ("hw/microblaze:
+pass random seed to fdt"), e4b4f0b71c ("hw/riscv: virt: pass random seed
+to fdt"), c6fe3e6b4c ("hw/openrisc: virt: pass random seed to fdt"),
+67f7e426e5 ("hw/i386: pass RNG seed via setup_data entry"), c287941a4d
+("hw/rx: pass random seed to fdt"), 5e19cc68fb ("hw/mips: boston: pass
+random seed to fdt"), 6b23a67916 ("hw/nios2: virt: pass random seed to fdt")
+c4b075318e ("hw/ppc: pass random seed to fdt"), and 5242876f37
+("hw/arm/virt: dt: add rng-seed property").
 
-  https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240912
+These earlier commits later were amended to rerandomize the RNG seed on
+snapshot load, but the LoongArch code somehow already does that, despite
+not having this patch here, presumably due to some lucky copy and
+pasting.
 
-for you to fetch changes up to 45d1fe46e5a6fe2b22b034e2b2bc0d941acd4b9e:
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-Id: <20240905153316.2038769-1-Jason@zx2c4.com>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ hw/loongarch/virt.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-  hw/loongarch: Add acpi SPCR table support (2024-09-12 20:57:54 +0800)
-
-----------------------------------------------------------------
-pull-loongarch-20240912
-
-----------------------------------------------------------------
-Bibo Mao (5):
-      target/loongarch: Add compatible support about VM reboot
-      hw/loongarch: Remove default enable with VIRTIO_VGA device
-      target/loongarch/kvm: Add vCPU reset function
-      target/loongarch: Support QMP dump-guest-memory
-      hw/loongarch: Add acpi SPCR table support
-
-Jason A. Donenfeld (2):
-      hw/loongarch: virt: support up to 4 serial ports
-      hw/loongarch: virt: pass random seed to fdt
-
- hw/loongarch/Kconfig                 |   1 -
- hw/loongarch/acpi-build.c            |  63 +++++++++++--
- hw/loongarch/virt.c                  |  33 ++++---
- include/hw/pci-host/ls7a.h           |   9 +-
- target/loongarch/arch_dump.c         | 167 +++++++++++++++++++++++++++++++++++
- target/loongarch/cpu.c               |  17 +++-
- target/loongarch/internals.h         |   2 +
- target/loongarch/kvm/kvm.c           |   5 +-
- target/loongarch/kvm/kvm_loongarch.h |   2 +-
- target/loongarch/meson.build         |   1 +
- 10 files changed, 274 insertions(+), 26 deletions(-)
- create mode 100644 target/loongarch/arch_dump.c
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 76dd29a391..81b1f9486f 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -48,6 +48,7 @@
+ #include "hw/block/flash.h"
+ #include "hw/virtio/virtio-iommu.h"
+ #include "qemu/error-report.h"
++#include "qemu/guest-random.h"
+ 
+ static bool virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
+ {
+@@ -303,6 +304,7 @@ static void fdt_add_uart_node(LoongArchVirtMachineState *lvms,
+ static void create_fdt(LoongArchVirtMachineState *lvms)
+ {
+     MachineState *ms = MACHINE(lvms);
++    uint8_t rng_seed[32];
+ 
+     ms->fdt = create_device_tree(&lvms->fdt_size);
+     if (!ms->fdt) {
+@@ -316,6 +318,10 @@ static void create_fdt(LoongArchVirtMachineState *lvms)
+     qemu_fdt_setprop_cell(ms->fdt, "/", "#address-cells", 0x2);
+     qemu_fdt_setprop_cell(ms->fdt, "/", "#size-cells", 0x2);
+     qemu_fdt_add_subnode(ms->fdt, "/chosen");
++
++    /* Pass seed to RNG */
++    qemu_guest_getrandom_nofail(rng_seed, sizeof(rng_seed));
++    qemu_fdt_setprop(ms->fdt, "/chosen", "rng-seed", rng_seed, sizeof(rng_seed));
+ }
+ 
+ static void fdt_add_cpu_nodes(const LoongArchVirtMachineState *lvms)
+-- 
+2.34.1
 
 
