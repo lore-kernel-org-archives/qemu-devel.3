@@ -4,116 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B16CFA3755
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 15:21:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3437FA375A
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 15:21:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp83j-0000v5-O8; Fri, 13 Sep 2024 11:18:08 -0400
+	id 1sp817-0005oC-AW; Fri, 13 Sep 2024 11:15:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sp83T-0008DA-1Q
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:17:55 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sp83N-0008MZ-L3
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:17:49 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 35ACA21B17;
- Fri, 13 Sep 2024 15:17:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1726240663; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4ihkfDbGXt5k4yEjJmGQL4MuVjBPLZa/AcDeWbyjnDw=;
- b=sbhDlU0SMddfAt/jerQbqUDs6jdbviF/1X//Fi39JLy4WsFMcaB2WlOitxFxVFNwJMoWP/
- e1/w6aYq65QUNppX6nj//qLe30b8YUrgtRXF/LgEn8YpKW6JDmh/tKyx/GzMgR3dHPIbuP
- rCIM8YaQe8OrzKSUIAaMAZMvTVr5dac=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1726240663;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4ihkfDbGXt5k4yEjJmGQL4MuVjBPLZa/AcDeWbyjnDw=;
- b=3rPuPN8RCDHSkbZhNupJrWPLfpulG0VYSpKjzxrI8cNttM8rFZngoEAaE0MbbEkiXBEpzG
- Z5lZgbyTKGHfanAw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1726240663; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4ihkfDbGXt5k4yEjJmGQL4MuVjBPLZa/AcDeWbyjnDw=;
- b=sbhDlU0SMddfAt/jerQbqUDs6jdbviF/1X//Fi39JLy4WsFMcaB2WlOitxFxVFNwJMoWP/
- e1/w6aYq65QUNppX6nj//qLe30b8YUrgtRXF/LgEn8YpKW6JDmh/tKyx/GzMgR3dHPIbuP
- rCIM8YaQe8OrzKSUIAaMAZMvTVr5dac=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1726240663;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4ihkfDbGXt5k4yEjJmGQL4MuVjBPLZa/AcDeWbyjnDw=;
- b=3rPuPN8RCDHSkbZhNupJrWPLfpulG0VYSpKjzxrI8cNttM8rFZngoEAaE0MbbEkiXBEpzG
- Z5lZgbyTKGHfanAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B24F813999;
- Fri, 13 Sep 2024 15:17:42 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id LcQLHpZX5GZfSgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 13 Sep 2024 15:17:42 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, Hyman Huang
- <yong.huang@smartx.com>, qemu-devel@nongnu.org, Eric Blake
- <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, David
- Hildenbrand <david@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH RFC 10/10] tests/migration-tests: Add test case for
- responsive CPU throttle
-In-Reply-To: <87ikuz1tgz.fsf@suse.de>
-References: <ZuC4pYT-atQwWePv@x1n> <87seu7qhao.fsf@suse.de>
- <ZuG-SijLg8Q27boE@x1n> <87ed5qq8e2.fsf@suse.de> <ZuH_pvnTCumKuXTh@x1n>
- <87bk0trifq.fsf@suse.de>
- <CAFEAcA9YkZiSSOAj0zH2OwF9AcziJT-zpnNVQn8BXizhSXHVOA@mail.gmail.com>
- <ZuMEF99PF0q0U9G-@x1n> <877cbghoi9.fsf@suse.de> <87ttek1o3j.fsf@suse.de>
- <ZuRTgbDhEJ7c-dcE@x1n> <87ikuz1tgz.fsf@suse.de>
-Date: Fri, 13 Sep 2024 12:17:40 -0300
-Message-ID: <87frq31t2j.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1sp807-00021B-V2; Fri, 13 Sep 2024 11:14:24 -0400
+Received: from nyc.source.kernel.org ([147.75.193.91])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1sp804-0007mM-Or; Fri, 13 Sep 2024 11:14:23 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 94B06A45198;
+ Fri, 13 Sep 2024 15:14:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D094C4CEC0;
+ Fri, 13 Sep 2024 15:14:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1726240457;
+ bh=wJogLjKRTRK+fhFgpvBnsWTVc3GmDsIavIppBdMXDuU=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=hkw+oQ3HBZzrnwBqDDSSXA/BUiveIL1PMM2w7sAtGK2Wqdp2vLng+6h7ecVwkuFlO
+ Nwussye2DTXBqictUJhYPOW4UsMkq+YB6KJYY5HJmXz8UeoHMi26PkOwyShwIwLkdY
+ pRkOBy+Q0Z1BHcH/YfReEzYhu4D2iI9jVp6Oe7j1snh7YLxerg1+PHLeMB5f2B0m3H
+ 7G2sbf2ToA3DFCORXYJgxYeSHH+mUYruCv52J4LRmwKOn1yKDU8O3E6aLcOnhHc4zT
+ 4yk60iheLwDXrgki6F0LKGDjlWJ3gbjwtLOqt+Xgb4Mmag3ieF33/N2ujxpWND4sKt
+ YjORa+uPhqiag==
+Date: Fri, 13 Sep 2024 17:14:12 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Dongjiu Geng <gengdongjiu1@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Shannon Zhao
+ <shannon.zhaosl@gmail.com>, kvm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v9 02/12] acpi/ghes: rework the logic to handle HEST
+ source ID
+Message-ID: <20240913171412.1a3dc701@foz.lan>
+In-Reply-To: <20240911170157.792225ef@imammedo.users.ipa.redhat.com>
+References: <cover.1724556967.git.mchehab+huawei@kernel.org>
+ <de67e08436e6903579f4fdc6beee7a5bc2696303.1724556967.git.mchehab+huawei@kernel.org>
+ <20240911170157.792225ef@imammedo.users.ipa.redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[9]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
- suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=147.75.193.91;
+ envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.147,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,258 +75,630 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+Em Wed, 11 Sep 2024 17:01:57 +0200
+Igor Mammedov <imammedo@redhat.com> escreveu:
 
-> Peter Xu <peterx@redhat.com> writes:
->
->> On Thu, Sep 12, 2024 at 07:52:48PM -0300, Fabiano Rosas wrote:
->>> Fabiano Rosas <farosas@suse.de> writes:
->>>=20
->>> > Peter Xu <peterx@redhat.com> writes:
->>> >
->>> >> On Thu, Sep 12, 2024 at 09:13:16AM +0100, Peter Maydell wrote:
->>> >>> On Wed, 11 Sept 2024 at 22:26, Fabiano Rosas <farosas@suse.de> wrot=
-e:
->>> >>> > I don't think we're discussing total CI time at this point, so th=
-e math
->>> >>> > doesn't really add up. We're not looking into making the CI finish
->>> >>> > faster. We're looking into making migration-test finish faster. T=
-hat
->>> >>> > would reduce timeouts in CI, speed-up make check and reduce the c=
-hance
->>> >>> > of random race conditions* affecting other people/staging runs.
->>> >>>=20
->>> >>> Right. The reason migration-test appears on my radar is because
->>> >>> it is very frequently the thing that shows up as "this sometimes
->>> >>> just fails or just times out and if you hit retry it goes away
->>> >>> again". That might not be migration-test's fault specifically,
->>> >>> because those retries tend to be certain CI configs (s390,
->>> >>> the i686-tci one), and I have some theories about what might be
->>> >>> causing it (e.g. build system runs 4 migration-tests in parallel,
->>> >>> which means 8 QEMU processes which is too many for the number
->>> >>> of host CPUs). But right now I look at CI job failures and my react=
-ion
->>> >>> is "oh, it's the migration-test failing yet again" :-(
->>> >>>=20
->>> >>> For some examples from this week:
->>> >>>=20
->>> >>> https://gitlab.com/qemu-project/qemu/-/jobs/7802183144
->>> >>> https://gitlab.com/qemu-project/qemu/-/jobs/7799842373  <--------[1]
->>> >>> https://gitlab.com/qemu-project/qemu/-/jobs/7786579152  <--------[2]
->>> >>> https://gitlab.com/qemu-project/qemu/-/jobs/7786579155
->>> >>
->>> >> Ah right, the TIMEOUT is unfortunate, especially if tests can be run=
- in
->>> >> parallel.  It indeed sounds like no good way to finally solve.. I do=
-n't
->>> >> also see how speeding up / reducing tests in migration test would he=
-lp, as
->>> >> that's (from some degree..) is the same as tuning the timeout value =
-bigger.
->>> >> When the tests are less it'll fit into 480s window, but maybe it's t=
-oo
->>> >> quick now we wonder whether we should shrink it to e.g. 90s, but the=
-n it
->>> >> can timeout again when on a busy host with less capability of concur=
-rency.
->>> >>
->>> >> But indeed there're two ERRORs ([1,2] above)..  I collected some mor=
-e info
->>> >> here before the log expires:
->>> >>
->>> >> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D8<=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->>> >>
->>> >> *** /i386/migration/multifd/tcp/plain/cancel, qtest-i386 on s390 host
->>> >>
->>> >> https://gitlab.com/qemu-project/qemu/-/jobs/7799842373
->>> >>
->>> >> 101/953 qemu:qtest+qtest-i386 / qtest-i386/migration-test           =
-              ERROR          144.32s   killed by signal 6 SIGABRT
->>> >>>>> QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-storage-=
-daemon G_TEST_DBUS_DAEMON=3D/home/gitlab-runner/builds/zEr9wY_L/0/qemu-proj=
-ect/qemu/tests/dbus-vmstate-daemon.sh PYTHON=3D/home/gitlab-runner/builds/z=
-Er9wY_L/0/qemu-project/qemu/build/pyvenv/bin/python3 QTEST_QEMU_IMG=3D./qem=
-u-img MALLOC_PERTURB_=3D144 QTEST_QEMU_BINARY=3D./qemu-system-i386 /home/gi=
-tlab-runner/builds/zEr9wY_L/0/qemu-project/qemu/build/tests/qtest/migration=
--test --tap -k
->>> >> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80  =E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95
->>> >> stderr:
->>> >> warning: fd: migration to a file is deprecated. Use file: instead.
->>> >> warning: fd: migration to a file is deprecated. Use file: instead.
->>> >> ../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from =
-signal 11 (Segmentation fault) (core dumped)
->>> >> (test program exited with status code -6)
->>> >> TAP parsing error: Too few tests run (expected 53, got 39)
->>> >> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95
->>> >>
->>> >> # Start of plain tests
->>> >> # Running /i386/migration/multifd/tcp/plain/cancel
->>> >> # Using machine type: pc-i440fx-9.2
->>> >> # starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-3273=
-509.sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-3273509.qmp=
-,id=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -=
-accel kvm -accel tcg -machine pc-i440fx-9.2, -name source,debug-threads=3Do=
-n -m 150M -serial file:/tmp/migration-test-4112T2/src_serial -drive if=3Dno=
-ne,id=3Dd0,file=3D/tmp/migration-test-4112T2/bootsect,format=3Draw -device =
-ide-hd,drive=3Dd0,secs=3D1,cyls=3D1,heads=3D1    2>/dev/null -accel qtest
->>> >> # starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-3273=
-509.sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-3273509.qmp=
-,id=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -=
-accel kvm -accel tcg -machine pc-i440fx-9.2, -name target,debug-threads=3Do=
-n -m 150M -serial file:/tmp/migration-test-4112T2/dest_serial -incoming def=
-er -drive if=3Dnone,id=3Dd0,file=3D/tmp/migration-test-4112T2/bootsect,form=
-at=3Draw -device ide-hd,drive=3Dd0,secs=3D1,cyls=3D1,heads=3D1    2>/dev/nu=
-ll -accel qtest
->>> >> ----------------------------------- stderr -------------------------=
-----------
->>> >> warning: fd: migration to a file is deprecated. Use file: instead.
->>> >> warning: fd: migration to a file is deprecated. Use file: instead.
->>> >> ../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from =
-signal 11 (Segmentation fault) (core dumped)
->>> >>
->>> >> *** /ppc64/migration/multifd/tcp/plain/cancel, qtest-ppc64 on i686 h=
-ost
->>> >>
->>> >> https://gitlab.com/qemu-project/qemu/-/jobs/7786579152
->>> >>
->>> >> 174/315 qemu:qtest+qtest-ppc64 / qtest-ppc64/migration-test         =
-              ERROR          381.00s   killed by signal 6 SIGABRT
->>> >>>>> PYTHON=3D/builds/qemu-project/qemu/build/pyvenv/bin/python3 QTEST=
-_QEMU_IMG=3D./qemu-img G_TEST_DBUS_DAEMON=3D/builds/qemu-project/qemu/tests=
-/dbus-vmstate-daemon.sh QTEST_QEMU_BINARY=3D./qemu-system-ppc64 MALLOC_PERT=
-URB_=3D178 QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-storage=
--daemon /builds/qemu-project/qemu/build/tests/qtest/migration-test --tap -k
->>> >> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80  =E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95
->>> >> stderr:
->>> >> qemu-system-ppc64: Cannot read from TLS channel: The TLS connection =
-was non-properly terminated.
->>> >> warning: fd: migration to a file is deprecated. Use file: instead.
->>> >> warning: fd: migration to a file is deprecated. Use file: instead.
->>> >> ../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from =
-signal 11 (Segmentation fault) (core dumped)
->>> >> (test program exited with status code -6)
->>> >> TAP parsing error: Too few tests run (expected 61, got 47)
->>> >> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95
->>> >>
->>> >> # Start of plain tests
->>> >> # Running /ppc64/migration/multifd/tcp/plain/cancel
->>> >> # Using machine type: pseries-9.2
->>> >> # starting QEMU: exec ./qemu-system-ppc64 -qtest unix:/tmp/qtest-407=
-66.sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-40766.qmp,id=
-=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -acc=
-el kvm -accel tcg -machine pseries-9.2,vsmt=3D8 -name source,debug-threads=
-=3Don -m 256M -serial file:/tmp/migration-test-H0Z1T2/src_serial -nodefault=
-s -machine cap-cfpc=3Dbroken,cap-sbbc=3Dbroken,cap-ibs=3Dbroken,cap-ccf-ass=
-ist=3Doff, -bios /tmp/migration-test-H0Z1T2/bootsect    2>/dev/null -accel =
-qtest
->>> >> # starting QEMU: exec ./qemu-system-ppc64 -qtest unix:/tmp/qtest-407=
-66.sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-40766.qmp,id=
-=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -acc=
-el kvm -accel tcg -machine pseries-9.2,vsmt=3D8 -name target,debug-threads=
-=3Don -m 256M -serial file:/tmp/migration-test-H0Z1T2/dest_serial -incoming=
- defer -nodefaults -machine cap-cfpc=3Dbroken,cap-sbbc=3Dbroken,cap-ibs=3Db=
-roken,cap-ccf-assist=3Doff, -bios /tmp/migration-test-H0Z1T2/bootsect    2>=
-/dev/null -accel qtest
->>> >> ----------------------------------- stderr -------------------------=
-----------
->>> >> qemu-system-ppc64: Cannot read from TLS channel: The TLS connection =
-was non-properly terminated.
->>> >> warning: fd: migration to a file is deprecated. Use file: instead.
->>> >> warning: fd: migration to a file is deprecated. Use file: instead.
->>> >> ../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from =
-signal 11 (Segmentation fault) (core dumped)
->>> >>
->>> >> (test program exited with status code -6)
->>> >> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D8<=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->>> >>
->>> >> So.. it's the same test (multifd/tcp/plain/cancel) that is failing on
->>> >> different host / arch being tested.  What is more weird is the two f=
-ailures
->>> >> are different, the 2nd failure throw out a TLS error even though the=
- test
->>> >> doesn't yet have tls involved.
->>> >
->>> > I think that's just a parallel test being cancelled prematurely, eith=
-er
->>> > due to the crash or due to the timeout.
->>> >
->>> >>
->>> >> Fabiano, is this the issue you're looking at?
->>> >
->>> > Yes. I can reproduce locally by running 2 processes in parallel: 1 lo=
-op
->>> > with make -j$(nproc) check and another loop with tcp/plain/cancel. It
->>> > takes ~1h to hit. I've seen crashes with ppc64, s390 and
->>> > aarch64.
->>> >
->>>=20
->>> Ok, the issue is that after commit 5ef7e26bdb ("migration/multifd: solve
->>> zero page causing multiple page faults"), the multifd code started using
->>> the rb->receivedmap bitmap, which belongs to the ram code and is
->>> initialized and *freed* from the ram SaveVMHandlers.
->>>=20
->>> process_incoming_migration_co()        ...
->>>   qemu_loadvm_state()                  multifd_nocomp_recv()
->>>     qemu_loadvm_state_cleanup()          ramblock_recv_bitmap_set_offse=
-t()
->>>       rb->receivedmap =3D NULL               set_bit_atomic(..., rb->re=
-ceivedmap)
->>>   ...
->>>   migration_incoming_state_destroy()
->>>     multifd_recv_cleanup()
->>>       multifd_recv_terminate_threads(NULL)
->>>=20
->>> Multifd threads are live until migration_incoming_state_destroy(), which
->>> is called some time later.
->>
->> Thanks for the debugging.  Hmm I would expect loadvm should wait until a=
-ll
->> ram is received somehow..
->
-> Looks like a similar issue as when we didn't have the multifd_send sync
-> working correctly and ram code would run and do cleanup.
+> On Sun, 25 Aug 2024 05:45:57 +0200
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> 
+> > The current logic is based on a lot of duct tape, with
+> > offsets calculated based on one define with the number of
+> > source IDs and an enum.
+> > 
+> > Rewrite the logic in a way that it would be more resilient
+> > of code changes, by moving the source ID count to an enum
+> > and make the offset calculus more explicit.
+> > 
+> > Such change was inspired on a patch from Jonathan Cameron
+> > splitting the logic to get the CPER address on a separate
+> > function, as this will be needed to support generic error
+> > injection.  
+> 
+> patch is too large and does too many things at once,
+> see inline suggestions on how to split it in more
+> manageable chunks.
+> (I'll mark preferred patch order with numbers)
 
-Btw, this is hard to debug, but I bet what's happening is that the
-ram_load code itself is exiting due to qemufile error. So there wouldn't
-be a way to make it wait for multifd.
+I ended adding more patches to make changes more logic.
+
+> 
+> > 
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > 
+> > ---
+> > 
+> > Changes from v8:
+> > - Non-rename/cleanup changes merged altogether;
+> > - source ID is now more generic, defined per guest target.
+> >   That should make easier to add support for 86.
+> > 
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > ---
+> >  hw/acpi/ghes.c           | 275 ++++++++++++++++++++++++---------------
+> >  hw/arm/virt-acpi-build.c |  10 +-
+> >  include/hw/acpi/ghes.h   |  18 +--
+> >  include/hw/arm/virt.h    |   7 +
+> >  target/arm/kvm.c         |   3 +-
+> >  5 files changed, 198 insertions(+), 115 deletions(-)
+> > 
+> > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> > index 529c14e3289f..965fb1b36587 100644
+> > --- a/hw/acpi/ghes.c
+> > +++ b/hw/acpi/ghes.c
+> > @@ -35,9 +35,6 @@
+> >  /* The max size in bytes for one error block */
+> >  #define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
+> >  
+> > -/* Now only support ARMv8 SEA notification type error source */
+> > -#define ACPI_GHES_ERROR_SOURCE_COUNT        1  
+> 
+>  [patch 4] getting rid of this and introducing num_sources
+>      (aka variable size HEST) 
+
+ok.
+
+> 
+> >  /* Generic Hardware Error Source version 2 */
+> >  #define ACPI_GHES_SOURCE_GENERIC_ERROR_V2   10
+> >  
+> > @@ -64,6 +61,19 @@
+> >   */
+> >  #define ACPI_GHES_GESB_SIZE                 20
+> >  
+> > +/*
+> > + * Offsets with regards to the start of the HEST table stored at
+> > + * ags->hest_addr_le, according with the memory layout map at
+> > + * docs/specs/acpi_hest_ghes.rst.
+> > + */  
+> perhaps  mention in comment/commit message, that hest lookup
+> is implemented only GHESv2 error sources.
+
+Ok, will add a comment, but IMO, it fits better at the routine which
+handles HEST error sources, so I added this there:
+
+    /*
+     * Currently, HEST Error source navigates only for GHESv2 tables
+     */
+    for (i = 0; i < ACPI_GHES_ERROR_SOURCE_COUNT; i++) {
+        uint64_t addr = err_source_struct;
+        uint16_t type, src_id;
+   ... 
+
+> 
+> That will work as far we do forward migration only
+> (i.e. old qemu -> new qemu), which is what upstream supports.
+> 
+> However it won't work for backward migration (new qemu -> old qemu)
+> since old one doesn't know about new non-GHESv2 sources.
+> And that means we would need to introduce compat knobs for every
+> new non-GHESv2 source is added. Which is easy to overlook and
+> it adds up to maintenance.
+> (You've already described zoo of types ACPI spec has in v8 review,
+> but I don't thing it's too complex to implement lookup of all
+> known types. compared to headache we would have with compat
+> settings if anyone remembers)
+> 
+> I won't insist on adding all known sources lookup in this series,
+> if you agree to do it as a patch on top of this series within this
+> dev cycle (~2 months time-frame).
+
+Seems fine to me to place it at the dev cycle.
+
+> > +/* ACPI 6.2: 18.3.2.8 Generic Hardware Error Source version 2 */  
+> 
+>  +  ,Table 18-383
+> 
+> > +#define HEST_GHES_V2_TABLE_SIZE  92
+> > +#define GHES_ACK_OFFSET          (64 + GAS_ADDR_OFFSET)
+> > +
+> > +/* ACPI 6.2: 18.3.2.7: Generic Hardware Error Source */  
+>      
+>    Table 18-380 'Error Status Address' field 
+
+Actually on ACPI 6.2, those tables are 18-382 and 18-379.
+
+I'll change the above to reflect that:
+
+/* ACPI 6.2: 18.3.2.8 Generic Hardware Error Source version 2
+ * Table 18-382 Generic Hardware Error Source version 2 (GHESv2) Structure
+ */
+#define HEST_GHES_V2_TABLE_SIZE  92
+#define GHES_ACK_OFFSET          (64 + GAS_ADDR_OFFSET)
+
+/* ACPI 6.2: 18.3.2.7: Generic Hardware Error Source
+ * Table 18-379: 'Error Status Address' field
+
+> 
+> > +#define GHES_ERR_ST_ADDR_OFFSET  (20 + GAS_ADDR_OFFSET)
+> > +
+> >  /*
+> >   * Values for error_severity field
+> >   */
+> > @@ -185,51 +195,30 @@ static void acpi_ghes_build_append_mem_cper(GArray *table,
+> >      build_append_int_noprefix(table, 0, 7);
+> >  }
+> >  
+> > -static int acpi_ghes_record_mem_error(uint64_t error_block_address,
+> > -                                      uint64_t error_physical_addr)
+> > +static void
+> > +ghes_gen_err_data_uncorrectable_recoverable(GArray *block,
+> > +                                            const uint8_t *section_type,
+> > +                                            int data_length)  
+>   [patch 2] splitting acpi_ghes_record_mem_error() on reusable and mem specific
+>            code
+
+Ok, will move to a separate patch after this one.
+
+> 
+> >  {
+> > -    GArray *block;
+> > -
+> > -    /* Memory Error Section Type */
+> > -    const uint8_t uefi_cper_mem_sec[] =
+> > -          UUID_LE(0xA5BC1114, 0x6F64, 0x4EDE, 0xB8, 0x63, 0x3E, 0x83, \
+> > -                  0xED, 0x7C, 0x83, 0xB1);
+> > -
+> >      /* invalid fru id: ACPI 4.0: 17.3.2.6.1 Generic Error Data,
+> >       * Table 17-13 Generic Error Data Entry
+> >       */
+> >      QemuUUID fru_id = {};
+> > -    uint32_t data_length;
+> >  
+> > -    block = g_array_new(false, true /* clear */, 1);
+> > -
+> > -    /* This is the length if adding a new generic error data entry*/
+> > -    data_length = ACPI_GHES_DATA_LENGTH + ACPI_GHES_MEM_CPER_LENGTH;
+> >      /*
+> > -     * It should not run out of the preallocated memory if adding a new generic
+> > -     * error data entry
+> > +     * Calculate the size with this block. No need to check for
+> > +     * too big CPER, as CPER size is checked at ghes_record_cper_errors()
+> >       */
+> > -    assert((data_length + ACPI_GHES_GESB_SIZE) <=
+> > -            ACPI_GHES_MAX_RAW_DATA_LENGTH);
+> > +    data_length += ACPI_GHES_GESB_SIZE;
+> >  
+> >      /* Build the new generic error status block header */
+> >      acpi_ghes_generic_error_status(block, ACPI_GEBS_UNCORRECTABLE,
+> >          0, 0, data_length, ACPI_CPER_SEV_RECOVERABLE);
+> >  
+> >      /* Build this new generic error data entry header */
+> > -    acpi_ghes_generic_error_data(block, uefi_cper_mem_sec,
+> > +    acpi_ghes_generic_error_data(block, section_type,
+> >          ACPI_CPER_SEV_RECOVERABLE, 0, 0,
+> >          ACPI_GHES_MEM_CPER_LENGTH, fru_id, 0);
+> > -
+> > -    /* Build the memory section CPER for above new generic error data entry */
+> > -    acpi_ghes_build_append_mem_cper(block, error_physical_addr);
+> > -
+> > -    /* Write the generic error data entry into guest memory */
+> > -    cpu_physical_memory_write(error_block_address, block->data, block->len);
+> > -
+> > -    g_array_free(block, true);
+> > -
+> > -    return 0;
+> >  }
+> >  
+> >  /*
+> > @@ -237,17 +226,18 @@ static int acpi_ghes_record_mem_error(uint64_t error_block_address,
+> >   * Initialize "etc/hardware_errors" and "etc/hardware_errors_addr" fw_cfg blobs.
+> >   * See docs/specs/acpi_hest_ghes.rst for blobs format.
+> >   */
+> > -void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
+> > +static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker,
+> > +                                   int num_sources)
+> >  {
+> >      int i, error_status_block_offset;
+> >  
+> >      /* Build error_block_address */
+> > -    for (i = 0; i < ACPI_GHES_ERROR_SOURCE_COUNT; i++) {
+> > +    for (i = 0; i < num_sources; i++) {
+> >          build_append_int_noprefix(hardware_errors, 0, sizeof(uint64_t));
+> >      }
+> >  
+> >      /* Build read_ack_register */
+> > -    for (i = 0; i < ACPI_GHES_ERROR_SOURCE_COUNT; i++) {
+> > +    for (i = 0; i < num_sources; i++) {
+> >          /*
+> >           * Initialize the value of read_ack_register to 1, so GHES can be
+> >           * writable after (re)boot.
+> > @@ -262,13 +252,13 @@ void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
+> >  
+> >      /* Reserve space for Error Status Data Block */
+> >      acpi_data_push(hardware_errors,
+> > -        ACPI_GHES_MAX_RAW_DATA_LENGTH * ACPI_GHES_ERROR_SOURCE_COUNT);
+> > +        ACPI_GHES_MAX_RAW_DATA_LENGTH * num_sources);
+> >  
+> >      /* Tell guest firmware to place hardware_errors blob into RAM */
+> >      bios_linker_loader_alloc(linker, ACPI_GHES_ERRORS_FW_CFG_FILE,
+> >                               hardware_errors, sizeof(uint64_t), false);
+> >  
+> > -    for (i = 0; i < ACPI_GHES_ERROR_SOURCE_COUNT; i++) {
+> > +    for (i = 0; i < num_sources; i++) {
+> >          /*
+> >           * Tell firmware to patch error_block_address entries to point to
+> >           * corresponding "Generic Error Status Block"  
+> 
+> > @@ -283,14 +273,20 @@ void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
+> >       * tell firmware to write hardware_errors GPA into
+> >       * hardware_errors_addr fw_cfg, once the former has been initialized.
+> >       */
+> > -    bios_linker_loader_write_pointer(linker, ACPI_GHES_DATA_ADDR_FW_CFG_FILE,
+> > -        0, sizeof(uint64_t), ACPI_GHES_ERRORS_FW_CFG_FILE, 0);
+> > +    bios_linker_loader_write_pointer(linker, ACPI_GHES_DATA_ADDR_FW_CFG_FILE, 0,
+> > +                                     sizeof(uint64_t),
+> > +                                     ACPI_GHES_ERRORS_FW_CFG_FILE, 0);  
+> 
+>  [patch 1] all indent changes in its own patch, or just drop them altogether 
+
+I'll drop the pure reformat changes from this patch. They'll
+be placed at the patches that rename ACPI_GHES_*_FW_CFG_*.
+
+Same for other occurrences.
+
+> >
+...
+> >      /*
+> >       * Read Ack Preserve field
+> > @@ -360,19 +350,28 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
+> >  }
+> >  
+> >  /* Build Hardware Error Source Table */
+> > -void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
+> > +void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
+> > +                     BIOSLinker *linker,
+> > +                     const uint16_t * const notify,
+> > +                     int num_sources,
+> >                       const char *oem_id, const char *oem_table_id)
+> >  {
+> >      AcpiTable table = { .sig = "HEST", .rev = 1,
+> >                          .oem_id = oem_id, .oem_table_id = oem_table_id };
+> > +    int i;
+> > +
+> > +    build_ghes_error_table(hardware_errors, linker, num_sources);
+> >  
+> >      acpi_table_begin(&table, table_data);
+> >  
+> > +    /* Beginning at the HEST Error Source struct count and data */
+> >      int hest_offset = table_data->len;
+> >  
+> >      /* Error Source Count */
+> > -    build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
+> > -    build_ghes_v2(table_data, ACPI_HEST_SRC_ID_SEA, linker);
+> > +    build_append_int_noprefix(table_data, num_sources, 4);
+> > +    for (i = 0; i < num_sources; i++) {
+> > +        build_ghes_v2(table_data, linker, notify[i], i, num_sources);
+> > +    }
+> >  
+> >      acpi_table_end(linker, &table);
+> >  
+> > @@ -403,60 +402,132 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
+> >      ags->present = true;
+> >  }
+> >  
+> > -int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
+> > +void ghes_record_cper_errors(const void *cper, size_t len,
+> > +                             uint16_t source_id, Error **errp)  
+> 
+>  [patch 3] switching to hest source id lookup method
+
+Ok.
+
+> >  {
+> > -    uint64_t error_block_addr, read_ack_register_addr, read_ack_register = 0;
+> > -    uint64_t start_addr;
+> > -    bool ret = -1;
+> > +    uint64_t hest_read_ack_start_addr, read_ack_start_addr;
+> > +    uint64_t hest_addr, cper_addr, err_source_struct;
+> > +    uint64_t hest_err_block_addr, error_block_addr;
+> > +    uint32_t num_sources, i;
+> >      AcpiGedState *acpi_ged_state;
+> >      AcpiGhesState *ags;
+> > +    uint64_t read_ack;
+> >  
+> > -    assert(source_id < ACPI_HEST_SRC_ID_RESERVED);
+> > +    if (len > ACPI_GHES_MAX_RAW_DATA_LENGTH) {
+> > +        error_setg(errp, "GHES CPER record is too big: %ld", len);
+> > +    }
+> >  
+> >      acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,
+> >                                                         NULL));
+> >      g_assert(acpi_ged_state);
+> >      ags = &acpi_ged_state->ghes_state;
+> >  
+> > -    start_addr = le64_to_cpu(ags->ghes_addr_le);
+> > -
+> > -    if (physical_address) {
+> > -
+> > -        if (source_id < ACPI_HEST_SRC_ID_RESERVED) {
+> > -            start_addr += source_id * sizeof(uint64_t);
+> > -        }
+> > -
+> > -        cpu_physical_memory_read(start_addr, &error_block_addr,
+> > -                                 sizeof(error_block_addr));
+> > -
+> > -        error_block_addr = le64_to_cpu(error_block_addr);
+> > -
+> > -        read_ack_register_addr = start_addr +
+> > -            ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t);
+> > -
+> > -        cpu_physical_memory_read(read_ack_register_addr,
+> > -                                 &read_ack_register, sizeof(read_ack_register));
+> > -
+> > -        /* zero means OSPM does not acknowledge the error */
+> > -        if (!read_ack_register) {
+> > -            error_report("OSPM does not acknowledge previous error,"
+> > -                " so can not record CPER for current error anymore");
+> > -        } else if (error_block_addr) {
+> > -            read_ack_register = cpu_to_le64(0);
+> > -            /*
+> > -             * Clear the Read Ack Register, OSPM will write it to 1 when
+> > -             * it acknowledges this error.
+> > -             */
+> > -            cpu_physical_memory_write(read_ack_register_addr,
+> > -                &read_ack_register, sizeof(uint64_t));
+> > -
+> > -            ret = acpi_ghes_record_mem_error(error_block_addr,
+> > -                                             physical_address);
+> > -        } else
+> > -            error_report("can not find Generic Error Status Block");
+> > +    hest_addr = le64_to_cpu(ags->hest_addr_le);
+> > +
+> > +    cpu_physical_memory_read(hest_addr, &num_sources, sizeof(num_sources));
+> > +
+> > +    if (source_id >= num_sources) {
+> > +        error_setg(errp,
+> > +                   "GHES: Source %d not found. Only %d sources are defined",
+> > +                   source_id, num_sources);
+> > +        return;
+> > +    }
+> > +    err_source_struct = hest_addr + sizeof(num_sources);
+> > +
+> > +    for (i = 0; i < num_sources; i++) {
+> > +        uint64_t addr = err_source_struct;
+> > +        uint16_t type, src_id;
+> > +
+> > +        cpu_physical_memory_read(addr, &type, sizeof(type));
+> > +
+> > +        /* For now, we only know the size of GHESv2 table */
+> > +        assert(type == ACPI_GHES_SOURCE_GENERIC_ERROR_V2);
+> > +
+> > +        /* It is GHES. Compare CPER source address */
+> > +        addr += sizeof(type);
+> > +        cpu_physical_memory_read(addr, &src_id, sizeof(src_id));
+> > +
+> > +        if (src_id == source_id)
+> > +            break;
+> > +
+> > +        err_source_struct += HEST_GHES_V2_TABLE_SIZE;
+> > +    }
+> > +    if (i == num_sources) {
+> > +        error_setg(errp, "HEST: Source %d not found.", source_id);
+> > +        return;
+> > +    }
+> > +
+> > +    /* Check if BIOS addr pointers were properly generated */
+> > +
+> > +    hest_err_block_addr = err_source_struct + GHES_ERR_ST_ADDR_OFFSET;
+> > +    hest_read_ack_start_addr = err_source_struct + GHES_ACK_OFFSET;
+> > +
+> > +    cpu_physical_memory_read(hest_err_block_addr, &error_block_addr,
+> > +                             sizeof(error_block_addr));
+> > +
+> > +    cpu_physical_memory_read(error_block_addr, &cper_addr,
+> > +                             sizeof(error_block_addr));
+> > +
+> > +    cpu_physical_memory_read(hest_read_ack_start_addr, &read_ack_start_addr,
+> > +			     sizeof(read_ack_start_addr));
+> > +
+> > +    /* Update ACK offset to notify about a new error */
+> > +
+> > +    cpu_physical_memory_read(read_ack_start_addr,
+> > +                             &read_ack, sizeof(read_ack));
+> > +
+> > +    /* zero means OSPM does not acknowledge the error */
+> > +    if (!read_ack) {
+> > +        error_setg(errp,
+> > +                   "Last CPER record was not acknowledged yet");
+> > +        read_ack = 1;
+> > +        cpu_physical_memory_write(read_ack_start_addr,
+> > +                                  &read_ack, sizeof(read_ack));
+> > +        return;
+> > +    }
+> > +
+> > +    read_ack = cpu_to_le64(0);
+> > +    cpu_physical_memory_write(read_ack_start_addr,
+> > +                              &read_ack, sizeof(read_ack));
+> > +
+> > +    /* Write the generic error data entry into guest memory */
+> > +    cpu_physical_memory_write(cper_addr, cper, len);
+> > +}
+> > +
+> > +int acpi_ghes_record_errors(int source_id, uint64_t physical_address)
+> > +{
+> > +    /* Memory Error Section Type */
+> > +    const uint8_t guid[] =
+> > +          UUID_LE(0xA5BC1114, 0x6F64, 0x4EDE, 0xB8, 0x63, 0x3E, 0x83, \
+> > +                  0xED, 0x7C, 0x83, 0xB1);
+> > +    Error *errp = NULL;
+> > +    GArray *block;
+> > +
+> > +    if (!physical_address) {
+> > +        error_report("can not find Generic Error Status Block for source id %d",
+> > +                     source_id);
+> > +        return -1;
+> > +    }
+> > +
+> > +    block = g_array_new(false, true /* clear */, 1);
+> > +
+> > +    ghes_gen_err_data_uncorrectable_recoverable(block, guid,
+> > +                                                ACPI_GHES_MAX_RAW_DATA_LENGTH);
+> > +
+> > +    /* Build the memory section CPER for above new generic error data entry */
+> > +    acpi_ghes_build_append_mem_cper(block, physical_address);
+> > +
+> > +    /* Report the error */
+> > +    ghes_record_cper_errors(block->data, block->len, source_id, &errp);
+> > +
+> > +    g_array_free(block, true);
+> > +
+> > +    if (errp) {
+> > +        error_report_err(errp);
+> > +        return -1;
+> >      }
+> >  
+> > -    return ret;
+> > +    return 0;
+> >  }
+> >  
+> >  bool acpi_ghes_present(void)
+> > diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> > index f76fb117adff..39100c2822c2 100644
+> > --- a/hw/arm/virt-acpi-build.c
+> > +++ b/hw/arm/virt-acpi-build.c
+> > @@ -890,6 +890,10 @@ static void acpi_align_size(GArray *blob, unsigned align)
+> >      g_array_set_size(blob, ROUND_UP(acpi_data_len(blob), align));
+> >  }
+> >  
+> > +static const uint16_t hest_ghes_notify[] = {
+> > +    [ARM_ACPI_HEST_SRC_ID_SEA] = ACPI_GHES_NOTIFY_SEA,
+> > +};  
+> 
+> I agree that machine/platform shall opt in for a specific source id,
+> but I'm not sure about whether we need platform specific source ids,
+> it seems to complicate things needlessly.
+>
+> For example if one would define different src_id for error injection
+> for ARM and X86, then we would somehow need to take that in account
+> when QMP command X called so it would use correct ID
+>
+> Maybe this needs it's own patch with a commit message that
+> would explain need for this approach (but so far I'm not seeing the point).
+> 
+> PS:
+> I'd prefer common/shared SRC_ID registry, from which boards would pick
+> applicable ones.
+
+I'll use a different approach, adding this to ghes.h:
+
+	/*
+	 * ID numbers used to fill HEST source ID field
+	 */
+	enum AcpiGhesSourceID {
+	    ACPI_HEST_SRC_ID_SYNC,
+	    ACPI_HEST_SRC_ID_QMP,       /* Use it only for QMP injected errors */
+	};
+
+	typedef struct AcpiNotificationSourceId {
+	    enum AcpiGhesSourceID source_id;
+	    enum AcpiGhesNotifyType notify;
+	} AcpiNotificationSourceId;
+
+And, at the binding logic (at arm/virt-acpi-build):
+
+	static const AcpiNotificationSourceId hest_ghes_notify[] = {
+	    {ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA},
+	    {ACPI_HEST_SRC_ID_QMP, ACPI_GHES_NOTIFY_GPIO},
+	};
+	...
+	acpi_build_hest(tables_blob, tables->hardware_errors, tables->linker,
+                        hest_ghes_notify, sizeof(hest_ghes_notify),
+                        vms->oem_id, vms->oem_table_id);
+
+For x86, with just QMP implemented, this will be:
+
+	static const AcpiNotificationSourceId hest_ghes_notify[] = {
+	    {ACPI_HEST_SRC_ID_QMP, ACPI_GHES_NOTIFY_SCI},
+	};
+	...
+	acpi_build_hest(tables_blob, tables->hardware_errors, tables->linker,
+                        hest_ghes_notify, sizeof(hest_ghes_notify),
+                        vms->oem_id, vms->oem_table_id);
+
+As the current logic doesn't assume anymore that source_id is an
+index, but instead searches for it along the error structures,
+such logic works fine and allows each arch to define what IDs
+they'll use and what notification is associated to each one of
+them.
+
+> > +
+> >  static
+> >  void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+> >  {
+> > @@ -943,10 +947,10 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+> >      build_dbg2(tables_blob, tables->linker, vms);
+> >  
+> >      if (vms->ras) {
+> > -        build_ghes_error_table(tables->hardware_errors, tables->linker);
+> >          acpi_add_table(table_offsets, tables_blob);
+> > -        acpi_build_hest(tables_blob, tables->linker, vms->oem_id,
+> > -                        vms->oem_table_id);
+> > +        acpi_build_hest(tables_blob, tables->hardware_errors, tables->linker,
+> > +                        hest_ghes_notify, sizeof(hest_ghes_notify),
+> > +                        vms->oem_id, vms->oem_table_id);
+> >      }
+> >  
+> >      if (ms->numa_state->num_nodes > 0) {
+> > diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+> > index 28b956acb19a..4b5af86ec077 100644
+> > --- a/include/hw/acpi/ghes.h
+> > +++ b/include/hw/acpi/ghes.h
+> > @@ -23,6 +23,7 @@
+> >  #define ACPI_GHES_H
+> >  
+> >  #include "hw/acpi/bios-linker-loader.h"
+> > +#include "qapi/error.h"
+> >  
+> >  /*
+> >   * Values for Hardware Error Notification Type field
+> > @@ -56,24 +57,23 @@ enum AcpiGhesNotifyType {
+> >      ACPI_GHES_NOTIFY_RESERVED = 12
+> >  };
+> >  
+> > -enum {
+> > -    ACPI_HEST_SRC_ID_SEA = 0,
+> > -    /* future ids go here */
+> > -    ACPI_HEST_SRC_ID_RESERVED,
+> > -};
+> > -
+> >  typedef struct AcpiGhesState {
+> >      uint64_t hest_addr_le;
+> >      uint64_t ghes_addr_le;
+> >      bool present; /* True if GHES is present at all on this board */
+> >  } AcpiGhesState;
+> >  
+> > -void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker);
+> > -void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
+> > +void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
+> > +                     BIOSLinker *linker,
+> > +                     const uint16_t * const notify,
+> > +                     int num_sources,
+> >                       const char *oem_id, const char *oem_table_id);
+> >  void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
+> >                            GArray *hardware_errors);
+> > -int acpi_ghes_record_errors(uint8_t notify, uint64_t error_physical_addr);
+> > +int acpi_ghes_record_errors(int source_id,
+> > +                            uint64_t error_physical_addr);
+> > +void ghes_record_cper_errors(const void *cper, size_t len,  
+> 
+> use GArray for cper so you won't have to pass down len
+
+Here, it would work fine, but when adding hw/acpi/ghes_cper.c,
+the logic there is:
+
+    cper = qbase64_decode(qmp_cper, -1, &len, errp);
+    if (!cper) {
+        error_setg(errp, "missing GHES CPER payload");
+        return;
+    }
+
+    ghes_record_cper_errors(cper, len, ACPI_HEST_SRC_ID_QMP, errp);
+
+If I use a GArray, it would mean an extra memory allocation
+for no good reason.
+
+So, IMO, better to keep passing buffer and length.
+
+Regards,
+Mauro
 
