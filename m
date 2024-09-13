@@ -4,68 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 021C2FA3728
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 08:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4203FA3727
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 08:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp1GN-00043N-0e; Fri, 13 Sep 2024 04:02:43 -0400
+	id 1sp1IH-0008Vu-6Z; Fri, 13 Sep 2024 04:04:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sp1GK-00042o-B0
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 04:02:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sp1IF-0008V3-KL
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 04:04:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sp1GH-0004BO-RL
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 04:02:39 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sp1IE-0004F8-6n
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 04:04:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726214555;
+ s=mimecast20190719; t=1726214676;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9BIS6N0Uk11OZFMlp3v1v7NHUWdnxsavDPt7VIlwXPQ=;
- b=Dz9SzosZmbKddv54QjHScTlKkJWh8KmXi2UMQaQwxYIdMMphMmxffTEnPq0E4PiRFVdU7R
- fwK+df6oA9YqK2zBdzSn0tVc1O4pJlatw5pRyc3AtIJOvBtc5eGbh/ULdYDdq4W+3ON56m
- 9LnMoVdB84Tj5ynhIr3FvU7dGFbbUxM=
+ bh=+AOCiWebeIf1kYOUexTOQ2z0M0umcclMVn52RuOr/Ok=;
+ b=TnUD2b9r/jz7Ly/9NJ/BM0kjLuYKWULTvPSOneSZF2oliypeAXJlvckxrMZS9sXH+4QrWt
+ Y5UXjW2CTVvBsbMNXjiCPnPFs8kESXWhjDIl80Ahkz4oEEOSxgbVsODTUWrGBiFL0/zWWh
+ EuJ4JiMRwIAJQqk8wBAU2d6MbO9/4Qo=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-52-FjPA4v5XMuWqbCfUijlKtg-1; Fri,
- 13 Sep 2024 04:02:32 -0400
-X-MC-Unique: FjPA4v5XMuWqbCfUijlKtg-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-121-UKZPT_9PMJ6N0xLn7lwyUg-1; Fri,
+ 13 Sep 2024 04:04:35 -0400
+X-MC-Unique: UKZPT_9PMJ6N0xLn7lwyUg-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1794719560B7; Fri, 13 Sep 2024 08:02:29 +0000 (UTC)
+ id 63DAF1955DD4; Fri, 13 Sep 2024 08:04:33 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.112])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B11C619560AA; Fri, 13 Sep 2024 08:02:27 +0000 (UTC)
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1A81E1956086; Fri, 13 Sep 2024 08:04:32 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5EEAE21E6A28; Fri, 13 Sep 2024 10:02:25 +0200 (CEST)
+ id A8A9D21E6A28; Fri, 13 Sep 2024 10:04:29 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Bibo Mao <maobibo@loongson.cn>,  Song Gao <gaosong@loongson.cn>,  Peter
- Xu <peterx@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Laurent Vivier
- <lvivier@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Subject: Re: [PATCH v4 1/5] hw/loongarch: Rename LOONGARCH_MACHINE with
- LOONGARCH_VIRT_MACHINE
-In-Reply-To: <2f7acdd5-9d9d-442c-a19f-c8a5828ae02b@redhat.com> (Thomas Huth's
- message of "Fri, 13 Sep 2024 09:36:42 +0200")
-References: <20240508031110.2507477-1-maobibo@loongson.cn>
- <20240508031110.2507477-2-maobibo@loongson.cn>
- <2f7acdd5-9d9d-442c-a19f-c8a5828ae02b@redhat.com>
-Date: Fri, 13 Sep 2024 10:02:25 +0200
-Message-ID: <87jzfg2d7y.fsf@pond.sub.org>
+To: Alexandre Ratchov <alex@caoua.org>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Qiuhao Li
+ <Qiuhao.Li@outlook.com>,  "Michael S. Tsirkin" <mst@redhat.com>,  Stefan
+ Hajnoczi <stefanha@redhat.com>,  Eric Blake <eblake@redhat.com>,  Darren
+ Kenny <darren.kenny@oracle.com>,  Bandan Das <bsd@redhat.com>,  Alexander
+ Bulekov <alxndr@bu.edu>,  Markus Armbruster <armbru@redhat.com>,  Akihiko
+ Odaki <akihiko.odaki@gmail.com>,  Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Brad Smith <brad@comstyle.com>,  Volker
+ =?utf-8?Q?R=C3=BCmelin?= <vr_qemu@t-online.de>
+Subject: Re: [PULL 20/24] audio: Add sndio backend
+In-Reply-To: <ZuBeYjju389c8MoI@vm1.arverb.com> (Alexandre Ratchov's message of
+ "Tue, 10 Sep 2024 16:57:38 +0200")
+References: <20220927081912.180983-1-kraxel@redhat.com>
+ <20220927081912.180983-21-kraxel@redhat.com>
+ <fc493743-5ab0-49eb-98ed-dd260f0f60d6@linaro.org>
+ <ZuBXqSoohgbS-rF6@redhat.com> <ZuBeYjju389c8MoI@vm1.arverb.com>
+Date: Fri, 13 Sep 2024 10:04:29 +0200
+Message-ID: <87frq42d4i.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -89,40 +98,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+Alexandre Ratchov <alex@caoua.org> writes:
 
-> On 08/05/2024 05.11, Bibo Mao wrote:
->> On LoongArch system, there is only virt machine type now, name
->> LOONGARCH_MACHINE is confused, rename it with LOONGARCH_VIRT_MACHINE.
->> Machine name about Other real hw boards can be added in future.
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->> ---
-> ...
->> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
->> index c0999878df..6619cb52a9 100644
->> --- a/hw/loongarch/virt.c
->> +++ b/hw/loongarch/virt.c
-> ...
->> @@ -1208,7 +1208,6 @@ static void loongarch_class_init(ObjectClass *oc, void *data)
->>       MachineClass *mc = MACHINE_CLASS(oc);
->>       HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
->>   -    mc->desc = "Loongson-3A5000 LS7A1000 machine";
->>       mc->init = loongarch_init;
->>       mc->default_ram_size = 1 * GiB;
->>       mc->default_cpu_type = LOONGARCH_CPU_TYPE_NAME("la464");
+> On Tue, Sep 10, 2024 at 03:28:57PM +0100, Daniel P. Berrang=C3=A9 wrote:
+>> >=20
+>> > This is the single use of the ISC license in the more than 10k
+>> > files in the repository. Just checking IIUC this document:
+>> > https://www.gnu.org/licenses/quick-guide-gplv3.en.html
+>> >=20
+>> > ISC -> LGPLv2.1 -> GPLv2 -> GPLv3
+>> >=20
+>> > So ISC is compatible with GPLv2-or-later. Is that correct?
+>>=20
+>> ISC is a permissive license that's semantically pretty much equivalent
+>> to either MIT or BSD 2 clause licenses and thus is broadly compatible
+>> with most other licenses, including the various GPL variants/versions.
+>>=20
+>> None the less, since sndioaudio.c was a new file, it should have been
+>> submitted using the GPLv2+, unless there was a reason it needed to
+>> diverge and use ISC.
+>>=20
+>> An example justification for divering is if the new code is derived
+>> from some non-QEMU source that was already ISC.
+>>=20
 >
->  Hi!
+> The ISC license is more permissive than GPLv2+ and compatible with it.
+> The file uses this license for history reasons: initial versions of it
+> used to be part of the OpenBSD ports repository, which uses ISC.
 >
-> I noticed that the machine now does not have any description anymore, which is kind of ugly when you list the available machines:
->
-> $ ./qemu-system-loongarch64 -M help
-> Supported machines are:
-> none                 empty machine
-> virt                 (null) (default)
->
-> Could you please come up with a new mc->desc for the virt machine?
+> If ISC is not appropriate for qemu, I agree to use GPLv2+ instead (I'm
+> the author this file).
 
-Formatting a null pointer with %s is actually a crash bug on some
-systems.
+Let's adjust the license then.  Alexandre, care to post the patch?
 
 
