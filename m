@@ -4,107 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AFF4FA3753
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 13:25:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF22FA3753
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 13:25:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp6IN-0004xv-2m; Fri, 13 Sep 2024 09:25:07 -0400
+	id 1sp6Ii-0005Kf-S6; Fri, 13 Sep 2024 09:25:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
- id 1sp6IJ-0004uw-Lq; Fri, 13 Sep 2024 09:25:03 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sp6Ih-0005IW-3M
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 09:25:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
- id 1sp6IH-0003r1-9D; Fri, 13 Sep 2024 09:25:03 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48D9Ge5f018596;
- Fri, 13 Sep 2024 13:24:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=e
- qpP1jMOE0Zoa2NJIoBre2c4Dwti9awja84/K786h/U=; b=m4bh2p427CGWokQqs
- ZrdFseSK2D51K+JmhZHXtdrI7qgxThXUR72G15Ga8e6C9n17BuwqM4VG17DxeDFo
- 91rq6zmNRwtcujTm9xdQrYu3JWQvSFTxfUxtrdE38B/5MiKzaOZm+jFNvntT70cC
- m8ZRNj0pGhCVK4XbSEZtlVd1AOPg7JczzPviUezU5RXltxafgwBtoCN8biKAaLQH
- flcbKcGcebEIlelePbe5IihXZd5kXb1494hfBxRX5DZBTMTUrCKrt05WGn8XQ5my
- CBEaciRU9I643NUkXUnCa9M3oq0qkxNfvVb6EcOz3+FyLrdco3XoeblihHT3KDWn
- 0ONSg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gegxa831-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Sep 2024 13:24:46 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48DDN9ed007968;
- Fri, 13 Sep 2024 13:24:46 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gegxa82x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Sep 2024 13:24:46 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48DCgF2b027389;
- Fri, 13 Sep 2024 13:24:45 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 41h3v3p1xh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Sep 2024 13:24:45 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48DDOf3440042924
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 13 Sep 2024 13:24:41 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B775220043;
- Fri, 13 Sep 2024 13:24:41 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8ED9820040;
- Fri, 13 Sep 2024 13:24:39 +0000 (GMT)
-Received: from [9.43.118.155] (unknown [9.43.118.155])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 13 Sep 2024 13:24:39 +0000 (GMT)
-Message-ID: <d93476aa-d777-419b-90a2-b50bb2d861ff@linux.ibm.com>
-Date: Fri, 13 Sep 2024 18:54:38 +0530
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sp6Ie-00045k-Sc
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 09:25:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1726233923;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=NPe0SUBJEdHvLb4sF5N4GC0rJ9nP/aoSGOggzvDbl8g=;
+ b=ItC7gH58h/jTitrvUBFp17o/zpmwoC7k6Gev6sQvx5fnXEbyE08bTrGMh8vTyiMRx4H+QH
+ jHDPLhUSbFa5sE8JQiNN89ZZS15UHsAil5ZTpRzM9aAzqzSQ0LSqyA4HoLzEiAyzQY5OzR
+ bIzUuLeMMzQhDD9oCILplcLnNrXxHek=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-68-PTUkDXjmNWGWjKbquZ-h_Q-1; Fri, 13 Sep 2024 09:25:21 -0400
+X-MC-Unique: PTUkDXjmNWGWjKbquZ-h_Q-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42cacba219cso6818755e9.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 06:25:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726233920; x=1726838720;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NPe0SUBJEdHvLb4sF5N4GC0rJ9nP/aoSGOggzvDbl8g=;
+ b=qWfHcMS7t7vcyqSVdNJla3ymRYQHclbHfHfOL3NPNheWL5qQxHEX/BMqO/TeZV67AD
+ WZefD06zLrk8bLVP8VzHnrR3XXAyDeMdrjReI/4BkIMetrebhifXzEJ2LaX15thTauQM
+ 7fsja7VlgbAiaI6YYePTL9Wbfb4aRGpMiUT7bOqF1psfAXvECjofc8PfKeyjvxxnuJ+B
+ 1udjgFF74QRyUUXhyQry6qIEtjH0heubNiawQAAAwrkmhpMh+cmu9mlp6SdSPOGVQPXD
+ RtU+Ie84+qHLRXep5g41CmAuMe2SDme4+SW38wniO1rV0tYRWtjJXE40M1X3YluZDmv3
+ B5rQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX3xCkr7fLMOG8e9eHT2/aUy8QQxXnak3SDfq60Ru1GIDtKK9uaZekHc1tXYKd1YAQPA2XeBSSEVst8@nongnu.org
+X-Gm-Message-State: AOJu0Yz+gvDHevU1K5ePklMpy9ldsSQufVkjGUxS8rx8gUD+n7zFYUkN
+ 5ARs4MrO+Y5r9ofnRH6USAYLEcb+wuB2ya+vGUvBNe/7hIbOBVe0lRNxFc6hrWaVo2PGPiy+Crl
+ dIr0B31zG9fu+5+zKMelWHYJt0253942siirYGmlvnkV1rwdZZfo4
+X-Received: by 2002:a5d:4cc6:0:b0:368:5a8c:580b with SMTP id
+ ffacd0b85a97d-378d61e2b19mr1816923f8f.19.1726233919950; 
+ Fri, 13 Sep 2024 06:25:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG0CWqp6VUNlYFtn66EgOGFI6WMHtPVYF+6fIDqre+6lLpa6ilT1SI2rwIcw8Qy8bM+8GJkNg==
+X-Received: by 2002:a5d:4cc6:0:b0:368:5a8c:580b with SMTP id
+ ffacd0b85a97d-378d61e2b19mr1816895f8f.19.1726233919319; 
+ Fri, 13 Sep 2024 06:25:19 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-378956d35e5sm17032360f8f.76.2024.09.13.06.25.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 13 Sep 2024 06:25:18 -0700 (PDT)
+Date: Fri, 13 Sep 2024 15:25:18 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v9 01/12] acpi/ghes: add a firmware file with HEST address
+Message-ID: <20240913152518.2f80ab1e@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240913074435.0eea2552@foz.lan>
+References: <cover.1724556967.git.mchehab+huawei@kernel.org>
+ <34dd38395f29f57a19aef299bafdff9442830ed3.1724556967.git.mchehab+huawei@kernel.org>
+ <20240911155108.190f0fdf@imammedo.users.ipa.redhat.com>
+ <20240913074435.0eea2552@foz.lan>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 v2 0/4] hw/ssi/pnv_spi: Fixes Coverity CID 1558831
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Glenn Miles <milesg@linux.ibm.com>,
- Caleb Schlossin <calebs@linux.vnet.ibm.com>, qemu-ppc@nongnu.org,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- Alistair Francis <alistair@alistair23.me>
-References: <20240807202804.56038-1-philmd@linaro.org>
- <d30b16a2-a45a-4596-bef8-2eac898a00e9@kaod.org>
-Content-Language: en-US
-From: Chalapathi V <chalapathi.v@linux.ibm.com>
-In-Reply-To: <d30b16a2-a45a-4596-bef8-2eac898a00e9@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: LRJX2N99OwaqzNLPbSdZwJwcZfzklCvN
-X-Proofpoint-ORIG-GUID: b_ozIr5T0HbgxN8hMIGM_pLUD8sbJ6jN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-13_10,2024-09-13_02,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 mlxlogscore=999
- lowpriorityscore=0 suspectscore=0 priorityscore=1501 bulkscore=0
- adultscore=0 impostorscore=0 clxscore=1011 malwarescore=0 mlxscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409130091
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=chalapathi.v@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.147,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,48 +108,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 13 Sep 2024 07:44:35 +0200
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-On 12-09-2024 22:25, Cédric Le Goater wrote:
-> Chalapthi,
->
-> On 8/7/24 22:28, Philippe Mathieu-Daudé wrote:
->> v2:
->> - Cover PowerNV SSI in MAINTAINERS
->> - Use GLib API in pnv_spi_xfer_buffer_free()
->> - Simplify returning early
->>
->> Supersedes: <20240806134829.351703-3-chalapathi.v@linux.ibm.com>
->
-> I was wondering where we were on this series. I see there were comments
-> on the initial one that would need some response at least. Do you have
-> plans for a respin ?
->
+> Em Wed, 11 Sep 2024 15:51:08 +0200
+> Igor Mammedov <imammedo@redhat.com> escreveu:
+> 
+> > On Sun, 25 Aug 2024 05:45:56 +0200
+> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> >   
+> > > Store HEST table address at GPA, placing its content at
+> > > hest_addr_le variable.
+> > > 
+> > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>    
+> > 
+> > This looks good to me.
+> > 
+> > in addition to this, it needs a patch on top to make sure
+> > that we migrate hest_addr_le.
+> > See a08a64627b6b 'ACPI: Record the Generic Error Status Block address'
+> > and fixes on top of that for an example.  
+> 
+> Hmm... If I understood such change well, vmstate_ghes_state() will
+> use this structure as basis to do migration:
+> 
+> 	/* ghes.h */
+> 	typedef struct AcpiGhesState {
+> 	    uint64_t hest_addr_le;
+> 	    uint64_t ghes_addr_le;
+> 	    bool present; /* True if GHES is present at all on this board */
+> 	} AcpiGhesState;
+> 
+> 	/* generic_event_device.c */
+> 	static const VMStateDescription vmstate_ghes_state = {
+> 	    .name = "acpi-ged/ghes",
+> 	    .version_id = 1,
+> 	    .minimum_version_id = 1,
+> 	    .needed = ghes_needed,
+> 	    .fields      = (VMStateField[]) {
+> 	        VMSTATE_STRUCT(ghes_state, AcpiGedState, 1,
+> 	                       vmstate_ghes_state, AcpiGhesState),
+> 	        VMSTATE_END_OF_LIST()
+> 	    }
+> 	};
+
+current code looks like that:
+                                                                                 
+static const VMStateDescription vmstate_ghes = {                                 
+    .name = "acpi-ghes",                                                         
+    .version_id = 1,                                                             
+    .minimum_version_id = 1,                                                     
+    .fields = (const VMStateField[]) {                                           
+        VMSTATE_UINT64(ghes_addr_le, AcpiGhesState),   <<===                         
+        VMSTATE_END_OF_LIST()                                                    
+    },                                                                           
+};                                                                               
+                                                                                 
+static bool ghes_needed(void *opaque)                                            
+{                                                                                
+    AcpiGedState *s = opaque;                                                    
+    return s->ghes_state.ghes_addr_le;                                           
+}                                                                                
+                                                                                 
+static const VMStateDescription vmstate_ghes_state = {                           
+    .name = "acpi-ged/ghes",                                                     
+    .version_id = 1,                                                             
+    .minimum_version_id = 1,                                                     
+    .needed = ghes_needed,                                                       
+    .fields = (const VMStateField[]) {                                           
+        VMSTATE_STRUCT(ghes_state, AcpiGedState, 1,                              
+                       vmstate_ghes, AcpiGhesState),                             
+        VMSTATE_END_OF_LIST()                                                    
+    }                                                                            
+};  
+
+where 
+    VMSTATE_UINT64(ghes_addr_le, AcpiGhesState),
+explicitly defines field(s) within structure to be sent over wire.
+
+we need to add a conditional field for ghes_addr_le
+which will be sent only with new machine types, but not with old ones
+to avoid migration breakage.
+
+I don't know much about migration, but maybe we can get away with
+similar condition as in ghes_needed(), or enabling QMP error injection
+based on machine type version.
+
+Or maybe adding a CLI option to enable QMP error injection in which
+case the explicit option would serve as a trigger enable QMP command and
+to migrate hest_addr_le.
+It might be even better this way, since machine wouldn't need to
+carry extra error source that will be used only for testing
+and practically never in production VMs (aka reduced attack surface).
+
+You can easily test it locally:
+  new-qemu: with your patches
+  old-qemu: qemu-9.1
+
+and then try to do forth & back migration for following cases:
+  1. (ping-pong case with OLD firmware/ACPI tables)
+     start old-qemu with 9.1 machine type ->
+       migrate to file ->
+       start new-qemu with 9.1 machine type -> restore from file ->
+       migrate to file ->
+       start old-qemu with 9.1 machine type ->restore from file ->
+       
+  2.  (ping-pong case with NEW firmware/ACPI tables)
+      do the same as #1 but starting with new-qemu binary
+
+(from upstream pov #2 is optional, but not implementing it
+is pain for downstream so it's better to have it if it's not
+too much work)
+
+> 	/* hw/arm/virt-acpi-build.c */
+> 	void virt_acpi_setup(VirtMachineState *vms)
+> 	{
+> 	    ...
+> 	    if (vms->ras) {
+> 	        assert(vms->acpi_dev);
+> 	        acpi_ged_state = ACPI_GED(vms->acpi_dev);
+> 	        acpi_ghes_add_fw_cfg(&acpi_ged_state->ghes_state,
+> 	                             vms->fw_cfg, tables.hardware_errors);
+> 	    }
+> 
+> Which relies on acpi_ghes_add_fw_cfg() function to setup callbacks for
+> the migration:
+> 
+> 	/* ghes.c */
+> 	void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
+> 	                          GArray *hardware_error)
+> 	{
+> 	    /* Create a read-only fw_cfg file for GHES */
+> 	    fw_cfg_add_file(s, ACPI_HW_ERROR_FW_CFG_FILE, hardware_error->data,
+> 	                    hardware_error->len);
+> 
+> 	    /* Create a read-write fw_cfg file for Address */
+> 	    fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, NULL,
+> 	        NULL, &(ags->ghes_addr_le), sizeof(ags->ghes_addr_le), false);
+> 
+> 	    fw_cfg_add_file_callback(s, ACPI_HEST_ADDR_FW_CFG_FILE, NULL, NULL,
+> 	        NULL, &(ags->hest_addr_le), sizeof(ags->hest_addr_le), false);
+> 
+> 	    ags->present = true;
+> 	}
+> 
+> It sounds to me that both ghes_addr_le and hest_addr_le will be migrated
+> altogether.
+
+fwcfg callbacks are irrelevant to migration, they tell firmware what to do
+with specified addresses (in our case, write into ags->hest_addr_le address
+of HEST), so that HW (qemu) would know where firmware placed the table.
+But that's about all it does.
+
+> 
+> Did I miss something?
+> 
 > Thanks,
->
-> C.
->
-Hello Cedric,
+> Mauro
+> 
 
-Thank You so much for reminding me. I apologize for not getting back on 
-this sooner. I am working on the review comments from initial v1 
-patchset and send the v2 patchset ASAP.
-
-Thank You,
-
-Chalapathi
->
->> Chalapathi V (1):
->>    hw/ssi/pnv_spi: Fixes Coverity CID 1558831
->>
->> Philippe Mathieu-Daudé (3):
->>    MAINTAINERS: Cover PowerPC SPI model in PowerNV section
->>    hw/ssi/pnv_spi: Match _xfer_buffer_free() with _xfer_buffer_new()
->>    hw/ssi/pnv_spi: Return early in transfer()
->>
->>   MAINTAINERS      |  2 ++
->>   hw/ssi/pnv_spi.c | 12 +++++++-----
->>   2 files changed, 9 insertions(+), 5 deletions(-)
->>
->
->
 
