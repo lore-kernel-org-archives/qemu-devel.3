@@ -4,43 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D836FA374A
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 12:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5821AFA374B
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 13:01:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp5lJ-0006tn-B5; Fri, 13 Sep 2024 08:50:57 -0400
+	id 1sp5vE-0004d1-LR; Fri, 13 Sep 2024 09:01:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sp5lH-0006st-LL; Fri, 13 Sep 2024 08:50:55 -0400
+ id 1sp5uz-0004aQ-3f
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 09:01:00 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sp5lF-0007Bb-20; Fri, 13 Sep 2024 08:50:54 -0400
+ id 1sp5ux-000873-61
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 09:00:56 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8CA2D4E602B;
- Fri, 13 Sep 2024 14:50:49 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 1809E4E602B;
+ Fri, 13 Sep 2024 15:00:52 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id jLmQqVCo83cq; Fri, 13 Sep 2024 14:50:47 +0200 (CEST)
+ with ESMTP id pEkiyLT10Mlr; Fri, 13 Sep 2024 15:00:50 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 8445C4E6004; Fri, 13 Sep 2024 14:50:47 +0200 (CEST)
+ id 2454E4E6004; Fri, 13 Sep 2024 15:00:50 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7F6F4746F60;
- Fri, 13 Sep 2024 14:50:47 +0200 (CEST)
-Date: Fri, 13 Sep 2024 14:50:47 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 2210F746F60;
+ Fri, 13 Sep 2024 15:00:50 +0200 (CEST)
+Date: Fri, 13 Sep 2024 15:00:50 +0200 (CEST)
 From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>
-cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com, 
- danielhb413@gmail.com
-Subject: Re: [PATCH v3 09/10] target/ppc: simplify var usage in
- ppc_next_unmasked_interrupt
-In-Reply-To: <20240913041337.912876-10-harshpb@linux.ibm.com>
-Message-ID: <e09919a0-061d-90e0-8107-68e509ce08aa@eik.bme.hu>
-References: <20240913041337.912876-1-harshpb@linux.ibm.com>
- <20240913041337.912876-10-harshpb@linux.ibm.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+cc: qemu-devel@nongnu.org, philmd@linaro.org, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Bernhard Beschow <shentey@gmail.com>
+Subject: Re: [PATCH 0/2] Solve vt82c686 qemu_irq leak.
+In-Reply-To: <20240910030754-mutt-send-email-mst@kernel.org>
+Message-ID: <7bb40daf-2b1a-e1b6-5977-543cb318c884@eik.bme.hu>
+References: <cover.1719690591.git.balaton@eik.bme.hu>
+ <20240910030754-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
@@ -65,160 +69,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 13 Sep 2024, Harsh Prateek Bora wrote:
-> As previously done for arch specific handlers, simplify var usage in
-> ppc_next_unmasked_interrupt by caching the env->pending_interrupts and
-> env->spr[SPR_LPCR] in local vars and using it later at multiple places.
+On Tue, 10 Sep 2024, Michael S. Tsirkin wrote:
+> On Sat, Jun 29, 2024 at 10:01:52PM +0200, BALATON Zoltan wrote:
+>> This is an alternative appriach to solve the qemu_irq leak in
+>> vt82c686. Allowing embedding an irq and init it in place like done
+>> with other objects may allow cleaner fix for similar issues and I also
+>> plan to use this for adding qemu_itq to pegasos2 machine state for
+>> which gpio would not work.
+>>
+>> BALATON Zoltan (2):
+>>   hw: Move declaration of IRQState to header and add init function
+>>   hw/isa/vt82c686.c: Embed i8259 irq in device state instead of
+>>     allocating
 >
-> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> ---
-> target/ppc/excp_helper.c | 54 ++++++++++++++++++++--------------------
-> 1 file changed, 27 insertions(+), 27 deletions(-)
->
-> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-> index d0e0f609a0..4eeeedff5b 100644
-> --- a/target/ppc/excp_helper.c
-> +++ b/target/ppc/excp_helper.c
-> @@ -2022,31 +2022,31 @@ static int p9_next_unmasked_interrupt(CPUPPCState *env,
->
-> static int ppc_next_unmasked_interrupt(CPUPPCState *env)
-> {
-> +    uint32_t pending_interrupts = env->pending_interrupts;
-> +    target_ulong lpcr = env->spr[SPR_LPCR];
-> +    bool async_deliver;
+> This looked like a simpler approach to shut up analyzer warnings, so I
+> picked this one.
 
-Maybe easier to review if split into one patch for each variable added so 
-it's easier to see what's replaced and that nothing is missed.
+Thanks. Looks like you had some mixup with adding your Signed-off-by 
+though but I did not notice that in the pull request only now that it 
+landed in master. (Just in case this can be corrected somehow in git but 
+otherwise it probably does not matter much.)
 
 Regards,
 BALATON Zoltan
-
-> +
-> #ifdef TARGET_PPC64
->     switch (env->excp_model) {
->     case POWERPC_EXCP_POWER7:
-> -        return p7_next_unmasked_interrupt(env, env->pending_interrupts,
-> -                                          env->spr[SPR_LPCR]);
-> +        return p7_next_unmasked_interrupt(env, pending_interrupts, lpcr);
->     case POWERPC_EXCP_POWER8:
-> -        return p8_next_unmasked_interrupt(env, env->pending_interrupts,
-> -                                          env->spr[SPR_LPCR]);
-> +        return p8_next_unmasked_interrupt(env, pending_interrupts, lpcr);
->     case POWERPC_EXCP_POWER9:
->     case POWERPC_EXCP_POWER10:
->     case POWERPC_EXCP_POWER11:
-> -        return p9_next_unmasked_interrupt(env, env->pending_interrupts,
-> -			                  env->spr[SPR_LPCR]);
-> +        return p9_next_unmasked_interrupt(env, pending_interrupts, lpcr);
->     default:
->         break;
->     }
-> #endif
-> -    bool async_deliver;
->
->     /* External reset */
-> -    if (env->pending_interrupts & PPC_INTERRUPT_RESET) {
-> +    if (pending_interrupts & PPC_INTERRUPT_RESET) {
->         return PPC_INTERRUPT_RESET;
->     }
->     /* Machine check exception */
-> -    if (env->pending_interrupts & PPC_INTERRUPT_MCK) {
-> +    if (pending_interrupts & PPC_INTERRUPT_MCK) {
->         return PPC_INTERRUPT_MCK;
->     }
-> #if 0 /* TODO */
-> @@ -2065,9 +2065,9 @@ static int ppc_next_unmasked_interrupt(CPUPPCState *env)
->     async_deliver = FIELD_EX64(env->msr, MSR, EE) || env->resume_as_sreset;
->
->     /* Hypervisor decrementer exception */
-> -    if (env->pending_interrupts & PPC_INTERRUPT_HDECR) {
-> +    if (pending_interrupts & PPC_INTERRUPT_HDECR) {
->         /* LPCR will be clear when not supported so this will work */
-> -        bool hdice = !!(env->spr[SPR_LPCR] & LPCR_HDICE);
-> +        bool hdice = !!(lpcr & LPCR_HDICE);
->         if ((async_deliver || !FIELD_EX64_HV(env->msr)) && hdice) {
->             /* HDEC clears on delivery */
->             return PPC_INTERRUPT_HDECR;
-> @@ -2075,18 +2075,18 @@ static int ppc_next_unmasked_interrupt(CPUPPCState *env)
->     }
->
->     /* Hypervisor virtualization interrupt */
-> -    if (env->pending_interrupts & PPC_INTERRUPT_HVIRT) {
-> +    if (pending_interrupts & PPC_INTERRUPT_HVIRT) {
->         /* LPCR will be clear when not supported so this will work */
-> -        bool hvice = !!(env->spr[SPR_LPCR] & LPCR_HVICE);
-> +        bool hvice = !!(lpcr & LPCR_HVICE);
->         if ((async_deliver || !FIELD_EX64_HV(env->msr)) && hvice) {
->             return PPC_INTERRUPT_HVIRT;
->         }
->     }
->
->     /* External interrupt can ignore MSR:EE under some circumstances */
-> -    if (env->pending_interrupts & PPC_INTERRUPT_EXT) {
-> -        bool lpes0 = !!(env->spr[SPR_LPCR] & LPCR_LPES0);
-> -        bool heic = !!(env->spr[SPR_LPCR] & LPCR_HEIC);
-> +    if (pending_interrupts & PPC_INTERRUPT_EXT) {
-> +        bool lpes0 = !!(lpcr & LPCR_LPES0);
-> +        bool heic = !!(lpcr & LPCR_HEIC);
->         /* HEIC blocks delivery to the hypervisor */
->         if ((async_deliver && !(heic && FIELD_EX64_HV(env->msr) &&
->             !FIELD_EX64(env->msr, MSR, PR))) ||
-> @@ -2096,45 +2096,45 @@ static int ppc_next_unmasked_interrupt(CPUPPCState *env)
->     }
->     if (FIELD_EX64(env->msr, MSR, CE)) {
->         /* External critical interrupt */
-> -        if (env->pending_interrupts & PPC_INTERRUPT_CEXT) {
-> +        if (pending_interrupts & PPC_INTERRUPT_CEXT) {
->             return PPC_INTERRUPT_CEXT;
->         }
->     }
->     if (async_deliver != 0) {
->         /* Watchdog timer on embedded PowerPC */
-> -        if (env->pending_interrupts & PPC_INTERRUPT_WDT) {
-> +        if (pending_interrupts & PPC_INTERRUPT_WDT) {
->             return PPC_INTERRUPT_WDT;
->         }
-> -        if (env->pending_interrupts & PPC_INTERRUPT_CDOORBELL) {
-> +        if (pending_interrupts & PPC_INTERRUPT_CDOORBELL) {
->             return PPC_INTERRUPT_CDOORBELL;
->         }
->         /* Fixed interval timer on embedded PowerPC */
-> -        if (env->pending_interrupts & PPC_INTERRUPT_FIT) {
-> +        if (pending_interrupts & PPC_INTERRUPT_FIT) {
->             return PPC_INTERRUPT_FIT;
->         }
->         /* Programmable interval timer on embedded PowerPC */
-> -        if (env->pending_interrupts & PPC_INTERRUPT_PIT) {
-> +        if (pending_interrupts & PPC_INTERRUPT_PIT) {
->             return PPC_INTERRUPT_PIT;
->         }
->         /* Decrementer exception */
-> -        if (env->pending_interrupts & PPC_INTERRUPT_DECR) {
-> +        if (pending_interrupts & PPC_INTERRUPT_DECR) {
->             return PPC_INTERRUPT_DECR;
->         }
-> -        if (env->pending_interrupts & PPC_INTERRUPT_DOORBELL) {
-> +        if (pending_interrupts & PPC_INTERRUPT_DOORBELL) {
->             return PPC_INTERRUPT_DOORBELL;
->         }
-> -        if (env->pending_interrupts & PPC_INTERRUPT_HDOORBELL) {
-> +        if (pending_interrupts & PPC_INTERRUPT_HDOORBELL) {
->             return PPC_INTERRUPT_HDOORBELL;
->         }
-> -        if (env->pending_interrupts & PPC_INTERRUPT_PERFM) {
-> +        if (pending_interrupts & PPC_INTERRUPT_PERFM) {
->             return PPC_INTERRUPT_PERFM;
->         }
->         /* Thermal interrupt */
-> -        if (env->pending_interrupts & PPC_INTERRUPT_THERM) {
-> +        if (pending_interrupts & PPC_INTERRUPT_THERM) {
->             return PPC_INTERRUPT_THERM;
->         }
->         /* EBB exception */
-> -        if (env->pending_interrupts & PPC_INTERRUPT_EBB) {
-> +        if (pending_interrupts & PPC_INTERRUPT_EBB) {
->             /*
->              * EBB exception must be taken in problem state and
->              * with BESCR_GE set.
->
 
