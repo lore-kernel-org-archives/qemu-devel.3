@@ -4,59 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A09FFA373D
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 10:22:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3906FA373F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 10:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp3Qu-0005RJ-AJ; Fri, 13 Sep 2024 06:21:44 -0400
+	id 1sp3TG-0001qm-Lp; Fri, 13 Sep 2024 06:24:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sp3Qo-0005O9-JW; Fri, 13 Sep 2024 06:21:39 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sp3Qm-0002W1-R8; Fri, 13 Sep 2024 06:21:38 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4X4qwP1cdGz6GC9G;
- Fri, 13 Sep 2024 18:16:37 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id B33931400D8;
- Fri, 13 Sep 2024 18:21:30 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 13 Sep
- 2024 12:21:29 +0200
-Date: Fri, 13 Sep 2024 11:21:28 +0100
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-CC: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <zhao1.liu@intel.com>,
- <zhenyu.z.wang@intel.com>, <dapeng1.mi@linux.intel.com>,
- <yongwei.ma@intel.com>, <armbru@redhat.com>, <farman@linux.ibm.com>,
- <peter.maydell@linaro.org>, <mst@redhat.com>, <anisinha@redhat.com>,
- <shannon.zhaosl@gmail.com>, <imammedo@redhat.com>, <mtosatti@redhat.com>,
- <berrange@redhat.com>, <richard.henderson@linaro.org>, <linuxarm@huwei.com>,
- <shameerali.kolothum.thodi@huawei.com>, <jiangkunkun@huawei.com>
-Subject: Re: [PATCH 2/5] i386/cpu: add IsDefined flag to smp-cache property
-Message-ID: <20240913112128.0000074c@Huawei.com>
-In-Reply-To: <20240912133829.400-3-alireza.sanaee@huawei.com>
-References: <20240912133829.400-1-alireza.sanaee@huawei.com>
- <20240912133829.400-3-alireza.sanaee@huawei.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sp3TC-0001pD-1z
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 06:24:06 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sp3T9-0002h3-Ga
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 06:24:05 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a90349aa7e5so196225966b.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 03:24:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726223041; x=1726827841; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dmYxsUlKrTQrTL6fy/gYgLOJOnbnLsWnE3zKHSbMwZo=;
+ b=bh3ilI5ox2jSJeezzYXA3PvzYqJJgPRZeiI0ST0n76kO0MkbKgWks0tAwvjVZVz1Ej
+ CH2kscbANIjjmM+XSOMQ5qV/y3EcghUZCGk3KsfJMs2LoezDVdKQ5zxSz+RrVcLNQT7A
+ LkwQpM5asCWl5hbE8ZkqHz3MrOTCgyDIkj7NGFtoxGcHLA21lE6meX3sxlcpEFoqsXMc
+ CWeIoU/1rxf3X+9zSAaI1Q5I61YLRd6ViS2THS4Qyc5Ib/ER2XypCJlu6j9gY7XMQK4u
+ GBVmt7Mejpl/RQ3wA4dI98SPtrhVcd1TCfN6sm7CKiZo5KrXxoi/N+Rki0LfpkEF8Axb
+ pNTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726223041; x=1726827841;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=dmYxsUlKrTQrTL6fy/gYgLOJOnbnLsWnE3zKHSbMwZo=;
+ b=lDLjufODwHe7CCoZWBZtIvUroLK+GLrZJ2ieBxR5XV1x0vgavnxstwMmIiG9BVCyjf
+ DHo+3yHHtmU2LQZkZjkXQ/01IPSvzYC7Sct4g35goFtK7DHvTSqjnfejymT94WsXStwM
+ r9Jr15aOUw8oZttR5jwNIi0EeN4r3zOPVbEPJ3U+3bgT6Ogm+lZ8ZiDEaghZ/ZH31Nym
+ eCIzeHcYlYB1Yl7j3M+72dDZVydUQbCSLqwT2tiadVSa/FSgp1e/o9t/69ts/3pgnanx
+ C8TvxQi6SDaFJ0/Tvme5AN1e0JyvLo9R3rifCC2SLR42OKNzppCuf7ONzoFUtr0Hm2jW
+ /bZQ==
+X-Gm-Message-State: AOJu0YyNiXdu1fqm19vQbUAjoj8tPXGYwa91DJxeIYYnLCJw9qNm8U35
+ ujwm0CzagYc8s3MPGzBYZD/BVSNW0XNOjYGvpDEFs/0RJmiZEI474KAyhUuig4w=
+X-Google-Smtp-Source: AGHT+IEWLbGVipNtGAqFwwzBRE1SZCR6ID9Kco+GPqT2MuFlj+JZf3Y0M/5kPCV3kyIt5gnA+XlSRg==
+X-Received: by 2002:a17:907:e699:b0:a8a:8c4c:3e2a with SMTP id
+ a640c23a62f3a-a902944e6cfmr481374166b.23.1726223040471; 
+ Fri, 13 Sep 2024 03:24:00 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a8d25c72ed3sm854121466b.135.2024.09.13.03.23.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 13 Sep 2024 03:23:59 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 1488B5F8B7;
+ Fri, 13 Sep 2024 11:23:59 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org
+Subject: Re: [PATCH 0/2] tcg: Fix branch/label link during plugin expansion
+In-Reply-To: <f7f1cb70-08f8-48aa-9db7-cc7a119a4234@linaro.org> (Richard
+ Henderson's message of "Tue, 10 Sep 2024 14:28:15 -0700")
+References: <20240910212351.977753-1-richard.henderson@linaro.org>
+ <f7f1cb70-08f8-48aa-9db7-cc7a119a4234@linaro.org>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Fri, 13 Sep 2024 11:23:59 +0100
+Message-ID: <87jzffrgw0.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,53 +95,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Sep 2024 14:38:26 +0100
-Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-> This commit adds IsDefined flag to the object and this helps in avoiding
-> extra checks for every single layer of caches in both x86 and ARM.
-Hi Ali,
+> On 9/10/24 14:23, Richard Henderson wrote:
+>> With tcg_last_op(), we always get the last op of the stream.
+>> With TCGContext.emit_before_op, the most recently emitted op
+>> is no longer the last op.
+>> Instead, pass the op being emitted back from the allocator so
+>> that we can link it to the label without needing to look it up.
+>
+> Oh, I meant to point out from whence this comes.
+> The plugin uses a conditional
 
-You mention x86 here, but no code changes to support that?
+    size_t n_insns =3D qemu_plugin_tb_n_insns(tb);
+    qemu_plugin_u64 quantum_insn =3D
+        qemu_plugin_scoreboard_u64_in_struct(vcpus, vCPUTime, quantum_insn);
+    /* count (and eventually trap) once per tb */
+    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+        tb, QEMU_PLUGIN_INLINE_ADD_U64, quantum_insn, n_insns);
 
-Jonathan
+>  ld_i32 tmp18,env,$0xffffffffffffdb10
+>  mul_i32 tmp18,tmp18,$0x18
+>  ext_i32_i64 tmp17,tmp18
+>  add_i64 tmp17,tmp17,$0x575410edadc8
 
-> 
-> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> ---
->  hw/core/machine-smp.c | 2 ++
->  include/hw/boards.h   | 1 +
->  2 files changed, 3 insertions(+)
-> 
-> diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-> index 9a28194676..5a02bbf584 100644
-> --- a/hw/core/machine-smp.c
-> +++ b/hw/core/machine-smp.c
-> @@ -371,6 +371,8 @@ bool machine_parse_smp_cache(MachineState *ms,
->          return false;
->      }
->  
-> +    ms->smp_cache.IsDefined = true;
-> +
->      return true;
->  }
->  
-> diff --git a/include/hw/boards.h b/include/hw/boards.h
-> index db2aa2b706..2883a57084 100644
-> --- a/include/hw/boards.h
-> +++ b/include/hw/boards.h
-> @@ -373,6 +373,7 @@ typedef struct CpuTopology {
->  
->  typedef struct SmpCache {
->      SmpCacheProperties props[CACHE_LEVEL_AND_TYPE__MAX];
-> +    bool IsDefined;
->  } SmpCache;
->  
->  /**
+    qemu_plugin_register_vcpu_tb_exec_cond_cb(
+        tb, every_quantum_insn,
+        QEMU_PLUGIN_CB_NO_REGS, QEMU_PLUGIN_COND_GE,
+        quantum_insn, max_insn_per_quantum, NULL);
 
+?
+
+>  ld_i64 tmp21,tmp17,$0x0
+>  brcond_i64 tmp21,$0x0,ltu,$L1
+>  ld_i32 tmp18,env,$0xffffffffffffdb10
+>  call plugin(0x79a2abfde66a),$0x1,$0,tmp18,$0x0
+>  set_label $L1
+>
+> Note that the branch is X < 0 (unsigned), which is always false, and
+> thus the branch is optimized away.
+
+I'm obviously missing something reading this. How can TCG know the state
+of the scoreboard variables and optimise away the branch?
+
+>
+>
+> r~
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
