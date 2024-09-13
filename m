@@ -4,79 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6771CFA375A
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 15:20:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B16CFA3755
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 15:21:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp81A-000640-0k; Fri, 13 Sep 2024 11:15:28 -0400
+	id 1sp83j-0000v5-O8; Fri, 13 Sep 2024 11:18:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sp809-00025c-1S
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:25 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sp83T-0008DA-1Q
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:17:55 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sp806-0007n7-SS
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:24 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-42cae102702so9679715e9.0
- for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 08:14:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726240460; x=1726845260; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=wrqlu0MBnX/IwubC7JB6PnaVoLkJuNGIJqIpkcG99Z0=;
- b=bCjPegGDQRwUKtiLErAZs/JZfUgrz5u1wRzQKqyW2atmPICu4uX6Jb8zkC20RIPy7P
- uFG5rxjEGryHyXI5tuYhbiyN2Odm7kA34jEQy1OVSDTEoieKMTHJG1OHErTXCCiRUI39
- aBoWZwntOFx4lnmJ9NdaAUplHnHTVOrV/Mb5qSAvM66YdUVV/aBgJUMB5vbXo1dVH9ox
- sDJP2LmOT8a79pGY2N4/d7KchC1IykFt0vKXCJ7xpGdoc7LhJ9ZQlYNWpfOlqzooO0kB
- KgUtfRSz2dNNjQ1CmUcIq/ShvC+HYc2fOM+Z1Q3nZyai4NyZZYJOCbkaJ+rMdMvgpL6l
- w4+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726240460; x=1726845260;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wrqlu0MBnX/IwubC7JB6PnaVoLkJuNGIJqIpkcG99Z0=;
- b=Wcl3+IHJOYOPT1oUuhw/Yx6MCCCdtvTV2+oCNBAbfLhFTwtc1VvcUEPD1/217IVe1z
- EZ7BYSt6szGGSdm3r+f7lb1ywelTSmMglqdCQhFYSUY3+OEW6I/45GU6jzMNTLlhDunB
- BkutgXEpvnRD5+A1ujZexwEWYo+bRwlVEnCpuQe2+/i119/1qWkfZJssPV9qrkDryEyw
- r1b3d9P7wD/QP0fnbVY1VRHXH09ahd3e6ryRGJeJe64A9wUidb4JxA5DMLtPXiILMlC8
- CJdq/nejLUvda5KCGLUwg28l6crY9TWQktRkUZd6K+QQnxvSX3bq6dvxinYaKFGIFQw6
- dcAg==
-X-Gm-Message-State: AOJu0Yxo6k0KoU45ViUAnfZjb2uQn+O/N4L+OQSfnj57rc2gAon6/Zb/
- QKE7AfaLRgqGjLGkgoeqq9sjc5dHiVWW+MY4qbW660FmHTvefha/AHVobjeuDYzpg1gylhJN/VS
- a
-X-Google-Smtp-Source: AGHT+IHHQ2HVSDmGVdLXr6iijTfHYsoCILBoUQ5/Q0copxpqmB2BcOl0c6rOs/J90Fa97qFokLL+UQ==
-X-Received: by 2002:a05:600c:4746:b0:426:6158:962d with SMTP id
- 5b1f17b1804b1-42d964d8612mr25076665e9.23.1726240460250; 
- Fri, 13 Sep 2024 08:14:20 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42d9b16bfbfsm29152325e9.22.2024.09.13.08.14.19
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Sep 2024 08:14:20 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 14/27] hvf: Split up hv_vm_create logic per arch
-Date: Fri, 13 Sep 2024 16:13:58 +0100
-Message-Id: <20240913151411.2167922-15-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240913151411.2167922-1-peter.maydell@linaro.org>
-References: <20240913151411.2167922-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sp83N-0008MZ-L3
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:17:49 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 35ACA21B17;
+ Fri, 13 Sep 2024 15:17:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726240663; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4ihkfDbGXt5k4yEjJmGQL4MuVjBPLZa/AcDeWbyjnDw=;
+ b=sbhDlU0SMddfAt/jerQbqUDs6jdbviF/1X//Fi39JLy4WsFMcaB2WlOitxFxVFNwJMoWP/
+ e1/w6aYq65QUNppX6nj//qLe30b8YUrgtRXF/LgEn8YpKW6JDmh/tKyx/GzMgR3dHPIbuP
+ rCIM8YaQe8OrzKSUIAaMAZMvTVr5dac=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726240663;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4ihkfDbGXt5k4yEjJmGQL4MuVjBPLZa/AcDeWbyjnDw=;
+ b=3rPuPN8RCDHSkbZhNupJrWPLfpulG0VYSpKjzxrI8cNttM8rFZngoEAaE0MbbEkiXBEpzG
+ Z5lZgbyTKGHfanAw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726240663; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4ihkfDbGXt5k4yEjJmGQL4MuVjBPLZa/AcDeWbyjnDw=;
+ b=sbhDlU0SMddfAt/jerQbqUDs6jdbviF/1X//Fi39JLy4WsFMcaB2WlOitxFxVFNwJMoWP/
+ e1/w6aYq65QUNppX6nj//qLe30b8YUrgtRXF/LgEn8YpKW6JDmh/tKyx/GzMgR3dHPIbuP
+ rCIM8YaQe8OrzKSUIAaMAZMvTVr5dac=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726240663;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4ihkfDbGXt5k4yEjJmGQL4MuVjBPLZa/AcDeWbyjnDw=;
+ b=3rPuPN8RCDHSkbZhNupJrWPLfpulG0VYSpKjzxrI8cNttM8rFZngoEAaE0MbbEkiXBEpzG
+ Z5lZgbyTKGHfanAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B24F813999;
+ Fri, 13 Sep 2024 15:17:42 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id LcQLHpZX5GZfSgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 13 Sep 2024 15:17:42 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Hyman Huang
+ <yong.huang@smartx.com>, qemu-devel@nongnu.org, Eric Blake
+ <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, David
+ Hildenbrand <david@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH RFC 10/10] tests/migration-tests: Add test case for
+ responsive CPU throttle
+In-Reply-To: <87ikuz1tgz.fsf@suse.de>
+References: <ZuC4pYT-atQwWePv@x1n> <87seu7qhao.fsf@suse.de>
+ <ZuG-SijLg8Q27boE@x1n> <87ed5qq8e2.fsf@suse.de> <ZuH_pvnTCumKuXTh@x1n>
+ <87bk0trifq.fsf@suse.de>
+ <CAFEAcA9YkZiSSOAj0zH2OwF9AcziJT-zpnNVQn8BXizhSXHVOA@mail.gmail.com>
+ <ZuMEF99PF0q0U9G-@x1n> <877cbghoi9.fsf@suse.de> <87ttek1o3j.fsf@suse.de>
+ <ZuRTgbDhEJ7c-dcE@x1n> <87ikuz1tgz.fsf@suse.de>
+Date: Fri, 13 Sep 2024 12:17:40 -0300
+Message-ID: <87frq31t2j.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[9]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
+ suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,102 +129,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Danny Canter <danny_canter@apple.com>
+Fabiano Rosas <farosas@suse.de> writes:
 
-This is preliminary work to split up hv_vm_create
-logic per platform so we can support creating VMs
-with > 64GB of RAM on Apple Silicon machines. This
-is done via ARM HVF's hv_vm_config_create() (and
-other APIs that modify this config that will be
-coming in future patches). This should have no
-behavioral difference at all as hv_vm_config_create()
-just assigns the same default values as if you just
-passed NULL to the function.
+> Peter Xu <peterx@redhat.com> writes:
+>
+>> On Thu, Sep 12, 2024 at 07:52:48PM -0300, Fabiano Rosas wrote:
+>>> Fabiano Rosas <farosas@suse.de> writes:
+>>>=20
+>>> > Peter Xu <peterx@redhat.com> writes:
+>>> >
+>>> >> On Thu, Sep 12, 2024 at 09:13:16AM +0100, Peter Maydell wrote:
+>>> >>> On Wed, 11 Sept 2024 at 22:26, Fabiano Rosas <farosas@suse.de> wrot=
+e:
+>>> >>> > I don't think we're discussing total CI time at this point, so th=
+e math
+>>> >>> > doesn't really add up. We're not looking into making the CI finish
+>>> >>> > faster. We're looking into making migration-test finish faster. T=
+hat
+>>> >>> > would reduce timeouts in CI, speed-up make check and reduce the c=
+hance
+>>> >>> > of random race conditions* affecting other people/staging runs.
+>>> >>>=20
+>>> >>> Right. The reason migration-test appears on my radar is because
+>>> >>> it is very frequently the thing that shows up as "this sometimes
+>>> >>> just fails or just times out and if you hit retry it goes away
+>>> >>> again". That might not be migration-test's fault specifically,
+>>> >>> because those retries tend to be certain CI configs (s390,
+>>> >>> the i686-tci one), and I have some theories about what might be
+>>> >>> causing it (e.g. build system runs 4 migration-tests in parallel,
+>>> >>> which means 8 QEMU processes which is too many for the number
+>>> >>> of host CPUs). But right now I look at CI job failures and my react=
+ion
+>>> >>> is "oh, it's the migration-test failing yet again" :-(
+>>> >>>=20
+>>> >>> For some examples from this week:
+>>> >>>=20
+>>> >>> https://gitlab.com/qemu-project/qemu/-/jobs/7802183144
+>>> >>> https://gitlab.com/qemu-project/qemu/-/jobs/7799842373  <--------[1]
+>>> >>> https://gitlab.com/qemu-project/qemu/-/jobs/7786579152  <--------[2]
+>>> >>> https://gitlab.com/qemu-project/qemu/-/jobs/7786579155
+>>> >>
+>>> >> Ah right, the TIMEOUT is unfortunate, especially if tests can be run=
+ in
+>>> >> parallel.  It indeed sounds like no good way to finally solve.. I do=
+n't
+>>> >> also see how speeding up / reducing tests in migration test would he=
+lp, as
+>>> >> that's (from some degree..) is the same as tuning the timeout value =
+bigger.
+>>> >> When the tests are less it'll fit into 480s window, but maybe it's t=
+oo
+>>> >> quick now we wonder whether we should shrink it to e.g. 90s, but the=
+n it
+>>> >> can timeout again when on a busy host with less capability of concur=
+rency.
+>>> >>
+>>> >> But indeed there're two ERRORs ([1,2] above)..  I collected some mor=
+e info
+>>> >> here before the log expires:
+>>> >>
+>>> >> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D8<=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>>> >>
+>>> >> *** /i386/migration/multifd/tcp/plain/cancel, qtest-i386 on s390 host
+>>> >>
+>>> >> https://gitlab.com/qemu-project/qemu/-/jobs/7799842373
+>>> >>
+>>> >> 101/953 qemu:qtest+qtest-i386 / qtest-i386/migration-test           =
+              ERROR          144.32s   killed by signal 6 SIGABRT
+>>> >>>>> QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-storage-=
+daemon G_TEST_DBUS_DAEMON=3D/home/gitlab-runner/builds/zEr9wY_L/0/qemu-proj=
+ect/qemu/tests/dbus-vmstate-daemon.sh PYTHON=3D/home/gitlab-runner/builds/z=
+Er9wY_L/0/qemu-project/qemu/build/pyvenv/bin/python3 QTEST_QEMU_IMG=3D./qem=
+u-img MALLOC_PERTURB_=3D144 QTEST_QEMU_BINARY=3D./qemu-system-i386 /home/gi=
+tlab-runner/builds/zEr9wY_L/0/qemu-project/qemu/build/tests/qtest/migration=
+-test --tap -k
+>>> >> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80  =E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95
+>>> >> stderr:
+>>> >> warning: fd: migration to a file is deprecated. Use file: instead.
+>>> >> warning: fd: migration to a file is deprecated. Use file: instead.
+>>> >> ../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from =
+signal 11 (Segmentation fault) (core dumped)
+>>> >> (test program exited with status code -6)
+>>> >> TAP parsing error: Too few tests run (expected 53, got 39)
+>>> >> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95
+>>> >>
+>>> >> # Start of plain tests
+>>> >> # Running /i386/migration/multifd/tcp/plain/cancel
+>>> >> # Using machine type: pc-i440fx-9.2
+>>> >> # starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-3273=
+509.sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-3273509.qmp=
+,id=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -=
+accel kvm -accel tcg -machine pc-i440fx-9.2, -name source,debug-threads=3Do=
+n -m 150M -serial file:/tmp/migration-test-4112T2/src_serial -drive if=3Dno=
+ne,id=3Dd0,file=3D/tmp/migration-test-4112T2/bootsect,format=3Draw -device =
+ide-hd,drive=3Dd0,secs=3D1,cyls=3D1,heads=3D1    2>/dev/null -accel qtest
+>>> >> # starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-3273=
+509.sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-3273509.qmp=
+,id=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -=
+accel kvm -accel tcg -machine pc-i440fx-9.2, -name target,debug-threads=3Do=
+n -m 150M -serial file:/tmp/migration-test-4112T2/dest_serial -incoming def=
+er -drive if=3Dnone,id=3Dd0,file=3D/tmp/migration-test-4112T2/bootsect,form=
+at=3Draw -device ide-hd,drive=3Dd0,secs=3D1,cyls=3D1,heads=3D1    2>/dev/nu=
+ll -accel qtest
+>>> >> ----------------------------------- stderr -------------------------=
+----------
+>>> >> warning: fd: migration to a file is deprecated. Use file: instead.
+>>> >> warning: fd: migration to a file is deprecated. Use file: instead.
+>>> >> ../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from =
+signal 11 (Segmentation fault) (core dumped)
+>>> >>
+>>> >> *** /ppc64/migration/multifd/tcp/plain/cancel, qtest-ppc64 on i686 h=
+ost
+>>> >>
+>>> >> https://gitlab.com/qemu-project/qemu/-/jobs/7786579152
+>>> >>
+>>> >> 174/315 qemu:qtest+qtest-ppc64 / qtest-ppc64/migration-test         =
+              ERROR          381.00s   killed by signal 6 SIGABRT
+>>> >>>>> PYTHON=3D/builds/qemu-project/qemu/build/pyvenv/bin/python3 QTEST=
+_QEMU_IMG=3D./qemu-img G_TEST_DBUS_DAEMON=3D/builds/qemu-project/qemu/tests=
+/dbus-vmstate-daemon.sh QTEST_QEMU_BINARY=3D./qemu-system-ppc64 MALLOC_PERT=
+URB_=3D178 QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-storage=
+-daemon /builds/qemu-project/qemu/build/tests/qtest/migration-test --tap -k
+>>> >> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80  =E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95
+>>> >> stderr:
+>>> >> qemu-system-ppc64: Cannot read from TLS channel: The TLS connection =
+was non-properly terminated.
+>>> >> warning: fd: migration to a file is deprecated. Use file: instead.
+>>> >> warning: fd: migration to a file is deprecated. Use file: instead.
+>>> >> ../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from =
+signal 11 (Segmentation fault) (core dumped)
+>>> >> (test program exited with status code -6)
+>>> >> TAP parsing error: Too few tests run (expected 61, got 47)
+>>> >> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95
+>>> >>
+>>> >> # Start of plain tests
+>>> >> # Running /ppc64/migration/multifd/tcp/plain/cancel
+>>> >> # Using machine type: pseries-9.2
+>>> >> # starting QEMU: exec ./qemu-system-ppc64 -qtest unix:/tmp/qtest-407=
+66.sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-40766.qmp,id=
+=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -acc=
+el kvm -accel tcg -machine pseries-9.2,vsmt=3D8 -name source,debug-threads=
+=3Don -m 256M -serial file:/tmp/migration-test-H0Z1T2/src_serial -nodefault=
+s -machine cap-cfpc=3Dbroken,cap-sbbc=3Dbroken,cap-ibs=3Dbroken,cap-ccf-ass=
+ist=3Doff, -bios /tmp/migration-test-H0Z1T2/bootsect    2>/dev/null -accel =
+qtest
+>>> >> # starting QEMU: exec ./qemu-system-ppc64 -qtest unix:/tmp/qtest-407=
+66.sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-40766.qmp,id=
+=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -acc=
+el kvm -accel tcg -machine pseries-9.2,vsmt=3D8 -name target,debug-threads=
+=3Don -m 256M -serial file:/tmp/migration-test-H0Z1T2/dest_serial -incoming=
+ defer -nodefaults -machine cap-cfpc=3Dbroken,cap-sbbc=3Dbroken,cap-ibs=3Db=
+roken,cap-ccf-assist=3Doff, -bios /tmp/migration-test-H0Z1T2/bootsect    2>=
+/dev/null -accel qtest
+>>> >> ----------------------------------- stderr -------------------------=
+----------
+>>> >> qemu-system-ppc64: Cannot read from TLS channel: The TLS connection =
+was non-properly terminated.
+>>> >> warning: fd: migration to a file is deprecated. Use file: instead.
+>>> >> warning: fd: migration to a file is deprecated. Use file: instead.
+>>> >> ../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from =
+signal 11 (Segmentation fault) (core dumped)
+>>> >>
+>>> >> (test program exited with status code -6)
+>>> >> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D8<=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>>> >>
+>>> >> So.. it's the same test (multifd/tcp/plain/cancel) that is failing on
+>>> >> different host / arch being tested.  What is more weird is the two f=
+ailures
+>>> >> are different, the 2nd failure throw out a TLS error even though the=
+ test
+>>> >> doesn't yet have tls involved.
+>>> >
+>>> > I think that's just a parallel test being cancelled prematurely, eith=
+er
+>>> > due to the crash or due to the timeout.
+>>> >
+>>> >>
+>>> >> Fabiano, is this the issue you're looking at?
+>>> >
+>>> > Yes. I can reproduce locally by running 2 processes in parallel: 1 lo=
+op
+>>> > with make -j$(nproc) check and another loop with tcp/plain/cancel. It
+>>> > takes ~1h to hit. I've seen crashes with ppc64, s390 and
+>>> > aarch64.
+>>> >
+>>>=20
+>>> Ok, the issue is that after commit 5ef7e26bdb ("migration/multifd: solve
+>>> zero page causing multiple page faults"), the multifd code started using
+>>> the rb->receivedmap bitmap, which belongs to the ram code and is
+>>> initialized and *freed* from the ram SaveVMHandlers.
+>>>=20
+>>> process_incoming_migration_co()        ...
+>>>   qemu_loadvm_state()                  multifd_nocomp_recv()
+>>>     qemu_loadvm_state_cleanup()          ramblock_recv_bitmap_set_offse=
+t()
+>>>       rb->receivedmap =3D NULL               set_bit_atomic(..., rb->re=
+ceivedmap)
+>>>   ...
+>>>   migration_incoming_state_destroy()
+>>>     multifd_recv_cleanup()
+>>>       multifd_recv_terminate_threads(NULL)
+>>>=20
+>>> Multifd threads are live until migration_incoming_state_destroy(), which
+>>> is called some time later.
+>>
+>> Thanks for the debugging.  Hmm I would expect loadvm should wait until a=
+ll
+>> ram is received somehow..
+>
+> Looks like a similar issue as when we didn't have the multifd_send sync
+> working correctly and ram code would run and do cleanup.
 
-Signed-off-by: Danny Canter <danny_canter@apple.com>
-Message-id: 20240828111552.93482-3-danny_canter@apple.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- include/sysemu/hvf_int.h  | 1 +
- accel/hvf/hvf-accel-ops.c | 6 +-----
- target/arm/hvf/hvf.c      | 9 +++++++++
- target/i386/hvf/hvf.c     | 5 +++++
- 4 files changed, 16 insertions(+), 5 deletions(-)
-
-diff --git a/include/sysemu/hvf_int.h b/include/sysemu/hvf_int.h
-index 5b28d17ba1f..42ae18433f0 100644
---- a/include/sysemu/hvf_int.h
-+++ b/include/sysemu/hvf_int.h
-@@ -65,6 +65,7 @@ void assert_hvf_ok_impl(hv_return_t ret, const char *file, unsigned int line,
- #define assert_hvf_ok(EX) assert_hvf_ok_impl((EX), __FILE__, __LINE__, #EX)
- const char *hvf_return_string(hv_return_t ret);
- int hvf_arch_init(void);
-+hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range);
- int hvf_arch_init_vcpu(CPUState *cpu);
- void hvf_arch_vcpu_destroy(CPUState *cpu);
- int hvf_vcpu_exec(CPUState *);
-diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
-index ac08cfb9f32..dbebf209f48 100644
---- a/accel/hvf/hvf-accel-ops.c
-+++ b/accel/hvf/hvf-accel-ops.c
-@@ -61,10 +61,6 @@
- 
- HVFState *hvf_state;
- 
--#ifdef __aarch64__
--#define HV_VM_DEFAULT NULL
--#endif
--
- /* Memory slots */
- 
- hvf_slot *hvf_find_overlap_slot(uint64_t start, uint64_t size)
-@@ -324,7 +320,7 @@ static int hvf_accel_init(MachineState *ms)
-     hv_return_t ret;
-     HVFState *s;
- 
--    ret = hv_vm_create(HV_VM_DEFAULT);
-+    ret = hvf_arch_vm_create(ms, 0);
-     assert_hvf_ok(ret);
- 
-     s = g_new0(HVFState, 1);
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index ace83671b59..19964d241ed 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -929,6 +929,15 @@ void hvf_arch_vcpu_destroy(CPUState *cpu)
- {
- }
- 
-+hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
-+{
-+    hv_vm_config_t config = hv_vm_config_create();
-+    hv_return_t ret = hv_vm_create(config);
-+    os_release(config);
-+
-+    return ret;
-+}
-+
- int hvf_arch_init_vcpu(CPUState *cpu)
- {
-     ARMCPU *arm_cpu = ARM_CPU(cpu);
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index c9c64e29781..68dc5d9cf75 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -223,6 +223,11 @@ int hvf_arch_init(void)
-     return 0;
- }
- 
-+hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
-+{
-+    return hv_vm_create(HV_VM_DEFAULT);
-+}
-+
- int hvf_arch_init_vcpu(CPUState *cpu)
- {
-     X86CPU *x86cpu = X86_CPU(cpu);
--- 
-2.34.1
-
+Btw, this is hard to debug, but I bet what's happening is that the
+ram_load code itself is exiting due to qemufile error. So there wouldn't
+be a way to make it wait for multifd.
 
