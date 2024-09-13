@@ -4,69 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB23FA3730
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 09:01:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 672B2FA3735
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 09:21:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp2An-00069s-7v; Fri, 13 Sep 2024 05:01:01 -0400
+	id 1sp2Tj-0004Wr-B0; Fri, 13 Sep 2024 05:20:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1sp2Ak-000698-OI
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 05:00:58 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1sp2Ai-0001v0-6w
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 05:00:58 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c24:1b92:0:640:175a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 5737761038;
- Fri, 13 Sep 2024 12:00:49 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:8020::1:5] (unknown
- [2a02:6b8:b081:8020::1:5])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id l0hcxT1IgSw0-YpwtM3yW; Fri, 13 Sep 2024 12:00:48 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1726218048;
- bh=CTdPUpGKp+/rtZyH1Yrlj93nnEtp9xhh5FXi3aGdO8g=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=QghVNYt/M91eDnEsgM5Bv2Bhs3WrFdVdWZxhmAEj0RtMrIvf7liPIiNd99p1/LG/S
- SeFCUrK78gjudZFHAKDubXBe+wAqz+1zyx/CtnZHoWIW08SAb2zA32gqautlx95PrN
- zCDlKykuxRWVOh7pi9kKXwoGFrOE6bCKvbk7FC4k=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <3dc986de-135e-44bf-9b51-606da5b8e660@yandex-team.ru>
-Date: Fri, 13 Sep 2024 12:00:48 +0300
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sp2Td-0004Vc-4G
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 05:20:29 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sp2TY-0003kq-9A
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 05:20:27 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxC+rMA+RmpsgGAA--.15760S3;
+ Fri, 13 Sep 2024 17:20:12 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMCxLeTLA+RmG60FAA--.32697S3;
+ Fri, 13 Sep 2024 17:20:12 +0800 (CST)
+Subject: Re: [RFC PATCH V2 4/5] hw/loongarch: Add KVM pch pic device support
+To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Huacai Chen <chenhuacai@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ kvm@vger.kernel.org
+References: <cover.1725969898.git.lixianglai@loongson.cn>
+ <86f29d4f56b12f826e8a5817cdb1efbfb6007a08.1725969898.git.lixianglai@loongson.cn>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <267f54d5-8660-b3b3-7cc3-bb851a5bfbae@loongson.cn>
+Date: Fri, 13 Sep 2024 17:20:11 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] chardev: introduce 'reconnect-ms' and deprecate
- 'reconnect'
-To: Markus Armbruster <armbru@redhat.com>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-devel@nongnu.org, devel@lists.libvirt.org,
- Peter Krempa <pkrempa@redhat.com>, Michal Privoznik <mprivozn@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-References: <20240905085703.106156-1-d-tatianin@yandex-team.ru>
- <87plp80w3g.fsf@pond.sub.org>
+In-Reply-To: <86f29d4f56b12f826e8a5817cdb1efbfb6007a08.1725969898.git.lixianglai@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
-In-Reply-To: <87plp80w3g.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMCxLeTLA+RmG60FAA--.32697S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9fXoW3try3uF4xtF4xtF47WF47KFX_yoW8WFW5to
+ WftF1SvF4xGr1fArWFkrn8tFW7CrWIkFZ8Aa9Fva15CF4Utry5KF9xKw1FyrW7Jws5Krn3
+ Aa4SgFs0yasFyrs7l-sFpf9Il3svdjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8wcxFpf
+ 9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
+ UjIYCTnIWjp_UUUYx7kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
+ 8IcIk0rVWrJVCq3wAFIxvE14AKwVWUXVWUAwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
+ Y2AK021l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14
+ v26r1j6r4UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAF
+ wI0_Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI
+ 0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280
+ aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2
+ xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAq
+ x4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r
+ 43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF
+ 7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxV
+ WUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j0
+ FALUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.188,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,56 +84,449 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/13/24 11:57 AM, Markus Armbruster wrote:
 
-> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
->
->> The 'reconnect' option only allows to specify the time in seconds,
->> which is way too long for certain workflows.
->>
->> We have a lightweight disk backend server, which takes about 20ms to
->> live update, but due to this limitation in QEMU, previously the guest
->> disk controller would hang for one second because it would take this
->> long for QEMU to reinitialize the socket connection.
->>
->> Introduce a new option called 'reconnect-ms', which is the same as
->> 'reconnect', except the value is treated as milliseconds. These are
->> mutually exclusive and specifying both results in an error.
-> Good:
->
->      $ upstream-qemu -nodefaults -chardev socket,id=chr0,path=test-hmp,server=off,reconnect=1,reconnect-ms=2
->      upstream-qemu: -chardev socket,id=chr0,path=test-hmp,server=off,reconnect=1,reconnect-ms=2: 'reconnect' and 'reconnect-ms' are mutually exclusive
->
-> Bad:
->
->      $ upstream-qemu -nodefaults -S -display none -qmp stdio
->      {"QMP": {"version": {"qemu": {"micro": 50, "minor": 1, "major": 9}, "package": "v9.1.0-211-ga0866249bd"}, "capabilities": ["oob"]}}
->      {"execute": "qmp_capabilities", "arguments": {"enable": ["oob"]}}
->      {"return": {}}
->      {"execute":"chardev-add", "arguments": {"id":"chr0", "backend": {"type": "socket", "data": {"server": false, "addr": {"type": "unix", "data": {"path": "xyz"}}, "reconnect": 1, "reconnect-ms": 2}}}}
->      {"return": {}}
->      upstream-qemu: Unable to connect character device chr0: Failed to connect to 'xyz': No such file or directory
->
-> We're not rejecting simultaneous use of @reconnect and @reconnect-ms
-> here.
->
-> Moreover, you somehow regressed the handling of the "unable to connect"
-> error.  Before the patch, behavior is correct:
->
->      $ upstream-qemu -nodefaults -S -display none -qmp stdio
->      {"QMP": {"version": {"qemu": {"micro": 50, "minor": 1, "major": 9}, "package": "v9.1.0-210-g4b7ea33074"}, "capabilities": ["oob"]}}
->      {"execute": "qmp_capabilities", "arguments": {"enable": ["oob"]}}
->      {"return": {}}
->      {"execute":"chardev-add", "arguments": {"id":"chr0", "backend": {"type": "socket", "data": {"server": false, "addr": {"type": "unix", "data": {"path": "xyz"}}}}}}
->      {"error": {"class": "GenericError", "desc": "Failed to add chardev 'chr0': Failed to connect to 'xyz': No such file or directory"}}
 
-Oh wow, thanks for spotting! I'll be sure to take a look at these.
+On 2024/9/10 下午8:18, Xianglai Li wrote:
+> Added pch_pic interrupt controller for kvm emulation.
+> The main process is to send the command word for
+> creating an pch_pic device to the kernel,
+> Delivers the pch pic interrupt controller configuration
+> register base address to the kernel.
+> When the VM is saved, the ioctl obtains the pch_pic
+> interrupt controller data in the kernel and saves it.
+> When the VM is recovered, the saved data is sent to the kernel.
+> 
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> ---
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Song Gao <gaosong@loongson.cn>
+> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> Cc: Huacai Chen <chenhuacai@kernel.org>
+> Cc: "Michael S. Tsirkin" <mst@redhat.com>
+> Cc: Cornelia Huck <cohuck@redhat.com>
+> Cc: kvm@vger.kernel.org
+> Cc: Bibo Mao <maobibo@loongson.cn>
+> Cc: Xianglai Li <lixianglai@loongson.cn>
+> 
+>   hw/intc/Kconfig                 |   3 +
+>   hw/intc/loongarch_pch_pic.c     |  40 ++++---
+>   hw/intc/loongarch_pch_pic_kvm.c | 180 ++++++++++++++++++++++++++++++++
+>   hw/intc/meson.build             |   1 +
+>   hw/loongarch/Kconfig            |   1 +
+>   hw/loongarch/virt.c             |  67 ++++++------
+>   6 files changed, 249 insertions(+), 43 deletions(-)
+>   create mode 100644 hw/intc/loongarch_pch_pic_kvm.c
+> 
+> diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
+> index df9352d41d..1169926eec 100644
+> --- a/hw/intc/Kconfig
+> +++ b/hw/intc/Kconfig
+> @@ -105,6 +105,9 @@ config LOONGARCH_PCH_PIC
+>       bool
+>       select UNIMP
+>   
+> +config LOONGARCH_PCH_PIC_KVM
+> +    bool
+> +
+>   config LOONGARCH_PCH_MSI
+>       select MSI_NONBROKEN
+>       bool
+> diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+> index 2d5e65abff..13934be7d9 100644
+> --- a/hw/intc/loongarch_pch_pic.c
+> +++ b/hw/intc/loongarch_pch_pic.c
+> @@ -16,18 +16,27 @@
+>   #include "migration/vmstate.h"
+>   #include "trace.h"
+>   #include "qapi/error.h"
+> +#include "sysemu/kvm.h"
+>   
+>   static void pch_pic_update_irq(LoongArchPCHPIC *s, uint64_t mask, int level)
+>   {
+>       uint64_t val;
+>       int irq;
+> +    int kvm_irq;
+>   
+>       if (level) {
+>           val = mask & s->intirr & ~s->int_mask;
+>           if (val) {
+>               irq = ctz64(val);
+>               s->intisr |= MAKE_64BIT_MASK(irq, 1);
+> -            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 1);
+> +            if (kvm_enabled() && kvm_irqchip_in_kernel()) {
+> +                kvm_irq = (
+> +                KVM_LOONGARCH_IRQ_TYPE_IOAPIC << KVM_LOONGARCH_IRQ_TYPE_SHIFT)
+> +                | (0 <<  KVM_LOONGARCH_IRQ_VCPU_SHIFT) | s->htmsi_vector[irq];
+> +                kvm_set_irq(kvm_state, kvm_irq, !!level);
+> +            } else {
+> +                qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 1);
+> +            }
+ From my point, modification is unnecessay, since there is separate irq 
+handler if irqchip_in_kernel in file hw/intc/loongarch_pch_pic_kvm.c
 
->> 'reconnect' is also deprecated by this commit to make it possible to
->> remove it in the future as to not keep two options that control the
->> same thing.
->>
->> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> Acked-by: Peter Krempa <pkrempa@redhat.com>
->> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Also I do not know why there is so such modification with file 
+hw/intc/loongarch_pch_pic.c, it is irrelative and not used if 
+irqchip_in_kernel is set.
+
+Regards
+Bibo Mao
+
+>           }
+>       } else {
+>           /*
+> @@ -38,7 +47,14 @@ static void pch_pic_update_irq(LoongArchPCHPIC *s, uint64_t mask, int level)
+>           if (val) {
+>               irq = ctz64(val);
+>               s->intisr &= ~MAKE_64BIT_MASK(irq, 1);
+> -            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 0);
+> +            if (kvm_enabled() && kvm_irqchip_in_kernel()) {
+> +                kvm_irq = (
+> +                KVM_LOONGARCH_IRQ_TYPE_IOAPIC << KVM_LOONGARCH_IRQ_TYPE_SHIFT)
+> +                | (0 <<  KVM_LOONGARCH_IRQ_VCPU_SHIFT) | s->htmsi_vector[irq];
+> +                kvm_set_irq(kvm_state, kvm_irq, !!level);
+> +            } else {
+> +                qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 0);
+> +            }
+>           }
+>       }
+>   }
+> @@ -265,18 +281,18 @@ static uint64_t loongarch_pch_pic_readb(void *opaque, hwaddr addr,
+>   {
+>       LoongArchPCHPIC *s = LOONGARCH_PCH_PIC(opaque);
+>       uint64_t val = 0;
+> -    uint32_t offset = (addr & 0xfff) + PCH_PIC_ROUTE_ENTRY_OFFSET;
+> +    uint32_t offset = (addr & 0xfff) + PCH_PIC_ROUTE_ENTRY_START;
+>       int64_t offset_tmp;
+>   
+>       switch (offset) {
+> -    case PCH_PIC_HTMSI_VEC_OFFSET ... PCH_PIC_HTMSI_VEC_END:
+> -        offset_tmp = offset - PCH_PIC_HTMSI_VEC_OFFSET;
+> +    case PCH_PIC_HTMSI_VEC_START ... PCH_PIC_HTMSI_VEC_END:
+> +        offset_tmp = offset - PCH_PIC_HTMSI_VEC_START;
+>           if (offset_tmp >= 0 && offset_tmp < 64) {
+>               val = s->htmsi_vector[offset_tmp];
+>           }
+>           break;
+> -    case PCH_PIC_ROUTE_ENTRY_OFFSET ... PCH_PIC_ROUTE_ENTRY_END:
+> -        offset_tmp = offset - PCH_PIC_ROUTE_ENTRY_OFFSET;
+> +    case PCH_PIC_ROUTE_ENTRY_START ... PCH_PIC_ROUTE_ENTRY_END:
+> +        offset_tmp = offset - PCH_PIC_ROUTE_ENTRY_START;
+>           if (offset_tmp >= 0 && offset_tmp < 64) {
+>               val = s->route_entry[offset_tmp];
+>           }
+> @@ -294,19 +310,19 @@ static void loongarch_pch_pic_writeb(void *opaque, hwaddr addr,
+>   {
+>       LoongArchPCHPIC *s = LOONGARCH_PCH_PIC(opaque);
+>       int32_t offset_tmp;
+> -    uint32_t offset = (addr & 0xfff) + PCH_PIC_ROUTE_ENTRY_OFFSET;
+> +    uint32_t offset = (addr & 0xfff) + PCH_PIC_ROUTE_ENTRY_START;
+>   
+>       trace_loongarch_pch_pic_writeb(size, addr, data);
+>   
+>       switch (offset) {
+> -    case PCH_PIC_HTMSI_VEC_OFFSET ... PCH_PIC_HTMSI_VEC_END:
+> -        offset_tmp = offset - PCH_PIC_HTMSI_VEC_OFFSET;
+> +    case PCH_PIC_HTMSI_VEC_START ... PCH_PIC_HTMSI_VEC_END:
+> +        offset_tmp = offset - PCH_PIC_HTMSI_VEC_START;
+>           if (offset_tmp >= 0 && offset_tmp < 64) {
+>               s->htmsi_vector[offset_tmp] = (uint8_t)(data & 0xff);
+>           }
+>           break;
+> -    case PCH_PIC_ROUTE_ENTRY_OFFSET ... PCH_PIC_ROUTE_ENTRY_END:
+> -        offset_tmp = offset - PCH_PIC_ROUTE_ENTRY_OFFSET;
+> +    case PCH_PIC_ROUTE_ENTRY_START ... PCH_PIC_ROUTE_ENTRY_END:
+> +        offset_tmp = offset - PCH_PIC_ROUTE_ENTRY_START;
+>           if (offset_tmp >= 0 && offset_tmp < 64) {
+>               s->route_entry[offset_tmp] = (uint8_t)(data & 0xff);
+>           }
+> diff --git a/hw/intc/loongarch_pch_pic_kvm.c b/hw/intc/loongarch_pch_pic_kvm.c
+> new file mode 100644
+> index 0000000000..9b6a2f6784
+> --- /dev/null
+> +++ b/hw/intc/loongarch_pch_pic_kvm.c
+> @@ -0,0 +1,180 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +/*
+> + * LoongArch kvm pch pic interrupt support
+> + *
+> + * Copyright (C) 2024 Loongson Technology Corporation Limited
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/qdev-properties.h"
+> +#include "qemu/typedefs.h"
+> +#include "hw/intc/loongarch_pch_pic.h"
+> +#include "hw/sysbus.h"
+> +#include "linux/kvm.h"
+> +#include "migration/vmstate.h"
+> +#include "qapi/error.h"
+> +#include "sysemu/kvm.h"
+> +#include "hw/loongarch/virt.h"
+> +#include "hw/pci-host/ls7a.h"
+> +#include "qemu/error-report.h"
+> +
+> +static void kvm_pch_pic_access_regs(int fd, uint64_t addr,
+> +                                       void *val, bool is_write)
+> +{
+> +        kvm_device_access(fd, KVM_DEV_LOONGARCH_PCH_PIC_GRP_REGS,
+> +                          addr, val, is_write, &error_abort);
+> +}
+> +
+> +static void kvm_loongarch_pch_pic_save_load(void *opaque, bool is_write)
+> +{
+> +    KVMLoongArchPCHPIC *s = (KVMLoongArchPCHPIC *)opaque;
+> +    KVMLoongArchPCHPICClass *class = KVM_LOONGARCH_PCH_PIC_GET_CLASS(s);
+> +    int fd = class->dev_fd;
+> +    int addr, offset;
+> +
+> +    kvm_pch_pic_access_regs(fd, PCH_PIC_MASK_START,
+> +                            (void *)&s->int_mask, is_write);
+> +    kvm_pch_pic_access_regs(fd, PCH_PIC_HTMSI_EN_START,
+> +                            (void *)&s->htmsi_en, is_write);
+> +    kvm_pch_pic_access_regs(fd, PCH_PIC_EDGE_START,
+> +                            (void *)&s->intedge, is_write);
+> +    kvm_pch_pic_access_regs(fd, PCH_PIC_AUTO_CTRL0_START,
+> +                            (void *)&s->auto_crtl0, is_write);
+> +    kvm_pch_pic_access_regs(fd, PCH_PIC_AUTO_CTRL1_START,
+> +                            (void *)&s->auto_crtl1, is_write);
+> +
+> +    for (addr = PCH_PIC_ROUTE_ENTRY_START;
+> +         addr < PCH_PIC_ROUTE_ENTRY_END; addr++) {
+> +        offset = addr - PCH_PIC_ROUTE_ENTRY_START;
+> +        kvm_pch_pic_access_regs(fd, addr,
+> +                                (void *)&s->route_entry[offset], is_write);
+> +    }
+> +
+> +    for (addr = PCH_PIC_HTMSI_VEC_START; addr < PCH_PIC_HTMSI_VEC_END; addr++) {
+> +        offset = addr - PCH_PIC_HTMSI_VEC_START;
+> +        kvm_pch_pic_access_regs(fd, addr,
+> +                                (void *)&s->htmsi_vector[offset], is_write);
+> +    }
+> +
+> +    kvm_pch_pic_access_regs(fd, PCH_PIC_INT_IRR_START,
+> +                            (void *)&s->intirr, is_write);
+> +    kvm_pch_pic_access_regs(fd, PCH_PIC_INT_ISR_START,
+> +                            (void *)&s->intisr, is_write);
+> +    kvm_pch_pic_access_regs(fd, PCH_PIC_POLARITY_START,
+> +                            (void *)&s->int_polarity, is_write);
+> +}
+> +
+> +static int kvm_loongarch_pch_pic_pre_save(void *opaque)
+> +{
+> +    kvm_loongarch_pch_pic_save_load(opaque, false);
+> +    return 0;
+> +}
+> +
+> +static int kvm_loongarch_pch_pic_post_load(void *opaque, int version_id)
+> +{
+> +    kvm_loongarch_pch_pic_save_load(opaque, true);
+> +    return 0;
+> +}
+> +
+> +static void kvm_pch_pic_handler(void *opaque, int irq, int level)
+> +{
+> +    int kvm_irq;
+> +
+> +    if (kvm_enabled()) {
+> +        kvm_irq = \
+> +            (KVM_LOONGARCH_IRQ_TYPE_IOAPIC << KVM_LOONGARCH_IRQ_TYPE_SHIFT)
+> +            | (0 <<  KVM_LOONGARCH_IRQ_VCPU_SHIFT) | irq;
+> +        kvm_set_irq(kvm_state, kvm_irq, !!level);
+> +    }
+> +}
+> +
+> +static void kvm_loongarch_pch_pic_realize(DeviceState *dev, Error **errp)
+> +{
+> +    KVMLoongArchPCHPICClass *pch_pic_class =
+> +            KVM_LOONGARCH_PCH_PIC_GET_CLASS(dev);
+> +    struct kvm_create_device cd = {0};
+> +    uint64_t pch_pic_base = VIRT_PCH_REG_BASE;
+> +    Error *err = NULL;
+> +    int ret;
+> +
+> +    pch_pic_class->parent_realize(dev, &err);
+> +    if (err) {
+> +        error_propagate(errp, err);
+> +        return;
+> +    }
+> +
+> +    if (!pch_pic_class->is_created) {
+> +        cd.type = KVM_DEV_TYPE_LOONGARCH_PCH_PIC;
+> +        ret = kvm_vm_ioctl(kvm_state, KVM_CREATE_DEVICE, &cd);
+> +        if (ret < 0) {
+> +            error_setg_errno(errp, errno,
+> +                             "Creating the KVM pch pic device failed");
+> +            return;
+> +        }
+> +        pch_pic_class->is_created = true;
+> +        pch_pic_class->dev_fd = cd.fd;
+> +        fprintf(stdout, "Create LoongArch pch pic irqchip in KVM done!\n");
+> +
+> +        ret = kvm_device_access(cd.fd, KVM_DEV_LOONGARCH_PCH_PIC_GRP_CTRL,
+> +                                KVM_DEV_LOONGARCH_PCH_PIC_CTRL_INIT,
+> +                                &pch_pic_base, true, NULL);
+> +        if (ret < 0) {
+> +            error_report(
+> +                "KVM PCH_PIC: failed to set the base address of PCH PIC");
+> +            exit(1);
+> +        }
+> +
+> +        qdev_init_gpio_in(dev, kvm_pch_pic_handler, VIRT_PCH_PIC_IRQ_NUM);
+> +    }
+> +}
+> +
+> +static const VMStateDescription vmstate_kvm_loongarch_pch_pic = {
+> +    .name = TYPE_LOONGARCH_PCH_PIC,
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .pre_save = kvm_loongarch_pch_pic_pre_save,
+> +    .post_load = kvm_loongarch_pch_pic_post_load,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT64(int_mask, KVMLoongArchPCHPIC),
+> +        VMSTATE_UINT64(htmsi_en, KVMLoongArchPCHPIC),
+> +        VMSTATE_UINT64(intedge, KVMLoongArchPCHPIC),
+> +        VMSTATE_UINT64(intclr, KVMLoongArchPCHPIC),
+> +        VMSTATE_UINT64(auto_crtl0, KVMLoongArchPCHPIC),
+> +        VMSTATE_UINT64(auto_crtl1, KVMLoongArchPCHPIC),
+> +        VMSTATE_UINT8_ARRAY(route_entry, KVMLoongArchPCHPIC, 64),
+> +        VMSTATE_UINT8_ARRAY(htmsi_vector, KVMLoongArchPCHPIC, 64),
+> +        VMSTATE_UINT64(last_intirr, KVMLoongArchPCHPIC),
+> +        VMSTATE_UINT64(intirr, KVMLoongArchPCHPIC),
+> +        VMSTATE_UINT64(intisr, KVMLoongArchPCHPIC),
+> +        VMSTATE_UINT64(int_polarity, KVMLoongArchPCHPIC),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+> +
+> +static void kvm_loongarch_pch_pic_class_init(ObjectClass *oc, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(oc);
+> +    KVMLoongArchPCHPICClass *pch_pic_class = KVM_LOONGARCH_PCH_PIC_CLASS(oc);
+> +
+> +    pch_pic_class->parent_realize = dc->realize;
+> +    dc->realize = kvm_loongarch_pch_pic_realize;
+> +    pch_pic_class->is_created = false;
+> +    dc->vmsd = &vmstate_kvm_loongarch_pch_pic;
+> +
+> +}
+> +
+> +static const TypeInfo kvm_loongarch_pch_pic_info = {
+> +    .name = TYPE_KVM_LOONGARCH_PCH_PIC,
+> +    .parent = TYPE_SYS_BUS_DEVICE,
+> +    .instance_size = sizeof(KVMLoongArchPCHPIC),
+> +    .class_size = sizeof(KVMLoongArchPCHPICClass),
+> +    .class_init = kvm_loongarch_pch_pic_class_init,
+> +};
+> +
+> +static void kvm_loongarch_pch_pic_register_types(void)
+> +{
+> +    type_register_static(&kvm_loongarch_pch_pic_info);
+> +}
+> +
+> +type_init(kvm_loongarch_pch_pic_register_types)
+> diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+> index 85174d1af1..c20c0a2c05 100644
+> --- a/hw/intc/meson.build
+> +++ b/hw/intc/meson.build
+> @@ -77,3 +77,4 @@ specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_PIC', if_true: files('loongarch_pch_
+>   specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_MSI', if_true: files('loongarch_pch_msi.c'))
+>   specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI', if_true: files('loongarch_extioi.c'))
+>   specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI_KVM', if_true: files('loongarch_extioi_kvm.c'))
+> +specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_PIC_KVM', if_true: files('loongarch_pch_pic_kvm.c'))
+> diff --git a/hw/loongarch/Kconfig b/hw/loongarch/Kconfig
+> index 99a523171f..f909f799ad 100644
+> --- a/hw/loongarch/Kconfig
+> +++ b/hw/loongarch/Kconfig
+> @@ -17,6 +17,7 @@ config LOONGARCH_VIRT
+>       select LOONGARCH_PCH_MSI
+>       select LOONGARCH_EXTIOI
+>       select LOONGARCH_IPI_KVM if KVM
+> +    select LOONGARCH_PCH_PIC_KVM if KVM
+>       select LOONGARCH_EXTIOI_KVM if KVM
+>       select LS7A_RTC
+>       select SMBIOS
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index 8ca7c09016..db0c08899b 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -865,40 +865,45 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+>       /* Add Extend I/O Interrupt Controller node */
+>       fdt_add_eiointc_node(lvms, &cpuintc_phandle, &eiointc_phandle);
+>   
+> -    pch_pic = qdev_new(TYPE_LOONGARCH_PCH_PIC);
+> -    num = VIRT_PCH_PIC_IRQ_NUM;
+> -    qdev_prop_set_uint32(pch_pic, "pch_pic_irq_num", num);
+> -    d = SYS_BUS_DEVICE(pch_pic);
+> -    sysbus_realize_and_unref(d, &error_fatal);
+> -    memory_region_add_subregion(get_system_memory(), VIRT_IOAPIC_REG_BASE,
+> -                            sysbus_mmio_get_region(d, 0));
+> -    memory_region_add_subregion(get_system_memory(),
+> -                            VIRT_IOAPIC_REG_BASE + PCH_PIC_ROUTE_ENTRY_OFFSET,
+> +    if (kvm_enabled() && kvm_irqchip_in_kernel()) {
+> +        pch_pic = qdev_new(TYPE_KVM_LOONGARCH_PCH_PIC);
+> +        sysbus_realize_and_unref(SYS_BUS_DEVICE(pch_pic), &error_fatal);
+> +    } else {
+> +        pch_pic = qdev_new(TYPE_LOONGARCH_PCH_PIC);
+> +        num = VIRT_PCH_PIC_IRQ_NUM;
+> +        qdev_prop_set_uint32(pch_pic, "pch_pic_irq_num", num);
+> +        d = SYS_BUS_DEVICE(pch_pic);
+> +        sysbus_realize_and_unref(d, &error_fatal);
+> +        memory_region_add_subregion(get_system_memory(), VIRT_IOAPIC_REG_BASE,
+> +                                sysbus_mmio_get_region(d, 0));
+> +        memory_region_add_subregion(get_system_memory(),
+> +                            VIRT_IOAPIC_REG_BASE + PCH_PIC_ROUTE_ENTRY_START,
+>                               sysbus_mmio_get_region(d, 1));
+> -    memory_region_add_subregion(get_system_memory(),
+> -                            VIRT_IOAPIC_REG_BASE + PCH_PIC_INT_STATUS_LO,
+> -                            sysbus_mmio_get_region(d, 2));
+> -
+> -    /* Connect pch_pic irqs to extioi */
+> -    for (i = 0; i < num; i++) {
+> -        qdev_connect_gpio_out(DEVICE(d), i, qdev_get_gpio_in(extioi, i));
+> -    }
+> +        memory_region_add_subregion(get_system_memory(),
+> +                                VIRT_IOAPIC_REG_BASE + PCH_PIC_INT_STATUS_LO,
+> +                                sysbus_mmio_get_region(d, 2));
+>   
+> -    /* Add PCH PIC node */
+> -    fdt_add_pch_pic_node(lvms, &eiointc_phandle, &pch_pic_phandle);
+> +        /* Connect pch_pic irqs to extioi */
+> +        for (i = 0; i < num; i++) {
+> +            qdev_connect_gpio_out(DEVICE(d), i, qdev_get_gpio_in(extioi, i));
+> +        }
+>   
+> -    pch_msi = qdev_new(TYPE_LOONGARCH_PCH_MSI);
+> -    start   =  num;
+> -    num = EXTIOI_IRQS - start;
+> -    qdev_prop_set_uint32(pch_msi, "msi_irq_base", start);
+> -    qdev_prop_set_uint32(pch_msi, "msi_irq_num", num);
+> -    d = SYS_BUS_DEVICE(pch_msi);
+> -    sysbus_realize_and_unref(d, &error_fatal);
+> -    sysbus_mmio_map(d, 0, VIRT_PCH_MSI_ADDR_LOW);
+> -    for (i = 0; i < num; i++) {
+> -        /* Connect pch_msi irqs to extioi */
+> -        qdev_connect_gpio_out(DEVICE(d), i,
+> -                              qdev_get_gpio_in(extioi, i + start));
+> +        /* Add PCH PIC node */
+> +        fdt_add_pch_pic_node(lvms, &eiointc_phandle, &pch_pic_phandle);
+> +
+> +        pch_msi = qdev_new(TYPE_LOONGARCH_PCH_MSI);
+> +        start   =  num;
+> +        num = EXTIOI_IRQS - start;
+> +        qdev_prop_set_uint32(pch_msi, "msi_irq_base", start);
+> +        qdev_prop_set_uint32(pch_msi, "msi_irq_num", num);
+> +        d = SYS_BUS_DEVICE(pch_msi);
+> +        sysbus_realize_and_unref(d, &error_fatal);
+> +        sysbus_mmio_map(d, 0, VIRT_PCH_MSI_ADDR_LOW);
+> +        for (i = 0; i < num; i++) {
+> +            /* Connect pch_msi irqs to extioi */
+> +            qdev_connect_gpio_out(DEVICE(d), i,
+> +                                  qdev_get_gpio_in(extioi, i + start));
+> +        }
+>       }
+>   
+>       /* Add PCH MSI node */
+> 
+
 
