@@ -4,73 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A88A0FA3757
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 14:23:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31967FA3755
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 14:31:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp7Ck-0003Rn-5H; Fri, 13 Sep 2024 10:23:22 -0400
+	id 1sp7Jc-0003Hu-1M; Fri, 13 Sep 2024 10:30:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sp7Ch-0003Qd-KS
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 10:23:19 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1sp7Ja-0003HL-6y
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 10:30:26 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sp7Ce-0001pk-Af
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 10:23:18 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5c40aea5c40so3693831a12.0
- for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 07:23:15 -0700 (PDT)
+ id 1sp7JY-0002f3-E6
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 10:30:25 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-53660856a21so1004472e87.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 07:30:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726237394; x=1726842194; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726237822; x=1726842622; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QUzkJDQLe4bsGE8ujXttYi7O1WdiFW79lLUK+yYP1aU=;
- b=fzFVW+zuDKJ4xpjtKtIw3vIX2xStn1Slc3f/z2AqXrCyhhtsRFTDqJTefmv5vykK+b
- Mx7Jarei2GRd3k+TorMBBcAb/OSc4+IM8SurKG5i1nPfrka6nuCFH3CRO01zBxUkaBao
- 5h04K5Wfdi005IUOqIjwMQB2WbmjQ4JLLyWXugOUUoSMEdW7+3sp0AP9JUq2lUneaQsn
- YtJGGePeMR6cFfUmM0xgq24slpzKvemuwYpp9Mok7e/4dmG9PDQ0M/ucq49UieqVxSQk
- 0+pbztEOJTrhLcWfh5/HbXGfudvNy73bDMUI1+rfQ0NzVIF/cr9Ziim4PgfuhcY1UvfO
- 8EPQ==
+ bh=Kpb8BbY7i4T4v3ULC8ET41Z7790TnbBTOoJfA2gr4wM=;
+ b=rK78a4hAwur3n5tA3W/30r4tU+uV4YYhFlYyzrZ1/7r9T/6A4CI2b3uPkXvB9mYJSX
+ lTcCiMTLoNqJ/OU0fmwpFoYYhYJIIbw/0IAvXjMSus1FoC+x6Tp1yAxNNmBLFwgLFNRC
+ 2TE+SJJe4DxKJXXzbAM34VetO24QLbUG0Sb2y5QqXOnXItyZBVs2L6mopU1jpFQ5ZpuY
+ 6dVvz4o8EQaeGYXfUf7LhWRMcBwNdmAh2GbqPTHRVYQnrkTMj9cWnRI0EHglpMIm6nm1
+ 3/0hJz4GanXxpuJvTmJAOYxgjDphavS+YhIPeqwdvO3/26kEmSDVcu7wPB+qt2dF+ePn
+ oABw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726237394; x=1726842194;
+ d=1e100.net; s=20230601; t=1726237822; x=1726842622;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QUzkJDQLe4bsGE8ujXttYi7O1WdiFW79lLUK+yYP1aU=;
- b=L3+XM9vhIxyWDcDU5f2UCEJ46kQ3fcJwj+oej7LZEWItT0BBpm3GgHgQxUjOTyY+Hq
- 2/YIGC0wMn2R19EX+YF2zdvlynrpfV+nzEi0wx/qxYkWN6qnSfzVtSSVzqwKf5i3XcIX
- tonizqYlmg3zZkuTaJerpC5w23gDzTfkjrjyOScjwvqLSJicOUOtrhHIgDs/UjzeBwwJ
- p49oihbi83cevEJI/M2fFKTN+w77+HkhmqA5ZvAeUxq1pL/km1cNmOSXkUP/xWidW71z
- 7oR9G5EeRpV8dgNgpJExz1y70rcJKXjLIE1NzeKLjJWmiiCyS27aA2md2T0oT28NTrXh
- aJRQ==
-X-Gm-Message-State: AOJu0Yx9G/GPEEntXE96ir4qQBiKrBU1DNuJCyo0zmAxf4OHAVwOkgN5
- J560gKI/M8EEtwUgG39ptstnZ2er36s9YdKEoBCCmqUkoBOcwlch+b/97MBpCgFa4sui0Ps2JKY
- 6kYtC5ppLVy9MMeCuwqyPvl1f+XYDeXsmpzw28g==
-X-Google-Smtp-Source: AGHT+IGr3JYYlFH0ZSw7OWmW0SXyWUTJMlVuQL5muPbTk4fDtRb/RiQN7/4KC/hMIWp1+DpmHIO9NF2V7jLRFNK6St4=
-X-Received: by 2002:a50:8d85:0:b0:5c2:5f31:8888 with SMTP id
- 4fb4d7f45d1cf-5c401602585mr11443858a12.15.1726237394105; Fri, 13 Sep 2024
- 07:23:14 -0700 (PDT)
+ bh=Kpb8BbY7i4T4v3ULC8ET41Z7790TnbBTOoJfA2gr4wM=;
+ b=RdE+gXh7v+AqoRDNGhMlpqLwQNBN5AA3O5nO5dAY+TLo6+jaj5lAAVjSysM4SahvGW
+ xVQqHowaGms34snWWeqDCxph2cdZdN3mPI15P2CietD/MSJiAlGYvYczaJIkG7ihLgIs
+ vHZ2iYg753osKaIAYzWBZ8C2Xfm3qrEOWo5kSw2hBGcQTsQKUcYA2g830TenSkY55Wru
+ rckkk2PWrN3w02NOuuo/18WgcNmsAUowQTVdgDwdQTtSvM3vYAdQGG4FMWr1n8FrKTjT
+ 5lTLMCDLAoWjq8w9BvT446Ju13KOCpzk87p5GPGVK0myFe6lR0S+UaAnR4DNgLAl3I9U
+ odzg==
+X-Gm-Message-State: AOJu0YxGgVQcSHNPmzENtzv+8BtW3uYKt1sBS0dvsUjWvPBABZwNlBif
+ b0JmVFubXWKaWeGskO42IitizvfVCXWngJ+ZaZ++X+bUKw/jgkMlbyXfXUNWvShaULNBuZPvoPw
+ dNLfB0HWD8Bw+szIqagQTBo4R+hTPddGAuCYM4A==
+X-Google-Smtp-Source: AGHT+IFIOVvWjzziCxPtwUoa4lDqfIZUzLyubU9wP9o5ClgPwmKwpKr38DeRK78DOUHHSwJNTW54ayUt+GcT7cXOTBE=
+X-Received: by 2002:a05:6512:350f:b0:536:55a8:6f78 with SMTP id
+ 2adb3069b0e04-5367fecd0eamr1559180e87.17.1726237821965; Fri, 13 Sep 2024
+ 07:30:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240912151003.2045031-1-peter.maydell@linaro.org>
- <CAFEAcA-ZuE4B1frfnkpS6yxu_YiTastZ9S_b=4_8zGigRtDeNg@mail.gmail.com>
- <CAFEAcA9sUcspOwWU-huyza4Rp=vw=5wArXBSnV-KDVYm5=8u_g@mail.gmail.com>
- <ZuRGrUiawzKk7lXG@redhat.com>
-In-Reply-To: <ZuRGrUiawzKk7lXG@redhat.com>
+References: <20240912065227.67848-1-philmd@linaro.org>
+In-Reply-To: <20240912065227.67848-1-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 13 Sep 2024 15:23:02 +0100
-Message-ID: <CAFEAcA-daVkdEm3y_DK9opuAj7o_U_tkxpuPXPxT7cwY-fK7Dw@mail.gmail.com>
-Subject: Re: [PATCH v2] .gitlab-ci.d/crossbuilds.yml: Force 'make check'
- single-threaded for cross-i686-tci
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
+Date: Fri, 13 Sep 2024 15:30:10 +0100
+Message-ID: <CAFEAcA9uxg_du0PQKpFf-tmcQWWY-u54v7c685F7JNXF2vKpsA@mail.gmail.com>
+Subject: Re: [PULL v2 00/61] Misc HW & UI patches for 2024-09-12
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,47 +89,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 13 Sept 2024 at 15:05, Daniel P. Berrang=C3=A9 <berrange@redhat.com=
-> wrote:
+On Thu, 12 Sept 2024 at 07:53, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.o=
+rg> wrote:
 >
-> On Fri, Sep 13, 2024 at 02:31:34PM +0100, Peter Maydell wrote:
-> > On Fri, 13 Sept 2024 at 13:24, Peter Maydell <peter.maydell@linaro.org>=
- wrote:
-> > >
-> > > On Thu, 12 Sept 2024 at 16:10, Peter Maydell <peter.maydell@linaro.or=
-g> wrote:
-> > > >
-> > > > The cross-i686-tci CI job is persistently flaky with various tests
-> > > > hitting timeouts.  One theory for why this is happening is that we'=
-re
-> > > > running too many tests in parallel and so sometimes a test gets
-> > > > starved of CPU and isn't able to complete within the timeout.
-> > > >
-> > > > (The environment this CI job runs in seems to cause us to default
-> > > > to a parallelism of 9 in the main CI.)
-> > > >
-> > > > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > > > ---
-> > > > If this works we might be able to wind this up to -j2 or -j3,
-> > > > and/or consider whether other CI jobs need something similar.
-> > >
-> > > I gave this a try, but unfortunately the result seems to be
-> > > that the whole job times out:
-> > > https://gitlab.com/qemu-project/qemu/-/jobs/7818441897
-> >
-> > ...but then this simple retry passed with a runtime of 47 mins:
-> >
-> > https://gitlab.com/qemu-project/qemu/-/jobs/7819225200
-> >
-> > I'm tempted to commit this as-is, and see whether it helps.
-> > If it doesn't I can always back it off to -j2, and if it does
-> > generate a lot of full-job-timeouts it's only me it's annoying.
+> v2:
+> - Fill Pierrick's commit description suggested by Eric Blake
+> - Include TMP105 fixes from Guenter
 >
-> Anyone know how many vCPUs our k8s runners have ?
+> The following changes since commit a4eb31c678400472de0b4915b9154a7c20d833=
+2f:
+>
+>   Merge tag 'pull-testing-gdbstub-oct-100924-1' of https://gitlab.com/sts=
+quad/qemu into staging (2024-09-11 13:17:29 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/philmd/qemu.git tags/hw-misc-20240912
+>
+> for you to fetch changes up to bd480a2baab659abe90da878bc955670691f53a8:
+>
+>   ui: remove break after g_assert_not_reached() (2024-09-12 08:44:48 +020=
+0)
+>
+> ----------------------------------------------------------------
+> Misc HW & UI patches
+>
+> - Remove deprecated SH4 SHIX machine TC58128 NAND EEPROM (Phil)
+> - Remove deprecated CRIS target (Phil)
+> - Remove deprecated RISC-V 'any' CPU type (Phil)
+> - Add fifo8_peek_buf() to correctly handle FIFO wraparound (Mark)
+> - Minor cleanups in Designware PCIe, PL011 and loongson IPI models (Phil)
+> - Fixes in TI TMP105 temperature (Guenter)
+> - Convert Sun ESCC and ADB mouses to QemuInputHandler (Mark)
+> - Prevent heap overflow in VIRTIO sound device (Volker)
+> - Cleanups around g_assert_not_reached() call (Pierrick)
+> - Add Cl=C3=A9ment as VT-d reviewer (Cl=C3=A9ment)
+> - Prevent stuck modifier keys and unexpected text input on Windows (Volke=
+r)
+> - Explicitly set SDL2 swap interval when OpenGL is enabled (Gert)
 
-They report as 8, I think, given that in the main CI run this
-job gets run as -j9. But we clearly aren't actually getting
-a reliable 9 CPUs worth.
+Fails tests on some CI configs:
+
+https://gitlab.com/qemu-project/qemu/-/jobs/7820098438
+
+ERROR:../tests/qtest/tmp105-test.c:103:send_and_receive: assertion
+failed (i2c_get16(i2cdev, TMP105_REG_T_LOW) =3D=3D 0x1234): (0x00001230 =3D=
+=3D
+0x00001234)
+(test program exited with status code -6)
+
+https://gitlab.com/qemu-project/qemu/-/jobs/7820098228
+
+ERROR:../tests/qtest/bcm2835-i2c-test.c:84:test_i2c_read_write:
+assertion failed (i2cdata =3D=3D 0xad): (160 =3D=3D 173)
+(test program exited with status code -6)
 
 -- PMM
 
