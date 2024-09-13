@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02ED5FA3737
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 09:25:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1304AFA3738
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 09:25:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp2Y8-0000P7-CJ; Fri, 13 Sep 2024 05:25:08 -0400
+	id 1sp2Yd-0000q1-KV; Fri, 13 Sep 2024 05:25:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sp2Y5-0000MT-NJ
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 05:25:05 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sp2Y1-0004Bz-JO
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 05:25:05 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5c24c92f699so1701757a12.2
- for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 02:25:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726219499; x=1726824299; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ci18e0ToEUJEx1JvuD2ii1z5vR72h4MufMPC7uSPvP0=;
- b=UMJF7c5porrk9MpxQmkge6RXVkiy/ftVUhpC2/R2LdP4X51HCiPCS5QdcECBOu4YAn
- w6ii+PC2fWEEJi2Vx5JMzCmGItgs/MEU2XiosgirypN1shde/WgX13nCYRPZWSNbijU/
- QyUPRPu+UMq2k6DjOVSGTGIcadgnm7NPWkSsw2NKtcfk1uW82XuGDuxRfaTUdysmMKoG
- lALqFP+ae99Q2kE5tnlYG3DYbFzw1M4fcZFXARehDHr2+nfSi4DDMIVOs1QTIMXOqKeW
- M6E+thgVCZgbZ3jT6/lEIroQ1ZTzaNRHZOiF5ycFIXaQfKIWkKImUVCjedFfrdi03/Dd
- fK1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726219499; x=1726824299;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ci18e0ToEUJEx1JvuD2ii1z5vR72h4MufMPC7uSPvP0=;
- b=vwnr3w59t48ZHBXLlWoLJAhDdVLGf14IE+nfIxfU2CqEMHs79sXuMjOYXz9xSdZo3u
- O6GUGf6irLkbjZODtdDp4XlkUgkVsNuSU0iwGDKdsFoH9bQL9dlQWeaecI+E8+5pGfNz
- HVQZw1SZN9jxPstQwcSZLPinxUxRoyJMtnnRWwnxgWt+Avso524PAacWzIlQ7Bewdy4W
- PZUlb8jFzv4stwJ0fsP0XdCPTm9hIiZ0Hjt/p7bORsvAeYYSrsc5DJf0aRS+39KfsNTf
- AToiLf34hMOuEQ4wp5tR0PKqVDQ9DvZIkCnyuqZX9QEy9xOzX1icvYPlfY7l7tVT0fOd
- XpfQ==
-X-Gm-Message-State: AOJu0Yx/9xNzBKfyHG28qEBtf5pq7eZLsFS3FEgDDvAttfS6NQhE3mq2
- nTVkDaEaGMFQi8Q3thmt5QXRIDZXRp1/alrLEkiXm3Up+r4SheWgXAlqwzqObXl7sf/BBnrxUFf
- vimDgCCkeY4qS9nDu7T4q7sU8WtcN3JytE00HXw==
-X-Google-Smtp-Source: AGHT+IFXqXzHT/40CxYhlVYBb6oK3De9pyqf//730Nl+k0mliYrik1gQJtZ8klgCQ1uZpqTsxfQESAFrlozq77CY0WM=
-X-Received: by 2002:a05:6402:2295:b0:5c2:112f:aa77 with SMTP id
- 4fb4d7f45d1cf-5c413e57ab9mr3388231a12.31.1726219498737; Fri, 13 Sep 2024
- 02:24:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sp2Ya-0000pQ-7Z
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 05:25:36 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sp2YX-0004Pi-RA
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 05:25:35 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8DxneoJBeRm1skGAA--.16240S3;
+ Fri, 13 Sep 2024 17:25:29 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMBxn+QIBeRm4a0FAA--.32584S3;
+ Fri, 13 Sep 2024 17:25:29 +0800 (CST)
+Subject: Re: [PATCH v4 1/5] hw/loongarch: Rename LOONGARCH_MACHINE with
+ LOONGARCH_VIRT_MACHINE
+To: Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
+References: <20240508031110.2507477-1-maobibo@loongson.cn>
+ <20240508031110.2507477-2-maobibo@loongson.cn>
+ <2f7acdd5-9d9d-442c-a19f-c8a5828ae02b@redhat.com>
+ <87jzfg2d7y.fsf@pond.sub.org>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <4df78e82-6a4b-c543-281c-b63b283dca42@loongson.cn>
+Date: Fri, 13 Sep 2024 17:25:28 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <cover.1726062663.git.mst@redhat.com>
-In-Reply-To: <cover.1726062663.git.mst@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 13 Sep 2024 10:24:47 +0100
-Message-ID: <CAFEAcA9GdiQ6pYXuaVX4ehvVhsbT9TKtXCQHR2abpJSRU4bSEw@mail.gmail.com>
-Subject: Re: [PULL 00/18] virtio,pc,pci: features, fixes, cleanups
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <87jzfg2d7y.fsf@pond.sub.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMBxn+QIBeRm4a0FAA--.32584S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7uFW3XFyDZrW5Aw4DXr4xAFc_yoW8XF18pr
+ 9xAF10ka1qqrZ7ArnIq3WFgF1UArZayFy2qFn5tr4Fka98ur1Fgr10y34kuayUAwn5AF1v
+ vws5C3yavayru3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GF
+ ylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1Li
+ SJUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.188,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,36 +87,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 11 Sept 2024 at 14:51, Michael S. Tsirkin <mst@redhat.com> wrote:
->
-> The following changes since commit a66f28df650166ae8b50c992eea45e7b247f4143:
->
->   Merge tag 'migration-20240909-pull-request' of https://gitlab.com/peterx/qemu into staging (2024-09-10 11:19:22 +0100)
->
-> are available in the Git repository at:
->
->   https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
->
-> for you to fetch changes up to 6e3c2d58e967cde3dadae298e81c5e8eb9fb9080:
->
->   hw/acpi/ich9: Add periodic and swsmi timer (2024-09-11 09:46:14 -0400)
->
-> ----------------------------------------------------------------
-> virtio,pc,pci: features, fixes, cleanups
->
-> i286 acpi speedup by precomputing _PRT by Ricardo Ribalda
-> vhost_net speedup by using MR transactions by Zuo Boqun
-> ich9 gained support for periodic and swsmi timer by Dominic Prinz
->
-> Fixes, cleanups all over the place.
->
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 
 
-Applied, thanks.
+On 2024/9/13 下午4:02, Markus Armbruster wrote:
+> Thomas Huth <thuth@redhat.com> writes:
+> 
+>> On 08/05/2024 05.11, Bibo Mao wrote:
+>>> On LoongArch system, there is only virt machine type now, name
+>>> LOONGARCH_MACHINE is confused, rename it with LOONGARCH_VIRT_MACHINE.
+>>> Machine name about Other real hw boards can be added in future.
+>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>>> ---
+>> ...
+>>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>>> index c0999878df..6619cb52a9 100644
+>>> --- a/hw/loongarch/virt.c
+>>> +++ b/hw/loongarch/virt.c
+>> ...
+>>> @@ -1208,7 +1208,6 @@ static void loongarch_class_init(ObjectClass *oc, void *data)
+>>>        MachineClass *mc = MACHINE_CLASS(oc);
+>>>        HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
+>>>    -    mc->desc = "Loongson-3A5000 LS7A1000 machine";
+>>>        mc->init = loongarch_init;
+>>>        mc->default_ram_size = 1 * GiB;
+>>>        mc->default_cpu_type = LOONGARCH_CPU_TYPE_NAME("la464");
+>>
+>>   Hi!
+>>
+>> I noticed that the machine now does not have any description anymore, which is kind of ugly when you list the available machines:
+>>
+>> $ ./qemu-system-loongarch64 -M help
+>> Supported machines are:
+>> none                 empty machine
+>> virt                 (null) (default)
+>>
+>> Could you please come up with a new mc->desc for the virt machine?
+> 
+> Formatting a null pointer with %s is actually a crash bug on some
+> systems.
+Thanks for pointing it out, I will submit a patch to add the description.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
+Regards
+Bibo Ma
 
--- PMM
 
