@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 472FEFC6160
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 16:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E84B8FC6166
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 16:41:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp9Lk-0001Uh-MD; Fri, 13 Sep 2024 12:40:48 -0400
+	id 1sp9Ks-0006Fq-Au; Fri, 13 Sep 2024 12:39:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1sp9La-0000oe-HO; Fri, 13 Sep 2024 12:40:38 -0400
+ id 1sp9Kp-000655-Q0; Fri, 13 Sep 2024 12:39:51 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1sp9LX-00017B-PT; Fri, 13 Sep 2024 12:40:38 -0400
+ id 1sp9Km-0000qB-AW; Fri, 13 Sep 2024 12:39:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
- Content-Type; bh=BeahmhsOF3u83K+5/zMSfIVWcTV5YzoBEeFsUE4xhFs=; b=QGjOAfoqK2wf
- YSngJZGQZ2A51WbWDPnA3HBItbtCAYyVP3wSrOVfbbSJvwNtcBQqWpqn8IncTbko1rW0L5NjG0dqE
- i7AoKtrDryLGe77YNfeF4CWWySOLupwcDmXzmPmcGtaoA5HtX4VzvM2AeOECq72LZJr8iyq+mKx9S
- roH/8GtpxHbcH1dfnNlnVPksPN1GisDGEKhagOAxHHGGuGQKB+P7lOW/EoL4w/Nyr5B0Oh5RU9QPt
- H1e2fWO31N/HxZ3dma1gEdpu4NweOkGVp6oBkV9WKXOo687W9dIfivAAjXHW1D54dnKgcKKGcSa/D
- 9ln4cDY8RWcA8exui3hh9Q==;
+ Content-Type; bh=6TUH3hWc7yBnsdPjbzKjuhLzm0vMR7kWS8RnMuC3e3s=; b=IkA1j8vllWQK
+ aNtIofazJvAr8V7nP2TEadx9CT/HSb+/xR2RZcgoLw6umCydkJueBCUh+h2JGZvfVRVc/x6YVSmoT
+ SFQJkHQrZ8aIcLVu8YMMoP27Lp+T8+TdhxZmDvMdbvkp3JUGcT3kQPz4+0m9oki02cvoBRH6LySMO
+ eFgiHxWzJjNwbAZCKIGVbNxTbL8cmcLqVZFWUPB3ABc2MvnTUxKXmam7a5RF46n2+9sJExMRXA11d
+ 5WXUGME8CoCz9LAVVNglFumvwkXnWXbv7MswpDGKnbiD4BU8B72eyDYjDQcsKDnIXLZahFXZNEHv5
+ XkbUjxIiq/58FEA6GF7VHA==;
 Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1sp9Hz-002OPf-0M;
- Fri, 13 Sep 2024 18:39:40 +0200
+ (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1sp9Hz-002OPf-09;
+ Fri, 13 Sep 2024 18:39:39 +0200
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
  eblake@redhat.com, stefanha@redhat.com, berto@igalia.com,
  andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH v3 11/12] iotests/271: add test cases for subcluster-based
- discard/unmap
-Date: Fri, 13 Sep 2024 19:39:41 +0300
-Message-Id: <20240913163942.423050-12-andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v3 09/12] qcow2: make subclusters discardable
+Date: Fri, 13 Sep 2024 19:39:39 +0300
+Message-Id: <20240913163942.423050-10-andrey.drobyshev@virtuozzo.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240913163942.423050-1-andrey.drobyshev@virtuozzo.com>
 References: <20240913163942.423050-1-andrey.drobyshev@virtuozzo.com>
@@ -68,347 +67,285 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a bunch of test cases covering new subclusters behaviour: unmap of
-last allocated subclusters; unmap of subclusters within unallocated
-cluster; discard of unallocated subclusters within a cluster; regular discard
-of subclusters within a cluster; discard of last allocated subclusters.
+This commit makes the discard operation work on the subcluster level
+rather than cluster level.  It introduces discard_l2_subclusters()
+function and makes use of it in qcow2 discard implementation, much like
+it's done with zero_in_l2_slice() / zero_l2_subclusters().  It also
+changes the qcow2 driver pdiscard_alignment to subcluster_size.  That
+way subcluster-aligned discards lead to actual fallocate(PUNCH_HOLE)
+operation and free host disk space.
 
-Also make all discard/unmap operations enable trace point 'file_do_fallocate'
-so that actual fallocate() calls are visible.
+This feature will let us gain additional disk space on guest
+TRIM/discard requests, especially when using large enough clusters
+(1M, 2M) with subclusters enabled.
+
+Also rename qcow2_cluster_discard() -> qcow2_subcluster_discard() to
+reflect the change.
 
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Reviewed-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
 ---
- tests/qemu-iotests/271     | 70 +++++++++++++++++++++++++++++---------
- tests/qemu-iotests/271.out | 69 ++++++++++++++++++++++++++++++++++---
- 2 files changed, 119 insertions(+), 20 deletions(-)
+ block/qcow2-cluster.c  | 106 +++++++++++++++++++++++++++++++++++++----
+ block/qcow2-snapshot.c |   6 +--
+ block/qcow2.c          |  25 +++++-----
+ block/qcow2.h          |   4 +-
+ tests/qemu-iotests/271 |   2 +-
+ 5 files changed, 117 insertions(+), 26 deletions(-)
 
-diff --git a/tests/qemu-iotests/271 b/tests/qemu-iotests/271
-index 04c57813c2..8b80682cff 100755
---- a/tests/qemu-iotests/271
-+++ b/tests/qemu-iotests/271
-@@ -81,6 +81,12 @@ _verify_l2_bitmap()
-     fi
+diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
+index 8d39e2f960..3c134a7e80 100644
+--- a/block/qcow2-cluster.c
++++ b/block/qcow2-cluster.c
+@@ -2105,25 +2105,106 @@ discard_in_l2_slice(BlockDriverState *bs, uint64_t offset, uint64_t nb_clusters,
+     return nb_clusters;
  }
  
-+# Filter out trace params which we don't control (file fd)
-+_filter_trace_fallocate()
+-int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
+-                          uint64_t bytes, enum qcow2_discard_type type,
+-                          bool full_discard)
++static int coroutine_fn GRAPH_RDLOCK
++discard_l2_subclusters(BlockDriverState *bs, uint64_t offset,
++                       uint64_t nb_subclusters,
++                       enum qcow2_discard_type type,
++                       bool full_discard)
 +{
-+    sed -E 's/fd=[0-9]+/fd=N/g'
++    BDRVQcow2State *s = bs->opaque;
++    uint64_t new_l2_bitmap, bitmap_alloc_mask, bitmap_zero_mask;
++    int ret, sc = offset_to_sc_index(s, offset);
++    g_auto(SubClusterRangeInfo) scri = { 0 };
++
++    ret = get_sc_range_info(bs, offset, nb_subclusters, &scri);
++    if (ret < 0) {
++        return ret;
++    }
++
++    new_l2_bitmap = scri.l2_bitmap;
++    bitmap_alloc_mask = QCOW_OFLAG_SUB_ALLOC_RANGE(sc, sc + nb_subclusters);
++    bitmap_zero_mask = QCOW_OFLAG_SUB_ZERO_RANGE(sc, sc + nb_subclusters);
++
++    new_l2_bitmap &= ~bitmap_alloc_mask;
++
++    /*
++     * Full discard means we fall through to the backing file, thus we need
++     * to mark the subclusters as deallocated and clear the corresponding
++     * zero bits.
++     *
++     * Non-full discard means subclusters should be explicitly marked as
++     * zeroes.  In this case QCOW2 specification requires the corresponding
++     * allocation status bits to be unset as well.  If the subclusters are
++     * deallocated in the first place and there's no backing, the operation
++     * can be skipped.
++     */
++    if (full_discard) {
++        new_l2_bitmap &= ~bitmap_zero_mask;
++    } else if (bs->backing || scri.l2_bitmap & bitmap_alloc_mask) {
++        new_l2_bitmap |= bitmap_zero_mask;
++    }
++
++    /*
++     * If after discarding this range there won't be any allocated subclusters
++     * left, and new bitmap becomes the same as it'd be after discarding the
++     * whole cluster, we better discard it entirely.  That way we'd also
++     * update the refcount table.
++     */
++    if ((full_discard && new_l2_bitmap == 0) ||
++            (!full_discard && new_l2_bitmap == QCOW_L2_BITMAP_ALL_ZEROES)) {
++        return discard_in_l2_slice(
++            bs, QEMU_ALIGN_DOWN(offset, s->cluster_size),
++            1, type, full_discard);
++    }
++
++    if (scri.l2_bitmap != new_l2_bitmap) {
++        set_l2_bitmap(s, scri.l2_slice, scri.l2_index, new_l2_bitmap);
++        qcow2_cache_entry_mark_dirty(s->l2_table_cache, scri.l2_slice);
++    }
++
++    discard_no_unref_any_file(
++        bs, (scri.l2_entry & L2E_OFFSET_MASK) + offset_into_cluster(s, offset),
++        nb_subclusters * s->subcluster_size, scri.ctype, type);
++
++    return 0;
 +}
 +
- # This should be called as _run_test c=XXX sc=XXX off=XXX len=XXX cmd=XXX
- # c:   cluster number (0 if unset)
- # sc:  subcluster number inside cluster @c (0 if unset)
-@@ -94,12 +100,13 @@ _verify_l2_bitmap()
- #      discard  -> discard
- _run_test()
++int qcow2_subcluster_discard(BlockDriverState *bs, uint64_t offset,
++                             uint64_t bytes, enum qcow2_discard_type type,
++                             bool full_discard)
  {
--    unset c sc off len cmd
-+    unset c sc off len cmd opt
-     for var in "$@"; do eval "$var"; done
-     case "${cmd:-write}" in
-         zero)
-             cmd="write -q -z";;
-         unmap)
-+            opt="--trace enable=file_do_fallocate"
-             cmd="write -q -z -u";;
-         compress)
-             pat=$((${pat:-0} + 1))
-@@ -108,6 +115,7 @@ _run_test()
-             pat=$((${pat:-0} + 1))
-             cmd="write -q -P ${pat}";;
-         discard)
-+            opt="--trace enable=file_do_fallocate"
-             cmd="discard -q";;
-         *)
-             echo "Unknown option $cmd"
-@@ -121,7 +129,7 @@ _run_test()
-     cmd="$cmd ${offset} ${len}"
-     raw_cmd=$(echo $cmd | sed s/-c//) # Raw images don't support -c
-     echo $cmd | sed 's/-P [0-9][0-9]\?/-P PATTERN/'
--    $QEMU_IO -c "$cmd" "$TEST_IMG" | _filter_qemu_io
-+    $QEMU_IO $opt -c "$cmd" "$TEST_IMG" 2>&1 | _filter_qemu_io | _filter_trace_fallocate
-     $QEMU_IO -c "$raw_cmd" -f raw "$TEST_IMG.raw" | _filter_qemu_io
-     _verify_img
-     _verify_l2_bitmap "$c"
-@@ -202,9 +210,10 @@ for use_backing_file in yes no; do
-     alloc="$(seq 16 31)"; zero="$(seq 0 15)"
-     _run_test sc=0 len=32k cmd=unmap
+     BDRVQcow2State *s = bs->opaque;
+     uint64_t end_offset = offset + bytes;
+     uint64_t nb_clusters;
++    unsigned head, tail;
+     int64_t cleared;
+     int ret;
  
--    ### Zero and unmap cluster #0
-+    ### Zero and unmap second half of cluster #0 (this will unmap it and
-+    ### discard l2 entry)
-     alloc=""; zero="$(seq 0 31)"
--    _run_test sc=0 len=64k cmd=unmap
-+    _run_test sc=16 len=32k cmd=unmap
+     /* Caller must pass aligned values, except at image end */
+-    assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
+-    assert(QEMU_IS_ALIGNED(end_offset, s->cluster_size) ||
++    assert(QEMU_IS_ALIGNED(offset, s->subcluster_size));
++    assert(QEMU_IS_ALIGNED(end_offset, s->subcluster_size) ||
+            end_offset == bs->total_sectors << BDRV_SECTOR_BITS);
  
-     ### Write subcluster #1 (middle of subcluster)
-     alloc="1"; zero="0 $(seq 2 31)"
-@@ -439,6 +448,12 @@ for use_backing_file in yes no; do
-     _verify_l2_bitmap 16
-     _verify_l2_bitmap 17
- 
-+    # Unmap subclusters #0-#3 of an unallocated cluster #8.  Since
-+    # 'write -z -u' doesn't lead to full discard, subclusters should become
-+    # explicitly zeroized
-+    alloc=""; zero="$(seq 0 3)"
-+    _run_test c=8 sc=0 len=8k cmd=unmap
+-    nb_clusters = size_to_clusters(s, bytes);
++    head = MIN(end_offset, ROUND_UP(offset, s->cluster_size)) - offset;
++    offset += head;
 +
-     # Cluster-aligned request from clusters #9 to #11
-     alloc=""; zero="$(seq 0 31)"
-     _run_test c=9 sc=0 len=192k cmd=unmap
-@@ -523,26 +538,45 @@ for use_backing_file in yes no; do
++    tail = (end_offset >= bs->total_sectors << BDRV_SECTOR_BITS) ? 0 :
++           end_offset - MAX(offset, start_of_cluster(s, end_offset));
++    end_offset -= tail;
+ 
+     s->cache_discards = true;
+ 
++    if (head) {
++        ret = discard_l2_subclusters(bs, offset - head,
++                                     size_to_subclusters(s, head), type,
++                                     full_discard);
++        if (ret < 0) {
++            goto fail;
++        }
++    }
++
++    nb_clusters = size_to_clusters(s, end_offset - offset);
++
+     /* Each L2 slice is handled by its own loop iteration */
+     while (nb_clusters > 0) {
+         cleared = discard_in_l2_slice(bs, offset, nb_clusters, type,
+@@ -2137,6 +2218,15 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
+         offset += (cleared * s->cluster_size);
+     }
+ 
++    if (tail) {
++        ret = discard_l2_subclusters(bs, end_offset,
++                                     size_to_subclusters(s, tail), type,
++                                     full_discard);
++        if (ret < 0) {
++            goto fail;
++        }
++    }
++
+     ret = 0;
+ fail:
+     s->cache_discards = false;
+@@ -2286,8 +2376,8 @@ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
+      */
+     if (s->qcow_version < 3) {
+         if (!bs->backing) {
+-            return qcow2_cluster_discard(bs, offset, bytes,
+-                                         QCOW2_DISCARD_REQUEST, false);
++            return qcow2_subcluster_discard(bs, offset, bytes,
++                                            QCOW2_DISCARD_REQUEST, false);
+         }
+         return -ENOTSUP;
+     }
+diff --git a/block/qcow2-snapshot.c b/block/qcow2-snapshot.c
+index 92e47978bf..4e39354d02 100644
+--- a/block/qcow2-snapshot.c
++++ b/block/qcow2-snapshot.c
+@@ -736,9 +736,9 @@ int qcow2_snapshot_create(BlockDriverState *bs, QEMUSnapshotInfo *sn_info)
+ 
+     /* The VM state isn't needed any more in the active L1 table; in fact, it
+      * hurts by causing expensive COW for the next snapshot. */
+-    qcow2_cluster_discard(bs, qcow2_vm_state_offset(s),
+-                          ROUND_UP(sn->vm_state_size, s->cluster_size),
+-                          QCOW2_DISCARD_NEVER, false);
++    qcow2_subcluster_discard(bs, qcow2_vm_state_offset(s),
++                             ROUND_UP(sn->vm_state_size, s->cluster_size),
++                             QCOW2_DISCARD_NEVER, false);
+ 
+ #ifdef DEBUG_ALLOC
+     {
+diff --git a/block/qcow2.c b/block/qcow2.c
+index dd359d241b..c2086d0bd1 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -1981,7 +1981,7 @@ static void qcow2_refresh_limits(BlockDriverState *bs, Error **errp)
+         bs->bl.request_alignment = qcrypto_block_get_sector_size(s->crypto);
+     }
+     bs->bl.pwrite_zeroes_alignment = s->subcluster_size;
+-    bs->bl.pdiscard_alignment = s->cluster_size;
++    bs->bl.pdiscard_alignment = s->subcluster_size;
+ }
+ 
+ static int GRAPH_UNLOCKED
+@@ -4126,19 +4126,19 @@ qcow2_co_pdiscard(BlockDriverState *bs, int64_t offset, int64_t bytes)
+         return -ENOTSUP;
+     }
+ 
+-    if (!QEMU_IS_ALIGNED(offset | bytes, s->cluster_size)) {
+-        assert(bytes < s->cluster_size);
++    if (!QEMU_IS_ALIGNED(offset | bytes, bs->bl.pdiscard_alignment)) {
++        assert(bytes < bs->bl.pdiscard_alignment);
+         /* Ignore partial clusters, except for the special case of the
+          * complete partial cluster at the end of an unaligned file */
+-        if (!QEMU_IS_ALIGNED(offset, s->cluster_size) ||
++        if (!QEMU_IS_ALIGNED(offset, bs->bl.pdiscard_alignment) ||
+             offset + bytes != bs->total_sectors * BDRV_SECTOR_SIZE) {
+             return -ENOTSUP;
+         }
+     }
+ 
+     qemu_co_mutex_lock(&s->lock);
+-    ret = qcow2_cluster_discard(bs, offset, bytes, QCOW2_DISCARD_REQUEST,
+-                                false);
++    ret = qcow2_subcluster_discard(bs, offset, bytes, QCOW2_DISCARD_REQUEST,
++                                   false);
+     qemu_co_mutex_unlock(&s->lock);
+     return ret;
+ }
+@@ -4349,10 +4349,10 @@ qcow2_co_truncate(BlockDriverState *bs, int64_t offset, bool exact,
+             goto fail;
+         }
+ 
+-        ret = qcow2_cluster_discard(bs, ROUND_UP(offset, s->cluster_size),
+-                                    old_length - ROUND_UP(offset,
+-                                                          s->cluster_size),
+-                                    QCOW2_DISCARD_ALWAYS, true);
++        ret = qcow2_subcluster_discard(bs, ROUND_UP(offset, s->cluster_size),
++                                       old_length - ROUND_UP(offset,
++                                                             s->cluster_size),
++                                       QCOW2_DISCARD_ALWAYS, true);
+         if (ret < 0) {
+             error_setg_errno(errp, -ret, "Failed to discard cropped clusters");
+             goto fail;
+@@ -5046,8 +5046,9 @@ static int GRAPH_RDLOCK qcow2_make_empty(BlockDriverState *bs)
+          * default action for this kind of discard is to pass the discard,
+          * which will ideally result in an actually smaller image file, as
+          * is probably desired. */
+-        ret = qcow2_cluster_discard(bs, offset, MIN(step, end_offset - offset),
+-                                    QCOW2_DISCARD_SNAPSHOT, true);
++        ret = qcow2_subcluster_discard(bs, offset,
++                                       MIN(step, end_offset - offset),
++                                       QCOW2_DISCARD_SNAPSHOT, true);
+         if (ret < 0) {
+             break;
+         }
+diff --git a/block/qcow2.h b/block/qcow2.h
+index 197bdcdf53..a65c185b51 100644
+--- a/block/qcow2.h
++++ b/block/qcow2.h
+@@ -953,8 +953,8 @@ void coroutine_fn GRAPH_RDLOCK
+ qcow2_alloc_cluster_abort(BlockDriverState *bs, QCowL2Meta *m);
+ 
+ int GRAPH_RDLOCK
+-qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset, uint64_t bytes,
+-                      enum qcow2_discard_type type, bool full_discard);
++qcow2_subcluster_discard(BlockDriverState *bs, uint64_t offset, uint64_t bytes,
++                         enum qcow2_discard_type type, bool full_discard);
+ 
+ int coroutine_fn GRAPH_RDLOCK
+ qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset, uint64_t bytes,
+diff --git a/tests/qemu-iotests/271 b/tests/qemu-iotests/271
+index 59a6fafa2f..04c57813c2 100755
+--- a/tests/qemu-iotests/271
++++ b/tests/qemu-iotests/271
+@@ -518,7 +518,7 @@ done
+ ############################################################
+ ############################################################
+ 
+-# Test qcow2_cluster_discard() with full and normal discards
++# Test qcow2_subcluster_discard() with full and normal discards
+ for use_backing_file in yes no; do
      echo
      echo "### Discarding clusters with non-zero bitmaps (backing file: $use_backing_file) ###"
-     echo
-+
-+    _reset_img 1M
-+
-+    # Write first half of cluster #0 and discard another half
-+    alloc="$(seq 0 15)"; zero=""
-+    _run_test sc=0 len=32k
-+    # When discarding unallocated subclusters, they only have to be
-+    # explicitly zeroized when the image has a backing file
-     if [ "$use_backing_file" = "yes" ]; then
--        _make_test_img -o extended_l2=on -F raw -b "$TEST_IMG.base" 1M
-+        alloc="$(seq 0 15)"; zero="$(seq 16 31)"
-     else
--        _make_test_img -o extended_l2=on 1M
-+        alloc="$(seq 0 15)"; zero=""
-     fi
--    # Write clusters #0-#2 and then discard them
--    $QEMU_IO -c 'write -q 0 128k' "$TEST_IMG"
--    $QEMU_IO -c 'discard -q 0 128k' "$TEST_IMG"
-+    _run_test sc=16 len=32k cmd=discard
-+
-+    # Write cluster #0 and discard its subclusters #0-#3
-+    alloc="$(seq 0 31)"; zero=""
-+    _run_test sc=0 len=64k
-+    alloc="$(seq 4 31)"; zero="$(seq 0 3)"
-+    _run_test sc=0 len=8k cmd=discard
-+
-+    # Discard remaining subclusters #4-#32.  This should unmap the cluster
-+    # and discard its l2 entry
-+    alloc=""; zero="$(seq 0 31)"
-+    _run_test sc=4 len=56k cmd=discard
-+
-+    # Write clusters #0-#1 and then discard them
-+    alloc="$(seq 0 31)"; zero=""
-+    _run_test sc=0 len=128k
-     # 'qemu-io discard' doesn't do a full discard, it zeroizes the
--    # cluster, so both clusters have all zero bits set now
-+    # cluster, so both clusters have all zero bits set after discard
-     alloc=""; zero="$(seq 0 31)"
--    _verify_l2_bitmap 0
-+    _run_test sc=0 len=128k cmd=discard
-     _verify_l2_bitmap 1
-+
-     # Now mark the 2nd half of the subclusters from cluster #0 as unallocated
-     poke_file "$TEST_IMG" $(($l2_offset+8)) "\x00\x00"
-+
-     # Discard cluster #0 again to see how the zero bits have changed
--    $QEMU_IO -c 'discard -q 0 64k' "$TEST_IMG"
--    # And do a full discard of cluster #1 by shrinking and growing the image
--    $QEMU_IMG resize --shrink "$TEST_IMG" 64k
--    $QEMU_IMG resize "$TEST_IMG" 1M
-     # A normal discard sets all 'zero' bits only if the image has a
-     # backing file, otherwise it won't touch them.
-     if [ "$use_backing_file" = "yes" ]; then
-@@ -550,7 +584,11 @@ for use_backing_file in yes no; do
-     else
-         alloc=""; zero="$(seq 0 15)"
-     fi
--    _verify_l2_bitmap 0
-+    _run_test sc=0 len=64k cmd=discard
-+
-+    # And do a full discard of cluster #1 by shrinking and growing the image
-+    $QEMU_IMG resize --shrink "$TEST_IMG" 64k
-+    $QEMU_IMG resize "$TEST_IMG" 1M
-     # A full discard should clear the L2 entry completely. However
-     # when growing an image with a backing file the new clusters are
-     # zeroized to hide the stale data from the backing file
-diff --git a/tests/qemu-iotests/271.out b/tests/qemu-iotests/271.out
-index 0b24d50159..c03e4c9bc2 100644
---- a/tests/qemu-iotests/271.out
-+++ b/tests/qemu-iotests/271.out
-@@ -29,14 +29,17 @@ L2 entry #0: 0x8000000000050000 ffffffff00000000
- write -q -P PATTERN 0 64k
- L2 entry #0: 0x8000000000050000 00000000ffffffff
- write -q -z -u 0 32k
-+file_do_fallocate fd=N mode=0x03 offset=327680 len=32768
- L2 entry #0: 0x8000000000050000 0000ffffffff0000
--write -q -z -u 0 64k
-+write -q -z -u 32k 32k
-+file_do_fallocate fd=N mode=0x03 offset=327680 len=65536
- L2 entry #0: 0x0000000000000000 ffffffff00000000
- write -q -P PATTERN 3k 512
- L2 entry #0: 0x8000000000050000 fffffffd00000002
- write -q -P PATTERN 0 64k
- L2 entry #0: 0x8000000000050000 00000000ffffffff
- discard -q 0 64k
-+file_do_fallocate fd=N mode=0x03 offset=327680 len=65536
- L2 entry #0: 0x0000000000000000 ffffffff00000000
- write -q -c -P PATTERN 0 64k
- L2 entry #0: 0x4000000000050000 0000000000000000
-@@ -71,14 +74,17 @@ L2 entry #0: 0x8000000000050000 ffffffff00000000
- write -q -P PATTERN 0 64k
- L2 entry #0: 0x8000000000050000 00000000ffffffff
- write -q -z -u 0 32k
-+file_do_fallocate fd=N mode=0x03 offset=327680 len=32768
- L2 entry #0: 0x8000000000050000 0000ffffffff0000
--write -q -z -u 0 64k
-+write -q -z -u 32k 32k
-+file_do_fallocate fd=N mode=0x03 offset=327680 len=65536
- L2 entry #0: 0x0000000000000000 ffffffff00000000
- write -q -P PATTERN 3k 512
- L2 entry #0: 0x8000000000050000 fffffffd00000002
- write -q -P PATTERN 0 64k
- L2 entry #0: 0x8000000000050000 00000000ffffffff
- discard -q 0 64k
-+file_do_fallocate fd=N mode=0x03 offset=327680 len=65536
- L2 entry #0: 0x0000000000000000 ffffffff00000000
- write -q -c -P PATTERN 0 64k
- L2 entry #0: 0x4000000000050000 0000000000000000
-@@ -301,15 +307,20 @@ L2 entry #14: 0x80000000000a0000 00000000ffffffff
- L2 entry #15: 0x80000000000b0000 00000000ffffffff
- L2 entry #16: 0x80000000000c0000 00000000ffffffff
- L2 entry #17: 0x80000000000d0000 00000000ffffffff
-+write -q -z -u 512k 8k
-+L2 entry #8: 0x0000000000000000 0000000f00000000
- write -q -z -u 576k 192k
-+file_do_fallocate fd=N mode=0x03 offset=327680 len=196608
- L2 entry #9: 0x0000000000000000 ffffffff00000000
- L2 entry #10: 0x0000000000000000 ffffffff00000000
- L2 entry #11: 0x0000000000000000 ffffffff00000000
- write -q -z -u 800k 128k
-+file_do_fallocate fd=N mode=0x03 offset=557056 len=131072
- L2 entry #12: 0x8000000000080000 ffff00000000ffff
- L2 entry #13: 0x0000000000000000 ffffffff00000000
- L2 entry #14: 0x80000000000a0000 0000ffffffff0000
- write -q -z -u 991k 128k
-+file_do_fallocate fd=N mode=0x03 offset=753664 len=129024
- L2 entry #15: 0x80000000000b0000 ffff00000000ffff
- L2 entry #16: 0x0000000000000000 ffffffff00000000
- L2 entry #17: 0x80000000000d0000 00007fffffff8000
-@@ -339,6 +350,7 @@ L2 entry #27: 0x4000000000120000 0000000000000000
- write -q -c -P PATTERN 1792k 64k
- L2 entry #28: 0x4000000000130000 0000000000000000
- write -q -z -u 1152k 192k
-+file_do_fallocate fd=N mode=0x03 offset=327680 len=196608
- L2 entry #18: 0x0000000000000000 ffffffff00000000
- L2 entry #19: 0x0000000000000000 ffffffff00000000
- L2 entry #20: 0x0000000000000000 ffffffff00000000
-@@ -351,6 +363,8 @@ L2 entry #24: 0x8000000000090000 00000000ffffffff
- L2 entry #25: 0x80000000000e0000 00000000ffffffff
- L2 entry #26: 0x80000000000f0000 00000000ffffffff
- write -q -z -u 1759k 128k
-+file_do_fallocate fd=N mode=0x03 offset=819200 len=32768
-+file_do_fallocate fd=N mode=0x03 offset=1245184 len=65536
- L2 entry #27: 0x80000000000c0000 ffff00000000ffff
- L2 entry #28: 0x0000000000000000 ffffffff00000000
- L2 entry #29: 0x8000000000100000 00007fff00008000
-@@ -369,15 +383,20 @@ L2 entry #14: 0x80000000000a0000 00000000ffffffff
- L2 entry #15: 0x80000000000b0000 00000000ffffffff
- L2 entry #16: 0x80000000000c0000 00000000ffffffff
- L2 entry #17: 0x80000000000d0000 00000000ffffffff
-+write -q -z -u 512k 8k
-+L2 entry #8: 0x0000000000000000 0000000f00000000
- write -q -z -u 576k 192k
-+file_do_fallocate fd=N mode=0x03 offset=327680 len=196608
- L2 entry #9: 0x0000000000000000 ffffffff00000000
- L2 entry #10: 0x0000000000000000 ffffffff00000000
- L2 entry #11: 0x0000000000000000 ffffffff00000000
- write -q -z -u 800k 128k
-+file_do_fallocate fd=N mode=0x03 offset=557056 len=131072
- L2 entry #12: 0x8000000000080000 ffff00000000ffff
- L2 entry #13: 0x0000000000000000 ffffffff00000000
- L2 entry #14: 0x80000000000a0000 0000ffffffff0000
- write -q -z -u 991k 128k
-+file_do_fallocate fd=N mode=0x03 offset=753664 len=129024
- L2 entry #15: 0x80000000000b0000 ffff00000000ffff
- L2 entry #16: 0x0000000000000000 ffffffff00000000
- L2 entry #17: 0x80000000000d0000 00007fffffff8000
-@@ -407,6 +426,7 @@ L2 entry #27: 0x4000000000120000 0000000000000000
- write -q -c -P PATTERN 1792k 64k
- L2 entry #28: 0x4000000000130000 0000000000000000
- write -q -z -u 1152k 192k
-+file_do_fallocate fd=N mode=0x03 offset=327680 len=196608
- L2 entry #18: 0x0000000000000000 ffffffff00000000
- L2 entry #19: 0x0000000000000000 ffffffff00000000
- L2 entry #20: 0x0000000000000000 ffffffff00000000
-@@ -419,28 +439,69 @@ L2 entry #24: 0x8000000000090000 00000000ffffffff
- L2 entry #25: 0x80000000000e0000 00000000ffffffff
- L2 entry #26: 0x80000000000f0000 00000000ffffffff
- write -q -z -u 1759k 128k
-+file_do_fallocate fd=N mode=0x03 offset=819200 len=32768
-+file_do_fallocate fd=N mode=0x03 offset=1245184 len=65536
- L2 entry #27: 0x80000000000c0000 ffff00000000ffff
- L2 entry #28: 0x0000000000000000 ffffffff00000000
- L2 entry #29: 0x0000000000000000 0000ffff00000000
- 
- ### Discarding clusters with non-zero bitmaps (backing file: yes) ###
- 
-+Formatting 'TEST_DIR/t.IMGFMT.raw', fmt=raw size=1048576
-+Formatting 'TEST_DIR/t.IMGFMT.base', fmt=raw size=1048576
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 backing_file=TEST_DIR/t.IMGFMT.base backing_fmt=raw
-+write -q -P PATTERN 0 32k
-+L2 entry #0: 0x8000000000050000 000000000000ffff
-+discard -q 32k 32k
-+file_do_fallocate fd=N mode=0x03 offset=360448 len=32768
-+L2 entry #0: 0x8000000000050000 ffff00000000ffff
-+write -q -P PATTERN 0 64k
-+L2 entry #0: 0x8000000000050000 00000000ffffffff
-+discard -q 0 8k
-+file_do_fallocate fd=N mode=0x03 offset=327680 len=8192
-+L2 entry #0: 0x8000000000050000 0000000ffffffff0
-+discard -q 8k 56k
-+file_do_fallocate fd=N mode=0x03 offset=327680 len=65536
-+L2 entry #0: 0x0000000000000000 ffffffff00000000
-+write -q -P PATTERN 0 128k
-+L2 entry #0: 0x8000000000050000 00000000ffffffff
-+discard -q 0 128k
-+file_do_fallocate fd=N mode=0x03 offset=327680 len=131072
- L2 entry #0: 0x0000000000000000 ffffffff00000000
- L2 entry #1: 0x0000000000000000 ffffffff00000000
-+discard -q 0 64k
-+L2 entry #0: 0x0000000000000000 ffffffff00000000
- Image resized.
- Image resized.
--L2 entry #0: 0x0000000000000000 ffffffff00000000
- L2 entry #1: 0x0000000000000000 ffffffff00000000
- 
- ### Discarding clusters with non-zero bitmaps (backing file: no) ###
- 
-+Formatting 'TEST_DIR/t.IMGFMT.raw', fmt=raw size=1048576
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576
-+write -q -P PATTERN 0 32k
-+L2 entry #0: 0x8000000000050000 000000000000ffff
-+discard -q 32k 32k
-+file_do_fallocate fd=N mode=0x03 offset=360448 len=32768
-+L2 entry #0: 0x8000000000050000 000000000000ffff
-+write -q -P PATTERN 0 64k
-+L2 entry #0: 0x8000000000050000 00000000ffffffff
-+discard -q 0 8k
-+file_do_fallocate fd=N mode=0x03 offset=327680 len=8192
-+L2 entry #0: 0x8000000000050000 0000000ffffffff0
-+discard -q 8k 56k
-+file_do_fallocate fd=N mode=0x03 offset=327680 len=65536
-+L2 entry #0: 0x0000000000000000 ffffffff00000000
-+write -q -P PATTERN 0 128k
-+L2 entry #0: 0x8000000000050000 00000000ffffffff
-+discard -q 0 128k
-+file_do_fallocate fd=N mode=0x03 offset=327680 len=131072
- L2 entry #0: 0x0000000000000000 ffffffff00000000
- L2 entry #1: 0x0000000000000000 ffffffff00000000
-+discard -q 0 64k
-+L2 entry #0: 0x0000000000000000 0000ffff00000000
- Image resized.
- Image resized.
--L2 entry #0: 0x0000000000000000 0000ffff00000000
- L2 entry #1: 0x0000000000000000 0000000000000000
- 
- ### Corrupted L2 entries - read test (allocated) ###
 -- 
 2.39.3
 
