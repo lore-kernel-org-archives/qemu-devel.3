@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D65D9FC6167
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBE9BFC6160
 	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 16:40:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp9Kr-0006EL-TH; Fri, 13 Sep 2024 12:39:53 -0400
+	id 1sp9Kr-0006DM-NJ; Fri, 13 Sep 2024 12:39:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1sp9Kn-00064M-T6; Fri, 13 Sep 2024 12:39:51 -0400
+ id 1sp9Kp-00064q-Du; Fri, 13 Sep 2024 12:39:51 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1sp9Km-0000q8-6E; Fri, 13 Sep 2024 12:39:49 -0400
+ id 1sp9Km-0000q6-7W; Fri, 13 Sep 2024 12:39:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
- Content-Type; bh=OeSkIH7knxZGHTt1LuTnXJidyr81oxLIC/BUMuLQL9k=; b=WQ76q1awnvy0
- hJXg5JvCJkLTIfgdT/YLPuixz5rxT2HL5fpeQUyHLGUCQoZtxruReFqs9SezuuRklVoHbyjyfk7ep
- eDhyrtIFGffNvQWgPDA/jKwPojI9lySKt8qf9qPM5T7xq8VuUcrdG61CiGqlR0UOCByYhizaqWtka
- /7a3foqqZYGRtvLO9B/z1rQSl4InCmC29edVDqODKAy+CMSpZo3FbqVG62qmURO9OoCLq9X7/BPoX
- dYWkqX6f40AekujhQbbLuuXGJVDk18xSQmv+pRSUOlXqAHOEaGdnvgrOe2Yg5lIClFpLBDK/1TDq9
- qU1+q7nvmEME3DvAuTjnpg==;
+ Content-Type; bh=XP3aSiHd4XPEkZX9lxGhcYqB0XI0vIx025UlNzp5+F4=; b=UoVv9MzKB3uG
+ fJDHcBE3/GJ9jAwf+kKpzHJ+Ytil9uyCBtqj46vIkK7otdatVdq4MkcQRhmqsNlVNe96oePyOnByu
+ 1KDXtvJhB9eVXTAmhZg0Gf3KvbD6R8oL7eFMkWjV9rgWP3r3Fx7cMl8cGW/kj0g23+DqNWp8qlkJX
+ mngbf8cY2Y3VbnQbTJ2PZYV245MITnvc1X7cFWTjBkfS9giz89WRbytc+ffFwI15hplk83mnUYEdT
+ PLF2tBq5GvlqGw2kBAKaynoWrAPSFFyeBSkqns7S9d3YoMtby0J11pIdDet/CwG0NypVwc/blGy3V
+ caM1tX2CLowf227A3WyGDw==;
 Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1sp9Hy-002OPf-2c;
+ (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1sp9Hy-002OPf-33;
  Fri, 13 Sep 2024 18:39:39 +0200
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
  eblake@redhat.com, stefanha@redhat.com, berto@igalia.com,
  andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH v3 02/12] qcow2: simplify L2 entries accounting for
- discard-no-unref
-Date: Fri, 13 Sep 2024 19:39:32 +0300
-Message-Id: <20240913163942.423050-3-andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v3 07/12] qcow2: add get_sc_range_info() helper for working
+ with subcluster ranges
+Date: Fri, 13 Sep 2024 19:39:37 +0300
+Message-Id: <20240913163942.423050-8-andrey.drobyshev@virtuozzo.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240913163942.423050-1-andrey.drobyshev@virtuozzo.com>
 References: <20240913163942.423050-1-andrey.drobyshev@virtuozzo.com>
@@ -68,87 +68,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commits 42a2890a and b2b10904 introduce handling of discard-no-unref
-option in discard_in_l2_slice() and zero_in_l2_slice().  They add even
-more if's when chosing the right l2 entry.  What we really need for this
-option is the new entry simply to contain the same host cluster offset,
-no matter whether we unmap or zeroize the cluster.  For that OR'ing with
-the old entry is enough.
+This helper simply obtains the l2 table parameters of the cluster which
+contains the given subclusters range.  Right now this info is being
+obtained and used by zero_l2_subclusters().  As we're about to introduce
+the subclusters discard operation, this helper would let us avoid code
+duplication.
 
-This patch doesn't change the logic and is pure refactoring.
+Also introduce struct SubClusterRangeInfo, which would contain all the
+needed params.
 
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Reviewed-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-Reviewed-by: Alberto Garcia <berto@igalia.com>
 ---
- block/qcow2-cluster.c | 34 +++++++++++++++-------------------
- 1 file changed, 15 insertions(+), 19 deletions(-)
+ block/qcow2-cluster.c | 140 ++++++++++++++++++++++++++++++++----------
+ 1 file changed, 108 insertions(+), 32 deletions(-)
 
 diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
-index ce8c0076b3..5f057ba2fd 100644
+index 7dff0bd5a1..475f167035 100644
 --- a/block/qcow2-cluster.c
 +++ b/block/qcow2-cluster.c
-@@ -1946,25 +1946,21 @@ discard_in_l2_slice(BlockDriverState *bs, uint64_t offset, uint64_t nb_clusters,
-             new_l2_entry = new_l2_bitmap = 0;
-         } else if (bs->backing || qcow2_cluster_is_allocated(cluster_type)) {
-             if (has_subclusters(s)) {
--                if (keep_reference) {
--                    new_l2_entry = old_l2_entry;
--                } else {
--                    new_l2_entry = 0;
--                }
-+                new_l2_entry = 0;
-                 new_l2_bitmap = QCOW_L2_BITMAP_ALL_ZEROES;
-             } else {
--                if (s->qcow_version >= 3) {
--                    if (keep_reference) {
--                        new_l2_entry |= QCOW_OFLAG_ZERO;
--                    } else {
--                        new_l2_entry = QCOW_OFLAG_ZERO;
--                    }
--                } else {
--                    new_l2_entry = 0;
--                }
-+                new_l2_entry = s->qcow_version >= 3 ? QCOW_OFLAG_ZERO : 0;
-             }
-         }
+@@ -1915,6 +1915,103 @@ discard_no_unref_any_file(BlockDriverState *bs, uint64_t offset,
+     }
+ }
  
-+        /*
-+         * No need to check for the QCOW version since discard-no-unref is
-+         * only allowed since version 3.
-+         */
-+        if (keep_reference) {
-+            new_l2_entry |= old_l2_entry;
++/*
++ * Structure containing info about the subclusters range within one cluster.
++ *
++ * Since @l2_slice is a strong reference to the l2 table slice containing
++ * the corresponding l2 entry, it must be explicitly released by
++ * qcow2_cache_put().  Thus the user must either declare it with g_auto()
++ * (in which case sc_range_info_cleanup() is called automatically) or do
++ * the cleanup themselves.
++ */
++typedef struct SubClusterRangeInfo {
++    uint64_t *l2_slice;
++    int l2_index;
++    uint64_t l2_entry;
++    uint64_t l2_bitmap;
++    QCow2ClusterType ctype;
++    Qcow2Cache *l2_table_cache;
++} SubClusterRangeInfo;
++
++static void sc_range_info_cleanup(SubClusterRangeInfo *scri)
++{
++    if (scri->l2_table_cache && scri->l2_slice) {
++        qcow2_cache_put(scri->l2_table_cache, (void **) &scri->l2_slice);
++    }
++}
++
++G_DEFINE_AUTO_CLEANUP_CLEAR_FUNC(SubClusterRangeInfo, sc_range_info_cleanup);
++
++/*
++ * For a given @offset and @nb_subclusters, fill out the SubClusterRangeInfo
++ * structure describing the subclusters range and referred to by @scri.
++ * Only the subclusters which can be independently discarded/zeroized
++ * (i.e. not compressed or invalid) are considered to be valid here.
++ *
++ * The subclusters range is denoted by @offset and @nb_subclusters and must
++ * not cross the cluster boundary.  @offset must be aligned to the subcluster
++ * size.
++ *
++ * Return: 0 if the SubClusterRangeInfo is successfully filled out and the
++ * subclusters within the given range might be discarded/zeroized;
++ * -EINVAL if any of the subclusters within the range is invalid;
++ * -ENOTSUP if the range is contained within a compressed cluster.
++ */
++static int GRAPH_RDLOCK
++get_sc_range_info(BlockDriverState *bs, uint64_t offset,
++                  unsigned nb_subclusters, SubClusterRangeInfo *scri)
++{
++    BDRVQcow2State *s = bs->opaque;
++    int ret, sc_cleared, sc_index = offset_to_sc_index(s, offset);
++    QCow2SubclusterType sctype;
++
++    /* Here we only work with the subclusters within single cluster. */
++    assert(nb_subclusters > 0 && nb_subclusters < s->subclusters_per_cluster);
++    assert(sc_index + nb_subclusters <= s->subclusters_per_cluster);
++    assert(offset_into_subcluster(s, offset) == 0);
++
++    scri->l2_table_cache = s->l2_table_cache;
++
++    ret = get_cluster_table(bs, offset, &scri->l2_slice, &scri->l2_index);
++    if (ret < 0) {
++        goto cleanup;
++    }
++
++    scri->l2_entry = get_l2_entry(s, scri->l2_slice, scri->l2_index);
++    scri->l2_bitmap = get_l2_bitmap(s, scri->l2_slice, scri->l2_index);
++    scri->ctype = qcow2_get_cluster_type(bs, scri->l2_entry);
++
++    sc_cleared = 0;
++    do {
++        ret = qcow2_get_subcluster_range_type(
++            bs, scri->l2_entry, scri->l2_bitmap, sc_index + sc_cleared,
++            &sctype);
++        if (ret < 0) {
++            goto cleanup;
 +        }
 +
-         if (old_l2_entry == new_l2_entry && old_l2_bitmap == new_l2_bitmap) {
-             continue;
-         }
-@@ -2064,19 +2060,19 @@ zero_in_l2_slice(BlockDriverState *bs, uint64_t offset,
-             ((flags & BDRV_REQ_MAY_UNMAP) && qcow2_cluster_is_allocated(type));
-         bool keep_reference =
-             (s->discard_no_unref && type != QCOW2_CLUSTER_COMPRESSED);
--        uint64_t new_l2_entry = old_l2_entry;
-+        uint64_t new_l2_entry = unmap ? 0 : old_l2_entry;
-         uint64_t new_l2_bitmap = old_l2_bitmap;
- 
--        if (unmap && !keep_reference) {
--            new_l2_entry = 0;
--        }
++        switch (sctype) {
++        case QCOW2_SUBCLUSTER_COMPRESSED:
++            /* We cannot partially zeroize/discard compressed clusters. */
++            ret = -ENOTSUP;
++            goto cleanup;
++        case QCOW2_SUBCLUSTER_INVALID:
++            ret = -EINVAL;
++            goto cleanup;
++        default:
++            break;
++        }
++
++        sc_cleared += ret;
++    } while (sc_cleared < nb_subclusters);
++
++    return 0;
++
++cleanup:
++    sc_range_info_cleanup(scri);
++    return ret;
++}
++
+ /*
+  * This discards as many clusters of nb_clusters as possible at once (i.e.
+  * all clusters in the same L2 slice) and returns the number of discarded
+@@ -2127,46 +2224,25 @@ zero_l2_subclusters(BlockDriverState *bs, uint64_t offset,
+                     unsigned nb_subclusters)
+ {
+     BDRVQcow2State *s = bs->opaque;
+-    uint64_t *l2_slice;
+-    uint64_t old_l2_bitmap, l2_bitmap;
+-    int l2_index, ret, sc = offset_to_sc_index(s, offset);
 -
-         if (has_subclusters(s)) {
-             new_l2_bitmap = QCOW_L2_BITMAP_ALL_ZEROES;
-         } else {
-             new_l2_entry |= QCOW_OFLAG_ZERO;
-         }
+-    /* For full clusters use zero_in_l2_slice() instead */
+-    assert(nb_subclusters > 0 && nb_subclusters < s->subclusters_per_cluster);
+-    assert(sc + nb_subclusters <= s->subclusters_per_cluster);
+-    assert(offset_into_subcluster(s, offset) == 0);
++    uint64_t new_l2_bitmap;
++    int ret, sc = offset_to_sc_index(s, offset);
++    g_auto(SubClusterRangeInfo) scri = { 0 };
  
-+        if (keep_reference) {
-+            new_l2_entry |= old_l2_entry;
-+        }
-+
-         if (old_l2_entry == new_l2_entry && old_l2_bitmap == new_l2_bitmap) {
-             continue;
-         }
+-    ret = get_cluster_table(bs, offset, &l2_slice, &l2_index);
++    ret = get_sc_range_info(bs, offset, nb_subclusters, &scri);
+     if (ret < 0) {
+         return ret;
+     }
+ 
+-    switch (qcow2_get_cluster_type(bs, get_l2_entry(s, l2_slice, l2_index))) {
+-    case QCOW2_CLUSTER_COMPRESSED:
+-        ret = -ENOTSUP; /* We cannot partially zeroize compressed clusters */
+-        goto out;
+-    case QCOW2_CLUSTER_NORMAL:
+-    case QCOW2_CLUSTER_UNALLOCATED:
+-        break;
+-    default:
+-        g_assert_not_reached();
+-    }
+-
+-    old_l2_bitmap = l2_bitmap = get_l2_bitmap(s, l2_slice, l2_index);
+-
+-    l2_bitmap |=  QCOW_OFLAG_SUB_ZERO_RANGE(sc, sc + nb_subclusters);
+-    l2_bitmap &= ~QCOW_OFLAG_SUB_ALLOC_RANGE(sc, sc + nb_subclusters);
++    new_l2_bitmap = scri.l2_bitmap;
++    new_l2_bitmap |=  QCOW_OFLAG_SUB_ZERO_RANGE(sc, sc + nb_subclusters);
++    new_l2_bitmap &= ~QCOW_OFLAG_SUB_ALLOC_RANGE(sc, sc + nb_subclusters);
+ 
+-    if (old_l2_bitmap != l2_bitmap) {
+-        set_l2_bitmap(s, l2_slice, l2_index, l2_bitmap);
+-        qcow2_cache_entry_mark_dirty(s->l2_table_cache, l2_slice);
++    if (new_l2_bitmap != scri.l2_bitmap) {
++        set_l2_bitmap(s, scri.l2_slice, scri.l2_index, new_l2_bitmap);
++        qcow2_cache_entry_mark_dirty(s->l2_table_cache, scri.l2_slice);
+     }
+ 
+-    ret = 0;
+-out:
+-    qcow2_cache_put(s->l2_table_cache, (void **) &l2_slice);
+-
+-    return ret;
++    return 0;
+ }
+ 
+ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
 -- 
 2.39.3
 
