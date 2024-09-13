@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F17DEEEC08
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 04:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 810EBEEE27A
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 04:14:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soxh9-0001s5-O6; Fri, 13 Sep 2024 00:14:07 -0400
+	id 1soxh3-0001Ns-73; Fri, 13 Sep 2024 00:14:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1soxh7-0001hI-C2; Fri, 13 Sep 2024 00:14:05 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1soxh1-0001IV-9Y; Fri, 13 Sep 2024 00:13:59 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1soxh5-0002Y2-TG; Fri, 13 Sep 2024 00:14:05 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48CHi696008336;
- Fri, 13 Sep 2024 04:14:01 GMT
+ id 1soxgz-0002Vz-KR; Fri, 13 Sep 2024 00:13:59 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48CLdm1g006344;
+ Fri, 13 Sep 2024 04:13:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=v1s7rmBBQEfNg
- ZhLDPKpJIbmkNz6Ez9eMDuN1mdwQWE=; b=s5lbFm5OGFDl4SRJV6jsXR1/6QzkH
- IAPOKOORaL4Wpuc6P8W2blk68vmj5Pmz5G6VQyOAedOSdtRkBMxUbpevbAhQDmbm
- kL+PQYdw7r/n9RNL1f6oqxkyY/uFeQcqCkE0qVRny8yqNaXGJEjpnkjjnMW8lsUY
- X5nMrhnHNZgdf0aKpFx2cqF+OJWzsgZehP0UitdueuSjnAM3k2aPSxXtRUjC2q1r
- hXjr2iVSsQ4kn6RXTav2J6FDyDv+kJf77dbeOS+PxlyH1OytXdbbzirMSyFcxhWw
- 5zDl5kbxVn+DtZ2M8zWU7lrlOngk3xJFCSHBCpHC1w3rI5u8u9g4IuiYQ==
+ :mime-version:content-transfer-encoding; s=pp1; bh=ZhLKMPU6bWt3r
+ XtcVG0bU4cbh5M19wavO4c6AV+CX2Y=; b=EDNxZyMFbc8QzYVMZi54Yq8tRlfck
+ vYjXnOVOQo/HKzaYS2E48kwF2Eo5a0oMucokfZf9lnr62f0Uk5KBk7Fh+b2Cf+W9
+ jN2FFSqMBTbGe9EKCOmCHVw3COrRaMSZfdHzN/xWClnZFeQ9YS7mprALwZTUMSQs
+ p8AyawQI9tDchJdOGiNxm5XfUQ1y68ZaEVotHBm03XmJUX4/exF1OCMTmNJlnjQi
+ Q1p4h/aNMPmOMlk4+0L19/wK/U40C597jaiCs6728/+cX1zQZHrs57HW7F5a7VwL
+ YN0gC3KiJkoLggvgRRPcxzkgSvKheSe28A9EN7ksKvjLFGJXJ7p5wBr8Q==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gd8kyb1y-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gejayjma-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Sep 2024 04:14:01 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48D4E0Vk008534;
- Fri, 13 Sep 2024 04:14:00 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gd8kyb1v-1
+ Fri, 13 Sep 2024 04:13:51 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48D4DoOD021844;
+ Fri, 13 Sep 2024 04:13:50 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gejayjm7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Sep 2024 04:14:00 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48D20W9Z032078;
- Fri, 13 Sep 2024 04:13:59 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41h2nn3rrc-1
+ Fri, 13 Sep 2024 04:13:50 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48D1vjNL010787;
+ Fri, 13 Sep 2024 04:13:49 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41kmb6yf7t-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Sep 2024 04:13:59 +0000
+ Fri, 13 Sep 2024 04:13:48 +0000
 Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
  [10.20.54.103])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48D4Dv1r39059736
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48D4Dlji33489394
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 13 Sep 2024 04:13:58 GMT
+ Fri, 13 Sep 2024 04:13:47 GMT
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DCAA62004B;
- Fri, 13 Sep 2024 04:13:57 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 004062004B;
+ Fri, 13 Sep 2024 04:13:46 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DDB6E20040;
- Fri, 13 Sep 2024 04:13:56 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0086120040;
+ Fri, 13 Sep 2024 04:13:46 +0000 (GMT)
 Received: from ltcrain34-lp1.aus.stglabs.ibm.com (unknown [9.3.101.40])
  by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 13 Sep 2024 04:13:56 +0000 (GMT)
+ Fri, 13 Sep 2024 04:13:45 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
 Cc: npiggin@gmail.com, balaton@eik.bme.hu, danielhb413@gmail.com
-Subject: [PATCH v3 10/10] target/ppc: combine multiple ail checks into one
-Date: Fri, 13 Sep 2024 09:43:37 +0530
-Message-ID: <20240913041337.912876-11-harshpb@linux.ibm.com>
+Subject: [PATCH v3 01/10] target/ppc: use locally stored msr and avoid
+ indirect access
+Date: Fri, 13 Sep 2024 09:43:28 +0530
+Message-ID: <20240913041337.912876-2-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240913041337.912876-1-harshpb@linux.ibm.com>
 References: <20240913041337.912876-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: N_qbH7gu1P1d2Wm3fCvXsJjtiDqroYmB
-X-Proofpoint-ORIG-GUID: MRu_ciDvZ8jENZdkiwKggr_HCZjJxMhA
+X-Proofpoint-ORIG-GUID: eSiA85HsyoUevNJ5E86f3qMhDyzlVB_v
+X-Proofpoint-GUID: tfBpryurIOjPJxZUv_Mg0b1kkE7CQ8sC
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-13_01,2024-09-12_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- impostorscore=0 suspectscore=0 clxscore=1015 phishscore=0 spamscore=0
- lowpriorityscore=0 adultscore=0 mlxscore=0 mlxlogscore=631 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409130028
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ priorityscore=1501 mlxscore=0
+ phishscore=0 mlxlogscore=706 spamscore=0 impostorscore=0 adultscore=0
+ bulkscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2409130028
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -111,42 +112,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ppc_excp_apply_ail has multiple if-checks for ail which is un-necessary.
-Combine them as appropriate.
+hreg_compute_hflags_value already stores msr locally to be used in most
+of the logic in the routine however some instances are still using
+env->msr which is unnecessary. Use locally stored value as available.
 
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- target/ppc/excp_helper.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ target/ppc/helper_regs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 4eeeedff5b..a8bd537a18 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -324,10 +324,7 @@ static void ppc_excp_apply_ail(PowerPCCPU *cpu, int excp, target_ulong msr,
-         }
+diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
+index 02076e96fb..fe543ab3b8 100644
+--- a/target/ppc/helper_regs.c
++++ b/target/ppc/helper_regs.c
+@@ -143,10 +143,10 @@ static uint32_t hreg_compute_hflags_value(CPUPPCState *env)
  
-         ail = (env->spr[SPR_LPCR] & LPCR_AIL) >> LPCR_AIL_SHIFT;
--        if (ail == 0) {
--            return;
--        }
--        if (ail == 1) {
-+        if (ail == 0 || ail == 1) {
-             /* AIL=1 is reserved, treat it like AIL=0 */
-             return;
+     if (ppc_flags & POWERPC_FLAG_DE) {
+         target_ulong dbcr0 = env->spr[SPR_BOOKE_DBCR0];
+-        if ((dbcr0 & DBCR0_ICMP) && FIELD_EX64(env->msr, MSR, DE)) {
++        if ((dbcr0 & DBCR0_ICMP) && FIELD_EX64(msr, MSR, DE)) {
+             hflags |= 1 << HFLAGS_SE;
          }
-@@ -351,10 +348,7 @@ static void ppc_excp_apply_ail(PowerPCCPU *cpu, int excp, target_ulong msr,
-         } else {
-             ail = (env->spr[SPR_LPCR] & LPCR_AIL) >> LPCR_AIL_SHIFT;
+-        if ((dbcr0 & DBCR0_BRT) && FIELD_EX64(env->msr, MSR, DE)) {
++        if ((dbcr0 & DBCR0_BRT) && FIELD_EX64(msr, MSR, DE)) {
+             hflags |= 1 << HFLAGS_BE;
          }
--        if (ail == 0) {
--            return;
--        }
--        if (ail == 1 || ail == 2) {
-+        if (ail == 0 || ail == 1 || ail == 2) {
-             /* AIL=1 and AIL=2 are reserved, treat them like AIL=0 */
-             return;
-         }
+     } else {
 -- 
 2.45.2
 
