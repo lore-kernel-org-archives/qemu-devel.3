@@ -4,67 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9D7FA3754
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 13:34:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D4E1FA3755
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 13:38:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp6RZ-0005Hl-QZ; Fri, 13 Sep 2024 09:34:38 -0400
+	id 1sp6Uf-0005Jj-5V; Fri, 13 Sep 2024 09:37:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sp6RU-0005C4-WD
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 09:34:33 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1sp6Ub-0005Ig-3X
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 09:37:45 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sp6RT-00052y-9S
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 09:34:32 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a8a7903cb7dso53886266b.3
- for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 06:34:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1sp6UZ-0005Q2-8F
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 09:37:44 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2f75aaaade6so24785921fa.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 06:37:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726234470; x=1726839270; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=pmhe3bI8QFmgeyNcHimuA3oh+IslcFwJqvMvAP71Ovg=;
- b=FPcAcDdWSVSc/sidhMLGGrJm82C4bk1Dc+1ufWEe1WkMtl0pdtnb68wtpdaYT3If5D
- 6Jw3G0wWOm1EDQqiEzU5mkC7QBMPgwOt7enTRk6G0Eo7PWHd9BN+uWa/+uVSEaQj0O7D
- hufWVGYzKNOCxurucCjoTGzEJfORKrBc5s2BrupEeYRyruf2/luNUSwjIdnDsXr5sL4m
- wabLf8Mrlugn6GhHTY4KkkXQa/bBu4svRza0WpZzsqwM+SMzcUW8rrt3Ca6VX9ZAJ3sS
- 6gsLSUVQ1rJKNeSmaRnkoV6t81g6+p11FPQsGa5XrRYxHFTFq4PL8ytnBF9bkNK6AsA7
- 51Ng==
+ d=sifive.com; s=google; t=1726234659; x=1726839459; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wbzOoQxCbHX4bElBtVkSdrsCkVqd5g6yTlTlNzfuNhE=;
+ b=TJTHC9frWFUf4Qo8H5XcpEJxP7MvjZ+nItHNgHlSjqVJKxaTalhLbdmSex6GDGh4Dc
+ r4n0dgHrWqrUnrQ9lbhZdT9EycfzgOeCXnUornMuBcqEXodzIKgCK/WxXtj7FVBB6OcA
+ giZ27FuKoAr7qQnn8BlJfEsn9O7mktluF2Pxy2b+gk/FwXT+q7GN2V6tZ9MvB2er3Dc6
+ W+hQ8n+rTmRo6F6qF9UoRZV7+Gmqa4yLmb6k54mrNT4OGLDr+87tGG73Y/8A16Uz+Tk4
+ 74RxhuAC/pr4NxML5ektPqrp9hGSvPshYv2jGQJmYHS/LbBIyQkNgtciTuGJX2gQQVEa
+ 8Q6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726234470; x=1726839270;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pmhe3bI8QFmgeyNcHimuA3oh+IslcFwJqvMvAP71Ovg=;
- b=euJyIHxzYvHWSxEqJynEHZHTCnS+KHOjLT95UjejoDZQ8YRxOesasqNbwFi7owqp2n
- uroTrl7u9vqo/INMPJFxo2z/l40GGWGVxiazYUgoBZA0rrhDKCj3QTpL/8nKqCxs5l3M
- WRDy7E6BGIyg17Vq2ebvXn1ugL01wxSMBajXW3eupn9qk4QCAfTZm11k8SD8adINCzCI
- 4rHZuoXdU0XMVi8oU2Dc6mUFbrSEK+CSCck9l8bFsbNCJOiRRhtlmmhSYTSrWn8j0o6X
- dvaLb0r4BVdcWerlmDuPs5rKZSO8hV8IhqZSM/bJqZVAn49zHJMVOAx8UxxRyUxDVCZK
- ROIg==
-X-Gm-Message-State: AOJu0YwdLZhbhjn7uLzcgt/TlkhK587TiLqXTtMrqbH8CuJiBD2hmkwY
- tgc8AGRSDwObYk4wV2XckC9cUCi6FX4Hq6rxCZ6ruA2E4R6NoMlBbl1mbXUr/zydxZBW57HG/Dw
- pRLrbiXDPu0xZxUuUOwQwl+jhIs4eHoO3cz9t0JxaRWOZyc7n
-X-Google-Smtp-Source: AGHT+IF21PDvA3gGDYUb/F28TfrL73qkWBU7Y6EDA4lk1AKKsGLUkWQ5IYVl4SS8wK0sCIV9GEmAbr9gn4EPyMba4i0=
-X-Received: by 2002:a05:6402:5d3:b0:5c3:c530:e99a with SMTP id
- 4fb4d7f45d1cf-5c41e1930c7mr3289275a12.15.1726234469613; Fri, 13 Sep 2024
- 06:34:29 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726234659; x=1726839459;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wbzOoQxCbHX4bElBtVkSdrsCkVqd5g6yTlTlNzfuNhE=;
+ b=DqfzNha0oCfXnKCHR2HcbF+ke6QFdWq5ZCjLXQqhY+Ub64cG2og4wFXOMUMLO0RucY
+ tyOG3ZsqJF2M0vpvLgsWPs1vYfXJ7LPu/jJM5/Pxo9H6RcyuhsjPCmpMyJvo0NvUr3k6
+ VXmqCTO4ckhUMTRzs39d0I3Lv/dCuPIw6TjNIBDvhUDh4ivmKdJwWatX2Qvl9bm3oPda
+ AIrkOw8IKJNs4hfy2E5K/eRJMcLlv2Aka3LwF+3E/4d5Nf6TRNlnwK1bhJ89SKnQcHN+
+ 7nmMAIRRV2UMaQuU4Z3GC1ew2iAtfTuUB3zX731bRkmtIv401eeEpfcwqBa1HZVEcwqL
+ 4awA==
+X-Gm-Message-State: AOJu0YxX+VYzQsDL7RpbokuTOGrJwJgyosXJZnX6xehyDjwIuz2m1dNj
+ uPNmScM1+gxYeNaFoEi18gw4gzhshYPyueRr74A7oGDq6ATRW1D3HAMMp8ahjKUS+OZ0gJEhy8Z
+ 1J7Wz9IudcWpGnUKQ2CnENjXk4U7iR7Oz8G1Tsg==
+X-Google-Smtp-Source: AGHT+IExt7tefLZSxB6SRjeCBxXTnRa7/pD9HRz/WsGOaWq1Y2XRfNRv3PgipiSClTieVJlhpHwW8EYfV3Kfpdi2HW0=
+X-Received: by 2002:a2e:f01:0:b0:2f7:7cc3:306 with SMTP id
+ 38308e7fff4ca-2f787dc7276mr33103481fa.17.1726234657897; 
+ Fri, 13 Sep 2024 06:37:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240912125132.268802-1-gaosong@loongson.cn>
-In-Reply-To: <20240912125132.268802-1-gaosong@loongson.cn>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 13 Sep 2024 14:34:18 +0100
-Message-ID: <CAFEAcA8OVt1+VH8JAio9uHHkxuT6f58+g3By3KjeDu0HRLTC2Q@mail.gmail.com>
-Subject: Re: [PULL 0/7] loongarch-to-apply queue
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
+References: <20240912051734.5298-1-jim.shu@sifive.com>
+ <5fca8390-33c8-4139-8238-caef3e3f1dbe@redhat.com>
+ <CALw707pkot65Zh_kpmKjZoQcm5f=VLLAFZwGbgR3D1qoDmiUGg@mail.gmail.com>
+ <92b61c0a-b770-4065-9a97-ba111fb092f6@redhat.com>
+In-Reply-To: <92b61c0a-b770-4065-9a97-ba111fb092f6@redhat.com>
+From: Jim Shu <jim.shu@sifive.com>
+Date: Fri, 13 Sep 2024 21:37:26 +0800
+Message-ID: <CALw707q0ro3H77JF36f8xNqPtpAGXS0Ww+5Pfhg7zjSutJmt3g@mail.gmail.com>
+Subject: Re: [PATCH] vfio/pci: Fix null pointer deference from error API
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x632.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=jim.shu@sifive.com; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,30 +92,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Sept 2024 at 14:09, Song Gao <gaosong@loongson.cn> wrote:
+On Thu, Sep 12, 2024 at 5:56=E2=80=AFPM C=C3=A9dric Le Goater <clg@redhat.c=
+om> wrote:
 >
-> The following changes since commit 4b7ea33074450bc6148c8e1545d78f179e64adb4:
+> Hello Jim,
 >
->   Merge tag 'pull-request-2024-09-11' of https://gitlab.com/thuth/qemu into staging (2024-09-11 19:28:23 +0100)
+> On 9/12/24 08:36, Jim Shu wrote:
+> > Hi C=C3=A9dric,
+> >
+> > Thank you very much for the quick response!
+> >
+> > I have checked the error API again. It seems to be my porting issue of
+> > set_iommu_device() callback.
 >
-> are available in the Git repository at:
->
->   https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240912
->
-> for you to fetch changes up to 45d1fe46e5a6fe2b22b034e2b2bc0d941acd4b9e:
->
->   hw/loongarch: Add acpi SPCR table support (2024-09-12 20:57:54 +0800)
->
-> ----------------------------------------------------------------
-> pull-loongarch-20240912
->
-> ----------------------------------------------------------------
+> Are you adding support for a new IOMMU ?
 
+Yes, I am working on RISC-V IOMMU support, based on Zhenzhong's
+iommufd nesting series [1] and RISC-V IOMMU patch v7.
+[1] https://github.com/yiliu1765/qemu/commits/zhenzhong/iommufd_nesting_rfc=
+v2
 
-Applied, thanks.
+>
+> > I think "pci_device_set_iommu_device(..., *errp)" should set 'errp' if
+> > this function returns false, right?
+>
+> yes, this is a requirement for routines using an Error parameter.
+> You can take a look at the "=3D Rules =3D" section in include/qapi/error.=
+h
+> for more info.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
+Thanks for the information! I will take a look.
 
--- PMM
+>
+> Thanks,
+>
+> C.
+>
 
