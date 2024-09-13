@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DED4FA375C
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 15:15:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10D59FA375A
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 15:15:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp80B-0002Be-E1; Fri, 13 Sep 2024 11:14:28 -0400
+	id 1sp80J-0002Uq-FB; Fri, 13 Sep 2024 11:14:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sp804-0001gx-6N
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:20 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1sp805-0001mb-NT
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:21 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sp801-0007lZ-MC
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:19 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-42ca4e0299eso18601355e9.2
- for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 08:14:17 -0700 (PDT)
+ id 1sp803-0007mE-TK
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:21 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42cb5b3c57eso21724075e9.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 08:14:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726240456; x=1726845256; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726240458; x=1726845258; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4imojfIsJ60JAMsYjzxe7fUUa1MPhY4EYRSKYHUjSoQ=;
- b=CGXt5n6XUxQa7AGXusN8fiyhY2VY0ma3HMKe8PJDvgrIV0htmyjd86F3PEKgtEpPYg
- tgeCMIacCDpWDTL4acPZjgEN8M578kQMK3liLYyK6McASYNPdq3RyhINOlJbW0jPsCd/
- HV7VZcPGWLb7joSgmuJq7eXYea/2er8tKDLRWb/rJ+ED3XHdZs4t+5UwQQW7dIneISjK
- Um0Sy5RhogLrdQ0xcOsSvpNyjPZY26cMJRLaigyVmtSmDiQDf5kaAfy1Iu02GVB3MCa8
- jW6S3awyqwORaaR2aE/pypRedlgC5ttv7mqbhZcPPWhSVn7Sc+6o4YzY7v+x+JWwjWtH
- PStw==
+ :reply-to; bh=NsggWRJP3KBRd4q9MhVbNlsb0QgXLnb4719LpHM7BO4=;
+ b=TR1on2ZiC9tjSl411W3LtZacrLw+dtq4ANl7PadI/6z64SwBZ+YUjdmvGoh719+t7l
+ tM6sD6/yb2QrbCrNjzv+QBvOOxLwgmEWgJs2Hj8G+uISHbMO4vMdTpVQg83AdQcIH0/Q
+ mnm4prrYSaJnc0W8x6oZrZV2iekVGY7fZvLUAf0q0RqlrTxqOzbE1veOuTDdYyT7K22w
+ U1/3xVviu2LgbzlcFkIYcd7kBC/a4ABtfnxb2gAG4GdgQgt7jO6iRveoYBwZ59mXvtdi
+ 5cowSytUObcUesdziSSnv4tBzr8xuEh2g9hauqECfNgV2iitmZzIE6mYrmsD0cuzcLfx
+ SXqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726240456; x=1726845256;
+ d=1e100.net; s=20230601; t=1726240458; x=1726845258;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4imojfIsJ60JAMsYjzxe7fUUa1MPhY4EYRSKYHUjSoQ=;
- b=tCiMO7QQFTc+PyNTKLzGIO418MH3qTNHNEiMbGt1hTAR1678/Vk5QRBUJdhEclykOk
- AXqukmGEaDmevEXyr4lt1QxnEKB3pT3l/dn2RBFiYJ4zql+AIJyVQuvLHBWhsPdl8JOv
- Sh78FcT9imQyikxca7MGR7Ua27Ascp+bSUUORzxi4umgk9dKWmFRzi8pEB+DhkkelKjy
- WianlMuLkGjCcVnu4uQD34t7MquXMqPQMiEicPLx3A7r7INc4nrO73No1tRnZOnR9vG4
- t5a/0FSpjd47D0/Nb7lsUTimOtIaPeLF88qIMEbNlSZKB+Y+zEjQWCPZHuHC1BAl7/6Q
- Uq1Q==
-X-Gm-Message-State: AOJu0YyHi+zGh4teOsMR2KGoGvsS0Z8ntBaktLBnIvR7lbjjTzWV7XUa
- hc8vBiT27+nYexCI7oAzvpR+IuEE+Sl3attCpTJ4Bp6+mqWIfdG27/Hx0p2tymnatJX+vudC+tG
- o
-X-Google-Smtp-Source: AGHT+IGOI4LNzrulSA+u/5UmOus/Px7Og6GOHll1hGy1pxaNZAGdBlDkWz1jkNfZTO62sd3CFErv7A==
-X-Received: by 2002:a05:600c:1e1a:b0:426:5fbe:bf75 with SMTP id
- 5b1f17b1804b1-42cdb567190mr51997755e9.23.1726240455887; 
- Fri, 13 Sep 2024 08:14:15 -0700 (PDT)
+ bh=NsggWRJP3KBRd4q9MhVbNlsb0QgXLnb4719LpHM7BO4=;
+ b=HHsAwrDrkwvlaCty4PXGZ+9rBqxlKjVMzBjFRis86iOoAscb1Fcb4q4e26tyaTbpxy
+ s55ESStxqkTBgWSi1XRfI/tuYW+MKiF2L4f3HP4Yyuxuw/8T0523/6YcGKRIWKdd5nSL
+ 61g5mTZp8x/3KVWDTK6ekzq4rk6T7/x9fa/d7DxJ9hOUjCxdkYeO53uOvYxaXeKgSoph
+ 0ktLjh6dnnudNp/6bewyKlGn8A93yOtnA2dlPs59Rs2j/0LyLRG1HUj/TAJuBYiRsU74
+ cpNJJaQgN84cmt3/o4Kkz8w16hNPrKnt55GI6NT9YBZygRAyQi4sLnbu2l8QupKnl8AV
+ PVLg==
+X-Gm-Message-State: AOJu0YxNpVz6cTp98P50CQRtI7BM21PvUUM2E259hZ9QZiWncc+hACw9
+ 3B/zrktg5hREAh0ONsDP8z4P9cVXt/sUCOIPQDHp3sXck6BQYu2qqL/3CVS7dJX497E+K2mCmEZ
+ e
+X-Google-Smtp-Source: AGHT+IHd54mqYLBNgpLP2MHv3K8qbLcnA9H8YKFYTq0j8M21NZenf/PxuNY6UPgH7LfLNxTVhXO5Dg==
+X-Received: by 2002:adf:e684:0:b0:374:c56c:fbb4 with SMTP id
+ ffacd0b85a97d-378c2d0627dmr4000787f8f.22.1726240458393; 
+ Fri, 13 Sep 2024 08:14:18 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42d9b16bfbfsm29152325e9.22.2024.09.13.08.14.15
+ 5b1f17b1804b1-42d9b16bfbfsm29152325e9.22.2024.09.13.08.14.18
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Sep 2024 08:14:15 -0700 (PDT)
+ Fri, 13 Sep 2024 08:14:18 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/27] hw: Define new device_class_set_legacy_reset()
-Date: Fri, 13 Sep 2024 16:13:50 +0100
-Message-Id: <20240913151411.2167922-7-peter.maydell@linaro.org>
+Subject: [PULL 10/27] hw/core/qdev: Simplify legacy_reset handling
+Date: Fri, 13 Sep 2024 16:13:54 +0100
+Message-Id: <20240913151411.2167922-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240913151411.2167922-1-peter.maydell@linaro.org>
 References: <20240913151411.2167922-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,105 +94,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define a device_class_set_legacy_reset() function which
-sets the DeviceClass::reset field. This serves two purposes:
- * it makes it clearer to the person writing code that
-   DeviceClass::reset is now legacy and they should look for
-   the new alternative (which is Resettable)
- * it makes it easier to rename the reset field (which in turn
-   makes it easier to find places that call it)
+Now that all devices which still implement a the legacy reset method
+register it via device_class_legacy_reset(), we can simplify the
+handling of these devices.  Instead of using the complex
+Resettable::get_transitional_function machinery, we register a hold
+phase method which invokes the DeviceClass::legacy_reset method.
 
-The Coccinelle script can be used to automatically convert code that
-was doing an open-coded assignment to DeviceClass::reset to call
-device_class_set_legacy_reset() instead.
+This will allow us to remove all the get_transitional_function
+handling from resettable.c.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240830145812.1967042-7-peter.maydell@linaro.org
+Message-id: 20240830145812.1967042-11-peter.maydell@linaro.org
 ---
- scripts/coccinelle/device-reset.cocci | 30 +++++++++++++++++++++++++++
- include/hw/qdev-core.h                | 13 ++++++++++++
- hw/core/qdev.c                        |  5 +++++
- 3 files changed, 48 insertions(+)
- create mode 100644 scripts/coccinelle/device-reset.cocci
+ hw/core/qdev.c | 55 ++++++++++++++++++++------------------------------
+ 1 file changed, 22 insertions(+), 33 deletions(-)
 
-diff --git a/scripts/coccinelle/device-reset.cocci b/scripts/coccinelle/device-reset.cocci
-new file mode 100644
-index 00000000000..510042afcca
---- /dev/null
-+++ b/scripts/coccinelle/device-reset.cocci
-@@ -0,0 +1,30 @@
-+// Convert opencoded DeviceClass::reset assignments to calls to
-+// device_class_set_legacy_reset()
-+//
-+// Copyright Linaro Ltd 2024
-+// This work is licensed under the terms of the GNU GPLv2 or later.
-+//
-+// spatch --macro-file scripts/cocci-macro-file.h \
-+//        --sp-file scripts/coccinelle/device-reset.cocci \
-+//        --keep-comments --smpl-spacing --in-place --include-headers --dir hw
-+//
-+// For simplicity we assume some things about the code we're modifying
-+// that happen to be true for all our targets:
-+//  * all cpu_class_set_parent_reset() callsites have a 'DeviceClass *dc' local
-+//  * the parent reset field in the target CPU class is 'parent_reset'
-+//  * no reset function already has a 'dev' local
-+
-+@@
-+identifier dc, resetfn;
-+@@
-+  DeviceClass *dc;
-+  ...
-+- dc->reset = resetfn;
-++ device_class_set_legacy_reset(dc, resetfn);
-+@@
-+identifier dc, resetfn;
-+@@
-+  DeviceClass *dc;
-+  ...
-+- dc->reset = &resetfn;
-++ device_class_set_legacy_reset(dc, resetfn);
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index 18c7845ce9b..ade85c31e05 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -953,6 +953,19 @@ void device_class_set_parent_realize(DeviceClass *dc,
-                                      DeviceRealize dev_realize,
-                                      DeviceRealize *parent_realize);
- 
-+/**
-+ * device_class_set_legacy_reset(): set the DeviceClass::reset method
-+ * @dc: The device class
-+ * @dev_reset: the reset function
-+ *
-+ * This function sets the DeviceClass::reset method. This is widely
-+ * used in existing code, but new code should prefer to use the
-+ * Resettable API as documented in docs/devel/reset.rst.
-+ * In addition, devices which need to chain to their parent class's
-+ * reset methods or which need to be subclassed must use Resettable.
-+ */
-+void device_class_set_legacy_reset(DeviceClass *dc,
-+                                   DeviceReset dev_reset);
- 
- /**
-  * device_class_set_parent_unrealize() - set up for chaining unrealize fns
 diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index cf811580621..51827858ce7 100644
+index 9af0ed3e1b7..db36f54d914 100644
 --- a/hw/core/qdev.c
 +++ b/hw/core/qdev.c
-@@ -844,6 +844,11 @@ static void device_class_init(ObjectClass *class, void *data)
+@@ -747,35 +747,6 @@ device_vmstate_if_get_id(VMStateIf *obj)
+     return qdev_get_dev_path(dev);
+ }
+ 
+-static void device_transitional_reset(Object *obj)
+-{
+-    DeviceClass *dc = DEVICE_GET_CLASS(obj);
+-
+-    /*
+-     * Device still using DeviceClass legacy_reset method. This doesn't
+-     * reset children. device_get_transitional_reset() checked that
+-     * this isn't NULL.
+-     */
+-    dc->legacy_reset(DEVICE(obj));
+-}
+-
+-/**
+- * device_get_transitional_reset:
+- * check if the device's class is ready for multi-phase
+- */
+-static ResettableTrFunction device_get_transitional_reset(Object *obj)
+-{
+-    DeviceClass *dc = DEVICE_GET_CLASS(obj);
+-    if (dc->legacy_reset) {
+-        /*
+-         * dc->reset has been overridden by a subclass,
+-         * the device is not ready for multi phase yet.
+-         */
+-        return device_transitional_reset;
+-    }
+-    return NULL;
+-}
+-
+ static void device_class_init(ObjectClass *class, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(class);
+@@ -800,12 +771,9 @@ static void device_class_init(ObjectClass *class, void *data)
+      * A NULL legacy_reset implies a three-phase reset device. Devices can
+      * only be reset using three-phase aware mechanisms, but we still support
+      * for transitional purposes leaf classes which set the old legacy_reset
+-     * method via device_class_set_legacy_reset(). If they do so, then
+-     * device_get_transitional_reset() will notice and arrange for the
+-     * DeviceClass::legacy_reset() method to be called during the hold phase.
++     * method via device_class_set_legacy_reset().
+      */
+     dc->legacy_reset = NULL;
+-    rc->get_transitional_function = device_get_transitional_reset;
+ 
+     object_class_property_add_bool(class, "realized",
+                                    device_get_realized, device_set_realized);
+@@ -817,8 +785,29 @@ static void device_class_init(ObjectClass *class, void *data)
                                     offsetof(DeviceState, parent_bus), NULL, 0);
  }
  
-+void device_class_set_legacy_reset(DeviceClass *dc, DeviceReset dev_reset)
++static void do_legacy_reset(Object *obj, ResetType type)
 +{
-+    dc->reset = dev_reset;
++    DeviceClass *dc = DEVICE_GET_CLASS(obj);
++
++    dc->legacy_reset(DEVICE(obj));
 +}
 +
- void device_class_set_parent_realize(DeviceClass *dc,
-                                      DeviceRealize dev_realize,
-                                      DeviceRealize *parent_realize)
+ void device_class_set_legacy_reset(DeviceClass *dc, DeviceReset dev_reset)
+ {
++    /*
++     * A legacy DeviceClass::reset has identical semantics to the
++     * three-phase "hold" method, with no "enter" or "exit"
++     * behaviour. Classes that use this legacy function must be leaf
++     * classes that do not chain up to their parent class reset.
++     * There is no mechanism for resetting a device that does not
++     * use the three-phase APIs, so the only place which calls
++     * the legacy_reset hook is do_legacy_reset().
++     */
++    ResettableClass *rc = RESETTABLE_CLASS(dc);
++
++    rc->phases.enter = NULL;
++    rc->phases.hold = do_legacy_reset;
++    rc->phases.exit = NULL;
+     dc->legacy_reset = dev_reset;
+ }
+ 
 -- 
 2.34.1
 
