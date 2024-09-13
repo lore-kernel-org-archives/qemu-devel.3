@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 044A3FC6169
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 17:29:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A3C0FC6169
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 17:29:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1spA4m-0006dj-Op; Fri, 13 Sep 2024 13:27:21 -0400
+	id 1spA4r-00070a-Nq; Fri, 13 Sep 2024 13:27:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1spA4c-0005y8-T3
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 13:27:11 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1spA4l-0006ZL-SV
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 13:27:20 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1spA4V-0005tk-QP
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 13:27:10 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5c260b19f71so2697334a12.1
- for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 10:27:03 -0700 (PDT)
+ id 1spA4b-0005wk-0T
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 13:27:16 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a8d56155f51so287872766b.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 10:27:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726248422; x=1726853222; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726248427; x=1726853227; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bg1S7MpqFLKynDQMTW/BgVqsjzz9T+4SZvu94a93bN0=;
- b=xSeZG2eeWB+UFjTeZ8P4bdSFNXAnl+iYXQFhu6X1A7YqbjXYm0Xfw0230nIWivbG9u
- RSSrTu7PjR79It19K2iNQD2FMlvqA8aRur1mRAbrRAWlCc9dMJjIyShfqPh4w78RgUDz
- qZZ6kkbYXGSOVwM2+zOqGJxeErpDLSFWAI4ZkajmN9IEbtKGsNzQQmTHqOWIYinAddI/
- Nrk1mczg+sagJNVgXet64wNiYileIi3aQa6G72BcIiXbUoVXQikPwV2JFS8VjggLmeRV
- 9FjKewZOxU+XfS47eJtaAatFon06F0pp3qdH3M+2RFYFH4UvT3sbVAY+B/cKljTNiW/I
- 1Kiw==
+ bh=cRFhj2SyvQ/EIwHMRij/KsWIl6x9+a8v4XWFbD+c1P0=;
+ b=DX6jTn7seE8vwRwsLwL+3+FTsU1smTjiFVjGrTqcKNA6gC0gvJOJGUepSEV1pODg69
+ HZSdq8ffQ7r6kfDUHuhHoYjULl7hHR0C1Gfo6yWO7rxfeGUPmdg6lryZSUdoSYJTEnMT
+ SVg7tcsZidJ3esPbBpju/CPg/gn0crSRgCFgF8mhkkZv7nZ202Xx20XA89FtHNQqCVbd
+ FF/pGEA3LXXTiXNv2pnBqC2VWgyo0zA87JLYVFg2RbSFi5pR+DCdLTxyXjyys/Nh+au+
+ c0c+PBSqPiF7ASuJmWjk6o7NDhQlzAh61A2VZCCXQIR+ITYDwRHWoz3eJjwtTZPBcIhA
+ tDhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726248422; x=1726853222;
+ d=1e100.net; s=20230601; t=1726248427; x=1726853227;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bg1S7MpqFLKynDQMTW/BgVqsjzz9T+4SZvu94a93bN0=;
- b=VVUAlMtApQwzVpphfJWkS6VdJMBR+5vzC/xnaMPE6zRYGlleWwhMZeej3U6ACyYPad
- jU+RvUPUb39Cg9Y6sTjPw14iLxUU5W4Qn8d2MCx8up61Wa0ION2G+EEsLhB5ejq9VdiL
- xhHMT2VYd+ul9pq+HLngqSHFaEoZtWjpgapNt0QiGpX7UACYLFU04HSdQZwn24Y3p4PS
- Q+WClWU2VL7xoDpAJjNZQaYJ6XjJF+U+foaMhM/u0p05bwZB1OSV3Im63oO4rkIfMgPS
- LY9piDiuakZB46MCL7/ZNgkr31yrW+BsrR7Emugy7QkV7qFIw3gCZ8OmzJ8im9Nbx6cA
- ntFw==
-X-Gm-Message-State: AOJu0YyCrwN/utrb5WKNFr+Y3dHTX+aFKT0aEglcOxjjCRqUkUb6v9Ay
- nz884Z94+/qeYSLjKE8Sy39MkYrBQFSSP7LLdl3PvhNWSLq7LTBTjVpfGQ33QRk=
-X-Google-Smtp-Source: AGHT+IGLdiyvCRAbVFKTTRI/yfVPVbqoQSZ8/27/OW2tLtvYMf4LNrIs0r6WsStQgUWWXN/5rWXdGw==
-X-Received: by 2002:a17:907:3e8b:b0:a8b:6ee7:ba1b with SMTP id
- a640c23a62f3a-a902943de74mr591772366b.15.1726248421629; 
- Fri, 13 Sep 2024 10:27:01 -0700 (PDT)
+ bh=cRFhj2SyvQ/EIwHMRij/KsWIl6x9+a8v4XWFbD+c1P0=;
+ b=RnmyMZ0PYthmvWUdkDYmArtXeMui5l6U4tvqS9R0cubyeFpJWcJyqz/CpBMe8F0Egg
+ a9QVtv21o4d7sM0nc91hu1OITLKmlZSkIIJZcjFTzmy7NmBX2DF+3vsDF16IdfHWEFdi
+ E3SVMA2zPCx1l4flQaHPQuzwbUbZ8lm9SlPbqhS4WYrqv+16VMB0tUw0PSXsOer7qWUZ
+ PGgK0T6a8fR4TB4E66sPf6RxXbIrIFK4FRz0ltu4nRqkA4E8FQNt1hlvSEBqzhOG3MsN
+ MCWaTcTDBfeD1s5WnKauZNcLY4/nUWBbl6ien8YnJ6Wmub4XLY6amX2sKRDZxS15d1+o
+ gTPA==
+X-Gm-Message-State: AOJu0YzzCOf2offFyWFKeB+S1Afv9SQfKmih8RwZ+KYW6B7fsGhv33Vf
+ PExEK12dk7RzlUa4hKgmkS9AsKo7bZgg/+pwZP+mOX1014sG5XSgd7cVT8st4yM=
+X-Google-Smtp-Source: AGHT+IFEssuOh4nHWOQg2vaid2IvdMu0VoHunUT5e4k77Lywp4vfGgoqhcpLcKANPhvfCdiXA7/Uhg==
+X-Received: by 2002:a17:907:60d5:b0:a8a:cc5a:7f3c with SMTP id
+ a640c23a62f3a-a90296715f7mr632864466b.58.1726248427294; 
+ Fri, 13 Sep 2024 10:27:07 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25c72861sm890889266b.105.2024.09.13.10.26.58
+ a640c23a62f3a-a8d25d657fesm896408366b.221.2024.09.13.10.27.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Sep 2024 10:27:00 -0700 (PDT)
+ Fri, 13 Sep 2024 10:27:06 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9C1255F9E2;
- Fri, 13 Sep 2024 18:26:56 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 832615FB3A;
+ Fri, 13 Sep 2024 18:26:57 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, devel@lists.libvirt.org,
@@ -75,18 +75,18 @@ Cc: Richard Henderson <richard.henderson@linaro.org>, devel@lists.libvirt.org,
  Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Xingtao Yao <yaoxt.fnst@fujitsu.com>
-Subject: [PATCH 05/17] plugins: extend API to get latest memory value accessed
-Date: Fri, 13 Sep 2024 18:26:43 +0100
-Message-Id: <20240913172655.173873-6-alex.bennee@linaro.org>
+ Elisha Hollander <just4now666666@gmail.com>
+Subject: [PATCH 14/17] util/timer: avoid deadlock when shutting down
+Date: Fri, 13 Sep 2024 18:26:52 +0100
+Message-Id: <20240913172655.173873-15-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240913172655.173873-1-alex.bennee@linaro.org>
 References: <20240913172655.173873-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,134 +109,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+When we shut down a guest we disable the timers. However this can
+cause deadlock if the guest has queued some async work that is trying
+to advance system time and spins forever trying to wind time forward.
+Pay attention to the return code and bail early if we can't wind time
+forward.
 
-This value can be accessed only during a memory callback, using
-new qemu_plugin_mem_get_value function.
-
-Returned value can be extended when QEMU will support accesses wider
-than 128 bits.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1719
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2152
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Xingtao Yao <yaoxt.fnst@fujitsu.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240724194708.1843704-3-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reported-by: Elisha Hollander <just4now666666@gmail.com>
 ---
- include/qemu/qemu-plugin.h   | 32 ++++++++++++++++++++++++++++++++
- plugins/api.c                | 33 +++++++++++++++++++++++++++++++++
- plugins/qemu-plugins.symbols |  1 +
- 3 files changed, 66 insertions(+)
+ util/qemu-timer.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index c71c705b69..649ce89815 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -262,6 +262,29 @@ enum qemu_plugin_mem_rw {
-     QEMU_PLUGIN_MEM_RW,
- };
+diff --git a/util/qemu-timer.c b/util/qemu-timer.c
+index 213114be68..6b1533bc2a 100644
+--- a/util/qemu-timer.c
++++ b/util/qemu-timer.c
+@@ -685,10 +685,17 @@ int64_t qemu_clock_advance_virtual_time(int64_t dest)
+ {
+     int64_t clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+     AioContext *aio_context;
++    int64_t deadline;
++
+     aio_context = qemu_get_aio_context();
+-    while (clock < dest) {
+-        int64_t deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
++
++    deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
+                                                       QEMU_TIMER_ATTR_ALL);
++    /*
++     * A deadline of < 0 indicates this timer is not enabled, so we
++     * won't get far trying to run it forward.
++     */
++    while (deadline >= 0 && clock < dest) {
+         int64_t warp = qemu_soonest_timeout(dest - clock, deadline);
  
-+enum qemu_plugin_mem_value_type {
-+    QEMU_PLUGIN_MEM_VALUE_U8,
-+    QEMU_PLUGIN_MEM_VALUE_U16,
-+    QEMU_PLUGIN_MEM_VALUE_U32,
-+    QEMU_PLUGIN_MEM_VALUE_U64,
-+    QEMU_PLUGIN_MEM_VALUE_U128,
-+};
+         qemu_virtual_clock_set_ns(qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + warp);
+@@ -696,6 +703,9 @@ int64_t qemu_clock_advance_virtual_time(int64_t dest)
+         qemu_clock_run_timers(QEMU_CLOCK_VIRTUAL);
+         timerlist_run_timers(aio_context->tlg.tl[QEMU_CLOCK_VIRTUAL]);
+         clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
 +
-+/* typedef qemu_plugin_mem_value - value accessed during a load/store */
-+typedef struct {
-+    enum qemu_plugin_mem_value_type type;
-+    union {
-+        uint8_t u8;
-+        uint16_t u16;
-+        uint32_t u32;
-+        uint64_t u64;
-+        struct {
-+            uint64_t low;
-+            uint64_t high;
-+        } u128;
-+    } data;
-+} qemu_plugin_mem_value;
-+
- /**
-  * enum qemu_plugin_cond - condition to enable callback
-  *
-@@ -551,6 +574,15 @@ bool qemu_plugin_mem_is_big_endian(qemu_plugin_meminfo_t info);
- QEMU_PLUGIN_API
- bool qemu_plugin_mem_is_store(qemu_plugin_meminfo_t info);
++        deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
++                                              QEMU_TIMER_ATTR_ALL);
+     }
+     qemu_clock_notify(QEMU_CLOCK_VIRTUAL);
  
-+/**
-+ * qemu_plugin_mem_get_mem_value() - return last value loaded/stored
-+ * @info: opaque memory transaction handle
-+ *
-+ * Returns: memory value
-+ */
-+QEMU_PLUGIN_API
-+qemu_plugin_mem_value qemu_plugin_mem_get_value(qemu_plugin_meminfo_t info);
-+
- /**
-  * qemu_plugin_get_hwaddr() - return handle for memory operation
-  * @info: opaque memory info structure
-diff --git a/plugins/api.c b/plugins/api.c
-index 2ff13d09de..3316d4a04d 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -351,6 +351,39 @@ bool qemu_plugin_mem_is_store(qemu_plugin_meminfo_t info)
-     return get_plugin_meminfo_rw(info) & QEMU_PLUGIN_MEM_W;
- }
- 
-+qemu_plugin_mem_value qemu_plugin_mem_get_value(qemu_plugin_meminfo_t info)
-+{
-+    uint64_t low = current_cpu->neg.plugin_mem_value_low;
-+    qemu_plugin_mem_value value;
-+
-+    switch (qemu_plugin_mem_size_shift(info)) {
-+    case 0:
-+        value.type = QEMU_PLUGIN_MEM_VALUE_U8;
-+        value.data.u8 = (uint8_t)low;
-+        break;
-+    case 1:
-+        value.type = QEMU_PLUGIN_MEM_VALUE_U16;
-+        value.data.u16 = (uint16_t)low;
-+        break;
-+    case 2:
-+        value.type = QEMU_PLUGIN_MEM_VALUE_U32;
-+        value.data.u32 = (uint32_t)low;
-+        break;
-+    case 3:
-+        value.type = QEMU_PLUGIN_MEM_VALUE_U64;
-+        value.data.u64 = low;
-+        break;
-+    case 4:
-+        value.type = QEMU_PLUGIN_MEM_VALUE_U128;
-+        value.data.u128.low = low;
-+        value.data.u128.high = current_cpu->neg.plugin_mem_value_high;
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+    return value;
-+}
-+
- /*
-  * Virtual Memory queries
-  */
-diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
-index ca773d8d9f..eed9d8abd9 100644
---- a/plugins/qemu-plugins.symbols
-+++ b/plugins/qemu-plugins.symbols
-@@ -13,6 +13,7 @@
-   qemu_plugin_insn_size;
-   qemu_plugin_insn_symbol;
-   qemu_plugin_insn_vaddr;
-+  qemu_plugin_mem_get_value;
-   qemu_plugin_mem_is_big_endian;
-   qemu_plugin_mem_is_sign_extended;
-   qemu_plugin_mem_is_store;
 -- 
 2.39.2
 
