@@ -4,95 +4,230 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45B3CEEE270
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 00:24:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48B6DEED600
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 01:38:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sou6D-00030i-0a; Thu, 12 Sep 2024 20:23:45 -0400
+	id 1sovFn-0008Hq-R0; Thu, 12 Sep 2024 21:37:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sou69-0002xk-1Y
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 20:23:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1sovFl-0008Eq-4S; Thu, 12 Sep 2024 21:37:41 -0400
+Received: from esa2.fujitsucc.c3s2.iphmx.com ([68.232.152.246])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sou65-0002Y1-F8
- for qemu-devel@nongnu.org; Thu, 12 Sep 2024 20:23:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726187014;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=j7yoZL+QTDqiQ2LxmJiOBpJg7ngo6WYSwUDWD/9h+SY=;
- b=Rjd7U2JLHec8UuuX+E5GUE93Je6yvuvaqY5JeZ5qYKm/EvC3IutmuvUBlMpC27WC6+JVFa
- q2VC8KU+N9Hsc4SGcMgq/heCm9Me9FbFQxt04AldJjkOSLehrx2GvbvabLPR9oOr2eUaz2
- 8NsngkUXpDOZZCCTnivtmmSQo0tkztE=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-257-MabhE_BFPKarv6DYgo6esg-1; Thu, 12 Sep 2024 20:23:33 -0400
-X-MC-Unique: MabhE_BFPKarv6DYgo6esg-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6c17f1a7011so24523526d6.3
- for <qemu-devel@nongnu.org>; Thu, 12 Sep 2024 17:23:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726187013; x=1726791813;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=j7yoZL+QTDqiQ2LxmJiOBpJg7ngo6WYSwUDWD/9h+SY=;
- b=wjkY5LTWHfovkW+/GrWiGKEX+J7MyGy/9bDzOdfiKRE9KHWg7rYneuCrqgAKBGSX24
- 5Pjvl9Wpsn6tFOQpdyHpIz74yByTlHgqPNmcCz5FEl887wfvwPCUAhuN6GkYj3eD/v/g
- kUoqyD8B7owCT8osrwM5O/ncMc726v9BX4D5TlKc0MUBptQb5zDoHxqnEji4XsDyBGvr
- Yhv6DpTk0kPcHeb2HkcdiGwkeDkDNy3r75oBB+Z58wb0atGswNaObOEinakoE4l8+LmL
- K6vwYjdqSD8uWuXZJgDf6c3oCsvYJtvtRvqMLLixDfeCRnWxcebh8GZexjavS5fBpQ10
- mY/Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVzIll7dhOonYGS/sGzrApQCEpklv0nApNcOrl6E1+taDRM9Kwnia7kSXNBngzT+zhpC3rpK4ZPacr4@nongnu.org
-X-Gm-Message-State: AOJu0YwCWXC+aLS5dh5m6KjSockino8qjAuivIkpv41cxezYrlBKvAAD
- JQBKLpK0JbvH6xxJHnTGFj/xphpN2PSBke5/O9/QOTI3547IqhnrqV60obl8hoLYIu+Y7EVUBuQ
- bmMf38gVuXJvmDtARQ8V4QHOEgQcSi9oH/Zn5rIsGBOTu1B01FDQe
-X-Received: by 2002:a05:6214:3a8b:b0:6c5:52cc:6070 with SMTP id
- 6a1803df08f44-6c5735a62eemr78515706d6.39.1726187012886; 
- Thu, 12 Sep 2024 17:23:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGFpvNOeZSEMoJX0pp2yDQVmNonn7d2Pp0MFrNRbUhFrz/q7knHC7mC964XjyRABqqNk/Cx3w==
-X-Received: by 2002:a05:6214:3a8b:b0:6c5:52cc:6070 with SMTP id
- 6a1803df08f44-6c5735a62eemr78515376d6.39.1726187012379; 
- Thu, 12 Sep 2024 17:23:32 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c534774752sm59990626d6.117.2024.09.12.17.23.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Sep 2024 17:23:31 -0700 (PDT)
-Date: Thu, 12 Sep 2024 20:23:29 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: mail@maciej.szmigiero.name, Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 12/17] migration/multifd: Device state transfer
- support - send side
-Message-ID: <ZuOGAb3988ExsrHi@x1n>
-References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <fdcfd68dfcf3b20278a4495eb639905b2a8e8ff3.1724701542.git.maciej.szmigiero@oracle.com>
- <87h6b4nosy.fsf@suse.de> <ZuCickYhs3nf2ERC@x1n>
- <87zfoc1zms.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1sovFh-0001UN-QK; Thu, 12 Sep 2024 21:37:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj1;
+ t=1726191458; x=1757727458;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=xixiJdwEler2ROnXrSw4Tlar93LWHdTp63lq/5oJc7Y=;
+ b=YX7h58RaDYWLVnBbY02U/99+Qlt1rMwRUp1AtoiQUckmF6mp7BWA6myy
+ 0U2AbH5ii8jPh0dp8+V8NizYWOypa2DycxV87qKiabyen/iSOaBSSWIe3
+ hBw7vj6BvhMU0rTR2m3/TKGob3NuaMfgYD5AHLj+5XAxaNLUZdAD8N6n0
+ ol6iHDmbYEMIluvWYDIRzr5klsqGdyqrDaY5LYr9dqOmw+dr6tStWL877
+ NHgJA7av7owFPL7P0qTqMlPJ1466teMM4C8Dp2uFUkC89B/X0Pigxba+P
+ Niqsm5jkqnEJieQp8DtjM7HaI5+meW4DdRZKBzswp8fKFoB4b23d7HPFi w==;
+X-CSE-ConnectionGUID: AeV7ToBBSmmvhyCYErfiuw==
+X-CSE-MsgGUID: 8Eg9nG67TNuHL9h6DifRYg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11193"; a="41741357"
+X-IronPort-AV: E=Sophos;i="6.10,224,1719846000"; d="scan'208";a="41741357"
+Received: from mail-japanwestazlp17010001.outbound.protection.outlook.com
+ (HELO OS0P286CU011.outbound.protection.outlook.com) ([40.93.130.1])
+ by ob1.fujitsucc.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Sep 2024 10:37:14 +0900
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=A7X2VKsC6qNBPgJUEfskDsONGEBMuhXAdhkkwHaqOJFUOAyedZEjq4WKBYBd2PPJi2R1kXap37FEFomuP8GlAFxEYGcoSJEC5HMykJ76biDnJf0hgcazl5T3kO5WwLiZGBhoykPgVyVi0wSu/2CqXKy3YZGBmBWrhsg2l9dvG5kTy8DDEXTQQbajJtd/52WrWvDsEu0IehM5bCVPuTBFNAp+yTIJcy83+yJJsEqNjQKG26gXhtw/4MnUfFXNlkCzZORzP7noeuRhr7OCVV+IyPHPV2OaYgL6mHvZmpzuR4AULw/Nkd4MBIUnVwGGc0BTK1wTQWYIRh5bboUBEZuiEg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=xixiJdwEler2ROnXrSw4Tlar93LWHdTp63lq/5oJc7Y=;
+ b=i3ebGT9TO1Z3qGVkRnfBnLh0JSO2n35U/g8UvDhrozSG0Q4E+R4C/lWP9HAvWgoDhGTlJTDFPHn5o3OL37zG6nXRQu+gN3QOFsNWADQ0Nfg+pHJxH1v++ozfnIHQH2VlQcrN2hT03k8Se8mpQti4o8PX9rHxdt/ZXkJEJosayP6c0uObk2ahgQXbJTaCzXkjCCPtJKs8+ZIXtFtuJBLMMewIUHpyqFuD5JwpHakCnPbLaKxjzlhHpz7ugbIhw2WZI7UwtyD05wAJKG3cmTZzuU3LQQwzy65Qq/6pDa3EPwzIrGQq9K3YT9zcFoJjRC8GQdVPDjiyKgjxpzVmR0o61g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fujitsu.com; dmarc=pass action=none header.from=fujitsu.com;
+ dkim=pass header.d=fujitsu.com; arc=none
+Received: from OSZPR01MB6453.jpnprd01.prod.outlook.com (2603:1096:604:ed::14)
+ by TYYPR01MB7069.jpnprd01.prod.outlook.com (2603:1096:400:db::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7962.19; Fri, 13 Sep
+ 2024 01:37:08 +0000
+Received: from OSZPR01MB6453.jpnprd01.prod.outlook.com
+ ([fe80::9ef5:e83:9047:de11]) by OSZPR01MB6453.jpnprd01.prod.outlook.com
+ ([fe80::9ef5:e83:9047:de11%5]) with mapi id 15.20.7939.022; Fri, 13 Sep 2024
+ 01:37:08 +0000
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: Jason Wang <jasowang@redhat.com>, =?utf-8?B?QWxleCBCZW5uw6ll?=
+ <alex.bennee@linaro.org>, Laurent Vivier <lvivier@redhat.com>, Marcelo
+ Tosatti <mtosatti@redhat.com>, Nicholas Piggin <npiggin@gmail.com>, Klaus
+ Jensen <its@irrelevant.dk>, WANG Xuerui <git@xen0n.name>, Halil Pasic
+ <pasic@linux.ibm.com>, Rob Herring <robh@kernel.org>, Michael Rolnik
+ <mrolnik@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Richard Henderson <richard.henderson@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>, Corey Minyard <minyard@acm.org>, Keith Busch
+ <kbusch@kernel.org>, Thomas Huth <thuth@redhat.com>, "Maciej S. Szmigiero"
+ <maciej.szmigiero@oracle.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Jesper
+ Devantier <foss@defmacro.it>, Hyman Huang <yong.huang@smartx.com>,
+ =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Palmer
+ Dabbelt <palmer@dabbelt.com>, "qemu-s390x@nongnu.org"
+ <qemu-s390x@nongnu.org>, Laurent Vivier <laurent@vivier.eu>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "Richard W.M. Jones"
+ <rjones@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Aurelien
+ Jarno <aurelien@aurel32.net>, =?utf-8?B?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?=
+ <berrange@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>, Christian Borntraeger
+ <borntraeger@linux.ibm.com>, Akihiko Odaki <akihiko.odaki@daynix.com>, Daniel
+ Henrique Barboza <dbarboza@ventanamicro.com>, Hanna Reitz
+ <hreitz@redhat.com>, Ani Sinha <anisinha@redhat.com>, "qemu-ppc@nongnu.org"
+ <qemu-ppc@nongnu.org>, =?utf-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?=
+ <marcandre.lureau@redhat.com>, Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bmeng.cn@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>, Helge
+ Deller <deller@gmx.de>, Peter Xu <peterx@redhat.com>, Daniel Henrique Barboza
+ <danielhb413@gmail.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>, Nina
+ Schoetterl-Glausch <nsg@linux.ibm.com>, Yanan Wang <wangyanan55@huawei.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, Igor Mammedov
+ <imammedo@redhat.com>, Jean-Christophe Dubois <jcd@tribudubois.net>, Eric
+ Farman <farman@linux.ibm.com>, Sriram Yagnaraman
+ <sriram.yagnaraman@ericsson.com>, "qemu-block@nongnu.org"
+ <qemu-block@nongnu.org>, Stefan Berger <stefanb@linux.vnet.ibm.com>, Joel
+ Stanley <joel@jms.id.au>, Eduardo Habkost <eduardo@habkost.net>, David Gibson
+ <david@gibson.dropbear.id.au>, Fam Zheng <fam@euphon.net>, Weiwei Li
+ <liwei1518@gmail.com>, Markus Armbruster <armbru@redhat.com>
+Subject: RE: [PATCH v2 00/48] Use g_assert_not_reached instead of
+ (g_)assert(0, false)
+Thread-Topic: [PATCH v2 00/48] Use g_assert_not_reached instead of
+ (g_)assert(0, false)
+Thread-Index: AQHbBOcD6IgVKZuIjkK8WaTrDJ6NE7JU78/A
+Date: Fri, 13 Sep 2024 01:37:07 +0000
+Message-ID: <OSZPR01MB6453486D937E15FBF6AEAD018D652@OSZPR01MB6453.jpnprd01.prod.outlook.com>
+References: <20240912073921.453203-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20240912073921.453203-1-pierrick.bouvier@linaro.org>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: =?utf-8?B?TVNJUF9MYWJlbF8xZTkyZWY3My0wYWQxLTQwYzUtYWQ1NS00NmRlMzM5Njgw?=
+ =?utf-8?B?MmZfQWN0aW9uSWQ9ZmViZGExYWEtOTU4MC00YTFlLThlOTEtY2M0YzE4N2Zm?=
+ =?utf-8?B?ZGE5O01TSVBfTGFiZWxfMWU5MmVmNzMtMGFkMS00MGM1LWFkNTUtNDZkZTMz?=
+ =?utf-8?B?OTY4MDJmX0NvbnRlbnRCaXRzPTA7TVNJUF9MYWJlbF8xZTkyZWY3My0wYWQx?=
+ =?utf-8?B?LTQwYzUtYWQ1NS00NmRlMzM5NjgwMmZfRW5hYmxlZD10cnVlO01TSVBfTGFi?=
+ =?utf-8?B?ZWxfMWU5MmVmNzMtMGFkMS00MGM1LWFkNTUtNDZkZTMzOTY4MDJmX01ldGhv?=
+ =?utf-8?B?ZD1Qcml2aWxlZ2VkO01TSVBfTGFiZWxfMWU5MmVmNzMtMGFkMS00MGM1LWFk?=
+ =?utf-8?B?NTUtNDZkZTMzOTY4MDJmX05hbWU9RlVKSVRTVS1QVUJMSUPigIs7TVNJUF9M?=
+ =?utf-8?B?YWJlbF8xZTkyZWY3My0wYWQxLTQwYzUtYWQ1NS00NmRlMzM5NjgwMmZfU2V0?=
+ =?utf-8?B?RGF0ZT0yMDI0LTA5LTEzVDAxOjMyOjQwWjtNU0lQX0xhYmVsXzFlOTJlZjcz?=
+ =?utf-8?B?LTBhZDEtNDBjNS1hZDU1LTQ2ZGUzMzk2ODAyZl9TaXRlSWQ9YTE5ZjEyMWQt?=
+ =?utf-8?Q?81e1-4858-a9d8-736e267fd4c7;?=
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=fujitsu.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: OSZPR01MB6453:EE_|TYYPR01MB7069:EE_
+x-ms-office365-filtering-correlation-id: a72c9a87-9902-465e-c373-08dcd394946e
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|7416014|366016|376014|38070700018|1580799027; 
+x-microsoft-antispam-message-info: =?utf-8?B?NXBMQlV2KzVyWm9Cdlk4YTh6aFE3TVpYdnhOUnpzV3YzcU9RNGFCa0pVNVNs?=
+ =?utf-8?B?NmwrUlFqRU96ckhkcFB4REZtSytJNE9WVEJ1eXprL3huZzdhWDMzSFVNSHF0?=
+ =?utf-8?B?WlhtMElVVHk2clIwK0NINCthVEtaYlZnOE05VDd5QmJqOXRRckxSTm1WL0tP?=
+ =?utf-8?B?TVpQemdQSHRHc0VTWndwZkRPQUN1MWVEdGYzc1oyQ0RmRVg5SzF3bXpuQWIr?=
+ =?utf-8?B?OUpxeWIxZVZ0OHkzcENDVVVUdWQ1czFyWkR0YW5iS08wcGROWFNJZWdPTDdC?=
+ =?utf-8?B?SG5qVGM3NW15ZU5tRXh3Tk5JK05kK2pidXJhYUxHNm1NK0ltVEhvM1lHd25p?=
+ =?utf-8?B?Nkl0YW8xODRkcFhCdkNVajhxTjFaMFFSejloV3g5QUV0UDlYTFhFTjZzc3RC?=
+ =?utf-8?B?U2NHdTEvemVhNmFycG9nWEZSaThaVmVISkM4TTMwN0I3QVgrZGF0VWFxY2ND?=
+ =?utf-8?B?OFBVRVZmUlNpaHBlVHprR0dwR0ZkbnZUOG1nV3Q2SGlMaGk1SE5OWFFoaWhK?=
+ =?utf-8?B?dVQwTzVrTmdYMTA1V0hORFpoZFhuYnV5VU5OdG9QK3FOREJSa3FvV3VBQ3Z2?=
+ =?utf-8?B?L21TaS9CaEtQMGNPdXE1MGhaMXRIKzkwb0hqU29oSGZ6cHNGOWM1ODA2YmYv?=
+ =?utf-8?B?RUlLakg3V0RDRUdyeVozdVdLUFJjaFVqMUV6ZFJCTHJBblVUK1UyeUptUjhZ?=
+ =?utf-8?B?VGMxRndoRDZMdWxiVUxiZW5BdnN4N2xkRlp0NzluZE9ySVYyWFdWbjZ6NUtx?=
+ =?utf-8?B?dEQveUpsOG92ZTcvZjVKN09GaHZiQnJ6WHdybnRCMjBobjZreTZrZFQ4RGg4?=
+ =?utf-8?B?TnNmcUo5UzQ0NXRZVlNlVEtGYjc4dFY3MWxhOGFRWkFra2RpYTNaaVVLa3BM?=
+ =?utf-8?B?OUJ3WUFGVzdPNlNpV3FWNG1laGl2UGdvL0ZpdFhDdlJrQkYvcXlsdnFoTnZs?=
+ =?utf-8?B?MzFBZ1pjMm1Odm9SaWZhSTZKMEhxTTdZS0V1ZFpncFRnUkRDNnU5dTBNT1hQ?=
+ =?utf-8?B?RmxWOEZld0xMaHZhTEpxZXFONDhMTG9ndWlPakNVWDJoK29NZDdxVDRlTWcy?=
+ =?utf-8?B?aklodWZJWTA4K2lkWGVyc3M1RmZ3YUZmdWR3WElXclUzTkRtZE0rMWlXT1Ja?=
+ =?utf-8?B?TldjZGpqTzlSYUtIcVpGa1JMbmpoTXdFOHlzaHVMeDY3aGYzY1VBdlhoazZZ?=
+ =?utf-8?B?NjVyTzM2RXRjekpJZHVsUTkzMmRveCtQWWNLSW9vOUVYV0lkeHQyR3hvYWpw?=
+ =?utf-8?B?YkFSWm9yL2IrVWNOVTgxUHBQbVZhTTJIU2RWZ2NLY2w0NFYzRHhMV083OGht?=
+ =?utf-8?B?em9uU01vNU9iY091UGtEb1hja24yZExWZm4xd1YyR0lMSUZQbWdrRzk2aTMx?=
+ =?utf-8?B?alJTZjJTNDlIUG01UnlXM0xManVaYi9FYitLOVpBaS9obC8zZ3MyTTN0QUlX?=
+ =?utf-8?B?VjlQRUNScno5aWRTM1c3UWhwbmNSN3lBYm1XcS81M3AvbW54U0pSRUxWMHVl?=
+ =?utf-8?B?Z2hGems2dTNzWGhVSXJVTG9VOU11dmVKd2MrcDF1alEzOGhmYmdoeFoyWHRP?=
+ =?utf-8?B?WTJvY3NUMWg3VUdyNXdPRmNrc29ZR2pKbCtqYXI3OEl1cUJMT3JEaVRLTjRE?=
+ =?utf-8?B?VUdXeGxvc2VGNHRoTnB1QjZkTld0NHNGdG5YUWpEYXBRV1RLNmptaHNrdFB1?=
+ =?utf-8?B?eGo2V0xpR0lzR2Z1SjJtNGRJVEUvU3NlNk5oa0dwTHlxQ1ZSenNvMkF1bE9z?=
+ =?utf-8?B?cE1lMkllSEgzKzRpRU1KdkVQaDNQbDVWeFU3aXhIYzJoVUdaektSWVBOM3I2?=
+ =?utf-8?B?aGFleEtHTGIyZkw1UVBheEhiM0Y3UTJueWRwc1ZCWHhTeGQrdnVjSTdQd3Fs?=
+ =?utf-8?B?NmkzazR5SXkvUVhYYnQ0UlYwVTNwVS9NM3AwY1dBNmxEeXc9PQ==?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-cn; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:OSZPR01MB6453.jpnprd01.prod.outlook.com; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(1800799024)(7416014)(366016)(376014)(38070700018)(1580799027);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?N3FWSzZ6MFhia2k0UWsrVFJCdXZmcisxeEVUWm5jaVVpbCtNR2x5Ly93WUxq?=
+ =?utf-8?B?MjdTSm9pTlNJUGlJRWptdlk0ZWJLMndoL1JybVpSYnlIZEViS1g2VzFSamJw?=
+ =?utf-8?B?YWlBMkhLMVNsb0JFM3VwOHBrcm55cGZaSzZhYnh3L2hYOGJCNVBMZWhsb3dm?=
+ =?utf-8?B?NUF5NVJpQkV1K3NXUmdqeWpnNTJWanRUNWRtZkt5emFmMGhGTHJZNjVvSGFO?=
+ =?utf-8?B?Q1VLdVY1RlBIVGtRa05PTFMydU5IaGhiRmN6Q28vaVNWbEVCR0hkOVJvTEx5?=
+ =?utf-8?B?b05VclVMVVdLWjRsaXRLVS9iNW1vSXp2US80d0IxRktqNzBGUmdUam5GU0xi?=
+ =?utf-8?B?TkZRVmdHUVhBb2szVEtRL0UwVmJNOWo5UDgzNGpxQlh2eFRZM2pIekRYWGNM?=
+ =?utf-8?B?TzlGTVdsTVBRMXV2Z0NNOWdkSm9ueDFUNkg5OGNyVkkrQUNVaUJ2SFpkTHhG?=
+ =?utf-8?B?OGZETUd0UlpoYkVrelVnUG5EUHVMRGhTRDJBQ2IzM09sNlF1ZlhBQ3k5RzZM?=
+ =?utf-8?B?Y3Y3Qk1WMTBlLy9Yd1NCdGJ6R2ExSkpJR2pxblBKZUpXdE5YQjVVUmpCQXVZ?=
+ =?utf-8?B?Ui91bGtjbXpoMGozT2RwYXpwM1dpRW52elFOLzY0akFZN3BJU1lmNmlUeGdU?=
+ =?utf-8?B?dk5uQ1BSb0JMRVQzYkI2WUx1eUc0RnNWNXExZkkvcFAwN29nSmpoNTcyaWw3?=
+ =?utf-8?B?Q0tRTVowVlN4dGROdVpVMHQzcDNKQ0tmOGZ0d08wUDBZWGNzUUVhaVpvM2Ux?=
+ =?utf-8?B?ZzFCMnVGU00rS1FYb09xTjlFUVBvQ2F0SHF5NnZBY04ybnlIZGZ3bys4dUZJ?=
+ =?utf-8?B?QVlGbXY0NkMyTkhJU01NZFR1RXlnSmQ4bytudU1qVzd1dEpOVkMzRkVjYTgy?=
+ =?utf-8?B?Tlp5aHNpV1p2Nkx3Vk5WOTZxcVlzSXVVY2g3WTk5dWduR0FZblU1VlRpVjdK?=
+ =?utf-8?B?Z2ZJaVRRVWw0Rm5JN2U0ZkVQUUs3bkxUeFByU2JWU0ZHbHZLL3lid0dla0lE?=
+ =?utf-8?B?MEFLTVZWcmtwQUUrb1BvbVQ5TzZQSnUzSkN4bGxReTZtZVVxM0J3ZS8vNytY?=
+ =?utf-8?B?Yk5wZFZuOHp0SDd6Nlh6L0l3aTVQNGphaGIzK0RHK1drUlBpSWovb21uOXZk?=
+ =?utf-8?B?Z1VFdTU2NW5NQ0QvQmRiMVh6VU10K3pKZnZTQjVJZVoyYy9kMXFQUjdSbHpx?=
+ =?utf-8?B?bG4xOUFLSDhvQlY5eENLT0dHYUQ5NnVXU1ZoZ2t1RWNJc1VONm1jWE5QTGtR?=
+ =?utf-8?B?QWgrcjZFYjRZKzBhME1FVmMzVGNtbWlMZmRYT0hBVDJYc3dUK1hxVHVhUGxx?=
+ =?utf-8?B?YkxGbWR2TXpSSGlIN2dFdEVOeVpXRkxaRmtOeHcvNG5QRGpDdkRxNHBZaUlZ?=
+ =?utf-8?B?V09sWXNzSTBGZTFDYmZ4cC9xUDkzRnoxSWFaZVZqOU9kb05rNlpOM05CSDE2?=
+ =?utf-8?B?L2xPRTR0dWNYb3ZBdGlXTU1HTUg5NCt3WGd0OEg0QUhYZXErRGlTaS9Xak5h?=
+ =?utf-8?B?TUowZHJLTE0xTVRnNkhCaHpMMWo0enc3WHdLamppekxTd0xjSjUyczZaVDQx?=
+ =?utf-8?B?YXk2Mjh0YnFvU1pZQUcvMnJqN2NyR0pkbTlTaU9WYWJDT3pwYndYODRaN0NY?=
+ =?utf-8?B?ZE9CWWJzQVNHbkY1MklQcXU5KzJJYjdLTTVodHZKM1dlR2hiWjM4YUE5aXdL?=
+ =?utf-8?B?N3UzaWRPZm5PRThxVzROTTNMZUE3b0RVb0FQbWZPcndxcVVXTFoxblUwbkR2?=
+ =?utf-8?B?ayt6UndsTzlzTSthU3VvSEpZS2M3ZjRlbDZ1VFJYWktsOHZMaFJ5MFlpbFBp?=
+ =?utf-8?B?aDVEcUkxNUlUU3RJclRsM00zYjdkVEZsdWp3a25LN0RRYjdPekU3ajVUazdK?=
+ =?utf-8?B?Wi9VVUlNTWpaaWdjM3phRUk3bWJuNlhXU0o3M0ZjOWNxWFVOVVlsVEJWL0Fw?=
+ =?utf-8?B?c1NEc0JURFVWTVczYUdETTE0cVVlQWl5SnU4N3hFVTZjaTdLaTFtc2VES2RN?=
+ =?utf-8?B?aDBHSHVBVis2eTdvWlBnSVo0ZHQ3emFNV1llbVM5S0V1cDkybHdqMXFUWmR3?=
+ =?utf-8?B?M3l6VThDYk8wZEhiU3Y4RzRKV0ErQlQzL3htWFErM3hqb2NGa0t5dWJiNVY0?=
+ =?utf-8?Q?p/NEuVWmX0NjhsEEOhazLQuzj?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87zfoc1zms.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: v6nZmdNrggOi/QmiHbyeXiDNfs7fYKxstrD1KXmX1E5KzPrBVStIHA4KivanwN1RI4FqvMUsoDgkMAApKUV5jWLoWaF9LjY13xfUf41j0non+gdX352GUODxIIkFPIS4y/QLkMGv85ZY9a4aADGLN/pkPsZuE1lnoakit91ZcWkT1skgSdrbqLwdV8pycWTy0ESWxXXADJ99KRyv1fLk1CT55pbD6se9KKbPzfeoEqs8rhngRlzGP4PMTjalT7x/jhG39TaHfeYRV0UW/EzL8Pq76HibNCNME1pCks168f9rjiLG3s3jnbn8Uzur1fZJ6YC7ITm7Bjc1Gtz4AeJDYCOy5OxigxwTH6bPFkF780/recrQMG4VE5083lQFxQh6Z12q8gi/vKGsTb0CH/dUt9rlSpFP0i7sQVjiCb/xuAnalXZtbQrZNF5sjVlFTHRcTcI/dXdDnynS2T+Y/wz6vx5s/HL3ryQzMZmh8dQeLYLkQ75/sORaeFI/WcIh2XJ4OQrXcX/lL8F21/iIhpS50oaciBT3CXnHg9s6SX87xpxECZG9dg/Gia7Tqn61pR7bMTKIGjrC7wbgHspgoNQF+LXSdJiPluL+JKVf3eLCxUpIqREWRToecUc96ZQMjezc
+X-OriginatorOrg: fujitsu.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: OSZPR01MB6453.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a72c9a87-9902-465e-c373-08dcd394946e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Sep 2024 01:37:07.8302 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a19f121d-81e1-4858-a9d8-736e267fd4c7
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: WWf0qFBNHKPV4SPrjCn34teNK/DUnmrhTbljE52madEKZ+ZFezYyHFsl8xEPlik3w56RRcK7KBUB4Ve2BO51+A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYYPR01MB7069
+Received-SPF: pass client-ip=68.232.152.246;
+ envelope-from=yaoxt.fnst@fujitsu.com; helo=esa2.fujitsucc.c3s2.iphmx.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,816 +240,180 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Xingtao Yao (Fujitsu)" <yaoxt.fnst@fujitsu.com>
+From:  "Xingtao Yao (Fujitsu)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 12, 2024 at 03:43:39PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> Hi Peter, sorry if I'm not very enthusiastic by this, I'm sure you
-> understand the rework is a little frustrating.
-
-That's OK.
-
-[For some reason my email sync program decided to give up working for
- hours.  I got more time looking at a tsc bug, which is good, but then I
- miss a lot of emails..]
-
-> 
-> > On Wed, Aug 28, 2024 at 09:41:17PM -0300, Fabiano Rosas wrote:
-> >> > +size_t multifd_device_state_payload_size(void)
-> >> > +{
-> >> > +    return sizeof(MultiFDDeviceState_t);
-> >> > +}
-> >> 
-> >> This will not be necessary because the payload size is the same as the
-> >> data type. We only need it for the special case where the MultiFDPages_t
-> >> is smaller than the total ram payload size.
-> >
-> > Today I was thinking maybe we should really clean this up, as the current
-> > multifd_send_data_alloc() is indeed too tricky (blame me.. who requested
-> > that more or less).  Knowing that VFIO can use dynamic buffers with ->idstr
-> > and ->buf (I was thinking it could be buf[1M].. but I was wrong...) made
-> > that feeling stronger.
-> 
-> If we're going to commit bad code and then rewrite it a week later, we
-> could have just let the original series from Maciej merge without any of
-> this.
-
-Why it's "bad code"?
-
-It runs pretty well, I don't think it's bad code.  You wrote it, and I
-don't think it's bad at all.
-
-But now we're rethinking after reading Maciej's new series.  Personally I
-don't think it's a major problem.
-
-Note that we're not changing the design back: what was initially proposed
-was the client submitting an array of multifd objects.  I still don't think
-that's right.
-
-What the change goes so far is we make the union a struct, however that's
-still N+2 objects not 2*N, where 2 came from RAM+VFIO.  I think the
-important bits are still there (from your previous refactor series).
-
-> I already suggested it a couple of times, we shouldn't be doing
-> core refactorings underneath contributors' patches, this is too
-> fragile. Just let people contribute their code and we can change it
-> later.
-
-I sincerely don't think a lot needs changing... only patch 1.  Basically
-patch 1 on top of your previous rework series will be at least what I want,
-but I'm open to comments from you guys.
-
-Note that patch 2-3 will be on top of Maciej's changes and they're totally
-not relevant to what we merged so far.  Hence, nothing relevant there to
-what you worked.  And this is the diff of patch 1:
-
- migration/multifd.h              | 16 +++++++++++-----
- migration/multifd-device-state.c |  8 ++++++--
- migration/multifd-nocomp.c       | 13 ++++++-------
- migration/multifd.c              | 25 ++++++-------------------
- 4 files changed, 29 insertions(+), 33 deletions(-)
-
-It's only 33 lines removed (many of which are comments..), it's not a huge
-lot.  I don't know why you feel so bad at this...
-
-It's probably because we maintain migration together, or we can keep our
-own way of work.  I don't think we did anything wrong yet so far.
-
-We can definitely talk about this in next 1:1.
-
-> 
-> This is also why I've been trying hard to separate core multifd
-> functionality from migration code that uses multifd to transmit their
-> data.
-> 
-> My original RFC plus the suggestion to extend multifd_ops for device
-> state would have (almost) made it so that no client code would be left
-> in multifd. We could have been turning this thing upside down and it
-> wouldn't affect anyone in terms of code conflicts.
-
-Do you mean you preferred the 2*N approach?
-
-> 
-> The ship has already sailed, so your patches below are fine, I have just
-> some small comments.
-
-I'm not sure what you meant about "ship sailed", but we should merge code
-whenever we think is the most correct.  I hope you meant after below all
-things look the best, or please shoot.  That's exactly what I'm requesting
-for as comments.
-
-> 
-> >
-> > I think we should change it now perhaps, otherwise we'll need to introduce
-> > other helpers to e.g. reset the device buffers, and that's not only slow
-> > but also not good looking, IMO.
-> 
-> I agree that part is kind of a sore thumb.
-> 
-> >
-> > So I went ahead with the idea in previous discussion, that I managed to
-> > change the SendData union into struct; the memory consumption is not super
-> > important yet, IMHO, but we should still stick with the object model where
-> > multifd enqueue thread switch buffer with multifd, as it still sounds a
-> > sane way to do.
-> >
-> > Then when that patch is ready, I further tried to make VFIO reuse multifd
-> > buffers just like what we do with MultiFDPages_t->offset[]: in RAM code we
-> > don't allocate it every time we enqueue.
-> >
-> > I hope it'll also work for VFIO.  VFIO has a specialty on being able to
-> > dump the config space so it's more complex (and I noticed Maciej's current
-> > design requires the final chunk of VFIO config data be migrated in one
-> > packet.. that is also part of the complexity there).  So I allowed that
-> > part to allocate a buffer but only that.  IOW, I made some API (see below)
-> > that can either reuse preallocated buffer, or use a separate one only for
-> > the final bulk.
-> >
-> > In short, could both of you have a look at what I came up with below?  I
-> > did that in patches because I think it's too much to comment, so patches
-> > may work better.  No concern if any of below could be good changes to you,
-> > then either Maciej can squash whatever into existing patches (and I feel
-> > like some existing patches in this series can go away with below design),
-> > or I can post pre-requisite patch but only if any of you prefer that.
-> >
-> > Anyway, let me know, the patches apply on top of this whole series applied
-> > first.
-> >
-> > I also wonder whether there can be any perf difference already (I tested
-> > all multifd qtest with below, but no VFIO I can run), perhaps not that
-> > much, but just to mention below should avoid both buffer allocations and
-> > one round of copy (so VFIO read() directly writes to the multifd buffers
-> > now).
-> >
-> > Thanks,
-> >
-> > ==========8<==========
-> > From a6cbcf692b2376e72cc053219d67bb32eabfb7a6 Mon Sep 17 00:00:00 2001
-> > From: Peter Xu <peterx@redhat.com>
-> > Date: Tue, 10 Sep 2024 12:10:59 -0400
-> > Subject: [PATCH 1/3] migration/multifd: Make MultiFDSendData a struct
-> >
-> > The newly introduced device state buffer can be used for either storing
-> > VFIO's read() raw data, but already also possible to store generic device
-> > states.  After noticing that device states may not easily provide a max
-> > buffer size (also the fact that RAM MultiFDPages_t after all also want to
-> > have flexibility on managing offset[] array), it may not be a good idea to
-> > stick with union on MultiFDSendData.. as it won't play well with such
-> > flexibility.
-> >
-> > Switch MultiFDSendData to a struct.
-> >
-> > It won't consume a lot more space in reality, after all the real buffers
-> > were already dynamically allocated, so it's so far only about the two
-> > structs (pages, device_state) that will be duplicated, but they're small.
-> >
-> > With this, we can remove the pretty hard to understand alloc size logic.
-> > Because now we can allocate offset[] together with the SendData, and
-> > properly free it when the SendData is freed.
-> >
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  migration/multifd.h              | 16 +++++++++++-----
-> >  migration/multifd-device-state.c |  8 ++++++--
-> >  migration/multifd-nocomp.c       | 13 ++++++-------
-> >  migration/multifd.c              | 25 ++++++-------------------
-> >  4 files changed, 29 insertions(+), 33 deletions(-)
-> >
-> > diff --git a/migration/multifd.h b/migration/multifd.h
-> > index c15c83104c..47203334b9 100644
-> > --- a/migration/multifd.h
-> > +++ b/migration/multifd.h
-> > @@ -98,9 +98,13 @@ typedef struct {
-> >      uint32_t num;
-> >      /* number of normal pages */
-> >      uint32_t normal_num;
-> > +    /*
-> > +     * Pointer to the ramblock.  NOTE: it's caller's responsibility to make
-> > +     * sure the pointer is always valid!
-> > +     */
-> 
-> This could use some rewording, it's not clear what "caller" means here.
-> 
-> >      RAMBlock *block;
-> > -    /* offset of each page */
-> > -    ram_addr_t offset[];
-> > +    /* offset array of each page, managed by multifd */
-> 
-> I'd drop the part after the comma, it's not very accurate and also gives
-> an impression that something sophisticated is being done to this.
-> 
-> > +    ram_addr_t *offset;
-> >  } MultiFDPages_t;
-> >  
-> >  struct MultiFDRecvData {
-> > @@ -123,7 +127,7 @@ typedef enum {
-> >      MULTIFD_PAYLOAD_DEVICE_STATE,
-> >  } MultiFDPayloadType;
-> >  
-> > -typedef union MultiFDPayload {
-> > +typedef struct MultiFDPayload {
-> >      MultiFDPages_t ram;
-> >      MultiFDDeviceState_t device_state;
-> >  } MultiFDPayload;
-> > @@ -323,11 +327,13 @@ static inline uint32_t multifd_ram_page_count(void)
-> >  void multifd_ram_save_setup(void);
-> >  void multifd_ram_save_cleanup(void);
-> >  int multifd_ram_flush_and_sync(void);
-> > -size_t multifd_ram_payload_size(void);
-> > +void multifd_ram_payload_alloc(MultiFDPages_t *pages);
-> > +void multifd_ram_payload_free(MultiFDPages_t *pages);
-> >  void multifd_ram_fill_packet(MultiFDSendParams *p);
-> >  int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp);
-> >  
-> > -size_t multifd_device_state_payload_size(void);
-> > +void multifd_device_state_payload_alloc(MultiFDDeviceState_t *device_state);
-> > +void multifd_device_state_payload_free(MultiFDDeviceState_t *device_state);
-> >  void multifd_device_state_save_setup(void);
-> >  void multifd_device_state_clear(MultiFDDeviceState_t *device_state);
-> >  void multifd_device_state_save_cleanup(void);
-> > diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
-> > index 9b364e8ef3..72b72b6e62 100644
-> > --- a/migration/multifd-device-state.c
-> > +++ b/migration/multifd-device-state.c
-> > @@ -22,9 +22,13 @@ bool send_threads_abort;
-> >  
-> >  static MultiFDSendData *device_state_send;
-> >  
-> > -size_t multifd_device_state_payload_size(void)
-> > +/* TODO: use static buffers for idstr and buf */
-> > +void multifd_device_state_payload_alloc(MultiFDDeviceState_t *device_state)
-> > +{
-> > +}
-> > +
-> > +void multifd_device_state_payload_free(MultiFDDeviceState_t *device_state)
-> >  {
-> > -    return sizeof(MultiFDDeviceState_t);
-> >  }
-> >  
-> >  void multifd_device_state_save_setup(void)
-> > diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-> > index 0b7b543f44..c1b95fee0d 100644
-> > --- a/migration/multifd-nocomp.c
-> > +++ b/migration/multifd-nocomp.c
-> > @@ -22,15 +22,14 @@
-> >  
-> >  static MultiFDSendData *multifd_ram_send;
-> >  
-> > -size_t multifd_ram_payload_size(void)
-> > +void multifd_ram_payload_alloc(MultiFDPages_t *pages)
-> >  {
-> > -    uint32_t n = multifd_ram_page_count();
-> > +    pages->offset = g_new0(ram_addr_t, multifd_ram_page_count());
-> > +}
-> >  
-> > -    /*
-> > -     * We keep an array of page offsets at the end of MultiFDPages_t,
-> > -     * add space for it in the allocation.
-> > -     */
-> > -    return sizeof(MultiFDPages_t) + n * sizeof(ram_addr_t);
-> > +void multifd_ram_payload_free(MultiFDPages_t *pages)
-> > +{
-> > +    g_clear_pointer(&pages->offset, g_free);
-> >  }
-> >  
-> >  void multifd_ram_save_setup(void)
-> > diff --git a/migration/multifd.c b/migration/multifd.c
-> > index bebe5b5a9b..5a20b831cf 100644
-> > --- a/migration/multifd.c
-> > +++ b/migration/multifd.c
-> > @@ -101,26 +101,12 @@ struct {
-> >  
-> >  MultiFDSendData *multifd_send_data_alloc(void)
-> >  {
-> > -    size_t max_payload_size, size_minus_payload;
-> > +    MultiFDSendData *new = g_new0(MultiFDSendData, 1);
-> >  
-> > -    /*
-> > -     * MultiFDPages_t has a flexible array at the end, account for it
-> > -     * when allocating MultiFDSendData. Use max() in case other types
-> > -     * added to the union in the future are larger than
-> > -     * (MultiFDPages_t + flex array).
-> > -     */
-> > -    max_payload_size = MAX(multifd_ram_payload_size(),
-> > -                           multifd_device_state_payload_size());
-> > -    max_payload_size = MAX(max_payload_size, sizeof(MultiFDPayload));
-> > -
-> > -    /*
-> > -     * Account for any holes the compiler might insert. We can't pack
-> > -     * the structure because that misaligns the members and triggers
-> > -     * Waddress-of-packed-member.
-> > -     */
-> > -    size_minus_payload = sizeof(MultiFDSendData) - sizeof(MultiFDPayload);
-> > +    multifd_ram_payload_alloc(&new->u.ram);
-> > +    multifd_device_state_payload_alloc(&new->u.device_state);
-> >  
-> > -    return g_malloc0(size_minus_payload + max_payload_size);
-> > +    return new;
-> >  }
-> >  
-> >  void multifd_send_data_clear(MultiFDSendData *data)
-> > @@ -147,7 +133,8 @@ void multifd_send_data_free(MultiFDSendData *data)
-> >          return;
-> >      }
-> >  
-> > -    multifd_send_data_clear(data);
-> > +    multifd_ram_payload_free(&data->u.ram);
-> > +    multifd_device_state_payload_free(&data->u.device_state);
-> 
-> The "u" needs to be dropped now. Could just change to "p". Or can we now
-> move the whole struct inside MultiFDSendData?
-
-Yep, all your comments look good to me.
-
-A note here: I intentionally didn't touch "u." as that requires more
-changes which doesn't help as me leaving "patch-styled comment".  As I
-said, feel free to see the patches as comments not patches for merging yet.
-I / Maciej can prepare patch but only if the idea in general can be
-accepted.
-
-For me as I mentioned patch 2-3 do not relevant much to current master
-branch, afaiu, so if you guys like I can repost patch 1 with a formal one,
-but only if Maciej thinks it's easier for him.
-
-> 
-> >  
-> >      g_free(data);
-> >  }
-> > -- 
-> > 2.45.0
-> >
-> >
-> >
-> > From 6695d134c0818f42183f5ea03c21e6d56e7b57ea Mon Sep 17 00:00:00 2001
-> > From: Peter Xu <peterx@redhat.com>
-> > Date: Tue, 10 Sep 2024 12:24:14 -0400
-> > Subject: [PATCH 2/3] migration/multifd: Optimize device_state->idstr updates
-> >
-> > The duplication / allocation of idstr for each VFIO blob is an overkill, as
-> > idstr isn't something that changes frequently.  Also, the idstr always came
-> > from the upper layer of se->idstr so it's always guaranteed to
-> > exist (e.g. no device unplug allowed during migration).
-> >
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  migration/multifd.h              |  4 ++++
-> >  migration/multifd-device-state.c | 10 +++++++---
-> >  2 files changed, 11 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/migration/multifd.h b/migration/multifd.h
-> > index 47203334b9..1eaa5d4496 100644
-> > --- a/migration/multifd.h
-> > +++ b/migration/multifd.h
-> > @@ -115,6 +115,10 @@ struct MultiFDRecvData {
-> >  };
-> >  
-> >  typedef struct {
-> > +    /*
-> > +     * Name of the owner device.  NOTE: it's caller's responsibility to
-> > +     * make sure the pointer is always valid!
-> > +     */
-> 
-> Same comment as the other one here.
-> 
-> >      char *idstr;
-> >      uint32_t instance_id;
-> >      char *buf;
-> > diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
-> > index 72b72b6e62..cfd0465bac 100644
-> > --- a/migration/multifd-device-state.c
-> > +++ b/migration/multifd-device-state.c
-> > @@ -44,7 +44,7 @@ void multifd_device_state_save_setup(void)
-> >  
-> >  void multifd_device_state_clear(MultiFDDeviceState_t *device_state)
-> >  {
-> > -    g_clear_pointer(&device_state->idstr, g_free);
-> > +    device_state->idstr = NULL;
-> >      g_clear_pointer(&device_state->buf, g_free);
-> >  }
-> >  
-> > @@ -100,7 +100,12 @@ bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
-> >  
-> >      multifd_set_payload_type(device_state_send, MULTIFD_PAYLOAD_DEVICE_STATE);
-> >      device_state = &device_state_send->u.device_state;
-> > -    device_state->idstr = g_strdup(idstr);
-> > +    /*
-> > +     * NOTE: here we must use a static idstr (e.g. of a savevm state
-> > +     * entry) rather than any dynamically allocated buffer, because multifd
-> > +     * assumes this pointer is always valid!
-> > +     */
-> > +    device_state->idstr = idstr;
-> >      device_state->instance_id = instance_id;
-> >      device_state->buf = g_memdup2(data, len);
-> >      device_state->buf_len = len;
-> > @@ -137,7 +142,6 @@ static void multifd_device_state_save_thread_data_free(void *opaque)
-> >  {
-> >      struct MultiFDDSSaveThreadData *data = opaque;
-> >  
-> > -    g_clear_pointer(&data->idstr, g_free);
-> >      g_free(data);
-> >  }
-> >  
-> > -- 
-> > 2.45.0
-> >
-> >
-> > From abfea9698ff46ad0e0175e1dcc6e005e0b2ece2a Mon Sep 17 00:00:00 2001
-> > From: Peter Xu <peterx@redhat.com>
-> > Date: Tue, 10 Sep 2024 12:27:49 -0400
-> > Subject: [PATCH 3/3] migration/multifd: Optimize device_state buffer
-> >  allocations
-> >
-> > Provide a device_state->buf_prealloc so that the buffers can be reused if
-> > possible.  Provide a set of APIs to use it right.  Please see the
-> > documentation for the API in the code.
-> >
-> > The default buffer size came from VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE as of
-> > now.
-> >
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  include/hw/vfio/vfio-common.h    |  9 ++++
-> >  include/migration/misc.h         | 12 ++++-
-> >  migration/multifd.h              | 11 +++-
-> >  hw/vfio/migration.c              | 43 ++++++++-------
-> >  migration/multifd-device-state.c | 93 +++++++++++++++++++++++++-------
-> >  migration/multifd.c              |  9 ----
-> >  6 files changed, 126 insertions(+), 51 deletions(-)
-> >
-> > diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> > index 4578a0ca6a..c1f2f4ae55 100644
-> > --- a/include/hw/vfio/vfio-common.h
-> > +++ b/include/hw/vfio/vfio-common.h
-> > @@ -61,6 +61,13 @@ typedef struct VFIORegion {
-> >      uint8_t nr; /* cache the region number for debug */
-> >  } VFIORegion;
-> >  
-> > +typedef struct VFIODeviceStatePacket {
-> > +    uint32_t version;
-> > +    uint32_t idx;
-> > +    uint32_t flags;
-> > +    uint8_t data[0];
-> > +} QEMU_PACKED VFIODeviceStatePacket;
-> > +
-> >  typedef struct VFIOMigration {
-> >      struct VFIODevice *vbasedev;
-> >      VMChangeStateEntry *vm_state;
-> > @@ -168,6 +175,8 @@ typedef struct VFIODevice {
-> >      int devid;
-> >      IOMMUFDBackend *iommufd;
-> >      VFIOIOASHwpt *hwpt;
-> > +    /* Only used on sender side when multifd is enabled */
-> > +    VFIODeviceStatePacket *multifd_packet;
-> >      QLIST_ENTRY(VFIODevice) hwpt_next;
-> >  } VFIODevice;
-> >  
-> > diff --git a/include/migration/misc.h b/include/migration/misc.h
-> > index 26f7f3140f..1a8676ed3d 100644
-> > --- a/include/migration/misc.h
-> > +++ b/include/migration/misc.h
-> > @@ -112,8 +112,16 @@ bool migration_in_bg_snapshot(void);
-> >  void dirty_bitmap_mig_init(void);
-> >  
-> >  /* migration/multifd-device-state.c */
-> > -bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
-> > -                                char *data, size_t len);
-> > +struct MultiFDDeviceState_t;
-> > +typedef struct MultiFDDeviceState_t MultiFDDeviceState_t;
-> > +
-> > +MultiFDDeviceState_t *
-> > +multifd_device_state_prepare(char *idstr, uint32_t instance_id);
-> > +void *multifd_device_state_get_buffer(MultiFDDeviceState_t *s,
-> > +                                      int64_t *buf_len);
-> > +bool multifd_device_state_finish(MultiFDDeviceState_t *state,
-> > +                                 void *buf, int64_t buf_len);
-> > +
-> >  bool migration_has_device_state_support(void);
-> >  
-> >  void
-> > diff --git a/migration/multifd.h b/migration/multifd.h
-> > index 1eaa5d4496..1ccdeeb8c5 100644
-> > --- a/migration/multifd.h
-> > +++ b/migration/multifd.h
-> > @@ -15,6 +15,7 @@
-> >  
-> >  #include "exec/target_page.h"
-> >  #include "ram.h"
-> > +#include "migration/misc.h"
-> >  
-> >  typedef struct MultiFDRecvData MultiFDRecvData;
-> >  typedef struct MultiFDSendData MultiFDSendData;
-> > @@ -114,16 +115,22 @@ struct MultiFDRecvData {
-> >      off_t file_offset;
-> >  };
-> >  
-> > -typedef struct {
-> > +struct MultiFDDeviceState_t {
-> >      /*
-> >       * Name of the owner device.  NOTE: it's caller's responsibility to
-> >       * make sure the pointer is always valid!
-> >       */
-> >      char *idstr;
-> >      uint32_t instance_id;
-> > +    /*
-> > +     * Points to the buffer to send via multifd.  Normally it's the same as
-> > +     * buf_prealloc, otherwise the caller needs to make sure the buffer is
-> > +     * avaliable through multifd running.
-> 
-> "throughout multifd runtime" maybe.
-> 
-> > +     */
-> >      char *buf;
-> > +    char *buf_prealloc;
-> >      size_t buf_len;
-> > -} MultiFDDeviceState_t;
-> > +};
-> >  
-> >  typedef enum {
-> >      MULTIFD_PAYLOAD_NONE,
-> > diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> > index 67996aa2df..e36422b7c5 100644
-> > --- a/hw/vfio/migration.c
-> > +++ b/hw/vfio/migration.c
-> > @@ -59,13 +59,6 @@
-> >  
-> >  #define VFIO_DEVICE_STATE_CONFIG_STATE (1)
-> >  
-> > -typedef struct VFIODeviceStatePacket {
-> > -    uint32_t version;
-> > -    uint32_t idx;
-> > -    uint32_t flags;
-> > -    uint8_t data[0];
-> > -} QEMU_PACKED VFIODeviceStatePacket;
-> > -
-> >  static int64_t bytes_transferred;
-> >  
-> >  static const char *mig_state_to_str(enum vfio_device_mig_state state)
-> > @@ -741,6 +734,9 @@ static void vfio_save_cleanup(void *opaque)
-> >      migration->initial_data_sent = false;
-> >      vfio_migration_cleanup(vbasedev);
-> >      trace_vfio_save_cleanup(vbasedev->name);
-> > +    if (vbasedev->multifd_packet) {
-> > +        g_clear_pointer(&vbasedev->multifd_packet, g_free);
-> > +    }
-> >  }
-> >  
-> >  static void vfio_state_pending_estimate(void *opaque, uint64_t *must_precopy,
-> > @@ -892,7 +888,8 @@ static int vfio_save_complete_precopy_async_thread_config_state(VFIODevice *vbas
-> >      g_autoptr(QIOChannelBuffer) bioc = NULL;
-> >      QEMUFile *f = NULL;
-> >      int ret;
-> > -    g_autofree VFIODeviceStatePacket *packet = NULL;
-> > +    VFIODeviceStatePacket *packet;
-> > +    MultiFDDeviceState_t *state;
-> >      size_t packet_len;
-> >  
-> >      bioc = qio_channel_buffer_new(0);
-> > @@ -911,13 +908,19 @@ static int vfio_save_complete_precopy_async_thread_config_state(VFIODevice *vbas
-> >      }
-> >  
-> >      packet_len = sizeof(*packet) + bioc->usage;
-> > -    packet = g_malloc0(packet_len);
-> > +
-> > +    state = multifd_device_state_prepare(idstr, instance_id);
-> > +    /*
-> > +     * Do not reuse multifd buffer, but use our own due to random size.
-> > +     * The buffer will be freed only when save cleanup.
-> > +     */
-> > +    vbasedev->multifd_packet = g_malloc0(packet_len);
-> > +    packet = vbasedev->multifd_packet;
-> >      packet->idx = idx;
-> >      packet->flags = VFIO_DEVICE_STATE_CONFIG_STATE;
-> >      memcpy(&packet->data, bioc->data, bioc->usage);
-> >  
-> > -    if (!multifd_queue_device_state(idstr, instance_id,
-> > -                                    (char *)packet, packet_len)) {
-> > +    if (!multifd_device_state_finish(state, packet, packet_len)) {
-> >          ret = -1;
-> >      }
-> >  
-> > @@ -936,7 +939,6 @@ static int vfio_save_complete_precopy_thread(char *idstr,
-> >      VFIODevice *vbasedev = opaque;
-> >      VFIOMigration *migration = vbasedev->migration;
-> >      int ret;
-> > -    g_autofree VFIODeviceStatePacket *packet = NULL;
-> >      uint32_t idx;
-> >  
-> >      if (!migration->multifd_transfer) {
-> > @@ -954,21 +956,25 @@ static int vfio_save_complete_precopy_thread(char *idstr,
-> >          goto ret_finish;
-> >      }
-> >  
-> > -    packet = g_malloc0(sizeof(*packet) + migration->data_buffer_size);
-> > -
-> >      for (idx = 0; ; idx++) {
-> > +        VFIODeviceStatePacket *packet;
-> > +        MultiFDDeviceState_t *state;
-> >          ssize_t data_size;
-> >          size_t packet_size;
-> > +        int64_t buf_size;
-> >  
-> >          if (qatomic_read(abort_flag)) {
-> >              ret = -ECANCELED;
-> >              goto ret_finish;
-> >          }
-> >  
-> > +        state = multifd_device_state_prepare(idstr, instance_id);
-> > +        packet = multifd_device_state_get_buffer(state, &buf_size);
-> >          data_size = read(migration->data_fd, &packet->data,
-> > -                         migration->data_buffer_size);
-> > +                         buf_size - sizeof(*packet));
-> >          if (data_size < 0) {
-> >              if (errno != ENOMSG) {
-> > +                multifd_device_state_finish(state, NULL, 0);
-> >                  ret = -errno;
-> >                  goto ret_finish;
-> >              }
-> > @@ -980,14 +986,15 @@ static int vfio_save_complete_precopy_thread(char *idstr,
-> >              data_size = 0;
-> >          }
-> >  
-> > -        if (data_size == 0)
-> > +        if (data_size == 0) {
-> > +            multifd_device_state_finish(state, NULL, 0);
-> >              break;
-> > +        }
-> >  
-> >          packet->idx = idx;
-> >          packet_size = sizeof(*packet) + data_size;
-> >  
-> > -        if (!multifd_queue_device_state(idstr, instance_id,
-> > -                                        (char *)packet, packet_size)) {
-> > +        if (!multifd_device_state_finish(state, packet, packet_size)) {
-> >              ret = -1;
-> >              goto ret_finish;
-> >          }
-> > diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
-> > index cfd0465bac..6f0259426d 100644
-> > --- a/migration/multifd-device-state.c
-> > +++ b/migration/multifd-device-state.c
-> > @@ -20,15 +20,18 @@ ThreadPool *send_threads;
-> >  int send_threads_ret;
-> >  bool send_threads_abort;
-> >  
-> > +#define  MULTIFD_DEVICE_STATE_BUFLEN  (1UL << 20)
-> > +
-> >  static MultiFDSendData *device_state_send;
-> >  
-> > -/* TODO: use static buffers for idstr and buf */
-> >  void multifd_device_state_payload_alloc(MultiFDDeviceState_t *device_state)
-> >  {
-> > +    device_state->buf_prealloc = g_malloc0(MULTIFD_DEVICE_STATE_BUFLEN);
-> >  }
-> >  
-> >  void multifd_device_state_payload_free(MultiFDDeviceState_t *device_state)
-> >  {
-> > +    g_clear_pointer(&device_state->buf_prealloc, g_free);
-> >  }
-> >  
-> >  void multifd_device_state_save_setup(void)
-> > @@ -42,12 +45,6 @@ void multifd_device_state_save_setup(void)
-> >      send_threads_abort = false;
-> >  }
-> >  
-> > -void multifd_device_state_clear(MultiFDDeviceState_t *device_state)
-> > -{
-> > -    device_state->idstr = NULL;
-> > -    g_clear_pointer(&device_state->buf, g_free);
-> > -}
-> > -
-> >  void multifd_device_state_save_cleanup(void)
-> >  {
-> >      g_clear_pointer(&send_threads, thread_pool_free);
-> > @@ -89,33 +86,89 @@ void multifd_device_state_send_prepare(MultiFDSendParams *p)
-> >      multifd_device_state_fill_packet(p);
-> >  }
-> >  
-> > -bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
-> > -                                char *data, size_t len)
-> > +/*
-> > + * Prepare to send some device state via multifd.  Returns the current idle
-> > + * MultiFDDeviceState_t*.
-> > + *
-> > + * As a follow up, the caller must call multifd_device_state_finish() to
-> > + * release the resources.
-> > + *
-> > + * One example usage of the API:
-> > + *
-> > + *   // Fetch a free multifd device state object
-> > + *   state = multifd_device_state_prepare(idstr, instance_id);
-> > + *
-> > + *   // Optional: fetch the buffer to reuse
-> > + *   buf = multifd_device_state_get_buffer(state, &buf_size);
-> > + *
-> > + *   // Here len>0 means success, otherwise failure
-> > + *   len = buffer_fill(buf, buf_size);
-> > + *
-> > + *   // Finish the transaction, either enqueue or cancel the request.  Here
-> > + *   // len>0 will enqueue, <=0 will cancel.
-> > + *   multifd_device_state_finish(state, buf, len);
-> > + */
-> > +MultiFDDeviceState_t *
-> > +multifd_device_state_prepare(char *idstr, uint32_t instance_id)
-> >  {
-> > -    /* Device state submissions can come from multiple threads */
-> > -    QEMU_LOCK_GUARD(&queue_job_mutex);
-> >      MultiFDDeviceState_t *device_state;
-> >  
-> >      assert(multifd_payload_empty(device_state_send));
-> >  
-> > -    multifd_set_payload_type(device_state_send, MULTIFD_PAYLOAD_DEVICE_STATE);
-> > +    /*
-> > +     * TODO: The lock name may need change, but I'm reusing just for
-> > +     * simplicity.
-> > +     */
-> > +    qemu_mutex_lock(&queue_job_mutex);
-> > +
-> >      device_state = &device_state_send->u.device_state;
-> >      /*
-> > -     * NOTE: here we must use a static idstr (e.g. of a savevm state
-> > -     * entry) rather than any dynamically allocated buffer, because multifd
-> > +     * NOTE: here we must use a static idstr (e.g. of a savevm state entry)
-> > +     * rather than any dynamically allocated buffer, because multifd
-> >       * assumes this pointer is always valid!
-> >       */
-> >      device_state->idstr = idstr;
-> >      device_state->instance_id = instance_id;
-> > -    device_state->buf = g_memdup2(data, len);
-> > -    device_state->buf_len = len;
-> >  
-> > -    if (!multifd_send(&device_state_send)) {
-> > -        multifd_send_data_clear(device_state_send);
-> > -        return false;
-> > +    return &device_state_send->u.device_state;
-> > +}
-> > +
-> > +/*
-> > + * Need to be used after a previous call to multifd_device_state_prepare(),
-> > + * the buffer must not be used after invoke multifd_device_state_finish().
-> > + */
-> > +void *multifd_device_state_get_buffer(MultiFDDeviceState_t *s,
-> > +                                      int64_t *buf_len)
-> > +{
-> > +    *buf_len = MULTIFD_DEVICE_STATE_BUFLEN;
-> > +    return s->buf_prealloc;
-> > +}
-> > +
-> > +/*
-> > + * Need to be used only in pair with a previous call to
-> > + * multifd_device_state_prepare().  Returns true if enqueue successful,
-> > + * false otherwise.
-> > + */
-> > +bool multifd_device_state_finish(MultiFDDeviceState_t *state,
-> > +                                 void *buf, int64_t buf_len)
-> > +{
-> > +    bool result = false;
-> > +
-> > +    /* Currently we only have one global free buffer */
-> > +    assert(state == &device_state_send->u.device_state);
-> > +
-> > +    if (buf_len < 0) {
-> > +        goto out;
-> >      }
-> >  
-> > -    return true;
-> > +    multifd_set_payload_type(device_state_send, MULTIFD_PAYLOAD_DEVICE_STATE);
-> > +    /* This normally will be the state->buf_prealloc, but not required */
-> > +    state->buf = buf;
-> > +    state->buf_len = buf_len;
-> > +    result = multifd_send(&device_state_send);
-> > +out:
-> > +    qemu_mutex_unlock(&queue_job_mutex);
-> > +    return result;
-> >  }
-> >  
-> >  bool migration_has_device_state_support(void)
-> > diff --git a/migration/multifd.c b/migration/multifd.c
-> > index 5a20b831cf..2b5185e298 100644
-> > --- a/migration/multifd.c
-> > +++ b/migration/multifd.c
-> > @@ -115,15 +115,6 @@ void multifd_send_data_clear(MultiFDSendData *data)
-> >          return;
-> >      }
-> >  
-> > -    switch (data->type) {
-> > -    case MULTIFD_PAYLOAD_DEVICE_STATE:
-> > -        multifd_device_state_clear(&data->u.device_state);
-> > -        break;
-> > -    default:
-> > -        /* Nothing to do */
-> > -        break;
-> > -    }
-> > -
-> >      data->type = MULTIFD_PAYLOAD_NONE;
-> >  }
-> >  
-> > -- 
-> > 2.45.0
-> 
-
--- 
-Peter Xu
-
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogcWVtdS1kZXZlbC1ib3Vu
+Y2VzK3lhb3h0LmZuc3Q9ZnVqaXRzdS5jb21Abm9uZ251Lm9yZw0KPiA8cWVtdS1kZXZlbC1ib3Vu
+Y2VzK3lhb3h0LmZuc3Q9ZnVqaXRzdS5jb21Abm9uZ251Lm9yZz4gT24gQmVoYWxmIE9mDQo+IFBp
+ZXJyaWNrIEJvdXZpZXINCj4gU2VudDogVGh1cnNkYXksIFNlcHRlbWJlciAxMiwgMjAyNCAzOjM5
+IFBNDQo+IFRvOiBxZW11LWRldmVsQG5vbmdudS5vcmcNCj4gQ2M6IEphc29uIFdhbmcgPGphc293
+YW5nQHJlZGhhdC5jb20+OyBBbGV4IEJlbm7DqWUgPGFsZXguYmVubmVlQGxpbmFyby5vcmc+Ow0K
+PiBMYXVyZW50IFZpdmllciA8bHZpdmllckByZWRoYXQuY29tPjsgTWFyY2VsbyBUb3NhdHRpIDxt
+dG9zYXR0aUByZWRoYXQuY29tPjsNCj4gTmljaG9sYXMgUGlnZ2luIDxucGlnZ2luQGdtYWlsLmNv
+bT47IEtsYXVzIEplbnNlbiA8aXRzQGlycmVsZXZhbnQuZGs+OyBXQU5HDQo+IFh1ZXJ1aSA8Z2l0
+QHhlbjBuLm5hbWU+OyBIYWxpbCBQYXNpYyA8cGFzaWNAbGludXguaWJtLmNvbT47IFJvYiBIZXJy
+aW5nDQo+IDxyb2JoQGtlcm5lbC5vcmc+OyBNaWNoYWVsIFJvbG5payA8bXJvbG5pa0BnbWFpbC5j
+b20+OyBaaGFvIExpdQ0KPiA8emhhbzEubGl1QGludGVsLmNvbT47IFBldGVyIE1heWRlbGwgPHBl
+dGVyLm1heWRlbGxAbGluYXJvLm9yZz47IFJpY2hhcmQNCj4gSGVuZGVyc29uIDxyaWNoYXJkLmhl
+bmRlcnNvbkBsaW5hcm8ub3JnPjsgRmFiaWFubyBSb3NhcyA8ZmFyb3Nhc0BzdXNlLmRlPjsNCj4g
+Q29yZXkgTWlueWFyZCA8bWlueWFyZEBhY20ub3JnPjsgS2VpdGggQnVzY2ggPGtidXNjaEBrZXJu
+ZWwub3JnPjsgVGhvbWFzDQo+IEh1dGggPHRodXRoQHJlZGhhdC5jb20+OyBNYWNpZWogUy4gU3pt
+aWdpZXJvIDxtYWNpZWouc3ptaWdpZXJvQG9yYWNsZS5jb20+Ow0KPiBIYXJzaCBQcmF0ZWVrIEJv
+cmEgPGhhcnNocGJAbGludXguaWJtLmNvbT47IEtldmluIFdvbGYgPGt3b2xmQHJlZGhhdC5jb20+
+Ow0KPiBQYW9sbyBCb256aW5pIDxwYm9uemluaUByZWRoYXQuY29tPjsgSmVzcGVyIERldmFudGll
+ciA8Zm9zc0BkZWZtYWNyby5pdD47DQo+IEh5bWFuIEh1YW5nIDx5b25nLmh1YW5nQHNtYXJ0eC5j
+b20+OyBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqQ0KPiA8cGhpbG1kQGxpbmFyby5vcmc+OyBQYWxt
+ZXIgRGFiYmVsdCA8cGFsbWVyQGRhYmJlbHQuY29tPjsNCj4gcWVtdS1zMzkweEBub25nbnUub3Jn
+OyBMYXVyZW50IFZpdmllciA8bGF1cmVudEB2aXZpZXIuZXU+Ow0KPiBxZW11LXJpc2N2QG5vbmdu
+dS5vcmc7IFJpY2hhcmQgVy5NLiBKb25lcyA8cmpvbmVzQHJlZGhhdC5jb20+OyBMaXUgWmhpd2Vp
+DQo+IDx6aGl3ZWlfbGl1QGxpbnV4LmFsaWJhYmEuY29tPjsgQXVyZWxpZW4gSmFybm8gPGF1cmVs
+aWVuQGF1cmVsMzIubmV0PjsgRGFuaWVsIFAuDQo+IEJlcnJhbmfDqSA8YmVycmFuZ2VAcmVkaGF0
+LmNvbT47IE1hcmNlbCBBcGZlbGJhdW0NCj4gPG1hcmNlbC5hcGZlbGJhdW1AZ21haWwuY29tPjsg
+a3ZtQHZnZXIua2VybmVsLm9yZzsgQ2hyaXN0aWFuIEJvcm50cmFlZ2VyDQo+IDxib3JudHJhZWdl
+ckBsaW51eC5pYm0uY29tPjsgQWtpaGlrbyBPZGFraSA8YWtpaGlrby5vZGFraUBkYXluaXguY29t
+PjsNCj4gRGFuaWVsIEhlbnJpcXVlIEJhcmJvemEgPGRiYXJib3phQHZlbnRhbmFtaWNyby5jb20+
+OyBIYW5uYSBSZWl0eg0KPiA8aHJlaXR6QHJlZGhhdC5jb20+OyBBbmkgU2luaGEgPGFuaXNpbmhh
+QHJlZGhhdC5jb20+Ow0KPiBxZW11LXBwY0Bub25nbnUub3JnOyBNYXJjLUFuZHLDqSBMdXJlYXUg
+PG1hcmNhbmRyZS5sdXJlYXVAcmVkaGF0LmNvbT47DQo+IEFsaXN0YWlyIEZyYW5jaXMgPGFsaXN0
+YWlyLmZyYW5jaXNAd2RjLmNvbT47IEJpbiBNZW5nIDxibWVuZy5jbkBnbWFpbC5jb20+Ow0KPiBN
+aWNoYWVsIFMuIFRzaXJraW4gPG1zdEByZWRoYXQuY29tPjsgSGVsZ2UgRGVsbGVyIDxkZWxsZXJA
+Z214LmRlPjsgUGV0ZXIgWHUNCj4gPHBldGVyeEByZWRoYXQuY29tPjsgRGFuaWVsIEhlbnJpcXVl
+IEJhcmJvemEgPGRhbmllbGhiNDEzQGdtYWlsLmNvbT47DQo+IERtaXRyeSBGbGV5dG1hbiA8ZG1p
+dHJ5LmZsZXl0bWFuQGdtYWlsLmNvbT47IE5pbmEgU2Nob2V0dGVybC1HbGF1c2NoDQo+IDxuc2dA
+bGludXguaWJtLmNvbT47IFlhbmFuIFdhbmcgPHdhbmd5YW5hbjU1QGh1YXdlaS5jb20+Ow0KPiBx
+ZW11LWFybUBub25nbnUub3JnOyBJZ29yIE1hbW1lZG92IDxpbWFtbWVkb0ByZWRoYXQuY29tPjsN
+Cj4gSmVhbi1DaHJpc3RvcGhlIER1Ym9pcyA8amNkQHRyaWJ1ZHVib2lzLm5ldD47IEVyaWMgRmFy
+bWFuDQo+IDxmYXJtYW5AbGludXguaWJtLmNvbT47IFNyaXJhbSBZYWduYXJhbWFuDQo+IDxzcmly
+YW0ueWFnbmFyYW1hbkBlcmljc3Nvbi5jb20+OyBxZW11LWJsb2NrQG5vbmdudS5vcmc7IFN0ZWZh
+biBCZXJnZXINCj4gPHN0ZWZhbmJAbGludXgudm5ldC5pYm0uY29tPjsgSm9lbCBTdGFubGV5IDxq
+b2VsQGptcy5pZC5hdT47IEVkdWFyZG8gSGFia29zdA0KPiA8ZWR1YXJkb0BoYWJrb3N0Lm5ldD47
+IERhdmlkIEdpYnNvbiA8ZGF2aWRAZ2lic29uLmRyb3BiZWFyLmlkLmF1PjsgRmFtDQo+IFpoZW5n
+IDxmYW1AZXVwaG9uLm5ldD47IFdlaXdlaSBMaSA8bGl3ZWkxNTE4QGdtYWlsLmNvbT47IE1hcmt1
+cw0KPiBBcm1icnVzdGVyIDxhcm1icnVAcmVkaGF0LmNvbT47IFBpZXJyaWNrIEJvdXZpZXIgPHBp
+ZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj4gU3ViamVjdDogW1BBVENIIHYyIDAwLzQ4XSBV
+c2UgZ19hc3NlcnRfbm90X3JlYWNoZWQgaW5zdGVhZCBvZiAoZ18pYXNzZXJ0KDAsDQo+IGZhbHNl
+KQ0KPiANCj4gVGhpcyBzZXJpZXMgY2xlYW5zIHVwIGFsbCB1c2FnZXMgb2YgYXNzZXJ0L2dfYXNz
+ZXJ0IHdobyBhcmUgc3VwcG9zZWQgdG8gc3RvcA0KPiBleGVjdXRpb24gb2YgUUVNVS4gV2UgcmVw
+bGFjZSB0aG9zZSBieSBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpLg0KPiBJdCB3YXMgc3VnZ2VzdGVk
+IHJlY2VudGx5IHdoZW4gY2xlYW5pbmcgY29kZWJhc2UgdG8gYnVpbGQgUUVNVSB3aXRoIGdjYw0K
+PiBhbmQgdHNhbjoNCj4gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvcWVtdS1kZXZlbC81NGJiMDJh
+Ni0xYjEyLTQ2MGEtOTdmNi0zZjQ3OGVmNzY2YzZAbGluDQo+IGFyby5vcmcvLg0KPiANCj4gSW4g
+bW9yZSwgY2xlYW51cCB1c2VsZXNzIGJyZWFrIGFuZCByZXR1cm4gYWZ0ZXIgZ19hc3NlcnRfbm90
+X3JlYWNoZWQoKTsNCkkgZm91bmQgdGhhdCBub3QgYWxsIG9mIHRoZSBicmVhayBvciByZXR1cm4g
+YWZ0ZXIgZ19hc3NlcnRfbm90X3JlYWNoZWQoKSB3ZXJlIGNsZWFuZWQgdXAsIGRvbid0IHRoZXkg
+bmVlZCB0byBiZSBjbGVhbmVkIHVwPw0KPiANCj4gQW5kIGZpbmFsbHksIGVuc3VyZSB3aXRoIHNj
+cmlwdHMvY2hlY2twYXRjaC5wbCB0aGF0IHdlIGRvbid0IHJlaW50cm9kdWNlDQo+IChnXylhc3Nl
+cnQoZmFsc2UpIGluIHRoZSBmdXR1cmUuDQo+IA0KPiBOZXcgY29tbWl0cyAocmVtb3ZpbmcgcmV0
+dXJuKSBuZWVkIHJldmlldy4NCj4gDQo+IFRlc3RlZCB0aGF0IGl0IGJ1aWxkIHdhcm5pbmcgZnJl
+ZSB3aXRoIGdjYyBhbmQgY2xhbmcuDQo+IA0KPiB2Mg0KPiAtIGFsaWduIGJhY2tzbGFzaGVzIGZv
+ciBzb21lIGNoYW5nZXMNCj4gLSBhZGQgc3VtbWFyeSBpbiBhbGwgY29tbWl0cyBtZXNzYWdlDQo+
+IC0gcmVtb3ZlIHJlZHVuZGFudCBjb21tZW50DQo+IA0KPiB2MQ0KPiBodHRwczovL2xvcmUua2Vy
+bmVsLm9yZy9xZW11LWRldmVsLzIwMjQwOTEwMjIxNjA2LjE4MTc0NzgtMS1waWVycmljay5ib3V2
+aWVyQA0KPiBsaW5hcm8ub3JnL1QvI3QNCj4gDQo+IFBpZXJyaWNrIEJvdXZpZXIgKDQ4KToNCj4g
+ICBkb2NzL3NwaW46IHJlcGxhY2UgYXNzZXJ0KDApIHdpdGggZ19hc3NlcnRfbm90X3JlYWNoZWQo
+KQ0KPiAgIGh3L2FjcGk6IHJlcGxhY2UgYXNzZXJ0KDApIHdpdGggZ19hc3NlcnRfbm90X3JlYWNo
+ZWQoKQ0KPiAgIGh3L2FybTogcmVwbGFjZSBhc3NlcnQoMCkgd2l0aCBnX2Fzc2VydF9ub3RfcmVh
+Y2hlZCgpDQo+ICAgaHcvY2hhcjogcmVwbGFjZSBhc3NlcnQoMCkgd2l0aCBnX2Fzc2VydF9ub3Rf
+cmVhY2hlZCgpDQo+ICAgaHcvY29yZTogcmVwbGFjZSBhc3NlcnQoMCkgd2l0aCBnX2Fzc2VydF9u
+b3RfcmVhY2hlZCgpDQo+ICAgaHcvbmV0OiByZXBsYWNlIGFzc2VydCgwKSB3aXRoIGdfYXNzZXJ0
+X25vdF9yZWFjaGVkKCkNCj4gICBody93YXRjaGRvZzogcmVwbGFjZSBhc3NlcnQoMCkgd2l0aCBn
+X2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+ICAgbWlncmF0aW9uOiByZXBsYWNlIGFzc2VydCgwKSB3
+aXRoIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4gICBxb2JqZWN0OiByZXBsYWNlIGFzc2VydCgw
+KSB3aXRoIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4gICBzeXN0ZW06IHJlcGxhY2UgYXNzZXJ0
+KDApIHdpdGggZ19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPiAgIHRhcmdldC9wcGM6IHJlcGxhY2Ug
+YXNzZXJ0KDApIHdpdGggZ19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPiAgIHRlc3RzL3F0ZXN0OiBy
+ZXBsYWNlIGFzc2VydCgwKSB3aXRoIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4gICB0ZXN0cy91
+bml0OiByZXBsYWNlIGFzc2VydCgwKSB3aXRoIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4gICBp
+bmNsdWRlL2h3L3MzOTB4OiByZXBsYWNlIGFzc2VydChmYWxzZSkgd2l0aCBnX2Fzc2VydF9ub3Rf
+cmVhY2hlZCgpDQo+ICAgYmxvY2s6IHJlcGxhY2UgYXNzZXJ0KGZhbHNlKSB3aXRoIGdfYXNzZXJ0
+X25vdF9yZWFjaGVkKCkNCj4gICBody9oeXBlcnY6IHJlcGxhY2UgYXNzZXJ0KGZhbHNlKSB3aXRo
+IGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4gICBody9uZXQ6IHJlcGxhY2UgYXNzZXJ0KGZhbHNl
+KSB3aXRoIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4gICBody9udm1lOiByZXBsYWNlIGFzc2Vy
+dChmYWxzZSkgd2l0aCBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+ICAgaHcvcGNpOiByZXBsYWNl
+IGFzc2VydChmYWxzZSkgd2l0aCBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+ICAgaHcvcHBjOiBy
+ZXBsYWNlIGFzc2VydChmYWxzZSkgd2l0aCBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+ICAgbWln
+cmF0aW9uOiByZXBsYWNlIGFzc2VydChmYWxzZSkgd2l0aCBnX2Fzc2VydF9ub3RfcmVhY2hlZCgp
+DQo+ICAgdGFyZ2V0L2kzODYva3ZtOiByZXBsYWNlIGFzc2VydChmYWxzZSkgd2l0aCBnX2Fzc2Vy
+dF9ub3RfcmVhY2hlZCgpDQo+ICAgdGVzdHMvcXRlc3Q6IHJlcGxhY2UgYXNzZXJ0KGZhbHNlKSB3
+aXRoIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4gICBhY2NlbC90Y2c6IHJlbW92ZSBicmVhayBh
+ZnRlciBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+ICAgYmxvY2s6IHJlbW92ZSBicmVhayBhZnRl
+ciBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+ICAgaHcvYWNwaTogcmVtb3ZlIGJyZWFrIGFmdGVy
+IGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4gICBody9ncGlvOiByZW1vdmUgYnJlYWsgYWZ0ZXIg
+Z19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPiAgIGh3L21pc2M6IHJlbW92ZSBicmVhayBhZnRlciBn
+X2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+ICAgaHcvbmV0OiByZW1vdmUgYnJlYWsgYWZ0ZXIgZ19h
+c3NlcnRfbm90X3JlYWNoZWQoKQ0KPiAgIGh3L3BjaS1ob3N0OiByZW1vdmUgYnJlYWsgYWZ0ZXIg
+Z19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPiAgIGh3L3Njc2k6IHJlbW92ZSBicmVhayBhZnRlciBn
+X2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+ICAgaHcvdHBtOiByZW1vdmUgYnJlYWsgYWZ0ZXIgZ19h
+c3NlcnRfbm90X3JlYWNoZWQoKQ0KPiAgIHRhcmdldC9hcm06IHJlbW92ZSBicmVhayBhZnRlciBn
+X2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+ICAgdGFyZ2V0L3Jpc2N2OiByZW1vdmUgYnJlYWsgYWZ0
+ZXIgZ19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPiAgIHRlc3RzL3F0ZXN0OiByZW1vdmUgYnJlYWsg
+YWZ0ZXIgZ19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPiAgIHVpOiByZW1vdmUgYnJlYWsgYWZ0ZXIg
+Z19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPiAgIGZwdTogcmVtb3ZlIGJyZWFrIGFmdGVyIGdfYXNz
+ZXJ0X25vdF9yZWFjaGVkKCkNCj4gICB0Y2cvbG9vbmdhcmNoNjQ6IHJlbW92ZSBicmVhayBhZnRl
+ciBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+ICAgaW5jbHVkZS9xZW11OiByZW1vdmUgcmV0dXJu
+IGFmdGVyIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4gICBody9oeXBlcnY6IHJlbW92ZSByZXR1
+cm4gYWZ0ZXIgZ19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPiAgIGh3L25ldDogcmVtb3ZlIHJldHVy
+biBhZnRlciBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+ICAgaHcvcGNpOiByZW1vdmUgcmV0dXJu
+IGFmdGVyIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4gICBody9wcGM6IHJlbW92ZSByZXR1cm4g
+YWZ0ZXIgZ19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPiAgIG1pZ3JhdGlvbjogcmVtb3ZlIHJldHVy
+biBhZnRlciBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+ICAgcW9iamVjdDogcmVtb3ZlIHJldHVy
+biBhZnRlciBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+ICAgcW9tOiByZW1vdmUgcmV0dXJuIGFm
+dGVyIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4gICB0ZXN0cy9xdGVzdDogcmVtb3ZlIHJldHVy
+biBhZnRlciBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+ICAgc2NyaXB0cy9jaGVja3BhdGNoLnBs
+OiBlbWl0IGVycm9yIHdoZW4gdXNpbmcgYXNzZXJ0KGZhbHNlKQ0KPiANCj4gIGRvY3Mvc3Bpbi9h
+aW9fbm90aWZ5X2FjY2VwdC5wcm9tZWxhICAgICB8ICA2ICsrKy0tLQ0KPiAgZG9jcy9zcGluL2Fp
+b19ub3RpZnlfYnVnLnByb21lbGEgICAgICAgIHwgIDYgKysrLS0tDQo+ICBpbmNsdWRlL2h3L3Mz
+OTB4L2NwdS10b3BvbG9neS5oICAgICAgICAgfCAgMiArLQ0KPiAgaW5jbHVkZS9xZW11L3BtZW0u
+aCAgICAgICAgICAgICAgICAgICAgIHwgIDEgLQ0KPiAgYWNjZWwvdGNnL3BsdWdpbi1nZW4uYyAg
+ICAgICAgICAgICAgICAgIHwgIDEgLQ0KPiAgYmxvY2svcWNvdzIuYyAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIHwgIDIgKy0NCj4gIGJsb2NrL3NzaC5jICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICB8ICAxIC0NCj4gIGh3L2FjcGkvYW1sLWJ1aWxkLmMgICAgICAgICAgICAgICAgICAgICB8
+ICAzICstLQ0KPiAgaHcvYXJtL2hpZ2hiYW5rLmMgICAgICAgICAgICAgICAgICAgICAgIHwgIDIg
+Ky0NCj4gIGh3L2NoYXIvYXZyX3VzYXJ0LmMgICAgICAgICAgICAgICAgICAgICB8ICAyICstDQo+
+ICBody9jb3JlL251bWEuYyAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgMiArLQ0KPiAgaHcv
+Z3Bpby9ucmY1MV9ncGlvLmMgICAgICAgICAgICAgICAgICAgIHwgIDEgLQ0KPiAgaHcvaHlwZXJ2
+L2h5cGVydl90ZXN0ZGV2LmMgICAgICAgICAgICAgIHwgIDcgKysrLS0tLQ0KPiAgaHcvaHlwZXJ2
+L3ZtYnVzLmMgICAgICAgICAgICAgICAgICAgICAgIHwgMTUgKysrKysrLS0tLS0tLS0tDQo+ICBo
+dy9taXNjL2lteDZfY2NtLmMgICAgICAgICAgICAgICAgICAgICAgfCAgMSAtDQo+ICBody9taXNj
+L21hY192aWEuYyAgICAgICAgICAgICAgICAgICAgICAgfCAgMiAtLQ0KPiAgaHcvbmV0L2UxMDAw
+ZV9jb3JlLmMgICAgICAgICAgICAgICAgICAgIHwgIDQgKy0tLQ0KPiAgaHcvbmV0L2k4MjU5Ni5j
+ICAgICAgICAgICAgICAgICAgICAgICAgIHwgIDIgKy0NCj4gIGh3L25ldC9pZ2JfY29yZS5jICAg
+ICAgICAgICAgICAgICAgICAgICB8ICA0ICstLS0NCj4gIGh3L25ldC9uZXRfcnhfcGt0LmMgICAg
+ICAgICAgICAgICAgICAgICB8ICAzICstLQ0KPiAgaHcvbmV0L3ZteG5ldDMuYyAgICAgICAgICAg
+ICAgICAgICAgICAgIHwgIDEgLQ0KPiAgaHcvbnZtZS9jdHJsLmMgICAgICAgICAgICAgICAgICAg
+ICAgICAgIHwgIDggKysrKy0tLS0NCj4gIGh3L3BjaS1ob3N0L2d0NjQxMjAuYyAgICAgICAgICAg
+ICAgICAgICB8ICAyIC0tDQo+ICBody9wY2kvcGNpLXN0dWIuYyAgICAgICAgICAgICAgICAgICAg
+ICAgfCAgNiArKy0tLS0NCj4gIGh3L3BwYy9wcGMuYyAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICB8ICAxIC0NCj4gIGh3L3BwYy9zcGFwcl9ldmVudHMuYyAgICAgICAgICAgICAgICAgICB8ICAz
+ICstLQ0KPiAgaHcvc2NzaS92aXJ0aW8tc2NzaS5jICAgICAgICAgICAgICAgICAgIHwgIDEgLQ0K
+PiAgaHcvdHBtL3RwbV9zcGFwci5jICAgICAgICAgICAgICAgICAgICAgIHwgIDEgLQ0KPiAgaHcv
+d2F0Y2hkb2cvd2F0Y2hkb2cuYyAgICAgICAgICAgICAgICAgIHwgIDIgKy0NCj4gIG1pZ3JhdGlv
+bi9kaXJ0eXJhdGUuYyAgICAgICAgICAgICAgICAgICB8ICAzICstLQ0KPiAgbWlncmF0aW9uL21p
+Z3JhdGlvbi1obXAtY21kcy5jICAgICAgICAgIHwgIDIgKy0NCj4gIG1pZ3JhdGlvbi9wb3N0Y29w
+eS1yYW0uYyAgICAgICAgICAgICAgICB8IDIxICsrKysrKystLS0tLS0tLS0tLS0tLQ0KPiAgbWln
+cmF0aW9uL3JhbS5jICAgICAgICAgICAgICAgICAgICAgICAgIHwgIDggKysrLS0tLS0NCj4gIHFv
+YmplY3QvcWxpdC5jICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAyICstDQo+ICBxb2JqZWN0
+L3FudW0uYyAgICAgICAgICAgICAgICAgICAgICAgICAgfCAxMiArKysrLS0tLS0tLS0NCj4gIHFv
+bS9vYmplY3QuYyAgICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAxIC0NCj4gIHN5c3RlbS9y
+dGMuYyAgICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAyICstDQo+ICB0YXJnZXQvYXJtL2h5
+cF9nZGJzdHViLmMgICAgICAgICAgICAgICAgfCAgMSAtDQo+ICB0YXJnZXQvaTM4Ni9rdm0va3Zt
+LmMgICAgICAgICAgICAgICAgICAgfCAgNCArKy0tDQo+ICB0YXJnZXQvcHBjL2RmcF9oZWxwZXIu
+YyAgICAgICAgICAgICAgICAgfCAgOCArKysrLS0tLQ0KPiAgdGFyZ2V0L3BwYy9tbXVfaGVscGVy
+LmMgICAgICAgICAgICAgICAgIHwgIDIgKy0NCj4gIHRhcmdldC9yaXNjdi9tb25pdG9yLmMgICAg
+ICAgICAgICAgICAgICB8ICAxIC0NCj4gIHRlc3RzL3F0ZXN0L2FjcGktdXRpbHMuYyAgICAgICAg
+ICAgICAgICB8ICAxIC0NCj4gIHRlc3RzL3F0ZXN0L2lwbWktYnQtdGVzdC5jICAgICAgICAgICAg
+ICB8ICAyICstDQo+ICB0ZXN0cy9xdGVzdC9pcG1pLWtjcy10ZXN0LmMgICAgICAgICAgICAgfCAg
+NCArKy0tDQo+ICB0ZXN0cy9xdGVzdC9taWdyYXRpb24taGVscGVycy5jICAgICAgICAgfCAgMSAt
+DQo+ICB0ZXN0cy9xdGVzdC9udW1hLXRlc3QuYyAgICAgICAgICAgICAgICAgfCAxMCArKysrKy0t
+LS0tDQo+ICB0ZXN0cy9xdGVzdC9ydGw4MTM5LXRlc3QuYyAgICAgICAgICAgICAgfCAgMiArLQ0K
+PiAgdGVzdHMvdW5pdC90ZXN0LXhzLW5vZGUuYyAgICAgICAgICAgICAgIHwgIDQgKystLQ0KPiAg
+dWkvcWVtdS1waXhtYW4uYyAgICAgICAgICAgICAgICAgICAgICAgIHwgIDEgLQ0KPiAgZnB1L3Nv
+ZnRmbG9hdC1wYXJ0cy5jLmluYyAgICAgICAgICAgICAgIHwgIDIgLS0NCj4gIHRhcmdldC9yaXNj
+di9pbnNuX3RyYW5zL3RyYW5zX3J2di5jLmluYyB8ICAyIC0tDQo+ICB0Y2cvbG9vbmdhcmNoNjQv
+dGNnLXRhcmdldC5jLmluYyAgICAgICAgfCAgMSAtDQo+ICBzY3JpcHRzL2NoZWNrcGF0Y2gucGwg
+ICAgICAgICAgICAgICAgICAgfCAgMyArKysNCj4gIDU0IGZpbGVzIGNoYW5nZWQsIDcyIGluc2Vy
+dGlvbnMoKyksIDEyMCBkZWxldGlvbnMoLSkNCj4gDQo+IC0tDQo+IDIuMzkuMg0KPiANCg0K
 
