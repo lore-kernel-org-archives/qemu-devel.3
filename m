@@ -4,107 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8800DEEEC08
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 04:41:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61CEEEEEC0E
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 05:21:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1soy7G-0000NX-Ut; Fri, 13 Sep 2024 00:41:06 -0400
+	id 1soyja-0002ll-8N; Fri, 13 Sep 2024 01:20:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1soy7F-0000Ld-EV; Fri, 13 Sep 2024 00:41:05 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1soyjW-0002hy-Ko; Fri, 13 Sep 2024 01:20:38 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1soy7D-0005iM-NT; Fri, 13 Sep 2024 00:41:05 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48CIDKKh032547;
- Fri, 13 Sep 2024 04:40:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- DtNAOovy8oDSzilCo3wg1dZdFOrnDpXA+0TLAmlLsQo=; b=dTGZ+apZTpR33OVX
- 9t1k/lWWRkHS0C8t85Z4jS77wAklqE/hkMIvTyFa6Y1QUCC/h1bdfASWcGPbDac2
- byxGDoBNtRgQtKUPMe4yGkHxtTvYa7jZDupt/3+OGOgtW67mZJ44AJwp44HwjTEZ
- lUDuVPe4qCWsalerhrNLwhcFrKgCirlaJJaOH0Tm27u2VbnPTjbVI2L7UbrSfDrs
- bS/1qK9uCgEzXBZv0XCAdAzBKIwYpyiwYxJMWi86ae3K6wyResmQ6hqergYvUHif
- Olra1ksd1N6BwGuf+mz0MvrYHE62h89atpf5iEY5juDkXjy1XBRhahjN3v8aL7MG
- QK7lgg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gegx7mrp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Sep 2024 04:40:46 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48D4ekvY014644;
- Fri, 13 Sep 2024 04:40:46 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41gegx7mrm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Sep 2024 04:40:46 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48D2Cr2s010770;
- Fri, 13 Sep 2024 04:40:45 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41kmb6yhyg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Sep 2024 04:40:45 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48D4eiv046793272
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 13 Sep 2024 04:40:44 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 20C2358045;
- Fri, 13 Sep 2024 04:40:44 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D13D858052;
- Fri, 13 Sep 2024 04:40:40 +0000 (GMT)
-Received: from [9.124.214.206] (unknown [9.124.214.206])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 13 Sep 2024 04:40:40 +0000 (GMT)
-Message-ID: <feb4dd6d-4cf9-4821-8e78-19f643d9da90@linux.ibm.com>
-Date: Fri, 13 Sep 2024 10:10:39 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/ppc: Fix lxv/stxv MSR facility check
-To: Fabiano Rosas <farosas@suse.de>, Nicholas Piggin <npiggin@gmail.com>,
- qemu-ppc@nongnu.org
-Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Lucas Mateus Castro <lucas.castro@eldorado.org.br>,
- qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Joel Stanley <joel@jms.id.au>
-References: <20240213083933.718881-1-npiggin@gmail.com>
- <87cylcl94u.fsf@suse.de>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <87cylcl94u.fsf@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: wIyYKLkcA7Mg95me0HwijsUU8iiLBKm3
-X-Proofpoint-ORIG-GUID: o0HMmYvpZcyZNdnpn7iVdvyEWM0xAT9n
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1soyjS-0001Xl-3b; Fri, 13 Sep 2024 01:20:35 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 76FED5C076F;
+ Fri, 13 Sep 2024 05:20:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CABACC4CEC0;
+ Fri, 13 Sep 2024 05:20:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1726204830;
+ bh=UaW0JClroVNWlhraitr91hMTlbi5VT0vYCxxVYhROnU=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=X1X8puXt78CFZ0KTOxYWbbedI3hRAEt2J3hDaWmopuqbnbJ4pltPhCkxPeMZVdlAO
+ 8FkDicu+y551u5INo+El52K7j8OovI23sX0C+5g4s8dFUJJyS5Ihp0d3xWO1ccXWBJ
+ N3Adh0sZvGNO9etM5F5Qr54FPMctVKYvrDdzmkukRild/lorPTAd/3D0oZc9g7jas0
+ bCVWHYXZ21GIjd0d0ixvYlo6xYWuKdxFLP0lr7j6xb/2pfim+xB9cMi0cj/y6Cg3HW
+ tzxWNJ39Bo6JHM1bCGAiXmQZjW9i7J3xssFVbu8f70T4/xKIpb8RJ0B2XmITT37zqv
+ zgew5k9QjyaDg==
+Date: Fri, 13 Sep 2024 07:20:25 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@Huawei.com>, Shiju Jose
+ <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
+ <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+ <linux-kernel@vger.kernel.org>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v8 06/13] acpi/ghes: add support for generic error
+ injection via QAPI
+Message-ID: <20240913072025.76a329b0@foz.lan>
+In-Reply-To: <20240912144233.675d6b63@imammedo.users.ipa.redhat.com>
+References: <cover.1723793768.git.mchehab+huawei@kernel.org>
+ <2c8970b5d54d17b601dc65d778cc8b5fb288984b.1723793768.git.mchehab+huawei@kernel.org>
+ <20240819145136.0452ff2b@imammedo.users.ipa.redhat.com>
+ <20240825052923.715f88bc@sal.lan>
+ <20240911152132.65a7a219@imammedo.users.ipa.redhat.com>
+ <20240911163436.00004738@Huawei.com>
+ <20240912144233.675d6b63@imammedo.users.ipa.redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-13_01,2024-09-12_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 mlxlogscore=814
- lowpriorityscore=0 suspectscore=0 priorityscore=1501 bulkscore=0
- adultscore=0 impostorscore=0 clxscore=1011 malwarescore=0 mlxscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409130030
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,61 +80,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Fabiano,
+Em Thu, 12 Sep 2024 14:42:33 +0200
+Igor Mammedov <imammedo@redhat.com> escreveu:
 
-On 9/10/24 04:36, Fabiano Rosas wrote:
-> Nicholas Piggin <npiggin@gmail.com> writes:
+> On Wed, 11 Sep 2024 16:34:36 +0100
+> Jonathan Cameron <Jonathan.Cameron@Huawei.com> wrote:
 > 
->> The move to decodetree flipped the inequality test for the VEC / VSX
->> MSR facility check.
->>
->> This caused application crashes under Linux, where these facility
->> unavailable interrupts are used for lazy-switching of VEC/VSX register
->> sets. Getting the incorrect interrupt would result in wrong registers
->> being loaded, potentially overwriting live values and/or exposing
->> stale ones.
->>
->> Cc: qemu-stable@nongnu.org
->> Reported-by: Joel Stanley <joel@jms.id.au>
->> Fixes: 70426b5bb738 ("target/ppc: moved stxvx and lxvx from legacy to decodtree")
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1769
->> Tested-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->> ---
->>   target/ppc/translate/vsx-impl.c.inc | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
->> index 6db87ab336..0266f09119 100644
->> --- a/target/ppc/translate/vsx-impl.c.inc
->> +++ b/target/ppc/translate/vsx-impl.c.inc
->> @@ -2268,7 +2268,7 @@ static bool do_lstxv(DisasContext *ctx, int ra, TCGv displ,
->>   
->>   static bool do_lstxv_D(DisasContext *ctx, arg_D *a, bool store, bool paired)
->>   {
->> -    if (paired || a->rt >= 32) {
->> +    if (paired || a->rt < 32) {
->>           REQUIRE_VSX(ctx);
->>       } else {
->>           REQUIRE_VECTOR(ctx);
-> 
-> What about the X-form down below?
-> 
-> static bool do_lstxv_X(DisasContext *ctx, arg_X *a, bool store, bool paired)
-> {
->      if (paired || a->rt >= 32) {
->          REQUIRE_VSX(ctx);
->      } else {
->          REQUIRE_VECTOR(ctx);
->      }
-> 
->      return do_lstxv(ctx, a->ra, cpu_gpr[a->rb], a->rt, store, paired);
-> }
+> > On Wed, 11 Sep 2024 15:21:32 +0200
+> > Igor Mammedov <imammedo@redhat.com> wrote:
+> > 
+> > > On Sun, 25 Aug 2024 05:29:23 +0200
+> > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> > >   
+> > > > Em Mon, 19 Aug 2024 14:51:36 +0200
+> > > > Igor Mammedov <imammedo@redhat.com> escreveu:
+> > > >     
+> > > > > > +        read_ack = 1;
+> > > > > > +        cpu_physical_memory_write(read_ack_start_addr,
+> > > > > > +                                  &read_ack, (uint64_t));        
+> > > > > we don't do this for SEV so, why are you setting it to 1 here?    
 
-Thanks for catching this. I have posted the fix here:
-https://lore.kernel.org/qemu-devel/20240913043827.914457-1-harshpb@linux.ibm.com/T/#u
+The diffstat doesn't really help here. The full code is:
 
-regards,
-Harsh
+    /* zero means OSPM does not acknowledge the error */
+    if (!read_ack) {
+        error_setg(errp,
+                   "Last CPER record was not acknowledged yet");
+        read_ack = 1;
+        cpu_physical_memory_write(read_ack_start_addr,
+                                  &read_ack, sizeof(read_ack));
+        return;
+    }
 
+> > > what you are doing here by setting read_ack = 1,
+> > > is making ack on behalf of OSPM when OSPM haven't handled existing error yet.
+> > > 
+> > > Essentially making HW/FW do the job of OSPM. That looks wrong to me.
+> > > From HW/FW side read_ack register should be thought as read-only.  
+> > 
+> > It's not read-only because HW/FW has to clear it so that HW/FW can detect
+> > when the OSPM next writes it.
+> 
+> By readonly, I've meant that hw shall not do above mentioned write
+> (bad phrasing on my side).
+
+The above code is actually an error handling condition: if for some
+reason errors are triggered too fast, there's a bug on QEMU or there is
+a bug at the OSPM, an error message is raised and the logic resets the 
+record to a sane state. So, on a next error, OSPM will get it.
+
+As described at https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html?highlight=asynchronous#generic-hardware-error-source:
+
+   "Some platforms may describe multiple Generic Hardware Error Source
+    structures with different notification types, as defined in 
+    Table 18.10. For example, a platform may describe one error source
+    for the handling of synchronous errors (e.g. MCE or SEA), and a 
+    second source for handling asynchronous errors (e.g. SCI or
+    External Interrupt)."
+
+Basically, the error logic there seems to fit for the asynchronous
+case, detecting if another error happened before OSPM handles the
+first one.
+
+IMO, there are a couple of alternatives to handle such case:
+
+1. Keep the code as-is: if this ever happens, an error message will
+   be issued. If SEA/MCE gets implemented synchronously on HW/FW/OSPM,
+   the above code will never be called;
+2. Change the logic to do that only for asynchronous sources
+   (currently, only if source ID is QMP);
+3. Add a special QMP message to reset the notification ack. Probably
+   would use Notification type as an input parameter;
+4. Have a much more complex code to implement asynchronous notifications,
+   with a queue to receive HEST errors and a separate thread to deliver
+   errors to OSPM asynchronously. If we go this way, QMP would be
+   returning the number of error messages queued, allowing error injection
+   code to know if OSPM has troubles delivering errors;
+5. Just return an error code without doing any resets. To me, this is 
+   the worse scenario.
+
+I don't like (5), as if something bad happens, there's nothing to be
+done.
+
+For QMP error injection (4) seems is overkill. It may be needed in the
+future if we end implementing a logic where host OS informs guest about
+hardware problems, and such errors use asynchronous notifications.
+
+I would also avoid implementing (3) at least for now, as reporting
+such error via QMP seems enough for the QMP usecase.
+
+So, if ok for you, I'll change the code to (2).
+
+
+> > Agreed this write to 1 looks wrong, but the one a few lines further down (to zero
+> > it) is correct.
+> 
+> yep, hw should clear register.
+> It would be better to so on OSPM ACK, but alas we can't intercept that,
+> so the next option would be to do that at the time when we add a new error block
+> 
+> > 
+> > My bug a long time back I think.
+> > 
+> > Jonathan
+> > 
+> > >   
+> > > > 
+> > > > IMO, this is needed, independently of the notification mechanism.
+> > > > 
+> > > > Regards,
+> > > > Mauro
+> > > >     
+> > > 
+> > >   
+> > 
+> 
+
+
+
+Thanks,
+Mauro
 
