@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B48DFA3755
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 15:17:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84BD5FA375A
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 15:18:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp81C-0006DM-1H; Fri, 13 Sep 2024 11:15:30 -0400
+	id 1sp80b-0003W6-I1; Fri, 13 Sep 2024 11:14:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sp807-00020E-LK
+ id 1sp807-0001zm-Ho
  for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:24 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sp804-0007mR-Qb
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:23 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-374b25263a3so783831f8f.0
- for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 08:14:20 -0700 (PDT)
+ id 1sp805-0007n0-Er
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:22 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-42cba6cdf32so20056285e9.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 08:14:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726240459; x=1726845259; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726240460; x=1726845260; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=txDZ12T6fHXdIDZypcg9V1CdvFzmbSQBApsf5uAHoUk=;
- b=bXw+bq1nnsKeUf1RM6xyQViv0scSsJcM0wxm+lS7aF8G2Jn/ZAZtDI5YkirhHKdzD6
- lW8JWvRvTCikI9DAgVbYrOLt4yz0mQ5L/oS2Z2mCTOtjiCxus8WiIir620MXiOR24339
- 05oA+SHmI5Bx1FYbTmChJLtA6EtG7cFNDmlxz/LZKyssEwgS4DDoU1LkeW60mR0JTm7Y
- 162IYe9nukcHIhg3FcsrwTbKVEYUuuTmnMlU7a5TklVEC/M2yGG67EHBY/fBhGWoauk6
- y7+kycEmKs14cyBm/Jfq7sCSl93xhiPB+P4TOrtrhVPU/zx++p6wiV792du2yuFm64Gg
- 5Abg==
+ :reply-to; bh=B84tOEz4iH8LzYCOElAIMYy1A32McFCI6tkMUnYQHUs=;
+ b=CKy+JZUhmxtRlXHTpGSy8oO67eNKil+lS5mKBg1JGkmsVmgmL5j67h+3SirnGDgf/E
+ w6FeJ4ctPFLm+taWCO4qvNwhgMYTZAjrW3N2FQQb6LSWUQgUmhXKdX9ch3+Sz5jyjimP
+ zykRIaY0v6/iDW9vZmwdCM7fonybaOkeq8fXkd6UFnbBi1jm5UClgVgCUL9XE/wBhDmA
+ 5oqiZ0KbIOlFXz4LAYKRU3/BLbXqgA0XWNh+IAmqHkjYVdXMHjgTN/YUgQSqh523NYTU
+ QdRIr4wEkptamXs6WpYOsJ7yEShUWmgsCmgfCLpa4z9fgrru8FDseOVQrvEQL2LLoWR8
+ xb0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726240459; x=1726845259;
+ d=1e100.net; s=20230601; t=1726240460; x=1726845260;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=txDZ12T6fHXdIDZypcg9V1CdvFzmbSQBApsf5uAHoUk=;
- b=V8aBbEGFaJjIjxNBIlB21PgrGp0bBV4omzEKY2J6GD4q58r363O+/Pw62Z5ZUWFJ5V
- EEm7nIs6aDc02doTwuM1bKBQNUungmWQmtdVfl/136UEkIbdFCVlCnN4P4qusf9syNsK
- YtgxUPyjYtuMSN4CZ2rZd7I9fsRzcqs16KEn45uJVGi6sk5RAGJMnPeFFvwwmKrYc1/f
- jItc67A8tFUnLP09GQhOpNemOw7ZxNR166u7y+ALO3xOBIEOQQBI9xest+7xg3fTudZh
- ea3IW3Q5FRYzbXuaihtl1HciU4Vb51oBeIr4uiKdLxhlh9wSt3qKAqf4FA46gprECLFr
- fgaQ==
-X-Gm-Message-State: AOJu0YxF8kBvTnygvIHsk7aeCWGKnKyXwXeu6ldkLqr/7m0PTZxoeJGn
- xe/CLc9/Cnc/DsmpJRefQFz7RiJ8qrSapzUjNWmHIOOsrBB4L4iIrpx8jZbw+gCUKdYPh/4IR+x
- /
-X-Google-Smtp-Source: AGHT+IG5EdxSXSQ/U2OqhaPKxZ76SL2bWR+NH8voCDOJZs+XFCZcbgUEh6hAd4w1pNENtgKUG581NA==
-X-Received: by 2002:a5d:5987:0:b0:374:c269:df79 with SMTP id
- ffacd0b85a97d-378d61e2b52mr2246391f8f.22.1726240458852; 
- Fri, 13 Sep 2024 08:14:18 -0700 (PDT)
+ bh=B84tOEz4iH8LzYCOElAIMYy1A32McFCI6tkMUnYQHUs=;
+ b=OjknKdbm79uUge+01tVsu95a3QvXU3HmWPSS3Mz7zKK0s47gPYOoxcTSxH9/uYf8GL
+ 4eMNGCYpDzM/iPFXttYOrJTj55s6wUGXEL1WkWJUYsWarLH3vg3AlOGLPed/r1xwptVY
+ C+XbTphlUaoDhH5q6Bcmdjmem6sQktTS1zEDyf/jPJVjS6sJWE7i5xaCrWQfUWangkrK
+ tpHIJ9gDVOwa6KlQacBIrdeehawf4MiI5dK4726QZExGyo0yyhiazoH3BJPibU7tVp7I
+ +kLXSkne2c8PK7yREfhECKpeuiynMkufXWT1QUAST2OfiiHGfXsmPLFXeeqxvL6NlUka
+ 1DBw==
+X-Gm-Message-State: AOJu0YwojZmZ4lmQRvqB3xGbLWlucMkL0Gdc2UC89hbrx1aHTjG5DRCX
+ oFgKKV9w5Zmi+5KpuOJhQdNxv2BcQHle04sHa9RH9JCxfh09ckC4rPOzkoX52AsNsLCaAYzVtyz
+ K
+X-Google-Smtp-Source: AGHT+IEnnqptfmbNcUW3PsqlmGUjyPzKjI7BZzVGu2otH22KYdljGPDpY9kaDeNBfYYebpqvYWUMpw==
+X-Received: by 2002:a05:600c:1d1c:b0:42c:b22e:fc3e with SMTP id
+ 5b1f17b1804b1-42cdb54c2f3mr57650205e9.15.1726240459821; 
+ Fri, 13 Sep 2024 08:14:19 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42d9b16bfbfsm29152325e9.22.2024.09.13.08.14.18
+ 5b1f17b1804b1-42d9b16bfbfsm29152325e9.22.2024.09.13.08.14.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Sep 2024 08:14:18 -0700 (PDT)
+ Fri, 13 Sep 2024 08:14:19 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 11/27] hw/core/resettable: Remove transitional_function
- machinery
-Date: Fri, 13 Sep 2024 16:13:55 +0100
-Message-Id: <20240913151411.2167922-12-peter.maydell@linaro.org>
+Subject: [PULL 13/27] hw/boards: Add hvf_get_physical_address_range to
+ MachineClass
+Date: Fri, 13 Sep 2024 16:13:57 +0100
+Message-Id: <20240913151411.2167922-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240913151411.2167922-1-peter.maydell@linaro.org>
 References: <20240913151411.2167922-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,116 +94,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We used to need the transitional_function machinery to handle bus
-classes and device classes which still used their legacy reset
-handling.  We have now converted all bus classes to three phase
-reset, and simplified the device class legacy reset so it is just an
-adapting wrapper function around registration of a hold phase method.
-There are therefore no more users of the transitional_function
-machinery and we can remove it.
+From: Danny Canter <danny_canter@apple.com>
 
+This addition will be necessary for some HVF related work to follow.
+For HVF on ARM there exists a set of APIs in macOS 13 to be able to
+adjust the IPA size for a given VM. This is useful as by default HVF
+uses 36 bits as the IPA size, so to support guests with > 64GB of RAM
+we'll need to reach for this.
+
+To have all the info necessary to carry this out however, we need some
+plumbing to be able to grab the memory map and compute the highest GPA
+prior to creating the VM. This is almost exactly like what kvm_type is
+used for on ARM today, and is also what this will be used for. We will
+compute the highest GPA and find what IPA size we'd need to satisfy this,
+and if it's valid (macOS today caps at 40b) we'll set this to be the IPA
+size in coming patches. This new method is only needed (today at least)
+on ARM, and obviously only for HVF/macOS, so admittedly it is much less
+generic than kvm_type today, but it seemed a somewhat sane way to get
+the information we need from the memmap at VM creation time.
+
+Signed-off-by: Danny Canter <danny_canter@apple.com>
+Message-id: 20240828111552.93482-2-danny_canter@apple.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: removed explicit setting of field to NULL on x86]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20240830145812.1967042-12-peter.maydell@linaro.org
 ---
- include/hw/resettable.h | 13 -------------
- hw/core/resettable.c    | 24 +++---------------------
- 2 files changed, 3 insertions(+), 34 deletions(-)
+ include/hw/boards.h | 5 +++++
+ hw/arm/virt.c       | 9 ++++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/resettable.h b/include/hw/resettable.h
-index 83b561fc830..94f6f22e3cf 100644
---- a/include/hw/resettable.h
-+++ b/include/hw/resettable.h
-@@ -90,14 +90,6 @@ typedef enum ResetType {
-  * @get_state: Mandatory method which must return a pointer to a
-  * ResettableState.
-  *
-- * @get_transitional_function: transitional method to handle Resettable objects
-- * not yet fully moved to this interface. It will be removed as soon as it is
-- * not needed anymore. This method is optional and may return a pointer to a
-- * function to be used instead of the phases. If the method exists and returns
-- * a non-NULL function pointer then that function is executed as a replacement
-- * of the 'hold' phase method taking the object as argument. The two other phase
-- * methods are not executed.
-- *
-  * @child_foreach: Executes a given callback on every Resettable child. Child
-  * in this context means a child in the qbus tree, so the children of a qbus
-  * are the devices on it, and the children of a device are all the buses it
-@@ -109,8 +101,6 @@ typedef void (*ResettableEnterPhase)(Object *obj, ResetType type);
- typedef void (*ResettableHoldPhase)(Object *obj, ResetType type);
- typedef void (*ResettableExitPhase)(Object *obj, ResetType type);
- typedef ResettableState * (*ResettableGetState)(Object *obj);
--typedef void (*ResettableTrFunction)(Object *obj);
--typedef ResettableTrFunction (*ResettableGetTrFunction)(Object *obj);
- typedef void (*ResettableChildCallback)(Object *, void *opaque,
-                                         ResetType type);
- typedef void (*ResettableChildForeach)(Object *obj,
-@@ -130,9 +120,6 @@ struct ResettableClass {
-     /* State access method */
-     ResettableGetState get_state;
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 9a492770cbb..ff25c53671f 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -215,6 +215,10 @@ typedef struct {
+  *    Return the type of KVM corresponding to the kvm-type string option or
+  *    computed based on other criteria such as the host kernel capabilities.
+  *    kvm-type may be NULL if it is not needed.
++ * @hvf_get_physical_address_range:
++ *    Returns the physical address range in bits to use for the HVF virtual
++ *    machine based on the current boards memory map. This may be NULL if it
++ *    is not needed.
+  * @numa_mem_supported:
+  *    true if '--numa node.mem' option is supported and false otherwise
+  * @hotplug_allowed:
+@@ -256,6 +260,7 @@ struct MachineClass {
+     void (*reset)(MachineState *state, ShutdownCause reason);
+     void (*wakeup)(MachineState *state);
+     int (*kvm_type)(MachineState *machine, const char *arg);
++    int (*hvf_get_physical_address_range)(MachineState *machine);
  
--    /* Transitional method for legacy reset compatibility */
--    ResettableGetTrFunction get_transitional_function;
--
-     /* Hierarchy handling method */
-     ResettableChildForeach child_foreach;
- };
-diff --git a/hw/core/resettable.c b/hw/core/resettable.c
-index 6dd3e3dc487..5cdb4a4f8d3 100644
---- a/hw/core/resettable.c
-+++ b/hw/core/resettable.c
-@@ -93,20 +93,6 @@ static void resettable_child_foreach(ResettableClass *rc, Object *obj,
-     }
+     BlockInterfaceType block_default_type;
+     int units_per_default_bus;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 7934b236516..d284a602e82 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -2111,7 +2111,8 @@ static void machvirt_init(MachineState *machine)
+ 
+     /*
+      * In accelerated mode, the memory map is computed earlier in kvm_type()
+-     * to create a VM with the right number of IPA bits.
++     * for Linux, or hvf_get_physical_address_range() for macOS to create a
++     * VM with the right number of IPA bits.
+      */
+     if (!vms->memmap) {
+         Object *cpuobj;
+@@ -3031,6 +3032,11 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
+     return fixed_ipa ? 0 : requested_pa_size;
  }
  
--/**
-- * resettable_get_tr_func:
-- * helper to fetch transitional reset callback if any.
-- */
--static ResettableTrFunction resettable_get_tr_func(ResettableClass *rc,
--                                                   Object *obj)
--{
--    ResettableTrFunction tr_func = NULL;
--    if (rc->get_transitional_function) {
--        tr_func = rc->get_transitional_function(obj);
--    }
--    return tr_func;
--}
--
- static void resettable_phase_enter(Object *obj, void *opaque, ResetType type)
++static int virt_hvf_get_physical_address_range(MachineState *ms)
++{
++    return 0;
++}
++
+ static void virt_machine_class_init(ObjectClass *oc, void *data)
  {
-     ResettableClass *rc = RESETTABLE_GET_CLASS(obj);
-@@ -146,7 +132,7 @@ static void resettable_phase_enter(Object *obj, void *opaque, ResetType type)
-     if (action_needed) {
-         trace_resettable_phase_enter_exec(obj, obj_typename, type,
-                                           !!rc->phases.enter);
--        if (rc->phases.enter && !resettable_get_tr_func(rc, obj)) {
-+        if (rc->phases.enter) {
-             rc->phases.enter(obj, type);
-         }
-         s->hold_phase_pending = true;
-@@ -171,12 +157,8 @@ static void resettable_phase_hold(Object *obj, void *opaque, ResetType type)
-     /* exec hold phase */
-     if (s->hold_phase_pending) {
-         s->hold_phase_pending = false;
--        ResettableTrFunction tr_func = resettable_get_tr_func(rc, obj);
-         trace_resettable_phase_hold_exec(obj, obj_typename, !!rc->phases.hold);
--        if (tr_func) {
--            trace_resettable_transitional_function(obj, obj_typename);
--            tr_func(obj);
--        } else if (rc->phases.hold) {
-+        if (rc->phases.hold) {
-             rc->phases.hold(obj, type);
-         }
-     }
-@@ -199,7 +181,7 @@ static void resettable_phase_exit(Object *obj, void *opaque, ResetType type)
-     assert(s->count > 0);
-     if (--s->count == 0) {
-         trace_resettable_phase_exit_exec(obj, obj_typename, !!rc->phases.exit);
--        if (rc->phases.exit && !resettable_get_tr_func(rc, obj)) {
-+        if (rc->phases.exit) {
-             rc->phases.exit(obj, type);
-         }
-     }
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -3090,6 +3096,7 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->get_default_cpu_node_id = virt_get_default_cpu_node_id;
+     mc->kvm_type = virt_kvm_type;
++    mc->hvf_get_physical_address_range = virt_hvf_get_physical_address_range;
+     assert(!mc->get_hotplug_handler);
+     mc->get_hotplug_handler = virt_machine_get_hotplug_handler;
+     hc->pre_plug = virt_machine_device_pre_plug_cb;
 -- 
 2.34.1
 
