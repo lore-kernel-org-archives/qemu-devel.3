@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3906FA373F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 10:24:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDEFFFA3742
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 10:26:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp3TG-0001qm-Lp; Fri, 13 Sep 2024 06:24:10 -0400
+	id 1sp3Vg-00079p-R2; Fri, 13 Sep 2024 06:26:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sp3TC-0001pD-1z
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 06:24:06 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1sp3Vf-00077D-8C
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 06:26:39 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sp3T9-0002h3-Ga
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 06:24:05 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a90349aa7e5so196225966b.0
- for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 03:24:02 -0700 (PDT)
+ id 1sp3Vd-0003Q9-J9
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 06:26:38 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a8d6d0fe021so297678666b.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 03:26:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726223041; x=1726827841; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726223196; x=1726827996; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dmYxsUlKrTQrTL6fy/gYgLOJOnbnLsWnE3zKHSbMwZo=;
- b=bh3ilI5ox2jSJeezzYXA3PvzYqJJgPRZeiI0ST0n76kO0MkbKgWks0tAwvjVZVz1Ej
- CH2kscbANIjjmM+XSOMQ5qV/y3EcghUZCGk3KsfJMs2LoezDVdKQ5zxSz+RrVcLNQT7A
- LkwQpM5asCWl5hbE8ZkqHz3MrOTCgyDIkj7NGFtoxGcHLA21lE6meX3sxlcpEFoqsXMc
- CWeIoU/1rxf3X+9zSAaI1Q5I61YLRd6ViS2THS4Qyc5Ib/ER2XypCJlu6j9gY7XMQK4u
- GBVmt7Mejpl/RQ3wA4dI98SPtrhVcd1TCfN6sm7CKiZo5KrXxoi/N+Rki0LfpkEF8Axb
- pNTA==
+ bh=nUQpIw0J7gYJntdrF3+fYQvrBvEG+S/20aOM1DWuFCc=;
+ b=nBNw2bBIN85zyJG/3/jJno5hVrbG99bacxteIymEo+tMYjL4F40Lj/g3mNH9KLjaED
+ JywVqTprPxlW+o6utNUnLIxKgaaG12qN7Sz+orBVDcIxmkIfFtpm3EAeAlCEQOdErKAd
+ 4m33XvVocosQ1QWBgELa1HGTcS16S48C3V1ZmgEgVlkXciHTogoBA9pwoYpHJT5Y8cE+
+ 6Mo8qZRfZtsCyUnncJb92egJgKm0o27BH3Lqq3yIKDoNS7Zhd9L/13+CzH1OQZaVB1h8
+ 3uU72HgD2pZT0XljBNkjgXk9RgsszFKjwgnElYahNMbgqhlxqyF2nqM04aid/6PQIixx
+ w4dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726223041; x=1726827841;
+ d=1e100.net; s=20230601; t=1726223196; x=1726827996;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dmYxsUlKrTQrTL6fy/gYgLOJOnbnLsWnE3zKHSbMwZo=;
- b=lDLjufODwHe7CCoZWBZtIvUroLK+GLrZJ2ieBxR5XV1x0vgavnxstwMmIiG9BVCyjf
- DHo+3yHHtmU2LQZkZjkXQ/01IPSvzYC7Sct4g35goFtK7DHvTSqjnfejymT94WsXStwM
- r9Jr15aOUw8oZttR5jwNIi0EeN4r3zOPVbEPJ3U+3bgT6Ogm+lZ8ZiDEaghZ/ZH31Nym
- eCIzeHcYlYB1Yl7j3M+72dDZVydUQbCSLqwT2tiadVSa/FSgp1e/o9t/69ts/3pgnanx
- C8TvxQi6SDaFJ0/Tvme5AN1e0JyvLo9R3rifCC2SLR42OKNzppCuf7ONzoFUtr0Hm2jW
- /bZQ==
-X-Gm-Message-State: AOJu0YyNiXdu1fqm19vQbUAjoj8tPXGYwa91DJxeIYYnLCJw9qNm8U35
- ujwm0CzagYc8s3MPGzBYZD/BVSNW0XNOjYGvpDEFs/0RJmiZEI474KAyhUuig4w=
-X-Google-Smtp-Source: AGHT+IEWLbGVipNtGAqFwwzBRE1SZCR6ID9Kco+GPqT2MuFlj+JZf3Y0M/5kPCV3kyIt5gnA+XlSRg==
-X-Received: by 2002:a17:907:e699:b0:a8a:8c4c:3e2a with SMTP id
- a640c23a62f3a-a902944e6cfmr481374166b.23.1726223040471; 
- Fri, 13 Sep 2024 03:24:00 -0700 (PDT)
+ bh=nUQpIw0J7gYJntdrF3+fYQvrBvEG+S/20aOM1DWuFCc=;
+ b=oRE4elXlrHYRnGn4xzyk+TvDe4LkXt+g+Ha+UUXHqOnJSv5nb3jljUKBZpYdT4XwU4
+ vGvHDUZ4uyzT5EhtqdLAp2k2Vu7HyjsA5Xq/LYIFWO/DzIfdUSl/7fOtljctqT8EkruD
+ 5LK2MgxDVZfw8NdNsobdFae8Gr1z4CTDPvyPzkStO8MtiPa2nYz8OQ6GvQ8Nw+WzRaAC
+ CCWIQK+vpdIBzV2OvN7hn9/2GUqR47M3MjcExwF/uR847gonP34hLWweoSkKdW1oBxcO
+ fZJoT97jcoqk4JqkvD9gBxeGE9AGmYtB/SV4cRnJ16QfSp3hMMrRlWGX8G79paU3f6i3
+ HP8w==
+X-Gm-Message-State: AOJu0YzYyQUqvADu53J5t1hpfl0Y7lW3hfHrlwXBM98t9NH4jwen9sBi
+ jo97Rlc37cFzLeRDXg/9F2bP/SYt6DjsGOwUlIIzK9uhVhMzRHrCl9sn3LMIZOJBHNhm25ow2On
+ Ezgk=
+X-Google-Smtp-Source: AGHT+IHQrRt6FvxWmDCh/LAIW/dCSPM57n5VcW3TM4THvMvt3tl0pcGjDtqiFx8qhXZVQgJfGBcW5Q==
+X-Received: by 2002:a17:907:e695:b0:a86:6fb3:fda5 with SMTP id
+ a640c23a62f3a-a90294a28d7mr598467366b.32.1726223195670; 
+ Fri, 13 Sep 2024 03:26:35 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25c72ed3sm854121466b.135.2024.09.13.03.23.59
+ a640c23a62f3a-a8d25c727fcsm851457266b.119.2024.09.13.03.26.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Sep 2024 03:23:59 -0700 (PDT)
+ Fri, 13 Sep 2024 03:26:35 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1488B5F8B7;
- Fri, 13 Sep 2024 11:23:59 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 5F2255F8B7;
+ Fri, 13 Sep 2024 11:26:34 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org
-Subject: Re: [PATCH 0/2] tcg: Fix branch/label link during plugin expansion
-In-Reply-To: <f7f1cb70-08f8-48aa-9db7-cc7a119a4234@linaro.org> (Richard
- Henderson's message of "Tue, 10 Sep 2024 14:28:15 -0700")
+Subject: Re: [PATCH 1/2] tcg: Return TCGOp from tcg_gen_op[1-6]
+In-Reply-To: <20240910212351.977753-2-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Tue, 10 Sep 2024 14:23:50 -0700")
 References: <20240910212351.977753-1-richard.henderson@linaro.org>
- <f7f1cb70-08f8-48aa-9db7-cc7a119a4234@linaro.org>
+ <20240910212351.977753-2-richard.henderson@linaro.org>
 User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Fri, 13 Sep 2024 11:23:59 +0100
-Message-ID: <87jzffrgw0.fsf@draig.linaro.org>
+Date: Fri, 13 Sep 2024 11:26:34 +0100
+Message-ID: <87frq3rgrp.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,50 +101,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Richard Henderson <richard.henderson@linaro.org> writes:
 
-> On 9/10/24 14:23, Richard Henderson wrote:
->> With tcg_last_op(), we always get the last op of the stream.
->> With TCGContext.emit_before_op, the most recently emitted op
->> is no longer the last op.
->> Instead, pass the op being emitted back from the allocator so
->> that we can link it to the label without needing to look it up.
->
-> Oh, I meant to point out from whence this comes.
-> The plugin uses a conditional
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-    size_t n_insns =3D qemu_plugin_tb_n_insns(tb);
-    qemu_plugin_u64 quantum_insn =3D
-        qemu_plugin_scoreboard_u64_in_struct(vcpus, vCPUTime, quantum_insn);
-    /* count (and eventually trap) once per tb */
-    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
-        tb, QEMU_PLUGIN_INLINE_ADD_U64, quantum_insn, n_insns);
-
->  ld_i32 tmp18,env,$0xffffffffffffdb10
->  mul_i32 tmp18,tmp18,$0x18
->  ext_i32_i64 tmp17,tmp18
->  add_i64 tmp17,tmp17,$0x575410edadc8
-
-    qemu_plugin_register_vcpu_tb_exec_cond_cb(
-        tb, every_quantum_insn,
-        QEMU_PLUGIN_CB_NO_REGS, QEMU_PLUGIN_COND_GE,
-        quantum_insn, max_insn_per_quantum, NULL);
-
-?
-
->  ld_i64 tmp21,tmp17,$0x0
->  brcond_i64 tmp21,$0x0,ltu,$L1
->  ld_i32 tmp18,env,$0xffffffffffffdb10
->  call plugin(0x79a2abfde66a),$0x1,$0,tmp18,$0x0
->  set_label $L1
->
-> Note that the branch is X < 0 (unsigned), which is always false, and
-> thus the branch is optimized away.
-
-I'm obviously missing something reading this. How can TCG know the state
-of the scoreboard variables and optimise away the branch?
-
->
->
-> r~
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
