@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 729CBFA3755
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 15:17:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B48DFA3755
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 15:17:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp81B-00069C-2r; Fri, 13 Sep 2024 11:15:29 -0400
+	id 1sp81C-0006DM-1H; Fri, 13 Sep 2024 11:15:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sp80D-0002NY-ON
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:29 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1sp807-00020E-LK
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:24 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sp80B-0007pE-BT
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:29 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-42cc8782869so22030935e9.2
- for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 08:14:26 -0700 (PDT)
+ id 1sp804-0007mR-Qb
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:23 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-374b25263a3so783831f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 08:14:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726240466; x=1726845266; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726240459; x=1726845259; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+xOK2ZrZb1liyDsXayAy9xBW8YsGkjzSUb/zEYjVuT4=;
- b=eBftLHR3dLFmsAZufPsgCRSPncnhp61qjBgTiSg2HcwpOCBsgGM85xu3iJjl3RmBBb
- wUKdqA2+iPAkKF01tZ16p9HLhX1rKQ66k7eYnN+zp9KBBb9Fl0Z8GWsSWJX0w79VQo6g
- YRpVWGWAEhqEav13W/9csqfYuMV6OQ3ESXytJKM3aYZikcoR+Q81T5VGnwXV4UF1Jmgt
- A1/TKc+ZpYn0IDzT3kiGRdIbBz/dymLkQwsDjJjWlgGTZhnWcF+86js0e8omUI8Ponca
- gSrofWHLyl55k3r56g4x3Ok6wyZiLnTrDdXfyiSTZWF6CJsXS8SSvWwmYZjYeztrWvAz
- 1mCg==
+ :reply-to; bh=txDZ12T6fHXdIDZypcg9V1CdvFzmbSQBApsf5uAHoUk=;
+ b=bXw+bq1nnsKeUf1RM6xyQViv0scSsJcM0wxm+lS7aF8G2Jn/ZAZtDI5YkirhHKdzD6
+ lW8JWvRvTCikI9DAgVbYrOLt4yz0mQ5L/oS2Z2mCTOtjiCxus8WiIir620MXiOR24339
+ 05oA+SHmI5Bx1FYbTmChJLtA6EtG7cFNDmlxz/LZKyssEwgS4DDoU1LkeW60mR0JTm7Y
+ 162IYe9nukcHIhg3FcsrwTbKVEYUuuTmnMlU7a5TklVEC/M2yGG67EHBY/fBhGWoauk6
+ y7+kycEmKs14cyBm/Jfq7sCSl93xhiPB+P4TOrtrhVPU/zx++p6wiV792du2yuFm64Gg
+ 5Abg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726240466; x=1726845266;
+ d=1e100.net; s=20230601; t=1726240459; x=1726845259;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+xOK2ZrZb1liyDsXayAy9xBW8YsGkjzSUb/zEYjVuT4=;
- b=TfDMwaz521rHVi1k987MRJgKkap2ugXubOyqpJVU2Q93zvKGLf2hICDt+2uB2toEac
- kPaU0UZNSzolmrzZZVACIeSd9lf6yOnEnkPcM6wQzvk54RMugaO2bxMjzYfbRi3/cjoF
- E76sgeLL3sXIeil9vXdXrjwhGNtIv29QhykkN8iUEPvFsEXEXNX+YU1mOqvUYxsvlMJT
- GA8VSP27vnVjgxWpYezQb4H9nOxPn/Rhdhw2C2ZLNJISKMlT1YQm/OKFDo74qa+eMe83
- rkETWOVUz307QxzBlZ+YAGcY+LvZ1f3OAJQusAo1yKy01nsYsGxRUPv1r8ZqjA6rHgu9
- OqcQ==
-X-Gm-Message-State: AOJu0YzBr/kT2yK9ehzSNMUQAtNA7zLBAnYTXhwlSpbbDIxOUPrRgi+q
- wqiWHzlSyWCy82/4OPCKTExSlBvOJ4QNNTQxEvbggFHe4V2gzW0lKuKfeRx0nrMBmtmsSnyV92j
- V
-X-Google-Smtp-Source: AGHT+IHxUDfU2VHMruB5dvPrXB9Ntp1GvXhJu9zIrnmDolYYqqZcCoFZXPFuwJhT0V53uGBdSRb/XQ==
-X-Received: by 2002:a05:600c:1c85:b0:42c:b9a5:ebae with SMTP id
- 5b1f17b1804b1-42cdb5385c8mr53628995e9.9.1726240465774; 
- Fri, 13 Sep 2024 08:14:25 -0700 (PDT)
+ bh=txDZ12T6fHXdIDZypcg9V1CdvFzmbSQBApsf5uAHoUk=;
+ b=V8aBbEGFaJjIjxNBIlB21PgrGp0bBV4omzEKY2J6GD4q58r363O+/Pw62Z5ZUWFJ5V
+ EEm7nIs6aDc02doTwuM1bKBQNUungmWQmtdVfl/136UEkIbdFCVlCnN4P4qusf9syNsK
+ YtgxUPyjYtuMSN4CZ2rZd7I9fsRzcqs16KEn45uJVGi6sk5RAGJMnPeFFvwwmKrYc1/f
+ jItc67A8tFUnLP09GQhOpNemOw7ZxNR166u7y+ALO3xOBIEOQQBI9xest+7xg3fTudZh
+ ea3IW3Q5FRYzbXuaihtl1HciU4Vb51oBeIr4uiKdLxhlh9wSt3qKAqf4FA46gprECLFr
+ fgaQ==
+X-Gm-Message-State: AOJu0YxF8kBvTnygvIHsk7aeCWGKnKyXwXeu6ldkLqr/7m0PTZxoeJGn
+ xe/CLc9/Cnc/DsmpJRefQFz7RiJ8qrSapzUjNWmHIOOsrBB4L4iIrpx8jZbw+gCUKdYPh/4IR+x
+ /
+X-Google-Smtp-Source: AGHT+IG5EdxSXSQ/U2OqhaPKxZ76SL2bWR+NH8voCDOJZs+XFCZcbgUEh6hAd4w1pNENtgKUG581NA==
+X-Received: by 2002:a5d:5987:0:b0:374:c269:df79 with SMTP id
+ ffacd0b85a97d-378d61e2b52mr2246391f8f.22.1726240458852; 
+ Fri, 13 Sep 2024 08:14:18 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42d9b16bfbfsm29152325e9.22.2024.09.13.08.14.25
+ 5b1f17b1804b1-42d9b16bfbfsm29152325e9.22.2024.09.13.08.14.18
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Sep 2024 08:14:25 -0700 (PDT)
+ Fri, 13 Sep 2024 08:14:18 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 23/27] hw/net/can/xlnx-versal-canfd: Fix FIFO issues
-Date: Fri, 13 Sep 2024 16:14:07 +0100
-Message-Id: <20240913151411.2167922-24-peter.maydell@linaro.org>
+Subject: [PULL 11/27] hw/core/resettable: Remove transitional_function
+ machinery
+Date: Fri, 13 Sep 2024 16:13:55 +0100
+Message-Id: <20240913151411.2167922-12-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240913151411.2167922-1-peter.maydell@linaro.org>
 References: <20240913151411.2167922-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,89 +94,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Doug Brown <doug@schmorgal.com>
+We used to need the transitional_function machinery to handle bus
+classes and device classes which still used their legacy reset
+handling.  We have now converted all bus classes to three phase
+reset, and simplified the device class legacy reset so it is just an
+adapting wrapper function around registration of a hold phase method.
+There are therefore no more users of the transitional_function
+machinery and we can remove it.
 
-The read index should not be changed when storing a new message into the
-RX or TX FIFO. Changing it at this point will cause the reader to get
-out of sync. The wrapping of the read index is already handled by the
-pre-write functions for the FIFO status registers anyway.
-
-Additionally, the calculation for wrapping the store index was off by
-one, which caused new messages to be written to the wrong location in
-the FIFO. This caused incorrect messages to be delivered.
-
-Signed-off-by: Doug Brown <doug@schmorgal.com>
-Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
-Message-id: 20240827034927.66659-8-doug@schmorgal.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20240830145812.1967042-12-peter.maydell@linaro.org
 ---
- hw/net/can/xlnx-versal-canfd.c | 36 +++-------------------------------
- 1 file changed, 3 insertions(+), 33 deletions(-)
+ include/hw/resettable.h | 13 -------------
+ hw/core/resettable.c    | 24 +++---------------------
+ 2 files changed, 3 insertions(+), 34 deletions(-)
 
-diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
-index ccfed364cc9..e148bd7b465 100644
---- a/hw/net/can/xlnx-versal-canfd.c
-+++ b/hw/net/can/xlnx-versal-canfd.c
-@@ -1144,18 +1144,8 @@ static void update_rx_sequential(XlnxVersalCANFDState *s,
-             read_index = ARRAY_FIELD_EX32(s->regs, RX_FIFO_STATUS_REGISTER, RI);
-             store_index = read_index + fill_level;
+diff --git a/include/hw/resettable.h b/include/hw/resettable.h
+index 83b561fc830..94f6f22e3cf 100644
+--- a/include/hw/resettable.h
++++ b/include/hw/resettable.h
+@@ -90,14 +90,6 @@ typedef enum ResetType {
+  * @get_state: Mandatory method which must return a pointer to a
+  * ResettableState.
+  *
+- * @get_transitional_function: transitional method to handle Resettable objects
+- * not yet fully moved to this interface. It will be removed as soon as it is
+- * not needed anymore. This method is optional and may return a pointer to a
+- * function to be used instead of the phases. If the method exists and returns
+- * a non-NULL function pointer then that function is executed as a replacement
+- * of the 'hold' phase method taking the object as argument. The two other phase
+- * methods are not executed.
+- *
+  * @child_foreach: Executes a given callback on every Resettable child. Child
+  * in this context means a child in the qbus tree, so the children of a qbus
+  * are the devices on it, and the children of a device are all the buses it
+@@ -109,8 +101,6 @@ typedef void (*ResettableEnterPhase)(Object *obj, ResetType type);
+ typedef void (*ResettableHoldPhase)(Object *obj, ResetType type);
+ typedef void (*ResettableExitPhase)(Object *obj, ResetType type);
+ typedef ResettableState * (*ResettableGetState)(Object *obj);
+-typedef void (*ResettableTrFunction)(Object *obj);
+-typedef ResettableTrFunction (*ResettableGetTrFunction)(Object *obj);
+ typedef void (*ResettableChildCallback)(Object *, void *opaque,
+                                         ResetType type);
+ typedef void (*ResettableChildForeach)(Object *obj,
+@@ -130,9 +120,6 @@ struct ResettableClass {
+     /* State access method */
+     ResettableGetState get_state;
  
--            if (read_index == s->cfg.rx0_fifo - 1) {
--                /*
--                 * When ri is s->cfg.rx0_fifo - 1 i.e. max, it goes cyclic that
--                 * means we reset the ri to 0x0.
--                 */
--                read_index = 0;
--                ARRAY_FIELD_DP32(s->regs, RX_FIFO_STATUS_REGISTER, RI,
--                                 read_index);
--            }
+-    /* Transitional method for legacy reset compatibility */
+-    ResettableGetTrFunction get_transitional_function;
 -
-             if (store_index > s->cfg.rx0_fifo - 1) {
--                store_index -= s->cfg.rx0_fifo - 1;
-+                store_index -= s->cfg.rx0_fifo;
-             }
+     /* Hierarchy handling method */
+     ResettableChildForeach child_foreach;
+ };
+diff --git a/hw/core/resettable.c b/hw/core/resettable.c
+index 6dd3e3dc487..5cdb4a4f8d3 100644
+--- a/hw/core/resettable.c
++++ b/hw/core/resettable.c
+@@ -93,20 +93,6 @@ static void resettable_child_foreach(ResettableClass *rc, Object *obj,
+     }
+ }
  
-             store_location = R_RB_ID_REGISTER +
-@@ -1172,18 +1162,8 @@ static void update_rx_sequential(XlnxVersalCANFDState *s,
-                                           RI_1);
-             store_index = read_index + fill_level;
- 
--            if (read_index == s->cfg.rx1_fifo - 1) {
--                /*
--                 * When ri is s->cfg.rx1_fifo - 1 i.e. max, it goes cyclic that
--                 * means we reset the ri to 0x0.
--                 */
--                read_index = 0;
--                ARRAY_FIELD_DP32(s->regs, RX_FIFO_STATUS_REGISTER, RI_1,
--                                 read_index);
--            }
+-/**
+- * resettable_get_tr_func:
+- * helper to fetch transitional reset callback if any.
+- */
+-static ResettableTrFunction resettable_get_tr_func(ResettableClass *rc,
+-                                                   Object *obj)
+-{
+-    ResettableTrFunction tr_func = NULL;
+-    if (rc->get_transitional_function) {
+-        tr_func = rc->get_transitional_function(obj);
+-    }
+-    return tr_func;
+-}
 -
-             if (store_index > s->cfg.rx1_fifo - 1) {
--                store_index -= s->cfg.rx1_fifo - 1;
-+                store_index -= s->cfg.rx1_fifo;
-             }
- 
-             store_location = R_RB_ID_REGISTER_1 +
-@@ -1265,18 +1245,8 @@ static void tx_fifo_stamp(XlnxVersalCANFDState *s, uint32_t tb0_regid)
-                           " Discarding the message\n");
-             ARRAY_FIELD_DP32(s->regs, INTERRUPT_STATUS_REGISTER, TXEOFLW, 1);
-         } else {
--            if (read_index == s->cfg.tx_fifo - 1) {
--                /*
--                 * When ri is s->cfg.tx_fifo - 1 i.e. max, it goes cyclic that
--                 * means we reset the ri to 0x0.
--                 */
--                read_index = 0;
--                ARRAY_FIELD_DP32(s->regs, TX_EVENT_FIFO_STATUS_REGISTER, TXE_RI,
--                                 read_index);
--            }
--
-             if (store_index > s->cfg.tx_fifo - 1) {
--                store_index -= s->cfg.tx_fifo - 1;
-+                store_index -= s->cfg.tx_fifo;
-             }
- 
-             assert(store_index < s->cfg.tx_fifo);
+ static void resettable_phase_enter(Object *obj, void *opaque, ResetType type)
+ {
+     ResettableClass *rc = RESETTABLE_GET_CLASS(obj);
+@@ -146,7 +132,7 @@ static void resettable_phase_enter(Object *obj, void *opaque, ResetType type)
+     if (action_needed) {
+         trace_resettable_phase_enter_exec(obj, obj_typename, type,
+                                           !!rc->phases.enter);
+-        if (rc->phases.enter && !resettable_get_tr_func(rc, obj)) {
++        if (rc->phases.enter) {
+             rc->phases.enter(obj, type);
+         }
+         s->hold_phase_pending = true;
+@@ -171,12 +157,8 @@ static void resettable_phase_hold(Object *obj, void *opaque, ResetType type)
+     /* exec hold phase */
+     if (s->hold_phase_pending) {
+         s->hold_phase_pending = false;
+-        ResettableTrFunction tr_func = resettable_get_tr_func(rc, obj);
+         trace_resettable_phase_hold_exec(obj, obj_typename, !!rc->phases.hold);
+-        if (tr_func) {
+-            trace_resettable_transitional_function(obj, obj_typename);
+-            tr_func(obj);
+-        } else if (rc->phases.hold) {
++        if (rc->phases.hold) {
+             rc->phases.hold(obj, type);
+         }
+     }
+@@ -199,7 +181,7 @@ static void resettable_phase_exit(Object *obj, void *opaque, ResetType type)
+     assert(s->count > 0);
+     if (--s->count == 0) {
+         trace_resettable_phase_exit_exec(obj, obj_typename, !!rc->phases.exit);
+-        if (rc->phases.exit && !resettable_get_tr_func(rc, obj)) {
++        if (rc->phases.exit) {
+             rc->phases.exit(obj, type);
+         }
+     }
 -- 
 2.34.1
 
