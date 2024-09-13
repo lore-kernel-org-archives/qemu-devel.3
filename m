@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A09A1FC6160
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 16:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68CC4FC6166
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 16:41:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp9Ks-0006GI-Df; Fri, 13 Sep 2024 12:39:54 -0400
+	id 1sp9Ks-0006H6-L7; Fri, 13 Sep 2024 12:39:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1sp9Kq-000691-LU; Fri, 13 Sep 2024 12:39:52 -0400
+ id 1sp9Kn-00064N-Sd; Fri, 13 Sep 2024 12:39:50 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1sp9Km-0000qE-HG; Fri, 13 Sep 2024 12:39:52 -0400
+ id 1sp9Km-0000qC-6v; Fri, 13 Sep 2024 12:39:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
- Content-Type; bh=zC4fCxWV/vMdGB/slP81g3/r2Jc6ZB1bGvRJ/IHPzDA=; b=sDjQp3LWKKez
- 1GzOqTAMzlEaLilX1mVFNDQTW1fwoqouBlqhDUyPlTUk7hf83LwYg4qFv/1EN6b+fPVgVnQ1LcYrm
- 4Cl+JcqtdDUG/BrQeCGtOkGSOzbkzREg2AL14A/sVxg1h68rCnbEDRZrSVzBQCkwnFXMEKbh5tLTe
- DmZkZMwtvqCqvHBdPW2/WHKilUOSF6Xvy1x1FotifT0RBRfyyP3iBVwfBiSjpD40NfPQ6BO0tAf3V
- z7Zt535yU47FqFAxp95F6I9xFqGMJYoVsx/IjBQJzJrN+oG7Ab5rUk9BshuKRL1lMh3DtYSWVTIE3
- deUiw6CWUF4mJ3UKOiI8cA==;
+ Content-Type; bh=g/TdJ5qXyf+1Rtq7JvfFokbbeo/irttxDxGcy32Lx1Y=; b=NEfuouYZGS0h
+ GBEenzfZW6KJCwxQX3fDjOGCOycF8SaVsq3Vxyir909D9y/SlfpSDxPMphvP6Fmelesub7QKx53JB
+ iCt+ie3NEdKyNZhxY3RhMAGT7CsSpami9TS6GNn7ATZZ6V1d2arOMdYhg8Ayk7fJefhrlRV9EGpwL
+ tjYtEZpQ4xnnDF3BfkNVLM7J6KJa8ABEj+NvQFJqINy89CP1/xoUiG9EThsmokDZwqblg08mNXYxI
+ /tkpq0LqAdcDar0TA1ricFsqQOv3HfUTVEDUKoLSPR+Ls18xXIDNOJJNTcxvDXT+a+CO8QKIVe0Pr
+ Kn1jgfMiRa/KqS4Wmgtq2w==;
 Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1sp9Hy-002OPf-2m;
+ (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1sp9Hy-002OPf-2R;
  Fri, 13 Sep 2024 18:39:39 +0200
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
  eblake@redhat.com, stefanha@redhat.com, berto@igalia.com,
  andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH v3 03/12] qcow2: put discard requests in the common queue when
- discard-no-unref enabled
-Date: Fri, 13 Sep 2024 19:39:33 +0300
-Message-Id: <20240913163942.423050-4-andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v3 01/12] qcow2: make function update_refcount_discard() global
+Date: Fri, 13 Sep 2024 19:39:31 +0300
+Message-Id: <20240913163942.423050-2-andrey.drobyshev@virtuozzo.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240913163942.423050-1-andrey.drobyshev@virtuozzo.com>
 References: <20240913163942.423050-1-andrey.drobyshev@virtuozzo.com>
@@ -68,88 +67,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Normally discard requests are stored in the queue attached to BDRVQcow2State
-to be processed later at once.  Currently discard-no-unref option handling
-causes these requests to be processed straight away.  Let's fix that.
+We are going to need it for discarding separate subclusters.  The
+function itself doesn't do anything with the refcount tables, it simply
+adds a discard request to the queue, so rename it to qcow2_queue_discard().
 
-Note that when doing regular discards qcow2_free_any_cluster() would check
-for the presence of external data files for us and redirect request to
-underlying data_file.  Here we want to do the same but avoid refcount updates,
-thus we perform the same checks.
-
-Suggested-by: Hanna Czenczek <hreitz@redhat.com>
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Reviewed-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+Reviewed-by: Alberto Garcia <berto@igalia.com>
 ---
- block/qcow2-cluster.c | 39 +++++++++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 10 deletions(-)
+ block/qcow2-refcount.c | 8 ++++----
+ block/qcow2.h          | 2 ++
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
-index 5f057ba2fd..7dff0bd5a1 100644
---- a/block/qcow2-cluster.c
-+++ b/block/qcow2-cluster.c
-@@ -1893,6 +1893,28 @@ again:
-     return 0;
+diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
+index 0266542cee..2026f5fa21 100644
+--- a/block/qcow2-refcount.c
++++ b/block/qcow2-refcount.c
+@@ -754,8 +754,8 @@ void qcow2_process_discards(BlockDriverState *bs, int ret)
+     }
  }
  
-+/*
-+ * Helper for adding a discard request to the queue without any refcount
-+ * modifications.  If external data file is used redirects the request to
-+ * the corresponding BdrvChild.
-+ */
-+static inline void
-+discard_no_unref_any_file(BlockDriverState *bs, uint64_t offset,
-+                          uint64_t length, QCow2ClusterType ctype,
-+                          enum qcow2_discard_type dtype)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+
-+    if (s->discard_passthrough[dtype] &&
-+        (ctype == QCOW2_CLUSTER_NORMAL || ctype == QCOW2_CLUSTER_ZERO_ALLOC)) {
-+        if (has_data_file(bs)) {
-+            bdrv_pdiscard(s->data_file, offset, length);
-+        } else {
-+            qcow2_queue_discard(bs, offset, length);
-+        }
-+    }
-+}
-+
- /*
-  * This discards as many clusters of nb_clusters as possible at once (i.e.
-  * all clusters in the same L2 slice) and returns the number of discarded
-@@ -1974,12 +1996,10 @@ discard_in_l2_slice(BlockDriverState *bs, uint64_t offset, uint64_t nb_clusters,
-         if (!keep_reference) {
-             /* Then decrease the refcount */
-             qcow2_free_any_cluster(bs, old_l2_entry, type);
--        } else if (s->discard_passthrough[type] &&
--                   (cluster_type == QCOW2_CLUSTER_NORMAL ||
--                    cluster_type == QCOW2_CLUSTER_ZERO_ALLOC)) {
-+        } else {
-             /* If we keep the reference, pass on the discard still */
--            bdrv_pdiscard(s->data_file, old_l2_entry & L2E_OFFSET_MASK,
--                          s->cluster_size);
-+            discard_no_unref_any_file(bs, old_l2_entry & L2E_OFFSET_MASK,
-+                                      s->cluster_size, cluster_type, type);
-         }
-     }
+-static void update_refcount_discard(BlockDriverState *bs,
+-                                    uint64_t offset, uint64_t length)
++void qcow2_queue_discard(BlockDriverState *bs, uint64_t offset,
++                         uint64_t length)
+ {
+     BDRVQcow2State *s = bs->opaque;
+     Qcow2DiscardRegion *d, *p, *next;
+@@ -902,7 +902,7 @@ update_refcount(BlockDriverState *bs, int64_t offset, int64_t length,
+             }
  
-@@ -2088,12 +2108,11 @@ zero_in_l2_slice(BlockDriverState *bs, uint64_t offset,
-             if (!keep_reference) {
-                 /* Then decrease the refcount */
-                 qcow2_free_any_cluster(bs, old_l2_entry, QCOW2_DISCARD_REQUEST);
--            } else if (s->discard_passthrough[QCOW2_DISCARD_REQUEST] &&
--                       (type == QCOW2_CLUSTER_NORMAL ||
--                        type == QCOW2_CLUSTER_ZERO_ALLOC)) {
-+            } else {
-                 /* If we keep the reference, pass on the discard still */
--                bdrv_pdiscard(s->data_file, old_l2_entry & L2E_OFFSET_MASK,
--                            s->cluster_size);
-+                discard_no_unref_any_file(bs, old_l2_entry & L2E_OFFSET_MASK,
-+                                          s->cluster_size, type,
-+                                          QCOW2_DISCARD_REQUEST);
+             if (s->discard_passthrough[type]) {
+-                update_refcount_discard(bs, cluster_offset, s->cluster_size);
++                qcow2_queue_discard(bs, cluster_offset, s->cluster_size);
              }
          }
      }
+@@ -3619,7 +3619,7 @@ qcow2_discard_refcount_block(BlockDriverState *bs, uint64_t discard_block_offs)
+         /* discard refblock from the cache if refblock is cached */
+         qcow2_cache_discard(s->refcount_block_cache, refblock);
+     }
+-    update_refcount_discard(bs, discard_block_offs, s->cluster_size);
++    qcow2_queue_discard(bs, discard_block_offs, s->cluster_size);
+ 
+     return 0;
+ }
+diff --git a/block/qcow2.h b/block/qcow2.h
+index a9e3481c6e..197bdcdf53 100644
+--- a/block/qcow2.h
++++ b/block/qcow2.h
+@@ -891,6 +891,8 @@ int coroutine_fn qcow2_check_refcounts(BlockDriverState *bs, BdrvCheckResult *re
+                                        BdrvCheckMode fix);
+ 
+ void GRAPH_RDLOCK qcow2_process_discards(BlockDriverState *bs, int ret);
++void qcow2_queue_discard(BlockDriverState *bs, uint64_t offset,
++                         uint64_t length);
+ 
+ int GRAPH_RDLOCK
+ qcow2_check_metadata_overlap(BlockDriverState *bs, int ign, int64_t offset,
 -- 
 2.39.3
 
