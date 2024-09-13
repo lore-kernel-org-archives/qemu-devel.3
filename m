@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F8C5FC616A
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 17:28:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86802FC616A
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 17:28:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1spA4p-0006rd-QU; Fri, 13 Sep 2024 13:27:23 -0400
+	id 1spA4q-0006w8-Mt; Fri, 13 Sep 2024 13:27:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1spA4g-0006Ci-Bt
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 13:27:14 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ id 1spA4l-0006Zh-VB
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 13:27:20 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1spA4Y-0005v0-T6
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 13:27:12 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-5367ae52a01so1701296e87.3
- for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 10:27:06 -0700 (PDT)
+ id 1spA4d-0005y6-Sl
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 13:27:18 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5c413cf5de5so3000398a12.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 10:27:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726248425; x=1726853225; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726248430; x=1726853230; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tNcKpK3gqW5pd0AiX4NmCCbDvgLi1QOfUkQVya3+J3c=;
- b=dMhgqKHttWXwg9Hh6JYeL1Tj8VkZyAbigPLnhy/oIv+rApl6Lv0uhT2bATbqWvIhvm
- QNhR0b0KaIaeMvBls27WvnIE0lDwgHB0EMIH2AS3Z0X/6Wal+fMman/ISsf/XbvFjvlu
- W0xuT7GG9jYjXpctWgENIf8LEq48nUfoCOOl12bkmVKMqlkvF8omOM53R7kgx1tmJ0Jc
- akgUMZKwy/T0tiMjg/sLd/Dlzi/gSFRrpEWGUxeepznASLM0D9XgW6COyBqLnMgG0DVM
- 14fra2FuRO0SSpE2rMJLrnc4MZX0T+s+a/DoKEY4CAkauZE835VGVq1/X9Q6GmiJcwZk
- 5VRw==
+ bh=KsHs41jQS6tBRZCgUdTKbBtzyuLG6Q+tQiFLGPFknkg=;
+ b=KDI3uMmA7d4T53D9UFIX1baVVjMi5AJjM7nfZWJl94KrZexKIwZo65CBVEgHKePH+f
+ GT3ciE5XhhQdkwknJqcwc3pvXOIqnrRhzwRiS+KkXxd/dcE+cF3+UxeHAHeS7q7I1iTk
+ /Ow0k/Hl1tDrk+dECvBJFbeqh+aTxNdsXSH1NHoav7JwYVNVgQbhoTWILKW7zTM4wvFD
+ TucmHp/5qYkLuuRUJqr9EG6/V0izeiEtf2W4rE636/ngLbaPoaNNeNI69Pk2hElmNCNw
+ b5/lWL0LKp4Klbp0RPDeNGKJDS9YYzwbKBeZ813jHpLshY/P4iftrRNlu0RxZXfSRhC5
+ bOoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726248425; x=1726853225;
+ d=1e100.net; s=20230601; t=1726248430; x=1726853230;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tNcKpK3gqW5pd0AiX4NmCCbDvgLi1QOfUkQVya3+J3c=;
- b=C4LuD/FH/acL0ZDUDuxqAFRTRZUK1QjkBYG6WhJ5RlIuSEu7d8VgOM+3xbNCR9S2Pb
- aG5j1xEGhxsylofKYNq2IkutJB8ImTMeaYPMjwhWxDLekcR6/oNCRxvfr83cyJ3q0RCM
- RYHyuA3+begkCEZAp6F3onHRzplXbBMUO9Vbu+BN522ThnzsYq+2wuEMeUvugvazx/Ak
- CufjZHqI58QMxUkwSUSyEdNHn4wJgjf4H1jkTQ3cl+YcYXEwstsn8TKns8WzQEIQozj7
- a3I1xJgzqvB6XuJF7e0buNhB3sAz0dTwua4Vea6VRbbwB+kZjzceBTDN+f2d8HdDP48K
- 6ifg==
-X-Gm-Message-State: AOJu0YzNI4hSey/VbZKN3g6vq8noGZh5OizEJudhnC1Lln2zUConbgpe
- YksM+XOvBYZvQYx5H16dTUz/fBfSvB0KmIQuPd47ofQs1TrB+RCgtd9HrVEEo+g=
-X-Google-Smtp-Source: AGHT+IHG6h9u+sMY4i8mG9ksmPVhqCM9SZTCG1cORERdH/GeIADh8bXIQknvkCNDzhne4hprxudoGA==
-X-Received: by 2002:a05:6512:224f:b0:530:aa09:b6bf with SMTP id
- 2adb3069b0e04-5367fee270emr2138919e87.24.1726248424436; 
- Fri, 13 Sep 2024 10:27:04 -0700 (PDT)
+ bh=KsHs41jQS6tBRZCgUdTKbBtzyuLG6Q+tQiFLGPFknkg=;
+ b=kJd0ns44TT5U21gA6kJ2wiVwNvenSHBIPU/TCd6S8VmhdldOfQ51B1bkDd2QG7mHPy
+ 6ApjDB3eHYalh577DQlRqiNliRDRCL91gRUCMc9zpEC+Z6aiPZSoj2AjMZv2m0tc0Nx5
+ RTq/89TpK1QIhd5WOUUC2ZZjKtODZ9HKXJvRCJRFFit9mhN4NHi1Uycu93uHHM/whxTw
+ PhVEBlP4fhrYvUpdzgJyQhRNN9uuqpZaNrkgSQswjAG3Dx6Usxqzt6eiu1sV0tQNgeJ2
+ d8x30IYmwPfuYtzp8uNYQNFMcjJHiktcEeH4P69c4KYOfbF2Dyd/IZXZmX++YXR3MBP1
+ qWyw==
+X-Gm-Message-State: AOJu0YzDTb6MPvv+4ZkR3Kb80Ctlxn5y/EXIvHK9gdaeEE/GYz0R4SjU
+ Q1cVhq2q18G1BMHb0OwlgBUA8GGhDs1yOeFAA8EJ1g2fK1Q7sfhCrejL7aa7NxA=
+X-Google-Smtp-Source: AGHT+IHqVyJ3JQSoQWNi61RlmzVMjIdfrWP4Wq4BnkPWry0yKIGapa9fUqVBKYGCEMTD0cs4s8Tvlw==
+X-Received: by 2002:a17:907:d5a2:b0:a86:96d1:d1f with SMTP id
+ a640c23a62f3a-a902943a557mr705628666b.26.1726248429541; 
+ Fri, 13 Sep 2024 10:27:09 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d25d400afsm894067866b.189.2024.09.13.10.26.58
+ a640c23a62f3a-a8d259528ecsm892292666b.67.2024.09.13.10.27.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Sep 2024 10:27:00 -0700 (PDT)
+ Fri, 13 Sep 2024 10:27:06 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DCE115FA0F;
- Fri, 13 Sep 2024 18:26:56 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 49A515FA40;
+ Fri, 13 Sep 2024 18:26:57 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, devel@lists.libvirt.org,
@@ -74,27 +74,25 @@ Cc: Richard Henderson <richard.henderson@linaro.org>, devel@lists.libvirt.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Xingtao Yao <yaoxt.fnst@fujitsu.com>
-Subject: [PATCH 08/17] tests/tcg/plugins/mem: add option to print memory
- accesses
-Date: Fri, 13 Sep 2024 18:26:46 +0100
-Message-Id: <20240913172655.173873-9-alex.bennee@linaro.org>
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH 12/17] tests/tcg: ensure s390x-softmmu output redirected
+Date: Fri, 13 Sep 2024 18:26:50 +0100
+Message-Id: <20240913172655.173873-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240913172655.173873-1-alex.bennee@linaro.org>
 References: <20240913172655.173873-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,132 +108,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+The multiarch system tests output serial data which should be
+redirected to the "output" chardev rather than echoed to the console.
 
-By using "print-accesses=true" option, mem plugin will now print every
-value accessed, with associated size, type (store vs load), symbol,
-instruction address and phys/virt address accessed.
+Remove the unused EXTFLAGS variable while we are at it.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Xingtao Yao <yaoxt.fnst@fujitsu.com>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240724194708.1843704-6-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/tcg/plugins/mem.c | 69 ++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 68 insertions(+), 1 deletion(-)
+ tests/tcg/s390x/Makefile.softmmu-target | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
-index b650dddcce..086e6f5bdf 100644
---- a/tests/tcg/plugins/mem.c
-+++ b/tests/tcg/plugins/mem.c
-@@ -21,10 +21,15 @@ typedef struct {
-     uint64_t io_count;
- } CPUCount;
- 
-+typedef struct {
-+    uint64_t vaddr;
-+    const char *sym;
-+} InsnInfo;
-+
- static struct qemu_plugin_scoreboard *counts;
- static qemu_plugin_u64 mem_count;
- static qemu_plugin_u64 io_count;
--static bool do_inline, do_callback;
-+static bool do_inline, do_callback, do_print_accesses;
- static bool do_haddr;
- static enum qemu_plugin_mem_rw rw = QEMU_PLUGIN_MEM_RW;
- 
-@@ -60,6 +65,44 @@ static void vcpu_mem(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
-     }
- }
- 
-+static void print_access(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
-+                         uint64_t vaddr, void *udata)
-+{
-+    InsnInfo *insn_info = udata;
-+    unsigned size = 8 << qemu_plugin_mem_size_shift(meminfo);
-+    const char *type = qemu_plugin_mem_is_store(meminfo) ? "store" : "load";
-+    qemu_plugin_mem_value value = qemu_plugin_mem_get_value(meminfo);
-+    uint64_t hwaddr =
-+        qemu_plugin_hwaddr_phys_addr(qemu_plugin_get_hwaddr(meminfo, vaddr));
-+    g_autoptr(GString) out = g_string_new("");
-+    g_string_printf(out,
-+                    "0x%"PRIx64",%s,0x%"PRIx64",0x%"PRIx64",%d,%s,",
-+                    insn_info->vaddr, insn_info->sym,
-+                    vaddr, hwaddr, size, type);
-+    switch (value.type) {
-+    case QEMU_PLUGIN_MEM_VALUE_U8:
-+        g_string_append_printf(out, "0x%02"PRIx8, value.data.u8);
-+        break;
-+    case QEMU_PLUGIN_MEM_VALUE_U16:
-+        g_string_append_printf(out, "0x%04"PRIx16, value.data.u16);
-+        break;
-+    case QEMU_PLUGIN_MEM_VALUE_U32:
-+        g_string_append_printf(out, "0x%08"PRIx32, value.data.u32);
-+        break;
-+    case QEMU_PLUGIN_MEM_VALUE_U64:
-+        g_string_append_printf(out, "0x%016"PRIx64, value.data.u64);
-+        break;
-+    case QEMU_PLUGIN_MEM_VALUE_U128:
-+        g_string_append_printf(out, "0x%016"PRIx64"%016"PRIx64,
-+                               value.data.u128.high, value.data.u128.low);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+    g_string_append_printf(out, "\n");
-+    qemu_plugin_outs(out->str);
-+}
-+
- static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
- {
-     size_t n = qemu_plugin_tb_n_insns(tb);
-@@ -79,6 +122,16 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-                                              QEMU_PLUGIN_CB_NO_REGS,
-                                              rw, NULL);
-         }
-+        if (do_print_accesses) {
-+            /* we leak this pointer, to avoid locking to keep track of it */
-+            InsnInfo *insn_info = g_malloc(sizeof(InsnInfo));
-+            const char *sym = qemu_plugin_insn_symbol(insn);
-+            insn_info->sym = sym ? sym : "";
-+            insn_info->vaddr = qemu_plugin_insn_vaddr(insn);
-+            qemu_plugin_register_vcpu_mem_cb(insn, print_access,
-+                                             QEMU_PLUGIN_CB_NO_REGS,
-+                                             rw, (void *) insn_info);
-+        }
-     }
- }
- 
-@@ -117,6 +170,12 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-                 fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
-                 return -1;
-             }
-+        } else if (g_strcmp0(tokens[0], "print-accesses") == 0) {
-+            if (!qemu_plugin_bool_parse(tokens[0], tokens[1],
-+                                        &do_print_accesses)) {
-+                fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
-+                return -1;
-+            }
-         } else {
-             fprintf(stderr, "option parsing failed: %s\n", opt);
-             return -1;
-@@ -129,6 +188,14 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-         return -1;
-     }
- 
-+    if (do_print_accesses) {
-+        g_autoptr(GString) out = g_string_new("");
-+        g_string_printf(out,
-+                "insn_vaddr,insn_symbol,mem_vaddr,mem_hwaddr,"
-+                "access_size,access_type,mem_value\n");
-+        qemu_plugin_outs(out->str);
-+    }
-+
-     counts = qemu_plugin_scoreboard_new(sizeof(CPUCount));
-     mem_count = qemu_plugin_scoreboard_u64_in_struct(
-         counts, CPUCount, mem_count);
+diff --git a/tests/tcg/s390x/Makefile.softmmu-target b/tests/tcg/s390x/Makefile.softmmu-target
+index f60f94b090..ad681bbe40 100644
+--- a/tests/tcg/s390x/Makefile.softmmu-target
++++ b/tests/tcg/s390x/Makefile.softmmu-target
+@@ -1,6 +1,6 @@
+ S390X_SRC=$(SRC_PATH)/tests/tcg/s390x
+ VPATH+=$(S390X_SRC)
+-QEMU_OPTS+=-action panic=exit-failure -nographic $(EXTFLAGS) -kernel
++QEMU_OPTS+=-action panic=exit-failure -nographic -serial chardev:output -kernel
+ LINK_SCRIPT=$(S390X_SRC)/softmmu.ld
+ CFLAGS+=-ggdb -O0
+ LDFLAGS=-nostdlib -static
 -- 
 2.39.2
 
