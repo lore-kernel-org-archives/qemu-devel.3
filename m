@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86802FC616A
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 17:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87BDDFC616A
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 17:28:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1spA4q-0006w8-Mt; Fri, 13 Sep 2024 13:27:24 -0400
+	id 1spA4f-00063C-Mo; Fri, 13 Sep 2024 13:27:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1spA4l-0006Zh-VB
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 13:27:20 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1spA4Z-0005ia-4R
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 13:27:07 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1spA4d-0005y6-Sl
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 13:27:18 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5c413cf5de5so3000398a12.0
- for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 10:27:10 -0700 (PDT)
+ id 1spA4V-0005tJ-4z
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 13:27:06 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42cae102702so10876105e9.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 10:27:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726248430; x=1726853230; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726248421; x=1726853221; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KsHs41jQS6tBRZCgUdTKbBtzyuLG6Q+tQiFLGPFknkg=;
- b=KDI3uMmA7d4T53D9UFIX1baVVjMi5AJjM7nfZWJl94KrZexKIwZo65CBVEgHKePH+f
- GT3ciE5XhhQdkwknJqcwc3pvXOIqnrRhzwRiS+KkXxd/dcE+cF3+UxeHAHeS7q7I1iTk
- /Ow0k/Hl1tDrk+dECvBJFbeqh+aTxNdsXSH1NHoav7JwYVNVgQbhoTWILKW7zTM4wvFD
- TucmHp/5qYkLuuRUJqr9EG6/V0izeiEtf2W4rE636/ngLbaPoaNNeNI69Pk2hElmNCNw
- b5/lWL0LKp4Klbp0RPDeNGKJDS9YYzwbKBeZ813jHpLshY/P4iftrRNlu0RxZXfSRhC5
- bOoQ==
+ bh=NUatFApg2Cs5Vc3/hwC8i7ZiRClvTT8CyVvcfUZaS0U=;
+ b=SfV/SHA/A0qZKSWMRg0XKzti8Rm2VxvFPzywVgOTHzQPaDL+Or95UrfFUP+2888rrK
+ vGOR8Indmq9N7+tC9rmmas0/pB2uHBXdwdhrsPgH7A9sEGGAtNmwC8SL6xhd3+gm5LBv
+ WZQHnoyS6fVnAHilV6d+jhbSkU9Epb8tOPjsIb/ArnDF4IgGldoZde1AMh6LUN1nasX3
+ zznNG7Lchfmt6iz8j77PREuV1TidVNGULdiGwBVN+G5sS0XDaXAU+caMEjIeeAZYogk0
+ MKC8yQPMNRow26lSpd7qmVHv9WecdgrOrFmiR9ZK8vxU4dPSqw/A6kCkEr2uxtjoMHip
+ 8+5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726248430; x=1726853230;
+ d=1e100.net; s=20230601; t=1726248421; x=1726853221;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KsHs41jQS6tBRZCgUdTKbBtzyuLG6Q+tQiFLGPFknkg=;
- b=kJd0ns44TT5U21gA6kJ2wiVwNvenSHBIPU/TCd6S8VmhdldOfQ51B1bkDd2QG7mHPy
- 6ApjDB3eHYalh577DQlRqiNliRDRCL91gRUCMc9zpEC+Z6aiPZSoj2AjMZv2m0tc0Nx5
- RTq/89TpK1QIhd5WOUUC2ZZjKtODZ9HKXJvRCJRFFit9mhN4NHi1Uycu93uHHM/whxTw
- PhVEBlP4fhrYvUpdzgJyQhRNN9uuqpZaNrkgSQswjAG3Dx6Usxqzt6eiu1sV0tQNgeJ2
- d8x30IYmwPfuYtzp8uNYQNFMcjJHiktcEeH4P69c4KYOfbF2Dyd/IZXZmX++YXR3MBP1
- qWyw==
-X-Gm-Message-State: AOJu0YzDTb6MPvv+4ZkR3Kb80Ctlxn5y/EXIvHK9gdaeEE/GYz0R4SjU
- Q1cVhq2q18G1BMHb0OwlgBUA8GGhDs1yOeFAA8EJ1g2fK1Q7sfhCrejL7aa7NxA=
-X-Google-Smtp-Source: AGHT+IHqVyJ3JQSoQWNi61RlmzVMjIdfrWP4Wq4BnkPWry0yKIGapa9fUqVBKYGCEMTD0cs4s8Tvlw==
-X-Received: by 2002:a17:907:d5a2:b0:a86:96d1:d1f with SMTP id
- a640c23a62f3a-a902943a557mr705628666b.26.1726248429541; 
- Fri, 13 Sep 2024 10:27:09 -0700 (PDT)
+ bh=NUatFApg2Cs5Vc3/hwC8i7ZiRClvTT8CyVvcfUZaS0U=;
+ b=qsHK3dgbIc5IWLulWvpys6LgvK2rDTHCsYEZhaqxwOccAaptNT5Lxkwagb3D7YbAc3
+ XKJKM3yt7UjHZ031buzxHjwwY+IcKLW10whSX7+0I3lTiyEj3mjtWZKJgzPCBJ+8MljL
+ BC1KoCmoeSwX3vCixWOceW/YfR4yBh0Xkdhoav6B/L4bBWDrnQulkUoym/HES8BkpO8/
+ 87AdSOWkzN3vCFPS3Vsv+W3CF5Z8QJ7Rf79IuYM224q5HxtIhrk2UdqgAKUmWH4AUQ+d
+ L134gjpumYqCgFFvW1nW8oxnMmFudm2MoXmqQJgwMp2qi+prWErIWb/+1FbhPgluQpjs
+ H26g==
+X-Gm-Message-State: AOJu0YwVv9kmq+nIDICyjTtIc6NG2tdUV+6xOzMcuV81ID0ecOgnz/2W
+ 8siZ/j3sJkrFGpxg7nDjrmNsWb7c41tTVEsDpzhan8ek2m0zr68VUl0IXd7YHvw=
+X-Google-Smtp-Source: AGHT+IHKKyf5ejwCJKMPXA8BYeuUmTDQT/fT0817zZDcui5LC+sxij4NZUISFyk/FH2B8D1GwWhLig==
+X-Received: by 2002:adf:cd8b:0:b0:374:b5fc:68df with SMTP id
+ ffacd0b85a97d-378d61d4f96mr2116520f8f.4.1726248420508; 
+ Fri, 13 Sep 2024 10:27:00 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8d259528ecsm892292666b.67.2024.09.13.10.27.00
+ 4fb4d7f45d1cf-5c3ebd5212asm7864030a12.57.2024.09.13.10.26.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Sep 2024 10:27:06 -0700 (PDT)
+ Fri, 13 Sep 2024 10:26:57 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 49A515FA40;
- Fri, 13 Sep 2024 18:26:57 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 317965F8C3;
+ Fri, 13 Sep 2024 18:26:56 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, devel@lists.libvirt.org,
@@ -75,17 +75,18 @@ Cc: Richard Henderson <richard.henderson@linaro.org>, devel@lists.libvirt.org,
  Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH 12/17] tests/tcg: ensure s390x-softmmu output redirected
-Date: Fri, 13 Sep 2024 18:26:50 +0100
-Message-Id: <20240913172655.173873-13-alex.bennee@linaro.org>
+Subject: [PATCH 01/17] deprecation: don't enable TCG plugins by default on 32
+ bit hosts
+Date: Fri, 13 Sep 2024 18:26:39 +0100
+Message-Id: <20240913172655.173873-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240913172655.173873-1-alex.bennee@linaro.org>
 References: <20240913172655.173873-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,28 +109,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The multiarch system tests output serial data which should be
-redirected to the "output" chardev rather than echoed to the console.
+The existing plugins already liberally use host pointer stuffing for
+passing user data which will fail when doing 64 bit guests on 32 bit
+hosts. We should discourage this by officially deprecating support and
+adding another nail to the 32 bit host coffin.
 
-Remove the unused EXTFLAGS variable while we are at it.
-
+Message-Id: <20240910140733.4007719-12-alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/tcg/s390x/Makefile.softmmu-target | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/tcg/s390x/Makefile.softmmu-target b/tests/tcg/s390x/Makefile.softmmu-target
-index f60f94b090..ad681bbe40 100644
---- a/tests/tcg/s390x/Makefile.softmmu-target
-+++ b/tests/tcg/s390x/Makefile.softmmu-target
-@@ -1,6 +1,6 @@
- S390X_SRC=$(SRC_PATH)/tests/tcg/s390x
- VPATH+=$(S390X_SRC)
--QEMU_OPTS+=-action panic=exit-failure -nographic $(EXTFLAGS) -kernel
-+QEMU_OPTS+=-action panic=exit-failure -nographic -serial chardev:output -kernel
- LINK_SCRIPT=$(S390X_SRC)/softmmu.ld
- CFLAGS+=-ggdb -O0
- LDFLAGS=-nostdlib -static
+---
+v2
+  - don't manually set based on CPU type, use __SIZEOF_POINTER__
+---
+ docs/about/deprecated.rst | 11 +++++++++++
+ configure                 | 21 ++++++++++++++++++++-
+ 2 files changed, 31 insertions(+), 1 deletion(-)
+
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 88f0f03786..f7c7c33d39 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -184,6 +184,17 @@ be an effective use of its limited resources, and thus intends to discontinue
+ it. Since all recent x86 hardware from the past >10 years is capable of the
+ 64-bit x86 extensions, a corresponding 64-bit OS should be used instead.
+ 
++TCG Plugin support not enabled by default on 32-bit hosts (since 9.2)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++While it is still possible to enable TCG plugin support for 32-bit
++hosts there are a number of potential pitfalls when instrumenting
++64-bit guests. The plugin APIs typically pass most addresses as
++uint64_t but practices like encoding that address in a host pointer
++for passing as user-data will lose data. As most software analysis
++benefits from having plenty of host memory it seems reasonable to
++encourage users to use 64 bit builds of QEMU for analysis work
++whatever targets they are instrumenting.
+ 
+ System emulator CPUs
+ --------------------
+diff --git a/configure b/configure
+index 7f6eb6b331..f376fa24b3 100755
+--- a/configure
++++ b/configure
+@@ -516,6 +516,25 @@ case "$cpu" in
+     ;;
+ esac
+ 
++# Now we have our CPU_CFLAGS we can check if we are targeting a 32 or
++# 64 bit host.
++
++check_64bit_host() {
++cat > $TMPC <<EOF
++#if __SIZEOF_POINTER__ != 8
++#error not 64 bit system
++#endif
++int main(void) { return 0; }
++EOF
++  compile_object "$1"
++}
++
++if check_64bit_host "$CPU_CFLAGS"; then
++    host_bits=64
++else
++    host_bits=32
++fi
++
+ if test -n "$host_arch" && {
+     ! test -d "$source_path/linux-user/include/host/$host_arch" ||
+     ! test -d "$source_path/common-user/host/$host_arch"; }; then
+@@ -1028,7 +1047,7 @@ if test "$static" = "yes" ; then
+   fi
+   plugins="no"
+ fi
+-if test "$plugins" != "no"; then
++if test "$plugins" != "no" && test $host_bits -eq 64; then
+   plugins=yes
+   subdirs="$subdirs contrib/plugins"
+ fi
 -- 
 2.39.2
 
