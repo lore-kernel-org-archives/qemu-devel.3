@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2355FA375A
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 15:21:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A32AEFA375A
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Sep 2024 15:21:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sp80o-0004TB-Ke; Fri, 13 Sep 2024 11:15:06 -0400
+	id 1sp818-0005wu-O9; Fri, 13 Sep 2024 11:15:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sp80D-0002O8-T0
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:30 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1sp80F-0002TR-9N
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:31 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sp80B-0007pL-V8
- for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:29 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-42cb60aff1eso21937875e9.0
- for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 08:14:27 -0700 (PDT)
+ id 1sp80D-0007pg-G0
+ for qemu-devel@nongnu.org; Fri, 13 Sep 2024 11:14:30 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-42cba0dc922so18585435e9.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Sep 2024 08:14:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726240466; x=1726845266; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726240468; x=1726845268; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Oz56FWVaoXtsjD0nTboxI30R6YmbWaqPQt/nyHE7yKc=;
- b=bqYJoUNKyXBjIUbjMxSYDztBFzKEiEK7H2F8BXSFAKLQXFqq/2PD2OXKRyQko1sTtH
- xvNBZm11riEp7kLUJa49ynUWwR38PSgJQVtvSsYwE4qM/Ti+JDftcHSGff0Y4BKnX63v
- z2oZOMFCbkp9raDy5ZNCT+iDlzN5gFr77wxhwgm8oeGIv7xhjo/hVeVKbLQbZ2AJgsgn
- FV5QWEQmM+Nw6bwsHffXa/cl/GH++CwQBiFXxKvCRpURZysXjMxU+OSMPY0MnNF1rPZ3
- HEfQKWBTYsVOb/FB8defVkOtv8Y0Vis9uMAtqxAbNQpyoHVghWf5gl2zbRV3/PeQgUZC
- myFg==
+ :reply-to; bh=wxR0xCz35b/wqsAjmukGKdOmyR9BCiHQy2UElwsB5Yo=;
+ b=UWZ92ArLcbnzNELc7l3HBQVbHq5pKXjYJqWZ/CIgkGWp+1OL8wntxWutXyJAQ57xRs
+ zXJsfe/IwE/PStY08FwTZZ6sqPtKwNtWjQHs+6lsF7WzOqn2Fv4caQsMM9IL7OBXnSWv
+ 21MdHrnJu1Ndfmg4TVcERXLOhYUmWsceTaRZcDw6E6lS9JtBtMZ4sMvQHjcQb1n2NHhl
+ wjFPEKRx0nak+HdJ5TBhxVPmXHkNeB1I8EjebJbN+ki+ZtkhJQvFmN8tBqWxBAACJyFO
+ 68Tu/af7g3TQrucK9hdT6OXkZev1U3DZw8E7Tfn9aJoPf0wVTGW4z26b2R/kDUyOfkLq
+ diqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726240466; x=1726845266;
+ d=1e100.net; s=20230601; t=1726240468; x=1726845268;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Oz56FWVaoXtsjD0nTboxI30R6YmbWaqPQt/nyHE7yKc=;
- b=Fu6DpxLnj+aiTdzIjJy0GtKMAtNmcoTtkYkGWOS1S+NDdGEKBtWnU7+b2FIFwwXK9m
- W9bnyLoq+ggnmZUObvXptQZ+tnjN2MG/aCoJabfGS63iVUSeMUDsmXrKkQ+ogWDy4HSL
- crjSiPUgX24ErIECBOhHmvBZKCsIynmPoyCWRnH7BpBxY9Kfk50Sqc0Id7NXUKmaDfsw
- GL/IGeIQZZPDIcWhJmhM0VLzCV8to4K+SS33Mx3ilI5VOn7v3UhzZd01+wf5F14hSxQx
- 1fn1sHjPZMf27lG6H0mpIDJgBfoA6VRgFsYrb7ChMw5XVGAOzD0q1pfwlDdQ3S1GwYG1
- rBiQ==
-X-Gm-Message-State: AOJu0YwHRaxeAA564mCLC0pdglUiridjB1SPpm5pnVoF5TQe5imyvmJC
- Q5mgnE5SaPCT9fxvcp4Z7WmJ93xrNwXB0P9qzD10MscrLG7wo43Wz2remVCOzzZ8iOUPTwDHEua
- K
-X-Google-Smtp-Source: AGHT+IGs9qDHqW2o+DRJBFB/gEZPj1X2dgP5MNLyeJS5VxHy5Rezrcmc80c34ciZD2B6jnUJChWLfw==
-X-Received: by 2002:a05:600c:4709:b0:426:647b:1bfc with SMTP id
- 5b1f17b1804b1-42cdb59148emr55845905e9.30.1726240466242; 
- Fri, 13 Sep 2024 08:14:26 -0700 (PDT)
+ bh=wxR0xCz35b/wqsAjmukGKdOmyR9BCiHQy2UElwsB5Yo=;
+ b=G+OCWSrcIaKo02tgKRf3lxORnVWzZsbBDV+fqMtfTkaz8YKUMl3fuHl0OsXajIGV3P
+ +NZxILvlROhuzg/uBhFW9xZuAACPfKm9vBM75umOAn7mcoHnyDL/6v2IgUKfaCmaiRTi
+ GzdE2hfK0qcxVN1R0cOAc/lQoKNX2OxS1x/im6FAdfwvGVu8p/hWK+jPa8BczVrlOPUZ
+ 4nLa3Aqubc1U9I2q+s68AUUIm6EfZh64ivScW3xAE9mePQmzPMuJWENc7TnfCfLFQXKc
+ ndBXyrOvgzF+y/wyMRc1YFqa5AbwJ2A8KRSmMvc3uetc9cwVN8epeLP0ibUueQ92xo0h
+ mR0g==
+X-Gm-Message-State: AOJu0YxPs4lrOO32reaHbTuKqWp+xdpxOM8rOUPwOJNKVQbnR7ouLUga
+ P7IlVJrlN+GUNJAHpxFx3EZhZOy14rKYcwsdQiIaLeJzpdeCL1ysu5K9y53ml1zkHVEUE5WQ7v1
+ +
+X-Google-Smtp-Source: AGHT+IFcCsJqUotusT7sXKVfK25NIESJHZnYqlAE6/NdOCAbpPcSUVjg3fLzFmOTZCInlU/IhnBRWQ==
+X-Received: by 2002:a05:600c:1e1a:b0:426:5fbe:bf75 with SMTP id
+ 5b1f17b1804b1-42cdb567190mr52002775e9.23.1726240467579; 
+ Fri, 13 Sep 2024 08:14:27 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42d9b16bfbfsm29152325e9.22.2024.09.13.08.14.25
+ 5b1f17b1804b1-42d9b16bfbfsm29152325e9.22.2024.09.13.08.14.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Sep 2024 08:14:26 -0700 (PDT)
+ Fri, 13 Sep 2024 08:14:27 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 24/27] MAINTAINERS: Remove Vikram Garhwal as maintainer
-Date: Fri, 13 Sep 2024 16:14:08 +0100
-Message-Id: <20240913151411.2167922-25-peter.maydell@linaro.org>
+Subject: [PULL 27/27] hw/intc/arm_gic: fix spurious level triggered interrupts
+Date: Fri, 13 Sep 2024 16:14:11 +0100
+Message-Id: <20240913151411.2167922-28-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240913151411.2167922-1-peter.maydell@linaro.org>
 References: <20240913151411.2167922-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,39 +94,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Francisco Iglesias <francisco.iglesias@amd.com>
+From: Jan Klötzke <jan.kloetzke@kernkonzept.com>
 
-Vikram's email is bouncing, pause his maintainership until a new email is
-provided.
+On GICv2 and later, level triggered interrupts are pending when either
+the interrupt line is asserted or the interrupt was made pending by a
+GICD_ISPENDRn write. Making a level triggered interrupt pending by
+software persists until either the interrupt is acknowledged or cleared
+by writing GICD_ICPENDRn. As long as the interrupt line is asserted,
+the interrupt is pending in any case.
 
-Signed-off-by: Francisco Iglesias <francisco.iglesias@amd.com>
-Message-id: 20240906181645.40359-2-francisco.iglesias@amd.com
+This logic is transparently implemented in gic_test_pending() for
+GICv1 and GICv2.  The function combines the "pending" irq_state flag
+(used for edge triggered interrupts and software requests) and the
+line status (tracked in the "level" field).  However, we also
+incorrectly set the pending flag on a guest write to GICD_ISENABLERn
+if the line of a level triggered interrupt was asserted.  This keeps
+the interrupt pending even if the line is de-asserted after some
+time.
+
+This incorrect logic is a leftover of the initial 11MPCore GIC
+implementation.  That handles things slightly differently to the
+architected GICv1 and GICv2.  The 11MPCore TRM does not give a lot of
+detail on the corner cases of its GIC's behaviour, and historically
+we have not wanted to investigate exactly what it does in reality, so
+QEMU's GIC model takes the approach of "retain our existing behaviour
+for 11MPCore, and implement the architectural standard for later GIC
+revisions".
+
+On that basis, commit 8d999995e45c10 in 2013 is where we added the
+"level-triggered interrupt with the line asserted" handling to
+gic_test_pending(), and we deliberately kept the old behaviour of
+gic_test_pending() for REV_11MPCORE.  That commit should have added
+the "only if 11MPCore" condition to the setting of the pending bit on
+writes to GICD_ISENABLERn, but forgot it.
+
+Add the missing "if REV_11MPCORE" condition, so that our behaviour
+on GICv1 and GICv2 matches the GIC architecture requirements.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 8d999995e45c10 ("arm_gic: Fix GIC pending behavior")
+Signed-off-by: Jan Klötzke <jan.kloetzke@kernkonzept.com>
+Message-id: 20240911114826.3558302-1-jan.kloetzke@kernkonzept.com
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: expanded comment a little and converted to coding-style form;
+ expanded commit message with the historical backstory]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- MAINTAINERS | 2 --
- 1 file changed, 2 deletions(-)
+ hw/intc/arm_gic.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index c59f7b25382..8be4f524779 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1951,7 +1951,6 @@ F: tests/qtest/intel-hda-test.c
- F: tests/qtest/fuzz-sb16-test.c
- 
- Xilinx CAN
--M: Vikram Garhwal <vikram.garhwal@amd.com>
- M: Francisco Iglesias <francisco.iglesias@amd.com>
- S: Maintained
- F: hw/net/can/xlnx-*
-@@ -2708,7 +2707,6 @@ F: include/hw/rx/
- 
- CAN bus subsystem and hardware
- M: Pavel Pisa <pisa@cmp.felk.cvut.cz>
--M: Vikram Garhwal <fnu.vikram@xilinx.com>
- S: Maintained
- W: https://canbus.pages.fel.cvut.cz/
- F: net/can/*
+diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
+index 806832439b4..2a48f0da2fe 100644
+--- a/hw/intc/arm_gic.c
++++ b/hw/intc/arm_gic.c
+@@ -1263,9 +1263,14 @@ static void gic_dist_writeb(void *opaque, hwaddr offset,
+                     trace_gic_enable_irq(irq + i);
+                 }
+                 GIC_DIST_SET_ENABLED(irq + i, cm);
+-                /* If a raised level triggered IRQ enabled then mark
+-                   is as pending.  */
+-                if (GIC_DIST_TEST_LEVEL(irq + i, mask)
++                /*
++                 * If a raised level triggered IRQ enabled then mark
++                 * it as pending on 11MPCore. For other GIC revisions we
++                 * handle the "level triggered and line asserted" check
++                 * at the other end in gic_test_pending().
++                 */
++                if (s->revision == REV_11MPCORE
++                        && GIC_DIST_TEST_LEVEL(irq + i, mask)
+                         && !GIC_DIST_TEST_EDGE_TRIGGER(irq + i)) {
+                     DPRINTF("Set %d pending mask %x\n", irq + i, mask);
+                     GIC_DIST_SET_PENDING(irq + i, mask);
 -- 
 2.34.1
 
