@@ -4,142 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 816BDC02190
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Sep 2024 11:27:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD6B8C02191
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Sep 2024 11:37:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1spQv8-0002lR-KS; Sat, 14 Sep 2024 07:26:30 -0400
+	id 1spR4u-0002AC-Ah; Sat, 14 Sep 2024 07:36:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajay.opensrc@micron.com>)
- id 1spQv7-0002jh-Gl
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 07:26:29 -0400
-Received: from mail-bn8nam04on2064.outbound.protection.outlook.com
- ([40.107.100.64] helo=NAM04-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1spR4s-00028b-Qd; Sat, 14 Sep 2024 07:36:34 -0400
+Received: from mail-sy4aus01olkn20813.outbound.protection.outlook.com
+ ([2a01:111:f403:2819::813]
+ helo=AUS01-SY4-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajay.opensrc@micron.com>)
- id 1spQv5-0004gd-5x
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 07:26:29 -0400
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1spR4r-0005gF-4E; Sat, 14 Sep 2024 07:36:34 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EKgOOgcwDGfA6dS/FM53sFdILat+oHE65793Uvfy55lIwB+EEIWF1kdD8XkXmd0oVNEPXkw/NuD8ABXJcQz5FRs9nY1Or1bBK05hLx9f6W+b262PGSAnuAqqRz/H8iFz/U2n+hDnyE4Fh8/ZDc0xwdfOTH0qoNP5sQNgm+EdV6J9FXnSF8dteyTQgws9aD6/mDVrzaDVLy15+Jh9WSCQAjUkUTofFkZ2rMG/l9WSme1JRGHTjFHRwPJFKf9JHPJWM1aIfThzKFYYw8nvnb3InmArzY1yG8SmXYeD+ABH0Fk2Y2xJ9P0IsF668hWUBhjqqMOzQeQe6wA1TjY0oSC0Dw==
+ b=itUxlNpCU72UJOEABAkImr4Gvq9D3D5ZG3RTErHjiU/IRqiuG3VwmvIWCdU17DEoWI+bV2Djr83gmGi40krW0CBsaX9z65VcwgTKqNCJ7+aPpv1vdzp512Kv+2CLJHBpWsRIKAUbeeM4+ci6+CxSCXGKWR+TEWeLh/a4lxOyWDki2D3DSRtnlkQ7I1FCxsqJ4Y9hrBdryRdmTIHIqS2D1gIDU7VqW8JaMx8mRXMuj9rtA+rhvJfatvISpQTUeYxnn45ZmYOp2lq9aYEjN6mqJbgGOxJ0gKlyvRWpVWwBO6m6WlDUOs1EDxwhtOQOT0NEGEku0u9vIaz/VQHX9r9rZg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qWurBCnkVDOKxwoN4VxNG9mRtJhZ9tkueleRIm1x0uM=;
- b=zTYNLsvsiEExHJCBx67GUfkNh1JlvKK5M5dg9iIa5FcqYPU2FQ/WfF/dPHlYEcd0XbW19b1nrg9JgfujYMN6kaaNAUrYMfl8j8Zlc0uy6PXzKmWukRe4zcRyPkAGA4qA/ZxJOMX2MS0U1O6Q6vG/kMoLfSrAmxTAYW/+cQfzAh1hA3rObMDYj7YTWOuih3/EE+xuTRn57irY3utG+WRcd442a7FQYz5+F/XLwjSlQyhqXYpbe0Szq31gn6SamHEeKW9Tfu9QqyUStRdLKVSQRB7NFyJIMH8Em5sFaZK8RSVgqKdS10oqC+zGTIwmvyJZXy+WXUJ3dbgm49S287sfvw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 137.201.242.130) smtp.rcpttodomain=redhat.com smtp.mailfrom=micron.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=micron.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=micron.com;
- s=selector2;
+ bh=8HWkc9NKCkmUjprmgEeSAxd+QEjohSYZtT2oI1bs3NQ=;
+ b=Aw6z9NbuqJyns4YzK4Lg3jaZokpbKs7w/b3vikzYU9r8AbASwy+G9k3Lhnj6GEHpeHYavClLMuPsJDjPniF7d5NJTZG3Oc3K7Kcv9eWlWBgPO2NFXIbhRqaaWQs0b99S00fsvQcTo8MBQx6UCSmjA3RSdqclLo820Nct2PVSj5am8Qnz5oGQzSp52ZbtNy5Rh6bfF2XA8zivONKnfOYZ1pO/dm4ePr2pAu9Do7dstYvqHtVLFJRf2lHNb+InUbbP/e9a97ZmRso6W0gMaQK0eCCxD3GE8DtT1UL6q948MCRCrSHQ23E3cs5y0aEPMQVtAX1sj2OCLozBF8u/JwKZ6Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qWurBCnkVDOKxwoN4VxNG9mRtJhZ9tkueleRIm1x0uM=;
- b=cPfLt7HU7/TZNi9kBINhlkLXLFG0+pyii6wMBTVC20Lz2G09gFRvjVPgVNbPbluVKsKNE719xqrtnwI2pgtFbkU8opkktkR8dUN9GSo7afr/cAYGav64v90L+5z0SkuRT+Tr+fMTHMyaIR4kpOIL+9QUOiUi3/e5fU5KGNH3rq7wXNbUVP0QmiUIHIxC0dNxwFlxItAeejxqJ5d7ONbvd25rVSUVi+AchxUCZeMlJg8LsjJkNSNEsFMLq/cQ9XT9sazlchdeIY89Vlhm4S//h1nKbGaYsN/XL45kWIjEOZzXOmatT+Ng11WEqnq587XVuc77EPjljAS1xc5CikN9dQ==
-Received: from BN9PR03CA0504.namprd03.prod.outlook.com (2603:10b6:408:130::29)
- by DS1PR08MB9812.namprd08.prod.outlook.com (2603:10b6:8:206::7) with
+ bh=8HWkc9NKCkmUjprmgEeSAxd+QEjohSYZtT2oI1bs3NQ=;
+ b=KCsaYdsY+3ZPOjdSuCRrHihhaVHdNSjpIDYs3DKSVyv5FUPneod0ptPgAm+WFenI28uZCAq1wOK9umTJvbd17xgCP0Mjf0oZFu8Aasb+tXb1ZIUkHOImkrBkkQghqTjlyrHfCymYMMien0aPrj9J3jpOm2oOAG5BzK6mzoy5rEw5Vv3XFTeq9wwWF3XYWBuvoFWmnvQCZVmHyUsGJtqk5y7jdib/WzI+93JwqFZ7O1UfENkEnQvXIBPq0IOJcieqg6xLBdxhSWP452sjHnD6J8LxzT8O7RHIi8jNvmSBSbnj3xZrcZ/vLEEbP8K9DXMOzBayQunbRQ8xO+9+XLq8jw==
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
+ by SY8P300MB0202.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:267::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7962.18; Sat, 14 Sep
- 2024 11:21:19 +0000
-Received: from BN2PEPF00004FC0.namprd04.prod.outlook.com
- (2603:10b6:408:130:cafe::6b) by BN9PR03CA0504.outlook.office365.com
- (2603:10b6:408:130::29) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7939.24 via Frontend
- Transport; Sat, 14 Sep 2024 11:21:19 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 137.201.242.130)
- smtp.mailfrom=micron.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=micron.com;
-Received-SPF: Pass (protection.outlook.com: domain of micron.com designates
- 137.201.242.130 as permitted sender) receiver=protection.outlook.com;
- client-ip=137.201.242.130; helo=mail.micron.com; pr=C
-Received: from mail.micron.com (137.201.242.130) by
- BN2PEPF00004FC0.mail.protection.outlook.com (10.167.243.186) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7918.13 via Frontend Transport; Sat, 14 Sep 2024 11:21:19 +0000
-Received: from BOW36EX19B.micron.com (137.201.85.154) by BOW17EX19B.micron.com
- (137.201.21.219) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Sat, 14 Sep
- 2024 05:21:16 -0600
-Received: from EMR-025.micron.com (10.101.228.116) by
- RestrictedRelayBOW36EX19B.micron.com (137.201.85.154) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11 via Frontend Transport; Sat, 14 Sep 2024 05:21:15 -0600
-From: <ajay.opensrc@micron.com>
-To: <mst@redhat.com>
-CC: <Jonathan.Cameron@huawei.com>, <john@jagalactic.com>,
- <emirakhur@micron.com>, <ajayjoshi@micron.com>, <sthanneeru@micron.com>,
- <Ravis.OpenSrc@micron.com>, <arramesh@micron.com>, <dave@stgolabs.net>,
- <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, Ajay Joshi
- <ajay.opensrc@micron.com>
-Subject: [PATCH v1] hw/cxl: Fix background completion percentage calculation
-Date: Sat, 14 Sep 2024 16:50:21 +0530
-Message-ID: <20240914112021.2730383-1-ajay.opensrc@micron.com>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7962.21; Sat, 14 Sep
+ 2024 11:36:24 +0000
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd%2]) with mapi id 15.20.7962.021; Sat, 14 Sep 2024
+ 11:36:24 +0000
+From: Junjie Mao <junjie.mao@hotmail.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Thomas Huth <thuth@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Gustavo Romero
+ <gustavo.romero@linaro.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Junjie Mao <junjie.mao@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>,  John Snow <jsnow@redhat.com>,  Cleber
+ Rosa <crosa@redhat.com>,  Beraldo Leal <bleal@redhat.com>,  Wainer dos
+ Santos Moschetta <wainersm@redhat.com>,  qemu-arm@nongnu.org
+Subject: Re: [PATCH v10 9/9] rust: add PL011 device model
+References: <20240910-rust-pl011-v10-0-85a89ee33c40@linaro.org>
+ <20240910-rust-pl011-v10-9-85a89ee33c40@linaro.org>
+ <SY0P300MB102661760C7F4AC73EDBB70F95662@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+Date: Sat, 14 Sep 2024 19:36:17 +0800
+In-Reply-To: <SY0P300MB102661760C7F4AC73EDBB70F95662@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+ (Junjie Mao's message of "Sat, 14 Sep 2024 16:03:40 +0800")
+Message-ID: <SY0P300MB1026206D60F2AEC8788BDA1D95662@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 Content-Type: text/plain
-X-MT-Whitelisted: matched
-X-EOPAttributedMessage: 0
+X-ClientProxiedBy: SI2PR01CA0029.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:192::8) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ (2603:10c6:10:282::22)
+X-Microsoft-Original-Message-ID: <87ldzuii1a.fsf@hotmail.com>
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF00004FC0:EE_|DS1PR08MB9812:EE_
-X-MS-Office365-Filtering-Correlation-Id: 51af6d05-bf57-4298-8e17-08dcd4af5b21
-X-EXT-ByPass: 1
-X-MT-RULE-Whitelisted: Triggered
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
+X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|SY8P300MB0202:EE_
+X-MS-Office365-Filtering-Correlation-Id: f317029b-304b-4036-bb24-08dcd4b1766a
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|1800799024|36860700013|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?6xks/WYvVZCT4Pn1nEhY7E6naINe3UDPjMA/YBtMZf7PnC/AqSoNAppSsd1p?=
- =?us-ascii?Q?Xwwacj1UoRc8tFgJ0iBMUy5NtXEL3PBsEzTD0lTkI63vdwKLaL4257eEOo1H?=
- =?us-ascii?Q?UbbeROlQk/XRKedvldrmpMk4gkoPWx8nfoE87gdjnkhG+j6MWz5eNiDVoLyH?=
- =?us-ascii?Q?kds1cNrCbCSbWGzpRN5D47IwYwjbsgDPtXZSqz40jxuxmm4QCHUghX/hLB/E?=
- =?us-ascii?Q?7zFWMBRzbgreHOpde2DnvEsoOGdJpUST1HEtnuvQ1vZhCnsi+ZgXehExTirL?=
- =?us-ascii?Q?Ij5fMY2XMoXPt1Au+SZ2ueFq4UPg9WlSxdVfPw4Ap8TsVUwuSn+pWRrQKCwT?=
- =?us-ascii?Q?U3hoQtwZzf/5imdvlLsy/6zy0w2IW7uAOJO3gr1l0w/tHTf2zwebJuuMMzQP?=
- =?us-ascii?Q?HTH6ruEPfW2yvg51q16FaGT5C2KaJ5oaA/75dlLv5Y4GbUYhjAs3nLHdgGty?=
- =?us-ascii?Q?advRPT1naNM8+h1wVSEUi7NSZj2Y2Fe//dlf2R8zQcnMktTeoWfN8oW7wj9X?=
- =?us-ascii?Q?r3PMSLwufT9A9bUvFUK3uVW9mirxrQTFa/mbEIGVXXRLysypNHgxZyYKazih?=
- =?us-ascii?Q?vFqERa21SWNCIFd7Oe7uFHJ72ZuBajKYcetyzzkBAihZQlExS181LI3zspIm?=
- =?us-ascii?Q?Sycq7ZVFWPV84nE5cv654x2gFIwn5SECLK8JB28QfccTdhnqQiHyKuYY8lr2?=
- =?us-ascii?Q?c+IUXjQ+OThvBqkbzyb+WSHOtJbRHbb/Utc4RjQUZeF6We8IX+i2Z23mGZNU?=
- =?us-ascii?Q?d7W3H0rjjhBY3aa775ySMOTTqDaaRB2jgstF5QMdXUlmC6BevAaJzrp6gbl0?=
- =?us-ascii?Q?vvww1hWTaEmU8c7Q1xbbPc+2Tbd6WtiDCl9el57Y2rv60CzDlD5Srvq37QH9?=
- =?us-ascii?Q?0md3YSMhYl0iA8lvlRJ6rZbUXTgS84PGWM8Fe9EiZWTk4R5mDpXudgbd5pKj?=
- =?us-ascii?Q?O1DX1UXaKcPr9tYQkQI+zV2WGkzfGZPmo8raxBn1dUn2e/Fr5hqBaWLyfrzq?=
- =?us-ascii?Q?C64OPP/NLAMKfoaD4y1We+b/ax/Yuq7HcK/6bNdvBZ6en7Gu5Ze9C6PpFM48?=
- =?us-ascii?Q?Vz1rXBpJWZyLkaBnTP4d0WnUx9EJD2iFDD9a73rEC/I/mO7eXaX50AJG1/cl?=
- =?us-ascii?Q?p8qs/0clj8BvGK3NL1CPXKY33Cxb30it1brOauwBNFlGuYRT4Pk2hU1sjOF1?=
- =?us-ascii?Q?tkzMQrjtkZOkjdgSoaq3Bsxi2Vp1xS5ZFiWPD5TDPURcSI4wdRjFBvw3j12v?=
- =?us-ascii?Q?fO1ea329bu2JG/955M6OWtI65cF6czDEqYby6pXARqsNzWnoJIM16Ix9R+3c?=
- =?us-ascii?Q?A9m/EwWzHTYDBtApTkv1gXjAXjYJLwQbRZ3SihdTqNf5a/ObtfHj6oGMWUKv?=
- =?us-ascii?Q?kNKJ1kA6kSoXw9DhVqG0VYBhR2kem3C0MSc9ga9m4dB2/TMI0gyJzpvvIyOw?=
- =?us-ascii?Q?v3whbAULzmT7z0nbVBs+8hF5bwe0s8gY?=
-X-Forefront-Antispam-Report: CIP:137.201.242.130; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.micron.com; PTR:masquerade.micron.com; CAT:NONE;
- SFS:(13230040)(82310400026)(1800799024)(36860700013)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: micron.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2024 11:21:19.1496 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 51af6d05-bf57-4298-8e17-08dcd4af5b21
-X-MS-Exchange-CrossTenant-Id: f38a5ecd-2813-4862-b11b-ac1d563c806f
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f38a5ecd-2813-4862-b11b-ac1d563c806f; Ip=[137.201.242.130];
- Helo=[mail.micron.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF00004FC0.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS1PR08MB9812
-Received-SPF: pass client-ip=40.107.100.64;
- envelope-from=ajay.opensrc@micron.com;
- helo=NAM04-BN8-obe.outbound.protection.outlook.com
+ ARA:14566002|19110799003|15080799006|7092599003|461199028|5072599009|8060799006|440099028|3412199025;
+X-Microsoft-Antispam-Message-Info: AW7JFsRS3AmwiKg/Uzu54loS+XnbsxE9KcEUbh+JAwbeo2Szg0T5V0iQeAYf4kVMrqGCX2JNO8LeVEi1QUqCeIjiCWCbpjUWxNvjcHaPdaXRtUVYd6FF9qTnrswOAfRBCnDFpHTtObxGbJ3NgPmunb43w+6ve07knfV7pRwoNfhGRxSq+6lgFOUl4ZVSUT/X9Vkm2ZANLrYOVJNJvTLVHWQJRT8YTALDebgxCzl6Ckgedo7UMv85OQjkbYqS4D5j1DtBDyvs/06iP918zW5GPnxeoNTMXzMvEo1MZzt/cTwWXeRYzHAzQwDiZmOWpHIV42rGjwwFs3/Dp07lZSWjqnIHJjWkJKJC3zBSA23HrGxYqceoYQlS6enhPmeUjaNH+q1AB8pF7oQ8nucsQoTJJpvrEDZTxfpfr5oIlyNmectuToarAUS3Cv0vAN/6R6pRWo7XaAMC5Lg1sEnaETof4kTqfx8leJ8J4s7p++sdUS/raUwyJfTUollbLSGE+jIW9Pr0hXUs4w+qjr+0zgRNa0qqkSA6afDJfXWVtMPdAiORKG4wCM7zjn2sFLV7fbdsVDidvm1us2VQZj/ir4OrC9Ma3t/DxmaG4bonROGtze/TngHhoLVfUdSj5v/+2oPRX/DjtopFKm+aU2xAueKXj6LgsrKp6VCHlMnbRnZuIu18NMU185jPYXDVI6qq5GT8AnHfZhiVXTsKSghA5IkWnX8wlL4jj5IsM1w1qkMCGTk=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?aSDqIMQCwgRVbg1Nipo/5Iu19wMFSqxEWHyLLQCOl+NDCsWwt9AHckpfQx/Y?=
+ =?us-ascii?Q?bCFVtsuUg0iJsP46cypD82fGrrfmEUqgo6E6rq/RxtLJy79i/sARd4OlrBP0?=
+ =?us-ascii?Q?RAvl/+03UX1miIRw7BptuA17gX3kQ4cMRvtgj7PP2qykvvmW+qJfA8dQDpQU?=
+ =?us-ascii?Q?Rfn7NugD/d3uQM95W2JkmCp2glcpyqWbAr9DLA2sA8wNvrCGPenhc9LTekGK?=
+ =?us-ascii?Q?X824lDexvsJNPfj50jas5LhKrjd4BNoon9u61hY/egMmMtMsqIsMXnqAb6bN?=
+ =?us-ascii?Q?k1w7BV7P4Ts50i7bpEgGcZCFLGTWC6vRJqLhpwlCBX7oexxqac61dGps2xsb?=
+ =?us-ascii?Q?2se9BOfiX0nuWk0KTByzRj2IrxQ2EA9cdyUxZlYU+SANDvM5w1H66vSZfh+p?=
+ =?us-ascii?Q?uxjcRFBBDi3AwBX8EZ56fPzKHH/mtc88+f8RPq08C6/Z5aU4eYt8HJ3lEccv?=
+ =?us-ascii?Q?2PJchTtQ68GB4l6ASjjm3ZFrmQf1CIzMgxUWc0yN/8K/Iz1rLKy1x5KjU52b?=
+ =?us-ascii?Q?aHdvzNf695SOCoedrR8F35+LEG0H3IPrQ4TrT5oTfIK3aQIC76XY2z95penh?=
+ =?us-ascii?Q?d8a8AgfczwcL33f8SfVkFOKIpZmfpI+oTCXvcPnQInlscPUZYdoZlnhl/y/+?=
+ =?us-ascii?Q?RqpRWbLIDWwEzc6wgYUNBAOKXuvjrFT23fBkBobR6+4XIBYaJziZsVkyVB4K?=
+ =?us-ascii?Q?fwWcokhawZLz+vw1MMM5WKgxqRB7zcsQwvO7HEx489D3w1aAJpg/7GivHY27?=
+ =?us-ascii?Q?0SkWQ19Bksg+mitRhse53e0t01HwR9Do6EOfOvp9AcXqKcMAV6nJ3FW29V7D?=
+ =?us-ascii?Q?AtDKs09ezkCR/uZkCmqNBDF8seTac5Zl+HtX1YieoWRqgaoMgnXKo8lRnuHR?=
+ =?us-ascii?Q?Q6m1/v0frvExI+QVyFu+/RNBtCl0rUyVWkeFA8d5pP9BIOdsBP9KAfQKA6OQ?=
+ =?us-ascii?Q?AB6UynVQR/pZvV2thiwLgHOD36KaMbFX1QhqRK6ELiKd3Om9uIRJlh1mv2d7?=
+ =?us-ascii?Q?mfh1GEPsHNX6XJhZZvT4omPMRIA3R+vXuNLIYG0pq7BubyjnMMfCjRIp+Bg4?=
+ =?us-ascii?Q?qYcJY165ryDtv/mJlJaSQnlKKqNbhHlt6CVs7pRRhfuszglNxF/ajytRkOd1?=
+ =?us-ascii?Q?DLzqIiztO24nOlt22Tm0VY+dois16S96jYQ6ufhVPnarTBWhfPY13Qs0Q337?=
+ =?us-ascii?Q?ro85L945o8ep1K7GdXDpDOgggLY84NOmaQ8sDNYG9ZSWxrSMYJChwmOhO54?=
+ =?us-ascii?Q?=3D?=
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: f317029b-304b-4036-bb24-08dcd4b1766a
+X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2024 11:36:24.2700 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY8P300MB0202
+Received-SPF: pass client-ip=2a01:111:f403:2819::813;
+ envelope-from=junjie.mao@hotmail.com;
+ helo=AUS01-SY4-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,41 +136,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ajay Joshi <ajayjoshi@micron.com>
+Junjie Mao <junjie.mao@hotmail.com> writes:
 
-The current completion percentage calculation
-does not account for the relative time since
-the start of the background activity, this leads
-to showing incorrect start percentage vs what has
-actually been completed.
+> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
+>
+>> This commit adds a re-implementation of hw/char/pl011.c in Rust.
+>>
+>> How to build:
+>>
+>> 1. Configure a QEMU build with:
+>>    --enable-system --target-list=aarch64-softmmu --enable-rust
+>> 2. Launching a VM with qemu-system-aarch64 should use the Rust version
+>>    of the pl011 device
+>>
+>> Co-authored-by: Junjie Mao <junjie.mao@intel.com>
+>> Co-authored-by: Paolo Bonzini <pbonzini@redhat.com>
+>> Signed-off-by: Junjie Mao <junjie.mao@intel.com>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>> ---
+> [snip]
+>> diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+>> new file mode 100644
+>> index 0000000000000000000000000000000000000000..6bd121b83ae831e838b05d83b67c698474b00b4a
+>> --- /dev/null
+>> +++ b/rust/hw/char/pl011/src/device.rs
+>> @@ -0,0 +1,600 @@
+>> +// Copyright 2024, Linaro Limited
+>> +// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>> +// SPDX-License-Identifier: GPL-2.0-or-later
+>> +
+>> +use core::{
+>> +    ffi::{c_int, c_uchar, c_uint, c_void, CStr},
+>> +    ptr::{addr_of, addr_of_mut, NonNull},
+>> +};
+>> +
+>> +use qemu_api::{
+>> +    bindings::{self, *},
+>> +    definitions::ObjectImpl,
+>> +};
+>> +
+>> +use crate::{
+>> +    memory_ops::PL011_OPS,
+>> +    registers::{self, Interrupt},
+>> +    RegisterOffset,
+>> +};
+>> +
+>> +static PL011_ID_ARM: [c_uchar; 8] = [0x11, 0x10, 0x14, 0x00, 0x0d, 0xf0, 0x05, 0xb1];
+>> +
+>> +const DATA_BREAK: u32 = 1 << 10;
+>> +
+>> +/// QEMU sourced constant.
+>> +pub const PL011_FIFO_DEPTH: usize = 16_usize;
+>> +
+>> +#[repr(C)]
+>> +#[derive(Debug, qemu_api_macros::Object)]
+>> +/// PL011 Device Model in QEMU
+>> +pub struct PL011State {
+>> +    pub parent_obj: SysBusDevice,
+>> +    pub iomem: MemoryRegion,
+>> +    #[doc(alias = "fr")]
+>> +    pub flags: registers::Flags,
+>> +    #[doc(alias = "lcr")]
+>> +    pub line_control: registers::LineControl,
+>> +    #[doc(alias = "rsr")]
+>> +    pub receive_status_error_clear: registers::ReceiveStatusErrorClear,
+>> +    #[doc(alias = "cr")]
+>> +    pub control: registers::Control,
+>> +    pub dmacr: u32,
+>> +    pub int_enabled: u32,
+>> +    pub int_level: u32,
+>> +    pub read_fifo: [u32; PL011_FIFO_DEPTH],
+>> +    pub ilpr: u32,
+>> +    pub ibrd: u32,
+>> +    pub fbrd: u32,
+>> +    pub ifl: u32,
+>
+> Some of the fields can be private to the implementation of PL011State.
+>
 
-This patch calculates the percentage based on the actual
-elapsed time since the start of the operation.
+Forgot to mention, all those are minor comments that came to my mind
+when I studied your code. Feel free to defer them to future
+series. Thanks.
 
-Fixes: 221d2cfbdb ("hw/cxl/mbox: Add support for background operations")
-
-Signed-off-by: Ajay Joshi <ajay.opensrc@micron.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- hw/cxl/cxl-mailbox-utils.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index c2ed251bb3..873d60c069 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -2708,7 +2708,8 @@ static void bg_timercb(void *opaque)
-         }
-     } else {
-         /* estimate only */
--        cci->bg.complete_pct = 100 * now / total_time;
-+        cci->bg.complete_pct =
-+            100 * (now - cci->bg.starttime) / cci->bg.runtime;
-         timer_mod(cci->bg.timer, now + CXL_MBOX_BG_UPDATE_FREQ);
-     }
- 
 -- 
-2.34.1
-
+Best Regards
+Junjie Mao
 
