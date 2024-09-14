@@ -4,122 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD6B8C02191
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Sep 2024 11:37:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6638EC02192
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Sep 2024 12:10:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1spR4u-0002AC-Ah; Sat, 14 Sep 2024 07:36:36 -0400
+	id 1spRbS-00054n-TV; Sat, 14 Sep 2024 08:10:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1spR4s-00028b-Qd; Sat, 14 Sep 2024 07:36:34 -0400
-Received: from mail-sy4aus01olkn20813.outbound.protection.outlook.com
- ([2a01:111:f403:2819::813]
- helo=AUS01-SY4-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1spRbP-0004v6-NT
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 08:10:11 -0400
+Received: from fhigh4-smtp.messagingengine.com ([103.168.172.155])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1spR4r-0005gF-4E; Sat, 14 Sep 2024 07:36:34 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=itUxlNpCU72UJOEABAkImr4Gvq9D3D5ZG3RTErHjiU/IRqiuG3VwmvIWCdU17DEoWI+bV2Djr83gmGi40krW0CBsaX9z65VcwgTKqNCJ7+aPpv1vdzp512Kv+2CLJHBpWsRIKAUbeeM4+ci6+CxSCXGKWR+TEWeLh/a4lxOyWDki2D3DSRtnlkQ7I1FCxsqJ4Y9hrBdryRdmTIHIqS2D1gIDU7VqW8JaMx8mRXMuj9rtA+rhvJfatvISpQTUeYxnn45ZmYOp2lq9aYEjN6mqJbgGOxJ0gKlyvRWpVWwBO6m6WlDUOs1EDxwhtOQOT0NEGEku0u9vIaz/VQHX9r9rZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8HWkc9NKCkmUjprmgEeSAxd+QEjohSYZtT2oI1bs3NQ=;
- b=Aw6z9NbuqJyns4YzK4Lg3jaZokpbKs7w/b3vikzYU9r8AbASwy+G9k3Lhnj6GEHpeHYavClLMuPsJDjPniF7d5NJTZG3Oc3K7Kcv9eWlWBgPO2NFXIbhRqaaWQs0b99S00fsvQcTo8MBQx6UCSmjA3RSdqclLo820Nct2PVSj5am8Qnz5oGQzSp52ZbtNy5Rh6bfF2XA8zivONKnfOYZ1pO/dm4ePr2pAu9Do7dstYvqHtVLFJRf2lHNb+InUbbP/e9a97ZmRso6W0gMaQK0eCCxD3GE8DtT1UL6q948MCRCrSHQ23E3cs5y0aEPMQVtAX1sj2OCLozBF8u/JwKZ6Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8HWkc9NKCkmUjprmgEeSAxd+QEjohSYZtT2oI1bs3NQ=;
- b=KCsaYdsY+3ZPOjdSuCRrHihhaVHdNSjpIDYs3DKSVyv5FUPneod0ptPgAm+WFenI28uZCAq1wOK9umTJvbd17xgCP0Mjf0oZFu8Aasb+tXb1ZIUkHOImkrBkkQghqTjlyrHfCymYMMien0aPrj9J3jpOm2oOAG5BzK6mzoy5rEw5Vv3XFTeq9wwWF3XYWBuvoFWmnvQCZVmHyUsGJtqk5y7jdib/WzI+93JwqFZ7O1UfENkEnQvXIBPq0IOJcieqg6xLBdxhSWP452sjHnD6J8LxzT8O7RHIi8jNvmSBSbnj3xZrcZ/vLEEbP8K9DXMOzBayQunbRQ8xO+9+XLq8jw==
-Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
- by SY8P300MB0202.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:267::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7962.21; Sat, 14 Sep
- 2024 11:36:24 +0000
-Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
- ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
- ([fe80::aea3:2365:f9e8:5bd%2]) with mapi id 15.20.7962.021; Sat, 14 Sep 2024
- 11:36:24 +0000
-From: Junjie Mao <junjie.mao@hotmail.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?=
- Lureau <marcandre.lureau@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Thomas Huth <thuth@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  Richard Henderson
- <richard.henderson@linaro.org>,  Gustavo Romero
- <gustavo.romero@linaro.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Peter
- Maydell <peter.maydell@linaro.org>,  Junjie Mao <junjie.mao@intel.com>,
- Zhao Liu <zhao1.liu@intel.com>,  John Snow <jsnow@redhat.com>,  Cleber
- Rosa <crosa@redhat.com>,  Beraldo Leal <bleal@redhat.com>,  Wainer dos
- Santos Moschetta <wainersm@redhat.com>,  qemu-arm@nongnu.org
-Subject: Re: [PATCH v10 9/9] rust: add PL011 device model
-References: <20240910-rust-pl011-v10-0-85a89ee33c40@linaro.org>
- <20240910-rust-pl011-v10-9-85a89ee33c40@linaro.org>
- <SY0P300MB102661760C7F4AC73EDBB70F95662@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-Date: Sat, 14 Sep 2024 19:36:17 +0800
-In-Reply-To: <SY0P300MB102661760C7F4AC73EDBB70F95662@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
- (Junjie Mao's message of "Sat, 14 Sep 2024 16:03:40 +0800")
-Message-ID: <SY0P300MB1026206D60F2AEC8788BDA1D95662@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-Content-Type: text/plain
-X-ClientProxiedBy: SI2PR01CA0029.apcprd01.prod.exchangelabs.com
- (2603:1096:4:192::8) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
- (2603:10c6:10:282::22)
-X-Microsoft-Original-Message-ID: <87ldzuii1a.fsf@hotmail.com>
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1spRbM-000175-V3
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 08:10:11 -0400
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal
+ [10.202.2.48])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 24AC1114030B;
+ Sat, 14 Sep 2024 08:10:07 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-08.internal (MEProxy); Sat, 14 Sep 2024 08:10:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1726315807;
+ x=1726402207; bh=OAtfobS7ue1MGtycMBRMt8ae7AQkM+8PzKI/3HFaepQ=; b=
+ yrEjN5C1Sfjlsnu84vOGT6XNfZAj/uECy5m6XsyydhUgVAS+vujlfAxOHQ7V3l2I
+ 2DAUUhRRgTzhzoOdgtCdj+lIvj9ZNmxspdLihjARkMkDDJpVu7HV2KjesDvjBDxb
+ Y1BL1ko6dIfg2wWVJQZvAaxfCa+Wt6YVwdEAVxA+2k2W57VZ8tXfYwIAx2Z3kjtA
+ UZJT+hhlpSnFy1AhRAjuQbQVLixkOd5l1bMqUmT9nDN/2YcpQeM3KL+SNAYptozh
+ S8FQgwldBThWBwF4n+zOifFXpYmHPN1/FtDGsnG1exQoTAxeiC64j1MB/EsIS6Hi
+ ZC+1cNDcuZWbhzUIudva0w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1726315807; x=
+ 1726402207; bh=OAtfobS7ue1MGtycMBRMt8ae7AQkM+8PzKI/3HFaepQ=; b=f
+ oGjloH4VncvGJjwXYX6cQsjnaYY4WAPj4OGwFgON7umSWINUsBmjQ6dORxEnVZK2
+ pZy7/M5hG4u/vmnINW2k/BSZ9ad01q0Py+g15qRElQ72HqNJT9LLJcBvAs8galeC
+ qdt9LDsK35S/n3H/R0KcOTX1T+O5PbHQVT4lJlmPOSRt6fzhgN79WFkDB+DXL1R9
+ ND4pOTHTHx32scuRop66MYHfRMdFqRmpJEwvrCk7Ev27M1tLRDSr3Vif8qZXdKCN
+ 9pGGO38vMOyQaIoBbugXXyrmWdwBjeZZCu2UES7C1JRof6qtRuBNNEgiOOuR4rO+
+ l7rELuQLUdWkyWx2BI5NA==
+X-ME-Sender: <xms:Hn3lZkoCblbrGcEFEVhYz_7E2pmJgIEYs-f7rCpc84uNhpVhnVWHZA>
+ <xme:Hn3lZqqREzMkVhXCpzmF2JUDgKsf9rBeebriT8_jrIPDZEEW-X_OXG-XfSzQ4rauW
+ zI_i5JrPvklSfvS_hw>
+X-ME-Received: <xmr:Hn3lZpMZTACulY3I1HOjZzW4GMjZ0PB9unLl9CHl81p1nFpgoJBDCsie3GZsVQr4FmI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudektddggeelucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+ rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+ htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
+ necuhfhrohhmpeflihgrgihunhcujggrnhhguceojhhirgiguhhnrdihrghnghesfhhlhi
+ hgohgrthdrtghomheqnecuggftrfgrthhtvghrnhepvdekiefhfeevkeeuveetfeelffek
+ gedugefhtdduudeghfeuveegffegudekjeelnecuvehluhhsthgvrhfuihiivgeptdenuc
+ frrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdr
+ tghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+ epqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehjihgrgihu
+ nhdrhigrnhhgsehflhihghhorghtrdgtohhmpdhrtghpthhtohepghgrohhsohhngheslh
+ hoohhnghhsohhnrdgtnh
+X-ME-Proxy: <xmx:Hn3lZr5hyNF05GjW6WQc-uEqD6hX01hKVJfx1G7gUVDOfqkHGStZgA>
+ <xmx:H33lZj4WjnV26ZuB0YtUyxqKVrNa0SCT59qHhvdfAoJw852_YYdSQw>
+ <xmx:H33lZrjIiXvBDwJR_KcqstFvpuGcNjdCUuHPgQF0uOv8I9jp3p0WNA>
+ <xmx:H33lZt5XPXBuA6jsVZ0711nvDddMs7Bwh7fKj7gVsJCcRp-5SpjKBg>
+ <xmx:H33lZlmNrbDuC1mRAKeYXZn4Ad4ShPxc67Wesss-L8uv68FUe0132WQ0>
+Feedback-ID: ifd894703:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 14 Sep 2024 08:10:06 -0400 (EDT)
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Date: Sat, 14 Sep 2024 13:10:03 +0100
+Subject: [PATCH 2/2] hw/loongarch/boot: Rework boot code generation
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|SY8P300MB0202:EE_
-X-MS-Office365-Filtering-Correlation-Id: f317029b-304b-4036-bb24-08dcd4b1766a
-X-Microsoft-Antispam: BCL:0;
- ARA:14566002|19110799003|15080799006|7092599003|461199028|5072599009|8060799006|440099028|3412199025;
-X-Microsoft-Antispam-Message-Info: AW7JFsRS3AmwiKg/Uzu54loS+XnbsxE9KcEUbh+JAwbeo2Szg0T5V0iQeAYf4kVMrqGCX2JNO8LeVEi1QUqCeIjiCWCbpjUWxNvjcHaPdaXRtUVYd6FF9qTnrswOAfRBCnDFpHTtObxGbJ3NgPmunb43w+6ve07knfV7pRwoNfhGRxSq+6lgFOUl4ZVSUT/X9Vkm2ZANLrYOVJNJvTLVHWQJRT8YTALDebgxCzl6Ckgedo7UMv85OQjkbYqS4D5j1DtBDyvs/06iP918zW5GPnxeoNTMXzMvEo1MZzt/cTwWXeRYzHAzQwDiZmOWpHIV42rGjwwFs3/Dp07lZSWjqnIHJjWkJKJC3zBSA23HrGxYqceoYQlS6enhPmeUjaNH+q1AB8pF7oQ8nucsQoTJJpvrEDZTxfpfr5oIlyNmectuToarAUS3Cv0vAN/6R6pRWo7XaAMC5Lg1sEnaETof4kTqfx8leJ8J4s7p++sdUS/raUwyJfTUollbLSGE+jIW9Pr0hXUs4w+qjr+0zgRNa0qqkSA6afDJfXWVtMPdAiORKG4wCM7zjn2sFLV7fbdsVDidvm1us2VQZj/ir4OrC9Ma3t/DxmaG4bonROGtze/TngHhoLVfUdSj5v/+2oPRX/DjtopFKm+aU2xAueKXj6LgsrKp6VCHlMnbRnZuIu18NMU185jPYXDVI6qq5GT8AnHfZhiVXTsKSghA5IkWnX8wlL4jj5IsM1w1qkMCGTk=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?aSDqIMQCwgRVbg1Nipo/5Iu19wMFSqxEWHyLLQCOl+NDCsWwt9AHckpfQx/Y?=
- =?us-ascii?Q?bCFVtsuUg0iJsP46cypD82fGrrfmEUqgo6E6rq/RxtLJy79i/sARd4OlrBP0?=
- =?us-ascii?Q?RAvl/+03UX1miIRw7BptuA17gX3kQ4cMRvtgj7PP2qykvvmW+qJfA8dQDpQU?=
- =?us-ascii?Q?Rfn7NugD/d3uQM95W2JkmCp2glcpyqWbAr9DLA2sA8wNvrCGPenhc9LTekGK?=
- =?us-ascii?Q?X824lDexvsJNPfj50jas5LhKrjd4BNoon9u61hY/egMmMtMsqIsMXnqAb6bN?=
- =?us-ascii?Q?k1w7BV7P4Ts50i7bpEgGcZCFLGTWC6vRJqLhpwlCBX7oexxqac61dGps2xsb?=
- =?us-ascii?Q?2se9BOfiX0nuWk0KTByzRj2IrxQ2EA9cdyUxZlYU+SANDvM5w1H66vSZfh+p?=
- =?us-ascii?Q?uxjcRFBBDi3AwBX8EZ56fPzKHH/mtc88+f8RPq08C6/Z5aU4eYt8HJ3lEccv?=
- =?us-ascii?Q?2PJchTtQ68GB4l6ASjjm3ZFrmQf1CIzMgxUWc0yN/8K/Iz1rLKy1x5KjU52b?=
- =?us-ascii?Q?aHdvzNf695SOCoedrR8F35+LEG0H3IPrQ4TrT5oTfIK3aQIC76XY2z95penh?=
- =?us-ascii?Q?d8a8AgfczwcL33f8SfVkFOKIpZmfpI+oTCXvcPnQInlscPUZYdoZlnhl/y/+?=
- =?us-ascii?Q?RqpRWbLIDWwEzc6wgYUNBAOKXuvjrFT23fBkBobR6+4XIBYaJziZsVkyVB4K?=
- =?us-ascii?Q?fwWcokhawZLz+vw1MMM5WKgxqRB7zcsQwvO7HEx489D3w1aAJpg/7GivHY27?=
- =?us-ascii?Q?0SkWQ19Bksg+mitRhse53e0t01HwR9Do6EOfOvp9AcXqKcMAV6nJ3FW29V7D?=
- =?us-ascii?Q?AtDKs09ezkCR/uZkCmqNBDF8seTac5Zl+HtX1YieoWRqgaoMgnXKo8lRnuHR?=
- =?us-ascii?Q?Q6m1/v0frvExI+QVyFu+/RNBtCl0rUyVWkeFA8d5pP9BIOdsBP9KAfQKA6OQ?=
- =?us-ascii?Q?AB6UynVQR/pZvV2thiwLgHOD36KaMbFX1QhqRK6ELiKd3Om9uIRJlh1mv2d7?=
- =?us-ascii?Q?mfh1GEPsHNX6XJhZZvT4omPMRIA3R+vXuNLIYG0pq7BubyjnMMfCjRIp+Bg4?=
- =?us-ascii?Q?qYcJY165ryDtv/mJlJaSQnlKKqNbhHlt6CVs7pRRhfuszglNxF/ajytRkOd1?=
- =?us-ascii?Q?DLzqIiztO24nOlt22Tm0VY+dois16S96jYQ6ufhVPnarTBWhfPY13Qs0Q337?=
- =?us-ascii?Q?ro85L945o8ep1K7GdXDpDOgggLY84NOmaQ8sDNYG9ZSWxrSMYJChwmOhO54?=
- =?us-ascii?Q?=3D?=
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: f317029b-304b-4036-bb24-08dcd4b1766a
-X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2024 11:36:24.2700 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY8P300MB0202
-Received-SPF: pass client-ip=2a01:111:f403:2819::813;
- envelope-from=junjie.mao@hotmail.com;
- helo=AUS01-SY4-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240914-loongarch-booting-v1-2-1517cae11c10@flygoat.com>
+References: <20240914-loongarch-booting-v1-0-1517cae11c10@flygoat.com>
+In-Reply-To: <20240914-loongarch-booting-v1-0-1517cae11c10@flygoat.com>
+To: qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6742;
+ i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
+ bh=LW0Cx/PLuEFhw+V0yg5fwl1MDczr4LkAV73g4buM2k8=;
+ b=owGbwMvMwCXmXMhTe71c8zDjabUkhrSntTKW6Tfc701WP9Ro6jmxYv4brtJFC9qFOg4l7dtp+
+ E3k4JWkjlIWBjEuBlkxRZYQAaW+DY0XF1x/kPUHZg4rE8gQBi5OAZjI3mKG/wG2d36+2uX731Ll
+ 9IqTt3h8bhy9G33n9aVACdVEn/mB938yMpxUXCBx/KHoFpl0i6cHi3Mde3ZNzHXk0GM8kLA50Fv
+ Nnh8A
+X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
+ fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
+Received-SPF: pass client-ip=103.168.172.155;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fhigh4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -136,90 +120,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Junjie Mao <junjie.mao@hotmail.com> writes:
+Use stl_p to write instructions so that host endian conversion
+will be performed.
 
-> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
->
->> This commit adds a re-implementation of hw/char/pl011.c in Rust.
->>
->> How to build:
->>
->> 1. Configure a QEMU build with:
->>    --enable-system --target-list=aarch64-softmmu --enable-rust
->> 2. Launching a VM with qemu-system-aarch64 should use the Rust version
->>    of the pl011 device
->>
->> Co-authored-by: Junjie Mao <junjie.mao@intel.com>
->> Co-authored-by: Paolo Bonzini <pbonzini@redhat.com>
->> Signed-off-by: Junjie Mao <junjie.mao@intel.com>
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->> ---
-> [snip]
->> diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
->> new file mode 100644
->> index 0000000000000000000000000000000000000000..6bd121b83ae831e838b05d83b67c698474b00b4a
->> --- /dev/null
->> +++ b/rust/hw/char/pl011/src/device.rs
->> @@ -0,0 +1,600 @@
->> +// Copyright 2024, Linaro Limited
->> +// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->> +// SPDX-License-Identifier: GPL-2.0-or-later
->> +
->> +use core::{
->> +    ffi::{c_int, c_uchar, c_uint, c_void, CStr},
->> +    ptr::{addr_of, addr_of_mut, NonNull},
->> +};
->> +
->> +use qemu_api::{
->> +    bindings::{self, *},
->> +    definitions::ObjectImpl,
->> +};
->> +
->> +use crate::{
->> +    memory_ops::PL011_OPS,
->> +    registers::{self, Interrupt},
->> +    RegisterOffset,
->> +};
->> +
->> +static PL011_ID_ARM: [c_uchar; 8] = [0x11, 0x10, 0x14, 0x00, 0x0d, 0xf0, 0x05, 0xb1];
->> +
->> +const DATA_BREAK: u32 = 1 << 10;
->> +
->> +/// QEMU sourced constant.
->> +pub const PL011_FIFO_DEPTH: usize = 16_usize;
->> +
->> +#[repr(C)]
->> +#[derive(Debug, qemu_api_macros::Object)]
->> +/// PL011 Device Model in QEMU
->> +pub struct PL011State {
->> +    pub parent_obj: SysBusDevice,
->> +    pub iomem: MemoryRegion,
->> +    #[doc(alias = "fr")]
->> +    pub flags: registers::Flags,
->> +    #[doc(alias = "lcr")]
->> +    pub line_control: registers::LineControl,
->> +    #[doc(alias = "rsr")]
->> +    pub receive_status_error_clear: registers::ReceiveStatusErrorClear,
->> +    #[doc(alias = "cr")]
->> +    pub control: registers::Control,
->> +    pub dmacr: u32,
->> +    pub int_enabled: u32,
->> +    pub int_level: u32,
->> +    pub read_fifo: [u32; PL011_FIFO_DEPTH],
->> +    pub ilpr: u32,
->> +    pub ibrd: u32,
->> +    pub fbrd: u32,
->> +    pub ifl: u32,
->
-> Some of the fields can be private to the implementation of PL011State.
->
+Replace mailbox read/write on LoongArch32 systems with 32bit IOCSR
+instructions to prevent illegal instructions.
 
-Forgot to mention, all those are minor comments that came to my mind
-when I studied your code. Feel free to defer them to future
-series. Thanks.
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+---
+ hw/loongarch/boot.c | 107 +++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 59 insertions(+), 48 deletions(-)
+
+diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+index 4d01c01594e2..5a1cc5b79b41 100644
+--- a/hw/loongarch/boot.c
++++ b/hw/loongarch/boot.c
+@@ -22,53 +22,64 @@ unsigned memmap_entries;
+ ram_addr_t initrd_offset;
+ uint64_t initrd_size;
+ 
+-static const unsigned int slave_boot_code[] = {
+-                  /* Configure reset ebase.                    */
+-    0x0400302c,   /* csrwr      $t0, LOONGARCH_CSR_EENTRY      */
+-
+-                  /* Disable interrupt.                        */
+-    0x0380100c,   /* ori        $t0, $zero,0x4                 */
+-    0x04000180,   /* csrxchg    $zero, $t0, LOONGARCH_CSR_CRMD */
+-
+-                  /* Clear mailbox.                            */
+-    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+-    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20          */
+-    0x06481da0,   /* iocsrwr.d  $zero, $t1                     */
+-
+-                  /* Enable IPI interrupt.                     */
+-    0x1400002c,   /* lu12i.w    $t0, 1(0x1)                    */
+-    0x0400118c,   /* csrxchg    $t0, $t0, LOONGARCH_CSR_ECFG   */
+-    0x02fffc0c,   /* addi.d     $t0, $r0,-1(0xfff)             */
+-    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+-    0x038011ad,   /* ori        $t1, $t1, CORE_EN_OFF          */
+-    0x064819ac,   /* iocsrwr.w  $t0, $t1                       */
+-    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+-    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20          */
+-
+-                  /* Wait for wakeup  <.L11>:                  */
+-    0x06488000,   /* idle       0x0                            */
+-    0x03400000,   /* andi       $zero, $zero, 0x0              */
+-    0x064809ac,   /* iocsrrd.w  $t0, $t1                       */
+-    0x43fff59f,   /* beqz       $t0, -12(0x7ffff4) # 48 <.L11> */
+-
+-                  /* Read and clear IPI interrupt.             */
+-    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+-    0x064809ac,   /* iocsrrd.w  $t0, $t1                       */
+-    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+-    0x038031ad,   /* ori        $t1, $t1, CORE_CLEAR_OFF       */
+-    0x064819ac,   /* iocsrwr.w  $t0, $t1                       */
+-
+-                  /* Disable  IPI interrupt.                   */
+-    0x1400002c,   /* lu12i.w    $t0, 1(0x1)                    */
+-    0x04001180,   /* csrxchg    $zero, $t0, LOONGARCH_CSR_ECFG */
+-
+-                  /* Read mail buf and jump to specified entry */
+-    0x1400002d,   /* lu12i.w    $t1, 1(0x1)                    */
+-    0x038081ad,   /* ori        $t1, $t1, CORE_BUF_20          */
+-    0x06480dac,   /* iocsrrd.d  $t0, $t1                       */
+-    0x00150181,   /* move       $ra, $t0                       */
+-    0x4c000020,   /* jirl       $zero, $ra,0                   */
+-};
++static void generate_secondary_boot_code(void *boot_code, bool is_64bit)
++{
++    uint32_t *p = boot_code;
++
++    /* Configure reset ebase. */
++    stl_p(p++, 0x0400302c); /* csrwr      $t0, LOONGARCH_CSR_EENTRY  */
++
++    /* Disable interrupt. */
++    stl_p(p++, 0x0380100c); /* ori        $t0, $zero,0x4             */
++    stl_p(p++, 0x04000180); /* csrxchg    $zero, $t0, LOONGARCH_CSR_CRMD */
++
++    /* Clear mailbox. */
++    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
++    stl_p(p++, 0x038081ad); /* ori        $t1, $t1, CORE_BUF_20      */
++    if (is_64bit) {
++        stl_p(p++, 0x06481da0); /* iocsrwr.d  $zero, $t1             */
++    } else {
++        stl_p(p++, 0x064819a0); /* iocsrwr.w  $zero, $t1             */
++    }
++
++    /* Enable IPI interrupt. */
++    stl_p(p++, 0x1400002c); /* lu12i.w    $t0, 1(0x1)                */
++    stl_p(p++, 0x0400118c); /* csrxchg    $t0, $t0, LOONGARCH_CSR_ECFG */
++    stl_p(p++, 0x02fffc0c); /* addi.d     $t0, $r0, -1(0xfff)        */
++    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
++    stl_p(p++, 0x038011ad); /* ori        $t1, $t1, CORE_EN_OFF      */
++    stl_p(p++, 0x064819ac); /* iocsrwr.w  $t0, $t1                   */
++    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
++    stl_p(p++, 0x038081ad); /* ori        $t1, $t1, CORE_BUF_20      */
++
++    /* Wait for wakeup <.L11>: */
++    stl_p(p++, 0x06488000); /* idle       0x0                        */
++    stl_p(p++, 0x03400000); /* andi       $zero, $zero, 0x0          */
++    stl_p(p++, 0x064809ac); /* iocsrrd.w  $t0, $t1                   */
++    stl_p(p++, 0x43fff59f); /* beqz       $t0, -12(0x7ffff4) # 48 <.L11> */
++
++    /* Read and clear IPI interrupt. */
++    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
++    stl_p(p++, 0x064809ac); /* iocsrrd.w  $t0, $t1                   */
++    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
++    stl_p(p++, 0x038031ad); /* ori        $t1, $t1, CORE_CLEAR_OFF   */
++    stl_p(p++, 0x064819ac); /* iocsrwr.w  $t0, $t1                   */
++
++    /* Disable IPI interrupt. */
++    stl_p(p++, 0x1400002c); /* lu12i.w    $t0, 1(0x1)                */
++    stl_p(p++, 0x04001180); /* csrxchg    $zero, $t0, LOONGARCH_CSR_ECFG */
++
++    /* Read mail buf and jump to specified entry. */
++    stl_p(p++, 0x1400002d); /* lu12i.w    $t1, 1(0x1)                */
++    stl_p(p++, 0x038081ad); /* ori        $t1, $t1, CORE_BUF_20      */
++    if (is_64bit) {
++        stl_p(p++, 0x06480dac); /* iocsrrd.d  $t0, $t1               */
++    } else {
++        stl_p(p++, 0x064809ac); /* iocsrrd.w  $t0, $t1               */
++    }
++    stl_p(p++, 0x00150181); /* move       $ra, $t0                   */
++    stl_p(p++, 0x4c000020); /* jirl       $zero, $ra, 0              */
++}
+ 
+ static inline void *guidcpy(void *dst, const void *src)
+ {
+@@ -379,7 +390,7 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+ 
+     /* Load slave boot code at pflash0 . */
+     void *boot_code = g_malloc0(VIRT_FLASH0_SIZE);
+-    memcpy(boot_code, &slave_boot_code, sizeof(slave_boot_code));
++    generate_secondary_boot_code(boot_code, is_la64(&lacpu->env));
+     rom_add_blob_fixed("boot_code", boot_code, VIRT_FLASH0_SIZE, VIRT_FLASH0_BASE);
+ 
+     CPU_FOREACH(cs) {
 
 -- 
-Best Regards
-Junjie Mao
+2.46.0
+
 
