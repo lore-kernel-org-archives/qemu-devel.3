@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DED7FC6199
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Sep 2024 06:17:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAE89FC6169
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Sep 2024 06:17:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1spM2m-0008T7-Ur; Sat, 14 Sep 2024 02:14:04 -0400
+	id 1spM2p-0000Aq-80; Sat, 14 Sep 2024 02:14:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1spM2h-00083G-5W; Sat, 14 Sep 2024 02:13:59 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ id 1spM2k-0008JC-TG
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 02:14:02 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1spM2e-0000v2-5d; Sat, 14 Sep 2024 02:13:58 -0400
+ id 1spM2i-0000xD-4r
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 02:14:02 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 1FAA55C0EE5;
+ by dfw.source.kernel.org (Postfix) with ESMTP id 94F4B5C59A7;
  Sat, 14 Sep 2024 06:13:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016CCC4CED0;
- Sat, 14 Sep 2024 06:13:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553DAC4CEEA;
+ Sat, 14 Sep 2024 06:13:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1726294434;
- bh=EWLyILZhCmCqcM/xaUKf+oF1P3KuMlWwct4g79O+XOA=;
+ bh=1dC6qge5j6u0iMd7Y9iF2l9tSLTNhq/Z8HDaN5NFEKg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=FSTB2IFIosJuVdm74y9wJR9dM/lBNHjiDH76v/rOhjIsuhl1sfwWp7ZvM502rRv2+
- KCBy9CnecJhveDK/lzMkCla/PJLhyArcetFN6jpNZWyOzfclyZuHWShdpf0QK64z92
- sasjN3p89ZLM+R9VMSuAbPgX9Us5phens2+xrXTav/2Db8zM9CmZH/X8xatijMz4Sp
- 5k9GbktJ8UU2KEr7s4mIn7tKLKJKF5qcP7hlxJ91PXUjbschbnqEs+Lv+9zROWH67K
- x2karIbvcNaTUn1YrxuhMkfTFyhxaTGdg0jWO6EoytePydblwD8WMy8WTvN2cpo5FJ
- 7d+voAxwJTSXw==
+ b=GsxQvSOmilsc9bLAco2lwhUosdZ8GGfW6pOnAuMJVq5+vhZqZwBruNWjoKtuDm6Ni
+ hfPGS53prFKRHaROaETVSX34J7K8hIZH3rS6mpJjikZOV9I7uGbKPhRANYHFesdUkT
+ zlB4TUtMODuEzz+HLMeBAdPvsYSO3QPc3M1+EDmyHBB67XpwbOrfwEPHrj8pYbuIHK
+ 6AwZOOM7gden7CpDanVUHe+7kLljAT761QBSGSLtlfwd8mwDJfnId2tYn1MLG+Im6P
+ X1CrABu0+EpozHyXXXAGYfwQUSOWdfVVdl6sSeQY9Dx4JF8k/uv5OEXjooZVKsAnmu
+ Cm3gnLHy2+8/A==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1spM2a-00000003V5i-0HSX; Sat, 14 Sep 2024 08:13:52 +0200
+ id 1spM2a-00000003V6l-23GT; Sat, 14 Sep 2024 08:13:52 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v10 05/21] acpi/ghes: better handle source_id and notification
-Date: Sat, 14 Sep 2024 08:13:26 +0200
-Message-ID: <409491c21021b3cc0b239bb95ca6cc78e6adda10.1726293808.git.mchehab+huawei@kernel.org>
+ Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
+ linux-kernel@vger.kernel.org, qemu-devel@nongnu.org
+Subject: [PATCH v10 21/21] scripts/arm_processor_error.py: retrieve mpidr if
+ not filled
+Date: Sat, 14 Sep 2024 08:13:42 +0200
+Message-ID: <62f32c5c40309a9c175e6b418fe368468e6aab06.1726293808.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <cover.1726293808.git.mchehab+huawei@kernel.org>
 References: <cover.1726293808.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.178.84.217;
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
  envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.147,
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.147,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,151 +78,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GHES has two fields with somewhat meanings:
-- notification type, which is a number defined at the ACPI spec
-  containing several arch-specific synchronous and assynchronous
-  types;
-- source id, which is a HW/FW defined number, used to distinguish
-  between different implemented hardware report mechanisms.
-
-The current logic is arm-specific, implementing a single source ID,
-for an armv8-specific synchronous report mechanism (SEA).
-
-Cleanup the code to make easier to add other types and make the
-code portable to non-ARM.
-
-As a collateral effect of such change, build_ghes_error_table()
-function is now an internal function.
-
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-
----
-
-Changes from v8:
-- Non-rename/cleanup changes merged altogether;
-- source ID is now more generic, defined per guest target.
-  That should make easier to add support for 86.
+Add support to retrieve mpidr value via qom-get.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- hw/acpi/ghes.c           | 31 +++++++++++++++----------------
- hw/arm/virt-acpi-build.c |  5 ++---
- include/hw/acpi/ghes.h   |  6 +++---
- 3 files changed, 20 insertions(+), 22 deletions(-)
+ scripts/arm_processor_error.py | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 17b7d9e10f3e..939e89723a2f 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -234,7 +234,7 @@ static int acpi_ghes_record_mem_error(uint64_t error_block_address,
-  * Initialize "etc/hardware_errors" and "etc/hardware_errors_addr" fw_cfg blobs.
-  * See docs/specs/acpi_hest_ghes.rst for blobs format.
-  */
--void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
-+static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
- {
-     int i, error_status_block_offset;
+diff --git a/scripts/arm_processor_error.py b/scripts/arm_processor_error.py
+index 62e0c5662232..0a16d4f0d8b1 100644
+--- a/scripts/arm_processor_error.py
++++ b/scripts/arm_processor_error.py
+@@ -5,12 +5,10 @@
+ #
+ # Copyright (C) 2024 Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
  
-@@ -285,9 +285,13 @@ void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
- }
+-# TODO: current implementation has dummy defaults.
+-#
+-# For a better implementation, a QMP addition/call is needed to
+-# retrieve some data for ARM Processor Error injection:
+-#
+-#   - ARM registers: power_state, mpidr.
++# Note: currently it lacks a method to fill the ARM Processor Error CPER
++# psci field from emulation. On a real hardware, this is filled only
++# when a CPU is not running. Implementing support for it to simulate a
++# real hardware is not trivial.
  
- /* Build Generic Hardware Error Source version 2 (GHESv2) */
--static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
-+static void build_ghes_v2(GArray *table_data,
-+                          BIOSLinker *linker,
-+                          enum AcpiGhesNotifyType notify,
-+                          uint16_t source_id)
- {
-     uint64_t address_offset;
+ import argparse
+ import re
+@@ -174,11 +172,24 @@ def send_cper(self, args):
+         else:
+             cper["running-state"] = 0
+ 
++        if args.mpidr:
++            cper["mpidr-el1"] = arg["mpidr"]
++        elif cpus:
++            cmd_arg = {
++                'path': cpus[0],
++                'property': "x-mpidr"
++            }
++            ret = qmp_cmd.send_cmd("qom-get", cmd_arg, may_open=True)
++            if isinstance(ret, int):
++                cper["mpidr-el1"] = ret
++            else:
++                cper["mpidr-el1"] = 0
 +
-     /*
-      * Type:
-      * Generic Hardware Error Source version 2(GHESv2 - Type 10)
-@@ -317,18 +321,8 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
-         address_offset + GAS_ADDR_OFFSET, sizeof(uint64_t),
-         ACPI_GHES_ERRORS_FW_CFG_FILE, source_id * sizeof(uint64_t));
+         if arm_valid_init:
+             if args.affinity:
+                 cper["valid"] |= self.arm_valid_bits["affinity"]
  
--    switch (source_id) {
--    case ACPI_HEST_SRC_ID_SEA:
--        /*
--         * Notification Structure
--         * Now only enable ARMv8 SEA notification type
--         */
--        build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_SEA);
--        break;
--    default:
--        error_report("Not support this error source");
--        abort();
--    }
-+    /* Notification Structure */
-+    build_ghes_hw_error_notification(table_data, notify);
+-            if args.mpidr:
++            if "mpidr-el1" in cper:
+                 cper["valid"] |= self.arm_valid_bits["mpidr"]
  
-     /* Error Status Block Length */
-     build_append_int_noprefix(table_data, ACPI_GHES_MAX_RAW_DATA_LENGTH, 4);
-@@ -357,19 +351,24 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
- }
+             if "running-state" in cper:
+@@ -362,7 +373,7 @@ def send_cper(self, args):
+                 if isinstance(ret, int):
+                     arg["midr-el1"] = ret
  
- /* Build Hardware Error Source Table */
--void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
-+void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
-+                     BIOSLinker *linker,
-                      const char *oem_id, const char *oem_table_id)
- {
-     AcpiTable table = { .sig = "HEST", .rev = 1,
-                         .oem_id = oem_id, .oem_table_id = oem_table_id };
- 
-+    build_ghes_error_table(hardware_errors, linker);
-+
-     acpi_table_begin(&table, table_data);
- 
-+    /* Beginning at the HEST Error Source struct count and data */
-     int hest_offset = table_data->len;
- 
-     /* Error Source Count */
-     build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
--    build_ghes_v2(table_data, ACPI_HEST_SRC_ID_SEA, linker);
-+    build_ghes_v2(table_data, linker,
-+                  ACPI_GHES_NOTIFY_SEA, ACPI_HEST_SRC_ID_SEA);
- 
-     acpi_table_end(linker, &table);
- 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index f76fb117adff..bafd9a56c217 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -943,10 +943,9 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
-     build_dbg2(tables_blob, tables->linker, vms);
- 
-     if (vms->ras) {
--        build_ghes_error_table(tables->hardware_errors, tables->linker);
-         acpi_add_table(table_offsets, tables_blob);
--        acpi_build_hest(tables_blob, tables->linker, vms->oem_id,
--                        vms->oem_table_id);
-+        acpi_build_hest(tables_blob, tables->hardware_errors, tables->linker,
-+                        vms->oem_id, vms->oem_table_id);
-     }
- 
-     if (ms->numa_state->num_nodes > 0) {
-diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 5421ffcbb7fa..c9bbda4740e2 100644
---- a/include/hw/acpi/ghes.h
-+++ b/include/hw/acpi/ghes.h
-@@ -69,12 +69,12 @@ typedef struct AcpiGhesState {
-     bool present; /* True if GHES is present at all on this board */
- } AcpiGhesState;
- 
--void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker);
--void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
-+void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
-+                     BIOSLinker *linker,
-                      const char *oem_id, const char *oem_table_id);
- void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
-                           GArray *hardware_errors);
--int acpi_ghes_record_errors(uint8_t notify, uint64_t error_physical_addr);
-+int acpi_ghes_record_errors(uint8_t source_id, uint64_t error_physical_addr);
- 
- /**
-  * acpi_ghes_present: Report whether ACPI GHES table is present
+-        util.data_add(data, arg.get("mpidr-el1", 0), 8)
++        util.data_add(data, cper["mpidr-el1"], 8)
+         util.data_add(data, arg.get("midr-el1", 0), 8)
+         util.data_add(data, cper["running-state"], 4)
+         util.data_add(data, arg.get("psci-state", 0), 4)
 -- 
 2.46.0
 
