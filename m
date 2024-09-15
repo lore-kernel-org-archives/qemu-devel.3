@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A295FC3ABA0
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 15:30:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F1A4C3ABA2
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 16:10:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1spr91-0006XK-Hj; Sun, 15 Sep 2024 11:26:35 -0400
+	id 1sproG-0002eq-Ct; Sun, 15 Sep 2024 12:09:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1spr8z-0006Un-As
- for qemu-devel@nongnu.org; Sun, 15 Sep 2024 11:26:33 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1sproF-0002aR-7g
+ for qemu-devel@nongnu.org; Sun, 15 Sep 2024 12:09:11 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1spr8x-0008CH-KQ
- for qemu-devel@nongnu.org; Sun, 15 Sep 2024 11:26:33 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2053525bd90so20690005ad.0
- for <qemu-devel@nongnu.org>; Sun, 15 Sep 2024 08:26:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1sproD-0006OV-EF
+ for qemu-devel@nongnu.org; Sun, 15 Sep 2024 12:09:10 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-718e285544fso1966124b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 15 Sep 2024 09:09:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726413989; x=1727018789; darn=nongnu.org;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1726416548; x=1727021348;
+ darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Eptwr1B6TaRaZQ7aEdRCfkv5ZrQAsR2zaI7/YwKtIOQ=;
- b=dqpDFI6+0CEq0RuQhi/+SSKcNL+6TGOarU1Lh+vBTJN+3qVpc8TuRQyRAQLbz1wn65
- /Y7+udDxKqr/wJkOe2i3ocYgUBMw0ysj+DlV9JtfFFPvQwhWDkjXFWJeFvNUbmRigL2C
- V0Dhff+7mCdF1VW0wCMqtMc3rVvPud+H7a2uCQy/X6ntG69l3jS1SxqXmfj7OzAXXpIc
- 5p1GqHqwGZ74LVRW3vFUrfISOjHAhMdeWW5/Iwt3OBaAQyG0RiU1L5aA0EcFL2rQt4rI
- kyIQ4YildwQtaVTEwv06GfB+wpxnQgWbAp1Dg7Z2teBjG2NQVY32EPsWeibF9fYEXW2I
- kPLg==
+ bh=lxw6C89QI6UbPkGgu8mJTGVSMtVBCh9fCukElZHUmoY=;
+ b=OVyu8h/sjH73JizOZRhjloYT6H8vHAIhv20tGmfeMwPx5yMEu81sorrn2Z42xusvK1
+ ycGqk9anmdAyTzRXDXukAMUxKPPLYKKg4ASLAHdEr2rfmpGgSI/8GHM/+EB/aENEJgQk
+ dqN3rF0XYwbMXxL9py6YWQ/hGWz0LdbPx+dxIPfFu8I1u4htkhwEYP7XzETDPDLMMAVA
+ ODHaYez5Akslb6oph2e6mxMaW1uY9b7C00lC+W9wTrrnMxE0bbCMTnOCm3LVSjYTDKIl
+ g6RkCc5WMgYeTPWvGzosvPaM3MgvANJ2ycs6cg+zQEvOSDKZvqNV4dElV1P9bwjd3mC+
+ EJIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726413989; x=1727018789;
+ d=1e100.net; s=20230601; t=1726416548; x=1727021348;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Eptwr1B6TaRaZQ7aEdRCfkv5ZrQAsR2zaI7/YwKtIOQ=;
- b=V/FzT/LxU4cpjc+vkoJ8Hx23mEP4rpQRM/hpbcTbJWImblmvt9z4TbZC6YFz3TDmH2
- Q6iCiooY0qB5sbX3/K2cQLFg6AKyy2/RMYs6kfr+ts4QJEF/fBqUKf1yj4503ald2LzE
- gK6uQKwkaJet2IA8tqZTcure8rnhOElZoVFUlFvdWCD73cfm+3I0hY7ns3oYjKHGqLL7
- EM3NrlZQuYpDI9UIdUHXw3w5O+pj3mXoLOGngJBQHm/KWzNr6iVVsypegSosZLiKZejn
- e3EubtuEgMC5iJBD9zOOcU/zEJ+5VLSAA3RBGKAfs5E9Ae6hxYWB6dezXyk/zNkBJHt4
- lGBg==
-X-Gm-Message-State: AOJu0YyDkLH02gmGS9pGBr+aiApcqCkLtUIHnOV6Wicnvd6KZ6F0JXMU
- ZMqexU08e14a8FCN5KWNJLlInRjfApbnhWXYFxJNI1BSoNdlXWqFQHuzLQ==
-X-Google-Smtp-Source: AGHT+IHTvBrfYTMnDuHIkf1lR1yQKX5cqnkHFRzGOpIhvzalmPJ39md9DpUM4ixAzLr96Tc2VEZc+w==
-X-Received: by 2002:a17:902:d4d2:b0:202:2b3e:28d0 with SMTP id
- d9443c01a7336-20781b425d5mr120388025ad.8.1726413989040; 
- Sun, 15 Sep 2024 08:26:29 -0700 (PDT)
-Received: from localhost.localdomain (14-200-149-22.tpgi.com.au.
- [14.200.149.22]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-207946f34c1sm22554335ad.184.2024.09.15.08.26.25
+ bh=lxw6C89QI6UbPkGgu8mJTGVSMtVBCh9fCukElZHUmoY=;
+ b=TK9YbUEB/jmKDymJk5DBQs4fofWJgrPrraeNNvPtnphDiocDDSHoj4hu9sRXq2RR/p
+ Cixi/ztNyo/Hbree9LIMOa8JcXRPY2pl5k2ttEce7G+nZnxGDGjZ5ShzWJL902QBn+j7
+ WHWOODjFldEdlDTEWv8YPo5PnX/y31BnPZymPHxhf3QLRp6uhVNdOticxejUqrE6sRR0
+ jgESb9Sf/bYMYwsrOIA5MuhDQu8DK4f4SY+pF9djjp9y4VuCXMfXj3ft6Y1CApMap2bm
+ 7W3IwzlfX/TvJR8mVOdlX06woRjhHhG+hmvDZr1KkxDkMMbZNlZiSk3/gE1HhLSvL0BC
+ 9+qQ==
+X-Gm-Message-State: AOJu0YxxL6Xa/jPHifeu7cvWX1Us+PoWC1Ni+heFdZNJt8veFkalx2Uo
+ u3j4YXveU9y70HshLHIuTTaQL2KPfuWjc0bA6LRR4ZuPwMK7/C9JEMCj1yqUCm4VOtb2Ga87kNa
+ qgjIjCQ==
+X-Google-Smtp-Source: AGHT+IHcQgpMzCVLaxZ7nd9l+/mRVcrIgDS1crPkkTQqxVV+tdV0103WWiTUcqtVZvtfVOSToeRgCw==
+X-Received: by 2002:a05:6a21:164a:b0:1cf:44ac:7144 with SMTP id
+ adf61e73a8af0-1d112e89110mr12537636637.31.1726416547253; 
+ Sun, 15 Sep 2024 09:09:07 -0700 (PDT)
+Received: from localhost.localdomain ([118.114.94.247])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-71944bb5967sm2344795b3a.182.2024.09.15.09.09.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Sep 2024 08:26:27 -0700 (PDT)
-From: Ajeet Singh <itachis6234@gmail.com>
-X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
+ Sun, 15 Sep 2024 09:09:07 -0700 (PDT)
+From: Hyman Huang <yong.huang@smartx.com>
 To: qemu-devel@nongnu.org
-Cc: Mark Corbin <mark@dibsco.co.uk>, Warner Losh <imp@bsdimp.com>,
- Ajeet Singh <itachis@FreeBSD.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v6 07/17] bsd-user: Add RISC-V signal trampoline setup function
-Date: Mon, 16 Sep 2024 01:25:44 +1000
-Message-Id: <20240915152554.8394-8-itachis@FreeBSD.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240915152554.8394-1-itachis@FreeBSD.org>
-References: <20240915152554.8394-1-itachis@FreeBSD.org>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, yong.huang@smartx.com
+Subject: [PATCH v1 3/7] qapi/migration: Introduce the iteration-count
+Date: Mon, 16 Sep 2024 00:08:46 +0800
+Message-Id: <654bfad294e2cc3394f744bd8536e0448c0bf550.1726390099.git.yong.huang@smartx.com>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <cover.1726390098.git.yong.huang@smartx.com>
+References: <cover.1726390098.git.yong.huang@smartx.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=itachis6234@gmail.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=yong.huang@smartx.com; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,67 +98,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Corbin <mark@dibsco.co.uk>
+The original migration information dirty-sync-count could
+no longer reflect iteration count due to the introduction
+of background synchronization in the next commit;
+add the iteration count to compensate.
 
-Implemented the 'setup_sigtramp' function for setting up the signal
-trampoline code in the RISC-V architecture.
-
-Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
-Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 ---
- bsd-user/riscv/target_arch_sigtramp.h | 41 +++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
- create mode 100644 bsd-user/riscv/target_arch_sigtramp.h
+ migration/migration-stats.h  |  4 ++++
+ migration/migration.c        |  1 +
+ migration/ram.c              | 12 ++++++++----
+ qapi/migration.json          |  6 +++++-
+ tests/qtest/migration-test.c |  2 +-
+ 5 files changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/bsd-user/riscv/target_arch_sigtramp.h b/bsd-user/riscv/target_arch_sigtramp.h
-new file mode 100644
-index 0000000000..dfe5076739
---- /dev/null
-+++ b/bsd-user/riscv/target_arch_sigtramp.h
-@@ -0,0 +1,41 @@
-+/*
-+ * RISC-V sigcode
-+ *
-+ * Copyright (c) 2019 Mark Corbin
-+ *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License as published by the Free Software Foundation; either
-+ * version 2 of the License, or (at your option) any later version.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-+ */
+diff --git a/migration/migration-stats.h b/migration/migration-stats.h
+index 05290ade76..43ee0f4f05 100644
+--- a/migration/migration-stats.h
++++ b/migration/migration-stats.h
+@@ -50,6 +50,10 @@ typedef struct {
+      * Number of times we have synchronized guest bitmaps.
+      */
+     Stat64 dirty_sync_count;
++    /*
++     * Number of migration iteration processed.
++     */
++    Stat64 iteration_count;
+     /*
+      * Number of times zero copy failed to send any page using zero
+      * copy.
+diff --git a/migration/migration.c b/migration/migration.c
+index 3dea06d577..055d527ff6 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1197,6 +1197,7 @@ static void populate_ram_info(MigrationInfo *info, MigrationState *s)
+     info->ram->mbps = s->mbps;
+     info->ram->dirty_sync_count =
+         stat64_get(&mig_stats.dirty_sync_count);
++    info->ram->iteration_count = stat64_get(&mig_stats.iteration_count);
+     info->ram->dirty_sync_missed_zero_copy =
+         stat64_get(&mig_stats.dirty_sync_missed_zero_copy);
+     info->ram->postcopy_requests =
+diff --git a/migration/ram.c b/migration/ram.c
+index e205806a5f..ca5a1b5f16 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -594,7 +594,7 @@ static void xbzrle_cache_zero_page(ram_addr_t current_addr)
+     /* We don't care if this fails to allocate a new cache page
+      * as long as it updated an old one */
+     cache_insert(XBZRLE.cache, current_addr, XBZRLE.zero_target_page,
+-                 stat64_get(&mig_stats.dirty_sync_count));
++                 stat64_get(&mig_stats.iteration_count));
+ }
+ 
+ #define ENCODING_FLAG_XBZRLE 0x1
+@@ -620,7 +620,7 @@ static int save_xbzrle_page(RAMState *rs, PageSearchStatus *pss,
+     int encoded_len = 0, bytes_xbzrle;
+     uint8_t *prev_cached_page;
+     QEMUFile *file = pss->pss_channel;
+-    uint64_t generation = stat64_get(&mig_stats.dirty_sync_count);
++    uint64_t generation = stat64_get(&mig_stats.iteration_count);
+ 
+     if (!cache_is_cached(XBZRLE.cache, current_addr, generation)) {
+         xbzrle_counters.cache_miss++;
+@@ -1079,6 +1079,10 @@ static void migration_bitmap_sync(RAMState *rs,
+     RAMBlock *block;
+     int64_t end_time;
+ 
++    if (!background) {
++        stat64_add(&mig_stats.iteration_count, 1);
++    }
 +
-+#ifndef TARGET_ARCH_SIGTRAMP_H
-+#define TARGET_ARCH_SIGTRAMP_H
-+
-+/* Compare with sigcode() in riscv/riscv/locore.S */
-+static inline abi_long setup_sigtramp(abi_ulong offset, unsigned sigf_uc,
-+        unsigned sys_sigreturn)
-+{
-+    uint32_t sys_exit = TARGET_FREEBSD_NR_exit;
-+
-+    uint32_t sigtramp_code[] = {
-+    /*1*/ const_le32(0x00010513),                        /*mv a0, sp*/
-+    /*2*/ const_le32(0x00050513 + (sigf_uc << 20)),      /*addi a0,a0,sigf_uc*/
-+    /*3*/ const_le32(0x00000293 + (sys_sigreturn << 20)),/*li t0,sys_sigreturn*/
-+    /*4*/ const_le32(0x00000073),                        /*ecall*/
-+    /*5*/ const_le32(0x00000293 + (sys_exit << 20)),     /*li t0,sys_exit*/
-+    /*6*/ const_le32(0x00000073),                        /*ecall*/
-+    /*7*/ const_le32(0xFF1FF06F)                         /*b -16*/
-+    };
-+
-+    return memcpy_to_target(offset, sigtramp_code, TARGET_SZSIGCODE);
-+}
-+#endif /* TARGET_ARCH_SIGTRAMP_H */
+     stat64_add(&mig_stats.dirty_sync_count, 1);
+ 
+     if (!rs->time_last_bitmap_sync) {
+@@ -1115,8 +1119,8 @@ static void migration_bitmap_sync(RAMState *rs,
+         rs->num_dirty_pages_period = 0;
+         rs->bytes_xfer_prev = migration_transferred_bytes();
+     }
+-    if (migrate_events()) {
+-        uint64_t generation = stat64_get(&mig_stats.dirty_sync_count);
++    if (!background && migrate_events()) {
++        uint64_t generation = stat64_get(&mig_stats.iteration_count);
+         qapi_event_send_migration_pass(generation);
+     }
+ }
+diff --git a/qapi/migration.json b/qapi/migration.json
+index b66cccf107..95b490706c 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -60,6 +60,9 @@
+ #     between 0 and @dirty-sync-count * @multifd-channels.  (since
+ #     7.1)
+ #
++# @iteration-count: The number of iterations since migration started.
++#     (since 9.2)
++#
+ # Since: 0.14
+ ##
+ { 'struct': 'MigrationStats',
+@@ -72,7 +75,8 @@
+            'multifd-bytes': 'uint64', 'pages-per-second': 'uint64',
+            'precopy-bytes': 'uint64', 'downtime-bytes': 'uint64',
+            'postcopy-bytes': 'uint64',
+-           'dirty-sync-missed-zero-copy': 'uint64' } }
++           'dirty-sync-missed-zero-copy': 'uint64',
++           'iteration-count' : 'int' } }
+ 
+ ##
+ # @XBZRLECacheStats:
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index d6768d5d71..b796a90cad 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -278,7 +278,7 @@ static int64_t read_migrate_property_int(QTestState *who, const char *property)
+ 
+ static uint64_t get_migration_pass(QTestState *who)
+ {
+-    return read_ram_property_int(who, "dirty-sync-count");
++    return read_ram_property_int(who, "iteration-count");
+ }
+ 
+ static void read_blocktime(QTestState *who)
 -- 
-2.34.1
+2.39.1
 
 
