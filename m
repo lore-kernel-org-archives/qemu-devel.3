@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74C3EC35FE2
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 01:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 642E3C35FE1
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 01:26:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1spe0y-0004vj-Kq; Sat, 14 Sep 2024 21:25:24 -0400
+	id 1spe0K-0002pj-Lx; Sat, 14 Sep 2024 21:24:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1spe0v-0004eE-U8
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:25:22 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1spe0H-0002p9-9m
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:24:42 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1spe0u-0005ep-48
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:25:21 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-71911585911so2897922b3a.3
- for <qemu-devel@nongnu.org>; Sat, 14 Sep 2024 18:25:19 -0700 (PDT)
+ id 1spe0F-0005RF-NS
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:24:41 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-71788bfe60eso2466693b3a.1
+ for <qemu-devel@nongnu.org>; Sat, 14 Sep 2024 18:24:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726363519; x=1726968319;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726363477; x=1726968277;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=CdRY63ffQFqOcAWbqBHjZhZUrkr1co+m6SgDSpmyEPE=;
- b=aBEigefPiL3XB6LG8Abfjh7A+fPO3kgoMlYsfkC8SoMcVu7zh8+N8hGUUV1hFwVwFy
- ybdaMIxQh8lQWFzKg6modOF/J0LuBs0F81y/q7qcBemREzsejrI28hC+RDnw5YxTZn+L
- Wru5ccPzUoU/Jj182es09VEiAPZcPK9/st0iqni10eZklKJ9W83MCs5ow648VoVKvPoP
- +/8fP6VFkiz8Sxhizfk78O48zCcRW2NnyT8wlPc3H9O2cGI2I++pymDXq6zeGconh8sA
- Hpr+LBQk8ADwJWHQgVM9FPWyo278FiDRZWNlCqfJgj+MS5TRxv1C/PD5qHYsW5/vCeh0
- DgaA==
+ :reply-to; bh=yTKMLrThNs3dDMSlreK+ICpdf6za+wNhj1qJUdDtbIo=;
+ b=lNbT4h0Pw575LN5xrvKA2delDYklaum3sStyH4Mk+yySyu8xaqq2IA3qge8ucgDVBb
+ FdWYrKHbSMXgRnLmB1xG8kfFh7FtC9DYr6ky6ocyz38Ex10p2HTzE+z8t7cB8hBumkBD
+ 7Or2w1HEBMjwXOJhBOU77zi7TC3AwmlxercdfeVlBdD/xlVHM8twi4IWH7fRhwE7b+jg
+ yjddGoJQWOoEhZxwTGD8WbG/DC9CR/KnDvFrA7MfiQU+9ZJEOPKJEDi39tm5JW8Jt9em
+ 67uR2/PUDhm3eRIQhIG1zd9cW/LEi/j3oKLGic1EjuW+EvkfBywdFeGCK/oRoeWmK9eu
+ 9A6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726363519; x=1726968319;
+ d=1e100.net; s=20230601; t=1726363477; x=1726968277;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CdRY63ffQFqOcAWbqBHjZhZUrkr1co+m6SgDSpmyEPE=;
- b=HDvr88bOHYEvRYIviHP15jeBg1UfmRAeR/RKDOpN+LLWc+8oYV7nL5Mw6XeG/uRI6q
- L6LVFSTKopJFzq2g8QAIsuYm3HYMmLpJ69yyAu803F55iXj7bs+ygA4ML3bV93r5c68I
- l6CVuhCb8eP6ZcIuG2Dk1mmm8oRxvTNxGuo9yNkUHgeoZbIEMnaaJ58huem4BZ/Y5xWO
- 6h840g6j1tMvijMGjmiO0WH+gttWZFUsBWZt9R/yTZdqut4+2Sf9qlnuhsUzNoN8dtK1
- LDEsun3SvDf9jPPBKgj4Kvf4Sr/MA6BIy4xK/uJMX8f5AW4/ibvLekZrhMuaj7HMJYEt
- aTDQ==
-X-Gm-Message-State: AOJu0Yya79avXLW5zPbKwzUF92ooQMxNSi0ZzqVaQKFP/4THgZjPeNRv
- baFDYA/R82ZViDDL0HbQ9wdXBSvZIscq09m4cEN44/fw4Wf1MBBeo2UuStE5NVEFnUaFfHY19lZ
- KKEY=
-X-Google-Smtp-Source: AGHT+IE0cB4d7jRE8OfdjaJVelZJxIWLsNvH+4lYszvBHLWNGt0YFUefas5bjxZc4uiS9Q7bStFW4w==
-X-Received: by 2002:a05:6a20:c6c1:b0:1cf:2ba0:c36d with SMTP id
- adf61e73a8af0-1cf75ea277emr14580005637.3.1726363518649; 
- Sat, 14 Sep 2024 18:25:18 -0700 (PDT)
+ bh=yTKMLrThNs3dDMSlreK+ICpdf6za+wNhj1qJUdDtbIo=;
+ b=Uuls1QR7sZ5B0IJYChg3kKX395Pa5d2Ni38ruRypx9YFfJm6qEFpVdDfit0w0l6q2I
+ 96T/YPWyTKO5xidkGjkvS8aevLKt23Nx9+DtbCwGYeDMH0RPSphqr+iHucqtcUDwvohu
+ afyS6ZgYTGnnJiumASxC/mvNu/Y1Zjz4j0N+XJj+Ew8dSRo3sb4C3hBf/XHoPiwLPiMx
+ fK6b0o5KBeY2rt2g5L1bxAMR5eYEBksOkIUy1+80MoCBkjUq9epo0ZCayxhkZFvzakeI
+ Ga/mA1NcDwz4ZvoNscdzY+PnRmWVT4pU8E9O/S4k5UuocE7yVw+MHyHS/Dl4HqqmYusb
+ 4eIw==
+X-Gm-Message-State: AOJu0YwM76K+7jZGMS2jDc1O+5o01zx+rJWIjV8XZzHC5IIg73xMK7Js
+ 9PTbnObDW41or3qNFInE4ueMz3seRAIUjFBI61CdS8hvJ11tygTmJP0KZC9l027JbDJ7TeBO2Ad
+ LXOM=
+X-Google-Smtp-Source: AGHT+IF51Z3E1n81FIknv+NP7KqLvmXf1UHAyU8TlecPRkU/WdUhRauCD08sHwMOYE+RCQvvAvtGKg==
+X-Received: by 2002:a05:6a21:1190:b0:1cf:6baf:61c0 with SMTP id
+ adf61e73a8af0-1cf764c29e6mr17117920637.44.1726363477574; 
+ Sat, 14 Sep 2024 18:24:37 -0700 (PDT)
 Received: from localhost ([210.160.217.68])
  by smtp.gmail.com with UTF8SMTPSA id
- 41be03b00d2f7-7db4998f3besm1745669a12.62.2024.09.14.18.25.16
+ d2e1a72fcca58-719449b370fsm1529648b3a.0.2024.09.14.18.24.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 14 Sep 2024 18:25:18 -0700 (PDT)
+ Sat, 14 Sep 2024 18:24:37 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 15 Sep 2024 10:23:52 +0900
-Subject: [PATCH RFC v3 11/11] docs/devel/ebpf_rss.rst: Update for peer RSS
+Date: Sun, 15 Sep 2024 10:23:43 +0900
+Subject: [PATCH RFC v3 02/11] net/vhost-vdpa: Report hashing capability
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240915-hash-v3-11-79cb08d28647@daynix.com>
+Message-Id: <20240915-hash-v3-2-79cb08d28647@daynix.com>
 References: <20240915-hash-v3-0-79cb08d28647@daynix.com>
 In-Reply-To: <20240915-hash-v3-0-79cb08d28647@daynix.com>
 To: qemu-devel@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>, 
@@ -73,8 +73,8 @@ To: qemu-devel@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>,
  "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>
 Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::42a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42a.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,63 +96,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-eBPF RSS virtio-net support was written in assumption that there is only
-one alternative RSS implementation: 'in-qemu' RSS. It is no longer true,
-and we now have yet another implementation; namely the peer RSS.
+Report hashing capability so that virtio-net can deliver the correct
+capability information to the guest.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- docs/devel/ebpf_rss.rst | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ include/net/net.h |  3 +++
+ net/net.c         |  9 +++++++++
+ net/vhost-vdpa.c  | 28 ++++++++++++++++++++++++++++
+ 3 files changed, 40 insertions(+)
 
-diff --git a/docs/devel/ebpf_rss.rst b/docs/devel/ebpf_rss.rst
-index 4a68682b31ac..06b09e8a3fed 100644
---- a/docs/devel/ebpf_rss.rst
-+++ b/docs/devel/ebpf_rss.rst
-@@ -5,9 +5,22 @@ eBPF RSS virtio-net support
- RSS(Receive Side Scaling) is used to distribute network packets to guest virtqueues
- by calculating packet hash. Usually every queue is processed then by a specific guest CPU core.
+diff --git a/include/net/net.h b/include/net/net.h
+index c8f679761bf9..099616c8cbe3 100644
+--- a/include/net/net.h
++++ b/include/net/net.h
+@@ -60,6 +60,7 @@ typedef bool (HasVnetHdrLen)(NetClientState *, int);
+ typedef void (SetOffload)(NetClientState *, int, int, int, int, int, int, int);
+ typedef int (GetVnetHdrLen)(NetClientState *);
+ typedef void (SetVnetHdrLen)(NetClientState *, int);
++typedef bool (GetVnetHashSupportedTypes)(NetClientState *, uint32_t *);
+ typedef int (SetVnetLE)(NetClientState *, bool);
+ typedef int (SetVnetBE)(NetClientState *, bool);
+ typedef struct SocketReadState SocketReadState;
+@@ -89,6 +90,7 @@ typedef struct NetClientInfo {
+     SetVnetHdrLen *set_vnet_hdr_len;
+     SetVnetLE *set_vnet_le;
+     SetVnetBE *set_vnet_be;
++    GetVnetHashSupportedTypes *get_vnet_hash_supported_types;
+     NetAnnounce *announce;
+     SetSteeringEBPF *set_steering_ebpf;
+     NetCheckPeerType *check_peer_type;
+@@ -192,6 +194,7 @@ void qemu_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
+                       int ecn, int ufo, int uso4, int uso6);
+ int qemu_get_vnet_hdr_len(NetClientState *nc);
+ void qemu_set_vnet_hdr_len(NetClientState *nc, int len);
++bool qemu_get_vnet_hash_supported_types(NetClientState *nc, uint32_t *types);
+ int qemu_set_vnet_le(NetClientState *nc, bool is_le);
+ int qemu_set_vnet_be(NetClientState *nc, bool is_be);
+ void qemu_macaddr_default_if_unset(MACAddr *macaddr);
+diff --git a/net/net.c b/net/net.c
+index 6938da05e077..3b04f8fe5d6b 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -559,6 +559,15 @@ void qemu_set_vnet_hdr_len(NetClientState *nc, int len)
+     nc->info->set_vnet_hdr_len(nc, len);
+ }
  
--For now there are 2 RSS implementations in qemu:
--- 'in-qemu' RSS (functions if qemu receives network packets, i.e. vhost=off)
--- eBPF RSS (can function with also with vhost=on)
-+For now there are 3 RSS implementations in qemu:
-+1. Peer RSS
-+2. eBPF RSS
-+3. 'In-QEMU' RSS
++bool qemu_get_vnet_hash_supported_types(NetClientState *nc, uint32_t *types)
++{
++    if (!nc || !nc->info->get_vnet_hash_supported_types) {
++        return false;
++    }
 +
-+'In-QEMU' RSS is incompatible with vhost since the packets are not routed to
-+QEMU. eBPF RSS requires Linux 5.8+. Peer RSS requires the peer to implement RSS.
-+Currently QEMU can use the RSS implementation of vDPA and Linux's TUN module
-+with the following patch applied:
-+https://lore.kernel.org/r/20240915-rss-v3-0-c630015db082@daynix.com/
++    return nc->info->get_vnet_hash_supported_types(nc, types);
++}
 +
-+eBPF RSS does not support hash reporting. Peer RSS may support limited hash
-+types.
+ int qemu_set_vnet_le(NetClientState *nc, bool is_le)
+ {
+ #if HOST_BIG_ENDIAN
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 03457ead663a..af0c3c448c1f 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -258,6 +258,32 @@ static bool vhost_vdpa_has_vnet_hdr(NetClientState *nc)
+     return true;
+ }
+ 
++static bool vhost_vdpa_get_vnet_hash_supported_types(NetClientState *nc,
++                                                     uint32_t *types)
++{
++    assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
++    VhostVDPAState *s = DO_UPCAST(VhostVDPAState, nc, nc);
++    uint64_t features = s->vhost_vdpa.dev->features;
++    int fd = s->vhost_vdpa.shared->device_fd;
++    struct {
++        struct vhost_vdpa_config hdr;
++        uint32_t supported_hash_types;
++    } config;
 +
-+virtio-net automatically chooses the RSS implementation to use. Peer RSS is
-+the most preferred, and 'in-QEMU' RSS is the least.
- 
- eBPF support (CONFIG_EBPF) is enabled by 'configure' script.
- To enable eBPF RSS support use './configure --enable-bpf'.
-@@ -47,9 +60,6 @@ eBPF RSS turned on by different combinations of vhost-net, vitrio-net and tap co
- 
-         tap,vhost=on & virtio-net-pci,rss=on,hash=on
- 
--If CONFIG_EBPF is not set then only 'in-qemu' RSS is supported.
--Also 'in-qemu' RSS, as a fallback, is used if the eBPF program failed to load or set to TUN.
--
- RSS eBPF program
- ----------------
- 
-@@ -65,7 +75,6 @@ Prerequisites to recompile the eBPF program (regenerate ebpf/rss.bpf.skeleton.h)
-         $ make -f Makefile.ebpf
- 
- Current eBPF RSS implementation uses 'bounded loops' with 'backward jump instructions' which present in the last kernels.
--Overall eBPF RSS works on kernels 5.8+.
- 
- eBPF RSS implementation
- -----------------------
++    if (!virtio_has_feature(features, VIRTIO_NET_F_HASH_REPORT) &&
++        !virtio_has_feature(features, VIRTIO_NET_F_RSS)) {
++        return false;
++    }
++
++    config.hdr.off = offsetof(struct virtio_net_config, supported_hash_types);
++    config.hdr.len = sizeof(config.supported_hash_types);
++
++    assert(!ioctl(fd, VHOST_VDPA_GET_CONFIG, &config));
++    *types = le32_to_cpu(config.supported_hash_types);
++
++    return true;
++}
++
+ static bool vhost_vdpa_has_ufo(NetClientState *nc)
+ {
+     assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
+@@ -436,6 +462,7 @@ static NetClientInfo net_vhost_vdpa_info = {
+         .stop = vhost_vdpa_net_client_stop,
+         .cleanup = vhost_vdpa_cleanup,
+         .has_vnet_hdr = vhost_vdpa_has_vnet_hdr,
++        .get_vnet_hash_supported_types = vhost_vdpa_get_vnet_hash_supported_types,
+         .has_ufo = vhost_vdpa_has_ufo,
+         .check_peer_type = vhost_vdpa_check_peer_type,
+         .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
+@@ -1303,6 +1330,7 @@ static NetClientInfo net_vhost_vdpa_cvq_info = {
+     .stop = vhost_vdpa_net_cvq_stop,
+     .cleanup = vhost_vdpa_cleanup,
+     .has_vnet_hdr = vhost_vdpa_has_vnet_hdr,
++    .get_vnet_hash_supported_types = vhost_vdpa_get_vnet_hash_supported_types,
+     .has_ufo = vhost_vdpa_has_ufo,
+     .check_peer_type = vhost_vdpa_check_peer_type,
+     .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
 
 -- 
 2.46.0
