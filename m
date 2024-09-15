@@ -4,74 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2213FC35FE0
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 01:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 755D7C35FE0
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 01:25:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1spdj3-00014U-BB; Sat, 14 Sep 2024 21:06:53 -0400
+	id 1spe0B-0002fn-Sr; Sat, 14 Sep 2024 21:24:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1spdj2-0000zk-3x
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:06:52 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1spe0A-0002fI-Ho
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:24:34 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1spdj0-00049y-Jv
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:06:51 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2068bee21d8so35516785ad.2
- for <qemu-devel@nongnu.org>; Sat, 14 Sep 2024 18:06:50 -0700 (PDT)
+ id 1spe08-0005Qz-U6
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:24:34 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2057c6c57b5so20035115ad.1
+ for <qemu-devel@nongnu.org>; Sat, 14 Sep 2024 18:24:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726362409; x=1726967209;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726363471; x=1726968271;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=nyASwxYCvsAWNh9neSNt2c74xLjhwEcHZ/10RfBTDG4=;
- b=hiDR48N6aDcvyk8H+iKvRXOqMTDTtTV516zlxxv8hYxyJcyOXsYu6tiWaaNJd9h3RP
- 7zsw+slMHSUZkVWCaa/yiLOJn0CoeAjuQJfHCXtaO+hxIihgVfHTcVpVzxZw7yC1CQbd
- NfD8C3RstBwau952/WUZ4hLR/WaxVSN/iaiCINPi2n51s8MAu7tFp3uIZbuN/KzC2zjs
- vBRIWEAPQcc1qNQrKeFEKbbQ7mQ3zy4HsMmRE3l8ZY33jNyADo1rCCzI6FjK8y+8ecf/
- Rm2diPTqBKyN2O5zVdlko1tfxci941+5lmHRTz1OvvmeD0P1rbgQhWL4DJfw4659Z/Zf
- SQZw==
+ :reply-to; bh=x8JfiA3K2oY/K7D1EGS4G8XFPBDM/W8pC6fABdWUS7w=;
+ b=MKA+YygOeIxl3C7acEB84UVgJR+nsKZaSbbdwIGWKePFRiEpzPThpaboTtOt5XeJsi
+ mIWiV3h/ossRatW8cJFI9WLPvQyV6CBl5BNneBuVge5Wp2MGPNrhMkdZMEXcMSwuCaWV
+ ZSlgITIkJdTNvxXw+4iql/st1KRYfqJPb+8KN+xVMhw2wjmogoHjZqTiWIpM70HmKv6g
+ P8pttHi44zduDxKiDLF0yibuch/Q/wlkYKmaGc+xsOr3Xv+ob1jH+lHRcqmCfCsvlF2g
+ qwdcsGdOzWZIXm7h/2/fYruC6v8crZRSUntUdJ+WKfNb2RdRgEK+KdRVX1PATi7hdHGQ
+ m8Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726362409; x=1726967209;
+ d=1e100.net; s=20230601; t=1726363471; x=1726968271;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nyASwxYCvsAWNh9neSNt2c74xLjhwEcHZ/10RfBTDG4=;
- b=aLIHkFzwjIN3TJgwQS7VuQH/aZIc5BnXdx45qun3EZGo/jizSc8dRBCJiQurVsK032
- ambrFsoMeI4icRFLc+ROW8apvW6bSs/9tysUHqwGfFtl5zJCArioAx8P9NxiAql/svnC
- kza4a3MzAwj/mNc47tMf1m38Rwe+B4PwRbvirIf8MG+joP9mttJIIfrrjaCNTVe+weKU
- 9qDFWhjyIfIeJQiwtUpjE5gn60GI7AROA8t314Mxhdf53jbNSU6knM+CozMOinEMbhvZ
- iOxTdF2hPSYIPyXZ72JYuNPCwYhKZLxjibdKln26S5IsFcIq62Ha7TUSsvX3rfcHZiwC
- typQ==
-X-Gm-Message-State: AOJu0Ywq3BRojZDGAoBYYY/ZuXhn/zPYN139J+pqhs+1Ua+YKpfEJt1b
- I+3ftD5UzQfZC1pvTN4Sl2Huk5TvzycZjwUmQwLIrs8haBgvHBWpngl8FbmGyNQ=
-X-Google-Smtp-Source: AGHT+IHgpNugcE3lXIRjZoDH3JdOq3mqlLpmE4nNvjSoxswpdwMiTt+008Pzku+Vt/Ta1svudNcKcg==
-X-Received: by 2002:a17:902:da8d:b0:205:6552:1099 with SMTP id
- d9443c01a7336-2076e31f984mr179183195ad.8.1726362409213; 
- Sat, 14 Sep 2024 18:06:49 -0700 (PDT)
+ bh=x8JfiA3K2oY/K7D1EGS4G8XFPBDM/W8pC6fABdWUS7w=;
+ b=MmyBhUUDH4Qe0j9QrmCADqPXRnnusroQ1XqPsmmu8MA9N+EIOode+72Et+YVVhqmdA
+ E60xgR4GyvvNmXg4S1ZoGIgRANA18PBG+V74mWDs/jP6hrWZRVXFZFch3ZiAWIwuRFIV
+ 6o+8Y8eDy408G0U3pfDKZApgMlmNCNyjeaAEzmzM/7CktX2nAvdDjcUmexdIE/wulAT1
+ En7NvCgy3G0aqsS/3VdVVRn7dKWe+1r1oRI9XVxjNWyGUafL5Eb+pwkKX04RjPgIyIp0
+ DpIEBdHvknWvwwjiScnKHh9mpmRJ7bp/QRL2PpAcB+E5TDXVunwQEO3NcOWvJZzmDRyL
+ Uu6g==
+X-Gm-Message-State: AOJu0YzpH3qDfay6HqnG3kPa7HWpg7rjlGLh14UEDasu+vjSFHghwSJT
+ OlLL/cZsc3K0c22mBa7r2RJ74oDa2EWrMqb9I9uc0lzNi3cq0HGFbEDZG73lITTq6TOeKx5o/67
+ RxQ4=
+X-Google-Smtp-Source: AGHT+IFY+DFDC/s7GYMQfy9lmUxtxsS5VJtq0iysOlN0P/b70Yc+gxN1J+o/stsVZYk8fjr7KsiERQ==
+X-Received: by 2002:a17:902:e751:b0:205:866d:177d with SMTP id
+ d9443c01a7336-2076e5f7af6mr147218985ad.21.1726363470588; 
+ Sat, 14 Sep 2024 18:24:30 -0700 (PDT)
 Received: from localhost ([210.160.217.68])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-207947666a3sm14713435ad.308.2024.09.14.18.06.47
+ d9443c01a7336-207945da563sm14846865ad.60.2024.09.14.18.24.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 14 Sep 2024 18:06:48 -0700 (PDT)
+ Sat, 14 Sep 2024 18:24:30 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 15 Sep 2024 10:06:39 +0900
-Subject: [PATCH 1/7] net: checksum: Convert data to void *
+Date: Sun, 15 Sep 2024 10:23:42 +0900
+Subject: [PATCH RFC v3 01/11] qdev-properties:
+ DEFINE_PROP_ON_OFF_AUTO_BIT()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240915-queue-v1-1-b49bd49b926d@daynix.com>
-References: <20240915-queue-v1-0-b49bd49b926d@daynix.com>
-In-Reply-To: <20240915-queue-v1-0-b49bd49b926d@daynix.com>
-To: Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240915-hash-v3-1-79cb08d28647@daynix.com>
+References: <20240915-hash-v3-0-79cb08d28647@daynix.com>
+In-Reply-To: <20240915-hash-v3-0-79cb08d28647@daynix.com>
+To: qemu-devel@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>, 
+ Andrew Melnychenko <andrew@daynix.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::630;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::635;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -93,50 +97,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the data parameter of net_checksum_calculate() to void * to
-save unnecessary casts for callers.
-
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- include/net/checksum.h | 2 +-
- net/checksum.c         | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ include/hw/qdev-properties.h | 18 ++++++++++++
+ hw/core/qdev-properties.c    | 66 +++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 83 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/checksum.h b/include/net/checksum.h
-index 7dec37e56c78..188e4cca0b7f 100644
---- a/include/net/checksum.h
-+++ b/include/net/checksum.h
-@@ -30,7 +30,7 @@ uint32_t net_checksum_add_cont(int len, uint8_t *buf, int seq);
- uint16_t net_checksum_finish(uint32_t sum);
- uint16_t net_checksum_tcpudp(uint16_t length, uint16_t proto,
-                              uint8_t *addrs, uint8_t *buf);
--void net_checksum_calculate(uint8_t *data, int length, int csum_flag);
-+void net_checksum_calculate(void *data, int length, int csum_flag);
+diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
+index 09aa04ca1e27..678837569784 100644
+--- a/include/hw/qdev-properties.h
++++ b/include/hw/qdev-properties.h
+@@ -43,10 +43,21 @@ struct PropertyInfo {
+     ObjectPropertyRelease *release;
+ };
  
- static inline uint32_t
- net_checksum_add(int len, uint8_t *buf)
-diff --git a/net/checksum.c b/net/checksum.c
-index 1a957e4c0b10..537457d89d07 100644
---- a/net/checksum.c
-+++ b/net/checksum.c
-@@ -57,7 +57,7 @@ uint16_t net_checksum_tcpudp(uint16_t length, uint16_t proto,
-     return net_checksum_finish(sum);
++/**
++ * struct OnOffAutoBit - OnOffAuto storage with 64 elements.
++ * @on_bits: Bitmap of elements with "on".
++ * @auto_bits: Bitmap of elements with "auto".
++ */
++typedef struct OnOffAutoBit {
++    uint32_t on_bits;
++    uint32_t auto_bits;
++} OnOffAutoBit;
++
+ 
+ /*** qdev-properties.c ***/
+ 
+ extern const PropertyInfo qdev_prop_bit;
++extern const PropertyInfo qdev_prop_on_off_auto_bit;
+ extern const PropertyInfo qdev_prop_bit64;
+ extern const PropertyInfo qdev_prop_bool;
+ extern const PropertyInfo qdev_prop_enum;
+@@ -86,6 +97,13 @@ extern const PropertyInfo qdev_prop_link;
+                 .set_default = true,                            \
+                 .defval.u    = (bool)_defval)
+ 
++#define DEFINE_PROP_ON_OFF_AUTO_BIT(_name, _state, _field, _bit, _defval) \
++    DEFINE_PROP(_name, _state, _field, qdev_prop_on_off_auto_bit,         \
++                OnOffAutoBit,                                             \
++                .bitnr    = (_bit),                                       \
++                .set_default = true,                                      \
++                .defval.i = (OnOffAuto)_defval)
++
+ #define DEFINE_PROP_UNSIGNED(_name, _state, _field, _defval, _prop, _type) \
+     DEFINE_PROP(_name, _state, _field, _prop, _type,                       \
+                 .set_default = true,                                       \
+diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+index 86a583574dd0..e1ff992e7177 100644
+--- a/hw/core/qdev-properties.c
++++ b/hw/core/qdev-properties.c
+@@ -133,7 +133,8 @@ const PropertyInfo qdev_prop_enum = {
+ 
+ static uint32_t qdev_get_prop_mask(Property *prop)
+ {
+-    assert(prop->info == &qdev_prop_bit);
++    assert(prop->info == &qdev_prop_bit ||
++           prop->info == &qdev_prop_on_off_auto_bit);
+     return 0x1 << prop->bitnr;
  }
  
--void net_checksum_calculate(uint8_t *data, int length, int csum_flag)
-+void net_checksum_calculate(void *data, int length, int csum_flag)
- {
-     int mac_hdr_len, ip_len;
-     struct ip_header *ip;
-@@ -101,7 +101,7 @@ void net_checksum_calculate(uint8_t *data, int length, int csum_flag)
-         return;
-     }
+@@ -183,6 +184,69 @@ const PropertyInfo qdev_prop_bit = {
+     .set_default_value = set_default_value_bool,
+ };
  
--    ip = (struct ip_header *)(data + mac_hdr_len);
-+    ip = (struct ip_header *)((uint8_t *)data + mac_hdr_len);
++static void prop_get_on_off_auto_bit(Object *obj, Visitor *v,
++                                     const char *name, void *opaque,
++                                     Error **errp)
++{
++    Property *prop = opaque;
++    OnOffAutoBit *p = object_field_prop_ptr(obj, prop);
++    int value;
++    uint32_t mask = qdev_get_prop_mask(prop);
++
++    if (p->auto_bits & mask) {
++        value = ON_OFF_AUTO_AUTO;
++    } else if (p->on_bits & mask) {
++        value = ON_OFF_AUTO_ON;
++    } else {
++        value = ON_OFF_AUTO_OFF;
++    }
++
++    visit_type_enum(v, name, &value, &OnOffAuto_lookup, errp);
++}
++
++static void prop_set_on_off_auto_bit(Object *obj, Visitor *v,
++                                     const char *name, void *opaque,
++                                     Error **errp)
++{
++    Property *prop = opaque;
++    OnOffAutoBit *p = object_field_prop_ptr(obj, prop);
++    bool bool_value;
++    int value;
++    uint32_t mask = qdev_get_prop_mask(prop);
++
++    if (visit_type_bool(v, name, &bool_value, NULL)) {
++        value = bool_value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
++    } else if (!visit_type_enum(v, name, &value, &OnOffAuto_lookup, errp)) {
++        return;
++    }
++
++    switch (value) {
++    case ON_OFF_AUTO_AUTO:
++        p->on_bits &= ~mask;
++        p->auto_bits |= mask;
++        break;
++
++    case ON_OFF_AUTO_ON:
++        p->on_bits |= mask;
++        p->auto_bits &= ~mask;
++        break;
++
++    case ON_OFF_AUTO_OFF:
++        p->on_bits &= ~mask;
++        p->auto_bits &= ~mask;
++        break;
++    }
++}
++
++const PropertyInfo qdev_prop_on_off_auto_bit = {
++    .name  = "OnOffAuto",
++    .description = "on/off/auto",
++    .enum_table = &OnOffAuto_lookup,
++    .get = prop_get_on_off_auto_bit,
++    .set = prop_set_on_off_auto_bit,
++    .set_default_value = qdev_propinfo_set_default_value_enum,
++};
++
+ /* Bit64 */
  
-     if (IP_HEADER_VERSION(ip) != IP_HEADER_VERSION_4) {
-         return; /* not IPv4 */
+ static uint64_t qdev_get_prop_mask64(Property *prop)
 
 -- 
 2.46.0
