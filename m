@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 755D7C35FE0
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 01:25:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9050CC35FE1
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 01:25:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1spe0B-0002fn-Sr; Sat, 14 Sep 2024 21:24:35 -0400
+	id 1spe0Y-0003M1-TQ; Sat, 14 Sep 2024 21:24:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1spe0A-0002fI-Ho
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:24:34 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1spe0X-0003Fn-BQ
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:24:57 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1spe08-0005Qz-U6
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:24:34 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2057c6c57b5so20035115ad.1
- for <qemu-devel@nongnu.org>; Sat, 14 Sep 2024 18:24:31 -0700 (PDT)
+ id 1spe0V-0005Rq-PX
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:24:57 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2d8a4bad409so2376076a91.0
+ for <qemu-devel@nongnu.org>; Sat, 14 Sep 2024 18:24:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726363471; x=1726968271;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726363494; x=1726968294;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=x8JfiA3K2oY/K7D1EGS4G8XFPBDM/W8pC6fABdWUS7w=;
- b=MKA+YygOeIxl3C7acEB84UVgJR+nsKZaSbbdwIGWKePFRiEpzPThpaboTtOt5XeJsi
- mIWiV3h/ossRatW8cJFI9WLPvQyV6CBl5BNneBuVge5Wp2MGPNrhMkdZMEXcMSwuCaWV
- ZSlgITIkJdTNvxXw+4iql/st1KRYfqJPb+8KN+xVMhw2wjmogoHjZqTiWIpM70HmKv6g
- P8pttHi44zduDxKiDLF0yibuch/Q/wlkYKmaGc+xsOr3Xv+ob1jH+lHRcqmCfCsvlF2g
- qwdcsGdOzWZIXm7h/2/fYruC6v8crZRSUntUdJ+WKfNb2RdRgEK+KdRVX1PATi7hdHGQ
- m8Ig==
+ :reply-to; bh=89JxFPnOlJQtCZTBwZsp0a/32JLBYWXWTM7l+f2b6vE=;
+ b=OvBDH9AnfcnF8xhUzAxJOQvso9ElHANY6uB4TVJlSE3Vc6oHg4pKS8+LHXvy2Y++5Y
+ kJF41Bt0HDC88iNvVpcDnb/0C6miFXVHYWJDYD2uF67IvWvhSl78Z8VGQDdB9FcekrnN
+ UuWvt7IG2g1Hl1+SS4c1apkxSOBQJWx4Zx5rT53Ea8IKxc82Cn5R6HYQQOsKdfSrXIWQ
+ br2xAklqD8NuyX+uBqh9smuMmUQsolJpFR17fUICcChH78d0J7/ur2VTWaN4vCp2pHt4
+ SGDYB/9LyHVJrHgW80kVTA5M5rFp7TpC1gns/GNw25fcJtCR3IIz54uAulS3UTQnUkVe
+ QCGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726363471; x=1726968271;
+ d=1e100.net; s=20230601; t=1726363494; x=1726968294;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=x8JfiA3K2oY/K7D1EGS4G8XFPBDM/W8pC6fABdWUS7w=;
- b=MmyBhUUDH4Qe0j9QrmCADqPXRnnusroQ1XqPsmmu8MA9N+EIOode+72Et+YVVhqmdA
- E60xgR4GyvvNmXg4S1ZoGIgRANA18PBG+V74mWDs/jP6hrWZRVXFZFch3ZiAWIwuRFIV
- 6o+8Y8eDy408G0U3pfDKZApgMlmNCNyjeaAEzmzM/7CktX2nAvdDjcUmexdIE/wulAT1
- En7NvCgy3G0aqsS/3VdVVRn7dKWe+1r1oRI9XVxjNWyGUafL5Eb+pwkKX04RjPgIyIp0
- DpIEBdHvknWvwwjiScnKHh9mpmRJ7bp/QRL2PpAcB+E5TDXVunwQEO3NcOWvJZzmDRyL
- Uu6g==
-X-Gm-Message-State: AOJu0YzpH3qDfay6HqnG3kPa7HWpg7rjlGLh14UEDasu+vjSFHghwSJT
- OlLL/cZsc3K0c22mBa7r2RJ74oDa2EWrMqb9I9uc0lzNi3cq0HGFbEDZG73lITTq6TOeKx5o/67
- RxQ4=
-X-Google-Smtp-Source: AGHT+IFY+DFDC/s7GYMQfy9lmUxtxsS5VJtq0iysOlN0P/b70Yc+gxN1J+o/stsVZYk8fjr7KsiERQ==
-X-Received: by 2002:a17:902:e751:b0:205:866d:177d with SMTP id
- d9443c01a7336-2076e5f7af6mr147218985ad.21.1726363470588; 
- Sat, 14 Sep 2024 18:24:30 -0700 (PDT)
+ bh=89JxFPnOlJQtCZTBwZsp0a/32JLBYWXWTM7l+f2b6vE=;
+ b=dq4jkuC0KDHkhEK3eo4NNy2INUWwHmEEQ5sP4WjtJXa4GNI3iPo65Qd1Zx6msCjbmO
+ PXAJ3/WJDUHdNRGTRq7UNJgQA69+0+7GzCejx2/I2sYblrz918FNYk5hkjqjkCBVs7Y3
+ g9JEQ6a1WZ6GKVQh1+V0LBUq41EM+5VnHGKy7uMn96ngdS8JDxfy98CAQEEhomVZdTED
+ KyIjzH6R0jwDjoi2+3t6hI6cbBrP90wsNKxAK0U5ilfjbdHGCIB9VlTJCkQtE+HNBm/s
+ FtTAyGI9/ViGnLt/O7OyI4tfr28u6WxkDuSXp7opZkqkGEBuAYj4d52wrsM8dNpMNV2s
+ j7dg==
+X-Gm-Message-State: AOJu0YyS2q51/NVAkZJ5UPA1FWYyKrLVr2PyUp4k0jdl27fuiOs5ag1E
+ 4oMfWHA8j77OW8dlGCKdzspTsRvSj5OSMCKx8oRCvCatqcjTB0m5cNi+TvqzH0KrFm7jRuG8SnA
+ ne3Y=
+X-Google-Smtp-Source: AGHT+IHQOjqkQ73VSwh5AmmupKudhjM3XR375wMvRoHTaFqjQmUeFKHdUScbgvHsRqNzzzwPvfSmlw==
+X-Received: by 2002:a17:90a:d903:b0:2d6:1c0f:fea6 with SMTP id
+ 98e67ed59e1d1-2db9ffc385dmr12841462a91.11.1726363494164; 
+ Sat, 14 Sep 2024 18:24:54 -0700 (PDT)
 Received: from localhost ([210.160.217.68])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-207945da563sm14846865ad.60.2024.09.14.18.24.26
+ d9443c01a7336-2079472fc26sm14812295ad.255.2024.09.14.18.24.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 14 Sep 2024 18:24:30 -0700 (PDT)
+ Sat, 14 Sep 2024 18:24:53 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 15 Sep 2024 10:23:42 +0900
-Subject: [PATCH RFC v3 01/11] qdev-properties:
- DEFINE_PROP_ON_OFF_AUTO_BIT()
+Date: Sun, 15 Sep 2024 10:23:46 +0900
+Subject: [PATCH RFC v3 05/11] net/vhost-vdpa: Remove dummy SetSteeringEBPF
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240915-hash-v3-1-79cb08d28647@daynix.com>
+Message-Id: <20240915-hash-v3-5-79cb08d28647@daynix.com>
 References: <20240915-hash-v3-0-79cb08d28647@daynix.com>
 In-Reply-To: <20240915-hash-v3-0-79cb08d28647@daynix.com>
 To: qemu-devel@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>, 
@@ -74,8 +73,8 @@ To: qemu-devel@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>,
  "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>
 Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::635;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x635.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -97,136 +96,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+It is no longer used.
+
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- include/hw/qdev-properties.h | 18 ++++++++++++
- hw/core/qdev-properties.c    | 66 +++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 83 insertions(+), 1 deletion(-)
+ net/vhost-vdpa.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
-index 09aa04ca1e27..678837569784 100644
---- a/include/hw/qdev-properties.h
-+++ b/include/hw/qdev-properties.h
-@@ -43,10 +43,21 @@ struct PropertyInfo {
-     ObjectPropertyRelease *release;
- };
- 
-+/**
-+ * struct OnOffAutoBit - OnOffAuto storage with 64 elements.
-+ * @on_bits: Bitmap of elements with "on".
-+ * @auto_bits: Bitmap of elements with "auto".
-+ */
-+typedef struct OnOffAutoBit {
-+    uint32_t on_bits;
-+    uint32_t auto_bits;
-+} OnOffAutoBit;
-+
- 
- /*** qdev-properties.c ***/
- 
- extern const PropertyInfo qdev_prop_bit;
-+extern const PropertyInfo qdev_prop_on_off_auto_bit;
- extern const PropertyInfo qdev_prop_bit64;
- extern const PropertyInfo qdev_prop_bool;
- extern const PropertyInfo qdev_prop_enum;
-@@ -86,6 +97,13 @@ extern const PropertyInfo qdev_prop_link;
-                 .set_default = true,                            \
-                 .defval.u    = (bool)_defval)
- 
-+#define DEFINE_PROP_ON_OFF_AUTO_BIT(_name, _state, _field, _bit, _defval) \
-+    DEFINE_PROP(_name, _state, _field, qdev_prop_on_off_auto_bit,         \
-+                OnOffAutoBit,                                             \
-+                .bitnr    = (_bit),                                       \
-+                .set_default = true,                                      \
-+                .defval.i = (OnOffAuto)_defval)
-+
- #define DEFINE_PROP_UNSIGNED(_name, _state, _field, _defval, _prop, _type) \
-     DEFINE_PROP(_name, _state, _field, _prop, _type,                       \
-                 .set_default = true,                                       \
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index 86a583574dd0..e1ff992e7177 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -133,7 +133,8 @@ const PropertyInfo qdev_prop_enum = {
- 
- static uint32_t qdev_get_prop_mask(Property *prop)
- {
--    assert(prop->info == &qdev_prop_bit);
-+    assert(prop->info == &qdev_prop_bit ||
-+           prop->info == &qdev_prop_on_off_auto_bit);
-     return 0x1 << prop->bitnr;
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 4af87ea226b4..5d846db5e71f 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -245,12 +245,6 @@ static void vhost_vdpa_cleanup(NetClientState *nc)
+     g_free(s->vhost_vdpa.shared);
  }
  
-@@ -183,6 +184,69 @@ const PropertyInfo qdev_prop_bit = {
-     .set_default_value = set_default_value_bool,
+-/** Dummy SetSteeringEBPF to support RSS for vhost-vdpa backend  */
+-static bool vhost_vdpa_set_steering_ebpf(NetClientState *nc, int prog_fd)
+-{
+-    return true;
+-}
+-
+ static bool vhost_vdpa_has_vnet_hdr(NetClientState *nc)
+ {
+     assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
+@@ -465,7 +459,6 @@ static NetClientInfo net_vhost_vdpa_info = {
+         .get_vnet_hash_supported_types = vhost_vdpa_get_vnet_hash_supported_types,
+         .has_ufo = vhost_vdpa_has_ufo,
+         .check_peer_type = vhost_vdpa_check_peer_type,
+-        .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
  };
  
-+static void prop_get_on_off_auto_bit(Object *obj, Visitor *v,
-+                                     const char *name, void *opaque,
-+                                     Error **errp)
-+{
-+    Property *prop = opaque;
-+    OnOffAutoBit *p = object_field_prop_ptr(obj, prop);
-+    int value;
-+    uint32_t mask = qdev_get_prop_mask(prop);
-+
-+    if (p->auto_bits & mask) {
-+        value = ON_OFF_AUTO_AUTO;
-+    } else if (p->on_bits & mask) {
-+        value = ON_OFF_AUTO_ON;
-+    } else {
-+        value = ON_OFF_AUTO_OFF;
-+    }
-+
-+    visit_type_enum(v, name, &value, &OnOffAuto_lookup, errp);
-+}
-+
-+static void prop_set_on_off_auto_bit(Object *obj, Visitor *v,
-+                                     const char *name, void *opaque,
-+                                     Error **errp)
-+{
-+    Property *prop = opaque;
-+    OnOffAutoBit *p = object_field_prop_ptr(obj, prop);
-+    bool bool_value;
-+    int value;
-+    uint32_t mask = qdev_get_prop_mask(prop);
-+
-+    if (visit_type_bool(v, name, &bool_value, NULL)) {
-+        value = bool_value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-+    } else if (!visit_type_enum(v, name, &value, &OnOffAuto_lookup, errp)) {
-+        return;
-+    }
-+
-+    switch (value) {
-+    case ON_OFF_AUTO_AUTO:
-+        p->on_bits &= ~mask;
-+        p->auto_bits |= mask;
-+        break;
-+
-+    case ON_OFF_AUTO_ON:
-+        p->on_bits |= mask;
-+        p->auto_bits &= ~mask;
-+        break;
-+
-+    case ON_OFF_AUTO_OFF:
-+        p->on_bits &= ~mask;
-+        p->auto_bits &= ~mask;
-+        break;
-+    }
-+}
-+
-+const PropertyInfo qdev_prop_on_off_auto_bit = {
-+    .name  = "OnOffAuto",
-+    .description = "on/off/auto",
-+    .enum_table = &OnOffAuto_lookup,
-+    .get = prop_get_on_off_auto_bit,
-+    .set = prop_set_on_off_auto_bit,
-+    .set_default_value = qdev_propinfo_set_default_value_enum,
-+};
-+
- /* Bit64 */
+ static int64_t vhost_vdpa_get_vring_group(int device_fd, unsigned vq_index,
+@@ -1333,7 +1326,6 @@ static NetClientInfo net_vhost_vdpa_cvq_info = {
+     .get_vnet_hash_supported_types = vhost_vdpa_get_vnet_hash_supported_types,
+     .has_ufo = vhost_vdpa_has_ufo,
+     .check_peer_type = vhost_vdpa_check_peer_type,
+-    .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
+ };
  
- static uint64_t qdev_get_prop_mask64(Property *prop)
+ /*
 
 -- 
 2.46.0
