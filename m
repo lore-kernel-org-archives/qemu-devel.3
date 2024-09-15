@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC1F7C35FE2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B622DC35FE1
 	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 01:25:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1spe0s-0004Hs-I3; Sat, 14 Sep 2024 21:25:18 -0400
+	id 1spe04-0002Vy-6Y; Sat, 14 Sep 2024 21:24:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1spe0o-0003xl-Oq
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:25:15 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1spe01-0002VO-O2
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:24:25 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1spe0l-0005e1-GW
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:25:12 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-7db233cef22so1546151a12.0
- for <qemu-devel@nongnu.org>; Sat, 14 Sep 2024 18:25:11 -0700 (PDT)
+ id 1spdzz-0005Qi-MJ
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:24:25 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-71923d87be4so1527144b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 14 Sep 2024 18:24:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726363510; x=1726968310;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726363461; x=1726968261;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4hKy6WeHKTopFFsCzB6TpUBLh4s+GMB0sadGqV/W3WI=;
- b=ZzS83AF2shJRW8YQIuSmQWzgKzs7IivQKMnNGbIZqetfE0z0hjS0kFhSLLhx1Sz8dX
- k2ubC/5xvFVZgo2AulPzUWEJiGtKP69HPiaShUpbf5+3M6AZDdCArlCijfXhf9p2PD6+
- GQ4AmoIlxzbseCplMwyCQL4Vr2txK12Pfl4SQSgKO7ajBidihkiwynHbcEeRvQug4nqE
- VQZeEovCOIFjag/5AJd38pICr3eWkvGoOWpSXepYxyXSGLQ1CtxXhqKZQcR/EbxX/KXd
- y/lYMjNC7Hu0hooWyAGQj30elqujkocpCvewmfMITc5eItDXTf5oT4tDTMTWxniCSNLm
- AsBQ==
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=mUoXegguz70cN78pSn5Nu/1+Slky6PRyeNuaO5Bjsrk=;
+ b=Rig9dcdlIE7WbglAwd35OB7qPdoSGFBDuzhx687eQXHlRWRVtBQd7ilo7AbsHeTCCi
+ 3sdIEaLmDMOBv4tXa6OB/5/SmXkyAM5tJ4loyfNUCRZbJ4yTVfXRtVCHbejdcop9S5GB
+ iVLbaI1XnnFVUBEX/lA9QPny3aD1KFa1QmZiCOPrUQKU9ZNTZvduGhv/1N3S5k1EONOS
+ Doo4CDgGtISTpzY/5QE3J7mDK0+If9DbK/J8bdqj1mzXn/yj8XosCdp3RMZ/vVUszUNl
+ XiGfFbnycZmL59ngHJTohvmOLP40zvdx1hhxiCPNIECKcE91l4D6Kn/FD0YdTQco6xLI
+ ClCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726363510; x=1726968310;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4hKy6WeHKTopFFsCzB6TpUBLh4s+GMB0sadGqV/W3WI=;
- b=iuo22EtbubUrL9y8zis76eYIhzO7CG21drl3dcJigsISNLVO+9T4NMnvp/Aqcgn3D4
- pxbcwMrh1VJs9+l2abiVLvDQHWUME6WmBlrSUhvV5VOvNArhuanMm1eh+AuaeWGpc3Zl
- o/wuXxTaK43PFdf1rv7YGJjX8KukT6sTPc7IfZShBN0DHL1a8efDqA0k6EUt8/a7S5zA
- H+K8oA0v6tyOiPZvBQlw3sQueVs/cxQukUfn1ZL9SwpOTze0rECNhZD2JT6vSv48Mgu3
- dF1H/Y2m8sPJ+YtBdOCQ3x4MU+rSwY+17VuizVGzhTG3OLdoVmyRjKpEj4bkYmeU5T/o
- ebpg==
-X-Gm-Message-State: AOJu0YwMXzeFljg7/POoPbBjCk7dXF5UtEpGvFzloAWeaSDAOdnGOPJa
- Eg3v8Dp2UB6BectTPRKp+0ANMSUbt1eKCWbc6kHeeoBu8RAUyVLaZh9Lc2s9qdZgBLS0Ml4rRVB
- SxRc=
-X-Google-Smtp-Source: AGHT+IHvjDZm5dOITED6jlH+QLrINXDdVtfofu/VErlAJom+yvrzk3xn+e8c/63yvqQAHdGHpOFS1g==
-X-Received: by 2002:a05:6a20:c996:b0:1c6:a680:ef3d with SMTP id
- adf61e73a8af0-1d112db5de9mr11528046637.28.1726363509887; 
- Sat, 14 Sep 2024 18:25:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726363461; x=1726968261;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mUoXegguz70cN78pSn5Nu/1+Slky6PRyeNuaO5Bjsrk=;
+ b=VH95bbCuXeyQT+xWPhmcSHRzHBxJBJVECcpczqpxyXomG9ivXboF6Vthg+ImcLJJJ9
+ LAXZgTZB34O1xcedUjbRlzdgd7IRnujIx6LH0cp8dBFjIogWOObFL/HivfPZtd9Y8tx3
+ 1dS7fcki/7d69KTqRhrvgrXmFrhN4AdNIh7cbPgK37UKvXxN5IBoYOAAAweUxNhe6w0l
+ uwVrP33CIz9i5MqcK17TogpgxAu171Zzs7PTCShu7r7NIm/ZgDmryjfxP2Hu73JXb9O5
+ +0x3LNkfTlaEYR3Z6u/Z8hNh0WZ05sCgnvMotCCrrhnTT9LNGqkYEP5RgGBYqryqJS2t
+ aYrw==
+X-Gm-Message-State: AOJu0YzfiI10z2Z/AxLJ4Itq7Kn+FFYAR5O4DMCnTy4X4Z6y2f91+MpM
+ Fwau/gu5+hNWdCpmKN+3T6IDjxoneFDlH54U7KLB0nZlugo38fzspSX0BgBFxeeJRS8Nj32b/tW
+ NXQY=
+X-Google-Smtp-Source: AGHT+IFnQu39Y8AR3vluVy08+1nLZIh4vnlMvjRktX5D6qqv1xOc5oy4+4BWRELfKtgIo8BNVbugMg==
+X-Received: by 2002:a05:6a00:1799:b0:714:1bd8:35f7 with SMTP id
+ d2e1a72fcca58-71936a60297mr10353064b3a.15.1726363461195; 
+ Sat, 14 Sep 2024 18:24:21 -0700 (PDT)
 Received: from localhost ([210.160.217.68])
  by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-71944a980b4sm1528308b3a.34.2024.09.14.18.25.07
+ d2e1a72fcca58-71944bc7bcbsm1517670b3a.205.2024.09.14.18.24.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 14 Sep 2024 18:25:09 -0700 (PDT)
+ Sat, 14 Sep 2024 18:24:20 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 15 Sep 2024 10:23:50 +0900
-Subject: [PATCH RFC v3 09/11] virtio-net: Offload hashing without vhost
+Subject: [PATCH RFC v3 00/11] virtio-net: Offload hashing without eBPF
+Date: Sun, 15 Sep 2024 10:23:41 +0900
+Message-Id: <20240915-hash-v3-0-79cb08d28647@daynix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240915-hash-v3-9-79cb08d28647@daynix.com>
-References: <20240915-hash-v3-0-79cb08d28647@daynix.com>
-In-Reply-To: <20240915-hash-v3-0-79cb08d28647@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAB035mYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDCyML3YzE4gxdMyMLYyPLRBPTFJMUJaDSgqLUtMwKsDHRSkFuzkqxtbU
+ AGvYp0lsAAAA=
 To: qemu-devel@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>, 
  Andrew Melnychenko <andrew@daynix.com>, 
  "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>
 Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::52e;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52e.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::430;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,51 +97,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is necessary to offload hashing to tap.
+Based-on: <20240915-queue-v1-0-b49bd49b926d@daynix.com>
+("[PATCH 0/7] virtio-net fixes")
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+I'm proposing to add a feature to offload virtio-net RSS/hash report to
+Linux. This series contain patches to utilize the proposed Linux feature.
+The patches for Linux are available at:
+https://lore.kernel.org/r/20240915-rss-v3-0-c630015db082@daynix.com/
+
+This work will be presented at LPC 2024:
+https://lpc.events/event/18/contributions/1963/
+
 ---
- hw/net/virtio-net.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+Akihiko Odaki (11):
+      qdev-properties: DEFINE_PROP_ON_OFF_AUTO_BIT()
+      net/vhost-vdpa: Report hashing capability
+      virtio-net: Move virtio_net_get_features() down
+      virtio-net: Retrieve peer hashing capability
+      net/vhost-vdpa: Remove dummy SetSteeringEBPF
+      virtio-net: Add hash type options
+      net: Allow configuring virtio hashing
+      virtio-net: Use qemu_set_vnet_hash()
+      virtio-net: Offload hashing without vhost
+      tap: Report virtio-net hashing support on Linux
+      docs/devel/ebpf_rss.rst: Update for peer RSS
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index be6759d1c0f4..72493b652bf5 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1695,7 +1695,11 @@ static size_t receive_header(VirtIONet *n, struct virtio_net_hdr *hdr,
- {
-     size_t hdr_len = n->guest_hdr_len;
- 
--    memcpy(hdr, buf, sizeof(struct virtio_net_hdr));
-+    memcpy(hdr, buf,
-+           n->rss_data.populate_hash &&
-+           n->rss_data.enabled && !n->rss_data.enabled_software_rss ?
-+           sizeof(struct virtio_net_hdr_v1_hash) :
-+           sizeof(struct virtio_net_hdr));
- 
-     *buf_offset = n->host_hdr_len;
-     work_around_broken_dhclient(hdr, &hdr_len, buf, buf_size, buf_offset);
-@@ -3072,11 +3076,13 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
-     }
- 
-     if (!get_vhost_net(nc->peer)) {
--        if (!use_own_hash) {
--            virtio_clear_feature(&features, VIRTIO_NET_F_HASH_REPORT);
--            virtio_clear_feature(&features, VIRTIO_NET_F_RSS);
--        } else if (virtio_has_feature(features, VIRTIO_NET_F_RSS)) {
--            virtio_net_load_ebpf(n);
-+        if (!use_peer_hash) {
-+            if (!use_own_hash) {
-+                virtio_clear_feature(&features, VIRTIO_NET_F_HASH_REPORT);
-+                virtio_clear_feature(&features, VIRTIO_NET_F_RSS);
-+            } else if (virtio_has_feature(features, VIRTIO_NET_F_RSS)) {
-+                virtio_net_load_ebpf(n);
-+            }
-         }
- 
-         return features;
+ docs/devel/ebpf_rss.rst        |  23 ++-
+ include/hw/qdev-properties.h   |  18 +++
+ include/hw/virtio/virtio-net.h |   6 +-
+ include/net/net.h              |  20 +++
+ net/tap-linux.h                |   2 +
+ net/tap_int.h                  |   3 +
+ hw/core/qdev-properties.c      |  66 ++++++++-
+ hw/net/virtio-net.c            | 327 +++++++++++++++++++++++++++++------------
+ net/net.c                      |  14 ++
+ net/tap-bsd.c                  |  10 ++
+ net/tap-linux.c                |  18 +++
+ net/tap-solaris.c              |  10 ++
+ net/tap-stub.c                 |  10 ++
+ net/tap.c                      |  15 ++
+ net/vhost-vdpa.c               |  41 +++++-
+ 15 files changed, 473 insertions(+), 110 deletions(-)
+---
+base-commit: decf357a35b1201b34cc37c47b4b027f9601855e
+change-id: 20240828-hash-628329a45d4d
 
+Best regards,
 -- 
-2.46.0
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
