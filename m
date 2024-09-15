@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BBBFC3ABA0
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 16:10:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF640C3ABA0
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 16:11:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sproD-0002Q8-1D; Sun, 15 Sep 2024 12:09:09 -0400
+	id 1sproV-0003Hl-3W; Sun, 15 Sep 2024 12:09:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1spro8-0002Ne-Jv
- for qemu-devel@nongnu.org; Sun, 15 Sep 2024 12:09:05 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1sproQ-0003Dw-Re
+ for qemu-devel@nongnu.org; Sun, 15 Sep 2024 12:09:23 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1spro6-0006N5-Is
- for qemu-devel@nongnu.org; Sun, 15 Sep 2024 12:09:04 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-71798a15ce5so3193410b3a.0
- for <qemu-devel@nongnu.org>; Sun, 15 Sep 2024 09:09:02 -0700 (PDT)
+ id 1sproO-0006Px-Nf
+ for qemu-devel@nongnu.org; Sun, 15 Sep 2024 12:09:22 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-718e11e4186so3544935b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 15 Sep 2024 09:09:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1726416541; x=1727021341;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1726416559; x=1727021359;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3OFIU38UikYUB3gdX1kGRi1xc6HOThSaI+9KQA5Kl24=;
- b=E1MknaFWdOHgPEXWVTxM9xhxEqDY0vszdnpt1Xv4inupOTWoY4UTr+OcmLac/IWkNZ
- 9NEaobQuKbVlnrPOZWQ2EayG5ZnHojtLBhOU5B5gLVrQRVSOfEAnmvr3vqe6HaNhZfO5
- NvH/GTpW7nGC8MV791deA6zRc/XVSVE/0QuXSn9FWE/ihE2cSFGlbYq+nZFfsenciPmY
- k/m+KAnSzE1gbioBq5ZBvM7E2iaeZ0oU1LWsoXFcuMGAB3YQ579cFPyT5UvegF7j10Dr
- c2gkv9ZSem9ZHilMZc/Z5J9LkcXRTMImZr+3tCROb4gO613bNichvjpMStUVNItxh4p0
- 9a9Q==
+ bh=VxfIUT8pMVWFFKuG2ha9l+max75wFuRXKMQhUKzr0eU=;
+ b=fWUJnH2Yi+N163kYIT0B5xSAcp4z9t6klV8jSNdwRW20Wrr+/tUSFgGNVEQgsei0nL
+ 1iwB5xNJJ11aHjJa3W96wWu0RQbCuFQ/1MfUDq8x6I1LIQ7UqYuTbnWyTiBjhk0kanFF
+ adXagL3RR7dSF4ALcN8DbGPbhlKB0P+Kk4Vb8taCkEOb51HbIToSiXLm1u8Hfaon6hDp
+ NwUeKoAR2ov5H4b8MZYoqGPDa1LbK9ebR6qVsFiAXkoGqjyZ7bD6qNzBXGACzQ70dFdo
+ fDkGDyx93a0Woo6j0LD0hyjPLJiYz0+2DN1yuIqtUVJI6RrrCooP7dd+jO7ExOnLye0N
+ l1Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726416541; x=1727021341;
+ d=1e100.net; s=20230601; t=1726416559; x=1727021359;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3OFIU38UikYUB3gdX1kGRi1xc6HOThSaI+9KQA5Kl24=;
- b=DwEJHUYCzXvesf/Fr8XHmUgrnt4QJwxlMr91X2zt/REmkkI1qIj8WbBKBHK3eh1yJL
- aUcYX079sm8GdSDqbId9F73Xps3kQd9Fd76RN/utcJGUSieZFWLEVOvvzgD5KXxz1y0e
- dMXRRviE/oAbOybQJ3xBKRmoawt3pQX0TXFG53A2jZxX7gOnfGzyMkV9EFF/GvF5fIh8
- In1f8awWqCKlF0+SlU55ID50Wz0k8dLIGKp65uFwq5t0CP+1FYonhLYqt4yJQMiMLUJi
- C1DWWi1NjWWJ0Z629ReIi4wEYcZ1kBl2p7ZogTtoNF5oxQ4zRBHCWgKhgYRiBmMfH1nn
- 98Fg==
-X-Gm-Message-State: AOJu0YzuDk8/VfgPdoqcByskqxT0CrzD5HQM9oqKkm1yiJsT4H7c/kxS
- zDRUXJaYzLYFnDMSaOSSrEjWcNoLO3V/JiWb1w3vDJz0M9v6uO/IqKYNK75e97VDGwnUGLrwRcq
- a0kIpXQ==
-X-Google-Smtp-Source: AGHT+IFh1U2MKNLDcaCu/t2xOiFeWPrezQ5sXg+TZK8gPYm0NLZ5WFpOfOsKQwyzvP6FtmXLKAh5pg==
-X-Received: by 2002:a05:6a20:e605:b0:1cf:1228:c175 with SMTP id
- adf61e73a8af0-1cf755c76eamr18380582637.8.1726416540322; 
- Sun, 15 Sep 2024 09:09:00 -0700 (PDT)
+ bh=VxfIUT8pMVWFFKuG2ha9l+max75wFuRXKMQhUKzr0eU=;
+ b=exoP6kfrZ+aMtzInGm1moSnaoLH+9Je58EgY+MfRxZ2WXGdZ/CkU9154dNQbwf6Bty
+ wYjgAxHvH3RKxkMxUM7et7LLtcJHg1z/1QJvNX0GqDacw0nRx+783mTr+JNRcB0hNqAy
+ o9xmVAH+T7s4TkOknk/amnWfuVbDC/Xwj4tyvjocSAU+ZujQZ9DcfT0SWBEGJA+fDNUJ
+ qhqVBy49ZsI/r0qeLmDJhLJn+aUvIf4BCnMWcJs66aXKbqBEWncgrGuWsjAjcJtODWs5
+ BTxQ14KYR8I2mNX5i4StCfHpPcQ2pE3vH5cue2E61rADWIIgKY9GVzcqLZPva59OsPjE
+ cwdQ==
+X-Gm-Message-State: AOJu0Yz46KSsdbztUv5tVRUWVJ7GtzGkhgq+5LfXiX+dazNOPWTiytxe
+ YXhT3BNTdDga9JWBAm0QV3RWYUaZrmElVxNm5Pfw+T/aGLAKnK71/FP38WxfKrS48TEIH0XLIIa
+ kY/nQDw==
+X-Google-Smtp-Source: AGHT+IGO3cZ8epqoxRRAaW2eKvyivLEIxVnTWOBSybaA9cfAcCbYsndlt4bvvQrFE4RauY2gKzw7ZQ==
+X-Received: by 2002:a05:6a21:168e:b0:1d2:bb49:6381 with SMTP id
+ adf61e73a8af0-1d2bb496410mr5558241637.47.1726416558401; 
+ Sun, 15 Sep 2024 09:09:18 -0700 (PDT)
 Received: from localhost.localdomain ([118.114.94.247])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71944bb5967sm2344795b3a.182.2024.09.15.09.08.57
+ d2e1a72fcca58-71944bb5967sm2344795b3a.182.2024.09.15.09.09.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Sep 2024 09:09:00 -0700 (PDT)
+ Sun, 15 Sep 2024 09:09:18 -0700 (PDT)
 From: Hyman Huang <yong.huang@smartx.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -67,16 +67,17 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  David Hildenbrand <david@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, yong.huang@smartx.com
-Subject: [PATCH v1 1/7] migration: Introduce structs for background sync
-Date: Mon, 16 Sep 2024 00:08:44 +0800
-Message-Id: <531750c8d7b6c09f877b5f335a60fab402c168be.1726390098.git.yong.huang@smartx.com>
+Subject: [PATCH v1 6/7] qapi/migration: Introduce cpu-responsive-throttle
+ parameter
+Date: Mon, 16 Sep 2024 00:08:49 +0800
+Message-Id: <81d939d716918ed5feea3850cf0644a66d9f1a7b.1726390099.git.yong.huang@smartx.com>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <cover.1726390098.git.yong.huang@smartx.com>
 References: <cover.1726390098.git.yong.huang@smartx.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=yong.huang@smartx.com; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=yong.huang@smartx.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,104 +99,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-shadow_bmap, iter_bmap and iter_dirty_pages are introduced
-to satisfy the need for background sync.
-
-Meanwhile, introduce enumeration of sync method.
+To enable the responsive throttle that will be implemented
+in the next commit, introduce the cpu-responsive-throttle
+parameter.
 
 Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 ---
- include/exec/ramblock.h | 45 +++++++++++++++++++++++++++++++++++++++++
- migration/ram.c         |  6 ++++++
- 2 files changed, 51 insertions(+)
+ migration/migration-hmp-cmds.c |  8 ++++++++
+ migration/options.c            | 20 ++++++++++++++++++++
+ migration/options.h            |  1 +
+ qapi/migration.json            | 16 +++++++++++++++-
+ 4 files changed, 44 insertions(+), 1 deletion(-)
 
-diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
-index 0babd105c0..0e327bc0ae 100644
---- a/include/exec/ramblock.h
-+++ b/include/exec/ramblock.h
-@@ -24,6 +24,30 @@
- #include "qemu/rcu.h"
- #include "exec/ramlist.h"
- 
-+/* Possible bits for cpu_physical_memory_sync_dirty_bitmap */
-+
-+/*
-+ * The old-fashioned sync, which is, in turn, used for CPU
-+ * throttle and memory transfer.
-+ */
-+#define RAMBLOCK_SYN_LEGACY_ITER   (1U << 0)
-+
-+/*
-+ * The modern sync, which is, in turn, used for CPU throttle
-+ * and memory transfer.
-+ */
-+#define RAMBLOCK_SYN_MODERN_ITER   (1U << 1)
-+
-+/* The modern sync, which is used for CPU throttle only */
-+#define RAMBLOCK_SYN_MODERN_BACKGROUND    (1U << 2)
-+
-+#define RAMBLOCK_SYN_MASK  (0x7)
-+
-+typedef enum RAMBlockSynMode {
-+    RAMBLOCK_SYN_LEGACY, /* Old-fashined mode */
-+    RAMBLOCK_SYN_MODERN, /* Background-sync-supported mode */
-+} RAMBlockSynMode;
-+
- struct RAMBlock {
-     struct rcu_head rcu;
-     struct MemoryRegion *mr;
-@@ -89,6 +113,27 @@ struct RAMBlock {
-      * could not have been valid on the source.
-      */
-     ram_addr_t postcopy_length;
-+
-+    /*
-+     * Used to backup the bmap during background sync to see whether any dirty
-+     * pages were sent during that time.
-+     */
-+    unsigned long *shadow_bmap;
-+
-+    /*
-+     * The bitmap "bmap," which was initially used for both sync and memory
-+     * transfer, will be replaced by two bitmaps: the previously used "bmap"
-+     * and the recently added "iter_bmap." Only the memory transfer is
-+     * conducted with the previously used "bmap"; the recently added
-+     * "iter_bmap" is utilized for dirty bitmap sync.
-+     */
-+    unsigned long *iter_bmap;
-+
-+    /* Number of new dirty pages during iteration */
-+    uint64_t iter_dirty_pages;
-+
-+    /* If background sync has shown up during iteration */
-+    bool background_sync_shown_up;
- };
- #endif
- #endif
-diff --git a/migration/ram.c b/migration/ram.c
-index 67ca3d5d51..f29faa82d6 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -2362,6 +2362,10 @@ static void ram_bitmaps_destroy(void)
-         block->bmap = NULL;
-         g_free(block->file_bmap);
-         block->file_bmap = NULL;
-+        g_free(block->shadow_bmap);
-+        block->shadow_bmap = NULL;
-+        g_free(block->iter_bmap);
-+        block->iter_bmap = NULL;
-     }
+diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+index 28165cfc9e..1fe6c74d66 100644
+--- a/migration/migration-hmp-cmds.c
++++ b/migration/migration-hmp-cmds.c
+@@ -264,6 +264,10 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+         monitor_printf(mon, "%s: %s\n",
+             MigrationParameter_str(MIGRATION_PARAMETER_CPU_THROTTLE_TAILSLOW),
+             params->cpu_throttle_tailslow ? "on" : "off");
++        assert(params->has_cpu_responsive_throttle);
++        monitor_printf(mon, "%s: %s\n",
++            MigrationParameter_str(MIGRATION_PARAMETER_CPU_RESPONSIVE_THROTTLE),
++            params->cpu_responsive_throttle ? "on" : "off");
+         assert(params->has_max_cpu_throttle);
+         monitor_printf(mon, "%s: %u\n",
+             MigrationParameter_str(MIGRATION_PARAMETER_MAX_CPU_THROTTLE),
+@@ -512,6 +516,10 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
+         p->has_cpu_throttle_tailslow = true;
+         visit_type_bool(v, param, &p->cpu_throttle_tailslow, &err);
+         break;
++    case MIGRATION_PARAMETER_CPU_RESPONSIVE_THROTTLE:
++        p->has_cpu_responsive_throttle = true;
++        visit_type_bool(v, param, &p->cpu_responsive_throttle, &err);
++        break;
+     case MIGRATION_PARAMETER_MAX_CPU_THROTTLE:
+         p->has_max_cpu_throttle = true;
+         visit_type_uint8(v, param, &p->max_cpu_throttle, &err);
+diff --git a/migration/options.c b/migration/options.c
+index 147cd2b8fd..b4c269bf1d 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -111,6 +111,8 @@ Property migration_properties[] = {
+                       DEFAULT_MIGRATE_CPU_THROTTLE_INCREMENT),
+     DEFINE_PROP_BOOL("x-cpu-throttle-tailslow", MigrationState,
+                       parameters.cpu_throttle_tailslow, false),
++    DEFINE_PROP_BOOL("x-cpu-responsive-throttle", MigrationState,
++                      parameters.cpu_responsive_throttle, false),
+     DEFINE_PROP_SIZE("x-max-bandwidth", MigrationState,
+                       parameters.max_bandwidth, MAX_THROTTLE),
+     DEFINE_PROP_SIZE("avail-switchover-bandwidth", MigrationState,
+@@ -705,6 +707,13 @@ uint8_t migrate_cpu_throttle_initial(void)
+     return s->parameters.cpu_throttle_initial;
  }
  
-@@ -2753,6 +2757,8 @@ static void ram_list_init_bitmaps(void)
-             }
-             block->clear_bmap_shift = shift;
-             block->clear_bmap = bitmap_new(clear_bmap_size(pages, shift));
-+            block->shadow_bmap = bitmap_new(pages);
-+            block->iter_bmap = bitmap_new(pages);
-         }
++bool migrate_responsive_throttle(void)
++{
++    MigrationState *s = migrate_get_current();
++
++    return s->parameters.cpu_responsive_throttle;
++}
++
+ bool migrate_cpu_throttle_tailslow(void)
+ {
+     MigrationState *s = migrate_get_current();
+@@ -891,6 +900,8 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+     params->cpu_throttle_increment = s->parameters.cpu_throttle_increment;
+     params->has_cpu_throttle_tailslow = true;
+     params->cpu_throttle_tailslow = s->parameters.cpu_throttle_tailslow;
++    params->has_cpu_responsive_throttle = true;
++    params->cpu_responsive_throttle = s->parameters.cpu_responsive_throttle;
+     params->tls_creds = g_strdup(s->parameters.tls_creds);
+     params->tls_hostname = g_strdup(s->parameters.tls_hostname);
+     params->tls_authz = g_strdup(s->parameters.tls_authz ?
+@@ -959,6 +970,7 @@ void migrate_params_init(MigrationParameters *params)
+     params->has_cpu_throttle_initial = true;
+     params->has_cpu_throttle_increment = true;
+     params->has_cpu_throttle_tailslow = true;
++    params->has_cpu_responsive_throttle = true;
+     params->has_max_bandwidth = true;
+     params->has_downtime_limit = true;
+     params->has_x_checkpoint_delay = true;
+@@ -1191,6 +1203,10 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
+         dest->cpu_throttle_tailslow = params->cpu_throttle_tailslow;
      }
- }
+ 
++    if (params->has_cpu_responsive_throttle) {
++        dest->cpu_responsive_throttle = params->cpu_responsive_throttle;
++    }
++
+     if (params->tls_creds) {
+         assert(params->tls_creds->type == QTYPE_QSTRING);
+         dest->tls_creds = params->tls_creds->u.s;
+@@ -1302,6 +1318,10 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
+         s->parameters.cpu_throttle_tailslow = params->cpu_throttle_tailslow;
+     }
+ 
++    if (params->has_cpu_responsive_throttle) {
++        s->parameters.cpu_responsive_throttle = params->cpu_responsive_throttle;
++    }
++
+     if (params->tls_creds) {
+         g_free(s->parameters.tls_creds);
+         assert(params->tls_creds->type == QTYPE_QSTRING);
+diff --git a/migration/options.h b/migration/options.h
+index a0bd6edc06..80d0fcdaf9 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -68,6 +68,7 @@ bool migrate_has_block_bitmap_mapping(void);
+ uint32_t migrate_checkpoint_delay(void);
+ uint8_t migrate_cpu_throttle_increment(void);
+ uint8_t migrate_cpu_throttle_initial(void);
++bool migrate_responsive_throttle(void);
+ bool migrate_cpu_throttle_tailslow(void);
+ bool migrate_direct_io(void);
+ uint64_t migrate_downtime_limit(void);
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 95b490706c..c61d3b3a6b 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -732,6 +732,10 @@
+ #     be excessive at tail stage.  The default value is false.  (Since
+ #     5.1)
+ #
++# @cpu-responsive-throttle: Make CPU throttling more responsively by
++#                           introduce an extra detection metric of
++#                           migration convergence. (Since 9.1)
++#
+ # @tls-creds: ID of the 'tls-creds' object that provides credentials
+ #     for establishing a TLS connection over the migration data
+ #     channel.  On the outgoing side of the migration, the credentials
+@@ -857,7 +861,7 @@
+            'announce-rounds', 'announce-step',
+            'throttle-trigger-threshold',
+            'cpu-throttle-initial', 'cpu-throttle-increment',
+-           'cpu-throttle-tailslow',
++           'cpu-throttle-tailslow', 'cpu-responsive-throttle',
+            'tls-creds', 'tls-hostname', 'tls-authz', 'max-bandwidth',
+            'avail-switchover-bandwidth', 'downtime-limit',
+            { 'name': 'x-checkpoint-delay', 'features': [ 'unstable' ] },
+@@ -913,6 +917,10 @@
+ #     be excessive at tail stage.  The default value is false.  (Since
+ #     5.1)
+ #
++# @cpu-responsive-throttle: Make CPU throttling more responsively by
++#                           introduce an extra detection metric of
++#                           migration convergence. (Since 9.1)
++#
+ # @tls-creds: ID of the 'tls-creds' object that provides credentials
+ #     for establishing a TLS connection over the migration data
+ #     channel.  On the outgoing side of the migration, the credentials
+@@ -1045,6 +1053,7 @@
+             '*cpu-throttle-initial': 'uint8',
+             '*cpu-throttle-increment': 'uint8',
+             '*cpu-throttle-tailslow': 'bool',
++            '*cpu-responsive-throttle': 'bool',
+             '*tls-creds': 'StrOrNull',
+             '*tls-hostname': 'StrOrNull',
+             '*tls-authz': 'StrOrNull',
+@@ -1127,6 +1136,10 @@
+ #     be excessive at tail stage.  The default value is false.  (Since
+ #     5.1)
+ #
++# @cpu-responsive-throttle: Make CPU throttling more responsively by
++#                           introduce an extra detection metric of
++#                           migration convergence. (Since 9.1)
++#
+ # @tls-creds: ID of the 'tls-creds' object that provides credentials
+ #     for establishing a TLS connection over the migration data
+ #     channel.  On the outgoing side of the migration, the credentials
+@@ -1252,6 +1265,7 @@
+             '*cpu-throttle-initial': 'uint8',
+             '*cpu-throttle-increment': 'uint8',
+             '*cpu-throttle-tailslow': 'bool',
++            '*cpu-responsive-throttle': 'bool',
+             '*tls-creds': 'str',
+             '*tls-hostname': 'str',
+             '*tls-authz': 'str',
 -- 
 2.39.1
 
