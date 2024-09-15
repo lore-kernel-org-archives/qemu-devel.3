@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ED81C35FE1
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 01:26:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1444C35FE0
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 01:26:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1spe0W-0003Bk-Ai; Sat, 14 Sep 2024 21:24:56 -0400
+	id 1spe0i-0003iw-6m; Sat, 14 Sep 2024 21:25:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1spe0T-0003Ac-Vp
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:24:53 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1spe0f-0003gW-Au
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:25:05 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1spe0S-0005Rf-0e
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:24:53 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2055136b612so42142525ad.0
- for <qemu-devel@nongnu.org>; Sat, 14 Sep 2024 18:24:51 -0700 (PDT)
+ id 1spe0d-0005SS-4v
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:25:05 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-206bd1c6ccdso19040495ad.3
+ for <qemu-devel@nongnu.org>; Sat, 14 Sep 2024 18:25:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726363490; x=1726968290;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726363502; x=1726968302;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=yN4IPLpzUJOoQP0bUmbKLVptw/fXWtyeCd8LXlwgVCQ=;
- b=ogrsUlW6BS2PRXcPqBoHHUKz2IfZxRVMWpIk954m5X/poWe7F42yRS+lXy3E0rogjK
- SwxgQi/SpoS7rCV1oE/IrLiip0prOKqlxC11/IyPhqAMXlqTrE3rDSMA1PO18crL0aR2
- Ykz1TtgRqw+vEt23+NJ12FA1GYrxXwm2ToMtUuOhuyNV0QwrM4q3qSl3ry5QYfU2d4el
- OGVdITVwXMiUTDhLNi0moXPAE5wNeNgaU0gHtsdNLuxo+WhK9Xcc2FxbbNIMJvooo1bS
- 3/CO/X0dxQE/yX0UxbAhSSiQ5U1RKqFCnQd81QTIzAg2FNTq3cL7QfkD1ndURSy2WCV6
- hvYg==
+ :reply-to; bh=05vEGgLAWx+iSc8sGRfqXN4iIzwNlz6gmxjzBkX2S4M=;
+ b=FoNbcGBuVuy/UI1RFU9Xl62T2Xtj2tTN0d4MurFCvuJetvLV735r5iiyYRxLVwa6Pw
+ DlmLaZtZY84KNJ7ctEV084WuXtvEkzcI+m0NM70Q0GWihfmtbRr/ZHQ5HpwnBCg6eLmG
+ gi0Vi35VQonR9FbgjvVyEMbYzbqdkpUI4gRdYx3fV2gScRh7Hkohszc8JiomNomtUawk
+ BeUU1AABimdk24pZA20Bn3KgTxe35DnaAIMk90q/e8/y7b1Uau5n9FKCe5k3o15ZL9Xo
+ 4PSxBRwi95F1JqRGNoa6XVutBGqo4V1g36l3tv3wWT3jK9cKPvWGcCLK3dd7glHTsKWe
+ w6Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726363490; x=1726968290;
+ d=1e100.net; s=20230601; t=1726363502; x=1726968302;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yN4IPLpzUJOoQP0bUmbKLVptw/fXWtyeCd8LXlwgVCQ=;
- b=Ah5VLujA2r9csWc3NyIkv/hoyXHH5VSEceiXnsOdNE59iqVDU9hJ/kFAz1rOU5gbbX
- AUWineG8nl7OY84LFbRbaJunFIJ8NEnzVGtVs8FHfuX2+tBDJRSvxkX98uJ+J2as3Bt1
- 00zjgExUiP7V3MEo2oDbJo6qgLJeE2gRqaTbtSCj59BjsFzbtLrpTHloqbYqjoXHv+kD
- Js5CIro6Ebl6PWM0YbhHothIRCpgoyUK/7W88gDspzVVqMuotdKsd56OxaC+YwEs56p9
- A2gp+Ro5HNFbKlx7NKU9wi2DC+J9Auple8rkK5ZSibX82SLQuVaTdj+/9VQoEOGe4SdF
- n61w==
-X-Gm-Message-State: AOJu0YyDNp7kKwu6zDLNDWA5LYUWg0u72wPhqN5UCHjABSEZVwrKzIqX
- 5ZwEj06OxRsALCuqcWEfjTnP64pdjmUcfQ9r7jRayse0OOoOTZYMq7A4Jt1WDbo2CIE4RJjCXf3
- 3Sfw=
-X-Google-Smtp-Source: AGHT+IEav6YWKN0VQVTWJi66uSrLCzrhGoJkfnF7L8prqH/KGhWA3/i9bwAHx8iDuV5K/HwYXzgvRQ==
-X-Received: by 2002:a17:902:d510:b0:206:b4cf:3107 with SMTP id
- d9443c01a7336-2076e422055mr184255655ad.49.1726363490522; 
- Sat, 14 Sep 2024 18:24:50 -0700 (PDT)
+ bh=05vEGgLAWx+iSc8sGRfqXN4iIzwNlz6gmxjzBkX2S4M=;
+ b=Ma3JkM6LWJ5rUf39LL9Rh5u7VCq0FyZ/h9//bp3Z4MoqnDnmVPRvxAPiySFZVkBFr0
+ XqHbaBYPHNTOGQYd4zrxddy1lqLdEcLf8JvZua8fNXfpv8TXo7NzJOuPwUlujKjqUahq
+ g5QqplygJMDlrpq0upGa7mKuetxJaW58X3mAsxmHk0LUZFSRp2YnnlPbVvAZBigDNm2p
+ iQPGlQlJv+/8Z4teasO51OUPajgNfFbOQgExEI5AvE5OTljnHVkzwG4LO559LwTp1PkH
+ VSy1/l1PTlyxdjcFZ79GEZ9L9OFfRfSMG8bIlOcvUbFafKFZK7O6zfHAZ9nXoKf8NW0G
+ cylQ==
+X-Gm-Message-State: AOJu0Yx+f7zfQLxgSghU0viQC990RTGgyFOsp1web9B9nhQLBefQ5kB+
+ l14x/BzVs2CeAlSsp9y3mgebyf2ECR45nCZzEcyfyxZ7cHspLyL2PzzhnMVt4WlXM0vA2FmeWsI
+ rEOs=
+X-Google-Smtp-Source: AGHT+IHo1xikBKBGlaHCAa1ysKqwUQv99VGI9V22/WQsXsf2ShiEyvhokw3vX3aRufYLWi4e8y6tZw==
+X-Received: by 2002:a17:902:d58c:b0:207:2093:99bb with SMTP id
+ d9443c01a7336-20782529c52mr83732095ad.31.1726363501525; 
+ Sat, 14 Sep 2024 18:25:01 -0700 (PDT)
 Received: from localhost ([210.160.217.68])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-207946010e4sm14933415ad.73.2024.09.14.18.24.46
+ d9443c01a7336-2079470f326sm14720875ad.203.2024.09.14.18.24.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 14 Sep 2024 18:24:50 -0700 (PDT)
+ Sat, 14 Sep 2024 18:25:01 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 15 Sep 2024 10:23:45 +0900
-Subject: [PATCH RFC v3 04/11] virtio-net: Retrieve peer hashing capability
+Date: Sun, 15 Sep 2024 10:23:48 +0900
+Subject: [PATCH RFC v3 07/11] net: Allow configuring virtio hashing
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240915-hash-v3-4-79cb08d28647@daynix.com>
+Message-Id: <20240915-hash-v3-7-79cb08d28647@daynix.com>
 References: <20240915-hash-v3-0-79cb08d28647@daynix.com>
 In-Reply-To: <20240915-hash-v3-0-79cb08d28647@daynix.com>
 To: qemu-devel@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>, 
@@ -73,8 +73,8 @@ To: qemu-devel@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>,
  "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>
 Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::631;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x631.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::629;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,220 +96,242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Retrieve peer hashing capability instead of hardcoding.
+This adds set_vnet_hash() to configure virtio hashing and implements it
+for Linux's tap. vDPA will have an empty function as configuring virtio
+hashing is done with the load().
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- include/hw/virtio/virtio-net.h |  5 +++-
- hw/net/virtio-net.c            | 67 ++++++++++++++++++++++++++++++++++--------
- net/vhost-vdpa.c               |  4 +--
- 3 files changed, 60 insertions(+), 16 deletions(-)
+ include/net/net.h | 17 +++++++++++++++++
+ net/tap-linux.h   |  1 +
+ net/tap_int.h     |  2 ++
+ net/net.c         |  5 +++++
+ net/tap-bsd.c     |  5 +++++
+ net/tap-linux.c   |  5 +++++
+ net/tap-solaris.c |  5 +++++
+ net/tap-stub.c    |  5 +++++
+ net/tap.c         |  7 +++++++
+ net/vhost-vdpa.c  |  7 +++++++
+ 10 files changed, 59 insertions(+)
 
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index 060c23c04d2d..202016ec74fc 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -144,7 +144,10 @@ typedef struct VirtioNetRssData {
-     bool    enabled_software_rss;
-     bool    redirect;
-     bool    populate_hash;
--    uint32_t hash_types;
-+    bool    peer_hash_available;
-+    uint32_t runtime_hash_types;
-+    uint32_t supported_hash_types;
-+    uint32_t peer_hash_types;
-     uint8_t key[VIRTIO_NET_RSS_MAX_KEY_SIZE];
-     uint16_t indirections_len;
-     uint16_t *indirections_table;
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 206b0335169d..3da15a60eaa5 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -157,7 +157,7 @@ static void virtio_net_get_config(VirtIODevice *vdev, uint8_t *config)
-                  virtio_host_has_feature(vdev, VIRTIO_NET_F_RSS) ?
-                  VIRTIO_NET_RSS_MAX_TABLE_LEN : 1);
-     virtio_stl_p(vdev, &netcfg.supported_hash_types,
--                 VIRTIO_NET_RSS_SUPPORTED_HASHES);
-+                 n->rss_data.supported_hash_types);
-     memcpy(config, &netcfg, n->config_size);
+diff --git a/include/net/net.h b/include/net/net.h
+index 099616c8cbe3..0c7e3513cf5f 100644
+--- a/include/net/net.h
++++ b/include/net/net.h
+@@ -35,6 +35,20 @@ typedef struct NICConf {
+     int32_t bootindex;
+ } NICConf;
  
-     /*
-@@ -1175,7 +1175,7 @@ static void rss_data_to_rss_config(struct VirtioNetRssData *data,
- {
-     config->redirect = data->redirect;
-     config->populate_hash = data->populate_hash;
--    config->hash_types = data->hash_types;
-+    config->hash_types = data->runtime_hash_types;
-     config->indirections_len = data->indirections_len;
-     config->default_queue = data->default_queue;
++#define NET_VNET_HASH_REPORT 1
++#define NET_VNET_HASH_RSS 2
++
++typedef struct NetVnetHash {
++    uint16_t flags;
++    uint8_t pad[2];
++    uint32_t types;
++} NetVnetHash;
++
++typedef struct NetVnetHashRss {
++    uint16_t indirection_table_mask;
++    uint16_t unclassified_queue;
++} NetVnetHashRss;
++
+ #define DEFINE_NIC_PROPERTIES(_state, _conf)                            \
+     DEFINE_PROP_MACADDR("mac",   _state, _conf.macaddr),                \
+     DEFINE_PROP_NETDEV("netdev", _state, _conf.peers)
+@@ -61,6 +75,7 @@ typedef void (SetOffload)(NetClientState *, int, int, int, int, int, int, int);
+ typedef int (GetVnetHdrLen)(NetClientState *);
+ typedef void (SetVnetHdrLen)(NetClientState *, int);
+ typedef bool (GetVnetHashSupportedTypes)(NetClientState *, uint32_t *);
++typedef void (SetVnetHash)(NetClientState *, const NetVnetHash *);
+ typedef int (SetVnetLE)(NetClientState *, bool);
+ typedef int (SetVnetBE)(NetClientState *, bool);
+ typedef struct SocketReadState SocketReadState;
+@@ -91,6 +106,7 @@ typedef struct NetClientInfo {
+     SetVnetLE *set_vnet_le;
+     SetVnetBE *set_vnet_be;
+     GetVnetHashSupportedTypes *get_vnet_hash_supported_types;
++    SetVnetHash *set_vnet_hash;
+     NetAnnounce *announce;
+     SetSteeringEBPF *set_steering_ebpf;
+     NetCheckPeerType *check_peer_type;
+@@ -195,6 +211,7 @@ void qemu_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
+ int qemu_get_vnet_hdr_len(NetClientState *nc);
+ void qemu_set_vnet_hdr_len(NetClientState *nc, int len);
+ bool qemu_get_vnet_hash_supported_types(NetClientState *nc, uint32_t *types);
++void qemu_set_vnet_hash(NetClientState *nc, const NetVnetHash *hash);
+ int qemu_set_vnet_le(NetClientState *nc, bool is_le);
+ int qemu_set_vnet_be(NetClientState *nc, bool is_be);
+ void qemu_macaddr_default_if_unset(MACAddr *macaddr);
+diff --git a/net/tap-linux.h b/net/tap-linux.h
+index 9a58cecb7f47..5fac64c24f99 100644
+--- a/net/tap-linux.h
++++ b/net/tap-linux.h
+@@ -32,6 +32,7 @@
+ #define TUNSETVNETLE _IOW('T', 220, int)
+ #define TUNSETVNETBE _IOW('T', 222, int)
+ #define TUNSETSTEERINGEBPF _IOR('T', 224, int)
++#define TUNSETVNETHASH _IOW('T', 229, NetVnetHash)
+ 
+ #endif
+ 
+diff --git a/net/tap_int.h b/net/tap_int.h
+index 8857ff299d22..e1b53e343397 100644
+--- a/net/tap_int.h
++++ b/net/tap_int.h
+@@ -27,6 +27,7 @@
+ #define NET_TAP_INT_H
+ 
+ #include "qapi/qapi-types-net.h"
++#include "net/net.h"
+ 
+ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
+              int vnet_hdr_required, int mq_required, Error **errp);
+@@ -40,6 +41,7 @@ int tap_probe_has_uso(int fd);
+ void tap_fd_set_offload(int fd, int csum, int tso4, int tso6, int ecn, int ufo,
+                         int uso4, int uso6);
+ void tap_fd_set_vnet_hdr_len(int fd, int len);
++void tap_fd_set_vnet_hash(int fd, const NetVnetHash *hash);
+ int tap_fd_set_vnet_le(int fd, int vnet_is_le);
+ int tap_fd_set_vnet_be(int fd, int vnet_is_be);
+ int tap_fd_enable(int fd);
+diff --git a/net/net.c b/net/net.c
+index 3b04f8fe5d6b..db365b6ec211 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -568,6 +568,11 @@ bool qemu_get_vnet_hash_supported_types(NetClientState *nc, uint32_t *types)
+     return nc->info->get_vnet_hash_supported_types(nc, types);
  }
-@@ -1209,6 +1209,10 @@ static void virtio_net_detach_epbf_rss(VirtIONet *n)
  
- static void virtio_net_commit_rss_config(VirtIONet *n)
- {
-+    if (n->rss_data.peer_hash_available) {
-+        return;
-+    }
-+
-     if (n->rss_data.enabled) {
-         n->rss_data.enabled_software_rss = n->rss_data.populate_hash;
-         if (n->rss_data.populate_hash) {
-@@ -1222,7 +1226,7 @@ static void virtio_net_commit_rss_config(VirtIONet *n)
-             }
-         }
- 
--        trace_virtio_net_rss_enable(n->rss_data.hash_types,
-+        trace_virtio_net_rss_enable(n->rss_data.runtime_hash_types,
-                                     n->rss_data.indirections_len,
-                                     sizeof(n->rss_data.key));
-     } else {
-@@ -1324,7 +1328,7 @@ static uint16_t virtio_net_handle_rss(VirtIONet *n,
-         err_value = (uint32_t)s;
-         goto error;
-     }
--    n->rss_data.hash_types = virtio_ldl_p(vdev, &cfg.hash_types);
-+    n->rss_data.runtime_hash_types = virtio_ldl_p(vdev, &cfg.hash_types);
-     n->rss_data.indirections_len =
-         virtio_lduw_p(vdev, &cfg.indirection_table_mask);
-     n->rss_data.indirections_len++;
-@@ -1387,12 +1391,12 @@ static uint16_t virtio_net_handle_rss(VirtIONet *n,
-         err_value = temp.b;
-         goto error;
-     }
--    if (!temp.b && n->rss_data.hash_types) {
-+    if (!temp.b && n->rss_data.runtime_hash_types) {
-         err_msg = "No key provided";
-         err_value = 0;
-         goto error;
-     }
--    if (!temp.b && !n->rss_data.hash_types) {
-+    if (!temp.b && !n->rss_data.runtime_hash_types) {
-         virtio_net_disable_rss(n);
-         return queue_pairs;
-     }
-@@ -1793,7 +1797,7 @@ static int virtio_net_process_rss(NetClientState *nc, const uint8_t *buf,
-     net_rx_pkt_set_protocols(pkt, &iov, 1, n->host_hdr_len);
-     net_rx_pkt_get_protocols(pkt, &hasip4, &hasip6, &l4hdr_proto);
-     net_hash_type = virtio_net_get_hash_type(hasip4, hasip6, l4hdr_proto,
--                                             n->rss_data.hash_types);
-+                                             n->rss_data.runtime_hash_types);
-     if (net_hash_type > NetPktRssIpV6UdpEx) {
-         if (n->rss_data.populate_hash) {
-             hdr->hash_value = VIRTIO_NET_HASH_REPORT_NONE;
-@@ -2973,6 +2977,14 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
- {
-     VirtIONet *n = VIRTIO_NET(vdev);
-     NetClientState *nc = qemu_get_queue(n->nic);
-+    uint32_t supported_hash_types = n->rss_data.supported_hash_types;
-+    uint32_t peer_hash_types = n->rss_data.peer_hash_types;
-+    bool use_own_hash =
-+        (supported_hash_types & VIRTIO_NET_RSS_SUPPORTED_HASHES) ==
-+        supported_hash_types;
-+    bool use_peer_hash =
-+        n->rss_data.peer_hash_available &&
-+        (supported_hash_types & peer_hash_types) == supported_hash_types;
- 
-     /* Firstly sync all virtio-net possible supported features */
-     features |= n->host_features;
-@@ -3009,12 +3021,24 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
-     }
- 
-     if (!get_vhost_net(nc->peer)) {
-+        if (!use_own_hash) {
-+            virtio_clear_feature(&features, VIRTIO_NET_F_HASH_REPORT);
-+            virtio_clear_feature(&features, VIRTIO_NET_F_RSS);
-+        } else if (virtio_has_feature(features, VIRTIO_NET_F_RSS)) {
-+            virtio_net_load_ebpf(n);
-+        }
-+
-         return features;
-     }
- 
--    if (!ebpf_rss_is_loaded(&n->ebpf_rss)) {
--        virtio_clear_feature(&features, VIRTIO_NET_F_RSS);
-+    if (!use_peer_hash) {
-+        virtio_clear_feature(&features, VIRTIO_NET_F_HASH_REPORT);
-+
-+        if (!use_own_hash || !virtio_net_load_ebpf(n)) {
-+            virtio_clear_feature(&features, VIRTIO_NET_F_RSS);
-+        }
-     }
-+
-     features = vhost_net_get_features(get_vhost_net(nc->peer), features);
-     vdev->backend_features = features;
- 
-@@ -3279,6 +3303,17 @@ static const VMStateDescription vmstate_virtio_net_has_vnet = {
-     },
- };
- 
-+static int virtio_net_rss_post_load(void *opaque, int version_id)
++void qemu_set_vnet_hash(NetClientState *nc, const NetVnetHash *hash)
 +{
-+    VirtIONet *n = VIRTIO_NET(opaque);
-+
-+    if (version_id == 1) {
-+        n->rss_data.supported_hash_types = VIRTIO_NET_RSS_SUPPORTED_HASHES;
-+    }
-+
-+    return 0;
++    nc->info->set_vnet_hash(nc, hash);
 +}
 +
- static bool virtio_net_rss_needed(void *opaque)
+ int qemu_set_vnet_le(NetClientState *nc, bool is_le)
  {
-     return VIRTIO_NET(opaque)->rss_data.enabled;
-@@ -3286,14 +3321,16 @@ static bool virtio_net_rss_needed(void *opaque)
+ #if HOST_BIG_ENDIAN
+diff --git a/net/tap-bsd.c b/net/tap-bsd.c
+index b4c84441ba8b..2eee0c0a0ec5 100644
+--- a/net/tap-bsd.c
++++ b/net/tap-bsd.c
+@@ -221,6 +221,11 @@ void tap_fd_set_vnet_hdr_len(int fd, int len)
+ {
+ }
  
- static const VMStateDescription vmstate_virtio_net_rss = {
-     .name      = "virtio-net-device/rss",
--    .version_id = 1,
-+    .version_id = 2,
-     .minimum_version_id = 1,
-+    .post_load = virtio_net_rss_post_load,
-     .needed = virtio_net_rss_needed,
-     .fields = (const VMStateField[]) {
-         VMSTATE_BOOL(rss_data.enabled, VirtIONet),
-         VMSTATE_BOOL(rss_data.redirect, VirtIONet),
-         VMSTATE_BOOL(rss_data.populate_hash, VirtIONet),
--        VMSTATE_UINT32(rss_data.hash_types, VirtIONet),
-+        VMSTATE_UINT32(rss_data.runtime_hash_types, VirtIONet),
-+        VMSTATE_UINT32_V(rss_data.supported_hash_types, VirtIONet, 2),
-         VMSTATE_UINT16(rss_data.indirections_len, VirtIONet),
-         VMSTATE_UINT16(rss_data.default_queue, VirtIONet),
-         VMSTATE_UINT8_ARRAY(rss_data.key, VirtIONet,
-@@ -3768,8 +3805,12 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
- 
-     net_rx_pkt_init(&n->rx_pkt);
- 
--    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
--        virtio_net_load_ebpf(n);
-+    if (qemu_get_vnet_hash_supported_types(qemu_get_queue(n->nic)->peer,
-+                                           &n->rss_data.peer_hash_types)) {
-+        n->rss_data.peer_hash_available = true;
-+        n->rss_data.supported_hash_types = n->rss_data.peer_hash_types;
-+    } else {
-+        n->rss_data.supported_hash_types = VIRTIO_NET_RSS_SUPPORTED_HASHES;
++void tap_fd_set_vnet_hash(int fd, const NetVnetHash *hash)
++{
++    g_assert_not_reached();
++}
++
+ int tap_fd_set_vnet_le(int fd, int is_le)
+ {
+     return -EINVAL;
+diff --git a/net/tap-linux.c b/net/tap-linux.c
+index 1226d5fda2d9..e96d38eec922 100644
+--- a/net/tap-linux.c
++++ b/net/tap-linux.c
+@@ -194,6 +194,11 @@ void tap_fd_set_vnet_hdr_len(int fd, int len)
      }
  }
  
++void tap_fd_set_vnet_hash(int fd, const NetVnetHash *hash)
++{
++    assert(!ioctl(fd, TUNSETVNETHASH, hash));
++}
++
+ int tap_fd_set_vnet_le(int fd, int is_le)
+ {
+     int arg = is_le ? 1 : 0;
+diff --git a/net/tap-solaris.c b/net/tap-solaris.c
+index 51b7830bef1d..c65104b84e93 100644
+--- a/net/tap-solaris.c
++++ b/net/tap-solaris.c
+@@ -225,6 +225,11 @@ void tap_fd_set_vnet_hdr_len(int fd, int len)
+ {
+ }
+ 
++void tap_fd_set_vnet_hash(int fd, const NetVnetHash *hash)
++{
++    g_assert_not_reached();
++}
++
+ int tap_fd_set_vnet_le(int fd, int is_le)
+ {
+     return -EINVAL;
+diff --git a/net/tap-stub.c b/net/tap-stub.c
+index 38673434cbd6..5bdc76216b7f 100644
+--- a/net/tap-stub.c
++++ b/net/tap-stub.c
+@@ -56,6 +56,11 @@ void tap_fd_set_vnet_hdr_len(int fd, int len)
+ {
+ }
+ 
++void tap_fd_set_vnet_hash(int fd, const NetVnetHash *hash)
++{
++    g_assert_not_reached();
++}
++
+ int tap_fd_set_vnet_le(int fd, int is_le)
+ {
+     return -EINVAL;
+diff --git a/net/tap.c b/net/tap.c
+index 51f7aec39d9e..8d451c745d70 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -248,6 +248,12 @@ static void tap_set_vnet_hdr_len(NetClientState *nc, int len)
+     s->using_vnet_hdr = true;
+ }
+ 
++static void tap_set_vnet_hash(NetClientState *nc, const NetVnetHash *hash)
++{
++    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    return tap_fd_set_vnet_hash(s->fd, hash);
++}
++
+ static int tap_set_vnet_le(NetClientState *nc, bool is_le)
+ {
+     TAPState *s = DO_UPCAST(TAPState, nc, nc);
+@@ -344,6 +350,7 @@ static NetClientInfo net_tap_info = {
+     .has_vnet_hdr_len = tap_has_vnet_hdr_len,
+     .set_offload = tap_set_offload,
+     .set_vnet_hdr_len = tap_set_vnet_hdr_len,
++    .set_vnet_hash = tap_set_vnet_hash,
+     .set_vnet_le = tap_set_vnet_le,
+     .set_vnet_be = tap_set_vnet_be,
+     .set_steering_ebpf = tap_set_steering_ebpf,
 diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index af0c3c448c1f..4af87ea226b4 100644
+index 5d846db5e71f..767fd8def468 100644
 --- a/net/vhost-vdpa.c
 +++ b/net/vhost-vdpa.c
-@@ -884,13 +884,13 @@ static int vhost_vdpa_net_load_rss(VhostVDPAState *s, const VirtIONet *n,
-      * configuration only at live migration.
-      */
-     if (!n->rss_data.enabled ||
--        n->rss_data.hash_types == VIRTIO_NET_HASH_REPORT_NONE) {
-+        n->rss_data.runtime_hash_types == VIRTIO_NET_HASH_REPORT_NONE) {
-         return 0;
-     }
+@@ -278,6 +278,11 @@ static bool vhost_vdpa_get_vnet_hash_supported_types(NetClientState *nc,
+     return true;
+ }
  
-     table = g_malloc_n(n->rss_data.indirections_len,
-                        sizeof(n->rss_data.indirections_table[0]));
--    cfg.hash_types = cpu_to_le32(n->rss_data.hash_types);
-+    cfg.hash_types = cpu_to_le32(n->rss_data.runtime_hash_types);
- 
-     if (do_rss) {
-         /*
++static void vhost_vdpa_set_vnet_hash(NetClientState *nc,
++                                     const NetVnetHash *hash)
++{
++}
++
+ static bool vhost_vdpa_has_ufo(NetClientState *nc)
+ {
+     assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
+@@ -457,6 +462,7 @@ static NetClientInfo net_vhost_vdpa_info = {
+         .cleanup = vhost_vdpa_cleanup,
+         .has_vnet_hdr = vhost_vdpa_has_vnet_hdr,
+         .get_vnet_hash_supported_types = vhost_vdpa_get_vnet_hash_supported_types,
++        .set_vnet_hash = vhost_vdpa_set_vnet_hash,
+         .has_ufo = vhost_vdpa_has_ufo,
+         .check_peer_type = vhost_vdpa_check_peer_type,
+ };
+@@ -1324,6 +1330,7 @@ static NetClientInfo net_vhost_vdpa_cvq_info = {
+     .cleanup = vhost_vdpa_cleanup,
+     .has_vnet_hdr = vhost_vdpa_has_vnet_hdr,
+     .get_vnet_hash_supported_types = vhost_vdpa_get_vnet_hash_supported_types,
++    .set_vnet_hash = vhost_vdpa_set_vnet_hash,
+     .has_ufo = vhost_vdpa_has_ufo,
+     .check_peer_type = vhost_vdpa_check_peer_type,
+ };
 
 -- 
 2.46.0
