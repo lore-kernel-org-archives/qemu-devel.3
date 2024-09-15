@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9050CC35FE1
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 01:25:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56CE2C35FE1
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 01:25:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1spe0Y-0003M1-TQ; Sat, 14 Sep 2024 21:24:58 -0400
+	id 1spe0O-0002zR-0j; Sat, 14 Sep 2024 21:24:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1spe0X-0003Fn-BQ
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:24:57 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1spe0M-0002xA-KE
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:24:46 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1spe0V-0005Rq-PX
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:24:57 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2d8a4bad409so2376076a91.0
- for <qemu-devel@nongnu.org>; Sat, 14 Sep 2024 18:24:55 -0700 (PDT)
+ id 1spe0K-0005RR-R9
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:24:46 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-6e7b121be30so1351972a12.1
+ for <qemu-devel@nongnu.org>; Sat, 14 Sep 2024 18:24:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726363494; x=1726968294;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726363483; x=1726968283;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=89JxFPnOlJQtCZTBwZsp0a/32JLBYWXWTM7l+f2b6vE=;
- b=OvBDH9AnfcnF8xhUzAxJOQvso9ElHANY6uB4TVJlSE3Vc6oHg4pKS8+LHXvy2Y++5Y
- kJF41Bt0HDC88iNvVpcDnb/0C6miFXVHYWJDYD2uF67IvWvhSl78Z8VGQDdB9FcekrnN
- UuWvt7IG2g1Hl1+SS4c1apkxSOBQJWx4Zx5rT53Ea8IKxc82Cn5R6HYQQOsKdfSrXIWQ
- br2xAklqD8NuyX+uBqh9smuMmUQsolJpFR17fUICcChH78d0J7/ur2VTWaN4vCp2pHt4
- SGDYB/9LyHVJrHgW80kVTA5M5rFp7TpC1gns/GNw25fcJtCR3IIz54uAulS3UTQnUkVe
- QCGg==
+ :reply-to; bh=WvHdtNnpckdi13gtOboMnLaoaTSIzoZUIyp9BN86gnQ=;
+ b=e7leI3xgJ9owQSoOFzjKxr0+FIEsbi6iKCEh+6fpD97DVTsRepDH0aCptrX4JfPZEp
+ Z8sY3jVBeKTgBfIVq6EwPUx6kwSV8iwUow++pYmnwfh5GMlJDLRuOB4KrqV2pe6u2rtz
+ 9pcnWxYmb3Lx9x2Xcl5EVBrzCmtMIf4UoYpMoaM0qJkOeD5YHfj1Bi27I3QqZRau5BdP
+ WlP8/xjrHo41su5oobHnU97U6+v+6SeNAQBWyX9erKMgqX/6SVyO6hjB+MEMqfQsc2mp
+ YA0oC4Do5Cy19w8dUSZ5wZ5yTOzU+wsCFvMaYz+LoNYwYkr9NpLdBjbhamF8aFoCRfNs
+ GrVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726363494; x=1726968294;
+ d=1e100.net; s=20230601; t=1726363483; x=1726968283;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=89JxFPnOlJQtCZTBwZsp0a/32JLBYWXWTM7l+f2b6vE=;
- b=dq4jkuC0KDHkhEK3eo4NNy2INUWwHmEEQ5sP4WjtJXa4GNI3iPo65Qd1Zx6msCjbmO
- PXAJ3/WJDUHdNRGTRq7UNJgQA69+0+7GzCejx2/I2sYblrz918FNYk5hkjqjkCBVs7Y3
- g9JEQ6a1WZ6GKVQh1+V0LBUq41EM+5VnHGKy7uMn96ngdS8JDxfy98CAQEEhomVZdTED
- KyIjzH6R0jwDjoi2+3t6hI6cbBrP90wsNKxAK0U5ilfjbdHGCIB9VlTJCkQtE+HNBm/s
- FtTAyGI9/ViGnLt/O7OyI4tfr28u6WxkDuSXp7opZkqkGEBuAYj4d52wrsM8dNpMNV2s
- j7dg==
-X-Gm-Message-State: AOJu0YyS2q51/NVAkZJ5UPA1FWYyKrLVr2PyUp4k0jdl27fuiOs5ag1E
- 4oMfWHA8j77OW8dlGCKdzspTsRvSj5OSMCKx8oRCvCatqcjTB0m5cNi+TvqzH0KrFm7jRuG8SnA
- ne3Y=
-X-Google-Smtp-Source: AGHT+IHQOjqkQ73VSwh5AmmupKudhjM3XR375wMvRoHTaFqjQmUeFKHdUScbgvHsRqNzzzwPvfSmlw==
-X-Received: by 2002:a17:90a:d903:b0:2d6:1c0f:fea6 with SMTP id
- 98e67ed59e1d1-2db9ffc385dmr12841462a91.11.1726363494164; 
- Sat, 14 Sep 2024 18:24:54 -0700 (PDT)
+ bh=WvHdtNnpckdi13gtOboMnLaoaTSIzoZUIyp9BN86gnQ=;
+ b=Yg5ik3uhTwUJtgDhUV7xuLhG1xx/dPfoXtKYv8rHii6LrR+MvH7Z7w8L4dhAgOP/9g
+ 31pjjVwLnFqg6Udt93HQ8u5uoBsitlm3fWugQYe1J5tqE5YX5rQ8Plv6FTDH1Pbdyjl1
+ 0b1VdGD/1vnhe4hvrmFdLIoaNYNtF2TK7iwIvuX1n86TxWuho2vTaphaXHs+Rqge7y13
+ 0tvWNmdg6OM0XYlCH5StHiaJBH7ognCdf+unsnHt7LPM4wqXm7g7ECpzWDgzXMwLpPmr
+ VqnD5AN4/fl1DEeiViWipwGoKdRuGiwN4C2kM86e+cusSAufNEnL1ZtqBFisqSL9BtQy
+ G+JQ==
+X-Gm-Message-State: AOJu0Ywx742AqcFJ6hOCORQKfNPVQG8w5bpDP4XJuM8CP+5JrBEQIJzN
+ iPsBSaV+yQd811+S3pPBMFeyJz7YMm6miMwpp6/PtHuGq9PKw7VAL6NyycLoXijw5c5YRwPqu4J
+ aZZA=
+X-Google-Smtp-Source: AGHT+IE64j8WVDCJalKgzDLgIPGNcBPxjAqxdPPIiQf+Cb2xR3T/OHB1bA6rXEK0/ykSFhSGWJA4/A==
+X-Received: by 2002:a05:6a20:b58b:b0:1d1:17c6:7a34 with SMTP id
+ adf61e73a8af0-1d117c67a4dmr7864491637.45.1726363483290; 
+ Sat, 14 Sep 2024 18:24:43 -0700 (PDT)
 Received: from localhost ([210.160.217.68])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-2079472fc26sm14812295ad.255.2024.09.14.18.24.52
+ d2e1a72fcca58-71944b7aed3sm1531402b3a.114.2024.09.14.18.24.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 14 Sep 2024 18:24:53 -0700 (PDT)
+ Sat, 14 Sep 2024 18:24:43 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 15 Sep 2024 10:23:46 +0900
-Subject: [PATCH RFC v3 05/11] net/vhost-vdpa: Remove dummy SetSteeringEBPF
+Date: Sun, 15 Sep 2024 10:23:44 +0900
+Subject: [PATCH RFC v3 03/11] virtio-net: Move virtio_net_get_features() down
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240915-hash-v3-5-79cb08d28647@daynix.com>
+Message-Id: <20240915-hash-v3-3-79cb08d28647@daynix.com>
 References: <20240915-hash-v3-0-79cb08d28647@daynix.com>
 In-Reply-To: <20240915-hash-v3-0-79cb08d28647@daynix.com>
 To: qemu-devel@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>, 
@@ -73,8 +73,8 @@ To: qemu-devel@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>,
  "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>
 Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::1035;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1035.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::529;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,46 +96,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer used.
+Move virtio_net_get_features() to the later part of the file so that
+it can call other functions.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- net/vhost-vdpa.c | 8 --------
- 1 file changed, 8 deletions(-)
+ hw/net/virtio-net.c | 146 ++++++++++++++++++++++++++--------------------------
+ 1 file changed, 73 insertions(+), 73 deletions(-)
 
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index 4af87ea226b4..5d846db5e71f 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -245,12 +245,6 @@ static void vhost_vdpa_cleanup(NetClientState *nc)
-     g_free(s->vhost_vdpa.shared);
- }
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index b4a3fb575c7c..206b0335169d 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -750,79 +750,6 @@ static void virtio_net_set_queue_pairs(VirtIONet *n)
  
--/** Dummy SetSteeringEBPF to support RSS for vhost-vdpa backend  */
--static bool vhost_vdpa_set_steering_ebpf(NetClientState *nc, int prog_fd)
+ static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue);
+ 
+-static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
+-                                        Error **errp)
 -{
--    return true;
+-    VirtIONet *n = VIRTIO_NET(vdev);
+-    NetClientState *nc = qemu_get_queue(n->nic);
+-
+-    /* Firstly sync all virtio-net possible supported features */
+-    features |= n->host_features;
+-
+-    virtio_add_feature(&features, VIRTIO_NET_F_MAC);
+-
+-    if (!peer_has_vnet_hdr(n)) {
+-        virtio_clear_feature(&features, VIRTIO_NET_F_CSUM);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_TSO4);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_TSO6);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_ECN);
+-
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_CSUM);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_TSO4);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_TSO6);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_ECN);
+-
+-        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_USO);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO4);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO6);
+-
+-        virtio_clear_feature(&features, VIRTIO_NET_F_HASH_REPORT);
+-    }
+-
+-    if (!peer_has_vnet_hdr(n) || !peer_has_ufo(n)) {
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_UFO);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_UFO);
+-    }
+-
+-    if (!peer_has_uso(n)) {
+-        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_USO);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO4);
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO6);
+-    }
+-
+-    if (!get_vhost_net(nc->peer)) {
+-        return features;
+-    }
+-
+-    if (!ebpf_rss_is_loaded(&n->ebpf_rss)) {
+-        virtio_clear_feature(&features, VIRTIO_NET_F_RSS);
+-    }
+-    features = vhost_net_get_features(get_vhost_net(nc->peer), features);
+-    vdev->backend_features = features;
+-
+-    if (n->mtu_bypass_backend &&
+-            (n->host_features & 1ULL << VIRTIO_NET_F_MTU)) {
+-        features |= (1ULL << VIRTIO_NET_F_MTU);
+-    }
+-
+-    /*
+-     * Since GUEST_ANNOUNCE is emulated the feature bit could be set without
+-     * enabled. This happens in the vDPA case.
+-     *
+-     * Make sure the feature set is not incoherent, as the driver could refuse
+-     * to start.
+-     *
+-     * TODO: QEMU is able to emulate a CVQ just for guest_announce purposes,
+-     * helping guest to notify the new location with vDPA devices that does not
+-     * support it.
+-     */
+-    if (!virtio_has_feature(vdev->backend_features, VIRTIO_NET_F_CTRL_VQ)) {
+-        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_ANNOUNCE);
+-    }
+-
+-    return features;
 -}
 -
- static bool vhost_vdpa_has_vnet_hdr(NetClientState *nc)
+ static uint64_t virtio_net_bad_features(VirtIODevice *vdev)
  {
-     assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
-@@ -465,7 +459,6 @@ static NetClientInfo net_vhost_vdpa_info = {
-         .get_vnet_hash_supported_types = vhost_vdpa_get_vnet_hash_supported_types,
-         .has_ufo = vhost_vdpa_has_ufo,
-         .check_peer_type = vhost_vdpa_check_peer_type,
--        .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
- };
+     uint64_t features = 0;
+@@ -3041,6 +2968,79 @@ static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue)
+     virtio_net_set_queue_pairs(n);
+ }
  
- static int64_t vhost_vdpa_get_vring_group(int device_fd, unsigned vq_index,
-@@ -1333,7 +1326,6 @@ static NetClientInfo net_vhost_vdpa_cvq_info = {
-     .get_vnet_hash_supported_types = vhost_vdpa_get_vnet_hash_supported_types,
-     .has_ufo = vhost_vdpa_has_ufo,
-     .check_peer_type = vhost_vdpa_check_peer_type,
--    .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
- };
- 
- /*
++static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
++                                        Error **errp)
++{
++    VirtIONet *n = VIRTIO_NET(vdev);
++    NetClientState *nc = qemu_get_queue(n->nic);
++
++    /* Firstly sync all virtio-net possible supported features */
++    features |= n->host_features;
++
++    virtio_add_feature(&features, VIRTIO_NET_F_MAC);
++
++    if (!peer_has_vnet_hdr(n)) {
++        virtio_clear_feature(&features, VIRTIO_NET_F_CSUM);
++        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_TSO4);
++        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_TSO6);
++        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_ECN);
++
++        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_CSUM);
++        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_TSO4);
++        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_TSO6);
++        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_ECN);
++
++        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_USO);
++        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO4);
++        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO6);
++
++        virtio_clear_feature(&features, VIRTIO_NET_F_HASH_REPORT);
++    }
++
++    if (!peer_has_vnet_hdr(n) || !peer_has_ufo(n)) {
++        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_UFO);
++        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_UFO);
++    }
++
++    if (!peer_has_uso(n)) {
++        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_USO);
++        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO4);
++        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO6);
++    }
++
++    if (!get_vhost_net(nc->peer)) {
++        return features;
++    }
++
++    if (!ebpf_rss_is_loaded(&n->ebpf_rss)) {
++        virtio_clear_feature(&features, VIRTIO_NET_F_RSS);
++    }
++    features = vhost_net_get_features(get_vhost_net(nc->peer), features);
++    vdev->backend_features = features;
++
++    if (n->mtu_bypass_backend &&
++            (n->host_features & 1ULL << VIRTIO_NET_F_MTU)) {
++        features |= (1ULL << VIRTIO_NET_F_MTU);
++    }
++
++    /*
++     * Since GUEST_ANNOUNCE is emulated the feature bit could be set without
++     * enabled. This happens in the vDPA case.
++     *
++     * Make sure the feature set is not incoherent, as the driver could refuse
++     * to start.
++     *
++     * TODO: QEMU is able to emulate a CVQ just for guest_announce purposes,
++     * helping guest to notify the new location with vDPA devices that does not
++     * support it.
++     */
++    if (!virtio_has_feature(vdev->backend_features, VIRTIO_NET_F_CTRL_VQ)) {
++        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_ANNOUNCE);
++    }
++
++    return features;
++}
++
+ static int virtio_net_post_load_device(void *opaque, int version_id)
+ {
+     VirtIONet *n = opaque;
 
 -- 
 2.46.0
