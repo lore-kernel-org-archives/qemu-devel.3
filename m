@@ -4,87 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28757C021A1
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Sep 2024 15:21:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E3C5C35FE2
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 01:07:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1spUZn-0007RI-6K; Sat, 14 Sep 2024 11:20:43 -0400
+	id 1spdj7-0001Hg-2n; Sat, 14 Sep 2024 21:06:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1spUZf-0007QD-5S
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 11:20:36 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1spdj5-0001CG-Ay
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:06:55 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1spUZd-00025E-5f
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 11:20:34 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-206aee40676so15136815ad.0
- for <qemu-devel@nongnu.org>; Sat, 14 Sep 2024 08:20:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1spdj3-0004AD-QM
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:06:55 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2da4ea59658so1870841a91.0
+ for <qemu-devel@nongnu.org>; Sat, 14 Sep 2024 18:06:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726327231; x=1726932031; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=B9zd8/Fmj7kzTO+YWpanBR2/pemqo1awmt5Ke9BQeBI=;
- b=M3NwZcPBZ+PCT+2uEqIVL+Vu3CCF1dDalUKZeHBm0oI9y6DVWv2E6zokKbAGIo30MK
- PsAA+KBiTntzcoZW7OvPGbeSRswmD8jIKdvKpPVsiSs74saIR1VvoA+FPa7yZdfkACwf
- 3MI1TTAPGD3aGTx2T8kwbMSQtJvvtFJUDws0Rfasx6FkoYJ666XCCNssNjtpX3WWBmr3
- WHDNGy4Q/aJLBW97CDprPmN9bxpzFlEXRhVqvCugMYJchAbtH96trnzLdnP2fEq47Rdl
- AShZiYskAmOTOFYJg1IT3xjuNEo+DwXyuZext6t5Q/SxwyT65AR0rnH88xyV/HtheUQE
- SuBw==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726362412; x=1726967212;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=ZUcT+2gn0meAFPXtJKPK+LJvYH+cHREDYZFhX2vH00E=;
+ b=hazzoG+DmJqPJF31gHwtCrE7RD1z9pCPbYQbqp8BTCK5OoAvVt2SKKz/pPoqqvAe/t
+ MPvvImrZSIsdKKB/YHV7dL1Cd2f/oBZfmCDZwZBholHQ5jV+pnevFKeHuvg5T+KCVo/Z
+ eaATtsZ0yOfXR4BZKeMXJebYiCx5IFHj3YoXcwiXXbMHe/DA92iIIz5EmJmZuV5eQOhk
+ +Vry25TwSady2qDhbcHpu71dE/i/JkKsb0IYd2iE63WXZX2OYu3gGGh609uMtCOzuWNm
+ 8p29GcrdWHuczROD1PLNsKN+ZnW3TVZDBv5Y+4X75LWGvXcdBmTdSZxWra5NyxafYbl/
+ J92g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726327231; x=1726932031;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=B9zd8/Fmj7kzTO+YWpanBR2/pemqo1awmt5Ke9BQeBI=;
- b=f+r0OusgHehvduSwrmLhFVytdNZtiqweKqE4gQzaCf7MgbQkEzEJNwrmiX3GfdD6lC
- 3nyaRr/rsA5elVE2gJAB384tdvFkqGGiUfOAMCZUOjxiym5g0vXFlqwPyF1bvMxC/Wn4
- viwZRltCvQcQXE5Dd47O8j+ptwJj5jz5qM2K/xi2feRTj44PKl76qw1OwKQXPiCfiaTN
- nZn1rGoWlyc7DDahh/h+WAqS/OLQFnykI+YUovePf6F1y60IdXtvdhn8G+FS/N1SIU8I
- ad4sSJXZNGsoUBLjiBWwtt2w8z6H5T1SSANmp4LdxgIx9oQxufnVCPo+/JxZYBGzmyvR
- SVoA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWTLnxFiC8AkR1FttMEyVj04tiHVJLdAFZO23phY0OR/OTulF9+uqV+igo4sSmS+ZSctQ+7iFAtBXGb@nongnu.org
-X-Gm-Message-State: AOJu0YyZLE4NdeKj1Sl1Gf93gdUAPyea+E4vmnqI7xs6hExIT3LkV76B
- GAarMLyOA+MoMy9MpiXhRqOalZj0y4mItt8oxJ8wmzXeZG+W/qTOncGT2QVr7/c=
-X-Google-Smtp-Source: AGHT+IG9Ge8VCVfcOlICkpEeHa3PiKh+2cuLR+vxZUSQLBk1Q+v2b6rGTbDHqNEeCeIs4hWO/2uIWQ==
-X-Received: by 2002:a17:902:ea09:b0:205:88bf:bfe9 with SMTP id
- d9443c01a7336-2078284bf3dmr101373695ad.15.1726327231065; 
- Sat, 14 Sep 2024 08:20:31 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2079470f38csm10542255ad.205.2024.09.14.08.20.29
+ d=1e100.net; s=20230601; t=1726362412; x=1726967212;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ZUcT+2gn0meAFPXtJKPK+LJvYH+cHREDYZFhX2vH00E=;
+ b=mruP3wE0Ng/IK8lF7DD0ckzqVnomn597Zb3v70hpK4T9LlBC7KphzGDhmhs5PzdSoa
+ SqlKXr5qeIdBcstg+kCTKmPJhyfCbfSsIfVG80DhwM5VcKfqI0t+yFh6D/Ok/pJsqNJ3
+ wcVmGsc4XHGoNEzS752qmvxD/mtQ4rk5dE1M81CdS1L4LjtYBItYL8UU6e9/zTYlzcXI
+ dctaep06OeL0kDgX69jiZgt5NLFxDiBcrXo37igd5RIUZxScGmkTp6e0HrlBwuOdLKlE
+ gNyU2hjN1NGlwvzlTEyfr5zTsFTUeums9plWX/eU/qDue5KUL7eDQoqlxvIgBGJBI+M2
+ PH2Q==
+X-Gm-Message-State: AOJu0Yw+ucKuJwZJ/snUpZyXWO6oAQza1x4q2Dte9MY1DqX5sxSygYLN
+ OuevkBuWpvI+4ZSugeh81V9WrU33Rqjm7lTKSlV3Gv/Kx5/PApKNCZI53/5nLI4=
+X-Google-Smtp-Source: AGHT+IHtSwK0WBC3+G8cJ73ei9TYeDv3GAf+7aPlliHpntNmlfZMyfjdFrKVVOCP7elqmYzyoitxtg==
+X-Received: by 2002:a17:90b:254b:b0:2d8:27c1:1d4a with SMTP id
+ 98e67ed59e1d1-2dbb9e47368mr9939934a91.24.1726362412321; 
+ Sat, 14 Sep 2024 18:06:52 -0700 (PDT)
+Received: from localhost ([210.160.217.68])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 98e67ed59e1d1-2dbb9d98963sm4332039a91.53.2024.09.14.18.06.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 14 Sep 2024 08:20:30 -0700 (PDT)
-Message-ID: <86858aa5-8bdd-4bdc-8a4d-6db9e314d794@linaro.org>
-Date: Sat, 14 Sep 2024 08:20:28 -0700
+ Sat, 14 Sep 2024 18:06:52 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Sun, 15 Sep 2024 10:06:40 +0900
+Subject: [PATCH 2/7] virtio-net: Fix size check in dhclient workaround
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] contrib/plugins: avoid hanging program
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Elisha Hollander <just4now666666@gmail.com>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20240913173807.189747-1-alex.bennee@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240913173807.189747-1-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240915-queue-v1-2-b49bd49b926d@daynix.com>
+References: <20240915-queue-v1-0-b49bd49b926d@daynix.com>
+In-Reply-To: <20240915-queue-v1-0-b49bd49b926d@daynix.com>
+To: Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>, 
+ qemu-stable@nongnu.org
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: none client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x102d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,18 +94,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/13/24 10:38, Alex Bennée wrote:
-> Although we asks for instructions per second we work in quanta and
-> that cannot be 0. Fail to load the plugin instead and report the
-> minimum IPS we can handle.
-> 
-> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
-> Reported-by: Elisha Hollander<just4now666666@gmail.com>
-> ---
->   contrib/plugins/ips.c | 5 +++++
->   1 file changed, 5 insertions(+)
+work_around_broken_dhclient() accesses IP and UDP headers to detect
+relevant packets and to calculate checksums, but it didn't check if
+the packet has size sufficient to accommodate them, causing out-of-bound
+access hazards. Fix this by correcting the size requirement.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Fixes: 1d41b0c1ec66 ("Work around dhclient brokenness")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ hw/net/virtio-net.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-r~
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 8f3097270869..755530c035e4 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1687,8 +1687,11 @@ static void virtio_net_hdr_swap(VirtIODevice *vdev, struct virtio_net_hdr *hdr)
+ static void work_around_broken_dhclient(struct virtio_net_hdr *hdr,
+                                         uint8_t *buf, size_t size)
+ {
++    size_t csum_size = ETH_HLEN + sizeof(struct ip_header) +
++                       sizeof(struct udp_header);
++
+     if ((hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) && /* missing csum */
+-        (size > 27 && size < 1500) && /* normal sized MTU */
++        (size >= csum_size && size < 1500) && /* normal sized MTU */
+         (buf[12] == 0x08 && buf[13] == 0x00) && /* ethertype == IPv4 */
+         (buf[23] == 17) && /* ip.protocol == UDP */
+         (buf[34] == 0 && buf[35] == 67)) { /* udp.srcport == bootps */
+
+-- 
+2.46.0
+
 
