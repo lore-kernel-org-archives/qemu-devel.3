@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E3C5C35FE2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B182C35FE1
 	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 01:07:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1spdj7-0001Hg-2n; Sat, 14 Sep 2024 21:06:57 -0400
+	id 1spdj0-0000u7-O1; Sat, 14 Sep 2024 21:06:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1spdj5-0001CG-Ay
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:06:55 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1spdiz-0000t5-NZ
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:06:50 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1spdj3-0004AD-QM
- for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:06:55 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2da4ea59658so1870841a91.0
- for <qemu-devel@nongnu.org>; Sat, 14 Sep 2024 18:06:53 -0700 (PDT)
+ id 1spdix-00049e-Q7
+ for qemu-devel@nongnu.org; Sat, 14 Sep 2024 21:06:49 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-6bce380eb96so1970201a12.0
+ for <qemu-devel@nongnu.org>; Sat, 14 Sep 2024 18:06:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726362412; x=1726967212;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1726362406; x=1726967206;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ZUcT+2gn0meAFPXtJKPK+LJvYH+cHREDYZFhX2vH00E=;
- b=hazzoG+DmJqPJF31gHwtCrE7RD1z9pCPbYQbqp8BTCK5OoAvVt2SKKz/pPoqqvAe/t
- MPvvImrZSIsdKKB/YHV7dL1Cd2f/oBZfmCDZwZBholHQ5jV+pnevFKeHuvg5T+KCVo/Z
- eaATtsZ0yOfXR4BZKeMXJebYiCx5IFHj3YoXcwiXXbMHe/DA92iIIz5EmJmZuV5eQOhk
- +Vry25TwSady2qDhbcHpu71dE/i/JkKsb0IYd2iE63WXZX2OYu3gGGh609uMtCOzuWNm
- 8p29GcrdWHuczROD1PLNsKN+ZnW3TVZDBv5Y+4X75LWGvXcdBmTdSZxWra5NyxafYbl/
- J92g==
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4bGD+HHT9hE1vC5vN+cFdhZQySMyDMT8fezz30sguFg=;
+ b=mDZpjSDhCEHoJPCR55Y5xExGC5T0bExLysG4Qoj1a+PStjvcbuFCLBZwGJZsQkUMpD
+ HEBoTg6YBL6wU/HE3qnZXRQoaBd0sksjrWLE4XLe/+lEpAModcMoy1cJ8C9bAY68O5yX
+ jSxio3+KPxBQn3F6mSfB7bpiCPDg3IEXPr0gQGI8i4cUEBNj7T85w9mhN7QxCj2hErIe
+ 8mbEHKMSkBsOMUdCqwTDK0AZytV4N7pyYw7AnbvxwENe7kMQqnKzGY4IknHTwyCpmH1U
+ vgnraHWUwVHGGuLONRR7gF9UCRy7oWMi3aL1s+jFx/G1j/qc5HMsoVVtckAtlo+MDrnC
+ GCnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726362412; x=1726967212;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZUcT+2gn0meAFPXtJKPK+LJvYH+cHREDYZFhX2vH00E=;
- b=mruP3wE0Ng/IK8lF7DD0ckzqVnomn597Zb3v70hpK4T9LlBC7KphzGDhmhs5PzdSoa
- SqlKXr5qeIdBcstg+kCTKmPJhyfCbfSsIfVG80DhwM5VcKfqI0t+yFh6D/Ok/pJsqNJ3
- wcVmGsc4XHGoNEzS752qmvxD/mtQ4rk5dE1M81CdS1L4LjtYBItYL8UU6e9/zTYlzcXI
- dctaep06OeL0kDgX69jiZgt5NLFxDiBcrXo37igd5RIUZxScGmkTp6e0HrlBwuOdLKlE
- gNyU2hjN1NGlwvzlTEyfr5zTsFTUeums9plWX/eU/qDue5KUL7eDQoqlxvIgBGJBI+M2
- PH2Q==
-X-Gm-Message-State: AOJu0Yw+ucKuJwZJ/snUpZyXWO6oAQza1x4q2Dte9MY1DqX5sxSygYLN
- OuevkBuWpvI+4ZSugeh81V9WrU33Rqjm7lTKSlV3Gv/Kx5/PApKNCZI53/5nLI4=
-X-Google-Smtp-Source: AGHT+IHtSwK0WBC3+G8cJ73ei9TYeDv3GAf+7aPlliHpntNmlfZMyfjdFrKVVOCP7elqmYzyoitxtg==
-X-Received: by 2002:a17:90b:254b:b0:2d8:27c1:1d4a with SMTP id
- 98e67ed59e1d1-2dbb9e47368mr9939934a91.24.1726362412321; 
- Sat, 14 Sep 2024 18:06:52 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726362406; x=1726967206;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4bGD+HHT9hE1vC5vN+cFdhZQySMyDMT8fezz30sguFg=;
+ b=cmNF8VI6o1zye4sKZ1usDzzd6kGHArBbothss3XheS5mUVPUIBgyS6Uu1TUUikdNsF
+ iTZ058ei2TS3lcTSbmwutyZtBQ9PQsJqyr4QiQ9ZKLT81iJXCISWWt0dKImfiTe8s7n8
+ i++dZLKtvyiNQp53nNteW8fiJDkZz2HKeE/3NEU9szi/I4EcOKUbSntuVuOCEGXb5LEC
+ 9NGu+BvFq0l9eRjmRfsUoNJ5NTEtNfxZ6SVGauQ3TsZyGEuEto2fGlctqAVrssZBFi2/
+ RsWV6IWSckxYCfQibhikWDxkNOXZfPlxFrnI8F212D/dlLFq21UJ49QjSoKUtle7uYfw
+ KrAQ==
+X-Gm-Message-State: AOJu0Yzow1aQI0VZYJk54hoDLKDBQBI4TGAF2opOvgG30JdoXFV704Aa
+ KUuLe+4vFnc1Jpx66KT7rXY4fFmeIe09F/ZRfvmQ88mpB2JTmYcotRHKVoTnkXc=
+X-Google-Smtp-Source: AGHT+IFZKa+kfAN6Dn59q+nSRWt+VamKm83Fkc8PZDy/DgFlDgYCzUR+UlDxblBzQsCXZAhp2Sh/3A==
+X-Received: by 2002:a17:90a:8a8e:b0:2cf:c9ab:e740 with SMTP id
+ 98e67ed59e1d1-2db9ffc208bmr11350257a91.11.1726362405673; 
+ Sat, 14 Sep 2024 18:06:45 -0700 (PDT)
 Received: from localhost ([210.160.217.68])
  by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-2dbb9d98963sm4332039a91.53.2024.09.14.18.06.50
+ 98e67ed59e1d1-2dbcfcbb42fsm2218895a91.4.2024.09.14.18.06.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 14 Sep 2024 18:06:52 -0700 (PDT)
+ Sat, 14 Sep 2024 18:06:45 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 15 Sep 2024 10:06:40 +0900
-Subject: [PATCH 2/7] virtio-net: Fix size check in dhclient workaround
+Subject: [PATCH 0/7] virtio-net fixes
+Date: Sun, 15 Sep 2024 10:06:38 +0900
+Message-Id: <20240915-queue-v1-0-b49bd49b926d@daynix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240915-queue-v1-2-b49bd49b926d@daynix.com>
-References: <20240915-queue-v1-0-b49bd49b926d@daynix.com>
-In-Reply-To: <20240915-queue-v1-0-b49bd49b926d@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAB4z5mYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDSwNz3cLS1NJU3TQTI1NLY/NEc2ODNCWg2oKi1LTMCrA50bG1tQD3nl6
+ LVwAAAA==
 To: Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>, 
  qemu-stable@nongnu.org
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::102d;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x102d.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::530;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -94,37 +95,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-work_around_broken_dhclient() accesses IP and UDP headers to detect
-relevant packets and to calculate checksums, but it didn't check if
-the packet has size sufficient to accommodate them, causing out-of-bound
-access hazards. Fix this by correcting the size requirement.
+Most of this series are fixes for software RSS and hash reporting, which
+should have no production user.
 
-Fixes: 1d41b0c1ec66 ("Work around dhclient brokenness")
-Cc: qemu-stable@nongnu.org
+However there is one exception; patch "virtio-net: Fix size check in
+dhclient workaround" fixes an out-of-bound access that can be triggered
+for anyone who don't use vhost. It has Cc: qemu-stable@nongnu.org and
+can be applied independently.
+
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/net/virtio-net.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+Akihiko Odaki (7):
+      net: checksum: Convert data to void *
+      virtio-net: Fix size check in dhclient workaround
+      virtio-net: Do not check for the queue before RSS
+      virtio-net: Fix hash reporting when the queue changes
+      virtio-net: Initialize hash reporting values
+      virtio-net: Copy received header to buffer
+      virtio-net: Fix num_buffers for version 1
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 8f3097270869..755530c035e4 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1687,8 +1687,11 @@ static void virtio_net_hdr_swap(VirtIODevice *vdev, struct virtio_net_hdr *hdr)
- static void work_around_broken_dhclient(struct virtio_net_hdr *hdr,
-                                         uint8_t *buf, size_t size)
- {
-+    size_t csum_size = ETH_HLEN + sizeof(struct ip_header) +
-+                       sizeof(struct udp_header);
-+
-     if ((hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) && /* missing csum */
--        (size > 27 && size < 1500) && /* normal sized MTU */
-+        (size >= csum_size && size < 1500) && /* normal sized MTU */
-         (buf[12] == 0x08 && buf[13] == 0x00) && /* ethertype == IPv4 */
-         (buf[23] == 17) && /* ip.protocol == UDP */
-         (buf[34] == 0 && buf[35] == 67)) { /* udp.srcport == bootps */
+ include/net/checksum.h |   2 +-
+ hw/net/virtio-net.c    | 109 ++++++++++++++++++++++++++++---------------------
+ net/checksum.c         |   4 +-
+ 3 files changed, 65 insertions(+), 50 deletions(-)
+---
+base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
+change-id: 20240907-queue-f425937a730f
 
+Best regards,
 -- 
-2.46.0
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
