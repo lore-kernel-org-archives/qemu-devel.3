@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B627C3ABA0
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 16:12:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B655C3ABA0
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Sep 2024 18:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sprrL-0008WG-23; Sun, 15 Sep 2024 12:12:23 -0400
+	id 1sptxZ-0004Ow-AG; Sun, 15 Sep 2024 14:26:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexjlzheng@gmail.com>)
- id 1spqdK-0002Ve-Qq
- for qemu-devel@nongnu.org; Sun, 15 Sep 2024 10:53:50 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1sptxX-0004Mi-Jt
+ for qemu-devel@nongnu.org; Sun, 15 Sep 2024 14:26:55 -0400
+Received: from mail-vs1-xe31.google.com ([2607:f8b0:4864:20::e31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexjlzheng@gmail.com>)
- id 1spqdJ-0002d0-9c
- for qemu-devel@nongnu.org; Sun, 15 Sep 2024 10:53:50 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2053a0bd0a6so36369395ad.3
- for <qemu-devel@nongnu.org>; Sun, 15 Sep 2024 07:53:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1sptxV-0004JG-M5
+ for qemu-devel@nongnu.org; Sun, 15 Sep 2024 14:26:54 -0400
+Received: by mail-vs1-xe31.google.com with SMTP id
+ ada2fe7eead31-49be3d534ffso1168592137.0
+ for <qemu-devel@nongnu.org>; Sun, 15 Sep 2024 11:26:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726412027; x=1727016827; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HnRBZVVsLc2RgPkyyuRiMWILDlwwxPSC4bPpaB3I5mw=;
- b=e6xd7z+cB3dR/wwxQUk8QeA86BiW872Rv9tF0/Tb/8GBvIKyoYb8OrnBzZPHkSavCp
- 5mjqZI+YF+0wbofDRDDbJlHIqK98J5y8CD2qEtcXdyoN1GyVemET5Q9XCVKDxbNEYcWM
- 76aTmpMcfrA0rKCUyOgyi9YJIFddv9C4Ey3brZ39LCkoYVkRmHES3Vc+eT9BSWYP1Bny
- a8gWZbIR0cV/q14dHvYcxfdMbqMarq7yJyeLyN/LSUZlPLtIOUIECRT5jdZlbRQWrhk8
- w0zLo3c/+ew44gxl+oiKq/Vd1swDeQWKYEnXblbCXS+caWnW5kYD56oX7PsUTiLJwoiq
- i0XA==
+ d=gmail.com; s=20230601; t=1726424812; x=1727029612; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=x80fU4RdR5XBAyTsIZ2iQkE7C4bUUYccK+cv3QachVk=;
+ b=MN/iTQju4uagVLkVOaQFJJHz2lwxOY5Iwy00Fkjh2K0SaGA9vIzjKTmLYyQctP0KCC
+ C9llrmJm6uCeHGMYPIOoX1I3ODdtChNrbu0dFJ/67p/6jrYibc8tFcplvwYfRfV1feQV
+ Hk/EP7qQHjFOdvO/pvQqjxT0GBrDkRqXzClAlEOXF8WbPD92QFDWISQEYMeW7eFQGxp1
+ wBGDg2R150ZGzN1+UA5cvUBpbbBMG3q/K9p+DgKu+LY1SFD53b5cqRfxsKqv8YY9FWMd
+ bW0u0qZd/3bVkzwAfsDGfsoFHzNv/m+W74g8+ZJHTAtIqunqjyuqrHkxNjdvyMDmTZ96
+ enpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726412027; x=1727016827;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1726424812; x=1727029612;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=HnRBZVVsLc2RgPkyyuRiMWILDlwwxPSC4bPpaB3I5mw=;
- b=Pkq98+nCFcW2/+BXTMAxh0IVwFgJnirHgDFIhNxsUxiiCl8H3fHO1O2SSVXtZW0xc/
- nhy/drTTayJVIy23n4iU1JWPKxnOUS4I2uCCtMMp92Jlu4+KKtNOsFNQNsq2AKol4kR5
- W0sX+atEqVZ5OP1iPn+L+JUCEr1+lMIPEBqIHv0VJKxUhvM/XZ6PVM6bLwsAAq4Y5Y7G
- aTRehJACqP5HhUMkmtoBOLtXTye973OZGNVOuKZILlW/fpSF/qCesJGUMvmM0Y6wyO38
- zMglG8CqSwY+YczLN+N7BsJYHNDWvaDr89YKTDi7Lkg7XNP+QgYrRmMaFtyz/47yBiwU
- Fpjw==
-X-Gm-Message-State: AOJu0Yzj/k7Sfe4Xl3SkiACJAK9xQiuTLSShfzTUqCrBVj93HiX7+4Yn
- yUC8IaXjVuRKqDfcceFCheuCZ5iWWuRmBjPNk77DWcRc3Hv3wluN
-X-Google-Smtp-Source: AGHT+IF0aOiJAlm78Qgt1wrHkVnN8EzE5u8tf7958w0SgWLsqYBYQy+zW8YWGgD6VtIhol5HbA3onw==
-X-Received: by 2002:a17:902:e94d:b0:205:5f36:ffa0 with SMTP id
- d9443c01a7336-2076e393a75mr190707485ad.35.1726412027246; 
- Sun, 15 Sep 2024 07:53:47 -0700 (PDT)
-Received: from localhost.localdomain ([119.28.17.178])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-207945da80fsm22413005ad.5.2024.09.15.07.53.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Sep 2024 07:53:46 -0700 (PDT)
-From: alexjlzheng@gmail.com
-X-Google-Original-From: alexjlzheng@tencent.com
-To: pbonzini@redhat.com,
-	berrange@redhat.com,
-	eduardo@habkost.net
-Cc: qemu-devel@nongnu.org,
-	Jinliang Zheng <alexjlzheng@tencent.com>
-Subject: [PATCH] qom: fix NULL pointer in object_initialize_with_type()
-Date: Sun, 15 Sep 2024 22:53:39 +0800
-Message-ID: <20240915145339.1368029-1-alexjlzheng@tencent.com>
-X-Mailer: git-send-email 2.41.1
+ bh=x80fU4RdR5XBAyTsIZ2iQkE7C4bUUYccK+cv3QachVk=;
+ b=FiD6PaSZv2w4Lt+kM1/+nc/QDX9KsGjdi8juorHugM17xxbp3XFFBqv58ZK6vpfy4e
+ dNDGjnGD0vVevXztwVprZIAhaNyEWmqwdhY/Gr3Gwq89Aak+ajIqBjuWATB21wlwFhBE
+ 3+CwgOGbwcxOb2s7rcGvF++QAjK0lmjb0lWm9kLPLzZjf1c+g3NnmTDzJpAzrj7ys/gT
+ +RnRkiMJljVMLPTh0QnZzCteV1ht9JLh3utrFEH08EG/jxazbSBrb/QIMzmEuIZ6MDZZ
+ LpTM/ZLTpvDNBzWeqTD9iAHAC4dOYRiOw++1jEK3zByg1swehwwYJgMiFktXFDNt7vcf
+ M6Bg==
+X-Gm-Message-State: AOJu0YwNFKRjw9vDba4GjzBSAfASQvnvFecWkB6fd18zvgXVdg+rjuNl
+ 6Mvj5z01lb3Echy0uJF6oGuXxmGpnBNsfJxZMHrzIYVwg3uQIoln+4CJ+WPqyKsWMEoeICy1z20
+ IP/PNgYV73scq7bD5mEuHbfNeocarNBUA
+X-Google-Smtp-Source: AGHT+IFRpy6vG48e0Wz2M2+ZVG2OyrwE/9gsUeU34zZApcSgJlHkbVz8A/fD2WJzhTDTkEVT/RfnAYhDYU2W/ZNb9Uo=
+X-Received: by 2002:a05:6102:dcc:b0:497:1b98:1f82 with SMTP id
+ ada2fe7eead31-49d4145e745mr9671565137.6.1726424812232; Sun, 15 Sep 2024
+ 11:26:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=alexjlzheng@gmail.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+References: <20240905195735.16911-1-dorjoychy111@gmail.com>
+In-Reply-To: <20240905195735.16911-1-dorjoychy111@gmail.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Mon, 16 Sep 2024 00:26:47 +0600
+Message-ID: <CAFfO_h76PocPsyZhD-gKPoLQjeOaPc6cwsNU=u=APGbKOZG=aw@mail.gmail.com>
+Subject: Re: [PATCH v6 0/8] AWS Nitro Enclave emulation support
+To: qemu-devel@nongnu.org
+Cc: graf@amazon.com, agraf@csgraf.de, stefanha@redhat.com, pbonzini@redhat.com,
+ slp@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net, 
+ mst@redhat.com, marcel.apfelbaum@gmail.com, berrange@redhat.com, 
+ philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e31;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-vs1-xe31.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 15 Sep 2024 12:12:19 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,59 +91,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jinliang Zheng <alexjlzheng@tencent.com>
+ping
 
-Currently, object_initialize_with_type() calls object_class_property_init_all()
-before initializing Object->properties. This may cause Object->properties to
-still be NULL when we call object_property_add() on Object.
+Requesting for review on this patch series. The first 3 patches have
+been merged by Daniel but the rest need to be reviewed. Thanks!
+patch URL: https://lore.kernel.org/qemu-devel/20240905195735.16911-1-dorjoychy111@gmail.com/T/#t
 
-For exmaple, if we extend DEFINE_PROP_ARRAY() to a version with a default value
-other than 0:
-	#define DEFINE_PROP_ARRAY_EXAMPLE(_name, _state, _field,	\
-				_arrayfield, _arrayprop, _arraytype)	\
-		DEFINE_PROP((PROP_ARRAY_LEN_PREFIX _name),		\
-			_state, _field, qdev_prop_arraylen_virtio_net,	\
-			uint32_t,					\
-			.set_default = true,				\
-			.defval.u = <non-zero>,				\
-			.arrayinfo = &(_arrayprop),			\
-			.arrayfieldsize = sizeof(_arraytype),		\
-			.arrayoffset = offsetof(_state, _arrayfield))
-We should have:
-	object_initialize_with_type
-	  object_class_property_init_all
-	    ObjectProperty->init() / object_property_init_defval
-	      ...
-	        set_prop_arraylen
-	          object_property_add
-	            object_property_try_add
-	              g_hash_table_insert(Object->properties)	<- NULL
-	  obj->properties = g_hash_table_new_full()		<- initializing
-
-This patch fixes the above problem by exchanging the order of Ojbect->properties
-initialization and object_class_property_init_all().
-
-Signed-off-by: Jinliang Zheng <alexjlzheng@tencent.com>
----
- qom/object.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/qom/object.c b/qom/object.c
-index 157a45c5f8..734b52f048 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -556,9 +556,9 @@ static void object_initialize_with_type(Object *obj, size_t size, TypeImpl *type
-     memset(obj, 0, type->instance_size);
-     obj->class = type->class;
-     object_ref(obj);
--    object_class_property_init_all(obj);
-     obj->properties = g_hash_table_new_full(g_str_hash, g_str_equal,
-                                             NULL, object_property_free);
-+    object_class_property_init_all(obj);
-     object_init_with_type(obj, type);
-     object_post_init_with_type(obj, type);
- }
--- 
-2.41.1
-
+Regards,
+Dorjoy
 
