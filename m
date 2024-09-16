@@ -4,109 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CF7DC3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 20:36:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E305CC3ABB2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 20:51:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqIRw-0000lK-0h; Mon, 16 Sep 2024 16:35:56 -0400
+	id 1sqIg1-0006JA-E2; Mon, 16 Sep 2024 16:50:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sqIRr-0000ho-3H
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 16:35:51 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sqIfz-0006IV-At
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 16:50:27 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sqIRl-00082G-MM
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 16:35:47 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sqIfx-0001C7-DM
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 16:50:27 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 0E4251FD79;
- Mon, 16 Sep 2024 20:35:36 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id A84C421A60;
+ Mon, 16 Sep 2024 20:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1726518936; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1726519823; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=NaiY61qJTf/2hbn0H/uYY44QQIcNEwUnPR1gpUjmp8Y=;
- b=C5QR4zWOuzFRo3ygSIRMUBRw3aj7Rp155ys0L66i6lhP/yshQVa3ateYI3re42PT58mSfS
- rBSrE/fUMDzfjh1qQ+lBZzE0Wx6rrOqIKjELns5+ekHt3U677iDGU31dav92BRrr9k41Uz
- 44eaOww3ZdzU9TKgw4zXyAQWTY0EXYI=
+ bh=RfOQw2Iyiw/pffAi7elz8B73349NwN48eDqWi18zkyE=;
+ b=HKYwp7b5XzbGXciarh0eC4wbb5MKOrSWT/yMDQJJ/m2PLjXK7Nr8bTUL3idzIEXyBihnwm
+ VFXVfMzcKKiakog3xoEDPZcDsuXYaiVei4JpiDTJHfrXqGdX535fxVz/W7a1wxZCr1w5sh
+ ZCjIAEiGW4BIANXwe3sv3chDqBPTDzw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1726518936;
+ s=susede2_ed25519; t=1726519823;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=NaiY61qJTf/2hbn0H/uYY44QQIcNEwUnPR1gpUjmp8Y=;
- b=CvTjsuwq2qEEJKrHVQ8pjaYbYPKplJNpxi6KWNGZDcrSzKiEyrJ0PiQBg5Irf/EJawrIWy
- iJ6lFSadk3bx3uCA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=C5QR4zWO;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=CvTjsuwq
+ bh=RfOQw2Iyiw/pffAi7elz8B73349NwN48eDqWi18zkyE=;
+ b=YhUbzNWiexSFSGZquIzcPuWpqHmI6pX2JdVqoBl3oqzdspNP6VdmQkO4H42YpwNOm+DRxT
+ hBELRKUHEsLTSdAg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=bAVvRa1B;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=G2n1m1C5
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1726518936; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1726519821; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=NaiY61qJTf/2hbn0H/uYY44QQIcNEwUnPR1gpUjmp8Y=;
- b=C5QR4zWOuzFRo3ygSIRMUBRw3aj7Rp155ys0L66i6lhP/yshQVa3ateYI3re42PT58mSfS
- rBSrE/fUMDzfjh1qQ+lBZzE0Wx6rrOqIKjELns5+ekHt3U677iDGU31dav92BRrr9k41Uz
- 44eaOww3ZdzU9TKgw4zXyAQWTY0EXYI=
+ bh=RfOQw2Iyiw/pffAi7elz8B73349NwN48eDqWi18zkyE=;
+ b=bAVvRa1BlaQLwwXFR1dgXR4xiWWyOxiqiiCDaEuTJGPVFgDzVCWQ38HWJtXfQ1k3nvtI6t
+ cLjaxZyZslxrS1lVFPY+EHlvKE9ReBCkRHc3EM2lqTrobn0h1r7kG6LZCNKUY8ZVIAUS2k
+ gRwFyOcEi42+3sQjzQH55WPcnFCwEsM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1726518936;
+ s=susede2_ed25519; t=1726519821;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=NaiY61qJTf/2hbn0H/uYY44QQIcNEwUnPR1gpUjmp8Y=;
- b=CvTjsuwq2qEEJKrHVQ8pjaYbYPKplJNpxi6KWNGZDcrSzKiEyrJ0PiQBg5Irf/EJawrIWy
- iJ6lFSadk3bx3uCA==
+ bh=RfOQw2Iyiw/pffAi7elz8B73349NwN48eDqWi18zkyE=;
+ b=G2n1m1C5ks+89lv2nuUvCuzSZKM/ZrFDAU/oH3vpWPVfl6d4z8TR/kD5Tmgxn8ljPZ4gzw
+ hxpcslmIhOby5+Ag==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 89F6013A3A;
- Mon, 16 Sep 2024 20:35:35 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 32D6E139CE;
+ Mon, 16 Sep 2024 20:50:20 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id hTl7FJeW6GbMHQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 16 Sep 2024 20:35:35 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id bX6hOgya6Ga+IQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 16 Sep 2024 20:50:20 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Hyman Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Eric Blake <eblake@redhat.com>, Markus
  Armbruster <armbru@redhat.com>, David Hildenbrand <david@redhat.com>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Paolo Bonzini
  <pbonzini@redhat.com>, yong.huang@smartx.com
-Subject: Re: [PATCH v1 3/7] qapi/migration: Introduce the iteration-count
-In-Reply-To: <654bfad294e2cc3394f744bd8536e0448c0bf550.1726390099.git.yong.huang@smartx.com>
+Subject: Re: [PATCH v1 5/7] migration: Support background dirty bitmap sync
+ and throttle
+In-Reply-To: <d74bc4ffb073c886bc566e7d771910db844cec1b.1726390099.git.yong.huang@smartx.com>
 References: <cover.1726390098.git.yong.huang@smartx.com>
- <654bfad294e2cc3394f744bd8536e0448c0bf550.1726390099.git.yong.huang@smartx.com>
-Date: Mon, 16 Sep 2024 17:35:32 -0300
-Message-ID: <87v7yvz697.fsf@suse.de>
+ <d74bc4ffb073c886bc566e7d771910db844cec1b.1726390099.git.yong.huang@smartx.com>
+Date: Mon, 16 Sep 2024 17:50:18 -0300
+Message-ID: <87setzz5kl.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Rspamd-Queue-Id: 0E4251FD79
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Rspamd-Queue-Id: A84C421A60
+X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  DWL_DNSWL_MED(-2.00)[suse.de:dkim];
  NEURAL_HAM_LONG(-1.00)[-1.000];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; RCPT_COUNT_SEVEN(0.00)[9];
- RCVD_TLS_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MISSING_XM_UA(0.00)[]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ MIME_TRACE(0.00)[0:+];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ RCPT_COUNT_SEVEN(0.00)[9]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[smartx.com:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,146 +130,133 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hyman Huang <yong.huang@smartx.com> writes:
 
-> The original migration information dirty-sync-count could
-> no longer reflect iteration count due to the introduction
-> of background synchronization in the next commit;
-> add the iteration count to compensate.
-
-I agree with the overall idea, but I feel we're lacking some information
-on what determines whether some of the lines below want to use the
-iteration count vs. the dirty sync count. Since this patch increments
-both variables at the same place, they can still be used interchangeably
-unless we add some words to explain the distinction.
-
-So to clarify: 
-
-What do we call an iteration? A call to save_live_iterate(),
-migration_iteration_run() or something else?
-
-Why dirty-sync-count should ever have reflected "iteration count"? It
-might have been this way by coincidence, but did we ever used it in that
-sense (aside from info migrate maybe)?
-
-With the new counter, what kind of meaning can a user extract from that
-number aside from "some undescribed thing happened N times" (this might
-be included in the migration.json docs)?
-
+> When VM is configured with huge memory, the current throttle logic
+> doesn't look like to scale, because migration_trigger_throttle()
+> is only called for each iteration, so it won't be invoked for a long
+> time if one iteration can take a long time.
+>
+> The background sync and throttle aim to fix the above issue by
+> synchronizing the remote dirty bitmap and triggering the throttle
+> once detect that iteration lasts a long time.
+>
+> This is a trade-off between synchronization overhead and CPU throttle
+> impact.
 >
 > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 > ---
->  migration/migration-stats.h  |  4 ++++
->  migration/migration.c        |  1 +
->  migration/ram.c              | 12 ++++++++----
->  qapi/migration.json          |  6 +++++-
->  tests/qtest/migration-test.c |  2 +-
->  5 files changed, 19 insertions(+), 6 deletions(-)
+>  migration/migration.c        | 12 +++++++++++
+>  tests/qtest/migration-test.c | 39 ++++++++++++++++++++++++++++++++++++
+>  2 files changed, 51 insertions(+)
 >
-> diff --git a/migration/migration-stats.h b/migration/migration-stats.h
-> index 05290ade76..43ee0f4f05 100644
-> --- a/migration/migration-stats.h
-> +++ b/migration/migration-stats.h
-> @@ -50,6 +50,10 @@ typedef struct {
->       * Number of times we have synchronized guest bitmaps.
->       */
->      Stat64 dirty_sync_count;
-> +    /*
-> +     * Number of migration iteration processed.
-> +     */
-> +    Stat64 iteration_count;
->      /*
->       * Number of times zero copy failed to send any page using zero
->       * copy.
 > diff --git a/migration/migration.c b/migration/migration.c
-> index 3dea06d577..055d527ff6 100644
+> index 055d527ff6..af8b22fa15 100644
 > --- a/migration/migration.c
 > +++ b/migration/migration.c
-> @@ -1197,6 +1197,7 @@ static void populate_ram_info(MigrationInfo *info, MigrationState *s)
->      info->ram->mbps = s->mbps;
->      info->ram->dirty_sync_count =
->          stat64_get(&mig_stats.dirty_sync_count);
-> +    info->ram->iteration_count = stat64_get(&mig_stats.iteration_count);
->      info->ram->dirty_sync_missed_zero_copy =
->          stat64_get(&mig_stats.dirty_sync_missed_zero_copy);
->      info->ram->postcopy_requests =
-> diff --git a/migration/ram.c b/migration/ram.c
-> index e205806a5f..ca5a1b5f16 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -594,7 +594,7 @@ static void xbzrle_cache_zero_page(ram_addr_t current_addr)
->      /* We don't care if this fails to allocate a new cache page
->       * as long as it updated an old one */
->      cache_insert(XBZRLE.cache, current_addr, XBZRLE.zero_target_page,
-> -                 stat64_get(&mig_stats.dirty_sync_count));
-> +                 stat64_get(&mig_stats.iteration_count));
->  }
+> @@ -1416,6 +1416,7 @@ static void migrate_fd_cleanup(MigrationState *s)
 >  
->  #define ENCODING_FLAG_XBZRLE 0x1
-> @@ -620,7 +620,7 @@ static int save_xbzrle_page(RAMState *rs, PageSearchStatus *pss,
->      int encoded_len = 0, bytes_xbzrle;
->      uint8_t *prev_cached_page;
->      QEMUFile *file = pss->pss_channel;
-> -    uint64_t generation = stat64_get(&mig_stats.dirty_sync_count);
-> +    uint64_t generation = stat64_get(&mig_stats.iteration_count);
+>          trace_migrate_fd_cleanup();
+>          bql_unlock();
+> +        migration_background_sync_cleanup();
+>          if (s->migration_thread_running) {
+>              qemu_thread_join(&s->thread);
+>              s->migration_thread_running = false;
+> @@ -3263,6 +3264,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
 >  
->      if (!cache_is_cached(XBZRLE.cache, current_addr, generation)) {
->          xbzrle_counters.cache_miss++;
-> @@ -1079,6 +1079,10 @@ static void migration_bitmap_sync(RAMState *rs,
->      RAMBlock *block;
->      int64_t end_time;
+>      if ((!pending_size || pending_size < s->threshold_size) && can_switchover) {
+>          trace_migration_thread_low_pending(pending_size);
+> +        migration_background_sync_cleanup();
+
+This one is redundant with the migrate_fd_cleanup() call at the end of
+migration_iteration_finish().
+
+>          migration_completion(s);
+>          return MIG_ITERATE_BREAK;
+>      }
+> @@ -3508,6 +3510,16 @@ static void *migration_thread(void *opaque)
+>      ret = qemu_savevm_state_setup(s->to_dst_file, &local_err);
+>      bql_unlock();
 >  
-> +    if (!background) {
-> +        stat64_add(&mig_stats.iteration_count, 1);
+> +    if (!migrate_dirty_limit()) {
+> +        /*
+> +         * Initiate the background sync watcher in order to guarantee
+> +         * that the CPU throttling acts appropriately. Dirty Limit
+> +         * doesn't use CPU throttle to make guest down, so ignore that
+> +         * case.
+> +         */
+> +        migration_background_sync_setup();
 > +    }
 > +
->      stat64_add(&mig_stats.dirty_sync_count, 1);
+>      qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
+>                                 MIGRATION_STATUS_ACTIVE);
 >  
->      if (!rs->time_last_bitmap_sync) {
-> @@ -1115,8 +1119,8 @@ static void migration_bitmap_sync(RAMState *rs,
->          rs->num_dirty_pages_period = 0;
->          rs->bytes_xfer_prev = migration_transferred_bytes();
->      }
-> -    if (migrate_events()) {
-> -        uint64_t generation = stat64_get(&mig_stats.dirty_sync_count);
-> +    if (!background && migrate_events()) {
-> +        uint64_t generation = stat64_get(&mig_stats.iteration_count);
->          qapi_event_send_migration_pass(generation);
->      }
->  }
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index b66cccf107..95b490706c 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -60,6 +60,9 @@
->  #     between 0 and @dirty-sync-count * @multifd-channels.  (since
->  #     7.1)
->  #
-> +# @iteration-count: The number of iterations since migration started.
-> +#     (since 9.2)
-> +#
->  # Since: 0.14
->  ##
->  { 'struct': 'MigrationStats',
-> @@ -72,7 +75,8 @@
->             'multifd-bytes': 'uint64', 'pages-per-second': 'uint64',
->             'precopy-bytes': 'uint64', 'downtime-bytes': 'uint64',
->             'postcopy-bytes': 'uint64',
-> -           'dirty-sync-missed-zero-copy': 'uint64' } }
-> +           'dirty-sync-missed-zero-copy': 'uint64',
-> +           'iteration-count' : 'int' } }
->  
->  ##
->  # @XBZRLECacheStats:
 > diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-> index d6768d5d71..b796a90cad 100644
+> index b796a90cad..e0e94d26be 100644
 > --- a/tests/qtest/migration-test.c
 > +++ b/tests/qtest/migration-test.c
-> @@ -278,7 +278,7 @@ static int64_t read_migrate_property_int(QTestState *who, const char *property)
->  
->  static uint64_t get_migration_pass(QTestState *who)
->  {
-> -    return read_ram_property_int(who, "dirty-sync-count");
-> +    return read_ram_property_int(who, "iteration-count");
+> @@ -281,6 +281,11 @@ static uint64_t get_migration_pass(QTestState *who)
+>      return read_ram_property_int(who, "iteration-count");
 >  }
 >  
+> +static uint64_t get_dirty_sync_count(QTestState *who)
+> +{
+> +    return read_ram_property_int(who, "dirty-sync-count");
+> +}
+> +
 >  static void read_blocktime(QTestState *who)
+>  {
+>      QDict *rsp_return;
+> @@ -468,6 +473,12 @@ static void migrate_ensure_converge(QTestState *who)
+>      migrate_set_parameter_int(who, "downtime-limit", 30 * 1000);
+>  }
+>  
+> +static void migrate_ensure_iteration_last_long(QTestState *who)
+> +{
+> +    /* Set 10Byte/s bandwidth limit to make the iteration last long enough */
+> +    migrate_set_parameter_int(who, "max-bandwidth", 10);
+> +}
+> +
+>  /*
+>   * Our goal is to ensure that we run a single full migration
+>   * iteration, and also dirty memory, ensuring that at least
+> @@ -2791,6 +2802,10 @@ static void test_migrate_auto_converge(void)
+>       * so we need to decrease a bandwidth.
+>       */
+>      const int64_t init_pct = 5, inc_pct = 25, max_pct = 95;
+> +    uint64_t prev_iter_cnt = 0, iter_cnt;
+> +    uint64_t iter_cnt_changes = 0;
+> +    uint64_t prev_dirty_sync_cnt = 0, dirty_sync_cnt;
+> +    uint64_t dirty_sync_cnt_changes = 0;
+>  
+>      if (test_migrate_start(&from, &to, uri, &args)) {
+>          return;
+> @@ -2827,6 +2842,30 @@ static void test_migrate_auto_converge(void)
+>      } while (true);
+>      /* The first percentage of throttling should be at least init_pct */
+>      g_assert_cmpint(percentage, >=, init_pct);
+> +
+> +    /* Make sure the iteration take a long time enough */
+> +    migrate_ensure_iteration_last_long(from);
+> +
+> +    /*
+> +     * End the loop when the dirty sync count or iteration count changes.
+> +     */
+> +    while (iter_cnt_changes < 2 && dirty_sync_cnt_changes < 2) {
+> +        usleep(1000 * 1000);
+> +        iter_cnt = get_migration_pass(from);
+> +        iter_cnt_changes += (iter_cnt != prev_iter_cnt);
+> +        prev_iter_cnt = iter_cnt;
+> +
+> +        dirty_sync_cnt = get_dirty_sync_count(from);
+> +        dirty_sync_cnt_changes += (dirty_sync_cnt != prev_dirty_sync_cnt);
+> +        prev_dirty_sync_cnt = dirty_sync_cnt;
+> +    }
+> +
+> +    /*
+> +     * The dirty sync count must have changed because we are in the same
+> +     * iteration.
+> +     */
+> +    g_assert_cmpint(iter_cnt_changes , < , dirty_sync_cnt_changes);
+> +
+>      /* Now, when we tested that throttling works, let it converge */
+>      migrate_ensure_converge(from);
 
