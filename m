@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65C15C3ABA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 10:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BBC2C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 10:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sq8wK-0006k5-UL; Mon, 16 Sep 2024 06:26:40 -0400
+	id 1sq90L-0003HY-SX; Mon, 16 Sep 2024 06:30:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sq8wJ-0006iH-DY
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 06:26:39 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sq8wH-0005r1-Up
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 06:26:39 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-535dc4ec181so3496468e87.3
- for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 03:26:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726482396; x=1727087196; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FhOcE6GLr7oBCg2qczBGYcYGD8YfMG8QvXwLqrVX/N4=;
- b=E6d8FEA6Uln2OH05eWhOF8LLcfT831Gfo6Gs3t9ucamgPPZE8yvfUHw+xO/kH55Saw
- epMejTRGmlMHbHhl0OM+2wVZ7fEeH/ikIJskg5O3671ZFzGj2By63vcBnkO859kqvIIz
- vaj6bhFMk6NWedPWkd+vvgI53HsvVWdCdj8xCVspjgHOJo20SQohmlyIWHwHC8OEZMTQ
- ufTgjuOQ706S6+noNftKEAPeV+qy35Pc0Y1DbowQTFuqqxC59yy2Lfc59EL0qTa1ob04
- XdjdeQ3ZRp1L6d5rYukr9gIkzhAk44BabO/KMHJUPlPrUzTbg9L327W+2eUqV0wLBi4P
- iOkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726482396; x=1727087196;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FhOcE6GLr7oBCg2qczBGYcYGD8YfMG8QvXwLqrVX/N4=;
- b=mPILhYicW9CkDf9a5Of6rU0l+gAF4BcCn9SRZO1BY48jG8w+H1myzTt7bUT0UVwJCj
- BozSEXLnHP6MnmoZT2GMKZqhTClq5APMGkt6HkJD6BxIG4Em0e8D1Jz/RYq1IuOkZT+H
- jyYaIypvtJ8EW+RlfcvMJBdEKxdNALij2DISjhbmGh5sFwi28H+BJlQyFB6VIZWMtRby
- 4euVGYJNFwKd73l4LklsFOO5GPBuOGFVtNgORNWgtJpE9fQU16vwFcMiixxT+HL5fILO
- mNvNtZMukvotSLlMc3p5mdaZM6+5w7c6LJp9QBMGqQkIOi+UwEKb1Zp2xkAb4u/Uz5DQ
- ua8Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXg4FWHHf3UWrRFa2Ko5lfbblsJdoMmLR/8eRrysO3kFV79EmDXsy97qBZUysUoto2gAwshDO1ZiDnC@nongnu.org
-X-Gm-Message-State: AOJu0YzEpeglJ21g/0i9GbxVxUpMzgzsCmxU4UwAcJ0s98cvjO4Ip1P+
- KAeA/6D2FIyz+pXC1Gn5u3ADBhB8Fxoy1SY8yWpiBGhalRZBd3aZWxXhk/61Mmb9gsJHSwCK7zY
- xu4FiMvfncdiuMJXLnizM+0gHZefJZsjzUfgmgQ==
-X-Google-Smtp-Source: AGHT+IGhsrvv51JHgD0poxYzuiEx2eEmGjluXMdq8Nr6FYMmHHbP61Ppc4/doXZvz/t30hBckosSaRs8V8K6uqKvfzY=
-X-Received: by 2002:a05:6512:12c8:b0:533:46cc:a71e with SMTP id
- 2adb3069b0e04-53678fec522mr7479617e87.54.1726482395844; Mon, 16 Sep 2024
- 03:26:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sq90K-0003G5-Ck
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 06:30:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sq90I-0006IM-MY
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 06:30:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1726482644;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0AkE4/w6gKhvXVSui1WEwcbfu3Cq/oc/itmmIHFm8sA=;
+ b=QPyfG5fvQzTi9WCKpfLxgB9XIffrVtRVUBC676rHws4AS6hpiw1inB+wMHejK+OFydYoTV
+ 0Nnug/k3MRM82Fys5D6FJOlaZXZk8q143JKUwSYD3Ocpn3CnP37IWkl27etbIgk+5MIlz2
+ cS4ldWfOYHLHUgy2RLxdYX/qSfI/Rr4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-35-H5JUb8bROOyP4Go2Rr0Krg-1; Mon,
+ 16 Sep 2024 06:30:43 -0400
+X-MC-Unique: H5JUb8bROOyP4Go2Rr0Krg-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D82041956083; Mon, 16 Sep 2024 10:30:41 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.121])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 98203195605A; Mon, 16 Sep 2024 10:30:38 +0000 (UTC)
+Date: Mon, 16 Sep 2024 12:30:36 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Peter Krempa <pkrempa@redhat.com>,
+ Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ qemu-devel@nongnu.org, devel@lists.libvirt.org,
+ Michal Privoznik <mprivozn@redhat.com>
+Subject: Re: -chardev with a JSON argument (was: [PATCH] chardev: introduce
+ 'reconnect-ms' and deprecate 'reconnect')
+Message-ID: <ZugIzLK6UKkRRw-1@redhat.com>
+References: <20240904051913.53148-1-d-tatianin@yandex-team.ru>
+ <ZthCn1ze3oUXbR3K@angien.pipo.sk> <87a5gavd6r.fsf_-_@pond.sub.org>
 MIME-Version: 1.0
-References: <20240903160751.4100218-1-peter.maydell@linaro.org>
-In-Reply-To: <20240903160751.4100218-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 16 Sep 2024 11:26:25 +0100
-Message-ID: <CAFEAcA9hH6b72pVMAVkGHWXye9t+RXHE13RD73AabQN+p_JOyw@mail.gmail.com>
-Subject: Re: [PATCH for-9.2 00/53] arm: Drop deprecated boards
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x129.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87a5gavd6r.fsf_-_@pond.sub.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,36 +86,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Sept 2024 at 17:07, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> This patchset removes the various Arm machines which we deprecated
-> for the 9.0 release and are therefore allowed to remove for the 9.2
-> release:
->  akita, borzoi, cheetah, connex, mainstone, n800, n810,
->  spitz, terrier, tosa, verdex, z2
-> We get to drop over 30,000 lines of unmaintained code. So it's
-> a big patchset but it's almost all deletions.
+Am 14.09.2024 um 10:42 hat Markus Armbruster geschrieben:
+> Peter Krempa <pkrempa@redhat.com> writes:
+> 
+> > This is a little off-topic:
+> >
+> > So I wanted to make libvirt use the new parameter to stay ahead
+> > deprecation. I've applied this patch to qemu, dumped capabilities and
+> > pretty much expected a bunch of test cases in libvirt fail as they'd be
+> > using a deprecated field as libvirt is supposed to validate everything.
+> >
+> > And the test suite passed unexpectedly. I've dug further and noticed
+> > that for some reason libvirt doesn't still use JSON parameters for
+> > -chardev (which is the pre-requisite for validation).
+> >
+> > I've also noticed that at some point I attempted to convert it over
+> > witnessed by having an (unused) capability named QEMU_CAPS_CHARDEV_JSON
+> > that I've introduced.
+> >
+> > My questions are:
+> > 1) Does '-chardev' accept JSON identical to 'chardev-add' QMP command?
+> 
+> Sadly, no.
+> 
+> How badly do you want it?
 
-Hi -- ping for review on at least patches 06, 08, 18:
+I suppose even my old patches to fully QAPIfy -chardev could be revived,
+which would not only add JSON support, but also make sure that
+everything that works in JSON also works with keyval syntax, both ways
+stay in sync in the future and that you can access non-scalar options
+without JSON:
 
->   hw/display: Remove tc6393xb device
->   hw/arm: Remove 'cheetah' machine
->   hw/display: Remove pxa2xx_lcd.c
+https://repo.or.cz/qemu/kevin.git/shortlog/refs/tags/qapi-alias-chardev-v4
 
-These are all straightforward removals of either
-deprecated machines or devices that are definitely
-exclusively used by those machines. That would be
-enough for me to get the bulk of the uncontroversial
-reviewed parts of this series upstream. I can then
-roll a much smaller v2 with the parts still under
-discussion.
+Without QAPI aliases, they will have to contain some ugly code to do the
+compatibility conversion, but whatever can be generated can also be
+written manually...
 
-Patches 22, 26 would also be helpful but they're a
-bit further down the patchstack so less critical:
+Kevin
 
->   hw/arm: Remove pxa2xx_pic
->   hw/misc: Remove cbus
-
-thanks
--- PMM
 
