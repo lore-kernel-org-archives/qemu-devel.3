@@ -4,57 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09ED5C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 12:14:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BB8AC3ABA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 12:14:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqAbl-0006Ei-La; Mon, 16 Sep 2024 08:13:34 -0400
+	id 1sqAcP-0006Yt-Dm; Mon, 16 Sep 2024 08:14:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=CK3F=QO=kaod.org=clg@ozlabs.org>)
- id 1sqAbi-0006Dx-0f
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 08:13:31 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sqAcM-0006Vc-M0
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 08:14:10 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=CK3F=QO=kaod.org=clg@ozlabs.org>)
- id 1sqAbe-000088-Kc
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 08:13:29 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4X6kMj28Cvz4xVR;
- Mon, 16 Sep 2024 22:13:21 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4X6kMf1624z4x8D;
- Mon, 16 Sep 2024 22:13:17 +1000 (AEST)
-Message-ID: <881df54b-c98c-4ce0-a434-05d055cc27bb@kaod.org>
-Date: Mon, 16 Sep 2024 14:13:13 +0200
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sqAcK-0000A0-DN
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 08:14:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=MTkAbvY/okSbIK3sQsAHXC5W187IFsx5mof5sw3h+jQ=; b=z3gfEzqGMlXxCYPUM8jDR3a+Ng
+ jsHFtUKsztnnt+DgD/VxqHUq8GVTZdfUChyNUH/S0Bp9VA0fGmwl8n88QTpYo8rn/gDOifUSlV4Ex
+ PoN/l1lO1RKub5r23IKAizhI30Do5D/+l1NfHn4pIrtQTVnug9yskAbYiXqihoMyZS0kCC20SNIRl
+ vj9mEkIOdXvjf/8NmOw57x7bA0YcBN8IwGiKWr8NEhAZzINiZUgcAXpdAuBJ2/ZHduq4HDDDXzRBN
+ JMxFn394FhBHXvkYPpcseynDBSW1gs06L0AKZclivfysgI8I3FGO0awMPZqFyVisf8m6waKMst3YO
+ EChXDyd9+tHUxSdb84FOHz9ElHPunN1sYwVnBkClhQ2TDatlP+J83kC7W1Jx00Z7rJShVHvOAfPoN
+ uvYMBQ6XZ4F4f/gQfROGjM9Mmjxl66/YLNtWg8lrNZXYi3M+/M6/hr6MB4hx2/aBKRUTZH31Eg/cH
+ 6G0UIZfXfTTK0e3owNrt5njICPyPC4XWzFROHTUrJQB10IbxzUySaT7Bp+YJdAvIRhchuQAo6mON2
+ 1KH5Yw9EaHGUI5oGPLwQVYY+5KXCt2zeERaeXTKBuCa7dv1oxwywO/qZDzIlDbt88dj2eQahSFBoU
+ ag7i1XuQcXwfTLI07TzHsvC0Yht0RHMdxETXyHNWs=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sqAc4-0006eX-Eo; Mon, 16 Sep 2024 13:13:56 +0100
+Message-ID: <10b76006-4cb5-485e-aff2-87c9e511ad2b@ilande.co.uk>
+Date: Mon, 16 Sep 2024 13:13:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 1/9] softmmu: Support concurrent bounce buffers
-To: Mattias Nissler <mnissler@rivosinc.com>, Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Mattias Nissler <mnissler@rivosinc.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org,
  Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+ <philmd@linaro.org>
 References: <20240909201147.3761639-1-peterx@redhat.com>
  <20240909201147.3761639-2-peterx@redhat.com>
  <441f797f-a377-45de-bfe6-042542c917d8@kaod.org> <ZuRQirmjwWGj1N2D@x1n>
  <CAGNS4TaDVs9eqb9jO5kgi9bL1t1tmc-GywiyP3xpbgFGgvbkLg@mail.gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <CAGNS4TaDVs9eqb9jO5kgi9bL1t1tmc-GywiyP3xpbgFGgvbkLg@mail.gmail.com>
+ <0d4c42a4-352d-4b14-905d-ef4839c68ad1@ilande.co.uk>
+ <CAFEAcA80SmMbNOhUqgB8h+16RR+d_hOeoVqUCJQZJHvDUtCaYw@mail.gmail.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <CAFEAcA80SmMbNOhUqgB8h+16RR+d_hOeoVqUCJQZJHvDUtCaYw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=CK3F=QO=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PULL 1/9] softmmu: Support concurrent bounce buffers
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,201 +111,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/16/24 10:23, Mattias Nissler wrote:
-> Thanks for the report, and my apologies for the breakage.
-> 
-> On Fri, Sep 13, 2024 at 4:47 PM Peter Xu <peterx@redhat.com> wrote:
+On 16/09/2024 12:44, Peter Maydell wrote:
+
+> On Mon, 16 Sept 2024 at 12:29, Mark Cave-Ayland
+> <mark.cave-ayland@ilande.co.uk> wrote:
 >>
->> On Fri, Sep 13, 2024 at 04:35:32PM +0200, Cédric Le Goater wrote:
->>> Hello,
+>> On 16/09/2024 09:23, Mattias Nissler wrote:
+>>> Looking at the code, the dma_memory_unmap calls in hw/ide/macio.c seem
+>>> to be passing buffer=NULL unconditionally, since the dma_mem field in
+>>> struct DBDMA_io is never set to anything non-zero. In fact, I believe
+>>> after commit be1e343995ef81fc05d9a4e1ec263ca171d842e7 "macio: switch
+>>> over to new byte-aligned DMA helpers", the dma_memory_unmap calls in
+>>> hw/ide/macio.c aren't doing anything and should probably have been
+>>> removed together with the dma_mem, dma_len and dir fields in struct
+>>> DBDMA_io. Speculative patch:
 >>>
->>> +Mark (for the Mac devices)
+>>> diff --git a/hw/ide/macio.c b/hw/ide/macio.c
+>>> index e84bf2c9f6..15dd40138e 100644
+>>> --- a/hw/ide/macio.c
+>>> +++ b/hw/ide/macio.c
+>>> @@ -119,9 +119,6 @@ static void pmac_ide_atapi_transfer_cb(void
+>>> *opaque, int ret)
+>>>        return;
 >>>
->>> On 9/9/24 22:11, Peter Xu wrote:
->>>> From: Mattias Nissler <mnissler@rivosinc.com>
->>>>
->>>> When DMA memory can't be directly accessed, as is the case when
->>>> running the device model in a separate process without shareable DMA
->>>> file descriptors, bounce buffering is used.
->>>>
->>>> It is not uncommon for device models to request mapping of several DMA
->>>> regions at the same time. Examples include:
->>>>    * net devices, e.g. when transmitting a packet that is split across
->>>>      several TX descriptors (observed with igb)
->>>>    * USB host controllers, when handling a packet with multiple data TRBs
->>>>      (observed with xhci)
->>>>
->>>> Previously, qemu only provided a single bounce buffer per AddressSpace
->>>> and would fail DMA map requests while the buffer was already in use. In
->>>> turn, this would cause DMA failures that ultimately manifest as hardware
->>>> errors from the guest perspective.
->>>>
->>>> This change allocates DMA bounce buffers dynamically instead of
->>>> supporting only a single buffer. Thus, multiple DMA mappings work
->>>> correctly also when RAM can't be mmap()-ed.
->>>>
->>>> The total bounce buffer allocation size is limited individually for each
->>>> AddressSpace. The default limit is 4096 bytes, matching the previous
->>>> maximum buffer size. A new x-max-bounce-buffer-size parameter is
->>>> provided to configure the limit for PCI devices.
->>>>
->>>> Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
->>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> Acked-by: Peter Xu <peterx@redhat.com>
->>>> Link: https://lore.kernel.org/r/20240819135455.2957406-1-mnissler@rivosinc.com
->>>> Signed-off-by: Peter Xu <peterx@redhat.com>
->>>> ---
->>>>    include/exec/memory.h       | 14 +++----
->>>>    include/hw/pci/pci_device.h |  3 ++
->>>>    hw/pci/pci.c                |  8 ++++
->>>>    system/memory.c             |  5 ++-
->>>>    system/physmem.c            | 82 ++++++++++++++++++++++++++-----------
->>>>    5 files changed, 76 insertions(+), 36 deletions(-)
+>>>    done:
+>>> -    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
+>>> -                     io->dir, io->dma_len);
+>>> -
+>>>        if (ret < 0) {
+>>>            block_acct_failed(blk_get_stats(s->blk), &s->acct);
+>>>        } else {
+>>> @@ -202,9 +199,6 @@ static void pmac_ide_transfer_cb(void *opaque, int ret)
+>>>        return;
 >>>
->>> Here is a report of a segv of the ppc64 mac99+cpu970 machine booting debian.
->>> See the stack trace below. Just wanted to let you know. I will digging further
->>> next week.
+>>>    done:
+>>> -    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
+>>> -                     io->dir, io->dma_len);
+>>> -
+>>>        if (s->dma_cmd == IDE_DMA_READ || s->dma_cmd == IDE_DMA_WRITE) {
+>>>            if (ret < 0) {
+>>>                block_acct_failed(blk_get_stats(s->blk), &s->acct);
+>>> diff --git a/include/hw/ppc/mac_dbdma.h b/include/hw/ppc/mac_dbdma.h
+>>> index 4a3f644516..c774f6bf84 100644
+>>> --- a/include/hw/ppc/mac_dbdma.h
+>>> +++ b/include/hw/ppc/mac_dbdma.h
+>>> @@ -44,10 +44,6 @@ struct DBDMA_io {
+>>>        DBDMA_end dma_end;
+>>>        /* DMA is in progress, don't start another one */
+>>>        bool processing;
+>>> -    /* DMA request */
+>>> -    void *dma_mem;
+>>> -    dma_addr_t dma_len;
+>>> -    DMADirection dir;
+>>>    };
 >>>
->>> Thanks,
+>>>    /*
 >>>
->>> C.
->>>
->>>
->>>
->>> Thread 1 "qemu-system-ppc" received signal SIGSEGV, Segmentation fault.
->>> address_space_unmap (len=<optimized out>, access_len=0, is_write=false, buffer=0x0,
->>>      as=0x5555565d45c0 <address_space_memory>) at ../system/physmem.c:3333
->>> 3333      assert(bounce->magic == BOUNCE_BUFFER_MAGIC);
->>> (gdb) bt
->>> #0  address_space_unmap
->>>      (len=<optimized out>, access_len=0, is_write=false, buffer=0x0, as=0x5555565d45c0 <address_space_memory>)
->>>      at ../system/physmem.c:3333
->>> #1  address_space_unmap
->>>      (as=as@entry=0x5555565d45c0 <address_space_memory>, buffer=0x0, len=<optimized out>, is_write=<optimized out>, access_len=0) at ../system/physmem.c:3313
->>> #2  0x000055555595ea48 in dma_memory_unmap
->>>      (access_len=<optimized out>, dir=<optimized out>, len=<optimized out>, buffer=<optimized out>, as=<optimized out>) at /home/legoater/work/qemu/qemu.git/include/sysemu/dma.h:236
->>> #3  pmac_ide_atapi_transfer_cb (opaque=0x555556c06470, ret=<optimized out>) at ../hw/ide/macio.c:122
->>> #4  0x00005555559861f3 in DBDMA_run (s=0x555556c04c60) at ../hw/misc/macio/mac_dbdma.c:546
->>> #5  DBDMA_run_bh (opaque=0x555556c04c60) at ../hw/misc/macio/mac_dbdma.c:556
->>> #6  0x0000555555f19f33 in aio_bh_call (bh=bh@entry=0x555556ab5570) at ../util/async.c:171
->>> #7  0x0000555555f1a0f5 in aio_bh_poll (ctx=ctx@entry=0x5555566af150) at ../util/async.c:218
->>> #8  0x0000555555f0269e in aio_dispatch (ctx=0x5555566af150) at ../util/aio-posix.c:423
->>> #9  0x0000555555f19d8e in aio_ctx_dispatch
->>>      (source=<optimized out>, callback=<optimized out>, user_data=<optimized out>) at ../util/async.c:360
->>> #10 0x00007ffff7315f4f in g_main_context_dispatch () at /lib64/libglib-2.0.so.0
->>> #11 0x0000555555f1b488 in glib_pollfds_poll () at ../util/main-loop.c:287
->>> #12 os_host_main_loop_wait (timeout=2143429) at ../util/main-loop.c:310
->>> #13 main_loop_wait (nonblocking=nonblocking@entry=0) at ../util/main-loop.c:589
->>> #14 0x0000555555abeba3 in qemu_main_loop () at ../system/runstate.c:826
->>> #15 0x0000555555e63787 in qemu_default_main () at ../system/main.c:37
->>> #16 0x00007ffff6e29590 in __libc_start_call_main () at /lib64/libc.so.6
->>> #17 0x00007ffff6e29640 in __libc_start_main_impl () at /lib64/libc.so.6
->>> #18 0x000055555588d4f5 in _start ()
+>>> Cédric, can you try with the above patch and/or share more details of
+>>> your setup so I can verify (I tried booting a ppc64el-pseries dqib
+>>> image but didn't see the issue)?
 >>
->> Thanks for the report!
->>
->> Mattias,
->>
->> Would you have time to take a look?
+>> I'm fairly sure that this patch would break MacOS 9 which was the reason that
+>> dma_memory_unmap() was added here in the first place: what I was finding was that
+>> without the dma_memory_unmap() the destination RAM wasn't being invalidated (or
+>> marked dirty), causing random crashes during boot.
 > 
-> I noticed that the backtrace indicates address_space_unmap is called
-> with buffer=0x0, len=0. This wasn't really correct before my
-> concurrent bounce buffering change either, but it looks like the
-> previous code would have tolerated this to a certain extent (at least
-> no immediate crashes). Original code in question:
+> dma_memory_unmap() of something you never mapped is
+> definitely wrong. Whatever is going on here, leaving the unmap
+> call in after you removed the dma_memory_map() call is just
+> papering over the actual cause of the crashes.
 > 
->      if (is_write) {
->          address_space_write(as, as->bounce.addr, MEMTXATTRS_UNSPECIFIED,
->                              as->bounce.buffer, access_len);
->      }
->      qemu_vfree(as->bounce.buffer);
->      as->bounce.buffer = NULL;
->      memory_region_unref(as->bounce.mr);
->      /* Clear in_use before reading map_client_list.  */
->      qatomic_set_mb(&as->bounce.in_use, false);
->      address_space_notify_map_clients(as);
+>> Would the issue be solved by adding a corresponding dma_memory_map() beforehand at
+>> the relevant places in hw/ide/macio.c? If that's required as part of the setup for
+>> bounce buffers then I can see how not having this present could cause problems.
 > 
-> address_space_write and qemu_vfree are safe to call with NULL/0
-> parameters. as->bounce.buffer = NULL would leak the buffer if one is
-> allocated, and memory_region_unref(as->bounce.mr) is only OK if the
-> bounce buffer hasn't been used before, otherwise we'd erroneously drop
-> a memory region reference.
+> The only purpose of this API is sequences of:
+>    host_ptr = dma_memory_map(...);
+>    access the host_ptr directly;
+>    dma_memory_unmap(...);
 > 
-> We have two options here: Either we fix the caller to not call
-> address_space_unmap with buffer=NULL. Or alternatively we make
-> address_space_unmap NULL-safe by putting a check to return immediately
-> when being passed a NULL buffer parameter.
+> The bounce-buffer stuff is an internal implementation detail
+> of making this API work when the DMA is going to a device.
 > 
-> Looking at the code, the dma_memory_unmap calls in hw/ide/macio.c seem
-> to be passing buffer=NULL unconditionally, since the dma_mem field in
-> struct DBDMA_io is never set to anything non-zero. In fact, I believe
-> after commit be1e343995ef81fc05d9a4e1ec263ca171d842e7 "macio: switch
-> over to new byte-aligned DMA helpers", the dma_memory_unmap calls in
-> hw/ide/macio.c aren't doing anything and should probably have been
-> removed together with the dma_mem, dma_len and dir fields in struct
-> DBDMA_io. Speculative patch:
+> We need to find whatever the actual cause of the macos failure is.
+> Mattias' suggested change looks right to me.
 > 
-> diff --git a/hw/ide/macio.c b/hw/ide/macio.c
-> index e84bf2c9f6..15dd40138e 100644
-> --- a/hw/ide/macio.c
-> +++ b/hw/ide/macio.c
-> @@ -119,9 +119,6 @@ static void pmac_ide_atapi_transfer_cb(void
-> *opaque, int ret)
->       return;
-> 
->   done:
-> -    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
-> -                     io->dir, io->dma_len);
-> -
->       if (ret < 0) {
->           block_acct_failed(blk_get_stats(s->blk), &s->acct);
->       } else {
-> @@ -202,9 +199,6 @@ static void pmac_ide_transfer_cb(void *opaque, int ret)
->       return;
-> 
->   done:
-> -    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
-> -                     io->dir, io->dma_len);
-> -
->       if (s->dma_cmd == IDE_DMA_READ || s->dma_cmd == IDE_DMA_WRITE) {
->           if (ret < 0) {
->               block_acct_failed(blk_get_stats(s->blk), &s->acct);
-> diff --git a/include/hw/ppc/mac_dbdma.h b/include/hw/ppc/mac_dbdma.h
-> index 4a3f644516..c774f6bf84 100644
-> --- a/include/hw/ppc/mac_dbdma.h
-> +++ b/include/hw/ppc/mac_dbdma.h
-> @@ -44,10 +44,6 @@ struct DBDMA_io {
->       DBDMA_end dma_end;
->       /* DMA is in progress, don't start another one */
->       bool processing;
-> -    /* DMA request */
-> -    void *dma_mem;
-> -    dma_addr_t dma_len;
-> -    DMADirection dir;
->   };
-> 
->   /*
-> 
-> Cédric, can you try with the above patch and/or 
+> I do wonder if something needs the memory barrier than
+> unmap does as part of its operation, e.g. in the
+> implementation of the dma_blk_* functions.
 
-crash seems gone.
+It has been a few years now, but I'm fairly sure the issue was that dma_blk_read() 
+didn't mark RAM containing code as dirty/invalid, and since MacOS 9 used overlays 
+then it would crash randomly trying to execute stale memory. dma_memory_unmap() 
+checks to see if the direction was to RAM, and then marks the memory dirty allowing 
+the new code to get picked up after a MMU fault.
 
-> share more details of your setup so I can verify
-
-You will need a Linnux powerpc or powerpc64 image for mac machines,
-which are not common now days, or MacOS images. My debian images
-are big. I will try to build you a small one for more tests.
-
-> (I tried booting a ppc64el-pseries dqib
-> image but didn't see the issue)?
-
-pseriers is a very different type of machine, the equivalent of the virt
-machine on ARM and RISCV. The HW is completely different.
-
-Thanks,
-
-C.
+If the memory barriers are already in place for the dma_blk_*() functions then the 
+analysis could be correct, in which case the bug is a misunderstanding I made in 
+be1e343995 ("macio: switch over to new byte-aligned DMA helpers") back in 2016.
 
 
+ATB,
+
+Mark.
 
 
