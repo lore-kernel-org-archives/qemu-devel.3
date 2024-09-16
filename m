@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97F52C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 15:53:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CD76C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 15:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqE1E-0007ki-65; Mon, 16 Sep 2024 11:52:04 -0400
+	id 1sqE1q-0001CO-A3; Mon, 16 Sep 2024 11:52:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sqE1C-0007ie-7z; Mon, 16 Sep 2024 11:52:02 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1sqE1b-0008Lr-3Z; Mon, 16 Sep 2024 11:52:31 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sqE1A-0000VY-98; Mon, 16 Sep 2024 11:52:01 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1fee6435a34so39969605ad.0; 
- Mon, 16 Sep 2024 08:51:59 -0700 (PDT)
+ id 1sqE1Z-0000X5-7x; Mon, 16 Sep 2024 11:52:26 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1fee6435a34so39974485ad.0; 
+ Mon, 16 Sep 2024 08:52:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726501918; x=1727106718; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1726501941; x=1727106741; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Eptwr1B6TaRaZQ7aEdRCfkv5ZrQAsR2zaI7/YwKtIOQ=;
- b=ItV7tQpZWSE6upn7bgVz/LT4cu8yvNOJmWB4P5VcBoJ6moVLrO1qAP7Gy7WN9fPEvS
- Wi9gNI7BHNFmJY0xDj+BNvnmRW21zc9lSpfIvEvCzmcRU/vyT2lhr89xN20flnXAQcak
- iDyezBMXij4lH/BkIqY58VCgJ3vfvJinpQ1S3CkEXjQ2bhdNFWvuHieOfZRcqP9N0xsf
- uApy+kywus9zN67XqGomFMNG2wu7x2YI0uIAq6VRms3QZYAX4dZVyQE1Rtd2hMgn3YMp
- EaAXV1893OYJUjplgkOMQ0kpVv6Few/Z83lMxB9m5CDRbq/kQ2fnqPLFJ1vr2IJGStzf
- wUgw==
+ bh=voYN43OZ7lwbwneNl7z2eHNOhROV9NjNWmAvKPq1wXw=;
+ b=LP3Fu7mBSHL54RqDFBe+MOZLc/3HLeG9E1hRPFWnDwlslKWpUcCEVlk4+XhSs3tZoe
+ CSYWbEmGdpbotGPI/JtvJ4FeUjHmYCdcvOLsO4zmCDWuX18SiJddAKfvVj2o2e2wCND7
+ pWjzplBtrbrmk4yAh/52pcJXyeDwRlJzHSw8M46ND++LuFbBh/uJ66zW+p/ndM8I3bxF
+ 3cdb5m/5bqfu756FfTis0agrqXQIaX97zXL5Wwit4dbkAAE1pRt1tr05EL5OtsNYFxPD
+ PRkItD84HSrDLUdJmjXDN2WoFbE6lPG53zSIxl3ZbhA7QOzi8HHzj5pXBFJjTFC8LXJ6
+ g79A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726501918; x=1727106718;
+ d=1e100.net; s=20230601; t=1726501941; x=1727106741;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Eptwr1B6TaRaZQ7aEdRCfkv5ZrQAsR2zaI7/YwKtIOQ=;
- b=A4gGa/aecOLhHi7Oa4ICZm51kPtCesj/kltnSHVnPECt6zsag80DaOrbpRW+pyVMr/
- a0YQBFmMnmVnBNNZdO5/FHfelX4zjkFqZap3jsUYYnxoCK6WwHuEAhgFogYNYa3vUteH
- LCSi+R8NU+gdZFRC5Q5u3rj6ETjge9nShE0qY0nIG+vLeCIt0SPx4GqMQkXiNRL4ycGd
- tAhjy3hcS9yBVz6+JsO28luai/12PgVOdNUqyKMDzQu8cqibS34lT6jnQdH3hoaHfMec
- IaPTdHF7ZvMOdTmDB4JcLcM0K/22EejBoBRI5Jg3sXccwNWvUrXfZrsNPugRL2dFo68v
- cpJA==
+ bh=voYN43OZ7lwbwneNl7z2eHNOhROV9NjNWmAvKPq1wXw=;
+ b=tUSU02WYfMoq2Br5vVlXD3NQNxfvvePfSTs4RTDosMs4eBiNAjmDeeNFJcehw7hDPy
+ za6a5205DYhTU99keMUcPX8fADlydN4/QH13Mzj2GFMD8hnLaBaaO1YHjg/l2pYt4muK
+ EWBc2PryqQ23b8gRKUrwX9NGirQqTOVx2wkbGgEnOSQcs+eHLpJmS0rcmC8tRDiguqEW
+ 5mxtMksKmwkDsbgfIZLbORfpdyfAlpyGjrRz/FfbcZq+9ULSAA22eZ0ao+xjDywmYPWE
+ BdonvbGB/n9PAbEfat/qZdogFSfKPzBCxR7HYinSKoTSqmSEzlQiu6Ue4fxb4TNTdwHG
+ uGlQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWRtYzMvq8L4mVMI/4UjFZsxco6UoZ5Gjb1FIeWyYq55vw2wKObYApalgySUeRObud+0L7pdc8FHU9K@nongnu.org
-X-Gm-Message-State: AOJu0Yy6EA7g2SSJ8kJoCi6eUYcknw65jXr7ULwAwExtb4N4i80B811P
- LrpszWhrb1r200bZrlpXaArDWynwa1UdsU8xxs90+G9onmIH+vPlouRdD0pY
-X-Google-Smtp-Source: AGHT+IHM2bnnYQCF1nvsBijdOog5wWRv0VGbUVTOu9qowXHr8vp50ttw4J5IBeIdHIK5mLDZYypyww==
-X-Received: by 2002:a17:902:f684:b0:207:1828:82fd with SMTP id
- d9443c01a7336-2076e37abf5mr219771225ad.28.1726501917792; 
- Mon, 16 Sep 2024 08:51:57 -0700 (PDT)
+ AJvYcCWzg75/dQJ4kNAuScLpU+Jq11mbSziaCqCnV/+HrgxEMYwQKB28MtNJsI90JBhQHPX07ZORNvrClN8B@nongnu.org
+X-Gm-Message-State: AOJu0YwSrBiMHSv9ae74RT/XeH8m73KHsOhkC7xXNbdx72luD9Iuc2t1
+ ah4ImWzAUrZexzS1HiTvL6X6V8ePUNA+hiT4OMls1UfhklmWq15QM6SdMa6X
+X-Google-Smtp-Source: AGHT+IFz9LAWYvIZ716tCUa0YLHvfPU8zdanNYfeyDHJ2w9J1P6DYEpVtSn54g93WgcfjQyml5dwSA==
+X-Received: by 2002:a17:902:e5c8:b0:1fc:2e38:d3de with SMTP id
+ d9443c01a7336-2076e315577mr251668655ad.7.1726501941458; 
+ Mon, 16 Sep 2024 08:52:21 -0700 (PDT)
 Received: from localhost.localdomain (27-32-110-191.tpgi.com.au.
  [27.32.110.191]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-207946046cbsm37482545ad.105.2024.09.16.08.51.54
+ d9443c01a7336-207946046cbsm37482545ad.105.2024.09.16.08.52.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Sep 2024 08:51:57 -0700 (PDT)
+ Mon, 16 Sep 2024 08:52:20 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
@@ -67,16 +67,17 @@ Cc: Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Ajeet Singh <itachis@FreeBSD.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v7 07/17] bsd-user: Add RISC-V signal trampoline setup function
-Date: Tue, 17 Sep 2024 01:51:09 +1000
-Message-Id: <20240916155119.14610-8-itachis@FreeBSD.org>
+Subject: [PATCH v7 13/17] bsd-user: Define RISC-V signal handling structures
+ and constants
+Date: Tue, 17 Sep 2024 01:51:15 +1000
+Message-Id: <20240916155119.14610-14-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240916155119.14610-1-itachis@FreeBSD.org>
 References: <20240916155119.14610-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=itachis6234@gmail.com; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=itachis6234@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,64 +103,99 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Corbin <mark@dibsco.co.uk>
 
-Implemented the 'setup_sigtramp' function for setting up the signal
-trampoline code in the RISC-V architecture.
+Added definitions for RISC-V signal handling, including structures
+and constants for managing signal frames and context
 
 Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Co-authored-by: Warner Losh <imp@bsdimp.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- bsd-user/riscv/target_arch_sigtramp.h | 41 +++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
- create mode 100644 bsd-user/riscv/target_arch_sigtramp.h
+ bsd-user/riscv/target_arch_signal.h | 75 +++++++++++++++++++++++++++++
+ 1 file changed, 75 insertions(+)
+ create mode 100644 bsd-user/riscv/target_arch_signal.h
 
-diff --git a/bsd-user/riscv/target_arch_sigtramp.h b/bsd-user/riscv/target_arch_sigtramp.h
+diff --git a/bsd-user/riscv/target_arch_signal.h b/bsd-user/riscv/target_arch_signal.h
 new file mode 100644
-index 0000000000..dfe5076739
+index 0000000000..1a634b865b
 --- /dev/null
-+++ b/bsd-user/riscv/target_arch_sigtramp.h
-@@ -0,0 +1,41 @@
++++ b/bsd-user/riscv/target_arch_signal.h
+@@ -0,0 +1,75 @@
 +/*
-+ * RISC-V sigcode
++ *  RISC-V signal definitions
 + *
-+ * Copyright (c) 2019 Mark Corbin
++ *  Copyright (c) 2019 Mark Corbin
 + *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License as published by the Free Software Foundation; either
-+ * version 2 of the License, or (at your option) any later version.
++ *  This program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2 of the License, or
++ *  (at your option) any later version.
 + *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
++ *  This program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *  GNU General Public License for more details.
 + *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ *  You should have received a copy of the GNU General Public License
++ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
 + */
 +
-+#ifndef TARGET_ARCH_SIGTRAMP_H
-+#define TARGET_ARCH_SIGTRAMP_H
++#ifndef TARGET_ARCH_SIGNAL_H
++#define TARGET_ARCH_SIGNAL_H
 +
-+/* Compare with sigcode() in riscv/riscv/locore.S */
-+static inline abi_long setup_sigtramp(abi_ulong offset, unsigned sigf_uc,
-+        unsigned sys_sigreturn)
-+{
-+    uint32_t sys_exit = TARGET_FREEBSD_NR_exit;
++#include "cpu.h"
 +
-+    uint32_t sigtramp_code[] = {
-+    /*1*/ const_le32(0x00010513),                        /*mv a0, sp*/
-+    /*2*/ const_le32(0x00050513 + (sigf_uc << 20)),      /*addi a0,a0,sigf_uc*/
-+    /*3*/ const_le32(0x00000293 + (sys_sigreturn << 20)),/*li t0,sys_sigreturn*/
-+    /*4*/ const_le32(0x00000073),                        /*ecall*/
-+    /*5*/ const_le32(0x00000293 + (sys_exit << 20)),     /*li t0,sys_exit*/
-+    /*6*/ const_le32(0x00000073),                        /*ecall*/
-+    /*7*/ const_le32(0xFF1FF06F)                         /*b -16*/
-+    };
 +
-+    return memcpy_to_target(offset, sigtramp_code, TARGET_SZSIGCODE);
-+}
-+#endif /* TARGET_ARCH_SIGTRAMP_H */
++#define TARGET_INSN_SIZE     4  /* riscv instruction size */
++
++/* Size of the signal trampoline code placed on the stack. */
++#define TARGET_SZSIGCODE    ((abi_ulong)(7 * TARGET_INSN_SIZE))
++
++/* Compare with riscv/include/_limits.h */
++#define TARGET_MINSIGSTKSZ  (1024 * 4)
++#define TARGET_SIGSTKSZ     (TARGET_MINSIGSTKSZ + 32768)
++
++struct target_gpregs {
++    uint64_t    gp_ra;
++    uint64_t    gp_sp;
++    uint64_t    gp_gp;
++    uint64_t    gp_tp;
++    uint64_t    gp_t[7];
++    uint64_t    gp_s[12];
++    uint64_t    gp_a[8];
++    uint64_t    gp_sepc;
++    uint64_t    gp_sstatus;
++};
++
++struct target_fpregs {
++    uint64_t        fp_x[32][2];
++    uint64_t        fp_fcsr;
++    uint32_t        fp_flags;
++    uint32_t        pad;
++};
++
++typedef struct target_mcontext {
++    struct target_gpregs   mc_gpregs;
++    struct target_fpregs   mc_fpregs;
++    uint32_t               mc_flags;
++#define TARGET_MC_FP_VALID 0x01
++    uint32_t               mc_pad;
++    uint64_t               mc_spare[8];
++} target_mcontext_t;
++
++#define TARGET_MCONTEXT_SIZE 864
++#define TARGET_UCONTEXT_SIZE 936
++
++#include "target_os_ucontext.h"
++
++struct target_sigframe {
++    target_ucontext_t   sf_uc; /* = *sf_uncontext */
++    target_siginfo_t    sf_si; /* = *sf_siginfo (SA_SIGINFO case)*/
++};
++
++#define TARGET_SIGSTACK_ALIGN 16
++
++#endif /* TARGET_ARCH_SIGNAL_H */
 -- 
 2.34.1
 
