@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A64D0C3ABCE
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 08:56:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E3C6C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 08:56:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sq7VP-000130-9P; Mon, 16 Sep 2024 04:54:47 -0400
+	id 1sq7VX-0001g9-C5; Mon, 16 Sep 2024 04:54:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sq7Uz-0000Ay-Au
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 04:54:23 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1sq7V9-0000b4-Mc
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 04:54:32 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sq7Uj-0005CQ-Ah
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 04:54:21 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-374c180d123so1664782f8f.3
- for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 01:54:04 -0700 (PDT)
+ id 1sq7Us-0005EP-Fj
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 04:54:31 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-42cbface8d6so39655245e9.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 01:54:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726476844; x=1727081644; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726476853; x=1727081653; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tM22JfJ8MqQx0zkIxo3mmiSupSHk/2QTpOs0HmJJEsE=;
- b=zlKB8U6MqlJeUw3FP9eOZukFa0OQztheuViUCYqdULCsc3ISl3DeiIxKhIlzy25/PO
- LtpBvQQzkFZShs2HWiMAhYibdktdQmj4fK0wqAOshnJQQ5x3yjRgy94hHT91HFDlIeTu
- sm/Gvvi85/vuuaDeOqFsAznCrAHDeKFSui5Awf5Zl1picPfeWEksorKNN5y2edcdzsfr
- pI8sjjpre/6WzPUXXnaKAnBRlmqFtogPwFv99kAcJZeUMiM1ihgxkg7qji6CnZz0nX8j
- MVOxmLMNCtOTtSjl3nmGobWkroe5assSAlryNR9j2WNH8tWqsnAczhWSLQ2sCu0XpAhS
- X90Q==
+ bh=aXyb7NcpmUG1NyUq2Ba7XIovKN57PGi0mUZtpk0zTz0=;
+ b=HOuXcTTuJVilcBBtYm32nGrknUj5JWYdDgjcbs1684MuTX//mgozLWCvRNw1Zg0U0J
+ SOzpqUxkfJnsy/Og3M3LvZCIXnhNCD2xS8N67o+Y/GtvGrP3t15bHIZMPkC7gsNil1tQ
+ NYqz3JJfydsjVMNwaWUVVUEsbFI/h3UH8Ux0gn8LIt1h1SwEDnrxi5PmFqKkRLQigXF6
+ 2zPl6Q1bKVS+bGL2yBURQxwUVWeBH7pEUCgbdlgvgxDqxUwAqDHT6DAksPyjGdq0B1xK
+ 4anrlThj4cxr8jmiow8iYwAW4c7tO4PK6gokGRy/mDf1yFZtpxamm9Rm75IRz/GeR9u6
+ cE2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726476844; x=1727081644;
+ d=1e100.net; s=20230601; t=1726476853; x=1727081653;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tM22JfJ8MqQx0zkIxo3mmiSupSHk/2QTpOs0HmJJEsE=;
- b=NyHOipQdbLjwTbgl61tvthAH6EkgsVZK/E/9sZTr8bRTVLA/LLxeAuBh8IzIAxyxn4
- lNaXaIQyKxNwiCl5vASYVZWEo9Rc7mJsS6ULeFrzwddGUjP6jPFhCbea1JuKdA0GvLSA
- 7c4BNN3ELfzbaw3g3WhmmK8eWuP8ckLCNCdG+SZQo852SKTw5HUMpRFuWTeLhJemF3Qu
- i0R4PUt2rPzEIDLQ2VY77G7nj5J/ZspspeOF5howLEuKBaZM5NdoCHp71DgF4nsfs16l
- SqE+CZVgrAcAOlA/dHIjbG8Zj9LR7LsU7EOabeJ0jq3cOGvbtYbVfIgNT9DVIhUXNYaQ
- aK3w==
-X-Gm-Message-State: AOJu0Yxuc6bFLIKvu8ZMFxkWyW8g3qEC2kCrStyhyyhYItTxjflvLeAK
- 6QC0Axh4OpbMVxMKSsZbTvssf7Dt5/vlx5CF60+QiSlB35LC4/KlUE+RVNHCOKo=
-X-Google-Smtp-Source: AGHT+IFLXJ+7V/1aaQoFam8TjRU/0MUzurvEQwqqJnRBJNRuxRXtksWyXaMEyQsLXdONHgHk3eQ2wg==
-X-Received: by 2002:a5d:6da6:0:b0:374:cd96:f73 with SMTP id
- ffacd0b85a97d-378d61d51bcmr7590148f8f.3.1726476843593; 
- Mon, 16 Sep 2024 01:54:03 -0700 (PDT)
+ bh=aXyb7NcpmUG1NyUq2Ba7XIovKN57PGi0mUZtpk0zTz0=;
+ b=RzxZKEdjHpZdr4WGVMSFnN8hJN2rCgC78tjMXvG4TMcX4MGzlq9gzFQrMxFfnjsqA4
+ Bci4MXr/V6KDSNUb7oS4V8okL7OSnAwK/NC1qhukzUl4waf3fXpaYJ/KeRkoZk43Ja67
+ nan2BCFKdqAH9qvA2CFh9zEmyk36eDyVT0Y9XVdgFTK2xtVzndzsGWm90SoXf9U4sTAj
+ mOVLo70VvORkzz6QKPAEuJM4pbv7W5TnxliI8FRhAefhgA2SCwl1TEUnrL6iHSbWSpHS
+ 6ClC74BD7iScDfys0cZhlcOYSICHVYZfcVst6S7bpuTnl6XQSo6D3LqI+CDWnRHk+268
+ KDhw==
+X-Gm-Message-State: AOJu0YxEBLLEMiki7fDSMHFlCVxFGmx+dSRzVBIWTJ16/zVGSwW9Dc3G
+ TxP9byv7Md7sQ/aCTBiZhDCkI7VaKsoA6gtjBAILVH4PourKtsyKubSCmYih5Xc=
+X-Google-Smtp-Source: AGHT+IHAcU59Z9L/lxeAqUYOsbyDshJpXcPuUE/cEuLbb1SV2B9zOPbq0GOrt41b3nrW5wfdkQ/d+g==
+X-Received: by 2002:a05:600c:1d1b:b0:42c:b555:43dd with SMTP id
+ 5b1f17b1804b1-42d9070a3f2mr112008505e9.3.1726476852466; 
+ Mon, 16 Sep 2024 01:54:12 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-378e73e7feesm6566584f8f.29.2024.09.16.01.54.01
+ ffacd0b85a97d-378e72e49bfsm6609974f8f.21.2024.09.16.01.54.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Sep 2024 01:54:01 -0700 (PDT)
+ Mon, 16 Sep 2024 01:54:09 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 747B85F8F6;
- Mon, 16 Sep 2024 09:54:00 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 6E7BD5FC7F;
+ Mon, 16 Sep 2024 09:54:01 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Thomas Huth <thuth@redhat.com>,
@@ -74,25 +74,24 @@ Cc: qemu-s390x@nongnu.org, Thomas Huth <thuth@redhat.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 02/18] deprecation: don't enable TCG plugins by default
- with TCI
-Date: Mon, 16 Sep 2024 09:53:44 +0100
-Message-Id: <20240916085400.1046925-3-alex.bennee@linaro.org>
+Subject: [PATCH v2 12/18] tests/tcg: ensure s390x-softmmu output redirected
+Date: Mon, 16 Sep 2024 09:53:54 +0100
+Message-Id: <20240916085400.1046925-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20240916085400.1046925-1-alex.bennee@linaro.org>
 References: <20240916085400.1046925-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,66 +107,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The softmmu memory instrumentation test sees so many more accesses
-than a normal translated host and its really not worth fixing up. Lets
-deprecate this odd configuration and save on the CI cycles.
+The multiarch system tests output serial data which should be
+redirected to the "output" chardev rather than echoed to the console.
 
-Message-Id: <20240910140733.4007719-13-alex.bennee@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Comment the use of EXTFLAGS variable while we are at it.
+
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- docs/about/deprecated.rst |  8 ++++++++
- configure                 | 11 +++++++++--
- 2 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index f7c7c33d39..5aa2e35314 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -196,6 +196,14 @@ benefits from having plenty of host memory it seems reasonable to
- encourage users to use 64 bit builds of QEMU for analysis work
- whatever targets they are instrumenting.
- 
-+TCG Plugin support not enabled by default with TCI (since 9.2)
-+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+While the TCG interpreter can interpret the TCG ops used by plugins it
-+is going to be so much slower it wouldn't make sense for any serious
-+instrumentation. Due to implementation differences there will also be
-+anomalies in things like memory instrumentation.
-+
- System emulator CPUs
- --------------------
- 
-diff --git a/configure b/configure
-index f376fa24b3..3778b61c40 100755
---- a/configure
-+++ b/configure
-@@ -629,6 +629,9 @@ meson_option_parse() {
-     exit 1
-   fi
- }
-+has_meson_option() {
-+    test "${meson_options#*"$1"}" != "$meson_options"
-+}
- 
- meson_add_machine_file() {
-   if test "$cross_compile" = "yes"; then
-@@ -1048,8 +1051,12 @@ if test "$static" = "yes" ; then
-   plugins="no"
- fi
- if test "$plugins" != "no" && test $host_bits -eq 64; then
--  plugins=yes
--  subdirs="$subdirs contrib/plugins"
-+    if has_meson_option "-Dtcg_interpreter=true"; then
-+        plugins="no"
-+    else
-+        plugins=yes
-+        subdirs="$subdirs contrib/plugins"
-+    fi
- fi
- 
- cat > $TMPC << EOF
+---
+v2
+  - don't remove EXTFLAGS, add comment
+---
+ tests/tcg/s390x/Makefile.softmmu-target | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/tests/tcg/s390x/Makefile.softmmu-target b/tests/tcg/s390x/Makefile.softmmu-target
+index f60f94b090..be242ba8f1 100644
+--- a/tests/tcg/s390x/Makefile.softmmu-target
++++ b/tests/tcg/s390x/Makefile.softmmu-target
+@@ -1,6 +1,7 @@
+ S390X_SRC=$(SRC_PATH)/tests/tcg/s390x
+ VPATH+=$(S390X_SRC)
+-QEMU_OPTS+=-action panic=exit-failure -nographic $(EXTFLAGS) -kernel
++# EXTFLAGS can be passed by the user, e.g. to override the --accel
++QEMU_OPTS+=-action panic=exit-failure -nographic -serial chardev:output $(EXTFLAGS) -kernel
+ LINK_SCRIPT=$(S390X_SRC)/softmmu.ld
+ CFLAGS+=-ggdb -O0
+ LDFLAGS=-nostdlib -static
 -- 
 2.39.5
 
