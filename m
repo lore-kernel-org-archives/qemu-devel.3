@@ -4,107 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAF4DC3ABA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 13:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED9A5C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 13:50:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqBeN-0003qY-O1; Mon, 16 Sep 2024 09:20:19 -0400
+	id 1sqC6X-0003Vy-37; Mon, 16 Sep 2024 09:49:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
- id 1sqBeL-0003os-TL; Mon, 16 Sep 2024 09:20:17 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
- id 1sqBeJ-0007eY-Bl; Mon, 16 Sep 2024 09:20:17 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48GCavLc011609;
- Mon, 16 Sep 2024 13:20:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:subject:from:to:cc:date:in-reply-to:references
- :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- bjyIOf8xvwvkNXX8tjCjxNsH2cQAi3fRTzRXG2q9eIw=; b=l8yI2iPt2zfOoxv/
- KouADbotXuCHBh5eRYDxc8zanio9IDzSv/Iy/gsM/GXMc3PopeND7TOHXbD2Dzwz
- Q7VFa+sWSsc25YFmlMEch/4QlvHQ/meeThO0ZpSrxmmGI1uMPgKgil94uqMp7rhf
- T+s764M+/MfkB7TWxApEalHCHv9zqMWAlksE62UylLP1Uldsg6JO1nUMfBYgVMm4
- Q2Wj4K2s5apMd+ro47pCXmrtN/R3RhzP7loNnIjpPRlAUP2TZFbsLRClQnl+pcWH
- NgxcQ0UgH5UMZupo2tIH4zLAC383l/+W/KxkXPBT8XaxlwK7tmp+0VQAv09U8g/f
- 6Tk+cw==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41pht89bt0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Sep 2024 13:20:10 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48GDKAs3025672;
- Mon, 16 Sep 2024 13:20:10 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41pht89bst-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Sep 2024 13:20:10 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48GBfoeW030631;
- Mon, 16 Sep 2024 13:20:09 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41npamyfsr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Sep 2024 13:20:09 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48GDK5P154264230
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 16 Sep 2024 13:20:05 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5333820040;
- Mon, 16 Sep 2024 13:20:05 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7B09020043;
- Mon, 16 Sep 2024 13:20:04 +0000 (GMT)
-Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
- [9.171.9.12]) by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 16 Sep 2024 13:20:04 +0000 (GMT)
-Message-ID: <a2cb5304c1bf326455030f7d370155ecba3cd7d2.camel@linux.ibm.com>
-Subject: Re: [PATCH v1 06/14] s390x: introduce s390_get_memory_limit()
-From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-To: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth
- <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, Christian
- Borntraeger <borntraeger@linux.ibm.com>, Eric Farman
- <farman@linux.ibm.com>, Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Janosch Frank
- <frankja@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>, Cornelia
- Huck <cohuck@redhat.com>
-Date: Mon, 16 Sep 2024 15:20:04 +0200
-In-Reply-To: <20240910175809.2135596-7-david@redhat.com>
-References: <20240910175809.2135596-1-david@redhat.com>
- <20240910175809.2135596-7-david@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.3 (3.52.3-1.fc40) 
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sqC6U-0003Uq-IE
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 09:49:23 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sqC6P-0001zl-D3
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 09:49:22 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42cd46f3a26so26551005e9.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 06:49:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726494555; x=1727099355; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=1q9G7Rw8B9MCD3mkcgSuqTdpXBuYdcKNXELJWROaM60=;
+ b=A191bwqym5GbOzCu8cGFxw1DuZvjuzYbyPP+z1Zvti6ugXW4UwA238ptPdNVKoHu/C
+ VM0OUm6wO88pXkVg8COrtxGhAZEmE1Zbh7CcS4BuQ4+Qvl4MDZG9djaR6YuZ3YyFnO5H
+ uBJWTAJa8wi3Ya26IxXBjTqcL4wleKMMJ3JpRysG7kT/Q2qwJz3IGoFheKeAhdVD02eh
+ vP6n5z3gYm3TtqGJbqMDePad+0YBuioybewCfJi31BZ4acE5U7DXTg40XRDYU0pPneAi
+ NuZPZyV3xEPhCvrU+l6mD4+1l2rAyhqUqOdixBA3N5uOv2+qaJarNsWzl/56ATlVPNuQ
+ 4bsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726494555; x=1727099355;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1q9G7Rw8B9MCD3mkcgSuqTdpXBuYdcKNXELJWROaM60=;
+ b=pYnCNv4x8Ndjdaw16ISQ3zcZ1fcqMLGGH/mp7mbZ8i20y/XViXTMzU2kZINj/1QNxh
+ nx/yhkJhd7dvnxQElFP3q//5XZltZnA34YTLPpXn1/ff4HguGptPAHnUchjAqwi2p9gX
+ eLJgXtlLIKvOG4taXTyNPYDiIBrgRlpzQ/P4UuYLEDNOAIYW7BMpEmWoKM6fMWJwIVoq
+ quNc5jW3vcgIFL+6Zh15+GWZxG24cw6fiBHgAZi5FlDlgvsn6BbONXtFqRTUkZqOWMu2
+ spadJn0kiSHTA7XmBHJ91dI9ScBwo1nirvekZcIypBmpLev0EqRzFOoObAGd0OY3BGwB
+ b8zA==
+X-Gm-Message-State: AOJu0YzOeRJrl3IfOsBFInW6WS5+D5eMZ27xvmnUvEtORLzzE4I0Q+la
+ dg/bBBP/6G5e4H27cicfZnKknHHU6KnPasmZt7xCfasa6WUkAGsshxX6jB8AVp1cv3V5Cwkjoc1
+ D
+X-Google-Smtp-Source: AGHT+IHeyWn9qdoKxU5ca6/Lu8x8ox3t6eVHnhf2DnHFk/1psv2on6KEGYPSyBsTvbw0RHMkOIhtOA==
+X-Received: by 2002:a05:600c:3b92:b0:426:64a2:5362 with SMTP id
+ 5b1f17b1804b1-42d90722043mr68856055e9.8.1726494555198; 
+ Mon, 16 Sep 2024 06:49:15 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-378e78054absm7321914f8f.106.2024.09.16.06.49.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 16 Sep 2024 06:49:14 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>
+Subject: [PATCH] .gitlab-ci.d/crossbuilds.yml: Force 'make check' to -j2 for
+ cross-i686-tci
+Date: Mon, 16 Sep 2024 14:49:13 +0100
+Message-Id: <20240916134913.2540486-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: KnMCiQoMi7sR3zoU6O7CXqSNF0xvHOmF
-X-Proofpoint-ORIG-GUID: XQkVqObg8oE3PuGYST2AxzGXLp-tiMlG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-16_09,2024-09-13_02,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- phishscore=0 bulkscore=0 suspectscore=0 priorityscore=1501 adultscore=0
- mlxlogscore=953 mlxscore=0 clxscore=1015 malwarescore=0 spamscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409160081
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=nsg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,71 +92,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2024-09-10 at 19:58 +0200, David Hildenbrand wrote:
-> Let's add s390_get_memory_limit(), to query what has been successfully
-> set via s390_set_memory_limit(). Allow setting the limit only once.
->=20
-> Signed-off-by: David Hildenbrand <david@redhat.com>
+In commit 1374ed49e1453c300 we forced the cross-i686-tci job to -j1 to
+see if this helped with test timeouts. It seems to help with that but
+on the other hand we now sometimes run into the overall 60 minute
+job timeout. Try -j2 instead.
 
-Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ .gitlab-ci.d/crossbuilds.yml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Comment below.
-> ---
->  target/s390x/cpu-sysemu.c | 19 +++++++++++++++++--
->  target/s390x/cpu.h        |  1 +
->  2 files changed, 18 insertions(+), 2 deletions(-)
->=20
-> diff --git a/target/s390x/cpu-sysemu.c b/target/s390x/cpu-sysemu.c
-> index 1cd30c1d84..1915567b3a 100644
-> --- a/target/s390x/cpu-sysemu.c
-> +++ b/target/s390x/cpu-sysemu.c
-> @@ -255,12 +255,27 @@ unsigned int s390_cpu_set_state(uint8_t cpu_state, =
-S390CPU *cpu)
->      return s390_count_running_cpus();
->  }
-> =20
-> +static uint64_t memory_limit;
-> +
->  int s390_set_memory_limit(uint64_t new_limit, uint64_t *hw_limit)
->  {
-> +    int ret =3D 0;
-> +
-> +    if (memory_limit) {
-> +        return -EBUSY;
-> +    }
->      if (kvm_enabled()) {
-> -        return kvm_s390_set_mem_limit(new_limit, hw_limit);
-> +        ret =3D kvm_s390_set_mem_limit(new_limit, hw_limit);
-> +    }
-> +    if (!ret) {
-> +        memory_limit =3D new_limit;
->      }
-> -    return 0;
-> +    return ret;
-> +}
-> +
-> +uint64_t s390_get_memory_limit(void)
-> +{
-
-Might be nice to guard/warn against s390_set_memory_limit not having been c=
-alled before.
-
-> +    return memory_limit;
->  }
-> =20
->  void s390_set_max_pagesize(uint64_t pagesize, Error **errp)
-> diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
-> index d6b75ad0e0..7a51b606ed 100644
-> --- a/target/s390x/cpu.h
-> +++ b/target/s390x/cpu.h
-> @@ -895,6 +895,7 @@ static inline void s390_do_cpu_load_normal(CPUState *=
-cs, run_on_cpu_data arg)
->  /* cpu.c */
->  void s390_crypto_reset(void);
->  int s390_set_memory_limit(uint64_t new_limit, uint64_t *hw_limit);
-> +uint64_t s390_get_memory_limit(void);
->  void s390_set_max_pagesize(uint64_t pagesize, Error **errp);
->  void s390_cmma_reset(void);
->  void s390_enable_css_support(S390CPU *cpu);
+diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
+index 1e21d082aa4..95dfc392244 100644
+--- a/.gitlab-ci.d/crossbuilds.yml
++++ b/.gitlab-ci.d/crossbuilds.yml
+@@ -62,11 +62,11 @@ cross-i686-tci:
+     IMAGE: debian-i686-cross
+     ACCEL: tcg-interpreter
+     EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,aarch64-softmmu,aarch64-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins --disable-kvm
+-    # Force tests to run in series, to see whether this
++    # Force tests to run with reduced parallelism, to see whether this
+     # reduces the flakiness of this CI job. The CI
+     # environment by default shows us 8 CPUs and so we
+     # would otherwise be using a parallelism of 9.
+-    MAKE_CHECK_ARGS: check check-tcg -j1
++    MAKE_CHECK_ARGS: check check-tcg -j2
+ 
+ cross-mipsel-system:
+   extends: .cross_system_build_job
+-- 
+2.34.1
 
 
