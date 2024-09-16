@@ -4,88 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C27AEC3ABA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 13:13:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F81BC3ABA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 13:14:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqBXF-0001fm-T5; Mon, 16 Sep 2024 09:12:58 -0400
+	id 1sqBYx-0006Dx-7z; Mon, 16 Sep 2024 09:14:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sqBWv-0001a9-Fq
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 09:12:42 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sqBWq-0006X8-PE
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 09:12:35 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-42e5e758093so10239615e9.1
- for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 06:12:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726492348; x=1727097148; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CuKYW32iuCVO7VkUFGzQQhY9BZxeslT0FvFlLvclZ1c=;
- b=r4fUdevpZxJVBQRDa15yNJIkwOwCdpi5k3LVGyqf63m5N8MGiT1HcHRvJbFZe0KoYQ
- DHfDKF9N8WP9KSdy8R0Jel/FQYajQUquMVSPMZXwmjV8Tj6dds/2o+WSlKMtyY7YYqlw
- MLu2grBggzKnh0SLqjWZa5vuxYlx0yht7Bv2CnQbWbYNs3PmeFzYcWohST50JBrcP1+1
- 1ne03MD7K7TDtO9wLk/kL2VybUy9wOZrdXKxWOphUCTiPbvgGbBb+VyiI+ZkuVHI6+ZM
- /nNcwSz0p64wQFK8M+fjoQ1Gdy/f7xa+0tQuNA0X6K+vzG7M3kg+QhOOAvfbw4OfKrCe
- S/HA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726492348; x=1727097148;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=CuKYW32iuCVO7VkUFGzQQhY9BZxeslT0FvFlLvclZ1c=;
- b=UkdGLi5QZ9h6lIQW8H+uHp6lCxn37+h2+3Y+hoWm9nTxGrp/wFVg/rcQJ4Rab1wKQ/
- tll5Qs/LBqlUT1/65FkLYlM/kvJhMVo5uCWRaTitRWQ/vdYRR4lO6nPV5bJMuxD9CSMu
- 6/0gTcLXZxAlyNGVm1TZlQzC9ahP4ryOplm6Q93KqruXZ+imRpAMJGNsIJtkkb70jSX7
- 7UlqCBwygA/00ebxv4Nl/nyiMAz4E06QS+zgoPxJlcpL4A7BVDULpftuGrjq7mfpx5Rs
- vY9J9pPaIt2mpRQ4BNesUvKnB/OSoVFSwIyAyVJh2Ih5a9Jox8XXZo/TgwoMaAQ00DxA
- lwgg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUAHUWJczp4Eb81djJWe782D+LIJtqls7i9+pqH84kKRFqsNX9Q0BpIDMbxaI612I0IWxtYnX2l7hUu@nongnu.org
-X-Gm-Message-State: AOJu0YzD9qHlIqA/eP9qlK5xF8EKxhPyUyjM0jix+e19oa7hqAfXjRbt
- 1UUMqptGiG4C5oumBnByQor0/mnvcSuas+V7weZNNnoMGKEqD7ogR1g/OdjBW4Vx81TVf1ElnoO
- I5EY=
-X-Google-Smtp-Source: AGHT+IFp29qAJ/cy4sTtDRKo/qHQ0KqnyGC7vMPx+izD63MIohHoUF09Y0KqgYxwhFQNCbbQN6ju0Q==
-X-Received: by 2002:a5d:4533:0:b0:368:31c7:19dd with SMTP id
- ffacd0b85a97d-378d61d5309mr6952021f8f.5.1726492347895; 
- Mon, 16 Sep 2024 06:12:27 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-378e73f62bfsm7199110f8f.51.2024.09.16.06.12.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Sep 2024 06:12:27 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 931DA5F87D;
- Mon, 16 Sep 2024 14:12:26 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Brian Cain <quic_bcain@quicinc.com>
-Cc: Brian Cain <bcain@quicinc.com>,  <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] tests/tcg/multiarch: Define _LARGEFILE64_SOURCE
-In-Reply-To: <0298a6cc-2c75-4cb9-8f9c-146c0173fc31@quicinc.com> (Brian Cain's
- message of "Mon, 16 Sep 2024 07:45:38 -0500")
-References: <20240907023924.1394728-1-bcain@quicinc.com>
- <0298a6cc-2c75-4cb9-8f9c-146c0173fc31@quicinc.com>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Mon, 16 Sep 2024 14:12:26 +0100
-Message-ID: <87wmjbg2th.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <SRS0=CK3F=QO=kaod.org=clg@ozlabs.org>)
+ id 1sqBYp-000691-53; Mon, 16 Sep 2024 09:14:35 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=CK3F=QO=kaod.org=clg@ozlabs.org>)
+ id 1sqBYi-0006iX-Gt; Mon, 16 Sep 2024 09:14:34 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4X6lk6209Hz4wd6;
+ Mon, 16 Sep 2024 23:14:22 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4X6lk36z2Pz4x21;
+ Mon, 16 Sep 2024 23:14:19 +1000 (AEST)
+Message-ID: <00b812a8-48ba-4d51-bb4d-30d7e461c907@kaod.org>
+Date: Mon, 16 Sep 2024 15:14:16 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 20/49] spapr: Tag pseries-2.1 - 2.11 machines as deprecated
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
+References: <20240219082938.238302-1-npiggin@gmail.com>
+ <20240219082938.238302-21-npiggin@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240219082938.238302-21-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=CK3F=QO=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,53 +65,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Brian Cain <quic_bcain@quicinc.com> writes:
+Hello Harsh,
 
-> On 9/6/2024 9:39 PM, Brian Cain wrote:
->> With newer clang builds (19.x), there's a warning for implicit function
->> declarations and it rejects linux-test.c.
->>
->> glibc/musl's readdir64() declaration in dirent is guarded by
->> _LARGEFILE64_SOURCE, so we'll define it to fix the warning.
->>
->>        BUILD   hexagon-linux-user guest-tests
->>      /local/mnt/workspace/upstream/toolchain_for_hexagon/qemu/tests/tcg/=
-multiarch/linux/linux-test.c:189:14: error: call to undeclared function 're=
-addir64'; ISO C99 and later do not support implicit function declarations [=
--Wimplicit-function-declaration]
->>        189 |         de =3D readdir64(dir);
->>            |              ^
->>
->> Signed-off-by: Brian Cain <bcain@quicinc.com>
->> ---
->>   tests/tcg/multiarch/linux/linux-test.c | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/tests/tcg/multiarch/linux/linux-test.c b/tests/tcg/multiarc=
-h/linux/linux-test.c
->> index 64f57cb287..4e0e862ad9 100644
->> --- a/tests/tcg/multiarch/linux/linux-test.c
->> +++ b/tests/tcg/multiarch/linux/linux-test.c
->> @@ -17,6 +17,7 @@
->>    *  along with this program; if not, see <http://www.gnu.org/licenses/=
->.
->>    */
->>   #define _GNU_SOURCE
->> +#define _LARGEFILE64_SOURCE
->>   #include <stdarg.h>
->>   #include <stdlib.h>
->>   #include <stdio.h>
->
->
-> Alex -- what do you think about this one?
+On 2/19/24 09:29, Nicholas Piggin wrote:
+> From: Cédric Le Goater <clg@kaod.org>
+> 
+> pseries machines before version 2.11 have undergone many changes to
+> correct issues, mostly regarding migration compatibility. This is
+> obfuscating the code uselessly and makes maintenance more difficult.
+> Remove them and only keep the last version of the 2.x series, 2.12,
+> still in use by old distros.
+> 
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Daniel Henrique Barboza <danielhb413@gmail.com>
+> Signed-off-by: Cédric Le Goater <clg@kaod.org>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   docs/about/deprecated.rst | 8 ++++++++
+>   hw/ppc/spapr.c            | 1 +
+>   roms/skiboot              | 2 +-
+>   3 files changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 5a2305ccd6..36bd3e15ef 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -229,6 +229,14 @@ The Nios II architecture is orphan.
+>   The machine is no longer in existence and has been long unmaintained
+>   in QEMU. This also holds for the TC51828 16MiB flash that it uses.
+>   
+> +``pseries-2.1`` up to ``pseries-2.11`` (since 9.0)
+> +''''''''''''''''''''''''''''''''''''''''''''''''''
+> +
+> +Older pseries machines before version 2.12 have undergone many changes
+> +to correct issues, mostly regarding migration compatibility. These are
+> +no longer maintained and removing them will make the code easier to
+> +read and maintain. Use versions 2.12 and above as a replacement.
+> +
 
-Actually scratch that, this is a 32 compat hack:
+Would you have time, or a KVM PPC team member, to start removing
+the now deprecated pseries machines in the QEMU 9.2 cycle ?
 
-  1f442da51e (tests/tcg/multiarch: fix 32bit linux-test on 64bit host)
+Thanks,
 
-Is the __USE_LARGEFILE64 symbol in the hexagon headers?
+C.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
 
