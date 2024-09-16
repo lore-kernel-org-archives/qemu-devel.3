@@ -4,71 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A17FC3ABB2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 16:56:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D34E4C3ABA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 17:11:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqF1D-0004Wq-PA; Mon, 16 Sep 2024 12:56:07 -0400
+	id 1sqFFR-00039X-91; Mon, 16 Sep 2024 13:10:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sqF1C-0004W6-49
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 12:56:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sqFFH-00038y-Tm
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 13:10:40 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sqF19-0006qM-K0
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 12:56:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726505760;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gEjsWsVIRGI6BJNvyUbYDEohXBTCJ5WCpfK1eRXRiMc=;
- b=JSTRZQ6MQqBAv7EAQerXkYaumyU2Septh+3hJKEGBYeJpPb2sqroQrKBWZNFjWW+zE85pk
- 0huKy4s0OYWSJJl2T4Fhd6+SejIyOw9um7lY/0EXGSSlR2vY1WDU/44WE+CKbH0kWhzEIY
- Jhiq09O+278ZgVOQyr4gTXRmqX3qvgc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-482-Xz74hy2ZNTOF3DAnga4w1w-1; Mon,
- 16 Sep 2024 12:55:59 -0400
-X-MC-Unique: Xz74hy2ZNTOF3DAnga4w1w-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D084D1955D48; Mon, 16 Sep 2024 16:55:57 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.252])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0BFDA1956086; Mon, 16 Sep 2024 16:55:55 +0000 (UTC)
-Date: Mon, 16 Sep 2024 18:55:54 +0200
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Albert Esteve <aesteve@redhat.com>
-Cc: qemu-devel@nongnu.org, slp@redhat.com, hi@alyssa.is, mst@redhat.com,
- Stefano Garzarella <sgarzare@redhat.com>, david@redhat.com,
- stevensd@chromium.org, jasowang@redhat.com
-Subject: Re: [PATCH 0/3] Document SHMEM vhost-user requests
-Message-ID: <20240916165554.GD521955@fedora.home>
-References: <20240912144432.126717-1-aesteve@redhat.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sqFFF-0000mN-11
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 13:10:39 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4X6rsZ38F3z6K9F4;
+ Tue, 17 Sep 2024 01:06:10 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 8CA71140CF4;
+ Tue, 17 Sep 2024 01:10:22 +0800 (CST)
+Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
+ frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 16 Sep 2024 19:10:19 +0200
+To: <imammedo@redhat.com>, <mst@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, <qemu-devel@nongnu.org>, <ankita@nvidia.com>
+CC: <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>,
+ <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, Richard Henderson
+ <richard.henderson@linaro.org>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
+ <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ <eduardo@habkost.net>, Michael Roth <michael.roth@amd.com>, Ani Sinha
+ <anisinha@redhat.com>
+Subject: [PATCH v6 00/15] acpi: NUMA nodes for CXL HB as GP + complex NUMA test
+Date: Mon, 16 Sep 2024 18:10:05 +0100
+Message-ID: <20240916171017.1841767-1-Jonathan.Cameron@huawei.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="TTYGSIlri4ypp21r"
-Content-Disposition: inline
-In-Reply-To: <20240912144432.126717-1-aesteve@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -51
+X-Spam_score: -5.2
+X-Spam_bar: -----
+X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-1.048, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,65 +68,118 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+v6 changes:
+- 2 new patches (11 and 12) to improve things in existing code after
+  Igor pointed them out in the new code.
+- More detailed example provided for docs for control of Generic Ports.
+  This has proved a difficult concept to convey.
+  Note there is one question Igor raised for Markus:
+  - Is exit(1) ok for failure paths rather than error_fatal.
+    Markus has acked the patch (10) but maybe this part was not his
+    focus.
+- Rebased.  Table data regenerated as other series touched DSDT.
 
---TTYGSIlri4ypp21r
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Title becoming a little misleading as now this does a bunch of other
+stuff as precursors, but I've kept it to maintain association with v3 and
+before. A more accurate series title is probably
+acpi: Rework GI affinity structure generation, add GPs + complex NUMA test.
 
-On Thu, Sep 12, 2024 at 04:44:29PM +0200, Albert Esteve wrote:
-> As a continuation of the
-> "Add SHMEM_MAP/UNMAP requests" patch [1],
-> I wanted to split vhost-user spec
-> parts into a separate patch, so that
-> it could be reviewed and integrated
-> separately. Having the specs upstreamed
-> would help others to add support for
-> these new vhost-user requests on
-> their systems.
->=20
-> This is such documentation-only patch.
+ACPI 6.5 introduced Generic Port Affinity Structures to close a system
+description gap that was a problem for CXL memory systems.
+It defines an new SRAT Affinity structure (and hence allows creation of an
+ACPI Proximity Node which can only be defined via an SRAT structure)
+for the boundary between a discoverable fabric and a non discoverable
+system interconnects etc.
 
-The spec changes do not mention that exposing VIRTIO Shared Memory
-Regions can lead to problems when other vhost-user devices attempt to
-access those memory addresses. Please either introduce MEM_READ/WRITE
-and explain its use or document that front-ends must forward mappings to
-back-ends so that VIRTIO Shared Memory Regions can be accessed.
+The HMAT data on latency and bandwidth is combined with discoverable
+information from the CXL bus (link speeds, lane counts) and CXL devices
+(switch port to port characteristics and USP to memory, via CDAT tables
+read from the device).  QEMU has supported the rest of the elements
+of this chain for a while but now the kernel has caught up and we need
+the missing element of Generic Ports (this code has been used extensively
+in testing and debugging that kernel support, some resulting fixes
+currently under review).
 
->=20
-> [1] - https://lore.kernel.org/all/20240628145710.1516121-1-aesteve@redhat=
-=2Ecom/T/
->=20
-> Albert Esteve (3):
->   vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
->   vhost_user.rst: Align VhostUserMsg excerpt members
->   vhost_user.rst: Add GET_SHMEM_CONFIG message
->=20
->  docs/interop/vhost-user.rst | 72 +++++++++++++++++++++++++++++++++++++
->  1 file changed, 72 insertions(+)
->=20
-> --=20
-> 2.45.2
->=20
+Generic Port Affinity Structures are very similar to the recently
+added Generic Initiator Affinity Structures (GI) so this series
+factors out and reuses much of that infrastructure for reuse
+There are subtle differences (beyond the obvious structure ID change).
 
---TTYGSIlri4ypp21r
-Content-Type: application/pgp-signature; name="signature.asc"
+- The ACPI spec example (and linux kernel support) has a Generic
+  Port not as associated with the CXL root port, but rather with
+  the CXL Host bridge. As a result, an ACPI handle is used (rather
+  than the PCI SBDF option for GIs). In QEMU the easiest way
+  to get to this is to target the root bridge PCI Bus, and
+  conveniently the root bridge bus number is used for the UID allowing
+  us to construct an appropriate entry.
 
------BEGIN PGP SIGNATURE-----
+A key addition of this series is a complex NUMA topology example that
+stretches the QEMU emulation code for GI, GP and nodes with just
+CPUS, just memory, just hot pluggable memory, mixture of memory and CPUs.
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmboYxoACgkQnKSrs4Gr
-c8il7Qf/WF/41JvXBZ94o926lyG4DIJtklX++9pvKsWrxCYVYwtb5lPM5x/o1BK7
-b0TB3R8SDcUwIVGw2rPfOaEuozuPg9v+wx+a0CCr9kzx+TIjkiQk/paEXjbcBWTw
-bnq5EbmOKfBIPpQiJvNRWa+gaG3GcTfbyUgsF7U7GkCsDAbHM+rVpLr2CPwnCeW/
-o95iG+eFlS2wTU2Nd//i/u8SYQ4faft96UjsusDPZdE54uzPNO2c6M9t90rALbP+
-iHMaa22B2bF1bPz1nVeYbj3CU7iOqVWqMFazzTAN+pRgntIPgs8G3ryx/W5en3nT
-eZSmhUn9C7JhfV1A+Wce4onewIA/bw==
-=iqxh
------END PGP SIGNATURE-----
+A similar test showed up a few NUMA related bugs with fixes applied for
+9.0 (note that one of these needs linux booted to identify that it
+rejects the HMAT table and this test is a regression test for the
+table generation only).
 
---TTYGSIlri4ypp21r--
+https://lore.kernel.org/qemu-devel/2eb6672cfdaea7dacd8e9bb0523887f13b9f85ce.1710282274.git.mst@redhat.com/
+https://lore.kernel.org/qemu-devel/74e2845c5f95b0c139c79233ddb65bb17f2dd679.1710282274.git.mst@redhat.com/
+
+
+Jonathan Cameron (15):
+  hw/acpi: Fix ordering of BDF in Generic Initiator PCI Device Handle.
+  hw/acpi/GI: Fix trivial parameter alignment issue.
+  hw/acpi: Move AML building code for Generic Initiators to aml_build.c
+  hw/acpi: Rename build_all_acpi_generic_initiators() to
+    build_acpi_generic_initiator()
+  hw/pci: Add a busnr property to pci_props and use for acpi/gi
+  acpi/pci: Move Generic Initiator object handling into acpi/pci.*
+  hw/pci-bridge: Add acpi_uid property to TYPE_PXB_BUS
+  hw/i386/acpi: Use TYPE_PXB_BUS property acpi_uid for DSDT
+  hw/pci-host/gpex-acpi: Use acpi_uid property.
+  hw/acpi: Generic Port Affinity Structure support
+  hw/acpi: Make storage of node id uint32_t to reduce fragility
+  hw/acpi: Generic Initiator - add missing object class property
+    descriptions.
+  bios-tables-test: Allow for new acpihmat-generic-x test data.
+  bios-tables-test: Add complex SRAT / HMAT test for GI GP
+  bios-tables-test: Add data for complex numa test (GI, GP etc)
+
+ qapi/qom.json                                 |  41 +++
+ include/hw/acpi/acpi_generic_initiator.h      |  47 ----
+ include/hw/acpi/aml-build.h                   |   7 +
+ include/hw/acpi/pci.h                         |   3 +
+ include/hw/pci/pci_bridge.h                   |   1 +
+ hw/acpi/acpi_generic_initiator.c              | 148 -----------
+ hw/acpi/aml-build.c                           |  83 ++++++
+ hw/acpi/pci.c                                 | 242 ++++++++++++++++++
+ hw/arm/virt-acpi-build.c                      |   3 +-
+ hw/i386/acpi-build.c                          |   8 +-
+ hw/pci-bridge/pci_expander_bridge.c           |  14 +-
+ hw/pci-host/gpex-acpi.c                       |   5 +-
+ hw/pci/pci.c                                  |  14 +
+ tests/qtest/bios-tables-test.c                |  97 +++++++
+ hw/acpi/meson.build                           |   1 -
+ .../data/acpi/x86/q35/APIC.acpihmat-generic-x | Bin 0 -> 136 bytes
+ .../data/acpi/x86/q35/CEDT.acpihmat-generic-x | Bin 0 -> 68 bytes
+ .../data/acpi/x86/q35/DSDT.acpihmat-generic-x | Bin 0 -> 12566 bytes
+ .../data/acpi/x86/q35/HMAT.acpihmat-generic-x | Bin 0 -> 360 bytes
+ .../data/acpi/x86/q35/SRAT.acpihmat-generic-x | Bin 0 -> 520 bytes
+ 20 files changed, 511 insertions(+), 203 deletions(-)
+ delete mode 100644 include/hw/acpi/acpi_generic_initiator.h
+ delete mode 100644 hw/acpi/acpi_generic_initiator.c
+ create mode 100644 tests/data/acpi/x86/q35/APIC.acpihmat-generic-x
+ create mode 100644 tests/data/acpi/x86/q35/CEDT.acpihmat-generic-x
+ create mode 100644 tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x
+ create mode 100644 tests/data/acpi/x86/q35/HMAT.acpihmat-generic-x
+ create mode 100644 tests/data/acpi/x86/q35/SRAT.acpihmat-generic-x
+
+-- 
+2.43.0
 
 
