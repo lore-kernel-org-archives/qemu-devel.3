@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A230FC3ABB2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 08:42:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34562C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 08:55:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sq7Is-0001pP-Qp; Mon, 16 Sep 2024 04:41:50 -0400
+	id 1sq7VU-0001Rn-LQ; Mon, 16 Sep 2024 04:54:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sq7Ij-0001ml-Bs
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 04:41:44 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1sq7V3-0000GQ-T2
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 04:54:26 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sq7Ig-0003bL-9c
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 04:41:40 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-42cb1758e41so23804335e9.1
- for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 01:41:37 -0700 (PDT)
+ id 1sq7Um-0005Cw-CY
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 04:54:24 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-42cb2191107so31972335e9.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 01:54:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726476096; x=1727080896; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1726476846; x=1727081646; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6zwcKW8cKBFR7rQucA22Lvh615WezakPNuIDv/yEP9U=;
- b=T9Q4B8/qrbZ84V8uCSf3P/Q3euo9jy8BL7XaGUbkrXyCJ5uD4MSjVJFL6UeervO/G9
- I4T1gmkjdIlUrEpn1IdEc83aysTc1k1LKftND7Bm7BmI+DFzuw56acJRcDOrkTuLH4dx
- 3g9t3Ab/rLVakCjUNw/8ACE3jHQ7KsBL7hGDYtMjIiI5IndA8Hgte50tos/P9AYhMNUW
- jbeTk28FpW/ZNeVrziVuv2V0e3Eh6L0fGas04sSdMhWHftkfYOUTnsIPnX0Jkx57AQWR
- xXDSCXti44margsjgf9ZVI7FzmLLSsUQrFiGi2e9N3u82ipqE4E15erm+fY4zYJVVzOz
- HhYA==
+ bh=fLxUQUnLDvLi/r8JTuG1fjcjViW7gUT9q/lZ9pYtQys=;
+ b=JUIUAfibIm77eE3GtairYaltNz9w1t7AAo+Paar/KxqEOH5nGqRHpct3LMCUkmom0l
+ jnXR7LY4lX66FB22a6ZAnnpXat9WuCnV2V1erJ39Pv28S8ByIwFcQmwxhr7m4q5DJKKl
+ K5b0CCuI4J3qRH3/VwlzUbSXJ/ur7nruN8S0jNVSvk6BUAeD3kiIqi/zPfugn8bRv0pb
+ IGSRkvGrVD0Dw8+7x0hDNvsdRPhMtheYcslgB29CixrdGdFdlK3e+lecdR5qE+gI/+p3
+ 9REXUWPf+JqAtyb4FKsY/MYW0bYlvOPXHnMQT6cab9zOQyVhXcY/FR7jULWaekSKjyX0
+ 14UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726476096; x=1727080896;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=6zwcKW8cKBFR7rQucA22Lvh615WezakPNuIDv/yEP9U=;
- b=cnEEzbRehdhK+fxOZkgOW09TEaMOn86tvh36qd1z6JMryc2WaBDDtjFpFaYChV+R2b
- SE2NgPjNtunmj536wQd70SvYJyvqo6E3dlMWPJ5+x1DXF3i+pZ3pdMT7/75sGInJJack
- 3l67D6dFs8gGk3Rl5VRnD+v2EHxAZYgkrk9gNZGomaGSWc6XyxFzoSsWCMAZ176lielh
- hc/TlFm8kgaE3cdTX6qcRaIIiAgcvzRkOv8ret8h/Bnd3H7NfWxgojn0t6eQKfWq7E2/
- 9hYaTktsrp/+59rpBIVbr3IyYtkA8Zdy0AhCJGIEHFWEj/OPB1bmmW6Rs3R/FXus8Vj/
- EIFA==
-X-Gm-Message-State: AOJu0YziWV5It+VrWHry1wpeK3oJP+V2tw6/n7rGDJgImC8k4OJ4/g81
- 1H+rulFWJoL3lTnzfmJ/C8myvovWctY1bzS5Xi7QcFEwiXLJLIK3Fzo+FuDAvTA=
-X-Google-Smtp-Source: AGHT+IFahcVuBpaJbgK44I1ljDyjsGuvMv9Cj55WUyvMej+YnOG0gByoqKtGIqQRXFkjkO2EaxQtSw==
-X-Received: by 2002:a05:600c:4e51:b0:426:5dc8:6a63 with SMTP id
- 5b1f17b1804b1-42d964e0f37mr72512925e9.30.1726476096193; 
- Mon, 16 Sep 2024 01:41:36 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726476846; x=1727081646;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fLxUQUnLDvLi/r8JTuG1fjcjViW7gUT9q/lZ9pYtQys=;
+ b=qHTUzMxSKrBW2E2AXakUCui1YYhbh2+JFgXdFJr4ZmCQk1soN+fhlxKHYZLqsL28JX
+ k4ScuawHKMTRpibMhamupYHvbEwo+Ic44oRTEEjTOuQWmcf2VrfW4N4SkE/smEJOMe2N
+ stAqJKzbsxXg4iipDEqu0w+jlsDU4VjQXu7/ZGdQnRQNGSFOhffkkNzDfvH9BLzNHAgR
+ PUwATr3vHheXJkbzSEjA5+eAkRYXSesoPBpmtOZrcyiWMk8oe5MGF9Vh0Df0GazRWBc2
+ h9j35G5b3+FepetRuMQpo6aFjaGgi0I91UFqnA3IrusT9f5Fe5n4Dv9DWy9q8vRYmzNg
+ EzBw==
+X-Gm-Message-State: AOJu0YyYKzfhj2BMaHJ/IiQwjkA1EyInLrhgS5ve6tG+KYn+K+Jut40I
+ eE/X0i5C/I85E7Hv4EwDgrS005mWoRa18Ub/JCTDnIMKLcuujKQVm1tUup7qMSU=
+X-Google-Smtp-Source: AGHT+IF59d7oZW5BM3OS1Y9L9aN7JozUg+haTfdbI/7OSuWbF4AnYGgdDQ7DgzaTYvGsl52uC5mlhQ==
+X-Received: by 2002:a5d:4092:0:b0:374:c481:3f6 with SMTP id
+ ffacd0b85a97d-378c2cd58c5mr7633901f8f.8.1726476845854; 
+ Mon, 16 Sep 2024 01:54:05 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42d9b189a83sm104275345e9.34.2024.09.16.01.41.35
+ ffacd0b85a97d-378e71f0683sm6632128f8f.13.2024.09.16.01.54.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Sep 2024 01:41:35 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B58365F87D;
- Mon, 16 Sep 2024 09:41:34 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Richard Henderson
- <richard.henderson@linaro.org>,  devel@lists.libvirt.org,  Thomas Huth
- <thuth@redhat.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,  qemu-ppc@nongnu.org,  Zhao Liu
- <zhao1.liu@intel.com>,  Yanan Wang <wangyanan55@huawei.com>,  Eduardo
- Habkost <eduardo@habkost.net>,  qemu-s390x@nongnu.org,  Alexandre Iooss
- <erdnaxe@crans.org>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>,  Daniel Henrique Barboza
- <danielhb413@gmail.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH 11/17] tests/tcg: only read/write 64 bit words on 64 bit
- systems
-In-Reply-To: <c56f2b0b-3028-4b89-8289-e20519cdcdb7@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 13 Sep 2024 22:15:40
- +0200")
-References: <20240913172655.173873-1-alex.bennee@linaro.org>
- <20240913172655.173873-12-alex.bennee@linaro.org>
- <c56f2b0b-3028-4b89-8289-e20519cdcdb7@linaro.org>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Mon, 16 Sep 2024 09:41:34 +0100
-Message-ID: <875xqwgfcx.fsf@draig.linaro.org>
+ Mon, 16 Sep 2024 01:54:04 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C4BF85F91C;
+ Mon, 16 Sep 2024 09:54:00 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Eduardo Habkost <eduardo@habkost.net>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Nicholas Piggin <npiggin@gmail.com>,
+ David Hildenbrand <david@redhat.com>, devel@lists.libvirt.org,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Xingtao Yao <yaoxt.fnst@fujitsu.com>
+Subject: [PATCH v2 05/18] plugins: extend API to get latest memory value
+ accessed
+Date: Mon, 16 Sep 2024 09:53:47 +0100
+Message-Id: <20240916085400.1046925-6-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20240916085400.1046925-1-alex.bennee@linaro.org>
+References: <20240916085400.1046925-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,89 +109,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-> On 13/9/24 19:26, Alex Benn=C3=A9e wrote:
->> While the compilers will generally happily synthesise a 64 bit value
->> for you on 32 bit systems it doesn't exercise anything on QEMU. It
->> also makes it hard to accurately compare the accesses to test_data
->> when instrumenting.
->> Message-Id: <20240910140733.4007719-21-alex.bennee@linaro.org>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> ---
->>   tests/tcg/multiarch/system/memory.c | 26 +++++++++++++++++++-------
->>   1 file changed, 19 insertions(+), 7 deletions(-)
->> diff --git a/tests/tcg/multiarch/system/memory.c
->> b/tests/tcg/multiarch/system/memory.c
->> index 8f2371975d..680dd4800b 100644
->> --- a/tests/tcg/multiarch/system/memory.c
->> +++ b/tests/tcg/multiarch/system/memory.c
->> @@ -163,6 +163,7 @@ static void init_test_data_u32(int offset)
->>       ml_printf("done %d @ %p\n", i, ptr);
->>   }
->>   +#if __SIZEOF_POINTER__ =3D=3D 8
->
->>=3D ? :)
+This value can be accessed only during a memory callback, using
+new qemu_plugin_mem_get_value function.
 
-Ahh I was confused by the email quoting. Do we actually have any systems
-with bigger pointers or is this just for future proofing?
+Returned value can be extended when QEMU will support accesses wider
+than 128 bits.
 
->
->>   static void init_test_data_u64(int offset)
->>   {
->>       uint8_t count =3D 0;
->> @@ -187,6 +188,7 @@ static void init_test_data_u64(int offset)
->>       }
->>       ml_printf("done %d @ %p\n", i, ptr);
->>   }
->> +#endif
->>     static bool read_test_data_u16(int offset)
->>   {
->> @@ -254,6 +256,7 @@ static bool read_test_data_u32(int offset)
->>       return true;
->>   }
->>   +#if __SIZEOF_POINTER__ =3D=3D 8
->>   static bool read_test_data_u64(int offset)
->>   {
->>       uint64_t word, *ptr =3D (uint64_t *)&test_data[offset];
->> @@ -307,11 +310,16 @@ static bool read_test_data_u64(int offset)
->>       ml_printf("done %d @ %p\n", i, ptr);
->>       return true;
->>   }
->> +#endif
->>     /* Read the test data and verify at various offsets */
->> -read_ufn read_ufns[] =3D { read_test_data_u16,
->> -                         read_test_data_u32,
->> -                         read_test_data_u64 };
->> +read_ufn read_ufns[] =3D {
->> +    read_test_data_u16,
->> +    read_test_data_u32,
->> +#if __SIZEOF_POINTER__ =3D=3D 8
->> +    read_test_data_u64
->> +#endif
->> +};
->>     bool do_unsigned_reads(int start_off)
->>   {
->> @@ -476,10 +484,14 @@ bool do_signed_reads(bool neg_first)
->>       return ok;
->>   }
->>   -init_ufn init_ufns[] =3D { init_test_data_u8,
->> -                         init_test_data_u16,
->> -                         init_test_data_u32,
->> -                         init_test_data_u64 };
->> +init_ufn init_ufns[] =3D {
->> +    init_test_data_u8,
->> +    init_test_data_u16,
->> +    init_test_data_u32,
->> +#if __SIZEOF_POINTER__ =3D=3D 8
->> +    init_test_data_u64
->> +#endif
->> +};
->>     int main(void)
->>   {
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1719
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2152
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Xingtao Yao <yaoxt.fnst@fujitsu.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20240724194708.1843704-3-pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ include/qemu/qemu-plugin.h   | 32 ++++++++++++++++++++++++++++++++
+ plugins/api.c                | 33 +++++++++++++++++++++++++++++++++
+ plugins/qemu-plugins.symbols |  1 +
+ 3 files changed, 66 insertions(+)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index c71c705b69..649ce89815 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -262,6 +262,29 @@ enum qemu_plugin_mem_rw {
+     QEMU_PLUGIN_MEM_RW,
+ };
+ 
++enum qemu_plugin_mem_value_type {
++    QEMU_PLUGIN_MEM_VALUE_U8,
++    QEMU_PLUGIN_MEM_VALUE_U16,
++    QEMU_PLUGIN_MEM_VALUE_U32,
++    QEMU_PLUGIN_MEM_VALUE_U64,
++    QEMU_PLUGIN_MEM_VALUE_U128,
++};
++
++/* typedef qemu_plugin_mem_value - value accessed during a load/store */
++typedef struct {
++    enum qemu_plugin_mem_value_type type;
++    union {
++        uint8_t u8;
++        uint16_t u16;
++        uint32_t u32;
++        uint64_t u64;
++        struct {
++            uint64_t low;
++            uint64_t high;
++        } u128;
++    } data;
++} qemu_plugin_mem_value;
++
+ /**
+  * enum qemu_plugin_cond - condition to enable callback
+  *
+@@ -551,6 +574,15 @@ bool qemu_plugin_mem_is_big_endian(qemu_plugin_meminfo_t info);
+ QEMU_PLUGIN_API
+ bool qemu_plugin_mem_is_store(qemu_plugin_meminfo_t info);
+ 
++/**
++ * qemu_plugin_mem_get_mem_value() - return last value loaded/stored
++ * @info: opaque memory transaction handle
++ *
++ * Returns: memory value
++ */
++QEMU_PLUGIN_API
++qemu_plugin_mem_value qemu_plugin_mem_get_value(qemu_plugin_meminfo_t info);
++
+ /**
+  * qemu_plugin_get_hwaddr() - return handle for memory operation
+  * @info: opaque memory info structure
+diff --git a/plugins/api.c b/plugins/api.c
+index 2ff13d09de..3316d4a04d 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -351,6 +351,39 @@ bool qemu_plugin_mem_is_store(qemu_plugin_meminfo_t info)
+     return get_plugin_meminfo_rw(info) & QEMU_PLUGIN_MEM_W;
+ }
+ 
++qemu_plugin_mem_value qemu_plugin_mem_get_value(qemu_plugin_meminfo_t info)
++{
++    uint64_t low = current_cpu->neg.plugin_mem_value_low;
++    qemu_plugin_mem_value value;
++
++    switch (qemu_plugin_mem_size_shift(info)) {
++    case 0:
++        value.type = QEMU_PLUGIN_MEM_VALUE_U8;
++        value.data.u8 = (uint8_t)low;
++        break;
++    case 1:
++        value.type = QEMU_PLUGIN_MEM_VALUE_U16;
++        value.data.u16 = (uint16_t)low;
++        break;
++    case 2:
++        value.type = QEMU_PLUGIN_MEM_VALUE_U32;
++        value.data.u32 = (uint32_t)low;
++        break;
++    case 3:
++        value.type = QEMU_PLUGIN_MEM_VALUE_U64;
++        value.data.u64 = low;
++        break;
++    case 4:
++        value.type = QEMU_PLUGIN_MEM_VALUE_U128;
++        value.data.u128.low = low;
++        value.data.u128.high = current_cpu->neg.plugin_mem_value_high;
++        break;
++    default:
++        g_assert_not_reached();
++    }
++    return value;
++}
++
+ /*
+  * Virtual Memory queries
+  */
+diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+index ca773d8d9f..eed9d8abd9 100644
+--- a/plugins/qemu-plugins.symbols
++++ b/plugins/qemu-plugins.symbols
+@@ -13,6 +13,7 @@
+   qemu_plugin_insn_size;
+   qemu_plugin_insn_symbol;
+   qemu_plugin_insn_vaddr;
++  qemu_plugin_mem_get_value;
+   qemu_plugin_mem_is_big_endian;
+   qemu_plugin_mem_is_sign_extended;
+   qemu_plugin_mem_is_store;
+-- 
+2.39.5
+
 
