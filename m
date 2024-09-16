@@ -4,95 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72A0AC3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 19:22:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CF7DC3ABCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 20:36:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqHI8-0007WP-7g; Mon, 16 Sep 2024 15:21:45 -0400
+	id 1sqIRw-0000lK-0h; Mon, 16 Sep 2024 16:35:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
- id 1sqHI6-0007Uf-GW
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 15:21:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
- id 1sqHI5-0005lf-2t
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 15:21:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726514499;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sqIRr-0000ho-3H
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 16:35:51 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sqIRl-00082G-MM
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 16:35:47 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 0E4251FD79;
+ Mon, 16 Sep 2024 20:35:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726518936; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ig/shWFu4ibovLeUT7Donxk/G5o96XD3gaiI9ldl03E=;
- b=UDHAGGLgYEGici6zrP0DZfRXuffEJaOa7x5D76ITtTMri7KH1ZgOxU1rMr2EnHB2TpYULF
- XKXstgzUVj3mRWTgbOD6FLNlbtq3iC9jzUS8RSVn1xh8iU8tRbbCeQPkTFP+4OUU46/Ni+
- Y4L8Sy9QLSJUXZDd3JIi85iwsr1afc0=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-T7n_HHSgNEejKZtvAZ2uMQ-1; Mon, 16 Sep 2024 15:21:36 -0400
-X-MC-Unique: T7n_HHSgNEejKZtvAZ2uMQ-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42cb998fd32so33546475e9.1
- for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 12:21:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726514495; x=1727119295;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ig/shWFu4ibovLeUT7Donxk/G5o96XD3gaiI9ldl03E=;
- b=Any5IUvsAPPeja1yzYmpFGQ8V5MQP78f9y0CkNqhD0b/1vpSy0Cq5PITXi+yEPmKRh
- +2FwSaoA4GrDL8z7xm58Tz1pO2iLj1FLObjZScRdigps4xcDvaBU7pvSi69UsdpcG+AU
- nqsiIzoNrv5lbwXvuiL7paqa68xbe7lC1/USMc9OqggxBW2CPDh+aTwzuvKSEfdWHFwQ
- agp4G37+HVR5ZxX4n1MMMgZYToA4pqL1621/fOOu6Bg83V0sg2A91r3U18pvAf0IrLUZ
- N+o/X1c9CtEhR/vYPZT3I2R/iDa3MAtahBmLT+o772JyvmJ84yYDclzyhyUreIpJ4sAf
- aNKg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUuLT8vJd5OtQEWprXoOIJkhLdRC14CfBJeP8KZTwiEGOqu3tzago6fk3P7m3cBlCkSDrAh/joj2XLC@nongnu.org
-X-Gm-Message-State: AOJu0YyORBeVDAEJMgS7Qe3jFlU00lluuIhCqSFfFCmveS6HMds3lSMP
- iIAOtC2HWmu/VWrsVaerLj9UUxPFFnnQBLwqPTueLW8cjxPxfKDQQARAL5CFtFMd1P8uXzcw9xS
- KJ16DKrF5gKZeSsxiqParAigqPrk9w+M456c0wuuRXVtxdvkuHhYD
-X-Received: by 2002:a05:600c:470d:b0:42c:bb96:340e with SMTP id
- 5b1f17b1804b1-42cdb56fa94mr108232035e9.31.1726514495425; 
- Mon, 16 Sep 2024 12:21:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEjaqYWmyhpUFktPM8HqQD1sxFd5Wju7AsiG/C5TkzkyXIsz00zZnhgxSowlQz6FNQ4axeoog==
-X-Received: by 2002:a05:600c:470d:b0:42c:bb96:340e with SMTP id
- 5b1f17b1804b1-42cdb56fa94mr108231895e9.31.1726514494937; 
- Mon, 16 Sep 2024 12:21:34 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42da24214bcsm84245805e9.31.2024.09.16.12.21.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Sep 2024 12:21:34 -0700 (PDT)
-Message-ID: <3c4c2e49-2537-4017-b350-d25c310a60ca@redhat.com>
-Date: Mon, 16 Sep 2024 21:21:33 +0200
+ bh=NaiY61qJTf/2hbn0H/uYY44QQIcNEwUnPR1gpUjmp8Y=;
+ b=C5QR4zWOuzFRo3ygSIRMUBRw3aj7Rp155ys0L66i6lhP/yshQVa3ateYI3re42PT58mSfS
+ rBSrE/fUMDzfjh1qQ+lBZzE0Wx6rrOqIKjELns5+ekHt3U677iDGU31dav92BRrr9k41Uz
+ 44eaOww3ZdzU9TKgw4zXyAQWTY0EXYI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726518936;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NaiY61qJTf/2hbn0H/uYY44QQIcNEwUnPR1gpUjmp8Y=;
+ b=CvTjsuwq2qEEJKrHVQ8pjaYbYPKplJNpxi6KWNGZDcrSzKiEyrJ0PiQBg5Irf/EJawrIWy
+ iJ6lFSadk3bx3uCA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=C5QR4zWO;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=CvTjsuwq
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726518936; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NaiY61qJTf/2hbn0H/uYY44QQIcNEwUnPR1gpUjmp8Y=;
+ b=C5QR4zWOuzFRo3ygSIRMUBRw3aj7Rp155ys0L66i6lhP/yshQVa3ateYI3re42PT58mSfS
+ rBSrE/fUMDzfjh1qQ+lBZzE0Wx6rrOqIKjELns5+ekHt3U677iDGU31dav92BRrr9k41Uz
+ 44eaOww3ZdzU9TKgw4zXyAQWTY0EXYI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726518936;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NaiY61qJTf/2hbn0H/uYY44QQIcNEwUnPR1gpUjmp8Y=;
+ b=CvTjsuwq2qEEJKrHVQ8pjaYbYPKplJNpxi6KWNGZDcrSzKiEyrJ0PiQBg5Irf/EJawrIWy
+ iJ6lFSadk3bx3uCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 89F6013A3A;
+ Mon, 16 Sep 2024 20:35:35 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id hTl7FJeW6GbMHQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 16 Sep 2024 20:35:35 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Hyman Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Eric Blake <eblake@redhat.com>, Markus
+ Armbruster <armbru@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, yong.huang@smartx.com
+Subject: Re: [PATCH v1 3/7] qapi/migration: Introduce the iteration-count
+In-Reply-To: <654bfad294e2cc3394f744bd8536e0448c0bf550.1726390099.git.yong.huang@smartx.com>
+References: <cover.1726390098.git.yong.huang@smartx.com>
+ <654bfad294e2cc3394f744bd8536e0448c0bf550.1726390099.git.yong.huang@smartx.com>
+Date: Mon, 16 Sep 2024 17:35:32 -0300
+Message-ID: <87v7yvz697.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/pci-bridge: Add a Kconfig switch for the normal PCI
- bridge
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- qemu-s390x@nongnu.org
-References: <20240913144844.427899-1-thuth@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
-In-Reply-To: <20240913144844.427899-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clegoate@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 0E4251FD79
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; RCPT_COUNT_SEVEN(0.00)[9];
+ RCVD_TLS_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,48 +123,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/13/24 16:48, Thomas Huth wrote:
-> The pci-bridge device is not usable on s390x, so introduce a Kconfig
-> switch that allows to disable it.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+Hyman Huang <yong.huang@smartx.com> writes:
 
+> The original migration information dirty-sync-count could
+> no longer reflect iteration count due to the introduction
+> of background synchronization in the next commit;
+> add the iteration count to compensate.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+I agree with the overall idea, but I feel we're lacking some information
+on what determines whether some of the lines below want to use the
+iteration count vs. the dirty sync count. Since this patch increments
+both variables at the same place, they can still be used interchangeably
+unless we add some words to explain the distinction.
 
-Thanks,
+So to clarify: 
 
-C.
+What do we call an iteration? A call to save_live_iterate(),
+migration_iteration_run() or something else?
 
+Why dirty-sync-count should ever have reflected "iteration count"? It
+might have been this way by coincidence, but did we ever used it in that
+sense (aside from info migrate maybe)?
 
+With the new counter, what kind of meaning can a user extract from that
+number aside from "some undescribed thing happened N times" (this might
+be included in the migration.json docs)?
+
+>
+> Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 > ---
->   hw/pci-bridge/Kconfig     | 5 +++++
->   hw/pci-bridge/meson.build | 2 +-
->   2 files changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/pci-bridge/Kconfig b/hw/pci-bridge/Kconfig
-> index 67077366cc..449ec98643 100644
-> --- a/hw/pci-bridge/Kconfig
-> +++ b/hw/pci-bridge/Kconfig
-> @@ -1,3 +1,8 @@
-> +config PCI_BRIDGE
-> +    bool
-> +    default y if PCI_DEVICES
-> +    depends on PCI
+>  migration/migration-stats.h  |  4 ++++
+>  migration/migration.c        |  1 +
+>  migration/ram.c              | 12 ++++++++----
+>  qapi/migration.json          |  6 +++++-
+>  tests/qtest/migration-test.c |  2 +-
+>  5 files changed, 19 insertions(+), 6 deletions(-)
+>
+> diff --git a/migration/migration-stats.h b/migration/migration-stats.h
+> index 05290ade76..43ee0f4f05 100644
+> --- a/migration/migration-stats.h
+> +++ b/migration/migration-stats.h
+> @@ -50,6 +50,10 @@ typedef struct {
+>       * Number of times we have synchronized guest bitmaps.
+>       */
+>      Stat64 dirty_sync_count;
+> +    /*
+> +     * Number of migration iteration processed.
+> +     */
+> +    Stat64 iteration_count;
+>      /*
+>       * Number of times zero copy failed to send any page using zero
+>       * copy.
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 3dea06d577..055d527ff6 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -1197,6 +1197,7 @@ static void populate_ram_info(MigrationInfo *info, MigrationState *s)
+>      info->ram->mbps = s->mbps;
+>      info->ram->dirty_sync_count =
+>          stat64_get(&mig_stats.dirty_sync_count);
+> +    info->ram->iteration_count = stat64_get(&mig_stats.iteration_count);
+>      info->ram->dirty_sync_missed_zero_copy =
+>          stat64_get(&mig_stats.dirty_sync_missed_zero_copy);
+>      info->ram->postcopy_requests =
+> diff --git a/migration/ram.c b/migration/ram.c
+> index e205806a5f..ca5a1b5f16 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -594,7 +594,7 @@ static void xbzrle_cache_zero_page(ram_addr_t current_addr)
+>      /* We don't care if this fails to allocate a new cache page
+>       * as long as it updated an old one */
+>      cache_insert(XBZRLE.cache, current_addr, XBZRLE.zero_target_page,
+> -                 stat64_get(&mig_stats.dirty_sync_count));
+> +                 stat64_get(&mig_stats.iteration_count));
+>  }
+>  
+>  #define ENCODING_FLAG_XBZRLE 0x1
+> @@ -620,7 +620,7 @@ static int save_xbzrle_page(RAMState *rs, PageSearchStatus *pss,
+>      int encoded_len = 0, bytes_xbzrle;
+>      uint8_t *prev_cached_page;
+>      QEMUFile *file = pss->pss_channel;
+> -    uint64_t generation = stat64_get(&mig_stats.dirty_sync_count);
+> +    uint64_t generation = stat64_get(&mig_stats.iteration_count);
+>  
+>      if (!cache_is_cached(XBZRLE.cache, current_addr, generation)) {
+>          xbzrle_counters.cache_miss++;
+> @@ -1079,6 +1079,10 @@ static void migration_bitmap_sync(RAMState *rs,
+>      RAMBlock *block;
+>      int64_t end_time;
+>  
+> +    if (!background) {
+> +        stat64_add(&mig_stats.iteration_count, 1);
+> +    }
 > +
->   config PCIE_PORT
->       bool
->       default y if PCI_DEVICES
-> diff --git a/hw/pci-bridge/meson.build b/hw/pci-bridge/meson.build
-> index f2a60434dd..2e0eb0d233 100644
-> --- a/hw/pci-bridge/meson.build
-> +++ b/hw/pci-bridge/meson.build
-> @@ -1,5 +1,5 @@
->   pci_ss = ss.source_set()
-> -pci_ss.add(files('pci_bridge_dev.c'))
-> +pci_ss.add(when: 'CONFIG_PCI_BRIDGE', if_true: files('pci_bridge_dev.c'))
->   pci_ss.add(when: 'CONFIG_I82801B11', if_true: files('i82801b11.c'))
->   pci_ss.add(when: 'CONFIG_IOH3420', if_true: files('ioh3420.c'))
->   pci_ss.add(when: 'CONFIG_PCIE_PORT', if_true: files('pcie_root_port.c', 'gen_pcie_root_port.c'))
-
+>      stat64_add(&mig_stats.dirty_sync_count, 1);
+>  
+>      if (!rs->time_last_bitmap_sync) {
+> @@ -1115,8 +1119,8 @@ static void migration_bitmap_sync(RAMState *rs,
+>          rs->num_dirty_pages_period = 0;
+>          rs->bytes_xfer_prev = migration_transferred_bytes();
+>      }
+> -    if (migrate_events()) {
+> -        uint64_t generation = stat64_get(&mig_stats.dirty_sync_count);
+> +    if (!background && migrate_events()) {
+> +        uint64_t generation = stat64_get(&mig_stats.iteration_count);
+>          qapi_event_send_migration_pass(generation);
+>      }
+>  }
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index b66cccf107..95b490706c 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -60,6 +60,9 @@
+>  #     between 0 and @dirty-sync-count * @multifd-channels.  (since
+>  #     7.1)
+>  #
+> +# @iteration-count: The number of iterations since migration started.
+> +#     (since 9.2)
+> +#
+>  # Since: 0.14
+>  ##
+>  { 'struct': 'MigrationStats',
+> @@ -72,7 +75,8 @@
+>             'multifd-bytes': 'uint64', 'pages-per-second': 'uint64',
+>             'precopy-bytes': 'uint64', 'downtime-bytes': 'uint64',
+>             'postcopy-bytes': 'uint64',
+> -           'dirty-sync-missed-zero-copy': 'uint64' } }
+> +           'dirty-sync-missed-zero-copy': 'uint64',
+> +           'iteration-count' : 'int' } }
+>  
+>  ##
+>  # @XBZRLECacheStats:
+> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+> index d6768d5d71..b796a90cad 100644
+> --- a/tests/qtest/migration-test.c
+> +++ b/tests/qtest/migration-test.c
+> @@ -278,7 +278,7 @@ static int64_t read_migrate_property_int(QTestState *who, const char *property)
+>  
+>  static uint64_t get_migration_pass(QTestState *who)
+>  {
+> -    return read_ram_property_int(who, "dirty-sync-count");
+> +    return read_ram_property_int(who, "iteration-count");
+>  }
+>  
+>  static void read_blocktime(QTestState *who)
 
