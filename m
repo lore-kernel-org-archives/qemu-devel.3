@@ -4,79 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED9A5C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 13:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D782C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 14:18:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqC6X-0003Vy-37; Mon, 16 Sep 2024 09:49:25 -0400
+	id 1sqCXZ-0003Jm-VH; Mon, 16 Sep 2024 10:17:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sqC6U-0003Uq-IE
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 09:49:23 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sqC6P-0001zl-D3
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 09:49:22 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-42cd46f3a26so26551005e9.2
- for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 06:49:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726494555; x=1727099355; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=1q9G7Rw8B9MCD3mkcgSuqTdpXBuYdcKNXELJWROaM60=;
- b=A191bwqym5GbOzCu8cGFxw1DuZvjuzYbyPP+z1Zvti6ugXW4UwA238ptPdNVKoHu/C
- VM0OUm6wO88pXkVg8COrtxGhAZEmE1Zbh7CcS4BuQ4+Qvl4MDZG9djaR6YuZ3YyFnO5H
- uBJWTAJa8wi3Ya26IxXBjTqcL4wleKMMJ3JpRysG7kT/Q2qwJz3IGoFheKeAhdVD02eh
- vP6n5z3gYm3TtqGJbqMDePad+0YBuioybewCfJi31BZ4acE5U7DXTg40XRDYU0pPneAi
- NuZPZyV3xEPhCvrU+l6mD4+1l2rAyhqUqOdixBA3N5uOv2+qaJarNsWzl/56ATlVPNuQ
- 4bsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726494555; x=1727099355;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1q9G7Rw8B9MCD3mkcgSuqTdpXBuYdcKNXELJWROaM60=;
- b=pYnCNv4x8Ndjdaw16ISQ3zcZ1fcqMLGGH/mp7mbZ8i20y/XViXTMzU2kZINj/1QNxh
- nx/yhkJhd7dvnxQElFP3q//5XZltZnA34YTLPpXn1/ff4HguGptPAHnUchjAqwi2p9gX
- eLJgXtlLIKvOG4taXTyNPYDiIBrgRlpzQ/P4UuYLEDNOAIYW7BMpEmWoKM6fMWJwIVoq
- quNc5jW3vcgIFL+6Zh15+GWZxG24cw6fiBHgAZi5FlDlgvsn6BbONXtFqRTUkZqOWMu2
- spadJn0kiSHTA7XmBHJ91dI9ScBwo1nirvekZcIypBmpLev0EqRzFOoObAGd0OY3BGwB
- b8zA==
-X-Gm-Message-State: AOJu0YzOeRJrl3IfOsBFInW6WS5+D5eMZ27xvmnUvEtORLzzE4I0Q+la
- dg/bBBP/6G5e4H27cicfZnKknHHU6KnPasmZt7xCfasa6WUkAGsshxX6jB8AVp1cv3V5Cwkjoc1
- D
-X-Google-Smtp-Source: AGHT+IHeyWn9qdoKxU5ca6/Lu8x8ox3t6eVHnhf2DnHFk/1psv2on6KEGYPSyBsTvbw0RHMkOIhtOA==
-X-Received: by 2002:a05:600c:3b92:b0:426:64a2:5362 with SMTP id
- 5b1f17b1804b1-42d90722043mr68856055e9.8.1726494555198; 
- Mon, 16 Sep 2024 06:49:15 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-378e78054absm7321914f8f.106.2024.09.16.06.49.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Sep 2024 06:49:14 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>
-Subject: [PATCH] .gitlab-ci.d/crossbuilds.yml: Force 'make check' to -j2 for
- cross-i686-tci
-Date: Mon, 16 Sep 2024 14:49:13 +0100
-Message-Id: <20240916134913.2540486-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <kamil@szczek.dev>) id 1sqCXQ-0003Iv-9D
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 10:17:12 -0400
+Received: from mail-4022.proton.ch ([185.70.40.22])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kamil@szczek.dev>) id 1sqCXM-0005iU-I3
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 10:17:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=szczek.dev;
+ s=protonmail; t=1726496222; x=1726755422;
+ bh=SZ34OBNKcUQfs74NzhP4vXxu+MsAoPqB9x3+m25pKeU=;
+ h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+ Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+ Message-ID:BIMI-Selector;
+ b=zjETKCCocZae3KdMSaS33fDx63l8gxVejOiqmaG4jZIkwbFCCjmW6XnPulmJC4llm
+ /RrtngC/SbCdR480g++UdYmOK9Mj6jVmVNxyzHCzocI173btdyCBOtwjrHREw8g8h0
+ tnpHQ7MczPCaeosEf42JRhR5x024XLfsPR4GQSl5LyyzqOdPvyAfbNYJR2LctCqp5J
+ 3v7OSuyHIQh4Mqj2FI7i+0sifYZOgRArCN7RwTS6uKpSS4I+ZdPps0ROT76aVqWvRR
+ 82jYWRJt1Ero6YDaN1czM14TNmoTUAvxhuim1uWzIJEoGIhlZNc7+DxCNKlaUOjbTn
+ GUfnXXlItcCVw==
+Date: Mon, 16 Sep 2024 14:16:32 +0000
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+From: =?utf-8?Q?Kamil_Szcz=C4=99k?= <kamil@szczek.dev>
+Cc: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v2] hw/i386/pc: Remove vmport value assertion
+Message-ID: <gODCf5hAzTYfCYRLXtbPw4av6ynWG2Dry9O3v18w7iwM2a2uZQwQ02kHyHHAeLuKr8yRKdREq_QT29fEo4sScB2CvammMOz_ubrg4hCBhjQ=@szczek.dev>
+In-Reply-To: <ZwF9ZexNs1h-uC0MrbkgGtMtdyLinROjVSmMNVzNftjGVWgOiuzdD1dSXEtzNH7OHbBFY6GVDYVFIDBgc3lhGqCOb7kaNZolSBkVyl3rNr4=@szczek.dev>
+References: <ZwF9ZexNs1h-uC0MrbkgGtMtdyLinROjVSmMNVzNftjGVWgOiuzdD1dSXEtzNH7OHbBFY6GVDYVFIDBgc3lhGqCOb7kaNZolSBkVyl3rNr4=@szczek.dev>
+Feedback-ID: 37679334:user:proton
+X-Pm-Message-ID: b197bb2c73997365f8bb447a8d0b7452c68b8d82
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=185.70.40.22; envelope-from=kamil@szczek.dev;
+ helo=mail-4022.proton.ch
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,35 +68,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In commit 1374ed49e1453c300 we forced the cross-i686-tci job to -j1 to
-see if this helped with test timeouts. It seems to help with that but
-on the other hand we now sometimes run into the overall 60 minute
-job timeout. Try -j2 instead.
+On Wednesday, August 21st, 2024 at 01:11, Kamil Szcz=C4=99k <kamil@szczek.d=
+ev> wrote:
+> There is no need for this assertion here, as we only use vmport value
+> for equality/inequality checks. This was originally prompted by the
+> following Coverity report:
+>  >>> CID 1559533: Integer handling issues (CONSTANT_EXPRESSION_RESULT)
+>  >>> "pcms->vmport >=3D 0" is always true regardless of the values of
+>  >>> its operands. This occurs as the logical first operand of "&&".
+>=20
+> Signed-off-by: Kamil Szcz=C4=99k <kamil@szczek.dev>
+> Reported-By: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- .gitlab-ci.d/crossbuilds.yml | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
-index 1e21d082aa4..95dfc392244 100644
---- a/.gitlab-ci.d/crossbuilds.yml
-+++ b/.gitlab-ci.d/crossbuilds.yml
-@@ -62,11 +62,11 @@ cross-i686-tci:
-     IMAGE: debian-i686-cross
-     ACCEL: tcg-interpreter
-     EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,aarch64-softmmu,aarch64-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins --disable-kvm
--    # Force tests to run in series, to see whether this
-+    # Force tests to run with reduced parallelism, to see whether this
-     # reduces the flakiness of this CI job. The CI
-     # environment by default shows us 8 CPUs and so we
-     # would otherwise be using a parallelism of 9.
--    MAKE_CHECK_ARGS: check check-tcg -j1
-+    MAKE_CHECK_ARGS: check check-tcg -j2
- 
- cross-mipsel-system:
-   extends: .cross_system_build_job
--- 
-2.34.1
+Hi, just checking in to see if this needs any additional work.
 
 
