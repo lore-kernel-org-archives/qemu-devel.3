@@ -4,74 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1BEDC3ABA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 17:28:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2119CC3ABB2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 17:36:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqFVv-0001yF-Dj; Mon, 16 Sep 2024 13:27:51 -0400
+	id 1sqFdL-0007Wj-Qp; Mon, 16 Sep 2024 13:35:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sqFVl-0001wo-6C
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 13:27:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sqFdJ-0007Vd-8b
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 13:35:29 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sqFVh-0002dA-35
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 13:27:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726507655;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ER1tyN54inpexBAr9/eBq2TzNdv3IEPLDa5Mf2fZ5Bw=;
- b=P5HWzL7AGiQbTcHru41YOZVjqGWoVdm1D1mLOOaSHS2LVguyuXtkALtwZyxzpwlrFgBGh2
- 6UGndX5A1jMk7SiYy0fzVD2aXE/huvQCX6BuEaKKHAfPZC3ADcA0NiAjIyzuQwaRAbsxOV
- ZhtpZaIVGdgS8zmXxYJTueebUxG9H4Y=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-359-iYirvugQMYaXD95eTw0Mrg-1; Mon,
- 16 Sep 2024 13:27:32 -0400
-X-MC-Unique: iYirvugQMYaXD95eTw0Mrg-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3FCE31944D24; Mon, 16 Sep 2024 17:27:31 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.252])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EFAE219560AA; Mon, 16 Sep 2024 17:27:27 +0000 (UTC)
-Date: Mon, 16 Sep 2024 19:27:26 +0200
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Albert Esteve <aesteve@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- slp@redhat.com, hi@alyssa.is, mst@redhat.com, david@redhat.com,
- jasowang@redhat.com, Stefano Garzarella <sgarzare@redhat.com>,
- stevensd@chromium.org
-Subject: Re: [PATCH v3 2/5] virtio: Track shared memory mappings
-Message-ID: <20240916172726.GF521955@fedora.home>
-References: <20240912145335.129447-1-aesteve@redhat.com>
- <20240912145335.129447-3-aesteve@redhat.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sqFdH-0003Mr-7c
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 13:35:29 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4X6sQQ14Ktz6K9FF;
+ Tue, 17 Sep 2024 01:31:10 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 51BF2140D1A;
+ Tue, 17 Sep 2024 01:35:22 +0800 (CST)
+Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
+ frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 16 Sep 2024 19:35:19 +0200
+To: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ <qemu-devel@nongnu.org>
+CC: <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>,
+ <marcel.apfelbaum@gmail.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
+ <ying.huang@intel.com>, Michael Roth <michael.roth@amd.com>,
+ <fan.ni@samsung.com>
+Subject: [PATCH qemu 0/6] hw/cxl: Link speed and width control
+Date: Mon, 16 Sep 2024 18:35:12 +0100
+Message-ID: <20240916173518.1843023-1-Jonathan.Cameron@huawei.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="TYVfLzhJD/SA5zjz"
-Content-Disposition: inline
-In-Reply-To: <20240912145335.129447-3-aesteve@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml100001.china.huawei.com (7.191.160.183) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -51
+X-Spam_score: -5.2
+X-Spam_bar: -----
+X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-1.048, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,313 +66,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Changes since RFC:
+- rebase
 
---TYVfLzhJD/SA5zjz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Question:
+- I could enable this for all PCIe device (including ports).
+  Does that makes sense, or is it better to limit this to my cases?
+  It is quite easy to build broken setups (downstream device reports
+  faster link than the port etc) because QEMU 'link' training' is
+  simplistic.  I'm not sure it is worth making it more clever.
 
-On Thu, Sep 12, 2024 at 04:53:32PM +0200, Albert Esteve wrote:
-> Update shmem_list to be able to track
-> active mappings on VIRTIO shared memory
-> regions. This allows to verify that new
-> mapping request received from backends
-> do not overlap. If they do, the request
-> shall fail in order to adhere to the specs.
->=20
-> Signed-off-by: Albert Esteve <aesteve@redhat.com>
-> ---
->  hw/virtio/vhost-user.c     | 31 +++++++++++++-------
->  hw/virtio/virtio.c         | 58 ++++++++++++++++++++++++++++++++++----
->  include/hw/virtio/virtio.h | 25 ++++++++++++++--
->  3 files changed, 96 insertions(+), 18 deletions(-)
->=20
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index 338cc942ec..de0bb35257 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -1776,7 +1776,7 @@ vhost_user_backend_handle_shmem_map(struct vhost_de=
-v *dev,
->                                      int fd)
->  {
->      void *addr =3D 0;
-> -    MemoryRegion *mr =3D NULL;
-> +    VirtSharedMemory *shmem =3D NULL;
-> =20
->      if (fd < 0) {
->          error_report("Bad fd for map");
-> @@ -1791,22 +1791,29 @@ vhost_user_backend_handle_shmem_map(struct vhost_=
-dev *dev,
->          return -EFAULT;
->      }
-> =20
-> -    mr =3D &dev->vdev->shmem_list[vu_mmap->shmid];
-> +    shmem =3D &dev->vdev->shmem_list[vu_mmap->shmid];
-> =20
-> -    if (!mr) {
-> +    if (!shmem) {
->          error_report("VIRTIO Shared Memory Region at "
->                       "ID %d unitialized", vu_mmap->shmid);
->          return -EFAULT;
->      }
-> =20
->      if ((vu_mmap->shm_offset + vu_mmap->len) < vu_mmap->len ||
-> -        (vu_mmap->shm_offset + vu_mmap->len) > mr->size) {
-> +        (vu_mmap->shm_offset + vu_mmap->len) > shmem->mr->size) {
->          error_report("Bad offset/len for mmap %" PRIx64 "+%" PRIx64,
->                       vu_mmap->shm_offset, vu_mmap->len);
->          return -EFAULT;
->      }
-> =20
-> -    void *shmem_ptr =3D memory_region_get_ram_ptr(mr);
-> +    if (virtio_shmem_map_overlaps(shmem, vu_mmap->shm_offset, vu_mmap->l=
-en)) {
-> +        error_report("Requested memory (%" PRIx64 "+%" PRIx64 ") overalp=
-s "
-> +                     "with previously mapped memory",
-> +                     vu_mmap->shm_offset, vu_mmap->len);
-> +        return -EFAULT;
-> +    }
-> +
-> +    void *shmem_ptr =3D memory_region_get_ram_ptr(shmem->mr);
-> =20
->      addr =3D mmap(shmem_ptr + vu_mmap->shm_offset, vu_mmap->len,
->          ((vu_mmap->flags & VHOST_USER_FLAG_MAP_R) ? PROT_READ : 0) |
-> @@ -1818,6 +1825,8 @@ vhost_user_backend_handle_shmem_map(struct vhost_de=
-v *dev,
->          return -EFAULT;
->      }
-> =20
-> +    virtio_add_shmem_map(shmem, vu_mmap->shm_offset, vu_mmap->len);
-> +
->      return 0;
->  }
-> =20
-> @@ -1826,7 +1835,7 @@ vhost_user_backend_handle_shmem_unmap(struct vhost_=
-dev *dev,
->                                        VhostUserMMap *vu_mmap)
->  {
->      void *addr =3D 0;
-> -    MemoryRegion *mr =3D NULL;
-> +    VirtSharedMemory *shmem =3D NULL;
-> =20
->      if (!dev->vdev->shmem_list ||
->          dev->vdev->n_shmem_regions <=3D vu_mmap->shmid) {
-> @@ -1836,22 +1845,22 @@ vhost_user_backend_handle_shmem_unmap(struct vhos=
-t_dev *dev,
->          return -EFAULT;
->      }
-> =20
-> -    mr =3D &dev->vdev->shmem_list[vu_mmap->shmid];
-> +    shmem =3D &dev->vdev->shmem_list[vu_mmap->shmid];
-> =20
-> -    if (!mr) {
-> +    if (!shmem) {
->          error_report("VIRTIO Shared Memory Region at "
->                       "ID %d unitialized", vu_mmap->shmid);
->          return -EFAULT;
->      }
-> =20
->      if ((vu_mmap->shm_offset + vu_mmap->len) < vu_mmap->len ||
-> -        (vu_mmap->shm_offset + vu_mmap->len) > mr->size) {
-> +        (vu_mmap->shm_offset + vu_mmap->len) > shmem->mr->size) {
->          error_report("Bad offset/len for mmap %" PRIx64 "+%" PRIx64,
->                       vu_mmap->shm_offset, vu_mmap->len);
->          return -EFAULT;
->      }
+The Generic Ports support added the ability to describe the bandwidth and
+Latency within a host to a CXL host bridge.  To be able to test the of the
+discovery path used by Linux [1] we also need to be able to create
+bottlenecks at difference places in the topology. There are two parts to
+this
+* CXL link characteristics as described by PCI Express Capability Link
+  status etc.
+* Bandwidth and latency across CXL Switches (via CDAT data from the switch
+  USP)
+* Bandwidth and latency from the CXL type 3 device port to the actual
+  memory (Via CDAT data from the EP).
 
-Please add a check for an existing mapping that matches [shm_offset,
-shm_offset + len). This will prevent partial unmap as required by the
-spec.
+Currently we have fixed values for the CXL CDAT tables, and to test this
+I recommend changing those as per the patch at the end of this cover letter
+(so they aren't always the bottleneck). Making those configurable will be
+handled in a future patch set.
 
-> =20
-> -    void *shmem_ptr =3D memory_region_get_ram_ptr(mr);
-> +    void *shmem_ptr =3D memory_region_get_ram_ptr(shmem->mr);
-> =20
->      addr =3D mmap(shmem_ptr + vu_mmap->shm_offset, vu_mmap->len,
->                  PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, -1, =
-0);
-> @@ -1861,6 +1870,8 @@ vhost_user_backend_handle_shmem_unmap(struct vhost_=
-dev *dev,
->          return -EFAULT;
->      }
-> =20
-> +    virtio_del_shmem_map(shmem, vu_mmap->shm_offset, vu_mmap->len);
-> +
->      return 0;
->  }
-> =20
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index ccc4f2cd75..0e2cd62a15 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -3059,15 +3059,52 @@ int virtio_save(VirtIODevice *vdev, QEMUFile *f)
->      return vmstate_save_state(f, &vmstate_virtio, vdev, NULL);
->  }
-> =20
-> -MemoryRegion *virtio_new_shmem_region(VirtIODevice *vdev)
-> +VirtSharedMemory *virtio_new_shmem_region(VirtIODevice *vdev)
->  {
-> -    MemoryRegion *mr;
-> +    VirtSharedMemory *shmem =3D NULL;
->      ++vdev->n_shmem_regions;
-> -    vdev->shmem_list =3D g_renew(MemoryRegion, vdev->shmem_list,
-> +    vdev->shmem_list =3D g_renew(VirtSharedMemory, vdev->shmem_list,
->                                 vdev->n_shmem_regions);
-> -    mr =3D &vdev->shmem_list[vdev->n_shmem_regions - 1];
-> -    mr =3D g_new0(MemoryRegion, 1);
-> -    return mr;
-> +    shmem =3D &vdev->shmem_list[vdev->n_shmem_regions - 1];
-> +    shmem =3D g_new0(VirtSharedMemory, 1);
-> +    QTAILQ_INIT(&shmem->mapped_regions);
-> +    return shmem;
-> +}
-> +
-> +void virtio_add_shmem_map(VirtSharedMemory *shmem, hwaddr offset,
-> +                          uint64_t size)
-> +{
-> +    MappedMemoryRegion *mmap =3D g_new0(MappedMemoryRegion, 1);
-> +    mmap->offset =3D offset;
-> +    mmap->size =3D int128_make64(size);
-> +    QTAILQ_REMOVE(&shmem->mapped_regions, mmap, link);
-> +    g_free(mmap);
+RFC has a set of examples but those were to help testing the kernel code
+rather than providing much info for QEMU review so I haven't repeated
+them ehre.
 
-mmap needs to be inserted into mapped_regions and must not be freed by
-this function.
+https://lore.kernel.org/qemu-devel/20240712122414.1448284-1-Jonathan.Cameron@huawei.com/
 
-> +}
-> +
-> +void virtio_del_shmem_map(VirtSharedMemory *shmem, hwaddr offset,
-> +                          uint64_t size)
-> +{
-> +    MappedMemoryRegion *mmap =3D g_new0(MappedMemoryRegion, 1);
-> +    mmap->offset =3D offset;
-> +    mmap->size =3D int128_make64(size);
-> +    QTAILQ_INSERT_TAIL(&shmem->mapped_regions, mmap, link);
+Jonathan Cameron (6):
+  hw/pci-bridge/cxl_root_port: Provide x-speed and x-width properties.
+  hw/pci-bridge/cxl_upstream: Provide x-speed and x-width properties.
+  hw/pcie: Factor out PCI Express link register filling common to EP.
+  hw/pcie: Provide a utility function for control of EP / SW USP link
+  hw/mem/cxl-type3: Add properties to control link speed and width
+  hw/pci-bridge/cxl-upstream: Add properties to control link speed and
+    width
 
-This function needs to search the list for the matching mmap and remove
-it from the list. It should not create a new mmap.
+ include/hw/cxl/cxl_device.h               |   4 +
+ include/hw/pci-bridge/cxl_upstream_port.h |   4 +
+ include/hw/pci/pcie.h                     |   2 +
+ hw/mem/cxl_type3.c                        |   6 ++
+ hw/pci-bridge/cxl_downstream.c            |  23 +++--
+ hw/pci-bridge/cxl_root_port.c             |   5 ++
+ hw/pci-bridge/cxl_upstream.c              |   6 ++
+ hw/pci/pcie.c                             | 105 ++++++++++++++--------
+ 8 files changed, 103 insertions(+), 52 deletions(-)
 
-> +    g_free(mmap);
-> +}
-> +
-> +bool virtio_shmem_map_overlaps(VirtSharedMemory *shmem, hwaddr offset,
-> +                               uint64_t size)
-> +{
-> +    MappedMemoryRegion *map_reg;
-> +    hwaddr new_reg_end =3D offset + size;
-> +    QTAILQ_FOREACH(map_reg, &shmem->mapped_regions, link) {
-> +        hwaddr region_end =3D map_reg->offset + map_reg->size;
-> +        if ((map_reg->offset =3D=3D offset) ||
-> +            (map_reg->offset < offset && region_end >=3D offset) ||
-> +            (offset < map_reg->offset && new_reg_end >=3D map_reg->offse=
-t )) {
-> +            return true;
-> +        }
-> +    }
-> +    return false;  =20
->  }
-> =20
->  /* A wrapper for use as a VMState .put function */
-> @@ -4007,11 +4044,20 @@ static void virtio_device_free_virtqueues(VirtIOD=
-evice *vdev)
->  static void virtio_device_instance_finalize(Object *obj)
->  {
->      VirtIODevice *vdev =3D VIRTIO_DEVICE(obj);
-> +    VirtSharedMemory *shmem =3D NULL;
-> +    int i;
-> =20
->      virtio_device_free_virtqueues(vdev);
-> =20
->      g_free(vdev->config);
->      g_free(vdev->vector_queues);
-> +    for (i =3D 0; i< vdev->n_shmem_regions; i++) {
-> +        shmem =3D &vdev->shmem_list[i];
-> +        while (!QTAILQ_EMPTY(&shmem->mapped_regions)) {
-> +            MappedMemoryRegion *mmap_reg =3D QTAILQ_FIRST(&shmem->mapped=
-_regions);
-> +            QTAILQ_REMOVE(&shmem->mapped_regions, mmap_reg, link);
-
-g_free(mmap_reg)
-
-> +        }
-> +    }
->  }
-> =20
->  static Property virtio_properties[] =3D {
-> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> index d4a2f664d9..5b801f33f5 100644
-> --- a/include/hw/virtio/virtio.h
-> +++ b/include/hw/virtio/virtio.h
-> @@ -98,6 +98,21 @@ enum virtio_device_endian {
->      VIRTIO_DEVICE_ENDIAN_BIG,
->  };
-> =20
-> +struct MappedMemoryRegion {
-> +    Int128 size;
-> +    hwaddr offset;
-> +    QTAILQ_ENTRY(MappedMemoryRegion) link;
-> +};
-> +
-> +typedef struct MappedMemoryRegion MappedMemoryRegion;
-> +
-> +struct VirtSharedMemory {
-> +    MemoryRegion *mr;
-> +    QTAILQ_HEAD(, MappedMemoryRegion) mapped_regions;
-> +};
-> +
-> +typedef struct VirtSharedMemory VirtSharedMemory;
-> +
->  /**
->   * struct VirtIODevice - common VirtIO structure
->   * @name: name of the device
-> @@ -168,7 +183,7 @@ struct VirtIODevice
->      EventNotifier config_notifier;
->      bool device_iotlb_enabled;
->      /* Shared memory region for vhost-user mappings. */
-> -    MemoryRegion *shmem_list;
-> +    VirtSharedMemory *shmem_list;
->      int n_shmem_regions;
->  };
-> =20
-> @@ -289,7 +304,13 @@ void virtio_notify(VirtIODevice *vdev, VirtQueue *vq=
-);
-> =20
->  int virtio_save(VirtIODevice *vdev, QEMUFile *f);
-> =20
-> -MemoryRegion *virtio_new_shmem_region(VirtIODevice *vdev);
-> +VirtSharedMemory *virtio_new_shmem_region(VirtIODevice *vdev);
-> +void virtio_add_shmem_map(VirtSharedMemory *shmem, hwaddr offset,
-> +                          uint64_t size);
-> +void virtio_del_shmem_map(VirtSharedMemory *shmem, hwaddr offset,
-> +                          uint64_t size);
-> +bool virtio_shmem_map_overlaps(VirtSharedMemory *shmem, hwaddr offset,
-> +                               uint64_t size);
-> =20
->  extern const VMStateInfo virtio_vmstate_info;
-> =20
-> --=20
-> 2.45.2
->=20
-
---TYVfLzhJD/SA5zjz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmboan4ACgkQnKSrs4Gr
-c8jxjAf6ArZ1UQ7cE57PEAvTIWD7xLG9YLBbp8pO33OTH2kcqVcG3uGGjUIbDyVb
-km8Y48hlWgP9utVmFosKaflSFN2PYtFPk7rEq0Bl1NLkeya6ul90btObUv0k4fVq
-0m/ekWwuL4RjzeYHFotGFUr+PvKEtASYHjgZ2StcywaUEyIYgQ6sx+lmfXq8uzvv
-3c8wVkQUqrvgOenAHF43CXDGAJJysC+ufKuMbBmTJU3pV+GB7JAT+AuoIPq6rCUC
-X3ZPagKtlhDMs+Ggmf1DYa6f4Peh6MQZLffPYCNF5I+v1VLRyVfGlB78Y0YVSdRE
-jJHL0ztTim08hgkGCa5Djpocll+Urw==
-=iFBR
------END PGP SIGNATURE-----
-
---TYVfLzhJD/SA5zjz--
+-- 
+2.43.0
 
 
