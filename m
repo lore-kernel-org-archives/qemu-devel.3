@@ -4,83 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6C38C3ABA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 14:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 634A8C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 14:25:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqCdW-0000db-P8; Mon, 16 Sep 2024 10:23:30 -0400
+	id 1sqCfS-0004zH-IT; Mon, 16 Sep 2024 10:25:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1sqCdU-0000cT-U6
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 10:23:28 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1sqCdS-0006yh-Qa
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 10:23:28 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48GCkdWb019170;
- Mon, 16 Sep 2024 14:23:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 60V6IG6sLGECfeGBer7DhvV3HjPKTgvkgqBshhOhCEk=; b=cUOKgfwmA2e1GkyW
- 853UJkbZPh6YlJEIiK2swYC8OxsLglGZfqNYgNaMMR9TJCzYuK661g6qjk50QfrX
- Yf3Kv+m/XJ6E5kz1AeNAJHyjFS6tW+p8/UDMwNlKWZfYNuTj3l9VOI8AsWIQUDNw
- Tfz+zzfaCc50TLFLnm/OISC8JO1XL0zZ4hghmmDavNK0ub+LzQiNVC2jXyk6sJ78
- +hh0A0CtAMqIkNOtTRsvr963MOw14HbmjvCH0V0U5GSHJWaxVBpP2+MZtFS2B1a/
- +tUT3gh8vZdNeK3rQc4ic430X2Bh0oTEXVdbAgmF7wWuUCcW3alRIuQQxrhMZoXF
- idZrdA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4jdm6qw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Sep 2024 14:23:23 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
- [10.47.97.35])
- by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48GENNnh026844
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Sep 2024 14:23:23 GMT
-Received: from [10.222.168.90] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 16 Sep
- 2024 07:23:22 -0700
-Message-ID: <b6ef0a81-1153-4aca-9e27-570c2f0a6853@quicinc.com>
-Date: Mon, 16 Sep 2024 09:23:21 -0500
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sqCfF-0004uA-CM
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 10:25:18 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sqCfD-0007U9-8c
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 10:25:16 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5c245c62362so5016788a12.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 07:25:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726496713; x=1727101513; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=KaPhIxZpgC0ZKYVE0HMI0s/8VDfo9L4b/ntZuZ2jzhE=;
+ b=A3wOvQgtoVU1niNYNGlclW8OSd7SHxYupRxbe5y5qSYGY7vlt5M7QRnHiKjFup/CMt
+ h46xoY//KdEXZRKRJDtjQr6QpsZqSmy8Hm23aRP3vGJuMQcD96OXItQqb6NSzYnaqjUQ
+ aMOu5Bg/4pI2qCq/E+kpqjSUhIF4Zj+OWTYJSlX9CVsatZdzzgPkaP1BReFMW8Au8xVm
+ akB2GgVFvMSjj0IRq/rzYW70GAVRUmDr51KJ3NJjNnjNs8teW9GSxZ86blV5Er1/X1ps
+ Nb2RgH7KKhvBfcT2lT7xr2H5q0/q/OpblAfg3SzE/qz/VFfCvtsN3hi503Pl+ot7LXJe
+ 2x+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726496713; x=1727101513;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=KaPhIxZpgC0ZKYVE0HMI0s/8VDfo9L4b/ntZuZ2jzhE=;
+ b=hV2rgNmGmC0s0pI/aMVfZcqxOc7RdQhITF+73PvKHY7HU+pMnRkMYX8bWwZxPBU34j
+ uC9O5+jTzfv8xG/LA3ZfjNTTHQfaGBVOnKd/PmEgtx7km38uKI9nMGdi8FxXuHdjIEKS
+ yGBK0DsCNglCGP9MquPsj0MHSljD93+lT8Qc8yYt9OdCjpuISLcbh8C/7aulXJW4eo/d
+ kcBPpZAmxP6Q9wCBFVsJ3Cxx6XARZjB23g5erh5PxtAE++Ciq5qV0YfN8UjPTcHoBCYy
+ fbSuyNkTPfodw8/tZPJ+z7LD6wpz06vb5tUiSAMi832+IlJg2twnx8C19jnsf/02dp/+
+ hlrQ==
+X-Gm-Message-State: AOJu0YxFxUtK9rzNmTKZz+sD2KYsvGei5kdo/DFRo0XbaFWx5Wx/OPNj
+ CF7v+ir/xVfhkWycQNZhvv72CvU6GctzxSbH6knSsAGN6UmyYmw+lOKrkBqL095W3YK1j+46Edo
+ bKgsbnmcfUQfDA25R8DtwU2E8HGRAEuvjVF+vJA==
+X-Google-Smtp-Source: AGHT+IFrom/VhCubfjCsdhCSPZlENgp+w5bvzfj/K4IKyqQ1+kDWiAzEEbXtJBfNzz9fdhgac1Q8yfuK8t7afGsAsFQ=
+X-Received: by 2002:a05:6402:1a34:b0:5bf:f1:908 with SMTP id
+ 4fb4d7f45d1cf-5c413e4faecmr9962308a12.24.1726496713289; Mon, 16 Sep 2024
+ 07:25:13 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/tcg/multiarch: Define _LARGEFILE64_SOURCE
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-CC: Brian Cain <bcain@quicinc.com>, <qemu-devel@nongnu.org>
-References: <20240907023924.1394728-1-bcain@quicinc.com>
- <0298a6cc-2c75-4cb9-8f9c-146c0173fc31@quicinc.com>
- <87wmjbg2th.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Brian Cain <quic_bcain@quicinc.com>
-In-Reply-To: <87wmjbg2th.fsf@draig.linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-ORIG-GUID: W5azYGo-1CJGzBgsvHB7xfwVzvLt0LVf
-X-Proofpoint-GUID: W5azYGo-1CJGzBgsvHB7xfwVzvLt0LVf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0
- clxscore=1015 adultscore=0 mlxscore=0 suspectscore=0 malwarescore=0
- priorityscore=1501 spamscore=0 bulkscore=0 lowpriorityscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409160092
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=quic_bcain@quicinc.com; helo=mx0a-0031df01.pphosted.com
+References: <20240912024114.1097832-1-richard.henderson@linaro.org>
+In-Reply-To: <20240912024114.1097832-1-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 16 Sep 2024 15:25:01 +0100
+Message-ID: <CAFEAcA_rc6hVe6m-WZQ5b6n5ACjCEF872KExw09jt6KNJ3tz-w@mail.gmail.com>
+Subject: Re: [PATCH v3 00/29] target/arm: AdvSIMD decodetree conversion, part 4
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,52 +87,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 12 Sept 2024 at 03:43, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Changes for v3:
+>   - Zero-extend results in Widen NeonGenNarrowEnvFn return to 64 bits
+>
+> Only patch 26 needs review.
+>
 
-On 9/16/2024 8:12 AM, Alex Bennée wrote:
-> Brian Cain <quic_bcain@quicinc.com> writes:
->
->> On 9/6/2024 9:39 PM, Brian Cain wrote:
->>> With newer clang builds (19.x), there's a warning for implicit function
->>> declarations and it rejects linux-test.c.
->>>
->>> glibc/musl's readdir64() declaration in dirent is guarded by
->>> _LARGEFILE64_SOURCE, so we'll define it to fix the warning.
->>>
->>>         BUILD   hexagon-linux-user guest-tests
->>>       /local/mnt/workspace/upstream/toolchain_for_hexagon/qemu/tests/tcg/multiarch/linux/linux-test.c:189:14: error: call to undeclared function 'readdir64'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
->>>         189 |         de = readdir64(dir);
->>>             |              ^
->>>
->>> Signed-off-by: Brian Cain <bcain@quicinc.com>
->>> ---
->>>    tests/tcg/multiarch/linux/linux-test.c | 1 +
->>>    1 file changed, 1 insertion(+)
->>>
->>> diff --git a/tests/tcg/multiarch/linux/linux-test.c b/tests/tcg/multiarch/linux/linux-test.c
->>> index 64f57cb287..4e0e862ad9 100644
->>> --- a/tests/tcg/multiarch/linux/linux-test.c
->>> +++ b/tests/tcg/multiarch/linux/linux-test.c
->>> @@ -17,6 +17,7 @@
->>>     *  along with this program; if not, see <http://www.gnu.org/licenses/>.
->>>     */
->>>    #define _GNU_SOURCE
->>> +#define _LARGEFILE64_SOURCE
->>>    #include <stdarg.h>
->>>    #include <stdlib.h>
->>>    #include <stdio.h>
->>
->> Alex -- what do you think about this one?
-> Actually scratch that, this is a 32 compat hack:
->
->    1f442da51e (tests/tcg/multiarch: fix 32bit linux-test on 64bit host)
->
-> Is the __USE_LARGEFILE64 symbol in the hexagon headers?
->
-musl does not define/use __USE_LARGEFILE64, no.  If it's well defined I 
-could examine whether it makes sense to add this feature to musl, 
-though.  How does __USE_LARGEFILE64 differ from _LARGEFILE64_SOURCE?  Is 
-it more appropriate to define that here?
 
--Brian
 
+Applied to target-arm.next, thanks.
+
+-- PMM
 
