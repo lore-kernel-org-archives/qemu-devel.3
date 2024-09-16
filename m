@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2106FC3ABB2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 10:23:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65C15C3ABA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 10:27:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sq8ry-0002AC-SF; Mon, 16 Sep 2024 06:22:10 -0400
+	id 1sq8wK-0006k5-UL; Mon, 16 Sep 2024 06:26:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sq8ru-000292-4Q
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 06:22:06 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1sq8wJ-0006iH-DY
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 06:26:39 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sq8rn-0005CI-AL
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 06:22:03 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5c42f406fa5so1217380a12.0
- for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 03:21:57 -0700 (PDT)
+ id 1sq8wH-0005r1-Up
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 06:26:39 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-535dc4ec181so3496468e87.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 03:26:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726482117; x=1727086917; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RjQKX/Qb8D93EO4xmaSZnODQy/dLuRTYQ3rhzDE+zf8=;
- b=nl72GqXhZuB5hfMhE5ViYRFZ4Jchr2uNcA3sRfiBgR///z3CbKR6EkPminazCGfuSv
- IIrfbhfMoLTk+fVTgJWGOVWMsZlWoprg+nFC9u9tV3IcBi/wuxFUPNWMqW+vYkaWE9q7
- zoVO5BzYZIcQWDITZTu8W71ujBDRLZ+tjxjlooJl7CVWj6d0EC8g97v643NtFiQjdT1v
- YVNksG0VD5x7PP180MHpNxg6v3nAaQ3HZ5e86BHB0K3cUHzupd3f+O/xHt/KlimWFV8C
- PzAzIiC2IAPoFMz5+vLS3VYCS7OA0zrCK/OImKq5QjUCwiHjHmLvHBcYPnHfSarHLZtk
- Il/g==
+ d=linaro.org; s=google; t=1726482396; x=1727087196; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FhOcE6GLr7oBCg2qczBGYcYGD8YfMG8QvXwLqrVX/N4=;
+ b=E6d8FEA6Uln2OH05eWhOF8LLcfT831Gfo6Gs3t9ucamgPPZE8yvfUHw+xO/kH55Saw
+ epMejTRGmlMHbHhl0OM+2wVZ7fEeH/ikIJskg5O3671ZFzGj2By63vcBnkO859kqvIIz
+ vaj6bhFMk6NWedPWkd+vvgI53HsvVWdCdj8xCVspjgHOJo20SQohmlyIWHwHC8OEZMTQ
+ ufTgjuOQ706S6+noNftKEAPeV+qy35Pc0Y1DbowQTFuqqxC59yy2Lfc59EL0qTa1ob04
+ XdjdeQ3ZRp1L6d5rYukr9gIkzhAk44BabO/KMHJUPlPrUzTbg9L327W+2eUqV0wLBi4P
+ iOkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726482117; x=1727086917;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RjQKX/Qb8D93EO4xmaSZnODQy/dLuRTYQ3rhzDE+zf8=;
- b=NDbp0SA4v5/exHeWtL29wALTr9SnQBupCZThee4q6xo8ZhwBON3IYyXbhPlx+1gz1U
- B/nUArOy3dpAZOIbLOIlY+6WYmokQgp+ijbESlevJ+yOhXD+q+Jnd9aFXE6ytFgctjMo
- WNBy0lBKLv7wFUHbabioQA5WG4We96dC4T4CfOyzr1dq0fyZyHUnVmjLpok8M3mYEiVi
- 1mwfQMfdz0Z65dsogtpDGml/wTMcm7uQEvoSAsmwsj4b/3MzxjiCOslc/2hBUqxBxUjj
- BVAaF2UbfQOavzvXkb2x81tV3BsQnyS83b6Lu22VkpK/ISY9LpUwlFNzdV7rG4T20ua4
- GzoA==
-X-Gm-Message-State: AOJu0YwJjQEeSYyj/v8ek3bINHX1KSPeXaSkAd1sn/Aorm8FMHnO1xdI
- EeOwvn6gejm/0lu2nWox91MWZB2PZuZ2qCn6cNXARrFNxPeIw2IjvLHRd99TR3vhYTceJQOFSw3
- 6WNs980TW+sx+6/25e04kBVfx4pbdjMYzEl0n8A==
-X-Google-Smtp-Source: AGHT+IHjMPGqSIqbaU9vlsS2OVh5cAeNpvijz+xQ8L/X1iT8csBdhI83lBYmts86TA13AcfGc/l2sxJ3UogIizP7Q7w=
-X-Received: by 2002:a05:6402:210d:b0:5c2:4d90:988 with SMTP id
- 4fb4d7f45d1cf-5c41e2af424mr21064289a12.32.1726482116585; Mon, 16 Sep 2024
- 03:21:56 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726482396; x=1727087196;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FhOcE6GLr7oBCg2qczBGYcYGD8YfMG8QvXwLqrVX/N4=;
+ b=mPILhYicW9CkDf9a5Of6rU0l+gAF4BcCn9SRZO1BY48jG8w+H1myzTt7bUT0UVwJCj
+ BozSEXLnHP6MnmoZT2GMKZqhTClq5APMGkt6HkJD6BxIG4Em0e8D1Jz/RYq1IuOkZT+H
+ jyYaIypvtJ8EW+RlfcvMJBdEKxdNALij2DISjhbmGh5sFwi28H+BJlQyFB6VIZWMtRby
+ 4euVGYJNFwKd73l4LklsFOO5GPBuOGFVtNgORNWgtJpE9fQU16vwFcMiixxT+HL5fILO
+ mNvNtZMukvotSLlMc3p5mdaZM6+5w7c6LJp9QBMGqQkIOi+UwEKb1Zp2xkAb4u/Uz5DQ
+ ua8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXg4FWHHf3UWrRFa2Ko5lfbblsJdoMmLR/8eRrysO3kFV79EmDXsy97qBZUysUoto2gAwshDO1ZiDnC@nongnu.org
+X-Gm-Message-State: AOJu0YzEpeglJ21g/0i9GbxVxUpMzgzsCmxU4UwAcJ0s98cvjO4Ip1P+
+ KAeA/6D2FIyz+pXC1Gn5u3ADBhB8Fxoy1SY8yWpiBGhalRZBd3aZWxXhk/61Mmb9gsJHSwCK7zY
+ xu4FiMvfncdiuMJXLnizM+0gHZefJZsjzUfgmgQ==
+X-Google-Smtp-Source: AGHT+IGhsrvv51JHgD0poxYzuiEx2eEmGjluXMdq8Nr6FYMmHHbP61Ppc4/doXZvz/t30hBckosSaRs8V8K6uqKvfzY=
+X-Received: by 2002:a05:6512:12c8:b0:533:46cc:a71e with SMTP id
+ 2adb3069b0e04-53678fec522mr7479617e87.54.1726482395844; Mon, 16 Sep 2024
+ 03:26:35 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240913203216.15265-1-philmd@linaro.org>
-In-Reply-To: <20240913203216.15265-1-philmd@linaro.org>
+References: <20240903160751.4100218-1-peter.maydell@linaro.org>
+In-Reply-To: <20240903160751.4100218-1-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 16 Sep 2024 11:21:45 +0100
-Message-ID: <CAFEAcA_cys_FvHn=-6kg_eqUwfm8AqywLpB0iLs+A+_75fQCUQ@mail.gmail.com>
-Subject: Re: [PULL v3 00/60] Misc HW & UI patches for 2024-09-13
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
+Date: Mon, 16 Sep 2024 11:26:25 +0100
+Message-ID: <CAFEAcA9hH6b72pVMAVkGHWXye9t+RXHE13RD73AabQN+p_JOyw@mail.gmail.com>
+Subject: Re: [PATCH for-9.2 00/53] arm: Drop deprecated boards
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,50 +88,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 13 Sept 2024 at 21:33, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.o=
-rg> wrote:
+On Tue, 3 Sept 2024 at 17:07, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> v3: Fixed TMP105 tests
->
-> The following changes since commit 28ae3179fc52d2e4d870b635c4a412aab99759=
-e7:
->
->   Merge tag 'pull-target-arm-20240913' of https://git.linaro.org/people/p=
-maydell/qemu-arm into staging (2024-09-13 16:14:33 +0100)
->
-> are available in the Git repository at:
->
->   https://github.com/philmd/qemu.git tags/hw-misc-20240913
->
-> for you to fetch changes up to b3372e0ec818d7747963a2ec7ae04fd1a8152afd:
->
->   ui: remove break after g_assert_not_reached() (2024-09-13 20:12:16 +020=
-0)
->
-> ----------------------------------------------------------------
-> Misc HW & UI patches
->
-> - Remove deprecated SH4 SHIX machine TC58128 NAND EEPROM (Phil)
-> - Remove deprecated CRIS target (Phil)
-> - Remove deprecated RISC-V 'any' CPU type (Phil)
-> - Add fifo8_peek_buf() to correctly handle FIFO wraparound (Mark)
-> - Minor cleanups in Designware PCIe, PL011 and loongson IPI models (Phil)
-> - Fixes in TI TMP105 temperature (Guenter)
-> - Convert Sun ESCC and ADB mouses to QemuInputHandler (Mark)
-> - Prevent heap overflow in VIRTIO sound device (Volker)
-> - Cleanups around g_assert_not_reached() call (Pierrick)
-> - Add Cl=C3=A9ment as VT-d reviewer (Cl=C3=A9ment)
-> - Prevent stuck modifier keys and unexpected text input on Windows (Volke=
-r)
-> - Explicitly set SDL2 swap interval when OpenGL is enabled (Gert)
->
-> ----------------------------------------------------------------
+> This patchset removes the various Arm machines which we deprecated
+> for the 9.0 release and are therefore allowed to remove for the 9.2
+> release:
+>  akita, borzoi, cheetah, connex, mainstone, n800, n810,
+>  spitz, terrier, tosa, verdex, z2
+> We get to drop over 30,000 lines of unmaintained code. So it's
+> a big patchset but it's almost all deletions.
 
+Hi -- ping for review on at least patches 06, 08, 18:
 
-Applied, thanks.
+>   hw/display: Remove tc6393xb device
+>   hw/arm: Remove 'cheetah' machine
+>   hw/display: Remove pxa2xx_lcd.c
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
+These are all straightforward removals of either
+deprecated machines or devices that are definitely
+exclusively used by those machines. That would be
+enough for me to get the bulk of the uncontroversial
+reviewed parts of this series upstream. I can then
+roll a much smaller v2 with the parts still under
+discussion.
 
+Patches 22, 26 would also be helpful but they're a
+bit further down the patchstack so less critical:
+
+>   hw/arm: Remove pxa2xx_pic
+>   hw/misc: Remove cbus
+
+thanks
 -- PMM
 
