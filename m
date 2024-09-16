@@ -4,135 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D63FCC3ABB2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 06:13:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A14C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 06:13:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sq4yS-00064K-Ji; Mon, 16 Sep 2024 02:12:36 -0400
+	id 1sq4zH-00079L-SP; Mon, 16 Sep 2024 02:13:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sq4yO-00061U-2Y
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 02:12:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sq4yM-0003yw-0m
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 02:12:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726467148;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=IU43YZLnlqou3HGWHsz4HNQvzRKfvBLc3jIplNcGmY0=;
- b=MyQjORBPoaTr03xhAOCZwVZ/N4wNjcqEqyl75m/1Veb/SYCkEDVfYw9wr1eyhgRcYdeS3l
- fThSiw99A/SVZSPOeIn/Ru27eE/ir0tS/1psvgTCbylC/k5NwtXo+FXVPBAPi38CmFN+Oj
- 3dQ0lz+2qh1+aPkVt1VvacFLlhwMlrs=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-76-d3DjdUgwPaaC-4nFvefBJw-1; Mon, 16 Sep 2024 02:12:26 -0400
-X-MC-Unique: d3DjdUgwPaaC-4nFvefBJw-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5c251bcb728so2131004a12.2
- for <qemu-devel@nongnu.org>; Sun, 15 Sep 2024 23:12:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
+ id 1sq4zG-00078Q-Sa
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 02:13:26 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
+ id 1sq4zE-00049m-O1
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 02:13:26 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-2f762de00e5so45058271fa.3
+ for <qemu-devel@nongnu.org>; Sun, 15 Sep 2024 23:13:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1726467203; x=1727072003; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=rleNyH8LPXX68qo/t8Kqutyi5T9TW+dTF8BeSm12s54=;
+ b=dM1hH/5yhkTb5s0Wgi3LEEYhSuKA2ts+omHDy6Q4qB/t8wbX24smRf8M2MoiVt6kQg
+ mt1/M/TvjpkKnNKs1MDKkUDPyICWqcxDKHxxPIOe1LpSfPQ2HufLYI5Hb2oA41sGT07T
+ P2K14EVM6A4kad+4z3xoqWIKHXXIdGI3pH3ZiWBv787ddPM/xKaO+DnoEaVN7Vee2S/0
+ TMpyLldcqOnsSz2Me+vZYkcyLUYgwiIHmVh9RTTb2qxC+cJS6CMCcQTl5sgYyx/dhbYs
+ hi95XAmribGU9UVYg9p+fS4E5jDWMUIuHfGN8tXe1jQ/yARb0uquoBzH87O6p3WW9FPD
+ 6gwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726467145; x=1727071945;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1726467203; x=1727072003;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=IU43YZLnlqou3HGWHsz4HNQvzRKfvBLc3jIplNcGmY0=;
- b=CztTJt0odi2+8+zUd9fsF+0m0AQo+u4scwCZTFGDlZbbB9/3HC6YZxt1OHJLjYx2X+
- fJGYVSMW/TiIuHtvIJRfQpv8v7L2FGE4/7E4YCHp+XYIcTxF2oYC6qs53RBWHwziopFD
- SfglXk5Tvi5ja9Qpfko84HPV1YS8SbN9EzylVkEcUp1fimB1AbYMmLkA+suzAXDhvXg4
- e81DLKj9NrqGq9vx/wii28MItnbP8T+2p8y3Kt/KMYJOIrDzi/rERcb+456dSNeqbAqk
- BGW83xfA682uNK5o5kbpL9eL2ulJ6BfH0/JyRIBAY7L3kLmZLAWv9hUkyVssLZoyVf6V
- DY6g==
-X-Gm-Message-State: AOJu0YzQ/MhxKMa0gjWTTe7rGb+1fRj2XRZo0YEUzL5RPr6rz77HaxbL
- p+tDQkWgKA5QsDwQN1T55r8JzijG6MAHHVLdFSjlMHVp859m0vPZjLlKZglceF5PigLHTsZeulo
- JwO5yMU7BpmW0aRhaH9xPP1mBOZ8/RofoAg9Lbr6At++9oFhUmZyb
-X-Received: by 2002:a05:6402:2750:b0:5c2:60ac:fdd8 with SMTP id
- 4fb4d7f45d1cf-5c413e12321mr11658604a12.13.1726467145503; 
- Sun, 15 Sep 2024 23:12:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH2QjxEgCc1V4Dy3Y+kmhjXumgNgSrN9xr56g7752QGhQZIPoeUB/BuyimlpgAeOJSxVwdE3Q==
-X-Received: by 2002:a05:6402:2750:b0:5c2:60ac:fdd8 with SMTP id
- 4fb4d7f45d1cf-5c413e12321mr11658585a12.13.1726467144924; 
- Sun, 15 Sep 2024 23:12:24 -0700 (PDT)
-Received: from [192.168.0.6] (ip-109-43-178-133.web.vodafone.de.
- [109.43.178.133]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c42bb89d44sm2211982a12.70.2024.09.15.23.12.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 15 Sep 2024 23:12:23 -0700 (PDT)
-Message-ID: <9b97cbc4-7074-40bb-aa47-93e495c8786e@redhat.com>
-Date: Mon, 16 Sep 2024 08:12:22 +0200
+ bh=rleNyH8LPXX68qo/t8Kqutyi5T9TW+dTF8BeSm12s54=;
+ b=k8IsKSeH6c3W0rgHirKzigZPqpKUBimajWXKejrsqzAEci7VI50j3As0ZUIRu57b/6
+ NlNI6LC3P9hDcVTutqEIRYJ0bnbWQ7eEWpgf+eeCThhtJ0m66SY9NwjTiE6r10VhyML/
+ fFUgRbuLM4a2GduDjF26PymiJGlwHnq1vdTvNBWLXIMFwiKVaaYWNFMad4n/KereZenA
+ XS3NnfavAPU7FbfjTlK+yaeniykzWOORVeQU1o+e4UC0MDUwGjVf2Ur5ogG5G2x4ZeMv
+ qiKRECy451tC0hIwW4P4jjKuQN0ZF22NH8EGrD7rEiTd43mXoOz91nC4rHpDDp17B3ts
+ yhpw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWk8x22/3W6Tj8UmMqZKptRdMcRkaudiKxDFU3GI/BYM/VKWuul5/8nHKvliU4HaNHZh64Knesrf+BD@nongnu.org
+X-Gm-Message-State: AOJu0Yy+0Z6CEG+WGky03MaxgnWhwLO+QSMvV/AUA+cAoIDbMjCRJKyv
+ HUuOyv4jSTYBLzfFKn3gdU+yx6V05Gc7+QBSdLs3Swg/B6VR+ZZVLYtY6xdecVeGq/Xc+Uv1UeA
+ dayjaeXHpuslH2FdoKcNnllW+R0c=
+X-Google-Smtp-Source: AGHT+IGe7zT2Sl1Ne+x4r2zlPDst6FC/fvioeWdGgtWe5fTINxJAP58O1pWiEEQ+An94dVRHzbhTWbMuEkrDFzKRwRg=
+X-Received: by 2002:a2e:b889:0:b0:2f6:5868:808a with SMTP id
+ 38308e7fff4ca-2f787ed5b1fmr74307951fa.19.1726467201565; Sun, 15 Sep 2024
+ 23:13:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/47] riscv-to-apply queue
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair23@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Ajeet Singh <itachis6234@gmail.com>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
 References: <20240912052953.2552501-1-alistair.francis@wdc.com>
- <CAFEAcA_W5bTcCmeAx+dB4+djcUHzjRH4GfBobaHot5VjE+x05g@mail.gmail.com>
- <CAKmqyKOFnajGSsKS2k=kYsB--uRjoCZZTv3QSxbEm40HK_k1jA@mail.gmail.com>
- <4aa984d0-db18-4a41-808c-e4d164c03d13@ventanamicro.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <4aa984d0-db18-4a41-808c-e4d164c03d13@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <20240912052953.2552501-33-alistair.francis@wdc.com>
+ <ccf73096-0fad-4bcb-bff4-e9e0ee6944dd@ventanamicro.com>
+In-Reply-To: <ccf73096-0fad-4bcb-bff4-e9e0ee6944dd@ventanamicro.com>
+From: Ajeet Singh <itachis6234@gmail.com>
+Date: Mon, 16 Sep 2024 16:13:09 +1000
+Message-ID: <CALmJt6GYwv=PT8C=muNwBCPFV=gK_pYcOhWJnBmG2jXtb5a9XA@mail.gmail.com>
+Subject: Re: [PULL 32/47] bsd-user: Add RISC-V signal trampoline setup function
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org, 
+ Mark Corbin <mark@dibsco.co.uk>, Ajeet Singh <itachis@freebsd.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Content-Type: multipart/alternative; boundary="000000000000440f2506223678e2"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=itachis6234@gmail.com; helo=mail-lj1-x22c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,73 +95,318 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/09/2024 21.58, Daniel Henrique Barboza wrote:
-> Hi Peter, Alistair,
-> 
-> On 9/14/24 6:15 AM, Alistair Francis wrote:
->> On Fri, Sep 13, 2024 at 8:37 PM Peter Maydell <peter.maydell@linaro.org> 
->> wrote:
->>>
->>> On Thu, 12 Sept 2024 at 06:30, Alistair Francis <alistair23@gmail.com> 
->>> wrote:
->>>>
->>>> The following changes since commit 
->>>> a4eb31c678400472de0b4915b9154a7c20d8332f:
->>>>
->>>>    Merge tag 'pull-testing-gdbstub-oct-100924-1' of https://gitlab.com/ 
->>>> stsquad/qemu into staging (2024-09-11 13:17:29 +0100)
->>>>
->>>> are available in the Git repository at:
->>>>
->>>>    https://github.com/alistair23/qemu.git tags/pull-riscv-to- 
->>>> apply-20240912-1
->>>>
->>>> for you to fetch changes up to 90d5d3c1115399d8e27621efd69dfa74a35a4932:
->>>>
->>>>    hw/intc: riscv-imsic: Fix interrupt state updates. (2024-09-12 
->>>> 15:05:10 +1000)
->>>>
->>>> ----------------------------------------------------------------
->>>> RISC-V PR for 9.2
->>>>
->>>> * Add a property to set vl to ceil(AVL/2)
->>>> * Enable numamem testing for RISC-V
->>>> * Consider MISA bit choice in implied rule
->>>> * Fix the za64rs priv spec requirements
->>>> * Enable Bit Manip for OpenTitan Ibex CPU
->>>> * Fix the group bit setting of AIA with KVM
->>>> * Stop timer with infinite timecmp
->>>> * Add 'fcsr' register to QEMU log as a part of F extension
->>>> * Fix riscv64 build on musl libc
->>>> * Add preliminary textra trigger CSR functions
->>>> * RISC-V IOMMU support
->>>> * RISC-V bsd-user support
->>>> * Respect firmware ELF entry point
->>>> * Add Svvptc extension support
->>>> * Fix masking of rv32 physical address
->>>> * Fix linking problem with semihosting disabled
->>>> * Fix IMSIC interrupt state updates
->>>
->>> Hi; this fails to build on FreeBSD:
->>>
->>> https://gitlab.com/qemu-project/qemu/-/jobs/7817823771
-> 
-> Is this one of those jobs that are only available when running the main 
-> pipeline? I don't
-> have this x86-freebsd runner when triggering the gitlab pipeline. I ended up 
-> installing a
-> FreeBSD VM and using it to reproduce the problem.
-> 
-> Would be nice to have access to a FreeBSD runner as a regular user, even if 
-> just for x86_64,
-> to help detect these build problems before sending a PR.
+--000000000000440f2506223678e2
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-You can enable this job for your pipelines, too, see 
-.gitlab-ci.d/cirrus/README.rst for information how to configure it.
+Hi, I had already fixed it and sent a patchv6,
 
-If you have a Linux host with KVM, you could alternatively also use "make 
-vm-build-freebsd" on your local machine instead.
+I will send another one with the other changes.
 
-  Thomas
+On Mon, 16 Sept, 2024, 5:51=E2=80=AFam Daniel Henrique Barboza, <
+dbarboza@ventanamicro.com> wrote:
 
+>
+>
+> On 9/12/24 2:29 AM, Alistair Francis wrote:
+> > From: Mark Corbin <mark@dibsco.co.uk>
+> >
+> > Implemented the 'setup_sigtramp' function for setting up the signal
+> > trampoline code in the RISC-V architecture.
+> >
+> > Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
+> > Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+> > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> > Message-ID: <20240907031927.1908-8-itachis@FreeBSD.org>
+> > Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> > ---
+> >   bsd-user/riscv/target_arch_sigtramp.h | 42 ++++++++++++++++++++++++++=
++
+> >   1 file changed, 42 insertions(+)
+> >   create mode 100644 bsd-user/riscv/target_arch_sigtramp.h
+> >
+> > diff --git a/bsd-user/riscv/target_arch_sigtramp.h
+> b/bsd-user/riscv/target_arch_sigtramp.h
+> > new file mode 100644
+> > index 0000000000..83345f3961
+> > --- /dev/null
+> > +++ b/bsd-user/riscv/target_arch_sigtramp.h
+> > @@ -0,0 +1,42 @@
+> > +/*
+> > + * RISC-V sigcode
+> > + *
+> > + * Copyright (c) 2019 Mark Corbin
+> > + *
+> > + * This library is free software; you can redistribute it and/or
+> > + * modify it under the terms of the GNU Lesser General Public
+> > + * License as published by the Free Software Foundation; either
+> > + * version 2 of the License, or (at your option) any later version.
+> > + *
+> > + * This library is distributed in the hope that it will be useful,
+> > + * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> > + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+> > + * Lesser General Public License for more details.
+> > + *
+> > + * You should have received a copy of the GNU Lesser General Public
+> > + * License along with this library; if not, see <
+> http://www.gnu.org/licenses/>.
+> > + */
+> > +
+> > +#ifndef TARGET_ARCH_SIGTRAMP_H
+> > +#define TARGET_ARCH_SIGTRAMP_H
+> > +
+> > +/* Compare with sigcode() in riscv/riscv/locore.S */
+> > +static inline abi_long setup_sigtramp(abi_ulong offset, unsigned
+> sigf_uc,
+> > +        unsigned sys_sigreturn)
+> > +{
+> > +    int i;
+>
+> There's no 'i' var being used. This will throw an 'unused variable'
+> warning when building.
+>
+> > +    uint32_t sys_exit =3D TARGET_FREEBSD_NR_exit;
+> > +
+> > +    static const uint32_t sigtramp_code[] =3D {
+> > +    /*1*/ const_le32(0x00010513),                        /*mv a0, sp*/
+> > +    /*2*/ const_le32(0x00050513 + (sigf_uc << 20)),      /*addi
+> a0,a0,sigf_uc*/
+> > +    /*3*/ const_le32(0x00000293 + (sys_sigreturn << 20)),/*li
+> t0,sys_sigreturn*/
+> > +    /*4*/ const_le32(0x00000073),                        /*ecall*/
+> > +    /*5*/ const_le32(0x00000293 + (sys_exit << 20)),     /*li
+> t0,sys_exit*/
+> > +    /*6*/ const_le32(0x00000073),                        /*ecall*/
+> > +    /*7*/ const_le32(0xFF1FF06F)                         /*b -16*/
+> > +    };
+>
+>
+> And this will throw the following error:
+>
+> ../bsd-user/riscv/target_arch_sigtramp.h:32:33: error: initializer elemen=
+t
+> is not a compile-time constant
+>     32 |     /*2*/ const_le32(0x00050513 + (sigf_uc << 20)),      /*addi
+> a0,a0,sigf_uc*/
+>                        ~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+> /tmp/cirrus-ci-build/include/qemu/bswap.h:168:26: note: expanded from
+> macro 'const_le32'
+>    168 | # define const_le32(_x) (_x)
+>        |                          ^~
+> 1 error generated.
+>
+>
+> One solution is to remove the 'static const' qualifier from the array, li=
+ke
+> bsd-user/arm/target_arch_sigtramp.h is doing.
+>
+>
+> This diff will fix the build:
+>
+>
+> diff --git a/bsd-user/riscv/target_arch_sigtramp.h
+> b/bsd-user/riscv/target_arch_sigtramp.h
+> index 83345f3961..dfe5076739 100644
+> --- a/bsd-user/riscv/target_arch_sigtramp.h
+> +++ b/bsd-user/riscv/target_arch_sigtramp.h
+> @@ -24,10 +24,9 @@
+>   static inline abi_long setup_sigtramp(abi_ulong offset, unsigned sigf_u=
+c,
+>           unsigned sys_sigreturn)
+>   {
+> -    int i;
+>       uint32_t sys_exit =3D TARGET_FREEBSD_NR_exit;
+>
+> -    static const uint32_t sigtramp_code[] =3D {
+> +    uint32_t sigtramp_code[] =3D {
+>       /*1*/ const_le32(0x00010513),                        /*mv a0, sp*/
+>       /*2*/ const_le32(0x00050513 + (sigf_uc << 20)),      /*addi
+> a0,a0,sigf_uc*/
+>       /*3*/ const_le32(0x00000293 + (sys_sigreturn << 20)),/*li
+> t0,sys_sigreturn*/
+>
+>
+>
+>
+> Thanks,
+>
+> Daniel
+>
+>
+>
+> > +
+> > +    return memcpy_to_target(offset, sigtramp_code, TARGET_SZSIGCODE);
+> > +}
+> > +#endif /* TARGET_ARCH_SIGTRAMP_H */
+>
+
+--000000000000440f2506223678e2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p dir=3D"ltr">Hi, I had already fixed it and sent a patch=
+v6,</p><p>I will send another one with the other changes.</p></div>
+<br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon=
+, 16 Sept, 2024, 5:51=E2=80=AFam Daniel Henrique Barboza, &lt;<a href=3D"ma=
+ilto:dbarboza@ventanamicro.com" target=3D"_blank">dbarboza@ventanamicro.com=
+</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
+0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
+<br>
+<br>
+On 9/12/24 2:29 AM, Alistair Francis wrote:<br>
+&gt; From: Mark Corbin &lt;<a href=3D"mailto:mark@dibsco.co.uk" rel=3D"nore=
+ferrer" target=3D"_blank">mark@dibsco.co.uk</a>&gt;<br>
+&gt; <br>
+&gt; Implemented the &#39;setup_sigtramp&#39; function for setting up the s=
+ignal<br>
+&gt; trampoline code in the RISC-V architecture.<br>
+&gt; <br>
+&gt; Signed-off-by: Mark Corbin &lt;<a href=3D"mailto:mark@dibsco.co.uk" re=
+l=3D"noreferrer" target=3D"_blank">mark@dibsco.co.uk</a>&gt;<br>
+&gt; Signed-off-by: Ajeet Singh &lt;itachis@FreeBSD.org&gt;<br>
+&gt; Reviewed-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson=
+@linaro.org" rel=3D"noreferrer" target=3D"_blank">richard.henderson@linaro.=
+org</a>&gt;<br>
+&gt; Message-ID: &lt;20240907031927.1908-8-itachis@FreeBSD.org&gt;<br>
+&gt; Signed-off-by: Alistair Francis &lt;<a href=3D"mailto:alistair.francis=
+@wdc.com" rel=3D"noreferrer" target=3D"_blank">alistair.francis@wdc.com</a>=
+&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0bsd-user/riscv/target_arch_sigtramp.h | 42 +++++++++++++++=
+++++++++++++<br>
+&gt;=C2=A0 =C2=A01 file changed, 42 insertions(+)<br>
+&gt;=C2=A0 =C2=A0create mode 100644 bsd-user/riscv/target_arch_sigtramp.h<b=
+r>
+&gt; <br>
+&gt; diff --git a/bsd-user/riscv/target_arch_sigtramp.h b/bsd-user/riscv/ta=
+rget_arch_sigtramp.h<br>
+&gt; new file mode 100644<br>
+&gt; index 0000000000..83345f3961<br>
+&gt; --- /dev/null<br>
+&gt; +++ b/bsd-user/riscv/target_arch_sigtramp.h<br>
+&gt; @@ -0,0 +1,42 @@<br>
+&gt; +/*<br>
+&gt; + * RISC-V sigcode<br>
+&gt; + *<br>
+&gt; + * Copyright (c) 2019 Mark Corbin<br>
+&gt; + *<br>
+&gt; + * This library is free software; you can redistribute it and/or<br>
+&gt; + * modify it under the terms of the GNU Lesser General Public<br>
+&gt; + * License as published by the Free Software Foundation; either<br>
+&gt; + * version 2 of the License, or (at your option) any later version.<b=
+r>
+&gt; + *<br>
+&gt; + * This library is distributed in the hope that it will be useful,<br=
+>
+&gt; + * but WITHOUT ANY WARRANTY; without even the implied warranty of<br>
+&gt; + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.=C2=A0 See the=
+ GNU<br>
+&gt; + * Lesser General Public License for more details.<br>
+&gt; + *<br>
+&gt; + * You should have received a copy of the GNU Lesser General Public<b=
+r>
+&gt; + * License along with this library; if not, see &lt;<a href=3D"http:/=
+/www.gnu.org/licenses/" rel=3D"noreferrer noreferrer" target=3D"_blank">htt=
+p://www.gnu.org/licenses/</a>&gt;.<br>
+&gt; + */<br>
+&gt; +<br>
+&gt; +#ifndef TARGET_ARCH_SIGTRAMP_H<br>
+&gt; +#define TARGET_ARCH_SIGTRAMP_H<br>
+&gt; +<br>
+&gt; +/* Compare with sigcode() in riscv/riscv/locore.S */<br>
+&gt; +static inline abi_long setup_sigtramp(abi_ulong offset, unsigned sigf=
+_uc,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 unsigned sys_sigreturn)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 int i;<br>
+<br>
+There&#39;s no &#39;i&#39; var being used. This will throw an &#39;unused v=
+ariable&#39; warning when building.<br>
+<br>
+&gt; +=C2=A0 =C2=A0 uint32_t sys_exit =3D TARGET_FREEBSD_NR_exit;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 static const uint32_t sigtramp_code[] =3D {<br>
+&gt; +=C2=A0 =C2=A0 /*1*/ const_le32(0x00010513),=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*mv a0, sp*/<b=
+r>
+&gt; +=C2=A0 =C2=A0 /*2*/ const_le32(0x00050513 + (sigf_uc &lt;&lt; 20)),=
+=C2=A0 =C2=A0 =C2=A0 /*addi a0,a0,sigf_uc*/<br>
+&gt; +=C2=A0 =C2=A0 /*3*/ const_le32(0x00000293 + (sys_sigreturn &lt;&lt; 2=
+0)),/*li t0,sys_sigreturn*/<br>
+&gt; +=C2=A0 =C2=A0 /*4*/ const_le32(0x00000073),=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*ecall*/<br>
+&gt; +=C2=A0 =C2=A0 /*5*/ const_le32(0x00000293 + (sys_exit &lt;&lt; 20)),=
+=C2=A0 =C2=A0 =C2=A0/*li t0,sys_exit*/<br>
+&gt; +=C2=A0 =C2=A0 /*6*/ const_le32(0x00000073),=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*ecall*/<br>
+&gt; +=C2=A0 =C2=A0 /*7*/ const_le32(0xFF1FF06F)=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/*b -16*/<br=
+>
+&gt; +=C2=A0 =C2=A0 };<br>
+<br>
+<br>
+And this will throw the following error:<br>
+<br>
+../bsd-user/riscv/target_arch_sigtramp.h:32:33: error: initializer element =
+is not a compile-time constant<br>
+=C2=A0 =C2=A0 32 |=C2=A0 =C2=A0 =C2=A0/*2*/ const_le32(0x00050513 + (sigf_u=
+c &lt;&lt; 20)),=C2=A0 =C2=A0 =C2=A0 /*addi a0,a0,sigf_uc*/<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0~~~~~~~~~~~^~~~~~~~~~~~~~~~~<br>
+/tmp/cirrus-ci-build/include/qemu/bswap.h:168:26: note: expanded from macro=
+ &#39;const_le32&#39;<br>
+=C2=A0 =C2=A0168 | # define const_le32(_x) (_x)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^~<br>
+1 error generated.<br>
+<br>
+<br>
+One solution is to remove the &#39;static const&#39; qualifier from the arr=
+ay, like<br>
+bsd-user/arm/target_arch_sigtramp.h is doing.<br>
+<br>
+<br>
+This diff will fix the build:<br>
+<br>
+<br>
+diff --git a/bsd-user/riscv/target_arch_sigtramp.h b/bsd-user/riscv/target_=
+arch_sigtramp.h<br>
+index 83345f3961..dfe5076739 100644<br>
+--- a/bsd-user/riscv/target_arch_sigtramp.h<br>
++++ b/bsd-user/riscv/target_arch_sigtramp.h<br>
+@@ -24,10 +24,9 @@<br>
+=C2=A0 static inline abi_long setup_sigtramp(abi_ulong offset, unsigned sig=
+f_uc,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 unsigned sys_sigreturn)<br>
+=C2=A0 {<br>
+-=C2=A0 =C2=A0 int i;<br>
+=C2=A0 =C2=A0 =C2=A0 uint32_t sys_exit =3D TARGET_FREEBSD_NR_exit;<br>
+<br>
+-=C2=A0 =C2=A0 static const uint32_t sigtramp_code[] =3D {<br>
++=C2=A0 =C2=A0 uint32_t sigtramp_code[] =3D {<br>
+=C2=A0 =C2=A0 =C2=A0 /*1*/ const_le32(0x00010513),=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*mv a0, sp*/<b=
+r>
+=C2=A0 =C2=A0 =C2=A0 /*2*/ const_le32(0x00050513 + (sigf_uc &lt;&lt; 20)),=
+=C2=A0 =C2=A0 =C2=A0 /*addi a0,a0,sigf_uc*/<br>
+=C2=A0 =C2=A0 =C2=A0 /*3*/ const_le32(0x00000293 + (sys_sigreturn &lt;&lt; =
+20)),/*li t0,sys_sigreturn*/<br>
+<br>
+<br>
+<br>
+<br>
+Thanks,<br>
+<br>
+Daniel<br>
+<br>
+<br>
+<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 return memcpy_to_target(offset, sigtramp_code, TARGET_S=
+ZSIGCODE);<br>
+&gt; +}<br>
+&gt; +#endif /* TARGET_ARCH_SIGTRAMP_H */<br>
+</blockquote></div>
+
+--000000000000440f2506223678e2--
 
