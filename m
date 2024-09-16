@@ -4,70 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96FD8C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 09:05:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48720C3ABA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 09:30:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sq7fh-0001Mn-4N; Mon, 16 Sep 2024 05:05:25 -0400
+	id 1sq83L-0004OT-RW; Mon, 16 Sep 2024 05:29:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sq7ff-0001Fd-2y
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 05:05:23 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1sq83J-0004Nq-4v
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 05:29:49 -0400
+Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sq7fd-0006nm-Ef
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 05:05:22 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5c4226a5af8so3662657a12.1
- for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 02:05:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1sq83H-0000P3-6d
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 05:29:48 -0400
+Received: by mail-oi1-x233.google.com with SMTP id
+ 5614622812f47-3e03a5ed4d7so1621960b6e.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 02:29:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726477519; x=1727082319; darn=nongnu.org;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1726478985; x=1727083785;
+ darn=nongnu.org; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KcVFsIezf3rekh22EaVvx4H7uocZC9nm0qD+BPLdntM=;
- b=Bapjd6/psxmgepTNLzwmJYtnHcmB5u4QIwpl9VqE874HJ8YZQMR3y2jp82ixpdJTqQ
- CpMrgbT0zQe6rfov2Tf/b45U+Q87PePEJtuJu/g025ueQi8Vwz2nrlVGPL/AdaVNCCet
- Cfy1exqqmnSaUjYTtH5BZJe+UZM2LkYab5+EsKoU0ZoDvMWoMcUw8LO3HpT42lEmSG63
- 6EDltfqhj6GRAwpvWbPXt/D35yQab8rpYGwpu2eTHGWPd6SRPKSP4v8yqcHnr68QBw77
- GVQI+/x8rCTBtuCOlR81u3p7D4cBQBBK0kRQ1KemPUDJBMbwo7URsVZXi8CqJ+x8N/tG
- Xbpw==
+ bh=ss2S+YjintUdScAM2LleCv0aK2E+5RpdIrz3Hsi4FG8=;
+ b=HH0a1Nuyu8/k8Buf7AQ8zefblKb03yMqMJwFtQcEjTGGrDpCiuLVJbRpZ/9H7cIjJ2
+ 1ab64t2sW7oUNT5PolQ1FBLkGo07fQdz3XlZkf47S1zB7Rppy7dtOPA4h2XFvHddvOTn
+ GX6wxCBjGIr+zm/F4bS4OMrrg8OPWm/HRPi10/5mR3g6HnaS+/zfWGxf/7AE+BqRGqCp
+ BW9MpKzgKbebeovBh1oaAm9M2qNa/X4L8mkhHMa2Y/D+ArKU3W2jRg2XJ2R+Is/awuWm
+ opHIPyA96SoqNx8VZb3cciVRed3dKDziAg7bkcrD0NPV9C18tnUPdGpqmVKKMkJuKgb0
+ RoXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726477519; x=1727082319;
+ d=1e100.net; s=20230601; t=1726478985; x=1727083785;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KcVFsIezf3rekh22EaVvx4H7uocZC9nm0qD+BPLdntM=;
- b=roi/C9SJxEi+0/bUO7p8gunmwz2qPNghZYmRdz+ZeKg4mzhbCeumrJQJyystMZMVbM
- Gf+HNnvTWLBcGc7fTb77Kd0eLjFXB0xqhgN7sbmUkIEPTNKgp6SkFx3U41pCLQKe7Mb/
- bvGQRqKKPm24Sgyv7pI7jkDJIJhyMrqOwT1YrBNA3eC/ChAWZZH0XqCwhg6XCMBJ2oaB
- D6GbKa8EqG5CubUT4HaT+1CVd7Ihao4W1mkVrr9cTzZ0n4txNFks3PmhYxSJOR7Hw6pl
- XbdP/ReKhBwuHUqjGH+/UzKNWJDuG4uhdsBA5QkmkQF1fMYNBWfdlRBy7O+tOVB4dUR+
- OmYg==
+ bh=ss2S+YjintUdScAM2LleCv0aK2E+5RpdIrz3Hsi4FG8=;
+ b=F+/JfnY0tvAVpumZ2z4yMUDElH71Wloi3za0oixu4IZg1j1tadOXD730InCOnLzDyt
+ QtSOFJ95LKWWcEOcRNV3M1LktF2awSZbjMIwddOqNAlbg5QwuIx6fc+X11zTqXnreZkB
+ IEL6GE/kAcU59E9n6ctoWjAgcJriEhmTGZKpDO7vPgu7yGYhmkItg+c574nHVH7kwQyT
+ +DrlEV+G6sU4pUU/n3ZIgBSxy1DTHE2UHnhXFY+kwuxVsx3GlgB9ZQrDJcwd/NQZbkLn
+ tGG6b+5K3nvfsZoeIm/hEpSeNl6pQsPxdenVBpV3My7jLJ4vovJn4E7l+yr7NfF78m+r
+ dpWg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVqUQtqbP3ike2YbHIA79zcsgmbKbD9wnoNdVdiKjyi4Zh84pgJs04H6uqg3liBc7d3E0GhPyuqD0v2@nongnu.org
-X-Gm-Message-State: AOJu0YxUygpTbTp51Op3281JQbWEycglw0ZHOOVcrFP14fQf7pypuH84
- YZuZWbTr47ahxAnzn6kh7mO+M8PkXCneELlX1x/BUJyAehC8ZVlwiqjXoYHK6SspnBUsqK1RAoB
- aHB0c2MLThxYS2nTnmroMOXTZAZfkFlTNCHVBnVoR/efwYw9b
-X-Google-Smtp-Source: AGHT+IFd7yAeGy4t2jD6gzql6ccxcEvqbLkmJSrW7TajeAAuUVEsGYwEvg9TuwacS8HFwHUq6RhdXNtB5DHJqPMDxq0=
-X-Received: by 2002:a05:6402:d1:b0:5a3:a4d7:caf5 with SMTP id
- 4fb4d7f45d1cf-5c413e5f5b9mr10079247a12.36.1726477519327; Mon, 16 Sep 2024
- 02:05:19 -0700 (PDT)
+ AJvYcCW3E3uxyyB8M6f2nY8poyla+/PKY6+UxtO9KiLeAs7NRDTw1ytOu0nxyIfpqFzXLJ7RHUz5J5/TA/3v@nongnu.org
+X-Gm-Message-State: AOJu0Yx/ZQDv2w3Sxj+p4DcqcJ7YEic6mN1ZJ4peA5JB+9ZmhHmhpOG3
+ OYTAfzYxlwb8s8E6eMoiCepQEq/eUtB7qOjADc3IxHWjj2+3eJa+Bcfs9seGCcBvxA2IcyHVHjY
+ wCr6UNecsWyozgTpt42ExACpXTako/MWUQ5JY5w==
+X-Google-Smtp-Source: AGHT+IGUAbt63FeOWbN+HFxNgKH8cRNT3grgoaHvEKXg0tP20ShIy6syKb0rG0IRvLYcoOjToeNGDbyczmZR2h3cu+k=
+X-Received: by 2002:a05:6808:218c:b0:3dc:299d:c4fb with SMTP id
+ 5614622812f47-3e071b15a7emr9414158b6e.40.1726478985144; Mon, 16 Sep 2024
+ 02:29:45 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240819135455.2957406-1-mnissler@rivosinc.com>
  <CAFEAcA-pVJozMoPnUU9TO=0KKH3iR95rf7XLj9EuaM7+Q-VZoQ@mail.gmail.com>
  <ZuRgV7lS75BpDUox@x1n>
  <CAFEAcA9kSi1id2SnQWEPyM44GvSH=tPqf-Unhyk92xdy+xZkJg@mail.gmail.com>
  <CAGNS4Ta6Zcoa_ShNihTqeM+Z4jbk2O2hRTeGddtYq2zwra+xCQ@mail.gmail.com>
-In-Reply-To: <CAGNS4Ta6Zcoa_ShNihTqeM+Z4jbk2O2hRTeGddtYq2zwra+xCQ@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 16 Sep 2024 10:05:07 +0100
-Message-ID: <CAFEAcA8Q50P3Eb8_fJgpYQ21PYoHnoUiDz0NhX5KAma552+=Hw@mail.gmail.com>
+ <CAFEAcA8Q50P3Eb8_fJgpYQ21PYoHnoUiDz0NhX5KAma552+=Hw@mail.gmail.com>
+In-Reply-To: <CAFEAcA8Q50P3Eb8_fJgpYQ21PYoHnoUiDz0NhX5KAma552+=Hw@mail.gmail.com>
+From: Mattias Nissler <mnissler@rivosinc.com>
+Date: Mon, 16 Sep 2024 11:29:34 +0200
+Message-ID: <CAGNS4TasT2=sLWbDwhk2hpX0nNJJCwF=Yd5WrYGUDj=R2AGbjw@mail.gmail.com>
 Subject: Re: [PATCH] softmmu: Support concurrent bounce buffers
-To: Mattias Nissler <mnissler@rivosinc.com>
+To: Peter Maydell <peter.maydell@linaro.org>
 Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, stefanha@redhat.com, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
@@ -75,14 +77,13 @@ Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
  David Hildenbrand <david@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
+ envelope-from=mnissler@rivosinc.com; helo=mail-oi1-x233.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,57 +100,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 16 Sept 2024 at 08:35, Mattias Nissler <mnissler@rivosinc.com> wrot=
-e:
+On Mon, Sep 16, 2024 at 11:05=E2=80=AFAM Peter Maydell <peter.maydell@linar=
+o.org> wrote:
 >
-> On Fri, Sep 13, 2024 at 6:47=E2=80=AFPM Peter Maydell <peter.maydell@lina=
-ro.org> wrote:
+> On Mon, 16 Sept 2024 at 08:35, Mattias Nissler <mnissler@rivosinc.com> wr=
+ote:
 > >
-> > On Fri, 13 Sept 2024 at 16:55, Peter Xu <peterx@redhat.com> wrote:
+> > On Fri, Sep 13, 2024 at 6:47=E2=80=AFPM Peter Maydell <peter.maydell@li=
+naro.org> wrote:
 > > >
-> > > On Thu, Sep 12, 2024 at 03:27:55PM +0100, Peter Maydell wrote:
-> > > > Coverity is pretty unhappy about this trick, because it isn't able
-> > > > to recognise that we can figure out the address of 'bounce'
-> > > > from the address of 'bounce->buffer' and free it in the
-> > > > address_space_unmap() code, so it thinks that every use
-> > > > of address_space_map(), pci_dma_map(), etc, is a memory leak.
-> > > > We can mark all those as false positives, of course, but it got
-> > > > me wondering whether maybe we should have this function return
-> > > > a struct that has all the information address_space_unmap()
-> > > > needs rather than relying on it being able to figure it out
-> > > > from the host memory pointer...
+> > > On Fri, 13 Sept 2024 at 16:55, Peter Xu <peterx@redhat.com> wrote:
+> > > >
+> > > > On Thu, Sep 12, 2024 at 03:27:55PM +0100, Peter Maydell wrote:
+> > > > > Coverity is pretty unhappy about this trick, because it isn't abl=
+e
+> > > > > to recognise that we can figure out the address of 'bounce'
+> > > > > from the address of 'bounce->buffer' and free it in the
+> > > > > address_space_unmap() code, so it thinks that every use
+> > > > > of address_space_map(), pci_dma_map(), etc, is a memory leak.
+> > > > > We can mark all those as false positives, of course, but it got
+> > > > > me wondering whether maybe we should have this function return
+> > > > > a struct that has all the information address_space_unmap()
+> > > > > needs rather than relying on it being able to figure it out
+> > > > > from the host memory pointer...
+> > > >
+> > > > Indeed that sounds like a viable option.  Looks like we don't have =
+a lot of
+> > > > address_space_map() users.
 > > >
-> > > Indeed that sounds like a viable option.  Looks like we don't have a =
-lot of
-> > > address_space_map() users.
+> > > There's quite a few wrappers of it too, so it's a little hard to coun=
+t.
+> > > We might want to avoid the memory allocation in the common case
+> > > by having the caller pass in an ASMapInfo struct to be filled
+> > > in rather than having address_space_map() allocate-and-return one.
 > >
-> > There's quite a few wrappers of it too, so it's a little hard to count.
-> > We might want to avoid the memory allocation in the common case
-> > by having the caller pass in an ASMapInfo struct to be filled
-> > in rather than having address_space_map() allocate-and-return one.
+> > Hm, this would work, but not only does it complicate the code
+> > consuming address_space_map, but it also increases memory footprint (a
+> > pointer being replaced by a struct of sizeof(BounceBuffer) if done
+> > naively), plus there's an additional pointer indirection (I'm doubtful
+> > whether this can be optimized away by the compiler). I haven't done
+> > any measurements of these effects, so can't say anything definitive,
+> > but this seems pretty costly just to appease coverity...
+> >
+> > Is there no way to inform coverity that a resource pointer is being
+> > transmuted into a handle, so it can track that instead? Given that
+> > pointer tricks like this and container_of usage is quite frequent, I
+> > would expect coverity to have a better strategy to handle these rather
+> > than suppressing false positive leak reports?
 >
-> Hm, this would work, but not only does it complicate the code
-> consuming address_space_map, but it also increases memory footprint (a
-> pointer being replaced by a struct of sizeof(BounceBuffer) if done
-> naively), plus there's an additional pointer indirection (I'm doubtful
-> whether this can be optimized away by the compiler). I haven't done
-> any measurements of these effects, so can't say anything definitive,
-> but this seems pretty costly just to appease coverity...
->
-> Is there no way to inform coverity that a resource pointer is being
-> transmuted into a handle, so it can track that instead? Given that
-> pointer tricks like this and container_of usage is quite frequent, I
-> would expect coverity to have a better strategy to handle these rather
-> than suppressing false positive leak reports?
+> It's not purely that I want to appease Coverity. I also
+> think for human readers that the current trick with passing
+> back a pointer into host memory and relying on being able to
+> get back to either the MR or to the bounce-buffer struct
+> from that is pretty tricky. Would we have designed it that
+> way if we weren't starting with the pre-existing address_space_map()
+> function signature?
 
-It's not purely that I want to appease Coverity. I also
-think for human readers that the current trick with passing
-back a pointer into host memory and relying on being able to
-get back to either the MR or to the bounce-buffer struct
-from that is pretty tricky. Would we have designed it that
-way if we weren't starting with the pre-existing address_space_map()
-function signature?
-
-thanks
--- PMM
+Identifying a mapping by its address seems pretty natural to me for
+callers of the API, at least as long as the address is all that the
+caller ever needs. The solution I implemented didn't/doesn't seem
+overly complicated to me, and I am hoping it wouldn't overwhelm anyone
+else who has worked with container_of (which seems to be used
+liberally in qemu). But at the end of the day it's a matter of
+personal taste and the background of the person writing the code, so
+I'll readily admit that this is personal opinion, and if qemu does
+prefer a different style then by all means we should change it and
+I'll be happy to help with that.
 
