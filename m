@@ -4,82 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A1ECC3ABA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 15:10:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63469C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 15:16:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqDLn-00056e-WE; Mon, 16 Sep 2024 11:09:16 -0400
+	id 1sqDSI-0008Gc-SO; Mon, 16 Sep 2024 11:15:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sqDLl-0004xG-I4; Mon, 16 Sep 2024 11:09:13 -0400
-Received: from mail-il1-x136.google.com ([2607:f8b0:4864:20::136])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sqDS8-0008Fv-I6
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 11:15:48 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sqDLk-00049S-0H; Mon, 16 Sep 2024 11:09:13 -0400
-Received: by mail-il1-x136.google.com with SMTP id
- e9e14a558f8ab-39f54ab8e69so17853595ab.1; 
- Mon, 16 Sep 2024 08:09:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726499349; x=1727104149; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tIDS2BgSDN2sYeAiwQv8u9Oegpn8pHfzCYrmX62ewXA=;
- b=nIkpclEsIgGOjCSYa2bRLF0AQhYQ/L9WpgWXPPMGUa/2ExnR/Bu21VThvQmnx7ErZJ
- eZQyMzZlL63vD3LFPDfJr4/WE1d8aFuK2cI79edpC/hLX7Uzdgdb0g7ZMRMug4ESwAZ5
- B8SpAhvl/xamYhTWIogPQyXf8fxb4k58Zgyxv+0vH4jdjArxyCahIxH4G/EJHb3Zj/5j
- a3dh51Ct12KC9SO/Mcm0mxC5prkID+0m0tX5ojirVxB99v/aeZZTz+RHuWiaydssrCax
- JsnkYBlBzSyI3CA24CH3SBKb+cK8p6h2VSVhnqE6wqOeLQFk6H221gvKfIMoGLznlTUV
- 7msg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726499349; x=1727104149;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tIDS2BgSDN2sYeAiwQv8u9Oegpn8pHfzCYrmX62ewXA=;
- b=pfnwRUhF0Eg0PoBdDGkNy17fe3XxUUwvdWDMWXPm7cr/9L6lLVnDm/2eumIZeHKeVE
- IoubFhQRx9fPfaSqvL1hK0IyiKwgmV6BbYHbZA8gXb7Upf1080F8R2m8+v8zHRFWiWZ8
- J3j9x1Soqh4OLR5UaANToKkqxwQITbnQ12h9DWu7OpBfAkdqbc1nfN/VduzHrLaee/gB
- smZjKBSecQ9V5++Dx65nOIrndT4RADxt6DnCkvIhyNCAnLxd53C+uKOFXNPJcIOv1vwz
- Jbb9EJeMAtryO6GNlHjtBc9Redh5PW5WjqmGCntgwK/bu5N2lupN4aP9SZlrMz3DY9Uk
- PJFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWEbhVUxx/FZu16eIpHCdLP8BDtQH/CjlBqvfHXvZE3F2ofSp8G0hS6SeP9CMgU1uDA0o+9E9lKqQ==@nongnu.org
-X-Gm-Message-State: AOJu0YxbGKaZ/axh7sD8imC+X5dcTzlDFeOCxt3CLTjPgA/R0zpjiVny
- QT7A7ZzQC7XhTck50c7fCF7wcwhDtyWW0A46eLql6Red75QKNfocXxlFN492
-X-Google-Smtp-Source: AGHT+IE86ZuS/7NQzNvR5tLVOdqaKbQKcpupAoW/xUcVW9ix1XY+RyPuORlI+lKWYit0Zg+iCQOwZg==
-X-Received: by 2002:a05:6e02:12c5:b0:39f:325f:78e6 with SMTP id
- e9e14a558f8ab-3a0845a0d55mr130717185ab.0.1726499349478; 
- Mon, 16 Sep 2024 08:09:09 -0700 (PDT)
-Received: from gmail.com (ip190-5-140-142.intercom.com.sv. [190.5.140.142])
- by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3a092e9005csm16897935ab.79.2024.09.16.08.09.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Sep 2024 08:09:08 -0700 (PDT)
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
- peter.maydell@linaro.org, alex.bennee@linaro.org, edgar.iglesias@amd.com,
- xen-devel@lists.xenproject.org, qemu-arm@nongnu.org
-Subject: [PATCH v1 4/4] hw/arm: xenpvh: Enable PCI for ARM PVH
-Date: Mon, 16 Sep 2024 17:08:52 +0200
-Message-ID: <20240916150853.1216703-5-edgar.iglesias@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240916150853.1216703-1-edgar.iglesias@gmail.com>
-References: <20240916150853.1216703-1-edgar.iglesias@gmail.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sqDS6-0005Eq-8p
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 11:15:47 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 317AA1F8B5;
+ Mon, 16 Sep 2024 15:15:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726499743; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FK0q0RUs8G/wBSh6s01XL1k6cVE0ZwZcnOwOWQFI+Y8=;
+ b=R9U5KVL1M26ZUAibiDbcuRVILf/hWGOn++C5C8kriinm304F+GOmsYGEQfx8lkDwfSJyBV
+ EFG0OBkoloo95h+qXPcKLtmKHqQb05dQAffgpf0rFGrGJ1uvZcp/khJVymDbVJssIm9XaO
+ MCeGwbs5aWPtQEYFdz069UU25Tx/cq0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726499743;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FK0q0RUs8G/wBSh6s01XL1k6cVE0ZwZcnOwOWQFI+Y8=;
+ b=V8eYeoAKdfeDYMYnOs8mtST2ZphcS9KvhnsRVN6Wde0gTopzuLaTYR/dsJR27QuoG5/36Q
+ 9NGO9Fc7Fb5poxCw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="rKS/AyHY";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=eRs0Z02r
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726499742; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FK0q0RUs8G/wBSh6s01XL1k6cVE0ZwZcnOwOWQFI+Y8=;
+ b=rKS/AyHYZpS48bpPjxpdQ4xKjz6fqH8ItE81P8yCLinzy6psh8ydx2NTa4sDevQVZEzxNy
+ JKnsUITNjoq58XzJzWXaZpiZgDUGoyeo66MunN5VprDxOsTc1Fvqpt23mZN58YH4sQxYAs
+ gYcfkdDGJ/ldRxl32aoDrnc5b2jwqho=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726499742;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FK0q0RUs8G/wBSh6s01XL1k6cVE0ZwZcnOwOWQFI+Y8=;
+ b=eRs0Z02r2Dk4UAzpudxnUKnFtVC/UU1Ygx7n5wdCASjSj3L/hhT30vDTIUSsCQSh0HOIEi
+ blX5cFyGl+84dlCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A406B1397F;
+ Mon, 16 Sep 2024 15:15:41 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id /PyHGp1L6GboQwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 16 Sep 2024 15:15:41 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Yichen Wang <yichen.wang@bytedance.com>, Markus Armbruster
+ <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Peter Xu <peterx@redhat.com>, Eric Blake
+ <eblake@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck
+ <cohuck@redhat.com>, qemu-devel@nongnu.org, Hao Xiang
+ <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>, Shivam Kumar
+ <shivam.kumar1@nutanix.com>, "Ho-Ren (Jack) Chuang"
+ <horenchuang@bytedance.com>
+Subject: Re: [External] Re: [PATCH v5 08/13] migration/multifd: Add new
+ migration option for multifd DSA offloading.
+In-Reply-To: <CAHObMVYuo8qtXgPhZqR6+pb6yVjjUAJTiW=urU+84iW4NPRpsw@mail.gmail.com>
+References: <20240711215244.19237-1-yichen.wang@bytedance.com>
+ <20240711215244.19237-9-yichen.wang@bytedance.com>
+ <CAHObMVZ1rifLMe-6R_Lttu_aOWDPvqv29sa6p_gz_7HROn00Tg@mail.gmail.com>
+ <87y1603n21.fsf@suse.de> <87ed7iyhci.fsf@pond.sub.org>
+ <CAHObMVYuo8qtXgPhZqR6+pb6yVjjUAJTiW=urU+84iW4NPRpsw@mail.gmail.com>
+Date: Mon, 16 Sep 2024 12:15:39 -0300
+Message-ID: <874j6f1vfo.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::136;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-il1-x136.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 317AA1F8B5
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_TLS_ALL(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[16];
+ MIME_TRACE(0.00)[0:+];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid,suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,49 +140,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+Yichen Wang <yichen.wang@bytedance.com> writes:
 
-Enable PCI support for the ARM Xen PVH machine.
+> On Wed, Jul 24, 2024 at 7:50=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>>
+>> Fabiano Rosas <farosas@suse.de> writes:
+>>
+>> > Yichen Wang <yichen.wang@bytedance.com> writes:
+>> >
+>> >> On Thu, Jul 11, 2024 at 2:53=E2=80=AFPM Yichen Wang <yichen.wang@byte=
+dance.com> wrote:
+>> >>
+>> >>> diff --git a/migration/options.c b/migration/options.c
+>> >>> index 645f55003d..f839493016 100644
+>> >>> --- a/migration/options.c
+>> >>> +++ b/migration/options.c
+>> >>> @@ -29,6 +29,7 @@
+>> >>>  #include "ram.h"
+>> >>>  #include "options.h"
+>> >>>  #include "sysemu/kvm.h"
+>> >>> +#include <cpuid.h>
+>> >>>
+>> >>>  /* Maximum migrate downtime set to 2000 seconds */
+>> >>>  #define MAX_MIGRATE_DOWNTIME_SECONDS 2000
+>> >>> @@ -162,6 +163,10 @@ Property migration_properties[] =3D {
+>> >>>      DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", Migratio=
+nState,
+>> >>>                         parameters.zero_page_detection,
+>> >>>                         ZERO_PAGE_DETECTION_MULTIFD),
+>> >>> +    /* DEFINE_PROP_ARRAY("dsa-accel-path", MigrationState, x, */
+>> >>> +    /*                    parameters.dsa_accel_path, qdev_prop_stri=
+ng, char *), */
+>> >
+>> > This is mostly correct, I think, you just need to create a field in
+>> > MigrationState to keep the length (instead of x). However, I found out
+>> > just now that this only works with QMP. Let me ask for other's
+>> > opinions...
+>> >
+>> >>> +    /* DEFINE_PROP_STRING("dsa-accel-path", MigrationState, */
+>> >>> +    /*                    parameters.dsa_accel_path), */
+>> >>>
+>> >>>      /* Migration capabilities */
+>> >>>      DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
+>> >>
+>> >> I changed the dsa-accel-path to be a ['str'], i.e. strList* in C.
+>> >> However, I am having a hard time about how to define the proper
+>> >> properties here. I don't know what MACRO to use and I can't find good
+>> >> examples... Need some guidance about how to proceed. Basically I will
+>> >> need this to pass something like '-global
+>> >> migration.dsa-accel-path=3D"/dev/dsa/wq0.0"' in cmdline, or
+>> >> "migrate_set_parameter dsa-accel-path" in QEMU CLI. Don't know how to
+>> >> pass strList there.
+>> >>
+>> >> Thanks very much!
+>> >
+>> > @Daniel, @Markus, any idea here?
+>> >
+>> > If I'm reading this commit[1] right, it seems we decided to disallow
+>> > passing of arrays without JSON, which affects -global on the
+>> > command-line and HMP.
+>> >
+>> > 1- b06f8b500d (qdev: Rework array properties based on list visitor,
+>> > 2023-11-09)
+>> >
+>> > QMP shell:
+>> > (QEMU) migrate-set-parameters dsa-accel-path=3D['a','b']
+>> > {"return": {}}
+>> >
+>> > HMP:
+>> > (qemu) migrate_set_parameter dsa-accel-path "['a','b']"
+>> > qemu-system-x86_64: ../qapi/string-input-visitor.c:343: parse_type_str:
+>> > Assertion `siv->lm =3D=3D LM_NONE' failed.
+>>
+>> HMP migrate_set_parameter doesn't support JSON.  It uses the string
+>> input visitor to parse the value, which can only do lists of integers.
+>>
+>> The string visitors have been thorns in my side since forever.
+>>
+>> > Any recommendation? I believe all migration parameters so far can be s=
+et
+>> > via those means, I don't think we can allow only this one to be
+>> > QMP-only.
+>> >
+>> > Or am I just missing something?
+>>
+>> I don't think the string input visitor can be compatibly extended to
+>> arbitrary lists.
+>>
+>> We could replace HMP migrate_set_parameter by migrate_set_parameters.
+>> The new command parses its single argument into a struct
+>> MigrateSetParameters with keyval_parse(),
+>> qobject_input_visitor_new_keyval(), and
+>> visit_type_MigrateSetParameters().
+>>
+>
+> I tried Fabiano's suggestion, and put a unit32_t in MigrateState data
+> structure. I got exactly the same: "qemu-system-x86_64.dsa:
+> ../../../qapi/string-input-visitor.c:343: parse_type_str: Assertion
+> `siv->lm =3D=3D LM_NONE' failed.". Steve's patch is more to be a read-only
+> field from HMP, so probably I can't do that.
 
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
----
- hw/arm/xen-pvh.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+What do you mean by read-only field? I thought his usage was the same as
+what we want for dsa-accel-path:
 
-diff --git a/hw/arm/xen-pvh.c b/hw/arm/xen-pvh.c
-index 28af3910ea..33f0dd5982 100644
---- a/hw/arm/xen-pvh.c
-+++ b/hw/arm/xen-pvh.c
-@@ -39,6 +39,16 @@ static void xen_arm_instance_init(Object *obj)
-                                          VIRTIO_MMIO_DEV_SIZE };
- }
- 
-+static void xen_pvh_set_pci_intx_irq(void *opaque, int intx_irq, int level)
-+{
-+    XenPVHMachineState *s = XEN_PVH_MACHINE(opaque);
-+    int irq = s->cfg.pci_intx_irq_base + intx_irq;
-+
-+    if (xendevicemodel_set_irq_level(xen_dmod, xen_domid, irq, level)) {
-+        error_report("xendevicemodel_set_pci_intx_level failed");
-+    }
-+}
-+
- static void xen_arm_machine_class_init(ObjectClass *oc, void *data)
- {
-     XenPVHMachineClass *xpc = XEN_PVH_MACHINE_CLASS(oc);
-@@ -69,7 +79,11 @@ static void xen_arm_machine_class_init(ObjectClass *oc, void *data)
-     /* Xen/ARM does not use buffered IOREQs.  */
-     xpc->handle_bufioreq = HVM_IOREQSRV_BUFIOREQ_OFF;
- 
-+    /* PCI INTX delivery.  */
-+    xpc->set_pci_intx_irq = xen_pvh_set_pci_intx_irq;
-+
-     /* List of supported features known to work on PVH ARM.  */
-+    xpc->has_pci = true;
-     xpc->has_tpm = true;
-     xpc->has_virtio_mmio = true;
- 
--- 
-2.43.0
+(qemu) migrate_set_parameter cpr-exec-command abc def
+(qemu) info migrate_parameters=20
+...
+cpr-exec-command: abc def
 
+(gdb) p valuestr
+$3 =3D 0x55555766a8d0 "abc def"
+(gdb) p *p->cpr_exec_command=20
+$6 =3D {next =3D 0x55555823d300, value =3D 0x55555765f690 "abc"}
+(gdb) p *p->cpr_exec_command.next
+$7 =3D {next =3D 0x55555805be20, value =3D 0x555557fefc80 "def"}
 
