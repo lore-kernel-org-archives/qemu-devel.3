@@ -4,87 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0991C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 11:46:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09ED5C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 12:14:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqABN-000399-P1; Mon, 16 Sep 2024 07:46:17 -0400
+	id 1sqAbl-0006Ei-La; Mon, 16 Sep 2024 08:13:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sqABI-0002nu-8k
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 07:46:12 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sqABA-0005TF-Ti
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 07:46:11 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1fc47abc040so33441535ad.0
- for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 04:46:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1726487162; x=1727091962; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tke0RvyTDDTVBrzp6vWBuDMRSH0wP+0EwIzfREkDLbg=;
- b=cBANUOqWybLTvqCi/UxiURVaANpuCRMV4lB7xchKrbyIIefpYYyLoQcVpDtAkLPIct
- fdHcfV0LmgFxGHE2hgANGmKUChRwQN/ki/xRLBRJoH9dhd4gAEbg545NRFNXfChGKXMT
- k+WOqlFN+k+9Zn/q5OdMPEM7ennr3nBjwRhXMZoOLqOAb36dHurKtJ35mP2+n+rbdPHz
- 6EGxIndpLPWO+wxYoLX4YRdoLjGUr7h9wqzo4sAjZJSH4tFmd2pW7fsYswCiRTHsNP/R
- AoPoACrlZcJfT6E8+RZLuXLg7oQrjyZIiBHT/fWsgpxau4YSGZI3sX+Zy/1VuHY+xrtW
- v4Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726487162; x=1727091962;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tke0RvyTDDTVBrzp6vWBuDMRSH0wP+0EwIzfREkDLbg=;
- b=Y2ktSA9tAN+C7DtBvpMymXGoThUTrZ6OrvIWRa0ut6w9Qv/C3g3A6KUVuRy6vxSDSs
- dGHlf2SodBxQ7tWrq9/1FAw/Gut5k2Rc/m7rn2U99yVW/D2fXe0r1x7PaykzUkhvPQqH
- 3XVy7AF6Ot3X/rP387gdTmuH/ZLY5fJwfQWzpBiqLC9TxepTdAeAdTyAosCoFt2ElTJ1
- sFn3r7SB3DkOgY3YiC6kjs3+hMZrxTKH9PMVYjxZkntUtvFbBJLsW2qqlXRRenYPfR0L
- CSzWaIAxM3qiaoZu274F9TBKOwE4rfJTrstOFGbZh4z1alMHma2bludEaatEuwYWjNHB
- g/8g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8OqukdkZq1Kcu20Yzs6yZhwAXVM6SSynuXIt7poe9iQ7YWZBReJxyq2Qk7Py26jIOCVCwZNrOFPrJ@nongnu.org
-X-Gm-Message-State: AOJu0YwdGuhunPbE+t533fiWoItJQXZHOnr5GrpaqRw/BwJ86XiXpJwj
- WBcz7/0PzXZ1jWknfHhnJ+wTYEDTuZeIoAmUf1wGU2TesQAONjsb4qgIU1Ho2OU=
-X-Google-Smtp-Source: AGHT+IGwYQOLLagntUB1A4EWi9OsNB239ajo/q9FJ0dg8m8+9yDM5MnVLaBorz2ycM6A41OhGngRDQ==
-X-Received: by 2002:a17:902:ce84:b0:205:6596:9dc7 with SMTP id
- d9443c01a7336-2076e463a12mr194443285ad.58.1726487162070; 
- Mon, 16 Sep 2024 04:46:02 -0700 (PDT)
-Received: from [192.168.68.110] (201-68-240-33.dsl.telesp.net.br.
- [201.68.240.33]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-207945da8dfsm34705815ad.46.2024.09.16.04.45.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Sep 2024 04:46:01 -0700 (PDT)
-Message-ID: <a3c8dc7f-f257-41a8-9fb3-50389052f2e9@ventanamicro.com>
-Date: Mon, 16 Sep 2024 08:45:57 -0300
+ (Exim 4.90_1) (envelope-from <SRS0=CK3F=QO=kaod.org=clg@ozlabs.org>)
+ id 1sqAbi-0006Dx-0f
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 08:13:31 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=CK3F=QO=kaod.org=clg@ozlabs.org>)
+ id 1sqAbe-000088-Kc
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 08:13:29 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4X6kMj28Cvz4xVR;
+ Mon, 16 Sep 2024 22:13:21 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4X6kMf1624z4x8D;
+ Mon, 16 Sep 2024 22:13:17 +1000 (AEST)
+Message-ID: <881df54b-c98c-4ce0-a434-05d055cc27bb@kaod.org>
+Date: Mon, 16 Sep 2024 14:13:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 00/17] bsd-user: Comprehensive RISCV Support
-To: Ajeet Singh <itachis6234@gmail.com>, qemu-devel@nongnu.org
-Cc: Mark Corbin <mark@dibsco.co.uk>, Warner Losh <imp@bsdimp.com>,
- Ajeet Singh <itachis@FreeBSD.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- "open list:RISC-V" <qemu-riscv@nongnu.org>
-References: <20240915152554.8394-1-itachis@FreeBSD.org>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240915152554.8394-1-itachis@FreeBSD.org>
+Subject: Re: [PULL 1/9] softmmu: Support concurrent bounce buffers
+To: Mattias Nissler <mnissler@rivosinc.com>, Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+References: <20240909201147.3761639-1-peterx@redhat.com>
+ <20240909201147.3761639-2-peterx@redhat.com>
+ <441f797f-a377-45de-bfe6-042542c917d8@kaod.org> <ZuRQirmjwWGj1N2D@x1n>
+ <CAGNS4TaDVs9eqb9jO5kgi9bL1t1tmc-GywiyP3xpbgFGgvbkLg@mail.gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <CAGNS4TaDVs9eqb9jO5kgi9bL1t1tmc-GywiyP3xpbgFGgvbkLg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=CK3F=QO=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,109 +70,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 9/16/24 10:23, Mattias Nissler wrote:
+> Thanks for the report, and my apologies for the breakage.
+> 
+> On Fri, Sep 13, 2024 at 4:47 PM Peter Xu <peterx@redhat.com> wrote:
+>>
+>> On Fri, Sep 13, 2024 at 04:35:32PM +0200, Cédric Le Goater wrote:
+>>> Hello,
+>>>
+>>> +Mark (for the Mac devices)
+>>>
+>>> On 9/9/24 22:11, Peter Xu wrote:
+>>>> From: Mattias Nissler <mnissler@rivosinc.com>
+>>>>
+>>>> When DMA memory can't be directly accessed, as is the case when
+>>>> running the device model in a separate process without shareable DMA
+>>>> file descriptors, bounce buffering is used.
+>>>>
+>>>> It is not uncommon for device models to request mapping of several DMA
+>>>> regions at the same time. Examples include:
+>>>>    * net devices, e.g. when transmitting a packet that is split across
+>>>>      several TX descriptors (observed with igb)
+>>>>    * USB host controllers, when handling a packet with multiple data TRBs
+>>>>      (observed with xhci)
+>>>>
+>>>> Previously, qemu only provided a single bounce buffer per AddressSpace
+>>>> and would fail DMA map requests while the buffer was already in use. In
+>>>> turn, this would cause DMA failures that ultimately manifest as hardware
+>>>> errors from the guest perspective.
+>>>>
+>>>> This change allocates DMA bounce buffers dynamically instead of
+>>>> supporting only a single buffer. Thus, multiple DMA mappings work
+>>>> correctly also when RAM can't be mmap()-ed.
+>>>>
+>>>> The total bounce buffer allocation size is limited individually for each
+>>>> AddressSpace. The default limit is 4096 bytes, matching the previous
+>>>> maximum buffer size. A new x-max-bounce-buffer-size parameter is
+>>>> provided to configure the limit for PCI devices.
+>>>>
+>>>> Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+>>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> Acked-by: Peter Xu <peterx@redhat.com>
+>>>> Link: https://lore.kernel.org/r/20240819135455.2957406-1-mnissler@rivosinc.com
+>>>> Signed-off-by: Peter Xu <peterx@redhat.com>
+>>>> ---
+>>>>    include/exec/memory.h       | 14 +++----
+>>>>    include/hw/pci/pci_device.h |  3 ++
+>>>>    hw/pci/pci.c                |  8 ++++
+>>>>    system/memory.c             |  5 ++-
+>>>>    system/physmem.c            | 82 ++++++++++++++++++++++++++-----------
+>>>>    5 files changed, 76 insertions(+), 36 deletions(-)
+>>>
+>>> Here is a report of a segv of the ppc64 mac99+cpu970 machine booting debian.
+>>> See the stack trace below. Just wanted to let you know. I will digging further
+>>> next week.
+>>>
+>>> Thanks,
+>>>
+>>> C.
+>>>
+>>>
+>>>
+>>> Thread 1 "qemu-system-ppc" received signal SIGSEGV, Segmentation fault.
+>>> address_space_unmap (len=<optimized out>, access_len=0, is_write=false, buffer=0x0,
+>>>      as=0x5555565d45c0 <address_space_memory>) at ../system/physmem.c:3333
+>>> 3333      assert(bounce->magic == BOUNCE_BUFFER_MAGIC);
+>>> (gdb) bt
+>>> #0  address_space_unmap
+>>>      (len=<optimized out>, access_len=0, is_write=false, buffer=0x0, as=0x5555565d45c0 <address_space_memory>)
+>>>      at ../system/physmem.c:3333
+>>> #1  address_space_unmap
+>>>      (as=as@entry=0x5555565d45c0 <address_space_memory>, buffer=0x0, len=<optimized out>, is_write=<optimized out>, access_len=0) at ../system/physmem.c:3313
+>>> #2  0x000055555595ea48 in dma_memory_unmap
+>>>      (access_len=<optimized out>, dir=<optimized out>, len=<optimized out>, buffer=<optimized out>, as=<optimized out>) at /home/legoater/work/qemu/qemu.git/include/sysemu/dma.h:236
+>>> #3  pmac_ide_atapi_transfer_cb (opaque=0x555556c06470, ret=<optimized out>) at ../hw/ide/macio.c:122
+>>> #4  0x00005555559861f3 in DBDMA_run (s=0x555556c04c60) at ../hw/misc/macio/mac_dbdma.c:546
+>>> #5  DBDMA_run_bh (opaque=0x555556c04c60) at ../hw/misc/macio/mac_dbdma.c:556
+>>> #6  0x0000555555f19f33 in aio_bh_call (bh=bh@entry=0x555556ab5570) at ../util/async.c:171
+>>> #7  0x0000555555f1a0f5 in aio_bh_poll (ctx=ctx@entry=0x5555566af150) at ../util/async.c:218
+>>> #8  0x0000555555f0269e in aio_dispatch (ctx=0x5555566af150) at ../util/aio-posix.c:423
+>>> #9  0x0000555555f19d8e in aio_ctx_dispatch
+>>>      (source=<optimized out>, callback=<optimized out>, user_data=<optimized out>) at ../util/async.c:360
+>>> #10 0x00007ffff7315f4f in g_main_context_dispatch () at /lib64/libglib-2.0.so.0
+>>> #11 0x0000555555f1b488 in glib_pollfds_poll () at ../util/main-loop.c:287
+>>> #12 os_host_main_loop_wait (timeout=2143429) at ../util/main-loop.c:310
+>>> #13 main_loop_wait (nonblocking=nonblocking@entry=0) at ../util/main-loop.c:589
+>>> #14 0x0000555555abeba3 in qemu_main_loop () at ../system/runstate.c:826
+>>> #15 0x0000555555e63787 in qemu_default_main () at ../system/main.c:37
+>>> #16 0x00007ffff6e29590 in __libc_start_call_main () at /lib64/libc.so.6
+>>> #17 0x00007ffff6e29640 in __libc_start_main_impl () at /lib64/libc.so.6
+>>> #18 0x000055555588d4f5 in _start ()
+>>
+>> Thanks for the report!
+>>
+>> Mattias,
+>>
+>> Would you have time to take a look?
+> 
+> I noticed that the backtrace indicates address_space_unmap is called
+> with buffer=0x0, len=0. This wasn't really correct before my
+> concurrent bounce buffering change either, but it looks like the
+> previous code would have tolerated this to a certain extent (at least
+> no immediate crashes). Original code in question:
+> 
+>      if (is_write) {
+>          address_space_write(as, as->bounce.addr, MEMTXATTRS_UNSPECIFIED,
+>                              as->bounce.buffer, access_len);
+>      }
+>      qemu_vfree(as->bounce.buffer);
+>      as->bounce.buffer = NULL;
+>      memory_region_unref(as->bounce.mr);
+>      /* Clear in_use before reading map_client_list.  */
+>      qatomic_set_mb(&as->bounce.in_use, false);
+>      address_space_notify_map_clients(as);
+> 
+> address_space_write and qemu_vfree are safe to call with NULL/0
+> parameters. as->bounce.buffer = NULL would leak the buffer if one is
+> allocated, and memory_region_unref(as->bounce.mr) is only OK if the
+> bounce buffer hasn't been used before, otherwise we'd erroneously drop
+> a memory region reference.
+> 
+> We have two options here: Either we fix the caller to not call
+> address_space_unmap with buffer=NULL. Or alternatively we make
+> address_space_unmap NULL-safe by putting a check to return immediately
+> when being passed a NULL buffer parameter.
+> 
+> Looking at the code, the dma_memory_unmap calls in hw/ide/macio.c seem
+> to be passing buffer=NULL unconditionally, since the dma_mem field in
+> struct DBDMA_io is never set to anything non-zero. In fact, I believe
+> after commit be1e343995ef81fc05d9a4e1ec263ca171d842e7 "macio: switch
+> over to new byte-aligned DMA helpers", the dma_memory_unmap calls in
+> hw/ide/macio.c aren't doing anything and should probably have been
+> removed together with the dma_mem, dma_len and dir fields in struct
+> DBDMA_io. Speculative patch:
+> 
+> diff --git a/hw/ide/macio.c b/hw/ide/macio.c
+> index e84bf2c9f6..15dd40138e 100644
+> --- a/hw/ide/macio.c
+> +++ b/hw/ide/macio.c
+> @@ -119,9 +119,6 @@ static void pmac_ide_atapi_transfer_cb(void
+> *opaque, int ret)
+>       return;
+> 
+>   done:
+> -    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
+> -                     io->dir, io->dma_len);
+> -
+>       if (ret < 0) {
+>           block_acct_failed(blk_get_stats(s->blk), &s->acct);
+>       } else {
+> @@ -202,9 +199,6 @@ static void pmac_ide_transfer_cb(void *opaque, int ret)
+>       return;
+> 
+>   done:
+> -    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
+> -                     io->dir, io->dma_len);
+> -
+>       if (s->dma_cmd == IDE_DMA_READ || s->dma_cmd == IDE_DMA_WRITE) {
+>           if (ret < 0) {
+>               block_acct_failed(blk_get_stats(s->blk), &s->acct);
+> diff --git a/include/hw/ppc/mac_dbdma.h b/include/hw/ppc/mac_dbdma.h
+> index 4a3f644516..c774f6bf84 100644
+> --- a/include/hw/ppc/mac_dbdma.h
+> +++ b/include/hw/ppc/mac_dbdma.h
+> @@ -44,10 +44,6 @@ struct DBDMA_io {
+>       DBDMA_end dma_end;
+>       /* DMA is in progress, don't start another one */
+>       bool processing;
+> -    /* DMA request */
+> -    void *dma_mem;
+> -    dma_addr_t dma_len;
+> -    DMADirection dir;
+>   };
+> 
+>   /*
+> 
+> Cédric, can you try with the above patch and/or 
 
-Please CC the RISC-V maintainer (Alistair, that I just CCed in this reply) in all RISC-V
-related patches. It would be nice to also CC qemu-riscv@nongnu.org to get more visibility
-from the RISC-V developers too.
+crash seems gone.
 
+> share more details of your setup so I can verify
 
-This series won't build in a FreeBSD x86_64 host:
+You will need a Linnux powerpc or powerpc64 image for mac machines,
+which are not common now days, or MacOS images. My debian images
+are big. I will try to build you a small one for more tests.
 
-In file included from ../bsd-user/main.c:53:
-../bsd-user/riscv/target_arch_cpu.h:126:13: error: call to undeclared function 'force_sig_fault'; ISO C99 and later do not support implicit function declarations [-Werror,-Wimplicit-function-declaration]
-   126 |             force_sig_fault(signo, code, env->pc);
-       |             ^
-../bsd-user/riscv/target_arch_cpu.h:129:9: error: call to undeclared function 'process_pending_signals'; ISO C99 and later do not support implicit function declarations [-Werror,-Wimplicit-function-declaration]
-   129 |         process_pending_signals(env);
-       |         ^
-../bsd-user/main.c:608:5: error: call to undeclared function 'signal_init'; ISO C99 and later do not support implicit function declarations [-Werror,-Wimplicit-function-declaration]
-   608 |     signal_init();
-       |     ^
-3 errors generated.
+> (I tried booting a ppc64el-pseries dqib
+> image but didn't see the issue)?
 
-
-You're missing the following header in patch 2:
-
-
-diff --git a/bsd-user/riscv/target_arch_cpu.h b/bsd-user/riscv/target_arch_cpu.h
-index 57abfbd556..a93ea3915a 100644
---- a/bsd-user/riscv/target_arch_cpu.h
-+++ b/bsd-user/riscv/target_arch_cpu.h
-@@ -21,6 +21,7 @@
-  #define TARGET_ARCH_CPU_H
-  
-  #include "target_arch.h"
-+#include "signal-common.h"
-  
-  #define TARGET_DEFAULT_CPU_MODEL "max"
-
-
-Please CC dbarboza@ventanamicro.com in the v7 because I'll compile test this series to avoid
-another pipeline fail that will hold the upstreaming of everything else.
-
-
+pseriers is a very different type of machine, the equivalent of the virt
+machine on ARM and RISCV. The HW is completely different.
 
 Thanks,
 
+C.
 
-Daniel
 
 
-On 9/15/24 12:25 PM, Ajeet Singh wrote:
-> Key Changes Compared to Version 5:
-> In target_arch_sigtramp.h removed static const,
-> as there was a compile-time constant issue
-> 
-> Mark Corbin (15):
->    bsd-user: Implement RISC-V CPU initialization and main loop
->    bsd-user: Add RISC-V CPU execution loop and syscall handling
->    bsd-user: Implement RISC-V CPU register cloning and reset functions
->    bsd-user: Implement RISC-V TLS register setup
->    bsd-user: Add RISC-V ELF definitions and hardware capability detection
->    bsd-user: Define RISC-V register structures and register copying
->    bsd-user: Add RISC-V signal trampoline setup function
->    bsd-user: Implement RISC-V sysarch system call emulation
->    bsd-user: Add RISC-V thread setup and initialization support
->    bsd-user: Define RISC-V VM parameters and helper functions
->    bsd-user: Define RISC-V system call structures and constants
->    bsd-user: Define RISC-V signal handling structures and constants
->    bsd-user: Implement RISC-V signal trampoline setup functions
->    bsd-user: Implement 'get_mcontext' for RISC-V
->    bsd-user: Implement set_mcontext and get_ucontext_sigreturn for RISCV
-> 
-> Warner Losh (2):
->    bsd-user: Add generic RISC-V64 target definitions
->    bsd-user: Add RISC-V 64-bit Target Configuration and Debug XML Files
-> 
->   bsd-user/riscv/signal.c               | 170 ++++++++++++++++++++++++++
->   bsd-user/riscv/target.h               |  20 +++
->   bsd-user/riscv/target_arch.h          |  27 ++++
->   bsd-user/riscv/target_arch_cpu.c      |  29 +++++
->   bsd-user/riscv/target_arch_cpu.h      | 147 ++++++++++++++++++++++
->   bsd-user/riscv/target_arch_elf.h      |  42 +++++++
->   bsd-user/riscv/target_arch_reg.h      |  88 +++++++++++++
->   bsd-user/riscv/target_arch_signal.h   |  75 ++++++++++++
->   bsd-user/riscv/target_arch_sigtramp.h |  41 +++++++
->   bsd-user/riscv/target_arch_sysarch.h  |  41 +++++++
->   bsd-user/riscv/target_arch_thread.h   |  47 +++++++
->   bsd-user/riscv/target_arch_vmparam.h  |  53 ++++++++
->   bsd-user/riscv/target_syscall.h       |  38 ++++++
->   configs/targets/riscv64-bsd-user.mak  |   4 +
->   14 files changed, 822 insertions(+)
->   create mode 100644 bsd-user/riscv/signal.c
->   create mode 100644 bsd-user/riscv/target.h
->   create mode 100644 bsd-user/riscv/target_arch.h
->   create mode 100644 bsd-user/riscv/target_arch_cpu.c
->   create mode 100644 bsd-user/riscv/target_arch_cpu.h
->   create mode 100644 bsd-user/riscv/target_arch_elf.h
->   create mode 100644 bsd-user/riscv/target_arch_reg.h
->   create mode 100644 bsd-user/riscv/target_arch_signal.h
->   create mode 100644 bsd-user/riscv/target_arch_sigtramp.h
->   create mode 100644 bsd-user/riscv/target_arch_sysarch.h
->   create mode 100644 bsd-user/riscv/target_arch_thread.h
->   create mode 100644 bsd-user/riscv/target_arch_vmparam.h
->   create mode 100644 bsd-user/riscv/target_syscall.h
->   create mode 100644 configs/targets/riscv64-bsd-user.mak
-> 
 
