@@ -4,87 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39C87C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 10:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4218DC3ABA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 11:05:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sq9Cj-00052d-DM; Mon, 16 Sep 2024 06:43:37 -0400
+	id 1sq9Xj-0003G1-BG; Mon, 16 Sep 2024 07:05:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sq9Ci-00051k-DV
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 06:43:36 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sq9Cg-0007J2-HB
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 06:43:36 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2d8b679d7f2so3492607a91.1
- for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 03:43:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1726483413; x=1727088213; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LDFXwJNy2sB25Q3vce5EzL0XjgmTJianlmZpkRbgqGg=;
- b=GdlUc1/vHVwMoC7ARy4BDCKPOq2hm4yss8THZLrU5TAxU3tGamDQjivSWd4Y8Pq3xe
- TLeIQCB3EPPtjQxE7S51Y1ZvexHNE+qGJfwEL+1tr3tFEyFC6sfaW8aGNoYt/bBoJ5b3
- H9DE+vxXpVK7bfPOWhJVu0ZaYF1fuujXFMAuVCYEeW4xk8yMRRwoPsbIx10EHn2IBqmT
- 80CG89DkMRg0PsV/d5YtRJuLWG3Rcpy6B8Lq6JM4SaDqh+J+ORNJRwZuRnco/ePkMqNy
- c4dvI6jhoY9LY6DYxxgpyYhaIHtwukYZ1DWrhTO3KfM5ofNszwO13/5AJFiUKUiObZn4
- q2hg==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sq9Xi-0003F4-0d
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 07:05:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sq9Xf-00019N-Qa
+ for qemu-devel@nongnu.org; Mon, 16 Sep 2024 07:05:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1726484713;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=f8L8zrjU0hX7xuCGfStZpPVLIWkvOYEq0KXroIh7oBo=;
+ b=AGhp7wZ8qthdS2tf6Y66LDq0p1qyAKpAYQbNnaFm/93785vR9yTUmxeX4OvT1uFT9YcUXc
+ 401/2TnUrhnnGwmsSG1TPhqGbnQbNSodxMuSdu/0XoMqY4+xZX7SG8BqmnMlNki0u23BNI
+ 23MiR90srN6B4XIo5+mou5NTCBRCQtI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-636-6LVon0XXNCWcw66aGqwCHg-1; Mon, 16 Sep 2024 07:05:11 -0400
+X-MC-Unique: 6LVon0XXNCWcw66aGqwCHg-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-42cb115566eso29675665e9.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 04:05:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726483413; x=1727088213;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LDFXwJNy2sB25Q3vce5EzL0XjgmTJianlmZpkRbgqGg=;
- b=IrhiufYJx4qxmCbdnNoA7HfECk8h9u9Pbw3WS6rQ7JfRtsPcqg6MLGOC1C2dXcHrvW
- dVssA5bepDt7p4S0rAJr+bJzTb/OUS6yRDHSp9H8sGFkMwCwb4PdNOGOOfgEsxE5ELcZ
- 5LL6XXKO7Duaxr5en9uXPQcNdrw5Ns7NBoXAJYqZfoyczgzbguVZpB41jXbEzFfRqI5o
- HHueJd+j1qU/o3F/HYZUwjmn84PvP/2IjXZkmU+qRsG4dCKKZx3y1a5tX/ybxcyITc6M
- FwC6VpCF3oXtoRsgPuFLhRG1jwBg7TlL+W9yHtakYog9zOJ+aZ1Ef47v413BnGfuPTYG
- U3kQ==
-X-Gm-Message-State: AOJu0YzHwDROGYmt0f8EW0muz4x28gVBTGfGi3am26u9SkeGbuNccfMy
- /EnJhsOI9baH/1XqNc2O+9qkpjE93za+Qz8sCzHXuDbBCszw0ajGnQlJUUYOFz4=
-X-Google-Smtp-Source: AGHT+IHkFgu1yFhW5sthUoj5TWJ/5hPlEcTQDsbsk+p10MaSEo1YIJO0VLRDk054zgWbLJV14ouhjA==
-X-Received: by 2002:a17:90a:7408:b0:2d8:b91d:d284 with SMTP id
- 98e67ed59e1d1-2db9ff91f8bmr17222763a91.16.1726483412936; 
- Mon, 16 Sep 2024 03:43:32 -0700 (PDT)
-Received: from [192.168.68.110] (201-68-240-33.dsl.telesp.net.br.
- [201.68.240.33]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2dbcfcf7f3fsm4882814a91.14.2024.09.16.03.43.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Sep 2024 03:43:32 -0700 (PDT)
-Message-ID: <1dca30ec-f2b1-4936-8531-6e273fc13e55@ventanamicro.com>
-Date: Mon, 16 Sep 2024 07:43:28 -0300
+ d=1e100.net; s=20230601; t=1726484710; x=1727089510;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=f8L8zrjU0hX7xuCGfStZpPVLIWkvOYEq0KXroIh7oBo=;
+ b=KjHpR26cBSav8SqXl5qw5Pz3tnB61cTpATGqI+6lLTCpDUuDkHdYpH6ed7+LAqzfru
+ kRFgiC00sb6ZHEc24+XGoAEw1sj08TZm4XaphOsbgDMB5o/z2feBrbtxY1Jt27zoJiVZ
+ UvO3Z3RYUrsm9eqD/NpwD83y22XgtP5TFW0awWo3EOgKMHG0ZeC/2TkVEDgHb5R5BNUB
+ hS48dGdXSQEM9lh6iblXkM5nCZdM8JaxPGUs5WHApOIjtfVIKcsf3sHdDUu3ezx5kGAn
+ s6NGWUrYvA38c146BaN6W3uHk1b3EeO3Tn9fG7qUBaM3QT3iHqQ97koISU/Emo3gbGME
+ Xumw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWjtn+fP4ISbEqsRXufTHUyII79FkLvBIQOya6VD/wQjjJ+seHKrf6FOHSpugREnafI5klwGhduQwXL@nongnu.org
+X-Gm-Message-State: AOJu0YzCEPLtHPgpxtaux2JS8N18x3Apz8/dzkFVOWyreec9Wa3PMlHG
+ z8Wic+ASiJzAQbNKqgvUxzEYRPxKNY5U/PsnQaKELbOE8i2fVJaW0Qif0znvRsedGXuszUWlF0Z
+ uTDPzdRfJu+8YMeHnjq2zjfR/E9NZNupDh8xNsaKOEcppwuiAx3dL
+X-Received: by 2002:a05:600c:4e94:b0:42c:b8c9:16b6 with SMTP id
+ 5b1f17b1804b1-42d9070a24cmr110057655e9.2.1726484710056; 
+ Mon, 16 Sep 2024 04:05:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGbPcog3aj8YawkxoSUaT7AsICVRNpQrYgJvWdmbobj8F6CJaBO8tJhm6kohsywnotfNUjwiw==
+X-Received: by 2002:a05:600c:4e94:b0:42c:b8c9:16b6 with SMTP id
+ 5b1f17b1804b1-42d9070a24cmr110056915e9.2.1726484708823; 
+ Mon, 16 Sep 2024 04:05:08 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42d9b05d707sm107580425e9.14.2024.09.16.04.05.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 16 Sep 2024 04:05:07 -0700 (PDT)
+Date: Mon, 16 Sep 2024 13:05:06 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v9 01/12] acpi/ghes: add a firmware file with HEST address
+Message-ID: <20240916130506.293ab543@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240914073314.46368ff6@foz.lan>
+References: <cover.1724556967.git.mchehab+huawei@kernel.org>
+ <34dd38395f29f57a19aef299bafdff9442830ed3.1724556967.git.mchehab+huawei@kernel.org>
+ <20240911155108.190f0fdf@imammedo.users.ipa.redhat.com>
+ <20240913074435.0eea2552@foz.lan>
+ <20240913152518.2f80ab1e@imammedo.users.ipa.redhat.com>
+ <20240914073314.46368ff6@foz.lan>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/47] riscv-to-apply queue
-To: Thomas Huth <thuth@redhat.com>, Alistair Francis <alistair23@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Ajeet Singh <itachis6234@gmail.com>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
-References: <20240912052953.2552501-1-alistair.francis@wdc.com>
- <CAFEAcA_W5bTcCmeAx+dB4+djcUHzjRH4GfBobaHot5VjE+x05g@mail.gmail.com>
- <CAKmqyKOFnajGSsKS2k=kYsB--uRjoCZZTv3QSxbEm40HK_k1jA@mail.gmail.com>
- <4aa984d0-db18-4a41-808c-e4d164c03d13@ventanamicro.com>
- <9b97cbc4-7074-40bb-aa47-93e495c8786e@redhat.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <9b97cbc4-7074-40bb-aa47-93e495c8786e@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1034.google.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,75 +110,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Sat, 14 Sep 2024 07:33:14 +0200
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-
-On 9/16/24 3:12 AM, Thomas Huth wrote:
-> On 15/09/2024 21.58, Daniel Henrique Barboza wrote:
->> Hi Peter, Alistair,
->>
->> On 9/14/24 6:15 AM, Alistair Francis wrote:
->>> On Fri, Sep 13, 2024 at 8:37 PM Peter Maydell <peter.maydell@linaro.org> wrote:
->>>>
->>>> On Thu, 12 Sept 2024 at 06:30, Alistair Francis <alistair23@gmail.com> wrote:
->>>>>
->>>>> The following changes since commit a4eb31c678400472de0b4915b9154a7c20d8332f:
->>>>>
->>>>>    Merge tag 'pull-testing-gdbstub-oct-100924-1' of https://gitlab.com/ stsquad/qemu into staging (2024-09-11 13:17:29 +0100)
->>>>>
->>>>> are available in the Git repository at:
->>>>>
->>>>>    https://github.com/alistair23/qemu.git tags/pull-riscv-to- apply-20240912-1
->>>>>
->>>>> for you to fetch changes up to 90d5d3c1115399d8e27621efd69dfa74a35a4932:
->>>>>
->>>>>    hw/intc: riscv-imsic: Fix interrupt state updates. (2024-09-12 15:05:10 +1000)
->>>>>
->>>>> ----------------------------------------------------------------
->>>>> RISC-V PR for 9.2
->>>>>
->>>>> * Add a property to set vl to ceil(AVL/2)
->>>>> * Enable numamem testing for RISC-V
->>>>> * Consider MISA bit choice in implied rule
->>>>> * Fix the za64rs priv spec requirements
->>>>> * Enable Bit Manip for OpenTitan Ibex CPU
->>>>> * Fix the group bit setting of AIA with KVM
->>>>> * Stop timer with infinite timecmp
->>>>> * Add 'fcsr' register to QEMU log as a part of F extension
->>>>> * Fix riscv64 build on musl libc
->>>>> * Add preliminary textra trigger CSR functions
->>>>> * RISC-V IOMMU support
->>>>> * RISC-V bsd-user support
->>>>> * Respect firmware ELF entry point
->>>>> * Add Svvptc extension support
->>>>> * Fix masking of rv32 physical address
->>>>> * Fix linking problem with semihosting disabled
->>>>> * Fix IMSIC interrupt state updates
->>>>
->>>> Hi; this fails to build on FreeBSD:
->>>>
->>>> https://gitlab.com/qemu-project/qemu/-/jobs/7817823771
->>
->> Is this one of those jobs that are only available when running the main pipeline? I don't
->> have this x86-freebsd runner when triggering the gitlab pipeline. I ended up installing a
->> FreeBSD VM and using it to reproduce the problem.
->>
->> Would be nice to have access to a FreeBSD runner as a regular user, even if just for x86_64,
->> to help detect these build problems before sending a PR.
+> Hi Igor,
 > 
-> You can enable this job for your pipelines, too, see .gitlab-ci.d/cirrus/README.rst for information how to configure it.
+> Em Fri, 13 Sep 2024 15:25:18 +0200
+> Igor Mammedov <imammedo@redhat.com> escreveu:
+> 
+> > > > in addition to this, it needs a patch on top to make sure
+> > > > that we migrate hest_addr_le.
+> > > > See a08a64627b6b 'ACPI: Record the Generic Error Status Block address'
+> > > > and fixes on top of that for an example.      
+> > > 
+> > > Hmm... If I understood such change well, vmstate_ghes_state() will
+> > > use this structure as basis to do migration:
+> > > 
+> > > 	/* ghes.h */
+> > > 	typedef struct AcpiGhesState {
+> > > 	    uint64_t hest_addr_le;
+> > > 	    uint64_t ghes_addr_le;
+> > > 	    bool present; /* True if GHES is present at all on this board */
+> > > 	} AcpiGhesState;
+> > > 
+> > > 	/* generic_event_device.c */
+> > > 	static const VMStateDescription vmstate_ghes_state = {
+> > > 	    .name = "acpi-ged/ghes",
+> > > 	    .version_id = 1,
+> > > 	    .minimum_version_id = 1,
+> > > 	    .needed = ghes_needed,
+> > > 	    .fields      = (VMStateField[]) {
+> > > 	        VMSTATE_STRUCT(ghes_state, AcpiGedState, 1,
+> > > 	                       vmstate_ghes_state, AcpiGhesState),
+> > > 	        VMSTATE_END_OF_LIST()
+> > > 	    }
+> > > 	};    
+> > 
+> > current code looks like that:
+> >                                                                                  
+> > static const VMStateDescription vmstate_ghes = {                                 
+> >     .name = "acpi-ghes",                                                         
+> >     .version_id = 1,                                                             
+> >     .minimum_version_id = 1,                                                     
+> >     .fields = (const VMStateField[]) {                                           
+> >         VMSTATE_UINT64(ghes_addr_le, AcpiGhesState),   <<===                         
+> >         VMSTATE_END_OF_LIST()                                                    
+> >     },                                                                           
+> > };                                                                               
+> >                                                                                  
+> > static bool ghes_needed(void *opaque)                                            
+> > {                                                                                
+> >     AcpiGedState *s = opaque;                                                    
+> >     return s->ghes_state.ghes_addr_le;                                           
+> > }                                                                                
+> >                                                                                  
+> > static const VMStateDescription vmstate_ghes_state = {                           
+> >     .name = "acpi-ged/ghes",                                                     
+> >     .version_id = 1,                                                             
+> >     .minimum_version_id = 1,                                                     
+> >     .needed = ghes_needed,                                                       
+> >     .fields = (const VMStateField[]) {                                           
+> >         VMSTATE_STRUCT(ghes_state, AcpiGedState, 1,                              
+> >                        vmstate_ghes, AcpiGhesState),                             
+> >         VMSTATE_END_OF_LIST()                                                    
+> >     }                                                                            
+> > };  
+> > 
+> > where 
+> >     VMSTATE_UINT64(ghes_addr_le, AcpiGhesState),
+> > explicitly defines field(s) within structure to be sent over wire.
+> > 
+> > we need to add a conditional field for ghes_addr_le
+> > which will be sent only with new machine types, but not with old ones
+> > to avoid migration breakage.
+> > 
+> > I don't know much about migration, but maybe we can get away with
+> > similar condition as in ghes_needed(), or enabling QMP error injection
+> > based on machine type version.
+> > 
+> > Or maybe adding a CLI option to enable QMP error injection in which
+> > case the explicit option would serve as a trigger enable QMP command and
+> > to migrate hest_addr_le.
+> > It might be even better this way, since machine wouldn't need to
+> > carry extra error source that will be used only for testing
+> > and practically never in production VMs (aka reduced attack surface).
+> > 
+> > You can easily test it locally:
+> >   new-qemu: with your patches
+> >   old-qemu: qemu-9.1
+> > 
+> > and then try to do forth & back migration for following cases:
+> >   1. (ping-pong case with OLD firmware/ACPI tables)
+> >      start old-qemu with 9.1 machine type ->
+> >        migrate to file ->
+> >        start new-qemu with 9.1 machine type -> restore from file ->
+> >        migrate to file ->  
+> 
+> As I never used migration, I'm a little stuck with the command line
+> parameters.
+> 
+> I guess I got the one to do the migration at the monitor:
+> 
+> 	(qemu) migrate file://tmp/migrate
+> 
+> But no idea how to start a machine using a saved state.
 
-Nice! Thanks!
+see https://www.linux-kvm.org/page/Migration
+'savevm/loadvm to an external state file (using pseudo-migration)' section
 
 > 
-> If you have a Linux host with KVM, you could alternatively also use "make vm-build-freebsd" on your local machine instead.
+> >        start old-qemu with 9.1 machine type ->restore from file ->
+> >        
+> >   2.  (ping-pong case with NEW firmware/ACPI tables)
+> >       do the same as #1 but starting with new-qemu binary
+> > 
+> > (from upstream pov #2 is optional, but not implementing it
+> > is pain for downstream so it's better to have it if it's not
+> > too much work)  
+> 
+> If I understood the migration documentation, every when new fields
+> are added, we should increment .version_id. If new version is
+> not backward-compatible, .minimum_version_id is also incremented.
+> 
+> So, for a migration-compatible code with a 9.1 VM, the code needs to
+> handle the case where hest_addr_le is not defined, e. g. use offsets
+> relative to ghes_addr_le, just like the current version, e.g.:
+> 
+>     uint64_t cper_addr, read_ack_start_addr;
+> 
+>     AcpiGedState *acpi_ged_state =
+>         ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED, NULL));
+>     AcpiGhesState *ags = &acpi_ged_state->ghes_state;
+> 
+>     if (!ags->hest_addr_le) {
+>         // Backward-compatible migration code
+>         uint64_t base = le64_to_cpu(ags->ghes_addr_le);
+> 
+>         *read_ack_start_addr = base +
+>             ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t) +
+>             error_source_to_index[notify] * sizeof(uint64_t);
+> 
+>         *cper_addr = base +
+>             ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t) +
+>             ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t) +
+>             error_source_to_index[notify] * ACPI_GHES_MAX_RAW_DATA_LENGTH;
+>    } else {
+>         // Use the new logic from ags->hest_addr_le
+>    }
+> 
+> There are two problems with that:
+> 
+> 1. On your reviews, if I understood right, the code above is not
+>    migration safe. So, while implementing it would be technically
+>    correct, migration still won't work;
+> 
+> 2. With the new code, ACPI_GHES_ERROR_SOURCE_COUNT is not
+>    defined anymore, as the size of the error source structure can
+>    be different on different architectures, being 2 for new
+>    VMs and 1 for old ones.
+> 
+>    Basically the new code gets it right because it can see a
+>    pointer to the HEST table, so it can get the number from there:
+> 
+> 	hest_addr = le64_to_cpu(ags->hest_addr_le);
+> 	cpu_physical_memory_read(hest_addr, &num_sources, sizeof(num_sources));
+> 
+>    But, without hest_addr_le, getting num_sources is not possible.
+> 
+>    An alternative would be to add a hacky code that works only for
+>    arm machines (as new versions may support more archs).
+> 
+>    Something like:
+> 	#define V1_ARM_ACPI_GHES_ERROR_SOURCE_COUNT 1
+> 	#define V2_ARM_ACPI_GHES_ERROR_SOURCE_COUNT 2
+> 
+>    And have a hardcoded logic that would work before/after this
+>    changeset but may break on newer versions, if the number of
+>    source IDs change, if we add other HEST types, etc.
+> 
+>    Now, assuming that such hack would work, it sounds too hacky to 
+>    my taste.
+> 
+> So, IMO it is a lot safer to not support migrations from v1 (only
+> ghes_addr_le), using a patch like the enclosed one to ensure that.
+> 
+> Btw, checking existing migration structs, it sounds that for almost all
+> structures, .version_id is identical to .minimum_version_id, meaning that
+> migration between different versions aren't supported on most cases.
 
-
-Way easier than what I did :D next time I'll grep the docs.
-
-
-Daniel
+let me try to find more examples on how to implement migration bits
+hopefully more comprehensible. 
 
 > 
->   Thomas
+> Thanks,
+> Mauro
 > 
+> ---
+> 
+> [PATCH] acpi/generic_event_device: Update GHES migration to cover hest addr
+> 
+> The GHES migration logic at GED should now support HEST table
+> location too.
+> 
+> Increase migration version and change needed to check for both
+> ghes_addr_le and hest_addr_le.
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> 
+> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+> index b4c83a089a02..efae0ff62c7b 100644
+> --- a/hw/acpi/generic_event_device.c
+> +++ b/hw/acpi/generic_event_device.c
+> @@ -351,10 +351,11 @@ static const VMStateDescription vmstate_ged_state = {
+>  
+>  static const VMStateDescription vmstate_ghes = {
+>      .name = "acpi-ghes",
+> -    .version_id = 1,
+> -    .minimum_version_id = 1,
+> +    .version_id = 2,
+> +    .minimum_version_id = 2,
+>      .fields = (const VMStateField[]) {
+>          VMSTATE_UINT64(ghes_addr_le, AcpiGhesState),
+> +        VMSTATE_UINT64(hest_addr_le, AcpiGhesState),
+>          VMSTATE_END_OF_LIST()
+>      },
+>  };
+> @@ -362,13 +363,13 @@ static const VMStateDescription vmstate_ghes = {
+>  static bool ghes_needed(void *opaque)
+>  {
+>      AcpiGedState *s = opaque;
+> -    return s->ghes_state.ghes_addr_le;
+> +    return s->ghes_state.ghes_addr_le && s->ghes_state.hest_addr_le;
+>  }
+>  
+>  static const VMStateDescription vmstate_ghes_state = {
+>      .name = "acpi-ged/ghes",
+> -    .version_id = 1,
+> -    .minimum_version_id = 1,
+> +    .version_id = 2,
+> +    .minimum_version_id = 2,
+>      .needed = ghes_needed,
+>      .fields = (const VMStateField[]) {
+>          VMSTATE_STRUCT(ghes_state, AcpiGedState, 1,
+> 
+> 
+
 
