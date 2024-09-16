@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B0EFC3ABA2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7A41C3ABD1
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 15:52:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqE0v-0006hP-DH; Mon, 16 Sep 2024 11:51:45 -0400
+	id 1sqE0y-0006qG-Sf; Mon, 16 Sep 2024 11:51:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sqE0s-0006Zk-TB; Mon, 16 Sep 2024 11:51:42 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1sqE0w-0006ib-9i; Mon, 16 Sep 2024 11:51:46 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sqE0r-0000Tg-9K; Mon, 16 Sep 2024 11:51:42 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-206f9b872b2so41786665ad.3; 
- Mon, 16 Sep 2024 08:51:40 -0700 (PDT)
+ id 1sqE0u-0000Tw-Ro; Mon, 16 Sep 2024 11:51:46 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-20688fbaeafso38581975ad.0; 
+ Mon, 16 Sep 2024 08:51:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726501899; x=1727106699; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1726501903; x=1727106703; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DTvqmRJjCBmmQsqoIM7XAGZfiD8autBgUlGw18dRGRE=;
- b=RamcKIBnEaEngPmAbAvjx7/iAqCH7QvaivcQi7/hoeo00hCh0LCKTI10g33V0BAexG
- GxNufUfbEGobqR9lQVdyWhXvZZsQzsQqPjFNJ+UVRY8AeiiVFL1dcqY9mz9lNK3na8GK
- RHTbShMFjnnHcfbPOe+X2b8QE65D+P9o18Xwh/Fbm5HcMHMmxI0KNnToM6jUOb4CeWde
- 7xpXQMeDZ8wqgz4ioh736HJTThcp0gdyNhbXc/D0tDLdB3TOYRceEIz0oX1DdyeGO9k/
- UBosZigybUI4B0i/jtLOlefGeGOhmQAKJ+sLTkGlAAYQot98B45Pya8+ZKkpdR62ra9A
- r0vQ==
+ bh=YzTEKW6pHdxoRGI49+9LGYc/ShJcZ5J3INnhKg7mgr4=;
+ b=SIFAFtxiZE7FPtfx1A4KDmv0cuk2RH6n2JCmtuZ5fwWNhdRsSTCsHI92fm3kDxUwlw
+ zLnv+oX8FVEq1kia5c+SmivQHE/71sr/jpbXhVpM3fHQEHxB+nv1ndSUiM+QRtGbO+Dn
+ 5F0Zm4I+pX3LEBGNnFcCz/NYwNfUYaeoCeEGQdCimeLYg3OEnMMg7UqW1cfwnvkChPKo
+ zq/XzcfLXxt5Ninc5JKBrezqJ4iKbG2+35JbxqOTQngUmMbVepNu2EppEnZp+/Pv+M2x
+ /zS8Zv6uITDNoHkCl+gDAdvNzCbafSH86fGLWFiWZO/FMNNhwHwNuKEmbjBkuX+8wBZc
+ 8UyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726501899; x=1727106699;
+ d=1e100.net; s=20230601; t=1726501903; x=1727106703;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DTvqmRJjCBmmQsqoIM7XAGZfiD8autBgUlGw18dRGRE=;
- b=CCOblTx68PMAK41ez8JsA088iCnYHcChdDNBds3kIWQXIkB9C8MbvwK/4Fh3Op9fPm
- IjDHcbjq1TUVtZqdE1TGwGMaROJRfW2aGtAbhYMdp3WtNo9uyCSf3x9bcIvgHGhECbft
- XXQcL3mdn+5a3QHU8USPdLljCPa7l8A5G/1GCv6Up81mJa+MksIFvLKAEDL/hkiaB/hO
- G/SUmfbjJRe6F9SXP/X+bbM5yCZ8fAFTNzuiJGKjUM2s9bds1mLQh9XQNymJd0tXDlSW
- UDLzk1Xw90J452pMHFLRMVh/BiEMtgoNfDGe9fX/pSs2cKo0dkw0OPqSwkAGxqOwSGmx
- wSaA==
+ bh=YzTEKW6pHdxoRGI49+9LGYc/ShJcZ5J3INnhKg7mgr4=;
+ b=NsLZ9YVu3IaLDxts0wq4FFgpxQQMvm6sB1pC9epW8l8xUO+LsCRCNd26OAhg/IBqxz
+ A6VMDcvmQZssfzrW/P2whZSxkAE+C43EmpO2n/XaOFUFTlFLvBspOoTl8J0ZP34pw1r+
+ DzRF0iEcV8PFE1BzImEewlrLpi3dhoTY/Uc+/dGupKW0wJsG3jGj5MiAy0Ag59pkFwOO
+ J2hQWYAhneMQmZViP0SmEDHRfpeP8i1pRaYZKgc5rJ/ZLU94W33J9Mz+RJftW8tuXkkj
+ OQqAnOKI7ctwl0z5m0zw+K8CpAkEspFJsEqhtSphUhTgiy2usSBYu4FBbXMNKcFyjv8o
+ bqoQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWAu5EatYhICXqqI98bkkjPzR/xaQlbqdgTqQcOq4hHPCqY+uf92vFxevsb+T7ZNrIdc0aTNRxhUHzf@nongnu.org
-X-Gm-Message-State: AOJu0YwQxwYbaCpeud89yW4qFRLXYVfPEpAgEy29WsQwFsd1rFOlLKJq
- krvLOk5Ta2iWc1j/+M8iplJJ9GZqGduq7FLT8N1erUJlLuQbz93NmCQGNHh1
-X-Google-Smtp-Source: AGHT+IF9pU7/Z5xK+JkHH4+aN6lAbbuxA8xbDiGb0/8wVvgAUciROjQePtLbm8OXWdap21CL4vZ6oA==
-X-Received: by 2002:a17:903:41cc:b0:207:6d2:2645 with SMTP id
- d9443c01a7336-2076e46177cmr234336705ad.47.1726501898795; 
- Mon, 16 Sep 2024 08:51:38 -0700 (PDT)
+ AJvYcCUK4WgBz3Pv+GHmgU8oNPkZoSM0t4/cjAm4HYoOcK3cGlcJo11PTS1dfGQg2EUyfpqrX9O/nJ3dIB8t@nongnu.org
+X-Gm-Message-State: AOJu0YwLkNwbcv+u+fxCW5O8ibaWYJQ7SBLVWHxziadBm9B0SX18DdTC
+ 0k6DHnJCTCj9+oZCBq3R0gRhrhMXdglevbioullkEbT6Hvd/WGg4InCNBvwJ
+X-Google-Smtp-Source: AGHT+IEzLVh4y6h4BPx8ubX+yoEwt3/ui7DPbs0P69uyDSkcvJOu4hZ19A2QXfs+e25q1xtZdWUbsQ==
+X-Received: by 2002:a17:903:18b:b0:205:6c5f:e3ca with SMTP id
+ d9443c01a7336-20782b7f000mr165276525ad.53.1726501902537; 
+ Mon, 16 Sep 2024 08:51:42 -0700 (PDT)
 Received: from localhost.localdomain (27-32-110-191.tpgi.com.au.
  [27.32.110.191]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-207946046cbsm37482545ad.105.2024.09.16.08.51.34
+ d9443c01a7336-207946046cbsm37482545ad.105.2024.09.16.08.51.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Sep 2024 08:51:38 -0700 (PDT)
+ Mon, 16 Sep 2024 08:51:42 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
@@ -65,20 +65,19 @@ Cc: Alistair Francis <alistair.francis@wdc.com>,
  Mark Corbin <mark@dibsco.co.uk>, qemu-riscv@nongnu.org,
  Warner Losh <imp@bsdimp.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Ajeet Singh <itachis@FreeBSD.org>, Jessica Clarke <jrtc27@jrtc27.com>,
- Kyle Evans <kevans@FreeBSD.org>,
+ Ajeet Singh <itachis@FreeBSD.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v7 02/17] bsd-user: Add RISC-V CPU execution loop and syscall
- handling
-Date: Tue, 17 Sep 2024 01:51:04 +1000
-Message-Id: <20240916155119.14610-3-itachis@FreeBSD.org>
+Subject: [PATCH v7 03/17] bsd-user: Implement RISC-V CPU register cloning and
+ reset functions
+Date: Tue, 17 Sep 2024 01:51:05 +1000
+Message-Id: <20240916155119.14610-4-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240916155119.14610-1-itachis@FreeBSD.org>
 References: <20240916155119.14610-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=itachis6234@gmail.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=itachis6234@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,120 +103,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Corbin <mark@dibsco.co.uk>
 
-Implemented the RISC-V CPU execution loop, including handling various
-exceptions and system calls. The loop continuously executes CPU
-instructions,processes exceptions, and handles system calls by invoking
-FreeBSD syscall handlers.
+Added functions for cloning CPU registers and resetting the CPU state
+for RISC-V architecture.
 
 Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
-Co-authored-by: Jessica Clarke <jrtc27@jrtc27.com>
-Co-authored-by: Kyle Evans <kevans@FreeBSD.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- bsd-user/riscv/target_arch_cpu.h | 94 ++++++++++++++++++++++++++++++++
- 1 file changed, 94 insertions(+)
+ bsd-user/riscv/target_arch_cpu.h | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 diff --git a/bsd-user/riscv/target_arch_cpu.h b/bsd-user/riscv/target_arch_cpu.h
-index f8d85e01ad..9c31d9dc4c 100644
+index 9c31d9dc4c..a93ea3915a 100644
 --- a/bsd-user/riscv/target_arch_cpu.h
 +++ b/bsd-user/riscv/target_arch_cpu.h
-@@ -37,4 +37,98 @@ static inline void target_cpu_init(CPURISCVState *env,
-     env->pc = regs->sepc;
+@@ -131,4 +131,18 @@ static inline void target_cpu_loop(CPURISCVState *env)
+     }
  }
  
-+static inline void target_cpu_loop(CPURISCVState *env)
++static inline void target_cpu_clone_regs(CPURISCVState *env, target_ulong newsp)
 +{
-+    CPUState *cs = env_cpu(env);
-+    int trapnr;
-+    abi_long ret;
-+    unsigned int syscall_num;
-+    int32_t signo, code;
-+
-+    for (;;) {
-+        cpu_exec_start(cs);
-+        trapnr = cpu_exec(cs);
-+        cpu_exec_end(cs);
-+        process_queued_cpu_work(cs);
-+
-+        signo = 0;
-+
-+        switch (trapnr) {
-+        case EXCP_INTERRUPT:
-+            /* just indicate that signals should be handled asap */
-+            break;
-+        case EXCP_ATOMIC:
-+            cpu_exec_step_atomic(cs);
-+            break;
-+        case RISCV_EXCP_U_ECALL:
-+            syscall_num = env->gpr[xT0];
-+            env->pc += TARGET_INSN_SIZE;
-+            /* Compare to cpu_fetch_syscall_args() in riscv/riscv/trap.c */
-+            if (TARGET_FREEBSD_NR___syscall == syscall_num ||
-+                TARGET_FREEBSD_NR_syscall == syscall_num) {
-+                ret = do_freebsd_syscall(env,
-+                                         env->gpr[xA0],
-+                                         env->gpr[xA1],
-+                                         env->gpr[xA2],
-+                                         env->gpr[xA3],
-+                                         env->gpr[xA4],
-+                                         env->gpr[xA5],
-+                                         env->gpr[xA6],
-+                                         env->gpr[xA7],
-+                                         0);
-+            } else {
-+                ret = do_freebsd_syscall(env,
-+                                         syscall_num,
-+                                         env->gpr[xA0],
-+                                         env->gpr[xA1],
-+                                         env->gpr[xA2],
-+                                         env->gpr[xA3],
-+                                         env->gpr[xA4],
-+                                         env->gpr[xA5],
-+                                         env->gpr[xA6],
-+                                         env->gpr[xA7]
-+                    );
-+            }
-+
-+            /*
-+             * Compare to cpu_set_syscall_retval() in
-+             * riscv/riscv/vm_machdep.c
-+             */
-+            if (ret >= 0) {
-+                env->gpr[xA0] = ret;
-+                env->gpr[xT0] = 0;
-+            } else if (ret == -TARGET_ERESTART) {
-+                env->pc -= TARGET_INSN_SIZE;
-+            } else if (ret != -TARGET_EJUSTRETURN) {
-+                env->gpr[xA0] = -ret;
-+                env->gpr[xT0] = 1;
-+            }
-+            break;
-+        case RISCV_EXCP_ILLEGAL_INST:
-+            signo = TARGET_SIGILL;
-+            code = TARGET_ILL_ILLOPC;
-+            break;
-+        case RISCV_EXCP_BREAKPOINT:
-+            signo = TARGET_SIGTRAP;
-+            code = TARGET_TRAP_BRKPT;
-+            break;
-+        case EXCP_DEBUG:
-+            signo = TARGET_SIGTRAP;
-+            code = TARGET_TRAP_BRKPT;
-+            break;
-+        default:
-+            fprintf(stderr, "qemu: unhandled CPU exception "
-+                "0x%x - aborting\n", trapnr);
-+            cpu_dump_state(cs, stderr, 0);
-+            abort();
-+        }
-+
-+        if (signo) {
-+            force_sig_fault(signo, code, env->pc);
-+        }
-+
-+        process_pending_signals(env);
++    if (newsp) {
++        env->gpr[xSP] = newsp;
 +    }
++
++    env->gpr[xA0] = 0;
++    env->gpr[xT0] = 0;
++}
++
++static inline void target_cpu_reset(CPUArchState *env)
++{
 +}
 +
  #endif /* TARGET_ARCH_CPU_H */
