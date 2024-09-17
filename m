@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EE80C3ABCB
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 04:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61249C3ABD0
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 04:40:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqPyB-000796-8e; Tue, 17 Sep 2024 00:37:43 -0400
+	id 1sqQ0n-0003Mm-6K; Tue, 17 Sep 2024 00:40:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sqPy9-00078C-22; Tue, 17 Sep 2024 00:37:41 -0400
+ id 1sqQ0m-0003Lr-J2; Tue, 17 Sep 2024 00:40:24 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sqPy7-0005aC-49; Tue, 17 Sep 2024 00:37:40 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48GIUxdZ030256;
- Tue, 17 Sep 2024 04:37:28 GMT
+ id 1sqQ0k-0005st-QF; Tue, 17 Sep 2024 00:40:24 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48GIUxhS031113;
+ Tue, 17 Sep 2024 04:40:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
  message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=+
- 7SHNvBq1FlvhJV7HFCU7AF/6JGgIWfJV6UCH/Dh0d8=; b=emmNQQ4GLO24GXmoS
- MdV/YllUvr2ZBq6EEshYVQRroWJLZx2unVAVd2tfgl6VkzcbT4WC8W/+SMqzrrFu
- dnbvuzk/Zt6Y9BSZu8QS5nhM22JNzk3RLwnrOXMbo8frXnvin+DR4wm8Wa80oceL
- pCkXZwgTqzqeiLobRwqzOh8J+fU12oCGrG5Ig/mue8f6A03E1RK1E03/wuwfoAcF
- JSZJW/6PqByk0eZOjQCObGVKKl1aRMQiWGPdquO+2FnnC590hOzX82k22YywQFVm
- 8Jby0nF+BRL1YfFAcWq+ubRcLILwEJDJZORl0402A029MyyxyxtbldJiXDiAFCue
- TBQrA==
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=o
+ h6ySI6hKImIjlyDIqDvXblLGirPSV2FSbcppFqrVjc=; b=MzZtg8ZNCY8V/Ms/9
+ B+KTVqPHFJpwKgksBQbsHbNpAgmT2zP83JKpfe8Dvi2GblhN110E4+5vLgLb1Jkp
+ se0YZCOcefP7DEcHnPSHVee7weFOOjeVMuKOOSXkSWhMBodY/NZbr9Px0IK6TOq/
+ cWhzl0ZAS7HSI++vT0B0fXSeu0MRodUes+bRvbrJ7MSwFERCAzm8cwWFrBHYbxxF
+ +Pu7vV9GTW1OqI4+fwS5nYThkSe3fFVqiCdz9dkHP0Tp7uDFg8z8NJk/E+uFwIOK
+ KoGywphwvEjeZ/v2THX+WEeW6hcESwxIaS+CM0jbPPjuXQqjO8cOeTD3pXHfHtcE
+ nQR+Q==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41pht8ctt4-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n3vnnbwa-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Sep 2024 04:37:28 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48H4bR08025449;
- Tue, 17 Sep 2024 04:37:27 GMT
+ Tue, 17 Sep 2024 04:40:13 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48H4eCxZ023397;
+ Tue, 17 Sep 2024 04:40:12 GMT
 Received: from ppma21.wdc07v.mail.ibm.com
  (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41pht8ctsy-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n3vnnbw5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Sep 2024 04:37:27 +0000 (GMT)
+ Tue, 17 Sep 2024 04:40:12 +0000 (GMT)
 Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48H2AA20000731;
- Tue, 17 Sep 2024 04:37:26 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41nntq321d-1
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48H25xt3000742;
+ Tue, 17 Sep 2024 04:40:11 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41nntq329e-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Sep 2024 04:37:26 +0000
+ Tue, 17 Sep 2024 04:40:11 +0000
 Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
  [10.241.53.102])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48H4bQAS20382282
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48H4eBkW52691344
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 17 Sep 2024 04:37:26 GMT
+ Tue, 17 Sep 2024 04:40:11 GMT
 Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2B50F58060;
- Tue, 17 Sep 2024 04:37:26 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3A86F5803F;
+ Tue, 17 Sep 2024 04:40:11 +0000 (GMT)
 Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5E5CD58056;
- Tue, 17 Sep 2024 04:37:24 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B98505805A;
+ Tue, 17 Sep 2024 04:40:08 +0000 (GMT)
 Received: from [9.109.242.165] (unknown [9.109.242.165])
  by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 17 Sep 2024 04:37:24 +0000 (GMT)
-Message-ID: <2829b101-4129-4d96-b6c6-eb287822c097@linux.ibm.com>
-Date: Tue, 17 Sep 2024 10:07:23 +0530
+ Tue, 17 Sep 2024 04:40:08 +0000 (GMT)
+Message-ID: <5680289a-9a6c-442d-b4d1-d73826ef6a00@linux.ibm.com>
+Date: Tue, 17 Sep 2024 10:10:07 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 20/49] spapr: Tag pseries-2.1 - 2.11 machines as deprecated
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- Thomas Huth <thuth@redhat.com>
-References: <20240219082938.238302-1-npiggin@gmail.com>
- <20240219082938.238302-21-npiggin@gmail.com>
- <00b812a8-48ba-4d51-bb4d-30d7e461c907@kaod.org>
+Subject: Re: [PATCH v3 09/10] target/ppc: simplify var usage in
+ ppc_next_unmasked_interrupt
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
+ danielhb413@gmail.com
+References: <20240913041337.912876-1-harshpb@linux.ibm.com>
+ <20240913041337.912876-10-harshpb@linux.ibm.com>
+ <e09919a0-061d-90e0-8107-68e509ce08aa@eik.bme.hu>
 Content-Language: en-US
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <00b812a8-48ba-4d51-bb4d-30d7e461c907@kaod.org>
+In-Reply-To: <e09919a0-061d-90e0-8107-68e509ce08aa@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 8ooWOpWFgu0SEmcmgy77uI4SrsqtTzC9
-X-Proofpoint-ORIG-GUID: Iid0lpteOswXFaenh0OBkE6oGj7AoOlo
+X-Proofpoint-ORIG-GUID: _fuxeCUUXc6RssTYVAlaeQeRSB7TJoO2
+X-Proofpoint-GUID: _VMMpc7zsm6Is2Ec_q8Krh_vqaXMZtIG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-17_01,2024-09-16_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- phishscore=0 bulkscore=0 suspectscore=0 priorityscore=1501 adultscore=0
- mlxlogscore=996 mlxscore=0 clxscore=1015 malwarescore=0 spamscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409170030
+ adultscore=0 mlxlogscore=999
+ priorityscore=1501 phishscore=0 clxscore=1015 malwarescore=0 bulkscore=0
+ impostorscore=0 spamscore=0 suspectscore=0 mlxscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2409170030
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -118,58 +118,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cedric,
 
-On 9/16/24 18:44, Cédric Le Goater wrote:
-> Hello Harsh,
-> 
-> On 2/19/24 09:29, Nicholas Piggin wrote:
->> From: Cédric Le Goater <clg@kaod.org>
+
+On 9/13/24 18:20, BALATON Zoltan wrote:
+> On Fri, 13 Sep 2024, Harsh Prateek Bora wrote:
+>> As previously done for arch specific handlers, simplify var usage in
+>> ppc_next_unmasked_interrupt by caching the env->pending_interrupts and
+>> env->spr[SPR_LPCR] in local vars and using it later at multiple places.
 >>
->> pseries machines before version 2.11 have undergone many changes to
->> correct issues, mostly regarding migration compatibility. This is
->> obfuscating the code uselessly and makes maintenance more difficult.
->> Remove them and only keep the last version of the 2.x series, 2.12,
->> still in use by old distros.
->>
->> Reviewed-by: Thomas Huth <thuth@redhat.com>
->> Reviewed-by: Daniel Henrique Barboza <danielhb413@gmail.com>
->> Signed-off-by: Cédric Le Goater <clg@kaod.org>
->> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+>> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 >> ---
->>   docs/about/deprecated.rst | 8 ++++++++
->>   hw/ppc/spapr.c            | 1 +
->>   roms/skiboot              | 2 +-
->>   3 files changed, 10 insertions(+), 1 deletion(-)
+>> target/ppc/excp_helper.c | 54 ++++++++++++++++++++--------------------
+>> 1 file changed, 27 insertions(+), 27 deletions(-)
 >>
->> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
->> index 5a2305ccd6..36bd3e15ef 100644
->> --- a/docs/about/deprecated.rst
->> +++ b/docs/about/deprecated.rst
->> @@ -229,6 +229,14 @@ The Nios II architecture is orphan.
->>   The machine is no longer in existence and has been long unmaintained
->>   in QEMU. This also holds for the TC51828 16MiB flash that it uses.
->> +``pseries-2.1`` up to ``pseries-2.11`` (since 9.0)
->> +''''''''''''''''''''''''''''''''''''''''''''''''''
->> +
->> +Older pseries machines before version 2.12 have undergone many changes
->> +to correct issues, mostly regarding migration compatibility. These are
->> +no longer maintained and removing them will make the code easier to
->> +read and maintain. Use versions 2.12 and above as a replacement.
->> +
+>> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+>> index d0e0f609a0..4eeeedff5b 100644
+>> --- a/target/ppc/excp_helper.c
+>> +++ b/target/ppc/excp_helper.c
+>> @@ -2022,31 +2022,31 @@ static int 
+>> p9_next_unmasked_interrupt(CPUPPCState *env,
+>>
+>> static int ppc_next_unmasked_interrupt(CPUPPCState *env)
+>> {
+>> +    uint32_t pending_interrupts = env->pending_interrupts;
+>> +    target_ulong lpcr = env->spr[SPR_LPCR];
+>> +    bool async_deliver;
 > 
-> Would you have time, or a KVM PPC team member, to start removing
-> the now deprecated pseries machines in the QEMU 9.2 cycle ?
+> Maybe easier to review if split into one patch for each variable added 
+> so it's easier to see what's replaced and that nothing is missed.
 > 
 
-Sure, I can take a look at that.
+Thanks for the reviews. I shall split as suggested in v4.
 
 regards,
 Harsh
 
-> Thanks,
+> Regards,
+> BALATON Zoltan
 > 
-> C.
-> 
-> 
+>> +
+>> #ifdef TARGET_PPC64
+>>     switch (env->excp_model) {
+>>     case POWERPC_EXCP_POWER7:
+>> -        return p7_next_unmasked_interrupt(env, env->pending_interrupts,
+>> -                                          env->spr[SPR_LPCR]);
+>> +        return p7_next_unmasked_interrupt(env, pending_interrupts, 
+>> lpcr);
+>>     case POWERPC_EXCP_POWER8:
+>> -        return p8_next_unmasked_interrupt(env, env->pending_interrupts,
+>> -                                          env->spr[SPR_LPCR]);
+>> +        return p8_next_unmasked_interrupt(env, pending_interrupts, 
+>> lpcr);
+>>     case POWERPC_EXCP_POWER9:
+>>     case POWERPC_EXCP_POWER10:
+>>     case POWERPC_EXCP_POWER11:
+>> -        return p9_next_unmasked_interrupt(env, env->pending_interrupts,
+>> -                              env->spr[SPR_LPCR]);
+>> +        return p9_next_unmasked_interrupt(env, pending_interrupts, 
+>> lpcr);
+>>     default:
+>>         break;
+>>     }
+>> #endif
+>> -    bool async_deliver;
+>>
+>>     /* External reset */
+>> -    if (env->pending_interrupts & PPC_INTERRUPT_RESET) {
+>> +    if (pending_interrupts & PPC_INTERRUPT_RESET) {
+>>         return PPC_INTERRUPT_RESET;
+>>     }
+>>     /* Machine check exception */
+>> -    if (env->pending_interrupts & PPC_INTERRUPT_MCK) {
+>> +    if (pending_interrupts & PPC_INTERRUPT_MCK) {
+>>         return PPC_INTERRUPT_MCK;
+>>     }
+>> #if 0 /* TODO */
+>> @@ -2065,9 +2065,9 @@ static int 
+>> ppc_next_unmasked_interrupt(CPUPPCState *env)
+>>     async_deliver = FIELD_EX64(env->msr, MSR, EE) || 
+>> env->resume_as_sreset;
+>>
+>>     /* Hypervisor decrementer exception */
+>> -    if (env->pending_interrupts & PPC_INTERRUPT_HDECR) {
+>> +    if (pending_interrupts & PPC_INTERRUPT_HDECR) {
+>>         /* LPCR will be clear when not supported so this will work */
+>> -        bool hdice = !!(env->spr[SPR_LPCR] & LPCR_HDICE);
+>> +        bool hdice = !!(lpcr & LPCR_HDICE);
+>>         if ((async_deliver || !FIELD_EX64_HV(env->msr)) && hdice) {
+>>             /* HDEC clears on delivery */
+>>             return PPC_INTERRUPT_HDECR;
+>> @@ -2075,18 +2075,18 @@ static int 
+>> ppc_next_unmasked_interrupt(CPUPPCState *env)
+>>     }
+>>
+>>     /* Hypervisor virtualization interrupt */
+>> -    if (env->pending_interrupts & PPC_INTERRUPT_HVIRT) {
+>> +    if (pending_interrupts & PPC_INTERRUPT_HVIRT) {
+>>         /* LPCR will be clear when not supported so this will work */
+>> -        bool hvice = !!(env->spr[SPR_LPCR] & LPCR_HVICE);
+>> +        bool hvice = !!(lpcr & LPCR_HVICE);
+>>         if ((async_deliver || !FIELD_EX64_HV(env->msr)) && hvice) {
+>>             return PPC_INTERRUPT_HVIRT;
+>>         }
+>>     }
+>>
+>>     /* External interrupt can ignore MSR:EE under some circumstances */
+>> -    if (env->pending_interrupts & PPC_INTERRUPT_EXT) {
+>> -        bool lpes0 = !!(env->spr[SPR_LPCR] & LPCR_LPES0);
+>> -        bool heic = !!(env->spr[SPR_LPCR] & LPCR_HEIC);
+>> +    if (pending_interrupts & PPC_INTERRUPT_EXT) {
+>> +        bool lpes0 = !!(lpcr & LPCR_LPES0);
+>> +        bool heic = !!(lpcr & LPCR_HEIC);
+>>         /* HEIC blocks delivery to the hypervisor */
+>>         if ((async_deliver && !(heic && FIELD_EX64_HV(env->msr) &&
+>>             !FIELD_EX64(env->msr, MSR, PR))) ||
+>> @@ -2096,45 +2096,45 @@ static int 
+>> ppc_next_unmasked_interrupt(CPUPPCState *env)
+>>     }
+>>     if (FIELD_EX64(env->msr, MSR, CE)) {
+>>         /* External critical interrupt */
+>> -        if (env->pending_interrupts & PPC_INTERRUPT_CEXT) {
+>> +        if (pending_interrupts & PPC_INTERRUPT_CEXT) {
+>>             return PPC_INTERRUPT_CEXT;
+>>         }
+>>     }
+>>     if (async_deliver != 0) {
+>>         /* Watchdog timer on embedded PowerPC */
+>> -        if (env->pending_interrupts & PPC_INTERRUPT_WDT) {
+>> +        if (pending_interrupts & PPC_INTERRUPT_WDT) {
+>>             return PPC_INTERRUPT_WDT;
+>>         }
+>> -        if (env->pending_interrupts & PPC_INTERRUPT_CDOORBELL) {
+>> +        if (pending_interrupts & PPC_INTERRUPT_CDOORBELL) {
+>>             return PPC_INTERRUPT_CDOORBELL;
+>>         }
+>>         /* Fixed interval timer on embedded PowerPC */
+>> -        if (env->pending_interrupts & PPC_INTERRUPT_FIT) {
+>> +        if (pending_interrupts & PPC_INTERRUPT_FIT) {
+>>             return PPC_INTERRUPT_FIT;
+>>         }
+>>         /* Programmable interval timer on embedded PowerPC */
+>> -        if (env->pending_interrupts & PPC_INTERRUPT_PIT) {
+>> +        if (pending_interrupts & PPC_INTERRUPT_PIT) {
+>>             return PPC_INTERRUPT_PIT;
+>>         }
+>>         /* Decrementer exception */
+>> -        if (env->pending_interrupts & PPC_INTERRUPT_DECR) {
+>> +        if (pending_interrupts & PPC_INTERRUPT_DECR) {
+>>             return PPC_INTERRUPT_DECR;
+>>         }
+>> -        if (env->pending_interrupts & PPC_INTERRUPT_DOORBELL) {
+>> +        if (pending_interrupts & PPC_INTERRUPT_DOORBELL) {
+>>             return PPC_INTERRUPT_DOORBELL;
+>>         }
+>> -        if (env->pending_interrupts & PPC_INTERRUPT_HDOORBELL) {
+>> +        if (pending_interrupts & PPC_INTERRUPT_HDOORBELL) {
+>>             return PPC_INTERRUPT_HDOORBELL;
+>>         }
+>> -        if (env->pending_interrupts & PPC_INTERRUPT_PERFM) {
+>> +        if (pending_interrupts & PPC_INTERRUPT_PERFM) {
+>>             return PPC_INTERRUPT_PERFM;
+>>         }
+>>         /* Thermal interrupt */
+>> -        if (env->pending_interrupts & PPC_INTERRUPT_THERM) {
+>> +        if (pending_interrupts & PPC_INTERRUPT_THERM) {
+>>             return PPC_INTERRUPT_THERM;
+>>         }
+>>         /* EBB exception */
+>> -        if (env->pending_interrupts & PPC_INTERRUPT_EBB) {
+>> +        if (pending_interrupts & PPC_INTERRUPT_EBB) {
+>>             /*
+>>              * EBB exception must be taken in problem state and
+>>              * with BESCR_GE set.
+>>
 
