@@ -4,81 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E19DBCAC596
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 18:59:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8B81CAC596
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 19:18:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqdPe-0002CZ-26; Tue, 17 Sep 2024 14:58:58 -0400
+	id 1sqdhI-000121-64; Tue, 17 Sep 2024 15:17:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqdPb-00022i-Up
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 14:58:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqdhC-00010v-Fa
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 15:17:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqdPa-0007y7-7H
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 14:58:55 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqdhA-0002sX-RR
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 15:17:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726599533;
+ s=mimecast20190719; t=1726600622;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=dbsDhz99GeKIRcWdziRigqnZeNTSQWprNldoD/uHVgQ=;
- b=MznJo4Oz0Or2EHJxI0nCBsewsj3Ufj7ceAxXX9h7KP8kTUi9LLS67E0wBXTJ34piM3m8a3
- NBhDJTLPmWZBsD85H4m8adfNWbmZ60pA9vFZUyfGW/RKapfq/2KVOxv2PUTE6dtS0UY1bk
- e5MKtQsx80qlxtn35O/XWBCxq9M5Uiw=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=w/0oP6bo75SGXFP+PPXKHmGyt7oKdqfMxTDWfgdu5zc=;
+ b=c1HlBTsNeuMbV7t00aW6l2cCxxFtZ9Ik+aY5w8fiFS03/fk9EFHepHdyUpqXqqYbALFiCf
+ jGxpxWL72wRQIVARgQdyFkkjyIjCQntEBw/yySWUAciM59pBw+Ota078puJnry+T4LhTTy
+ t5j/mO7bOToMAcywSTFWGQU7UKJVG5I=
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
+ [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-413-Pk9seloROhKyQhL3Sfl_og-1; Tue, 17 Sep 2024 14:58:51 -0400
-X-MC-Unique: Pk9seloROhKyQhL3Sfl_og-1
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-4585eba9b52so153812641cf.3
- for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 11:58:51 -0700 (PDT)
+ us-mta-624-SopIYY2sNQmE0lB6morXTQ-1; Tue, 17 Sep 2024 15:17:00 -0400
+X-MC-Unique: SopIYY2sNQmE0lB6morXTQ-1
+Received: by mail-oi1-f197.google.com with SMTP id
+ 5614622812f47-3e04ec015easo4652046b6e.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 12:17:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726599531; x=1727204331;
+ d=1e100.net; s=20230601; t=1726600620; x=1727205420;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dbsDhz99GeKIRcWdziRigqnZeNTSQWprNldoD/uHVgQ=;
- b=aHWADe1JgKZUzCKlZZ8ytBO+ZtpmzgMfR4rPUseIwkyDYsFn4eIZ52eJQ5+xAMihdG
- ooGsrWHoXllK1tFro6W2kTFUqLZn6IoFFGA/i17Xg6MR/rjfx76Jo9fM4jaeKZytfcXX
- gzn5KMeEKAPQkiH9gCrJz/Ndlo3oubJuIvTzsU/g+3A6Khv/6RWlgHntwlPF6g8TvYOb
- IDXAwaPPfcOm7OScmOg7/VI+7NBAJSAmwqoz7v8qNEB9J0/z1IV6DKr+5p/RORyNsYxS
- 0RHUdZapOsI+NxEVoGOBCsZHldyPVYUffkMNrOSMVX0486N6Cigd4mHOXJuPeUvP+Ddw
- iJuw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPJfsiNvGWPEvz4D8EXqI0Mw9WjkHIINMZrGLv+C223X2k6cWIf+y8LUgcAVmwZPq9KbZhmOUOvo2h@nongnu.org
-X-Gm-Message-State: AOJu0Yy+r4K5a8F4ealxclVdnp1Q8xHCj83RJU+WIbqPpK79zNMTcQbn
- YpE+HbIg1e3wvJKHNvigrq5Sdqph5clVcpGOkqL2A1fCx86U5GnDUgoEKaBOpD2V9BjQctcicGR
- Q80qvZFC+bbIu03X81WZvGPhxW81A+jQ1gC2VAiAr18UDJlLK79r9
-X-Received: by 2002:a05:6214:2f02:b0:6c5:51ed:2dbc with SMTP id
- 6a1803df08f44-6c57358430amr283611036d6.45.1726599531006; 
- Tue, 17 Sep 2024 11:58:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF0RMkHH4EDinYsa39HjVUWnIEegJyT26t2RSbeepH2ZAtrZV+EpGl9vyZnlS8Aa8AZKBXUtg==
-X-Received: by 2002:a05:6214:2f02:b0:6c5:51ed:2dbc with SMTP id
- 6a1803df08f44-6c57358430amr283610786d6.45.1726599530568; 
- Tue, 17 Sep 2024 11:58:50 -0700 (PDT)
+ bh=w/0oP6bo75SGXFP+PPXKHmGyt7oKdqfMxTDWfgdu5zc=;
+ b=dPdnRPVrGU6+gcddk9Hz+g7/rVoOOf50Ihz1ZQtkAYmblWISnnpSMlOpkxhbc9abzn
+ ssxr6fqigTdG9sihtuesprVZIseIIlsc6ejPwWkwowSpt0abPnCA39WlcqJbFk27bJUq
+ vn/TpaM0lE5skU0zjE3hRNFaepitZpUuO6D0rZYgnSAvvGegzYjcIfUwNaLSUMlK83L1
+ O0reDQycD/LZHi8COCBkJ/PSmNbv2rpe+zeFB4LxCka6VXboUJbl10aOQumv030LhwWm
+ yVdcGaCeRb2+f9cSJiaQXteDA6dFwzjhZrlRMXDzMuui10MQtWpQcDWNpbuT0ShzLgcw
+ Pm9Q==
+X-Gm-Message-State: AOJu0YzKjF0vkqQ752D8S7pIYevjxJEHvyzDUHeIwiy42UOPjKNZj+/p
+ uHxXcrQVDwj9cPMKd+GJcYg3kg9lOM4Bhnqafr+nLMunQE/Yxn0pcjbProY3FaTFj4E0xYIhF1E
+ cXUEIwBoMK6HZScf94eAUus38rliBVtpzKncUaVOiSPmEFUim9Vtk
+X-Received: by 2002:a05:6358:6184:b0:1b5:f81c:875f with SMTP id
+ e5c5f4694b2df-1bb14dc25damr745977755d.5.1726600619971; 
+ Tue, 17 Sep 2024 12:16:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGPhRhKn3tvR6b3opXYvsP1NKsDvv5PO7Ru4rCkhyUN3GZF8TAqcN9G3kITD17hsKhTcQ15Gg==
+X-Received: by 2002:a05:6358:6184:b0:1b5:f81c:875f with SMTP id
+ e5c5f4694b2df-1bb14dc25damr745975055d.5.1726600619633; 
+ Tue, 17 Sep 2024 12:16:59 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c58c62633bsm37561286d6.25.2024.09.17.11.58.49
+ af79cd13be357-7ab3eb62cefsm389793585a.102.2024.09.17.12.16.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Sep 2024 11:58:49 -0700 (PDT)
-Date: Tue, 17 Sep 2024 14:58:47 -0400
+ Tue, 17 Sep 2024 12:16:59 -0700 (PDT)
+Date: Tue, 17 Sep 2024 15:16:57 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] memory: notify hypervisor of all eventfds during
- listener (de)registration
-Message-ID: <ZunRZ5yA6KaNtmEA@x1n>
-References: <20240910120100.9460-1-anisinha@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 1/2] migration/savevm: Remove extra load cleanup calls
+Message-ID: <ZunVqQsnReeqnorV@x1n>
+References: <20240917185802.15619-1-farosas@suse.de>
+ <20240917185802.15619-2-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240910120100.9460-1-anisinha@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20240917185802.15619-2-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -102,192 +98,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Ani,
-
-On Tue, Sep 10, 2024 at 05:31:00PM +0530, Ani Sinha wrote:
-> When a new listener for an address space is registered, the hypervisor must be
-> informed of all existing eventfds for that address space by calling
-> eventfd_add() for that listener. Similarly, when a listener is de-registered
-> from an address space, the hypervisor must be informed of all existing eventfds
-> for that address space with a call to eventfd_del().
+On Tue, Sep 17, 2024 at 03:58:01PM -0300, Fabiano Rosas wrote:
+> There are two qemu_loadvm_state_cleanup() calls that were introduced
+> when qemu_loadvm_state_setup() was still called before loading the
+> configuration section, so there was state to be cleaned up if the
+> header checks failed.
 > 
-> Same is also true for coalesced io. Send coalesced io add/del listener
-> notifications if any flatrage for the address space registered with the
-> listener intersects with any coalesced io range.
+> However, commit 9e14b84908 ("migration/savevm: load_header before
+> load_setup") has moved that configuration section part to
+> qemu_loadvm_state_header() which now happens before
+> qemu_loadvm_state_setup().
 > 
-> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> Remove the cleanup calls that are now misplaced.
+> 
+> Fixes: 9e14b84908 ("migration/savevm: load_header before load_setup")
 
-This is only to make the API clean, as I see that only kvm uses either of
-the features (while kvm never registers during VM running).  Am I right?
+Considering it's a cleanup, do you mind if I further remove this Fixes but
+just mention it in commit message (so as to make Michael's life easier when
+backport)?
 
-I'd like to double check whether we need to copy stable, or whether there's
-a real bug.
-
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->  system/memory.c | 77 +++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 77 insertions(+)
+>  migration/savevm.c | 2 --
+>  1 file changed, 2 deletions(-)
 > 
-> changelog:
-> v2: tags added, indentation fixed, commit log fixed, code cleanup.
-> 
-> diff --git a/system/memory.c b/system/memory.c
-> index 5e6eb459d5..8379e086fb 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -941,6 +941,38 @@ static void flat_range_coalesced_io_add(FlatRange *fr, AddressSpace *as)
->      }
->  }
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index d500eae979..d0759694fd 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -2732,13 +2732,11 @@ static int qemu_loadvm_state_header(QEMUFile *f)
+>      if (migrate_get_current()->send_configuration) {
+>          if (qemu_get_byte(f) != QEMU_VM_CONFIGURATION) {
+>              error_report("Configuration section missing");
+> -            qemu_loadvm_state_cleanup();
+>              return -EINVAL;
+>          }
+>          ret = vmstate_load_state(f, &vmstate_configuration, &savevm_state, 0);
 >  
-> +static void
-> +flat_range_coalesced_io_notify_listener_add_del(FlatRange *fr,
-> +                                                MemoryRegionSection *mrs,
-> +                                                MemoryListener *listener,
-> +                                                AddressSpace *as, bool add)
-> +{
-> +    CoalescedMemoryRange *cmr;
-> +    MemoryRegion *mr = fr->mr;
-> +    AddrRange tmp;
-> +
-> +    QTAILQ_FOREACH(cmr, &mr->coalesced, link) {
-> +        tmp = addrrange_shift(cmr->addr,
-> +                              int128_sub(fr->addr.start,
-> +                                         int128_make64(fr->offset_in_region)));
-> +
-> +        if (!addrrange_intersects(tmp, fr->addr)) {
-> +            return;
-> +        }
-> +        tmp = addrrange_intersection(tmp, fr->addr);
-> +
-> +        if (add) {
-
-Do we need to check ->coalesced_io_add != NULL here?  I wonder whether this
-could crash if some dynamic listener got inserted (with coalesced list
-non-empty).
-
-> +            listener->coalesced_io_add(listener, mrs,
-> +                                       int128_get64(tmp.start),
-> +                                       int128_get64(tmp.size));
-> +        } else {
-> +            listener->coalesced_io_del(listener, mrs,
-
-Same.
-
-> +                                       int128_get64(tmp.start),
-> +                                       int128_get64(tmp.size));
-> +        }
-> +    }
-> +}
-> +
->  static void address_space_update_topology_pass(AddressSpace *as,
->                                                 const FlatView *old_view,
->                                                 const FlatView *new_view,
-> @@ -3015,8 +3047,10 @@ void memory_global_dirty_log_stop(unsigned int flags)
->  static void listener_add_address_space(MemoryListener *listener,
->                                         AddressSpace *as)
->  {
-> +    unsigned i;
->      FlatView *view;
->      FlatRange *fr;
-> +    MemoryRegionIoeventfd *fd;
->  
->      if (listener->begin) {
->          listener->begin(listener);
-> @@ -3041,10 +3075,31 @@ static void listener_add_address_space(MemoryListener *listener,
->          if (listener->region_add) {
->              listener->region_add(listener, &section);
+>          if (ret) {
+> -            qemu_loadvm_state_cleanup();
+>              return ret;
 >          }
-> +
-> +        /* send coalesced io add notifications */
-> +        flat_range_coalesced_io_notify_listener_add_del(fr, &section,
-> +                                                        listener, as, true);
-> +
->          if (fr->dirty_log_mask && listener->log_start) {
->              listener->log_start(listener, &section, 0, fr->dirty_log_mask);
->          }
->      }
-> +
-> +    /*
-> +     * register all eventfds for this address space for the newly registered
-> +     * listener.
-> +     */
-> +    for (i = 0; i < as->ioeventfd_nb; i++) {
-> +        fd = &as->ioeventfds[i];
-> +        MemoryRegionSection section = (MemoryRegionSection) {
-> +            .fv = address_space_to_flatview(as),
-
-Nitpick: I don't think it'll be anything different if we hold BQL anyway,
-but.. might be good to use "view" directly here, as we're holding a
-refcount there via address_space_get_flatview().
-
-While it's not crystal clear otherwise (when without knowing BQL held) that
-address_space_to_flatview() will return the same flatview.
-
-> +            .offset_within_address_space = int128_get64(fd->addr.start),
-> +            .size = fd->addr.size,
-> +        };
-> +        listener->eventfd_add(listener, &section,
-> +                              fd->match_data, fd->data, fd->e);
-
-Check ->eventfd_add != NULL?
-
-> +    }
-> +
->      if (listener->commit) {
->          listener->commit(listener);
->      }
-> @@ -3054,8 +3109,10 @@ static void listener_add_address_space(MemoryListener *listener,
->  static void listener_del_address_space(MemoryListener *listener,
->                                         AddressSpace *as)
->  {
-> +    unsigned i;
->      FlatView *view;
->      FlatRange *fr;
-> +    MemoryRegionIoeventfd *fd;
->  
->      if (listener->begin) {
->          listener->begin(listener);
-> @@ -3067,10 +3124,30 @@ static void listener_del_address_space(MemoryListener *listener,
->          if (fr->dirty_log_mask && listener->log_stop) {
->              listener->log_stop(listener, &section, fr->dirty_log_mask, 0);
->          }
-> +
-> +        /* send coalesced io del notifications */
-> +        flat_range_coalesced_io_notify_listener_add_del(fr, &section,
-> +                                                        listener, as, false);
->          if (listener->region_del) {
->              listener->region_del(listener, &section);
->          }
->      }
-> +
-> +    /*
-> +     * de-register all eventfds for this address space for the current
-> +     * listener.
-> +     */
-> +    for (i = 0; i < as->ioeventfd_nb; i++) {
-> +        fd = &as->ioeventfds[i];
-> +        MemoryRegionSection section = (MemoryRegionSection) {
-> +            .fv = address_space_to_flatview(as),
-
-Same.
-
-> +            .offset_within_address_space = int128_get64(fd->addr.start),
-> +            .size = fd->addr.size,
-> +        };
-> +        listener->eventfd_del(listener, &section,
-> +                              fd->match_data, fd->data, fd->e);
-
-Check eventfd_del != NULL?
-
-Thanks,
-
-> +    }
-> +
->      if (listener->commit) {
->          listener->commit(listener);
 >      }
 > -- 
-> 2.42.0
+> 2.35.3
 > 
 
 -- 
