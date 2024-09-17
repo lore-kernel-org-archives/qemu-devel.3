@@ -4,83 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C5F1C35FF8
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 08:54:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55835C35FF8
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 08:56:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqTvm-0007Mu-PQ; Tue, 17 Sep 2024 04:51:30 -0400
+	id 1sqTz9-0005d6-LG; Tue, 17 Sep 2024 04:54:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sqTvj-0007MN-NL
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 04:51:27 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
+ id 1sqTz6-0005Np-Ew
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 04:54:57 -0400
+Received: from mail-io1-xd2d.google.com ([2607:f8b0:4864:20::d2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sqTvT-0008Vt-Fh
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 04:51:25 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-42cb7a2e4d6so44547065e9.0
- for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 01:51:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
+ id 1sqTyp-0000LK-CL
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 04:54:55 -0400
+Received: by mail-io1-xd2d.google.com with SMTP id
+ ca18e2360f4ac-82cdada0f21so137585939f.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 01:54:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726563067; x=1727167867; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1726563266; x=1727168066; darn=nongnu.org;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cSYHu5lBYgP+YuUarCXjaJs9Yl4nMxFLvamP9MQ79yg=;
- b=QsjtFGM39D8cZcs0OAE25i3TMCyxiBkBSXhKIt72H1d6xBtRUCRODSiklg25t1rbWv
- FYDtbzHpyWiE51MRY3TNbevKgQmZkpqysTNjIA+8mLh6/bEibTQ66O4etg1q6eA4kHfq
- W3n29XrcGR4ym+WQOB1YJGC8rLICOprBafQCAWu8Lv1v5opKy0BCBCsnu7+aGyI9x1uz
- RpV7Aquwq8pktb2wJMn+8Ot3qdxdARtdZEJ3idCnsR8DOG17nmix1YpwGec4V804W1pN
- QcjGDifwtBTzdLB/3CdrnqX9eeKe2nqqLOakKK+Rp79+Nnkt5WOqPMFFzJf6tvvUYFzK
- p4GA==
+ bh=61XaBCJHY6YUIRxRweyMtM5JczlHuQWVPbVt/Ctmrjg=;
+ b=DkOjkJA4zLbDO4KqXwY5saP0FvcwnazLr6q1ji3LdqN3yAnxbiZxFSYB27o/I37k4r
+ 5iAJUmZl5u4gXk/WCuhA5SucwS2mjM/pQhg2KpI0wIaBKPDe1wD941U2YVDC1Cq2EMye
+ 4V+s1WKnUmPE1cNtxelktOXXGzEduwSSusRkBPXhBDqqCrKfIv6jH8l9c1IQLNa8FiVE
+ Eq1jmMwS5K6n1kwTtQTjuzuG9puN2yvpMt0+FkJ7ypfEEXe/VyS4vy0XVWgUid6OgJr2
+ 74/j2aAeW4/P5i657sJBU/AOsxA+dQSVgHER4wqVLctw8Q1zwbSOUP5dJ2e099zqL1wM
+ jkgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726563067; x=1727167867;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1726563266; x=1727168066;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cSYHu5lBYgP+YuUarCXjaJs9Yl4nMxFLvamP9MQ79yg=;
- b=npY6yaP0G3qYPtHGMzySe9v2dbbHucjXdPl4uWrZm7yi390WFBMURYBKr+bEaTqFws
- 3IwKvXovz/UF5CdGkUJ4mzeG6eRhx4/SjI1wyGAW0ZAGR9gZbVl9xcPAWs8xBolQeb8g
- tVSKBxpyuXDTn3Sb9eFLElh47D4Ry9yldF+rhJD8OkVL7sB6+AGbbaeJ3Gn46CsIkXur
- nnSikCL9ZbKl4SVOkCQrBjfIDW4TdXyuRl0iJHtALkv33UIyk74UrF6cvDO0vUtSG2hs
- wedT2HRZGO3Qa/c1jjfN3i7oJ1ONOX3QKEy8ygOtGLDset+MiAkOjjLDFvreIkJAPMez
- hRgA==
-X-Gm-Message-State: AOJu0YzVDP7OaVTf2iybYWX7y4Y1mMD9fwuw7ZP7cy+OKgMNLqB5TIgv
- P6xO5HwWUQCrgKkiGJTehCOwSEPRK+McHw3s0XrFOnrKqwe8lh7nJSYi369wFB/l1yBCNjKfIvD
- wDHM=
-X-Google-Smtp-Source: AGHT+IGVgam6pQh1MOtIgKCFNO9doLYN/GbfP6pAXbzFSHjpkWa1yOXld6hwpktMiXmnTDSJZyWkmw==
-X-Received: by 2002:a05:600c:5121:b0:42c:b377:3f5f with SMTP id
- 5b1f17b1804b1-42cdb547e96mr135717025e9.14.1726563066903; 
- Tue, 17 Sep 2024 01:51:06 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.131.223])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42d9b189986sm129889615e9.29.2024.09.17.01.51.05
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 17 Sep 2024 01:51:06 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 1/3] tests/unit: Really build pbkdf test on macOS
-Date: Tue, 17 Sep 2024 10:50:56 +0200
-Message-ID: <20240917085058.1740-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240917085058.1740-1-philmd@linaro.org>
-References: <20240917085058.1740-1-philmd@linaro.org>
+ bh=61XaBCJHY6YUIRxRweyMtM5JczlHuQWVPbVt/Ctmrjg=;
+ b=rxdx0BZ+gx9HbmSCeUXsJsQeycbojp6mVOqdL/hclSavoWko1oHMlsD/JAjKiPEHOd
+ fWcOc0+5j0jA97ogRko9vGVrRQmudljc9KJBthchgyDNUZgmhMab40G3AChH9tWfLiXg
+ Pu0cpPc50EDw3Go3V7oXnyHBqh2ydcALBfEqKO7S697dNUg9K8udmwwum21HhpNtH9Bp
+ /fKJwIw/GevFCo4bB3Jqza3/yZn672EO1bswjrlRneCBX86oc+8jWyYHvsDCBbouIZXb
+ 8nOXAnrWsJZYTjnbrKakf9Gs2vNkUGLXNac44iNS8MdgPlxfyPfcIkkgy7fJYJj5HexU
+ B7OQ==
+X-Gm-Message-State: AOJu0Yxqfegu6Jq/0TGi4Y/UOq8CTXT8WZtDPoFUOpZoZzlRJ+NKQtKg
+ 8mjooCqgMFFC0xveeImIeg/jsOQuwK0MJ3YxFF4E+bFRmVKVFzN2K3HQJUW+ffAFSR24djIT7Jx
+ xO3lC2jPdUcit0ibnv0DS4yjEtGFtJne2yMqklakJ4AYZvxvdrQc=
+X-Google-Smtp-Source: AGHT+IG7+gz3rTQ2/s1RFwZhOPAYnuAyCupersfyB2spnDM7B1EhOnCv8EeROgtcQdpVvaYJ7y7Ek9a++tL12xkl6HA=
+X-Received: by 2002:a05:6602:341c:b0:807:f0fb:1192 with SMTP id
+ ca18e2360f4ac-82d376a7d37mr1413665739f.1.1726563266320; Tue, 17 Sep 2024
+ 01:54:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+References: <20240917085058.1740-1-philmd@linaro.org>
+ <20240917085058.1740-2-philmd@linaro.org>
+In-Reply-To: <20240917085058.1740-2-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Tue, 17 Sep 2024 10:54:15 +0200
+Message-ID: <CAPMQPEJegTwz0K_bZB=QKN8HwMJt_0mtpTMWmK=mpVHQRnJ1Hw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] tests/unit: Really build pbkdf test on macOS
+To: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2d;
+ envelope-from=philippe.mathieu-daude@linaro.org; helo=mail-io1-xd2d.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,32 +88,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix a typo to run the pbkdf crypto cipher tests on macOS.
+Oops, this patch wasn't meant for this series, already posted & reviewed:
+https://lore.kernel.org/qemu-devel/20240917065736.27883-1-philmd@linaro.org=
+/
 
- $ make check-unit
-   ...
-   87/102 qemu:unit / test-crypto-pbkdf      OK      2.35s   17 subtests passed
-
-Fixes: ebe0302ac8 ("tests/unit: build pbkdf test on macOS")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tests/unit/test-crypto-pbkdf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/tests/unit/test-crypto-pbkdf.c b/tests/unit/test-crypto-pbkdf.c
-index b477cf4e4b..12ee808fbc 100644
---- a/tests/unit/test-crypto-pbkdf.c
-+++ b/tests/unit/test-crypto-pbkdf.c
-@@ -25,7 +25,7 @@
- #include <sys/resource.h>
- #endif
- 
--#if defined(_WIN32) || defined(RUSAGE_THREAD) || defined(CONFIG_DARWNI)
-+#if defined(_WIN32) || defined(RUSAGE_THREAD) || defined(CONFIG_DARWIN)
- #include "crypto/pbkdf.h"
- 
- typedef struct QCryptoPbkdfTestData QCryptoPbkdfTestData;
--- 
-2.45.2
-
+On Tue, 17 Sept 2024 at 10:51, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.o=
+rg> wrote:
+>
+> Fix a typo to run the pbkdf crypto cipher tests on macOS.
+>
+>  $ make check-unit
+>    ...
+>    87/102 qemu:unit / test-crypto-pbkdf      OK      2.35s   17 subtests =
+passed
+>
+> Fixes: ebe0302ac8 ("tests/unit: build pbkdf test on macOS")
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  tests/unit/test-crypto-pbkdf.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/tests/unit/test-crypto-pbkdf.c b/tests/unit/test-crypto-pbkd=
+f.c
+> index b477cf4e4b..12ee808fbc 100644
+> --- a/tests/unit/test-crypto-pbkdf.c
+> +++ b/tests/unit/test-crypto-pbkdf.c
+> @@ -25,7 +25,7 @@
+>  #include <sys/resource.h>
+>  #endif
+>
+> -#if defined(_WIN32) || defined(RUSAGE_THREAD) || defined(CONFIG_DARWNI)
+> +#if defined(_WIN32) || defined(RUSAGE_THREAD) || defined(CONFIG_DARWIN)
+>  #include "crypto/pbkdf.h"
+>
+>  typedef struct QCryptoPbkdfTestData QCryptoPbkdfTestData;
+> --
+> 2.45.2
+>
 
