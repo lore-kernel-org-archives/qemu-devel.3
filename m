@@ -4,35 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B114ACAC593
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 18:10:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E030CAC593
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 18:10:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqcdH-00040c-7t; Tue, 17 Sep 2024 14:08:59 -0400
+	id 1sqcdI-00046t-UF; Tue, 17 Sep 2024 14:09:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sqcdC-0003n4-Ob; Tue, 17 Sep 2024 14:08:54 -0400
+ id 1sqcdG-0003wj-3V; Tue, 17 Sep 2024 14:08:58 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sqcdA-0002MV-Ko; Tue, 17 Sep 2024 14:08:54 -0400
+ id 1sqcdE-0002N3-1R; Tue, 17 Sep 2024 14:08:57 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9B4EC8FBC0;
- Tue, 17 Sep 2024 21:08:23 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CC37B8FBC2;
+ Tue, 17 Sep 2024 21:08:25 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4BFF013E742;
- Tue, 17 Sep 2024 21:08:39 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9947E13E744;
+ Tue, 17 Sep 2024 21:08:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.14 v2 00/47] Patch Round-up for stable 7.2.14,
- freeze on 2024-09-16 (frozen)
-Date: Tue, 17 Sep 2024 21:08:29 +0300
-Message-Id: <20240917180836.633380-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, David Hildenbrand <david@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.14 42/47] softmmu/physmem: fix memory leak in
+ dirty_memory_extend()
+Date: Tue, 17 Sep 2024 21:08:31 +0300
+Message-Id: <20240917180836.633380-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <qemu-stable-7.2.14-20240917210634@cover.tls.msk.ru>
+References: <qemu-stable-7.2.14-20240917210634@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -58,120 +64,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v7.2.14:
+From: David Hildenbrand <david@redhat.com>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
+As reported by Peter, we might be leaking memory when removing the
+highest RAMBlock (in the weird ram_addr_t space), and adding a new one.
 
-Patch freeze is 2024-09-16 (frozen), and the release is planned for 2024-09-18:
+We will fail to realize that we already allocated bitmaps for more
+dirty memory blocks, and effectively discard the pointers to them.
 
-  https://wiki.qemu.org/Planning/7.2
+Fix it by getting rid of last_ram_page() and by remembering the number
+of dirty memory blocks that have been allocated already.
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
+While at it, let's use "unsigned int" for the number of blocks, which
+should be sufficient until we reach ~32 exabytes.
 
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
+Looks like this leak was introduced as we switched from using a single
+bitmap_zero_extend() to allocating multiple bitmaps:
+bitmap_zero_extend() relies on g_renew() which should have taken care of
+this.
 
-Thanks!
+Resolves: https://lkml.kernel.org/r/CAFEAcA-k7a+VObGAfCFNygQNfCKL=AfX6A4kScq=VSSK0peqPg@mail.gmail.com
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: 5b82b703b69a ("memory: RCU ram_list.dirty_memory[] for safe RAM hotplug")
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Tested-by: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-stable@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Link: https://lore.kernel.org/r/20240828090743.128647-1-david@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit b84f06c2bee727b3870b4eeccbe3a45c5aea14c1)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: context fix due to lack of
+ v9.0.0-rc4-49-g15f7a80c49cb "RAMBlock: Add support of KVM private guest memfd")
 
-/mjt
+diff --git a/include/exec/ramlist.h b/include/exec/ramlist.h
+index 2ad2a81acc..d9cfe530be 100644
+--- a/include/exec/ramlist.h
++++ b/include/exec/ramlist.h
+@@ -50,6 +50,7 @@ typedef struct RAMList {
+     /* RCU-enabled, writes protected by the ramlist lock. */
+     QLIST_HEAD(, RAMBlock) blocks;
+     DirtyMemoryBlocks *dirty_memory[DIRTY_MEMORY_NUM];
++    unsigned int num_dirty_blocks;
+     uint32_t version;
+     QLIST_HEAD(, RAMBlockNotifier) ramblock_notifiers;
+ } RAMList;
+diff --git a/softmmu/physmem.c b/softmmu/physmem.c
+index 1b606a3002..5b176581f6 100644
+--- a/softmmu/physmem.c
++++ b/softmmu/physmem.c
+@@ -1660,18 +1660,6 @@ static ram_addr_t find_ram_offset(ram_addr_t size)
+     return offset;
+ }
+ 
+-static unsigned long last_ram_page(void)
+-{
+-    RAMBlock *block;
+-    ram_addr_t last = 0;
+-
+-    RCU_READ_LOCK_GUARD();
+-    RAMBLOCK_FOREACH(block) {
+-        last = MAX(last, block->offset + block->max_length);
+-    }
+-    return last >> TARGET_PAGE_BITS;
+-}
+-
+ static void qemu_ram_setup_dump(void *addr, ram_addr_t size)
+ {
+     int ret;
+@@ -1919,13 +1907,11 @@ void qemu_ram_msync(RAMBlock *block, ram_addr_t start, ram_addr_t length)
+ }
+ 
+ /* Called with ram_list.mutex held */
+-static void dirty_memory_extend(ram_addr_t old_ram_size,
+-                                ram_addr_t new_ram_size)
++static void dirty_memory_extend(ram_addr_t new_ram_size)
+ {
+-    ram_addr_t old_num_blocks = DIV_ROUND_UP(old_ram_size,
+-                                             DIRTY_MEMORY_BLOCK_SIZE);
+-    ram_addr_t new_num_blocks = DIV_ROUND_UP(new_ram_size,
+-                                             DIRTY_MEMORY_BLOCK_SIZE);
++    unsigned int old_num_blocks = ram_list.num_dirty_blocks;
++    unsigned int new_num_blocks = DIV_ROUND_UP(new_ram_size,
++                                               DIRTY_MEMORY_BLOCK_SIZE);
+     int i;
+ 
+     /* Only need to extend if block count increased */
+@@ -1957,6 +1943,8 @@ static void dirty_memory_extend(ram_addr_t old_ram_size,
+             g_free_rcu(old_blocks, rcu);
+         }
+     }
++
++    ram_list.num_dirty_blocks = new_num_blocks;
+ }
+ 
+ static void ram_block_add(RAMBlock *new_block, Error **errp)
+@@ -1965,11 +1953,9 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+     const bool shared = qemu_ram_is_shared(new_block);
+     RAMBlock *block;
+     RAMBlock *last_block = NULL;
+-    ram_addr_t old_ram_size, new_ram_size;
++    ram_addr_t ram_size;
+     Error *err = NULL;
+ 
+-    old_ram_size = last_ram_page();
+-
+     qemu_mutex_lock_ramlist();
+     new_block->offset = find_ram_offset(new_block->max_length);
+ 
+@@ -1997,11 +1983,8 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+         }
+     }
+ 
+-    new_ram_size = MAX(old_ram_size,
+-              (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS);
+-    if (new_ram_size > old_ram_size) {
+-        dirty_memory_extend(old_ram_size, new_ram_size);
+-    }
++    ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
++    dirty_memory_extend(ram_size);
+     /* Keep the list sorted from biggest to smallest block.  Unlike QTAILQ,
+      * QLIST (which has an RCU-friendly variant) does not have insertion at
+      * tail, so save the last element in last_block.
+-- 
+2.39.5
 
---------------------------------------
-01* 3becc9390810 Markus Armbruster:
-   qapi/qom: Document feature unstable of @x-vfio-user-server
-02* 31d93fedf41c Daniyal Khan:
-   target/arm: Use float_status copy in sme_fmopa_s
-03* 207d30b5fdb5 Richard Henderson:
-   target/arm: Use FPST_F16 for SME FMOPA (widening)
-04* c510fe78f1b7 Zheyu Ma:
-   hw/nvme: fix memory leak in nvme_dsm
-05* a207d5f87d66 Zhao Liu:
-   hw/cxl/cxl-host: Fix segmentation fault when getting cxl-fmw property
-06* a3c8d7e38550 Clément Mathieu--Drif:
-   intel_iommu: fix FRCD construction macro
-07* 13be929aff80 Paolo Bonzini:
-   target/i386: do not crash if microvm guest uses SGX CPUID leaves
-08* 903cc9e1173e songziming:
-   chardev/char-win-stdio.c: restore old console mode
-09* 2465c89fb983 Bibo Mao:
-   hw/intc/loongson_ipi: Access memory in little endian
-10* 851495571d14 Peter Maydell:
-   util/async.c: Forbid negative min/max in 
-   aio_context_set_thread_pool_params()
-11* d72479b11797 Thomas Huth:
-   hw/virtio: Fix the de-initialization of vhost-user devices
-12* 83340193b991 Richard Henderson:
-   target/rx: Use target_ulong for address in LI
-13* 546d574b11e0 Frederik van Hövell:
-   hw/char/bcm2835_aux: Fix assert when receive FIFO fills up
-14* 0892fffc2aba Peter Maydell:
-   hw/misc/bcm2835_property: Fix handling of FRAMEBUFFER_SET_PALETTE
-15* 56f1c0db928a Peter Maydell:
-   target/arm: Don't assert for 128-bit tile accesses when SVL is 128
-16* ea3f5a90f036 Peter Maydell:
-   target/arm: Fix UMOPA/UMOPS of 16-bit values
-17* 76916dfa89e8 Peter Maydell:
-   target/arm: Avoid shifts by -1 in tszimm_shr() and tszimm_shl()
-18* f573ac059ed0 Peter Maydell:
-   target/arm: Ignore SMCR_EL2.LEN and SVCR_EL2.LEN if EL2 is not enabled
-19* 48e5b5f994bc Peter Maydell:
-   docs/sphinx/depfile.py: Handle env.doc2path() returning a Path not a str
-20* 9a45b0761628 Peter Maydell:
-   hw/i386/amd_iommu: Don't leak memory in amdvi_update_iotlb()
-21* 5a558be93ad6 Marco Palumbi:
-   hw/arm/mps2-tz.c: fix RX/TX interrupts order
-22* 55f9f4ee018c Peter Maydell:
-   target/arm: Handle denormals correctly for FMOPA (widening)
-23* f1595ceb9aad Akihiko Odaki:
-   virtio-net: Ensure queue index fits with RSS
-24* f937309fbdbb thomas:
-   virtio-net: Fix network stall at the host side waiting for kick
-25* ed5a159c3de4 Philippe Mathieu-Daudé:
-   hw/sd/sdhci: Reset @data_count index on invalid ADMA transfers
-26* b881cf00c99e Amjad Alsharafi:
-   vvfat: Fix bug in writing to middle of file
-27* 21b25a0e466a Amjad Alsharafi:
-   vvfat: Fix usage of `info.file.offset`
-28* f60a6f7e17bf Amjad Alsharafi:
-   vvfat: Fix wrong checks for cluster mappings invariant
-29* 5eed3db33650 Amjad Alsharafi:
-   vvfat: Fix reading files with non-continuous clusters
-30* c8f60bfb4345 Amjad Alsharafi:
-   iotests: Add `vvfat` tests
-31* fb1c2aaa981e Eric Blake:
-   nbd/server: Plumb in new args to nbd_client_add()
-32* c8a76dbd90c2 Eric Blake:
-   nbd/server: CVE-2024-7409: Cap default max-connections to 100
-33* b9b72cb3ce15 Eric Blake:
-   nbd/server: CVE-2024-7409: Drop non-negotiating clients
-34* 3e7ef738c846 Eric Blake:
-   nbd/server: CVE-2024-7409: Close stray clients at server-stop
-35* 3874f5f73c44 Eric Blake:
-   nbd/server: CVE-2024-7409: Avoid use-after-free when closing server
-36* 446e5e8b4515 Jianzhou Yue:
-   hw/core/ptimer: fix timer zero period condition for freq > 1GHz
-37* 547c4e50929e Stefano Garzarella:
-   block/blkio: use FUA flag on write zeroes only if supported
-38* 416f2b16c02c Richard Henderson:
-   target/i386: Do not apply REX to MMX operands
-39* 940d802b24e6 Alexander Ivanov:
-   module: Prevent crash by resetting local_err in module_load_qom_all()
-40* 87e012f29f2e Peter Maydell:
-   crypto/tlscredspsk: Free username on finalize
-41 108d99742af1 Alex Bennée:
-   gitlab: migrate the s390x custom machine to 22.04
-42 b84f06c2bee7 David Hildenbrand:
-   softmmu/physmem: fix memory leak in dirty_memory_extend()
-43 c72cab5ad9f8 Tiago Pasqualini:
-   crypto: run qcrypto_pbkdf2_count_iters in a new thread
-44 e6c09ea4f9e5 Daniel P. Berrangé:
-   crypto: check gnutls & gcrypt support the requested pbkdf hash
-45 d6192f3f7593 Haoran Zhang:
-   hw/display/vhost-user-gpu.c: fix vhost_user_gpu_chr_read()
-46 d0068b746a0a Alex Bennée:
-   tests/docker: remove debian-armel-cross
-47 110684c9a69a Jan Klötzke:
-   hw/intc/arm_gic: fix spurious level triggered interrupts
-
-(commit(s) marked with * were in previous series and are not resent)
 
