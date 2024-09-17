@@ -4,78 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BD2ACAC58E
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 17:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 023F9CAC58E
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 17:07:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqbbF-0007am-5B; Tue, 17 Sep 2024 13:02:49 -0400
+	id 1sqbfe-000466-3q; Tue, 17 Sep 2024 13:07:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqbbD-0007YO-3T
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 13:02:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sqbfc-00045c-Gf
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 13:07:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqbbA-0002jV-3K
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 13:02:46 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sqbfa-0003FR-Sg
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 13:07:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726592562;
+ s=mimecast20190719; t=1726592837;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DqPp0RmMR/qMqG8/YCcg5Uy0HxznPLSeRzz2jFd5aDY=;
- b=dJLxyw93DktjE0l85NUXMXjA7c3S0A+EL4qiFwsgibkC3GSyaLhkmV7f5UkUWw9uJQB92o
- xRqsORVdthXIz0iOPIlw7P8Y710f5/cbGTEqIm/wtZAUyuu0fzn68WHG7yRpj7mOZ1dVKp
- vcbh1NfzNyWTEz/9KOVc90p5VnOVs+w=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3XKfZGPBgG4Iz4dKY6GaNQn0cpBFSkhMZlLUsHbrAoM=;
+ b=Nj4SFOAFy27+TZIQasPgT1FZGAYGZEOzolgm3JaV8iXbnR/jJpxu72W+nHklcHBJ8ZH/AC
+ kSxmbtk8NUxERDCyelSDkXLXfxdxkv5LMadzGQqDhTN2Jyk8Q1+ikmHcoJmCfxChzThcLF
+ 3BsWMRQFdcs+SmIqB7+pH74Cw0vaJ+k=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-552-3bDk1mJ3ObmryrhKQoP-mg-1; Tue, 17 Sep 2024 13:02:40 -0400
-X-MC-Unique: 3bDk1mJ3ObmryrhKQoP-mg-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6c353a05885so7690436d6.2
- for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 10:02:40 -0700 (PDT)
+ us-mta-355-56a6C6NHObqD6mUwDc4jFw-1; Tue, 17 Sep 2024 13:07:15 -0400
+X-MC-Unique: 56a6C6NHObqD6mUwDc4jFw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-42cb236ad4aso38258445e9.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 10:07:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726592560; x=1727197360;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DqPp0RmMR/qMqG8/YCcg5Uy0HxznPLSeRzz2jFd5aDY=;
- b=mFSBptRxtNil6M/VoCDe23ONOqbSDWQ2YLWlD9185pTGLhuREJE2kBuU0UAr55KtKH
- rUB0CsbNxKoKlzEDnHAYSABfCc31xVKkr/XB8kyPi/V6f2VqogBjmGYkJHkc2Y7V1pj5
- y64+itPANcNboT80RUpn05oMDyCmos/4yAcphMCCT9tHtio8ZYA6NKARxedz1ES6hWyH
- +AHnZere5gX1YJqxhF+/d4u61T8gZ4zPlHID93/sFVxx1QNS0lReeOaAETU/cMXrPKIK
- qSlhVSBWKaLnGeATl4WKF+ok2rHWPIpWjLhPs3m+4ejFMvGN/dEzpXDfMpm+Tr5nUxOd
- qDoQ==
-X-Gm-Message-State: AOJu0YyjxMf0ilBylt5H86HTyYAnNnR3ZImqFz6H3iUxksgAgB3Gp+8s
- WIxeks81pSEJsI/BRbx6wTxC8cLUU2sX6LAXvTPpD1AXhzPCv6ESHUsdjtY3Ytoz/2I+gr91fvf
- in2yQFppmRGFXuc/+uE9bSpEB1T/aPBZzGH9H37LhTT/7Z88J9Suw
-X-Received: by 2002:a05:6214:33c5:b0:6c5:acf0:400 with SMTP id
- 6a1803df08f44-6c5acf00550mr39989186d6.52.1726592559864; 
- Tue, 17 Sep 2024 10:02:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGpJIRTptFSsWbScX2QG2DhbtptyIRpJufqBghqHizc2gsFx18nLj2o7z6ILAXhxraZ1C4RBw==
-X-Received: by 2002:a05:6214:33c5:b0:6c5:acf0:400 with SMTP id
- 6a1803df08f44-6c5acf00550mr39988726d6.52.1726592559217; 
- Tue, 17 Sep 2024 10:02:39 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c5acf18081sm9215386d6.134.2024.09.17.10.02.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Sep 2024 10:02:38 -0700 (PDT)
-Date: Tue, 17 Sep 2024 13:02:36 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH 2/2] migration/multifd: Fix rb->receivedmap cleanup race
-Message-ID: <Zum2LOpaIRVDDEo9@x1n>
-References: <20240913220542.18305-1-farosas@suse.de>
- <20240913220542.18305-3-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1726592833; x=1727197633;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3XKfZGPBgG4Iz4dKY6GaNQn0cpBFSkhMZlLUsHbrAoM=;
+ b=jn4t1/4Zn7raZkPmJic91vzuUpLN99BmeULdeIQSEQSaZPt2UOSdMn/cT6++w5gNJQ
+ +/U8qOCASFughIBewGhIqXgj7VCHzT6TcjIB7W4z57B3md6ipjjLqltRBzYV5+SefzIh
+ QMx4i9sn5V0/hlcyMx35RNvi2DlPCno0dlPmDdBL53xEGsEvgcfUQclCQ0tdlfetQNAq
+ G+eBAQKDdWz2O+t6AobLVw5D2xoK2lLXfXbcFwGVsu19Q8ByeDw+/kAfd67PpCL3FSDg
+ IcBMWH5yfwbN9yQDf/c7tJig1MdsltCZHh2bMLjoEPC96jyOnWlZ+3SKdOKBJabVj7pZ
+ QwBw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUQzulEVjDy/PXY2byePob1NB3612cX8ueK127p8f3sxa87HFYJubfWXPPsQEOWOxuuicRd7dlZXp7o@nongnu.org
+X-Gm-Message-State: AOJu0YzYonZN91HVXzu0yf+E4CbRHS+c0vCxXKmRippAR2jfYajYMabc
+ U8oBYxtZmFzaU7wwFfuUz1HThibg95pd4MBxg5ZH5Eky6ZlYKUSteVL0dyun8n6Xouq7iUuGIwN
+ SLqYKEcnKnsYMSRtYZ+6fgqHgEwvNI9jUE/zuq/3Gv32qDu40v9n+
+X-Received: by 2002:a05:600c:510f:b0:426:66e9:b844 with SMTP id
+ 5b1f17b1804b1-42cdb529479mr137876785e9.8.1726592833139; 
+ Tue, 17 Sep 2024 10:07:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGY7y/opb+aSl+6pfqnHnX3Vd63DEldQmhs8g9E7JqNvFTQk9wJQ/bJAyFzwUc73120LVa9Pg==
+X-Received: by 2002:a05:600c:510f:b0:426:66e9:b844 with SMTP id
+ 5b1f17b1804b1-42cdb529479mr137876545e9.8.1726592832612; 
+ Tue, 17 Sep 2024 10:07:12 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
+ ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42da22d7e2esm107873265e9.13.2024.09.17.10.07.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Sep 2024 10:07:12 -0700 (PDT)
+Message-ID: <45f44392-cb56-4341-ab1d-7d7f28554c77@redhat.com>
+Date: Tue, 17 Sep 2024 19:07:10 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240913220542.18305-3-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 12/17] migration/multifd: Device state transfer support
+ - send side
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: mail@maciej.szmigiero.name, Alex Williamson <alex.williamson@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
+ <fdcfd68dfcf3b20278a4495eb639905b2a8e8ff3.1724701542.git.maciej.szmigiero@oracle.com>
+ <87h6b4nosy.fsf@suse.de> <ZuCickYhs3nf2ERC@x1n> <87zfoc1zms.fsf@suse.de>
+ <ZuOGAb3988ExsrHi@x1n> <87o74r1yfw.fsf@suse.de> <ZuRJ8i4T_vUzrawY@x1n>
+ <87ldzv1tpb.fsf@suse.de> <ZuRYouLwikc4OYye@x1n>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <ZuRYouLwikc4OYye@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -83,7 +96,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,129 +112,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 13, 2024 at 07:05:42PM -0300, Fabiano Rosas wrote:
-> Fix a segmentation fault in multifd when rb->receivedmap is cleared
-> too early.
-> 
-> After commit 5ef7e26bdb ("migration/multifd: solve zero page causing
-> multiple page faults"), multifd started using the rb->receivedmap
-> bitmap, which belongs to ram.c and is initialized and *freed* from the
-> ram SaveVMHandlers.
-> 
-> Multifd threads are live until migration_incoming_state_destroy(),
-> which is called after qemu_loadvm_state_cleanup(), leading to a crash
-> when accessing rb->receivedmap.
-> 
-> process_incoming_migration_co()        ...
->   qemu_loadvm_state()                  multifd_nocomp_recv()
->     qemu_loadvm_state_cleanup()          ramblock_recv_bitmap_set_offset()
->       rb->receivedmap = NULL               set_bit_atomic(..., rb->receivedmap)
->   ...
->   migration_incoming_state_destroy()
->     multifd_recv_cleanup()
->       multifd_recv_terminate_threads(NULL)
-> 
-> Move the loadvm cleanup into migration_incoming_state_destroy(), after
-> multifd_recv_cleanup() to ensure multifd thread have already exited
-> when rb->receivedmap is cleared.
-> 
-> The have_listen_thread logic can now be removed because its purpose
-> was to delay cleanup until postcopy_ram_listen_thread() had finished.
-> 
-> CC: qemu-stable@nongnu.org
-> Fixes: 5ef7e26bdb ("migration/multifd: solve zero page causing multiple page faults")
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  migration/migration.c | 1 +
->  migration/migration.h | 1 -
->  migration/savevm.c    | 9 ---------
->  3 files changed, 1 insertion(+), 10 deletions(-)
-> 
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 3dea06d577..b190a574b1 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -378,6 +378,7 @@ void migration_incoming_state_destroy(void)
->      struct MigrationIncomingState *mis = migration_incoming_get_current();
->  
->      multifd_recv_cleanup();
-> +    qemu_loadvm_state_cleanup();
->  
->      if (mis->to_src_file) {
->          /* Tell source that we are done */
-> diff --git a/migration/migration.h b/migration/migration.h
-> index 38aa1402d5..20b0a5b66e 100644
-> --- a/migration/migration.h
-> +++ b/migration/migration.h
-> @@ -101,7 +101,6 @@ struct MigrationIncomingState {
->      /* Set this when we want the fault thread to quit */
->      bool           fault_thread_quit;
->  
-> -    bool           have_listen_thread;
->      QemuThread     listen_thread;
->  
->      /* For the kernel to send us notifications */
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index d0759694fd..532ee5e4b0 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -2076,10 +2076,8 @@ static void *postcopy_ram_listen_thread(void *opaque)
->       * got a bad migration state).
->       */
->      migration_incoming_state_destroy();
-> -    qemu_loadvm_state_cleanup();
->  
->      rcu_unregister_thread();
-> -    mis->have_listen_thread = false;
->      postcopy_state_set(POSTCOPY_INCOMING_END);
->  
->      object_unref(OBJECT(migr));
-> @@ -2130,7 +2128,6 @@ static int loadvm_postcopy_handle_listen(MigrationIncomingState *mis)
->          return -1;
->      }
->  
-> -    mis->have_listen_thread = true;
->      postcopy_thread_create(mis, &mis->listen_thread, "mig/dst/listen",
->                             postcopy_ram_listen_thread, QEMU_THREAD_DETACHED);
->      trace_loadvm_postcopy_handle_listen("return");
-> @@ -2978,11 +2975,6 @@ int qemu_loadvm_state(QEMUFile *f)
->  
->      trace_qemu_loadvm_state_post_main(ret);
->  
-> -    if (mis->have_listen_thread) {
-> -        /* Listen thread still going, can't clean up yet */
-> -        return ret;
-> -    }
+[ ... ]
 
-Hmm, I wonder whether we would still need this.  IIUC it's not only about
-cleanup, but also that when postcopy is involved, dst QEMU postpones doing
-any of the rest in the qemu_loadvm_state_main() call.
-
-E.g. cpu put, aka, cpu_synchronize_all_post_init(), is also done in
-loadvm_postcopy_handle_run_bh() later.
-
-IOW, I'd then expect when this patch applied we'll put cpu twice?
-
-I think the should_send_vmdesc() part is fine, as it returns false for
-postcopy anyway.  However not sure on the cpu post_init above.
-
-> -
->      if (ret == 0) {
->          ret = qemu_file_get_error(f);
->      }
-> @@ -3022,7 +3014,6 @@ int qemu_loadvm_state(QEMUFile *f)
->          }
->      }
->  
-> -    qemu_loadvm_state_cleanup();
->      cpu_synchronize_all_post_init();
->  
->      return ret;
-> -- 
-> 2.35.3
+>>> I as a patch writer always like to do that when it's essential.  Normally
+>>> the case is I don't have enough reviewer resources to help me get a better
+>>> design, or discuss about it.
+>>
+>> Right, but we can't keep providing a moving target. See the thread pool
+>> discussion for an example. It's hard to work that way. The discussion
+>> here is similar, we introduced the union, now we're moving to the
+>> struct. And you're right that the changes here are small, so let's not
+>> get caught in that.
 > 
+> What's your suggestion on the thread pool?  Should we merge the change
+> where vfio creates the threads on its own (assuming vfio maintainers are ok
+> with it)?
+> 
+> I would say no, that's what I suggested.  I'd start with reusing
+> ThreadPool, then we found issue when Stefan reported worry on abusing the
+> API.  All these discussions seem sensible to me so far.  We can't rush on
+> these until we figure things out step by step.  I don't see a way.
+> 
+> I saw Cedric suggesting to not even create a thread on recv side.  I am not
+> sure whether that's easy, but I'd agree with Cedric if possible.  I think
+> Maciej could have a point where it can block mutlifd threads, aka, IO
+> threads, which might be unwanted.
 
--- 
-Peter Xu
+Sorry, If I am adding noise on this topic. I made this suggestion
+because I spotted some asymmetry in the proposal.
+
+The send and recv implementation in VFIO relies on different
+interfaces with different level of complexity. The send part is
+using a set of multifd callbacks called from multifd threads,
+if I am correct. Whereas the recv part is directly implemented
+in VFIO with local thread(s?) doing their own state receive cookery.
+
+I was expecting a common interface to minimize assumptions on both
+ends. It doesn't have to be callback based. It could be a set of
+services a subsystem could use to transfer state in parallel.
+<side note>
+      VFIO migration is driven by numerous callbacks and it is
+      difficult to understand the context in which these are called.
+      Adding more callbacks might not be the best approach.
+</side note>
+
+The other comment was on optimisation. If this is an optimisation
+then I would expect, first, a non-optimized version not using threads
+(on the recv side).
+
+VFIO Migration is a "new" feature which needs some more run-in.
+That said, it is stable, MLX5 VFs devices have good support, you
+can rely on me to evaluate the future respins.
+
+Thanks,
+
+C.
 
 
