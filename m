@@ -4,59 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10221C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Sep 2024 23:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26639C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 00:21:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqLU5-0006Pn-OZ; Mon, 16 Sep 2024 19:50:22 -0400
+	id 1sqLxQ-0005gT-0b; Mon, 16 Sep 2024 20:20:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1sqLU3-0006H4-I2; Mon, 16 Sep 2024 19:50:19 -0400
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>)
+ id 1sqLxM-0005dV-9Y; Mon, 16 Sep 2024 20:20:37 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1sqLU1-00024P-TX; Mon, 16 Sep 2024 19:50:19 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id B23245C3114;
- Mon, 16 Sep 2024 23:50:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154FDC4CEC4;
- Mon, 16 Sep 2024 23:50:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1726530616;
- bh=EcihBU2MW+o0k8STiYL5wfgfRi+z+e3ydSW7l+a5gAw=;
- h=Date:From:To:cc:Subject:In-Reply-To:References:From;
- b=RGB2J96z0XM6/2N1YgdJL1hrET9dwWbaDhoLTvF8NJVBBzsOIyCxVhID0f9Mm7/FI
- MDo1dFqc2ihsQb+75KauXTS95u5y7oB7kHJmJ8qMOv8nogC7ApweXU5PWRTKrTJmKE
- azIVOi20Ms9eLdjkPk9P9apALizLi5pnnfCeq5+PgYXW9V2UT0yYWQdaRsX13sOmq1
- KXrKpowqs+eUrVw1K5icr9oY6KsCKXROLDykw+7TaV3Aa9ntu0FHeOvv5ND1S1MtDZ
- FgW1X7STNq2ASK9rVzamI1jlbQulGfwtsbf0dJ7EJZzgndGWQg8LL4YmVGQ9Zaewpx
- BQmMWPto4BNxA==
-Date: Mon, 16 Sep 2024 16:50:12 -0700 (PDT)
-From: Stefano Stabellini <sstabellini@kernel.org>
-X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-cc: qemu-devel@nongnu.org, sstabellini@kernel.org, anthony@xenproject.org, 
- paul@xen.org, peter.maydell@linaro.org, alex.bennee@linaro.org, 
- edgar.iglesias@amd.com, xen-devel@lists.xenproject.org, 
- qemu-arm@nongnu.org
-Subject: Re: [PATCH v1 4/4] hw/arm: xenpvh: Enable PCI for ARM PVH
-In-Reply-To: <20240916150853.1216703-5-edgar.iglesias@gmail.com>
-Message-ID: <alpine.DEB.2.22.394.2409161649590.1417852@ubuntu-linux-20-04-desktop>
-References: <20240916150853.1216703-1-edgar.iglesias@gmail.com>
- <20240916150853.1216703-5-edgar.iglesias@gmail.com>
-User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>)
+ id 1sqLx9-0004h7-0F; Mon, 16 Sep 2024 20:20:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
+ :Subject; bh=tMr2hCwjWAs6864CxYZ41XYc60jRLO1VTLyODAr5PCM=; b=X+TK+9Dk6XwCZw52
+ ATwgnXS4EFBaF/PNaTC4WFvgFWjOgaTeWU0S85wgjPGl5LEJekEfLzNbhUTKZL9WmsoLH4xgybwpH
+ 1KNDwvy1ecY6NeA1NvyX9PiNE/WGd1kb96RJ6WBzdpQ54mrDp9XaEj0mANKcK4Z9mf6kHdAbcjxjF
+ C8khg3txoITzD+GRhX/5pUm/Djuwm8zUMtuS/OI9hDWEOpQJlZ5xb/2F74Juzy0vBBotZdvUIaOMU
+ bO9bSIsT6mBdE7229mZ4E/MDrOHdybogpCBl561QX6fqOzpTC/NHSQWqllDgQSYuFnyqd1M/hAu4K
+ Il13a1fC4G2hlW/Iig==;
+Received: from localhost ([127.0.0.1] helo=dalek.home.treblig.org)
+ by mx.treblig.org with esmtp (Exim 4.96)
+ (envelope-from <dave@treblig.org>) id 1sqLwx-0062n3-2I;
+ Tue, 17 Sep 2024 00:20:11 +0000
+From: dave@treblig.org
+To: jsnow@redhat.com, vsementsov@yandex-team.ru, kwolf@redhat.com,
+ hreitz@redhat.com
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: [PATCH] block: Remove unused aio_task_pool_empty
+Date: Tue, 17 Sep 2024 01:20:07 +0100
+Message-ID: <20240917002007.330689-1-dave@treblig.org>
+X-Mailer: git-send-email 2.46.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=sstabellini@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dave@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,54 +65,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 16 Sep 2024, Edgar E. Iglesias wrote:
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> 
-> Enable PCI support for the ARM Xen PVH machine.
-> 
-> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+aio_task_pool_empty has been unused since it was added in
+  6e9b225f73 ("block: introduce aio task pool")
 
+Remove it.
 
-> ---
->  hw/arm/xen-pvh.c | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
-> 
-> diff --git a/hw/arm/xen-pvh.c b/hw/arm/xen-pvh.c
-> index 28af3910ea..33f0dd5982 100644
-> --- a/hw/arm/xen-pvh.c
-> +++ b/hw/arm/xen-pvh.c
-> @@ -39,6 +39,16 @@ static void xen_arm_instance_init(Object *obj)
->                                           VIRTIO_MMIO_DEV_SIZE };
->  }
->  
-> +static void xen_pvh_set_pci_intx_irq(void *opaque, int intx_irq, int level)
-> +{
-> +    XenPVHMachineState *s = XEN_PVH_MACHINE(opaque);
-> +    int irq = s->cfg.pci_intx_irq_base + intx_irq;
-> +
-> +    if (xendevicemodel_set_irq_level(xen_dmod, xen_domid, irq, level)) {
-> +        error_report("xendevicemodel_set_pci_intx_level failed");
-> +    }
-> +}
-> +
->  static void xen_arm_machine_class_init(ObjectClass *oc, void *data)
->  {
->      XenPVHMachineClass *xpc = XEN_PVH_MACHINE_CLASS(oc);
-> @@ -69,7 +79,11 @@ static void xen_arm_machine_class_init(ObjectClass *oc, void *data)
->      /* Xen/ARM does not use buffered IOREQs.  */
->      xpc->handle_bufioreq = HVM_IOREQSRV_BUFIOREQ_OFF;
->  
-> +    /* PCI INTX delivery.  */
-> +    xpc->set_pci_intx_irq = xen_pvh_set_pci_intx_irq;
-> +
->      /* List of supported features known to work on PVH ARM.  */
-> +    xpc->has_pci = true;
->      xpc->has_tpm = true;
->      xpc->has_virtio_mmio = true;
->  
-> -- 
-> 2.43.0
-> 
+Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+---
+ block/aio_task.c         | 5 -----
+ include/block/aio_task.h | 2 --
+ 2 files changed, 7 deletions(-)
+
+diff --git a/block/aio_task.c b/block/aio_task.c
+index 9bd17ea2c1..bb5c05f455 100644
+--- a/block/aio_task.c
++++ b/block/aio_task.c
+@@ -119,8 +119,3 @@ int aio_task_pool_status(AioTaskPool *pool)
+ 
+     return pool->status;
+ }
+-
+-bool aio_task_pool_empty(AioTaskPool *pool)
+-{
+-    return pool->busy_tasks == 0;
+-}
+diff --git a/include/block/aio_task.h b/include/block/aio_task.h
+index 18a9c41f4e..c81d637617 100644
+--- a/include/block/aio_task.h
++++ b/include/block/aio_task.h
+@@ -40,8 +40,6 @@ void aio_task_pool_free(AioTaskPool *);
+ /* error code of failed task or 0 if all is OK */
+ int aio_task_pool_status(AioTaskPool *pool);
+ 
+-bool aio_task_pool_empty(AioTaskPool *pool);
+-
+ /* User provides filled @task, however task->pool will be set automatically */
+ void coroutine_fn aio_task_pool_start_task(AioTaskPool *pool, AioTask *task);
+ 
+-- 
+2.46.0
+
 
