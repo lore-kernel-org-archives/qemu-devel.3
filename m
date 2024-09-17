@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CE29CAC58D
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 16:40:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BF80CAC58F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 16:43:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqbE7-00047C-Hg; Tue, 17 Sep 2024 12:38:55 -0400
+	id 1sqbHz-0004ub-Du; Tue, 17 Sep 2024 12:42:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqbE1-0003lV-OZ
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 12:38:50 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqbHy-0004qP-6q
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 12:42:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqbE0-0008UB-45
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 12:38:49 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqbHw-0000gZ-Pg
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 12:42:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726591127;
+ s=mimecast20190719; t=1726591371;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=SxzMnh3LR9kbrVwkJ0PAxEWUkiep6PxwmVi9MFzuWOA=;
- b=XLekxeaGoeXNnb1Bb7+w3EVlgdkqbylCzYbpe3K4gYtqUDK8Eo+IhI3LU+p1dd4zQvDSgx
- f12bpMM+Cc6kt5Gyrhfs6N2X795xf9JncRq/tDiIcZSHPwdjniedR7+PYR7uramaDDqiJ+
- pQjoQFr6js4KkFolLV87g7YWhu69b1k=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xXAoODM891WyCuZ2lqkot9OAEth3wXGCS4cYfWEQaLE=;
+ b=MPdkuQET6cCp1mVWWMs2PFDtTGczHY5xylmop+SgW0oSuo5A8MBeLLiFz6wHJgW6qGzw0a
+ HdhU0WFAjAVaK0Mq9tm0BwY9qJNWyYkqauehoCj4We/LuIcisopQjliSXvxMyuSRWjZEbD
+ aII5z73OiXZOV1rs/vTDYX6uIuRE5zw=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-671-DTBg2HQHO2WmhZ25XzctQg-1; Tue, 17 Sep 2024 12:38:46 -0400
-X-MC-Unique: DTBg2HQHO2WmhZ25XzctQg-1
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-45828d941f1so94162121cf.3
- for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 09:38:46 -0700 (PDT)
+ us-mta-595-uNItc66YNs2vRFPSb_qOiQ-1; Tue, 17 Sep 2024 12:42:50 -0400
+X-MC-Unique: uNItc66YNs2vRFPSb_qOiQ-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4581253bd26so91612751cf.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 09:42:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726591125; x=1727195925;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SxzMnh3LR9kbrVwkJ0PAxEWUkiep6PxwmVi9MFzuWOA=;
- b=S4aSQOJ03VAUDEOPYMJ+4cXWyfzklLu9mtbDVdiiNc3/TMWrN287KdwPNRLUPsCJoz
- hohMbyWFo77HRfhyQ4KrzBbUt8QMgkRM+kh1eRqZ3j7zgDomRjuaAxMZOCSdORE4wC/b
- H28qAmHu1RbmdLgej8giW+2GQ1IghrrS4uYFfUa6ZpeBdV3/aQqe8UjsZH59LMZPec8n
- /oWsZ6X64Qg8jC4MKmuR6oxzombxBgq7JR8Jgk/f1gjU4wUYpKnPvyZ1kwCop//DrIIO
- NgMWxtOr1SuPvd2mpfxsrduiqX+YUFlerRH9dn0mJBZlxMsFv1/ThcVNXFwcP6I+cfTe
- Yo2g==
-X-Gm-Message-State: AOJu0Yxdvi5jEqTFfzW7+NJNUbh9YwHrbfVl+RDIBHYRCdkD9HpN/BZ2
- hn5oR+djdkqvc64IOhqCtIpnOvCjVWAeOum7ccJgUOM8IbAe1elmjJnPLtqCsoJBOaemM7LFkim
- ZOOKE1UTjRMmNvhij76wSDRhT/1+y/NbnxuwbeAfprwReCqU2JBtwd8de7XWEXCy2zdDUuaaYGY
- x4UXcJPqnfASJEcM7ptk87n6/0qxVnbigJhqlP
-X-Received: by 2002:ac8:7e92:0:b0:458:53da:a4e9 with SMTP id
- d75a77b69052e-45b081eee24mr9435571cf.4.1726591125180; 
- Tue, 17 Sep 2024 09:38:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFDjAhygfHh81isAqOnGCSAncBV8wM9/StrqPBLPnSzDPMKQ8lr8HcuiEJLSJBzcyegFYrs6Q==
-X-Received: by 2002:ac8:7e92:0:b0:458:53da:a4e9 with SMTP id
- d75a77b69052e-45b081eee24mr9435191cf.4.1726591124707; 
- Tue, 17 Sep 2024 09:38:44 -0700 (PDT)
-Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ d=1e100.net; s=20230601; t=1726591370; x=1727196170;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xXAoODM891WyCuZ2lqkot9OAEth3wXGCS4cYfWEQaLE=;
+ b=jJ/bt/93ox1tsIFIfLLdYoXC0v7bO4e8rAEuTLyWFm4XJ3XoyzfD9WXm1cQwo23gjm
+ jWW3uxd5mHdhfVP01DdhfmnzaeNYXF8UNCgMPdT3+Y8xHUnDxxEf51eSuNATXlkaGvH2
+ bfHSNhkF5mrtc8HxJTDlT/4jdFp1h2cMd7f9NUfnSAXWznmP0MEUf3t8p2ItthF6cy5c
+ gnlJVxxL5mQrWe4VzJVsGuoYkMjWX9gMcyPskPp6ZsR+ftlnZV4wGTqqTsUTsgCLjHGo
+ w264lT3rQFBblzbg+2u8pqiWwsRelZ+2vNIFStQ7P5vg13ouBOoRSnTFWaCXCm8uVQwH
+ GwGA==
+X-Gm-Message-State: AOJu0Yz0mmArPgPhIS1JqtCkFfRw+lYZMXgA0VLwVYSaWDao7rArPGjM
+ cLH+ZiVzNmF5ZlpVZ0Za7088NNPzPwfR/5W3c+v86H+FMkGs56G9q5YbHTv0c0Nwc00OEM+6NXN
+ Z3ZiL2EdPUfWkUsIpIJ0imiLRS7BBe9R6q+CG+3WH/UhG6izSlwg43m2YL8Ap7wY=
+X-Received: by 2002:ac8:5a45:0:b0:458:37c4:dec0 with SMTP id
+ d75a77b69052e-45860416d76mr305956431cf.53.1726591369945; 
+ Tue, 17 Sep 2024 09:42:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFjDS667fKgiyiFgr+NZYps9ec7sWON3H5+hSyfONeysdzf+cI8NwXSGACOU8IWrBDWVdu9BQ==
+X-Received: by 2002:ac8:5a45:0:b0:458:37c4:dec0 with SMTP id
+ d75a77b69052e-45860416d76mr305956141cf.53.1726591369597; 
+ Tue, 17 Sep 2024 09:42:49 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-459aad2497asm39942911cf.95.2024.09.17.09.38.42
+ d75a77b69052e-459aad0293asm40025591cf.74.2024.09.17.09.42.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Sep 2024 09:38:43 -0700 (PDT)
+ Tue, 17 Sep 2024 09:42:48 -0700 (PDT)
+Date: Tue, 17 Sep 2024 12:42:47 -0400
 From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Vitaly Kuznetsov <vkuznets@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- peterx@redhat.com, Prasad Pandit <ppandit@redhat.com>,
- Julia Suvorova <jusual@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>
-Subject: [PATCH v4 4/4] KVM: Rename KVMState->nr_slots to nr_slots_max
-Date: Tue, 17 Sep 2024 12:38:35 -0400
-Message-ID: <20240917163835.194664-5-peterx@redhat.com>
-X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20240917163835.194664-1-peterx@redhat.com>
-References: <20240917163835.194664-1-peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH 1/2] migration/savevm: Remove extra load cleanup calls
+Message-ID: <Zumxh3Ey56YhkXcW@x1n>
+References: <20240913220542.18305-1-farosas@suse.de>
+ <20240913220542.18305-2-farosas@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240913220542.18305-2-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -102,78 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This value used to reflect the maximum supported memslots from KVM kernel.
-Rename it to be clearer.
+On Fri, Sep 13, 2024 at 07:05:41PM -0300, Fabiano Rosas wrote:
+> There are two qemu_loadvm_state_cleanup() calls that were introduced
+> when qemu_loadvm_state_setup() was still called before loading the
+> configuration section, so there was state to be cleaned up if the
+> header checks failed.
+> 
+> However, commit 9e14b84908 ("migration/savevm: load_header before
+> load_setup") has moved that configuration section part to
+> qemu_loadvm_state_header() which now happens before
+> qemu_loadvm_state_setup().
+> 
+> Remove the cleanup calls that are now misplaced.
+> 
+> CC: qemu-stable@nongnu.org
+> Fixes: 9e14b84908 ("migration/savevm: load_header before load_setup")
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- include/sysemu/kvm_int.h |  4 ++--
- accel/kvm/kvm-all.c      | 12 ++++++------
- 2 files changed, 8 insertions(+), 8 deletions(-)
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-diff --git a/include/sysemu/kvm_int.h b/include/sysemu/kvm_int.h
-index 914c5c9ec5..a1e72763da 100644
---- a/include/sysemu/kvm_int.h
-+++ b/include/sysemu/kvm_int.h
-@@ -103,8 +103,8 @@ struct KVMDirtyRingReaper {
- struct KVMState
- {
-     AccelState parent_obj;
--
--    int nr_slots;
-+    /* Max number of KVM slots supported */
-+    int nr_slots_max;
-     int fd;
-     int vmfd;
-     int coalesced_mmio;
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index bceb154943..7fa4019544 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -183,8 +183,8 @@ static bool kvm_slots_grow(KVMMemoryListener *kml, unsigned int nr_slots_new)
-     unsigned int i, cur = kml->nr_slots_allocated;
-     KVMSlot *slots;
- 
--    if (nr_slots_new > kvm_state->nr_slots) {
--        nr_slots_new = kvm_state->nr_slots;
-+    if (nr_slots_new > kvm_state->nr_slots_max) {
-+        nr_slots_new = kvm_state->nr_slots_max;
-     }
- 
-     if (cur >= nr_slots_new) {
-@@ -225,7 +225,7 @@ unsigned int kvm_get_max_memslots(void)
- {
-     KVMState *s = KVM_STATE(current_accel());
- 
--    return s->nr_slots;
-+    return s->nr_slots_max;
- }
- 
- unsigned int kvm_get_free_memslots(void)
-@@ -243,7 +243,7 @@ unsigned int kvm_get_free_memslots(void)
-     }
-     kvm_slots_unlock();
- 
--    return s->nr_slots - used_slots;
-+    return s->nr_slots_max - used_slots;
- }
- 
- /* Called with KVMMemoryListener.slots_lock held */
-@@ -2513,10 +2513,10 @@ static int kvm_init(MachineState *ms)
-         (kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
- 
-     kvm_immediate_exit = kvm_check_extension(s, KVM_CAP_IMMEDIATE_EXIT);
--    s->nr_slots = kvm_check_extension(s, KVM_CAP_NR_MEMSLOTS);
-+    s->nr_slots_max = kvm_check_extension(s, KVM_CAP_NR_MEMSLOTS);
- 
-     /* If unspecified, use the default value */
--    if (!s->nr_slots) {
-+    if (!s->nr_slots_max) {
-         s->nr_slots_max = KVM_MEMSLOTS_NR_MAX_DEFAULT;
-     }
- 
+We don't need to copy stable, am I right?  IIUC it's a good cleanup,
+however not a bug fix, as qemu_loadvm_state_cleanup() can be invoked
+without calling _setup() safely?
+
+> ---
+>  migration/savevm.c | 2 --
+>  1 file changed, 2 deletions(-)
+> 
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index d500eae979..d0759694fd 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -2732,13 +2732,11 @@ static int qemu_loadvm_state_header(QEMUFile *f)
+>      if (migrate_get_current()->send_configuration) {
+>          if (qemu_get_byte(f) != QEMU_VM_CONFIGURATION) {
+>              error_report("Configuration section missing");
+> -            qemu_loadvm_state_cleanup();
+>              return -EINVAL;
+>          }
+>          ret = vmstate_load_state(f, &vmstate_configuration, &savevm_state, 0);
+>  
+>          if (ret) {
+> -            qemu_loadvm_state_cleanup();
+>              return ret;
+>          }
+>      }
+> -- 
+> 2.35.3
+> 
+
 -- 
-2.45.0
+Peter Xu
 
 
