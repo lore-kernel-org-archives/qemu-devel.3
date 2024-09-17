@@ -4,132 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F28F1C3ABD8
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 06:02:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A01FC3ABD4
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 06:03:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqRHJ-0002GM-1t; Tue, 17 Sep 2024 02:01:33 -0400
+	id 1sqRJ8-0006Oa-HN; Tue, 17 Sep 2024 02:03:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sqRHH-0002Fs-KC
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 02:01:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sqRJ6-0006Nb-FV; Tue, 17 Sep 2024 02:03:24 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sqRHG-0005h7-3m
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 02:01:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726552887;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=6xMrs0J9TDrNL2JLLIY33DZd2WES7crOQcx9Jm1MJLY=;
- b=MacK5Zl4zVky3daYzYnGxpELxyntZXx2lqvPJAXrsj0c4vFpkiWTJriSIpHz2JczeoHa+L
- oEXwItPoZOUdr+uso04U4mTTadlmuXtv0Dbm+pKD7Wk6AQ+Y6gilmL41fQhf5jm5e4wblO
- PXQNJ/nNjo/dSfH3HQLv06GKCiv92cU=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-295-iyTd6iqoOyG3BZon3yeaNQ-1; Tue, 17 Sep 2024 02:01:25 -0400
-X-MC-Unique: iyTd6iqoOyG3BZon3yeaNQ-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5c251a09953so2316773a12.3
- for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 23:01:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726552884; x=1727157684;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6xMrs0J9TDrNL2JLLIY33DZd2WES7crOQcx9Jm1MJLY=;
- b=bz5Wrdw8g5OWSCAYZTVAKOKBvy6T6O8Qnvu8vBD7nYYjKV35ySo9VS/H44xWRMP45f
- VoSxkBFqrQK+peDLWEaX0fllMfzPlEvwu0mSKuvuhRkicvNPQ50NHhzEmXQ1vl4qGCer
- tvkQW/DifRKjyH+UOrnKBa/tW0ZWu3MvxvD2LDarMcJmAQQphkPuGHDfifXpZMHZGMrN
- a0591VOhiZtSefE/htAAesMd1SDiy09Z3qC+Z0jFwdCZ0yW7dhvYgUMZwYoT7WGbzn9j
- LWXkBUnlTrE8WsckRWEzLsrw3KKr3n/av5cS15qJUyrr/71IsgsEkXR22kKNCOTmnUMc
- GRYA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWCpsDaAp1H1+AXat2Qr/DxsBa7id7vf0IYqoapOWU/Zr8hZUgw1qhLHi4uZ8/ez93ssqBKjt3V6l67@nongnu.org
-X-Gm-Message-State: AOJu0YwGhjUCMYb+99w2DkKubAJI+XJGlj5qZtk5pRyXNQSp0EJ2Nr13
- ER9MnBDdd5Hf0CtJOmEBsdBmBef3PImW5xLZ8cF/D8zzlZbDMk8AM+GxCiEHtUyMarHigpA0i73
- L78tKZUfeb6vz33LpFOvhLtpK49XfkCr3hrN67cxnmUBdODM6q5dNNHH5SGBu
-X-Received: by 2002:a05:6402:5242:b0:5c3:cc7d:c29d with SMTP id
- 4fb4d7f45d1cf-5c41ddb1659mr11243661a12.6.1726552884028; 
- Mon, 16 Sep 2024 23:01:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHPdYUW5Zr6HRuuxK93BWMiu/Kz2jqOpuabNlXmTrSt9Kc9hdvN16cS0L+5fJfz+kPdyZxGSQ==
-X-Received: by 2002:a05:6402:5242:b0:5c3:cc7d:c29d with SMTP id
- 4fb4d7f45d1cf-5c41ddb1659mr11243546a12.6.1726552882075; 
- Mon, 16 Sep 2024 23:01:22 -0700 (PDT)
-Received: from [192.168.0.6] (ip-109-42-49-166.web.vodafone.de.
- [109.42.49.166]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c42bb8c8d7sm3290779a12.64.2024.09.16.23.01.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Sep 2024 23:01:21 -0700 (PDT)
-Message-ID: <83c88cdd-85ba-482b-ad15-253f2ef913f8@redhat.com>
-Date: Tue, 17 Sep 2024 08:01:19 +0200
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sqRJ3-0005ke-T6; Tue, 17 Sep 2024 02:03:24 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48GIUxBC031825;
+ Tue, 17 Sep 2024 06:03:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:mime-version:content-type
+ :content-transfer-encoding; s=pp1; bh=T/lJDcSfogMGw619SGK7MnmnrU
+ Krj4mJyQow+ngW0yw=; b=BSSUYRGpehwrrodtoIsF7fCaFttaXTeAEo2i++GiYV
+ hZwb8yzA1NA01kT89jP+gzUtoepCZIFXsbxZjMmN0IWL806eC4ZM8+1tRhjyTOUm
+ LC5ItEVwH7/sqa4pd5G2FS6BSj6rp4NL+gIPfzAXQWHPbdB+imF+ss8EGBiwskcE
+ pPdTE3t/y49B+DDjCNYXKKnHIRp/sUAgspqDisYxZcIloWFS0uxQ7671WAinTkDs
+ ZBctvJ+2Wpe3rRCaBgXAzhpyYZ8Krhchcap4tydJqqkqN41GHT+BoSWHFhQEMCHj
+ Pp3X9Rczfbd2LYIUyMbRPtBiZUX52K4lIheqOELMDH5Q==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n3uj64e4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Sep 2024 06:03:11 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48H63AS3007276;
+ Tue, 17 Sep 2024 06:03:10 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n3uj64dy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Sep 2024 06:03:10 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48H2bEOQ030649;
+ Tue, 17 Sep 2024 06:03:09 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41npan396f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Sep 2024 06:03:09 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48H637Xu33423828
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 17 Sep 2024 06:03:07 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6886D2004F;
+ Tue, 17 Sep 2024 06:03:07 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6FC3F2004B;
+ Tue, 17 Sep 2024 06:03:06 +0000 (GMT)
+Received: from ltcrain34-lp1.aus.stglabs.ibm.com (unknown [9.3.101.40])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 17 Sep 2024 06:03:06 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, danielhb413@gmail.com, clg@kaod.org
+Subject: [PATCH] ppc/spapr: remove deprecated machines specific code
+Date: Tue, 17 Sep 2024 11:33:00 +0530
+Message-ID: <20240917060300.943496-1-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] .gitlab-ci.d/crossbuilds.yml: Force 'make check' to -j2
- for cross-i686-tci
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-References: <20240916134913.2540486-1-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240916134913.2540486-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: p5AQIcp2IDuol7GBGIzVGAxDXpgHrAhP
+X-Proofpoint-GUID: zviwOE2RiclJ4aPGCfSi-44Kqqh23EBI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-17_01,2024-09-16_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ mlxlogscore=999 adultscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ clxscore=1015 bulkscore=0 suspectscore=0 mlxscore=0 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409170040
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,36 +110,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/09/2024 15.49, Peter Maydell wrote:
-> In commit 1374ed49e1453c300 we forced the cross-i686-tci job to -j1 to
-> see if this helped with test timeouts. It seems to help with that but
-> on the other hand we now sometimes run into the overall 60 minute
-> job timeout. Try -j2 instead.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   .gitlab-ci.d/crossbuilds.yml | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
-> index 1e21d082aa4..95dfc392244 100644
-> --- a/.gitlab-ci.d/crossbuilds.yml
-> +++ b/.gitlab-ci.d/crossbuilds.yml
-> @@ -62,11 +62,11 @@ cross-i686-tci:
->       IMAGE: debian-i686-cross
->       ACCEL: tcg-interpreter
->       EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,aarch64-softmmu,aarch64-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins --disable-kvm
-> -    # Force tests to run in series, to see whether this
-> +    # Force tests to run with reduced parallelism, to see whether this
->       # reduces the flakiness of this CI job. The CI
->       # environment by default shows us 8 CPUs and so we
->       # would otherwise be using a parallelism of 9.
-> -    MAKE_CHECK_ARGS: check check-tcg -j1
-> +    MAKE_CHECK_ARGS: check check-tcg -j2
->   
->   cross-mipsel-system:
->     extends: .cross_system_build_job
+Commit 1392617d3576 intended to tag pseries-2.1 - 2.11 machines as
+deprecated with reasons mentioned in its commit log.
+Removing the arch specific code for the now deprecated machine types.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Suggested-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ hw/ppc/spapr.c | 235 -------------------------------------------------
+ 1 file changed, 235 deletions(-)
+
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 8aa3ce7449..04f06377b4 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -5157,241 +5157,6 @@ static void spapr_machine_2_12_sxxm_class_options(MachineClass *mc)
+ 
+ DEFINE_SPAPR_MACHINE_TAGGED(2, 12, sxxm);
+ 
+-/*
+- * pseries-2.11
+- */
+-
+-static void spapr_machine_2_11_class_options(MachineClass *mc)
+-{
+-    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
+-
+-    spapr_machine_2_12_class_options(mc);
+-    smc->default_caps.caps[SPAPR_CAP_HTM] = SPAPR_CAP_ON;
+-    compat_props_add(mc->compat_props, hw_compat_2_11, hw_compat_2_11_len);
+-}
+-
+-DEFINE_SPAPR_MACHINE(2, 11);
+-
+-/*
+- * pseries-2.10
+- */
+-
+-static void spapr_machine_2_10_class_options(MachineClass *mc)
+-{
+-    spapr_machine_2_11_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_10, hw_compat_2_10_len);
+-}
+-
+-DEFINE_SPAPR_MACHINE(2, 10);
+-
+-/*
+- * pseries-2.9
+- */
+-
+-static void spapr_machine_2_9_class_options(MachineClass *mc)
+-{
+-    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
+-    static GlobalProperty compat[] = {
+-        { TYPE_POWERPC_CPU, "pre-2.10-migration", "on" },
+-    };
+-
+-    spapr_machine_2_10_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_9, hw_compat_2_9_len);
+-    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-    smc->pre_2_10_has_unused_icps = true;
+-    smc->resize_hpt_default = SPAPR_RESIZE_HPT_DISABLED;
+-}
+-
+-DEFINE_SPAPR_MACHINE(2, 9);
+-
+-/*
+- * pseries-2.8
+- */
+-
+-static void spapr_machine_2_8_class_options(MachineClass *mc)
+-{
+-    static GlobalProperty compat[] = {
+-        { TYPE_SPAPR_PCI_HOST_BRIDGE, "pcie-extended-configuration-space", "off" },
+-    };
+-
+-    spapr_machine_2_9_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_8, hw_compat_2_8_len);
+-    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-    mc->numa_mem_align_shift = 23;
+-}
+-
+-DEFINE_SPAPR_MACHINE(2, 8);
+-
+-/*
+- * pseries-2.7
+- */
+-
+-static bool phb_placement_2_7(SpaprMachineState *spapr, uint32_t index,
+-                              uint64_t *buid, hwaddr *pio,
+-                              hwaddr *mmio32, hwaddr *mmio64,
+-                              unsigned n_dma, uint32_t *liobns, Error **errp)
+-{
+-    /* Legacy PHB placement for pseries-2.7 and earlier machine types */
+-    const uint64_t base_buid = 0x800000020000000ULL;
+-    const hwaddr phb_spacing = 0x1000000000ULL; /* 64 GiB */
+-    const hwaddr mmio_offset = 0xa0000000; /* 2 GiB + 512 MiB */
+-    const hwaddr pio_offset = 0x80000000; /* 2 GiB */
+-    const uint32_t max_index = 255;
+-    const hwaddr phb0_alignment = 0x10000000000ULL; /* 1 TiB */
+-
+-    uint64_t ram_top = MACHINE(spapr)->ram_size;
+-    hwaddr phb0_base, phb_base;
+-    int i;
+-
+-    /* Do we have device memory? */
+-    if (MACHINE(spapr)->device_memory) {
+-        /* Can't just use maxram_size, because there may be an
+-         * alignment gap between normal and device memory regions
+-         */
+-        ram_top = MACHINE(spapr)->device_memory->base +
+-            memory_region_size(&MACHINE(spapr)->device_memory->mr);
+-    }
+-
+-    phb0_base = QEMU_ALIGN_UP(ram_top, phb0_alignment);
+-
+-    if (index > max_index) {
+-        error_setg(errp, "\"index\" for PAPR PHB is too large (max %u)",
+-                   max_index);
+-        return false;
+-    }
+-
+-    *buid = base_buid + index;
+-    for (i = 0; i < n_dma; ++i) {
+-        liobns[i] = SPAPR_PCI_LIOBN(index, i);
+-    }
+-
+-    phb_base = phb0_base + index * phb_spacing;
+-    *pio = phb_base + pio_offset;
+-    *mmio32 = phb_base + mmio_offset;
+-    /*
+-     * We don't set the 64-bit MMIO window, relying on the PHB's
+-     * fallback behaviour of automatically splitting a large "32-bit"
+-     * window into contiguous 32-bit and 64-bit windows
+-     */
+-
+-    return true;
+-}
+-
+-static void spapr_machine_2_7_class_options(MachineClass *mc)
+-{
+-    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
+-    static GlobalProperty compat[] = {
+-        { TYPE_SPAPR_PCI_HOST_BRIDGE, "mem_win_size", "0xf80000000", },
+-        { TYPE_SPAPR_PCI_HOST_BRIDGE, "mem64_win_size", "0", },
+-        { TYPE_POWERPC_CPU, "pre-2.8-migration", "on", },
+-        { TYPE_SPAPR_PCI_HOST_BRIDGE, "pre-2.8-migration", "on", },
+-    };
+-
+-    spapr_machine_2_8_class_options(mc);
+-    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power7_v2.3");
+-    mc->default_machine_opts = "modern-hotplug-events=off";
+-    compat_props_add(mc->compat_props, hw_compat_2_7, hw_compat_2_7_len);
+-    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-    smc->phb_placement = phb_placement_2_7;
+-}
+-
+-DEFINE_SPAPR_MACHINE(2, 7);
+-
+-/*
+- * pseries-2.6
+- */
+-
+-static void spapr_machine_2_6_class_options(MachineClass *mc)
+-{
+-    static GlobalProperty compat[] = {
+-        { TYPE_SPAPR_PCI_HOST_BRIDGE, "ddw", "off" },
+-    };
+-
+-    spapr_machine_2_7_class_options(mc);
+-    mc->has_hotpluggable_cpus = false;
+-    compat_props_add(mc->compat_props, hw_compat_2_6, hw_compat_2_6_len);
+-    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-}
+-
+-DEFINE_SPAPR_MACHINE(2, 6);
+-
+-/*
+- * pseries-2.5
+- */
+-
+-static void spapr_machine_2_5_class_options(MachineClass *mc)
+-{
+-    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
+-    static GlobalProperty compat[] = {
+-        { "spapr-vlan", "use-rx-buffer-pools", "off" },
+-    };
+-
+-    spapr_machine_2_6_class_options(mc);
+-    smc->use_ohci_by_default = true;
+-    compat_props_add(mc->compat_props, hw_compat_2_5, hw_compat_2_5_len);
+-    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-}
+-
+-DEFINE_SPAPR_MACHINE(2, 5);
+-
+-/*
+- * pseries-2.4
+- */
+-
+-static void spapr_machine_2_4_class_options(MachineClass *mc)
+-{
+-    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
+-
+-    spapr_machine_2_5_class_options(mc);
+-    smc->dr_lmb_enabled = false;
+-    compat_props_add(mc->compat_props, hw_compat_2_4, hw_compat_2_4_len);
+-}
+-
+-DEFINE_SPAPR_MACHINE(2, 4);
+-
+-/*
+- * pseries-2.3
+- */
+-
+-static void spapr_machine_2_3_class_options(MachineClass *mc)
+-{
+-    static GlobalProperty compat[] = {
+-        { "spapr-pci-host-bridge", "dynamic-reconfiguration", "off" },
+-    };
+-    spapr_machine_2_4_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_3, hw_compat_2_3_len);
+-    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-}
+-DEFINE_SPAPR_MACHINE(2, 3);
+-
+-/*
+- * pseries-2.2
+- */
+-
+-static void spapr_machine_2_2_class_options(MachineClass *mc)
+-{
+-    static GlobalProperty compat[] = {
+-        { TYPE_SPAPR_PCI_HOST_BRIDGE, "mem_win_size", "0x20000000" },
+-    };
+-
+-    spapr_machine_2_3_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_2, hw_compat_2_2_len);
+-    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-    mc->default_machine_opts = "modern-hotplug-events=off,suppress-vmdesc=on";
+-}
+-DEFINE_SPAPR_MACHINE(2, 2);
+-
+-/*
+- * pseries-2.1
+- */
+-
+-static void spapr_machine_2_1_class_options(MachineClass *mc)
+-{
+-    spapr_machine_2_2_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_1, hw_compat_2_1_len);
+-}
+-DEFINE_SPAPR_MACHINE(2, 1);
+-
+ static void spapr_machine_register_types(void)
+ {
+     type_register_static(&spapr_machine_info);
+-- 
+2.45.2
 
 
