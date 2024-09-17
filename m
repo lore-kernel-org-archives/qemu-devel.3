@@ -4,99 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 023F9CAC58E
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 17:07:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18E97CAC591
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 17:18:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqbfe-000466-3q; Tue, 17 Sep 2024 13:07:22 -0400
+	id 1sqbpO-0004Jh-Jj; Tue, 17 Sep 2024 13:17:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sqbfc-00045c-Gf
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 13:07:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sqbfa-0003FR-Sg
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 13:07:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726592837;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1sqbpN-0004Io-8b; Tue, 17 Sep 2024 13:17:25 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1sqbpL-0004pu-C6; Tue, 17 Sep 2024 13:17:25 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id E522720131;
+ Tue, 17 Sep 2024 17:17:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726593438; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=3XKfZGPBgG4Iz4dKY6GaNQn0cpBFSkhMZlLUsHbrAoM=;
- b=Nj4SFOAFy27+TZIQasPgT1FZGAYGZEOzolgm3JaV8iXbnR/jJpxu72W+nHklcHBJ8ZH/AC
- kSxmbtk8NUxERDCyelSDkXLXfxdxkv5LMadzGQqDhTN2Jyk8Q1+ikmHcoJmCfxChzThcLF
- 3BsWMRQFdcs+SmIqB7+pH74Cw0vaJ+k=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-355-56a6C6NHObqD6mUwDc4jFw-1; Tue, 17 Sep 2024 13:07:15 -0400
-X-MC-Unique: 56a6C6NHObqD6mUwDc4jFw-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42cb236ad4aso38258445e9.3
- for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 10:07:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726592833; x=1727197633;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3XKfZGPBgG4Iz4dKY6GaNQn0cpBFSkhMZlLUsHbrAoM=;
- b=jn4t1/4Zn7raZkPmJic91vzuUpLN99BmeULdeIQSEQSaZPt2UOSdMn/cT6++w5gNJQ
- +/U8qOCASFughIBewGhIqXgj7VCHzT6TcjIB7W4z57B3md6ipjjLqltRBzYV5+SefzIh
- QMx4i9sn5V0/hlcyMx35RNvi2DlPCno0dlPmDdBL53xEGsEvgcfUQclCQ0tdlfetQNAq
- G+eBAQKDdWz2O+t6AobLVw5D2xoK2lLXfXbcFwGVsu19Q8ByeDw+/kAfd67PpCL3FSDg
- IcBMWH5yfwbN9yQDf/c7tJig1MdsltCZHh2bMLjoEPC96jyOnWlZ+3SKdOKBJabVj7pZ
- QwBw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQzulEVjDy/PXY2byePob1NB3612cX8ueK127p8f3sxa87HFYJubfWXPPsQEOWOxuuicRd7dlZXp7o@nongnu.org
-X-Gm-Message-State: AOJu0YzYonZN91HVXzu0yf+E4CbRHS+c0vCxXKmRippAR2jfYajYMabc
- U8oBYxtZmFzaU7wwFfuUz1HThibg95pd4MBxg5ZH5Eky6ZlYKUSteVL0dyun8n6Xouq7iUuGIwN
- SLqYKEcnKnsYMSRtYZ+6fgqHgEwvNI9jUE/zuq/3Gv32qDu40v9n+
-X-Received: by 2002:a05:600c:510f:b0:426:66e9:b844 with SMTP id
- 5b1f17b1804b1-42cdb529479mr137876785e9.8.1726592833139; 
- Tue, 17 Sep 2024 10:07:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGY7y/opb+aSl+6pfqnHnX3Vd63DEldQmhs8g9E7JqNvFTQk9wJQ/bJAyFzwUc73120LVa9Pg==
-X-Received: by 2002:a05:600c:510f:b0:426:66e9:b844 with SMTP id
- 5b1f17b1804b1-42cdb529479mr137876545e9.8.1726592832612; 
- Tue, 17 Sep 2024 10:07:12 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42da22d7e2esm107873265e9.13.2024.09.17.10.07.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Sep 2024 10:07:12 -0700 (PDT)
-Message-ID: <45f44392-cb56-4341-ab1d-7d7f28554c77@redhat.com>
-Date: Tue, 17 Sep 2024 19:07:10 +0200
+ bh=6KyYkef0jfQX81VnM2HEYNGbYquLz4TCQxi3ghZVPI0=;
+ b=KlNjEBMsIb2BdGR+mXGeMUP1KxvdrEgCvmGkhj7bDpnf+9z+QxY3rt2pmHUsnRSR1VTGMv
+ MHfGyB3jxmomcugpq3kBLo7Dia+JvJ4DNyrLzWqcvW+z/eyAmhicX2c6Yt6OBnwP8dF7AH
+ WwDFbQ4oaQg3tgLKWB1tXVV1tjNIPLU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726593438;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6KyYkef0jfQX81VnM2HEYNGbYquLz4TCQxi3ghZVPI0=;
+ b=8Tk2L+hqcP7M/JALhjJgL10fSD5CnV9+70ZZRoHaX/n1o2KUWmGkTpHHQltViz0wqjD8At
+ YmqsrnUwToNXpzBA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=vRRBJFoh;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=wZyS848S
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726593437; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6KyYkef0jfQX81VnM2HEYNGbYquLz4TCQxi3ghZVPI0=;
+ b=vRRBJFohXqpy/hpD5vcJ8MU/bMOHnsJjIdtZP748u13LbDIxjYhlJlzyCysc/LT/pg6Lao
+ iS/s5YBS4bvJtVcwtLQlMyCAtdN9owgiaH1YrsY+JvNOhC5wM364MZhWuXgYSbwO2g4yDl
+ dtdm7DZ5aVD7swN8s57MB9vGckyuSxY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726593437;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6KyYkef0jfQX81VnM2HEYNGbYquLz4TCQxi3ghZVPI0=;
+ b=wZyS848Sc9ZwSKoNPbWV1NTsfGHN+0ILtmd9eTDH9sduJARPd5LBjI8zOFOmrCExahyZXj
+ NgaAz93itRhMoADg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6B523139CE;
+ Tue, 17 Sep 2024 17:17:17 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id A6q7DJ256WYDdAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 17 Sep 2024 17:17:17 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH 1/2] migration/savevm: Remove extra load cleanup calls
+In-Reply-To: <Zumxh3Ey56YhkXcW@x1n>
+References: <20240913220542.18305-1-farosas@suse.de>
+ <20240913220542.18305-2-farosas@suse.de> <Zumxh3Ey56YhkXcW@x1n>
+Date: Tue, 17 Sep 2024 14:17:14 -0300
+Message-ID: <87ikuuyzc5.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/17] migration/multifd: Device state transfer support
- - send side
-To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: mail@maciej.szmigiero.name, Alex Williamson <alex.williamson@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <fdcfd68dfcf3b20278a4495eb639905b2a8e8ff3.1724701542.git.maciej.szmigiero@oracle.com>
- <87h6b4nosy.fsf@suse.de> <ZuCickYhs3nf2ERC@x1n> <87zfoc1zms.fsf@suse.de>
- <ZuOGAb3988ExsrHi@x1n> <87o74r1yfw.fsf@suse.de> <ZuRJ8i4T_vUzrawY@x1n>
- <87ldzv1tpb.fsf@suse.de> <ZuRYouLwikc4OYye@x1n>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <ZuRYouLwikc4OYye@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain
+X-Rspamd-Queue-Id: E522720131
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FROM_HAS_DN(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ TO_DN_SOME(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[nongnu.org:email, suse.de:dkim, suse.de:mid,
+ suse.de:email]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,60 +125,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[ ... ]
+Peter Xu <peterx@redhat.com> writes:
 
->>> I as a patch writer always like to do that when it's essential.  Normally
->>> the case is I don't have enough reviewer resources to help me get a better
->>> design, or discuss about it.
->>
->> Right, but we can't keep providing a moving target. See the thread pool
->> discussion for an example. It's hard to work that way. The discussion
->> here is similar, we introduced the union, now we're moving to the
->> struct. And you're right that the changes here are small, so let's not
->> get caught in that.
-> 
-> What's your suggestion on the thread pool?  Should we merge the change
-> where vfio creates the threads on its own (assuming vfio maintainers are ok
-> with it)?
-> 
-> I would say no, that's what I suggested.  I'd start with reusing
-> ThreadPool, then we found issue when Stefan reported worry on abusing the
-> API.  All these discussions seem sensible to me so far.  We can't rush on
-> these until we figure things out step by step.  I don't see a way.
-> 
-> I saw Cedric suggesting to not even create a thread on recv side.  I am not
-> sure whether that's easy, but I'd agree with Cedric if possible.  I think
-> Maciej could have a point where it can block mutlifd threads, aka, IO
-> threads, which might be unwanted.
+> On Fri, Sep 13, 2024 at 07:05:41PM -0300, Fabiano Rosas wrote:
+>> There are two qemu_loadvm_state_cleanup() calls that were introduced
+>> when qemu_loadvm_state_setup() was still called before loading the
+>> configuration section, so there was state to be cleaned up if the
+>> header checks failed.
+>> 
+>> However, commit 9e14b84908 ("migration/savevm: load_header before
+>> load_setup") has moved that configuration section part to
+>> qemu_loadvm_state_header() which now happens before
+>> qemu_loadvm_state_setup().
+>> 
+>> Remove the cleanup calls that are now misplaced.
+>> 
+>> CC: qemu-stable@nongnu.org
+>> Fixes: 9e14b84908 ("migration/savevm: load_header before load_setup")
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+>
+> We don't need to copy stable, am I right?  IIUC it's a good cleanup,
+> however not a bug fix, as qemu_loadvm_state_cleanup() can be invoked
+> without calling _setup() safely?
 
-Sorry, If I am adding noise on this topic. I made this suggestion
-because I spotted some asymmetry in the proposal.
-
-The send and recv implementation in VFIO relies on different
-interfaces with different level of complexity. The send part is
-using a set of multifd callbacks called from multifd threads,
-if I am correct. Whereas the recv part is directly implemented
-in VFIO with local thread(s?) doing their own state receive cookery.
-
-I was expecting a common interface to minimize assumptions on both
-ends. It doesn't have to be callback based. It could be a set of
-services a subsystem could use to transfer state in parallel.
-<side note>
-      VFIO migration is driven by numerous callbacks and it is
-      difficult to understand the context in which these are called.
-      Adding more callbacks might not be the best approach.
-</side note>
-
-The other comment was on optimisation. If this is an optimisation
-then I would expect, first, a non-optimized version not using threads
-(on the recv side).
-
-VFIO Migration is a "new" feature which needs some more run-in.
-That said, it is stable, MLX5 VFs devices have good support, you
-can rely on me to evaluate the future respins.
-
-Thanks,
-
-C.
-
+Hm, I think you're right. If we fail in the header part the multifd
+threads will still be waiting for the ram code to release them.
 
