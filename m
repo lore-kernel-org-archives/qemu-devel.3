@@ -4,56 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7EB6C36009
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 10:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17F72C3600E
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 10:36:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqVYn-00011r-JF; Tue, 17 Sep 2024 06:35:53 -0400
+	id 1sqVYp-0001KK-KW; Tue, 17 Sep 2024 06:35:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sqVYj-0000nu-Nw
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 06:35:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sqVYm-00014x-H5
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 06:35:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sqVYh-0007EF-To
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 06:35:49 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sqVYk-0007FS-Sv
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 06:35:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726569347;
+ s=mimecast20190719; t=1726569350;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=I/kQvYXXNA9PfnVpMRMcO+46aqwkomR8VO9CAsh4dC8=;
- b=L7YKhxUNZ7czQRzVchEOnrVp4dOHYMnsbHGfroT2Vqi4XdvuMUJpqHDMsYrWVfGM372B7K
- TmykO+jh99Ne2GTxUrOMx6oNY5SBlHiigamkja0+tB+I+qzcoQiUUim/2cSsKRuAOTpouN
- ozOQ0JaaEnXBx4N7Fmfq301EbVmarBA=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ufRQbjm7d7eCmJD9moGgnZPGW+ajo9ELmJ23ToN/Heo=;
+ b=VvqDD3Ttpt/ZjhChmVRw6VpsUdMk3ePWfyQwzxiDvgWbiP/Xn3EjLZ6PfMHElPwnQak4/P
+ ck8TYlpbQ5T1kpduWY49B/K1EmxGGBXsHO86lbzObzM3XYmAG4/+3cxxK2KlOzQ5hsOZdU
+ Gi++t/WaDXVqi3QVlVvMvf7Ey15VTo4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-302-P_94joMKMqWWIVN0Dbpj6w-1; Tue,
- 17 Sep 2024 06:35:44 -0400
-X-MC-Unique: P_94joMKMqWWIVN0Dbpj6w-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-265-WrEN7D5ROD2NE5JUo1Bk8g-1; Tue,
+ 17 Sep 2024 06:35:46 -0400
+X-MC-Unique: WrEN7D5ROD2NE5JUo1Bk8g-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DC0481953945; Tue, 17 Sep 2024 10:35:43 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A8F331955D4C; Tue, 17 Sep 2024 10:35:45 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.158])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 49AEA19560A3; Tue, 17 Sep 2024 10:35:41 +0000 (UTC)
+ id 6194E19560A3; Tue, 17 Sep 2024 10:35:44 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 00/17] s390x and test patches
-Date: Tue, 17 Sep 2024 12:35:23 +0200
-Message-ID: <20240917103540.149144-1-thuth@redhat.com>
+Subject: [PULL 01/17] tests/qtest/cdrom-test: Improve the machine detection in
+ the cdrom test
+Date: Tue, 17 Sep 2024 12:35:24 +0200
+Message-ID: <20240917103540.149144-2-thuth@redhat.com>
+In-Reply-To: <20240917103540.149144-1-thuth@redhat.com>
+References: <20240917103540.149144-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -77,73 +80,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- Hi!
+When configuring QEMU with the --without-default-devices switch, these
+tests are currently failing since they assume that the "pc" and "q35"
+machines are always available. Add some proper checks to make the test
+work without these machines, too.
 
-The following changes since commit ea9cdbcf3a0b8d5497cddf87990f1b39d8f3bb0a:
+Message-ID: <20240905191434.694440-3-thuth@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/qtest/cdrom-test.c | 77 ++++++++++++++++++++++------------------
+ 1 file changed, 42 insertions(+), 35 deletions(-)
 
-  Merge tag 'hw-misc-20240913' of https://github.com/philmd/qemu into staging (2024-09-15 18:27:40 +0100)
-
-are available in the Git repository at:
-
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2024-09-17
-
-for you to fetch changes up to 66659fe76d3577b2cc3aa36d3935e3a2e9558e82:
-
-  .gitlab-ci.d/crossbuilds.yml: Force 'make check' to -j2 for cross-i686-tci (2024-09-17 10:53:13 +0200)
-
-----------------------------------------------------------------
-* Make all qtest targets work with "--without-default-devices"
-* Replace assert(0) and assert(false) in qtests and s390x code
-* Enable the device aliases for or1k
-* Some other small test improvements
-
-----------------------------------------------------------------
-Daniel P. Berrangé (1):
-      gitlab: fix logic for changing docker tag on stable branches
-
-Matheus Tavares Bernardino (1):
-      docs/fuzz: fix outdated mention to enable-sanitizers
-
-Peter Maydell (1):
-      .gitlab-ci.d/crossbuilds.yml: Force 'make check' to -j2 for cross-i686-tci
-
-Philippe Mathieu-Daudé (1):
-      system: Sort QEMU_ARCH_VIRTIO_PCI definition
-
-Pierrick Bouvier (5):
-      tests/qtest: replace assert(0) with g_assert_not_reached()
-      tests/unit: replace assert(0) with g_assert_not_reached()
-      include/hw/s390x: replace assert(false) with g_assert_not_reached()
-      tests/qtest: replace assert(false) with g_assert_not_reached()
-      tests/qtest: remove break after g_assert_not_reached()
-
-Thomas Huth (8):
-      tests/qtest/cdrom-test: Improve the machine detection in the cdrom test
-      tests/qtest/boot-order-test: Make the machine name mandatory in this test
-      tests/qtest/hd-geo-test: Check for availability of "pc" machine before using it
-      tests/qtest/meson.build: Add more CONFIG switches checks for the x86 tests
-      tests/qtest: Disable numa-test if the default machine is not available
-      .gitlab-ci.d/buildtest: Build most targets in the build-without-defaults job
-      system: Enable the device aliases for or1k, too
-      tests/functional: Move the mips64el fuloong2e test into the thorough category
-
- docs/devel/testing/fuzzing.rst  |  5 +--
- include/hw/s390x/cpu-topology.h |  2 +-
- system/qdev-monitor.c           | 18 ++++++----
- tests/qtest/boot-order-test.c   |  4 +--
- tests/qtest/cdrom-test.c        | 77 ++++++++++++++++++++++-------------------
- tests/qtest/hd-geo-test.c       | 71 +++++++++++++++++++------------------
- tests/qtest/ipmi-bt-test.c      |  2 +-
- tests/qtest/ipmi-kcs-test.c     |  4 +--
- tests/qtest/migration-helpers.c |  1 -
- tests/qtest/numa-test.c         | 10 +++---
- tests/qtest/rtl8139-test.c      |  2 +-
- tests/unit/test-xs-node.c       |  4 +--
- .gitlab-ci.d/base.yml           |  2 +-
- .gitlab-ci.d/buildtest.yml      |  9 +----
- .gitlab-ci.d/crossbuilds.yml    |  4 +--
- tests/functional/meson.build    |  5 +--
- tests/qtest/meson.build         | 31 +++++++++--------
- 17 files changed, 131 insertions(+), 120 deletions(-)
+diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
+index 5d89e62515..9d72b24e4b 100644
+--- a/tests/qtest/cdrom-test.c
++++ b/tests/qtest/cdrom-test.c
+@@ -135,13 +135,35 @@ static void add_x86_tests(void)
+         return;
+     }
+ 
+-    qtest_add_data_func("cdrom/boot/default", "-cdrom ", test_cdboot);
+-    if (qtest_has_device("virtio-scsi-ccw")) {
+-        qtest_add_data_func("cdrom/boot/virtio-scsi",
+-                            "-device virtio-scsi -device scsi-cd,drive=cdr "
+-                            "-blockdev file,node-name=cdr,filename=",
+-                            test_cdboot);
++    if (qtest_has_machine("pc")) {
++        qtest_add_data_func("cdrom/boot/default", "-cdrom ", test_cdboot);
++        if (qtest_has_device("virtio-scsi-ccw")) {
++            qtest_add_data_func("cdrom/boot/virtio-scsi",
++                                "-device virtio-scsi -device scsi-cd,drive=cdr "
++                                "-blockdev file,node-name=cdr,filename=",
++                                test_cdboot);
++        }
++
++        if (qtest_has_device("am53c974")) {
++            qtest_add_data_func("cdrom/boot/am53c974",
++                                "-device am53c974 -device scsi-cd,drive=cd1 "
++                                "-drive if=none,id=cd1,format=raw,file=",
++                                test_cdboot);
++        }
++        if (qtest_has_device("dc390")) {
++            qtest_add_data_func("cdrom/boot/dc390",
++                                "-device dc390 -device scsi-cd,drive=cd1 "
++                                "-blockdev file,node-name=cd1,filename=",
++                                test_cdboot);
++        }
++        if (qtest_has_device("lsi53c895a")) {
++            qtest_add_data_func("cdrom/boot/lsi53c895a",
++                                "-device lsi53c895a -device scsi-cd,drive=cd1 "
++                                "-blockdev file,node-name=cd1,filename=",
++                                test_cdboot);
++        }
+     }
++
+     /*
+      * Unstable CI test under load
+      * See https://lists.gnu.org/archive/html/qemu-devel/2019-02/msg05509.html
+@@ -150,35 +172,20 @@ static void add_x86_tests(void)
+         qtest_add_data_func("cdrom/boot/isapc", "-M isapc "
+                             "-drive if=ide,media=cdrom,file=", test_cdboot);
+     }
+-    if (qtest_has_device("am53c974")) {
+-        qtest_add_data_func("cdrom/boot/am53c974",
+-                            "-device am53c974 -device scsi-cd,drive=cd1 "
+-                            "-drive if=none,id=cd1,format=raw,file=",
+-                            test_cdboot);
+-    }
+-    if (qtest_has_device("dc390")) {
+-        qtest_add_data_func("cdrom/boot/dc390",
+-                            "-device dc390 -device scsi-cd,drive=cd1 "
+-                            "-blockdev file,node-name=cd1,filename=",
+-                            test_cdboot);
+-    }
+-    if (qtest_has_device("lsi53c895a")) {
+-        qtest_add_data_func("cdrom/boot/lsi53c895a",
+-                            "-device lsi53c895a -device scsi-cd,drive=cd1 "
+-                            "-blockdev file,node-name=cd1,filename=",
+-                            test_cdboot);
+-    }
+-    if (qtest_has_device("megasas")) {
+-        qtest_add_data_func("cdrom/boot/megasas", "-M q35 "
+-                            "-device megasas -device scsi-cd,drive=cd1 "
+-                            "-blockdev file,node-name=cd1,filename=",
+-                            test_cdboot);
+-    }
+-    if (qtest_has_device("megasas-gen2")) {
+-        qtest_add_data_func("cdrom/boot/megasas-gen2", "-M q35 "
+-                            "-device megasas-gen2 -device scsi-cd,drive=cd1 "
+-                            "-blockdev file,node-name=cd1,filename=",
+-                            test_cdboot);
++
++    if (qtest_has_machine("q35")) {
++        if (qtest_has_device("megasas")) {
++            qtest_add_data_func("cdrom/boot/megasas", "-M q35 "
++                                "-device megasas -device scsi-cd,drive=cd1 "
++                                "-blockdev file,node-name=cd1,filename=",
++                                test_cdboot);
++        }
++        if (qtest_has_device("megasas-gen2")) {
++            qtest_add_data_func("cdrom/boot/megasas-gen2", "-M q35 "
++                                "-device megasas-gen2 -device scsi-cd,drive=cd1 "
++                                "-blockdev file,node-name=cd1,filename=",
++                                test_cdboot);
++        }
+     }
+ }
+ 
+-- 
+2.46.0
 
 
