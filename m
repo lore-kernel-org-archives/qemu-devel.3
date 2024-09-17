@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47D44C3ABDF
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 06:26:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 797C1C35FE4
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 06:49:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqReO-0006Ub-NN; Tue, 17 Sep 2024 02:25:24 -0400
+	id 1sqS0j-0004dy-6N; Tue, 17 Sep 2024 02:48:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1sqReL-0006Py-OQ
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 02:25:22 -0400
-Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1sqS0g-0004dP-GE
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 02:48:26 -0400
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1sqReI-0008Ff-H8
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 02:25:21 -0400
-Received: by mail-oi1-x233.google.com with SMTP id
- 5614622812f47-3e06853e579so2680885b6e.0
- for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 23:25:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1sqS0d-00026y-KC
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 02:48:26 -0400
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-710f0415ac8so2997605a34.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 23:48:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1726554317; x=1727159117;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1726555701; x=1727160501;
  darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4JuUamB5l2v4Heut1Ym/kfOJLl6QfdzCZRU1MAkfwig=;
- b=3e7Ua+keB6ypzxeuEQFu4QQrmkpvHZbshZzmxJDRtmpwvlKwjyTSKjlWVRgJnPyH6W
- d/ZXNZDREBAhK9OcM6mgddjHgNOS0YPWl8oejxAIbJ2b8W6K6rlR8Y/rI+4HZsN5lr6o
- JHL/SffYaNteNj1+pCTcwYsMfGRVmc3qPfHrkrIjBBudjrTIQT23pgMbsQXiXr+t7obX
- XVJ52BFHhl5YHClCzLwnER82kr5yrvucCDzp0BsbXgOeovhFGfmONHWRylVUXIv6mTWl
- yERehDW/ajTVNFOxIT2DHqAFbLpmbqxC1ciEifOvZr9vPOsRCyG4nueAC3B0ntE0MT83
- cugw==
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=jGKo0x8y/Urg5U2kUSiOyJdftvMwPNC5ZvSXQGTbFng=;
+ b=DIiAlRSPUpUUwwCvKxPN1BjkW41I0Uc0W3b6BGFiudsf+rxSxHR9qKVxPXGtrw7SwA
+ AwSmnyINH3Bso9FmnIG8I2UuHtYBKJA08q94AN+TUxpbiic9IMH86G6vU04Dajx2fKGz
+ nW19TzCico18KDc7Xw3bafWQrgYKmo6XpuE7eq+iyH9NqLJb9Y6v9YBm7d2bicTdWzSU
+ 0elhed5O7pjt46rKRgrjeDQvA2luQV+RZ8VApvwKKeysBShfhdUo7027L4C57QjW3Jnb
+ WKS5CpPs8i4AqLzFDnX4MhNsVWfJ1HIVsYACnf7K0yN399uop5o2SKxWl0U9Nm5AfAuW
+ QWrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726554317; x=1727159117;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4JuUamB5l2v4Heut1Ym/kfOJLl6QfdzCZRU1MAkfwig=;
- b=a1J5oPDlHeBt5Aqc3HMVh+uT+wwApD/EP9dEFeOEAgFe88c7oKVKurnSdkyu3r09mh
- PU506pmYYQYAczFwWVW6TG2fPxhLeQQ0Sm8znHIUG/1ZHmx/v7klE1izpwsm6ejC4sCF
- iVjtjp74e18GrvhaUqudZPOVmrqSr0NAFVidrm22KOp0TJatAknUG18OaYJmGJg6X7OJ
- nkEnHcLgjRl/1mjqTdMci3Qkq8AvNH89u0vBl7JOIGn0VFaJSADJFQOOkMgFjTXmu8rZ
- h3NY7nYZN7/VI0sFBauGSYl80NnZG4BiYTQWgRD4SA3T1aCoI7ejjMsNw27XalOOBNn2
- +lGg==
-X-Gm-Message-State: AOJu0YxSamtpLBAgBzveIqWxW5pW5xiKodwXQffYDoD2fmHn1HURquKD
- Ge9Ge5WtbQ9enxznPEVhro25dcp4cW8sF3r6+d1oAD1RHjRH2pzRJt3ZleJAp4zA2/b6xzdwJwO
- NIe8V5yyRKJTGbt6k2R9h81CrX2Q8FJiTvzBdrQ==
-X-Google-Smtp-Source: AGHT+IENSixNhQN4HUFMAtV1v4swQrAJhTb3f5Jy0znCldWB7Xymbn6XwAVTacp27qFRPrCOUar0NXHiPvMcHvB0aLU=
-X-Received: by 2002:a05:6808:199b:b0:3e0:5896:a0cf with SMTP id
- 5614622812f47-3e071ae36abmr10372204b6e.35.1726554316707; Mon, 16 Sep 2024
- 23:25:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726555701; x=1727160501;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jGKo0x8y/Urg5U2kUSiOyJdftvMwPNC5ZvSXQGTbFng=;
+ b=iZEPeNqBHSDKJh/uE058s3z2j2UKVFDjgiyPwhPiWelgw8BsN6wscq//7LeXLLOxtJ
+ rVBsdWzbq6tp/zgbszaH6XcmnigY2TlxC9AfySH2d8ybw2blBtf7wwhhfxceXo+pNitA
+ 1k67dDNUGkdMvQgLHIbIZrT20HIPjJmSlJEQpunWMTjMtVDLOnzDs2JXZY/NoXC07cU5
+ em6DEJa0HjuCwex10ENPsz9T0jvsFxENAeXKuK1owXq+hSvUC2J3NF1gV9IKYiKSP8d3
+ Cv9L5aV57+FK6XXTuF6wKaTNz8znImvi8PL1F2IL7XZnr9sN59P8EECQV1PAPkO/Grj4
+ rHvA==
+X-Gm-Message-State: AOJu0YzSDZeCtry+T6F4hgbS/kf5+QTU63gCYHpvQvraXCogNFOr3n5T
+ UZAI2KTE48qzrz7mB9tuYpUpfIeY59m4/GcRcibwEw+kPL6SbZDshPWUtaB4erE565ZafGYwgt0
+ ubr+BYbbbzNTZg3a1anPxZ+yIdojqQ+auFjFziw==
+X-Google-Smtp-Source: AGHT+IEzVLgzq3lWhx9zxnhW1GDSklwB/pRQQo7rYk/r1MkgejNyuLrGvQW5QAa2OexdKU7OYh7OR0qKnDBVp+LEsAE=
+X-Received: by 2002:a05:6870:c14e:b0:277:d195:ab88 with SMTP id
+ 586e51a60fabf-27c3f627623mr10223690fac.32.1726555700205; Mon, 16 Sep 2024
+ 23:48:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240916175708.1829059-1-mnissler@rivosinc.com>
- <c7ded7f1-3985-4694-b033-6070911f49dc@ilande.co.uk>
-In-Reply-To: <c7ded7f1-3985-4694-b033-6070911f49dc@ilande.co.uk>
-From: Mattias Nissler <mnissler@rivosinc.com>
-Date: Tue, 17 Sep 2024 08:25:06 +0200
-Message-ID: <CAGNS4TZP2yOCurhWoskzswDvMjmW7xd4Xeg-dCnEuMc7tAJTsQ@mail.gmail.com>
-Subject: Re: [PATCH] mac_dbdma: Remove leftover `dma_memory_unmap` calls
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- John Snow <jsnow@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-ppc@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
- envelope-from=mnissler@rivosinc.com; helo=mail-oi1-x233.google.com
+References: <cover.1726390098.git.yong.huang@smartx.com>
+ <531750c8d7b6c09f877b5f335a60fab402c168be.1726390098.git.yong.huang@smartx.com>
+ <87msk7z4l3.fsf@suse.de>
+In-Reply-To: <87msk7z4l3.fsf@suse.de>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Tue, 17 Sep 2024 14:48:03 +0800
+Message-ID: <CAK9dgmb_rK5HJOGTG=KXKgH=e2e8JV8aqoOWUHBEyjnc-+kiqg@mail.gmail.com>
+Subject: Re: [PATCH v1 1/7] migration: Introduce structs for background sync
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: multipart/alternative; boundary="00000000000032372f06224b13b5"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=yong.huang@smartx.com; helo=mail-ot1-x32c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,96 +93,417 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mark, thanks for testing and confirming that this doesn't cause any
-obvious breakage.
+--00000000000032372f06224b13b5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-For my curiosity, which path should this patch take to get into
-master? Peter, are you going to respin your pull request with this
-included?
+On Tue, Sep 17, 2024 at 5:11=E2=80=AFAM Fabiano Rosas <farosas@suse.de> wro=
+te:
 
-On Mon, Sep 16, 2024 at 11:06=E2=80=AFPM Mark Cave-Ayland
-<mark.cave-ayland@ilande.co.uk> wrote:
+> Hyman Huang <yong.huang@smartx.com> writes:
 >
-> On 16/09/2024 18:57, Mattias Nissler wrote:
->
-> > These were passing a NULL buffer pointer unconditionally, which happens
-> > to behave in a mostly benign way (except for the chance of an excess
-> > memory region unref and a bounce buffer leak). Per the function comment=
-,
-> > this was never meant to be accepted though, and triggers an assertion
-> > with the "softmmu: Support concurrent bounce buffers" change.
+> > shadow_bmap, iter_bmap and iter_dirty_pages are introduced
+> > to satisfy the need for background sync.
 > >
-> > Given that the code in question never sets up any mappings, just remove
-> > the unnecessary dma_memory_unmap calls along with the DBDMA_io struct
-> > fields that are now entirely unused.
+> > Meanwhile, introduce enumeration of sync method.
 > >
-> > Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 > > ---
-> >   hw/ide/macio.c             | 6 ------
-> >   include/hw/ppc/mac_dbdma.h | 4 ----
-> >   2 files changed, 10 deletions(-)
+> >  include/exec/ramblock.h | 45 +++++++++++++++++++++++++++++++++++++++++
+> >  migration/ram.c         |  6 ++++++
+> >  2 files changed, 51 insertions(+)
 > >
-> > diff --git a/hw/ide/macio.c b/hw/ide/macio.c
-> > index bec2e866d7..99477a3d13 100644
-> > --- a/hw/ide/macio.c
-> > +++ b/hw/ide/macio.c
-> > @@ -119,9 +119,6 @@ static void pmac_ide_atapi_transfer_cb(void *opaque=
-, int ret)
-> >       return;
+> > diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
+> > index 0babd105c0..0e327bc0ae 100644
+> > --- a/include/exec/ramblock.h
+> > +++ b/include/exec/ramblock.h
+> > @@ -24,6 +24,30 @@
+> >  #include "qemu/rcu.h"
+> >  #include "exec/ramlist.h"
 > >
-> >   done:
-> > -    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
-> > -                     io->dir, io->dma_len);
-> > -
-> >       if (ret < 0) {
-> >           block_acct_failed(blk_get_stats(s->blk), &s->acct);
-> >       } else {
-> > @@ -202,9 +199,6 @@ static void pmac_ide_transfer_cb(void *opaque, int =
-ret)
-> >       return;
+> > +/* Possible bits for cpu_physical_memory_sync_dirty_bitmap */
+> > +
+> > +/*
+> > + * The old-fashioned sync, which is, in turn, used for CPU
+> > + * throttle and memory transfer.
+>
+
+Using the traditional sync method, the page sending logic iterates
+the "bmap" to transfer dirty pages while the CPU throttle logic
+counts the amount of new dirty pages and detects convergence.
+There are two uses for "bmap".
+
+Using the modern sync method, "bmap" is used for transfer
+dirty pages and "iter_bmap" is used to track new dirty pages.
+
+
+> I'm not sure I follow what "in turn" is supposed to mean in this
+> sentence. Could you clarify?
+>
+
+Here I want to express "in sequence".  But failed obviously. :(
+
+
+>
+> > + */
+> > +#define RAMBLOCK_SYN_LEGACY_ITER   (1U << 0)
+>
+> So ITER is as opposed to background? I'm a bit confused with the terms.
+>
+
+Yes.
+
+
+>
+> > +
+> > +/*
+> > + * The modern sync, which is, in turn, used for CPU throttle
+> > + * and memory transfer.
+> > + */
+> > +#define RAMBLOCK_SYN_MODERN_ITER   (1U << 1)
+> > +
+> > +/* The modern sync, which is used for CPU throttle only */
+> > +#define RAMBLOCK_SYN_MODERN_BACKGROUND    (1U << 2)
+>
+> What's the plan for the "legacy" part? To be removed soon? Do we want to
+> remove it now? Maybe better to not use the modern/legacy terms unless we
+> want to give the impression that the legacy one is discontinued.
+>
+
+The bitmap they utilized to track the dirty page information was the
+distinction between the "legacy iteration" and the "modern iteration."
+The "iter_bmap" field is used by the "modern iteration" while the "bmap"
+field is used by the "legacy iteration."
+
+Since the refinement is now transparent and there is no API available to
+change the sync method, I actually want to remove it right now in order
+to simplify the logic. I'll include it in the next version.
+
+
+>
+> > +
+> > +#define RAMBLOCK_SYN_MASK  (0x7)
+> > +
+> > +typedef enum RAMBlockSynMode {
+> > +    RAMBLOCK_SYN_LEGACY, /* Old-fashined mode */
+> > +    RAMBLOCK_SYN_MODERN, /* Background-sync-supported mode */
+> > +} RAMBlockSynMode;
+>
+> I'm also wondering wheter we need this enum + the flags or one of them
+> would suffice. I'm looking at code like this in the following patches,
+> for instance:
+>
+
+If we drop the "legacy modern", we can simplify the following
+logic too.
+
+
+> +    if (sync_mode =3D=3D RAMBLOCK_SYN_MODERN) {
+> +        if (background) {
+> +            flag =3D RAMBLOCK_SYN_MODERN_BACKGROUND;
+> +        } else {
+> +            flag =3D RAMBLOCK_SYN_MODERN_ITER;
+> +        }
+> +    }
+
+Couldn't we use LEGACY/BG/ITER?
+
+
+> > +
+> >  struct RAMBlock {
+> >      struct rcu_head rcu;
+> >      struct MemoryRegion *mr;
+> > @@ -89,6 +113,27 @@ struct RAMBlock {
+> >       * could not have been valid on the source.
+> >       */
+> >      ram_addr_t postcopy_length;
+> > +
+> > +    /*
+> > +     * Used to backup the bmap during background sync to see whether
+> any dirty
+> > +     * pages were sent during that time.
+> > +     */
+> > +    unsigned long *shadow_bmap;
+> > +
+> > +    /*
+> > +     * The bitmap "bmap," which was initially used for both sync and
+> memory
+> > +     * transfer, will be replaced by two bitmaps: the previously used
+> "bmap"
+> > +     * and the recently added "iter_bmap." Only the memory transfer is
+> > +     * conducted with the previously used "bmap"; the recently added
+> > +     * "iter_bmap" is utilized for dirty bitmap sync.
+> > +     */
+> > +    unsigned long *iter_bmap;
+> > +
+> > +    /* Number of new dirty pages during iteration */
+> > +    uint64_t iter_dirty_pages;
+> > +
+> > +    /* If background sync has shown up during iteration */
+> > +    bool background_sync_shown_up;
+> >  };
+> >  #endif
+> >  #endif
+> > diff --git a/migration/ram.c b/migration/ram.c
+> > index 67ca3d5d51..f29faa82d6 100644
+> > --- a/migration/ram.c
+> > +++ b/migration/ram.c
+> > @@ -2362,6 +2362,10 @@ static void ram_bitmaps_destroy(void)
+> >          block->bmap =3D NULL;
+> >          g_free(block->file_bmap);
+> >          block->file_bmap =3D NULL;
+> > +        g_free(block->shadow_bmap);
+> > +        block->shadow_bmap =3D NULL;
+> > +        g_free(block->iter_bmap);
+> > +        block->iter_bmap =3D NULL;
+> >      }
+> >  }
 > >
-> >   done:
-> > -    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
-> > -                     io->dir, io->dma_len);
-> > -
-> >       if (s->dma_cmd =3D=3D IDE_DMA_READ || s->dma_cmd =3D=3D IDE_DMA_W=
-RITE) {
-> >           if (ret < 0) {
-> >               block_acct_failed(blk_get_stats(s->blk), &s->acct);
-> > diff --git a/include/hw/ppc/mac_dbdma.h b/include/hw/ppc/mac_dbdma.h
-> > index 4a3f644516..c774f6bf84 100644
-> > --- a/include/hw/ppc/mac_dbdma.h
-> > +++ b/include/hw/ppc/mac_dbdma.h
-> > @@ -44,10 +44,6 @@ struct DBDMA_io {
-> >       DBDMA_end dma_end;
-> >       /* DMA is in progress, don't start another one */
-> >       bool processing;
-> > -    /* DMA request */
-> > -    void *dma_mem;
-> > -    dma_addr_t dma_len;
-> > -    DMADirection dir;
-> >   };
-> >
-> >   /*
+> > @@ -2753,6 +2757,8 @@ static void ram_list_init_bitmaps(void)
+> >              }
+> >              block->clear_bmap_shift =3D shift;
+> >              block->clear_bmap =3D bitmap_new(clear_bmap_size(pages,
+> shift));
+> > +            block->shadow_bmap =3D bitmap_new(pages);
+> > +            block->iter_bmap =3D bitmap_new(pages);
+> >          }
+> >      }
+> >  }
 >
-> Thanks for looking at this, Matthias. I've given it a quick spin around v=
-arious PPC
-> Mac images and it looks good to me, so:
+
+
+--=20
+Best regards
+
+--00000000000032372f06224b13b5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 17, 20=
+24 at 5:11=E2=80=AFAM Fabiano Rosas &lt;<a href=3D"mailto:farosas@suse.de">=
+farosas@suse.de</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" s=
+tyle=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:so=
+lid;border-left-color:rgb(204,204,204);padding-left:1ex">Hyman Huang &lt;<a=
+ href=3D"mailto:yong.huang@smartx.com" target=3D"_blank">yong.huang@smartx.=
+com</a>&gt; writes:<br>
+<br>
+&gt; shadow_bmap, iter_bmap and iter_dirty_pages are introduced<br>
+&gt; to satisfy the need for background sync.<br>
+&gt;<br>
+&gt; Meanwhile, introduce enumeration of sync method.<br>
+&gt;<br>
+&gt; Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com=
+" target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 include/exec/ramblock.h | 45 +++++++++++++++++++++++++++++++++++=
+++++++<br>
+&gt;=C2=A0 migration/ram.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 6 +++++=
++<br>
+&gt;=C2=A0 2 files changed, 51 insertions(+)<br>
+&gt;<br>
+&gt; diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h<br>
+&gt; index 0babd105c0..0e327bc0ae 100644<br>
+&gt; --- a/include/exec/ramblock.h<br>
+&gt; +++ b/include/exec/ramblock.h<br>
+&gt; @@ -24,6 +24,30 @@<br>
+&gt;=C2=A0 #include &quot;qemu/rcu.h&quot;<br>
+&gt;=C2=A0 #include &quot;exec/ramlist.h&quot;<br>
+&gt;=C2=A0 <br>
+&gt; +/* Possible bits for cpu_physical_memory_sync_dirty_bitmap */<br>
+&gt; +<br>
+&gt; +/*<br>
+&gt; + * The old-fashioned sync, which is, in turn, used for CPU<br>
+&gt; + * throttle and memory transfer.<br></blockquote><div><br></div><div =
+class=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans=
+-serif">Using the traditional sync method, the page sending logic iterates<=
+/div><div class=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&=
+quot;,sans-serif">the &quot;bmap&quot; to transfer dirty pages while the CP=
+U throttle logic</div><div class=3D"gmail_default" style=3D"font-family:&qu=
+ot;comic sans ms&quot;,sans-serif">counts the amount of new dirty pages and=
+ detects convergence.</div><div class=3D"gmail_default" style=3D"font-famil=
+y:&quot;comic sans ms&quot;,sans-serif">There are two uses for &quot;bmap&q=
+uot;.</div><div class=3D"gmail_default" style=3D"font-family:&quot;comic sa=
+ns ms&quot;,sans-serif"><br></div><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif">Using the modern sync method=
+, &quot;bmap&quot; is used for transfer</div><div class=3D"gmail_default" s=
+tyle=3D"font-family:&quot;comic sans ms&quot;,sans-serif">dirty pages and &=
+quot;iter_bmap&quot; is used to track new dirty pages.</div><div><br></div>=
+<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
+left-width:1px;border-left-style:solid;border-left-color:rgb(204,204,204);p=
+adding-left:1ex">
+<br>
+I&#39;m not sure I follow what &quot;in turn&quot; is supposed to mean in t=
+his<br>
+sentence. Could you clarify?<br></blockquote><div><br></div><div><div style=
+=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_defaul=
+t">Here I want to express &quot;in sequence&quot;.=C2=A0 But failed obvious=
+ly. :(</div></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;=
+border-left-color:rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; + */<br>
+&gt; +#define RAMBLOCK_SYN_LEGACY_ITER=C2=A0 =C2=A0(1U &lt;&lt; 0)<br>
+<br>
+So ITER is as opposed to background? I&#39;m a bit confused with the terms.=
+<br></blockquote><div><br></div><div><div style=3D"font-family:&quot;comic =
+sans ms&quot;,sans-serif" class=3D"gmail_default">Yes.=C2=A0</div></div><di=
+v>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left-width:1px;border-left-style:solid;border-left-color:rgb(=
+204,204,204);padding-left:1ex">
+<br>
+&gt; +<br>
+&gt; +/*<br>
+&gt; + * The modern sync, which is, in turn, used for CPU throttle<br>
+&gt; + * and memory transfer.<br>
+&gt; + */<br>
+&gt; +#define RAMBLOCK_SYN_MODERN_ITER=C2=A0 =C2=A0(1U &lt;&lt; 1)<br>
+&gt; +<br>
+&gt; +/* The modern sync, which is used for CPU throttle only */<br>
+&gt; +#define RAMBLOCK_SYN_MODERN_BACKGROUND=C2=A0 =C2=A0 (1U &lt;&lt; 2)<b=
+r>
+<br>
+What&#39;s the plan for the &quot;legacy&quot; part? To be removed soon? Do=
+ we want to<br>
+remove it now? Maybe better to not use the modern/legacy terms unless we<br=
 >
-> Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->
-> My guess is that the current use of dma_memory_unmap() was a misunderstan=
-ding/bug
-> when porting the macio IDE device over to use the byte-aligned block DMA =
-helpers, so
-> I think you can also add:
->
-> Fixes: be1e343995 ("macio: switch over to new byte-aligned DMA helpers")
->
->
-> ATB,
->
-> Mark.
->
+want to give the impression that the legacy one is discontinued.<br></block=
+quote><div><br></div><div><div style=3D"font-family:&quot;comic sans ms&quo=
+t;,sans-serif" class=3D"gmail_default">The bitmap they utilized to track th=
+e dirty page information was the</div><div style=3D"font-family:&quot;comic=
+ sans ms&quot;,sans-serif" class=3D"gmail_default">distinction between the =
+&quot;legacy iteration&quot; and the &quot;modern iteration.&quot;</div><di=
+v style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail=
+_default">The &quot;iter_bmap&quot; field is used by the &quot;modern itera=
+tion&quot; while the &quot;bmap&quot;</div><div style=3D"font-family:&quot;=
+comic sans ms&quot;,sans-serif" class=3D"gmail_default">field is used by th=
+e &quot;legacy iteration.&quot;<br></div><div style=3D"font-family:&quot;co=
+mic sans ms&quot;,sans-serif" class=3D"gmail_default"><br></div><div style=
+=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_defaul=
+t">Since the refinement is now transparent and there is no API available to=
+</div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=
+=3D"gmail_default">change the sync method, I actually want to remove it rig=
+ht now in order</div><div style=3D"font-family:&quot;comic sans ms&quot;,sa=
+ns-serif" class=3D"gmail_default">to simplify the logic. I&#39;ll include i=
+t in the next version.</div></div><div>=C2=A0</div><blockquote class=3D"gma=
+il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-le=
+ft-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; +<br>
+&gt; +#define RAMBLOCK_SYN_MASK=C2=A0 (0x7)<br>
+&gt; +<br>
+&gt; +typedef enum RAMBlockSynMode {<br>
+&gt; +=C2=A0 =C2=A0 RAMBLOCK_SYN_LEGACY, /* Old-fashined mode */<br>
+&gt; +=C2=A0 =C2=A0 RAMBLOCK_SYN_MODERN, /* Background-sync-supported mode =
+*/<br>
+&gt; +} RAMBlockSynMode;<br>
+<br>
+I&#39;m also wondering wheter we need this enum + the flags or one of them<=
+br>
+would suffice. I&#39;m looking at code like this in the following patches,<=
+br>
+for instance:<br></blockquote><div><br></div><div><span style=3D"font-famil=
+y:&quot;comic sans ms&quot;,sans-serif">If we drop the &quot;legacy modern&=
+quot;, we can simplify <span class=3D"gmail_default" style=3D"font-family:&=
+quot;comic sans ms&quot;,sans-serif"></span>t<span class=3D"gmail_default" =
+style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">he following</sp=
+an></span></div><div><span style=3D"font-family:&quot;comic sans ms&quot;,s=
+ans-serif"><span class=3D"gmail_default" style=3D"font-family:&quot;comic s=
+ans ms&quot;,sans-serif">logic</span>=C2=A0too.</span>=C2=A0<span class=3D"=
+gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-serif"><=
+/span><br></div><div><span class=3D"gmail_default" style=3D"font-family:&qu=
+ot;comic sans ms&quot;,sans-serif"><br></span></div><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-l=
+eft-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">
+<br>
++=C2=A0 =C2=A0 if (sync_mode =3D=3D RAMBLOCK_SYN_MODERN) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (background) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 flag =3D RAMBLOCK_SYN_MODERN_BAC=
+KGROUND;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 flag =3D RAMBLOCK_SYN_MODERN_ITE=
+R;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 }</blockquote><blockquote class=3D"gmail_quote" style=3D"mar=
+gin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-=
+left-color:rgb(204,204,204);padding-left:1ex">
+Couldn&#39;t we use LEGACY/BG/ITER?</blockquote><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-=
+style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; +<br>
+&gt;=C2=A0 struct RAMBlock {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 struct rcu_head rcu;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 struct MemoryRegion *mr;<br>
+&gt; @@ -89,6 +113,27 @@ struct RAMBlock {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* could not have been valid on the source.<b=
+r>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 ram_addr_t postcopy_length;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 /*<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* Used to backup the bmap during background sync =
+to see whether any dirty<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* pages were sent during that time.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 unsigned long *shadow_bmap;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 /*<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* The bitmap &quot;bmap,&quot; which was initiall=
+y used for both sync and memory<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* transfer, will be replaced by two bitmaps: the =
+previously used &quot;bmap&quot;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* and the recently added &quot;iter_bmap.&quot; O=
+nly the memory transfer is<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* conducted with the previously used &quot;bmap&q=
+uot;; the recently added<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* &quot;iter_bmap&quot; is utilized for dirty bit=
+map sync.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 unsigned long *iter_bmap;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 /* Number of new dirty pages during iteration */<br>
+&gt; +=C2=A0 =C2=A0 uint64_t iter_dirty_pages;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 /* If background sync has shown up during iteration */<=
+br>
+&gt; +=C2=A0 =C2=A0 bool background_sync_shown_up;<br>
+&gt;=C2=A0 };<br>
+&gt;=C2=A0 #endif<br>
+&gt;=C2=A0 #endif<br>
+&gt; diff --git a/migration/ram.c b/migration/ram.c<br>
+&gt; index 67ca3d5d51..f29faa82d6 100644<br>
+&gt; --- a/migration/ram.c<br>
+&gt; +++ b/migration/ram.c<br>
+&gt; @@ -2362,6 +2362,10 @@ static void ram_bitmaps_destroy(void)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;bmap =3D NULL;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(block-&gt;file_bmap);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;file_bmap =3D NULL;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(block-&gt;shadow_bmap);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;shadow_bmap =3D NULL;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(block-&gt;iter_bmap);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;iter_bmap =3D NULL;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt; @@ -2753,6 +2757,8 @@ static void ram_list_init_bitmaps(void)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;clear_bmap_s=
+hift =3D shift;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;clear_bmap =
+=3D bitmap_new(clear_bmap_size(pages, shift));<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;shadow_bmap =3D b=
+itmap_new(pages);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;iter_bmap =3D bit=
+map_new(pages);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 }<br>
+</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
+gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
+iv dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font>=
+</div></div></div>
+
+--00000000000032372f06224b13b5--
 
