@@ -4,74 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38CEAC35FF3
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 08:33:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB492C35FF4
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 08:36:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqTeR-0004Ws-3K; Tue, 17 Sep 2024 04:33:36 -0400
+	id 1sqThS-0004TI-IG; Tue, 17 Sep 2024 04:36:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sqTeB-0004Sy-Ad
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 04:33:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sqTe9-0005bw-0Y
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 04:33:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726561996;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=M4PpRA2KlQ+aB1jqHcBSB16nRdAX7Lce0AuAHDQga2I=;
- b=QcmrF6SubNWslTp+m5I5x0ZZB15yCiB3ofcfpWt6dGedRxsPV/CyMcjjPUE8clpRoO6kNx
- RxiOXC5VqJmrJ97DTnfukSx+TuxcVjSuep1ZhBlpWGnWLo/GKbp5k119GsB98byhvqB/i6
- q+zNx7E+QaQxHUsFLVWC6rPjxgMcm2U=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-111-BH7uwUt1NoeitExoSeJ3Ow-1; Tue,
- 17 Sep 2024 04:33:12 -0400
-X-MC-Unique: BH7uwUt1NoeitExoSeJ3Ow-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7221119560B0; Tue, 17 Sep 2024 08:33:11 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.39.193.72])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AA0361956095; Tue, 17 Sep 2024 08:33:10 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 783F118000A6; Tue, 17 Sep 2024 10:33:08 +0200 (CEST)
-Date: Tue, 17 Sep 2024 10:33:08 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Song Gao <gaosong@loongson.cn>
-Subject: Re: [PULL 0/4] Edk2 stable202408 20240916 patches
-Message-ID: <fpuym4qketft2623iobercv2yyz75g4wilr63e4h7vrj5qtqce@ynjvl2af64sf>
-References: <20240916122603.71615-1-kraxel@redhat.com>
- <CAFEAcA92v0UByDWykb7P=Ecd206WO+WNzdU2U=Q51o-fepPUFw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1sqThO-0004SY-3Q
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 04:36:38 -0400
+Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1sqThM-00067y-J0
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 04:36:37 -0400
+Received: by mail-oo1-xc2e.google.com with SMTP id
+ 006d021491bc7-5e5568f1baaso951776eaf.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 01:36:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1726562192; x=1727166992; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=qVQqfUHY4tV0D5MLmX3JhZxcTGyb9S5vkvePgnWyIo8=;
+ b=ZZSUAuRKPEBDlrS47phBE0xMdvvLFKssOO2nBe5ZS8wcrOrQIrDCfxWafA1WNiIrfT
+ ve5I1x8CBprQCqCLKDgDLkqZuN01aXOAnwhMLz+4URlMU4DHNRea+XxTj/l0fEdP9GPb
+ YqrWQm0cXwujrnQe17Y35bjCEwo7mUiik/U8blEUxllEjfQ9y7j5ZiLDqBh93PUKjpMC
+ o8yBVYVBHPpIyUXJInoZBdEP+sy5paY6MO+kER5hEJzq7H7GnrVOFEg/85uuz6w6azP0
+ n8wmnQkZejkmMNyyko5iGqqYHhwcaNgLCKbdkvwkJuF2IuIHnq1ar/T/13MIIQ1COSqz
+ x8HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726562192; x=1727166992;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qVQqfUHY4tV0D5MLmX3JhZxcTGyb9S5vkvePgnWyIo8=;
+ b=jeeMITbU2GAclJlzbSWp1TXye6bauAHD8jeSUOeqb0vUWtWk54AQoGYqkxxEBW8o+L
+ fAQJXJS3xh+WlFUeng8ttpv8DbA2Ag9pSROItqs5NSRqXR5uXr/9Vfvq6JbpeBInrlho
+ snSWn6VAm1myWH1qXDJxZ8PefLGOuxrXImGjcuVX/8GnmaAbHxK88TVwG8Dw0+j79LbI
+ 9AwYpvsFhIW7j+g73d+un0F8QjXJFlS/CQkePlENXjC04WSFlsL4SNdcl0V3V7lS0KBg
+ +Rls/sPuCMlLDvV/Yu5xWX6uHz/JJ4TOb+aQTuWa2Yg6hxOBJQ8VP7TeoSxFv6AYdYIW
+ sMSg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW4ru8ePL9Usrht0U8Mo/Avj7zyv7tUmYfLY09+zD0PPm86P548KK57+J3mU2NqNm1YqF7EhyYNyETr@nongnu.org
+X-Gm-Message-State: AOJu0YyopJ8uudyzHAxddbCuFeTNzRS9X79WBr0+EDO4IfHz4gsR8tvO
+ c4N/gHMtkgP7DyJ8pAoItBJXJuUMjTFW3B11Xjb6s7RNN7wEdpEuZdvfFI7Ra7hWUYoWNXm/5sw
+ DPNnyyyg1cc2D8Sf+3/zeSK5uluU=
+X-Google-Smtp-Source: AGHT+IEXfsT2lEGT5QkFQxVKN30PB/KDClDOI2GB/liwc0HOUnMJjPb2G5oMtb96ZzVdnuBL4ETKkIwnxFIYTFNy2kw=
+X-Received: by 2002:a05:6870:1646:b0:27b:8902:5ac9 with SMTP id
+ 586e51a60fabf-27c3f6aa053mr13463626fac.40.1726562192338; Tue, 17 Sep 2024
+ 01:36:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA92v0UByDWykb7P=Ecd206WO+WNzdU2U=Q51o-fepPUFw@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240912145335.129447-1-aesteve@redhat.com>
+ <20240912145335.129447-5-aesteve@redhat.com>
+ <20240917083258.GE575885@fedora.redhat.com>
+In-Reply-To: <20240917083258.GE575885@fedora.redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 17 Sep 2024 10:36:20 +0200
+Message-ID: <CAJSP0QWAqFrNHMGkvgSPboKFHfBD-fXeOzDFSsuuJgQLVXyUxA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/5] vhost-user-dev: Add cache BAR
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, slp@redhat.com, 
+ hi@alyssa.is, mst@redhat.com, david@redhat.com, jasowang@redhat.com, 
+ Stefano Garzarella <sgarzare@redhat.com>, stevensd@chromium.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2e;
+ envelope-from=stefanha@gmail.com; helo=mail-oo1-xc2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,14 +94,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi,
+On Tue, 17 Sept 2024 at 10:33, Stefan Hajnoczi <stefanha@redhat.com> wrote:
+>
+> On Thu, Sep 12, 2024 at 04:53:34PM +0200, Albert Esteve wrote:
+> > @@ -331,6 +333,37 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
+> >          do_vhost_user_cleanup(vdev, vub);
+> >      }
+> >
+> > +    ret = vub->vhost_dev.vhost_ops->vhost_get_shmem_config(&vub->vhost_dev,
+> > +                                                           &nregions,
+> > +                                                           memory_sizes,
+> > +                                                           errp);
+> > +
+> > +    if (ret < 0) {
+> > +        do_vhost_user_cleanup(vdev, vub);
+> > +    }
+> > +
+> > +    for (i = 0; i < nregions; i++) {
+> > +        if (memory_sizes[i]) {
+> > +            if (memory_sizes[i] % qemu_real_host_page_size() != 0) {
+> > +                error_setg(errp, "Shared memory %d size must be a power of 2 "
+> > +                                 "no smaller than the page size", i);
+> > +                return;
+> > +            }
+> > +
+> > +            cache_ptr = mmap(NULL, memory_sizes[i], PROT_NONE,
+> > +                            MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+> > +            if (cache_ptr == MAP_FAILED) {
+> > +                error_setg_errno(errp, errno, "Unable to mmap blank cache");
+> > +                return;
+> > +            }
+> > +
+> > +            virtio_new_shmem_region(vdev);
+> > +            memory_region_init_ram_ptr(vdev->shmem_list[i].mr,
+>
+> I don't think this works because virtio_new_shmem_region() leaves .mr =
+> NULL? Why allocates the MemoryRegion and assigns it to shmem_list[i].mr?
 
-> acpi-test: Warning! SSDT binary file mismatch. Actual
-
-Address has changed due to firmware size change.
-I'll respin with acpi test data updates included.
-
-take care,
-  Gerd
-
+"Why" -> "Who"
 
