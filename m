@@ -4,51 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95E6AC3ABCB
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 00:23:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EE80C3ABCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 04:38:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqM0B-0006KY-7O; Mon, 16 Sep 2024 20:23:31 -0400
+	id 1sqPyB-000796-8e; Tue, 17 Sep 2024 00:37:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1sqM09-0006EY-Mr
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 20:23:29 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sqPy9-00078C-22; Tue, 17 Sep 2024 00:37:41 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1sqM08-0004lE-7L
- for qemu-devel@nongnu.org; Mon, 16 Sep 2024 20:23:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
- :Subject; bh=p1kU3EpILUn6eNlUprAr230kdxcmxsTp6jHbv+nJJUY=; b=rzzq86CFsfwV4QPp
- fLqSRDFMKDufQEBHyKrOXa7q5TmB3JaHvhiLi1fEOCWh4YXcm+CvgH4eFM+LN/qKVTQcLK2yLhfQH
- 9YJVIh9mrtnwhvXCnT8Mi0OBmnECLk3Co4H6QPT5DE+95Y1IpzFpVhYrQ+Rx4bB9XfRuOrfBmWvls
- Ex6w6VIvjthMfNw65Fe/2FkyugAXT017Kdqx9Rsp99lG+3d3sTCX24GdaqhhbWjqNhDRKkNs5IEIk
- rky2tWlgP9gqOf9dpi8vX3U1C8TdGDUcfQWI4txZxkQilVUh10OmIcL8FocVPI7ZIQTyy4Zb9JeCW
- qE5xik7S353XwsKtxQ==;
-Received: from localhost ([127.0.0.1] helo=dalek.home.treblig.org)
- by mx.treblig.org with esmtp (Exim 4.96)
- (envelope-from <dave@treblig.org>) id 1sqM06-0062pB-20;
- Tue, 17 Sep 2024 00:23:26 +0000
-From: dave@treblig.org
-To: marcandre.lureau@redhat.com,
-	berrange@redhat.com
-Cc: qemu-devel@nongnu.org,
-	"Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH] ui/cursor: remove cursor_get_mono_image
-Date: Tue, 17 Sep 2024 01:23:18 +0100
-Message-ID: <20240917002318.331010-1-dave@treblig.org>
-X-Mailer: git-send-email 2.46.0
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sqPy7-0005aC-49; Tue, 17 Sep 2024 00:37:40 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48GIUxdZ030256;
+ Tue, 17 Sep 2024 04:37:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=+
+ 7SHNvBq1FlvhJV7HFCU7AF/6JGgIWfJV6UCH/Dh0d8=; b=emmNQQ4GLO24GXmoS
+ MdV/YllUvr2ZBq6EEshYVQRroWJLZx2unVAVd2tfgl6VkzcbT4WC8W/+SMqzrrFu
+ dnbvuzk/Zt6Y9BSZu8QS5nhM22JNzk3RLwnrOXMbo8frXnvin+DR4wm8Wa80oceL
+ pCkXZwgTqzqeiLobRwqzOh8J+fU12oCGrG5Ig/mue8f6A03E1RK1E03/wuwfoAcF
+ JSZJW/6PqByk0eZOjQCObGVKKl1aRMQiWGPdquO+2FnnC590hOzX82k22YywQFVm
+ 8Jby0nF+BRL1YfFAcWq+ubRcLILwEJDJZORl0402A029MyyxyxtbldJiXDiAFCue
+ TBQrA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41pht8ctt4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Sep 2024 04:37:28 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48H4bR08025449;
+ Tue, 17 Sep 2024 04:37:27 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41pht8ctsy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Sep 2024 04:37:27 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48H2AA20000731;
+ Tue, 17 Sep 2024 04:37:26 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41nntq321d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Sep 2024 04:37:26 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48H4bQAS20382282
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 17 Sep 2024 04:37:26 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2B50F58060;
+ Tue, 17 Sep 2024 04:37:26 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5E5CD58056;
+ Tue, 17 Sep 2024 04:37:24 +0000 (GMT)
+Received: from [9.109.242.165] (unknown [9.109.242.165])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 17 Sep 2024 04:37:24 +0000 (GMT)
+Message-ID: <2829b101-4129-4d96-b6c6-eb287822c097@linux.ibm.com>
+Date: Tue, 17 Sep 2024 10:07:23 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 20/49] spapr: Tag pseries-2.1 - 2.11 machines as deprecated
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Thomas Huth <thuth@redhat.com>
+References: <20240219082938.238302-1-npiggin@gmail.com>
+ <20240219082938.238302-21-npiggin@gmail.com>
+ <00b812a8-48ba-4d51-bb4d-30d7e461c907@kaod.org>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <00b812a8-48ba-4d51-bb4d-30d7e461c907@kaod.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dave@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 8ooWOpWFgu0SEmcmgy77uI4SrsqtTzC9
+X-Proofpoint-ORIG-GUID: Iid0lpteOswXFaenh0OBkE6oGj7AoOlo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-17_01,2024-09-16_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ phishscore=0 bulkscore=0 suspectscore=0 priorityscore=1501 adultscore=0
+ mlxlogscore=996 mlxscore=0 clxscore=1015 malwarescore=0 spamscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409170030
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,67 +118,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
+Hi Cedric,
 
-cursor_get_mono_image has been unused since 2018's
-  0015ca5cba ("ui: remove support for SDL1.2 in favour of SDL2")
+On 9/16/24 18:44, Cédric Le Goater wrote:
+> Hello Harsh,
+> 
+> On 2/19/24 09:29, Nicholas Piggin wrote:
+>> From: Cédric Le Goater <clg@kaod.org>
+>>
+>> pseries machines before version 2.11 have undergone many changes to
+>> correct issues, mostly regarding migration compatibility. This is
+>> obfuscating the code uselessly and makes maintenance more difficult.
+>> Remove them and only keep the last version of the 2.x series, 2.12,
+>> still in use by old distros.
+>>
+>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>> Reviewed-by: Daniel Henrique Barboza <danielhb413@gmail.com>
+>> Signed-off-by: Cédric Le Goater <clg@kaod.org>
+>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+>> ---
+>>   docs/about/deprecated.rst | 8 ++++++++
+>>   hw/ppc/spapr.c            | 1 +
+>>   roms/skiboot              | 2 +-
+>>   3 files changed, 10 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+>> index 5a2305ccd6..36bd3e15ef 100644
+>> --- a/docs/about/deprecated.rst
+>> +++ b/docs/about/deprecated.rst
+>> @@ -229,6 +229,14 @@ The Nios II architecture is orphan.
+>>   The machine is no longer in existence and has been long unmaintained
+>>   in QEMU. This also holds for the TC51828 16MiB flash that it uses.
+>> +``pseries-2.1`` up to ``pseries-2.11`` (since 9.0)
+>> +''''''''''''''''''''''''''''''''''''''''''''''''''
+>> +
+>> +Older pseries machines before version 2.12 have undergone many changes
+>> +to correct issues, mostly regarding migration compatibility. These are
+>> +no longer maintained and removing them will make the code easier to
+>> +read and maintain. Use versions 2.12 and above as a replacement.
+>> +
+> 
+> Would you have time, or a KVM PPC team member, to start removing
+> the now deprecated pseries machines in the QEMU 9.2 cycle ?
+> 
 
-Remove it.
+Sure, I can take a look at that.
 
-Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
----
- include/ui/console.h |  1 -
- ui/cursor.c          | 24 ------------------------
- 2 files changed, 25 deletions(-)
+regards,
+Harsh
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index fa986ab97e..5832d52a8a 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -175,7 +175,6 @@ int cursor_get_mono_bpl(QEMUCursor *c);
- void cursor_set_mono(QEMUCursor *c,
-                      uint32_t foreground, uint32_t background, uint8_t *image,
-                      int transparent, uint8_t *mask);
--void cursor_get_mono_image(QEMUCursor *c, int foreground, uint8_t *mask);
- void cursor_get_mono_mask(QEMUCursor *c, int transparent, uint8_t *mask);
- 
- typedef void *QEMUGLContext;
-diff --git a/ui/cursor.c b/ui/cursor.c
-index dd3853320d..6e23244fbe 100644
---- a/ui/cursor.c
-+++ b/ui/cursor.c
-@@ -197,30 +197,6 @@ void cursor_set_mono(QEMUCursor *c,
-     }
- }
- 
--void cursor_get_mono_image(QEMUCursor *c, int foreground, uint8_t *image)
--{
--    uint32_t *data = c->data;
--    uint8_t bit;
--    int x,y,bpl;
--
--    bpl = cursor_get_mono_bpl(c);
--    memset(image, 0, bpl * c->height);
--    for (y = 0; y < c->height; y++) {
--        bit = 0x80;
--        for (x = 0; x < c->width; x++, data++) {
--            if (((*data & 0xff000000) == 0xff000000) &&
--                ((*data & 0x00ffffff) == foreground)) {
--                image[x/8] |= bit;
--            }
--            bit >>= 1;
--            if (bit == 0) {
--                bit = 0x80;
--            }
--        }
--        image += bpl;
--    }
--}
--
- void cursor_get_mono_mask(QEMUCursor *c, int transparent, uint8_t *mask)
- {
-     uint32_t *data = c->data;
--- 
-2.46.0
-
+> Thanks,
+> 
+> C.
+> 
+> 
 
