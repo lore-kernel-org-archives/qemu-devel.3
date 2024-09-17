@@ -4,38 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E030CAC593
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 18:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E9FCAC594
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 18:10:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqcdI-00046t-UF; Tue, 17 Sep 2024 14:09:01 -0400
+	id 1sqcdN-0004Qc-Lf; Tue, 17 Sep 2024 14:09:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sqcdG-0003wj-3V; Tue, 17 Sep 2024 14:08:58 -0400
+ id 1sqcdM-0004LW-4s; Tue, 17 Sep 2024 14:09:04 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sqcdE-0002N3-1R; Tue, 17 Sep 2024 14:08:57 -0400
+ id 1sqcdK-0002Nl-Gb; Tue, 17 Sep 2024 14:09:03 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CC37B8FBC2;
- Tue, 17 Sep 2024 21:08:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 67A668FBC5;
+ Tue, 17 Sep 2024 21:08:28 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9947E13E744;
- Tue, 17 Sep 2024 21:08:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B1B3213E747;
+ Tue, 17 Sep 2024 21:08:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, David Hildenbrand <david@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Peter Xu <peterx@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Haoran Zhang <wh1sper@zju.edu.cn>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.14 42/47] softmmu/physmem: fix memory leak in
- dirty_memory_extend()
-Date: Tue, 17 Sep 2024 21:08:31 +0300
-Message-Id: <20240917180836.633380-3-mjt@tls.msk.ru>
+Subject: [Stable-7.2.14 45/47] hw/display/vhost-user-gpu.c: fix
+ vhost_user_gpu_chr_read()
+Date: Tue, 17 Sep 2024 21:08:34 +0300
+Message-Id: <20240917180836.633380-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.14-20240917210634@cover.tls.msk.ru>
 References: <qemu-stable-7.2.14-20240917210634@cover.tls.msk.ru>
@@ -64,133 +62,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Hildenbrand <david@redhat.com>
+From: Haoran Zhang <wh1sper@zju.edu.cn>
 
-As reported by Peter, we might be leaking memory when removing the
-highest RAMBlock (in the weird ram_addr_t space), and adding a new one.
+fix vhost_user_gpu_chr_read() where `size` was incorrectly passed to `msg->flags`.
 
-We will fail to realize that we already allocated bitmaps for more
-dirty memory blocks, and effectively discard the pointers to them.
-
-Fix it by getting rid of last_ram_page() and by remembering the number
-of dirty memory blocks that have been allocated already.
-
-While at it, let's use "unsigned int" for the number of blocks, which
-should be sufficient until we reach ~32 exabytes.
-
-Looks like this leak was introduced as we switched from using a single
-bitmap_zero_extend() to allocating multiple bitmaps:
-bitmap_zero_extend() relies on g_renew() which should have taken care of
-this.
-
-Resolves: https://lkml.kernel.org/r/CAFEAcA-k7a+VObGAfCFNygQNfCKL=AfX6A4kScq=VSSK0peqPg@mail.gmail.com
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Fixes: 5b82b703b69a ("memory: RCU ram_list.dirty_memory[] for safe RAM hotplug")
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Tested-by: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-stable@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Link: https://lore.kernel.org/r/20240828090743.128647-1-david@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit b84f06c2bee727b3870b4eeccbe3a45c5aea14c1)
+Fixes: 267f664658 ("hw/display: add vhost-user-vga & gpu-pci")
+Signed-off-by: Haoran Zhang <wh1sper@zju.edu.cn>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fix due to lack of
- v9.0.0-rc4-49-g15f7a80c49cb "RAMBlock: Add support of KVM private guest memfd")
+(cherry picked from commit d6192f3f7593536a4285e8ab6c6cf3f34973ce62)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/exec/ramlist.h b/include/exec/ramlist.h
-index 2ad2a81acc..d9cfe530be 100644
---- a/include/exec/ramlist.h
-+++ b/include/exec/ramlist.h
-@@ -50,6 +50,7 @@ typedef struct RAMList {
-     /* RCU-enabled, writes protected by the ramlist lock. */
-     QLIST_HEAD(, RAMBlock) blocks;
-     DirtyMemoryBlocks *dirty_memory[DIRTY_MEMORY_NUM];
-+    unsigned int num_dirty_blocks;
-     uint32_t version;
-     QLIST_HEAD(, RAMBlockNotifier) ramblock_notifiers;
- } RAMList;
-diff --git a/softmmu/physmem.c b/softmmu/physmem.c
-index 1b606a3002..5b176581f6 100644
---- a/softmmu/physmem.c
-+++ b/softmmu/physmem.c
-@@ -1660,18 +1660,6 @@ static ram_addr_t find_ram_offset(ram_addr_t size)
-     return offset;
- }
- 
--static unsigned long last_ram_page(void)
--{
--    RAMBlock *block;
--    ram_addr_t last = 0;
--
--    RCU_READ_LOCK_GUARD();
--    RAMBLOCK_FOREACH(block) {
--        last = MAX(last, block->offset + block->max_length);
--    }
--    return last >> TARGET_PAGE_BITS;
--}
--
- static void qemu_ram_setup_dump(void *addr, ram_addr_t size)
- {
-     int ret;
-@@ -1919,13 +1907,11 @@ void qemu_ram_msync(RAMBlock *block, ram_addr_t start, ram_addr_t length)
- }
- 
- /* Called with ram_list.mutex held */
--static void dirty_memory_extend(ram_addr_t old_ram_size,
--                                ram_addr_t new_ram_size)
-+static void dirty_memory_extend(ram_addr_t new_ram_size)
- {
--    ram_addr_t old_num_blocks = DIV_ROUND_UP(old_ram_size,
--                                             DIRTY_MEMORY_BLOCK_SIZE);
--    ram_addr_t new_num_blocks = DIV_ROUND_UP(new_ram_size,
--                                             DIRTY_MEMORY_BLOCK_SIZE);
-+    unsigned int old_num_blocks = ram_list.num_dirty_blocks;
-+    unsigned int new_num_blocks = DIV_ROUND_UP(new_ram_size,
-+                                               DIRTY_MEMORY_BLOCK_SIZE);
-     int i;
- 
-     /* Only need to extend if block count increased */
-@@ -1957,6 +1943,8 @@ static void dirty_memory_extend(ram_addr_t old_ram_size,
-             g_free_rcu(old_blocks, rcu);
-         }
-     }
-+
-+    ram_list.num_dirty_blocks = new_num_blocks;
- }
- 
- static void ram_block_add(RAMBlock *new_block, Error **errp)
-@@ -1965,11 +1953,9 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-     const bool shared = qemu_ram_is_shared(new_block);
-     RAMBlock *block;
-     RAMBlock *last_block = NULL;
--    ram_addr_t old_ram_size, new_ram_size;
-+    ram_addr_t ram_size;
-     Error *err = NULL;
- 
--    old_ram_size = last_ram_page();
--
-     qemu_mutex_lock_ramlist();
-     new_block->offset = find_ram_offset(new_block->max_length);
- 
-@@ -1997,11 +1983,8 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-         }
+diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+index 19c0e20103..7dee566cfe 100644
+--- a/hw/display/vhost-user-gpu.c
++++ b/hw/display/vhost-user-gpu.c
+@@ -335,7 +335,7 @@ vhost_user_gpu_chr_read(void *opaque)
      }
  
--    new_ram_size = MAX(old_ram_size,
--              (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS);
--    if (new_ram_size > old_ram_size) {
--        dirty_memory_extend(old_ram_size, new_ram_size);
--    }
-+    ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
-+    dirty_memory_extend(ram_size);
-     /* Keep the list sorted from biggest to smallest block.  Unlike QTAILQ,
-      * QLIST (which has an RCU-friendly variant) does not have insertion at
-      * tail, so save the last element in last_block.
+     msg->request = request;
+-    msg->flags = size;
++    msg->flags = flags;
+     msg->size = size;
+ 
+     if (request == VHOST_USER_GPU_CURSOR_UPDATE ||
 -- 
 2.39.5
 
