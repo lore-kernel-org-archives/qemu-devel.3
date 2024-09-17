@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17B23C3600A
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 10:46:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72733C3600C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 10:51:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqVhx-0005s7-HI; Tue, 17 Sep 2024 06:45:21 -0400
+	id 1sqVmq-0000lW-Fs; Tue, 17 Sep 2024 06:50:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sqVhn-0005MC-64
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 06:45:13 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sqVml-0000XF-6b
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 06:50:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sqVhl-0000uk-3a
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 06:45:10 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sqVmj-0001cA-NP
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 06:50:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726569907;
+ s=mimecast20190719; t=1726570215;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=r/Ag1BmC9eMAm7phult1485iyJ81UB75pFGcxcnNo/Y=;
- b=h/wB3GAUoB+YIyNOjApGsD5klvTagHdGI9pPzRruX/T/ZMtT5HhuFu4FraU5q2+5nXUNoe
- prMxwafK8aEokAqJnF2PeecmuMRwJ1PYtK9HuHD7biFaWctba+v+/3QrIZ61MQ0SPls92p
- Es/YTuCumlU/Tv8oeHb0iM0S7lNhuCM=
+ bh=KJZ0dbb4/J8DcASF6EMvDqsfXYBlRGsfjBEpOs025G4=;
+ b=ap3yRqYKCK8+swvTj4zYdvQGFDbf0tjXUQqq1taQn3ShdSw82DBoCnEqNXYGqujCjPGeGv
+ EyrSQ4gPGwM9O0y+KOptUIwUpTkC2X2iE8+T/fJxPIpF/SyxZsWW/3aeP7w8G5rMcRxBeB
+ teqi8ASh/keBhhdH4NZ2FmRNkHd7oAM=
 Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
  [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-232-LhtnwoonMmysntml82J79g-1; Tue, 17 Sep 2024 06:45:06 -0400
-X-MC-Unique: LhtnwoonMmysntml82J79g-1
+ us-mta-462-cecotbV3OLqZe0muSAu9Sw-1; Tue, 17 Sep 2024 06:50:14 -0400
+X-MC-Unique: cecotbV3OLqZe0muSAu9Sw-1
 Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a8a8308cceaso628970366b.0
- for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 03:45:06 -0700 (PDT)
+ a640c23a62f3a-a8d2e6a69b6so426238466b.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 03:50:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726569905; x=1727174705;
+ d=1e100.net; s=20230601; t=1726570213; x=1727175013;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
+ :content-language:references:cc:to:from:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=r/Ag1BmC9eMAm7phult1485iyJ81UB75pFGcxcnNo/Y=;
- b=DExzkhGG8iO5TU0nd/Xg37vpd/De1lkZLomD8egoOysN41l2mf8EoghhXHuLLFoIgh
- NrxGCYF1bl+o61Uz/7XGyajY7oFLlEGtzTQBb9EsEf4GzVU1xm8+rG7rZV8V8nhsImP1
- +htC9o+XiQI1KzN3y/3B0+eRhElIcIsdPbgu9W0q1E7NqonF4NzsoukWRdJfi6AZU+h0
- f0chhCTUFq7/fKmnS8D9p4M8xprEtqx5d1QNhpoSqftsEY5hK77HZBC9lbyfZPs7mEwR
- rK4gAKrJyxNGQ2UcOd3PXo6z5ISODaRiGKchwOCZmIgSdNYojp83lvgRx5IF/K/XWjfO
- XHlg==
+ bh=KJZ0dbb4/J8DcASF6EMvDqsfXYBlRGsfjBEpOs025G4=;
+ b=bGJnMzGmodklrpph3JoxvL7YRuR2eFb8/Gsohu/2ydv3+WPcnPRPKqHMHnJf+o9dNW
+ BUfD+uzhRQwhy/aWOfaF72/sRFjjFpgx1lLkow+qFVZlAdfnGmVgW9BYvH8mavB2yFI6
+ gqpVpA5utRqfbAelfDGayveAOIlUi0tJCunOzHcz4TX1qkCW8LqThLCJnTpJbEjXAGy9
+ 7FUgxnQgLBPqbO3IVHBe4LmBxOet5tlFXW2KuyzT8FTleP7D6mGTIhBWOIupVsN8oDx6
+ U5nU8/Wb4e6/bMr9/6KwJhHGRTuuasNAWJiafe+w6bVSmIISE/zbQKr7+VzwF+yka4W8
+ tJ3Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVberozzLg/rLFd+r9H0PXQpXqsTtYhld+ZDwnnOdGi+OOAkKKF1CDooueW/BhSFwMuFBQAZkLKRGwn@nongnu.org
-X-Gm-Message-State: AOJu0YxOJxLDVS9esL34hRubncFxEYL5DZQMzXJWKkjv8tN9M1noZllc
- zkdrN6ONQCV/024jwWonGQablwajkQ3MxeP6qRc0yNNMPuyyONVT/7Qay2SVNE5bmvVOF9iLwzF
- z7ig1IqBzGnihr7+CTQrJAUUCQzOoNx5I34I9AdrPwYHCaqW2QhLi
-X-Received: by 2002:a17:907:2da3:b0:a8d:63b5:e795 with SMTP id
- a640c23a62f3a-a8ffaadad47mr2583892366b.3.1726569905048; 
- Tue, 17 Sep 2024 03:45:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE6EKSa1b129XMyk7h+NYWcD6ePdrcH3wZwmRkERs0aa7bk3e+RQIjHKjdpQ5DmZqp/LgR8Pg==
-X-Received: by 2002:a17:907:2da3:b0:a8d:63b5:e795 with SMTP id
- a640c23a62f3a-a8ffaadad47mr2583888366b.3.1726569904601; 
- Tue, 17 Sep 2024 03:45:04 -0700 (PDT)
+ AJvYcCX4d/cZJpwr77YFjUOcaVkIY9iXQ1dQ7BfXL22LXYLr+F+bEzVuwGagYgxirFcNkp9SlMTy/baOeD8N@nongnu.org
+X-Gm-Message-State: AOJu0Yy5g8GHy7WLS3SYGQ9yA64+3e2yDMFV//YndKOWVPurlAxhOhWK
+ ZWQofaWyEVUnE9vKiv9uedgl4s4zYqFXNPMNUm1v3oFYQS4F0q2AA/JHRYlMfnMzYhGSLCJpzfs
+ vMdFDln2HS6/TU8xunWLc2L6uXE+Egiv2e+8f9Qrfje4X+VsFpL+8
+X-Received: by 2002:a17:907:1c8c:b0:a8d:483f:5199 with SMTP id
+ a640c23a62f3a-a902966a981mr1917742066b.58.1726570213216; 
+ Tue, 17 Sep 2024 03:50:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHzlkZbJdK+ynKZpUu3uavBYO6PgRgDD4hBVmtUUj7agHWvGZb4qrXAjUvIi+Wc7y4cx5pKqA==
+X-Received: by 2002:a17:907:1c8c:b0:a8d:483f:5199 with SMTP id
+ a640c23a62f3a-a902966a981mr1917738966b.58.1726570212757; 
+ Tue, 17 Sep 2024 03:50:12 -0700 (PDT)
 Received: from [192.168.55.136] (tmo-067-108.customers.d1-online.com.
  [80.187.67.108]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90610f43a4sm425827766b.83.2024.09.17.03.45.03
+ a640c23a62f3a-a9061116388sm433524366b.92.2024.09.17.03.50.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Sep 2024 03:45:04 -0700 (PDT)
-Message-ID: <9a4fedc5-d142-4b3d-90c3-2f03d628003e@redhat.com>
-Date: Tue, 17 Sep 2024 12:45:02 +0200
+ Tue, 17 Sep 2024 03:50:12 -0700 (PDT)
+Message-ID: <32ed2987-6243-4137-9526-d1ce059eb5aa@redhat.com>
+Date: Tue, 17 Sep 2024 12:50:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v1 03/14] s390x/s390-virtio-hcall: prepare for more
  diag500 hypercalls
+From: David Hildenbrand <david@redhat.com>
 To: Nina Schoetterl-Glausch <nsg@linux.ibm.com>, qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
@@ -83,7 +84,7 @@ Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
 References: <20240910175809.2135596-1-david@redhat.com>
  <20240910175809.2135596-4-david@redhat.com>
  <98b3faa73073829bbe964bec21803657f7f19846.camel@linux.ibm.com>
-From: David Hildenbrand <david@redhat.com>
+ <9a4fedc5-d142-4b3d-90c3-2f03d628003e@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -130,7 +131,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <98b3faa73073829bbe964bec21803657f7f19846.camel@linux.ibm.com>
+In-Reply-To: <9a4fedc5-d142-4b3d-90c3-2f03d628003e@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
@@ -157,52 +158,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.09.24 15:22, Nina Schoetterl-Glausch wrote:
-> On Tue, 2024-09-10 at 19:57 +0200, David Hildenbrand wrote:
->> Let's generalize, abstracting the virtio bits. diag500 is now a generic
->> hypercall to handle QEMU/KVM specific things. Explicitly specify all
->> already defined subcodes, including legacy ones (so we know what we can
->> use for new hypercalls).
+On 17.09.24 12:45, David Hildenbrand wrote:
+> On 12.09.24 15:22, Nina Schoetterl-Glausch wrote:
+>> On Tue, 2024-09-10 at 19:57 +0200, David Hildenbrand wrote:
+>>> Let's generalize, abstracting the virtio bits. diag500 is now a generic
+>>> hypercall to handle QEMU/KVM specific things. Explicitly specify all
+>>> already defined subcodes, including legacy ones (so we know what we can
+>>> use for new hypercalls).
+>>>
+>>> We'll rename the files separately, so git properly detects the rename.
+>>>
+>>> Signed-off-by: David Hildenbrand <david@redhat.com>
+>>> ---
+>>>    hw/s390x/s390-virtio-hcall.c   |  8 ++++----
+>>>    hw/s390x/s390-virtio-hcall.h   | 11 ++++++-----
+>>>    target/s390x/kvm/kvm.c         | 10 ++--------
+>>>    target/s390x/tcg/misc_helper.c |  4 ++--
+>>>    4 files changed, 14 insertions(+), 19 deletions(-)
+>>>
+>> [...]
+>>>
+>>> diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+>>> index 94181d9281..ac292b184a 100644
+>>> --- a/target/s390x/kvm/kvm.c
+>>> +++ b/target/s390x/kvm/kvm.c
+>>> @@ -1493,16 +1493,10 @@ static int handle_e3(S390CPU *cpu, struct kvm_run *run, uint8_t ipbl)
+>>>    
+>>>    static int handle_hypercall(S390CPU *cpu, struct kvm_run *run)
 >>
->> We'll rename the files separately, so git properly detects the rename.
->>
->> Signed-off-by: David Hildenbrand <david@redhat.com>
->> ---
->>   hw/s390x/s390-virtio-hcall.c   |  8 ++++----
->>   hw/s390x/s390-virtio-hcall.h   | 11 ++++++-----
->>   target/s390x/kvm/kvm.c         | 10 ++--------
->>   target/s390x/tcg/misc_helper.c |  4 ++--
->>   4 files changed, 14 insertions(+), 19 deletions(-)
->>
-> [...]
->>
->> diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
->> index 94181d9281..ac292b184a 100644
->> --- a/target/s390x/kvm/kvm.c
->> +++ b/target/s390x/kvm/kvm.c
->> @@ -1493,16 +1493,10 @@ static int handle_e3(S390CPU *cpu, struct kvm_run *run, uint8_t ipbl)
->>   
->>   static int handle_hypercall(S390CPU *cpu, struct kvm_run *run)
+>> Might as well make the return type void then.
 > 
-> Might as well make the return type void then.
-
-Agreed.
-
-> More importantly, are you changing the behavior?
-> If I'm reading the code right, previously handle_instruction would inject an
-> additional PGM_OPERATION due to the negative return value, which does seem off to me.
-> If so, IMO this change should go into a separate patch.
-
-You are right, agreed.
-
-> I'm also wondering if the injection of PGM_SPECIFICATION should just go into
-> handle_diag_500 and handle_hypercall should just be inlined.
+> Agreed.
 > 
+>> More importantly, are you changing the behavior?
+>> If I'm reading the code right, previously handle_instruction would inject an
+>> additional PGM_OPERATION due to the negative return value, which does seem off to me.
+>> If so, IMO this change should go into a separate patch.
+> 
+> You are right, agreed.
 
-I had exactly that, and used s390_program_interrupt(env, 
-PGM_SPECIFICATION, ra); let me revive that.
+Ah, reading again, we have a "return 0;" after the 
+"kvm_s390_program_interrupt", so it should work as expected.
 
-Thanks!
 -- 
 Cheers,
 
