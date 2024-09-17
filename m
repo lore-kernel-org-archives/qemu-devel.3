@@ -4,98 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F07E0CAC593
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 17:51:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82A4DCAC593
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 18:09:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqcLy-0003t8-A0; Tue, 17 Sep 2024 13:51:06 -0400
+	id 1sqcdD-0003oD-V1; Tue, 17 Sep 2024 14:08:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqcLu-0003sb-1v
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 13:51:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sqcdC-0003mJ-6d; Tue, 17 Sep 2024 14:08:54 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqcLs-0008P1-9m
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 13:51:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726595458;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=F7/Fi6PmNfuZpYDoiVI88kcvYhhDj+dpJdMCImVSfEw=;
- b=TBq7xT+dfXFPoCn8OP6HlZ9pcoVr5IBQ/RPKgG1U0e4sdoYQUtOVH9sWMc46BOjjoqII57
- 0SSYGXl8CuSnXppxf0Tna6k+mbrLZcczSXTi2UM+crVeaggEuEKWObADIihYy5tuB/Qs5t
- DfZvrDiChgFPkLm/zZtEIAvWRLLuKEU=
-Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
- [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-311-Ch47Z0iONeaf0dIiOssM9w-1; Tue, 17 Sep 2024 13:50:51 -0400
-X-MC-Unique: Ch47Z0iONeaf0dIiOssM9w-1
-Received: by mail-ua1-f70.google.com with SMTP id
- a1e0cc1a2514c-848917ba13aso1070693241.3
- for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 10:50:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726595451; x=1727200251;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F7/Fi6PmNfuZpYDoiVI88kcvYhhDj+dpJdMCImVSfEw=;
- b=hLZ5HpAuuIu9zQCjDC3NIKlJlMRnSQ34SweMk7u64FwbeMBEi6DZf17wXRvtU29rtZ
- ApqQRscsocibBIUJGi4iS5/15XafRh+nlPqj21Nf2PLkHzW29Mbmeu0/Kwx3hfA1woTf
- ZtuIoLAdGQnCHcB8Go9vw3V8NqIx0cE+/89IoTPg+ItywrtcgQ+ku53AfmwFkv4PZEAd
- ejnXhq3RYmNidb5dGz5s5G0Uo8npzhwkmZu2caKiOB+tN8nuM/TtNHLcAHEQcfLkeke0
- Uuo1iJZDhvkL10iJrXYD425XMv/ibkVLWB+hdMCXdopuNOr0rtUg6nPslw0TALo9g81f
- cICA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUrX4jQ6OKI0XgVj5+zZZM7pdiTXJRuqRYtqp8ApRQiPc2uUKGqrK7KEv8Jzklq+dF3uIIJuHC8EtE8@nongnu.org
-X-Gm-Message-State: AOJu0YyY9RFOrFUtL5lBo/WsedPfRCB7V5JH/xk2+rJRSAm5L3j+zX97
- CL4650gwVHA+UwuawZE5vmgUrbVZce+HVi0e3Id57o5WJ6jlZcdZ9goQtlFL9oZPM7z1Agk0Lx7
- 2YloPpiZcvw4vhfNWURUjoVKI+ppj/1mOuYyQnn/LkMfusNzF1AZv
-X-Received: by 2002:a05:6102:c87:b0:49b:cb56:1083 with SMTP id
- ada2fe7eead31-49d415d6fffmr14774146137.28.1726595451222; 
- Tue, 17 Sep 2024 10:50:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEgChNrUCBpbzblUTMcqeS84o+kKJMjH3ZEKf0HtFnsc1JaZ+z37d+tX3gW3oI6c4uESgP1yg==
-X-Received: by 2002:a05:6102:c87:b0:49b:cb56:1083 with SMTP id
- ada2fe7eead31-49d415d6fffmr14774115137.28.1726595450817; 
- Tue, 17 Sep 2024 10:50:50 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c58c691deasm36708426d6.80.2024.09.17.10.50.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Sep 2024 10:50:50 -0700 (PDT)
-Date: Tue, 17 Sep 2024 13:50:48 -0400
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, mail@maciej.szmigiero.name,
- Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 12/17] migration/multifd: Device state transfer
- support - send side
-Message-ID: <ZunBeBnqpgAIpt4Z@x1n>
-References: <fdcfd68dfcf3b20278a4495eb639905b2a8e8ff3.1724701542.git.maciej.szmigiero@oracle.com>
- <87h6b4nosy.fsf@suse.de> <ZuCickYhs3nf2ERC@x1n>
- <87zfoc1zms.fsf@suse.de> <ZuOGAb3988ExsrHi@x1n>
- <87o74r1yfw.fsf@suse.de> <ZuRJ8i4T_vUzrawY@x1n>
- <87ldzv1tpb.fsf@suse.de> <ZuRYouLwikc4OYye@x1n>
- <45f44392-cb56-4341-ab1d-7d7f28554c77@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sqcdA-0002MW-1q; Tue, 17 Sep 2024 14:08:53 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 5907D8FBC1;
+ Tue, 17 Sep 2024 21:08:24 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D3CD113E743;
+ Tue, 17 Sep 2024 21:08:39 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.14 41/47] gitlab: migrate the s390x custom machine to
+ 22.04
+Date: Tue, 17 Sep 2024 21:08:30 +0300
+Message-Id: <20240917180836.633380-2-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <qemu-stable-7.2.14-20240917210634@cover.tls.msk.ru>
+References: <qemu-stable-7.2.14-20240917210634@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <45f44392-cb56-4341-ab1d-7d7f28554c77@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,86 +61,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 17, 2024 at 07:07:10PM +0200, Cédric Le Goater wrote:
-> [ ... ]
-> 
-> > > > I as a patch writer always like to do that when it's essential.  Normally
-> > > > the case is I don't have enough reviewer resources to help me get a better
-> > > > design, or discuss about it.
-> > > 
-> > > Right, but we can't keep providing a moving target. See the thread pool
-> > > discussion for an example. It's hard to work that way. The discussion
-> > > here is similar, we introduced the union, now we're moving to the
-> > > struct. And you're right that the changes here are small, so let's not
-> > > get caught in that.
-> > 
-> > What's your suggestion on the thread pool?  Should we merge the change
-> > where vfio creates the threads on its own (assuming vfio maintainers are ok
-> > with it)?
-> > 
-> > I would say no, that's what I suggested.  I'd start with reusing
-> > ThreadPool, then we found issue when Stefan reported worry on abusing the
-> > API.  All these discussions seem sensible to me so far.  We can't rush on
-> > these until we figure things out step by step.  I don't see a way.
-> > 
-> > I saw Cedric suggesting to not even create a thread on recv side.  I am not
-> > sure whether that's easy, but I'd agree with Cedric if possible.  I think
-> > Maciej could have a point where it can block mutlifd threads, aka, IO
-> > threads, which might be unwanted.
-> 
-> Sorry, If I am adding noise on this topic. I made this suggestion
-> because I spotted some asymmetry in the proposal.
-> 
-> The send and recv implementation in VFIO relies on different
-> interfaces with different level of complexity. The send part is
-> using a set of multifd callbacks called from multifd threads,
-> if I am correct. Whereas the recv part is directly implemented
-> in VFIO with local thread(s?) doing their own state receive cookery.
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Yeh, the send/recv sides are indeed not fully symmetrical in the case of
-multifd - the recv side is more IO-driven, e.g., QEMU reacts based on what
-it receives (which was encoded in the headers of the received packets).
+20.04 is dead (from QEMU's point of view), long live 22.04!
 
-The src is more of a generic consumer / producer model where threads can
-enqueue tasks / data to different iochannels.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240426153938.1707723-3-alex.bennee@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 108d99742af1fa6e977dcfac9d4151b7915e33a3)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: context fixups in .gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml)
 
-> 
-> I was expecting a common interface to minimize assumptions on both
-> ends. It doesn't have to be callback based. It could be a set of
-> services a subsystem could use to transfer state in parallel.
-> <side note>
->      VFIO migration is driven by numerous callbacks and it is
->      difficult to understand the context in which these are called.
->      Adding more callbacks might not be the best approach.
-> </side note>
-> 
-> The other comment was on optimisation. If this is an optimisation
-> then I would expect, first, a non-optimized version not using threads
-> (on the recv side).
-
-As commented in a previous email, I had a feeling that Maciej wanted to
-avoid blocking multifd threads when applying VFIO data chunks to the kernel
-driver, but Maciej please correct me.. I could be wrong.
-
-To me I think I'm fine even if it blocks multifd threads, as it'll only
-happen when with VFIO (we may want to consider n_multifd_threads to be
-based on num of vfio devices then, so we still always have some idle
-threads taking IOs out of the NIC buffers).
-
-So I agree with Cedric that if we can provide a functional working version
-first then we can at least go with the simpler approach first.
-
-> 
-> VFIO Migration is a "new" feature which needs some more run-in.
-> That said, it is stable, MLX5 VFs devices have good support, you
-> can rely on me to evaluate the future respins.
-> 
-> Thanks,
-> 
-> C.
-> 
-
+diff --git a/.gitlab-ci.d/custom-runners.yml b/.gitlab-ci.d/custom-runners.yml
+index 97f99e29c2..94414457f1 100644
+--- a/.gitlab-ci.d/custom-runners.yml
++++ b/.gitlab-ci.d/custom-runners.yml
+@@ -14,7 +14,7 @@ variables:
+   GIT_STRATEGY: clone
+ 
+ include:
+-  - local: '/.gitlab-ci.d/custom-runners/ubuntu-20.04-s390x.yml'
++  - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml'
+   - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml'
+   - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml'
+   - local: '/.gitlab-ci.d/custom-runners/centos-stream-8-x86_64.yml'
+diff --git a/.gitlab-ci.d/custom-runners/ubuntu-20.04-s390x.yml b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
+similarity index 89%
+rename from .gitlab-ci.d/custom-runners/ubuntu-20.04-s390x.yml
+rename to .gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
+index 0c835939db..12c6e21119 100644
+--- a/.gitlab-ci.d/custom-runners/ubuntu-20.04-s390x.yml
++++ b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
+@@ -1,12 +1,12 @@
+-# All ubuntu-20.04 jobs should run successfully in an environment
++# All ubuntu-22.04 jobs should run successfully in an environment
+ # setup by the scripts/ci/setup/build-environment.yml task
+-# "Install basic packages to build QEMU on Ubuntu 20.04/20.04"
++# "Install basic packages to build QEMU on Ubuntu 22.04"
+ 
+-ubuntu-20.04-s390x-all-linux-static:
++ubuntu-22.04-s390x-all-linux-static:
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_20.04
++ - ubuntu_22.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -24,11 +24,11 @@ ubuntu-20.04-s390x-all-linux-static:
+  - make --output-sync -j`nproc` check-tcg V=1
+    || { cat meson-logs/testlog.txt; exit 1; } ;
+ 
+-ubuntu-20.04-s390x-all:
++ubuntu-22.04-s390x-all:
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_20.04
++ - ubuntu_22.04
+  - s390x
+  timeout: 75m
+  rules:
+@@ -43,11 +43,11 @@ ubuntu-20.04-s390x-all:
+  - make --output-sync -j`nproc` check V=1
+    || { cat meson-logs/testlog.txt; exit 1; } ;
+ 
+-ubuntu-20.04-s390x-alldbg:
++ubuntu-22.04-s390x-alldbg:
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_20.04
++ - ubuntu_22.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -66,11 +66,11 @@ ubuntu-20.04-s390x-alldbg:
+  - make --output-sync -j`nproc` check V=1
+    || { cat meson-logs/testlog.txt; exit 1; } ;
+ 
+-ubuntu-20.04-s390x-clang:
++ubuntu-22.04-s390x-clang:
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_20.04
++ - ubuntu_22.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -88,11 +88,11 @@ ubuntu-20.04-s390x-clang:
+  - make --output-sync -j`nproc` check V=1
+    || { cat meson-logs/testlog.txt; exit 1; } ;
+ 
+-ubuntu-20.04-s390x-tci:
++ubuntu-22.04-s390x-tci:
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_20.04
++ - ubuntu_22.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+@@ -108,11 +108,11 @@ ubuntu-20.04-s390x-tci:
+    || { cat config.log meson-logs/meson-log.txt; exit 1; }
+  - make --output-sync -j`nproc`
+ 
+-ubuntu-20.04-s390x-notcg:
++ubuntu-22.04-s390x-notcg:
+  needs: []
+  stage: build
+  tags:
+- - ubuntu_20.04
++ - ubuntu_22.04
+  - s390x
+  rules:
+  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
 -- 
-Peter Xu
+2.39.5
 
 
