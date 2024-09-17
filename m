@@ -4,83 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1193C36009
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 10:24:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 615D7C36009
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 10:33:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqVMo-00081x-3D; Tue, 17 Sep 2024 06:23:30 -0400
+	id 1sqVWK-0006Ef-Vv; Tue, 17 Sep 2024 06:33:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sqVMm-0007yn-91
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 06:23:28 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sqVMk-0004jq-NJ
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 06:23:28 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-5367ae52a01so4740390e87.3
- for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 03:23:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726568604; x=1727173404; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1VepKD5AHEkXWgFp2Tf2s1/T3c5CzElQVbAc95xRRNw=;
- b=C5FU50y2ymLpfrJmFU+0gW2bL6pdCP1XAtGJN9Mvn8PAnQSnlX8QWgKHx0PRAF9Ilf
- RDsh7HycKNsV0akGJTA2acJXBQ3qd8gqy9su54yedNYuRKyze+4wsTdWkHyw6s+vedx+
- Q1R5GwpsvQ5j5XU2ylJo78KpalGSQre7v167nAN1D8bDSONFiU2VoujJ1UZFC9IOvLRz
- 34uzL+hvm7WsGgSb5xfl/d8DeJL6BBorm5Y5E3SW5CwfnqdfbvAKl/HyB8jvVtx2W+AJ
- LUZxADNMS5IYsIjc5H9PiFent317rIELdcAcxUHqLAUuQrxtm9TZA+z3w8lioMIZ5tJX
- fgOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726568604; x=1727173404;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1VepKD5AHEkXWgFp2Tf2s1/T3c5CzElQVbAc95xRRNw=;
- b=e8ah4fs+nAyTckNwF6jqcLzIrmRXrBf+JjgJS6cLATkt5bLPRgfWeDYyDTRRsVT8kX
- TefpS7ioh2Bv3eJ4JsGYrXtGp1Gq1QyktGatfDuRZ0TzFH57O7aJtOV4Y4qZdr+X18O9
- SiHbi29MLNg9N4hqZ5XbnVexVi5WmH5eb11w/wOcuCTwi2Mchsw75tSL9o272wC4Toyc
- 3SCrxZxrQR+P65JryZL7e1PsMYxqnVcX/oHtolEtwM1ojyg5Jd3SKDtw9mYHJOG1VzdU
- 5knvxlEa7LhZ8My8NxmGlQAmMnE4afXMe9E0Bp6I+RJ8xU3XoeomZVufHtnPblLH9AQB
- t5lw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVHAQ6linMrCsIOwCqKeuzD8taPtQ6qAyh8cCKJ6VsmDy40HR2LEdlN2i5wMWud0XUHw0PRGLiD9ZZy@nongnu.org
-X-Gm-Message-State: AOJu0YyaCF8xIE6nUXhOm+wbF5tXk/4cW2xarXaphgjQ3shsfcZUrFHT
- MsFmRc/gzRqpHPGSD1yuvj4jF9YguUF6wp7YZJvRRyop5WG3KE5uemXXKOkXhtOF6Zy8oLdUZtG
- imcsYfvEtgAL/J1R5OEYo+62k6fOZ0hcUJl8zwQ==
-X-Google-Smtp-Source: AGHT+IHjggBhB+TylOGLSEpqKrqz4C/ZRQ+dKVd5pOXk8O2raD6q8eQBMKsniGHjmAPKNOzBRnnIfky7/mHuW//KlQY=
-X-Received: by 2002:a05:6512:3ca5:b0:535:6cde:5c4d with SMTP id
- 2adb3069b0e04-5367feb9b81mr8731694e87.3.1726568604429; Tue, 17 Sep 2024
- 03:23:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sqVVl-000673-V1
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 06:32:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sqVVj-0006kU-Ns
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 06:32:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1726569163;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=T3S03emqiACR4UcCYsadHUuF/xYoupzmjS6f8Wz8fGI=;
+ b=f3J109aLbxZqSTgxxtlYANm09wKIQoQE6ZNccJ6JX19R4tRzuEPkBgWwX39ZpDW3w8HhhV
+ Nz9rqS2PO7h7MX/zbDIk1IvMKSROShSdKGVaCCRndqL2Ax5zlLgx/gHcgnu5dZp/oSFM1P
+ N4R0WLCpQZZMIy1j8WOLiW0zeKhjxn8=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-xKVJ5f8ENia4xZ-MZNMlvg-1; Tue,
+ 17 Sep 2024 06:32:41 -0400
+X-MC-Unique: xKVJ5f8ENia4xZ-MZNMlvg-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A771A1955D59; Tue, 17 Sep 2024 10:32:40 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.193.154])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 195CF19560B0; Tue, 17 Sep 2024 10:32:38 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>,
+ =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>
+Subject: [PULL 3/8] vfio/igd: support legacy mode for all known generations
+Date: Tue, 17 Sep 2024 12:32:24 +0200
+Message-ID: <20240917103229.876515-4-clg@redhat.com>
+In-Reply-To: <20240917103229.876515-1-clg@redhat.com>
+References: <20240917103229.876515-1-clg@redhat.com>
 MIME-Version: 1.0
-References: <20240915125725.33099-1-ines.varhol@telecom-paris.fr>
- <10b98c97-ff2a-430f-ab76-66cc5948b0f8@tls.msk.ru>
- <CAFEAcA_xsqUbCcgstwJWmF2uUWJGskZ04r6dNkiNpQPYbrMg2w@mail.gmail.com>
- <9732ed11-ed5f-4b2a-99bb-7de629148d95@tls.msk.ru>
-In-Reply-To: <9732ed11-ed5f-4b2a-99bb-7de629148d95@tls.msk.ru>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 17 Sep 2024 11:23:13 +0100
-Message-ID: <CAFEAcA_wjfCyxCtNn_UuEU2q6pGgzWUepxiEb3Mnebu=0cvNZA@mail.gmail.com>
-Subject: Re: [PATCH] hw/display: Fix mirrored output in dm163
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
- qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Laurent Vivier <laurent@vivier.eu>,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>, qemu-trivial@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x129.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,21 +82,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 17 Sept 2024 at 10:54, Michael Tokarev <mjt@tls.msk.ru> wrote:
->
-> On 17.09.2024 12:39, Peter Maydell wrote:
->
-> >> This is an interesting device, I wonder if it is used by anyone?
-> >
-> > The device is used by the Arm b-l475e-iot01a board.
->
-> I mean if it is actually used in practice, - there's just 1 commit
-> for this file - it's addition in Apr this year, and that's all.
-> If the image is inverted, I wonder how it worked and no one
-> noticed :)
+From: Corvin Köhne <corvin.koehne@gmail.com>
 
-This is a fairly new board, and the authors are gradually
-adding its devices.
+We're soon going to add support for legacy mode to ElkhartLake and
+TigerLake devices. Those are gen 11 and 12 devices. At the moment, all
+devices identified by our igd_gen function do support legacy mode. This
+won't change when adding our new devices of gen 11 and 12. Therefore, it
+makes more sense to accept legacy mode for all known devices instead of
+maintaining a long list of known good generations. If we add a new
+generation to igd_gen which doesn't support legacy mode for some reason,
+it'll be easy to advance the check to reject legacy mode for this
+specific generation.
 
--- PMM
+Signed-off-by: Corvin Köhne <c.koehne@beckhoff.com>
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+---
+ hw/vfio/igd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 650a323ddaac746de780103ca857256709c0e0aa..d5e57656a8b7bb207b421977f9a2c76943d4a899 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -416,7 +416,7 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+      * devices maintain compatibility with generation 8.
+      */
+     gen = igd_gen(vdev);
+-    if (gen != 6 && gen != 8) {
++    if (gen == -1) {
+         error_report("IGD device %s is unsupported in legacy mode, "
+                      "try SandyBridge or newer", vdev->vbasedev.name);
+         return;
+-- 
+2.46.0
+
 
