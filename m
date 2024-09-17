@@ -4,94 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D15EC35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 09:35:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBE54C3ABD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 09:41:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqUbj-0007BP-UF; Tue, 17 Sep 2024 05:34:51 -0400
+	id 1sqUgx-0004oy-MV; Tue, 17 Sep 2024 05:40:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sqUbh-00078a-4q
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 05:34:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sqUbf-00061U-N7
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 05:34:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726565686;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jjkuNBDLMIAJ/uQm+mpkOUbFOPVD1Lvn3qtluJr/L6k=;
- b=dYuDXHnhkMiDKRP69HfvNrdzBGrUKxuy5uF1ij3mtDkqQ5k6ZUryFg2O/RKATbQVTMv8rE
- Q+naKeowyiippYw8fmI0KmwzIrpxcBN/2t17sbihTV6Exy6VRRdponnMNg7UGgWqLp9QSr
- FN+h50JSlce+osUAN37xjSJllh3O5WE=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-187-tbieDZGUOmewL0weLzW3Eg-1; Tue, 17 Sep 2024 05:34:44 -0400
-X-MC-Unique: tbieDZGUOmewL0weLzW3Eg-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-5367cae7614so1133603e87.3
- for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 02:34:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sqUgv-0004mo-Uk
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 05:40:13 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sqUgu-0006ub-8h
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 05:40:13 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5c255e3c327so6965816a12.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 02:40:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726566010; x=1727170810; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zcwpRtt1+Ds3KwlSF38JVJVBrJu4VTvKRsmKU20Kw0M=;
+ b=EW3zIAdwnlHvUNokmE6D6jpnnAbBJn9Ujaw+dU2xDVF1QPulw7XKdLR86iV5IIGG2O
+ AiA+0McXDj8UFTLphdMCC5QHwGbvgiJWAuM+S+Dv9uQIURgEpErWJR4wzFZVx0UxzCtk
+ kGsQRbT/egAiYoAJVfn/xD5FIPxiwlL8EYIMzVjuj/1OGo2aDN6glFRzDJ4E8gAErMJ2
+ kHJqCPNMmi7YDY6hwZUwe3sw1fB33v0xE2HvQJDlnb+IPZeR6Q2jIRlgdz+8xt5JBOdn
+ MOPVErUaSmQ8d0giCTi9IFvHE99V2NaG1sPSAfjpI/3DXVEa+sfNixBuKLOr4ZGJ8DAs
+ QM6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726565683; x=1727170483;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1726566010; x=1727170810;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jjkuNBDLMIAJ/uQm+mpkOUbFOPVD1Lvn3qtluJr/L6k=;
- b=BYCyuPjZfyo5YkBQy8bswAR+680ALTeHgi4hBAZSXSG+Tin71AhpJ+Gbs1nP4oswrE
- H3mJ7/p6+5bI3cdsyxeh+fC2NqEiamqumdPDDoEbXU29JmuIXR6qpaGuKm8Vx/uj52Qn
- BRK54l7gXJ+q2OGUrQOm/L+daCJ5/PMWSLzjtbfHNMX/gl7gnH8caW2nyzxv0msl6LJH
- 0//pKvpNdoVK/0RuWKLcujNXBcQdcXJTpf8e5n17sJNdAWyikmDrOSqyOajqSgss/8ZM
- oY2lJ8Efg0liMTmC+VYcm1VMQ/1RBwIrZvyzeC4hC94ss1Qf0d7O/Dx2ZRU/k1i275Au
- ml0Q==
+ bh=zcwpRtt1+Ds3KwlSF38JVJVBrJu4VTvKRsmKU20Kw0M=;
+ b=D/jilwz0oEZMc58S4DaShzeX0paS6FHT9xtNOhvC5a2nmrzZ1TqxmA6biinWkbr4QP
+ 0Z9QDzHNluRMKS7Xrj4C3wmMmQD7QHspB5nXExfPr5efiA+n5KHxTUYlpt5C/VjkEktc
+ MgWAjB+UdbVdEbkDUrNt5SzX6XXrPBGraxiO6XHlBbsWpECT5tjhHfJUDd8SnT8S6W70
+ 1hb5qXBnagBfaGzIA2OfCWKPdyGHDXGvPI8dU5W8LK2l8/gB7mlxia4ua7Ovnu5RWfws
+ CzU6rGiezBRdqBydRpHGojiCu92LLIh4yfhfcf7BdOEiM52uaYwsd+EOwDiAc66Bd/ZF
+ HKsg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUyj+rsuh2ywFMwjbrG2baYF4g9z7mGvS2fKDZXmJupwtWSA/0vJbMChKOTGIeWNffSmLxnKthXxquD@nongnu.org
-X-Gm-Message-State: AOJu0Yz+4GJ88W8A/EFHo/JkCS611CdhG2umGE9MnV1XSlKUrKMzFNJj
- LOmBHJtdOla7/xm8ax7pu5oJmI5uqE1794ROd8mlG7Pwqt0BY6JSBxJjwmsFo+veqZxpMyXOOvy
- gvoSaXNgMvLMlnVoyP4cAVfSdhxFcc4Tuyel2VTkJEvcp2h/mihUf
-X-Received: by 2002:a05:6512:ea4:b0:52e:f907:1023 with SMTP id
- 2adb3069b0e04-53678ff5e06mr9932920e87.49.1726565682973; 
- Tue, 17 Sep 2024 02:34:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGx9LegrKHp/daHt+ABb2qNfSu0ZiXmGlSGM+DWvjW//RcWpKn1wgglAmL+62PIHMLYMDeVvQ==
-X-Received: by 2002:a05:6512:ea4:b0:52e:f907:1023 with SMTP id
- 2adb3069b0e04-53678ff5e06mr9932887e87.49.1726565682325; 
- Tue, 17 Sep 2024 02:34:42 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42da22d85f2sm96908345e9.17.2024.09.17.02.34.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Sep 2024 02:34:41 -0700 (PDT)
-Date: Tue, 17 Sep 2024 11:34:41 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v10 01/21] acpi/ghes: add a firmware file with HEST address
-Message-ID: <20240917113441.430d0bd9@imammedo.users.ipa.redhat.com>
-In-Reply-To: <a1dacc20d1a2e6fc0031f957863750bd6132f423.1726293808.git.mchehab+huawei@kernel.org>
-References: <cover.1726293808.git.mchehab+huawei@kernel.org>
- <a1dacc20d1a2e6fc0031f957863750bd6132f423.1726293808.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ AJvYcCXLxvfL/V7jZ5xyH+z1FXocMqBnx2ret16On9snn6ZtyEszvH53akC347OWYvaQ4mUiZXyyNaH5bE+O@nongnu.org
+X-Gm-Message-State: AOJu0Yzd/O/l/yToJ+mwEAIjh6sXO1uBzDuZguCYd/Xy5GUhffNQhSon
+ 3Vf0uUL4RQbkGyvXooZgXM12K58wX9ibDiaxEmuABfw8pTSTVj610kZ70anL2ksGh8SiQ25b5LW
+ U2c99WKTsTXCmNmItrfh6XZ2dre+avNY2ssfqMQ==
+X-Google-Smtp-Source: AGHT+IEVGii+uHQRlzUgRZOQf97m1MqlJKDH3wrqcGoANl5JYntRoxj2mFSYoWWUtMwoW+/CBk9/LSd0C5VET95xdsI=
+X-Received: by 2002:a05:6402:34c7:b0:5c2:6c2d:3fb3 with SMTP id
+ 4fb4d7f45d1cf-5c413e5ed94mr13515652a12.36.1726566009804; Tue, 17 Sep 2024
+ 02:40:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240915125725.33099-1-ines.varhol@telecom-paris.fr>
+ <10b98c97-ff2a-430f-ab76-66cc5948b0f8@tls.msk.ru>
+In-Reply-To: <10b98c97-ff2a-430f-ab76-66cc5948b0f8@tls.msk.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 17 Sep 2024 10:39:56 +0100
+Message-ID: <CAFEAcA_xsqUbCcgstwJWmF2uUWJGskZ04r6dNkiNpQPYbrMg2w@mail.gmail.com>
+Subject: Re: [PATCH] hw/display: Fix mirrored output in dm163
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
+ qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Laurent Vivier <laurent@vivier.eu>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>, qemu-trivial@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,94 +96,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 14 Sep 2024 08:13:22 +0200
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+On Tue, 17 Sept 2024 at 10:11, Michael Tokarev <mjt@tls.msk.ru> wrote:
+>
+> On 15.09.2024 15:57, In=C3=A8s Varhol wrote:
+> > DM163 is an emulated 8x8 LED matrix. This commit flips the image
+> > horizontally so it's rendered the same way as on the hardware.
+>
+> Picked this one up for trivial-patches, as it is, -
+> I've no idea if it is correct or not :)
+>
+> This is an interesting device, I wonder if it is used by anyone?
 
-> Store HEST table address at GPA, placing its content at
-> hest_addr_le variable.
+The device is used by the Arm b-l475e-iot01a board.
 
-say here why (just short description and pointing to the next patch
-that would do that)
-
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
-PS:
-I'd move this patch to later in the series,
-right before the patch where you are going to use hest_addr_le
-
-> 
-> ---
-> 
-> Change from v8:
-> - hest_addr_lr is now pointing to the error source size and data.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-stray Signed-off-by
-
-> ---
->  hw/acpi/ghes.c         | 15 +++++++++++++++
->  include/hw/acpi/ghes.h |  1 +
->  2 files changed, 16 insertions(+)
-> 
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index e9511d9b8f71..529c14e3289f 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -30,6 +30,7 @@
->  
->  #define ACPI_GHES_ERRORS_FW_CFG_FILE        "etc/hardware_errors"
->  #define ACPI_GHES_DATA_ADDR_FW_CFG_FILE     "etc/hardware_errors_addr"
-> +#define ACPI_HEST_ADDR_FW_CFG_FILE          "etc/acpi_table_hest_addr"
->  
->  /* The max size in bytes for one error block */
->  #define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
-> @@ -367,11 +368,22 @@ void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
->  
->      acpi_table_begin(&table, table_data);
->  
-> +    int hest_offset = table_data->len;
-> +
->      /* Error Source Count */
->      build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
->      build_ghes_v2(table_data, ACPI_HEST_SRC_ID_SEA, linker);
->  
->      acpi_table_end(linker, &table);
-> +
-> +    /*
-> +     * tell firmware to write into GPA the address of HEST via fw_cfg,
-> +     * once initialized.
-> +     */
-> +    bios_linker_loader_write_pointer(linker,
-> +                                     ACPI_HEST_ADDR_FW_CFG_FILE, 0,
-> +                                     sizeof(uint64_t),
-> +                                     ACPI_BUILD_TABLE_FILE, hest_offset);
->  }
->  
->  void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-> @@ -385,6 +397,9 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
->      fw_cfg_add_file_callback(s, ACPI_GHES_DATA_ADDR_FW_CFG_FILE, NULL, NULL,
->          NULL, &(ags->ghes_addr_le), sizeof(ags->ghes_addr_le), false);
->  
-> +    fw_cfg_add_file_callback(s, ACPI_HEST_ADDR_FW_CFG_FILE, NULL, NULL,
-> +        NULL, &(ags->hest_addr_le), sizeof(ags->hest_addr_le), false);
-> +
->      ags->present = true;
->  }
->  
-> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-> index 674f6958e905..28b956acb19a 100644
-> --- a/include/hw/acpi/ghes.h
-> +++ b/include/hw/acpi/ghes.h
-> @@ -63,6 +63,7 @@ enum {
->  };
->  
->  typedef struct AcpiGhesState {
-> +    uint64_t hest_addr_le;
->      uint64_t ghes_addr_le;
->      bool present; /* True if GHES is present at all on this board */
->  } AcpiGhesState;
-
+thanks
+-- PMM
 
