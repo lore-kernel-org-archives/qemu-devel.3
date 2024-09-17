@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9E29C35FEE
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 07:49:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8771C35FEE
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 07:51:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqSwq-00054Q-FA; Tue, 17 Sep 2024 03:48:32 -0400
+	id 1sqSzT-0000v6-OB; Tue, 17 Sep 2024 03:51:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sqSwk-00052n-Kz
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 03:48:29 -0400
+ id 1sqSzS-0000u4-9X
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 03:51:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sqSwi-0000AR-VP
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 03:48:26 -0400
+ id 1sqSzQ-0000VU-Gv
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 03:51:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726559304;
+ s=mimecast20190719; t=1726559442;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=qXlK0HxNUO8ods+gFcIlUdWIsqoZRSJ335x9fVpfaG4=;
- b=LLjirnT94PUOZ0Jfs/3hcKJkmMmu3LRkBaw0cgihd0gbl2TWCYh4WeuAS54I5yRennhhLM
- AayJ35K+6+pprWv+9LFvlxBRAcaHbj6+EICQLNS3xnogzy2xA9D95buf4ofP/vkOwll2xO
- xsdFvxoF7g9KN/H3Y0zIT59WCXkVZ0k=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=zBDsLdNkar1ybOrbMweizTymW79wd7HzWTHJRqDdT/k=;
+ b=Oo+VVlrBVkQcZFd9jOHQjvbl4tYb5W1Mt7906yafVeeZJ/L/hltEnrOwTnC3Bdf9oYrrtT
+ 9w6496+buepmWOVGLtv49m0sLbn2+GVk9NMCp1nxCDCTNV6MEbBn1mjt0xL5/apK9rRpVc
+ uAygPsAjSpJ3mL2ITDPFrLhoEHtBqew=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-263-GE1d0Pa0MdOEwfuYmOupZA-1; Tue,
- 17 Sep 2024 03:48:21 -0400
-X-MC-Unique: GE1d0Pa0MdOEwfuYmOupZA-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-Fo7t1AdGNj6xILkeGs18Tg-1; Tue,
+ 17 Sep 2024 03:50:39 -0400
+X-MC-Unique: Fo7t1AdGNj6xILkeGs18Tg-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E4FC01955F40; Tue, 17 Sep 2024 07:48:19 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3A2661955D4B; Tue, 17 Sep 2024 07:50:37 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.41])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1D3C019560A3; Tue, 17 Sep 2024 07:48:16 +0000 (UTC)
-Date: Tue, 17 Sep 2024 09:48:15 +0200
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8A0851956086; Tue, 17 Sep 2024 07:50:35 +0000 (UTC)
+Date: Tue, 17 Sep 2024 09:50:33 +0200
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: Albert Esteve <aesteve@redhat.com>
 Cc: qemu-devel@nongnu.org,
@@ -54,15 +54,15 @@ Cc: qemu-devel@nongnu.org,
  jasowang@redhat.com, Stefano Garzarella <sgarzare@redhat.com>,
  stevensd@chromium.org
 Subject: Re: [PATCH v3 3/5] vhost_user: Add frontend command for shmem config
-Message-ID: <20240917074815.GB575885@fedora.redhat.com>
+Message-ID: <20240917075033.GC575885@fedora.redhat.com>
 References: <20240912145335.129447-1-aesteve@redhat.com>
  <20240912145335.129447-4-aesteve@redhat.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="TV+Hmd/XIUZxAKaq"
+ protocol="application/pgp-signature"; boundary="5S0BR6VSxcOk5sIE"
 Content-Disposition: inline
 In-Reply-To: <20240912145335.129447-4-aesteve@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -88,7 +88,7 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---TV+Hmd/XIUZxAKaq
+--5S0BR6VSxcOk5sIE
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
@@ -140,6 +140,9 @@ X) - 1)
 > +    uint32_t nregions;
 > +    uint32_t padding;
 > +    uint64_t memory_sizes[VHOST_MEMORY_BASELINE_NREGIONS];
+
+I think this should be VHOST_USER_MAX_SHMEM_REGIONS.
+
 > +} VhostUserShMemConfig;
 > +
 >  typedef struct VhostUserLog {
@@ -216,15 +219,6 @@ host_dev *dev,
 > +typedef int (*vhost_get_shmem_config_op)(struct vhost_dev *dev,
 > +                                         int *nregions,
 > +                                         uint64_t *memory_sizes,
-
-VHOST_USER_MAX_SHMEM_REGIONS is defined inside vhost-user.c and not
-visible here. However, vhost_get_shmem_config_op() assumes the caller
-knows the maximum number of memory_sizes[] array elements.
-
-I think a constant should be declared in the VIRTIO header files and a
-doc comment is needed here stating that memory_sizes[] must be at least
-VIRTIO_MAX_SHMEM_REGIONS.
-
 > +                                         Error **errp);
 > +
 > =20
@@ -255,21 +249,21 @@ r.h
 > 2.45.2
 >=20
 
---TV+Hmd/XIUZxAKaq
+--5S0BR6VSxcOk5sIE
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmbpND8ACgkQnKSrs4Gr
-c8jY2gf9FKXe6hpesJ44jiZeUlw+z8d3lISjKQeEKB2FK+Le04NIgthvUwCgpMRl
-zNWYwUO/b/jJzSxRAHrQItLhroQq+T+aFyn1SzRs+6IvwiUxGeHmfK12JKM3Mzeo
-Lm+tQyFEo4CJl+iVSLExAnEPyC21RSYztxrUimXLAT2D74gBBw7JYfayc8hGwLa5
-td4nxsqnLaeB5sdlYtBjOoiBLQcs9xOL0bWWJnYEHol+UgBWI5d7i9wcXMTmZkXE
-0/bnkvEh/hpkKu1L8jNbsdkTtTAsl2oT/AOWy+43kfiRVKfkz9JmvB2y8WnBXhfm
-35W5ffMwwqsRNH7HF/g0fUJqcpS9bw==
-=QrDR
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmbpNMkACgkQnKSrs4Gr
+c8iAPQf+ILSiZgnGUgfvJ/vw5XYQGSOGRVICp4qoazhhoUvqkMxlJ+J/fcIwxSxg
+LWBgNTMtSComotdwjcBs/RV4/uGj34az5ZvqPRr7wmhpFaROAiU1zmpUM9ZXkmGG
+VsUVy4wqmmLjVRQXaICdsEbeZFXlRIJlky+wYCwPqY2lVff+NC1T2p7nudMIyojs
+HeDCbbRHZ/Bf+m2BA6ZRK3OVY5noiBDh6E2Rah5xQ19WcnUJ+UetR7DxP3Euf+KI
+HMZO64TSO7rfzsDpO4Vk7Y+hS+Iuma3MP2SSio0FTQIPo7Mcy+gnuKb3Cdna1W8u
+nvazTfvghTz7zPsdWBIGJt1JeaaTCw==
+=FTQD
 -----END PGP SIGNATURE-----
 
---TV+Hmd/XIUZxAKaq--
+--5S0BR6VSxcOk5sIE--
 
 
