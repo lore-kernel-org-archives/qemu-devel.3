@@ -4,69 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E210C36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 10:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1193C36009
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 10:24:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqVD9-0000Af-P3; Tue, 17 Sep 2024 06:13:32 -0400
+	id 1sqVMo-00081x-3D; Tue, 17 Sep 2024 06:23:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sqVD0-000052-9k
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 06:13:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sqVCy-0003Fh-Rp
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 06:13:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726568000;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1PB0xsthZELZgvnONivkvEbHUVJiYbvPYU85ovXyz1E=;
- b=IMALBcEnhNlWw/P8nkLBE1ALdKaW7xNtaOnVGmUtwhEwXQxfGryhARmhprP5VC98aXSp5Q
- i94zrdj7pOtC9TMidedg11yh44dFQDboYTXRw2UdA/WLDOtX6G+BlI4JrOXsmYK2FPcD8N
- D74jxPpYgN7PK5DCIIDfX2Z4jj7Gyrs=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-l80SYyS1OfmqbAJfqhn9Hg-1; Tue,
- 17 Sep 2024 06:13:14 -0400
-X-MC-Unique: l80SYyS1OfmqbAJfqhn9Hg-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C2BFE19560AB; Tue, 17 Sep 2024 10:13:11 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.41])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E2B6C30001A4; Tue, 17 Sep 2024 10:13:09 +0000 (UTC)
-Date: Tue, 17 Sep 2024 12:13:08 +0200
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Dmitry Frolov <frolov@swemel.ru>
-Cc: sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org, qemu-block@nongnu.org
-Subject: Re: [PATCH] hw/block: fix uint32 overflow
-Message-ID: <20240917101308.GA591744@fedora.redhat.com>
-References: <20240917080356.270576-2-frolov@swemel.ru>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sqVMm-0007yn-91
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 06:23:28 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sqVMk-0004jq-NJ
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 06:23:28 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-5367ae52a01so4740390e87.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 03:23:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726568604; x=1727173404; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=1VepKD5AHEkXWgFp2Tf2s1/T3c5CzElQVbAc95xRRNw=;
+ b=C5FU50y2ymLpfrJmFU+0gW2bL6pdCP1XAtGJN9Mvn8PAnQSnlX8QWgKHx0PRAF9Ilf
+ RDsh7HycKNsV0akGJTA2acJXBQ3qd8gqy9su54yedNYuRKyze+4wsTdWkHyw6s+vedx+
+ Q1R5GwpsvQ5j5XU2ylJo78KpalGSQre7v167nAN1D8bDSONFiU2VoujJ1UZFC9IOvLRz
+ 34uzL+hvm7WsGgSb5xfl/d8DeJL6BBorm5Y5E3SW5CwfnqdfbvAKl/HyB8jvVtx2W+AJ
+ LUZxADNMS5IYsIjc5H9PiFent317rIELdcAcxUHqLAUuQrxtm9TZA+z3w8lioMIZ5tJX
+ fgOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726568604; x=1727173404;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1VepKD5AHEkXWgFp2Tf2s1/T3c5CzElQVbAc95xRRNw=;
+ b=e8ah4fs+nAyTckNwF6jqcLzIrmRXrBf+JjgJS6cLATkt5bLPRgfWeDYyDTRRsVT8kX
+ TefpS7ioh2Bv3eJ4JsGYrXtGp1Gq1QyktGatfDuRZ0TzFH57O7aJtOV4Y4qZdr+X18O9
+ SiHbi29MLNg9N4hqZ5XbnVexVi5WmH5eb11w/wOcuCTwi2Mchsw75tSL9o272wC4Toyc
+ 3SCrxZxrQR+P65JryZL7e1PsMYxqnVcX/oHtolEtwM1ojyg5Jd3SKDtw9mYHJOG1VzdU
+ 5knvxlEa7LhZ8My8NxmGlQAmMnE4afXMe9E0Bp6I+RJ8xU3XoeomZVufHtnPblLH9AQB
+ t5lw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVHAQ6linMrCsIOwCqKeuzD8taPtQ6qAyh8cCKJ6VsmDy40HR2LEdlN2i5wMWud0XUHw0PRGLiD9ZZy@nongnu.org
+X-Gm-Message-State: AOJu0YyaCF8xIE6nUXhOm+wbF5tXk/4cW2xarXaphgjQ3shsfcZUrFHT
+ MsFmRc/gzRqpHPGSD1yuvj4jF9YguUF6wp7YZJvRRyop5WG3KE5uemXXKOkXhtOF6Zy8oLdUZtG
+ imcsYfvEtgAL/J1R5OEYo+62k6fOZ0hcUJl8zwQ==
+X-Google-Smtp-Source: AGHT+IHjggBhB+TylOGLSEpqKrqz4C/ZRQ+dKVd5pOXk8O2raD6q8eQBMKsniGHjmAPKNOzBRnnIfky7/mHuW//KlQY=
+X-Received: by 2002:a05:6512:3ca5:b0:535:6cde:5c4d with SMTP id
+ 2adb3069b0e04-5367feb9b81mr8731694e87.3.1726568604429; Tue, 17 Sep 2024
+ 03:23:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="t+LP5SZ+888D42wA"
-Content-Disposition: inline
-In-Reply-To: <20240917080356.270576-2-frolov@swemel.ru>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240915125725.33099-1-ines.varhol@telecom-paris.fr>
+ <10b98c97-ff2a-430f-ab76-66cc5948b0f8@tls.msk.ru>
+ <CAFEAcA_xsqUbCcgstwJWmF2uUWJGskZ04r6dNkiNpQPYbrMg2w@mail.gmail.com>
+ <9732ed11-ed5f-4b2a-99bb-7de629148d95@tls.msk.ru>
+In-Reply-To: <9732ed11-ed5f-4b2a-99bb-7de629148d95@tls.msk.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 17 Sep 2024 11:23:13 +0100
+Message-ID: <CAFEAcA_wjfCyxCtNn_UuEU2q6pGgzWUepxiEb3Mnebu=0cvNZA@mail.gmail.com>
+Subject: Re: [PATCH] hw/display: Fix mirrored output in dm163
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
+ qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Laurent Vivier <laurent@vivier.eu>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>, qemu-trivial@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,43 +96,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, 17 Sept 2024 at 10:54, Michael Tokarev <mjt@tls.msk.ru> wrote:
+>
+> On 17.09.2024 12:39, Peter Maydell wrote:
+>
+> >> This is an interesting device, I wonder if it is used by anyone?
+> >
+> > The device is used by the Arm b-l475e-iot01a board.
+>
+> I mean if it is actually used in practice, - there's just 1 commit
+> for this file - it's addition in Apr this year, and that's all.
+> If the image is inverted, I wonder how it worked and no one
+> noticed :)
 
---t+LP5SZ+888D42wA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This is a fairly new board, and the authors are gradually
+adding its devices.
 
-On Tue, Sep 17, 2024 at 11:03:18AM +0300, Dmitry Frolov wrote:
-> The product bs->bl.zone_size * (bs->bl.nr_zones - 1) may overflow
-> uint32.
->=20
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
->=20
-> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
-> ---
->  hw/block/virtio-blk.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-
-Thanks, applied to my block tree:
-https://gitlab.com/stefanha/qemu/commits/block
-
-Stefan
-
---t+LP5SZ+888D42wA
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmbpVjMACgkQnKSrs4Gr
-c8jdPgf/fse8zPASYpHHT4vbqtuxwIRhg4Kyh0BiXYt0mRLj/y52hm8Kf42MdKHp
-dQtACuDMHGLbbHR5PLWN5lizGdx+8deNZNu49/atq7CkRc7K3gwCihEBtaBfgHIp
-5kPmIdTT+g5VCIVLeW+LDnN1Se5mhZ13bxHU1UY89RcKVkBsn26lU0NhbH7LISy2
-bqQbfM7L0u37wOi/DPIwGT8Lf+CKAtdOhmE3z5hBdytOVqX0htwpb6C1aHMoqqjv
-coFTNkh5zQL1GifsfCmP9zmD8gxMlt25+qJr3JD9XVLFOlhyqMmSqEyr9bHQafA2
-pRcEJ9jCg8wsect0FVtiZuBGTYXHsQ==
-=psDM
------END PGP SIGNATURE-----
-
---t+LP5SZ+888D42wA--
-
+-- PMM
 
