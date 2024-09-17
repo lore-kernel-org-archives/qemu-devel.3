@@ -4,74 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B3FBC35FFF
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 12:41:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55524C3601A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 12:45:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqXW3-0008Jl-Et; Tue, 17 Sep 2024 08:41:11 -0400
+	id 1sqXa2-0004GP-0J; Tue, 17 Sep 2024 08:45:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sqXVz-0008Ih-96
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 08:41:07 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sqXZz-0004EK-3E
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 08:45:15 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sqXVv-0002XB-8m
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 08:41:06 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5c42bd0386cso4620747a12.2
- for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 05:41:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sqXZw-000314-AQ
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 08:45:14 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-42cb7a2e4d6so46619955e9.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 05:45:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726576861; x=1727181661; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VoWNgzRNzvsVgNlZHKuj08Z40X/Ok4jgEHeAr7pYfdg=;
- b=orf2uMGTfLXEWoM+QR/MXHx9bUtP6Kf5wXxbUHqcX1PgCHLRot3UWm6NoTRtV8C5yV
- eolA0mz8Sq1ZkYV/LUIZ/HPQ3F2ee9PtEZ2CzzcLe8XB35972Oc3qjProbF1Ivf1PMD2
- xsEkByHkQD4IhFPIE/TLMhL8HHQVJUnVKMR82ic0bgGcc8TJZ8UFAY2lmotBjE/iJcF+
- IowOEFt47fH5ye/5H/2Alj/yu3HlYuU+GUVmUBtUcScyyMaZCeD95tQRnG/VWeErdUAf
- OZkPavTmzYo04Z5qm0blUkZ8OZKLKc5b3b0+lSqqTSpEt0jv87rQHmelXgobukEMuACX
- YHyA==
+ d=ventanamicro.com; s=google; t=1726577110; x=1727181910; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=R2D8omB6AIs3LPmVIk9BObkgDL6uOtgEhSvvMBO53Ms=;
+ b=DWNomanKdiO0KP6DC8ybSWmqdZbcWOSxL33UiDJyF1IAlL7aRGqhMP0G+3B1oIYfAk
+ 7xd5S7FomkITjy/m0kxAapXFsYKOXWUvIg8+DnsOk0FpPbm9fKAyDupf3+anDv5XSVVw
+ XRc9ETBmquEIt0eoCce4kzP+kga1y3M7v/3eFokDXs8i4cwDQQ1DqQIc/iFxNde11p23
+ CRxIZb12MotxYTvbBpBt7lixBQ765VOkJYxz5QUwKIhyjOzYeH0WyH4ROAnhdX9NiLMk
+ 4kEEgT9L2cCrAhREBL/z35EXeI4gU/wQyI7dpR7k7iv5rLxbsMZfAM/0QHDmvYyFMOaa
+ dFPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726576861; x=1727181661;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VoWNgzRNzvsVgNlZHKuj08Z40X/Ok4jgEHeAr7pYfdg=;
- b=DqXrW09R2cnqFJztsAJ4k4sDN3VNOsB/djrMBMrV0kYlI3N1TJTKd3OGO7LauBcEfC
- YGpAgxpV++K+mWePU11RRk7cd2cpuvw/P6iSpxEkiA3jXHHKR5d9mZ7GbI1XPeLf2x2B
- YvzgOVzCUggedmqccn94yCD8dpL8rJZmbrgK85oOzcnKQC4XMfKxR1cCv+ZdZeSXkyOI
- 0tkLHHl7lfuUylD5OeXT8S5uPdf1cB6K9y6QlWByUPUC7fC0CcflIxrNIIJvgC1xnd4M
- +IBx8N/nbeos6YoqLjo32agMEY8FhBym963TcltH/5Lyv030CGxqFJfmISBf+PMIWSXd
- J5uQ==
+ d=1e100.net; s=20230601; t=1726577110; x=1727181910;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=R2D8omB6AIs3LPmVIk9BObkgDL6uOtgEhSvvMBO53Ms=;
+ b=qrVJ2RkbqraRej+HXXFBkmO6bt30Er0anHWSJhlEwuMR0sGopGR04CKG6cKEiBwlfO
+ uJbmgZpzfO7SOwDiSMDn37lx4jjj4w5cCv77T9TZrxT3mQYqqlZ632blgaEXRgBieDcs
+ UxpxWKAT0Wp/CKSQMS21sy1hJfNyb2P5/XB4ZZBFm0ROmv2uXqVDbYCu07xkU4WpebsC
+ gikbLN9IJgkQWNIynK6Zwmlrh1LkEawGX93uK+v1FrtbdIiqXGqfIl8ByyYjVXSPuDGI
+ AC+NTQBLRjJhabmXBVVyBXyeMGHcHh4/LKjbf7NWg6mpaP4816KuC1f6vHzsxIW2UORG
+ 5GWQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUreAHoDCwNZxfxXaE/sip4dJ1mKnV4q41fV6VR5uFNBncT3zm3Pf7Re719rNWha67Yyk+SruTxd0IJ@nongnu.org
-X-Gm-Message-State: AOJu0YyASgW9mqP/p84se/nP8sy3XKX4SH/eFTjLinI5Za2ddZmmkwyI
- vCE271oX5/PisO8Xd844sb0K9+i/e71dTTGoSRPaZWIrADaYPVNLXNGVLue/5goWhs94XH2h1KK
- KR0nhIn/qoLv89IC5CTYxX7xBbDmMDMkrhhDksA==
-X-Google-Smtp-Source: AGHT+IFddQGZPh7ufuTrxqAFojepcwLGWOdXnososvk+dWlheg63IYTwcV4CD9ChUJbzD7tz2vePxAmLFe488NmuP7g=
-X-Received: by 2002:aa7:d91a:0:b0:5c2:634a:fc1e with SMTP id
- 4fb4d7f45d1cf-5c413e4bcc1mr17317840a12.23.1726576860947; Tue, 17 Sep 2024
- 05:41:00 -0700 (PDT)
+ AJvYcCX/A3GMgKTgGCncG+TateoR6OsyCyCQttID+h2d7Mu5bRzWaTJgAHHyrA33mt4nyOidTQRfzOFsG89s@nongnu.org
+X-Gm-Message-State: AOJu0YyuPIFUjZBNsFidDWm0yYeFXX4/AesZ/GMZtqhy20d+0Dyz2TWi
+ dknItgcnSOFUz8uPovfZVHKzlHANKQE1bD0DUsfgzwI0sUiIWOd4MYicFQvE9xg=
+X-Google-Smtp-Source: AGHT+IHL0gNK0X/v97KdZxKStrAktOesKMobua4sN8iN9MxPJ2nkMymPIjGDYd5+Pc9JCeRh1aH3lA==
+X-Received: by 2002:adf:e552:0:b0:374:b6f3:728d with SMTP id
+ ffacd0b85a97d-378c2d516c4mr10153515f8f.46.1726577110079; 
+ Tue, 17 Sep 2024 05:45:10 -0700 (PDT)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-378e780519esm9436905f8f.103.2024.09.17.05.45.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Sep 2024 05:45:09 -0700 (PDT)
+Date: Tue, 17 Sep 2024 14:45:08 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Gregor Haas <gregorhaas1997@gmail.com>, qemu-devel@nongnu.org, 
+ qemu-riscv@nongnu.org, atishp@rivosinc.com, dbarboza@ventanamicro.com, 
+ alistair.francis@wdc.com
+Subject: Re: [PATCH v3 0/1] Add support for generating OpenSBI domains in the
+ device tree
+Message-ID: <20240917-2683603a6ea10148772d365e@orel>
+References: <20240805210444.497723-1-gregorhaas1997@gmail.com>
+ <CAKmqyKM_qgc+wwrDRzZM1yda=dZziM=1rGU2_SDeJU9PTnacVg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20240913163636.253949-1-r.peniaev@gmail.com>
- <20240913163636.253949-2-r.peniaev@gmail.com>
- <CAMxuvawD8QrsjJ9xiE9KDa=BTj8urRcCcN5YasiE3m-R7xEcuQ@mail.gmail.com>
-In-Reply-To: <CAMxuvawD8QrsjJ9xiE9KDa=BTj8urRcCcN5YasiE3m-R7xEcuQ@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 17 Sep 2024 13:40:49 +0100
-Message-ID: <CAFEAcA96LM9fe5bTOVVAz3PuNfAt_aGr_6gq3BP9wfFq0Y3OwA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] chardev: implement backend chardev multiplexing
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: Roman Penyaev <r.peniaev@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKmqyKM_qgc+wwrDRzZM1yda=dZziM=1rGU2_SDeJU9PTnacVg@mail.gmail.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,46 +101,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 17 Sept 2024 at 13:32, Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@redhat.com> wrote:
+On Mon, Sep 09, 2024 at 01:27:05PM GMT, Alistair Francis wrote:
+> On Tue, Aug 6, 2024 at 7:05 AM Gregor Haas <gregorhaas1997@gmail.com> wrote:
+> >
+> > This patch series adds support for specifying OpenSBI domains on the QEMU
+> > command line. A simple example of what this looks like is below, including
+> > mapping the board's UART into the secondary domain:
+> 
+> Thanks for the patch, sorry it took me so long to look into this
+> 
+> >
+> > qemu-system-riscv64 -machine virt -bios fw_jump.bin -cpu max -smp 2 -m 4G -nographic \
+> >         -device opensbi-memregion,id=mem,base=0xBC000000,order=26,mmio=false \
+> >         -device opensbi-memregion,id=uart,base=0x10000000,order=12,mmio=true,device0="/soc/serial@10000000" \
+> >         -device opensbi-domain,id=domain,possible-harts=0-1,boot-hart=0x0,next-addr=0xBC000000,next-mode=1,region0=mem,perms0=0x3f,region1=uart,perms1=0x3f
+> 
+> This will need documentation added under docs (probably under
+> docs/system/riscv) of how this should be used.
+> 
+> I'm not convinced this is something we want though. A user can dump
+> the QEMU DTB and edit it to support OpenSBI domains if they want.
 >
-> Hi Roman
->
-> On Fri, Sep 13, 2024 at 8:37=E2=80=AFPM Roman Penyaev <r.peniaev@gmail.co=
-m> wrote:
-> >
-> > This patch implements multiplexing capability of several backend
-> > devices, which opens up an opportunity to use a single frontend
-> > device on the guest, which can be manipulated from several
-> > backend devices.
-> >
-> > The idea of the change is trivial: keep list of backend devices
-> > (up to 4), init them on demand and forward data buffer back and
-> > forth.
-> >
-> > The following is QEMU command line example:
-> >
-> >   -chardev socket,path=3D/tmp/sock,server=3Don,wait=3Doff,id=3Dsock0 \
-> >   -chardev vc,id=3Dvc0 \
-> >   -chardev mux,id=3Dmux0,chardev=3Dvc0,,sock0 \
-> >   -device virtconsole,chardev=3Dmux0 \
-> >   -vnc 0.0.0.0:0
-> >
-> > Which creates 2 backend devices: text virtual console (`vc0`)
-> > and a socket (`sock0`) connected to the single virtio hvc
-> > console with the multiplexer (`mux0`) help. `vc0` renders
-> > text to an image, which can be shared over the VNC protocol.
-> > `sock0` is a socket backend which provides biderectional
-> > communication to the virtio hvc console.
->
-> I think I would rather implement a new mux for this purpose, like
-> "mux-be" perhaps?
->
-> "mux" has been a bit hidden (behind mux=3Don) for various reasons, and
-> is probably not at production quality level.
 
-You get a mux by default (for serial vs HMP monitor), so
-I think it's pretty heavily used and tested in that sense...
+I also feel like this is just pushing the population of device tree
+nodes from an editor of a .dts file to the QEMU command line. If some
+generation is needed, then maybe we need a script, possibly one which
+has the same command line inputs as proposed here. afaik, we haven't
+typically taken patches which help overlay the generated devicetree
+with additional nodes. For example, see [1] for one such proposal
+and rejection.
 
--- PMM
+[1] https://lore.kernel.org/all/20210926183410.256484-1-sjg@chromium.org/
+
+Thanks,
+drew
 
