@@ -4,71 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C538CAC58D
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 16:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 796A1CAC58D
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 16:04:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqadZ-0005vK-Dx; Tue, 17 Sep 2024 12:01:09 -0400
+	id 1sqae8-00078i-9x; Tue, 17 Sep 2024 12:01:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
- id 1sqadW-0005lV-LF
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 12:01:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
- id 1sqadU-0003gF-Vg
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 12:01:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726588863;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=s/ofPsoeUxqxDQv2RABQLnVI8pNi50vFOv5/rQ2rWf0=;
- b=hNAl6iL7OiJ+/MRZ32Ws9QDC4FSSIzpTMhN2vRyxWG1lJ1Zel7s3KVgpLTrYWfOfN2yjtS
- 0k2oIdu5vSCR7Dh/0G5Sn5m9hIbEEX2wkxg+sZzgY/oquoG2w0O0/ty1eykJcCeHSA6XFI
- 7IKFm18cQtiZ2m8QoolxMKpEgE1G+2g=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-389-lmdaCVsgNu-c0V9JHBsEug-1; Tue,
- 17 Sep 2024 12:01:02 -0400
-X-MC-Unique: lmdaCVsgNu-c0V9JHBsEug-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 618261944AA4
- for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 16:01:01 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.45.226.82])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 348F630001A4; Tue, 17 Sep 2024 16:00:58 +0000 (UTC)
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
-To: qemu-devel@nongnu.org,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH RESEND v4 4/4] docs/system: Add recommendations to Hyper-V
- enlightenments doc
-Date: Tue, 17 Sep 2024 18:00:51 +0200
-Message-ID: <20240917160051.2637594-5-vkuznets@redhat.com>
-In-Reply-To: <20240917160051.2637594-1-vkuznets@redhat.com>
-References: <20240917160051.2637594-1-vkuznets@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sqae6-0006y5-4t
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 12:01:42 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sqae4-0003xB-C3
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 12:01:41 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5c42f406e29so4874123a12.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 09:01:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726588899; x=1727193699; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=q/5xsMMvS7v+dj2//klH1BoTXqckiobFqW8DVaXBLmU=;
+ b=QtNDx7tGhhdErKdphT4IFjN9WzCeNdm5tlW39WIQ6xl94juncWAh7aDwevgKLxZGUk
+ vdIAlgZnTpri2f59mluqdyjn3Vw2ZS0wHt28DE44xGtjGjAR3XkifliRHBqcI/9qbkU2
+ eVIltmMafrFJzqKCBpOrT3sXN/GWr6EQu07ycnD5WxRjJYDo93KMgr7WnAQAHkQNAiiv
+ NeqSU+JtiClucQXR+C0skvZP11S/N+2bKX2jgHaMX1N84NuCInuG474LMvf0MarCUUAm
+ t7jTmyjZCZvFFmpD1g7ZRf9DcMp0XCuOV9DZ7m1EVEcmRITX5VTpSnVGYxc4jyLnDtQ4
+ V9vQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726588899; x=1727193699;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=q/5xsMMvS7v+dj2//klH1BoTXqckiobFqW8DVaXBLmU=;
+ b=Xl1ZVkOSBlEVEYRuhkNHyqgpegUt/sl0UD0LR3ccYnIFfCIOxC2evZ3F25xUIAgST0
+ VRupY/IWHh8vHZ5cznNSTWmG21xsSycV/azF4bSJE4P3zZVGuPdhPs5zwMqQXYQ+Ptuu
+ 8C9jYtQVulXjCzsnasRVvu8Eh2+PU6ge6HIYl7reKS0ArTHHnzmLbpJoMnb/goSFWOjL
+ Ua7Hjzvfh7Yp/PTAnNLe82kjA4P3RSNRRbTaXgulemoPr88yKFPdex6NqiXcWdy7LseP
+ EtZxV78iBRr47f1bJE4NwVnUUqvwTOdUktykeco5wwTKipSJDELccrKFVAbjKcEAg3k3
+ ZjGA==
+X-Gm-Message-State: AOJu0YxC/w9nL2auzCkqAnjhnuR9nEFg1NqPRgehz8MYSl9RCBlgFJMm
+ TXjMOfj77SfywZ5tyrcgTGZLbqgz6AXblgbozjDB/JPajLV5OFbiqt/PEYLOpt9SbPP2xN/Cz3Y
+ RWBUAcEjfDZP8w7luQ4fWu5DCJzQJ9FpurC+RXw==
+X-Google-Smtp-Source: AGHT+IHVLtKorG+3+Ssr7T5KZdbroUTdgr/azS+YzYe3rzcrwOqtpTjQiNTj6wOofkfLo2n4lx5Rh4brQgtS2NFxdlU=
+X-Received: by 2002:aa7:c3c9:0:b0:5be:cdaf:1c09 with SMTP id
+ 4fb4d7f45d1cf-5c413e50f05mr14939988a12.28.1726588898256; Tue, 17 Sep 2024
+ 09:01:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=vkuznets@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240910-b4-move-to-freebsd-v5-0-0fb66d803c93@linaro.org>
+In-Reply-To: <20240910-b4-move-to-freebsd-v5-0-0fb66d803c93@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 17 Sep 2024 17:01:27 +0100
+Message-ID: <CAFEAcA9W4h4TDr+d_xE9MB4Jc+bCeAS5r0MyH8tuMWssDcRqvw@mail.gmail.com>
+Subject: Re: [PATCH v5 0/4] tests: updates for aarch64/sbsa-ref
+To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Radoslaw Biernacki <rad@semihalf.com>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,57 +92,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While hyperv.rst already has all currently implemented Hyper-V
-enlightenments documented, it may be unclear what is the recommended set to
-achieve the best result. Add the corresponding section to the doc.
+On Tue, 10 Sept 2024 at 10:48, Marcin Juszkiewicz
+<marcin.juszkiewicz@linaro.org> wrote:
+>
+> We want test to run on default cpu settings. For now it is plain
+> Neoverse-N2 but we are considering either disabling PAuth or going with
+> 'impdef' way.
+>
+> We want to have some non-Linux OS in testing in case one of changes keep
+> Linux booting but crash elsewhere. So far OpenBSD was used for it but we
+> move to FreeBSD 14.x due to longer support cycles (OpenBSD 7.3 we use is
+> already EoL).
+>
+> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
 
-Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
----
- docs/system/i386/hyperv.rst | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+Applied to target-arm.next, thanks.
 
-diff --git a/docs/system/i386/hyperv.rst b/docs/system/i386/hyperv.rst
-index 009947e39141..1c1de77feb65 100644
---- a/docs/system/i386/hyperv.rst
-+++ b/docs/system/i386/hyperv.rst
-@@ -283,6 +283,36 @@ Supplementary features
-   feature alters this behavior and only allows the guest to use exposed Hyper-V
-   enlightenments.
- 
-+Recommendations
-+---------------
-+
-+To achieve the best performance of Windows and Hyper-V guests and unless there
-+are any specific requirements (e.g. migration to older QEMU/KVM versions,
-+emulating specific Hyper-V version, ...), it is recommended to enable all
-+currently implemented Hyper-V enlightenments with the following exceptions:
-+
-+- ``hv-syndbg``, ``hv-passthrough``, ``hv-enforce-cpuid`` should not be enabled
-+  in production configurations as these are debugging/development features.
-+- ``hv-reset`` can be avoided as modern Hyper-V versions don't expose it.
-+- ``hv-evmcs`` can (and should) be enabled on Intel CPUs only. While the feature
-+  is only used in nested configurations (Hyper-V, WSL2), enabling it for regular
-+  Windows guests should not have any negative effects.
-+- ``hv-no-nonarch-coresharing`` must only be enabled if vCPUs are properly pinned
-+  so no non-architectural core sharing is possible.
-+- ``hv-vendor-id``, ``hv-version-id-build``, ``hv-version-id-major``,
-+  ``hv-version-id-minor``, ``hv-version-id-spack``, ``hv-version-id-sbranch``,
-+  ``hv-version-id-snumber`` can be left unchanged, guests are not supposed to
-+  behave differently when different Hyper-V version is presented to them.
-+- ``hv-crash`` must only be enabled if the crash information is consumed via
-+  QAPI by higher levels of the virtualization stack. Enabling this feature
-+  effectively prevents Windows from creating dumps upon crashes.
-+- ``hv-reenlightenment`` can only be used on hardware which supports TSC
-+  scaling or when guest migration is not needed.
-+- ``hv-spinlocks`` should be set to e.g. 0xfff when host CPUs are overcommited
-+  (meaning there are other scheduled tasks or guests) and can be left unchanged
-+  from the default value (0xffffffff) otherwise.
-+- ``hv-avic``/``hv-apicv`` should not be enabled if the hardware does not
-+  support APIC virtualization (Intel APICv, AMD AVIC).
- 
- Useful links
- ------------
--- 
-2.46.0
-
+-- PMM
 
