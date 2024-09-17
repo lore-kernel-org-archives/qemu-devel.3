@@ -4,78 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1871EC35FEA
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 06:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2FF7C35FEB
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 07:02:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqSA9-0002Eu-D1; Tue, 17 Sep 2024 02:58:13 -0400
+	id 1sqSDQ-0006xe-Ad; Tue, 17 Sep 2024 03:01:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sqSA2-0002B4-4E
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 02:58:06 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sqS9z-0003Cc-BL
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 02:58:05 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2f75c56f16aso65576361fa.0
- for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 23:58:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726556280; x=1727161080; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=cSYHu5lBYgP+YuUarCXjaJs9Yl4nMxFLvamP9MQ79yg=;
- b=rpJq/MM0QPi0dFV7lovW69ySVH8TS1huhVHIyfvf/SysfncRNYmMwQo2Be2ddyjWkn
- Q3sUCFv63HPJiUQpV6EONxMCxQtBdEmFS5CmkdUc/aMJSuEMFFGHksG55lh0nrLYAKjY
- yqhTci7JEp90SBZOVSIluo5GJyG3Oqn28voHSSO2cgR7RmpECvIrLEHK4l01EkEPOHbp
- 1PkZAIeiTtbcNM28VhnDG/tpw7lXii0WodoJeATD0HwtYUmurhIDFiQzwDitZdfLHB7u
- CA0yA1eQbkHWXLWAQqYrgtUzPLNKWm8B8Rxm/VIMYbMUzMitD1T97DVeZcolSGnfn0OE
- tBKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726556280; x=1727161080;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cSYHu5lBYgP+YuUarCXjaJs9Yl4nMxFLvamP9MQ79yg=;
- b=r5Iug8e+LipnY81RBI92sextkcYUht3xuDlchb7pR3j5MQ9g7+aa305A4QaWHjGqeW
- UIpHjzqgkixd05M6aaqVv3p4FjM0/PukUZSmiusXwJsrHJSJxKTQOVmnNO6LUOv7lVvy
- M+qmSXUQQ2yfrq2hWg4qGTqh95w2hwEo3AVjBXwd1p/eg+8AvleTAC0/ToUyHVHT8Xez
- uBdVitnHZegnksx67vrxl++oPZyblSD4VeJlYMjpbzwjW3bKWTP7lxnmkoJ+nSPFEWG+
- k5sLhn9laVQ6q8H+/JeMAe8Uf4YMImezePq5XLnqnWV6JjH+iASFTIjLA0SpxQYE8VVF
- NPMg==
-X-Gm-Message-State: AOJu0YzWPwzqxCWY+6ErTpKUq7tZCrQ7oriEG1kJ56eKptP+gYzBuksu
- 6YUnPijhORf7DVRj3Err0IRzI9omOIaw48mKIFNsZwVysukfThg69aoapi7iSh8Tn+fMJlLWZVg
- L
-X-Google-Smtp-Source: AGHT+IGxO1yPEeWmwzTh2ISe6LjTMvWeubk/OTHWo/D6cYrABDr1jI687MkKdlmKMzm8JtKnZo7czA==
-X-Received: by 2002:a05:6512:1054:b0:52e:9c69:b25b with SMTP id
- 2adb3069b0e04-53678fc859amr9234072e87.28.1726556280261; 
- Mon, 16 Sep 2024 23:58:00 -0700 (PDT)
-Received: from m1x-phil.lan (sto93-h02-176-184-36-77.dsl.sta.abo.bbox.fr.
- [176.184.36.77]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90610967bbsm406286566b.8.2024.09.16.23.57.52
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 16 Sep 2024 23:57:59 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] tests/unit: Really build pbkdf test on macOS
-Date: Tue, 17 Sep 2024 08:57:36 +0200
-Message-ID: <20240917065736.27883-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
+ (Exim 4.90_1) (envelope-from <SRS0=F3tl=QP=kaod.org=clg@ozlabs.org>)
+ id 1sqSDN-0006wV-J6; Tue, 17 Sep 2024 03:01:34 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=F3tl=QP=kaod.org=clg@ozlabs.org>)
+ id 1sqSDL-0003Xy-25; Tue, 17 Sep 2024 03:01:33 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4X7CPC5nx3z4xZg;
+ Tue, 17 Sep 2024 17:01:19 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4X7CP967xZz4xYP;
+ Tue, 17 Sep 2024 17:01:17 +1000 (AEST)
+Message-ID: <6ed1b5e4-cdd4-4805-ae24-36810ef11fe3@kaod.org>
+Date: Tue, 17 Sep 2024 09:01:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ppc/spapr: remove deprecated machines specific code
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, danielhb413@gmail.com
+References: <20240917060300.943496-1-harshpb@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240917060300.943496-1-harshpb@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=F3tl=QP=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,32 +64,279 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix a typo to run the pbkdf crypto cipher tests on macOS.
+Hello Harsh,
 
- $ make check-unit
-   ...
-   87/102 qemu:unit / test-crypto-pbkdf      OK      2.35s   17 subtests passed
+On 9/17/24 08:03, Harsh Prateek Bora wrote:
+> Commit 1392617d3576 intended to tag pseries-2.1 - 2.11 machines as
+> deprecated with reasons mentioned in its commit log.
+> Removing the arch specific code for the now deprecated machine types.
+> 
+> Suggested-by: Cédric Le Goater <clg@kaod.org>
+> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-Fixes: ebe0302ac8 ("tests/unit: build pbkdf test on macOS")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tests/unit/test-crypto-pbkdf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+There is more to it :/
 
-diff --git a/tests/unit/test-crypto-pbkdf.c b/tests/unit/test-crypto-pbkdf.c
-index b477cf4e4b..12ee808fbc 100644
---- a/tests/unit/test-crypto-pbkdf.c
-+++ b/tests/unit/test-crypto-pbkdf.c
-@@ -25,7 +25,7 @@
- #include <sys/resource.h>
- #endif
- 
--#if defined(_WIN32) || defined(RUSAGE_THREAD) || defined(CONFIG_DARWNI)
-+#if defined(_WIN32) || defined(RUSAGE_THREAD) || defined(CONFIG_DARWIN)
- #include "crypto/pbkdf.h"
- 
- typedef struct QCryptoPbkdfTestData QCryptoPbkdfTestData;
--- 
-2.45.2
+Some machine versions have their own set of properties, like the
+"pre-*-migration" ones, and the associated code should be removed
+also. It impacts more models than just the machine model.
+
+I suggest one patch per machine version, or one patch per complex
+machine version and a combo patch for the simple ones.
+
+Thanks,
+
+C.
+
+
+> ---
+>   hw/ppc/spapr.c | 235 -------------------------------------------------
+>   1 file changed, 235 deletions(-)
+> 
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index 8aa3ce7449..04f06377b4 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -5157,241 +5157,6 @@ static void spapr_machine_2_12_sxxm_class_options(MachineClass *mc)
+>   
+>   DEFINE_SPAPR_MACHINE_TAGGED(2, 12, sxxm);
+>   
+> -/*
+> - * pseries-2.11
+> - */
+> -
+> -static void spapr_machine_2_11_class_options(MachineClass *mc)
+> -{
+> -    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
+> -
+> -    spapr_machine_2_12_class_options(mc);
+> -    smc->default_caps.caps[SPAPR_CAP_HTM] = SPAPR_CAP_ON;
+> -    compat_props_add(mc->compat_props, hw_compat_2_11, hw_compat_2_11_len);
+> -}
+> -
+> -DEFINE_SPAPR_MACHINE(2, 11);
+> -
+> -/*
+> - * pseries-2.10
+> - */
+> -
+> -static void spapr_machine_2_10_class_options(MachineClass *mc)
+> -{
+> -    spapr_machine_2_11_class_options(mc);
+> -    compat_props_add(mc->compat_props, hw_compat_2_10, hw_compat_2_10_len);
+> -}
+> -
+> -DEFINE_SPAPR_MACHINE(2, 10);
+> -
+> -/*
+> - * pseries-2.9
+> - */
+> -
+> -static void spapr_machine_2_9_class_options(MachineClass *mc)
+> -{
+> -    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
+> -    static GlobalProperty compat[] = {
+> -        { TYPE_POWERPC_CPU, "pre-2.10-migration", "on" },
+> -    };
+> -
+> -    spapr_machine_2_10_class_options(mc);
+> -    compat_props_add(mc->compat_props, hw_compat_2_9, hw_compat_2_9_len);
+> -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+> -    smc->pre_2_10_has_unused_icps = true;
+> -    smc->resize_hpt_default = SPAPR_RESIZE_HPT_DISABLED;
+> -}
+> -
+> -DEFINE_SPAPR_MACHINE(2, 9);
+> -
+> -/*
+> - * pseries-2.8
+> - */
+> -
+> -static void spapr_machine_2_8_class_options(MachineClass *mc)
+> -{
+> -    static GlobalProperty compat[] = {
+> -        { TYPE_SPAPR_PCI_HOST_BRIDGE, "pcie-extended-configuration-space", "off" },
+> -    };
+> -
+> -    spapr_machine_2_9_class_options(mc);
+> -    compat_props_add(mc->compat_props, hw_compat_2_8, hw_compat_2_8_len);
+> -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+> -    mc->numa_mem_align_shift = 23;
+> -}
+> -
+> -DEFINE_SPAPR_MACHINE(2, 8);
+> -
+> -/*
+> - * pseries-2.7
+> - */
+> -
+> -static bool phb_placement_2_7(SpaprMachineState *spapr, uint32_t index,
+> -                              uint64_t *buid, hwaddr *pio,
+> -                              hwaddr *mmio32, hwaddr *mmio64,
+> -                              unsigned n_dma, uint32_t *liobns, Error **errp)
+> -{
+> -    /* Legacy PHB placement for pseries-2.7 and earlier machine types */
+> -    const uint64_t base_buid = 0x800000020000000ULL;
+> -    const hwaddr phb_spacing = 0x1000000000ULL; /* 64 GiB */
+> -    const hwaddr mmio_offset = 0xa0000000; /* 2 GiB + 512 MiB */
+> -    const hwaddr pio_offset = 0x80000000; /* 2 GiB */
+> -    const uint32_t max_index = 255;
+> -    const hwaddr phb0_alignment = 0x10000000000ULL; /* 1 TiB */
+> -
+> -    uint64_t ram_top = MACHINE(spapr)->ram_size;
+> -    hwaddr phb0_base, phb_base;
+> -    int i;
+> -
+> -    /* Do we have device memory? */
+> -    if (MACHINE(spapr)->device_memory) {
+> -        /* Can't just use maxram_size, because there may be an
+> -         * alignment gap between normal and device memory regions
+> -         */
+> -        ram_top = MACHINE(spapr)->device_memory->base +
+> -            memory_region_size(&MACHINE(spapr)->device_memory->mr);
+> -    }
+> -
+> -    phb0_base = QEMU_ALIGN_UP(ram_top, phb0_alignment);
+> -
+> -    if (index > max_index) {
+> -        error_setg(errp, "\"index\" for PAPR PHB is too large (max %u)",
+> -                   max_index);
+> -        return false;
+> -    }
+> -
+> -    *buid = base_buid + index;
+> -    for (i = 0; i < n_dma; ++i) {
+> -        liobns[i] = SPAPR_PCI_LIOBN(index, i);
+> -    }
+> -
+> -    phb_base = phb0_base + index * phb_spacing;
+> -    *pio = phb_base + pio_offset;
+> -    *mmio32 = phb_base + mmio_offset;
+> -    /*
+> -     * We don't set the 64-bit MMIO window, relying on the PHB's
+> -     * fallback behaviour of automatically splitting a large "32-bit"
+> -     * window into contiguous 32-bit and 64-bit windows
+> -     */
+> -
+> -    return true;
+> -}
+> -
+> -static void spapr_machine_2_7_class_options(MachineClass *mc)
+> -{
+> -    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
+> -    static GlobalProperty compat[] = {
+> -        { TYPE_SPAPR_PCI_HOST_BRIDGE, "mem_win_size", "0xf80000000", },
+> -        { TYPE_SPAPR_PCI_HOST_BRIDGE, "mem64_win_size", "0", },
+> -        { TYPE_POWERPC_CPU, "pre-2.8-migration", "on", },
+> -        { TYPE_SPAPR_PCI_HOST_BRIDGE, "pre-2.8-migration", "on", },
+> -    };
+> -
+> -    spapr_machine_2_8_class_options(mc);
+> -    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power7_v2.3");
+> -    mc->default_machine_opts = "modern-hotplug-events=off";
+> -    compat_props_add(mc->compat_props, hw_compat_2_7, hw_compat_2_7_len);
+> -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+> -    smc->phb_placement = phb_placement_2_7;
+> -}
+> -
+> -DEFINE_SPAPR_MACHINE(2, 7);
+> -
+> -/*
+> - * pseries-2.6
+> - */
+> -
+> -static void spapr_machine_2_6_class_options(MachineClass *mc)
+> -{
+> -    static GlobalProperty compat[] = {
+> -        { TYPE_SPAPR_PCI_HOST_BRIDGE, "ddw", "off" },
+> -    };
+> -
+> -    spapr_machine_2_7_class_options(mc);
+> -    mc->has_hotpluggable_cpus = false;
+> -    compat_props_add(mc->compat_props, hw_compat_2_6, hw_compat_2_6_len);
+> -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+> -}
+> -
+> -DEFINE_SPAPR_MACHINE(2, 6);
+> -
+> -/*
+> - * pseries-2.5
+> - */
+> -
+> -static void spapr_machine_2_5_class_options(MachineClass *mc)
+> -{
+> -    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
+> -    static GlobalProperty compat[] = {
+> -        { "spapr-vlan", "use-rx-buffer-pools", "off" },
+> -    };
+> -
+> -    spapr_machine_2_6_class_options(mc);
+> -    smc->use_ohci_by_default = true;
+> -    compat_props_add(mc->compat_props, hw_compat_2_5, hw_compat_2_5_len);
+> -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+> -}
+> -
+> -DEFINE_SPAPR_MACHINE(2, 5);
+> -
+> -/*
+> - * pseries-2.4
+> - */
+> -
+> -static void spapr_machine_2_4_class_options(MachineClass *mc)
+> -{
+> -    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
+> -
+> -    spapr_machine_2_5_class_options(mc);
+> -    smc->dr_lmb_enabled = false;
+> -    compat_props_add(mc->compat_props, hw_compat_2_4, hw_compat_2_4_len);
+> -}
+> -
+> -DEFINE_SPAPR_MACHINE(2, 4);
+> -
+> -/*
+> - * pseries-2.3
+> - */
+> -
+> -static void spapr_machine_2_3_class_options(MachineClass *mc)
+> -{
+> -    static GlobalProperty compat[] = {
+> -        { "spapr-pci-host-bridge", "dynamic-reconfiguration", "off" },
+> -    };
+> -    spapr_machine_2_4_class_options(mc);
+> -    compat_props_add(mc->compat_props, hw_compat_2_3, hw_compat_2_3_len);
+> -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+> -}
+> -DEFINE_SPAPR_MACHINE(2, 3);
+> -
+> -/*
+> - * pseries-2.2
+> - */
+> -
+> -static void spapr_machine_2_2_class_options(MachineClass *mc)
+> -{
+> -    static GlobalProperty compat[] = {
+> -        { TYPE_SPAPR_PCI_HOST_BRIDGE, "mem_win_size", "0x20000000" },
+> -    };
+> -
+> -    spapr_machine_2_3_class_options(mc);
+> -    compat_props_add(mc->compat_props, hw_compat_2_2, hw_compat_2_2_len);
+> -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+> -    mc->default_machine_opts = "modern-hotplug-events=off,suppress-vmdesc=on";
+> -}
+> -DEFINE_SPAPR_MACHINE(2, 2);
+> -
+> -/*
+> - * pseries-2.1
+> - */
+> -
+> -static void spapr_machine_2_1_class_options(MachineClass *mc)
+> -{
+> -    spapr_machine_2_2_class_options(mc);
+> -    compat_props_add(mc->compat_props, hw_compat_2_1, hw_compat_2_1_len);
+> -}
+> -DEFINE_SPAPR_MACHINE(2, 1);
+> -
+>   static void spapr_machine_register_types(void)
+>   {
+>       type_register_static(&spapr_machine_info);
 
 
