@@ -4,111 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD21CAC596
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 19:31:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BB56CAC596
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 19:31:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqduC-0002za-Ik; Tue, 17 Sep 2024 15:30:33 -0400
+	id 1sqduZ-0003h6-Ez; Tue, 17 Sep 2024 15:30:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sqdta-0002Fd-C8; Tue, 17 Sep 2024 15:29:54 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sqdtX-0006ON-HQ; Tue, 17 Sep 2024 15:29:54 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sqduP-0003Z9-38
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 15:30:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sqduM-0006nt-LF
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 15:30:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1726601440;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=wT45EcmUFavWIsSLHZ4amtxidsrBg1JvFHgCMTmHcdE=;
+ b=N7IMQyeGoZq2nwFs0exESNTE+4m8IUNA6IY6Di+ZuJkS/4epO3qB31JHdIU1uvFSCmzwUr
+ qRE1vjvkk4euzqsh4FGomIu4nErQArftuHntYd/0yU7pwJv+YUrwL2gG696o7ktBxwdJgx
+ GajZZp4tEAbLxpH107f0fWWAzdo9ZJU=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-121-P5rtHR4mOLS3mCbfJI6oRA-1; Tue,
+ 17 Sep 2024 15:30:35 -0400
+X-MC-Unique: P5rtHR4mOLS3mCbfJI6oRA-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 474C322464;
- Tue, 17 Sep 2024 19:29:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1726601389; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3cijoSnKf+Tv2+dE7EhlJetbakcGeE44AhabJGtwzbQ=;
- b=LbrTVibx0hdgokm0O551TE5diWA9xzcxSIeDVToNfL2zIoCcZW0KUmGq3IlGvRZzjpYSRy
- 21RPy6OjYgtgtKvgmO9mRz/DeRaatw5Y/XeDlMc8fCWJg9UdG2IWZRtcDaKEwNTHnjOfiT
- wyIMa0eDyhACswEcfC7Vx2TCgo/vsV4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1726601389;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3cijoSnKf+Tv2+dE7EhlJetbakcGeE44AhabJGtwzbQ=;
- b=Ks0t6DKs23zO8YHQxMzqvJSslNAwCrdasbkKoKqR88/AnbymqBhKegesbycLRnb4uNualo
- 3FSA6oICR/q3JXAA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=LbrTVibx;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Ks0t6DKs
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1726601389; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3cijoSnKf+Tv2+dE7EhlJetbakcGeE44AhabJGtwzbQ=;
- b=LbrTVibx0hdgokm0O551TE5diWA9xzcxSIeDVToNfL2zIoCcZW0KUmGq3IlGvRZzjpYSRy
- 21RPy6OjYgtgtKvgmO9mRz/DeRaatw5Y/XeDlMc8fCWJg9UdG2IWZRtcDaKEwNTHnjOfiT
- wyIMa0eDyhACswEcfC7Vx2TCgo/vsV4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1726601389;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3cijoSnKf+Tv2+dE7EhlJetbakcGeE44AhabJGtwzbQ=;
- b=Ks0t6DKs23zO8YHQxMzqvJSslNAwCrdasbkKoKqR88/AnbymqBhKegesbycLRnb4uNualo
- 3FSA6oICR/q3JXAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C0E26139CE;
- Tue, 17 Sep 2024 19:29:48 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id mu8fIazY6WYoFgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 17 Sep 2024 19:29:48 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH 2/2] migration/multifd: Fix rb->receivedmap cleanup race
-In-Reply-To: <ZunWarI8toCsqAVL@x1n>
-References: <20240917185802.15619-1-farosas@suse.de>
- <20240917185802.15619-3-farosas@suse.de> <ZunWarI8toCsqAVL@x1n>
-Date: Tue, 17 Sep 2024 16:29:46 -0300
-Message-ID: <877cbayt79.fsf@suse.de>
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BC05119560AE; Tue, 17 Sep 2024 19:30:33 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.54])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id ACB4F19560AA; Tue, 17 Sep 2024 19:30:30 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-trivial@nongnu.org, Jia Liu <proljc@gmail.com>
+Subject: [PATCH] tests/qemu-iotests/testenv: Use the "virt" machine for or1k
+Date: Tue, 17 Sep 2024 21:30:28 +0200
+Message-ID: <20240917193028.320400-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 474C322464
-X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,98 +77,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+When compiling QEMU just with "--target-list=or1k-softmmu", there
+are 8 iotests failing that try to use PCI devices - but the default
+or1k machine does not have a PCI bus. The "virt" machine is better
+suited for running the iotests than the or1k default machine since
+it provides PCI and thus e.g. support for virtio-blk and virtio-scsi,
+too. With this change, there are no failing iotests anymore when
+using the qemu-system-or1k binary for running the tests.
 
-> On Tue, Sep 17, 2024 at 03:58:02PM -0300, Fabiano Rosas wrote:
->> Fix a segmentation fault in multifd when rb->receivedmap is cleared
->> too early.
->> 
->> After commit 5ef7e26bdb ("migration/multifd: solve zero page causing
->> multiple page faults"), multifd started using the rb->receivedmap
->> bitmap, which belongs to ram.c and is initialized and *freed* from the
->> ram SaveVMHandlers.
->> 
->> Multifd threads are live until migration_incoming_state_destroy(),
->> which is called after qemu_loadvm_state_cleanup(), leading to a crash
->> when accessing rb->receivedmap.
->> 
->> process_incoming_migration_co()        ...
->>   qemu_loadvm_state()                  multifd_nocomp_recv()
->>     qemu_loadvm_state_cleanup()          ramblock_recv_bitmap_set_offset()
->>       rb->receivedmap = NULL               set_bit_atomic(..., rb->receivedmap)
->>   ...
->>   migration_incoming_state_destroy()
->>     multifd_recv_cleanup()
->>       multifd_recv_terminate_threads(NULL)
->> 
->> Move the loadvm cleanup into migration_incoming_state_destroy(), after
->> multifd_recv_cleanup() to ensure multifd threads have already exited
->> when rb->receivedmap is cleared.
->> 
->> Adjust the postcopy listen thread comment to indicate that we still
->> want to skip the cpu synchronization.
->> 
->> CC: qemu-stable@nongnu.org
->> Fixes: 5ef7e26bdb ("migration/multifd: solve zero page causing multiple page faults")
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->
-> Reviewed-by: Peter Xu <peterx@redhat.com>
->
-> One trivial question below..
->
->> ---
->>  migration/migration.c | 1 +
->>  migration/savevm.c    | 6 ++++--
->>  2 files changed, 5 insertions(+), 2 deletions(-)
->> 
->> diff --git a/migration/migration.c b/migration/migration.c
->> index 3dea06d577..b190a574b1 100644
->> --- a/migration/migration.c
->> +++ b/migration/migration.c
->> @@ -378,6 +378,7 @@ void migration_incoming_state_destroy(void)
->>      struct MigrationIncomingState *mis = migration_incoming_get_current();
->>  
->>      multifd_recv_cleanup();
->
-> Would you mind I add a comment squashed here when queue?
->
->        /*
->         * RAM state cleanup needs to happen after multifd cleanup, because
->         * multifd threads can use some of its states (receivedmap).
->         */
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/qemu-iotests/testenv.py | 1 +
+ 1 file changed, 1 insertion(+)
 
-Yeah, that's ok.
+diff --git a/tests/qemu-iotests/testenv.py b/tests/qemu-iotests/testenv.py
+index c8848f2ec2..0b32eec119 100644
+--- a/tests/qemu-iotests/testenv.py
++++ b/tests/qemu-iotests/testenv.py
+@@ -240,6 +240,7 @@ def __init__(self, source_dir: str, build_dir: str,
+             ('aarch64', 'virt'),
+             ('avr', 'mega2560'),
+             ('m68k', 'virt'),
++            ('or1k', 'virt'),
+             ('riscv32', 'virt'),
+             ('riscv64', 'virt'),
+             ('rx', 'gdbsim-r5f562n8'),
+-- 
+2.46.0
 
->
->> +    qemu_loadvm_state_cleanup();
->>  
->>      if (mis->to_src_file) {
->>          /* Tell source that we are done */
->> diff --git a/migration/savevm.c b/migration/savevm.c
->> index d0759694fd..7e1e27182a 100644
->> --- a/migration/savevm.c
->> +++ b/migration/savevm.c
->> @@ -2979,7 +2979,10 @@ int qemu_loadvm_state(QEMUFile *f)
->>      trace_qemu_loadvm_state_post_main(ret);
->>  
->>      if (mis->have_listen_thread) {
->> -        /* Listen thread still going, can't clean up yet */
->> +        /*
->> +         * Postcopy listen thread still going, don't synchronize the
->> +         * cpus yet.
->> +         */
->>          return ret;
->>      }
->>  
->> @@ -3022,7 +3025,6 @@ int qemu_loadvm_state(QEMUFile *f)
->>          }
->>      }
->>  
->> -    qemu_loadvm_state_cleanup();
->>      cpu_synchronize_all_post_init();
->>  
->>      return ret;
->> -- 
->> 2.35.3
->> 
 
