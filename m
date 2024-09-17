@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C1BDCAC595
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 18:18:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8EE9CAC593
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 18:18:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqckm-0003Ft-Cc; Tue, 17 Sep 2024 14:16:45 -0400
+	id 1sqcjN-0003qf-E0; Tue, 17 Sep 2024 14:15:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sqchv-0005nt-3s; Tue, 17 Sep 2024 14:13:48 -0400
+ id 1sqci8-0006pv-5n; Tue, 17 Sep 2024 14:14:02 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sqcht-0002yc-BB; Tue, 17 Sep 2024 14:13:46 -0400
+ id 1sqci3-0002zB-BY; Tue, 17 Sep 2024 14:13:59 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2F6038FC09;
- Tue, 17 Sep 2024 21:13:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E09578FC0B;
+ Tue, 17 Sep 2024 21:13:01 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A7F4013E768;
- Tue, 17 Sep 2024 21:13:15 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6865313E76A;
+ Tue, 17 Sep 2024 21:13:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Jan=20Kl=C3=B6tzke?= <jan.kloetzke@kernkonzept.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.3 80/82] hw/intc/arm_gic: fix spurious level triggered
- interrupts
-Date: Tue, 17 Sep 2024 21:12:54 +0300
-Message-Id: <20240917181256.634732-12-mjt@tls.msk.ru>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, Thomas Huth <thuth@redhat.com>
+Subject: [Stable-9.0.3 82/82] gitlab: fix logic for changing docker tag on
+ stable branches
+Date: Tue, 17 Sep 2024 21:12:56 +0300
+Message-Id: <20240917181256.634732-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.0.3-20240917211142@cover.tls.msk.ru>
 References: <qemu-stable-9.0.3-20240917211142@cover.tls.msk.ru>
@@ -61,76 +61,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jan Klötzke <jan.kloetzke@kernkonzept.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-On GICv2 and later, level triggered interrupts are pending when either
-the interrupt line is asserted or the interrupt was made pending by a
-GICD_ISPENDRn write. Making a level triggered interrupt pending by
-software persists until either the interrupt is acknowledged or cleared
-by writing GICD_ICPENDRn. As long as the interrupt line is asserted,
-the interrupt is pending in any case.
+This fixes:
 
-This logic is transparently implemented in gic_test_pending() for
-GICv1 and GICv2.  The function combines the "pending" irq_state flag
-(used for edge triggered interrupts and software requests) and the
-line status (tracked in the "level" field).  However, we also
-incorrectly set the pending flag on a guest write to GICD_ISENABLERn
-if the line of a level triggered interrupt was asserted.  This keeps
-the interrupt pending even if the line is de-asserted after some
-time.
+  commit e28112d00703abd136e2411d23931f4f891c9244
+  Author: Daniel P. Berrangé <berrange@redhat.com>
+  Date:   Thu Jun 8 17:40:16 2023 +0100
 
-This incorrect logic is a leftover of the initial 11MPCore GIC
-implementation.  That handles things slightly differently to the
-architected GICv1 and GICv2.  The 11MPCore TRM does not give a lot of
-detail on the corner cases of its GIC's behaviour, and historically
-we have not wanted to investigate exactly what it does in reality, so
-QEMU's GIC model takes the approach of "retain our existing behaviour
-for 11MPCore, and implement the architectural standard for later GIC
-revisions".
+    gitlab: stable staging branches publish containers in a separate tag
 
-On that basis, commit 8d999995e45c10 in 2013 is where we added the
-"level-triggered interrupt with the line asserted" handling to
-gic_test_pending(), and we deliberately kept the old behaviour of
-gic_test_pending() for REV_11MPCORE.  That commit should have added
-the "only if 11MPCore" condition to the setting of the pending bit on
-writes to GICD_ISENABLERn, but forgot it.
+Due to a copy+paste mistake, that commit included "QEMU_JOB_SKIPPED"
+in the final rule that was meant to be a 'catch all' for staging
+branches.
 
-Add the missing "if REV_11MPCORE" condition, so that our behaviour
-on GICv1 and GICv2 matches the GIC architecture requirements.
+As a result stable branches are still splattering dockers from the
+primary development branch.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 8d999995e45c10 ("arm_gic: Fix GIC pending behavior")
-Signed-off-by: Jan Klötzke <jan.kloetzke@kernkonzept.com>
-Message-id: 20240911114826.3558302-1-jan.kloetzke@kernkonzept.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: expanded comment a little and converted to coding-style form;
- expanded commit message with the historical backstory]
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 110684c9a69a02cbabfbddcd3afa921826ad565c)
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Tested-by: Michael Tokarev <mjt@tls.msk.ru>
+Message-ID: <20240906140958.84755-1-berrange@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 8d5ab746b1e6668ffb0378820b25665b385c8573)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
-index e4b8437f8b..f0582f7a49 100644
---- a/hw/intc/arm_gic.c
-+++ b/hw/intc/arm_gic.c
-@@ -1263,9 +1263,14 @@ static void gic_dist_writeb(void *opaque, hwaddr offset,
-                     trace_gic_enable_irq(irq + i);
-                 }
-                 GIC_DIST_SET_ENABLED(irq + i, cm);
--                /* If a raised level triggered IRQ enabled then mark
--                   is as pending.  */
--                if (GIC_DIST_TEST_LEVEL(irq + i, mask)
-+                /*
-+                 * If a raised level triggered IRQ enabled then mark
-+                 * it as pending on 11MPCore. For other GIC revisions we
-+                 * handle the "level triggered and line asserted" check
-+                 * at the other end in gic_test_pending().
-+                 */
-+                if (s->revision == REV_11MPCORE
-+                        && GIC_DIST_TEST_LEVEL(irq + i, mask)
-                         && !GIC_DIST_TEST_EDGE_TRIGGER(irq + i)) {
-                     DPRINTF("Set %d pending mask %x\n", irq + i, mask);
-                     GIC_DIST_SET_PENDING(irq + i, mask);
+diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
+index bf3d8efab6..25b88aaa06 100644
+--- a/.gitlab-ci.d/base.yml
++++ b/.gitlab-ci.d/base.yml
+@@ -128,7 +128,7 @@ variables:
+       when: manual
+ 
+     # Jobs can run if any jobs they depend on were successful
+-    - if: '$QEMU_JOB_SKIPPED && $CI_PROJECT_NAMESPACE == $QEMU_CI_UPSTREAM && $CI_COMMIT_BRANCH =~ /staging-[[:digit:]]+\.[[:digit:]]/'
++    - if: '$CI_PROJECT_NAMESPACE == $QEMU_CI_UPSTREAM && $CI_COMMIT_BRANCH =~ /staging-[[:digit:]]+\.[[:digit:]]/'
+       when: on_success
+       variables:
+         QEMU_CI_CONTAINER_TAG: $CI_COMMIT_REF_SLUG
 -- 
 2.39.5
 
