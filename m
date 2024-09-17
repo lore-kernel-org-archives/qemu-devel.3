@@ -4,99 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E8B6C36019
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 12:16:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E37A3C36018
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 12:30:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqX7R-0003jZ-V9; Tue, 17 Sep 2024 08:15:46 -0400
+	id 1sqXL5-0003uB-K2; Tue, 17 Sep 2024 08:29:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sqX7E-0003Mm-B5
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 08:15:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sqX7B-00079D-74
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 08:15:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726575326;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AsBnjy+X7R8yO5SwSmmu3aaG/Z4/ynLw4YA/Z9vtMbI=;
- b=KFaGzJ/qA36IZMNGLo0mRp18uvDxfmyLa+kvrs9ulceKfF/TzXglaMJqTf1q2q6Z32MhY6
- eOL4bEFKry8ar/lvlkXROxc5rkFsQCFIXaZr3iXhngZigskeVxprFo2fMLDK7Okpph6z7s
- M99b3WVbDicvYdg7fyXf5xUPOHjZF84=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-371-qNKgWVwnNA2QsDed1HAp4A-1; Tue, 17 Sep 2024 08:15:23 -0400
-X-MC-Unique: qNKgWVwnNA2QsDed1HAp4A-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42cb857fc7dso41233645e9.0
- for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 05:15:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sqXL1-0003sv-Pq
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 08:29:47 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sqXKz-0000iW-Cx
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 08:29:47 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-374b9761eecso4472636f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 05:29:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1726576183; x=1727180983; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=cDwJqjT39P7l+wmzkodQCGVmKW8RyhC5f8lT0NFE48I=;
+ b=AIUYU1OdoDRxxRglFOrbdTc9Hq5MRnRfXNANXPBc85qlUVc6/GXqeyoUEv4Q68bDvl
+ Ch5SER+QTtDCyvcQHgXj1pLuiKTrdKqYNO3rqArk3Z7+XH2bJj0xJFy8yuJMg/OVWQuK
+ 0WxFMOC5b7EkSLoV+Ojz4ZxSiepHpyqa8UWZVAdV6o67C1m4VVKpqjW6ST6u4qJe/S9E
+ IOM9SbprW8s8Bds7sPw7+VzTXZmgqeYw8cqc43xUGEK3ZdQu47pTMtEU/PjS9eCRNGPi
+ K/0RoBC5a2aSkn0Cru5PkLiqY0C9SYzqzxGpTjqGW65Wj2GHw8b0Pbb8sYH/a99Xohe/
+ aSmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726575322; x=1727180122;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AsBnjy+X7R8yO5SwSmmu3aaG/Z4/ynLw4YA/Z9vtMbI=;
- b=BRiMI1tDAj2Rr8uLMLvxFD+m0WJ4f/Ea4Atj83RVosevBcPOKGYUHlnHhmjX7eCn1F
- /0GPC2b3cviNktQ7d8EQV4KZpg6g/asm/GLyYsaoJJZbVvkbdeiTN3cRQRPWu/iYRzfD
- CU7FYtQeKY4vpPAJU8aOkkY8Sdg1OgDbnqH+AGmTQRbXzF3yChiY1JLOxObK266YyeFd
- HS5Apk0PBSQXR2mCDHR9Y/5wG24WPyEuulcYGA5gp6ICD4ZG2cqbO+66GXWzf9Zn8OZD
- VFK9x7zwpA2kKS3saGfWmP2tLinkp3QPH12SLd0DKYLpCxQ3kPnhHBaaT54SmRfTnu+H
- NWVg==
+ d=1e100.net; s=20230601; t=1726576183; x=1727180983;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cDwJqjT39P7l+wmzkodQCGVmKW8RyhC5f8lT0NFE48I=;
+ b=tfxb4SHZgy79miARFcLQkO6YcprouRPMrheYNPC0LUqer9Rg6d9uMjb95m36hRdQeE
+ tZnZnt7oRWNp8MGb0nlCFJU0wkyXaTAErataEVVJfRBnuHwYRka53fGrpqRuIzV6m4aA
+ D6Qk8dmJ2kVGxNeYZuLh5em+BiUR3C85eN0rDR/9NxXSq5As1uZbFGiJr8LTdd4Mm5TB
+ LnmLFLYQhByzg9xDn0mddnl1L8CzMlzTff95dbk8DyGLCdlnR8DGMZuy/JIUKfdTyeYU
+ 2Gg1N6PrHCv6hiy9iymPU4lzLvlAMko4guSwcxytDKMV0Pd7EgtWkrQf0w1WqPmfdQs7
+ +BSA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+aGAMnwTkYdXBWGsU56bgH/4eEKwmCvZvFWuZdG53HPtcJoNLyKIu/ELHYeizY+4tKUn9T9jRGbDV@nongnu.org
-X-Gm-Message-State: AOJu0Yxq2rqq0s7YtnGyLR9V3NLFMfD1nfss9vNeNbU18/YOtJ+o2ogu
- vWpt+VnfU9kI7kD/Ru9F4e8jfscpcb6J4oY2qLUwLx1MfxFWyla962PGEKkVzzY3CZHXZDtNB8N
- FRcdcySwLdnBRK3FXX5yKtSIHREAahjLS157JxuGIVMIiDHOz59rA
-X-Received: by 2002:a05:600c:474d:b0:42b:8a35:1acf with SMTP id
- 5b1f17b1804b1-42cdb586f4cmr147962515e9.25.1726575321791; 
- Tue, 17 Sep 2024 05:15:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGDaQt/Kk+FBdnrigXqyg0bYmIA0V9x+x+wJSLf76x1CQYsA1tvA83D0CUwSoJQMo2sBz6ibg==
-X-Received: by 2002:a05:600c:474d:b0:42b:8a35:1acf with SMTP id
- 5b1f17b1804b1-42cdb586f4cmr147961835e9.25.1726575321020; 
- Tue, 17 Sep 2024 05:15:21 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-378e73e80eesm9339148f8f.30.2024.09.17.05.15.20
+ AJvYcCUJ67UyBPO/9EgFqfvKQcMr4ck+HlkSiktVr1ALvDzNIrCVIArgZB8RN+6c9GOi1T1DEntuZqiS5Akv@nongnu.org
+X-Gm-Message-State: AOJu0YwpxtZNxThfWRmkSJI3zAmKSecoZq68My4BetbDyjcNh/ETKR+b
+ OLbQLW59JuYrpuaBSQyfSKYdP/lpvi5Bki3v4M/J13T1mNJNHBvksWonPkeiJQE=
+X-Google-Smtp-Source: AGHT+IGoGLCoJThzqQAu/NfFkIZ2VYBcdN+6Phs4T7Bx8M0Yjpd+25ONDLaZRkwAh/sK9knOvdFSpA==
+X-Received: by 2002:a05:6000:11c7:b0:368:633d:f111 with SMTP id
+ ffacd0b85a97d-378c2d4c92dmr10453302f8f.40.1726576182374; 
+ Tue, 17 Sep 2024 05:29:42 -0700 (PDT)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-378e780e14fsm9425127f8f.117.2024.09.17.05.29.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Sep 2024 05:15:20 -0700 (PDT)
-Date: Tue, 17 Sep 2024 14:15:19 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Cleber Rosa <crosa@redhat.com>, Dongjiu Geng
- <gengdongjiu1@gmail.com>, Eric Blake <eblake@redhat.com>, John Snow
- <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>, Michael Roth
- <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>,
- kvm@vger.kernel.org, linux-kernel@vger.kernel.org, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v10 00/21] Add ACPI CPER firmware first error injection
- on ARM emulation
-Message-ID: <20240917141519.57766bb6@imammedo.users.ipa.redhat.com>
-In-Reply-To: <cover.1726293808.git.mchehab+huawei@kernel.org>
-References: <cover.1726293808.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ Tue, 17 Sep 2024 05:29:41 -0700 (PDT)
+Date: Tue, 17 Sep 2024 14:29:41 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Alexei Filippov <alexei.filippov@syntacore.com>
+Cc: alistair.francis@wdc.com, alistair23@gmail.com, 
+ apatel@ventanamicro.com, bin.meng@windriver.com, dbarboza@ventanamicro.com, 
+ liwei1518@gmail.com, palmer@dabbelt.com, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com
+Subject: Re: [PATCH v9] target/riscv/kvm/kvm-cpu.c: kvm_riscv_handle_sbi()
+ fail with vendor-specific SBI
+Message-ID: <20240917-4c642a7fb52b49f470c9f29a@orel>
+References: <20240626-1420003b7d88d892be22a719@orel>
+ <20240917115433.38503-1-alexei.filippov@syntacore.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240917115433.38503-1-alexei.filippov@syntacore.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,210 +100,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 14 Sep 2024 08:13:21 +0200
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-
-> This series add support for injecting generic CPER records.  Such records
-> are generated outside QEMU via a provided script.
+On Tue, Sep 17, 2024 at 02:54:33PM GMT, Alexei Filippov wrote:
+> kvm_riscv_handle_sbi() may return not supported return code to not
+> trigger qemu abort with vendor-specific sbi.
 > 
-> On this  version,  the patch reworking the way offsets are calculated were
-> split on several other patches, to make one logical change per patch and
-> make review easier.
+> Add new error path to provide proper error in case of
+> qemu_chr_fe_read_all() may not return sizeof(ch), because exactly zero
+> just means we failed to read input, which can happen, so
+> telling the SBI caller we failed to read, but telling the caller of this
+> function that we successfully emulated the SBI call, is correct. However,
+> anything else, other than sizeof(ch), means something unexpected happened,
+> so we should return an error.
 > 
-> Despite the number of patches increased from 12 to 21, there is just one
-> real new patch (as the other ones are a split from a big change):
+> Added SBI related return code's defines.
 > 
->   acpi/generic_event_device: Update GHES migration to cover hest addr
+> Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
+> Fixes: 4eb47125 ("target/riscv: Handle KVM_EXIT_RISCV_SBI exit")
 
-I'm done with this round of review.
-
-Given that the series accumulated a bunch of cleanups,
-I'd suggest to move all cleanups/renamings not related
-to new HEST lookup and new src id mapping to the beginning
-of the series, so once they reviewed they could be split up into
-a separate series that could be merged while we are ironing down
-the new functionality. 
- 
+Fixes tag goes above s-o-b and 8 hex digits is a bit small. Most
+commit references in QEMU are using 10 or 12 digits.
 
 > ---
+>  target/riscv/kvm/kvm-cpu.c         | 10 ++++++----
+>  target/riscv/sbi_ecall_interface.h | 12 ++++++++++++
+>  2 files changed, 18 insertions(+), 4 deletions(-)
 > 
-> v10:
-> - Patch 1 split on several patches to make reviews easier;
-> - Added a migration patch;
-> - CPER QMP command was renamed;
-> - Updated some comments to better reflect exact ACPI version;
-> - Removed a code to reset acks when OSPM fails to read records;
-> - Removed a duplicated config GHES_CPER symbol;
-> - There is  now an arch-independent namespace for GHES source IDs;
-> - Fixed the size of hest_ghes_notify array when creating tables;
-> - acpi-hest.json is now a section of ACPI;
-> - QMP command renamed from @ghes-cper to inject-ghes-error.
-> 
-> v9:
-> - Patches reorganized to make easier for reviewers;
-> - source ID is now guest-OS specific;
-> - Some patches got a revision history since v8;
-> - Several minor cleanups.
-> 
-> v8:
-> - Fix one of the BIOS links that were incorrect;
-> - Changed mem error internal injection to use a common code;
-> - No more hardcoded values for CPER: instead of using just the
->   payload at the QAPI, it now has the full raw CPER there;
-> - Error injection script now supports changing fields at the
->   Generic Error Data section of the CPER;
-> - Several minor cleanups.
-> 
-> v7:
-> - Change the way offsets are calculated and used on HEST table.
->   Now, it is compatible with migrations as all offsets are relative
->   to the HEST table;
-> - GHES interface is now more generic: the entire CPER is sent via
->   QMP, instead of just the payload;
-> - Some code cleanups to make the code more robust;
-> - The python script now uses QEMUMonitorProtocol class.
-> 
-> v6:
-> - PNP0C33 device creation moved to aml-build.c;
-> - acpi_ghes record functions now use ACPI notify parameter,
->   instead of source ID;
-> - the number of source IDs is now automatically calculated;
-> - some code cleanups and function/var renames;
-> - some fixes and cleanups at the error injection script;
-> - ghes cper stub now produces an error if cper JSON is not compiled;
-> - Offset calculation logic for GHES was refactored;
-> - Updated documentation to reflect the GHES allocated size;
-> - Added a x-mpidr object for QOM usage;
-> - Added a patch making usage of x-mpidr field at ARM injection
->   script;
-> 
-> v5:
-> - CPER guid is now passing as string;
-> - raw-data is now passed with base64 encode;
-> - Removed several GPIO left-overs from arm/virt.c changes;
-> - Lots of cleanups and improvements at the error injection script.
->   It now better handles QMP dialog and doesn't print debug messages.
->   Also, code was split on two modules, to make easier to add more
->   error injection commands.
-> 
-> v4:
-> - CPER generation moved to happen outside QEMU;
-> - One patch adding support for mpidr query was removed.
-> 
-> v3:
-> - patch 1 cleanups with some comment changes and adding another place where
->   the poweroff GPIO define should be used. No changes on other patches (except
->   due to conflict resolution).
-> 
-> v2:
-> - added a new patch using a define for GPIO power pin;
-> - patch 2 changed to also use a define for generic error GPIO pin;
-> - a couple cleanups at patch 2 removing uneeded else clauses.
-> 
-> Example of generating a CPER record:
-> 
-> $ scripts/ghes_inject.py -d arm -p 0xdeadbeef
-> GUID: e19e3d16-bc11-11e4-9caa-c2051d5d46b0
-> Generic Error Status Block (20 bytes):
->       00000000  01 00 00 00 00 00 00 00 00 00 00 00 90 00 00 00   ................
->       00000010  00 00 00 00                                       ....
-> 
-> Generic Error Data Entry (72 bytes):
->       00000000  16 3d 9e e1 11 bc e4 11 9c aa c2 05 1d 5d 46 b0   .=...........]F.
->       00000010  00 00 00 00 00 03 00 00 48 00 00 00 00 00 00 00   ........H.......
->       00000020  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   ................
->       00000030  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   ................
->       00000040  00 00 00 00 00 00 00 00                           ........
-> 
-> Payload (72 bytes):
->       00000000  05 00 00 00 01 00 00 00 48 00 00 00 00 00 00 00   ........H.......
->       00000010  00 00 00 80 00 00 00 00 10 05 0f 00 00 00 00 00   ................
->       00000020  00 00 00 00 00 00 00 00 00 20 14 00 02 01 00 03   ......... ......
->       00000030  0f 00 91 00 00 00 00 00 ef be ad de 00 00 00 00   ................
->       00000040  ef be ad de 00 00 00 00                           ........
-> 
-> Error injected.
-> 
-> [    9.358364] {1}[Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 1
-> [    9.359027] {1}[Hardware Error]: event severity: recoverable
-> [    9.359586] {1}[Hardware Error]:  Error 0, type: recoverable
-> [    9.360124] {1}[Hardware Error]:   section_type: ARM processor error
-> [    9.360561] {1}[Hardware Error]:   MIDR: 0x00000000000f0510
-> [    9.361160] {1}[Hardware Error]:   Multiprocessor Affinity Register (MPIDR): 0x0000000080000000
-> [    9.361643] {1}[Hardware Error]:   running state: 0x0
-> [    9.362142] {1}[Hardware Error]:   Power State Coordination Interface state: 0
-> [    9.362682] {1}[Hardware Error]:   Error info structure 0:
-> [    9.363030] {1}[Hardware Error]:   num errors: 2
-> [    9.363656] {1}[Hardware Error]:    error_type: 0x02: cache error
-> [    9.364163] {1}[Hardware Error]:    error_info: 0x000000000091000f
-> [    9.364834] {1}[Hardware Error]:     transaction type: Data Access
-> [    9.365599] {1}[Hardware Error]:     cache error, operation type: Data write
-> [    9.366441] {1}[Hardware Error]:     cache level: 2
-> [    9.367005] {1}[Hardware Error]:     processor context not corrupted
-> [    9.367753] {1}[Hardware Error]:    physical fault address: 0x00000000deadbeef
-> [    9.374267] Memory failure: 0xdeadb: recovery action for free buddy page: Recovered
-> 
-> Such script currently supports arm processor error CPER, but can easily be
-> extended to other GHES notification types.
-> 
-> 
-> Mauro Carvalho Chehab (21):
->   acpi/ghes: add a firmware file with HEST address
->   acpi/generic_event_device: Update GHES migration to cover hest addr
->   acpi/ghes: get rid of ACPI_HEST_SRC_ID_RESERVED
->   acpi/ghes: simplify acpi_ghes_record_errors() code
->   acpi/ghes: better handle source_id and notification
->   acpi/ghes: Remove a duplicated out of bounds check
->   acpi/ghes: rework the logic to handle HEST source ID
->   acpi/ghes: Change the type for source_id
->   acpi/ghes: Don't hardcode the number of sources on ghes
->   acpi/ghes: make the GHES record generation more generic
->   acpi/ghes: don't crash QEMU if ghes GED is not found
->   acpi/ghes: rename etc/hardware_error file macros
->   acpi/ghes: better name GHES memory error function
->   acpi/ghes: add a notifier to notify when error data is ready
->   acpi/generic_event_device: add an APEI error device
->   arm/virt: Wire up a GED error device for ACPI / GHES
->   qapi/acpi-hest: add an interface to do generic CPER error injection
->   docs: acpi_hest_ghes: fix documentation for CPER size
->   scripts/ghes_inject: add a script to generate GHES error inject
->   target/arm: add an experimental mpidr arm cpu property object
->   scripts/arm_processor_error.py: retrieve mpidr if not filled
-> 
->  MAINTAINERS                            |  10 +
->  docs/specs/acpi_hest_ghes.rst          |   6 +-
->  hw/acpi/Kconfig                        |   5 +
->  hw/acpi/aml-build.c                    |  10 +
->  hw/acpi/generic_event_device.c         |  19 +-
->  hw/acpi/ghes-stub.c                    |   2 +-
->  hw/acpi/ghes.c                         | 312 +++++++----
->  hw/acpi/ghes_cper.c                    |  32 ++
->  hw/acpi/ghes_cper_stub.c               |  19 +
->  hw/acpi/meson.build                    |   2 +
->  hw/arm/virt-acpi-build.c               |  12 +-
->  hw/arm/virt.c                          |  19 +-
->  include/hw/acpi/acpi_dev_interface.h   |   1 +
->  include/hw/acpi/aml-build.h            |   2 +
->  include/hw/acpi/generic_event_device.h |   1 +
->  include/hw/acpi/ghes.h                 |  37 +-
->  include/hw/arm/virt.h                  |   2 +
->  qapi/acpi-hest.json                    |  35 ++
->  qapi/meson.build                       |   1 +
->  qapi/qapi-schema.json                  |   1 +
->  scripts/arm_processor_error.py         | 388 ++++++++++++++
->  scripts/ghes_inject.py                 |  51 ++
->  scripts/qmp_helper.py                  | 702 +++++++++++++++++++++++++
->  target/arm/cpu.c                       |   1 +
->  target/arm/cpu.h                       |   1 +
->  target/arm/helper.c                    |  10 +-
->  target/arm/kvm.c                       |   3 +-
->  27 files changed, 1552 insertions(+), 132 deletions(-)
->  create mode 100644 hw/acpi/ghes_cper.c
->  create mode 100644 hw/acpi/ghes_cper_stub.c
->  create mode 100644 qapi/acpi-hest.json
->  create mode 100644 scripts/arm_processor_error.py
->  create mode 100755 scripts/ghes_inject.py
->  create mode 100644 scripts/qmp_helper.py
-> 
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index f6e3156b8d..9f2ca67c9f 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -1517,19 +1517,21 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
+>          ret = qemu_chr_fe_read_all(serial_hd(0)->be, &ch, sizeof(ch));
+>          if (ret == sizeof(ch)) {
+>              run->riscv_sbi.ret[0] = ch;
+> -        } else {
+> +            ret = 0;
+> +        } else if (ret == 0) {
+>              run->riscv_sbi.ret[0] = -1;
+> +        } else {
+> +            ret = -1;
+>          }
+> -        ret = 0;
 
+Looks good!
+
+>          break;
+>      case SBI_EXT_DBCN:
+>          kvm_riscv_handle_sbi_dbcn(cs, run);
+>          break;
+>      default:
+>          qemu_log_mask(LOG_UNIMP,
+> -                      "%s: un-handled SBI EXIT, specific reasons is %lu\n",
+> +                      "%s: Unhandled SBI exit with extension-id %lu\n",
+>                        __func__, run->riscv_sbi.extension_id);
+> -        ret = -1;
+> +        run->riscv_sbi.ret[0] = SBI_ERR_NOT_SUPPORTED;
+
+This, along with the addition of the SBI_* defines below, should be a
+separate patch. If we were just naming the -1, then I wouldn't mind it
+slipping in with the same patch, but this is changing behavior since
+SBI_ERR_NOT_SUPPORTED is -2. I agree with the change, though, it just
+needs to be a separate patch. And the separate patch should have the
+same Fixes tag.
+
+Thanks,
+drew
+
+>          break;
+>      }
+>      return ret;
+> diff --git a/target/riscv/sbi_ecall_interface.h b/target/riscv/sbi_ecall_interface.h
+> index 7dfe5f72c6..4df0accd78 100644
+> --- a/target/riscv/sbi_ecall_interface.h
+> +++ b/target/riscv/sbi_ecall_interface.h
+> @@ -86,4 +86,16 @@
+>  #define SBI_EXT_VENDOR_END              0x09FFFFFF
+>  /* clang-format on */
+>  
+> +/* SBI return error codes */
+> +#define SBI_SUCCESS                  0
+> +#define SBI_ERR_FAILURE             -1
+> +#define SBI_ERR_NOT_SUPPORTED       -2
+> +#define SBI_ERR_INVALID_PARAM       -3
+> +#define SBI_ERR_DENIED              -4
+> +#define SBI_ERR_INVALID_ADDRESS     -5
+> +#define SBI_ERR_ALREADY_AVAILABLE   -6
+> +#define SBI_ERR_ALREADY_STARTED     -7
+> +#define SBI_ERR_ALREADY_STOPPED     -8
+> +#define SBI_ERR_NO_SHMEM            -9
+> +
+>  #endif
+> -- 
+> 2.34.1
+> 
 
