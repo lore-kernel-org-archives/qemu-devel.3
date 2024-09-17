@@ -4,82 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53E17CAC595
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 18:48:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BF42CAC596
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 18:58:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqdEy-0001zF-05; Tue, 17 Sep 2024 14:47:56 -0400
+	id 1sqdP1-0000se-4U; Tue, 17 Sep 2024 14:58:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
- id 1sqdEv-0001wj-JW; Tue, 17 Sep 2024 14:47:53 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
- id 1sqdEt-0006pc-K6; Tue, 17 Sep 2024 14:47:53 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48HGHHDY003273;
- Tue, 17 Sep 2024 18:47:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=gvs7LqF+xtFGfN6thtTWry
- siI/92KfpTLHMHjZtddRg=; b=FMb02qzJ/8mmZtWJjoSjvX4B+Mj6M5tujdGDah
- jheK04Qkk39N0SxErgq2GptOkudDeMDMgPC11EKzf6c8A+RC8SXEUW7Qu2Wz6Qsj
- yEYp636/IOSF6gG2pr77lyFjmgCtmfhNHAhnz5bMo53GTbBngef5spNydjSl38+w
- m7c7jNtmKyBSzMPJUiHfNh28kXE8pE5vHekWFPZCOyNqrlBG8RmOp8o2LCdENdBs
- 2po4gGaWZACqXro9UUPC+dCAEA/iISKL/jaRKUCI7w4MFuLCYFny88nzp+q7LIOW
- z1B/buJC9pLbYwkyW8uflvM23tIa4S6MnxzNcpWVQqQMcqJw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4jhqtve-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Sep 2024 18:47:40 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
- [10.47.209.196])
- by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48HIlc6q009775
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Sep 2024 18:47:38 GMT
-Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 17 Sep 2024 11:47:38 -0700
-From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-To: <qemu-devel@nongnu.org>
-CC: <balaton@eik.bme.hu>, <mst@redhat.com>, <bcain@quicinc.com>,
- <qemu-trivial@nongnu.org>
-Subject: [PATCH] hw: fix memory leak in IRQState allocation
-Date: Tue, 17 Sep 2024 15:47:28 -0300
-Message-ID: <6f0b480e1f0fbeb9550d447dcbeda920f1869d2d.1726598846.git.quic_mathbern@quicinc.com>
-X-Mailer: git-send-email 2.37.2
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sqdOu-0000TI-1G
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 14:58:12 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sqdOs-0007sv-Cb
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 14:58:11 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 6F17B20175;
+ Tue, 17 Sep 2024 18:58:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726599487; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=pDOutgHgC+7cxFV9D4fDdbCwOnf71UDR4fsrnyECtk0=;
+ b=Ls9anWnDaQV2td7zUkv4D9FeZcx7Ncz0OLMoKuKbVKrlg5ojrHBfic+zHQcGP8+7qSFtqa
+ PPPfJ3I+F1OyOs5PIZ43Vb2w2+w0BeizZlzUHA7IeoAl9y2EfetzXhXvtxaAxnn+ZrnBMY
+ YdSn/elqwXPQn0a7np0i7n3/GuePKUU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726599487;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=pDOutgHgC+7cxFV9D4fDdbCwOnf71UDR4fsrnyECtk0=;
+ b=Q6OU7PEuRpU44mSiEb/M9JJf+Gx6W4C/57umI17dg6/Ex5WfAUIoQiUbrTC+po9qk/KrQ6
+ mtcoKrSjkl42G5Bg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=tvyQY9Vj;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=0jIDp2eb
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726599486; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=pDOutgHgC+7cxFV9D4fDdbCwOnf71UDR4fsrnyECtk0=;
+ b=tvyQY9Vj0Rnn4CTwg5UUhLUuZV+S9d9PfZw1kp4PPpxcVLjiPbE28wgGr/AC+6kUM4IziI
+ 2SI57CRLvhsI1ZmUUbm1xBStQrGlT14lGaopYpeEVclQAc2p3uXDvAVln2Xbrz0iwDIODz
+ +u9ZmnAIJjdntzCbiw6pRmnu16/GdEM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726599486;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=pDOutgHgC+7cxFV9D4fDdbCwOnf71UDR4fsrnyECtk0=;
+ b=0jIDp2ebPQ4g71BseOMGbUoz3m+TOfYeKeIRQ0t4Ui7XkcXpkS4RaN3NXaTVIXSJy8zEAd
+ DoCNyg3wDOT3EQCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3C7A5139CE;
+ Tue, 17 Sep 2024 18:58:05 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id OJwyAT3R6WYiDgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 17 Sep 2024 18:58:05 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>,
+	Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH 0/2] migration/multifd: Fix rb->receivedmap cleanup race
+Date: Tue, 17 Sep 2024 15:58:00 -0300
+Message-Id: <20240917185802.15619-1-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-ORIG-GUID: 09_5WzyaVgyuJS2giFnFeESq81pqY2EO
-X-Proofpoint-GUID: 09_5WzyaVgyuJS2giFnFeESq81pqY2EO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- clxscore=1011 phishscore=0 impostorscore=0 bulkscore=0 adultscore=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0 mlxscore=0
- mlxlogscore=884 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409170134
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=quic_mathbern@quicinc.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Rspamd-Queue-Id: 6F17B20175
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-5.01 / 50.00]; BAYES_HAM(-3.00)[99.98%];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim]; MID_CONTAINS_FROM(1.00)[];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCPT_COUNT_THREE(0.00)[3]; ARC_NA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url, imap1.dmz-prg2.suse.org:rdns,
+ imap1.dmz-prg2.suse.org:helo, suse.de:mid, suse.de:dkim]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,59 +119,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At e72a7f65c1 (hw: Move declaration of IRQState to header and add init
-function, 2024-06-29), we've changed qemu_allocate_irq() to use a
-combination of g_new() + object_initialize() instead of
-IRQ(object_new()). The latter sets obj->free, so that that the memory is
-properly cleaned when the object is finalized, but the former doesn't.
+v2: Keep skipping the cpu_synchronize_all_post_init() call if the
+postcopy listen thread is live. Don't copy stable on the first patch.
 
-Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
----
- hw/core/irq.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+CI run: https://gitlab.com/farosas/qemu/-/pipelines/1457418838
+====
+v1:
+https://lore.kernel.org/r/20240913220542.18305-1-farosas@suse.de
 
-diff --git a/hw/core/irq.c b/hw/core/irq.c
-index db95ffc18f..7d80de1ca6 100644
---- a/hw/core/irq.c
-+++ b/hw/core/irq.c
-@@ -34,13 +34,19 @@ void qemu_set_irq(qemu_irq irq, int level)
-     irq->handler(irq->opaque, irq->n, level);
- }
- 
-+static void qemu_init_irq_fields(IRQState *irq, qemu_irq_handler handler,
-+                                 void *opaque, int n)
-+{
-+    irq->handler = handler;
-+    irq->opaque = opaque;
-+    irq->n = n;
-+}
-+
- void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
-                    int n)
- {
-     object_initialize(irq, sizeof(*irq), TYPE_IRQ);
--    irq->handler = handler;
--    irq->opaque = opaque;
--    irq->n = n;
-+    qemu_init_irq_fields(irq, handler, opaque, n);
- }
- 
- qemu_irq *qemu_extend_irqs(qemu_irq *old, int n_old, qemu_irq_handler handler,
-@@ -66,11 +72,8 @@ qemu_irq *qemu_allocate_irqs(qemu_irq_handler handler, void *opaque, int n)
- 
- qemu_irq qemu_allocate_irq(qemu_irq_handler handler, void *opaque, int n)
- {
--    IRQState *irq;
--
--    irq = g_new(IRQState, 1);
--    qemu_init_irq(irq, handler, opaque, n);
--
-+    IRQState *irq = IRQ(object_new(TYPE_IRQ));
-+    qemu_init_irq_fields(irq, handler, opaque, n);
-     return irq;
- }
- 
+This fixes the crash we've been seing recently in migration-test. The
+first patch is a cleanup to have only one place calling
+qemu_loadvm_state_cleanup() and the second patch reorders the cleanup
+calls to make multifd_recv_cleanup() run first and stop the recv
+threads.
+
+Fabiano Rosas (2):
+  migration/savevm: Remove extra load cleanup calls
+  migration/multifd: Fix rb->receivedmap cleanup race
+
+ migration/migration.c | 1 +
+ migration/savevm.c    | 8 ++++----
+ 2 files changed, 5 insertions(+), 4 deletions(-)
+
 -- 
-2.37.2
+2.35.3
 
 
