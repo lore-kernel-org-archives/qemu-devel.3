@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F0B1CAC594
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 18:13:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23AEDCAC594
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 18:15:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqcfe-00007m-5W; Tue, 17 Sep 2024 14:11:26 -0400
+	id 1sqchv-0005dj-4j; Tue, 17 Sep 2024 14:13:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sqcfa-00085M-8X; Tue, 17 Sep 2024 14:11:22 -0400
+ id 1sqchP-0003Qv-5l; Tue, 17 Sep 2024 14:13:16 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sqcfY-0002k4-9c; Tue, 17 Sep 2024 14:11:21 -0400
+ id 1sqchM-0002vl-RT; Tue, 17 Sep 2024 14:13:14 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3BA428FBE0;
- Tue, 17 Sep 2024 21:10:54 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2F30A8FBFF;
+ Tue, 17 Sep 2024 21:12:52 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9463313E756;
- Tue, 17 Sep 2024 21:11:09 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9E2A113E75F;
+ Tue, 17 Sep 2024 21:13:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Haoran Zhang <wh1sper@zju.edu.cn>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Arman Nabiev <nabiev.arman13@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.7 59/65] hw/display/vhost-user-gpu.c: fix
- vhost_user_gpu_chr_read()
-Date: Tue, 17 Sep 2024 21:10:48 +0300
-Message-Id: <20240917181054.633974-7-mjt@tls.msk.ru>
+Subject: [Stable-9.0.3 71/82] target/ppc: Fix migration of CPUs with TLB_EMB
+ TLB type
+Date: Tue, 17 Sep 2024 21:12:45 +0300
+Message-Id: <20240917181256.634732-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-8.2.7-20240917211019@cover.tls.msk.ru>
-References: <qemu-stable-8.2.7-20240917211019@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.0.3-20240917211142@cover.tls.msk.ru>
+References: <qemu-stable-9.0.3-20240917211142@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,32 +60,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haoran Zhang <wh1sper@zju.edu.cn>
+From: Arman Nabiev <nabiev.arman13@gmail.com>
 
-fix vhost_user_gpu_chr_read() where `size` was incorrectly passed to `msg->flags`.
+In vmstate_tlbemb a cut-and-paste error meant we gave
+this vmstate subsection the same "cpu/tlb6xx" name as
+the vmstate_tlb6xx subsection. This breaks migration load
+for any CPU using the TLB_EMB CPU type, because when we
+see the "tlb6xx" name in the incoming data we try to
+interpret it as a vmstate_tlb6xx subsection, which it
+isn't the right format for:
 
-Fixes: 267f664658 ("hw/display: add vhost-user-vga & gpu-pci")
-Signed-off-by: Haoran Zhang <wh1sper@zju.edu.cn>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+ $ qemu-system-ppc -drive
+ if=none,format=qcow2,file=/home/petmay01/test-images/virt/dummy.qcow2
+ -monitor stdio -M bamboo
+ QEMU 9.0.92 monitor - type 'help' for more information
+ (qemu) savevm foo
+ (qemu) loadvm foo
+ Missing section footer for cpu
+ Error: Error -22 while loading VM state
+
+Correct the incorrect vmstate section name. Since migration
+for these CPU types was completely broken before, we don't
+need to care that this is a migration compatibility break.
+
+This affects the PPC 405, 440, 460 and e200 CPU families.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2522
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Arman Nabiev <nabiev.arman13@gmail.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+(cherry picked from commit 203beb6f047467a4abfc8267c234393cea3f471c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit d6192f3f7593536a4285e8ab6c6cf3f34973ce62)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index 709c8a02a1..373f04a7b4 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -385,7 +385,7 @@ vhost_user_gpu_chr_read(void *opaque)
-     }
+diff --git a/target/ppc/machine.c b/target/ppc/machine.c
+index 203fe28e01..19763a7142 100644
+--- a/target/ppc/machine.c
++++ b/target/ppc/machine.c
+@@ -621,7 +621,7 @@ static bool tlbemb_needed(void *opaque)
+ }
  
-     msg->request = request;
--    msg->flags = size;
-+    msg->flags = flags;
-     msg->size = size;
- 
-     if (request == VHOST_USER_GPU_CURSOR_UPDATE ||
+ static const VMStateDescription vmstate_tlbemb = {
+-    .name = "cpu/tlb6xx",
++    .name = "cpu/tlbemb",
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .needed = tlbemb_needed,
 -- 
 2.39.5
 
