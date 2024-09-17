@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E9FCAC594
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 18:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81A09CAC594
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 18:10:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqcdN-0004Qc-Lf; Tue, 17 Sep 2024 14:09:05 -0400
+	id 1sqcdM-0004MU-Dd; Tue, 17 Sep 2024 14:09:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sqcdM-0004LW-4s; Tue, 17 Sep 2024 14:09:04 -0400
+ id 1sqcdJ-0004BM-LC; Tue, 17 Sep 2024 14:09:01 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sqcdK-0002Nl-Gb; Tue, 17 Sep 2024 14:09:03 -0400
+ id 1sqcdH-0002NW-RM; Tue, 17 Sep 2024 14:09:01 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 67A668FBC5;
- Tue, 17 Sep 2024 21:08:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6F7778FBC4;
+ Tue, 17 Sep 2024 21:08:27 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B1B3213E747;
- Tue, 17 Sep 2024 21:08:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F32E413E746;
+ Tue, 17 Sep 2024 21:08:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Haoran Zhang <wh1sper@zju.edu.cn>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.14 45/47] hw/display/vhost-user-gpu.c: fix
- vhost_user_gpu_chr_read()
-Date: Tue, 17 Sep 2024 21:08:34 +0300
-Message-Id: <20240917180836.633380-6-mjt@tls.msk.ru>
+Subject: [Stable-7.2.14 44/47] crypto: check gnutls & gcrypt support the
+ requested pbkdf hash
+Date: Tue, 17 Sep 2024 21:08:33 +0300
+Message-Id: <20240917180836.633380-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.14-20240917210634@cover.tls.msk.ru>
 References: <qemu-stable-7.2.14-20240917210634@cover.tls.msk.ru>
@@ -62,32 +62,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haoran Zhang <wh1sper@zju.edu.cn>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-fix vhost_user_gpu_chr_read() where `size` was incorrectly passed to `msg->flags`.
+Both gnutls and gcrypt can be configured to exclude support for certain
+algorithms via a runtime check against system crypto policies. Thus it
+is not sufficient to have a compile time test for hash support in their
+pbkdf implementations.
 
-Fixes: 267f664658 ("hw/display: add vhost-user-vga & gpu-pci")
-Signed-off-by: Haoran Zhang <wh1sper@zju.edu.cn>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit d6192f3f7593536a4285e8ab6c6cf3f34973ce62)
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit e6c09ea4f9e5f8af92a6453642b84b9efd52892f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index 19c0e20103..7dee566cfe 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -335,7 +335,7 @@ vhost_user_gpu_chr_read(void *opaque)
+diff --git a/crypto/pbkdf-gcrypt.c b/crypto/pbkdf-gcrypt.c
+index a8d8e64f4d..bc0719c831 100644
+--- a/crypto/pbkdf-gcrypt.c
++++ b/crypto/pbkdf-gcrypt.c
+@@ -33,7 +33,7 @@ bool qcrypto_pbkdf2_supports(QCryptoHashAlgorithm hash)
+     case QCRYPTO_HASH_ALG_SHA384:
+     case QCRYPTO_HASH_ALG_SHA512:
+     case QCRYPTO_HASH_ALG_RIPEMD160:
+-        return true;
++        return qcrypto_hash_supports(hash);
+     default:
+         return false;
      }
- 
-     msg->request = request;
--    msg->flags = size;
-+    msg->flags = flags;
-     msg->size = size;
- 
-     if (request == VHOST_USER_GPU_CURSOR_UPDATE ||
+diff --git a/crypto/pbkdf-gnutls.c b/crypto/pbkdf-gnutls.c
+index 2dfbbd382c..911b565bea 100644
+--- a/crypto/pbkdf-gnutls.c
++++ b/crypto/pbkdf-gnutls.c
+@@ -33,7 +33,7 @@ bool qcrypto_pbkdf2_supports(QCryptoHashAlgorithm hash)
+     case QCRYPTO_HASH_ALG_SHA384:
+     case QCRYPTO_HASH_ALG_SHA512:
+     case QCRYPTO_HASH_ALG_RIPEMD160:
+-        return true;
++        return qcrypto_hash_supports(hash);
+     default:
+         return false;
+     }
 -- 
 2.39.5
 
