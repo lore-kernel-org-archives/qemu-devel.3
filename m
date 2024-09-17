@@ -4,87 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55524C3601A
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 12:45:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC96AC3601A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 12:49:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqXa2-0004GP-0J; Tue, 17 Sep 2024 08:45:18 -0400
+	id 1sqXdX-0000Ql-4r; Tue, 17 Sep 2024 08:48:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1sqXZz-0004EK-3E
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 08:45:15 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1sqXZw-000314-AQ
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 08:45:14 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-42cb7a2e4d6so46619955e9.0
- for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 05:45:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1726577110; x=1727181910; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=R2D8omB6AIs3LPmVIk9BObkgDL6uOtgEhSvvMBO53Ms=;
- b=DWNomanKdiO0KP6DC8ybSWmqdZbcWOSxL33UiDJyF1IAlL7aRGqhMP0G+3B1oIYfAk
- 7xd5S7FomkITjy/m0kxAapXFsYKOXWUvIg8+DnsOk0FpPbm9fKAyDupf3+anDv5XSVVw
- XRc9ETBmquEIt0eoCce4kzP+kga1y3M7v/3eFokDXs8i4cwDQQ1DqQIc/iFxNde11p23
- CRxIZb12MotxYTvbBpBt7lixBQ765VOkJYxz5QUwKIhyjOzYeH0WyH4ROAnhdX9NiLMk
- 4kEEgT9L2cCrAhREBL/z35EXeI4gU/wQyI7dpR7k7iv5rLxbsMZfAM/0QHDmvYyFMOaa
- dFPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726577110; x=1727181910;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=R2D8omB6AIs3LPmVIk9BObkgDL6uOtgEhSvvMBO53Ms=;
- b=qrVJ2RkbqraRej+HXXFBkmO6bt30Er0anHWSJhlEwuMR0sGopGR04CKG6cKEiBwlfO
- uJbmgZpzfO7SOwDiSMDn37lx4jjj4w5cCv77T9TZrxT3mQYqqlZ632blgaEXRgBieDcs
- UxpxWKAT0Wp/CKSQMS21sy1hJfNyb2P5/XB4ZZBFm0ROmv2uXqVDbYCu07xkU4WpebsC
- gikbLN9IJgkQWNIynK6Zwmlrh1LkEawGX93uK+v1FrtbdIiqXGqfIl8ByyYjVXSPuDGI
- AC+NTQBLRjJhabmXBVVyBXyeMGHcHh4/LKjbf7NWg6mpaP4816KuC1f6vHzsxIW2UORG
- 5GWQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX/A3GMgKTgGCncG+TateoR6OsyCyCQttID+h2d7Mu5bRzWaTJgAHHyrA33mt4nyOidTQRfzOFsG89s@nongnu.org
-X-Gm-Message-State: AOJu0YyuPIFUjZBNsFidDWm0yYeFXX4/AesZ/GMZtqhy20d+0Dyz2TWi
- dknItgcnSOFUz8uPovfZVHKzlHANKQE1bD0DUsfgzwI0sUiIWOd4MYicFQvE9xg=
-X-Google-Smtp-Source: AGHT+IHL0gNK0X/v97KdZxKStrAktOesKMobua4sN8iN9MxPJ2nkMymPIjGDYd5+Pc9JCeRh1aH3lA==
-X-Received: by 2002:adf:e552:0:b0:374:b6f3:728d with SMTP id
- ffacd0b85a97d-378c2d516c4mr10153515f8f.46.1726577110079; 
- Tue, 17 Sep 2024 05:45:10 -0700 (PDT)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-378e780519esm9436905f8f.103.2024.09.17.05.45.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Sep 2024 05:45:09 -0700 (PDT)
-Date: Tue, 17 Sep 2024 14:45:08 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Gregor Haas <gregorhaas1997@gmail.com>, qemu-devel@nongnu.org, 
- qemu-riscv@nongnu.org, atishp@rivosinc.com, dbarboza@ventanamicro.com, 
- alistair.francis@wdc.com
-Subject: Re: [PATCH v3 0/1] Add support for generating OpenSBI domains in the
- device tree
-Message-ID: <20240917-2683603a6ea10148772d365e@orel>
-References: <20240805210444.497723-1-gregorhaas1997@gmail.com>
- <CAKmqyKM_qgc+wwrDRzZM1yda=dZziM=1rGU2_SDeJU9PTnacVg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1sqXdQ-0000Q5-Vh; Tue, 17 Sep 2024 08:48:49 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1sqXdO-0003NF-Vp; Tue, 17 Sep 2024 08:48:48 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48H8APsh006402;
+ Tue, 17 Sep 2024 12:48:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:subject:from:to:cc:date:in-reply-to:references
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ kUNkkvPGvlFKI5FXYnt3BX0hDE6hsebFmzWXJcqJNs4=; b=UmAHYYgBezYq5F5u
+ z/+UrOOfXojWKYgNloMXas1pp+5mfxg0HyaqezRrHsFj35kQMEkQ0Mbm7jMT1xvb
+ teRY/9us1B3ZFARYDZ+BbUfmRN52uxltLrHjTLZ3JmhdzofCllzNbS1e15tJEUoT
+ 9jyEs+Dkh0Qt7mlmIMjT1Z6aRbBCd9Wj2a/96MC141Nj/4rZdCd4slRoKGdb+jHg
+ iAaps3IHsA+doXJ2h8thmQtkaupycImPckEPAOadycT7OjTms1zrhBUFrIeoeRH9
+ XuIcXp5jvcJUYdIA8km+hZ6oyqLUq3eAPcqT79HtzGC3puRqAozo9caPKRYfl5yd
+ +A6aPg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n41afk2b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Sep 2024 12:48:43 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48HCiNLR027006;
+ Tue, 17 Sep 2024 12:48:43 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n41afk26-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Sep 2024 12:48:43 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48HC0HRE000637;
+ Tue, 17 Sep 2024 12:48:42 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41nn715e0x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Sep 2024 12:48:42 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48HCmccD40239402
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 17 Sep 2024 12:48:38 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BF64120043;
+ Tue, 17 Sep 2024 12:48:38 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 146C92004B;
+ Tue, 17 Sep 2024 12:48:38 +0000 (GMT)
+Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
+ [9.171.35.187]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 17 Sep 2024 12:48:37 +0000 (GMT)
+Message-ID: <229425cd92897e4ff3b5f4456c1c75215668358e.camel@linux.ibm.com>
+Subject: Re: [PATCH v1 06/14] s390x: introduce s390_get_memory_limit()
+From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+To: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth
+ <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, Christian
+ Borntraeger <borntraeger@linux.ibm.com>, Eric Farman
+ <farman@linux.ibm.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Janosch Frank
+ <frankja@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>, Cornelia
+ Huck <cohuck@redhat.com>
+Date: Tue, 17 Sep 2024 14:48:37 +0200
+In-Reply-To: <e91fa726-2a72-486a-a687-ec3a29100cc0@redhat.com>
+References: <20240910175809.2135596-1-david@redhat.com>
+ <20240910175809.2135596-7-david@redhat.com>
+ <a2cb5304c1bf326455030f7d370155ecba3cd7d2.camel@linux.ibm.com>
+ <e91fa726-2a72-486a-a687-ec3a29100cc0@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.3 (3.52.3-1.fc40) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKM_qgc+wwrDRzZM1yda=dZziM=1rGU2_SDeJU9PTnacVg@mail.gmail.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Dm9G_oANKqKs6y_Pm-CLMYSbwMyhw5WS
+X-Proofpoint-ORIG-GUID: ug74sKDaIOwvNhTfzna36maP7MXnuyBV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-17_05,2024-09-16_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0
+ lowpriorityscore=0 suspectscore=0 mlxscore=0 mlxlogscore=874 bulkscore=0
+ impostorscore=0 phishscore=0 priorityscore=1501 spamscore=0 clxscore=1015
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409170091
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=nsg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,38 +122,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 09, 2024 at 01:27:05PM GMT, Alistair Francis wrote:
-> On Tue, Aug 6, 2024 at 7:05 AM Gregor Haas <gregorhaas1997@gmail.com> wrote:
-> >
-> > This patch series adds support for specifying OpenSBI domains on the QEMU
-> > command line. A simple example of what this looks like is below, including
-> > mapping the board's UART into the secondary domain:
-> 
-> Thanks for the patch, sorry it took me so long to look into this
-> 
-> >
-> > qemu-system-riscv64 -machine virt -bios fw_jump.bin -cpu max -smp 2 -m 4G -nographic \
-> >         -device opensbi-memregion,id=mem,base=0xBC000000,order=26,mmio=false \
-> >         -device opensbi-memregion,id=uart,base=0x10000000,order=12,mmio=true,device0="/soc/serial@10000000" \
-> >         -device opensbi-domain,id=domain,possible-harts=0-1,boot-hart=0x0,next-addr=0xBC000000,next-mode=1,region0=mem,perms0=0x3f,region1=uart,perms1=0x3f
-> 
-> This will need documentation added under docs (probably under
-> docs/system/riscv) of how this should be used.
-> 
-> I'm not convinced this is something we want though. A user can dump
-> the QEMU DTB and edit it to support OpenSBI domains if they want.
->
+On Tue, 2024-09-17 at 13:23 +0200, David Hildenbrand wrote:
+> On 16.09.24 15:20, Nina Schoetterl-Glausch wrote:
+> > On Tue, 2024-09-10 at 19:58 +0200, David Hildenbrand wrote:
+> > > Let's add s390_get_memory_limit(), to query what has been successfull=
+y
+> > > set via s390_set_memory_limit(). Allow setting the limit only once.
+> > >=20
+> > > Signed-off-by: David Hildenbrand <david@redhat.com>
+> >=20
+> > Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+> >=20
+> > Comment below.
+> > > ---
+> > >   target/s390x/cpu-sysemu.c | 19 +++++++++++++++++--
+> > >   target/s390x/cpu.h        |  1 +
+> > >   2 files changed, 18 insertions(+), 2 deletions(-)
 
-I also feel like this is just pushing the population of device tree
-nodes from an editor of a .dts file to the QEMU command line. If some
-generation is needed, then maybe we need a script, possibly one which
-has the same command line inputs as proposed here. afaik, we haven't
-typically taken patches which help overlay the generated devicetree
-with additional nodes. For example, see [1] for one such proposal
-and rejection.
+[...]
 
-[1] https://lore.kernel.org/all/20210926183410.256484-1-sjg@chromium.org/
+> > > +
+> > > +uint64_t s390_get_memory_limit(void)
+> > > +{
+> >=20
+> > Might be nice to guard/warn against s390_set_memory_limit not having be=
+en called before.
+> >=20
+>=20
+> What about the following on top:
+>=20
+> diff --git a/target/s390x/cpu-sysemu.c b/target/s390x/cpu-sysemu.c
+> index 1915567b3a..07cb85103a 100644
+> --- a/target/s390x/cpu-sysemu.c
+> +++ b/target/s390x/cpu-sysemu.c
+> @@ -263,6 +263,8 @@ int s390_set_memory_limit(uint64_t new_limit, uint64_=
+t *hw_limit)
+>  =20
+>       if (memory_limit) {
+>           return -EBUSY;
+> +    } else if (!new_limit) {
+> +        return -EINVAL;
+>       }
+>       if (kvm_enabled()) {
+>           ret =3D kvm_s390_set_mem_limit(new_limit, hw_limit);
+> @@ -275,6 +277,8 @@ int s390_set_memory_limit(uint64_t new_limit, uint64_=
+t *hw_limit)
+>  =20
+>   uint64_t s390_get_memory_limit(void)
+>   {
+> +    /* We expect to be called after s390_set_memory_limit(). */
+> +    assert(memory_limit);
+>       return memory_limit;
+>   }
 
-Thanks,
-drew
+Looks good.
+
+Looking at the patch again I'm wondering if using globals in qemu is still =
+encouraged.
+I know it's a common pattern today, but seeing efforts like the multiarch b=
+inary or Unicorn
+I'm wondering if there is aspirations to do things more "cleanly", in gener=
+al, for far out benefits?
+I.e. memory_limit could be a machine property instead.
 
