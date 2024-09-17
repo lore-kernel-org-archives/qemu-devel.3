@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82A4DCAC593
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 18:09:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3269ECAC594
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 18:10:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqcdD-0003oD-V1; Tue, 17 Sep 2024 14:08:56 -0400
+	id 1sqcdc-00050d-3D; Tue, 17 Sep 2024 14:09:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sqcdC-0003mJ-6d; Tue, 17 Sep 2024 14:08:54 -0400
+ id 1sqcdP-0004Zp-Pb; Tue, 17 Sep 2024 14:09:07 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sqcdA-0002MW-1q; Tue, 17 Sep 2024 14:08:53 -0400
+ id 1sqcdN-0002OI-Uk; Tue, 17 Sep 2024 14:09:07 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5907D8FBC1;
- Tue, 17 Sep 2024 21:08:24 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 063E38FBC7;
+ Tue, 17 Sep 2024 21:08:30 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D3CD113E743;
- Tue, 17 Sep 2024 21:08:39 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 85BF113E749;
+ Tue, 17 Sep 2024 21:08:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.14 41/47] gitlab: migrate the s390x custom machine to
- 22.04
-Date: Tue, 17 Sep 2024 21:08:30 +0300
-Message-Id: <20240917180836.633380-2-mjt@tls.msk.ru>
+ =?UTF-8?q?Jan=20Kl=C3=B6tzke?= <jan.kloetzke@kernkonzept.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.14 47/47] hw/intc/arm_gic: fix spurious level triggered
+ interrupts
+Date: Tue, 17 Sep 2024 21:08:36 +0300
+Message-Id: <20240917180836.633380-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.14-20240917210634@cover.tls.msk.ru>
 References: <qemu-stable-7.2.14-20240917210634@cover.tls.msk.ru>
@@ -61,125 +61,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Jan Klötzke <jan.kloetzke@kernkonzept.com>
 
-20.04 is dead (from QEMU's point of view), long live 22.04!
+On GICv2 and later, level triggered interrupts are pending when either
+the interrupt line is asserted or the interrupt was made pending by a
+GICD_ISPENDRn write. Making a level triggered interrupt pending by
+software persists until either the interrupt is acknowledged or cleared
+by writing GICD_ICPENDRn. As long as the interrupt line is asserted,
+the interrupt is pending in any case.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240426153938.1707723-3-alex.bennee@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 108d99742af1fa6e977dcfac9d4151b7915e33a3)
+This logic is transparently implemented in gic_test_pending() for
+GICv1 and GICv2.  The function combines the "pending" irq_state flag
+(used for edge triggered interrupts and software requests) and the
+line status (tracked in the "level" field).  However, we also
+incorrectly set the pending flag on a guest write to GICD_ISENABLERn
+if the line of a level triggered interrupt was asserted.  This keeps
+the interrupt pending even if the line is de-asserted after some
+time.
+
+This incorrect logic is a leftover of the initial 11MPCore GIC
+implementation.  That handles things slightly differently to the
+architected GICv1 and GICv2.  The 11MPCore TRM does not give a lot of
+detail on the corner cases of its GIC's behaviour, and historically
+we have not wanted to investigate exactly what it does in reality, so
+QEMU's GIC model takes the approach of "retain our existing behaviour
+for 11MPCore, and implement the architectural standard for later GIC
+revisions".
+
+On that basis, commit 8d999995e45c10 in 2013 is where we added the
+"level-triggered interrupt with the line asserted" handling to
+gic_test_pending(), and we deliberately kept the old behaviour of
+gic_test_pending() for REV_11MPCORE.  That commit should have added
+the "only if 11MPCore" condition to the setting of the pending bit on
+writes to GICD_ISENABLERn, but forgot it.
+
+Add the missing "if REV_11MPCORE" condition, so that our behaviour
+on GICv1 and GICv2 matches the GIC architecture requirements.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 8d999995e45c10 ("arm_gic: Fix GIC pending behavior")
+Signed-off-by: Jan Klötzke <jan.kloetzke@kernkonzept.com>
+Message-id: 20240911114826.3558302-1-jan.kloetzke@kernkonzept.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: expanded comment a little and converted to coding-style form;
+ expanded commit message with the historical backstory]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 110684c9a69a02cbabfbddcd3afa921826ad565c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fixups in .gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml)
 
-diff --git a/.gitlab-ci.d/custom-runners.yml b/.gitlab-ci.d/custom-runners.yml
-index 97f99e29c2..94414457f1 100644
---- a/.gitlab-ci.d/custom-runners.yml
-+++ b/.gitlab-ci.d/custom-runners.yml
-@@ -14,7 +14,7 @@ variables:
-   GIT_STRATEGY: clone
- 
- include:
--  - local: '/.gitlab-ci.d/custom-runners/ubuntu-20.04-s390x.yml'
-+  - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml'
-   - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml'
-   - local: '/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml'
-   - local: '/.gitlab-ci.d/custom-runners/centos-stream-8-x86_64.yml'
-diff --git a/.gitlab-ci.d/custom-runners/ubuntu-20.04-s390x.yml b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
-similarity index 89%
-rename from .gitlab-ci.d/custom-runners/ubuntu-20.04-s390x.yml
-rename to .gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
-index 0c835939db..12c6e21119 100644
---- a/.gitlab-ci.d/custom-runners/ubuntu-20.04-s390x.yml
-+++ b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
-@@ -1,12 +1,12 @@
--# All ubuntu-20.04 jobs should run successfully in an environment
-+# All ubuntu-22.04 jobs should run successfully in an environment
- # setup by the scripts/ci/setup/build-environment.yml task
--# "Install basic packages to build QEMU on Ubuntu 20.04/20.04"
-+# "Install basic packages to build QEMU on Ubuntu 22.04"
- 
--ubuntu-20.04-s390x-all-linux-static:
-+ubuntu-22.04-s390x-all-linux-static:
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_20.04
-+ - ubuntu_22.04
-  - s390x
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-@@ -24,11 +24,11 @@ ubuntu-20.04-s390x-all-linux-static:
-  - make --output-sync -j`nproc` check-tcg V=1
-    || { cat meson-logs/testlog.txt; exit 1; } ;
- 
--ubuntu-20.04-s390x-all:
-+ubuntu-22.04-s390x-all:
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_20.04
-+ - ubuntu_22.04
-  - s390x
-  timeout: 75m
-  rules:
-@@ -43,11 +43,11 @@ ubuntu-20.04-s390x-all:
-  - make --output-sync -j`nproc` check V=1
-    || { cat meson-logs/testlog.txt; exit 1; } ;
- 
--ubuntu-20.04-s390x-alldbg:
-+ubuntu-22.04-s390x-alldbg:
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_20.04
-+ - ubuntu_22.04
-  - s390x
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-@@ -66,11 +66,11 @@ ubuntu-20.04-s390x-alldbg:
-  - make --output-sync -j`nproc` check V=1
-    || { cat meson-logs/testlog.txt; exit 1; } ;
- 
--ubuntu-20.04-s390x-clang:
-+ubuntu-22.04-s390x-clang:
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_20.04
-+ - ubuntu_22.04
-  - s390x
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-@@ -88,11 +88,11 @@ ubuntu-20.04-s390x-clang:
-  - make --output-sync -j`nproc` check V=1
-    || { cat meson-logs/testlog.txt; exit 1; } ;
- 
--ubuntu-20.04-s390x-tci:
-+ubuntu-22.04-s390x-tci:
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_20.04
-+ - ubuntu_22.04
-  - s390x
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-@@ -108,11 +108,11 @@ ubuntu-20.04-s390x-tci:
-    || { cat config.log meson-logs/meson-log.txt; exit 1; }
-  - make --output-sync -j`nproc`
- 
--ubuntu-20.04-s390x-notcg:
-+ubuntu-22.04-s390x-notcg:
-  needs: []
-  stage: build
-  tags:
-- - ubuntu_20.04
-+ - ubuntu_22.04
-  - s390x
-  rules:
-  - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
+index 47f01e45e3..b8a4364b7f 100644
+--- a/hw/intc/arm_gic.c
++++ b/hw/intc/arm_gic.c
+@@ -1263,9 +1263,14 @@ static void gic_dist_writeb(void *opaque, hwaddr offset,
+                     trace_gic_enable_irq(irq + i);
+                 }
+                 GIC_DIST_SET_ENABLED(irq + i, cm);
+-                /* If a raised level triggered IRQ enabled then mark
+-                   is as pending.  */
+-                if (GIC_DIST_TEST_LEVEL(irq + i, mask)
++                /*
++                 * If a raised level triggered IRQ enabled then mark
++                 * it as pending on 11MPCore. For other GIC revisions we
++                 * handle the "level triggered and line asserted" check
++                 * at the other end in gic_test_pending().
++                 */
++                if (s->revision == REV_11MPCORE
++                        && GIC_DIST_TEST_LEVEL(irq + i, mask)
+                         && !GIC_DIST_TEST_EDGE_TRIGGER(irq + i)) {
+                     DPRINTF("Set %d pending mask %x\n", irq + i, mask);
+                     GIC_DIST_SET_PENDING(irq + i, mask);
 -- 
 2.39.5
 
