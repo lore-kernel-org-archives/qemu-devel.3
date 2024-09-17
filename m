@@ -4,97 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A01FC3ABD4
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 06:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47D44C3ABDF
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 06:26:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqRJ8-0006Oa-HN; Tue, 17 Sep 2024 02:03:27 -0400
+	id 1sqReO-0006Ub-NN; Tue, 17 Sep 2024 02:25:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sqRJ6-0006Nb-FV; Tue, 17 Sep 2024 02:03:24 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sqRJ3-0005ke-T6; Tue, 17 Sep 2024 02:03:24 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48GIUxBC031825;
- Tue, 17 Sep 2024 06:03:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:mime-version:content-type
- :content-transfer-encoding; s=pp1; bh=T/lJDcSfogMGw619SGK7MnmnrU
- Krj4mJyQow+ngW0yw=; b=BSSUYRGpehwrrodtoIsF7fCaFttaXTeAEo2i++GiYV
- hZwb8yzA1NA01kT89jP+gzUtoepCZIFXsbxZjMmN0IWL806eC4ZM8+1tRhjyTOUm
- LC5ItEVwH7/sqa4pd5G2FS6BSj6rp4NL+gIPfzAXQWHPbdB+imF+ss8EGBiwskcE
- pPdTE3t/y49B+DDjCNYXKKnHIRp/sUAgspqDisYxZcIloWFS0uxQ7671WAinTkDs
- ZBctvJ+2Wpe3rRCaBgXAzhpyYZ8Krhchcap4tydJqqkqN41GHT+BoSWHFhQEMCHj
- Pp3X9Rczfbd2LYIUyMbRPtBiZUX52K4lIheqOELMDH5Q==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n3uj64e4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Sep 2024 06:03:11 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48H63AS3007276;
- Tue, 17 Sep 2024 06:03:10 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n3uj64dy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Sep 2024 06:03:10 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48H2bEOQ030649;
- Tue, 17 Sep 2024 06:03:09 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41npan396f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Sep 2024 06:03:09 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48H637Xu33423828
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 17 Sep 2024 06:03:07 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6886D2004F;
- Tue, 17 Sep 2024 06:03:07 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6FC3F2004B;
- Tue, 17 Sep 2024 06:03:06 +0000 (GMT)
-Received: from ltcrain34-lp1.aus.stglabs.ibm.com (unknown [9.3.101.40])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 17 Sep 2024 06:03:06 +0000 (GMT)
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, danielhb413@gmail.com, clg@kaod.org
-Subject: [PATCH] ppc/spapr: remove deprecated machines specific code
-Date: Tue, 17 Sep 2024 11:33:00 +0530
-Message-ID: <20240917060300.943496-1-harshpb@linux.ibm.com>
-X-Mailer: git-send-email 2.45.2
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1sqReL-0006Py-OQ
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 02:25:22 -0400
+Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1sqReI-0008Ff-H8
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 02:25:21 -0400
+Received: by mail-oi1-x233.google.com with SMTP id
+ 5614622812f47-3e06853e579so2680885b6e.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 23:25:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1726554317; x=1727159117;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4JuUamB5l2v4Heut1Ym/kfOJLl6QfdzCZRU1MAkfwig=;
+ b=3e7Ua+keB6ypzxeuEQFu4QQrmkpvHZbshZzmxJDRtmpwvlKwjyTSKjlWVRgJnPyH6W
+ d/ZXNZDREBAhK9OcM6mgddjHgNOS0YPWl8oejxAIbJ2b8W6K6rlR8Y/rI+4HZsN5lr6o
+ JHL/SffYaNteNj1+pCTcwYsMfGRVmc3qPfHrkrIjBBudjrTIQT23pgMbsQXiXr+t7obX
+ XVJ52BFHhl5YHClCzLwnER82kr5yrvucCDzp0BsbXgOeovhFGfmONHWRylVUXIv6mTWl
+ yERehDW/ajTVNFOxIT2DHqAFbLpmbqxC1ciEifOvZr9vPOsRCyG4nueAC3B0ntE0MT83
+ cugw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726554317; x=1727159117;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4JuUamB5l2v4Heut1Ym/kfOJLl6QfdzCZRU1MAkfwig=;
+ b=a1J5oPDlHeBt5Aqc3HMVh+uT+wwApD/EP9dEFeOEAgFe88c7oKVKurnSdkyu3r09mh
+ PU506pmYYQYAczFwWVW6TG2fPxhLeQQ0Sm8znHIUG/1ZHmx/v7klE1izpwsm6ejC4sCF
+ iVjtjp74e18GrvhaUqudZPOVmrqSr0NAFVidrm22KOp0TJatAknUG18OaYJmGJg6X7OJ
+ nkEnHcLgjRl/1mjqTdMci3Qkq8AvNH89u0vBl7JOIGn0VFaJSADJFQOOkMgFjTXmu8rZ
+ h3NY7nYZN7/VI0sFBauGSYl80NnZG4BiYTQWgRD4SA3T1aCoI7ejjMsNw27XalOOBNn2
+ +lGg==
+X-Gm-Message-State: AOJu0YxSamtpLBAgBzveIqWxW5pW5xiKodwXQffYDoD2fmHn1HURquKD
+ Ge9Ge5WtbQ9enxznPEVhro25dcp4cW8sF3r6+d1oAD1RHjRH2pzRJt3ZleJAp4zA2/b6xzdwJwO
+ NIe8V5yyRKJTGbt6k2R9h81CrX2Q8FJiTvzBdrQ==
+X-Google-Smtp-Source: AGHT+IENSixNhQN4HUFMAtV1v4swQrAJhTb3f5Jy0znCldWB7Xymbn6XwAVTacp27qFRPrCOUar0NXHiPvMcHvB0aLU=
+X-Received: by 2002:a05:6808:199b:b0:3e0:5896:a0cf with SMTP id
+ 5614622812f47-3e071ae36abmr10372204b6e.35.1726554316707; Mon, 16 Sep 2024
+ 23:25:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: p5AQIcp2IDuol7GBGIzVGAxDXpgHrAhP
-X-Proofpoint-GUID: zviwOE2RiclJ4aPGCfSi-44Kqqh23EBI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-17_01,2024-09-16_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- mlxlogscore=999 adultscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
- clxscore=1015 bulkscore=0 suspectscore=0 mlxscore=0 impostorscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409170040
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240916175708.1829059-1-mnissler@rivosinc.com>
+ <c7ded7f1-3985-4694-b033-6070911f49dc@ilande.co.uk>
+In-Reply-To: <c7ded7f1-3985-4694-b033-6070911f49dc@ilande.co.uk>
+From: Mattias Nissler <mnissler@rivosinc.com>
+Date: Tue, 17 Sep 2024 08:25:06 +0200
+Message-ID: <CAGNS4TZP2yOCurhWoskzswDvMjmW7xd4Xeg-dCnEuMc7tAJTsQ@mail.gmail.com>
+Subject: Re: [PATCH] mac_dbdma: Remove leftover `dma_memory_unmap` calls
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ John Snow <jsnow@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-ppc@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
+ envelope-from=mnissler@rivosinc.com; helo=mail-oi1-x233.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,263 +93,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 1392617d3576 intended to tag pseries-2.1 - 2.11 machines as
-deprecated with reasons mentioned in its commit log.
-Removing the arch specific code for the now deprecated machine types.
+Mark, thanks for testing and confirming that this doesn't cause any
+obvious breakage.
 
-Suggested-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
----
- hw/ppc/spapr.c | 235 -------------------------------------------------
- 1 file changed, 235 deletions(-)
+For my curiosity, which path should this patch take to get into
+master? Peter, are you going to respin your pull request with this
+included?
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 8aa3ce7449..04f06377b4 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -5157,241 +5157,6 @@ static void spapr_machine_2_12_sxxm_class_options(MachineClass *mc)
- 
- DEFINE_SPAPR_MACHINE_TAGGED(2, 12, sxxm);
- 
--/*
-- * pseries-2.11
-- */
--
--static void spapr_machine_2_11_class_options(MachineClass *mc)
--{
--    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
--
--    spapr_machine_2_12_class_options(mc);
--    smc->default_caps.caps[SPAPR_CAP_HTM] = SPAPR_CAP_ON;
--    compat_props_add(mc->compat_props, hw_compat_2_11, hw_compat_2_11_len);
--}
--
--DEFINE_SPAPR_MACHINE(2, 11);
--
--/*
-- * pseries-2.10
-- */
--
--static void spapr_machine_2_10_class_options(MachineClass *mc)
--{
--    spapr_machine_2_11_class_options(mc);
--    compat_props_add(mc->compat_props, hw_compat_2_10, hw_compat_2_10_len);
--}
--
--DEFINE_SPAPR_MACHINE(2, 10);
--
--/*
-- * pseries-2.9
-- */
--
--static void spapr_machine_2_9_class_options(MachineClass *mc)
--{
--    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
--    static GlobalProperty compat[] = {
--        { TYPE_POWERPC_CPU, "pre-2.10-migration", "on" },
--    };
--
--    spapr_machine_2_10_class_options(mc);
--    compat_props_add(mc->compat_props, hw_compat_2_9, hw_compat_2_9_len);
--    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
--    smc->pre_2_10_has_unused_icps = true;
--    smc->resize_hpt_default = SPAPR_RESIZE_HPT_DISABLED;
--}
--
--DEFINE_SPAPR_MACHINE(2, 9);
--
--/*
-- * pseries-2.8
-- */
--
--static void spapr_machine_2_8_class_options(MachineClass *mc)
--{
--    static GlobalProperty compat[] = {
--        { TYPE_SPAPR_PCI_HOST_BRIDGE, "pcie-extended-configuration-space", "off" },
--    };
--
--    spapr_machine_2_9_class_options(mc);
--    compat_props_add(mc->compat_props, hw_compat_2_8, hw_compat_2_8_len);
--    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
--    mc->numa_mem_align_shift = 23;
--}
--
--DEFINE_SPAPR_MACHINE(2, 8);
--
--/*
-- * pseries-2.7
-- */
--
--static bool phb_placement_2_7(SpaprMachineState *spapr, uint32_t index,
--                              uint64_t *buid, hwaddr *pio,
--                              hwaddr *mmio32, hwaddr *mmio64,
--                              unsigned n_dma, uint32_t *liobns, Error **errp)
--{
--    /* Legacy PHB placement for pseries-2.7 and earlier machine types */
--    const uint64_t base_buid = 0x800000020000000ULL;
--    const hwaddr phb_spacing = 0x1000000000ULL; /* 64 GiB */
--    const hwaddr mmio_offset = 0xa0000000; /* 2 GiB + 512 MiB */
--    const hwaddr pio_offset = 0x80000000; /* 2 GiB */
--    const uint32_t max_index = 255;
--    const hwaddr phb0_alignment = 0x10000000000ULL; /* 1 TiB */
--
--    uint64_t ram_top = MACHINE(spapr)->ram_size;
--    hwaddr phb0_base, phb_base;
--    int i;
--
--    /* Do we have device memory? */
--    if (MACHINE(spapr)->device_memory) {
--        /* Can't just use maxram_size, because there may be an
--         * alignment gap between normal and device memory regions
--         */
--        ram_top = MACHINE(spapr)->device_memory->base +
--            memory_region_size(&MACHINE(spapr)->device_memory->mr);
--    }
--
--    phb0_base = QEMU_ALIGN_UP(ram_top, phb0_alignment);
--
--    if (index > max_index) {
--        error_setg(errp, "\"index\" for PAPR PHB is too large (max %u)",
--                   max_index);
--        return false;
--    }
--
--    *buid = base_buid + index;
--    for (i = 0; i < n_dma; ++i) {
--        liobns[i] = SPAPR_PCI_LIOBN(index, i);
--    }
--
--    phb_base = phb0_base + index * phb_spacing;
--    *pio = phb_base + pio_offset;
--    *mmio32 = phb_base + mmio_offset;
--    /*
--     * We don't set the 64-bit MMIO window, relying on the PHB's
--     * fallback behaviour of automatically splitting a large "32-bit"
--     * window into contiguous 32-bit and 64-bit windows
--     */
--
--    return true;
--}
--
--static void spapr_machine_2_7_class_options(MachineClass *mc)
--{
--    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
--    static GlobalProperty compat[] = {
--        { TYPE_SPAPR_PCI_HOST_BRIDGE, "mem_win_size", "0xf80000000", },
--        { TYPE_SPAPR_PCI_HOST_BRIDGE, "mem64_win_size", "0", },
--        { TYPE_POWERPC_CPU, "pre-2.8-migration", "on", },
--        { TYPE_SPAPR_PCI_HOST_BRIDGE, "pre-2.8-migration", "on", },
--    };
--
--    spapr_machine_2_8_class_options(mc);
--    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power7_v2.3");
--    mc->default_machine_opts = "modern-hotplug-events=off";
--    compat_props_add(mc->compat_props, hw_compat_2_7, hw_compat_2_7_len);
--    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
--    smc->phb_placement = phb_placement_2_7;
--}
--
--DEFINE_SPAPR_MACHINE(2, 7);
--
--/*
-- * pseries-2.6
-- */
--
--static void spapr_machine_2_6_class_options(MachineClass *mc)
--{
--    static GlobalProperty compat[] = {
--        { TYPE_SPAPR_PCI_HOST_BRIDGE, "ddw", "off" },
--    };
--
--    spapr_machine_2_7_class_options(mc);
--    mc->has_hotpluggable_cpus = false;
--    compat_props_add(mc->compat_props, hw_compat_2_6, hw_compat_2_6_len);
--    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
--}
--
--DEFINE_SPAPR_MACHINE(2, 6);
--
--/*
-- * pseries-2.5
-- */
--
--static void spapr_machine_2_5_class_options(MachineClass *mc)
--{
--    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
--    static GlobalProperty compat[] = {
--        { "spapr-vlan", "use-rx-buffer-pools", "off" },
--    };
--
--    spapr_machine_2_6_class_options(mc);
--    smc->use_ohci_by_default = true;
--    compat_props_add(mc->compat_props, hw_compat_2_5, hw_compat_2_5_len);
--    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
--}
--
--DEFINE_SPAPR_MACHINE(2, 5);
--
--/*
-- * pseries-2.4
-- */
--
--static void spapr_machine_2_4_class_options(MachineClass *mc)
--{
--    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
--
--    spapr_machine_2_5_class_options(mc);
--    smc->dr_lmb_enabled = false;
--    compat_props_add(mc->compat_props, hw_compat_2_4, hw_compat_2_4_len);
--}
--
--DEFINE_SPAPR_MACHINE(2, 4);
--
--/*
-- * pseries-2.3
-- */
--
--static void spapr_machine_2_3_class_options(MachineClass *mc)
--{
--    static GlobalProperty compat[] = {
--        { "spapr-pci-host-bridge", "dynamic-reconfiguration", "off" },
--    };
--    spapr_machine_2_4_class_options(mc);
--    compat_props_add(mc->compat_props, hw_compat_2_3, hw_compat_2_3_len);
--    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
--}
--DEFINE_SPAPR_MACHINE(2, 3);
--
--/*
-- * pseries-2.2
-- */
--
--static void spapr_machine_2_2_class_options(MachineClass *mc)
--{
--    static GlobalProperty compat[] = {
--        { TYPE_SPAPR_PCI_HOST_BRIDGE, "mem_win_size", "0x20000000" },
--    };
--
--    spapr_machine_2_3_class_options(mc);
--    compat_props_add(mc->compat_props, hw_compat_2_2, hw_compat_2_2_len);
--    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
--    mc->default_machine_opts = "modern-hotplug-events=off,suppress-vmdesc=on";
--}
--DEFINE_SPAPR_MACHINE(2, 2);
--
--/*
-- * pseries-2.1
-- */
--
--static void spapr_machine_2_1_class_options(MachineClass *mc)
--{
--    spapr_machine_2_2_class_options(mc);
--    compat_props_add(mc->compat_props, hw_compat_2_1, hw_compat_2_1_len);
--}
--DEFINE_SPAPR_MACHINE(2, 1);
--
- static void spapr_machine_register_types(void)
- {
-     type_register_static(&spapr_machine_info);
--- 
-2.45.2
-
+On Mon, Sep 16, 2024 at 11:06=E2=80=AFPM Mark Cave-Ayland
+<mark.cave-ayland@ilande.co.uk> wrote:
+>
+> On 16/09/2024 18:57, Mattias Nissler wrote:
+>
+> > These were passing a NULL buffer pointer unconditionally, which happens
+> > to behave in a mostly benign way (except for the chance of an excess
+> > memory region unref and a bounce buffer leak). Per the function comment=
+,
+> > this was never meant to be accepted though, and triggers an assertion
+> > with the "softmmu: Support concurrent bounce buffers" change.
+> >
+> > Given that the code in question never sets up any mappings, just remove
+> > the unnecessary dma_memory_unmap calls along with the DBDMA_io struct
+> > fields that are now entirely unused.
+> >
+> > Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+> > ---
+> >   hw/ide/macio.c             | 6 ------
+> >   include/hw/ppc/mac_dbdma.h | 4 ----
+> >   2 files changed, 10 deletions(-)
+> >
+> > diff --git a/hw/ide/macio.c b/hw/ide/macio.c
+> > index bec2e866d7..99477a3d13 100644
+> > --- a/hw/ide/macio.c
+> > +++ b/hw/ide/macio.c
+> > @@ -119,9 +119,6 @@ static void pmac_ide_atapi_transfer_cb(void *opaque=
+, int ret)
+> >       return;
+> >
+> >   done:
+> > -    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
+> > -                     io->dir, io->dma_len);
+> > -
+> >       if (ret < 0) {
+> >           block_acct_failed(blk_get_stats(s->blk), &s->acct);
+> >       } else {
+> > @@ -202,9 +199,6 @@ static void pmac_ide_transfer_cb(void *opaque, int =
+ret)
+> >       return;
+> >
+> >   done:
+> > -    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
+> > -                     io->dir, io->dma_len);
+> > -
+> >       if (s->dma_cmd =3D=3D IDE_DMA_READ || s->dma_cmd =3D=3D IDE_DMA_W=
+RITE) {
+> >           if (ret < 0) {
+> >               block_acct_failed(blk_get_stats(s->blk), &s->acct);
+> > diff --git a/include/hw/ppc/mac_dbdma.h b/include/hw/ppc/mac_dbdma.h
+> > index 4a3f644516..c774f6bf84 100644
+> > --- a/include/hw/ppc/mac_dbdma.h
+> > +++ b/include/hw/ppc/mac_dbdma.h
+> > @@ -44,10 +44,6 @@ struct DBDMA_io {
+> >       DBDMA_end dma_end;
+> >       /* DMA is in progress, don't start another one */
+> >       bool processing;
+> > -    /* DMA request */
+> > -    void *dma_mem;
+> > -    dma_addr_t dma_len;
+> > -    DMADirection dir;
+> >   };
+> >
+> >   /*
+>
+> Thanks for looking at this, Matthias. I've given it a quick spin around v=
+arious PPC
+> Mac images and it looks good to me, so:
+>
+> Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>
+> My guess is that the current use of dma_memory_unmap() was a misunderstan=
+ding/bug
+> when porting the macio IDE device over to use the byte-aligned block DMA =
+helpers, so
+> I think you can also add:
+>
+> Fixes: be1e343995 ("macio: switch over to new byte-aligned DMA helpers")
+>
+>
+> ATB,
+>
+> Mark.
+>
 
