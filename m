@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 797C1C35FE4
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 06:49:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B54F9C35FEA
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 06:53:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqS0j-0004dy-6N; Tue, 17 Sep 2024 02:48:29 -0400
+	id 1sqS5Q-0000av-Qe; Tue, 17 Sep 2024 02:53:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1sqS0g-0004dP-GE
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 02:48:26 -0400
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ id 1sqS5M-0000aK-3s
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 02:53:16 -0400
+Received: from mail-oa1-x36.google.com ([2001:4860:4864:20::36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1sqS0d-00026y-KC
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 02:48:26 -0400
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-710f0415ac8so2997605a34.1
- for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 23:48:22 -0700 (PDT)
+ id 1sqS5J-0002lv-CV
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 02:53:15 -0400
+Received: by mail-oa1-x36.google.com with SMTP id
+ 586e51a60fabf-277c861d9f6so1596939fac.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Sep 2024 23:53:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1726555701; x=1727160501;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1726555992; x=1727160792;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jGKo0x8y/Urg5U2kUSiOyJdftvMwPNC5ZvSXQGTbFng=;
- b=DIiAlRSPUpUUwwCvKxPN1BjkW41I0Uc0W3b6BGFiudsf+rxSxHR9qKVxPXGtrw7SwA
- AwSmnyINH3Bso9FmnIG8I2UuHtYBKJA08q94AN+TUxpbiic9IMH86G6vU04Dajx2fKGz
- nW19TzCico18KDc7Xw3bafWQrgYKmo6XpuE7eq+iyH9NqLJb9Y6v9YBm7d2bicTdWzSU
- 0elhed5O7pjt46rKRgrjeDQvA2luQV+RZ8VApvwKKeysBShfhdUo7027L4C57QjW3Jnb
- WKS5CpPs8i4AqLzFDnX4MhNsVWfJ1HIVsYACnf7K0yN399uop5o2SKxWl0U9Nm5AfAuW
- QWrQ==
+ bh=IX5U4CTx7dC3DChb74dZMrcaZ89yEDGSjSrub4gYLS4=;
+ b=uR2o97CRq+UzcEpvfTX+3C2YNRsXH6eshnsxgNwYm8jIPsBC58f1U3ZxmsFJoox9OE
+ 5NvTowva0exMqMB0kzfuB5i2lAvTYBx2rJte01zCI/H6kg9wIZ0CdRm401trSQ0axJG5
+ qaWqbCUaxj5gSXKwlYpuoSyROcFGeN9RShPC187FTzjlzs7eCR7ezSrrgzgpg5tyqzvZ
+ Q/aC3moljnVeuNhFLpMHcsm3gMZgNlrSbezeb8b9+1BCtWUQP9ZfMkCCQR9H2aDTOXJ5
+ zRjedrBPowSIk4aG0wO5il7wwDA9hCzeML3jjrX8V/LgToryT5VHzxSe69r1SEefJ75b
+ hkmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726555701; x=1727160501;
+ d=1e100.net; s=20230601; t=1726555992; x=1727160792;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=jGKo0x8y/Urg5U2kUSiOyJdftvMwPNC5ZvSXQGTbFng=;
- b=iZEPeNqBHSDKJh/uE058s3z2j2UKVFDjgiyPwhPiWelgw8BsN6wscq//7LeXLLOxtJ
- rVBsdWzbq6tp/zgbszaH6XcmnigY2TlxC9AfySH2d8ybw2blBtf7wwhhfxceXo+pNitA
- 1k67dDNUGkdMvQgLHIbIZrT20HIPjJmSlJEQpunWMTjMtVDLOnzDs2JXZY/NoXC07cU5
- em6DEJa0HjuCwex10ENPsz9T0jvsFxENAeXKuK1owXq+hSvUC2J3NF1gV9IKYiKSP8d3
- Cv9L5aV57+FK6XXTuF6wKaTNz8znImvi8PL1F2IL7XZnr9sN59P8EECQV1PAPkO/Grj4
- rHvA==
-X-Gm-Message-State: AOJu0YzSDZeCtry+T6F4hgbS/kf5+QTU63gCYHpvQvraXCogNFOr3n5T
- UZAI2KTE48qzrz7mB9tuYpUpfIeY59m4/GcRcibwEw+kPL6SbZDshPWUtaB4erE565ZafGYwgt0
- ubr+BYbbbzNTZg3a1anPxZ+yIdojqQ+auFjFziw==
-X-Google-Smtp-Source: AGHT+IEzVLgzq3lWhx9zxnhW1GDSklwB/pRQQo7rYk/r1MkgejNyuLrGvQW5QAa2OexdKU7OYh7OR0qKnDBVp+LEsAE=
-X-Received: by 2002:a05:6870:c14e:b0:277:d195:ab88 with SMTP id
- 586e51a60fabf-27c3f627623mr10223690fac.32.1726555700205; Mon, 16 Sep 2024
- 23:48:20 -0700 (PDT)
+ bh=IX5U4CTx7dC3DChb74dZMrcaZ89yEDGSjSrub4gYLS4=;
+ b=X8XxPSYXjk3bWGiifZKmdIoINsWy2pDVUYO8plF11jFhUoq/d4aEwTrVH/zMRISGC1
+ vcr8QMWptNDiOvRl8WQIlotH1nHTVcF1q9CNy+pw+45RGq2oPSL0gPh4DuCtttYeZpUf
+ bnzB0+B3io6wU53YvEjZub0/l1oJMWk26Ypt7LFGX3SwQy5PNmZ9KNxyXk1+oi+sttEV
+ BL16IQgey6JgGWeNrO9SFfjxesi4+ZjnHL5A0QzEVRcPxDq75QRzY85QYsZ+dNHpsA6E
+ 840FTZBEZHmXTGmFVO1DNAsG7aGYWZQQqoOES82E0LHC/HK8b7QMdb8Y4Tf16LaLgX7/
+ Ciig==
+X-Gm-Message-State: AOJu0YwdO+w7xBe4+G51Oba+AMyAiSyozPGmRFo9ph/5hlmq/p7jgltr
+ BryFUsBjOxmhMvZGul8KeHOiSlISrUxVGbPI9m9wHDFVp+D2X0Jv2hwaqaELuusJRotMC1iJcbx
+ 384rE3nkQyRXeJztxmRtASnc10jPGuIOBW5HMZOphWcR+g7Je5NhcECai
+X-Google-Smtp-Source: AGHT+IEyC1ztPFHFBGFRBWwRpWkhKRgOftYEyq3QvSY4zkC5dVJ2x2qflg3gJlcZloKLT53umHxh6yOpTqx2eL+WgEk=
+X-Received: by 2002:a05:6871:ca16:b0:261:164e:d12a with SMTP id
+ 586e51a60fabf-27c689cb4femr8160532fac.22.1726555991334; Mon, 16 Sep 2024
+ 23:53:11 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1726390098.git.yong.huang@smartx.com>
- <531750c8d7b6c09f877b5f335a60fab402c168be.1726390098.git.yong.huang@smartx.com>
- <87msk7z4l3.fsf@suse.de>
-In-Reply-To: <87msk7z4l3.fsf@suse.de>
+ <654bfad294e2cc3394f744bd8536e0448c0bf550.1726390099.git.yong.huang@smartx.com>
+ <87v7yvz697.fsf@suse.de>
+In-Reply-To: <87v7yvz697.fsf@suse.de>
 From: Yong Huang <yong.huang@smartx.com>
-Date: Tue, 17 Sep 2024 14:48:03 +0800
-Message-ID: <CAK9dgmb_rK5HJOGTG=KXKgH=e2e8JV8aqoOWUHBEyjnc-+kiqg@mail.gmail.com>
-Subject: Re: [PATCH v1 1/7] migration: Introduce structs for background sync
+Date: Tue, 17 Sep 2024 14:52:55 +0800
+Message-ID: <CAK9dgmY86NP6Gu74ZCf1sOG=xp+sQXe40Y7ssv-50O0wmcS=cQ@mail.gmail.com>
+Subject: Re: [PATCH v1 3/7] qapi/migration: Introduce the iteration-count
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
  David Hildenbrand <david@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000032372f06224b13b5"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=yong.huang@smartx.com; helo=mail-ot1-x32c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/alternative; boundary="0000000000008c79c406224b24cc"
+Received-SPF: pass client-ip=2001:4860:4864:20::36;
+ envelope-from=yong.huang@smartx.com; helo=mail-oa1-x36.google.com
+X-Spam_score_int: 14
+X-Spam_score: 1.4
+X-Spam_bar: +
+X-Spam_report: (1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,417 +93,390 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000032372f06224b13b5
+--0000000000008c79c406224b24cc
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 17, 2024 at 5:11=E2=80=AFAM Fabiano Rosas <farosas@suse.de> wro=
+On Tue, Sep 17, 2024 at 4:35=E2=80=AFAM Fabiano Rosas <farosas@suse.de> wro=
 te:
 
 > Hyman Huang <yong.huang@smartx.com> writes:
 >
-> > shadow_bmap, iter_bmap and iter_dirty_pages are introduced
-> > to satisfy the need for background sync.
-> >
-> > Meanwhile, introduce enumeration of sync method.
+> > The original migration information dirty-sync-count could
+> > no longer reflect iteration count due to the introduction
+> > of background synchronization in the next commit;
+> > add the iteration count to compensate.
+>
+> I agree with the overall idea, but I feel we're lacking some information
+> on what determines whether some of the lines below want to use the
+> iteration count vs. the dirty sync count. Since this patch increments
+> both variables at the same place, they can still be used interchangeably
+> unless we add some words to explain the distinction.
+>
+> So to clarify:
+>
+> What do we call an iteration? A call to save_live_iterate(),
+> migration_iteration_run() or something else?
+>
+> Why dirty-sync-count should ever have reflected "iteration count"? It
+> might have been this way by coincidence, but did we ever used it in that
+> sense (aside from info migrate maybe)?
+>
+> With the new counter, what kind of meaning can a user extract from that
+> number aside from "some undescribed thing happened N times" (this might
+> be included in the migration.json docs)?
+>
+
+Alright, I'll make some revisions to the docs in the upcoming version
+and see if it clarifies the meaning of these two pieces of information.
+
+
 > >
 > > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 > > ---
-> >  include/exec/ramblock.h | 45 +++++++++++++++++++++++++++++++++++++++++
-> >  migration/ram.c         |  6 ++++++
-> >  2 files changed, 51 insertions(+)
+> >  migration/migration-stats.h  |  4 ++++
+> >  migration/migration.c        |  1 +
+> >  migration/ram.c              | 12 ++++++++----
+> >  qapi/migration.json          |  6 +++++-
+> >  tests/qtest/migration-test.c |  2 +-
+> >  5 files changed, 19 insertions(+), 6 deletions(-)
 > >
-> > diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
-> > index 0babd105c0..0e327bc0ae 100644
-> > --- a/include/exec/ramblock.h
-> > +++ b/include/exec/ramblock.h
-> > @@ -24,6 +24,30 @@
-> >  #include "qemu/rcu.h"
-> >  #include "exec/ramlist.h"
-> >
-> > +/* Possible bits for cpu_physical_memory_sync_dirty_bitmap */
-> > +
-> > +/*
-> > + * The old-fashioned sync, which is, in turn, used for CPU
-> > + * throttle and memory transfer.
->
-
-Using the traditional sync method, the page sending logic iterates
-the "bmap" to transfer dirty pages while the CPU throttle logic
-counts the amount of new dirty pages and detects convergence.
-There are two uses for "bmap".
-
-Using the modern sync method, "bmap" is used for transfer
-dirty pages and "iter_bmap" is used to track new dirty pages.
-
-
-> I'm not sure I follow what "in turn" is supposed to mean in this
-> sentence. Could you clarify?
->
-
-Here I want to express "in sequence".  But failed obviously. :(
-
-
->
-> > + */
-> > +#define RAMBLOCK_SYN_LEGACY_ITER   (1U << 0)
->
-> So ITER is as opposed to background? I'm a bit confused with the terms.
->
-
-Yes.
-
-
->
-> > +
-> > +/*
-> > + * The modern sync, which is, in turn, used for CPU throttle
-> > + * and memory transfer.
-> > + */
-> > +#define RAMBLOCK_SYN_MODERN_ITER   (1U << 1)
-> > +
-> > +/* The modern sync, which is used for CPU throttle only */
-> > +#define RAMBLOCK_SYN_MODERN_BACKGROUND    (1U << 2)
->
-> What's the plan for the "legacy" part? To be removed soon? Do we want to
-> remove it now? Maybe better to not use the modern/legacy terms unless we
-> want to give the impression that the legacy one is discontinued.
->
-
-The bitmap they utilized to track the dirty page information was the
-distinction between the "legacy iteration" and the "modern iteration."
-The "iter_bmap" field is used by the "modern iteration" while the "bmap"
-field is used by the "legacy iteration."
-
-Since the refinement is now transparent and there is no API available to
-change the sync method, I actually want to remove it right now in order
-to simplify the logic. I'll include it in the next version.
-
-
->
-> > +
-> > +#define RAMBLOCK_SYN_MASK  (0x7)
-> > +
-> > +typedef enum RAMBlockSynMode {
-> > +    RAMBLOCK_SYN_LEGACY, /* Old-fashined mode */
-> > +    RAMBLOCK_SYN_MODERN, /* Background-sync-supported mode */
-> > +} RAMBlockSynMode;
->
-> I'm also wondering wheter we need this enum + the flags or one of them
-> would suffice. I'm looking at code like this in the following patches,
-> for instance:
->
-
-If we drop the "legacy modern", we can simplify the following
-logic too.
-
-
-> +    if (sync_mode =3D=3D RAMBLOCK_SYN_MODERN) {
-> +        if (background) {
-> +            flag =3D RAMBLOCK_SYN_MODERN_BACKGROUND;
-> +        } else {
-> +            flag =3D RAMBLOCK_SYN_MODERN_ITER;
-> +        }
-> +    }
-
-Couldn't we use LEGACY/BG/ITER?
-
-
-> > +
-> >  struct RAMBlock {
-> >      struct rcu_head rcu;
-> >      struct MemoryRegion *mr;
-> > @@ -89,6 +113,27 @@ struct RAMBlock {
-> >       * could not have been valid on the source.
+> > diff --git a/migration/migration-stats.h b/migration/migration-stats.h
+> > index 05290ade76..43ee0f4f05 100644
+> > --- a/migration/migration-stats.h
+> > +++ b/migration/migration-stats.h
+> > @@ -50,6 +50,10 @@ typedef struct {
+> >       * Number of times we have synchronized guest bitmaps.
 > >       */
-> >      ram_addr_t postcopy_length;
-> > +
+> >      Stat64 dirty_sync_count;
 > > +    /*
-> > +     * Used to backup the bmap during background sync to see whether
-> any dirty
-> > +     * pages were sent during that time.
+> > +     * Number of migration iteration processed.
 > > +     */
-> > +    unsigned long *shadow_bmap;
-> > +
-> > +    /*
-> > +     * The bitmap "bmap," which was initially used for both sync and
-> memory
-> > +     * transfer, will be replaced by two bitmaps: the previously used
-> "bmap"
-> > +     * and the recently added "iter_bmap." Only the memory transfer is
-> > +     * conducted with the previously used "bmap"; the recently added
-> > +     * "iter_bmap" is utilized for dirty bitmap sync.
-> > +     */
-> > +    unsigned long *iter_bmap;
-> > +
-> > +    /* Number of new dirty pages during iteration */
-> > +    uint64_t iter_dirty_pages;
-> > +
-> > +    /* If background sync has shown up during iteration */
-> > +    bool background_sync_shown_up;
-> >  };
-> >  #endif
-> >  #endif
+> > +    Stat64 iteration_count;
+> >      /*
+> >       * Number of times zero copy failed to send any page using zero
+> >       * copy.
+> > diff --git a/migration/migration.c b/migration/migration.c
+> > index 3dea06d577..055d527ff6 100644
+> > --- a/migration/migration.c
+> > +++ b/migration/migration.c
+> > @@ -1197,6 +1197,7 @@ static void populate_ram_info(MigrationInfo *info=
+,
+> MigrationState *s)
+> >      info->ram->mbps =3D s->mbps;
+> >      info->ram->dirty_sync_count =3D
+> >          stat64_get(&mig_stats.dirty_sync_count);
+> > +    info->ram->iteration_count =3D stat64_get(&mig_stats.iteration_cou=
+nt);
+> >      info->ram->dirty_sync_missed_zero_copy =3D
+> >          stat64_get(&mig_stats.dirty_sync_missed_zero_copy);
+> >      info->ram->postcopy_requests =3D
 > > diff --git a/migration/ram.c b/migration/ram.c
-> > index 67ca3d5d51..f29faa82d6 100644
+> > index e205806a5f..ca5a1b5f16 100644
 > > --- a/migration/ram.c
 > > +++ b/migration/ram.c
-> > @@ -2362,6 +2362,10 @@ static void ram_bitmaps_destroy(void)
-> >          block->bmap =3D NULL;
-> >          g_free(block->file_bmap);
-> >          block->file_bmap =3D NULL;
-> > +        g_free(block->shadow_bmap);
-> > +        block->shadow_bmap =3D NULL;
-> > +        g_free(block->iter_bmap);
-> > +        block->iter_bmap =3D NULL;
-> >      }
+> > @@ -594,7 +594,7 @@ static void xbzrle_cache_zero_page(ram_addr_t
+> current_addr)
+> >      /* We don't care if this fails to allocate a new cache page
+> >       * as long as it updated an old one */
+> >      cache_insert(XBZRLE.cache, current_addr, XBZRLE.zero_target_page,
+> > -                 stat64_get(&mig_stats.dirty_sync_count));
+> > +                 stat64_get(&mig_stats.iteration_count));
 > >  }
 > >
-> > @@ -2753,6 +2757,8 @@ static void ram_list_init_bitmaps(void)
-> >              }
-> >              block->clear_bmap_shift =3D shift;
-> >              block->clear_bmap =3D bitmap_new(clear_bmap_size(pages,
-> shift));
-> > +            block->shadow_bmap =3D bitmap_new(pages);
-> > +            block->iter_bmap =3D bitmap_new(pages);
-> >          }
+> >  #define ENCODING_FLAG_XBZRLE 0x1
+> > @@ -620,7 +620,7 @@ static int save_xbzrle_page(RAMState *rs,
+> PageSearchStatus *pss,
+> >      int encoded_len =3D 0, bytes_xbzrle;
+> >      uint8_t *prev_cached_page;
+> >      QEMUFile *file =3D pss->pss_channel;
+> > -    uint64_t generation =3D stat64_get(&mig_stats.dirty_sync_count);
+> > +    uint64_t generation =3D stat64_get(&mig_stats.iteration_count);
+> >
+> >      if (!cache_is_cached(XBZRLE.cache, current_addr, generation)) {
+> >          xbzrle_counters.cache_miss++;
+> > @@ -1079,6 +1079,10 @@ static void migration_bitmap_sync(RAMState *rs,
+> >      RAMBlock *block;
+> >      int64_t end_time;
+> >
+> > +    if (!background) {
+> > +        stat64_add(&mig_stats.iteration_count, 1);
+> > +    }
+> > +
+> >      stat64_add(&mig_stats.dirty_sync_count, 1);
+> >
+> >      if (!rs->time_last_bitmap_sync) {
+> > @@ -1115,8 +1119,8 @@ static void migration_bitmap_sync(RAMState *rs,
+> >          rs->num_dirty_pages_period =3D 0;
+> >          rs->bytes_xfer_prev =3D migration_transferred_bytes();
+> >      }
+> > -    if (migrate_events()) {
+> > -        uint64_t generation =3D stat64_get(&mig_stats.dirty_sync_count=
+);
+> > +    if (!background && migrate_events()) {
+> > +        uint64_t generation =3D stat64_get(&mig_stats.iteration_count)=
+;
+> >          qapi_event_send_migration_pass(generation);
 > >      }
 > >  }
+> > diff --git a/qapi/migration.json b/qapi/migration.json
+> > index b66cccf107..95b490706c 100644
+> > --- a/qapi/migration.json
+> > +++ b/qapi/migration.json
+> > @@ -60,6 +60,9 @@
+> >  #     between 0 and @dirty-sync-count * @multifd-channels.  (since
+> >  #     7.1)
+> >  #
+> > +# @iteration-count: The number of iterations since migration started.
+> > +#     (since 9.2)
+> > +#
+> >  # Since: 0.14
+> >  ##
+> >  { 'struct': 'MigrationStats',
+> > @@ -72,7 +75,8 @@
+> >             'multifd-bytes': 'uint64', 'pages-per-second': 'uint64',
+> >             'precopy-bytes': 'uint64', 'downtime-bytes': 'uint64',
+> >             'postcopy-bytes': 'uint64',
+> > -           'dirty-sync-missed-zero-copy': 'uint64' } }
+> > +           'dirty-sync-missed-zero-copy': 'uint64',
+> > +           'iteration-count' : 'int' } }
+> >
+> >  ##
+> >  # @XBZRLECacheStats:
+> > diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.=
+c
+> > index d6768d5d71..b796a90cad 100644
+> > --- a/tests/qtest/migration-test.c
+> > +++ b/tests/qtest/migration-test.c
+> > @@ -278,7 +278,7 @@ static int64_t read_migrate_property_int(QTestState
+> *who, const char *property)
+> >
+> >  static uint64_t get_migration_pass(QTestState *who)
+> >  {
+> > -    return read_ram_property_int(who, "dirty-sync-count");
+> > +    return read_ram_property_int(who, "iteration-count");
+> >  }
+> >
+> >  static void read_blocktime(QTestState *who)
 >
 
 
 --=20
 Best regards
 
---00000000000032372f06224b13b5
+--0000000000008c79c406224b24cc
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
 t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
 ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 17, 20=
-24 at 5:11=E2=80=AFAM Fabiano Rosas &lt;<a href=3D"mailto:farosas@suse.de">=
+24 at 4:35=E2=80=AFAM Fabiano Rosas &lt;<a href=3D"mailto:farosas@suse.de">=
 farosas@suse.de</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" s=
 tyle=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:so=
 lid;border-left-color:rgb(204,204,204);padding-left:1ex">Hyman Huang &lt;<a=
  href=3D"mailto:yong.huang@smartx.com" target=3D"_blank">yong.huang@smartx.=
 com</a>&gt; writes:<br>
 <br>
-&gt; shadow_bmap, iter_bmap and iter_dirty_pages are introduced<br>
-&gt; to satisfy the need for background sync.<br>
-&gt;<br>
-&gt; Meanwhile, introduce enumeration of sync method.<br>
+&gt; The original migration information dirty-sync-count could<br>
+&gt; no longer reflect iteration count due to the introduction<br>
+&gt; of background synchronization in the next commit;<br>
+&gt; add the iteration count to compensate.<br>
+<br>
+I agree with the overall idea, but I feel we&#39;re lacking some informatio=
+n<br>
+on what determines whether some of the lines below want to use the<br>
+iteration count vs. the dirty sync count. Since this patch increments<br>
+both variables at the same place, they can still be used interchangeably<br=
+>
+unless we add some words to explain the distinction.<br>
+<br>
+So to clarify: <br>
+<br>
+What do we call an iteration? A call to save_live_iterate(),<br>
+migration_iteration_run() or something else?<br>
+<br>
+Why dirty-sync-count should ever have reflected &quot;iteration count&quot;=
+? It<br>
+might have been this way by coincidence, but did we ever used it in that<br=
+>
+sense (aside from info migrate maybe)?<br>
+<br>
+With the new counter, what kind of meaning can a user extract from that<br>
+number aside from &quot;some undescribed thing happened N times&quot; (this=
+ might<br>
+be included in the migration.json docs)?<br></blockquote><div><br></div><di=
+v><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"=
+gmail_default">Alright, I&#39;ll make some revisions to the docs in the upc=
+oming version</div><div style=3D"font-family:&quot;comic sans ms&quot;,sans=
+-serif" class=3D"gmail_default">and see if it clarifies the meaning of thes=
+e two pieces of information.</div></div><div><br></div><blockquote class=3D=
+"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;borde=
+r-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">
+<br>
 &gt;<br>
 &gt; Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com=
 " target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
 &gt; ---<br>
-&gt;=C2=A0 include/exec/ramblock.h | 45 +++++++++++++++++++++++++++++++++++=
-++++++<br>
-&gt;=C2=A0 migration/ram.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 6 +++++=
-+<br>
-&gt;=C2=A0 2 files changed, 51 insertions(+)<br>
+&gt;=C2=A0 migration/migration-stats.h=C2=A0 |=C2=A0 4 ++++<br>
+&gt;=C2=A0 migration/migration.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 1 +<br>
+&gt;=C2=A0 migration/ram.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+| 12 ++++++++----<br>
+&gt;=C2=A0 qapi/migration.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 6 =
++++++-<br>
+&gt;=C2=A0 tests/qtest/migration-test.c |=C2=A0 2 +-<br>
+&gt;=C2=A0 5 files changed, 19 insertions(+), 6 deletions(-)<br>
 &gt;<br>
-&gt; diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h<br>
-&gt; index 0babd105c0..0e327bc0ae 100644<br>
-&gt; --- a/include/exec/ramblock.h<br>
-&gt; +++ b/include/exec/ramblock.h<br>
-&gt; @@ -24,6 +24,30 @@<br>
-&gt;=C2=A0 #include &quot;qemu/rcu.h&quot;<br>
-&gt;=C2=A0 #include &quot;exec/ramlist.h&quot;<br>
-&gt;=C2=A0 <br>
-&gt; +/* Possible bits for cpu_physical_memory_sync_dirty_bitmap */<br>
-&gt; +<br>
-&gt; +/*<br>
-&gt; + * The old-fashioned sync, which is, in turn, used for CPU<br>
-&gt; + * throttle and memory transfer.<br></blockquote><div><br></div><div =
-class=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans=
--serif">Using the traditional sync method, the page sending logic iterates<=
-/div><div class=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&=
-quot;,sans-serif">the &quot;bmap&quot; to transfer dirty pages while the CP=
-U throttle logic</div><div class=3D"gmail_default" style=3D"font-family:&qu=
-ot;comic sans ms&quot;,sans-serif">counts the amount of new dirty pages and=
- detects convergence.</div><div class=3D"gmail_default" style=3D"font-famil=
-y:&quot;comic sans ms&quot;,sans-serif">There are two uses for &quot;bmap&q=
-uot;.</div><div class=3D"gmail_default" style=3D"font-family:&quot;comic sa=
-ns ms&quot;,sans-serif"><br></div><div class=3D"gmail_default" style=3D"fon=
-t-family:&quot;comic sans ms&quot;,sans-serif">Using the modern sync method=
-, &quot;bmap&quot; is used for transfer</div><div class=3D"gmail_default" s=
-tyle=3D"font-family:&quot;comic sans ms&quot;,sans-serif">dirty pages and &=
-quot;iter_bmap&quot; is used to track new dirty pages.</div><div><br></div>=
-<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
-left-width:1px;border-left-style:solid;border-left-color:rgb(204,204,204);p=
-adding-left:1ex">
+&gt; diff --git a/migration/migration-stats.h b/migration/migration-stats.h=
 <br>
-I&#39;m not sure I follow what &quot;in turn&quot; is supposed to mean in t=
-his<br>
-sentence. Could you clarify?<br></blockquote><div><br></div><div><div style=
-=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_defaul=
-t">Here I want to express &quot;in sequence&quot;.=C2=A0 But failed obvious=
-ly. :(</div></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;=
-border-left-color:rgb(204,204,204);padding-left:1ex">
-<br>
-&gt; + */<br>
-&gt; +#define RAMBLOCK_SYN_LEGACY_ITER=C2=A0 =C2=A0(1U &lt;&lt; 0)<br>
-<br>
-So ITER is as opposed to background? I&#39;m a bit confused with the terms.=
-<br></blockquote><div><br></div><div><div style=3D"font-family:&quot;comic =
-sans ms&quot;,sans-serif" class=3D"gmail_default">Yes.=C2=A0</div></div><di=
-v>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
- 0.8ex;border-left-width:1px;border-left-style:solid;border-left-color:rgb(=
-204,204,204);padding-left:1ex">
-<br>
-&gt; +<br>
-&gt; +/*<br>
-&gt; + * The modern sync, which is, in turn, used for CPU throttle<br>
-&gt; + * and memory transfer.<br>
-&gt; + */<br>
-&gt; +#define RAMBLOCK_SYN_MODERN_ITER=C2=A0 =C2=A0(1U &lt;&lt; 1)<br>
-&gt; +<br>
-&gt; +/* The modern sync, which is used for CPU throttle only */<br>
-&gt; +#define RAMBLOCK_SYN_MODERN_BACKGROUND=C2=A0 =C2=A0 (1U &lt;&lt; 2)<b=
-r>
-<br>
-What&#39;s the plan for the &quot;legacy&quot; part? To be removed soon? Do=
- we want to<br>
-remove it now? Maybe better to not use the modern/legacy terms unless we<br=
->
-want to give the impression that the legacy one is discontinued.<br></block=
-quote><div><br></div><div><div style=3D"font-family:&quot;comic sans ms&quo=
-t;,sans-serif" class=3D"gmail_default">The bitmap they utilized to track th=
-e dirty page information was the</div><div style=3D"font-family:&quot;comic=
- sans ms&quot;,sans-serif" class=3D"gmail_default">distinction between the =
-&quot;legacy iteration&quot; and the &quot;modern iteration.&quot;</div><di=
-v style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail=
-_default">The &quot;iter_bmap&quot; field is used by the &quot;modern itera=
-tion&quot; while the &quot;bmap&quot;</div><div style=3D"font-family:&quot;=
-comic sans ms&quot;,sans-serif" class=3D"gmail_default">field is used by th=
-e &quot;legacy iteration.&quot;<br></div><div style=3D"font-family:&quot;co=
-mic sans ms&quot;,sans-serif" class=3D"gmail_default"><br></div><div style=
-=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_defaul=
-t">Since the refinement is now transparent and there is no API available to=
-</div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=
-=3D"gmail_default">change the sync method, I actually want to remove it rig=
-ht now in order</div><div style=3D"font-family:&quot;comic sans ms&quot;,sa=
-ns-serif" class=3D"gmail_default">to simplify the logic. I&#39;ll include i=
-t in the next version.</div></div><div>=C2=A0</div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-le=
-ft-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">
-<br>
-&gt; +<br>
-&gt; +#define RAMBLOCK_SYN_MASK=C2=A0 (0x7)<br>
-&gt; +<br>
-&gt; +typedef enum RAMBlockSynMode {<br>
-&gt; +=C2=A0 =C2=A0 RAMBLOCK_SYN_LEGACY, /* Old-fashined mode */<br>
-&gt; +=C2=A0 =C2=A0 RAMBLOCK_SYN_MODERN, /* Background-sync-supported mode =
-*/<br>
-&gt; +} RAMBlockSynMode;<br>
-<br>
-I&#39;m also wondering wheter we need this enum + the flags or one of them<=
-br>
-would suffice. I&#39;m looking at code like this in the following patches,<=
-br>
-for instance:<br></blockquote><div><br></div><div><span style=3D"font-famil=
-y:&quot;comic sans ms&quot;,sans-serif">If we drop the &quot;legacy modern&=
-quot;, we can simplify <span class=3D"gmail_default" style=3D"font-family:&=
-quot;comic sans ms&quot;,sans-serif"></span>t<span class=3D"gmail_default" =
-style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">he following</sp=
-an></span></div><div><span style=3D"font-family:&quot;comic sans ms&quot;,s=
-ans-serif"><span class=3D"gmail_default" style=3D"font-family:&quot;comic s=
-ans ms&quot;,sans-serif">logic</span>=C2=A0too.</span>=C2=A0<span class=3D"=
-gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-serif"><=
-/span><br></div><div><span class=3D"gmail_default" style=3D"font-family:&qu=
-ot;comic sans ms&quot;,sans-serif"><br></span></div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-l=
-eft-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">
-<br>
-+=C2=A0 =C2=A0 if (sync_mode =3D=3D RAMBLOCK_SYN_MODERN) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (background) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 flag =3D RAMBLOCK_SYN_MODERN_BAC=
-KGROUND;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 flag =3D RAMBLOCK_SYN_MODERN_ITE=
-R;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 }</blockquote><blockquote class=3D"gmail_quote" style=3D"mar=
-gin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-=
-left-color:rgb(204,204,204);padding-left:1ex">
-Couldn&#39;t we use LEGACY/BG/ITER?</blockquote><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-=
-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">
-<br>
-&gt; +<br>
-&gt;=C2=A0 struct RAMBlock {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 struct rcu_head rcu;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 struct MemoryRegion *mr;<br>
-&gt; @@ -89,6 +113,27 @@ struct RAMBlock {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* could not have been valid on the source.<b=
-r>
+&gt; index 05290ade76..43ee0f4f05 100644<br>
+&gt; --- a/migration/migration-stats.h<br>
+&gt; +++ b/migration/migration-stats.h<br>
+&gt; @@ -50,6 +50,10 @@ typedef struct {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* Number of times we have synchronized guest=
+ bitmaps.<br>
 &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 ram_addr_t postcopy_length;<br>
-&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 Stat64 dirty_sync_count;<br>
 &gt; +=C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* Used to backup the bmap during background sync =
-to see whether any dirty<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* pages were sent during that time.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* Number of migration iteration processed.<br>
 &gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; +=C2=A0 =C2=A0 unsigned long *shadow_bmap;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* The bitmap &quot;bmap,&quot; which was initiall=
-y used for both sync and memory<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* transfer, will be replaced by two bitmaps: the =
-previously used &quot;bmap&quot;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* and the recently added &quot;iter_bmap.&quot; O=
-nly the memory transfer is<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* conducted with the previously used &quot;bmap&q=
-uot;; the recently added<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* &quot;iter_bmap&quot; is utilized for dirty bit=
-map sync.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; +=C2=A0 =C2=A0 unsigned long *iter_bmap;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 /* Number of new dirty pages during iteration */<br>
-&gt; +=C2=A0 =C2=A0 uint64_t iter_dirty_pages;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 /* If background sync has shown up during iteration */<=
-br>
-&gt; +=C2=A0 =C2=A0 bool background_sync_shown_up;<br>
-&gt;=C2=A0 };<br>
-&gt;=C2=A0 #endif<br>
-&gt;=C2=A0 #endif<br>
+&gt; +=C2=A0 =C2=A0 Stat64 iteration_count;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 /*<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* Number of times zero copy failed to send a=
+ny page using zero<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* copy.<br>
+&gt; diff --git a/migration/migration.c b/migration/migration.c<br>
+&gt; index 3dea06d577..055d527ff6 100644<br>
+&gt; --- a/migration/migration.c<br>
+&gt; +++ b/migration/migration.c<br>
+&gt; @@ -1197,6 +1197,7 @@ static void populate_ram_info(MigrationInfo *inf=
+o, MigrationState *s)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 info-&gt;ram-&gt;mbps =3D s-&gt;mbps;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 info-&gt;ram-&gt;dirty_sync_count =3D<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stat64_get(&amp;mig_stats.dirty_sync=
+_count);<br>
+&gt; +=C2=A0 =C2=A0 info-&gt;ram-&gt;iteration_count =3D stat64_get(&amp;mi=
+g_stats.iteration_count);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 info-&gt;ram-&gt;dirty_sync_missed_zero_copy =3D<b=
+r>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stat64_get(&amp;mig_stats.dirty_sync=
+_missed_zero_copy);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 info-&gt;ram-&gt;postcopy_requests =3D<br>
 &gt; diff --git a/migration/ram.c b/migration/ram.c<br>
-&gt; index 67ca3d5d51..f29faa82d6 100644<br>
+&gt; index e205806a5f..ca5a1b5f16 100644<br>
 &gt; --- a/migration/ram.c<br>
 &gt; +++ b/migration/ram.c<br>
-&gt; @@ -2362,6 +2362,10 @@ static void ram_bitmaps_destroy(void)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;bmap =3D NULL;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(block-&gt;file_bmap);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;file_bmap =3D NULL;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(block-&gt;shadow_bmap);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;shadow_bmap =3D NULL;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(block-&gt;iter_bmap);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;iter_bmap =3D NULL;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; @@ -594,7 +594,7 @@ static void xbzrle_cache_zero_page(ram_addr_t curr=
+ent_addr)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 /* We don&#39;t care if this fails to allocate a n=
+ew cache page<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* as long as it updated an old one */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 cache_insert(XBZRLE.cache, current_addr, XBZRLE.ze=
+ro_target_page,<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0stat64_=
+get(&amp;mig_stats.dirty_sync_count));<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0stat64_=
+get(&amp;mig_stats.iteration_count));<br>
 &gt;=C2=A0 }<br>
 &gt;=C2=A0 <br>
-&gt; @@ -2753,6 +2757,8 @@ static void ram_list_init_bitmaps(void)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;clear_bmap_s=
-hift =3D shift;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;clear_bmap =
-=3D bitmap_new(clear_bmap_size(pages, shift));<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;shadow_bmap =3D b=
-itmap_new(pages);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;iter_bmap =3D bit=
-map_new(pages);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 #define ENCODING_FLAG_XBZRLE 0x1<br>
+&gt; @@ -620,7 +620,7 @@ static int save_xbzrle_page(RAMState *rs, PageSear=
+chStatus *pss,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 int encoded_len =3D 0, bytes_xbzrle;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 uint8_t *prev_cached_page;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 QEMUFile *file =3D pss-&gt;pss_channel;<br>
+&gt; -=C2=A0 =C2=A0 uint64_t generation =3D stat64_get(&amp;mig_stats.dirty=
+_sync_count);<br>
+&gt; +=C2=A0 =C2=A0 uint64_t generation =3D stat64_get(&amp;mig_stats.itera=
+tion_count);<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (!cache_is_cached(XBZRLE.cache, current_addr, g=
+eneration)) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 xbzrle_counters.cache_miss++;<br>
+&gt; @@ -1079,6 +1079,10 @@ static void migration_bitmap_sync(RAMState *rs,=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 RAMBlock *block;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 int64_t end_time;<br>
+&gt;=C2=A0 <br>
+&gt; +=C2=A0 =C2=A0 if (!background) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 stat64_add(&amp;mig_stats.iteration_count=
+, 1);<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 stat64_add(&amp;mig_stats.dirty_sync_count, 1);<br=
+>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (!rs-&gt;time_last_bitmap_sync) {<br>
+&gt; @@ -1115,8 +1119,8 @@ static void migration_bitmap_sync(RAMState *rs,<=
+br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 rs-&gt;num_dirty_pages_period =3D 0;=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 rs-&gt;bytes_xfer_prev =3D migration=
+_transferred_bytes();<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; -=C2=A0 =C2=A0 if (migrate_events()) {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 uint64_t generation =3D stat64_get(&amp;m=
+ig_stats.dirty_sync_count);<br>
+&gt; +=C2=A0 =C2=A0 if (!background &amp;&amp; migrate_events()) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 uint64_t generation =3D stat64_get(&amp;m=
+ig_stats.iteration_count);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qapi_event_send_migration_pass(gener=
+ation);<br>
 &gt;=C2=A0 =C2=A0 =C2=A0 }<br>
 &gt;=C2=A0 }<br>
+&gt; diff --git a/qapi/migration.json b/qapi/migration.json<br>
+&gt; index b66cccf107..95b490706c 100644<br>
+&gt; --- a/qapi/migration.json<br>
+&gt; +++ b/qapi/migration.json<br>
+&gt; @@ -60,6 +60,9 @@<br>
+&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0between 0 and @dirty-sync-count * @multifd-=
+channels.=C2=A0 (since<br>
+&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A07.1)<br>
+&gt;=C2=A0 #<br>
+&gt; +# @iteration-count: The number of iterations since migration started.=
+<br>
+&gt; +#=C2=A0 =C2=A0 =C2=A0(since 9.2)<br>
+&gt; +#<br>
+&gt;=C2=A0 # Since: 0.14<br>
+&gt;=C2=A0 ##<br>
+&gt;=C2=A0 { &#39;struct&#39;: &#39;MigrationStats&#39;,<br>
+&gt; @@ -72,7 +75,8 @@<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;multifd-bytes&#39;=
+: &#39;uint64&#39;, &#39;pages-per-second&#39;: &#39;uint64&#39;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;precopy-bytes&#39;=
+: &#39;uint64&#39;, &#39;downtime-bytes&#39;: &#39;uint64&#39;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;postcopy-bytes&#39=
+;: &#39;uint64&#39;,<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;dirty-sync-missed-zero-=
+copy&#39;: &#39;uint64&#39; } }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;dirty-sync-missed-zero-=
+copy&#39;: &#39;uint64&#39;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;iteration-count&#39; : =
+&#39;int&#39; } }<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 ##<br>
+&gt;=C2=A0 # @XBZRLECacheStats:<br>
+&gt; diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test=
+.c<br>
+&gt; index d6768d5d71..b796a90cad 100644<br>
+&gt; --- a/tests/qtest/migration-test.c<br>
+&gt; +++ b/tests/qtest/migration-test.c<br>
+&gt; @@ -278,7 +278,7 @@ static int64_t read_migrate_property_int(QTestStat=
+e *who, const char *property)<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 static uint64_t get_migration_pass(QTestState *who)<br>
+&gt;=C2=A0 {<br>
+&gt; -=C2=A0 =C2=A0 return read_ram_property_int(who, &quot;dirty-sync-coun=
+t&quot;);<br>
+&gt; +=C2=A0 =C2=A0 return read_ram_property_int(who, &quot;iteration-count=
+&quot;);<br>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 static void read_blocktime(QTestState *who)<br>
 </blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
 gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
 iv dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font>=
 </div></div></div>
 
---00000000000032372f06224b13b5--
+--0000000000008c79c406224b24cc--
 
