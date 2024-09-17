@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89BEFCAC58D
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 16:39:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CE29CAC58D
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 16:40:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqbE6-0003zI-LP; Tue, 17 Sep 2024 12:38:54 -0400
+	id 1sqbE7-00047C-Hg; Tue, 17 Sep 2024 12:38:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqbE0-0003id-Fg
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 12:38:48 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqbE1-0003lV-OZ
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 12:38:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqbDy-0008To-Nx
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 12:38:48 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqbE0-0008UB-45
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 12:38:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726591126;
+ s=mimecast20190719; t=1726591127;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZyaI/UCHK61GYnEHGZaEepibYRivTV0MRwcjjCl1LVM=;
- b=P1n1HzBGK1Hx8ALV/XJIFuwKlc5FYJ/FnqWbT3osyv2JuTNl485ixwjjH7hmlM687q6yve
- dqWFrMNVzg7xYFYq3eB5S8pQDAhzP/3rCNevm3vO/SFFTw8J/Y/AIL7oKAVUcj1dx2jtun
- sQoFP4u14sHBQe68PFmNrTZzh2XQyqU=
+ bh=SxzMnh3LR9kbrVwkJ0PAxEWUkiep6PxwmVi9MFzuWOA=;
+ b=XLekxeaGoeXNnb1Bb7+w3EVlgdkqbylCzYbpe3K4gYtqUDK8Eo+IhI3LU+p1dd4zQvDSgx
+ f12bpMM+Cc6kt5Gyrhfs6N2X795xf9JncRq/tDiIcZSHPwdjniedR7+PYR7uramaDDqiJ+
+ pQjoQFr6js4KkFolLV87g7YWhu69b1k=
 Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
  [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-581-31jIsb4VPWWYpH2s2EKYgA-1; Tue, 17 Sep 2024 12:38:45 -0400
-X-MC-Unique: 31jIsb4VPWWYpH2s2EKYgA-1
+ us-mta-671-DTBg2HQHO2WmhZ25XzctQg-1; Tue, 17 Sep 2024 12:38:46 -0400
+X-MC-Unique: DTBg2HQHO2WmhZ25XzctQg-1
 Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-4586e0c6597so90115181cf.2
- for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 09:38:43 -0700 (PDT)
+ d75a77b69052e-45828d941f1so94162121cf.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 09:38:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726591123; x=1727195923;
+ d=1e100.net; s=20230601; t=1726591125; x=1727195925;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZyaI/UCHK61GYnEHGZaEepibYRivTV0MRwcjjCl1LVM=;
- b=oQdS4ine8zhUFK5gGyV/WY687AXAfCiv3lEUw2ALBVEzwXkptR7laaCdVM1VykAfIx
- Bz4JJhhwpnJLZsEugr9L+6PKBkJ1HhKxMoyWUlon+vUf9U4ipN1icrSBGT56qEKAtgMA
- HjsCdPWQAiqB5bT1dXSpX5wGr1SmMP9soWwSKZ8xG3V5Hpg+KrRYWSIAq9giNOLvarKU
- o6Uus8amdCRd1SnWFoZ+6pbm6hk7UUIdP/lEr0WXqjs5ojTGqev7z+hLWiP/x1kPqMfA
- xDHxmincYVMXegcqT8+y44cr1v2gKIBQ/W4L14PAtQc8HcRIrmyigKHSis2Lad+PU0gH
- KGug==
-X-Gm-Message-State: AOJu0YyDQKueepjJhsgjXuWM6yq0fP8kKm7CWgHxtRH2cNuDcToNK8FK
- LZq7PKQXgNtdp3dmCFDVfTHydwIQ6cINb1ufzej9lUJoegtq2VV2d81nZ+L9vpIo/N3wWsFOMxH
- fojfwLbr8j9RXt8xF/LPA+gkBdMXgYSYu7nvDIij65BsVggRxEN4x7iQHxDQOP8yM0hU8b2nSTX
- OuK2RzOu+qvkEfbhbOe2+a0XiJhddr5SgW6fKi
-X-Received: by 2002:a05:622a:5d3:b0:451:a12d:b9d1 with SMTP id
- d75a77b69052e-458602a7663mr333879171cf.10.1726591123218; 
- Tue, 17 Sep 2024 09:38:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEOLri8g3HajwEL1z5d5V9xdqzSxTVr2uPDNOLqez36tIKXmhMQudxcO4H7ZM5SJg7TBopG/g==
-X-Received: by 2002:a05:622a:5d3:b0:451:a12d:b9d1 with SMTP id
- d75a77b69052e-458602a7663mr333878701cf.10.1726591122732; 
- Tue, 17 Sep 2024 09:38:42 -0700 (PDT)
+ bh=SxzMnh3LR9kbrVwkJ0PAxEWUkiep6PxwmVi9MFzuWOA=;
+ b=S4aSQOJ03VAUDEOPYMJ+4cXWyfzklLu9mtbDVdiiNc3/TMWrN287KdwPNRLUPsCJoz
+ hohMbyWFo77HRfhyQ4KrzBbUt8QMgkRM+kh1eRqZ3j7zgDomRjuaAxMZOCSdORE4wC/b
+ H28qAmHu1RbmdLgej8giW+2GQ1IghrrS4uYFfUa6ZpeBdV3/aQqe8UjsZH59LMZPec8n
+ /oWsZ6X64Qg8jC4MKmuR6oxzombxBgq7JR8Jgk/f1gjU4wUYpKnPvyZ1kwCop//DrIIO
+ NgMWxtOr1SuPvd2mpfxsrduiqX+YUFlerRH9dn0mJBZlxMsFv1/ThcVNXFwcP6I+cfTe
+ Yo2g==
+X-Gm-Message-State: AOJu0Yxdvi5jEqTFfzW7+NJNUbh9YwHrbfVl+RDIBHYRCdkD9HpN/BZ2
+ hn5oR+djdkqvc64IOhqCtIpnOvCjVWAeOum7ccJgUOM8IbAe1elmjJnPLtqCsoJBOaemM7LFkim
+ ZOOKE1UTjRMmNvhij76wSDRhT/1+y/NbnxuwbeAfprwReCqU2JBtwd8de7XWEXCy2zdDUuaaYGY
+ x4UXcJPqnfASJEcM7ptk87n6/0qxVnbigJhqlP
+X-Received: by 2002:ac8:7e92:0:b0:458:53da:a4e9 with SMTP id
+ d75a77b69052e-45b081eee24mr9435571cf.4.1726591125180; 
+ Tue, 17 Sep 2024 09:38:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFDjAhygfHh81isAqOnGCSAncBV8wM9/StrqPBLPnSzDPMKQ8lr8HcuiEJLSJBzcyegFYrs6Q==
+X-Received: by 2002:ac8:7e92:0:b0:458:53da:a4e9 with SMTP id
+ d75a77b69052e-45b081eee24mr9435191cf.4.1726591124707; 
+ Tue, 17 Sep 2024 09:38:44 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-459aad2497asm39942911cf.95.2024.09.17.09.38.41
+ d75a77b69052e-459aad2497asm39942911cf.95.2024.09.17.09.38.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Sep 2024 09:38:42 -0700 (PDT)
+ Tue, 17 Sep 2024 09:38:43 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Vitaly Kuznetsov <vkuznets@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  peterx@redhat.com, Prasad Pandit <ppandit@redhat.com>,
  Julia Suvorova <jusual@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>
-Subject: [PATCH v4 3/4] KVM: Rename KVMMemoryListener.nr_used_slots to
- nr_slots_used
-Date: Tue, 17 Sep 2024 12:38:34 -0400
-Message-ID: <20240917163835.194664-4-peterx@redhat.com>
+Subject: [PATCH v4 4/4] KVM: Rename KVMState->nr_slots to nr_slots_max
+Date: Tue, 17 Sep 2024 12:38:35 -0400
+Message-ID: <20240917163835.194664-5-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240917163835.194664-1-peterx@redhat.com>
 References: <20240917163835.194664-1-peterx@redhat.com>
@@ -103,58 +102,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This will make all nr_slots counters to be named in the same manner.
+This value used to reflect the maximum supported memslots from KVM kernel.
+Rename it to be clearer.
 
 Reviewed-by: David Hildenbrand <david@redhat.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/sysemu/kvm_int.h | 2 +-
- accel/kvm/kvm-all.c      | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ include/sysemu/kvm_int.h |  4 ++--
+ accel/kvm/kvm-all.c      | 12 ++++++------
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/include/sysemu/kvm_int.h b/include/sysemu/kvm_int.h
-index 2304537b93..914c5c9ec5 100644
+index 914c5c9ec5..a1e72763da 100644
 --- a/include/sysemu/kvm_int.h
 +++ b/include/sysemu/kvm_int.h
-@@ -45,7 +45,7 @@ typedef struct KVMMemoryUpdate {
- typedef struct KVMMemoryListener {
-     MemoryListener listener;
-     KVMSlot *slots;
--    unsigned int nr_used_slots;
-+    unsigned int nr_slots_used;
-     unsigned int nr_slots_allocated;
-     int as_id;
-     QSIMPLEQ_HEAD(, KVMMemoryUpdate) transaction_add;
+@@ -103,8 +103,8 @@ struct KVMDirtyRingReaper {
+ struct KVMState
+ {
+     AccelState parent_obj;
+-
+-    int nr_slots;
++    /* Max number of KVM slots supported */
++    int nr_slots_max;
+     int fd;
+     int vmfd;
+     int coalesced_mmio;
 diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 0b66c8b27f..bceb154943 100644
+index bceb154943..7fa4019544 100644
 --- a/accel/kvm/kvm-all.c
 +++ b/accel/kvm/kvm-all.c
-@@ -239,7 +239,7 @@ unsigned int kvm_get_free_memslots(void)
-         if (!s->as[i].ml) {
-             continue;
-         }
--        used_slots = MAX(used_slots, s->as[i].ml->nr_used_slots);
-+        used_slots = MAX(used_slots, s->as[i].ml->nr_slots_used);
+@@ -183,8 +183,8 @@ static bool kvm_slots_grow(KVMMemoryListener *kml, unsigned int nr_slots_new)
+     unsigned int i, cur = kml->nr_slots_allocated;
+     KVMSlot *slots;
+ 
+-    if (nr_slots_new > kvm_state->nr_slots) {
+-        nr_slots_new = kvm_state->nr_slots;
++    if (nr_slots_new > kvm_state->nr_slots_max) {
++        nr_slots_new = kvm_state->nr_slots_max;
+     }
+ 
+     if (cur >= nr_slots_new) {
+@@ -225,7 +225,7 @@ unsigned int kvm_get_max_memslots(void)
+ {
+     KVMState *s = KVM_STATE(current_accel());
+ 
+-    return s->nr_slots;
++    return s->nr_slots_max;
+ }
+ 
+ unsigned int kvm_get_free_memslots(void)
+@@ -243,7 +243,7 @@ unsigned int kvm_get_free_memslots(void)
      }
      kvm_slots_unlock();
  
-@@ -1516,7 +1516,7 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
-             }
-             start_addr += slot_size;
-             size -= slot_size;
--            kml->nr_used_slots--;
-+            kml->nr_slots_used--;
-         } while (size);
-         return;
-     }
-@@ -1555,7 +1555,7 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
-         ram_start_offset += slot_size;
-         ram += slot_size;
-         size -= slot_size;
--        kml->nr_used_slots++;
-+        kml->nr_slots_used++;
-     } while (size);
+-    return s->nr_slots - used_slots;
++    return s->nr_slots_max - used_slots;
  }
+ 
+ /* Called with KVMMemoryListener.slots_lock held */
+@@ -2513,10 +2513,10 @@ static int kvm_init(MachineState *ms)
+         (kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
+ 
+     kvm_immediate_exit = kvm_check_extension(s, KVM_CAP_IMMEDIATE_EXIT);
+-    s->nr_slots = kvm_check_extension(s, KVM_CAP_NR_MEMSLOTS);
++    s->nr_slots_max = kvm_check_extension(s, KVM_CAP_NR_MEMSLOTS);
+ 
+     /* If unspecified, use the default value */
+-    if (!s->nr_slots) {
++    if (!s->nr_slots_max) {
+         s->nr_slots_max = KVM_MEMSLOTS_NR_MAX_DEFAULT;
+     }
  
 -- 
 2.45.0
