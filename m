@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8B81CAC596
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 19:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39217CAC596
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 19:20:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqdhI-000121-64; Tue, 17 Sep 2024 15:17:12 -0400
+	id 1sqdkL-0006EH-VO; Tue, 17 Sep 2024 15:20:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqdhC-00010v-Fa
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 15:17:08 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqdkJ-00069D-BS
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 15:20:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqdhA-0002sX-RR
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 15:17:06 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqdkH-0003oX-0S
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 15:20:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726600622;
+ s=mimecast20190719; t=1726600816;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=w/0oP6bo75SGXFP+PPXKHmGyt7oKdqfMxTDWfgdu5zc=;
- b=c1HlBTsNeuMbV7t00aW6l2cCxxFtZ9Ik+aY5w8fiFS03/fk9EFHepHdyUpqXqqYbALFiCf
- jGxpxWL72wRQIVARgQdyFkkjyIjCQntEBw/yySWUAciM59pBw+Ota078puJnry+T4LhTTy
- t5j/mO7bOToMAcywSTFWGQU7UKJVG5I=
-Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
- [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OxGnRkjYkqGnblnXtwZEOEsiAvAnyjc6PlNzyYf7dQk=;
+ b=AyzFIXThmMGmphgwFt0u7PmbnAbygiHMLzc+ckevGX29uTu5tRnzRePxlH/AoRwfKeW/im
+ p2UIBMUyaIH1YBVtf86DKejHYNdufdtcTAeHEFEFhQ6urtiyaXdfCMfTNy4f3kU8b0JdGl
+ /svkUEBSmS1LfeFBFQo/frvz6wG8ggg=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-624-SopIYY2sNQmE0lB6morXTQ-1; Tue, 17 Sep 2024 15:17:00 -0400
-X-MC-Unique: SopIYY2sNQmE0lB6morXTQ-1
-Received: by mail-oi1-f197.google.com with SMTP id
- 5614622812f47-3e04ec015easo4652046b6e.2
- for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 12:17:00 -0700 (PDT)
+ us-mta-692-h8KnvUtBNZ-wRNY8E3MYEA-1; Tue, 17 Sep 2024 15:20:14 -0400
+X-MC-Unique: h8KnvUtBNZ-wRNY8E3MYEA-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7ac9b08cb77so257694085a.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 12:20:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726600620; x=1727205420;
+ d=1e100.net; s=20230601; t=1726600813; x=1727205613;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w/0oP6bo75SGXFP+PPXKHmGyt7oKdqfMxTDWfgdu5zc=;
- b=dPdnRPVrGU6+gcddk9Hz+g7/rVoOOf50Ihz1ZQtkAYmblWISnnpSMlOpkxhbc9abzn
- ssxr6fqigTdG9sihtuesprVZIseIIlsc6ejPwWkwowSpt0abPnCA39WlcqJbFk27bJUq
- vn/TpaM0lE5skU0zjE3hRNFaepitZpUuO6D0rZYgnSAvvGegzYjcIfUwNaLSUMlK83L1
- O0reDQycD/LZHi8COCBkJ/PSmNbv2rpe+zeFB4LxCka6VXboUJbl10aOQumv030LhwWm
- yVdcGaCeRb2+f9cSJiaQXteDA6dFwzjhZrlRMXDzMuui10MQtWpQcDWNpbuT0ShzLgcw
- Pm9Q==
-X-Gm-Message-State: AOJu0YzKjF0vkqQ752D8S7pIYevjxJEHvyzDUHeIwiy42UOPjKNZj+/p
- uHxXcrQVDwj9cPMKd+GJcYg3kg9lOM4Bhnqafr+nLMunQE/Yxn0pcjbProY3FaTFj4E0xYIhF1E
- cXUEIwBoMK6HZScf94eAUus38rliBVtpzKncUaVOiSPmEFUim9Vtk
-X-Received: by 2002:a05:6358:6184:b0:1b5:f81c:875f with SMTP id
- e5c5f4694b2df-1bb14dc25damr745977755d.5.1726600619971; 
- Tue, 17 Sep 2024 12:16:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGPhRhKn3tvR6b3opXYvsP1NKsDvv5PO7Ru4rCkhyUN3GZF8TAqcN9G3kITD17hsKhTcQ15Gg==
-X-Received: by 2002:a05:6358:6184:b0:1b5:f81c:875f with SMTP id
- e5c5f4694b2df-1bb14dc25damr745975055d.5.1726600619633; 
- Tue, 17 Sep 2024 12:16:59 -0700 (PDT)
+ bh=OxGnRkjYkqGnblnXtwZEOEsiAvAnyjc6PlNzyYf7dQk=;
+ b=d9hMYjkhmrG8ENRA+lD9xbUzpJ0m3H1Sv20oKUcSD++O3TVxampsgZgb4SjkP+vl9z
+ H5Cg5D1rj80/Eea8W5U1M+8dGuB5GJYupBx1jkfUzTZApA/yirYntAndOgoYMS15BaJV
+ avaSzfl0aplwCvu+HdHknqH47MrMZZ9Fo+i+hNaRaoocUB9otjvXEzJsOdYSkB69YPYK
+ o0mE6o4yr9ywFTcWve17ReQVnVbvOWRo3zC2bOchatEJVHJOb0xEUFwRYYcPlTEk8T4h
+ cO1PgRzgHc5kZNhm0rBGOjj/On/EUugJfwRHEiuj+Ji4Qj5NIZHo5FVBzA4ggxUE+N2U
+ lCzQ==
+X-Gm-Message-State: AOJu0YynIaArXHDbsSgwqpcRA++heLG0LfEcSSadt0i30M0DOJ2sNrOO
+ ER0w8pD7JKa+EiF+cHT2+67lQBIdrHh0dIYkJX/YIKpzPNf60v3J4DAYFnyUl3g5RoX8Vql4IOX
+ rbghcAmMyUiXlYRyHY/BHaQRp5uf0jWClLaipJZYQcHXdAGLE/FAWQuZhUyDbEv0=
+X-Received: by 2002:a05:620a:251:b0:7ac:a077:6a3d with SMTP id
+ af79cd13be357-7aca0776c90mr291515985a.10.1726600813423; 
+ Tue, 17 Sep 2024 12:20:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrWm/mSyddpXyImcGnp2hAKLlppOI+X/ESUjvwXAsdxop1XBEFPiHOPojXTFK69BbnOeRCww==
+X-Received: by 2002:a05:620a:251:b0:7ac:a077:6a3d with SMTP id
+ af79cd13be357-7aca0776c90mr291512985a.10.1726600812972; 
+ Tue, 17 Sep 2024 12:20:12 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7ab3eb62cefsm389793585a.102.2024.09.17.12.16.58
+ af79cd13be357-7ab3eb65f9bsm390275185a.120.2024.09.17.12.20.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Sep 2024 12:16:59 -0700 (PDT)
-Date: Tue, 17 Sep 2024 15:16:57 -0400
+ Tue, 17 Sep 2024 12:20:12 -0700 (PDT)
+Date: Tue, 17 Sep 2024 15:20:10 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 1/2] migration/savevm: Remove extra load cleanup calls
-Message-ID: <ZunVqQsnReeqnorV@x1n>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH 2/2] migration/multifd: Fix rb->receivedmap cleanup race
+Message-ID: <ZunWarI8toCsqAVL@x1n>
 References: <20240917185802.15619-1-farosas@suse.de>
- <20240917185802.15619-2-farosas@suse.de>
+ <20240917185802.15619-3-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240917185802.15619-2-farosas@suse.de>
+In-Reply-To: <20240917185802.15619-3-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -82,7 +83,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,49 +99,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 17, 2024 at 03:58:01PM -0300, Fabiano Rosas wrote:
-> There are two qemu_loadvm_state_cleanup() calls that were introduced
-> when qemu_loadvm_state_setup() was still called before loading the
-> configuration section, so there was state to be cleaned up if the
-> header checks failed.
+On Tue, Sep 17, 2024 at 03:58:02PM -0300, Fabiano Rosas wrote:
+> Fix a segmentation fault in multifd when rb->receivedmap is cleared
+> too early.
 > 
-> However, commit 9e14b84908 ("migration/savevm: load_header before
-> load_setup") has moved that configuration section part to
-> qemu_loadvm_state_header() which now happens before
-> qemu_loadvm_state_setup().
+> After commit 5ef7e26bdb ("migration/multifd: solve zero page causing
+> multiple page faults"), multifd started using the rb->receivedmap
+> bitmap, which belongs to ram.c and is initialized and *freed* from the
+> ram SaveVMHandlers.
 > 
-> Remove the cleanup calls that are now misplaced.
+> Multifd threads are live until migration_incoming_state_destroy(),
+> which is called after qemu_loadvm_state_cleanup(), leading to a crash
+> when accessing rb->receivedmap.
 > 
-> Fixes: 9e14b84908 ("migration/savevm: load_header before load_setup")
-
-Considering it's a cleanup, do you mind if I further remove this Fixes but
-just mention it in commit message (so as to make Michael's life easier when
-backport)?
-
-> Reviewed-by: Peter Xu <peterx@redhat.com>
+> process_incoming_migration_co()        ...
+>   qemu_loadvm_state()                  multifd_nocomp_recv()
+>     qemu_loadvm_state_cleanup()          ramblock_recv_bitmap_set_offset()
+>       rb->receivedmap = NULL               set_bit_atomic(..., rb->receivedmap)
+>   ...
+>   migration_incoming_state_destroy()
+>     multifd_recv_cleanup()
+>       multifd_recv_terminate_threads(NULL)
+> 
+> Move the loadvm cleanup into migration_incoming_state_destroy(), after
+> multifd_recv_cleanup() to ensure multifd threads have already exited
+> when rb->receivedmap is cleared.
+> 
+> Adjust the postcopy listen thread comment to indicate that we still
+> want to skip the cpu synchronization.
+> 
+> CC: qemu-stable@nongnu.org
+> Fixes: 5ef7e26bdb ("migration/multifd: solve zero page causing multiple page faults")
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+
+One trivial question below..
+
 > ---
->  migration/savevm.c | 2 --
->  1 file changed, 2 deletions(-)
+>  migration/migration.c | 1 +
+>  migration/savevm.c    | 6 ++++--
+>  2 files changed, 5 insertions(+), 2 deletions(-)
 > 
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 3dea06d577..b190a574b1 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -378,6 +378,7 @@ void migration_incoming_state_destroy(void)
+>      struct MigrationIncomingState *mis = migration_incoming_get_current();
+>  
+>      multifd_recv_cleanup();
+
+Would you mind I add a comment squashed here when queue?
+
+       /*
+        * RAM state cleanup needs to happen after multifd cleanup, because
+        * multifd threads can use some of its states (receivedmap).
+        */
+
+> +    qemu_loadvm_state_cleanup();
+>  
+>      if (mis->to_src_file) {
+>          /* Tell source that we are done */
 > diff --git a/migration/savevm.c b/migration/savevm.c
-> index d500eae979..d0759694fd 100644
+> index d0759694fd..7e1e27182a 100644
 > --- a/migration/savevm.c
 > +++ b/migration/savevm.c
-> @@ -2732,13 +2732,11 @@ static int qemu_loadvm_state_header(QEMUFile *f)
->      if (migrate_get_current()->send_configuration) {
->          if (qemu_get_byte(f) != QEMU_VM_CONFIGURATION) {
->              error_report("Configuration section missing");
-> -            qemu_loadvm_state_cleanup();
->              return -EINVAL;
->          }
->          ret = vmstate_load_state(f, &vmstate_configuration, &savevm_state, 0);
+> @@ -2979,7 +2979,10 @@ int qemu_loadvm_state(QEMUFile *f)
+>      trace_qemu_loadvm_state_post_main(ret);
 >  
->          if (ret) {
-> -            qemu_loadvm_state_cleanup();
->              return ret;
+>      if (mis->have_listen_thread) {
+> -        /* Listen thread still going, can't clean up yet */
+> +        /*
+> +         * Postcopy listen thread still going, don't synchronize the
+> +         * cpus yet.
+> +         */
+>          return ret;
+>      }
+>  
+> @@ -3022,7 +3025,6 @@ int qemu_loadvm_state(QEMUFile *f)
 >          }
 >      }
+>  
+> -    qemu_loadvm_state_cleanup();
+>      cpu_synchronize_all_post_init();
+>  
+>      return ret;
 > -- 
 > 2.35.3
 > 
