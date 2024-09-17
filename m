@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E07ECAC58E
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 16:39:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0BE2CAC58F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Sep 2024 16:39:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqbE4-0003ui-M9; Tue, 17 Sep 2024 12:38:52 -0400
+	id 1sqbE3-0003no-DA; Tue, 17 Sep 2024 12:38:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqbE0-0003ic-3b
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 12:38:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqbDy-0003fs-92
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 12:38:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqbDy-0008TW-1F
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 12:38:47 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqbDv-0008T2-Lq
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 12:38:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726591124;
+ s=mimecast20190719; t=1726591122;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eenrsbEr6uJN92Yt183uHoXgP8OKY4iqp8mQemFQxtU=;
- b=UXuNTBrSkgzeNlijWjsv22RgBeTKusJf303lZl+g+Y6goLYA4SYQ5svv3kk1XUBeccBYqA
- T3YaP8JzA9ddBE0IxMwIF259mz/V6yceJfkb+uhgyXJi+1cGv3/TGTSYQBHKArdRWI3uDV
- ltcou52dy+V31U+NHqC4qbCfxs2NiDo=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=84wnjWXrrC4dLoX00Djx1SeDqK9rvS4gkrQ6KA874uc=;
+ b=Ynn/YztC0PJPkfHwne8eQzw74Aonx6Ts+eM2bsYbKJhftRVylwXzZbQNjcGWX6jcDocwfo
+ mYHUWD1jmq8DcIOMGQWcd5g2VonGwsCoppKhStQE0voCyS1U78HhHAlH0otD8tfUssEhjj
+ bDNpGx8xB0s05oUnd1eKUZI1QxqHIC8=
+Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
+ [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-658-nw-bClk3N_-6tYLN9g9WrA-1; Tue, 17 Sep 2024 12:38:42 -0400
-X-MC-Unique: nw-bClk3N_-6tYLN9g9WrA-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-45834f5927aso94088751cf.2
- for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 09:38:42 -0700 (PDT)
+ us-mta-561-5uiXmEYROW-3mksrf6DkJA-1; Tue, 17 Sep 2024 12:38:41 -0400
+X-MC-Unique: 5uiXmEYROW-3mksrf6DkJA-1
+Received: by mail-yb1-f197.google.com with SMTP id
+ 3f1490d57ef6-e1dab3a941fso8488735276.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 09:38:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726591122; x=1727195922;
+ d=1e100.net; s=20230601; t=1726591120; x=1727195920;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eenrsbEr6uJN92Yt183uHoXgP8OKY4iqp8mQemFQxtU=;
- b=IUSPvGTprfyVCozmDVhZ6LMUsDbJOqrpjtimj4W8hZ0Am6swJtJoZ39NztA/cHq+uX
- 8zhcvqZOsjEr3ULxV6N6O2l45e29kKlzuuOeqz5tiVQRUzWMEZDEElwa7eK3YMACIdc+
- ruSx0k5KcooePFZa9lF2gW0nUWqSqIJsVjxTKNNNPtks6pev6e6zu/4No5Jn+SLqEoo4
- XQQ/Zf3uJ1CNKOilLQyVqMz+ut9DYrLe0Ms/QdRPOcG+eVN+AL5vuCoHLW2ojSss9A3y
- di2giLjHP3NARBe8AJPJDV+ZuVcz5GLpFckr/SScba4leO/DxLwXDK/Iutdalj+1CeLT
- Kn1w==
-X-Gm-Message-State: AOJu0YwjZXU7Jmp5AKx9oCu8HMOPmlgI8k3kxhS5o6eYs3K1hzPDlAV2
- kc35deMzb0MnP4YDQm8Ef6at2YYAkjESAn9ZeAqgD3EoKyM0bYmbDTTW5OReSYV+p4933iOdp12
- Lx27MEZoHJWd2E/85lQwimffgq96ZZuRTS1nVtpZ/XoQ/nUNhfv98WRpVd4hhYCTIHnAi93Yhmg
- ilcExMXahZqlDOlJ/tzsIghk7FeUxkpL8lNZu1
-X-Received: by 2002:a05:622a:2985:b0:458:2945:c4a3 with SMTP id
- d75a77b69052e-4586044df56mr272042091cf.56.1726591121797; 
- Tue, 17 Sep 2024 09:38:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH9ypQjNrqRXuZW+HM0HoKKw84fnSrIcDR1EUfnrD80q0bpkvuTSxriC4/mzvhxeSF2pdhVFg==
-X-Received: by 2002:a05:622a:2985:b0:458:2945:c4a3 with SMTP id
- d75a77b69052e-4586044df56mr272041781cf.56.1726591121365; 
- Tue, 17 Sep 2024 09:38:41 -0700 (PDT)
+ bh=84wnjWXrrC4dLoX00Djx1SeDqK9rvS4gkrQ6KA874uc=;
+ b=wWLubJZwRl/UxAagnsMyAYwt9gCvC+C1FQGDyt24eXqAcJ/tpkjLtqGw0Xcqckp2Yj
+ hXsMc6JWSeovN+yxCAENngzEUdkIPNGpQHQpAM7/C7FWuMP20ibkAScD3G4iH5FwUB/z
+ okwAet0xIvFnGPxuSt1tZNYkxMgD6/L62D0ARfXj49qOrp41fmonWadzwEnC0hEymIf/
+ 86UzC/ODOj6Ccvn/xXrznVxFDgCU0DqSoLyDQysMKDKEezbiXN9aOn1dXGJ7SgOz/CyL
+ o6EYhm2XVEYec7ATQWQ4QiD+Ub1FXCGCt1sKtwPZ85L2SmBQO9flztoh4KtUFehN+8NP
+ o6FQ==
+X-Gm-Message-State: AOJu0YxrBj/PVshV1MwTtFR+tNRDs5kioRZogNEaKdn4nWHzkive3OXQ
+ H/0EWYb2xxd7C6OWVuOzGu3Exjb7kj4AA6YLfsPXWHjqDFKdagEdgzkaq4sOSLy5bRHWPGn1ure
+ pdFMapQlkTHQ0MuDy/sR4J3EuZZkq3mUU334UaknLsy3TOg8AZvVaOxAKhy/TEBwa0ZW7WkqXrZ
+ W01d2rj2Mt0JXuyRRRp2OsWMD+hk6Fl2EXWY7J
+X-Received: by 2002:a05:6902:1893:b0:e1b:dc38:1a8c with SMTP id
+ 3f1490d57ef6-e1db00e4773mr13815152276.43.1726591119904; 
+ Tue, 17 Sep 2024 09:38:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IElzacNy7x6dkzOnJFT0n9RqIS5nEMZPSy2z2kYH85YCnu73mrEu/uqmYb+UuCPLlp8IDcALA==
+X-Received: by 2002:a05:6902:1893:b0:e1b:dc38:1a8c with SMTP id
+ 3f1490d57ef6-e1db00e4773mr13815099276.43.1726591119276; 
+ Tue, 17 Sep 2024 09:38:39 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-459aad2497asm39942911cf.95.2024.09.17.09.38.39
+ d75a77b69052e-459aad2497asm39942911cf.95.2024.09.17.09.38.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Sep 2024 09:38:40 -0700 (PDT)
+ Tue, 17 Sep 2024 09:38:38 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Vitaly Kuznetsov <vkuznets@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  peterx@redhat.com, Prasad Pandit <ppandit@redhat.com>,
  Julia Suvorova <jusual@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>
-Subject: [PATCH v4 2/4] KVM: Define KVM_MEMSLOTS_NUM_MAX_DEFAULT
-Date: Tue, 17 Sep 2024 12:38:33 -0400
-Message-ID: <20240917163835.194664-3-peterx@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>, Zhiyi Guo <zhguo@redhat.com>
+Subject: [PATCH v4 1/4] KVM: Dynamic sized kvm memslots array
+Date: Tue, 17 Sep 2024 12:38:32 -0400
+Message-ID: <20240917163835.194664-2-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240917163835.194664-1-peterx@redhat.com>
 References: <20240917163835.194664-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -102,37 +103,236 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make the default max nr_slots a macro, it's only used when KVM reports
-nothing.
+Zhiyi reported an infinite loop issue in VFIO use case.  The cause of that
+was a separate discussion, however during that I found a regression of
+dirty sync slowness when profiling.
 
-Reviewed-by: David Hildenbrand <david@redhat.com>
+Each KVMMemoryListerner maintains an array of kvm memslots.  Currently it's
+statically allocated to be the max supported by the kernel.  However after
+Linux commit 4fc096a99e ("KVM: Raise the maximum number of user memslots"),
+the max supported memslots reported now grows to some number large enough
+so that it may not be wise to always statically allocate with the max
+reported.
+
+What's worse, QEMU kvm code still walks all the allocated memslots entries
+to do any form of lookups.  It can drastically slow down all memslot
+operations because each of such loop can run over 32K times on the new
+kernels.
+
+Fix this issue by making the memslots to be allocated dynamically.
+
+Here the initial size was set to 16 because it should cover the basic VM
+usages, so that the hope is the majority VM use case may not even need to
+grow at all (e.g. if one starts a VM with ./qemu-system-x86_64 by default
+it'll consume 9 memslots), however not too large to waste memory.
+
+There can also be even better way to address this, but so far this is the
+simplest and should be already better even than before we grow the max
+supported memslots.  For example, in the case of above issue when VFIO was
+attached on a 32GB system, there are only ~10 memslots used.  So it could
+be good enough as of now.
+
+In the above VFIO context, measurement shows that the precopy dirty sync
+shrinked from ~86ms to ~3ms after this patch applied.  It should also apply
+to any KVM enabled VM even without VFIO.
+
+NOTE: we don't have a FIXES tag for this patch because there's no real
+commit that regressed this in QEMU. Such behavior existed for a long time,
+but only start to be a problem when the kernel reports very large
+nr_slots_max value.  However that's pretty common now (the kernel change
+was merged in 2021) so we attached cc:stable because we'll want this change
+to be backported to stable branches.
+
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Reported-by: Zhiyi Guo <zhguo@redhat.com>
+Tested-by: Zhiyi Guo <zhguo@redhat.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- accel/kvm/kvm-all.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/sysemu/kvm_int.h |  1 +
+ accel/kvm/kvm-all.c      | 87 +++++++++++++++++++++++++++++++++-------
+ accel/kvm/trace-events   |  1 +
+ 3 files changed, 74 insertions(+), 15 deletions(-)
 
+diff --git a/include/sysemu/kvm_int.h b/include/sysemu/kvm_int.h
+index 17483ff53b..2304537b93 100644
+--- a/include/sysemu/kvm_int.h
++++ b/include/sysemu/kvm_int.h
+@@ -46,6 +46,7 @@ typedef struct KVMMemoryListener {
+     MemoryListener listener;
+     KVMSlot *slots;
+     unsigned int nr_used_slots;
++    unsigned int nr_slots_allocated;
+     int as_id;
+     QSIMPLEQ_HEAD(, KVMMemoryUpdate) transaction_add;
+     QSIMPLEQ_HEAD(, KVMMemoryUpdate) transaction_del;
 diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index e0430f08ea..0b66c8b27f 100644
+index beb1988d12..e0430f08ea 100644
 --- a/accel/kvm/kvm-all.c
 +++ b/accel/kvm/kvm-all.c
-@@ -71,6 +71,8 @@
+@@ -69,6 +69,9 @@
+ #define KVM_GUESTDBG_BLOCKIRQ 0
+ #endif
  
- /* Default num of memslots to be allocated when VM starts */
- #define  KVM_MEMSLOTS_NR_ALLOC_DEFAULT                      16
-+/* Default max allowed memslots if kernel reported nothing */
-+#define  KVM_MEMSLOTS_NR_MAX_DEFAULT                        32
- 
++/* Default num of memslots to be allocated when VM starts */
++#define  KVM_MEMSLOTS_NR_ALLOC_DEFAULT                      16
++
  struct KVMParkedVcpu {
      unsigned long vcpu_id;
-@@ -2515,7 +2517,7 @@ static int kvm_init(MachineState *ms)
+     int kvm_fd;
+@@ -165,6 +168,57 @@ void kvm_resample_fd_notify(int gsi)
+     }
+ }
  
-     /* If unspecified, use the default value */
-     if (!s->nr_slots) {
--        s->nr_slots = 32;
-+        s->nr_slots_max = KVM_MEMSLOTS_NR_MAX_DEFAULT;
++/**
++ * kvm_slots_grow(): Grow the slots[] array in the KVMMemoryListener
++ *
++ * @kml: The KVMMemoryListener* to grow the slots[] array
++ * @nr_slots_new: The new size of slots[] array
++ *
++ * Returns: True if the array grows larger, false otherwise.
++ */
++static bool kvm_slots_grow(KVMMemoryListener *kml, unsigned int nr_slots_new)
++{
++    unsigned int i, cur = kml->nr_slots_allocated;
++    KVMSlot *slots;
++
++    if (nr_slots_new > kvm_state->nr_slots) {
++        nr_slots_new = kvm_state->nr_slots;
++    }
++
++    if (cur >= nr_slots_new) {
++        /* Big enough, no need to grow, or we reached max */
++        return false;
++    }
++
++    if (cur == 0) {
++        slots = g_new0(KVMSlot, nr_slots_new);
++    } else {
++        assert(kml->slots);
++        slots = g_renew(KVMSlot, kml->slots, nr_slots_new);
++        /*
++         * g_renew() doesn't initialize extended buffers, however kvm
++         * memslots require fields to be zero-initialized. E.g. pointers,
++         * memory_size field, etc.
++         */
++        memset(&slots[cur], 0x0, sizeof(slots[0]) * (nr_slots_new - cur));
++    }
++
++    for (i = cur; i < nr_slots_new; i++) {
++        slots[i].slot = i;
++    }
++
++    kml->slots = slots;
++    kml->nr_slots_allocated = nr_slots_new;
++    trace_kvm_slots_grow(cur, nr_slots_new);
++
++    return true;
++}
++
++static bool kvm_slots_double(KVMMemoryListener *kml)
++{
++    return kvm_slots_grow(kml, kml->nr_slots_allocated * 2);
++}
++
+ unsigned int kvm_get_max_memslots(void)
+ {
+     KVMState *s = KVM_STATE(current_accel());
+@@ -193,15 +247,26 @@ unsigned int kvm_get_free_memslots(void)
+ /* Called with KVMMemoryListener.slots_lock held */
+ static KVMSlot *kvm_get_free_slot(KVMMemoryListener *kml)
+ {
+-    KVMState *s = kvm_state;
++    unsigned int n;
+     int i;
+ 
+-    for (i = 0; i < s->nr_slots; i++) {
++    for (i = 0; i < kml->nr_slots_allocated; i++) {
+         if (kml->slots[i].memory_size == 0) {
+             return &kml->slots[i];
+         }
      }
  
-     s->nr_as = kvm_check_extension(s, KVM_CAP_MULTI_ADDRESS_SPACE);
++    /*
++     * If no free slots, try to grow first by doubling.  Cache the old size
++     * here to avoid another round of search: if the grow succeeded, it
++     * means slots[] now must have the existing "n" slots occupied,
++     * followed by one or more free slots starting from slots[n].
++     */
++    n = kml->nr_slots_allocated;
++    if (kvm_slots_double(kml)) {
++        return &kml->slots[n];
++    }
++
+     return NULL;
+ }
+ 
+@@ -222,10 +287,9 @@ static KVMSlot *kvm_lookup_matching_slot(KVMMemoryListener *kml,
+                                          hwaddr start_addr,
+                                          hwaddr size)
+ {
+-    KVMState *s = kvm_state;
+     int i;
+ 
+-    for (i = 0; i < s->nr_slots; i++) {
++    for (i = 0; i < kml->nr_slots_allocated; i++) {
+         KVMSlot *mem = &kml->slots[i];
+ 
+         if (start_addr == mem->start_addr && size == mem->memory_size) {
+@@ -267,7 +331,7 @@ int kvm_physical_memory_addr_from_host(KVMState *s, void *ram,
+     int i, ret = 0;
+ 
+     kvm_slots_lock();
+-    for (i = 0; i < s->nr_slots; i++) {
++    for (i = 0; i < kml->nr_slots_allocated; i++) {
+         KVMSlot *mem = &kml->slots[i];
+ 
+         if (ram >= mem->ram && ram < mem->ram + mem->memory_size) {
+@@ -1071,7 +1135,7 @@ static int kvm_physical_log_clear(KVMMemoryListener *kml,
+ 
+     kvm_slots_lock();
+ 
+-    for (i = 0; i < s->nr_slots; i++) {
++    for (i = 0; i < kml->nr_slots_allocated; i++) {
+         mem = &kml->slots[i];
+         /* Discard slots that are empty or do not overlap the section */
+         if (!mem->memory_size ||
+@@ -1719,12 +1783,8 @@ static void kvm_log_sync_global(MemoryListener *l, bool last_stage)
+     /* Flush all kernel dirty addresses into KVMSlot dirty bitmap */
+     kvm_dirty_ring_flush();
+ 
+-    /*
+-     * TODO: make this faster when nr_slots is big while there are
+-     * only a few used slots (small VMs).
+-     */
+     kvm_slots_lock();
+-    for (i = 0; i < s->nr_slots; i++) {
++    for (i = 0; i < kml->nr_slots_allocated; i++) {
+         mem = &kml->slots[i];
+         if (mem->memory_size && mem->flags & KVM_MEM_LOG_DIRTY_PAGES) {
+             kvm_slot_sync_dirty_pages(mem);
+@@ -1839,12 +1899,9 @@ void kvm_memory_listener_register(KVMState *s, KVMMemoryListener *kml,
+ {
+     int i;
+ 
+-    kml->slots = g_new0(KVMSlot, s->nr_slots);
+     kml->as_id = as_id;
+ 
+-    for (i = 0; i < s->nr_slots; i++) {
+-        kml->slots[i].slot = i;
+-    }
++    kvm_slots_grow(kml, KVM_MEMSLOTS_NR_ALLOC_DEFAULT);
+ 
+     QSIMPLEQ_INIT(&kml->transaction_add);
+     QSIMPLEQ_INIT(&kml->transaction_del);
+diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
+index 82c65fd2ab..e43d18a869 100644
+--- a/accel/kvm/trace-events
++++ b/accel/kvm/trace-events
+@@ -36,3 +36,4 @@ kvm_io_window_exit(void) ""
+ kvm_run_exit_system_event(int cpu_index, uint32_t event_type) "cpu_index %d, system_even_type %"PRIu32
+ kvm_convert_memory(uint64_t start, uint64_t size, const char *msg) "start 0x%" PRIx64 " size 0x%" PRIx64 " %s"
+ kvm_memory_fault(uint64_t start, uint64_t size, uint64_t flags) "start 0x%" PRIx64 " size 0x%" PRIx64 " flags 0x%" PRIx64
++kvm_slots_grow(unsigned int old, unsigned int new) "%u -> %u"
 -- 
 2.45.0
 
