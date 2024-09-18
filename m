@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3283CDD553
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 19:27:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DACF2CDD553
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 19:29:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr0H4-0005xV-FA; Wed, 18 Sep 2024 15:23:38 -0400
+	id 1sr0HD-0006Xj-1G; Wed, 18 Sep 2024 15:23:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3syjrZgUKCu4jQlYfWeeWbU.SecgUck-TUlUbdedWdk.ehW@flex--tavip.bounces.google.com>)
- id 1sr0H1-0005m8-R6
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 15:23:35 -0400
-Received: from mail-pj1-x1049.google.com ([2607:f8b0:4864:20::1049])
+ <3vSjrZgUKCvgyf0nulttlqj.htrvjrz-ij0jqstslsz.twl@flex--tavip.bounces.google.com>)
+ id 1sr0HB-0006Pm-Aa
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 15:23:45 -0400
+Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3syjrZgUKCu4jQlYfWeeWbU.SecgUck-TUlUbdedWdk.ehW@flex--tavip.bounces.google.com>)
- id 1sr0H0-0007PT-0V
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 15:23:35 -0400
-Received: by mail-pj1-x1049.google.com with SMTP id
- 98e67ed59e1d1-2db446a3d28so202845a91.2
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 12:23:33 -0700 (PDT)
+ <3vSjrZgUKCvgyf0nulttlqj.htrvjrz-ij0jqstslsz.twl@flex--tavip.bounces.google.com>)
+ id 1sr0H9-0007Ra-Jd
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 15:23:45 -0400
+Received: by mail-pg1-x54a.google.com with SMTP id
+ 41be03b00d2f7-7cf58491fe9so7104a12.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 12:23:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1726687412; x=1727292212; darn=nongnu.org;
+ d=google.com; s=20230601; t=1726687422; x=1727292222; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=BasiRtQN5aAXKK780JUMkf3D1GTFkZQUDjsTNmgnDHw=;
- b=p3eemXqhfZCwbUzvszRaUHP7iKOrtuENZsNBLULly6tuUGMuF3QvIiS2eVfy6FZWvA
- iv6F4Er0MKY6c2cxubVOrSFEj0vSEySoIZZ2zvqKp4rrP5G5PrujvTg3AGnix6GGRTR7
- OITM5tZAij7iDMIILmP1Bptk8NUVpMESysw3HmmXfXywSrKi288hHwR7QhvSBriR6V1u
- awKUW/DGQPe8lIP5jgz2q4mCJxQ7AVzW0jkiF2LjYqyKDszqibrqRHIK3o72m2CS9dJh
- SdGDHGZ9FdLMsfBEmOwRTP1eo+R6Aw0V7tFYGx/9qySEszfP9G2LAYYsUTqXkY4EG02Q
- fMlQ==
+ bh=UuK6tEDguSgEq4sOmbOCdqmyqurQ/O4ePv8cGHfnsdc=;
+ b=aYpUCMDVgxoI6mBrESeIzBFjYKSwRoT+WOxPae/kEC06zTIZecaGyz1sOnUmUeXEAE
+ dxlydeamEalKnLgW5yzhzMsLEV6YnXsds0ts7saICHheHGSrmRfTIgwjIsSoPPWaPOg5
+ H13h3Q+2nx/cy2PUMds6L7vxJoe4Jd6LajnSoaXEV4N0Q+mUvzamuDfk9NGAHsuvm0Xn
+ fgWBITsKHBbbNxxtDx7dr6v9CryO1Mn7B80NLD0fT4qcL1td5ER5OAegi4iKM8GOLu5E
+ UwEQ48PHSRZwrHq/qtBtJMQn1jIU3ksHTXo1P6cvFQ52gKR9gX1AIBRXkyIc0tB++kgj
+ 61Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726687412; x=1727292212;
+ d=1e100.net; s=20230601; t=1726687422; x=1727292222;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BasiRtQN5aAXKK780JUMkf3D1GTFkZQUDjsTNmgnDHw=;
- b=U6bMMgMwcKk02zAhZ8KK8+Hv1NZGlh+HM2gB6KQROUo4SV4keTEZOlzeQjWpB0n0vQ
- 8WhjsWQpMdHem9r58e8AuxiKIBJBwBFHG3KrMDHG8K3FTicmQED/4oEG8ebBtORW4e4Q
- t0BXGSAIzF5FFfBHOqwjnw8Wzn/vpbo/42RYEQ8cd6yXut7JEz24NTkeLPtiKRhOGoSj
- Nt5qw3FZUIVwTOYxFlZpXMTZdMpNau3s44DLkbOWFvQtkrbrTH8vejV1a5lIF+lZ4dAe
- FADoWQoix9AedfGrA6Ojwibkx2UFyxOuOWeRKGpUyWFdY7/ow1T4pbdorrrF9DPPtVWq
- u2oQ==
-X-Gm-Message-State: AOJu0YxSsNHnmk9gL3gYi4bdjOL/cN2xsyz2tFAtcFNstGrutBaZ5+xc
- W9eLNq71VdH93D5hq0Lex9swOsCmAurmv//cyoJtrVMXLcB+crYQGt6SGa8xspo6CrlXN5+iImk
- 1Jf/9cBcqX06SOEfvw3D1t0jXEUb1YmN5XOVx+kVjmRAF8/I4XHuHq4O/GR701B8VaXP6iOlQK3
- QPsQY+YfkzX0B20rWtUfaqWQOtmQ==
-X-Google-Smtp-Source: AGHT+IE9pugV1W1gjuJk7mMtSsgn3Hz3rKDHUkp0c70pIqllMcHBraati2zSX2yJMxPbsD2VPV2Khw7cDA==
+ bh=UuK6tEDguSgEq4sOmbOCdqmyqurQ/O4ePv8cGHfnsdc=;
+ b=loBH+GJa4zPAi1JLMIl6YSBmT9PkeQNR0Z/sukvrTbLFZR2gNo78RJKAouRBxZXkiX
+ x4qwd2NXlm3WiF9TdWX2r73jGSR3Qj4f1+b2JMn2ngp1Ehbxpxi+U9Dd/Hp7wxrsqtzf
+ E+3vtzVr6IywrgjaiMvtEwilCqx36g8u0XG300a7W1Yv6qRyVDJrg4YlaPa4D6Pppv6B
+ 76/WqGSDFMZ29aVUYCgm0ROiuMVLCDYrudRrJVHeklmpH8Y8tj1170YoVJfFsjNQzEzD
+ 1sbex8IxdAQ+q76Fl9d+OCh6qROhkahmYO7DN/LCvl+3wp6N3Bz4GGU6cLd39y8TPkPZ
+ /LCw==
+X-Gm-Message-State: AOJu0Yz36LVrNv+A3T5CCzt8npwUejPVCrg1/YaMXrWWzi7Fom2vcmYE
+ mpM7ImJfe6gLTZZHR+P6IZcZmPsyR+tEg8IUB3AKYQxzL2lcOBu+o4M12wUmeJ9k9THFCNP6hoV
+ zIr98QZIoQW0eLjBVeERvJ4C7pgGOHNS9LI4pAOhJJep2bS73IPAIluo4bXt2nKqzt7EdQ5905O
+ YzwO+gO2rC8Ly9BOWI0FA7Ba8uJQ==
+X-Google-Smtp-Source: AGHT+IF/VVcq0q2HFZVgs0XnP3tsz9awQau2u9tqGE/EyDNtIWx67p5un+DCPyjL/VX/cn54XKMhHglZ6Q==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a17:90b:17d2:b0:2d8:e7ef:7d1e
+ (user=tavip job=sendgmr) by 2002:a17:902:d486:b0:206:a574:b4f1
  with SMTP id
- 98e67ed59e1d1-2dbb9f199eemr66045a91.7.1726687411869; Wed, 18 Sep 2024
- 12:23:31 -0700 (PDT)
-Date: Wed, 18 Sep 2024 12:22:47 -0700
+ d9443c01a7336-20782a68cfcmr17873365ad.8.1726687421442; Wed, 18 Sep 2024
+ 12:23:41 -0700 (PDT)
+Date: Wed, 18 Sep 2024 12:22:52 -0700
 In-Reply-To: <20240918192254.3136903-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20240918192254.3136903-1-tavip@google.com>
 X-Mailer: git-send-email 2.46.0.662.g92d0881bb0-goog
-Message-ID: <20240918192254.3136903-20-tavip@google.com>
-Subject: [PATCH 19/25] hw/misc: add i2c-tester
+Message-ID: <20240918192254.3136903-25-tavip@google.com>
+Subject: [PATCH 24/25] systems/qtest: add device clock APIs
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -72,16 +72,16 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org, jsnow@redhat.com, 
  crosa@redhat.com, lvivier@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1049;
- envelope-from=3syjrZgUKCu4jQlYfWeeWbU.SecgUck-TUlUbdedWdk.ehW@flex--tavip.bounces.google.com;
- helo=mail-pj1-x1049.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
+ envelope-from=3vSjrZgUKCvgyf0nulttlqj.htrvjrz-ij0jqstslsz.twl@flex--tavip.bounces.google.com;
+ helo=mail-pg1-x54a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
 X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ USER_IN_DEF_DKIM_WL=-7.5, WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,200 +97,234 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a simple i2c peripheral to be used for testing I2C device
-models. The peripheral has a fixed number of registers that can be
-read and written.
+Add qtest APIs to check the device clock frequency.
 
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- include/hw/misc/i2c_tester.h |  30 ++++++++++
- hw/misc/i2c_tester.c         | 109 +++++++++++++++++++++++++++++++++++
- hw/misc/Kconfig              |   5 ++
- hw/misc/meson.build          |   2 +
- 4 files changed, 146 insertions(+)
- create mode 100644 include/hw/misc/i2c_tester.h
- create mode 100644 hw/misc/i2c_tester.c
+ include/hw/qdev-clock.h       | 10 +++++++
+ tests/qtest/libqtest-single.h | 24 +++++++++++++++++
+ tests/qtest/libqtest.h        | 22 +++++++++++++++
+ hw/core/qdev-clock.c          |  2 +-
+ system/qtest.c                | 51 +++++++++++++++++++++++++++++++++++
+ tests/qtest/libqtest.c        | 29 ++++++++++++++++++++
+ 6 files changed, 137 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/misc/i2c_tester.h b/include/hw/misc/i2c_tester.h
-new file mode 100644
-index 0000000000..f6b6491008
---- /dev/null
-+++ b/include/hw/misc/i2c_tester.h
-@@ -0,0 +1,30 @@
-+/*
-+ *
-+ * Copyright (c) 2024 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef HW_I2C_TESTER_H
-+#define HW_I2C_TESTER_H
-+
-+#include "qemu/osdep.h"
-+#include "hw/i2c/i2c.h"
-+#include "hw/irq.h"
-+
-+#define I2C_TESTER_NUM_REGS    0x31
-+
-+#define TYPE_I2C_TESTER "i2c-tester"
-+#define I2C_TESTER(obj) OBJECT_CHECK(I2cTesterState, (obj), TYPE_I2C_TESTER)
-+
-+typedef struct {
-+    I2CSlave i2c;
-+    bool set_reg_idx;
-+    uint8_t reg_idx;
-+    uint8_t regs[I2C_TESTER_NUM_REGS];
-+} I2cTesterState;
-+
-+#endif /* HW_I2C_TESTER_H */
-diff --git a/hw/misc/i2c_tester.c b/hw/misc/i2c_tester.c
-new file mode 100644
-index 0000000000..77ce8bf91a
---- /dev/null
-+++ b/hw/misc/i2c_tester.c
-@@ -0,0 +1,109 @@
-+/*
-+ * Simple I2C peripheral for testing I2C device models.
-+ *
-+ * Copyright (c) 2024 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "hw/misc/i2c_tester.h"
-+
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "migration/vmstate.h"
-+
-+static void i2c_tester_reset_enter(Object *o, ResetType type)
-+{
-+    I2cTesterState *s = I2C_TESTER(o);
-+
-+    s->set_reg_idx = false;
-+    s->reg_idx     = 0;
-+    memset(s->regs, 0, I2C_TESTER_NUM_REGS);
-+}
-+
-+static int i2c_tester_event(I2CSlave *i2c, enum i2c_event event)
-+{
-+    I2cTesterState *s = I2C_TESTER(i2c);
-+
-+    if (event == I2C_START_SEND) {
-+        s->set_reg_idx = true;
-+    }
-+
-+    return 0;
-+}
-+
-+static uint8_t i2c_tester_rx(I2CSlave *i2c)
-+{
-+    I2cTesterState *s = I2C_TESTER(i2c);
-+
-+    if (s->reg_idx >= I2C_TESTER_NUM_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid reg 0x%02x\n", __func__,
-+                      s->reg_idx);
-+        return I2C_NACK;
-+    }
-+
-+    return s->regs[s->reg_idx];
-+}
-+
-+static int i2c_tester_tx(I2CSlave *i2c, uint8_t data)
-+{
-+    I2cTesterState *s = I2C_TESTER(i2c);
-+
-+    if (s->set_reg_idx) {
-+        /* Setting the register in which the operation will be done. */
-+        s->reg_idx = data;
-+        s->set_reg_idx = false;
-+        return 0;
-+    }
-+
-+    if (s->reg_idx >= I2C_TESTER_NUM_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid reg 0x%02x\n", __func__,
-+                      s->reg_idx);
-+        return I2C_NACK;
-+    }
-+
-+    /* Write reg data. */
-+    s->regs[s->reg_idx] = data;
-+
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_i2c_tester = {
-+    .name = "i2c-tester",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_I2C_SLAVE(i2c, I2cTesterState),
-+        VMSTATE_BOOL(set_reg_idx, I2cTesterState),
-+        VMSTATE_UINT8(reg_idx, I2cTesterState),
-+        VMSTATE_UINT8_ARRAY(regs, I2cTesterState, I2C_TESTER_NUM_REGS),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void i2c_tester_class_init(ObjectClass *oc, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+    ResettableClass *rc = RESETTABLE_CLASS(oc);
-+    I2CSlaveClass *isc = I2C_SLAVE_CLASS(oc);
-+
-+    rc->phases.enter = i2c_tester_reset_enter;
-+    dc->vmsd = &vmstate_i2c_tester;
-+    isc->event = i2c_tester_event;
-+    isc->recv = i2c_tester_rx;
-+    isc->send = i2c_tester_tx;
-+}
-+
-+static const TypeInfo i2c_tester_types[] = {
-+    {
-+        .name = TYPE_I2C_TESTER,
-+        .parent = TYPE_I2C_SLAVE,
-+        .instance_size = sizeof(I2cTesterState),
-+        .class_init = i2c_tester_class_init
-+    },
-+};
-+
-+DEFINE_TYPES(i2c_tester_types);
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 4b688aead2..3e93c12c8e 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -213,6 +213,11 @@ config IOSB
- config XLNX_VERSAL_TRNG
-     bool
+diff --git a/include/hw/qdev-clock.h b/include/hw/qdev-clock.h
+index ffa0f7ba09..19ed34ae88 100644
+--- a/include/hw/qdev-clock.h
++++ b/include/hw/qdev-clock.h
+@@ -15,6 +15,7 @@
+ #define QDEV_CLOCK_H
  
-+config I2C_TESTER
-+    bool
-+    default y if TEST_DEVICES
-+    depends on I2C
-+
- config FLEXCOMM
-     bool
-     select I2C
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index faaf2671ba..4f22231fa3 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -158,6 +158,8 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
- # HPPA devices
- system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
+ #include "hw/clock.h"
++#include "hw/qdev-core.h"
  
-+system_ss.add(when: 'CONFIG_I2C_TESTER', if_true: files('i2c_tester.c'))
+ /**
+  * qdev_init_clock_in:
+@@ -161,4 +162,13 @@ typedef struct ClockPortInitElem ClockPortInitArray[];
+  */
+ void qdev_init_clocks(DeviceState *dev, const ClockPortInitArray clocks);
+ 
++/**
++ * qdev_get_clocklist:
++ * @dev: the device to find clock for
++ * @name: clock name
++ *
++ * Returns: a named clock list entry or NULL if the clock was not found
++ */
++NamedClockList *qdev_get_clocklist(DeviceState *dev, const char *name);
 +
- system_ss.add(when: 'CONFIG_FLEXCOMM', if_true: files('flexcomm.c'))
- system_ss.add(when: 'CONFIG_RT500_CLKCTL', if_true: files('rt500_clkctl0.c', 'rt500_clkctl1.c'))
- system_ss.add(when: 'CONFIG_RT500_RSTCTL', if_true: files('rt500_rstctl.c'))
+ #endif /* QDEV_CLOCK_H */
+diff --git a/tests/qtest/libqtest-single.h b/tests/qtest/libqtest-single.h
+index c22037c8b2..51eb69ff74 100644
+--- a/tests/qtest/libqtest-single.h
++++ b/tests/qtest/libqtest-single.h
+@@ -408,4 +408,28 @@ static inline int64_t clock_step(int64_t step)
+     return qtest_clock_step(global_qtest, step);
+ }
+ 
++/**
++ * qtest_qdev_clock_in_get_hz:
++ * @path: QOM path of a device.
++ * @name: Clock name.
++ *
++ * Returns: device clock frequency in HZ
++ */
++static inline uint64_t dev_clock_in_get_hz(const char *path, const char *name)
++{
++    return qtest_dev_clock_in_get_hz(global_qtest, path, name);
++}
++
++/**
++ * qtest_qdev_clock_out_get_hz:
++ * @path: QOM path of a device.
++ * @name: Clock name.
++ *
++ * Returns: device clock frequency in HZ
++ */
++static inline uint64_t dev_clock_out_get_hz(const char *path, const char *name)
++{
++    return qtest_dev_clock_out_get_hz(global_qtest, path, name);
++}
++
+ #endif
+diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
+index f9bbeb2e60..cfb7098985 100644
+--- a/tests/qtest/libqtest.h
++++ b/tests/qtest/libqtest.h
+@@ -1169,4 +1169,26 @@ bool have_qemu_img(void);
+  */
+ bool mkimg(const char *file, const char *fmt, unsigned size_mb);
+ 
++/**
++ * qtest_qdev_clock_in_get_hz:
++ * @s: #QTestState instance to operate on.
++ * @path: QOM path of a device.
++ * @name: Clock name.
++ *
++ * Returns: device clock frequency in HZ
++ */
++uint64_t qtest_dev_clock_in_get_hz(QTestState *s, const char *path,
++                                   const char *name);
++
++/**
++ * qtest_qdev_clock_out_get_hz:
++ * @s: #QTestState instance to operate on.
++ * @path: QOM path of a device.
++ * @name: Clock name.
++ *
++ * Returns: device clock frequency in HZ
++ */
++uint64_t qtest_dev_clock_out_get_hz(QTestState *s, const char *path,
++                                    const char *name);
++
+ #endif
+diff --git a/hw/core/qdev-clock.c b/hw/core/qdev-clock.c
+index 82799577f3..3c9e2d5d73 100644
+--- a/hw/core/qdev-clock.c
++++ b/hw/core/qdev-clock.c
+@@ -144,7 +144,7 @@ void qdev_init_clocks(DeviceState *dev, const ClockPortInitArray clocks)
+     }
+ }
+ 
+-static NamedClockList *qdev_get_clocklist(DeviceState *dev, const char *name)
++NamedClockList *qdev_get_clocklist(DeviceState *dev, const char *name)
+ {
+     NamedClockList *ncl;
+ 
+diff --git a/system/qtest.c b/system/qtest.c
+index 95bb80a2bc..465666a416 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -19,6 +19,7 @@
+ #include "exec/ioport.h"
+ #include "exec/memory.h"
+ #include "exec/tswap.h"
++#include "hw/qdev-clock.h"
+ #include "hw/qdev-core.h"
+ #include "hw/irq.h"
+ #include "hw/core/cpu.h"
+@@ -245,6 +246,20 @@ static void *qtest_server_send_opaque;
+  *
+  * Forcibly set the given interrupt pin to the given level.
+  *
++ * Device clock frequency
++ * """"""""""""""""""""""
++ *
++ * .. code-block:: none
++ *
++ *  > qdev_clock_out_get_hz QOM-PATH CLOCK-NAME
++ *  < OK HZ
++ *
++ * .. code-block:: none
++ *
++ *  > qdev_clock_in_get_hz QOM-PATH CLOCK-NAME
++ *  < OK HZ
++ *
++ * where HZ is the clock frequency in hertz.
+  */
+ 
+ static int hex2nib(char ch)
+@@ -758,6 +773,42 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+         qtest_send_prefix(chr);
+         qtest_sendf(chr, "OK %"PRIi64"\n",
+                     (int64_t)qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
++    } else if (strcmp(words[0], "qdev_clock_in_get_hz") == 0 ||
++               strcmp(words[0], "qdev_clock_out_get_hz") == 0) {
++        bool is_outbound = words[0][11] == 'o';
++        DeviceState *dev;
++        NamedClockList *ncl;
++
++        g_assert(words[1]);
++        g_assert(words[2]);
++
++        dev = DEVICE(object_resolve_path(words[1], NULL));
++        if (!dev) {
++            qtest_send_prefix(chr);
++            qtest_send(chr, "FAIL Unknown device\n");
++            return;
++        }
++
++        ncl = qdev_get_clocklist(dev, words[2]);
++        if (!ncl) {
++            qtest_send_prefix(chr);
++            qtest_send(chr, "FAIL Unknown clock\n");
++            return;
++        }
++
++        if (is_outbound && !ncl->output) {
++            qtest_send_prefix(chr);
++            qtest_send(chr, "FAIL Not an output clock\n");
++            return;
++        }
++
++        if (!is_outbound && ncl->output) {
++            qtest_send_prefix(chr);
++            qtest_send(chr, "FAIL Not an input clock\n");
++            return;
++        }
++
++        qtest_sendf(chr, "OK %u\n", clock_get_hz(ncl->clock));
+     } else if (process_command_cb && process_command_cb(chr, words)) {
+         /* Command got consumed by the callback handler */
+     } else {
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index 4055d6b953..cc11b5f42e 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -2065,3 +2065,32 @@ bool mkimg(const char *file, const char *fmt, unsigned size_mb)
+ 
+     return ret && !err;
+ }
++
++static uint64_t qtest_dev_clock_get_hz(QTestState *s, const char *path,
++                                       const char *name, bool out)
++{
++    gchar **args;
++    int ret;
++    uint64_t value;
++
++    qtest_sendf(s, "qdev_clock_%s_get_hz %s %s\n", out ? "out" : "in",
++                path, name);
++    args = qtest_rsp_args(s, 2);
++    ret = qemu_strtou64(args[1], NULL, 0, &value);
++    g_assert(!ret);
++    g_strfreev(args);
++
++    return value;
++}
++
++uint64_t qtest_dev_clock_out_get_hz(QTestState *s, const char *path,
++                                    const char *name)
++{
++    return qtest_dev_clock_get_hz(s, path, name, true);
++}
++
++uint64_t qtest_dev_clock_in_get_hz(QTestState *s, const char *path,
++                                   const char *name)
++{
++    return qtest_dev_clock_get_hz(s, path, name, false);
++}
 -- 
 2.46.0.662.g92d0881bb0-goog
 
