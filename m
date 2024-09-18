@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E9B7CAC5B2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CD9FCAC598
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 01:43:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqji1-0006Ns-QA; Tue, 17 Sep 2024 21:42:21 -0400
+	id 1sqji1-0006PP-VH; Tue, 17 Sep 2024 21:42:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sqjhz-0006Mt-Lt
+ id 1sqjhz-0006Mu-P9
  for qemu-devel@nongnu.org; Tue, 17 Sep 2024 21:42:19 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sqjhx-0007kc-3s
+ (envelope-from <maobibo@loongson.cn>) id 1sqjhx-0007km-71
  for qemu-devel@nongnu.org; Tue, 17 Sep 2024 21:42:19 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Bx9+jxL+pmrWMKAA--.22638S3;
- Wed, 18 Sep 2024 09:42:09 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Dx1uj2L+pmumMKAA--.22548S3;
+ Wed, 18 Sep 2024 09:42:14 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMBxn+TuL+pmkT8JAA--.52894S2;
- Wed, 18 Sep 2024 09:42:06 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBxn+TuL+pmkT8JAA--.52894S4;
+ Wed, 18 Sep 2024 09:42:10 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: "Michael S . Tsirkin" <mst@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Song Gao <gaosong@loongson.cn>
@@ -32,13 +32,16 @@ Cc: Ani Sinha <anisinha@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  "Jason A . Donenfeld" <Jason@zx2c4.com>,
  =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas@t-8ch.de>,
  qemu-devel@nongnu.org
-Subject: [PATCH v3 0/2] Add FDT table support with acpi ged pm register
-Date: Wed, 18 Sep 2024 09:42:04 +0800
-Message-Id: <20240918014206.2165821-1-maobibo@loongson.cn>
+Subject: [PATCH v3 2/2] hw/loongarch/virt: Add FDT table support with acpi ged
+ pm register
+Date: Wed, 18 Sep 2024 09:42:06 +0800
+Message-Id: <20240918014206.2165821-3-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240918014206.2165821-1-maobibo@loongson.cn>
+References: <20240918014206.2165821-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxn+TuL+pmkT8JAA--.52894S2
+X-CM-TRANSID: qMiowMBxn+TuL+pmkT8JAA--.52894S4
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -73,27 +76,68 @@ Here acpi ged pm register is exposed with FDT table, it is compatbile
 with syscon method in FDT table, only that acpi ged pm register is accessed
 with 8-bit mode, rather with 32-bit mode.
 
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
-v2 ... v3:
-  1. Keep orginal macro name ACPI_GED_SLP_TYP_S5 unchanged, renaming 
-     ACPI_GED_SLP_TYPx_y with  ACPI_GED_SLP_TYP_y
-  2. Add acpi chapter reference with notation
+ hw/loongarch/virt.c | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-v1 ... v2:
-  1. Modify name of macro for acpi ged register from ACPI spec, and also add
-     comments for macro definition.
----
-Bibo Mao (2):
-  acpi: ged: Add macro for acpi sleep control register
-  hw/loongarch/virt: Add FDT table support with acpi ged pm register
-
- hw/acpi/generic_event_device.c         |  6 ++--
- hw/loongarch/virt.c                    | 39 ++++++++++++++++++++++++++
- include/hw/acpi/generic_event_device.h |  7 +++--
- 3 files changed, 47 insertions(+), 5 deletions(-)
-
-
-base-commit: 2b81c046252fbfb375ad30632362fc16e6e22bd5
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 81b1f9486f..1b85ba80c9 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -280,6 +280,44 @@ static void fdt_add_rtc_node(LoongArchVirtMachineState *lvms,
+     g_free(nodename);
+ }
+ 
++static void fdt_add_ged_reset(LoongArchVirtMachineState *lvms)
++{
++    char *name;
++    uint32_t ged_handle;
++    MachineState *ms = MACHINE(lvms);
++    hwaddr base = VIRT_GED_REG_ADDR;
++    hwaddr size = ACPI_GED_REG_COUNT;
++
++    ged_handle = qemu_fdt_alloc_phandle(ms->fdt);
++    name = g_strdup_printf("/ged@%" PRIx64, base);
++    qemu_fdt_add_subnode(ms->fdt, name);
++    qemu_fdt_setprop_string(ms->fdt, name, "compatible", "syscon");
++    qemu_fdt_setprop_cells(ms->fdt, name, "reg", 0x0, base, 0x0, size);
++    /* 8 bit registers */
++    qemu_fdt_setprop_cell(ms->fdt, name, "reg-shift", 0);
++    qemu_fdt_setprop_cell(ms->fdt, name, "reg-io-width", 1);
++    qemu_fdt_setprop_cell(ms->fdt, name, "phandle", ged_handle);
++    ged_handle = qemu_fdt_get_phandle(ms->fdt, name);
++    g_free(name);
++
++    name = g_strdup_printf("/reboot");
++    qemu_fdt_add_subnode(ms->fdt, name);
++    qemu_fdt_setprop_string(ms->fdt, name, "compatible", "syscon-reboot");
++    qemu_fdt_setprop_cell(ms->fdt, name, "regmap", ged_handle);
++    qemu_fdt_setprop_cell(ms->fdt, name, "offset", ACPI_GED_REG_RESET);
++    qemu_fdt_setprop_cell(ms->fdt, name, "value", ACPI_GED_RESET_VALUE);
++    g_free(name);
++
++    name = g_strdup_printf("/poweroff");
++    qemu_fdt_add_subnode(ms->fdt, name);
++    qemu_fdt_setprop_string(ms->fdt, name, "compatible", "syscon-poweroff");
++    qemu_fdt_setprop_cell(ms->fdt, name, "regmap", ged_handle);
++    qemu_fdt_setprop_cell(ms->fdt, name, "offset", ACPI_GED_REG_SLEEP_CTL);
++    qemu_fdt_setprop_cell(ms->fdt, name, "value", ACPI_GED_SLP_EN |
++                          (ACPI_GED_SLP_TYP_S5 << ACPI_GED_SLP_TYP_POS));
++    g_free(name);
++}
++
+ static void fdt_add_uart_node(LoongArchVirtMachineState *lvms,
+                               uint32_t *pch_pic_phandle, hwaddr base,
+                               int irq, bool chosen)
+@@ -737,6 +775,7 @@ static void virt_devices_init(DeviceState *pch_pic,
+                          qdev_get_gpio_in(pch_pic,
+                          VIRT_RTC_IRQ - VIRT_GSI_BASE));
+     fdt_add_rtc_node(lvms, pch_pic_phandle);
++    fdt_add_ged_reset(lvms);
+ 
+     /* acpi ged */
+     lvms->acpi_ged = create_acpi_ged(pch_pic, lvms);
 -- 
 2.39.3
 
