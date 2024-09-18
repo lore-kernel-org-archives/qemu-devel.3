@@ -4,76 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BA44CE8D67
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 09:51:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58B15CE8D6E
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 10:05:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srDoc-0007i5-4M; Thu, 19 Sep 2024 05:51:10 -0400
+	id 1srE1n-0005Mg-W9; Thu, 19 Sep 2024 06:04:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srDoZ-0007hR-MW
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 05:51:07 -0400
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1srE1j-00059v-KH
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 06:04:43 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srDoW-0000ae-BC
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 05:51:07 -0400
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-53661ac5ba1so646311e87.2
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 02:51:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1srE1h-0002HG-OV
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 06:04:43 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a8d100e9ce0so78140566b.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 03:04:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726739462; x=1727344262; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qHdxZ00VUY93W8YQ38IceZwsDA+dPnLqiCccveS2RNA=;
- b=TIEEefL8RXG2Hj6rFy7dsamjWLu6HAvsJvBBM1qFx368WpdKTQc+ANNNVZ546f9Wrk
- +rlUi9ow00cT+mD1daCFPYtrPAnFNeFM9YBHSy7C9TfEkAZPCDY9UYkHj3rMtm97KAQw
- VNhR5LBVYBbcrCT6w9ESjHHjYqq3EoeznaWbIomqfcZ5qn75yst3Ky6ly2wY7B67x0C4
- X1VK05s2hYqsrvs1ouD8GBytNLbsi90mfQr+Zg9Zt3Vflx9mr9K/GeH+2RhNjca3umxk
- CQYfZ2wRWFX6MymUTC5sfKrYpGANefbodmC69GwT5aCOPhxW/qwNQzELX0bTg25FMKBL
- d7MA==
+ d=linaro.org; s=google; t=1726740280; x=1727345080; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pkb9RoMieZB7x0grFP61zIkg4zRv8Ds7sTpiRSCuqVY=;
+ b=qsZOLYpyDGcvhUGbaqhCso4AeoBNKveChvHX4JNU8xAXuJ76sdgMav24M8Dj0I2MZn
+ O1y7JRSg3EFXVq34OBDkYUiPUlPRlWy7xbphgmy/2rSMDmzYAK5drzc4i6fLye8Ts2fb
+ 7NLdsMklpTEYK1zoAYYNxorZUSF5rcx+mEdMbcLS6grenn7dF2RW+GpmW/XlnarKvuOO
+ WgjNzkN0rJ7HFSQ+Gwwk03/CTu0d+3T1AsckHAtVB9vYxiu40izJT7V205kPj6dLkPOz
+ UWmTFONPyNzHnKwSKij2AHQuWc7ka0gv20zhv5Ys+6+0SwlRKU8AAZEcggnljyI47VfJ
+ CC2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726739462; x=1727344262;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qHdxZ00VUY93W8YQ38IceZwsDA+dPnLqiCccveS2RNA=;
- b=Ankv5r79c57js8C9R1wK1cgrPL44OHZ4Odzn8ykm4nam9NUyJXRqaErdtlzcX+GhM2
- F0DLsgmei1DzLOzwxtCSSS38BtN81XoxN0CuOP93EcVdMF2jpddCVReRNdbuxIIY0Xe3
- 37WYbZt3usK9/I8HDCIZ5jHxOEzMfCAe4lVKjR262P0TKejJPRmQQUt+ZtGAfLFoUecv
- riBtuhILodmviMnA8O/rAXLhY/7ZszKJ4DzpVPCH2Dv/76eaj+Khhgts0Wmv5HZq1sWL
- T+dk9jWfBZMwLOCl82cdSYHdA7Muy8Lk5emvlgZR1BwjwaQ1qRQTBTv5P0ni+we9YMmg
- gNPQ==
-X-Gm-Message-State: AOJu0YwyQJmDCqjQbrJvWyL1l0gBfHY5xhse5lV62syH4IFT/ZBpuT9x
- qKOiq0Ebom9H1yl7IWfJBcLQOwaFRJ6rFtnntlSAyiFyDqU1ULJa809nX/H0dwEX3KR6KQ3LG25
- D7+KIIMWZd5ZITH6t3D7EFYSyXw4IQ2IHCR9hM5DSUMrHFJen
-X-Google-Smtp-Source: AGHT+IEyqkLlnUtu+DBzHMDT1sLzgSHxyIF2nBtcE1NMq1LgTjSBmjOcbDbNwLxSj5gNOCLLgiwxn+I3vGx/ltmCLzA=
-X-Received: by 2002:a05:6512:3f0d:b0:52b:bf8e:ffea with SMTP id
- 2adb3069b0e04-53678feb0f9mr14944844e87.40.1726739461989; Thu, 19 Sep 2024
- 02:51:01 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726740280; x=1727345080;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pkb9RoMieZB7x0grFP61zIkg4zRv8Ds7sTpiRSCuqVY=;
+ b=PjS3Z8blFfUV8MtZM7dhsefMcdyQ6gS91SKkNCbIC506DwgY12bt+mVMFMMhvqfXov
+ vd7Fjs9GdobErndBCPF56Csuwl9tnevEHFuTWl0wmx6IpuFpEpa53ce3NR36bf3ClAw7
+ p/ElbKYEVKv10Zfdu+4gYMQ+qrDoalKXexKpA3Eg10AmOFc0OrV6uwBbYRsAXE8inCtK
+ /zPJ8+yXz6RymRRgU4NNQafiReoLisfvdPg1o5hXYhXqb/IFw8G0nFqd2yhF6aJLnnuD
+ F2+6i9IlDRReslQaQH6LdFhdRBL2PLpdqQCx2vwZnLE7k6grupGYznhxfAKkQ2MCMHsL
+ /S6A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWWmA5SzhsqCWZSncISXvewcOCTeaHXVvq/zkVdf35pmpVyxe2WYwpESccl3+gKCdGsZFS0KfFfpHA6@nongnu.org
+X-Gm-Message-State: AOJu0YzFLj4Sk0cWZzruoLc9ZudkHH0dtZwIprs7IgsGfOgw5RWfdCSK
+ 8h6/LHFWpHxL39sGBmXxdI8oESZIH58j8uODITO2BkgILtBVlirnPYax4MXaGFc=
+X-Google-Smtp-Source: AGHT+IEiYf0vDmd1hmiet1Nxw2vKyN16OJHyyFeZTNvhYEY0pShiNSwywlc/0dmN6iRGOqg+E++dtQ==
+X-Received: by 2002:a17:907:e295:b0:a86:7e2d:f10b with SMTP id
+ a640c23a62f3a-a90294ced3bmr2292115366b.37.1726740279980; 
+ Thu, 19 Sep 2024 03:04:39 -0700 (PDT)
+Received: from [10.133.7.245] ([83.68.141.146])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a90610f3aaesm701574766b.53.2024.09.19.03.04.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Sep 2024 03:04:39 -0700 (PDT)
+Message-ID: <68b03a32-94f7-4823-9698-9af6f6552a0d@linaro.org>
+Date: Wed, 18 Sep 2024 16:34:49 +0200
 MIME-Version: 1.0
-References: <20240918210712.2336854-1-alex.bennee@linaro.org>
-In-Reply-To: <20240918210712.2336854-1-alex.bennee@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Sep 2024 10:50:50 +0100
-Message-ID: <CAFEAcA8tdyELui0=jYFObZO1=O_isJ-c1e0s4ZCbMVyfsrY=9A@mail.gmail.com>
-Subject: Re: [PULL 00/18] tcg plugins (deprecations, mem apis, contrib plugins)
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] gitlab-ci: Make separate sections for build and test
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+References: <20240918125449.3125571-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240918125449.3125571-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,68 +100,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 18 Sept 2024 at 22:08, Alex Benn=C3=A9e <alex.bennee@linaro.org> wr=
-ote:
->
-> The following changes since commit 2b81c046252fbfb375ad30632362fc16e6e22b=
-d5:
->
->   Merge tag 'block-pull-request' of https://gitlab.com/stefanha/qemu into=
- staging (2024-09-17 14:02:18 +0100)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/stsquad/qemu.git tags/pull-tcg-plugin-memory-180924-=
-2
->
-> for you to fetch changes up to a33f4871e0a0f4bf1cb037ab29fae7df7f2fc658:
->
->   contrib/plugins: avoid hanging program (2024-09-18 21:02:36 +0100)
->
-> ----------------------------------------------------------------
-> TCG plugin memory instrumentation updates
->
->   - deprecate plugins on 32 bit hosts
->   - deprecate plugins with TCI
->   - extend memory API to save value
->   - add check-tcg tests to exercise new memory API
->   - fix timer deadlock with non-changing timer
->   - add basic block vector plugin to contrib
->   - add cflow plugin to contrib
->   - extend syscall plugin to dump write memory
->   - validate ips plugin arguments meet minimum slice value
->
-> ----------------------------------------------------------------
+On 9/18/24 14:54, Peter Maydell wrote:
+> Peter Maydell (2):
+>    .gitlab-ci.d: Split build and test in cross build job templates
+>    .gitlab-ci.d: Make separate collapsible log sections for build and
+>      test
 
-Fails to build on macos:
-https://gitlab.com/qemu-project/qemu/-/jobs/7865151156
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-../tests/tcg/plugins/mem.c:12:10: fatal error: 'endian.h' file not found
-
-endian.h is a Linuxism.
-
-While I'm looking at the code, this caught my eye:
-
-    case QEMU_PLUGIN_MEM_VALUE_U64:
-    {
-        uint64_t *p =3D (uint64_t *) &ri->data[offset];
-        uint64_t val =3D be ? htobe64(value.data.u64) : htole64(value.data.=
-u64);
-        if (is_store) {
-            *p =3D val;
-        } else if (*p !=3D val) {
-            unseen_data =3D true;
-        }
-        break;
-    }
-
-Casting a random byte pointer to uint64_t* like that
-and dereferencing it isn't valid -- it can fault if
-it's not aligned correctly.
-
-I suspect the plugin needs to define versions of at least some
-of the functionality in qemu's include/qemu/bswap.h.
-
-thanks
--- PMM
+r~
 
