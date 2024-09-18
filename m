@@ -4,71 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBC53C35FE7
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 05:53:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA5B7C3600F
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 06:06:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqncp-0001b3-P3; Wed, 18 Sep 2024 01:53:15 -0400
+	id 1sqnob-0007S0-Jk; Wed, 18 Sep 2024 02:05:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sqncj-0001aJ-F0
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 01:53:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sqnch-0007RX-KF
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 01:53:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726638785;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WLVcFukP+8C7+eH6+pYs8KIsjxL0ER+1dAge8Ca5G+c=;
- b=DZpPRI1pd5xCDieL6wcm0zFXhpEQ9PwgxCd1IAv/V3V8o99giH5zB8d7u+61CTqmHMze84
- RoMQtUiSTqESgccYMpJsoIljCVmOBsOg6xBu8rzDAw2rnAS5n9KQhUcLheMOSKFEMVX2da
- hCunNhyTvKDvW95vXV9gJ74mqHcFwcA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-6muknBUjO_iGNn1zY45Isg-1; Wed,
- 18 Sep 2024 01:53:01 -0400
-X-MC-Unique: 6muknBUjO_iGNn1zY45Isg-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2359D195608B; Wed, 18 Sep 2024 05:53:00 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.47])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3F4783001FEF; Wed, 18 Sep 2024 05:52:59 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C9C2F21E6A28; Wed, 18 Sep 2024 07:52:56 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: dave@treblig.org
-Cc: peterx@redhat.com,  farosas@suse.de,  eblake@redhat.com,
- armbru@redhat.com,  qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/3] migration: Remove unused zero-blocks capability
-In-Reply-To: <20240918000207.182683-3-dave@treblig.org> (dave@treblig.org's
- message of "Wed, 18 Sep 2024 01:02:06 +0100")
-References: <20240918000207.182683-1-dave@treblig.org>
- <20240918000207.182683-3-dave@treblig.org>
-Date: Wed, 18 Sep 2024 07:52:56 +0200
-Message-ID: <87msk54ifb.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sqnoY-0007Qe-95
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 02:05:22 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sqnoV-0000X0-Af
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 02:05:20 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a8d6ac24a3bso81973766b.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Sep 2024 23:05:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1726639517; x=1727244317; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=t5mGxf+CZ3zZYnX4JbiIfh5pZ7tAjdTRZMOnJjviD4c=;
+ b=LF18ZYDNAnD49KmiYHK2PM5WdHqmXbq+00n3vApQiA3H0u+Xz7CcbIgqoa8GhoPYn8
+ 5bmYqUJVUXKRN4hPOSY8xXCNZmQnUFEUI4HFNojDszdTg0BfwDg7VU9MsTcZqCIYt2iF
+ XWFLPG4hQSBlSzQbA0rHh+zmhyxpECUYVFXgFjq4qL0h6ldoNmcZKdlNkXyyucVTnMnd
+ EPylH4vKGt9mPz2jtI318qBIwzZ+ZHPxRgVh6Cz5d0NFUAh2Njk6Jvra0RjfqhBOdtpe
+ a6i2eEVQKKgH33q3VW63gxjXh8CYY2X2ht20Kd626D9WC3xQmAUh2m1isKP6QPiR77ux
+ Zgdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726639517; x=1727244317;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=t5mGxf+CZ3zZYnX4JbiIfh5pZ7tAjdTRZMOnJjviD4c=;
+ b=JRb52/Gxl28jPoiI5rYL6ur8TxRTzotHh38v63f16qnYtZoIVqvxvN/heZMhlGFZkd
+ AA5Hfs3EgqyM18tkaXaBivfvKadDs3LxHDCT/HvACOYYwJXjz2r1OmLRGIz8rjRABysf
+ VFFHPm2exK35/ojkD9oGqZvL/9R5pNFvRzUUSB/RJRXWamnSf2szuhZ0r1HTOJQ7+rzM
+ qpvmbBovr1q6AKIhQnmp7ESm0/S5dB5m7YTDOIsGqMeO8kXMTUN9pwfe3J3B8X38YucY
+ JtHcjtS7CwfRyslmFo80PsC/XF7kcuWr6xAl6lZXwOLe6mpKzEMg4CIpjRsWHnS9Yoj9
+ aOUA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU41xBbNKkdIMi0X04MGqbyQXMlLhc8tH1JN6Bg3tZ+XYKI2DW5Ow8H8A2T1ozwT+7Sr42tCYVc6+Kz@nongnu.org
+X-Gm-Message-State: AOJu0YwipXMe++Fv3V2fM5mvJEo/OgCLcE9FHWb2mCOVd9L7aoWGer+9
+ P6FSi9cX4TiPpk1MSrxtNg4J1lG0is9FQxXz8fVEnNhwkpGiYvM1WjByFAIF6/s=
+X-Google-Smtp-Source: AGHT+IGHKR0qqgSX96tsaPbrMvlFd8LcDl6wWuDi67U5uzQHtG4PPaURsQoSA0G1nXDghe6Ahz69jQ==
+X-Received: by 2002:a17:907:7ea7:b0:a8a:cc5a:7f30 with SMTP id
+ a640c23a62f3a-a902a8c26ffmr2252797466b.25.1726639516625; 
+ Tue, 17 Sep 2024 23:05:16 -0700 (PDT)
+Received: from localhost ([213.235.133.41]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9061096aa2sm536689566b.35.2024.09.17.23.05.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Sep 2024 23:05:15 -0700 (PDT)
+Date: Wed, 18 Sep 2024 08:05:13 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org, 
+ qemu-devel@nongnu.org, Anup Patel <anup@brainfault.org>, 
+ Atish Patra <atishp@atishpatra.org>, Paul Walmsley <paul.walmsley@sifive.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, kvm@vger.kernel.org,
+ kvm-riscv@lists.infradead.org, 
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/1] target/riscv: enable floating point unit
+Message-ID: <20240918-039d1e3bebf2231bd452a5ad@orel>
+References: <20240916181633.366449-1-heinrich.schuchardt@canonical.com>
+ <20240917-f45624310204491aede04703@orel>
+ <15c359a4-b3c1-4cb0-be2e-d5ca5537bc5b@canonical.com>
+ <20240917-b13c51d41030029c70aab785@orel>
+ <8b24728f-8b6e-4c79-91f6-7cbb79494550@canonical.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8b24728f-8b6e-4c79-91f6-7cbb79494550@canonical.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=ajones@ventanamicro.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,105 +106,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-dave@treblig.org writes:
-
-> From: "Dr. David Alan Gilbert" <dave@treblig.org>
+On Tue, Sep 17, 2024 at 06:45:21PM GMT, Heinrich Schuchardt wrote:
+...
+> When thinking about the migration of virtual machines shouldn't QEMU be in
+> control of the initial state of vcpus instead of KVM?
 >
-> migrate_zero_blocks is unused since
->   eef0bae3a7 ("migration: Remove block migration")
->
-> Remove it.
-> That whole zero-blocks capability was just for old-school
-> block migration anyway.
->
-> Remove the capability as well.
->
-> Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
-> ---
->  migration/options.c |  8 --------
->  migration/options.h |  1 -
->  qapi/migration.json | 10 +---------
->  3 files changed, 1 insertion(+), 18 deletions(-)
->
-> diff --git a/migration/options.c b/migration/options.c
-> index 9460c5dee9..997e060612 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -177,7 +177,6 @@ Property migration_properties[] = {
->      DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
->      DEFINE_PROP_MIG_CAP("x-rdma-pin-all", MIGRATION_CAPABILITY_RDMA_PIN_ALL),
->      DEFINE_PROP_MIG_CAP("x-auto-converge", MIGRATION_CAPABILITY_AUTO_CONVERGE),
-> -    DEFINE_PROP_MIG_CAP("x-zero-blocks", MIGRATION_CAPABILITY_ZERO_BLOCKS),
->      DEFINE_PROP_MIG_CAP("x-events", MIGRATION_CAPABILITY_EVENTS),
->      DEFINE_PROP_MIG_CAP("x-postcopy-ram", MIGRATION_CAPABILITY_POSTCOPY_RAM),
->      DEFINE_PROP_MIG_CAP("x-postcopy-preempt",
 
-Property of (pseudo-)device "migration".  The "x-" prefix suggests we
-expect management software not to rely on it.  Okay.
+Thinking about this more, I'm inclined to agree. Initial state and reset
+state should be traits of the VMM (potentially influenced by the user)
+rather than KVM.
 
-[...]
-
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index b66cccf107..82d0fc962e 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -389,13 +389,6 @@
->  #     footprint is mlock()'d on demand or all at once.  Refer to
->  #     docs/rdma.txt for usage.  Disabled by default.  (since 2.0)
->  #
-> -# @zero-blocks: During storage migration encode blocks of zeroes
-> -#     efficiently.  This essentially saves 1MB of zeroes per block on
-> -#     the wire.  Enabling requires source and target VM to support
-> -#     this feature.  To enable it is sufficient to enable the
-> -#     capability on the source VM.  The feature is disabled by
-> -#     default.  (since 1.6)
-> -#
->  # @events: generate events for each migration state change (since 2.4)
->  #
->  # @auto-converge: If enabled, QEMU will automatically throttle down
-> @@ -483,7 +476,7 @@
->  # Since: 1.2
->  ##
->  { 'enum': 'MigrationCapability',
-> -  'data': ['xbzrle', 'rdma-pin-all', 'auto-converge', 'zero-blocks',
-> +  'data': ['xbzrle', 'rdma-pin-all', 'auto-converge',
->             'events', 'postcopy-ram',
->             { 'name': 'x-colo', 'features': [ 'unstable' ] },
->             'release-ram',
-
-This is used by migrate-set-capabilities and query-migrate-capabilities,
-via ['MigrationCapabilityStatus'].
-
-query-migrate-capabilities is unaffected: it couldn't return zero-blocks
-anymore even before the patch.
-
-migrate-set-capabilities changes incompatibly, I'm afraid.  Before the
-patch:
-
-    {"execute": "migrate-set-capabilities", "arguments": {"capabilities": [{"capability": "zero-blocks", "state": true}]}}
-    {"return": {}}
-
-Afterwards:
-
-    {"error": {"class": "GenericError", "desc": "Parameter 'capability' does not accept value 'zero-blocks'"}}
-
-If we had somehow rejected the capability when it made no sense,
-removing it now it never makes sense would be obviously fine.
-
-The straight & narrow path is to deprecate now, remove later.
-
-If we believe nothing relies on it, we can bend the rules and remove
-right away.  Missing then: update to docs/about/removed-features.rst.
-
-> @@ -542,7 +535,6 @@
->  #           {"state": false, "capability": "xbzrle"},
->  #           {"state": false, "capability": "rdma-pin-all"},
->  #           {"state": false, "capability": "auto-converge"},
-> -#           {"state": false, "capability": "zero-blocks"},
->  #           {"state": true, "capability": "events"},
->  #           {"state": false, "capability": "postcopy-ram"},
->  #           {"state": false, "capability": "x-colo"}
-
-Example for query-migrate-capabilities.  Good.
-
+Thanks,
+drew
 
