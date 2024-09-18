@@ -4,56 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C916CCD1A3
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 12:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DB9ACCD1A3
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 12:32:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqtpH-0008PO-21; Wed, 18 Sep 2024 08:30:31 -0400
+	id 1sqtqY-0003i9-AM; Wed, 18 Sep 2024 08:31:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaoshiyuan@baidu.com>)
- id 1sqtpE-0008Op-Su
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 08:30:29 -0400
-Received: from mx24.baidu.com ([111.206.215.185] helo=baidu.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaoshiyuan@baidu.com>)
- id 1sqtpA-0008Vq-LU
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 08:30:28 -0400
-To: David Hildenbrand <david@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>, Jason Wang
- <jasowang@redhat.com>, "Zuo,Boqun" <zuoboqun@baidu.com>, "peterx@redhat.com"
- <peterx@redhat.com>, "alxndr@bu.edu" <alxndr@bu.edu>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v3 1/1] virtio-pci: Add lookup subregion of
- VirtIOPCIRegion MR
-Thread-Topic: [PATCH v3 1/1] virtio-pci: Add lookup subregion of
- VirtIOPCIRegion MR
-Thread-Index: AQHbCcaAp+oaXwlAHke9fuf1dG6Z0g==
-Date: Wed, 18 Sep 2024 12:30:10 +0000
-Message-ID: <780a8840510448bb96c3e5db946a75ad@baidu.com>
-References: <20240903120304.97833-1-gaoshiyuan@baidu.com>,
- <b7f9dad2-29d9-42e6-97b0-32be6c077391@redhat.com>
-In-Reply-To: <b7f9dad2-29d9-42e6-97b0-32be6c077391@redhat.com>
-Accept-Language: en-US, zh-CN
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.127.87.136]
-Content-Type: multipart/alternative;
- boundary="_000_780a8840510448bb96c3e5db946a75adbaiducom_"
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1sqtqT-0003VG-TM
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 08:31:46 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1sqtqR-00006a-11
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 08:31:45 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-5356aa9a0afso8284908e87.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 05:31:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1726662701; x=1727267501; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cynRD5XT/jkB4E8sJCxTzWk/7qkTL71fEZuUjaiVnuk=;
+ b=OArrc8ojuVOkzHSPLejuDiEpeMWEUKW7wTWkXG0n4gvwmoQ2KVBw3NZtwu1ru8YAN0
+ 6d/jVo84fOFxOyE2qgTMqgi30sYHEEyrPU+km+C2FZu5kLeGg83BuqfopTThrmUuk2Lm
+ LxB/TvgCinsRF2f5pjef41HYNK3fSqkqUBhxp+Yvj0EhIaejPNPI4GHpmndXe47t/KJj
+ 5aqJKU2R7Wg8O1UuB0iAE/almlJroUOZBqB90y/yYB7B9fGLcyEh2Bwq7+GNRLwbF9Qa
+ knQl+VRkHh4iyAbrxSSk4MQkZmyspwyMOQBO5hsr3mM2UAkcYiW/5cSC/xmT0M7wdBH/
+ CFsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726662701; x=1727267501;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cynRD5XT/jkB4E8sJCxTzWk/7qkTL71fEZuUjaiVnuk=;
+ b=pRofpxYfgKNgUwbffybpWMI2sTCbSaUkFkdpuBkt6lBP7mW0FzTGrIWdHm3W5JoDCQ
+ pIWpC62VScO/GopJXNFYhyadovaYLM6bjrUh/kNFMA2YNbGrAp9q72RfTcgRGDP+OwZn
+ 99fOpR4jq2qAZbjEWR/PkUKZU5LQX6DxfQq6hg401iVX0VYw3xrh1HrY0CIgSw1OA6iE
+ l8g8YvzYmb12RuPVvoBRk6gdQqc1LIi/nxTPOQmgd9cgOACMtUXSBBi+QyqMw0Ac/7J4
+ REpabPnu9vsbXYQIyABIBGyN3wXXjlVUybY3CxIl8WftiWn3uAkeZoez/Y9dExWG7bUE
+ lRKg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXzzlK6tkAXqzTbCXvfqmLM4/C9n0/Xy4/s3TM8Z11K14qQ8ZxJ1ycG1N8YX5RrwUBVZezfBT1a/apH@nongnu.org
+X-Gm-Message-State: AOJu0YxULRmHPkp86rUVkYWNDlc7rKn4RClzK/gI7oCd0uRF+S0q0x+/
+ /xlXG1OiDUzrMivAFppx/lNEamzL6Nas+Djeefb79BhxVkxs8ELHyWPLYBJ1N/ujPYxtEnwFrrr
+ ZfMA96PFB0IEcr5YpO+aUnKFyrCo=
+X-Google-Smtp-Source: AGHT+IGh8CqW87UH36UHWr17CChHo3THAdxZZdms7RF3enO9rj4r5tRSWINVUVaEHKbg6Y7mrgjzeOyFzsehFS6On/g=
+X-Received: by 2002:a05:6512:2803:b0:536:2356:5dce with SMTP id
+ 2adb3069b0e04-5367ff329e6mr13000423e87.58.1726662700545; Wed, 18 Sep 2024
+ 05:31:40 -0700 (PDT)
 MIME-Version: 1.0
-X-FEAS-Client-IP: 172.31.51.51
-X-FE-Last-Public-Client-IP: 100.100.100.60
-X-FE-Policy-ID: 52:10:53:SYSTEM
-Received-SPF: pass client-ip=111.206.215.185;
- envelope-from=gaoshiyuan@baidu.com; helo=baidu.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+References: <20240913163636.253949-1-r.peniaev@gmail.com>
+ <20240913163636.253949-2-r.peniaev@gmail.com>
+ <CAMxuvawD8QrsjJ9xiE9KDa=BTj8urRcCcN5YasiE3m-R7xEcuQ@mail.gmail.com>
+ <CACZ9PQU2X0T+FX6QV+6O8MhBLuJkLut41rtjb5Lp5z+3Sjm6Ww@mail.gmail.com>
+ <CAJ+F1CL1fg=hWYiprQ8BubpPSAgS1JMj6dY9Av-rKitw9ZhWzg@mail.gmail.com>
+In-Reply-To: <CAJ+F1CL1fg=hWYiprQ8BubpPSAgS1JMj6dY9Av-rKitw9ZhWzg@mail.gmail.com>
+From: Roman Penyaev <r.peniaev@gmail.com>
+Date: Wed, 18 Sep 2024 14:31:29 +0200
+Message-ID: <CACZ9PQX4SOBe9cXgP45HBqo8uXKcnwPsKcZT-nVa_b9i7pQrog@mail.gmail.com>
+Subject: Re: [PATCH 1/2] chardev: implement backend chardev multiplexing
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Cc: Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=r.peniaev@gmail.com; helo=mail-lf1-x136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,235 +93,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Gao,Shiyuan" <gaoshiyuan@baidu.com>
-From:  "Gao,Shiyuan" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_000_780a8840510448bb96c3e5db946a75adbaiducom_
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-> > Now virtio_address_space_lookup only lookup common/isr/device/notify
-> > MR and exclude their subregions.
-> >
-> > When VHOST_USER_PROTOCOL_F_HOST_NOTIFIER enable, the notify MR has
-> > host-notifier subregions and we need use host-notifier MR to
-> > notify the hardware accelerator directly instead of eventfd notify.
-> >
-> > Further more, maybe common/isr/device MR also has subregions in
-> > the future, so need memory_region_find for each MR incluing
-> > their subregions.
-> >
-> > Add lookup subregion of VirtIOPCIRegion MR instead of only lookup conta=
-iner MR.
-> >
-> > Fixes: a93c8d8 ("virtio-pci: Replace modern_as with direct access to mo=
-dern_bar")
-> >
-> > Co-developed-by: Zuo Boqun <zuoboqun@baidu.com>
-> > Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
-> > Signed-off-by: Zuo Boqun <zuoboqun@baidu.com>
-> > ---
-> >   hw/virtio/virtio-pci.c | 8 ++++++--
-> >   1 file changed, 6 insertions(+), 2 deletions(-)
-> >
-> > ---
-> > v2 -> v3:
-> > * modify commit message
-> > * remove unused variable and move mrs to the inner block
-> > * replace error_report with assert
-> >
-> > v1 -> v2:
-> > * modify commit message
-> > * replace direct iteration over subregions with memory_region_find.
-> >
-> > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> > index 524b63e5c7..4d832fe845 100644
-> > --- a/hw/virtio/virtio-pci.c
-> > +++ b/hw/virtio/virtio-pci.c
-> > @@ -615,8 +615,12 @@ static MemoryRegion *virtio_address_space_lookup(V=
-irtIOPCIProxy *proxy,
-> >           reg =3D &proxy->regs[i];
-> >           if (*off >=3D reg->offset &&
-> >               *off + len <=3D reg->offset + reg->size) {
-> > -            *off -=3D reg->offset;
-> > -            return &reg->mr;
-> > +            MemoryRegionSection mrs =3D memory_region_find(&reg->mr,
-> > +                                        *off - reg->offset, len);
-> > +            assert(mrs.mr);
+Thanks for the review, I will try to come up with the next version of
+this series.
+
+On Wed, Sep 18, 2024 at 12:52=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@gmail.com> wrote:
+[cut]
 >
-> We are able to trigger that assert:
 >
-> https://gitlab.com/qemu-project/qemu/-/issues/2576
+> Indeed, this double commas stuff is weird, I don't know that "trick". Is =
+it used elsewhere and documented? I don't see a test in test-qemu-opts.c ei=
+ther.
+
+In few places, for example here:
+https://www.qemu.org/docs/master/system/qemu-manpage.html#options
+(look for "double")
+
+The second quote acts as an escape symbol to avoid splitting of the
+command line.
+Then in the modified mux I used a single comma as a separator for an array =
+of
+backends.
+
 >
-> Can you take a look and send a fix?
->
-> --
-> Cheers,
->
-> David / dhildenb
->
+> There is another ongoing discussion about json support for -chardev: "-ch=
+ardev with a JSON argument".
 
-Sorry for this, Peter and David's Command line can reproduce in my environm=
-ent.
+Thanks, found.
 
-But this patch works fine in my testing environment, it can start VM(both q=
-35 and i440fx) success and
-I will compare the differences in command line parameters with Peter's.
-
-As for qtest, When I use this command line(Change the machine from q35 to i=
-440fx), it looks ok
-
-    cat << EOF | ./qemu-system-x86_64 -display none -machine accel=3Dqtest,=
- -m \
-    512M -machine pc -nodefaults -device virtio-balloon -qtest stdio
-    outl 0xcf8 0x80000890
-    outl 0xcfc 0x2
-    outl 0xcf8 0x80000891
-    inl 0xcfc
-    EOF
-
-So I think there might exists other bug, and this patch just happens to tri=
-gger them.
-I will find it as soon as possible.
-
-
---_000_780a8840510448bb96c3e5db946a75adbaiducom_
-Content-Type: text/html; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
-1">
-<style type=3D"text/css" style=3D"display:none;"><!-- P {margin-top:0;margi=
-n-bottom:0;} --></style>
-</head>
-<body dir=3D"ltr">
-<div id=3D"divtagdefaultwrapper" style=3D"font-size: 12pt; color: rgb(0, 0,=
- 0); font-family: Calibri, Helvetica, sans-serif, Helvetica, EmojiFont, &qu=
-ot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, NotoColorEmoji, &qu=
-ot;Segoe UI Symbol&quot;, &quot;Android Emoji&quot;, EmojiSymbols;" dir=3D"=
-ltr">
-<p></p>
-<div>&gt; &gt; Now virtio_address_space_lookup only lookup common/isr/devic=
-e/notify</div>
-<div>&gt; &gt; MR and exclude their subregions.</div>
-<div>&gt; &gt;</div>
-<div>&gt; &gt; When VHOST_USER_PROTOCOL_F_HOST_NOTIFIER enable, the notify =
-MR has</div>
-<div>&gt; &gt; host-notifier subregions and we need use host-notifier MR to=
-</div>
-<div>&gt; &gt; notify the hardware accelerator directly instead of eventfd =
-notify.</div>
-<div>&gt; &gt;</div>
-<div>&gt; &gt; Further more, maybe common/isr/device MR also has subregions=
- in</div>
-<div>&gt; &gt; the future, so need memory_region_find for each MR incluing<=
-/div>
-<div>&gt; &gt; their subregions.</div>
-<div>&gt; &gt;</div>
-<div>&gt; &gt; Add lookup subregion of VirtIOPCIRegion MR instead of only l=
-ookup container MR.</div>
-<div>&gt; &gt;</div>
-<div>&gt; &gt; Fixes: a93c8d8 (&quot;virtio-pci: Replace modern_as with dir=
-ect access to modern_bar&quot;)</div>
-<div>&gt; &gt;</div>
-<div>&gt; &gt; Co-developed-by: Zuo Boqun &lt;zuoboqun@baidu.com&gt;</div>
-<div>&gt; &gt; Signed-off-by: Gao Shiyuan &lt;gaoshiyuan@baidu.com&gt;</div=
->
-<div>&gt; &gt; Signed-off-by: Zuo Boqun &lt;zuoboqun@baidu.com&gt;</div>
-<div>&gt; &gt; ---</div>
-<div>&gt; &gt;&nbsp; &nbsp;hw/virtio/virtio-pci.c | 8 &#43;&#43;&#43;&#43;&=
-#43;&#43;--</div>
-<div>&gt; &gt;&nbsp; &nbsp;1 file changed, 6 insertions(&#43;), 2 deletions=
-(-)</div>
-<div>&gt; &gt;</div>
-<div>&gt; &gt; ---</div>
-<div>&gt; &gt; v2 -&gt; v3:</div>
-<div>&gt; &gt; * modify commit message</div>
-<div>&gt; &gt; * remove unused variable and move mrs to the inner block</di=
-v>
-<div>&gt; &gt; * replace error_report with assert</div>
-<div>&gt; &gt;</div>
-<div>&gt; &gt; v1 -&gt; v2:</div>
-<div>&gt; &gt; * modify commit message</div>
-<div>&gt; &gt; * replace direct iteration over subregions with memory_regio=
-n_find.</div>
-<div>&gt; &gt;</div>
-<div>&gt; &gt; diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c=
-</div>
-<div>&gt; &gt; index 524b63e5c7..4d832fe845 100644</div>
-<div>&gt; &gt; --- a/hw/virtio/virtio-pci.c</div>
-<div>&gt; &gt; &#43;&#43;&#43; b/hw/virtio/virtio-pci.c</div>
-<div>&gt; &gt; @@ -615,8 &#43;615,12 @@ static MemoryRegion *virtio_address=
-_space_lookup(VirtIOPCIProxy *proxy,</div>
-<div>&gt; &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;reg =3D &amp;proxy-&=
-gt;regs[i];</div>
-<div>&gt; &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if (*off &gt;=3D reg=
--&gt;offset &amp;&amp;</div>
-<div>&gt; &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*off &=
-#43; len &lt;=3D reg-&gt;offset &#43; reg-&gt;size) {</div>
-<div>&gt; &gt; -&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; *off -=3D reg-&gt=
-;offset;</div>
-<div>&gt; &gt; -&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return &amp;reg-&=
-gt;mr;</div>
-<div>&gt; &gt; &#43;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; MemoryRegionS=
-ection mrs =3D memory_region_find(&amp;reg-&gt;mr,</div>
-<div>&gt; &gt; &#43;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;=
- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbs=
-p; &nbsp; *off - reg-&gt;offset, len);</div>
-<div>&gt; &gt; &#43;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; assert(mrs.mr=
-);</div>
-<div>&gt;</div>
-<div>&gt; We are able to trigger that assert:</div>
-<div>&gt;</div>
-<div>&gt; https://gitlab.com/qemu-project/qemu/-/issues/2576</div>
-<div>&gt;</div>
-<div>&gt; Can you take a look and send a fix?</div>
-<div>&gt;</div>
-<div>&gt; --</div>
-<div>&gt; Cheers,</div>
-<div>&gt;</div>
-<div>&gt; David / dhildenb</div>
-<div>&gt;</div>
-<div><br>
-</div>
-<div>Sorry for this, Peter and David's Command line can reproduce in my env=
-ironment.</div>
-<div><br>
-</div>
-<div>But this patch works fine in my testing environment, it can start VM(b=
-oth q35 and i440fx) success and</div>
-<div>I will compare the differences in command line parameters with Peter's=
-.</div>
-<div><br>
-</div>
-<div>As for qtest, When I use this command line(Change the machine from q35=
- to i440fx), it looks ok</div>
-<div><br>
-</div>
-<div>&nbsp; &nbsp; cat &lt;&lt; EOF | ./qemu-system-x86_64 -display none -m=
-achine accel=3Dqtest, -m \</div>
-<div>&nbsp; &nbsp; 512M -machine pc -nodefaults -device virtio-balloon -qte=
-st stdio</div>
-<div>&nbsp; &nbsp; outl 0xcf8 0x80000890</div>
-<div>&nbsp; &nbsp; outl 0xcfc 0x2</div>
-<div>&nbsp; &nbsp; outl 0xcf8 0x80000891</div>
-<div>&nbsp; &nbsp; inl 0xcfc</div>
-<div>&nbsp; &nbsp; EOF</div>
-<div><br>
-</div>
-<div>So I think there might exists other bug, and this patch just happens t=
-o trigger them.</div>
-<div>I will find it as soon as possible.</div>
-<br>
-<p></p>
-<div style=3D"color: rgb(0, 0, 0);"></div>
-</div>
-</body>
-</html>
-
---_000_780a8840510448bb96c3e5db946a75adbaiducom_--
+--
+Roman
 
