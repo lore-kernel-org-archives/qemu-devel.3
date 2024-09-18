@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3FD5CDD55D
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 23:15:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2EA8CDD560
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 23:27:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr3su-000775-HW; Wed, 18 Sep 2024 19:14:56 -0400
+	id 1sr44I-0004Qo-Gj; Wed, 18 Sep 2024 19:26:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1sr3st-00076P-3K
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 19:14:55 -0400
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1sr44F-0004PN-WC
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 19:26:40 -0400
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1sr3sr-0005z7-Cz
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 19:14:54 -0400
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1sr44D-00076Z-0i
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 19:26:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
- :Subject; bh=8KCKR8Z4fyMwdHYhXIg5dBaJGxaQw6CWDC5hIfzpuJ8=; b=io8+f1JDxjju290/
- ZcZEUg5i7dSfh6t9Rz6325VtS3sYomErzytiC+dsNjSRiMjBLQM9re7zknj50KUlf+xiIDk9qccJl
- JR703kxCmOkVpYci47V/FhsAF+bSPHZK5LRdBdxrYlNkh1gxuG5i669uBWWqtOZxc/ltSGe+bL6Vh
- gTndMB+2s42RCSEgjrqS1G/5mhukBX3pzUdzXqscFSl2cueBNS6OpLvS+WcBNedL5sLjKCRV3D7g+
- iXvkc+cDRJT1FhJP9AfvZwz3SAB/A3zK+l6b7Pe1ulALey6NRCySKV3uFBO5WviASfEwMF+hOaFLj
- 9YOI+ZKtFT8yztot0A==;
+ :Subject; bh=/AzXOTog6JSFPIQeZ6YWfUHgDT42rlTKecRlLONwMdw=; b=N9K0E9WSMpI5JTwf
+ OSVc7RytBGP7foei4l4Cv2s09awECD6o8WrPSn1F55fX+v3qw4SJr4HF2NA4GYYGZE7RV3MKSwKVu
+ HSVoAQoKTPZqEN5RWYSS9gaRJ59/py9MNpQmu+zy/IYp5EfoHYq8X8d8xMWgKtvz+oItBsikhsCUo
+ asRRSq1SSJND5ZvjjBHH7ljUfXe7N62MA23VLJ0OFm3Iw8st6Je/AKk5pkmmZ1hXBvYKYluytXzwU
+ AsFbxkrUOL5Zc9or54G0wjvH1XaM+bFFTUPmIgArFJFlvb8hc4T9TVqt2zoBCtxWfjA5UY7Uu2Jd0
+ GpGzn63Ou3uugMrCgA==;
 Received: from localhost ([127.0.0.1] helo=dalek.home.treblig.org)
  by mx.treblig.org with esmtp (Exim 4.96)
- (envelope-from <dave@treblig.org>) id 1sr3sm-006Lww-26;
- Wed, 18 Sep 2024 23:14:48 +0000
+ (envelope-from <dave@treblig.org>) id 1sr44A-006LyH-1S;
+ Wed, 18 Sep 2024 23:26:34 +0000
 From: dave@treblig.org
-To: jiri@resnulli.us,
-	jasowang@redhat.com,
+To: berrange@redhat.com,
 	qemu-devel@nongnu.org
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH] hw/net/rocker: Remove unused rocker_fp_ports
-Date: Thu, 19 Sep 2024 00:14:47 +0100
-Message-ID: <20240918231447.458796-1-dave@treblig.org>
+Subject: [PATCH] sockets: Remove deadcode
+Date: Thu, 19 Sep 2024 00:26:33 +0100
+Message-ID: <20240918232633.463861-1-dave@treblig.org>
 X-Mailer: git-send-email 2.46.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -67,43 +66,107 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-rocker_fp_ports hasn't been used since it was added back in 2015.
-Remove it.
+socket_remote_address hasn't been used since it was added in
+  17c55decec ("sockets: add helpers for creating SocketAddress from a socket")
+
+inet_connect hasn't been used since 2017's
+  8ecc2f9eab ("sheepdog: Use SocketAddress and socket_connect()")
+
+Remove them.
 
 Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 ---
- hw/net/rocker/rocker.c | 5 -----
- hw/net/rocker/rocker.h | 1 -
- 2 files changed, 6 deletions(-)
+ include/qemu/sockets.h | 16 ----------------
+ util/qemu-sockets.c    | 35 -----------------------------------
+ 2 files changed, 51 deletions(-)
 
-diff --git a/hw/net/rocker/rocker.c b/hw/net/rocker/rocker.c
-index 1ab5852113..5e74acc969 100644
---- a/hw/net/rocker/rocker.c
-+++ b/hw/net/rocker/rocker.c
-@@ -134,11 +134,6 @@ RockerPortList *qmp_query_rocker_ports(const char *name, Error **errp)
-     return list;
+diff --git a/include/qemu/sockets.h b/include/qemu/sockets.h
+index d935fd80da..c562690d89 100644
+--- a/include/qemu/sockets.h
++++ b/include/qemu/sockets.h
+@@ -61,7 +61,6 @@ int socket_set_fast_reuse(int fd);
+ int inet_ai_family_from_address(InetSocketAddress *addr,
+                                 Error **errp);
+ int inet_parse(InetSocketAddress *addr, const char *str, Error **errp);
+-int inet_connect(const char *str, Error **errp);
+ int inet_connect_saddr(InetSocketAddress *saddr, Error **errp);
+ 
+ NetworkAddressFamily inet_netfamily(int family);
+@@ -117,21 +116,6 @@ socket_sockaddr_to_address(struct sockaddr_storage *sa,
+  */
+ SocketAddress *socket_local_address(int fd, Error **errp);
+ 
+-/**
+- * socket_remote_address:
+- * @fd: the socket file handle
+- * @errp: pointer to uninitialized error object
+- *
+- * Get the string representation of the remote socket
+- * address. A pointer to the allocated address information
+- * struct will be returned, which the caller is required to
+- * release with a call qapi_free_SocketAddress() when no
+- * longer required.
+- *
+- * Returns: the socket address struct, or NULL on error
+- */
+-SocketAddress *socket_remote_address(int fd, Error **errp);
+-
+ /**
+  * socket_address_flatten:
+  * @addr: the socket address to flatten
+diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
+index 60c44b2b56..c1b162b056 100644
+--- a/util/qemu-sockets.c
++++ b/util/qemu-sockets.c
+@@ -707,26 +707,6 @@ int inet_parse(InetSocketAddress *addr, const char *str, Error **errp)
  }
  
--uint32_t rocker_fp_ports(Rocker *r)
+ 
+-/**
+- * Create a blocking socket and connect it to an address.
+- *
+- * @str: address string
+- * @errp: set in case of an error
+- *
+- * Returns -1 in case of error, file descriptor on success
+- **/
+-int inet_connect(const char *str, Error **errp)
 -{
--    return r->fp_ports;
+-    int sock = -1;
+-    InetSocketAddress *addr = g_new(InetSocketAddress, 1);
+-
+-    if (!inet_parse(addr, str, errp)) {
+-        sock = inet_connect_saddr(addr, errp);
+-    }
+-    qapi_free_InetSocketAddress(addr);
+-    return sock;
 -}
 -
- static uint32_t rocker_get_pport_by_tx_ring(Rocker *r,
-                                             DescRing *ring)
- {
-diff --git a/hw/net/rocker/rocker.h b/hw/net/rocker/rocker.h
-index f85354d9d1..6e0962f47a 100644
---- a/hw/net/rocker/rocker.h
-+++ b/hw/net/rocker/rocker.h
-@@ -72,7 +72,6 @@ DECLARE_INSTANCE_CHECKER(Rocker, ROCKER,
-                          TYPE_ROCKER)
+ #ifdef CONFIG_AF_VSOCK
+ static bool vsock_parse_vaddr_to_sockaddr(const VsockSocketAddress *vaddr,
+                                           struct sockaddr_vm *svm,
+@@ -1421,21 +1401,6 @@ SocketAddress *socket_local_address(int fd, Error **errp)
+ }
  
- Rocker *rocker_find(const char *name);
--uint32_t rocker_fp_ports(Rocker *r);
- int rocker_event_link_changed(Rocker *r, uint32_t pport, bool link_up);
- int rocker_event_mac_vlan_seen(Rocker *r, uint32_t pport, uint8_t *addr,
-                                uint16_t vlan_id);
+ 
+-SocketAddress *socket_remote_address(int fd, Error **errp)
+-{
+-    struct sockaddr_storage ss;
+-    socklen_t sslen = sizeof(ss);
+-
+-    if (getpeername(fd, (struct sockaddr *)&ss, &sslen) < 0) {
+-        error_setg_errno(errp, errno, "%s",
+-                         "Unable to query remote socket address");
+-        return NULL;
+-    }
+-
+-    return socket_sockaddr_to_address(&ss, sslen, errp);
+-}
+-
+-
+ SocketAddress *socket_address_flatten(SocketAddressLegacy *addr_legacy)
+ {
+     SocketAddress *addr;
 -- 
 2.46.0
 
