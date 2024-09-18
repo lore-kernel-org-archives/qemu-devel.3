@@ -4,103 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F07FACCD194
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 09:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28A94CCD195
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 10:13:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqrQf-0008Dl-CZ; Wed, 18 Sep 2024 05:56:57 -0400
+	id 1sqrfC-0005GK-Pe; Wed, 18 Sep 2024 06:11:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1sqrQd-0008Cj-1H; Wed, 18 Sep 2024 05:56:55 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1sqrQb-0007VN-0g; Wed, 18 Sep 2024 05:56:54 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48HJjbxi031850;
- Wed, 18 Sep 2024 09:56:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:subject:from:to:cc:date:in-reply-to:references
- :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- nu9wanx64FU5k3I0do3V202TD2E8rqo3Vu4EhuBb7WA=; b=YmniixnjZFTVwEWF
- Qw9+kHlSOn8QUjDMjVvYFrskIuq146zNFbb49h5ZXwGLEouVS9GHAoKFcuv9lzw7
- Y+Bpg1U0hoTf5Movfy+65xheMRoXocNr0rq0sJqwJ0nZcQL09PiNu8IImV5mGBuJ
- QKW+LSv9PHJSLvQpv2kDL80lV109wDp+LCGBkJ0rOQccQNYPMbr7H/ZBLr4z6eWO
- 7TqXr3a9VfXHXP0wlhRBHY19rR97VyikLZnN+Wi9uPkxcb/treTeKas8YVYqzymS
- fEZE6L8g0uz33h7SOwdADkvmTXHDXiH1ZdAV7Khhp8ujIT3UXNItaY0LDrGNMPTg
- f27QHQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n3ujd5s7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 18 Sep 2024 09:56:48 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48I9um6T012866;
- Wed, 18 Sep 2024 09:56:48 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n3ujd5s4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 18 Sep 2024 09:56:48 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48I8oXcO001871;
- Wed, 18 Sep 2024 09:56:47 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 41nqh3sywu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 18 Sep 2024 09:56:47 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48I9ujvl44696028
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 18 Sep 2024 09:56:45 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B95C120049;
- Wed, 18 Sep 2024 09:56:45 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 63D8720040;
- Wed, 18 Sep 2024 09:56:45 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 18 Sep 2024 09:56:45 +0000 (GMT)
-Message-ID: <c7416776312932df4e4c27cf040189fd098cba3c.camel@linux.ibm.com>
-Subject: PING: [PATCH v2 0/2] target/ppc: Make divd[u] handler method
- decodetree compatible
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Nicholas Piggin <npiggin@gmail.com>, Daniel Henrique Barboza
- <danielhb413@gmail.com>, Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Date: Wed, 18 Sep 2024 11:56:45 +0200
-In-Reply-To: <20240812085841.1583-1-iii@linux.ibm.com>
-References: <20240812085841.1583-1-iii@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: CXTsaMgdGiLU01Jav3nQ_aYLCOKI59UT
-X-Proofpoint-GUID: 5sNqpHmNzeuySJGt3mQwnT1twnKt687E
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sqrfA-0005DA-27
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 06:11:56 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sqrf8-0000w2-D3
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 06:11:55 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5c275491c61so1652250a12.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 03:11:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726654312; x=1727259112; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=g5xJCI3jIM+E07EAG0ku4aft+jYfu8AVjJlyxLFkIes=;
+ b=IDE19H0nY5JVrnnDAKURN2pH4CZtHfM4Goi4tX/yj7BBHBRF3sx136UZ42RhPlNPY5
+ qMemOksC57fNDu521vHVuuUfybLiDLoCr5YAdZzMiPcva2h8LPsPTDUPj7fFzulswKZG
+ nT9j7Iax3vGlOYtyBBMEVOYSOyYPL8OFLHMYhU/PvPFL7ZjH0ClmeN9ceCeZrNt3MkNb
+ cFuoao8XGp170+q7vRfEfq4+BFLRouQiBlAVj/l/wglGONSgoggfW44chuFpPl4bw43l
+ A89gaoWuAWbV8wkyIRiWqLPQFkKI4gCa1UQDbQqe0jSYaPVNzgwZ9iTx29NmqJPsLOsc
+ 6kCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726654312; x=1727259112;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=g5xJCI3jIM+E07EAG0ku4aft+jYfu8AVjJlyxLFkIes=;
+ b=B8SPcPnOQ84jTHhBC+lxKEZLzskeZP+f9piCjgl1+PdGogGJpLMA/ci0F7OIwysnh9
+ IPVdfIyV5v0WtkF0t7tFKsZFtGsbDS3wwQblCYRhkbjdA28Bl8W563JgjqG9axHpWu5H
+ Quc93HXcABzmr7YzXpnT8mFm+GYWhXfSOwDrV9+VnW32QBqASuMDTdZSWjFPFcqaQmMB
+ RH2fryi18mbdkh8kaOFxd89crZPS5AapIeXDCUlcDQCfX/ZAnsBCkhTfsfNhEr2pSwyq
+ YagH9a0d6xicbAtGcyXxt1x37BHBFDFJa/UQxZmE3iq9p5Sak+su3Oj+teiRaQrJFIKg
+ C/GQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUS9JC69SVPfTWXmC434EEt4ThBxcoLR7c1vMs5+euFrHbuAPNTVNhKJ5XDeUMVLf1VHhVPHIlYx5H0@nongnu.org
+X-Gm-Message-State: AOJu0YxvdrXRxOunkqcrjzJNcLhE1a2dCLE+fQpd9uy5huPpSl0Wnizr
+ QkLo4JKzrKl0M+Fl2VBKzQ16YmGBVILAeRBo4yuHRqlW2Wd62W/A/pI9w3HAplI=
+X-Google-Smtp-Source: AGHT+IF5vnsT+51c8uToKgefA6uiZuXCu76ZV8hTQ6ISJUZuTlwZrqkNmopvkpkoeZcG58GqY8SicQ==
+X-Received: by 2002:a05:6402:4025:b0:5be:fc1d:fd38 with SMTP id
+ 4fb4d7f45d1cf-5c413e60976mr17785486a12.36.1726654311567; 
+ Wed, 18 Sep 2024 03:11:51 -0700 (PDT)
+Received: from [10.133.7.245] ([83.68.141.146])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5c42bb53122sm4737204a12.32.2024.09.18.03.11.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Sep 2024 03:11:51 -0700 (PDT)
+Message-ID: <33101e38-080d-4444-a8c3-9d01827e243f@linaro.org>
+Date: Wed, 18 Sep 2024 12:11:48 +0200
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-18_07,2024-09-16_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- mlxlogscore=763 adultscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
- clxscore=1015 bulkscore=0 suspectscore=0 mlxscore=0 impostorscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409180063
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 02/12] tcg/riscv: Add basic support for vector
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ Swung0x48 <swung0x48@outlook.com>,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240911132630.461-1-zhiwei_liu@linux.alibaba.com>
+ <20240911132630.461-3-zhiwei_liu@linux.alibaba.com>
+ <0d591570-02c6-48c9-9e3f-ef47ac20ce7d@linaro.org>
+ <b87e7a7e-41fd-4b26-bde3-9adca9babb24@linux.alibaba.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <b87e7a7e-41fd-4b26-bde3-9adca9babb24@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,32 +103,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2024-08-12 at 10:53 +0200, Ilya Leoshkevich wrote:
-> v1:
-> https://lore.kernel.org/qemu-devel/20240731100953.14950-1-iii@linux.ibm.c=
-om/
-> v1 -> v2: Add R-bs and a targeted divd[u] patch.
->=20
-> Hi,
->=20
-> This series contains two fixes for the same issue: divd[u] touching
-> uninitialized ctx->opcode.
->=20
-> Patch 1 is a catch-all solution for all issues in this class. IMHO
-> it's worth having something like this until the legacy decoder is
-> fully eliminated.
->=20
-> Patch 2 is a targeted fix for divd[u] only.
->=20
-> Best regards,
-> Ilya
->=20
-> Ilya Leoshkevich (2):
-> =C2=A0 target/ppc: Set ctx->opcode for decode_insn32()
-> =C2=A0 target/ppc: Make divd[u] handler method decodetree compatible
->=20
-> =C2=A0target/ppc/translate.c | 5 ++---
-> =C2=A01 file changed, 2 insertions(+), 3 deletions(-)
+On 9/18/24 07:17, LIU Zhiwei wrote:
+> 
+> On 2024/9/12 2:41, Richard Henderson wrote:
+>> On 9/11/24 06:26, LIU Zhiwei wrote:
+>>> From: Swung0x48<swung0x48@outlook.com>
+>>>
+>>> The RISC-V vector instruction set utilizes the LMUL field to group
+>>> multiple registers, enabling variable-length vector registers. This
+>>> implementation uses only the first register number of each group while
+>>> reserving the other register numbers within the group.
+>>>
+>>> In TCG, each VEC_IR can have 3 types (TCG_TYPE_V64/128/256), and the
+>>> host runtime needs to adjust LMUL based on the type to use different
+>>> register groups.
+>>>
+>>> This presents challenges for TCG's register allocation. Currently, we
+>>> avoid modifying the register allocation part of TCG and only expose the
+>>> minimum number of vector registers.
+>>>
+>>> For example, when the host vlen is 64 bits and type is TCG_TYPE_V256, with
+>>> LMUL equal to 4, we use 4 vector registers as one register group. We can
+>>> use a maximum of 8 register groups, but the V0 register number is reserved
+>>> as a mask register, so we can effectively use at most 7 register groups.
+>>> Moreover, when type is smaller than TCG_TYPE_V256, only 7 registers are
+>>> forced to be used. This is because TCG cannot yet dynamically constrain
+>>> registers with type; likewise, when the host vlen is 128 bits and
+>>> TCG_TYPE_V256, we can use at most 15 registers.
+>>>
+>>> There is not much pressure on vector register allocation in TCG now, so
+>>> using 7 registers is feasible and will not have a major impact on code
+>>> generation.
+>>>
+>>> This patch:
+>>> 1. Reserves vector register 0 for use as a mask register.
+>>> 2. When using register groups, reserves the additional registers within
+>>>     each group.
+>>>
+>>> Signed-off-by: TANG Tiancheng<tangtiancheng.ttc@alibaba-inc.com>
+>>> Co-authored-by: TANG Tiancheng<tangtiancheng.ttc@alibaba-inc.com>
+>>
+>> If there is a co-author, there should be another Signed-off-by.
+> 
+> This patch has added a tag:
+> 
+> Signed-off-by: TANG Tiancheng<tangtiancheng.ttc@alibaba-inc.com>
+> 
+> 
+> Do you mean we should add the same tag twice?
 
-Ping.
+The from line is "Swung0x48 <swung0x48@outlook.com>".
+If this is an alternate email for TANG Tiancheng, then please fix the patch --author.
+
+
+r~
 
