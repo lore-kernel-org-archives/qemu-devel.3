@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84DA4CCD192
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 09:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5474ECCD192
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 09:25:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqqkp-00077w-4d; Wed, 18 Sep 2024 05:13:43 -0400
+	id 1sqqvS-0003bY-Nq; Wed, 18 Sep 2024 05:24:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sqqkn-000772-IC
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:13:41 -0400
-Received: from dedi548.your-server.de ([85.10.215.148])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sqqvN-0003at-OP
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:24:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sqqkl-0003CH-8j
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:13:41 -0400
-Received: from sslproxy02.your-server.de ([78.47.166.47])
- by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sqqkf-000IIM-2k for qemu-devel@nongnu.org;
- Wed, 18 Sep 2024 11:13:33 +0200
-Received: from [82.100.198.138] (helo=mail.embedded-brains.de)
- by sslproxy02.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1sqqkf-000Dcr-1k for qemu-devel@nongnu.org;
- Wed, 18 Sep 2024 11:13:33 +0200
-Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id 4174048006C
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 11:13:33 +0200 (CEST)
-Received: from mail.embedded-brains.de ([127.0.0.1])
- by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
- with ESMTP id 3JE0o0OTWVIr for <qemu-devel@nongnu.org>;
- Wed, 18 Sep 2024 11:13:32 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id DAB4748017C
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 11:13:32 +0200 (CEST)
-X-Virus-Scanned: amavis at zimbra.eb.localhost
-Received: from mail.embedded-brains.de ([127.0.0.1])
- by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
- with ESMTP id PhFmrw8JIUs7 for <qemu-devel@nongnu.org>;
- Wed, 18 Sep 2024 11:13:32 +0200 (CEST)
-Received: from zimbra.eb.localhost (zimbra.eb.localhost [192.168.96.204])
- by mail.embedded-brains.de (Postfix) with ESMTP id AD85048006C
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 11:13:32 +0200 (CEST)
-Date: Wed, 18 Sep 2024 11:13:32 +0200 (CEST)
-From: Sebastian Huber <sebastian.huber@embedded-brains.de>
-To: qemu-devel <qemu-devel@nongnu.org>
-Message-ID: <1242128488.101916.1726650812387.JavaMail.zimbra@embedded-brains.de>
-Subject: Xilinx Zynq 7000 Start of CPU1
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sqqvL-00043n-NK
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:24:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1726651473;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=Iz67smzzOXZyMTU9nhdny5TDC7LdQBbHvNtUHEwpvv8=;
+ b=YqfeLrjppdY6Gvuq8hGfsEMhBcJocUuuIfdzwRxXFjvbO7Bqt+FQ7ePR/FGVIYrgpQxSnE
+ 50oYTr0Lv/x+bTtfCLmfZAmCBpg7jCWhGKizezoQAd5Z+oYx7BM5cGftPWh9K5z6bP7jQu
+ HEEBfBw/wOPsm3ug5QJJrZBOh1EFP8g=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-671-HpZYkV6TOHK-UOYg2yZW8Q-1; Wed,
+ 18 Sep 2024 05:24:29 -0400
+X-MC-Unique: HpZYkV6TOHK-UOYg2yZW8Q-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 292F81944AA4; Wed, 18 Sep 2024 09:24:28 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.226.29])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DBC9E30001A1; Wed, 18 Sep 2024 09:24:25 +0000 (UTC)
+Date: Wed, 18 Sep 2024 11:24:22 +0200
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: QEMU Developers <qemu-devel@nongnu.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: flakiness on CI jobs run via k8s
+Message-ID: <ZuqcRvjd9f3YGutx@redhat.com>
+References: <CAFEAcA9ZsxwZb_=A15pUXDF+HH=sD-B8zm1j8MMJ-mPsZNP62Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [192.168.96.204]
-X-Mailer: Zimbra 9.0.0_GA_4615 (ZimbraWebClient - FF128 (Linux)/9.0.0_GA_4615)
-Thread-Index: XWOxYHF+B3TrRy5pEyz5aKlxLJtu6w==
-Thread-Topic: Xilinx Zynq 7000 Start of CPU1
-X-Authenticated-Sender: smtp-embedded@poldi-networks.de
-X-Virus-Scanned: Clear (ClamAV 1.0.5/27401/Tue Sep 17 10:31:21 2024)
-Received-SPF: pass client-ip=85.10.215.148;
- envelope-from=sebastian.huber@embedded-brains.de; helo=dedi548.your-server.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA9ZsxwZb_=A15pUXDF+HH=sD-B8zm1j8MMJ-mPsZNP62Q@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,37 +81,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+On Tue, Sep 17, 2024 at 04:48:45PM +0100, Peter Maydell wrote:
+> I notice that a lot of the CI job flakiness I'm seeing with main
+> CI runs involves jobs that are run via the k8s runners. Notably
+> cross-i686-tci and cross-i686-system and cross-i686-user are like this.
+> These jobs run with no flakiness that I've noticed when they're run
+> by an individual gitlab user (in which case they're not running on
+> k8s, I believe). So something seems to be up with the environment
+> we're using to run the jobs for the main CI. My impression is that
+> the time things take to run can be very variable, especially if the
+> CI job believes the reported number of CPUs and actually tries to run
+> 8 or 9 test cases in parallel.
+> 
+> Any ideas what might be causing issues here, or config tweaks
+> we might be able to make to ensure that the environment reports
+> to the CI job a number of CPUs/etc that accurately reflects
+> the amount of resource it really has?
 
-I recently added the support for CPU1 to the xilinx-zynq-a9 machine (hw/arm=
-/xilinx_zynq.c). However, the reset behaviour doesn't match exactly with th=
-e hardware. After a system reset (SRST), the CPU1 should execute a wfe inst=
-ruction and then load the start address from 0xfffffff0:
+Didn't we change the hosting for our k8s runners recently ? They were
+running on Azure, but I vaguely recall hearing that it was being
+switched again.
 
-https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Starting-Code-on-CPU-1
+Anyway, perhaps the cloud provider is over-committing the env such
+that we have excessive streal time and thus not getting the full
+power of the CPUs we expect.  I know gitlab's own public runners
+will suffer from this periodically, due to the very cheap VMs they
+host on.
 
-It would be great if someone has a hint for me how I can add this startup c=
-ode for CPU1 at address region 0xFFFFFE00 to 0xFFFFFFF0.
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-Kind regards, Sebastian
-
---=20
-embedded brains GmbH & Co. KG
-Herr Sebastian HUBER
-Dornierstr. 4
-82178 Puchheim
-Germany
-email: sebastian.huber@embedded-brains.de
-phone: +49-89-18 94 741 - 16
-fax:   +49-89-18 94 741 - 08
-
-Registergericht: Amtsgericht M=C3=BCnchen
-Registernummer: HRB 157899
-Vertretungsberechtigte Gesch=C3=A4ftsf=C3=BChrer: Peter Rasmussen, Thomas D=
-=C3=B6rfler
-Unsere Datenschutzerkl=C3=A4rung finden Sie hier:
-https://embedded-brains.de/datenschutzerklaerung/
 
