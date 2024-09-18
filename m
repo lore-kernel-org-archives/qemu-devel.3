@@ -4,51 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98A44CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 14:17:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D93D5CCD1B7
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 14:19:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqvTQ-0001BE-Is; Wed, 18 Sep 2024 10:16:04 -0400
+	id 1sqvWk-0005wp-TN; Wed, 18 Sep 2024 10:19:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1sqvTM-000191-NH
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 10:16:02 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1sqvTK-0004TI-Og
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 10:16:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
- :Subject; bh=vKqpOD15e1VclfTK3L5CXdjgHocRd3YUXBcZAVPIbgQ=; b=A8tttI3UgYTmNTnC
- 7FBZXDhrytouCgiv42cVm25aHR6gwxm/8CxE9zeK5hZ2mU82sfD5DAHTDfQGTMTz4AMDaOHisHtlh
- 3zehWCim2BUqfSKG6b+lqvgbhum8bboG99OU8Ix26MYztDjHDhxZ82EHgYkuLhxV5kxKFEfUsJTjU
- yDMiyjYowTucAxEb+vvPwTD3JbSmKXBdw8c5JT6B5+Pld6MHWVHZGmK30O3xTYE+mor3SlyDCu5WG
- LQpj6lebZ24yaFIvQ7ZpUolC4JPOij21p0lMgHueAnT1/Xru1OW5+qU1aywwHDg+P+XyHzbStOSuP
- t58cfmgowu1kRojFZQ==;
-Received: from localhost ([127.0.0.1] helo=dalek.home.treblig.org)
- by mx.treblig.org with esmtp (Exim 4.96)
- (envelope-from <dave@treblig.org>) id 1sqvTG-006Itt-1x;
- Wed, 18 Sep 2024 14:15:54 +0000
-From: dave@treblig.org
-To: richard.henderson@linaro.org,
-	laurent@vivier.eu
-Cc: qemu-devel@nongnu.org,
-	"Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH] linux-user: Remove unused handle_vm86_fault
-Date: Wed, 18 Sep 2024 15:15:53 +0100
-Message-ID: <20240918141553.149521-1-dave@treblig.org>
-X-Mailer: git-send-email 2.46.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sqvWd-0005vl-3W
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 10:19:25 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sqvWa-0004xo-Nn
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 10:19:22 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a8ce5db8668so104703466b.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 07:19:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726669158; x=1727273958; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aM8gjwf3Lk/C8mpbX+e1LkgG/VFJdpCI80PWonoL+Uc=;
+ b=RVWlJeQloamduk+rul5d/sNAHdqMYJHCIwzvjtzlrWO81FfBja1Vrsuo7ssotkgznt
+ /O++bAEr2MZaZ3xwLAQcwg5ZJw66UURQ46RoYjjp5qdIpDqRMpBYM/MvXUJkrTUhz+oT
+ okmiEL2xxv1o3OwhVFhLVBWulQF6ZOMxszeGYT9Nxo36d/hyifDm7x59FBPSzOS/NxBd
+ 7M9iO5KrbIgoInPb8iRFPpJeFUGy83PdnX6vA2UomZQn+EoAvv1ABNjnfMCnten6s46s
+ Z0n82vDjYsolgFrDTUpd6cub0OsFGL4pWo6Ldnn52jIxF6g1vR4h7W18pul5Wx/E8zeE
+ zelQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726669158; x=1727273958;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=aM8gjwf3Lk/C8mpbX+e1LkgG/VFJdpCI80PWonoL+Uc=;
+ b=LhfeHHPK+DcX8jHejic9uPnz3oVsez3LJfYCvBvEYeK2atEF7lO29sjgBVcnFV/Lds
+ NTuzoLp23YM88td3AVPoTJhA96sRt0cUna6+yE5rW8pWE7lDADip8TO/EgVGoHEvxz4r
+ rcRXm3icc9mt/ToGplN2S7TzWx/l/aZFCtVpOCPxvGCy4wh1vWajPHwCarsJvyknAxkU
+ zscrB0OnCLD3FxaM19gM2EY5z4DWC6ktElqM61zHzSxu95itl5SLBUypHF+QcfG1DRpa
+ pvW/Wuv9w7HPY4Ovouw5f2s6+X0oTNrEZHANp2iKyBRRWkrg6PhbY9fTAD5vfWJP05ZW
+ d6Sg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWVmJFTk89dJba1XSlE1vSblnNIlVmKgG9gFwtGPUR2JL4dgJH2dndNWYjBvqAelZDhShErbxlkFmPT@nongnu.org
+X-Gm-Message-State: AOJu0Yx9+xGWbdncHNIZ5f3R4rLZPSfUoMRo4rIf9JpR0kP5ogCEU7J8
+ lrglGJrCwBJv2czFghuaXZDzVzfU/U24odDERmMUhLEGLQXT2bL97m/m9Lv+efw=
+X-Google-Smtp-Source: AGHT+IFnJVlJzxndldxEnz9qlmu/DP48j1zZacHkuPV9APlfE0bI5xtYyeZvpjl/ZEP3/VtnjcBDbg==
+X-Received: by 2002:a17:906:bc11:b0:a86:68a1:6a08 with SMTP id
+ a640c23a62f3a-a902948e84amr2284129266b.29.1726669158060; 
+ Wed, 18 Sep 2024 07:19:18 -0700 (PDT)
+Received: from [10.133.7.245] ([83.68.141.146])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a90610f3ae2sm592987866b.76.2024.09.18.07.19.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Sep 2024 07:19:17 -0700 (PDT)
+Message-ID: <c8902f79-0094-4821-99ab-ec0eba5e870d@linaro.org>
+Date: Wed, 18 Sep 2024 16:19:15 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dave@treblig.org;
- helo=mx.treblig.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/fp: Make mul and div tests have a longer timeout
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20240917141641.2836265-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240917141641.2836265-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,179 +97,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
+On 9/17/24 16:16, Peter Maydell wrote:
+> At the moment we run all fp-test tests except for the muladd ones
+> with the default meson test timeout of 30s. This is plenty for
+> most of the test cases, but for multiplication and division we
+> can sometimes hit the timeout if the CI runner is going slow.
+> 
+> Add support to meson.build for a way to override the timeout on
+> a per test basis, and use it to set the timeout to 60s for
+> fp-test-rem, fp-test-div and fp-test-mul. We can use this new
+> generic mechanism also to set the timeout for mulAdd rather
+> than hardcoding it.
+> 
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+> On my local system these tests finish in less than 5 seconds
+> each, but on the cross-i686-system CI job they can take 5 or 6
+> times as long. Example:
+> https://gitlab.com/qemu-project/qemu/-/jobs/7844908223
+> ---
+>   tests/fp/meson.build | 16 +++++++++++++++-
+>   1 file changed, 15 insertions(+), 1 deletion(-)
 
-handle_vm86_fault has been unused since:
-  1ade5b2fed ("linux-user/i386: Split out maybe_handle_vm86_trap")
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Remove it, and it's local macros.
-
-Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
----
- linux-user/user-internals.h |   1 -
- linux-user/vm86.c           | 136 ------------------------------------
- 2 files changed, 137 deletions(-)
-
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index 5c7f173ceb..46ffc093f4 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -102,7 +102,6 @@ int host_to_target_waitstatus(int status);
- /* vm86.c */
- void save_v86_state(CPUX86State *env);
- void handle_vm86_trap(CPUX86State *env, int trapno);
--void handle_vm86_fault(CPUX86State *env);
- int do_vm86(CPUX86State *env, long subfunction, abi_ulong v86_addr);
- #elif defined(TARGET_SPARC64)
- void sparc64_set_context(CPUSPARCState *env);
-diff --git a/linux-user/vm86.c b/linux-user/vm86.c
-index 9f512a2242..31a2d707cf 100644
---- a/linux-user/vm86.c
-+++ b/linux-user/vm86.c
-@@ -255,142 +255,6 @@ void handle_vm86_trap(CPUX86State *env, int trapno)
-     }
- }
- 
--#define CHECK_IF_IN_TRAP() \
--      if ((ts->vm86plus.vm86plus.flags & TARGET_vm86dbg_active) && \
--          (ts->vm86plus.vm86plus.flags & TARGET_vm86dbg_TFpendig)) \
--                newflags |= TF_MASK
--
--#define VM86_FAULT_RETURN \
--        if ((ts->vm86plus.vm86plus.flags & TARGET_force_return_for_pic) && \
--            (ts->v86flags & (IF_MASK | VIF_MASK))) \
--            return_to_32bit(env, TARGET_VM86_PICRETURN); \
--        return
--
--void handle_vm86_fault(CPUX86State *env)
--{
--    CPUState *cs = env_cpu(env);
--    TaskState *ts = get_task_state(cs);
--    uint32_t csp, ssp;
--    unsigned int ip, sp, newflags, newip, newcs, opcode, intno;
--    int data32, pref_done;
--
--    csp = env->segs[R_CS].selector << 4;
--    ip = env->eip & 0xffff;
--
--    ssp = env->segs[R_SS].selector << 4;
--    sp = env->regs[R_ESP] & 0xffff;
--
--    LOG_VM86("VM86 exception %04x:%08x\n",
--             env->segs[R_CS].selector, env->eip);
--
--    data32 = 0;
--    pref_done = 0;
--    do {
--        opcode = vm_getb(env, csp, ip);
--        ADD16(ip, 1);
--        switch (opcode) {
--        case 0x66:      /* 32-bit data */     data32=1; break;
--        case 0x67:      /* 32-bit address */  break;
--        case 0x2e:      /* CS */              break;
--        case 0x3e:      /* DS */              break;
--        case 0x26:      /* ES */              break;
--        case 0x36:      /* SS */              break;
--        case 0x65:      /* GS */              break;
--        case 0x64:      /* FS */              break;
--        case 0xf2:      /* repnz */	      break;
--        case 0xf3:      /* rep */             break;
--        default: pref_done = 1;
--        }
--    } while (!pref_done);
--
--    /* VM86 mode */
--    switch(opcode) {
--    case 0x9c: /* pushf */
--        if (data32) {
--            vm_putl(env, ssp, sp - 4, get_vflags(env));
--            ADD16(env->regs[R_ESP], -4);
--        } else {
--            vm_putw(env, ssp, sp - 2, get_vflags(env));
--            ADD16(env->regs[R_ESP], -2);
--        }
--        env->eip = ip;
--        VM86_FAULT_RETURN;
--
--    case 0x9d: /* popf */
--        if (data32) {
--            newflags = vm_getl(env, ssp, sp);
--            ADD16(env->regs[R_ESP], 4);
--        } else {
--            newflags = vm_getw(env, ssp, sp);
--            ADD16(env->regs[R_ESP], 2);
--        }
--        env->eip = ip;
--        CHECK_IF_IN_TRAP();
--        if (data32) {
--            if (set_vflags_long(newflags, env))
--                return;
--        } else {
--            if (set_vflags_short(newflags, env))
--                return;
--        }
--        VM86_FAULT_RETURN;
--
--    case 0xcd: /* int */
--        intno = vm_getb(env, csp, ip);
--        ADD16(ip, 1);
--        env->eip = ip;
--        if (ts->vm86plus.vm86plus.flags & TARGET_vm86dbg_active) {
--            if ( (ts->vm86plus.vm86plus.vm86dbg_intxxtab[intno >> 3] >>
--                  (intno &7)) & 1) {
--                return_to_32bit(env, TARGET_VM86_INTx + (intno << 8));
--                return;
--            }
--        }
--        do_int(env, intno);
--        break;
--
--    case 0xcf: /* iret */
--        if (data32) {
--            newip = vm_getl(env, ssp, sp) & 0xffff;
--            newcs = vm_getl(env, ssp, sp + 4) & 0xffff;
--            newflags = vm_getl(env, ssp, sp + 8);
--            ADD16(env->regs[R_ESP], 12);
--        } else {
--            newip = vm_getw(env, ssp, sp);
--            newcs = vm_getw(env, ssp, sp + 2);
--            newflags = vm_getw(env, ssp, sp + 4);
--            ADD16(env->regs[R_ESP], 6);
--        }
--        env->eip = newip;
--        cpu_x86_load_seg(env, R_CS, newcs);
--        CHECK_IF_IN_TRAP();
--        if (data32) {
--            if (set_vflags_long(newflags, env))
--                return;
--        } else {
--            if (set_vflags_short(newflags, env))
--                return;
--        }
--        VM86_FAULT_RETURN;
--
--    case 0xfa: /* cli */
--        env->eip = ip;
--        clear_IF(env);
--        VM86_FAULT_RETURN;
--
--    case 0xfb: /* sti */
--        env->eip = ip;
--        if (set_IF(env))
--            return;
--        VM86_FAULT_RETURN;
--
--    default:
--        /* real VM86 GPF exception */
--        return_to_32bit(env, TARGET_VM86_UNKNOWN);
--        break;
--    }
--}
--
- int do_vm86(CPUX86State *env, long subfunction, abi_ulong vm86_addr)
- {
-     CPUState *cs = env_cpu(env);
--- 
-2.46.0
-
+r~
 
