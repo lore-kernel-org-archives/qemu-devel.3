@@ -4,84 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E32ACCD1A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 13:19:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14CF3CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 13:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1squaD-0004fV-9E; Wed, 18 Sep 2024 09:19:01 -0400
+	id 1squsv-0006Zw-PZ; Wed, 18 Sep 2024 09:38:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
- id 1squaA-0004XN-OJ
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 09:18:58 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
- id 1squa8-0005Vz-NU
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 09:18:58 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2055136b612so84582345ad.0
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 06:18:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1726665534; x=1727270334; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=nUSGCu4AkUfHxrvYixPgCsiLMuPBrCq73vnsoiuSJT8=;
- b=Q2GYBR4OZ3fX1E75XpI9QuAj/LXJzxbV6r1hGQ0F7R0WzAXB6mIoLRlefBNQHV5WGe
- hpHV+x+r1PkR5EO4jA7FbbF+H89x4VOm2o0QfR9ItG6Y7ginbNw0S1q7iMA9XzzYi0ae
- XoWSUwyY2w1WMkje+u00/uiF/Kbm9niV6kJPShNM3CQB9NDiAXxRJCO36FWxhgIPUQ80
- nPYrWsiuxCBdww9DOQCNDsgLMQoon8mcgw8CelQyp4mS95oUsQtKqHUCLZTA6fEGvMur
- 0W3BZOhDS26HRRa0bFkn5CzM0qDN1hYb4OfyaYfHZL6GnWOknF2j7h1y5elM1K/mF6Fj
- 6KJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726665534; x=1727270334;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nUSGCu4AkUfHxrvYixPgCsiLMuPBrCq73vnsoiuSJT8=;
- b=IdF9MyaRdgGU5TywmjqUs5XYUNKUGkwnDzplAJIzCD2zxIHhaE/YIaRuRiyuX8IRX9
- ipM+/BS2UAeAu1rXgHBQfQ1/uVq72ZE2ihP8jQnxrmXuYi9oLjFuHgcZLDIp6mV4mrve
- hRqn4JRY4PO3/+M0VD3N1jzehPAwjCtaehlr6GwoA4ooHsRsKxbhFldP39fmnagA1cWK
- SVmmB7xWXC90CFUiQhJ3kVIDs6LS8xe1dCeWvOjmCkttZrxySoWpxPNZ910eRJwMI1NA
- SIh++fS4z05MPU3VSNnRxl8UvgpA7G4rtCNvfdySGMqF8y5MgyZiBS0ucFTA3cYCkRIZ
- ckqw==
-X-Gm-Message-State: AOJu0YyZ1qVT3yVr6h0sd6Hgc0tbGHdNZCbel5I7LgTHxyxMl3pE0t7m
- PBmKxfyiBnokOE+sx9vt9VeWm5CzgioPsBxtoEkdqwc9ckuk9jvJpQHcKaFNjYOl4jBfYSv1ZwV
- e
-X-Google-Smtp-Source: AGHT+IFWlaF6QYx/ym/ZioEVaIlulSc70T3DHyRDVlNteT+IhaWqmxEeqXGzNeRaWrhjrBm2smAEag==
-X-Received: by 2002:a17:902:c64c:b0:207:457f:b8f0 with SMTP id
- d9443c01a7336-2076e36f86amr238412695ad.27.1726665534558; 
- Wed, 18 Sep 2024 06:18:54 -0700 (PDT)
-Received: from MacBook-Pro-2.local.bytedance.net ([203.208.167.148])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-207946d3c8bsm64479485ad.126.2024.09.18.06.18.50
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 18 Sep 2024 06:18:54 -0700 (PDT)
-From: Chuang Xu <xuchuangxclwt@bytedance.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, imammedo@redhat.com, xieyongji@bytedance.com,
- chaiwen.cc@bytedance.com, zhao1.liu@intel.com, qemu-stable@nongnu.org,
- Chuang Xu <xuchuangxclwt@bytedance.com>,
- Guixiong Wei <weiguixiong@bytedance.com>,
- Yipeng Yin <yinyipeng@bytedance.com>
-Subject: [PATCH v3] i386/cpu: fixup number of addressable IDs for logical
- processors in the physical package
-Date: Wed, 18 Sep 2024 21:18:15 +0800
-Message-Id: <20240918131815.8543-1-xuchuangxclwt@bytedance.com>
-X-Mailer: git-send-email 2.24.3 (Apple Git-128)
+ (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
+ id 1squsS-0006Sx-Av; Wed, 18 Sep 2024 09:37:53 -0400
+Received: from mta-04.yadro.com ([89.207.88.248])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
+ id 1squs4-0007r3-ON; Wed, 18 Sep 2024 09:37:45 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 6F78EC0006
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-04; t=1726666634;
+ bh=h/xNo84tLzuUBiJzxOYvmq5ZkSQGeVRmK+P8RjYIjBY=;
+ h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
+ b=tHaZ36aVOLjizpTUOrHHR+pcsNY4ap9DYDd29KiJAry/4v9duLUfbYPYTau7gjj4P
+ HVY7w0BHn/wyINi4X4kJLPAU7zqlFXedTXFkfSQjYPpJioHwczVqWfI7TK3eCxzPEV
+ ZYI6JEyITO3oKmdtLSIsxpXnquT1jhWIk5jMZKXdgpqa8ZLDoTCs2zh/zvDTEiUJdP
+ GAj1dM9PuLG1gB+27sapsaYlQCECXbeJnRGCyOC84Uv0WgLQzuX1zrPVvDKzP2G1oV
+ m9hca+nb40Rpg+mMBE38T0X/L8ju9QDUhTRhtlAH3/qkVK72GH1nwv1UdzKyTMyQ8F
+ QxNKK29Lk0TrQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-03; t=1726666634;
+ bh=h/xNo84tLzuUBiJzxOYvmq5ZkSQGeVRmK+P8RjYIjBY=;
+ h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
+ b=MriygYevTylppcQGAiXdKg27BJP4JlqUR6cy9S/Rck59fl9shnIUvZFArNptS/Zqo
+ egeLkmZTOE8Z31e8g8I40KQUe9w/vQuY+RtW8NaM3Onm02I7dSA2KpOuSgiQCPOyQj
+ RExs3XJZeY8ddixKeiBxgN/u1jvKNWFzyubHZyxm5ke4d4rHrGuBh984lVH2sRTFyw
+ YMUH210qlWhQTM9g5JV0oIt5ZEwgD09CWC91WX0sp7t4a/UAxhBJZTZe9jyBWi4NmF
+ CqQlTdeQHureRFbZx3vxT0G3WeyYCPx2YWM787GoE+9kJWC+vkIdrgJPXDlxWJHfiY
+ H16NNbZT3jYeQ==
+Message-ID: <0e2bbc89-66ae-4ca3-b01b-64998a6e8da6@syntacore.com>
+Date: Wed, 18 Sep 2024 16:37:12 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=xuchuangxclwt@bytedance.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9] target/riscv/kvm/kvm-cpu.c: kvm_riscv_handle_sbi()
+ fail with vendor-specific SBI
+To: Andrew Jones <ajones@ventanamicro.com>
+CC: <alistair.francis@wdc.com>, <alistair23@gmail.com>,
+ <apatel@ventanamicro.com>, <bin.meng@windriver.com>,
+ <dbarboza@ventanamicro.com>, <liwei1518@gmail.com>, <palmer@dabbelt.com>,
+ <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>,
+ <zhiwei_liu@linux.alibaba.com>
+References: <20240626-1420003b7d88d892be22a719@orel>
+ <20240917115433.38503-1-alexei.filippov@syntacore.com>
+ <20240917-4c642a7fb52b49f470c9f29a@orel>
+ <20240917-d929b9736eea1df07a77a9bc@orel>
+Content-Language: en-US
+From: Aleksei Filippov <alexei.filippov@syntacore.com>
+Organization: Syntacore
+In-Reply-To: <20240917-d929b9736eea1df07a77a9bc@orel>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: T-EXCH-06.corp.yadro.com (172.17.10.110) To
+ T-EXCH-12.corp.yadro.com (172.17.11.143)
+Received-SPF: permerror client-ip=89.207.88.248;
+ envelope-from=alexei.filippov@syntacore.com; helo=mta-04.yadro.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
+ T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,48 +88,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When QEMU is started with:
--cpu host,migratable=on,host-cache-info=on,l3-cache=off
--smp 180,sockets=2,dies=1,cores=45,threads=2
 
-Try to execute "cpuid -1 -l 1 -r" in guest, we'll obtain a value of 90 for
-CPUID.01H.EBX[23:16], while the expected value is 128. And Try to
-execute "cpuid -1 -l 4 -r" in guest, we'll obtain a value of 63 for
-CPUID.04H.EAX[31:26] as expected.
 
-As (1+CPUID.04H.EAX[31:26]) round up to the nearest power-of-2 integer,
-we'd beter round up CPUID.01H.EBX[23:16] to the nearest power-of-2
-integer too. Otherwise we may encounter unexpected results in guest.
+On 17.09.2024 16:10, Andrew Jones wrote:
+> On Tue, Sep 17, 2024 at 02:29:41PM GMT, Andrew Jones wrote:
+>> On Tue, Sep 17, 2024 at 02:54:33PM GMT, Alexei Filippov wrote:
+>>> kvm_riscv_handle_sbi() may return not supported return code to not
+>>> trigger qemu abort with vendor-specific sbi.
+>>>
+>>> Add new error path to provide proper error in case of
+>>> qemu_chr_fe_read_all() may not return sizeof(ch), because exactly zero
+>>> just means we failed to read input, which can happen, so
+>>> telling the SBI caller we failed to read, but telling the caller of this
+>>> function that we successfully emulated the SBI call, is correct. However,
+>>> anything else, other than sizeof(ch), means something unexpected happened,
+>>> so we should return an error.
+>>>
+>>> Added SBI related return code's defines.
+>>>
+>>> Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
+>>> Fixes: 4eb47125 ("target/riscv: Handle KVM_EXIT_RISCV_SBI exit")
+>>
+>> Fixes tag goes above s-o-b and 8 hex digits is a bit small. Most
+>> commit references in QEMU are using 10 or 12 digits.
+>>
+>>> ---
+>>>   target/riscv/kvm/kvm-cpu.c         | 10 ++++++----
+>>>   target/riscv/sbi_ecall_interface.h | 12 ++++++++++++
+>>>   2 files changed, 18 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+>>> index f6e3156b8d..9f2ca67c9f 100644
+>>> --- a/target/riscv/kvm/kvm-cpu.c
+>>> +++ b/target/riscv/kvm/kvm-cpu.c
+>>> @@ -1517,19 +1517,21 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
+>>>           ret = qemu_chr_fe_read_all(serial_hd(0)->be, &ch, sizeof(ch));
+>>>           if (ret == sizeof(ch)) {
+>>>               run->riscv_sbi.ret[0] = ch;
+>>> -        } else {
+>>> +            ret = 0;
+>>> +        } else if (ret == 0) {
+>>>               run->riscv_sbi.ret[0] = -1;
+>>> +        } else {
+>>> +            ret = -1;
+>>>           }
+>>> -        ret = 0;
+>>
+>> Looks good!
+>>
+>>>           break;
+>>>       case SBI_EXT_DBCN:
+>>>           kvm_riscv_handle_sbi_dbcn(cs, run);
+>>>           break;
+>>>       default:
+>>>           qemu_log_mask(LOG_UNIMP,
+>>> -                      "%s: un-handled SBI EXIT, specific reasons is %lu\n",
+>>> +                      "%s: Unhandled SBI exit with extension-id %lu\n",
+>>>                         __func__, run->riscv_sbi.extension_id);
+>>> -        ret = -1;
+>>> +        run->riscv_sbi.ret[0] = SBI_ERR_NOT_SUPPORTED;
+>>
+>> This, along with the addition of the SBI_* defines below, should be a
+>> separate patch. If we were just naming the -1, then I wouldn't mind it
+>> slipping in with the same patch, but this is changing behavior since
+>> SBI_ERR_NOT_SUPPORTED is -2. I agree with the change, though, it just
+>> needs to be a separate patch. And the separate patch should have the
+>> same Fixes tag.
+>>
+> 
+> Actually it's even more of a difference than s/-1/-2/ since we're no long
+> aborting the SBI call, but returning non-supported instead.
 
-For example, when QEMU is started with CLI above and xtopology is disabled,
-guest kernel 5.15.120 uses CPUID.01H.EBX[23:16]/(1+CPUID.04H.EAX[31:26]) to
-calculate threads-per-core in detect_ht(). Then guest will get "90/(1+63)=1"
-as the result, even though theads-per-core should actually be 2.
+I agreed, I'll split commits, but do you want me to resend patch as 2 patch 
+series or 2 separate patches?
+> 
+> Thanks,
+> drew
 
-So let us round up CPUID.01H.EBX[23:16] to the nearest power-of-2 integer
-to solve the unexpected result.
-
-Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
-Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
-Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
----
- target/i386/cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 4c2e6f3a71..3710ae5283 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6417,7 +6417,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         }
-         *edx = env->features[FEAT_1_EDX];
-         if (threads_per_pkg > 1) {
--            *ebx |= threads_per_pkg << 16;
-+            *ebx |= pow2ceil(threads_per_pkg) << 16;
-             *edx |= CPUID_HT;
-         }
-         if (!cpu->enable_pmu) {
 -- 
-2.20.1
-
+Sincerely,
+Aleksei Filippov
 
