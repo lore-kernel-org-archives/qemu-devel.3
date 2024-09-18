@@ -4,94 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 243E0CDD55C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 23:03:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0C49CDD55C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 23:04:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr3gt-00068m-98; Wed, 18 Sep 2024 19:02:31 -0400
+	id 1sr3hq-0007Ub-0e; Wed, 18 Sep 2024 19:03:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=98481a01b=graf@amazon.de>)
- id 1sr3gs-00068J-31
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 19:02:30 -0400
-Received: from smtp-fw-6002.amazon.com ([52.95.49.90])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=98481a01b=graf@amazon.de>)
- id 1sr3gp-00058k-Kh
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 19:02:29 -0400
+ (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1sr3ho-0007Ni-8C
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 19:03:28 -0400
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1sr3hm-0005Hj-2O
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 19:03:28 -0400
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-53690eb134bso36447e87.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 16:03:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1726700547; x=1758236547;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=qaNCtu5Ah5GsphXESzIsuf1PNk2lIzYS7FZTOR3VTqo=;
- b=pJHsh08cOw97a6R9d3US0QtUft0lW2nf+iU7NuOX8xKHA/L/zt3AYTGO
- TOhUR6glI+PjygsjtsAzJKw0pIUFLYB10giEnwz3AWGipdhobBQoEwEaE
- j5bQVULS4Wk1YRPxhCiWJfQRCpH6Hzn9YZi0NVAe39TzElzKZKUhTdmVM w=;
-X-IronPort-AV: E=Sophos;i="6.10,240,1719878400"; d="scan'208";a="434420965"
-Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
- by smtp-border-fw-6002.iad6.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2024 23:02:21 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [10.0.38.20:29700]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.10.6:2525] with
- esmtp (Farcaster)
- id d980ed7c-ac6b-4381-a9dc-9e91c65cd53c; Wed, 18 Sep 2024 23:02:20 +0000 (UTC)
-X-Farcaster-Flow-ID: d980ed7c-ac6b-4381-a9dc-9e91c65cd53c
-Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.218) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Wed, 18 Sep 2024 23:02:19 +0000
-Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
- (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34; Wed, 18 Sep 2024
- 23:02:15 +0000
-Message-ID: <5e2b6e72-0b7e-45fa-8a5d-d7a2eff9a5b4@amazon.com>
-Date: Thu, 19 Sep 2024 01:02:12 +0200
+ d=google.com; s=20230601; t=1726700604; x=1727305404; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=d0XHLnHSYciIA9k4ZqsqHgbNsw+iRtJoHrmtSqO/HIA=;
+ b=N6p7ISjetoKLPN5Excd0vqA+aqhRyN/uc0QsE674v8wwbFnomRNt638kOMppGqTD98
+ DHh3WWdFLRHzdq9W1yk7mL21S/GYyqCjoBh8ewZrrXsnGoViW55Bo4kl0iG0Kl/4BX+Y
+ Dzh9M3iAAC7gdY6KLYMPx3Fuwj5RpoNWgTvnH10w32GmNVIs3KiMCtM3QOo18BKWMz2D
+ BeF8ShwifhOzSzFmR57+akK0SSJVM9PG3/pOVMuo08DI+4EkPgy62Q/aBOQfysEgNNUG
+ 6NommMByBRMBseLjrtDVgD9uGy1NohFpLgWeTl03bQNq/2A+xjRueiTyxKFLnCLvla1z
+ 5tzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726700604; x=1727305404;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=d0XHLnHSYciIA9k4ZqsqHgbNsw+iRtJoHrmtSqO/HIA=;
+ b=ORbLOZeTuH9Ffj+GjUVJikRY607ftn6fr0ortwYmCstjgakSPR2i8+dUvXzfASNQx0
+ M7zLYw5MoVqaWIXf0chMCfE5ORkfGWScGM+dw2Ln+kmiMR0JlmrlhrVcwi5zX/tnuIxo
+ jO+fb3Y8Ka9w1UTznGt++2exuYB2I44zgJIlXITrBwPuRVSzb60j7Aed5E7roA2KEWgy
+ uWGXZuyY/cZ1tmlKbb9B9b0j1d7nrqaU/AbZLeXT2ninQLWSDYt7uZpY4+x7BLiWBsqj
+ yuAV3Q4BLz0ANOC4jken/yHNui8dftD2VVFhkzFd8h9o9jXzAfBAgYVdvux6ys+//ohM
+ BxVQ==
+X-Gm-Message-State: AOJu0Yz+asVwlR2oXCv2Rh8fcQhQwx85JQJk5DIhtDQA3HV7qLHpfMg7
+ +Db4BqrtVSZRJoftiPVrQOdg+48bWYvHsPPkpbOCv9IEDai3juSwuzoUZzLysFlWG+PT4FWlrS5
+ JprmI/JyBvzy+hlgQVSeeiZvpwGujBVPy1Ied
+X-Google-Smtp-Source: AGHT+IFixzRESHTe0fikPuKK+Gi78QzDQj9bG3adGHYiZGRaGgcmxS20wtBUtPiT+qv4qAarTcjCD6QEet9cfm+ujhQ=
+X-Received: by 2002:a05:6512:1395:b0:52e:8475:7c23 with SMTP id
+ 2adb3069b0e04-536a7c2e3acmr12906e87.7.1726700603774; Wed, 18 Sep 2024
+ 16:03:23 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: vm events, userspace, the vmgenid driver, and the future [was:
- the uevent revert thread]
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, <virtio-dev@lists.oasis-open.org>, <qemu-devel@nongnu.org>
-CC: Lennart Poettering <mzxreary@0pointer.de>, <linux-kernel@vger.kernel.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Babis Chalios
- <bchalios@amazon.es>, Theodore Ts'o <tytso@mit.edu>, "Cali, Marco"
- <xmarcalx@amazon.co.uk>, Arnd Bergmann <arnd@arndb.de>, "rostedt@goodmis.org"
- <rostedt@goodmis.org>, Christian Brauner <brauner@kernel.org>, Paolo Bonzini
- <pbonzini@redhat.com>, Sean Christopherson <seanjc@google.com>,
- <jann@thejh.net>, Michael Kelley <mhklinux@outlook.com>
-References: <20240418114814.24601-1-Jason@zx2c4.com>
- <e09ce9fd-14cb-47aa-a22d-d295e466fbb4@amazon.com>
- <CAHmME9qKFraYWmzD9zKCd4oaMg6FyQGP5pL9bzZP4QuqV1O_Qw@mail.gmail.com>
- <ZieoRxn-On0gD-H2@gardel-login>
- <b819717c-74ea-4556-8577-ccd90e9199e9@amazon.com>
- <Ziujox51oPzZmwzA@zx2c4.com> <Zi9ilaX3254KL3Pp@gardel-login>
- <01d2b24c-a9d2-4be0-8fa0-35d9937eceb4@amazon.com>
- <CAHmME9rxn5KJJBOC3TqTEgotnsFO5r6F-DJn3ekc5ZgW8OaCFw@mail.gmail.com>
- <84c3696d-8108-4a2e-90d7-7830ca6cc3b9@amazon.com>
- <ZutT7bArzCwW5yyf@zx2c4.com>
-Content-Language: en-US
-From: Alexander Graf <graf@amazon.com>
-In-Reply-To: <ZutT7bArzCwW5yyf@zx2c4.com>
-X-Originating-IP: [10.253.83.51]
-X-ClientProxiedBy: EX19D036UWB001.ant.amazon.com (10.13.139.133) To
- EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=52.95.49.90;
- envelope-from=prvs=98481a01b=graf@amazon.de; helo=smtp-fw-6002.amazon.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+References: <20240918192254.3136903-1-tavip@google.com>
+ <20240918192254.3136903-20-tavip@google.com>
+ <Zusypeay8cjjPTn0@mail.minyard.net>
+In-Reply-To: <Zusypeay8cjjPTn0@mail.minyard.net>
+From: Octavian Purdila <tavip@google.com>
+Date: Wed, 18 Sep 2024 16:03:12 -0700
+Message-ID: <CAGWr4cQapNbGZteQYAFYrgDnh3cY0xHnEtAiDW0zuURwZr_V3g@mail.gmail.com>
+Subject: Re: [PATCH 19/25] hw/misc: add i2c-tester
+To: corey@minyard.net
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, stefanst@google.com, 
+ pbonzini@redhat.com, peter.maydell@linaro.org, marcandre.lureau@redhat.com, 
+ berrange@redhat.com, eduardo@habkost.net, luc@lmichel.fr, 
+ damien.hedde@dahe.fr, alistair@alistair23.me, thuth@redhat.com, 
+ philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, lvivier@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=tavip@google.com; helo=mail-lf1-x135.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,125 +94,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ck9uIDE5LjA5LjI0IDAwOjI3LCBKYXNvbiBBLiBEb25lbmZlbGQgd3JvdGU6Cj4gW2Jyb2FkZW5l
-ZCBzdWJqZWN0IGxpbmUgYW5kIGFkZGVkIHJlbGV2YW50IHBhcnRpZXMgdG8gY2MgbGlzdF0KPgo+
-IE9uIFR1ZSwgU2VwIDE3LCAyMDI0IGF0IDEwOjU1OjIwUE0gKzAyMDAsIEFsZXhhbmRlciBHcmFm
-IHdyb3RlOgo+PiBXaGF0IGlzIHN0aWxsIG9wZW4gYXJlIHVzZXIgc3BhY2UgYXBwbGljYXRpb25z
-IHRoYXQgcmVxdWlyZSBldmVudCBiYXNlZAo+PiBub3RpZmljYXRpb24gb24gVk0gY2xvbmUgZXZl
-bnRzIC0gYW5kICpvbmx5KiBWTSBjbG9uZSBldmVudHMuIFRoaXMKPj4gbW9zdGx5IGNhdGVycyBm
-b3IgdG9vbHMgbGlrZSBzeXN0ZW1kIHdoaWNoIG5lZWQgdG8gZXhlY3V0ZSBwb2xpY3kgLSBzdWNo
-Cj4+IGFzIGdlbmVyYXRpbmcgcmFuZG9tbHkgZ2VuZXJhdGVkIE1BQyBhZGRyZXNzZXMgLSBpbiB0
-aGUgZXZlbnQgYSBWTSB3YXMKPj4gY2xvbmVkLgo+Pgo+PiBUaGF0J3MgdGhlIHVzZSBjYXNlIHRo
-aXMgcGF0Y2ggInZtZ2VuaWQ6IGVtaXQgdWV2ZW50IHdoZW4gVk1HRU5JRAo+PiB1cGRhdGVzIiBp
-cyBhYm91dCBhbmQgSSB0aGluayB0aGUgYmVzdCBwYXRoIGZvcndhcmQgaXMgdG8ganVzdCByZXZl
-cnQKPj4gdGhlIHJldmVydC4gQSB1ZXZlbnQgZnJvbSB0aGUgZGV2aWNlIGRyaXZlciBpcyBhIHdl
-bGwgZXN0YWJsaXNoZWQsIHdlbGwKPj4gZml0dGluZyBMaW51eCBtZWNoYW5pc20gZm9yIHRoYXQg
-dHlwZSBvZiBub3RpZmljYXRpb24uCj4gVGhlIHRoaW5nIHRoYXQgd29ycmllcyBtZSBpcyB0aGF0
-IHZtZ2VuaWQgaXMganVzdCBzb21lIHdlaXJkIHJhbmRvbQo+IG1pY3Jvc29mdCBhY3BpIGRyaXZl
-ci4gSXQncyBvbmUgc29ydCBvZiBwYXJ0aWN1bGFyIGRldmljZSwgYW5kIG5vdCBhCj4gdmVyeSBn
-b29kIG9uZSBhdCB0aGF0LiBUaGVyZSdzIHN0aWxsIHJvb20gZm9yIHZpcnRpby9xZW11IHRvIGlt
-cHJvdmUgb24KPiBpdCB3aXRoIHRoZWlyIG93biB0aGluZywgb3IgZm9yIHZib3ggb3Igd2hhdGV2
-ZXIgZWxzZSB0byBoYXZlIHRoZWlyCj4gdmVyc2lvbiwgYW5kIHhlbiB0aGVpcnMsIGFuZCBzbyBm
-b3J0aC4gVGhhdCBpcyB0byBzYXksIEknbSBub3Qgc3VyZSB0aGF0Cj4gdGhpcyB2aXJ0dWFsIGhh
-cmR3YXJlIGlzICp0aGUqIHdheSBvZiBkb2luZyBpdC4KCgpJIGFncmVlLCBidXQgZ2l2ZW4gdGhh
-dCBpdCdzIGJlZW4gYSBmZXcgeWVhcnMgYW5kIG5vYm9keSBlbHNlIHJlYWxseSAKY2FtZSB1cCB3
-aXRoIGEgZGlmZmVyZW50IGRldmljZSwgaXQgbWVhbnMgdGhlIGN1cnJlbnQgc2VtYW50aWNzIGZv
-ciB0aGUgCnNjb3BlIG9mIHdoYXQgdGhlIGRldmljZSBpcyBkb2luZyBhcmUgY2xvc2UgdG8gImdv
-b2QgZW5vdWdoIi4gU28gSSBkb24ndCAKZXhwZWN0IGEgbG90IG9mIGlubm92YXRpb24gaGVyZS4g
-QW5kIGlmIHRoZXJlIHdpbGwgYmUgaW5ub3ZhdGlvbiAtIGFzIAp5b3UgcG9pbnQgb3V0IC0gaXQg
-d2lsbCBicmluZyBkaWZmZXJlbnQgc2VtYW50aWNzIHRoYXQgd2lsbCB0aGVuIGFsc28gCnJlcXVp
-cmUgdXNlciBzcGFjZSBjaGFuZ2VzIGFueXdheS4KCgo+IEV2ZW4gaW4gdGVybXMgb2YgdGhlIGVu
-dHJvcHkgc3R1ZmYgKHdoaWNoIEkga25vdyB5b3Ugbm8gbG9uZ2VyIGNhcmUKPiBhYm91dCwgYnV0
-IEkgZG8pLCBtc3QncyBvcmlnaW5hbCB2aXJ0aW8tcm5nIGRyYWZ0IG1lbnRpb25lZCByZXBvcnRp
-bmcKPiBldmVudHMgYmV5b25kIGp1c3QgVk0gZm9ya3MsIGV4dGVuZGluZyBpdCBnZW5lcmljYWxs
-eSB0byBhbnkga2luZCBvZgo+IGVudHJvcHkgcmVkdWN0aW9uIHNpdHVhdGlvbi4gRm9yIGV4YW1w
-bGUsIG1pZ3JhdGlvbiBvciBzdXNwZW5kIG9yCj4gd2hhdGV2ZXIgbWlnaHQgYmUgaW50ZXJlc3Rp
-bmcgdGhpbmdzIHRvIHRyaWdnZXIuIEhlY2ssIG9uZSBjb3VsZCBpbWFnaW5lCj4gdGhvc2UgY29t
-aW5nIHRocm91Z2ggdm1nZW5pZCBhdCBzb21lIHBvaW50LCB3aGljaCB3b3VsZCB0aGVuIGNoYW5n
-ZSB0aGUKPiBzZW1hbnRpY3MgeW91J3JlIGFmdGVyIGZvciBzeXN0ZW1kLgoKCklmIHRoZXkgY29t
-ZSB0aHJvdWdoIHZtZ2VuaWQsIGl0IHdvdWxkIG5lZWQgdG8gZ2FpbiBhIG5ldyB0eXBlIG9mIGV2
-ZW50IAphdCB3aGljaCBwb2ludCB0aGUgdWV2ZW50IG5vdGlmaWNhdGlvbiB3b3VsZCBhbHNvIGNo
-YW5nZS4KCkknbSBhbHNvIG5vdCBzdXJlIHdoeSBsaXZlIG1pZ3JhdGlvbiB3b3VsZCB0cmlnZ2Vy
-IGVpdGhlciBhIHZtIGNsb25lIG9yIAphbnkgcm5nIHJlbGV2YW50IGV2ZW50LiBBbmQgc3VzcGVu
-ZCBpcyBzb21ldGhpbmcgd2UgYWxyZWFkeSBoYXZlIHRoZSAKbWFjaGluZXJ5IGZvciB0byBkZXRl
-Y3QuCgoKPiBFdmVuIGluIHRlcm1zIG9mIHJlcG9ydGluZyBleGNsdXNpdmVseSBhYm91dCBleHRl
-cm5hbCBWTSBldmVudHMsIHRoZXJlJ3MKPiBhIHN1YnRsZSB0aGluZyB0byBjb25zaWRlciBiZXR3
-ZWVuIGNsb25lcy9mb3JrcyBhbmQgcm9sbGJhY2tzLCBhcyB3ZWxsCj4gYXMgbWlncmF0aW9ucy4g
-Vm1nZW5pZCBraW5kIG9mIGx1bXBzIGl0IGFsbCB0b2dldGhlciwgYW5kIGhvcGVmdWxseSB0aGUK
-CgpJdCdzIHRoZSBvcHBvc2l0ZTogVk1HZW5JRCBpcyBleGNsdXNpdmVseSBjb25jZXJuZWQgYWJv
-dXQgY2xvbmVzLiBJdCAKZG9lc24ndCBjYXJlIGFib3V0IHJvbGxiYWNrcy4gSXQgZG9lc24ndCBj
-YXJlIGFib3V0IG1pZ3JhdGlvbnMuIEl0cyAKdmFsdWUgZWZmZWN0aXZlbHkgY2hhbmdlcyB3aGVu
-IHlvdSBjbG9uZSBhIFZNOyBhbmQgb25seSB0aGVuLgoKCj4gaHlwZXJ2aXNvciBub3RpZmllcyBp
-biBhIHdheSBjb25zaXN0ZW50IHdpdGggd2hhdCB1c2Vyc3BhY2Ugd2FzIGhvcGluZwo+IHRvIGxl
-YXJuIGFib3V0LiAoUmlnaHQgbm93LCBtYXliZSB3ZSdyZSBkb2luZyB3aGF0IEh5cGVyLVYgZG9l
-cywgbWF5YmUsCj4gYnV0IGFsc28gbWF5YmUgbm90OyBpdCdzIGtpbmQgb2YgbG9vc2UuKSBTbyBh
-dCBzb21lIHBvaW50LCB0aGVyZSdzIGEKPiBxdWVzdGlvbiBhYm91dCB0aGUgbGltaXRhdGlvbnMg
-b2Ygdm1nZW5pZCBhbmQgdGhlIHBvc3NpYmxlIGV4dGVuc2lvbnMgb2YKPiBpdCwgb3Igd2hldGhl
-ciB0aGlzIHdpbGwgY29tZSBpbiBhIGRpZmZlcmVudCBkcml2ZXIgb3IgdmlydHVhbCBoYXJkd2Fy
-ZSwKPiBhbmQgaG93LgoKClRvIG1lIGEgbG90IG9mIHRoaXMgaXMgdG9vIHZhZ3VlIHRvIGJlIGFj
-dGlvbmFibGUuIFVubGVzcyBzb21lb25lIGNvbWVzIAppbiB3aXRoIHJlYWwgc2NlbmFyaW9zIHdo
-ZXJlIHRoZXkgY2FyZSBhYm91dCBvdGhlciBzY2VuYXJpb3MsIGl0IHNvdW5kcyAKdG8gbWUgbGlr
-ZSB0aGUgb25lIHNjZW5hcmlvIHRoYXQgdm1nZW5pZCBjb3ZlcnMgaXMgd2hhdCBzeXN0ZW0gbGV2
-ZWwgCnVzZXIgc3BhY2UgY2FyZXMgYWJvdXQuIElmIGluIGEgZmV3IHllYXJzIHdlIHJlYWxpemUg
-dGhhdCB3ZSBuZWVkIDMgCmRpZmZlcmVudCB0eXBlcyBvZiBldmVudHMsIHdlIGNhbiBzdGFydCBs
-b29raW5nIGF0IHdheXMgdG8gZnVubmVsIHRob3NlIAppbiBhIG1vcmUgYWJzdHJhY3Qgd2F5LiBV
-bnRpbCB0aGVuLCBiZWNhdXNlIHdlIGRvbid0IGtub3cgd2hhdCB0aGVzZSAKZXZlbnRzIHdpbGwg
-YmUsIHdlIGNhbid0IGV2ZW4gZGVzaWduIGFuIEFQSSB0aGF0IHdvdWxkIGFkZHJlc3MgdGhlbS4K
-CktlZXAgaW4gbWluZCB0aGF0IHdlJ3JlIG5vdCByZWFsbHkgdGFsa2luZyBoZXJlIGFib3V0IGJ1
-aWxkaW5nIGEgZ2VuZXJpYyAKQVBJIGZvciBhbnkgcmFuZG9tIHVzZXIgc3BhY2UgYXBwbGljYXRp
-b24uIFdlIG9ubHkgd2FudCB0byBnaXZlIHN5c3RlbSAKc29mdHdhcmUgdGhlIGFiaWxpdHkgdG8g
-cmVhc29uIGFib3V0IHN5c3RlbSBldmVudHMuIElNSE8gYW55IG1vcmUgCmFic3RyYWN0IGxheWVy
-IHRvIGZ1bm5lbCBtdWx0aXBsZSBkaWZmZXJlbnQgb2YgdGhlc2UgdG8gZG93bnN0cmVhbSB1c2Vy
-IApzcGFjZSAoaWYgd2UgZXZlciBjYXJlKSB3b3VsZCBiZSBhIHVzZXIgc3BhY2UgcHJvYmxlbSB0
-byBzb2x2ZSwgbGlrZSBmb3IgCmV4YW1wbGUgYSBkYnVzIGV2ZW50LgoKCj4gUmlnaHQgbm93LCB0
-aGlzIGlzIG1vc3RseSB1bmV4cGxvcmVkLiBUaGUgdmlydGlvLXJuZyBhdmVudWUgd2FzIGxhcmdl
-c3QKPiBzdGVwIGluIHRlcm1zIG9mIGV4cGxvcmluZyB0aGlzIHByb2JsZW0gc3BhY2UsIGJ1dCB0
-aGVyZSBhcmUgb2J2aW91c2x5IGEKPiBmZXcgZGlyZWN0aW9ucyB0byBnbywgZGVwZW5kaW5nIG9u
-IHdoYXQgeW91ciBwcmltYXJ5IGNvbmNlcm4gaXMuCj4KPiBCdXQgYWxsIG9mIHRoYXQgbWFrZXMg
-bWUgdGhpbmsgdGhhdCBleHBvc2luZyB0aGUgcGFydGljdWxhcnMgb2YgdGhpcwo+IHZpcnR1YWwg
-aGFyZHdhcmUgZHJpdmVyIHRvIHVzZXJzcGFjZSBpcyBub3QgdGhlIGJlc3Qgb3B0aW9uLCBvciBh
-dCBsZWFzdAo+IG5vdCBhbiBvcHRpb24gdG8gcnVzaCBpbnRvIChvciB0byB0cmljayBHcmVnIGlu
-dG8pLCBhbmQgd2lsbCBib3RoIGxpbWl0CgoKSSdtIHByZXR0eSBzdXJlIEkgbmV2ZXIgdHJpY2tl
-ZCBHcmVnIGludG8gYW55dGhpbmcgOikKCgo+IHdoYXQgd2UgY2FuIGRvIHdpdGggaXQgbGF0ZXIs
-IGFuZCBwb3RlbnRpYWxseSBidXJkZW4gdXNlcnNwYWNlIHdpdGgKPiBoYXZpbmcgdG8gY2hlY2sg
-bXVsdGlwbGUgZGlmZmVyZW50IHRoaW5ncyB3aXRoIGNvbmZ1c2luZyBpbnRlcmFjdGlvbnMKPiBk
-b3duIHRoZSByb2FkLiBTbyBJIHRoaW5rIGl0J3Mgd29ydGggc3RlcHBpbmcgYmFjayBhIGJpdCBh
-bmQgdGhpbmtpbmcKCgpUaGlzIGludGVyZmFjZSBoZXJlIGlzIG9ubHkgYXZhaWxhYmxlIHRvIGVm
-ZmVjdGl2ZWx5IHVkZXYvc3lzdGVtZCB0eXBlIApzb2Z0d2FyZS4gQW55IGFic3RyYWN0aW9uIGFi
-b3ZlIHRoYXQgc2hvdWxkIGJlIG9uIHRoZW0uIEFuZCBpZiB3ZSAKZXZlbnR1YWxseSBkZWNpZGUg
-dGhhdCB3ZSBuZWVkIGEgYmV0dGVyIGludGVyZmFjZSB0byBnZW5lcmljIHVzZXIgc3BhY2UsIAp3
-ZSBjYW4gc3RpbGwgYnVpbGQgaXQuCgoKPiBhYm91dCB3aGF0IHdlIGFjdHVhbGx5IHdhbnQgZnJv
-bSB0aGlzIGFuZCB3aGF0IHRob3NlIHNlbWFudGljcyBzaG91bGQKPiBiZS4KPgo+IEknZCBhbHNv
-IGxvdmUgdG8gaGVhciBmcm9tIHRoZSBRRU1VIGd1eXMgb24gdGhpcyBhbmQgZ2V0IHRoZWlyIGlu
-cHV0LiBUbwo+IHRoYXQgZW5kLCBJJ3ZlIGFkZGVkIHFlbXUgYW5kIHZpcnRpbyBtYWlsaW5nIGxp
-c3RzLCBhcyB3ZWxsIGFzIG1zdC4KPgo+IEFsc28sIEknZCBiZSBpbnRlcmVzdGVkIHRvIGxlYXJu
-IHNwZWNpZmljYWxseSB3aGF0IHlvdSAoQW1hem9uKSB3YW50Cj4gdGhpcyBmb3IgYW5kIHdoYXQg
-dGhlIGxhcmdlciBwaWN0dXJlIHRoZXJlIGlzLiBJIGdldCB0aGUgc3lzdGVtZCBjYXNlLAo+IGJ1
-dCBJJ20gdW5kZXIgdGhlIGFzc3VtcHRpb24geW91J3ZlIGdvdCBhIGRpZmZlcmVudCBwcm9qZWN0
-IGluIHlvdXIKPiB3b29kcy4KCgpUaGUgcHVycG9zZSBmb3IgQW1hem9uIGhlcmUgaXMgdG8gYWNj
-ZWxlcmF0ZSBzZXJ2ZXJsZXNzIGNvbXB1dGUgVk1zIFsxXS4KCldlIHdhbnQgdG8gc25hcHNob3Qg
-YSBWTSBwb3N0LWluaXQsIGJlZm9yZSBpdCByZWNlaXZlcyBhbnkgb3BlcmF0aW9uLiAKVGhlbiBy
-ZXN1bWUgaXQsIGluaXRpYXRlIGxvZ2ljIHRvIHJlc2FuaXRpemUgaXRzZWxmIGFuZCBzZXJ2ZSB0
-aGUgCnJlcXVlc3QuIFRoZSByZWFzb24gd2Ugd2FudCB0aGlzIHBhcnRpY3VsYXIgdm1nZW5pZCBp
-bnRlcmZhY2UgaXMgc28gdGhhdCAKd2UgY2FuIGNyZWF0ZSBhIG5vdGlvbiBvZiAicmVzYW5pdGl6
-YXRpb24iIGluIHVzZXIgc3BhY2UgYXQgYWxsLiBPbmNlIHdlIApoYXZlIHRoZSBldmVudCwgc3lz
-dGVtZCBjYW4gc3RhcnQgZXN0YWJsaXNoaW5nIHNlcnZpY2UgYWN0aW9ucyBiYXNlZCBvbiAKdGhh
-dCB3aGljaCB3aWxsIGxlYWQgdG8gdGhlIHVzZXIgc3BhY2UgZWNvc3lzdGVtIHRvIGdyb3cgaW50
-ZXJmYWNlcyB0byAKc2F5ICJzYW5pdGl6ZSB5b3Vyc2VsZiIgd2hpY2ggd2UgY2FuIHRoZW4gYWxz
-byBpbnZva2UgaW4gVk0gcG9zdC1pbml0IC0gCnByb2JhYmx5IHdpdGhvdXQgc3lzdGVtZCA6KS4K
-CldlIGJ1aWx0IHN1Y2ggZXZlbnQgbG9naWMgZm9yIEphdmEgdG9kYXkgWzJdLCBidXQgd2Ugd291
-bGQgbGlrZSB0byAKZXhwYW5kIGJleW9uZC4gQW5kIHRoYXQgd2lsbCBiZWNvbWUgYW4gdW5tYWlu
-dGFpbmFibGUgbWVzcyB3aXRob3V0IAp2aWFibGUgZWNvc3lzdGVtIHN1cHBvcnQsIHNvIHdlIG1h
-eSBhcyB3ZWxsIGVuYWJsZSAibm9ybWFsIiBWTSBjbG9uZXMgCndpdGggdGhlIHNhbWUgbG9naWMu
-IEdpdmVuIHByZXR0eSBtdWNoIGFsbCBoeXBlcnZpc29ycyAoaW5jbHVkaW5nIFFFTVUpIApvdXQg
-dGhlcmUgYWxyZWFkeSBpbXBsZW1lbnQgdm1nZW5pZCwgaXQgc2VlbXMgdG8gYmUgdGhlIGRlIGZh
-Y3RvIApzdGFuZGFyZCB0byBkbyBleGFjdGx5IHRoaXMgbm90aWZpY2F0aW9uLgoKCkFsZXgKClsx
-XSBodHRwczovL2RvY3MuYXdzLmFtYXpvbi5jb20vbGFtYmRhL2xhdGVzdC9kZy9zbmFwc3RhcnQu
-aHRtbApbMl0gCmh0dHBzOi8vZG9jcy5hd3MuYW1hem9uLmNvbS9sYW1iZGEvbGF0ZXN0L2RnL3Nu
-YXBzdGFydC1ydW50aW1lLWhvb2tzLmh0bWwKCgoKCkFtYXpvbiBXZWIgU2VydmljZXMgRGV2ZWxv
-cG1lbnQgQ2VudGVyIEdlcm1hbnkgR21iSApLcmF1c2Vuc3RyLiAzOAoxMDExNyBCZXJsaW4KR2Vz
-Y2hhZWZ0c2Z1ZWhydW5nOiBDaHJpc3RpYW4gU2NobGFlZ2VyLCBKb25hdGhhbiBXZWlzcwpFaW5n
-ZXRyYWdlbiBhbSBBbXRzZ2VyaWNodCBDaGFybG90dGVuYnVyZyB1bnRlciBIUkIgMjU3NzY0IEIK
-U2l0ejogQmVybGluClVzdC1JRDogREUgMzY1IDUzOCA1OTcK
+On Wed, Sep 18, 2024 at 1:06=E2=80=AFPM Corey Minyard <corey@minyard.net> w=
+rote:
+>
+> On Wed, Sep 18, 2024 at 12:22:47PM -0700, Octavian Purdila wrote:
+> > Add a simple i2c peripheral to be used for testing I2C device
+> > models. The peripheral has a fixed number of registers that can be
+> > read and written.
+>
+> Why is this better than just using the eeprom device?
+>
 
+The main reason for adding it is that, AFAICT, there is no i2c slave
+device that responds with I2C_NACK during a transaction.
+
+Also, having a dedicated device for testing purposes makes it easier
+to add new features than adding it to a real device where it might not
+always be possible. I tried to add the NACK functionality but I did
+not find one where the datasheet would confirm the behaviour I was
+looking for.
+
+> This has some uncommon attributes compared to most i2c devices.  For
+> instance, most i2c devices take their address as the first bytes of a
+> write operation, then auto-increment after that for reads and writes.
+> This seems to take one address on a write after a system reset, then use
+> that forever.
+>
+> Anyway, unless there is a compelling reason to use this over the eeprom
+> device, I'm going to recommend against it.
+>
+
+
+> -corey
+>
+> >
+> > Signed-off-by: Octavian Purdila <tavip@google.com>
+> > ---
+> >  include/hw/misc/i2c_tester.h |  30 ++++++++++
+> >  hw/misc/i2c_tester.c         | 109 +++++++++++++++++++++++++++++++++++
+> >  hw/misc/Kconfig              |   5 ++
+> >  hw/misc/meson.build          |   2 +
+> >  4 files changed, 146 insertions(+)
+> >  create mode 100644 include/hw/misc/i2c_tester.h
+> >  create mode 100644 hw/misc/i2c_tester.c
+> >
+> > diff --git a/include/hw/misc/i2c_tester.h b/include/hw/misc/i2c_tester.=
+h
+> > new file mode 100644
+> > index 0000000000..f6b6491008
+> > --- /dev/null
+> > +++ b/include/hw/misc/i2c_tester.h
+> > @@ -0,0 +1,30 @@
+> > +/*
+> > + *
+> > + * Copyright (c) 2024 Google LLC
+> > + *
+> > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > + *
+> > + * This work is licensed under the terms of the GNU GPL, version 2 or =
+later.
+> > + * See the COPYING file in the top-level directory.
+> > + */
+> > +
+> > +#ifndef HW_I2C_TESTER_H
+> > +#define HW_I2C_TESTER_H
+> > +
+> > +#include "qemu/osdep.h"
+> > +#include "hw/i2c/i2c.h"
+> > +#include "hw/irq.h"
+> > +
+> > +#define I2C_TESTER_NUM_REGS    0x31
+> > +
+> > +#define TYPE_I2C_TESTER "i2c-tester"
+> > +#define I2C_TESTER(obj) OBJECT_CHECK(I2cTesterState, (obj), TYPE_I2C_T=
+ESTER)
+> > +
+> > +typedef struct {
+> > +    I2CSlave i2c;
+> > +    bool set_reg_idx;
+> > +    uint8_t reg_idx;
+> > +    uint8_t regs[I2C_TESTER_NUM_REGS];
+> > +} I2cTesterState;
+> > +
+> > +#endif /* HW_I2C_TESTER_H */
+> > diff --git a/hw/misc/i2c_tester.c b/hw/misc/i2c_tester.c
+> > new file mode 100644
+> > index 0000000000..77ce8bf91a
+> > --- /dev/null
+> > +++ b/hw/misc/i2c_tester.c
+> > @@ -0,0 +1,109 @@
+> > +/*
+> > + * Simple I2C peripheral for testing I2C device models.
+> > + *
+> > + * Copyright (c) 2024 Google LLC
+> > + *
+> > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > + *
+> > + * This work is licensed under the terms of the GNU GPL, version 2 or =
+later.
+> > + * See the COPYING file in the top-level directory.
+> > + */
+> > +
+> > +#include "hw/misc/i2c_tester.h"
+> > +
+> > +#include "qemu/log.h"
+> > +#include "qemu/module.h"
+> > +#include "migration/vmstate.h"
+> > +
+> > +static void i2c_tester_reset_enter(Object *o, ResetType type)
+> > +{
+> > +    I2cTesterState *s =3D I2C_TESTER(o);
+> > +
+> > +    s->set_reg_idx =3D false;
+> > +    s->reg_idx     =3D 0;
+> > +    memset(s->regs, 0, I2C_TESTER_NUM_REGS);
+> > +}
+> > +
+> > +static int i2c_tester_event(I2CSlave *i2c, enum i2c_event event)
+> > +{
+> > +    I2cTesterState *s =3D I2C_TESTER(i2c);
+> > +
+> > +    if (event =3D=3D I2C_START_SEND) {
+> > +        s->set_reg_idx =3D true;
+> > +    }
+> > +
+> > +    return 0;
+> > +}
+> > +
+> > +static uint8_t i2c_tester_rx(I2CSlave *i2c)
+> > +{
+> > +    I2cTesterState *s =3D I2C_TESTER(i2c);
+> > +
+> > +    if (s->reg_idx >=3D I2C_TESTER_NUM_REGS) {
+> > +        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid reg 0x%02x\n", __f=
+unc__,
+> > +                      s->reg_idx);
+> > +        return I2C_NACK;
+> > +    }
+> > +
+> > +    return s->regs[s->reg_idx];
+> > +}
+> > +
+> > +static int i2c_tester_tx(I2CSlave *i2c, uint8_t data)
+> > +{
+> > +    I2cTesterState *s =3D I2C_TESTER(i2c);
+> > +
+> > +    if (s->set_reg_idx) {
+> > +        /* Setting the register in which the operation will be done. *=
+/
+> > +        s->reg_idx =3D data;
+> > +        s->set_reg_idx =3D false;
+> > +        return 0;
+> > +    }
+> > +
+> > +    if (s->reg_idx >=3D I2C_TESTER_NUM_REGS) {
+> > +        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid reg 0x%02x\n", __f=
+unc__,
+> > +                      s->reg_idx);
+> > +        return I2C_NACK;
+> > +    }
+> > +
+> > +    /* Write reg data. */
+> > +    s->regs[s->reg_idx] =3D data;
+> > +
+> > +    return 0;
+> > +}
+> > +
+> > +static const VMStateDescription vmstate_i2c_tester =3D {
+> > +    .name =3D "i2c-tester",
+> > +    .version_id =3D 1,
+> > +    .minimum_version_id =3D 1,
+> > +    .fields =3D (const VMStateField[]) {
+> > +        VMSTATE_I2C_SLAVE(i2c, I2cTesterState),
+> > +        VMSTATE_BOOL(set_reg_idx, I2cTesterState),
+> > +        VMSTATE_UINT8(reg_idx, I2cTesterState),
+> > +        VMSTATE_UINT8_ARRAY(regs, I2cTesterState, I2C_TESTER_NUM_REGS)=
+,
+> > +        VMSTATE_END_OF_LIST()
+> > +    }
+> > +};
+> > +
+> > +static void i2c_tester_class_init(ObjectClass *oc, void *data)
+> > +{
+> > +    DeviceClass *dc =3D DEVICE_CLASS(oc);
+> > +    ResettableClass *rc =3D RESETTABLE_CLASS(oc);
+> > +    I2CSlaveClass *isc =3D I2C_SLAVE_CLASS(oc);
+> > +
+> > +    rc->phases.enter =3D i2c_tester_reset_enter;
+> > +    dc->vmsd =3D &vmstate_i2c_tester;
+> > +    isc->event =3D i2c_tester_event;
+> > +    isc->recv =3D i2c_tester_rx;
+> > +    isc->send =3D i2c_tester_tx;
+> > +}
+> > +
+> > +static const TypeInfo i2c_tester_types[] =3D {
+> > +    {
+> > +        .name =3D TYPE_I2C_TESTER,
+> > +        .parent =3D TYPE_I2C_SLAVE,
+> > +        .instance_size =3D sizeof(I2cTesterState),
+> > +        .class_init =3D i2c_tester_class_init
+> > +    },
+> > +};
+> > +
+> > +DEFINE_TYPES(i2c_tester_types);
+> > diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+> > index 4b688aead2..3e93c12c8e 100644
+> > --- a/hw/misc/Kconfig
+> > +++ b/hw/misc/Kconfig
+> > @@ -213,6 +213,11 @@ config IOSB
+> >  config XLNX_VERSAL_TRNG
+> >      bool
+> >
+> > +config I2C_TESTER
+> > +    bool
+> > +    default y if TEST_DEVICES
+> > +    depends on I2C
+> > +
+> >  config FLEXCOMM
+> >      bool
+> >      select I2C
+> > diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+> > index faaf2671ba..4f22231fa3 100644
+> > --- a/hw/misc/meson.build
+> > +++ b/hw/misc/meson.build
+> > @@ -158,6 +158,8 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: fil=
+es('sbsa_ec.c'))
+> >  # HPPA devices
+> >  system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
+> >
+> > +system_ss.add(when: 'CONFIG_I2C_TESTER', if_true: files('i2c_tester.c'=
+))
+> > +
+> >  system_ss.add(when: 'CONFIG_FLEXCOMM', if_true: files('flexcomm.c'))
+> >  system_ss.add(when: 'CONFIG_RT500_CLKCTL', if_true: files('rt500_clkct=
+l0.c', 'rt500_clkctl1.c'))
+> >  system_ss.add(when: 'CONFIG_RT500_RSTCTL', if_true: files('rt500_rstct=
+l.c'))
+> > --
+> > 2.46.0.662.g92d0881bb0-goog
+> >
+> >
 
