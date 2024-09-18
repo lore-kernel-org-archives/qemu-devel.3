@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B640CDD54F
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 18:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6BDECDD54F
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 18:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqzTC-0001jU-IR; Wed, 18 Sep 2024 14:32:06 -0400
+	id 1sqzTG-00021G-Pi; Wed, 18 Sep 2024 14:32:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqzT9-0001hd-6Y
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 14:32:03 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqzTE-0001pX-PT
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 14:32:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqzT6-0001zk-Th
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 14:32:02 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqzTB-00020S-5l
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 14:32:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726684317;
+ s=mimecast20190719; t=1726684324;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=9UuXYercPx+yzdVxMuWHgiGJm7ilgLZXDllJ7gHsVgk=;
- b=MzbT4zI67SoI5XISpkXJwg90E8v+FLWAV2AH9ktqz3NyCMGAJeJnkrph2Ju0TEL2Qu3sCJ
- Sy5fQ3R2MlrscA52AgwK4tJdZDyECbXyhw6JggUanQOOUQ2QVQOxMAuqHalg/cZG9WB7Sm
- OaRUAwmWXUOTVu5Oq/1Ti6T2Hlr6XL0=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TdTM1Vy8cJBfZl/IClQA3wFNSuuJkD9Zb5WcgYw2HVw=;
+ b=il/YVGS+DhfhvIfqtzwGEiuMwTV8A+O98woWg9/JlPREIg8Hcq74Lq12S7cO7iab5FflnD
+ p7iNI/KZOWH+ZYP9hBjve4478Q+8o9EQM9tTgv2B0gF89FOd973bb0bsIASJt1FaAt07Eq
+ fEzkRBXCgYEP1qw9cPHirKaFUGPPlKk=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-386--kpNwUEpPG6wtLH_putTzQ-1; Wed, 18 Sep 2024 14:31:55 -0400
-X-MC-Unique: -kpNwUEpPG6wtLH_putTzQ-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6c3554020afso118560106d6.3
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 11:31:55 -0700 (PDT)
+ us-mta-252-OF9vlQI8M3ORIEFMblEuPQ-1; Wed, 18 Sep 2024 14:32:03 -0400
+X-MC-Unique: OF9vlQI8M3ORIEFMblEuPQ-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7a99d13efafso5762985a.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 11:32:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726684314; x=1727289114;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9UuXYercPx+yzdVxMuWHgiGJm7ilgLZXDllJ7gHsVgk=;
- b=LSp55PVf0jM9e1RGM996AvTrXj3c0NE7D3YeYlmxwT1lavyZfxrWlYA/Rbe3bX+ok+
- PPIZ7jvauACGs20zzikCIXfjtd7K3lEg9vD+sF5dQ0sWKd9dE9hJhf91Em9riNtgUvUC
- sQn+oFpBB9SA7iSrnvK+lhS4WQdeDcT4ylpvqbYIRFdC2hbXp1gkwq4YqE9PusdMmtR9
- BV6dEwluLlkXpgbcsCzn+gC9ieSo/+n9VYrovXtEDxzNFzaqLBx11pYyBywjOC+O444Q
- bok/eVudwObjYtpycR3FbKa3ZHE258WGDXc9AVHEnDYirmufBfWev/fS1Kmlpa/cuBvC
- g2pA==
-X-Gm-Message-State: AOJu0YzSb/39Qu/SdgYm9svCQxAsd4GBOWsyD5ux+Xgqxj7Amzdq0NUZ
- 3hCX3MyXJ+phK5sBm+NxiYO63Z1Cxt4TmWyFVpqDTfPVwmqJ1ZkehNNrV9l38xtD/CZuH0lZze5
- XKtL+wnKPVshitOoAVBgP8lof9zUgV22mUgWMy91fY9Yo0vwucUxwxLgdVI7GTupghgqtkIhKZf
- EO5S0ymuyookL8GT4NynY430VB5q7Rb2T4bQ==
-X-Received: by 2002:a05:6214:5c07:b0:6c3:5a9a:572b with SMTP id
- 6a1803df08f44-6c573532f8amr309399636d6.20.1726684314140; 
- Wed, 18 Sep 2024 11:31:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHedxJ97WPY8qm7Je9VyUdfcQFvH5rm9DEyn/vqqSfuvAln/GV0wCDE6sSJcXp/D4fROd0SRw==
-X-Received: by 2002:a05:6214:5c07:b0:6c3:5a9a:572b with SMTP id
- 6a1803df08f44-6c573532f8amr309399416d6.20.1726684313711; 
- Wed, 18 Sep 2024 11:31:53 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726684321; x=1727289121;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TdTM1Vy8cJBfZl/IClQA3wFNSuuJkD9Zb5WcgYw2HVw=;
+ b=iOYKn/Gz/OXd0JmLQxKC67o+jBrLSO6DhOFg53PV8eEUL6hHbbZgRmXZoQkLcTKTzG
+ TF/I7Eulea+uzTP0TEejkUXxSJ37QXTFMJiJaDnsKFr9pmjt+xZzhZnq+fMXqVXbLujq
+ mytepUIx0+5OFU4UroeowylpZTLVCGFYLJCma1LBX2jC+J3iCDqa1ejriyaPghNPxa2P
+ mnJCAONc40aq3Z5qS4V/0OXUoBAKyXQHYGe5g0jEZSrca6oF3avbGABMVmLtBwUPO37t
+ 0Flcm746uxEGIpEx2lDUi9ifXRq7Tbz+QLs8cCv66mzaHX55FdIAJ8Ig7mtD7U0BLyfH
+ 1kCQ==
+X-Gm-Message-State: AOJu0YzKNx7N1X/a0Kc04UYJPGHOkP205wjrGj0Sg1GqQqpFV94F3kgR
+ A+uaC9DOVM5tyNTCepsAgTjfWWNEHAXgDbBsm6bxhD9Blw5cD1ftjrkfeXELnw9FK/lmCGkbKrf
+ tu0lYC5bckzfTvrsDWsqyk7/LFvKJGjBUGRIMCkaelEtdTYKMHff0ww+3mo03AdnWwRVkloLgfR
+ pXHYEMKGiwa+MUxhmefyyOUY2PGBbTdcbu2w==
+X-Received: by 2002:a05:6214:4403:b0:6c1:6e39:b697 with SMTP id
+ 6a1803df08f44-6c57350bdc6mr303518496d6.9.1726684321349; 
+ Wed, 18 Sep 2024 11:32:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHSvAOiyU95D6ePIobMsNvblxyYYrzW1cd/ZhPg1X5WZtSsh5oHTwQ7sqzJsL5wVzkYLrcqPw==
+X-Received: by 2002:a05:6214:4403:b0:6c1:6e39:b697 with SMTP id
+ 6a1803df08f44-6c57350bdc6mr303516866d6.9.1726684317717; 
+ Wed, 18 Sep 2024 11:31:57 -0700 (PDT)
 Received: from x1n.. (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c75e494a28sm30486d6.68.2024.09.18.11.31.52
+ 6a1803df08f44-6c75e494a28sm30486d6.68.2024.09.18.11.31.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Sep 2024 11:31:52 -0700 (PDT)
+ Wed, 18 Sep 2024 11:31:56 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- peterx@redhat.com
-Subject: [PULL v2 0/6] Migration 20240917 patches
-Date: Wed, 18 Sep 2024 14:31:45 -0400
-Message-ID: <20240918183151.6413-1-peterx@redhat.com>
+ peterx@redhat.com, Yichen Wang <yichen.wang@bytedance.com>,
+ Bryan Zhang <bryan.zhang@bytedance.com>, Hao Xiang <hao.xiang@linux.dev>,
+ Yuan Liu <yuan1.liu@intel.com>
+Subject: [PULL v2 2/6] migration/multifd: Fix build for qatzip
+Date: Wed, 18 Sep 2024 14:31:47 -0400
+Message-ID: <20240918183151.6413-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
+In-Reply-To: <20240918183151.6413-1-peterx@redhat.com>
+References: <20240918183151.6413-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -100,52 +104,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 2b81c046252fbfb375ad30632362fc16e6e22bd5:
+The qatzip series was based on an older commit, it applied cleanly even
+though it has conflicts.  Neither CI nor myself found the build will break
+as it's skipped by default when qatzip library was missing.
 
-  Merge tag 'block-pull-request' of https://gitlab.com/stefanha/qemu into staging (2024-09-17 14:02:18 +0100)
+Fix the build issues.  No need to copy stable as it just landed 9.2.
 
-are available in the Git repository at:
+Cc: Yichen Wang <yichen.wang@bytedance.com>
+Cc: Bryan Zhang <bryan.zhang@bytedance.com>
+Cc: Hao Xiang <hao.xiang@linux.dev>
+Cc: Yuan Liu <yuan1.liu@intel.com>
+Fixes: 80484f9459 ("migration: Introduce 'qatzip' compression method")
+Link: https://lore.kernel.org/r/20240910210450.3835123-1-peterx@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/multifd-qatzip.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-  https://gitlab.com/peterx/qemu.git tags/migration-20240917-pull-request
-
-for you to fetch changes up to 4ce56229087860805877075ddb29dd44578365a9:
-
-  migration/multifd: Fix rb->receivedmap cleanup race (2024-09-18 14:27:39 -0400)
-
-----------------------------------------------------------------
-Migration pull request for 9.2
-
-- Fabiano's patch to move two tests to slow tests.
-- Peter's patch to fix qatzip builds
-- Stefan's multifd-zstd fix on unsigned diff comparisons
-- Fea's bug fix to consistently use memattrs when map() address space
-- Fabiano's bug fix on multifd race condition against receivedmap
-
-----------------------------------------------------------------
-
-Fabiano Rosas (3):
-  tests/qtest/migration: Move a couple of slow tests under g_test_slow
-  migration/savevm: Remove extra load cleanup calls
-  migration/multifd: Fix rb->receivedmap cleanup race
-
-Fea.Wang (1):
-  softmmu/physmem.c: Keep transaction attribute in address_space_map()
-
-Peter Xu (1):
-  migration/multifd: Fix build for qatzip
-
-Stefan Weil (1):
-  migration/multifd: Fix loop conditions in multifd_zstd_send_prepare
-    and multifd_zstd_recv
-
- migration/migration.c        |  5 +++++
- migration/multifd-qatzip.c   | 18 +++++++++---------
- migration/multifd-zstd.c     |  8 ++++----
- migration/savevm.c           |  8 ++++----
- system/physmem.c             |  2 +-
- tests/qtest/migration-test.c |  8 +++++---
- 6 files changed, 28 insertions(+), 21 deletions(-)
-
+diff --git a/migration/multifd-qatzip.c b/migration/multifd-qatzip.c
+index 3c787ed879..7b68397625 100644
+--- a/migration/multifd-qatzip.c
++++ b/migration/multifd-qatzip.c
+@@ -160,7 +160,8 @@ static void qatzip_send_cleanup(MultiFDSendParams *p, Error **errp)
+  */
+ static int qatzip_send_prepare(MultiFDSendParams *p, Error **errp)
+ {
+-    MultiFDPages_t *pages = p->pages;
++    uint32_t page_size = multifd_ram_page_size();
++    MultiFDPages_t *pages = &p->data->u.ram;
+     QatzipData *q = p->compress_data;
+     int ret;
+     unsigned int in_len, out_len;
+@@ -179,12 +180,12 @@ static int qatzip_send_prepare(MultiFDSendParams *p, Error **errp)
+      * implementation.
+      */
+     for (int i = 0; i < pages->normal_num; i++) {
+-        memcpy(q->in_buf + (i * p->page_size),
++        memcpy(q->in_buf + (i * page_size),
+                pages->block->host + pages->offset[i],
+-               p->page_size);
++               page_size);
+     }
+ 
+-    in_len = pages->normal_num * p->page_size;
++    in_len = pages->normal_num * page_size;
+     if (in_len > q->in_len) {
+         error_setg(errp, "multifd %u: unexpectedly large input", p->id);
+         return -1;
+@@ -197,7 +198,7 @@ static int qatzip_send_prepare(MultiFDSendParams *p, Error **errp)
+                    p->id, ret);
+         return -1;
+     }
+-    if (in_len != pages->normal_num * p->page_size) {
++    if (in_len != pages->normal_num * page_size) {
+         error_setg(errp, "multifd %u: QATzip failed to compress all input",
+                    p->id);
+         return -1;
+@@ -329,7 +330,8 @@ static int qatzip_recv(MultiFDRecvParams *p, Error **errp)
+     int ret;
+     unsigned int in_len, out_len;
+     uint32_t in_size = p->next_packet_size;
+-    uint32_t expected_size = p->normal_num * p->page_size;
++    uint32_t page_size = multifd_ram_page_size();
++    uint32_t expected_size = p->normal_num * page_size;
+     uint32_t flags = p->flags & MULTIFD_FLAG_COMPRESSION_MASK;
+ 
+     if (in_size > q->in_len) {
+@@ -370,9 +372,7 @@ static int qatzip_recv(MultiFDRecvParams *p, Error **errp)
+ 
+     /* Copy each page to its appropriate location. */
+     for (int i = 0; i < p->normal_num; i++) {
+-        memcpy(p->host + p->normal[i],
+-               q->out_buf + p->page_size * i,
+-               p->page_size);
++        memcpy(p->host + p->normal[i], q->out_buf + page_size * i, page_size);
+     }
+     return 0;
+ }
 -- 
 2.45.0
 
