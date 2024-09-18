@@ -4,53 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C38CCCD194
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 09:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BF21CCD195
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 09:47:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqrGt-0006u1-T5; Wed, 18 Sep 2024 05:46:53 -0400
+	id 1sqrGx-0006xR-SK; Wed, 18 Sep 2024 05:46:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sqrGe-0006tO-A5
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:46:36 -0400
+ id 1sqrGk-0006tp-9Y
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:46:44 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sqrGc-000684-Kc
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:46:35 -0400
+ id 1sqrGg-00068N-M3
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:46:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:In-Reply-To:References;
- bh=iNsIw6xK1apqOO3e6p8R3cdgDHbBV2u8JXYlGWQIFvQ=; b=dWGjcsn+U9egzLt5NXLJjKtTF3
- HZtfBNvMjyYyUMb2kYsfqUIH4LOBGslNIPrIMuFrOYmyG2duf8hMOnVcS7uzLHPKuZu4ibJPXOLtS
- OV0QD83fPFhoBSlEWcGJsNmm5YDrKo+2oDHCoV1nKLYz6c24fUpyOEeP3/DmqtRDJi1zS1oEQ5yej
- PcV65/HC9atvoKTzeAvkt3tFZewmYNwlep/b11QJlj5OlO4SM2FpK0B8it+MgWlbtT0TnHZJFtosH
- ntvJD6QZEIzRP3qkr/4lJcncxkpVnU5sNHid2iru7q70aL8Vqf6Kb5jjX4TCmtABCAIR9rbJsA1zT
- kHxKwq6fOf2w+mSaC7DqRJPz/+aACjdeoLJGDl43mvJj1wnacPxCzdi8up3Mk1UNUhDFrj3tZvbC6
- 6Qp27tiyjZnPBQCNJadsXKTxLN7eGkrQJiNwdBNyOxatdJmhMcJYdTNZH30qVnoMgBzagHUspoPhC
- 7dCJ9c9WPppl2f7GGLkNIRxnH23DDv/Bk/6zJqa4nNsgrH2jPBvh8I+i92xZO4ayvPwHfNbXFDNbq
- c5IT70p7LVJS+U9YMnOy4CBo6pJNcMkDHkXr/hlJBBJobX5hfXk56MSYN/mCAbMrX8mk5IQpqg4OG
- DOKf7sLb1WVPCznEuJCGeRMGZAQd41kz/LAfHw6C8=;
+ References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
+ Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=QMp2RwAcPB10Y/NCxbIR5w0tfU+tZkdc3NSGX7eN+sY=; b=eH8NUIIqAA76Ir+tGuduQ7jaw0
+ 8GPBxSGmvFCEv+nJDOYSyeBt6fkPdtLPoEAoRw3nvUBw7PRXOji3A8iGRROsb1YbqeCoY2pYyTflo
+ cV664Bd0D55CjysyM2jjlb00fnqS+rW+6kYJdJcMUd7+kURYbrocDeBcprUcRw65In21UdNxC326X
+ xlkieu0hx2OZPMVFW/VuykF1RlnfRoxdz6p3JaHYYdSOj4TYlJQkszKdkz1RIRgRXnC6rsqA8fPlf
+ p5pfS6eqtSJuUPBHFN7IkuSqiAeFPFE7d4mmuMjU+eWzQQmvZ4O7pxi5cczTjirUn7zJC1hrGN+ix
+ o6Xu3yv7n/Ud5/ka0brbNlBagFp4e86q72clFDTyEl0pMFs2WQTdBSl1ULSQUA3XsdW7Xy4yM63uz
+ ZhFJFqUilXD4/BOLfIaFutXZtH50ccZqB+H2DUmDtV34UPpuFsvLxCOkSoRLiCkpAn8+TstBy48Bt
+ Pkc2+knw7RgxLvSizxAS6o1Ac6W8mt4XVH967kkesQQyZLyGlsqQoNloSHeeqNRS6dT2eEvCl+Z62
+ /1DeXVZCPXi/wH2iIzmwCnMYMiUlvaKaDJEW4cjpcRBhOxfRTlTFeL8FuLMLPpOiv0uSZ4V8ZrMnl
+ aekS9MMgywyxN8qyCfa3WHfPOUqhiUFAbw7kWMVMA=;
 Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
  (helo=cheesecake.fritz.box)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sqrGS-000BB2-Vz; Wed, 18 Sep 2024 10:46:28 +0100
+ id 1sqrGX-000BB2-4M; Wed, 18 Sep 2024 10:46:33 +0100
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: qemu-devel@nongnu.org,
 	peter.maydell@linaro.org
-Date: Wed, 18 Sep 2024 10:46:23 +0100
-Message-Id: <20240918094624.938242-1-mark.cave-ayland@ilande.co.uk>
+Date: Wed, 18 Sep 2024 10:46:24 +0100
+Message-Id: <20240918094624.938242-2-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20240918094624.938242-1-mark.cave-ayland@ilande.co.uk>
+References: <20240918094624.938242-1-mark.cave-ayland@ilande.co.uk>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 0/1] qemu-macppc queue 20240918
+Subject: [PULL 1/1] mac_dbdma: Remove leftover `dma_memory_unmap` calls
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -76,26 +78,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 2b81c046252fbfb375ad30632362fc16e6e22bd5:
+From: Mattias Nissler <mnissler@rivosinc.com>
 
-  Merge tag 'block-pull-request' of https://gitlab.com/stefanha/qemu into staging (2024-09-17 14:02:18 +0100)
+These were passing a NULL buffer pointer unconditionally, which happens
+to behave in a mostly benign way (except for the chance of an excess
+memory region unref and a bounce buffer leak). Per the function comment,
+this was never meant to be accepted though, and triggers an assertion
+with the "softmmu: Support concurrent bounce buffers" change.
 
-are available in the Git repository at:
+Given that the code in question never sets up any mappings, just remove
+the unnecessary dma_memory_unmap calls along with the DBDMA_io struct
+fields that are now entirely unused.
 
-  https://github.com/mcayland/qemu.git tags/qemu-macppc-20240918
-
-for you to fetch changes up to 2d0a071e625d7234e8c5623b7e7bf445e1bef72c:
-
-  mac_dbdma: Remove leftover `dma_memory_unmap` calls (2024-09-18 09:31:56 +0100)
-
-----------------------------------------------------------------
-DMA fix for macio IDE device
-
-----------------------------------------------------------------
-Mattias Nissler (1):
-      mac_dbdma: Remove leftover `dma_memory_unmap` calls
-
+Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+Message-Id: <20240916175708.1829059-1-mnissler@rivosinc.com>
+Fixes: be1e343995 ("macio: switch over to new byte-aligned DMA helpers")
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+---
  hw/ide/macio.c             | 6 ------
  include/hw/ppc/mac_dbdma.h | 4 ----
  2 files changed, 10 deletions(-)
+
+diff --git a/hw/ide/macio.c b/hw/ide/macio.c
+index bec2e866d7..99477a3d13 100644
+--- a/hw/ide/macio.c
++++ b/hw/ide/macio.c
+@@ -119,9 +119,6 @@ static void pmac_ide_atapi_transfer_cb(void *opaque, int ret)
+     return;
+ 
+ done:
+-    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
+-                     io->dir, io->dma_len);
+-
+     if (ret < 0) {
+         block_acct_failed(blk_get_stats(s->blk), &s->acct);
+     } else {
+@@ -202,9 +199,6 @@ static void pmac_ide_transfer_cb(void *opaque, int ret)
+     return;
+ 
+ done:
+-    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
+-                     io->dir, io->dma_len);
+-
+     if (s->dma_cmd == IDE_DMA_READ || s->dma_cmd == IDE_DMA_WRITE) {
+         if (ret < 0) {
+             block_acct_failed(blk_get_stats(s->blk), &s->acct);
+diff --git a/include/hw/ppc/mac_dbdma.h b/include/hw/ppc/mac_dbdma.h
+index 4a3f644516..c774f6bf84 100644
+--- a/include/hw/ppc/mac_dbdma.h
++++ b/include/hw/ppc/mac_dbdma.h
+@@ -44,10 +44,6 @@ struct DBDMA_io {
+     DBDMA_end dma_end;
+     /* DMA is in progress, don't start another one */
+     bool processing;
+-    /* DMA request */
+-    void *dma_mem;
+-    dma_addr_t dma_len;
+-    DMADirection dir;
+ };
+ 
+ /*
+-- 
+2.39.5
+
 
