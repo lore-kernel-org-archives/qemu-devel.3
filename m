@@ -4,133 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ACFBCDD55D
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 21:49:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2591CDD55C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 22:26:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr2XO-0002TQ-1j; Wed, 18 Sep 2024 17:48:38 -0400
+	id 1sr37H-0003lg-K7; Wed, 18 Sep 2024 18:25:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sr2XM-0002P4-BH
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 17:48:36 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1sr37E-0003h8-Ej
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 18:25:40 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sr2XH-0005xE-PP
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 17:48:36 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-205659dc63aso1997035ad.1
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 14:48:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1sr377-0001bg-MT
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 18:25:40 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-53690eb134bso35719e87.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 15:25:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726696110; x=1727300910; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=56eFY0PPKbojN9iHiuO5E17taMmpX3hGYkXam5W4kI8=;
- b=f9AgAeBs55T+abcL2eyA1VbM+13IoAFdEh8OPuaj19cwpLo4RJWIPiMJThaUwLLkec
- qkIJSmdp1n92KYt89czjr2ugpyPXMOriVMrPbvHsnnqXmXmbz0cZDWQfiXbDML2cy1hv
- OHGCdUfa2YBvjUAxU6UoBPsy2oL5IS5pU5iQWzzeesKHlmMvfqUX9gcO9rxFmykJr9wd
- in1dg8lY5cHMdkx/1MCBBl3z1rYa8x4LHfURDS+xGNZYJw4aTL+KZPsuQyIvnIPL/rdM
- G7BuA/x5y2D1qw9HgfEKunY5qAnIKgc4YLqR5Q7O8MIEo7zs6LSdYdhZ9wUjfTvlWuR1
- I6hg==
+ d=google.com; s=20230601; t=1726698330; x=1727303130; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7tKiC6OryOG723Qb5i0R4XJX8OZZDkjDR6RxjWE52FU=;
+ b=wrh2wapUQc3Q7cm6ejWZ81BrYDYjwgCbQf3JYp9UgO8fkG+kwJeDugY54QIP0hkugZ
+ japzc4R30ALrh+Kmo/wX8q1klZgM7C2RNgCuTfKMg0fQA5Htp1AGCIHlTkd0sdX20fNi
+ jOQ6d2rjcW94UsysvEvWPklRIuSvovISIrd5CGnl+4W264kz0vaaU7ERd3ZSsy5hVJGv
+ lCHmozRxi5W9leIIIIbJWIIfhnd+PLZrLjpOb/G+03E8WL4o+ak0PU0cH6XacB7l5KwR
+ rT3I+ezTRx1Y3fESRhFmXFj32dVSB1Ykw+X4VRpLFRAshkw5Z/Fc5OusWexSPthYM+l3
+ jmyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726696110; x=1727300910;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=56eFY0PPKbojN9iHiuO5E17taMmpX3hGYkXam5W4kI8=;
- b=QoE596067dSKnh8x4+LDkcSCo/LrWkxdiYcHx8cHsXH/+h67skmDN9xxt3A2vnDrhN
- mfWwCgkDeDKeaWAxMSeUXVRvJDd8zMj5hf/ibO8YbkVdDNb31kTyPACUn4E/4/FzK9Xx
- pm9cXQCTeLWG7aWEIa3cmCcWlX54kTtyFRW9KrGMcR8xIR5GtEGOLOBJ1P63hm8mybYC
- UxXt7jvNcjfWz+E6UKWq98XCgVqjJYt8wwgOrI2e5wZxmnr91Dopmi6MT7oMnLK3rimo
- fcD3C4Y6NaRKkZZb89ivqkY/Tbe9bKnKffi1VyEg/lumL7eQUkXfRS2EnlYcQf7o57wb
- gJOg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXULLbvBHpiEq/UGENnVk9XW8h5N3BX3cL9+xHLUDAv3caowIYUv7f8kqisob0rvfRsBPppwwi/a7XJ@nongnu.org
-X-Gm-Message-State: AOJu0YysTR3bmV2V2aLOCeETsnYyGOSeqDrBNK0/NlnaS6S+BQPZW9my
- H25BiWGVtc5dSHmDC8F3/HYzlAZN8tE9h4fnHspGiQd7f2Tob8JSIi01PhuEydI=
-X-Google-Smtp-Source: AGHT+IG+xzYa/L8bq7kWZz9TpyKRRVs2FqZ8wnJP63m6mKS5eGogLn32uep1trP6iXzOGJjIS59+EQ==
-X-Received: by 2002:a17:903:189:b0:205:500f:5dcc with SMTP id
- d9443c01a7336-2076e4612e7mr333975395ad.40.1726696109758; 
- Wed, 18 Sep 2024 14:48:29 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20794735728sm69387345ad.271.2024.09.18.14.48.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Sep 2024 14:48:29 -0700 (PDT)
-Message-ID: <fada9192-1f49-4ccc-a3e0-30f17459eb31@linaro.org>
-Date: Wed, 18 Sep 2024 14:48:26 -0700
+ d=1e100.net; s=20230601; t=1726698330; x=1727303130;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7tKiC6OryOG723Qb5i0R4XJX8OZZDkjDR6RxjWE52FU=;
+ b=OxB+BV93Mfk+SO11QPk+0M0qiYyLgO81EveQaBfktBFKaThdr+9LB742b8d309KpK5
+ 9h2Y+mw44uNaw+uP2DK0O972g20db4F0tVvnLewCPdwJnAt3uM3ZKx08l6EY2FcCcSds
+ 6VqybCKNY1tMOS6BO30IK37iVikN3gHDYmgsaYoIrtjUHAUNmsXj30GfAGwT8/nCgJrs
+ Di98G9GanEfyA5XbzT0NU7jLAwefcwnWwoPCeFURcJn0Y5Ujx3hXFDo1/eMD+KNqinou
+ gk6yRjCF6ZxKD9lp5HPE4G6YOJEwL6qV/Dg5zrm+rtGwCi6uJx5SsyWoyym+ur130/tn
+ YqwA==
+X-Gm-Message-State: AOJu0YwVudh7hBgWnlrJDFTibrLoA1uk/h+RGSZn45as3UsW/xa2CvcC
+ VkTr4Rc+BlZnrRSa5eroqGPwm51duSsuFJrJtnCQ6mCwjA839XupssNKkpkEiSwxh3onKVNwBWX
+ GsnBMumQYgJ56HlsViQG7pr/3PtTDeUNvk/J1
+X-Google-Smtp-Source: AGHT+IHmh87kW+AQDfNhFwYEAFAPeovZgmMrJoEq20wvBcgZpacL/aGZJWq2CKf78XYXiILf9qPLnf0Q/toBBsRyoa4=
+X-Received: by 2002:a05:6512:3d9e:b0:535:3d14:1313 with SMTP id
+ 2adb3069b0e04-536a6931d76mr129372e87.0.1726698328971; Wed, 18 Sep 2024
+ 15:25:28 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/48] Use g_assert_not_reached instead of
- (g_)assert(0, false)
-To: "Xingtao Yao (Fujitsu)" <yaoxt.fnst@fujitsu.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: Jason Wang <jasowang@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Laurent Vivier <lvivier@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Klaus Jensen <its@irrelevant.dk>, WANG Xuerui <git@xen0n.name>,
- Halil Pasic <pasic@linux.ibm.com>, Rob Herring <robh@kernel.org>,
- Michael Rolnik <mrolnik@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Corey Minyard <minyard@acm.org>,
- Keith Busch <kbusch@kernel.org>, Thomas Huth <thuth@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Kevin Wolf <kwolf@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Jesper Devantier <foss@defmacro.it>,
- Hyman Huang <yong.huang@smartx.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>,
- Laurent Vivier <laurent@vivier.eu>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "Richard W.M. Jones" <rjones@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Hanna Reitz <hreitz@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Helge Deller <deller@gmx.de>,
- Peter Xu <peterx@redhat.com>, Daniel Henrique Barboza
- <danielhb413@gmail.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Eric Farman <farman@linux.ibm.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>, Joel Stanley <joel@jms.id.au>,
- Eduardo Habkost <eduardo@habkost.net>,
- David Gibson <david@gibson.dropbear.id.au>, Fam Zheng <fam@euphon.net>,
- Weiwei Li <liwei1518@gmail.com>, Markus Armbruster <armbru@redhat.com>
-References: <20240912073921.453203-1-pierrick.bouvier@linaro.org>
- <OSZPR01MB6453486D937E15FBF6AEAD018D652@OSZPR01MB6453.jpnprd01.prod.outlook.com>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <OSZPR01MB6453486D937E15FBF6AEAD018D652@OSZPR01MB6453.jpnprd01.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20240918192254.3136903-1-tavip@google.com>
+ <20240918192254.3136903-9-tavip@google.com>
+ <Zus1YzMOZD1ppO-2@mail.minyard.net>
+ <CAGWr4cSvq+WnUQO3-8jyasQPhKGQCvzOYqRm5W8vRdhW9iU=xw@mail.gmail.com>
+ <ZutGsQglLtK7MtRB@mail.minyard.net>
+In-Reply-To: <ZutGsQglLtK7MtRB@mail.minyard.net>
+From: Octavian Purdila <tavip@google.com>
+Date: Wed, 18 Sep 2024 15:25:16 -0700
+Message-ID: <CAGWr4cQhyH2ygyxzs_TaVPRdmG_s-hFnLXsR2dC6NcP-c1fNFg@mail.gmail.com>
+Subject: Re: [PATCH 08/25] hw/i2c: add support for flexcomm i2c
+To: corey@minyard.net
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, stefanst@google.com, 
+ pbonzini@redhat.com, peter.maydell@linaro.org, marcandre.lureau@redhat.com, 
+ berrange@redhat.com, eduardo@habkost.net, luc@lmichel.fr, 
+ damien.hedde@dahe.fr, alistair@alistair23.me, thuth@redhat.com, 
+ philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, lvivier@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=tavip@google.com; helo=mail-lf1-x129.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,192 +96,1873 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gOS8xMi8yNCAxODozNywgWGluZ3RhbyBZYW8gKEZ1aml0c3UpIHdyb3RlOg0KPiANCj4g
-DQo+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPj4gRnJvbTogcWVtdS1kZXZlbC1i
-b3VuY2VzK3lhb3h0LmZuc3Q9ZnVqaXRzdS5jb21Abm9uZ251Lm9yZw0KPj4gPHFlbXUtZGV2
-ZWwtYm91bmNlcyt5YW94dC5mbnN0PWZ1aml0c3UuY29tQG5vbmdudS5vcmc+IE9uIEJlaGFs
-ZiBPZg0KPj4gUGllcnJpY2sgQm91dmllcg0KPj4gU2VudDogVGh1cnNkYXksIFNlcHRlbWJl
-ciAxMiwgMjAyNCAzOjM5IFBNDQo+PiBUbzogcWVtdS1kZXZlbEBub25nbnUub3JnDQo+PiBD
-YzogSmFzb24gV2FuZyA8amFzb3dhbmdAcmVkaGF0LmNvbT47IEFsZXggQmVubsOpZSA8YWxl
-eC5iZW5uZWVAbGluYXJvLm9yZz47DQo+PiBMYXVyZW50IFZpdmllciA8bHZpdmllckByZWRo
-YXQuY29tPjsgTWFyY2VsbyBUb3NhdHRpIDxtdG9zYXR0aUByZWRoYXQuY29tPjsNCj4+IE5p
-Y2hvbGFzIFBpZ2dpbiA8bnBpZ2dpbkBnbWFpbC5jb20+OyBLbGF1cyBKZW5zZW4gPGl0c0Bp
-cnJlbGV2YW50LmRrPjsgV0FORw0KPj4gWHVlcnVpIDxnaXRAeGVuMG4ubmFtZT47IEhhbGls
-IFBhc2ljIDxwYXNpY0BsaW51eC5pYm0uY29tPjsgUm9iIEhlcnJpbmcNCj4+IDxyb2JoQGtl
-cm5lbC5vcmc+OyBNaWNoYWVsIFJvbG5payA8bXJvbG5pa0BnbWFpbC5jb20+OyBaaGFvIExp
-dQ0KPj4gPHpoYW8xLmxpdUBpbnRlbC5jb20+OyBQZXRlciBNYXlkZWxsIDxwZXRlci5tYXlk
-ZWxsQGxpbmFyby5vcmc+OyBSaWNoYXJkDQo+PiBIZW5kZXJzb24gPHJpY2hhcmQuaGVuZGVy
-c29uQGxpbmFyby5vcmc+OyBGYWJpYW5vIFJvc2FzIDxmYXJvc2FzQHN1c2UuZGU+Ow0KPj4g
-Q29yZXkgTWlueWFyZCA8bWlueWFyZEBhY20ub3JnPjsgS2VpdGggQnVzY2ggPGtidXNjaEBr
-ZXJuZWwub3JnPjsgVGhvbWFzDQo+PiBIdXRoIDx0aHV0aEByZWRoYXQuY29tPjsgTWFjaWVq
-IFMuIFN6bWlnaWVybyA8bWFjaWVqLnN6bWlnaWVyb0BvcmFjbGUuY29tPjsNCj4+IEhhcnNo
-IFByYXRlZWsgQm9yYSA8aGFyc2hwYkBsaW51eC5pYm0uY29tPjsgS2V2aW4gV29sZiA8a3dv
-bGZAcmVkaGF0LmNvbT47DQo+PiBQYW9sbyBCb256aW5pIDxwYm9uemluaUByZWRoYXQuY29t
-PjsgSmVzcGVyIERldmFudGllciA8Zm9zc0BkZWZtYWNyby5pdD47DQo+PiBIeW1hbiBIdWFu
-ZyA8eW9uZy5odWFuZ0BzbWFydHguY29tPjsgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kNCj4+
-IDxwaGlsbWRAbGluYXJvLm9yZz47IFBhbG1lciBEYWJiZWx0IDxwYWxtZXJAZGFiYmVsdC5j
-b20+Ow0KPj4gcWVtdS1zMzkweEBub25nbnUub3JnOyBMYXVyZW50IFZpdmllciA8bGF1cmVu
-dEB2aXZpZXIuZXU+Ow0KPj4gcWVtdS1yaXNjdkBub25nbnUub3JnOyBSaWNoYXJkIFcuTS4g
-Sm9uZXMgPHJqb25lc0ByZWRoYXQuY29tPjsgTGl1IFpoaXdlaQ0KPj4gPHpoaXdlaV9saXVA
-bGludXguYWxpYmFiYS5jb20+OyBBdXJlbGllbiBKYXJubyA8YXVyZWxpZW5AYXVyZWwzMi5u
-ZXQ+OyBEYW5pZWwgUC4NCj4+IEJlcnJhbmfDqSA8YmVycmFuZ2VAcmVkaGF0LmNvbT47IE1h
-cmNlbCBBcGZlbGJhdW0NCj4+IDxtYXJjZWwuYXBmZWxiYXVtQGdtYWlsLmNvbT47IGt2bUB2
-Z2VyLmtlcm5lbC5vcmc7IENocmlzdGlhbiBCb3JudHJhZWdlcg0KPj4gPGJvcm50cmFlZ2Vy
-QGxpbnV4LmlibS5jb20+OyBBa2loaWtvIE9kYWtpIDxha2loaWtvLm9kYWtpQGRheW5peC5j
-b20+Ow0KPj4gRGFuaWVsIEhlbnJpcXVlIEJhcmJvemEgPGRiYXJib3phQHZlbnRhbmFtaWNy
-by5jb20+OyBIYW5uYSBSZWl0eg0KPj4gPGhyZWl0ekByZWRoYXQuY29tPjsgQW5pIFNpbmhh
-IDxhbmlzaW5oYUByZWRoYXQuY29tPjsNCj4+IHFlbXUtcHBjQG5vbmdudS5vcmc7IE1hcmMt
-QW5kcsOpIEx1cmVhdSA8bWFyY2FuZHJlLmx1cmVhdUByZWRoYXQuY29tPjsNCj4+IEFsaXN0
-YWlyIEZyYW5jaXMgPGFsaXN0YWlyLmZyYW5jaXNAd2RjLmNvbT47IEJpbiBNZW5nIDxibWVu
-Zy5jbkBnbWFpbC5jb20+Ow0KPj4gTWljaGFlbCBTLiBUc2lya2luIDxtc3RAcmVkaGF0LmNv
-bT47IEhlbGdlIERlbGxlciA8ZGVsbGVyQGdteC5kZT47IFBldGVyIFh1DQo+PiA8cGV0ZXJ4
-QHJlZGhhdC5jb20+OyBEYW5pZWwgSGVucmlxdWUgQmFyYm96YSA8ZGFuaWVsaGI0MTNAZ21h
-aWwuY29tPjsNCj4+IERtaXRyeSBGbGV5dG1hbiA8ZG1pdHJ5LmZsZXl0bWFuQGdtYWlsLmNv
-bT47IE5pbmEgU2Nob2V0dGVybC1HbGF1c2NoDQo+PiA8bnNnQGxpbnV4LmlibS5jb20+OyBZ
-YW5hbiBXYW5nIDx3YW5neWFuYW41NUBodWF3ZWkuY29tPjsNCj4+IHFlbXUtYXJtQG5vbmdu
-dS5vcmc7IElnb3IgTWFtbWVkb3YgPGltYW1tZWRvQHJlZGhhdC5jb20+Ow0KPj4gSmVhbi1D
-aHJpc3RvcGhlIER1Ym9pcyA8amNkQHRyaWJ1ZHVib2lzLm5ldD47IEVyaWMgRmFybWFuDQo+
-PiA8ZmFybWFuQGxpbnV4LmlibS5jb20+OyBTcmlyYW0gWWFnbmFyYW1hbg0KPj4gPHNyaXJh
-bS55YWduYXJhbWFuQGVyaWNzc29uLmNvbT47IHFlbXUtYmxvY2tAbm9uZ251Lm9yZzsgU3Rl
-ZmFuIEJlcmdlcg0KPj4gPHN0ZWZhbmJAbGludXgudm5ldC5pYm0uY29tPjsgSm9lbCBTdGFu
-bGV5IDxqb2VsQGptcy5pZC5hdT47IEVkdWFyZG8gSGFia29zdA0KPj4gPGVkdWFyZG9AaGFi
-a29zdC5uZXQ+OyBEYXZpZCBHaWJzb24gPGRhdmlkQGdpYnNvbi5kcm9wYmVhci5pZC5hdT47
-IEZhbQ0KPj4gWmhlbmcgPGZhbUBldXBob24ubmV0PjsgV2Vpd2VpIExpIDxsaXdlaTE1MThA
-Z21haWwuY29tPjsgTWFya3VzDQo+PiBBcm1icnVzdGVyIDxhcm1icnVAcmVkaGF0LmNvbT47
-IFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj4+IFN1
-YmplY3Q6IFtQQVRDSCB2MiAwMC80OF0gVXNlIGdfYXNzZXJ0X25vdF9yZWFjaGVkIGluc3Rl
-YWQgb2YgKGdfKWFzc2VydCgwLA0KPj4gZmFsc2UpDQo+Pg0KPj4gVGhpcyBzZXJpZXMgY2xl
-YW5zIHVwIGFsbCB1c2FnZXMgb2YgYXNzZXJ0L2dfYXNzZXJ0IHdobyBhcmUgc3VwcG9zZWQg
-dG8gc3RvcA0KPj4gZXhlY3V0aW9uIG9mIFFFTVUuIFdlIHJlcGxhY2UgdGhvc2UgYnkgZ19h
-c3NlcnRfbm90X3JlYWNoZWQoKS4NCj4+IEl0IHdhcyBzdWdnZXN0ZWQgcmVjZW50bHkgd2hl
-biBjbGVhbmluZyBjb2RlYmFzZSB0byBidWlsZCBRRU1VIHdpdGggZ2NjDQo+PiBhbmQgdHNh
-bjoNCj4+IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvNTRiYjAyYTYtMWIx
-Mi00NjBhLTk3ZjYtM2Y0NzhlZjc2NmM2QGxpbg0KPj4gYXJvLm9yZy8uDQo+Pg0KPj4gSW4g
-bW9yZSwgY2xlYW51cCB1c2VsZXNzIGJyZWFrIGFuZCByZXR1cm4gYWZ0ZXIgZ19hc3NlcnRf
-bm90X3JlYWNoZWQoKTsNCj4gSSBmb3VuZCB0aGF0IG5vdCBhbGwgb2YgdGhlIGJyZWFrIG9y
-IHJldHVybiBhZnRlciBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpIHdlcmUgY2xlYW5lZCB1cCwg
-ZG9uJ3QgdGhleSBuZWVkIHRvIGJlIGNsZWFuZWQgdXA/DQo+Pg0KPj4gQW5kIGZpbmFsbHks
-IGVuc3VyZSB3aXRoIHNjcmlwdHMvY2hlY2twYXRjaC5wbCB0aGF0IHdlIGRvbid0IHJlaW50
-cm9kdWNlDQo+PiAoZ18pYXNzZXJ0KGZhbHNlKSBpbiB0aGUgZnV0dXJlLg0KPj4NCj4+IE5l
-dyBjb21taXRzIChyZW1vdmluZyByZXR1cm4pIG5lZWQgcmV2aWV3Lg0KPj4NCj4+IFRlc3Rl
-ZCB0aGF0IGl0IGJ1aWxkIHdhcm5pbmcgZnJlZSB3aXRoIGdjYyBhbmQgY2xhbmcuDQo+Pg0K
-Pj4gdjINCj4+IC0gYWxpZ24gYmFja3NsYXNoZXMgZm9yIHNvbWUgY2hhbmdlcw0KPj4gLSBh
-ZGQgc3VtbWFyeSBpbiBhbGwgY29tbWl0cyBtZXNzYWdlDQo+PiAtIHJlbW92ZSByZWR1bmRh
-bnQgY29tbWVudA0KPj4NCj4+IHYxDQo+PiBodHRwczovL2xvcmUua2VybmVsLm9yZy9xZW11
-LWRldmVsLzIwMjQwOTEwMjIxNjA2LjE4MTc0NzgtMS1waWVycmljay5ib3V2aWVyQA0KPj4g
-bGluYXJvLm9yZy9ULyN0DQo+Pg0KPj4gUGllcnJpY2sgQm91dmllciAoNDgpOg0KPj4gICAg
-ZG9jcy9zcGluOiByZXBsYWNlIGFzc2VydCgwKSB3aXRoIGdfYXNzZXJ0X25vdF9yZWFjaGVk
-KCkNCj4+ICAgIGh3L2FjcGk6IHJlcGxhY2UgYXNzZXJ0KDApIHdpdGggZ19hc3NlcnRfbm90
-X3JlYWNoZWQoKQ0KPj4gICAgaHcvYXJtOiByZXBsYWNlIGFzc2VydCgwKSB3aXRoIGdfYXNz
-ZXJ0X25vdF9yZWFjaGVkKCkNCj4+ICAgIGh3L2NoYXI6IHJlcGxhY2UgYXNzZXJ0KDApIHdp
-dGggZ19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPj4gICAgaHcvY29yZTogcmVwbGFjZSBhc3Nl
-cnQoMCkgd2l0aCBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+PiAgICBody9uZXQ6IHJlcGxh
-Y2UgYXNzZXJ0KDApIHdpdGggZ19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPj4gICAgaHcvd2F0
-Y2hkb2c6IHJlcGxhY2UgYXNzZXJ0KDApIHdpdGggZ19hc3NlcnRfbm90X3JlYWNoZWQoKQ0K
-Pj4gICAgbWlncmF0aW9uOiByZXBsYWNlIGFzc2VydCgwKSB3aXRoIGdfYXNzZXJ0X25vdF9y
-ZWFjaGVkKCkNCj4+ICAgIHFvYmplY3Q6IHJlcGxhY2UgYXNzZXJ0KDApIHdpdGggZ19hc3Nl
-cnRfbm90X3JlYWNoZWQoKQ0KPj4gICAgc3lzdGVtOiByZXBsYWNlIGFzc2VydCgwKSB3aXRo
-IGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4+ICAgIHRhcmdldC9wcGM6IHJlcGxhY2UgYXNz
-ZXJ0KDApIHdpdGggZ19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPj4gICAgdGVzdHMvcXRlc3Q6
-IHJlcGxhY2UgYXNzZXJ0KDApIHdpdGggZ19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPj4gICAg
-dGVzdHMvdW5pdDogcmVwbGFjZSBhc3NlcnQoMCkgd2l0aCBnX2Fzc2VydF9ub3RfcmVhY2hl
-ZCgpDQo+PiAgICBpbmNsdWRlL2h3L3MzOTB4OiByZXBsYWNlIGFzc2VydChmYWxzZSkgd2l0
-aCBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+PiAgICBibG9jazogcmVwbGFjZSBhc3NlcnQo
-ZmFsc2UpIHdpdGggZ19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPj4gICAgaHcvaHlwZXJ2OiBy
-ZXBsYWNlIGFzc2VydChmYWxzZSkgd2l0aCBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+PiAg
-ICBody9uZXQ6IHJlcGxhY2UgYXNzZXJ0KGZhbHNlKSB3aXRoIGdfYXNzZXJ0X25vdF9yZWFj
-aGVkKCkNCj4+ICAgIGh3L252bWU6IHJlcGxhY2UgYXNzZXJ0KGZhbHNlKSB3aXRoIGdfYXNz
-ZXJ0X25vdF9yZWFjaGVkKCkNCj4+ICAgIGh3L3BjaTogcmVwbGFjZSBhc3NlcnQoZmFsc2Up
-IHdpdGggZ19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPj4gICAgaHcvcHBjOiByZXBsYWNlIGFz
-c2VydChmYWxzZSkgd2l0aCBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+PiAgICBtaWdyYXRp
-b246IHJlcGxhY2UgYXNzZXJ0KGZhbHNlKSB3aXRoIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkN
-Cj4+ICAgIHRhcmdldC9pMzg2L2t2bTogcmVwbGFjZSBhc3NlcnQoZmFsc2UpIHdpdGggZ19h
-c3NlcnRfbm90X3JlYWNoZWQoKQ0KPj4gICAgdGVzdHMvcXRlc3Q6IHJlcGxhY2UgYXNzZXJ0
-KGZhbHNlKSB3aXRoIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4+ICAgIGFjY2VsL3RjZzog
-cmVtb3ZlIGJyZWFrIGFmdGVyIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4+ICAgIGJsb2Nr
-OiByZW1vdmUgYnJlYWsgYWZ0ZXIgZ19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPj4gICAgaHcv
-YWNwaTogcmVtb3ZlIGJyZWFrIGFmdGVyIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4+ICAg
-IGh3L2dwaW86IHJlbW92ZSBicmVhayBhZnRlciBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+
-PiAgICBody9taXNjOiByZW1vdmUgYnJlYWsgYWZ0ZXIgZ19hc3NlcnRfbm90X3JlYWNoZWQo
-KQ0KPj4gICAgaHcvbmV0OiByZW1vdmUgYnJlYWsgYWZ0ZXIgZ19hc3NlcnRfbm90X3JlYWNo
-ZWQoKQ0KPj4gICAgaHcvcGNpLWhvc3Q6IHJlbW92ZSBicmVhayBhZnRlciBnX2Fzc2VydF9u
-b3RfcmVhY2hlZCgpDQo+PiAgICBody9zY3NpOiByZW1vdmUgYnJlYWsgYWZ0ZXIgZ19hc3Nl
-cnRfbm90X3JlYWNoZWQoKQ0KPj4gICAgaHcvdHBtOiByZW1vdmUgYnJlYWsgYWZ0ZXIgZ19h
-c3NlcnRfbm90X3JlYWNoZWQoKQ0KPj4gICAgdGFyZ2V0L2FybTogcmVtb3ZlIGJyZWFrIGFm
-dGVyIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4+ICAgIHRhcmdldC9yaXNjdjogcmVtb3Zl
-IGJyZWFrIGFmdGVyIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4+ICAgIHRlc3RzL3F0ZXN0
-OiByZW1vdmUgYnJlYWsgYWZ0ZXIgZ19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPj4gICAgdWk6
-IHJlbW92ZSBicmVhayBhZnRlciBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+PiAgICBmcHU6
-IHJlbW92ZSBicmVhayBhZnRlciBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+PiAgICB0Y2cv
-bG9vbmdhcmNoNjQ6IHJlbW92ZSBicmVhayBhZnRlciBnX2Fzc2VydF9ub3RfcmVhY2hlZCgp
-DQo+PiAgICBpbmNsdWRlL3FlbXU6IHJlbW92ZSByZXR1cm4gYWZ0ZXIgZ19hc3NlcnRfbm90
-X3JlYWNoZWQoKQ0KPj4gICAgaHcvaHlwZXJ2OiByZW1vdmUgcmV0dXJuIGFmdGVyIGdfYXNz
-ZXJ0X25vdF9yZWFjaGVkKCkNCj4+ICAgIGh3L25ldDogcmVtb3ZlIHJldHVybiBhZnRlciBn
-X2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+PiAgICBody9wY2k6IHJlbW92ZSByZXR1cm4gYWZ0
-ZXIgZ19hc3NlcnRfbm90X3JlYWNoZWQoKQ0KPj4gICAgaHcvcHBjOiByZW1vdmUgcmV0dXJu
-IGFmdGVyIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4+ICAgIG1pZ3JhdGlvbjogcmVtb3Zl
-IHJldHVybiBhZnRlciBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+PiAgICBxb2JqZWN0OiBy
-ZW1vdmUgcmV0dXJuIGFmdGVyIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkNCj4+ICAgIHFvbTog
-cmVtb3ZlIHJldHVybiBhZnRlciBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+PiAgICB0ZXN0
-cy9xdGVzdDogcmVtb3ZlIHJldHVybiBhZnRlciBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpDQo+
-PiAgICBzY3JpcHRzL2NoZWNrcGF0Y2gucGw6IGVtaXQgZXJyb3Igd2hlbiB1c2luZyBhc3Nl
-cnQoZmFsc2UpDQo+Pg0KPj4gICBkb2NzL3NwaW4vYWlvX25vdGlmeV9hY2NlcHQucHJvbWVs
-YSAgICAgfCAgNiArKystLS0NCj4+ICAgZG9jcy9zcGluL2Fpb19ub3RpZnlfYnVnLnByb21l
-bGEgICAgICAgIHwgIDYgKysrLS0tDQo+PiAgIGluY2x1ZGUvaHcvczM5MHgvY3B1LXRvcG9s
-b2d5LmggICAgICAgICB8ICAyICstDQo+PiAgIGluY2x1ZGUvcWVtdS9wbWVtLmggICAgICAg
-ICAgICAgICAgICAgICB8ICAxIC0NCj4+ICAgYWNjZWwvdGNnL3BsdWdpbi1nZW4uYyAgICAg
-ICAgICAgICAgICAgIHwgIDEgLQ0KPj4gICBibG9jay9xY293Mi5jICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgfCAgMiArLQ0KPj4gICBibG9jay9zc2guYyAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgfCAgMSAtDQo+PiAgIGh3L2FjcGkvYW1sLWJ1aWxkLmMgICAgICAgICAg
-ICAgICAgICAgICB8ICAzICstLQ0KPj4gICBody9hcm0vaGlnaGJhbmsuYyAgICAgICAgICAg
-ICAgICAgICAgICAgfCAgMiArLQ0KPj4gICBody9jaGFyL2F2cl91c2FydC5jICAgICAgICAg
-ICAgICAgICAgICAgfCAgMiArLQ0KPj4gICBody9jb3JlL251bWEuYyAgICAgICAgICAgICAg
-ICAgICAgICAgICAgfCAgMiArLQ0KPj4gICBody9ncGlvL25yZjUxX2dwaW8uYyAgICAgICAg
-ICAgICAgICAgICAgfCAgMSAtDQo+PiAgIGh3L2h5cGVydi9oeXBlcnZfdGVzdGRldi5jICAg
-ICAgICAgICAgICB8ICA3ICsrKy0tLS0NCj4+ICAgaHcvaHlwZXJ2L3ZtYnVzLmMgICAgICAg
-ICAgICAgICAgICAgICAgIHwgMTUgKysrKysrLS0tLS0tLS0tDQo+PiAgIGh3L21pc2MvaW14
-Nl9jY20uYyAgICAgICAgICAgICAgICAgICAgICB8ICAxIC0NCj4+ICAgaHcvbWlzYy9tYWNf
-dmlhLmMgICAgICAgICAgICAgICAgICAgICAgIHwgIDIgLS0NCj4+ICAgaHcvbmV0L2UxMDAw
-ZV9jb3JlLmMgICAgICAgICAgICAgICAgICAgIHwgIDQgKy0tLQ0KPj4gICBody9uZXQvaTgy
-NTk2LmMgICAgICAgICAgICAgICAgICAgICAgICAgfCAgMiArLQ0KPj4gICBody9uZXQvaWdi
-X2NvcmUuYyAgICAgICAgICAgICAgICAgICAgICAgfCAgNCArLS0tDQo+PiAgIGh3L25ldC9u
-ZXRfcnhfcGt0LmMgICAgICAgICAgICAgICAgICAgICB8ICAzICstLQ0KPj4gICBody9uZXQv
-dm14bmV0My5jICAgICAgICAgICAgICAgICAgICAgICAgfCAgMSAtDQo+PiAgIGh3L252bWUv
-Y3RybC5jICAgICAgICAgICAgICAgICAgICAgICAgICB8ICA4ICsrKystLS0tDQo+PiAgIGh3
-L3BjaS1ob3N0L2d0NjQxMjAuYyAgICAgICAgICAgICAgICAgICB8ICAyIC0tDQo+PiAgIGh3
-L3BjaS9wY2ktc3R1Yi5jICAgICAgICAgICAgICAgICAgICAgICB8ICA2ICsrLS0tLQ0KPj4g
-ICBody9wcGMvcHBjLmMgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgMSAtDQo+PiAg
-IGh3L3BwYy9zcGFwcl9ldmVudHMuYyAgICAgICAgICAgICAgICAgICB8ICAzICstLQ0KPj4g
-ICBody9zY3NpL3ZpcnRpby1zY3NpLmMgICAgICAgICAgICAgICAgICAgfCAgMSAtDQo+PiAg
-IGh3L3RwbS90cG1fc3BhcHIuYyAgICAgICAgICAgICAgICAgICAgICB8ICAxIC0NCj4+ICAg
-aHcvd2F0Y2hkb2cvd2F0Y2hkb2cuYyAgICAgICAgICAgICAgICAgIHwgIDIgKy0NCj4+ICAg
-bWlncmF0aW9uL2RpcnR5cmF0ZS5jICAgICAgICAgICAgICAgICAgIHwgIDMgKy0tDQo+PiAg
-IG1pZ3JhdGlvbi9taWdyYXRpb24taG1wLWNtZHMuYyAgICAgICAgICB8ICAyICstDQo+PiAg
-IG1pZ3JhdGlvbi9wb3N0Y29weS1yYW0uYyAgICAgICAgICAgICAgICB8IDIxICsrKysrKyst
-LS0tLS0tLS0tLS0tLQ0KPj4gICBtaWdyYXRpb24vcmFtLmMgICAgICAgICAgICAgICAgICAg
-ICAgICAgfCAgOCArKystLS0tLQ0KPj4gICBxb2JqZWN0L3FsaXQuYyAgICAgICAgICAgICAg
-ICAgICAgICAgICAgfCAgMiArLQ0KPj4gICBxb2JqZWN0L3FudW0uYyAgICAgICAgICAgICAg
-ICAgICAgICAgICAgfCAxMiArKysrLS0tLS0tLS0NCj4+ICAgcW9tL29iamVjdC5jICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIHwgIDEgLQ0KPj4gICBzeXN0ZW0vcnRjLmMgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgfCAgMiArLQ0KPj4gICB0YXJnZXQvYXJtL2h5cF9nZGJz
-dHViLmMgICAgICAgICAgICAgICAgfCAgMSAtDQo+PiAgIHRhcmdldC9pMzg2L2t2bS9rdm0u
-YyAgICAgICAgICAgICAgICAgICB8ICA0ICsrLS0NCj4+ICAgdGFyZ2V0L3BwYy9kZnBfaGVs
-cGVyLmMgICAgICAgICAgICAgICAgIHwgIDggKysrKy0tLS0NCj4+ICAgdGFyZ2V0L3BwYy9t
-bXVfaGVscGVyLmMgICAgICAgICAgICAgICAgIHwgIDIgKy0NCj4+ICAgdGFyZ2V0L3Jpc2N2
-L21vbml0b3IuYyAgICAgICAgICAgICAgICAgIHwgIDEgLQ0KPj4gICB0ZXN0cy9xdGVzdC9h
-Y3BpLXV0aWxzLmMgICAgICAgICAgICAgICAgfCAgMSAtDQo+PiAgIHRlc3RzL3F0ZXN0L2lw
-bWktYnQtdGVzdC5jICAgICAgICAgICAgICB8ICAyICstDQo+PiAgIHRlc3RzL3F0ZXN0L2lw
-bWkta2NzLXRlc3QuYyAgICAgICAgICAgICB8ICA0ICsrLS0NCj4+ICAgdGVzdHMvcXRlc3Qv
-bWlncmF0aW9uLWhlbHBlcnMuYyAgICAgICAgIHwgIDEgLQ0KPj4gICB0ZXN0cy9xdGVzdC9u
-dW1hLXRlc3QuYyAgICAgICAgICAgICAgICAgfCAxMCArKysrKy0tLS0tDQo+PiAgIHRlc3Rz
-L3F0ZXN0L3J0bDgxMzktdGVzdC5jICAgICAgICAgICAgICB8ICAyICstDQo+PiAgIHRlc3Rz
-L3VuaXQvdGVzdC14cy1ub2RlLmMgICAgICAgICAgICAgICB8ICA0ICsrLS0NCj4+ICAgdWkv
-cWVtdS1waXhtYW4uYyAgICAgICAgICAgICAgICAgICAgICAgIHwgIDEgLQ0KPj4gICBmcHUv
-c29mdGZsb2F0LXBhcnRzLmMuaW5jICAgICAgICAgICAgICAgfCAgMiAtLQ0KPj4gICB0YXJn
-ZXQvcmlzY3YvaW5zbl90cmFucy90cmFuc19ydnYuYy5pbmMgfCAgMiAtLQ0KPj4gICB0Y2cv
-bG9vbmdhcmNoNjQvdGNnLXRhcmdldC5jLmluYyAgICAgICAgfCAgMSAtDQo+PiAgIHNjcmlw
-dHMvY2hlY2twYXRjaC5wbCAgICAgICAgICAgICAgICAgICB8ICAzICsrKw0KPj4gICA1NCBm
-aWxlcyBjaGFuZ2VkLCA3MiBpbnNlcnRpb25zKCspLCAxMjAgZGVsZXRpb25zKC0pDQo+Pg0K
-Pj4gLS0NCj4+IDIuMzkuMg0KPj4NCj4gDQoNCldoaWNoIG9uZSBkaWQgeW91IGZpbmQ/IFVz
-aW5nIHdoaWNoIGdyZXAgY29tbWFuZD8NCg==
+On Wed, Sep 18, 2024 at 2:31=E2=80=AFPM Corey Minyard <corey@minyard.net> w=
+rote:
+>
+> On Wed, Sep 18, 2024 at 02:04:58PM -0700, Octavian Purdila wrote:
+> > On Wed, Sep 18, 2024 at 1:17???PM Corey Minyard <corey@minyard.net> wro=
+te:
+> > >
+> > > On Wed, Sep 18, 2024 at 12:22:36PM -0700, Octavian Purdila wrote:
+> > > > Add support for NXP's flexcomm i2c. It does not support slave mode =
+or
+> > > > DMA.
+> > > >
+> > > > The patch includes an automatically generated header which contains
+> > > > the register layout and helpers.
+> > > >
+> > > > The header can be regenerated with the svd-flexcomm-i2c target when
+> > > > the build is configured with --enable-mcux-soc-svd.
+> > > >
+> > > > Signed-off-by: Octavian Purdila <tavip@google.com>
+> > > > ---
+> > > >  include/hw/arm/svd/flexcomm_i2c.h | 1190 +++++++++++++++++++++++++=
+++++
+> > > >  include/hw/i2c/flexcomm_i2c.h     |   40 +
+> > > >  include/hw/misc/flexcomm.h        |    2 +
+> > > >  hw/i2c/flexcomm_i2c.c             |  250 ++++++
+> > > >  hw/misc/flexcomm.c                |    3 +
+> > > >  hw/arm/svd/meson.build            |    3 +
+> > > >  hw/i2c/meson.build                |    1 +
+> > > >  hw/i2c/trace-events               |   10 +
+> > > >  hw/misc/Kconfig                   |    1 +
+> > > >  9 files changed, 1500 insertions(+)
+> > > >  create mode 100644 include/hw/arm/svd/flexcomm_i2c.h
+> > > >  create mode 100644 include/hw/i2c/flexcomm_i2c.h
+> > > >  create mode 100644 hw/i2c/flexcomm_i2c.c
+> > > >
+> > > > diff --git a/include/hw/arm/svd/flexcomm_i2c.h b/include/hw/arm/svd=
+/flexcomm_i2c.h
+> > > > new file mode 100644
+> > > > index 0000000000..9017d48446
+> > > > --- /dev/null
+> > > > +++ b/include/hw/arm/svd/flexcomm_i2c.h
+> > > > @@ -0,0 +1,1190 @@
+> > > > +/*
+> > > > + * Copyright 2016-2023 NXP SPDX-License-Identifier: BSD-3-Clause
+> > > > + *
+> > > > + * Automatically generated by svd-gen-header.py from MIMXRT595S_cm=
+33.xml
+> > > > + */
+> > > > +#pragma once
+> > > > +
+> > > > +#include "hw/register.h"
+> > > > +
+> > > > +/* I2C Bus Interface */
+> > > > +#define FLEXCOMM_I2C_REGS_NO (1024)
+> > > > +
+> > > > +/* Configuration Register */
+> > > > +REG32(FLEXCOMM_I2C_CFG, 2048);
+> > > > +/* Master Enable */
+> > > > +FIELD(FLEXCOMM_I2C_CFG, MSTEN, 0, 1);
+> > > > +/* Slave Enable */
+> > > > +FIELD(FLEXCOMM_I2C_CFG, SLVEN, 1, 1);
+> > > > +/* Monitor Enable */
+> > > > +FIELD(FLEXCOMM_I2C_CFG, MONEN, 2, 1);
+> > > > +/* I2C bus Time-out Enable */
+> > > > +FIELD(FLEXCOMM_I2C_CFG, TIMEOUTEN, 3, 1);
+> > > > +/* Monitor function Clock Stretching */
+> > > > +FIELD(FLEXCOMM_I2C_CFG, MONCLKSTR, 4, 1);
+> > > > +/* High Speed mode Capable enable */
+> > > > +FIELD(FLEXCOMM_I2C_CFG, HSCAPABLE, 5, 1);
+> > > > +
+> > > > +/* Status Register */
+> > > > +REG32(FLEXCOMM_I2C_STAT, 2052);
+> > > > +/* Master Pending */
+> > > > +FIELD(FLEXCOMM_I2C_STAT, MSTPENDING, 0, 1);
+> > > > +/* Master State code */
+> > > > +FIELD(FLEXCOMM_I2C_STAT, MSTSTATE, 1, 3);
+> > > > +/* Master Arbitration Loss flag */
+> > > > +FIELD(FLEXCOMM_I2C_STAT, MSTARBLOSS, 4, 1);
+> > > > +/* Master Start/Stop Error flag */
+> > > > +FIELD(FLEXCOMM_I2C_STAT, MSTSTSTPERR, 6, 1);
+> > > > +/* Slave Pending */
+> > > > +FIELD(FLEXCOMM_I2C_STAT, SLVPENDING, 8, 1);
+> > > > +/* Slave State */
+> > > > +FIELD(FLEXCOMM_I2C_STAT, SLVSTATE, 9, 2);
+> > > > +/* Slave Not Stretching */
+> > > > +FIELD(FLEXCOMM_I2C_STAT, SLVNOTSTR, 11, 1);
+> > > > +/* Slave address match Index T */
+> > > > +FIELD(FLEXCOMM_I2C_STAT, SLVIDX, 12, 2);
+> > > > +/* Slave selected flag */
+> > > > +FIELD(FLEXCOMM_I2C_STAT, SLVSEL, 14, 1);
+> > > > +/* Slave Deselected flag */
+> > > > +FIELD(FLEXCOMM_I2C_STAT, SLVDESEL, 15, 1);
+> > > > +/* Monitor Ready */
+> > > > +FIELD(FLEXCOMM_I2C_STAT, MONRDY, 16, 1);
+> > > > +/* Monitor Overflow flag */
+> > > > +FIELD(FLEXCOMM_I2C_STAT, MONOV, 17, 1);
+> > > > +/* Monitor Active flag */
+> > > > +FIELD(FLEXCOMM_I2C_STAT, MONACTIVE, 18, 1);
+> > > > +/* Monitor Idle flag */
+> > > > +FIELD(FLEXCOMM_I2C_STAT, MONIDLE, 19, 1);
+> > > > +/* Event Time-out Interrupt flag */
+> > > > +FIELD(FLEXCOMM_I2C_STAT, EVENTTIMEOUT, 24, 1);
+> > > > +/* SCL Time-out Interrupt flag */
+> > > > +FIELD(FLEXCOMM_I2C_STAT, SCLTIMEOUT, 25, 1);
+> > > > +
+> > > > +/* Interrupt Enable Set Register */
+> > > > +REG32(FLEXCOMM_I2C_INTENSET, 2056);
+> > > > +/* Master Pending interrupt Enable */
+> > > > +FIELD(FLEXCOMM_I2C_INTENSET, MSTPENDINGEN, 0, 1);
+> > > > +/* Master Arbitration Loss interrupt Enable */
+> > > > +FIELD(FLEXCOMM_I2C_INTENSET, MSTARBLOSSEN, 4, 1);
+> > > > +/* Master Start/Stop Error interrupt Enable */
+> > > > +FIELD(FLEXCOMM_I2C_INTENSET, MSTSTSTPERREN, 6, 1);
+> > > > +/* Slave Pending interrupt Enable */
+> > > > +FIELD(FLEXCOMM_I2C_INTENSET, SLVPENDINGEN, 8, 1);
+> > > > +/* Slave Not Stretching interrupt Enable */
+> > > > +FIELD(FLEXCOMM_I2C_INTENSET, SLVNOTSTREN, 11, 1);
+> > > > +/* Slave Deselect interrupt Enable */
+> > > > +FIELD(FLEXCOMM_I2C_INTENSET, SLVDESELEN, 15, 1);
+> > > > +/* Monitor data Ready interrupt Enable */
+> > > > +FIELD(FLEXCOMM_I2C_INTENSET, MONRDYEN, 16, 1);
+> > > > +/* Monitor Overrun interrupt Enable */
+> > > > +FIELD(FLEXCOMM_I2C_INTENSET, MONOVEN, 17, 1);
+> > > > +/* Monitor Idle interrupt Enable */
+> > > > +FIELD(FLEXCOMM_I2C_INTENSET, MONIDLEEN, 19, 1);
+> > > > +/* Event Time-out interrupt Enable */
+> > > > +FIELD(FLEXCOMM_I2C_INTENSET, EVENTTIMEOUTEN, 24, 1);
+> > > > +/* SCL Time-out interrupt Enable */
+> > > > +FIELD(FLEXCOMM_I2C_INTENSET, SCLTIMEOUTEN, 25, 1);
+> > > > +
+> > > > +/* Interrupt Enable Clear Register */
+> > > > +REG32(FLEXCOMM_I2C_INTENCLR, 2060);
+> > > > +/* Master Pending interrupt clear */
+> > > > +FIELD(FLEXCOMM_I2C_INTENCLR, MSTPENDINGCLR, 0, 1);
+> > > > +/* Master Arbitration Loss interrupt clear */
+> > > > +FIELD(FLEXCOMM_I2C_INTENCLR, MSTARBLOSSCLR, 4, 1);
+> > > > +/* Master Start/Stop Error interrupt clear */
+> > > > +FIELD(FLEXCOMM_I2C_INTENCLR, MSTSTSTPERRCLR, 6, 1);
+> > > > +/* Slave Pending interrupt clear */
+> > > > +FIELD(FLEXCOMM_I2C_INTENCLR, SLVPENDINGCLR, 8, 1);
+> > > > +/* Slave Not Stretching interrupt clear */
+> > > > +FIELD(FLEXCOMM_I2C_INTENCLR, SLVNOTSTRCLR, 11, 1);
+> > > > +/* Slave Deselect interrupt clear */
+> > > > +FIELD(FLEXCOMM_I2C_INTENCLR, SLVDESELCLR, 15, 1);
+> > > > +/* Monitor data Ready interrupt clear */
+> > > > +FIELD(FLEXCOMM_I2C_INTENCLR, MONRDYCLR, 16, 1);
+> > > > +/* Monitor Overrun interrupt clear */
+> > > > +FIELD(FLEXCOMM_I2C_INTENCLR, MONOVCLR, 17, 1);
+> > > > +/* Monitor Idle interrupt clear */
+> > > > +FIELD(FLEXCOMM_I2C_INTENCLR, MONIDLECLR, 19, 1);
+> > > > +/* Event time-out interrupt clear */
+> > > > +FIELD(FLEXCOMM_I2C_INTENCLR, EVENTTIMEOUTCLR, 24, 1);
+> > > > +/* SCL time-out interrupt clear */
+> > > > +FIELD(FLEXCOMM_I2C_INTENCLR, SCLTIMEOUTCLR, 25, 1);
+> > > > +
+> > > > +/* Time-out Register */
+> > > > +REG32(FLEXCOMM_I2C_TIMEOUT, 2064);
+> > > > +/* Time-out time value, the bottom 4 bits */
+> > > > +FIELD(FLEXCOMM_I2C_TIMEOUT, TOMIN, 0, 4);
+> > > > +/* Time-out time value */
+> > > > +FIELD(FLEXCOMM_I2C_TIMEOUT, TO, 4, 12);
+> > > > +
+> > > > +/* Clock Divider Register */
+> > > > +REG32(FLEXCOMM_I2C_CLKDIV, 2068);
+> > > > +/* Divider Value */
+> > > > +FIELD(FLEXCOMM_I2C_CLKDIV, DIVVAL, 0, 16);
+> > > > +
+> > > > +/* Interrupt Status Register */
+> > > > +REG32(FLEXCOMM_I2C_INTSTAT, 2072);
+> > > > +/* Master Pending */
+> > > > +FIELD(FLEXCOMM_I2C_INTSTAT, MSTPENDING, 0, 1);
+> > > > +/* Master Arbitration Loss flag */
+> > > > +FIELD(FLEXCOMM_I2C_INTSTAT, MSTARBLOSS, 4, 1);
+> > > > +/* Master Start/Stop Error flag */
+> > > > +FIELD(FLEXCOMM_I2C_INTSTAT, MSTSTSTPERR, 6, 1);
+> > > > +/* Slave Pending */
+> > > > +FIELD(FLEXCOMM_I2C_INTSTAT, SLVPENDING, 8, 1);
+> > > > +/* Slave Not Stretching status */
+> > > > +FIELD(FLEXCOMM_I2C_INTSTAT, SLVNOTSTR, 11, 1);
+> > > > +/* Slave Deselected flag */
+> > > > +FIELD(FLEXCOMM_I2C_INTSTAT, SLVDESEL, 15, 1);
+> > > > +/* Monitor Ready */
+> > > > +FIELD(FLEXCOMM_I2C_INTSTAT, MONRDY, 16, 1);
+> > > > +/* Monitor Overflow flag */
+> > > > +FIELD(FLEXCOMM_I2C_INTSTAT, MONOV, 17, 1);
+> > > > +/* Monitor Idle flag */
+> > > > +FIELD(FLEXCOMM_I2C_INTSTAT, MONIDLE, 19, 1);
+> > > > +/* Event Time-out Interrupt flag */
+> > > > +FIELD(FLEXCOMM_I2C_INTSTAT, EVENTTIMEOUT, 24, 1);
+> > > > +/* SCL Time-out Interrupt flag */
+> > > > +FIELD(FLEXCOMM_I2C_INTSTAT, SCLTIMEOUT, 25, 1);
+> > > > +
+> > > > +/* Master Control Register */
+> > > > +REG32(FLEXCOMM_I2C_MSTCTL, 2080);
+> > > > +/* Master Continue(write-only) */
+> > > > +FIELD(FLEXCOMM_I2C_MSTCTL, MSTCONTINUE, 0, 1);
+> > > > +/* Master Start control(write-only) */
+> > > > +FIELD(FLEXCOMM_I2C_MSTCTL, MSTSTART, 1, 1);
+> > > > +/* Master Stop control(write-only) */
+> > > > +FIELD(FLEXCOMM_I2C_MSTCTL, MSTSTOP, 2, 1);
+> > > > +/* Master DMA enable */
+> > > > +FIELD(FLEXCOMM_I2C_MSTCTL, MSTDMA, 3, 1);
+> > > > +
+> > > > +/* Master Timing Register */
+> > > > +REG32(FLEXCOMM_I2C_MSTTIME, 2084);
+> > > > +/* Master SCL Low time */
+> > > > +FIELD(FLEXCOMM_I2C_MSTTIME, MSTSCLLOW, 0, 3);
+> > > > +/* Master SCL High time */
+> > > > +FIELD(FLEXCOMM_I2C_MSTTIME, MSTSCLHIGH, 4, 3);
+> > > > +
+> > > > +/* Master Data Register */
+> > > > +REG32(FLEXCOMM_I2C_MSTDAT, 2088);
+> > > > +/* Master function data register */
+> > > > +FIELD(FLEXCOMM_I2C_MSTDAT, DATA, 0, 8);
+> > > > +
+> > > > +/* Slave Control Register */
+> > > > +REG32(FLEXCOMM_I2C_SLVCTL, 2112);
+> > > > +/* Slave Continue */
+> > > > +FIELD(FLEXCOMM_I2C_SLVCTL, SLVCONTINUE, 0, 1);
+> > > > +/* Slave NACK */
+> > > > +FIELD(FLEXCOMM_I2C_SLVCTL, SLVNACK, 1, 1);
+> > > > +/* Slave DMA enable */
+> > > > +FIELD(FLEXCOMM_I2C_SLVCTL, SLVDMA, 3, 1);
+> > > > +/* Automatic Acknowledge */
+> > > > +FIELD(FLEXCOMM_I2C_SLVCTL, AUTOACK, 8, 1);
+> > > > +/* Automatic Match Read */
+> > > > +FIELD(FLEXCOMM_I2C_SLVCTL, AUTOMATCHREAD, 9, 1);
+> > > > +
+> > > > +/* Slave Data Register */
+> > > > +REG32(FLEXCOMM_I2C_SLVDAT, 2116);
+> > > > +/* Slave function data register */
+> > > > +FIELD(FLEXCOMM_I2C_SLVDAT, DATA, 0, 8);
+> > > > +
+> > > > +/* Slave Address Register */
+> > > > +REG32(FLEXCOMM_I2C_SLVADR0, 2120);
+> > > > +/* Slave Address n Disable */
+> > > > +FIELD(FLEXCOMM_I2C_SLVADR0, SADISABLE, 0, 1);
+> > > > +/* Slave Address. */
+> > > > +FIELD(FLEXCOMM_I2C_SLVADR0, SLVADR, 1, 7);
+> > > > +/* Automatic NACK operation */
+> > > > +FIELD(FLEXCOMM_I2C_SLVADR0, AUTONACK, 15, 1);
+> > > > +
+> > > > +/* Slave Address Register */
+> > > > +REG32(FLEXCOMM_I2C_SLVADR1, 2124);
+> > > > +/* Slave Address n Disable */
+> > > > +FIELD(FLEXCOMM_I2C_SLVADR1, SADISABLE, 0, 1);
+> > > > +/* Slave Address. */
+> > > > +FIELD(FLEXCOMM_I2C_SLVADR1, SLVADR, 1, 7);
+> > > > +/* Automatic NACK operation */
+> > > > +FIELD(FLEXCOMM_I2C_SLVADR1, AUTONACK, 15, 1);
+> > > > +
+> > > > +/* Slave Address Register */
+> > > > +REG32(FLEXCOMM_I2C_SLVADR2, 2128);
+> > > > +/* Slave Address n Disable */
+> > > > +FIELD(FLEXCOMM_I2C_SLVADR2, SADISABLE, 0, 1);
+> > > > +/* Slave Address. */
+> > > > +FIELD(FLEXCOMM_I2C_SLVADR2, SLVADR, 1, 7);
+> > > > +/* Automatic NACK operation */
+> > > > +FIELD(FLEXCOMM_I2C_SLVADR2, AUTONACK, 15, 1);
+> > > > +
+> > > > +/* Slave Address Register */
+> > > > +REG32(FLEXCOMM_I2C_SLVADR3, 2132);
+> > > > +/* Slave Address n Disable */
+> > > > +FIELD(FLEXCOMM_I2C_SLVADR3, SADISABLE, 0, 1);
+> > > > +/* Slave Address. */
+> > > > +FIELD(FLEXCOMM_I2C_SLVADR3, SLVADR, 1, 7);
+> > > > +/* Automatic NACK operation */
+> > > > +FIELD(FLEXCOMM_I2C_SLVADR3, AUTONACK, 15, 1);
+> > > > +
+> > > > +/* Slave Qualification for Address 0 Register */
+> > > > +REG32(FLEXCOMM_I2C_SLVQUAL0, 2136);
+> > > > +/* Qualify mode for slave address 0 */
+> > > > +FIELD(FLEXCOMM_I2C_SLVQUAL0, QUALMODE0, 0, 1);
+> > > > +/* Slave address Qualifier for address 0 */
+> > > > +FIELD(FLEXCOMM_I2C_SLVQUAL0, SLVQUAL0, 1, 7);
+> > > > +
+> > > > +/* Monitor Receiver Data Register */
+> > > > +REG32(FLEXCOMM_I2C_MONRXDAT, 2176);
+> > > > +/* Monitor function Receiver Data */
+> > > > +FIELD(FLEXCOMM_I2C_MONRXDAT, MONRXDAT, 0, 8);
+> > > > +/* Monitor Received Start */
+> > > > +FIELD(FLEXCOMM_I2C_MONRXDAT, MONSTART, 8, 1);
+> > > > +/* Monitor Received Repeated Start */
+> > > > +FIELD(FLEXCOMM_I2C_MONRXDAT, MONRESTART, 9, 1);
+> > > > +/* Monitor Received NACK */
+> > > > +FIELD(FLEXCOMM_I2C_MONRXDAT, MONNACK, 10, 1);
+> > > > +
+> > > > +/* Peripheral Identification Register */
+> > > > +REG32(FLEXCOMM_I2C_ID, 4092);
+> > > > +/* Aperture */
+> > > > +FIELD(FLEXCOMM_I2C_ID, APERTURE, 0, 8);
+> > > > +/* Minor revision of module implementation */
+> > > > +FIELD(FLEXCOMM_I2C_ID, MINOR_REV, 8, 4);
+> > > > +/* Major revision of module implementation */
+> > > > +FIELD(FLEXCOMM_I2C_ID, MAJOR_REV, 12, 4);
+> > > > +/* Module identifier for the selected function */
+> > > > +FIELD(FLEXCOMM_I2C_ID, ID, 16, 16);
+> > > > +
+> > >
+> > > Are any of the below enums even used?  Or for that matter, most of th=
+e
+> > > above fields?
+> > >
+> > > If these are just here for documentation, I would prefer English text=
+;
+> > > it's more dense and easier to read.  It's very difficult to tie all t=
+his
+> > > together into a cohesive view of the device registers.
+> > >
+> >
+> > Since this is autogenerated for the full set of the device registers
+> > there will be fields that are not used either because the emulation is
+> > incomplete or because they don't have effect for emulation.
+> >
+> > I think it is still valuable to have this generated automatically
+> > instead of doing it by hand.
+> >
+> > Would adding options to only generate certain definitions help? As
+> > long as we are reasonable with the granularity (e.g. register level) I
+> > think it could trim *most* of the unused generated code without
+> > becoming too tedious on how to instruct the tool to generate the code.
+> > However, I expect to still have *some* unused generated code.
+>
+> Generally it's frowned upon to have a ton of extra stuff that's not
+> used.  I would think some is ok, like defining bits in registers that
+> aren't used yet, but I have no idea how all the enums below here
+> actually tie into anything.  I'm guessing these are just bitmasks into
+> registers, but really, it's a lot easier to read if you have something
+> like:
+>
+> /*
+>  * The I2C Master function enable. When disabled, the Master
+>  * configuration settings are not changed, but the Master function is
+>  * internally reset.
+>  */
+> #define FLEXCOMM_I2C_CFG_MSTEN (1 << 4)
+>
+> and them have them grouped together with the register they belong to.  I
+> don't know how you would even use these enums.  AFAICT, none of them are
+> used.
+>
+
+Ah, I see. You are right, it is not useful for 1 bit fields, I'll fix
+the generator to skip these for bits.
+
+The purpose of the enums is for the case where a certain field can
+have more than two options. To give an example that is used:
+
+typedef enum {
+    FLEXCOMM_I2C_STAT_MSTSTATE_IDLE =3D 0,
+    FLEXCOMM_I2C_STAT_MSTSTATE_RECEIVE_READY =3D 1,
+    FLEXCOMM_I2C_STAT_MSTSTATE_TRANSMIT_READY =3D 2,
+    FLEXCOMM_I2C_STAT_MSTSTATE_NACK_ADDRESS =3D 3,
+    FLEXCOMM_I2C_STAT_MSTSTATE_NACK_DATA =3D 4,
+} FLEXCOMM_I2C_STAT_MSTSTATE_Enum;
+
+> And the whole idea of this is to make the code more readable.  So if
+> you define these things, you should use them.  Look around through the
+> code of other devices to get a feel of how things are done.
+>
+
+Thanks for the review and sorry for the rough edges, I should have
+caught the bits enums thing.
+
+> -corey
+>
+> >
+> >
+> > > The .c file itself seems ok.
+> > >
+> > > -corey
+> > >
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * Disabled. The I2C Master function is disabled. When disable=
+d, the Master
+> > > > +     * configuration settings are not changed, but the Master func=
+tion is
+> > > > +     * internally reset.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_CFG_MSTEN_DISABLED =3D 0,
+> > > > +    /* Enabled. The I2C Master function is enabled. */
+> > > > +    FLEXCOMM_I2C_CFG_MSTEN_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_CFG_MSTEN_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * Disabled. The I2C slave function is disabled. When disabled=
+, the Slave
+> > > > +     * configuration settings are not changed, but the Slave funct=
+ion is
+> > > > +     * internally reset.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_CFG_SLVEN_DISABLED =3D 0,
+> > > > +    /* Enabled. The I2C slave function is enabled. */
+> > > > +    FLEXCOMM_I2C_CFG_SLVEN_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_CFG_SLVEN_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * Disabled. The I2C Monitor function is disabled. When disabl=
+ed, the
+> > > > +     * Monitor function configuration settings are not changed, bu=
+t the Monitor
+> > > > +     * function is internally reset.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_CFG_MONEN_DISABLED =3D 0,
+> > > > +    /* Enabled. The I2C Monitor function is enabled. */
+> > > > +    FLEXCOMM_I2C_CFG_MONEN_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_CFG_MONEN_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * Disabled. The time-out function is disabled. When disabled,=
+ the time-out
+> > > > +     * function is internally reset.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_CFG_TIMEOUTEN_DISABLED =3D 0,
+> > > > +    /*
+> > > > +     * Enabled. The time-out function is enabled. Both types of ti=
+me-out flags
+> > > > +     * will be generated and will cause interrupts if those flags =
+are enabled.
+> > > > +     * Typically, only one time-out flag will be used in a system.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_CFG_TIMEOUTEN_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_CFG_TIMEOUTEN_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * Disabled. The Monitor function will not perform clock stret=
+ching.
+> > > > +     * Software or DMA may not always be able to read data provide=
+d by the
+> > > > +     * Monitor function before it (the data) is overwritten. This =
+mode can be
+> > > > +     * used when non-invasive monitoring is critical.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_CFG_MONCLKSTR_DISABLED =3D 0,
+> > > > +    /*
+> > > > +     * Enabled. The Monitor function will perform clock stretching=
+, to ensure
+> > > > +     * that the software or DMA can read all incoming data supplie=
+d by the
+> > > > +     * Monitor function.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_CFG_MONCLKSTR_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_CFG_MONCLKSTR_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Fast mode Plus enable */
+> > > > +    FLEXCOMM_I2C_CFG_HSCAPABLE_FAST_MODE_PLUS =3D 0,
+> > > > +    /* High Speed mode enable */
+> > > > +    FLEXCOMM_I2C_CFG_HSCAPABLE_HIGH_SPEED =3D 1,
+> > > > +} FLEXCOMM_I2C_CFG_HSCAPABLE_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * In progress. Communication is in progress and the Master fu=
+nction is
+> > > > +     * busy and cannot currently accept a command.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_MSTPENDING_IN_PROGRESS =3D 0,
+> > > > +    /*
+> > > > +     * Pending. The Master function needs software service or is i=
+n the idle
+> > > > +     * state. If the master is not in the idle state, then the mas=
+ter is
+> > > > +     * waiting to receive or transmit data, or is waiting for the =
+NACK bit.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_MSTPENDING_PENDING =3D 1,
+> > > > +} FLEXCOMM_I2C_STAT_MSTPENDING_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * Idle. The Master function is available to be used for a new=
+ transaction.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_MSTSTATE_IDLE =3D 0,
+> > > > +    /*
+> > > > +     * Receive ready. Received data is available (in Master Receiv=
+er mode).
+> > > > +     * Address plus Read was previously sent and Acknowledged by a=
+ slave.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_MSTSTATE_RECEIVE_READY =3D 1,
+> > > > +    /*
+> > > > +     * Transmit ready. Data can be transmitted (in Master Transmit=
+ter mode).
+> > > > +     * Address plus Write was previously sent and Acknowledged by =
+a slave.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_MSTSTATE_TRANSMIT_READY =3D 2,
+> > > > +    /* NACK Address. Slave NACKed address. */
+> > > > +    FLEXCOMM_I2C_STAT_MSTSTATE_NACK_ADDRESS =3D 3,
+> > > > +    /* NACK Data. Slave NACKed transmitted data. */
+> > > > +    FLEXCOMM_I2C_STAT_MSTSTATE_NACK_DATA =3D 4,
+> > > > +} FLEXCOMM_I2C_STAT_MSTSTATE_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No Arbitration Loss has occurred */
+> > > > +    FLEXCOMM_I2C_STAT_MSTARBLOSS_NO_LOSS =3D 0,
+> > > > +    /*
+> > > > +     * Arbitration loss. The Master function has experienced an Ar=
+bitration
+> > > > +     * Loss. At this point, the Master function has already stoppe=
+d driving the
+> > > > +     * bus and has gone into an idle state. Software can respond b=
+y doing
+> > > > +     * nothing, or by sending a Start (to attempt to gain control =
+of the bus
+> > > > +     * when the bus next becomes idle).
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_MSTARBLOSS_ARBITRATION_LOSS =3D 1,
+> > > > +} FLEXCOMM_I2C_STAT_MSTARBLOSS_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No Start/Stop Error has occurred. */
+> > > > +    FLEXCOMM_I2C_STAT_MSTSTSTPERR_NO_ERROR =3D 0,
+> > > > +    /*
+> > > > +     * The Master function has experienced a Start/Stop Error. A S=
+tart or Stop
+> > > > +     * was detected at a time when Start or Stop is not allowed by=
+ the I2C
+> > > > +     * specification. The Master interface has stopped driving the=
+ bus and gone
+> > > > +     * into an idle state; no action is required. A request for a =
+Start could
+> > > > +     * be made, or software could attempt to make sure that the bu=
+s has not
+> > > > +     * stalled.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_MSTSTSTPERR_ERROR =3D 1,
+> > > > +} FLEXCOMM_I2C_STAT_MSTSTSTPERR_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * In progress. The Slave function does not currently need sof=
+tware
+> > > > +     * service.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_SLVPENDING_IN_PROGRESS =3D 0,
+> > > > +    /*
+> > > > +     * Pending. The Slave function needs software service. Informa=
+tion about
+> > > > +     * what is needed is in the Slave state field (SLVSTATE).
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_SLVPENDING_PENDING =3D 1,
+> > > > +} FLEXCOMM_I2C_STAT_SLVPENDING_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * Slave address. Address plus R/W received. At least one of t=
+he 4 slave
+> > > > +     * addresses has been matched by hardware.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_SLVSTATE_SLAVE_ADDRESS =3D 0,
+> > > > +    /* Slave receive. Received data is available (in Slave Receive=
+r mode). */
+> > > > +    FLEXCOMM_I2C_STAT_SLVSTATE_SLAVE_RECEIVE =3D 1,
+> > > > +    /* Slave transmit. Data can be transmitted (in Slave Transmitt=
+er mode). */
+> > > > +    FLEXCOMM_I2C_STAT_SLVSTATE_SLAVE_TRANSMIT =3D 2,
+> > > > +} FLEXCOMM_I2C_STAT_SLVSTATE_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * Stretching. The slave function is currently stretching the =
+I2C bus
+> > > > +     * clock. Deep-Sleepmode cannot be entered at this time.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_SLVNOTSTR_STRETCHING =3D 0,
+> > > > +    /*
+> > > > +     * Not stretching. The slave function is not currently stretch=
+ing the I2C
+> > > > +     * bus clock. Deep-sleep mode can be entered at this time.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_SLVNOTSTR_NOT_STRETCHING =3D 1,
+> > > > +} FLEXCOMM_I2C_STAT_SLVNOTSTR_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Address 0. Slave address 0 was matched. */
+> > > > +    FLEXCOMM_I2C_STAT_SLVIDX_ADDRESS0 =3D 0,
+> > > > +    /* Address 1. Slave address 1 was matched. */
+> > > > +    FLEXCOMM_I2C_STAT_SLVIDX_ADDRESS1 =3D 1,
+> > > > +    /* Address 2. Slave address 2 was matched. */
+> > > > +    FLEXCOMM_I2C_STAT_SLVIDX_ADDRESS2 =3D 2,
+> > > > +    /* Address 3. Slave address 3 was matched. */
+> > > > +    FLEXCOMM_I2C_STAT_SLVIDX_ADDRESS3 =3D 3,
+> > > > +} FLEXCOMM_I2C_STAT_SLVIDX_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Not selected. The Slave function is not currently selected.=
+ */
+> > > > +    FLEXCOMM_I2C_STAT_SLVSEL_NOT_SELECTED =3D 0,
+> > > > +    /* Selected. The Slave function is currently selected. */
+> > > > +    FLEXCOMM_I2C_STAT_SLVSEL_SELECTED =3D 1,
+> > > > +} FLEXCOMM_I2C_STAT_SLVSEL_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * Not deselected. The Slave function has not become deselecte=
+d. This does
+> > > > +     * not mean that the Slave is currently selected. That informa=
+tion is in
+> > > > +     * the SLVSEL flag.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_SLVDESEL_NOT_DESELECTED =3D 0,
+> > > > +    /*
+> > > > +     * Deselected. The Slave function has become deselected. This =
+is
+> > > > +     * specifically caused by the SLVSEL flag changing from 1 to 0=
+. See SLVSEL
+> > > > +     * for details about when that event occurs.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_SLVDESEL_DESELECTED =3D 1,
+> > > > +} FLEXCOMM_I2C_STAT_SLVDESEL_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No data. The Monitor function does not currently have data =
+available. */
+> > > > +    FLEXCOMM_I2C_STAT_MONRDY_NO_DATA =3D 0,
+> > > > +    /* Data waiting. The Monitor function has data waiting to be r=
+ead. */
+> > > > +    FLEXCOMM_I2C_STAT_MONRDY_DATA_WAITING =3D 1,
+> > > > +} FLEXCOMM_I2C_STAT_MONRDY_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No overrun. Monitor data has not overrun. */
+> > > > +    FLEXCOMM_I2C_STAT_MONOV_NO_OVERRUN =3D 0,
+> > > > +    /*
+> > > > +     * Overrun. A Monitor data overrun has occurred. An overrun ca=
+n only happen
+> > > > +     * when Monitor clock stretching not enabled via the CFG[MONCL=
+KSTR] bit.
+> > > > +     * Writing 1 to MONOV bit clears the MONOV flag.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_MONOV_OVERRUN =3D 1,
+> > > > +} FLEXCOMM_I2C_STAT_MONOV_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Inactive. The Monitor function considers the I2C bus to be =
+inactive. */
+> > > > +    FLEXCOMM_I2C_STAT_MONACTIVE_INACTIVE =3D 0,
+> > > > +    /* Active. The Monitor function considers the I2C bus to be ac=
+tive. */
+> > > > +    FLEXCOMM_I2C_STAT_MONACTIVE_ACTIVE =3D 1,
+> > > > +} FLEXCOMM_I2C_STAT_MONACTIVE_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * Not idle. The I2C bus is not idle, or MONIDLE flag has been=
+ cleared by
+> > > > +     * software.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_MONIDLE_NOT_IDLE =3D 0,
+> > > > +    /*
+> > > > +     * Idle. The I2C bus has gone idle at least once, since the la=
+st time
+> > > > +     * MONIDLE flag was cleared by software.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_MONIDLE_IDLE =3D 1,
+> > > > +} FLEXCOMM_I2C_STAT_MONIDLE_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No time-out. I2C bus events have not caused a time-out. */
+> > > > +    FLEXCOMM_I2C_STAT_EVENTTIMEOUT_NO_TIMEOUT =3D 0,
+> > > > +    /*
+> > > > +     * Event time-out. The time between I2C bus events has been lo=
+nger than the
+> > > > +     * time specified by the TIMEOUT register.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_STAT_EVENTTIMEOUT_EVEN_TIMEOUT =3D 1,
+> > > > +} FLEXCOMM_I2C_STAT_EVENTTIMEOUT_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No time-out. SCL low time has not caused a time-out. */
+> > > > +    FLEXCOMM_I2C_STAT_SCLTIMEOUT_NO_TIMEOUT =3D 0,
+> > > > +    /* Time-out. SCL low time has caused a time-out. */
+> > > > +    FLEXCOMM_I2C_STAT_SCLTIMEOUT_TIMEOUT =3D 1,
+> > > > +} FLEXCOMM_I2C_STAT_SCLTIMEOUT_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Disabled. The MstPending interrupt is disabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_MSTPENDINGEN_DISABLED =3D 0,
+> > > > +    /* Enabled. The MstPending interrupt is enabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_MSTPENDINGEN_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENSET_MSTPENDINGEN_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Disabled. The MstArbLoss interrupt is disabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_MSTARBLOSSEN_DISABLED =3D 0,
+> > > > +    /* Enabled. The MstArbLoss interrupt is enabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_MSTARBLOSSEN_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENSET_MSTARBLOSSEN_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Disabled. The MstStStpErr interrupt is disabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_MSTSTSTPERREN_DISABLED =3D 0,
+> > > > +    /* Enabled. The MstStStpErr interrupt is enabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_MSTSTSTPERREN_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENSET_MSTSTSTPERREN_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Disabled. The SlvPending interrupt is disabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_SLVPENDINGEN_DISABLED =3D 0,
+> > > > +    /* Enabled. The SlvPending interrupt is enabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_SLVPENDINGEN_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENSET_SLVPENDINGEN_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Disabled. The SlvNotStr interrupt is disabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_SLVNOTSTREN_DISABLED =3D 0,
+> > > > +    /* Enabled. The SlvNotStr interrupt is enabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_SLVNOTSTREN_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENSET_SLVNOTSTREN_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Disabled. The SlvDeSel interrupt is disabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_SLVDESELEN_DISABLED =3D 0,
+> > > > +    /* Enabled. The SlvDeSel interrupt is enabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_SLVDESELEN_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENSET_SLVDESELEN_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Disabled. The MonRdy interrupt is disabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_MONRDYEN_DISABLED =3D 0,
+> > > > +    /* Enabled. The MonRdy interrupt is enabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_MONRDYEN_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENSET_MONRDYEN_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Disabled. The MonOv interrupt is disabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_MONOVEN_DISABLED =3D 0,
+> > > > +    /* Enabled. The MonOv interrupt is enabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_MONOVEN_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENSET_MONOVEN_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Disabled. The MonIdle interrupt is disabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_MONIDLEEN_DISABLED =3D 0,
+> > > > +    /* Enabled. The MonIdle interrupt is enabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_MONIDLEEN_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENSET_MONIDLEEN_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Disabled. The Event time-out interrupt is disabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_EVENTTIMEOUTEN_DISABLED =3D 0,
+> > > > +    /* Enabled. The Event time-out interrupt is enabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_EVENTTIMEOUTEN_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENSET_EVENTTIMEOUTEN_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Disabled. The SCL time-out interrupt is disabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_SCLTIMEOUTEN_DISABLED =3D 0,
+> > > > +    /* Enabled. The SCL time-out interrupt is enabled. */
+> > > > +    FLEXCOMM_I2C_INTENSET_SCLTIMEOUTEN_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENSET_SCLTIMEOUTEN_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No effect on interrupt */
+> > > > +    FLEXCOMM_I2C_INTENCLR_MSTPENDINGCLR_NO_EFFECT =3D 0,
+> > > > +    /* Clears the interrupt bit in INTENSET register */
+> > > > +    FLEXCOMM_I2C_INTENCLR_MSTPENDINGCLR_CLEAR_MSTPENDING =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENCLR_MSTPENDINGCLR_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No effect on interrupt */
+> > > > +    FLEXCOMM_I2C_INTENCLR_MSTARBLOSSCLR_NO_EFFECT =3D 0,
+> > > > +    /* Clears the interrupt bit in INTENSET register */
+> > > > +    FLEXCOMM_I2C_INTENCLR_MSTARBLOSSCLR_CLEAR_MSTARBLOSS =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENCLR_MSTARBLOSSCLR_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No effect on interrupt */
+> > > > +    FLEXCOMM_I2C_INTENCLR_MSTSTSTPERRCLR_NO_EFFECT =3D 0,
+> > > > +    /* Clears the interrupt bit in INTENSET register */
+> > > > +    FLEXCOMM_I2C_INTENCLR_MSTSTSTPERRCLR_CLEAR_MSTSTSTPERR =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENCLR_MSTSTSTPERRCLR_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No effect on interrupt */
+> > > > +    FLEXCOMM_I2C_INTENCLR_SLVPENDINGCLR_NO_EFFECT =3D 0,
+> > > > +    /* Clears the interrupt bit in INTENSET register */
+> > > > +    FLEXCOMM_I2C_INTENCLR_SLVPENDINGCLR_CLEAR_SLVPENDING =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENCLR_SLVPENDINGCLR_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No effect on interrupt */
+> > > > +    FLEXCOMM_I2C_INTENCLR_SLVNOTSTRCLR_NO_EFFECT =3D 0,
+> > > > +    /* Clears the interrupt bit in INTENSET register */
+> > > > +    FLEXCOMM_I2C_INTENCLR_SLVNOTSTRCLR_CLEAR_SLVNOTSTR =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENCLR_SLVNOTSTRCLR_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No effect on interrupt */
+> > > > +    FLEXCOMM_I2C_INTENCLR_SLVDESELCLR_NO_EFFECT =3D 0,
+> > > > +    /* Clears the interrupt bit in INTENSET register */
+> > > > +    FLEXCOMM_I2C_INTENCLR_SLVDESELCLR_CLEAR_SLVDESEL =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENCLR_SLVDESELCLR_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No effect on interrupt */
+> > > > +    FLEXCOMM_I2C_INTENCLR_MONRDYCLR_NO_EFFECT =3D 0,
+> > > > +    /* Clears the interrupt bit in INTENSET register */
+> > > > +    FLEXCOMM_I2C_INTENCLR_MONRDYCLR_CLEAR_MONRDY =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENCLR_MONRDYCLR_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No effect on interrupt */
+> > > > +    FLEXCOMM_I2C_INTENCLR_MONOVCLR_NO_EFFECT =3D 0,
+> > > > +    /* Clears the interrupt bit in INTENSET register */
+> > > > +    FLEXCOMM_I2C_INTENCLR_MONOVCLR_CLEAR_MONOV =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENCLR_MONOVCLR_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No effect on interrupt */
+> > > > +    FLEXCOMM_I2C_INTENCLR_MONIDLECLR_NO_EFFECT =3D 0,
+> > > > +    /* Clears the interrupt bit in INTENSET register */
+> > > > +    FLEXCOMM_I2C_INTENCLR_MONIDLECLR_CLEAR_MONIDLE =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENCLR_MONIDLECLR_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No effect on interrupt */
+> > > > +    FLEXCOMM_I2C_INTENCLR_EVENTTIMEOUTCLR_NO_EFFECT =3D 0,
+> > > > +    /* Clears the interrupt bit in INTENSET register */
+> > > > +    FLEXCOMM_I2C_INTENCLR_EVENTTIMEOUTCLR_CLEAR_EVENTTIMEOUT =3D 1=
+,
+> > > > +} FLEXCOMM_I2C_INTENCLR_EVENTTIMEOUTCLR_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No effect on interrupt */
+> > > > +    FLEXCOMM_I2C_INTENCLR_SCLTIMEOUTCLR_NO_EFFECT =3D 0,
+> > > > +    /* Clears the interrupt bit in INTENSET register */
+> > > > +    FLEXCOMM_I2C_INTENCLR_SCLTIMEOUTCLR_CLEAR_SCLTIMEOUT =3D 1,
+> > > > +} FLEXCOMM_I2C_INTENCLR_SCLTIMEOUTCLR_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* A time-out will occur after 16 counts of the I2C function c=
+lock. */
+> > > > +    FLEXCOMM_I2C_TIMEOUT_TO_TIMEOUT16 =3D 0,
+> > > > +    /* A time-out will occur after 32 counts of the I2C function c=
+lock. */
+> > > > +    FLEXCOMM_I2C_TIMEOUT_TO_TIMEOUT32 =3D 1,
+> > > > +    /* A time-out will occur after 65,536 counts of the I2C functi=
+on clock. */
+> > > > +    FLEXCOMM_I2C_TIMEOUT_TO_TIMEOUT65K =3D 4095,
+> > > > +} FLEXCOMM_I2C_TIMEOUT_TO_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* FCLK is used directly by the I2C. */
+> > > > +    FLEXCOMM_I2C_CLKDIV_DIVVAL_FCLKUNDIVIDED =3D 0,
+> > > > +    /* FCLK is divided by 2 before being used by the I2C. */
+> > > > +    FLEXCOMM_I2C_CLKDIV_DIVVAL_FCLKDIV2 =3D 1,
+> > > > +    /* FCLK is divided by 3 before being used by the I2C. */
+> > > > +    FLEXCOMM_I2C_CLKDIV_DIVVAL_FCLKDIV3 =3D 2,
+> > > > +    /* FCLK is divided by 65,536 before being used by the I2C. */
+> > > > +    FLEXCOMM_I2C_CLKDIV_DIVVAL_FCLKDIV65K =3D 65535,
+> > > > +} FLEXCOMM_I2C_CLKDIV_DIVVAL_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Not active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_MSTPENDING_MSTPENDING_ISNOTACTIVE =3D 0,
+> > > > +    /* Active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_MSTPENDING_MSTPENDING_ISACTIVE =3D 1,
+> > > > +} FLEXCOMM_I2C_INTSTAT_MSTPENDING_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Not active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_MSTARBLOSS_MSTARBLOSS_ISNOTACTIVE =3D 0,
+> > > > +    /* Active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_MSTARBLOSS_MSTARBLOSS_ISACTIVE =3D 1,
+> > > > +} FLEXCOMM_I2C_INTSTAT_MSTARBLOSS_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Not active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_MSTSTSTPERR_MSTSTSTPERR_ISNOTACTIVE =3D 0=
+,
+> > > > +    /* Active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_MSTSTSTPERR_MSTSTSTPERR_ISACTIVE =3D 1,
+> > > > +} FLEXCOMM_I2C_INTSTAT_MSTSTSTPERR_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Not active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_SLVPENDING_SLVPENDING_ISNOTACTIVE =3D 0,
+> > > > +    /* Active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_SLVPENDING_SLVPENDING_ISACTIVE =3D 1,
+> > > > +} FLEXCOMM_I2C_INTSTAT_SLVPENDING_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Not active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_SLVNOTSTR_SLVNOTSTR_ISNOTACTIVE =3D 0,
+> > > > +    /* Active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_SLVNOTSTR_SLVNOTSTR_ISACTIVE =3D 1,
+> > > > +} FLEXCOMM_I2C_INTSTAT_SLVNOTSTR_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Not active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_SLVDESEL_SLVDESEL_ISNOTACTIVE =3D 0,
+> > > > +    /* Active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_SLVDESEL_SLVDESEL_ISACTIVE =3D 1,
+> > > > +} FLEXCOMM_I2C_INTSTAT_SLVDESEL_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Not active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_MONRDY_MONRDY_ISNOTACTIVE =3D 0,
+> > > > +    /* Active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_MONRDY_MONRDY_ISACTIVE =3D 1,
+> > > > +} FLEXCOMM_I2C_INTSTAT_MONRDY_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Not active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_MONOV_MONOV_ISNOTACTIVE =3D 0,
+> > > > +    /* Active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_MONOV_MONOV_ISACTIVE =3D 1,
+> > > > +} FLEXCOMM_I2C_INTSTAT_MONOV_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Not active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_MONIDLE_MONIDLE_ISNOTACTIVE =3D 0,
+> > > > +    /* Active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_MONIDLE_MONIDLE_ISACTIVE =3D 1,
+> > > > +} FLEXCOMM_I2C_INTSTAT_MONIDLE_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Not active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_EVENTTIMEOUT_EVENTTIMEOUT_ISNOTACTIVE =3D=
+ 0,
+> > > > +    /* Active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_EVENTTIMEOUT_EVENTTIMEOUT_ISACTIVE =3D 1,
+> > > > +} FLEXCOMM_I2C_INTSTAT_EVENTTIMEOUT_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Not active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_SCLTIMEOUT_SCLTIMEOUT_ISNOTACTIVE =3D 0,
+> > > > +    /* Active */
+> > > > +    FLEXCOMM_I2C_INTSTAT_SCLTIMEOUT_SCLTIMEOUT_ISACTIVE =3D 1,
+> > > > +} FLEXCOMM_I2C_INTSTAT_SCLTIMEOUT_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No effect */
+> > > > +    FLEXCOMM_I2C_MSTCTL_MSTCONTINUE_NO_EFFECT =3D 0,
+> > > > +    /*
+> > > > +     * Continue. Informs the Master function to continue to the ne=
+xt operation.
+> > > > +     * This action must done after writing transmit data, reading =
+received
+> > > > +     * data, or any other housekeeping related to the next bus ope=
+ration.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTCTL_MSTCONTINUE_CONTINUE =3D 1,
+> > > > +} FLEXCOMM_I2C_MSTCTL_MSTCONTINUE_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No effect */
+> > > > +    FLEXCOMM_I2C_MSTCTL_MSTSTART_NO_EFFECT =3D 0,
+> > > > +    /*
+> > > > +     * Start. A Start will be generated on the I2C bus at the next=
+ allowed
+> > > > +     * time.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTCTL_MSTSTART_START =3D 1,
+> > > > +} FLEXCOMM_I2C_MSTCTL_MSTSTART_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No effect */
+> > > > +    FLEXCOMM_I2C_MSTCTL_MSTSTOP_NO_EFFECT =3D 0,
+> > > > +    /*
+> > > > +     * Stop. A Stop will be generated on the I2C bus at the next a=
+llowed time,
+> > > > +     * preceded by a NACK to the slave if the master is receiving =
+data from the
+> > > > +     * slave (in Master Receiver mode).
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTCTL_MSTSTOP_STOP =3D 1,
+> > > > +} FLEXCOMM_I2C_MSTCTL_MSTSTOP_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Disable. No DMA requests are generated for master operation=
+. */
+> > > > +    FLEXCOMM_I2C_MSTCTL_MSTDMA_DISABLED =3D 0,
+> > > > +    /*
+> > > > +     * Enable. A DMA request is generated for I2C master data oper=
+ations. When
+> > > > +     * this I2C master is generating Acknowledge bits in Master Re=
+ceiver mode,
+> > > > +     * the acknowledge is generated automatically.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTCTL_MSTDMA_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_MSTCTL_MSTDMA_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * 2 clocks. Minimum SCL low time is 2 clocks of the I2C clock=
+ pre-divider.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTTIME_MSTSCLLOW_MSTSCLLOW_2CLOCKS =3D 0,
+> > > > +    /*
+> > > > +     * 3 clocks. Minimum SCL low time is 3 clocks of the I2C clock=
+ pre-divider.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTTIME_MSTSCLLOW_MSTSCLLOW_3CLOCKS =3D 1,
+> > > > +    /*
+> > > > +     * 4 clocks. Minimum SCL low time is 4 clocks of the I2C clock=
+ pre-divider.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTTIME_MSTSCLLOW_MSTSCLLOW_4CLOCKS =3D 2,
+> > > > +    /*
+> > > > +     * 5 clocks. Minimum SCL low time is 5 clocks of the I2C clock=
+ pre-divider.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTTIME_MSTSCLLOW_MSTSCLLOW_5CLOCKS =3D 3,
+> > > > +    /*
+> > > > +     * 6 clocks. Minimum SCL low time is 6 clocks of the I2C clock=
+ pre-divider.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTTIME_MSTSCLLOW_MSTSCLLOW_6CLOCKS =3D 4,
+> > > > +    /*
+> > > > +     * 7 clocks. Minimum SCL low time is 7 clocks of the I2C clock=
+ pre-divider.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTTIME_MSTSCLLOW_MSTSCLLOW_7CLOCKS =3D 5,
+> > > > +    /*
+> > > > +     * 8 clocks. Minimum SCL low time is 8 clocks of the I2C clock=
+ pre-divider.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTTIME_MSTSCLLOW_MSTSCLLOW_8CLOCKS =3D 6,
+> > > > +    /*
+> > > > +     * 9 clocks. Minimum SCL low time is 9 clocks of the I2C clock=
+ pre-divider.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTTIME_MSTSCLLOW_MSTSCLLOW_9CLOCKS =3D 7,
+> > > > +} FLEXCOMM_I2C_MSTTIME_MSTSCLLOW_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * 2 clocks. Minimum SCL high time is 2 clocks of the I2C cloc=
+k
+> > > > +     * pre-divider.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTTIME_MSTSCLHIGH_MSTSCLHIGH_2CLOCKS =3D 0,
+> > > > +    /*
+> > > > +     * 3 clocks. Minimum SCL high time is 3 clocks of the I2C cloc=
+k pre-divider
+> > > > +     * .
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTTIME_MSTSCLHIGH_MSTSCLHIGH_3CLOCKS =3D 1,
+> > > > +    /*
+> > > > +     * 4 clocks. Minimum SCL high time is 4 clocks of the I2C cloc=
+k
+> > > > +     * pre-divider.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTTIME_MSTSCLHIGH_MSTSCLHIGH_4CLOCKS =3D 2,
+> > > > +    /*
+> > > > +     * 5 clocks. Minimum SCL high time is 5 clocks of the I2C cloc=
+k
+> > > > +     * pre-divider.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTTIME_MSTSCLHIGH_MSTSCLHIGH_5CLOCKS =3D 3,
+> > > > +    /*
+> > > > +     * 6 clocks. Minimum SCL high time is 6 clocks of the I2C cloc=
+k
+> > > > +     * pre-divider.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTTIME_MSTSCLHIGH_MSTSCLHIGH_6CLOCKS =3D 4,
+> > > > +    /*
+> > > > +     * 7 clocks. Minimum SCL high time is 7 clocks of the I2C cloc=
+k
+> > > > +     * pre-divider.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTTIME_MSTSCLHIGH_MSTSCLHIGH_7CLOCKS =3D 5,
+> > > > +    /*
+> > > > +     * 8 clocks. Minimum SCL high time is 8 clocks of the I2C cloc=
+k
+> > > > +     * pre-divider.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTTIME_MSTSCLHIGH_MSTSCLHIGH_8CLOCKS =3D 6,
+> > > > +    /*
+> > > > +     * 9 clocks. Minimum SCL high time is 9 clocks of the I2C cloc=
+k
+> > > > +     * pre-divider.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MSTTIME_MSTSCLHIGH_MSTSCLHIGH_9CLOCKS =3D 7,
+> > > > +} FLEXCOMM_I2C_MSTTIME_MSTSCLHIGH_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No effect */
+> > > > +    FLEXCOMM_I2C_SLVCTL_SLVCONTINUE_NO_EFFECT =3D 0,
+> > > > +    /*
+> > > > +     * Continue. Informs the Slave function to continue to the nex=
+t operation,
+> > > > +     * by clearing the STAT[SLVPENDING] flag. This must be done af=
+ter writing
+> > > > +     * transmit data, reading received data, or any other housekee=
+ping related
+> > > > +     * to the next bus operation. Automatic Operation has differen=
+t
+> > > > +     * requirements. SLVCONTINUE should not be set unless SLVPENDI=
+NG =3D 1.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_SLVCTL_SLVCONTINUE_CONTINUE =3D 1,
+> > > > +} FLEXCOMM_I2C_SLVCTL_SLVCONTINUE_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* No effect */
+> > > > +    FLEXCOMM_I2C_SLVCTL_SLVNACK_NO_EFFECT =3D 0,
+> > > > +    /*
+> > > > +     * NACK. Causes the Slave function to NACK the master when the=
+ slave is
+> > > > +     * receiving data from the master (in Slave Receiver mode).
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_SLVCTL_SLVNACK_NACK =3D 1,
+> > > > +} FLEXCOMM_I2C_SLVCTL_SLVNACK_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Disabled. No DMA requests are issued for Slave mode operati=
+on. */
+> > > > +    FLEXCOMM_I2C_SLVCTL_SLVDMA_DISABLED =3D 0,
+> > > > +    /*
+> > > > +     * Enabled. DMA requests are issued for I2C slave data transmi=
+ssion and
+> > > > +     * reception.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_SLVCTL_SLVDMA_ENABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_SLVCTL_SLVDMA_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * Normal, non-automatic operation. If AUTONACK =3D 0, then a =
+SlvPending
+> > > > +     * interrupt is generated when a matching address is received.=
+ If AUTONACK
+> > > > +     * =3D 1, then received addresses are NACKed (ignored).
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_SLVCTL_AUTOACK_NORMAL =3D 0,
+> > > > +    /*
+> > > > +     * A header with matching SLVADR0 and matching direction as se=
+t by
+> > > > +     * AUTOMATCHREAD will be ACKed immediately, allowing the maste=
+r to move on
+> > > > +     * to the data bytes. If the address matches SLVADR0, but the =
+direction
+> > > > +     * does not match AUTOMATCHREAD, then the behavior will depend=
+ on the
+> > > > +     * SLVADR0[AUTONACK] bit: if AUTONACK is set, then it will be =
+Nacked; if
+> > > > +     * AUTONACK is clear, then a SlvPending interrupt is generated=
+.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_SLVCTL_AUTOACK_AUTOMATIC_ACK =3D 1,
+> > > > +} FLEXCOMM_I2C_SLVCTL_AUTOACK_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* In Automatic Mode, the expected next operation is an I2C wr=
+ite. */
+> > > > +    FLEXCOMM_I2C_SLVCTL_AUTOMATCHREAD_I2C_WRITE =3D 0,
+> > > > +    /* In Automatic Mode, the expected next operation is an I2C re=
+ad. */
+> > > > +    FLEXCOMM_I2C_SLVCTL_AUTOMATCHREAD_I2C_READ =3D 1,
+> > > > +} FLEXCOMM_I2C_SLVCTL_AUTOMATCHREAD_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Enabled. Slave Address n is enabled. */
+> > > > +    FLEXCOMM_I2C_SLVADR0_SADISABLE_ENABLED =3D 0,
+> > > > +    /* Ignored. Slave Address n is ignored. */
+> > > > +    FLEXCOMM_I2C_SLVADR0_SADISABLE_DISABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_SLVADR0_SADISABLE_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Normal operation, matching I2C addresses are not ignored. *=
+/
+> > > > +    FLEXCOMM_I2C_SLVADR0_AUTONACK_NORMAL =3D 0,
+> > > > +    /*
+> > > > +     * Automatic-only mode. All incoming addresses are ignored (NA=
+CKed), unless
+> > > > +     * AUTOACK is set, and the address matches SLVADRn, and AUTOMA=
+TCHREAD
+> > > > +     * matches the direction.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_SLVADR0_AUTONACK_AUTOMATIC =3D 1,
+> > > > +} FLEXCOMM_I2C_SLVADR0_AUTONACK_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Enabled. Slave Address n is enabled. */
+> > > > +    FLEXCOMM_I2C_SLVADR1_SADISABLE_ENABLED =3D 0,
+> > > > +    /* Ignored. Slave Address n is ignored. */
+> > > > +    FLEXCOMM_I2C_SLVADR1_SADISABLE_DISABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_SLVADR1_SADISABLE_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Normal operation, matching I2C addresses are not ignored. *=
+/
+> > > > +    FLEXCOMM_I2C_SLVADR1_AUTONACK_NORMAL =3D 0,
+> > > > +    /*
+> > > > +     * Automatic-only mode. All incoming addresses are ignored (NA=
+CKed), unless
+> > > > +     * AUTOACK is set, and the address matches SLVADRn, and AUTOMA=
+TCHREAD
+> > > > +     * matches the direction.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_SLVADR1_AUTONACK_AUTOMATIC =3D 1,
+> > > > +} FLEXCOMM_I2C_SLVADR1_AUTONACK_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Enabled. Slave Address n is enabled. */
+> > > > +    FLEXCOMM_I2C_SLVADR2_SADISABLE_ENABLED =3D 0,
+> > > > +    /* Ignored. Slave Address n is ignored. */
+> > > > +    FLEXCOMM_I2C_SLVADR2_SADISABLE_DISABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_SLVADR2_SADISABLE_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Normal operation, matching I2C addresses are not ignored. *=
+/
+> > > > +    FLEXCOMM_I2C_SLVADR2_AUTONACK_NORMAL =3D 0,
+> > > > +    /*
+> > > > +     * Automatic-only mode. All incoming addresses are ignored (NA=
+CKed), unless
+> > > > +     * AUTOACK is set, and the address matches SLVADRn, and AUTOMA=
+TCHREAD
+> > > > +     * matches the direction.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_SLVADR2_AUTONACK_AUTOMATIC =3D 1,
+> > > > +} FLEXCOMM_I2C_SLVADR2_AUTONACK_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Enabled. Slave Address n is enabled. */
+> > > > +    FLEXCOMM_I2C_SLVADR3_SADISABLE_ENABLED =3D 0,
+> > > > +    /* Ignored. Slave Address n is ignored. */
+> > > > +    FLEXCOMM_I2C_SLVADR3_SADISABLE_DISABLED =3D 1,
+> > > > +} FLEXCOMM_I2C_SLVADR3_SADISABLE_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /* Normal operation, matching I2C addresses are not ignored. *=
+/
+> > > > +    FLEXCOMM_I2C_SLVADR3_AUTONACK_NORMAL =3D 0,
+> > > > +    /*
+> > > > +     * Automatic-only mode. All incoming addresses are ignored (NA=
+CKed), unless
+> > > > +     * AUTOACK is set, and the address matches SLVADRn, and AUTOMA=
+TCHREAD
+> > > > +     * matches the direction.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_SLVADR3_AUTONACK_AUTOMATIC =3D 1,
+> > > > +} FLEXCOMM_I2C_SLVADR3_AUTONACK_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * Mask. The SLVQUAL0 field is used as a logical mask for matc=
+hing address
+> > > > +     * 0.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_SLVQUAL0_QUALMODE0_MASK =3D 0,
+> > > > +    /*
+> > > > +     * Extend. The SLVQUAL0 field is used to extend address 0 matc=
+hing in a
+> > > > +     * range of addresses.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_SLVQUAL0_QUALMODE0_EXTEND =3D 1,
+> > > > +} FLEXCOMM_I2C_SLVQUAL0_QUALMODE0_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * No start detected. The Monitor function has not detected a =
+Start event
+> > > > +     * on the I2C bus.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MONRXDAT_MONSTART_NO_START_DETECTED =3D 0,
+> > > > +    /*
+> > > > +     * Start detected. The Monitor function has detected a Start e=
+vent on the
+> > > > +     * I2C bus.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MONRXDAT_MONSTART_START_DETECTED =3D 1,
+> > > > +} FLEXCOMM_I2C_MONRXDAT_MONSTART_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * No repeated start detected. The Monitor function has not de=
+tected a
+> > > > +     * Repeated Start event on the I2C bus.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MONRXDAT_MONRESTART_NOT_DETECTED =3D 0,
+> > > > +    /*
+> > > > +     * Repeated start detected. The Monitor function has detected =
+a Repeated
+> > > > +     * Start event on the I2C bus.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MONRXDAT_MONRESTART_DETECTED =3D 1,
+> > > > +} FLEXCOMM_I2C_MONRXDAT_MONRESTART_Enum;
+> > > > +
+> > > > +typedef enum {
+> > > > +    /*
+> > > > +     * Acknowledged. The data currently being provided by the Moni=
+tor function
+> > > > +     * was acknowledged by at least one master or slave receiver.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MONRXDAT_MONNACK_ACKNOWLEDGED =3D 0,
+> > > > +    /*
+> > > > +     * Not acknowledged. The data currently being provided by the =
+Monitor
+> > > > +     * function was not acknowledged by any receiver.
+> > > > +     */
+> > > > +    FLEXCOMM_I2C_MONRXDAT_MONNACK_NOT_ACKNOWLEDGED =3D 1,
+> > > > +} FLEXCOMM_I2C_MONRXDAT_MONNACK_Enum;
+> > > > +
+> > > > +
+> > > > +#define FLEXCOMM_I2C_REGISTER_ACCESS_INFO_ARRAY(_name) \
+> > > > +    struct RegisterAccessInfo _name[FLEXCOMM_I2C_REGS_NO] =3D { \
+> > > > +        [0 ... FLEXCOMM_I2C_REGS_NO - 1] =3D { \
+> > > > +            .name =3D "", \
+> > > > +            .addr =3D -1, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_CFG] =3D { \
+> > > > +            .name =3D "CFG", \
+> > > > +            .addr =3D 0x800, \
+> > > > +            .ro =3D 0xFFFFFFC0, \
+> > > > +            .reset =3D 0x0, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_STAT] =3D { \
+> > > > +            .name =3D "STAT", \
+> > > > +            .addr =3D 0x804, \
+> > > > +            .ro =3D 0xFCF57FAF, \
+> > > > +            .reset =3D 0x801, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_INTENSET] =3D { \
+> > > > +            .name =3D "INTENSET", \
+> > > > +            .addr =3D 0x808, \
+> > > > +            .ro =3D 0xFCF476AE, \
+> > > > +            .reset =3D 0x0, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_INTENCLR] =3D { \
+> > > > +            .name =3D "INTENCLR", \
+> > > > +            .addr =3D 0x80C, \
+> > > > +            .ro =3D 0xFCF476AE, \
+> > > > +            .reset =3D 0x0, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_TIMEOUT] =3D { \
+> > > > +            .name =3D "TIMEOUT", \
+> > > > +            .addr =3D 0x810, \
+> > > > +            .ro =3D 0xFFFF0000, \
+> > > > +            .reset =3D 0xFFFF, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_CLKDIV] =3D { \
+> > > > +            .name =3D "CLKDIV", \
+> > > > +            .addr =3D 0x814, \
+> > > > +            .ro =3D 0xFFFF0000, \
+> > > > +            .reset =3D 0x0, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_INTSTAT] =3D { \
+> > > > +            .name =3D "INTSTAT", \
+> > > > +            .addr =3D 0x818, \
+> > > > +            .ro =3D 0xFFFFFFFF, \
+> > > > +            .reset =3D 0x801, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_MSTCTL] =3D { \
+> > > > +            .name =3D "MSTCTL", \
+> > > > +            .addr =3D 0x820, \
+> > > > +            .ro =3D 0xFFFFFFF0, \
+> > > > +            .reset =3D 0x0, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_MSTTIME] =3D { \
+> > > > +            .name =3D "MSTTIME", \
+> > > > +            .addr =3D 0x824, \
+> > > > +            .ro =3D 0xFFFFFF88, \
+> > > > +            .reset =3D 0x77, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_MSTDAT] =3D { \
+> > > > +            .name =3D "MSTDAT", \
+> > > > +            .addr =3D 0x828, \
+> > > > +            .ro =3D 0xFFFFFF00, \
+> > > > +            .reset =3D 0x0, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_SLVCTL] =3D { \
+> > > > +            .name =3D "SLVCTL", \
+> > > > +            .addr =3D 0x840, \
+> > > > +            .ro =3D 0xFFFFFCF4, \
+> > > > +            .reset =3D 0x0, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_SLVDAT] =3D { \
+> > > > +            .name =3D "SLVDAT", \
+> > > > +            .addr =3D 0x844, \
+> > > > +            .ro =3D 0xFFFFFF00, \
+> > > > +            .reset =3D 0x0, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_SLVADR0] =3D { \
+> > > > +            .name =3D "SLVADR0", \
+> > > > +            .addr =3D 0x848, \
+> > > > +            .ro =3D 0xFFFF7F00, \
+> > > > +            .reset =3D 0x1, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_SLVADR1] =3D { \
+> > > > +            .name =3D "SLVADR1", \
+> > > > +            .addr =3D 0x84C, \
+> > > > +            .ro =3D 0xFFFF7F00, \
+> > > > +            .reset =3D 0x1, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_SLVADR2] =3D { \
+> > > > +            .name =3D "SLVADR2", \
+> > > > +            .addr =3D 0x850, \
+> > > > +            .ro =3D 0xFFFF7F00, \
+> > > > +            .reset =3D 0x1, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_SLVADR3] =3D { \
+> > > > +            .name =3D "SLVADR3", \
+> > > > +            .addr =3D 0x854, \
+> > > > +            .ro =3D 0xFFFF7F00, \
+> > > > +            .reset =3D 0x1, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_SLVQUAL0] =3D { \
+> > > > +            .name =3D "SLVQUAL0", \
+> > > > +            .addr =3D 0x858, \
+> > > > +            .ro =3D 0xFFFFFF00, \
+> > > > +            .reset =3D 0x0, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_MONRXDAT] =3D { \
+> > > > +            .name =3D "MONRXDAT", \
+> > > > +            .addr =3D 0x880, \
+> > > > +            .ro =3D 0xFFFFFFFF, \
+> > > > +            .reset =3D 0x0, \
+> > > > +        }, \
+> > > > +        [R_FLEXCOMM_I2C_ID] =3D { \
+> > > > +            .name =3D "ID", \
+> > > > +            .addr =3D 0xFFC, \
+> > > > +            .ro =3D 0xFFFFFFFF, \
+> > > > +            .reset =3D 0xE0301300, \
+> > > > +        }, \
+> > > > +    }
+> > > > diff --git a/include/hw/i2c/flexcomm_i2c.h b/include/hw/i2c/flexcom=
+m_i2c.h
+> > > > new file mode 100644
+> > > > index 0000000000..7b27e333d7
+> > > > --- /dev/null
+> > > > +++ b/include/hw/i2c/flexcomm_i2c.h
+> > > > @@ -0,0 +1,40 @@
+> > > > +/*
+> > > > + * QEMU model for NXP's FLEXCOMM I2C
+> > > > + *
+> > > > + * Copyright (c) 2024 Google LLC
+> > > > + *
+> > > > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > > > + *
+> > > > + * This work is licensed under the terms of the GNU GPL, version 2=
+ or later.
+> > > > + * See the COPYING file in the top-level directory.
+> > > > + */
+> > > > +
+> > > > +#ifndef HW_FLEXCOMM_I2C_H
+> > > > +#define HW_FLEXCOMM_I2C_H
+> > > > +
+> > > > +#include "hw/i2c/i2c.h"
+> > > > +#include "hw/misc/flexcomm_function.h"
+> > > > +
+> > > > +#define TYPE_FLEXCOMM_I2C "flexcomm-i2c"
+> > > > +OBJECT_DECLARE_TYPE(FlexcommI2cState, FlexcommI2cClass, FLEXCOMM_I=
+2C);
+> > > > +
+> > > > +struct FlexcommI2cState {
+> > > > +    FlexcommFunction parent_obj;
+> > > > +
+> > > > +    I2CBus *bus;
+> > > > +};
+> > > > +
+> > > > +struct FlexcommI2cClass {
+> > > > +    FlexcommFunctionClass parent_obj;
+> > > > +
+> > > > +    FlexcommFunctionSelect select;
+> > > > +};
+> > > > +
+> > > > +#define MSTSTATE_IDLE 0
+> > > > +#define MSTSTATE_RXRDY 1
+> > > > +#define MSTSTATE_TXRDY 2
+> > > > +#define MSTSTATE_NAKADR 3
+> > > > +#define MSTSTATE_NAKDAT 4
+> > > > +
+> > > > +
+> > > > +#endif /* HW_FLEXCOMM_I2C_H */
+> > > > diff --git a/include/hw/misc/flexcomm.h b/include/hw/misc/flexcomm.=
+h
+> > > > index 679b7ea64d..c9f1cd3890 100644
+> > > > --- a/include/hw/misc/flexcomm.h
+> > > > +++ b/include/hw/misc/flexcomm.h
+> > > > @@ -16,6 +16,7 @@
+> > > >  #include "hw/arm/svd/flexcomm.h"
+> > > >  #include "qemu/fifo32.h"
+> > > >  #include "hw/char/flexcomm_usart.h"
+> > > > +#include "hw/i2c/flexcomm_i2c.h"
+> > > >
+> > > >  #define FLEXCOMM_FUNC_USART     0
+> > > >  #define FLEXCOMM_FUNC_SPI       1
+> > > > @@ -48,6 +49,7 @@ struct FlexcommState {
+> > > >      Fifo32 rx_fifo;
+> > > >      Fifo32 tx_fifo;
+> > > >      FlexcommUsartState usart;
+> > > > +    FlexcommI2cState i2c;
+> > > >  };
+> > > >
+> > > >  #endif /* HW_FLEXCOMM_H */
+> > > > diff --git a/hw/i2c/flexcomm_i2c.c b/hw/i2c/flexcomm_i2c.c
+> > > > new file mode 100644
+> > > > index 0000000000..e5341ec241
+> > > > --- /dev/null
+> > > > +++ b/hw/i2c/flexcomm_i2c.c
+> > > > @@ -0,0 +1,250 @@
+> > > > +/*
+> > > > + * QEMU model for NXP's FLEXCOMM I2C
+> > > > + *
+> > > > + * Copyright (c) 2024 Google LLC
+> > > > + *
+> > > > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > > > + *
+> > > > + * This work is licensed under the terms of the GNU GPL, version 2=
+ or later.
+> > > > + * See the COPYING file in the top-level directory.
+> > > > + */
+> > > > +
+> > > > +#include "qemu/osdep.h"
+> > > > +#include "qemu/cutils.h"
+> > > > +#include "hw/irq.h"
+> > > > +#include "hw/qdev-properties.h"
+> > > > +#include "qemu/log.h"
+> > > > +#include "qemu/module.h"
+> > > > +#include "exec/address-spaces.h"
+> > > > +#include "qapi/error.h"
+> > > > +#include "trace.h"
+> > > > +#include "hw/i2c/flexcomm_i2c.h"
+> > > > +#include "hw/arm/svd/flexcomm_i2c.h"
+> > > > +
+> > > > +#define REG(s, reg) (s->regs[R_FLEXCOMM_I2C_##reg])
+> > > > +#define RF_WR(s, reg, field, val) \
+> > > > +    ARRAY_FIELD_DP32(s->regs, FLEXCOMM_I2C_##reg, field, val)
+> > > > +#define RF_RD(s, reg, field) \
+> > > > +    ARRAY_FIELD_EX32(s->regs, FLEXCOMM_I2C_##reg, field)
+> > > > +
+> > > > +static FLEXCOMM_I2C_REGISTER_ACCESS_INFO_ARRAY(reg_info);
+> > > > +
+> > > > +static void flexcomm_i2c_reset(FlexcommFunction *f)
+> > > > +{
+> > > > +    for (int i =3D 0; i < FLEXCOMM_I2C_REGS_NO; i++) {
+> > > > +        hwaddr addr =3D reg_info[i].addr;
+> > > > +
+> > > > +        if (addr !=3D -1) {
+> > > > +            struct RegisterInfo ri =3D {
+> > > > +                .data =3D &f->regs[addr / 4],
+> > > > +                .data_size =3D 4,
+> > > > +                .access =3D &reg_info[i],
+> > > > +            };
+> > > > +
+> > > > +            register_reset(&ri);
+> > > > +        }
+> > > > +    }
+> > > > +}
+> > > > +
+> > > > +static void flexcomm_i2c_irq_update(FlexcommFunction *f)
+> > > > +{
+> > > > +    bool enabled =3D RF_RD(f, CFG, MSTEN);
+> > > > +    bool irq, per_irqs;
+> > > > +
+> > > > +    REG(f, INTSTAT) =3D REG(f, STAT) & REG(f, INTENSET);
+> > > > +    per_irqs =3D REG(f, INTSTAT) !=3D 0;
+> > > > +
+> > > > +    irq =3D enabled && per_irqs;
+> > > > +
+> > > > +    trace_flexcomm_i2c_irq(DEVICE(f)->id, irq, per_irqs, enabled);
+> > > > +    flexcomm_set_irq(f, irq);
+> > > > +}
+> > > > +
+> > > > +static MemTxResult flexcomm_i2c_reg_read(void *opaque, hwaddr addr=
+,
+> > > > +                                         uint64_t *data, unsigned =
+size,
+> > > > +                                         MemTxAttrs attrs)
+> > > > +{
+> > > > +    FlexcommFunction *f =3D FLEXCOMM_FUNCTION(opaque);
+> > > > +    MemTxResult ret =3D MEMTX_OK;
+> > > > +    const struct RegisterAccessInfo *rai =3D &reg_info[addr / 4];
+> > > > +
+> > > > +    if (size !=3D 4) {
+> > > > +        ret =3D MEMTX_ERROR;
+> > > > +        goto out;
+> > > > +    }
+> > > > +
+> > > > +    *data =3D f->regs[addr / 4];
+> > > > +
+> > > > +    flexcomm_i2c_irq_update(f);
+> > > > +
+> > > > +out:
+> > > > +    trace_flexcomm_i2c_reg_read(DEVICE(f)->id, rai->name, addr, *d=
+ata);
+> > > > +    return ret;
+> > > > +}
+> > > > +
+> > > > +static MemTxResult flexcomm_i2c_reg_write(void *opaque, hwaddr add=
+r,
+> > > > +                                          uint64_t value, unsigned=
+ size,
+> > > > +                                          MemTxAttrs attrs)
+> > > > +{
+> > > > +    FlexcommFunction *f =3D FLEXCOMM_FUNCTION(opaque);
+> > > > +    FlexcommI2cState *s =3D FLEXCOMM_I2C(opaque);
+> > > > +    const struct RegisterAccessInfo *rai =3D &reg_info[addr / 4];
+> > > > +    struct RegisterInfo ri =3D {
+> > > > +        .data =3D &f->regs[addr / 4],
+> > > > +        .data_size =3D 4,
+> > > > +        .access =3D rai,
+> > > > +    };
+> > > > +
+> > > > +    trace_flexcomm_i2c_reg_write(DEVICE(f)->id, rai->name, addr, v=
+alue);
+> > > > +
+> > > > +    if (size !=3D 4) {
+> > > > +        return MEMTX_ERROR;
+> > > > +    }
+> > > > +
+> > > > +    switch (addr) {
+> > > > +    case A_FLEXCOMM_I2C_CFG:
+> > > > +    {
+> > > > +        register_write(&ri, value, ~0, NULL, false);
+> > > > +        if (RF_RD(f, CFG, SLVEN)) {
+> > > > +            qemu_log_mask(LOG_GUEST_ERROR, "I2C slave not supporte=
+d");
+> > > > +        }
+> > > > +        if (RF_RD(f, CFG, MONEN)) {
+> > > > +            qemu_log_mask(LOG_GUEST_ERROR, "I2C monitoring not sup=
+ported");
+> > > > +        }
+> > > > +        break;
+> > > > +    }
+> > > > +    case A_FLEXCOMM_I2C_INTENCLR:
+> > > > +    {
+> > > > +        REG(f, INTENSET) &=3D ~value;
+> > > > +        break;
+> > > > +    }
+> > > > +    case A_FLEXCOMM_I2C_TIMEOUT:
+> > > > +    {
+> > > > +        register_write(&ri, value, ~0, NULL, false);
+> > > > +        /* The bottom 4 bits are hard-wired to 0xF */
+> > > > +        RF_WR(f, TIMEOUT, TOMIN, 0xf);
+> > > > +        break;
+> > > > +    }
+> > > > +    case A_FLEXCOMM_I2C_MSTCTL:
+> > > > +    {
+> > > > +        register_write(&ri, value, ~0, NULL, false);
+> > > > +        if (RF_RD(f, MSTCTL, MSTSTART)) {
+> > > > +            uint8_t i2c_addr =3D RF_RD(f, MSTDAT, DATA);
+> > > > +            bool recv =3D i2c_addr & 1;
+> > > > +
+> > > > +            trace_flexcomm_i2c_start(DEVICE(s)->id, i2c_addr, recv=
+);
+> > > > +            if (i2c_start_transfer(s->bus, i2c_addr, recv)) {
+> > > > +                RF_WR(f, STAT, MSTSTATE, MSTSTATE_NAKADR);
+> > > > +                trace_flexcomm_i2c_nak(DEVICE(s)->id);
+> > > > +            } else {
+> > > > +                if (recv) {
+> > > > +                    uint8_t data =3D i2c_recv(s->bus);
+> > > > +
+> > > > +                    RF_WR(f, MSTDAT, DATA, data);
+> > > > +                    trace_flexcomm_i2c_rx(DEVICE(s)->id, data);
+> > > > +                    RF_WR(f, STAT, MSTSTATE, MSTSTATE_RXRDY);
+> > > > +                } else {
+> > > > +                    RF_WR(f, STAT, MSTSTATE, MSTSTATE_TXRDY);
+> > > > +                }
+> > > > +            }
+> > > > +        }
+> > > > +        if (RF_RD(f, MSTCTL, MSTSTOP)) {
+> > > > +            RF_WR(f, STAT, MSTSTATE, MSTSTATE_IDLE);
+> > > > +            i2c_end_transfer(s->bus);
+> > > > +        }
+> > > > +        if (RF_RD(f, MSTCTL, MSTCONTINUE)) {
+> > > > +            if (RF_RD(f, STAT, MSTSTATE) =3D=3D MSTSTATE_TXRDY) {
+> > > > +                uint8_t data =3D RF_RD(f, MSTDAT, DATA);
+> > > > +
+> > > > +                trace_flexcomm_i2c_tx(DEVICE(s)->id, data);
+> > > > +                if (i2c_send(s->bus, data)) {
+> > > > +                    RF_WR(f, STAT, MSTSTATE, MSTSTATE_NAKDAT);
+> > > > +                }
+> > > > +            } else if (RF_RD(f, STAT, MSTSTATE) =3D=3D MSTSTATE_RX=
+RDY) {
+> > > > +                uint8_t data =3D i2c_recv(s->bus);
+> > > > +
+> > > > +                RF_WR(f, MSTDAT, DATA, data);
+> > > > +                trace_flexcomm_i2c_rx(DEVICE(s)->id, data);
+> > > > +            }
+> > > > +        }
+> > > > +        break;
+> > > > +    }
+> > > > +    case A_FLEXCOMM_I2C_STAT:
+> > > > +    {
+> > > > +        /* write 1 to clear bits */
+> > > > +        REG(f, STAT) &=3D ~value;
+> > > > +        break;
+> > > > +    }
+> > > > +    case A_FLEXCOMM_I2C_SLVCTL:
+> > > > +    case A_FLEXCOMM_I2C_SLVDAT:
+> > > > +    case A_FLEXCOMM_I2C_SLVADR0:
+> > > > +    case A_FLEXCOMM_I2C_SLVADR1:
+> > > > +    case A_FLEXCOMM_I2C_SLVADR2:
+> > > > +    case A_FLEXCOMM_I2C_SLVADR3:
+> > > > +    case A_FLEXCOMM_I2C_SLVQUAL0:
+> > > > +    {
+> > > > +        qemu_log_mask(LOG_GUEST_ERROR, "I2C slave not supported\n"=
+);
+> > > > +        break;
+> > > > +    }
+> > > > +    default:
+> > > > +        register_write(&ri, value, ~0, NULL, false);
+> > > > +        break;
+> > > > +    }
+> > > > +
+> > > > +    flexcomm_i2c_irq_update(f);
+> > > > +
+> > > > +    return MEMTX_OK;
+> > > > +}
+> > > > +
+> > > > +static void flexcomm_i2c_select(FlexcommFunction *f, bool selected=
+)
+> > > > +{
+> > > > +    FlexcommI2cClass *ic =3D FLEXCOMM_I2C_GET_CLASS(f);
+> > > > +
+> > > > +    if (selected) {
+> > > > +        flexcomm_i2c_reset(f);
+> > > > +    }
+> > > > +    ic->select(f, selected);
+> > > > +}
+> > > > +
+> > > > +static const MemoryRegionOps flexcomm_i2c_ops =3D {
+> > > > +    .read_with_attrs =3D flexcomm_i2c_reg_read,
+> > > > +    .write_with_attrs =3D flexcomm_i2c_reg_write,
+> > > > +    .endianness =3D DEVICE_NATIVE_ENDIAN,
+> > > > +    .valid =3D {
+> > > > +        .min_access_size =3D 4,
+> > > > +        .max_access_size =3D 4,
+> > > > +        .unaligned =3D false,
+> > > > +    },
+> > > > +};
+> > > > +
+> > > > +static void flexcomm_i2c_realize(DeviceState *dev, Error **errp)
+> > > > +{
+> > > > +    FlexcommI2cState *s =3D FLEXCOMM_I2C(dev);
+> > > > +
+> > > > +    s->bus =3D i2c_init_bus(DEVICE(s), "bus");
+> > > > +}
+> > > > +
+> > > > +static void flexcomm_i2c_class_init(ObjectClass *klass, void *data=
+)
+> > > > +{
+> > > > +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> > > > +    FlexcommFunctionClass *fc =3D FLEXCOMM_FUNCTION_CLASS(klass);
+> > > > +    FlexcommI2cClass *ic =3D FLEXCOMM_I2C_CLASS(klass);
+> > > > +
+> > > > +    dc->realize =3D flexcomm_i2c_realize;
+> > > > +    ic->select =3D fc->select;
+> > > > +    fc->select =3D flexcomm_i2c_select;
+> > > > +    fc->name =3D "i2c";
+> > > > +    fc->mmio_ops =3D &flexcomm_i2c_ops;
+> > > > +}
+> > > > +
+> > > > +static const TypeInfo flexcomm_i2c_types[] =3D {
+> > > > +    {
+> > > > +        .name          =3D TYPE_FLEXCOMM_I2C,
+> > > > +        .parent        =3D TYPE_FLEXCOMM_FUNCTION,
+> > > > +        .instance_size =3D sizeof(FlexcommI2cState),
+> > > > +        .class_init    =3D flexcomm_i2c_class_init,
+> > > > +        .class_size    =3D sizeof(FlexcommI2cClass),
+> > > > +    },
+> > > > +};
+> > > > +
+> > > > +DEFINE_TYPES(flexcomm_i2c_types);
+> > > > diff --git a/hw/misc/flexcomm.c b/hw/misc/flexcomm.c
+> > > > index a291148f27..b1a2f01acf 100644
+> > > > --- a/hw/misc/flexcomm.c
+> > > > +++ b/hw/misc/flexcomm.c
+> > > > @@ -24,6 +24,7 @@
+> > > >  #include "hw/misc/flexcomm.h"
+> > > >  #include "hw/arm/svd/flexcomm_usart.h"
+> > > >  #include "hw/char/flexcomm_usart.h"
+> > > > +#include "hw/i2c/flexcomm_i2c.h"
+> > > >
+> > > >  #define REG(s, reg) (s->regs[R_FLEXCOMM_##reg])
+> > > >  #define RF_WR(s, reg, field, val) \
+> > > > @@ -220,6 +221,7 @@ static void flexcomm_init(Object *obj)
+> > > >      sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->container);
+> > > >      sysbus_init_irq(sbd, &s->irq);
+> > > >      object_initialize_child(obj, "usart", &s->usart, TYPE_FLEXCOMM=
+_USART);
+> > > > +    object_initialize_child(obj, "i2c", &s->i2c, TYPE_FLEXCOMM_I2C=
+);
+> > > >  }
+> > > >
+> > > >  static void flexcomm_finalize(Object *obj)
+> > > > @@ -250,6 +252,7 @@ static void flexcomm_realize(DeviceState *dev, =
+Error **errp)
+> > > >
+> > > >      memory_region_add_subregion_overlap(&s->container, 0, &s->mmio=
+, -1);
+> > > >      flexcomm_func_realize_and_unref(FLEXCOMM_FUNCTION(&s->usart), =
+errp);
+> > > > +    flexcomm_func_realize_and_unref(FLEXCOMM_FUNCTION(&s->i2c), er=
+rp);
+> > > >  }
+> > > >
+> > > >  static const VMStateDescription vmstate_flexcomm =3D {
+> > > > diff --git a/hw/arm/svd/meson.build b/hw/arm/svd/meson.build
+> > > > index 2bde34d15b..417491cd5c 100644
+> > > > --- a/hw/arm/svd/meson.build
+> > > > +++ b/hw/arm/svd/meson.build
+> > > > @@ -7,4 +7,7 @@ if get_option('mcux-soc-svd')
+> > > >    run_target('svd-flexcomm-usart', command: svd_gen_header +
+> > > >      [ '-i', rt595, '-o', '@SOURCE_ROOT@/include/hw/arm/svd/flexcom=
+m_usart.h',
+> > > >      '-p', 'USART0', '-t', 'FLEXCOMM_USART'])
+> > > > +  run_target('svd-flexcomm-i2c', command: svd_gen_header +
+> > > > +    [ '-i', rt595, '-o', '@SOURCE_ROOT@/include/hw/arm/svd/flexcom=
+m_i2c.h',
+> > > > +      '-p', 'I2C0', '-t', 'FLEXCOMM_I2C'])
+> > > >  endif
+> > > > diff --git a/hw/i2c/meson.build b/hw/i2c/meson.build
+> > > > index c459adcb59..e7d79e6938 100644
+> > > > --- a/hw/i2c/meson.build
+> > > > +++ b/hw/i2c/meson.build
+> > > > @@ -18,4 +18,5 @@ i2c_ss.add(when: 'CONFIG_PPC4XX', if_true: files(=
+'ppc4xx_i2c.c'))
+> > > >  i2c_ss.add(when: 'CONFIG_PCA954X', if_true: files('i2c_mux_pca954x=
+.c'))
+> > > >  i2c_ss.add(when: 'CONFIG_PMBUS', if_true: files('pmbus_device.c'))
+> > > >  i2c_ss.add(when: 'CONFIG_BCM2835_I2C', if_true: files('bcm2835_i2c=
+.c'))
+> > > > +i2c_ss.add(when: 'CONFIG_FLEXCOMM', if_true: files('flexcomm_i2c.c=
+'))
+> > > >  system_ss.add_all(when: 'CONFIG_I2C', if_true: i2c_ss)
+> > > > diff --git a/hw/i2c/trace-events b/hw/i2c/trace-events
+> > > > index 6900e06eda..9f0175fab7 100644
+> > > > --- a/hw/i2c/trace-events
+> > > > +++ b/hw/i2c/trace-events
+> > > > @@ -51,3 +51,13 @@ npcm7xx_smbus_recv_fifo(const char *id, uint8_t =
+received, uint8_t expected) "%s
+> > > >
+> > > >  pca954x_write_bytes(uint8_t value) "PCA954X write data: 0x%02x"
+> > > >  pca954x_read_data(uint8_t value) "PCA954X read data: 0x%02x"
+> > > > +
+> > > > +# flexcomm_i2c.c
+> > > > +
+> > > > +flexcomm_i2c_reg_read(const char *id, const char *reg_name, uint32=
+_t addr, uint32_t val) " %s: %s[0x%04x] -> 0x%08x"
+> > > > +flexcomm_i2c_reg_write(const char *id, const char *reg_name, uint3=
+2_t addr, uint32_t val) "%s: %s[0x%04x] <- 0x%08x"
+> > > > +flexcomm_i2c_start(const char *id, uint8_t addr, uint8_t recv) "%s=
+: 0x%02x %d"
+> > > > +flexcomm_i2c_rx(const char *id, uint8_t data) "%s: <- 0x%02x"
+> > > > +flexcomm_i2c_tx(const char *id, uint8_t data) "%s: -> 0x%02x"
+> > > > +flexcomm_i2c_nak(const char *id) "%s: <- nak"
+> > > > +flexcomm_i2c_irq(const char *id, bool irq, bool perirqs, bool enab=
+led) "%s: %d %d %d"
+> > > > diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+> > > > index 14167ae9e8..9a244fa01d 100644
+> > > > --- a/hw/misc/Kconfig
+> > > > +++ b/hw/misc/Kconfig
+> > > > @@ -215,5 +215,6 @@ config XLNX_VERSAL_TRNG
+> > > >
+> > > >  config FLEXCOMM
+> > > >      bool
+> > > > +    select I2C
+> > > >
+> > > >  source macio/Kconfig
+> > > > --
+> > > > 2.46.0.662.g92d0881bb0-goog
+> > > >
+> > > >
 
