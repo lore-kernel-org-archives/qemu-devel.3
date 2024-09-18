@@ -4,64 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BF21CCD195
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 09:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F07FACCD194
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 09:57:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqrGx-0006xR-SK; Wed, 18 Sep 2024 05:46:55 -0400
+	id 1sqrQf-0008Dl-CZ; Wed, 18 Sep 2024 05:56:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sqrGk-0006tp-9Y
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:46:44 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1sqrQd-0008Cj-1H; Wed, 18 Sep 2024 05:56:55 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sqrGg-00068N-M3
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:46:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=QMp2RwAcPB10Y/NCxbIR5w0tfU+tZkdc3NSGX7eN+sY=; b=eH8NUIIqAA76Ir+tGuduQ7jaw0
- 8GPBxSGmvFCEv+nJDOYSyeBt6fkPdtLPoEAoRw3nvUBw7PRXOji3A8iGRROsb1YbqeCoY2pYyTflo
- cV664Bd0D55CjysyM2jjlb00fnqS+rW+6kYJdJcMUd7+kURYbrocDeBcprUcRw65In21UdNxC326X
- xlkieu0hx2OZPMVFW/VuykF1RlnfRoxdz6p3JaHYYdSOj4TYlJQkszKdkz1RIRgRXnC6rsqA8fPlf
- p5pfS6eqtSJuUPBHFN7IkuSqiAeFPFE7d4mmuMjU+eWzQQmvZ4O7pxi5cczTjirUn7zJC1hrGN+ix
- o6Xu3yv7n/Ud5/ka0brbNlBagFp4e86q72clFDTyEl0pMFs2WQTdBSl1ULSQUA3XsdW7Xy4yM63uz
- ZhFJFqUilXD4/BOLfIaFutXZtH50ccZqB+H2DUmDtV34UPpuFsvLxCOkSoRLiCkpAn8+TstBy48Bt
- Pkc2+knw7RgxLvSizxAS6o1Ac6W8mt4XVH967kkesQQyZLyGlsqQoNloSHeeqNRS6dT2eEvCl+Z62
- /1DeXVZCPXi/wH2iIzmwCnMYMiUlvaKaDJEW4cjpcRBhOxfRTlTFeL8FuLMLPpOiv0uSZ4V8ZrMnl
- aekS9MMgywyxN8qyCfa3WHfPOUqhiUFAbw7kWMVMA=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- (helo=cheesecake.fritz.box)
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sqrGX-000BB2-4M; Wed, 18 Sep 2024 10:46:33 +0100
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: qemu-devel@nongnu.org,
-	peter.maydell@linaro.org
-Date: Wed, 18 Sep 2024 10:46:24 +0100
-Message-Id: <20240918094624.938242-2-mark.cave-ayland@ilande.co.uk>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20240918094624.938242-1-mark.cave-ayland@ilande.co.uk>
-References: <20240918094624.938242-1-mark.cave-ayland@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1sqrQb-0007VN-0g; Wed, 18 Sep 2024 05:56:54 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48HJjbxi031850;
+ Wed, 18 Sep 2024 09:56:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:subject:from:to:cc:date:in-reply-to:references
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ nu9wanx64FU5k3I0do3V202TD2E8rqo3Vu4EhuBb7WA=; b=YmniixnjZFTVwEWF
+ Qw9+kHlSOn8QUjDMjVvYFrskIuq146zNFbb49h5ZXwGLEouVS9GHAoKFcuv9lzw7
+ Y+Bpg1U0hoTf5Movfy+65xheMRoXocNr0rq0sJqwJ0nZcQL09PiNu8IImV5mGBuJ
+ QKW+LSv9PHJSLvQpv2kDL80lV109wDp+LCGBkJ0rOQccQNYPMbr7H/ZBLr4z6eWO
+ 7TqXr3a9VfXHXP0wlhRBHY19rR97VyikLZnN+Wi9uPkxcb/treTeKas8YVYqzymS
+ fEZE6L8g0uz33h7SOwdADkvmTXHDXiH1ZdAV7Khhp8ujIT3UXNItaY0LDrGNMPTg
+ f27QHQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n3ujd5s7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 18 Sep 2024 09:56:48 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48I9um6T012866;
+ Wed, 18 Sep 2024 09:56:48 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n3ujd5s4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 18 Sep 2024 09:56:48 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48I8oXcO001871;
+ Wed, 18 Sep 2024 09:56:47 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 41nqh3sywu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 18 Sep 2024 09:56:47 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48I9ujvl44696028
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 18 Sep 2024 09:56:45 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B95C120049;
+ Wed, 18 Sep 2024 09:56:45 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 63D8720040;
+ Wed, 18 Sep 2024 09:56:45 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 18 Sep 2024 09:56:45 +0000 (GMT)
+Message-ID: <c7416776312932df4e4c27cf040189fd098cba3c.camel@linux.ibm.com>
+Subject: PING: [PATCH v2 0/2] target/ppc: Make divd[u] handler method
+ decodetree compatible
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Nicholas Piggin <npiggin@gmail.com>, Daniel Henrique Barboza
+ <danielhb413@gmail.com>, Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Date: Wed, 18 Sep 2024 11:56:45 +0200
+In-Reply-To: <20240812085841.1583-1-iii@linux.ibm.com>
+References: <20240812085841.1583-1-iii@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: CXTsaMgdGiLU01Jav3nQ_aYLCOKI59UT
+X-Proofpoint-GUID: 5sNqpHmNzeuySJGt3mQwnT1twnKt687E
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 1/1] mac_dbdma: Remove leftover `dma_memory_unmap` calls
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-18_07,2024-09-16_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ mlxlogscore=763 adultscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ clxscore=1015 bulkscore=0 suspectscore=0 mlxscore=0 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409180063
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,69 +116,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mattias Nissler <mnissler@rivosinc.com>
+On Mon, 2024-08-12 at 10:53 +0200, Ilya Leoshkevich wrote:
+> v1:
+> https://lore.kernel.org/qemu-devel/20240731100953.14950-1-iii@linux.ibm.c=
+om/
+> v1 -> v2: Add R-bs and a targeted divd[u] patch.
+>=20
+> Hi,
+>=20
+> This series contains two fixes for the same issue: divd[u] touching
+> uninitialized ctx->opcode.
+>=20
+> Patch 1 is a catch-all solution for all issues in this class. IMHO
+> it's worth having something like this until the legacy decoder is
+> fully eliminated.
+>=20
+> Patch 2 is a targeted fix for divd[u] only.
+>=20
+> Best regards,
+> Ilya
+>=20
+> Ilya Leoshkevich (2):
+> =C2=A0 target/ppc: Set ctx->opcode for decode_insn32()
+> =C2=A0 target/ppc: Make divd[u] handler method decodetree compatible
+>=20
+> =C2=A0target/ppc/translate.c | 5 ++---
+> =C2=A01 file changed, 2 insertions(+), 3 deletions(-)
 
-These were passing a NULL buffer pointer unconditionally, which happens
-to behave in a mostly benign way (except for the chance of an excess
-memory region unref and a bounce buffer leak). Per the function comment,
-this was never meant to be accepted though, and triggers an assertion
-with the "softmmu: Support concurrent bounce buffers" change.
-
-Given that the code in question never sets up any mappings, just remove
-the unnecessary dma_memory_unmap calls along with the DBDMA_io struct
-fields that are now entirely unused.
-
-Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
-Message-Id: <20240916175708.1829059-1-mnissler@rivosinc.com>
-Fixes: be1e343995 ("macio: switch over to new byte-aligned DMA helpers")
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
----
- hw/ide/macio.c             | 6 ------
- include/hw/ppc/mac_dbdma.h | 4 ----
- 2 files changed, 10 deletions(-)
-
-diff --git a/hw/ide/macio.c b/hw/ide/macio.c
-index bec2e866d7..99477a3d13 100644
---- a/hw/ide/macio.c
-+++ b/hw/ide/macio.c
-@@ -119,9 +119,6 @@ static void pmac_ide_atapi_transfer_cb(void *opaque, int ret)
-     return;
- 
- done:
--    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
--                     io->dir, io->dma_len);
--
-     if (ret < 0) {
-         block_acct_failed(blk_get_stats(s->blk), &s->acct);
-     } else {
-@@ -202,9 +199,6 @@ static void pmac_ide_transfer_cb(void *opaque, int ret)
-     return;
- 
- done:
--    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
--                     io->dir, io->dma_len);
--
-     if (s->dma_cmd == IDE_DMA_READ || s->dma_cmd == IDE_DMA_WRITE) {
-         if (ret < 0) {
-             block_acct_failed(blk_get_stats(s->blk), &s->acct);
-diff --git a/include/hw/ppc/mac_dbdma.h b/include/hw/ppc/mac_dbdma.h
-index 4a3f644516..c774f6bf84 100644
---- a/include/hw/ppc/mac_dbdma.h
-+++ b/include/hw/ppc/mac_dbdma.h
-@@ -44,10 +44,6 @@ struct DBDMA_io {
-     DBDMA_end dma_end;
-     /* DMA is in progress, don't start another one */
-     bool processing;
--    /* DMA request */
--    void *dma_mem;
--    dma_addr_t dma_len;
--    DMADirection dir;
- };
- 
- /*
--- 
-2.39.5
-
+Ping.
 
