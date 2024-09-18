@@ -4,74 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5E03CCD1A0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D22FCCCD1A3
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 12:55:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1squCy-0003aY-2O; Wed, 18 Sep 2024 08:55:00 -0400
+	id 1squCx-0003Ye-CB; Wed, 18 Sep 2024 08:54:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1squCu-0003UZ-5Q
+ id 1squCu-0003UX-5A
  for qemu-devel@nongnu.org; Wed, 18 Sep 2024 08:54:56 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1squCq-0002pH-U9
+ id 1squCs-0002pJ-2F
  for qemu-devel@nongnu.org; Wed, 18 Sep 2024 08:54:55 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-42cb8dac900so66065275e9.3
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 05:54:52 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-42e5e758093so30598235e9.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 05:54:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1726664091; x=1727268891; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=h1kd82LVPM0QwwFbNXUzYoW8UKMIxENMRxYyzlKOH+Q=;
- b=hZXZ/W1WhnDQmI88St0mlPkgP90Of89dz53ImV2nUPCYa6gIOR/F6jkdU9/04iZHyt
- RRP9NE6wzfE4kmEGfSSAZqPVNVovd5vJOICKXNUqC2a6I8zl8SG0evrVIf+8DRB2F1jm
- mDt+Gq1hkqPPE2FbG+3blgbnRxvTIw27w3OU2GrC2Kg6IsVoBuQBIcZ8JRrjGOO3Gm1D
- K5P8boqivR6NheIBOi4xyMPKRgWKO6rPyirzAiXOrB8IW5HsStBgyh5eKZVyGQ6EMILF
- EwPqv2z2GVBGcNBTvIVmb1iHV8b6uiwfX7KpEDt3L7XAgbL2a+H46wl9WbZTrkXw1xh0
- uc8g==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Z3xuY/dn/VE1/VAQJG02uSRnCOARSaZWLd5XFaTF7XQ=;
+ b=r1iI/UB4xmJac71a0WPt7pWuX2HqDb/MzMBnkH3zDy4Cj/QXzvMHQTAROp/UZpQVOw
+ StqPbra589wrJTl87OkKpmmzC8AnNxtvbwmPwKIkYFiGOA07BZ6nxPpJlDm/UkRjsW1C
+ V2jD0/RmybTqtmRsdvpEYesVhIe8IMKM3Lic21xyCqhEc6sPOXnfiLuKC1G3YGXp4CQS
+ j9PDfb2ltvL+Bx2XNILKmD38i647f9XFh0byECm/RxH0oVXhvpIjisbzcgeGcLlVt6zi
+ 9HIFvKOBUtODEUXoFOhH4TSTB5YNbl40GjGRSsM+NKM0shxtq8GEnWWeY034nj22WDks
+ XxGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1726664091; x=1727268891;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=h1kd82LVPM0QwwFbNXUzYoW8UKMIxENMRxYyzlKOH+Q=;
- b=a6+GpcnZ+DmviYhlkH2N3edORIEnEX4u83b7RLaVKfm2oP1HVV9VtW5jqsaYqxPyTL
- BZnuQdKny7kTA/JPbhXDH49rEnGU7XiwEmS8f0gSSj+Agc28YGX+B0KJU5mSlNQG7gYi
- 5e3cjp+kvoEaSVpTOPJQFWTBki2ZS0FkbzuTrIKS2kdEXwiE2CV0dkTTtVUGf60ZhvMS
- 4n9rmEXDnLiHELkj+Bk11zULMEnZbTtv53TA0vsphwmFGtlqhbZH0NbkEPqDvSNwgzqv
- pTvQs34gK/RHk+j/sPWkC9pljvnnTTY90uvR1ng0AwWH+1+Mz+BtH9nx04bUqi1xQTqZ
- qUbw==
-X-Gm-Message-State: AOJu0YxyqKKRi5LkSc09IRxiRXU4OiUNhxETMPYyjT0ub9IZlBo8KsYQ
- DKJtLv7pcV4QdIxzHkOBbTrVCvHoZ1VPPIl88t/veCrrt4S5zaSUaODPKQPJnsPb1DLZO7Dv+sI
- 0
-X-Google-Smtp-Source: AGHT+IHy/eA+FK/76d7FVVO/oTbeqNdyDjYm7Q8YpyBBb2lbU1vYeYOl4XwiwXksW0WWopEp+ChHyA==
-X-Received: by 2002:a05:600c:4fd6:b0:42c:d084:ed7e with SMTP id
- 5b1f17b1804b1-42cdb509eafmr152434275e9.4.1726664090845; 
- Wed, 18 Sep 2024 05:54:50 -0700 (PDT)
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Z3xuY/dn/VE1/VAQJG02uSRnCOARSaZWLd5XFaTF7XQ=;
+ b=Yhn8SA5NGce94eKou6tnSG3CV4eSfFvduE0YrOb7qUCWzEr2xGWRn+N77C/2V5kLvr
+ 0RvMnjmCANeViirZ106NqgsZRiexnjRfIDq8pSBaZzg2OAfje0rxbRsVFyN98Z4jX9AY
+ CKho/tascxIgjSj0YSWF5KPo2qV+k9c6sQJEMxPBlSEtY4fslaJGqXibTrke2IFIRcfN
+ kDEu0X3YCWGrgwz2WqJublYlGagWoGj/bRBa6BYk6nE9fntX5tw94pu8DHCM32yzRGn2
+ gmmoaWCSEELRAdyfX71WCvPGKAk+ZTNV3EiH2MslIBfqlxuMuJcG8FXyxzv5UWwDuOlS
+ tdww==
+X-Gm-Message-State: AOJu0YyGCZah9xj4ttlAm661jozI9I82qhb2bT0+fB7id+1W7+uy6gQO
+ PXpRFAkU0gDdQfvdEELOmAVITc2iTGfTsBiNYM/sFBuPTfcyr33XN+Hl+S1ZV+C1R+0IamIHT+V
+ X
+X-Google-Smtp-Source: AGHT+IFyXfKoNfev7J4icMDCycs9JIFSAGp1MiwNUoIdmNJdGhZWOIQY5QVcotfUnP1+ULQ3eNeWdg==
+X-Received: by 2002:a05:600c:3b1d:b0:42c:c401:6d8b with SMTP id
+ 5b1f17b1804b1-42d9070af3emr139345795e9.7.1726664091456; 
+ Wed, 18 Sep 2024 05:54:51 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
  5b1f17b1804b1-42e7051335fsm16410645e9.30.2024.09.18.05.54.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Sep 2024 05:54:50 -0700 (PDT)
+ Wed, 18 Sep 2024 05:54:51 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH 0/2] gitlab-ci: Make separate sections for build and test
-Date: Wed, 18 Sep 2024 13:54:47 +0100
-Message-Id: <20240918125449.3125571-1-peter.maydell@linaro.org>
+Subject: [PATCH 1/2] .gitlab-ci.d: Split build and test in cross build job
+ templates
+Date: Wed, 18 Sep 2024 13:54:48 +0100
+Message-Id: <20240918125449.3125571-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240918125449.3125571-1-peter.maydell@linaro.org>
+References: <20240918125449.3125571-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,52 +98,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset uses gitlab's support for putting special lines
-in the log output that it will interpret as the beginning and
-end markers for a collapsible section in the build log.
+In the native_build_job_template we have separate steps in the script
+for the build and the test steps.  This is helpful because then
+gitlab will give separate timestamps in the log view for each, and
+you can see how long it took to compile vs how long to test.  In the
+templates in crossbuild-template.yml, however, we do both the build
+and test in a single 'make' invocation, and so we don't get the
+separate timing information.
 
-That's documented here, but it's just "write a line with
-the right format and a timestamp and a magic escape sequence
-in it":
-https://docs.gitlab.com/ee/ci/yaml/script.html#expand-and-collapse-job-log-sections
+Split the build and test, in the same way we do in the native build
+template.
 
-Since gitlab puts little "time taken" bubbles for each
-collapsible section, we can use this to easily find out how
-much time is taken for build versus test.
+This will also give us a place to separate out how parallel we want
+to do the build by default from how parallel we want to do the tests
+by default, which might be helpful in future.
 
-Patch 1 splits out "make" and "make check" to separate make
-invocations for the cross-build templates; we do this for
-the native-build already.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+Gitlab seems to be inconsistent about whether you get the
+separate time-taken bubbles for each line of the script section
+or not; but certainly if we don't split into separate 'make'
+invocations we definitely can't get the timing info...
+---
+ .gitlab-ci.d/crossbuild-template.yml | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-Patch 2 adds the shell functions that emit start and end
-section markers, and puts in section lines in the job
-templates.
-
-Since this is just for convenience in looking at CI job logs,
-I have not put in a lot of effort into dividing things into
-sections -- I've mostly just put configure/build/test into
-the templates. We can always tweak the sections later if
-we find out it would be useful.
-
-If you want to see what the resulting logs look like you
-can look at the jobs in this pipeline:
-https://gitlab.com/pm215/qemu/-/pipelines/1458593312
-
-thanks
--- PMM
-
-Peter Maydell (2):
-  .gitlab-ci.d: Split build and test in cross build job templates
-  .gitlab-ci.d: Make separate collapsible log sections for build and
-    test
-
- .gitlab-ci.d/buildtest-template.yml  | 14 ++++++++
- .gitlab-ci.d/buildtest.yml           |  1 +
- .gitlab-ci.d/crossbuild-template.yml | 48 ++++++++++++++++++++++++++--
- scripts/ci/gitlab-ci-section         | 29 +++++++++++++++++
- 4 files changed, 89 insertions(+), 3 deletions(-)
- create mode 100644 scripts/ci/gitlab-ci-section
-
+diff --git a/.gitlab-ci.d/crossbuild-template.yml b/.gitlab-ci.d/crossbuild-template.yml
+index 2ce0432eb77..d1cb7a35dbf 100644
+--- a/.gitlab-ci.d/crossbuild-template.yml
++++ b/.gitlab-ci.d/crossbuild-template.yml
+@@ -9,6 +9,7 @@
+     when: always
+   timeout: 80m
+   before_script:
++    - JOBS=$(expr $(nproc) + 1)
+     - cat /packages.txt
+   script:
+     - export CCACHE_BASEDIR="$(pwd)"
+@@ -24,7 +25,11 @@
+           i386-softmmu microblaze-softmmu mips-softmmu mipsel-softmmu
+           mips64-softmmu ppc-softmmu riscv32-softmmu sh4-softmmu
+           sparc-softmmu xtensa-softmmu $CROSS_SKIP_TARGETS"
+-    - make -j$(expr $(nproc) + 1) all check-build $MAKE_CHECK_ARGS
++    - make -j"$JOBS" all check-build
++    - if test -n "$MAKE_CHECK_ARGS";
++      then
++        $MAKE -j"$JOBS" $MAKE_CHECK_ARGS ;
++      fi
+     - if grep -q "EXESUF=.exe" config-host.mak;
+       then make installer;
+       version="$(git describe --match v[0-9]* 2>/dev/null || git rev-parse --short HEAD)";
+@@ -46,6 +51,8 @@
+     paths:
+       - ccache/
+     key: "$CI_JOB_NAME"
++  before_script:
++    - JOBS=$(expr $(nproc) + 1)
+   script:
+     - export CCACHE_BASEDIR="$(pwd)"
+     - export CCACHE_DIR="$CCACHE_BASEDIR/ccache"
+@@ -55,7 +62,11 @@
+     - cd build
+     - ../configure --enable-werror --disable-docs $QEMU_CONFIGURE_OPTS
+         --disable-tools --enable-${ACCEL:-kvm} $EXTRA_CONFIGURE_OPTS
+-    - make -j$(expr $(nproc) + 1) all check-build $MAKE_CHECK_ARGS
++    - make -j"$JOBS" all check-build
++    - if test -n "$MAKE_CHECK_ARGS";
++      then
++        $MAKE -j"$JOBS" $MAKE_CHECK_ARGS ;
++      fi
+ 
+ .cross_user_build_job:
+   extends: .base_job_template
+@@ -65,6 +76,8 @@
+     paths:
+       - ccache/
+     key: "$CI_JOB_NAME"
++  before_script:
++    - JOBS=$(expr $(nproc) + 1)
+   script:
+     - export CCACHE_BASEDIR="$(pwd)"
+     - export CCACHE_DIR="$CCACHE_BASEDIR/ccache"
+@@ -76,7 +89,11 @@
+           alpha-linux-user m68k-linux-user microblazeel-linux-user
+           or1k-linux-user ppc-linux-user sparc-linux-user
+           xtensa-linux-user $CROSS_SKIP_TARGETS"
+-    - make -j$(expr $(nproc) + 1) all check-build $MAKE_CHECK_ARGS
++    - make -j"$JOBS" all check-build
++    - if test -n "$MAKE_CHECK_ARGS";
++      then
++        $MAKE -j"$JOBS" $MAKE_CHECK_ARGS ;
++      fi
+ 
+ # We can still run some tests on some of our cross build jobs. They can add this
+ # template to their extends to save the build logs and test results
 -- 
 2.34.1
 
