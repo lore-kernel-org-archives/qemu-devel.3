@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EA36CCD1A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 13:08:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA81ECCD1A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 13:13:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1squPs-0000Vg-PR; Wed, 18 Sep 2024 09:08:20 -0400
+	id 1squUT-0005v0-Ql; Wed, 18 Sep 2024 09:13:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1squPq-0000OF-N9
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 09:08:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1squPo-0004Pj-LT
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 09:08:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726664894;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5ehwJvytcPBUkUyoDO5hT69ggPEYh0bNJnJ7WrbfdSc=;
- b=f3w6+I0H1fo0Ch2QieDPaq6XkDptMqCkN6fZMTGq5RV+LCVaD3a6ke1WFuYwKhSUVdsume
- avyG3c4458vpBYclgvWjR+2p3Lz3WyxrLapKcYXE0uE79kDnHGlLAkOmU2+HzDLgahkGil
- aBElx0dE6TAQt7xpMfGHeS8Y6j72BCA=
-Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
- [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-665-0M7dCceRONS4ggmaoDgxLA-1; Wed, 18 Sep 2024 09:08:12 -0400
-X-MC-Unique: 0M7dCceRONS4ggmaoDgxLA-1
-Received: by mail-lj1-f197.google.com with SMTP id
- 38308e7fff4ca-2f77be8ff40so41232811fa.0
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 06:08:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1squUS-0005u1-8u
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 09:13:04 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1squUQ-0004yl-Ev
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 09:13:03 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2f7528f4658so50271431fa.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 06:13:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726665180; x=1727269980; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=1UIao/Jz5H8HMYQFxpoEYcHdlz/BHFAG+1NToY/M7y4=;
+ b=uC3wh7ofxzBlYtYf8fC6jrxngnOUjxUnyD50bL3Xgmda0EZAV/C9oW2owVpvuTnwwV
+ xNkaF6hynUZgmHeTNW2osOeYy+Yyl1N7A15L9ooTdsqvOexEz8aHpnYHtFAiZ+IDgE4s
+ iPV4/VPgeJpTAIZrc8FllLZgqU93IX4KAtEOuVcDLRxJPXzekpGuEm6NkzOWXOeSA+cS
+ e87yMxdjfHnFZwqRUxZYZo60lX4oaZOoZHLInWMgPq1veZrYxNUw2ZDMS0AdYFrXhp7F
+ ZAw9VH2er2FWE5KHRkPXv+WrTEhPKa1sYiTuso69TzRi/C1KA6yd3rfRmp8tP8uu9PYA
+ Kk1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726664891; x=1727269691;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5ehwJvytcPBUkUyoDO5hT69ggPEYh0bNJnJ7WrbfdSc=;
- b=u/SXPj9/Wv17EpD4BFUG76NMW/FQJZEnBqiCrPu5CWWgH/GNrPyda2KD+yPUW9mv/4
- HINyAzQpD1AgaBnyk4ufaGL1pDxL/kyGsKaSRACOSGiPflPnWwYBspxIHrUwFewJa2AU
- 5BnyW//4+hnYTsqTfLiJ8IcpX/oiofBx6fTajNlmLMmrOcJoNQaQXplOHDaF0SxLEutm
- RuxhdSo8E9cOwuxVkfpfBUsa1ZoBB0ssjjEn+u0oVt0Tgq0Hj2ADQHN8BT+O/nLv/y71
- GAm8UEeOGoUEPO4cEiYOaQ61MO6qwsS7od7Ky8ZuA43e/RdE/tPLr0hpB0X2SqjqEf+h
- xbhw==
+ d=1e100.net; s=20230601; t=1726665180; x=1727269980;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1UIao/Jz5H8HMYQFxpoEYcHdlz/BHFAG+1NToY/M7y4=;
+ b=eZVOtvsTXGrqHv5lg537w8kTwlLKO1ZD0Q6MWvEwd4HCuIv6o/6LS7v8yX3eWqiHhP
+ twnEDXS9B2LtnD9hVbxu4RcIFdT+kwJtzYgVs+FICuakTEqTjI92gZ/T+s6BBHJOY2Lt
+ df2O/Yjqz5lhMEV78mj+5owHHhPGWlDdcdQra8dIN5PIjugHwrUwlLYE6vLmtypRENsh
+ zggsWAdk/S11mlNIUXSTITRdyguasM3c2o5U59IGSl88emOdyb11HRJHebCZXS1srJPL
+ 6ulyy5xONLSnndqFmGjMCSD43wcuM/XJqGB08FHK58LDVjIBn3o47d/1vi8Sl94BI89I
+ +2Hg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWJ8shGoDfkOleJl/f72OqoTFr5Xum0nXv6Tsv0ZdiQuoVjltxY7mumcCXDUg9Omu22euuJmq+LZehL@nongnu.org
-X-Gm-Message-State: AOJu0Yz5ADAE3bkxJej2pd2rSoYvvfVzv1Fb3rS67dKnTlXC7uAnIKha
- FKfo34TTeFy8nPVKGhQsiO6w9KXDt6MtSSqGsHGehFBfW3Z26FaZSPMeA7+6Bh+r+1d1LNKio70
- N6vcrhqa8Z7fO1B8yJTYvcFrf5ylYa9xYJrS5Sh33VaSu5hORJEGC
-X-Received: by 2002:a05:651c:1541:b0:2f7:611c:a643 with SMTP id
- 38308e7fff4ca-2f791b4d50fmr100039301fa.33.1726664890636; 
- Wed, 18 Sep 2024 06:08:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGgqDSSP5XnHPNACUzwzb6D6hg2wE73ZMTPxkGO7TG/cP7RSupbK8t/3Tf/4I8Qnp3+yjJPaw==
-X-Received: by 2002:a05:651c:1541:b0:2f7:611c:a643 with SMTP id
- 38308e7fff4ca-2f791b4d50fmr100038971fa.33.1726664889997; 
- Wed, 18 Sep 2024 06:08:09 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42e7054c568sm16379025e9.43.2024.09.18.06.08.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Sep 2024 06:08:09 -0700 (PDT)
-Date: Wed, 18 Sep 2024 15:08:08 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: dave@treblig.org
-Cc: mst@redhat.com, sgarzare@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH] vhost: Remove unused vhost_dev_{load|save}_inflight
-Message-ID: <20240918150808.4e3d06fa@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240918121034.16417-1-dave@treblig.org>
-References: <20240918121034.16417-1-dave@treblig.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ AJvYcCXspCfJa1+849pQo+43dDU3cbulS/EluxGySLeB22PnCQvxpKOx0Bm1p+rypiyjiDY8RZ7SC3zAKMhI@nongnu.org
+X-Gm-Message-State: AOJu0YyFrA2oh4lcy46II5IgeAjY7tDt/CiG2I4PZ5Z79d15h0j29sp1
+ FGkbo2Veip+EU0+guRBwFVV6LW0YroRL/CsX6/D8jRvNvjnYQaxrawG3xFRR4vwSWYTMaiXVYBJ
+ vJyIRwAhEeH6ohE2LYpjU+Dlnev1ANEVtQ8kJTw==
+X-Google-Smtp-Source: AGHT+IF5izfJa+xhgK0mjYVqlKJIK89IcU1cb1NpZfcXm0pryp2o/BMT6N8z0wfXVAWqfUbW+2JjG7UdxmVTGR7xheE=
+X-Received: by 2002:a05:651c:509:b0:2f3:fd4a:eac6 with SMTP id
+ 38308e7fff4ca-2f7919fe8d6mr81760011fa.18.1726665180209; Wed, 18 Sep 2024
+ 06:13:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240916181633.366449-1-heinrich.schuchardt@canonical.com>
+ <20240917-f45624310204491aede04703@orel>
+ <15c359a4-b3c1-4cb0-be2e-d5ca5537bc5b@canonical.com>
+ <20240917-b13c51d41030029c70aab785@orel>
+ <8b24728f-8b6e-4c79-91f6-7cbb79494550@canonical.com>
+ <20240918-039d1e3bebf2231bd452a5ad@orel>
+ <CAFEAcA-Yg9=5naRVVCwma0Ug0vFZfikqc6_YiRQTrfBpoz9Bjw@mail.gmail.com>
+ <bab7a5ce-74b6-49ae-b610-9a0f624addc0@canonical.com>
+In-Reply-To: <bab7a5ce-74b6-49ae-b610-9a0f624addc0@canonical.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 18 Sep 2024 14:12:48 +0100
+Message-ID: <CAFEAcA-L7sQfK6MNt1ZbZqUMk+TJor=uD3Jj-Pc6Vy9j9JHhYQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] target/riscv: enable floating point unit
+To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ Anup Patel <anup@brainfault.org>, Atish Patra <atishp@atishpatra.org>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ kvm@vger.kernel.org, 
+ kvm-riscv@lists.infradead.org, linux-riscv@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, Andrew Jones <ajones@ventanamicro.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,106 +106,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 18 Sep 2024 13:10:34 +0100
-dave@treblig.org wrote:
+On Wed, 18 Sept 2024 at 14:06, Heinrich Schuchardt
+<heinrich.schuchardt@canonical.com> wrote:
+> Thanks Peter for looking into this.
+>
+> QEMU's cpu_synchronize_all_post_init() and
+> do_kvm_cpu_synchronize_post_reset() both end up in
+> kvm_arch_put_registers() and that is long after Linux
+> kvm_arch_vcpu_create() has been setting some FPU state. See the output
+> below.
+>
+> kvm_arch_put_registers() copies the CSRs by calling
+> kvm_riscv_put_regs_csr(). Here we can find:
+>
+>      KVM_RISCV_SET_CSR(cs, env, sstatus, env->mstatus);
+>
+> This call enables or disables the FPU according to the value of
+> env->mstatus.
+>
+> So we need to set the desired state of the floating point unit in QEMU.
+> And this is what the current patch does both for TCG and KVM.
 
-> From: "Dr. David Alan Gilbert" <dave@treblig.org>
-> 
-> vhost_dev_load_inflight and vhost_dev_save_inflight have been
-> unused since they were added in 2019 by:
-> 
-> 5ad204bf2a ("vhost-user: Support transferring inflight buffer between qemu and backend")
-> 
-> Remove them, and their helper vhost_dev_resize_inflight.
-> 
-> Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+If it does this for both TCG and KVM then I don't understand
+this bit from the commit message:
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+# Without this patch EDK II with TLS enabled crashes when hitting the first
+# floating point instruction while running QEMU with --accel kvm and runs
+# fine with --accel tcg.
 
-> ---
->  hw/virtio/vhost.c         | 56 ---------------------------------------
->  include/hw/virtio/vhost.h |  2 --
->  2 files changed, 58 deletions(-)
-> 
-> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index 7c5ef81b55..76f9b2aaad 100644
-> --- a/hw/virtio/vhost.c
-> +++ b/hw/virtio/vhost.c
-> @@ -1930,62 +1930,6 @@ void vhost_dev_free_inflight(struct vhost_inflight *inflight)
->      }
->  }
->  
-> -static int vhost_dev_resize_inflight(struct vhost_inflight *inflight,
-> -                                     uint64_t new_size)
-> -{
-> -    Error *err = NULL;
-> -    int fd = -1;
-> -    void *addr = qemu_memfd_alloc("vhost-inflight", new_size,
-> -                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
-> -                                  &fd, &err);
-> -
-> -    if (err) {
-> -        error_report_err(err);
-> -        return -ENOMEM;
-> -    }
-> -
-> -    vhost_dev_free_inflight(inflight);
-> -    inflight->offset = 0;
-> -    inflight->addr = addr;
-> -    inflight->fd = fd;
-> -    inflight->size = new_size;
-> -
-> -    return 0;
-> -}
-> -
-> -void vhost_dev_save_inflight(struct vhost_inflight *inflight, QEMUFile *f)
-> -{
-> -    if (inflight->addr) {
-> -        qemu_put_be64(f, inflight->size);
-> -        qemu_put_be16(f, inflight->queue_size);
-> -        qemu_put_buffer(f, inflight->addr, inflight->size);
-> -    } else {
-> -        qemu_put_be64(f, 0);
-> -    }
-> -}
-> -
-> -int vhost_dev_load_inflight(struct vhost_inflight *inflight, QEMUFile *f)
-> -{
-> -    uint64_t size;
-> -
-> -    size = qemu_get_be64(f);
-> -    if (!size) {
-> -        return 0;
-> -    }
-> -
-> -    if (inflight->size != size) {
-> -        int ret = vhost_dev_resize_inflight(inflight, size);
-> -        if (ret < 0) {
-> -            return ret;
-> -        }
-> -    }
-> -    inflight->queue_size = qemu_get_be16(f);
-> -
-> -    qemu_get_buffer(f, inflight->addr, size);
-> -
-> -    return 0;
-> -}
-> -
->  int vhost_dev_prepare_inflight(struct vhost_dev *hdev, VirtIODevice *vdev)
->  {
->      int r;
-> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-> index c75be46c06..461c168c37 100644
-> --- a/include/hw/virtio/vhost.h
-> +++ b/include/hw/virtio/vhost.h
-> @@ -338,8 +338,6 @@ void vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
->  
->  void vhost_dev_reset_inflight(struct vhost_inflight *inflight);
->  void vhost_dev_free_inflight(struct vhost_inflight *inflight);
-> -void vhost_dev_save_inflight(struct vhost_inflight *inflight, QEMUFile *f);
-> -int vhost_dev_load_inflight(struct vhost_inflight *inflight, QEMUFile *f);
->  int vhost_dev_prepare_inflight(struct vhost_dev *hdev, VirtIODevice *vdev);
->  int vhost_dev_set_inflight(struct vhost_dev *dev,
->                             struct vhost_inflight *inflight);
+Shouldn't this guest crash the same way with both KVM and TCG without
+this patch, because the FPU state is the same for both?
 
+-- PMM
 
