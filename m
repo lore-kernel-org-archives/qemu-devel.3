@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 031C2CDD54F
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 18:33:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23495CDD54F
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 18:44:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqzTM-0002Oc-HC; Wed, 18 Sep 2024 14:32:16 -0400
+	id 1sqzeK-0007Iu-Ot; Wed, 18 Sep 2024 14:43:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqzTI-00028H-IO
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 14:32:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sqzTD-00020l-0g
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 14:32:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726684326;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=w4/INXL/PVn5TMqQnxTEKZfK/Si8TZmajwPGuc+4jWg=;
- b=bVMiBzcD4OyKsBt0cI+tA6Ukod3PCgYpIEeZSHldKLmMh3J3WLfGWI7PYFGssSBt6CMe9q
- nU7O9AQUtx1DQd7vQrJ09TIYzJeAmCExo7oUbNgWmVfPg2TR2C/58gogejuD67Y8FjBu/A
- TDrfNHjonY7I77n/68Ei00KygASkGi0=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-DGZnF_SaO0KQLDE2M0TILg-1; Wed, 18 Sep 2024 14:32:05 -0400
-X-MC-Unique: DGZnF_SaO0KQLDE2M0TILg-1
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-4581d371964so559691cf.1
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 11:32:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sqzeI-0007Ho-T1
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 14:43:34 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sqzeH-0003EZ-7u
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 14:43:34 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-7cf5e179b68so28878a12.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 11:43:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726685011; x=1727289811; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mUn3vVs3PAg1jpdzhe1s5TNbomjixUrUyStKSozflik=;
+ b=ulb7wqBepRucEHj4QUvMrsCAOjWZvG+K+jv7VVt+TAByo2PDptSHQk7JmlKBdLM9OZ
+ fDkgNoaxb08EvvERhOp7H+oxHq5CGET5DvH05G+WHyXej7OJPaOT6kEhkSfqCdP5xjQr
+ Mr1us1RNXvwI3Na1aV/lrpPHkpumeGm8mNzWhOzdbrorZyW7KxU/tFwragTZ8tyuI2qT
+ otNiIQSQx1UOht2YkTQwdJ+nOYqxMs6xAUqMFJKS1u++x0yRRih5cy2XOP7JvQEAlpGC
+ 3He8BkTkggZzOyADeSjJUeGzT/VMHII5mR7KGxG01HMWrICXmEQVv3Fz4dq19a1zBhR6
+ SOkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726684324; x=1727289124;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=w4/INXL/PVn5TMqQnxTEKZfK/Si8TZmajwPGuc+4jWg=;
- b=Eu0l2u5q4pm9xH5SSKVWs6nEGZoWY4VSjZ81+lpBuRScROQwoMqA5+CdH/KuAnQMb4
- B6YvBkQQzQ3QCm79aN+srjPF2DNTl4QwJSP1hm9A70aJojtq/RuSkyzJf+VNkZEC1gPp
- 3xgaxHGBcxJ/ywlaLegycxBIom6jf3u4UaY/o5jXvk0wcp/4P8jvHVPDUj0i+CSxbu9E
- LSqmVhezRT6RcXedVCkJu2X1x9sSBk4aWw4vWqnSLp7VHH9OtR1LGKHIWPjVI/oBD71C
- V0eGDBdNqPA0mYK2wO7VkluAS7ceLgXbYAz47hiGFNa79WcHJ2HRGYjluwHm2GtnRc8j
- ThkQ==
-X-Gm-Message-State: AOJu0YxN6r5MWPlh8b/ycIlpI+pK5e9BTCmA3vxiaZeeLruCgXxqymAQ
- JXIih2yG1+FDcIZydKCx9IOj3HWyDo6QVmcIOG/BeT4I2ffVogKjX0UJ2Rf8JR2CKyXwKQvYhHR
- M7JtxAaXEtWpCbeE0UiHtT1i27jrMoJc7qsr+SrvHEZYxe5AFhRGze7hjU7ybPYl3DzASyG/hy2
- 8Yp9ydaUR7YdC5uYuFyUOd8yTVqJInUZ0dyw==
-X-Received: by 2002:a05:6214:448b:b0:6c5:681e:1d4 with SMTP id
- 6a1803df08f44-6c5736cbbb9mr439299036d6.34.1726684324006; 
- Wed, 18 Sep 2024 11:32:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEJi16r2N/lzXN4dbpFGtJgjveCfMxRgrJhniOuy7eKhoXuY2yCxnp6Stvu3hu462F+ia/VSw==
-X-Received: by 2002:a05:6214:448b:b0:6c5:681e:1d4 with SMTP id
- 6a1803df08f44-6c5736cbbb9mr439298636d6.34.1726684323504; 
- Wed, 18 Sep 2024 11:32:03 -0700 (PDT)
-Received: from x1n.. (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c75e494a28sm30486d6.68.2024.09.18.11.32.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Sep 2024 11:32:01 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- peterx@redhat.com
-Subject: [PULL v2 5/6] migration/savevm: Remove extra load cleanup calls
-Date: Wed, 18 Sep 2024 14:31:50 -0400
-Message-ID: <20240918183151.6413-6-peterx@redhat.com>
-X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20240918183151.6413-1-peterx@redhat.com>
-References: <20240918183151.6413-1-peterx@redhat.com>
+ d=1e100.net; s=20230601; t=1726685011; x=1727289811;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mUn3vVs3PAg1jpdzhe1s5TNbomjixUrUyStKSozflik=;
+ b=RSzUa0/0426ngFOJekf7Hk/MCKz6cB6yUKNVNJ2V4Y/2RXIXZIkV4RCMLbFM7NGp2K
+ xRf7e7UaWYMT3F3cbASXk1/iYoD3bYHPTyTJGLJL6IRVpLFTVkOOZtakiraTWqDq3VE8
+ kYx3QAdKopYU+xU5FrxZTW72lpP6TBlvmD4V8/2i8T609sqWwHHPuN77TgSMYGpWIdcH
+ VcO4t8NIqADQmC4gFC/tQMOGjB164gqD5+KPcg+D1f0YsD76hJ+2+SlV+IbU80tRIMC8
+ pr0gYf7UTlZkm425M3Nq64w5gre59kQlzjTlrJpIurfcRbGtbkvkCeG8f45iayNY9fMb
+ X/0w==
+X-Gm-Message-State: AOJu0Yyg/kXAJ+zDgnQA+lZ0MP4rRXv5mNjsNerqY7qZ7LQd/Mb2sx83
+ 3WE2fWg1N/wowAw6BOvlo6kiflJ7cfpDmIEtmBwC5ZEISrKmOm3nFCtU9Z7xbT8=
+X-Google-Smtp-Source: AGHT+IFNeFvI+FeuoqaUjf+7LYg1q2d4BRxyYfcT+Awcekb89xJtzurLWQ9NV8ISzhOhgL4Ksf90ww==
+X-Received: by 2002:a05:6a21:3401:b0:1cf:49a6:992a with SMTP id
+ adf61e73a8af0-1d2fcad220amr858776637.21.1726685011098; 
+ Wed, 18 Sep 2024 11:43:31 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-71944b7afaesm7010644b3a.130.2024.09.18.11.43.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Sep 2024 11:43:30 -0700 (PDT)
+Message-ID: <c1f77391-a939-4fa6-98fa-c50622a71ede@linaro.org>
+Date: Wed, 18 Sep 2024 11:43:29 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] tcg: Fix branch/label link during plugin expansion
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20240910212351.977753-1-richard.henderson@linaro.org>
+ <f7f1cb70-08f8-48aa-9db7-cc7a119a4234@linaro.org>
+ <87jzffrgw0.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <87jzffrgw0.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,52 +98,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
-
-There are two qemu_loadvm_state_cleanup() calls that were introduced
-when qemu_loadvm_state_setup() was still called before loading the
-configuration section, so there was state to be cleaned up if the
-header checks failed.
-
-However, commit 9e14b84908 ("migration/savevm: load_header before
-load_setup") has moved that configuration section part to
-qemu_loadvm_state_header() which now happens before
-qemu_loadvm_state_setup().
-
-Remove the cleanup calls that are now misplaced.
-
-Note that we didn't use Fixes because it's benign to cleanup() even if
-setup() is not invoked.  So this patch is not needed for stable, as it
-falls into cleanup category.
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240917185802.15619-2-farosas@suse.de
-[peterx: added last paragraph of commit message]
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/savevm.c | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/migration/savevm.c b/migration/savevm.c
-index d500eae979..d0759694fd 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2732,13 +2732,11 @@ static int qemu_loadvm_state_header(QEMUFile *f)
-     if (migrate_get_current()->send_configuration) {
-         if (qemu_get_byte(f) != QEMU_VM_CONFIGURATION) {
-             error_report("Configuration section missing");
--            qemu_loadvm_state_cleanup();
-             return -EINVAL;
-         }
-         ret = vmstate_load_state(f, &vmstate_configuration, &savevm_state, 0);
- 
-         if (ret) {
--            qemu_loadvm_state_cleanup();
-             return ret;
-         }
-     }
--- 
-2.45.0
-
+T24gOS8xMy8yNCAwMzoyMywgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBSaWNoYXJkIEhlbmRl
+cnNvbiA8cmljaGFyZC5oZW5kZXJzb25AbGluYXJvLm9yZz4gd3JpdGVzOg0KPiANCj4+IE9u
+IDkvMTAvMjQgMTQ6MjMsIFJpY2hhcmQgSGVuZGVyc29uIHdyb3RlOg0KPj4+IFdpdGggdGNn
+X2xhc3Rfb3AoKSwgd2UgYWx3YXlzIGdldCB0aGUgbGFzdCBvcCBvZiB0aGUgc3RyZWFtLg0K
+Pj4+IFdpdGggVENHQ29udGV4dC5lbWl0X2JlZm9yZV9vcCwgdGhlIG1vc3QgcmVjZW50bHkg
+ZW1pdHRlZCBvcA0KPj4+IGlzIG5vIGxvbmdlciB0aGUgbGFzdCBvcC4NCj4+PiBJbnN0ZWFk
+LCBwYXNzIHRoZSBvcCBiZWluZyBlbWl0dGVkIGJhY2sgZnJvbSB0aGUgYWxsb2NhdG9yIHNv
+DQo+Pj4gdGhhdCB3ZSBjYW4gbGluayBpdCB0byB0aGUgbGFiZWwgd2l0aG91dCBuZWVkaW5n
+IHRvIGxvb2sgaXQgdXAuDQo+Pg0KPj4gT2gsIEkgbWVhbnQgdG8gcG9pbnQgb3V0IGZyb20g
+d2hlbmNlIHRoaXMgY29tZXMuDQo+PiBUaGUgcGx1Z2luIHVzZXMgYSBjb25kaXRpb25hbA0K
+PiANCj4gICAgICBzaXplX3Qgbl9pbnNucyA9IHFlbXVfcGx1Z2luX3RiX25faW5zbnModGIp
+Ow0KPiAgICAgIHFlbXVfcGx1Z2luX3U2NCBxdWFudHVtX2luc24gPQ0KPiAgICAgICAgICBx
+ZW11X3BsdWdpbl9zY29yZWJvYXJkX3U2NF9pbl9zdHJ1Y3QodmNwdXMsIHZDUFVUaW1lLCBx
+dWFudHVtX2luc24pOw0KPiAgICAgIC8qIGNvdW50IChhbmQgZXZlbnR1YWxseSB0cmFwKSBv
+bmNlIHBlciB0YiAqLw0KPiAgICAgIHFlbXVfcGx1Z2luX3JlZ2lzdGVyX3ZjcHVfdGJfZXhl
+Y19pbmxpbmVfcGVyX3ZjcHUoDQo+ICAgICAgICAgIHRiLCBRRU1VX1BMVUdJTl9JTkxJTkVf
+QUREX1U2NCwgcXVhbnR1bV9pbnNuLCBuX2luc25zKTsNCj4gDQo+PiAgIGxkX2kzMiB0bXAx
+OCxlbnYsJDB4ZmZmZmZmZmZmZmZmZGIxMA0KPj4gICBtdWxfaTMyIHRtcDE4LHRtcDE4LCQw
+eDE4DQo+PiAgIGV4dF9pMzJfaTY0IHRtcDE3LHRtcDE4DQo+PiAgIGFkZF9pNjQgdG1wMTcs
+dG1wMTcsJDB4NTc1NDEwZWRhZGM4DQo+IA0KPiAgICAgIHFlbXVfcGx1Z2luX3JlZ2lzdGVy
+X3ZjcHVfdGJfZXhlY19jb25kX2NiKA0KPiAgICAgICAgICB0YiwgZXZlcnlfcXVhbnR1bV9p
+bnNuLA0KPiAgICAgICAgICBRRU1VX1BMVUdJTl9DQl9OT19SRUdTLCBRRU1VX1BMVUdJTl9D
+T05EX0dFLA0KPiAgICAgICAgICBxdWFudHVtX2luc24sIG1heF9pbnNuX3Blcl9xdWFudHVt
+LCBOVUxMKTsNCj4gDQo+ID8NCj4gDQo+PiAgIGxkX2k2NCB0bXAyMSx0bXAxNywkMHgwDQo+
+PiAgIGJyY29uZF9pNjQgdG1wMjEsJDB4MCxsdHUsJEwxDQo+PiAgIGxkX2kzMiB0bXAxOCxl
+bnYsJDB4ZmZmZmZmZmZmZmZmZGIxMA0KPj4gICBjYWxsIHBsdWdpbigweDc5YTJhYmZkZTY2
+YSksJDB4MSwkMCx0bXAxOCwkMHgwDQo+PiAgIHNldF9sYWJlbCAkTDENCj4+DQo+PiBOb3Rl
+IHRoYXQgdGhlIGJyYW5jaCBpcyBYIDwgMCAodW5zaWduZWQpLCB3aGljaCBpcyBhbHdheXMg
+ZmFsc2UsIGFuZA0KPj4gdGh1cyB0aGUgYnJhbmNoIGlzIG9wdGltaXplZCBhd2F5Lg0KPiAN
+Cj4gSSdtIG9idmlvdXNseSBtaXNzaW5nIHNvbWV0aGluZyByZWFkaW5nIHRoaXMuIEhvdyBj
+YW4gVENHIGtub3cgdGhlIHN0YXRlDQo+IG9mIHRoZSBzY29yZWJvYXJkIHZhcmlhYmxlcyBh
+bmQgb3B0aW1pc2UgYXdheSB0aGUgYnJhbmNoPw0KPiANCg0KVGhlIGNvbnN0YW50IGFnYWlu
+c3Qgd2hpY2ggd2UgY29tcGFyZSBzY29yZWJvYXJkIGVudHJ5IHZhbHVlIGlzIGtub3duIGF0
+IA0KdHJhbnNsYXRpb24gdGltZS4NCg0KPj4NCj4+DQo+PiByfg0KPiANCg==
 
