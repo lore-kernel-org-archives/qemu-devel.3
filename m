@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7209CCAC5AC
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 00:03:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F85CCAC5AC
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 00:03:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqi9K-00006e-NK; Tue, 17 Sep 2024 20:02:26 -0400
+	id 1sqi9M-0000A3-1X; Tue, 17 Sep 2024 20:02:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1sqi9F-0008TN-CP
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 20:02:21 -0400
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1sqi9G-0008UE-AV
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 20:02:23 -0400
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1sqi9D-0006Nm-71
- for qemu-devel@nongnu.org; Tue, 17 Sep 2024 20:02:20 -0400
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1sqi9D-0006Np-Kd
+ for qemu-devel@nongnu.org; Tue, 17 Sep 2024 20:02:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
- :Subject; bh=bD3rvGM9bKH1LNpdoa6AoyOCSg7fPA7SsO5lOyd/K/s=; b=rC1Bd1IySEFRS370
- mNhK6WcF0pHDH1eVMWMgdPkoh5eEjA6O0SyveyCOKNBt2IQPf+gRTM5HR6LaQaWB1+wm1paAzVrK9
- y0ua0+YIt3WdH1FBUyih3TJtts+kSmhY1LXsDc2ZDeB3jDmf+api4mXHazQLMVMwN7a7Lc6zKg9Tk
- EppATigC6PX5spBUbFqLqLrjjp7S1AzQ1YEJGEXCvH/7j55raWuz3oVxoJOoUF4Ff9lKAVRutT53T
- Z8vJnbBNoDJPaicWA/DHijolIbjlIhJ9aTyX3oOaYIPaQjlpR+WfMpKh9+aH3CAq3tBTbIH9LLLN+
- 2YnNmArgBMuK+P/2HQ==;
+ :Subject; bh=gWSsjX1LZaUqlQr3wzl8g0MVhTupUsNLSrpZVJHlMmI=; b=Em7lRfOfqvKhsYBK
+ 82I6Fdn0J8E9dz1YpW8JdQlOTZD3PCPVFe+02PzMPSFWSqtNr3iplQal9FEKtnT+cb1RdF9Igbxj6
+ k12jzOizp6Y85XrzmR2pzs7zevOhy8jBK70l1nNNqJD4YWo+VKiPx2CVHTEqAf50ZX1xgBRWh+GCi
+ JzdIG0zhFa4vOosFhiYpWZVD9jRG7Zvr450zI/en2iqdiD5ZbCPA9H0A0+9eBEG5b1tjGxBB3sA+F
+ u3DMaocBMokaPAuUVLliiVachFb7jKgWWayeR+B02Q4ZF8jQ9rlTx4Oqyfw4Lt6AWDD8tBT2Yqrz7
+ 3lkPxISoAbpxZkdkcw==;
 Received: from localhost ([127.0.0.1] helo=dalek.home.treblig.org)
  by mx.treblig.org with esmtp (Exim 4.96)
- (envelope-from <dave@treblig.org>) id 1sqi9A-006Dj5-19;
- Wed, 18 Sep 2024 00:02:16 +0000
+ (envelope-from <dave@treblig.org>) id 1sqi9B-006Dj5-03;
+ Wed, 18 Sep 2024 00:02:17 +0000
 From: dave@treblig.org
 To: peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com
 Cc: qemu-devel@nongnu.org,
 	"Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH 1/3] migration: Remove migrate_cap_set
-Date: Wed, 18 Sep 2024 01:02:05 +0100
-Message-ID: <20240918000207.182683-2-dave@treblig.org>
+Subject: [PATCH 2/3] migration: Remove unused zero-blocks capability
+Date: Wed, 18 Sep 2024 01:02:06 +0100
+Message-ID: <20240918000207.182683-3-dave@treblig.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240918000207.182683-1-dave@treblig.org>
 References: <20240918000207.182683-1-dave@treblig.org>
@@ -68,60 +68,95 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-migrate_cap_set has been unused since
-  18d154f575 ("migration: Remove 'blk/-b' option from migrate commands")
+migrate_zero_blocks is unused since
+  eef0bae3a7 ("migration: Remove block migration")
 
 Remove it.
+That whole zero-blocks capability was just for old-school
+block migration anyway.
+
+Remove the capability as well.
 
 Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 ---
- migration/options.c | 20 --------------------
+ migration/options.c |  8 --------
  migration/options.h |  1 -
- 2 files changed, 21 deletions(-)
+ qapi/migration.json | 10 +---------
+ 3 files changed, 1 insertion(+), 18 deletions(-)
 
 diff --git a/migration/options.c b/migration/options.c
-index 147cd2b8fd..9460c5dee9 100644
+index 9460c5dee9..997e060612 100644
 --- a/migration/options.c
 +++ b/migration/options.c
-@@ -605,26 +605,6 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
-     return true;
+@@ -177,7 +177,6 @@ Property migration_properties[] = {
+     DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
+     DEFINE_PROP_MIG_CAP("x-rdma-pin-all", MIGRATION_CAPABILITY_RDMA_PIN_ALL),
+     DEFINE_PROP_MIG_CAP("x-auto-converge", MIGRATION_CAPABILITY_AUTO_CONVERGE),
+-    DEFINE_PROP_MIG_CAP("x-zero-blocks", MIGRATION_CAPABILITY_ZERO_BLOCKS),
+     DEFINE_PROP_MIG_CAP("x-events", MIGRATION_CAPABILITY_EVENTS),
+     DEFINE_PROP_MIG_CAP("x-postcopy-ram", MIGRATION_CAPABILITY_POSTCOPY_RAM),
+     DEFINE_PROP_MIG_CAP("x-postcopy-preempt",
+@@ -339,13 +338,6 @@ bool migrate_xbzrle(void)
+     return s->capabilities[MIGRATION_CAPABILITY_XBZRLE];
  }
  
--bool migrate_cap_set(int cap, bool value, Error **errp)
+-bool migrate_zero_blocks(void)
 -{
 -    MigrationState *s = migrate_get_current();
--    bool new_caps[MIGRATION_CAPABILITY__MAX];
 -
--    if (migration_is_running()) {
--        error_setg(errp, "There's a migration process in progress");
--        return false;
--    }
--
--    memcpy(new_caps, s->capabilities, sizeof(new_caps));
--    new_caps[cap] = value;
--
--    if (!migrate_caps_check(s->capabilities, new_caps, errp)) {
--        return false;
--    }
--    s->capabilities[cap] = value;
--    return true;
+-    return s->capabilities[MIGRATION_CAPABILITY_ZERO_BLOCKS];
 -}
 -
- MigrationCapabilityStatusList *qmp_query_migrate_capabilities(Error **errp)
+ bool migrate_zero_copy_send(void)
  {
-     MigrationCapabilityStatusList *head = NULL, **tail = &head;
+     MigrationState *s = migrate_get_current();
 diff --git a/migration/options.h b/migration/options.h
-index a0bd6edc06..36e7b3723f 100644
+index 36e7b3723f..79084eed0d 100644
 --- a/migration/options.h
 +++ b/migration/options.h
-@@ -58,7 +58,6 @@ bool migrate_tls(void);
- /* capabilities helpers */
+@@ -40,7 +40,6 @@ bool migrate_release_ram(void);
+ bool migrate_return_path(void);
+ bool migrate_validate_uuid(void);
+ bool migrate_xbzrle(void);
+-bool migrate_zero_blocks(void);
+ bool migrate_zero_copy_send(void);
  
- bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp);
--bool migrate_cap_set(int cap, bool value, Error **errp);
- 
- /* parameters */
- 
+ /*
+diff --git a/qapi/migration.json b/qapi/migration.json
+index b66cccf107..82d0fc962e 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -389,13 +389,6 @@
+ #     footprint is mlock()'d on demand or all at once.  Refer to
+ #     docs/rdma.txt for usage.  Disabled by default.  (since 2.0)
+ #
+-# @zero-blocks: During storage migration encode blocks of zeroes
+-#     efficiently.  This essentially saves 1MB of zeroes per block on
+-#     the wire.  Enabling requires source and target VM to support
+-#     this feature.  To enable it is sufficient to enable the
+-#     capability on the source VM.  The feature is disabled by
+-#     default.  (since 1.6)
+-#
+ # @events: generate events for each migration state change (since 2.4)
+ #
+ # @auto-converge: If enabled, QEMU will automatically throttle down
+@@ -483,7 +476,7 @@
+ # Since: 1.2
+ ##
+ { 'enum': 'MigrationCapability',
+-  'data': ['xbzrle', 'rdma-pin-all', 'auto-converge', 'zero-blocks',
++  'data': ['xbzrle', 'rdma-pin-all', 'auto-converge',
+            'events', 'postcopy-ram',
+            { 'name': 'x-colo', 'features': [ 'unstable' ] },
+            'release-ram',
+@@ -542,7 +535,6 @@
+ #           {"state": false, "capability": "xbzrle"},
+ #           {"state": false, "capability": "rdma-pin-all"},
+ #           {"state": false, "capability": "auto-converge"},
+-#           {"state": false, "capability": "zero-blocks"},
+ #           {"state": true, "capability": "events"},
+ #           {"state": false, "capability": "postcopy-ram"},
+ #           {"state": false, "capability": "x-colo"}
 -- 
 2.46.0
 
