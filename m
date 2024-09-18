@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4BF0CDD556
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 21:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B78D8CDD556
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 21:07:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr1tW-0005Fn-RR; Wed, 18 Sep 2024 17:07:26 -0400
+	id 1sr1tS-0004vC-0Y; Wed, 18 Sep 2024 17:07:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sr1tV-0005AU-Ew
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 17:07:25 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1sr1tP-0004oy-Kg
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 17:07:19 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sr1tT-0001ds-Rx
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 17:07:25 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a8a7cdfdd80so14217166b.0
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 14:07:23 -0700 (PDT)
+ id 1sr1tM-0001ZT-Iw
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 17:07:19 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-5c43003a667so195811a12.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 14:07:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726693642; x=1727298442; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726693634; x=1727298434; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0gcAPVufwlARI8k9tEcW8Q+w96+wb8gfpJ78TxPW758=;
- b=A8EXm7xev3SU5LCSyM53jaU6iAQ54gAk+wpy1jNf5qzJLtogzkVaF2ZiBHMXBb6P9x
- TvMKKLp7gakCmYXR2bYBPcAwF4gemIedMMIFiOl0C/V2mhPvfKBv+EvpqzuT3Dojpk8d
- dEzaQt+ndpe9bhLdeJUJazW4G83igfPtO7nGtVH6m20I4R53R/hG6cUK9odrhs9bWF1r
- IGnHfNrdC9Y8nGsqlyHjSu+eEDOp2Qn64xaW6Ose+KtarfAXckHSolYNHpNARAztX9Ej
- cAEoOpjx6Cjv3vHBqti3Z/rEN52pI2rhGKgQ7ZNMVdS8s60hBovqCqouWvUlcnxJKItQ
- FW6A==
+ bh=l8PYdaTTNho7oFbmy/119cv/0Q+vgu2VyKL3FrL1OWo=;
+ b=DAs5e9+LSK4IzqwVqOfWl3Co0XFAyFBlvztIlKmzpg3GOFwFUkHXNI9deOmtdrwlwn
+ +xWxoO51PMB73cPQt6V2+zGv15kU4BjNp9Li8t+ofT7QGmEI4NBiPDXhYSXUxF+2nfhE
+ OLEwQwmuhy3zU7NwnhPDKPpEIyPkkhBJCjR2DxRoL+kDQih5Su2fj82NOwVHA8RiZaRg
+ CR3pN9QWJpNDcEW42mRZvRmoD5rw8Anr5lQCin6WDLgwkxJ+0sf9smR1CmosPzPRzrjg
+ 2rKfismxW8kWauHFmGOx4zDSDa4UZ8ejfqHXaiyjVdY7HBK8p2nQyL/I7y5aoz7WM2JC
+ A/VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726693642; x=1727298442;
+ d=1e100.net; s=20230601; t=1726693634; x=1727298434;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0gcAPVufwlARI8k9tEcW8Q+w96+wb8gfpJ78TxPW758=;
- b=wU0Jwlk+gMrRMXzUiAkuEELlg2ySqcfeoHKzFije1msAWCh+8am0RBKYzw0Xs/Mm1D
- 2bO/ZelIt1QcoLaXBqElkRaa52EoVaaJzElTx6bbkbUwAax4VMtriGV324TzZXYHh9Bd
- NxXT1/lcw8UDk2c4Vu7LKL4Wge29psAC3imrp8ACsXu51/0QiEPl+fZMKK31SQyStm+P
- pRxt4ARRcdNau0X5uiNYdLYKbXZZ0z90N7bgsjsbt5uJgtmmytOOg+gn7jtIltqUxSJC
- kBlBuIuuh3j077fVNQFxiOEEjdBnUxIcRsdfUTkdvvwQQbF3cwii629DhD5hE8RnbPh9
- S9Jg==
-X-Gm-Message-State: AOJu0Yz1piezIiB4rs3oOkETGK5rnEPqWcbFtoR5uENiYKNYOv9B8iOI
- JpnFuP7L6z04WvJ0tMnWybsUKa3+zUK6ENAjcDJMWo2/BN65NzVpyyUvyB9Ub+4=
-X-Google-Smtp-Source: AGHT+IEB7cgYaHWQBvau9yo4rvoNzkL6GxQWhVCdbmPtKTx6c+sZMh6JomCoXZMKDlxnugYenp/C0w==
-X-Received: by 2002:a17:906:794a:b0:a8a:8c8e:f5e6 with SMTP id
- a640c23a62f3a-a9048108fe6mr2110191066b.49.1726693642099; 
- Wed, 18 Sep 2024 14:07:22 -0700 (PDT)
+ bh=l8PYdaTTNho7oFbmy/119cv/0Q+vgu2VyKL3FrL1OWo=;
+ b=OYqIidfF59hMFNGOEgaZ++gsOZDXXrYhoDF9/fp7AJ4fY750J3Z2H0qsZ0Ez0LJRsV
+ lP109UUvLKRcGfx8uGVA0feAvd88U3IXDAP9Qc8KPMDX85jl7GJCYxGwYsUrNbL8g4tY
+ fw6ZKDx5WNtVMwuqFSFv8vvRQn4AxMMUPpEzf3OnA9M6x3UGt/4ANByAy8KNq/Ui84Yq
+ YeeaBgXfGXpY1nTp5Tx/zVvojC5rG1bi+vatL0cajW7vPMqjup/HioYn178VGwIEbW4u
+ ANMn2XiBORuK2oaWt0h1cT6tHhuxGcekOt0eRgnG3CLA+YCdV3XUQTbTGu9Tulghrg4n
+ LyhQ==
+X-Gm-Message-State: AOJu0Yw39dISa/nmHjSzHWjfjY02dacN3zY6xmo8xI+38AqsNA3L0SuY
+ nUIH8uablRExo2ETuUo1o6zXfWeJYY+KdxraI0Urr6ddrIKnDphEzx1zAGtYz7Y=
+X-Google-Smtp-Source: AGHT+IHTdZsIWdnnS4bkrBdNFJUXjNP2PC7ITAztPPydpFpWb8uQlRw5M68rNLCWswq9yB4RH3G78Q==
+X-Received: by 2002:a17:907:3d91:b0:a86:8ff8:1dd8 with SMTP id
+ a640c23a62f3a-a9048044a21mr2014339166b.46.1726693633817; 
+ Wed, 18 Sep 2024 14:07:13 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9060f39a8fsm636426366b.0.2024.09.18.14.07.15
+ a640c23a62f3a-a908d2305e3sm397557866b.186.2024.09.18.14.07.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Sep 2024 14:07:16 -0700 (PDT)
+ Wed, 18 Sep 2024 14:07:13 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 510BF5F94D;
- Wed, 18 Sep 2024 22:07:13 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 6C6845F8C8;
+ Wed, 18 Sep 2024 22:07:12 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 11/18] tests/tcg: only read/write 64 bit words on 64 bit systems
-Date: Wed, 18 Sep 2024 22:07:05 +0100
-Message-Id: <20240918210712.2336854-12-alex.bennee@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ devel@lists.libvirt.org (reviewer:Incompatible changes)
+Subject: [PULL 02/18] deprecation: don't enable TCG plugins by default with TCI
+Date: Wed, 18 Sep 2024 22:06:56 +0100
+Message-Id: <20240918210712.2336854-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20240918210712.2336854-1-alex.bennee@linaro.org>
 References: <20240918210712.2336854-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,82 +99,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While the compilers will generally happily synthesise a 64 bit value
-for you on 32 bit systems it doesn't exercise anything on QEMU. It
-also makes it hard to accurately compare the accesses to test_data
-when instrumenting.
+The softmmu memory instrumentation test sees so many more accesses
+than a normal translated host and its really not worth fixing up. Lets
+deprecate this odd configuration and save on the CI cycles.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240916085400.1046925-12-alex.bennee@linaro.org>
+Message-Id: <20240916085400.1046925-3-alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/multiarch/system/memory.c b/tests/tcg/multiarch/system/memory.c
-index 8f2371975d..28080767b2 100644
---- a/tests/tcg/multiarch/system/memory.c
-+++ b/tests/tcg/multiarch/system/memory.c
-@@ -163,6 +163,7 @@ static void init_test_data_u32(int offset)
-     ml_printf("done %d @ %p\n", i, ptr);
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 809b2b9b81..c0aa52def5 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -196,6 +196,14 @@ benefits from having plenty of host memory it seems reasonable to
+ encourage users to use 64 bit builds of QEMU for analysis work
+ whatever targets they are instrumenting.
+ 
++TCG Plugin support not enabled by default with TCI (since 9.2)
++''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++While the TCG interpreter can interpret the TCG ops used by plugins it
++is going to be so much slower it wouldn't make sense for any serious
++instrumentation. Due to implementation differences there will also be
++anomalies in things like memory instrumentation.
++
+ System emulator CPUs
+ --------------------
+ 
+diff --git a/configure b/configure
+index cc8e1ed5b8..aa7aae70fa 100755
+--- a/configure
++++ b/configure
+@@ -629,6 +629,9 @@ meson_option_parse() {
+     exit 1
+   fi
  }
++has_meson_option() {
++    test "${meson_options#*"$1"}" != "$meson_options"
++}
  
-+#if __SIZEOF_POINTER__ >= 8
- static void init_test_data_u64(int offset)
- {
-     uint8_t count = 0;
-@@ -187,6 +188,7 @@ static void init_test_data_u64(int offset)
-     }
-     ml_printf("done %d @ %p\n", i, ptr);
- }
-+#endif
+ meson_add_machine_file() {
+   if test "$cross_compile" = "yes"; then
+@@ -1048,8 +1051,12 @@ if test "$static" = "yes" ; then
+   plugins="no"
+ fi
+ if test "$plugins" != "no" && test $host_bits -eq 64; then
+-  plugins=yes
+-  subdirs="$subdirs contrib/plugins"
++    if has_meson_option "-Dtcg_interpreter=true"; then
++        plugins="no"
++    else
++        plugins=yes
++        subdirs="$subdirs contrib/plugins"
++    fi
+ fi
  
- static bool read_test_data_u16(int offset)
- {
-@@ -254,6 +256,7 @@ static bool read_test_data_u32(int offset)
-     return true;
- }
- 
-+#if __SIZEOF_POINTER__ >= 8
- static bool read_test_data_u64(int offset)
- {
-     uint64_t word, *ptr = (uint64_t *)&test_data[offset];
-@@ -307,11 +310,16 @@ static bool read_test_data_u64(int offset)
-     ml_printf("done %d @ %p\n", i, ptr);
-     return true;
- }
-+#endif
- 
- /* Read the test data and verify at various offsets */
--read_ufn read_ufns[] = { read_test_data_u16,
--                         read_test_data_u32,
--                         read_test_data_u64 };
-+read_ufn read_ufns[] = {
-+    read_test_data_u16,
-+    read_test_data_u32,
-+#if __SIZEOF_POINTER__ >= 8
-+    read_test_data_u64
-+#endif
-+};
- 
- bool do_unsigned_reads(int start_off)
- {
-@@ -476,10 +484,14 @@ bool do_signed_reads(bool neg_first)
-     return ok;
- }
- 
--init_ufn init_ufns[] = { init_test_data_u8,
--                         init_test_data_u16,
--                         init_test_data_u32,
--                         init_test_data_u64 };
-+init_ufn init_ufns[] = {
-+    init_test_data_u8,
-+    init_test_data_u16,
-+    init_test_data_u32,
-+#if __SIZEOF_POINTER__ >= 8
-+    init_test_data_u64
-+#endif
-+};
- 
- int main(void)
- {
+ cat > $TMPC << EOF
 -- 
 2.39.5
 
