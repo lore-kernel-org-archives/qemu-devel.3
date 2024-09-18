@@ -4,63 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5474ECCD192
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 09:25:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E302CCD192
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 09:30:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqqvS-0003bY-Nq; Wed, 18 Sep 2024 05:24:42 -0400
+	id 1sqr0W-000860-89; Wed, 18 Sep 2024 05:29:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sqqvN-0003at-OP
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:24:37 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1sqr0S-00084x-3z
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:29:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sqqvL-00043n-NK
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:24:37 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1sqr0Q-0004Va-Cb
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:29:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726651473;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Iz67smzzOXZyMTU9nhdny5TDC7LdQBbHvNtUHEwpvv8=;
- b=YqfeLrjppdY6Gvuq8hGfsEMhBcJocUuuIfdzwRxXFjvbO7Bqt+FQ7ePR/FGVIYrgpQxSnE
- 50oYTr0Lv/x+bTtfCLmfZAmCBpg7jCWhGKizezoQAd5Z+oYx7BM5cGftPWh9K5z6bP7jQu
- HEEBfBw/wOPsm3ug5QJJrZBOh1EFP8g=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-671-HpZYkV6TOHK-UOYg2yZW8Q-1; Wed,
- 18 Sep 2024 05:24:29 -0400
-X-MC-Unique: HpZYkV6TOHK-UOYg2yZW8Q-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 292F81944AA4; Wed, 18 Sep 2024 09:24:28 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.226.29])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DBC9E30001A1; Wed, 18 Sep 2024 09:24:25 +0000 (UTC)
-Date: Wed, 18 Sep 2024 11:24:22 +0200
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: flakiness on CI jobs run via k8s
-Message-ID: <ZuqcRvjd9f3YGutx@redhat.com>
-References: <CAFEAcA9ZsxwZb_=A15pUXDF+HH=sD-B8zm1j8MMJ-mPsZNP62Q@mail.gmail.com>
+ s=mimecast20190719; t=1726651789;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8ezzSZ7Dx5LUEDd6UbDX6MNPcXpgVwJjwGGHnw97NCU=;
+ b=VJWmy+HI0i7rGsOQe+WnvRZ7zF+ibsjV77UPCKuuUdBlODrJ8boyT0YSmZ8iS4Op2WCX76
+ rbLdMw5aGx+ExItGaExAuY6I8vRPWyYr+/qAs4e7IH6kdSjX2lnX4LaO705+21RSeeUxkO
+ j9gB9hnCOO4X8BbasB5ZAFASFJ0qQ3g=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-651-f9MX-wNFMFGKly1jmzGM2Q-1; Wed, 18 Sep 2024 05:29:48 -0400
+X-MC-Unique: f9MX-wNFMFGKly1jmzGM2Q-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7a99d13efafso1511949885a.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 02:29:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726651788; x=1727256588;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8ezzSZ7Dx5LUEDd6UbDX6MNPcXpgVwJjwGGHnw97NCU=;
+ b=Y6JHIgZ3mFd55mNI7JNNu3Evq8kHkCVT4U70By26CxA6N3HGNYdIhJSyq8QAoxxeSO
+ gZA9HhBOk3pL8JcxgbpIS/HsZqz+wDnV1pgIzyEpyIuLcDy/5lmfjhs8NGhDVmf99ZIt
+ cNXpVAJrZQRbJBKG9xOwtrwZTulPYPgmeXP5/oWd1tYgtaj4TUBYjEgjIuaZCuaFQZhJ
+ iDlsjZt/07OG17KxLCrBo8+2AU6UdmWUbeS8xlPbTZ4RitTb/ryv6cLopq78yzWFXhH8
+ HF7LAwviBjElZaH+6MlYQB866gpCvwjEmsi6X06P24DrKp4WLDJZPQ2a9mV+wsju/Gg6
+ W2Lg==
+X-Gm-Message-State: AOJu0YxxF41IAHxEIuK4vwgvLRgdchHY5HlHJelWuCTBnycpC6PZnpHX
+ sowT5tBCji46MoE0DtZjQSueIt4Yo09Pys7Ny5+Rjaz6jARD5q/MLAO0kszcDuALNtaAoZXU71Z
+ xUwSi2F25dcDEzyVfEvtalzF6JHqMeNGIP1JY5TZgX6W90wHzyo5xjn3R0wp/wQrupmYl2O36gp
+ eNUokBbGHRc7MrlpaOUqKDM9elF4o=
+X-Received: by 2002:a0c:ef0f:0:b0:6c5:9307:ef6a with SMTP id
+ 6a1803df08f44-6c59307f140mr158011786d6.18.1726651787765; 
+ Wed, 18 Sep 2024 02:29:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHs/dxEDRNOjEHUoBE4cxrzBbpnItlJGzTwTc80xNdX363qWWMzGQaZKuHfYI4/vvr8ExsomuvVRl+pWJO3CMA=
+X-Received: by 2002:a0c:ef0f:0:b0:6c5:9307:ef6a with SMTP id
+ 6a1803df08f44-6c59307f140mr158011636d6.18.1726651787407; Wed, 18 Sep 2024
+ 02:29:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA9ZsxwZb_=A15pUXDF+HH=sD-B8zm1j8MMJ-mPsZNP62Q@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+References: <3a78811ad5b0e87816b7616ab21d2eeef00b9c52.1726647033.git.mprivozn@redhat.com>
+In-Reply-To: <3a78811ad5b0e87816b7616ab21d2eeef00b9c52.1726647033.git.mprivozn@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Wed, 18 Sep 2024 13:29:36 +0400
+Message-ID: <CAMxuvay3s1XS7xEOoAr8HnrO087H_3H+GMWb-cVoC0+Dm0feuQ@mail.gmail.com>
+Subject: Re: [PATCH v2] audio/pw: Report more accurate error when connecting
+ to PipeWire fails
+To: Michal Privoznik <mprivozn@redhat.com>
+Cc: qemu-devel@nongnu.org, kraxel@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -81,42 +94,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 17, 2024 at 04:48:45PM +0100, Peter Maydell wrote:
-> I notice that a lot of the CI job flakiness I'm seeing with main
-> CI runs involves jobs that are run via the k8s runners. Notably
-> cross-i686-tci and cross-i686-system and cross-i686-user are like this.
-> These jobs run with no flakiness that I've noticed when they're run
-> by an individual gitlab user (in which case they're not running on
-> k8s, I believe). So something seems to be up with the environment
-> we're using to run the jobs for the main CI. My impression is that
-> the time things take to run can be very variable, especially if the
-> CI job believes the reported number of CPUs and actually tries to run
-> 8 or 9 test cases in parallel.
-> 
-> Any ideas what might be causing issues here, or config tweaks
-> we might be able to make to ensure that the environment reports
-> to the CI job a number of CPUs/etc that accurately reflects
-> the amount of resource it really has?
+On Wed, Sep 18, 2024 at 12:17=E2=80=AFPM Michal Privoznik <mprivozn@redhat.=
+com> wrote:
+>
+> According to its man page [1], pw_context_connect() sets errno on
+> failure:
+>
+>   Returns a Core on success or NULL with errno set on error.
+>
+> It may be handy to see errno when figuring out why PipeWire
+> failed to connect. That leaves us with just one possible path to
+> reach 'fail_error' label which is then moved to that path and
+> also its error message is adjusted slightly.
+>
+> 1: https://docs.pipewire.org/group__pw__core.html#ga5994e3a54e4ec718094ca=
+02a1234815b
+>
+> Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
 
-Didn't we change the hosting for our k8s runners recently ? They were
-running on Azure, but I vaguely recall hearing that it was being
-switched again.
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-Anyway, perhaps the cloud provider is over-committing the env such
-that we have excessive streal time and thus not getting the full
-power of the CPUs we expect.  I know gitlab's own public runners
-will suffer from this periodically, due to the very cheap VMs they
-host on.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> ---
+>
+> v2 of:
+>
+> https://mail.gnu.org/archive/html/qemu-devel/2024-09/msg03485.html
+>
+> diff to v1:
+> - Dropped duplicated S-o-b line
+> - Fixed typo on error message (s/PipeWite/PipeWire/)
+>
+>  audio/pwaudio.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/audio/pwaudio.c b/audio/pwaudio.c
+> index 3b14e04fbb..8e13b58286 100644
+> --- a/audio/pwaudio.c
+> +++ b/audio/pwaudio.c
+> @@ -769,13 +769,15 @@ qpw_audio_init(Audiodev *dev, Error **errp)
+>      pw->core =3D pw_context_connect(pw->context, NULL, 0);
+>      if (pw->core =3D=3D NULL) {
+>          pw_thread_loop_unlock(pw->thread_loop);
+> -        goto fail_error;
+> +        error_setg_errno(errp, errno, "Failed to connect to PipeWire ins=
+tance");
+> +        goto fail;
+>      }
+>
+>      if (pw_core_add_listener(pw->core, &pw->core_listener,
+>                               &core_events, pw) < 0) {
+>          pw_thread_loop_unlock(pw->thread_loop);
+> -        goto fail_error;
+> +        error_setg(errp, "Failed to add PipeWire listener");
+> +        goto fail;
+>      }
+>      if (wait_resync(pw) < 0) {
+>          pw_thread_loop_unlock(pw->thread_loop);
+> @@ -785,8 +787,6 @@ qpw_audio_init(Audiodev *dev, Error **errp)
+>
+>      return g_steal_pointer(&pw);
+>
+> -fail_error:
+> -    error_setg(errp, "Failed to initialize PW context");
+>  fail:
+>      if (pw->thread_loop) {
+>          pw_thread_loop_stop(pw->thread_loop);
+> --
+> 2.44.2
+>
 
 
