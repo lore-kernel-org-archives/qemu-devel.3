@@ -4,52 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11FEBCDD543
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 15:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 511ECCDD546
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 15:50:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqwtJ-0000NL-Te; Wed, 18 Sep 2024 11:46:55 -0400
+	id 1sqwvy-0005Me-Eu; Wed, 18 Sep 2024 11:49:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=ebve=QQ=kaod.org=clg@ozlabs.org>)
- id 1sqwt7-0000GX-PZ; Wed, 18 Sep 2024 11:46:45 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1sqwvw-0005Jf-CC
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 11:49:36 -0400
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=ebve=QQ=kaod.org=clg@ozlabs.org>)
- id 1sqwt2-0007V7-WF; Wed, 18 Sep 2024 11:46:40 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4X830g1ZfQz4xWZ;
- Thu, 19 Sep 2024 01:46:27 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1sqwvt-0007fr-Hu
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 11:49:36 -0400
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4X830b402Kz4wnr;
- Thu, 19 Sep 2024 01:46:23 +1000 (AEST)
-Message-ID: <87af7635-5401-402a-8c6b-573db1d8a9e4@kaod.org>
-Date: Wed, 18 Sep 2024 17:46:18 +0200
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 7686F3F756
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 15:49:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20210705; t=1726674571;
+ bh=F+xAcdwvemJXFq2JmBI2yNArggYzfuI0I0zCGmRTnl8=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+ In-Reply-To:Content-Type;
+ b=k1Vh2K9TQfYfBs5+LRj/7CcrOdYnnCIXY+kK9T44dw+UgWuE1Um3oxL+khRkXcD/r
+ /GnAfQYkc6IKpOuDYl1CnuYgbHCAw4zyGxP9Vik4cTFju4kNxzTjiEpt0kmYPKT2ai
+ lccjzpfGOY7R5Xx7/qIhKcJ1RNRpJiLirK2GWorYD0BnSwPfjRV8DxA3GJq7dPrWIn
+ gFRgHA7r/WFirRvHS6xI8t7uOjMg6K0GPoNPb/nbzRUC1lrEzohw812zzgfQmgAtlx
+ D3rjGveA0xJL7EKOyrLg+QVgGJUJbjxSNYJYRwG9l5hDy4VwX7LlARXGM/z4T8sBcY
+ Gx9PwZExJqONw==
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42cb33e6299so44195135e9.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 08:49:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726674569; x=1727279369;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=F+xAcdwvemJXFq2JmBI2yNArggYzfuI0I0zCGmRTnl8=;
+ b=kj8ES83KAxNpNyYo05NEMGIpgFEidPIWfQ+jWHV0y+NVGg0raY68MZF6d4XUYPr6bb
+ pwsOcIIcNR3qgtD+qD2gX/NdFq3VbVNOah/w3igEGEf28jZlyImnjaTA+Md3F6Evk+kb
+ 7t3kERr9dcTf0q1pjKVscbFQ2xI1PO/17AgF11uqt9kg8514NsmYeFZqVy902AMR4R4T
+ WHwLYuNCYqt1jWqpMmgUmhI4rqusSGf0N2c7w1iI+LmYgvWx4VdufkYxAGslcA3Tx5qj
+ HOzG+slwFfLV7Jc5h7VGljdYauw4j9YFnNxJjrkk64WcN88iDOoB8zfXTVlgVOiB8w6q
+ cSig==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWjpj3x85C5F8yncDfoF+tyBGUSxFmservWbhDNUJfslM0sEydzjyTROtowSFXkFSGunzSI5Zo06Iw/@nongnu.org
+X-Gm-Message-State: AOJu0Yw96QXwjKmxe/Ln7RTathaXwOU0w39QxIqHjjIwxei0jQ7raZzg
+ XqnO722AcXFiDizwLagJm97P4mzl5fUD4MbQOBh93vToczqbdPglPYV36aGETht0/dDiUZctAyn
+ dA8LYXVZZKX773niJNJY0pe1AdQOTurf5H14DRGVsilzHLw5czbWpqulOVExYa14jkiRZ
+X-Received: by 2002:a05:600c:4e93:b0:42c:ba83:3f01 with SMTP id
+ 5b1f17b1804b1-42cdb540288mr156767875e9.8.1726674568850; 
+ Wed, 18 Sep 2024 08:49:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IExAlrcNId5RFaxWnWQbjyD7bs3F/Z1jJ/Y8qRGrKFZW3zH9kusnRT07hhPZ09WpG/efGfuSA==
+X-Received: by 2002:a05:600c:4e93:b0:42c:ba83:3f01 with SMTP id
+ 5b1f17b1804b1-42cdb540288mr156767565e9.8.1726674568334; 
+ Wed, 18 Sep 2024 08:49:28 -0700 (PDT)
+Received: from [192.168.103.101]
+ (ip-005-147-080-091.um06.pools.vodafone-ip.de. [5.147.80.91])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-378e72e4a46sm12643718f8f.14.2024.09.18.08.49.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Sep 2024 08:49:27 -0700 (PDT)
+Message-ID: <620daf0d-caf8-4fe5-901e-2abadb751392@canonical.com>
+Date: Wed, 18 Sep 2024 17:49:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/qtest: Add XIVE tests for the powernv10 machine
-To: Michael Kowal <kowal@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
- milesg@linux.ibm.com, thuth@redhat.com, lvivier@redhat.com,
- pbonzini@redhat.com
-References: <20240916182311.30522-1-kowal@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240916182311.30522-1-kowal@linux.ibm.com>
+Subject: Re: [PATCH 1/1] target/riscv: enable floating point unit
+To: Andrew Jones <ajones@ventanamicro.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, Anup Patel <anup@brainfault.org>,
+ Atish Patra <atishp@atishpatra.org>, Paul Walmsley
+ <paul.walmsley@sifive.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ kvm@vger.kernel.org, kvm-riscv@lists.infradead.org,
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20240916181633.366449-1-heinrich.schuchardt@canonical.com>
+ <20240917-f45624310204491aede04703@orel>
+ <15c359a4-b3c1-4cb0-be2e-d5ca5537bc5b@canonical.com>
+ <20240917-b13c51d41030029c70aab785@orel>
+ <8b24728f-8b6e-4c79-91f6-7cbb79494550@canonical.com>
+ <20240918-039d1e3bebf2231bd452a5ad@orel>
+ <CAFEAcA-Yg9=5naRVVCwma0Ug0vFZfikqc6_YiRQTrfBpoz9Bjw@mail.gmail.com>
+ <bab7a5ce-74b6-49ae-b610-9a0f624addc0@canonical.com>
+ <CAFEAcA-L7sQfK6MNt1ZbZqUMk+TJor=uD3Jj-Pc6Vy9j9JHhYQ@mail.gmail.com>
+ <f1e41b95-c499-4e06-91cb-006dcd9d29e6@canonical.com>
+ <20240918-4e2df3f0cabdb8002d7315d9@orel>
+Content-Language: en-US
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+In-Reply-To: <20240918-4e2df3f0cabdb8002d7315d9@orel>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=ebve=QQ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
+Received-SPF: pass client-ip=185.125.188.123;
+ envelope-from=heinrich.schuchardt@canonical.com;
+ helo=smtp-relay-internal-1.canonical.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,898 +130,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello, On 9/16/24 20:23, Michael Kowal wrote:
-> From: Frederic Barrat <fbarrat@linux.ibm.com>
+On 18.09.24 15:56, Andrew Jones wrote:
+> Thanks Heinrich, I had also forgotten that distinction. So the last
+> question is whether or not we want to reset mstatus.FS to 1 instead of 3,
+> as is done in this patch.
 > 
-> These XIVE tests include:
-> - General interrupt IRQ tests that:
->    - enable and trigger an interrupt
->    - acknowledge the interrupt
->    - end of interrupt processing
-> - Test the Pull Thread Context to Odd Thread Reporting Line
-> - Test the different cache flush inject and queue sync inject operations
-> 
-> Co-authored-by: Frederic Barrat <fbarrat@linux.ibm.com>
-> Co-authored-by: Glenn Miles <milesg@linux.ibm.com>
-> Co-authored-by: Michael Kowal <kowal@linux.ibm.com>
-> 
-> Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
-> Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
-> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
-
-Here are some more comments (following Thomas)
-
-> ---
->   MAINTAINERS                        |   3 +-
->   tests/qtest/pnv-xive2-common.h     | 246 ++++++++++++++++++++
->   tests/qtest/pnv-xive2-flush-sync.h | 194 ++++++++++++++++
->   tests/qtest/pnv-xive2-test.c       | 351 +++++++++++++++++++++++++++++
->   tests/qtest/meson.build            |   1 +
->   5 files changed, 794 insertions(+), 1 deletion(-)
->   create mode 100644 tests/qtest/pnv-xive2-common.h
->   create mode 100644 tests/qtest/pnv-xive2-flush-sync.h
->   create mode 100644 tests/qtest/pnv-xive2-test.c
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index ffacd60f40..f410dc1714 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2660,6 +2660,7 @@ L: qemu-ppc@nongnu.org
->   S: Odd Fixes
->   F: hw/*/*xive*
->   F: include/hw/*/*xive*
-> +F: tests/qtest/*xive*
->   F: docs/*/*xive*
->   
->   Renesas peripherals
-> @@ -3326,7 +3327,7 @@ R: Paolo Bonzini <pbonzini@redhat.com>
->   R: Bandan Das <bsd@redhat.com>
->   R: Stefan Hajnoczi <stefanha@redhat.com>
->   R: Thomas Huth <thuth@redhat.com>
-> -R: Darren Kenny <darren.kenny@oracle.com>
-> +R: Darren Kenny <darren.kenny@oracle.com>
->   R: Qiuhao Li <Qiuhao.Li@outlook.com>
->   S: Maintained
->   F: tests/qtest/fuzz/
-> diff --git a/tests/qtest/pnv-xive2-common.h b/tests/qtest/pnv-xive2-common.h
-> new file mode 100644
-> index 0000000000..66647686ee
-> --- /dev/null
-> +++ b/tests/qtest/pnv-xive2-common.h
-> @@ -0,0 +1,246 @@
-> +#ifndef TEST_PNV_XIVE2_COMMON_H
-> +#define TEST_PNV_XIVE2_COMMON_H
-> +
-> +/*
-> + * sizing:
-> + * 128 interrupts
-> + *   => ESB BAR range: 16M
-> + * 256 ENDs
-> + *   => END BAR range: 16M
-> + * 256 VPs
-> + *   => NVPG,NVC BAR range: 32M
-> + */
-> +#define MAX_IRQS                128
-> +#define MAX_ENDS                256
-> +#define MAX_VPS                 256
-> +
-> +#define XIVE_PAGE_SHIFT         16
-> +
-> +#define XIVE_TRIGGER_PAGE       0
-> +#define XIVE_EOI_PAGE           1
-> +
-> +#define XIVE_IC_ADDR            0x0006030200000000ull
-> +#define XIVE_IC_TM_INDIRECT     (XIVE_IC_ADDR + (256 << XIVE_PAGE_SHIFT))
-> +#define XIVE_IC_BAR             ((0x3ull << 62) | XIVE_IC_ADDR)
-> +#define XIVE_TM_BAR             0xc006030203180000ull
-> +#define XIVE_ESB_ADDR           0x0006050000000000ull
-> +#define XIVE_ESB_BAR            ((0x3ull << 62) | XIVE_ESB_ADDR)
-> +#define XIVE_END_BAR            0xc006060000000000ull
-> +#define XIVE_NVPG_ADDR          0x0006040000000000ull
-> +#define XIVE_NVPG_BAR           ((0x3ull << 62) | XIVE_NVPG_ADDR)
-> +#define XIVE_NVC_ADDR           0x0006030208000000ull
-> +#define XIVE_NVC_BAR            ((0x3ull << 62) | XIVE_NVC_ADDR)
-> +
-> +/*
-> + * Memory layout
-> + * A check is done when a table is configured to ensure that the max
-> + * size of the resource fits in the table.
-> + */
-> +#define XIVE_VST_SIZE           0x10000ull /* must be at least 4k */
-> +
-> +#define XIVE_MEM_START          0x10000000ull
-> +#define XIVE_ESB_MEM            XIVE_MEM_START
-> +#define XIVE_EAS_MEM            (XIVE_ESB_MEM + XIVE_VST_SIZE)
-> +#define XIVE_END_MEM            (XIVE_EAS_MEM + XIVE_VST_SIZE)
-> +#define XIVE_NVP_MEM            (XIVE_END_MEM + XIVE_VST_SIZE)
-> +#define XIVE_NVG_MEM            (XIVE_NVP_MEM + XIVE_VST_SIZE)
-> +#define XIVE_NVC_MEM            (XIVE_NVG_MEM + XIVE_VST_SIZE)
-> +#define XIVE_SYNC_MEM           (XIVE_NVC_MEM + XIVE_VST_SIZE)
-> +#define XIVE_QUEUE_MEM          (XIVE_SYNC_MEM + XIVE_VST_SIZE)
-> +#define XIVE_QUEUE_SIZE         4096 /* per End */
-> +#define XIVE_REPORT_MEM         (XIVE_QUEUE_MEM + XIVE_QUEUE_SIZE * MAX_VPS)
-> +#define XIVE_REPORT_SIZE        256 /* two cache lines per NVP */
-> +#define XIVE_MEM_END            (XIVE_REPORT_MEM + XIVE_REPORT_SIZE * MAX_VPS)
-> +
-> +#define P10_XSCOM_BASE          0x000603fc00000000ull
-> +#define XIVE_XSCOM              0x2010800ull
-> +
-> +#define XIVE_ESB_RESET          0b00
-> +#define XIVE_ESB_OFF            0b01
-> +#define XIVE_ESB_PENDING        0b10
-> +#define XIVE_ESB_QUEUED         0b11
-> +
-> +#define XIVE_ESB_GET            0x800
-> +#define XIVE_ESB_SET_PQ_00      0xc00 /* Load */
-> +#define XIVE_ESB_SET_PQ_01      0xd00 /* Load */
-> +#define XIVE_ESB_SET_PQ_10      0xe00 /* Load */
-> +#define XIVE_ESB_SET_PQ_11      0xf00 /* Load */
-> +
-> +#define XIVE_ESB_STORE_EOI      0x400 /* Store */
-> +
-> +static uint64_t pnv_xscom_addr(uint32_t pcba)
-> +{
-> +    return P10_XSCOM_BASE | ((uint64_t) pcba << 3);
-> +}
-> +
-> +static uint64_t pnv_xive_xscom_addr(uint32_t reg)
-> +{
-> +    return pnv_xscom_addr(XIVE_XSCOM + reg);
-> +}
-> +
-> +static uint64_t pnv_xive_xscom_read(QTestState *qts, uint32_t reg)
-> +{
-> +    return qtest_readq(qts, pnv_xive_xscom_addr(reg));
-> +}
-> +
-> +static void pnv_xive_xscom_write(QTestState *qts, uint32_t reg, uint64_t val)
-> +{
-> +    qtest_writeq(qts, pnv_xive_xscom_addr(reg), val);
-> +}
-> +
-> +
-> +static void get_struct(QTestState *qts, uint64_t src, void *dest, size_t size)
-> +{
-> +    uint8_t *destination = (uint8_t *)dest;
-> +    size_t i;
-> +
-> +    for (i = 0; i < size; i++) {
-> +        *(destination + i) = qtest_readb(qts, src + i);
-> +    }
-> +}
->+
-> +static void copy_struct(QTestState *qts, void *src, uint64_t dest, size_t size)
-> +{
-> +    uint8_t *source = (uint8_t *)src;
-> +    size_t i;
-> +
-> +    for (i = 0; i < size; i++) {
-> +        qtest_writeb(qts, dest + i, *(source + i));
-> +    }
-> +}
-> +
-> +static uint64_t get_queue_addr(uint32_t end_index)
-> +{
-> +    return XIVE_QUEUE_MEM + end_index * XIVE_QUEUE_SIZE;
-> +}
-> +
-> +static uint8_t get_esb(QTestState *qts, uint32_t index, uint8_t page,
-> +                       uint32_t offset)
-> +{
-> +    uint64_t addr;
-> +
-> +    addr = XIVE_ESB_ADDR + (index << (XIVE_PAGE_SHIFT + 1));
-
-may be cast index with (uint64_t). I think it could overflow.
-
-> +    if (page == 1) {
-> +        addr += 1 << XIVE_PAGE_SHIFT;
-> +    }
-> +    return qtest_readb(qts, addr + offset);
-> +}
-> +
-> +static void set_esb(QTestState *qts, uint32_t index, uint8_t page,
-> +                    uint32_t offset, uint32_t val)
-> +{
-> +    uint64_t addr;
-> +
-> +    addr = XIVE_ESB_ADDR + (index << (XIVE_PAGE_SHIFT + 1));
-> +    if (page == 1) {
-> +        addr += 1 << XIVE_PAGE_SHIFT;
-> +    }
-> +    return qtest_writel(qts, addr + offset, cpu_to_be32(val));
-> +}
-> +
-> +static void get_nvp(QTestState *qts, uint32_t index, Xive2Nvp* nvp)
-> +{
-> +    uint64_t addr = XIVE_NVP_MEM + index * sizeof(Xive2Nvp);
-> +    get_struct(qts, addr, nvp, sizeof(Xive2Nvp));
-> +}
-> +
-> +static uint64_t get_cl_pair_addr(Xive2Nvp *nvp)
-> +{
-> +    uint64_t upper = xive_get_field32(0x0fffffff, nvp->w6);
-> +    uint64_t lower = xive_get_field32(0xffffff00, nvp->w7);
-
-Are these mask NVP2_W6_REPORTING_LINE and NVP2_W7_REPORTING_LINE ?
-
-> +    return (upper << 32) | (lower << 8);
-> +}
-> +
-> +static void set_cl_pair(QTestState *qts, Xive2Nvp *nvp, uint8_t *cl_pair)
-> +{
-> +    uint64_t addr = get_cl_pair_addr(nvp);
-> +    copy_struct(qts, cl_pair, addr, XIVE_REPORT_SIZE);
-> +}
-> +
-> +static void get_cl_pair(QTestState *qts, Xive2Nvp *nvp, uint8_t *cl_pair)
-> +{
-> +    uint64_t addr = get_cl_pair_addr(nvp);
-> +    get_struct(qts, addr, cl_pair, XIVE_REPORT_SIZE);
-> +}
-> +
-> +static void set_nvp(QTestState *qts, uint32_t index, uint8_t first)
-> +{
-> +    uint64_t nvp_addr;
-> +    Xive2Nvp nvp;
-> +    uint64_t report_addr;
-> +
-> +    nvp_addr = XIVE_NVP_MEM + index * sizeof(Xive2Nvp);
-> +    report_addr = (XIVE_REPORT_MEM + index * XIVE_REPORT_SIZE) >> 8;
-> +
-> +    memset(&nvp, 0, sizeof(nvp));
-> +    nvp.w0 = xive_set_field32(NVP2_W0_VALID, 0, 1);
-> +    nvp.w0 = xive_set_field32(NVP2_W0_PGOFIRST, nvp.w0, first);
-> +    nvp.w6 = xive_set_field32(NVP2_W6_REPORTING_LINE, nvp.w6,
-> +                              (report_addr >> 24) & 0xfffffff);
-> +    nvp.w7 = xive_set_field32(NVP2_W7_REPORTING_LINE, nvp.w7,
-> +                              report_addr & 0xffffff);
-> +    copy_struct(qts, &nvp, nvp_addr, sizeof(nvp));
-> +}
-> +
-> +static void set_nvg(QTestState *qts, uint32_t index, uint8_t next)
-> +{
-> +    uint64_t nvg_addr;
-> +    Xive2Nvgc nvg;
-> +
-> +    nvg_addr = XIVE_NVG_MEM + index * sizeof(Xive2Nvgc);
-> +
-> +    memset(&nvg, 0, sizeof(nvg));
-> +    nvg.w0 = xive_set_field32(NVGC2_W0_VALID, 0, 1);
-> +    nvg.w0 = xive_set_field32(NVGC2_W0_PGONEXT, nvg.w0, next);
-> +    copy_struct(qts, &nvg, nvg_addr, sizeof(nvg));
-> +}
-> +
-> +static void set_eas(QTestState *qts, uint32_t index, uint32_t end_index,
-> +                    uint32_t data)
-> +{
-> +    uint64_t eas_addr;
-> +    Xive2Eas eas;
-> +
-> +    eas_addr = XIVE_EAS_MEM + index * sizeof(Xive2Eas);
-> +
-> +    memset(&eas, 0, sizeof(eas));
-> +    eas.w = xive_set_field64(EAS2_VALID, 0, 1);
-> +    eas.w = xive_set_field64(EAS2_END_INDEX, eas.w, end_index);
-> +    eas.w = xive_set_field64(EAS2_END_DATA, eas.w, data);
-> +    copy_struct(qts, &eas, eas_addr, sizeof(eas));
-> +}
-> +
-> +static void set_end(QTestState *qts, uint32_t index, uint32_t nvp_index,
-> +                    uint8_t priority, bool i)
-> +{
-> +    uint64_t end_addr, queue_addr, queue_hi, queue_lo;
-> +    uint8_t queue_size;
-> +    Xive2End end;
-> +
-> +    end_addr = XIVE_END_MEM + index * sizeof(Xive2End);
-> +    queue_addr = get_queue_addr(index);
-> +    queue_hi = (queue_addr >> 32) & END2_W2_EQ_ADDR_HI;
-> +    queue_lo = queue_addr & END2_W3_EQ_ADDR_LO;
-> +    queue_size = __builtin_ctz(XIVE_QUEUE_SIZE) - 12;
-> +
-> +    memset(&end, 0, sizeof(end));
-> +    end.w0 = xive_set_field32(END2_W0_VALID, 0, 1);
-> +    end.w0 = xive_set_field32(END2_W0_ENQUEUE, end.w0, 1);
-> +    end.w0 = xive_set_field32(END2_W0_UCOND_NOTIFY, end.w0, 1);
-> +    end.w0 = xive_set_field32(END2_W0_BACKLOG, end.w0, 1);
-> +
-> +    end.w1 = xive_set_field32(END2_W1_GENERATION, 0, 1);
-> +
-> +    end.w2 = cpu_to_be32(queue_hi);
-> +
-> +    end.w3 = cpu_to_be32(queue_lo);
-> +    end.w3 = xive_set_field32(END2_W3_QSIZE, end.w3, queue_size);
-> +
-> +    end.w6 = xive_set_field32(END2_W6_IGNORE, 0, i);
-> +    end.w6 = xive_set_field32(END2_W6_VP_OFFSET, end.w6, nvp_index);
-> +
-> +    end.w7 = xive_set_field32(END2_W7_F0_PRIORITY, 0, priority);
-> +    copy_struct(qts, &end, end_addr, sizeof(end));
-> +}
-> +
-> +#endif /* TEST_PNV_XIVE2_COMMON_H */
-> diff --git a/tests/qtest/pnv-xive2-flush-sync.h b/tests/qtest/pnv-xive2-flush-sync.h
-> new file mode 100644
-> index 0000000000..21d18ad9a7
-> --- /dev/null
-> +++ b/tests/qtest/pnv-xive2-flush-sync.h
-> @@ -0,0 +1,194 @@
-> +#ifndef TEST_PNV_XIVE2_FLUSH_SYNC_H
-> +#define TEST_PNV_XIVE2_FLUSH_SYNC_H
-> +
-> +#include "pnv-xive2-common.h"
-> +
-> +#define PNV_XIVE2_QUEUE_IPI              0x00
-> +#define PNV_XIVE2_QUEUE_HW               0x01
-> +#define PNV_XIVE2_QUEUE_NXC              0x02
-> +#define PNV_XIVE2_QUEUE_INT              0x03
-> +#define PNV_XIVE2_QUEUE_OS               0x04
-> +#define PNV_XIVE2_QUEUE_POOL             0x05
-> +#define PNV_XIVE2_QUEUE_HARD             0x06
-> +#define PNV_XIVE2_CACHE_ENDC             0x08
-> +#define PNV_XIVE2_CACHE_ESBC             0x09
-> +#define PNV_XIVE2_CACHE_EASC             0x0a
-> +#define PNV_XIVE2_QUEUE_NXC_LD_LCL_NCO   0x10
-> +#define PNV_XIVE2_QUEUE_NXC_LD_LCL_CO    0x11
-> +#define PNV_XIVE2_QUEUE_NXC_ST_LCL_NCI   0x12
-> +#define PNV_XIVE2_QUEUE_NXC_ST_LCL_CI    0x13
-> +#define PNV_XIVE2_QUEUE_NXC_ST_RMT_NCI   0x14
-> +#define PNV_XIVE2_QUEUE_NXC_ST_RMT_CI    0x15
-> +#define PNV_XIVE2_CACHE_NXC              0x18
-> +
-> +#define PNV_XIVE2_SYNC_IPI              0x000
-> +#define PNV_XIVE2_SYNC_HW               0x080
-> +#define PNV_XIVE2_SYNC_NxC              0x100
-> +#define PNV_XIVE2_SYNC_INT              0x180
-> +#define PNV_XIVE2_SYNC_OS_ESC           0x200
-> +#define PNV_XIVE2_SYNC_POOL_ESC         0x280
-> +#define PNV_XIVE2_SYNC_HARD_ESC         0x300
-> +#define PNV_XIVE2_SYNC_NXC_LD_LCL_NCO   0x800
-> +#define PNV_XIVE2_SYNC_NXC_LD_LCL_CO    0x880
-> +#define PNV_XIVE2_SYNC_NXC_ST_LCL_NCI   0x900
-> +#define PNV_XIVE2_SYNC_NXC_ST_LCL_CI    0x980
-> +#define PNV_XIVE2_SYNC_NXC_ST_RMT_NCI   0xA00
-> +#define PNV_XIVE2_SYNC_NXC_ST_RMT_CI    0xA80
-> +
-> +static uint64_t get_sync_addr(uint32_t src_pir, int ic_topo_id, int type)
-> +{
-> +    int thread_nr = src_pir & 0x7f;
-> +    uint64_t addr = XIVE_SYNC_MEM +  thread_nr * 512 + ic_topo_id * 32 + type;
-> +    return addr;
-> +}
-> +
-> +static uint8_t get_sync(QTestState *qts, uint32_t src_pir, int ic_topo_id,
-> +                        int type)
-> +{
-> +    uint64_t addr = get_sync_addr(src_pir, ic_topo_id, type);
-> +    return qtest_readb(qts, addr);
-> +}
-> +
-> +static void clr_sync(QTestState *qts, uint32_t src_pir, int ic_topo_id,
-> +                        int type)
-> +{
-> +    uint64_t addr = get_sync_addr(src_pir, ic_topo_id, type);
-> +    qtest_writeb(qts, addr, 0x0);
-> +}
-> +
-> +static void inject_cache_flush(QTestState *qts, int ic_topo_id,
-> +                               uint64_t scom_addr)
-> +{
-> +    (void)ic_topo_id;
-> +    pnv_xive_xscom_write(qts, scom_addr, 0);
-> +}
-> +
-> +static void inject_queue_sync(QTestState *qts, int ic_topo_id, uint64_t offset)
-> +{
-> +    (void)ic_topo_id;
-> +    uint64_t addr = XIVE_IC_ADDR + (VST_SYNC << XIVE_PAGE_SHIFT) + offset;
-> +    qtest_writeq(qts, addr, 0);
-> +}
-> +
-> +static void inject_op(QTestState *qts, int ic_topo_id, int type)
-> +{
-> +    switch (type) {
-> +    case PNV_XIVE2_QUEUE_IPI:
-> +        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_IPI);
-> +        break;
-> +    case PNV_XIVE2_QUEUE_HW:
-> +        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_HW);
-> +        break;
-> +    case PNV_XIVE2_QUEUE_NXC:
-> +        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_NxC);
-> +        break;
-> +    case PNV_XIVE2_QUEUE_INT:
-> +        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_INT);
-> +        break;
-> +    case PNV_XIVE2_QUEUE_OS:
-> +        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_OS_ESC);
-> +        break;
-> +    case PNV_XIVE2_QUEUE_POOL:
-> +        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_POOL_ESC);
-> +        break;
-> +    case PNV_XIVE2_QUEUE_HARD:
-> +        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_HARD_ESC);
-> +        break;
-> +    case PNV_XIVE2_CACHE_ENDC:
-> +        inject_cache_flush(qts, ic_topo_id, X_VC_ENDC_FLUSH_INJECT);
-> +        break;
-> +    case PNV_XIVE2_CACHE_ESBC:
-> +        inject_cache_flush(qts, ic_topo_id, X_VC_ESBC_FLUSH_INJECT);
-> +        break;
-> +    case PNV_XIVE2_CACHE_EASC:
-> +        inject_cache_flush(qts, ic_topo_id, X_VC_EASC_FLUSH_INJECT);
-> +        break;
-> +    case PNV_XIVE2_QUEUE_NXC_LD_LCL_NCO:
-> +        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_NXC_LD_LCL_NCO);
-> +        break;
-> +    case PNV_XIVE2_QUEUE_NXC_LD_LCL_CO:
-> +        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_NXC_LD_LCL_CO);
-> +        break;
-> +    case PNV_XIVE2_QUEUE_NXC_ST_LCL_NCI:
-> +        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_NXC_ST_LCL_NCI);
-> +        break;
-> +    case PNV_XIVE2_QUEUE_NXC_ST_LCL_CI:
-> +        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_NXC_ST_LCL_CI);
-> +        break;
-> +    case PNV_XIVE2_QUEUE_NXC_ST_RMT_NCI:
-> +        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_NXC_ST_RMT_NCI);
-> +        break;
-> +    case PNV_XIVE2_QUEUE_NXC_ST_RMT_CI:
-> +        inject_queue_sync(qts, ic_topo_id, PNV_XIVE2_SYNC_NXC_ST_RMT_CI);
-> +        break;
-> +    case PNV_XIVE2_CACHE_NXC:
-> +        inject_cache_flush(qts, ic_topo_id, X_PC_NXC_FLUSH_INJECT);
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +        break;
-> +    }
-> +}
-> +
-> +const uint8_t xive_inject_tests[] = {
-> +    PNV_XIVE2_QUEUE_IPI,
-> +    PNV_XIVE2_QUEUE_HW,
-> +    PNV_XIVE2_QUEUE_NXC,
-> +    PNV_XIVE2_QUEUE_INT,
-> +    PNV_XIVE2_QUEUE_OS,
-> +    PNV_XIVE2_QUEUE_POOL,
-> +    PNV_XIVE2_QUEUE_HARD,
-> +    PNV_XIVE2_CACHE_ENDC,
-> +    PNV_XIVE2_CACHE_ESBC,
-> +    PNV_XIVE2_CACHE_EASC,
-> +    PNV_XIVE2_QUEUE_NXC_LD_LCL_NCO,
-> +    PNV_XIVE2_QUEUE_NXC_LD_LCL_CO,
-> +    PNV_XIVE2_QUEUE_NXC_ST_LCL_NCI,
-> +    PNV_XIVE2_QUEUE_NXC_ST_LCL_CI,
-> +    PNV_XIVE2_QUEUE_NXC_ST_RMT_NCI,
-> +    PNV_XIVE2_QUEUE_NXC_ST_RMT_CI,
-> +    PNV_XIVE2_CACHE_NXC,
-> +};
-> +
-> +static void test_flush_sync_inject(QTestState *qts)
-> +{
-> +    int ic_topo_id = 0;
-> +
-> +    /*
-> +     * Writes performed by qtest are not done in the context of a thread.
-> +     * This means that QEMU XIVE code doesn't have a way to determine what
-> +     * thread is originating the write.  In order to allow for some testing,
-> +     * QEMU XIVE code will assume a PIR of 0 when unable to determine the
-> +     * source thread for cache flush and queue sync inject operations.
-> +     * See hw/intc/pnv_xive2.c: pnv_xive2_inject_notify() for details.
-> +     */
-> +    int src_pir = 0;
-> +    int test_nr;
-> +    uint8_t byte;
-> +
-> +    printf("# ============================================================\n");
-> +    printf("# Starting cache flush/queue sync injection tests...\n");
-> +
-> +    for (test_nr = 0; test_nr < sizeof(xive_inject_tests);
-> +         test_nr++) {
-> +        int op_type = xive_inject_tests[test_nr];
-> +
-> +        printf("# Running test %d\n", test_nr);
-> +
-> +        /* start with status byte set to 0 */
-> +        clr_sync(qts, src_pir, ic_topo_id, op_type);
-> +        byte = get_sync(qts, src_pir, ic_topo_id, op_type);
-> +        g_assert_cmphex(byte, ==, 0);
-> +
-> +        /* request cache flush or queue sync operation */
-> +        inject_op(qts, ic_topo_id, op_type);
-> +
-> +        /* verify that status byte was written to 0xff */
-> +        byte = get_sync(qts, src_pir, ic_topo_id, op_type);
-> +        g_assert_cmphex(byte, ==, 0xff);
-> +
-> +        clr_sync(qts, src_pir, ic_topo_id, op_type);
-> +    }
-> +}
-> +
-> +#endif /* TEST_PNV_XIVE2_FLUSH_SYNC_H */
-> diff --git a/tests/qtest/pnv-xive2-test.c b/tests/qtest/pnv-xive2-test.c
-> new file mode 100644
-> index 0000000000..471512dccd
-> --- /dev/null
-> +++ b/tests/qtest/pnv-xive2-test.c
-> @@ -0,0 +1,351 @@
-> +/*
-> + * QTest testcase for PowerNV 10 interrupt controller (xive2)
-> + *
-> + * Copyright (c) 2023, IBM Corporation.
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or
-> +A * later. See the COPYING file in the top-level directory.
-> + */
-> +#include "qemu/osdep.h"
-> +#include "libqtest.h"
-> +
-> +#define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
-> +#define PPC_BIT32(bit)          (0x80000000 >> (bit))
-> +#define PPC_BIT8(bit)           (0x80 >> (bit))
-> +#define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
-> +#define PPC_BITMASK32(bs, be)   ((PPC_BIT32(bs) - PPC_BIT32(be)) | \
-> +                                 PPC_BIT32(bs))
-
-Would it be possible to move these helpers in a common file that
-tests/qtest/pnv-host-i2c-test.c could use too ? Just asking.
+> Thanks,
+> drew
 
 
-> +#include "hw/intc/pnv_xive2_regs.h"
-> +#include "hw/ppc/xive_regs.h"
-> +#include "hw/ppc/xive2_regs.h"
-> +#include "pnv-xive2-common.h"
-> +#include "pnv-xive2-flush-sync.h"
-> +
-> +#define SMT                     4 /* some tests will break if less than 4 */
-> +
-> +static void set_table(QTestState *qts, uint64_t type, uint64_t addr)
-> +{
-> +    uint64_t vsd, size, log_size;
-> +
-> +    /*
-> +     * First, let's make sure that all the resources used fit in the
-> +     * given table.
-> +     */
-> +    switch (type) {
-> +    case VST_ESB:
-> +        size = MAX_IRQS / 4;
-> +        break;
-> +    case VST_EAS:
-> +        size = MAX_IRQS * 8;
-> +        break;
-> +    case VST_END:
-> +        size = MAX_ENDS * 32;
-> +        break;
-> +    case VST_NVP:
-> +    case VST_NVG:
-> +    case VST_NVC:
-> +        size = MAX_VPS * 32;
-> +        break;
-> +    case VST_SYNC:
-> +        size = 64 * 1024;
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +
-> +    g_assert_cmpuint(size, <=, XIVE_VST_SIZE);
-> +    log_size = __builtin_ctz(XIVE_VST_SIZE) - 12;
+If the FD flag set to 3 (Dirty) indicates that "the corresponding state 
+has potentially been modified since the last context save". Upon context 
+switches the value of the floating point registers has to be saved.
 
-can we use ctzl ?
+The value 1 (Initial) implies that saving the registers on a context 
+change is not needed.
 
+3 (Dirty) is the safest choice. This is why OpenSBI is also using it.
 
-Thanks,
+For reference:
 
-C.
+3.1.6.6. Extension Context Status in mstatus Register
+The RISC-V Instruction Set Manual: Volume II - Privileged Architecture
+Version 2024-04-11
 
+Best regards
 
-> +
-> +    vsd = ((uint64_t) VSD_MODE_EXCLUSIVE) << 62 | addr | log_size;
-> +    pnv_xive_xscom_write(qts, X_VC_VSD_TABLE_ADDR, type << 48);
-> +    pnv_xive_xscom_write(qts, X_VC_VSD_TABLE_DATA, vsd);
-> +
-> +    if (type != VST_EAS && type != VST_IC && type != VST_ERQ) {
-> +        pnv_xive_xscom_write(qts, X_PC_VSD_TABLE_ADDR, type << 48);
-> +        pnv_xive_xscom_write(qts, X_PC_VSD_TABLE_DATA, vsd);
-> +    }
-> +}
-> +
-> +static void set_tima8(QTestState *qts, uint32_t pir, uint32_t offset,
-> +                      uint8_t b)
-> +{
-> +    uint64_t ic_addr;
-> +
-> +    ic_addr = XIVE_IC_TM_INDIRECT + (pir << XIVE_PAGE_SHIFT);
-> +    qtest_writeb(qts, ic_addr + offset, b);
-> +}
-> +
-> +static void set_tima32(QTestState *qts, uint32_t pir, uint32_t offset,
-> +                       uint32_t l)
-> +{
-> +    uint64_t ic_addr;
-> +
-> +    ic_addr = XIVE_IC_TM_INDIRECT + (pir << XIVE_PAGE_SHIFT);
-> +    qtest_writel(qts, ic_addr + offset, l);
-> +}
-> +
-> +static uint8_t get_tima8(QTestState *qts, uint32_t pir, uint32_t offset)
-> +{
-> +    uint64_t ic_addr;
-> +
-> +    ic_addr = XIVE_IC_TM_INDIRECT + (pir << XIVE_PAGE_SHIFT);
-> +    return qtest_readb(qts, ic_addr + offset);
-> +}
-> +
-> +static uint16_t get_tima16(QTestState *qts, uint32_t pir, uint32_t offset)
-> +{
-> +    uint64_t ic_addr;
-> +
-> +    ic_addr = XIVE_IC_TM_INDIRECT + (pir << XIVE_PAGE_SHIFT);
-> +    return qtest_readw(qts, ic_addr + offset);
-> +}
-> +
-> +static uint32_t get_tima32(QTestState *qts, uint32_t pir, uint32_t offset)
-> +{
-> +    uint64_t ic_addr;
-> +
-> +    ic_addr = XIVE_IC_TM_INDIRECT + (pir << XIVE_PAGE_SHIFT);
-> +    return qtest_readl(qts, ic_addr + offset);
-> +}
-> +
-> +static void reset_pool_threads(QTestState *qts)
-> +{
-> +    uint8_t first_group = 0;
-> +    int i;
-> +
-> +    for (i = 0; i < SMT; i++) {
-> +        uint32_t nvp_idx = 0x100 + i;
-> +        set_nvp(qts, nvp_idx, first_group);
-> +        set_tima32(qts, i, TM_QW2_HV_POOL + TM_WORD0, 0x000000ff);
-> +        set_tima32(qts, i, TM_QW2_HV_POOL + TM_WORD1, 0);
-> +        set_tima32(qts, i, TM_QW2_HV_POOL + TM_WORD2, TM_QW2W2_VP | nvp_idx);
-> +    }
-> +}
-> +
-> +static void reset_hw_threads(QTestState *qts)
-> +{
-> +    uint8_t first_group = 0;
-> +    uint32_t w1 = 0x000000ff;
-> +    int i;
-> +
-> +    if (SMT >= 4) {
-> +        /* define 2 groups of 2, part of a bigger group of size 4 */
-> +        set_nvg(qts, 0x80, 0x02);
-> +        set_nvg(qts, 0x82, 0x02);
-> +        set_nvg(qts, 0x81, 0);
-> +        first_group = 0x01;
-> +        w1 = 0x000300ff;
-> +    }
-> +
-> +    for (i = 0; i < SMT; i++) {
-> +        set_nvp(qts, 0x80 + i, first_group);
-> +        set_tima32(qts, i, TM_QW3_HV_PHYS + TM_WORD0, 0x00ff00ff);
-> +        set_tima32(qts, i, TM_QW3_HV_PHYS + TM_WORD1, w1);
-> +        set_tima32(qts, i, TM_QW3_HV_PHYS + TM_WORD2, 0x80000000);
-> +    }
-> +}
-> +
-> +static void reset_state(QTestState *qts)
-> +{
-> +    size_t mem_used = XIVE_MEM_END - XIVE_MEM_START;
-> +
-> +    qtest_memset(qts, XIVE_MEM_START, 0, mem_used);
-> +    reset_hw_threads(qts);
-> +    reset_pool_threads(qts);
-> +}
-> +
-> +static void init_xive(QTestState *qts)
-> +{
-> +    uint64_t val1, val2, range;
-> +
-> +    /*
-> +     * We can take a few shortcuts here, as we know the default values
-> +     * used for xive initialization
-> +     */
-> +
-> +    /*
-> +     * Set the BARs.
-> +     * We reuse the same values used by firmware to ease debug.
-> +     */
-> +    pnv_xive_xscom_write(qts, X_CQ_IC_BAR, XIVE_IC_BAR);
-> +    pnv_xive_xscom_write(qts, X_CQ_TM_BAR, XIVE_TM_BAR);
-> +
-> +    /* ESB and NVPG use 2 pages per resource. The others only one page */
-> +    range = (MAX_IRQS << 17) >> 25;
-> +    val1 = XIVE_ESB_BAR | range;
-> +    pnv_xive_xscom_write(qts, X_CQ_ESB_BAR, val1);
-> +
-> +    range = (MAX_ENDS << 16) >> 25;
-> +    val1 = XIVE_END_BAR | range;
-> +    pnv_xive_xscom_write(qts, X_CQ_END_BAR, val1);
-> +
-> +    range = (MAX_VPS << 17) >> 25;
-> +    val1 = XIVE_NVPG_BAR | range;
-> +    pnv_xive_xscom_write(qts, X_CQ_NVPG_BAR, val1);
-> +
-> +    range = (MAX_VPS << 16) >> 25;
-> +    val1 = XIVE_NVC_BAR | range;
-> +    pnv_xive_xscom_write(qts, X_CQ_NVC_BAR, val1);
-> +
-> +    /*
-> +     * Enable hw threads.
-> +     * We check the value written. Useless with current
-> +     * implementation, but it validates the xscom read path and it's
-> +     * what the hardware procedure says
-> +     */
-> +    val1 = 0xF000000000000000ull; /* core 0, 4 threads */
-> +    pnv_xive_xscom_write(qts, X_TCTXT_EN0, val1);
-> +    val2 = pnv_xive_xscom_read(qts, X_TCTXT_EN0);
-> +    g_assert_cmphex(val1, ==, val2);
-> +
-> +    /* Memory tables */
-> +    set_table(qts, VST_ESB, XIVE_ESB_MEM);
-> +    set_table(qts, VST_EAS, XIVE_EAS_MEM);
-> +    set_table(qts, VST_END, XIVE_END_MEM);
-> +    set_table(qts, VST_NVP, XIVE_NVP_MEM);
-> +    set_table(qts, VST_NVG, XIVE_NVG_MEM);
-> +    set_table(qts, VST_NVC, XIVE_NVC_MEM);
-> +    set_table(qts, VST_SYNC, XIVE_SYNC_MEM);
-> +
-> +    reset_hw_threads(qts);
-> +    reset_pool_threads(qts);
-> +}
-> +
-> +static void test_hw_irq(QTestState *qts)
-> +{
-> +    uint32_t irq = 2;
-> +    uint32_t irq_data = 0x600df00d;
-> +    uint32_t end_index = 5;
-> +    uint32_t target_pir = 1;
-> +    uint32_t target_nvp = 0x80 + target_pir;
-> +    uint8_t priority = 5;
-> +    uint32_t reg32;
-> +    uint16_t reg16;
-> +    uint8_t pq, nsr, cppr;
-> +
-> +    printf("# ============================================================\n");
-> +    printf("# Testing irq %d to hardware thread %d\n", irq, target_pir);
-> +
-> +    /* irq config */
-> +    set_eas(qts, irq, end_index, irq_data);
-> +    set_end(qts, end_index, target_nvp, priority, false /* group */);
-> +
-> +    /* enable and trigger irq */
-> +    get_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_SET_PQ_00);
-> +    set_esb(qts, irq, XIVE_TRIGGER_PAGE, 0, 0);
-> +
-> +    /* check irq is raised on cpu */
-> +    pq = get_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_GET);
-> +    g_assert_cmpuint(pq, ==, XIVE_ESB_PENDING);
-> +
-> +    reg32 = get_tima32(qts, target_pir, TM_QW3_HV_PHYS + TM_WORD0);
-> +    nsr = reg32 >> 24;
-> +    cppr = (reg32 >> 16) & 0xFF;
-> +    g_assert_cmphex(nsr, ==, 0x80);
-> +    g_assert_cmphex(cppr, ==, 0xFF);
-> +
-> +    /* ack the irq */
-> +    reg16 = get_tima16(qts, target_pir, TM_SPC_ACK_HV_REG);
-> +    nsr = reg16 >> 8;
-> +    cppr = reg16 & 0xFF;
-> +    g_assert_cmphex(nsr, ==, 0x80);
-> +    g_assert_cmphex(cppr, ==, priority);
-> +
-> +    /* check irq data is what was configured */
-> +    reg32 = qtest_readl(qts, get_queue_addr(end_index));
-> +    g_assert_cmphex((reg32 & 0x7fffffff), ==, (irq_data & 0x7fffffff));
-> +
-> +    /* End Of Interrupt */
-> +    set_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_STORE_EOI, 0);
-> +    pq = get_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_GET);
-> +    g_assert_cmpuint(pq, ==, XIVE_ESB_RESET);
-> +
-> +    /* reset CPPR */
-> +    set_tima8(qts, target_pir, TM_QW3_HV_PHYS + TM_CPPR, 0xFF);
-> +    reg32 = get_tima32(qts, target_pir, TM_QW3_HV_PHYS + TM_WORD0);
-> +    nsr = reg32 >> 24;
-> +    cppr = (reg32 >> 16) & 0xFF;
-> +    g_assert_cmphex(nsr, ==, 0x00);
-> +    g_assert_cmphex(cppr, ==, 0xFF);
-> +}
-> +
-> +#define XIVE_ODD_CL 0x80
-> +static void test_pull_thread_ctx_to_odd_thread_cl(QTestState *qts)
-> +{
-> +    uint32_t target_pir = 1;
-> +    uint32_t target_nvp = 0x80 + target_pir;
-> +    Xive2Nvp nvp;
-> +    uint8_t cl_pair[XIVE_REPORT_SIZE];
-> +    uint32_t qw1w0, qw3w0, qw1w2, qw2w2;
-> +    uint8_t qw3b8;
-> +    uint32_t cl_word;
-> +    uint32_t word2;
-> +
-> +    printf("# ============================================================\n");
-> +    printf("# Testing 'Pull Thread Context to Odd Thread Reporting Line'\n");
-> +
-> +    /* clear odd cache line prior to pull operation */
-> +    memset(cl_pair, 0, sizeof(cl_pair));
-> +    get_nvp(qts, target_nvp, &nvp);
-> +    set_cl_pair(qts, &nvp, cl_pair);
-> +
-> +    /* Read some values from TIMA that we expect to see in cacheline */
-> +    qw1w0 = get_tima32(qts, target_pir, TM_QW1_OS + TM_WORD0);
-> +    qw3w0 = get_tima32(qts, target_pir, TM_QW3_HV_PHYS + TM_WORD0);
-> +    qw1w2 = get_tima32(qts, target_pir, TM_QW1_OS + TM_WORD2);
-> +    qw2w2 = get_tima32(qts, target_pir, TM_QW2_HV_POOL + TM_WORD2);
-> +    qw3b8 = get_tima8(qts, target_pir, TM_QW3_HV_PHYS + TM_WORD2);
-> +
-> +    /* Execute the pull operation */
-> +    set_tima8(qts, target_pir, TM_SPC_PULL_PHYS_CTX_OL, 0);
-> +
-> +    /* Verify odd cache line values match TIMA after pull operation */
-> +    get_cl_pair(qts, &nvp, cl_pair);
-> +    memcpy(&cl_word, &cl_pair[XIVE_ODD_CL + TM_QW1_OS + TM_WORD0], 4);
-> +    g_assert_cmphex(qw1w0, ==, be32_to_cpu(cl_word));
-> +    memcpy(&cl_word, &cl_pair[XIVE_ODD_CL + TM_QW3_HV_PHYS + TM_WORD0], 4);
-> +    g_assert_cmphex(qw3w0, ==, be32_to_cpu(cl_word));
-> +    memcpy(&cl_word, &cl_pair[XIVE_ODD_CL + TM_QW1_OS + TM_WORD2], 4);
-> +    g_assert_cmphex(qw1w2, ==, be32_to_cpu(cl_word));
-> +    memcpy(&cl_word, &cl_pair[XIVE_ODD_CL + TM_QW2_HV_POOL + TM_WORD2], 4);
-> +    g_assert_cmphex(qw2w2, ==, be32_to_cpu(cl_word));
-> +    g_assert_cmphex(qw3b8, ==,
-> +                    cl_pair[XIVE_ODD_CL + TM_QW3_HV_PHYS + TM_WORD2]);
-> +
-> +    /* Verify that all TIMA valid bits for target thread are cleared */
-> +    word2 = get_tima32(qts, target_pir, TM_QW1_OS + TM_WORD2);
-> +    g_assert_cmphex(xive_get_field32(TM_QW1W2_VO, word2), ==, 0);
-> +    word2 = get_tima32(qts, target_pir, TM_QW2_HV_POOL + TM_WORD2);
-> +    g_assert_cmphex(xive_get_field32(TM_QW2W2_VP, word2), ==, 0);
-> +    word2 = get_tima32(qts, target_pir, TM_QW3_HV_PHYS + TM_WORD2);
-> +    g_assert_cmphex(xive_get_field32(TM_QW3W2_VT, word2), ==, 0);
-> +}
-> +
-> +static void test_xive(void)
-> +{
-> +    QTestState *qts;
-> +
-> +    qts = qtest_initf("-M powernv10 -smp %d,cores=1,threads=%d -nographic "
-> +                      "-nodefaults -serial mon:stdio -S "
-> +                      "-d guest_errors -trace '*xive*'",
-> +                      SMT, SMT);
-> +    init_xive(qts);
-> +
-> +    test_hw_irq(qts);
-> +
-> +    /* omit reset_state here and use settings from test_hw_irq */
-> +    test_pull_thread_ctx_to_odd_thread_cl(qts);
-> +
-> +    reset_state(qts);
-> +    test_flush_sync_inject(qts);
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +int main(int argc, char **argv)
-> +{
-> +    g_test_init(&argc, &argv, NULL);
-> +    qtest_add_func("xive2", test_xive);
-> +    return g_test_run();
-> +}
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index fc852f3d8b..7a086b4fed 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -172,6 +172,7 @@ qtests_ppc64 = \
->     qtests_ppc + \
->     (config_all_devices.has_key('CONFIG_PSERIES') ? ['device-plug-test'] : []) +               \
->     (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-xscom-test'] : []) +                 \
-> +  (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-xive2-test'] : []) +                 \
->     (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-spi-seeprom-test'] : []) +           \
->     (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-host-i2c-test'] : []) +              \
->     (config_all_devices.has_key('CONFIG_PSERIES') ? ['rtas-test'] : []) +                      \
-
+Heinrich
 
