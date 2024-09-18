@@ -4,84 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E302CCD192
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 09:30:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C38CCCD194
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 09:47:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqr0W-000860-89; Wed, 18 Sep 2024 05:29:56 -0400
+	id 1sqrGt-0006u1-T5; Wed, 18 Sep 2024 05:46:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1sqr0S-00084x-3z
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:29:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sqrGe-0006tO-A5
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:46:36 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1sqr0Q-0004Va-Cb
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:29:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726651789;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8ezzSZ7Dx5LUEDd6UbDX6MNPcXpgVwJjwGGHnw97NCU=;
- b=VJWmy+HI0i7rGsOQe+WnvRZ7zF+ibsjV77UPCKuuUdBlODrJ8boyT0YSmZ8iS4Op2WCX76
- rbLdMw5aGx+ExItGaExAuY6I8vRPWyYr+/qAs4e7IH6kdSjX2lnX4LaO705+21RSeeUxkO
- j9gB9hnCOO4X8BbasB5ZAFASFJ0qQ3g=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-f9MX-wNFMFGKly1jmzGM2Q-1; Wed, 18 Sep 2024 05:29:48 -0400
-X-MC-Unique: f9MX-wNFMFGKly1jmzGM2Q-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7a99d13efafso1511949885a.0
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 02:29:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726651788; x=1727256588;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8ezzSZ7Dx5LUEDd6UbDX6MNPcXpgVwJjwGGHnw97NCU=;
- b=Y6JHIgZ3mFd55mNI7JNNu3Evq8kHkCVT4U70By26CxA6N3HGNYdIhJSyq8QAoxxeSO
- gZA9HhBOk3pL8JcxgbpIS/HsZqz+wDnV1pgIzyEpyIuLcDy/5lmfjhs8NGhDVmf99ZIt
- cNXpVAJrZQRbJBKG9xOwtrwZTulPYPgmeXP5/oWd1tYgtaj4TUBYjEgjIuaZCuaFQZhJ
- iDlsjZt/07OG17KxLCrBo8+2AU6UdmWUbeS8xlPbTZ4RitTb/ryv6cLopq78yzWFXhH8
- HF7LAwviBjElZaH+6MlYQB866gpCvwjEmsi6X06P24DrKp4WLDJZPQ2a9mV+wsju/Gg6
- W2Lg==
-X-Gm-Message-State: AOJu0YxxF41IAHxEIuK4vwgvLRgdchHY5HlHJelWuCTBnycpC6PZnpHX
- sowT5tBCji46MoE0DtZjQSueIt4Yo09Pys7Ny5+Rjaz6jARD5q/MLAO0kszcDuALNtaAoZXU71Z
- xUwSi2F25dcDEzyVfEvtalzF6JHqMeNGIP1JY5TZgX6W90wHzyo5xjn3R0wp/wQrupmYl2O36gp
- eNUokBbGHRc7MrlpaOUqKDM9elF4o=
-X-Received: by 2002:a0c:ef0f:0:b0:6c5:9307:ef6a with SMTP id
- 6a1803df08f44-6c59307f140mr158011786d6.18.1726651787765; 
- Wed, 18 Sep 2024 02:29:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHs/dxEDRNOjEHUoBE4cxrzBbpnItlJGzTwTc80xNdX363qWWMzGQaZKuHfYI4/vvr8ExsomuvVRl+pWJO3CMA=
-X-Received: by 2002:a0c:ef0f:0:b0:6c5:9307:ef6a with SMTP id
- 6a1803df08f44-6c59307f140mr158011636d6.18.1726651787407; Wed, 18 Sep 2024
- 02:29:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sqrGc-000684-Kc
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:46:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References;
+ bh=iNsIw6xK1apqOO3e6p8R3cdgDHbBV2u8JXYlGWQIFvQ=; b=dWGjcsn+U9egzLt5NXLJjKtTF3
+ HZtfBNvMjyYyUMb2kYsfqUIH4LOBGslNIPrIMuFrOYmyG2duf8hMOnVcS7uzLHPKuZu4ibJPXOLtS
+ OV0QD83fPFhoBSlEWcGJsNmm5YDrKo+2oDHCoV1nKLYz6c24fUpyOEeP3/DmqtRDJi1zS1oEQ5yej
+ PcV65/HC9atvoKTzeAvkt3tFZewmYNwlep/b11QJlj5OlO4SM2FpK0B8it+MgWlbtT0TnHZJFtosH
+ ntvJD6QZEIzRP3qkr/4lJcncxkpVnU5sNHid2iru7q70aL8Vqf6Kb5jjX4TCmtABCAIR9rbJsA1zT
+ kHxKwq6fOf2w+mSaC7DqRJPz/+aACjdeoLJGDl43mvJj1wnacPxCzdi8up3Mk1UNUhDFrj3tZvbC6
+ 6Qp27tiyjZnPBQCNJadsXKTxLN7eGkrQJiNwdBNyOxatdJmhMcJYdTNZH30qVnoMgBzagHUspoPhC
+ 7dCJ9c9WPppl2f7GGLkNIRxnH23DDv/Bk/6zJqa4nNsgrH2jPBvh8I+i92xZO4ayvPwHfNbXFDNbq
+ c5IT70p7LVJS+U9YMnOy4CBo6pJNcMkDHkXr/hlJBBJobX5hfXk56MSYN/mCAbMrX8mk5IQpqg4OG
+ DOKf7sLb1WVPCznEuJCGeRMGZAQd41kz/LAfHw6C8=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ (helo=cheesecake.fritz.box)
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sqrGS-000BB2-Vz; Wed, 18 Sep 2024 10:46:28 +0100
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To: qemu-devel@nongnu.org,
+	peter.maydell@linaro.org
+Date: Wed, 18 Sep 2024 10:46:23 +0100
+Message-Id: <20240918094624.938242-1-mark.cave-ayland@ilande.co.uk>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-References: <3a78811ad5b0e87816b7616ab21d2eeef00b9c52.1726647033.git.mprivozn@redhat.com>
-In-Reply-To: <3a78811ad5b0e87816b7616ab21d2eeef00b9c52.1726647033.git.mprivozn@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 18 Sep 2024 13:29:36 +0400
-Message-ID: <CAMxuvay3s1XS7xEOoAr8HnrO087H_3H+GMWb-cVoC0+Dm0feuQ@mail.gmail.com>
-Subject: Re: [PATCH v2] audio/pw: Report more accurate error when connecting
- to PipeWire fails
-To: Michal Privoznik <mprivozn@redhat.com>
-Cc: qemu-devel@nongnu.org, kraxel@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: [PULL 0/1] qemu-macppc queue 20240918
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,73 +76,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 18, 2024 at 12:17=E2=80=AFPM Michal Privoznik <mprivozn@redhat.=
-com> wrote:
->
-> According to its man page [1], pw_context_connect() sets errno on
-> failure:
->
->   Returns a Core on success or NULL with errno set on error.
->
-> It may be handy to see errno when figuring out why PipeWire
-> failed to connect. That leaves us with just one possible path to
-> reach 'fail_error' label which is then moved to that path and
-> also its error message is adjusted slightly.
->
-> 1: https://docs.pipewire.org/group__pw__core.html#ga5994e3a54e4ec718094ca=
-02a1234815b
->
-> Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+The following changes since commit 2b81c046252fbfb375ad30632362fc16e6e22bd5:
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+  Merge tag 'block-pull-request' of https://gitlab.com/stefanha/qemu into staging (2024-09-17 14:02:18 +0100)
 
-> ---
->
-> v2 of:
->
-> https://mail.gnu.org/archive/html/qemu-devel/2024-09/msg03485.html
->
-> diff to v1:
-> - Dropped duplicated S-o-b line
-> - Fixed typo on error message (s/PipeWite/PipeWire/)
->
->  audio/pwaudio.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/audio/pwaudio.c b/audio/pwaudio.c
-> index 3b14e04fbb..8e13b58286 100644
-> --- a/audio/pwaudio.c
-> +++ b/audio/pwaudio.c
-> @@ -769,13 +769,15 @@ qpw_audio_init(Audiodev *dev, Error **errp)
->      pw->core =3D pw_context_connect(pw->context, NULL, 0);
->      if (pw->core =3D=3D NULL) {
->          pw_thread_loop_unlock(pw->thread_loop);
-> -        goto fail_error;
-> +        error_setg_errno(errp, errno, "Failed to connect to PipeWire ins=
-tance");
-> +        goto fail;
->      }
->
->      if (pw_core_add_listener(pw->core, &pw->core_listener,
->                               &core_events, pw) < 0) {
->          pw_thread_loop_unlock(pw->thread_loop);
-> -        goto fail_error;
-> +        error_setg(errp, "Failed to add PipeWire listener");
-> +        goto fail;
->      }
->      if (wait_resync(pw) < 0) {
->          pw_thread_loop_unlock(pw->thread_loop);
-> @@ -785,8 +787,6 @@ qpw_audio_init(Audiodev *dev, Error **errp)
->
->      return g_steal_pointer(&pw);
->
-> -fail_error:
-> -    error_setg(errp, "Failed to initialize PW context");
->  fail:
->      if (pw->thread_loop) {
->          pw_thread_loop_stop(pw->thread_loop);
-> --
-> 2.44.2
->
+are available in the Git repository at:
 
+  https://github.com/mcayland/qemu.git tags/qemu-macppc-20240918
+
+for you to fetch changes up to 2d0a071e625d7234e8c5623b7e7bf445e1bef72c:
+
+  mac_dbdma: Remove leftover `dma_memory_unmap` calls (2024-09-18 09:31:56 +0100)
+
+----------------------------------------------------------------
+DMA fix for macio IDE device
+
+----------------------------------------------------------------
+Mattias Nissler (1):
+      mac_dbdma: Remove leftover `dma_memory_unmap` calls
+
+ hw/ide/macio.c             | 6 ------
+ include/hw/ppc/mac_dbdma.h | 4 ----
+ 2 files changed, 10 deletions(-)
 
