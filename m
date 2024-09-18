@@ -4,49 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D669CCD1A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 14:03:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E929CCD1AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 14:04:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqvGo-0002zU-8E; Wed, 18 Sep 2024 10:03:02 -0400
+	id 1sqvGt-0003AO-Tq; Wed, 18 Sep 2024 10:03:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <s.makarov@syntacore.com>)
- id 1sqvGl-0002xs-2r; Wed, 18 Sep 2024 10:02:59 -0400
+ id 1sqvGo-0002zy-Cd; Wed, 18 Sep 2024 10:03:02 -0400
 Received: from mta-04.yadro.com ([89.207.88.248])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <s.makarov@syntacore.com>)
- id 1sqvGi-0002b0-JZ; Wed, 18 Sep 2024 10:02:58 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com A4EFDC0002
+ id 1sqvGk-0002b7-1z; Wed, 18 Sep 2024 10:03:00 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 26841C0002
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1726668169;
- bh=oxsZbL2ehpkUOthxSsGCY2jo8At/i/UgF1cy29T+VRo=;
+ s=mta-04; t=1726668176;
+ bh=Y7u+ZYWkETAKlOCWN/jUACcmbj4sINmDqk7xJHoZJoI=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=UK1Eq/TUKnbquvrzN0PGc9yrm8jj1OEYRWL3NgidYHiqudqNOyLhOQR8QIlizq6z0
- KY4D4nhGUpK12IXjX9FgWpA2SIeX36vUotEXW5jYixqwgoO5fXqB2hDB2nQnI+WBeV
- NoK1owqtIgmjrgPNsVFL9UbvzHfd6CeOuWW7Zc6uFxg9gRa0o8nP2mRg0djg8RUqrR
- +qqbGNQcESZeSLjcV+gnHEdOykyQp/Cpv3OZ3qUqpzdehvC3VURmZTViN47xTgaI2X
- zs1pMmXxxE6+KHdcq9hSj68tGm8g/5jM6f4YzqRTmMwjlvv5xgUHCxofl8lEMyS6nn
- 5x1H/5bhzLPCg==
+ b=n8vvmFM71BYbFnY4mRI5ctBOMRZSDBNfSjFYiJC8Wsvt0gZKyuuMdVK7jlkjqAt6K
+ 5QuWa2oQ9UXTBSefKh2C+6kL/GahnnsrjjOgFggPbDPKNltIj+oWZleI8b/lCtJNqF
+ WLklvOkIyvt5GhF1HbpbMocrcx7WxDfQgkpqDX3Fi3k0DI3LFTPeatwEvGRrWJ7wFt
+ EBqMojRYEZuhzGve0roWurdGA1vvCqLTF1PFJumxW3leznI7Ob9IYt/uz0NQFCcp5O
+ LFSlZyY4w03oLGjv1rcmePoUdGdifgFOaKdRc04fnH5o9ZQNbbI+XGqJFqZR95hMR/
+ eS09xNcTG3FEQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1726668169;
- bh=oxsZbL2ehpkUOthxSsGCY2jo8At/i/UgF1cy29T+VRo=;
+ s=mta-03; t=1726668176;
+ bh=Y7u+ZYWkETAKlOCWN/jUACcmbj4sINmDqk7xJHoZJoI=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=n0S4AA43NmZFKSnk38FJNTHtGUhh5ih9UwWKa1ELZah8iJp7s3o9HJ3LORiydzDgY
- Jlu55KXA1Z9zKdottKVH1juAn7Mwh8TaENj4FQFpc3D2ZbaukVNrQQNrC0i8ct6flf
- FB+c773eeroPRQg7M+xtrE9kvwu8aqvd/X9VslM7LVlHz3HP+TFhAiOO7O0He9EtxG
- UZZkTJMy+MWlVrqA0Q1OcbUfP+72gVV/2AMdOK0rGLEdXtFKXx1PVQ3cku49T/bJmP
- M1W42+3JgCKEjaEWldHE8dYf76HdM0dIeWOyi5Tt6wiORQcsSqqOGeomEIct+OFcFu
- 0reHEjZ4/l4oA==
+ b=vWjPTy78Vm3sRvLI+RnVsqnPXBYZP6eWK30ZMZRLrcf8pfjl3xh/dsZepSVDO2UUo
+ E6zRZe3CkW+tQ2axqNeDi8P+EjMaxmFkey+2SqFY9P/SNkWA8zamWe+bDO7X2ZBwZQ
+ ijAfUDe1Pp3LV2h5VFkifj34peyDZVimZYGnZm/KYI/XRoWEgwy0iaXrIAgO8pdYHf
+ K69M88DYK9hHZjZfaYz8bwjenzhwFlJO9c5boU2W/300tJWRuK5S/A1r8Df3/192VQ
+ vR9ARQX25NUR8ffzT5KLmFRaslF7ut8JAwTNUBnEsJXOMBSs/k60mpxt9XMuMK+/D7
+ FYNcbLhQX0EZw==
 From: Sergey Makarov <s.makarov@syntacore.com>
 To: <Alistar.Francis@wdc.com>
 CC: <s.makarov@syntacore.com>, <bmeng.cn@gmail.com>, <palmer@dabbelt.com>,
  <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: [PATCH 0/2] riscv: hw/intc: Fixes for standard conformance
-Date: Wed, 18 Sep 2024 17:02:27 +0300
-Message-ID: <20240918140229.124329-1-s.makarov@syntacore.com>
+Subject: [PATCH 2/2] hw/intc: Don't clear pending bits on IRQ lowering
+Date: Wed, 18 Sep 2024 17:02:29 +0300
+Message-ID: <20240918140229.124329-3-s.makarov@syntacore.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240918140229.124329-1-s.makarov@syntacore.com>
+References: <20240918140229.124329-1-s.makarov@syntacore.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -76,31 +78,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-*** Patchset goal ***
+According to PLIC specification (chapter 5), there
+is only one case, when interrupt is claimed. Fix
+PLIC controller to match this behavior.
 
-This patchset aims to improve standard conformance for SiFive PLIC
-implementation.
+Signed-off-by: Sergey Makarov <s.makarov@syntacore.com>
+---
+ hw/intc/sifive_plic.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-*** Testing cases ***
-
-Currently there are no automated tests for these changes, but there
-are several test cases, with which these changes may be checked:
-1. Zeroth priority register can be checked by reading it after
-   writing to it. Without patch its value would be the same which
-   is written there, but with it it would be zero;
-2. Trigger call of `sifive_plic_irq_request` with level 0.
-   Without second patch it will clear pending bit, but with it
-   pending bit won't be cleared.
-If anyone knows how this can be turned into automated test, help
-would be appreciated.
-
-Sergey Makarov (2):
-  hw/intc: Make zeroth priority register read-only
-  hw/intc: Don't clear pending bits on IRQ lowering
-
- hw/intc/sifive_plic.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
-
+diff --git a/hw/intc/sifive_plic.c b/hw/intc/sifive_plic.c
+index 3f3ee96ebc..deec162630 100644
+--- a/hw/intc/sifive_plic.c
++++ b/hw/intc/sifive_plic.c
+@@ -354,8 +354,10 @@ static void sifive_plic_irq_request(void *opaque, int irq, int level)
+ {
+     SiFivePLICState *s = opaque;
+ 
+-    sifive_plic_set_pending(s, irq, level > 0);
+-    sifive_plic_update(s);
++    if (level > 0) {
++        sifive_plic_set_pending(s, irq, true);
++        sifive_plic_update(s);
++    }
+ }
+ 
+ static void sifive_plic_realize(DeviceState *dev, Error **errp)
 -- 
 2.34.1
 
