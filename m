@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9160ACDD556
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 21:11:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE023CDD55C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 21:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr1tV-0005CG-W9; Wed, 18 Sep 2024 17:07:26 -0400
+	id 1sr1zU-0007vU-UF; Wed, 18 Sep 2024 17:13:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sr1tU-00054P-1q
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 17:07:24 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1sr1zS-0007gg-5j
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 17:13:34 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sr1tS-0001da-Cg
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 17:07:23 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5c255e3c327so183596a12.1
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 14:07:22 -0700 (PDT)
+ id 1sr1zQ-0002Di-IB
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 17:13:33 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a8d6ac24a3bso26731566b.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 14:13:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726693641; x=1727298441; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726694011; x=1727298811; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UmSUHnclueWy8Ml22HesraUXC/kTCDRkeEOTmo3FB50=;
- b=U0a7lhO+52zXIJIdSaS74PFsbu2v/3DDiloB666ehZ9zvlAsvjPOle/oLcWh/cJfDe
- uz8Ta4Yv1yYUfoSwuES/lcevGsYAz08nZ8d1spoVZooKCY93xi0ApPriaqoCx3JqR0uw
- mc8WfPJJH1AuGC1XvSYaj7FS1DVQ31mge8LxkUH8N+WOrPpZKK6g+Geng2DKCupJ83E1
- fGjgTTwI0qNc+4FKYkDqUwSaGhiM2UNlwiGpBkwle8UoACqZHVe1bCdhTJyAzbk8fJwn
- q7zu0cuNt6kTJzAZd8604Fl7kH0UgwSXk8rAG6o1u+YaMmt7+kUkGt4LsIuU94UhTUCw
- QJ1g==
+ bh=njwup9bdkkn3Pmq6MgNZmWDd6Jmwa84hQ2yWGTmpHoI=;
+ b=aBe0ym9ZbcgL0aG11GJLg8PVCM4f10DVuaqrSi70cs5MkMyynY3j0ysWXwDD2ziBPP
+ zObRCJPqoTzBwOGAPU0FnN9zia0cyBUmvB6ytRBH5f+XAN7Ke9UPpmKZA/u/RoQpetdc
+ ekt9zgmEyEzT+DKiD+TwCWhrVlQRZlGNw/3VGtCloRqvoXxTS5+W/B+ML8TmDbE/CEYD
+ vbaCD4G5rth1dw0uqfxRAp6Ex7rJ3vLBNeNPNToWbbJpXuJ5pFWQEkjB+x2Mvh/9BnWM
+ 9nZu9gS5XnhOMZCHRmnlgZ3vHcg30bPjLtOBl1ltshhcniJmuebbLTEhmaIE49zWBTYg
+ 8L3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726693641; x=1727298441;
+ d=1e100.net; s=20230601; t=1726694011; x=1727298811;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UmSUHnclueWy8Ml22HesraUXC/kTCDRkeEOTmo3FB50=;
- b=wzLQQdP4GiB6JpJ6J4KJl5H8scNB6mDPixKzBmyJwyw4ytQyqG/EjNSbaJ+RDlRBDX
- AQ/J9/kIR9bu4S5YxiKCXlc9AZGUL+SyLJlq0bBgI91gnLOMaopSluCHgk/oDnEo7bN1
- N+buOwukBTO3EY/Dv0wiE1EqezcFRl252pewBUVFd+kytbt/qKUpKo2BO0NsxUbARBeK
- Fr9B9mAMc+aJ/nNqpWPuUrIzm2WmUyX/O3bKY6+bV/xN9ltUrLdRhvNAVIEQUsakV11X
- ia3suCpGNXOOxamkvGGZkusUjQ4gtYtOW6rYk/P6J+qSq4vzwZcwk91gBdgHt4n9xzLy
- z+ow==
-X-Gm-Message-State: AOJu0Yw0dMKDArfOr69huLaqZk0nsXVcVvqRuXulgaI2rFpElCxHHjNT
- gbLwiIaI2souZ13X5WCx84P0hldxgt+PzBx4kTpxOzaWd1kbTDXWXCFSnIzHWkJ+I0Am8FwdOmj
- okmY=
-X-Google-Smtp-Source: AGHT+IHKglD4VZubdtombQ7TWRD5KD2sMQek+AkV3m+AYfVCtOIdqGgNUKBO0LaJJn1jGSDbBXRPMg==
-X-Received: by 2002:a17:907:1c11:b0:a7a:acae:3415 with SMTP id
- a640c23a62f3a-a90293dbffbmr2470346866b.10.1726693640783; 
- Wed, 18 Sep 2024 14:07:20 -0700 (PDT)
+ bh=njwup9bdkkn3Pmq6MgNZmWDd6Jmwa84hQ2yWGTmpHoI=;
+ b=nMw+JwmDJdxKUugjAqcU2N85N2srzUouWpml32GyGWhK26SIFexCmgjNmuttNKSQwB
+ tSdmpQhzJVMH7WdGZ3jIiM1qUH8lpgZHlTA2bOAVzbeZoJSJjZNRwTsUyoLkFF+UcseP
+ O+TWaZGOCvXMeFSoFJMDhqAHX0TFcSJIHJDPzxpvvxeKIYHt80Tvg/0y2HbU1Fxw2Lx+
+ 8C+fwLbV4m6GeD6huCdFU2pW42ZNNzAvLnsiH3WlMtSImiZU6HnR2729uNTmUBl9qmNc
+ Z80RoOpaQmUqkLiz7CT7Pl+B3L1FiOhmhu949ijHA6iqIrm72/c72hqR5l/gKhtMrzN6
+ EiDA==
+X-Gm-Message-State: AOJu0Yx05fgQTeEAjhohrG/u4S2bUhcSB3cMVkdIWBmHq/98CRXeQ8zL
+ BnDY1BLUFFKBwrAbulIpcVM2EKmArjH65iEV9MlW+G7uYuAFLIvu7Gm4aRg1DIU=
+X-Google-Smtp-Source: AGHT+IFgUaMh83XdHml1ayAdv3b2I/RAdmvJ5owbx0Rw75ng6AYmvaL1/iuXN7j7FHP3K5SiUTCaWw==
+X-Received: by 2002:a17:907:7288:b0:a8d:4c83:d85d with SMTP id
+ a640c23a62f3a-a90c1c77fc6mr100022766b.12.1726694010605; 
+ Wed, 18 Sep 2024 14:13:30 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90c39cbceesm19101966b.132.2024.09.18.14.07.15
+ a640c23a62f3a-a90612e4b87sm644766366b.179.2024.09.18.14.13.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Sep 2024 14:07:16 -0700 (PDT)
+ Wed, 18 Sep 2024 14:13:30 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 66C115F952;
+ by draig.lan (Postfix) with ESMTP id 9A24B5F885;
  Wed, 18 Sep 2024 22:07:13 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- qemu-s390x@nongnu.org (open list:S390 TCG CPUs)
-Subject: [PULL 12/18] tests/tcg: ensure s390x-softmmu output redirected
-Date: Wed, 18 Sep 2024 22:07:06 +0100
-Message-Id: <20240918210712.2336854-13-alex.bennee@linaro.org>
+ Elisha Hollander <just4now666666@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 14/18] util/timer: avoid deadlock when shutting down
+Date: Wed, 18 Sep 2024 22:07:08 +0100
+Message-Id: <20240918210712.2336854-15-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20240918210712.2336854-1-alex.bennee@linaro.org>
 References: <20240918210712.2336854-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,29 +99,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The multiarch system tests output serial data which should be
-redirected to the "output" chardev rather than echoed to the console.
+When we shut down a guest we disable the timers. However this can
+cause deadlock if the guest has queued some async work that is trying
+to advance system time and spins forever trying to wind time forward.
+Pay attention to the return code and bail early if we can't wind time
+forward.
 
-Comment the use of EXTFLAGS variable while we are at it.
-
-Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reported-by: Elisha Hollander <just4now666666@gmail.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240916085400.1046925-13-alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20240916085400.1046925-15-alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/s390x/Makefile.softmmu-target b/tests/tcg/s390x/Makefile.softmmu-target
-index f60f94b090..be242ba8f1 100644
---- a/tests/tcg/s390x/Makefile.softmmu-target
-+++ b/tests/tcg/s390x/Makefile.softmmu-target
-@@ -1,6 +1,7 @@
- S390X_SRC=$(SRC_PATH)/tests/tcg/s390x
- VPATH+=$(S390X_SRC)
--QEMU_OPTS+=-action panic=exit-failure -nographic $(EXTFLAGS) -kernel
-+# EXTFLAGS can be passed by the user, e.g. to override the --accel
-+QEMU_OPTS+=-action panic=exit-failure -nographic -serial chardev:output $(EXTFLAGS) -kernel
- LINK_SCRIPT=$(S390X_SRC)/softmmu.ld
- CFLAGS+=-ggdb -O0
- LDFLAGS=-nostdlib -static
+diff --git a/util/qemu-timer.c b/util/qemu-timer.c
+index 213114be68..6b1533bc2a 100644
+--- a/util/qemu-timer.c
++++ b/util/qemu-timer.c
+@@ -685,10 +685,17 @@ int64_t qemu_clock_advance_virtual_time(int64_t dest)
+ {
+     int64_t clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+     AioContext *aio_context;
++    int64_t deadline;
++
+     aio_context = qemu_get_aio_context();
+-    while (clock < dest) {
+-        int64_t deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
++
++    deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
+                                                       QEMU_TIMER_ATTR_ALL);
++    /*
++     * A deadline of < 0 indicates this timer is not enabled, so we
++     * won't get far trying to run it forward.
++     */
++    while (deadline >= 0 && clock < dest) {
+         int64_t warp = qemu_soonest_timeout(dest - clock, deadline);
+ 
+         qemu_virtual_clock_set_ns(qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + warp);
+@@ -696,6 +703,9 @@ int64_t qemu_clock_advance_virtual_time(int64_t dest)
+         qemu_clock_run_timers(QEMU_CLOCK_VIRTUAL);
+         timerlist_run_timers(aio_context->tlg.tl[QEMU_CLOCK_VIRTUAL]);
+         clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++
++        deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
++                                              QEMU_TIMER_ATTR_ALL);
+     }
+     qemu_clock_notify(QEMU_CLOCK_VIRTUAL);
+ 
 -- 
 2.39.5
 
