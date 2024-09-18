@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 209EACDD556
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 21:08:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BA51CDD556
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 21:09:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr1tS-0004wM-A4; Wed, 18 Sep 2024 17:07:22 -0400
+	id 1sr1tT-00051N-FC; Wed, 18 Sep 2024 17:07:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sr1tP-0004pF-Q8
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 17:07:19 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1sr1tQ-0004qi-IW
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 17:07:21 -0400
+Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sr1tN-0001Zx-NE
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 17:07:19 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5c2561e8041so178886a12.2
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 14:07:17 -0700 (PDT)
+ id 1sr1tO-0001bF-OV
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 17:07:20 -0400
+Received: by mail-lf1-x12a.google.com with SMTP id
+ 2adb3069b0e04-5356bb55224so184243e87.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 14:07:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726693636; x=1727298436; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726693637; x=1727298437; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3/HyHbGcSckOdKLF1EYAUB114Xir6Orehr4YuOmz0iw=;
- b=beX/YI1uRf2Fq3xL4Hx3JAsIWDpcrwotDFB3I7zOIllamMB2KL5tk6BWMGTLcwn2A/
- 3FBO7Hl4vmopvhhABsFP7VeeMgydZ+KSOOZd4kvSxtT9Gm+07l29ErHILZfipncyeIxa
- etmBnE4x3OYWi5UOYOyoAvxr4etTMugbkCXToi3hok/YP8lWyq7ya09uQi6MZ5TLYjhj
- sT53exyy4DMheuYmzJewDUIDbSF1uhmAUypjblfdjl+N7sdCAJ+Ifvzi8YYEmLVsYFyD
- +3+qeAvP3llTvYrG7LYpwGr25ile9yiXyI7oWvg1XFitao8yxufL1UMm9QYWR1AqhqqN
- 3BOQ==
+ bh=N+FbOV5cANak4tvS11G6TRWhb5xp2aE/sDGBKNdQXN8=;
+ b=s569fDSxJFvhx5IkcfJvm5D7LA2djEYPxZOlNNTQPe2+kgLnTDWGA5vy6hIktlHAZv
+ N0yywnal2dOC9y8LaE979z1YZLknWF05sK7RBFomgE1T+vWakKyC065s+34PgsqrF/sJ
+ 0zcBl0c4g3qM/trGm3Ee2zyOCAC2d6pclj9XfUqF0giMnPiSTFER5UveQR3Tte1n7SJi
+ WSuvRUDclZBys1RkRBO81hMIuAonpyDf6yfS4fv14+smAxc03Idc+1zeCXzZ6xhFeDIj
+ b1aOHBTKG32CjrRIYagd5KdzPw8avS/Vw713I3G0RWivgJSnDq086TlGpzaqmMD/ndHy
+ 2Lqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726693636; x=1727298436;
+ d=1e100.net; s=20230601; t=1726693637; x=1727298437;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3/HyHbGcSckOdKLF1EYAUB114Xir6Orehr4YuOmz0iw=;
- b=LmXQfiQZdwSMYGKvgYmrN07JBsB3qImbzMBELcQvwVwvnA4shJecevtdFqARP25yrw
- nY7u4aLufXhqQrbfp9IpgJH89g/droszpigm42kRrYJVGhBaaO0r+oh5lph7WDnCOK1Y
- HZ3ETTdsy1GIPpAPzf0Vqgyx1BhJ5P/JoX78FtMiVRlPkkwm8VSAOE8JSfDbfmVIfibj
- Jt2ctytPREew0uFMAQotVEfrRGO0JKbiDutglqFLqBlr668AIOAUFqxnwiVj6S0CpHnl
- zDbzZpEUNR605zc/XzdMJEAsCwTW9FAsCG6d68ykW30TuHOyVCIBte8ZSRHhm5o1GLBZ
- 1GEg==
-X-Gm-Message-State: AOJu0YzLDXDyzNlgxWsLTEwX5bgCZP8LJIKf7/KRoQhozPLMVXs0gCV/
- Z/bIzIZVqR6tQh0WSc3qf8PiILAWjsNmv5RikyqufsyJ2hY5kQZUPQwXT61rMaM=
-X-Google-Smtp-Source: AGHT+IHV58QftuvwXXi76HH8XPGKkDy1FaR5lmC5k3xJm23VXa7bFtHvHqFj0VNXwS2rCu/Nz9RQTw==
-X-Received: by 2002:a05:6402:3551:b0:5c4:1c74:56f2 with SMTP id
- 4fb4d7f45d1cf-5c41e1904edmr14275902a12.15.1726693635673; 
- Wed, 18 Sep 2024 14:07:15 -0700 (PDT)
+ bh=N+FbOV5cANak4tvS11G6TRWhb5xp2aE/sDGBKNdQXN8=;
+ b=PTRwDNz4OHbHosa4jYUIUnFlyPV+qTfVGWNl4jr4JNagt8BNtUUGm2NK+IpC3+6DBh
+ PdGK/I0QJoswdkJB8VTdcNlS4n68eVSbLF+R1g/FNxE7U9zr2KEyDCUX47FrrqW2/fhs
+ HZ1qSwyJ6sfewJcsrE0kYKOxPvY3a+mOaupS+jixluokeD+waqFaO9pCp+1YLDI074UY
+ d8DZ6xJxUdXBaCPiaVX0y7jtBL/viiiOR2Vuduik1DCOXfyZuksHKS3UXNqkVWk8ejWI
+ PksaUQV40ezGJjQidlDfg4Ak6an93BjMXRoUJ2raNvW3qyZhXMYRC7EUfyK3dx4SHfDF
+ j3qQ==
+X-Gm-Message-State: AOJu0YyeO6K8xH7dVulyVRD9rk+goMhq3hufy+9dEjQU+HKN73YcBFz0
+ u+PwtRZDDsKhCRo3yfiyiXlNsT/Jz4VCGmUgoSEa9k2mxJCyAVpjYe7iBVpwJSw=
+X-Google-Smtp-Source: AGHT+IEp6fTJxY/j2S51BW7MiCjkKds9grj+5Jug2wGokBe6c7zZtRGT3vzVlr0u5lXzOww2gjwI1A==
+X-Received: by 2002:a05:6512:3350:b0:536:7a88:6185 with SMTP id
+ 2adb3069b0e04-5367a8862e7mr10410876e87.15.1726693636428; 
+ Wed, 18 Sep 2024 14:07:16 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c42bb89e07sm5328729a12.76.2024.09.18.14.07.12
+ a640c23a62f3a-a90613303b4sm629745866b.213.2024.09.18.14.07.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 18 Sep 2024 14:07:14 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 536405F8A7;
+ by draig.lan (Postfix) with ESMTP id BBF0D5F90C;
  Wed, 18 Sep 2024 22:07:12 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- devel@lists.libvirt.org (reviewer:Incompatible changes)
-Subject: [PULL 01/18] deprecation: don't enable TCG plugins by default on 32
- bit hosts
-Date: Wed, 18 Sep 2024 22:06:55 +0100
-Message-Id: <20240918210712.2336854-2-alex.bennee@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Xingtao Yao <yaoxt.fnst@fujitsu.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PULL 05/18] plugins: extend API to get latest memory value accessed
+Date: Wed, 18 Sep 2024 22:06:59 +0100
+Message-Id: <20240918210712.2336854-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20240918210712.2336854-1-alex.bennee@linaro.org>
 References: <20240918210712.2336854-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,76 +101,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The existing plugins already liberally use host pointer stuffing for
-passing user data which will fail when doing 64 bit guests on 32 bit
-hosts. We should discourage this by officially deprecating support and
-adding another nail to the 32 bit host coffin.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+This value can be accessed only during a memory callback, using
+new qemu_plugin_mem_get_value function.
+
+Returned value can be extended when QEMU will support accesses wider
+than 128 bits.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1719
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2152
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Xingtao Yao <yaoxt.fnst@fujitsu.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20240724194708.1843704-3-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240916085400.1046925-2-alex.bennee@linaro.org>
+Message-Id: <20240916085400.1046925-6-alex.bennee@linaro.org>
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index ed31d4b0b2..809b2b9b81 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -184,6 +184,17 @@ be an effective use of its limited resources, and thus intends to discontinue
- it. Since all recent x86 hardware from the past >10 years is capable of the
- 64-bit x86 extensions, a corresponding 64-bit OS should be used instead.
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index c71c705b69..649ce89815 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -262,6 +262,29 @@ enum qemu_plugin_mem_rw {
+     QEMU_PLUGIN_MEM_RW,
+ };
  
-+TCG Plugin support not enabled by default on 32-bit hosts (since 9.2)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++enum qemu_plugin_mem_value_type {
++    QEMU_PLUGIN_MEM_VALUE_U8,
++    QEMU_PLUGIN_MEM_VALUE_U16,
++    QEMU_PLUGIN_MEM_VALUE_U32,
++    QEMU_PLUGIN_MEM_VALUE_U64,
++    QEMU_PLUGIN_MEM_VALUE_U128,
++};
 +
-+While it is still possible to enable TCG plugin support for 32-bit
-+hosts there are a number of potential pitfalls when instrumenting
-+64-bit guests. The plugin APIs typically pass most addresses as
-+uint64_t but practices like encoding that address in a host pointer
-+for passing as user-data will lose data. As most software analysis
-+benefits from having plenty of host memory it seems reasonable to
-+encourage users to use 64 bit builds of QEMU for analysis work
-+whatever targets they are instrumenting.
- 
- System emulator CPUs
- --------------------
-diff --git a/configure b/configure
-index f3e7572afb..cc8e1ed5b8 100755
---- a/configure
-+++ b/configure
-@@ -516,6 +516,25 @@ case "$cpu" in
-     ;;
- esac
- 
-+# Now we have our CPU_CFLAGS we can check if we are targeting a 32 or
-+# 64 bit host.
++/* typedef qemu_plugin_mem_value - value accessed during a load/store */
++typedef struct {
++    enum qemu_plugin_mem_value_type type;
++    union {
++        uint8_t u8;
++        uint16_t u16;
++        uint32_t u32;
++        uint64_t u64;
++        struct {
++            uint64_t low;
++            uint64_t high;
++        } u128;
++    } data;
++} qemu_plugin_mem_value;
 +
-+check_64bit_host() {
-+cat > $TMPC <<EOF
-+#if __SIZEOF_POINTER__ != 8
-+#error not 64 bit system
-+#endif
-+int main(void) { return 0; }
-+EOF
-+  compile_object "$1"
+ /**
+  * enum qemu_plugin_cond - condition to enable callback
+  *
+@@ -551,6 +574,15 @@ bool qemu_plugin_mem_is_big_endian(qemu_plugin_meminfo_t info);
+ QEMU_PLUGIN_API
+ bool qemu_plugin_mem_is_store(qemu_plugin_meminfo_t info);
+ 
++/**
++ * qemu_plugin_mem_get_mem_value() - return last value loaded/stored
++ * @info: opaque memory transaction handle
++ *
++ * Returns: memory value
++ */
++QEMU_PLUGIN_API
++qemu_plugin_mem_value qemu_plugin_mem_get_value(qemu_plugin_meminfo_t info);
++
+ /**
+  * qemu_plugin_get_hwaddr() - return handle for memory operation
+  * @info: opaque memory info structure
+diff --git a/plugins/api.c b/plugins/api.c
+index 2ff13d09de..3316d4a04d 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -351,6 +351,39 @@ bool qemu_plugin_mem_is_store(qemu_plugin_meminfo_t info)
+     return get_plugin_meminfo_rw(info) & QEMU_PLUGIN_MEM_W;
+ }
+ 
++qemu_plugin_mem_value qemu_plugin_mem_get_value(qemu_plugin_meminfo_t info)
++{
++    uint64_t low = current_cpu->neg.plugin_mem_value_low;
++    qemu_plugin_mem_value value;
++
++    switch (qemu_plugin_mem_size_shift(info)) {
++    case 0:
++        value.type = QEMU_PLUGIN_MEM_VALUE_U8;
++        value.data.u8 = (uint8_t)low;
++        break;
++    case 1:
++        value.type = QEMU_PLUGIN_MEM_VALUE_U16;
++        value.data.u16 = (uint16_t)low;
++        break;
++    case 2:
++        value.type = QEMU_PLUGIN_MEM_VALUE_U32;
++        value.data.u32 = (uint32_t)low;
++        break;
++    case 3:
++        value.type = QEMU_PLUGIN_MEM_VALUE_U64;
++        value.data.u64 = low;
++        break;
++    case 4:
++        value.type = QEMU_PLUGIN_MEM_VALUE_U128;
++        value.data.u128.low = low;
++        value.data.u128.high = current_cpu->neg.plugin_mem_value_high;
++        break;
++    default:
++        g_assert_not_reached();
++    }
++    return value;
 +}
 +
-+if check_64bit_host "$CPU_CFLAGS"; then
-+    host_bits=64
-+else
-+    host_bits=32
-+fi
-+
- if test -n "$host_arch" && {
-     ! test -d "$source_path/linux-user/include/host/$host_arch" ||
-     ! test -d "$source_path/common-user/host/$host_arch"; }; then
-@@ -1028,7 +1047,7 @@ if test "$static" = "yes" ; then
-   fi
-   plugins="no"
- fi
--if test "$plugins" != "no"; then
-+if test "$plugins" != "no" && test $host_bits -eq 64; then
-   plugins=yes
-   subdirs="$subdirs contrib/plugins"
- fi
+ /*
+  * Virtual Memory queries
+  */
+diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+index ca773d8d9f..eed9d8abd9 100644
+--- a/plugins/qemu-plugins.symbols
++++ b/plugins/qemu-plugins.symbols
+@@ -13,6 +13,7 @@
+   qemu_plugin_insn_size;
+   qemu_plugin_insn_symbol;
+   qemu_plugin_insn_vaddr;
++  qemu_plugin_mem_get_value;
+   qemu_plugin_mem_is_big_endian;
+   qemu_plugin_mem_is_sign_extended;
+   qemu_plugin_mem_is_store;
 -- 
 2.39.5
 
