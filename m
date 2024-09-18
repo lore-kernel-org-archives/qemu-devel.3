@@ -4,96 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD3B3CCD1A3
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 12:22:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1019CCD1A3
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 12:23:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqthD-0001AU-Gi; Wed, 18 Sep 2024 08:22:13 -0400
+	id 1sqthk-0001kN-EP; Wed, 18 Sep 2024 08:22:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sqth1-00015F-Ly
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 08:22:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sqtgy-0007LS-2W
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 08:21:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726662113;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GzfVzlmfEDIal0FGOmG929QVA1cSXOjk3xpvWuwpbVE=;
- b=XeEX/tIg3oZZKZ2ZcCPgnintoOg8vkiK4l2ITHFcj6q6zCSR7zPWrmk8ik6zpkLqfMhxFI
- 3JVbFPMYkzdbyfGNLho6njyR32Z14II/iRmVAMwUEwsM7XJqeBIyQg2KriiMMo2qmCiHPO
- pbhoEq+USWA5zpWUpcEcfUeqciIjZas=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-155-SP3SlPXGP5ingvrpRJV7BA-1; Wed, 18 Sep 2024 08:21:50 -0400
-X-MC-Unique: SP3SlPXGP5ingvrpRJV7BA-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-374c960ee7aso3896277f8f.3
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 05:21:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
+ id 1sqthh-0001hF-BJ
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 08:22:42 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
+ id 1sqthe-0007Nn-DH
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 08:22:41 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-20551eeba95so51209115ad.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 05:22:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1726662152; x=1727266952; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VoZvzrqtYkPzDqiF8l2U/IOSUyoXsdz6sZLSE507Qjc=;
+ b=guTyO4Zcw0pE+1b8VGXDFEUcsOMbl23QK6uW52kzHvixt/11+ZFI+H63h7/rtn2XEm
+ s04sbHvviOHL5wz0sJIOPA5vkiJ6rZBq8UTE848EXqCjRmZy1T2hJxWfHr4JARW1ffFT
+ 6g8osAPVOiJVxsKtrj5Bdi1qfhUWP9bykgXznR6IeSEYh+FdU72V/0blCPBPMYxrogNg
+ 5tYnw2WTOOx/QCKlrHxGpvvDSr2BgJFqhL1TY5460ljaGvsDyEvnjVDhzK347aNzR+Px
+ LadOB98QikmB2UZBAAvFhM/HmAwu9+65bgjtqcrqOn4PATcIj20nlBT/PR8Itw0KPU4S
+ 2v7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726662110; x=1727266910;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GzfVzlmfEDIal0FGOmG929QVA1cSXOjk3xpvWuwpbVE=;
- b=J5gvwL+Pm0o5vWk5H2bxKyzQ7OaceAUCMz6wMuizgjm7dUeMnHjX76xEPMZ9MmiT8j
- 2RWTrVtb/cdmVb4PZzrs1eA6pjVMZOeb6A+UlcTc8JVjB7vcMnZmDIzYVa9sMe8vbyeD
- fKlxm31IUySIeoJ1PdW8OxIsxfp+DML1VcWa8iJI+/M7lFjQOq4xSHhJxTjp1h3mmKvm
- A9UgLpZLZ7aW7wePZEyPJkD5tgKXSlIdftp4gvpCXmyMl1jh0JkRhxZ/XFmE+KGfZMRb
- l1TXC7TjXfT9j6+gngbr4NJHdDJPwxSC9YiIMlo3BDPOPObc+mOeRLnA72TnTG/JsWhH
- UzIA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWWk0ScCJ3J4efoOf0C4MC3FzBwauEu7jaY/eA4xOF6/roWNvi6cBXj7ftyWU47XjPirB6IikTFCOtZ@nongnu.org
-X-Gm-Message-State: AOJu0YwGFAwfzlCO1As+gjyj0fEkrTJobZYwlOUyPnakR6fzM09+YZLw
- Mc8EI8KbuSiEhTZ+VDOq3/btyuPUPQo3DBLF+lOMZEhniDJdvwIdXKeQv6gj+9G2v2+PrGIseDa
- ldA6Is+MEposKUjm8gGpEmw4XBDU5uzDvHkBhSuXR2r5KZzFpmtTd
-X-Received: by 2002:adf:cd8b:0:b0:378:8f2f:905f with SMTP id
- ffacd0b85a97d-378d61d4d27mr14322175f8f.11.1726662109574; 
- Wed, 18 Sep 2024 05:21:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFffAWseuab53raL510pbuU7srN1JqGpMfTnm5vp0NMQ4CFNNAQTb6Hg6Ut5fG0+uKX0aiFxQ==
-X-Received: by 2002:adf:cd8b:0:b0:378:8f2f:905f with SMTP id
- ffacd0b85a97d-378d61d4d27mr14322146f8f.11.1726662109045; 
- Wed, 18 Sep 2024 05:21:49 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-378e73e80fcsm12135518f8f.36.2024.09.18.05.21.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Sep 2024 05:21:48 -0700 (PDT)
-Date: Wed, 18 Sep 2024 14:21:47 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Song Gao <gaosong@loongson.cn>,
- Ani Sinha <anisinha@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- "Jason A . Donenfeld" <Jason@zx2c4.com>, Thomas =?UTF-8?B?V2Vpw59zY2h1?=
- =?UTF-8?B?aA==?= <thomas@t-8ch.de>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 1/2] acpi: ged: Add macro for acpi sleep control
- register
-Message-ID: <20240918142147.50ef7b60@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240918014206.2165821-2-maobibo@loongson.cn>
-References: <20240918014206.2165821-1-maobibo@loongson.cn>
- <20240918014206.2165821-2-maobibo@loongson.cn>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1726662152; x=1727266952;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=VoZvzrqtYkPzDqiF8l2U/IOSUyoXsdz6sZLSE507Qjc=;
+ b=Z2v1bFhXNLTKU0Lxob/hJQMLq7rfhLSLTxggl960m+wNDscwJSM1/Q/w8XuandhXvA
+ qj48oUhysV8fv6GeRf1n0fwoXFcUMc/cp0/CRheONtCgaEPxaGk7QF0K/IiwQTgmVPoP
+ TtcukbUK/6ucyts+iz4aTZkXkzeeXwDHnNOxkeZSr3FDL34FfjEOp2IINshVYi47WDc9
+ SvaTj5didBg7zoZkG2crQmI3AxLYoJy1GnlwkyM1FqbgBeNOZCVuIpwExm4Q/7MqVmx8
+ U1lxJMR82lW5P7lZQcUSQYYaLgmQh+ZAnesq8LbWDhFhD3bnkdBmzHGoJc9RKqk5AJ4Y
+ 5eJw==
+X-Gm-Message-State: AOJu0YwlGKDzVOSqhO+PZvdqU9jZRNwgtJ5pFcXUIjPoDxYPf7WXqBa7
+ DsUwvJG8MGJaThJlCqLxPtJwDA45uU4i5+mKdEhj23IkiXTcrGJOIL34Yt00zz8=
+X-Google-Smtp-Source: AGHT+IGKSSr/Y2NQRxRzaK73LTt0r6gPwhXQZpu5lqftaqYYuqu35O4Pd6hFfdXBP949eyKu5nufRw==
+X-Received: by 2002:a17:902:cf06:b0:206:aa2e:6d1f with SMTP id
+ d9443c01a7336-2078296a953mr295103945ad.46.1726662152233; 
+ Wed, 18 Sep 2024 05:22:32 -0700 (PDT)
+Received: from [10.84.158.138] ([203.208.167.149])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-207946fab2bsm64293705ad.194.2024.09.18.05.22.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Sep 2024 05:22:31 -0700 (PDT)
+Message-ID: <4967d160-bb34-498f-8f41-d451ac590482@bytedance.com>
+Date: Wed, 18 Sep 2024 20:22:26 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] i386/cpu: fixup number of addressable IDs for logical
+ processors in the physical package
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, xieyongji@bytedance.com,
+ chaiwen.cc@bytedance.com, zhao1.liu@intel.com, qemu-stable@nongnu.org,
+ Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>
+References: <20240914110127.67690-1-xuchuangxclwt@bytedance.com>
+ <20240918140242.2c360209@imammedo.users.ipa.redhat.com>
+From: Chuang Xu <xuchuangxclwt@bytedance.com>
+In-Reply-To: <20240918140242.2c360209@imammedo.users.ipa.redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=xuchuangxclwt@bytedance.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,56 +100,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 18 Sep 2024 09:42:05 +0800
-Bibo Mao <maobibo@loongson.cn> wrote:
+Hi, Igor:
 
-> Macro definition is added for acpi sleep control register, ged emulation
-> driver can use the macro , also it can be used in FDT table if ged is
-> exposed with FDT table.
-> 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+On 2024/9/18 下午8:02, Igor Mammedov wrote:
+> On Sat, 14 Sep 2024 19:01:27 +0800
+> Chuang Xu <xuchuangxclwt@bytedance.com> wrote:
+>
+>> When QEMU is started with:
+>> -cpu host,migratable=on,host-cache-info=on,l3-cache=off
+>> -smp 180,sockets=2,dies=1,cores=45,threads=2
+>>
+>> Execute "cpuid -1 -l 1 -r" in guest, we'll get:
+>> eax=0x000806f8 ebx=0x465a0800 ecx=0xfffaba1f edx=0x3fa9fbff
+>> CPUID.01H.EBX[23:16] is 90, while the expected value is 128.
+>>
+>> Execute "cpuid -1 -l 4 -r" in guest, we'll get:
+>> eax=0xfc004121 ebx=0x02c0003f ecx=0x0000003f edx=0x00000000
+>> CPUID.04H.EAX[31:26] is 63, which is as expected.
+>>
+>> As (1+CPUID.04H.EAX[31:26]) round up to the nearest power-of-2 integer,
+>> we'd beter round up CPUID.01H.EBX[23:16] to the nearest power-of-2
+>> integer too. Otherwise we may encounter unexpected results in guest.
+>>
+>> For example, when QEMU is started with CLI above and xtopology is disabled,
+>> guest kernel 5.15.120 uses CPUID.01H.EBX[23:16]/(1+CPUID.04H.EAX[31:26]) to
+>> calculate threads-per-core in detect_ht(). Then guest will get "90/(1+63)=1"
+>> as the result, even though theads-per-core should actually be 2.
+>>
+>> So let us round up CPUID.01H.EBX[23:16] to the nearest power-of-2 integer
+>> to solve the unexpected result.
+>>
+>> Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+>> Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
+>> Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+>> ---
+>>   target/i386/cpu.c | 8 +++++++-
+>>   1 file changed, 7 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>> index 4c2e6f3a71..24d60ead9e 100644
+>> --- a/target/i386/cpu.c
+>> +++ b/target/i386/cpu.c
+>> @@ -261,6 +261,12 @@ static uint32_t max_thread_ids_for_cache(X86CPUTopoInfo *topo_info,
+>>       return num_ids - 1;
+>>   }
+>>   
+>> +static uint32_t max_thread_number_in_package(X86CPUTopoInfo *topo_info)
+>> +{
+>> +    uint32_t num_threads = 1 << apicid_pkg_offset(topo_info);
+>> +    return num_threads;
+>> +}
+>> +
+>>   static uint32_t max_core_ids_in_package(X86CPUTopoInfo *topo_info)
+>>   {
+>>       uint32_t num_cores = 1 << (apicid_pkg_offset(topo_info) -
+>> @@ -6417,7 +6423,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>>           }
+>>           *edx = env->features[FEAT_1_EDX];
+>>           if (threads_per_pkg > 1) {
+>> -            *ebx |= threads_per_pkg << 16;
+>> +            *ebx |= max_thread_number_in_package(&topo_info) << 16;
+> why not use pow2ceil(threads_per_pkg) instead?
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+I saw in the latest code that calculations of cpuids involving CPU topology all use topo_info,
+so in order to maintain consistency in code style, I also used topo_info for calculation.
 
-> ---
->  hw/acpi/generic_event_device.c         | 6 +++---
->  include/hw/acpi/generic_event_device.h | 7 +++++--
->  2 files changed, 8 insertions(+), 5 deletions(-)
-> 
-> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-> index 15b4c3ebbf..d00f5a6c1c 100644
-> --- a/hw/acpi/generic_event_device.c
-> +++ b/hw/acpi/generic_event_device.c
-> @@ -201,9 +201,9 @@ static void ged_regs_write(void *opaque, hwaddr addr, uint64_t data,
->  
->      switch (addr) {
->      case ACPI_GED_REG_SLEEP_CTL:
-> -        slp_typ = (data >> 2) & 0x07;
-> -        slp_en  = (data >> 5) & 0x01;
-> -        if (slp_en && slp_typ == 5) {
-> +        slp_typ = (data >> ACPI_GED_SLP_TYP_POS) & ACPI_GED_SLP_TYP_MASK;
-> +        slp_en  = !!(data & ACPI_GED_SLP_EN);
-> +        if (slp_en && slp_typ == ACPI_GED_SLP_TYP_S5) {
->              qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
->          }
->          return;
-> diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
-> index 40af3550b5..d2dac87b4a 100644
-> --- a/include/hw/acpi/generic_event_device.h
-> +++ b/include/hw/acpi/generic_event_device.h
-> @@ -81,8 +81,11 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
->  /* ACPI_GED_REG_RESET value for reset*/
->  #define ACPI_GED_RESET_VALUE       0x42
->  
-> -/* ACPI_GED_REG_SLEEP_CTL.SLP_TYP value for S5 (aka poweroff) */
-> -#define ACPI_GED_SLP_TYP_S5        0x05
-> +/* [ACPI 5.0 Chapter 4.8.3.7] Sleep Control and Status Register */
-> +#define ACPI_GED_SLP_TYP_POS       0x2   /* SLP_TYPx Bit Offset */
-> +#define ACPI_GED_SLP_TYP_MASK      0x07  /* SLP_TYPx 3-bit mask */
-> +#define ACPI_GED_SLP_TYP_S5        0x05  /* System _S5 State (Soft Off) */
-> +#define ACPI_GED_SLP_EN            0x20  /* SLP_EN write-only bit */
->  
->  #define GED_DEVICE      "GED"
->  #define AML_GED_EVT_REG "EREG"
-
+>
+>>               *edx |= CPUID_HT;
+>>           }
+>>           if (!cpu->enable_pmu) {
 
