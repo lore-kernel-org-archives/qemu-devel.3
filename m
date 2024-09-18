@@ -4,95 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91662CDD543
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 15:34:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB77DCDD541
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 15:42:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqwfg-0005n8-Nt; Wed, 18 Sep 2024 11:32:48 -0400
+	id 1sqwoR-0007v5-I8; Wed, 18 Sep 2024 11:41:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sqwfe-0005kp-OW
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 11:32:46 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sqwfd-0005me-1F
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 11:32:46 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5c42bda005eso5663730a12.0
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 08:32:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726673563; x=1727278363; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=DCpTEL/dYMB7Uol2NlYZ7DCyhiPYwgEy6rc2BA5KywU=;
- b=TnL5GxtxcpnSE1L9udozZXG0h4AkfLyeoGqVCR+Se3MWwE9k2ms2q8yv238wqW2iWc
- 75I+F4VjaQEHCP0uD0+9UjShZknnQs+YSwiDMzscbQG9blI99Uc75NBZdfBmAKciFffc
- 6w0HK2ODM37Fyqp4fK8LY/Zg21NcmZc0Jrh4EjvkBNdKPu09s9ruQ4IrtqU88erYpFHZ
- lS10Xtvo2qvgyagVwv2pH5F9+lRmEYH1eMRMcbktKpxAae9WocoOJYylbSm462RaqQ2e
- q5TWmYxX097XCq/tt/Jhzw2Zfrja5LnfO2Fppn9aZhVtO1ecsRVIQkheCE4HlDb7Eb7l
- 0gwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726673563; x=1727278363;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DCpTEL/dYMB7Uol2NlYZ7DCyhiPYwgEy6rc2BA5KywU=;
- b=gl356dhz/+ua+MoCdrxHtY9TeAai5ltYXOvA+giWa6QFny/hxrem696/+jgDMcqwIp
- tDlEr5Sn1ptOdFN/PNfouKEHPxYXZyT6iKx1y0surYK2o1Qotr7xKgQ2C6bbPpktlVNl
- atH/DWad2W+ils5R4JxSkyrQy1puZAVzbDDsk+ihRPNXJ9TyyeG8qYD5yzX5vPg/zpVv
- 7B9CuPsOYZfbuubForbaPNokVt+6pwpit6hmNZnGXfuoxp2pB91VJnmxD9t9tS+EF8Pv
- JFujlEe2IO3Ket1sXYSyjIdxXnMk3RsWR0qi4DfA9cNNKZFreAEAc+Tuyfu6JetaZQAG
- luVw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUNXnoW/R0QPg7CUvauFwlAkc7o0lLO8VxTws8g6QrhKNOIiOcrzV0qYXbmDeWRvIKnvnlCJfR9eSVf@nongnu.org
-X-Gm-Message-State: AOJu0Yxj+32Wm0Cuchs9gTdZgMaJlmDyBnenVahiWxpg0NzmaBBnfEM+
- RdDrZRM5VFSUKj+yMj5yXNso0axRmr/D6jX5WWke0nlgDCs3qxGX1QfDzrWaml+N/jAm/3JOnBf
- G3cNB5V0+7IpKKuZr2wmS7St+/jVYmMKmFtCloA==
-X-Google-Smtp-Source: AGHT+IHUXyXfmA5Am44lE06hFsf1unXiUfxYsmWUCGV8LXPzN024Cxhz2eXy8PcJcIICTPqY5rE5RE0MwfG5g8Mtkro=
-X-Received: by 2002:a05:6402:280a:b0:5c2:8249:b2d3 with SMTP id
- 4fb4d7f45d1cf-5c413e4c51fmr18852185a12.26.1726673562914; Wed, 18 Sep 2024
- 08:32:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1sqwoP-0007uF-2G
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 11:41:49 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1sqwoL-00070Y-D2
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 11:41:48 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48IA4O6u024611;
+ Wed, 18 Sep 2024 15:41:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ SV7JuGRTfet6CFFRNH+BKDceTI8X94GwlrJEKQBYCyg=; b=JU7deBYe6RmeOn2o
+ hO3KSpHhunLfxcqdcRX1IVjlD9HayhdpmKcP0QyeF6SqT+kR802oFk/IIMW2zeGz
+ FT0b9hBcP2Zins3X4Gz8o8xMEo4FvJEeiYGM3bEtraQAvBf6EtOh2zsIfGFf0NMi
+ M3g2qEb+u/ytf0bvOw+/o7fd3TTp2LTvoY31KyYC+i9t0JgubzO947b3v7eQo+KJ
+ v0zM77uXz9zNq/8qc4AiRvsxCMbwK9FBOqZDS48mS0dpJDLG6yXsPRUrQ+c83F5V
+ YD0Q//19+SfiUSG4/tb6xf4YfLYP9V+vtDRb7oblnonFpF34P1Yrz480/Y2TnFjq
+ 8+Ve3w==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4gd2dnr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 18 Sep 2024 15:41:36 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
+ [10.47.97.35])
+ by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48IFfZuB016869
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 18 Sep 2024 15:41:35 GMT
+Received: from [10.110.61.117] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 18 Sep
+ 2024 08:41:34 -0700
+Message-ID: <bab6e4f3-e3a2-4cf7-866e-4e70a3cd41c7@quicinc.com>
+Date: Wed, 18 Sep 2024 10:41:33 -0500
 MIME-Version: 1.0
-References: <20240916181633.366449-1-heinrich.schuchardt@canonical.com>
- <20240917-f45624310204491aede04703@orel>
- <15c359a4-b3c1-4cb0-be2e-d5ca5537bc5b@canonical.com>
- <20240917-b13c51d41030029c70aab785@orel>
- <8b24728f-8b6e-4c79-91f6-7cbb79494550@canonical.com>
- <20240918-039d1e3bebf2231bd452a5ad@orel>
- <CAFEAcA-Yg9=5naRVVCwma0Ug0vFZfikqc6_YiRQTrfBpoz9Bjw@mail.gmail.com>
- <bab7a5ce-74b6-49ae-b610-9a0f624addc0@canonical.com>
- <CAFEAcA-L7sQfK6MNt1ZbZqUMk+TJor=uD3Jj-Pc6Vy9j9JHhYQ@mail.gmail.com>
- <f1e41b95-c499-4e06-91cb-006dcd9d29e6@canonical.com>
-In-Reply-To: <f1e41b95-c499-4e06-91cb-006dcd9d29e6@canonical.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 18 Sep 2024 16:32:31 +0100
-Message-ID: <CAFEAcA_ePVwnpVVWJSx8=-8v2h_z2imfSdyAZd62RhXaZUTojA@mail.gmail.com>
-Subject: Re: [PATCH 1/1] target/riscv: enable floating point unit
-To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- Anup Patel <anup@brainfault.org>, Atish Patra <atishp@atishpatra.org>, 
- Paul Walmsley <paul.walmsley@sifive.com>, Albert Ou <aou@eecs.berkeley.edu>,
- kvm@vger.kernel.org, 
- kvm-riscv@lists.infradead.org, linux-riscv@lists.infradead.org, 
- linux-kernel@vger.kernel.org, Andrew Jones <ajones@ventanamicro.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] linux-user: update syscall_nr.h to Linux v6.10
+To: Laurent Vivier <laurent@vivier.eu>, <qemu-devel@nongnu.org>
+CC: Brian Cain <bcain@quicinc.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ <sidneym@quicinc.com>,
+ Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+References: <20240918074256.720617-1-laurent@vivier.eu>
+ <20240918074256.720617-2-laurent@vivier.eu>
+Content-Language: en-US
+From: Brian Cain <quic_bcain@quicinc.com>
+In-Reply-To: <20240918074256.720617-2-laurent@vivier.eu>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-ORIG-GUID: Z8zjNE9_Ai4UgHcZV20pNzJFWL93OO4D
+X-Proofpoint-GUID: Z8zjNE9_Ai4UgHcZV20pNzJFWL93OO4D
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0
+ bulkscore=0 clxscore=1011 spamscore=0 adultscore=0 lowpriorityscore=0
+ mlxlogscore=949 impostorscore=0 mlxscore=0 priorityscore=1501 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2409180103
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_bcain@quicinc.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,60 +106,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 18 Sept 2024 at 14:49, Heinrich Schuchardt
-<heinrich.schuchardt@canonical.com> wrote:
+
+On 9/18/2024 2:42 AM, Laurent Vivier wrote:
+> Automatically generated using scripts/gensyscalls.sh
 >
-> On 18.09.24 15:12, Peter Maydell wrote:
-> > On Wed, 18 Sept 2024 at 14:06, Heinrich Schuchardt
-> > <heinrich.schuchardt@canonical.com> wrote:
-> >> Thanks Peter for looking into this.
-> >>
-> >> QEMU's cpu_synchronize_all_post_init() and
-> >> do_kvm_cpu_synchronize_post_reset() both end up in
-> >> kvm_arch_put_registers() and that is long after Linux
-> >> kvm_arch_vcpu_create() has been setting some FPU state. See the output
-> >> below.
-> >>
-> >> kvm_arch_put_registers() copies the CSRs by calling
-> >> kvm_riscv_put_regs_csr(). Here we can find:
-> >>
-> >>       KVM_RISCV_SET_CSR(cs, env, sstatus, env->mstatus);
-> >>
-> >> This call enables or disables the FPU according to the value of
-> >> env->mstatus.
-> >>
-> >> So we need to set the desired state of the floating point unit in QEMU.
-> >> And this is what the current patch does both for TCG and KVM.
-> >
-> > If it does this for both TCG and KVM then I don't understand
-> > this bit from the commit message:
-> >
-> > # Without this patch EDK II with TLS enabled crashes when hitting the first
-> > # floating point instruction while running QEMU with --accel kvm and runs
-> > # fine with --accel tcg.
-> >
-> > Shouldn't this guest crash the same way with both KVM and TCG without
-> > this patch, because the FPU state is the same for both?
-
-> By default `qemu-system-riscv64 --accel tcg` runs OpenSBI as firmware
-> which enables the FPU.
+> Signed-off-by: Laurent Vivier <laurent@vivier.eu>
+> ---
+>   linux-user/aarch64/syscall_nr.h     | 19 ++++++++++++++++++-
+>   linux-user/hexagon/syscall_nr.h     | 20 ++++++++++++++++++--
+>   linux-user/loongarch64/syscall_nr.h | 14 +++++++++++++-
+>   linux-user/openrisc/syscall_nr.h    | 18 +++++++++++++++++-
+>   linux-user/riscv/syscall32_nr.h     | 23 ++++++++++++++++++++---
+>   linux-user/riscv/syscall64_nr.h     | 23 ++++++++++++++++++++---
+>   6 files changed, 106 insertions(+), 11 deletions(-)
 >
-> If you would choose a different SBI implementation which does not enable
-> the FPU you could experience the same crash.
+> diff --git a/linux-user/aarch64/syscall_nr.h b/linux-user/aarch64/syscall_nr.h
+> index 12ef002d60f9..c2e09ed5c50c 100644
+> --- a/linux-user/aarch64/syscall_nr.h
+> +++ b/linux-user/aarch64/syscall_nr.h
+> @@ -305,9 +305,26 @@
+>   #define TARGET_NR_process_madvise 440
+>   #define TARGET_NR_epoll_pwait2 441
+>   #define TARGET_NR_mount_setattr 442
+> +#define TARGET_NR_quotactl_fd 443
+>   #define TARGET_NR_landlock_create_ruleset 444
+>   #define TARGET_NR_landlock_add_rule 445
+>   #define TARGET_NR_landlock_restrict_self 446
+> -#define TARGET_NR_syscalls 447
+> +#define TARGET_NR_memfd_secret 447
+> +#define TARGET_NR_process_mrelease 448
+> +#define TARGET_NR_futex_waitv 449
+> +#define TARGET_NR_set_mempolicy_home_node 450
+> +#define TARGET_NR_cachestat 451
+> +#define TARGET_NR_fchmodat2 452
+> +#define TARGET_NR_map_shadow_stack 453
+> +#define TARGET_NR_futex_wake 454
+> +#define TARGET_NR_futex_wait 455
+> +#define TARGET_NR_futex_requeue 456
+> +#define TARGET_NR_statmount 457
+> +#define TARGET_NR_listmount 458
+> +#define TARGET_NR_lsm_get_self_attr 459
+> +#define TARGET_NR_lsm_set_self_attr 460
+> +#define TARGET_NR_lsm_list_modules 461
+> +#define TARGET_NR_mseal 462
+> +#define TARGET_NR_syscalls 463
+>   
+>   #endif /* LINUX_USER_AARCH64_SYSCALL_NR_H */
+> diff --git a/linux-user/hexagon/syscall_nr.h b/linux-user/hexagon/syscall_nr.h
+> index b047dbbf6df3..f3220b74f7c3 100644
+> --- a/linux-user/hexagon/syscall_nr.h
+> +++ b/linux-user/hexagon/syscall_nr.h
+> @@ -90,7 +90,7 @@
+>   #define TARGET_NR_sync 81
+>   #define TARGET_NR_fsync 82
+>   #define TARGET_NR_fdatasync 83
+> -#define TARGET_NR_sync_file_range 84
+> +#define TARGET_NR_sync_file_range2 84
+>   #define TARGET_NR_timerfd_create 85
+>   #define TARGET_NR_timerfd_settime 86
+>   #define TARGET_NR_timerfd_gettime 87
+> @@ -324,9 +324,25 @@
+>   #define TARGET_NR_process_madvise 440
+>   #define TARGET_NR_epoll_pwait2 441
+>   #define TARGET_NR_mount_setattr 442
+> +#define TARGET_NR_quotactl_fd 443
+>   #define TARGET_NR_landlock_create_ruleset 444
+>   #define TARGET_NR_landlock_add_rule 445
+>   #define TARGET_NR_landlock_restrict_self 446
+> -#define TARGET_NR_syscalls 447
+> +#define TARGET_NR_process_mrelease 448
+> +#define TARGET_NR_futex_waitv 449
+> +#define TARGET_NR_set_mempolicy_home_node 450
+> +#define TARGET_NR_cachestat 451
+> +#define TARGET_NR_fchmodat2 452
+> +#define TARGET_NR_map_shadow_stack 453
+> +#define TARGET_NR_futex_wake 454
+> +#define TARGET_NR_futex_wait 455
+> +#define TARGET_NR_futex_requeue 456
+> +#define TARGET_NR_statmount 457
+> +#define TARGET_NR_listmount 458
+> +#define TARGET_NR_lsm_get_self_attr 459
+> +#define TARGET_NR_lsm_set_self_attr 460
+> +#define TARGET_NR_lsm_list_modules 461
+> +#define TARGET_NR_mseal 462
+> +#define TARGET_NR_syscalls 463
 
-Ah, so KVM vs TCG is a red herring and it's actually "some guest
-firmware doesn't enable the FPU itself, and if you run that then it will
-fall over, whether you do it in KVM or TCG" ? That makes more sense.
+For hexagon system calls:
 
-I don't have an opinion on whether you want to do that or not,
-not knowing what the riscv architecture mandates. (On Arm this
-would be fairly clearly "the guest software is broken and
-should be fixed", but that's because the Arm architecture
-says you can't assume the FPU is enabled from reset.)
+Reviewed-by: Brian Cain <bcain@quicinc.com>
 
-I do think the commit message could use clarification to
-explain this.
 
-thanks
--- PMM
+Note for future updates that as of v6.11 hexagon has switched to the new 
+system call table.
+
+
+>   
+>   #endif /* LINUX_USER_HEXAGON_SYSCALL_NR_H */
+> diff --git a/linux-user/loongarch64/syscall_nr.h b/linux-user/loongarch64/syscall_nr.h
+> index be00915adf22..fefca6f5f6d3 100644
+> --- a/linux-user/loongarch64/syscall_nr.h
+> +++ b/linux-user/loongarch64/syscall_nr.h
+> @@ -307,6 +307,18 @@
+>   #define TARGET_NR_process_mrelease 448
+>   #define TARGET_NR_futex_waitv 449
+>   #define TARGET_NR_set_mempolicy_home_node 450
+> -#define TARGET_NR_syscalls 451
+> +#define TARGET_NR_cachestat 451
+> +#define TARGET_NR_fchmodat2 452
+> +#define TARGET_NR_map_shadow_stack 453
+> +#define TARGET_NR_futex_wake 454
+> +#define TARGET_NR_futex_wait 455
+> +#define TARGET_NR_futex_requeue 456
+> +#define TARGET_NR_statmount 457
+> +#define TARGET_NR_listmount 458
+> +#define TARGET_NR_lsm_get_self_attr 459
+> +#define TARGET_NR_lsm_set_self_attr 460
+> +#define TARGET_NR_lsm_list_modules 461
+> +#define TARGET_NR_mseal 462
+> +#define TARGET_NR_syscalls 463
+>   
+>   #endif /* LINUX_USER_LOONGARCH_SYSCALL_NR_H */
+> diff --git a/linux-user/openrisc/syscall_nr.h b/linux-user/openrisc/syscall_nr.h
+> index f7faddb54c58..2b66f99ea66a 100644
+> --- a/linux-user/openrisc/syscall_nr.h
+> +++ b/linux-user/openrisc/syscall_nr.h
+> @@ -326,9 +326,25 @@
+>   #define TARGET_NR_process_madvise 440
+>   #define TARGET_NR_epoll_pwait2 441
+>   #define TARGET_NR_mount_setattr 442
+> +#define TARGET_NR_quotactl_fd 443
+>   #define TARGET_NR_landlock_create_ruleset 444
+>   #define TARGET_NR_landlock_add_rule 445
+>   #define TARGET_NR_landlock_restrict_self 446
+> -#define TARGET_NR_syscalls 447
+> +#define TARGET_NR_process_mrelease 448
+> +#define TARGET_NR_futex_waitv 449
+> +#define TARGET_NR_set_mempolicy_home_node 450
+> +#define TARGET_NR_cachestat 451
+> +#define TARGET_NR_fchmodat2 452
+> +#define TARGET_NR_map_shadow_stack 453
+> +#define TARGET_NR_futex_wake 454
+> +#define TARGET_NR_futex_wait 455
+> +#define TARGET_NR_futex_requeue 456
+> +#define TARGET_NR_statmount 457
+> +#define TARGET_NR_listmount 458
+> +#define TARGET_NR_lsm_get_self_attr 459
+> +#define TARGET_NR_lsm_set_self_attr 460
+> +#define TARGET_NR_lsm_list_modules 461
+> +#define TARGET_NR_mseal 462
+> +#define TARGET_NR_syscalls 463
+>   
+>   #endif /* LINUX_USER_OPENRISC_SYSCALL_NR_H */
+> diff --git a/linux-user/riscv/syscall32_nr.h b/linux-user/riscv/syscall32_nr.h
+> index 412e58e5b2f2..42376ac8c7d2 100644
+> --- a/linux-user/riscv/syscall32_nr.h
+> +++ b/linux-user/riscv/syscall32_nr.h
+> @@ -7,6 +7,8 @@
+>   #define LINUX_USER_RISCV_SYSCALL32_NR_H
+>   
+>   #define TARGET_NR_io_setup 0
+> +#define TARGET_NR_riscv_flush_icache (TARGET_NR_arch_specific_syscall + 15)
+> +#define TARGET_NR_riscv_hwprobe (TARGET_NR_arch_specific_syscall + 14)
+>   #define TARGET_NR_io_destroy 1
+>   #define TARGET_NR_io_submit 2
+>   #define TARGET_NR_io_cancel 3
+> @@ -227,8 +229,6 @@
+>   #define TARGET_NR_perf_event_open 241
+>   #define TARGET_NR_accept4 242
+>   #define TARGET_NR_arch_specific_syscall 244
+> -#define TARGET_NR_riscv_flush_icache (TARGET_NR_arch_specific_syscall + 15)
+> -#define TARGET_NR_riscv_hwprobe (TARGET_NR_arch_specific_syscall + 14)
+>   #define TARGET_NR_prlimit64 261
+>   #define TARGET_NR_fanotify_init 262
+>   #define TARGET_NR_fanotify_mark 263
+> @@ -300,9 +300,26 @@
+>   #define TARGET_NR_process_madvise 440
+>   #define TARGET_NR_epoll_pwait2 441
+>   #define TARGET_NR_mount_setattr 442
+> +#define TARGET_NR_quotactl_fd 443
+>   #define TARGET_NR_landlock_create_ruleset 444
+>   #define TARGET_NR_landlock_add_rule 445
+>   #define TARGET_NR_landlock_restrict_self 446
+> -#define TARGET_NR_syscalls 447
+> +#define TARGET_NR_memfd_secret 447
+> +#define TARGET_NR_process_mrelease 448
+> +#define TARGET_NR_futex_waitv 449
+> +#define TARGET_NR_set_mempolicy_home_node 450
+> +#define TARGET_NR_cachestat 451
+> +#define TARGET_NR_fchmodat2 452
+> +#define TARGET_NR_map_shadow_stack 453
+> +#define TARGET_NR_futex_wake 454
+> +#define TARGET_NR_futex_wait 455
+> +#define TARGET_NR_futex_requeue 456
+> +#define TARGET_NR_statmount 457
+> +#define TARGET_NR_listmount 458
+> +#define TARGET_NR_lsm_get_self_attr 459
+> +#define TARGET_NR_lsm_set_self_attr 460
+> +#define TARGET_NR_lsm_list_modules 461
+> +#define TARGET_NR_mseal 462
+> +#define TARGET_NR_syscalls 463
+>   
+>   #endif /* LINUX_USER_RISCV_SYSCALL32_NR_H */
+> diff --git a/linux-user/riscv/syscall64_nr.h b/linux-user/riscv/syscall64_nr.h
+> index 29e1eb20753e..96ee92ec31f8 100644
+> --- a/linux-user/riscv/syscall64_nr.h
+> +++ b/linux-user/riscv/syscall64_nr.h
+> @@ -7,6 +7,8 @@
+>   #define LINUX_USER_RISCV_SYSCALL64_NR_H
+>   
+>   #define TARGET_NR_io_setup 0
+> +#define TARGET_NR_riscv_flush_icache (TARGET_NR_arch_specific_syscall + 15)
+> +#define TARGET_NR_riscv_hwprobe (TARGET_NR_arch_specific_syscall + 14)
+>   #define TARGET_NR_io_destroy 1
+>   #define TARGET_NR_io_submit 2
+>   #define TARGET_NR_io_cancel 3
+> @@ -250,8 +252,6 @@
+>   #define TARGET_NR_accept4 242
+>   #define TARGET_NR_recvmmsg 243
+>   #define TARGET_NR_arch_specific_syscall 244
+> -#define TARGET_NR_riscv_flush_icache (TARGET_NR_arch_specific_syscall + 15)
+> -#define TARGET_NR_riscv_hwprobe (TARGET_NR_arch_specific_syscall + 14)
+>   #define TARGET_NR_wait4 260
+>   #define TARGET_NR_prlimit64 261
+>   #define TARGET_NR_fanotify_init 262
+> @@ -306,9 +306,26 @@
+>   #define TARGET_NR_process_madvise 440
+>   #define TARGET_NR_epoll_pwait2 441
+>   #define TARGET_NR_mount_setattr 442
+> +#define TARGET_NR_quotactl_fd 443
+>   #define TARGET_NR_landlock_create_ruleset 444
+>   #define TARGET_NR_landlock_add_rule 445
+>   #define TARGET_NR_landlock_restrict_self 446
+> -#define TARGET_NR_syscalls 447
+> +#define TARGET_NR_memfd_secret 447
+> +#define TARGET_NR_process_mrelease 448
+> +#define TARGET_NR_futex_waitv 449
+> +#define TARGET_NR_set_mempolicy_home_node 450
+> +#define TARGET_NR_cachestat 451
+> +#define TARGET_NR_fchmodat2 452
+> +#define TARGET_NR_map_shadow_stack 453
+> +#define TARGET_NR_futex_wake 454
+> +#define TARGET_NR_futex_wait 455
+> +#define TARGET_NR_futex_requeue 456
+> +#define TARGET_NR_statmount 457
+> +#define TARGET_NR_listmount 458
+> +#define TARGET_NR_lsm_get_self_attr 459
+> +#define TARGET_NR_lsm_set_self_attr 460
+> +#define TARGET_NR_lsm_list_modules 461
+> +#define TARGET_NR_mseal 462
+> +#define TARGET_NR_syscalls 463
+>   
+>   #endif /* LINUX_USER_RISCV_SYSCALL64_NR_H */
 
