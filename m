@@ -4,42 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C995CEE6426
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 06:55:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA7AFEE6426
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 06:55:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqoaK-0003GF-2R; Wed, 18 Sep 2024 02:54:45 -0400
+	id 1sqoaN-0003X8-PP; Wed, 18 Sep 2024 02:54:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sqoaB-0002y4-Ub
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 02:54:36 -0400
+ id 1sqoaB-0002xj-Is
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 02:54:35 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sqoa8-0005OZ-7V
+ (envelope-from <maobibo@loongson.cn>) id 1sqoa7-0005OS-Sf
  for qemu-devel@nongnu.org; Wed, 18 Sep 2024 02:54:35 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8BxfeoleepmuX4KAA--.24805S3;
- Wed, 18 Sep 2024 14:54:29 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Bx9+gieepmqH4KAA--.22902S3;
+ Wed, 18 Sep 2024 14:54:26 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMAxSeYieepmKlQJAA--.53115S7;
- Wed, 18 Sep 2024 14:54:29 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMAxSeYieepmKlQJAA--.53115S2;
+ Wed, 18 Sep 2024 14:54:26 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 5/8] hw/intc/loongarch_pch: Move some functions to file
- loongarch_pic_common
-Date: Wed, 18 Sep 2024 14:54:23 +0800
-Message-Id: <20240918065426.2341823-6-maobibo@loongson.cn>
+Subject: [PATCH v2 0/8] hw/intc/loongarch_pch: Split into pic common and pic
+Date: Wed, 18 Sep 2024 14:54:18 +0800
+Message-Id: <20240918065426.2341823-1-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240918065426.2341823-1-maobibo@loongson.cn>
-References: <20240918065426.2341823-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxSeYieepmKlQJAA--.53115S7
+X-CM-TRANSID: qMiowMAxSeYieepmKlQJAA--.53115S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,120 +63,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move some common functions to file loongarch_pic_common.c, the common
-functions include loongarch_pic_common_realize(), property structure
-loongarch_pic_common_properties and vmstate structure
-vmstate_loongarch_pic_common.
+In order to support irqchip_in_kenrel method, split loongarch pch pic
+driver into two parts, pic common and pic TCG driver. LoongArch pic common
+driver includes vmstate and property interface, also vmstate load and
+store interface is defined in pic common driver.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+In future LoongArch pic kvm driver can inherit from pic common driver.
+
 ---
- hw/intc/loongarch_pch_pic.c    | 37 +-----------------------------
- hw/intc/loongarch_pic_common.c | 41 ++++++++++++++++++++++++++++++++++
- 2 files changed, 42 insertions(+), 36 deletions(-)
- create mode 100644 hw/intc/loongarch_pic_common.c
+v1 ... v2:
+  1. Reorganize the patchset, put macro and structure moving patch as
+     first one
+  2. Split the patchset with smaller patch, so that it is easier to
+     review
+---
+Bibo Mao (8):
+  include: Add loongarch_pic_common header file
+  include: Move struct LoongArchPCHPIC to loongarch_pic_common header
+    file
+  hw/intc/loongarch_pch: Merge instance_init() into realize()
+  hw/intc/loongarch_pch: Rename LoongArchPCHPIC with
+    LoongArchPICCommonState
+  hw/intc/loongarch_pch: Move some functions to file
+    loongarch_pic_common
+  hw/intc/loongarch_pch: Inherit from loongarch_pic_common
+  hw/intc/loongarch_pch: Add pre_save and post_load interfaces
+  hw/intc/loongarch_pch: Code cleanup about loongarch_pch_pic
 
-diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index 64f30d8916..25c612b366 100644
---- a/hw/intc/loongarch_pch_pic.c
-+++ b/hw/intc/loongarch_pch_pic.c
-@@ -379,16 +379,7 @@ static void loongarch_pch_pic_reset(DeviceState *d)
-     s->int_polarity = 0x0;
- }
- 
--static void loongarch_pic_common_realize(DeviceState *dev, Error **errp)
--{
--    LoongArchPICCommonState *s = LOONGARCH_PCH_PIC(dev);
--
--    if (!s->irq_num || s->irq_num  > VIRT_PCH_PIC_IRQ_NUM) {
--        error_setg(errp, "Invalid 'pic_irq_num'");
--        return;
--    }
--}
--
-+#include "loongarch_pic_common.c"
- static void loongarch_pch_pic_realize(DeviceState *dev, Error **errp)
- {
-     LoongArchPCHPIC *s = LOONGARCH_PCH_PIC(dev);
-@@ -417,32 +408,6 @@ static void loongarch_pch_pic_realize(DeviceState *dev, Error **errp)
- 
- }
- 
--static Property loongarch_pic_common_properties[] = {
--    DEFINE_PROP_UINT32("pch_pic_irq_num", LoongArchPICCommonState, irq_num, 0),
--    DEFINE_PROP_END_OF_LIST(),
--};
--
--static const VMStateDescription vmstate_loongarch_pic_common = {
--    .name = "loongarch_pch_pic",
--    .version_id = 1,
--    .minimum_version_id = 1,
--    .fields = (const VMStateField[]) {
--        VMSTATE_UINT64(int_mask, LoongArchPICCommonState),
--        VMSTATE_UINT64(htmsi_en, LoongArchPICCommonState),
--        VMSTATE_UINT64(intedge, LoongArchPICCommonState),
--        VMSTATE_UINT64(intclr, LoongArchPICCommonState),
--        VMSTATE_UINT64(auto_crtl0, LoongArchPICCommonState),
--        VMSTATE_UINT64(auto_crtl1, LoongArchPICCommonState),
--        VMSTATE_UINT8_ARRAY(route_entry, LoongArchPICCommonState, 64),
--        VMSTATE_UINT8_ARRAY(htmsi_vector, LoongArchPICCommonState, 64),
--        VMSTATE_UINT64(last_intirr, LoongArchPICCommonState),
--        VMSTATE_UINT64(intirr, LoongArchPICCommonState),
--        VMSTATE_UINT64(intisr, LoongArchPICCommonState),
--        VMSTATE_UINT64(int_polarity, LoongArchPICCommonState),
--        VMSTATE_END_OF_LIST()
--    }
--};
--
- static void loongarch_pch_pic_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-diff --git a/hw/intc/loongarch_pic_common.c b/hw/intc/loongarch_pic_common.c
-new file mode 100644
-index 0000000000..c8e0490d40
---- /dev/null
-+++ b/hw/intc/loongarch_pic_common.c
-@@ -0,0 +1,41 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * QEMU Loongson 7A1000 I/O interrupt controller.
-+ * Copyright (C) 2024 Loongson Technology Corporation Limited
-+ */
-+
-+static void loongarch_pic_common_realize(DeviceState *dev, Error **errp)
-+{
-+    LoongArchPICCommonState *s = LOONGARCH_PCH_PIC(dev);
-+
-+    if (!s->irq_num || s->irq_num  > VIRT_PCH_PIC_IRQ_NUM) {
-+        error_setg(errp, "Invalid 'pic_irq_num'");
-+        return;
-+    }
-+}
-+
-+static Property loongarch_pic_common_properties[] = {
-+    DEFINE_PROP_UINT32("pch_pic_irq_num", LoongArchPICCommonState, irq_num, 0),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static const VMStateDescription vmstate_loongarch_pic_common = {
-+    .name = "loongarch_pch_pic",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(int_mask, LoongArchPICCommonState),
-+        VMSTATE_UINT64(htmsi_en, LoongArchPICCommonState),
-+        VMSTATE_UINT64(intedge, LoongArchPICCommonState),
-+        VMSTATE_UINT64(intclr, LoongArchPICCommonState),
-+        VMSTATE_UINT64(auto_crtl0, LoongArchPICCommonState),
-+        VMSTATE_UINT64(auto_crtl1, LoongArchPICCommonState),
-+        VMSTATE_UINT8_ARRAY(route_entry, LoongArchPICCommonState, 64),
-+        VMSTATE_UINT8_ARRAY(htmsi_vector, LoongArchPICCommonState, 64),
-+        VMSTATE_UINT64(last_intirr, LoongArchPICCommonState),
-+        VMSTATE_UINT64(intirr, LoongArchPICCommonState),
-+        VMSTATE_UINT64(intisr, LoongArchPICCommonState),
-+        VMSTATE_UINT64(int_polarity, LoongArchPICCommonState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
+ hw/intc/loongarch_pch_pic.c            | 106 ++++++++-----------------
+ hw/intc/loongarch_pic_common.c         |  97 ++++++++++++++++++++++
+ hw/intc/meson.build                    |   2 +-
+ hw/loongarch/virt.c                    |   2 +-
+ include/hw/intc/loongarch_pch_pic.h    |  70 ++++------------
+ include/hw/intc/loongarch_pic_common.h |  82 +++++++++++++++++++
+ 6 files changed, 230 insertions(+), 129 deletions(-)
+ create mode 100644 hw/intc/loongarch_pic_common.c
+ create mode 100644 include/hw/intc/loongarch_pic_common.h
+
+
+base-commit: 2b81c046252fbfb375ad30632362fc16e6e22bd5
 -- 
 2.39.3
 
