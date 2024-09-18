@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A402CDD552
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 19:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 521DACDD553
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 19:30:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr0H1-0005jm-Db; Wed, 18 Sep 2024 15:23:35 -0400
+	id 1sr0Gn-0004n0-LB; Wed, 18 Sep 2024 15:23:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3qyjrZgUKCuYbIdQXOWWOTM.KWUYMUc-LMdMTVWVOVc.WZO@flex--tavip.bounces.google.com>)
- id 1sr0Gu-0005Io-Va
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 15:23:29 -0400
-Received: from mail-pf1-x449.google.com ([2607:f8b0:4864:20::449])
+ <3kyjrZgUKCs4DuF2908805y.w86Ay6E-xyFy578707E.8B0@flex--tavip.bounces.google.com>)
+ id 1sr0GV-0004S6-V3
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 15:23:04 -0400
+Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3qyjrZgUKCuYbIdQXOWWOTM.KWUYMUc-LMdMTVWVOVc.WZO@flex--tavip.bounces.google.com>)
- id 1sr0Gs-0007Nf-C5
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 15:23:27 -0400
-Received: by mail-pf1-x449.google.com with SMTP id
- d2e1a72fcca58-7190c5e73cdso70487b3a.0
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 12:23:25 -0700 (PDT)
+ <3kyjrZgUKCs4DuF2908805y.w86Ay6E-xyFy578707E.8B0@flex--tavip.bounces.google.com>)
+ id 1sr0GU-0007II-B4
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 15:23:03 -0400
+Received: by mail-yb1-xb4a.google.com with SMTP id
+ 3f1490d57ef6-e02b5792baaso167264276.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 12:23:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1726687405; x=1727292205; darn=nongnu.org;
+ d=google.com; s=20230601; t=1726687381; x=1727292181; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=LH2iO35jx1TQ4g6EFz+L7zqP2G1PAY0VCA+0NbB5ci8=;
- b=SWcgBzuyDFS1jIlrD4ukMp4WKe1YkNjY+LtgtUjbGENMxHFBJYRmL8bBJIVudVGz4b
- 2ICWubBkM4qDVjF6Jz3UsQ56SgWZBhi5TaCr9NIPHTb+ljSpahqrs9Fr3jgpdH9zinA0
- BvIVtSGCRxFUXOlICSU3jbaoBLUb59qFOhu3omLRHDcgYem8x2c5XvUMZmiZk5CtMCzV
- M+kn2GQRiF1zhFCsiO+weNjzqTYSoK6JEpzxOQSJQn/JdDi1wXqnj7WTCwNVop7nFWDe
- HIItjQNC/+pnz1eyXPq3iYsRuZA9TvWsQup/xCBNfq2YwGvLL3UvSEbznPxn9hvphI0C
- 5qVw==
+ bh=Is1Pe9Ut7+FUOXRSBGio99L8BWy9EslIqrLBu7QfCA8=;
+ b=2IwRO8Kja88wJ94RMDtGQzxOQLop42HhVFpqZsYDsHz+/hQxj3KRb8UQJt0qJhjQKN
+ 0c5I8ObRYQNGAgt76qSQbKBpO3pnluugcnOUOtLdTzKwNVKJR4ikfCJwQTBaX644Aku8
+ TLJ/nc9I0VIODmcsFbTTLCn/yhWbGjralwu1UsXuSr08ZxvBYrA87RVI46rkYHLf658l
+ u7nhV8PrZBSPSdgomG3eTguzZNgbzbwQbCcoNOVO9tHqOvT2RoOQLLKXzkB2/1A7ES+H
+ HACbYAANpr4ZKXU8jtUho//9XyL2C5s1ydQ0m+owmKB5qDMvibVqRKsAbievR3xe2C9b
+ 7ENA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726687405; x=1727292205;
+ d=1e100.net; s=20230601; t=1726687381; x=1727292181;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LH2iO35jx1TQ4g6EFz+L7zqP2G1PAY0VCA+0NbB5ci8=;
- b=wzg5GsHmuE33mHWBZcKWo+lwEt+2z18zE2FUAEEzFAOZqizZ93FSGMOKRcEjlqja5n
- Cl9ZEl8/LwzzcRjd7ZL4M/+n2i2WK/1KEWRjoGlwE/qBp/vSCetFzsCjZcnY+JqIt+7K
- 1w8Q/aSxiKEBNDtMDgLEp/TzasemM31VItaDvRG/3JjXMLD52Lhkl/FTQsIEq5Bd9P3i
- XD1B4ELZa79pAXCmAYNGOKZpuiJ4K3FOEDYiGv2pLLPH74MCpFt7x2fUXvFH1evH0bIy
- LlNFGnIVw30RrvFPBKDDKiRuDoHlg+IK66J0PPRd14TcoTWtPKyJLzZMBjbE4ul6eTkE
- zvpA==
-X-Gm-Message-State: AOJu0YxbmFdJm809Hp7NAoaBzp8j36C2ViI44jXnZeA5GVAz0fguB19j
- 9lqP85K6WwMi8q3mIRqxRrs/EjuTUq/XWPW/j/q+5wz9v3NphgBHt06IcJEU9feCu4vMEkTJOEv
- yYWlagrgXWMCvpv8Rv6c31YM1jemqiHWtpiXlf1XEQjzGET0fQ0PQHmvs3xrJK+0BaEZv+fYNVe
- Yi4eZPiu8Uv+vL3zsVkita3kG/GQ==
-X-Google-Smtp-Source: AGHT+IEjoG7zUr2P2Fy4LWtZgZy8Y1sFKzhVgMbcwUQWX/mPhvM6Zr0Z3hH6QtqK5TNvxJMI/PT+shKS9Q==
+ bh=Is1Pe9Ut7+FUOXRSBGio99L8BWy9EslIqrLBu7QfCA8=;
+ b=K5UsYYWpLAhd8SNUYbQc1cAz7MUfW79Cmgn3PIp1iA2JZnYt8fixPJCPViIPoLx100
+ 8qN6sTQ56US2KZWuaaCTI1Gr2St2e8+OAgO6AsnXv4GV7v+3VVTxLO6IY03mSuzx/dAH
+ bJlDD7LySjsptD55AK5H3/68eeaNuIGRuCA7fzLsYqszCeVhpoCqDHI3FsOdFCuL6o7y
+ qTgg1XgtiCuG1qfjJudzcpyHmwKCuCuj/fOGqZX7MIg3iB1vGVtUIY72pyPP6JJ1HGh7
+ xz6EnXiIKzFwcvNFaAklNpu8IaOrT1XMa3/vNodLsuvxnpW2r1oKY2Isrxvz0YZ91Via
+ tEqg==
+X-Gm-Message-State: AOJu0YzB+r5IoZ2trHjQUieJdVpUffBRfxmlw7WAVklfKHOOVTByJEkB
+ 42gNpZeJo0B+izeg36QYpSjsB8HMzPfJXk98tEkAd92UjIlCGUX5yj2Rr1kXE6B6o8kbMZVfLsC
+ mLLlB1OGRHZ6QAPgXub2MwcZxFv3Le+lwuGWKD28rzvqtFsnM27hNCgPtk1VBn6BfPpbB+GmBun
+ 2X/wY7ehb8s7BOn5A0htPMtMEOeQ==
+X-Google-Smtp-Source: AGHT+IHkySxgEZYLi4WMd7ZmcuN6KJFEPSj3FgsG3HRJR+GWFLkWhXgxPgIOftl6XFM+Gn5BP1pwrnQ1cQ==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a05:6a00:6f28:b0:70e:9de1:992e
- with SMTP id
- d2e1a72fcca58-71926060114mr60644b3a.1.1726687403885; Wed, 18 Sep 2024
- 12:23:23 -0700 (PDT)
-Date: Wed, 18 Sep 2024 12:22:43 -0700
+ (user=tavip job=sendgmr) by 2002:a25:e090:0:b0:e11:584f:c2ca with
+ SMTP id
+ 3f1490d57ef6-e1d9dc3c15bmr55129276.6.1726687379366; Wed, 18 Sep 2024 12:22:59
+ -0700 (PDT)
+Date: Wed, 18 Sep 2024 12:22:30 -0700
 In-Reply-To: <20240918192254.3136903-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20240918192254.3136903-1-tavip@google.com>
 X-Mailer: git-send-email 2.46.0.662.g92d0881bb0-goog
-Message-ID: <20240918192254.3136903-16-tavip@google.com>
-Subject: [PATCH 15/25] tests/qtest: add register access macros and functions
+Message-ID: <20240918192254.3136903-3-tavip@google.com>
+Subject: [PATCH 02/25] tests/unit: add fifo32 tests
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -72,16 +72,16 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org, jsnow@redhat.com, 
  crosa@redhat.com, lvivier@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::449;
- envelope-from=3qyjrZgUKCuYbIdQXOWWOTM.KWUYMUc-LMdMTVWVOVc.WZO@flex--tavip.bounces.google.com;
- helo=mail-pf1-x449.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
+ envelope-from=3kyjrZgUKCs4DuF2908805y.w86Ay6E-xyFy578707E.8B0@flex--tavip.bounces.google.com;
+ helo=mail-yb1-xb4a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
 X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,94 +97,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add utility macros for accessing register or register bit fields in
-tests, e.g.:
-
-  REG32_WRITE(FLEXCOMM, PSELID, persel);
-  g_assert(REG32_READ_FIELD(FLEXCOMM, PSELID, PERSEL) == persel);
+Add push/pop and peek tests for fifo32.
 
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- tests/qtest/reg-utils.h | 70 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 70 insertions(+)
- create mode 100644 tests/qtest/reg-utils.h
+ tests/unit/test-fifo.c | 50 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
-diff --git a/tests/qtest/reg-utils.h b/tests/qtest/reg-utils.h
-new file mode 100644
-index 0000000000..e09aaf3333
---- /dev/null
-+++ b/tests/qtest/reg-utils.h
-@@ -0,0 +1,70 @@
-+/*
-+ * Register access utilities for device tests.
-+ *
-+ * Copyright (C) 2024 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+#ifndef _REG_UTILS_H
-+#define _REG_UTILS_H
+diff --git a/tests/unit/test-fifo.c b/tests/unit/test-fifo.c
+index 14153c41fa..d0e05ba95c 100644
+--- a/tests/unit/test-fifo.c
++++ b/tests/unit/test-fifo.c
+@@ -13,6 +13,7 @@
+ #include "qemu/osdep.h"
+ #include "migration/vmstate.h"
+ #include "qemu/fifo8.h"
++#include "qemu/fifo32.h"
+ 
+ const VMStateInfo vmstate_info_uint32;
+ const VMStateInfo vmstate_info_buffer;
+@@ -432,6 +433,53 @@ static void test_fifo8_pushpop(void)
+     fifo8_destroy(&fifo);
+ }
+ 
++static void test_fifo32_pushpop(void)
++{
++    Fifo32 fifo;
++    uint32_t e;
 +
-+#include "libqtest-single.h"
-+#include "hw/registerfields.h"
++    fifo32_create(&fifo, 2);
++    fifo32_push(&fifo, 0x11121314);
++    fifo32_push(&fifo, 0x21222324);
++    g_assert(fifo32_num_used(&fifo) == 2);
 +
-+#ifdef DEBUG_REG
-+#define debug(fmt, args...) fprintf(stderr, fmt, ## args)
-+#else
-+#define debug(fmt, args...)
-+#endif
++    e = fifo32_pop(&fifo);
++    g_assert(e == 0x11121314);
++    g_assert(fifo32_num_used(&fifo) == 1);
 +
-+#define _REG_OFF(mod, reg) (A_##mod##_##reg)
++    e = fifo32_peek(&fifo);
++    g_assert(e == 0x21222324);
 +
-+#define REG32_READ(mod, reg)                                            \
-+    ({                                                                  \
-+        uint32_t value;                                                 \
-+        value = readl(mod##_BASE + _REG_OFF(mod, reg));                 \
-+        debug("[%s] -> %08x\n", #reg, value);                           \
-+        value;                                                          \
-+    })
++    g_assert(fifo32_num_used(&fifo) == 1);
++    fifo32_destroy(&fifo);
++}
 +
-+#define REG32_WRITE(mod, reg, value)                                    \
-+    do {                                                                \
-+        debug("[%s] <- %08x\n", #reg, value);                           \
-+        writel(mod##_BASE + _REG_OFF(mod, reg), value);                 \
-+    } while (0)
++static void test_fifo32_peek(void)
++{
++    Fifo32 fifo;
++    uint32_t e;
 +
-+#define REG_FIELD_VAL(v, mod, reg, field)                               \
-+    FIELD_EX32(v, mod##_##reg, field)                                   \
++    fifo32_create(&fifo, 2);
++    fifo32_push(&fifo, 0x11121314);
++    fifo32_push(&fifo, 0x21222324);
++    g_assert(fifo32_num_used(&fifo) == 2);
 +
-+#define REG32_READ_FIELD(mod, reg, field)                   \
-+    REG_FIELD_VAL(REG32_READ(mod, reg), mod, reg, field)
++    e = fifo32_peek(&fifo);
++    g_assert(e == 0x11121314);
++    g_assert(fifo32_num_used(&fifo) == 2);
 +
-+#define REG32_WRITE_FIELD(mod, reg, field, val)                         \
-+    do {                                                                \
-+        uint32_t _tmp = REG32_READ(mod, reg);                           \
-+        _tmp = FIELD_DP32(_tmp, mod##_##reg, field, val);               \
-+        REG32_WRITE(mod, reg, _tmp);                                    \
-+    } while (0)
++    e = fifo32_pop(&fifo);
++    g_assert(e == 0x11121314);
++    g_assert(fifo32_num_used(&fifo) == 1);
 +
-+#define REG32_WRITE_FIELD_NOUPDATE(mod, reg, field, val)                \
-+    do {                                                                \
-+        uint32_t _tmp = FIELD_DP32(0, mod##_##reg, field, val);         \
-+        REG32_WRITE(mod, reg, _tmp);                                    \
-+    } while (0)
++    e = fifo32_peek(&fifo);
++    g_assert(e == 0x21222324);
++    g_assert(fifo32_num_used(&fifo) == 1);
 +
-+#define WAIT_REG32_FIELD(ns, mod, reg, field, val)                      \
-+    do {                                                                \
-+        clock_step(ns);                                                 \
-+        g_assert_cmpuint(REG32_READ_FIELD(mod, reg, field), ==, val);   \
-+    } while (0)
++    fifo32_destroy(&fifo);
++}
 +
-+#define REG32_READ_FAIL(mod, reg) \
-+    readl_fail(mod##_BASE + _REG_OFF(mod, reg))
 +
-+#define REG32_WRITE_FAIL(mod, reg, value) \
-+    writel_fail(mod##_BASE + _REG_OFF(mod, reg), value)
-+
-+#endif /* _REG_UTILS_H */
+ int main(int argc, char *argv[])
+ {
+     g_test_init(&argc, &argv, NULL);
+@@ -445,5 +493,7 @@ int main(int argc, char *argv[])
+     g_test_add_func("/fifo8/peek_bufptr_wrap", test_fifo8_peek_bufptr_wrap);
+     g_test_add_func("/fifo8/pop_bufptr", test_fifo8_pop_bufptr);
+     g_test_add_func("/fifo8/pop_bufptr_wrap", test_fifo8_pop_bufptr_wrap);
++    g_test_add_func("/fifo32/pushpop", test_fifo32_pushpop);
++    g_test_add_func("/fifo32/peek", test_fifo32_peek);
+     return g_test_run();
+ }
 -- 
 2.46.0.662.g92d0881bb0-goog
 
