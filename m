@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 371A3CAC5B3
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 15:15:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39956CAC5B3
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 15:16:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqwP6-0000wK-1b; Wed, 18 Sep 2024 11:15:40 -0400
+	id 1sqwPD-00012a-Lq; Wed, 18 Sep 2024 11:15:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <just4now666666@gmail.com>)
- id 1sqwOt-0000uy-EC
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 11:15:30 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1sqwP6-0000x5-7k
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 11:15:46 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <just4now666666@gmail.com>)
- id 1sqwOm-0003ej-Pm
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 11:15:25 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-718e285544fso4506117b3a.1
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 08:15:18 -0700 (PDT)
+ id 1sqwP1-0003gq-GB
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 11:15:39 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2d8a4bad409so4800571a91.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 08:15:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726672517; x=1727277317; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1726672533; x=1727277333; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ag6fqPKxDQCNDt9GdDu6ip+9XA1UdxBT22NLW6XREKk=;
- b=IdNMe/Uoi5r6np8brulQ2v3pONAUuJtnxBfAbQh/HOuyDIkD5ygj3bWd4AZpWRi9ax
- N5nyDwMyGABu97Nqf6q3waxCNYJWoPUlZwex4iWIiTA+10YKzFqnEBexcKzpy/G6yoy/
- 9FGbrMOGVBKuFUPwIi/GS5NvqUUi/dcFD6NYpMNpmg/LR4FCSClG/h8qthCUvVWSej/+
- C+Cj84FzPWtse5REobtA5gfptYgql9SL0zi1FY6M2IBH1FfmgiWROEsmNe+ZJaKqhx0J
- NnlzFNT9OuCFkgrqd+EGGa8eX8NOZM2Mt5MPTLbhXEdBk61Acz9OxIdJ9UDvQjWg245U
- M5Nw==
+ bh=V2407ygCqU+0pBKVB90FpeWTltBAYtTfmrbyY/Nb3GA=;
+ b=QYGRLUzBJJkZGLwVUunGtJEPIOmr+TACRfRGBLMC3296jyAGPczJog3w89dMVQSMNn
+ k9HyJ80lSlPGzGQil+A1WmkOGrKRVOm53aw6zdZBN0IB088NlLbVxAj4pS+DKEIpejV0
+ tLxOpY7eJ9fwKt0Pud8isrrMfttmpYvwBpFMJFaeq6/LjarlXGm9zaOtedCD46SV5kV+
+ x4F+lVWQe/eO4f/PsqVCNqwIEez/yOkXc4gEfyKHBD7k60CFEQcVuBxoQwfASQx7+CiW
+ 55sj9GsGgjoildJO2vOtcAr03OLRnCcXWbk5IGAlRZzWsKzg724vVeEFsf3cmonG9Tk8
+ 4n7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726672517; x=1727277317;
+ d=1e100.net; s=20230601; t=1726672533; x=1727277333;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ag6fqPKxDQCNDt9GdDu6ip+9XA1UdxBT22NLW6XREKk=;
- b=MPJelx5Ln+BA+ROuKj1w2Pd7ceSBAY+mlY3tkDo9jC6FoqlpvlqNddFBb5cuzm5b5K
- GU+VGd0Vbr/ncdSVaHKUGWxk5PT4eKu8Tc+hVv6HYCx10QMp99EYz3ZXAPyEz421Ljoq
- hljzcNwgXtTZQXx98xqwOYh530N854ol7w7UQXNaHvIHcRiNZnmwlhb6tInFEN0N8ub9
- eP8Nbu9RVgDp3DaYBPqHxMWFJqKbNxlJOpA2EX6zPOi25jwKkws+R/DFY7gx8dfJqiM0
- FCOsUdVAiF63x49f9QWI7/9j6Dv/Wu9Wn5IcqAMr5U5cWhR5aIQZJO/OXwwKuCo3eoYJ
- ZBKQ==
-X-Gm-Message-State: AOJu0YxY7CjxmenFX6ySRzWSw7mrEAD+nAm5wPg54TKucizaEXazaxlM
- DcF7j80rrzx600MXm7CZTJ+nYXjFRI8/uTrhEGG3yxqULj2J05qMlt+C9zZeKTi6fEr1lNvcmaN
- JXS+5497+tx8hl9I9xxexZq4b5IjO1OmsRTrw/5qBnuDpMtaSMgkjEZrlisVq6J1NaUE=
-X-Google-Smtp-Source: AGHT+IGe+RNJjtzRGrtTtBGAHJE3SSts/mUtygMit8A+fexW9KOo5yJSj+q6Fjg2Z5B6H0y2AveAkGwKeImBL155smrY6uEn2LCGiRgL
-X-Received: by 2002:a05:6a21:3942:b0:1d2:e807:b5b3 with SMTP id
- adf61e73a8af0-1d2e807b6demr7502607637.8.1726672517388; Wed, 18 Sep 2024
- 08:15:17 -0700 (PDT)
+ bh=V2407ygCqU+0pBKVB90FpeWTltBAYtTfmrbyY/Nb3GA=;
+ b=xOWmdOsUAVBDaOjDxxL0xCKU/DYehDWVP9F4xUYxTLgyFcwShb1cBb0j8RwoL85DUC
+ VPxndBp9eTg4k2qu2ZR9ULNqx/ZLre/zIhXElx97qOobExyx3gD6ALqlJr+kLVIm3uu6
+ LCoO23OJrJSZmqE9YQmQOcR6zcUcNRJeCk6yvewtieb+xn45G4B0UAx/gW07cBDisEWe
+ mtCpr6t2AyMFzWpK0cMpLKa1GS5IxlimQiTaluKe3PyoJRHhsZ+HfCGjKa2+WkKvicPn
+ ataisjzQOCUNK3wKpM2gPU2/RR2igjKTpLZ1XhWElArThYYYsksUTdKcIaj5WZK6gyeB
+ 7HVw==
+X-Gm-Message-State: AOJu0Yw/tswQ3CN5VR5v2MwVRjmMdj2s7y4WcvvNZ3LFyYBnT6eCS0qm
+ Vl7QG0LLF+ZsIcha8YMk7IP7UYBqTLW1SZPB+LU7BU1bTBIUN1XG+atNSnXJsPIlSALzXwl/9VH
+ 5nofSP8ePsTNs5b5jo0NoyC7b+uk=
+X-Google-Smtp-Source: AGHT+IFq3gUhBZpEtklSZsuc2hD7L6WeMRiUUp+qaMZfTsemVhzGc3J4vOnjI0QJ0L2rXsmZmOylAn867g4jy5iE10c=
+X-Received: by 2002:a17:90a:4604:b0:2cd:1e60:9c31 with SMTP id
+ 98e67ed59e1d1-2dba0068235mr25308008a91.30.1726672532597; Wed, 18 Sep 2024
+ 08:15:32 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240816162044.5764-1-just4now666666@gmail.com>
  <871q2ae24s.fsf@draig.linaro.org>
@@ -68,22 +68,23 @@ References: <20240816162044.5764-1-just4now666666@gmail.com>
  <87o74rrhp8.fsf@draig.linaro.org>
 In-Reply-To: <87o74rrhp8.fsf@draig.linaro.org>
 From: Elisha Hollander <just4now666666@gmail.com>
-Date: Wed, 18 Sep 2024 18:15:05 +0300
-Message-ID: <CACkyd_ZVJ8YXT-uNC1zLJYPwJCkUtQpKPW8pVb66RUzNg9nhqg@mail.gmail.com>
+Date: Wed, 18 Sep 2024 18:15:20 +0300
+Message-ID: <CACkyd_a4BC16jY2fXGiy90R197fco1Gd5OWymK5+NXshUpBA6w@mail.gmail.com>
 Subject: Re: [PATCH 1/1] allow using a higher icount
-To: alex.bennee@linaro.org
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com
-Content-Type: multipart/alternative; boundary="0000000000000aec250622664619"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=just4now666666@gmail.com; helo=mail-pf1-x433.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000f2f3900622664655"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=just4now666666@gmail.com; helo=mail-pj1-x1033.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- MIME_HTML_MOSTLY=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,15 +100,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000000aec250622664619
+--000000000000f2f3900622664655
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 =F0=9F=91=8D
-
-Elisha reacted via Gmail
-<https://www.google.com/gmail/about/?utm_source=3Dgmail-in-product&utm_medi=
-um=3Det&utm_campaign=3Demojireactionemail#app>
 
 On Fri, Sep 13, 2024, 13:06 Alex Benn=C3=A9e <alex.bennee@linaro.org> wrote=
 :
@@ -589,29 +586,18 @@ t
 > Virtualisation Tech Lead @ Linaro
 >
 
---0000000000000aec250622664619
-Content-Type: text/vnd.google.email-reaction+json; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-{
-  "emoji": "=F0=9F=91=8D",
-  "version": 1
-}
---0000000000000aec250622664619
+--000000000000f2f3900622664655
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div><p style=3D"font-size:50px;margin-top:0;margin-bottom:0">=F0=9F=91=8D<=
-/p><p style=3D"margin-top:10px;margin-bottom:0">Elisha reacted via <a style=
-=3D"color:unset;text-decoration:underline" href=3D"https://www.google.com/g=
-mail/about/?utm_source=3Dgmail-in-product&amp;utm_medium=3Det&amp;utm_campa=
-ign=3Demojireactionemail#app">Gmail</a></p></div><br><div class=3D"gmail_qu=
-ote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Sep 13, 2024, 13:06 Alex=
- Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.bennee@lina=
-ro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"m=
-argin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Elisha Hollan=
-der &lt;<a href=3D"mailto:just4now666666@gmail.com" target=3D"_blank" rel=
-=3D"noreferrer">just4now666666@gmail.com</a>&gt; writes:<br>
+<p dir=3D"ltr">=F0=9F=91=8D</p>
+<br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri=
+, Sep 13, 2024, 13:06 Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@li=
+naro.org">alex.bennee@linaro.org</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padd=
+ing-left:1ex">Elisha Hollander &lt;<a href=3D"mailto:just4now666666@gmail.c=
+om" target=3D"_blank" rel=3D"noreferrer">just4now666666@gmail.com</a>&gt; w=
+rites:<br>
 <br>
 &gt; weird...<br>
 <br>
@@ -1286,5 +1272,5 @@ Alex Benn=C3=A9e<br>
 Virtualisation Tech Lead @ Linaro<br>
 </blockquote></div>
 
---0000000000000aec250622664619--
+--000000000000f2f3900622664655--
 
