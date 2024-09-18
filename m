@@ -4,93 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69AE5CCD18F
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 08:31:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84DA4CCD192
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 09:14:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sqq5U-0004GK-V1; Wed, 18 Sep 2024 04:31:00 -0400
+	id 1sqqkp-00077w-4d; Wed, 18 Sep 2024 05:13:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sqq5R-00043C-Ku; Wed, 18 Sep 2024 04:30:58 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1sqqkn-000772-IC
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:13:41 -0400
+Received: from dedi548.your-server.de ([85.10.215.148])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sqq5Q-00071r-1s; Wed, 18 Sep 2024 04:30:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=ah94qEh+mNRDg/xyFFn8/1+PWDKdK09V4BP/voC/t9E=; b=WHB+FFM6d+7hRXDK9rSXuWniy4
- 5hEFoH0fzCETjPEYZAnlojIhhQ3g/bqqqX63FyYdF28mdDNKSYbPQZv20/fOzDNsvdSbeNkijq19Y
- wJhb3X/7q/FI1S8EG2mVqG2L2UDjtA1xTMGdnH+PLDO7eA/EPt2FztcHdvTSTfma2loNMPkm2nXWQ
- 2MIjaWtvZrU+C+8j9OzCQSoQxShwFGsZHAPcK6Uthb4S4oE4pKb5urmmD8/aYzgWCM5y3RK6Kp+re
- /CXr2Ln51qld4WVY7DrB0XG/giuDUXcQMgE8g73KDc7+z5U0REigT+g7PGxp1V6hTEmJzUJNSNpUp
- 1O91Gcidwapr6d1vvUBTZb2gNoiF+hEXkMO4zB3Ol87sP2+SOxLLFT/vMPnSUfBjzwqt3YIG3T7/8
- vvVHDE+aelTXxrVyXl8Yo805I/b6VTfsfgubSuvt8ryaBnIB9pbRhiRWUFSeOcitvz0/nNx93KCpY
- Qlk4SdRv0aPKigKzSvtXBYOf/KQJtQktx2PH1FG0ScdHmt90twXJMUb/EuIZ9aj9TWgGK2in5J63l
- 2JSHwEzifKmOEwUBGn7xbHFiZU4BVj7yEDWfZ9K8fbS2Xdk9ma50jVJirTI22wdvzXawJh3c/ws7E
- dZcJAlTbmkFuyxnp0aWQj65NMnOBb65l80CfEmKE4=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sqq5E-000ApG-Vq; Wed, 18 Sep 2024 09:30:45 +0100
-Message-ID: <457780b7-3271-472c-ba98-a85f1e6ac8d0@ilande.co.uk>
-Date: Wed, 18 Sep 2024 09:30:44 +0100
+ (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1sqqkl-0003CH-8j
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 05:13:41 -0400
+Received: from sslproxy02.your-server.de ([78.47.166.47])
+ by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1sqqkf-000IIM-2k for qemu-devel@nongnu.org;
+ Wed, 18 Sep 2024 11:13:33 +0200
+Received: from [82.100.198.138] (helo=mail.embedded-brains.de)
+ by sslproxy02.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1sqqkf-000Dcr-1k for qemu-devel@nongnu.org;
+ Wed, 18 Sep 2024 11:13:33 +0200
+Received: from localhost (localhost [127.0.0.1])
+ by mail.embedded-brains.de (Postfix) with ESMTP id 4174048006C
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 11:13:33 +0200 (CEST)
+Received: from mail.embedded-brains.de ([127.0.0.1])
+ by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
+ with ESMTP id 3JE0o0OTWVIr for <qemu-devel@nongnu.org>;
+ Wed, 18 Sep 2024 11:13:32 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by mail.embedded-brains.de (Postfix) with ESMTP id DAB4748017C
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 11:13:32 +0200 (CEST)
+X-Virus-Scanned: amavis at zimbra.eb.localhost
+Received: from mail.embedded-brains.de ([127.0.0.1])
+ by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id PhFmrw8JIUs7 for <qemu-devel@nongnu.org>;
+ Wed, 18 Sep 2024 11:13:32 +0200 (CEST)
+Received: from zimbra.eb.localhost (zimbra.eb.localhost [192.168.96.204])
+ by mail.embedded-brains.de (Postfix) with ESMTP id AD85048006C
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 11:13:32 +0200 (CEST)
+Date: Wed, 18 Sep 2024 11:13:32 +0200 (CEST)
+From: Sebastian Huber <sebastian.huber@embedded-brains.de>
+To: qemu-devel <qemu-devel@nongnu.org>
+Message-ID: <1242128488.101916.1726650812387.JavaMail.zimbra@embedded-brains.de>
+Subject: Xilinx Zynq 7000 Start of CPU1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Peter Xu <peterx@redhat.com>, Mattias Nissler <mnissler@rivosinc.com>,
- John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-block@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- qemu-ppc@nongnu.org
-References: <20240916175708.1829059-1-mnissler@rivosinc.com>
- <c7ded7f1-3985-4694-b033-6070911f49dc@ilande.co.uk>
- <CAGNS4TZP2yOCurhWoskzswDvMjmW7xd4Xeg-dCnEuMc7tAJTsQ@mail.gmail.com>
- <Zumu5x-_jzwI52FD@x1n>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <Zumu5x-_jzwI52FD@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] mac_dbdma: Remove leftover `dma_memory_unmap` calls
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [192.168.96.204]
+X-Mailer: Zimbra 9.0.0_GA_4615 (ZimbraWebClient - FF128 (Linux)/9.0.0_GA_4615)
+Thread-Index: XWOxYHF+B3TrRy5pEyz5aKlxLJtu6w==
+Thread-Topic: Xilinx Zynq 7000 Start of CPU1
+X-Authenticated-Sender: smtp-embedded@poldi-networks.de
+X-Virus-Scanned: Clear (ClamAV 1.0.5/27401/Tue Sep 17 10:31:21 2024)
+Received-SPF: pass client-ip=85.10.215.148;
+ envelope-from=sebastian.huber@embedded-brains.de; helo=dedi548.your-server.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,28 +84,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/09/2024 17:31, Peter Xu wrote:
+Hello,
 
-> On Tue, Sep 17, 2024 at 08:25:06AM +0200, Mattias Nissler wrote:
->> Mark, thanks for testing and confirming that this doesn't cause any
->> obvious breakage.
->>
->> For my curiosity, which path should this patch take to get into
->> master? Peter, are you going to respin your pull request with this
->> included?
-> 
-> The pull has already landed master branch, so there'll be no respin.  And
-> considering this is a fix from the device side, may make more sense that
-> the maintainer takes it, which points to John Snow here.
-> 
-> John, would you take it via your tree?
+I recently added the support for CPU1 to the xilinx-zynq-a9 machine (hw/arm=
+/xilinx_zynq.c). However, the reset behaviour doesn't match exactly with th=
+e hardware. After a system reset (SRST), the CPU1 should execute a wfe inst=
+ruction and then load the start address from 0xfffffff0:
 
-Looks like people are busy, so I've queued this to my qemu-macppc branch and will 
-send a PR if it passes CI.
+https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Starting-Code-on-CPU-1
 
+It would be great if someone has a hint for me how I can add this startup c=
+ode for CPU1 at address region 0xFFFFFE00 to 0xFFFFFFF0.
 
-ATB,
+Kind regards, Sebastian
 
-Mark.
+--=20
+embedded brains GmbH & Co. KG
+Herr Sebastian HUBER
+Dornierstr. 4
+82178 Puchheim
+Germany
+email: sebastian.huber@embedded-brains.de
+phone: +49-89-18 94 741 - 16
+fax:   +49-89-18 94 741 - 08
 
+Registergericht: Amtsgericht M=C3=BCnchen
+Registernummer: HRB 157899
+Vertretungsberechtigte Gesch=C3=A4ftsf=C3=BChrer: Peter Rasmussen, Thomas D=
+=C3=B6rfler
+Unsere Datenschutzerkl=C3=A4rung finden Sie hier:
+https://embedded-brains.de/datenschutzerklaerung/
 
