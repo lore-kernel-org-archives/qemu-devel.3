@@ -4,113 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6172CCD1A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 13:07:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EA36CCD1A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Sep 2024 13:08:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1squOF-0004jY-Uk; Wed, 18 Sep 2024 09:06:39 -0400
+	id 1squPs-0000Vg-PR; Wed, 18 Sep 2024 09:08:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1squOE-0004ib-5e
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 09:06:38 -0400
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1squPq-0000OF-N9
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 09:08:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1squOB-0004Ln-SR
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 09:06:37 -0400
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 90C6E3F594
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 13:06:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1726664792;
- bh=8l2x542gYIchymchoFuMWg32uMUCoYpfBV/jXlvRWAk=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
- In-Reply-To:Content-Type;
- b=PG7SvGYRuAHjL/d5F0CeYdwgdrZJZ09hIvIBF+xe6dHYse1SZgAFUxvqeUJJgoxrF
- xHEbXKid76HeNo1FkhEYH7sFO6+zlwpmzprUmE2C7BQpfZe6kovI6RiF99D1K0pOnM
- MKO1QLYKvvJE4y/c/HyzLtIc6y8vBjoA0c+rnAJwve8U4ChL6ClZYsWZ+lk7O7bxic
- dAKzXY9o0rRbfornP+y0jlcI0qaYcAsxbSMp8Mfviq/+ircRLev6zCxJUdJbXdAYUJ
- VE/sBDEsbFu+GnFHlmOgrOYSJpGHgp65bdMy/fAhnQlv+n7w3VN3IfNVpPLjghgNrU
- aXNLWxfu2KYLw==
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42cb236ad4aso44199405e9.3
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 06:06:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1squPo-0004Pj-LT
+ for qemu-devel@nongnu.org; Wed, 18 Sep 2024 09:08:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1726664894;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5ehwJvytcPBUkUyoDO5hT69ggPEYh0bNJnJ7WrbfdSc=;
+ b=f3w6+I0H1fo0Ch2QieDPaq6XkDptMqCkN6fZMTGq5RV+LCVaD3a6ke1WFuYwKhSUVdsume
+ avyG3c4458vpBYclgvWjR+2p3Lz3WyxrLapKcYXE0uE79kDnHGlLAkOmU2+HzDLgahkGil
+ aBElx0dE6TAQt7xpMfGHeS8Y6j72BCA=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-665-0M7dCceRONS4ggmaoDgxLA-1; Wed, 18 Sep 2024 09:08:12 -0400
+X-MC-Unique: 0M7dCceRONS4ggmaoDgxLA-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2f77be8ff40so41232811fa.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 06:08:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726664792; x=1727269592;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8l2x542gYIchymchoFuMWg32uMUCoYpfBV/jXlvRWAk=;
- b=PoBYBaAMc9JJ7vXmvok7/Y9NmrPnZGywogVrs99zs3GXZU5RwukPCJ5QZCu1VzgSn4
- NJN65RSORdpnWCXCDBb8dhgOKA5mBpXvaRg+Uh0m+SmAE6jZJmyb5mmvSyTr2GbQNeuz
- z85QApEFZ36xtCwpw0EFhgfSt+KSxm2QRJbLOYWZvnEbgHqemppukqITE1M5VkPJIUGJ
- LDIq7RNO1Qc/hZY2JikROdTfrW5VOD7kQ5LCKE33vrtPwrGprZ9oabTgCEaCrG0hI7hv
- DyJNyF4HRiNVYn+UiSOzvUmotyNTIFqJYaC92PxAwTGfsoFAeRtsS0jetcM5mpU7cdEn
- P9tg==
+ d=1e100.net; s=20230601; t=1726664891; x=1727269691;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5ehwJvytcPBUkUyoDO5hT69ggPEYh0bNJnJ7WrbfdSc=;
+ b=u/SXPj9/Wv17EpD4BFUG76NMW/FQJZEnBqiCrPu5CWWgH/GNrPyda2KD+yPUW9mv/4
+ HINyAzQpD1AgaBnyk4ufaGL1pDxL/kyGsKaSRACOSGiPflPnWwYBspxIHrUwFewJa2AU
+ 5BnyW//4+hnYTsqTfLiJ8IcpX/oiofBx6fTajNlmLMmrOcJoNQaQXplOHDaF0SxLEutm
+ RuxhdSo8E9cOwuxVkfpfBUsa1ZoBB0ssjjEn+u0oVt0Tgq0Hj2ADQHN8BT+O/nLv/y71
+ GAm8UEeOGoUEPO4cEiYOaQ61MO6qwsS7od7Ky8ZuA43e/RdE/tPLr0hpB0X2SqjqEf+h
+ xbhw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXnmNtfDk7vooz33pxkbSzESCnK9WkiBAG34gs5uWrKWiLvHQYzPq0Xe/kPibjPWDozdpMYdujDBQeU@nongnu.org
-X-Gm-Message-State: AOJu0YzRjdEVy2BvocKxYH2IynJ6+xhrGbmmbE7hKk1u58aG575oMTQz
- orG1VOYbA4TP5LR1ugOBwWW9MuvjiFy1mj/gQNUmvwyEQteTV2pjapTdB8KBFfsW98PjP74Nw5H
- m3spfVF1Izr145BFYTrkoQg+d4PBHRBvREiapoPZxcGkt7PkZTaod0/PyaiTBB8CXI05M
-X-Received: by 2002:a05:600c:511b:b0:42c:a72a:e8f4 with SMTP id
- 5b1f17b1804b1-42cdb5317cbmr172610045e9.14.1726664791863; 
- Wed, 18 Sep 2024 06:06:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IENUt5bat+VyuH/X8ftjxUcPkWydjb9viwhSYt5aRmGL/qmuhxrHiMPPpyLNd/r+qN+rQ2zTw==
-X-Received: by 2002:a05:600c:511b:b0:42c:a72a:e8f4 with SMTP id
- 5b1f17b1804b1-42cdb5317cbmr172609685e9.14.1726664791267; 
- Wed, 18 Sep 2024 06:06:31 -0700 (PDT)
-Received: from [192.168.103.101]
- (dynamic-046-114-111-082.46.114.pool.telefonica.de. [46.114.111.82])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-378e73f99b0sm12303634f8f.60.2024.09.18.06.06.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Sep 2024 06:06:30 -0700 (PDT)
-Message-ID: <bab7a5ce-74b6-49ae-b610-9a0f624addc0@canonical.com>
-Date: Wed, 18 Sep 2024 15:06:28 +0200
+ AJvYcCWJ8shGoDfkOleJl/f72OqoTFr5Xum0nXv6Tsv0ZdiQuoVjltxY7mumcCXDUg9Omu22euuJmq+LZehL@nongnu.org
+X-Gm-Message-State: AOJu0Yz5ADAE3bkxJej2pd2rSoYvvfVzv1Fb3rS67dKnTlXC7uAnIKha
+ FKfo34TTeFy8nPVKGhQsiO6w9KXDt6MtSSqGsHGehFBfW3Z26FaZSPMeA7+6Bh+r+1d1LNKio70
+ N6vcrhqa8Z7fO1B8yJTYvcFrf5ylYa9xYJrS5Sh33VaSu5hORJEGC
+X-Received: by 2002:a05:651c:1541:b0:2f7:611c:a643 with SMTP id
+ 38308e7fff4ca-2f791b4d50fmr100039301fa.33.1726664890636; 
+ Wed, 18 Sep 2024 06:08:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGgqDSSP5XnHPNACUzwzb6D6hg2wE73ZMTPxkGO7TG/cP7RSupbK8t/3Tf/4I8Qnp3+yjJPaw==
+X-Received: by 2002:a05:651c:1541:b0:2f7:611c:a643 with SMTP id
+ 38308e7fff4ca-2f791b4d50fmr100038971fa.33.1726664889997; 
+ Wed, 18 Sep 2024 06:08:09 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42e7054c568sm16379025e9.43.2024.09.18.06.08.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Sep 2024 06:08:09 -0700 (PDT)
+Date: Wed, 18 Sep 2024 15:08:08 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: dave@treblig.org
+Cc: mst@redhat.com, sgarzare@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH] vhost: Remove unused vhost_dev_{load|save}_inflight
+Message-ID: <20240918150808.4e3d06fa@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240918121034.16417-1-dave@treblig.org>
+References: <20240918121034.16417-1-dave@treblig.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] target/riscv: enable floating point unit
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, Anup Patel <anup@brainfault.org>,
- Atish Patra <atishp@atishpatra.org>, Paul Walmsley
- <paul.walmsley@sifive.com>, Albert Ou <aou@eecs.berkeley.edu>,
- kvm@vger.kernel.org, kvm-riscv@lists.infradead.org,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
- Andrew Jones <ajones@ventanamicro.com>
-References: <20240916181633.366449-1-heinrich.schuchardt@canonical.com>
- <20240917-f45624310204491aede04703@orel>
- <15c359a4-b3c1-4cb0-be2e-d5ca5537bc5b@canonical.com>
- <20240917-b13c51d41030029c70aab785@orel>
- <8b24728f-8b6e-4c79-91f6-7cbb79494550@canonical.com>
- <20240918-039d1e3bebf2231bd452a5ad@orel>
- <CAFEAcA-Yg9=5naRVVCwma0Ug0vFZfikqc6_YiRQTrfBpoz9Bjw@mail.gmail.com>
-Content-Language: en-US
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-In-Reply-To: <CAFEAcA-Yg9=5naRVVCwma0Ug0vFZfikqc6_YiRQTrfBpoz9Bjw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=185.125.188.122;
- envelope-from=heinrich.schuchardt@canonical.com;
- helo=smtp-relay-internal-0.canonical.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,128 +104,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18.09.24 13:10, Peter Maydell wrote:
-> On Wed, 18 Sept 2024 at 07:06, Andrew Jones <ajones@ventanamicro.com> wrote:
->>
->> On Tue, Sep 17, 2024 at 06:45:21PM GMT, Heinrich Schuchardt wrote:
->> ...
->>> When thinking about the migration of virtual machines shouldn't QEMU be in
->>> control of the initial state of vcpus instead of KVM?
->>>
->>
->> Thinking about this more, I'm inclined to agree. Initial state and reset
->> state should be traits of the VMM (potentially influenced by the user)
->> rather than KVM.
+On Wed, 18 Sep 2024 13:10:34 +0100
+dave@treblig.org wrote:
+
+> From: "Dr. David Alan Gilbert" <dave@treblig.org>
 > 
-> Mmm. IIRC the way this works on Arm at least is that at some point
-> post-reset and before running the VM we do a QEMU->kernel state
-> sync, which means that whatever the kernel does with the CPU state
-> doesn't matter, only what QEMU's idea of reset is. Looking at the
-> source I think the way this happens is that kvm_cpu_synchronize_post_reset()
-> arranges to do a kvm_arch_put_registers(). (For Arm we have to do
-> some fiddling around to make sure our CPU state is in the right
-> place for that put_registers to DTRT, which is what kvm_arm_reset_vcpu()
-> is doing, but that's a consequence of the way we chose to handle
-> migration and in particular migration of system registers rather than
-> something necessarily every architecture wants to be doing.)
+> vhost_dev_load_inflight and vhost_dev_save_inflight have been
+> unused since they were added in 2019 by:
 > 
-> This also works for reset of the vCPU on a guest-reboot. We don't
-> tell KVM to reset the vCPU, we just set up the vCPU state on the
-> QEMU side and then do a QEMU->kernel state sync of it.
+> 5ad204bf2a ("vhost-user: Support transferring inflight buffer between qemu and backend")
 > 
-> -- PMM
+> Remove them, and their helper vhost_dev_resize_inflight.
+> 
+> Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 
-Thanks Peter for looking into this.
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-QEMU's cpu_synchronize_all_post_init() and 
-do_kvm_cpu_synchronize_post_reset() both end up in 
-kvm_arch_put_registers() and that is long after Linux 
-kvm_arch_vcpu_create() has been setting some FPU state. See the output 
-below.
-
-kvm_arch_put_registers() copies the CSRs by calling 
-kvm_riscv_put_regs_csr(). Here we can find:
-
-     KVM_RISCV_SET_CSR(cs, env, sstatus, env->mstatus);
-
-This call enables or disables the FPU according to the value of 
-env->mstatus.
-
-So we need to set the desired state of the floating point unit in QEMU. 
-And this is what the current patch does both for TCG and KVM.
-
-Best regards
-
-Heinrich
-
-
-$ qemu-system-riscv64 -M virt -accel kvm -nographic -kernel payload.bin
-QEMU qemu_init: Entry
-QEMU qmp_x_exit_preconfig: Entry
-[ 3503.369249] kvm_arch_vcpu_create: Entry
-[ 3503.369669] kvm_riscv_vcpu_fp_reset: At entry FS=0
-[ 3503.369966] kvm_riscv_vcpu_fp_reset: At exit FS=8192
-[ 3503.370256] kvm_arch_vcpu_create: Exit
-[ 3503.378620] kvm_arch_vcpu_create: Entry
-[ 3503.379123] kvm_riscv_vcpu_fp_reset: At entry FS=0
-[ 3503.379610] kvm_riscv_vcpu_fp_reset: At exit FS=8192
-[ 3503.380111] kvm_arch_vcpu_create: Exit
-[ 3503.394837] kvm_arch_vcpu_create: Entry
-[ 3503.395238] kvm_riscv_vcpu_fp_reset: At entry FS=0
-[ 3503.395585] kvm_riscv_vcpu_fp_reset: At exit FS=8192
-[ 3503.395947] kvm_arch_vcpu_create: Exit
-[ 3503.397023] kvm_riscv_vcpu_set_reg_config:
-[ 3503.398066] kvm_riscv_vcpu_set_reg_config:
-[ 3503.398430] kvm_riscv_vcpu_set_reg_config:
-QEMU riscv_cpu_reset_hold: Entry
-QEMU kvm_riscv_reset_vcpu: Entry
-QEMU kvm_riscv_reset_vcpu: Exit
-QEMU riscv_cpu_reset_hold: Exit
-QEMU qemu_machine_creation_done: Entry
-QEMU qdev_machine_creation_done: Entry
-QEMU cpu_synchronize_all_post_init: Entry
-QEMU cpu_synchronize_post_init: Entry
-QEMU kvm_cpu_synchronize_post_init: Entry
-QEMU do_kvm_cpu_synchronize_post_init: Entry
-QEMU kvm_arch_put_registers: Entry
-QEMU kvm_riscv_put_regs_csr: Entry
-QEMU kvm_riscv_put_regs_csr: Exit
-QEMU kvm_arch_put_registers: Exit
-QEMU do_kvm_cpu_synchronize_post_init: Exit
-QEMU kvm_cpu_synchronize_post_init: Exit
-QEMU cpu_synchronize_post_init: Exit
-QEMU cpu_synchronize_all_post_init: Exit
-QEMU qemu_system_reset: Entry
-QEMU kvm_arch_get_registers: Entry
-QEMU riscv_cpu_reset_hold: Entry
-QEMU kvm_riscv_reset_vcpu: Entry
-QEMU kvm_riscv_reset_vcpu: Exit
-QEMU riscv_cpu_reset_hold: Exit
-QEMU cpu_synchronize_all_post_reset: Entry
-QEMU cpu_synchronize_post_reset: Entry
-QEMU do_kvm_cpu_synchronize_post_reset: Entry
-QEMU kvm_arch_put_registers: Entry
-QEMU kvm_riscv_put_regs_csr: Entry
-QEMU kvm_riscv_put_regs_csr: Exit
-QEMU kvm_riscv_sync_mpstate_to_kvm: Entry
-QEMU kvm_riscv_sync_mpstate_to_kvm: Exit
-QEMU kvm_arch_put_registers: Exit
-QEMU do_kvm_cpu_synchronize_post_reset: Exit
-QEMU cpu_synchronize_post_reset: Exit
-QEMU cpu_synchronize_all_post_reset: Exit
-QEMU qemu_system_reset: Exit
-QEMU qdev_machine_creation_done: Exit
-QEMU qmp_x_exit_preconfig: Exit
-QEMU qemu_init: Exit
-QEMU kvm_cpu_exec: Entry
-[ 3503.566493] kvm_arch_vcpu_ioctl_run: run->ext_reason 0
-QEMU kvm_cpu_exec: Exit
-QEMU kvm_cpu_exec: Entry
-[ 3503.568338] kvm_arch_vcpu_ioctl_run: run->ext_reason 0
-[ 3503.568740] kvm_riscv_check_vcpu_requests: Entry
-[ 3503.569534] kvm_riscv_check_vcpu_requests: Entry
-
-Test payload
-============
+> ---
+>  hw/virtio/vhost.c         | 56 ---------------------------------------
+>  include/hw/virtio/vhost.h |  2 --
+>  2 files changed, 58 deletions(-)
+> 
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 7c5ef81b55..76f9b2aaad 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -1930,62 +1930,6 @@ void vhost_dev_free_inflight(struct vhost_inflight *inflight)
+>      }
+>  }
+>  
+> -static int vhost_dev_resize_inflight(struct vhost_inflight *inflight,
+> -                                     uint64_t new_size)
+> -{
+> -    Error *err = NULL;
+> -    int fd = -1;
+> -    void *addr = qemu_memfd_alloc("vhost-inflight", new_size,
+> -                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
+> -                                  &fd, &err);
+> -
+> -    if (err) {
+> -        error_report_err(err);
+> -        return -ENOMEM;
+> -    }
+> -
+> -    vhost_dev_free_inflight(inflight);
+> -    inflight->offset = 0;
+> -    inflight->addr = addr;
+> -    inflight->fd = fd;
+> -    inflight->size = new_size;
+> -
+> -    return 0;
+> -}
+> -
+> -void vhost_dev_save_inflight(struct vhost_inflight *inflight, QEMUFile *f)
+> -{
+> -    if (inflight->addr) {
+> -        qemu_put_be64(f, inflight->size);
+> -        qemu_put_be16(f, inflight->queue_size);
+> -        qemu_put_buffer(f, inflight->addr, inflight->size);
+> -    } else {
+> -        qemu_put_be64(f, 0);
+> -    }
+> -}
+> -
+> -int vhost_dev_load_inflight(struct vhost_inflight *inflight, QEMUFile *f)
+> -{
+> -    uint64_t size;
+> -
+> -    size = qemu_get_be64(f);
+> -    if (!size) {
+> -        return 0;
+> -    }
+> -
+> -    if (inflight->size != size) {
+> -        int ret = vhost_dev_resize_inflight(inflight, size);
+> -        if (ret < 0) {
+> -            return ret;
+> -        }
+> -    }
+> -    inflight->queue_size = qemu_get_be16(f);
+> -
+> -    qemu_get_buffer(f, inflight->addr, size);
+> -
+> -    return 0;
+> -}
+> -
+>  int vhost_dev_prepare_inflight(struct vhost_dev *hdev, VirtIODevice *vdev)
+>  {
+>      int r;
+> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+> index c75be46c06..461c168c37 100644
+> --- a/include/hw/virtio/vhost.h
+> +++ b/include/hw/virtio/vhost.h
+> @@ -338,8 +338,6 @@ void vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
+>  
+>  void vhost_dev_reset_inflight(struct vhost_inflight *inflight);
+>  void vhost_dev_free_inflight(struct vhost_inflight *inflight);
+> -void vhost_dev_save_inflight(struct vhost_inflight *inflight, QEMUFile *f);
+> -int vhost_dev_load_inflight(struct vhost_inflight *inflight, QEMUFile *f);
+>  int vhost_dev_prepare_inflight(struct vhost_dev *hdev, VirtIODevice *vdev);
+>  int vhost_dev_set_inflight(struct vhost_dev *dev,
+>                             struct vhost_inflight *inflight);
 
 
