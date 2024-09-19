@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0482CF3963
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 17:45:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 852D3CF3963
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 17:46:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srLDm-00066z-Kq; Thu, 19 Sep 2024 13:45:39 -0400
+	id 1srLEC-0007lS-7R; Thu, 19 Sep 2024 13:46:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srLDj-0005wZ-6Y
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 13:45:35 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srLE3-0007Mg-P7
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 13:45:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srLDg-00019Y-4I
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 13:45:33 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srLDz-0001Fq-7J
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 13:45:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726767931;
+ s=mimecast20190719; t=1726767950;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=/Oy5NalvK6J6W/GptNSPGW/2Bna+PFbW1pFSxfxu2sQ=;
- b=ivrPIxUrR9jmV9SA91kbw80wMPUKj0QDvxDO/2n7JlbqTdLfeB0RnwBq57MgPxrfV0XLE1
- SaSK39kq2LIDepTYtk/0rb71OQOHC25qywZHPwe29W6nc4aNV5vjgt2aPuXkKDdDcZh0/a
- ZN2qqLLO1NhLCapOmbCKDOR7SE5aVnM=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uZbyOA9scaVSchpZftyGzzOJHSL66lELLtrNvl9bpMU=;
+ b=BHXrg4bsnoGWghjgWA4zTKy2oZu7rEzxpckSOpJMd98iHhHqCrdJ1TAVHGQkj+q02u+LVc
+ 1w+aWZI88sphmcIRxB34WENVsi2CxCo1ob0T0ReeWhepze6rfndqku7pjXDxsFH8UuaTe9
+ 40HSyOsw7ngM3ajbGylbfixu9fVCBIE=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-440-Uf4_8HawN1SXLKZKsvuoTA-1; Thu, 19 Sep 2024 13:45:28 -0400
-X-MC-Unique: Uf4_8HawN1SXLKZKsvuoTA-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6c358223647so13687566d6.3
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 10:45:28 -0700 (PDT)
+ us-mta-286-apRK_DhEOWqU2xvpNzM20A-1; Thu, 19 Sep 2024 13:45:49 -0400
+X-MC-Unique: apRK_DhEOWqU2xvpNzM20A-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6c360967e53so19781646d6.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 10:45:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726767927; x=1727372727;
+ d=1e100.net; s=20230601; t=1726767948; x=1727372748;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/Oy5NalvK6J6W/GptNSPGW/2Bna+PFbW1pFSxfxu2sQ=;
- b=PNAZyvsFXeNfXAMHv/fsbNQ0G23iVxBCvKbeKeBlTkerfX+580xWB8dlYVzXJ3snRG
- J2CV3p1dl/l+bJBKVICkVyeZZzFFUijMGfCKCik3VDJed8UEiT/xWwOvROTvgDGylWzs
- otNMhvuJ9FQIOgxB5VkHRH9dQwpa2lR8/SFkrO32QQs4jU0iq1YVpGYFtp/lmETIaMKh
- 4/+jAflL/ebo4os0wnWQ4FbqnYDH5/KDe/6JokimGcy/NkHjxQQ3dBPrBcWtgoerryAx
- UZAaTuGOlsyCIYu9exCiSqVi+rXu9S/oxNCzSWbmkTfoXJnLiygtH7s3noztrNv+1EkD
- Qi9w==
+ bh=uZbyOA9scaVSchpZftyGzzOJHSL66lELLtrNvl9bpMU=;
+ b=mogVurSG/2SY6En3Vg8XshXq/aGfFfUIDYrthBlJJDEz0MJDzFVl9fcPLwHuk6a0LR
+ M5Bf8aS5Ajp+4dAF32VPfSHYhoep2UeWKN9viL8LblV/RyAwPWJVXrDxWqszYSSgrr13
+ C3U+gjiyHYf10hm7tuySI1juD0P1XMf2R2hpXf2Og2Yx9dS1/XS270GNoyTiKFlBd7qt
+ F0F8TDsTFcrZAR/k2KKczsOVLfbCgnIw0XufQjwln//wtuA1RTZHsx8wgUbz2XiRFY07
+ KIAXZjpepSvzdfLKBpp6GphEQMaefmwmRDrnOxkQENk+M9aYHkTXvQUJZt6zRiEFd7Zg
+ ooyw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX17fVVMwq1W7q/A0XvsU5XBsy/ePI+5y+zoDjwfMyIYzYZvvg2g8KuotyVxY8QoT+nRNNsO2yv8JkB@nongnu.org
-X-Gm-Message-State: AOJu0YzuNi1j9dW+M1CixRI498RnvL4mV3ugk9P66RWdjs7bc3bHjT5q
- +3Ms8Rp69xkXdHPXtnRtf3PTPAZTmWbm3DgTW6BQDA1efChytKX2Yhsg8FL1rMulWA5nv6FahDa
- xUWUZjvC8iEp+a8NoDJW1ba6kslaN08X98EPLT3uKzLdU4cv9EKe/
-X-Received: by 2002:a05:6214:3207:b0:6c5:32a5:567a with SMTP id
- 6a1803df08f44-6c7bc6dafd8mr1929126d6.1.1726767927555; 
- Thu, 19 Sep 2024 10:45:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEBvFgmiIfBAS7LhtomYooecUZbKRLhmQHKydlgN1iR/Ulg9XIJsLElDhY+6JY9ffhj90COpw==
-X-Received: by 2002:a05:6214:3207:b0:6c5:32a5:567a with SMTP id
- 6a1803df08f44-6c7bc6dafd8mr1928896d6.1.1726767927285; 
- Thu, 19 Sep 2024 10:45:27 -0700 (PDT)
+ AJvYcCXIQeKRNMTuXth1WiwGESzZtZhBoASwx8zjbe5VANNdnJI3dFxqrTD8ImUAP0Ktv7oaWmiuBY76ZwdA@nongnu.org
+X-Gm-Message-State: AOJu0YwrRIC730RlWCPzplVZy+Mw/3jxa+5QQmZuUOdnDGJKewp0p0sE
+ TbM0n9bfQCMn2Ylzn0CrIUmjxu3FYvUgCP4BwkhpmlTy8tZ6deZbBAO+4Y7KGwSRZZ3HcOsQaXY
+ S6BP0ndTrc9/9u559Ytuy4zjF1T5O5yOiukBTvz12ZHeANsHspqwKxt26GlKJ
+X-Received: by 2002:a05:6214:4a93:b0:6c1:6a71:970e with SMTP id
+ 6a1803df08f44-6c7bc679b14mr1983426d6.5.1726767947632; 
+ Thu, 19 Sep 2024 10:45:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHF8XWc6nrANZExPoNtWgrXWGg+SvBVUsCZqova2ZQvkMfT2NxDhiADrDUquH0GqHftVRfhUw==
+X-Received: by 2002:a05:6214:4a93:b0:6c1:6a71:970e with SMTP id
+ 6a1803df08f44-6c7bc679b14mr1983136d6.5.1726767947191; 
+ Thu, 19 Sep 2024 10:45:47 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c75e557a79sm9528396d6.76.2024.09.19.10.45.26
+ 6a1803df08f44-6c75e57a646sm9639776d6.126.2024.09.19.10.45.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Sep 2024 10:45:26 -0700 (PDT)
-Date: Thu, 19 Sep 2024 13:45:25 -0400
+ Thu, 19 Sep 2024 10:45:46 -0700 (PDT)
+Date: Thu, 19 Sep 2024 13:45:44 -0400
 From: Peter Xu <peterx@redhat.com>
 To: dave@treblig.org
 Cc: farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
  qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 2/7] migration: Remove unused migrate_zero_blocks
-Message-ID: <ZuxjNfoLYwTXt6Jh@x1n>
+Subject: Re: [PATCH v2 3/7] migration: Deprecate zero-blocks capability
+Message-ID: <ZuxjSHvVCwE220N8@x1n>
 References: <20240919134626.166183-1-dave@treblig.org>
- <20240919134626.166183-3-dave@treblig.org>
+ <20240919134626.166183-4-dave@treblig.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240919134626.166183-3-dave@treblig.org>
+In-Reply-To: <20240919134626.166183-4-dave@treblig.org>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -102,15 +102,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 19, 2024 at 02:46:21PM +0100, dave@treblig.org wrote:
-> From: "Dr. David Alan Gilbert" <dave@treblig.org>
+On Thu, Sep 19, 2024 at 02:46:22PM +0100, dave@treblig.org wrote:
+> From: Fabiano Rosas <farosas@suse.de>
 > 
-> migrate_zero_blocks is unused since
->   eef0bae3a7 ("migration: Remove block migration")
+> The zero-blocks capability was meant to be used along with the block
+> migration, which has been removed already in commit eef0bae3a7
+> ("migration: Remove block migration").
 > 
-> Remove it.
+> Setting zero-blocks is currently a noop, but the outright removal of
+> the capability would cause and error in case some users are still
+> setting it. Put the capability through the deprecation process.
 > 
-> Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 
