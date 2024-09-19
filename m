@@ -4,80 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C43DCE8D7A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 11:22:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6787ACE8D7A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 11:32:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srFDn-0005ZY-D3; Thu, 19 Sep 2024 07:21:15 -0400
+	id 1srFOD-0002hs-VK; Thu, 19 Sep 2024 07:32:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1srFDi-0005YI-Dv
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 07:21:10 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1srFDd-0003bZ-RN
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 07:21:10 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-208ccde82e6so6065725ad.0
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 04:21:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1726744862; x=1727349662; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=w69oY+Uc9GUTghN+pPlLoPPcJ1xKPaNWEfTrgtQs7Fk=;
- b=lfmIGN74gCJE56glYo7DsfFM7qNi8bbQb4VKYFe4h1qnP7GjiOOaqtnc0kw3EC5pG9
- V30aNcp3X6GzQ9ciKTJri68QvEnTPDp4D61TealoTIIAZBnnuInKRSznfbOQNtaVRQaS
- VJn71UYd8qU+W/e6YX7cRFlTkNbWOLmDFGZWkUx1saiHOuCNKJVteHJROtWE6Q2SpdfD
- nbq7EGjztPFn/RM3UpKeDg23xTHJuOM5IMBbrecH5COGqguQWCGCxAkCXr/iOd5MFjvL
- cqJhhHaN42YgEpGEdDNQkR2d7FFRY5uBS/UOQ/7xBhYBT1aJxeqmqkX5uNJH348jPs5q
- fqaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726744862; x=1727349662;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=w69oY+Uc9GUTghN+pPlLoPPcJ1xKPaNWEfTrgtQs7Fk=;
- b=rCPMNU29ciGCoBfHBrlTdJUJG4FblNZGFcC07TvG8DhC/d4ldnPXKWI+41nc8v2Nno
- coAvPgDf6VS5bSxiehf8860YcuqjyyRa84laO0JOxQ0DCTum7f6v/AJq8LtasylQ+8ew
- LMiYlE1mVP4mbkMfPd0m12v7/7Ofn8Lf/851/lFvHi89rxVw/xCQ5+e1S6y7Urj2B4BI
- r/ZBC5y75L70f4B+D8RlW1u+acY/7kN56i1sm0i+IdjxUTcLVR+llYhvu5GDKsGAcOTy
- 8ULeXd9N9TdlPmbCz2KZpy6AAFZUDCRQKhtGQWcjQxPORv+Yb5krbYesjLV+A2cUVvZG
- yTvw==
-X-Gm-Message-State: AOJu0YwwJCAr5A7+IuM+oHQsAiMrgFpfW3YPtEZoayCQLWYQeoAHPe7I
- 9sNASmxIfTtEKzVR9Y3sUj6EFwoOD45NrPQ0jyNXG2eJUHtwa+drCT0MMEi54wcUbw/qLypUGaF
- 1
-X-Google-Smtp-Source: AGHT+IGdel6nFwZ0o2aMFPLyVVcVn6lol681wYHOth03syMADpRYBjGtH7f8SKIVk3IOTzXOQryqRg==
-X-Received: by 2002:a17:903:249:b0:206:8eec:c087 with SMTP id
- d9443c01a7336-2076e354d05mr345746185ad.16.1726744862281; 
- Thu, 19 Sep 2024 04:21:02 -0700 (PDT)
-Received: from grind.dc1.ventanamicro.com (201-68-240-33.dsl.telesp.net.br.
- [201.68.240.33]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2079472df88sm77954255ad.243.2024.09.19.04.20.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Sep 2024 04:21:01 -0700 (PDT)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com,
- eblake@redhat.com, armbru@redhat.com, ajones@ventanamicro.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH] qapi, machine-qmp-cmds.c: query-accelerator support
-Date: Thu, 19 Sep 2024 08:20:56 -0300
-Message-ID: <20240919112056.620917-1-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.45.2
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1srFO5-0002h4-TA
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 07:31:56 -0400
+Received: from fout2-smtp.messagingengine.com ([103.168.172.145])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1srFO1-00055j-AD
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 07:31:51 -0400
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal
+ [10.202.2.49])
+ by mailfout.phl.internal (Postfix) with ESMTP id 4B16C138008C;
+ Thu, 19 Sep 2024 07:31:45 -0400 (EDT)
+Received: from phl-imap-12 ([10.202.2.86])
+ by phl-compute-09.internal (MEProxy); Thu, 19 Sep 2024 07:31:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1726745505;
+ x=1726831905; bh=tA9cykiGJ3geWKPniMlL8Lav7oTSAfOxqz6gjwT9AjM=; b=
+ KUsvn6cLSEVEaFPeIE2hG4PVjjKPFd9ke8Yh93zGtJEvfpgJdzA1QFbcZOOwe767
+ FrEXHA84q64qXg2rz8+rVr8ilD5o33NzKhzLw2OnTpaQY6HeJhtyUCVQteeLdCF3
+ /Gn38cpjGoU9RWOzhZ4dVPEmlFbox/hvioF7z9Yf2jQbQX+fPRx3+BRKzQQ0xO/P
+ X+xh90rHvmXhZrNqU1lhjRCHzo1xIb+9CqQqpk114PdbX42POKF5nj/OwpwyW4Bx
+ zfjKY3oUfebVsLEGqyS08ChmRkcUDAM9Pzz8a2tLsMKTNj3+NawLPHSKotwIClBr
+ 3Clh0O+xrbHzo0qByL41wA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1726745505; x=
+ 1726831905; bh=tA9cykiGJ3geWKPniMlL8Lav7oTSAfOxqz6gjwT9AjM=; b=j
+ doN7JjqHIsjLAqOZOA+c/vi4KkA263nTTnkq4QeCb9eR2shjFfitLszErThWLZg3
+ pQyzu+Y3f4YQFbJNVgbJAyqVMmfyTPfpgpJ+hfJK0hjAkczM8K+tuhpH9v/Yws1S
+ bgGpWITXhtN7WlRtvGIKMybQrVks9mQ1VREhLjjxr1oDtz+x8w5kRlfNk4YGkye2
+ 9BBi4hjNLnedmEFebYgoamjf+xJD7P6Vt0c3uk7Qr2w8+d5IeBfzMBZQF2FG7Qmv
+ h8eny4Y36+zfVWeYIEEHLH/Mn2yuGPAeVwQZTzpuC51ylmEJGIR6dE1IBxkmtvVm
+ yHUlyKSGQOx0Y5cLHKUIQ==
+X-ME-Sender: <xms:oAvsZs8aH_5Lsvls1Ax2SmbMQT_XFDh2N2DS-cwWK01kLH-tOhklww>
+ <xme:oAvsZkuAHqZPuvDnHiy5RIHLAdUaHgY5d5qNwDu62kgZ6VovIrQJA7tTvjVRz0B6c
+ wCXvXFVm7ahWAUgeDo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudeluddggeduucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+ rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+ htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
+ necuhfhrohhmpedflfhirgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghnghesfh
+ hlhihgohgrthdrtghomheqnecuggftrfgrthhtvghrnhepjeehfeduvddtgffgvdffkeet
+ hefhlefgvdevvdekuefffeekheehgeevhfevteejnecuvehluhhsthgvrhfuihiivgeptd
+ enucfrrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihgohgr
+ thdrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+ htohepghgrohhsohhngheslhhoohhnghhsohhnrdgtnhdprhgtphhtthhopehmrghosghi
+ sghosehlohhonhhgshhonhdrtghnpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnoh
+ hnghhnuhdrohhrgh
+X-ME-Proxy: <xmx:oAvsZiBaxGiGNbNWbEuKbyelKGdVJU6TnWPuX313gxcDO3PHM6j5Ag>
+ <xmx:oAvsZseL9h4V_LQB8ZOQlex706NdYhXi8u1Y2kTf-vD3GvUV9Cmnjw>
+ <xmx:oAvsZhMSRloUATbX1a4kuPkrTHqjT6XzNHLc6A0Oq_usnytnI8fAtg>
+ <xmx:oAvsZmlgfQj4lez9qb68i5qOYSLwp0rNAUVesF9aJeHjHVgqwuM51g>
+ <xmx:oQvsZqYuzE6vOsiI0GrKkR7qcUyNlwHIbMNlZhtm9KuWHddzRqj2Ro9q>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id B73241C20065; Thu, 19 Sep 2024 07:31:44 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Date: Thu, 19 Sep 2024 12:31:07 +0100
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: "QEMU devel" <qemu-devel@nongnu.org>
+Cc: "Song Gao" <gaosong@loongson.cn>, "Bibo Mao" <maobibo@loongson.cn>
+Message-Id: <2d46845b-8702-44ba-b302-e569ad1e90e4@app.fastmail.com>
+In-Reply-To: <20240914-loongarch-booting-v1-0-1517cae11c10@flygoat.com>
+References: <20240914-loongarch-booting-v1-0-1517cae11c10@flygoat.com>
+Subject: Re: [PATCH 0/2] hw/loongarch/booting: Booting protocol refactoring
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=103.168.172.145;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fout2-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,126 +110,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a QMP command that shows all specific properties of the current
-accelerator in use.
 
-This can be used as a complement of other APIs like query-machines and
-query-cpu-model-expansion, allowing management to get a more complete
-picture of the running QEMU process.
 
-This is the output with a x86_64 TCG guest:
+=E5=9C=A82024=E5=B9=B49=E6=9C=8814=E6=97=A5=E4=B9=9D=E6=9C=88 =E4=B8=8B=E5=
+=8D=881:10=EF=BC=8CJiaxun Yang=E5=86=99=E9=81=93=EF=BC=9A
+> Hi all,
+>
+> This series refactored booting protocol generation code
+> to better accommodate different host ABI / Alignment and
+> endianess.
 
-$ ./build/qemu-system-x86_64 -S  -display none -accel tcg -qmp tcp:localhost:1234,server,wait=off
++ Bibo,
 
-$ ./scripts/qmp/qmp-shell localhost:1234
-Welcome to the QMP low-level shell!
-Connected to QEMU 9.1.50
+Ping for review.
 
-(QEMU) query-accelerator
-{"return": {"name": "tcg", "props": {"one-insn-per-tb": false, "thread": "multi", "tb-size": 0, "split-wx": false, "type": "tcg-accel"}}}
+Thanks
 
-And for a x86_64 KVM guest:
+>
+> It also enhanced LoongArch32 support.
+>
+> Thanks
+>
+> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> ---
+> Jiaxun Yang (2):
+>       hw/loongarch/boot: Refactor EFI booting protocol generation
+>       hw/loongarch/boot: Rework boot code generation
+>
+>  hw/loongarch/boot.c         | 321 ++++++++++++++++++++++++++++-------=
+---------
+>  include/hw/loongarch/boot.h | 106 ++++++++++++---
+>  2 files changed, 293 insertions(+), 134 deletions(-)
+> ---
+> base-commit: 28ae3179fc52d2e4d870b635c4a412aab99759e7
+> change-id: 20240914-loongarch-booting-b5ae3f4976b7
+>
+> Best regards,
+> --=20
+> Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-$ ./build/qemu-system-x86_64 -S  -display none -accel kvm -qmp tcp:localhost:1234,server,wait=off
-
-$ ./scripts/qmp/qmp-shell localhost:1234
-Welcome to the QMP low-level shell!
-Connected to QEMU 9.1.50
-
-(QEMU) query-accelerator
-{"return": {"name": "KVM", "props": {"mem-container-smram[0]": "", "xen-gnttab-max-frames": 64, "device": "", "xen-version": 0, "mem-smram[0]": "", "notify-window": 0, "dirty-ring-size": 0, "kvm-shadow-mem": -1, "type": "kvm-accel", "notify-vmexit": "run", "xen-evtchn-max-pirq": 256}}}
-
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- hw/core/machine-qmp-cmds.c | 34 ++++++++++++++++++++++++++++++++++
- qapi/machine.json          | 27 +++++++++++++++++++++++++++
- 2 files changed, 61 insertions(+)
-
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 130217da8f..eac803bf36 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -15,6 +15,7 @@
- #include "qapi/error.h"
- #include "qapi/qapi-builtin-visit.h"
- #include "qapi/qapi-commands-machine.h"
-+#include "qapi/qmp/qdict.h"
- #include "qapi/qmp/qobject.h"
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/type-helpers.h"
-@@ -406,3 +407,36 @@ GuidInfo *qmp_query_vm_generation_id(Error **errp)
-     info->guid = qemu_uuid_unparse_strdup(&vms->guid);
-     return info;
- }
-+
-+AccelInfo *qmp_query_accelerator(Error **errp)
-+{
-+    AccelState *accel = current_accel();
-+    AccelClass *acc = ACCEL_GET_CLASS(accel);
-+    AccelInfo *info = g_new0(AccelInfo, 1);
-+    QDict *qdict_out = qdict_new();
-+    ObjectPropertyIterator iter;
-+    ObjectProperty *prop;
-+
-+    info->name = g_strdup(acc->name);
-+
-+    object_property_iter_init(&iter, OBJECT(accel));
-+    while ((prop = object_property_iter_next(&iter))) {
-+        QObject *value;
-+
-+        if (!prop->get) {
-+            continue;
-+        }
-+
-+        value = object_property_get_qobject(OBJECT(accel), prop->name,
-+                                                  &error_abort);
-+        qdict_put_obj(qdict_out, prop->name, value);
-+    }
-+
-+    if (!qdict_size(qdict_out)) {
-+        qobject_unref(qdict_out);
-+    } else {
-+        info->props = QOBJECT(qdict_out);
-+    }
-+
-+    return info;
-+}
-diff --git a/qapi/machine.json b/qapi/machine.json
-index a6b8795b09..d0d527d1eb 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1898,3 +1898,30 @@
- { 'command': 'x-query-interrupt-controllers',
-   'returns': 'HumanReadableText',
-   'features': [ 'unstable' ]}
-+
-+##
-+# @AccelInfo:
-+#
-+# Information about the current accelerator.
-+#
-+# @name: the name of the current accelerator being used
-+#
-+# @props: a dictionary of the accelerator properties
-+#
-+# Since: 9.2
-+##
-+{ 'struct': 'AccelInfo',
-+  'data': { 'name': 'str',
-+            '*props': 'any' } }
-+
-+##
-+# @query-accelerator:
-+#
-+# Shows information about the accelerator in use.
-+#
-+# Returns: a CpuModelExpansionInfo describing the expanded CPU model
-+#
-+# Since: 9.2
-+##
-+{ 'command': 'query-accelerator',
-+  'returns': 'AccelInfo' }
--- 
-2.45.2
-
+--=20
+- Jiaxun
 
