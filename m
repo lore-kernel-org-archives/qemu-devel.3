@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91FF3CDD569
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 01:42:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5090ACDD566
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 01:43:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr6A8-0001N6-4k; Wed, 18 Sep 2024 21:40:52 -0400
+	id 1sr69e-0006y8-7r; Wed, 18 Sep 2024 21:40:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sr6A5-0000v0-00; Wed, 18 Sep 2024 21:40:49 -0400
+ id 1sr69X-0006VA-HX; Wed, 18 Sep 2024 21:40:15 -0400
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sr6A2-0004sM-PF; Wed, 18 Sep 2024 21:40:48 -0400
+ id 1sr69V-0004sM-HX; Wed, 18 Sep 2024 21:40:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1726710047; x=1758246047;
+ t=1726710014; x=1758246014;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=4Lv6y5pVsU6DtDjzxhv1VCs53XCauucInvDj9vyaeKw=;
- b=awy2/xxSsHTmH5XOq1GV1w9kbwIKMC7Nw/v4pvsU1iiX0sHFLpcCVKo0
- /Czs0+kznTAYgCo9Qu4EZq4ybfjnoM0naAThTrnP0ACEBMJff9V64DXdy
- mjxbN+I9zIvdPx7F66qLn4l853ow9b/Yt0NDAm49Wl6x7hzMME7SUhh1L
- xYGBriwAJoM/lT3ZK+/Nn7YoAV4lVBIbvRt9MTJOxL2k206O9LkuamvF2
- f32go8w7BbF6Y7FXWs5n7TWokdurk8KDZNhhTsi2sGY4wq0D87rCerpEr
- rDw6Po2fWhcOdu63An4MwjcG6jT/9gVWzQkoPXxtDK9FgrenXCt7t33DQ w==;
-X-CSE-ConnectionGUID: XIyDjPVqQOS3U2OsVEdkwg==
-X-CSE-MsgGUID: zCUem+QJTyOmuQ3hbP9VZw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25797982"
-X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25797982"
+ bh=F7jWrurI1XVWfEeDSjk70sFPKqku+j5BACGGdK6zY9w=;
+ b=ZPX7dzyq5jw7trgy7ycKP+tucFWEGqXZ2m/AVheA/CXOJauTIni63/J/
+ mgOCektyCbJOMoCa01aEQbltw9ODZMXz+hTyN05oBAfzFijMrcKQuFmpZ
+ irMQoi6385scApVA9NpDmVggSkfnbO1r6632fnNBXWakHGxGON4tPtvZe
+ YLkQaxXwUN0cNbh9nGkJcHrpNXvF+zW7XfOZFpjjd6vtP4bjAM4PtVLLm
+ aQBbiT4MIQcaNShbZhX+vMJCBCSAM2dEnLQRiexKnUaagd6jv2Xw0aTHf
+ 1oXg06H9bNTtMvtPxHcmmYorevHIwe+98NMDcnV4IkuolkltCKjucQOjy w==;
+X-CSE-ConnectionGUID: FXmAoYI2Sh+Wo2oUmCiC3A==
+X-CSE-MsgGUID: zYtSrsS0Q26Hr850g5lJ9g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25797856"
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25797856"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Sep 2024 18:40:45 -0700
-X-CSE-ConnectionGUID: oRBjSbnIQmSIHRcM58FHEg==
-X-CSE-MsgGUID: BCnW7jNJTSGl38Hi7C4luQ==
+ 18 Sep 2024 18:40:12 -0700
+X-CSE-ConnectionGUID: VQKFuNgeQburcx//Eizfqw==
+X-CSE-MsgGUID: 5cDjh2NdT+qSFPCfiK9wyw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="70058880"
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="70058644"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa006.jf.intel.com with ESMTP; 18 Sep 2024 18:40:39 -0700
+ by orviesa006.jf.intel.com with ESMTP; 18 Sep 2024 18:40:05 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -66,10 +66,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-ppc@nongnu.org,
  qemu-arm@nongnu.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC v2 09/15] hw/cpu: Abstract module/die/socket levels as topology
- devices
-Date: Thu, 19 Sep 2024 09:55:27 +0800
-Message-Id: <20240919015533.766754-10-zhao1.liu@intel.com>
+Subject: [RFC v2 04/15] hw/cpu: Introduce CPU slot to manage CPU topology
+Date: Thu, 19 Sep 2024 09:55:22 +0800
+Message-Id: <20240919015533.766754-5-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240919015533.766754-1-zhao1.liu@intel.com>
 References: <20240919015533.766754-1-zhao1.liu@intel.com>
@@ -100,59 +99,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Abstract module/die/socket levels as the cpu-module/cpu-die/cpu-socket
-topology devices then they can be inserted into topology tree.
+When there's a CPU topology tree, original MachineState.smp (CpuTopology
+structure) is not enough to dynamically monitor changes of the tree or
+update topology information in time.
+
+To address this, introduce the CPU slot, as the root of CPU topology
+tree, which is used to update and maintain global topological statistics
+by listening any changes of topology device (realize() and unrealize()).
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- MAINTAINERS             |  6 ++++++
- hw/cpu/die.c            | 34 ++++++++++++++++++++++++++++++++++
- hw/cpu/meson.build      |  3 +++
- hw/cpu/module.c         | 34 ++++++++++++++++++++++++++++++++++
- hw/cpu/socket.c         | 34 ++++++++++++++++++++++++++++++++++
- include/hw/cpu/die.h    | 29 +++++++++++++++++++++++++++++
- include/hw/cpu/module.h | 29 +++++++++++++++++++++++++++++
- include/hw/cpu/socket.h | 29 +++++++++++++++++++++++++++++
- 8 files changed, 198 insertions(+)
- create mode 100644 hw/cpu/die.c
- create mode 100644 hw/cpu/module.c
- create mode 100644 hw/cpu/socket.c
- create mode 100644 include/hw/cpu/die.h
- create mode 100644 include/hw/cpu/module.h
- create mode 100644 include/hw/cpu/socket.h
+ MAINTAINERS               |   2 +
+ hw/cpu/cpu-slot.c         | 140 ++++++++++++++++++++++++++++++++++++++
+ hw/cpu/meson.build        |   1 +
+ include/hw/cpu/cpu-slot.h |  72 ++++++++++++++++++++
+ 4 files changed, 215 insertions(+)
+ create mode 100644 hw/cpu/cpu-slot.c
+ create mode 100644 include/hw/cpu/cpu-slot.h
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 8e5b2cd91dca..03c1a13de074 100644
+index 230267597b5f..8e5b2cd91dca 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1886,6 +1886,9 @@ F: hw/core/numa.c
+@@ -1884,6 +1884,7 @@ F: hw/core/machine-smp.c
+ F: hw/core/null-machine.c
+ F: hw/core/numa.c
  F: hw/cpu/cluster.c
- F: hw/cpu/cpu-slot.c
++F: hw/cpu/cpu-slot.c
  F: hw/cpu/cpu-topology.c
-+F: hw/cpu/die.c
-+F: hw/cpu/module.c
-+F: hw/cpu/socket.c
  F: qapi/machine.json
  F: qapi/machine-common.json
- F: qapi/machine-target.json
-@@ -1894,6 +1897,9 @@ F: include/hw/core/cpu.h
+@@ -1891,6 +1892,7 @@ F: qapi/machine-target.json
+ F: include/hw/boards.h
+ F: include/hw/core/cpu.h
  F: include/hw/cpu/cluster.h
- F: include/hw/cpu/cpu-slot.h
++F: include/hw/cpu/cpu-slot.h
  F: include/hw/cpu/cpu-topology.h
-+F: include/hw/cpu/die.h
-+F: include/hw/cpu/module.h
-+F: include/hw/cpu/socket.h
  F: include/sysemu/numa.h
  F: tests/functional/test_cpu_queries.py
- F: tests/functional/test_empty_cpu_model.py
-diff --git a/hw/cpu/die.c b/hw/cpu/die.c
+diff --git a/hw/cpu/cpu-slot.c b/hw/cpu/cpu-slot.c
 new file mode 100644
-index 000000000000..f00907ffd78b
+index 000000000000..66ef8d9faa97
 --- /dev/null
-+++ b/hw/cpu/die.c
-@@ -0,0 +1,34 @@
++++ b/hw/cpu/cpu-slot.c
+@@ -0,0 +1,140 @@
 +/*
-+ * CPU die abstract device
++ * CPU slot abstraction - manage CPU topology
 + *
 + * Copyright (C) 2024 Intel Corporation.
 + *
@@ -163,50 +155,154 @@ index 000000000000..f00907ffd78b
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/cpu/die.h"
 +
-+static void cpu_die_class_init(ObjectClass *oc, void *data)
++#include "hw/boards.h"
++#include "hw/cpu/cpu-slot.h"
++#include "hw/cpu/cpu-topology.h"
++#include "hw/qdev-core.h"
++#include "hw/qdev-properties.h"
++#include "hw/sysbus.h"
++#include "qapi/error.h"
++
++static void cpu_slot_add_topo_info(CPUSlot *slot, CPUTopoState *topo)
 +{
-+    CPUTopoClass *tc = CPU_TOPO_CLASS(oc);
++    CpuTopologyLevel level = GET_CPU_TOPO_LEVEL(topo);
++    CPUTopoStatEntry *entry;
++    int instances_num;
 +
-+    tc->level = CPU_TOPOLOGY_LEVEL_DIE;
++    entry = &slot->stat.entries[level];
++    entry->total_instances++;
++
++    instances_num = cpu_topo_get_instances_num(topo);
++    if (instances_num > entry->max_instances) {
++        entry->max_instances = instances_num;
++    }
++
++    set_bit(level, slot->stat.curr_levels);
++
++    return;
 +}
 +
-+static const TypeInfo cpu_die_type_info = {
-+    .name = TYPE_CPU_DIE,
-+    .parent = TYPE_CPU_TOPO,
-+    .class_init = cpu_die_class_init,
-+    .instance_size = sizeof(CPUDie),
++static void cpu_slot_device_realize(DeviceListener *listener,
++                                    DeviceState *dev)
++{
++    CPUSlot *slot = container_of(listener, CPUSlot, listener);
++    CPUTopoState *topo;
++
++    if (!object_dynamic_cast(OBJECT(dev), TYPE_CPU_TOPO)) {
++        return;
++    }
++
++    topo = CPU_TOPO(dev);
++    cpu_slot_add_topo_info(slot, topo);
++}
++
++static void cpu_slot_del_topo_info(CPUSlot *slot, CPUTopoState *topo)
++{
++    CpuTopologyLevel level = GET_CPU_TOPO_LEVEL(topo);
++    CPUTopoStatEntry *entry;
++
++    entry = &slot->stat.entries[level];
++    entry->total_instances--;
++
++    return;
++}
++
++static void cpu_slot_device_unrealize(DeviceListener *listener,
++                                      DeviceState *dev)
++{
++    CPUSlot *slot = container_of(listener, CPUSlot, listener);
++    CPUTopoState *topo;
++
++    if (!object_dynamic_cast(OBJECT(dev), TYPE_CPU_TOPO)) {
++        return;
++    }
++
++    topo = CPU_TOPO(dev);
++    cpu_slot_del_topo_info(slot, topo);
++}
++
++DeviceListener cpu_slot_device_listener = {
++    .realize = cpu_slot_device_realize,
++    .unrealize = cpu_slot_device_unrealize,
 +};
 +
-+static void cpu_die_register_types(void)
++static bool slot_bus_check_topology(CPUBusState *cbus,
++                                    CPUTopoState *topo,
++                                    Error **errp)
 +{
-+    type_register_static(&cpu_die_type_info);
++    CPUSlot *slot = CPU_SLOT(BUS(cbus)->parent);
++    CpuTopologyLevel level = GET_CPU_TOPO_LEVEL(topo);
++
++    if (!test_bit(level, slot->supported_levels)) {
++        error_setg(errp, "cpu topo: level %s is not supported",
++                   CpuTopologyLevel_str(level));
++        return false;
++    }
++    return true;
 +}
 +
-+type_init(cpu_die_register_types)
++static void cpu_slot_realize(DeviceState *dev, Error **errp)
++{
++    CPUSlot *slot = CPU_SLOT(dev);
++
++    slot->listener = cpu_slot_device_listener;
++    device_listener_register(&slot->listener);
++
++    qbus_init(&slot->bus, sizeof(CPUBusState),
++              TYPE_CPU_BUS, dev, "cpu-slot");
++    slot->bus.check_topology = slot_bus_check_topology;
++}
++
++static void cpu_slot_unrealize(DeviceState *dev)
++{
++    CPUSlot *slot = CPU_SLOT(dev);
++
++    device_listener_unregister(&slot->listener);
++}
++
++static void cpu_slot_class_init(ObjectClass *oc, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++
++    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
++    dc->realize = cpu_slot_realize;
++    dc->unrealize = cpu_slot_unrealize;
++}
++
++static const TypeInfo cpu_slot_type_info = {
++    .name = TYPE_CPU_SLOT,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .class_init = cpu_slot_class_init,
++    .instance_size = sizeof(CPUSlot),
++};
++
++static void cpu_slot_register_types(void)
++{
++    type_register_static(&cpu_slot_type_info);
++}
++
++type_init(cpu_slot_register_types)
 diff --git a/hw/cpu/meson.build b/hw/cpu/meson.build
-index 358e2b3960fa..c64eec4460d8 100644
+index 6c6546646608..358e2b3960fa 100644
 --- a/hw/cpu/meson.build
 +++ b/hw/cpu/meson.build
-@@ -3,6 +3,9 @@ common_ss.add(files('cpu-topology.c'))
+@@ -1,6 +1,7 @@
+ common_ss.add(files('cpu-topology.c'))
+ 
  system_ss.add(files('core.c'))
- system_ss.add(files('cpu-slot.c'))
++system_ss.add(files('cpu-slot.c'))
  system_ss.add(when: 'CONFIG_CPU_CLUSTER', if_true: files('cluster.c'))
-+system_ss.add(files('die.c'))
-+system_ss.add(files('module.c'))
-+system_ss.add(files('socket.c'))
  
  system_ss.add(when: 'CONFIG_ARM11MPCORE', if_true: files('arm11mpcore.c'))
- system_ss.add(when: 'CONFIG_REALVIEW', if_true: files('realview_mpcore.c'))
-diff --git a/hw/cpu/module.c b/hw/cpu/module.c
+diff --git a/include/hw/cpu/cpu-slot.h b/include/hw/cpu/cpu-slot.h
 new file mode 100644
-index 000000000000..b6f50a2ba588
+index 000000000000..9d02d5de578e
 --- /dev/null
-+++ b/hw/cpu/module.c
-@@ -0,0 +1,34 @@
++++ b/include/hw/cpu/cpu-slot.h
+@@ -0,0 +1,72 @@
 +/*
-+ * CPU module abstract device
++ * CPU slot abstraction header
 + *
 + * Copyright (C) 2024 Intel Corporation.
 + *
@@ -216,174 +312,67 @@ index 000000000000..b6f50a2ba588
 + * later.  See the COPYING file in the top-level directory.
 + */
 +
-+#include "qemu/osdep.h"
-+#include "hw/cpu/module.h"
-+
-+static void cpu_module_class_init(ObjectClass *oc, void *data)
-+{
-+    CPUTopoClass *tc = CPU_TOPO_CLASS(oc);
-+
-+    tc->level = CPU_TOPOLOGY_LEVEL_MODULE;
-+}
-+
-+static const TypeInfo cpu_module_type_info = {
-+    .name = TYPE_CPU_MODULE,
-+    .parent = TYPE_CPU_TOPO,
-+    .class_init = cpu_module_class_init,
-+    .instance_size = sizeof(CPUModule),
-+};
-+
-+static void cpu_module_register_types(void)
-+{
-+    type_register_static(&cpu_module_type_info);
-+}
-+
-+type_init(cpu_module_register_types)
-diff --git a/hw/cpu/socket.c b/hw/cpu/socket.c
-new file mode 100644
-index 000000000000..516e93389e11
---- /dev/null
-+++ b/hw/cpu/socket.c
-@@ -0,0 +1,34 @@
-+/*
-+ * CPU socket abstract device
-+ *
-+ * Copyright (C) 2024 Intel Corporation.
-+ *
-+ * Author: Zhao Liu <zhao1.liu@intel.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or
-+ * later.  See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/cpu/socket.h"
-+
-+static void cpu_socket_class_init(ObjectClass *oc, void *data)
-+{
-+    CPUTopoClass *tc = CPU_TOPO_CLASS(oc);
-+
-+    tc->level = CPU_TOPOLOGY_LEVEL_SOCKET;
-+}
-+
-+static const TypeInfo cpu_socket_type_info = {
-+    .name = TYPE_CPU_SOCKET,
-+    .parent = TYPE_CPU_TOPO,
-+    .class_init = cpu_socket_class_init,
-+    .instance_size = sizeof(CPUSocket),
-+};
-+
-+static void cpu_socket_register_types(void)
-+{
-+    type_register_static(&cpu_socket_type_info);
-+}
-+
-+type_init(cpu_socket_register_types)
-diff --git a/include/hw/cpu/die.h b/include/hw/cpu/die.h
-new file mode 100644
-index 000000000000..682e226ac569
---- /dev/null
-+++ b/include/hw/cpu/die.h
-@@ -0,0 +1,29 @@
-+/*
-+ * CPU die abstract device
-+ *
-+ * Copyright (C) 2024 Intel Corporation.
-+ *
-+ * Author: Zhao Liu <zhao1.liu@intel.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or
-+ * later.  See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef HW_CPU_DIE_H
-+#define HW_CPU_DIE_H
++#ifndef CPU_SLOT_H
++#define CPU_SLOT_H
 +
 +#include "hw/cpu/cpu-topology.h"
 +#include "hw/qdev-core.h"
++#include "hw/sysbus.h"
++#include "qapi/qapi-types-machine-common.h"
++#include "qom/object.h"
 +
-+#define TYPE_CPU_DIE "cpu-die"
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(CPUDie, CPU_DIE)
-+
-+struct CPUDie {
-+    /*< private >*/
-+    CPUTopoState obj;
-+
-+    /*< public >*/
-+};
-+
-+#endif /* HW_CPU_DIE_H */
-diff --git a/include/hw/cpu/module.h b/include/hw/cpu/module.h
-new file mode 100644
-index 000000000000..242cd623a3b3
---- /dev/null
-+++ b/include/hw/cpu/module.h
-@@ -0,0 +1,29 @@
-+/*
-+ * CPU module abstract device
-+ *
-+ * Copyright (C) 2024 Intel Corporation.
-+ *
-+ * Author: Zhao Liu <zhao1.liu@intel.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or
-+ * later.  See the COPYING file in the top-level directory.
++/**
++ * CPUTopoStatEntry:
++ * @total_instances: Total number of topological instances at the same level
++ *                   that are currently inserted in CPU slot
++ * @max_instances: Maximum number of topological instances at the same level
++ *                 under the parent topological container
 + */
++typedef struct CPUTopoStatEntry {
++    int total_instances;
++    int max_instances;
++} CPUTopoStatEntry;
 +
-+#ifndef HW_CPU_MODULE_H
-+#define HW_CPU_MODULE_H
-+
-+#include "hw/cpu/cpu-topology.h"
-+#include "hw/qdev-core.h"
-+
-+#define TYPE_CPU_MODULE "cpu-module"
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(CPUModule, CPU_MODULE)
-+
-+struct CPUModule {
-+    /*< private >*/
-+    CPUTopoState obj;
-+
-+    /*< public >*/
-+};
-+
-+#endif /* HW_CPU_MODULE_H */
-diff --git a/include/hw/cpu/socket.h b/include/hw/cpu/socket.h
-new file mode 100644
-index 000000000000..a25bf8727a22
---- /dev/null
-+++ b/include/hw/cpu/socket.h
-@@ -0,0 +1,29 @@
-+/*
-+ * CPU socket abstract device
-+ *
-+ * Copyright (C) 2024 Intel Corporation.
-+ *
-+ * Author: Zhao Liu <zhao1.liu@intel.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or
-+ * later.  See the COPYING file in the top-level directory.
++/**
++ * CPUTopoStat:
++ * @entries: Detail count information for valid topology levels under
++ *           CPU slot
++ * @curr_levels: Current CPU topology levels inserted in CPU slot
 + */
++typedef struct CPUTopoStat {
++    /* TODO: Exclude invalid and default levels. */
++    CPUTopoStatEntry entries[CPU_TOPOLOGY_LEVEL__MAX];
++    DECLARE_BITMAP(curr_levels, CPU_TOPOLOGY_LEVEL__MAX);
++} CPUTopoStat;
 +
-+#ifndef HW_CPU_SOCKET_H
-+#define HW_CPU_SOCKET_H
++#define TYPE_CPU_SLOT "cpu-slot"
++OBJECT_DECLARE_SIMPLE_TYPE(CPUSlot, CPU_SLOT)
 +
-+#include "hw/cpu/cpu-topology.h"
-+#include "hw/qdev-core.h"
-+
-+#define TYPE_CPU_SOCKET "cpu-socket"
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(CPUSocket, CPU_SOCKET)
-+
-+struct CPUSocket {
++/**
++ * CPUSlot:
++ * @cores: Queue consisting of all the cores in the topology tree
++ *     where the cpu-slot is the root. cpu-slot can maintain similar
++ *     queues for other topology levels to facilitate traversal
++ *     when necessary.
++ * @stat: Topological statistics for topology tree.
++ * @bus: CPU bus to add the children topology device.
++ * @supported_levels: Supported topology levels for topology tree.
++ * @listener: Hooks to listen realize() and unrealize() of topology
++ *            device.
++ */
++struct CPUSlot {
 +    /*< private >*/
-+    CPUTopoState parent_obj;
++    SysBusDevice parent_obj;
 +
 +    /*< public >*/
++    CPUBusState bus;
++    CPUTopoStat stat;
++    DECLARE_BITMAP(supported_levels, CPU_TOPOLOGY_LEVEL__MAX);
++
++    DeviceListener listener;
 +};
 +
-+#endif /* HW_CPU_SOCKET_H */
++#endif /* CPU_SLOT_H */
 -- 
 2.34.1
 
