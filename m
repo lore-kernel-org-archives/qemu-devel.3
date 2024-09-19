@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A9E4CF3964
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 18:58:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB9A4CF3962
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 18:59:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srMMC-0007SM-V3; Thu, 19 Sep 2024 14:58:24 -0400
+	id 1srMMW-00080c-7w; Thu, 19 Sep 2024 14:58:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1srMMA-0007KV-5V
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 14:58:22 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1srMMS-0007ut-L7
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 14:58:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1srMM8-0001Np-9X
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 14:58:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1srMMO-0001Oj-Rk
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 14:58:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726772299;
+ s=mimecast20190719; t=1726772315;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=32SIVo5ZUcpeDivRWuhw0SoH5RpwYN28O0swWDGMd48=;
- b=PJUumPVXGJH4z6Rpk9/qp2+NE226runGq45/P6tRWdl9vYlik7hCEGXNJxuRso60syXbgD
- lgnRJhYHMBxbi9TiN9MdKfSw+dyrBJCsr7IJz3OvVvzdmE6d5O6NMVMv8zOfJ521sTqqLD
- AlvkAiyK6lIPz/iyAkcOYpQqqe08Gw0=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=F+7Df5RlRnVhdLECEw4E+fTPOMXYOLddRglbS63IbB4=;
+ b=L+TMGJFSOyNpw44RNkJXGxhvAYMGSyj9UAymesCjxL34sfOjVAcfEzRpF1xNLT5PyoUkng
+ sRzcdCiZj/h4uyjEA6XWLtsP7GYwTIb8MPw/iWrX9Yc4QUWbdKmFzuOQHvIVpYAYjzM6UX
+ PnUnNDJ9Pzt/i3x1rBXKf2bqu4jMU3k=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-571-X3q4BCyoNRO4oYNxPuaYvg-1; Thu,
- 19 Sep 2024 14:58:15 -0400
-X-MC-Unique: X3q4BCyoNRO4oYNxPuaYvg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-UIQrJIxIM5WNQ3mHlmkANg-1; Thu,
+ 19 Sep 2024 14:58:26 -0400
+X-MC-Unique: UIQrJIxIM5WNQ3mHlmkANg-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (unknown
  [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 83AE81953954; Thu, 19 Sep 2024 18:58:13 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D6C8D19772E3; Thu, 19 Sep 2024 18:58:24 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.46])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2066419560AA; Thu, 19 Sep 2024 18:58:09 +0000 (UTC)
+ id 24EFF19560AA; Thu, 19 Sep 2024 18:58:20 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -51,9 +51,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Yoshinori Sato <ysato@users.sourceforge.jp>,
  Magnus Damm <magnus.damm@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH 4/7] tests/functional: Convert the SPARCStation Avocado test
-Date: Thu, 19 Sep 2024 20:57:44 +0200
-Message-ID: <20240919185749.71222-5-thuth@redhat.com>
+Subject: [PATCH 7/7] tests/functional: Convert the r2d sh4 Avocado test
+Date: Thu, 19 Sep 2024 20:57:47 +0200
+Message-ID: <20240919185749.71222-8-thuth@redhat.com>
 In-Reply-To: <20240919185749.71222-1-thuth@redhat.com>
 References: <20240919185749.71222-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -84,87 +84,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the new launch_kernel function to convert this test in a simple way.
+This is the last test that is using the do_test_advcal_2018()
+function, so we can now remove that function from boot_linux_console.py,
+too.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                          |  1 +
- tests/avocado/boot_linux_console.py  |  8 --------
- tests/functional/meson.build         |  4 ++++
- tests/functional/test_sparc_sun4m.py | 25 +++++++++++++++++++++++++
- 4 files changed, 30 insertions(+), 8 deletions(-)
- create mode 100755 tests/functional/test_sparc_sun4m.py
+ MAINTAINERS                         |  1 +
+ tests/avocado/boot_linux_console.py | 25 -----------------------
+ tests/functional/meson.build        |  4 ++++
+ tests/functional/test_sh4_r2d.py    | 31 +++++++++++++++++++++++++++++
+ 4 files changed, 36 insertions(+), 25 deletions(-)
+ create mode 100755 tests/functional/test_sh4_r2d.py
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index a75d6ba7d2..b85a3fc529 100644
+index 63eb306d6e..62f5255f40 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1693,6 +1693,7 @@ F: include/hw/nvram/sun_nvram.h
- F: include/hw/sparc/sparc32_dma.h
- F: include/hw/sparc/sun4m_iommu.h
- F: pc-bios/openbios-sparc32
-+F: tests/functional/test_sparc_sun4m.py
+@@ -1679,6 +1679,7 @@ F: hw/pci-host/sh_pci.c
+ F: hw/timer/sh_timer.c
+ F: include/hw/sh4/sh_intc.h
+ F: include/hw/timer/tmu012.h
++F: tests/functional/test_sh4_r2d.py
  
- Sun4u
- M: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+ SPARC Machines
+ --------------
 diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-index cf58499c84..900af67412 100644
+index f5dc9e9cfa..759fda9cc8 100644
 --- a/tests/avocado/boot_linux_console.py
 +++ b/tests/avocado/boot_linux_console.py
-@@ -1019,11 +1019,3 @@ def test_sh4_r2d(self):
-         tar_hash = 'fe06a4fd8ccbf2e27928d64472939d47829d4c7e'
-         self.vm.add_args('-append', 'console=ttySC1')
-         self.do_test_advcal_2018('09', tar_hash, 'zImage', console=1)
+@@ -882,17 +882,6 @@ def test_arm_orangepi_uboot_netbsd9(self):
+         # Wait for user-space
+         wait_for_console_pattern(self, 'Starting root file system check')
+ 
+-    def do_test_advcal_2018(self, day, tar_hash, kernel_name, console=0):
+-        tar_url = ('https://qemu-advcal.gitlab.io'
+-                   '/qac-best-of-multiarch/download/day' + day + '.tar.xz')
+-        file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
+-        archive.extract(file_path, self.workdir)
+-        self.vm.set_console(console_index=console)
+-        self.vm.add_args('-kernel',
+-                         self.workdir + '/day' + day + '/' + kernel_name)
+-        self.vm.launch()
+-        self.wait_for_console_pattern('QEMU advent calendar')
 -
--    def test_sparc_ss20(self):
+     def test_arm_ast2600_debian(self):
+         """
+         :avocado: tags=arch:arm
+@@ -964,17 +953,3 @@ def test_ppc_powernv10(self):
+         :avocado: tags=accel:tcg
+         """
+         self.do_test_ppc64_powernv('P10')
+-
+-    # This test has a 6-10% failure rate on various hosts that look
+-    # like issues with a buggy kernel. As a result we don't want it
+-    # gating releases on Gitlab.
+-    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
+-    def test_sh4_r2d(self):
 -        """
--        :avocado: tags=arch:sparc
--        :avocado: tags=machine:SS-20
+-        :avocado: tags=arch:sh4
+-        :avocado: tags=machine:r2d
+-        :avocado: tags=flaky
 -        """
--        tar_hash = 'b18550d5d61c7615d989a06edace051017726a9f'
--        self.do_test_advcal_2018('11', tar_hash, 'zImage.elf')
+-        tar_hash = 'fe06a4fd8ccbf2e27928d64472939d47829d4c7e'
+-        self.vm.add_args('-append', 'console=ttySC1')
+-        self.do_test_advcal_2018('09', tar_hash, 'zImage', console=1)
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 8fd852f4ab..8aacd15cf3 100644
+index 449c6a95ea..56a541530f 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -125,6 +125,10 @@ tests_s390x_system_thorough = [
+@@ -127,6 +127,10 @@ tests_s390x_system_thorough = [
    's390x_topology',
  ]
  
-+tests_sparc_system_thorough = [
-+  'sparc_sun4m',
++tests_sh4_system_thorough = [
++  'sh4_r2d',
 +]
 +
- tests_sparc64_system_thorough = [
-   'sparc64_sun4u',
+ tests_sparc_system_thorough = [
+   'sparc_sun4m',
  ]
-diff --git a/tests/functional/test_sparc_sun4m.py b/tests/functional/test_sparc_sun4m.py
+diff --git a/tests/functional/test_sh4_r2d.py b/tests/functional/test_sh4_r2d.py
 new file mode 100755
-index 0000000000..b334375820
+index 0000000000..5fe8cf9f8d
 --- /dev/null
-+++ b/tests/functional/test_sparc_sun4m.py
-@@ -0,0 +1,25 @@
++++ b/tests/functional/test_sh4_r2d.py
+@@ -0,0 +1,31 @@
 +#!/usr/bin/env python3
 +#
-+# Functional test that boots a Linux kernel on a sparc sun4m machine
-+# and checks the console
++# Boot a Linux kernel on a r2d sh4 machine and check the console
 +#
 +# SPDX-License-Identifier: GPL-2.0-or-later
 +
++import os
++
 +from qemu_test import LinuxKernelTest, Asset
 +from qemu_test.utils import archive_extract
++from unittest import skipUnless
 +
-+class Sun4mTest(LinuxKernelTest):
++class R2dTest(LinuxKernelTest):
 +
-+    ASSET_DAY11 = Asset(
-+        'https://www.qemu-advent-calendar.org/2018/download/day11.tar.xz',
-+        'c776533ba756bf4dd3f1fc4c024fb50ef0d853e05c5f5ddf0900a32d1eaa49e0')
++    ASSET_DAY09 = Asset(
++        'https://www.qemu-advent-calendar.org/2018/download/day09.tar.xz',
++        'a61b44d2630a739d1380cc4ff4b80981d47ccfd5992f1484ccf48322c35f09ac')
 +
-+    def test_sparc_ss20(self):
-+        self.set_machine('SS-20')
-+        file_path = self.ASSET_DAY11.fetch()
++    # This test has a 6-10% failure rate on various hosts that look
++    # like issues with a buggy kernel.
++    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable')
++    def test_r2d(self):
++        self.set_machine('r2d')
++        file_path = self.ASSET_DAY09.fetch()
 +        archive_extract(file_path, self.workdir)
-+        self.launch_kernel(self.workdir + '/day11/zImage.elf',
++        self.vm.add_args('-append', 'console=ttySC1')
++        self.launch_kernel(self.workdir + '/day09/zImage', console_index=1,
 +                           wait_for='QEMU advent calendar')
 +
 +if __name__ == '__main__':
