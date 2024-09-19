@@ -4,43 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC4A5CF3941
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10FA6CF3942
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:48:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srHUg-0007rw-Vs; Thu, 19 Sep 2024 09:46:51 -0400
+	id 1srHUj-00083d-Kf; Thu, 19 Sep 2024 09:46:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1srHUW-0007ES-Ip
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:46:45 -0400
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1srHUg-0007qE-KW
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:46:50 -0400
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1srHUQ-0005zp-UN
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:46:39 -0400
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1srHUQ-0005zl-UM
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:46:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
- :Subject; bh=yth4XXP3doal8mi5kLWYXcmT+5/Krh3E/otCxVnGH08=; b=rCkMbo81Gy7YknXH
- 2fWsXnJ9xiZVShtbTLOUGNdnuTmd6LuQb1h7rLCVvIKU5HRUkxrL01LacqvVZuBFIYkVi3JarstW1
- mkwESKSHv7LlNxbtdxQ0MujAUPMmfifU2J6kQINKqJYBZDiWC1UJUm0ptqenGZpBd2Hg2bDcP2ZID
- jx6dx0NEGhHN2JLP9CCLK2jPyR29eSvYarLFDqAJoK460d2oAAJcJKMpUz/+0Y2BFYjY02Y0xQQM3
- K685qClXh1YV8Z+ghDlxF9wfzZ7bdFNnDr1/kmUFRuVFw0dcyCyK9AfLmiIdj/sgHb1BOTIVu7wSz
- DnDvI+V+ZwdLkehGPg==;
+ :Subject; bh=KrajGmYAtlRM8qcr9rCRYTxgOyGTlHDlDTPA25yNl6M=; b=DyyNixIh7Mwcpt9I
+ exQIvCDteWktIf5tSe8suM5xApvyfo3h7WXidD4FokOUzOIMLX3fDhOT4662exP+QUMgqsLYxJXVK
+ ugoGwprSI3Mp5IqkSkuOg/wibPK1CHN9mGzG7RBz0ybFTXFZ99nEWj1/2iTrHxf24ynlyZF7sAarq
+ /dW3j1xbl1NLFHluMhuykV/KDGXgHrcXbFP8ubQCDiXteqZX9jiEEx/Xjw6quuPtOFBkQxIfTpf0i
+ QO/mlOm6xPkrvmQvbLEysomQmtyqGNl5j15eYhtL09BQFsYhLVprdocSTzm6rAAJ+3K+lmagoOOqS
+ sDB222UoXxZubOupZg==;
 Received: from localhost ([127.0.0.1] helo=dalek.home.treblig.org)
  by mx.treblig.org with esmtp (Exim 4.96)
- (envelope-from <dave@treblig.org>) id 1srHUL-006QOJ-0x;
- Thu, 19 Sep 2024 13:46:29 +0000
+ (envelope-from <dave@treblig.org>) id 1srHUJ-006QOJ-2y;
+ Thu, 19 Sep 2024 13:46:27 +0000
 From: dave@treblig.org
 To: peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com
 Cc: qemu-devel@nongnu.org,
 	"Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH v2 2/7] migration: Remove unused migrate_zero_blocks
-Date: Thu, 19 Sep 2024 14:46:21 +0100
-Message-ID: <20240919134626.166183-3-dave@treblig.org>
+Subject: [PATCH v2 0/7] Migration deadcode removal
+Date: Thu, 19 Sep 2024 14:46:19 +0100
+Message-ID: <20240919134626.166183-1-dave@treblig.org>
 X-Mailer: git-send-email 2.46.1
-In-Reply-To: <20240919134626.166183-1-dave@treblig.org>
-References: <20240919134626.166183-1-dave@treblig.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dave@treblig.org;
@@ -68,47 +66,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-migrate_zero_blocks is unused since
-  eef0bae3a7 ("migration: Remove block migration")
+  This is a set of deadcode removal around migration
+found by looking for unused symbols.
 
-Remove it.
+v2
+   Don't remove the zero-blocks capability yet
+   add Fabiano's deprecation text patch.
+   Use the uffd helpers in postcopy rather than
+     removing most of them.
+   Remove one.
 
-Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
----
- migration/options.c | 7 -------
- migration/options.h | 1 -
- 2 files changed, 8 deletions(-)
+Dave
 
-diff --git a/migration/options.c b/migration/options.c
-index 9460c5dee9..6f549984cb 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -339,13 +339,6 @@ bool migrate_xbzrle(void)
-     return s->capabilities[MIGRATION_CAPABILITY_XBZRLE];
- }
- 
--bool migrate_zero_blocks(void)
--{
--    MigrationState *s = migrate_get_current();
--
--    return s->capabilities[MIGRATION_CAPABILITY_ZERO_BLOCKS];
--}
--
- bool migrate_zero_copy_send(void)
- {
-     MigrationState *s = migrate_get_current();
-diff --git a/migration/options.h b/migration/options.h
-index 36e7b3723f..79084eed0d 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -40,7 +40,6 @@ bool migrate_release_ram(void);
- bool migrate_return_path(void);
- bool migrate_validate_uuid(void);
- bool migrate_xbzrle(void);
--bool migrate_zero_blocks(void);
- bool migrate_zero_copy_send(void);
- 
- /*
+Dr. David Alan Gilbert (6):
+  migration: Remove migrate_cap_set
+  migration: Remove unused migrate_zero_blocks
+  migration: Remove unused socket_send_channel_create_sync
+  util/userfaultfd: Return -errno on error
+  migration/postcopy: Use uffd helpers
+  util/userfaultfd: Remove unused uffd_poll_events
+
+Fabiano Rosas (1):
+  migration: Deprecate zero-blocks capability
+
+ docs/about/deprecated.rst  |  6 +++++
+ include/qemu/userfaultfd.h |  1 -
+ migration/options.c        | 31 ++++--------------------
+ migration/options.h        |  2 --
+ migration/postcopy-ram.c   | 47 ++++++++++--------------------------
+ migration/socket.c         | 18 --------------
+ migration/socket.h         |  1 -
+ qapi/migration.json        |  5 +++-
+ util/userfaultfd.c         | 49 ++++++++++----------------------------
+ 9 files changed, 39 insertions(+), 121 deletions(-)
+
 -- 
 2.46.1
 
