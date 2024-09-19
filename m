@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A83CE8D7D
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 12:13:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B33CE8D7D
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 12:15:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srG27-0001sy-PZ; Thu, 19 Sep 2024 08:13:15 -0400
+	id 1srG3n-0001bo-9P; Thu, 19 Sep 2024 08:14:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srG25-0001dz-F4
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 08:13:13 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1srG3m-0001YH-B2
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 08:14:58 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srG23-0001x8-L3
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 08:13:13 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5c2561e8041so1027269a12.2
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 05:13:10 -0700 (PDT)
+ id 1srG3k-00022E-Iz
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 08:14:57 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5c25554ec1eso1066494a12.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 05:14:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726747989; x=1727352789; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726748094; x=1727352894; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=TzMpZCVB9NHqLGK27a3PvRT37LkciyTprpfonu/P71g=;
- b=Xgc6886reKur3dDq9WzoNqTbnxCo8hQG1zMZdTu05AQle6ruo7pXiDt35y7fMXr61x
- 80rT75VTBrOWKmSrrGIWrLhALOVzqQNkLIffTq1b7CDPyJhhCHUIkCOUpbPfh7LDemEZ
- 4zDXO401M8HBIXAXjwiXAezUT8aSVUlGH6djk/l1fakX1k4BL/BkRVBTySiQnPzC+Stk
- ZuABpWZSzMMY+oAkS5Zj42kRmFQzKdgtRIH8gl+zoz8Bl0JxlwxqKXk2jGJA3oBZzrsw
- ytjF2ZTrY5KtCebElciuYQlDCPNbmvhTieg0NJOLbXiwISgY0Sgtn+kzR9/q1ddRL8dK
- m7ZA==
+ bh=ITNzsVedTG0A9oh8mPcSnOgdo0s0QS2FVvVYwXjShG8=;
+ b=KbLpfhSWAlYSKIpxyU/EDiWQzjy/L0+Abx5mTPVQMS5ot7nBIqA4IvjUdwIp8byui9
+ lp0YarsHAjghkkQVk5+KykL2uYDZPsAJ1QWjdgqpY8XerPJUkX1DDuwJgOOrVyz4raUd
+ 3fkwvXR/KyEFPXlbk9fdpxq1Dhodn1ELG6ZpDRgJ6rmKes30pqHp5R7d1GvrFTV8WyQ+
+ n3pNcQ+AA97RfRtV6eyAe4r0T4ZMRqGongfYDxaz/dwZqYd3wvxmR15pdD3ITOaN4KzM
+ ygWyl67lhXniHkZ7LT4YJp5I+PS1aUoviPzk887UmIiniuDknfA1nfELdHBGiyKRDro/
+ E1Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726747989; x=1727352789;
+ d=1e100.net; s=20230601; t=1726748094; x=1727352894;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=TzMpZCVB9NHqLGK27a3PvRT37LkciyTprpfonu/P71g=;
- b=a64wmX0odU99O0VCX0hFo1eFjY8eISH1UBE04Simjohx++HsUUlOfpN/zCIEO00WCG
- Xskz4KwG1e0Ji2duJYQCK8oQvrt3q10cXy5biZp1T3JLUjQk2h8+NtY3eMxiya9C1AT8
- 1VrNCoJx58aLK3zEN6k4zfhy6G4JNPKlrr5AzhTtN68IErxyXEk9RTaDbD+DvSAyQTpS
- oKujvTFD+xD62Ab8wcL4NcqwoH3MZYG5oQmux1VdA3lZefH0zk4dcSnWiIk9RzrC7fgU
- bNIYCURhWaVu7F4Df51FWoz3t6wuvz8Gg/qbGVDwu5q6zVA5EW3g4mUEGCQ6ZyUNJDqU
- DiHw==
-X-Gm-Message-State: AOJu0YwwtfSpk+7nOayqnoQ3QM8Dfk/2Z/JBHUVwmv6yrzbbrI3xtryu
- hM+xvxR+4CW49EUVLP2Kp5KqjhfA0q6h1IwT+rn+Dn+DZk69ThaEINoog1Ym2DqyjU1mSlN7ic1
- ZADBTiYzjta3xmdBPYLpM1CgHxDPTj14GunIbE49iPQGQadUn
-X-Google-Smtp-Source: AGHT+IF9dxO4aL99tV4mmWRmOEiU0wPshWJJp2xg/4DDqOyap6PAeFmVLne8/DCsfgAazK2TB9itNfl/qZvxb0Ncdg8=
-X-Received: by 2002:a05:6402:3511:b0:5c4:2efe:c9e3 with SMTP id
- 4fb4d7f45d1cf-5c42efeccffmr14464697a12.17.1726747989491; Thu, 19 Sep 2024
- 05:13:09 -0700 (PDT)
+ bh=ITNzsVedTG0A9oh8mPcSnOgdo0s0QS2FVvVYwXjShG8=;
+ b=ipYOAieXgKTYdS+aVrMtWMHHoNc5wrN2d1elaHhmwPbSA+YWXkGdDDKQAxDtxGJ0A5
+ nMOrdY+S/mR208hoRj6UYWCSRc1WA+CKbV+Xl9ZTPFt+U1FDalIV52KE4Bx7GwclP3wa
+ JZcS4TdvbfDQ2l63mZksqPFj6ORddFV+sQPJKNLmfSK5l/kAYtzcdvjx4IlroBBVsKbY
+ dlhrlUmWiCoHRe9iclNuDfS1fQqUY985lsKjcqSrTzUY2jjalBh9Ql/yrqEeZ7zdUk7P
+ 5wsEth5/4SR1yfsG6Wk6P6GPkYefwSC0LnerD5oueGqjZUcEQzQnv9lnQeP6ea8dsBIY
+ DKVw==
+X-Gm-Message-State: AOJu0YzGNrRuAkx1Jl84ugq3YBHX3MIOMVSM8hOKdmV5iO3Pk5xE5EyC
+ 8sMZV0CFDWts4me3OXoN8kOoOSNfblTZDCp1rYz460shd3WaGBZP2NYfKpXwajluv18yna2RcrC
+ y46zyYaYFLanyOAGvmxz/ie8Wgzemxf0a4jLmUy8O63VtQyHZ
+X-Google-Smtp-Source: AGHT+IH0uoWcbCWjdb1bXz7D4+O5temPBDkNrEnV+uxpPJQqI0+5uRP8wniNl/MnKz1xCcO4/Xg1dRgzGnZi6p8cd2o=
+X-Received: by 2002:a05:6402:5204:b0:5c3:9fa9:1b72 with SMTP id
+ 4fb4d7f45d1cf-5c413e09477mr24012550a12.6.1726748093721; Thu, 19 Sep 2024
+ 05:14:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240816132212.3602106-1-peter.maydell@linaro.org>
- <CAFEAcA8XwbB89sNKPJpFRXcFb1esUpRMaeue8e=Wepvpmr9PHw@mail.gmail.com>
-In-Reply-To: <CAFEAcA8XwbB89sNKPJpFRXcFb1esUpRMaeue8e=Wepvpmr9PHw@mail.gmail.com>
+References: <20240815131206.3231819-1-peter.maydell@linaro.org>
+ <CAFEAcA_cpkdKTvm5Sx3AwvMzd9+1umvwBpB=XLEO2ULj1wiHzw@mail.gmail.com>
+In-Reply-To: <CAFEAcA_cpkdKTvm5Sx3AwvMzd9+1umvwBpB=XLEO2ULj1wiHzw@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Sep 2024 13:12:57 +0100
-Message-ID: <CAFEAcA-7FGH0gk=g021cdH3NCx+8kJm0ygGMYrjyhB8JHnROMw@mail.gmail.com>
-Subject: Re: [PATCH for-9.2 0/7] docs/devel: Convert txt files to rST
+Date: Thu, 19 Sep 2024 13:14:43 +0100
+Message-ID: <CAFEAcA9WamZDSsDStfRWWLmeCzUOy8xRUaDYJQH-u0DQVXewrA@mail.gmail.com>
+Subject: Re: [PATCH for-9.2 0/2] accel/kvm: Fix two minor Coverity nits
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,81 +88,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping^2.
-
-In particular: Paolo, it would be helpful if you could
-confirm what license you intended for the lockcnt.c code.
-
-thanks
--- PMM
-
-On Fri, 6 Sept 2024 at 16:12, Peter Maydell <peter.maydell@linaro.org> wrote:
+On Fri, 6 Sept 2024 at 16:10, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> Ping for review on these docs conversions, please?
->
-> thanks
-> -- PMM
->
-> On Fri, 16 Aug 2024 at 14:22, Peter Maydell <peter.maydell@linaro.org> wrote:
+> On Thu, 15 Aug 2024 at 14:12, Peter Maydell <peter.maydell@linaro.org> wrote:
 > >
-> > This patchset converts a collection of the remaining txt files in
-> > docs/devel to rST format. At this point in the release cycle
-> > I'm targeting 9.2 for these.
+> > This patchset fixes a couple of minor Coverity nits:
+> >  * a can't-happen integer overflow when assigning from a long to
+> >    an int in kvm_init_vcpu()
+> >  * some unreachable code in kvm_dirty_ring_reaper_thread()
 > >
-> > Patches 1-5 are simple conversions.  In patch 6 I move the
-> > QemuLockCnt APIs to their own header file; this is so that we can
-> > include the kernel-doc generated APIs in lockcnt.rst (since
-> > kernel-doc works on a per-file basis).
-> >
-> > Paolo: can you confirm that you mean GPLv2-or-later for the lockcnt
-> > code?  There's no explicit license comment in either util/lockcnt.c
-> > or include/qemu/thread.h.
-> >
-> > (There's one .txt file left in docs/devel after this, but I don't
-> > think it's very useful so I propose to delete it and will send a
-> > separate patch for that.)
+> > Since there's no actual incorrect behaviour, these are 9.2
+> > material.
 > >
 > > thanks
 > > -- PMM
 > >
-> > Peter Maydell (7):
-> >   docs/devel/blkdebug: Convert to rST format
-> >   docs/devel/blkverify: Convert to rST format
-> >   docs/devel/lockcnt: Convert to rST format
-> >   docs/devel/multiple-iothreads: Convert to rST format
-> >   docs/devel/rcu: Convert to rST format
-> >   include: Move QemuLockCnt APIs to their own header
-> >   docs/devel/lockcnt: Include kernel-doc API documentation
-> >
-> >  MAINTAINERS                                 |   8 +-
-> >  docs/devel/blkdebug.rst                     | 177 ++++++++++++++++++++
-> >  docs/devel/blkdebug.txt                     | 162 ------------------
-> >  docs/devel/{blkverify.txt => blkverify.rst} |  30 ++--
-> >  docs/devel/index-api.rst                    |   1 +
-> >  docs/devel/index-build.rst                  |   2 +
-> >  docs/devel/index-internals.rst              |   2 +
-> >  docs/devel/{lockcnt.txt => lockcnt.rst}     |  89 +++++-----
-> >  docs/devel/multiple-iothreads.rst           | 139 +++++++++++++++
-> >  docs/devel/multiple-iothreads.txt           | 130 --------------
-> >  docs/devel/{rcu.txt => rcu.rst}             | 172 +++++++++----------
-> >  include/block/aio.h                         |   1 +
-> >  include/hw/core/cpu.h                       |   1 +
-> >  include/qemu/lockcnt.h                      | 130 ++++++++++++++
-> >  include/qemu/thread.h                       | 111 ------------
-> >  accel/accel-blocker.c                       |   1 +
-> >  hw/core/cpu-common.c                        |   1 +
-> >  util/aio-posix.c                            |   1 +
-> >  util/aio-win32.c                            |   1 +
-> >  util/async.c                                |   1 +
-> >  util/fdmon-epoll.c                          |   1 +
-> >  util/lockcnt.c                              |   1 +
-> >  22 files changed, 608 insertions(+), 554 deletions(-)
-> >  create mode 100644 docs/devel/blkdebug.rst
-> >  delete mode 100644 docs/devel/blkdebug.txt
-> >  rename docs/devel/{blkverify.txt => blkverify.rst} (77%)
-> >  rename docs/devel/{lockcnt.txt => lockcnt.rst} (75%)
-> >  create mode 100644 docs/devel/multiple-iothreads.rst
-> >  delete mode 100644 docs/devel/multiple-iothreads.txt
-> >  rename docs/devel/{rcu.txt => rcu.rst} (73%)
-> >  create mode 100644 include/qemu/lockcnt.h
+> > Peter Maydell (2):
+> >   kvm: Make 'mmap_size' be 'int' in kvm_init_vcpu(),
+> >     do_kvm_destroy_vcpu()
+> >   kvm: Remove unreachable code in kvm_dirty_ring_reaper_thread()
+>
+> Ping for review on patch 2, please?
+>
+> (I can take these through target-arm if you like.)
+
+It's been two weeks, and patch 2 is pretty trivial, so I'm
+going to take these through target-arm.next.
+
+-- PMM
 
