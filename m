@@ -4,110 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C5B5CE8D7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 12:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A83CE8D7D
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 12:13:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srG1r-0000yn-3J; Thu, 19 Sep 2024 08:12:59 -0400
+	id 1srG27-0001sy-PZ; Thu, 19 Sep 2024 08:13:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1srG1i-0000xS-Ng
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 08:12:50 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1srG25-0001dz-F4
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 08:13:13 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1srG1f-0001vx-UN
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 08:12:49 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id D86B7208FE;
- Thu, 19 Sep 2024 12:12:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1726747966; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JeLJrCEIZqxB4WaioKG/nmlbbAvNA/mYV2Wlhns99u8=;
- b=KMfOG9gbkmRnFm05lJ3FYiesqU12j/uRKiTAlTewN+X1b580GAfdGMHTDk439NZX3O1qKB
- kZgrxnH56lIAbFr1c+PgMRQ+OrqyWWPxuWjWhkkd6eeNfiTGCoaOFa0L83bh+TvWX+bIZr
- a7M0EGW9nq+c4sLIwpNsdYveZjQimmY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1726747966;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JeLJrCEIZqxB4WaioKG/nmlbbAvNA/mYV2Wlhns99u8=;
- b=BvaqsEQ7WiCw2sDVtrh3bLnMcXee+ir0bHrJQymqpgkuILvl3rnTUB6h4o2DtkkzVR9oLd
- d9g/ZhHMctaOleDQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=CHKFWr+d;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=fwv2q1QG
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1726747965; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JeLJrCEIZqxB4WaioKG/nmlbbAvNA/mYV2Wlhns99u8=;
- b=CHKFWr+dhEsCt2seIlPDNM/pwx7lO6XPpAS7R28AE59ezGHaMSXmFW1E4W/0Z0/l8sWoPj
- R0shJ64jXIvrBqtr6REshYC7vf5aDNm9AjAz9IKK2AjlksH6+f4F+vVaKN6b8VcI5fC2Mz
- hDlioxX9M43ZbMmxuyyglSlMH9ETIfE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1726747965;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JeLJrCEIZqxB4WaioKG/nmlbbAvNA/mYV2Wlhns99u8=;
- b=fwv2q1QGAivItpx7U+sxaXSGbDom+xJ40BNSFzPQkUBQfy1JgxzC6hBidyFpccCM+WmZaT
- /OCnm/ZwuT7A6QBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 64C9813A5F;
- Thu, 19 Sep 2024 12:12:45 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id iK1XCz0V7GYkJgAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 19 Sep 2024 12:12:45 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: dave@treblig.org, peterx@redhat.com, eblake@redhat.com, armbru@redhat.com
-Cc: qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH 3/3] migration: Remove unused
- socket_send_channel_create_sync
-In-Reply-To: <20240918000207.182683-4-dave@treblig.org>
-References: <20240918000207.182683-1-dave@treblig.org>
- <20240918000207.182683-4-dave@treblig.org>
-Date: Thu, 19 Sep 2024 09:12:42 -0300
-Message-ID: <87wmj7etad.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1srG23-0001x8-L3
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 08:13:13 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5c2561e8041so1027269a12.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 05:13:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726747989; x=1727352789; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=TzMpZCVB9NHqLGK27a3PvRT37LkciyTprpfonu/P71g=;
+ b=Xgc6886reKur3dDq9WzoNqTbnxCo8hQG1zMZdTu05AQle6ruo7pXiDt35y7fMXr61x
+ 80rT75VTBrOWKmSrrGIWrLhALOVzqQNkLIffTq1b7CDPyJhhCHUIkCOUpbPfh7LDemEZ
+ 4zDXO401M8HBIXAXjwiXAezUT8aSVUlGH6djk/l1fakX1k4BL/BkRVBTySiQnPzC+Stk
+ ZuABpWZSzMMY+oAkS5Zj42kRmFQzKdgtRIH8gl+zoz8Bl0JxlwxqKXk2jGJA3oBZzrsw
+ ytjF2ZTrY5KtCebElciuYQlDCPNbmvhTieg0NJOLbXiwISgY0Sgtn+kzR9/q1ddRL8dK
+ m7ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726747989; x=1727352789;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TzMpZCVB9NHqLGK27a3PvRT37LkciyTprpfonu/P71g=;
+ b=a64wmX0odU99O0VCX0hFo1eFjY8eISH1UBE04Simjohx++HsUUlOfpN/zCIEO00WCG
+ Xskz4KwG1e0Ji2duJYQCK8oQvrt3q10cXy5biZp1T3JLUjQk2h8+NtY3eMxiya9C1AT8
+ 1VrNCoJx58aLK3zEN6k4zfhy6G4JNPKlrr5AzhTtN68IErxyXEk9RTaDbD+DvSAyQTpS
+ oKujvTFD+xD62Ab8wcL4NcqwoH3MZYG5oQmux1VdA3lZefH0zk4dcSnWiIk9RzrC7fgU
+ bNIYCURhWaVu7F4Df51FWoz3t6wuvz8Gg/qbGVDwu5q6zVA5EW3g4mUEGCQ6ZyUNJDqU
+ DiHw==
+X-Gm-Message-State: AOJu0YwwtfSpk+7nOayqnoQ3QM8Dfk/2Z/JBHUVwmv6yrzbbrI3xtryu
+ hM+xvxR+4CW49EUVLP2Kp5KqjhfA0q6h1IwT+rn+Dn+DZk69ThaEINoog1Ym2DqyjU1mSlN7ic1
+ ZADBTiYzjta3xmdBPYLpM1CgHxDPTj14GunIbE49iPQGQadUn
+X-Google-Smtp-Source: AGHT+IF9dxO4aL99tV4mmWRmOEiU0wPshWJJp2xg/4DDqOyap6PAeFmVLne8/DCsfgAazK2TB9itNfl/qZvxb0Ncdg8=
+X-Received: by 2002:a05:6402:3511:b0:5c4:2efe:c9e3 with SMTP id
+ 4fb4d7f45d1cf-5c42efeccffmr14464697a12.17.1726747989491; Thu, 19 Sep 2024
+ 05:13:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: D86B7208FE
-X-Spamd-Result: default: False [-5.81 / 50.00]; BAYES_HAM(-2.30)[96.71%];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240816132212.3602106-1-peter.maydell@linaro.org>
+ <CAFEAcA8XwbB89sNKPJpFRXcFb1esUpRMaeue8e=Wepvpmr9PHw@mail.gmail.com>
+In-Reply-To: <CAFEAcA8XwbB89sNKPJpFRXcFb1esUpRMaeue8e=Wepvpmr9PHw@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 19 Sep 2024 13:12:57 +0100
+Message-ID: <CAFEAcA-7FGH0gk=g021cdH3NCx+8kJm0ygGMYrjyhB8JHnROMw@mail.gmail.com>
+Subject: Re: [PATCH for-9.2 0/7] docs/devel: Convert txt files to rST
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,16 +89,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-dave@treblig.org writes:
+Ping^2.
 
-> From: "Dr. David Alan Gilbert" <dave@treblig.org>
->
-> socket_send_channel_create_sync only use was removed by
->   d0edb8a173 ("migration: Create the postcopy preempt channel asynchronously")
->
-> Remove it.
->
-> Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+In particular: Paolo, it would be helpful if you could
+confirm what license you intended for the lockcnt.c code.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+thanks
+-- PMM
+
+On Fri, 6 Sept 2024 at 16:12, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> Ping for review on these docs conversions, please?
+>
+> thanks
+> -- PMM
+>
+> On Fri, 16 Aug 2024 at 14:22, Peter Maydell <peter.maydell@linaro.org> wrote:
+> >
+> > This patchset converts a collection of the remaining txt files in
+> > docs/devel to rST format. At this point in the release cycle
+> > I'm targeting 9.2 for these.
+> >
+> > Patches 1-5 are simple conversions.  In patch 6 I move the
+> > QemuLockCnt APIs to their own header file; this is so that we can
+> > include the kernel-doc generated APIs in lockcnt.rst (since
+> > kernel-doc works on a per-file basis).
+> >
+> > Paolo: can you confirm that you mean GPLv2-or-later for the lockcnt
+> > code?  There's no explicit license comment in either util/lockcnt.c
+> > or include/qemu/thread.h.
+> >
+> > (There's one .txt file left in docs/devel after this, but I don't
+> > think it's very useful so I propose to delete it and will send a
+> > separate patch for that.)
+> >
+> > thanks
+> > -- PMM
+> >
+> > Peter Maydell (7):
+> >   docs/devel/blkdebug: Convert to rST format
+> >   docs/devel/blkverify: Convert to rST format
+> >   docs/devel/lockcnt: Convert to rST format
+> >   docs/devel/multiple-iothreads: Convert to rST format
+> >   docs/devel/rcu: Convert to rST format
+> >   include: Move QemuLockCnt APIs to their own header
+> >   docs/devel/lockcnt: Include kernel-doc API documentation
+> >
+> >  MAINTAINERS                                 |   8 +-
+> >  docs/devel/blkdebug.rst                     | 177 ++++++++++++++++++++
+> >  docs/devel/blkdebug.txt                     | 162 ------------------
+> >  docs/devel/{blkverify.txt => blkverify.rst} |  30 ++--
+> >  docs/devel/index-api.rst                    |   1 +
+> >  docs/devel/index-build.rst                  |   2 +
+> >  docs/devel/index-internals.rst              |   2 +
+> >  docs/devel/{lockcnt.txt => lockcnt.rst}     |  89 +++++-----
+> >  docs/devel/multiple-iothreads.rst           | 139 +++++++++++++++
+> >  docs/devel/multiple-iothreads.txt           | 130 --------------
+> >  docs/devel/{rcu.txt => rcu.rst}             | 172 +++++++++----------
+> >  include/block/aio.h                         |   1 +
+> >  include/hw/core/cpu.h                       |   1 +
+> >  include/qemu/lockcnt.h                      | 130 ++++++++++++++
+> >  include/qemu/thread.h                       | 111 ------------
+> >  accel/accel-blocker.c                       |   1 +
+> >  hw/core/cpu-common.c                        |   1 +
+> >  util/aio-posix.c                            |   1 +
+> >  util/aio-win32.c                            |   1 +
+> >  util/async.c                                |   1 +
+> >  util/fdmon-epoll.c                          |   1 +
+> >  util/lockcnt.c                              |   1 +
+> >  22 files changed, 608 insertions(+), 554 deletions(-)
+> >  create mode 100644 docs/devel/blkdebug.rst
+> >  delete mode 100644 docs/devel/blkdebug.txt
+> >  rename docs/devel/{blkverify.txt => blkverify.rst} (77%)
+> >  rename docs/devel/{lockcnt.txt => lockcnt.rst} (75%)
+> >  create mode 100644 docs/devel/multiple-iothreads.rst
+> >  delete mode 100644 docs/devel/multiple-iothreads.txt
+> >  rename docs/devel/{rcu.txt => rcu.rst} (73%)
+> >  create mode 100644 include/qemu/lockcnt.h
 
