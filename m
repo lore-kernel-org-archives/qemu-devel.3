@@ -4,57 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACE1DCF3942
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:50:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6976CF3941
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 14:06:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srHXh-0007A1-W4; Thu, 19 Sep 2024 09:49:58 -0400
+	id 1srHms-0000iQ-7S; Thu, 19 Sep 2024 10:05:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaoshiyuan@baidu.com>)
- id 1srHXg-000748-2t
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:49:56 -0400
-Received: from mx24.baidu.com ([111.206.215.185] helo=baidu.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaoshiyuan@baidu.com>)
- id 1srHXc-0006Mi-8X
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:49:55 -0400
-To: David Hildenbrand <david@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>, Jason Wang
- <jasowang@redhat.com>, "Zuo,Boqun" <zuoboqun@baidu.com>, "alxndr@bu.edu"
- <alxndr@bu.edu>, "thuth@redhat.com" <thuth@redhat.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "Gao,Shiyuan"
- <gaoshiyuan@baidu.com>
-Subject: Re: [PATCH v3 1/1] virtio-pci: Add lookup subregion of
- VirtIOPCIRegion MR
-Thread-Topic: [PATCH v3 1/1] virtio-pci: Add lookup subregion of
- VirtIOPCIRegion MR
-Thread-Index: AQHbCpq+8JD0HFaZskiEbYf/lnfsEg==
-Date: Thu, 19 Sep 2024 13:49:26 +0000
-Message-ID: <33842f6145ba42c5a9b021ba31054a7f@baidu.com>
-References: <20240903120304.97833-1-gaoshiyuan@baidu.com>,
- <b7f9dad2-29d9-42e6-97b0-32be6c077391@redhat.com>
-In-Reply-To: <b7f9dad2-29d9-42e6-97b0-32be6c077391@redhat.com>
-Accept-Language: en-US, zh-CN
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.22.192.143]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1srHmq-0000hE-Ij
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 10:05:36 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1srHmo-0000Kd-OH
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 10:05:36 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 1A0FF3390C;
+ Thu, 19 Sep 2024 14:05:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726754731; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JBuDBYWD4ocfm689UJF8LWs2H2zZIbTRnbe+5QeqBUQ=;
+ b=axrgDVNl502mEn00oSPbsqzmeq9UPs4MBcibF5vloytM6gksjlkACvsVrq4r5YU3c4fT22
+ +ogQKCUDFdcgspaUwVc8PZhrKMiNVlh9n+XIDyBBaySjweV6KyqbMUu8m/i19xeAE8NExl
+ VPI09UYxvNDAkNfCss1Ezy+W+f0iIwU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726754731;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JBuDBYWD4ocfm689UJF8LWs2H2zZIbTRnbe+5QeqBUQ=;
+ b=+hP+fy2K0qLoKx8hm7c5q/8Fae4VCtZenvyqaqBVBC4WzCVwvE/gjof3J9+HBwdHNTl1fU
+ XI0VnJsKLt0ZCZDg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726754731; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JBuDBYWD4ocfm689UJF8LWs2H2zZIbTRnbe+5QeqBUQ=;
+ b=axrgDVNl502mEn00oSPbsqzmeq9UPs4MBcibF5vloytM6gksjlkACvsVrq4r5YU3c4fT22
+ +ogQKCUDFdcgspaUwVc8PZhrKMiNVlh9n+XIDyBBaySjweV6KyqbMUu8m/i19xeAE8NExl
+ VPI09UYxvNDAkNfCss1Ezy+W+f0iIwU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726754731;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JBuDBYWD4ocfm689UJF8LWs2H2zZIbTRnbe+5QeqBUQ=;
+ b=+hP+fy2K0qLoKx8hm7c5q/8Fae4VCtZenvyqaqBVBC4WzCVwvE/gjof3J9+HBwdHNTl1fU
+ XI0VnJsKLt0ZCZDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 960BD13A5F;
+ Thu, 19 Sep 2024 14:05:30 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id aKNTF6ov7GZQSQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 19 Sep 2024 14:05:30 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, David
+ Hildenbrand <david@redhat.com>
+Subject: Re: [PULL v2 0/6] Migration 20240917 patches
+In-Reply-To: <CAFEAcA_9HKtTciFtrs9T9PG06GgYdoDoCASeBi7wO9CswA=1tw@mail.gmail.com>
+References: <20240918183151.6413-1-peterx@redhat.com>
+ <CAFEAcA9MsybcOa9pGeU7EHuqvRqfBk4TSwYR_tkHF2Xbc19Yuw@mail.gmail.com>
+ <ZuwSGJODsyj_bA4P@x1n>
+ <CAFEAcA_9HKtTciFtrs9T9PG06GgYdoDoCASeBi7wO9CswA=1tw@mail.gmail.com>
+Date: Thu, 19 Sep 2024 11:05:28 -0300
+Message-ID: <87r09feo2f.fsf@suse.de>
 MIME-Version: 1.0
-X-FEAS-Client-IP: 172.31.51.44
-X-FE-Last-Public-Client-IP: 100.100.100.60
-X-FE-Policy-ID: 52:10:53:SYSTEM
-Received-SPF: pass client-ip=111.206.215.185;
- envelope-from=gaoshiyuan@baidu.com; helo=baidu.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,196 +113,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Gao,Shiyuan" <gaoshiyuan@baidu.com>
-From:  "Gao,Shiyuan" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->> Now virtio_address_space_lookup only lookup common/isr/device/notify
->> MR and exclude their subregions.
+Peter Maydell <peter.maydell@linaro.org> writes:
+
+> On Thu, 19 Sept 2024 at 12:59, Peter Xu <peterx@redhat.com> wrote:
 >>
->> When VHOST_USER_PROTOCOL_F_HOST_NOTIFIER enable, the notify MR has
->> host-notifier subregions and we need use host-notifier MR to
->> notify the hardware accelerator directly instead of eventfd notify.
+>> On Thu, Sep 19, 2024 at 10:08:25AM +0100, Peter Maydell wrote:
+>> > Thanks for looking at the issues with the migration tests.
+>> > This run went through first time without my needing to retry any
+>> > jobs, so fingers crossed that we have at least improved the reliability.
+>> > (I have a feeling there's still something funny with the k8s runners,
+>> > but that's not migration-test specific, it's just that test tends
+>> > to be the longest running and so most likely to be affected.)
 >>
->> Further more, maybe common/isr/device MR also has subregions in
->> the future, so need memory_region_find for each MR incluing
->> their subregions.
+>> Kudos all go to Fabiano for debugging the hard problem.
 >>
->> Add lookup subregion of VirtIOPCIRegion MR instead of only lookup contai=
-ner MR.
->>
->> Fixes: a93c8d8 ("virtio-pci: Replace modern_as with direct access to mod=
-ern_bar")
->>
->> Co-developed-by: Zuo Boqun <zuoboqun@baidu.com>
->> Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
->> Signed-off-by: Zuo Boqun <zuoboqun@baidu.com>
->> ---
->>=A0=A0 hw/virtio/virtio-pci.c | 8 ++++++--
->>=A0=A0 1 file changed, 6 insertions(+), 2 deletions(-)
->>
->> ---
->> v2 -> v3:
->> * modify commit message
->> * remove unused variable and move mrs to the inner block
->> * replace error_report with assert
->>
->> v1 -> v2:
->> * modify commit message
->> * replace direct iteration over subregions with memory_region_find.
->>
->> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
->> index 524b63e5c7..4d832fe845 100644
->> --- a/hw/virtio/virtio-pci.c
->> +++ b/hw/virtio/virtio-pci.c
->> @@ -615,8 +615,12 @@ static MemoryRegion *virtio_address_space_lookup(Vi=
-rtIOPCIProxy *proxy,
->>=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 reg =3D &proxy->regs[i];
->>=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 if (*off >=3D reg->offset &&
->>=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 *off + len <=3D reg->offset + =
-reg->size) {
->> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 *off -=3D reg->offset;
->> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 return &reg->mr;
->> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 MemoryRegionSection mrs =3D memory_re=
-gion_find(&reg->mr,
->> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 *off - reg->offset, len);
->> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 assert(mrs.mr);
+>> And yes, please let either of us know if it fails again, we can either keep
+>> looking, or still can disable it when necessary (if it takes long to debug).
 >
->We are able to trigger that assert:
+> On the subject of potential races in the migration code,
+> there's a couple of outstanding Coverity issues that might
+> be worth looking at. If they're false-positives let me know
+> and I can reclassify them in Coverity.
 >
->https://gitlab.com/qemu-project/qemu/-/issues/2576
+> CID 1527402: In migrate_fd_cleanup() Coverity thinks there's
+> a race because we read s->to_dst_file in the "if (s->to_dst_file)"
+> check without holding the qemu_file_lock. This might be a
+> false-positive because the race Coverity identifies happens
+> if two threads both call migrate_fd_cleanup() at the same
+> time, which is probably not permitted. (But OTOH taking a
+> mutex gets you for free any necessary memory barriers...)
+
+Yes, we shouldn't rely on mental gymnastics to prove that there's no
+concurrent access.
+
+@peterx, that RH bug you showed me could very well be caused by this
+race, except that I don't see how fd_cleanup could race with
+itself. Just having the lock would probably save us time even thinking
+about it.
+
 >
->Can you take a look and send a fix?
+> CID 1527413: In postcopy_pause_incoming() we read
+> mis->postcopy_qemufile_dst without holding the
+> postcopy_prio_thread_mutex which we use to protect the write
+> to that field, so Coverity thinks there's a race if two
+> threads call this function at once.
+
+At first sight, it seems like a real problem. We did a good pass on
+these races on the source side, but the destination side hasn't been
+investigated yet.
+
+Unfortunately, these QEMUFile races are not trivial to fix due to
+several design pain points, such as:
+
+- the QEMUFile pointer validity being sometimes used to imply no error
+  has happened before;
+
+- the various shutdown() calls that serve both as a way to kick a read()
+  that's stuck, but also to cause some other part of the code to realise
+  there has been an error (due to the point above);
+
+- the yank feature which has weird semantics regarding whether it
+  operates on an iochannel or qemufile;
+
+- migrate_fd_cancel() that _can_ run concurrently with anything else;
+
+- the need to ensure the other end of migration also reacts to
+  error/cancel on this side;
+
 >
->--
->Cheers,
+> (The only other migration Coverity issue is CID 1560071,
+> which is the "better to use pstrcpy()" not-really-a-bug
+> we discussed in another thread.)
 >
->David / dhildenb
-
-This problem is caused by the incorrect usage of the `memory_region_find` f=
-unction.
-`memory_region_find` need find address_space of the search MR, howerver the
-VirtIOPCIRegion->regs[i].mr cann't find address_space, such as
-
-memory-region: pci_bridge_pci
-  0000000000000000-ffffffffffffffff (prio 0, i/o): pci_bridge_pci
-    000000a000000000-000000a000003fff (prio 1, i/o): virtio-pci
-      000000a000000000-000000a000000fff (prio 0, i/o): virtio-pci-common-vi=
-rtio-balloon
-      000000a000001000-000000a000001fff (prio 0, i/o): virtio-pci-isr-virti=
-o-balloon
-      000000a000002000-000000a000002fff (prio 0, i/o): virtio-pci-device-vi=
-rtio-balloon
-      000000a000003000-000000a000003fff (prio 0, i/o): virtio-pci-notify-vi=
-rtio-balloon
-
-memory_region_find
-  --> memory_region_find_rcu
-    --> memory_region_to_address_space
-      --> return NULL
-
-So memory_region_find cann't find these MR that not under address_space, Is=
- this as expected?
-
-There are two ways to solve this problem.
-
-* One is direct iteration over subregions of search MR instead of memory_re=
-gion_find.
-If use this method, we will make it more general to handle multi-level
-subregion scenarios, even though they do not currently exist.
-
-@@ -610,13 +610,22 @@ static MemoryRegion
-*virtio_address_space_lookup(VirtIOPCIProxy *proxy,
- {
-     int i;
-     VirtIOPCIRegion *reg;
-+    MemoryRegion *mr, *submr;
-
-     for (i =3D 0; i < ARRAY_SIZE(proxy->regs); ++i) {
-         reg =3D &proxy->regs[i];
-         if (*off >=3D reg->offset &&
-             *off + len <=3D reg->offset + reg->size) {
-             *off -=3D reg->offset;
--            return &reg->mr;
-+            mr =3D &reg->mr;
-+            QTAILQ_FOREACH(submr, &mr->subregions, subregions_link) {
-+                if (*off >=3D submr->addr &&
-+                    *off + len < submr->addr + submr->size) {
-+                    *off -=3D submr->addr;
-+                    return submr;
-+                }
-+            }
-+            return mr;
-         }
-     }
-
-* Another is add address_space for VirtIOPCIProxy and PCIBridge, so memory_=
-region_find
-will find the address_space of the search MR.
-
-diff --git a/hw/pci/pci_bridge.c b/hw/pci/pci_bridge.c
-index 6a4e38856d..07873c478f 100644
---- a/hw/pci/pci_bridge.c
-+++ b/hw/pci/pci_bridge.c
-@@ -380,6 +380,7 @@ void pci_bridge_initfn(PCIDevice *dev, const char *type=
-name)
-     sec_bus->map_irq =3D br->map_irq ? br->map_irq : pci_swizzle_map_irq_f=
-n;
-     sec_bus->address_space_mem =3D &br->address_space_mem;
-     memory_region_init(&br->address_space_mem, OBJECT(br), "pci_bridge_pci=
-", UINT64_MAX);
-+    address_space_init(&br->as_mem, &br->address_space_mem, "pci_bridge_pc=
-i");
-     sec_bus->address_space_io =3D &br->address_space_io;
-     memory_region_init(&br->address_space_io, OBJECT(br), "pci_bridge_io",
-                        4 * GiB);
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 4d832fe845..83e020c0f6 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2180,6 +2180,8 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Er=
-ror **errp)
-                        /* PCI BAR regions must be powers of 2 */
-                        pow2ceil(proxy->notify.offset + proxy->notify.size)=
-);
-
-+    address_space_init(&proxy->modern_as, &proxy->modern_bar, "virtio-pci"=
-);
-+
-     if (proxy->disable_legacy =3D=3D ON_OFF_AUTO_AUTO) {
-         proxy->disable_legacy =3D pcie_port ? ON_OFF_AUTO_ON : ON_OFF_AUTO=
-_OFF;
-     }
-diff --git a/include/hw/pci/pci_bridge.h b/include/hw/pci/pci_bridge.h
-index 5cd452115a..2e807760e4 100644
---- a/include/hw/pci/pci_bridge.h
-+++ b/include/hw/pci/pci_bridge.h
-@@ -72,6 +72,7 @@ struct PCIBridge {
-      */
-     MemoryRegion address_space_mem;
-     MemoryRegion address_space_io;
-+    AddressSpace as_mem;
-
-     PCIBridgeWindows windows;
-
-diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.=
-h
-index 9e67ba38c7..fddceaaa47 100644
---- a/include/hw/virtio/virtio-pci.h
-+++ b/include/hw/virtio/virtio-pci.h
-@@ -147,6 +147,7 @@ struct VirtIOPCIProxy {
-     };
-     MemoryRegion modern_bar;
-     MemoryRegion io_bar;
-+    AddressSpace modern_as;
-     uint32_t legacy_io_bar_idx;
-     uint32_t msix_bar_idx;
-     uint32_t modern_io_bar_idx;
-Maybe revert 1f881ea4a444ef36a8b6907b0b82be4b3af253a2 can also solve this a=
-nd the
-orignal problem.
-
-Does anyone have any suggestions?=
+> thanks
+> -- PMM
 
