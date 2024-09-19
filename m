@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 346BBCE8D7D
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 12:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63DFFCE8D7D
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 12:35:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srGMG-0005yX-To; Thu, 19 Sep 2024 08:34:05 -0400
+	id 1srGNO-00009f-OP; Thu, 19 Sep 2024 08:35:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srGME-0005wN-SZ
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 08:34:02 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1srGNK-0008RN-Ex
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 08:35:10 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srGMD-00044R-7l
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 08:34:02 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5c26a52cf82so479830a12.2
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 05:33:59 -0700 (PDT)
+ id 1srGNI-0004OI-Ez
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 08:35:10 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5c413cf5de5so1133295a12.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 05:35:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726749238; x=1727354038; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726749306; x=1727354106; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/xAwov8AW+493fM5Ax8X0ja8GImF/Cy1bQEtti0B5SY=;
- b=WhKJaVGAL3Tu869MzDeiCJuW5R0C6BHG8BqMcKgxGz5KWvUVRJSntDsKUjtzuAYdRU
- C49MU2fzf9fRbR7ypD62+J7rrC2WdGCTIioEEipfNkekvwBFIoD8kyrwGaN7PaTdcGR4
- rTKoiaZORjYipfD7/7a26sl/HTmzPG86aTTDJ62axhP1H6eao0/5OF5i9JZvxS6POjOb
- jY7DI0rnAOAzbxcy5khsEk+Of0BqJSNJ8yVqbCk7O+7HFUi47IvuZmHuxC1TacGMzdMb
- VndbgDmkCmOX6qeoeZGsCoIWOxkbUGRq47f25kM/wk8b3mxjLcCehkH8fA6UbWb0+yvz
- xXcQ==
+ bh=o/SwdblouEhEnCZnb5NVaN4hQYxFPGgEO3+R3dzFctc=;
+ b=pfghPbojW/rA50vb7ntB9la07w989gHgW34kXLk+UEMDB4uGI8ieDWamNMtgyJQBvA
+ 6ctBkg60CRkXcGBVP/BBFI560Lc1zoUFhdNYb+TN5w1BLoa7Q3bE+GvP+n0euuSegUtI
+ j1iJ7CcgaO8S+mqZmfBEPoFhAdpvz6YsDO52/ZPZWrRpPYM9qDlxVrY0EWjzfngScoIb
+ aE3UnNSmqw8HVPINgqxhICsoVMMMIvJVwUyAYcydPwynWzaQCrv1edIOzz30RV8QQNW+
+ JrroEcoOLz37uyJ2sZPAwkFTa2bZf6hY2e6C5Kf5+YiPsbjiHsHPE8wz5jJDk4E0GUwA
+ hXxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726749238; x=1727354038;
+ d=1e100.net; s=20230601; t=1726749306; x=1727354106;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=/xAwov8AW+493fM5Ax8X0ja8GImF/Cy1bQEtti0B5SY=;
- b=KvUs/E308aSH8C6ufuwdwvVrVvEeYy6mNANKHa8gQWs8GqiLBaUZ0vutiCdDe1iugG
- z9VmmzGBUfjWiuYsqgpkISxpPCw4zUYbjhGUYNNUSs9rawyrx1BErRHUVn7IKLJv6b+l
- rijkvPw8l4okJbIcUEx1i/OVj6YF3TNWzzGBU3cDSEEzT5tMrd8JnKkDAkuZPvYfbxCY
- 6eg5Fr4Tx87V/c86yc0/uOe330eQsS9cuPhb9Mw1TfsMyF1eHPhqdNhj4Jl7U4Yf/eos
- 8Nh5Z5A1j6BEMA5ZKsA1hWCPp0XlgyRgUXpCfgKkF2IK94aNzCjCVSFePoG9/WzTIm7p
- T5fQ==
-X-Gm-Message-State: AOJu0YyFSNNYk8FnXjUuDWSJqcgUMps1a9NuF0osTMSqEFs74eTSXxYc
- JKm8XBZ6/+8am9yb2X9J5Jzc9iK49istPKNdToDGKUCsiHVND3pO3caIwjVieeEr5AeXBS+NCAC
- YUwocuzSKhHj4p1G+G1/F9qhZaxvrR2gML3eo2g==
-X-Google-Smtp-Source: AGHT+IFKQ/LlomsaFJno/FNasGEA8KiUX1LVf3Kzq5dXQMPT0HX+O7y/+OhGhO8AQCxNdAsjYaf2VW5fVfHCB2HdRWM=
-X-Received: by 2002:a05:6402:210d:b0:5c2:4d90:988 with SMTP id
- 4fb4d7f45d1cf-5c41e2af424mr32970765a12.32.1726749238189; Thu, 19 Sep 2024
- 05:33:58 -0700 (PDT)
+ bh=o/SwdblouEhEnCZnb5NVaN4hQYxFPGgEO3+R3dzFctc=;
+ b=M7LJn+RWAzGr+b9bYb+3KPEhzYK9MqbIFEjBv/+Ha/2xt+TVUfquWGoB9EsSi+KSZf
+ n1szJgELsWeIeys+BtnF3HHSo62VuDJSSooXA8nmtO5MFXayPLO0nR9+ziY/NL/VjTVX
+ UMM4z2WPur4UTqhl4/Rkl5Cju7oZerVPMLVEdQAh5Ag2WVSg0YfEp7pdbs/udC7p/9rF
+ ellqBYnYTUBRky6GqQkM/VIh/wkihHJwCQpxbGLA0KAjkhD1KXD2+IbLfZ+FB51W5SOD
+ 3C59shyS/mBwEMMxBIkO8Oe/Xzc23YZxILmDFx9VlDIPRDwoK3T+Mhivup8o4NGiVzBD
+ D1TQ==
+X-Gm-Message-State: AOJu0YzwkUklLiaUlwH+NriiF67HEWWQJOscZOUjemx9i2LipJx+2FK4
+ 80CgYM47V8Z19XlSZi1w3wxlmFvhRXi064DglV7bwDRln/vxTJW2L1tO4mGrQYsOcsjA8ZQgL5n
+ MmrQ2cur6Gf/mCgygWEa9ReullFyYX7Tctwwetw==
+X-Google-Smtp-Source: AGHT+IFTP45wdSS8WPzGLkL0d7NBYuJ0N2Bibaj3UCTaa7gVC3/qfiIGX0Ts5f5YrahqViPGJKmbcQGcqLOaewVW2B4=
+X-Received: by 2002:a05:6402:24a5:b0:5c4:b00:5e62 with SMTP id
+ 4fb4d7f45d1cf-5c413e2a27cmr21858261a12.20.1726749306432; Thu, 19 Sep 2024
+ 05:35:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240816133318.3603114-1-peter.maydell@linaro.org>
- <7a4cc8d1-b2ab-4b06-b1cd-b39bbe8b499f@gmail.com>
-In-Reply-To: <7a4cc8d1-b2ab-4b06-b1cd-b39bbe8b499f@gmail.com>
+References: <20240819144303.37852-1-peter.maydell@linaro.org>
+ <20240910110344.10e4805e@imammedo.users.ipa.redhat.com>
+ <CAFEAcA_Rjiy1so28OVPpL=+++XuU+gSXhn-v_WHMcpc_wa_xMw@mail.gmail.com>
+In-Reply-To: <CAFEAcA_Rjiy1so28OVPpL=+++XuU+gSXhn-v_WHMcpc_wa_xMw@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Sep 2024 13:33:44 +0100
-Message-ID: <CAFEAcA_F5LgzbFJC3ADABjLS2oSwQyqWfdXd9VecqO56yKHNew@mail.gmail.com>
-Subject: Re: [PATCH for-9.2] docs/devel: Remove nested-papr.txt
-To: Daniel Henrique Barboza <danielhb413@gmail.com>
-Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>, 
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
+Date: Thu, 19 Sep 2024 13:34:54 +0100
+Message-ID: <CAFEAcA94EdUOOk71nv4oFRJXNBM=62FCD9dfwVSWMS-VM_OZtw@mail.gmail.com>
+Subject: Re: [PATCH] docs/system/cpu-hotplug: Update example's
+ socket-id/core-id
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,29 +90,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 24 Aug 2024 at 11:13, Daniel Henrique Barboza
-<danielhb413@gmail.com> wrote:
+On Tue, 10 Sept 2024 at 10:38, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
->
->
-> On 8/16/24 10:33 AM, Peter Maydell wrote:
-> > docs/devel/nested-papr.txt is entirely (apart from the initial
-> > paragraph) a partial copy of the kernel documentation
-> > https://docs.kernel.org/arch/powerpc/kvm-nested.html
+> On Tue, 10 Sept 2024 at 10:03, Igor Mammedov <imammedo@redhat.com> wrote:
 > >
-> > There's no benefit to the QEMU docs to converting this to rST,
-> > so instead delete it. Anybody needing to know the API and
-> > protocol for the guest to communicate with the hypervisor
-> > to created nested VMs should refer to the authoratitative
-> > documentation in the kernel docs.
+> > On Mon, 19 Aug 2024 15:43:03 +0100
+> > Peter Maydell <peter.maydell@linaro.org> wrote:
+> > > @@ -83,34 +83,32 @@ vCPU hotplug
+> > >
+> > >        (QEMU) query-cpus-fast
+> > >        {
+> > > -          "execute": "query-cpus-fast",
+> > >            "arguments": {}
+> > > +          "execute": "query-cpus-fast",
+> > >        }
+> > >        {
+> > >            "return": [
+> > >                {
+> > > -                  "qom-path": "/machine/unattached/device[0]",
+> > > -                  "target": "x86_64",
+> > > -                  "thread-id": 11534,
+> > >                    "cpu-index": 0,
+> > >                    "props": {
+> > > -                      "socket-id": 0,
+> > >                        "core-id": 0,
+> > > +                      "socket-id": 0,
+> > >                        "thread-id": 0
+> > >                    },
+> > > -                  "arch": "x86"
+> > > +                  "qom-path": "/machine/unattached/device[0]",
+> > > +                  "target": "x86_64",
+> > > +                  "thread-id": 28957
+> > >                },
+> > >                {
+> > > -                  "qom-path": "/machine/peripheral/cpu-2",
+> > > -                  "target": "x86_64",
+> > > -                  "thread-id": 12106,
+> > >                    "cpu-index": 1,
+> > >                    "props": {
+> > > -                      "socket-id": 1,
+> > > -                      "core-id": 0,
+> > > +                      "core-id": 1,
+> > > +                      "socket-id": 0,
+> > >                        "thread-id": 0
+> > >                    },
+> > > -                  "arch": "x86"
+> > > +                  "qom-path": "/machine/peripheral/cpu-2",
+> > > +                  "target": "x86_64",
+> > > +                  "thread-id": 29095
+> > >                }
 > >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
+> > beside reordering, which seems fine, this hunk also introduces target change
+> > perhaps a separate patch for that?
 >
-> Reviewed-by: Daniel Henrique Barboza <danielhb413@gmail.com>
+> What target change? It all says "target": "x86_64" both before
+> and after.
 
-Thanks for the review; I'll take this via target-arm.next
-since I'm doing a pullreq.
+Hi Igor, would you mind clarifying what you meant here?
+I'm happy to respin, but I don't understand what change you're
+asking for.
 
+thanks
 -- PMM
 
