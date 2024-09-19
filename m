@@ -4,167 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82ED5CDD578
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCDC3CDD573
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:35:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srHJJ-0002XX-Vc; Thu, 19 Sep 2024 09:35:06 -0400
+	id 1srHJJ-0002qY-Vj; Thu, 19 Sep 2024 09:35:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <doug.miller@cornelisnetworks.com>)
- id 1srGK5-0005dQ-CQ
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 08:31:49 -0400
-Received: from mail-westcentralusazon11020082.outbound.protection.outlook.com
- ([40.93.198.82] helo=CY4PR05CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <doug.miller@cornelisnetworks.com>)
- id 1srGK3-0003oD-9W
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 08:31:49 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xriuoFsx5wDCl+gUAclYDJvyeXdP2AsSVTL3hldiwxhKkWllD30KmEtnNV9a7a0JTX21cN6gghEAYD+8GzdZEotUV2neO/0DWN/bWyzAE4JSU+vbJDv//u7ogd/uL3fW2oKquF9QCRISx/o+OZ48QqroReSenW8dIc6m4NdBZGa2f0gkma6e99xC+l8b7Po25JusyLhPfB8GufD4Z5QLMy4LjfInflvjCK8cWMfwyJtxMxxqlw83MN/rVR9ZmImwHcUPgglKAjhnRgvobyECC7mzPt4d7wGncmfiwcWDtXAKDkNJhKro5u2E+zO93YiVrWCrEKHa6oth9rpaGs24kw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=S0V7mlzriMTD9e8u/w2A45urO7L0/XKAw9eGBTfQu2M=;
- b=uJB7BmEy+gM5uDtlKd0KQgohTXW8BExruf5qR8RTA5HSAxmA0nig0EyKr5//DtsRJpAP3B/XgfDtZ9cwauefj/DZLDmlwxPRlEKePZn9CdjmuCTHEiBrjflgnS2hNtXPxx7sqX0+cjY8O09Kctj+bFwjlfwGrUANoeASbBRN5Eaqj/tRedxwhmuNNYanwsSoGg02PqkmtBiSx4kO3YIfYxMKsU9/R+phUqCNEXiL2isVUuU1Xu7p1frm0IQ3nvMfHh8zMrXzBJ0oxNZs+l74H7VcukSqqb8OEuS+9REK6CTjigt3becPb5EOcPFebtlXXqEnM3fMFcZPWenBjhwobw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=cornelisnetworks.com; dmarc=pass action=none
- header.from=cornelisnetworks.com; dkim=pass header.d=cornelisnetworks.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cornelisnetworks.com; 
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=S0V7mlzriMTD9e8u/w2A45urO7L0/XKAw9eGBTfQu2M=;
- b=cjE1Ai6LEmUL79bW2UdZUrseJttkobdkYDAZGFNvKhJs+CUJb0yxBPZikO9k1OaChriFdrHV5qzTcMHZDVSEaaZnvxWxHmyQU/AAmfWZb/Df1rm8eXrV4cQqxpsOa0ZeZkgzyKBpFRYHWkCA9UPE3YehhiqUaO9URlyP8JhonsKzGvoY9YZSdFk0z+0mhdAy9T4OpCpm/ziGXR9M6ZCBEuysWj4OTqqh3s+J4+M09NNEtUie4r/aGhFhkTRVJF0TsdGyN8kmhDOYRbOPxQ1mgrC0+Mf/0wadSXKgOZcJmP/8MUYers9+3n3fflsIo/JtnOC8TbtbKWU267vzbTJ9Nw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=cornelisnetworks.com;
-Received: from PH7PR01MB8146.prod.exchangelabs.com (2603:10b6:510:2bd::18) by
- CH0PR01MB7091.prod.exchangelabs.com (2603:10b6:610:f1::8) with
- Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7982.22; Thu, 19 Sep 2024 12:26:37 +0000
-Received: from PH7PR01MB8146.prod.exchangelabs.com
- ([fe80::2972:642:93d1:e9d4]) by PH7PR01MB8146.prod.exchangelabs.com
- ([fe80::2972:642:93d1:e9d4%5]) with mapi id 15.20.7982.016; Thu, 19 Sep 2024
- 12:26:36 +0000
-Message-ID: <8da76a79-444b-46f4-96db-309d03689220@cornelisnetworks.com>
-Date: Thu, 19 Sep 2024 07:26:33 -0500
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: qemu-devel@nongnu.org, virtualization@lists.linux.dev,
- "Michael S. Tsirkin" <mst@redhat.com>
-Cc: "Dalessandro, Dennis" <dennis.dalessandro@cornelisnetworks.com>
-From: Doug Miller <doug.miller@cornelisnetworks.com>
-Subject: Looking for help and advice on using RPMSG-over-VIRTIO
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: CH0PR08CA0017.namprd08.prod.outlook.com
- (2603:10b6:610:33::22) To PH7PR01MB8146.prod.exchangelabs.com
- (2603:10b6:510:2bd::18)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1srHJ0-0001Zu-08
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:34:48 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1srHIw-0004Rs-0B
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:34:43 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5c3ca32974fso1049577a12.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 06:34:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726752880; x=1727357680; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=dVOwl7TVYAuQCiKaTOD+iwg1613vIkWsU7lmwzlxW+I=;
+ b=AVqwGDfwwbemFyzRkEK36tkabpEoh+gOSjw66N8HqoIDO8Id+MJCBRsjJvwYqpNofM
+ mZRQUn386/hwgBqPbrpSHZIRI/6/lyulviokKFB/Qtg34nhO4Djiu66EVFzM6Li0tcCa
+ /jxAOsPwE83MBWPGi9ux8cZ6Z1X1jxa+LixWWjvy6wxQ6VRP/3f/Ne9ZXWXQWXejb56i
+ ttcSW8eeWz/O6pnBtNDIiXs0ALEU7qb5kdZ/U3u+ambW0+U6KVwsRJgcPRJ4Ts6F1G0D
+ 9Zj6UqG6YZD66WtcXuhSBz5lX/gZzXqvGY7aSSSLn6mdnjiw6Tx5y4bwDr6ZbScJYj/s
+ 4X/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726752880; x=1727357680;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dVOwl7TVYAuQCiKaTOD+iwg1613vIkWsU7lmwzlxW+I=;
+ b=L3/3C7Mes+0gHJMhpD0h7V5lwNehfCMnyWlDfjEHZVWGfMgNTiV1alHdYcQyLm5MaS
+ T9dcoTmMw5FbSUslwTrsKtD12Q84arlejE7OPB96cGadFqKR91wW4pJCYeNIQENAtypU
+ fX8p5t9x6BreUq6gmRCIwXajs/2ll1gU3EVFzc/pcVVAC/qYJihUC0tGfiLvxifBxLf2
+ aHB1GsMD1opJsJ4sp4x5xq7e2RgFd8KFg/LGY/Zuvd1dwGL3/KjKjpyw57jq3LYL0nDe
+ B38ATmaNSUpXQtExhgE4ogITE2TULy6REqL8erUkyGhmWMbPzjTUNeLHMcD1paGuZO5O
+ dqIQ==
+X-Gm-Message-State: AOJu0YxjMzj585v3tDiZb6lZOX+KYrh8QLYaHOy9NKgd09Aa5eFnBN53
+ iXNB5/7cug3topTax8pxlM8dXE5QhXenak+v94YWANf6eLvS3For+6AgBh3t8yqEwHy6ixnGKIJ
+ NB3iGIK8USCTYrmjAxUJPtLKGin6p1SWjrar6v6F9BxegdQ7D
+X-Google-Smtp-Source: AGHT+IGCPA7EPY+dCI71UJyAZPV20SjoqdnWXYnzvZkAxUA9UrbnIEFjCGREml3MWwQV9TsY+eSwFxC1l6q0zDdizKI=
+X-Received: by 2002:a05:6402:4303:b0:5c4:2343:1236 with SMTP id
+ 4fb4d7f45d1cf-5c4234314d9mr18169049a12.4.1726752880259; Thu, 19 Sep 2024
+ 06:34:40 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR01MB8146:EE_|CH0PR01MB7091:EE_
-X-MS-Office365-Filtering-Correlation-Id: e44552d3-de39-433e-f357-08dcd8a64df7
-X-MS-Exchange-AtpMessageProperties: SA
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?OHlCd29VZ0VpNEY4OEdJZUhaRE10dWxPajI5OFNyK29SY3hTRHRsRkNGMCt2?=
- =?utf-8?B?aVprczBUbXNLdFZCY2I1NkF2ZW5UUEtmNW9uYjlaSEFpcmhOalJuTFFSemxn?=
- =?utf-8?B?WFMxdmppVW1UL0ZFVGg4bVJOeGV5SFg4djkrbjdyYzc0dkthK0dyNm10RllN?=
- =?utf-8?B?VStPQ1FtQndwUTFodGhNVC9xUFpJcGlHOHFYT0M5cGNuazdmNm8xbFQ5b0di?=
- =?utf-8?B?cWJjZUJGSkJrYUNXWUNrR29ZOUplK2c2UXdpRy80dmVKRjkrWFFZL21UcWVx?=
- =?utf-8?B?RVlRU0k0enFOREwrODk3QVI2YmlFUVNyRDcxM2NtYlJvaGZYOU5qV2tVU2hq?=
- =?utf-8?B?aXFsdW1zT3J5QjB0QWdibEdxY0NkanhZcUNZMkhxQXIxd1VuTmFDdTI0RTc4?=
- =?utf-8?B?THRRT21NWjhZdzE4bVJ1dTBLcllRNHBnTTJjR1E3TzVDRFFTcTVCWEo0SXJY?=
- =?utf-8?B?aEhrb1FTdCtNVU43aHFsNlFNL1AxRGdJWFlCODllWm1GUldGbCtwOXh3NkZM?=
- =?utf-8?B?K2hNRVNHOTdVRDJyVGdrVUh2K1ZacnRHRFlPODBzRVBFWEZJb0hBZnR5YXJ3?=
- =?utf-8?B?RnhnWlgrZHNwa05BbGdOSExua2hqVG5CSkszMTdFV21MSzBYWXZKVVlYRm15?=
- =?utf-8?B?eDZ4cnlXVWxFY29qTDVrcGpZME1BbW56Y2ZCWldyQ3RpcGdMeGVHbjBMYW0v?=
- =?utf-8?B?T2hiVHBxeUhsKzMwMWFUZ1BwZDVURnZ6bkJocjlUeHlBK0RWbnJyWUF4dkxW?=
- =?utf-8?B?Z3NWcW9GZ1cwTUhoNUs3TGVkNFZqWmZlSVppeDVhdk0yMFdtVU5OeEtLWWFs?=
- =?utf-8?B?aVBER3RhbGdGZDNZWkxOeTJMVFN6OUJ4Y2xnZHRrVDdFR25mU0V4Vjc4cWx4?=
- =?utf-8?B?R1A1VUFJYUhxc2JjY3kvMGVudnV3dHd5ZHlzc1FnTkV5TitHWkYwekFmTURN?=
- =?utf-8?B?T2JJUUlOK0pjU3FiaXYyOG1keTR4US9XNjZkNnJ5MlkreTh3TWFkY0kyUFNE?=
- =?utf-8?B?NzRlYUxqZmZNayt6bERMWDkyc3dLWUsrcUNEb00xa25IeU5KSDkzbCtGSnFr?=
- =?utf-8?B?VUxKOE9PQjIvWk5nYklBeDMrVTk0TlhEYlVyQi9SRDRHelU4aW80cTd3TE15?=
- =?utf-8?B?ZVdocGhqWmdFWFBUL0pIS2d1M0ptTHFxOGlkQzN3cUpsSzVhQTBMN3pqMlZl?=
- =?utf-8?B?U2VzUk0vU0VDSXVnMG5McUNaWnRobjFDWWR2Ym4xMGR1SEhRdjRUdVdLYktt?=
- =?utf-8?B?VGNUQW1QbnNUekZYWitpOHBrZGwyR2RSeGppQUdvTjVDRDFUdmFNZndqQS9B?=
- =?utf-8?B?NkxTaVRVOGpsOTZtenJxemY1YThONTJXbHJBZWxvSHBjZERJc3MzTVNWTEhP?=
- =?utf-8?B?b3ZUUlhjS3FRdHlMcVNJVDdXbkZwZzluY0QyZE8ralVDZHcwMlZVdi9NMlpr?=
- =?utf-8?B?REVnWXJlZkRSTUJ2SExtQmxnbFI1Z215VWdIOHR5em5mNTBia2t4TGYyQW1P?=
- =?utf-8?B?d0JaTVprVXlOQTRVaVdRQm0zQ2VQcDYxQUZKRWZkME9pTHlXdUF0Nlg5ZUxm?=
- =?utf-8?B?ZjUxeHpoOUl0c041cnZkbkhZZFFNSmZ6bkh1d0lhNXBMN2tXZDcwRTAvcHA3?=
- =?utf-8?B?TnRFU3NxbVAydGRSMEJWNnEybXErckdLQXhidWRWZ2pVbENJMXlkeVI5ZS9z?=
- =?utf-8?B?Wkh3azZQY201SWw3T1NJUXNydkwxcnhlN1dhVzJxL2tmaWhHeDExOUcvVDdl?=
- =?utf-8?B?bzVSNWt3TWpuZUx3NG5iaVJWc0p4Q0FHczFweXZ5KzBTUUNDVkhMeUVVVGZE?=
- =?utf-8?B?Wi9XZ2hhMk5wS2k5Q3ZxUT09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH7PR01MB8146.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dHpZckFDOVZ5Mk12LzBpMmc2bXZDN0ovbGQ1TmovK2p1VHlIYVZVWFlNY1or?=
- =?utf-8?B?TjFrMXNHckx1aC9lZGRYQlR2dElzUStKeVZkN1lzNDE2YkQzQjBEdFBJUzZI?=
- =?utf-8?B?dkFCdlNNei83ZkYwLzNrUXhQRXhVcjErQkVnbFFLMkYvV0k4YjFhR3dGU3ZK?=
- =?utf-8?B?ckZVaGlEdFFRNUJCUFgvMzVDTFB0eVJyVlA0TWlnZjBOaVYwdGNwKzkvbWs5?=
- =?utf-8?B?ZytDMlhLV0JlK1NJMFFHUCt1QU5qQVJ6TlVUSmwvZmRGdnpYREZsVWkvNnBu?=
- =?utf-8?B?dEFMV24xU0RhOUpMWWlLUlBkT0xYaHZyZUgvcUZoVERpMVg3aGdLbit6WFNI?=
- =?utf-8?B?TitUL2pXY2Rody8rM2ZRcHpyOUk2V3ZjOWNwQitXcGZMSmxSRytvR0JFNHJ5?=
- =?utf-8?B?anZzRmJUMkhZa0JlWlVaSmdGZnpSK2pTL013Mks1TWhmdlZPV2tXa2hHb2NX?=
- =?utf-8?B?QUhOcEpiY3c1Slcxb3RTM2hxY095SDNCVVIxQ0NxbnoyWDJ4RVQwOGxiaUpT?=
- =?utf-8?B?UkNJeWQ3bytiQXdnaWZpSkc0R3hkc3lKbHE1UnhBVDFsWjBOWXp4bHJGaEFD?=
- =?utf-8?B?MjZCU0M4YmkwcnF1b1J5ZlVrVUhEZFpyd1FSaFNEZG5yQUF3b0FpRVNxbzF4?=
- =?utf-8?B?a2NyZlNhRTB4UzRkbGhmUUJudXJJY1B0VUZDUDJrVENEb0piZ0VES2JNMm5V?=
- =?utf-8?B?bjZBQ0VmSzBCRC8rMk5mb1NmZ1AwZ1FabHliNytMWnlUbUJhOGxjb0FPZ2xK?=
- =?utf-8?B?dXZEV1ZHQjNYSENMcHYyVHJvTzd5U1hxLzVRTHo1cEhWT1YzMEl3dy96TzRB?=
- =?utf-8?B?MTBwVi9uQXN4QTgvdVA0cCtOOTlrU0hOM0d6MWNjTlBoTi92a043RmVqZTVD?=
- =?utf-8?B?Q0hpM00zcWJnakUzV2dGYU5RUEt5dTVIcVJ0Nkp0R0ZTaTBsbVBLaDNDV2F6?=
- =?utf-8?B?TW1hVjZoSWxBZlc2Y3UrTlAxUzBFNDA4aWNwYlZDRjR1bFpWVkFxVXVLNWdW?=
- =?utf-8?B?THJ3eG9qS1NwZGNreXZOdXZOYXFjZDAzTm1RYzVRUHBTL3IvczVwcFZNUm85?=
- =?utf-8?B?VUw5bG9wcmhVUHIxM0NhK25qVkhLS2V2TG9aUzNTeDg2UjhBblk4M0hCRHZQ?=
- =?utf-8?B?MlVqbzZadXNidGovQXhQc1NES1FZNE9RV2trdnc3emZpdWV6SUpRMFdRSEtB?=
- =?utf-8?B?Y2FNZ1pSMGVlNGFpa3dJS09KS3B2UEtzTmZHZE12TWZEaFhNa0NTVzVZNWha?=
- =?utf-8?B?emdFenlFaUhiSUxuc2JXdkJyVGgyWk9hempBcHc5alZ1N3kxNmZGOFJBOG5M?=
- =?utf-8?B?MEVJV0NHYkNmUUs5K2toOHh1SzJXM2FsYjVQekN6dlN5Y1poS2lnc0I2L3NF?=
- =?utf-8?B?Rng0bk4zbnhUUHp2L3V1TVVsckJVUmtPR1F3RDZOWkRyc3h5ZGVoSFpmUHpq?=
- =?utf-8?B?SHd0bFBCTWxiaWVxM0F5SFpPaGRIWG8wc2NXZHBuZ2ZlOTV5OTlRNm9JQTlE?=
- =?utf-8?B?TGw3LzhLMkV6Rk45MVBCd1VtS2NuNVZKVjhyVzVGU045Z1NGOUVXZmxtY2dZ?=
- =?utf-8?B?ZGJ5V3VsVWYrWk13cFRwdkw2d3R6WWNVWDUwWE1YREVEaTdVNWU5VzV5SzBY?=
- =?utf-8?B?cENRc3dKY2kzaktDNWpkR0FCcExJL3UxU0lSVGhIQlpuWFkxVHJIRVdNdU1P?=
- =?utf-8?B?WU5LbmdZQjVFem9BejYrd3Uxaks2UFVycUFPSVJwTzYrazlBN0xFRTJVMVNo?=
- =?utf-8?B?KzlsNlJuUzdQVlRYVkhmZTVNNnJ3enY1YkdKUFAxQkNiblJKMWE4S1lucDkx?=
- =?utf-8?B?QTJaVzhBdFhmZkw2Wkp6d2FHZi9uY0owMUdONXFRYTNVbTdjZi8xbEhjclk2?=
- =?utf-8?B?bkxBalVITm5JTmw0Nnd1OXgvRkROMldUMWtudFQ0dlF5cFRjTzkycjZVeVVi?=
- =?utf-8?B?c2hhWVJCVi9PLzNKcW9JbXQwSEg3blRGMms2ZnhJVHRPQWdKKzBPZ2tkZG1X?=
- =?utf-8?B?dU9FMFQ5N0J5eHNJNzhKc25LT29XNkFOMXRNQ1FaMURrZkE1TWNreXVvYjRD?=
- =?utf-8?B?RlJGNExNUjk1WWNQTENxZHFsREozeE9XZEVoS05aeXRLTzY3UmJpVGFJR1Nh?=
- =?utf-8?B?T1N4NStlM2NrS2J0VXp0Q3k2ekV1N1JZSXZGUy90eE9VQ1VPRTB3RWIwQ0RZ?=
- =?utf-8?Q?Dzdu9tG/7T40XzaLKWGTQPw=3D?=
-X-OriginatorOrg: cornelisnetworks.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e44552d3-de39-433e-f357-08dcd8a64df7
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR01MB8146.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Sep 2024 12:26:36.5537 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4dbdb7da-74ee-4b45-8747-ef5ce5ebe68a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: JkdwetDwcEcayQC7YL28z7CHgiyN3ZTz76Zg4Ozomp4TYIYWf5bPC+H9xwtzoyKBYFvEXT+cBlTHI0PYRhmpvYH066D5mMfuFZOCO6woId3+6CIBGeyEKolKDD7Sng1Z
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR01MB7091
-Received-SPF: pass client-ip=40.93.198.82;
- envelope-from=doug.miller@cornelisnetworks.com;
- helo=CY4PR05CU001.outbound.protection.outlook.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240918183151.6413-1-peterx@redhat.com>
+ <CAFEAcA9MsybcOa9pGeU7EHuqvRqfBk4TSwYR_tkHF2Xbc19Yuw@mail.gmail.com>
+ <ZuwSGJODsyj_bA4P@x1n>
+In-Reply-To: <ZuwSGJODsyj_bA4P@x1n>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 19 Sep 2024 14:34:28 +0100
+Message-ID: <CAFEAcA_9HKtTciFtrs9T9PG06GgYdoDoCASeBi7wO9CswA=1tw@mail.gmail.com>
+Subject: Re: [PULL v2 0/6] Migration 20240917 patches
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-1.048, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 19 Sep 2024 09:34:46 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -179,25 +90,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I am working on adding SR-IOV for a new adapter and need to find a way
-to communicate between guest and host drivers without using the adapter
-hardware. I have been looking at RPMSG-over-VIRTIO as a way to this, but
-have not been able to figure out how the host would setup the RPMSG
-device needed for this.
+On Thu, 19 Sept 2024 at 12:59, Peter Xu <peterx@redhat.com> wrote:
+>
+> On Thu, Sep 19, 2024 at 10:08:25AM +0100, Peter Maydell wrote:
+> > Thanks for looking at the issues with the migration tests.
+> > This run went through first time without my needing to retry any
+> > jobs, so fingers crossed that we have at least improved the reliability.
+> > (I have a feeling there's still something funny with the k8s runners,
+> > but that's not migration-test specific, it's just that test tends
+> > to be the longest running and so most likely to be affected.)
+>
+> Kudos all go to Fabiano for debugging the hard problem.
+>
+> And yes, please let either of us know if it fails again, we can either keep
+> looking, or still can disable it when necessary (if it takes long to debug).
 
-I have seen at least one bug in virtio_rpmsg_bus that was discovered and
-fixed by qemu developers, and so am hoping there may be some experience
-with rpmsg here that can help.
+On the subject of potential races in the migration code,
+there's a couple of outstanding Coverity issues that might
+be worth looking at. If they're false-positives let me know
+and I can reclassify them in Coverity.
 
-I see an example in the Linux kernel for using rpmsg from the guest
-(client) side, in samples/rpmsg/rpmsg_client_sample.c. What I'm having
-difficulty with is finding examples or documentation on how to do the
-host side. I have heard that the VMMs may also play a role in setting
-this up, or are doing something similar, but so far I am not able to
-find code examples in qemu or libvert.
+CID 1527402: In migrate_fd_cleanup() Coverity thinks there's
+a race because we read s->to_dst_file in the "if (s->to_dst_file)"
+check without holding the qemu_file_lock. This might be a
+false-positive because the race Coverity identifies happens
+if two threads both call migrate_fd_cleanup() at the same
+time, which is probably not permitted. (But OTOH taking a
+mutex gets you for free any necessary memory barriers...)
 
-Any help would be appreciated,
-Doug
+CID 1527413: In postcopy_pause_incoming() we read
+mis->postcopy_qemufile_dst without holding the
+postcopy_prio_thread_mutex which we use to protect the write
+to that field, so Coverity thinks there's a race if two
+threads call this function at once.
 
-External recipient
+(The only other migration Coverity issue is CID 1560071,
+which is the "better to use pstrcpy()" not-really-a-bug
+we discussed in another thread.)
+
+thanks
+-- PMM
 
