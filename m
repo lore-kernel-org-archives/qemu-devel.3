@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CABA2CF3942
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:48:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E664CF3941
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:48:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srHUf-0007kN-0H; Thu, 19 Sep 2024 09:46:49 -0400
+	id 1srHUj-00081G-1f; Thu, 19 Sep 2024 09:46:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1srHUU-00078J-TI
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:46:39 -0400
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1srHUW-0007CV-0H
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:46:45 -0400
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1srHUQ-000609-UN
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:46:38 -0400
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1srHUQ-0005zn-UP
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:46:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
- :Subject; bh=+ITeZviAUjdU79Lh7KnozJBelk/8symZBSM8bBXNmh8=; b=hTDDoJfmTCNi14vv
- 2lkRR0W9oAS61ad+vNLQYnVT/ZBeE7aOct/u4ZB1qvUNirQ1FGSSPXgl85gnGse/y6vetv0u6SDEi
- zcTkWb0AegkR44sjgko7In5ZEKj9RqpYwY0tPyFhKbMxLbI/xkE8I/3xkvK4lXUf9SfaoaV/iN/DJ
- bDalJNs+YVSlBfj7HPPvUTUOBR1VPa+prD5i2OqjPqKuNQsRqQ837y5+9IB91B0HG5ag1Ci7bZ7On
- 7K/4q/9wQTHpozhv+zhZYtTNq9YYXbjhdS/2RJARnFqPxi8JflDU3ZDeezUkMWFaJZ4yUTdk8kLtq
- kC5JhoYLQ8s+c4bs3Q==;
+ :Subject; bh=iIi4XYDAIN0x4iyYQPhfWqN51Z2+zfNdJj4hCZEgqfc=; b=CHOnsEnZlnN+ASYZ
+ l9UGUbxCQvTBQ9Isib7/6RxLwxpvQQWB+Y3kSZRZ5uaBfgLZ6e9r0wDzB8uq+hbyJTBZToexVvmIH
+ ahqf3UcWVZ++l4neARVgfijLXErvtgB7+zEtbFrVUf6WZO+iHcbWZRjnWEKJsjvtXNmqZl5f7Q1wO
+ g76x+DYKQKUR8VVSfK/CzWGEKJ5QDWac4fxsS4L0xNruUzKYaXsCbzyO+Zb2lfoCseEhheG6yhsMe
+ b2CLom8BFSd0eIQH43pn3OSb7iAoDJY8hcrYVkFYrYM76QQMimUAGV7Rkfevx8gmW7c5VZUu9RAhC
+ frWgqGobQk1Dzloy3Q==;
 Received: from localhost ([127.0.0.1] helo=dalek.home.treblig.org)
  by mx.treblig.org with esmtp (Exim 4.96)
- (envelope-from <dave@treblig.org>) id 1srHUN-006QOJ-0s;
- Thu, 19 Sep 2024 13:46:31 +0000
+ (envelope-from <dave@treblig.org>) id 1srHUK-006QOJ-2B;
+ Thu, 19 Sep 2024 13:46:28 +0000
 From: dave@treblig.org
 To: peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com
 Cc: qemu-devel@nongnu.org,
 	"Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH v2 5/7] util/userfaultfd: Return -errno on error
-Date: Thu, 19 Sep 2024 14:46:24 +0100
-Message-ID: <20240919134626.166183-6-dave@treblig.org>
+Subject: [PATCH v2 1/7] migration: Remove migrate_cap_set
+Date: Thu, 19 Sep 2024 14:46:20 +0100
+Message-ID: <20240919134626.166183-2-dave@treblig.org>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240919134626.166183-1-dave@treblig.org>
 References: <20240919134626.166183-1-dave@treblig.org>
@@ -68,88 +68,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-Convert (the currently unused) uffd_wakeup, uffd_copy_page and
-uffd_zero_page to return -errno on error rather than -1.
+migrate_cap_set has been unused since
+  18d154f575 ("migration: Remove 'blk/-b' option from migrate commands")
 
-That will make it easier to reuse in postcopy.
+Remove it.
 
 Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 ---
- util/userfaultfd.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ migration/options.c | 20 --------------------
+ migration/options.h |  1 -
+ 2 files changed, 21 deletions(-)
 
-diff --git a/util/userfaultfd.c b/util/userfaultfd.c
-index 1b2fa949d4..518d5c3586 100644
---- a/util/userfaultfd.c
-+++ b/util/userfaultfd.c
-@@ -240,7 +240,7 @@ int uffd_change_protection(int uffd_fd, void *addr, uint64_t length,
-  * Copy range of source pages to the destination to resolve
-  * missing page fault somewhere in the destination range.
-  *
-- * Returns 0 on success, negative value in case of an error
-+ * Returns 0 on success, -errno in case of an error
-  *
-  * @uffd_fd: UFFD file descriptor
-  * @dst_addr: destination base address
-@@ -259,10 +259,11 @@ int uffd_copy_page(int uffd_fd, void *dst_addr, void *src_addr,
-     uffd_copy.mode = dont_wake ? UFFDIO_COPY_MODE_DONTWAKE : 0;
+diff --git a/migration/options.c b/migration/options.c
+index 147cd2b8fd..9460c5dee9 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -605,26 +605,6 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+     return true;
+ }
  
-     if (ioctl(uffd_fd, UFFDIO_COPY, &uffd_copy)) {
-+        int e = errno;
-         error_report("uffd_copy_page() failed: dst_addr=%p src_addr=%p length=%" PRIu64
-                 " mode=%" PRIx64 " errno=%i", dst_addr, src_addr,
--                length, (uint64_t) uffd_copy.mode, errno);
--        return -1;
-+                length, (uint64_t) uffd_copy.mode, e);
-+        return -e;
-     }
+-bool migrate_cap_set(int cap, bool value, Error **errp)
+-{
+-    MigrationState *s = migrate_get_current();
+-    bool new_caps[MIGRATION_CAPABILITY__MAX];
+-
+-    if (migration_is_running()) {
+-        error_setg(errp, "There's a migration process in progress");
+-        return false;
+-    }
+-
+-    memcpy(new_caps, s->capabilities, sizeof(new_caps));
+-    new_caps[cap] = value;
+-
+-    if (!migrate_caps_check(s->capabilities, new_caps, errp)) {
+-        return false;
+-    }
+-    s->capabilities[cap] = value;
+-    return true;
+-}
+-
+ MigrationCapabilityStatusList *qmp_query_migrate_capabilities(Error **errp)
+ {
+     MigrationCapabilityStatusList *head = NULL, **tail = &head;
+diff --git a/migration/options.h b/migration/options.h
+index a0bd6edc06..36e7b3723f 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -58,7 +58,6 @@ bool migrate_tls(void);
+ /* capabilities helpers */
  
-     return 0;
-@@ -273,7 +274,7 @@ int uffd_copy_page(int uffd_fd, void *dst_addr, void *src_addr,
-  *
-  * Fill range pages with zeroes to resolve missing page fault within the range.
-  *
-- * Returns 0 on success, negative value in case of an error
-+ * Returns 0 on success, -errno in case of an error
-  *
-  * @uffd_fd: UFFD file descriptor
-  * @addr: base address
-@@ -289,10 +290,11 @@ int uffd_zero_page(int uffd_fd, void *addr, uint64_t length, bool dont_wake)
-     uffd_zeropage.mode = dont_wake ? UFFDIO_ZEROPAGE_MODE_DONTWAKE : 0;
+ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp);
+-bool migrate_cap_set(int cap, bool value, Error **errp);
  
-     if (ioctl(uffd_fd, UFFDIO_ZEROPAGE, &uffd_zeropage)) {
-+        int e = errno;
-         error_report("uffd_zero_page() failed: addr=%p length=%" PRIu64
-                 " mode=%" PRIx64 " errno=%i", addr, length,
--                (uint64_t) uffd_zeropage.mode, errno);
--        return -1;
-+                (uint64_t) uffd_zeropage.mode, e);
-+        return -e;
-     }
+ /* parameters */
  
-     return 0;
-@@ -306,7 +308,7 @@ int uffd_zero_page(int uffd_fd, void *addr, uint64_t length, bool dont_wake)
-  * via UFFD-IO IOCTLs with MODE_DONTWAKE flag set, then after that all waits
-  * for the whole memory range are satisfied in a single call to uffd_wakeup().
-  *
-- * Returns 0 on success, negative value in case of an error
-+ * Returns 0 on success, -errno in case of an error
-  *
-  * @uffd_fd: UFFD file descriptor
-  * @addr: base address
-@@ -320,9 +322,10 @@ int uffd_wakeup(int uffd_fd, void *addr, uint64_t length)
-     uffd_range.len = length;
- 
-     if (ioctl(uffd_fd, UFFDIO_WAKE, &uffd_range)) {
-+        int e = errno;
-         error_report("uffd_wakeup() failed: addr=%p length=%" PRIu64 " errno=%i",
--                addr, length, errno);
--        return -1;
-+                addr, length, e);
-+        return -e;
-     }
- 
-     return 0;
 -- 
 2.46.1
 
