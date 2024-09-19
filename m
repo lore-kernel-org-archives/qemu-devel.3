@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CD58CDD569
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 01:41:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25020CDD569
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 01:41:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr69t-00088Q-CO; Wed, 18 Sep 2024 21:40:37 -0400
+	id 1sr69j-0007OM-3r; Wed, 18 Sep 2024 21:40:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sr69r-00081X-M3; Wed, 18 Sep 2024 21:40:35 -0400
+ id 1sr69f-00075p-RY; Wed, 18 Sep 2024 21:40:24 -0400
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sr69p-0004sM-EQ; Wed, 18 Sep 2024 21:40:35 -0400
+ id 1sr69d-0004sM-0M; Wed, 18 Sep 2024 21:40:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1726710033; x=1758246033;
+ t=1726710021; x=1758246021;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=GsWICJ5+g1+q1v0KglBy1lWu3UY61FHqayyy9q2Rqsk=;
- b=jAyV+GElpZchTCz5wRtKmy0OsD6ubtEHOR0nP0GcrejOhlUHCC/OUfM0
- CZg/cST3+j6OdHF1YrXUVKuy+j/vE9N+G/BExbyxK9fisknKYGP1q6vAW
- z70BVpyR6jUyqMXdWBZR/gVZ5i0PzWdoo9QMbEKpLiKKRq4OicbxvQMYn
- oNwXnSlO7enMB6VLNccMmYPc0Lk0Jc11MzRBluxgBmN7ZoMRsw6kl1/P4
- 26QkN4CJUDPvZmj0wwrxFVZztyAM93VwDPl4JbxclWuiF6VtDJLVxLnvW
- quNxjU66fW9RgajXxB4Q2jCbRP69o5TqnGDKghjJCbeSgxaGy7WYo/CNk w==;
-X-CSE-ConnectionGUID: EHJo3F9DRB6yibNL+QNGvA==
-X-CSE-MsgGUID: xpjv6+AaQ3e7g9UD1fuOWg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25797904"
-X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25797904"
+ bh=573w2DHmYSHZ5HLG8xM/Ws3MSekemg/qhlyIWizCQb0=;
+ b=k89lWRCUwm+9dH3RLxrLPrP0k4+RvNnRCTSt2oTw826HwLnAEr8m3K7c
+ hL2tRI++Ysx1Xpgtz8gnBP0tyAmi4NdeSNqj0R95d/afxYP7fTZl3z1Rm
+ qITLEskfCj9OcOYLRvY1EzzdJtVAGr6oI8G9yxv+rt8/IHtsEkZqofE6G
+ nt+J4qMd5C44IYtfglNP4rSTKvcW0FQ2E6ewe5obDgaZVj88b5DIby+8n
+ yAU56Pn1/JFtw8ihUhxIXzIqs5fG5mFu41DAJ/t1lNy3gjYLBhJv1oPZz
+ sUYquDAz9ZxUycVKpfAOMU2eFwLDFZNLBcbBCBtJojL6axVzEAsqBAaaz A==;
+X-CSE-ConnectionGUID: rBlcq/lUT62CwOLPTV1Q+g==
+X-CSE-MsgGUID: 7Mx2LXU0TsaCe21LUGTSmg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25797873"
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25797873"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Sep 2024 18:40:32 -0700
-X-CSE-ConnectionGUID: BVbtC0uyT5+cD6+BxlQqYA==
-X-CSE-MsgGUID: ZRQq89eASbGRoUgWB8SFRw==
+ 18 Sep 2024 18:40:18 -0700
+X-CSE-ConnectionGUID: VTAf9j9wSdmPPMQUWsdetg==
+X-CSE-MsgGUID: O69kmvrZS0GmljFMm/GWdA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="70058791"
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="70058690"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa006.jf.intel.com with ESMTP; 18 Sep 2024 18:40:25 -0700
+ by orviesa006.jf.intel.com with ESMTP; 18 Sep 2024 18:40:12 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -66,10 +66,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-ppc@nongnu.org,
  qemu-arm@nongnu.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC v2 07/15] hw/core/cpu: Convert CPU from general device to
- topology device
-Date: Thu, 19 Sep 2024 09:55:25 +0800
-Message-Id: <20240919015533.766754-8-zhao1.liu@intel.com>
+Subject: [RFC v2 05/15] qdev: Add method in BusClass to customize device index
+Date: Thu, 19 Sep 2024 09:55:23 +0800
+Message-Id: <20240919015533.766754-6-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240919015533.766754-1-zhao1.liu@intel.com>
 References: <20240919015533.766754-1-zhao1.liu@intel.com>
@@ -100,200 +99,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert CPU to topology device then it can be added into topology tree.
+Currently, when the bus assigns an index to a child device, it relies on
+a monotonically increasing max_index.
 
-Because CPU then inherits properties and settings of topology device,
-make the following changes to take into account the special case for CPU:
+However, when a device is removed from the bus, its index is not
+reassigned to new devices, leading to "holes" in child indices.
 
- * Omit setting category since topology device has already set.
+For topology devices, such as CPUs/cores, arches define custom
+sub-topology IDs. Some of these IDs are global (e.g., core-id for core
+devices), while others are local (e.g., thread-id/core-id/module-id for
+x86 CPUs).
 
- * Make realize() of topology device as the parent realize().
+Local IDs are indexes under the same parent device and align with
+BusChild's index meaning. Therefore, local IDs in a topology context
+should use BusChild.index.
 
- * Clean up some cases that assume parent obj is DeviceState and access
-   parent_obj directly.
+Considering that topology devices support hot-plug and local IDs often
+have range constraints, add a new method (BusClass.assign_free_index) to
+allow the bus to customize index assignment.
 
- * Set CPU's topology level as thread.
-
- * And one complex change: mask bus_type as NULL.
-
-    - This is because for the arches don't support topology tree,
-      there's no CPU bus bridge so that CPUs of these arches can't be
-      created. So, only the CPU with arch supporting topology tree
-      should override the bus_type field.
-
- * Further, support cpu_create() for the CPU with bus_type.
-
-    - This is a corner case, some arch CPUs may set bus_type, and
-      cpu_create() would be called in system emulation case (e.g., none
-      machine). To handle such case, try to find the machine's CPU bus
-      in cpu_create().
+Based on this method, the CPU bus will search for free index "holes"
+created by unplugging and assign these free indices to newly inserted
+devices.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- accel/kvm/kvm-all.c   |  4 ++--
- hw/core/cpu-common.c  | 42 +++++++++++++++++++++++++++++++++++++-----
- include/hw/core/cpu.h |  7 +++++--
- target/ppc/kvm.c      |  2 +-
- 4 files changed, 45 insertions(+), 10 deletions(-)
+ hw/core/qdev.c                |  8 +++++++-
+ hw/cpu/cpu-topology.c         | 37 +++++++++++++++++++++++++++++++++++
+ include/hw/cpu/cpu-topology.h |  1 +
+ include/hw/qdev-core.h        |  2 ++
+ 4 files changed, 47 insertions(+), 1 deletion(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index beb1988d12cf..48c040f6861d 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -4173,7 +4173,7 @@ static void query_stats(StatsResultList **result, StatsTarget target,
-         break;
-     case STATS_TARGET_VCPU:
-         add_stats_entry(result, STATS_PROVIDER_KVM,
--                        cpu->parent_obj.canonical_path,
-+                        DEVICE(cpu)->canonical_path,
-                         stats_list);
-         break;
-     default:
-@@ -4265,7 +4265,7 @@ static void query_stats_cb(StatsResultList **result, StatsTarget target,
-         stats_args.names = names;
-         stats_args.errp = errp;
-         CPU_FOREACH(cpu) {
--            if (!apply_str_list_filter(cpu->parent_obj.canonical_path, targets)) {
-+            if (!apply_str_list_filter(DEVICE(cpu)->canonical_path, targets)) {
-                 continue;
-             }
-             query_stats_vcpu(cpu, &stats_args);
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index 7982ecd39a53..08f2d536ff6d 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -57,7 +57,19 @@ CPUState *cpu_create(const char *typename)
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index ff073cbff56d..e3e9f0f303d6 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -78,11 +78,17 @@ static void bus_remove_child(BusState *bus, DeviceState *child)
+ 
+ static void bus_add_child(BusState *bus, DeviceState *child)
  {
-     Error *err = NULL;
-     CPUState *cpu = CPU(object_new(typename));
--    if (!qdev_realize(DEVICE(cpu), NULL, &err)) {
-+    BusState *bus = NULL;
-+
-+    if (DEVICE_GET_CLASS(cpu)->bus_type) {
-+        MachineState *ms;
-+
-+        ms = (MachineState *)object_dynamic_cast(qdev_get_machine(),
-+                                                 TYPE_MACHINE);
-+        if (ms) {
-+            bus = BUS(&ms->topo->bus);
-+        }
++    BusClass *bc = BUS_GET_CLASS(bus);
+     char name[32];
+     BusChild *kid = g_malloc0(sizeof(*kid));
+ 
++    if (bc->assign_free_index) {
++        kid->index = bc->assign_free_index(bus);
++    } else {
++        kid->index = bus->max_index++;
 +    }
 +
-+    if (!qdev_realize(DEVICE(cpu), bus, &err)) {
-         error_report_err(err);
-         object_unref(OBJECT(cpu));
-         exit(EXIT_FAILURE);
-@@ -196,6 +208,12 @@ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
- {
-     CPUState *cpu = CPU(dev);
-     Object *machine = qdev_get_machine();
-+    CPUClass *cc = CPU_GET_CLASS(cpu);
-+
-+    cc->parent_realize(dev, errp);
-+    if (*errp) {
-+        return;
-+    }
- 
-     /* qdev_get_machine() can return something that's not TYPE_MACHINE
-      * if this is one of the user-only emulators; in that case there's
-@@ -302,6 +320,7 @@ static void cpu_common_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     ResettableClass *rc = RESETTABLE_CLASS(klass);
-+    CPUTopoClass *tc = CPU_TOPO_CLASS(klass);
-     CPUClass *k = CPU_CLASS(klass);
- 
-     k->parse_features = cpu_common_parse_features;
-@@ -309,9 +328,6 @@ static void cpu_common_class_init(ObjectClass *klass, void *data)
-     k->has_work = cpu_common_has_work;
-     k->gdb_read_register = cpu_common_gdb_read_register;
-     k->gdb_write_register = cpu_common_gdb_write_register;
--    set_bit(DEVICE_CATEGORY_CPU, dc->categories);
--    dc->realize = cpu_common_realizefn;
--    dc->unrealize = cpu_common_unrealizefn;
-     rc->phases.hold = cpu_common_reset_hold;
-     cpu_class_init_props(dc);
-     /*
-@@ -319,11 +335,27 @@ static void cpu_common_class_init(ObjectClass *klass, void *data)
-      * IRQs, adding reset handlers, halting non-first CPUs, ...
-      */
-     dc->user_creatable = false;
-+    /*
-+     * CPU is the minimum granularity for hotplug in most case, and
-+     * often its hotplug handler is ultimately decided by the machine.
-+     * For generality, set this flag to avoid blocking possible hotplug
-+     * support.
-+     */
-+    dc->hotpluggable = true;
-+    device_class_set_parent_realize(dc, cpu_common_realizefn,
-+                                    &k->parent_realize);
-+    dc->unrealize = cpu_common_unrealizefn;
-+    /*
-+     * Avoid archs that do not support topology device trees from
-+     * encountering error when creating CPUs.
-+     */
-+    dc->bus_type = NULL;
-+    tc->level = CPU_TOPOLOGY_LEVEL_THREAD;
+     bus->num_children++;
+-    kid->index = bus->max_index++;
+     kid->child = child;
+     child->bus_node = kid;
+     object_ref(OBJECT(kid->child));
+diff --git a/hw/cpu/cpu-topology.c b/hw/cpu/cpu-topology.c
+index e68c06132e7d..3e8982ff7e6c 100644
+--- a/hw/cpu/cpu-topology.c
++++ b/hw/cpu/cpu-topology.c
+@@ -49,11 +49,40 @@ static bool cpu_bus_check_address(BusState *bus, DeviceState *dev,
+     return cpu_parent_check_topology(bus->parent, dev, errp);
  }
  
- static const TypeInfo cpu_type_info = {
-     .name = TYPE_CPU,
--    .parent = TYPE_DEVICE,
-+    .parent = TYPE_CPU_TOPO,
-     .instance_size = sizeof(CPUState),
-     .instance_init = cpu_common_initfn,
-     .instance_finalize = cpu_common_finalize,
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 1c9c775df658..d7268bcb48cb 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -20,6 +20,7 @@
- #ifndef QEMU_CPU_H
- #define QEMU_CPU_H
- 
-+#include "hw/cpu/cpu-topology.h"
- #include "hw/qdev-core.h"
- #include "disas/dis-asm.h"
- #include "exec/breakpoint.h"
-@@ -144,7 +145,7 @@ struct SysemuCPUOps;
-  */
- struct CPUClass {
-     /*< private >*/
--    DeviceClass parent_class;
-+    CPUTopoClass parent_class;
-     /*< public >*/
- 
-     ObjectClass *(*class_by_name)(const char *cpu_model);
-@@ -189,6 +190,8 @@ struct CPUClass {
-     int reset_dump_flags;
-     int gdb_num_core_regs;
-     bool gdb_stop_before_watchpoint;
++static int cpu_bus_assign_free_index(BusState *bus)
++{
++    BusChild *kid;
++    int index;
 +
-+    DeviceRealize parent_realize;
- };
- 
- /*
-@@ -456,7 +459,7 @@ struct qemu_work_item;
-  */
- struct CPUState {
-     /*< private >*/
--    DeviceState parent_obj;
-+    CPUTopoState parent_obj;
-     /* cache to avoid expensive CPU_GET_CLASS */
-     CPUClass *cc;
-     /*< public >*/
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index 907dba60d1b5..b3cc42e545af 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -2351,7 +2351,7 @@ static void alter_insns(uint64_t *word, uint64_t flags, bool on)
- static bool kvmppc_cpu_realize(CPUState *cs, Error **errp)
++    if (bus->num_children == bus->max_index) {
++        return bus->max_index++;
++    }
++
++    assert(bus->num_children < bus->max_index);
++    /* TODO: Introduce the list sorted by index */
++    for (index = 0; index < bus->num_children; index++) {
++        bool existed = false;
++
++        QTAILQ_FOREACH(kid, &bus->children, sibling) {
++            if (kid->index == index) {
++                existed = true;
++                break;
++            }
++        }
++
++        if (!existed) {
++            break;
++        }
++    }
++    return index;
++}
++
+ static void cpu_bus_class_init(ObjectClass *oc, void *data)
  {
-     int ret;
--    const char *vcpu_str = (cs->parent_obj.hotplugged == true) ?
-+    const char *vcpu_str = (DEVICE(cs)->hotplugged == true) ?
-                            "hotplug" : "create";
-     cs->cpu_index = cpu_get_free_index();
+     BusClass *bc = BUS_CLASS(oc);
+ 
+     bc->check_address = cpu_bus_check_address;
++    bc->assign_free_index = cpu_bus_assign_free_index;
+ }
+ 
+ static const TypeInfo cpu_bus_type_info = {
+@@ -177,3 +206,11 @@ int cpu_topo_get_instances_num(CPUTopoState *topo)
+ 
+     return bus ? bus->num_children : 1;
+ }
++
++int cpu_topo_get_index(CPUTopoState *topo)
++{
++    BusChild *node = DEVICE(topo)->bus_node;
++
++    assert(node);
++    return node->index;
++}
+diff --git a/include/hw/cpu/cpu-topology.h b/include/hw/cpu/cpu-topology.h
+index 7a447ad16ee7..80aeff18baa3 100644
+--- a/include/hw/cpu/cpu-topology.h
++++ b/include/hw/cpu/cpu-topology.h
+@@ -64,5 +64,6 @@ struct CPUTopoState {
+ #define GET_CPU_TOPO_LEVEL(topo)    (CPU_TOPO_GET_CLASS(topo)->level)
+ 
+ int cpu_topo_get_instances_num(CPUTopoState *topo);
++int cpu_topo_get_index(CPUTopoState *topo);
+ 
+ #endif /* CPU_TOPO_H */
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index 7cbc5fb97298..77223b28c788 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -342,6 +342,8 @@ struct BusClass {
+      */
+     bool (*check_address)(BusState *bus, DeviceState *dev, Error **errp);
+ 
++    int (*assign_free_index)(BusState *bus);
++
+     BusRealize realize;
+     BusUnrealize unrealize;
  
 -- 
 2.34.1
