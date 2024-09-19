@@ -4,75 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF7CDCE8D78
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 11:34:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD274CE8D7A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 11:37:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srFQB-0006tI-NX; Thu, 19 Sep 2024 07:34:03 -0400
+	id 1srFSq-0002px-B2; Thu, 19 Sep 2024 07:36:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srFQA-0006sm-AR
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 07:34:02 -0400
-Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>)
+ id 1srFSn-0002or-GA; Thu, 19 Sep 2024 07:36:45 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srFQ8-0005EM-Kn
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 07:34:02 -0400
-Received: by mail-lf1-x132.google.com with SMTP id
- 2adb3069b0e04-53661ac5ba1so743518e87.2
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 04:33:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726745637; x=1727350437; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=TX+YKdgsNY4eHwiANJL05KwePN0Q1NSwu/+CMRm+C3o=;
- b=WvXf62zbfdDjH/LIT7kOtffYLeEcaKSS+rEX5h2yv+zbe5C41IxOR+UjqXmIW+FCqO
- V9mMKWQ0PwyBgPe2/gxJ0rryen5SN+LOuXt68pCcyZkhdr1N52zUqPY/eYNyXJyN3nri
- 8e9EWj2rQsteBY8QiuCmkHBhuhGCpU+/Vnl99jwtQn6iJkkxzmamq49kk9wSfOGF08Kz
- 57MlFc4v3TMWblSw1uydUcskzzXmevLPebjMuL9PvCsafMoGqCzwNjwdqxnrCH3T1+kQ
- ygQmGY41FzluDo5Bu0OWXzu8WDPVPtZr9Ck3qK9dKEYK62MhO3G+2CnA6fanBMMw4meq
- YLdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726745637; x=1727350437;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TX+YKdgsNY4eHwiANJL05KwePN0Q1NSwu/+CMRm+C3o=;
- b=EPllj3S8I2FjcT6vmMCbKQGAGi0nDlubJkBktflLahhD/IWkXwxfCwtEM5hWNhWzZE
- LSbSlV9exQbJ9XchHp914jE0t8X6jdWuMIfSJdw8lV+SPuM5O0IT7koxBlx2i+gvJj8n
- hp57ebPl6J9nhzFLLt/JNSWPBGEhoszlffbciEpLP/b9lrOleLsZPaH19z3I92fnBEeA
- Qq1mC/wrZS0GYjzxaJeg/ASsEhxrYqSWQoaXlyQijFl7pgeAxn3oGBuPHqOSqwvOmbIM
- rDVuqHzE6xGE8ze3c1oug8c06uivhzgIk5eSpSbldJl1/JED64vhXgGyEBDvD+SScV3k
- 5eHQ==
-X-Gm-Message-State: AOJu0Yz5kOKYcdsfLY8pTUCT+uffd+IPSfZVN1+vcd4svpSZQ1I6/8cs
- puYuI/y/t+9cm9Am3BVYwurRvKwRCiOk0nj8+aV5dy+J3hGsDcK7qEYJjFrGnfdNfHDuIo/NhgB
- 5yLmLgBjCTJzmYOhVfLtpOstPBh8kQOoFXbm23Q==
-X-Google-Smtp-Source: AGHT+IE9qHFVb5ssOqMGRsPMjvWZMH1qMM4u+wfVXdFHvfbGKTKSO8NSgidp+AeIqvG7wZXkrsZhsnUhuRHitqJ5KXU=
-X-Received: by 2002:a05:6512:4381:b0:536:9efb:bb1a with SMTP id
- 2adb3069b0e04-5369efbbbd5mr3902560e87.38.1726745637272; Thu, 19 Sep 2024
- 04:33:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>)
+ id 1srFSl-0005k2-Dn; Thu, 19 Sep 2024 07:36:44 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 25DDD3389A;
+ Thu, 19 Sep 2024 11:36:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726745801; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CN3IQqa64vRMg4h+Wr7zWchzJEAtuQ/fyQe/maW3neY=;
+ b=e74v4OZhWn0mQvMb2oI4tfMF3CRwWtwZgkMsLkTdhGkpVC7dokg52SDcc5kU6xbGhg7Jnb
+ mqMNjJlLNz12H1gOqOnuURCWc8dfSygcbVuBeyeJvIUrQPWCcKCPvbLwU8AB2XGtEd5DVd
+ urSjjDTsfQ5j3vYqnu/OJNfR+sJpQeY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726745801;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CN3IQqa64vRMg4h+Wr7zWchzJEAtuQ/fyQe/maW3neY=;
+ b=MF26RqvoK/i6bNrRmqNC/346g1hxKkTB2v1JSqklN/8p6AA0TOCJ5A7XqXlDJtVq2LmPr+
+ 84j3jVQztcrgksDg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=e74v4OZh;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=MF26Rqvo
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1726745801; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CN3IQqa64vRMg4h+Wr7zWchzJEAtuQ/fyQe/maW3neY=;
+ b=e74v4OZhWn0mQvMb2oI4tfMF3CRwWtwZgkMsLkTdhGkpVC7dokg52SDcc5kU6xbGhg7Jnb
+ mqMNjJlLNz12H1gOqOnuURCWc8dfSygcbVuBeyeJvIUrQPWCcKCPvbLwU8AB2XGtEd5DVd
+ urSjjDTsfQ5j3vYqnu/OJNfR+sJpQeY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1726745801;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CN3IQqa64vRMg4h+Wr7zWchzJEAtuQ/fyQe/maW3neY=;
+ b=MF26RqvoK/i6bNrRmqNC/346g1hxKkTB2v1JSqklN/8p6AA0TOCJ5A7XqXlDJtVq2LmPr+
+ 84j3jVQztcrgksDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D947B13A5F;
+ Thu, 19 Sep 2024 11:36:40 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 03a2MsgM7GY4GwAAD6G6ig
+ (envelope-from <cfontana@suse.de>); Thu, 19 Sep 2024 11:36:40 +0000
+Message-ID: <b9231ac0-d4b7-4565-b2aa-5ceff3a7e672@suse.de>
+Date: Thu, 19 Sep 2024 13:36:36 +0200
 MIME-Version: 1.0
-References: <20240917141641.2836265-1-peter.maydell@linaro.org>
- <c8902f79-0094-4821-99ab-ec0eba5e870d@linaro.org>
-In-Reply-To: <c8902f79-0094-4821-99ab-ec0eba5e870d@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Sep 2024 12:33:45 +0100
-Message-ID: <CAFEAcA_2+qRM85UKxp0vgASnhzjR7CtVPJyCwdYhONifZ2_QEw@mail.gmail.com>
-Subject: Re: [PATCH] tests/fp: Make mul and div tests have a longer timeout
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::132;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/ppc: Fix lxvx/stxvx facility check
+From: Claudio Fontana <cfontana@suse.de>
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+References: <20240911141651.6914-1-farosas@suse.de>
+ <9e6212ca-5c2f-459c-a59d-11fbdb796c07@suse.de>
+ <bcdc7a95-09de-4a2e-a45c-aa4a539afc06@suse.de>
+Content-Language: en-US
+In-Reply-To: <bcdc7a95-09de-4a2e-a45c-aa4a539afc06@suse.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 25DDD3389A
+X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ FREEMAIL_CC(0.00)[nongnu.org,gmail.com]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCPT_COUNT_SEVEN(0.00)[7]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:dkim, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=cfontana@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,35 +140,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 18 Sept 2024 at 15:19, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 9/17/24 16:16, Peter Maydell wrote:
-> > At the moment we run all fp-test tests except for the muladd ones
-> > with the default meson test timeout of 30s. This is plenty for
-> > most of the test cases, but for multiplication and division we
-> > can sometimes hit the timeout if the CI runner is going slow.
-> >
-> > Add support to meson.build for a way to override the timeout on
-> > a per test basis, and use it to set the timeout to 60s for
-> > fp-test-rem, fp-test-div and fp-test-mul. We can use this new
-> > generic mechanism also to set the timeout for mulAdd rather
-> > than hardcoding it.
-> >
-> > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> > ---
-> > On my local system these tests finish in less than 5 seconds
-> > each, but on the cross-i686-system CI job they can take 5 or 6
-> > times as long. Example:
-> > https://gitlab.com/qemu-project/qemu/-/jobs/7844908223
-> > ---
-> >   tests/fp/meson.build | 16 +++++++++++++++-
-> >   1 file changed, 15 insertions(+), 1 deletion(-)
->
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+ping, adding Richard.
 
-Thanks; I've applied this directly to see if it helps with
-some of the CI flakiness.
+We will need to include this downstream because of the breakage its lack causes.
+It is already reviewed by me, but some TCG maintainer indicating it will be included in some queue would help,
 
--- PMM
+Thanks,
+
+Claudio
+
+On 9/18/24 17:11, Claudio Fontana wrote:
+> Adding Ilya FYI.
+> 
+> Ciao,
+> 
+> Claudio
+> 
+> On 9/11/24 18:19, Claudio Fontana wrote:
+>> On 9/11/24 16:16, Fabiano Rosas wrote:
+>>> The XT check for the lxvx/stxvx instructions is currently
+>>> inverted. This was introduced during the move to decodetree.
+>>>
+>>> From the ISA:
+>>>   Chapter 7. Vector-Scalar Extension Facility
+>>>   Load VSX Vector Indexed X-form
+>>>
+>>>   lxvx XT,RA,RB
+>>>   if TX=0 & MSR.VSX=0 then VSX_Unavailable()
+>>>   if TX=1 & MSR.VEC=0 then Vector_Unavailable()
+>>>   ...
+>>>   Let XT be the value 32×TX + T.
+>>>
+>>> The code currently does the opposite:
+>>>
+>>>     if (paired || a->rt >= 32) {
+>>>         REQUIRE_VSX(ctx);
+>>>     } else {
+>>>         REQUIRE_VECTOR(ctx);
+>>>     }
+>>>
+>>> This was already fixed for lxv/stxv at commit "2cc0e449d1 (target/ppc:
+>>> Fix lxv/stxv MSR facility check)", but the indexed forms were missed.
+>>>
+>>> Cc: qemu-stable@nongnu.org
+>>> Fixes: 70426b5bb7 ("target/ppc: moved stxvx and lxvx from legacy to decodtree")
+>>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>>> ---
+>>>  target/ppc/translate/vsx-impl.c.inc | 2 +-
+>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
+>>> index 40a87ddc4a..a869f30e86 100644
+>>> --- a/target/ppc/translate/vsx-impl.c.inc
+>>> +++ b/target/ppc/translate/vsx-impl.c.inc
+>>> @@ -2244,7 +2244,7 @@ static bool do_lstxv_PLS_D(DisasContext *ctx, arg_PLS_D *a,
+>>>  
+>>>  static bool do_lstxv_X(DisasContext *ctx, arg_X *a, bool store, bool paired)
+>>>  {
+>>> -    if (paired || a->rt >= 32) {
+>>> +    if (paired || a->rt < 32) {
+>>>          REQUIRE_VSX(ctx);
+>>>      } else {
+>>>          REQUIRE_VECTOR(ctx);
+>>
+>> Reviewed-by: Claudio Fontana <cfontana@suse.de>
+>>
+> 
+> 
+
 
