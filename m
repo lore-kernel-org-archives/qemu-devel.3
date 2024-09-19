@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A724CE8D5F
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 09:09:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72A57CE8D62
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 09:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srD9g-0001oo-Na; Thu, 19 Sep 2024 05:08:52 -0400
+	id 1srD9W-0001eJ-UA; Thu, 19 Sep 2024 05:08:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srD9f-0001nV-C8
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 05:08:51 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ id 1srD9V-0001d2-9X
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 05:08:41 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srD9d-0003pT-Lu
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 05:08:51 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-53660856a21so539268e87.2
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 02:08:49 -0700 (PDT)
+ id 1srD9T-0003o6-Cb
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 05:08:41 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5c24c92f699so622006a12.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 02:08:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726736928; x=1727341728; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726736917; x=1727341717; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=WZZTdW5IM9H3BJtV2HMjAaknCf+SKGFMIVGVXnEZP5Q=;
- b=iYZbSLF9PcIqzCtDNpgSLBiGYfFqrre9/CBAxoQstcL6AQrMX2bTJB9cNNjSPqnx8W
- 5H4Wd88RLTDWJ2srUY4FLlUpYtSj5Nb7pO8dVIM4X2p3OVk/UjmS1p3XOL3baxfUaFdC
- cpyN7MHheZj+LQIxzvOq7EZAJeripNc8ip1gJl4nIPXSDceBZPc8GFO4zNsJCXvVvvFM
- 87j15BIDn94u9JrryvIw6y3cfQA80raohwHdsvxW1vM5I/QwDcDhkI0XAWwmFSV9SdZu
- tn6lEpBASEWi1lSGWsf85/4X5daxv2IMYsp8P7TUrGCliaCbtVRbufpfBamrp3xzSsrg
- QbTQ==
+ bh=S+Vm0aIJf76hdDpFepnx6YQE+r17lmweI6qL4DRvvHg=;
+ b=r+a7qjRF+cp77nF/0HGMHqjsBYbwrnYxYucl/bcWT12yCmtcQAG3pGlTy5OpgZGDLH
+ 0cTFnGs+1UK6Evht9YXdYv6Gevi9hFXcNM05BAT/a4GKCQuyLHZ3KuqI/omjkSsjzi/U
+ zF6Nnrmt1aDXdbT+0/virsorFR/zQYtGUccCC874gqmtaG0PFXcKv5r2Co4qJ8q1+yiC
+ 2xchW1v8qHbpak2Ql4vlRW/eOwZNXqswQkcOeHPBHHOkvm4qFMmd9QrG/q/ckq33vGXf
+ JWXhPK/jz3ac6rD+DSzICpn9ZgLlI/0HZA0kDK9xevdYDbLCcOt5P7+divYZ6BQPBHox
+ wxiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726736928; x=1727341728;
+ d=1e100.net; s=20230601; t=1726736917; x=1727341717;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=WZZTdW5IM9H3BJtV2HMjAaknCf+SKGFMIVGVXnEZP5Q=;
- b=EmAbvKMZ6lK4bKLHwuUHkwXTmy0zGTc8If0ITVDb7gt3qW9ArR9zrORBm72LWI4DAG
- 3ZSNMSEVuICn55tLnAiT2ieLve/NFzkGCbqxUzmJ6RLQYOCZ6mt2Vyfa52F9Shd4gRw5
- inZaacmIZkXAqHcPtUeYBr36IxdJQwwSFbLfOKBxi3C4AejphCdEGfkQZIRL5SW/q/jw
- W4GPiHWfcX8jlxnazAwF3W+UwlvSRGGir0qpub9th1P2wismeO0Mso3OOL+6P6WXjqhH
- 3ukSXJ9HdiXSPcygFnHbXLv0/oa+bTZgRAUh9pHtz/JKLaWp6tIhJA4HRqy5lKdpmioV
- d8tg==
-X-Gm-Message-State: AOJu0Yy0u+Zhk6kS0djBW+kIz+Z4w2dqNcmz/gVO3LNGUk3/9FFJuMMt
- 5iRZsvTWBTM1MVg8ahY8g4AUgAn/p3Nx2onNbTUHT2DLhnSM0BWRlCtHc4JXwU9QFk7Y1hOKmuT
- iclNPCV/4ZvYXzosoMDPfuSHQT+tSjjhBLrsgWB+PUghHYvyE
-X-Google-Smtp-Source: AGHT+IGIxy6wnU2uzuWd91792U5APtJr/ICWKDSC6GMOlFbvkMSOe48rU+w1p/p4qdpJk3Wj0yQxTaPeM0r0uKW/CM4=
-X-Received: by 2002:a05:6512:3ca5:b0:535:6cde:5c4d with SMTP id
- 2adb3069b0e04-5367feb9b81mr13551733e87.3.1726736927589; Thu, 19 Sep 2024
- 02:08:47 -0700 (PDT)
+ bh=S+Vm0aIJf76hdDpFepnx6YQE+r17lmweI6qL4DRvvHg=;
+ b=q0RlT3kWEPSd6FEqeaq/9/qohVurw/p/y7s4ks3CsW+++3D+H4fIG+Zy4FZIb+sfzv
+ Pc968xtDLHwnI68aRwaOCFF7S+pybu7XmJQ6qKRHRDtnMSrGyWy/NPsPVvbgwRkXmkyg
+ ccwvnM0aTIhdPDXyhV6s8UaHSe9VdTGVaxHipYHQKlHe8kwB0RvWK88E4qbuugR7d4jW
+ hKCd1V/Gyo42ufOQl8jaf4W3Rmdg0fY3tHyKG0BIsDj9GeQVrfqApElPDm2y8K9ibM8C
+ Bt0oUXhLPrVaXjefLVS5XH7KuN8wclE/JgRtz4WCweAmT9e0V42ruAa9Lmna+boisf28
+ fTsA==
+X-Gm-Message-State: AOJu0Yz75MYUjVH+QJvGTTs/SmHFpck5NXGjUry1ewpduXIt4qtnF9YP
+ UQs169n+UzzwvaHGM699g1z5mPyqyoHehPaBJTZK7h8FXnM1y8kwUofy0gYMwzAQOI89AbNlTSZ
+ Bp6uSWvKr+BSB9iKrtgvF1iDKuM3UhqwXXu5alwG/tZLqoHBr
+X-Google-Smtp-Source: AGHT+IHmRzbtqinSE/3AKLxkiiWZA0+rgOJimgFKmY5DYAIg0tzT0W+Aaatgb/nUb23x/pyIeV3uZecwjidE9QkiY/k=
+X-Received: by 2002:a05:6402:d0a:b0:5be:fd66:edf3 with SMTP id
+ 4fb4d7f45d1cf-5c413e1ee7bmr22939915a12.18.1726736917230; Thu, 19 Sep 2024
+ 02:08:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240918094624.938242-1-mark.cave-ayland@ilande.co.uk>
-In-Reply-To: <20240918094624.938242-1-mark.cave-ayland@ilande.co.uk>
+References: <20240918183151.6413-1-peterx@redhat.com>
+In-Reply-To: <20240918183151.6413-1-peterx@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Sep 2024 10:08:36 +0100
-Message-ID: <CAFEAcA8Z01m_-M4TzHW56in7ydk2NR7jrsdg1CTD_GzURW5nug@mail.gmail.com>
-Subject: Re: [PULL 0/1] qemu-macppc queue 20240918
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: qemu-devel@nongnu.org
+Date: Thu, 19 Sep 2024 10:08:25 +0100
+Message-ID: <CAFEAcA9MsybcOa9pGeU7EHuqvRqfBk4TSwYR_tkHF2Xbc19Yuw@mail.gmail.com>
+Subject: Re: [PULL v2 0/6] Migration 20240917 patches
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x129.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,8 +88,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 18 Sept 2024 at 10:46, Mark Cave-Ayland
-<mark.cave-ayland@ilande.co.uk> wrote:
+On Wed, 18 Sept 2024 at 19:31, Peter Xu <peterx@redhat.com> wrote:
 >
 > The following changes since commit 2b81c046252fbfb375ad30632362fc16e6e22bd5:
 >
@@ -96,18 +96,32 @@ On Wed, 18 Sept 2024 at 10:46, Mark Cave-Ayland
 >
 > are available in the Git repository at:
 >
->   https://github.com/mcayland/qemu.git tags/qemu-macppc-20240918
+>   https://gitlab.com/peterx/qemu.git tags/migration-20240917-pull-request
 >
-> for you to fetch changes up to 2d0a071e625d7234e8c5623b7e7bf445e1bef72c:
+> for you to fetch changes up to 4ce56229087860805877075ddb29dd44578365a9:
 >
->   mac_dbdma: Remove leftover `dma_memory_unmap` calls (2024-09-18 09:31:56 +0100)
+>   migration/multifd: Fix rb->receivedmap cleanup race (2024-09-18 14:27:39 -0400)
 >
 > ----------------------------------------------------------------
-> DMA fix for macio IDE device
+> Migration pull request for 9.2
 >
+> - Fabiano's patch to move two tests to slow tests.
+> - Peter's patch to fix qatzip builds
+> - Stefan's multifd-zstd fix on unsigned diff comparisons
+> - Fea's bug fix to consistently use memattrs when map() address space
+> - Fabiano's bug fix on multifd race condition against receivedmap
+>
+> ----------------------------------------------------------------
 
 
 Applied, thanks.
+
+Thanks for looking at the issues with the migration tests.
+This run went through first time without my needing to retry any
+jobs, so fingers crossed that we have at least improved the reliability.
+(I have a feeling there's still something funny with the k8s runners,
+but that's not migration-test specific, it's just that test tends
+to be the longest running and so most likely to be affected.)
 
 Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
 for any user-visible changes.
