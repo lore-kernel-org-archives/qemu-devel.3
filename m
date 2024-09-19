@@ -4,77 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0BE0CDD566
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 01:36:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 337BECDD569
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 01:40:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr65E-00010z-Qu; Wed, 18 Sep 2024 21:35:48 -0400
+	id 1sr69F-0005ca-39; Wed, 18 Sep 2024 21:39:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yaozhenguo1@gmail.com>)
- id 1sr65C-00010E-Tv
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 21:35:47 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yaozhenguo1@gmail.com>)
- id 1sr65A-0004QW-Ul
- for qemu-devel@nongnu.org; Wed, 18 Sep 2024 21:35:46 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-68518bc1407so3082557b3.2
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 18:35:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726709743; x=1727314543; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=B+KAxMpxoyRSjFMZowl3Lnxq8wuVXNRVxinGAz4ryuI=;
- b=NjK15IRZhpOTbKfP8m7wAqwVj6kq/qNW6b1YSZQczcvXLswXwuO44kF8lXLC9U1TmR
- zic/uPm3ohk2Y7e4Y4+wia7W+31+1mj73PuZy4evJFyaePQQ1aOWB/pyXiTE1OWPDVe8
- BTtY7Yie+Vdj5/D504X+X6cIt0xvDVI8SazXRpRrbykwt2TkM8blJCTS8qvcmqbo7Bcc
- iPoTy6st2O9g+7+VMUzSnfOCS/KVphq4AE8IThLSD+eqkAcEzvXGJOR95ETPtUzbt25+
- e6JajR8cUep57/p/3EXvBOqiyr91AYK3DXxV1AmRyBRs2DtZm0+ieIIy56dLThbCVlw5
- uwug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726709743; x=1727314543;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=B+KAxMpxoyRSjFMZowl3Lnxq8wuVXNRVxinGAz4ryuI=;
- b=MaUzH40++tSmRAM0MfWCX64Q/YSidojlkZQv+xWoczFislUur6k9IAORiO97ltSrOc
- HJjtqOaWyvXZcoZ/Vk1q+A4RY7b6EjzmI05g89vwBCzZb+PVkhXK23hYPRolb2nKJhV7
- uUiAlG0+F0d58LugcURKHKu9yRWQEkhJBSmFj5Q52sTRxXQ9QnrjlULV3wNYkpwT5gLG
- 1Sfa9IhnoibE7C9B/Xyl8uuCse/RYR1EO9MG8XrTKJzt4iGM30AraBYMIBSU/KILFivk
- aTTY+cd2JjzzbdPOLFqjuRh5y+45tB2tUE0BMQSUCpCzl2+RAvbvzVUltmridUjG4uyf
- Ltgw==
-X-Gm-Message-State: AOJu0Yw6jnbBrT/qTlKgYmam9mJtRlZrOa5UCbyGmsPkFKfpIc93CHh+
- WVDG9LY8Ly/s8JdBGKRFenxvBJzQTglp+ROdQVnDta/NRQuDut6eUT0uebmufHVw1rCwEfVzXxz
- evtlK7J6WTGSvvKTOLmZ+sEgd1rI=
-X-Google-Smtp-Source: AGHT+IH5yWV2MTB8GD8ZBPOObocuxasEfpd0rtreicJN6RTpSYFBYudUl1giVLvL8zdlJ72EkJJA4I6ks7sihkMucqk=
-X-Received: by 2002:a05:690c:7091:b0:6db:3b2f:a18a with SMTP id
- 00721157ae682-6dbcc2610b5mr199461987b3.11.1726709742955; Wed, 18 Sep 2024
- 18:35:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sr69D-0005XQ-58; Wed, 18 Sep 2024 21:39:55 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sr69B-0004rv-HH; Wed, 18 Sep 2024 21:39:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1726709994; x=1758245994;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=boVKc/SUSgKzZVCNXF6Ki7YN9fmGZ9ZYevKMMyl1qEI=;
+ b=VR0iIhFKWVq1dePxu5em0PIfawiQ09WLyy4QYoTHikd4i5peoxif2Eeg
+ sJwhj2OkSQkbPu4HB2IoyfWLn9YixogBV1OT0vJoQXjom8I4Pxl67u0oL
+ shHsgSnyqA/ZsPinsq37MKvW2esiCgerkqqgZPwQDFUySWWKvmj5woqtT
+ UXSC50E2YZYuvNq/LZ9ODozC6o9JBTK8gEp853yuhsT8oJkiPPF/y+xMm
+ D7tLAqATmDrzU/jahZLSs+O2RpXgONab2NBFMZCFiFemVlr16ihjV6hKn
+ lQXy8aN2TGkNLEbyQlxz6F0JLSlTB/JtoGILJN+eiZ9jwcFvPB462k4hH w==;
+X-CSE-ConnectionGUID: Z1ENhFAsSd2ZU8DFqSpHKw==
+X-CSE-MsgGUID: FHX5Y8AoR1OhZKPGLbr0Ug==
+X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25797804"
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25797804"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Sep 2024 18:39:51 -0700
+X-CSE-ConnectionGUID: j2QDLduuRda1guYfMEBzhA==
+X-CSE-MsgGUID: g9MJhIXaQNWqXtJKo1PT6w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="70058475"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
+ by orviesa006.jf.intel.com with ESMTP; 18 Sep 2024 18:39:45 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-ppc@nongnu.org,
+ qemu-arm@nongnu.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [RFC v2 01/15] qdev: Add pointer to BusChild in DeviceState
+Date: Thu, 19 Sep 2024 09:55:19 +0800
+Message-Id: <20240919015533.766754-2-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240919015533.766754-1-zhao1.liu@intel.com>
+References: <20240919015533.766754-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
-References: <20240913080800.40816-1-yaozhenguo@jd.com>
-In-Reply-To: <20240913080800.40816-1-yaozhenguo@jd.com>
-From: Zhenguo Yao <yaozhenguo1@gmail.com>
-Date: Thu, 19 Sep 2024 09:35:31 +0800
-Message-ID: <CA+WzARnvD-S8pMb7Uma6Sw=20RfcTuGDj+gZo_cxqkqgXvypJg@mail.gmail.com>
-Subject: Re: [PATCH V1] virtio/vhost-user: fix qemu abort when hotunplug
- vhost-user-net device
-To: alex.bennee@linaro.org, mst@redhat.com, sgarzare@redhat.com
-Cc: qemu-devel@nongnu.org, yaozhenguo@jd.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=yaozhenguo1@gmail.com; helo=mail-yw1-x1134.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,197 +99,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-yaozhenguo <yaozhenguo1@gmail.com> =E4=BA=8E2024=E5=B9=B49=E6=9C=8813=E6=97=
-=A5=E5=91=A8=E4=BA=94 16:08=E5=86=99=E9=81=93=EF=BC=9A
->
-> During the process of hot-unplug in vhost-user-net NIC, vhost_user_cleanu=
-p
-> may add same rcu node to rcu list. Function calls are as follows:
->
-> vhost_user_cleanup
->     ->vhost_user_host_notifier_remove
->         ->call_rcu(n, vhost_user_host_notifier_free, rcu);
->     ->g_free_rcu(n, rcu);
->
-> When this happens, QEMU will abort in try_dequeue:
->
-> if (head =3D=3D &dummy && qatomic_mb_read(&tail) =3D=3D &dummy.next) {
->     abort();
-> }
->
-> Backtrace is as follows:
-> 0  __pthread_kill_implementation () at /usr/lib64/libc.so.6
-> 1  raise () at /usr/lib64/libc.so.6
-> 2  abort () at /usr/lib64/libc.so.6
-> 3  try_dequeue () at ../util/rcu.c:235
-> 4  call_rcu_thread (0) at ../util/rcu.c:288
-> 5  qemu_thread_start (0) at ../util/qemu-thread-posix.c:541
-> 6  start_thread () at /usr/lib64/libc.so.6
-> 7  clone3 () at /usr/lib64/libc.so.6
->
-> Reason for the abort is that adding two identical nodes to the rcu list w=
-ill
-> cause it becomes a ring. After dummy node is added to the tail of the lis=
-t in
-> try_dequeue, the ring is opened. But lead to a situation that only one no=
-de is
-> added to list and rcu_call_count is added twice. This will cause try_dequ=
-eue
-> abort.
->
-> This issue happens when n->addr !=3D 0 in vhost_user_host_notifier_remove=
-. It can
-> happens in a hotplug stress test with a 32queue vhost-user-net type NIC.
-> Because n->addr is set in VHOST_USER_BACKEND_VRING_HOST_NOTIFIER_MSG func=
-tion.
-> during device hotplug process and it is cleared in vhost_dev_stop during =
-device
-> hot-unplug. Since VHOST_USER_BACKEND_VRING_HOST_NOTIFIER_MSG is a message=
- sent
-> by DPDK to qemu, it is asynchronous. So, there is no guaranteed order bet=
-ween
-> the two processes of setting n->addr and clearing n->addr. If setting n->=
-addr
-> in hotplug occurs after clearing n->addr in hotunplug, the issue will occ=
-ur.
-> So, it is necessary to merge g_free_rcu and vhost_user_host_notifier_free=
- into
-> one rcu node.
->
-> Fixes: 503e355465 ("virtio/vhost-user: dynamically assign VhostUserHostNo=
-tifiers")
->
-> Signed-off-by: yaozhenguo <yaozhenguo@jd.com>
-> ---
->  hw/virtio/vhost-user.c         | 34 ++++++++++++++++++----------------
->  include/hw/virtio/vhost-user.h |  1 +
->  2 files changed, 19 insertions(+), 16 deletions(-)
->
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index 00561da..b2da3cf 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -1185,9 +1185,16 @@ static int vhost_user_set_vring_num(struct vhost_d=
-ev *dev,
->
->  static void vhost_user_host_notifier_free(VhostUserHostNotifier *n)
->  {
-> -    assert(n && n->unmap_addr);
-> -    munmap(n->unmap_addr, qemu_real_host_page_size());
-> -    n->unmap_addr =3D NULL;
-> +    if (n->unmap_addr) {
-> +        munmap(n->unmap_addr, qemu_real_host_page_size());
-> +        n->unmap_addr =3D NULL;
-> +    }
-> +    if (n->need_free) {
-> +        memory_region_transaction_begin();
-> +        object_unparent(OBJECT(&n->mr));
-> +        memory_region_transaction_commit();
-> +        g_free(n);
-> +    }
->  }
->
->  /*
-> @@ -1195,17 +1202,20 @@ static void vhost_user_host_notifier_free(VhostUs=
-erHostNotifier *n)
->   * under rcu.
->   */
->  static void vhost_user_host_notifier_remove(VhostUserHostNotifier *n,
-> -                                            VirtIODevice *vdev)
-> +                                            VirtIODevice *vdev, bool fre=
-e)
->  {
->      if (n->addr) {
->          if (vdev) {
-> +            memory_region_transaction_begin();
->              virtio_queue_set_host_notifier_mr(vdev, n->idx, &n->mr, fals=
-e);
-> +            memory_region_transaction_commit();
->          }
->          assert(!n->unmap_addr);
->          n->unmap_addr =3D n->addr;
->          n->addr =3D NULL;
-> -        call_rcu(n, vhost_user_host_notifier_free, rcu);
->      }
-> +    n->need_free =3D free;
-> +    call_rcu(n, vhost_user_host_notifier_free, rcu);
->  }
+The device topology structures based on buses are unidirectional: the
+parent device can access the child device through the BusChild within
+the bus, but not vice versa.
 
-This brings up another problem. When the device is initialized,
-problems may occur when the execution times of
-vhost_user_get_vring_base and
-vhost_user_backend_handle_vring_host_notifier are relatively close,
-and the same node is submitted to the rcu list. This happened during
-our regression testing. Therefore, modifications must be made to avoid
-this problem.
+For the CPU topology tree constructed on the device-bus, it is necessary
+for the child device to be able to access the parent device via the
+parent bus. To address this, introduce a pointer to the BusChild, named
+bus_node.
 
-vhost_user_get_vring_base
-    vhost_user_host_notifier_remove(n, dev->vdev, false);
-vhost_user_backend_handle_vring_host_notifier
-    vhost_user_host_notifier_remove(n, dev->vdev, false);
->
->  static int vhost_user_set_vring_base(struct vhost_dev *dev,
-> @@ -1280,7 +1290,7 @@ static int vhost_user_get_vring_base(struct vhost_d=
-ev *dev,
->
->      VhostUserHostNotifier *n =3D fetch_notifier(u->user, ring->index);
->      if (n) {
-> -        vhost_user_host_notifier_remove(n, dev->vdev);
-> +        vhost_user_host_notifier_remove(n, dev->vdev, false);
->      }
->
->      ret =3D vhost_user_write(dev, &msg, NULL, 0);
-> @@ -1562,7 +1572,7 @@ static int vhost_user_backend_handle_vring_host_not=
-ifier(struct vhost_dev *dev,
->       * new mapped address.
->       */
->      n =3D fetch_or_create_notifier(user, queue_idx);
-> -    vhost_user_host_notifier_remove(n, vdev);
-> +    vhost_user_host_notifier_remove(n, vdev, false);
->
->      if (area->u64 & VHOST_USER_VRING_NOFD_MASK) {
->          return 0;
-> @@ -2737,13 +2747,7 @@ static void vhost_user_state_destroy(gpointer data=
-)
->  {
->      VhostUserHostNotifier *n =3D (VhostUserHostNotifier *) data;
->      if (n) {
-> -        vhost_user_host_notifier_remove(n, NULL);
-> -        object_unparent(OBJECT(&n->mr));
-> -        /*
-> -         * We can't free until vhost_user_host_notifier_remove has
-> -         * done it's thing so schedule the free with RCU.
-> -         */
-> -        g_free_rcu(n, rcu);
-> +        vhost_user_host_notifier_remove(n, NULL, true);
->      }
->  }
->
-> @@ -2765,9 +2769,7 @@ void vhost_user_cleanup(VhostUserState *user)
->      if (!user->chr) {
->          return;
->      }
-> -    memory_region_transaction_begin();
->      user->notifiers =3D (GPtrArray *) g_ptr_array_free(user->notifiers, =
-true);
-> -    memory_region_transaction_commit();
->      user->chr =3D NULL;
->  }
->
-> diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-use=
-r.h
-> index 324cd86..a171f29 100644
-> --- a/include/hw/virtio/vhost-user.h
-> +++ b/include/hw/virtio/vhost-user.h
-> @@ -54,6 +54,7 @@ typedef struct VhostUserHostNotifier {
->      void *addr;
->      void *unmap_addr;
->      int idx;
-> +    bool need_free;
->  } VhostUserHostNotifier;
->
->  /**
-> --
-> 1.8.3.1
->
+This pointer also simplifies the logic of bus_remove_child(). Instead of
+the parent bus needing to traverse the children list to locate the
+corresponding BusChild, it can now directly find it using the bus_node
+pointer.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ hw/core/qdev.c          | 29 ++++++++++++++---------------
+ include/hw/qdev-core.h  |  4 ++++
+ include/qemu/typedefs.h |  1 +
+ 3 files changed, 19 insertions(+), 15 deletions(-)
+
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index db36f54d914a..4429856eaddd 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -57,25 +57,23 @@ static void bus_free_bus_child(BusChild *kid)
+ 
+ static void bus_remove_child(BusState *bus, DeviceState *child)
+ {
+-    BusChild *kid;
+-
+-    QTAILQ_FOREACH(kid, &bus->children, sibling) {
+-        if (kid->child == child) {
+-            char name[32];
++    BusChild *kid = child->bus_node;
++    char name[32];
+ 
+-            snprintf(name, sizeof(name), "child[%d]", kid->index);
+-            QTAILQ_REMOVE_RCU(&bus->children, kid, sibling);
++    if (!kid) {
++        return;
++    }
+ 
+-            bus->num_children--;
++    snprintf(name, sizeof(name), "child[%d]", kid->index);
++    QTAILQ_REMOVE_RCU(&bus->children, kid, sibling);
++    child->bus_node = NULL;
++    bus->num_children--;
+ 
+-            /* This gives back ownership of kid->child back to us.  */
+-            object_property_del(OBJECT(bus), name);
++    /* This gives back ownership of kid->child back to us.  */
++    object_property_del(OBJECT(bus), name);
+ 
+-            /* free the bus kid, when it is safe to do so*/
+-            call_rcu(kid, bus_free_bus_child, rcu);
+-            break;
+-        }
+-    }
++    /* free the bus kid, when it is safe to do so*/
++    call_rcu(kid, bus_free_bus_child, rcu);
+ }
+ 
+ static void bus_add_child(BusState *bus, DeviceState *child)
+@@ -86,6 +84,7 @@ static void bus_add_child(BusState *bus, DeviceState *child)
+     bus->num_children++;
+     kid->index = bus->max_index++;
+     kid->child = child;
++    child->bus_node = kid;
+     object_ref(OBJECT(kid->child));
+ 
+     QTAILQ_INSERT_HEAD_RCU(&bus->children, kid, sibling);
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index aa97c34a4be7..85c7d462dfba 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -253,6 +253,10 @@ struct DeviceState {
+      * @parent_bus: bus this device belongs to
+      */
+     BusState *parent_bus;
++    /**
++     * @bus_node: bus node inserted in parent bus
++     */
++    BusChild *bus_node;
+     /**
+      * @gpios: QLIST of named GPIOs the device provides.
+      */
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index 9d222dc37628..aef41c4e67ce 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -32,6 +32,7 @@ typedef struct BdrvDirtyBitmapIter BdrvDirtyBitmapIter;
+ typedef struct BlockBackend BlockBackend;
+ typedef struct BlockBackendRootState BlockBackendRootState;
+ typedef struct BlockDriverState BlockDriverState;
++typedef struct BusChild BusChild;
+ typedef struct BusClass BusClass;
+ typedef struct BusState BusState;
+ typedef struct Chardev Chardev;
+-- 
+2.34.1
+
 
