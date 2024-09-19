@@ -4,43 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2108FCF3963
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 19:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DABCACF3963
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 19:50:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srNAN-0000q7-Dn; Thu, 19 Sep 2024 15:50:15 -0400
+	id 1srNAO-0000wj-0P; Thu, 19 Sep 2024 15:50:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1srNAK-0000gl-6P
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 15:50:12 -0400
+ id 1srNAM-0000sQ-VV
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 15:50:14 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1srNAI-0007N8-K6
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 15:50:11 -0400
+ id 1srNAL-0007NX-38
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 15:50:14 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1srNAA-0000d5-Ox; Thu, 19 Sep 2024 21:50:02 +0200
-Message-ID: <e9037c2b-3994-405b-baf1-de8a862880e0@maciej.szmigiero.name>
-Date: Thu, 19 Sep 2024 21:49:57 +0200
+ id 1srNAE-0000d5-9z; Thu, 19 Sep 2024 21:50:06 +0200
+Message-ID: <643554c7-41d1-4a1b-bfde-39f2ad17db58@maciej.szmigiero.name>
+Date: Thu, 19 Sep 2024 21:50:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 12/17] migration/multifd: Device state transfer support
  - send side
 To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
  <fdcfd68dfcf3b20278a4495eb639905b2a8e8ff3.1724701542.git.maciej.szmigiero@oracle.com>
- <ZuBumSH-nZDzpCcQ@x1n>
+ <87h6b4nosy.fsf@suse.de>
+ <bbdac26f-4a38-4cee-a9aa-cfae61b16dea@maciej.szmigiero.name>
+ <87bk1anoy7.fsf@suse.de> <Zt9PMrRXZN_qkSQ6@x1n>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -84,7 +86,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <ZuBumSH-nZDzpCcQ@x1n>
+In-Reply-To: <Zt9PMrRXZN_qkSQ6@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=37.28.154.113;
@@ -110,28 +112,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.09.2024 18:06, Peter Xu wrote:
-> On Tue, Aug 27, 2024 at 07:54:31PM +0200, Maciej S. Szmigiero wrote:
->> +bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
->> +                                char *data, size_t len)
->> +{
->> +    /* Device state submissions can come from multiple threads */
->> +    QEMU_LOCK_GUARD(&queue_job_mutex);
+On 9.09.2024 21:40, Peter Xu wrote:
+> On Fri, Aug 30, 2024 at 10:02:40AM -0300, Fabiano Rosas wrote:
+>>>>> @@ -397,20 +404,16 @@ bool multifd_send(MultiFDSendData **send_data)
+>>>>>    
+>>>>>            p = &multifd_send_state->params[i];
+>>>>>            /*
+>>>>> -         * Lockless read to p->pending_job is safe, because only multifd
+>>>>> -         * sender thread can clear it.
+>>>>> +         * Lockless RMW on p->pending_job_preparing is safe, because only multifd
+>>>>> +         * sender thread can clear it after it had seen p->pending_job being set.
+>>>>> +         *
+>>>>> +         * Pairs with qatomic_store_release() in multifd_send_thread().
+>>>>>             */
+>>>>> -        if (qatomic_read(&p->pending_job) == false) {
+>>>>> +        if (qatomic_cmpxchg(&p->pending_job_preparing, false, true) == false) {
+>>>>
+>>>> What's the motivation for this change? It would be better to have it in
+>>>> a separate patch with a proper justification.
+>>>
+>>> The original RFC patch set used dedicated device state multifd channels.
+>>>
+>>> Peter and other people wanted this functionality removed, however this caused
+>>> a performance (downtime) regression.
+>>>
+>>> One of the things that seemed to help mitigate this regression was making
+>>> the multifd channel selection more fair via this change.
+>>>
+>>> But I can split out it to a separate commit in the next patch set version and
+>>> then see what performance improvement it currently brings.
+>>
+>> Yes, better to have it separate if anything for documentation of the
+>> rationale.
 > 
-> Ah, just notice there's the mutex.
+> And when drafting that patch, please add a comment explaining the field.
+> Currently it's missing:
 > 
-> So please consider the reply in the other thread, IIUC we can make it for
-> multifd_send() to be a generic mutex to simplify the other patch too, then
-> drop here.
-> 
-> I assume the ram code should be fine taking one more mutex even without
-> vfio, if it only takes once for each ~128 pages to enqueue, and only take
-> in the main thread, then each update should be also in the hot path
-> (e.g. no cache bouncing).
+>      /*
+>       * The sender thread has work to do if either of below boolean is set.
+>       *
+>       * @pending_job:  a job is pending
+>       * @pending_sync: a sync request is pending
+>       *
+>       * For both of these fields, they're only set by the requesters, and
+>       * cleared by the multifd sender threads.
+>       */
+>      bool pending_job;
+>      bool pending_job_preparing;
+>      bool pending_sync;
 > 
 
-Will check whether it is possible to use a common mutex here for both RAM
-and device state submission without drop in performance.
+Will do if these variables end staying in the patch (instead of being
+replaced by the common send mutex, for example).
 
 Thanks,
 Maciej
