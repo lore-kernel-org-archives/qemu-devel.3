@@ -4,84 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBC5ACE8D49
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 06:00:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A796CE8D52
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 07:07:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srAA6-0003W3-Bm; Thu, 19 Sep 2024 01:57:08 -0400
+	id 1srBFF-0006Tu-0R; Thu, 19 Sep 2024 03:06:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1srA9q-0002pw-M6; Thu, 19 Sep 2024 01:56:50 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1srBFD-0006R0-EC
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 03:06:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1srA9o-0007Qp-Ij; Thu, 19 Sep 2024 01:56:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1726725409; x=1758261409;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=cQ08ivvbyToxE/NhN3+dCAQERQMlDYEq9vSrgiTrea4=;
- b=SwTwys4lQdupoEm7YRdBLe6RnhtPjAoysi8gt1QBkmwXZ5D//FRnup/8
- GOVs6UQm8yMcRQlYuZfKFQU4evY/AOsB0tx/fB0KnkHDAIHpxly2pv9ST
- 9sSjhGy32LGAIT8/lOVYovtPRc6dUIaKQ6pb25WfSR8Q7/n3e6QQ0YG8w
- MoWqh7ikvV+ARBasRc3tHmzKvv1P+Ihuy3llydZn97ix/xDpHJtNYqZqT
- aN/+5G+F0Ql59upV8b1JVNDXE9vvppLpg6Cl4s+i9wo/Pf9lp0+h3gqiz
- +AYZ340cubu5uLgyXa3jv6eVmmWTCXrht8dQOJVBF55TStN+K9OaZry83 g==;
-X-CSE-ConnectionGUID: LIgm+4apTEy/qJYAFUTzxg==
-X-CSE-MsgGUID: xcgCJtXaQ0CbgrWQql+EbA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25813797"
-X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25813797"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Sep 2024 22:56:47 -0700
-X-CSE-ConnectionGUID: rMNYl1sATnOo2bqgjGFlQw==
-X-CSE-MsgGUID: V3LeJGc2RIC+vnG1nDqGFA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="69418845"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa006.fm.intel.com with ESMTP; 18 Sep 2024 22:56:41 -0700
-From: Zhao Liu <zhao1.liu@intel.com>
-To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Sergio Lopez <slp@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC v2 12/12] i386: Support custom topology for microvm,
- pc-i440fx and pc-q35
-Date: Thu, 19 Sep 2024 14:11:28 +0800
-Message-Id: <20240919061128.769139-13-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240919061128.769139-1-zhao1.liu@intel.com>
-References: <20240919061128.769139-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1srBFB-000713-Cs
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 03:06:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1726729584;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qxbNmeE3LusfWiF21hWN8Ui5QNyTLC27qmunUfq4r/0=;
+ b=NZ+nzu1jTp+vLND2V5rX6wsfGIqmejnhu3wmzNDZIRqlJiAVesv/ONPOvNGLiP9Gqm9wjF
+ NYQJN8wHCVnZvZYR4ETYbnNdwNJOTXIX0Iy0VDL3U9oIv9g7P2K2Y/pNXQKmnM1pU8eiE1
+ hP2galSWg0QwiRFjuTT8UUuzopFvGDA=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-452-3OPRGPZWNPOm-vNk4WAw6w-1; Thu, 19 Sep 2024 03:06:22 -0400
+X-MC-Unique: 3OPRGPZWNPOm-vNk4WAw6w-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-42cb830ea86so2994595e9.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 00:06:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726729581; x=1727334381;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qxbNmeE3LusfWiF21hWN8Ui5QNyTLC27qmunUfq4r/0=;
+ b=OkDhuC44pU1kaKgJnHX90/JEAiSnLD7H9nFQBV5sR4dy4MqeSmV1blueOBVhOPV+1K
+ 5fC4AWKxzDHHO2u9Bnynmh+/CaB7nLbvx3ku4FwfhbRNau7y5XGrSa8w3RG1ioV71hcU
+ spfMvFnIN3hnYMFWZTFEOShVOVZTmeoeG0AjkB2L4ynKU/1IUQhjnUAueXxMmPMxEa2E
+ KhHRKBqreX8tx+6xyuqI1sV9jYMTMgjh5R1fYILXR9cMdKzLbVI9NYjrh04jy+WwPZ48
+ 9TaRrQuqogBWAcOOhntSeaJeFud9wpqTLTF/B5Tr8KN1F9+lvI5Gix5e4y5Gp1kSzujY
+ yqpw==
+X-Gm-Message-State: AOJu0Yynmc5Dg9X9OlPxnG3TRph0TBBFbSNH5to5VlgxM0BTLBIXdbdQ
+ +9z79/gEGg44dFpW14sNEZwf6r0Bq8Xq4KVFmwNkamxYNJPA/Xjz3hJmHFmP7bYqp8Vb07FIrSQ
+ gMKgQEOu7n7ZTZHkVbmroew9ZrANL66B6Ay88PnwTPU1CGWhkByKV
+X-Received: by 2002:adf:a45d:0:b0:374:c847:848 with SMTP id
+ ffacd0b85a97d-378c2d5a70dmr12027882f8f.36.1726729581346; 
+ Thu, 19 Sep 2024 00:06:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF5RL3uMfBR8XLRh035DgdZQsypR0OykDYweXpRD8gyTZzlCHNC9WQ/o1VaFxqi09Id3WeT9Q==
+X-Received: by 2002:adf:a45d:0:b0:374:c847:848 with SMTP id
+ ffacd0b85a97d-378c2d5a70dmr12027859f8f.36.1726729580896; 
+ Thu, 19 Sep 2024 00:06:20 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-378e73e81a5sm14367890f8f.34.2024.09.19.00.06.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Sep 2024 00:06:20 -0700 (PDT)
+Date: Thu, 19 Sep 2024 09:06:18 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Chuang Xu <xuchuangxclwt@bytedance.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, xieyongji@bytedance.com,
+ chaiwen.cc@bytedance.com, zhao1.liu@intel.com, qemu-stable@nongnu.org,
+ Guixiong Wei <weiguixiong@bytedance.com>, Yipeng Yin
+ <yinyipeng@bytedance.com>
+Subject: Re: [PATCH v3] i386/cpu: fixup number of addressable IDs for
+ logical processors in the physical package
+Message-ID: <20240919090618.463a03e4@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240918131815.8543-1-xuchuangxclwt@bytedance.com>
+References: <20240918131815.8543-1-xuchuangxclwt@bytedance.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,88 +106,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With custom topology enabling, user could configure hyrid CPU topology
-from CLI.
+On Wed, 18 Sep 2024 21:18:15 +0800
+Chuang Xu <xuchuangxclwt@bytedance.com> wrote:
 
-For example, create a Intel Core (P core) with 2 threads and 2 Intel
-Atom (E core) with single thread for PC machine:
+> When QEMU is started with:
+> -cpu host,migratable=on,host-cache-info=on,l3-cache=off
+> -smp 180,sockets=2,dies=1,cores=45,threads=2
+> 
+> Try to execute "cpuid -1 -l 1 -r" in guest, we'll obtain a value of 90 for
+> CPUID.01H.EBX[23:16], while the expected value is 128. And Try to
+> execute "cpuid -1 -l 4 -r" in guest, we'll obtain a value of 63 for
+> CPUID.04H.EAX[31:26] as expected.
+> 
+> As (1+CPUID.04H.EAX[31:26]) round up to the nearest power-of-2 integer,
+> we'd beter round up CPUID.01H.EBX[23:16] to the nearest power-of-2
+> integer too. Otherwise we may encounter unexpected results in guest.
+> 
+> For example, when QEMU is started with CLI above and xtopology is disabled,
+> guest kernel 5.15.120 uses CPUID.01H.EBX[23:16]/(1+CPUID.04H.EAX[31:26]) to
+> calculate threads-per-core in detect_ht(). Then guest will get "90/(1+63)=1"
+> as the result, even though theads-per-core should actually be 2.
+> 
+> So let us round up CPUID.01H.EBX[23:16] to the nearest power-of-2 integer
+> to solve the unexpected result.
+> 
+> Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+> Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
+> Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
 
--smp maxsockets=1,maxdies=1,maxmodules=2,maxcores=2,maxthreads=2
--machine pc,custom-topo=on \
--device cpu-socket,id=sock0 \
--device cpu-die,id=die0,bus=sock0 \
--device cpu-module,id=mod0,bus=die0 \
--device cpu-module,id=mod1,bus=die0 \
--device x86-intel-core,id=core0,bus=mod0 \
--device x86-intel-atom,id=core1,bus=mod1 \
--device x86-intel-atom,id=core2,bus=mod1 \
--device host-x86_64-cpu,id=cpu0,socket-id=0,die-id=0,module-id=0,core-id=0,thread-id=0 \
--device host-x86_64-cpu,id=cpu1,socket-id=0,die-id=0,module-id=0,core-id=0,thread-id=1 \
--device host-x86_64-cpu,id=cpu2,socket-id=0,die-id=0,module-id=1,core-id=0,thread-id=0 \
--device host-x86_64-cpu,id=cpu3,socket-id=0,die-id=0,module-id=1,core-id=1,thread-id=0
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- hw/i386/microvm.c    | 1 +
- hw/i386/pc_piix.c    | 1 +
- hw/i386/pc_q35.c     | 1 +
- hw/i386/x86-common.c | 6 ++++++
- 4 files changed, 9 insertions(+)
-
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index dc9b21a34230..bd03b6946e6c 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -671,6 +671,7 @@ static void microvm_class_init(ObjectClass *oc, void *data)
-     mc->reset = microvm_machine_reset;
- 
-     mc->post_init = microvm_machine_state_post_init;
-+    mc->smp_props.custom_topo_supported = true;
- 
-     /* hotplug (for cpu coldplug) */
-     mc->get_hotplug_handler = microvm_get_hotplug_handler;
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index c1db2f3129cf..9c696a226858 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -473,6 +473,7 @@ static void pc_i440fx_machine_options(MachineClass *m)
-     m->no_floppy = !module_object_class_by_name(TYPE_ISA_FDC);
-     m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
-     m->post_init = pc_post_init1;
-+    m->smp_props.custom_topo_supported = true;
-     machine_class_allow_dynamic_sysbus_dev(m, TYPE_RAMFB_DEVICE);
-     machine_class_allow_dynamic_sysbus_dev(m, TYPE_VMBUS_BRIDGE);
- 
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 9ce3e65d7182..9241366ff351 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -356,6 +356,7 @@ static void pc_q35_machine_options(MachineClass *m)
-     m->max_cpus = 4096;
-     m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
-     m->post_init = pc_q35_post_init;
-+    m->smp_props.custom_topo_supported = true;
-     machine_class_allow_dynamic_sysbus_dev(m, TYPE_AMD_IOMMU_DEVICE);
-     machine_class_allow_dynamic_sysbus_dev(m, TYPE_INTEL_IOMMU_DEVICE);
-     machine_class_allow_dynamic_sysbus_dev(m, TYPE_RAMFB_DEVICE);
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index 58591e015569..2995eed5d670 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -195,6 +195,12 @@ void x86_cpus_init(X86MachineState *x86ms, int default_cpu_version)
-     }
- 
-     possible_cpus = mc->possible_cpu_arch_ids(ms);
-+
-+    /* Leave user to add CPUs. */
-+    if (ms->topo->custom_topo_enabled) {
-+        return;
-+    }
-+
-     for (i = 0; i < ms->smp.cpus; i++) {
-         x86_cpu_new(x86ms, i, possible_cpus->cpus[i].arch_id, &error_fatal);
-     }
--- 
-2.34.1
+> ---
+>  target/i386/cpu.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 4c2e6f3a71..3710ae5283 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -6417,7 +6417,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>          }
+>          *edx = env->features[FEAT_1_EDX];
+>          if (threads_per_pkg > 1) {
+> -            *ebx |= threads_per_pkg << 16;
+> +            *ebx |= pow2ceil(threads_per_pkg) << 16;
+>              *edx |= CPUID_HT;
+>          }
+>          if (!cpu->enable_pmu) {
 
 
