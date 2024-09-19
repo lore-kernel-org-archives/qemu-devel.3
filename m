@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54B45CDD573
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E29B0CDD57A
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:13:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srGwu-0006oq-8R; Thu, 19 Sep 2024 09:11:56 -0400
+	id 1srGwL-0004l2-Al; Thu, 19 Sep 2024 09:11:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srGwV-0005N0-6R
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:32 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1srGwF-0004Ty-In
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:16 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srGwQ-000141-Mm
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:29 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-42cbe624c59so7157915e9.3
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 06:11:26 -0700 (PDT)
+ id 1srGwA-0000zr-MP
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:14 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-42e5e1e6d37so7615495e9.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 06:11:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726751484; x=1727356284; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726751469; x=1727356269; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=wY+6Wzf1rUpv4L8A+yggR6ArSeO7x3xvS/bCz9HnCdY=;
- b=Y46xasJaVYU+QtyI101rBqg/xiKZWcLz9ZKuYSzFfoghyM5mIVGHLUJhk6jYaZmBYA
- +dv9vjwO8sm1pAkLDhQ/lW6VrBigDdPy1awBQA2Sf176/NYfaiLryMuQpyallcH99sWa
- 5xDGcb6NZ1MsxlUiUYrjwpivThzqxlWGSx2qFUDF7v8U92uZXHReKslk/Q0FlY+kk+8j
- K19ogT2dsWR8zD5d/E1i77qTUNh9EsxrAH487G33ypwS7TJhAQORDFU21QriPSkH+XF3
- n98h1F76G3m0lhG58yr45k1Jfw+HqWVm8XvQrVAPj3+BBQTSm5XwrlV5WHnnsFBK+k2q
- 0MHw==
+ :reply-to; bh=ssn9H7VrIbql77q/bvO9LinYCZ18sNmlwvuHxervBLY=;
+ b=opY0+KIB26u5hTyyE+UysA6HFJb/lM9s5eCD+pQAhQg67DKERu+c96QLcVcED6wH4P
+ VBXprEnxFQQVElNRyeMufacLcolbiUuFE0q0xzmf83U9LITh89sHGz2obbEg8QjaT8z0
+ 4voUr6krnDMJ2SUQB+Z6dK6XywtbEqRE+Z9JQ3v7MKUdtuP4yTiHWunXk0EgIjR1zc7b
+ mRDVu8qyrxqZtAg0BX1Ut5APM2dULxTEgtealAhMJismni5fftzN2FH1YL2NRVOFxIrD
+ kxw6Fb6v+mMf0d9FJaMborZ4WHDedsz1cQ0HRvgneF8Ip9sFbVJPXnjoUgWzZTJOz7Bk
+ O3Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726751484; x=1727356284;
+ d=1e100.net; s=20230601; t=1726751469; x=1727356269;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wY+6Wzf1rUpv4L8A+yggR6ArSeO7x3xvS/bCz9HnCdY=;
- b=X58B9M8h6ma2N6A1NlGvbkA542KKh0GETeuxQ7qvxh8RcR7ikIqLs+qO95/g1XlZ4z
- NKQOogGh3yjwe3+rmWlyCzoPIbWAhx9y1u02ACRt8p7FlrHRQ56qfpQm6tlPtCrbgPOX
- I7o/fxW7rcshFcFRy8yymqFUZYp4CfmA5SbXNXgh9kpfClDm8HJJpcrM5qO8rRFeni40
- CRt9E6VKmWOSuifK4XVnH6xPLgI2uCucOXH+pMHcTaoVCFAlEEl5ZyaUXIwrUQMw2nS9
- azClHe/Hc1pbkxkT8gWhuOkt2E5XA3PY5EzA3SDW5O5p8eaaKd8NLiyNOYBzJxczdRKp
- 1nng==
-X-Gm-Message-State: AOJu0Yx4ucndfPxniLNDRzIJXPhP61P+BtZ6PcyVZ/HKmDIR2/1AkCsD
- Nx8Qd/TC3fM6oSQKB0X7hQvtwRhmQQ5GyYlfCPJxUaQxKrFkgxrMod6oLK/wkWi6GxnjPWVBF57
- Q
-X-Google-Smtp-Source: AGHT+IF3PMqNikB1Ck96oDojZrnrZiI33i8JHo+dUm4Wbe5Kmox/da6lfD+4NSU+ZDawKEVpvW8eAA==
-X-Received: by 2002:a05:600c:4746:b0:426:51ce:bb14 with SMTP id
- 5b1f17b1804b1-42d964f3612mr153557325e9.30.1726751483801; 
- Thu, 19 Sep 2024 06:11:23 -0700 (PDT)
+ bh=ssn9H7VrIbql77q/bvO9LinYCZ18sNmlwvuHxervBLY=;
+ b=bV142Yrnr+JjeYVtg/vfBpjxJ4Eri3y+M2MsLVSJxszemt20VvNm6bYCT9szxFiQXR
+ +ggMj7PwLgTwIVVxsgz0bESaGYY0eftkBuXDcFTYOM2MwLgqYOk14MZCj32xnRJuT3a0
+ ol8yDr8mlpoluoJIoT3XY7lIL5wzaMrWXGbnwVEnDYle/Y3D1948/PrZlkgEWTZ+SMbX
+ SUsDU27Qlzvh4cTb3mJm8S652jns+9Y80IYacy/XFbdLbw6pIVOrBBOb20EU5zrHvGoe
+ a1XZtPgngyaQmlq0rjadAbbYUgM5F/7sH+AF6J7ZmVV/796e3WGnr9J6bcTRfz3FMHdg
+ 5lFA==
+X-Gm-Message-State: AOJu0YyPWR0mWWZUpnGJjyDoph4aTQq38VJlLEGBtO8n1s8ibYAswztz
+ nsXHhNcxJQs3ciRoz5Y4+N4p0R14RYTw+C7nyW8QcaAYiu2Mx/AcJ4GVxREiyNfZlwJcqashkPL
+ u
+X-Google-Smtp-Source: AGHT+IExGLpvYK/TKAgu1jcRILpzv0nNEkrFIgVvpTwziH07SJKTyoLIFqkRAyVmt9CrKMcdrd7tag==
+X-Received: by 2002:a05:600c:4f81:b0:42c:b7f9:4bbd with SMTP id
+ 5b1f17b1804b1-42cdb586ccfmr193756785e9.26.1726751468933; 
+ Thu, 19 Sep 2024 06:11:08 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42e754091d3sm21667845e9.10.2024.09.19.06.11.23
+ 5b1f17b1804b1-42e754091d3sm21667845e9.10.2024.09.19.06.11.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Sep 2024 06:11:23 -0700 (PDT)
+ Thu, 19 Sep 2024 06:11:08 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 27/38] target/arm: Convert SQSHL, UQSHL,
- SQSHLU (immediate) to decodetree
-Date: Thu, 19 Sep 2024 14:10:55 +0100
-Message-Id: <20240919131106.3362543-28-peter.maydell@linaro.org>
+Subject: [PULL 02/38] target/arm: Replace tcg_gen_dupi_vec with constants in
+ translate-sve.c
+Date: Thu, 19 Sep 2024 14:10:30 +0100
+Message-Id: <20240919131106.3362543-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240919131106.3362543-1-peter.maydell@linaro.org>
 References: <20240919131106.3362543-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,346 +96,325 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
+Instead of copying a constant into a temporary with dupi,
+use a vector constant directly.
+
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240912024114.1097832-28-richard.henderson@linaro.org
+Message-id: 20240912024114.1097832-3-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/a64.decode      |  36 +++++-
- target/arm/tcg/translate-a64.c | 223 ++++++++++++++-------------------
- 2 files changed, 128 insertions(+), 131 deletions(-)
+ target/arm/tcg/translate-sve.c | 128 +++++++++++++--------------------
+ 1 file changed, 49 insertions(+), 79 deletions(-)
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 96803fe6e4c..63e04ddfcde 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -1287,11 +1287,30 @@ RSHRN_v         0.00 11110 .... ... 10001 1 ..... .....     @q_shri_b
- RSHRN_v         0.00 11110 .... ... 10001 1 ..... .....     @q_shri_h
- RSHRN_v         0.00 11110 .... ... 10001 1 ..... .....     @q_shri_s
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 9e2536dfe99..49d32fabc9d 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -6081,9 +6081,9 @@ static void gen_sshll_vec(unsigned vece, TCGv_vec d, TCGv_vec n, int64_t imm)
  
-+SQSHL_vi        0.00 11110 .... ... 01110 1 ..... .....     @q_shli_b
-+SQSHL_vi        0.00 11110 .... ... 01110 1 ..... .....     @q_shli_h
-+SQSHL_vi        0.00 11110 .... ... 01110 1 ..... .....     @q_shli_s
-+SQSHL_vi        0.00 11110 .... ... 01110 1 ..... .....     @q_shli_d
-+
-+UQSHL_vi        0.10 11110 .... ... 01110 1 ..... .....     @q_shli_b
-+UQSHL_vi        0.10 11110 .... ... 01110 1 ..... .....     @q_shli_h
-+UQSHL_vi        0.10 11110 .... ... 01110 1 ..... .....     @q_shli_s
-+UQSHL_vi        0.10 11110 .... ... 01110 1 ..... .....     @q_shli_d
-+
-+SQSHLU_vi       0.10 11110 .... ... 01100 1 ..... .....     @q_shli_b
-+SQSHLU_vi       0.10 11110 .... ... 01100 1 ..... .....     @q_shli_h
-+SQSHLU_vi       0.10 11110 .... ... 01100 1 ..... .....     @q_shli_s
-+SQSHLU_vi       0.10 11110 .... ... 01100 1 ..... .....     @q_shli_d
-+
- # Advanced SIMD scalar shift by immediate
+     if (top) {
+         if (shl == halfbits) {
+-            TCGv_vec t = tcg_temp_new_vec_matching(d);
+-            tcg_gen_dupi_vec(vece, t, MAKE_64BIT_MASK(halfbits, halfbits));
+-            tcg_gen_and_vec(vece, d, n, t);
++            tcg_gen_and_vec(vece, d, n,
++                            tcg_constant_vec_matching(d, vece,
++                                MAKE_64BIT_MASK(halfbits, halfbits)));
+         } else {
+             tcg_gen_sari_vec(vece, d, n, halfbits);
+             tcg_gen_shli_vec(vece, d, d, shl);
+@@ -6138,18 +6138,18 @@ static void gen_ushll_vec(unsigned vece, TCGv_vec d, TCGv_vec n, int64_t imm)
  
- @shri_d         .... ..... 1 ...... ..... . rn:5 rd:5   \
-                 &rri_e esz=3 imm=%neon_rshift_i6
--@shli_d         .... ..... 1 imm:6  ..... . rn:5 rd:5   &rri_e esz=3 
-+
-+@shli_b         .... ..... 0001 imm:3  ..... . rn:5 rd:5    &rri_e esz=0
-+@shli_h         .... ..... 001  imm:4  ..... . rn:5 rd:5    &rri_e esz=1
-+@shli_s         .... ..... 01   imm:5  ..... . rn:5 rd:5    &rri_e esz=2
-+@shli_d         .... ..... 1    imm:6  ..... . rn:5 rd:5    &rri_e esz=3
+     if (top) {
+         if (shl == halfbits) {
+-            TCGv_vec t = tcg_temp_new_vec_matching(d);
+-            tcg_gen_dupi_vec(vece, t, MAKE_64BIT_MASK(halfbits, halfbits));
+-            tcg_gen_and_vec(vece, d, n, t);
++            tcg_gen_and_vec(vece, d, n,
++                            tcg_constant_vec_matching(d, vece,
++                                MAKE_64BIT_MASK(halfbits, halfbits)));
+         } else {
+             tcg_gen_shri_vec(vece, d, n, halfbits);
+             tcg_gen_shli_vec(vece, d, d, shl);
+         }
+     } else {
+         if (shl == 0) {
+-            TCGv_vec t = tcg_temp_new_vec_matching(d);
+-            tcg_gen_dupi_vec(vece, t, MAKE_64BIT_MASK(0, halfbits));
+-            tcg_gen_and_vec(vece, d, n, t);
++            tcg_gen_and_vec(vece, d, n,
++                            tcg_constant_vec_matching(d, vece,
++                                MAKE_64BIT_MASK(0, halfbits)));
+         } else {
+             tcg_gen_shli_vec(vece, d, n, halfbits);
+             tcg_gen_shri_vec(vece, d, d, halfbits - shl);
+@@ -6317,18 +6317,14 @@ static const TCGOpcode sqxtn_list[] = {
  
- SSHR_s          0101 11110 .... ... 00000 1 ..... .....     @shri_d
- USHR_s          0111 11110 .... ... 00000 1 ..... .....     @shri_d
-@@ -1305,3 +1324,18 @@ SRI_s           0111 11110 .... ... 01000 1 ..... .....     @shri_d
- 
- SHL_s           0101 11110 .... ... 01010 1 ..... .....     @shli_d
- SLI_s           0111 11110 .... ... 01010 1 ..... .....     @shli_d
-+
-+SQSHL_si        0101 11110 .... ... 01110 1 ..... .....     @shli_b
-+SQSHL_si        0101 11110 .... ... 01110 1 ..... .....     @shli_h
-+SQSHL_si        0101 11110 .... ... 01110 1 ..... .....     @shli_s
-+SQSHL_si        0101 11110 .... ... 01110 1 ..... .....     @shli_d
-+
-+UQSHL_si        0111 11110 .... ... 01110 1 ..... .....     @shli_b
-+UQSHL_si        0111 11110 .... ... 01110 1 ..... .....     @shli_h
-+UQSHL_si        0111 11110 .... ... 01110 1 ..... .....     @shli_s
-+UQSHL_si        0111 11110 .... ... 01110 1 ..... .....     @shli_d
-+
-+SQSHLU_si       0111 11110 .... ... 01100 1 ..... .....     @shli_b
-+SQSHLU_si       0111 11110 .... ... 01100 1 ..... .....     @shli_h
-+SQSHLU_si       0111 11110 .... ... 01100 1 ..... .....     @shli_s
-+SQSHLU_si       0111 11110 .... ... 01100 1 ..... .....     @shli_d
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 7918720d9b0..77324e0145f 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -6982,6 +6982,9 @@ TRANS(URSRA_v, do_vec_shift_imm, a, gen_gvec_ursra)
- TRANS(SRI_v, do_vec_shift_imm, a, gen_gvec_sri)
- TRANS(SHL_v, do_vec_shift_imm, a, tcg_gen_gvec_shli)
- TRANS(SLI_v, do_vec_shift_imm, a, gen_gvec_sli);
-+TRANS(SQSHL_vi, do_vec_shift_imm, a, gen_neon_sqshli)
-+TRANS(UQSHL_vi, do_vec_shift_imm, a, gen_neon_uqshli)
-+TRANS(SQSHLU_vi, do_vec_shift_imm, a, gen_neon_sqshlui)
- 
- static bool do_vec_shift_imm_wide(DisasContext *s, arg_qrri_e *a, bool is_u)
+ static void gen_sqxtnb_vec(unsigned vece, TCGv_vec d, TCGv_vec n)
  {
-@@ -7209,6 +7212,92 @@ TRANS(SRI_s, do_scalar_shift_imm, a, gen_sri_d, true, 0)
- TRANS(SHL_s, do_scalar_shift_imm, a, tcg_gen_shli_i64, false, 0)
- TRANS(SLI_s, do_scalar_shift_imm, a, gen_sli_d, true, 0)
+-    TCGv_vec t = tcg_temp_new_vec_matching(d);
+     int halfbits = 4 << vece;
+     int64_t mask = (1ull << halfbits) - 1;
+     int64_t min = -1ull << (halfbits - 1);
+     int64_t max = -min - 1;
  
-+static void trunc_i64_env_imm(TCGv_i64 d, TCGv_i64 s, int64_t i,
-+                              NeonGenTwoOpEnvFn *fn)
-+{
-+    TCGv_i32 t = tcg_temp_new_i32();
-+    tcg_gen_extrl_i64_i32(t, s);
-+    fn(t, tcg_env, t, tcg_constant_i32(i));
-+    tcg_gen_extu_i32_i64(d, t);
-+}
-+
-+static void gen_sqshli_b(TCGv_i64 d, TCGv_i64 s, int64_t i)
-+{
-+    trunc_i64_env_imm(d, s, i, gen_helper_neon_qshl_s8);
-+}
-+
-+static void gen_sqshli_h(TCGv_i64 d, TCGv_i64 s, int64_t i)
-+{
-+    trunc_i64_env_imm(d, s, i, gen_helper_neon_qshl_s16);
-+}
-+
-+static void gen_sqshli_s(TCGv_i64 d, TCGv_i64 s, int64_t i)
-+{
-+    trunc_i64_env_imm(d, s, i, gen_helper_neon_qshl_s32);
-+}
-+
-+static void gen_sqshli_d(TCGv_i64 d, TCGv_i64 s, int64_t i)
-+{
-+    gen_helper_neon_qshl_s64(d, tcg_env, s, tcg_constant_i64(i));
-+}
-+
-+static void gen_uqshli_b(TCGv_i64 d, TCGv_i64 s, int64_t i)
-+{
-+    trunc_i64_env_imm(d, s, i, gen_helper_neon_qshl_u8);
-+}
-+
-+static void gen_uqshli_h(TCGv_i64 d, TCGv_i64 s, int64_t i)
-+{
-+    trunc_i64_env_imm(d, s, i, gen_helper_neon_qshl_u16);
-+}
-+
-+static void gen_uqshli_s(TCGv_i64 d, TCGv_i64 s, int64_t i)
-+{
-+    trunc_i64_env_imm(d, s, i, gen_helper_neon_qshl_u32);
-+}
-+
-+static void gen_uqshli_d(TCGv_i64 d, TCGv_i64 s, int64_t i)
-+{
-+    gen_helper_neon_qshl_u64(d, tcg_env, s, tcg_constant_i64(i));
-+}
-+
-+static void gen_sqshlui_b(TCGv_i64 d, TCGv_i64 s, int64_t i)
-+{
-+    trunc_i64_env_imm(d, s, i, gen_helper_neon_qshlu_s8);
-+}
-+
-+static void gen_sqshlui_h(TCGv_i64 d, TCGv_i64 s, int64_t i)
-+{
-+    trunc_i64_env_imm(d, s, i, gen_helper_neon_qshlu_s16);
-+}
-+
-+static void gen_sqshlui_s(TCGv_i64 d, TCGv_i64 s, int64_t i)
-+{
-+    trunc_i64_env_imm(d, s, i, gen_helper_neon_qshlu_s32);
-+}
-+
-+static void gen_sqshlui_d(TCGv_i64 d, TCGv_i64 s, int64_t i)
-+{
-+    gen_helper_neon_qshlu_s64(d, tcg_env, s, tcg_constant_i64(i));
-+}
-+
-+static WideShiftImmFn * const f_scalar_sqshli[] = {
-+    gen_sqshli_b, gen_sqshli_h, gen_sqshli_s, gen_sqshli_d
-+};
-+
-+static WideShiftImmFn * const f_scalar_uqshli[] = {
-+    gen_uqshli_b, gen_uqshli_h, gen_uqshli_s, gen_uqshli_d
-+};
-+
-+static WideShiftImmFn * const f_scalar_sqshlui[] = {
-+    gen_sqshlui_b, gen_sqshlui_h, gen_sqshlui_s, gen_sqshlui_d
-+};
-+
-+/* Note that the helpers sign-extend their inputs, so don't do it here. */
-+TRANS(SQSHL_si, do_scalar_shift_imm, a, f_scalar_sqshli[a->esz], false, 0)
-+TRANS(UQSHL_si, do_scalar_shift_imm, a, f_scalar_uqshli[a->esz], false, 0)
-+TRANS(SQSHLU_si, do_scalar_shift_imm, a, f_scalar_sqshlui[a->esz], false, 0)
-+
- /* Shift a TCGv src by TCGv shift_amount, put result in dst.
-  * Note that it is the caller's responsibility to ensure that the
-  * shift amount is in range (ie 0..31 or 0..63) and provide the ARM
-@@ -9501,116 +9590,6 @@ static void handle_vec_simd_sqshrn(DisasContext *s, bool is_scalar, bool is_q,
-     clear_vec_high(s, is_q, rd);
+-    tcg_gen_dupi_vec(vece, t, min);
+-    tcg_gen_smax_vec(vece, d, n, t);
+-    tcg_gen_dupi_vec(vece, t, max);
+-    tcg_gen_smin_vec(vece, d, d, t);
+-    tcg_gen_dupi_vec(vece, t, mask);
+-    tcg_gen_and_vec(vece, d, d, t);
++    tcg_gen_smax_vec(vece, d, n, tcg_constant_vec_matching(d, vece, min));
++    tcg_gen_smin_vec(vece, d, d, tcg_constant_vec_matching(d, vece, max));
++    tcg_gen_and_vec(vece, d, d, tcg_constant_vec_matching(d, vece, mask));
  }
  
--/* SQSHLU, UQSHL, SQSHL: saturating left shifts */
--static void handle_simd_qshl(DisasContext *s, bool scalar, bool is_q,
--                             bool src_unsigned, bool dst_unsigned,
--                             int immh, int immb, int rn, int rd)
--{
--    int immhb = immh << 3 | immb;
--    int size = 32 - clz32(immh) - 1;
--    int shift = immhb - (8 << size);
--    int pass;
--
--    assert(immh != 0);
--    assert(!(scalar && is_q));
--
--    if (!scalar) {
--        if (!is_q && extract32(immh, 3, 1)) {
--            unallocated_encoding(s);
--            return;
--        }
--
--        /* Since we use the variable-shift helpers we must
--         * replicate the shift count into each element of
--         * the tcg_shift value.
--         */
--        switch (size) {
--        case 0:
--            shift |= shift << 8;
--            /* fall through */
--        case 1:
--            shift |= shift << 16;
--            break;
--        case 2:
--        case 3:
--            break;
--        default:
--            g_assert_not_reached();
--        }
--    }
--
--    if (!fp_access_check(s)) {
--        return;
--    }
--
--    if (size == 3) {
--        TCGv_i64 tcg_shift = tcg_constant_i64(shift);
--        static NeonGenTwo64OpEnvFn * const fns[2][2] = {
--            { gen_helper_neon_qshl_s64, gen_helper_neon_qshlu_s64 },
--            { NULL, gen_helper_neon_qshl_u64 },
--        };
--        NeonGenTwo64OpEnvFn *genfn = fns[src_unsigned][dst_unsigned];
--        int maxpass = is_q ? 2 : 1;
--
--        for (pass = 0; pass < maxpass; pass++) {
--            TCGv_i64 tcg_op = tcg_temp_new_i64();
--
--            read_vec_element(s, tcg_op, rn, pass, MO_64);
--            genfn(tcg_op, tcg_env, tcg_op, tcg_shift);
--            write_vec_element(s, tcg_op, rd, pass, MO_64);
--        }
--        clear_vec_high(s, is_q, rd);
--    } else {
--        TCGv_i32 tcg_shift = tcg_constant_i32(shift);
--        static NeonGenTwoOpEnvFn * const fns[2][2][3] = {
--            {
--                { gen_helper_neon_qshl_s8,
--                  gen_helper_neon_qshl_s16,
--                  gen_helper_neon_qshl_s32 },
--                { gen_helper_neon_qshlu_s8,
--                  gen_helper_neon_qshlu_s16,
--                  gen_helper_neon_qshlu_s32 }
--            }, {
--                { NULL, NULL, NULL },
--                { gen_helper_neon_qshl_u8,
--                  gen_helper_neon_qshl_u16,
--                  gen_helper_neon_qshl_u32 }
--            }
--        };
--        NeonGenTwoOpEnvFn *genfn = fns[src_unsigned][dst_unsigned][size];
--        MemOp memop = scalar ? size : MO_32;
--        int maxpass = scalar ? 1 : is_q ? 4 : 2;
--
--        for (pass = 0; pass < maxpass; pass++) {
--            TCGv_i32 tcg_op = tcg_temp_new_i32();
--
--            read_vec_element_i32(s, tcg_op, rn, pass, memop);
--            genfn(tcg_op, tcg_env, tcg_op, tcg_shift);
--            if (scalar) {
--                switch (size) {
--                case 0:
--                    tcg_gen_ext8u_i32(tcg_op, tcg_op);
--                    break;
--                case 1:
--                    tcg_gen_ext16u_i32(tcg_op, tcg_op);
--                    break;
--                case 2:
--                    break;
--                default:
--                    g_assert_not_reached();
--                }
--                write_fp_sreg(s, rd, tcg_op);
--            } else {
--                write_vec_element_i32(s, tcg_op, rd, pass, MO_32);
--            }
--        }
--
--        if (!scalar) {
--            clear_vec_high(s, is_q, rd);
--        }
--    }
--}
--
- /* Common vector code for handling integer to FP conversion */
- static void handle_simd_intfp_conv(DisasContext *s, int rd, int rn,
-                                    int elements, int is_signed,
-@@ -9890,16 +9869,6 @@ static void disas_simd_scalar_shift_imm(DisasContext *s, uint32_t insn)
-         handle_vec_simd_sqshrn(s, true, false, is_u, is_u,
-                                immh, immb, opcode, rn, rd);
-         break;
--    case 0xc: /* SQSHLU */
--        if (!is_u) {
--            unallocated_encoding(s);
--            return;
--        }
--        handle_simd_qshl(s, true, false, false, true, immh, immb, rn, rd);
--        break;
--    case 0xe: /* SQSHL, UQSHL */
--        handle_simd_qshl(s, true, false, is_u, is_u, immh, immb, rn, rd);
--        break;
-     case 0x1f: /* FCVTZS, FCVTZU */
-         handle_simd_shift_fpint_conv(s, true, false, is_u, immh, immb, rn, rd);
-         break;
-@@ -9910,6 +9879,8 @@ static void disas_simd_scalar_shift_imm(DisasContext *s, uint32_t insn)
-     case 0x06: /* SRSRA / URSRA */
-     case 0x08: /* SRI */
-     case 0x0a: /* SHL / SLI */
-+    case 0x0c: /* SQSHLU */
-+    case 0x0e: /* SQSHL, UQSHL */
-         unallocated_encoding(s);
-         break;
-     }
-@@ -10561,16 +10532,6 @@ static void disas_simd_shift_imm(DisasContext *s, uint32_t insn)
-         handle_simd_shift_intfp_conv(s, false, is_q, is_u, immh, immb,
-                                      opcode, rn, rd);
-         break;
--    case 0xc: /* SQSHLU */
--        if (!is_u) {
--            unallocated_encoding(s);
--            return;
--        }
--        handle_simd_qshl(s, false, is_q, false, true, immh, immb, rn, rd);
--        break;
--    case 0xe: /* SQSHL, UQSHL */
--        handle_simd_qshl(s, false, is_q, is_u, is_u, immh, immb, rn, rd);
--        break;
-     case 0x1f: /* FCVTZS/ FCVTZU */
-         handle_simd_shift_fpint_conv(s, false, is_q, is_u, immh, immb, rn, rd);
-         return;
-@@ -10581,6 +10542,8 @@ static void disas_simd_shift_imm(DisasContext *s, uint32_t insn)
-     case 0x06: /* SRSRA / URSRA (accum + rounding) */
-     case 0x08: /* SRI */
-     case 0x0a: /* SHL / SLI */
-+    case 0x0c: /* SQSHLU */
-+    case 0x0e: /* SQSHL, UQSHL */
-     case 0x14: /* SSHLL / USHLL */
-         unallocated_encoding(s);
-         return;
+ static const GVecGen2 sqxtnb_ops[3] = {
+@@ -6349,19 +6345,15 @@ TRANS_FEAT(SQXTNB, aa64_sve2, do_narrow_extract, a, sqxtnb_ops)
+ 
+ static void gen_sqxtnt_vec(unsigned vece, TCGv_vec d, TCGv_vec n)
+ {
+-    TCGv_vec t = tcg_temp_new_vec_matching(d);
+     int halfbits = 4 << vece;
+     int64_t mask = (1ull << halfbits) - 1;
+     int64_t min = -1ull << (halfbits - 1);
+     int64_t max = -min - 1;
+ 
+-    tcg_gen_dupi_vec(vece, t, min);
+-    tcg_gen_smax_vec(vece, n, n, t);
+-    tcg_gen_dupi_vec(vece, t, max);
+-    tcg_gen_smin_vec(vece, n, n, t);
++    tcg_gen_smax_vec(vece, n, n, tcg_constant_vec_matching(d, vece, min));
++    tcg_gen_smin_vec(vece, n, n, tcg_constant_vec_matching(d, vece, max));
+     tcg_gen_shli_vec(vece, n, n, halfbits);
+-    tcg_gen_dupi_vec(vece, t, mask);
+-    tcg_gen_bitsel_vec(vece, d, t, d, n);
++    tcg_gen_bitsel_vec(vece, d, tcg_constant_vec_matching(d, vece, mask), d, n);
+ }
+ 
+ static const GVecGen2 sqxtnt_ops[3] = {
+@@ -6389,12 +6381,10 @@ static const TCGOpcode uqxtn_list[] = {
+ 
+ static void gen_uqxtnb_vec(unsigned vece, TCGv_vec d, TCGv_vec n)
+ {
+-    TCGv_vec t = tcg_temp_new_vec_matching(d);
+     int halfbits = 4 << vece;
+     int64_t max = (1ull << halfbits) - 1;
+ 
+-    tcg_gen_dupi_vec(vece, t, max);
+-    tcg_gen_umin_vec(vece, d, n, t);
++    tcg_gen_umin_vec(vece, d, n, tcg_constant_vec_matching(d, vece, max));
+ }
+ 
+ static const GVecGen2 uqxtnb_ops[3] = {
+@@ -6415,14 +6405,13 @@ TRANS_FEAT(UQXTNB, aa64_sve2, do_narrow_extract, a, uqxtnb_ops)
+ 
+ static void gen_uqxtnt_vec(unsigned vece, TCGv_vec d, TCGv_vec n)
+ {
+-    TCGv_vec t = tcg_temp_new_vec_matching(d);
+     int halfbits = 4 << vece;
+     int64_t max = (1ull << halfbits) - 1;
++    TCGv_vec maxv = tcg_constant_vec_matching(d, vece, max);
+ 
+-    tcg_gen_dupi_vec(vece, t, max);
+-    tcg_gen_umin_vec(vece, n, n, t);
++    tcg_gen_umin_vec(vece, n, n, maxv);
+     tcg_gen_shli_vec(vece, n, n, halfbits);
+-    tcg_gen_bitsel_vec(vece, d, t, d, n);
++    tcg_gen_bitsel_vec(vece, d, maxv, d, n);
+ }
+ 
+ static const GVecGen2 uqxtnt_ops[3] = {
+@@ -6450,14 +6439,11 @@ static const TCGOpcode sqxtun_list[] = {
+ 
+ static void gen_sqxtunb_vec(unsigned vece, TCGv_vec d, TCGv_vec n)
+ {
+-    TCGv_vec t = tcg_temp_new_vec_matching(d);
+     int halfbits = 4 << vece;
+     int64_t max = (1ull << halfbits) - 1;
+ 
+-    tcg_gen_dupi_vec(vece, t, 0);
+-    tcg_gen_smax_vec(vece, d, n, t);
+-    tcg_gen_dupi_vec(vece, t, max);
+-    tcg_gen_umin_vec(vece, d, d, t);
++    tcg_gen_smax_vec(vece, d, n, tcg_constant_vec_matching(d, vece, 0));
++    tcg_gen_umin_vec(vece, d, d, tcg_constant_vec_matching(d, vece, max));
+ }
+ 
+ static const GVecGen2 sqxtunb_ops[3] = {
+@@ -6478,16 +6464,14 @@ TRANS_FEAT(SQXTUNB, aa64_sve2, do_narrow_extract, a, sqxtunb_ops)
+ 
+ static void gen_sqxtunt_vec(unsigned vece, TCGv_vec d, TCGv_vec n)
+ {
+-    TCGv_vec t = tcg_temp_new_vec_matching(d);
+     int halfbits = 4 << vece;
+     int64_t max = (1ull << halfbits) - 1;
++    TCGv_vec maxv = tcg_constant_vec_matching(d, vece, max);
+ 
+-    tcg_gen_dupi_vec(vece, t, 0);
+-    tcg_gen_smax_vec(vece, n, n, t);
+-    tcg_gen_dupi_vec(vece, t, max);
+-    tcg_gen_umin_vec(vece, n, n, t);
++    tcg_gen_smax_vec(vece, n, n, tcg_constant_vec_matching(d, vece, 0));
++    tcg_gen_umin_vec(vece, n, n, maxv);
+     tcg_gen_shli_vec(vece, n, n, halfbits);
+-    tcg_gen_bitsel_vec(vece, d, t, d, n);
++    tcg_gen_bitsel_vec(vece, d, maxv, d, n);
+ }
+ 
+ static const GVecGen2 sqxtunt_ops[3] = {
+@@ -6551,13 +6535,11 @@ static void gen_shrnb64_i64(TCGv_i64 d, TCGv_i64 n, int64_t shr)
+ 
+ static void gen_shrnb_vec(unsigned vece, TCGv_vec d, TCGv_vec n, int64_t shr)
+ {
+-    TCGv_vec t = tcg_temp_new_vec_matching(d);
+     int halfbits = 4 << vece;
+     uint64_t mask = MAKE_64BIT_MASK(0, halfbits);
+ 
+     tcg_gen_shri_vec(vece, n, n, shr);
+-    tcg_gen_dupi_vec(vece, t, mask);
+-    tcg_gen_and_vec(vece, d, n, t);
++    tcg_gen_and_vec(vece, d, n, tcg_constant_vec_matching(d, vece, mask));
+ }
+ 
+ static const TCGOpcode shrnb_vec_list[] = { INDEX_op_shri_vec, 0 };
+@@ -6609,13 +6591,11 @@ static void gen_shrnt64_i64(TCGv_i64 d, TCGv_i64 n, int64_t shr)
+ 
+ static void gen_shrnt_vec(unsigned vece, TCGv_vec d, TCGv_vec n, int64_t shr)
+ {
+-    TCGv_vec t = tcg_temp_new_vec_matching(d);
+     int halfbits = 4 << vece;
+     uint64_t mask = MAKE_64BIT_MASK(0, halfbits);
+ 
+     tcg_gen_shli_vec(vece, n, n, halfbits - shr);
+-    tcg_gen_dupi_vec(vece, t, mask);
+-    tcg_gen_bitsel_vec(vece, d, t, d, n);
++    tcg_gen_bitsel_vec(vece, d, tcg_constant_vec_matching(d, vece, mask), d, n);
+ }
+ 
+ static const TCGOpcode shrnt_vec_list[] = { INDEX_op_shli_vec, 0 };
+@@ -6658,14 +6638,12 @@ TRANS_FEAT(RSHRNT, aa64_sve2, do_shr_narrow, a, rshrnt_ops)
+ static void gen_sqshrunb_vec(unsigned vece, TCGv_vec d,
+                              TCGv_vec n, int64_t shr)
+ {
+-    TCGv_vec t = tcg_temp_new_vec_matching(d);
+     int halfbits = 4 << vece;
++    uint64_t max = MAKE_64BIT_MASK(0, halfbits);
+ 
+     tcg_gen_sari_vec(vece, n, n, shr);
+-    tcg_gen_dupi_vec(vece, t, 0);
+-    tcg_gen_smax_vec(vece, n, n, t);
+-    tcg_gen_dupi_vec(vece, t, MAKE_64BIT_MASK(0, halfbits));
+-    tcg_gen_umin_vec(vece, d, n, t);
++    tcg_gen_smax_vec(vece, n, n, tcg_constant_vec_matching(d, vece, 0));
++    tcg_gen_umin_vec(vece, d, n, tcg_constant_vec_matching(d, vece, max));
+ }
+ 
+ static const TCGOpcode sqshrunb_vec_list[] = {
+@@ -6690,16 +6668,15 @@ TRANS_FEAT(SQSHRUNB, aa64_sve2, do_shr_narrow, a, sqshrunb_ops)
+ static void gen_sqshrunt_vec(unsigned vece, TCGv_vec d,
+                              TCGv_vec n, int64_t shr)
+ {
+-    TCGv_vec t = tcg_temp_new_vec_matching(d);
+     int halfbits = 4 << vece;
++    uint64_t max = MAKE_64BIT_MASK(0, halfbits);
++    TCGv_vec maxv = tcg_constant_vec_matching(d, vece, max);
+ 
+     tcg_gen_sari_vec(vece, n, n, shr);
+-    tcg_gen_dupi_vec(vece, t, 0);
+-    tcg_gen_smax_vec(vece, n, n, t);
+-    tcg_gen_dupi_vec(vece, t, MAKE_64BIT_MASK(0, halfbits));
+-    tcg_gen_umin_vec(vece, n, n, t);
++    tcg_gen_smax_vec(vece, n, n, tcg_constant_vec_matching(d, vece, 0));
++    tcg_gen_umin_vec(vece, n, n, maxv);
+     tcg_gen_shli_vec(vece, n, n, halfbits);
+-    tcg_gen_bitsel_vec(vece, d, t, d, n);
++    tcg_gen_bitsel_vec(vece, d, maxv, d, n);
+ }
+ 
+ static const TCGOpcode sqshrunt_vec_list[] = {
+@@ -6742,18 +6719,15 @@ TRANS_FEAT(SQRSHRUNT, aa64_sve2, do_shr_narrow, a, sqrshrunt_ops)
+ static void gen_sqshrnb_vec(unsigned vece, TCGv_vec d,
+                             TCGv_vec n, int64_t shr)
+ {
+-    TCGv_vec t = tcg_temp_new_vec_matching(d);
+     int halfbits = 4 << vece;
+     int64_t max = MAKE_64BIT_MASK(0, halfbits - 1);
+     int64_t min = -max - 1;
++    int64_t mask = MAKE_64BIT_MASK(0, halfbits);
+ 
+     tcg_gen_sari_vec(vece, n, n, shr);
+-    tcg_gen_dupi_vec(vece, t, min);
+-    tcg_gen_smax_vec(vece, n, n, t);
+-    tcg_gen_dupi_vec(vece, t, max);
+-    tcg_gen_smin_vec(vece, n, n, t);
+-    tcg_gen_dupi_vec(vece, t, MAKE_64BIT_MASK(0, halfbits));
+-    tcg_gen_and_vec(vece, d, n, t);
++    tcg_gen_smax_vec(vece, n, n, tcg_constant_vec_matching(d, vece, min));
++    tcg_gen_smin_vec(vece, n, n, tcg_constant_vec_matching(d, vece, max));
++    tcg_gen_and_vec(vece, d, n, tcg_constant_vec_matching(d, vece, mask));
+ }
+ 
+ static const TCGOpcode sqshrnb_vec_list[] = {
+@@ -6778,19 +6752,16 @@ TRANS_FEAT(SQSHRNB, aa64_sve2, do_shr_narrow, a, sqshrnb_ops)
+ static void gen_sqshrnt_vec(unsigned vece, TCGv_vec d,
+                              TCGv_vec n, int64_t shr)
+ {
+-    TCGv_vec t = tcg_temp_new_vec_matching(d);
+     int halfbits = 4 << vece;
+     int64_t max = MAKE_64BIT_MASK(0, halfbits - 1);
+     int64_t min = -max - 1;
++    int64_t mask = MAKE_64BIT_MASK(0, halfbits);
+ 
+     tcg_gen_sari_vec(vece, n, n, shr);
+-    tcg_gen_dupi_vec(vece, t, min);
+-    tcg_gen_smax_vec(vece, n, n, t);
+-    tcg_gen_dupi_vec(vece, t, max);
+-    tcg_gen_smin_vec(vece, n, n, t);
++    tcg_gen_smax_vec(vece, n, n, tcg_constant_vec_matching(d, vece, min));
++    tcg_gen_smin_vec(vece, n, n, tcg_constant_vec_matching(d, vece, max));
+     tcg_gen_shli_vec(vece, n, n, halfbits);
+-    tcg_gen_dupi_vec(vece, t, MAKE_64BIT_MASK(0, halfbits));
+-    tcg_gen_bitsel_vec(vece, d, t, d, n);
++    tcg_gen_bitsel_vec(vece, d, tcg_constant_vec_matching(d, vece, mask), d, n);
+ }
+ 
+ static const TCGOpcode sqshrnt_vec_list[] = {
+@@ -6833,12 +6804,11 @@ TRANS_FEAT(SQRSHRNT, aa64_sve2, do_shr_narrow, a, sqrshrnt_ops)
+ static void gen_uqshrnb_vec(unsigned vece, TCGv_vec d,
+                             TCGv_vec n, int64_t shr)
+ {
+-    TCGv_vec t = tcg_temp_new_vec_matching(d);
+     int halfbits = 4 << vece;
++    int64_t max = MAKE_64BIT_MASK(0, halfbits);
+ 
+     tcg_gen_shri_vec(vece, n, n, shr);
+-    tcg_gen_dupi_vec(vece, t, MAKE_64BIT_MASK(0, halfbits));
+-    tcg_gen_umin_vec(vece, d, n, t);
++    tcg_gen_umin_vec(vece, d, n, tcg_constant_vec_matching(d, vece, max));
+ }
+ 
+ static const TCGOpcode uqshrnb_vec_list[] = {
+@@ -6863,14 +6833,14 @@ TRANS_FEAT(UQSHRNB, aa64_sve2, do_shr_narrow, a, uqshrnb_ops)
+ static void gen_uqshrnt_vec(unsigned vece, TCGv_vec d,
+                             TCGv_vec n, int64_t shr)
+ {
+-    TCGv_vec t = tcg_temp_new_vec_matching(d);
+     int halfbits = 4 << vece;
++    int64_t max = MAKE_64BIT_MASK(0, halfbits);
++    TCGv_vec maxv = tcg_constant_vec_matching(d, vece, max);
+ 
+     tcg_gen_shri_vec(vece, n, n, shr);
+-    tcg_gen_dupi_vec(vece, t, MAKE_64BIT_MASK(0, halfbits));
+-    tcg_gen_umin_vec(vece, n, n, t);
++    tcg_gen_umin_vec(vece, n, n, maxv);
+     tcg_gen_shli_vec(vece, n, n, halfbits);
+-    tcg_gen_bitsel_vec(vece, d, t, d, n);
++    tcg_gen_bitsel_vec(vece, d, maxv, d, n);
+ }
+ 
+ static const TCGOpcode uqshrnt_vec_list[] = {
 -- 
 2.34.1
 
