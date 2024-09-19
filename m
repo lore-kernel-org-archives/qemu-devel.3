@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DABCACF3963
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 19:50:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44CECCF3962
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 19:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srNAO-0000wj-0P; Thu, 19 Sep 2024 15:50:16 -0400
+	id 1srNBU-0007Kj-Jq; Thu, 19 Sep 2024 15:51:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1srNAM-0000sQ-VV
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 15:50:14 -0400
+ id 1srNBT-0007HQ-T0
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 15:51:23 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1srNAL-0007NX-38
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 15:50:14 -0400
+ id 1srNBS-0007Qz-4L
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 15:51:23 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1srNAE-0000d5-9z; Thu, 19 Sep 2024 21:50:06 +0200
-Message-ID: <643554c7-41d1-4a1b-bfde-39f2ad17db58@maciej.szmigiero.name>
-Date: Thu, 19 Sep 2024 21:50:06 +0200
+ id 1srNBK-0000eh-Hz; Thu, 19 Sep 2024 21:51:14 +0200
+Message-ID: <324c13cd-f64f-418c-a534-409c9301bc93@maciej.szmigiero.name>
+Date: Thu, 19 Sep 2024 21:51:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 12/17] migration/multifd: Device state transfer support
  - send side
-To: Peter Xu <peterx@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
+To: Peter Xu <peterx@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>, Eric Blake
+ <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
-References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <fdcfd68dfcf3b20278a4495eb639905b2a8e8ff3.1724701542.git.maciej.szmigiero@oracle.com>
- <87h6b4nosy.fsf@suse.de>
- <bbdac26f-4a38-4cee-a9aa-cfae61b16dea@maciej.szmigiero.name>
- <87bk1anoy7.fsf@suse.de> <Zt9PMrRXZN_qkSQ6@x1n>
+References: <fdcfd68dfcf3b20278a4495eb639905b2a8e8ff3.1724701542.git.maciej.szmigiero@oracle.com>
+ <87h6b4nosy.fsf@suse.de> <ZuCickYhs3nf2ERC@x1n> <87zfoc1zms.fsf@suse.de>
+ <ZuOGAb3988ExsrHi@x1n> <87o74r1yfw.fsf@suse.de> <ZuRJ8i4T_vUzrawY@x1n>
+ <87ldzv1tpb.fsf@suse.de> <ZuRYouLwikc4OYye@x1n>
+ <45f44392-cb56-4341-ab1d-7d7f28554c77@redhat.com> <ZunBeBnqpgAIpt4Z@x1n>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -86,9 +86,9 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <Zt9PMrRXZN_qkSQ6@x1n>
+In-Reply-To: <ZunBeBnqpgAIpt4Z@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=37.28.154.113;
  envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
 X-Spam_score_int: -18
@@ -112,58 +112,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9.09.2024 21:40, Peter Xu wrote:
-> On Fri, Aug 30, 2024 at 10:02:40AM -0300, Fabiano Rosas wrote:
->>>>> @@ -397,20 +404,16 @@ bool multifd_send(MultiFDSendData **send_data)
->>>>>    
->>>>>            p = &multifd_send_state->params[i];
->>>>>            /*
->>>>> -         * Lockless read to p->pending_job is safe, because only multifd
->>>>> -         * sender thread can clear it.
->>>>> +         * Lockless RMW on p->pending_job_preparing is safe, because only multifd
->>>>> +         * sender thread can clear it after it had seen p->pending_job being set.
->>>>> +         *
->>>>> +         * Pairs with qatomic_store_release() in multifd_send_thread().
->>>>>             */
->>>>> -        if (qatomic_read(&p->pending_job) == false) {
->>>>> +        if (qatomic_cmpxchg(&p->pending_job_preparing, false, true) == false) {
->>>>
->>>> What's the motivation for this change? It would be better to have it in
->>>> a separate patch with a proper justification.
->>>
->>> The original RFC patch set used dedicated device state multifd channels.
->>>
->>> Peter and other people wanted this functionality removed, however this caused
->>> a performance (downtime) regression.
->>>
->>> One of the things that seemed to help mitigate this regression was making
->>> the multifd channel selection more fair via this change.
->>>
->>> But I can split out it to a separate commit in the next patch set version and
->>> then see what performance improvement it currently brings.
+On 17.09.2024 19:50, Peter Xu wrote:
+> On Tue, Sep 17, 2024 at 07:07:10PM +0200, Cédric Le Goater wrote:
+>> [ ... ]
 >>
->> Yes, better to have it separate if anything for documentation of the
->> rationale.
+>>>>> I as a patch writer always like to do that when it's essential.  Normally
+>>>>> the case is I don't have enough reviewer resources to help me get a better
+>>>>> design, or discuss about it.
+>>>>
+>>>> Right, but we can't keep providing a moving target. See the thread pool
+>>>> discussion for an example. It's hard to work that way. The discussion
+>>>> here is similar, we introduced the union, now we're moving to the
+>>>> struct. And you're right that the changes here are small, so let's not
+>>>> get caught in that.
+>>>
+>>> What's your suggestion on the thread pool?  Should we merge the change
+>>> where vfio creates the threads on its own (assuming vfio maintainers are ok
+>>> with it)?
+>>>
+>>> I would say no, that's what I suggested.  I'd start with reusing
+>>> ThreadPool, then we found issue when Stefan reported worry on abusing the
+>>> API.  All these discussions seem sensible to me so far.  We can't rush on
+>>> these until we figure things out step by step.  I don't see a way.
+>>>
+>>> I saw Cedric suggesting to not even create a thread on recv side.  I am not
+>>> sure whether that's easy, but I'd agree with Cedric if possible.  I think
+>>> Maciej could have a point where it can block mutlifd threads, aka, IO
+>>> threads, which might be unwanted.
+>>
+>> Sorry, If I am adding noise on this topic. I made this suggestion
+>> because I spotted some asymmetry in the proposal.
+>>
+>> The send and recv implementation in VFIO relies on different
+>> interfaces with different level of complexity. The send part is
+>> using a set of multifd callbacks called from multifd threads,
+>> if I am correct. Whereas the recv part is directly implemented
+>> in VFIO with local thread(s?) doing their own state receive cookery.
 > 
-> And when drafting that patch, please add a comment explaining the field.
-> Currently it's missing:
+> Yeh, the send/recv sides are indeed not fully symmetrical in the case of
+> multifd - the recv side is more IO-driven, e.g., QEMU reacts based on what
+> it receives (which was encoded in the headers of the received packets).
 > 
->      /*
->       * The sender thread has work to do if either of below boolean is set.
->       *
->       * @pending_job:  a job is pending
->       * @pending_sync: a sync request is pending
->       *
->       * For both of these fields, they're only set by the requesters, and
->       * cleared by the multifd sender threads.
->       */
->      bool pending_job;
->      bool pending_job_preparing;
->      bool pending_sync;
-> 
+> The src is more of a generic consumer / producer model where threads can
+> enqueue tasks / data to different iochannels.
 
-Will do if these variables end staying in the patch (instead of being
-replaced by the common send mutex, for example).
+Currently, the best case happens if both sides are I/O bound with respect
+to the VFIO devices - reading device state from the source device as
+fast as it can produce it and loading device state into the target device
+as fast as it can consume it.
+
+These devices aren't normally seriously network bandwidth constrained
+here.
+
+>>
+>> I was expecting a common interface to minimize assumptions on both
+>> ends. It doesn't have to be callback based. It could be a set of
+>> services a subsystem could use to transfer state in parallel.
+>> <side note>
+>>       VFIO migration is driven by numerous callbacks and it is
+>>       difficult to understand the context in which these are called.
+>>       Adding more callbacks might not be the best approach.
+>> </side note>
+>>
+>> The other comment was on optimisation. If this is an optimisation
+>> then I would expect, first, a non-optimized version not using threads
+>> (on the recv side).
+> 
+> As commented in a previous email, I had a feeling that Maciej wanted to
+> avoid blocking multifd threads when applying VFIO data chunks to the kernel
+> driver, but Maciej please correct me.. I could be wrong.
+
+Yes, we don't want the case that loading device state into one VFIO device
+blocks loading such state into another VFIO device and so the second VFIO
+device ends up being partially idle during that time.
+
+> To me I think I'm fine even if it blocks multifd threads, as it'll only
+> happen when with VFIO (we may want to consider n_multifd_threads to be
+> based on num of vfio devices then, so we still always have some idle
+> threads taking IOs out of the NIC buffers).
+
+The current design uses exactly one loading thread per VFIO device.
+
+> So I agree with Cedric that if we can provide a functional working version
+> first then we can at least go with the simpler approach first.
+> 
+>>
+>> VFIO Migration is a "new" feature which needs some more run-in.
+>> That said, it is stable, MLX5 VFs devices have good support, you
+>> can rely on me to evaluate the future respins.
+>>
+>> Thanks,
+>>
+>> C.
+>>
+> 
 
 Thanks,
 Maciej
