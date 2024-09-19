@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25020CDD569
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 01:41:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 576DBCDD566
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 01:41:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr69j-0007OM-3r; Wed, 18 Sep 2024 21:40:27 -0400
+	id 1sr6AW-0003nV-7g; Wed, 18 Sep 2024 21:41:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sr69f-00075p-RY; Wed, 18 Sep 2024 21:40:24 -0400
+ id 1sr6AS-0003MV-1L; Wed, 18 Sep 2024 21:41:13 -0400
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sr69d-0004sM-0M; Wed, 18 Sep 2024 21:40:23 -0400
+ id 1sr6AL-00058t-U1; Wed, 18 Sep 2024 21:41:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1726710021; x=1758246021;
+ t=1726710066; x=1758246066;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=573w2DHmYSHZ5HLG8xM/Ws3MSekemg/qhlyIWizCQb0=;
- b=k89lWRCUwm+9dH3RLxrLPrP0k4+RvNnRCTSt2oTw826HwLnAEr8m3K7c
- hL2tRI++Ysx1Xpgtz8gnBP0tyAmi4NdeSNqj0R95d/afxYP7fTZl3z1Rm
- qITLEskfCj9OcOYLRvY1EzzdJtVAGr6oI8G9yxv+rt8/IHtsEkZqofE6G
- nt+J4qMd5C44IYtfglNP4rSTKvcW0FQ2E6ewe5obDgaZVj88b5DIby+8n
- yAU56Pn1/JFtw8ihUhxIXzIqs5fG5mFu41DAJ/t1lNy3gjYLBhJv1oPZz
- sUYquDAz9ZxUycVKpfAOMU2eFwLDFZNLBcbBCBtJojL6axVzEAsqBAaaz A==;
-X-CSE-ConnectionGUID: rBlcq/lUT62CwOLPTV1Q+g==
-X-CSE-MsgGUID: 7Mx2LXU0TsaCe21LUGTSmg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25797873"
-X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25797873"
+ bh=wx8cdMXy87jbp3iDhkGcf2ZrKApAXiC+ip9Awek7e04=;
+ b=H4sg3J7/8h9fIOrQXZ2gqJiz2lje4MubItHOAGLd8F4Q1A8DovnyhDp/
+ 7oFqISUPnYDfbUna4SnTwwgIU5KioshijN9azLA0YJWZF7gS04M5M1D+a
+ ouLa7xYnEZ68mYR/L7F8q1Bx2b0g2ch6sKbUOCOJfzS7x+j390WwJHHpI
+ esObkElxFt+bPYeWadBJNo4afAZZwo2D0tIWx1eoZj2BftDK/2iQL1UFU
+ LuQUg53kwclYdMFRnYeVL081UCU5Le3153m3SfibQiHZcG1FVJcE228sf
+ SSS2UowoQM8QuHuaNHt8IWpmL0qgBGUUQPdmvdZ2+B8qvHdkF5wikIkOe Q==;
+X-CSE-ConnectionGUID: fyBXDkf4Rl2bWx1WqiYgGg==
+X-CSE-MsgGUID: x6r6KefwRGSnP/5GQJGKgA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25798065"
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25798065"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Sep 2024 18:40:18 -0700
-X-CSE-ConnectionGUID: VTAf9j9wSdmPPMQUWsdetg==
-X-CSE-MsgGUID: O69kmvrZS0GmljFMm/GWdA==
+ 18 Sep 2024 18:41:04 -0700
+X-CSE-ConnectionGUID: /9zU/3CdSJut5CeCqd6www==
+X-CSE-MsgGUID: 6BJoj00JRPy92lBgaz2/QQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="70058690"
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="70058955"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa006.jf.intel.com with ESMTP; 18 Sep 2024 18:40:12 -0700
+ by orviesa006.jf.intel.com with ESMTP; 18 Sep 2024 18:40:58 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -66,9 +66,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-ppc@nongnu.org,
  qemu-arm@nongnu.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC v2 05/15] qdev: Add method in BusClass to customize device index
-Date: Thu, 19 Sep 2024 09:55:23 +0800
-Message-Id: <20240919015533.766754-6-zhao1.liu@intel.com>
+Subject: [RFC v2 12/15] hw/i386: Allow i386 to create new CPUs in topology tree
+Date: Thu, 19 Sep 2024 09:55:30 +0800
+Message-Id: <20240919015533.766754-13-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240919015533.766754-1-zhao1.liu@intel.com>
 References: <20240919015533.766754-1-zhao1.liu@intel.com>
@@ -79,11 +79,11 @@ Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,140 +99,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, when the bus assigns an index to a child device, it relies on
-a monotonically increasing max_index.
+For x86, CPU's apic ID represent its topology path and is the
+combination of topology sub IDs in each leavl.
 
-However, when a device is removed from the bus, its index is not
-reassigned to new devices, leading to "holes" in child indices.
+When x86 machine creates CPUs, to insert the CPU into topology tree, use
+apic ID to get topology sub IDs.
 
-For topology devices, such as CPUs/cores, arches define custom
-sub-topology IDs. Some of these IDs are global (e.g., core-id for core
-devices), while others are local (e.g., thread-id/core-id/module-id for
-x86 CPUs).
-
-Local IDs are indexes under the same parent device and align with
-BusChild's index meaning. Therefore, local IDs in a topology context
-should use BusChild.index.
-
-Considering that topology devices support hot-plug and local IDs often
-have range constraints, add a new method (BusClass.assign_free_index) to
-allow the bus to customize index assignment.
-
-Based on this method, the CPU bus will search for free index "holes"
-created by unplugging and assign these free indices to newly inserted
-devices.
+Then search the topology tree for the corresponding parent topology
+device and insert the CPU into the CPU bus of the parent device.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/core/qdev.c                |  8 +++++++-
- hw/cpu/cpu-topology.c         | 37 +++++++++++++++++++++++++++++++++++
- include/hw/cpu/cpu-topology.h |  1 +
- include/hw/qdev-core.h        |  2 ++
- 4 files changed, 47 insertions(+), 1 deletion(-)
+ hw/i386/x86-common.c | 101 +++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 97 insertions(+), 4 deletions(-)
 
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index ff073cbff56d..e3e9f0f303d6 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -78,11 +78,17 @@ static void bus_remove_child(BusState *bus, DeviceState *child)
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index b21d2ab97349..a7f082b0a90b 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -53,14 +53,107 @@
+ /* Physical Address of PVH entry point read from kernel ELF NOTE */
+ static size_t pvh_start_addr;
  
- static void bus_add_child(BusState *bus, DeviceState *child)
+-static void x86_cpu_new(X86MachineState *x86ms, int64_t apic_id, Error **errp)
++static int x86_cpu_get_topo_id(const X86CPUTopoIDs *topo_ids,
++                               CpuTopologyLevel level)
  {
-+    BusClass *bc = BUS_GET_CLASS(bus);
-     char name[32];
-     BusChild *kid = g_malloc0(sizeof(*kid));
- 
-+    if (bc->assign_free_index) {
-+        kid->index = bc->assign_free_index(bus);
-+    } else {
-+        kid->index = bus->max_index++;
+-    Object *cpu = object_new(MACHINE(x86ms)->cpu_type);
++    switch (level) {
++    case CPU_TOPOLOGY_LEVEL_THREAD:
++        return topo_ids->smt_id;
++    case CPU_TOPOLOGY_LEVEL_CORE:
++        return topo_ids->core_id;
++    case CPU_TOPOLOGY_LEVEL_MODULE:
++        return topo_ids->module_id;
++    case CPU_TOPOLOGY_LEVEL_DIE:
++        return topo_ids->die_id;
++    case CPU_TOPOLOGY_LEVEL_SOCKET:
++        return topo_ids->pkg_id;
++    default:
++        g_assert_not_reached();
 +    }
 +
-     bus->num_children++;
--    kid->index = bus->max_index++;
-     kid->child = child;
-     child->bus_node = kid;
-     object_ref(OBJECT(kid->child));
-diff --git a/hw/cpu/cpu-topology.c b/hw/cpu/cpu-topology.c
-index e68c06132e7d..3e8982ff7e6c 100644
---- a/hw/cpu/cpu-topology.c
-+++ b/hw/cpu/cpu-topology.c
-@@ -49,11 +49,40 @@ static bool cpu_bus_check_address(BusState *bus, DeviceState *dev,
-     return cpu_parent_check_topology(bus->parent, dev, errp);
- }
- 
-+static int cpu_bus_assign_free_index(BusState *bus)
-+{
-+    BusChild *kid;
-+    int index;
-+
-+    if (bus->num_children == bus->max_index) {
-+        return bus->max_index++;
-+    }
-+
-+    assert(bus->num_children < bus->max_index);
-+    /* TODO: Introduce the list sorted by index */
-+    for (index = 0; index < bus->num_children; index++) {
-+        bool existed = false;
-+
-+        QTAILQ_FOREACH(kid, &bus->children, sibling) {
-+            if (kid->index == index) {
-+                existed = true;
-+                break;
-+            }
-+        }
-+
-+        if (!existed) {
-+            break;
-+        }
-+    }
-+    return index;
++    return -1;
 +}
 +
- static void cpu_bus_class_init(ObjectClass *oc, void *data)
- {
-     BusClass *bc = BUS_CLASS(oc);
- 
-     bc->check_address = cpu_bus_check_address;
-+    bc->assign_free_index = cpu_bus_assign_free_index;
- }
- 
- static const TypeInfo cpu_bus_type_info = {
-@@ -177,3 +206,11 @@ int cpu_topo_get_instances_num(CPUTopoState *topo)
- 
-     return bus ? bus->num_children : 1;
- }
++typedef struct SearchCoreCb {
++    const X86CPUTopoIDs *topo_ids;
++    const CPUTopoState *parent;
++} SearchCoreCb;
 +
-+int cpu_topo_get_index(CPUTopoState *topo)
++static int x86_search_topo_parent(DeviceState *dev, void *opaque)
 +{
-+    BusChild *node = DEVICE(topo)->bus_node;
++    CPUTopoState *topo = CPU_TOPO(dev);
++    CpuTopologyLevel level = GET_CPU_TOPO_LEVEL(topo);
++    SearchCoreCb *cb = opaque;
++    int topo_id, index;
 +
-+    assert(node);
-+    return node->index;
++    topo_id = x86_cpu_get_topo_id(cb->topo_ids, level);
++    index = cpu_topo_get_index(topo);
++
++    if (topo_id < 0) {
++        error_report("Invalid %s-id: %d",
++                     CpuTopologyLevel_str(level), topo_id);
++        error_printf("Try to set the %s-id in [0-%d].\n",
++                     CpuTopologyLevel_str(level),
++                     cpu_topo_get_instances_num(topo) - 1);
++        return TOPO_FOREACH_ERR;
++    }
++
++    if (topo_id == index) {
++        if (level == CPU_TOPOLOGY_LEVEL_CORE) {
++            cb->parent = topo;
++            /* The error result could exit directly. */
++            return TOPO_FOREACH_ERR;
++        }
++        return TOPO_FOREACH_CONTINUE;
++    }
++    return TOPO_FOREACH_END;
 +}
-diff --git a/include/hw/cpu/cpu-topology.h b/include/hw/cpu/cpu-topology.h
-index 7a447ad16ee7..80aeff18baa3 100644
---- a/include/hw/cpu/cpu-topology.h
-+++ b/include/hw/cpu/cpu-topology.h
-@@ -64,5 +64,6 @@ struct CPUTopoState {
- #define GET_CPU_TOPO_LEVEL(topo)    (CPU_TOPO_GET_CLASS(topo)->level)
- 
- int cpu_topo_get_instances_num(CPUTopoState *topo);
-+int cpu_topo_get_index(CPUTopoState *topo);
- 
- #endif /* CPU_TOPO_H */
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index 7cbc5fb97298..77223b28c788 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -342,6 +342,8 @@ struct BusClass {
-      */
-     bool (*check_address)(BusState *bus, DeviceState *dev, Error **errp);
- 
-+    int (*assign_free_index)(BusState *bus);
 +
-     BusRealize realize;
-     BusUnrealize unrealize;
++static BusState *x86_find_topo_bus(MachineState *ms, X86CPUTopoIDs *topo_ids)
++{
++    SearchCoreCb cb;
++
++    cb.topo_ids = topo_ids;
++    cb.parent = NULL;
++    qbus_walk_children(BUS(&ms->topo->bus), x86_search_topo_parent,
++                       NULL, NULL, NULL, &cb);
++
++    if (!cb.parent) {
++        return NULL;
++    }
++
++    return BUS(cb.parent->bus);
++}
++
++static void x86_cpu_new(X86MachineState *x86ms, int index,
++                        int64_t apic_id, Error **errp)
++{
++    MachineState *ms = MACHINE(x86ms);
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
++    Object *cpu = object_new(ms->cpu_type);
++    DeviceState *dev = DEVICE(cpu);
++    BusState *bus = NULL;
++
++    /*
++     * Once x86 machine supports topo_tree_supported, x86 CPU would
++     * also have bus_type.
++     */
++    if (mc->smp_props.topo_tree_supported) {
++        X86CPUTopoIDs topo_ids;
++        X86CPUTopoInfo topo_info;
++
++        init_topo_info(&topo_info, x86ms);
++        x86_topo_ids_from_apicid(apic_id, &topo_info, &topo_ids);
++        bus = x86_find_topo_bus(ms, &topo_ids);
++
++        /* Only with dev->id, CPU can be inserted into topology tree. */
++        dev->id = g_strdup_printf("%s[%d]", ms->cpu_type, index);
++    }
+ 
+     if (!object_property_set_uint(cpu, "apic-id", apic_id, errp)) {
+         goto out;
+     }
+-    qdev_realize(DEVICE(cpu), NULL, errp);
++    qdev_realize(dev, bus, errp);
+ 
+ out:
+     object_unref(cpu);
+@@ -111,7 +204,7 @@ void x86_cpus_init(X86MachineState *x86ms, int default_cpu_version)
+ 
+     possible_cpus = mc->possible_cpu_arch_ids(ms);
+     for (i = 0; i < ms->smp.cpus; i++) {
+-        x86_cpu_new(x86ms, possible_cpus->cpus[i].arch_id, &error_fatal);
++        x86_cpu_new(x86ms, i, possible_cpus->cpus[i].arch_id, &error_fatal);
+     }
+ }
  
 -- 
 2.34.1
