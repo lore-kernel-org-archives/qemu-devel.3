@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6ADECDD569
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 01:42:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07340CDD566
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 01:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr6BC-0007fW-9i; Wed, 18 Sep 2024 21:41:58 -0400
+	id 1sr6AK-0002Yn-TD; Wed, 18 Sep 2024 21:41:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sr6Ai-0005e6-LX; Wed, 18 Sep 2024 21:41:29 -0400
+ id 1sr6AC-0001xG-5d; Wed, 18 Sep 2024 21:40:56 -0400
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sr6Ag-0005AN-HF; Wed, 18 Sep 2024 21:41:28 -0400
+ id 1sr6AA-00058t-2C; Wed, 18 Sep 2024 21:40:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1726710087; x=1758246087;
+ t=1726710054; x=1758246054;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=R/RyqBpSFLfGANKmP2zWrU5SVWm2/qn58wOc7/+Iwms=;
- b=XRiBW6ThyhwYtqtWmCat7Nkuhj9Q1bXN9eTlg4EL5iKAbFzOTk0r3KTO
- xJn/HYJaSEgfDDTlNF035HVY+j8rISVETTbFRvQtYIGztjC376yygHSud
- yJbtU4sggvLsMdQE/nvHrvlVejCyqqghVbyZTmvfdVqaTdHIk8AZ1MWs0
- 3tC6a+QHQoeJVgnkFm3ISmF7pcD8KPL2+w74/R3RY5VA9QgCMNFFrQM00
- f0ORavhaXIZdFeBBbZ9eYUw476raJ4bIv3ImFlRQU4uCjAvN6Bc2KWJRT
- L1JRBDBm7m3gSBPfDuF+vay7eLo1pIBSNsESE3uIYfR6EvgIlKfLJPOjL Q==;
-X-CSE-ConnectionGUID: aj7RdIABSOCedBi7ma9zGg==
-X-CSE-MsgGUID: 4yyXbx2sT56P+ToiUA9AKQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25798138"
-X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25798138"
+ bh=0niF0vf3jvEyp2QjdR6nFcp3M1J547cnSvpKpCorKyw=;
+ b=m6sSuQKwo81FBEOn+fWUI1uJvZrjwWZxCrjw0p/vqoUaTRWDq1FvkRM6
+ IZrV5n7Mye4UrNVWA6gCI5sLmeZTrhh0HbA5Hnl2KXsyAp1uFNTMtOe8Y
+ QP6kfbVqvd/lqe48Cmgyf6duHzfGZhao7BrpdI7/spqCwT7ux2nyTocbp
+ hVAzKOIP+fB7nAQSRJjiI2UhjaZmk4BNeVlAFGVN+REF4RRVuODsifi3A
+ /juzozPN1SqcEJt4dboJ0p6TuoTF2kQl5xQhD/fy/s+ViFSk31+iM0xlb
+ 3uOSPl8D9iSRGOfiAQwiawA+cxrm3Y5hgCa1nsyVEKj0MWvAKiu4v88B5 w==;
+X-CSE-ConnectionGUID: B829nPk0SvSTbR90pivhng==
+X-CSE-MsgGUID: Abr6DWOsSa2REyST/WQ4vQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25798002"
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25798002"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Sep 2024 18:41:25 -0700
-X-CSE-ConnectionGUID: szNCjQVpTIWjD4Z0T6eu4A==
-X-CSE-MsgGUID: 4gQNKxRUT0GdnsrB0gseZg==
+ 18 Sep 2024 18:40:52 -0700
+X-CSE-ConnectionGUID: sCN0Ehe4SeiW9m26BTN/FA==
+X-CSE-MsgGUID: e7DxLiX3SxWuG72VcaXdmQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="70059004"
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="70058928"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa006.jf.intel.com with ESMTP; 18 Sep 2024 18:41:18 -0700
+ by orviesa006.jf.intel.com with ESMTP; 18 Sep 2024 18:40:45 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -66,9 +66,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-ppc@nongnu.org,
  qemu-arm@nongnu.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC v2 15/15] i386: Support topology device tree
-Date: Thu, 19 Sep 2024 09:55:33 +0800
-Message-Id: <20240919015533.766754-16-zhao1.liu@intel.com>
+Subject: [RFC v2 10/15] hw/machine: Build smp topology tree from -smp
+Date: Thu, 19 Sep 2024 09:55:28 +0800
+Message-Id: <20240919015533.766754-11-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240919015533.766754-1-zhao1.liu@intel.com>
 References: <20240919015533.766754-1-zhao1.liu@intel.com>
@@ -99,191 +99,271 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Support complete QOM CPu topology tree for x86 machine, and specify
-bus_type for x86 CPU so that all x86 CPUs will be added in the topology
-tree.
+For architectures supports QOM topology (indicated by the MachineClass.
+topo_tree_supported field), implement smp QOM topology tree from
+MachineState.smp.
 
-Since the CPU slot make the machine as the hotplug handler for all
-topology devices, hotplug related hooks may used to handle other
-topology devices besides the CPU. Thus, make microvm not assume that
-the device is only a CPU when implementing the relevant hooks.
+The topology tree is created before MachineClass.init(), where arch
+will initialize CPUs or cores, corresponding to the
+MachineState.possible_cpus[].
 
-Additionally, drop code paths that are not needed by the topology tree
-implementation.
+To avoid conflicts with CPU/core generation in the arch machine,
+create_smp_topo_children() will only create topology levels which
+are higher than the granularity of possible_cpus[]. The remaining
+topology parts will be completed by the arch machine during machine
+init().
+
+There's a new field, arch_id_topo_level, to indicate the granularity of
+possible_cpus[]. While this field is set, CPU slot can create the
+topology tree level by level. Without this field, any topology device
+will be collect at the CPU bus of the CPU slot and will not be organized
+into a tree structure.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/i386/microvm.c    | 13 +++++---
- hw/i386/x86-common.c | 78 +++++---------------------------------------
- hw/i386/x86.c        |  2 ++
- target/i386/cpu.c    |  2 ++
- 4 files changed, 21 insertions(+), 74 deletions(-)
+ hw/core/machine.c         |   5 ++
+ hw/cpu/cpu-slot.c         | 153 ++++++++++++++++++++++++++++++++++++++
+ include/hw/boards.h       |   2 +
+ include/hw/cpu/cpu-slot.h |   5 ++
+ include/qemu/bitops.h     |   5 ++
+ 5 files changed, 170 insertions(+)
 
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index 40edcee7af29..49a897db50fc 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -417,16 +417,21 @@ static void microvm_fix_kernel_cmdline(MachineState *machine)
- static void microvm_device_pre_plug_cb(HotplugHandler *hotplug_dev,
-                                        DeviceState *dev, Error **errp)
- {
--    X86CPU *cpu = X86_CPU(dev);
-+    if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
-+        X86CPU *cpu;
-+        cpu = X86_CPU(dev);
- 
--    cpu->host_phys_bits = true; /* need reliable phys-bits */
--    x86_cpu_pre_plug(hotplug_dev, dev, errp);
-+        cpu->host_phys_bits = true; /* need reliable phys-bits */
-+        x86_cpu_pre_plug(hotplug_dev, dev, errp);
-+    }
- }
- 
- static void microvm_device_plug_cb(HotplugHandler *hotplug_dev,
-                                    DeviceState *dev, Error **errp)
- {
--    x86_cpu_plug(hotplug_dev, dev, errp);
-+    if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
-+        x86_cpu_plug(hotplug_dev, dev, errp);
-+    }
- }
- 
- static void microvm_device_unplug_request_cb(HotplugHandler *hotplug_dev,
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index d837aadc9dea..75d4b2f3d43a 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -129,26 +129,18 @@ static void x86_cpu_new(X86MachineState *x86ms, int index,
-                         int64_t apic_id, Error **errp)
- {
-     MachineState *ms = MACHINE(x86ms);
--    MachineClass *mc = MACHINE_GET_CLASS(ms);
-     Object *cpu = object_new(ms->cpu_type);
-     DeviceState *dev = DEVICE(cpu);
-     BusState *bus = NULL;
-+    X86CPUTopoIDs topo_ids;
-+    X86CPUTopoInfo topo_info;
- 
--    /*
--     * Once x86 machine supports topo_tree_supported, x86 CPU would
--     * also have bus_type.
--     */
--    if (mc->smp_props.topo_tree_supported) {
--        X86CPUTopoIDs topo_ids;
--        X86CPUTopoInfo topo_info;
--
--        init_topo_info(&topo_info, x86ms);
--        x86_topo_ids_from_apicid(apic_id, &topo_info, &topo_ids);
--        bus = x86_find_topo_bus(ms, &topo_ids);
-+    init_topo_info(&topo_info, x86ms);
-+    x86_topo_ids_from_apicid(apic_id, &topo_info, &topo_ids);
-+    bus = x86_find_topo_bus(ms, &topo_ids);
- 
--        /* Only with dev->id, CPU can be inserted into topology tree. */
--        dev->id = g_strdup_printf("%s[%d]", ms->cpu_type, index);
--    }
-+    /* Only with dev->id, CPU can be inserted into topology tree. */
-+    dev->id = g_strdup_printf("%s[%d]", ms->cpu_type, index);
- 
-     if (!object_property_set_uint(cpu, "apic-id", apic_id, errp)) {
-         goto out;
-@@ -399,10 +391,7 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
-     X86CPU *cpu = X86_CPU(dev);
-     CPUX86State *env = &cpu->env;
-     MachineState *ms = MACHINE(hotplug_dev);
--    MachineClass *mc = MACHINE_GET_CLASS(ms);
-     X86MachineState *x86ms = X86_MACHINE(hotplug_dev);
--    unsigned int smp_cores = ms->smp.cores;
--    unsigned int smp_threads = ms->smp.threads;
-     X86CPUTopoInfo topo_info;
- 
-     if (!object_dynamic_cast(OBJECT(cpu), ms->cpu_type)) {
-@@ -434,58 +423,7 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
-         set_bit(CPU_TOPOLOGY_LEVEL_DIE, env->avail_cpu_topo);
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index b6258d95b1e8..076bd365197b 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1638,6 +1638,11 @@ void machine_run_board_init(MachineState *machine, const char *mem_path, Error *
+                                    "on", false);
      }
  
--    if (cpu->apic_id == UNASSIGNED_APIC_ID &&
--        !mc->smp_props.topo_tree_supported) {
--        x86_fixup_topo_ids(ms, cpu);
--
--        if (cpu->socket_id < 0) {
--            error_setg(errp, "CPU socket-id is not set");
--            return;
--        } else if (cpu->socket_id > ms->smp.sockets - 1) {
--            error_setg(errp, "Invalid CPU socket-id: %u must be in range 0:%u",
--                       cpu->socket_id, ms->smp.sockets - 1);
--            return;
--        }
--        if (cpu->die_id < 0) {
--            error_setg(errp, "CPU die-id is not set");
--            return;
--        } else if (cpu->die_id > ms->smp.dies - 1) {
--            error_setg(errp, "Invalid CPU die-id: %u must be in range 0:%u",
--                       cpu->die_id, ms->smp.dies - 1);
--        }
--        if (cpu->module_id < 0) {
--            error_setg(errp, "CPU module-id is not set");
--            return;
--        } else if (cpu->module_id > ms->smp.modules - 1) {
--            error_setg(errp, "Invalid CPU module-id: %u must be in range 0:%u",
--                       cpu->module_id, ms->smp.modules - 1);
--            return;
--        }
--        if (cpu->core_id < 0) {
--            error_setg(errp, "CPU core-id is not set");
--            return;
--        } else if (cpu->core_id > (smp_cores - 1)) {
--            error_setg(errp, "Invalid CPU core-id: %u must be in range 0:%u",
--                       cpu->core_id, smp_cores - 1);
--            return;
--        }
--        if (cpu->thread_id < 0) {
--            error_setg(errp, "CPU thread-id is not set");
--            return;
--        } else if (cpu->thread_id > (smp_threads - 1)) {
--            error_setg(errp, "Invalid CPU thread-id: %u must be in range 0:%u",
--                       cpu->thread_id, smp_threads - 1);
--            return;
--        }
--
--        topo_ids.pkg_id = cpu->socket_id;
--        topo_ids.die_id = cpu->die_id;
--        topo_ids.module_id = cpu->module_id;
--        topo_ids.core_id = cpu->core_id;
--        topo_ids.smt_id = cpu->thread_id;
--        cpu->apic_id = x86_apicid_from_topo_ids(&topo_info, &topo_ids);
--    } else if (cpu->apic_id == UNASSIGNED_APIC_ID &&
--               mc->smp_props.topo_tree_supported) {
-+    if (cpu->apic_id == UNASSIGNED_APIC_ID) {
-         /*
-          * For this case, CPU is added by specifying the bus. Under the
-          * topology tree, specifying only the bus should be feasible, but
-diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-index 01fc5e656272..cdf7b81ad0e3 100644
---- a/hw/i386/x86.c
-+++ b/hw/i386/x86.c
-@@ -381,6 +381,8 @@ static void x86_machine_class_init(ObjectClass *oc, void *data)
-     mc->cpu_index_to_instance_props = x86_cpu_index_to_props;
-     mc->get_default_cpu_node_id = x86_get_default_cpu_node_id;
-     mc->possible_cpu_arch_ids = x86_possible_cpu_arch_ids;
-+    mc->smp_props.arch_id_topo_level = CPU_TOPOLOGY_LEVEL_THREAD;
-+    mc->smp_props.topo_tree_supported = true;
-     mc->kvm_type = x86_kvm_type;
-     x86mc->save_tsc_khz = true;
-     x86mc->fwcfg_dma_enabled = true;
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 90221ceb7313..fb54c2c100a0 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -8473,6 +8473,8 @@ static void x86_cpu_common_class_init(ObjectClass *oc, void *data)
- #ifndef CONFIG_USER_ONLY
-     BusFinderClass *bfc = BUS_FINDER_CLASS(oc);
-     bfc->find_bus = x86_cpu_get_parent_bus;
++    if (machine_class->smp_props.topo_tree_supported &&
++        !machine_create_topo_tree(machine, errp)) {
++        return;
++    }
 +
-+    dc->bus_type = TYPE_CPU_BUS;
- #endif
+     accel_init_interfaces(ACCEL_GET_CLASS(machine->accelerator));
+     machine_class->init(machine);
+     phase_advance(PHASE_MACHINE_INITIALIZED);
+diff --git a/hw/cpu/cpu-slot.c b/hw/cpu/cpu-slot.c
+index 4dbd5b7b7e00..1cc3b32ed675 100644
+--- a/hw/cpu/cpu-slot.c
++++ b/hw/cpu/cpu-slot.c
+@@ -12,8 +12,12 @@
+ #include "qemu/osdep.h"
  
-     object_class_property_add(oc, "family", "int",
+ #include "hw/boards.h"
++#include "hw/cpu/core.h"
+ #include "hw/cpu/cpu-slot.h"
+ #include "hw/cpu/cpu-topology.h"
++#include "hw/cpu/die.h"
++#include "hw/cpu/module.h"
++#include "hw/cpu/socket.h"
+ #include "hw/qdev-core.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/sysbus.h"
+@@ -172,3 +176,152 @@ void machine_plug_cpu_slot(MachineState *ms)
+         qbus_set_hotplug_handler(BUS(&slot->bus), OBJECT(ms));
+     }
+ }
++
++static int get_smp_info_by_level(const CpuTopology *smp_info,
++                                 CpuTopologyLevel child_level)
++{
++    switch (child_level) {
++    case CPU_TOPOLOGY_LEVEL_THREAD:
++        return smp_info->threads;
++    case CPU_TOPOLOGY_LEVEL_CORE:
++        return smp_info->cores;
++    case CPU_TOPOLOGY_LEVEL_MODULE:
++        return smp_info->modules;
++    case CPU_TOPOLOGY_LEVEL_DIE:
++        return smp_info->dies;
++    case CPU_TOPOLOGY_LEVEL_SOCKET:
++        return smp_info->sockets;
++    default:
++        /* TODO: Add support for other levels. */
++        g_assert_not_reached();
++    }
++
++    return 0;
++}
++
++static const char *get_topo_typename_by_level(CpuTopologyLevel level)
++{
++    switch (level) {
++    case CPU_TOPOLOGY_LEVEL_CORE:
++        return TYPE_CPU_CORE;
++    case CPU_TOPOLOGY_LEVEL_MODULE:
++        return TYPE_CPU_MODULE;
++    case CPU_TOPOLOGY_LEVEL_DIE:
++        return TYPE_CPU_DIE;
++    case CPU_TOPOLOGY_LEVEL_SOCKET:
++        return TYPE_CPU_SOCKET;
++    default:
++        /* TODO: Add support for other levels. */
++        g_assert_not_reached();
++    }
++
++    return NULL;
++}
++
++typedef struct SMPBuildCbData {
++    DECLARE_BITMAP(create_levels, CPU_TOPOLOGY_LEVEL__MAX);
++    const CpuTopology *smp_info;
++    CPUTopoStat *stat;
++    Error **errp;
++} SMPBuildCbData;
++
++static int create_smp_topo_children(DeviceState *dev, void *opaque)
++{
++    Object *parent = OBJECT(dev);
++    CpuTopologyLevel child_level;
++    SMPBuildCbData *cb = opaque;
++    CPUTopoState *topo = NULL;
++    BusState *qbus;
++    CPUBusState *cbus;
++    Error **errp = cb->errp;
++    int max_children;
++
++    if (object_dynamic_cast(parent, TYPE_CPU_TOPO)) {
++        topo = CPU_TOPO(parent);
++        CpuTopologyLevel parent_level;
++
++        parent_level = GET_CPU_TOPO_LEVEL(topo);
++        child_level = find_last_bit(cb->create_levels, parent_level);
++
++        if (child_level == parent_level) {
++            return TOPO_FOREACH_CONTINUE;
++        }
++
++        cbus = topo->bus;
++    } else if (object_dynamic_cast(parent, TYPE_CPU_SLOT)) {
++        child_level = find_last_bit(cb->create_levels, CPU_TOPOLOGY_LEVEL__MAX);
++        cbus = &CPU_SLOT(parent)->bus;
++    } else {
++        return TOPO_FOREACH_ERR;
++    }
++
++    qbus = BUS(cbus);
++    max_children = get_smp_info_by_level(cb->smp_info, child_level);
++    for (int i = 0; i < max_children; i++) {
++        DeviceState *child;
++
++        child = qdev_new(get_topo_typename_by_level(child_level));
++
++        /*
++         * Bus inserts child device at head (QTAILQ_INSERT_HEAD_RCU), This
++         * could result in the device IDs in the created topology having a
++         * zig-zag arrangement.
++         *
++         * TODO: Remove obstacles preventing the use of QTAILQ_INSERT_HEAD_RCU
++         * for bus to insert kid device.
++         */
++        child->id = g_strdup_printf("%s[%d]",
++            CpuTopologyLevel_str(child_level),
++            cb->stat->entries[child_level].total_instances);
++
++        if (!qdev_realize_and_unref(child, qbus, errp)) {
++            return TOPO_FOREACH_ERR;
++        }
++    }
++
++    return TOPO_FOREACH_CONTINUE;
++}
++
++bool machine_create_topo_tree(MachineState *ms, Error **errp)
++{
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
++    CPUSlot *slot = ms->topo;
++    CpuTopologyLevel level;
++    SMPBuildCbData cb;
++
++    if (!slot) {
++        error_setg(errp, "Invalid machine: "
++                   "the cpu-slot of machine is not initialized.");
++        return false;
++    }
++
++    /*
++     * Don't support full topology tree.
++     * Just use slot to collect topology device.
++     */
++    if (!mc->smp_props.arch_id_topo_level) {
++        return true;
++    }
++
++    bitmap_copy(cb.create_levels, slot->supported_levels,
++                CPU_TOPOLOGY_LEVEL__MAX);
++    cb.smp_info = &ms->smp;
++    cb.stat = &slot->stat;
++    cb.errp = errp;
++
++    /*
++     * Topology objects at arch_id_topo_level and lower levels will be
++     * created by MachineClass.possible_cpu_arch_ids().
++     */
++    FOR_EACH_SET_BIT(level, slot->supported_levels,
++                     mc->smp_props.arch_id_topo_level + 1) {
++        clear_bit(level, cb.create_levels);
++    }
++
++    if (qdev_walk_children(DEVICE(slot), create_smp_topo_children,
++                           NULL, NULL, NULL, &cb) < 0) {
++        return false;
++    }
++
++    return true;
++}
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index eeb4e7e2ce9f..a49677466ef6 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -155,6 +155,7 @@ typedef struct {
+  *                    supported by the machine
+  * @topo_tree_supported - whether QOM topology tree is supported by the
+  *                        machine
++ * @arch_id_topo_level - topology granularity for possible_cpus[]
+  */
+ typedef struct {
+     bool prefer_sockets;
+@@ -166,6 +167,7 @@ typedef struct {
+     bool modules_supported;
+     bool cache_supported[CACHE_LEVEL_AND_TYPE__MAX];
+     bool topo_tree_supported;
++    CpuTopologyLevel arch_id_topo_level;
+ } SMPCompatProps;
+ 
+ /**
+diff --git a/include/hw/cpu/cpu-slot.h b/include/hw/cpu/cpu-slot.h
+index 24e122013bf7..1838e8c0c3f9 100644
+--- a/include/hw/cpu/cpu-slot.h
++++ b/include/hw/cpu/cpu-slot.h
+@@ -69,6 +69,11 @@ struct CPUSlot {
+     DeviceListener listener;
+ };
+ 
++#define TOPO_FOREACH_END             1
++#define TOPO_FOREACH_CONTINUE        0
++#define TOPO_FOREACH_ERR             -1
++
+ void machine_plug_cpu_slot(MachineState *ms);
++bool machine_create_topo_tree(MachineState *ms, Error **errp);
+ 
+ #endif /* CPU_SLOT_H */
+diff --git a/include/qemu/bitops.h b/include/qemu/bitops.h
+index 2c0a2fe7512d..d1c0e52219de 100644
+--- a/include/qemu/bitops.h
++++ b/include/qemu/bitops.h
+@@ -631,4 +631,9 @@ static inline uint64_t half_unshuffle64(uint64_t x)
+     return x;
+ }
+ 
++#define FOR_EACH_SET_BIT(bit, addr, size)               \
++    for ((bit) = find_first_bit((addr), (size));        \
++         (bit) < (size);                                \
++         (bit) = find_next_bit((addr), (size), (bit) + 1))
++
+ #endif
 -- 
 2.34.1
 
