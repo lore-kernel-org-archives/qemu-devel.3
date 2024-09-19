@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16654CDD578
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3460CDD573
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:12:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srGwj-0006A8-Po; Thu, 19 Sep 2024 09:11:45 -0400
+	id 1srGwj-0006A7-Pk; Thu, 19 Sep 2024 09:11:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srGwX-0005XQ-Rv
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:36 -0400
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ id 1srGwL-0004l9-8f
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:21 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srGwU-00015h-Qt
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:33 -0400
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-2f75e5f3debso7786381fa.1
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 06:11:29 -0700 (PDT)
+ id 1srGwH-00011V-8Z
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:20 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-42cbc38a997so5487695e9.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 06:11:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726751488; x=1727356288; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726751475; x=1727356275; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4mM7auy/FOUtYcyKkKCo8MHtp21fztts72NvbXMteRw=;
- b=y0fB4jMYwAblAIHercYElA6N8oChrUZiqVUbOi9bWEUcXiDieZhIwyMFEKqTt5VA89
- r177cLE30PJxPJDHBeTQLyN/VWMLJa3nZUdTmjIW76lzAWnM3t9z6HAnCFj3MSeP8JQQ
- dLGyxX6V7umRTq70we6Vx/pFhNz+QsRIGPdVMGs1izTQnUhCXHVM96OPStpwkN/3ztAm
- bnJvUhy7yBpPzTdw92GZmDxM9eU9+qq0dLCppexhKEfpxRuK6R46iTqVUssaAn6s4LQD
- kbK8Jq24M0tSKkP0vmZC7k/R4jcXaUiTwCmMHqI2g04xRYgJSP6VxNgnsr32CYGh1MYx
- H/qA==
+ :reply-to; bh=NwA8IMlT0sOSRXhOrSBTBleprWAAmzHJ7qrswSkhHtE=;
+ b=Fe8hdSTU411BgOUAZIf3gBlLgnt57wOa1JKu6+P631MXj14jPTCy6Rgx2tNaY08Y0f
+ XherVE62Y1b1UwxPQnFh8ngcOu2OZSugWn+DMpkYBOhzDxr6w3KkKll2MlBh3mRZeiIj
+ lwxVoYYWUQRb2h40K8wBi3/mCAJvwLwwGXQK75n7dvk81CoIn+XLwBH8qPm9U1n01D2y
+ 0sgDNXQABzb2/QPDs25sX0/MrVYctHHpSzeCQX8+CcBda/aFAjgdI8V8cYUEbR6qFkNP
+ SKMxW8QB4y69x8JNenxp//quqJDdtOY1y4EMo8LwKI9uaHZwlRZjiI3alasjdOZgQWl3
+ i++g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726751488; x=1727356288;
+ d=1e100.net; s=20230601; t=1726751475; x=1727356275;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4mM7auy/FOUtYcyKkKCo8MHtp21fztts72NvbXMteRw=;
- b=AxXycTyeVmk70XVhAiefnh/hZdkeV4cZI08ay0vy+vfkJ31GQ0YCuUDhaYAQKqt7kK
- eZW/mA4Wx0dh6TMoFuwMhCXUdl38Wp97MiCTYemX5958UxcSAf52ORhmVK4T5Suv7LK6
- 5WGCOhyvrTjjwYD8g2DFDunQ100K/tjRzv244aecNU7ZPFEjkEYxPpbQZ2V0NSbPA/2P
- kf+pXWiRJ31KiZosulDO+zCyybhF4VSZUKa2LIyYJXdIa+Zwtj6XLypHh9tPlPk5gkSW
- 0U4L5AvQMQslnr7BRaDy+Lx5bi79AQdSpErI9JSAz+fBXYMbDK+LcMT1IXqEChgfPZwT
- ETiQ==
-X-Gm-Message-State: AOJu0YyIRbuHtXAZ0kn9Ogc7ityRYZ1323C20k8CtdqdJ1lkPhAiSRdj
- Y3PETgCBLBxU6JNhyTYHRYKaTd7J9zLpzDUiOxTxlb1y47iz7fpmOmHvqmDLlhuwdQQf5RPiCaP
- W
-X-Google-Smtp-Source: AGHT+IEdQvOO+eyhhmWjd08K49z3UADY4tLot4c6bE6h5c6h5qH/ZThRlkbjE7WIr/fONao/q553yA==
-X-Received: by 2002:a05:651c:2118:b0:2f7:528f:421e with SMTP id
- 38308e7fff4ca-2f79183a94emr112200111fa.0.1726751487939; 
- Thu, 19 Sep 2024 06:11:27 -0700 (PDT)
+ bh=NwA8IMlT0sOSRXhOrSBTBleprWAAmzHJ7qrswSkhHtE=;
+ b=l8Pkj1OwBY9PK53/C60dnAoWYbgm4X2i7vX83BlzrevAkT+VrY+zdmEr0vxyIUgIHj
+ J9Fp2Qjq3CaeROcPIM0oWEYA6/321FTrkaowVrBfzwV2JYxnGXWAHsC+Hw/XU6pJB7pV
+ MIJm/LBaVcS9sXxJieO1L7goqZVa0/6aIbQLGrYTBXfqdrfmvgm0dVlJTZhu6WbZV/En
+ jOOcGY1VLzn5TK3JVgCtCYptSGb6BWx9hmdjjk7AwsjX64h4olZeVsatdDwH4Nave5OH
+ mlmGyA8kNVNHK5Tw2LgaAKC8wytd9cphPSH5ut67Dt34EJXqSsPU+hG97p8NlkryBGb1
+ FQ9g==
+X-Gm-Message-State: AOJu0Yx5vtP/UTpocdWw9R09YiEEXwAxhwOQUMd1i9TK6vE0K4+t/Xsa
+ 8DNQIxkcZE6hKgxyTMGEg31wLkX+4b9LTBrwZBe0uM+T8xt8rVEPdJZB0ap6TyNJwZfZhTlvgMh
+ t
+X-Google-Smtp-Source: AGHT+IGlXCwzCl97IssJXVYd3+CWUJTm3KfB1qMwlD+EXMKOS0DWeh8U/bv0ADqh8YgoMwd6ur1tAQ==
+X-Received: by 2002:a05:600c:154d:b0:42c:b2a2:af3a with SMTP id
+ 5b1f17b1804b1-42e744279b1mr21822355e9.9.1726751475005; 
+ Thu, 19 Sep 2024 06:11:15 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42e754091d3sm21667845e9.10.2024.09.19.06.11.27
+ 5b1f17b1804b1-42e754091d3sm21667845e9.10.2024.09.19.06.11.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Sep 2024 06:11:27 -0700 (PDT)
+ Thu, 19 Sep 2024 06:11:14 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 34/38] tests: drop OpenBSD tests for aarch64/sbsa-ref
-Date: Thu, 19 Sep 2024 14:11:02 +0100
-Message-Id: <20240919131106.3362543-35-peter.maydell@linaro.org>
+Subject: [PULL 13/38] target/arm: Convert MOVI, FMOV, ORR,
+ BIC (vector immediate) to decodetree
+Date: Thu, 19 Sep 2024 14:10:41 +0100
+Message-Id: <20240919131106.3362543-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240919131106.3362543-1-peter.maydell@linaro.org>
 References: <20240919131106.3362543-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,78 +94,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-OpenBSD 7.3 we use is EoL. Both 7.4 and 7.5 releases do not work on
-anything above Neoverse-N1 due to PAC emulation:
-
-https://marc.info/?l=openbsd-arm&m=171050428327850&w=2
-
-OpenBSD 7.6 is not yet released.
-
-Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Message-id: 20240910-b4-move-to-freebsd-v5-4-0fb66d803c93@linaro.org
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240912024114.1097832-14-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/functional/test_aarch64_sbsaref.py | 44 ------------------------
- 1 file changed, 44 deletions(-)
+ target/arm/tcg/a64.decode      |   9 +++
+ target/arm/tcg/translate-a64.c | 117 ++++++++++++++-------------------
+ 2 files changed, 59 insertions(+), 67 deletions(-)
 
-diff --git a/tests/functional/test_aarch64_sbsaref.py b/tests/functional/test_aarch64_sbsaref.py
-index 1648e8ceb68..b50e1a59657 100755
---- a/tests/functional/test_aarch64_sbsaref.py
-+++ b/tests/functional/test_aarch64_sbsaref.py
-@@ -143,50 +143,6 @@ def test_sbsaref_alpine_linux_max(self):
-         self.boot_alpine_linux("max")
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index e11e293631b..278d7873c21 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -1184,3 +1184,12 @@ FMINV_s         0110 1110 10 11000 01111 10 ..... .....     @rr_q1e2
+ # Floating-point Immediate
  
+ FMOVI_s         0001 1110 .. 1 imm:8 100 00000 rd:5         esz=%esz_hsd
++
++# Advanced SIMD Modified Immediate
++
++%abcdefgh       16:3 5:5
++
++FMOVI_v_h       0 q:1 00 1111 00000 ... 1111 11 ..... rd:5  %abcdefgh
++
++# MOVI, MVNI, ORR, BIC, FMOV are all intermixed via cmode.
++Vimm            0 q:1 op:1 0 1111 00000 ... cmode:4 01 ..... rd:5 %abcdefgh
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 0e290062ef1..53022f4fc08 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -6913,6 +6913,52 @@ static bool trans_FMOVI_s(DisasContext *s, arg_FMOVI_s *a)
+     return true;
+ }
  
--    ASSET_OPENBSD_ISO = Asset(
--        ('https://cdn.openbsd.org/pub/OpenBSD/7.3/arm64/miniroot73.img'),
--        '7fc2c75401d6f01fbfa25f4953f72ad7d7c18650056d30755c44b9c129b707e5')
++/*
++ * Advanced SIMD Modified Immediate
++ */
++
++static bool trans_FMOVI_v_h(DisasContext *s, arg_FMOVI_v_h *a)
++{
++    if (!dc_isar_feature(aa64_fp16, s)) {
++        return false;
++    }
++    if (fp_access_check(s)) {
++        tcg_gen_gvec_dup_imm(MO_16, vec_full_reg_offset(s, a->rd),
++                             a->q ? 16 : 8, vec_full_reg_size(s),
++                             vfp_expand_imm(MO_16, a->abcdefgh));
++    }
++    return true;
++}
++
++static void gen_movi(unsigned vece, uint32_t dofs, uint32_t aofs,
++                     int64_t c, uint32_t oprsz, uint32_t maxsz)
++{
++    tcg_gen_gvec_dup_imm(MO_64, dofs, oprsz, maxsz, c);
++}
++
++static bool trans_Vimm(DisasContext *s, arg_Vimm *a)
++{
++    GVecGen2iFn *fn;
++
++    /* Handle decode of cmode/op here between ORR/BIC/MOVI */
++    if ((a->cmode & 1) && a->cmode < 12) {
++        /* For op=1, the imm will be inverted, so BIC becomes AND. */
++        fn = a->op ? tcg_gen_gvec_andi : tcg_gen_gvec_ori;
++    } else {
++        /* There is one unallocated cmode/op combination in this space */
++        if (a->cmode == 15 && a->op == 1 && a->q == 0) {
++            return false;
++        }
++        fn = gen_movi;
++    }
++
++    if (fp_access_check(s)) {
++        uint64_t imm = asimd_imm_const(a->abcdefgh, a->cmode, a->op);
++        gen_gvec_fn2i(s, a->q, a->rd, a->rd, imm, fn, MO_64);
++    }
++    return true;
++}
++
+ /* Shift a TCGv src by TCGv shift_amount, put result in dst.
+  * Note that it is the caller's responsibility to ensure that the
+  * shift amount is in range (ie 0..31 or 0..63) and provide the ARM
+@@ -9092,69 +9138,6 @@ static void disas_data_proc_fp(DisasContext *s, uint32_t insn)
+     }
+ }
+ 
+-/* AdvSIMD modified immediate
+- *  31  30   29  28                 19 18 16 15   12  11  10  9     5 4    0
+- * +---+---+----+---------------------+-----+-------+----+---+-------+------+
+- * | 0 | Q | op | 0 1 1 1 1 0 0 0 0 0 | abc | cmode | o2 | 1 | defgh |  Rd  |
+- * +---+---+----+---------------------+-----+-------+----+---+-------+------+
+- *
+- * There are a number of operations that can be carried out here:
+- *   MOVI - move (shifted) imm into register
+- *   MVNI - move inverted (shifted) imm into register
+- *   ORR  - bitwise OR of (shifted) imm with register
+- *   BIC  - bitwise clear of (shifted) imm with register
+- * With ARMv8.2 we also have:
+- *   FMOV half-precision
+- */
+-static void disas_simd_mod_imm(DisasContext *s, uint32_t insn)
+-{
+-    int rd = extract32(insn, 0, 5);
+-    int cmode = extract32(insn, 12, 4);
+-    int o2 = extract32(insn, 11, 1);
+-    uint64_t abcdefgh = extract32(insn, 5, 5) | (extract32(insn, 16, 3) << 5);
+-    bool is_neg = extract32(insn, 29, 1);
+-    bool is_q = extract32(insn, 30, 1);
+-    uint64_t imm = 0;
 -
--    # This tests the whole boot chain from EFI to Userspace
--    # We only boot a whole OS for the current top level CPU and GIC
--    # Other test profiles should use more minimal boots
--    def boot_openbsd73(self, cpu=None):
--        self.fetch_firmware()
+-    if (o2) {
+-        if (cmode != 0xf || is_neg) {
+-            unallocated_encoding(s);
+-            return;
+-        }
+-        /* FMOV (vector, immediate) - half-precision */
+-        if (!dc_isar_feature(aa64_fp16, s)) {
+-            unallocated_encoding(s);
+-            return;
+-        }
+-        imm = vfp_expand_imm(MO_16, abcdefgh);
+-        /* now duplicate across the lanes */
+-        imm = dup_const(MO_16, imm);
+-    } else {
+-        if (cmode == 0xf && is_neg && !is_q) {
+-            unallocated_encoding(s);
+-            return;
+-        }
+-        imm = asimd_imm_const(abcdefgh, cmode, is_neg);
+-    }
 -
--        img_path = self.ASSET_OPENBSD_ISO.fetch()
+-    if (!fp_access_check(s)) {
+-        return;
+-    }
 -
--        self.vm.set_console()
--        self.vm.add_args(
--            "-drive", f"file={img_path},format=raw,snapshot=on",
--        )
--        if cpu:
--            self.vm.add_args("-cpu", cpu)
+-    if (!((cmode & 0x9) == 0x1 || (cmode & 0xd) == 0x9)) {
+-        /* MOVI or MVNI, with MVNI negation handled above.  */
+-        tcg_gen_gvec_dup_imm(MO_64, vec_full_reg_offset(s, rd), is_q ? 16 : 8,
+-                             vec_full_reg_size(s), imm);
+-    } else {
+-        /* ORR or BIC, with BIC negation to AND handled above.  */
+-        if (is_neg) {
+-            gen_gvec_fn2i(s, is_q, rd, rd, imm, tcg_gen_gvec_andi, MO_64);
+-        } else {
+-            gen_gvec_fn2i(s, is_q, rd, rd, imm, tcg_gen_gvec_ori, MO_64);
+-        }
+-    }
+-}
 -
--        self.vm.launch()
--        wait_for_console_pattern(self,
--                                 "Welcome to the OpenBSD/arm64"
--                                 " 7.3 installation program.")
--
--    def test_sbsaref_openbsd73_cortex_a57(self):
--        self.boot_openbsd73("cortex-a57")
--
--    def test_sbsaref_openbsd73_default_cpu(self):
--        self.boot_openbsd73()
--
--    def test_sbsaref_openbsd73_max_pauth_off(self):
--        self.boot_openbsd73("max,pauth=off")
--
--    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
--                'Test might timeout due to PAuth emulation')
--    def test_sbsaref_openbsd73_max_pauth_impdef(self):
--        self.boot_openbsd73("max,pauth-impdef=on")
--
--    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'),
--                'Test might timeout due to PAuth emulation')
--    def test_sbsaref_openbsd73_max(self):
--        self.boot_openbsd73("max")
--
--
-     ASSET_FREEBSD_ISO = Asset(
-         ('https://download.freebsd.org/releases/arm64/aarch64/ISO-IMAGES/'
-          '14.1/FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso'),
+ /*
+  * Common SSHR[RA]/USHR[RA] - Shift right (optional rounding/accumulate)
+  *
+@@ -10635,8 +10618,10 @@ static void disas_simd_shift_imm(DisasContext *s, uint32_t insn)
+     bool is_u = extract32(insn, 29, 1);
+     bool is_q = extract32(insn, 30, 1);
+ 
+-    /* data_proc_simd[] has sent immh == 0 to disas_simd_mod_imm. */
+-    assert(immh != 0);
++    if (immh == 0) {
++        unallocated_encoding(s);
++        return;
++    }
+ 
+     switch (opcode) {
+     case 0x08: /* SRI */
+@@ -11644,8 +11629,6 @@ static void disas_simd_two_reg_misc_fp16(DisasContext *s, uint32_t insn)
+ static const AArch64DecodeTable data_proc_simd[] = {
+     /* pattern  ,  mask     ,  fn                        */
+     { 0x0e200800, 0x9f3e0c00, disas_simd_two_reg_misc },
+-    /* simd_mod_imm decode is a subset of simd_shift_imm, so must precede it */
+-    { 0x0f000400, 0x9ff80400, disas_simd_mod_imm },
+     { 0x0f000400, 0x9f800400, disas_simd_shift_imm },
+     { 0x5e200800, 0xdf3e0c00, disas_simd_scalar_two_reg_misc },
+     { 0x5f000400, 0xdf800400, disas_simd_scalar_shift_imm },
 -- 
 2.34.1
 
