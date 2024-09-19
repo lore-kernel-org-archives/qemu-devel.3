@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9BE5CE8D4C
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 04:50:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA2BDCE8D4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 04:51:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr94g-000198-Do; Thu, 19 Sep 2024 00:47:26 -0400
+	id 1sr958-0003HS-0T; Thu, 19 Sep 2024 00:47:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sr94b-0000oc-U7
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 00:47:21 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1sr94x-0002R3-73
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 00:47:43 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sr94V-0007Ga-IA
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 00:47:21 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-718d8d6af8fso288063b3a.3
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 21:47:14 -0700 (PDT)
+ id 1sr94r-0007SG-2M
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 00:47:42 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-71923d87be4so293079b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 21:47:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726721234; x=1727326034; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726721256; x=1727326056; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7PZhVYqzq4kADvRMhAIMG6rvS/s/Gp2LRBj3c7uTV/4=;
- b=rPY0hAEz8wwhdq6gge/JJtBsMK6YXatS9EkisTuZslqbKcky07/n+PlFDxv/0y1IMY
- zvzbFDJkyWf04/IOL94p0z2xuddWiWHJz53Jye8Lk5NKr6U+Vf4LiRf74hLOyKzS4U23
- zK8DIgRyJ08Iy9Hi1sG/Vey2j9QMg5oc6+6AauV9Bedj6ZImehV7q/CyvAyq3UR1n2JM
- KeamHNSU2iG0UyhPhnxzASSRkkg4XNHRzmTEHXa3R1KLBoPh1O3UK4WiHNvs2GZJit3t
- 4HOxbGpXbfifUui/L596CbW7QzXui0xRfUzJzl4EKh7MTVG3AajvBcTcKEvvZ0W6/mXy
- EQ+w==
+ bh=eNWqkzSNCBE+28dt8xOll3Id+6eEjKMEGJfuDzGU1co=;
+ b=zMPuRZqiQFk+Pu5xxrbzFNezEAif+k8yooqEH6VmXaHilyrV0Sgn2zPK/VleKxK9z0
+ FSXhV3LbDhjkW3BddsayLbbLCl8su5w6wdiUSEUvvuoErlUO3+Bf5g5Ao329e9I55ndc
+ smWXu5u8aO/SiRYL3qb63yLu7oUKa9XzZrRBxakRK5TBSUDz5tbDcXEc68UdfZc7qwTe
+ /A0/mBGIeDfAs/lPGkC0cjR+qpUhCf6kRjy7Nyl3y9Cjg1/dGrZyx98Ees7Tj0u922HV
+ T38ID/lyHy3En+AhJkIbEVbiaw2h0wQYn+oesj+4a6f28ma1g4jU5xM+7zOJjxJyQ6PI
+ 9ZCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726721234; x=1727326034;
+ d=1e100.net; s=20230601; t=1726721256; x=1727326056;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7PZhVYqzq4kADvRMhAIMG6rvS/s/Gp2LRBj3c7uTV/4=;
- b=fqZJorDqO7GHKbM1sQq+6PTPv6MQ1Jgo5djKXFOQcJmGDLSVbiECydLPYqIuaErTFo
- h4i2nTpoe1/BQILq8mY4Y8a4ocAYkdX+gF+ZeWkMoxfnWvITRUerpiqT7rCDEZAdNk6t
- TsoacOWTA+fWbHXAIdiLEEwT5mIxqO13OhvM5vMHyITfXVZRaHGD9N6A5RL5wc4ojCsP
- 1H5WtiM/4c7YQDTyFGF3WfEJqXCd2PL7KUZ911wuAy0vjfZjHhSusKQDt//ERZQge7nI
- xxsdzqEgpK7oVpz8XeU8MjpwbB9eZPAeDHiyQ0JAEDPrUUfiN6lvv2GILE7ymqrNFDg/
- Grmw==
-X-Gm-Message-State: AOJu0YxZSvAdiOk1C6iojByqQvFQ3oaoZ1CxW9nsQJ2IJSfgC8pw04Qs
- OBe7zZHHiTOPRSzuMVnKbFX6O7x5glYEjZi/ZdCMXN2Trj72Vg96WwGdmRM6lrWzCxMwTTVkBMn
- yI07H4Q==
-X-Google-Smtp-Source: AGHT+IFRqXUQzeifeEouuocTRosW9D+grcvLtI1xOR31wi5/CcwZDxPvsAI1HZex+byGlUmwqu8pKw==
-X-Received: by 2002:a05:6a00:2d91:b0:717:86ea:d010 with SMTP id
- d2e1a72fcca58-719261edaa2mr33169557b3a.21.1726721233871; 
- Wed, 18 Sep 2024 21:47:13 -0700 (PDT)
+ bh=eNWqkzSNCBE+28dt8xOll3Id+6eEjKMEGJfuDzGU1co=;
+ b=YNARJoBbK2PeDgzOidmn9vN6vnuduU81lZpVM1EiE3NABH9sre5Be80LaN8z5fx1pr
+ DtcHtOwVWPJ3576QUgWTsE+z98c9dm7ZCds2/Nzex7a15Pd4n1UskU3/VuZknRWGumhK
+ /Gxb7Tlto8Bn4BXDtYwSJ6YYZUNmO64gsS2+gMP773xDU9tOKXkLQ6oU7PMSX2I82r4z
+ LdHx4PRkrqWMCEUjwOrLr6NmzEtUPnIwdYXI6g+L3cMK54J5/bCqhQIlQnk1VjsISWfn
+ EdbRFmikF711M6YtPULhDKMvhIJycoy9zFAV/1gWXfU2piHG0w+L+gRpy7ToOQbvWJfx
+ fMBA==
+X-Gm-Message-State: AOJu0YzA1N2x6o6rPncoyuUSJRyF+QLUuZUok/6rMUWXR+zLg3C6bkyj
+ 5T0rmUWMc16Yk48nypAikN1UyptWe5oxBtDGlRvtgdSBXbhzvWMflU8kKIMFuuj4EcI0p7TPAbn
+ PA4jV7g==
+X-Google-Smtp-Source: AGHT+IG0RTXo4zmQGQBlENczTzliTQANG1tf/+V1ayQphhYWAEQO8ZekAqNGAnEsgrQycROh/RQPBw==
+X-Received: by 2002:a05:6a21:1690:b0:1cf:4348:d5c8 with SMTP id
+ adf61e73a8af0-1d112e8bfaemr31803053637.39.1726721255788; 
+ Wed, 18 Sep 2024 21:47:35 -0700 (PDT)
 Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71944bc279csm7478601b3a.188.2024.09.18.21.47.12
+ d2e1a72fcca58-71944bc279csm7478601b3a.188.2024.09.18.21.47.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Sep 2024 21:47:13 -0700 (PDT)
+ Wed, 18 Sep 2024 21:47:35 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
@@ -105,25 +105,24 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Jesper Devantier <foss@defmacro.it>, Marcelo Tosatti <mtosatti@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 14/34] target/i386/kvm: replace assert(false) with
+Subject: [PATCH v3 25/34] include/qemu: remove return after
  g_assert_not_reached()
-Date: Wed, 18 Sep 2024 21:46:21 -0700
-Message-Id: <20240919044641.386068-15-pierrick.bouvier@linaro.org>
+Date: Wed, 18 Sep 2024 21:46:32 -0700
+Message-Id: <20240919044641.386068-26-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20240919044641.386068-1-pierrick.bouvier@linaro.org>
 References: <20240919044641.386068-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,35 +142,24 @@ This patch is part of a series that moves towards a consistent use of
 g_assert_not_reached() rather than an ad hoc mix of different
 assertion mechanisms.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/i386/kvm/kvm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/qemu/pmem.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index ada581c5d6e..c8056ef83d7 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5771,7 +5771,7 @@ static int kvm_handle_rdmsr(X86CPU *cpu, struct kvm_run *run)
-         }
-     }
- 
--    assert(false);
-+    g_assert_not_reached();
+diff --git a/include/qemu/pmem.h b/include/qemu/pmem.h
+index d2d7ad085cc..e12a67ba2c0 100644
+--- a/include/qemu/pmem.h
++++ b/include/qemu/pmem.h
+@@ -22,7 +22,6 @@ pmem_memcpy_persist(void *pmemdest, const void *src, size_t len)
+     /* If 'pmem' option is 'on', we should always have libpmem support,
+        or qemu will report a error and exit, never come here. */
+     g_assert_not_reached();
+-    return NULL;
  }
  
- static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
-@@ -5790,7 +5790,7 @@ static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
-         }
-     }
- 
--    assert(false);
-+    g_assert_not_reached();
- }
- 
- static bool has_sgx_provisioning;
+ static inline void
 -- 
 2.39.5
 
