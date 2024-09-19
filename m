@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9197CDD578
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:12:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8585CDD57A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:13:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srGwP-0004sT-1f; Thu, 19 Sep 2024 09:11:26 -0400
+	id 1srGwy-00078Q-Oz; Thu, 19 Sep 2024 09:12:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srGwG-0004U9-A9
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:16 -0400
+ id 1srGwW-0005Sw-No
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:36 -0400
 Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srGwD-00010J-Df
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:16 -0400
+ id 1srGwT-00015H-34
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:32 -0400
 Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-42cb8dac900so7632105e9.3
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 06:11:12 -0700 (PDT)
+ 5b1f17b1804b1-42cae6bb895so7712975e9.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 06:11:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726751471; x=1727356271; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726751487; x=1727356287; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=e9gN9iym25WjHBVpIhI+njO5zeAi0FqzRkFImgHvlIA=;
- b=jmrhVHg/CZ3oxdMARuvCzo+iYjesUMglAEZFhXbvfQFMFAXRBc9Wiq4KVZNYPxf29O
- 99h3I0PSh8XoEVvnoa0VPnllgpW/wM1z8GHQBTHpmxfxRhlIHrsc6EYgCxQjh+FllOsp
- vfSGXEwW9UbO7t2WuQaJaFxmBuWELog7s2HMYAVkjesx4kS7EvrF1tl5joic1DF1Hzat
- mNKWcNhFuxM4axvm/jWzHkLn0F/QnH49bxjvQiGxD8E99NpKRuMRWZ93mvMpH5WuAX0z
- KvQPTpw4D+J9JVfDuSY7p+gmChceLgvTGtaHtHc/VIz+0FlHUzz9R/b0Mw6ZL7KhhlR1
- 4F1g==
+ :reply-to; bh=AphQX4ql+BAtHg5yWLKAQ+5iWJXZHPjOafSUz9y3vMM=;
+ b=Z6ntYAfPdPWmiElpYnv7lXPib7zLSXRJ4rVf7pJrhz9EqqtruX7g1fkxpDq39G9BFv
+ FRFI4J6Bc2fvziux7oTb5eYpIr6J3bRncLjJ6cRarPgVZKMLKKTezR+jR4a1YccvTrM2
+ cpZLBhiFnfVeE+LphRLkSYZBv6Omn0SbWbaePd82RUOAj9xQqI+SfZEZ+HsfynTlitYQ
+ yVBY5gQW8jbUSV3Clg+/VHD7SkzyEyr0YuW3E88yKXFR7WIo1oOiEfKZYpfvGUbnwB7c
+ YU8CbI49yGinE8QRtLZs3RD2emxBOwdsBKhw4Iw5y3QU3x2Mt9CbQ1vCedPpfslXJRI9
+ iT8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726751471; x=1727356271;
+ d=1e100.net; s=20230601; t=1726751487; x=1727356287;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=e9gN9iym25WjHBVpIhI+njO5zeAi0FqzRkFImgHvlIA=;
- b=cOUV1H9nbYzu/2vZTnb06MsNUTlXjr/49QHozSDfopFJNlKky0OopT07dz9Q2HEdPt
- xAU2lRHb/9+0Vv5y2FzoL/qEhmEP9W/kgaB1lmpOfERoalKissKGvJrFJkNWyyxEeAh6
- FW/Fh5khDU5Xxv32z7jP0uDxawjGPsNr/u93wlDf/oCC7hh/1WX0C86Yy+d5Tv+xQsDr
- fFhsslPY+D2AU1aEpYcbER3+vGNOXcZ46eTKE2CN4Pv66sfa8P5z4OXe3f8IdpCR6BhV
- gW9NtFOJpkGCZFts1hgC7mR721EDMNLFXh856H1tvh/tt+XOykwJWveWcxx0pysm5y24
- j5uA==
-X-Gm-Message-State: AOJu0YzjL1x8P2kOqf6trlElTUUwZRm++sKWG+JzaXWw3FBdOfiPL4ew
- v7F6ms9laCsK0yRFLgaM8WSTLDNW51YEgqEhpbH7ZfQ8s4xI3UkOuEo5s93Ez8R4I7kz4UcQaLc
- g
-X-Google-Smtp-Source: AGHT+IELi35SomLOQTn0Ynru2xfzxY17n97/y4K0jHX7zRW/DjIT3vd1O3mEuoYCf6eKNsRHKfML2w==
-X-Received: by 2002:a7b:c453:0:b0:42c:de34:34be with SMTP id
- 5b1f17b1804b1-42cde3436e0mr208139425e9.3.1726751471340; 
- Thu, 19 Sep 2024 06:11:11 -0700 (PDT)
+ bh=AphQX4ql+BAtHg5yWLKAQ+5iWJXZHPjOafSUz9y3vMM=;
+ b=lHRkE12hDO9M0aPkPr3ae91z8bsTlm4UWeLfv7ASpXN5Y8L+dJeykzPahfFMdZUNND
+ 4IvsJu2G8iYfnr7I4w5BQHVZvkYnTvaZXI38ng5zlg9S64o67m3tBdlhTZPOci5Hh+lO
+ 4IOO6bU26d/DdcSwckRwvIQCrPkUbJgM3117HYtaB32nbpduyoJUjjqkPV21RY+Z/x8Y
+ rhU0c5g0ZW9mc45DwF9tBYzyZyVC+C7w+Tgv2Jw8tOG+DRz4pQmfLPuu7yD2y7zNWFI/
+ cpUmMM3Om0ECCyZN8+CT2aBfO6lqeQtMg1hyBF+Wsht3+VxT/M/av2lxR5fPKc6anO/b
+ k/QQ==
+X-Gm-Message-State: AOJu0YzbUWqSaHvo80uK4ckZXpYppPJnve+SkMUTpS40qLRrRbixB+vN
+ jKME39+yJHVDZ/qYZGGhAV5nrSJwuuiHoMhmc9oMyv7/Vmw9ZS4vQHmq+JlwkAS1enErU8x4Dn7
+ y
+X-Google-Smtp-Source: AGHT+IGkmf+CjGpxjMfkAu037xnBDDsEAxLdzvVG0L955VtzT1Ori6Xi568avdZw57x74boDa11V3A==
+X-Received: by 2002:a05:600c:19c6:b0:426:5fe1:ec7a with SMTP id
+ 5b1f17b1804b1-42cdb5913f2mr173613295e9.31.1726751486623; 
+ Thu, 19 Sep 2024 06:11:26 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42e754091d3sm21667845e9.10.2024.09.19.06.11.10
+ 5b1f17b1804b1-42e754091d3sm21667845e9.10.2024.09.19.06.11.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Sep 2024 06:11:10 -0700 (PDT)
+ Thu, 19 Sep 2024 06:11:26 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/38] target/arm: Convert EXT to decodetree
-Date: Thu, 19 Sep 2024 14:10:34 +0100
-Message-Id: <20240919131106.3362543-7-peter.maydell@linaro.org>
+Subject: [PULL 32/38] tests: add FreeBSD tests for aarch64/sbsa-ref
+Date: Thu, 19 Sep 2024 14:11:00 +0100
+Message-Id: <20240919131106.3362543-33-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240919131106.3362543-1-peter.maydell@linaro.org>
 References: <20240919131106.3362543-1-peter.maydell@linaro.org>
@@ -94,177 +94,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+FreeBSD has longer support cycle for stable release (14.x EoL in 2028)
+than OpenBSD (7.3 we use is already EoL). Also bugfixes are backported
+so we can stay on 14.x for longer.
+
+Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Message-id: 20240910-b4-move-to-freebsd-v5-2-0fb66d803c93@linaro.org
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240912024114.1097832-7-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/a64.decode      |   5 ++
- target/arm/tcg/translate-a64.c | 121 +++++++++++++--------------------
- 2 files changed, 53 insertions(+), 73 deletions(-)
+ tests/functional/test_aarch64_sbsaref.py | 43 +++++++++++++++++++++++-
+ 1 file changed, 42 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 62df4c4ceb4..f72f95865fb 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -1136,3 +1136,8 @@ FMADD           0001 1111 .. 0 ..... 0 ..... ..... .....    @rrrr_hsd
- FMSUB           0001 1111 .. 0 ..... 1 ..... ..... .....    @rrrr_hsd
- FNMADD          0001 1111 .. 1 ..... 0 ..... ..... .....    @rrrr_hsd
- FNMSUB          0001 1111 .. 1 ..... 1 ..... ..... .....    @rrrr_hsd
-+
-+# Advanced SIMD Extract
-+
-+EXT_d           0010 1110 00 0 rm:5 00 imm:3 0 rn:5 rd:5
-+EXT_q           0110 1110 00 0 rm:5 0  imm:4 0 rn:5 rd:5
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 1a0b2bb33b6..48188d41165 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -6582,6 +6582,54 @@ static bool trans_FCSEL(DisasContext *s, arg_FCSEL *a)
-     return true;
- }
+diff --git a/tests/functional/test_aarch64_sbsaref.py b/tests/functional/test_aarch64_sbsaref.py
+index 528882f4fa9..89d0b9587a8 100755
+--- a/tests/functional/test_aarch64_sbsaref.py
++++ b/tests/functional/test_aarch64_sbsaref.py
+@@ -1,6 +1,6 @@
+ #!/usr/bin/env python3
+ #
+-# Functional test that boots a Linux kernel and checks the console
++# Functional test that boots a kernel and checks the console
+ #
+ # SPDX-FileCopyrightText: 2023-2024 Linaro Ltd.
+ # SPDX-FileContributor: Philippe Mathieu-Daudé <philmd@linaro.org>
+@@ -184,5 +184,46 @@ def test_sbsaref_openbsd73_max(self):
+         self.boot_openbsd73("max")
  
-+/*
-+ * Advanced SIMD Extract
-+ */
-+
-+static bool trans_EXT_d(DisasContext *s, arg_EXT_d *a)
-+{
-+    if (fp_access_check(s)) {
-+        TCGv_i64 lo = read_fp_dreg(s, a->rn);
-+        if (a->imm != 0) {
-+            TCGv_i64 hi = read_fp_dreg(s, a->rm);
-+            tcg_gen_extract2_i64(lo, lo, hi, a->imm * 8);
-+        }
-+        write_fp_dreg(s, a->rd, lo);
-+    }
-+    return true;
-+}
-+
-+static bool trans_EXT_q(DisasContext *s, arg_EXT_q *a)
-+{
-+    TCGv_i64 lo, hi;
-+    int pos = (a->imm & 7) * 8;
-+    int elt = a->imm >> 3;
-+
-+    if (!fp_access_check(s)) {
-+        return true;
-+    }
-+
-+    lo = tcg_temp_new_i64();
-+    hi = tcg_temp_new_i64();
-+
-+    read_vec_element(s, lo, a->rn, elt, MO_64);
-+    elt++;
-+    read_vec_element(s, hi, elt & 2 ? a->rm : a->rn, elt & 1, MO_64);
-+    elt++;
-+
-+    if (pos != 0) {
-+        TCGv_i64 hh = tcg_temp_new_i64();
-+        tcg_gen_extract2_i64(lo, lo, hi, pos);
-+        read_vec_element(s, hh, a->rm, elt & 1, MO_64);
-+        tcg_gen_extract2_i64(hi, hi, hh, pos);
-+    }
-+
-+    write_vec_element(s, lo, a->rd, 0, MO_64);
-+    write_vec_element(s, hi, a->rd, 1, MO_64);
-+    clear_vec_high(s, true, a->rd);
-+    return true;
-+}
-+
- /*
-  * Floating-point data-processing (3 source)
-  */
-@@ -8890,78 +8938,6 @@ static void disas_data_proc_fp(DisasContext *s, uint32_t insn)
-     }
- }
  
--/* EXT
-- *   31  30 29         24 23 22  21 20  16 15  14  11 10  9    5 4    0
-- * +---+---+-------------+-----+---+------+---+------+---+------+------+
-- * | 0 | Q | 1 0 1 1 1 0 | op2 | 0 |  Rm  | 0 | imm4 | 0 |  Rn  |  Rd  |
-- * +---+---+-------------+-----+---+------+---+------+---+------+------+
-- */
--static void disas_simd_ext(DisasContext *s, uint32_t insn)
--{
--    int is_q = extract32(insn, 30, 1);
--    int op2 = extract32(insn, 22, 2);
--    int imm4 = extract32(insn, 11, 4);
--    int rm = extract32(insn, 16, 5);
--    int rn = extract32(insn, 5, 5);
--    int rd = extract32(insn, 0, 5);
--    int pos = imm4 << 3;
--    TCGv_i64 tcg_resl, tcg_resh;
--
--    if (op2 != 0 || (!is_q && extract32(imm4, 3, 1))) {
--        unallocated_encoding(s);
--        return;
--    }
--
--    if (!fp_access_check(s)) {
--        return;
--    }
--
--    tcg_resh = tcg_temp_new_i64();
--    tcg_resl = tcg_temp_new_i64();
--
--    /* Vd gets bits starting at pos bits into Vm:Vn. This is
--     * either extracting 128 bits from a 128:128 concatenation, or
--     * extracting 64 bits from a 64:64 concatenation.
--     */
--    if (!is_q) {
--        read_vec_element(s, tcg_resl, rn, 0, MO_64);
--        if (pos != 0) {
--            read_vec_element(s, tcg_resh, rm, 0, MO_64);
--            tcg_gen_extract2_i64(tcg_resl, tcg_resl, tcg_resh, pos);
--        }
--    } else {
--        TCGv_i64 tcg_hh;
--        typedef struct {
--            int reg;
--            int elt;
--        } EltPosns;
--        EltPosns eltposns[] = { {rn, 0}, {rn, 1}, {rm, 0}, {rm, 1} };
--        EltPosns *elt = eltposns;
--
--        if (pos >= 64) {
--            elt++;
--            pos -= 64;
--        }
--
--        read_vec_element(s, tcg_resl, elt->reg, elt->elt, MO_64);
--        elt++;
--        read_vec_element(s, tcg_resh, elt->reg, elt->elt, MO_64);
--        elt++;
--        if (pos != 0) {
--            tcg_gen_extract2_i64(tcg_resl, tcg_resl, tcg_resh, pos);
--            tcg_hh = tcg_temp_new_i64();
--            read_vec_element(s, tcg_hh, elt->reg, elt->elt, MO_64);
--            tcg_gen_extract2_i64(tcg_resh, tcg_resh, tcg_hh, pos);
--        }
--    }
--
--    write_vec_element(s, tcg_resl, rd, 0, MO_64);
--    if (is_q) {
--        write_vec_element(s, tcg_resh, rd, 1, MO_64);
--    }
--    clear_vec_high(s, is_q, rd);
--}
--
- /* TBL/TBX
-  *   31  30 29         24 23 22  21 20  16 15  14 13  12  11 10 9    5 4    0
-  * +---+---+-------------+-----+---+------+---+-----+----+-----+------+------+
-@@ -11860,7 +11836,6 @@ static const AArch64DecodeTable data_proc_simd[] = {
-     { 0x0f000400, 0x9f800400, disas_simd_shift_imm },
-     { 0x0e000000, 0xbf208c00, disas_simd_tb },
-     { 0x0e000800, 0xbf208c00, disas_simd_zip_trn },
--    { 0x2e000000, 0xbf208400, disas_simd_ext },
-     { 0x5e200800, 0xdf3e0c00, disas_simd_scalar_two_reg_misc },
-     { 0x5f000400, 0xdf800400, disas_simd_scalar_shift_imm },
-     { 0x0e780800, 0x8f7e0c00, disas_simd_two_reg_misc_fp16 },
++    ASSET_FREEBSD_ISO = Asset(
++        ('https://download.freebsd.org/releases/arm64/aarch64/ISO-IMAGES/'
++         '14.1/FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso'),
++        '44cdbae275ef1bb6dab1d5fbb59473d4f741e1c8ea8a80fd9e906b531d6ad461')
++
++    # This tests the whole boot chain from EFI to Userspace
++    # We only boot a whole OS for the current top level CPU and GIC
++    # Other test profiles should use more minimal boots
++    def boot_freebsd14(self, cpu=None):
++        self.fetch_firmware()
++
++        img_path = self.ASSET_FREEBSD_ISO.fetch()
++
++        self.vm.set_console()
++        self.vm.add_args(
++            "-drive", f"file={img_path},format=raw,snapshot=on",
++        )
++        if cpu:
++            self.vm.add_args("-cpu", cpu)
++
++        self.vm.launch()
++        wait_for_console_pattern(self, 'Welcome to FreeBSD!')
++
++    def test_sbsaref_freebsd14_cortex_a57(self):
++        self.boot_freebsd14("cortex-a57")
++
++    def test_sbsaref_freebsd14_default_cpu(self):
++        self.boot_freebsd14()
++
++    def test_sbsaref_freebsd14_max_pauth_off(self):
++        self.boot_freebsd14("max,pauth=off")
++
++    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
++    def test_sbsaref_freebsd14_max_pauth_impdef(self):
++        self.boot_freebsd14("max,pauth-impdef=on")
++
++    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
++    def test_sbsaref_freebsd14_max(self):
++        self.boot_freebsd14("max")
++
++
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
 2.34.1
 
