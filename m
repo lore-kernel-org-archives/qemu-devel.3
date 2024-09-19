@@ -4,78 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCDC3CDD573
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:35:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04DC7CDD573
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:35:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srHJJ-0002qY-Vj; Thu, 19 Sep 2024 09:35:06 -0400
+	id 1srHJL-0002sI-Ij; Thu, 19 Sep 2024 09:35:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srHJ0-0001Zu-08
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:34:48 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srHIw-0004Rs-0B
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:34:43 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5c3ca32974fso1049577a12.3
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 06:34:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726752880; x=1727357680; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=dVOwl7TVYAuQCiKaTOD+iwg1613vIkWsU7lmwzlxW+I=;
- b=AVqwGDfwwbemFyzRkEK36tkabpEoh+gOSjw66N8HqoIDO8Id+MJCBRsjJvwYqpNofM
- mZRQUn386/hwgBqPbrpSHZIRI/6/lyulviokKFB/Qtg34nhO4Djiu66EVFzM6Li0tcCa
- /jxAOsPwE83MBWPGi9ux8cZ6Z1X1jxa+LixWWjvy6wxQ6VRP/3f/Ne9ZXWXQWXejb56i
- ttcSW8eeWz/O6pnBtNDIiXs0ALEU7qb5kdZ/U3u+ambW0+U6KVwsRJgcPRJ4Ts6F1G0D
- 9Zj6UqG6YZD66WtcXuhSBz5lX/gZzXqvGY7aSSSLn6mdnjiw6Tx5y4bwDr6ZbScJYj/s
- 4X/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726752880; x=1727357680;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dVOwl7TVYAuQCiKaTOD+iwg1613vIkWsU7lmwzlxW+I=;
- b=L3/3C7Mes+0gHJMhpD0h7V5lwNehfCMnyWlDfjEHZVWGfMgNTiV1alHdYcQyLm5MaS
- T9dcoTmMw5FbSUslwTrsKtD12Q84arlejE7OPB96cGadFqKR91wW4pJCYeNIQENAtypU
- fX8p5t9x6BreUq6gmRCIwXajs/2ll1gU3EVFzc/pcVVAC/qYJihUC0tGfiLvxifBxLf2
- aHB1GsMD1opJsJ4sp4x5xq7e2RgFd8KFg/LGY/Zuvd1dwGL3/KjKjpyw57jq3LYL0nDe
- B38ATmaNSUpXQtExhgE4ogITE2TULy6REqL8erUkyGhmWMbPzjTUNeLHMcD1paGuZO5O
- dqIQ==
-X-Gm-Message-State: AOJu0YxjMzj585v3tDiZb6lZOX+KYrh8QLYaHOy9NKgd09Aa5eFnBN53
- iXNB5/7cug3topTax8pxlM8dXE5QhXenak+v94YWANf6eLvS3For+6AgBh3t8yqEwHy6ixnGKIJ
- NB3iGIK8USCTYrmjAxUJPtLKGin6p1SWjrar6v6F9BxegdQ7D
-X-Google-Smtp-Source: AGHT+IGCPA7EPY+dCI71UJyAZPV20SjoqdnWXYnzvZkAxUA9UrbnIEFjCGREml3MWwQV9TsY+eSwFxC1l6q0zDdizKI=
-X-Received: by 2002:a05:6402:4303:b0:5c4:2343:1236 with SMTP id
- 4fb4d7f45d1cf-5c4234314d9mr18169049a12.4.1726752880259; Thu, 19 Sep 2024
- 06:34:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <chao.gao@intel.com>)
+ id 1sr9RN-0001bj-9w
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 01:10:53 -0400
+Received: from mgamail.intel.com ([198.175.65.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chao.gao@intel.com>)
+ id 1sr9RK-00023X-Mk
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 01:10:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1726722651; x=1758258651;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=TK45IQc09A6cua+tN+o4oqoEEfoNXkZlIHxFO6UzYiQ=;
+ b=FQH2R5LLBYxTdHw313j121evTrHCxnVhDsZPxijWKsthK7DIw4M/3/rc
+ T78kI232aKmMA+MmeVciSQHKC9T6sO+l2Gud23okaGvSQ8mzigyptPYSg
+ Wmq4eCpvidd4aamA1yHAz6G2yXSRtcI6bMcpR0DlVgXwSigT72Lv0LsMF
+ ozY/TW6vFjwUbN3adUBQaPtJdIY4WWWfsz7WjudEZ5Jjzcqk0PUaL37Fn
+ e8SGUHUmZRcGbtNg7e+q0Y7alIl8v8mLB8eeK2A8E6xRYIprCGJ52o5no
+ 4R6zYNyZiqYeu9tTEWPGRF225uLVKuaNYaAgwmqCu/PTqis5w2HVBD1Gy g==;
+X-CSE-ConnectionGUID: waoQu/buRnKjCpkQjhR9DQ==
+X-CSE-MsgGUID: EZ+N5OUUQxCEXorREhJ/VA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25817914"
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25817914"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Sep 2024 22:10:47 -0700
+X-CSE-ConnectionGUID: VrGo1ugBS46s1jR5GFIyJA==
+X-CSE-MsgGUID: 9vdgGrpLQWm9QqQ+7/HrFg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="100629752"
+Received: from spr.sh.intel.com ([10.239.53.31])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Sep 2024 22:10:45 -0700
+From: Chao Gao <chao.gao@intel.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, jmattson@google.com,
+ pawan.kumar.gupta@linux.intel.com, jon@nutanix.com,
+ Chao Gao <chao.gao@intel.com>
+Subject: [PATCH] target/i386: Add more features enumerated by CPUID.7.2.EDX
+Date: Thu, 19 Sep 2024 13:10:11 +0800
+Message-ID: <20240919051011.118309-1-chao.gao@intel.com>
+X-Mailer: git-send-email 2.46.1
 MIME-Version: 1.0
-References: <20240918183151.6413-1-peterx@redhat.com>
- <CAFEAcA9MsybcOa9pGeU7EHuqvRqfBk4TSwYR_tkHF2Xbc19Yuw@mail.gmail.com>
- <ZuwSGJODsyj_bA4P@x1n>
-In-Reply-To: <ZuwSGJODsyj_bA4P@x1n>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Sep 2024 14:34:28 +0100
-Message-ID: <CAFEAcA_9HKtTciFtrs9T9PG06GgYdoDoCASeBi7wO9CswA=1tw@mail.gmail.com>
-Subject: Re: [PULL v2 0/6] Migration 20240917 patches
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- David Hildenbrand <david@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.17; envelope-from=chao.gao@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 19 Sep 2024 09:34:48 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,44 +83,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 19 Sept 2024 at 12:59, Peter Xu <peterx@redhat.com> wrote:
->
-> On Thu, Sep 19, 2024 at 10:08:25AM +0100, Peter Maydell wrote:
-> > Thanks for looking at the issues with the migration tests.
-> > This run went through first time without my needing to retry any
-> > jobs, so fingers crossed that we have at least improved the reliability.
-> > (I have a feeling there's still something funny with the k8s runners,
-> > but that's not migration-test specific, it's just that test tends
-> > to be the longest running and so most likely to be affected.)
->
-> Kudos all go to Fabiano for debugging the hard problem.
->
-> And yes, please let either of us know if it fails again, we can either keep
-> looking, or still can disable it when necessary (if it takes long to debug).
+Following 5 bits in CPUID.7.2.EDX are supported by KVM. Add their
+supports in QEMU. Each of them indicates certain bits of IA32_SPEC_CTRL
+are supported. Those bits can control CPU speculation behavior which can
+be used to defend against side-channel attacks.
 
-On the subject of potential races in the migration code,
-there's a couple of outstanding Coverity issues that might
-be worth looking at. If they're false-positives let me know
-and I can reclassify them in Coverity.
+bit0: intel-psfd
+  if 1, indicates bit 7 of the IA32_SPEC_CTRL MSR is supported. Bit 7 of
+  this MSR disables Fast Store Forwarding Predictor without disabling
+  Speculative Store Bypass
 
-CID 1527402: In migrate_fd_cleanup() Coverity thinks there's
-a race because we read s->to_dst_file in the "if (s->to_dst_file)"
-check without holding the qemu_file_lock. This might be a
-false-positive because the race Coverity identifies happens
-if two threads both call migrate_fd_cleanup() at the same
-time, which is probably not permitted. (But OTOH taking a
-mutex gets you for free any necessary memory barriers...)
+bit1: ipred-ctrl
+  If 1, indicates bits 3 and 4 of the IA32_SPEC_CTRL MSR are supported.
+  Bit 3 of this MSR enables IPRED_DIS control for CPL3. Bit 4 of this
+  MSR enables IPRED_DIS control for CPL0/1/2
 
-CID 1527413: In postcopy_pause_incoming() we read
-mis->postcopy_qemufile_dst without holding the
-postcopy_prio_thread_mutex which we use to protect the write
-to that field, so Coverity thinks there's a race if two
-threads call this function at once.
+bit2: rrsba-ctrl
+  If 1, indicates bits 5 and 6 of the IA32_SPEC_CTRL MSR are supported.
+  Bit 5 of this MSR disables RRSBA behavior for CPL3. Bit 6 of this MSR
+  disables RRSBA behavior for CPL0/1/2
 
-(The only other migration Coverity issue is CID 1560071,
-which is the "better to use pstrcpy()" not-really-a-bug
-we discussed in another thread.)
+bit3: ddpd-u
+  If 1, indicates bit 8 of the IA32_SPEC_CTRL MSR is supported. Bit 8 of
+  this MSR disables Data Dependent Prefetcher.
 
-thanks
--- PMM
+bit4: bhi-ctrl
+  if 1, indicates bit 10 of the IA32_SPEC_CTRL MSR is supported. Bit 10
+  of this MSR enables BHI_DIS_S behavior.
+
+Signed-off-by: Chao Gao <chao.gao@intel.com>
+---
+ target/i386/cpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 85ef7452c0..18ba958f46 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1148,8 +1148,8 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+     [FEAT_7_2_EDX] = {
+         .type = CPUID_FEATURE_WORD,
+         .feat_names = {
+-            NULL, NULL, NULL, NULL,
+-            NULL, "mcdt-no", NULL, NULL,
++            "intel-psfd", "ipred-ctrl", "rrsba-ctrl", "ddpd-u",
++            "bhi-ctrl", "mcdt-no", NULL, NULL,
+             NULL, NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
+-- 
+2.46.1
+
 
