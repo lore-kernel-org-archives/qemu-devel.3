@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11084CDD569
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 01:42:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91FF3CDD569
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 01:42:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr6Af-00052f-3p; Wed, 18 Sep 2024 21:41:25 -0400
+	id 1sr6A8-0001N6-4k; Wed, 18 Sep 2024 21:40:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sr6Ac-0004f3-9p; Wed, 18 Sep 2024 21:41:22 -0400
+ id 1sr6A5-0000v0-00; Wed, 18 Sep 2024 21:40:49 -0400
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sr6Aa-0005AN-0D; Wed, 18 Sep 2024 21:41:21 -0400
+ id 1sr6A2-0004sM-PF; Wed, 18 Sep 2024 21:40:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1726710080; x=1758246080;
+ t=1726710047; x=1758246047;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=e8uNe2XyBy//pc+Jdrf2eDU6ylT8TdayHazakj6xvUI=;
- b=G3djzK7Mj/4MZtkq46m6Jt4ZRpmHLMEPTJ8nYt0si4D237mWzb7IU1g8
- cErLbcAv0K5xEoJuw+Emkfj5iONxqlCoXgc9JKkPCFEeWT31mkASE6bPz
- NEM+2k9xSBy/kQGM2niJovDIUEI9hdBkQTTy/Qa23PhsUbTL4Vl+70jFo
- PZ6gZSjcFZ+sgfuawx6b1j4irvaJcOoHMMdkxlmgLj1VHuySV0sIan7tz
- UFjRiN9UH/83P1cwxDk8DiaLp/Z52hBx/ayb1cwkFkX6U8xjKkmdqOOb3
- GOXEazu2yr026PFGs2Lh9IDia5lkfHEW5d3H9OvSwNh4CNsuapdnr/FG7 w==;
-X-CSE-ConnectionGUID: MXF3snzYSB6MNdffbT7MRw==
-X-CSE-MsgGUID: Yl92eHFvTSCb7PVchPibcg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25798108"
-X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25798108"
+ bh=4Lv6y5pVsU6DtDjzxhv1VCs53XCauucInvDj9vyaeKw=;
+ b=awy2/xxSsHTmH5XOq1GV1w9kbwIKMC7Nw/v4pvsU1iiX0sHFLpcCVKo0
+ /Czs0+kznTAYgCo9Qu4EZq4ybfjnoM0naAThTrnP0ACEBMJff9V64DXdy
+ mjxbN+I9zIvdPx7F66qLn4l853ow9b/Yt0NDAm49Wl6x7hzMME7SUhh1L
+ xYGBriwAJoM/lT3ZK+/Nn7YoAV4lVBIbvRt9MTJOxL2k206O9LkuamvF2
+ f32go8w7BbF6Y7FXWs5n7TWokdurk8KDZNhhTsi2sGY4wq0D87rCerpEr
+ rDw6Po2fWhcOdu63An4MwjcG6jT/9gVWzQkoPXxtDK9FgrenXCt7t33DQ w==;
+X-CSE-ConnectionGUID: XIyDjPVqQOS3U2OsVEdkwg==
+X-CSE-MsgGUID: zCUem+QJTyOmuQ3hbP9VZw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25797982"
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25797982"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Sep 2024 18:41:17 -0700
-X-CSE-ConnectionGUID: FdACOWMXSMOp94R+MXOELA==
-X-CSE-MsgGUID: Wk9cMGQHQpOW5if6nrEZ5A==
+ 18 Sep 2024 18:40:45 -0700
+X-CSE-ConnectionGUID: oRBjSbnIQmSIHRcM58FHEg==
+X-CSE-MsgGUID: BCnW7jNJTSGl38Hi7C4luQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="70058986"
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="70058880"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa006.jf.intel.com with ESMTP; 18 Sep 2024 18:41:11 -0700
+ by orviesa006.jf.intel.com with ESMTP; 18 Sep 2024 18:40:39 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -66,10 +66,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-ppc@nongnu.org,
  qemu-arm@nongnu.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC v2 14/15] i386/cpu: Support CPU plugged in topology tree via
- bus-finder
-Date: Thu, 19 Sep 2024 09:55:32 +0800
-Message-Id: <20240919015533.766754-15-zhao1.liu@intel.com>
+Subject: [RFC v2 09/15] hw/cpu: Abstract module/die/socket levels as topology
+ devices
+Date: Thu, 19 Sep 2024 09:55:27 +0800
+Message-Id: <20240919015533.766754-10-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240919015533.766754-1-zhao1.liu@intel.com>
 References: <20240919015533.766754-1-zhao1.liu@intel.com>
@@ -100,213 +100,290 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use topology sub IDs or APIC ID to locate parent topology device and
-bus.
-
-This process naturally verifies the correctness of topology-related IDs,
-making it possible to drop the existing topology ID sanity checks once
-x86 machine supports topology tree.
+Abstract module/die/socket levels as the cpu-module/cpu-die/cpu-socket
+topology devices then they can be inserted into topology tree.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/i386/x86-common.c  | 99 ++++++++++++++++++++++++++++++++++---------
- include/hw/i386/x86.h |  2 +
- target/i386/cpu.c     | 11 +++++
- 3 files changed, 91 insertions(+), 21 deletions(-)
+ MAINTAINERS             |  6 ++++++
+ hw/cpu/die.c            | 34 ++++++++++++++++++++++++++++++++++
+ hw/cpu/meson.build      |  3 +++
+ hw/cpu/module.c         | 34 ++++++++++++++++++++++++++++++++++
+ hw/cpu/socket.c         | 34 ++++++++++++++++++++++++++++++++++
+ include/hw/cpu/die.h    | 29 +++++++++++++++++++++++++++++
+ include/hw/cpu/module.h | 29 +++++++++++++++++++++++++++++
+ include/hw/cpu/socket.h | 29 +++++++++++++++++++++++++++++
+ 8 files changed, 198 insertions(+)
+ create mode 100644 hw/cpu/die.c
+ create mode 100644 hw/cpu/module.c
+ create mode 100644 hw/cpu/socket.c
+ create mode 100644 include/hw/cpu/die.h
+ create mode 100644 include/hw/cpu/module.h
+ create mode 100644 include/hw/cpu/socket.h
 
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index a7f082b0a90b..d837aadc9dea 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -208,6 +208,65 @@ void x86_cpus_init(X86MachineState *x86ms, int default_cpu_version)
-     }
- }
- 
-+static void x86_fixup_topo_ids(MachineState *ms, X86CPU *cpu)
-+{
-+    /*
-+     * die-id was optional in QEMU 4.0 and older, so keep it optional
-+     * if there's only one die per socket.
-+     */
-+    if (cpu->module_id < 0 && ms->smp.modules == 1) {
-+        cpu->module_id = 0;
-+    }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 8e5b2cd91dca..03c1a13de074 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1886,6 +1886,9 @@ F: hw/core/numa.c
+ F: hw/cpu/cluster.c
+ F: hw/cpu/cpu-slot.c
+ F: hw/cpu/cpu-topology.c
++F: hw/cpu/die.c
++F: hw/cpu/module.c
++F: hw/cpu/socket.c
+ F: qapi/machine.json
+ F: qapi/machine-common.json
+ F: qapi/machine-target.json
+@@ -1894,6 +1897,9 @@ F: include/hw/core/cpu.h
+ F: include/hw/cpu/cluster.h
+ F: include/hw/cpu/cpu-slot.h
+ F: include/hw/cpu/cpu-topology.h
++F: include/hw/cpu/die.h
++F: include/hw/cpu/module.h
++F: include/hw/cpu/socket.h
+ F: include/sysemu/numa.h
+ F: tests/functional/test_cpu_queries.py
+ F: tests/functional/test_empty_cpu_model.py
+diff --git a/hw/cpu/die.c b/hw/cpu/die.c
+new file mode 100644
+index 000000000000..f00907ffd78b
+--- /dev/null
++++ b/hw/cpu/die.c
+@@ -0,0 +1,34 @@
++/*
++ * CPU die abstract device
++ *
++ * Copyright (C) 2024 Intel Corporation.
++ *
++ * Author: Zhao Liu <zhao1.liu@intel.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or
++ * later.  See the COPYING file in the top-level directory.
++ */
 +
-+    /*
-+     * module-id was optional in QEMU 9.0 and older, so keep it optional
-+     * if there's only one module per die.
-+     */
-+    if (cpu->die_id < 0 && ms->smp.dies == 1) {
-+        cpu->die_id = 0;
-+    }
++#include "qemu/osdep.h"
++#include "hw/cpu/die.h"
++
++static void cpu_die_class_init(ObjectClass *oc, void *data)
++{
++    CPUTopoClass *tc = CPU_TOPO_CLASS(oc);
++
++    tc->level = CPU_TOPOLOGY_LEVEL_DIE;
 +}
 +
-+BusState *x86_cpu_get_parent_bus(DeviceState *dev)
++static const TypeInfo cpu_die_type_info = {
++    .name = TYPE_CPU_DIE,
++    .parent = TYPE_CPU_TOPO,
++    .class_init = cpu_die_class_init,
++    .instance_size = sizeof(CPUDie),
++};
++
++static void cpu_die_register_types(void)
 +{
-+    MachineState *ms = MACHINE(qdev_get_machine());
-+    X86MachineState *x86ms = X86_MACHINE(ms);
-+    X86CPU *cpu = X86_CPU(dev);
-+    X86CPUTopoIDs topo_ids;
-+    X86CPUTopoInfo topo_info;
-+    BusState *bus;
-+
-+    x86_fixup_topo_ids(ms, cpu);
-+    init_topo_info(&topo_info, x86ms);
-+
-+    if (cpu->apic_id == UNASSIGNED_APIC_ID) {
-+        /* TODO: Make the thread_id and bus index of CPU the same. */
-+        topo_ids.smt_id = cpu->thread_id;
-+        topo_ids.core_id = cpu->core_id;
-+        topo_ids.module_id = cpu->module_id;
-+        topo_ids.die_id = cpu->die_id;
-+        topo_ids.pkg_id = cpu->socket_id;
-+    } else {
-+        x86_topo_ids_from_apicid(cpu->apic_id, &topo_info, &topo_ids);
-+    }
-+
-+    bus = x86_find_topo_bus(ms, &topo_ids);
-+
-+    /*
-+     * If APIC ID is not set,
-+     * set it based on socket/die/module/core/thread properties.
-+     *
-+     * The children walking result proves topo ids are valid.
-+     * Though module and die are optional, topology tree will create
-+     * at least 1 instance by default if the machine supports.
-+     */
-+    if (bus && cpu->apic_id == UNASSIGNED_APIC_ID) {
-+        cpu->apic_id = x86_apicid_from_topo_ids(&topo_info, &topo_ids);
-+    }
-+
-+    return bus;
++    type_register_static(&cpu_die_type_info);
 +}
 +
- void x86_rtc_set_cpus_count(ISADevice *s, uint16_t cpus_count)
- {
-     MC146818RtcState *rtc = MC146818_RTC(s);
-@@ -340,6 +399,7 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
-     X86CPU *cpu = X86_CPU(dev);
-     CPUX86State *env = &cpu->env;
-     MachineState *ms = MACHINE(hotplug_dev);
-+    MachineClass *mc = MACHINE_GET_CLASS(ms);
-     X86MachineState *x86ms = X86_MACHINE(hotplug_dev);
-     unsigned int smp_cores = ms->smp.cores;
-     unsigned int smp_threads = ms->smp.threads;
-@@ -374,26 +434,9 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
-         set_bit(CPU_TOPOLOGY_LEVEL_DIE, env->avail_cpu_topo);
-     }
++type_init(cpu_die_register_types)
+diff --git a/hw/cpu/meson.build b/hw/cpu/meson.build
+index 358e2b3960fa..c64eec4460d8 100644
+--- a/hw/cpu/meson.build
++++ b/hw/cpu/meson.build
+@@ -3,6 +3,9 @@ common_ss.add(files('cpu-topology.c'))
+ system_ss.add(files('core.c'))
+ system_ss.add(files('cpu-slot.c'))
+ system_ss.add(when: 'CONFIG_CPU_CLUSTER', if_true: files('cluster.c'))
++system_ss.add(files('die.c'))
++system_ss.add(files('module.c'))
++system_ss.add(files('socket.c'))
  
--    /*
--     * If APIC ID is not set,
--     * set it based on socket/die/module/core/thread properties.
--     */
--    if (cpu->apic_id == UNASSIGNED_APIC_ID) {
--        /*
--         * die-id was optional in QEMU 4.0 and older, so keep it optional
--         * if there's only one die per socket.
--         */
--        if (cpu->die_id < 0 && ms->smp.dies == 1) {
--            cpu->die_id = 0;
--        }
--
--        /*
--         * module-id was optional in QEMU 9.0 and older, so keep it optional
--         * if there's only one module per die.
--         */
--        if (cpu->module_id < 0 && ms->smp.modules == 1) {
--            cpu->module_id = 0;
--        }
-+    if (cpu->apic_id == UNASSIGNED_APIC_ID &&
-+        !mc->smp_props.topo_tree_supported) {
-+        x86_fixup_topo_ids(ms, cpu);
- 
-         if (cpu->socket_id < 0) {
-             error_setg(errp, "CPU socket-id is not set");
-@@ -409,7 +452,6 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
-         } else if (cpu->die_id > ms->smp.dies - 1) {
-             error_setg(errp, "Invalid CPU die-id: %u must be in range 0:%u",
-                        cpu->die_id, ms->smp.dies - 1);
--            return;
-         }
-         if (cpu->module_id < 0) {
-             error_setg(errp, "CPU module-id is not set");
-@@ -442,6 +484,21 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
-         topo_ids.core_id = cpu->core_id;
-         topo_ids.smt_id = cpu->thread_id;
-         cpu->apic_id = x86_apicid_from_topo_ids(&topo_info, &topo_ids);
-+    } else if (cpu->apic_id == UNASSIGNED_APIC_ID &&
-+               mc->smp_props.topo_tree_supported) {
-+        /*
-+         * For this case, CPU is added by specifying the bus. Under the
-+         * topology tree, specifying only the bus should be feasible, but
-+         * the topology represented by the bus, topo ids, or apic id must
-+         * be consistent.
-+         *
-+         * To simplify, the case with only the bus specified is not supported
-+         * at this time.
-+         */
-+        if (x86_cpu_get_parent_bus(dev) != dev->parent_bus) {
-+            error_setg(errp, "Invalid CPU topology ids");
-+            return;
-+        }
-     }
- 
-     cpu_slot = x86_find_cpu_slot(MACHINE(x86ms), cpu->apic_id, &idx);
-diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
-index d43cb3908e65..2a62b4b8d08c 100644
---- a/include/hw/i386/x86.h
-+++ b/include/hw/i386/x86.h
-@@ -138,6 +138,8 @@ void x86_load_linux(X86MachineState *x86ms,
- bool x86_machine_is_smm_enabled(const X86MachineState *x86ms);
- bool x86_machine_is_acpi_enabled(const X86MachineState *x86ms);
- 
-+BusState *x86_cpu_get_parent_bus(DeviceState *dev);
+ system_ss.add(when: 'CONFIG_ARM11MPCORE', if_true: files('arm11mpcore.c'))
+ system_ss.add(when: 'CONFIG_REALVIEW', if_true: files('realview_mpcore.c'))
+diff --git a/hw/cpu/module.c b/hw/cpu/module.c
+new file mode 100644
+index 000000000000..b6f50a2ba588
+--- /dev/null
++++ b/hw/cpu/module.c
+@@ -0,0 +1,34 @@
++/*
++ * CPU module abstract device
++ *
++ * Copyright (C) 2024 Intel Corporation.
++ *
++ * Author: Zhao Liu <zhao1.liu@intel.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or
++ * later.  See the COPYING file in the top-level directory.
++ */
 +
- /* Global System Interrupts */
- 
- #define ACPI_BUILD_PCI_IRQS ((1<<5) | (1<<9) | (1<<10) | (1<<11))
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 6d9f7dc0872a..90221ceb7313 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -35,12 +35,14 @@
- #include "standard-headers/asm-x86/kvm_para.h"
- #include "hw/qdev-properties.h"
- #include "hw/i386/topology.h"
-+#include "monitor/bus-finder.h"
- #ifndef CONFIG_USER_ONLY
- #include "sysemu/reset.h"
- #include "qapi/qapi-commands-machine-target.h"
- #include "exec/address-spaces.h"
- #include "hw/boards.h"
- #include "hw/i386/sgx-epc.h"
-+#include "hw/i386/x86.h"
- #endif
- 
- #include "disas/capstone.h"
-@@ -8468,6 +8470,11 @@ static void x86_cpu_common_class_init(ObjectClass *oc, void *data)
- 
-     dc->user_creatable = true;
- 
-+#ifndef CONFIG_USER_ONLY
-+    BusFinderClass *bfc = BUS_FINDER_CLASS(oc);
-+    bfc->find_bus = x86_cpu_get_parent_bus;
-+#endif
++#include "qemu/osdep.h"
++#include "hw/cpu/module.h"
 +
-     object_class_property_add(oc, "family", "int",
-                               x86_cpuid_version_get_family,
-                               x86_cpuid_version_set_family, NULL, NULL);
-@@ -8520,6 +8527,10 @@ static const TypeInfo x86_cpu_type_info = {
-     .abstract = true,
-     .class_size = sizeof(X86CPUClass),
-     .class_init = x86_cpu_common_class_init,
-+    .interfaces = (InterfaceInfo[]) {
-+        { TYPE_BUS_FINDER },
-+        { }
-+    }
- };
- 
- /* "base" CPU model, used by query-cpu-model-expansion */
++static void cpu_module_class_init(ObjectClass *oc, void *data)
++{
++    CPUTopoClass *tc = CPU_TOPO_CLASS(oc);
++
++    tc->level = CPU_TOPOLOGY_LEVEL_MODULE;
++}
++
++static const TypeInfo cpu_module_type_info = {
++    .name = TYPE_CPU_MODULE,
++    .parent = TYPE_CPU_TOPO,
++    .class_init = cpu_module_class_init,
++    .instance_size = sizeof(CPUModule),
++};
++
++static void cpu_module_register_types(void)
++{
++    type_register_static(&cpu_module_type_info);
++}
++
++type_init(cpu_module_register_types)
+diff --git a/hw/cpu/socket.c b/hw/cpu/socket.c
+new file mode 100644
+index 000000000000..516e93389e11
+--- /dev/null
++++ b/hw/cpu/socket.c
+@@ -0,0 +1,34 @@
++/*
++ * CPU socket abstract device
++ *
++ * Copyright (C) 2024 Intel Corporation.
++ *
++ * Author: Zhao Liu <zhao1.liu@intel.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or
++ * later.  See the COPYING file in the top-level directory.
++ */
++
++#include "qemu/osdep.h"
++#include "hw/cpu/socket.h"
++
++static void cpu_socket_class_init(ObjectClass *oc, void *data)
++{
++    CPUTopoClass *tc = CPU_TOPO_CLASS(oc);
++
++    tc->level = CPU_TOPOLOGY_LEVEL_SOCKET;
++}
++
++static const TypeInfo cpu_socket_type_info = {
++    .name = TYPE_CPU_SOCKET,
++    .parent = TYPE_CPU_TOPO,
++    .class_init = cpu_socket_class_init,
++    .instance_size = sizeof(CPUSocket),
++};
++
++static void cpu_socket_register_types(void)
++{
++    type_register_static(&cpu_socket_type_info);
++}
++
++type_init(cpu_socket_register_types)
+diff --git a/include/hw/cpu/die.h b/include/hw/cpu/die.h
+new file mode 100644
+index 000000000000..682e226ac569
+--- /dev/null
++++ b/include/hw/cpu/die.h
+@@ -0,0 +1,29 @@
++/*
++ * CPU die abstract device
++ *
++ * Copyright (C) 2024 Intel Corporation.
++ *
++ * Author: Zhao Liu <zhao1.liu@intel.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or
++ * later.  See the COPYING file in the top-level directory.
++ */
++
++#ifndef HW_CPU_DIE_H
++#define HW_CPU_DIE_H
++
++#include "hw/cpu/cpu-topology.h"
++#include "hw/qdev-core.h"
++
++#define TYPE_CPU_DIE "cpu-die"
++
++OBJECT_DECLARE_SIMPLE_TYPE(CPUDie, CPU_DIE)
++
++struct CPUDie {
++    /*< private >*/
++    CPUTopoState obj;
++
++    /*< public >*/
++};
++
++#endif /* HW_CPU_DIE_H */
+diff --git a/include/hw/cpu/module.h b/include/hw/cpu/module.h
+new file mode 100644
+index 000000000000..242cd623a3b3
+--- /dev/null
++++ b/include/hw/cpu/module.h
+@@ -0,0 +1,29 @@
++/*
++ * CPU module abstract device
++ *
++ * Copyright (C) 2024 Intel Corporation.
++ *
++ * Author: Zhao Liu <zhao1.liu@intel.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or
++ * later.  See the COPYING file in the top-level directory.
++ */
++
++#ifndef HW_CPU_MODULE_H
++#define HW_CPU_MODULE_H
++
++#include "hw/cpu/cpu-topology.h"
++#include "hw/qdev-core.h"
++
++#define TYPE_CPU_MODULE "cpu-module"
++
++OBJECT_DECLARE_SIMPLE_TYPE(CPUModule, CPU_MODULE)
++
++struct CPUModule {
++    /*< private >*/
++    CPUTopoState obj;
++
++    /*< public >*/
++};
++
++#endif /* HW_CPU_MODULE_H */
+diff --git a/include/hw/cpu/socket.h b/include/hw/cpu/socket.h
+new file mode 100644
+index 000000000000..a25bf8727a22
+--- /dev/null
++++ b/include/hw/cpu/socket.h
+@@ -0,0 +1,29 @@
++/*
++ * CPU socket abstract device
++ *
++ * Copyright (C) 2024 Intel Corporation.
++ *
++ * Author: Zhao Liu <zhao1.liu@intel.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or
++ * later.  See the COPYING file in the top-level directory.
++ */
++
++#ifndef HW_CPU_SOCKET_H
++#define HW_CPU_SOCKET_H
++
++#include "hw/cpu/cpu-topology.h"
++#include "hw/qdev-core.h"
++
++#define TYPE_CPU_SOCKET "cpu-socket"
++
++OBJECT_DECLARE_SIMPLE_TYPE(CPUSocket, CPU_SOCKET)
++
++struct CPUSocket {
++    /*< private >*/
++    CPUTopoState parent_obj;
++
++    /*< public >*/
++};
++
++#endif /* HW_CPU_SOCKET_H */
 -- 
 2.34.1
 
