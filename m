@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE472CF3941
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:47:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA0F1CF3941
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:47:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srHUk-00086I-6c; Thu, 19 Sep 2024 09:46:54 -0400
+	id 1srHUi-0007yW-UL; Thu, 19 Sep 2024 09:46:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1srHUg-0007qG-Bw
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1srHUg-0007qI-Bu
  for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:46:50 -0400
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1srHUQ-0005zr-UV
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1srHUQ-0005zx-UR
  for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:46:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
- :Subject; bh=l4UyVNwJ4yMa4BuDM6CsK36HOowHp3U5Yt7uEmfutOk=; b=rNny+XlTXCax2NqA
- gfjwzh442GvmLcUjFCtnnDmU8KU/rCFg1dddE07Q2OZB55/mJeQbL6ePWKR0RB8wetjJjHkqvYbFW
- TU16MJvJtAhsOHHEQEKl2MPeM8q2TnY+9McRCB2DwDsGmM6dakPp46aO2zMMDIDpAhKs6b/Pc8nG8
- 6wxOfYwL1w8xTjUlbQ+JyFvpB9O7a/h4wiKu+oPkC3Va+vSpD818xhA5CtsExa6Y8ngiWlPLQ0JMG
- hWJutBqOI8u0uAtrIgH6iy8C34weoARaQJUd7StEzqTp8VT/EofDUbNTEGHbJz0iFBwdP17dPPfr/
- OMIv0JG10UVAWD9Frw==;
+ :Subject; bh=6vNa82WphtB1is9lgrKpqh6cZbhNlLMUwM6YrQbpBXs=; b=h+Fy/18hZSQWnxkI
+ cF1soIFGxmL4f+WRJZzgcY2y5z1fXstdXPMfi5xzatT64qXLveqtF0kk/TkI1ANJ7DMkzKm0yV5bQ
+ gfVx+is6u337HH568vRVrzejyhUMHP3D5QTP3dSgKUQsCFtbMt0yMHLG+tDK8ReXVgxicucxA1EJl
+ +bh8FHp7b+kAsfYgNSz1xHhEMAKXxe7jyL6zer+q4JvbqjG3fzfYpQa1Q3WB+3ePlQLpUpTPHmz5B
+ mK5x/vUL2Oxg+qRF0GixSX3YfQqDQ+UbWzG/y5kzqS70l1SjNovhPK5QYV8JJuuRDDlDQ9M6wUmwh
+ 0rlgiK9fvrSxYSmEGA==;
 Received: from localhost ([127.0.0.1] helo=dalek.home.treblig.org)
  by mx.treblig.org with esmtp (Exim 4.96)
- (envelope-from <dave@treblig.org>) id 1srHUM-006QOJ-0B;
+ (envelope-from <dave@treblig.org>) id 1srHUM-006QOJ-2F;
  Thu, 19 Sep 2024 13:46:30 +0000
 From: dave@treblig.org
 To: peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH v2 3/7] migration: Deprecate zero-blocks capability
-Date: Thu, 19 Sep 2024 14:46:22 +0100
-Message-ID: <20240919134626.166183-4-dave@treblig.org>
+Cc: qemu-devel@nongnu.org,
+	"Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: [PATCH v2 4/7] migration: Remove unused
+ socket_send_channel_create_sync
+Date: Thu, 19 Sep 2024 14:46:23 +0100
+Message-ID: <20240919134626.166183-5-dave@treblig.org>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240919134626.166183-1-dave@treblig.org>
 References: <20240919134626.166183-1-dave@treblig.org>
@@ -65,72 +67,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-The zero-blocks capability was meant to be used along with the block
-migration, which has been removed already in commit eef0bae3a7
-("migration: Remove block migration").
+socket_send_channel_create_sync only use was removed by
+  d0edb8a173 ("migration: Create the postcopy preempt channel asynchronously")
 
-Setting zero-blocks is currently a noop, but the outright removal of
-the capability would cause and error in case some users are still
-setting it. Put the capability through the deprecation process.
+Remove it.
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 ---
- docs/about/deprecated.rst | 6 ++++++
- migration/options.c       | 4 ++++
- qapi/migration.json       | 5 ++++-
- 3 files changed, 14 insertions(+), 1 deletion(-)
+ migration/socket.c | 18 ------------------
+ migration/socket.h |  1 -
+ 2 files changed, 19 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index ed31d4b0b2..47cabb6fcc 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -476,3 +476,9 @@ usage of providing a file descriptor to a plain file has been
- deprecated in favor of explicitly using the ``file:`` URI with the
- file descriptor being passed as an ``fdset``. Refer to the ``add-fd``
- command documentation for details on the ``fdset`` usage.
-+
-+``zero-blocks`` capability (since 9.2)
-+''''''''''''''''''''''''''''''''''''''
-+
-+The ``zero-blocks`` capability was part of the block migration which
-+doesn't exist anymore since it was removed in QEMU v9.1.
-diff --git a/migration/options.c b/migration/options.c
-index 6f549984cb..ad8d6989a8 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -450,6 +450,10 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
-     ERRP_GUARD();
-     MigrationIncomingState *mis = migration_incoming_get_current();
+diff --git a/migration/socket.c b/migration/socket.c
+index 9ab89b1e08..5ec65b8c03 100644
+--- a/migration/socket.c
++++ b/migration/socket.c
+@@ -42,24 +42,6 @@ void socket_send_channel_create(QIOTaskFunc f, void *data)
+                                      f, data, NULL, NULL);
+ }
  
-+    if (new_caps[MIGRATION_CAPABILITY_ZERO_BLOCKS]) {
-+        warn_report("zero-blocks capability is deprecated");
-+    }
-+
- #ifndef CONFIG_REPLICATION
-     if (new_caps[MIGRATION_CAPABILITY_X_COLO]) {
-         error_setg(errp, "QEMU compiled without replication module"
-diff --git a/qapi/migration.json b/qapi/migration.json
-index b66cccf107..3af6aa1740 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -479,11 +479,14 @@
- # Features:
- #
- # @unstable: Members @x-colo and @x-ignore-shared are experimental.
-+# @deprecated: Member @zero-blocks is deprecated as being part of
-+#     block migration which was already removed.
- #
- # Since: 1.2
- ##
- { 'enum': 'MigrationCapability',
--  'data': ['xbzrle', 'rdma-pin-all', 'auto-converge', 'zero-blocks',
-+  'data': ['xbzrle', 'rdma-pin-all', 'auto-converge',
-+           { 'name': 'zero-blocks', 'features': [ 'deprecated' ] },
-            'events', 'postcopy-ram',
-            { 'name': 'x-colo', 'features': [ 'unstable' ] },
-            'release-ram',
+-QIOChannel *socket_send_channel_create_sync(Error **errp)
+-{
+-    QIOChannelSocket *sioc = qio_channel_socket_new();
+-
+-    if (!outgoing_args.saddr) {
+-        object_unref(OBJECT(sioc));
+-        error_setg(errp, "Initial sock address not set!");
+-        return NULL;
+-    }
+-
+-    if (qio_channel_socket_connect_sync(sioc, outgoing_args.saddr, errp) < 0) {
+-        object_unref(OBJECT(sioc));
+-        return NULL;
+-    }
+-
+-    return QIO_CHANNEL(sioc);
+-}
+-
+ struct SocketConnectData {
+     MigrationState *s;
+     char *hostname;
+diff --git a/migration/socket.h b/migration/socket.h
+index 46c233ecd2..04ebbe95a1 100644
+--- a/migration/socket.h
++++ b/migration/socket.h
+@@ -22,7 +22,6 @@
+ #include "qemu/sockets.h"
+ 
+ void socket_send_channel_create(QIOTaskFunc f, void *data);
+-QIOChannel *socket_send_channel_create_sync(Error **errp);
+ 
+ void socket_start_incoming_migration(SocketAddress *saddr, Error **errp);
+ 
 -- 
 2.46.1
 
