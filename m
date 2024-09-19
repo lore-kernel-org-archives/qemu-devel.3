@@ -4,103 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E63CF396D
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 20:48:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39339CF396D
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 20:55:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srO4K-00066g-QT; Thu, 19 Sep 2024 16:48:04 -0400
+	id 1srOB3-0002BN-9I; Thu, 19 Sep 2024 16:55:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1srO4I-00065U-Eb
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 16:48:02 -0400
-Received: from mout.kundenserver.de ([217.72.192.74])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srOB0-0002As-76
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 16:54:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1srO4F-0005dh-Ng
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 16:48:02 -0400
-Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
- (mreue108 [213.165.67.119]) with ESMTPSA (Nemesis) id
- 1N8ojI-1rvcXH25rS-015tim; Thu, 19 Sep 2024 22:47:53 +0200
-Message-ID: <8ca819e6-7e93-4607-a44f-dac6fc3a2ae2@vivier.eu>
-Date: Thu, 19 Sep 2024 22:47:53 +0200
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srOAx-0006pa-5z
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 16:54:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1726779293;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pFPlGj2kOJN8lAwSgpFxxi6BWKzPOJTl3yaIoGfeQek=;
+ b=C/8L61tzPTNsgy3N6dhCDm1GTBz++iyyHfnWcVtr2XBmntdfKn6zZ10HbCPr0rQH5lG9/3
+ H18gsGlX0XkIhspPA5iu6vHDR5lL56JBXJ44uWAocnJhL2lfEJ1d29dvnMV5dCVEEdBbBT
+ 1swVcEHXqF+XOkSUmO2cTcIPVPFmAR4=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-455-FdgH7K2IPJONlrpsKvvUrw-1; Thu, 19 Sep 2024 16:54:51 -0400
+X-MC-Unique: FdgH7K2IPJONlrpsKvvUrw-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7a1d0b29198so225515085a.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 13:54:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726779291; x=1727384091;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pFPlGj2kOJN8lAwSgpFxxi6BWKzPOJTl3yaIoGfeQek=;
+ b=Xx4KAOt684ZtWiYNZjV7EKNq5hvsuvO0l2ZEUEVbeQ/WoggaS8kiVnK/ckakUb2iva
+ EQJi76gbNVbGabBK1sfdENWq30MC6dGHvtFTP9wyx5jgq4mHPQ8hnjbnJST4ukdqM1+M
+ zwnG9k3MVTAu00QAC2DhvUQ/eMqutFQLnSafWIys0eLR9hPCEOorIemy3D+4THfzT95c
+ 6jHAhJjJVXF1L/WFwVhpfxqsLBq7Txhv0wDHLwOT7s2JzuKiN/yGWLwr7n/EHwcjXrss
+ Oq54YhxKzdhrfSU3a5/5RAcGDEYbTj2yEhm3ExtbrX3973+bd4IY6cgW9cKXFVm+25Ab
+ bY/g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX4S4Etko+pEZSTLo6I4YKO00pjUsct11zCCnJ6P+h2g4lDAat3j2eA8MXO3XOQe+bzXbRbc7JoZZr2@nongnu.org
+X-Gm-Message-State: AOJu0YwVldZ66iLsNrqLsBgvp9WqCF/lp+sm8fDCbLoJ0kp2aOljtZEd
+ cNEIxHNIiejdcPVaaK2qyx3qEqOs6ehzOTl+OZViSVuBehiqDMzAFLRK+8ADpou0xO3JIowTsRC
+ +hcBorPIvxo8eVBJZsh+Fj28ZQhy38fVauE1Rj4fVc9ygaqwINB36
+X-Received: by 2002:a05:622a:209:b0:458:5141:7be7 with SMTP id
+ d75a77b69052e-45b228ce09bmr2887381cf.39.1726779290901; 
+ Thu, 19 Sep 2024 13:54:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG2d7qr75uNaE87BcL+sPSZUdpX+fxhajdZ4rIWYIHWuLo/DvQZRW6VVjF0dboJr9q8peuZmg==
+X-Received: by 2002:a05:622a:209:b0:458:5141:7be7 with SMTP id
+ d75a77b69052e-45b228ce09bmr2887141cf.39.1726779290421; 
+ Thu, 19 Sep 2024 13:54:50 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-45b1786961asm10736981cf.6.2024.09.19.13.54.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Sep 2024 13:54:49 -0700 (PDT)
+Date: Thu, 19 Sep 2024 16:54:47 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Avihai Horon <avihaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 06/17] migration: Add
+ save_live_complete_precopy_{begin,end} handlers
+Message-ID: <ZuyPlyh0sCYPP7C2@x1n>
+References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
+ <afe0bc649007593edaa77f5f3923acb733a24c6a.1724701542.git.maciej.szmigiero@oracle.com>
+ <9f9f0408-866d-4dc8-8c8e-80c3cfdd190a@nvidia.com>
+ <Zt83mWWlMomX4mRD@x1n>
+ <fa64bf51-7fec-454b-b204-f92f5d06f731@maciej.szmigiero.name>
+ <Zt9HuA3QtP0E93X1@x1n>
+ <81dd1071-9285-415f-a334-3d8109e0a905@maciej.szmigiero.name>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/1] linux-user: add openat2 support in linux-user
-To: Michael Vogt <michael.vogt@gmail.com>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Michael Vogt <mvogt@redhat.com>
-References: <cover.1726774919.git.mvogt@redhat.com>
- <22d50b05f3387e23094eaf1f42ef4d435dd555b8.1726774919.git.mvogt@redhat.com>
-Content-Language: fr
-From: Laurent Vivier <laurent@vivier.eu>
-Autocrypt: addr=laurent@vivier.eu; keydata=
- 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
-In-Reply-To: <22d50b05f3387e23094eaf1f42ef4d435dd555b8.1726774919.git.mvogt@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:Q8LSNPWiYjyBdg7Agjiul0qvZ41NeLZ6PqOX2vkbTCwjkSCtzqC
- Im1372u4pzInZaOndYnYxDhBE0TiUPhv326B/U74HOkeAB1lRrMv5VzSmKrrDudF8dSvMSo
- JzrnutwTIgQLYMFzyBSmMAJusAPKi/PIJFvq4CIYpxKqQ3M61XW5eSWGtVMR1zMV+LK/Bao
- ofwZQNxdnZDkduqWGYTeg==
-UI-OutboundReport: notjunk:1;M01:P0:kJmUmIqTCEY=;dxQrUx6ILFVAxUxf5lKj+/Z6L1p
- L52qQbrxQvhm71nHqEsrb+MPTjKYiIU0JntRpNmbIH4EfUhSbOJp10NdKl7zhvPx3qUUjIK7d
- IczOl1l8XeW/D1qzRn4Du7FiY0qmdqd55lBkUfIri9vmiLH2HxrgPqIcSQVmEIDveok+jzQl4
- Y5nP2+WBcTz6VVZbjkoeZTeO5GlxbXqxUpPclkoU5zwjCmvjXQmGqFn84oyVKKR9KK+IAsIul
- CqHDxWLwURmlBkA6A/Fem1BhLFPUPMbs3Bo34Up80pJcSxntpVNH7AyHjZED11PZzBgUdjgaG
- DUhGb+NUypeF9VSnsc37l8mAL1NW30wvLdSQUR+jTeaSFQWqcbXc2J2S+XYnP6pk1RT21/UO2
- 5/6/3PKq7lhv5osBh9hke7n2Zv4EwqAWFTxQqjMEUs+u2oG74kpSerLSQBAbHJHnV0An7vr7G
- PuDcJf5nAGydt9PnILoywlpOG12lK7beMBhDdQ7jjw/VASlxGcnWh90LxQSlXxEjZ8ikjJpoY
- jtTEBUsN4TLgzhXQ+HtikCkqG0uW0TgN4mx3bjd5P+5thTo7hLifxpt+Bg4mrS0Z4s7vh4TNq
- LWgQTfaaFW0VM4YaIJa2pxHM5/8YAVGq1LXmwzvaFMukAzsoEDcEZrdVt8tPchRbPYacDkcGY
- wnaKS2rXfft9DhKslw1jnU6U8HsHq6vvX2SpV7Hgl/cJE/Lp15SLHXs1VgvOIwxAQt0aY/feG
- U0eH3u3SBNZqnwd+pfSNO7l+cz0kQ9Uhw==
-Received-SPF: pass client-ip=217.72.192.74; envelope-from=laurent@vivier.eu;
- helo=mout.kundenserver.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <81dd1071-9285-415f-a334-3d8109e0a905@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -118,203 +112,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-your PATCH 1/1 doesn't appear to be a reply of PATCH 0/1 (mail header tag 
-"In-Reply-To:"/"Reference") so it is not correctly collected by patchew.org. Do you have the 
-'thread' parameter for git-send-email?
-
-See my comments below:
-
-Le 19/09/2024 à 21:46, Michael Vogt a écrit :
-> This commit adds support for the `openat2()` syscall in the
-> `linux-user` userspace emulator.
+On Thu, Sep 19, 2024 at 09:47:53PM +0200, Maciej S. Szmigiero wrote:
+> On 9.09.2024 21:08, Peter Xu wrote:
+> > On Mon, Sep 09, 2024 at 08:32:45PM +0200, Maciej S. Szmigiero wrote:
+> > > On 9.09.2024 19:59, Peter Xu wrote:
+> > > > On Thu, Sep 05, 2024 at 04:45:48PM +0300, Avihai Horon wrote:
+> > > > > 
+> > > > > On 27/08/2024 20:54, Maciej S. Szmigiero wrote:
+> > > > > > External email: Use caution opening links or attachments
+> > > > > > 
+> > > > > > 
+> > > > > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> > > > > > 
+> > > > > > These SaveVMHandlers help device provide its own asynchronous
+> > > > > > transmission of the remaining data at the end of a precopy phase.
+> > > > > > 
+> > > > > > In this use case the save_live_complete_precopy_begin handler might
+> > > > > > be used to mark the stream boundary before proceeding with asynchronous
+> > > > > > transmission of the remaining data while the
+> > > > > > save_live_complete_precopy_end handler might be used to mark the
+> > > > > > stream boundary after performing the asynchronous transmission.
+> > > > > > 
+> > > > > > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> > > > > > ---
+> > > > > >     include/migration/register.h | 36 ++++++++++++++++++++++++++++++++++++
+> > > > > >     migration/savevm.c           | 35 +++++++++++++++++++++++++++++++++++
+> > > > > >     2 files changed, 71 insertions(+)
+> > > > > > 
+> > > > > > diff --git a/include/migration/register.h b/include/migration/register.h
+> > > > > > index f60e797894e5..9de123252edf 100644
+> > > > > > --- a/include/migration/register.h
+> > > > > > +++ b/include/migration/register.h
+> > > > > > @@ -103,6 +103,42 @@ typedef struct SaveVMHandlers {
+> > > > > >          */
+> > > > > >         int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
+> > > > > > 
+> > > > > > +    /**
+> > > > > > +     * @save_live_complete_precopy_begin
+> > > > > > +     *
+> > > > > > +     * Called at the end of a precopy phase, before all
+> > > > > > +     * @save_live_complete_precopy handlers and before launching
+> > > > > > +     * all @save_live_complete_precopy_thread threads.
+> > > > > > +     * The handler might, for example, mark the stream boundary before
+> > > > > > +     * proceeding with asynchronous transmission of the remaining data via
+> > > > > > +     * @save_live_complete_precopy_thread.
+> > > > > > +     * When postcopy is enabled, devices that support postcopy will skip this step.
+> > > > > > +     *
+> > > > > > +     * @f: QEMUFile where the handler can synchronously send data before returning
+> > > > > > +     * @idstr: this device section idstr
+> > > > > > +     * @instance_id: this device section instance_id
+> > > > > > +     * @opaque: data pointer passed to register_savevm_live()
+> > > > > > +     *
+> > > > > > +     * Returns zero to indicate success and negative for error
+> > > > > > +     */
+> > > > > > +    int (*save_live_complete_precopy_begin)(QEMUFile *f,
+> > > > > > +                                            char *idstr, uint32_t instance_id,
+> > > > > > +                                            void *opaque);
+> > > > > > +    /**
+> > > > > > +     * @save_live_complete_precopy_end
+> > > > > > +     *
+> > > > > > +     * Called at the end of a precopy phase, after @save_live_complete_precopy
+> > > > > > +     * handlers and after all @save_live_complete_precopy_thread threads have
+> > > > > > +     * finished. When postcopy is enabled, devices that support postcopy will
+> > > > > > +     * skip this step.
+> > > > > > +     *
+> > > > > > +     * @f: QEMUFile where the handler can synchronously send data before returning
+> > > > > > +     * @opaque: data pointer passed to register_savevm_live()
+> > > > > > +     *
+> > > > > > +     * Returns zero to indicate success and negative for error
+> > > > > > +     */
+> > > > > > +    int (*save_live_complete_precopy_end)(QEMUFile *f, void *opaque);
+> > > > > 
+> > > > > Is this handler necessary now that migration core is responsible for the
+> > > > > threads and joins them? I don't see VFIO implementing it later on.
+> > > > 
+> > > > Right, I spot the same thing.
+> > > > 
+> > > > This series added three hooks: begin, end, precopy_thread.
+> > > > 
+> > > > What I think is it only needs one, which is precopy_async.  My vague memory
+> > > > was that was what we used to discuss too, so that when migration precopy
+> > > > flushes the final round of iterable data, it does:
+> > > > 
+> > > >     (1) loop over all complete_precopy_async() and enqueue the tasks if
+> > > >         existed into the migration worker pool.  Then,
+> > > > 
+> > > >     (2) loop over all complete_precopy() like before.
+> > > > 
+> > > > Optionally, we can enforce one vmstate handler only provides either
+> > > > complete_precopy_async() or complete_precopy().  In this case VFIO can
+> > > > update the two hooks during setup() by detecting multifd && !mapped_ram &&
+> > > > nocomp.
+> > > > 
+> > > 
+> > > The "_begin" hook is still necessary to mark the end of the device state
+> > > sent via the main migration stream (during the phase VM is still running)
+> > > since we can't start loading the multifd sent device state until all of
+> > > that earlier data finishes loading first.
+> > 
+> > Ah I remembered some more now, thanks.
+> > 
+> > If vfio can send data during iterations this new hook will also not be
+> > needed, right?
+> > 
+> > I remember you mentioned you'd have a look and see the challenges there, is
+> > there any conclusion yet on whether we can use multifd even during that?
 > 
-> It is implemented by extracting a new helper `maybe_do_fake_open()`
-> out of the exiting `do_guest_openat()` and share that with the
-> new `do_guest_openat2()`. Unfortunately we cannot just make
-> do_guest_openat2() a superset of do_guest_openat() because the
-> openat2() syscall is stricter with the argument checking and
-> will return an error for invalid flags or mode combinations (which
-> open()/openat() will ignore).
+> Yeah, I looked at that and it wasn't a straightforward thing to introduce.
 > 
-> The implementation is similar to SYSCALL_DEFINE(openat2), i.e.
-> a new `copy_struct_from_user()` is used that works the same
-> as the kernels version to support backwards-compatibility
-> for struct syscall argument.
+> I am worried that with all the things that already piled up (including the
+> new thread pool implementation) we risk missing QEMU 9.2 too if this is
+> included.
+
+Not explicitly required, but IMHO it'll be nice to provide a paragraph in
+the new version when repost explaining the challenges of using it during
+iterations.  It'll be not only for me but for whoever may want to extend
+your solution to iterations.
+
+I asked this question again mostly because I found that when with iteration
+support the design looks simpler in begin(), so that the extra sync is not
+needed.  But I confess you know better than me, so whatever you think best
+is ok here.
+
 > 
-> Instead of including openat2.h we create a copy of `open_how`
-> as `open_how_ver0` to ensure that if the structure grows we
-> can log a LOG_UNIMP warning.
+> > It's also a pity that we introduce this hook only because we want a
+> > boundary between "iterable stage" and "final stage".  IIUC if we have any
+> > kind of message telling dest before hand that "we're going to the last
+> > stage" then this hook can be avoided.  Now it's at least inefficient
+> > because we need to trigger begin() per-device, even if I think it's more of
+> > a global request saying that "we need to load all main stream data first
+> > before moving on".
 > 
-> Note that in this commit using openat2() for a "faked" file in
-> /proc will ignore the "resolve" flags. This is not great but it
-> seems similar to the exiting behavior when openat() is called
-> with a dirfd to "/proc". Here too the fake file lookup may
-> not catch the special file because "realpath()" is used to
-> determine if the path is in /proc. Alternatively to ignoring
-> we could simply fail with `-TARGET_ENOSYS` (or similar) if
-> `resolve` flags are passed and we found something that looks
-> like a file in /proc that needs faking.
+> It should be pretty easy to remove that begin() hook once it is no longer
+> needed - after all, it's only necessary for the sender.
+
+Do you mean you have plan to remove the begin() hook even without making
+interate() work too?  That's definitely nice if so.
+
 > 
-> Signed-off-by: Michael Vogt <mvogt@redhat.com>
-> Buglink: https://github.com/osbuild/bootc-image-builder/issues/619
-> ---
->   linux-user/syscall.c      | 107 +++++++++++++++++++++++++++++++++++++-
->   linux-user/syscall_defs.h |   7 +++
->   2 files changed, 112 insertions(+), 2 deletions(-)
+> > > 
+> > > We shouldn't send that boundary marker in .save_live_complete_precopy
+> > > either since it would meant unnecessary waiting for other devices
+> > > (not necessary VFIO ones) .save_live_complete_precopy bulk data.
+> > > 
+> > > And VFIO SaveVMHandlers are shared for all VFIO devices (and const) so
+> > > we can't really change them at runtime.
+> > 
+> > In all cases, please consider dropping end() if it's never used; IMO it's
+> > fine if there is only begin(), and we shouldn't keep hooks that are never
+> > used.
 > 
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index b693aeff5b..99f3afece7 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -602,6 +602,34 @@ static int check_zeroed_user(abi_long addr, size_t ksize, size_t usize)
->       return 1;
->   }
->   
-> +/*
-> + * Copies a target struct to a host struct, in a way that guarantees
-> + * backwards-compatibility for struct syscall arguments.
-> + *
-> + * Similar to kernels uaccess.h:copy_struct_from_user()
-> + */
-> +static int
-> +copy_struct_from_user(void *dst, size_t ksize, abi_ptr src, size_t usize)
-> +{
-> +    size_t size = MIN(ksize, usize);
-> +    size_t rest = MAX(ksize, usize) - size;
-> +
-> +    /* Deal with trailing bytes. */
-> +    if (usize < ksize) {
-> +        memset(dst + size, 0, rest);
-> +    } else if (usize > ksize) {
-> +        int ret = check_zeroed_user(src, ksize, usize);
-> +        if (ret <= 0) {
-> +            return ret ?: -TARGET_E2BIG;
-> +        }
-> +    }
-> +    /* Copy the interoperable parts of the struct. */
-> +    if (copy_from_user(dst, src, size)) {
-> +        return -TARGET_EFAULT;
-> +    }
-> +    return 0;
-> +}
-> +
->   #define safe_syscall0(type, name) \
->   static type safe_##name(void) \
->   { \
-> @@ -653,6 +681,15 @@ safe_syscall3(ssize_t, read, int, fd, void *, buff, size_t, count)
->   safe_syscall3(ssize_t, write, int, fd, const void *, buff, size_t, count)
->   safe_syscall4(int, openat, int, dirfd, const char *, pathname, \
->                 int, flags, mode_t, mode)
-> +
-> +struct open_how_ver0 {
-> +    __u64 flags;
-> +    __u64 mode;
-> +    __u64 resolve;
-> +};
-> +safe_syscall4(int, openat2, int, dirfd, const char *, pathname, \
-> +              const struct open_how_ver0 *, how, size_t, size)
-> +
->   #if defined(TARGET_NR_wait4) || defined(TARGET_NR_waitpid)
->   safe_syscall4(pid_t, wait4, pid_t, pid, int *, status, int, options, \
->                 struct rusage *, rusage)
-> @@ -8334,8 +8371,9 @@ static int open_net_route(CPUArchState *cpu_env, int fd)
->   }
->   #endif
->   
-> -int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
-> -                    int flags, mode_t mode, bool safe)
-> +static int maybe_do_fake_open(CPUArchState *cpu_env, int dirfd,
-> +                              const char *fname, int flags, mode_t mode,
-> +                              bool safe)
->   {
->       g_autofree char *proc_name = NULL;
->       const char *pathname;
-> @@ -8418,6 +8456,17 @@ int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
->           return fd;
->       }
->   
-> +    return -2;
-> +}
-> +
-> +int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *pathname,
-> +                    int flags, mode_t mode, bool safe)
-> +{
-> +    int fd = maybe_do_fake_open(cpu_env, dirfd, pathname, flags, mode, safe);
-> +    if (fd > -2) {
-> +        return get_errno(fd);
+> Okay, will remove the end() hook then.
+> 
+> > Thanks,
+> > 
+> 
+> Thanks,
+> Maciej
+> 
 
-Don't put the get_errno() here, because safe_openat() and openat() below don't have one, and 
-moreover the callers are doing get_errno(do_guest_openat()).
-
-> +    }
-> +
->       if (safe) {
->           return safe_openat(dirfd, path(pathname), flags, mode);
->       } else {
-> @@ -8425,6 +8474,55 @@ int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
->       }
->   }
->   
-> +
-> +static int do_openat2(CPUArchState *cpu_env, abi_long dirfd,
-> +                      abi_ptr guest_pathname, abi_ptr guest_open_how,
-> +                      abi_long guest_size)
-> +{
-> +    struct open_how_ver0 how = {0};
-> +    int ret;
-> +
-> +    if (guest_size < sizeof(struct target_open_how_ver0)) {
-> +        return -TARGET_EINVAL;
-> +    }
-> +    ret = copy_struct_from_user(&how, sizeof(how), guest_open_how, guest_size);
-> +    if (ret) {
-> +        if (ret == -TARGET_E2BIG) {
-> +            qemu_log_mask(LOG_UNIMP,
-> +                          "Unimplemented openat2 open_how size: %lu\n",
-> +                          guest_size);
-> +        }
-> +        return ret;
-> +    }
-> +    char *pathname = lock_user_string(guest_pathname);
-
-Don't put the declaration in the middle of the code.
-See https://qemu-project.gitlab.io/qemu/devel/style.html#declarations
-
-> +    if (!pathname) {
-> +        return -TARGET_EFAULT;
-> +    }
-> +
-> +    how.flags = target_to_host_bitmask(how.flags, fcntl_flags_tbl);
-> +    how.mode = tswap64(how.mode);
-> +    how.resolve = tswap64(how.resolve);
-> +
-> +    /*
-> +     * Ideally we would pass "how->resolve" flags into this helper too but
-> +     * the lookup for files that need faking is based on "realpath()" so
-> +     * neither a dirfd for "proc" nor restrictions via "resolve" flags can
-> +     * be honored right now.
-> +     */
-> +    int fd = maybe_do_fake_open(cpu_env, dirfd, pathname, how.flags, how.mode,
-> +                                true);
-> +    if (fd > -2) {
-> +        return get_errno(fd);
-
-it's better to set "ret = get_errno(fd);" and not return to execute the fd_trans_unregister() and 
-unlock_user() below.
-
-> +    } else { > +        ret = get_errno(safe_openat2(dirfd, pathname, &how,
-> +                                     sizeof(struct open_how_ver0)));
-> +    }
-> +
-> +    fd_trans_unregister(ret);
-> +    unlock_user(pathname, guest_pathname, 0);
-> +    return ret;
-> +}
-> +
-
-Thanks,
-Laurent
+-- 
+Peter Xu
 
 
