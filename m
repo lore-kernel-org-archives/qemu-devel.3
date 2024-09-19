@@ -4,96 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9671FCE8D55
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 04:23:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC9C8CE8D46
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 04:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr8gw-0003ka-4R; Thu, 19 Sep 2024 00:22:54 -0400
+	id 1sr8qi-0001Xr-QH; Thu, 19 Sep 2024 00:33:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sr8gu-0003iI-MA; Thu, 19 Sep 2024 00:22:52 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1sr8qg-0001W8-AO; Thu, 19 Sep 2024 00:32:58 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sr8gr-0004iL-W3; Thu, 19 Sep 2024 00:22:52 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48IIP2CS018273;
- Thu, 19 Sep 2024 04:21:54 GMT
+ id 1sr8qe-0005ib-GT; Thu, 19 Sep 2024 00:32:58 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48J06gWb032764;
+ Thu, 19 Sep 2024 04:32:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
  message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=9
- 5u1DYlnvISlhbA20kHPYmiwVdtwBPQuyPZrRrI7ZtQ=; b=YFU5YVNeYBq27w8LJ
- iDtAP7YvUSAEzQSRgrlIkA30SMEEA33ItZ33mSMDTHgvkwwbtM5k794mTKN4+Wud
- zMd/zgqg3ax+PfWFkyts4jDCgZPy386BCH33sVVNr7hs7+kg0DHO8TX/cUueMY80
- 44oIb+3uR/fSdh3uUKgy0pqNr1HWDYjoxKUp3p9tUz4bZ6z5yXmnIeJ3lqYami1q
- eZMMNheDa+7/YDMbk1z+eU1ii4AMzoJQEXrrbi+Hsv93tmEdHu3ZVs9TRn7S7H7H
- RMd68xLHVjVDJGIqsBd+tnGZ9A5+A+IkcfvFAiGOUJfftgDPgHM6IK2t+lYp5Zqv
- iUUkA==
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=/
+ /yJ0NNspX/NjhT+l80KXGos5UAotpfB9myc1LXLROk=; b=HDoLNTgG01OosqJKz
+ 6DUtJdmgAWyktND2QrB0Ptwy8xND0s0NZJ1BCElEJFkdrF9x0/Qk5drOIqwo4REU
+ aEwnyGXj2BzmV+B2ZKmYI3GMweRy2H1yj+bmgcr2i+BiJWZ77Rwrl1/y/ISwUGAR
+ W0HDPb/L3qQveTquKHxHV6peweue8OME8t1RJlr1IYk8cfa9T6mTRhbDPJsK9Bhn
+ DW3YHPSQbaRB8BU+OognT/EGLa7DYcrjClhmEY/stNUf4ZGyoMEay0iLWQ50Sssk
+ wx4Llm0jj8WotdnTj5h/4lXQiO/Fg+Wa4seRBcHZiXAbJTglF8f2R44IZe7zc8P0
+ D55sw==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n3vdsqbd-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41pht8sm1n-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 19 Sep 2024 04:21:53 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48J4LrJ7024625;
- Thu, 19 Sep 2024 04:21:53 GMT
+ Thu, 19 Sep 2024 04:32:40 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48J4Wdbx026638;
+ Thu, 19 Sep 2024 04:32:40 GMT
 Received: from ppma23.wdc07v.mail.ibm.com
  (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n3vdsqb8-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41pht8sm1f-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 19 Sep 2024 04:21:53 +0000 (GMT)
+ Thu, 19 Sep 2024 04:32:39 +0000 (GMT)
 Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48J3VQXP031056;
- Thu, 19 Sep 2024 04:21:52 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41npanf1js-1
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48J4Ikdj030649;
+ Thu, 19 Sep 2024 04:32:39 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41npanf2un-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 19 Sep 2024 04:21:52 +0000
+ Thu, 19 Sep 2024 04:32:39 +0000
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48J4LpJx17367564
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48J4WbB341943300
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 19 Sep 2024 04:21:51 GMT
+ Thu, 19 Sep 2024 04:32:37 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8623A5805F;
- Thu, 19 Sep 2024 04:21:51 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id BE9715805E;
+ Thu, 19 Sep 2024 04:32:37 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DC90458043;
- Thu, 19 Sep 2024 04:21:49 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A953E58059;
+ Thu, 19 Sep 2024 04:32:32 +0000 (GMT)
 Received: from [9.109.242.165] (unknown [9.109.242.165])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 19 Sep 2024 04:21:49 +0000 (GMT)
-Message-ID: <83ed520d-b8b1-4f25-b003-ff48e2f3c57a@linux.ibm.com>
-Date: Thu, 19 Sep 2024 09:51:47 +0530
+ Thu, 19 Sep 2024 04:32:32 +0000 (GMT)
+Message-ID: <013649bd-4fa2-4a8f-a1a6-c466e14cb787@linux.ibm.com>
+Date: Thu, 19 Sep 2024 10:02:27 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc/spapr: remove deprecated machines specific code
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, danielhb413@gmail.com
-References: <20240917060300.943496-1-harshpb@linux.ibm.com>
- <6ed1b5e4-cdd4-4805-ae24-36810ef11fe3@kaod.org>
+Subject: Re: [PATCH v16 02/13] hw/ppc/spapr_pci: Do not create DT for disabled
+ PCI device
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <20240913-reuse-v16-0-d016b4b4f616@daynix.com>
+ <20240913-reuse-v16-2-d016b4b4f616@daynix.com>
+ <b143662e-67a1-4edf-8bfa-cf43039989a8@redhat.com>
 Content-Language: en-US
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <6ed1b5e4-cdd4-4805-ae24-36810ef11fe3@kaod.org>
+In-Reply-To: <b143662e-67a1-4edf-8bfa-cf43039989a8@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: yZ_MdrjFO2poKTzKNuZ1G6mmtT6SkcWD
-X-Proofpoint-GUID: eqgflQhUHQDgIgYqPmEi2NdtepglZhFK
+X-Proofpoint-GUID: sFSxDv2kaXYYB2Ii4jyFCCd9Z0KwAPRb
+X-Proofpoint-ORIG-GUID: gYjhne8AV71192j6B1ocQq16ZtcseQ7l
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-19_02,2024-09-18_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0
- lowpriorityscore=0 suspectscore=0 bulkscore=0 clxscore=1015 mlxscore=0
- malwarescore=0 mlxlogscore=999 priorityscore=1501 phishscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ lowpriorityscore=0
+ phishscore=0 bulkscore=0 suspectscore=0 priorityscore=1501 adultscore=0
+ mlxlogscore=999 mlxscore=0 clxscore=1011 malwarescore=0 spamscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2408220000 definitions=main-2409190025
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -117,301 +131,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cedric,
 
-On 9/17/24 12:31, Cédric Le Goater wrote:
-> Hello Harsh,
-> 
-> On 9/17/24 08:03, Harsh Prateek Bora wrote:
->> Commit 1392617d3576 intended to tag pseries-2.1 - 2.11 machines as
->> deprecated with reasons mentioned in its commit log.
->> Removing the arch specific code for the now deprecated machine types.
->>
->> Suggested-by: Cédric Le Goater <clg@kaod.org>
->> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> 
-> There is more to it :/
-> 
-> Some machine versions have their own set of properties, like the
-> "pre-*-migration" ones, and the associated code should be removed
-> also. It impacts more models than just the machine model.
-> 
-> I suggest one patch per machine version, or one patch per complex
-> machine version and a combo patch for the simple ones.
 
-Sure, I shall post v2 as a patchset addressing your inputs.
-
-regards,
-Harsh
-
+On 9/18/24 19:57, Cédric Le Goater wrote:
+> Hello,
+> 
+> Adding :
+> 
+>    Harsh for QEMU/PPC pseries machine,
+>    Shivaprasad for KVM/PPC VFIO and IOMMU support.
+> 
+> Could you please give us your feedback on these changes ?
 > 
 > Thanks,
 > 
 > C.
 > 
 > 
->> ---
->>   hw/ppc/spapr.c | 235 -------------------------------------------------
->>   1 file changed, 235 deletions(-)
+> 
+>   On 9/13/24 05:44, Akihiko Odaki wrote:
+>> Disabled means it is a disabled SR-IOV VF or it is powered off, and
+>> hidden from the guest.
 >>
->> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
->> index 8aa3ce7449..04f06377b4 100644
->> --- a/hw/ppc/spapr.c
->> +++ b/hw/ppc/spapr.c
->> @@ -5157,241 +5157,6 @@ static void 
->> spapr_machine_2_12_sxxm_class_options(MachineClass *mc)
->>   DEFINE_SPAPR_MACHINE_TAGGED(2, 12, sxxm);
->> -/*
->> - * pseries-2.11
->> - */
->> -
->> -static void spapr_machine_2_11_class_options(MachineClass *mc)
->> -{
->> -    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
->> -
->> -    spapr_machine_2_12_class_options(mc);
->> -    smc->default_caps.caps[SPAPR_CAP_HTM] = SPAPR_CAP_ON;
->> -    compat_props_add(mc->compat_props, hw_compat_2_11, 
->> hw_compat_2_11_len);
->> -}
->> -
->> -DEFINE_SPAPR_MACHINE(2, 11);
->> -
->> -/*
->> - * pseries-2.10
->> - */
->> -
->> -static void spapr_machine_2_10_class_options(MachineClass *mc)
->> -{
->> -    spapr_machine_2_11_class_options(mc);
->> -    compat_props_add(mc->compat_props, hw_compat_2_10, 
->> hw_compat_2_10_len);
->> -}
->> -
->> -DEFINE_SPAPR_MACHINE(2, 10);
->> -
->> -/*
->> - * pseries-2.9
->> - */
->> -
->> -static void spapr_machine_2_9_class_options(MachineClass *mc)
->> -{
->> -    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
->> -    static GlobalProperty compat[] = {
->> -        { TYPE_POWERPC_CPU, "pre-2.10-migration", "on" },
->> -    };
->> -
->> -    spapr_machine_2_10_class_options(mc);
->> -    compat_props_add(mc->compat_props, hw_compat_2_9, 
->> hw_compat_2_9_len);
->> -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
->> -    smc->pre_2_10_has_unused_icps = true;
->> -    smc->resize_hpt_default = SPAPR_RESIZE_HPT_DISABLED;
->> -}
->> -
->> -DEFINE_SPAPR_MACHINE(2, 9);
->> -
->> -/*
->> - * pseries-2.8
->> - */
->> -
->> -static void spapr_machine_2_8_class_options(MachineClass *mc)
->> -{
->> -    static GlobalProperty compat[] = {
->> -        { TYPE_SPAPR_PCI_HOST_BRIDGE, 
->> "pcie-extended-configuration-space", "off" },
->> -    };
->> -
->> -    spapr_machine_2_9_class_options(mc);
->> -    compat_props_add(mc->compat_props, hw_compat_2_8, 
->> hw_compat_2_8_len);
->> -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
->> -    mc->numa_mem_align_shift = 23;
->> -}
->> -
->> -DEFINE_SPAPR_MACHINE(2, 8);
->> -
->> -/*
->> - * pseries-2.7
->> - */
->> -
->> -static bool phb_placement_2_7(SpaprMachineState *spapr, uint32_t index,
->> -                              uint64_t *buid, hwaddr *pio,
->> -                              hwaddr *mmio32, hwaddr *mmio64,
->> -                              unsigned n_dma, uint32_t *liobns, Error 
->> **errp)
->> -{
->> -    /* Legacy PHB placement for pseries-2.7 and earlier machine types */
->> -    const uint64_t base_buid = 0x800000020000000ULL;
->> -    const hwaddr phb_spacing = 0x1000000000ULL; /* 64 GiB */
->> -    const hwaddr mmio_offset = 0xa0000000; /* 2 GiB + 512 MiB */
->> -    const hwaddr pio_offset = 0x80000000; /* 2 GiB */
->> -    const uint32_t max_index = 255;
->> -    const hwaddr phb0_alignment = 0x10000000000ULL; /* 1 TiB */
->> -
->> -    uint64_t ram_top = MACHINE(spapr)->ram_size;
->> -    hwaddr phb0_base, phb_base;
->> -    int i;
->> -
->> -    /* Do we have device memory? */
->> -    if (MACHINE(spapr)->device_memory) {
->> -        /* Can't just use maxram_size, because there may be an
->> -         * alignment gap between normal and device memory regions
->> -         */
->> -        ram_top = MACHINE(spapr)->device_memory->base +
->> -            memory_region_size(&MACHINE(spapr)->device_memory->mr);
->> -    }
->> -
->> -    phb0_base = QEMU_ALIGN_UP(ram_top, phb0_alignment);
->> -
->> -    if (index > max_index) {
->> -        error_setg(errp, "\"index\" for PAPR PHB is too large (max %u)",
->> -                   max_index);
->> -        return false;
->> -    }
->> -
->> -    *buid = base_buid + index;
->> -    for (i = 0; i < n_dma; ++i) {
->> -        liobns[i] = SPAPR_PCI_LIOBN(index, i);
->> -    }
->> -
->> -    phb_base = phb0_base + index * phb_spacing;
->> -    *pio = phb_base + pio_offset;
->> -    *mmio32 = phb_base + mmio_offset;
->> -    /*
->> -     * We don't set the 64-bit MMIO window, relying on the PHB's
->> -     * fallback behaviour of automatically splitting a large "32-bit"
->> -     * window into contiguous 32-bit and 64-bit windows
->> -     */
->> -
->> -    return true;
->> -}
->> -
->> -static void spapr_machine_2_7_class_options(MachineClass *mc)
->> -{
->> -    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
->> -    static GlobalProperty compat[] = {
->> -        { TYPE_SPAPR_PCI_HOST_BRIDGE, "mem_win_size", "0xf80000000", },
->> -        { TYPE_SPAPR_PCI_HOST_BRIDGE, "mem64_win_size", "0", },
->> -        { TYPE_POWERPC_CPU, "pre-2.8-migration", "on", },
->> -        { TYPE_SPAPR_PCI_HOST_BRIDGE, "pre-2.8-migration", "on", },
->> -    };
->> -
->> -    spapr_machine_2_8_class_options(mc);
->> -    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power7_v2.3");
->> -    mc->default_machine_opts = "modern-hotplug-events=off";
->> -    compat_props_add(mc->compat_props, hw_compat_2_7, 
->> hw_compat_2_7_len);
->> -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
->> -    smc->phb_placement = phb_placement_2_7;
->> -}
->> -
->> -DEFINE_SPAPR_MACHINE(2, 7);
->> -
->> -/*
->> - * pseries-2.6
->> - */
->> -
->> -static void spapr_machine_2_6_class_options(MachineClass *mc)
->> -{
->> -    static GlobalProperty compat[] = {
->> -        { TYPE_SPAPR_PCI_HOST_BRIDGE, "ddw", "off" },
->> -    };
->> -
->> -    spapr_machine_2_7_class_options(mc);
->> -    mc->has_hotpluggable_cpus = false;
->> -    compat_props_add(mc->compat_props, hw_compat_2_6, 
->> hw_compat_2_6_len);
->> -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
->> -}
->> -
->> -DEFINE_SPAPR_MACHINE(2, 6);
->> -
->> -/*
->> - * pseries-2.5
->> - */
->> -
->> -static void spapr_machine_2_5_class_options(MachineClass *mc)
->> -{
->> -    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
->> -    static GlobalProperty compat[] = {
->> -        { "spapr-vlan", "use-rx-buffer-pools", "off" },
->> -    };
->> -
->> -    spapr_machine_2_6_class_options(mc);
->> -    smc->use_ohci_by_default = true;
->> -    compat_props_add(mc->compat_props, hw_compat_2_5, 
->> hw_compat_2_5_len);
->> -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
->> -}
->> -
->> -DEFINE_SPAPR_MACHINE(2, 5);
->> -
->> -/*
->> - * pseries-2.4
->> - */
->> -
->> -static void spapr_machine_2_4_class_options(MachineClass *mc)
->> -{
->> -    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
->> -
->> -    spapr_machine_2_5_class_options(mc);
->> -    smc->dr_lmb_enabled = false;
->> -    compat_props_add(mc->compat_props, hw_compat_2_4, 
->> hw_compat_2_4_len);
->> -}
->> -
->> -DEFINE_SPAPR_MACHINE(2, 4);
->> -
->> -/*
->> - * pseries-2.3
->> - */
->> -
->> -static void spapr_machine_2_3_class_options(MachineClass *mc)
->> -{
->> -    static GlobalProperty compat[] = {
->> -        { "spapr-pci-host-bridge", "dynamic-reconfiguration", "off" },
->> -    };
->> -    spapr_machine_2_4_class_options(mc);
->> -    compat_props_add(mc->compat_props, hw_compat_2_3, 
->> hw_compat_2_3_len);
->> -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
->> -}
->> -DEFINE_SPAPR_MACHINE(2, 3);
->> -
->> -/*
->> - * pseries-2.2
->> - */
->> -
->> -static void spapr_machine_2_2_class_options(MachineClass *mc)
->> -{
->> -    static GlobalProperty compat[] = {
->> -        { TYPE_SPAPR_PCI_HOST_BRIDGE, "mem_win_size", "0x20000000" },
->> -    };
->> -
->> -    spapr_machine_2_3_class_options(mc);
->> -    compat_props_add(mc->compat_props, hw_compat_2_2, 
->> hw_compat_2_2_len);
->> -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
->> -    mc->default_machine_opts = 
->> "modern-hotplug-events=off,suppress-vmdesc=on";
->> -}
->> -DEFINE_SPAPR_MACHINE(2, 2);
->> -
->> -/*
->> - * pseries-2.1
->> - */
->> -
->> -static void spapr_machine_2_1_class_options(MachineClass *mc)
->> -{
->> -    spapr_machine_2_2_class_options(mc);
->> -    compat_props_add(mc->compat_props, hw_compat_2_1, 
->> hw_compat_2_1_len);
->> -}
->> -DEFINE_SPAPR_MACHINE(2, 1);
->> -
->>   static void spapr_machine_register_types(void)
->>   {
->>       type_register_static(&spapr_machine_info);
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   hw/ppc/spapr_pci.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
+>> index 7cf9904c3546..f63182a03c41 100644
+>> --- a/hw/ppc/spapr_pci.c
+>> +++ b/hw/ppc/spapr_pci.c
+>> @@ -1296,6 +1296,10 @@ static void spapr_dt_pci_device_cb(PCIBus *bus, 
+>> PCIDevice *pdev,
+>>           return;
+>>       }
+>> +    if (!pdev->enabled) {
+>> +        return;
+>> +    }
+>> +
+
+While I will let Shivaprasad comment from IO perspective, I would like 
+to suggest merging this condition with the error condition check 
+preceding it.
+
+regards,
+Harsh
+
+>>       err = spapr_dt_pci_device(p->sphb, pdev, p->fdt, p->offset);
+>>       if (err < 0) {
+>>           p->err = err;
+>>
+> 
 > 
 
