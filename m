@@ -4,83 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB19ACF3970
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 21:17:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB2ACF3970
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 21:19:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srOWj-0004LE-QD; Thu, 19 Sep 2024 17:17:25 -0400
+	id 1srOXz-0001Of-Bs; Thu, 19 Sep 2024 17:18:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregorhaas1997@gmail.com>)
- id 1srOWh-0004JZ-VT; Thu, 19 Sep 2024 17:17:23 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gregorhaas1997@gmail.com>)
- id 1srOWf-0000gH-RN; Thu, 19 Sep 2024 17:17:23 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2054e22ce3fso14506085ad.2; 
- Thu, 19 Sep 2024 14:17:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1726780639; x=1727385439; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EoSjHxGhf0A2MNCQwDDUg4rIGiQy/h0AKZYL30BhkPs=;
- b=Ez744S5PTHBsbh8mWDkUqO3om/zja+oAHw1q5uzOdXoSBABQZOUpkn9Up9VGDGsn8j
- D6Ujl0tKhko+WDDFU9GUgC+cBkp0nPX4mjVH9LkiV9MWVe8Aayi4QX+Qb74roVGtOkz+
- 9JrUjW+w9T0G4PoPopNoaQAnspL3MXF3319Zu9GLRfCaRSjryPdq1zKw1VM2KNBl4YSX
- xTM3kfDVsxqiGlkNNgMnQOS+74CEl0vUgc0q1EVWFcqASRbLtwcyVUwZ89G4YUYmKLKE
- lpAXE4o4vuJoPtZlYw4k1hAlBNxhFiTIpyKly8VKyEqLNbmSD89ItBH9o77kwUgrONE3
- QrgQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srOXy-0001JQ-4T
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 17:18:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srOXw-0000n3-KG
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 17:18:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1726780719;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/h0B+FgVmF4hl7MJvr7oKOHu6ekeIjZIwhOLzrLLULU=;
+ b=FA6WodINa5dQ7ZOdw7W7yrxqdxEC6dF6CrwWGDw4Il4B0Rb6xUvEo1uxlbx7at1w/rW9vQ
+ IPOq64Y2sji/MP12MgCqYT1s/syjM/M5pZTLNQAybCIyoFZ7U8qoDm6QFjm9XGsiuDR7BA
+ Xe5GweNjL80XrKmm3OsX6t/EehyzbZs=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-668-5NNnwJC6OGW2Y-fveLkIOQ-1; Thu, 19 Sep 2024 17:18:38 -0400
+X-MC-Unique: 5NNnwJC6OGW2Y-fveLkIOQ-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6c366dfd540so22110296d6.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 14:18:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726780639; x=1727385439;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=EoSjHxGhf0A2MNCQwDDUg4rIGiQy/h0AKZYL30BhkPs=;
- b=OyZDXexKFfiM25D00XM/ikhsiTKsbnZbhCjsDfWZr8031H5e0evEt81P2VPjCAw6BV
- vCPmMxz1w7/HfPCKxhueTjE9u84nrv7HS9ZZZep1ZZb+qGLHuJEiLbCN7IX8oBPuk9ir
- HII+GpHp+bcRcyJTsl/3peA4l5D8TIFnByy18xAawj5weCtCDiU18E3Js4yB1ze4/kFa
- c8qbH9nbbxpkpzLcX56CjKIHTJIooiViSwKV6RM7324oI1cUHLJxwXtKL9RiUP6XEVDC
- PvTpp1733PJRnpg2Sz4bdQrcTZxr+aonJ+VgjQdFa9gYzJ9gxtrIWztTp0P0RQ8yhXCe
- F6XQ==
+ d=1e100.net; s=20230601; t=1726780718; x=1727385518;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/h0B+FgVmF4hl7MJvr7oKOHu6ekeIjZIwhOLzrLLULU=;
+ b=V3hCdtWcktvRocvAsabAOY3ofEJYhL6nLuRj5qJIYaP8dbqUJ/vFrE6KASPkQ9Yk1Z
+ 08hI4Y6+TomwvmfeqyGlYTFP8VkZu9VQE0zkgiJd8XoBuNckrgpqp3d3HeE2KZcnYOBn
+ sGGNHklKNiG6hpf9hFwSGB01hH+8phWXU2fe01V59OUpJ3BevUpK0tbHv9iRG2hAurhd
+ 6gk5BtgsidSgS65H0CxKe8c0km6dlI1VuPSroMJPHPJDx8dvO8vhdBykO72zAag0Zdbo
+ 1McD+v8sn/d4/7oVvFrHnQW3BnNiW4L2qZfF9LSFno1d2LXoRwoqgI6akDgdMm//IY4V
+ PN5A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQky7WNVY5ayWMqzqwLw8cyiDL17SRXMWb5zHruCB+k/K/750Dcq7HkTX3RgZDPcshzGQj93DL/tAf@nongnu.org,
- AJvYcCXiSu7zO4FcmMD7h93GxaTs7kanT+mgeo90S1VIffPKTh4kSxcwx/gqK3VH/w8KnjRZF+1ubdC+cAEOJw==@nongnu.org
-X-Gm-Message-State: AOJu0YwAO3LXCNxMGjSLBNimDL9IBAoJUhC/eh7IcLQ3Ww5qlZkbgEZ1
- J+NfaoPgzxm8yjAKUy8CgwplSIs/Ps9IAQIzzi70vewqwdqFGPX6ohqKERonmex3BE5Fb0C2lgi
- tWJAk4hnBM550X29gxJp7zPRgZso=
-X-Google-Smtp-Source: AGHT+IHAvGMT4xeFtLIjE6EjMcJl2/vC+wLjcFSVbyA8+lR9ePxEbtdjGl5qTFACGv5YpvFSqsQYDFi4sgPo32XRcpQ=
-X-Received: by 2002:a17:902:f7c5:b0:207:45f1:d1fe with SMTP id
- d9443c01a7336-208d843e28dmr4947685ad.61.1726780639256; Thu, 19 Sep 2024
- 14:17:19 -0700 (PDT)
+ AJvYcCVHJ9H2LZbG+HubeduNRedqSX5Eq+Jwg2eIZd6nCzfJYd7ZwtYwOj9dlrC1CeQ+YYJT8FvJabiINMu/@nongnu.org
+X-Gm-Message-State: AOJu0Yzzivnr0RhWBX/82K+x8AF3DXweiiEvxlYdhaCswyS88CXX2EUW
+ qIr+YN0JBnHOIIaDZVBDOv1WKUYd/JU5UZgNnN/7MQfUVfQk5ilHMZnvUqZ6DoEAzPLQLP9+Mri
+ D5XEwi7HqDFp3cLww4bFs3fBsf7ekyU+DUm5RO8qN8jlNJImLmI8H
+X-Received: by 2002:a05:6214:449f:b0:6c5:ab2b:3a9c with SMTP id
+ 6a1803df08f44-6c7bc65b698mr10175786d6.4.1726780717864; 
+ Thu, 19 Sep 2024 14:18:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHAbhycUm7WJTH+d4MIb2iVS+p1q2Ga+w1BSsr5IG+y2cNXP7NiK7ILVvmn5p2XT2mnybZI0w==
+X-Received: by 2002:a05:6214:449f:b0:6c5:ab2b:3a9c with SMTP id
+ 6a1803df08f44-6c7bc65b698mr10175506d6.4.1726780717547; 
+ Thu, 19 Sep 2024 14:18:37 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6c75e44bffesm10963556d6.3.2024.09.19.14.18.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Sep 2024 14:18:36 -0700 (PDT)
+Date: Thu, 19 Sep 2024 17:18:33 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 12/17] migration/multifd: Device state transfer
+ support - send side
+Message-ID: <ZuyVKeNW0uIIJJNI@x1n>
+References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
+ <fdcfd68dfcf3b20278a4495eb639905b2a8e8ff3.1724701542.git.maciej.szmigiero@oracle.com>
+ <ZuBumSH-nZDzpCcQ@x1n>
+ <e9037c2b-3994-405b-baf1-de8a862880e0@maciej.szmigiero.name>
 MIME-Version: 1.0
-References: <20240805210444.497723-1-gregorhaas1997@gmail.com>
- <CAKmqyKM_qgc+wwrDRzZM1yda=dZziM=1rGU2_SDeJU9PTnacVg@mail.gmail.com>
- <20240917-2683603a6ea10148772d365e@orel>
-In-Reply-To: <20240917-2683603a6ea10148772d365e@orel>
-From: Gregor Haas <gregorhaas1997@gmail.com>
-Date: Thu, 19 Sep 2024 14:16:42 -0700
-Message-ID: <CAMqWt3ofKAZVMjDcpA=xYcwaRw9ZJ51o1g+pp2vobVoyT2ODkQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/1] Add support for generating OpenSBI domains in the
- device tree
-To: Andrew Jones <ajones@ventanamicro.com>
-Cc: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, 
- atishp@rivosinc.com, dbarboza@ventanamicro.com, alistair.francis@wdc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=gregorhaas1997@gmail.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <e9037c2b-3994-405b-baf1-de8a862880e0@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,63 +110,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Drew,
+On Thu, Sep 19, 2024 at 09:49:57PM +0200, Maciej S. Szmigiero wrote:
+> On 10.09.2024 18:06, Peter Xu wrote:
+> > On Tue, Aug 27, 2024 at 07:54:31PM +0200, Maciej S. Szmigiero wrote:
+> > > +bool multifd_queue_device_state(char *idstr, uint32_t instance_id,
+> > > +                                char *data, size_t len)
+> > > +{
+> > > +    /* Device state submissions can come from multiple threads */
+> > > +    QEMU_LOCK_GUARD(&queue_job_mutex);
+> > 
+> > Ah, just notice there's the mutex.
+> > 
+> > So please consider the reply in the other thread, IIUC we can make it for
+> > multifd_send() to be a generic mutex to simplify the other patch too, then
+> > drop here.
+> > 
+> > I assume the ram code should be fine taking one more mutex even without
+> > vfio, if it only takes once for each ~128 pages to enqueue, and only take
+> > in the main thread, then each update should be also in the hot path
+> > (e.g. no cache bouncing).
+> > 
+> 
+> Will check whether it is possible to use a common mutex here for both RAM
+> and device state submission without drop in performance.
 
-On Tue, Sep 17, 2024 at 5:45=E2=80=AFAM Andrew Jones <ajones@ventanamicro.c=
-om> wrote:
->
-> On Mon, Sep 09, 2024 at 01:27:05PM GMT, Alistair Francis wrote:
-> > On Tue, Aug 6, 2024 at 7:05=E2=80=AFAM Gregor Haas <gregorhaas1997@gmai=
-l.com> wrote:
-> > >
-> > > This patch series adds support for specifying OpenSBI domains on the =
-QEMU
-> > > command line. A simple example of what this looks like is below, incl=
-uding
-> > > mapping the board's UART into the secondary domain:
-> >
-> > Thanks for the patch, sorry it took me so long to look into this
-> >
-> > >
-> > > qemu-system-riscv64 -machine virt -bios fw_jump.bin -cpu max -smp 2 -=
-m 4G -nographic \
-> > >         -device opensbi-memregion,id=3Dmem,base=3D0xBC000000,order=3D=
-26,mmio=3Dfalse \
-> > >         -device opensbi-memregion,id=3Duart,base=3D0x10000000,order=
-=3D12,mmio=3Dtrue,device0=3D"/soc/serial@10000000" \
-> > >         -device opensbi-domain,id=3Ddomain,possible-harts=3D0-1,boot-=
-hart=3D0x0,next-addr=3D0xBC000000,next-mode=3D1,region0=3Dmem,perms0=3D0x3f=
-,region1=3Duart,perms1=3D0x3f
-> >
-> > This will need documentation added under docs (probably under
-> > docs/system/riscv) of how this should be used.
-> >
-> > I'm not convinced this is something we want though. A user can dump
-> > the QEMU DTB and edit it to support OpenSBI domains if they want.
-> >
->
-> I also feel like this is just pushing the population of device tree
-> nodes from an editor of a .dts file to the QEMU command line. If some
-> generation is needed, then maybe we need a script, possibly one which
-> has the same command line inputs as proposed here. afaik, we haven't
-> typically taken patches which help overlay the generated devicetree
-> with additional nodes. For example, see [1] for one such proposal
-> and rejection.
->
-> [1] https://lore.kernel.org/all/20210926183410.256484-1-sjg@chromium.org/
-> Thanks,
-> drew
+Thanks.
 
-Thanks for the link! After reading through that chain, I can see that there=
- is
-typically high resistance to guest-specific device tree patches. As such, I=
-'ll
-probably abandon this patch series rather than doing more work to clean it =
-up.
-I do wonder why there is so much resistance to these types of changes when =
-the
-need for them arises so often in various boot firmwares.
+-- 
+Peter Xu
 
-Thanks,
-Gregor
 
