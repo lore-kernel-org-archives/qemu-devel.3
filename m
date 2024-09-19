@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C83BBCF3962
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 18:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BBFACF3963
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 18:59:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srMM1-00076R-UH; Thu, 19 Sep 2024 14:58:13 -0400
+	id 1srMMG-0007dy-4P; Thu, 19 Sep 2024 14:58:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1srMM0-0006yh-2M
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 14:58:12 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1srMME-0007ZZ-LF
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 14:58:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1srMLy-0001NJ-HM
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 14:58:11 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1srMMC-0001O6-R7
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 14:58:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726772289;
+ s=mimecast20190719; t=1726772303;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UwlFYwPN+QHlMLSj5ERxLP4JF1V2FyHI7rXBw43Qfsw=;
- b=ApV4d/vlwcTftegBfz6rF1ujKYwgiad8C80OtEaGYmhpAwpap0QaFkSq7dLQEgqxY8Aozk
- 2CZVuDc2NjqoGX+lpI6Akvk/W44QH9ZZCCEQPPy6C56ivndzzOXJN26RXcA3CEBtEtgXJg
- 3cgLdKArei2Txg2mnQRRDPDmOdaO8qE=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=SYa+qomcAX21vpHUSncIfptuYVSKRE7oQzzDiYo3Bk0=;
+ b=AS8D7jNFPS/2shjtU3s6ullGBrD3hFGBxAGG57sCw5qCkUlC9SqiRpZEX6oQUQSiBk594W
+ /8oIS/iGCBcZmHUL72QVAPUVEo76OuRaX6XqK9LmYwPcSyZb+LmrYPv1xpXZetSXVCVfst
+ x76NXR3nP+VHxnPiWjFBNFtcWNq3pmc=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-NACYhpGvOAq5qkHqBQGWTQ-1; Thu,
- 19 Sep 2024 14:58:06 -0400
-X-MC-Unique: NACYhpGvOAq5qkHqBQGWTQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-444-WNNcXUWkMcCX2u4fScrkEQ-1; Thu,
+ 19 Sep 2024 14:58:18 -0400
+X-MC-Unique: WNNcXUWkMcCX2u4fScrkEQ-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (unknown
  [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8A8F0193584E; Thu, 19 Sep 2024 18:58:05 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 363341953963; Thu, 19 Sep 2024 18:58:17 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.46])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AE2A019560AA; Thu, 19 Sep 2024 18:58:01 +0000 (UTC)
+ id 3AE8519560AA; Thu, 19 Sep 2024 18:58:13 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -51,9 +51,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Yoshinori Sato <ysato@users.sourceforge.jp>,
  Magnus Damm <magnus.damm@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH 2/7] tests/functional: Convert the vexpressa9 Avocado test
-Date: Thu, 19 Sep 2024 20:57:42 +0200
-Message-ID: <20240919185749.71222-3-thuth@redhat.com>
+Subject: [PATCH 5/7] tests/functional: Convert the e500 ppc64 Avocado test
+Date: Thu, 19 Sep 2024 20:57:45 +0200
+Message-ID: <20240919185749.71222-6-thuth@redhat.com>
 In-Reply-To: <20240919185749.71222-1-thuth@redhat.com>
 References: <20240919185749.71222-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -88,85 +88,86 @@ Use the new launch_kernel function to convert this test in a simple way.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                           |  1 +
- tests/avocado/boot_linux_console.py   |  9 ---------
- tests/functional/meson.build          |  1 +
- tests/functional/test_arm_vexpress.py | 26 ++++++++++++++++++++++++++
- 4 files changed, 28 insertions(+), 9 deletions(-)
- create mode 100755 tests/functional/test_arm_vexpress.py
+ MAINTAINERS                         |  1 +
+ tests/avocado/boot_linux_console.py | 11 -----------
+ tests/functional/meson.build        |  1 +
+ tests/functional/test_ppc64_e500.py | 25 +++++++++++++++++++++++++
+ 4 files changed, 27 insertions(+), 11 deletions(-)
+ create mode 100755 tests/functional/test_ppc64_e500.py
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index ffacd60f40..7f7f4c2be6 100644
+index b85a3fc529..3dd80a0138 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1005,6 +1005,7 @@ S: Maintained
- F: hw/arm/vexpress.c
- F: hw/display/sii9022.c
- F: docs/system/arm/vexpress.rst
-+F: tests/functional/test_arm_vexpress.py
+@@ -1445,6 +1445,7 @@ F: pc-bios/u-boot.e500
+ F: hw/intc/openpic_kvm.c
+ F: include/hw/ppc/openpic_kvm.h
+ F: docs/system/ppc/ppce500.rst
++F: tests/functional/test_ppc64_e500.py
  
- Versatile PB
- M: Peter Maydell <peter.maydell@linaro.org>
+ mpc8544ds
+ L: qemu-ppc@nongnu.org
 diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-index 6c50284986..7a776c2818 100644
+index 900af67412..344c7835a2 100644
 --- a/tests/avocado/boot_linux_console.py
 +++ b/tests/avocado/boot_linux_console.py
-@@ -893,15 +893,6 @@ def do_test_advcal_2018(self, day, tar_hash, kernel_name, console=0):
-         self.vm.launch()
-         self.wait_for_console_pattern('QEMU advent calendar')
+@@ -918,17 +918,6 @@ def test_arm_ast2600_debian(self):
+         self.wait_for_console_pattern("SMP: Total of 2 processors activated")
+         self.wait_for_console_pattern("No filesystem could mount root")
  
--    def test_arm_vexpressa9(self):
+-    def test_ppc64_e500(self):
 -        """
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:vexpress-a9
+-        :avocado: tags=arch:ppc64
+-        :avocado: tags=machine:ppce500
+-        :avocado: tags=cpu:e5500
+-        :avocado: tags=accel:tcg
 -        """
--        tar_hash = '32b7677ce8b6f1471fb0059865f451169934245b'
--        self.vm.add_args('-dtb', self.workdir + '/day16/vexpress-v2p-ca9.dtb')
--        self.do_test_advcal_2018('16', tar_hash, 'winter.zImage')
+-        self.require_accelerator("tcg")
+-        tar_hash = '6951d86d644b302898da2fd701739c9406527fe1'
+-        self.do_test_advcal_2018('19', tar_hash, 'uImage')
 -
-     def test_arm_ast2600_debian(self):
-         """
-         :avocado: tags=arch:arm
+     def do_test_ppc64_powernv(self, proc):
+         self.require_accelerator("tcg")
+         images_url = ('https://github.com/open-power/op-build/releases/download/v2.7/')
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 8d5520349d..3fc1bb192d 100644
+index 8aacd15cf3..bc33332313 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -50,6 +50,7 @@ tests_arm_system_thorough = [
-   'arm_canona1100',
-   'arm_integratorcp',
-   'arm_raspi2',
-+  'arm_vexpress',
+@@ -111,6 +111,7 @@ tests_ppc_system_thorough = [
  ]
  
- tests_arm_linuxuser_thorough = [
-diff --git a/tests/functional/test_arm_vexpress.py b/tests/functional/test_arm_vexpress.py
+ tests_ppc64_system_thorough = [
++  'ppc64_e500',
+   'ppc64_hv',
+   'ppc64_powernv',
+   'ppc64_pseries',
+diff --git a/tests/functional/test_ppc64_e500.py b/tests/functional/test_ppc64_e500.py
 new file mode 100755
-index 0000000000..cc6015112b
+index 0000000000..3558ae0c8c
 --- /dev/null
-+++ b/tests/functional/test_arm_vexpress.py
-@@ -0,0 +1,26 @@
++++ b/tests/functional/test_ppc64_e500.py
+@@ -0,0 +1,25 @@
 +#!/usr/bin/env python3
 +#
-+# Functional test that boots a Linux kernel on an versatile express machine
-+# and checks the console
++# Boot a Linux kernel on a e500 ppc64 machine and check the console
 +#
 +# SPDX-License-Identifier: GPL-2.0-or-later
 +
 +from qemu_test import LinuxKernelTest, Asset
 +from qemu_test.utils import archive_extract
 +
-+class VExpressTest(LinuxKernelTest):
++class E500Test(LinuxKernelTest):
 +
-+    ASSET_DAY16 = Asset(
-+        'https://www.qemu-advent-calendar.org/2018/download/day16.tar.xz',
-+        '63311adb2d4c4e7a73214a86d29988add87266a909719c56acfadd026b4110a7')
++    ASSET_DAY19 = Asset(
++        'https://www.qemu-advent-calendar.org/2018/download/day19.tar.xz',
++        '20b1bb5a8488c664defbb5d283addc91a05335a936c63b3f5ff7eee74b725755')
 +
-+    def test_arm_vexpressa9(self):
-+        self.set_machine('vexpress-a9')
-+        file_path = self.ASSET_DAY16.fetch()
++    def test_ppc64_e500(self):
++        self.set_machine('ppce500')
++        self.cpu = 'e5500'
++        file_path = self.ASSET_DAY19.fetch()
 +        archive_extract(file_path, self.workdir)
-+        self.launch_kernel(self.workdir + '/day16/winter.zImage',
-+                           dtb=self.workdir + '/day16/vexpress-v2p-ca9.dtb',
++        self.launch_kernel(self.workdir + '/day19/uImage',
 +                           wait_for='QEMU advent calendar')
 +
 +if __name__ == '__main__':
