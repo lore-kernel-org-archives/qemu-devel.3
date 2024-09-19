@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8933ACE8D49
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 05:58:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B92BACE8D49
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 05:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srA9k-0001dY-0b; Thu, 19 Sep 2024 01:56:44 -0400
+	id 1srA9o-0002St-Ij; Thu, 19 Sep 2024 01:56:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1srA9V-000850-Nn; Thu, 19 Sep 2024 01:56:31 -0400
+ id 1srA9l-000215-En; Thu, 19 Sep 2024 01:56:45 -0400
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1srA9T-0007Pn-Jo; Thu, 19 Sep 2024 01:56:29 -0400
+ id 1srA9i-0007Qp-U1; Thu, 19 Sep 2024 01:56:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1726725388; x=1758261388;
+ t=1726725403; x=1758261403;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=qJ6NOfIv6xlTy3/VIJhTGfDVU1kuzHahvjHb/mzi/Yo=;
- b=LsmKbLxpZTAkAH9jt6PBGr6/UZknrMPlgV6vV+3bld22PrV2K89H1iZH
- /yb6HdebgURDLpI6ejbtntqueouJwq2u/tqo/Mq5R1oFHyYywU/5zDGhT
- oXYQxriK/yDKGrYS0n4tjudxDRSDFt1ANMC9TZc3CfQ7m0VLZn1ze9mBn
- 8cX8RyrCoWhZnrWat8XHHb52cHB0uFWkT2d1ijIcoy8n8yug8xvC/GXNR
- OGeceFlhLzOnpK++qXc6ishUOkh/N45J65h6GZlfqnplfDG/9KPOU1rBO
- dDaQuxdbKe8sHNM4UMTCglp40qu7ig/EqbaYC7OzVuvGyM2mRR7bRc2Pm w==;
-X-CSE-ConnectionGUID: A4doQjUaRy6y9668g3yoeA==
-X-CSE-MsgGUID: lUA6d5dLSu2HgYTyDokJPw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25813697"
-X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25813697"
+ bh=85v++8FV1/OeoJfcfM2dF4Z0fvvP/1Y4odYjQpC249A=;
+ b=We6e8tAkjnhIG9u/GK6oTcvN35Th3auW7KKIpaBLcVhlbROhPTkbDD/y
+ sFZ4+BE0t4itnptYTF6T2vUJ+dPLzhwgJ1xz8cpBt15+HRkGMCg53UAV7
+ Iz9/yEyzo1O6qcdS0f7Dt4QmdR17VwSou9wJ/q9n1bD4ivnw9VzXmB4p/
+ AZ6D3AvARhnWW4PoKzW34A2dri/VGd5YrtrlHZWZvP28qb2yCkKNL68UP
+ oP1DuID4VPk90B8P1dO+W+v/yGyMmajMsyoricVzHHDAzjYMHD9VtJZCl
+ T3tWJJ/dGH42E3SZzJlJeYuU9XlQVlewnG06swEgXYT1AX92LGarCqSUl w==;
+X-CSE-ConnectionGUID: frF3s5S6QrSZZ5Nuzx+kig==
+X-CSE-MsgGUID: GGG2KbwMSaGs0fHPZMvdcw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25813763"
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25813763"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Sep 2024 22:56:26 -0700
-X-CSE-ConnectionGUID: RNragx4JQm++GP/Zqhw+Sw==
-X-CSE-MsgGUID: ix81mjh5Tfy9LecwpDpOIA==
+ 18 Sep 2024 22:56:41 -0700
+X-CSE-ConnectionGUID: UYayTWY+RcSOXbGe/lxomA==
+X-CSE-MsgGUID: oSBDaJfESCymhB7De9E+LA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="69418793"
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="69418828"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa006.fm.intel.com with ESMTP; 18 Sep 2024 22:56:20 -0700
+ by fmviesa006.fm.intel.com with ESMTP; 18 Sep 2024 22:56:32 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -63,9 +63,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
  Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC v2 09/12] i386: Introduce x86 CPU core abstractions
-Date: Thu, 19 Sep 2024 14:11:25 +0800
-Message-Id: <20240919061128.769139-10-zhao1.liu@intel.com>
+Subject: [RFC v2 11/12] i386/machine: Split machine initialization after CPU
+ creation into post_init()
+Date: Thu, 19 Sep 2024 14:11:27 +0800
+Message-Id: <20240919061128.769139-12-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240919061128.769139-1-zhao1.liu@intel.com>
 References: <20240919061128.769139-1-zhao1.liu@intel.com>
@@ -96,152 +97,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Abstract 3 core types for i386: common core, Intel Core (P-core) and
-Intel atom (E-core). This is in preparation for creating the hybrid
-topology from the CLI.
+Custom topology will allow machine to skip the default CPU creation and
+accept user's CPU creation from CLI.
+
+Therefore, for microvm, pc-i440fx and pc-q35, split machine
+initialization from x86_cpus_init(), and place the remaining part into
+post_init(), which can continue to run after CPU creation from CLI.
+
+This addresses the CPU dependency for the remaining initialization steps
+after x86_cpus_init().
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/core.c      | 56 +++++++++++++++++++++++++++++++++++++++++
- target/i386/core.h      | 53 ++++++++++++++++++++++++++++++++++++++
- target/i386/meson.build |  1 +
- 3 files changed, 110 insertions(+)
- create mode 100644 target/i386/core.c
- create mode 100644 target/i386/core.h
+ hw/i386/microvm.c    |  7 +++++++
+ hw/i386/pc_piix.c    | 40 +++++++++++++++++++++++++---------------
+ hw/i386/pc_q35.c     | 36 ++++++++++++++++++++++--------------
+ include/hw/i386/pc.h |  3 +++
+ 4 files changed, 57 insertions(+), 29 deletions(-)
 
-diff --git a/target/i386/core.c b/target/i386/core.c
-new file mode 100644
-index 000000000000..d76186a6a070
---- /dev/null
-+++ b/target/i386/core.c
-@@ -0,0 +1,56 @@
-+/*
-+ * x86 CPU core
-+ *
-+ * Copyright (C) 2024 Intel Corporation.
-+ *
-+ * Author: Zhao Liu <zhao1.liu@intel.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or
-+ * later.  See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "core.h"
-+
-+static void x86_common_core_class_init(ObjectClass *oc, void *data)
-+{
-+    X86CPUCoreClass *cc = X86_CPU_CORE_CLASS(oc);
-+
-+    cc->core_type = COMMON_CORE;
+diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+index 49a897db50fc..dc9b21a34230 100644
+--- a/hw/i386/microvm.c
++++ b/hw/i386/microvm.c
+@@ -463,6 +463,11 @@ static void microvm_machine_state_init(MachineState *machine)
+     microvm_memory_init(mms);
+ 
+     x86_cpus_init(x86ms, CPU_VERSION_LATEST);
 +}
 +
-+static void x86_intel_atom_class_init(ObjectClass *oc, void *data)
++static void microvm_machine_state_post_init(MachineState *machine)
 +{
-+    X86CPUCoreClass *cc = X86_CPU_CORE_CLASS(oc);
++    MicrovmMachineState *mms = MICROVM_MACHINE(machine);
+ 
+     microvm_devices_init(mms);
+ }
+@@ -665,6 +670,8 @@ static void microvm_class_init(ObjectClass *oc, void *data)
+     /* Machine class handlers */
+     mc->reset = microvm_machine_reset;
+ 
++    mc->post_init = microvm_machine_state_post_init;
 +
-+    cc->core_type = INTEL_ATOM;
+     /* hotplug (for cpu coldplug) */
+     mc->get_hotplug_handler = microvm_get_hotplug_handler;
+     hc->pre_plug = microvm_device_pre_plug_cb;
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 2bf6865d405e..c1db2f3129cf 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -105,19 +105,9 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+     PCMachineState *pcms = PC_MACHINE(machine);
+     PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+     X86MachineState *x86ms = X86_MACHINE(machine);
+-    MemoryRegion *system_memory = get_system_memory();
+-    MemoryRegion *system_io = get_system_io();
+-    Object *phb = NULL;
+-    ISABus *isa_bus;
+-    Object *piix4_pm = NULL;
+-    qemu_irq smi_irq;
+-    GSIState *gsi_state;
+-    MemoryRegion *ram_memory;
+-    MemoryRegion *pci_memory = NULL;
+-    MemoryRegion *rom_memory = system_memory;
+     ram_addr_t lowmem;
+-    uint64_t hole64_size = 0;
+ 
++    pcms->pci_type = pci_type;
+     /*
+      * Calculate ram split, for memory below and above 4G.  It's a bit
+      * complicated for backward compatibility reasons ...
+@@ -150,9 +140,9 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+      *    qemu -M pc,max-ram-below-4g=4G -m 3968M  -> 3968M low (=4G-128M)
+      */
+     if (xen_enabled()) {
+-        xen_hvm_init_pc(pcms, &ram_memory);
++        xen_hvm_init_pc(pcms, &pcms->pre_config_ram);
+     } else {
+-        ram_memory = machine->ram;
++        pcms->pre_config_ram = machine->ram;
+         if (!pcms->max_ram_below_4g) {
+             pcms->max_ram_below_4g = 0xe0000000; /* default: 3.5G */
+         }
+@@ -182,6 +172,23 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+ 
+     pc_machine_init_sgx_epc(pcms);
+     x86_cpus_init(x86ms, pcmc->default_cpu_version);
 +}
 +
-+static void x86_intel_core_class_init(ObjectClass *oc, void *data)
++static void pc_post_init1(MachineState *machine)
 +{
-+    X86CPUCoreClass *cc = X86_CPU_CORE_CLASS(oc);
-+
-+    cc->core_type = INTEL_CORE;
++    PCMachineState *pcms = PC_MACHINE(machine);
++    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
++    X86MachineState *x86ms = X86_MACHINE(machine);
++    MemoryRegion *system_memory = get_system_memory();
++    MemoryRegion *system_io = get_system_io();
++    Object *phb = NULL;
++    ISABus *isa_bus;
++    Object *piix4_pm = NULL;
++    qemu_irq smi_irq;
++    GSIState *gsi_state;
++    MemoryRegion *pci_memory = NULL;
++    MemoryRegion *rom_memory = system_memory;
++    uint64_t hole64_size = 0;
+ 
+     if (kvm_enabled()) {
+         kvmclock_create(pcmc->kvmclock_create_always);
+@@ -195,7 +202,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+         phb = OBJECT(qdev_new(TYPE_I440FX_PCI_HOST_BRIDGE));
+         object_property_add_child(OBJECT(machine), "i440fx", phb);
+         object_property_set_link(phb, PCI_HOST_PROP_RAM_MEM,
+-                                 OBJECT(ram_memory), &error_fatal);
++                                 OBJECT(pcms->pre_config_ram), &error_fatal);
+         object_property_set_link(phb, PCI_HOST_PROP_PCI_MEM,
+                                  OBJECT(pci_memory), &error_fatal);
+         object_property_set_link(phb, PCI_HOST_PROP_SYSTEM_MEM,
+@@ -206,7 +213,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+                                  x86ms->below_4g_mem_size, &error_fatal);
+         object_property_set_uint(phb, PCI_HOST_ABOVE_4G_MEM_SIZE,
+                                  x86ms->above_4g_mem_size, &error_fatal);
+-        object_property_set_str(phb, I440FX_HOST_PROP_PCI_TYPE, pci_type,
++        object_property_set_str(phb, I440FX_HOST_PROP_PCI_TYPE, pcms->pci_type,
+                                 &error_fatal);
+         sysbus_realize_and_unref(SYS_BUS_DEVICE(phb), &error_fatal);
+ 
+@@ -413,6 +420,7 @@ static void pc_set_south_bridge(Object *obj, int value, Error **errp)
+ static void pc_init_isa(MachineState *machine)
+ {
+     pc_init1(machine, NULL);
++    pc_post_init1(machine);
+ }
+ #endif
+ 
+@@ -423,6 +431,7 @@ static void pc_xen_hvm_init_pci(MachineState *machine)
+                 TYPE_IGD_PASSTHROUGH_I440FX_PCI_DEVICE : TYPE_I440FX_PCI_DEVICE;
+ 
+     pc_init1(machine, pci_type);
++    pc_post_init1(machine);
+ }
+ 
+ static void pc_xen_hvm_init(MachineState *machine)
+@@ -463,6 +472,7 @@ static void pc_i440fx_machine_options(MachineClass *m)
+     m->default_nic = "e1000";
+     m->no_floppy = !module_object_class_by_name(TYPE_ISA_FDC);
+     m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
++    m->post_init = pc_post_init1;
+     machine_class_allow_dynamic_sysbus_dev(m, TYPE_RAMFB_DEVICE);
+     machine_class_allow_dynamic_sysbus_dev(m, TYPE_VMBUS_BRIDGE);
+ 
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 8319b6d45ee3..9ce3e65d7182 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -129,21 +129,7 @@ static void pc_q35_init(MachineState *machine)
+     PCMachineState *pcms = PC_MACHINE(machine);
+     PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+     X86MachineState *x86ms = X86_MACHINE(machine);
+-    Object *phb;
+-    PCIDevice *lpc;
+-    DeviceState *lpc_dev;
+-    MemoryRegion *system_memory = get_system_memory();
+-    MemoryRegion *system_io = get_system_io();
+-    MemoryRegion *pci_memory = g_new(MemoryRegion, 1);
+-    GSIState *gsi_state;
+-    ISABus *isa_bus;
+-    int i;
+     ram_addr_t lowmem;
+-    DriveInfo *hd[MAX_SATA_PORTS];
+-    MachineClass *mc = MACHINE_GET_CLASS(machine);
+-    bool acpi_pcihp;
+-    bool keep_pci_slot_hpc;
+-    uint64_t pci_hole64_size = 0;
+ 
+     assert(pcmc->pci_enabled);
+ 
+@@ -188,6 +174,27 @@ static void pc_q35_init(MachineState *machine)
+ 
+     pc_machine_init_sgx_epc(pcms);
+     x86_cpus_init(x86ms, pcmc->default_cpu_version);
 +}
 +
-+static const TypeInfo x86_cpu_core_infos[] = {
-+    {
-+        .name = TYPE_X86_CPU_CORE,
-+        .parent = TYPE_CPU_CORE,
-+        .class_size = sizeof(X86CPUCoreClass),
-+        .class_init = x86_common_core_class_init,
-+        .instance_size = sizeof(X86CPUCore),
-+    },
-+    {
-+        .parent = TYPE_X86_CPU_CORE,
-+        .name = X86_CPU_CORE_TYPE_NAME("intel-atom"),
-+        .class_init = x86_intel_atom_class_init,
-+    },
-+    {
-+        .parent = TYPE_X86_CPU_CORE,
-+        .name = X86_CPU_CORE_TYPE_NAME("intel-core"),
-+        .class_init = x86_intel_core_class_init,
-+    },
-+};
++static void pc_q35_post_init(MachineState *machine)
++{
++    PCMachineState *pcms = PC_MACHINE(machine);
++    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
++    X86MachineState *x86ms = X86_MACHINE(machine);
++    Object *phb;
++    PCIDevice *lpc;
++    DeviceState *lpc_dev;
++    MemoryRegion *system_memory = get_system_memory();
++    MemoryRegion *system_io = get_system_io();
++    MemoryRegion *pci_memory = g_new(MemoryRegion, 1);
++    GSIState *gsi_state;
++    ISABus *isa_bus;
++    int i;
++    DriveInfo *hd[MAX_SATA_PORTS];
++    MachineClass *mc = MACHINE_GET_CLASS(machine);
++    bool acpi_pcihp;
++    bool keep_pci_slot_hpc;
++    uint64_t pci_hole64_size = 0;
+ 
+     if (kvm_enabled()) {
+         kvmclock_create(pcmc->kvmclock_create_always);
+@@ -348,6 +355,7 @@ static void pc_q35_machine_options(MachineClass *m)
+     m->no_floppy = 1;
+     m->max_cpus = 4096;
+     m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
++    m->post_init = pc_q35_post_init;
+     machine_class_allow_dynamic_sysbus_dev(m, TYPE_AMD_IOMMU_DEVICE);
+     machine_class_allow_dynamic_sysbus_dev(m, TYPE_INTEL_IOMMU_DEVICE);
+     machine_class_allow_dynamic_sysbus_dev(m, TYPE_RAMFB_DEVICE);
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 14ee06287da3..14534781e8fb 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -58,6 +58,9 @@ typedef struct PCMachineState {
+ 
+     SGXEPCState sgx_epc;
+     CXLState cxl_devices_state;
 +
-+DEFINE_TYPES(x86_cpu_core_infos)
-diff --git a/target/i386/core.h b/target/i386/core.h
-new file mode 100644
-index 000000000000..b942153b2c0d
---- /dev/null
-+++ b/target/i386/core.h
-@@ -0,0 +1,53 @@
-+/*
-+ * x86 CPU core header
-+ *
-+ * Copyright (C) 2024 Intel Corporation.
-+ *
-+ * Author: Zhao Liu <zhao1.liu@intel.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or
-+ * later.  See the COPYING file in the top-level directory.
-+ */
-+
-+#include "hw/cpu/core.h"
-+#include "hw/cpu/cpu-topology.h"
-+#include "qom/object.h"
-+
-+#ifndef I386_CORE_H
-+#define I386_CORE_H
-+
-+#ifdef TARGET_X86_64
-+#define TYPE_X86_PREFIX "x86-"
-+#else
-+#define TYPE_X86_PREFIX "i386-"
-+#endif
-+
-+#define TYPE_X86_CPU_CORE TYPE_X86_PREFIX "core"
-+
-+OBJECT_DECLARE_TYPE(X86CPUCore, X86CPUCoreClass, X86_CPU_CORE)
-+
-+typedef enum {
-+    COMMON_CORE = 0,
-+    INTEL_ATOM,
-+    INTEL_CORE,
-+} X86CoreType;
-+
-+struct X86CPUCoreClass {
-+    /*< private >*/
-+    CPUTopoClass parent_class;
-+
-+    /*< public >*/
-+    DeviceRealize parent_realize;
-+    X86CoreType core_type;
-+};
-+
-+struct X86CPUCore {
-+    /*< private >*/
-+    CPUCore parent_obj;
-+
-+    /*< public >*/
-+};
-+
-+#define X86_CPU_CORE_TYPE_NAME(core_type_str) (TYPE_X86_PREFIX core_type_str)
-+
-+#endif /* I386_CORE_H */
-diff --git a/target/i386/meson.build b/target/i386/meson.build
-index 075117989b9d..80a32526d98b 100644
---- a/target/i386/meson.build
-+++ b/target/i386/meson.build
-@@ -18,6 +18,7 @@ i386_system_ss.add(files(
-   'arch_memory_mapping.c',
-   'machine.c',
-   'monitor.c',
-+  'core.c',
-   'cpu-apic.c',
-   'cpu-sysemu.c',
- ))
++    MemoryRegion *pre_config_ram;
++    const char *pci_type;
+ } PCMachineState;
+ 
+ #define PC_MACHINE_ACPI_DEVICE_PROP "acpi-device"
 -- 
 2.34.1
 
