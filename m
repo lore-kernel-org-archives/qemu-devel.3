@@ -4,78 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFD31CDD573
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:17:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA1A3CDD578
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:18:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srGwx-00075P-5g; Thu, 19 Sep 2024 09:11:59 -0400
+	id 1srGwl-0006HF-Ig; Thu, 19 Sep 2024 09:11:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1srGwv-0006wU-K1
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:57 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1srGwR-000597-EW
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:28 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1srGwt-00019u-B2
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:57 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a8a7903cb7dso56740366b.3
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 06:11:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1srGwM-000134-Ob
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:27 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-42cb5b3c57eso7634895e9.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 06:11:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726751513; x=1727356313; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wOh3f59vIQEM1sqQ2WN1asCa5iff+GQlUxHH7szOQUY=;
- b=zl765BxXkCM3NSYQVugfDQ4wX55b7amnLHCZB2I7trDOBZzpVUgFt8bD58fykzMFdd
- dggKfcnPmF4JDvjvOLBo1qik5VZtbLrilK7yUNvZnpPFODqsA7S5PftIzF341mXCgsRY
- NxuxCFa1PHLhUwE2D/QbmMN56eZjC3/lQJmafLMutCu8hH6F72GoeCZ0UUZc8taBpq84
- /lE21I+IXStyHnUgeAUT5eE+is7qUHqfNsK03zO/u+p51Wi1M+kKgjQ1VwqTrv4MF5OV
- nFeno+IZe3lL97hCLd8+6k/pcSNw57D2p6SvUO2xf8SN7jpkB4GjuwG0V25OUePrCnom
- uXeQ==
+ d=linaro.org; s=google; t=1726751480; x=1727356280; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=7scyfkuSJmy4vO3ArcLRWxGnGFS5Tga2npXVxbFfSXI=;
+ b=gSGIETtnJj499svUM6UhSUYvSrIM3gzUPR9weUsGqXRuoS/FXUbKjyVgwyp9oIObNC
+ p41vBryIzq2Xk2FC2ZOdsCklzgraoYJpcuzyg0/FVgw7N/Io8iW2FRE4yd2uClOH/8Pt
+ 04v4Pq0h5i9IKH1RgdthV7pVPVOxMh2H1SeSZseQwd+BgqQutYx64QnQUWNdlusH82LH
+ A6+9NMmLU3iDKPibJEDRYVrSw8f9rNF171ZWVUx6CoB/Ul+B5TIB/4XguF+GGx3vuHcd
+ vnE5NkJeom7rOJIzaIpYx9Nqs6A1lk8mKsI5dQrJGzEsVrEmCxPsHGnfK3WhH8+AXi4V
+ PF9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726751513; x=1727356313;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wOh3f59vIQEM1sqQ2WN1asCa5iff+GQlUxHH7szOQUY=;
- b=V+LTq1XXraXRpvj8LRrPM7xP+Ht6ftmgGT8UKnf2abX5H4piELOSeg1dwc2w3vdDtW
- LmKsROcei+zlU4KjyjcDKNNiN/NeXXjtnfpwnrr8sJWattl6prBbx+Wikk+q5ZvT3YyF
- v6eFyRD/3fG36nhYfl8W04nrEbrH2H/i38OeNjtyQKKs09iP23Yye2miorVHWLYAGptI
- A4ikgJfsv+rTc2VW0h1wqTFCs2oHHfH9sceGvJiXV8y+r6u9m/4scqNvAVfpj4SiUpcH
- LiRoAHrwfYu3lL2cpMNJg2CZ3jzlBcMvqn31Kh1ux8n7WzRFkp7Ig7NuLnJ9zd05dfhI
- 7Bmg==
-X-Gm-Message-State: AOJu0Yw7ggiL5Rn6relLgzdJEcbkUcznRp2ASgU3poL6XDfuBbC1YpX8
- mfG860gGo9QlgU+O9ToSrBdGUan3V3+VMM8fZkv2PsOf0zUbz2VOtmSkm/pTh78=
-X-Google-Smtp-Source: AGHT+IHaOcTgPADUixEc584Qzu0jx2qbwPPYLoELt4yOQUt4al2eST+S8x1+Uw9Q8KigXHh81Hq2yg==
-X-Received: by 2002:a05:6402:c4a:b0:5c4:8b7:d93d with SMTP id
- 4fb4d7f45d1cf-5c41e193760mr31381511a12.18.1726751513266; 
- Thu, 19 Sep 2024 06:11:53 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c42bb89cebsm5935169a12.60.2024.09.19.06.11.51
+ d=1e100.net; s=20230601; t=1726751480; x=1727356280;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7scyfkuSJmy4vO3ArcLRWxGnGFS5Tga2npXVxbFfSXI=;
+ b=gaN9JgVVtfOa9iJnAM2wJDO9MYY9kwbmxF0fUKklzjcEY1il8/l3F8H4PBJZkU0lHX
+ BPji5bjgUfBolEgRftwNK9m39sFKYMIgOUeE3mR5jEE3ZsqD/UKxk55jsDGWSbCRPUTI
+ O2mLNTPC+CSW27GBOQwPIsYdIAg4b1enhkJTWLDPms58uTEEd82bv0HBJvNrqj7Vezq5
+ g+1Zzn8d/p0XpLw4nM/lDseiI3oQh0FjJeYA4QLDL7jgmQbTMEAQGMCesNV9NEH+M3zR
+ PBGBNG9fneGzWn8eIcV9gNhDuo7hqSfsd3EjbAmBxdIJ7+yq0VD/7zILdcERq4zthtMI
+ 1eeQ==
+X-Gm-Message-State: AOJu0Yz45qYiSb1uxE6Q+i8YsoaYWc1CrapBnPEJjYEYnnyEg8kmzJuK
+ yc7rBivHQHHFHahdI5heE9la1dQ+yJk1afSDitaDV4s68nS1mev4LhMtpCcYa03ejdwlgWwziDW
+ P
+X-Google-Smtp-Source: AGHT+IGTweD6xsS3B15oAVZUsA8mqVrRo46h6oSFNRoCwhdQMdycyhN7j0GVGsamh3NZuWIYTJgIKQ==
+X-Received: by 2002:a05:600c:45cf:b0:42c:bad0:6c1c with SMTP id
+ 5b1f17b1804b1-42cdb54e480mr165111785e9.18.1726751480014; 
+ Thu, 19 Sep 2024 06:11:20 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42e754091d3sm21667845e9.10.2024.09.19.06.11.19
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Sep 2024 06:11:52 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 03E705F8A7;
- Thu, 19 Sep 2024 14:11:51 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL 00/18] tcg plugins (deprecations, mem apis, contrib plugins)
-In-Reply-To: <CAFEAcA8tdyELui0=jYFObZO1=O_isJ-c1e0s4ZCbMVyfsrY=9A@mail.gmail.com>
- (Peter Maydell's message of "Thu, 19 Sep 2024 10:50:50 +0100")
-References: <20240918210712.2336854-1-alex.bennee@linaro.org>
- <CAFEAcA8tdyELui0=jYFObZO1=O_isJ-c1e0s4ZCbMVyfsrY=9A@mail.gmail.com>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Thu, 19 Sep 2024 14:11:50 +0100
-Message-ID: <875xqrg549.fsf@draig.linaro.org>
+ Thu, 19 Sep 2024 06:11:19 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 21/38] target/arm: Split out subroutines of
+ handle_shri_with_rndacc
+Date: Thu, 19 Sep 2024 14:10:49 +0100
+Message-Id: <20240919131106.3362543-22-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240919131106.3362543-1-peter.maydell@linaro.org>
+References: <20240919131106.3362543-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,85 +94,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+From: Richard Henderson <richard.henderson@linaro.org>
 
-> On Wed, 18 Sept 2024 at 22:08, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
-wrote:
->>
->> The following changes since commit 2b81c046252fbfb375ad30632362fc16e6e22=
-bd5:
->>
->>   Merge tag 'block-pull-request' of https://gitlab.com/stefanha/qemu int=
-o staging (2024-09-17 14:02:18 +0100)
->>
->> are available in the Git repository at:
->>
->>   https://gitlab.com/stsquad/qemu.git tags/pull-tcg-plugin-memory-180924=
--2
->>
->> for you to fetch changes up to a33f4871e0a0f4bf1cb037ab29fae7df7f2fc658:
->>
->>   contrib/plugins: avoid hanging program (2024-09-18 21:02:36 +0100)
->>
->> ----------------------------------------------------------------
->> TCG plugin memory instrumentation updates
->>
->>   - deprecate plugins on 32 bit hosts
->>   - deprecate plugins with TCI
->>   - extend memory API to save value
->>   - add check-tcg tests to exercise new memory API
->>   - fix timer deadlock with non-changing timer
->>   - add basic block vector plugin to contrib
->>   - add cflow plugin to contrib
->>   - extend syscall plugin to dump write memory
->>   - validate ips plugin arguments meet minimum slice value
->>
->> ----------------------------------------------------------------
->
-> Fails to build on macos:
-> https://gitlab.com/qemu-project/qemu/-/jobs/7865151156
->
-> ../tests/tcg/plugins/mem.c:12:10: fatal error: 'endian.h' file not found
->
-> endian.h is a Linuxism.
+There isn't a lot of commonality along the different paths of
+handle_shri_with_rndacc.  Split them out to separate functions,
+which will be usable during the decodetree conversion.
 
-Doh - I'd written it off the failure as waiting for the MacOS bump and
-didn't see the actual error. I'll see what we can do.
+Simplify 64-bit rounding operations to not require double-word arithmetic.
 
->
-> While I'm looking at the code, this caught my eye:
->
->     case QEMU_PLUGIN_MEM_VALUE_U64:
->     {
->         uint64_t *p =3D (uint64_t *) &ri->data[offset];
->         uint64_t val =3D be ? htobe64(value.data.u64) : htole64(value.dat=
-a.u64);
->         if (is_store) {
->             *p =3D val;
->         } else if (*p !=3D val) {
->             unseen_data =3D true;
->         }
->         break;
->     }
->
-> Casting a random byte pointer to uint64_t* like that
-> and dereferencing it isn't valid -- it can fault if
-> it's not aligned correctly.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240912024114.1097832-22-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/tcg/translate-a64.c | 138 ++++++++++++++++++++-------------
+ 1 file changed, 82 insertions(+), 56 deletions(-)
 
-Hmm in the normal case of x86 hosts we will never hit this. I guess we
-could do a memcpy step and then the byteswap?
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index e59236330ad..f4deacd5548 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -7019,6 +7019,78 @@ static bool do_vec_shift_imm_wide(DisasContext *s, arg_qrri_e *a, bool is_u)
+ TRANS(SSHLL_v, do_vec_shift_imm_wide, a, false)
+ TRANS(USHLL_v, do_vec_shift_imm_wide, a, true)
+ 
++static void gen_sshr_d(TCGv_i64 dst, TCGv_i64 src, int64_t shift)
++{
++    assert(shift >= 0 && shift <= 64);
++    tcg_gen_sari_i64(dst, src, MIN(shift, 63));
++}
++
++static void gen_ushr_d(TCGv_i64 dst, TCGv_i64 src, int64_t shift)
++{
++    assert(shift >= 0 && shift <= 64);
++    if (shift == 64) {
++        tcg_gen_movi_i64(dst, 0);
++    } else {
++        tcg_gen_shri_i64(dst, src, shift);
++    }
++}
++
++static void gen_srshr_bhs(TCGv_i64 dst, TCGv_i64 src, int64_t shift)
++{
++    assert(shift >= 0 && shift <= 32);
++    if (shift) {
++        TCGv_i64 rnd = tcg_constant_i64(1ull << (shift - 1));
++        tcg_gen_add_i64(dst, src, rnd);
++        tcg_gen_sari_i64(dst, dst, shift);
++    } else {
++        tcg_gen_mov_i64(dst, src);
++    }
++}
++
++static void gen_urshr_bhs(TCGv_i64 dst, TCGv_i64 src, int64_t shift)
++{
++    assert(shift >= 0 && shift <= 32);
++    if (shift) {
++        TCGv_i64 rnd = tcg_constant_i64(1ull << (shift - 1));
++        tcg_gen_add_i64(dst, src, rnd);
++        tcg_gen_shri_i64(dst, dst, shift);
++    } else {
++        tcg_gen_mov_i64(dst, src);
++    }
++}
++
++static void gen_srshr_d(TCGv_i64 dst, TCGv_i64 src, int64_t shift)
++{
++    assert(shift >= 0 && shift <= 64);
++    if (shift == 0) {
++        tcg_gen_mov_i64(dst, src);
++    } else if (shift == 64) {
++        /* Extension of sign bit (0,-1) plus sign bit (0,1) is zero. */
++        tcg_gen_movi_i64(dst, 0);
++    } else {
++        TCGv_i64 rnd = tcg_temp_new_i64();
++        tcg_gen_extract_i64(rnd, src, shift - 1, 1);
++        tcg_gen_sari_i64(dst, src, shift);
++        tcg_gen_add_i64(dst, dst, rnd);
++    }
++}
++
++static void gen_urshr_d(TCGv_i64 dst, TCGv_i64 src, int64_t shift)
++{
++    assert(shift >= 0 && shift <= 64);
++    if (shift == 0) {
++        tcg_gen_mov_i64(dst, src);
++    } else if (shift == 64) {
++        /* Rounding will propagate bit 63 into bit 64. */
++        tcg_gen_shri_i64(dst, src, 63);
++    } else {
++        TCGv_i64 rnd = tcg_temp_new_i64();
++        tcg_gen_extract_i64(rnd, src, shift - 1, 1);
++        tcg_gen_shri_i64(dst, src, shift);
++        tcg_gen_add_i64(dst, dst, rnd);
++    }
++}
++
+ /* Shift a TCGv src by TCGv shift_amount, put result in dst.
+  * Note that it is the caller's responsibility to ensure that the
+  * shift amount is in range (ie 0..31 or 0..63) and provide the ARM
+@@ -9208,69 +9280,23 @@ static void handle_shri_with_rndacc(TCGv_i64 tcg_res, TCGv_i64 tcg_src,
+                                     bool round, bool accumulate,
+                                     bool is_u, int size, int shift)
+ {
+-    bool extended_result = false;
+-    int ext_lshift = 0;
+-    TCGv_i64 tcg_src_hi;
+-
+-    if (round && size == 3) {
+-        extended_result = true;
+-        ext_lshift = 64 - shift;
+-        tcg_src_hi = tcg_temp_new_i64();
+-    } else if (shift == 64) {
+-        if (!accumulate && is_u) {
+-            /* result is zero */
+-            tcg_gen_movi_i64(tcg_res, 0);
+-            return;
+-        }
+-    }
+-
+-    /* Deal with the rounding step */
+-    if (round) {
+-        TCGv_i64 tcg_rnd = tcg_constant_i64(1ull << (shift - 1));
+-        if (extended_result) {
+-            TCGv_i64 tcg_zero = tcg_constant_i64(0);
+-            if (!is_u) {
+-                /* take care of sign extending tcg_res */
+-                tcg_gen_sari_i64(tcg_src_hi, tcg_src, 63);
+-                tcg_gen_add2_i64(tcg_src, tcg_src_hi,
+-                                 tcg_src, tcg_src_hi,
+-                                 tcg_rnd, tcg_zero);
+-            } else {
+-                tcg_gen_add2_i64(tcg_src, tcg_src_hi,
+-                                 tcg_src, tcg_zero,
+-                                 tcg_rnd, tcg_zero);
+-            }
++    if (!round) {
++        if (is_u) {
++            gen_ushr_d(tcg_src, tcg_src, shift);
+         } else {
+-            tcg_gen_add_i64(tcg_src, tcg_src, tcg_rnd);
++            gen_sshr_d(tcg_src, tcg_src, shift);
+         }
+-    }
+-
+-    /* Now do the shift right */
+-    if (round && extended_result) {
+-        /* extended case, >64 bit precision required */
+-        if (ext_lshift == 0) {
+-            /* special case, only high bits matter */
+-            tcg_gen_mov_i64(tcg_src, tcg_src_hi);
++    } else if (size == MO_64) {
++        if (is_u) {
++            gen_urshr_d(tcg_src, tcg_src, shift);
+         } else {
+-            tcg_gen_shri_i64(tcg_src, tcg_src, shift);
+-            tcg_gen_shli_i64(tcg_src_hi, tcg_src_hi, ext_lshift);
+-            tcg_gen_or_i64(tcg_src, tcg_src, tcg_src_hi);
++            gen_srshr_d(tcg_src, tcg_src, shift);
+         }
+     } else {
+         if (is_u) {
+-            if (shift == 64) {
+-                /* essentially shifting in 64 zeros */
+-                tcg_gen_movi_i64(tcg_src, 0);
+-            } else {
+-                tcg_gen_shri_i64(tcg_src, tcg_src, shift);
+-            }
++            gen_urshr_bhs(tcg_src, tcg_src, shift);
+         } else {
+-            if (shift == 64) {
+-                /* effectively extending the sign-bit */
+-                tcg_gen_sari_i64(tcg_src, tcg_src, 63);
+-            } else {
+-                tcg_gen_sari_i64(tcg_src, tcg_src, shift);
+-            }
++            gen_srshr_bhs(tcg_src, tcg_src, shift);
+         }
+     }
+ 
+-- 
+2.34.1
 
-> I suspect the plugin needs to define versions of at least some
-> of the functionality in qemu's include/qemu/bswap.h.
-
-Could it be included directly without bringing in the rest of QEMU's
-include deps?
-
->
-> thanks
-> -- PMM
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
