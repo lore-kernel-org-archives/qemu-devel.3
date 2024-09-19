@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78211CF3962
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 18:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C83BBCF3962
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 18:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srMMO-0007om-TW; Thu, 19 Sep 2024 14:58:38 -0400
+	id 1srMM1-00076R-UH; Thu, 19 Sep 2024 14:58:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1srMMJ-0007oD-SQ
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 14:58:32 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1srMM0-0006yh-2M
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 14:58:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1srMMG-0001OK-OX
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 14:58:30 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1srMLy-0001NJ-HM
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 14:58:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726772307;
+ s=mimecast20190719; t=1726772289;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DFsR7wISCOc7VHWHWUczMQ3VkF23yYewNSUH/p5x32w=;
- b=AHlxxjEWKa3y7IZyEZNT4ylTQ+co+YvYaggJecRHLjVWwoOyPIHTcnjwFBHgRscTNQE6pC
- hb6obZHdYMla2PXUIj1wwezlB4U4C5si/U8iljGm4cWSqyBFpdTLNG/E3e5UW+Cuq8LAo+
- PXT49ybigexkYSAs13D8A31jFR09z4c=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=UwlFYwPN+QHlMLSj5ERxLP4JF1V2FyHI7rXBw43Qfsw=;
+ b=ApV4d/vlwcTftegBfz6rF1ujKYwgiad8C80OtEaGYmhpAwpap0QaFkSq7dLQEgqxY8Aozk
+ 2CZVuDc2NjqoGX+lpI6Akvk/W44QH9ZZCCEQPPy6C56ivndzzOXJN26RXcA3CEBtEtgXJg
+ 3cgLdKArei2Txg2mnQRRDPDmOdaO8qE=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-pqVZcxGoMuCqcuDyi82kMQ-1; Thu,
- 19 Sep 2024 14:58:21 -0400
-X-MC-Unique: pqVZcxGoMuCqcuDyi82kMQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-NACYhpGvOAq5qkHqBQGWTQ-1; Thu,
+ 19 Sep 2024 14:58:06 -0400
+X-MC-Unique: NACYhpGvOAq5qkHqBQGWTQ-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (unknown
  [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 669C7193EF45; Thu, 19 Sep 2024 18:58:20 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A8F0193584E; Thu, 19 Sep 2024 18:58:05 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.46])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C6D9A19560AA; Thu, 19 Sep 2024 18:58:17 +0000 (UTC)
+ id AE2A019560AA; Thu, 19 Sep 2024 18:58:01 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -51,13 +51,12 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Yoshinori Sato <ysato@users.sourceforge.jp>,
  Magnus Damm <magnus.damm@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH 6/7] tests/functional: Convert the mac ppc Avocado tests
-Date: Thu, 19 Sep 2024 20:57:46 +0200
-Message-ID: <20240919185749.71222-7-thuth@redhat.com>
+Subject: [PATCH 2/7] tests/functional: Convert the vexpressa9 Avocado test
+Date: Thu, 19 Sep 2024 20:57:42 +0200
+Message-ID: <20240919185749.71222-3-thuth@redhat.com>
 In-Reply-To: <20240919185749.71222-1-thuth@redhat.com>
 References: <20240919185749.71222-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -85,132 +84,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The g3beige and mac99 tests use the same asset, so put them together
-in a new test_ppc_mac.py file.
+Use the new launch_kernel function to convert this test in a simple way.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                         |  2 ++
- tests/avocado/boot_linux_console.py | 30 -----------------------
- tests/functional/meson.build        |  1 +
- tests/functional/test_ppc_mac.py    | 38 +++++++++++++++++++++++++++++
- 4 files changed, 41 insertions(+), 30 deletions(-)
- create mode 100755 tests/functional/test_ppc_mac.py
+ MAINTAINERS                           |  1 +
+ tests/avocado/boot_linux_console.py   |  9 ---------
+ tests/functional/meson.build          |  1 +
+ tests/functional/test_arm_vexpress.py | 26 ++++++++++++++++++++++++++
+ 4 files changed, 28 insertions(+), 9 deletions(-)
+ create mode 100755 tests/functional/test_arm_vexpress.py
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 3dd80a0138..63eb306d6e 100644
+index ffacd60f40..7f7f4c2be6 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1474,6 +1474,7 @@ F: include/hw/ppc/mac_dbdma.h
- F: include/hw/pci-host/uninorth.h
- F: include/hw/input/adb*
- F: pc-bios/qemu_vga.ndrv
-+F: tests/functional/test_ppc_mac.py
+@@ -1005,6 +1005,7 @@ S: Maintained
+ F: hw/arm/vexpress.c
+ F: hw/display/sii9022.c
+ F: docs/system/arm/vexpress.rst
++F: tests/functional/test_arm_vexpress.py
  
- Old World (g3beige)
- M: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-@@ -1489,6 +1490,7 @@ F: include/hw/intc/heathrow_pic.h
- F: include/hw/input/adb*
- F: include/hw/pci-host/grackle.h
- F: pc-bios/qemu_vga.ndrv
-+F: tests/functional/test_ppc_mac.py
- 
- PReP
- M: Hervé Poussineau <hpoussin@reactos.org>
+ Versatile PB
+ M: Peter Maydell <peter.maydell@linaro.org>
 diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-index 344c7835a2..f5dc9e9cfa 100644
+index 6c50284986..7a776c2818 100644
 --- a/tests/avocado/boot_linux_console.py
 +++ b/tests/avocado/boot_linux_console.py
-@@ -965,36 +965,6 @@ def test_ppc_powernv10(self):
-         """
-         self.do_test_ppc64_powernv('P10')
+@@ -893,15 +893,6 @@ def do_test_advcal_2018(self, day, tar_hash, kernel_name, console=0):
+         self.vm.launch()
+         self.wait_for_console_pattern('QEMU advent calendar')
  
--    def test_ppc_g3beige(self):
+-    def test_arm_vexpressa9(self):
 -        """
--        :avocado: tags=arch:ppc
--        :avocado: tags=machine:g3beige
--        :avocado: tags=accel:tcg
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:vexpress-a9
 -        """
--        # TODO: g3beige works with kvm_pr but we don't have a
--        # reliable way ATM (e.g. looking at /proc/modules) to detect
--        # whether we're running kvm_hv or kvm_pr. For now let's
--        # disable this test if we don't have TCG support.
--        self.require_accelerator("tcg")
--        tar_hash = 'e0b872a5eb8fdc5bed19bd43ffe863900ebcedfc'
--        self.vm.add_args('-M', 'graphics=off')
--        self.do_test_advcal_2018('15', tar_hash, 'invaders.elf')
+-        tar_hash = '32b7677ce8b6f1471fb0059865f451169934245b'
+-        self.vm.add_args('-dtb', self.workdir + '/day16/vexpress-v2p-ca9.dtb')
+-        self.do_test_advcal_2018('16', tar_hash, 'winter.zImage')
 -
--    def test_ppc_mac99(self):
--        """
--        :avocado: tags=arch:ppc
--        :avocado: tags=machine:mac99
--        :avocado: tags=accel:tcg
--        """
--        # TODO: mac99 works with kvm_pr but we don't have a
--        # reliable way ATM (e.g. looking at /proc/modules) to detect
--        # whether we're running kvm_hv or kvm_pr. For now let's
--        # disable this test if we don't have TCG support.
--        self.require_accelerator("tcg")
--        tar_hash = 'e0b872a5eb8fdc5bed19bd43ffe863900ebcedfc'
--        self.vm.add_args('-M', 'graphics=off')
--        self.do_test_advcal_2018('15', tar_hash, 'invaders.elf')
--
-     # This test has a 6-10% failure rate on various hosts that look
-     # like issues with a buggy kernel. As a result we don't want it
-     # gating releases on Gitlab.
+     def test_arm_ast2600_debian(self):
+         """
+         :avocado: tags=arch:arm
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index bc33332313..449c6a95ea 100644
+index 8d5520349d..3fc1bb192d 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -106,6 +106,7 @@ tests_ppc_system_thorough = [
-   'ppc_40p',
-   'ppc_amiga',
-   'ppc_bamboo',
-+  'ppc_mac',
-   'ppc_mpc8544ds',
-   'ppc_virtex_ml507',
+@@ -50,6 +50,7 @@ tests_arm_system_thorough = [
+   'arm_canona1100',
+   'arm_integratorcp',
+   'arm_raspi2',
++  'arm_vexpress',
  ]
-diff --git a/tests/functional/test_ppc_mac.py b/tests/functional/test_ppc_mac.py
+ 
+ tests_arm_linuxuser_thorough = [
+diff --git a/tests/functional/test_arm_vexpress.py b/tests/functional/test_arm_vexpress.py
 new file mode 100755
-index 0000000000..a6b1ca2d4c
+index 0000000000..cc6015112b
 --- /dev/null
-+++ b/tests/functional/test_ppc_mac.py
-@@ -0,0 +1,38 @@
++++ b/tests/functional/test_arm_vexpress.py
+@@ -0,0 +1,26 @@
 +#!/usr/bin/env python3
 +#
-+# Boot Linux kernel on a mac99 and g3beige ppc machine and check the console
++# Functional test that boots a Linux kernel on an versatile express machine
++# and checks the console
 +#
 +# SPDX-License-Identifier: GPL-2.0-or-later
 +
 +from qemu_test import LinuxKernelTest, Asset
 +from qemu_test.utils import archive_extract
 +
-+class MacTest(LinuxKernelTest):
++class VExpressTest(LinuxKernelTest):
 +
-+    ASSET_DAY15 = Asset(
-+        'https://www.qemu-advent-calendar.org/2018/download/day15.tar.xz',
-+        '03e0757c131d2959decf293a3572d3b96c5a53587165bf05ce41b2818a2bccd5')
++    ASSET_DAY16 = Asset(
++        'https://www.qemu-advent-calendar.org/2018/download/day16.tar.xz',
++        '63311adb2d4c4e7a73214a86d29988add87266a909719c56acfadd026b4110a7')
 +
-+    def do_day15_test(self):
-+        # mac99 also works with kvm_pr but we don't have a reliable way at
-+        # the moment (e.g. by looking at /proc/modules) to detect whether
-+        # we're running kvm_hv or kvm_pr. For now let's disable this test
-+        # if we don't have TCG support.
-+        self.require_accelerator("tcg")
-+
-+        file_path = self.ASSET_DAY15.fetch()
++    def test_arm_vexpressa9(self):
++        self.set_machine('vexpress-a9')
++        file_path = self.ASSET_DAY16.fetch()
 +        archive_extract(file_path, self.workdir)
-+        self.vm.add_args('-M', 'graphics=off')
-+        self.launch_kernel(self.workdir + '/day15/invaders.elf',
++        self.launch_kernel(self.workdir + '/day16/winter.zImage',
++                           dtb=self.workdir + '/day16/vexpress-v2p-ca9.dtb',
 +                           wait_for='QEMU advent calendar')
-+
-+    def test_ppc_g3beige(self):
-+        self.set_machine('g3beige')
-+        self.do_day15_test()
-+
-+    def test_ppc_mac99(self):
-+        self.set_machine('mac99')
-+        self.do_day15_test()
 +
 +if __name__ == '__main__':
 +    LinuxKernelTest.main()
