@@ -4,80 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE841CF395D
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 17:37:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0348BCF3963
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 17:45:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srL51-0007aC-KC; Thu, 19 Sep 2024 13:36:35 -0400
+	id 1srLD1-0004aR-TS; Thu, 19 Sep 2024 13:44:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1srL4z-0007Yu-Ba
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 13:36:33 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1srL4x-0008Ix-6I
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 13:36:32 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-5365a9574b6so1884311e87.1
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 10:36:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726767388; x=1727372188; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3AF48rdApHgyMQ46yOp36qgbGB9ZkdcNddz/1UO6ePo=;
- b=pHWrqQUxfsaAZJiH+Qm0mnZjaOOB2ADSrchW6Ch0Dfnqn3cusc2/NZF4TvO1rbFRiW
- MF7aNKpczeJu9JufAcaIB6EolT5EUBIQpszs4KgUTEYfFsHOPXUi6mtJCrFMqCOx9Pfv
- v6eGeYu6Mi3+viWLjZs7TdIH28gVyJ502Dz/aqDtX6BgzVEcmXoIfRPCv0txpMkplS5D
- xILJVkgSSBx5uob7dzLIc2bM0CoaczyLGpfLStAMRWL6RMgMMM1nUSUatI1H0xI8+2/u
- gALrtaVKRNK1ZnxnrEPmpWA79zuNuhMiqOcmSDLwOzle7vC4hxv1s/cvYbTBv76J4tRV
- 3H4Q==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srLCv-0004Yj-5s
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 13:44:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srLCs-0000or-8Y
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 13:44:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1726767879;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eALNlN7F+UfR00b/ZAMr5648yq0kKRioLFmvjHC0aGk=;
+ b=fmO+GDjNR4qWU2qoH6CADX7fNp1lBj8aAJhk0w5XutrTphCniU0OZPDCbMMhr4FixVwjpK
+ aVH5f57pfP+nHFySdDaeNUSTMQOU5aiaE2kECUUpjOmAVBCCIIYp94CYMbgQxjFjMnnl5r
+ PSVkn4GrJ18XfKu9bGpx4oyjDbhmvBw=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-651-0Usso1WhPIqTLUgd_go1fw-1; Thu, 19 Sep 2024 13:44:38 -0400
+X-MC-Unique: 0Usso1WhPIqTLUgd_go1fw-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6c35b3a220aso46150046d6.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 10:44:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726767388; x=1727372188;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3AF48rdApHgyMQ46yOp36qgbGB9ZkdcNddz/1UO6ePo=;
- b=lzpbpYRqMjbzILyMx4McqVDuZhWJau9FHZbfz+e2nIyU6pkxa0XX2SzOJ935CbTqeb
- JQvG5HdgZbO5iwU2PmFFRtuCWOGKVdxDrSEisI1KYcwhT8ErAA33FPfQcOFqIQ9i4own
- a36MoLnOOJEymbTd2k6n4xBmrpVPIhvuNp5QcTIVh6CLw5MGgYHwnJh3LlE0QcB1v4Hj
- mFpeW7jPOg3Lg9OkfIBZdt0rnZgfEjPaau6VATXUtruqC8Nb91hZHuf9jM5ojpzyFrSa
- M+2ojsHVShtdmH9zSIwzTskGvl+vx1APZiapPPoOaFP1UH9+qsUOVnimfpIfPW68m+U2
- dpdQ==
-X-Gm-Message-State: AOJu0Yxmi8tHNMd5ZQfM3YAKuZReqySMNEBQIwwheV+lI0q+e13oEOqC
- kwC+aC7p3yArpIiyJfxybEkUwolb9xm6M/KSu5jtC5SKrXvwXZLtsO/Cf92ZVKM=
-X-Google-Smtp-Source: AGHT+IE69RGGNctT1iruAsbiLuSnmJ8YpnIt/x2kix1IAfamVXAKfU+dhMNk1yXi4xVs3ky+JPo8Xw==
-X-Received: by 2002:a05:6512:b01:b0:536:a7e0:131a with SMTP id
- 2adb3069b0e04-536ac2f5334mr79239e87.26.1726767388159; 
- Thu, 19 Sep 2024 10:36:28 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90612df750sm744187066b.160.2024.09.19.10.36.26
+ d=1e100.net; s=20230601; t=1726767878; x=1727372678;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eALNlN7F+UfR00b/ZAMr5648yq0kKRioLFmvjHC0aGk=;
+ b=bLRQKdDKtd32vGvgaNbPvhx0IIsBdt/6ZGy6k0sKA8n2zplJuZ7wh9ZoGBayQy9KEc
+ N5Iudb0d/Ai72Vzhvfdn2x2xTFF5HoHCO8JFlN4Aib7XtcAFwh2ElOj1Mr7aBV3CkNjg
+ 99VhaqIPvtv16/WjWMZKA4EoctZ3i2B+z076Vg6qkcKFPHssIh4BnWbpmhBeArK3jzsU
+ r311tzfq1fQLCNAYSH44WBFllotBoUjbqPXE5/PlK0QckvV5y48Jmx1Lyk4i8utVgF88
+ WY2YbdMdMPoG95XMkI9SRZJdb/ytvQm0NBxk4d2TiEXTs0qkPK5dEmZPDKK3PHa29l/T
+ x7mg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXmCridUQ+jwIPv2Ivf4gL0rVvwlZoW1PzLOt2lTs6d230f+40FamM3vtlP0bzNhXrPwqzLdD66++p+@nongnu.org
+X-Gm-Message-State: AOJu0YzwCUoRO33K5vkdxtxN3DQmgIlBIr7pap6HdnfsqT0CbSmBHWt0
+ L6nvlHi3iSSBtKhH79DMDh71lOQDMuv42+mTQnQj0H91QVzLUeYA16V1bVNV4D5+UOzxZuRDHdE
+ L4bn+HXeYpIjbnP2eN4r19NeBOnS1m8vn7Nt1Up/UUo+OEC7MsCv3
+X-Received: by 2002:a05:6214:4802:b0:6c5:5095:3f02 with SMTP id
+ 6a1803df08f44-6c7bb99bc36mr8713556d6.1.1726767878150; 
+ Thu, 19 Sep 2024 10:44:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG9b1b2rrpuYeOJaoWFxUtcdWk6KARMcUp4JzFu0ic5tWjy+hiIjeo4VA/D7DK2hcfX6TzTWA==
+X-Received: by 2002:a05:6214:4802:b0:6c5:5095:3f02 with SMTP id
+ 6a1803df08f44-6c7bb99bc36mr8713186d6.1.1726767877739; 
+ Thu, 19 Sep 2024 10:44:37 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6c75e494ae3sm9594566d6.70.2024.09.19.10.44.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Sep 2024 10:36:26 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A50A75F8A7;
- Thu, 19 Sep 2024 18:36:25 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL v2 00/18] tcg plugins (deprecations, mem apis, contrib plugins)
-Date: Thu, 19 Sep 2024 18:36:25 +0100
-Message-Id: <20240919173625.2859137-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ Thu, 19 Sep 2024 10:44:36 -0700 (PDT)
+Date: Thu, 19 Sep 2024 13:44:33 -0400
+From: Peter Xu <peterx@redhat.com>
+To: dave@treblig.org
+Cc: farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 6/7] migration/postcopy: Use uffd helpers
+Message-ID: <ZuxjAQJV4mjD2ENH@x1n>
+References: <20240919134626.166183-1-dave@treblig.org>
+ <20240919134626.166183-7-dave@treblig.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x134.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240919134626.166183-7-dave@treblig.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,97 +102,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 14556211bc6d7125a44d5b5df90caba019b0ec0e:
+On Thu, Sep 19, 2024 at 02:46:25PM +0100, dave@treblig.org wrote:
+> From: "Dr. David Alan Gilbert" <dave@treblig.org>
+> 
+> Use the uffd_copy_page, uffd_zero_page and uffd_wakeup helpers
+> rather than calling ioctl ourselves.
+> 
+> They return -errno on error, and print an error_report themselves.
+> I think this actually makes postcopy_place_page actually more
+> consistent in it's callers.
+> 
+> Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 
-  Merge tag 'qemu-macppc-20240918' of https://github.com/mcayland/qemu into staging (2024-09-18 20:59:10 +0100)
-
-are available in the Git repository at:
-
-  https://gitlab.com/stsquad/qemu.git tags/pull-tcg-plugin-memory-190924-1
-
-for you to fetch changes up to 8148fb56c753908fcc41d52846f9d8e6ae5f7daf:
-
-  contrib/plugins: avoid hanging program (2024-09-19 15:58:01 +0100)
-
-----------------------------------------------------------------
-TCG plugin memory instrumentation updates
-
-  - deprecate plugins on 32 bit hosts
-  - deprecate plugins with TCI
-  - extend memory API to save value
-  - add check-tcg tests to exercise new memory API
-  - fix timer deadlock with non-changing timer
-  - add basic block vector plugin to contrib
-  - add cflow plugin to contrib
-  - extend syscall plugin to dump write memory
-  - validate ips plugin arguments meet minimum slice value
-
-----------------------------------------------------------------
-Akihiko Odaki (1):
-      contrib/plugins: Add a plugin to generate basic block vectors
-
-Alex Bennée (9):
-      deprecation: don't enable TCG plugins by default on 32 bit hosts
-      deprecation: don't enable TCG plugins by default with TCI
-      contrib/plugins: control flow plugin
-      tests/tcg: clean up output of memory system test
-      tests/tcg: only read/write 64 bit words on 64 bit systems
-      tests/tcg: ensure s390x-softmmu output redirected
-      tests/tcg: add a system test to check memory instrumentation
-      util/timer: avoid deadlock when shutting down
-      contrib/plugins: avoid hanging program
-
-Pierrick Bouvier (6):
-      plugins: save value during memory accesses
-      plugins: extend API to get latest memory value accessed
-      tests/tcg: add mechanism to run specific tests with plugins
-      tests/tcg: allow to check output of plugins
-      tests/tcg/plugins/mem: add option to print memory accesses
-      tests/tcg/multiarch: add test for plugin memory access
-
-Rowan Hart (2):
-      plugins: add plugin API to read guest memory
-      plugins: add option to dump write argument to syscall plugin
-
- docs/about/deprecated.rst                          |  19 +
- docs/about/emulation.rst                           |  44 ++-
- configure                                          |  32 +-
- accel/tcg/atomic_template.h                        |  66 +++-
- include/hw/core/cpu.h                              |   4 +
- include/qemu/plugin.h                              |   4 +
- include/qemu/qemu-plugin.h                         |  64 +++-
- contrib/plugins/bbv.c                              | 158 +++++++++
- contrib/plugins/cflow.c                            | 388 +++++++++++++++++++++
- contrib/plugins/ips.c                              |   6 +
- plugins/api.c                                      |  53 +++
- plugins/core.c                                     |   6 +
- tcg/tcg-op-ldst.c                                  |  66 +++-
- tests/tcg/multiarch/system/memory.c                | 123 ++++---
- tests/tcg/multiarch/test-plugin-mem-access.c       | 177 ++++++++++
- tests/tcg/plugins/mem.c                            | 270 +++++++++++++-
- tests/tcg/plugins/syscall.c                        | 117 +++++++
- util/qemu-timer.c                                  |  14 +-
- accel/tcg/atomic_common.c.inc                      |  13 +-
- accel/tcg/ldst_common.c.inc                        |  38 +-
- contrib/plugins/Makefile                           |   2 +
- plugins/qemu-plugins.symbols                       |   2 +
- tests/tcg/Makefile.target                          |  12 +-
- tests/tcg/alpha/Makefile.softmmu-target            |   2 +-
- tests/tcg/alpha/Makefile.target                    |   3 +
- tests/tcg/multiarch/Makefile.target                |  11 +
- tests/tcg/multiarch/check-plugin-output.sh         |  36 ++
- tests/tcg/multiarch/system/Makefile.softmmu-target |   6 +
- .../tcg/multiarch/system/validate-memory-counts.py | 130 +++++++
- tests/tcg/ppc64/Makefile.target                    |   5 +
- tests/tcg/s390x/Makefile.softmmu-target            |   8 +-
- 31 files changed, 1796 insertions(+), 83 deletions(-)
- create mode 100644 contrib/plugins/bbv.c
- create mode 100644 contrib/plugins/cflow.c
- create mode 100644 tests/tcg/multiarch/test-plugin-mem-access.c
- create mode 100755 tests/tcg/multiarch/check-plugin-output.sh
- create mode 100755 tests/tcg/multiarch/system/validate-memory-counts.py
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
 -- 
-2.39.5
+Peter Xu
 
 
