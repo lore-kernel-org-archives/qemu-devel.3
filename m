@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C43FCDD578
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:19:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DECB8CDD578
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 13:19:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srGwi-00064N-7m; Thu, 19 Sep 2024 09:11:44 -0400
+	id 1srGwn-0006NQ-01; Thu, 19 Sep 2024 09:11:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srGwV-0005NG-9B
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:32 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1srGwX-0005Wq-Mv
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:36 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1srGwQ-00013f-NV
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:29 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-42cbc38a997so5489415e9.1
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 06:11:23 -0700 (PDT)
+ id 1srGwU-00015p-SS
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 09:11:33 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42cacabd2e0so6929605e9.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 06:11:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726751482; x=1727356282; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726751489; x=1727356289; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=65GoK7jjLDjdYPKDwe9YM8X2eiP0HXrBJnIC4AyohQU=;
- b=h8eVY03X+hHR/l6mMWlx91CkmoKXYvemnvzwJW2jyDolp+t76EY72mbA6UGs+iUbXY
- 1YX9RqACaAzIHCPdk3okXzXOmrzM0DX8dG9LltvkjOYrJAbRJgUBVt1PDDz3E7QyElz6
- lkMv20feMam5LAMP0X0qcpBb6LBkEe1tf+g9keCEB88U6AqZ70twqw3+0K2ti6KGf9RF
- id2apltSjpfFoH0qLOMgfQOM+PlXSODSH71bV6ZyELeQdOuBju3cIexaAqt+Ox6Cd1S6
- 1OMtkwpOVc7Tq86LvPIWpPNUDQhqqbQddSR0ATvReI4PvVi8ERsDe1FLG7dEGjSTulWi
- HI6g==
+ :reply-to; bh=2kJBVTVE3hu5xqrb4mWZcjRn/GfkKIqvu4GFHzWSmhk=;
+ b=etH4A9JUNJzVvD86qbiEcWGjCnQ4n5eGTaZuw29ctxWERJ0NNaM5JtFTic/y/MhFQj
+ PD3WME6ZitxA/Ag+YIEVKwy/2nONoGiQnRHrgZ0U5POii1jlHpLBPH7cWibhXtsLItwW
+ o0nt7dbhgVisFo8Xw83aBFp8g9UQ85dlmSi9UvNr/2jJAPqOuA2lP9f+SfWsuqiVU6cN
+ dSflwu0T7AY+PtmnkwhrSyUkA7cGT7O/iZeBXPkwKA8EwCRBYMlsPpIiSsnMjVh2uXAR
+ RtBkLk3kGMh8wirBg0bSYYVAMB1iObP1WbzGyNQ9V5Jkf4XhUj6OYzkGmgBdB9ZA0B4J
+ ACnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726751482; x=1727356282;
+ d=1e100.net; s=20230601; t=1726751489; x=1727356289;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=65GoK7jjLDjdYPKDwe9YM8X2eiP0HXrBJnIC4AyohQU=;
- b=oJnJVEkKuary0JotoVY/+ZJNL85d0wEJ4Qz+5FAP9yeHXKlhWC2kQFcyCF9bxxHUkP
- vPbwSB2JILntvwhMgPDZwO7iZV2jZ/YerEL7NTKNqOn9eU4bv7wPn3n8MmYILR8Mitn4
- 8N8c8Mddvo1E9Et1GncGjO2izP6aLO+7Nyn0cZia653voBqkEvJ+/jHqu8na14e175Zz
- /df3d2O04ZThek6e18TOnNMYdeNTafJkzsrA+DnDoAT97cweWvH+LHzmAVWIYqH9OcWt
- VrOjHexGKH8cTxaD7DKUS08JeOOV/7C7OQzrkvw6h5o2OWoo7uKbaqp9Cy++95pysFB/
- m6dQ==
-X-Gm-Message-State: AOJu0YxCqArduzw8RTdd1g/BYnx0pmV3VfpLZp5+9tc7m08PoLLqZYzj
- Q8pygnp32oQOIt+JT/brNzcEfRAq0t1uEz9FlImxircS2s9Cphzzz+0D+c6nY9QSnw9HTpsIRP0
- 2
-X-Google-Smtp-Source: AGHT+IFkTsTFJOZxVnfyMPi2Mm6Ib2nfy1aHzmV1lVtxBJgrftR8xhGjD7hW+CJYZRx/ks2jlFqHaA==
-X-Received: by 2002:a05:600c:19ce:b0:424:8743:86b4 with SMTP id
- 5b1f17b1804b1-42e74406533mr18458475e9.6.1726751482123; 
- Thu, 19 Sep 2024 06:11:22 -0700 (PDT)
+ bh=2kJBVTVE3hu5xqrb4mWZcjRn/GfkKIqvu4GFHzWSmhk=;
+ b=AhU5NZaO2Ma/tQbPDfMSuwAJuqGa1ucfpSQiIB2LdZnppyYUkUKQDUSio/f5ibO6yw
+ NvrGnQd9N2Qtio2IoZHBonVmDwGTCr+0EctsDJdrqjalX7kHdl6v7orc97hgY5csum5a
+ 2rb0NaDe53zKazQmqoSwZjv5GBvGx9Mr/G9cK2+Tz6VZeWPTj+AKbiDubIpoxhf4H25/
+ HJZC6E01DiNfeZQxHHW4dAXn3+azPur+/3cNNej4mfHH3YT9q2tNAfp5Yo1sdrDLHujy
+ 0Jo51q2+GIQ843w7ilkQ2sY7NiaVljURU2WKlXcEJ4cMwuOdwZxHXxdOVuJ45ZJkaqS/
+ J6Gg==
+X-Gm-Message-State: AOJu0Yw8BGgRrq+j/a69PjC0CmL+IJ+m3+8zDsUZC8eojklVYYYmxNP9
+ 9SZTFpa8WH5tjswT7bkOUXDKEX87po5vGzTqHA7rMPIEvo5pJQyesl3mZhoAt07kUBR1/qiTHfJ
+ n
+X-Google-Smtp-Source: AGHT+IECwEh/qkofVwg1XdzLI2LdG7u+H0EnErGFD8OfoEQO++RDocbpAbhsfoqR3p1tPMHnMb4mNw==
+X-Received: by 2002:a05:600c:4e94:b0:42c:a574:6362 with SMTP id
+ 5b1f17b1804b1-42cdb522c74mr170364475e9.11.1726751489023; 
+ Thu, 19 Sep 2024 06:11:29 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42e754091d3sm21667845e9.10.2024.09.19.06.11.21
+ 5b1f17b1804b1-42e754091d3sm21667845e9.10.2024.09.19.06.11.28
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Sep 2024 06:11:21 -0700 (PDT)
+ Thu, 19 Sep 2024 06:11:28 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 24/38] target/arm: Convert handle_scalar_simd_shli to decodetree
-Date: Thu, 19 Sep 2024 14:10:52 +0100
-Message-Id: <20240919131106.3362543-25-peter.maydell@linaro.org>
+Subject: [PULL 36/38] kvm: Remove unreachable code in
+ kvm_dirty_ring_reaper_thread()
+Date: Thu, 19 Sep 2024 14:11:04 +0100
+Message-Id: <20240919131106.3362543-37-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240919131106.3362543-1-peter.maydell@linaro.org>
 References: <20240919131106.3362543-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,121 +94,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+The code at the tail end of the loop in kvm_dirty_ring_reaper_thread()
+is unreachable, because there is no way for execution to leave the
+loop. Replace it with a g_assert_not_reached().
 
-This includes SHL and SLI.
+(The code has always been unreachable, right from the start
+when the function was added in commit b4420f198dd8.)
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240912024114.1097832-25-richard.henderson@linaro.org
+Resolves: Coverity CID 1547687
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20240815131206.3231819-3-peter.maydell@linaro.org
 ---
- target/arm/tcg/a64.decode      |  4 ++++
- target/arm/tcg/translate-a64.c | 44 +++++++---------------------------
- 2 files changed, 13 insertions(+), 35 deletions(-)
+ accel/kvm/kvm-all.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 6c2362b3bbc..96803fe6e4c 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -1291,6 +1291,7 @@ RSHRN_v         0.00 11110 .... ... 10001 1 ..... .....     @q_shri_s
- 
- @shri_d         .... ..... 1 ...... ..... . rn:5 rd:5   \
-                 &rri_e esz=3 imm=%neon_rshift_i6
-+@shli_d         .... ..... 1 imm:6  ..... . rn:5 rd:5   &rri_e esz=3 
- 
- SSHR_s          0101 11110 .... ... 00000 1 ..... .....     @shri_d
- USHR_s          0111 11110 .... ... 00000 1 ..... .....     @shri_d
-@@ -1301,3 +1302,6 @@ URSHR_s         0111 11110 .... ... 00100 1 ..... .....     @shri_d
- SRSRA_s         0101 11110 .... ... 00110 1 ..... .....     @shri_d
- URSRA_s         0111 11110 .... ... 00110 1 ..... .....     @shri_d
- SRI_s           0111 11110 .... ... 01000 1 ..... .....     @shri_d
-+
-+SHL_s           0101 11110 .... ... 01010 1 ..... .....     @shli_d
-+SLI_s           0111 11110 .... ... 01010 1 ..... .....     @shli_d
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index efd93a7f234..934746d2f2c 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -7124,6 +7124,11 @@ static void gen_sri_d(TCGv_i64 dst, TCGv_i64 src, int64_t shift)
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 6c4cb263ba3..fe4cd721d9b 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -1525,11 +1525,7 @@ static void *kvm_dirty_ring_reaper_thread(void *data)
+         r->reaper_iteration++;
      }
+ 
+-    trace_kvm_dirty_ring_reaper("exit");
+-
+-    rcu_unregister_thread();
+-
+-    return NULL;
++    g_assert_not_reached();
  }
  
-+static void gen_sli_d(TCGv_i64 dst, TCGv_i64 src, int64_t shift)
-+{
-+    tcg_gen_deposit_i64(dst, dst, src, shift, 64 - shift);
-+}
-+
- static bool do_vec_shift_imm_narrow(DisasContext *s, arg_qrri_e *a,
-                                     WideShiftImmFn * const fns[3], MemOp sign)
- {
-@@ -7201,6 +7206,9 @@ TRANS(SRSRA_s, do_scalar_shift_imm, a, gen_srsra_d, true, 0)
- TRANS(URSRA_s, do_scalar_shift_imm, a, gen_ursra_d, true, 0)
- TRANS(SRI_s, do_scalar_shift_imm, a, gen_sri_d, true, 0)
- 
-+TRANS(SHL_s, do_scalar_shift_imm, a, tcg_gen_shli_i64, false, 0)
-+TRANS(SLI_s, do_scalar_shift_imm, a, gen_sli_d, true, 0)
-+
- /* Shift a TCGv src by TCGv shift_amount, put result in dst.
-  * Note that it is the caller's responsibility to ensure that the
-  * shift amount is in range (ie 0..31 or 0..63) and provide the ARM
-@@ -9417,38 +9425,6 @@ static void handle_shri_with_rndacc(TCGv_i64 tcg_res, TCGv_i64 tcg_src,
-     }
- }
- 
--/* SHL/SLI - Scalar shift left */
--static void handle_scalar_simd_shli(DisasContext *s, bool insert,
--                                    int immh, int immb, int opcode,
--                                    int rn, int rd)
--{
--    int size = 32 - clz32(immh) - 1;
--    int immhb = immh << 3 | immb;
--    int shift = immhb - (8 << size);
--    TCGv_i64 tcg_rn;
--    TCGv_i64 tcg_rd;
--
--    if (!extract32(immh, 3, 1)) {
--        unallocated_encoding(s);
--        return;
--    }
--
--    if (!fp_access_check(s)) {
--        return;
--    }
--
--    tcg_rn = read_fp_dreg(s, rn);
--    tcg_rd = insert ? read_fp_dreg(s, rd) : tcg_temp_new_i64();
--
--    if (insert) {
--        tcg_gen_deposit_i64(tcg_rd, tcg_rd, tcg_rn, shift, 64 - shift);
--    } else {
--        tcg_gen_shli_i64(tcg_rd, tcg_rn, shift);
--    }
--
--    write_fp_dreg(s, rd, tcg_rd);
--}
--
- /* SQSHRN/SQSHRUN - Saturating (signed/unsigned) shift right with
-  * (signed/unsigned) narrowing */
- static void handle_vec_simd_sqshrn(DisasContext *s, bool is_scalar, bool is_q,
-@@ -9900,9 +9876,6 @@ static void disas_simd_scalar_shift_imm(DisasContext *s, uint32_t insn)
-     }
- 
-     switch (opcode) {
--    case 0x0a: /* SHL / SLI */
--        handle_scalar_simd_shli(s, is_u, immh, immb, opcode, rn, rd);
--        break;
-     case 0x1c: /* SCVTF, UCVTF */
-         handle_simd_shift_intfp_conv(s, true, false, is_u, immh, immb,
-                                      opcode, rn, rd);
-@@ -9940,6 +9913,7 @@ static void disas_simd_scalar_shift_imm(DisasContext *s, uint32_t insn)
-     case 0x04: /* SRSHR / URSHR */
-     case 0x06: /* SRSRA / URSRA */
-     case 0x08: /* SRI */
-+    case 0x0a: /* SHL / SLI */
-         unallocated_encoding(s);
-         break;
-     }
+ static void kvm_dirty_ring_reaper_init(KVMState *s)
 -- 
 2.34.1
 
