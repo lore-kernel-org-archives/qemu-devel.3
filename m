@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E689DCE8D49
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 04:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCFF2CE8D4C
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 04:54:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr94r-00022M-SY; Thu, 19 Sep 2024 00:47:37 -0400
+	id 1sr95R-0005Xw-Ug; Thu, 19 Sep 2024 00:48:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sr94j-0001OY-BQ
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 00:47:29 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1sr95F-00047c-Do
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 00:48:02 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sr94d-0007LO-GO
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 00:47:29 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-718e285544fso294421b3a.1
- for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 21:47:23 -0700 (PDT)
+ id 1sr94z-0007X8-FK
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 00:48:01 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-71798661a52so342043b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 21:47:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726721242; x=1727326042; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726721264; x=1727326064; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XTfod+luVyICpEfgZ8Uh3DA36M6kM7v+mrR6MBDF7uk=;
- b=gySmbAwF3yQ1JULozXtkfqpb9Wyrr64X1tk3Ncjgb7LgUXzQHQuOlP/Lo7JdhEJzkh
- iSpJgxjYmkYDPFy+GYc5xfFUyokT8AAPAJoJ9uXEXQAiVU6WPJ9o9ZjKUvj8IQawXB4l
- qNPypWqK8+HxBpWtqEDPBL7UtUPHk05qndYzYF03W9tiaq1Os3gCnE/+J79UxveA9cvx
- W9/DpnSNW7ziz8PoRm3u8Ftx0utqMToO8cm9YNClrnPswptgFoUjFD56i0IUJnRJH739
- vz5xox2J6cnKRXaEm8TRP+W6KvYGhBcHk5XR9WKf6zVRph5LsFtPVZbuliAHxXv996ni
- VIqg==
+ bh=ZHfEx5g5BzL1PX1RgAlJ8l3kVoVW/oh/s4YLt1Je16g=;
+ b=HHb826SwhZH+oEYl5D6yU4uRjwLwPoes64wjS5uAApZ+b31zTbnJ78V1hG9Xhn00BU
+ f/i3EpPFZ1OA/7D88t6E6YZBbzIbWBax0nKdu9aX8zTxEnmGEdlg5224Yotft2hcegh+
+ +4vuW4H6Zj0oy/31/jAF/v3KkLrtnH5pUjtHMD+gjSqoTv6CK6ozQMZv3IduvttVHPAD
+ n9nMOI9kFDigrsEK672o6u3UYTbzEf3iLbEZEvflTU1emg+BRrvRWjTH3FEFQYHsISOP
+ e5IOUyhPR/2gJRuu/4m8vuvhOSyWI5d2peIxR2AvWwwz1bcyWKzVY1kAq0HjmAPvk4On
+ udHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726721242; x=1727326042;
+ d=1e100.net; s=20230601; t=1726721264; x=1727326064;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XTfod+luVyICpEfgZ8Uh3DA36M6kM7v+mrR6MBDF7uk=;
- b=MXo46Qn2pGMVZhTktB5nUFL0gWXZSn1igeFZBiaA2w/ls8yeqgx2hT750NuH5iIC4A
- rd6UGPU0qn2RaGdnZNR2Z14E7QFxYaRM5Y1XN+yleuf7U/6Ae4FfgLe8bVyabfEV4I41
- O1PjM6DQLckOCu2KM99WqxhdK05oiPdKSHCg1jtv0SBobNXkTSXAEMWejJUio0GZyYP0
- qSuM4TdnyS9+HTItkMlgZR46Hn5MHetPwR8AW5+P4qo0SMixq9PxBrHVpJIK7xkZNhCS
- 8C661se1tFs+CVsV8YAmBdEH6TLLyjX2qA1PlvAtEMX9HjJwMmWy40M67y0BaNfzxqew
- ZUew==
-X-Gm-Message-State: AOJu0YxGpZIoDK7Mpw0l2yTAqcVLi0CwfI5q/CrZhRwbjKoBbZ8tZcWa
- M4ZNGqtnEABTB2Xd3e6hvLmWGsvSqV9fmVqUqcsHFRYFLbOL1q78rFDwwOWjJuiadmiLEyyQhF/
- 5ToPlfA==
-X-Google-Smtp-Source: AGHT+IENpGOMxkAxVpBEbVxwqYg+XoCNj0Y+tup5K+eTLr6T9UQRMpy2wwxVgVE7FTWLiR+Ma6cVKg==
-X-Received: by 2002:a05:6a00:2d10:b0:717:9462:8bda with SMTP id
- d2e1a72fcca58-71936a5fb10mr30684467b3a.12.1726721242032; 
- Wed, 18 Sep 2024 21:47:22 -0700 (PDT)
+ bh=ZHfEx5g5BzL1PX1RgAlJ8l3kVoVW/oh/s4YLt1Je16g=;
+ b=P9c84iz9fQwuog3WlKbUr4nraaja/pRn8ArlQERA8XhYtQ11w5A8kztXSaEJaWQJr1
+ ogNIKmgK2QSV6ag/oFkRGieLAMfpDhuy0hDHi1/aehZKaEK+K/dzfbJXH97LhoDTxMAf
+ bwahCj2WrYcNZlM6gdCrybw+110TpX2lKPd5QuYAN2EJra8YYnoqRuNeENUnm2xZXiqK
+ qJ47mmLBMbhq/9g4FmoJbfG/XnpREOIpBzUkexUwg0arL+/K/h3sl3IUbyPsrA/7NL8Z
+ vG3d940WqChsr/2LuDULuCCMmUAj9QwJphpUbICeM1/0V0iRCzFLYzL5g9+EjJeqV4e0
+ igRA==
+X-Gm-Message-State: AOJu0Yzx764crMkLn6t5le2Cs2+gO3gQNDtddlbeMIEqufMKDn0LwleG
+ A2d8hNfoSBM1R0ZUg9azwT4Akw2rIZKNHP784BFdjECqPmsHWGlYYDrKR6EZVG81agKv5ECzul9
+ kH7FJfw==
+X-Google-Smtp-Source: AGHT+IGn0zKE4NWTBii40hBHgJl3lvYHO2m3pyUcQ8D1+09Ub75s0ooGndgxJcjdbl40KxBP6dN9PQ==
+X-Received: by 2002:a05:6a00:1746:b0:70d:2a1b:422c with SMTP id
+ d2e1a72fcca58-7198e2a8f1dmr3107578b3a.7.1726721264030; 
+ Wed, 18 Sep 2024 21:47:44 -0700 (PDT)
 Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71944bc279csm7478601b3a.188.2024.09.18.21.47.20
+ d2e1a72fcca58-71944bc279csm7478601b3a.188.2024.09.18.21.47.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Sep 2024 21:47:21 -0700 (PDT)
+ Wed, 18 Sep 2024 21:47:43 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
@@ -104,23 +104,24 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Yanan Wang <wangyanan55@huawei.com>, Michael Rolnik <mrolnik@gmail.com>,
  Jesper Devantier <foss@defmacro.it>, Marcelo Tosatti <mtosatti@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 18/34] hw/net: remove break after g_assert_not_reached()
-Date: Wed, 18 Sep 2024 21:46:25 -0700
-Message-Id: <20240919044641.386068-19-pierrick.bouvier@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v3 29/34] hw/ppc: remove return after g_assert_not_reached()
+Date: Wed, 18 Sep 2024 21:46:36 -0700
+Message-Id: <20240919044641.386068-30-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20240919044641.386068-1-pierrick.bouvier@linaro.org>
 References: <20240919044641.386068-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -141,24 +142,38 @@ This patch is part of a series that moves towards a consistent use of
 g_assert_not_reached() rather than an ad hoc mix of different
 assertion mechanisms.
 
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/net/net_rx_pkt.c | 1 -
- 1 file changed, 1 deletion(-)
+ hw/ppc/ppc.c          | 1 -
+ hw/ppc/spapr_events.c | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/hw/net/net_rx_pkt.c b/hw/net/net_rx_pkt.c
-index 6b9c4c9559d..0ea87344745 100644
---- a/hw/net/net_rx_pkt.c
-+++ b/hw/net/net_rx_pkt.c
-@@ -376,7 +376,6 @@ net_rx_pkt_calc_rss_hash(struct NetRxPkt *pkt,
+diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+index e6fa5580c01..fde46194122 100644
+--- a/hw/ppc/ppc.c
++++ b/hw/ppc/ppc.c
+@@ -267,7 +267,6 @@ static void power9_set_irq(void *opaque, int pin, int level)
          break;
      default:
          g_assert_not_reached();
--        break;
+-        return;
+     }
+ }
+ 
+diff --git a/hw/ppc/spapr_events.c b/hw/ppc/spapr_events.c
+index 38ac1cb7866..4dbf8e2e2ef 100644
+--- a/hw/ppc/spapr_events.c
++++ b/hw/ppc/spapr_events.c
+@@ -646,7 +646,6 @@ static void spapr_hotplug_req_event(uint8_t hp_id, uint8_t hp_action,
+          * that don't support them
+          */
+         g_assert_not_reached();
+-        return;
      }
  
-     net_toeplitz_key_init(&key_data, key);
+     if (hp_id == RTAS_LOG_V6_HP_ID_DRC_COUNT) {
 -- 
 2.39.5
 
