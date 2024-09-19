@@ -4,96 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6787ACE8D7A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 11:32:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF7CDCE8D78
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 11:34:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srFOD-0002hs-VK; Thu, 19 Sep 2024 07:32:02 -0400
+	id 1srFQB-0006tI-NX; Thu, 19 Sep 2024 07:34:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1srFO5-0002h4-TA
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 07:31:56 -0400
-Received: from fout2-smtp.messagingengine.com ([103.168.172.145])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1srFO1-00055j-AD
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 07:31:51 -0400
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal
- [10.202.2.49])
- by mailfout.phl.internal (Postfix) with ESMTP id 4B16C138008C;
- Thu, 19 Sep 2024 07:31:45 -0400 (EDT)
-Received: from phl-imap-12 ([10.202.2.86])
- by phl-compute-09.internal (MEProxy); Thu, 19 Sep 2024 07:31:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1726745505;
- x=1726831905; bh=tA9cykiGJ3geWKPniMlL8Lav7oTSAfOxqz6gjwT9AjM=; b=
- KUsvn6cLSEVEaFPeIE2hG4PVjjKPFd9ke8Yh93zGtJEvfpgJdzA1QFbcZOOwe767
- FrEXHA84q64qXg2rz8+rVr8ilD5o33NzKhzLw2OnTpaQY6HeJhtyUCVQteeLdCF3
- /Gn38cpjGoU9RWOzhZ4dVPEmlFbox/hvioF7z9Yf2jQbQX+fPRx3+BRKzQQ0xO/P
- X+xh90rHvmXhZrNqU1lhjRCHzo1xIb+9CqQqpk114PdbX42POKF5nj/OwpwyW4Bx
- zfjKY3oUfebVsLEGqyS08ChmRkcUDAM9Pzz8a2tLsMKTNj3+NawLPHSKotwIClBr
- 3Clh0O+xrbHzo0qByL41wA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1726745505; x=
- 1726831905; bh=tA9cykiGJ3geWKPniMlL8Lav7oTSAfOxqz6gjwT9AjM=; b=j
- doN7JjqHIsjLAqOZOA+c/vi4KkA263nTTnkq4QeCb9eR2shjFfitLszErThWLZg3
- pQyzu+Y3f4YQFbJNVgbJAyqVMmfyTPfpgpJ+hfJK0hjAkczM8K+tuhpH9v/Yws1S
- bgGpWITXhtN7WlRtvGIKMybQrVks9mQ1VREhLjjxr1oDtz+x8w5kRlfNk4YGkye2
- 9BBi4hjNLnedmEFebYgoamjf+xJD7P6Vt0c3uk7Qr2w8+d5IeBfzMBZQF2FG7Qmv
- h8eny4Y36+zfVWeYIEEHLH/Mn2yuGPAeVwQZTzpuC51ylmEJGIR6dE1IBxkmtvVm
- yHUlyKSGQOx0Y5cLHKUIQ==
-X-ME-Sender: <xms:oAvsZs8aH_5Lsvls1Ax2SmbMQT_XFDh2N2DS-cwWK01kLH-tOhklww>
- <xme:oAvsZkuAHqZPuvDnHiy5RIHLAdUaHgY5d5qNwDu62kgZ6VovIrQJA7tTvjVRz0B6c
- wCXvXFVm7ahWAUgeDo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudeluddggeduucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
- rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
- htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
- necuhfhrohhmpedflfhirgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghnghesfh
- hlhihgohgrthdrtghomheqnecuggftrfgrthhtvghrnhepjeehfeduvddtgffgvdffkeet
- hefhlefgvdevvdekuefffeekheehgeevhfevteejnecuvehluhhsthgvrhfuihiivgeptd
- enucfrrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihgohgr
- thdrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
- htohepghgrohhsohhngheslhhoohhnghhsohhnrdgtnhdprhgtphhtthhopehmrghosghi
- sghosehlohhonhhgshhonhdrtghnpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnoh
- hnghhnuhdrohhrgh
-X-ME-Proxy: <xmx:oAvsZiBaxGiGNbNWbEuKbyelKGdVJU6TnWPuX313gxcDO3PHM6j5Ag>
- <xmx:oAvsZseL9h4V_LQB8ZOQlex706NdYhXi8u1Y2kTf-vD3GvUV9Cmnjw>
- <xmx:oAvsZhMSRloUATbX1a4kuPkrTHqjT6XzNHLc6A0Oq_usnytnI8fAtg>
- <xmx:oAvsZmlgfQj4lez9qb68i5qOYSLwp0rNAUVesF9aJeHjHVgqwuM51g>
- <xmx:oQvsZqYuzE6vOsiI0GrKkR7qcUyNlwHIbMNlZhtm9KuWHddzRqj2Ro9q>
-Feedback-ID: ifd894703:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id B73241C20065; Thu, 19 Sep 2024 07:31:44 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1srFQA-0006sm-AR
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 07:34:02 -0400
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1srFQ8-0005EM-Kn
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 07:34:02 -0400
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-53661ac5ba1so743518e87.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 04:33:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726745637; x=1727350437; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=TX+YKdgsNY4eHwiANJL05KwePN0Q1NSwu/+CMRm+C3o=;
+ b=WvXf62zbfdDjH/LIT7kOtffYLeEcaKSS+rEX5h2yv+zbe5C41IxOR+UjqXmIW+FCqO
+ V9mMKWQ0PwyBgPe2/gxJ0rryen5SN+LOuXt68pCcyZkhdr1N52zUqPY/eYNyXJyN3nri
+ 8e9EWj2rQsteBY8QiuCmkHBhuhGCpU+/Vnl99jwtQn6iJkkxzmamq49kk9wSfOGF08Kz
+ 57MlFc4v3TMWblSw1uydUcskzzXmevLPebjMuL9PvCsafMoGqCzwNjwdqxnrCH3T1+kQ
+ ygQmGY41FzluDo5Bu0OWXzu8WDPVPtZr9Ck3qK9dKEYK62MhO3G+2CnA6fanBMMw4meq
+ YLdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726745637; x=1727350437;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TX+YKdgsNY4eHwiANJL05KwePN0Q1NSwu/+CMRm+C3o=;
+ b=EPllj3S8I2FjcT6vmMCbKQGAGi0nDlubJkBktflLahhD/IWkXwxfCwtEM5hWNhWzZE
+ LSbSlV9exQbJ9XchHp914jE0t8X6jdWuMIfSJdw8lV+SPuM5O0IT7koxBlx2i+gvJj8n
+ hp57ebPl6J9nhzFLLt/JNSWPBGEhoszlffbciEpLP/b9lrOleLsZPaH19z3I92fnBEeA
+ Qq1mC/wrZS0GYjzxaJeg/ASsEhxrYqSWQoaXlyQijFl7pgeAxn3oGBuPHqOSqwvOmbIM
+ rDVuqHzE6xGE8ze3c1oug8c06uivhzgIk5eSpSbldJl1/JED64vhXgGyEBDvD+SScV3k
+ 5eHQ==
+X-Gm-Message-State: AOJu0Yz5kOKYcdsfLY8pTUCT+uffd+IPSfZVN1+vcd4svpSZQ1I6/8cs
+ puYuI/y/t+9cm9Am3BVYwurRvKwRCiOk0nj8+aV5dy+J3hGsDcK7qEYJjFrGnfdNfHDuIo/NhgB
+ 5yLmLgBjCTJzmYOhVfLtpOstPBh8kQOoFXbm23Q==
+X-Google-Smtp-Source: AGHT+IE9qHFVb5ssOqMGRsPMjvWZMH1qMM4u+wfVXdFHvfbGKTKSO8NSgidp+AeIqvG7wZXkrsZhsnUhuRHitqJ5KXU=
+X-Received: by 2002:a05:6512:4381:b0:536:9efb:bb1a with SMTP id
+ 2adb3069b0e04-5369efbbbd5mr3902560e87.38.1726745637272; Thu, 19 Sep 2024
+ 04:33:57 -0700 (PDT)
 MIME-Version: 1.0
-Date: Thu, 19 Sep 2024 12:31:07 +0100
-From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
-To: "QEMU devel" <qemu-devel@nongnu.org>
-Cc: "Song Gao" <gaosong@loongson.cn>, "Bibo Mao" <maobibo@loongson.cn>
-Message-Id: <2d46845b-8702-44ba-b302-e569ad1e90e4@app.fastmail.com>
-In-Reply-To: <20240914-loongarch-booting-v1-0-1517cae11c10@flygoat.com>
-References: <20240914-loongarch-booting-v1-0-1517cae11c10@flygoat.com>
-Subject: Re: [PATCH 0/2] hw/loongarch/booting: Booting protocol refactoring
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=103.168.172.145;
- envelope-from=jiaxun.yang@flygoat.com; helo=fout2-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20240917141641.2836265-1-peter.maydell@linaro.org>
+ <c8902f79-0094-4821-99ab-ec0eba5e870d@linaro.org>
+In-Reply-To: <c8902f79-0094-4821-99ab-ec0eba5e870d@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 19 Sep 2024 12:33:45 +0100
+Message-ID: <CAFEAcA_2+qRM85UKxp0vgASnhzjR7CtVPJyCwdYhONifZ2_QEw@mail.gmail.com>
+Subject: Re: [PATCH] tests/fp: Make mul and div tests have a longer timeout
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,45 +89,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-=E5=9C=A82024=E5=B9=B49=E6=9C=8814=E6=97=A5=E4=B9=9D=E6=9C=88 =E4=B8=8B=E5=
-=8D=881:10=EF=BC=8CJiaxun Yang=E5=86=99=E9=81=93=EF=BC=9A
-> Hi all,
+On Wed, 18 Sept 2024 at 15:19, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> This series refactored booting protocol generation code
-> to better accommodate different host ABI / Alignment and
-> endianess.
-
-+ Bibo,
-
-Ping for review.
-
-Thanks
-
+> On 9/17/24 16:16, Peter Maydell wrote:
+> > At the moment we run all fp-test tests except for the muladd ones
+> > with the default meson test timeout of 30s. This is plenty for
+> > most of the test cases, but for multiplication and division we
+> > can sometimes hit the timeout if the CI runner is going slow.
+> >
+> > Add support to meson.build for a way to override the timeout on
+> > a per test basis, and use it to set the timeout to 60s for
+> > fp-test-rem, fp-test-div and fp-test-mul. We can use this new
+> > generic mechanism also to set the timeout for mulAdd rather
+> > than hardcoding it.
+> >
+> > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> > ---
+> > On my local system these tests finish in less than 5 seconds
+> > each, but on the cross-i686-system CI job they can take 5 or 6
+> > times as long. Example:
+> > https://gitlab.com/qemu-project/qemu/-/jobs/7844908223
+> > ---
+> >   tests/fp/meson.build | 16 +++++++++++++++-
+> >   1 file changed, 15 insertions(+), 1 deletion(-)
 >
-> It also enhanced LoongArch32 support.
->
-> Thanks
->
-> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> ---
-> Jiaxun Yang (2):
->       hw/loongarch/boot: Refactor EFI booting protocol generation
->       hw/loongarch/boot: Rework boot code generation
->
->  hw/loongarch/boot.c         | 321 ++++++++++++++++++++++++++++-------=
----------
->  include/hw/loongarch/boot.h | 106 ++++++++++++---
->  2 files changed, 293 insertions(+), 134 deletions(-)
-> ---
-> base-commit: 28ae3179fc52d2e4d870b635c4a412aab99759e7
-> change-id: 20240914-loongarch-booting-b5ae3f4976b7
->
-> Best regards,
-> --=20
-> Jiaxun Yang <jiaxun.yang@flygoat.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
---=20
-- Jiaxun
+Thanks; I've applied this directly to see if it helps with
+some of the CI flakiness.
+
+-- PMM
 
