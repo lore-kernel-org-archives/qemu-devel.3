@@ -4,58 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FEC2CF3959
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 15:13:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97A68CF395C
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 15:24:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srIqA-0000ng-SV; Thu, 19 Sep 2024 11:13:07 -0400
+	id 1srJ0D-0002gT-CD; Thu, 19 Sep 2024 11:23:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1srIq8-0000ft-Ow
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 11:13:04 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1srJ0B-0002g0-Bz
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 11:23:27 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1srIq6-0008Ra-CM
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 11:13:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=h0jpzkag006RczGeMCnr6BKjrfdEO/NylZjdESEjlyU=; b=qlLIudBzAU8DITXj
- v6NyY0hqStoQk93Eig6WJLK/csjpwT78RK3EtU2qVc631oeOMpUpraRJwBVCARYIrGSN2VoG+3Pae
- NywIc79kmOkCK2gjdrGAw2YI9R01MVvk6Ncewy0Ak+UIXbXTjOrgTMYSCzilm8ER/Y5gWKbxsADZy
- ZE/nBaycUcbHFqnPhCcTBNZs79WXr/g6zM5KQANnyFFdF+GJy6sEmZCWRisjyNJBe8unyYJpvTRi6
- ZshSEzkJTnbPcaOZye/RpQ8s69L0lY7oDJ4o+jpj4T/t93EX5ORz1fXBbgvAXMrM6pSTM/uFaWpxN
- LonQ3WAlntbLL+cxyw==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1srIq2-006RQ2-25;
- Thu, 19 Sep 2024 15:12:58 +0000
-Date: Thu, 19 Sep 2024 15:12:58 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Jag Raman <jag.raman@oracle.com>
-Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: of remote_iohub_finalize
-Message-ID: <Zuw_erEDSNMyQldP@gallifrey>
-References: <ZusHMRnxjeS5qOd6@gallifrey>
- <38410E7A-7058-466A-ADAC-AFA494BF4890@oracle.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1srJ07-00018x-Vl
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 11:23:26 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48JDodet019465;
+ Thu, 19 Sep 2024 15:23:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:content-transfer-encoding
+ :mime-version; s=pp1; bh=KA66hIwPZ8v+3/ZpX0NNmYASwbjSHje+MUFpNg4
+ h4Zs=; b=L+X0by9YPBkQis+4nOw4QYyXMhhIXYJr1S304ytO3MVMSD0u44d2Bs+
+ gJmj9yHz8h+ftGsL80V2CSqtTT5DVnm/F/f3XWSLnpucc8vLMI8FBJ/a2+ZTXls+
+ G+V1lYGkws7YTPtA1cAYjUBWTgz3GrQQPiV1WXxnXb+8SgmgEIBegrqDBkxCQXWX
+ WCD2iIqhuHOPpaE7mnbU+3TwiJdvXKkpvWokMn5zHVGqvhIpLI6yCUhibnLNxAGj
+ H5DTEPUyG8CdPxqDfo2vLdeavqfZ8KReca7UAJxH3rFV4kH9qF2MjNOc62D77HWF
+ 1nzrcxC17nHfkNMhM7sAyEHBJkT196A==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n41awkff-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 19 Sep 2024 15:23:17 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48JFMYmI009279;
+ Thu, 19 Sep 2024 15:23:16 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41n41awkfd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 19 Sep 2024 15:23:16 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48JEGKqH001785;
+ Thu, 19 Sep 2024 15:23:15 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 41nqh41u5k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 19 Sep 2024 15:23:15 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48JFNE6b7340520
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 19 Sep 2024 15:23:14 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0A9692004B;
+ Thu, 19 Sep 2024 15:23:14 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9C5D320043;
+ Thu, 19 Sep 2024 15:23:13 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.171.47.36])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 19 Sep 2024 15:23:13 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-devel@nongnu.org, 
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH] tests/docker: Fix microblaze atomics
+Date: Thu, 19 Sep 2024 17:23:04 +0200
+Message-ID: <20240919152308.10440-1-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.46.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: oCuyBZvS0VKqmucDXFChdh-w2QtlhcRF
+X-Proofpoint-ORIG-GUID: ZNns8uHUlz_ghPfoExAynXEopC9zfG2i
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <38410E7A-7058-466A-ADAC-AFA494BF4890@oracle.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
-X-Uptime: 15:12:51 up 134 days,  2:26,  1 user,  load average: 0.07, 0.02, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, SUBJ_LACKS_WORDS=1.831 autolearn=no autolearn_force=no
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-19_12,2024-09-19_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0
+ lowpriorityscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999 bulkscore=0
+ impostorscore=0 phishscore=0 priorityscore=1501 spamscore=0 clxscore=1011
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409190099
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,38 +116,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Jag Raman (jag.raman@oracle.com) wrote:
-> Hi Dave,
-> 
-> Thanks for checking!
-> 
-> remote_iohub_finalize() is a relic from when remote iohub was a separate type. We aren't calling it anywhere; we can remove it.
+GCC produces invalid code for microblaze atomics.
 
-OK, I'll send a patch later.
+The fix is unfortunately not upstream, so fetch it from an external
+location and apply it locally.
 
-Dave
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ .../debian-microblaze-cross.d/build-toolchain.sh          | 8 ++++++++
+ tests/docker/dockerfiles/debian-toolchain.docker          | 7 +++++++
+ 2 files changed, 15 insertions(+)
 
-> Cheers,
-> Jag
-> 
-> > On Sep 18, 2024, at 1:00 PM, Dr. David Alan Gilbert <dave@treblig.org> wrote:
-> > 
-> > Hi Jag,
-> >  One of my scripts noticed that 'remote_iohub_finalize' in
-> > hw/remote/iohub.c is unused; before I go and delete it as deadcode,
-> > is that actually just a missing call somewhere?
-> > 
-> > Dave
-> > 
-> > -- 
-> > -----Open up your eyes, open up your mind, open up your code -------   
-> > / Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-> > \        dave @ treblig.org |                               | In Hex /
-> > \ _________________________|_____ http://www.treblig.org   |_______/
-> 
+diff --git a/tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.sh b/tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.sh
+index 23ec0aa9a72..c5cd0aa931c 100755
+--- a/tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.sh
++++ b/tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.sh
+@@ -10,6 +10,8 @@ TOOLCHAIN_INSTALL=/usr/local
+ TOOLCHAIN_BIN=${TOOLCHAIN_INSTALL}/bin
+ CROSS_SYSROOT=${TOOLCHAIN_INSTALL}/$TARGET/sys-root
+ 
++GCC_PATCH0_URL=https://raw.githubusercontent.com/Xilinx/meta-xilinx/refs/tags/xlnx-rel-v2024.1/meta-microblaze/recipes-devtools/gcc/gcc-12/0009-Patch-microblaze-Fix-atomic-boolean-return-value.patch
++
+ export PATH=${TOOLCHAIN_BIN}:$PATH
+ 
+ #
+@@ -31,6 +33,12 @@ mv gcc-11.2.0 src-gcc
+ mv musl-1.2.2 src-musl
+ mv linux-5.10.70 src-linux
+ 
++#
++# Patch gcc
++#
++
++wget -O - ${GCC_PATCH0_URL} | patch -d src-gcc -p1
++
+ mkdir -p bld-hdr bld-binu bld-gcc bld-musl
+ mkdir -p ${CROSS_SYSROOT}/usr/include
+ 
+diff --git a/tests/docker/dockerfiles/debian-toolchain.docker b/tests/docker/dockerfiles/debian-toolchain.docker
+index 687a97fec4a..ab4ce29533d 100644
+--- a/tests/docker/dockerfiles/debian-toolchain.docker
++++ b/tests/docker/dockerfiles/debian-toolchain.docker
+@@ -10,6 +10,8 @@ FROM docker.io/library/debian:11-slim
+ # ??? The build-dep isn't working, missing a number of
+ # minimal build dependiencies, e.g. libmpc.
+ 
++RUN sed 's/^deb /deb-src /' </etc/apt/sources.list >/etc/apt/sources.list.d/deb-src.list
++
+ RUN apt update && \
+     DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
+     DEBIAN_FRONTEND=noninteractive eatmydata \
+@@ -33,6 +35,11 @@ RUN cd /root && ./build-toolchain.sh
+ # and the build trees by restoring the original image,
+ # then copying the built toolchain from stage 0.
+ FROM docker.io/library/debian:11-slim
++RUN apt update && \
++    DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
++    DEBIAN_FRONTEND=noninteractive eatmydata \
++    apt install -y --no-install-recommends \
++        libmpc3
+ COPY --from=0 /usr/local /usr/local
+ # As a final step configure the user (if env is defined)
+ ARG USER
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+2.46.0
+
 
