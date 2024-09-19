@@ -4,56 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06178CF3958
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 14:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42BE8CF395B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 15:06:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srINE-0004qj-HY; Thu, 19 Sep 2024 10:43:14 -0400
+	id 1srIiu-0006Zf-Ow; Thu, 19 Sep 2024 11:05:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1srIMy-0004U4-Bm
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 10:42:56 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1srIis-0006Ya-6U
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 11:05:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1srIMm-0004Hx-Cj
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 10:42:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=josV6NXwzoUJASKVBaFDCVv1eUqMkzXz1NTL5UaS96Y=; b=H6YVxhxOR9nMTORn
- IctCKZp+KnZvGgQl5Cxv1eMsvQqQckD/IxrAKHhAJ1XzJyO/hy0J/tifFy49FTVfNazzJ69s8n6vf
- tzVrVg1amVuJwQhJE+EHG/NzZHQv/CoOa1lHURtAYVPBtgo+jG9/TSHNq6sIvT+5YbovtZfysPXIu
- hIQvC38XlQg1I7eCAZ5EcR3DUd7dFMKEkFQb9suV0W5HBFnW/bfm8PHW1pQh6MfMt8mXOy6HKsNOR
- 2LLHk0dpZ9vGdeC9tsQ5uodqBqQ0tZWYA8D8kUaz+fuRA/iCaTcMkeWuvXi5+6xW7Jkzd11AYbDsT
- PAM2SrGgfzPpM6Wsdw==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1srIMl-006RFU-1G;
- Thu, 19 Sep 2024 14:42:43 +0000
-Date: Thu, 19 Sep 2024 14:42:43 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: pbonzini@redhat.com
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] qemu-timer: Remove unused
- qemu_clock_get_main_loop_timerlist
-Message-ID: <Zuw4Y1VLDhjB7_hL@gallifrey>
-References: <20240918163427.175237-1-dave@treblig.org>
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1srIiq-0007e5-0u
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 11:05:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1726758330;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CRBaIT1ZiEL/UGx9VPyJK7064AwhFwjo48bUXISveq8=;
+ b=JBwG3LZvE/HZGQCnvDmvEaVgoNcVRkuSaH8olqwE+Tb4iqzI+QXWbyavP2JR+Fb68bhzsf
+ mNJ4YcT/es9VMyP9kOgH7aRoWNBo0UHo5JIe9RUxo3jki37cj+7IcJPCeF+lmy5EuBxi6V
+ s6AOFMONb0dXe1coM6c5fwn/pPgAQtA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-112-9YGylzwgNteCDK_4Ujoq1g-1; Thu,
+ 19 Sep 2024 11:05:27 -0400
+X-MC-Unique: 9YGylzwgNteCDK_4Ujoq1g-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7260E193611E; Thu, 19 Sep 2024 15:05:25 +0000 (UTC)
+Received: from localhost (unknown [10.39.194.77])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7EB8719560AF; Thu, 19 Sep 2024 15:05:24 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>, Gustavo Romero
+ <gustavo.romero@linaro.org>, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, darren@os.amperecomputing.com
+Subject: Re: [PATCH V2] arm/kvm: add support for MTE
+In-Reply-To: <879f7e65-070a-4d9b-b70f-60576b7b5319@os.amperecomputing.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Michael O'Neill, Amy Ross"
+References: <20240912091616.393685-1-gankulkarni@os.amperecomputing.com>
+ <0faf9a7c-0400-482c-974f-7b70e1d58202@linaro.org>
+ <879f7e65-070a-4d9b-b70f-60576b7b5319@os.amperecomputing.com>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Thu, 19 Sep 2024 17:05:21 +0200
+Message-ID: <8734lvu1ji.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20240918163427.175237-1-dave@treblig.org>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
-X-Uptime: 14:42:22 up 134 days,  1:56,  1 user,  load average: 0.03, 0.01, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,74 +89,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* dave@treblig.org (dave@treblig.org) wrote:
-> From: "Dr. David Alan Gilbert" <dave@treblig.org>
-> 
-> qemu_clock_get_main_loop_timerlist has been unused since it was
-> originally added in
->   ff83c66ecc ("aio / timers: Split QEMUClock into QEMUClock and QEMUTimerList")
-> 
-> Remove it.
-> 
-> Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+On Thu, Sep 19 2024, Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com> wrote:
 
-V2 sent, see:
+> I have modified as below diff to keep TCG if loop as it is and adding if 
+> for KVM case to clear/mask the MTE bits if MTE in KVM mode is not 
+> enabled by user command(if no mte=on).
+>
+> Is below diff makes sense?
+>
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index a59417aac8..523996576d 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -2390,15 +2390,20 @@ static void arm_cpu_realizefn(DeviceState *dev, 
+> Error **errp)
+>
+>   #ifndef CONFIG_USER_ONLY
+>           /*
+> -         * If we do not have tag-memory provided by the TCG
+> -         * nor MTE at KVM enabled, reduce MTE support to
+> -         * instructions enabled at EL0.
+> +         * If we do not have tag-memory provided by the TCG,
+> +         * reduce MTE support to instructions enabled at EL0.
+>            * This matches Cortex-A710 BROADCASTMTE input being LOW.
+>            */
+> -        if (cpu->tag_memory == NULL && !cpu->kvm_mte) {
+> +        if (tcg_enabled() && cpu->tag_memory == NULL) {
+>               cpu->isar.id_aa64pfr1 =
+>                   FIELD_DP64(cpu->isar.id_aa64pfr1, ID_AA64PFR1, MTE, 1);
+>           }
+> +
+> +        /* Disable MTE, if it is not enabled by the user for KVM mode.
+> +         */
+> +        if (kvm_enabled() && !cpu->kvm_mte) {
+> +                FIELD_DP64(cpu->isar.id_aa64pfr1, ID_AA64PFR1, MTE, 0);
+> +        }
+>   #endif
+>       }
 
-[PATCH v2] qemu-timer: Remove unused timer functions
-<20240919144124.309646-1-dave@treblig.org>
+Wouldn't that be a possibly guest-visible change?
 
-I found another one.
-
-Dave
-
-> ---
->  include/qemu/timer.h | 10 ----------
->  util/qemu-timer.c    |  5 -----
->  2 files changed, 15 deletions(-)
-> 
-> diff --git a/include/qemu/timer.h b/include/qemu/timer.h
-> index fa56ec9481..ccd8578ae3 100644
-> --- a/include/qemu/timer.h
-> +++ b/include/qemu/timer.h
-> @@ -190,16 +190,6 @@ bool qemu_clock_use_for_deadline(QEMUClockType type);
->   */
->  int64_t qemu_clock_deadline_ns_all(QEMUClockType type, int attr_mask);
->  
-> -/**
-> - * qemu_clock_get_main_loop_timerlist:
-> - * @type: the clock type
-> - *
-> - * Return the default timer list associated with a clock.
-> - *
-> - * Returns: the default timer list
-> - */
-> -QEMUTimerList *qemu_clock_get_main_loop_timerlist(QEMUClockType type);
-> -
->  /**
->   * qemu_clock_nofify:
->   * @type: the clock type
-> diff --git a/util/qemu-timer.c b/util/qemu-timer.c
-> index 213114be68..e5b5452e4e 100644
-> --- a/util/qemu-timer.c
-> +++ b/util/qemu-timer.c
-> @@ -291,11 +291,6 @@ QEMUClockType timerlist_get_clock(QEMUTimerList *timer_list)
->      return timer_list->clock->type;
->  }
->  
-> -QEMUTimerList *qemu_clock_get_main_loop_timerlist(QEMUClockType type)
-> -{
-> -    return main_loop_tlg.tl[type];
-> -}
-> -
->  void timerlist_notify(QEMUTimerList *timer_list)
->  {
->      if (timer_list->notify_cb) {
-> -- 
-> 2.46.0
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
 
