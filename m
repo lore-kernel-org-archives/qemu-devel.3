@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69CE5CF3962
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 16:30:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F578CF395D
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 16:31:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srK2Y-0003Wo-4w; Thu, 19 Sep 2024 12:29:58 -0400
+	id 1srK3T-0004g9-Rf; Thu, 19 Sep 2024 12:30:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srK2U-0003Vl-IJ
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 12:29:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srK3R-0004Xr-RV
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 12:30:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srK2R-0008RY-TP
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 12:29:54 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srK3Q-0000FJ-AN
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 12:30:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726763389;
+ s=mimecast20190719; t=1726763451;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=geVXq9sudmm8z2UhOnWjyW7zxA3OSFv3GjlrV/2IZWI=;
- b=DE2VQ4fIcBbbHvdBy4Zybn2BYHKlGIcYAlPXIrp8rCsA4gnDdPK6SDk/gtXvO/pkfuyypU
- dYvfSdQ+O0mnME7Y4PErJv/pJzpZ7575o2JdSQBGIDBHCNOCmZlqDDhCd7Evb0CLRJoXxo
- WTHMkMVlKoa25WzL58xq6MKaPwbkOI8=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=sJuqsr58LBB69SsuxZGkJ5RDmjH6Yqf8sAzR4L4/8EA=;
+ b=S1RAX67gnE0GEAj9GyU32fNuhZiq1729FhqRl6aW99+TdT93gyOe1V5qR+RpOzW9UKwK0D
+ R67WTAKTW6tcefwvQmlkRVCAhNdwx8GCe+YhZUn8Pf1Hxz+MbMSoOGCQidfuKacH8cEbE2
+ ag8zPGDk86tfGu0NBZk7tNUcdomhykQ=
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
+ [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-534-yp-plt2SPBaYQhaj7ERxEg-1; Thu, 19 Sep 2024 12:29:47 -0400
-X-MC-Unique: yp-plt2SPBaYQhaj7ERxEg-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6c5135456cbso23354536d6.0
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 09:29:47 -0700 (PDT)
+ us-mta-595-G3WTYPLrOG62hHWkeQgfSA-1; Thu, 19 Sep 2024 12:30:46 -0400
+X-MC-Unique: G3WTYPLrOG62hHWkeQgfSA-1
+Received: by mail-oo1-f71.google.com with SMTP id
+ 006d021491bc7-5daa71823e0so1312393eaf.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 09:30:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726763387; x=1727368187;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=geVXq9sudmm8z2UhOnWjyW7zxA3OSFv3GjlrV/2IZWI=;
- b=t2HPwa8MypsifeqGqsJ+BJGnXtkaq5xv1yx03ZsmeySxV0EUZaZ337VzfXVihNJSGu
- AIoqi8OU1Xio71eYoEbN4KID1nubyAnpF/MMAV/gXgrCH2zN49Y0VYuJ4CaKqslE9tA5
- BWQxWmlZpP4IvlhP4URDqRi7lgggceMpQ7ZsFhIR9PuyVDmKaIT231CZN3ixiX2rbKez
- QLnGLz9S4yAbqyNeAgLjs0w0PbYP7hlH6GwBX6eFRpwx3ZmzPycjshGsRJVJ9MF2wkG3
- 0vFVSSjgQgbvLaK9foGXZ2pVzGF3sG6bnHDxrvLIUtfFhViUCZPGPeBXRXbiOPLUpjeA
- Y4tg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/alViJVwAf5pqVXodY41xR2huML9e9wzDCMuOqSBKhh0jz4u4aTg+y5Ke0ayo84ewMxlBOMNEjMr6@nongnu.org
-X-Gm-Message-State: AOJu0YwOnJnpMZZCvh1zzvDvtY2QB84SETMfgzIjxj87KpLg05Qet8Bx
- +wh2zqpYCtHrYR7FeKu916ENThetgDcXH/o8CIotG/NtB4diDnCl60AItzmez5sBjHY1BDx2QXf
- FlgYD6kstZKl7MKqgZXunt9/jFlOTBFA+KNZeJmSU7Pse0fVVEP6h
-X-Received: by 2002:a05:6214:2b87:b0:6c5:1fe5:f84c with SMTP id
- 6a1803df08f44-6c57df33cc1mr319223326d6.20.1726763387243; 
- Thu, 19 Sep 2024 09:29:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHslC3n537kqKG9H43uTGY1ETtOojftGdoX2WzE/TItJYFWhLfdI11/yNOIuxQWlE1xfRtH2A==
-X-Received: by 2002:a05:6214:2b87:b0:6c5:1fe5:f84c with SMTP id
- 6a1803df08f44-6c57df33cc1mr319223056d6.20.1726763386869; 
- Thu, 19 Sep 2024 09:29:46 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ d=1e100.net; s=20230601; t=1726763446; x=1727368246;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sJuqsr58LBB69SsuxZGkJ5RDmjH6Yqf8sAzR4L4/8EA=;
+ b=MyjsX07ENG44iTchnTNzJ5Ciwt8uhZEU8YZuA3Es8BVrNUXjxr0wNVsa2Hjoi0RmmX
+ RSnYh4CdASVttnZAPGvL1Bxmq8hYpET3QJK3OrDbaP9db/OOmTdtQ3xS1ZgDSR5s6djx
+ 6b6WC/T+LD69l8gCCSl0+loYvNLiP+Yj7yqg63NoVWDCJYoEr4lTMxbTR202hSUTzU4B
+ iB1EeajT6KLH+xpYUxsVm/hbezRrqeR4iManJpt7gzfIfuSPY408v5uLzU9oj0EcEEnQ
+ v8xlp/vT2o7pgVgh6huNQ8sUBi0XlshfpcUgacAhR5RmnHcWLuo1TJV6y/SgzRn6mNz/
+ KVFQ==
+X-Gm-Message-State: AOJu0Yz98T3ZjoSQVsisE1ptQljXnWQz9jy9QO09O0LeiAN69VBkRy4y
+ J6iIQW9jKxHZijB5Vhz8FIE7oHpeD0DEBWKGu/MtWi5z+FlADIZR0PEBmYPQcMkKgBIXpKmllYI
+ RJr/I9rgwZmBTOaeMspv8XYUIyfFY8I69CYjXSlUZ8f02nHU8k9mHMsFiLxxk6Q+sjkSOweWWoG
+ rRt1ghF+37OCpywr/MJjQdLY5vEqUkrdlAbg==
+X-Received: by 2002:a05:6359:5f8f:b0:1b1:a666:2bba with SMTP id
+ e5c5f4694b2df-1bc97624c38mr21343155d.24.1726763445815; 
+ Thu, 19 Sep 2024 09:30:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE7CQGWdYnHMDRxkvbJFhiJPRnTpU8rxO3LjpvXcmHxf8EpGeYypDylUo0Wjnu1+3LpQLti3A==
+X-Received: by 2002:a05:6359:5f8f:b0:1b1:a666:2bba with SMTP id
+ e5c5f4694b2df-1bc97624c38mr21339655d.24.1726763445373; 
+ Thu, 19 Sep 2024 09:30:45 -0700 (PDT)
+Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c75e4949basm8994116d6.67.2024.09.19.09.29.45
+ af79cd13be357-7acb0809a59sm89741585a.45.2024.09.19.09.30.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Sep 2024 09:29:45 -0700 (PDT)
-Date: Thu, 19 Sep 2024 12:29:43 -0400
+ Thu, 19 Sep 2024 09:30:44 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>
-Subject: Re: [PULL v2 0/6] Migration 20240917 patches
-Message-ID: <ZuxRd1vu3PXT_VpK@x1n>
-References: <20240918183151.6413-1-peterx@redhat.com>
- <CAFEAcA9MsybcOa9pGeU7EHuqvRqfBk4TSwYR_tkHF2Xbc19Yuw@mail.gmail.com>
- <ZuwSGJODsyj_bA4P@x1n>
- <CAFEAcA_9HKtTciFtrs9T9PG06GgYdoDoCASeBi7wO9CswA=1tw@mail.gmail.com>
- <87r09feo2f.fsf@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>,
+ peterx@redhat.com
+Subject: [PATCH] migration: Cleanup migrate_fd_cleanup() on accessing
+ to_dst_file
+Date: Thu, 19 Sep 2024 12:30:42 -0400
+Message-ID: <20240919163042.116767-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.45.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87r09feo2f.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -105,129 +99,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 19, 2024 at 11:05:28AM -0300, Fabiano Rosas wrote:
-> Peter Maydell <peter.maydell@linaro.org> writes:
-> 
-> > On Thu, 19 Sept 2024 at 12:59, Peter Xu <peterx@redhat.com> wrote:
-> >>
-> >> On Thu, Sep 19, 2024 at 10:08:25AM +0100, Peter Maydell wrote:
-> >> > Thanks for looking at the issues with the migration tests.
-> >> > This run went through first time without my needing to retry any
-> >> > jobs, so fingers crossed that we have at least improved the reliability.
-> >> > (I have a feeling there's still something funny with the k8s runners,
-> >> > but that's not migration-test specific, it's just that test tends
-> >> > to be the longest running and so most likely to be affected.)
-> >>
-> >> Kudos all go to Fabiano for debugging the hard problem.
-> >>
-> >> And yes, please let either of us know if it fails again, we can either keep
-> >> looking, or still can disable it when necessary (if it takes long to debug).
-> >
-> > On the subject of potential races in the migration code,
-> > there's a couple of outstanding Coverity issues that might
-> > be worth looking at. If they're false-positives let me know
-> > and I can reclassify them in Coverity.
-> >
-> > CID 1527402: In migrate_fd_cleanup() Coverity thinks there's
-> > a race because we read s->to_dst_file in the "if (s->to_dst_file)"
-> > check without holding the qemu_file_lock. This might be a
-> > false-positive because the race Coverity identifies happens
-> > if two threads both call migrate_fd_cleanup() at the same
-> > time, which is probably not permitted. (But OTOH taking a
-> > mutex gets you for free any necessary memory barriers...)
-> 
-> Yes, we shouldn't rely on mental gymnastics to prove that there's no
-> concurrent access.
-> 
-> @peterx, that RH bug you showed me could very well be caused by this
-> race, except that I don't see how fd_cleanup could race with
-> itself. Just having the lock would probably save us time even thinking
-> about it.
+The cleanup function can in many cases needs cleanup on its own.
 
-I can send a patch for this one.
+The major thing we want to do here is not referencing to_dst_file when
+without the file mutex.  When at it, touch things elsewhere too to make it
+look slightly better in general.
 
-> 
-> >
-> > CID 1527413: In postcopy_pause_incoming() we read
-> > mis->postcopy_qemufile_dst without holding the
-> > postcopy_prio_thread_mutex which we use to protect the write
-> > to that field, so Coverity thinks there's a race if two
-> > threads call this function at once.
-> 
-> At first sight, it seems like a real problem. We did a good pass on
-> these races on the source side, but the destination side hasn't been
-> investigated yet.
+One thing to mention is, migration_thread has its own "running" boolean, so
+it doesn't need to rely on to_dst_file being non-NULL.  Multifd has a
+dependency so it needs to be skipped if to_dst_file is not yet set; add a
+richer comment for such reason.
 
-I think it's probably safe and no real race could happen.  The rational
-being that during postcopy (aka, when ram load thread is running), this
-postcopy_qemufile_dst can only be modified by one thread, which is the ram
-listen thread itself.  The other consumer of it is the fast load thread,
-but that thread should only read postcopy_qemufile_dst, not update.
+Resolves: Coverity CID 1527402
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/migration.c | 32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
-IOW, here the "if (postcopy_qemufile_dst)" is not about saying "whether
-anyone else can released it", instead it's about "whether preempt mode is
-enabled, and whether we have the fast channel at all".
-
-When it's set, it means preempt is enabled, and it will never become NULL
-in that case.
-
-Here I _think_ we can replace it with a migrate_postcopy_preempt() safely,
-because AFAICT that must be created when with it enabled.  However the
-tricky part is the next line, which does the shutdown():
-
-        qemu_file_shutdown(mis->postcopy_qemufile_dst);
-
-That's unfortunately not replaceable, and that's so far the only way (and
-pretty traditional way... as you pointed out below..) that we can kick one
-qemufile read() out.  In this specific case, the fast thread normally holds
-the mutex meanwhile read() on this qemufile via one qemu_get_be64() of
-ram_load_postcopy(), then we kick it out with the shutdown().
-
-IOW both facts need to be true here for the fast load thread on: (1) mutex
-held, and (2) block at qemu_get_be64().  So there's no way we can take the
-mutex before the shutdown() or we deadlock.. it'll be easier if we have
-other way to kick the qemu_get_be64(), e.g. if it could be a generic poll()
-then we can have it poll on both the qemufile and another eventfd.  But
-we're stick with the qemufile API here..
-
-So in short: I don't have a good and simple solution for this one.. but I
-am 99.9999% sure it's safe.
-
-> 
-> Unfortunately, these QEMUFile races are not trivial to fix due to
-> several design pain points, such as:
-> 
-> - the QEMUFile pointer validity being sometimes used to imply no error
->   has happened before;
-> 
-> - the various shutdown() calls that serve both as a way to kick a read()
->   that's stuck, but also to cause some other part of the code to realise
->   there has been an error (due to the point above);
-> 
-> - the yank feature which has weird semantics regarding whether it
->   operates on an iochannel or qemufile;
-> 
-> - migrate_fd_cancel() that _can_ run concurrently with anything else;
-> 
-> - the need to ensure the other end of migration also reacts to
->   error/cancel on this side;
-
-Right.  Ultimately it's about relying on shutdown() for kicking qemufile
-ops out as of now..  that _may_ not always hold locks.  The other example
-is qmp_yank() on a migration channel, which invokes the same iochannel
-shutdown() via migration_yank_iochannel().
-
-> 
-> >
-> > (The only other migration Coverity issue is CID 1560071,
-> > which is the "better to use pstrcpy()" not-really-a-bug
-> > we discussed in another thread.)
-> >
-> > thanks
-> > -- PMM
-> 
-
+diff --git a/migration/migration.c b/migration/migration.c
+index ae2be31557..a10fae1aee 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1405,6 +1405,9 @@ void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
+ static void migrate_fd_cleanup(MigrationState *s)
+ {
+     MigrationEventType type;
++    QEMUFile *tmp = NULL;
++
++    trace_migrate_fd_cleanup();
+ 
+     g_free(s->hostname);
+     s->hostname = NULL;
+@@ -1415,26 +1418,29 @@ static void migrate_fd_cleanup(MigrationState *s)
+ 
+     close_return_path_on_source(s);
+ 
+-    if (s->to_dst_file) {
+-        QEMUFile *tmp;
+-
+-        trace_migrate_fd_cleanup();
++    if (s->migration_thread_running) {
+         bql_unlock();
+-        if (s->migration_thread_running) {
+-            qemu_thread_join(&s->thread);
+-            s->migration_thread_running = false;
+-        }
++        qemu_thread_join(&s->thread);
++        s->migration_thread_running = false;
+         bql_lock();
++    }
+ 
+-        multifd_send_shutdown();
+-        qemu_mutex_lock(&s->qemu_file_lock);
++    WITH_QEMU_LOCK_GUARD(&s->qemu_file_lock) {
++        /*
++         * Close the file handle without the lock to make sure the critical
++         * section won't block for long.
++         */
+         tmp = s->to_dst_file;
+         s->to_dst_file = NULL;
+-        qemu_mutex_unlock(&s->qemu_file_lock);
++    }
++
++    if (tmp) {
+         /*
+-         * Close the file handle without the lock to make sure the
+-         * critical section won't block for long.
++         * We only need to shutdown multifd if tmp!=NULL, because if
++         * tmp==NULL, it means the main channel isn't established, while
++         * multifd is only setup after that (in migration_thread()).
+          */
++        multifd_send_shutdown();
+         migration_ioc_unregister_yank_from_file(tmp);
+         qemu_fclose(tmp);
+     }
 -- 
-Peter Xu
+2.45.0
 
 
