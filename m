@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0348BCF3963
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 17:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A03E1CF3962
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 17:45:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srLD1-0004aR-TS; Thu, 19 Sep 2024 13:44:52 -0400
+	id 1srLDd-0005LB-HK; Thu, 19 Sep 2024 13:45:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srLCv-0004Yj-5s
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 13:44:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srLDN-00053V-Md
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 13:45:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srLCs-0000or-8Y
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 13:44:44 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srLDF-0000zb-Is
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 13:45:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726767879;
+ s=mimecast20190719; t=1726767904;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=eALNlN7F+UfR00b/ZAMr5648yq0kKRioLFmvjHC0aGk=;
- b=fmO+GDjNR4qWU2qoH6CADX7fNp1lBj8aAJhk0w5XutrTphCniU0OZPDCbMMhr4FixVwjpK
- aVH5f57pfP+nHFySdDaeNUSTMQOU5aiaE2kECUUpjOmAVBCCIIYp94CYMbgQxjFjMnnl5r
- PSVkn4GrJ18XfKu9bGpx4oyjDbhmvBw=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BhLYToOqL4tc/hlM0yff0jzIrH/qRLSSaBpoR4+ZBn8=;
+ b=hSDd+iIowZmE7FAw171d5tqw3i1aRpGdwQDTD/Rjr7uB7Ing8xWLICNoMrCd4S24RvW/v8
+ 5MPbxwRYdcied7iuX1K3cbkuuJhG8zaF/lZfvEIo87e1TBBwPICfKkpYQ5ZJf5WvUWbsTV
+ BNNYZ6g1s1C/mfbcpqWrKpn++ZLxBPo=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-0Usso1WhPIqTLUgd_go1fw-1; Thu, 19 Sep 2024 13:44:38 -0400
-X-MC-Unique: 0Usso1WhPIqTLUgd_go1fw-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6c35b3a220aso46150046d6.0
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 10:44:38 -0700 (PDT)
+ us-mta-680-qpZtF8t7MNKV05U7m5OspQ-1; Thu, 19 Sep 2024 13:45:03 -0400
+X-MC-Unique: qpZtF8t7MNKV05U7m5OspQ-1
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7a9a6251df5so261623085a.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 10:45:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726767878; x=1727372678;
+ d=1e100.net; s=20230601; t=1726767902; x=1727372702;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eALNlN7F+UfR00b/ZAMr5648yq0kKRioLFmvjHC0aGk=;
- b=bLRQKdDKtd32vGvgaNbPvhx0IIsBdt/6ZGy6k0sKA8n2zplJuZ7wh9ZoGBayQy9KEc
- N5Iudb0d/Ai72Vzhvfdn2x2xTFF5HoHCO8JFlN4Aib7XtcAFwh2ElOj1Mr7aBV3CkNjg
- 99VhaqIPvtv16/WjWMZKA4EoctZ3i2B+z076Vg6qkcKFPHssIh4BnWbpmhBeArK3jzsU
- r311tzfq1fQLCNAYSH44WBFllotBoUjbqPXE5/PlK0QckvV5y48Jmx1Lyk4i8utVgF88
- WY2YbdMdMPoG95XMkI9SRZJdb/ytvQm0NBxk4d2TiEXTs0qkPK5dEmZPDKK3PHa29l/T
- x7mg==
+ bh=BhLYToOqL4tc/hlM0yff0jzIrH/qRLSSaBpoR4+ZBn8=;
+ b=l8LZVrqYoHGT60T88uIM3lZLSdIJaONvbh46l9aKADxbnT8FRWNmb7CsqChgJEmmm7
+ 4VESpGbrp+KEiKUP4vdMfEY+KHPWTe8UwWD4IrnvTufiXmI/qb5mLFF7m7RUzFl7aYCg
+ QVs789EiKk2boWHG6hlBKTdPCo73xtCjDY5wXjdeccx51bB7MxnF3Acj0BlB8ncMHGC3
+ iMQe/8t/Loq61AUJqt7uzWCnEUt33dj5OHEHN8ZNjecqxJ3KjQ6IyhI6b0QS/oiWbyN+
+ SVA6cqNqlbXJClOg/4GjRZxkgoXO0bdoK1/uJtE7nz9HhOpe08Na4MU3OI90JkgjHBYk
+ pSrQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXmCridUQ+jwIPv2Ivf4gL0rVvwlZoW1PzLOt2lTs6d230f+40FamM3vtlP0bzNhXrPwqzLdD66++p+@nongnu.org
-X-Gm-Message-State: AOJu0YzwCUoRO33K5vkdxtxN3DQmgIlBIr7pap6HdnfsqT0CbSmBHWt0
- L6nvlHi3iSSBtKhH79DMDh71lOQDMuv42+mTQnQj0H91QVzLUeYA16V1bVNV4D5+UOzxZuRDHdE
- L4bn+HXeYpIjbnP2eN4r19NeBOnS1m8vn7Nt1Up/UUo+OEC7MsCv3
-X-Received: by 2002:a05:6214:4802:b0:6c5:5095:3f02 with SMTP id
- 6a1803df08f44-6c7bb99bc36mr8713556d6.1.1726767878150; 
- Thu, 19 Sep 2024 10:44:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG9b1b2rrpuYeOJaoWFxUtcdWk6KARMcUp4JzFu0ic5tWjy+hiIjeo4VA/D7DK2hcfX6TzTWA==
-X-Received: by 2002:a05:6214:4802:b0:6c5:5095:3f02 with SMTP id
- 6a1803df08f44-6c7bb99bc36mr8713186d6.1.1726767877739; 
- Thu, 19 Sep 2024 10:44:37 -0700 (PDT)
+ AJvYcCVKfrO5yAHZYBB9rrFbyFN1NqsssAvvrmLF+xaiWJg1kvUiIEJxlTfsdiafEaYiCNFOVAclOCsSJLkH@nongnu.org
+X-Gm-Message-State: AOJu0Yz+Au70ewhw9ltMvscmYNQI3NphOCgyj5b/emzpRi4Hexpx3U9X
+ sV710MRWklB8qaqOCmW5v49jzCtKkY7sqdTJ8Wwz55nx1LE7pBt6/AoWURs0+TVEG0TQSQCCxro
+ b0DYzKYTx7F0ZuSw7mFhsjKcRojEZPfdPLG/dWmBob0Uc6WclfdBY
+X-Received: by 2002:a05:620a:40c8:b0:7ac:b19c:2121 with SMTP id
+ af79cd13be357-7acb8225283mr35177385a.63.1726767902594; 
+ Thu, 19 Sep 2024 10:45:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHNghkcFiLttXfr1gwTsFgKOv2rkAKBhD/Shw8jm9fbStF+WsOtJX4bglwJn6qHGSUQr0MHPg==
+X-Received: by 2002:a05:620a:40c8:b0:7ac:b19c:2121 with SMTP id
+ af79cd13be357-7acb8225283mr35175285a.63.1726767902323; 
+ Thu, 19 Sep 2024 10:45:02 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c75e494ae3sm9594566d6.70.2024.09.19.10.44.35
+ af79cd13be357-7acb08ed0bdsm93423985a.130.2024.09.19.10.45.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Sep 2024 10:44:36 -0700 (PDT)
-Date: Thu, 19 Sep 2024 13:44:33 -0400
+ Thu, 19 Sep 2024 10:45:01 -0700 (PDT)
+Date: Thu, 19 Sep 2024 13:44:59 -0400
 From: Peter Xu <peterx@redhat.com>
 To: dave@treblig.org
 Cc: farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
  qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 6/7] migration/postcopy: Use uffd helpers
-Message-ID: <ZuxjAQJV4mjD2ENH@x1n>
+Subject: Re: [PATCH v2 7/7] util/userfaultfd: Remove unused uffd_poll_events
+Message-ID: <ZuxjG88xJ7VmiH6C@x1n>
 References: <20240919134626.166183-1-dave@treblig.org>
- <20240919134626.166183-7-dave@treblig.org>
+ <20240919134626.166183-8-dave@treblig.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240919134626.166183-7-dave@treblig.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20240919134626.166183-8-dave@treblig.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -102,15 +102,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 19, 2024 at 02:46:25PM +0100, dave@treblig.org wrote:
+On Thu, Sep 19, 2024 at 02:46:26PM +0100, dave@treblig.org wrote:
 > From: "Dr. David Alan Gilbert" <dave@treblig.org>
 > 
-> Use the uffd_copy_page, uffd_zero_page and uffd_wakeup helpers
-> rather than calling ioctl ourselves.
-> 
-> They return -errno on error, and print an error_report themselves.
-> I think this actually makes postcopy_place_page actually more
-> consistent in it's callers.
+> uffd_poll_events has been unused since it was added; it's also
+> just a wrapper around a plain old poll call, so doesn't add anything.
 > 
 > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 
