@@ -4,118 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC9C8CE8D46
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 04:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1983CE8D49
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 04:48:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr8qi-0001Xr-QH; Thu, 19 Sep 2024 00:33:00 -0400
+	id 1sr94M-00084v-EP; Thu, 19 Sep 2024 00:47:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sr8qg-0001W8-AO; Thu, 19 Sep 2024 00:32:58 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sr8qe-0005ib-GT; Thu, 19 Sep 2024 00:32:58 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48J06gWb032764;
- Thu, 19 Sep 2024 04:32:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=/
- /yJ0NNspX/NjhT+l80KXGos5UAotpfB9myc1LXLROk=; b=HDoLNTgG01OosqJKz
- 6DUtJdmgAWyktND2QrB0Ptwy8xND0s0NZJ1BCElEJFkdrF9x0/Qk5drOIqwo4REU
- aEwnyGXj2BzmV+B2ZKmYI3GMweRy2H1yj+bmgcr2i+BiJWZ77Rwrl1/y/ISwUGAR
- W0HDPb/L3qQveTquKHxHV6peweue8OME8t1RJlr1IYk8cfa9T6mTRhbDPJsK9Bhn
- DW3YHPSQbaRB8BU+OognT/EGLa7DYcrjClhmEY/stNUf4ZGyoMEay0iLWQ50Sssk
- wx4Llm0jj8WotdnTj5h/4lXQiO/Fg+Wa4seRBcHZiXAbJTglF8f2R44IZe7zc8P0
- D55sw==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41pht8sm1n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 19 Sep 2024 04:32:40 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48J4Wdbx026638;
- Thu, 19 Sep 2024 04:32:40 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41pht8sm1f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 19 Sep 2024 04:32:39 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48J4Ikdj030649;
- Thu, 19 Sep 2024 04:32:39 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41npanf2un-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 19 Sep 2024 04:32:39 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48J4WbB341943300
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 19 Sep 2024 04:32:37 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BE9715805E;
- Thu, 19 Sep 2024 04:32:37 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A953E58059;
- Thu, 19 Sep 2024 04:32:32 +0000 (GMT)
-Received: from [9.109.242.165] (unknown [9.109.242.165])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 19 Sep 2024 04:32:32 +0000 (GMT)
-Message-ID: <013649bd-4fa2-4a8f-a1a6-c466e14cb787@linux.ibm.com>
-Date: Thu, 19 Sep 2024 10:02:27 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 02/13] hw/ppc/spapr_pci: Do not create DT for disabled
- PCI device
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sr94K-0007xE-PY
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 00:47:04 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sr94E-00077V-80
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 00:47:04 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-7198cb6bb02so269225b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Sep 2024 21:46:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726721217; x=1727326017; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KJkmiG3PhPpYsgMJ7XkEBDNaPQyoDU9Xw+XJyRk65WE=;
+ b=rdY8ydl4cUE2I9J8VfSYfEQaWCcmyFPvQKqfgoHdeknoJrb4JZhEPs6yiJEQ+OnC1E
+ nnK5U+KAyKU8+Ju21Z1BE3YZ2kBLUjmzuHYIAVDT88X/tUIAubkeTFQrfArw0/QUym9g
+ WJTwicOnVExEg79EER511wLkK9J5M3kxpZ2t+zv+j+OINIwvn8Z2zjtyjIyHg8PH+0vy
+ Mlccob5vdo+EDtu06zl3GgkOUjvglqhmNtS/yBoARU77fgawsy69EvHLw1ZI97Xr7H10
+ 6CU0JDM2LzYNcdY7NXxJY7eVnAcTiFaGyATz94Xzsl+hu8q0wHNBwz3GRtvjVfyDMlfR
+ 98qA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726721217; x=1727326017;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KJkmiG3PhPpYsgMJ7XkEBDNaPQyoDU9Xw+XJyRk65WE=;
+ b=u6/3eFcNpAMuzml7+fUGqqU1wmTUOWjkWr+MHBRGzHrdLdkGv82isorz/Hxvz0HaZL
+ VXh622+Smw5YVmI+vE6WsirkNF2vBi2gCfFI88K2d/mjPc0cU32ern5m1PHKSLMxjnIc
+ 2DOsWgrAga/EYFhHlu/QlIkT4F5OpNuPK3cFaXdqtldke4DoQOsflk3hRPU8RkGrb76q
+ EsvPYqe6DJ1Q2w67Rm2QcUBYtE1ViwVt+81a44Bmv6raawl1JfKkDBBez9ApGQzSwWAQ
+ MHHM9sEXW6d3L6D4S8RohGMo7jfKJPEtPeoIHBSwJnZbsbiMQbXW8oTdsP5cplvlPh5G
+ Vb1Q==
+X-Gm-Message-State: AOJu0YyNp2Ep79jqMA021/KQOrTguAQj8FNsd5DFvilbHzICBgvKyTOs
+ mgdUnXZxJ20hdEH9XE8OmQ1coCXDKXPXZuIhFTlbV2jzRCM2b0qVVbMAV7L4N/K0RcjoEGVMvuu
+ zHrI9Gw==
+X-Google-Smtp-Source: AGHT+IFI8OaToJZDzbcw+Y/dxaLu3fYE/OJ9AAnzLLztALk/zezzILuHxXxJLn5xpki0Ylem6dbZgA==
+X-Received: by 2002:a05:6a00:2401:b0:718:dd53:70db with SMTP id
+ d2e1a72fcca58-7192606c438mr38378490b3a.11.1726721216563; 
+ Wed, 18 Sep 2024 21:46:56 -0700 (PDT)
+Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-71944bc279csm7478601b3a.188.2024.09.18.21.46.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Sep 2024 21:46:56 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Hyman Huang <yong.huang@smartx.com>, Halil Pasic <pasic@linux.ibm.com>,
+ kvm@vger.kernel.org, Bin Meng <bmeng.cn@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-s390x@nongnu.org,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Hanna Reitz <hreitz@redhat.com>, Klaus Jensen <its@irrelevant.dk>,
+ Corey Minyard <minyard@acm.org>, Laurent Vivier <laurent@vivier.eu>,
+ WANG Xuerui <git@xen0n.name>, Thomas Huth <thuth@redhat.com>,
+ Rob Herring <robh@kernel.org>, Eduardo Habkost <eduardo@habkost.net>,
+ Nicholas Piggin <npiggin@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Ani Sinha <anisinha@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, Fam Zheng <fam@euphon.net>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Keith Busch <kbusch@kernel.org>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-riscv@nongnu.org,
+ Igor Mammedov <imammedo@redhat.com>,
  Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20240913-reuse-v16-0-d016b4b4f616@daynix.com>
- <20240913-reuse-v16-2-d016b4b4f616@daynix.com>
- <b143662e-67a1-4edf-8bfa-cf43039989a8@redhat.com>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <b143662e-67a1-4edf-8bfa-cf43039989a8@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Jason Wang <jasowang@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ "Richard W.M. Jones" <rjones@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-arm@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-block@nongnu.org,
+ Joel Stanley <joel@jms.id.au>, Weiwei Li <liwei1518@gmail.com>,
+ Kevin Wolf <kwolf@redhat.com>, Helge Deller <deller@gmx.de>,
+ Yanan Wang <wangyanan55@huawei.com>, Michael Rolnik <mrolnik@gmail.com>,
+ Jesper Devantier <foss@defmacro.it>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 05/34] qobject: replace assert(0) with
+ g_assert_not_reached()
+Date: Wed, 18 Sep 2024 21:46:12 -0700
+Message-Id: <20240919044641.386068-6-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20240919044641.386068-1-pierrick.bouvier@linaro.org>
+References: <20240919044641.386068-1-pierrick.bouvier@linaro.org>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: sFSxDv2kaXYYB2Ii4jyFCCd9Z0KwAPRb
-X-Proofpoint-ORIG-GUID: gYjhne8AV71192j6B1ocQq16ZtcseQ7l
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-19_02,2024-09-18_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- phishscore=0 bulkscore=0 suspectscore=0 priorityscore=1501 adultscore=0
- mlxlogscore=999 mlxscore=0 clxscore=1011 malwarescore=0 spamscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409190025
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,57 +138,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This patch is part of a series that moves towards a consistent use of
+g_assert_not_reached() rather than an ad hoc mix of different
+assertion mechanisms.
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ qobject/qlit.c | 2 +-
+ qobject/qnum.c | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-On 9/18/24 19:57, Cédric Le Goater wrote:
-> Hello,
-> 
-> Adding :
-> 
->    Harsh for QEMU/PPC pseries machine,
->    Shivaprasad for KVM/PPC VFIO and IOMMU support.
-> 
-> Could you please give us your feedback on these changes ?
-> 
-> Thanks,
-> 
-> C.
-> 
-> 
-> 
->   On 9/13/24 05:44, Akihiko Odaki wrote:
->> Disabled means it is a disabled SR-IOV VF or it is powered off, and
->> hidden from the guest.
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   hw/ppc/spapr_pci.c | 4 ++++
->>   1 file changed, 4 insertions(+)
->>
->> diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
->> index 7cf9904c3546..f63182a03c41 100644
->> --- a/hw/ppc/spapr_pci.c
->> +++ b/hw/ppc/spapr_pci.c
->> @@ -1296,6 +1296,10 @@ static void spapr_dt_pci_device_cb(PCIBus *bus, 
->> PCIDevice *pdev,
->>           return;
->>       }
->> +    if (!pdev->enabled) {
->> +        return;
->> +    }
->> +
+diff --git a/qobject/qlit.c b/qobject/qlit.c
+index be8332136c2..a62865b6423 100644
+--- a/qobject/qlit.c
++++ b/qobject/qlit.c
+@@ -118,7 +118,7 @@ QObject *qobject_from_qlit(const QLitObject *qlit)
+     case QTYPE_QBOOL:
+         return QOBJECT(qbool_from_bool(qlit->value.qbool));
+     default:
+-        assert(0);
++        g_assert_not_reached();
+     }
+ 
+     return NULL;
+diff --git a/qobject/qnum.c b/qobject/qnum.c
+index 2bbeaedc7b4..2138b563a9f 100644
+--- a/qobject/qnum.c
++++ b/qobject/qnum.c
+@@ -85,7 +85,7 @@ bool qnum_get_try_int(const QNum *qn, int64_t *val)
+         return false;
+     }
+ 
+-    assert(0);
++    g_assert_not_reached();
+     return false;
+ }
+ 
+@@ -123,7 +123,7 @@ bool qnum_get_try_uint(const QNum *qn, uint64_t *val)
+         return false;
+     }
+ 
+-    assert(0);
++    g_assert_not_reached();
+     return false;
+ }
+ 
+@@ -156,7 +156,7 @@ double qnum_get_double(QNum *qn)
+         return qn->u.dbl;
+     }
+ 
+-    assert(0);
++    g_assert_not_reached();
+     return 0.0;
+ }
+ 
+@@ -172,7 +172,7 @@ char *qnum_to_string(QNum *qn)
+         return g_strdup_printf("%.17g", qn->u.dbl);
+     }
+ 
+-    assert(0);
++    g_assert_not_reached();
+     return NULL;
+ }
+ 
+-- 
+2.39.5
 
-While I will let Shivaprasad comment from IO perspective, I would like 
-to suggest merging this condition with the error condition check 
-preceding it.
-
-regards,
-Harsh
-
->>       err = spapr_dt_pci_device(p->sphb, pdev, p->fdt, p->offset);
->>       if (err < 0) {
->>           p->err = err;
->>
-> 
-> 
 
