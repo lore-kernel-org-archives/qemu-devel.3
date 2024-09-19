@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89E20CDD566
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 01:42:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C060ACDD569
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 01:42:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sr69N-00064U-47; Wed, 18 Sep 2024 21:40:05 -0400
+	id 1sr69m-0007ct-6g; Wed, 18 Sep 2024 21:40:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sr69K-0005x4-4H; Wed, 18 Sep 2024 21:40:02 -0400
+ id 1sr69k-0007W2-IV; Wed, 18 Sep 2024 21:40:28 -0400
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sr69I-0004sM-3g; Wed, 18 Sep 2024 21:40:01 -0400
+ id 1sr69i-0004sM-MC; Wed, 18 Sep 2024 21:40:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1726710000; x=1758246000;
+ t=1726710027; x=1758246027;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=GTUQ019BfwQpkrJFj+VNn+W9sPDXxvfUxmbaNbsBlZw=;
- b=C0jJCw9WKbkHzOASivXqT+4eZm5sqekIhSPUVBI5Y+K2BfJ+Cb3yCJVl
- RWF3zxV+segrfSa9Aqf2ahQ6K9+dmgMlkYDsqazdSAKZOEcjlKJ6Es7tE
- M21BudHHUIZpmfmwRJ0ICFTG/TmxcXtJO6cVwOQnFXRJzOVm+7pxXCF6M
- p8Pg0QqUgYjCi1h0Zr6S3vwCKePGe8DX7ZFYaTRnzVw51lOrgVmCbr6ds
- 77L4hEwBELzU/OmwRyZJj8j27tiQLgL7T5NHvqg3/7ezBLpQ8qg6yQN5X
- VKDFEe+VRuyF913azQXoUEmuILa3soB4Ecmo0WVpEFUnMLciam/VS2g2i A==;
-X-CSE-ConnectionGUID: 3FakcqtQQ+Ou7Jw6wTgq0w==
-X-CSE-MsgGUID: K/yh6/ktRDK8Px3mTrwsAQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25797823"
-X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25797823"
+ bh=+kEYgTEqzxM7Ze52eMLk4clqkl8mXjIJEkgs/jlv98A=;
+ b=aoTvQuqzlGB+gLshVG9VdheVjivcHitEXumqlF2YakQH72/y8WniVm2t
+ mDci4wZSHyi2IVtF7ds7jHvuJDh4syLTAkNF9Y2YKJdMFp6z2mNmmWl6B
+ 0QNoCHS7acnQ14trSsqXFSirzjPTETIUgtjKpQvEVI7W8OeuYGozWbr8t
+ MJmDS/dY4da860Q6jHGUbpW6SlK/k6AtFwxoYZJVRgKcxpsbFaNBuFXQg
+ KoyPGDb9lazO5+P4J4DBLwnl5o/cID5wyhzOtLj0SvQjJZHApJLKSiO29
+ jlZ2COEw3Xwvbne3ruZf8ZNJIOTCdFYfEma2zsjfLq4WsAW55vEHzoVV9 A==;
+X-CSE-ConnectionGUID: uf15sLY/SgSd4z5suOI6MQ==
+X-CSE-MsgGUID: BEWXfLGrSmyi9WG+16ilwA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11199"; a="25797879"
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="25797879"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Sep 2024 18:39:58 -0700
-X-CSE-ConnectionGUID: I3knkL/jSee7aLywlolMUQ==
-X-CSE-MsgGUID: yWAY1M6kTXWufBZ8mK+FLw==
+ 18 Sep 2024 18:40:25 -0700
+X-CSE-ConnectionGUID: /WO5kkQtTAmAANN0ooMDVw==
+X-CSE-MsgGUID: Z1ZnLU9xQpuscAGPUNlugQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="70058495"
+X-IronPort-AV: E=Sophos;i="6.10,240,1719903600"; d="scan'208";a="70058743"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa006.jf.intel.com with ESMTP; 18 Sep 2024 18:39:52 -0700
+ by orviesa006.jf.intel.com with ESMTP; 18 Sep 2024 18:40:19 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -66,14 +66,14 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-ppc@nongnu.org,
  qemu-arm@nongnu.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC v2 02/15] qdev: Add the interface to reparent the device
-Date: Thu, 19 Sep 2024 09:55:20 +0800
-Message-Id: <20240919015533.766754-3-zhao1.liu@intel.com>
+Subject: [RFC v2 06/15] hw/core: Create CPU slot in MachineState to manage CPU
+ topology tree
+Date: Thu, 19 Sep 2024 09:55:24 +0800
+Message-Id: <20240919015533.766754-7-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240919015533.766754-1-zhao1.liu@intel.com>
 References: <20240919015533.766754-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
@@ -100,203 +100,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-User created devices may need to adjust their default object parent or
-parent bus.
+With CPU slot support, the machine can manage the CPU topology tree. To
+enable hot-plug support for topology devices, use the machine as the
+hotplug handler for the CPU bus.
 
-User created devices are QOM parented to one of the peripheral
-containers ("/peripheral" or "/peripheral-anon") in qdev_set_id() by
-default. Sometimes, it is necessary to reparent a device to another
-object to express the more accurate child<> relationship, as in the
-cases of the PnvPHBRootPort device or subsequent topology devices.
-
-The current pnv_phb_user_get_parent() implements such reparenting logic.
-To allow it to be used by topology devices as well, transform it into a
-generic qdev interface with custom device id ("default_id" parameter).
-
-And add the code to handle the failure of object_property_add_child().
+Additionally, since not all machines support the topology tree from the
+start, add a "topo_tree_supported" flag to indicate whether a machine
+supports the topology tree. And create the CPU slot as the topology root
+only for machines that support it.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/core/qdev.c         | 52 +++++++++++++++++++++++++++++++++++++
- hw/pci-host/pnv_phb.c  | 59 +++++++++---------------------------------
- include/hw/qdev-core.h |  3 +++
- 3 files changed, 67 insertions(+), 47 deletions(-)
+ hw/core/machine.c         |  2 ++
+ hw/cpu/cpu-slot.c         | 34 ++++++++++++++++++++++++++++++++++
+ include/hw/boards.h       |  9 +++++++++
+ include/hw/cpu/cpu-slot.h |  2 ++
+ system/vl.c               |  4 ++++
+ 5 files changed, 51 insertions(+)
 
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index 4429856eaddd..ff073cbff56d 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -143,6 +143,58 @@ bool qdev_set_parent_bus(DeviceState *dev, BusState *bus, Error **errp)
-     return true;
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 518beb9f883a..b6258d95b1e8 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1239,6 +1239,8 @@ static void machine_initfn(Object *obj)
+         ms->smp_cache.props[i].topology = CPU_TOPOLOGY_LEVEL_DEFAULT;
+     }
+ 
++    ms->topo = NULL;
++
+     machine_copy_boot_config(ms, &(BootConfiguration){ 0 });
  }
  
-+/*
-+ * Set the QOM parent and parent bus of an object child. If the device
-+ * state associated with the child has an id, use it as QOM id.
-+ * Otherwise use default_id as QOM id.
-+ *
-+ * This helper does both operations at the same time because setting
-+ * a new QOM child will erase the bus parent of the device. This happens
-+ * because object_unparent() will call object_property_del_child(),
-+ * which in turn calls the property release callback prop->release if
-+ * it's defined. In our case this callback is set to
-+ * object_finalize_child_property(), which was assigned during the
-+ * first object_property_add_child() call. This callback will end up
-+ * calling device_unparent(), and this function removes the device
-+ * from its parent bus.
-+ *
-+ * The QOM and parent bus to be set aren't necessarily related, so
-+ * let's receive both as arguments.
-+ */
-+bool qdev_set_parent(DeviceState *dev, BusState *bus, Object *parent,
-+                     char *default_id, Error **errp)
+diff --git a/hw/cpu/cpu-slot.c b/hw/cpu/cpu-slot.c
+index 66ef8d9faa97..4dbd5b7b7e00 100644
+--- a/hw/cpu/cpu-slot.c
++++ b/hw/cpu/cpu-slot.c
+@@ -138,3 +138,37 @@ static void cpu_slot_register_types(void)
+ }
+ 
+ type_init(cpu_slot_register_types)
++
++void machine_plug_cpu_slot(MachineState *ms)
 +{
-+    Object *child = OBJECT(dev);
-+    ObjectProperty *prop;
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
++    CPUSlot *slot;
 +
-+    if (!dev->id && !default_id) {
-+        error_setg(errp, "unknown device id");
-+        return false;
++    slot = CPU_SLOT(qdev_new(TYPE_CPU_SLOT));
++    set_bit(CPU_TOPOLOGY_LEVEL_THREAD, slot->supported_levels);
++    set_bit(CPU_TOPOLOGY_LEVEL_CORE, slot->supported_levels);
++    set_bit(CPU_TOPOLOGY_LEVEL_SOCKET, slot->supported_levels);
++
++    /*
++     * Now just consider the levels that x86 supports.
++     * TODO: Supports other levels.
++     */
++    if (mc->smp_props.modules_supported) {
++        set_bit(CPU_TOPOLOGY_LEVEL_MODULE, slot->supported_levels);
 +    }
 +
-+    if (child->parent == parent) {
-+        return true;
++    if (mc->smp_props.dies_supported) {
++        set_bit(CPU_TOPOLOGY_LEVEL_DIE, slot->supported_levels);
 +    }
 +
-+    object_ref(child);
-+    object_unparent(child);
-+    prop =  object_property_add_child(parent,
-+                                      dev->id ? dev->id : default_id,
-+                                      child);
-+    object_unref(child);
++    ms->topo = slot;
++    object_property_add_child(container_get(OBJECT(ms), "/peripheral"),
++                              "cpu-slot", OBJECT(ms->topo));
++    DEVICE(ms->topo)->id = g_strdup_printf("%s", "cpu-slot");
 +
-+    if (!prop) {
-+        error_setg(errp, "couldn't change parent");
-+        return false;
++    sysbus_realize(SYS_BUS_DEVICE(slot), &error_abort);
++
++    if (mc->get_hotplug_handler) {
++        qbus_set_hotplug_handler(BUS(&slot->bus), OBJECT(ms));
 +    }
-+
-+    if (!qdev_set_parent_bus(dev, bus, errp)) {
-+        return false;
-+    }
-+
-+    return true;
 +}
-+
- DeviceState *qdev_new(const char *name)
- {
-     ObjectClass *oc = object_class_by_name(name);
-diff --git a/hw/pci-host/pnv_phb.c b/hw/pci-host/pnv_phb.c
-index d4c118d44362..a26e7b7aec5c 100644
---- a/hw/pci-host/pnv_phb.c
-+++ b/hw/pci-host/pnv_phb.c
-@@ -19,49 +19,6 @@
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 2dd8decf640a..eeb4e7e2ce9f 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -10,6 +10,7 @@
+ #include "qemu/module.h"
  #include "qom/object.h"
- #include "sysemu/sysemu.h"
+ #include "hw/core/cpu.h"
++#include "hw/cpu/cpu-slot.h"
  
--
--/*
-- * Set the QOM parent and parent bus of an object child. If the device
-- * state associated with the child has an id, use it as QOM id.
-- * Otherwise use object_typename[index] as QOM id.
-- *
-- * This helper does both operations at the same time because setting
-- * a new QOM child will erase the bus parent of the device. This happens
-- * because object_unparent() will call object_property_del_child(),
-- * which in turn calls the property release callback prop->release if
-- * it's defined. In our case this callback is set to
-- * object_finalize_child_property(), which was assigned during the
-- * first object_property_add_child() call. This callback will end up
-- * calling device_unparent(), and this function removes the device
-- * from its parent bus.
-- *
-- * The QOM and parent bus to be set aren´t necessarily related, so
-- * let's receive both as arguments.
-- */
--static bool pnv_parent_fixup(Object *parent, BusState *parent_bus,
--                             Object *child, int index,
--                             Error **errp)
--{
--    g_autofree char *default_id =
--        g_strdup_printf("%s[%d]", object_get_typename(child), index);
--    const char *dev_id = DEVICE(child)->id;
--
--    if (child->parent == parent) {
--        return true;
--    }
--
--    object_ref(child);
--    object_unparent(child);
--    object_property_add_child(parent, dev_id ? dev_id : default_id, child);
--    object_unref(child);
--
--    if (!qdev_set_parent_bus(DEVICE(child), parent_bus, errp)) {
--        return false;
--    }
--
--    return true;
--}
--
- static Object *pnv_phb_user_get_parent(PnvChip *chip, PnvPHB *phb, Error **errp)
- {
-     if (phb->version == 3) {
-@@ -82,6 +39,7 @@ static bool pnv_phb_user_device_init(PnvPHB *phb, Error **errp)
-     PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
-     PnvChip *chip = pnv_get_chip(pnv, phb->chip_id);
-     Object *parent = NULL;
-+    g_autofree char *default_id = NULL;
+ #define TYPE_MACHINE_SUFFIX "-machine"
  
-     if (!chip) {
-         error_setg(errp, "invalid chip id: %d", phb->chip_id);
-@@ -98,8 +56,11 @@ static bool pnv_phb_user_device_init(PnvPHB *phb, Error **errp)
-      * correctly the device tree. pnv_xscom_dt() needs every
-      * PHB to be a child of the chip to build the DT correctly.
-      */
--    if (!pnv_parent_fixup(parent, qdev_get_parent_bus(DEVICE(chip)),
--                          OBJECT(phb), phb->phb_id, errp)) {
-+    default_id = g_strdup_printf("%s[%d]",
-+                                 object_get_typename(OBJECT(phb)),
-+                                 phb->phb_id);
-+    if (!qdev_set_parent(DEVICE(phb), qdev_get_parent_bus(DEVICE(chip)),
-+                         parent, default_id, errp)) {
-         return false;
-     }
+@@ -152,6 +153,8 @@ typedef struct {
+  * @modules_supported - whether modules are supported by the machine
+  * @cache_supported - whether cache topologies (l1d, l1i, l2 and l3) are
+  *                    supported by the machine
++ * @topo_tree_supported - whether QOM topology tree is supported by the
++ *                        machine
+  */
+ typedef struct {
+     bool prefer_sockets;
+@@ -162,6 +165,7 @@ typedef struct {
+     bool drawers_supported;
+     bool modules_supported;
+     bool cache_supported[CACHE_LEVEL_AND_TYPE__MAX];
++    bool topo_tree_supported;
+ } SMPCompatProps;
  
-@@ -246,6 +207,7 @@ static void pnv_phb_root_port_realize(DeviceState *dev, Error **errp)
-     uint16_t device_id = 0;
-     Error *local_err = NULL;
-     int chip_id, index;
-+    g_autofree char *default_id = NULL;
+ /**
+@@ -431,6 +435,11 @@ struct MachineState {
+     CPUArchIdList *possible_cpus;
+     CpuTopology smp;
+     SmpCache smp_cache;
++    /*
++     * TODO: get rid of "smp" and merge it into "topo" when all arches
++     * support QOM topology.
++     */
++    CPUSlot *topo;
+     struct NVDIMMState *nvdimms_state;
+     struct NumaState *numa_state;
+ };
+diff --git a/include/hw/cpu/cpu-slot.h b/include/hw/cpu/cpu-slot.h
+index 9d02d5de578e..24e122013bf7 100644
+--- a/include/hw/cpu/cpu-slot.h
++++ b/include/hw/cpu/cpu-slot.h
+@@ -69,4 +69,6 @@ struct CPUSlot {
+     DeviceListener listener;
+ };
  
-     /*
-      * 'index' will be used both as a PCIE slot value and to calculate
-@@ -273,8 +235,11 @@ static void pnv_phb_root_port_realize(DeviceState *dev, Error **errp)
-      * parent bus. Change the QOM parent to be the same as the
-      * parent bus it's already assigned to.
-      */
--    if (!pnv_parent_fixup(OBJECT(bus), BUS(bus), OBJECT(dev),
--                          index, errp)) {
-+    default_id = g_strdup_printf("%s[%d]",
-+                                 object_get_typename(OBJECT(dev)),
-+                                 index);
-+    if (!qdev_set_parent(dev, BUS(bus), OBJECT(bus),
-+                         default_id, errp)) {
-         return;
-     }
- 
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index 85c7d462dfba..7cbc5fb97298 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -1011,6 +1011,9 @@ char *qdev_get_human_name(DeviceState *dev);
- /* FIXME: make this a link<> */
- bool qdev_set_parent_bus(DeviceState *dev, BusState *bus, Error **errp);
- 
-+bool qdev_set_parent(DeviceState *dev, BusState *bus, Object *parent,
-+                     char *default_id, Error **errp);
++void machine_plug_cpu_slot(MachineState *ms);
 +
- extern bool qdev_hot_removed;
+ #endif /* CPU_SLOT_H */
+diff --git a/system/vl.c b/system/vl.c
+index fe547ca47c27..193e7049ccbe 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2151,6 +2151,10 @@ static void qemu_create_machine(QDict *qdict)
+                                           false, &error_abort);
+         qobject_unref(default_opts);
+     }
++
++    if (machine_class->smp_props.topo_tree_supported) {
++        machine_plug_cpu_slot(current_machine);
++    }
+ }
  
- char *qdev_get_dev_path(DeviceState *dev);
+ static int global_init_func(void *opaque, QemuOpts *opts, Error **errp)
 -- 
 2.34.1
 
