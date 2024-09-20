@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12AE5CF9C41
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 15:12:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A747ECF9C4B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 15:12:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srfHq-0002aF-Os; Fri, 20 Sep 2024 11:11:10 -0400
+	id 1srfHu-0002nJ-IJ; Fri, 20 Sep 2024 11:11:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
- id 1srfHf-00026v-Tc; Fri, 20 Sep 2024 11:11:00 -0400
+ id 1srfHl-0002Ho-Kb; Fri, 20 Sep 2024 11:11:05 -0400
 Received: from mout.kundenserver.de ([217.72.192.75])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
- id 1srfHc-0003nI-8P; Fri, 20 Sep 2024 11:10:59 -0400
+ id 1srfHg-0003nw-2L; Fri, 20 Sep 2024 11:11:04 -0400
 Received: from quad ([82.64.211.94]) by mrelayeu.kundenserver.de (mreue109
- [212.227.15.183]) with ESMTPSA (Nemesis) id 1M9npT-1sug5T0n1J-005aMt; Fri, 20
- Sep 2024 17:10:38 +0200
+ [212.227.15.183]) with ESMTPSA (Nemesis) id 1N7iKq-1rwy9X2rg2-01514m; Fri, 20
+ Sep 2024 17:10:37 +0200
 From: Laurent Vivier <laurent@vivier.eu>
 To: qemu-devel@nongnu.org
 Cc: Brian Cain <bcain@quicinc.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
@@ -28,30 +28,30 @@ Cc: Brian Cain <bcain@quicinc.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Alistair Francis <alistair.francis@wdc.com>, qemu-riscv@nongnu.org,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Bin Meng <bmeng.cn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH 4/6] linux-user,hexagon: move to syscalltbl file
-Date: Fri, 20 Sep 2024 17:10:32 +0200
-Message-ID: <20240920151034.859533-5-laurent@vivier.eu>
+Subject: [PATCH 3/6] linux-user,riscv: move to syscalltbl file
+Date: Fri, 20 Sep 2024 17:10:31 +0200
+Message-ID: <20240920151034.859533-4-laurent@vivier.eu>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240920151034.859533-1-laurent@vivier.eu>
 References: <20240920151034.859533-1-laurent@vivier.eu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:OiJFNgmJf9JYW/7j6LD4SUMPblhGxvculbyGbQjXOdUeQYkoPCR
- wozOBnloBjwZK3ipyODaT9d+74tySySjQg7orPBvSd7MIQSOLoCECoo0bd2XVdL/qEouAG+
- pWLwuay5pfbN+lOjXj280R8yovGhj4svov9rzsYRE3PyUfIcRrT4Ew+wOoFUhYJFG+wlsSw
- gQZQG9k5/gIASEhxWlm6A==
-UI-OutboundReport: notjunk:1;M01:P0:UBYmkT8Z4Mk=;L79a8GZrgqFinqQ04mV+RfwVp6X
- eLBi/HwiP0vfWuOMeNv7QkWqESxLgj12YjPA3yXaT5GyAQps2lDfv0wh7HxlgFMN8NHQTYDEN
- ySfpjZtklGfqJ42lwGzNXJGb19urn0BbqzqI8TmIpHu8N20ERvTSpnD6sJWrAEXqgY+8AHXsD
- NC2KyNTnQ3SmnwCMF4DCJ0igN+J3fs8IIdTaklOj7nz6tV7ITUXwk5zh206cds4BglYK1ycX0
- UbUy2nzk7f7C+W63hE1y/j9Jj2n55faHBju+TwlmDviLpPxqeT4ds3sGotwS5Y5CTYb4YfJ3k
- NoJwzijrGLZ1O/bbx8+YFiOQJZW2HWASit78yLz1nUlZ5cYl714Zfrmerl7c5oPYROW4KNSIW
- GyBoZNw252SH2v5X4vQ6s7s6Z9Nz4xtwm9KJYYCrXlkIIJFoLab83D9oB8Gz3o5uRtPKppXgr
- KsIBf35ye45oPWrrp+bNkuAaMIYnZgDG4l5CSMrwWQFhFrULmhQXWSkfdwG0Lr/qFEymJtFZv
- PezipOMT0HeZW6dCk2E8jvP3Rr6FJ5YeCpWl9kWRUXhXOou8IIsSVgMQIoMcl3pa09TYmw7U2
- yNh1TdZfKjiJ56hjUOBo9vuqbFA1XDGRFvl9yt0CBs/dr7ZqatbkFQG0Cv6yrN4xkRvmG0Q1l
- X2uVsacI91VFsMRnGkehkSo9+ylg9A95yLcd16v2jVndZyuiQz4ji8Y20xSNfpnqt5xHgX6GA
- 58FC/3tAbLRBwHyNzOhk5drW+OJBxr9tg==
+X-Provags-ID: V03:K1:Aaeiu90qW+EuQmGGoP2vi1ziKHBzq9unBeROqxkq480FWH8+2LY
+ cs0IQUV1Y9MDZOEESsL5z09LoesKu8VmN1efiSQ41Jqy0+3mdDnkgmrlOnPpDzsphtkuiG/
+ wGWW2yKPbiLO/nX9nz8JJ8UHM2u++ola4jYZvgREQ+KDHM/FN1nZc6NRC3C6jvN0p05VRFD
+ /uRU56ZgECE4u2vVCTMSA==
+UI-OutboundReport: notjunk:1;M01:P0:2ZlScIq7I2k=;taihnGN3gymaff2hPL64UUqZx6U
+ XfDt94oaCfroi9S6Gs4c09RQ+C+Z3bQqKtO4WkpYDpjKhRi/bkesZyusp4sSlVbWi1ShoqGbo
+ EZhpORrUyKnXBO4dDVaTDCalFPAHgqksRwjSu5EEyLjnA+9FDHv4vtHsYs50SgyrB/4ZFlTQL
+ x0ZlddU9otMG6tkKwMBJHoZuc4JfuP1ENvK81GWF6lrYqfwquV0eZA4bejyVSUajq2KgyFK8C
+ 9WjTiYv/Faq721zk01qvlh/+2P1bI/uVz+vAOo9JWxVNZZv1A6wZFJ+XFCR5iUOJ3Wb9pJk6c
+ 6pHuoIjYHLUakn21Xit1JVBJe0zdENGTt29EgPVxeTGlDtka9YLoDwJNLvLFIvMX+mRIzEVU9
+ QR47/CHSzY2La8qoDKzj4pqigJ8nZ5akJ7maTEg3XS6282bMhzGpTefhIDokI4uphwPRKUKEk
+ 59mKmEiVS4F+ozhIqr/5ctYeYf0aJQ9kvAkdkNBUw6wuIYWnRGNLqsXUx0M0YBpzXMh+YIF8z
+ lPYS6e1k9uZ7mLJobV17tNhkMNTDRZnD06wgO3VqGb4l2ZbXtaWXOvFyCS3aNOwCzQoLvzK2Y
+ X2Tq0GHxch8/MZpgByuhsAAoYys5nOUw3oKUhs4zUnvV0ofz8eRT0506PdQliyRBPca/LC+sg
+ 0VBQwxqBQDQNaVdTYumquyNQZ0snLDqyO8ApJ8KgtZuaskr6qLTeEgSshje2OLd8PNcp9gmfO
+ SQ6FAgFP8Y7rvRhBkFrcG/r/8lyWiErSA==
 Received-SPF: pass client-ip=217.72.192.75; envelope-from=laurent@vivier.eu;
  helo=mout.kundenserver.de
 X-Spam_score_int: -18
@@ -75,8 +75,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since kernel v6.11 hexagon has moved from syscall_nr.h file
-to syscall.tbl (36d69c29759e ("hexagon: use new system call table"))
+Since kernel v6.11 riscv has moved from syscall_nr.h file
+to syscall.tbl (3db80c999deb ("riscv: convert to generic syscall
+table"))
 
 Update linux-user scripts to be able to retrieve syscall numbers
 from linux syscall.tbl instead of syscall_nr.h.
@@ -85,46 +86,78 @@ scripts/update-syscalltbl.sh
 
 Signed-off-by: Laurent Vivier <laurent@vivier.eu>
 ---
- configs/targets/hexagon-linux-user.mak |   2 +
- linux-user/hexagon/meson.build         |   6 +
- linux-user/hexagon/syscall.tbl         | 405 +++++++++++++++++++++++++
- linux-user/hexagon/syscall_nr.h        | 348 ---------------------
- linux-user/hexagon/syscallhdr.sh       |  28 ++
- linux-user/meson.build                 |   1 +
- scripts/gensyscalls.sh                 |   1 -
+ configs/targets/riscv32-linux-user.mak |   3 +
+ configs/targets/riscv64-linux-user.mak |   3 +
+ linux-user/riscv/cpu_loop.c            |   2 +-
+ linux-user/riscv/meson.build           |   6 +
+ linux-user/riscv/syscall.tbl           | 405 +++++++++++++++++++++++++
+ linux-user/riscv/syscall32_nr.h        | 325 --------------------
+ linux-user/riscv/syscall64_nr.h        | 331 --------------------
+ linux-user/riscv/syscall_nr.h          |  15 -
+ linux-user/riscv/syscallhdr.sh         |  28 ++
+ scripts/gensyscalls.sh                 |   2 -
  scripts/update-syscalltbl.sh           |   1 +
- 8 files changed, 443 insertions(+), 349 deletions(-)
- create mode 100644 linux-user/hexagon/meson.build
- create mode 100644 linux-user/hexagon/syscall.tbl
- delete mode 100644 linux-user/hexagon/syscall_nr.h
- create mode 100644 linux-user/hexagon/syscallhdr.sh
+ 11 files changed, 447 insertions(+), 674 deletions(-)
+ create mode 100644 linux-user/riscv/syscall.tbl
+ delete mode 100644 linux-user/riscv/syscall32_nr.h
+ delete mode 100644 linux-user/riscv/syscall64_nr.h
+ delete mode 100644 linux-user/riscv/syscall_nr.h
+ create mode 100644 linux-user/riscv/syscallhdr.sh
 
-diff --git a/configs/targets/hexagon-linux-user.mak b/configs/targets/hexagon-linux-user.mak
-index 2765a4c5638d..b912045bd307 100644
---- a/configs/targets/hexagon-linux-user.mak
-+++ b/configs/targets/hexagon-linux-user.mak
-@@ -1,2 +1,4 @@
- TARGET_ARCH=hexagon
- TARGET_XML_FILES=gdb-xml/hexagon-core.xml gdb-xml/hexagon-hvx.xml
+diff --git a/configs/targets/riscv32-linux-user.mak b/configs/targets/riscv32-linux-user.mak
+index 9761618e67f4..0dbaf5210ac8 100644
+--- a/configs/targets/riscv32-linux-user.mak
++++ b/configs/targets/riscv32-linux-user.mak
+@@ -4,3 +4,6 @@ TARGET_ABI_DIR=riscv
+ TARGET_XML_FILES= gdb-xml/riscv-32bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-32bit-virtual.xml
+ CONFIG_SEMIHOSTING=y
+ CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
++TARGET_SYSTBL_ABI=32
++TARGET_SYSTBL_ABI=common,32,riscv,memfd_secret
 +TARGET_SYSTBL=syscall.tbl
-+TARGET_SYSTBL_ABI=common,32,hexagon,time32,stat64,rlimit,renameat
-diff --git a/linux-user/hexagon/meson.build b/linux-user/hexagon/meson.build
-new file mode 100644
-index 000000000000..d203c3ec9296
---- /dev/null
-+++ b/linux-user/hexagon/meson.build
-@@ -0,0 +1,6 @@
+diff --git a/configs/targets/riscv64-linux-user.mak b/configs/targets/riscv64-linux-user.mak
+index cfd1fd382f92..477cd4523e2b 100644
+--- a/configs/targets/riscv64-linux-user.mak
++++ b/configs/targets/riscv64-linux-user.mak
+@@ -4,3 +4,6 @@ TARGET_ABI_DIR=riscv
+ TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml
+ CONFIG_SEMIHOSTING=y
+ CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
++TARGET_SYSTBL_ABI=64
++TARGET_SYSTBL_ABI=common,64,riscv,rlimit,memfd_secret
++TARGET_SYSTBL=syscall.tbl
+diff --git a/linux-user/riscv/cpu_loop.c b/linux-user/riscv/cpu_loop.c
+index 52c49c2e4264..0af533e186fd 100644
+--- a/linux-user/riscv/cpu_loop.c
++++ b/linux-user/riscv/cpu_loop.c
+@@ -47,7 +47,7 @@ void cpu_loop(CPURISCVState *env)
+             break;
+         case RISCV_EXCP_U_ECALL:
+             env->pc += 4;
+-            if (env->gpr[xA7] == TARGET_NR_arch_specific_syscall + 15) {
++            if (env->gpr[xA7] == TARGET_NR_riscv_flush_icache) {
+                 /* riscv_flush_icache_syscall is a no-op in QEMU as
+                    self-modifying code is automatically detected */
+                 ret = 0;
+diff --git a/linux-user/riscv/meson.build b/linux-user/riscv/meson.build
+index beb989a7caac..b2e7df0f4f65 100644
+--- a/linux-user/riscv/meson.build
++++ b/linux-user/riscv/meson.build
+@@ -5,3 +5,9 @@ vdso_64_inc = gen_vdso.process('vdso-64.so',
+ 
+ linux_user_ss.add(when: 'TARGET_RISCV32', if_true: vdso_32_inc)
+ linux_user_ss.add(when: 'TARGET_RISCV64', if_true: vdso_64_inc)
 +
 +syscall_nr_generators += {
-+  'hexagon': generator(sh,
++  'riscv': generator(sh,
 +                      arguments: [ meson.current_source_dir() / 'syscallhdr.sh', '@INPUT@', '@OUTPUT@', '@EXTRA_ARGS@' ],
 +                      output: '@BASENAME@_nr.h')
 +}
-diff --git a/linux-user/hexagon/syscall.tbl b/linux-user/hexagon/syscall.tbl
+diff --git a/linux-user/riscv/syscall.tbl b/linux-user/riscv/syscall.tbl
 new file mode 100644
 index 000000000000..845e24eb372e
 --- /dev/null
-+++ b/linux-user/hexagon/syscall.tbl
++++ b/linux-user/riscv/syscall.tbl
 @@ -0,0 +1,405 @@
 +# SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note
 +#
@@ -531,25 +564,26 @@ index 000000000000..845e24eb372e
 +460	common	lsm_set_self_attr		sys_lsm_set_self_attr
 +461	common	lsm_list_modules		sys_lsm_list_modules
 +462	common	mseal				sys_mseal
-diff --git a/linux-user/hexagon/syscall_nr.h b/linux-user/hexagon/syscall_nr.h
+diff --git a/linux-user/riscv/syscall32_nr.h b/linux-user/riscv/syscall32_nr.h
 deleted file mode 100644
-index f3220b74f7c3..000000000000
---- a/linux-user/hexagon/syscall_nr.h
+index 42376ac8c7d2..000000000000
+--- a/linux-user/riscv/syscall32_nr.h
 +++ /dev/null
-@@ -1,348 +0,0 @@
+@@ -1,325 +0,0 @@
 -/*
 - * This file contains the system call numbers.
 - * Do not modify.
 - * This file is generated by scripts/gensyscalls.sh
 - */
--#ifndef LINUX_USER_HEXAGON_SYSCALL_NR_H
--#define LINUX_USER_HEXAGON_SYSCALL_NR_H
+-#ifndef LINUX_USER_RISCV_SYSCALL32_NR_H
+-#define LINUX_USER_RISCV_SYSCALL32_NR_H
 -
 -#define TARGET_NR_io_setup 0
+-#define TARGET_NR_riscv_flush_icache (TARGET_NR_arch_specific_syscall + 15)
+-#define TARGET_NR_riscv_hwprobe (TARGET_NR_arch_specific_syscall + 14)
 -#define TARGET_NR_io_destroy 1
 -#define TARGET_NR_io_submit 2
 -#define TARGET_NR_io_cancel 3
--#define TARGET_NR_io_getevents 4
 -#define TARGET_NR_setxattr 5
 -#define TARGET_NR_lsetxattr 6
 -#define TARGET_NR_fsetxattr 7
@@ -583,7 +617,6 @@ index f3220b74f7c3..000000000000
 -#define TARGET_NR_unlinkat 35
 -#define TARGET_NR_symlinkat 36
 -#define TARGET_NR_linkat 37
--#define TARGET_NR_renameat 38
 -#define TARGET_NR_umount2 39
 -#define TARGET_NR_mount 40
 -#define TARGET_NR_pivot_root 41
@@ -617,8 +650,6 @@ index f3220b74f7c3..000000000000
 -#define TARGET_NR_preadv 69
 -#define TARGET_NR_pwritev 70
 -#define TARGET_NR_sendfile64 71
--#define TARGET_NR_pselect6 72
--#define TARGET_NR_ppoll 73
 -#define TARGET_NR_signalfd4 74
 -#define TARGET_NR_vmsplice 75
 -#define TARGET_NR_splice 76
@@ -629,7 +660,341 @@ index f3220b74f7c3..000000000000
 -#define TARGET_NR_sync 81
 -#define TARGET_NR_fsync 82
 -#define TARGET_NR_fdatasync 83
--#define TARGET_NR_sync_file_range2 84
+-#define TARGET_NR_sync_file_range 84
+-#define TARGET_NR_timerfd_create 85
+-#define TARGET_NR_acct 89
+-#define TARGET_NR_capget 90
+-#define TARGET_NR_capset 91
+-#define TARGET_NR_personality 92
+-#define TARGET_NR_exit 93
+-#define TARGET_NR_exit_group 94
+-#define TARGET_NR_waitid 95
+-#define TARGET_NR_set_tid_address 96
+-#define TARGET_NR_unshare 97
+-#define TARGET_NR_set_robust_list 99
+-#define TARGET_NR_get_robust_list 100
+-#define TARGET_NR_getitimer 102
+-#define TARGET_NR_setitimer 103
+-#define TARGET_NR_kexec_load 104
+-#define TARGET_NR_init_module 105
+-#define TARGET_NR_delete_module 106
+-#define TARGET_NR_timer_create 107
+-#define TARGET_NR_timer_getoverrun 109
+-#define TARGET_NR_timer_delete 111
+-#define TARGET_NR_syslog 116
+-#define TARGET_NR_ptrace 117
+-#define TARGET_NR_sched_setparam 118
+-#define TARGET_NR_sched_setscheduler 119
+-#define TARGET_NR_sched_getscheduler 120
+-#define TARGET_NR_sched_getparam 121
+-#define TARGET_NR_sched_setaffinity 122
+-#define TARGET_NR_sched_getaffinity 123
+-#define TARGET_NR_sched_yield 124
+-#define TARGET_NR_sched_get_priority_max 125
+-#define TARGET_NR_sched_get_priority_min 126
+-#define TARGET_NR_restart_syscall 128
+-#define TARGET_NR_kill 129
+-#define TARGET_NR_tkill 130
+-#define TARGET_NR_tgkill 131
+-#define TARGET_NR_sigaltstack 132
+-#define TARGET_NR_rt_sigsuspend 133
+-#define TARGET_NR_rt_sigaction 134
+-#define TARGET_NR_rt_sigprocmask 135
+-#define TARGET_NR_rt_sigpending 136
+-#define TARGET_NR_rt_sigqueueinfo 138
+-#define TARGET_NR_rt_sigreturn 139
+-#define TARGET_NR_setpriority 140
+-#define TARGET_NR_getpriority 141
+-#define TARGET_NR_reboot 142
+-#define TARGET_NR_setregid 143
+-#define TARGET_NR_setgid 144
+-#define TARGET_NR_setreuid 145
+-#define TARGET_NR_setuid 146
+-#define TARGET_NR_setresuid 147
+-#define TARGET_NR_getresuid 148
+-#define TARGET_NR_setresgid 149
+-#define TARGET_NR_getresgid 150
+-#define TARGET_NR_setfsuid 151
+-#define TARGET_NR_setfsgid 152
+-#define TARGET_NR_times 153
+-#define TARGET_NR_setpgid 154
+-#define TARGET_NR_getpgid 155
+-#define TARGET_NR_getsid 156
+-#define TARGET_NR_setsid 157
+-#define TARGET_NR_getgroups 158
+-#define TARGET_NR_setgroups 159
+-#define TARGET_NR_uname 160
+-#define TARGET_NR_sethostname 161
+-#define TARGET_NR_setdomainname 162
+-#define TARGET_NR_getrlimit 163
+-#define TARGET_NR_setrlimit 164
+-#define TARGET_NR_getrusage 165
+-#define TARGET_NR_umask 166
+-#define TARGET_NR_prctl 167
+-#define TARGET_NR_getcpu 168
+-#define TARGET_NR_getpid 172
+-#define TARGET_NR_getppid 173
+-#define TARGET_NR_getuid 174
+-#define TARGET_NR_geteuid 175
+-#define TARGET_NR_getgid 176
+-#define TARGET_NR_getegid 177
+-#define TARGET_NR_gettid 178
+-#define TARGET_NR_sysinfo 179
+-#define TARGET_NR_mq_open 180
+-#define TARGET_NR_mq_unlink 181
+-#define TARGET_NR_mq_notify 184
+-#define TARGET_NR_mq_getsetattr 185
+-#define TARGET_NR_msgget 186
+-#define TARGET_NR_msgctl 187
+-#define TARGET_NR_msgrcv 188
+-#define TARGET_NR_msgsnd 189
+-#define TARGET_NR_semget 190
+-#define TARGET_NR_semctl 191
+-#define TARGET_NR_semop 193
+-#define TARGET_NR_shmget 194
+-#define TARGET_NR_shmctl 195
+-#define TARGET_NR_shmat 196
+-#define TARGET_NR_shmdt 197
+-#define TARGET_NR_socket 198
+-#define TARGET_NR_socketpair 199
+-#define TARGET_NR_bind 200
+-#define TARGET_NR_listen 201
+-#define TARGET_NR_accept 202
+-#define TARGET_NR_connect 203
+-#define TARGET_NR_getsockname 204
+-#define TARGET_NR_getpeername 205
+-#define TARGET_NR_sendto 206
+-#define TARGET_NR_recvfrom 207
+-#define TARGET_NR_setsockopt 208
+-#define TARGET_NR_getsockopt 209
+-#define TARGET_NR_shutdown 210
+-#define TARGET_NR_sendmsg 211
+-#define TARGET_NR_recvmsg 212
+-#define TARGET_NR_readahead 213
+-#define TARGET_NR_brk 214
+-#define TARGET_NR_munmap 215
+-#define TARGET_NR_mremap 216
+-#define TARGET_NR_add_key 217
+-#define TARGET_NR_request_key 218
+-#define TARGET_NR_keyctl 219
+-#define TARGET_NR_clone 220
+-#define TARGET_NR_execve 221
+-#define TARGET_NR_mmap2 222
+-#define TARGET_NR_fadvise64_64 223
+-#define TARGET_NR_swapon 224
+-#define TARGET_NR_swapoff 225
+-#define TARGET_NR_mprotect 226
+-#define TARGET_NR_msync 227
+-#define TARGET_NR_mlock 228
+-#define TARGET_NR_munlock 229
+-#define TARGET_NR_mlockall 230
+-#define TARGET_NR_munlockall 231
+-#define TARGET_NR_mincore 232
+-#define TARGET_NR_madvise 233
+-#define TARGET_NR_remap_file_pages 234
+-#define TARGET_NR_mbind 235
+-#define TARGET_NR_get_mempolicy 236
+-#define TARGET_NR_set_mempolicy 237
+-#define TARGET_NR_migrate_pages 238
+-#define TARGET_NR_move_pages 239
+-#define TARGET_NR_rt_tgsigqueueinfo 240
+-#define TARGET_NR_perf_event_open 241
+-#define TARGET_NR_accept4 242
+-#define TARGET_NR_arch_specific_syscall 244
+-#define TARGET_NR_prlimit64 261
+-#define TARGET_NR_fanotify_init 262
+-#define TARGET_NR_fanotify_mark 263
+-#define TARGET_NR_name_to_handle_at 264
+-#define TARGET_NR_open_by_handle_at 265
+-#define TARGET_NR_syncfs 267
+-#define TARGET_NR_setns 268
+-#define TARGET_NR_sendmmsg 269
+-#define TARGET_NR_process_vm_readv 270
+-#define TARGET_NR_process_vm_writev 271
+-#define TARGET_NR_kcmp 272
+-#define TARGET_NR_finit_module 273
+-#define TARGET_NR_sched_setattr 274
+-#define TARGET_NR_sched_getattr 275
+-#define TARGET_NR_renameat2 276
+-#define TARGET_NR_seccomp 277
+-#define TARGET_NR_getrandom 278
+-#define TARGET_NR_memfd_create 279
+-#define TARGET_NR_bpf 280
+-#define TARGET_NR_execveat 281
+-#define TARGET_NR_userfaultfd 282
+-#define TARGET_NR_membarrier 283
+-#define TARGET_NR_mlock2 284
+-#define TARGET_NR_copy_file_range 285
+-#define TARGET_NR_preadv2 286
+-#define TARGET_NR_pwritev2 287
+-#define TARGET_NR_pkey_mprotect 288
+-#define TARGET_NR_pkey_alloc 289
+-#define TARGET_NR_pkey_free 290
+-#define TARGET_NR_statx 291
+-#define TARGET_NR_rseq 293
+-#define TARGET_NR_kexec_file_load 294
+-#define TARGET_NR_clock_gettime64 403
+-#define TARGET_NR_clock_settime64 404
+-#define TARGET_NR_clock_adjtime64 405
+-#define TARGET_NR_clock_getres_time64 406
+-#define TARGET_NR_clock_nanosleep_time64 407
+-#define TARGET_NR_timer_gettime64 408
+-#define TARGET_NR_timer_settime64 409
+-#define TARGET_NR_timerfd_gettime64 410
+-#define TARGET_NR_timerfd_settime64 411
+-#define TARGET_NR_utimensat_time64 412
+-#define TARGET_NR_pselect6_time64 413
+-#define TARGET_NR_ppoll_time64 414
+-#define TARGET_NR_io_pgetevents_time64 416
+-#define TARGET_NR_recvmmsg_time64 417
+-#define TARGET_NR_mq_timedsend_time64 418
+-#define TARGET_NR_mq_timedreceive_time64 419
+-#define TARGET_NR_semtimedop_time64 420
+-#define TARGET_NR_rt_sigtimedwait_time64 421
+-#define TARGET_NR_futex_time64 422
+-#define TARGET_NR_sched_rr_get_interval_time64 423
+-#define TARGET_NR_pidfd_send_signal 424
+-#define TARGET_NR_io_uring_setup 425
+-#define TARGET_NR_io_uring_enter 426
+-#define TARGET_NR_io_uring_register 427
+-#define TARGET_NR_open_tree 428
+-#define TARGET_NR_move_mount 429
+-#define TARGET_NR_fsopen 430
+-#define TARGET_NR_fsconfig 431
+-#define TARGET_NR_fsmount 432
+-#define TARGET_NR_fspick 433
+-#define TARGET_NR_pidfd_open 434
+-#define TARGET_NR_clone3 435
+-#define TARGET_NR_close_range 436
+-#define TARGET_NR_openat2 437
+-#define TARGET_NR_pidfd_getfd 438
+-#define TARGET_NR_faccessat2 439
+-#define TARGET_NR_process_madvise 440
+-#define TARGET_NR_epoll_pwait2 441
+-#define TARGET_NR_mount_setattr 442
+-#define TARGET_NR_quotactl_fd 443
+-#define TARGET_NR_landlock_create_ruleset 444
+-#define TARGET_NR_landlock_add_rule 445
+-#define TARGET_NR_landlock_restrict_self 446
+-#define TARGET_NR_memfd_secret 447
+-#define TARGET_NR_process_mrelease 448
+-#define TARGET_NR_futex_waitv 449
+-#define TARGET_NR_set_mempolicy_home_node 450
+-#define TARGET_NR_cachestat 451
+-#define TARGET_NR_fchmodat2 452
+-#define TARGET_NR_map_shadow_stack 453
+-#define TARGET_NR_futex_wake 454
+-#define TARGET_NR_futex_wait 455
+-#define TARGET_NR_futex_requeue 456
+-#define TARGET_NR_statmount 457
+-#define TARGET_NR_listmount 458
+-#define TARGET_NR_lsm_get_self_attr 459
+-#define TARGET_NR_lsm_set_self_attr 460
+-#define TARGET_NR_lsm_list_modules 461
+-#define TARGET_NR_mseal 462
+-#define TARGET_NR_syscalls 463
+-
+-#endif /* LINUX_USER_RISCV_SYSCALL32_NR_H */
+diff --git a/linux-user/riscv/syscall64_nr.h b/linux-user/riscv/syscall64_nr.h
+deleted file mode 100644
+index 96ee92ec31f8..000000000000
+--- a/linux-user/riscv/syscall64_nr.h
++++ /dev/null
+@@ -1,331 +0,0 @@
+-/*
+- * This file contains the system call numbers.
+- * Do not modify.
+- * This file is generated by scripts/gensyscalls.sh
+- */
+-#ifndef LINUX_USER_RISCV_SYSCALL64_NR_H
+-#define LINUX_USER_RISCV_SYSCALL64_NR_H
+-
+-#define TARGET_NR_io_setup 0
+-#define TARGET_NR_riscv_flush_icache (TARGET_NR_arch_specific_syscall + 15)
+-#define TARGET_NR_riscv_hwprobe (TARGET_NR_arch_specific_syscall + 14)
+-#define TARGET_NR_io_destroy 1
+-#define TARGET_NR_io_submit 2
+-#define TARGET_NR_io_cancel 3
+-#define TARGET_NR_io_getevents 4
+-#define TARGET_NR_setxattr 5
+-#define TARGET_NR_lsetxattr 6
+-#define TARGET_NR_fsetxattr 7
+-#define TARGET_NR_getxattr 8
+-#define TARGET_NR_lgetxattr 9
+-#define TARGET_NR_fgetxattr 10
+-#define TARGET_NR_listxattr 11
+-#define TARGET_NR_llistxattr 12
+-#define TARGET_NR_flistxattr 13
+-#define TARGET_NR_removexattr 14
+-#define TARGET_NR_lremovexattr 15
+-#define TARGET_NR_fremovexattr 16
+-#define TARGET_NR_getcwd 17
+-#define TARGET_NR_lookup_dcookie 18
+-#define TARGET_NR_eventfd2 19
+-#define TARGET_NR_epoll_create1 20
+-#define TARGET_NR_epoll_ctl 21
+-#define TARGET_NR_epoll_pwait 22
+-#define TARGET_NR_dup 23
+-#define TARGET_NR_dup3 24
+-#define TARGET_NR_fcntl 25
+-#define TARGET_NR_inotify_init1 26
+-#define TARGET_NR_inotify_add_watch 27
+-#define TARGET_NR_inotify_rm_watch 28
+-#define TARGET_NR_ioctl 29
+-#define TARGET_NR_ioprio_set 30
+-#define TARGET_NR_ioprio_get 31
+-#define TARGET_NR_flock 32
+-#define TARGET_NR_mknodat 33
+-#define TARGET_NR_mkdirat 34
+-#define TARGET_NR_unlinkat 35
+-#define TARGET_NR_symlinkat 36
+-#define TARGET_NR_linkat 37
+-#define TARGET_NR_umount2 39
+-#define TARGET_NR_mount 40
+-#define TARGET_NR_pivot_root 41
+-#define TARGET_NR_nfsservctl 42
+-#define TARGET_NR_statfs 43
+-#define TARGET_NR_fstatfs 44
+-#define TARGET_NR_truncate 45
+-#define TARGET_NR_ftruncate 46
+-#define TARGET_NR_fallocate 47
+-#define TARGET_NR_faccessat 48
+-#define TARGET_NR_chdir 49
+-#define TARGET_NR_fchdir 50
+-#define TARGET_NR_chroot 51
+-#define TARGET_NR_fchmod 52
+-#define TARGET_NR_fchmodat 53
+-#define TARGET_NR_fchownat 54
+-#define TARGET_NR_fchown 55
+-#define TARGET_NR_openat 56
+-#define TARGET_NR_close 57
+-#define TARGET_NR_vhangup 58
+-#define TARGET_NR_pipe2 59
+-#define TARGET_NR_quotactl 60
+-#define TARGET_NR_getdents64 61
+-#define TARGET_NR_lseek 62
+-#define TARGET_NR_read 63
+-#define TARGET_NR_write 64
+-#define TARGET_NR_readv 65
+-#define TARGET_NR_writev 66
+-#define TARGET_NR_pread64 67
+-#define TARGET_NR_pwrite64 68
+-#define TARGET_NR_preadv 69
+-#define TARGET_NR_pwritev 70
+-#define TARGET_NR_sendfile 71
+-#define TARGET_NR_pselect6 72
+-#define TARGET_NR_ppoll 73
+-#define TARGET_NR_signalfd4 74
+-#define TARGET_NR_vmsplice 75
+-#define TARGET_NR_splice 76
+-#define TARGET_NR_tee 77
+-#define TARGET_NR_readlinkat 78
+-#define TARGET_NR_newfstatat 79
+-#define TARGET_NR_fstat 80
+-#define TARGET_NR_sync 81
+-#define TARGET_NR_fsync 82
+-#define TARGET_NR_fdatasync 83
+-#define TARGET_NR_sync_file_range 84
 -#define TARGET_NR_timerfd_create 85
 -#define TARGET_NR_timerfd_settime 86
 -#define TARGET_NR_timerfd_gettime 87
@@ -767,8 +1132,8 @@ index f3220b74f7c3..000000000000
 -#define TARGET_NR_keyctl 219
 -#define TARGET_NR_clone 220
 -#define TARGET_NR_execve 221
--#define TARGET_NR_mmap2 222
--#define TARGET_NR_fadvise64_64 223
+-#define TARGET_NR_mmap 222
+-#define TARGET_NR_fadvise64 223
 -#define TARGET_NR_swapon 224
 -#define TARGET_NR_swapoff 225
 -#define TARGET_NR_mprotect 226
@@ -825,26 +1190,6 @@ index f3220b74f7c3..000000000000
 -#define TARGET_NR_io_pgetevents 292
 -#define TARGET_NR_rseq 293
 -#define TARGET_NR_kexec_file_load 294
--#define TARGET_NR_clock_gettime64 403
--#define TARGET_NR_clock_settime64 404
--#define TARGET_NR_clock_adjtime64 405
--#define TARGET_NR_clock_getres_time64 406
--#define TARGET_NR_clock_nanosleep_time64 407
--#define TARGET_NR_timer_gettime64 408
--#define TARGET_NR_timer_settime64 409
--#define TARGET_NR_timerfd_gettime64 410
--#define TARGET_NR_timerfd_settime64 411
--#define TARGET_NR_utimensat_time64 412
--#define TARGET_NR_pselect6_time64 413
--#define TARGET_NR_ppoll_time64 414
--#define TARGET_NR_io_pgetevents_time64 416
--#define TARGET_NR_recvmmsg_time64 417
--#define TARGET_NR_mq_timedsend_time64 418
--#define TARGET_NR_mq_timedreceive_time64 419
--#define TARGET_NR_semtimedop_time64 420
--#define TARGET_NR_rt_sigtimedwait_time64 421
--#define TARGET_NR_futex_time64 422
--#define TARGET_NR_sched_rr_get_interval_time64 423
 -#define TARGET_NR_pidfd_send_signal 424
 -#define TARGET_NR_io_uring_setup 425
 -#define TARGET_NR_io_uring_enter 426
@@ -856,6 +1201,7 @@ index f3220b74f7c3..000000000000
 -#define TARGET_NR_fsmount 432
 -#define TARGET_NR_fspick 433
 -#define TARGET_NR_pidfd_open 434
+-#define TARGET_NR_clone3 435
 -#define TARGET_NR_close_range 436
 -#define TARGET_NR_openat2 437
 -#define TARGET_NR_pidfd_getfd 438
@@ -867,6 +1213,7 @@ index f3220b74f7c3..000000000000
 -#define TARGET_NR_landlock_create_ruleset 444
 -#define TARGET_NR_landlock_add_rule 445
 -#define TARGET_NR_landlock_restrict_self 446
+-#define TARGET_NR_memfd_secret 447
 -#define TARGET_NR_process_mrelease 448
 -#define TARGET_NR_futex_waitv 449
 -#define TARGET_NR_set_mempolicy_home_node 450
@@ -884,12 +1231,33 @@ index f3220b74f7c3..000000000000
 -#define TARGET_NR_mseal 462
 -#define TARGET_NR_syscalls 463
 -
--#endif /* LINUX_USER_HEXAGON_SYSCALL_NR_H */
-diff --git a/linux-user/hexagon/syscallhdr.sh b/linux-user/hexagon/syscallhdr.sh
+-#endif /* LINUX_USER_RISCV_SYSCALL64_NR_H */
+diff --git a/linux-user/riscv/syscall_nr.h b/linux-user/riscv/syscall_nr.h
+deleted file mode 100644
+index 0a5a2f2fb161..000000000000
+--- a/linux-user/riscv/syscall_nr.h
++++ /dev/null
+@@ -1,15 +0,0 @@
+-/*
+- * Syscall numbers from asm-generic, common for most
+- * of recently-added arches including RISC-V.
+- */
+-
+-#ifndef LINUX_USER_RISCV_SYSCALL_NR_H
+-#define LINUX_USER_RISCV_SYSCALL_NR_H
+-
+-#ifdef TARGET_RISCV32
+-# include "syscall32_nr.h"
+-#else
+-# include "syscall64_nr.h"
+-#endif
+-
+-#endif
+diff --git a/linux-user/riscv/syscallhdr.sh b/linux-user/riscv/syscallhdr.sh
 new file mode 100644
-index 000000000000..ed605c038ee9
+index 000000000000..4069dc59b684
 --- /dev/null
-+++ b/linux-user/hexagon/syscallhdr.sh
++++ b/linux-user/riscv/syscallhdr.sh
 @@ -0,0 +1,28 @@
 +#!/bin/sh
 +# SPDX-License-Identifier: GPL-2.0
@@ -900,7 +1268,7 @@ index 000000000000..ed605c038ee9
 +prefix="$4"
 +offset="$5"
 +
-+fileguard=LINUX_USER_HEXAGON_`basename "$out" | sed \
++fileguard=LINUX_USER_X86_64_`basename "$out" | sed \
 +    -e 'y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/' \
 +    -e 's/[^A-Z0-9_]/_/g' -e 's/__/_/g'`
 +grep -E "^[0-9A-Fa-fXx]+[[:space:]]+${my_abis}" "$in" | sort -n | (
@@ -919,41 +1287,31 @@ index 000000000000..ed605c038ee9
 +    echo ""
 +    echo "#endif /* ${fileguard} */"
 +) > "$out"
-diff --git a/linux-user/meson.build b/linux-user/meson.build
-index cfbaf9741ded..f75b4fe0e3ec 100644
---- a/linux-user/meson.build
-+++ b/linux-user/meson.build
-@@ -38,6 +38,7 @@ gen_vdso = generator(gen_vdso_exe, output: '@BASENAME@.c.inc',
- subdir('aarch64')
- subdir('alpha')
- subdir('arm')
-+subdir('hexagon')
- subdir('hppa')
- subdir('i386')
- subdir('loongarch64')
 diff --git a/scripts/gensyscalls.sh b/scripts/gensyscalls.sh
-index babbc6127de4..1696473c6da6 100755
+index 68de3f1aca3c..babbc6127de4 100755
 --- a/scripts/gensyscalls.sh
 +++ b/scripts/gensyscalls.sh
-@@ -93,6 +93,5 @@ generate_syscall_nr()
+@@ -93,8 +93,6 @@ generate_syscall_nr()
  mkdir "$TMP/asm"
  > "$TMP/asm/bitsperlong.h"
  
--generate_syscall_nr hexagon 32 "$output/linux-user/hexagon/syscall_nr.h"
+-generate_syscall_nr riscv 32 "$output/linux-user/riscv/syscall32_nr.h"
+-generate_syscall_nr riscv 64 "$output/linux-user/riscv/syscall64_nr.h"
+ generate_syscall_nr hexagon 32 "$output/linux-user/hexagon/syscall_nr.h"
  generate_syscall_nr loongarch 64 "$output/linux-user/loongarch64/syscall_nr.h"
  rm -fr "$TMP"
 diff --git a/scripts/update-syscalltbl.sh b/scripts/update-syscalltbl.sh
-index cf3ea1dea143..f7615c19bbdc 100755
+index c3f898fd9f6c..cf3ea1dea143 100755
 --- a/scripts/update-syscalltbl.sh
 +++ b/scripts/update-syscalltbl.sh
-@@ -2,6 +2,7 @@ TBL_LIST="\
- arch/alpha/kernel/syscalls/syscall.tbl,linux-user/alpha/syscall.tbl \
- arch/arm/tools/syscall.tbl,linux-user/arm/syscall.tbl \
- scripts/syscall.tbl,linux-user/aarch64/syscall_64.tbl \
-+scripts/syscall.tbl,linux-user/hexagon/syscall.tbl \
- arch/m68k/kernel/syscalls/syscall.tbl,linux-user/m68k/syscall.tbl \
- arch/microblaze/kernel/syscalls/syscall.tbl,linux-user/microblaze/syscall.tbl \
- arch/mips/kernel/syscalls/syscall_n32.tbl,linux-user/mips64/syscall_n32.tbl \
+@@ -10,6 +10,7 @@ arch/mips/kernel/syscalls/syscall_o32.tbl,linux-user/mips/syscall_o32.tbl \
+ scripts/syscall.tbl,linux-user/openrisc/syscall.tbl \
+ arch/parisc/kernel/syscalls/syscall.tbl,linux-user/hppa/syscall.tbl \
+ arch/powerpc/kernel/syscalls/syscall.tbl,linux-user/ppc/syscall.tbl \
++scripts/syscall.tbl,linux-user/riscv/syscall.tbl \
+ arch/s390/kernel/syscalls/syscall.tbl,linux-user/s390x/syscall.tbl \
+ arch/sh/kernel/syscalls/syscall.tbl,linux-user/sh4/syscall.tbl \
+ arch/sparc/kernel/syscalls/syscall.tbl,linux-user/sparc64/syscall.tbl \
 -- 
 2.46.0
 
