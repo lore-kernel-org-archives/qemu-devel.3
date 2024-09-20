@@ -4,76 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC470C78829
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 11:38:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7B27C7883E
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 13:32:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srbxO-0003AV-Pg; Fri, 20 Sep 2024 07:37:50 -0400
+	id 1srdjL-0001eG-Vx; Fri, 20 Sep 2024 09:31:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1srbxM-00036X-Cr
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 07:37:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1srbxK-0005hK-Sb
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 07:37:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726832263;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=s0wUYhjHcz8ouBrCbnWMVRu7sKK7GW2MToPrNPgbau0=;
- b=BJe3UXhuzwYTaKTMkKa6ptkPYZF7JXpxGMYjeV2BA0XMxP93MG/prYzp0sKB+cwC4Q/pCu
- VqfmTC8/J3LO+cKYMwWQWguK+D0Hb75+Ym4BUaf76UwJdGX81PMB+DClWrosymrXPcDlp8
- WjGGWOtYBAOIhgj8obi64h4yUrmBW/c=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-640-cVIP2_IuOwiV9oNAyo9dtw-1; Fri,
- 20 Sep 2024 07:37:40 -0400
-X-MC-Unique: cVIP2_IuOwiV9oNAyo9dtw-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D4F0019371D6; Fri, 20 Sep 2024 11:37:37 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.47])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 27FB81956052; Fri, 20 Sep 2024 11:37:36 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A3DCF21E6A28; Fri, 20 Sep 2024 13:37:34 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,  qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org,  palmer@dabbelt.com,  alistair.francis@wdc.com,
- liwei1518@gmail.com,  bmeng.cn@gmail.com,  richard.henderson@linaro.org,
- Swung0x48 <swung0x48@outlook.com>,  TANG Tiancheng
- <tangtiancheng.ttc@alibaba-inc.com>
-Subject: Re: [PATCH v4 02/12] tcg/riscv: Add basic support for vector
-In-Reply-To: <e1ecceab-084e-4864-a361-e5f06fa4b57d@ventanamicro.com> (Daniel
- Henrique Barboza's message of "Fri, 20 Sep 2024 08:26:52 -0300")
-References: <20240911132630.461-1-zhiwei_liu@linux.alibaba.com>
- <20240911132630.461-3-zhiwei_liu@linux.alibaba.com>
- <e1ecceab-084e-4864-a361-e5f06fa4b57d@ventanamicro.com>
-Date: Fri, 20 Sep 2024 13:37:34 +0200
-Message-ID: <87a5g2imip.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1srZat-0001Vs-K0
+ for qemu-devel@nongnu.org; Fri, 20 Sep 2024 05:06:29 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1srZar-00043G-8Y
+ for qemu-devel@nongnu.org; Fri, 20 Sep 2024 05:06:26 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a8d43657255so259130766b.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Sep 2024 02:06:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gourry.net; s=google; t=1726823182; x=1727427982; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=5ea6kApel9704WtmafZwie6CE4udCD/ZWEKovHegrZg=;
+ b=dg+fdGnrtiNvhgF6sEfXi/4NkGAK/FKpCn2uFpA5fFrlH0SvorNenUD3rhETmyz5ZF
+ ZlhtPCVJg6niWj6eZk3g+pzmAB1MvRlWpJnUFyN5fvUqXJIKDQPFiGVZK+H5TwvnQGKy
+ ChWNJ0a95ViuT3pq6C1Tg1RERLZodmHoGXc97vK9gkWQoDVYbugMl/3vn7YZ/rg4piXC
+ nSvLjENKlSBj4n6B6m7+0jKj0dOLedJMJHuPN43dSXq0rMBThFByrQQ3VzQmd4KTA6WL
+ rSCP3xdz3rXOXQKhfQQ8xu/GgN6+xqZABxOZdsmUhivDPXH0uY1VBPILGaBPsjppMe/w
+ UEsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726823182; x=1727427982;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5ea6kApel9704WtmafZwie6CE4udCD/ZWEKovHegrZg=;
+ b=QOSw0gxm/mn8njsNDbRh5cu+FLuqiHFE5taYwspjSBcbcm1Sui7IyenEo1bs4WsbNd
+ Oin6EVfPxPsVL1/azunaf5bYvOFM4p/traDbhdESC6KrX37j0jwf5a+yWzxFcV8tnXtV
+ F/TK8nWRAS0bVKx6zitz3eHi0CdxiCdvQeP76Jt6UhIYxTZNPRaep7QdkFBB2OlyXx9d
+ FA1lcUqYpcLh/NAaoEKXgJ1yEvCDFs4GvgnuyDw5ckIL6XIdMv7zgIle7a5YXZWp0AvN
+ HG+TBnRFv8FjdT5OTRzBQvzzkUJ5HS6Iur3DLTrFp//y69q3V6OKRkY+kQ8TrBEI9KZO
+ gaRg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUzlQCYOTLHbhwgqE0mjTwvEppeon5IVFLm/2XhTGSnT3n0b0yj6ybX4fhJpxDWK3R+xQJkJaIVS7/C@nongnu.org
+X-Gm-Message-State: AOJu0Yzo6HytYTwqp/kAaBf2qFypUd2uKf3E5Im4cOeYX77Rx23fo5ng
+ ev+s9bd0s2LFHY4wDc7/bUaKawXIVx/Lq6It+2MSvZGXJjaLn9YsH/m3MRK5e1w=
+X-Google-Smtp-Source: AGHT+IHS5Ou0XIJ4uflfTtxR3ETCTI4FJBbvqfkbaPfxDAC5XJ69GFR67U4wnEW673qhczAiNcFAYw==
+X-Received: by 2002:a17:906:cad6:b0:a8d:25d3:65e4 with SMTP id
+ a640c23a62f3a-a90d4ffcb11mr164635366b.36.1726823182340; 
+ Fri, 20 Sep 2024 02:06:22 -0700 (PDT)
+Received: from PC2K9PVX.TheFacebook.com ([83.68.141.146])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a90610f4971sm821742366b.90.2024.09.20.02.06.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 20 Sep 2024 02:06:21 -0700 (PDT)
+Date: Fri, 20 Sep 2024 11:06:09 +0200
+From: Gregory Price <gourry@gourry.net>
+To: David Hildenbrand <david@redhat.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, linux-mm@kvack.org,
+ linux-cxl@vger.kernel.org, Davidlohr Bueso <dave@stgolabs.net>,
+ Ira Weiny <ira.weiny@intel.com>, John Groves <John@groves.net>,
+ virtualization@lists.linux.dev, Oscar Salvador <osalvador@suse.de>,
+ qemu-devel@nongnu.org, Dave Jiang <dave.jiang@intel.com>,
+ Dan Williams <dan.j.williams@intel.com>, linuxarm@huawei.com,
+ wangkefeng.wang@huawei.com, John Groves <jgroves@micron.com>,
+ Fan Ni <fan.ni@samsung.com>, Navneet Singh <navneet.singh@intel.com>,
+ =?utf-8?B?4oCcTWljaGFlbCBTLiBUc2lya2lu4oCd?= <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [RFC] Virtualizing tagged disaggregated memory capacity (app
+ specific, multi host shared)
+Message-ID: <Zu07AU3aUrHBMXaw@PC2K9PVX.TheFacebook.com>
+References: <20240815172223.00001ca7@Huawei.com>
+ <fc05d089-ce04-42d2-a0d7-ea32fd73fe90@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fc05d089-ce04-42d2-a0d7-ea32fd73fe90@redhat.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=gourry@gourry.net; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 20 Sep 2024 09:31:23 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,21 +105,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel Henrique Barboza <dbarboza@ventanamicro.com> writes:
-
-> Hi Zhiwei,
+> > 2. Coarse grained memory increases for 'normal' memory.
+> >     Can use memory hot-plug. Recovery of capacity likely to only be possible on
+> >     VM shutdown.
+> 
+> Is there are reason "movable" (ZONE_MOVABLE) is not an option, at least in
+> some setups? If not, why?
 >
-> As Rixchard already pointed out, we must have a "Signed-off-by" tag with the "author" of
-> the patch, and it must be the exact spelling. So in this case:
->
-> Signed-off-by: Swung0x48 <swung0x48@outlook.com>
 
-I'm afraid we need a legal name here, not a nickname.
 
-> More info here:
->
-> https://www.qemu.org/docs/master/devel/submitting-a-patch.html
+This seems like a bit of a muddied conversation.
 
-[...]
+"'normal' memory" has no defined meaning - so lets clear this up a bit
 
+There is:
+* System-RAM (memory managed by kernel allocators)
+* Special Purpose Memory (generally presented as DAX)
+
+System-RAM is managed as zones - the relevant ones are
+* ZONE_NORMAL allows both movable and non-movable allocations
+* ZONE_MOVABLE only allows non-movable allocations
+  (Caveat: this generally only applies to allocation, you can
+   violate this with stuff like pinning)
+
+Hotplug can be thought of as two discrete mechanisms
+* Exposing capacity to the kernel (CXL DCD Transactions)
+* Exposing capacity to allocators (mm/memory-hotplug.c)
+
+1) if the intent is to primarily utilize dynamic capacity for VMs, then
+   the host does not need (read: should not need) to map the memory as
+   System-RAM in the host. The VMM should be made to consume it directly
+   via DAX or otherwise.
+
+   That capacity is almost by definition "Capital G Guaranteed" to be
+   reclaimable regardless of what the guest does. A VMM can force a guest
+   to let go of resources - that's its job.
+
+2) if the intent is to provide dynamic capacity to a host as System-RAM, then
+   recoverability is dictated by system usage of that capacity. If onlined
+   into ZONE_MOVABLE, then if the system has avoided doing things like pinning
+   those pages it should *generally* be recoverable (but not guaranteed).
+
+
+For the virtualization discussion:
+
+Hotplug and recoverability is a non-issue.  The capacity should never be
+exposed to system allocators and the VMM should be made to consume special
+purpose memory directly. That's on the VMM/orchestration software to get right.
+
+
+For the host System-RAM discussion:
+
+Auto-onlined hotplug capacity presently defaults to ZONE_NORMAL, but we
+discussed (yesterday, at Plumbers) changing this default to ZONE_MOVABLE.
+
+The only concern is when insufficient ZONE_NORMAL exists to support
+ZONE_MOVABLE capacity - but this is unlikely to be the general scenario AND
+can be mitigated w/ existing mechanisms.
+
+Manually onlined capacity defaults to ZONE_MOVABLE.
+
+It would be nice to make this behavior consistent, since the general opinion
+appears to be that this capacity should default to ZONE_MOVABLE.
+
+~Gregory
 
