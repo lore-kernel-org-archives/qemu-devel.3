@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF412CF9C54
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 15:24:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97F29CF9C52
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 15:24:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srfTX-0004iU-LN; Fri, 20 Sep 2024 11:23:15 -0400
+	id 1srfTw-00052U-3s; Fri, 20 Sep 2024 11:23:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1srfTW-0004hS-Aj
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 11:23:14 -0400
+ id 1srfTu-00051t-7F
+ for qemu-devel@nongnu.org; Fri, 20 Sep 2024 11:23:38 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1srfTU-0005PC-7x
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 11:23:14 -0400
+ id 1srfTs-0005Qn-Bh
+ for qemu-devel@nongnu.org; Fri, 20 Sep 2024 11:23:37 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1srfTH-0008Rb-Sv; Fri, 20 Sep 2024 17:22:59 +0200
-Message-ID: <c90deba5-8f47-4a9c-b039-284b84fe7d19@maciej.szmigiero.name>
-Date: Fri, 20 Sep 2024 17:22:54 +0200
+ id 1srfTi-0008SC-Dh; Fri, 20 Sep 2024 17:23:26 +0200
+Message-ID: <dbb9ce96-100b-4a95-8ce1-f0b8b5041046@maciej.szmigiero.name>
+Date: Fri, 20 Sep 2024 17:23:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/17] migration: Add
- save_live_complete_precopy_{begin,end} handlers
+Subject: Re: [PATCH v2 12/17] migration/multifd: Device state transfer support
+ - send side
 To: Peter Xu <peterx@redhat.com>
-Cc: Avihai Horon <avihaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
+Cc: Fabiano Rosas <farosas@suse.de>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
 References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <afe0bc649007593edaa77f5f3923acb733a24c6a.1724701542.git.maciej.szmigiero@oracle.com>
- <9f9f0408-866d-4dc8-8c8e-80c3cfdd190a@nvidia.com> <Zt83mWWlMomX4mRD@x1n>
- <fa64bf51-7fec-454b-b204-f92f5d06f731@maciej.szmigiero.name>
- <Zt9HuA3QtP0E93X1@x1n>
- <81dd1071-9285-415f-a334-3d8109e0a905@maciej.szmigiero.name>
- <ZuyPlyh0sCYPP7C2@x1n>
+ <fdcfd68dfcf3b20278a4495eb639905b2a8e8ff3.1724701542.git.maciej.szmigiero@oracle.com>
+ <87h6b4nosy.fsf@suse.de> <ZuCickYhs3nf2ERC@x1n>
+ <13034f56-cb92-47d3-b72e-21ef28248f2d@maciej.szmigiero.name>
+ <ZuyU00_DHsU5xita@x1n>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -87,7 +86,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <ZuyPlyh0sCYPP7C2@x1n>
+In-Reply-To: <ZuyU00_DHsU5xita@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=37.28.154.113;
@@ -112,154 +111,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.09.2024 22:54, Peter Xu wrote:
-> On Thu, Sep 19, 2024 at 09:47:53PM +0200, Maciej S. Szmigiero wrote:
->> On 9.09.2024 21:08, Peter Xu wrote:
->>> On Mon, Sep 09, 2024 at 08:32:45PM +0200, Maciej S. Szmigiero wrote:
->>>> On 9.09.2024 19:59, Peter Xu wrote:
->>>>> On Thu, Sep 05, 2024 at 04:45:48PM +0300, Avihai Horon wrote:
->>>>>>
->>>>>> On 27/08/2024 20:54, Maciej S. Szmigiero wrote:
->>>>>>> External email: Use caution opening links or attachments
->>>>>>>
->>>>>>>
->>>>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>>>>>
->>>>>>> These SaveVMHandlers help device provide its own asynchronous
->>>>>>> transmission of the remaining data at the end of a precopy phase.
->>>>>>>
->>>>>>> In this use case the save_live_complete_precopy_begin handler might
->>>>>>> be used to mark the stream boundary before proceeding with asynchronous
->>>>>>> transmission of the remaining data while the
->>>>>>> save_live_complete_precopy_end handler might be used to mark the
->>>>>>> stream boundary after performing the asynchronous transmission.
->>>>>>>
->>>>>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->>>>>>> ---
->>>>>>>      include/migration/register.h | 36 ++++++++++++++++++++++++++++++++++++
->>>>>>>      migration/savevm.c           | 35 +++++++++++++++++++++++++++++++++++
->>>>>>>      2 files changed, 71 insertions(+)
->>>>>>>
->>>>>>> diff --git a/include/migration/register.h b/include/migration/register.h
->>>>>>> index f60e797894e5..9de123252edf 100644
->>>>>>> --- a/include/migration/register.h
->>>>>>> +++ b/include/migration/register.h
->>>>>>> @@ -103,6 +103,42 @@ typedef struct SaveVMHandlers {
->>>>>>>           */
->>>>>>>          int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
->>>>>>>
->>>>>>> +    /**
->>>>>>> +     * @save_live_complete_precopy_begin
->>>>>>> +     *
->>>>>>> +     * Called at the end of a precopy phase, before all
->>>>>>> +     * @save_live_complete_precopy handlers and before launching
->>>>>>> +     * all @save_live_complete_precopy_thread threads.
->>>>>>> +     * The handler might, for example, mark the stream boundary before
->>>>>>> +     * proceeding with asynchronous transmission of the remaining data via
->>>>>>> +     * @save_live_complete_precopy_thread.
->>>>>>> +     * When postcopy is enabled, devices that support postcopy will skip this step.
->>>>>>> +     *
->>>>>>> +     * @f: QEMUFile where the handler can synchronously send data before returning
->>>>>>> +     * @idstr: this device section idstr
->>>>>>> +     * @instance_id: this device section instance_id
->>>>>>> +     * @opaque: data pointer passed to register_savevm_live()
->>>>>>> +     *
->>>>>>> +     * Returns zero to indicate success and negative for error
->>>>>>> +     */
->>>>>>> +    int (*save_live_complete_precopy_begin)(QEMUFile *f,
->>>>>>> +                                            char *idstr, uint32_t instance_id,
->>>>>>> +                                            void *opaque);
->>>>>>> +    /**
->>>>>>> +     * @save_live_complete_precopy_end
->>>>>>> +     *
->>>>>>> +     * Called at the end of a precopy phase, after @save_live_complete_precopy
->>>>>>> +     * handlers and after all @save_live_complete_precopy_thread threads have
->>>>>>> +     * finished. When postcopy is enabled, devices that support postcopy will
->>>>>>> +     * skip this step.
->>>>>>> +     *
->>>>>>> +     * @f: QEMUFile where the handler can synchronously send data before returning
->>>>>>> +     * @opaque: data pointer passed to register_savevm_live()
->>>>>>> +     *
->>>>>>> +     * Returns zero to indicate success and negative for error
->>>>>>> +     */
->>>>>>> +    int (*save_live_complete_precopy_end)(QEMUFile *f, void *opaque);
->>>>>>
->>>>>> Is this handler necessary now that migration core is responsible for the
->>>>>> threads and joins them? I don't see VFIO implementing it later on.
->>>>>
->>>>> Right, I spot the same thing.
->>>>>
->>>>> This series added three hooks: begin, end, precopy_thread.
->>>>>
->>>>> What I think is it only needs one, which is precopy_async.  My vague memory
->>>>> was that was what we used to discuss too, so that when migration precopy
->>>>> flushes the final round of iterable data, it does:
->>>>>
->>>>>      (1) loop over all complete_precopy_async() and enqueue the tasks if
->>>>>          existed into the migration worker pool.  Then,
->>>>>
->>>>>      (2) loop over all complete_precopy() like before.
->>>>>
->>>>> Optionally, we can enforce one vmstate handler only provides either
->>>>> complete_precopy_async() or complete_precopy().  In this case VFIO can
->>>>> update the two hooks during setup() by detecting multifd && !mapped_ram &&
->>>>> nocomp.
->>>>>
+On 19.09.2024 23:17, Peter Xu wrote:
+> On Thu, Sep 19, 2024 at 09:49:43PM +0200, Maciej S. Szmigiero wrote:
+>> On 10.09.2024 21:48, Peter Xu wrote:
+>>> On Wed, Aug 28, 2024 at 09:41:17PM -0300, Fabiano Rosas wrote:
+>>>>> +size_t multifd_device_state_payload_size(void)
+>>>>> +{
+>>>>> +    return sizeof(MultiFDDeviceState_t);
+>>>>> +}
 >>>>
->>>> The "_begin" hook is still necessary to mark the end of the device state
->>>> sent via the main migration stream (during the phase VM is still running)
->>>> since we can't start loading the multifd sent device state until all of
->>>> that earlier data finishes loading first.
+>>>> This will not be necessary because the payload size is the same as the
+>>>> data type. We only need it for the special case where the MultiFDPages_t
+>>>> is smaller than the total ram payload size.
 >>>
->>> Ah I remembered some more now, thanks.
+>>> Today I was thinking maybe we should really clean this up, as the current
+>>> multifd_send_data_alloc() is indeed too tricky (blame me.. who requested
+>>> that more or less).  Knowing that VFIO can use dynamic buffers with ->idstr
+>>> and ->buf (I was thinking it could be buf[1M].. but I was wrong...) made
+>>> that feeling stronger.
 >>>
->>> If vfio can send data during iterations this new hook will also not be
->>> needed, right?
+>>> I think we should change it now perhaps, otherwise we'll need to introduce
+>>> other helpers to e.g. reset the device buffers, and that's not only slow
+>>> but also not good looking, IMO.
 >>>
->>> I remember you mentioned you'd have a look and see the challenges there, is
->>> there any conclusion yet on whether we can use multifd even during that?
+>>> So I went ahead with the idea in previous discussion, that I managed to
+>>> change the SendData union into struct; the memory consumption is not super
+>>> important yet, IMHO, but we should still stick with the object model where
+>>> multifd enqueue thread switch buffer with multifd, as it still sounds a
+>>> sane way to do.
+>>>
+>>> Then when that patch is ready, I further tried to make VFIO reuse multifd
+>>> buffers just like what we do with MultiFDPages_t->offset[]: in RAM code we
+>>> don't allocate it every time we enqueue.
+>>>
+>>> I hope it'll also work for VFIO.  VFIO has a specialty on being able to
+>>> dump the config space so it's more complex (and I noticed Maciej's current
+>>> design requires the final chunk of VFIO config data be migrated in one
+>>> packet.. that is also part of the complexity there).  So I allowed that
+>>> part to allocate a buffer but only that.  IOW, I made some API (see below)
+>>> that can either reuse preallocated buffer, or use a separate one only for
+>>> the final bulk.
+>>>
+>>> In short, could both of you have a look at what I came up with below?  I
+>>> did that in patches because I think it's too much to comment, so patches
+>>> may work better.  No concern if any of below could be good changes to you,
+>>> then either Maciej can squash whatever into existing patches (and I feel
+>>> like some existing patches in this series can go away with below design),
+>>> or I can post pre-requisite patch but only if any of you prefer that.
+>>>
+>>> Anyway, let me know, the patches apply on top of this whole series applied
+>>> first.
+>>>
+>>> I also wonder whether there can be any perf difference already (I tested
+>>> all multifd qtest with below, but no VFIO I can run), perhaps not that
+>>> much, but just to mention below should avoid both buffer allocations and
+>>> one round of copy (so VFIO read() directly writes to the multifd buffers
+>>> now).
 >>
->> Yeah, I looked at that and it wasn't a straightforward thing to introduce.
+>> I am not against making MultiFDSendData a struct and maybe introducing
+>> some pre-allocated buffer.
 >>
->> I am worried that with all the things that already piled up (including the
->> new thread pool implementation) we risk missing QEMU 9.2 too if this is
->> included.
+>> But to be honest, that manual memory management with having to remember
+>> to call multifd_device_state_finish() on error paths as in your
+>> proposed patch 3 really invites memory leaks.
+>>
+>> Will think about some other way to have a reusable buffer.
 > 
-> Not explicitly required, but IMHO it'll be nice to provide a paragraph in
-> the new version when repost explaining the challenges of using it during
-> iterations.  It'll be not only for me but for whoever may want to extend
-> your solution to iterations.
-
-Will do.
-
-> I asked this question again mostly because I found that when with iteration
-> support the design looks simpler in begin(), so that the extra sync is not
-> needed.  But I confess you know better than me, so whatever you think best
-> is ok here.
-
-If we do the MIG_CMD_SWITCHOVER / QEMU_VM_COMMAND thing common for all
-devices then we don't need begin() even without live-phase multifd
-device state transfer.
-
->>
->>> It's also a pity that we introduce this hook only because we want a
->>> boundary between "iterable stage" and "final stage".  IIUC if we have any
->>> kind of message telling dest before hand that "we're going to the last
->>> stage" then this hook can be avoided.  Now it's at least inefficient
->>> because we need to trigger begin() per-device, even if I think it's more of
->>> a global request saying that "we need to load all main stream data first
->>> before moving on".
->>
->> It should be pretty easy to remove that begin() hook once it is no longer
->> needed - after all, it's only necessary for the sender.
+> Sure.  That's patch 3, and I suppose then it looks like patch 1 is still
+> OK in one way or another.
 > 
-> Do you mean you have plan to remove the begin() hook even without making
-> interate() work too?  That's definitely nice if so.
+>>
+>> In terms of not making idstr copy (your proposed patch 2) I am not
+>> 100% sure that avoiding such tiny allocation really justifies the risk
+>> of possible use-after-free of a dangling pointer.
+> 
+> Why there's risk?  Someone strdup() on the stack?  That only goes via VFIO
+> itself, so I thought it wasn't that complicated.  But yeah as I said this
+> part (patch 2) is optional.
 
-As I wrote above, I think with MIG_CMD_SWITCHOVER it shouldn't be needed?
+I mean the risk here is somebody providing idstr that somehow gets free'd
+or overwritten before the device state buffer gets sent.
+
+With a static idstr that's obviously not an issue, but I see that, for example,
+vmstate_register_with_alias_id() generates idstr dynamically and this API
+is used by all qdevs that have a VMSD (in device_set_realized()).
+
+>> Not 100% against it either if you are confident that it will never happen.
+>>
+>> By the way, I guess it makes sense to carry these changes in the main patch
+>> set rather than as a separate changes?
+> 
+> Whatever you prefer.
+> 
+> I wrote those patches only because I thought maybe you'd like to run some
+> perf test to see whether they would help at all, and when the patches are
+> there it'll be much easier for you, then you can decide whether it's worth
+> intergrating already, or leave that for later.
+> 
+> If not I'd say they're even lower priority, so feel free to stick with
+> whatever easier for you.  I'm ok there.
+> 
+> However it'll be always good we can still have patch 1 as I mentioned
+> before (as part of your series, if you won't disagree), to make the
+> SendData interface slightly cleaner and easier to follow.
+> 
+
+Will try to include these patches in my patch set if they don't cause any
+downtime regressions.
 
 Thanks,
 Maciej
-
 
 
