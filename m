@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36976CF58CB
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 04:33:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F208CF58CB
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 04:35:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srVK8-0004V0-BT; Fri, 20 Sep 2024 00:32:52 -0400
+	id 1srVML-0000Cb-9B; Fri, 20 Sep 2024 00:35:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1srVK5-0004Tv-SG
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 00:32:49 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1srVMH-0000AB-S4
+ for qemu-devel@nongnu.org; Fri, 20 Sep 2024 00:35:06 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1srVK4-0007mt-1c
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 00:32:49 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1srVMG-00086u-4e
+ for qemu-devel@nongnu.org; Fri, 20 Sep 2024 00:35:05 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0268F907A6;
- Fri, 20 Sep 2024 07:32:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 15750907A9;
+ Fri, 20 Sep 2024 07:34:43 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 731FE1408CB;
- Fri, 20 Sep 2024 07:32:46 +0300 (MSK)
-Message-ID: <6f2571c5-72f5-4da9-b254-860be0b06a6f@tls.msk.ru>
-Date: Fri, 20 Sep 2024 07:32:46 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8B8C81408D0;
+ Fri, 20 Sep 2024 07:35:02 +0300 (MSK)
+Message-ID: <317e4bbd-383e-48f9-b450-be334d65550a@tls.msk.ru>
+Date: Fri, 20 Sep 2024 07:35:02 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] hw/char/stm32l4x5_usart.c: Enable USART ACK bit response
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: Jacob Abrams <satur9nine@gmail.com>, qemu-devel@nongnu.org
 Cc: philmd@linaro.org, peter.maydell@linaro.org
 References: <20240911043255.51966-1-satur9nine@gmail.com>
+ <6f2571c5-72f5-4da9-b254-860be0b06a6f@tls.msk.ru>
 Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -77,9 +78,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20240911043255.51966-1-satur9nine@gmail.com>
+In-Reply-To: <6f2571c5-72f5-4da9-b254-860be0b06a6f@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -103,21 +104,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11.09.2024 07:32, Jacob Abrams wrote:
-> SW modifying USART_CR1 TE bit should cuase HW to respond by altering
-> USART_ISR TEACK bit, and likewise for RE and REACK bit.
-> 
-> This resolves some but not all issues necessary for the official STM USART
-> HAL driver to function as is.
-> 
-> Fixes: 87b77e6e01ca ("hw/char/stm32l4x5_usart: Enable serial read and write")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2540
+On 20.09.2024 07:32, Michael Tokarev wrote:
+...
+> Though I'm a bit unsure about the target series. !2540
+> talks about 9.0.2, but 9.0 does not have 87b77e6e01ca
+> which is being fixed by this change.  Is !2540 incorrect?
 
-This seems to be a -stable material, is it not?
-
-Though I'm a bit unsure about the target series. !2540
-talks about 9.0.2, but 9.0 does not have 87b77e6e01ca
-which is being fixed by this change.  Is !2540 incorrect?
+Ah, n/m, !2540 does indeed mention in 9.0 the device were
+non-functional.  So the fix is for 9.1 only.
 
 Thanks,
 
