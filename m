@@ -4,33 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04EF9CF58E5
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 07:46:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF01ACF58E4
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 07:46:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srYHA-0007J9-2c; Fri, 20 Sep 2024 03:42:00 -0400
+	id 1srYI6-00049b-3c; Fri, 20 Sep 2024 03:42:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1srYH8-0007Cz-6A; Fri, 20 Sep 2024 03:41:58 -0400
+ id 1srYI3-0003m4-H9; Fri, 20 Sep 2024 03:42:55 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1srYH6-0000FC-Kd; Fri, 20 Sep 2024 03:41:57 -0400
+ id 1srYI1-0000JV-MB; Fri, 20 Sep 2024 03:42:55 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 053D79085D;
- Fri, 20 Sep 2024 10:41:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B8AF890867;
+ Fri, 20 Sep 2024 10:41:24 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 94FE81409E0;
- Fri, 20 Sep 2024 10:41:38 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5FA171409EA;
+ Fri, 20 Sep 2024 10:41:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 07/22] tests/unit: Really build pbkdf test on macOS
-Date: Fri, 20 Sep 2024 10:41:19 +0300
-Message-Id: <20240920074134.664961-8-mjt@tls.msk.ru>
+Subject: [PULL 17/22] tests/bench: Rename test_akcipher_keys.inc ->
+ test_akcipher_keys.c.inc
+Date: Fri, 20 Sep 2024 10:41:29 +0300
+Message-Id: <20240920074134.664961-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20240920074134.664961-1-mjt@tls.msk.ru>
 References: <20240920074134.664961-1-mjt@tls.msk.ru>
@@ -62,34 +63,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Fix a typo to run the pbkdf crypto cipher tests on macOS.
+Since commit 139c1837db ("meson: rename included C source files
+to .c.inc"), QEMU standard procedure for included C files is to
+use *.c.inc.
 
- $ make check-unit
-   ...
-   87/102 qemu:unit / test-crypto-pbkdf      OK      2.35s   17 subtests passed
+Besides, since commit 6a0057aa22 ("docs/devel: make a statement
+about includes") this is documented in the Coding Style:
 
-Fixes: ebe0302ac8 ("tests/unit: build pbkdf test on macOS")
+  If you do use template header files they should be named with
+  the ``.c.inc`` or ``.h.inc`` suffix to make it clear they are
+  being included for expansion.
+
+Rename "test_akcipher_keys.inc" as "test_akcipher_keys.c.inc".
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- tests/unit/test-crypto-pbkdf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/bench/benchmark-crypto-akcipher.c                         | 2 +-
+ .../bench/{test_akcipher_keys.inc => test_akcipher_keys.c.inc}  | 0
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ rename tests/bench/{test_akcipher_keys.inc => test_akcipher_keys.c.inc} (100%)
 
-diff --git a/tests/unit/test-crypto-pbkdf.c b/tests/unit/test-crypto-pbkdf.c
-index b477cf4e4b..12ee808fbc 100644
---- a/tests/unit/test-crypto-pbkdf.c
-+++ b/tests/unit/test-crypto-pbkdf.c
-@@ -25,7 +25,7 @@
- #include <sys/resource.h>
- #endif
+diff --git a/tests/bench/benchmark-crypto-akcipher.c b/tests/bench/benchmark-crypto-akcipher.c
+index 750c7e89ee..0a6e5db1d6 100644
+--- a/tests/bench/benchmark-crypto-akcipher.c
++++ b/tests/bench/benchmark-crypto-akcipher.c
+@@ -16,7 +16,7 @@
+ #include "crypto/akcipher.h"
+ #include "standard-headers/linux/virtio_crypto.h"
  
--#if defined(_WIN32) || defined(RUSAGE_THREAD) || defined(CONFIG_DARWNI)
-+#if defined(_WIN32) || defined(RUSAGE_THREAD) || defined(CONFIG_DARWIN)
- #include "crypto/pbkdf.h"
+-#include "test_akcipher_keys.inc"
++#include "test_akcipher_keys.c.inc"
  
- typedef struct QCryptoPbkdfTestData QCryptoPbkdfTestData;
+ static QCryptoAkCipher *create_rsa_akcipher(const uint8_t *priv_key,
+                                             size_t keylen,
+diff --git a/tests/bench/test_akcipher_keys.inc b/tests/bench/test_akcipher_keys.c.inc
+similarity index 100%
+rename from tests/bench/test_akcipher_keys.inc
+rename to tests/bench/test_akcipher_keys.c.inc
 -- 
 2.39.5
 
