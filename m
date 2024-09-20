@@ -4,34 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87593CF58E5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 875C8CF58E6
 	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 07:47:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srYIX-0006Yy-Ju; Fri, 20 Sep 2024 03:43:25 -0400
+	id 1srYI4-0003qc-G1; Fri, 20 Sep 2024 03:42:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1srYIA-0004qU-SU; Fri, 20 Sep 2024 03:43:03 -0400
+ id 1srYHj-0001rQ-9s; Fri, 20 Sep 2024 03:42:37 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1srYI8-0000Lo-SI; Fri, 20 Sep 2024 03:43:02 -0400
+ id 1srYHh-0000JL-GN; Fri, 20 Sep 2024 03:42:35 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F2C869086B;
- Fri, 20 Sep 2024 10:41:26 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3B3E890866;
+ Fri, 20 Sep 2024 10:41:24 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 94CAC1409EE;
- Fri, 20 Sep 2024 10:41:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D24FC1409E9;
+ Fri, 20 Sep 2024 10:41:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 21/22] license: Update deprecated SPDX tag GPL-2.0+ to
- GPL-2.0-or-later
-Date: Fri, 20 Sep 2024 10:41:33 +0300
-Message-Id: <20240920074134.664961-22-mjt@tls.msk.ru>
+Subject: [PULL 16/22] target/hexagon: Rename macros.inc -> macros.h.inc
+Date: Fri, 20 Sep 2024 10:41:28 +0300
+Message-Id: <20240920074134.664961-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20240920074134.664961-1-mjt@tls.msk.ru>
 References: <20240920074134.664961-1-mjt@tls.msk.ru>
@@ -63,120 +62,84 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The 'GPL-2.0+' license identifier has been deprecated since license
-list version 2.0rc2 [1] and replaced by the 'GPL-2.0-or-later' [2]
-tag.
+Since commits 139c1837db ("meson: rename included C source files
+to .c.inc") and 0979ed017f ("meson: rename .inc.h files to .h.inc"),
+EMU standard procedure for included header files is to use *.h.inc.
 
-[1] https://spdx.org/licenses/GPL-2.0+.html
-[2] https://spdx.org/licenses/GPL-2.0-or-later.html
+Besides, since commit 6a0057aa22 ("docs/devel: make a statement
+about includes") this is documented in the Coding Style:
 
-Mechanical patch running:
+  If you do use template header files they should be named with
+  the ``.c.inc`` or ``.h.inc`` suffix to make it clear they are
+  being included for expansion.
 
-  $ sed -i -e s/GPL-2.0+/GPL-2.0-or-later/ \
-    $(git grep -lP 'SPDX-License-Identifier: \W+GPL-2.0\+[ $]' \
-        | egrep -v '^linux-headers|^include/standard-headers')
+Therefore rename "macros.inc" as "macros.h.inc".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Brian Cain <bcain@quicinc.com>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/core/uboot_image.h           | 2 +-
- hw/nvram/fw_cfg-acpi.c          | 2 +-
- hw/virtio/virtio-acpi.c         | 2 +-
- include/hw/nvram/fw_cfg_acpi.h  | 2 +-
- include/hw/usb/dwc2-regs.h      | 2 +-
- include/hw/virtio/virtio-acpi.h | 2 +-
- target/riscv/cpu-param.h        | 2 +-
- target/s390x/cpu-param.h        | 2 +-
- 8 files changed, 8 insertions(+), 8 deletions(-)
+ target/hexagon/gen_idef_parser_funcs.py                 | 2 +-
+ target/hexagon/idef-parser/README.rst                   | 4 ++--
+ target/hexagon/idef-parser/{macros.inc => macros.h.inc} | 0
+ target/hexagon/meson.build                              | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+ rename target/hexagon/idef-parser/{macros.inc => macros.h.inc} (100%)
 
-diff --git a/hw/core/uboot_image.h b/hw/core/uboot_image.h
-index 18ac293359..e4dcfb08f0 100644
---- a/hw/core/uboot_image.h
-+++ b/hw/core/uboot_image.h
-@@ -1,4 +1,4 @@
--/* SPDX-License-Identifier: GPL-2.0+ */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
- /*
-  * (C) Copyright 2008 Semihalf
-  *
-diff --git a/hw/nvram/fw_cfg-acpi.c b/hw/nvram/fw_cfg-acpi.c
-index 58cdcd3121..2e6ef89b98 100644
---- a/hw/nvram/fw_cfg-acpi.c
-+++ b/hw/nvram/fw_cfg-acpi.c
-@@ -1,4 +1,4 @@
--// SPDX-License-Identifier: GPL-2.0+
-+// SPDX-License-Identifier: GPL-2.0-or-later
- /*
-  * Add fw_cfg device in DSDT
-  *
-diff --git a/hw/virtio/virtio-acpi.c b/hw/virtio/virtio-acpi.c
-index 230a669500..85becef03c 100644
---- a/hw/virtio/virtio-acpi.c
-+++ b/hw/virtio/virtio-acpi.c
-@@ -1,4 +1,4 @@
--// SPDX-License-Identifier: GPL-2.0+
-+// SPDX-License-Identifier: GPL-2.0-or-later
- /*
-  * virtio ACPI Support
-  *
-diff --git a/include/hw/nvram/fw_cfg_acpi.h b/include/hw/nvram/fw_cfg_acpi.h
-index b39eb0490f..dfd2a44ef0 100644
---- a/include/hw/nvram/fw_cfg_acpi.h
-+++ b/include/hw/nvram/fw_cfg_acpi.h
-@@ -1,4 +1,4 @@
--/* SPDX-License-Identifier: GPL-2.0+ */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
- /*
-  * ACPI support for fw_cfg
-  *
-diff --git a/include/hw/usb/dwc2-regs.h b/include/hw/usb/dwc2-regs.h
-index 0bf3f2aa17..523b112c5e 100644
---- a/include/hw/usb/dwc2-regs.h
-+++ b/include/hw/usb/dwc2-regs.h
-@@ -1,4 +1,4 @@
--/* SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause) */
-+/* SPDX-License-Identifier: (GPL-2.0-or-later OR BSD-3-Clause) */
- /*
-  * Imported from the Linux kernel file drivers/usb/dwc2/hw.h, commit
-  * a89bae709b3492b478480a2c9734e7e9393b279c ("usb: dwc2: Move
-diff --git a/include/hw/virtio/virtio-acpi.h b/include/hw/virtio/virtio-acpi.h
-index cace2a315f..cdfbd943ae 100644
---- a/include/hw/virtio/virtio-acpi.h
-+++ b/include/hw/virtio/virtio-acpi.h
-@@ -1,4 +1,4 @@
--/* SPDX-License-Identifier: GPL-2.0+ */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
- /*
-  * ACPI support for virtio
-  */
-diff --git a/target/riscv/cpu-param.h b/target/riscv/cpu-param.h
-index 1fbd64939d..25686192c0 100644
---- a/target/riscv/cpu-param.h
-+++ b/target/riscv/cpu-param.h
-@@ -2,7 +2,7 @@
-  * RISC-V cpu parameters for qemu.
-  *
-  * Copyright (c) 2017-2018 SiFive, Inc.
-- * SPDX-License-Identifier: GPL-2.0+
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
+diff --git a/target/hexagon/gen_idef_parser_funcs.py b/target/hexagon/gen_idef_parser_funcs.py
+index eb494abba8..72f11c68ca 100644
+--- a/target/hexagon/gen_idef_parser_funcs.py
++++ b/target/hexagon/gen_idef_parser_funcs.py
+@@ -50,7 +50,7 @@ def main():
+     tagimms = hex_common.get_tagimms()
  
- #ifndef RISCV_CPU_PARAM_H
-diff --git a/target/s390x/cpu-param.h b/target/s390x/cpu-param.h
-index 11d23b600d..a05ffcf78d 100644
---- a/target/s390x/cpu-param.h
-+++ b/target/s390x/cpu-param.h
-@@ -2,7 +2,7 @@
-  * S/390 cpu parameters for qemu.
-  *
-  * Copyright (c) 2009 Ulrich Hecht
-- * SPDX-License-Identifier: GPL-2.0+
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
+     with open(sys.argv[-1], "w") as f:
+-        f.write('#include "macros.inc"\n\n')
++        f.write('#include "macros.h.inc"\n\n')
  
- #ifndef S390_CPU_PARAM_H
+         for tag in hex_common.tags:
+             ## Skip the priv instructions
+diff --git a/target/hexagon/idef-parser/README.rst b/target/hexagon/idef-parser/README.rst
+index d0aa34309b..7199177ee3 100644
+--- a/target/hexagon/idef-parser/README.rst
++++ b/target/hexagon/idef-parser/README.rst
+@@ -138,7 +138,7 @@ we obtain the pseudo code
+ with macros such as ``fJUMPR`` intact.
+ 
+ The second step is to expand macros into a form suitable for our parser.
+-These macros are defined in ``idef-parser/macros.inc`` and the step is
++These macros are defined in ``idef-parser/macros.h.inc`` and the step is
+ carried out by the ``prepare`` script which runs the C preprocessor on
+ ``idef_parser_input.h.inc`` to produce
+ ``idef_parser_input.preprocessed.h.inc``.
+@@ -266,7 +266,7 @@ in plain C is defined as
+     #define fABS(A) (((A) < 0) ? (-(A)) : (A))
+ 
+ and returns the absolute value of the argument ``A``. This macro is not included
+-in ``idef-parser/macros.inc`` and as such is not expanded and kept as a "call"
++in ``idef-parser/macros.h.inc`` and as such is not expanded and kept as a "call"
+ ``fABS(...)``. Reason being, that ``fABS`` is easier to match and map to
+ ``tcg_gen_abs_<width>``, compared to the full ternary expression above. Loads of
+ macros in ``macros.h`` are kept unexpanded to aid in parsing, as seen in the
+diff --git a/target/hexagon/idef-parser/macros.inc b/target/hexagon/idef-parser/macros.h.inc
+similarity index 100%
+rename from target/hexagon/idef-parser/macros.inc
+rename to target/hexagon/idef-parser/macros.h.inc
+diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
+index 9ea1f4fc59..f1723778a6 100644
+--- a/target/hexagon/meson.build
++++ b/target/hexagon/meson.build
+@@ -284,7 +284,7 @@ if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
+         'idef_parser_input.preprocessed.h.inc',
+         output: 'idef_parser_input.preprocessed.h.inc',
+         input: idef_parser_input_generated,
+-        depend_files: [idef_parser_dir / 'macros.inc'],
++        depend_files: [idef_parser_dir / 'macros.h.inc'],
+         command: [idef_parser_dir / 'prepare', '@INPUT@', '-I' + idef_parser_dir, '-o', '@OUTPUT@'],
+     )
+ 
 -- 
 2.39.5
 
