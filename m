@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3842BCF9C55
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 15:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91340CF9C55
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 15:47:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srfi8-0006CP-O0; Fri, 20 Sep 2024 11:38:20 -0400
+	id 1srfqP-0004nF-VC; Fri, 20 Sep 2024 11:46:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=h092=QS=kaod.org=clg@ozlabs.org>)
- id 1srfhy-00069u-LW; Fri, 20 Sep 2024 11:38:11 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1srfqO-0004mL-G4
+ for qemu-devel@nongnu.org; Fri, 20 Sep 2024 11:46:52 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=h092=QS=kaod.org=clg@ozlabs.org>)
- id 1srfhv-00075n-NW; Fri, 20 Sep 2024 11:38:10 -0400
+ id 1srfqM-0000Bg-IK
+ for qemu-devel@nongnu.org; Fri, 20 Sep 2024 11:46:52 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4X9Gjv0Z3xz4xcN;
- Sat, 21 Sep 2024 01:37:55 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4X9Gw50CsNz4xcY;
+ Sat, 21 Sep 2024 01:46:45 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4X9Gjs0BcYz4xSQ;
- Sat, 21 Sep 2024 01:37:52 +1000 (AEST)
-Message-ID: <9dc36749-d33e-48b4-bde0-9e48d8a481b5@kaod.org>
-Date: Fri, 20 Sep 2024 17:37:48 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4X9Gw35dgnz4xS0;
+ Sat, 21 Sep 2024 01:46:43 +1000 (AEST)
+Message-ID: <53ca713b-f4b3-45e6-a0bc-6836b1f837b5@kaod.org>
+Date: Fri, 20 Sep 2024 17:46:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Convert the powernv tests from
- boot_linux_console.py
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-ppc@nongnu.org
-References: <20240920150319.81723-1-thuth@redhat.com>
+Subject: Re: [PATCH] hw/ppc: fix decrementer with BookE timers
+To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com
+References: <20240715084639.983127-1-chigot@adacore.com>
+ <42fe0e65-e1c1-47be-9ba1-9a43e4a05192@kaod.org>
+ <CAJ307EjvT1PES6VV96NRj+PNtbhjqRiHX+b73wAReaQjQHfv3w@mail.gmail.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240920150319.81723-1-thuth@redhat.com>
+In-Reply-To: <CAJ307EjvT1PES6VV96NRj+PNtbhjqRiHX+b73wAReaQjQHfv3w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=h092=QS=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -66,140 +67,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/20/24 17:03, Thomas Huth wrote:
-> Move the tests into the already existing test_ppc64_powernv.py
-> file.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+Hello Clément,
 
+> Unless I'm wrong this patch has not been queued yet. Is there any
+> reason for this ?
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+I don't think there was a PPC PR yet. We are just starting the
+QEMU 9.2 cycle [*]. Since this is a fix that applies on older
+releases, may be we could have a PR in not too long.
 
 Thanks,
 
 C.
 
+[*] https://wiki.qemu.org/Planning/9.2
 
-> ---
->   Based-on: 20240919185749.71222-1-thuth@redhat.com
-> 
->   tests/avocado/boot_linux_console.py    | 46 --------------------------
->   tests/functional/test_ppc64_powernv.py | 42 +++++++++++++++++++++--
->   2 files changed, 39 insertions(+), 49 deletions(-)
-> 
-> diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-> index 759fda9cc8..23d1b3587b 100644
-> --- a/tests/avocado/boot_linux_console.py
-> +++ b/tests/avocado/boot_linux_console.py
-> @@ -907,49 +907,3 @@ def test_arm_ast2600_debian(self):
->           self.wait_for_console_pattern("SMP: Total of 2 processors activated")
->           self.wait_for_console_pattern("No filesystem could mount root")
->   
-> -    def do_test_ppc64_powernv(self, proc):
-> -        self.require_accelerator("tcg")
-> -        images_url = ('https://github.com/open-power/op-build/releases/download/v2.7/')
-> -
-> -        kernel_url = images_url + 'zImage.epapr'
-> -        kernel_hash = '0ab237df661727e5392cee97460e8674057a883c5f74381a128fa772588d45cd'
-> -        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash,
-> -                                       algorithm='sha256')
-> -        self.vm.set_console()
-> -        self.vm.add_args('-kernel', kernel_path,
-> -                         '-append', 'console=tty0 console=hvc0',
-> -                         '-device', 'pcie-pci-bridge,id=bridge1,bus=pcie.1,addr=0x0',
-> -                         '-device', 'nvme,bus=pcie.2,addr=0x0,serial=1234',
-> -                         '-device', 'e1000e,bus=bridge1,addr=0x3',
-> -                         '-device', 'nec-usb-xhci,bus=bridge1,addr=0x2')
-> -        self.vm.launch()
-> -
-> -        self.wait_for_console_pattern("CPU: " + proc + " generation processor")
-> -        self.wait_for_console_pattern("zImage starting: loaded")
-> -        self.wait_for_console_pattern("Run /init as init process")
-> -        # Device detection output driven by udev probing is sometimes cut off
-> -        # from console output, suspect S14silence-console init script.
-> -
-> -    def test_ppc_powernv8(self):
-> -        """
-> -        :avocado: tags=arch:ppc64
-> -        :avocado: tags=machine:powernv8
-> -        :avocado: tags=accel:tcg
-> -        """
-> -        self.do_test_ppc64_powernv('P8')
-> -
-> -    def test_ppc_powernv9(self):
-> -        """
-> -        :avocado: tags=arch:ppc64
-> -        :avocado: tags=machine:powernv9
-> -        :avocado: tags=accel:tcg
-> -        """
-> -        self.do_test_ppc64_powernv('P9')
-> -
-> -    def test_ppc_powernv10(self):
-> -        """
-> -        :avocado: tags=arch:ppc64
-> -        :avocado: tags=machine:powernv10
-> -        :avocado: tags=accel:tcg
-> -        """
-> -        self.do_test_ppc64_powernv('P10')
-> diff --git a/tests/functional/test_ppc64_powernv.py b/tests/functional/test_ppc64_powernv.py
-> index 67497d6404..685e2178ed 100755
-> --- a/tests/functional/test_ppc64_powernv.py
-> +++ b/tests/functional/test_ppc64_powernv.py
-> @@ -7,10 +7,10 @@
->   # This work is licensed under the terms of the GNU GPL, version 2 or
->   # later.  See the COPYING file in the top-level directory.
->   
-> -from qemu_test import QemuSystemTest, Asset
-> +from qemu_test import LinuxKernelTest, Asset
->   from qemu_test import wait_for_console_pattern
->   
-> -class powernvMachine(QemuSystemTest):
-> +class powernvMachine(LinuxKernelTest):
->   
->       timeout = 90
->       KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 console=hvc0 '
-> @@ -78,5 +78,41 @@ def test_linux_big_boot(self):
->           wait_for_console_pattern(self, console_pattern, self.panic_message)
->           wait_for_console_pattern(self, self.good_message, self.panic_message)
->   
-> +
-> +    ASSET_EPAPR_KERNEL = Asset(
-> +        ('https://github.com/open-power/op-build/releases/download/v2.7/'
-> +         'zImage.epapr'),
-> +        '0ab237df661727e5392cee97460e8674057a883c5f74381a128fa772588d45cd')
-> +
-> +    def do_test_ppc64_powernv(self, proc):
-> +        self.require_accelerator("tcg")
-> +        kernel_path = self.ASSET_EPAPR_KERNEL.fetch()
-> +        self.vm.set_console()
-> +        self.vm.add_args('-kernel', kernel_path,
-> +                         '-append', 'console=tty0 console=hvc0',
-> +                         '-device', 'pcie-pci-bridge,id=bridge1,bus=pcie.1,addr=0x0',
-> +                         '-device', 'nvme,bus=pcie.2,addr=0x0,serial=1234',
-> +                         '-device', 'e1000e,bus=bridge1,addr=0x3',
-> +                         '-device', 'nec-usb-xhci,bus=bridge1,addr=0x2')
-> +        self.vm.launch()
-> +
-> +        self.wait_for_console_pattern("CPU: " + proc + " generation processor")
-> +        self.wait_for_console_pattern("zImage starting: loaded")
-> +        self.wait_for_console_pattern("Run /init as init process")
-> +        # Device detection output driven by udev probing is sometimes cut off
-> +        # from console output, suspect S14silence-console init script.
-> +
-> +    def test_powernv8(self):
-> +        self.set_machine('powernv8')
-> +        self.do_test_ppc64_powernv('P8')
-> +
-> +    def test_powernv9(self):
-> +        self.set_machine('powernv9')
-> +        self.do_test_ppc64_powernv('P9')
-> +
-> +    def test_powernv10(self):
-> +        self.set_machine('powernv10')
-> +        self.do_test_ppc64_powernv('P10')
-> +
->   if __name__ == '__main__':
-> -    QemuSystemTest.main()
-> +    LinuxKernelTest.main()
 
 
