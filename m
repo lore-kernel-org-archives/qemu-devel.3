@@ -4,61 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 269F1CF3973
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 00:04:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28820CF3976
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 00:04:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srR7d-00035k-KX; Thu, 19 Sep 2024 20:03:42 -0400
+	id 1srR7e-00039K-NU; Thu, 19 Sep 2024 20:03:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alan.adamson@oracle.com>)
- id 1srR7a-00033Y-DJ; Thu, 19 Sep 2024 20:03:38 -0400
+ id 1srR7a-00033Z-Hx; Thu, 19 Sep 2024 20:03:38 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alan.adamson@oracle.com>)
- id 1srR7X-0003Qo-OV; Thu, 19 Sep 2024 20:03:38 -0400
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48JLN9mc010092;
- Fri, 20 Sep 2024 00:03:26 GMT
+ id 1srR7X-0003R6-Va; Thu, 19 Sep 2024 20:03:38 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48JLN2xS009926;
+ Fri, 20 Sep 2024 00:03:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=corp-2023-11-20; bh=/2NNYjOkAxdbdq
- n/DlsO4FCAB9/eG5reVNgJlrfBgRk=; b=QzhH1ISy8pbrKuYUdA38aDRx5Nh2zt
- L2sYAqVYDmey+/QohuvsuEtLotZOgcEcYrgPkDaayJn8uyKxAcqfpTgW6B2w7s4Q
- Qxl2eiGEbSzHEOC/W6e3bZKod1rctHOHeelIBOxqkF6Ou+cKBw6Sf4Zgh39jX9xi
- ER8MtpLkaQeYKv3qIsrCRed63X759UxekYFkIslnecNnk6yqxqGMn1/UedvQ/ElH
- luS1Z9/YunVRLn2trPxMfMApadKBXHH6mTMPB/V4rryodJaAQd2i22/ZhrHaYD12
- BJUNuJtTgJ/VkCyTBixvJlgmq3H9dhhKzBwIo7fIHMXB2ioAw9hSyl4g==
+ from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding; s=corp-2023-11-20; bh=E
+ 9QE9Kl2sQglmU4opycoo35QhjBLL1Q4abYB9l436Z4=; b=kSBxh3RK1jGzZ2H4j
+ PqF0GTfhiiA7uJ1EtPgJyY/LcgoH0XyVlaVBQpK8nXlc+ejutO4f6T7VjjH1HHRU
+ Pmy0rrB20u0GVOcoHiZQKOfG/Cwg2L1I8ECTYMuqZn+F7M/iBwLVEWpaWa9LqtLU
+ jXfZb8+jdQPKu4DQokgt4MEFMYswUtWsw4lYT1qHL5PLgfh3EyCGDeNw13Pw2iGY
+ nR2QHJFnvFOYCBsLLuCZidr7eQ4hgoyZWokqrQt37c+Jlteth5+KcSYy1rCl8nk0
+ xFxkxTMfSqd+O+/oCaN6SeXYiot+Gvf19ZMx3iI4qY02iObEAKDrwMCgO1Og9L+m
+ Aorcw==
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 41n3n3nf3s-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 41n3sd5j36-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 20 Sep 2024 00:03:26 +0000 (GMT)
+ Fri, 20 Sep 2024 00:03:27 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 48JLmQLW034049; Fri, 20 Sep 2024 00:03:25 GMT
+ with ESMTP id 48JLBTUs034143; Fri, 20 Sep 2024 00:03:27 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 41nycmg2dk-1
+ 41nycmg2ec-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 20 Sep 2024 00:03:25 +0000
+ Fri, 20 Sep 2024 00:03:27 +0000
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48K03Pr8023686;
- Fri, 20 Sep 2024 00:03:25 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48K03PrA023686;
+ Fri, 20 Sep 2024 00:03:26 GMT
 Received: from ca-dev94.us.oracle.com (ca-dev94.us.oracle.com [10.129.136.30])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 41nycmg2cn-1; Fri, 20 Sep 2024 00:03:25 +0000
+ ESMTP id 41nycmg2cn-2; Fri, 20 Sep 2024 00:03:26 +0000
 From: Alan Adamson <alan.adamson@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: alan.adamson@oracle.com, kbusch@kernel.org, its@irrelevant.dk,
  qemu-block@nongnu.org
-Subject: [PATCH v2 0/1] hw/nvme: add atomic write support
-Date: Thu, 19 Sep 2024 17:07:20 -0700
-Message-ID: <20240920000721.993119-1-alan.adamson@oracle.com>
+Subject: [PATCH v2 1/1] hw/nvme: add atomic write support
+Date: Thu, 19 Sep 2024 17:07:21 -0700
+Message-ID: <20240920000721.993119-2-alan.adamson@oracle.com>
 X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20240920000721.993119-1-alan.adamson@oracle.com>
+References: <20240920000721.993119-1-alan.adamson@oracle.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
@@ -69,8 +72,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
  malwarescore=0 spamscore=0 mlxscore=0 adultscore=0 suspectscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2408220000 definitions=main-2409190161
-X-Proofpoint-GUID: mu7GDz0nuLB02xqLHrMC5AesjLpXfb56
-X-Proofpoint-ORIG-GUID: mu7GDz0nuLB02xqLHrMC5AesjLpXfb56
+X-Proofpoint-ORIG-GUID: VpzX7LuyZsN6SUHT57CNJ2dnvW8mNHHV
+X-Proofpoint-GUID: VpzX7LuyZsN6SUHT57CNJ2dnvW8mNHHV
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=alan.adamson@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -96,123 +99,338 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Changelog:
+Adds support for the controller atomic parameters: AWUN and AWUPF. Atomic
+Compare and Write Unit (ACWU) is not currently supported.
 
-v2:	- Include changes suggested by Klaus
-	- Check for READ/WRITE commmands when walking SQs.
-	- Updated the "cover-letter" below with new fio example.
+Writes that adhere to the ACWU and AWUPF parameters are guaranteed to be atomic.
 
-=====================================================================================
-
-Since there is work in the Linux NVMe Driver community to add Atomic Write
-support, it would be desirable to be able to test it with qemu nvme emulation.
- 
-This patch will focus on supporting NVMe controller atomic write parameters (AWUN and
-AWUPF) but can be extended to support Namespace parameters (NAWUN and NAWUPF)
-and Boundaries (NABSN, NABO, and NABSPF).
- 
-Atomic Write Parameters for NVMe QEMU
--------------------------------------
 New NVMe QEMU Parameters (See NVMe Specification for details):
-        atomic.dn (default off) - Set the value of Disable Normal.
-        atomic.awun=UINT16 (default: 0)
-        atomic.awupf=UINT16 (default: 0)
- 
-qemu command line example:
-        qemu-system-x86_64 -cpu host --enable-kvm -smp cpus=4 -no-reboot -m 8192M -drive file=./disk.img,if=ide \
-        -boot c -device e1000,netdev=net0,mac=DE:CC:CC:EF:99:88 -netdev tap,id=net0 \
-	-device nvme,id=nvme-ctrl-0,serial=nvme-1,atomic.dn=off,atomic.awun=15,atomic.awupf=7 \
-        -drive file=./nvme.img,if=none,id=nvm-1 -device nvme-ns,drive=nvm-1,bus=nvme-ctrl-0 nvme-ns,drive=nvm-1,bus=nvme-ctrl-0
- 
-Making Writes Atomic:
----------------------
-Currently, as the nvme emulator walks through the Submission Queue (SQ)
-(nvme_process_sq()), it takes each request (read/write/etc) off the SQ and starts its
-execution and then continues on with the next SQ entry until all entries are started. It
-is likely, multiple requests (from multiple SQs) will be executing in parallel and acting
-on a common LBA range.  This prevents writes from completing atomically. When a write
-completes atomically, either all or none of the LBAs will be committed to media.  This
-means writes to a common LBA range can not be done in parallel if writes are going to
-be atomic. The nvme emulator does not currently guarantee this and LBAs
-from multiple requests may get committed.  The fio test shown below, comfirms this.
- 
-Prior to taking a command off of a SQ, a check needs to be done to determine if it
-conflicts atomically with a currently executing command.
- 
-bool nvme_atomic_write_check() - Checks a NVMe command to determine if it can be started,
-or if it conflicts atomically with a currently executing command.
- 
-Returns:   NVME_ATOMIC_NO_START - The command atomically conflicts with a currently
-           executing command and can not be started.
- 
-           NVME_ATOMIC_START_ATOMIC  - The command is an atomic write, does not
-           conflict atomically with a currently executing command, and can be started.
- 
-           NVME_ATOMIC_START_NONATOMIC - The command is not an atomic write, but it
-           can be started.
+       atomic.dn (default off) - Set the value of Disable Normal.
+       atomic.awun=UINT16 (default: 0)
+       atomic.awupf=UINT16 (default: 0)
 
-If a command is blocked from being started, nvme_process_sq() needs to be rescheduled.
- 
-Implementation:
----------------
-Each SQ maintains a list of executing requests (sq->out_req_list). When a command is
-taken off the SQ to start executing it, it is placed on out_req_list and removed when
-the command completes and placed on the Completion Queue (CQ). When nvme_process_sq()
-is executing and looking to take a command off the SQ, nvme_atomic_write_check() is
-called to determine if it is atomically safe to start executing the command. If it is
-safe, nvme_atomic_write_check() will return NVME_ATOMIC_START_ATOMIC or
-NVME_ATOMIC_START_NONATOMIC. nvme_process_sq() then pulls the command off the SQ,
-places an associated request onto out_req_list. If it is not atomically safe,
-(nvme_atomic_write_check() returns NVME_ATOMIC_NO_START). The command remains on the SQ,
-and processing of that SQ stops and nvme_process_sq() will be rescheduled.
-When nvme_atomic_write_check() is called, the out_req_list for each SQ is walked and the
-LBA range of the command to be started is compared with each executing request.
+By default (Disable Normal set to zero), the maximum atomic write size is
+set to the AWUN value.  If Disable Normal is set, the maximum atomic write
+size is set to AWUPF.
 
-What is the Maximum Atomic Write Size?
---------------------------------------
-By default the qemu parameter atomic.awun specifices that maximum atomic write size which
-will be used by maximum atomic Write size. If Disable Normal is set to true with qemu
-parameter atomic.dn or with the SET FEATURE command, the atomic.awupf value will specify
-the maximum atomic write size.
-
-Testing
--------
-NVMe QEMU Parameters used: atomic.dn=off,atomic.awun=63,atomic.awupf=63
- 
-# nvme id-ctrl /dev/nvme0 | grep awun
-awun      : 15
-# nvme id-ctrl /dev/nvme0 | grep awupf
-awupf     : 7
-# nvme id-ctrl /dev/nvme0 | grep acwu
-acwu      : 0    < Since qemu-nvme doesn't support Compare and Write, this is always zero
-# nvme get-feature /dev/nvme0  -f 0xa
-get-feature:0x0a (Write Atomicity Normal), Current value:00000000
-#
-
-fio testing - using upstream version fio-3.37-124 (includes atomic write support) 
----------------------------------------------------------------------------------
-# fio --filename=/dev/nvme0n1 --direct=1 --rw=randwrite --bs=8k --iodepth=256 --name=iops --numjobs=50 --ioengine=libaio --loops=10 --verify=crc64 --verify_write_sequence=0
-Since the block size passed into fio is 8k, this is <= the maximum atomic blocksize (awun=15(8k)), this test will always succeed. 
-
-# fio --filename=/dev/nvme0n1 --direct=1 --rw=randwrite --bs=64k --iodepth=256 --name=iops --numjobs=50 --ioengine=libaio --loops=10 --verify=crc64 --verify_write_sequence=0
-Since the block size passed into fio is 64k, which is > the maximum atomic blocksize (awun=15(8k)), this test will eventually fail with:
-crc64: verify failed at file /dev/nvme0n1 offset 347799552, length 65536 (requested block: offset=347799552, length=65536, flags=88)
-       Expected CRC: d54d5f50d2569c94
-       Received CRC: 691e1aed4669ba33 
-
-Future Work
------------
-- Namespace support (NAWUN, NAWUPF and NACWU)
-- Namespace Boundary support (NABSN, NABO, and NABSPF)
-- Atomic Compare and Write Unit (ACWU)
-
-Alan Adamson (1):
-  hw/nvme: add atomic write support
-
+Signed-off-by: Alan Adamson <alan.adamson@oracle.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+---
  hw/nvme/ctrl.c | 164 ++++++++++++++++++++++++++++++++++++++++++++++++-
  hw/nvme/nvme.h |  12 ++++
  2 files changed, 175 insertions(+), 1 deletion(-)
 
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 9e94a2405407..0af46c57ee86 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -40,6 +40,9 @@
+  *              sriov_vi_flexible=<N[optional]> \
+  *              sriov_max_vi_per_vf=<N[optional]> \
+  *              sriov_max_vq_per_vf=<N[optional]> \
++ *              atomic.dn=<on|off[optional]>, \
++ *              atomic.awun<N[optional]>, \
++ *              atomic.awupf<N[optional]>, \
+  *              subsys=<subsys_id>
+  *      -device nvme-ns,drive=<drive_id>,bus=<bus_name>,nsid=<nsid>,\
+  *              zoned=<true|false[optional]>, \
+@@ -254,6 +257,7 @@ static const uint32_t nvme_feature_cap[NVME_FID_MAX] = {
+     [NVME_ERROR_RECOVERY]           = NVME_FEAT_CAP_CHANGE | NVME_FEAT_CAP_NS,
+     [NVME_VOLATILE_WRITE_CACHE]     = NVME_FEAT_CAP_CHANGE,
+     [NVME_NUMBER_OF_QUEUES]         = NVME_FEAT_CAP_CHANGE,
++    [NVME_WRITE_ATOMICITY]          = NVME_FEAT_CAP_CHANGE,
+     [NVME_ASYNCHRONOUS_EVENT_CONF]  = NVME_FEAT_CAP_CHANGE,
+     [NVME_TIMESTAMP]                = NVME_FEAT_CAP_CHANGE,
+     [NVME_HOST_BEHAVIOR_SUPPORT]    = NVME_FEAT_CAP_CHANGE,
+@@ -6293,8 +6297,10 @@ defaults:
+         if (ret) {
+             return ret;
+         }
+-        goto out;
++        break;
+ 
++    case NVME_WRITE_ATOMICITY:
++        result = n->dn;
+         break;
+     default:
+         result = nvme_feature_default[fid];
+@@ -6378,6 +6384,8 @@ static uint16_t nvme_set_feature(NvmeCtrl *n, NvmeRequest *req)
+     uint8_t save = NVME_SETFEAT_SAVE(dw10);
+     uint16_t status;
+     int i;
++    NvmeIdCtrl *id = &n->id_ctrl;
++    NvmeAtomic *atomic = &n->atomic;
+ 
+     trace_pci_nvme_setfeat(nvme_cid(req), nsid, fid, save, dw11);
+ 
+@@ -6530,6 +6538,22 @@ static uint16_t nvme_set_feature(NvmeCtrl *n, NvmeRequest *req)
+         return NVME_CMD_SEQ_ERROR | NVME_DNR;
+     case NVME_FDP_EVENTS:
+         return nvme_set_feature_fdp_events(n, ns, req);
++    case NVME_WRITE_ATOMICITY:
++
++        n->dn = 0x1 & dw11;
++
++        if (n->dn) {
++            atomic->atomic_max_write_size = id->awupf + 1;
++        } else {
++            atomic->atomic_max_write_size = id->awun + 1;
++        }
++
++        if (atomic->atomic_max_write_size == 1) {
++            atomic->atomic_writes = 0;
++        } else {
++            atomic->atomic_writes = 1;
++        }
++        break;
+     default:
+         return NVME_FEAT_NOT_CHANGEABLE | NVME_DNR;
+     }
+@@ -7227,6 +7251,80 @@ static void nvme_update_sq_tail(NvmeSQueue *sq)
+     trace_pci_nvme_update_sq_tail(sq->sqid, sq->tail);
+ }
+ 
++#define NVME_ATOMIC_NO_START        0
++#define NVME_ATOMIC_START_ATOMIC    1
++#define NVME_ATOMIC_START_NONATOMIC 2
++
++static int nvme_atomic_write_check(NvmeCtrl *n, NvmeCmd *cmd,
++    NvmeAtomic *atomic)
++{
++    NvmeRwCmd *rw = (NvmeRwCmd *)cmd;
++    uint64_t slba = le64_to_cpu(rw->slba);
++    uint32_t nlb = (uint32_t)le16_to_cpu(rw->nlb);
++    uint64_t elba = slba + nlb;
++    bool cmd_atomic_wr = true;
++    int i;
++
++    if ((cmd->opcode == NVME_CMD_READ) || ((cmd->opcode == NVME_CMD_WRITE) &&
++        ((rw->nlb + 1) > atomic->atomic_max_write_size))) {
++        cmd_atomic_wr = false;
++    }
++
++    /*
++     * Walk the queues to see if there are any atomic conflicts.
++     */
++    for (i = 1; i < n->params.max_ioqpairs + 1; i++) {
++        NvmeSQueue *sq;
++        NvmeRequest *req;
++        NvmeRwCmd *req_rw;
++        uint64_t req_slba;
++        uint32_t req_nlb;
++        uint64_t req_elba;
++
++        sq = n->sq[i];
++        if (!sq) {
++            break;
++        }
++
++        /*
++         * Walk all the requests on a given queue.
++         */
++        QTAILQ_FOREACH(req, &sq->out_req_list, entry) {
++            req_rw = (NvmeRwCmd *)&req->cmd;
++
++            if (((req_rw->opcode == NVME_CMD_WRITE) || (req_rw->opcode == NVME_CMD_READ)) &&
++                (cmd->nsid == req->ns->params.nsid)) {
++                req_slba = le64_to_cpu(req_rw->slba);
++                req_nlb = (uint32_t)le16_to_cpu(req_rw->nlb);
++                req_elba = req_slba + req_nlb;
++
++                if (cmd_atomic_wr) {
++                    if ((elba >= req_slba) && (slba <= req_elba)) {
++                        return NVME_ATOMIC_NO_START;
++                    }
++                } else {
++                    if (req->atomic_write && ((elba >= req_slba) &&
++                        (slba <= req_elba))) {
++                        return NVME_ATOMIC_NO_START;
++                    }
++                }
++            }
++        }
++    }
++    if (cmd_atomic_wr) {
++        return NVME_ATOMIC_START_ATOMIC;
++    }
++    return NVME_ATOMIC_START_NONATOMIC;
++}
++
++static NvmeAtomic *nvme_get_atomic(NvmeCtrl *n, NvmeCmd *cmd)
++{
++    if (n->atomic.atomic_writes) {
++        return &n->atomic;
++    }
++    return NULL;
++}
++
+ static void nvme_process_sq(void *opaque)
+ {
+     NvmeSQueue *sq = opaque;
+@@ -7243,6 +7341,9 @@ static void nvme_process_sq(void *opaque)
+     }
+ 
+     while (!(nvme_sq_empty(sq) || QTAILQ_EMPTY(&sq->req_list))) {
++        NvmeAtomic *atomic;
++        bool cmd_is_atomic;
++
+         addr = sq->dma_addr + (sq->head << NVME_SQES);
+         if (nvme_addr_read(n, addr, (void *)&cmd, sizeof(cmd))) {
+             trace_pci_nvme_err_addr_read(addr);
+@@ -7250,6 +7351,28 @@ static void nvme_process_sq(void *opaque)
+             stl_le_p(&n->bar.csts, NVME_CSTS_FAILED);
+             break;
+         }
++
++        atomic = nvme_get_atomic(n, &cmd);
++
++        cmd_is_atomic = false;
++        if (sq->sqid && atomic) {
++            int ret;
++
++            qemu_mutex_lock(&atomic->atomic_lock);
++            ret = nvme_atomic_write_check(n, &cmd, atomic);
++            switch (ret) {
++            case NVME_ATOMIC_NO_START:
++                qemu_bh_schedule(sq->bh);
++                qemu_mutex_unlock(&atomic->atomic_lock);
++                return;
++            case NVME_ATOMIC_START_ATOMIC:
++                cmd_is_atomic = true;
++                break;
++            case NVME_ATOMIC_START_NONATOMIC:
++            default:
++                break;
++            }
++        }
+         nvme_inc_sq_head(sq);
+ 
+         req = QTAILQ_FIRST(&sq->req_list);
+@@ -7259,6 +7382,11 @@ static void nvme_process_sq(void *opaque)
+         req->cqe.cid = cmd.cid;
+         memcpy(&req->cmd, &cmd, sizeof(NvmeCmd));
+ 
++        if (sq->sqid && atomic) {
++            req->atomic_write = cmd_is_atomic;
++            qemu_mutex_unlock(&atomic->atomic_lock);
++        }
++
+         status = sq->sqid ? nvme_io_cmd(n, req) :
+             nvme_admin_cmd(n, req);
+         if (status != NVME_NO_COMPLETE) {
+@@ -7362,6 +7490,8 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
+     n->outstanding_aers = 0;
+     n->qs_created = false;
+ 
++    n->dn = n->params.atomic_dn; /* Set Disable Normal */
++
+     nvme_update_msixcap_ts(pci_dev, n->conf_msix_qsize);
+ 
+     if (pci_is_vf(pci_dev)) {
+@@ -8138,6 +8268,8 @@ static void nvme_init_state(NvmeCtrl *n)
+     NvmeSecCtrlEntry *list = n->sec_ctrl_list;
+     NvmeSecCtrlEntry *sctrl;
+     PCIDevice *pci = PCI_DEVICE(n);
++    NvmeAtomic *atomic = &n->atomic;
++    NvmeIdCtrl *id = &n->id_ctrl;
+     uint8_t max_vfs;
+     int i;
+ 
+@@ -8195,6 +8327,31 @@ static void nvme_init_state(NvmeCtrl *n)
+                         cpu_to_le16(n->params.sriov_max_vi_per_vf) :
+                         cap->vifrt / MAX(max_vfs, 1);
+     }
++
++    /* Atomic Write */
++    id->awun = n->params.atomic_awun;
++    id->awupf = n->params.atomic_awupf;
++    n->dn = n->params.atomic_dn;
++
++    qemu_mutex_init(&atomic->atomic_lock);
++
++    if (id->awun || id->awupf) {
++        if (id->awupf > id->awun) {
++            id->awupf = 0;
++        }
++
++        if (n->dn) {
++            atomic->atomic_max_write_size = id->awupf + 1;
++        } else {
++            atomic->atomic_max_write_size = id->awun + 1;
++        }
++
++        if (atomic->atomic_max_write_size == 1) {
++            atomic->atomic_writes = 0;
++        } else {
++            atomic->atomic_writes = 1;
++        }
++    }
+ }
+ 
+ static void nvme_init_cmb(NvmeCtrl *n, PCIDevice *pci_dev)
+@@ -8675,6 +8832,8 @@ static void nvme_exit(PCIDevice *pci_dev)
+         nvme_subsys_unregister_ctrl(n->subsys, n);
+     }
+ 
++    qemu_mutex_destroy(&n->atomic.atomic_lock);
++
+     g_free(n->cq);
+     g_free(n->sq);
+     g_free(n->aer_reqs);
+@@ -8734,6 +8893,9 @@ static Property nvme_props[] = {
+                      false),
+     DEFINE_PROP_UINT16("mqes", NvmeCtrl, params.mqes, 0x7ff),
+     DEFINE_PROP_UINT16("spdm_port", PCIDevice, spdm_port, 0),
++    DEFINE_PROP_BOOL("atomic.dn", NvmeCtrl, params.atomic_dn, 0),
++    DEFINE_PROP_UINT16("atomic.awun", NvmeCtrl, params.atomic_awun, 0),
++    DEFINE_PROP_UINT16("atomic.awupf", NvmeCtrl, params.atomic_awupf, 0),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+index 781985754d0d..4d8582e6f2a5 100644
+--- a/hw/nvme/nvme.h
++++ b/hw/nvme/nvme.h
+@@ -220,6 +220,12 @@ typedef struct NvmeNamespaceParams {
+     } fdp;
+ } NvmeNamespaceParams;
+ 
++typedef struct NvmeAtomic {
++    uint32_t    atomic_max_write_size;
++    QemuMutex   atomic_lock;
++    bool        atomic_writes;
++} NvmeAtomic;
++
+ typedef struct NvmeNamespace {
+     DeviceState  parent_obj;
+     BlockConf    blkconf;
+@@ -421,6 +427,7 @@ typedef struct NvmeRequest {
+     NvmeCmd                 cmd;
+     BlockAcctCookie         acct;
+     NvmeSg                  sg;
++    bool                    atomic_write;
+     QTAILQ_ENTRY(NvmeRequest)entry;
+ } NvmeRequest;
+ 
+@@ -538,6 +545,9 @@ typedef struct NvmeParams {
+     uint32_t  sriov_max_vq_per_vf;
+     uint32_t  sriov_max_vi_per_vf;
+     bool     msix_exclusive_bar;
++    uint16_t atomic_awun;
++    uint16_t atomic_awupf;
++    bool     atomic_dn;
+ } NvmeParams;
+ 
+ typedef struct NvmeCtrl {
+@@ -619,6 +629,8 @@ typedef struct NvmeCtrl {
+         uint16_t    vqrfap;
+         uint16_t    virfap;
+     } next_pri_ctrl_cap;    /* These override pri_ctrl_cap after reset */
++    uint32_t    dn; /* Disable Normal */
++    NvmeAtomic  atomic;
+ } NvmeCtrl;
+ 
+ typedef enum NvmeResetType {
 -- 
 2.43.5
 
