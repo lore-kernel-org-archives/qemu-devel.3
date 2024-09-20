@@ -4,93 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7B27C7883E
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 13:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8561FC78853
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 14:29:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srdjL-0001eG-Vx; Fri, 20 Sep 2024 09:31:28 -0400
+	id 1srecX-0008EG-2R; Fri, 20 Sep 2024 10:28:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1srZat-0001Vs-K0
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 05:06:29 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1srZar-00043G-8Y
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 05:06:26 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a8d43657255so259130766b.0
- for <qemu-devel@nongnu.org>; Fri, 20 Sep 2024 02:06:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1srecO-0008Cx-9d; Fri, 20 Sep 2024 10:28:20 -0400
+Received: from out30-118.freemail.mail.aliyun.com ([115.124.30.118])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1srecK-0006Qt-4i; Fri, 20 Sep 2024 10:28:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gourry.net; s=google; t=1726823182; x=1727427982; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=5ea6kApel9704WtmafZwie6CE4udCD/ZWEKovHegrZg=;
- b=dg+fdGnrtiNvhgF6sEfXi/4NkGAK/FKpCn2uFpA5fFrlH0SvorNenUD3rhETmyz5ZF
- ZlhtPCVJg6niWj6eZk3g+pzmAB1MvRlWpJnUFyN5fvUqXJIKDQPFiGVZK+H5TwvnQGKy
- ChWNJ0a95ViuT3pq6C1Tg1RERLZodmHoGXc97vK9gkWQoDVYbugMl/3vn7YZ/rg4piXC
- nSvLjENKlSBj4n6B6m7+0jKj0dOLedJMJHuPN43dSXq0rMBThFByrQQ3VzQmd4KTA6WL
- rSCP3xdz3rXOXQKhfQQ8xu/GgN6+xqZABxOZdsmUhivDPXH0uY1VBPILGaBPsjppMe/w
- UEsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726823182; x=1727427982;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5ea6kApel9704WtmafZwie6CE4udCD/ZWEKovHegrZg=;
- b=QOSw0gxm/mn8njsNDbRh5cu+FLuqiHFE5taYwspjSBcbcm1Sui7IyenEo1bs4WsbNd
- Oin6EVfPxPsVL1/azunaf5bYvOFM4p/traDbhdESC6KrX37j0jwf5a+yWzxFcV8tnXtV
- F/TK8nWRAS0bVKx6zitz3eHi0CdxiCdvQeP76Jt6UhIYxTZNPRaep7QdkFBB2OlyXx9d
- FA1lcUqYpcLh/NAaoEKXgJ1yEvCDFs4GvgnuyDw5ckIL6XIdMv7zgIle7a5YXZWp0AvN
- HG+TBnRFv8FjdT5OTRzBQvzzkUJ5HS6Iur3DLTrFp//y69q3V6OKRkY+kQ8TrBEI9KZO
- gaRg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUzlQCYOTLHbhwgqE0mjTwvEppeon5IVFLm/2XhTGSnT3n0b0yj6ybX4fhJpxDWK3R+xQJkJaIVS7/C@nongnu.org
-X-Gm-Message-State: AOJu0Yzo6HytYTwqp/kAaBf2qFypUd2uKf3E5Im4cOeYX77Rx23fo5ng
- ev+s9bd0s2LFHY4wDc7/bUaKawXIVx/Lq6It+2MSvZGXJjaLn9YsH/m3MRK5e1w=
-X-Google-Smtp-Source: AGHT+IHS5Ou0XIJ4uflfTtxR3ETCTI4FJBbvqfkbaPfxDAC5XJ69GFR67U4wnEW673qhczAiNcFAYw==
-X-Received: by 2002:a17:906:cad6:b0:a8d:25d3:65e4 with SMTP id
- a640c23a62f3a-a90d4ffcb11mr164635366b.36.1726823182340; 
- Fri, 20 Sep 2024 02:06:22 -0700 (PDT)
-Received: from PC2K9PVX.TheFacebook.com ([83.68.141.146])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90610f4971sm821742366b.90.2024.09.20.02.06.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Sep 2024 02:06:21 -0700 (PDT)
-Date: Fri, 20 Sep 2024 11:06:09 +0200
-From: Gregory Price <gourry@gourry.net>
-To: David Hildenbrand <david@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, linux-mm@kvack.org,
- linux-cxl@vger.kernel.org, Davidlohr Bueso <dave@stgolabs.net>,
- Ira Weiny <ira.weiny@intel.com>, John Groves <John@groves.net>,
- virtualization@lists.linux.dev, Oscar Salvador <osalvador@suse.de>,
- qemu-devel@nongnu.org, Dave Jiang <dave.jiang@intel.com>,
- Dan Williams <dan.j.williams@intel.com>, linuxarm@huawei.com,
- wangkefeng.wang@huawei.com, John Groves <jgroves@micron.com>,
- Fan Ni <fan.ni@samsung.com>, Navneet Singh <navneet.singh@intel.com>,
- =?utf-8?B?4oCcTWljaGFlbCBTLiBUc2lya2lu4oCd?= <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [RFC] Virtualizing tagged disaggregated memory capacity (app
- specific, multi host shared)
-Message-ID: <Zu07AU3aUrHBMXaw@PC2K9PVX.TheFacebook.com>
-References: <20240815172223.00001ca7@Huawei.com>
- <fc05d089-ce04-42d2-a0d7-ea32fd73fe90@redhat.com>
+ d=linux.alibaba.com; s=default;
+ t=1726842483; h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:From;
+ bh=4+Z1zB86W08EFswS88V1tEOdDVh9ogt/XoR/HKLOluE=;
+ b=KcWrpncWPcMGON4QhfhqqP0uPQReh3Q96F5KCUYAN4wc5/w81KcjkQJ6s78hTpGSRoHWENjRlH803OxL+4tXuUHSGfWV+P+4avgv/C5+Yi2CrDzjB8QtEDlgHJIhxBzNdEpc38jLRUUcPOqIe8WTztMichIpknyRVe1yyWPgrt0=
+Received: from 192.168.3.95(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WFLKmIh_1726842477) by smtp.aliyun-inc.com;
+ Fri, 20 Sep 2024 22:27:58 +0800
+Content-Type: multipart/alternative;
+ boundary="------------GcLzkqPsHQyKeZ4EltwQppKH"
+Message-ID: <a7973dea-a430-473f-b0e9-c85fdeda1ac3@linux.alibaba.com>
+Date: Fri, 20 Sep 2024 22:26:51 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fc05d089-ce04-42d2-a0d7-ea32fd73fe90@redhat.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=gourry@gourry.net; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 02/12] tcg/riscv: Add basic support for vector
+To: 0x48 Swung <swung0x48@outlook.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "liwei1518@gmail.com" <liwei1518@gmail.com>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "palmer@dabbelt.com" <palmer@dabbelt.com>,
+ "alistair.francis@wdc.com" <alistair.francis@wdc.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "liwei1518@gmail.com" <liwei1518@gmail.com>,
+ "bmeng.cn@gmail.com" <bmeng.cn@gmail.com>,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240911132630.461-1-zhiwei_liu@linux.alibaba.com>
+ <20240911132630.461-3-zhiwei_liu@linux.alibaba.com>
+ <0d591570-02c6-48c9-9e3f-ef47ac20ce7d@linaro.org>
+ <b87e7a7e-41fd-4b26-bde3-9adca9babb24@linux.alibaba.com>
+ <33101e38-080d-4444-a8c3-9d01827e243f@linaro.org>
+ <b88244bc-aaf7-42f9-a90f-e4027ac72ebf@linux.alibaba.com>
+ <20e20fde-830f-4314-a944-e7973bda5d8c@linaro.org>
+ <SY8P300MB02825DF878585DDC68EB088CE06C2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM>
+Content-Language: en-US
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <SY8P300MB02825DF878585DDC68EB088CE06C2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM>
+Received-SPF: pass client-ip=115.124.30.118;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-118.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 20 Sep 2024 09:31:23 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,68 +81,329 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > 2. Coarse grained memory increases for 'normal' memory.
-> >     Can use memory hot-plug. Recovery of capacity likely to only be possible on
-> >     VM shutdown.
-> 
-> Is there are reason "movable" (ZONE_MOVABLE) is not an option, at least in
-> some setups? If not, why?
+This is a multi-part message in MIME format.
+--------------GcLzkqPsHQyKeZ4EltwQppKH
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+
+On 2024/9/20 12:01, 0x48 Swung wrote:
+> Hey everyone! Late to the party. Life happens sometimes ;)
+> Just discovered this patch and this mail list, and I'd like to provide 
+> some background story here.
+> I originally provided my initial implementation in a downstream repo 
+> last year, namely 
+> https://github.com/plctlab/plct-qemu/tree/plct-riscv-backend-rvv .
+> I'm new to contributing to qemu and also take part in the open-source 
+> community upstreaming process as a whole, so I may make mistakes in my 
+> following claims, but I see some confusion here:
+> 1. The PLCT branch (which includes my original commits) is 
+> open-sourced using GPLv2, which follows QEMU's upstream repo. So 
+> according to the license, my modification should be EXPLICITLY shown 
+> in the patch, but I haven't seen any.
+> 2. I do consent upstreaming my patch last year, in the form of a patch 
+> submitted with modifications from T-head, and on behalf of them. And 
+> it was agreed back in the days that I can be mentioned as one of the 
+> authors. But it turnsout that there's no "sign-off", "author", 
+> "co-author" line mentioning me. If I don't speak out in this 
+> situation, does it imply that this patch is purely LIU Zhiwei's work 
+> and have nothing to do with me?
 >
+> I'd like LIU to separate my patch and his modification to two separate 
+> patches, and explicitly name where are those patches coming from, so 
+> that this patch can comply to GPLv2 license and can we clarify those 
+> misunderstandings.
+>
+> I don't want to take it personally , but I do smell something's wrong 
+> going on here...
 
+I think there was a misunderstanding. But I will not explain it too much 
+here. If you agree, please don't block this work and send the tag as 
+Daniel and Markus point out.
 
-This seems like a bit of a muddied conversation.
+Thanks,
+Zhiwei
 
-"'normal' memory" has no defined meaning - so lets clear this up a bit
+>
+> Best Regards,
+> Swung0x48 (aka. Huang Shiyuan)
+>
+> Get Outlook for Android <https://aka.ms/AAb9ysg>
+> ------------------------------------------------------------------------
+> *From:* Richard Henderson <richard.henderson@linaro.org>
+> *Sent:* Wednesday, September 18, 2024 10:27:16 PM
+> *To:* LIU Zhiwei <zhiwei_liu@linux.alibaba.com>; qemu-devel@nongnu.org 
+> <qemu-devel@nongnu.org>
+> *Cc:* qemu-riscv@nongnu.org <qemu-riscv@nongnu.org>; 
+> palmer@dabbelt.com <palmer@dabbelt.com>; alistair.francis@wdc.com 
+> <alistair.francis@wdc.com>; dbarboza@ventanamicro.com 
+> <dbarboza@ventanamicro.com>; liwei1518@gmail.com 
+> <liwei1518@gmail.com>; bmeng.cn@gmail.com <bmeng.cn@gmail.com>; 
+> Swung0x48 <swung0x48@outlook.com>; TANG Tiancheng 
+> <tangtiancheng.ttc@alibaba-inc.com>
+> *Subject:* Re: [PATCH v4 02/12] tcg/riscv: Add basic support for vector
+> On 9/18/24 12:43, LIU Zhiwei wrote:
+> >
+> > On 2024/9/18 18:11, Richard Henderson wrote:
+> >> On 9/18/24 07:17, LIU Zhiwei wrote:
+> >>>
+> >>> On 2024/9/12 2:41, Richard Henderson wrote:
+> >>>> On 9/11/24 06:26, LIU Zhiwei wrote:
+> >>>>> From: Swung0x48<swung0x48@outlook.com>
+> >>>>>
+> >>>>> The RISC-V vector instruction set utilizes the LMUL field to group
+> >>>>> multiple registers, enabling variable-length vector registers. This
+> >>>>> implementation uses only the first register number of each group 
+> while
+> >>>>> reserving the other register numbers within the group.
+> >>>>>
+> >>>>> In TCG, each VEC_IR can have 3 types (TCG_TYPE_V64/128/256), and the
+> >>>>> host runtime needs to adjust LMUL based on the type to use different
+> >>>>> register groups.
+> >>>>>
+> >>>>> This presents challenges for TCG's register allocation. 
+> Currently, we
+> >>>>> avoid modifying the register allocation part of TCG and only 
+> expose the
+> >>>>> minimum number of vector registers.
+> >>>>>
+> >>>>> For example, when the host vlen is 64 bits and type is 
+> TCG_TYPE_V256, with
+> >>>>> LMUL equal to 4, we use 4 vector registers as one register 
+> group. We can
+> >>>>> use a maximum of 8 register groups, but the V0 register number 
+> is reserved
+> >>>>> as a mask register, so we can effectively use at most 7 register 
+> groups.
+> >>>>> Moreover, when type is smaller than TCG_TYPE_V256, only 7 
+> registers are
+> >>>>> forced to be used. This is because TCG cannot yet dynamically 
+> constrain
+> >>>>> registers with type; likewise, when the host vlen is 128 bits and
+> >>>>> TCG_TYPE_V256, we can use at most 15 registers.
+> >>>>>
+> >>>>> There is not much pressure on vector register allocation in TCG 
+> now, so
+> >>>>> using 7 registers is feasible and will not have a major impact 
+> on code
+> >>>>> generation.
+> >>>>>
+> >>>>> This patch:
+> >>>>> 1. Reserves vector register 0 for use as a mask register.
+> >>>>> 2. When using register groups, reserves the additional registers 
+> within
+> >>>>>     each group.
+> >>>>>
+> >>>>> Signed-off-by: TANG Tiancheng<tangtiancheng.ttc@alibaba-inc.com>
+> >>>>> Co-authored-by: TANG Tiancheng<tangtiancheng.ttc@alibaba-inc.com>
+> >>>>
+> >>>> If there is a co-author, there should be another Signed-off-by.
+> >>>
+> >>> This patch has added a tag:
+> >>>
+> >>> Signed-off-by: TANG Tiancheng<tangtiancheng.ttc@alibaba-inc.com>
+> >>>
+> >>>
+> >>> Do you mean we should add the same tag twice?
+> >>
+> >> The from line is "Swung0x48 <swung0x48@outlook.com>".
+> >> If this is an alternate email for TANG Tiancheng,
+> >
+> > No, Swung0x48 is another author.
+>
+> Then we need a proper Signed-off-by line from that author.
+>
+>
+> r~
+--------------GcLzkqPsHQyKeZ4EltwQppKH
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-There is:
-* System-RAM (memory managed by kernel allocators)
-* Special Purpose Memory (generally presented as DAX)
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 2024/9/20 12:01, 0x48 Swung wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:SY8P300MB02825DF878585DDC68EB088CE06C2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <div dir="auto">Hey ever<span>yone! Late to the <span>party. Life
+            happens sometimes ;)</span></span></div>
+      <div dir="auto"><span><span>Just discovered this patch and this
+            mail list, and I'd like to provide some back<span>ground
+              story here.</span></span></span></div>
+      <div dir="auto">I originally provided my initial implementation in
+        a downstream repo last year, namely <a rel="noreferrer noopener"
+href="https://github.com/plctlab/plct-qemu/tree/plct-riscv-backend-rvv"
+style="font-family: sans-serif; font-size: medium; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; color: rgb(0, 120, 212); background-color: rgb(255, 255, 255);"
+          moz-do-not-send="true" class="moz-txt-link-freetext">https://github.com/plctlab/plct-qemu/tree/plct-riscv-backend-rvv</a> .</div>
+      <div dir="auto">I'm new to contributing to qemu and also take part
+        in the open-source community upstreaming process as a whole, so
+        I may make mistakes in my following claims, but I see some
+        confusion here:</div>
+      <div dir="auto">1. The PLCT branch (which includes my original
+        commits) is open-sourced using GPLv2, which follows QEMU's
+        upstream repo. So acc<span>ording to the license, my
+          modification should be EXPLICITLY shown in the patch, but I
+          haven't seen any.</span></div>
+      <div dir="auto"><span>2. I do consent upstreaming my patch last
+          year, in the form of a patch submitted with modifications from
+          T-head, and on behalf of them. And it was agreed back in the
+          days that I can be mentioned as one of the authors. But it
+          turns<span> out that there's no "sign-off", "author",
+            "co-author" line mentioning me. If I don't speak out in this
+            situ<span>ation, does it imply that this patch is purely LIU
+              Zhiwei's work and have nothing to <span>do with me?</span></span></span></span></div>
+      <div dir="auto"><span><span><span><span><br>
+              </span></span></span></span></div>
+      <div dir="auto"><span><span><span><span>I'd like LIU to separate
+                my patch and his modifi<span>cation to two separate
+                  patches, and explicitly name where are tho<span>se
+                    patches com<span>ing from, so that this patch can
+                      comply to GPLv2 license and can we clarify those
+                      misun<span>derstandings.</span></span></span></span></span></span></span></span></div>
+      <div dir="auto"><span><span><span><span><br>
+              </span></span></span></span></div>
+      <div dir="auto"><span><span><span><span>I don't want to take it <span>personally
+                  , but I do smell something's wrong going on here...</span></span></span></span></span></div>
+    </blockquote>
+    <p>I think there was a misunderstanding. But I will not explain it
+      too much here. If you agree, please don't block this work and send
+      the tag as Daniel and Markus point out.</p>
+    <p>Thanks,<br>
+      Zhiwei<br>
+    </p>
+    <blockquote type="cite"
+cite="mid:SY8P300MB02825DF878585DDC68EB088CE06C2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM">
+      <div dir="auto"><span><span><span><span><span><br>
+                </span></span></span></span></span></div>
+      <div dir="auto"><span><span><span><span><span>Best Rega<span>rds,</span></span></span></span></span></span></div>
+      <div dir="auto"><span><span><span><span><span><span>Swung0x48
+                    (aka. Huang Shiyuan)</span></span></span></span></span></span></div>
+      <div><br>
+      </div>
+      <div id="ms-outlook-mobile-signature" dir="auto">Get <a
+          href="https://aka.ms/AAb9ysg" moz-do-not-send="true">
+          Outlook for Android</a></div>
+      <hr style="display:inline-block;width:98%" tabindex="-1">
+      <div id="divRplyFwdMsg" dir="ltr"><font style="font-size:11pt"
+          face="Calibri, sans-serif" color="#000000"><b>From:</b>
+          Richard Henderson <a class="moz-txt-link-rfc2396E" href="mailto:richard.henderson@linaro.org">&lt;richard.henderson@linaro.org&gt;</a><br>
+          <b>Sent:</b> Wednesday, September 18, 2024 10:27:16 PM<br>
+          <b>To:</b> LIU Zhiwei <a class="moz-txt-link-rfc2396E" href="mailto:zhiwei_liu@linux.alibaba.com">&lt;zhiwei_liu@linux.alibaba.com&gt;</a>;
+          <a class="moz-txt-link-abbreviated" href="mailto:qemu-devel@nongnu.org">qemu-devel@nongnu.org</a> <a class="moz-txt-link-rfc2396E" href="mailto:qemu-devel@nongnu.org">&lt;qemu-devel@nongnu.org&gt;</a><br>
+          <b>Cc:</b> <a class="moz-txt-link-abbreviated" href="mailto:qemu-riscv@nongnu.org">qemu-riscv@nongnu.org</a>
+          <a class="moz-txt-link-rfc2396E" href="mailto:qemu-riscv@nongnu.org">&lt;qemu-riscv@nongnu.org&gt;</a>; <a class="moz-txt-link-abbreviated" href="mailto:palmer@dabbelt.com">palmer@dabbelt.com</a>
+          <a class="moz-txt-link-rfc2396E" href="mailto:palmer@dabbelt.com">&lt;palmer@dabbelt.com&gt;</a>; <a class="moz-txt-link-abbreviated" href="mailto:alistair.francis@wdc.com">alistair.francis@wdc.com</a>
+          <a class="moz-txt-link-rfc2396E" href="mailto:alistair.francis@wdc.com">&lt;alistair.francis@wdc.com&gt;</a>; <a class="moz-txt-link-abbreviated" href="mailto:dbarboza@ventanamicro.com">dbarboza@ventanamicro.com</a>
+          <a class="moz-txt-link-rfc2396E" href="mailto:dbarboza@ventanamicro.com">&lt;dbarboza@ventanamicro.com&gt;</a>; <a class="moz-txt-link-abbreviated" href="mailto:liwei1518@gmail.com">liwei1518@gmail.com</a>
+          <a class="moz-txt-link-rfc2396E" href="mailto:liwei1518@gmail.com">&lt;liwei1518@gmail.com&gt;</a>; <a class="moz-txt-link-abbreviated" href="mailto:bmeng.cn@gmail.com">bmeng.cn@gmail.com</a>
+          <a class="moz-txt-link-rfc2396E" href="mailto:bmeng.cn@gmail.com">&lt;bmeng.cn@gmail.com&gt;</a>; Swung0x48
+          <a class="moz-txt-link-rfc2396E" href="mailto:swung0x48@outlook.com">&lt;swung0x48@outlook.com&gt;</a>; TANG Tiancheng
+          <a class="moz-txt-link-rfc2396E" href="mailto:tangtiancheng.ttc@alibaba-inc.com">&lt;tangtiancheng.ttc@alibaba-inc.com&gt;</a><br>
+          <b>Subject:</b> Re: [PATCH v4 02/12] tcg/riscv: Add basic
+          support for vector</font>
+        <div> </div>
+      </div>
+      <div class="BodyFragment"><font size="2"><span
+            style="font-size:11pt;">
+            <div class="PlainText">On 9/18/24 12:43, LIU Zhiwei wrote:<br>
+              &gt; <br>
+              &gt; On 2024/9/18 18:11, Richard Henderson wrote:<br>
+              &gt;&gt; On 9/18/24 07:17, LIU Zhiwei wrote:<br>
+              &gt;&gt;&gt;<br>
+              &gt;&gt;&gt; On 2024/9/12 2:41, Richard Henderson wrote:<br>
+              &gt;&gt;&gt;&gt; On 9/11/24 06:26, LIU Zhiwei wrote:<br>
+              &gt;&gt;&gt;&gt;&gt; From:
+              Swung0x48<a class="moz-txt-link-rfc2396E" href="mailto:swung0x48@outlook.com">&lt;swung0x48@outlook.com&gt;</a><br>
+              &gt;&gt;&gt;&gt;&gt;<br>
+              &gt;&gt;&gt;&gt;&gt; The RISC-V vector instruction set
+              utilizes the LMUL field to group<br>
+              &gt;&gt;&gt;&gt;&gt; multiple registers, enabling
+              variable-length vector registers. This<br>
+              &gt;&gt;&gt;&gt;&gt; implementation uses only the first
+              register number of each group while<br>
+              &gt;&gt;&gt;&gt;&gt; reserving the other register numbers
+              within the group.<br>
+              &gt;&gt;&gt;&gt;&gt;<br>
+              &gt;&gt;&gt;&gt;&gt; In TCG, each VEC_IR can have 3 types
+              (TCG_TYPE_V64/128/256), and the<br>
+              &gt;&gt;&gt;&gt;&gt; host runtime needs to adjust LMUL
+              based on the type to use different<br>
+              &gt;&gt;&gt;&gt;&gt; register groups.<br>
+              &gt;&gt;&gt;&gt;&gt;<br>
+              &gt;&gt;&gt;&gt;&gt; This presents challenges for TCG's
+              register allocation. Currently, we<br>
+              &gt;&gt;&gt;&gt;&gt; avoid modifying the register
+              allocation part of TCG and only expose the<br>
+              &gt;&gt;&gt;&gt;&gt; minimum number of vector registers.<br>
+              &gt;&gt;&gt;&gt;&gt;<br>
+              &gt;&gt;&gt;&gt;&gt; For example, when the host vlen is 64
+              bits and type is TCG_TYPE_V256, with<br>
+              &gt;&gt;&gt;&gt;&gt; LMUL equal to 4, we use 4 vector
+              registers as one register group. We can<br>
+              &gt;&gt;&gt;&gt;&gt; use a maximum of 8 register groups,
+              but the V0 register number is reserved<br>
+              &gt;&gt;&gt;&gt;&gt; as a mask register, so we can
+              effectively use at most 7 register groups.<br>
+              &gt;&gt;&gt;&gt;&gt; Moreover, when type is smaller than
+              TCG_TYPE_V256, only 7 registers are<br>
+              &gt;&gt;&gt;&gt;&gt; forced to be used. This is because
+              TCG cannot yet dynamically constrain<br>
+              &gt;&gt;&gt;&gt;&gt; registers with type; likewise, when
+              the host vlen is 128 bits and<br>
+              &gt;&gt;&gt;&gt;&gt; TCG_TYPE_V256, we can use at most 15
+              registers.<br>
+              &gt;&gt;&gt;&gt;&gt;<br>
+              &gt;&gt;&gt;&gt;&gt; There is not much pressure on vector
+              register allocation in TCG now, so<br>
+              &gt;&gt;&gt;&gt;&gt; using 7 registers is feasible and
+              will not have a major impact on code<br>
+              &gt;&gt;&gt;&gt;&gt; generation.<br>
+              &gt;&gt;&gt;&gt;&gt;<br>
+              &gt;&gt;&gt;&gt;&gt; This patch:<br>
+              &gt;&gt;&gt;&gt;&gt; 1. Reserves vector register 0 for use
+              as a mask register.<br>
+              &gt;&gt;&gt;&gt;&gt; 2. When using register groups,
+              reserves the additional registers within<br>
+              &gt;&gt;&gt;&gt;&gt;     each group.<br>
+              &gt;&gt;&gt;&gt;&gt;<br>
+              &gt;&gt;&gt;&gt;&gt; Signed-off-by: TANG
+              Tiancheng<a class="moz-txt-link-rfc2396E" href="mailto:tangtiancheng.ttc@alibaba-inc.com">&lt;tangtiancheng.ttc@alibaba-inc.com&gt;</a><br>
+              &gt;&gt;&gt;&gt;&gt; Co-authored-by: TANG
+              Tiancheng<a class="moz-txt-link-rfc2396E" href="mailto:tangtiancheng.ttc@alibaba-inc.com">&lt;tangtiancheng.ttc@alibaba-inc.com&gt;</a><br>
+              &gt;&gt;&gt;&gt;<br>
+              &gt;&gt;&gt;&gt; If there is a co-author, there should be
+              another Signed-off-by.<br>
+              &gt;&gt;&gt;<br>
+              &gt;&gt;&gt; This patch has added a tag:<br>
+              &gt;&gt;&gt;<br>
+              &gt;&gt;&gt; Signed-off-by: TANG
+              Tiancheng<a class="moz-txt-link-rfc2396E" href="mailto:tangtiancheng.ttc@alibaba-inc.com">&lt;tangtiancheng.ttc@alibaba-inc.com&gt;</a><br>
+              &gt;&gt;&gt;<br>
+              &gt;&gt;&gt;<br>
+              &gt;&gt;&gt; Do you mean we should add the same tag twice?<br>
+              &gt;&gt;<br>
+              &gt;&gt; The from line is "Swung0x48
+              <a class="moz-txt-link-rfc2396E" href="mailto:swung0x48@outlook.com">&lt;swung0x48@outlook.com&gt;</a>".<br>
+              &gt;&gt; If this is an alternate email for TANG Tiancheng,<br>
+              &gt; <br>
+              &gt; No, Swung0x48 is another author.<br>
+              <br>
+              Then we need a proper Signed-off-by line from that author.<br>
+              <br>
+              <br>
+              r~<br>
+            </div>
+          </span></font></div>
+    </blockquote>
+  </body>
+</html>
 
-System-RAM is managed as zones - the relevant ones are
-* ZONE_NORMAL allows both movable and non-movable allocations
-* ZONE_MOVABLE only allows non-movable allocations
-  (Caveat: this generally only applies to allocation, you can
-   violate this with stuff like pinning)
-
-Hotplug can be thought of as two discrete mechanisms
-* Exposing capacity to the kernel (CXL DCD Transactions)
-* Exposing capacity to allocators (mm/memory-hotplug.c)
-
-1) if the intent is to primarily utilize dynamic capacity for VMs, then
-   the host does not need (read: should not need) to map the memory as
-   System-RAM in the host. The VMM should be made to consume it directly
-   via DAX or otherwise.
-
-   That capacity is almost by definition "Capital G Guaranteed" to be
-   reclaimable regardless of what the guest does. A VMM can force a guest
-   to let go of resources - that's its job.
-
-2) if the intent is to provide dynamic capacity to a host as System-RAM, then
-   recoverability is dictated by system usage of that capacity. If onlined
-   into ZONE_MOVABLE, then if the system has avoided doing things like pinning
-   those pages it should *generally* be recoverable (but not guaranteed).
-
-
-For the virtualization discussion:
-
-Hotplug and recoverability is a non-issue.  The capacity should never be
-exposed to system allocators and the VMM should be made to consume special
-purpose memory directly. That's on the VMM/orchestration software to get right.
-
-
-For the host System-RAM discussion:
-
-Auto-onlined hotplug capacity presently defaults to ZONE_NORMAL, but we
-discussed (yesterday, at Plumbers) changing this default to ZONE_MOVABLE.
-
-The only concern is when insufficient ZONE_NORMAL exists to support
-ZONE_MOVABLE capacity - but this is unlikely to be the general scenario AND
-can be mitigated w/ existing mechanisms.
-
-Manually onlined capacity defaults to ZONE_MOVABLE.
-
-It would be nice to make this behavior consistent, since the general opinion
-appears to be that this capacity should default to ZONE_MOVABLE.
-
-~Gregory
+--------------GcLzkqPsHQyKeZ4EltwQppKH--
 
