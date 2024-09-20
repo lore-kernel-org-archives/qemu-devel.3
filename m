@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11841CF3964
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 03:03:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B4D4CF58C0
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 03:14:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srTuw-0002kk-Qq; Thu, 19 Sep 2024 23:02:47 -0400
+	id 1srU5f-0007ZI-3E; Thu, 19 Sep 2024 23:13:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1srTus-0002kH-0O
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 23:02:42 -0400
+ id 1srU5c-0007Y3-CC
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 23:13:48 -0400
 Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1srTuo-0005mX-FS
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 23:02:41 -0400
+ id 1srU5Y-0006rV-Lw
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 23:13:47 -0400
 Received: by mail-oa1-x29.google.com with SMTP id
- 586e51a60fabf-277f19ee2a2so804579fac.1
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 20:02:37 -0700 (PDT)
+ 586e51a60fabf-277f0540c3aso895868fac.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 20:13:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1726801356; x=1727406156;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1726802022; x=1727406822;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=9TiJ9vr1v7J6VArlWxbWN9unErnyIeHgYpn7HAQNF6g=;
- b=3MGI29Ana4mhOVB/po7wSf4tmPTsaYuMpSPop13Pnanr6lqmN6vjj6aO1N5X9UBhBd
- 1Ph0Qd021KpdolkmG/RBz+lHVucmGouLNvhjuWTAKxP9Qri9PNrWTl3pbr2D1kpMJIpS
- 14mwSTSkebzTMKE9mtXJtTdrjSA7UDhgMFnZb1tkUmQZ0m9NOXE/SAZsj7XikPp+bMth
- j96SETJJraw4YS5/6QMV/k6bAIzmdg2lCrgjQ7LsrnSPYQnhNmDCOZCBO30eeqqAxEhY
- W6/bsrBr5ollyMKp1NO7k6Ig+IUe75DEARXDDe63HchwMADBitoJHkRZt7c9MsYLUZIH
- 2XNQ==
+ bh=BmUsHFn9JTPDrQbK+9MV1H6hgDJhBv/nUw3WUVpLAcI=;
+ b=qWxZ79ZAUPZ80mPU1wef3Cus0+fpF9N1KfAM2tpQf+3/mM0lEATGqSdE1Z7FuxWCOZ
+ fnq4xmhPDmmbOmhDUX4uNLDN9JaYvudkv9vvsbRxAUAdpF1v8k9lYHXnxBb0c9y5koSd
+ RI/EqeBTNMU1S326VUV+NYssyUIfyjlZxj5AihHUi1UcMBHTjpVTQZTexg5Rt/cYPjKK
+ 9oSaZasGfBmRWKQqPxzXgfvzswtY4GvfLrY6SivlIA5YkhH6at85GcTvusQ3rRpFZCG7
+ oD2SW5qge0XcXRjr9iO9Kks7kzLK8+Wa2+Ebfe1Vj616JPSxFk+b4a1UbC5eS3QbbLXX
+ H5rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726801356; x=1727406156;
+ d=1e100.net; s=20230601; t=1726802022; x=1727406822;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=9TiJ9vr1v7J6VArlWxbWN9unErnyIeHgYpn7HAQNF6g=;
- b=Lgb53L/lFTze6qXzOsOdySH+IJ64ue7ceNudzYlYAzMEnP02m9Wa+1wZ9PXxoBFzDw
- clNrJGx1ljxC3HMO/9bIqgRRCF6b+3IpTAv+hKQfDswxWLx8Z6XDHxkX3pP/1CnHGysL
- MaQS2YxMN49+mfbSpAFaj4P8LGcYqARYJ+Ae1vHsL+sAoao6M4DK6FXcaRpla+4StpC/
- vtqhn3HrgyOvjnpnv/XU8pgrsgMM3loMfXPGEeNWloXfva6LdwKEvrYURGvjPOvzn3nz
- k1MDsxGC0s3iHdXSACINz5kJFfJMz9Da+i1I/fz2FqsdTxAX++v3zFzRuQqgvjBpFyx0
- SX9w==
+ bh=BmUsHFn9JTPDrQbK+9MV1H6hgDJhBv/nUw3WUVpLAcI=;
+ b=tAnR55XVP1Kf9v1LeBO2kPJ51wwDVVquZRX+5X7jy7T4lNxYFWt2lDdujTGQ4iDDPO
+ ugRU2soTIOVGmBMUZ1M0io781+M+Twj3ZkX1KfFLX4yEHQeHkv+N94b2wCcICGXG+lzH
+ 3kbBuFIq7d7QQT2P1QifZN8LJkPZmgkJKSqmHCWNSsu4a9/Z2b9i/9YNJsfrVOEk9Kc7
+ 0DKxJkpRNJi8aTTwctD05RLji94kXVyskbWtS1cvHCEML212xX5yJK5L4uHBunRTD0lU
+ AXnOfUMBy2kHeMXvgSkMR6DU3K4eayrO2UkQxeD4QnRpWqJ+2MLfLZpMFP0GY9O/1SlT
+ fNdA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVkvaaqp1dWy62+oh/VuWyoIyzfhOIlaDIOngun/l0LQZ4kEsklF7v+hTLr2oZuguoUVlPLB6+AbDVZ@nongnu.org
-X-Gm-Message-State: AOJu0YwfgTLd+Wa93+m04fEnkIgfiaJVexywpmAk8owLk5O4T46z0kTp
- Fpa/Y/AeJ6WfJ3ATd0ZmBI1biQTQhhT3DvQCYsxMU/KnzJSLano96CH8dPkRFWw5TF8E8qhmq2u
- i+MLCjW5m2nRc+XrX+TftjlFzgDoEC8D5xBeAmQ==
-X-Google-Smtp-Source: AGHT+IH272Pcn07OQizmIVNFn2j1JtrzpmQl5dvs4kiZw4ajOez9ZuiDcqIov3a0e84C9MLW95qvOVjJzPYgM20sd3w=
-X-Received: by 2002:a05:6871:e015:b0:255:2e14:3d9d with SMTP id
- 586e51a60fabf-2803cea837amr681912fac.5.1726801355946; Thu, 19 Sep 2024
- 20:02:35 -0700 (PDT)
+ AJvYcCV15b/M1TS0dE+/FyW+jJ358wZKxE2N0u1A4AeDEcj0Efzj+BUbbBzuJ0/i398IhmgkGgNOPuhhHiHq@nongnu.org
+X-Gm-Message-State: AOJu0YyEaYS1caMNPMdMU1LntQmXl1Cc8+eu4izavMm0TZATY3MwJ7rv
+ RUN1nRTscYvL6WJaOd9MV4lYJ+7OffCUpnxD1VfNAuBeVyePgWnhnLZkxubpN5epqDgU7/bL1e6
+ 1AY7rfFZkMYSvl9h18B32lJy3rt7SxQJr2XKqPQ==
+X-Google-Smtp-Source: AGHT+IGQ4NZTZxx4lsapjmFZNQ0vVe8Kpww+dEnkwDWKEiGZ7AFhQzznnLNkA4w9Ivb5vfHyF0Eosks5I8YQowoK6Qw=
+X-Received: by 2002:a05:6870:82a9:b0:270:3139:59fe with SMTP id
+ 586e51a60fabf-2803cf2bb48mr637456fac.12.1726802021697; Thu, 19 Sep 2024
+ 20:13:41 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1726390098.git.yong.huang@smartx.com>
  <531750c8d7b6c09f877b5f335a60fab402c168be.1726390098.git.yong.huang@smartx.com>
@@ -64,8 +64,8 @@ References: <cover.1726390098.git.yong.huang@smartx.com>
  <ZuxxOObKqS_G0Ela@x1n>
 In-Reply-To: <ZuxxOObKqS_G0Ela@x1n>
 From: Yong Huang <yong.huang@smartx.com>
-Date: Fri, 20 Sep 2024 11:02:20 +0800
-Message-ID: <CAK9dgmZ4PCbBhDYhFy_3EgZDzb1oGFGs9pXsOYqz9ke_Sj10yA@mail.gmail.com>
+Date: Fri, 20 Sep 2024 11:13:25 +0800
+Message-ID: <CAK9dgmY=PV28Wg0wGubQGg-opnsEzoawxD8esao2Hkt+nR_aDg@mail.gmail.com>
 Subject: Re: [PATCH v1 1/7] migration: Introduce structs for background sync
 To: Peter Xu <peterx@redhat.com>
 Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
@@ -73,7 +73,7 @@ Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
  Markus Armbruster <armbru@redhat.com>, David Hildenbrand <david@redhat.com>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000006b60c006228445e9"
+Content-Type: multipart/alternative; boundary="00000000000019e9330622846d64"
 Received-SPF: pass client-ip=2001:4860:4864:20::29;
  envelope-from=yong.huang@smartx.com; helo=mail-oa1-x29.google.com
 X-Spam_score_int: -18
@@ -97,7 +97,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006b60c006228445e9
+--00000000000019e9330622846d64
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -198,19 +198,9 @@ o
 d.
 > But is it always better?  At least it consumes much more resources..
 >
-
-Yes, it introduces an extra bitmap with respect to the old sync logic.
-
-
->
 > Otherwise, we can still leave that logic as-is but use a migration proper=
 ty
 > to turn it on only on new machines I think.
->
-
-OK, that's fine.
-
-
 >
 > Besides, could you explain why the solution needs to be this complex?  My
 > previous question was that we sync dirty too less, while auto converge
@@ -225,6 +215,12 @@ me
 > to time.
 >
 > I also don't see why we need a separate thread, plus two new bitmaps, to
+>
+
+You mean we could do the background sync in the migration thread or
+in the main thread( eg, using a timer) ?
+
+
 > achieve this..  I didn't read in-depth yet, but I thought dirty sync
 > requires bql anyway, then I don't yet understand why the two bitmaps are
 > required.  If the bitmaps are introduced in the 1st patch, IMO it'll be
@@ -240,7 +236,7 @@ me
 --=20
 Best regards
 
---0000000000006b60c006228445e9
+--00000000000019e9330622846d64
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -366,21 +362,11 @@ How confident do we think the new way is better than the old?<br>
 If it&#39;ll be 100% / always better, I agree we can consider removing the =
 old.<br>
 But is it always better?=C2=A0 At least it consumes much more resources..<b=
-r></blockquote><div><br></div><div><div style=3D"font-family:&quot;comic sa=
-ns ms&quot;,sans-serif" class=3D"gmail_default">Yes, it introduces an extra=
- bitmap with respect to the old sync logic.</div></div><div>=C2=A0</div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t-width:1px;border-left-style:solid;border-left-color:rgb(204,204,204);padd=
-ing-left:1ex">
+r>
 <br>
 Otherwise, we can still leave that logic as-is but use a migration property=
 <br>
-to turn it on only on new machines I think.<br></blockquote><div><br></div>=
-<div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=
-=3D"gmail_default">OK, that&#39;s fine.</div></div><div>=C2=A0</div><blockq=
-uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-wi=
-dth:1px;border-left-style:solid;border-left-color:rgb(204,204,204);padding-=
-left:1ex">
+to turn it on only on new machines I think.<br>
 <br>
 Besides, could you explain why the solution needs to be this complex?=C2=A0=
  My<br>
@@ -397,7 +383,14 @@ iterate() is invoked much more frequent, and maybe we can do sync from time=
 to time.<br>
 <br>
 I also don&#39;t see why we need a separate thread, plus two new bitmaps, t=
-o<br>
+o<br></blockquote><div><br></div><div><div style=3D"font-family:&quot;comic=
+ sans ms&quot;,sans-serif" class=3D"gmail_default">You mean we could do the=
+ background sync in the migration thread or=C2=A0</div><div style=3D"font-f=
+amily:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_default">in the =
+main thread( eg, using a timer) ?</div></div><div>=C2=A0</div><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1p=
+x;border-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1=
+ex">
 achieve this..=C2=A0 I didn&#39;t read in-depth yet, but I thought dirty sy=
 nc<br>
 requires bql anyway, then I don&#39;t yet understand why the two bitmaps ar=
@@ -416,5 +409,5 @@ gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
 iv dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font>=
 </div></div></div>
 
---0000000000006b60c006228445e9--
+--00000000000019e9330622846d64--
 
