@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE3DCCF9C51
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF412CF9C54
 	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 15:24:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srfTn-0004sD-Ou; Fri, 20 Sep 2024 11:23:31 -0400
+	id 1srfTX-0004iU-LN; Fri, 20 Sep 2024 11:23:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1srfTh-0004ri-MV
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 11:23:25 -0400
+ id 1srfTW-0004hS-Aj
+ for qemu-devel@nongnu.org; Fri, 20 Sep 2024 11:23:14 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1srfTf-0005QH-Ku
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 11:23:25 -0400
+ id 1srfTU-0005PC-7x
+ for qemu-devel@nongnu.org; Fri, 20 Sep 2024 11:23:14 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1srfTW-0008Rw-Ge; Fri, 20 Sep 2024 17:23:14 +0200
-Message-ID: <bbed8165-de5c-4ebe-a6cc-ff33f9ea363a@maciej.szmigiero.name>
-Date: Fri, 20 Sep 2024 17:23:08 +0200
+ id 1srfTH-0008Rb-Sv; Fri, 20 Sep 2024 17:22:59 +0200
+Message-ID: <c90deba5-8f47-4a9c-b039-284b84fe7d19@maciej.szmigiero.name>
+Date: Fri, 20 Sep 2024 17:22:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/17] migration: Add load_finish handler and
- associated functions
+Subject: Re: [PATCH v2 06/17] migration: Add
+ save_live_complete_precopy_{begin,end} handlers
 To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
+Cc: Avihai Horon <avihaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
 References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <1a7599896decdbae61cee385739dc0badc9b4364.1724701542.git.maciej.szmigiero@oracle.com>
- <Zt9UjvvbeUZQlGNY@x1n>
- <d245c8b6-b765-42e1-a5ec-bdb46494cec4@maciej.szmigiero.name>
- <ZuyTjQJujZo6tw9p@x1n>
+ <afe0bc649007593edaa77f5f3923acb733a24c6a.1724701542.git.maciej.szmigiero@oracle.com>
+ <9f9f0408-866d-4dc8-8c8e-80c3cfdd190a@nvidia.com> <Zt83mWWlMomX4mRD@x1n>
+ <fa64bf51-7fec-454b-b204-f92f5d06f731@maciej.szmigiero.name>
+ <Zt9HuA3QtP0E93X1@x1n>
+ <81dd1071-9285-415f-a334-3d8109e0a905@maciej.szmigiero.name>
+ <ZuyPlyh0sCYPP7C2@x1n>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -86,7 +87,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <ZuyTjQJujZo6tw9p@x1n>
+In-Reply-To: <ZuyPlyh0sCYPP7C2@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=37.28.154.113;
@@ -111,154 +112,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.09.2024 23:11, Peter Xu wrote:
-> On Thu, Sep 19, 2024 at 09:49:10PM +0200, Maciej S. Szmigiero wrote:
->> On 9.09.2024 22:03, Peter Xu wrote:
->>> On Tue, Aug 27, 2024 at 07:54:27PM +0200, Maciej S. Szmigiero wrote:
->>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+On 19.09.2024 22:54, Peter Xu wrote:
+> On Thu, Sep 19, 2024 at 09:47:53PM +0200, Maciej S. Szmigiero wrote:
+>> On 9.09.2024 21:08, Peter Xu wrote:
+>>> On Mon, Sep 09, 2024 at 08:32:45PM +0200, Maciej S. Szmigiero wrote:
+>>>> On 9.09.2024 19:59, Peter Xu wrote:
+>>>>> On Thu, Sep 05, 2024 at 04:45:48PM +0300, Avihai Horon wrote:
+>>>>>>
+>>>>>> On 27/08/2024 20:54, Maciej S. Szmigiero wrote:
+>>>>>>> External email: Use caution opening links or attachments
+>>>>>>>
+>>>>>>>
+>>>>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>>>>>
+>>>>>>> These SaveVMHandlers help device provide its own asynchronous
+>>>>>>> transmission of the remaining data at the end of a precopy phase.
+>>>>>>>
+>>>>>>> In this use case the save_live_complete_precopy_begin handler might
+>>>>>>> be used to mark the stream boundary before proceeding with asynchronous
+>>>>>>> transmission of the remaining data while the
+>>>>>>> save_live_complete_precopy_end handler might be used to mark the
+>>>>>>> stream boundary after performing the asynchronous transmission.
+>>>>>>>
+>>>>>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>>>>>>> ---
+>>>>>>>      include/migration/register.h | 36 ++++++++++++++++++++++++++++++++++++
+>>>>>>>      migration/savevm.c           | 35 +++++++++++++++++++++++++++++++++++
+>>>>>>>      2 files changed, 71 insertions(+)
+>>>>>>>
+>>>>>>> diff --git a/include/migration/register.h b/include/migration/register.h
+>>>>>>> index f60e797894e5..9de123252edf 100644
+>>>>>>> --- a/include/migration/register.h
+>>>>>>> +++ b/include/migration/register.h
+>>>>>>> @@ -103,6 +103,42 @@ typedef struct SaveVMHandlers {
+>>>>>>>           */
+>>>>>>>          int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
+>>>>>>>
+>>>>>>> +    /**
+>>>>>>> +     * @save_live_complete_precopy_begin
+>>>>>>> +     *
+>>>>>>> +     * Called at the end of a precopy phase, before all
+>>>>>>> +     * @save_live_complete_precopy handlers and before launching
+>>>>>>> +     * all @save_live_complete_precopy_thread threads.
+>>>>>>> +     * The handler might, for example, mark the stream boundary before
+>>>>>>> +     * proceeding with asynchronous transmission of the remaining data via
+>>>>>>> +     * @save_live_complete_precopy_thread.
+>>>>>>> +     * When postcopy is enabled, devices that support postcopy will skip this step.
+>>>>>>> +     *
+>>>>>>> +     * @f: QEMUFile where the handler can synchronously send data before returning
+>>>>>>> +     * @idstr: this device section idstr
+>>>>>>> +     * @instance_id: this device section instance_id
+>>>>>>> +     * @opaque: data pointer passed to register_savevm_live()
+>>>>>>> +     *
+>>>>>>> +     * Returns zero to indicate success and negative for error
+>>>>>>> +     */
+>>>>>>> +    int (*save_live_complete_precopy_begin)(QEMUFile *f,
+>>>>>>> +                                            char *idstr, uint32_t instance_id,
+>>>>>>> +                                            void *opaque);
+>>>>>>> +    /**
+>>>>>>> +     * @save_live_complete_precopy_end
+>>>>>>> +     *
+>>>>>>> +     * Called at the end of a precopy phase, after @save_live_complete_precopy
+>>>>>>> +     * handlers and after all @save_live_complete_precopy_thread threads have
+>>>>>>> +     * finished. When postcopy is enabled, devices that support postcopy will
+>>>>>>> +     * skip this step.
+>>>>>>> +     *
+>>>>>>> +     * @f: QEMUFile where the handler can synchronously send data before returning
+>>>>>>> +     * @opaque: data pointer passed to register_savevm_live()
+>>>>>>> +     *
+>>>>>>> +     * Returns zero to indicate success and negative for error
+>>>>>>> +     */
+>>>>>>> +    int (*save_live_complete_precopy_end)(QEMUFile *f, void *opaque);
+>>>>>>
+>>>>>> Is this handler necessary now that migration core is responsible for the
+>>>>>> threads and joins them? I don't see VFIO implementing it later on.
+>>>>>
+>>>>> Right, I spot the same thing.
+>>>>>
+>>>>> This series added three hooks: begin, end, precopy_thread.
+>>>>>
+>>>>> What I think is it only needs one, which is precopy_async.  My vague memory
+>>>>> was that was what we used to discuss too, so that when migration precopy
+>>>>> flushes the final round of iterable data, it does:
+>>>>>
+>>>>>      (1) loop over all complete_precopy_async() and enqueue the tasks if
+>>>>>          existed into the migration worker pool.  Then,
+>>>>>
+>>>>>      (2) loop over all complete_precopy() like before.
+>>>>>
+>>>>> Optionally, we can enforce one vmstate handler only provides either
+>>>>> complete_precopy_async() or complete_precopy().  In this case VFIO can
+>>>>> update the two hooks during setup() by detecting multifd && !mapped_ram &&
+>>>>> nocomp.
+>>>>>
 >>>>
->>>> load_finish SaveVMHandler allows migration code to poll whether
->>>> a device-specific asynchronous device state loading operation had finished.
->>>>
->>>> In order to avoid calling this handler needlessly the device is supposed
->>>> to notify the migration code of its possible readiness via a call to
->>>> qemu_loadvm_load_finish_ready_broadcast() while holding
->>>> qemu_loadvm_load_finish_ready_lock.
->>>>
->>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->>>> ---
->>>>    include/migration/register.h | 21 +++++++++++++++
->>>>    migration/migration.c        |  6 +++++
->>>>    migration/migration.h        |  3 +++
->>>>    migration/savevm.c           | 52 ++++++++++++++++++++++++++++++++++++
->>>>    migration/savevm.h           |  4 +++
->>>>    5 files changed, 86 insertions(+)
->>>>
->>>> diff --git a/include/migration/register.h b/include/migration/register.h
->>>> index 4a578f140713..44d8cf5192ae 100644
->>>> --- a/include/migration/register.h
->>>> +++ b/include/migration/register.h
->>>> @@ -278,6 +278,27 @@ typedef struct SaveVMHandlers {
->>>>        int (*load_state_buffer)(void *opaque, char *data, size_t data_size,
->>>>                                 Error **errp);
->>>> +    /**
->>>> +     * @load_finish
->>>> +     *
->>>> +     * Poll whether all asynchronous device state loading had finished.
->>>> +     * Not called on the load failure path.
->>>> +     *
->>>> +     * Called while holding the qemu_loadvm_load_finish_ready_lock.
->>>> +     *
->>>> +     * If this method signals "not ready" then it might not be called
->>>> +     * again until qemu_loadvm_load_finish_ready_broadcast() is invoked
->>>> +     * while holding qemu_loadvm_load_finish_ready_lock.
+>>>> The "_begin" hook is still necessary to mark the end of the device state
+>>>> sent via the main migration stream (during the phase VM is still running)
+>>>> since we can't start loading the multifd sent device state until all of
+>>>> that earlier data finishes loading first.
 >>>
->>> [1]
+>>> Ah I remembered some more now, thanks.
 >>>
->>>> +     *
->>>> +     * @opaque: data pointer passed to register_savevm_live()
->>>> +     * @is_finished: whether the loading had finished (output parameter)
->>>> +     * @errp: pointer to Error*, to store an error if it happens.
->>>> +     *
->>>> +     * Returns zero to indicate success and negative for error
->>>> +     * It's not an error that the loading still hasn't finished.
->>>> +     */
->>>> +    int (*load_finish)(void *opaque, bool *is_finished, Error **errp);
+>>> If vfio can send data during iterations this new hook will also not be
+>>> needed, right?
 >>>
->>> The load_finish() semantics is a bit weird, especially above [1] on "only
->>> allowed to be called once if ..." and also on the locks.
+>>> I remember you mentioned you'd have a look and see the challenges there, is
+>>> there any conclusion yet on whether we can use multifd even during that?
 >>
->> The point of this remark is that a driver needs to call
->> qemu_loadvm_load_finish_ready_broadcast() if it wants for the migration
->> core to call its load_finish handler again.
+>> Yeah, I looked at that and it wasn't a straightforward thing to introduce.
 >>
->>> It looks to me vfio_load_finish() also does the final load of the device.
->>>
->>> I wonder whether that final load can be done in the threads,
->>
->> Here, the problem is that current VFIO VMState has to be loaded from the main
->> migration thread as it internally calls QEMU core address space modification
->> methods which explode if called from another thread(s).
+>> I am worried that with all the things that already piled up (including the
+>> new thread pool implementation) we risk missing QEMU 9.2 too if this is
+>> included.
 > 
-> Ahh, I see.  I'm trying to make dest qemu loadvm in a thread too and yield
-> BQL if possible, when that's ready then in your case here IIUC you can
-> simply take BQL in whichever thread that loads it.. but yeah it's not ready
-> at least..
+> Not explicitly required, but IMHO it'll be nice to provide a paragraph in
+> the new version when repost explaining the challenges of using it during
+> iterations.  It'll be not only for me but for whoever may want to extend
+> your solution to iterations.
 
-Yeah, long term we might want to work on making these QEMU core address space
-modification methods somehow callable from multiple threads but that's
-definitely not something for the initial patch set.
+Will do.
 
-> Would it be possible vfio_save_complete_precopy_async_thread_config_state()
-> be done in VFIO's save_live_complete_precopy() through the main channel
-> somehow?  IOW, does it rely on iterative data to be fetched first from
-> kernel, or completely separate states? 
+> I asked this question again mostly because I found that when with iteration
+> support the design looks simpler in begin(), so that the extra sync is not
+> needed.  But I confess you know better than me, so whatever you think best
+> is ok here.
 
-The device state data needs to be fully loaded first before "activating"
-the device by loading its config state.
-
-> And just curious: how large is it
-> normally (and I suppose this decides whether it's applicable to be sent via
-> the main channel at all..)?
-
-Config data is *much* smaller than device state data - as far as I remember
-it was on order of kilobytes.
+If we do the MIG_CMD_SWITCHOVER / QEMU_VM_COMMAND thing common for all
+devices then we don't need begin() even without live-phase multifd
+device state transfer.
 
 >>
->>> then after
->>> everything loaded the device post a semaphore telling the main thread to
->>> continue.  See e.g.:
->>>
->>>       if (migrate_switchover_ack()) {
->>>           qemu_loadvm_state_switchover_ack_needed(mis);
->>>       }
->>>
->>> IIUC, VFIO can register load_complete_ack similarly so it only sem_post()
->>> when all things are loaded?  We can then get rid of this slightly awkward
->>> interface.  I had a feeling that things can be simplified (e.g., if the
->>> thread will take care of loading the final vmstate then the mutex is also
->>> not needed? etc.).
+>>> It's also a pity that we introduce this hook only because we want a
+>>> boundary between "iterable stage" and "final stage".  IIUC if we have any
+>>> kind of message telling dest before hand that "we're going to the last
+>>> stage" then this hook can be avoided.  Now it's at least inefficient
+>>> because we need to trigger begin() per-device, even if I think it's more of
+>>> a global request saying that "we need to load all main stream data first
+>>> before moving on".
 >>
->> With just a single call to switchover_ack_needed per VFIO device it would
->> need to do a blocking wait for the device buffers and config state load
->> to finish, therefore blocking other VFIO devices from potentially loading
->> their config state if they are ready to begin this operation earlier.
+>> It should be pretty easy to remove that begin() hook once it is no longer
+>> needed - after all, it's only necessary for the sender.
 > 
-> I am not sure I get you here, loading VFIO device states (I mean, the
-> non-iterable part) will need to be done sequentially IIUC due to what you
-> said and should rely on BQL, so I don't know how that could happen
-> concurrently for now.  But I think indeed BQL is a problem.
-Consider that we have two VFIO devices (A and B), with the following order
-of switchover_ack_needed handler calls for them: first A get this call,
-once the call for A finishes then B gets this call.
+> Do you mean you have plan to remove the begin() hook even without making
+> interate() work too?  That's definitely nice if so.
 
-Now consider what happens if B had loaded all its buffers (in the loading
-thread) and it is ready for its config load before A finished loading its
-buffers.
-
-B has to wait idle in this situation (even though it could have been already
-loading its config) since the switchover_ack_needed handler for A won't
-return until A is fully done.
-
-> So IMHO this recv side interface so far is the major pain that I really
-> want to avoid (comparing to the rest) in the series.  Let's see whether we
-> can come up with something better..
-> 
-> One other (probably not pretty..) idea is when waiting here in the main
-> thread it yields BQL, then other threads can take it and load the VFIO
-> final chunk of data.  But I could miss something else.
-> 
-
-I think temporary dropping BQL deep inside migration code is similar
-to running QEMU event loop deep inside migration code (about which
-people complained in my generic thread pool implementation): it's easy
-to miss some subtle dependency/race somewhere and accidentally cause rare
-hard to debug deadlock.
-
-That's why I think that it's ultimately probably better to make QEMU core
-address space modification methods thread safe / re-entrant instead.
+As I wrote above, I think with MIG_CMD_SWITCHOVER it shouldn't be needed?
 
 Thanks,
 Maciej
+
 
 
