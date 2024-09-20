@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28820CF3976
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 00:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B88C2CF397F
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 02:44:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srR7e-00039K-NU; Thu, 19 Sep 2024 20:03:42 -0400
+	id 1srTci-00039O-S5; Thu, 19 Sep 2024 22:43:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alan.adamson@oracle.com>)
- id 1srR7a-00033Z-Hx; Thu, 19 Sep 2024 20:03:38 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alan.adamson@oracle.com>)
- id 1srR7X-0003R6-Va; Thu, 19 Sep 2024 20:03:38 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48JLN2xS009926;
- Fri, 20 Sep 2024 00:03:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=corp-2023-11-20; bh=E
- 9QE9Kl2sQglmU4opycoo35QhjBLL1Q4abYB9l436Z4=; b=kSBxh3RK1jGzZ2H4j
- PqF0GTfhiiA7uJ1EtPgJyY/LcgoH0XyVlaVBQpK8nXlc+ejutO4f6T7VjjH1HHRU
- Pmy0rrB20u0GVOcoHiZQKOfG/Cwg2L1I8ECTYMuqZn+F7M/iBwLVEWpaWa9LqtLU
- jXfZb8+jdQPKu4DQokgt4MEFMYswUtWsw4lYT1qHL5PLgfh3EyCGDeNw13Pw2iGY
- nR2QHJFnvFOYCBsLLuCZidr7eQ4hgoyZWokqrQt37c+Jlteth5+KcSYy1rCl8nk0
- xFxkxTMfSqd+O+/oCaN6SeXYiot+Gvf19ZMx3iI4qY02iObEAKDrwMCgO1Og9L+m
- Aorcw==
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 41n3sd5j36-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 20 Sep 2024 00:03:27 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 48JLBTUs034143; Fri, 20 Sep 2024 00:03:27 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 41nycmg2ec-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 20 Sep 2024 00:03:27 +0000
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48K03PrA023686;
- Fri, 20 Sep 2024 00:03:26 GMT
-Received: from ca-dev94.us.oracle.com (ca-dev94.us.oracle.com [10.129.136.30])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 41nycmg2cn-2; Fri, 20 Sep 2024 00:03:26 +0000
-From: Alan Adamson <alan.adamson@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: alan.adamson@oracle.com, kbusch@kernel.org, its@irrelevant.dk,
- qemu-block@nongnu.org
-Subject: [PATCH v2 1/1] hw/nvme: add atomic write support
-Date: Thu, 19 Sep 2024 17:07:21 -0700
-Message-ID: <20240920000721.993119-2-alan.adamson@oracle.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20240920000721.993119-1-alan.adamson@oracle.com>
-References: <20240920000721.993119-1-alan.adamson@oracle.com>
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1srTcf-00038G-Ne
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 22:43:53 -0400
+Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1srTcc-0003Sg-LU
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 22:43:53 -0400
+Received: by mail-oo1-xc2b.google.com with SMTP id
+ 006d021491bc7-5e1cdfe241eso642264eaf.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 19:43:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1726800228; x=1727405028;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ePhbiQY0oDh0dQOBl+INE+Ksd6ztM0cuqXRVHJrUgyQ=;
+ b=OmbJekJ0ro/DPaxsvyHghCu4FnyMka+rsP6kwRie/Dp7Blh6FUq3xxfVzNbSN9DdcP
+ Zd21emkdwlQ0ZR+F9ZrKDn2aMZO7z0FfkWfOUSnXLZ4LjZ6QKIATfFy4XDjyupEYalOk
+ 29vLMwW6+XJSyfUI7d+BaRol+atujm6o0s+IjAEVWWCOTHdxcZQCerAVjS2PYeOk341F
+ DSL58Iwo7RPEFMGYO2iVvYq+yxNIX+XXRshegoCTHd/rp6NGdTqgKSB3qcFVoVVyugDc
+ +VAHVu8imvTYIf4O4lhQ27jPkI5XW1QvoK10FhuywpGPAzRJrCkByFlmwCGagWFmPjBO
+ 3zrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726800228; x=1727405028;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ePhbiQY0oDh0dQOBl+INE+Ksd6ztM0cuqXRVHJrUgyQ=;
+ b=YBYztWRPJGvGaZuUNEJWAIyna0FNB83mntPK4+5xqfSWWBXNTVifCVAzaysBArk+zj
+ yG913LEd7L+uRMGhBsuT+9l0xha2sxgMpcurTHPhk3IDYZ9jZXuA0xJZ6Qon7o8ppPYU
+ pw/hWYJSdqDPoeohmbzhY72+aVtIBg0/gR/ahEcASjRd3BiKipwNiT5xXeWjA6NX1XdF
+ FIwMze2726HEWwY1UVYoHAQYY21t3jtqQuDimWeuLsVk5PW3pT1dOwfi49kygX6cV9ro
+ 4VmWVFck0CxMjGEfXQaj9k4tCDGWR3AUCtZPlA8irSVaVznHJNfaCdgVrIbf9Vt4kg0X
+ 0xdA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXlUmXmxccq48EIw99ak06vFJkD0L0AJMQ179zgu0aHgjvRD7GZzdpk05c6jBnP31ZEd3XhONUxYu9E@nongnu.org
+X-Gm-Message-State: AOJu0YzqaLxuOjs+RLHct/VcOdiLrsJNYZtwmnKqdvNtGDwuIWkZIEWF
+ foTDqMdzTQo/BaVmZvsAN31rnzNc8Z+78MjQOJ+udQ1sahJVMDeGq91KIZtRV6OIFJ6baUpfmLs
+ vKq4GsFuWuSGV0hLcR5OFNEAGQlse0lMC9I12bw==
+X-Google-Smtp-Source: AGHT+IHbaslxZ/jux5RdkgwcATsaEx9zqm3oiCAeJYfxFABXMmfbY2+o5JcjrcgaJ/HTwLQB4KsPrVivWDsYYqXahFc=
+X-Received: by 2002:a05:6870:56a0:b0:260:ff2f:9d24 with SMTP id
+ 586e51a60fabf-2803a78514emr757399fac.33.1726800227029; Thu, 19 Sep 2024
+ 19:43:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-19_22,2024-09-19_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- mlxlogscore=999
- malwarescore=0 spamscore=0 mlxscore=0 adultscore=0 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2408220000 definitions=main-2409190161
-X-Proofpoint-ORIG-GUID: VpzX7LuyZsN6SUHT57CNJ2dnvW8mNHHV
-X-Proofpoint-GUID: VpzX7LuyZsN6SUHT57CNJ2dnvW8mNHHV
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=alan.adamson@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+References: <cover.1726390098.git.yong.huang@smartx.com>
+ <531750c8d7b6c09f877b5f335a60fab402c168be.1726390098.git.yong.huang@smartx.com>
+ <87msk7z4l3.fsf@suse.de>
+ <CAK9dgmb_rK5HJOGTG=KXKgH=e2e8JV8aqoOWUHBEyjnc-+kiqg@mail.gmail.com>
+ <ZuxxOObKqS_G0Ela@x1n>
+In-Reply-To: <ZuxxOObKqS_G0Ela@x1n>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Fri, 20 Sep 2024 10:43:31 +0800
+Message-ID: <CAK9dgmYaE=poiwLQqD6qbjJQdgPLMn8cW8VO47xYFTBkNiUVLA@mail.gmail.com>
+Subject: Re: [PATCH v1 1/7] migration: Introduce structs for background sync
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, David Hildenbrand <david@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000216fd606228402a7"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
+ envelope-from=yong.huang@smartx.com; helo=mail-oo1-xc2b.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,339 +97,409 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds support for the controller atomic parameters: AWUN and AWUPF. Atomic
-Compare and Write Unit (ACWU) is not currently supported.
+--000000000000216fd606228402a7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Writes that adhere to the ACWU and AWUPF parameters are guaranteed to be atomic.
+On Fri, Sep 20, 2024 at 2:45=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
 
-New NVMe QEMU Parameters (See NVMe Specification for details):
-       atomic.dn (default off) - Set the value of Disable Normal.
-       atomic.awun=UINT16 (default: 0)
-       atomic.awupf=UINT16 (default: 0)
+> On Tue, Sep 17, 2024 at 02:48:03PM +0800, Yong Huang wrote:
+> > On Tue, Sep 17, 2024 at 5:11=E2=80=AFAM Fabiano Rosas <farosas@suse.de>=
+ wrote:
+> >
+> > > Hyman Huang <yong.huang@smartx.com> writes:
+> > >
+> > > > shadow_bmap, iter_bmap and iter_dirty_pages are introduced
+> > > > to satisfy the need for background sync.
+> > > >
+> > > > Meanwhile, introduce enumeration of sync method.
+> > > >
+> > > > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+> > > > ---
+> > > >  include/exec/ramblock.h | 45
+> +++++++++++++++++++++++++++++++++++++++++
+> > > >  migration/ram.c         |  6 ++++++
+> > > >  2 files changed, 51 insertions(+)
+> > > >
+> > > > diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
+> > > > index 0babd105c0..0e327bc0ae 100644
+> > > > --- a/include/exec/ramblock.h
+> > > > +++ b/include/exec/ramblock.h
+> > > > @@ -24,6 +24,30 @@
+> > > >  #include "qemu/rcu.h"
+> > > >  #include "exec/ramlist.h"
+> > > >
+> > > > +/* Possible bits for cpu_physical_memory_sync_dirty_bitmap */
+> > > > +
+> > > > +/*
+> > > > + * The old-fashioned sync, which is, in turn, used for CPU
+> > > > + * throttle and memory transfer.
+> > >
+> >
+> > Using the traditional sync method, the page sending logic iterates
+> > the "bmap" to transfer dirty pages while the CPU throttle logic
+> > counts the amount of new dirty pages and detects convergence.
+> > There are two uses for "bmap".
+> >
+> > Using the modern sync method, "bmap" is used for transfer
+> > dirty pages and "iter_bmap" is used to track new dirty pages.
+> >
+> >
+> > > I'm not sure I follow what "in turn" is supposed to mean in this
+> > > sentence. Could you clarify?
+> > >
+> >
+> > Here I want to express "in sequence".  But failed obviously. :(
+> >
+> >
+> > >
+> > > > + */
+> > > > +#define RAMBLOCK_SYN_LEGACY_ITER   (1U << 0)
+> > >
+> > > So ITER is as opposed to background? I'm a bit confused with the term=
+s.
+> > >
+> >
+> > Yes.
+> >
+> >
+> > >
+> > > > +
+> > > > +/*
+> > > > + * The modern sync, which is, in turn, used for CPU throttle
+> > > > + * and memory transfer.
+> > > > + */
+> > > > +#define RAMBLOCK_SYN_MODERN_ITER   (1U << 1)
+> > > > +
+> > > > +/* The modern sync, which is used for CPU throttle only */
+> > > > +#define RAMBLOCK_SYN_MODERN_BACKGROUND    (1U << 2)
+> > >
+> > > What's the plan for the "legacy" part? To be removed soon? Do we want
+> to
+> > > remove it now? Maybe better to not use the modern/legacy terms unless
+> we
+> > > want to give the impression that the legacy one is discontinued.
+> > >
+> >
+> > The bitmap they utilized to track the dirty page information was the
+> > distinction between the "legacy iteration" and the "modern iteration."
+> > The "iter_bmap" field is used by the "modern iteration" while the "bmap=
+"
+> > field is used by the "legacy iteration."
+> >
+> > Since the refinement is now transparent and there is no API available t=
+o
+> > change the sync method, I actually want to remove it right now in order
+> > to simplify the logic. I'll include it in the next version.
+>
+> How confident do we think the new way is better than the old?
+>
+> If it'll be 100% / always better, I agree we can consider removing the ol=
+d.
+> But is it always better?  At least it consumes much more resources..
+>
+> Otherwise, we can still leave that logic as-is but use a migration proper=
+ty
+> to turn it on only on new machines I think.
+>
+> Besides, could you explain why the solution needs to be this complex?  My
+> previous question was that we sync dirty too less, while auto converge
+> relies on dirty information, so that means auto converge can be adjusted
+> too unfrequently.
+>
 
-By default (Disable Normal set to zero), the maximum atomic write size is
-set to the AWUN value.  If Disable Normal is set, the maximum atomic write
-size is set to AWUPF.
+The original logic will update the bmap for each sync, which was used to
+conduct the dirty page sending. In the background sync logic, we do not
+want to update bmap to interfere with the behavior of page sending for
+each background sync, since the bitmap we are syncing is only used to
+detect the convergence and do the CPU throttle.
 
-Signed-off-by: Alan Adamson <alan.adamson@oracle.com>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
----
- hw/nvme/ctrl.c | 164 ++++++++++++++++++++++++++++++++++++++++++++++++-
- hw/nvme/nvme.h |  12 ++++
- 2 files changed, 175 insertions(+), 1 deletion(-)
+The iteration sync wants to 1: sync dirty bitmap, 2:detect convergence,
+3: do the CPU throttle and 4: use the bmap fetched to conduct the page
+sending, while the background sync only does the 1,2,3. They have different
+purposes. These logic need at least two bitmap, one is used to page sending
+and another is used for CPU throttling, to achieve this, we introduced the
+iter_bmap as the temporary bitmap to store the dirty page information
+during background sync and copy it to the bmap in the iteration sync logic.
+However, the dirty page information in iter_bmap may be repetitive since
+the dirty pages it records could be sent after background syncing, we
+introduced the shadow_bmap to help calculate the dirty pages having
+been sent during two background syncs.
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 9e94a2405407..0af46c57ee86 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -40,6 +40,9 @@
-  *              sriov_vi_flexible=<N[optional]> \
-  *              sriov_max_vi_per_vf=<N[optional]> \
-  *              sriov_max_vq_per_vf=<N[optional]> \
-+ *              atomic.dn=<on|off[optional]>, \
-+ *              atomic.awun<N[optional]>, \
-+ *              atomic.awupf<N[optional]>, \
-  *              subsys=<subsys_id>
-  *      -device nvme-ns,drive=<drive_id>,bus=<bus_name>,nsid=<nsid>,\
-  *              zoned=<true|false[optional]>, \
-@@ -254,6 +257,7 @@ static const uint32_t nvme_feature_cap[NVME_FID_MAX] = {
-     [NVME_ERROR_RECOVERY]           = NVME_FEAT_CAP_CHANGE | NVME_FEAT_CAP_NS,
-     [NVME_VOLATILE_WRITE_CACHE]     = NVME_FEAT_CAP_CHANGE,
-     [NVME_NUMBER_OF_QUEUES]         = NVME_FEAT_CAP_CHANGE,
-+    [NVME_WRITE_ATOMICITY]          = NVME_FEAT_CAP_CHANGE,
-     [NVME_ASYNCHRONOUS_EVENT_CONF]  = NVME_FEAT_CAP_CHANGE,
-     [NVME_TIMESTAMP]                = NVME_FEAT_CAP_CHANGE,
-     [NVME_HOST_BEHAVIOR_SUPPORT]    = NVME_FEAT_CAP_CHANGE,
-@@ -6293,8 +6297,10 @@ defaults:
-         if (ret) {
-             return ret;
-         }
--        goto out;
-+        break;
- 
-+    case NVME_WRITE_ATOMICITY:
-+        result = n->dn;
-         break;
-     default:
-         result = nvme_feature_default[fid];
-@@ -6378,6 +6384,8 @@ static uint16_t nvme_set_feature(NvmeCtrl *n, NvmeRequest *req)
-     uint8_t save = NVME_SETFEAT_SAVE(dw10);
-     uint16_t status;
-     int i;
-+    NvmeIdCtrl *id = &n->id_ctrl;
-+    NvmeAtomic *atomic = &n->atomic;
- 
-     trace_pci_nvme_setfeat(nvme_cid(req), nsid, fid, save, dw11);
- 
-@@ -6530,6 +6538,22 @@ static uint16_t nvme_set_feature(NvmeCtrl *n, NvmeRequest *req)
-         return NVME_CMD_SEQ_ERROR | NVME_DNR;
-     case NVME_FDP_EVENTS:
-         return nvme_set_feature_fdp_events(n, ns, req);
-+    case NVME_WRITE_ATOMICITY:
-+
-+        n->dn = 0x1 & dw11;
-+
-+        if (n->dn) {
-+            atomic->atomic_max_write_size = id->awupf + 1;
-+        } else {
-+            atomic->atomic_max_write_size = id->awun + 1;
-+        }
-+
-+        if (atomic->atomic_max_write_size == 1) {
-+            atomic->atomic_writes = 0;
-+        } else {
-+            atomic->atomic_writes = 1;
-+        }
-+        break;
-     default:
-         return NVME_FEAT_NOT_CHANGEABLE | NVME_DNR;
-     }
-@@ -7227,6 +7251,80 @@ static void nvme_update_sq_tail(NvmeSQueue *sq)
-     trace_pci_nvme_update_sq_tail(sq->sqid, sq->tail);
- }
- 
-+#define NVME_ATOMIC_NO_START        0
-+#define NVME_ATOMIC_START_ATOMIC    1
-+#define NVME_ATOMIC_START_NONATOMIC 2
-+
-+static int nvme_atomic_write_check(NvmeCtrl *n, NvmeCmd *cmd,
-+    NvmeAtomic *atomic)
-+{
-+    NvmeRwCmd *rw = (NvmeRwCmd *)cmd;
-+    uint64_t slba = le64_to_cpu(rw->slba);
-+    uint32_t nlb = (uint32_t)le16_to_cpu(rw->nlb);
-+    uint64_t elba = slba + nlb;
-+    bool cmd_atomic_wr = true;
-+    int i;
-+
-+    if ((cmd->opcode == NVME_CMD_READ) || ((cmd->opcode == NVME_CMD_WRITE) &&
-+        ((rw->nlb + 1) > atomic->atomic_max_write_size))) {
-+        cmd_atomic_wr = false;
-+    }
-+
-+    /*
-+     * Walk the queues to see if there are any atomic conflicts.
-+     */
-+    for (i = 1; i < n->params.max_ioqpairs + 1; i++) {
-+        NvmeSQueue *sq;
-+        NvmeRequest *req;
-+        NvmeRwCmd *req_rw;
-+        uint64_t req_slba;
-+        uint32_t req_nlb;
-+        uint64_t req_elba;
-+
-+        sq = n->sq[i];
-+        if (!sq) {
-+            break;
-+        }
-+
-+        /*
-+         * Walk all the requests on a given queue.
-+         */
-+        QTAILQ_FOREACH(req, &sq->out_req_list, entry) {
-+            req_rw = (NvmeRwCmd *)&req->cmd;
-+
-+            if (((req_rw->opcode == NVME_CMD_WRITE) || (req_rw->opcode == NVME_CMD_READ)) &&
-+                (cmd->nsid == req->ns->params.nsid)) {
-+                req_slba = le64_to_cpu(req_rw->slba);
-+                req_nlb = (uint32_t)le16_to_cpu(req_rw->nlb);
-+                req_elba = req_slba + req_nlb;
-+
-+                if (cmd_atomic_wr) {
-+                    if ((elba >= req_slba) && (slba <= req_elba)) {
-+                        return NVME_ATOMIC_NO_START;
-+                    }
-+                } else {
-+                    if (req->atomic_write && ((elba >= req_slba) &&
-+                        (slba <= req_elba))) {
-+                        return NVME_ATOMIC_NO_START;
-+                    }
-+                }
-+            }
-+        }
-+    }
-+    if (cmd_atomic_wr) {
-+        return NVME_ATOMIC_START_ATOMIC;
-+    }
-+    return NVME_ATOMIC_START_NONATOMIC;
-+}
-+
-+static NvmeAtomic *nvme_get_atomic(NvmeCtrl *n, NvmeCmd *cmd)
-+{
-+    if (n->atomic.atomic_writes) {
-+        return &n->atomic;
-+    }
-+    return NULL;
-+}
-+
- static void nvme_process_sq(void *opaque)
- {
-     NvmeSQueue *sq = opaque;
-@@ -7243,6 +7341,9 @@ static void nvme_process_sq(void *opaque)
-     }
- 
-     while (!(nvme_sq_empty(sq) || QTAILQ_EMPTY(&sq->req_list))) {
-+        NvmeAtomic *atomic;
-+        bool cmd_is_atomic;
-+
-         addr = sq->dma_addr + (sq->head << NVME_SQES);
-         if (nvme_addr_read(n, addr, (void *)&cmd, sizeof(cmd))) {
-             trace_pci_nvme_err_addr_read(addr);
-@@ -7250,6 +7351,28 @@ static void nvme_process_sq(void *opaque)
-             stl_le_p(&n->bar.csts, NVME_CSTS_FAILED);
-             break;
-         }
-+
-+        atomic = nvme_get_atomic(n, &cmd);
-+
-+        cmd_is_atomic = false;
-+        if (sq->sqid && atomic) {
-+            int ret;
-+
-+            qemu_mutex_lock(&atomic->atomic_lock);
-+            ret = nvme_atomic_write_check(n, &cmd, atomic);
-+            switch (ret) {
-+            case NVME_ATOMIC_NO_START:
-+                qemu_bh_schedule(sq->bh);
-+                qemu_mutex_unlock(&atomic->atomic_lock);
-+                return;
-+            case NVME_ATOMIC_START_ATOMIC:
-+                cmd_is_atomic = true;
-+                break;
-+            case NVME_ATOMIC_START_NONATOMIC:
-+            default:
-+                break;
-+            }
-+        }
-         nvme_inc_sq_head(sq);
- 
-         req = QTAILQ_FIRST(&sq->req_list);
-@@ -7259,6 +7382,11 @@ static void nvme_process_sq(void *opaque)
-         req->cqe.cid = cmd.cid;
-         memcpy(&req->cmd, &cmd, sizeof(NvmeCmd));
- 
-+        if (sq->sqid && atomic) {
-+            req->atomic_write = cmd_is_atomic;
-+            qemu_mutex_unlock(&atomic->atomic_lock);
-+        }
-+
-         status = sq->sqid ? nvme_io_cmd(n, req) :
-             nvme_admin_cmd(n, req);
-         if (status != NVME_NO_COMPLETE) {
-@@ -7362,6 +7490,8 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
-     n->outstanding_aers = 0;
-     n->qs_created = false;
- 
-+    n->dn = n->params.atomic_dn; /* Set Disable Normal */
-+
-     nvme_update_msixcap_ts(pci_dev, n->conf_msix_qsize);
- 
-     if (pci_is_vf(pci_dev)) {
-@@ -8138,6 +8268,8 @@ static void nvme_init_state(NvmeCtrl *n)
-     NvmeSecCtrlEntry *list = n->sec_ctrl_list;
-     NvmeSecCtrlEntry *sctrl;
-     PCIDevice *pci = PCI_DEVICE(n);
-+    NvmeAtomic *atomic = &n->atomic;
-+    NvmeIdCtrl *id = &n->id_ctrl;
-     uint8_t max_vfs;
-     int i;
- 
-@@ -8195,6 +8327,31 @@ static void nvme_init_state(NvmeCtrl *n)
-                         cpu_to_le16(n->params.sriov_max_vi_per_vf) :
-                         cap->vifrt / MAX(max_vfs, 1);
-     }
-+
-+    /* Atomic Write */
-+    id->awun = n->params.atomic_awun;
-+    id->awupf = n->params.atomic_awupf;
-+    n->dn = n->params.atomic_dn;
-+
-+    qemu_mutex_init(&atomic->atomic_lock);
-+
-+    if (id->awun || id->awupf) {
-+        if (id->awupf > id->awun) {
-+            id->awupf = 0;
-+        }
-+
-+        if (n->dn) {
-+            atomic->atomic_max_write_size = id->awupf + 1;
-+        } else {
-+            atomic->atomic_max_write_size = id->awun + 1;
-+        }
-+
-+        if (atomic->atomic_max_write_size == 1) {
-+            atomic->atomic_writes = 0;
-+        } else {
-+            atomic->atomic_writes = 1;
-+        }
-+    }
- }
- 
- static void nvme_init_cmb(NvmeCtrl *n, PCIDevice *pci_dev)
-@@ -8675,6 +8832,8 @@ static void nvme_exit(PCIDevice *pci_dev)
-         nvme_subsys_unregister_ctrl(n->subsys, n);
-     }
- 
-+    qemu_mutex_destroy(&n->atomic.atomic_lock);
-+
-     g_free(n->cq);
-     g_free(n->sq);
-     g_free(n->aer_reqs);
-@@ -8734,6 +8893,9 @@ static Property nvme_props[] = {
-                      false),
-     DEFINE_PROP_UINT16("mqes", NvmeCtrl, params.mqes, 0x7ff),
-     DEFINE_PROP_UINT16("spdm_port", PCIDevice, spdm_port, 0),
-+    DEFINE_PROP_BOOL("atomic.dn", NvmeCtrl, params.atomic_dn, 0),
-+    DEFINE_PROP_UINT16("atomic.awun", NvmeCtrl, params.atomic_awun, 0),
-+    DEFINE_PROP_UINT16("atomic.awupf", NvmeCtrl, params.atomic_awupf, 0),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 781985754d0d..4d8582e6f2a5 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -220,6 +220,12 @@ typedef struct NvmeNamespaceParams {
-     } fdp;
- } NvmeNamespaceParams;
- 
-+typedef struct NvmeAtomic {
-+    uint32_t    atomic_max_write_size;
-+    QemuMutex   atomic_lock;
-+    bool        atomic_writes;
-+} NvmeAtomic;
-+
- typedef struct NvmeNamespace {
-     DeviceState  parent_obj;
-     BlockConf    blkconf;
-@@ -421,6 +427,7 @@ typedef struct NvmeRequest {
-     NvmeCmd                 cmd;
-     BlockAcctCookie         acct;
-     NvmeSg                  sg;
-+    bool                    atomic_write;
-     QTAILQ_ENTRY(NvmeRequest)entry;
- } NvmeRequest;
- 
-@@ -538,6 +545,9 @@ typedef struct NvmeParams {
-     uint32_t  sriov_max_vq_per_vf;
-     uint32_t  sriov_max_vi_per_vf;
-     bool     msix_exclusive_bar;
-+    uint16_t atomic_awun;
-+    uint16_t atomic_awupf;
-+    bool     atomic_dn;
- } NvmeParams;
- 
- typedef struct NvmeCtrl {
-@@ -619,6 +629,8 @@ typedef struct NvmeCtrl {
-         uint16_t    vqrfap;
-         uint16_t    virfap;
-     } next_pri_ctrl_cap;    /* These override pri_ctrl_cap after reset */
-+    uint32_t    dn; /* Disable Normal */
-+    NvmeAtomic  atomic;
- } NvmeCtrl;
- 
- typedef enum NvmeResetType {
--- 
-2.43.5
 
+> However I wonder whether that can be achieved in a simpler manner by
+>
+
+I have tried my best to make the solution simpler but failed. :(
+
+
+> e.g. invoke migration_bitmap_sync_precopy() more frequently during
+>
+
+Yes, invoke migration_bitmap_sync_precopy more frequently is also my
+first idea but it involves bitmap updating and interfere with the behavior
+of page sending, it also affects the migration information stats and
+interfere
+other migration logic such as migration_update_rates().
+
+
+> migration, for example, in ram_save_iterate() - not every time but the
+> iterate() is invoked much more frequent, and maybe we can do sync from ti=
+me
+> to time.
+
+
+> I also don't see why we need a separate thread, plus two new bitmaps, to
+> achieve this..  I didn't read in-depth yet, but I thought dirty sync
+> requires bql anyway, then I don't yet understand why the two bitmaps are
+> required.  If the bitmaps are introduced in the 1st patch, IMO it'll be
+> great to explain clearly on why they're needed here.
+>
+> Thanks,
+>
+> --
+> Peter Xu
+>
+>
+Thanks,
+
+Yong
+
+--=20
+Best regards
+
+--000000000000216fd606228402a7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Sep 20, 20=
+24 at 2:45=E2=80=AFAM Peter Xu &lt;<a href=3D"mailto:peterx@redhat.com">pet=
+erx@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
+yle=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:sol=
+id;border-left-color:rgb(204,204,204);padding-left:1ex">On Tue, Sep 17, 202=
+4 at 02:48:03PM +0800, Yong Huang wrote:<br>
+&gt; On Tue, Sep 17, 2024 at 5:11=E2=80=AFAM Fabiano Rosas &lt;<a href=3D"m=
+ailto:farosas@suse.de" target=3D"_blank">farosas@suse.de</a>&gt; wrote:<br>
+&gt; <br>
+&gt; &gt; Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" target=
+=3D"_blank">yong.huang@smartx.com</a>&gt; writes:<br>
+&gt; &gt;<br>
+&gt; &gt; &gt; shadow_bmap, iter_bmap and iter_dirty_pages are introduced<b=
+r>
+&gt; &gt; &gt; to satisfy the need for background sync.<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; Meanwhile, introduce enumeration of sync method.<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yong.huang@=
+smartx.com" target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
+&gt; &gt; &gt; ---<br>
+&gt; &gt; &gt;=C2=A0 include/exec/ramblock.h | 45 +++++++++++++++++++++++++=
+++++++++++++++++<br>
+&gt; &gt; &gt;=C2=A0 migration/ram.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=
+=A0 6 ++++++<br>
+&gt; &gt; &gt;=C2=A0 2 files changed, 51 insertions(+)<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; diff --git a/include/exec/ramblock.h b/include/exec/ramblock=
+.h<br>
+&gt; &gt; &gt; index 0babd105c0..0e327bc0ae 100644<br>
+&gt; &gt; &gt; --- a/include/exec/ramblock.h<br>
+&gt; &gt; &gt; +++ b/include/exec/ramblock.h<br>
+&gt; &gt; &gt; @@ -24,6 +24,30 @@<br>
+&gt; &gt; &gt;=C2=A0 #include &quot;qemu/rcu.h&quot;<br>
+&gt; &gt; &gt;=C2=A0 #include &quot;exec/ramlist.h&quot;<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; +/* Possible bits for cpu_physical_memory_sync_dirty_bitmap =
+*/<br>
+&gt; &gt; &gt; +<br>
+&gt; &gt; &gt; +/*<br>
+&gt; &gt; &gt; + * The old-fashioned sync, which is, in turn, used for CPU<=
+br>
+&gt; &gt; &gt; + * throttle and memory transfer.<br>
+&gt; &gt;<br>
+&gt; <br>
+&gt; Using the traditional sync method, the page sending logic iterates<br>
+&gt; the &quot;bmap&quot; to transfer dirty pages while the CPU throttle lo=
+gic<br>
+&gt; counts the amount of new dirty pages and detects convergence.<br>
+&gt; There are two uses for &quot;bmap&quot;.<br>
+&gt; <br>
+&gt; Using the modern sync method, &quot;bmap&quot; is used for transfer<br=
+>
+&gt; dirty pages and &quot;iter_bmap&quot; is used to track new dirty pages=
+.<br>
+&gt; <br>
+&gt; <br>
+&gt; &gt; I&#39;m not sure I follow what &quot;in turn&quot; is supposed to=
+ mean in this<br>
+&gt; &gt; sentence. Could you clarify?<br>
+&gt; &gt;<br>
+&gt; <br>
+&gt; Here I want to express &quot;in sequence&quot;.=C2=A0 But failed obvio=
+usly. :(<br>
+&gt; <br>
+&gt; <br>
+&gt; &gt;<br>
+&gt; &gt; &gt; + */<br>
+&gt; &gt; &gt; +#define RAMBLOCK_SYN_LEGACY_ITER=C2=A0 =C2=A0(1U &lt;&lt; 0=
+)<br>
+&gt; &gt;<br>
+&gt; &gt; So ITER is as opposed to background? I&#39;m a bit confused with =
+the terms.<br>
+&gt; &gt;<br>
+&gt; <br>
+&gt; Yes.<br>
+&gt; <br>
+&gt; <br>
+&gt; &gt;<br>
+&gt; &gt; &gt; +<br>
+&gt; &gt; &gt; +/*<br>
+&gt; &gt; &gt; + * The modern sync, which is, in turn, used for CPU throttl=
+e<br>
+&gt; &gt; &gt; + * and memory transfer.<br>
+&gt; &gt; &gt; + */<br>
+&gt; &gt; &gt; +#define RAMBLOCK_SYN_MODERN_ITER=C2=A0 =C2=A0(1U &lt;&lt; 1=
+)<br>
+&gt; &gt; &gt; +<br>
+&gt; &gt; &gt; +/* The modern sync, which is used for CPU throttle only */<=
+br>
+&gt; &gt; &gt; +#define RAMBLOCK_SYN_MODERN_BACKGROUND=C2=A0 =C2=A0 (1U &lt=
+;&lt; 2)<br>
+&gt; &gt;<br>
+&gt; &gt; What&#39;s the plan for the &quot;legacy&quot; part? To be remove=
+d soon? Do we want to<br>
+&gt; &gt; remove it now? Maybe better to not use the modern/legacy terms un=
+less we<br>
+&gt; &gt; want to give the impression that the legacy one is discontinued.<=
+br>
+&gt; &gt;<br>
+&gt; <br>
+&gt; The bitmap they utilized to track the dirty page information was the<b=
+r>
+&gt; distinction between the &quot;legacy iteration&quot; and the &quot;mod=
+ern iteration.&quot;<br>
+&gt; The &quot;iter_bmap&quot; field is used by the &quot;modern iteration&=
+quot; while the &quot;bmap&quot;<br>
+&gt; field is used by the &quot;legacy iteration.&quot;<br>
+&gt; <br>
+&gt; Since the refinement is now transparent and there is no API available =
+to<br>
+&gt; change the sync method, I actually want to remove it right now in orde=
+r<br>
+&gt; to simplify the logic. I&#39;ll include it in the next version.<br>
+<br>
+How confident do we think the new way is better than the old?<br>
+<br>
+If it&#39;ll be 100% / always better, I agree we can consider removing the =
+old.<br>
+But is it always better?=C2=A0 At least it consumes much more resources..<b=
+r>
+<br>
+Otherwise, we can still leave that logic as-is but use a migration property=
+<br>
+to turn it on only on new machines I think.<br>
+<br>
+Besides, could you explain why the solution needs to be this complex?=C2=A0=
+ My<br>
+previous question was that we sync dirty too less, while auto converge<br>
+relies on dirty information, so that means auto converge can be adjusted<br=
+>
+too unfrequently.<br></blockquote><div><br></div><div><div style=3D"font-fa=
+mily:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_default">The orig=
+inal logic will update the bmap for each sync, which was used to</div><div =
+style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_d=
+efault">conduct the dirty page sending. In the background sync logic, we do=
+ not</div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" c=
+lass=3D"gmail_default">want=C2=A0to update bmap to interfere with the behav=
+ior of page sending for</div><div style=3D"font-family:&quot;comic sans ms&=
+quot;,sans-serif" class=3D"gmail_default">each background sync, since the b=
+itmap we are syncing is only used to</div><div style=3D"font-family:&quot;c=
+omic sans ms&quot;,sans-serif" class=3D"gmail_default">detect the convergen=
+ce and do the CPU throttle.</div><div style=3D"font-family:&quot;comic sans=
+ ms&quot;,sans-serif" class=3D"gmail_default"><br></div><div style=3D"font-=
+family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_default">The it=
+eration sync=C2=A0wants to 1: sync dirty bitmap, 2:detect convergence,</div=
+><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"g=
+mail_default">3: do the CPU throttle and 4: use the bmap fetched to conduct=
+ the page</div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-ser=
+if" class=3D"gmail_default">sending, while the background sync=C2=A0only do=
+es the 1,2,3. They have different</div><div class=3D"gmail_default"><span s=
+tyle=3D"font-family:&quot;comic sans ms&quot;,sans-serif">purpose</span><fo=
+nt face=3D"comic sans ms, sans-serif">s.=C2=A0These logic need at least two=
+ bitmap, one is used to page sending</font></div><div class=3D"gmail_defaul=
+t"><font face=3D"comic sans ms, sans-serif">and another is used for CPU thr=
+ottling, to achieve this, we introduced the</font></div><div class=3D"gmail=
+_default"><font face=3D"comic sans ms, sans-serif">iter_bmap as the tempora=
+ry bitmap to store the dirty page information</font></div><div class=3D"gma=
+il_default"><font face=3D"comic sans ms, sans-serif">during background sync=
+ and copy it to the bmap in the iteration sync logic.</font></div><div clas=
+s=3D"gmail_default"><font face=3D"comic sans ms, sans-serif">However, the d=
+irty page information in iter_bmap=C2=A0</font><span style=3D"font-family:&=
+quot;comic sans ms&quot;,sans-serif">may be repetitive since</span></div><d=
+iv class=3D"gmail_default"><span style=3D"font-family:&quot;comic sans ms&q=
+uot;,sans-serif">the dirty pages it records could be sent after background =
+syncing, we</span></div><div class=3D"gmail_default"><font face=3D"comic sa=
+ns ms, sans-serif">introduced the shadow_bmap to help calculate the dirty p=
+ages having</font></div><div class=3D"gmail_default"><font face=3D"comic sa=
+ns ms, sans-serif">been sent during two background syncs.</font></div></div=
+><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"g=
+mail_default"><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
+px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-left-=
+color:rgb(204,204,204);padding-left:1ex">
+<br>
+However I wonder whether that can be achieved in a simpler manner by<br></b=
+lockquote><div><br></div><div><span style=3D"font-family:&quot;comic sans m=
+s&quot;,sans-serif">I have tried my best to make the solution simpler but f=
+ailed. :(</span><br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote=
+" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style=
+:solid;border-left-color:rgb(204,204,204);padding-left:1ex">
+e.g. invoke <span class=3D"gmail_default" style=3D"font-family:&quot;comic =
+sans ms&quot;,sans-serif"></span><span class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif"></span>migration_bitmap_sync=
+_precopy() more frequently during<br></blockquote><div><br></div><div style=
+=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_defaul=
+t">Yes, invoke migration_bitmap_sync_precopy more frequently is also my</di=
+v><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"=
+gmail_default">first idea but it involves bitmap updating and interfere wit=
+h the behavior</div><div style=3D"font-family:&quot;comic sans ms&quot;,san=
+s-serif" class=3D"gmail_default">of page sending, it also affects the migra=
+tion information stats and interfere</div><div style=3D"font-family:&quot;c=
+omic sans ms&quot;,sans-serif" class=3D"gmail_default">other migration logi=
+c such as=C2=A0migration_update_rates().</div><div>=C2=A0</div><blockquote =
+class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1=
+px;border-left-style:solid;border-left-color:rgb(204,204,204);padding-left:=
+1ex">
+migration, for example, in ram_save_iterate() - not every time but the<br>
+iterate() is invoked much more frequent, and maybe we can do sync from time=
+<br>
+to time.</blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-left-col=
+or:rgb(204,204,204);padding-left:1ex">
+<br>
+I also don&#39;t see why we need a separate thread, plus two new bitmaps, t=
+o<br>
+achieve this..=C2=A0 I didn&#39;t read in-depth yet, but I thought dirty sy=
+nc<br>
+requires bql anyway, then I don&#39;t yet understand why the two bitmaps ar=
+e<br>
+required.=C2=A0 If the bitmaps are introduced in the 1st patch, IMO it&#39;=
+ll be<br>
+great to explain clearly on why they&#39;re needed here.<br>
+<br>
+Thanks,<br>
+<br>
+-- <br>
+Peter Xu<br>
+<br>
+</blockquote></div><br clear=3D"all"><div><div style=3D"font-family:&quot;c=
+omic sans ms&quot;,sans-serif" class=3D"gmail_default">Thanks,</div><div st=
+yle=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_def=
+ault"><br></div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-se=
+rif" class=3D"gmail_default">Yong</div></div><div><br></div><span class=3D"=
+gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signa=
+ture"><div dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regard=
+s</font></div></div></div>
+
+--000000000000216fd606228402a7--
 
