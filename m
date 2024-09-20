@@ -4,56 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C70A7CF9C55
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 16:11:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B238CF9C59
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 16:14:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srgDk-0008Kt-D4; Fri, 20 Sep 2024 12:11:00 -0400
+	id 1srgGP-0000VM-MW; Fri, 20 Sep 2024 12:13:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1srgDi-0008DZ-Ik
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 12:10:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1srgGO-0000UX-5t
+ for qemu-devel@nongnu.org; Fri, 20 Sep 2024 12:13:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1srgDg-00042B-5j
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 12:10:57 -0400
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1srgGM-0004JE-Lb
+ for qemu-devel@nongnu.org; Fri, 20 Sep 2024 12:13:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726848654;
+ s=mimecast20190719; t=1726848821;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding;
- bh=+PgIX/tPajMVfVh6gYkWb1bwdlXDYGf/Hf77zKHTjKw=;
- b=OO9zBkGNAUM9Io3kGHFsc176V01G+4C/E25OZ9Hkgr84Hb8dGJbeWFe/9ilISFt97iVfxy
- sY2NzLA9WRlG7NhebqQcGBGnEMK1bP98Ojom0wTzOaKCPj6b+3PneZ3ZMSvxipXzOgS2du
- juiNEE3v+qMuZlCKPzr9Pyf09Y/xxZ8=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=+m6SzrDF1hmgV4N+sFo2uBKimrLhERLYwJRC4a2PXOA=;
+ b=h9FEmeU3C5nUK8MoxJ9OgTHDbE8Q6qpd9EyQ10BpFKBCK1Y3dTxL1k2uDsLGFVj+EjdQRd
+ KjtDEcIsB/FntUqirQEVjWeoOloM9D8vNlQ23r/ix3IJ5M5OyUwN5GXBv/0BeJITL1Wx0G
+ CDVaF+gfiTMkwIAq3q5dCdtgffQCRTY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-5izZFd4cOA-TYWlVIPc6VA-1; Fri,
- 20 Sep 2024 12:10:50 -0400
-X-MC-Unique: 5izZFd4cOA-TYWlVIPc6VA-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-446-0Bbwv3JgOYy4WPeci_TMoA-1; Fri,
+ 20 Sep 2024 12:13:38 -0400
+X-MC-Unique: 0Bbwv3JgOYy4WPeci_TMoA-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F28171979053; Fri, 20 Sep 2024 16:10:49 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.194.56])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E72AC19560AA; Fri, 20 Sep 2024 16:10:47 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Yoshinori Sato <ysato@users.sourceforge.jp>,
-	qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org
-Subject: [PATCH] configs: Fix typo in the sh4-softmmu devices config file
-Date: Fri, 20 Sep 2024 18:10:45 +0200
-Message-ID: <20240920161045.84622-1-thuth@redhat.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B569C1933189
+ for <qemu-devel@nongnu.org>; Fri, 20 Sep 2024 16:13:37 +0000 (UTC)
+Received: from rh-jmarcin.brq.redhat.com (unknown [10.43.2.64])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5B1DF30001A1; Fri, 20 Sep 2024 16:13:36 +0000 (UTC)
+From: Juraj Marcin <jmarcin@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>,
+	Peter Xu <peterx@redhat.com>
+Subject: [PATCH] tests/migration-test: Wait for cancellation sooner in multifd
+ cancel
+Date: Fri, 20 Sep 2024 18:13:02 +0200
+Message-ID: <20240920161319.2337625-1-jmarcin@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -77,25 +81,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is the config file for the little endian target, so there
-should not be a "eb" in here.
+The source QEMU might not finish the cancellation of the migration
+before we start setting up the next attempt. During the setup, the
+test_migrate_start() function and others might need to interact with the
+source in a way that is not possible unless the migration is fully
+canceled. For example, setting capabilities when the migration is still
+running leads to an error.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+By moving the wait before the setup, we ensure this does not happen.
+
+Cc: Peter Xu <peterx@redhat.com>
+Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
 ---
- configs/devices/sh4-softmmu/default.mak | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/qtest/migration-test.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/configs/devices/sh4-softmmu/default.mak b/configs/devices/sh4-softmmu/default.mak
-index aa821e4b60..efb401bfb1 100644
---- a/configs/devices/sh4-softmmu/default.mak
-+++ b/configs/devices/sh4-softmmu/default.mak
-@@ -1,4 +1,4 @@
--# Default configuration for sh4eb-softmmu
-+# Default configuration for sh4-softmmu
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 814ec109a6..95e45b5029 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -3267,6 +3267,16 @@ static void test_multifd_tcp_cancel(void)
+     qtest_wait_qemu(to);
+     qtest_quit(to);
  
- # Uncomment the following lines to disable these optional devices:
- #
++    /*
++     * Ensure the source QEMU finishes its cancellation process before we
++     * proceed with the setup of the next migration. The test_migrate_start()
++     * function and others might want to interact with the source in a way that
++     * is not possible while the migration is not canceled properly. For
++     * example, setting migration capabilities when the migration is still
++     * running leads to an error.
++     */
++    wait_for_migration_status(from, "cancelled", NULL);
++
+     args = (MigrateStart){
+         .only_target = true,
+     };
+@@ -3282,8 +3292,6 @@ static void test_multifd_tcp_cancel(void)
+     /* Start incoming migration from the 1st socket */
+     migrate_incoming_qmp(to2, "tcp:127.0.0.1:0", "{}");
+ 
+-    wait_for_migration_status(from, "cancelled", NULL);
+-
+     migrate_ensure_non_converge(from);
+ 
+     migrate_qmp(from, to2, NULL, NULL, "{}");
 -- 
-2.46.0
+2.46.1
 
 
