@@ -4,98 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC214CF9C5D
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 17:11:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6CB0CF9C60
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 18:04:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srh8x-0002g9-CC; Fri, 20 Sep 2024 13:10:07 -0400
+	id 1srhyE-0006a3-P5; Fri, 20 Sep 2024 14:03:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srh8v-0002eU-TX
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 13:10:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srh8p-0004LK-6J
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 13:10:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726852195;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SwSJdV7OXcQ4sYk2bnWP9eb3PoY2D4xX1Ykcm+x17Fc=;
- b=YD0a/0sbAcaIMG+7ALEAirgQEfrzUEdCa5Fun5uRKbUX8PjwkDX3gGZsNVlmrG3hvxDK8L
- SeFXdncL9NwqZgKjgtG0gHNrLb2S7u/UyJviwgaJmipijEmkGnkxIeaLdxPn+D6MyjlXmR
- rO2YINlu6N7k6oxtQ900nBQRWOyN2hk=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-25-7WS56vkpNsCYcoJFaQYlVA-1; Fri, 20 Sep 2024 13:09:53 -0400
-X-MC-Unique: 7WS56vkpNsCYcoJFaQYlVA-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6c3580b7cf5so32703046d6.3
- for <qemu-devel@nongnu.org>; Fri, 20 Sep 2024 10:09:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726852192; x=1727456992;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1srhyD-0006YX-4b
+ for qemu-devel@nongnu.org; Fri, 20 Sep 2024 14:03:05 -0400
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1srhyA-0002jy-TU
+ for qemu-devel@nongnu.org; Fri, 20 Sep 2024 14:03:04 -0400
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-53661d95508so2257e87.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Sep 2024 11:03:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1726855380; x=1727460180; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SwSJdV7OXcQ4sYk2bnWP9eb3PoY2D4xX1Ykcm+x17Fc=;
- b=Hj8nvDF7W06ohUEFrTW6FAKNu6kmKCzJg55TykC8m2vJ2zXZLoWs68xE/myin6V3vA
- /1/l/AkXE/Z/ho9qbNB/H+5bjebPrKXktB7+uy+w9zhoI9aqDTZ6LGRA519/m0aCHrJD
- KRrbRbH4kqb/IF8XkFHr0YE7bfzuqquV8O8row9RdRcwGaUn9/fSqPRsWHUwbIPfgSds
- 0PIPnd2YIZX6AYw22oAN3qRR3iWXiwij96qfdmI9PJEfannC3A1LllWQlcK608NKeyC+
- PpUEEqOiscaLpyRwZ81pE56izQ+jDJo8ZKa2ZNs6Sh8nQ405AIeuxqrVQg7x2GXb5tlR
- 7kZw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWNFHs2Io7DfwSGzyqYpcKkOSm6wX+zXRpNt+GyRQolzRtJt7zMGSg9ebD6PSQzXHdFiPiwcuuQ4Sqp@nongnu.org
-X-Gm-Message-State: AOJu0Yw4x97JRZ0tOOWTlzFWuGWWEBaZSTAeVfhAfJmjtbdhmWmE6nh5
- 9VKS3314RsoU5AMSykq7cCX2Ngow8TKEOpno6RhgoJTaBQEqdSGmogKAGkPTxNAZkMTeA5qC/Ry
- StCIKwnNL0JD5OKYzkpPEpSXMGY3+wF1+j1xKAWtPc3G45jrVDESc
-X-Received: by 2002:a05:6214:5c4a:b0:6b2:de80:2be5 with SMTP id
- 6a1803df08f44-6c7bc725fd1mr42919206d6.31.1726852192424; 
- Fri, 20 Sep 2024 10:09:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEBm1rdgRNDkQ4FKe0q/MfvZq3jTajOqTkfGGbyHi3JgdUc1GQKPBh0dKiNoYu0WZKHeJdpCg==
-X-Received: by 2002:a05:6214:5c4a:b0:6b2:de80:2be5 with SMTP id
- 6a1803df08f44-6c7bc725fd1mr42918876d6.31.1726852191995; 
- Fri, 20 Sep 2024 10:09:51 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c75e46f014sm19954496d6.52.2024.09.20.10.09.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Sep 2024 10:09:51 -0700 (PDT)
-Date: Fri, 20 Sep 2024 13:09:49 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 12/17] migration/multifd: Device state transfer
- support - send side
-Message-ID: <Zu2sXYUmsrxUndtd@x1n>
-References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
- <fdcfd68dfcf3b20278a4495eb639905b2a8e8ff3.1724701542.git.maciej.szmigiero@oracle.com>
- <87h6b4nosy.fsf@suse.de> <ZuCickYhs3nf2ERC@x1n>
- <13034f56-cb92-47d3-b72e-21ef28248f2d@maciej.szmigiero.name>
- <ZuyU00_DHsU5xita@x1n>
- <dbb9ce96-100b-4a95-8ce1-f0b8b5041046@maciej.szmigiero.name>
+ bh=bofBxwt9eQWNhPNybPCc/0fu7JZxDxx/ho7OkhckqN8=;
+ b=RMGq2p/t+1ePGVrvwvO/TpBeRDJJjc5PT5+7N7rVK6FB11LiOt4AYs5rwZa7FusuP0
+ 6odKdu3lyj7KXqhGj8znxDOCvPcA1VMiPkbM91xMEjGQSlSAOfoM1jttM53SiTE3Z7fr
+ wH0bMzuoNDFKP2jj6lLpdBsUm6JND1Ayh2tc3xUPwgVdMPX5/Hm8PtZHUaKZLh39vq2l
+ vT4l0VlbgW6BNuCZ8zvXuVb1FF26ZjHo3stZ/fJxEC3fX/QOMstzgrrVqTBNgrgS93yz
+ xq4UQgP5s0QfIo5E+KdPQEW8SLH0k17qi/xPflVj+Mmq5rzSmtf+S/GcCcuNp+IFGduw
+ oVSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726855380; x=1727460180;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bofBxwt9eQWNhPNybPCc/0fu7JZxDxx/ho7OkhckqN8=;
+ b=e0X47WD+JzUzHrY3rgSi3BQtE/uHZO+Mf5pS6tKl8BQfzKCbq9d7jUqzxWN1vWxUCh
+ jp2TZHYSre7Hn6dASPuek5cIMTSvqRvfyavAZdBNGSD0v521t8FZxvd+x5n29KRdVuOk
+ ZQnC7vhDrjxyu4taQ7IDo7xv3+c+oAS3gEMHHq/KPpcmTLy7OL2MK0dd876occc9dQMJ
+ ilqM94ezMt5PcPNKDlU8HKuBvMpqhN6wrOwXNUd99m0E/oQeqEdqTDTFLLSdNAlP43Db
+ VpPk+CjYZuMzYa/AkQ189T5LP9jyDhGMwH9ZMCbxAzhxSBuCG53FoxRXMEhggbWgsZSB
+ bZ0w==
+X-Gm-Message-State: AOJu0YzAQXBHz5e3dh1WD3vyUxkWnLy4xod4/1xD8LqDyn+AZnjxcTQl
+ 3SGU0DoqDvOWGzveYuTaByJ2mJ2h9uljgWpFYCC4FU8Qmld2O5swqbig/fvsaGFPIWs1tel7xP9
+ shqFdVrNNR3Hsgh1COr/IwBIOv5mR7I3mzuGs
+X-Google-Smtp-Source: AGHT+IGJ1ETV5ZC91844XrR8qZ1tJ6gNM0bRQSbVmChqwtlkTGAVdGOE/OfumrQG1VuV36WsNiIXhSKXPXq9xbbz0pY=
+X-Received: by 2002:a05:6512:3f1d:b0:535:68b2:9589 with SMTP id
+ 2adb3069b0e04-5374adc4e10mr23251e87.2.1726855379576; Fri, 20 Sep 2024
+ 11:02:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <dbb9ce96-100b-4a95-8ce1-f0b8b5041046@maciej.szmigiero.name>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <20240918192254.3136903-1-tavip@google.com>
+ <20240918192254.3136903-9-tavip@google.com>
+ <Zus1YzMOZD1ppO-2@mail.minyard.net>
+ <CAGWr4cSvq+WnUQO3-8jyasQPhKGQCvzOYqRm5W8vRdhW9iU=xw@mail.gmail.com>
+ <ZutGsQglLtK7MtRB@mail.minyard.net>
+ <CAFEAcA_ZUkz8xv_PP27nD_eRL18v0cU6A7K+K57b8ML-9pmodQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA_ZUkz8xv_PP27nD_eRL18v0cU6A7K+K57b8ML-9pmodQ@mail.gmail.com>
+From: Octavian Purdila <tavip@google.com>
+Date: Fri, 20 Sep 2024 11:02:46 -0700
+Message-ID: <CAGWr4cScq6+KQi2aJWtgSUSt+j28wXsxP240FfzTrCAFGRV14g@mail.gmail.com>
+Subject: Re: [PATCH 08/25] hw/i2c: add support for flexcomm i2c
+To: corey@minyard.net
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, stefanst@google.com, 
+ pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com, 
+ eduardo@habkost.net, luc@lmichel.fr, damien.hedde@dahe.fr, 
+ alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org, jsnow@redhat.com, 
+ crosa@redhat.com, lvivier@redhat.com, 
+ Peter Maydell <peter.maydell@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=tavip@google.com; helo=mail-lf1-x131.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,124 +98,296 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 20, 2024 at 05:23:20PM +0200, Maciej S. Szmigiero wrote:
-> On 19.09.2024 23:17, Peter Xu wrote:
-> > On Thu, Sep 19, 2024 at 09:49:43PM +0200, Maciej S. Szmigiero wrote:
-> > > On 10.09.2024 21:48, Peter Xu wrote:
-> > > > On Wed, Aug 28, 2024 at 09:41:17PM -0300, Fabiano Rosas wrote:
-> > > > > > +size_t multifd_device_state_payload_size(void)
-> > > > > > +{
-> > > > > > +    return sizeof(MultiFDDeviceState_t);
-> > > > > > +}
-> > > > > 
-> > > > > This will not be necessary because the payload size is the same as the
-> > > > > data type. We only need it for the special case where the MultiFDPages_t
-> > > > > is smaller than the total ram payload size.
-> > > > 
-> > > > Today I was thinking maybe we should really clean this up, as the current
-> > > > multifd_send_data_alloc() is indeed too tricky (blame me.. who requested
-> > > > that more or less).  Knowing that VFIO can use dynamic buffers with ->idstr
-> > > > and ->buf (I was thinking it could be buf[1M].. but I was wrong...) made
-> > > > that feeling stronger.
-> > > > 
-> > > > I think we should change it now perhaps, otherwise we'll need to introduce
-> > > > other helpers to e.g. reset the device buffers, and that's not only slow
-> > > > but also not good looking, IMO.
-> > > > 
-> > > > So I went ahead with the idea in previous discussion, that I managed to
-> > > > change the SendData union into struct; the memory consumption is not super
-> > > > important yet, IMHO, but we should still stick with the object model where
-> > > > multifd enqueue thread switch buffer with multifd, as it still sounds a
-> > > > sane way to do.
-> > > > 
-> > > > Then when that patch is ready, I further tried to make VFIO reuse multifd
-> > > > buffers just like what we do with MultiFDPages_t->offset[]: in RAM code we
-> > > > don't allocate it every time we enqueue.
-> > > > 
-> > > > I hope it'll also work for VFIO.  VFIO has a specialty on being able to
-> > > > dump the config space so it's more complex (and I noticed Maciej's current
-> > > > design requires the final chunk of VFIO config data be migrated in one
-> > > > packet.. that is also part of the complexity there).  So I allowed that
-> > > > part to allocate a buffer but only that.  IOW, I made some API (see below)
-> > > > that can either reuse preallocated buffer, or use a separate one only for
-> > > > the final bulk.
-> > > > 
-> > > > In short, could both of you have a look at what I came up with below?  I
-> > > > did that in patches because I think it's too much to comment, so patches
-> > > > may work better.  No concern if any of below could be good changes to you,
-> > > > then either Maciej can squash whatever into existing patches (and I feel
-> > > > like some existing patches in this series can go away with below design),
-> > > > or I can post pre-requisite patch but only if any of you prefer that.
-> > > > 
-> > > > Anyway, let me know, the patches apply on top of this whole series applied
-> > > > first.
-> > > > 
-> > > > I also wonder whether there can be any perf difference already (I tested
-> > > > all multifd qtest with below, but no VFIO I can run), perhaps not that
-> > > > much, but just to mention below should avoid both buffer allocations and
-> > > > one round of copy (so VFIO read() directly writes to the multifd buffers
-> > > > now).
-> > > 
-> > > I am not against making MultiFDSendData a struct and maybe introducing
-> > > some pre-allocated buffer.
-> > > 
-> > > But to be honest, that manual memory management with having to remember
-> > > to call multifd_device_state_finish() on error paths as in your
-> > > proposed patch 3 really invites memory leaks.
-> > > 
-> > > Will think about some other way to have a reusable buffer.
-> > 
-> > Sure.  That's patch 3, and I suppose then it looks like patch 1 is still
-> > OK in one way or another.
-> > 
-> > > 
-> > > In terms of not making idstr copy (your proposed patch 2) I am not
-> > > 100% sure that avoiding such tiny allocation really justifies the risk
-> > > of possible use-after-free of a dangling pointer.
-> > 
-> > Why there's risk?  Someone strdup() on the stack?  That only goes via VFIO
-> > itself, so I thought it wasn't that complicated.  But yeah as I said this
-> > part (patch 2) is optional.
-> 
-> I mean the risk here is somebody providing idstr that somehow gets free'd
-> or overwritten before the device state buffer gets sent.
-> 
-> With a static idstr that's obviously not an issue, but I see that, for example,
-> vmstate_register_with_alias_id() generates idstr dynamically and this API
-> is used by all qdevs that have a VMSD (in device_set_realized()).
-> 
-> > > Not 100% against it either if you are confident that it will never happen.
-> > > 
-> > > By the way, I guess it makes sense to carry these changes in the main patch
-> > > set rather than as a separate changes?
-> > 
-> > Whatever you prefer.
-> > 
-> > I wrote those patches only because I thought maybe you'd like to run some
-> > perf test to see whether they would help at all, and when the patches are
-> > there it'll be much easier for you, then you can decide whether it's worth
-> > intergrating already, or leave that for later.
-> > 
-> > If not I'd say they're even lower priority, so feel free to stick with
-> > whatever easier for you.  I'm ok there.
-> > 
-> > However it'll be always good we can still have patch 1 as I mentioned
-> > before (as part of your series, if you won't disagree), to make the
-> > SendData interface slightly cleaner and easier to follow.
-> > 
-> 
-> Will try to include these patches in my patch set if they don't cause any
-> downtime regressions.
+On Thu, Sep 19, 2024 at 2:36=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Wed, 18 Sept 2024 at 22:31, Corey Minyard <corey@minyard.net> wrote:
+> > Generally it's frowned upon to have a ton of extra stuff that's not
+> > used.  I would think some is ok, like defining bits in registers that
+> > aren't used yet, but I have no idea how all the enums below here
+> > actually tie into anything.  I'm guessing these are just bitmasks into
+> > registers, but really, it's a lot easier to read if you have something
+> > like:
+> >
+> > /*
+> >  * The I2C Master function enable. When disabled, the Master
+> >  * configuration settings are not changed, but the Master function is
+> >  * internally reset.
+> >  */
+> > #define FLEXCOMM_I2C_CFG_MSTEN (1 << 4)
+>
+> The FIELD macro already gives you that:
+>   FIELD(FLEXCOMM_I2C_CFG, MSTEN, startbit, len);
+> will define an R_FLEXCOMM_I2C_CFG_MSTEN_MASK (which is
+> (1 << startbit) for the 'len =3D=3D 1' case).
+>
+> You can also set and read a 1 bit field the same as
+> any other, with the FIELD_DP32/FIELD_EX32 macros, so
+> you don't often need to directly use the MASK macro:
+>   s->cfg =3D FIELD_DP32(s->cfg, CFG, MSTEN, 1);
+> and
+>   if (FIELD_EX32(s->cfg, CFG, MSTEN)) {
+>      ...
+>   }
+>
+> The FIELD() macros are a bit unwieldy sometimes but the
+> advantage over ad-hoc #defines is that they're consistent
+> for every field in every register.
+>
+> I agree that providing enums for the possible values for 1-bit
+> fields is a bit superfluous.
+>
 
-Thanks, note that it's not my request to have patch 2-3. :)  Please take
-your own judgement.
+I went ahead and removed those 1-bit enum values and added support to
+filter register/fields when generating the code. Also converted the
+enums to defines to make these a little bit more compact as I don't
+think we have any advantage over the enums?
 
-Again, I'd run a round of perf (only if my patches can directly run through
-without heavy debugging on top of yours), if nothing shows a benefit I'd go
-with what you have right now, and we drop patch 2-3 - they're not justified
-if they provide zero perf benefit.
+So with the following invocation:
 
--- 
-Peter Xu
+  run_target('svd-flexcomm-i2c', command: svd_gen_header +
+    [ '-i', rt595, '-o', '@SOURCE_ROOT@/include/hw/arm/svd/flexcomm_i2c.h',
+      '-p', 'I2C0', '-t', 'FLEXCOMM_I2C',
+      '--fields', 'CFG TIMEOUT:TOMIN MSTCTL MSTDAT
+STAT:MSTPENDING,MSTSTATE INT*:MSTPENDING* SLV*:'])
 
+I am getting the below generated file. Note that the register info is
+generated for all registers because this information is used to
+initialize the reset values, mask writes appropriately in registers
+and trace register access.
+
+Please let me know if this looks good or if there are any other tweaks
+I could make.
+
+/*
+ * Copyright 2016-2023 NXP SPDX-License-Identifier: BSD-3-Clause
+ *
+ * Automatically generated by svd-gen-header.py from MIMXRT595S_cm33.xml
+ */
+#pragma once
+
+#include "hw/register.h"
+
+/* I2C Bus Interface */
+#define FLEXCOMM_I2C_REGS_NO (1024)
+
+/* Configuration Register */
+REG32(FLEXCOMM_I2C_CFG, 0x800);
+/* Master Enable */
+FIELD(FLEXCOMM_I2C_CFG, MSTEN, 0, 1);
+/* Slave Enable */
+FIELD(FLEXCOMM_I2C_CFG, SLVEN, 1, 1);
+/* Monitor Enable */
+FIELD(FLEXCOMM_I2C_CFG, MONEN, 2, 1);
+/* I2C bus Time-out Enable */
+FIELD(FLEXCOMM_I2C_CFG, TIMEOUTEN, 3, 1);
+/* Monitor function Clock Stretching */
+FIELD(FLEXCOMM_I2C_CFG, MONCLKSTR, 4, 1);
+/* High Speed mode Capable enable */
+FIELD(FLEXCOMM_I2C_CFG, HSCAPABLE, 5, 1);
+
+/* Status Register */
+REG32(FLEXCOMM_I2C_STAT, 0x804);
+/* Master Pending */
+FIELD(FLEXCOMM_I2C_STAT, MSTPENDING, 0, 1);
+/* Master State code */
+FIELD(FLEXCOMM_I2C_STAT, MSTSTATE, 1, 3);
+/* Idle. The Master function is available to be used for a new transaction.=
+ */
+#define FLEXCOMM_I2C_STAT_MSTSTATE_IDLE 0
+/*
+ * Receive ready. Received data is available (in Master Receiver mode). Add=
+ress
+ * plus Read was previously sent and Acknowledged by a slave.
+ */
+#define FLEXCOMM_I2C_STAT_MSTSTATE_RECEIVE_READY 1
+/*
+ * Transmit ready. Data can be transmitted (in Master Transmitter mode).
+ * Address plus Write was previously sent and Acknowledged by a slave.
+ */
+#define FLEXCOMM_I2C_STAT_MSTSTATE_TRANSMIT_READY 2
+/* NACK Address. Slave NACKed address. */
+#define FLEXCOMM_I2C_STAT_MSTSTATE_NACK_ADDRESS 3
+/* NACK Data. Slave NACKed transmitted data. */
+#define FLEXCOMM_I2C_STAT_MSTSTATE_NACK_DATA 4
+
+/* Interrupt Enable Set Register */
+REG32(FLEXCOMM_I2C_INTENSET, 0x808);
+/* Master Pending interrupt Enable */
+FIELD(FLEXCOMM_I2C_INTENSET, MSTPENDINGEN, 0, 1);
+
+/* Interrupt Enable Clear Register */
+REG32(FLEXCOMM_I2C_INTENCLR, 0x80C);
+/* Master Pending interrupt clear */
+FIELD(FLEXCOMM_I2C_INTENCLR, MSTPENDINGCLR, 0, 1);
+
+/* Time-out Register */
+REG32(FLEXCOMM_I2C_TIMEOUT, 0x810);
+/* Time-out time value, the bottom 4 bits */
+FIELD(FLEXCOMM_I2C_TIMEOUT, TOMIN, 0, 4);
+
+/* Interrupt Status Register */
+REG32(FLEXCOMM_I2C_INTSTAT, 0x818);
+/* Master Pending */
+FIELD(FLEXCOMM_I2C_INTSTAT, MSTPENDING, 0, 1);
+
+/* Master Control Register */
+REG32(FLEXCOMM_I2C_MSTCTL, 0x820);
+/* Master Continue(write-only) */
+FIELD(FLEXCOMM_I2C_MSTCTL, MSTCONTINUE, 0, 1);
+/* Master Start control(write-only) */
+FIELD(FLEXCOMM_I2C_MSTCTL, MSTSTART, 1, 1);
+/* Master Stop control(write-only) */
+FIELD(FLEXCOMM_I2C_MSTCTL, MSTSTOP, 2, 1);
+/* Master DMA enable */
+FIELD(FLEXCOMM_I2C_MSTCTL, MSTDMA, 3, 1);
+
+/* Master Data Register */
+REG32(FLEXCOMM_I2C_MSTDAT, 0x828);
+/* Master function data register */
+FIELD(FLEXCOMM_I2C_MSTDAT, DATA, 0, 8);
+
+/* Slave Control Register */
+REG32(FLEXCOMM_I2C_SLVCTL, 0x840);
+
+/* Slave Data Register */
+REG32(FLEXCOMM_I2C_SLVDAT, 0x844);
+
+/* Slave Address Register */
+REG32(FLEXCOMM_I2C_SLVADR0, 0x848);
+
+/* Slave Address Register */
+REG32(FLEXCOMM_I2C_SLVADR1, 0x84C);
+
+/* Slave Address Register */
+REG32(FLEXCOMM_I2C_SLVADR2, 0x850);
+
+/* Slave Address Register */
+REG32(FLEXCOMM_I2C_SLVADR3, 0x854);
+
+/* Slave Qualification for Address 0 Register */
+REG32(FLEXCOMM_I2C_SLVQUAL0, 0x858);
+
+
+#define FLEXCOMM_I2C_REGISTER_ACCESS_INFO_ARRAY(_name) \
+    struct RegisterAccessInfo _name[FLEXCOMM_I2C_REGS_NO] =3D { \
+        [0 ... FLEXCOMM_I2C_REGS_NO - 1] =3D { \
+            .name =3D "", \
+            .addr =3D -1, \
+        }, \
+        [0x200] =3D { \
+            .name =3D "CFG", \
+            .addr =3D 0x800, \
+            .ro =3D 0xFFFFFFC0, \
+            .reset =3D 0x0, \
+        }, \
+        [0x201] =3D { \
+            .name =3D "STAT", \
+            .addr =3D 0x804, \
+            .ro =3D 0xFCF57FAF, \
+            .reset =3D 0x801, \
+        }, \
+        [0x202] =3D { \
+            .name =3D "INTENSET", \
+            .addr =3D 0x808, \
+            .ro =3D 0xFCF476AE, \
+            .reset =3D 0x0, \
+        }, \
+        [0x203] =3D { \
+            .name =3D "INTENCLR", \
+            .addr =3D 0x80C, \
+            .ro =3D 0xFCF476AE, \
+            .reset =3D 0x0, \
+        }, \
+        [0x204] =3D { \
+            .name =3D "TIMEOUT", \
+            .addr =3D 0x810, \
+            .ro =3D 0xFFFF0000, \
+            .reset =3D 0xFFFF, \
+        }, \
+        [0x205] =3D { \
+            .name =3D "CLKDIV", \
+            .addr =3D 0x814, \
+            .ro =3D 0xFFFF0000, \
+            .reset =3D 0x0, \
+        }, \
+        [0x206] =3D { \
+            .name =3D "INTSTAT", \
+            .addr =3D 0x818, \
+            .ro =3D 0xFFFFFFFF, \
+            .reset =3D 0x801, \
+        }, \
+        [0x208] =3D { \
+            .name =3D "MSTCTL", \
+            .addr =3D 0x820, \
+            .ro =3D 0xFFFFFFF0, \
+            .reset =3D 0x0, \
+        }, \
+        [0x209] =3D { \
+            .name =3D "MSTTIME", \
+            .addr =3D 0x824, \
+            .ro =3D 0xFFFFFF88, \
+            .reset =3D 0x77, \
+        }, \
+        [0x20A] =3D { \
+            .name =3D "MSTDAT", \
+            .addr =3D 0x828, \
+            .ro =3D 0xFFFFFF00, \
+            .reset =3D 0x0, \
+        }, \
+        [0x210] =3D { \
+            .name =3D "SLVCTL", \
+            .addr =3D 0x840, \
+            .ro =3D 0xFFFFFCF4, \
+            .reset =3D 0x0, \
+        }, \
+        [0x211] =3D { \
+            .name =3D "SLVDAT", \
+            .addr =3D 0x844, \
+            .ro =3D 0xFFFFFF00, \
+            .reset =3D 0x0, \
+        }, \
+        [0x212] =3D { \
+            .name =3D "SLVADR0", \
+            .addr =3D 0x848, \
+            .ro =3D 0xFFFF7F00, \
+            .reset =3D 0x1, \
+        }, \
+        [0x213] =3D { \
+            .name =3D "SLVADR1", \
+            .addr =3D 0x84C, \
+            .ro =3D 0xFFFF7F00, \
+            .reset =3D 0x1, \
+        }, \
+        [0x214] =3D { \
+            .name =3D "SLVADR2", \
+            .addr =3D 0x850, \
+            .ro =3D 0xFFFF7F00, \
+            .reset =3D 0x1, \
+        }, \
+        [0x215] =3D { \
+            .name =3D "SLVADR3", \
+            .addr =3D 0x854, \
+            .ro =3D 0xFFFF7F00, \
+            .reset =3D 0x1, \
+        }, \
+        [0x216] =3D { \
+            .name =3D "SLVQUAL0", \
+            .addr =3D 0x858, \
+            .ro =3D 0xFFFFFF00, \
+            .reset =3D 0x0, \
+        }, \
+        [0x220] =3D { \
+            .name =3D "MONRXDAT", \
+            .addr =3D 0x880, \
+            .ro =3D 0xFFFFFFFF, \
+            .reset =3D 0x0, \
+        }, \
+        [0x3FF] =3D { \
+            .name =3D "ID", \
+            .addr =3D 0xFFC, \
+            .ro =3D 0xFFFFFFFF, \
+            .reset =3D 0xE0301300, \
+        }, \
+    }
 
