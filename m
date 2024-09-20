@@ -4,103 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B81F0CF3973
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Sep 2024 22:27:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 269F1CF3973
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 00:04:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srPbe-00073f-1x; Thu, 19 Sep 2024 18:26:34 -0400
+	id 1srR7d-00035k-KX; Thu, 19 Sep 2024 20:03:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1srPbc-00073B-9d
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 18:26:32 -0400
-Received: from mout.kundenserver.de ([212.227.126.130])
+ (Exim 4.90_1) (envelope-from <alan.adamson@oracle.com>)
+ id 1srR7a-00033Y-DJ; Thu, 19 Sep 2024 20:03:38 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1srPba-0000wN-IO
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 18:26:32 -0400
-Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
- (mreue009 [213.165.67.103]) with ESMTPSA (Nemesis) id
- 1MBUuV-1sg6nz28Ct-006Sny; Fri, 20 Sep 2024 00:26:20 +0200
-Message-ID: <fd8f939e-5a87-4169-b2d6-244d83f2df8b@vivier.eu>
-Date: Fri, 20 Sep 2024 00:26:19 +0200
+ (Exim 4.90_1) (envelope-from <alan.adamson@oracle.com>)
+ id 1srR7X-0003Qo-OV; Thu, 19 Sep 2024 20:03:38 -0400
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48JLN9mc010092;
+ Fri, 20 Sep 2024 00:03:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+ from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=corp-2023-11-20; bh=/2NNYjOkAxdbdq
+ n/DlsO4FCAB9/eG5reVNgJlrfBgRk=; b=QzhH1ISy8pbrKuYUdA38aDRx5Nh2zt
+ L2sYAqVYDmey+/QohuvsuEtLotZOgcEcYrgPkDaayJn8uyKxAcqfpTgW6B2w7s4Q
+ Qxl2eiGEbSzHEOC/W6e3bZKod1rctHOHeelIBOxqkF6Ou+cKBw6Sf4Zgh39jX9xi
+ ER8MtpLkaQeYKv3qIsrCRed63X759UxekYFkIslnecNnk6yqxqGMn1/UedvQ/ElH
+ luS1Z9/YunVRLn2trPxMfMApadKBXHH6mTMPB/V4rryodJaAQd2i22/ZhrHaYD12
+ BJUNuJtTgJ/VkCyTBixvJlgmq3H9dhhKzBwIo7fIHMXB2ioAw9hSyl4g==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 41n3n3nf3s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 20 Sep 2024 00:03:26 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 48JLmQLW034049; Fri, 20 Sep 2024 00:03:25 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 41nycmg2dk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 20 Sep 2024 00:03:25 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48K03Pr8023686;
+ Fri, 20 Sep 2024 00:03:25 GMT
+Received: from ca-dev94.us.oracle.com (ca-dev94.us.oracle.com [10.129.136.30])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 41nycmg2cn-1; Fri, 20 Sep 2024 00:03:25 +0000
+From: Alan Adamson <alan.adamson@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: alan.adamson@oracle.com, kbusch@kernel.org, its@irrelevant.dk,
+ qemu-block@nongnu.org
+Subject: [PATCH v2 0/1] hw/nvme: add atomic write support
+Date: Thu, 19 Sep 2024 17:07:20 -0700
+Message-ID: <20240920000721.993119-1-alan.adamson@oracle.com>
+X-Mailer: git-send-email 2.43.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/1] linux-user: add openat2 support in linux-user
-To: Michael Vogt <michael.vogt@gmail.com>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Michael Vogt <mvogt@redhat.com>
-References: <cover.1726774919.git.mvogt@redhat.com>
- <22d50b05f3387e23094eaf1f42ef4d435dd555b8.1726774919.git.mvogt@redhat.com>
-Content-Language: fr
-From: Laurent Vivier <laurent@vivier.eu>
-Autocrypt: addr=laurent@vivier.eu; keydata=
- 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
-In-Reply-To: <22d50b05f3387e23094eaf1f42ef4d435dd555b8.1726774919.git.mvogt@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:oNTe3+MWpi7Z8B+eTbaiQ9onq1rWTF+zcMnn9w7WUItH8UtZmmD
- HeNgNr8YUVNkoovaZ9+Ms0/eunz430sSdenowQLjfopkXtgPr3qbELPtuFr2BT0tpftqeCn
- adG3Ru6G/qa5o/kMEij0VqtIsGJjw4uR4HFDFkGTbXKvwAKlxbZdwbMpmNiySkCp43tun5a
- 36MRklwfeJik012R+sPDA==
-UI-OutboundReport: notjunk:1;M01:P0:9R7WJbDNbaQ=;6G0ftnabvjaFifFoOlPaWBqesK1
- +mVykYsA20AjD//0qm7zJk9+QGfcNcDffeAIHPL+Fw5SMW72iOiVtiDlNqq1+ezYFP4LfTyGn
- UzSXeGCt2nbWZOoIyCqe6D8cw1aOErV7BtH845SRvKfaqaJ35bBLLSMBW1xw/TyZACwFXx9N/
- fo3yIUQ5dxtqS0Wl5DbC2uN/a5JmDsA/YwJlWECqTJOjZxQiR7+yxdAfvQKTdKBJzOX4y1iA5
- 28ZaEjvYWIV6h2ZAw/X/FNO2J88BDjRxn8dqX21e6xEiZA0i8yTzpAyDPefelptPMUDVNwpaX
- Na7xbWzcqgo2u0vCP+Y8AjAwyiOU96NcrBdyQPbP8Zl9Q3Ohr1BvWg2aINU9UjU24cTvmODI3
- aHwYWOuPNAV9Aqv5qwzrWW+yBkb4WB/aB8t+bq0i+mFnmOni0GzJApKAvhf+FPb7b3FRbMk+H
- qQgk7uve1uqx/FcXHC8WE6IkS7esLBMymfgHR/quH1GE9qHI+dTv8gJtpG+C6Bxokfk1NgQXV
- HEkmSUdKe7f3KrmAHY11zdUpy6hlIrKUlrZOEhvHjkAIT8zUlGp3h/JSoiB9Vdz5ZjYZgB+cU
- nmCb7SzBogTlw8KQQGsoD9M+i0kvEzhAvD4/2BjFql6yktiU5o2/DT3nR1hC9Fb7eOD0neaxX
- sq/DLR0RRzcmdYJ3Gwj2uWSG/zQfClK+Tw4PUKKCWWmKe8g2pyNE/62MRLXxKvKrs8LzzggGY
- KvcYRtM7gKMbfprykMpkvX09KwTr476hQ==
-Received-SPF: pass client-ip=212.227.126.130; envelope-from=laurent@vivier.eu;
- helo=mout.kundenserver.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-19_22,2024-09-19_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ mlxlogscore=999
+ malwarescore=0 spamscore=0 mlxscore=0 adultscore=0 suspectscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2408220000 definitions=main-2409190161
+X-Proofpoint-GUID: mu7GDz0nuLB02xqLHrMC5AesjLpXfb56
+X-Proofpoint-ORIG-GUID: mu7GDz0nuLB02xqLHrMC5AesjLpXfb56
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=alan.adamson@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -118,42 +96,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Le 19/09/2024 à 21:46, Michael Vogt a écrit :
-> This commit adds support for the `openat2()` syscall in the
-> `linux-user` userspace emulator.
-> 
-> It is implemented by extracting a new helper `maybe_do_fake_open()`
-> out of the exiting `do_guest_openat()` and share that with the
-> new `do_guest_openat2()`. Unfortunately we cannot just make
-> do_guest_openat2() a superset of do_guest_openat() because the
-> openat2() syscall is stricter with the argument checking and
-> will return an error for invalid flags or mode combinations (which
-> open()/openat() will ignore).
-> 
-> The implementation is similar to SYSCALL_DEFINE(openat2), i.e.
-> a new `copy_struct_from_user()` is used that works the same
-> as the kernels version to support backwards-compatibility
-> for struct syscall argument.
-> 
-> Instead of including openat2.h we create a copy of `open_how`
-> as `open_how_ver0` to ensure that if the structure grows we
-> can log a LOG_UNIMP warning.
-> 
-> Note that in this commit using openat2() for a "faked" file in
-> /proc will ignore the "resolve" flags. This is not great but it
-> seems similar to the exiting behavior when openat() is called
-> with a dirfd to "/proc". Here too the fake file lookup may
-> not catch the special file because "realpath()" is used to
-> determine if the path is in /proc. Alternatively to ignoring
-> we could simply fail with `-TARGET_ENOSYS` (or similar) if
-> `resolve` flags are passed and we found something that looks
-> like a file in /proc that needs faking.
-> 
-> Signed-off-by: Michael Vogt <mvogt@redhat.com>
+Changelog:
 
-And I think it's better if the "From:" address is the same as the S-o-b address.
+v2:	- Include changes suggested by Klaus
+	- Check for READ/WRITE commmands when walking SQs.
+	- Updated the "cover-letter" below with new fio example.
 
-Thanks,
-Laurent
+=====================================================================================
+
+Since there is work in the Linux NVMe Driver community to add Atomic Write
+support, it would be desirable to be able to test it with qemu nvme emulation.
+ 
+This patch will focus on supporting NVMe controller atomic write parameters (AWUN and
+AWUPF) but can be extended to support Namespace parameters (NAWUN and NAWUPF)
+and Boundaries (NABSN, NABO, and NABSPF).
+ 
+Atomic Write Parameters for NVMe QEMU
+-------------------------------------
+New NVMe QEMU Parameters (See NVMe Specification for details):
+        atomic.dn (default off) - Set the value of Disable Normal.
+        atomic.awun=UINT16 (default: 0)
+        atomic.awupf=UINT16 (default: 0)
+ 
+qemu command line example:
+        qemu-system-x86_64 -cpu host --enable-kvm -smp cpus=4 -no-reboot -m 8192M -drive file=./disk.img,if=ide \
+        -boot c -device e1000,netdev=net0,mac=DE:CC:CC:EF:99:88 -netdev tap,id=net0 \
+	-device nvme,id=nvme-ctrl-0,serial=nvme-1,atomic.dn=off,atomic.awun=15,atomic.awupf=7 \
+        -drive file=./nvme.img,if=none,id=nvm-1 -device nvme-ns,drive=nvm-1,bus=nvme-ctrl-0 nvme-ns,drive=nvm-1,bus=nvme-ctrl-0
+ 
+Making Writes Atomic:
+---------------------
+Currently, as the nvme emulator walks through the Submission Queue (SQ)
+(nvme_process_sq()), it takes each request (read/write/etc) off the SQ and starts its
+execution and then continues on with the next SQ entry until all entries are started. It
+is likely, multiple requests (from multiple SQs) will be executing in parallel and acting
+on a common LBA range.  This prevents writes from completing atomically. When a write
+completes atomically, either all or none of the LBAs will be committed to media.  This
+means writes to a common LBA range can not be done in parallel if writes are going to
+be atomic. The nvme emulator does not currently guarantee this and LBAs
+from multiple requests may get committed.  The fio test shown below, comfirms this.
+ 
+Prior to taking a command off of a SQ, a check needs to be done to determine if it
+conflicts atomically with a currently executing command.
+ 
+bool nvme_atomic_write_check() - Checks a NVMe command to determine if it can be started,
+or if it conflicts atomically with a currently executing command.
+ 
+Returns:   NVME_ATOMIC_NO_START - The command atomically conflicts with a currently
+           executing command and can not be started.
+ 
+           NVME_ATOMIC_START_ATOMIC  - The command is an atomic write, does not
+           conflict atomically with a currently executing command, and can be started.
+ 
+           NVME_ATOMIC_START_NONATOMIC - The command is not an atomic write, but it
+           can be started.
+
+If a command is blocked from being started, nvme_process_sq() needs to be rescheduled.
+ 
+Implementation:
+---------------
+Each SQ maintains a list of executing requests (sq->out_req_list). When a command is
+taken off the SQ to start executing it, it is placed on out_req_list and removed when
+the command completes and placed on the Completion Queue (CQ). When nvme_process_sq()
+is executing and looking to take a command off the SQ, nvme_atomic_write_check() is
+called to determine if it is atomically safe to start executing the command. If it is
+safe, nvme_atomic_write_check() will return NVME_ATOMIC_START_ATOMIC or
+NVME_ATOMIC_START_NONATOMIC. nvme_process_sq() then pulls the command off the SQ,
+places an associated request onto out_req_list. If it is not atomically safe,
+(nvme_atomic_write_check() returns NVME_ATOMIC_NO_START). The command remains on the SQ,
+and processing of that SQ stops and nvme_process_sq() will be rescheduled.
+When nvme_atomic_write_check() is called, the out_req_list for each SQ is walked and the
+LBA range of the command to be started is compared with each executing request.
+
+What is the Maximum Atomic Write Size?
+--------------------------------------
+By default the qemu parameter atomic.awun specifices that maximum atomic write size which
+will be used by maximum atomic Write size. If Disable Normal is set to true with qemu
+parameter atomic.dn or with the SET FEATURE command, the atomic.awupf value will specify
+the maximum atomic write size.
+
+Testing
+-------
+NVMe QEMU Parameters used: atomic.dn=off,atomic.awun=63,atomic.awupf=63
+ 
+# nvme id-ctrl /dev/nvme0 | grep awun
+awun      : 15
+# nvme id-ctrl /dev/nvme0 | grep awupf
+awupf     : 7
+# nvme id-ctrl /dev/nvme0 | grep acwu
+acwu      : 0    < Since qemu-nvme doesn't support Compare and Write, this is always zero
+# nvme get-feature /dev/nvme0  -f 0xa
+get-feature:0x0a (Write Atomicity Normal), Current value:00000000
+#
+
+fio testing - using upstream version fio-3.37-124 (includes atomic write support) 
+---------------------------------------------------------------------------------
+# fio --filename=/dev/nvme0n1 --direct=1 --rw=randwrite --bs=8k --iodepth=256 --name=iops --numjobs=50 --ioengine=libaio --loops=10 --verify=crc64 --verify_write_sequence=0
+Since the block size passed into fio is 8k, this is <= the maximum atomic blocksize (awun=15(8k)), this test will always succeed. 
+
+# fio --filename=/dev/nvme0n1 --direct=1 --rw=randwrite --bs=64k --iodepth=256 --name=iops --numjobs=50 --ioengine=libaio --loops=10 --verify=crc64 --verify_write_sequence=0
+Since the block size passed into fio is 64k, which is > the maximum atomic blocksize (awun=15(8k)), this test will eventually fail with:
+crc64: verify failed at file /dev/nvme0n1 offset 347799552, length 65536 (requested block: offset=347799552, length=65536, flags=88)
+       Expected CRC: d54d5f50d2569c94
+       Received CRC: 691e1aed4669ba33 
+
+Future Work
+-----------
+- Namespace support (NAWUN, NAWUPF and NACWU)
+- Namespace Boundary support (NABSN, NABO, and NABSPF)
+- Atomic Compare and Write Unit (ACWU)
+
+Alan Adamson (1):
+  hw/nvme: add atomic write support
+
+ hw/nvme/ctrl.c | 164 ++++++++++++++++++++++++++++++++++++++++++++++++-
+ hw/nvme/nvme.h |  12 ++++
+ 2 files changed, 175 insertions(+), 1 deletion(-)
+
+-- 
+2.43.5
 
 
