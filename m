@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 875C8CF58E6
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 07:47:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2563ECF58E4
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 07:48:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srYI4-0003qc-G1; Fri, 20 Sep 2024 03:42:56 -0400
+	id 1srYH7-00075t-DQ; Fri, 20 Sep 2024 03:41:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1srYHj-0001rQ-9s; Fri, 20 Sep 2024 03:42:37 -0400
+ id 1srYH5-00070D-71; Fri, 20 Sep 2024 03:41:55 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1srYHh-0000JL-GN; Fri, 20 Sep 2024 03:42:35 -0400
+ id 1srYGw-0000Cm-9Y; Fri, 20 Sep 2024 03:41:54 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3B3E890866;
- Fri, 20 Sep 2024 10:41:24 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4C7C49085A;
+ Fri, 20 Sep 2024 10:41:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D24FC1409E9;
- Fri, 20 Sep 2024 10:41:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id EC9781409DD;
+ Fri, 20 Sep 2024 10:41:36 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 16/22] target/hexagon: Rename macros.inc -> macros.h.inc
-Date: Fri, 20 Sep 2024 10:41:28 +0300
-Message-Id: <20240920074134.664961-17-mjt@tls.msk.ru>
+Cc: Tejas Vipin <tejasvipin76@gmail.com>, qemu-trivial@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 04/22] ppc: fix incorrect spelling of PowerMac
+Date: Fri, 20 Sep 2024 10:41:16 +0300
+Message-Id: <20240920074134.664961-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20240920074134.664961-1-mjt@tls.msk.ru>
 References: <20240920074134.664961-1-mjt@tls.msk.ru>
@@ -60,86 +60,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Tejas Vipin <tejasvipin76@gmail.com>
 
-Since commits 139c1837db ("meson: rename included C source files
-to .c.inc") and 0979ed017f ("meson: rename .inc.h files to .h.inc"),
-EMU standard procedure for included header files is to use *.h.inc.
+PowerMac is spelled as PowerMAC (Media Access Control) in some places.
+This is misleading.
 
-Besides, since commit 6a0057aa22 ("docs/devel: make a statement
-about includes") this is documented in the Coding Style:
-
-  If you do use template header files they should be named with
-  the ``.c.inc`` or ``.h.inc`` suffix to make it clear they are
-  being included for expansion.
-
-Therefore rename "macros.inc" as "macros.h.inc".
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Brian Cain <bcain@quicinc.com>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2297
+Signed-off-by: Tejas Vipin <tejasvipin76@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- target/hexagon/gen_idef_parser_funcs.py                 | 2 +-
- target/hexagon/idef-parser/README.rst                   | 4 ++--
- target/hexagon/idef-parser/{macros.inc => macros.h.inc} | 0
- target/hexagon/meson.build                              | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
- rename target/hexagon/idef-parser/{macros.inc => macros.h.inc} (100%)
+ docs/system/ppc/powermac.rst | 4 ++--
+ hw/ppc/mac_newworld.c        | 2 +-
+ hw/ppc/mac_oldworld.c        | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/target/hexagon/gen_idef_parser_funcs.py b/target/hexagon/gen_idef_parser_funcs.py
-index eb494abba8..72f11c68ca 100644
---- a/target/hexagon/gen_idef_parser_funcs.py
-+++ b/target/hexagon/gen_idef_parser_funcs.py
-@@ -50,7 +50,7 @@ def main():
-     tagimms = hex_common.get_tagimms()
+diff --git a/docs/system/ppc/powermac.rst b/docs/system/ppc/powermac.rst
+index 04334ba210..3eac81c491 100644
+--- a/docs/system/ppc/powermac.rst
++++ b/docs/system/ppc/powermac.rst
+@@ -4,8 +4,8 @@ PowerMac family boards (``g3beige``, ``mac99``)
+ Use the executable ``qemu-system-ppc`` to simulate a complete PowerMac
+ PowerPC system.
  
-     with open(sys.argv[-1], "w") as f:
--        f.write('#include "macros.inc"\n\n')
-+        f.write('#include "macros.h.inc"\n\n')
+-- ``g3beige``              Heathrow based PowerMAC
+-- ``mac99``                Mac99 based PowerMAC
++- ``g3beige``              Heathrow based PowerMac
++- ``mac99``                Mac99 based PowerMac
  
-         for tag in hex_common.tags:
-             ## Skip the priv instructions
-diff --git a/target/hexagon/idef-parser/README.rst b/target/hexagon/idef-parser/README.rst
-index d0aa34309b..7199177ee3 100644
---- a/target/hexagon/idef-parser/README.rst
-+++ b/target/hexagon/idef-parser/README.rst
-@@ -138,7 +138,7 @@ we obtain the pseudo code
- with macros such as ``fJUMPR`` intact.
+ Supported devices
+ -----------------
+diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
+index ff9e490c4e..9d249a506c 100644
+--- a/hw/ppc/mac_newworld.c
++++ b/hw/ppc/mac_newworld.c
+@@ -571,7 +571,7 @@ static void core99_machine_class_init(ObjectClass *oc, void *data)
+     MachineClass *mc = MACHINE_CLASS(oc);
+     FWPathProviderClass *fwc = FW_PATH_PROVIDER_CLASS(oc);
  
- The second step is to expand macros into a form suitable for our parser.
--These macros are defined in ``idef-parser/macros.inc`` and the step is
-+These macros are defined in ``idef-parser/macros.h.inc`` and the step is
- carried out by the ``prepare`` script which runs the C preprocessor on
- ``idef_parser_input.h.inc`` to produce
- ``idef_parser_input.preprocessed.h.inc``.
-@@ -266,7 +266,7 @@ in plain C is defined as
-     #define fABS(A) (((A) < 0) ? (-(A)) : (A))
+-    mc->desc = "Mac99 based PowerMAC";
++    mc->desc = "Mac99 based PowerMac";
+     mc->init = ppc_core99_init;
+     mc->block_default_type = IF_IDE;
+     /* SMP is not supported currently */
+diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
+index 1981d3d8f6..eef3261002 100644
+--- a/hw/ppc/mac_oldworld.c
++++ b/hw/ppc/mac_oldworld.c
+@@ -411,7 +411,7 @@ static void heathrow_class_init(ObjectClass *oc, void *data)
+     MachineClass *mc = MACHINE_CLASS(oc);
+     FWPathProviderClass *fwc = FW_PATH_PROVIDER_CLASS(oc);
  
- and returns the absolute value of the argument ``A``. This macro is not included
--in ``idef-parser/macros.inc`` and as such is not expanded and kept as a "call"
-+in ``idef-parser/macros.h.inc`` and as such is not expanded and kept as a "call"
- ``fABS(...)``. Reason being, that ``fABS`` is easier to match and map to
- ``tcg_gen_abs_<width>``, compared to the full ternary expression above. Loads of
- macros in ``macros.h`` are kept unexpanded to aid in parsing, as seen in the
-diff --git a/target/hexagon/idef-parser/macros.inc b/target/hexagon/idef-parser/macros.h.inc
-similarity index 100%
-rename from target/hexagon/idef-parser/macros.inc
-rename to target/hexagon/idef-parser/macros.h.inc
-diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
-index 9ea1f4fc59..f1723778a6 100644
---- a/target/hexagon/meson.build
-+++ b/target/hexagon/meson.build
-@@ -284,7 +284,7 @@ if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
-         'idef_parser_input.preprocessed.h.inc',
-         output: 'idef_parser_input.preprocessed.h.inc',
-         input: idef_parser_input_generated,
--        depend_files: [idef_parser_dir / 'macros.inc'],
-+        depend_files: [idef_parser_dir / 'macros.h.inc'],
-         command: [idef_parser_dir / 'prepare', '@INPUT@', '-I' + idef_parser_dir, '-o', '@OUTPUT@'],
-     )
- 
+-    mc->desc = "Heathrow based PowerMAC";
++    mc->desc = "Heathrow based PowerMac";
+     mc->init = ppc_heathrow_init;
+     mc->block_default_type = IF_IDE;
+     /* SMP is not supported currently */
 -- 
 2.39.5
 
