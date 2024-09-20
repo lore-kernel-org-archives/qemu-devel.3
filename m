@@ -4,34 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89688CF58E5
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 07:44:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A848CF58E5
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 07:45:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srYHY-0000fI-4D; Fri, 20 Sep 2024 03:42:24 -0400
+	id 1srYHP-0008UI-OX; Fri, 20 Sep 2024 03:42:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1srYHI-00080j-Jr; Fri, 20 Sep 2024 03:42:11 -0400
+ id 1srYHF-0007iT-KI; Fri, 20 Sep 2024 03:42:06 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1srYHH-0000Gl-0O; Fri, 20 Sep 2024 03:42:08 -0400
+ id 1srYHA-0000Fw-08; Fri, 20 Sep 2024 03:42:04 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 70C0590863;
- Fri, 20 Sep 2024 10:41:22 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D016A90860;
+ Fri, 20 Sep 2024 10:41:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 00DEF1409E6;
- Fri, 20 Sep 2024 10:41:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 729751409E3;
+ Fri, 20 Sep 2024 10:41:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, qemu-trivial@nongnu.org,
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 13/22] tests/qemu-iotests/testenv: Use the "virt" machine for
- or1k
-Date: Fri, 20 Sep 2024 10:41:25 +0300
-Message-Id: <20240920074134.664961-14-mjt@tls.msk.ru>
+Subject: [PULL 10/22] envlist: Remove unused envlist_parse
+Date: Fri, 20 Sep 2024 10:41:22 +0300
+Message-Id: <20240920074134.664961-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20240920074134.664961-1-mjt@tls.msk.ru>
 References: <20240920074134.664961-1-mjt@tls.msk.ru>
@@ -60,36 +59,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-When compiling QEMU just with "--target-list=or1k-softmmu", there
-are 8 iotests failing that try to use PCI devices - but the default
-or1k machine does not have a PCI bus. The "virt" machine is better
-suited for running the iotests than the or1k default machine since
-it provides PCI and thus e.g. support for virtio-blk and virtio-scsi,
-too. With this change, there are no failing iotests anymore when
-using the qemu-system-or1k binary for running the tests.
+envlist_parse, envlist_parse_set, envlist_parse_unset were added
+in 2009 but never used, see:
+  04a6dfebb6 ("linux-user: Add generic env variable handling")
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Remove them.
+
+Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- tests/qemu-iotests/testenv.py | 1 +
- 1 file changed, 1 insertion(+)
+ include/qemu/envlist.h |  2 --
+ util/envlist.c         | 69 ------------------------------------------
+ 2 files changed, 71 deletions(-)
 
-diff --git a/tests/qemu-iotests/testenv.py b/tests/qemu-iotests/testenv.py
-index c8848f2ec2..0b32eec119 100644
---- a/tests/qemu-iotests/testenv.py
-+++ b/tests/qemu-iotests/testenv.py
-@@ -240,6 +240,7 @@ def __init__(self, source_dir: str, build_dir: str,
-             ('aarch64', 'virt'),
-             ('avr', 'mega2560'),
-             ('m68k', 'virt'),
-+            ('or1k', 'virt'),
-             ('riscv32', 'virt'),
-             ('riscv64', 'virt'),
-             ('rx', 'gdbsim-r5f562n8'),
+diff --git a/include/qemu/envlist.h b/include/qemu/envlist.h
+index 6006dfae44..b2883f6659 100644
+--- a/include/qemu/envlist.h
++++ b/include/qemu/envlist.h
+@@ -7,8 +7,6 @@ envlist_t *envlist_create(void);
+ void envlist_free(envlist_t *);
+ int envlist_setenv(envlist_t *, const char *);
+ int envlist_unsetenv(envlist_t *, const char *);
+-int envlist_parse_set(envlist_t *, const char *);
+-int envlist_parse_unset(envlist_t *, const char *);
+ char **envlist_to_environ(const envlist_t *, size_t *);
+ 
+ #endif /* ENVLIST_H */
+diff --git a/util/envlist.c b/util/envlist.c
+index db937c0427..15fdbb109d 100644
+--- a/util/envlist.c
++++ b/util/envlist.c
+@@ -12,9 +12,6 @@ struct envlist {
+     size_t el_count;                        /* number of entries */
+ };
+ 
+-static int envlist_parse(envlist_t *envlist,
+-    const char *env, int (*)(envlist_t *, const char *));
+-
+ /*
+  * Allocates new envlist and returns pointer to it.
+  */
+@@ -51,72 +48,6 @@ envlist_free(envlist_t *envlist)
+     g_free(envlist);
+ }
+ 
+-/*
+- * Parses comma separated list of set/modify environment
+- * variable entries and updates given enlist accordingly.
+- *
+- * For example:
+- *     envlist_parse(el, "HOME=foo,SHELL=/bin/sh");
+- *
+- * inserts/sets environment variables HOME and SHELL.
+- *
+- * Returns 0 on success, errno otherwise.
+- */
+-int
+-envlist_parse_set(envlist_t *envlist, const char *env)
+-{
+-    return (envlist_parse(envlist, env, &envlist_setenv));
+-}
+-
+-/*
+- * Parses comma separated list of unset environment variable
+- * entries and removes given variables from given envlist.
+- *
+- * Returns 0 on success, errno otherwise.
+- */
+-int
+-envlist_parse_unset(envlist_t *envlist, const char *env)
+-{
+-    return (envlist_parse(envlist, env, &envlist_unsetenv));
+-}
+-
+-/*
+- * Parses comma separated list of set, modify or unset entries
+- * and calls given callback for each entry.
+- *
+- * Returns 0 in case of success, errno otherwise.
+- */
+-static int
+-envlist_parse(envlist_t *envlist, const char *env,
+-    int (*callback)(envlist_t *, const char *))
+-{
+-    char *tmpenv, *envvar;
+-    char *envsave = NULL;
+-    int ret = 0;
+-    assert(callback != NULL);
+-
+-    if ((envlist == NULL) || (env == NULL))
+-        return (EINVAL);
+-
+-    tmpenv = g_strdup(env);
+-    envsave = tmpenv;
+-
+-    do {
+-        envvar = strchr(tmpenv, ',');
+-        if (envvar != NULL) {
+-            *envvar = '\0';
+-        }
+-        if ((*callback)(envlist, tmpenv) != 0) {
+-            ret = errno;
+-            break;
+-        }
+-        tmpenv = envvar + 1;
+-    } while (envvar != NULL);
+-
+-    g_free(envsave);
+-    return ret;
+-}
+-
+ /*
+  * Sets environment value to envlist in similar manner
+  * than putenv(3).
 -- 
 2.39.5
 
