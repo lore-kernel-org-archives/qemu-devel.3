@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B88C2CF397F
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 02:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11841CF3964
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 03:03:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srTci-00039O-S5; Thu, 19 Sep 2024 22:43:56 -0400
+	id 1srTuw-0002kk-Qq; Thu, 19 Sep 2024 23:02:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1srTcf-00038G-Ne
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 22:43:53 -0400
-Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
+ id 1srTus-0002kH-0O
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 23:02:42 -0400
+Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1srTcc-0003Sg-LU
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 22:43:53 -0400
-Received: by mail-oo1-xc2b.google.com with SMTP id
- 006d021491bc7-5e1cdfe241eso642264eaf.1
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 19:43:49 -0700 (PDT)
+ id 1srTuo-0005mX-FS
+ for qemu-devel@nongnu.org; Thu, 19 Sep 2024 23:02:41 -0400
+Received: by mail-oa1-x29.google.com with SMTP id
+ 586e51a60fabf-277f19ee2a2so804579fac.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 20:02:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1726800228; x=1727405028;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1726801356; x=1727406156;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ePhbiQY0oDh0dQOBl+INE+Ksd6ztM0cuqXRVHJrUgyQ=;
- b=OmbJekJ0ro/DPaxsvyHghCu4FnyMka+rsP6kwRie/Dp7Blh6FUq3xxfVzNbSN9DdcP
- Zd21emkdwlQ0ZR+F9ZrKDn2aMZO7z0FfkWfOUSnXLZ4LjZ6QKIATfFy4XDjyupEYalOk
- 29vLMwW6+XJSyfUI7d+BaRol+atujm6o0s+IjAEVWWCOTHdxcZQCerAVjS2PYeOk341F
- DSL58Iwo7RPEFMGYO2iVvYq+yxNIX+XXRshegoCTHd/rp6NGdTqgKSB3qcFVoVVyugDc
- +VAHVu8imvTYIf4O4lhQ27jPkI5XW1QvoK10FhuywpGPAzRJrCkByFlmwCGagWFmPjBO
- 3zrQ==
+ bh=9TiJ9vr1v7J6VArlWxbWN9unErnyIeHgYpn7HAQNF6g=;
+ b=3MGI29Ana4mhOVB/po7wSf4tmPTsaYuMpSPop13Pnanr6lqmN6vjj6aO1N5X9UBhBd
+ 1Ph0Qd021KpdolkmG/RBz+lHVucmGouLNvhjuWTAKxP9Qri9PNrWTl3pbr2D1kpMJIpS
+ 14mwSTSkebzTMKE9mtXJtTdrjSA7UDhgMFnZb1tkUmQZ0m9NOXE/SAZsj7XikPp+bMth
+ j96SETJJraw4YS5/6QMV/k6bAIzmdg2lCrgjQ7LsrnSPYQnhNmDCOZCBO30eeqqAxEhY
+ W6/bsrBr5ollyMKp1NO7k6Ig+IUe75DEARXDDe63HchwMADBitoJHkRZt7c9MsYLUZIH
+ 2XNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726800228; x=1727405028;
+ d=1e100.net; s=20230601; t=1726801356; x=1727406156;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ePhbiQY0oDh0dQOBl+INE+Ksd6ztM0cuqXRVHJrUgyQ=;
- b=YBYztWRPJGvGaZuUNEJWAIyna0FNB83mntPK4+5xqfSWWBXNTVifCVAzaysBArk+zj
- yG913LEd7L+uRMGhBsuT+9l0xha2sxgMpcurTHPhk3IDYZ9jZXuA0xJZ6Qon7o8ppPYU
- pw/hWYJSdqDPoeohmbzhY72+aVtIBg0/gR/ahEcASjRd3BiKipwNiT5xXeWjA6NX1XdF
- FIwMze2726HEWwY1UVYoHAQYY21t3jtqQuDimWeuLsVk5PW3pT1dOwfi49kygX6cV9ro
- 4VmWVFck0CxMjGEfXQaj9k4tCDGWR3AUCtZPlA8irSVaVznHJNfaCdgVrIbf9Vt4kg0X
- 0xdA==
+ bh=9TiJ9vr1v7J6VArlWxbWN9unErnyIeHgYpn7HAQNF6g=;
+ b=Lgb53L/lFTze6qXzOsOdySH+IJ64ue7ceNudzYlYAzMEnP02m9Wa+1wZ9PXxoBFzDw
+ clNrJGx1ljxC3HMO/9bIqgRRCF6b+3IpTAv+hKQfDswxWLx8Z6XDHxkX3pP/1CnHGysL
+ MaQS2YxMN49+mfbSpAFaj4P8LGcYqARYJ+Ae1vHsL+sAoao6M4DK6FXcaRpla+4StpC/
+ vtqhn3HrgyOvjnpnv/XU8pgrsgMM3loMfXPGEeNWloXfva6LdwKEvrYURGvjPOvzn3nz
+ k1MDsxGC0s3iHdXSACINz5kJFfJMz9Da+i1I/fz2FqsdTxAX++v3zFzRuQqgvjBpFyx0
+ SX9w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXlUmXmxccq48EIw99ak06vFJkD0L0AJMQ179zgu0aHgjvRD7GZzdpk05c6jBnP31ZEd3XhONUxYu9E@nongnu.org
-X-Gm-Message-State: AOJu0YzqaLxuOjs+RLHct/VcOdiLrsJNYZtwmnKqdvNtGDwuIWkZIEWF
- foTDqMdzTQo/BaVmZvsAN31rnzNc8Z+78MjQOJ+udQ1sahJVMDeGq91KIZtRV6OIFJ6baUpfmLs
- vKq4GsFuWuSGV0hLcR5OFNEAGQlse0lMC9I12bw==
-X-Google-Smtp-Source: AGHT+IHbaslxZ/jux5RdkgwcATsaEx9zqm3oiCAeJYfxFABXMmfbY2+o5JcjrcgaJ/HTwLQB4KsPrVivWDsYYqXahFc=
-X-Received: by 2002:a05:6870:56a0:b0:260:ff2f:9d24 with SMTP id
- 586e51a60fabf-2803a78514emr757399fac.33.1726800227029; Thu, 19 Sep 2024
- 19:43:47 -0700 (PDT)
+ AJvYcCVkvaaqp1dWy62+oh/VuWyoIyzfhOIlaDIOngun/l0LQZ4kEsklF7v+hTLr2oZuguoUVlPLB6+AbDVZ@nongnu.org
+X-Gm-Message-State: AOJu0YwfgTLd+Wa93+m04fEnkIgfiaJVexywpmAk8owLk5O4T46z0kTp
+ Fpa/Y/AeJ6WfJ3ATd0ZmBI1biQTQhhT3DvQCYsxMU/KnzJSLano96CH8dPkRFWw5TF8E8qhmq2u
+ i+MLCjW5m2nRc+XrX+TftjlFzgDoEC8D5xBeAmQ==
+X-Google-Smtp-Source: AGHT+IH272Pcn07OQizmIVNFn2j1JtrzpmQl5dvs4kiZw4ajOez9ZuiDcqIov3a0e84C9MLW95qvOVjJzPYgM20sd3w=
+X-Received: by 2002:a05:6871:e015:b0:255:2e14:3d9d with SMTP id
+ 586e51a60fabf-2803cea837amr681912fac.5.1726801355946; Thu, 19 Sep 2024
+ 20:02:35 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1726390098.git.yong.huang@smartx.com>
  <531750c8d7b6c09f877b5f335a60fab402c168be.1726390098.git.yong.huang@smartx.com>
@@ -64,8 +64,8 @@ References: <cover.1726390098.git.yong.huang@smartx.com>
  <ZuxxOObKqS_G0Ela@x1n>
 In-Reply-To: <ZuxxOObKqS_G0Ela@x1n>
 From: Yong Huang <yong.huang@smartx.com>
-Date: Fri, 20 Sep 2024 10:43:31 +0800
-Message-ID: <CAK9dgmYaE=poiwLQqD6qbjJQdgPLMn8cW8VO47xYFTBkNiUVLA@mail.gmail.com>
+Date: Fri, 20 Sep 2024 11:02:20 +0800
+Message-ID: <CAK9dgmZ4PCbBhDYhFy_3EgZDzb1oGFGs9pXsOYqz9ke_Sj10yA@mail.gmail.com>
 Subject: Re: [PATCH v1 1/7] migration: Introduce structs for background sync
 To: Peter Xu <peterx@redhat.com>
 Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
@@ -73,9 +73,9 @@ Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
  Markus Armbruster <armbru@redhat.com>, David Hildenbrand <david@redhat.com>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000216fd606228402a7"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
- envelope-from=yong.huang@smartx.com; helo=mail-oo1-xc2b.google.com
+Content-Type: multipart/alternative; boundary="0000000000006b60c006228445e9"
+Received-SPF: pass client-ip=2001:4860:4864:20::29;
+ envelope-from=yong.huang@smartx.com; helo=mail-oa1-x29.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -97,7 +97,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000216fd606228402a7
+--0000000000006b60c006228445e9
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -198,57 +198,32 @@ o
 d.
 > But is it always better?  At least it consumes much more resources..
 >
+
+Yes, it introduces an extra bitmap with respect to the old sync logic.
+
+
+>
 > Otherwise, we can still leave that logic as-is but use a migration proper=
 ty
 > to turn it on only on new machines I think.
+>
+
+OK, that's fine.
+
+
 >
 > Besides, could you explain why the solution needs to be this complex?  My
 > previous question was that we sync dirty too less, while auto converge
 > relies on dirty information, so that means auto converge can be adjusted
 > too unfrequently.
 >
-
-The original logic will update the bmap for each sync, which was used to
-conduct the dirty page sending. In the background sync logic, we do not
-want to update bmap to interfere with the behavior of page sending for
-each background sync, since the bitmap we are syncing is only used to
-detect the convergence and do the CPU throttle.
-
-The iteration sync wants to 1: sync dirty bitmap, 2:detect convergence,
-3: do the CPU throttle and 4: use the bmap fetched to conduct the page
-sending, while the background sync only does the 1,2,3. They have different
-purposes. These logic need at least two bitmap, one is used to page sending
-and another is used for CPU throttling, to achieve this, we introduced the
-iter_bmap as the temporary bitmap to store the dirty page information
-during background sync and copy it to the bmap in the iteration sync logic.
-However, the dirty page information in iter_bmap may be repetitive since
-the dirty pages it records could be sent after background syncing, we
-introduced the shadow_bmap to help calculate the dirty pages having
-been sent during two background syncs.
-
-
 > However I wonder whether that can be achieved in a simpler manner by
->
-
-I have tried my best to make the solution simpler but failed. :(
-
-
 > e.g. invoke migration_bitmap_sync_precopy() more frequently during
->
-
-Yes, invoke migration_bitmap_sync_precopy more frequently is also my
-first idea but it involves bitmap updating and interfere with the behavior
-of page sending, it also affects the migration information stats and
-interfere
-other migration logic such as migration_update_rates().
-
-
 > migration, for example, in ram_save_iterate() - not every time but the
 > iterate() is invoked much more frequent, and maybe we can do sync from ti=
 me
 > to time.
-
-
+>
 > I also don't see why we need a separate thread, plus two new bitmaps, to
 > achieve this..  I didn't read in-depth yet, but I thought dirty sync
 > requires bql anyway, then I don't yet understand why the two bitmaps are
@@ -261,14 +236,11 @@ me
 > Peter Xu
 >
 >
-Thanks,
-
-Yong
 
 --=20
 Best regards
 
---000000000000216fd606228402a7
+--0000000000006b60c006228445e9
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -394,88 +366,35 @@ How confident do we think the new way is better than the old?<br>
 If it&#39;ll be 100% / always better, I agree we can consider removing the =
 old.<br>
 But is it always better?=C2=A0 At least it consumes much more resources..<b=
-r>
+r></blockquote><div><br></div><div><div style=3D"font-family:&quot;comic sa=
+ns ms&quot;,sans-serif" class=3D"gmail_default">Yes, it introduces an extra=
+ bitmap with respect to the old sync logic.</div></div><div>=C2=A0</div><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
+t-width:1px;border-left-style:solid;border-left-color:rgb(204,204,204);padd=
+ing-left:1ex">
 <br>
 Otherwise, we can still leave that logic as-is but use a migration property=
 <br>
-to turn it on only on new machines I think.<br>
+to turn it on only on new machines I think.<br></blockquote><div><br></div>=
+<div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=
+=3D"gmail_default">OK, that&#39;s fine.</div></div><div>=C2=A0</div><blockq=
+uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-wi=
+dth:1px;border-left-style:solid;border-left-color:rgb(204,204,204);padding-=
+left:1ex">
 <br>
 Besides, could you explain why the solution needs to be this complex?=C2=A0=
  My<br>
 previous question was that we sync dirty too less, while auto converge<br>
 relies on dirty information, so that means auto converge can be adjusted<br=
 >
-too unfrequently.<br></blockquote><div><br></div><div><div style=3D"font-fa=
-mily:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_default">The orig=
-inal logic will update the bmap for each sync, which was used to</div><div =
-style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_d=
-efault">conduct the dirty page sending. In the background sync logic, we do=
- not</div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" c=
-lass=3D"gmail_default">want=C2=A0to update bmap to interfere with the behav=
-ior of page sending for</div><div style=3D"font-family:&quot;comic sans ms&=
-quot;,sans-serif" class=3D"gmail_default">each background sync, since the b=
-itmap we are syncing is only used to</div><div style=3D"font-family:&quot;c=
-omic sans ms&quot;,sans-serif" class=3D"gmail_default">detect the convergen=
-ce and do the CPU throttle.</div><div style=3D"font-family:&quot;comic sans=
- ms&quot;,sans-serif" class=3D"gmail_default"><br></div><div style=3D"font-=
-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_default">The it=
-eration sync=C2=A0wants to 1: sync dirty bitmap, 2:detect convergence,</div=
-><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"g=
-mail_default">3: do the CPU throttle and 4: use the bmap fetched to conduct=
- the page</div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-ser=
-if" class=3D"gmail_default">sending, while the background sync=C2=A0only do=
-es the 1,2,3. They have different</div><div class=3D"gmail_default"><span s=
-tyle=3D"font-family:&quot;comic sans ms&quot;,sans-serif">purpose</span><fo=
-nt face=3D"comic sans ms, sans-serif">s.=C2=A0These logic need at least two=
- bitmap, one is used to page sending</font></div><div class=3D"gmail_defaul=
-t"><font face=3D"comic sans ms, sans-serif">and another is used for CPU thr=
-ottling, to achieve this, we introduced the</font></div><div class=3D"gmail=
-_default"><font face=3D"comic sans ms, sans-serif">iter_bmap as the tempora=
-ry bitmap to store the dirty page information</font></div><div class=3D"gma=
-il_default"><font face=3D"comic sans ms, sans-serif">during background sync=
- and copy it to the bmap in the iteration sync logic.</font></div><div clas=
-s=3D"gmail_default"><font face=3D"comic sans ms, sans-serif">However, the d=
-irty page information in iter_bmap=C2=A0</font><span style=3D"font-family:&=
-quot;comic sans ms&quot;,sans-serif">may be repetitive since</span></div><d=
-iv class=3D"gmail_default"><span style=3D"font-family:&quot;comic sans ms&q=
-uot;,sans-serif">the dirty pages it records could be sent after background =
-syncing, we</span></div><div class=3D"gmail_default"><font face=3D"comic sa=
-ns ms, sans-serif">introduced the shadow_bmap to help calculate the dirty p=
-ages having</font></div><div class=3D"gmail_default"><font face=3D"comic sa=
-ns ms, sans-serif">been sent during two background syncs.</font></div></div=
-><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"g=
-mail_default"><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
-px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-left-=
-color:rgb(204,204,204);padding-left:1ex">
+too unfrequently.<br>
 <br>
-However I wonder whether that can be achieved in a simpler manner by<br></b=
-lockquote><div><br></div><div><span style=3D"font-family:&quot;comic sans m=
-s&quot;,sans-serif">I have tried my best to make the solution simpler but f=
-ailed. :(</span><br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote=
-" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style=
-:solid;border-left-color:rgb(204,204,204);padding-left:1ex">
-e.g. invoke <span class=3D"gmail_default" style=3D"font-family:&quot;comic =
-sans ms&quot;,sans-serif"></span><span class=3D"gmail_default" style=3D"fon=
-t-family:&quot;comic sans ms&quot;,sans-serif"></span>migration_bitmap_sync=
-_precopy() more frequently during<br></blockquote><div><br></div><div style=
-=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_defaul=
-t">Yes, invoke migration_bitmap_sync_precopy more frequently is also my</di=
-v><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"=
-gmail_default">first idea but it involves bitmap updating and interfere wit=
-h the behavior</div><div style=3D"font-family:&quot;comic sans ms&quot;,san=
-s-serif" class=3D"gmail_default">of page sending, it also affects the migra=
-tion information stats and interfere</div><div style=3D"font-family:&quot;c=
-omic sans ms&quot;,sans-serif" class=3D"gmail_default">other migration logi=
-c such as=C2=A0migration_update_rates().</div><div>=C2=A0</div><blockquote =
-class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1=
-px;border-left-style:solid;border-left-color:rgb(204,204,204);padding-left:=
-1ex">
+However I wonder whether that can be achieved in a simpler manner by<br>
+e.g. invoke migration_bitmap_sync_precopy() more frequently during<br>
 migration, for example, in ram_save_iterate() - not every time but the<br>
 iterate() is invoked much more frequent, and maybe we can do sync from time=
 <br>
-to time.</blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-left-col=
-or:rgb(204,204,204);padding-left:1ex">
+to time.<br>
 <br>
 I also don&#39;t see why we need a separate thread, plus two new bitmaps, t=
 o<br>
@@ -492,14 +411,10 @@ Thanks,<br>
 -- <br>
 Peter Xu<br>
 <br>
-</blockquote></div><br clear=3D"all"><div><div style=3D"font-family:&quot;c=
-omic sans ms&quot;,sans-serif" class=3D"gmail_default">Thanks,</div><div st=
-yle=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_def=
-ault"><br></div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-se=
-rif" class=3D"gmail_default">Yong</div></div><div><br></div><span class=3D"=
-gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signa=
-ture"><div dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regard=
-s</font></div></div></div>
+</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
+gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
+iv dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font>=
+</div></div></div>
 
---000000000000216fd606228402a7--
+--0000000000006b60c006228445e9--
 
