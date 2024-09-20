@@ -4,78 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2185ACF9C55
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 16:24:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88729CF9C59
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 16:46:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srgPr-0005fJ-6k; Fri, 20 Sep 2024 12:23:31 -0400
+	id 1srgle-00044S-Lr; Fri, 20 Sep 2024 12:46:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srgPp-0005em-Bt
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 12:23:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srgld-000437-2L
+ for qemu-devel@nongnu.org; Fri, 20 Sep 2024 12:46:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srgPn-0005yQ-Pi
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 12:23:29 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1srgla-0000ti-Pe
+ for qemu-devel@nongnu.org; Fri, 20 Sep 2024 12:46:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1726849404;
+ s=mimecast20190719; t=1726850755;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=s5ftDNI4+MN336NjHNR0lrO3iggZbuuQMrLWus/bYGU=;
- b=AMrycSqffteiSpob4NhpHCo6d6m1oidF92NE4wX0DOc2COhOObL9fAGKnpTmh4B+CCzSfm
- TmSNqWYPc/jjK2gL28heidyfSaMjVFpBUNPOCze7hKSvA7jGNi23G+T/eqLZyk8wOPMXis
- DkWvUoM0CxiGKsM+/tHdsqbPUOG6URA=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=du3soqcUea/NVhbdUTSxvPRNKzDEwYb8T33zWNbIdkM=;
+ b=SZlmnnQx+sC/W0uDSCzG2mrOq7tgkKI0QDrnY8Bd5PpzeKy578rVfHL9mGQXB5r6g8wnP1
+ cnQJUSaKQ37V5Bmt8P7NaQLCh3rNyqv+toSusIBLpjh9fc6g20mqgWDmoni96nW9ZM1UXW
+ 6H0Nutgwt+1X99P65u1+7MD6OKfHaJY=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-433-vsJEX93xOGy3qC03bbab9w-1; Fri, 20 Sep 2024 12:23:22 -0400
-X-MC-Unique: vsJEX93xOGy3qC03bbab9w-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6c3649bca89so37475196d6.1
- for <qemu-devel@nongnu.org>; Fri, 20 Sep 2024 09:23:22 -0700 (PDT)
+ us-mta-618-1wp0hQRcPz-JJ74UKmwMYA-1; Fri, 20 Sep 2024 12:45:54 -0400
+X-MC-Unique: 1wp0hQRcPz-JJ74UKmwMYA-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7a9a85e4a85so485808385a.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Sep 2024 09:45:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726849402; x=1727454202;
+ d=1e100.net; s=20230601; t=1726850754; x=1727455554;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s5ftDNI4+MN336NjHNR0lrO3iggZbuuQMrLWus/bYGU=;
- b=WVQFcgfmUEVy9RcVVeu64vQu3tBsGUE7FWxkeS7UQZa8j52qT98nu33SumBbpMdodM
- hUv2dK+nARzxppqI8IUZ/SU7P7PGeOFaCpKw6kiT/gh3Iad/A4enxfEfvOW68CwFQPbK
- IKpqlYCFJHdmGjmJU+H3apA/9Kk2ovSH/QXHFhy2wkC1AcAdDSnWmRcIk6/OyhY197sn
- 1/Nr3SxRCRtza9C1DG6a5qHEAoDKAgWjSM8rq1bcALA5ZVRRT1Q+Jeexhj5YPxBovGww
- hvA6oZ3Wbg/mcci5NCp3wjtLhAqGO0Si87wmu5J2Im93UvAjezb5KCDD9FlR9gVyWRyL
- /D6Q==
-X-Gm-Message-State: AOJu0YyicnUcwHWNRr3QDzhiuoGsEEaxcrryefroETzYg/jwTYbZj9HU
- pGioPRaouG+a5IngTzUfe62+D2H3VMj4jEnX7zj8RtwZZRLqg6qYKWSp5rhmqrEKJQhlpWduwgh
- 8mC3F2DKzuQs97739u8KZipcuz1MYHQbH12XMA5WzFeNYJHsg+Efb
-X-Received: by 2002:a05:6214:5690:b0:6b8:5afd:8f89 with SMTP id
- 6a1803df08f44-6c7bc8127d6mr50927606d6.37.1726849402034; 
- Fri, 20 Sep 2024 09:23:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGDpRN3aqOARKsk5XIZWKdjruVTatrE3GedQtGXGk5/Toe8xsLbv8oFu/e4EiZf/uRZ4m7dew==
-X-Received: by 2002:a05:6214:5690:b0:6b8:5afd:8f89 with SMTP id
- 6a1803df08f44-6c7bc8127d6mr50927146d6.37.1726849401442; 
- Fri, 20 Sep 2024 09:23:21 -0700 (PDT)
+ bh=du3soqcUea/NVhbdUTSxvPRNKzDEwYb8T33zWNbIdkM=;
+ b=DWrIrWJ1TUC1kASNzDFijA3ndh/s5jbHaIMT6F8gv/O7YTT1Atf1ZJNW2bCUEJnjh9
+ ghIqZn2msYL3cnYq7r1l3x+uL+bTWLDt4NuAHbpz01y6FbzhYr528Yi2Ce4DMlDRnjnM
+ NQfQj6AQgBkIOJh2jHfNrUFt7ToIwNlAkw5qbiex7OR5YSF2XozqcOOAi5CsGjQ7vq0O
+ zwRxqgWZLalJ3HCf0FHekjbqgAcHDFPzUvJ/nKqTS8dI0zhjxkEDCrKa/evkko8FrWHp
+ zRYc2p0jPiaeqC1+v5ANiPDyo5ECBpfj8v5b0acahI1xmAa8jmO5HdZLA+DUPKyT1xBy
+ vjSw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXn2j+af6ZiTyxRywTb5SLsrlCb951jct6TfjjVjqqFT4vpF4dH+0/WNU7+/BK6zkdU0d64LYqdWxUx@nongnu.org
+X-Gm-Message-State: AOJu0YxkuzuVcFG5Dhh/iIzbrA10FAViP6fgOXi88rBXi+QaTAfMMYul
+ /5d9bmDEnYXlsqKJPb+I2pN9q+HUDLluRfbvhP4VyMs2If8sHHW6Ev7EUp3WYC/OmVzEQp4O+nj
+ xuBlXCZ+CF3NnmNVI+/xmsWf29hZ33Kwc5OTRIattyUgXCeUZSKLg
+X-Received: by 2002:a05:620a:258d:b0:7a9:bf92:45ba with SMTP id
+ af79cd13be357-7acb7ff6791mr525593285a.0.1726850754152; 
+ Fri, 20 Sep 2024 09:45:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHq19CSCLzbiK7VNfoLyrMYxOnVY9xWjzoseZX/zhNI3M8oY4RMoBWYQOiPgZeVijSB0oqqsA==
+X-Received: by 2002:a05:620a:258d:b0:7a9:bf92:45ba with SMTP id
+ af79cd13be357-7acb7ff6791mr525587885a.0.1726850753528; 
+ Fri, 20 Sep 2024 09:45:53 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c75e586d26sm19477486d6.137.2024.09.20.09.23.20
+ af79cd13be357-7acb08dae51sm197992285a.122.2024.09.20.09.45.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Sep 2024 09:23:21 -0700 (PDT)
-Date: Fri, 20 Sep 2024 12:23:19 -0400
+ Fri, 20 Sep 2024 09:45:52 -0700 (PDT)
+Date: Fri, 20 Sep 2024 12:45:50 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH] tests/migration-test: Wait for cancellation sooner in
- multifd cancel
-Message-ID: <Zu2hd3-mE4a4a-lj@x1n>
-References: <20240920161319.2337625-1-jmarcin@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 08/17] migration: Add load_finish handler and
+ associated functions
+Message-ID: <Zu2mvrKOvmD1WtvD@x1n>
+References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
+ <1a7599896decdbae61cee385739dc0badc9b4364.1724701542.git.maciej.szmigiero@oracle.com>
+ <Zt9UjvvbeUZQlGNY@x1n>
+ <d245c8b6-b765-42e1-a5ec-bdb46494cec4@maciej.szmigiero.name>
+ <ZuyTjQJujZo6tw9p@x1n>
+ <bbed8165-de5c-4ebe-a6cc-ff33f9ea363a@maciej.szmigiero.name>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240920161319.2337625-1-jmarcin@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <bbed8165-de5c-4ebe-a6cc-ff33f9ea363a@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -99,64 +111,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 20, 2024 at 06:13:02PM +0200, Juraj Marcin wrote:
-> The source QEMU might not finish the cancellation of the migration
-> before we start setting up the next attempt. During the setup, the
-> test_migrate_start() function and others might need to interact with the
-> source in a way that is not possible unless the migration is fully
-> canceled. For example, setting capabilities when the migration is still
-> running leads to an error.
+On Fri, Sep 20, 2024 at 05:23:08PM +0200, Maciej S. Szmigiero wrote:
+> On 19.09.2024 23:11, Peter Xu wrote:
+> > On Thu, Sep 19, 2024 at 09:49:10PM +0200, Maciej S. Szmigiero wrote:
+> > > On 9.09.2024 22:03, Peter Xu wrote:
+> > > > On Tue, Aug 27, 2024 at 07:54:27PM +0200, Maciej S. Szmigiero wrote:
+> > > > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> > > > > 
+> > > > > load_finish SaveVMHandler allows migration code to poll whether
+> > > > > a device-specific asynchronous device state loading operation had finished.
+> > > > > 
+> > > > > In order to avoid calling this handler needlessly the device is supposed
+> > > > > to notify the migration code of its possible readiness via a call to
+> > > > > qemu_loadvm_load_finish_ready_broadcast() while holding
+> > > > > qemu_loadvm_load_finish_ready_lock.
+> > > > > 
+> > > > > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> > > > > ---
+> > > > >    include/migration/register.h | 21 +++++++++++++++
+> > > > >    migration/migration.c        |  6 +++++
+> > > > >    migration/migration.h        |  3 +++
+> > > > >    migration/savevm.c           | 52 ++++++++++++++++++++++++++++++++++++
+> > > > >    migration/savevm.h           |  4 +++
+> > > > >    5 files changed, 86 insertions(+)
+> > > > > 
+> > > > > diff --git a/include/migration/register.h b/include/migration/register.h
+> > > > > index 4a578f140713..44d8cf5192ae 100644
+> > > > > --- a/include/migration/register.h
+> > > > > +++ b/include/migration/register.h
+> > > > > @@ -278,6 +278,27 @@ typedef struct SaveVMHandlers {
+> > > > >        int (*load_state_buffer)(void *opaque, char *data, size_t data_size,
+> > > > >                                 Error **errp);
+> > > > > +    /**
+> > > > > +     * @load_finish
+> > > > > +     *
+> > > > > +     * Poll whether all asynchronous device state loading had finished.
+> > > > > +     * Not called on the load failure path.
+> > > > > +     *
+> > > > > +     * Called while holding the qemu_loadvm_load_finish_ready_lock.
+> > > > > +     *
+> > > > > +     * If this method signals "not ready" then it might not be called
+> > > > > +     * again until qemu_loadvm_load_finish_ready_broadcast() is invoked
+> > > > > +     * while holding qemu_loadvm_load_finish_ready_lock.
+> > > > 
+> > > > [1]
+> > > > 
+> > > > > +     *
+> > > > > +     * @opaque: data pointer passed to register_savevm_live()
+> > > > > +     * @is_finished: whether the loading had finished (output parameter)
+> > > > > +     * @errp: pointer to Error*, to store an error if it happens.
+> > > > > +     *
+> > > > > +     * Returns zero to indicate success and negative for error
+> > > > > +     * It's not an error that the loading still hasn't finished.
+> > > > > +     */
+> > > > > +    int (*load_finish)(void *opaque, bool *is_finished, Error **errp);
+> > > > 
+> > > > The load_finish() semantics is a bit weird, especially above [1] on "only
+> > > > allowed to be called once if ..." and also on the locks.
+> > > 
+> > > The point of this remark is that a driver needs to call
+> > > qemu_loadvm_load_finish_ready_broadcast() if it wants for the migration
+> > > core to call its load_finish handler again.
+> > > 
+> > > > It looks to me vfio_load_finish() also does the final load of the device.
+> > > > 
+> > > > I wonder whether that final load can be done in the threads,
+> > > 
+> > > Here, the problem is that current VFIO VMState has to be loaded from the main
+> > > migration thread as it internally calls QEMU core address space modification
+> > > methods which explode if called from another thread(s).
+> > 
+> > Ahh, I see.  I'm trying to make dest qemu loadvm in a thread too and yield
+> > BQL if possible, when that's ready then in your case here IIUC you can
+> > simply take BQL in whichever thread that loads it.. but yeah it's not ready
+> > at least..
 > 
-> By moving the wait before the setup, we ensure this does not happen.
+> Yeah, long term we might want to work on making these QEMU core address space
+> modification methods somehow callable from multiple threads but that's
+> definitely not something for the initial patch set.
 > 
-> Cc: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-
-+Fabiano, +PeterM.
-
-Some more context: this issue Juraj can only reproduce in one of our
-downstream 9.2 branch with some probably over crowded build systems.  But
-logically it looks still possible to also happen upstream..
-
-queued, thanks!
-
-> ---
->  tests/qtest/migration-test.c | 12 ++++++++++--
->  1 file changed, 10 insertions(+), 2 deletions(-)
+> > Would it be possible vfio_save_complete_precopy_async_thread_config_state()
+> > be done in VFIO's save_live_complete_precopy() through the main channel
+> > somehow?  IOW, does it rely on iterative data to be fetched first from
+> > kernel, or completely separate states?
 > 
-> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-> index 814ec109a6..95e45b5029 100644
-> --- a/tests/qtest/migration-test.c
-> +++ b/tests/qtest/migration-test.c
-> @@ -3267,6 +3267,16 @@ static void test_multifd_tcp_cancel(void)
->      qtest_wait_qemu(to);
->      qtest_quit(to);
->  
-> +    /*
-> +     * Ensure the source QEMU finishes its cancellation process before we
-> +     * proceed with the setup of the next migration. The test_migrate_start()
-> +     * function and others might want to interact with the source in a way that
-> +     * is not possible while the migration is not canceled properly. For
-> +     * example, setting migration capabilities when the migration is still
-> +     * running leads to an error.
-> +     */
-> +    wait_for_migration_status(from, "cancelled", NULL);
-> +
->      args = (MigrateStart){
->          .only_target = true,
->      };
-> @@ -3282,8 +3292,6 @@ static void test_multifd_tcp_cancel(void)
->      /* Start incoming migration from the 1st socket */
->      migrate_incoming_qmp(to2, "tcp:127.0.0.1:0", "{}");
->  
-> -    wait_for_migration_status(from, "cancelled", NULL);
-> -
->      migrate_ensure_non_converge(from);
->  
->      migrate_qmp(from, to2, NULL, NULL, "{}");
-> -- 
-> 2.46.1
+> The device state data needs to be fully loaded first before "activating"
+> the device by loading its config state.
 > 
+> > And just curious: how large is it
+> > normally (and I suppose this decides whether it's applicable to be sent via
+> > the main channel at all..)?
+> 
+> Config data is *much* smaller than device state data - as far as I remember
+> it was on order of kilobytes.
+> 
+> > > 
+> > > > then after
+> > > > everything loaded the device post a semaphore telling the main thread to
+> > > > continue.  See e.g.:
+> > > > 
+> > > >       if (migrate_switchover_ack()) {
+> > > >           qemu_loadvm_state_switchover_ack_needed(mis);
+> > > >       }
+> > > > 
+> > > > IIUC, VFIO can register load_complete_ack similarly so it only sem_post()
+> > > > when all things are loaded?  We can then get rid of this slightly awkward
+> > > > interface.  I had a feeling that things can be simplified (e.g., if the
+> > > > thread will take care of loading the final vmstate then the mutex is also
+> > > > not needed? etc.).
+> > > 
+> > > With just a single call to switchover_ack_needed per VFIO device it would
+> > > need to do a blocking wait for the device buffers and config state load
+> > > to finish, therefore blocking other VFIO devices from potentially loading
+> > > their config state if they are ready to begin this operation earlier.
+> > 
+> > I am not sure I get you here, loading VFIO device states (I mean, the
+> > non-iterable part) will need to be done sequentially IIUC due to what you
+> > said and should rely on BQL, so I don't know how that could happen
+> > concurrently for now.  But I think indeed BQL is a problem.
+> Consider that we have two VFIO devices (A and B), with the following order
+> of switchover_ack_needed handler calls for them: first A get this call,
+> once the call for A finishes then B gets this call.
+> 
+> Now consider what happens if B had loaded all its buffers (in the loading
+> thread) and it is ready for its config load before A finished loading its
+> buffers.
+> 
+> B has to wait idle in this situation (even though it could have been already
+> loading its config) since the switchover_ack_needed handler for A won't
+> return until A is fully done.
+
+This sounds like a performance concern, and I wonder how much this impacts
+the real workload (that you run a test and measure, with/without such
+concurrency) when we can save two devices in parallel anyway; I would
+expect the real diff is small due to the fact I mentioned that we save >1
+VFIO devices concurrently via multifd.
+
+Do you think we can start with a simpler approach?
+
+So what I'm thinking could be very clean is, we just discussed about
+MIG_CMD_SWITCHOVER and looks like you also think it's an OK approach.  I
+wonder when with it why not we move one step further to have
+MIG_CMD_SEND_NON_ITERABE just to mark that "iterable devices all done,
+ready to send non-iterable".  It can be controlled by the same migration
+property so we only send these two flags in 9.2+ machine types.
+
+Then IIUC VFIO can send config data through main wire (just like most of
+other pci devices! which is IMHO a good fit..) and on destination VFIO
+holds off loading them until passing the MIG_CMD_SEND_NON_ITERABE phase.
+
+Side note: when looking again, I really think we should cleanup some
+migration switchover phase functions, e.g. I think
+qemu_savevm_state_complete_precopy() parameters are pretty confusing,
+especially iterable_only, even if inside it it also have some postcopy
+implicit checks, urgh.. but this is not relevant to our discussion, and I
+won't draft that before your series land; that can complicate stuff.
+
+> 
+> > So IMHO this recv side interface so far is the major pain that I really
+> > want to avoid (comparing to the rest) in the series.  Let's see whether we
+> > can come up with something better..
+> > 
+> > One other (probably not pretty..) idea is when waiting here in the main
+> > thread it yields BQL, then other threads can take it and load the VFIO
+> > final chunk of data.  But I could miss something else.
+> > 
+> 
+> I think temporary dropping BQL deep inside migration code is similar
+> to running QEMU event loop deep inside migration code (about which
+> people complained in my generic thread pool implementation): it's easy
+> to miss some subtle dependency/race somewhere and accidentally cause rare
+> hard to debug deadlock.
+> 
+> That's why I think that it's ultimately probably better to make QEMU core
+> address space modification methods thread safe / re-entrant instead.
+
+Right, let's see how you think about above.
+
+Thanks,
 
 -- 
 Peter Xu
