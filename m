@@ -4,85 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88226CF9C5F
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 18:10:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B540CF9C5F
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 18:56:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sri4h-0003TF-3E; Fri, 20 Sep 2024 14:09:47 -0400
+	id 1srinP-0006dN-Ql; Fri, 20 Sep 2024 14:55:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1sri4e-0003Rm-I4
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 14:09:44 -0400
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ (Exim 4.90_1) (envelope-from <ufimtseva@gmail.com>)
+ id 1srinN-0006Wu-NF; Fri, 20 Sep 2024 14:55:57 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1sri4a-0003NH-OH
- for qemu-devel@nongnu.org; Fri, 20 Sep 2024 14:09:44 -0400
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-535dc4ec181so2345897e87.3
- for <qemu-devel@nongnu.org>; Fri, 20 Sep 2024 11:09:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ufimtseva@gmail.com>)
+ id 1srinK-00015o-Oc; Fri, 20 Sep 2024 14:55:56 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a86e9db75b9so333810666b.1; 
+ Fri, 20 Sep 2024 11:55:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=minyard-net.20230601.gappssmtp.com; s=20230601; t=1726855778; x=1727460578;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LacxQpJuK2J3AiMcw1FAtS734utUTVehtpy/NRIDDsY=;
- b=bRDE6u6T12WLu5hD8bNehpLgmJInQtQCab66pyLAAkhE7d90qpIBdhV4boKBbW1RXo
- me/kmdSfFiTzW0xokeptDzI1eKZfsLK2WqPVKew/MmWX5zcxHPEaWJKWhPLYXd4E0sF8
- UYGW2vl082V2j8NM2rzUt7QMlRd5+4a/QiBHxh/fM9n+9QOiHbmW6b0KbR1BKituk6JA
- QCQr5eOhWVCpV14SQF1TVoKKMIK1/zqwgU9hhgrZri6SvPjef17/IKdBOw2hIs0236d0
- QgEeOEYB7ocuthX7jqneG/y4KpkA0u0j+ClrpsBeTWlYvzTAw/ivJ1t7BkbQk7sLT45B
- 9ajw==
+ d=gmail.com; s=20230601; t=1726858552; x=1727463352; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=j14y80EvgaH3X0sRzgGq2kIx+5ZX7nubWNfOPxor4J0=;
+ b=PADj3hM8TOjyAJW5rQIr3ERzAl3U+awYEkJWVZhR8MEA36kK8dv59GgVqBNy0KgKl9
+ wzSUV14eaGwDyTymeoGsw1z7HOWXp+ypBLx8N7oWy9KI5kokn79Dyg4NjUBDvV/vK2S6
+ 23uDOEfSe1TOBj4+vsQUWnUs5A2hxPFlZAwMtMz0Xe/Mzyd+W9vsTan+JX7uvwn4n1sw
+ 1izTti22AMaeuPkBfpHSSfKu8jBtBPJFKT//r/XQJgBJ9DUtLgNNloPaCmZYofy2ykA9
+ wb4KH882tXXgzYqy8/IvKgN5cDDNJrnAa0oAwvqA6LXC1WNeQT5HNqXxcqpa6J3jsn/P
+ x+hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726855778; x=1727460578;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=LacxQpJuK2J3AiMcw1FAtS734utUTVehtpy/NRIDDsY=;
- b=cJN2u/bvHki5UfRG6Scx9yc16gZfi3gkdOTlH9450X1bok7gQJHlG0GVwQy3bHlPsM
- NrEbA2sA/5bY82vj0FIRa1gcjCr9OYGo/HW2MviW+fpbHI4A9DrKllKeHYoRv7m67Lp5
- CTr8yL924owM/+PB87rkTkEej4VHyKo4fiMF14Ii87k3mA/yqzx85fkydIfugN8vnrcr
- 5zuf7TIOIpDDwtWpdN9q5ycVH/o/CRZhPVhV3h90VYcaannrl8A8Z1JGgAaD09lImMG+
- V8MFl3X6lGxRGJLfQwzJKh94gd4pUjpkWqyACrM7eLxEG3yNpvOU9ac/YJ8KK6ApZL79
- mBwg==
-X-Gm-Message-State: AOJu0YzQl9Z5EUkXtyEZ4/WMn8LvVBktGQ7ptq7gzGqgnwzpsn/3KYQl
- HzqMnMhAIAvMrQ1BjjxsLAO/f7/1xW5/rOlLZ0mw2n199fyJm3QX+EYVOTxgWdFMDNBH3j6bw+L
- nlNxLO6dFiiNMlTeu2twOaNbGSKShwjwlKCEd/EkC3oR6l0oYBDE=
-X-Google-Smtp-Source: AGHT+IFSj3n+69exar9gYLkq4atrEl3bEYdcmhpTf/uN+awbYylXl4LDamhKlsJMXRuzlyxuk91Z6vp51wNL4uRKwTs=
-X-Received: by 2002:a05:6512:6c9:b0:534:543e:1895 with SMTP id
- 2adb3069b0e04-536ad3d7205mr2289035e87.39.1726855777687; Fri, 20 Sep 2024
- 11:09:37 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1726858552; x=1727463352;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=j14y80EvgaH3X0sRzgGq2kIx+5ZX7nubWNfOPxor4J0=;
+ b=gg50FM8ze53NnxNHtS+1r2SXQs+jA4bV8dM6TkZB+TfOTuqOUHdaItqmWv1Wq+AiR7
+ jQ5ZFvspYYDPN6lU9LWBWDUhmQwiNZGvqnrtOYdiWoR05K2FsagWMneEbDMZxpzq/blR
+ S8VvC0ZOqdtSmiG7cXk+EQY76YraCVADm2P0p9o8lOnMJ1JJCAxuBob0tayGeqonsEnq
+ 7omMZlXFNsFDUNHDbc1SuG1+IeuExkZhnOXZRdyg9C+KvVHWh5TFooKyuft6qKFPMPo4
+ Y1F02guYngYdEIEEvEcKdlfka/jtAXydFVScnYM5UDnnKUtDdQ+oQhUXQcZCwMiODeT4
+ lIIA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXqJ2HEYhzwoBIzr2pkm+s1uMJfV2B2GOrRexN/LXYx/yAidEDfnJabxToFfG/c9EKQzwBUCe5XJEqZag==@nongnu.org
+X-Gm-Message-State: AOJu0YyrJ01LZii16t6b65WS34mUjuPOjmlBCeAltIUQrhLgUKA+xMhQ
+ KzoDuhpEp3gRmaPma1TcX6LY/uzV/GKAe25qpiNkNGgj95R8nW9twuqgpZIhcRm0+uMHawaps9j
+ Lu1afUbPVoCemd3QUdVGx7qg26PQ=
+X-Google-Smtp-Source: AGHT+IHT++9r12yWRWTL4guihonBGzeBx/gPhlWzes08h0A2uPZiio3iuSvgJgS2aIyoFUZ41TbnQ0UshJxwwS5gPdI=
+X-Received: by 2002:a17:906:fe4a:b0:a86:aa57:57b8 with SMTP id
+ a640c23a62f3a-a90d5197d56mr388265866b.63.1726858552159; Fri, 20 Sep 2024
+ 11:55:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240918192254.3136903-1-tavip@google.com>
- <20240918192254.3136903-9-tavip@google.com>
- <Zus1YzMOZD1ppO-2@mail.minyard.net>
- <CAGWr4cSvq+WnUQO3-8jyasQPhKGQCvzOYqRm5W8vRdhW9iU=xw@mail.gmail.com>
- <ZutGsQglLtK7MtRB@mail.minyard.net>
- <CAFEAcA_ZUkz8xv_PP27nD_eRL18v0cU6A7K+K57b8ML-9pmodQ@mail.gmail.com>
- <CAGWr4cScq6+KQi2aJWtgSUSt+j28wXsxP240FfzTrCAFGRV14g@mail.gmail.com>
-In-Reply-To: <CAGWr4cScq6+KQi2aJWtgSUSt+j28wXsxP240FfzTrCAFGRV14g@mail.gmail.com>
-From: Corey Minyard <corey@minyard.net>
-Date: Fri, 20 Sep 2024 13:09:26 -0500
-Message-ID: <CAB9gMfosdyNxRS4N+pt+oHCXoQ2enV7Ot+ws7enuts0XOMUp5g@mail.gmail.com>
-Subject: Re: [PATCH 08/25] hw/i2c: add support for flexcomm i2c
-To: Octavian Purdila <tavip@google.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, stefanst@google.com, 
- pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com, 
- eduardo@habkost.net, luc@lmichel.fr, damien.hedde@dahe.fr, 
- alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org, jsnow@redhat.com, 
- crosa@redhat.com, lvivier@redhat.com, 
- Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: none client-ip=2a00:1450:4864:20::12f;
- envelope-from=corey@minyard.net; helo=mail-lf1-x12f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+References: <20240913220542.18305-1-farosas@suse.de>
+ <20240913220542.18305-3-farosas@suse.de>
+In-Reply-To: <20240913220542.18305-3-farosas@suse.de>
+From: Elena Ufimtseva <ufimtseva@gmail.com>
+Date: Fri, 20 Sep 2024 11:55:30 -0700
+Message-ID: <CAEr7rXgZiH-cBaoQEUqFb45Ajn78iMboMxLa1jGQJGTXNvrCGw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] migration/multifd: Fix rb->receivedmap cleanup race
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000009433a20622919606"
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=ufimtseva@gmail.com; helo=mail-ej1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,307 +89,301 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks, this all looks good to me.  And FIELD() is the right way to
-go, as Peter said.
+--0000000000009433a20622919606
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
--corey
+On Fri, Sep 13, 2024 at 3:07=E2=80=AFPM Fabiano Rosas <farosas@suse.de> wro=
+te:
 
-On Fri, Sep 20, 2024 at 1:03=E2=80=AFPM Octavian Purdila <tavip@google.com>=
- wrote:
+> Fix a segmentation fault in multifd when rb->receivedmap is cleared
+> too early.
 >
-> On Thu, Sep 19, 2024 at 2:36=E2=80=AFAM Peter Maydell <peter.maydell@lina=
-ro.org> wrote:
-> >
-> > On Wed, 18 Sept 2024 at 22:31, Corey Minyard <corey@minyard.net> wrote:
-> > > Generally it's frowned upon to have a ton of extra stuff that's not
-> > > used.  I would think some is ok, like defining bits in registers that
-> > > aren't used yet, but I have no idea how all the enums below here
-> > > actually tie into anything.  I'm guessing these are just bitmasks int=
-o
-> > > registers, but really, it's a lot easier to read if you have somethin=
-g
-> > > like:
-> > >
-> > > /*
-> > >  * The I2C Master function enable. When disabled, the Master
-> > >  * configuration settings are not changed, but the Master function is
-> > >  * internally reset.
-> > >  */
-> > > #define FLEXCOMM_I2C_CFG_MSTEN (1 << 4)
-> >
-> > The FIELD macro already gives you that:
-> >   FIELD(FLEXCOMM_I2C_CFG, MSTEN, startbit, len);
-> > will define an R_FLEXCOMM_I2C_CFG_MSTEN_MASK (which is
-> > (1 << startbit) for the 'len =3D=3D 1' case).
-> >
-> > You can also set and read a 1 bit field the same as
-> > any other, with the FIELD_DP32/FIELD_EX32 macros, so
-> > you don't often need to directly use the MASK macro:
-> >   s->cfg =3D FIELD_DP32(s->cfg, CFG, MSTEN, 1);
-> > and
-> >   if (FIELD_EX32(s->cfg, CFG, MSTEN)) {
-> >      ...
-> >   }
-> >
-> > The FIELD() macros are a bit unwieldy sometimes but the
-> > advantage over ad-hoc #defines is that they're consistent
-> > for every field in every register.
-> >
-> > I agree that providing enums for the possible values for 1-bit
-> > fields is a bit superfluous.
-> >
+> After commit 5ef7e26bdb ("migration/multifd: solve zero page causing
+> multiple page faults"), multifd started using the rb->receivedmap
+> bitmap, which belongs to ram.c and is initialized and *freed* from the
+> ram SaveVMHandlers.
 >
-> I went ahead and removed those 1-bit enum values and added support to
-> filter register/fields when generating the code. Also converted the
-> enums to defines to make these a little bit more compact as I don't
-> think we have any advantage over the enums?
+> Multifd threads are live until migration_incoming_state_destroy(),
+> which is called after qemu_loadvm_state_cleanup(), leading to a crash
+> when accessing rb->receivedmap.
 >
-> So with the following invocation:
+> process_incoming_migration_co()        ...
+>   qemu_loadvm_state()                  multifd_nocomp_recv()
+>     qemu_loadvm_state_cleanup()          ramblock_recv_bitmap_set_offset(=
+)
+>       rb->receivedmap =3D NULL               set_bit_atomic(...,
+> rb->receivedmap)
+>   ...
+>   migration_incoming_state_destroy()
+>     multifd_recv_cleanup()
+>       multifd_recv_terminate_threads(NULL)
 >
->   run_target('svd-flexcomm-i2c', command: svd_gen_header +
->     [ '-i', rt595, '-o', '@SOURCE_ROOT@/include/hw/arm/svd/flexcomm_i2c.h=
-',
->       '-p', 'I2C0', '-t', 'FLEXCOMM_I2C',
->       '--fields', 'CFG TIMEOUT:TOMIN MSTCTL MSTDAT
-> STAT:MSTPENDING,MSTSTATE INT*:MSTPENDING* SLV*:'])
+> Move the loadvm cleanup into migration_incoming_state_destroy(), after
+> multifd_recv_cleanup() to ensure multifd thread have already exited
+> when rb->receivedmap is cleared.
 >
-> I am getting the below generated file. Note that the register info is
-> generated for all registers because this information is used to
-> initialize the reset values, mask writes appropriately in registers
-> and trace register access.
+> The have_listen_thread logic can now be removed because its purpose
+> was to delay cleanup until postcopy_ram_listen_thread() had finished.
 >
-> Please let me know if this looks good or if there are any other tweaks
-> I could make.
+> CC: qemu-stable@nongnu.org
+> Fixes: 5ef7e26bdb ("migration/multifd: solve zero page causing multiple
+> page faults")
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  migration/migration.c | 1 +
+>  migration/migration.h | 1 -
+>  migration/savevm.c    | 9 ---------
+>  3 files changed, 1 insertion(+), 10 deletions(-)
 >
-> /*
->  * Copyright 2016-2023 NXP SPDX-License-Identifier: BSD-3-Clause
->  *
->  * Automatically generated by svd-gen-header.py from MIMXRT595S_cm33.xml
->  */
-> #pragma once
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 3dea06d577..b190a574b1 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -378,6 +378,7 @@ void migration_incoming_state_destroy(void)
+>      struct MigrationIncomingState *mis =3D migration_incoming_get_curren=
+t();
 >
-> #include "hw/register.h"
+>      multifd_recv_cleanup();
+> +    qemu_loadvm_state_cleanup();
 >
-> /* I2C Bus Interface */
-> #define FLEXCOMM_I2C_REGS_NO (1024)
+>      if (mis->to_src_file) {
+>          /* Tell source that we are done */
+> diff --git a/migration/migration.h b/migration/migration.h
+> index 38aa1402d5..20b0a5b66e 100644
+> --- a/migration/migration.h
+> +++ b/migration/migration.h
+> @@ -101,7 +101,6 @@ struct MigrationIncomingState {
+>      /* Set this when we want the fault thread to quit */
+>      bool           fault_thread_quit;
 >
-> /* Configuration Register */
-> REG32(FLEXCOMM_I2C_CFG, 0x800);
-> /* Master Enable */
-> FIELD(FLEXCOMM_I2C_CFG, MSTEN, 0, 1);
-> /* Slave Enable */
-> FIELD(FLEXCOMM_I2C_CFG, SLVEN, 1, 1);
-> /* Monitor Enable */
-> FIELD(FLEXCOMM_I2C_CFG, MONEN, 2, 1);
-> /* I2C bus Time-out Enable */
-> FIELD(FLEXCOMM_I2C_CFG, TIMEOUTEN, 3, 1);
-> /* Monitor function Clock Stretching */
-> FIELD(FLEXCOMM_I2C_CFG, MONCLKSTR, 4, 1);
-> /* High Speed mode Capable enable */
-> FIELD(FLEXCOMM_I2C_CFG, HSCAPABLE, 5, 1);
+> -    bool           have_listen_thread;
+>      QemuThread     listen_thread;
 >
-> /* Status Register */
-> REG32(FLEXCOMM_I2C_STAT, 0x804);
-> /* Master Pending */
-> FIELD(FLEXCOMM_I2C_STAT, MSTPENDING, 0, 1);
-> /* Master State code */
-> FIELD(FLEXCOMM_I2C_STAT, MSTSTATE, 1, 3);
-> /* Idle. The Master function is available to be used for a new transactio=
-n. */
-> #define FLEXCOMM_I2C_STAT_MSTSTATE_IDLE 0
-> /*
->  * Receive ready. Received data is available (in Master Receiver mode). A=
-ddress
->  * plus Read was previously sent and Acknowledged by a slave.
->  */
-> #define FLEXCOMM_I2C_STAT_MSTSTATE_RECEIVE_READY 1
-> /*
->  * Transmit ready. Data can be transmitted (in Master Transmitter mode).
->  * Address plus Write was previously sent and Acknowledged by a slave.
->  */
-> #define FLEXCOMM_I2C_STAT_MSTSTATE_TRANSMIT_READY 2
-> /* NACK Address. Slave NACKed address. */
-> #define FLEXCOMM_I2C_STAT_MSTSTATE_NACK_ADDRESS 3
-> /* NACK Data. Slave NACKed transmitted data. */
-> #define FLEXCOMM_I2C_STAT_MSTSTATE_NACK_DATA 4
+>      /* For the kernel to send us notifications */
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index d0759694fd..532ee5e4b0 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -2076,10 +2076,8 @@ static void *postcopy_ram_listen_thread(void
+> *opaque)
+>       * got a bad migration state).
+>       */
+>      migration_incoming_state_destroy();
+> -    qemu_loadvm_state_cleanup();
 >
-> /* Interrupt Enable Set Register */
-> REG32(FLEXCOMM_I2C_INTENSET, 0x808);
-> /* Master Pending interrupt Enable */
-> FIELD(FLEXCOMM_I2C_INTENSET, MSTPENDINGEN, 0, 1);
+>      rcu_unregister_thread();
+> -    mis->have_listen_thread =3D false;
+>      postcopy_state_set(POSTCOPY_INCOMING_END);
 >
-> /* Interrupt Enable Clear Register */
-> REG32(FLEXCOMM_I2C_INTENCLR, 0x80C);
-> /* Master Pending interrupt clear */
-> FIELD(FLEXCOMM_I2C_INTENCLR, MSTPENDINGCLR, 0, 1);
+>      object_unref(OBJECT(migr));
+> @@ -2130,7 +2128,6 @@ static int
+> loadvm_postcopy_handle_listen(MigrationIncomingState *mis)
+>          return -1;
+>      }
 >
-> /* Time-out Register */
-> REG32(FLEXCOMM_I2C_TIMEOUT, 0x810);
-> /* Time-out time value, the bottom 4 bits */
-> FIELD(FLEXCOMM_I2C_TIMEOUT, TOMIN, 0, 4);
+> -    mis->have_listen_thread =3D true;
+>      postcopy_thread_create(mis, &mis->listen_thread, "mig/dst/listen",
+>                             postcopy_ram_listen_thread,
+> QEMU_THREAD_DETACHED);
+>      trace_loadvm_postcopy_handle_listen("return");
+> @@ -2978,11 +2975,6 @@ int qemu_loadvm_state(QEMUFile *f)
 >
-> /* Interrupt Status Register */
-> REG32(FLEXCOMM_I2C_INTSTAT, 0x818);
-> /* Master Pending */
-> FIELD(FLEXCOMM_I2C_INTSTAT, MSTPENDING, 0, 1);
+>      trace_qemu_loadvm_state_post_main(ret);
 >
-> /* Master Control Register */
-> REG32(FLEXCOMM_I2C_MSTCTL, 0x820);
-> /* Master Continue(write-only) */
-> FIELD(FLEXCOMM_I2C_MSTCTL, MSTCONTINUE, 0, 1);
-> /* Master Start control(write-only) */
-> FIELD(FLEXCOMM_I2C_MSTCTL, MSTSTART, 1, 1);
-> /* Master Stop control(write-only) */
-> FIELD(FLEXCOMM_I2C_MSTCTL, MSTSTOP, 2, 1);
-> /* Master DMA enable */
-> FIELD(FLEXCOMM_I2C_MSTCTL, MSTDMA, 3, 1);
+> -    if (mis->have_listen_thread) {
+> -        /* Listen thread still going, can't clean up yet */
+> -        return ret;
+> -    }
+> -
+>      if (ret =3D=3D 0) {
+>          ret =3D qemu_file_get_error(f);
+>      }
+> @@ -3022,7 +3014,6 @@ int qemu_loadvm_state(QEMUFile *f)
+>          }
+>      }
 >
-> /* Master Data Register */
-> REG32(FLEXCOMM_I2C_MSTDAT, 0x828);
-> /* Master function data register */
-> FIELD(FLEXCOMM_I2C_MSTDAT, DATA, 0, 8);
+> -    qemu_loadvm_state_cleanup();
+>      cpu_synchronize_all_post_init();
 >
-> /* Slave Control Register */
-> REG32(FLEXCOMM_I2C_SLVCTL, 0x840);
->
-> /* Slave Data Register */
-> REG32(FLEXCOMM_I2C_SLVDAT, 0x844);
->
-> /* Slave Address Register */
-> REG32(FLEXCOMM_I2C_SLVADR0, 0x848);
->
-> /* Slave Address Register */
-> REG32(FLEXCOMM_I2C_SLVADR1, 0x84C);
->
-> /* Slave Address Register */
-> REG32(FLEXCOMM_I2C_SLVADR2, 0x850);
->
-> /* Slave Address Register */
-> REG32(FLEXCOMM_I2C_SLVADR3, 0x854);
->
-> /* Slave Qualification for Address 0 Register */
-> REG32(FLEXCOMM_I2C_SLVQUAL0, 0x858);
+
+
+Hi Fabiano
+
+I have a question. By removing  qemu_loadvm_state_cleanup() here, the
+failure path that ends up with exit(EXIT_FAILURE)
+in process_incoming_migration_co() end up not calling the
+qemu_loadvm_state_cleanup(). I am not sure how this is important since
+there is exit, but the
+vfio, for example, will not call the VF reset.
+
+Another more general question is why destination Qemu has to terminate
+there if there was an error detected during live migration?
+Could just failing the migration and leave destination running be a more
+expected scenario?
+
+Thank you!
+
+     return ret;
+> --
+> 2.35.3
 >
 >
-> #define FLEXCOMM_I2C_REGISTER_ACCESS_INFO_ARRAY(_name) \
->     struct RegisterAccessInfo _name[FLEXCOMM_I2C_REGS_NO] =3D { \
->         [0 ... FLEXCOMM_I2C_REGS_NO - 1] =3D { \
->             .name =3D "", \
->             .addr =3D -1, \
->         }, \
->         [0x200] =3D { \
->             .name =3D "CFG", \
->             .addr =3D 0x800, \
->             .ro =3D 0xFFFFFFC0, \
->             .reset =3D 0x0, \
->         }, \
->         [0x201] =3D { \
->             .name =3D "STAT", \
->             .addr =3D 0x804, \
->             .ro =3D 0xFCF57FAF, \
->             .reset =3D 0x801, \
->         }, \
->         [0x202] =3D { \
->             .name =3D "INTENSET", \
->             .addr =3D 0x808, \
->             .ro =3D 0xFCF476AE, \
->             .reset =3D 0x0, \
->         }, \
->         [0x203] =3D { \
->             .name =3D "INTENCLR", \
->             .addr =3D 0x80C, \
->             .ro =3D 0xFCF476AE, \
->             .reset =3D 0x0, \
->         }, \
->         [0x204] =3D { \
->             .name =3D "TIMEOUT", \
->             .addr =3D 0x810, \
->             .ro =3D 0xFFFF0000, \
->             .reset =3D 0xFFFF, \
->         }, \
->         [0x205] =3D { \
->             .name =3D "CLKDIV", \
->             .addr =3D 0x814, \
->             .ro =3D 0xFFFF0000, \
->             .reset =3D 0x0, \
->         }, \
->         [0x206] =3D { \
->             .name =3D "INTSTAT", \
->             .addr =3D 0x818, \
->             .ro =3D 0xFFFFFFFF, \
->             .reset =3D 0x801, \
->         }, \
->         [0x208] =3D { \
->             .name =3D "MSTCTL", \
->             .addr =3D 0x820, \
->             .ro =3D 0xFFFFFFF0, \
->             .reset =3D 0x0, \
->         }, \
->         [0x209] =3D { \
->             .name =3D "MSTTIME", \
->             .addr =3D 0x824, \
->             .ro =3D 0xFFFFFF88, \
->             .reset =3D 0x77, \
->         }, \
->         [0x20A] =3D { \
->             .name =3D "MSTDAT", \
->             .addr =3D 0x828, \
->             .ro =3D 0xFFFFFF00, \
->             .reset =3D 0x0, \
->         }, \
->         [0x210] =3D { \
->             .name =3D "SLVCTL", \
->             .addr =3D 0x840, \
->             .ro =3D 0xFFFFFCF4, \
->             .reset =3D 0x0, \
->         }, \
->         [0x211] =3D { \
->             .name =3D "SLVDAT", \
->             .addr =3D 0x844, \
->             .ro =3D 0xFFFFFF00, \
->             .reset =3D 0x0, \
->         }, \
->         [0x212] =3D { \
->             .name =3D "SLVADR0", \
->             .addr =3D 0x848, \
->             .ro =3D 0xFFFF7F00, \
->             .reset =3D 0x1, \
->         }, \
->         [0x213] =3D { \
->             .name =3D "SLVADR1", \
->             .addr =3D 0x84C, \
->             .ro =3D 0xFFFF7F00, \
->             .reset =3D 0x1, \
->         }, \
->         [0x214] =3D { \
->             .name =3D "SLVADR2", \
->             .addr =3D 0x850, \
->             .ro =3D 0xFFFF7F00, \
->             .reset =3D 0x1, \
->         }, \
->         [0x215] =3D { \
->             .name =3D "SLVADR3", \
->             .addr =3D 0x854, \
->             .ro =3D 0xFFFF7F00, \
->             .reset =3D 0x1, \
->         }, \
->         [0x216] =3D { \
->             .name =3D "SLVQUAL0", \
->             .addr =3D 0x858, \
->             .ro =3D 0xFFFFFF00, \
->             .reset =3D 0x0, \
->         }, \
->         [0x220] =3D { \
->             .name =3D "MONRXDAT", \
->             .addr =3D 0x880, \
->             .ro =3D 0xFFFFFFFF, \
->             .reset =3D 0x0, \
->         }, \
->         [0x3FF] =3D { \
->             .name =3D "ID", \
->             .addr =3D 0xFFC, \
->             .ro =3D 0xFFFFFFFF, \
->             .reset =3D 0xE0301300, \
->         }, \
->     }
+>
+
+--=20
+Elena
+
+--0000000000009433a20622919606
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Fri, Sep 13, 2024 at 3:07=E2=80=AF=
+PM Fabiano Rosas &lt;<a href=3D"mailto:farosas@suse.de">farosas@suse.de</a>=
+&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Fix =
+a segmentation fault in multifd when rb-&gt;receivedmap is cleared<br>
+too early.<br>
+<br>
+After commit 5ef7e26bdb (&quot;migration/multifd: solve zero page causing<b=
+r>
+multiple page faults&quot;), multifd started using the rb-&gt;receivedmap<b=
+r>
+bitmap, which belongs to ram.c and is initialized and *freed* from the<br>
+ram SaveVMHandlers.<br>
+<br>
+Multifd threads are live until migration_incoming_state_destroy(),<br>
+which is called after qemu_loadvm_state_cleanup(), leading to a crash<br>
+when accessing rb-&gt;receivedmap.<br>
+<br>
+process_incoming_migration_co()=C2=A0 =C2=A0 =C2=A0 =C2=A0 ...<br>
+=C2=A0 qemu_loadvm_state()=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 multifd_nocomp_recv()<br>
+=C2=A0 =C2=A0 qemu_loadvm_state_cleanup()=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ ramblock_recv_bitmap_set_offset()<br>
+=C2=A0 =C2=A0 =C2=A0 rb-&gt;receivedmap =3D NULL=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0set_bit_atomic(..., rb-&gt;receivedmap)<br>
+=C2=A0 ...<br>
+=C2=A0 migration_incoming_state_destroy()<br>
+=C2=A0 =C2=A0 multifd_recv_cleanup()<br>
+=C2=A0 =C2=A0 =C2=A0 multifd_recv_terminate_threads(NULL)<br>
+<br>
+Move the loadvm cleanup into migration_incoming_state_destroy(), after<br>
+multifd_recv_cleanup() to ensure multifd thread have already exited<br>
+when rb-&gt;receivedmap is cleared.<br>
+<br>
+The have_listen_thread logic can now be removed because its purpose<br>
+was to delay cleanup until postcopy_ram_listen_thread() had finished.<br>
+<br>
+CC: <a href=3D"mailto:qemu-stable@nongnu.org" target=3D"_blank">qemu-stable=
+@nongnu.org</a><br>
+Fixes: 5ef7e26bdb (&quot;migration/multifd: solve zero page causing multipl=
+e page faults&quot;)<br>
+Signed-off-by: Fabiano Rosas &lt;<a href=3D"mailto:farosas@suse.de" target=
+=3D"_blank">farosas@suse.de</a>&gt;<br>
+---<br>
+=C2=A0migration/migration.c | 1 +<br>
+=C2=A0migration/migration.h | 1 -<br>
+=C2=A0migration/savevm.c=C2=A0 =C2=A0 | 9 ---------<br>
+=C2=A03 files changed, 1 insertion(+), 10 deletions(-)<br>
+<br>
+diff --git a/migration/migration.c b/migration/migration.c<br>
+index 3dea06d577..b190a574b1 100644<br>
+--- a/migration/migration.c<br>
++++ b/migration/migration.c<br>
+@@ -378,6 +378,7 @@ void migration_incoming_state_destroy(void)<br>
+=C2=A0 =C2=A0 =C2=A0struct MigrationIncomingState *mis =3D migration_incomi=
+ng_get_current();<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0multifd_recv_cleanup();<br>
++=C2=A0 =C2=A0 qemu_loadvm_state_cleanup();<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0if (mis-&gt;to_src_file) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Tell source that we are done */<br>
+diff --git a/migration/migration.h b/migration/migration.h<br>
+index 38aa1402d5..20b0a5b66e 100644<br>
+--- a/migration/migration.h<br>
++++ b/migration/migration.h<br>
+@@ -101,7 +101,6 @@ struct MigrationIncomingState {<br>
+=C2=A0 =C2=A0 =C2=A0/* Set this when we want the fault thread to quit */<br=
+>
+=C2=A0 =C2=A0 =C2=A0bool=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0fault_thre=
+ad_quit;<br>
+<br>
+-=C2=A0 =C2=A0 bool=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0have_listen_thr=
+ead;<br>
+=C2=A0 =C2=A0 =C2=A0QemuThread=C2=A0 =C2=A0 =C2=A0listen_thread;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0/* For the kernel to send us notifications */<br>
+diff --git a/migration/savevm.c b/migration/savevm.c<br>
+index d0759694fd..532ee5e4b0 100644<br>
+--- a/migration/savevm.c<br>
++++ b/migration/savevm.c<br>
+@@ -2076,10 +2076,8 @@ static void *postcopy_ram_listen_thread(void *opaque=
+)<br>
+=C2=A0 =C2=A0 =C2=A0 * got a bad migration state).<br>
+=C2=A0 =C2=A0 =C2=A0 */<br>
+=C2=A0 =C2=A0 =C2=A0migration_incoming_state_destroy();<br>
+-=C2=A0 =C2=A0 qemu_loadvm_state_cleanup();<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0rcu_unregister_thread();<br>
+-=C2=A0 =C2=A0 mis-&gt;have_listen_thread =3D false;<br>
+=C2=A0 =C2=A0 =C2=A0postcopy_state_set(POSTCOPY_INCOMING_END);<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0object_unref(OBJECT(migr));<br>
+@@ -2130,7 +2128,6 @@ static int loadvm_postcopy_handle_listen(MigrationInc=
+omingState *mis)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -1;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+-=C2=A0 =C2=A0 mis-&gt;have_listen_thread =3D true;<br>
+=C2=A0 =C2=A0 =C2=A0postcopy_thread_create(mis, &amp;mis-&gt;listen_thread,=
+ &quot;mig/dst/listen&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 postcopy_ram_listen_thread, QEMU_THREAD_DETACHED);=
+<br>
+=C2=A0 =C2=A0 =C2=A0trace_loadvm_postcopy_handle_listen(&quot;return&quot;)=
+;<br>
+@@ -2978,11 +2975,6 @@ int qemu_loadvm_state(QEMUFile *f)<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0trace_qemu_loadvm_state_post_main(ret);<br>
+<br>
+-=C2=A0 =C2=A0 if (mis-&gt;have_listen_thread) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Listen thread still going, can&#39;t clean =
+up yet */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 return ret;<br>
+-=C2=A0 =C2=A0 }<br>
+-<br>
+=C2=A0 =C2=A0 =C2=A0if (ret =3D=3D 0) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D qemu_file_get_error(f);<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+@@ -3022,7 +3014,6 @@ int qemu_loadvm_state(QEMUFile *f)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+-=C2=A0 =C2=A0 qemu_loadvm_state_cleanup();<br>
+=C2=A0 =C2=A0 =C2=A0cpu_synchronize_all_post_init();<br>=C2=A0</blockquote>=
+<div><br></div><div>Hi Fabiano</div><div><br></div><div>I have a question. =
+By removing=C2=A0 qemu_loadvm_state_cleanup() here, the failure path that e=
+nds up with exit(EXIT_FAILURE)</div><div>in process_incoming_migration_co()=
+ end up not calling the=C2=A0 qemu_loadvm_state_cleanup(). I am not sure ho=
+w this is important since there is exit, but the <br></div><div>vfio, for e=
+xample, will not call the VF reset.</div><div><br></div><div>Another more g=
+eneral question is why destination Qemu has to terminate there if there was=
+ an error detected during live migration?</div><div>Could just failing the =
+migration and leave destination running be a more expected scenario?</div><=
+div><br></div><div>Thank you!<br></div><div><br></div><blockquote class=3D"=
+gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
+4,204,204);padding-left:1ex">
+=C2=A0 =C2=A0 =C2=A0return ret;<br>
+-- <br>
+2.35.3<br>
+<br>
+<br>
+</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
+fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Elena</div></=
+div>
+
+--0000000000009433a20622919606--
 
