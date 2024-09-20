@@ -4,89 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4921ACF58CB
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 04:25:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E449CCF58CB
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 04:29:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srVCH-0001g4-4C; Fri, 20 Sep 2024 00:24:45 -0400
+	id 1srVG7-0008B7-Dk; Fri, 20 Sep 2024 00:28:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1srVCG-0001c9-1Z; Fri, 20 Sep 2024 00:24:44 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1srVG4-00089O-1B; Fri, 20 Sep 2024 00:28:41 -0400
+Received: from out30-131.freemail.mail.aliyun.com ([115.124.30.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1srVCD-0006vn-Gj; Fri, 20 Sep 2024 00:24:43 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1FD979079D;
- Fri, 20 Sep 2024 07:24:20 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9E40D1408BF;
- Fri, 20 Sep 2024 07:24:39 +0300 (MSK)
-Message-ID: <e1608676-1f85-4814-97d6-ced2e493f56c@tls.msk.ru>
-Date: Fri, 20 Sep 2024 07:24:38 +0300
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1srVFz-0007Vr-KQ; Fri, 20 Sep 2024 00:28:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1726806500; h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:From;
+ bh=8gbIu4gMkY2DovfYpcLSoO6UpjE62TzSCvz97mFhAac=;
+ b=RjJ3jnWN6OFUCkJkEg0FW8AA391NSNAYpl0ulzGTSjvDZ0Fw/d/LyYuNJPVuilpqpreq5YHkBJ8dnfk/gKe+KjmxiaMKoJHGPG+F31SypZM6YQvp7UBgKcGa9CnijNion6IGCvegyTNzGAfOx9XPBW70xPsLd6LepnNcNBU255k=
+Received: from 30.166.64.81(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WFJpG91_1726806497) by smtp.aliyun-inc.com;
+ Fri, 20 Sep 2024 12:28:18 +0800
+Content-Type: multipart/alternative;
+ boundary="------------0zcXMjZUsgBUHcKiOYt0JBFS"
+Message-ID: <f007a9e0-eb65-45c1-8ae2-e13fcffd199c@linux.alibaba.com>
+Date: Fri, 20 Sep 2024 12:27:11 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [ANNOUNCE] QEMU 9.0.3 Stable released
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-Content-Language: en-US, ru-RU
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------sGsHbgDqGfLGoyH0tva8EL1H"
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Subject: Re: [PATCH v4 02/12] tcg/riscv: Add basic support for vector
+To: 0x48 Swung <swung0x48@outlook.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "palmer@dabbelt.com" <palmer@dabbelt.com>,
+ "alistair.francis@wdc.com" <alistair.francis@wdc.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "liwei1518@gmail.com" <liwei1518@gmail.com>,
+ "bmeng.cn@gmail.com" <bmeng.cn@gmail.com>,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240911132630.461-1-zhiwei_liu@linux.alibaba.com>
+ <20240911132630.461-3-zhiwei_liu@linux.alibaba.com>
+ <0d591570-02c6-48c9-9e3f-ef47ac20ce7d@linaro.org>
+ <b87e7a7e-41fd-4b26-bde3-9adca9babb24@linux.alibaba.com>
+ <33101e38-080d-4444-a8c3-9d01827e243f@linaro.org>
+ <b88244bc-aaf7-42f9-a90f-e4027ac72ebf@linux.alibaba.com>
+ <20e20fde-830f-4314-a944-e7973bda5d8c@linaro.org>
+ <SY8P300MB02825DF878585DDC68EB088CE06C2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM>
+Content-Language: en-US
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <SY8P300MB02825DF878585DDC68EB088CE06C2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM>
+Received-SPF: pass client-ip=115.124.30.131;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-131.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001,
+ USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,331 +82,356 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------sGsHbgDqGfLGoyH0tva8EL1H
-Content-Type: multipart/mixed; boundary="------------42PPUhUzFBbuMFahvyJ0qZUu";
- protected-headers="v1"
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-Message-ID: <e1608676-1f85-4814-97d6-ced2e493f56c@tls.msk.ru>
-Subject: [ANNOUNCE] QEMU 9.0.3 Stable released
-
---------------42PPUhUzFBbuMFahvyJ0qZUu
-Content-Type: multipart/mixed; boundary="------------2L6nPBKGOTBj0DKFzpPcJ03Q"
-
---------------2L6nPBKGOTBj0DKFzpPcJ03Q
+This is a multi-part message in MIME format.
+--------------0zcXMjZUsgBUHcKiOYt0JBFS
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 8bit
 
-SGkgZXZlcnlvbmUsDQoNClRoZSBRRU1VIHY5LjAuMyBzdGFibGUgcmVsZWFzZSBpcyBub3cg
-YXZhaWxhYmxlLg0KDQpZb3UgY2FuIGdyYWIgdGhlIHRhcmJhbGwgZnJvbSBvdXIgZG93bmxv
-YWQgcGFnZSBoZXJlOg0KDQogICBodHRwczovL3d3dy5xZW11Lm9yZy9kb3dubG9hZC8jc291
-cmNlDQoNCiAgIGh0dHBzOi8vZG93bmxvYWQucWVtdS5vcmcvcWVtdS05LjAuMy50YXIueHoN
-CiAgIGh0dHBzOi8vZG93bmxvYWQucWVtdS5vcmcvcWVtdS05LjAuMy50YXIueHouc2lnIChz
-aWduYXR1cmUpDQoNCnY5LjAuMyBpcyBub3cgdGFnZ2VkIGluIHRoZSBvZmZpY2lhbCBxZW11
-LmdpdCByZXBvc2l0b3J5LCBhbmQgdGhlDQpzdGFibGUtOS4wIGJyYW5jaCBoYXMgYmVlbiB1
-cGRhdGVkIGFjY29yZGluZ2x5Og0KDQogICBodHRwczovL2dpdGxhYi5jb20vcWVtdS1wcm9q
-ZWN0L3FlbXUvLS9jb21taXRzL3N0YWJsZS05LjANCg0KVGhlcmUgYXJlIDgyIGNoYW5nZXMg
-c2luY2UgdGhlIHByZXZpb3VzIHY5LjAuMiByZWxlYXNlLg0KDQpUaGFuayB5b3UgZXZlcnlv
-bmUgd2hvIGhhcyBiZWVuIGludm9sdmVkIGFuZCBoZWxwZWQgd2l0aCB0aGUgc3RhYmxlIHNl
-cmllcyENCg0KL21qdA0KDQpDaGFuZ2Vsb2cgKHN0YWJsZS05LjAtaGFzaCBtYXN0ZXItaGFz
-aCBBdXRob3IgTmFtZTogQ29tbW1pdC1TdWJqZWN0KToNCg0KNmE1NGQ1Y2Y1NSBNaWNoYWVs
-IFRva2FyZXY6DQogIFVwZGF0ZSB2ZXJzaW9uIGZvciA5LjAuMyByZWxlYXNlDQo4Njg2MTE1
-OTU1IDhkNWFiNzQ2YjEgRGFuaWVsIFAuIEJlcnJhbmfDqToNCiAgZ2l0bGFiOiBmaXggbG9n
-aWMgZm9yIGNoYW5naW5nIGRvY2tlciB0YWcgb24gc3RhYmxlIGJyYW5jaGVzDQoyNDA5ZGZl
-ZmQ5IGFlMjNjZDAwMTcgR2VydCBXb2xsbnk6DQogIHVpL3NkbDI6IHNldCBzd2FwIGludGVy
-dmFsIGV4cGxpY2l0bHkgd2hlbiBPcGVuR0wgaXMgZW5hYmxlZA0KYjA1NmZhZTJjZCAxMTA2
-ODRjOWE2IEphbiBLbMO2dHprZToNCiAgaHcvaW50Yy9hcm1fZ2ljOiBmaXggc3B1cmlvdXMg
-bGV2ZWwgdHJpZ2dlcmVkIGludGVycnVwdHMNCjU4NTI4YmYyMGUgN2ZjNjYxMWNhZCBWb2xr
-ZXIgUsO8bWVsaW46DQogIGh3L2F1ZGlvL3ZpcnRpby1zb3VuZDogZml4IGhlYXAgYnVmZmVy
-IG92ZXJmbG93DQpkMmMzYzdkZGM5IDE5ZDIxMTEwNTkgQWxleCBCZW5uw6llOg0KICB0ZXN0
-cy9kb2NrZXI6IHVwZGF0ZSBkZWJpYW4gaTY4NiBhbmQgbWlwc2VsIGltYWdlcyB0byBib29r
-d29ybQ0KN2NhNDBkZDU3MyBkMDA2OGI3NDZhIEFsZXggQmVubsOpZToNCiAgdGVzdHMvZG9j
-a2VyOiByZW1vdmUgZGViaWFuLWFybWVsLWNyb3NzDQowOTM2ZGI3Y2U2IGQ2MTkyZjNmNzUg
-SGFvcmFuIFpoYW5nOg0KICBody9kaXNwbGF5L3Zob3N0LXVzZXItZ3B1LmM6IGZpeCB2aG9z
-dF91c2VyX2dwdV9jaHJfcmVhZCgpDQowYWRjMWZmOGM3IDU4NmFjMmM2N2QgRGFuaWVsIFAu
-IEJlcnJhbmfDqToNCiAgY3J5cHRvOiBhdm9pZCBsZWFrIG9mIGN0eCB3aGVuIGJhZCBjaXBo
-ZXIgbW9kZSBpcyBnaXZlbg0KNTIxMDU5MzIxNCBlNmMwOWVhNGY5IERhbmllbCBQLiBCZXJy
-YW5nw6k6DQogIGNyeXB0bzogY2hlY2sgZ251dGxzICYgZ2NyeXB0IHN1cHBvcnQgdGhlIHJl
-cXVlc3RlZCBwYmtkZiBoYXNoDQpkMmNjODU5M2NkIGM3MmNhYjVhZDkgVGlhZ28gUGFzcXVh
-bGluaToNCiAgY3J5cHRvOiBydW4gcWNyeXB0b19wYmtkZjJfY291bnRfaXRlcnMgaW4gYSBu
-ZXcgdGhyZWFkDQo2ODMxOGE3YTkwIGI4NGYwNmMyYmUgRGF2aWQgSGlsZGVuYnJhbmQ6DQog
-IHNvZnRtbXUvcGh5c21lbTogZml4IG1lbW9yeSBsZWFrIGluIGRpcnR5X21lbW9yeV9leHRl
-bmQoKQ0KMzgyZWU4ODhmYiAyMDNiZWI2ZjA0IEFybWFuIE5hYmlldjoNCiAgdGFyZ2V0L3Bw
-YzogRml4IG1pZ3JhdGlvbiBvZiBDUFVzIHdpdGggVExCX0VNQiBUTEIgdHlwZQ0KM2M0N2Ew
-MTYyYiAxMDhkOTk3NDJhIEFsZXggQmVubsOpZToNCiAgZ2l0bGFiOiBtaWdyYXRlIHRoZSBz
-MzkweCBjdXN0b20gbWFjaGluZSB0byAyMi4wNA0KMzkwMzA0OWQxMiBlYWQ1MDc4Y2YxIEhl
-bGdlIERlbGxlcjoNCiAgdGFyZ2V0L2hwcGE6IEZpeCBQU1cgVi1iaXQgcGFja2FnaW5nIGlu
-IGNwdV9ocHBhX2dldCBmb3IgaHBwYTY0DQo5OTQzY2ViNDYwIDdkMTQ0NzFhMTIgVm9sa2Vy
-IFLDvG1lbGluOg0KICBody9hdWRpby92aXJ0aW8tc25kOiBmaXggaW52YWxpZCBwYXJhbSBj
-aGVjaw0KMjY2NTQ0NDIxMSA5NDk2MmZmMDBkIE5pY2hvbGFzIFBpZ2dpbjoNCiAgUmV2ZXJ0
-ICJyZXBsYXk6IHN0b3AgdXMgaGFuZ2luZyBpbiBycl93YWl0X2lvX2V2ZW50Ig0KNzFjZThk
-YmM2YiBhNGFkNGE5ZDk4IFJpY2hhcmQgSGVuZGVyc29uOg0KICBsaW51eC11c2VyOiBIYW5k
-bGUgc2hvcnQgcmVhZHMgaW4gbW1hcF9oX2d0X2cNCjUxOGFkNjU5ZmUgNGMxMDc4NzBlOCBQ
-ZXRlciBNYXlkZWxsOg0KICBtaWdyYXRpb24vbXVsdGlmZDogRnJlZSBNdWx0aUZEUmVjdlBh
-cmFtczo6ZGF0YQ0KNTE2ZGE0MTU4MCBhOGU2M2ZmMjg5IENpbmR5IEx1Og0KICB2aXJ0aW8t
-cGNpOiBGaXggdGhlIHVzZSBvZiBhbiB1bmluaXRpYWxpemVkIGlycWZkDQo0MzU4ZmEzMzNl
-IDZhMjIxMjFjNGYgS2xhdXMgSmVuc2VuOg0KICBody9udm1lOiBmaXggbGVhayBvZiB1bmlu
-aXRpYWxpemVkIG1lbW9yeSBpbiBpb19tZ210X3JlY3YNCmY2ZjAzZGY0OWYgODdlMDEyZjI5
-ZiBQZXRlciBNYXlkZWxsOg0KICBjcnlwdG8vdGxzY3JlZHNwc2s6IEZyZWUgdXNlcm5hbWUg
-b24gZmluYWxpemUNCjhjMzQyMjBmNDAgMTJkMzYyOTRhMiBSaWNoYXJkIEhlbmRlcnNvbjoN
-CiAgdGFyZ2V0L3NwYXJjOiBSZXN0cmljdCBTVFFGIHRvIHNwYXJjdjkNCjFmMWNiYmQwZDcg
-M2FlZmVlM2VjMCBSaWNoYXJkIEhlbmRlcnNvbjoNCiAgbGludXgtdXNlcjogUHJlc2VydmUg
-TlVMTCBoaXQgaW4gdGFyZ2V0X21tYXAgc3Vicm91dGluZXMNCmRiMWY0NTg1NDIgZmU2OGNj
-MDkyMyBBbHlzc2EgUm9zczoNCiAgdGFyZ2V0L2hleGFnb246IGRvbid0IGxvb2sgZm9yIHN0
-YXRpYyBnbGliDQozZjJmMTU4Mjk5IDk0MGQ4MDJiMjQgQWxleGFuZGVyIEl2YW5vdjoNCiAg
-bW9kdWxlOiBQcmV2ZW50IGNyYXNoIGJ5IHJlc2V0dGluZyBsb2NhbF9lcnIgaW4gbW9kdWxl
-X2xvYWRfcW9tX2FsbCgpDQoyYjVjMDRkODJlIDRjMmMwNDc0NjkgUGV0ZXIgTWF5ZGVsbDoN
-CiAgdGFyZ2V0L2FybTogRml4IHVzYWdlIG9mIE1NVSBpbmRleGVzIHdoZW4gRUwzIGlzIEFB
-cmNoMzINCjZjMDg0ZGFhNjMgMTUwYzI0ZjM0ZSBQZXRlciBNYXlkZWxsOg0KICB0YXJnZXQv
-YXJtOiBVcGRhdGUgdHJhbnNsYXRpb24gcmVnaW1lIGNvbW1lbnQgZm9yIG5ldyBmZWF0dXJl
-cw0KNTNjMjc4NWVhZiA4ZTBjOWE5ZWZhIFJpY2hhcmQgSGVuZGVyc29uOg0KICB0YXJnZXQv
-YXJtOiBDbGVhciBoaWdoIFNWRSBlbGVtZW50cyBpbiBoYW5kbGVfdmVjX3NpbWRfd3NobGkN
-CmM0MmJmNzMzZjggNDE2ZjJiMTZjMCBSaWNoYXJkIEhlbmRlcnNvbjoNCiAgdGFyZ2V0L2kz
-ODY6IERvIG5vdCBhcHBseSBSRVggdG8gTU1YIG9wZXJhbmRzDQo0NTBmZTUzM2I3IDU0N2M0
-ZTUwOTIgU3RlZmFubyBHYXJ6YXJlbGxhOg0KICBibG9jay9ibGtpbzogdXNlIEZVQSBmbGFn
-IG9uIHdyaXRlIHplcm9lcyBvbmx5IGlmIHN1cHBvcnRlZA0KZTVmZTcwZDNhZiA0NDZlNWU4
-YjQ1IEppYW56aG91IFl1ZToNCiAgaHcvY29yZS9wdGltZXI6IGZpeCB0aW1lciB6ZXJvIHBl
-cmlvZCBjb25kaXRpb24gZm9yIGZyZXEgPiAxR0h6DQozNDE2MzQ5OTQ1IGZhNjJjYjk4OWEg
-RGF2aWQgV29vZGhvdXNlOg0KICBuZXQ6IEZpeCAnLW5ldCBuaWMsbW9kZWw9Zm9yIG5vbi1o
-ZWxwIGFyZ3VtZW50cw0KMzA2NmE1NDBiNSAzODc0ZjVmNzNjIEVyaWMgQmxha2U6DQogIG5i
-ZC9zZXJ2ZXI6IENWRS0yMDI0LTc0MDk6IEF2b2lkIHVzZS1hZnRlci1mcmVlIHdoZW4gY2xv
-c2luZyBzZXJ2ZXINCjczYTVhOTIyNTkgM2U3ZWY3MzhjOCBFcmljIEJsYWtlOg0KICBuYmQv
-c2VydmVyOiBDVkUtMjAyNC03NDA5OiBDbG9zZSBzdHJheSBjbGllbnRzIGF0IHNlcnZlci1z
-dG9wDQpmNGMxYWRiMjI4IGI5YjcyY2IzY2UgRXJpYyBCbGFrZToNCiAgbmJkL3NlcnZlcjog
-Q1ZFLTIwMjQtNzQwOTogRHJvcCBub24tbmVnb3RpYXRpbmcgY2xpZW50cw0KOWJkYjQwYjJk
-NCBjOGE3NmRiZDkwIEVyaWMgQmxha2U6DQogIG5iZC9zZXJ2ZXI6IENWRS0yMDI0LTc0MDk6
-IENhcCBkZWZhdWx0IG1heC1jb25uZWN0aW9ucyB0byAxMDANCjQyZjNhNjVlOTEgZmIxYzJh
-YWE5OCBFcmljIEJsYWtlOg0KICBuYmQvc2VydmVyOiBQbHVtYiBpbiBuZXcgYXJncyB0byBu
-YmRfY2xpZW50X2FkZCgpDQo2NjIyNjYzYTJjIGM4ZjYwYmZiNDMgQW1qYWQgQWxzaGFyYWZp
-Og0KICBpb3Rlc3RzOiBBZGQgYHZ2ZmF0YCB0ZXN0cw0KYTdjNGFiNzcwYSA1ZWVkM2RiMzM2
-IEFtamFkIEFsc2hhcmFmaToNCiAgdnZmYXQ6IEZpeCByZWFkaW5nIGZpbGVzIHdpdGggbm9u
-LWNvbnRpbnVvdXMgY2x1c3RlcnMNCmEzMmI4MTM5YjkgZjYwYTZmN2UxNyBBbWphZCBBbHNo
-YXJhZmk6DQogIHZ2ZmF0OiBGaXggd3JvbmcgY2hlY2tzIGZvciBjbHVzdGVyIG1hcHBpbmdz
-IGludmFyaWFudA0KMDczYzlmOTZhYyAyMWIyNWEwZTQ2IEFtamFkIEFsc2hhcmFmaToNCiAg
-dnZmYXQ6IEZpeCB1c2FnZSBvZiBgaW5mby5maWxlLm9mZnNldGANCjM4MjYxOGE2N2UgYjg4
-MWNmMDBjOSBBbWphZCBBbHNoYXJhZmk6DQogIHZ2ZmF0OiBGaXggYnVnIGluIHdyaXRpbmcg
-dG8gbWlkZGxlIG9mIGZpbGUNCjlkZjFjMGE1NTUgZWQ1YTE1OWMzZCBQaGlsaXBwZSBNYXRo
-aWV1LURhdWTDqToNCiAgaHcvc2Qvc2RoY2k6IFJlc2V0IEBkYXRhX2NvdW50IGluZGV4IG9u
-IGludmFsaWQgQURNQSB0cmFuc2ZlcnMNCmY5YjlhNjhiM2UgNjgyYTA1MjgwNSBSaWNoYXJk
-IEhlbmRlcnNvbjoNCiAgdGNnL3BwYzogU3luYyB0Y2dfb3V0X3Rlc3QgYW5kIGNvbnN0cmFp
-bnRzDQo3M2I0OTFiNzkyIGFjNjM3NTViMjAgUmljaGFyZCBIZW5kZXJzb246DQogIHRhcmdl
-dC9pMzg2OiBGaXggVlNJQiBkZWNvZGUNCmNlMTVkODQzZjEgNWIwYzI3NDJjOCBJbHlhIExl
-b3Noa2V2aWNoOg0KICBsaW51eC11c2VyL2VsZmxvYWQ6IEZpeCBwcl9waWQgdmFsdWVzIGlu
-IGNvcmUgZmlsZXMNCjk4NmUyNTNhZmQgMGJkNWI5Mjg0ZiBGYWJpYW5vIFJvc2FzOg0KICBt
-aWdyYXRpb24vbXVsdGlmZDogRml4IG11bHRpZmRfc2VuZF9zZXR1cCBjbGVhbnVwIHdoZW4g
-Y2hhbm5lbCANCmNyZWF0aW9uIGZhaWxzDQo4NjM2ZDVhMzJjIDY0Zjc1ZjU3ZjkgRGF2aWQg
-V29vZGhvdXNlOg0KICBuZXQ6IFJlaW5zdGF0ZSAnLW5ldCBuaWMsIG1vZGVsPWxwJyBvdXRw
-dXQgYXMgZG9jdW1lbnRlZCBpbiBtYW4gcGFnZQ0KNmNlNzc5MTQ5NyBmOTM3MzA5ZmJkIHRo
-b21hczoNCiAgdmlydGlvLW5ldDogRml4IG5ldHdvcmsgc3RhbGwgYXQgdGhlIGhvc3Qgc2lk
-ZSB3YWl0aW5nIGZvciBraWNrDQpmOGYxZWEyYTNjIGYxNTk1Y2ViOWEgQWtpaGlrbyBPZGFr
-aToNCiAgdmlydGlvLW5ldDogRW5zdXJlIHF1ZXVlIGluZGV4IGZpdHMgd2l0aCBSU1MNCmQ2
-MzljMGNiMDkgNTVmOWY0ZWUwMSBQZXRlciBNYXlkZWxsOg0KICB0YXJnZXQvYXJtOiBIYW5k
-bGUgZGVub3JtYWxzIGNvcnJlY3RseSBmb3IgRk1PUEEgKHdpZGVuaW5nKQ0KNjVmZWU5ZmYw
-NyA1YTU1OGJlOTNhIE1hcmNvIFBhbHVtYmk6DQogIGh3L2FybS9tcHMyLXR6LmM6IGZpeCBS
-WC9UWCBpbnRlcnJ1cHRzIG9yZGVyDQpjMTVlZGI0OThkIDlhNDViMDc2MTYgUGV0ZXIgTWF5
-ZGVsbDoNCiAgaHcvaTM4Ni9hbWRfaW9tbXU6IERvbid0IGxlYWsgbWVtb3J5IGluIGFtZHZp
-X3VwZGF0ZV9pb3RsYigpDQpkNGQ4MjU5YmU1IDQ4ZTViNWY5OTQgUGV0ZXIgTWF5ZGVsbDoN
-CiAgZG9jcy9zcGhpbngvZGVwZmlsZS5weTogSGFuZGxlIGVudi5kb2MycGF0aCgpIHJldHVy
-bmluZyBhIFBhdGggbm90IGEgc3RyDQplNWY3NmQ1MjkxIGY1NzNhYzA1OWUgUGV0ZXIgTWF5
-ZGVsbDoNCiAgdGFyZ2V0L2FybTogSWdub3JlIFNNQ1JfRUwyLkxFTiBhbmQgU1ZDUl9FTDIu
-TEVOIGlmIEVMMiBpcyBub3QgZW5hYmxlZA0KNTQwYTcwZDJjNCA3NjkxNmRmYTg5IFBldGVy
-IE1heWRlbGw6DQogIHRhcmdldC9hcm06IEF2b2lkIHNoaWZ0cyBieSAtMSBpbiB0c3ppbW1f
-c2hyKCkgYW5kIHRzemltbV9zaGwoKQ0KMTg4YjhhZDBlNCBlYTNmNWE5MGYwIFBldGVyIE1h
-eWRlbGw6DQogIHRhcmdldC9hcm06IEZpeCBVTU9QQS9VTU9QUyBvZiAxNi1iaXQgdmFsdWVz
-DQozYTIxZTdiYWQ2IDU2ZjFjMGRiOTIgUGV0ZXIgTWF5ZGVsbDoNCiAgdGFyZ2V0L2FybTog
-RG9uJ3QgYXNzZXJ0IGZvciAxMjgtYml0IHRpbGUgYWNjZXNzZXMgd2hlbiBTVkwgaXMgMTI4
-DQphMTAxOWQxMjVlIDA4OTJmZmZjMmEgUGV0ZXIgTWF5ZGVsbDoNCiAgaHcvbWlzYy9iY20y
-ODM1X3Byb3BlcnR5OiBGaXggaGFuZGxpbmcgb2YgRlJBTUVCVUZGRVJfU0VUX1BBTEVUVEUN
-CjA1NTVhNDIzNzcgNTQ2ZDU3NGIxMSBGcmVkZXJpayB2YW4gSMO2dmVsbDoNCiAgaHcvY2hh
-ci9iY20yODM1X2F1eDogRml4IGFzc2VydCB3aGVuIHJlY2VpdmUgRklGTyBmaWxscyB1cA0K
-ZTEwMTEyYWVhNiA4MzM0MDE5M2I5IFJpY2hhcmQgSGVuZGVyc29uOg0KICB0YXJnZXQvcng6
-IFVzZSB0YXJnZXRfdWxvbmcgZm9yIGFkZHJlc3MgaW4gTEkNCjkwOGNlZWJiYTggZDcyNDc5
-YjExNyBUaG9tYXMgSHV0aDoNCiAgaHcvdmlydGlvOiBGaXggdGhlIGRlLWluaXRpYWxpemF0
-aW9uIG9mIHZob3N0LXVzZXIgZGV2aWNlcw0KZDFlYWNiZWYzZSBlMGJmOTU0NDNlIFNlcmdl
-eSBEeWFzbGk6DQogIFJldmVydCAicWVtdS1jaGFyOiBkbyBub3Qgb3BlcmF0ZSBvbiBzb3Vy
-Y2VzIGZyb20gZmluYWxpemUgY2FsbGJhY2tzIg0KN2MxN2E3YTliZCA4NTE0OTU1NzFkIFBl
-dGVyIE1heWRlbGw6DQogIHV0aWwvYXN5bmMuYzogRm9yYmlkIG5lZ2F0aXZlIG1pbi9tYXgg
-aW4gDQphaW9fY29udGV4dF9zZXRfdGhyZWFkX3Bvb2xfcGFyYW1zKCkNCjUwNjc1Nzc3YTAg
-YTE4ZmZiY2Y4YiBTb25nIEdhbzoNCiAgdGFyZ2V0L2xvb25nYXJjaDogRml4IGhlbHBlcl9s
-ZGRpcigpIGEgQ0lEIElOVEVHRVJfT1ZFUkZMT1cgaXNzdWUNCjlkMDA3NmI0YTEgMGMyMDg2
-YmM3MyBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqToNCiAgaHcvaW50Yy9sb29uZ3Nvbl9pcGk6
-IEZpeCByZXNvdXJjZSBsZWFrDQo0MzdjNTU2MDM3IDI0NjVjODlmYjkgQmlibyBNYW86DQog
-IGh3L2ludGMvbG9vbmdzb25faXBpOiBBY2Nlc3MgbWVtb3J5IGluIGxpdHRsZSBlbmRpYW4N
-CjQyNTQ1N2JmNzUgOTAzY2M5ZTExNyBzb25nemltaW5nOg0KICBjaGFyZGV2L2NoYXItd2lu
-LXN0ZGlvLmM6IHJlc3RvcmUgb2xkIGNvbnNvbGUgbW9kZQ0KOGI5ZTU2ZTczMiAxM2JlOTI5
-YWZmIFBhb2xvIEJvbnppbmk6DQogIHRhcmdldC9pMzg2OiBkbyBub3QgY3Jhc2ggaWYgbWlj
-cm92bSBndWVzdCB1c2VzIFNHWCBDUFVJRCBsZWF2ZXMNCjQ4NTYzN2YyODIgYTNjOGQ3ZTM4
-NSBDbMOpbWVudCBNYXRoaWV1LS1EcmlmOg0KICBpbnRlbF9pb21tdTogZml4IEZSQ0QgY29u
-c3RydWN0aW9uIG1hY3JvDQo0MzkwMDk2MTdlIDliNjA4MzQ2NWYgTWFub3MgUGl0c2lkaWFu
-YWtpczoNCiAgdmlydGlvLXNuZDogY2hlY2sgZm9yIGludmFsaWQgcGFyYW0gc2hpZnQgb3Bl
-cmFuZHMNCjZlZjI5NWNiMWMgOThlNzdlM2RkOCBNYW5vcyBQaXRzaWRpYW5ha2lzOg0KICB2
-aXJ0aW8tc25kOiBhZGQgbWF4IHNpemUgYm91bmRzIGNoZWNrIGluIGlucHV0IGNiDQplOWU5
-MjQzM2M4IGEyMDdkNWY4N2QgWmhhbyBMaXU6DQogIGh3L2N4bC9jeGwtaG9zdDogRml4IHNl
-Z21lbnRhdGlvbiBmYXVsdCB3aGVuIGdldHRpbmcgY3hsLWZtdyBwcm9wZXJ0eQ0KNzY3NjQ5
-ODc1NCBjNTEwZmU3OGYxIFpoZXl1IE1hOg0KICBody9udm1lOiBmaXggbWVtb3J5IGxlYWsg
-aW4gbnZtZV9kc20NCjQ0MzA0ZmYxYTggMzBhMTY5MGYyNCBBa2loaWtvIE9kYWtpOg0KICBo
-dmY6IGFybTogRG8gbm90IGFkdmFuY2UgUEMgd2hlbiByYWlzaW5nIGFuIGV4Y2VwdGlvbg0K
-NDM5MjljODE4YyAyMDdkMzBiNWZkIFJpY2hhcmQgSGVuZGVyc29uOg0KICB0YXJnZXQvYXJt
-OiBVc2UgRlBTVF9GMTYgZm9yIFNNRSBGTU9QQSAod2lkZW5pbmcpDQowMTY5ODg5ZGNhIDMx
-ZDkzZmVkZjQgRGFuaXlhbCBLaGFuOg0KICB0YXJnZXQvYXJtOiBVc2UgZmxvYXRfc3RhdHVz
-IGNvcHkgaW4gc21lX2Ztb3BhX3MNCjUwZWNkNWIxZmQgMjU0ODliNTIxYiBQZXRlciBNYXlk
-ZWxsOg0KICB0YXJnZXQvYXJtOiBMREFQUiBzaG91bGQgaG9ub3VyIFNDVExSX0VMeC5uQUEN
-CmM2OGIzODBiNjIgNTY2OWQyNmVjNiBQZXRlciBNYXlkZWxsOg0KICB0YXJnZXQvYXJtOiBG
-aXggaGFuZGxpbmcgb2YgTERBUFIvU1RMUiB3aXRoIG5lZ2F0aXZlIG9mZnNldA0KYWIzMmJl
-YWE4ZSAzYmVjYzkzOTA4IE1hcmt1cyBBcm1icnVzdGVyOg0KICBxYXBpL3FvbTogRG9jdW1l
-bnQgZmVhdHVyZSB1bnN0YWJsZSBvZiBAeC12ZmlvLXVzZXItc2VydmVyDQozNGFjMDhhYTFj
-IDU3YThhODBkMWEgRmlvbmEgRWJuZXI6DQogIHNjc2k6IGZpeCByZWdyZXNzaW9uIGFuZCBo
-b25vciBib290aW5kZXggYWdhaW4gZm9yIGxlZ2FjeSBkcml2ZXMNCmZiMzU1MjE0NDggYTQ5
-NzUwMjNmYiBGaW9uYSBFYm5lcjoNCiAgaHcvc2NzaS9sc2k1M2M4OTVhOiBidW1wIGluc3Ry
-dWN0aW9uIGxpbWl0IGluIHNjcmlwdHMgcHJvY2Vzc2luZyB0byANCmZpeCByZWdyZXNzaW9u
-DQoNCg==
---------------2L6nPBKGOTBj0DKFzpPcJ03Q
-Content-Type: application/pgp-keys; name="OpenPGP_0x61AD3D98ECDF2C8E.asc"
-Content-Disposition: attachment; filename="OpenPGP_0x61AD3D98ECDF2C8E.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP PUBLIC KEY BLOCK-----
+On 2024/9/20 12:01, 0x48 Swung wrote:
+> Hey everyone! Late to the party. Life happens sometimes ;)
+> Just discovered this patch and this mail list, and I'd like to provide 
+> some background story here.
+> I originally provided my initial implementation in a downstream repo 
+> last year, namely 
+> https://github.com/plctlab/plct-qemu/tree/plct-riscv-backend-rvv .
+> I'm new to contributing to qemu and also take part in the open-source 
+> community upstreaming process as a whole, so I may make mistakes in my 
+> following claims, but I see some confusion here:
+> 1. The PLCT branch (which includes my original commits) is 
+> open-sourced using GPLv2, which follows QEMU's upstream repo. So 
+> according to the license, my modification should be EXPLICITLY shown 
+> in the patch, but I haven't seen any.
+I think I have carefully processed it.
+> 2. I do consent upstreaming my patch last year, in the form of a patch 
+> submitted with modifications from T-head, and on behalf of them. And 
+> it was agreed back in the days that I can be mentioned as one of the 
+> authors. But it turnsout that there's no "sign-off", "author", 
+> "co-author" line mentioning me.
 
-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
-YU3lDguR31r4RETwuvI=3D
-=3D/6h1
------END PGP PUBLIC KEY BLOCK-----
+The author of this patch is you. You can see it from the "From: 
+Swung0x48<swung0x48@outlook.com>" in the patch.
 
---------------2L6nPBKGOTBj0DKFzpPcJ03Q--
+In V4, TianCheng thinks he also have done some contribution to this 
+patch. Thus he adds himself as a co-author.
 
---------------42PPUhUzFBbuMFahvyJ0qZUu--
+> If I don't speak out in this situation, does it imply that this patch 
+> is purely LIU Zhiwei's work and have nothing to do with me?
+No. I just review this patch set and sent it to the mail list. None of 
+this patch set belong to me.
+>
+> I'd like LIU to separate my patch and his modification to two separate 
+> patches, and explicitly name where are those patches coming from, so 
+> that this patch can comply to GPLv2 license and can we clarify those 
+> misunderstandings.
 
---------------sGsHbgDqGfLGoyH0tva8EL1H
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+I think we have done it. Welcome to point out my mistake if you find some.
 
------BEGIN PGP SIGNATURE-----
+Thanks,
+Zhiwei
 
-iQIzBAEBCgAdFiEEZKoqtTHVaQM2a/75gqpKJDselHgFAmbs+QYACgkQgqpKJDse
-lHjJ4w/9HXKVRo7bZVvzYOQA+2yPIs4SwlLEQH9bocW1eblUgqkw3IWQKzpVo+wT
-mzbay0g1UimlMgJ6LPzEiZFGWr/JT37zmvLPr0B+1gpxTlQWofnMRRIBII/L//qn
-jnrLwO4gOm6d/a4NzT70vjgrDVyzVMxFDZ557zLaAPU5cBpAxFJBGLtujkMzjz9N
-vIX184SgtSBmTPd6fYfsmzEYCpCrHzSC+aYcVTJ333cD/Moig3bZCg7fLrJooM9z
-ctsyPXT0NthYM9SoI0vhpKRcLHNA8N2/5H91tcLxTWLCN7DMm3T+/ahnHFGOWxmR
-7JU+JVGz7dL3JJmB1rWBT0zV3B/NWodRaD7MvV1zpMtjqriZ4kV5isYaJv6VoWtN
-y8wqspIU4uXsP0eZ75RQQVIOuhdVeXXiuM2QMWzJ8TVjvacAsFkKY9K0HXwqk2G2
-QNV6Ud6koLhtwf9olq1LDPZ/UPUJLqHTENRyrejwSsW03+WGeEj208UPN+FAbnPj
-OCwPBnJ13rxb2xqhn8muHu6udr+wLxlHjoSg1QqWXs1WKE6Z1ZK8Rixz2bNB7mac
-9sdwnpmrR84qAlwP0yD9T04ZO3IKOVx2fr2gqIYgJO0qiYA7IPXGzYFWs+KHvGHt
-K1lQrcYjzP7lHUpUZ8e/1qtR95i97cGmpxXYw3peKN8BNN5ELHA=
-=Vm01
------END PGP SIGNATURE-----
+>
+> I don't want to take it personally , but I do smell something's wrong 
+> going on here...
+>
+> Best Regards,
+> Swung0x48 (aka. Huang Shiyuan)
+>
+> Get Outlook for Android <https://aka.ms/AAb9ysg>
+> ------------------------------------------------------------------------
+> *From:* Richard Henderson <richard.henderson@linaro.org>
+> *Sent:* Wednesday, September 18, 2024 10:27:16 PM
+> *To:* LIU Zhiwei <zhiwei_liu@linux.alibaba.com>; qemu-devel@nongnu.org 
+> <qemu-devel@nongnu.org>
+> *Cc:* qemu-riscv@nongnu.org <qemu-riscv@nongnu.org>; 
+> palmer@dabbelt.com <palmer@dabbelt.com>; alistair.francis@wdc.com 
+> <alistair.francis@wdc.com>; dbarboza@ventanamicro.com 
+> <dbarboza@ventanamicro.com>; liwei1518@gmail.com 
+> <liwei1518@gmail.com>; bmeng.cn@gmail.com <bmeng.cn@gmail.com>; 
+> Swung0x48 <swung0x48@outlook.com>; TANG Tiancheng 
+> <tangtiancheng.ttc@alibaba-inc.com>
+> *Subject:* Re: [PATCH v4 02/12] tcg/riscv: Add basic support for vector
+> On 9/18/24 12:43, LIU Zhiwei wrote:
+> >
+> > On 2024/9/18 18:11, Richard Henderson wrote:
+> >> On 9/18/24 07:17, LIU Zhiwei wrote:
+> >>>
+> >>> On 2024/9/12 2:41, Richard Henderson wrote:
+> >>>> On 9/11/24 06:26, LIU Zhiwei wrote:
+> >>>>> From: Swung0x48<swung0x48@outlook.com>
+> >>>>>
+> >>>>> The RISC-V vector instruction set utilizes the LMUL field to group
+> >>>>> multiple registers, enabling variable-length vector registers. This
+> >>>>> implementation uses only the first register number of each group 
+> while
+> >>>>> reserving the other register numbers within the group.
+> >>>>>
+> >>>>> In TCG, each VEC_IR can have 3 types (TCG_TYPE_V64/128/256), and the
+> >>>>> host runtime needs to adjust LMUL based on the type to use different
+> >>>>> register groups.
+> >>>>>
+> >>>>> This presents challenges for TCG's register allocation. 
+> Currently, we
+> >>>>> avoid modifying the register allocation part of TCG and only 
+> expose the
+> >>>>> minimum number of vector registers.
+> >>>>>
+> >>>>> For example, when the host vlen is 64 bits and type is 
+> TCG_TYPE_V256, with
+> >>>>> LMUL equal to 4, we use 4 vector registers as one register 
+> group. We can
+> >>>>> use a maximum of 8 register groups, but the V0 register number 
+> is reserved
+> >>>>> as a mask register, so we can effectively use at most 7 register 
+> groups.
+> >>>>> Moreover, when type is smaller than TCG_TYPE_V256, only 7 
+> registers are
+> >>>>> forced to be used. This is because TCG cannot yet dynamically 
+> constrain
+> >>>>> registers with type; likewise, when the host vlen is 128 bits and
+> >>>>> TCG_TYPE_V256, we can use at most 15 registers.
+> >>>>>
+> >>>>> There is not much pressure on vector register allocation in TCG 
+> now, so
+> >>>>> using 7 registers is feasible and will not have a major impact 
+> on code
+> >>>>> generation.
+> >>>>>
+> >>>>> This patch:
+> >>>>> 1. Reserves vector register 0 for use as a mask register.
+> >>>>> 2. When using register groups, reserves the additional registers 
+> within
+> >>>>>     each group.
+> >>>>>
+> >>>>> Signed-off-by: TANG Tiancheng<tangtiancheng.ttc@alibaba-inc.com>
+> >>>>> Co-authored-by: TANG Tiancheng<tangtiancheng.ttc@alibaba-inc.com>
+> >>>>
+> >>>> If there is a co-author, there should be another Signed-off-by.
+> >>>
+> >>> This patch has added a tag:
+> >>>
+> >>> Signed-off-by: TANG Tiancheng<tangtiancheng.ttc@alibaba-inc.com>
+> >>>
+> >>>
+> >>> Do you mean we should add the same tag twice?
+> >>
+> >> The from line is "Swung0x48 <swung0x48@outlook.com>".
+> >> If this is an alternate email for TANG Tiancheng,
+> >
+> > No, Swung0x48 is another author.
+>
+> Then we need a proper Signed-off-by line from that author.
+>
+>
+> r~
+--------------0zcXMjZUsgBUHcKiOYt0JBFS
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
---------------sGsHbgDqGfLGoyH0tva8EL1H--
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 2024/9/20 12:01, 0x48 Swung wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:SY8P300MB02825DF878585DDC68EB088CE06C2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <div dir="auto">Hey ever<span>yone! Late to the <span>party. Life
+            happens sometimes ;)</span></span></div>
+      <div dir="auto"><span><span>Just discovered this patch and this
+            mail list, and I'd like to provide some back<span>ground
+              story here.</span></span></span></div>
+      <div dir="auto">I originally provided my initial implementation in
+        a downstream repo last year, namely <a rel="noreferrer noopener"
+href="https://github.com/plctlab/plct-qemu/tree/plct-riscv-backend-rvv"
+style="font-family: sans-serif; font-size: medium; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; color: rgb(0, 120, 212); background-color: rgb(255, 255, 255);"
+          moz-do-not-send="true" class="moz-txt-link-freetext">https://github.com/plctlab/plct-qemu/tree/plct-riscv-backend-rvv</a> .</div>
+      <div dir="auto">I'm new to contributing to qemu and also take part
+        in the open-source community upstreaming process as a whole, so
+        I may make mistakes in my following claims, but I see some
+        confusion here:</div>
+      <div dir="auto">1. The PLCT branch (which includes my original
+        commits) is open-sourced using GPLv2, which follows QEMU's
+        upstream repo. So acc<span>ording to the license, my
+          modification should be EXPLICITLY shown in the patch, but I
+          haven't seen any.</span></div>
+    </blockquote>
+    I think I have carefully processed it.<br>
+    <blockquote type="cite"
+cite="mid:SY8P300MB02825DF878585DDC68EB088CE06C2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM">
+      <div dir="auto"><span>2. I do consent upstreaming my patch last
+          year, in the form of a patch submitted with modifications from
+          T-head, and on behalf of them. And it was agreed back in the
+          days that I can be mentioned as one of the authors. But it
+          turns<span> out that there's no "sign-off", "author",
+            "co-author" line mentioning me.</span></span></div>
+    </blockquote>
+    <p>The author of this patch is you. You can see it from the "<font
+        size="2"><span style="font-size:11pt;">From:
+          Swung0x48<a class="moz-txt-link-rfc2396E" href="mailto:swung0x48@outlook.com">&lt;swung0x48@outlook.com&gt;</a></span></font>" in the
+      patch.</p>
+    <p>In V4, TianCheng thinks he also have done some contribution to
+      this patch. Thus he adds himself as a co-author.<br>
+    </p>
+    <blockquote type="cite"
+cite="mid:SY8P300MB02825DF878585DDC68EB088CE06C2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM">
+      <div dir="auto"><span><span> If I don't speak out in this situ<span>ation,
+              does it imply that this patch is purely LIU Zhiwei's work
+              and have nothing to <span>do with me?</span></span></span></span></div>
+    </blockquote>
+    No. I just review this patch set and sent it to the mail list. None
+    of this patch set belong to me.<br>
+    <blockquote type="cite"
+cite="mid:SY8P300MB02825DF878585DDC68EB088CE06C2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM">
+      <div dir="auto"><span><span><span><span><br>
+              </span></span></span></span></div>
+      <div dir="auto"><span><span><span><span>I'd like LIU to separate
+                my patch and his modifi<span>cation to two separate
+                  patches, and explicitly name where are tho<span>se
+                    patches com<span>ing from, so that this patch can
+                      comply to GPLv2 license and can we clarify those
+                      misun<span>derstandings.</span></span></span></span></span></span></span></span></div>
+    </blockquote>
+    <p>I think we have done it. Welcome to point out my mistake if you
+      find some.</p>
+    <p>Thanks,<br>
+      Zhiwei<br>
+    </p>
+    <blockquote type="cite"
+cite="mid:SY8P300MB02825DF878585DDC68EB088CE06C2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM">
+      <div dir="auto"><span><span><span><span><br>
+              </span></span></span></span></div>
+      <div dir="auto"><span><span><span><span>I don't want to take it <span>personally
+                  , but I do smell something's wrong going on here...</span></span></span></span></span></div>
+      <div dir="auto"><span><span><span><span><span><br>
+                </span></span></span></span></span></div>
+      <div dir="auto"><span><span><span><span><span>Best Rega<span>rds,</span></span></span></span></span></span></div>
+      <div dir="auto"><span><span><span><span><span><span>Swung0x48
+                    (aka. Huang Shiyuan)</span></span></span></span></span></span></div>
+      <div><br>
+      </div>
+      <div id="ms-outlook-mobile-signature" dir="auto">Get <a
+          href="https://aka.ms/AAb9ysg" moz-do-not-send="true">
+          Outlook for Android</a></div>
+      <hr style="display:inline-block;width:98%" tabindex="-1">
+      <div id="divRplyFwdMsg" dir="ltr"><font style="font-size:11pt"
+          face="Calibri, sans-serif" color="#000000"><b>From:</b>
+          Richard Henderson <a class="moz-txt-link-rfc2396E" href="mailto:richard.henderson@linaro.org">&lt;richard.henderson@linaro.org&gt;</a><br>
+          <b>Sent:</b> Wednesday, September 18, 2024 10:27:16 PM<br>
+          <b>To:</b> LIU Zhiwei <a class="moz-txt-link-rfc2396E" href="mailto:zhiwei_liu@linux.alibaba.com">&lt;zhiwei_liu@linux.alibaba.com&gt;</a>;
+          <a class="moz-txt-link-abbreviated" href="mailto:qemu-devel@nongnu.org">qemu-devel@nongnu.org</a> <a class="moz-txt-link-rfc2396E" href="mailto:qemu-devel@nongnu.org">&lt;qemu-devel@nongnu.org&gt;</a><br>
+          <b>Cc:</b> <a class="moz-txt-link-abbreviated" href="mailto:qemu-riscv@nongnu.org">qemu-riscv@nongnu.org</a>
+          <a class="moz-txt-link-rfc2396E" href="mailto:qemu-riscv@nongnu.org">&lt;qemu-riscv@nongnu.org&gt;</a>; <a class="moz-txt-link-abbreviated" href="mailto:palmer@dabbelt.com">palmer@dabbelt.com</a>
+          <a class="moz-txt-link-rfc2396E" href="mailto:palmer@dabbelt.com">&lt;palmer@dabbelt.com&gt;</a>; <a class="moz-txt-link-abbreviated" href="mailto:alistair.francis@wdc.com">alistair.francis@wdc.com</a>
+          <a class="moz-txt-link-rfc2396E" href="mailto:alistair.francis@wdc.com">&lt;alistair.francis@wdc.com&gt;</a>; <a class="moz-txt-link-abbreviated" href="mailto:dbarboza@ventanamicro.com">dbarboza@ventanamicro.com</a>
+          <a class="moz-txt-link-rfc2396E" href="mailto:dbarboza@ventanamicro.com">&lt;dbarboza@ventanamicro.com&gt;</a>; <a class="moz-txt-link-abbreviated" href="mailto:liwei1518@gmail.com">liwei1518@gmail.com</a>
+          <a class="moz-txt-link-rfc2396E" href="mailto:liwei1518@gmail.com">&lt;liwei1518@gmail.com&gt;</a>; <a class="moz-txt-link-abbreviated" href="mailto:bmeng.cn@gmail.com">bmeng.cn@gmail.com</a>
+          <a class="moz-txt-link-rfc2396E" href="mailto:bmeng.cn@gmail.com">&lt;bmeng.cn@gmail.com&gt;</a>; Swung0x48
+          <a class="moz-txt-link-rfc2396E" href="mailto:swung0x48@outlook.com">&lt;swung0x48@outlook.com&gt;</a>; TANG Tiancheng
+          <a class="moz-txt-link-rfc2396E" href="mailto:tangtiancheng.ttc@alibaba-inc.com">&lt;tangtiancheng.ttc@alibaba-inc.com&gt;</a><br>
+          <b>Subject:</b> Re: [PATCH v4 02/12] tcg/riscv: Add basic
+          support for vector</font>
+        <div> </div>
+      </div>
+      <div class="BodyFragment"><font size="2"><span
+            style="font-size:11pt;">
+            <div class="PlainText">On 9/18/24 12:43, LIU Zhiwei wrote:<br>
+              &gt; <br>
+              &gt; On 2024/9/18 18:11, Richard Henderson wrote:<br>
+              &gt;&gt; On 9/18/24 07:17, LIU Zhiwei wrote:<br>
+              &gt;&gt;&gt;<br>
+              &gt;&gt;&gt; On 2024/9/12 2:41, Richard Henderson wrote:<br>
+              &gt;&gt;&gt;&gt; On 9/11/24 06:26, LIU Zhiwei wrote:<br>
+              &gt;&gt;&gt;&gt;&gt; From:
+              Swung0x48<a class="moz-txt-link-rfc2396E" href="mailto:swung0x48@outlook.com">&lt;swung0x48@outlook.com&gt;</a><br>
+              &gt;&gt;&gt;&gt;&gt;<br>
+              &gt;&gt;&gt;&gt;&gt; The RISC-V vector instruction set
+              utilizes the LMUL field to group<br>
+              &gt;&gt;&gt;&gt;&gt; multiple registers, enabling
+              variable-length vector registers. This<br>
+              &gt;&gt;&gt;&gt;&gt; implementation uses only the first
+              register number of each group while<br>
+              &gt;&gt;&gt;&gt;&gt; reserving the other register numbers
+              within the group.<br>
+              &gt;&gt;&gt;&gt;&gt;<br>
+              &gt;&gt;&gt;&gt;&gt; In TCG, each VEC_IR can have 3 types
+              (TCG_TYPE_V64/128/256), and the<br>
+              &gt;&gt;&gt;&gt;&gt; host runtime needs to adjust LMUL
+              based on the type to use different<br>
+              &gt;&gt;&gt;&gt;&gt; register groups.<br>
+              &gt;&gt;&gt;&gt;&gt;<br>
+              &gt;&gt;&gt;&gt;&gt; This presents challenges for TCG's
+              register allocation. Currently, we<br>
+              &gt;&gt;&gt;&gt;&gt; avoid modifying the register
+              allocation part of TCG and only expose the<br>
+              &gt;&gt;&gt;&gt;&gt; minimum number of vector registers.<br>
+              &gt;&gt;&gt;&gt;&gt;<br>
+              &gt;&gt;&gt;&gt;&gt; For example, when the host vlen is 64
+              bits and type is TCG_TYPE_V256, with<br>
+              &gt;&gt;&gt;&gt;&gt; LMUL equal to 4, we use 4 vector
+              registers as one register group. We can<br>
+              &gt;&gt;&gt;&gt;&gt; use a maximum of 8 register groups,
+              but the V0 register number is reserved<br>
+              &gt;&gt;&gt;&gt;&gt; as a mask register, so we can
+              effectively use at most 7 register groups.<br>
+              &gt;&gt;&gt;&gt;&gt; Moreover, when type is smaller than
+              TCG_TYPE_V256, only 7 registers are<br>
+              &gt;&gt;&gt;&gt;&gt; forced to be used. This is because
+              TCG cannot yet dynamically constrain<br>
+              &gt;&gt;&gt;&gt;&gt; registers with type; likewise, when
+              the host vlen is 128 bits and<br>
+              &gt;&gt;&gt;&gt;&gt; TCG_TYPE_V256, we can use at most 15
+              registers.<br>
+              &gt;&gt;&gt;&gt;&gt;<br>
+              &gt;&gt;&gt;&gt;&gt; There is not much pressure on vector
+              register allocation in TCG now, so<br>
+              &gt;&gt;&gt;&gt;&gt; using 7 registers is feasible and
+              will not have a major impact on code<br>
+              &gt;&gt;&gt;&gt;&gt; generation.<br>
+              &gt;&gt;&gt;&gt;&gt;<br>
+              &gt;&gt;&gt;&gt;&gt; This patch:<br>
+              &gt;&gt;&gt;&gt;&gt; 1. Reserves vector register 0 for use
+              as a mask register.<br>
+              &gt;&gt;&gt;&gt;&gt; 2. When using register groups,
+              reserves the additional registers within<br>
+              &gt;&gt;&gt;&gt;&gt;     each group.<br>
+              &gt;&gt;&gt;&gt;&gt;<br>
+              &gt;&gt;&gt;&gt;&gt; Signed-off-by: TANG
+              Tiancheng<a class="moz-txt-link-rfc2396E" href="mailto:tangtiancheng.ttc@alibaba-inc.com">&lt;tangtiancheng.ttc@alibaba-inc.com&gt;</a><br>
+              &gt;&gt;&gt;&gt;&gt; Co-authored-by: TANG
+              Tiancheng<a class="moz-txt-link-rfc2396E" href="mailto:tangtiancheng.ttc@alibaba-inc.com">&lt;tangtiancheng.ttc@alibaba-inc.com&gt;</a><br>
+              &gt;&gt;&gt;&gt;<br>
+              &gt;&gt;&gt;&gt; If there is a co-author, there should be
+              another Signed-off-by.<br>
+              &gt;&gt;&gt;<br>
+              &gt;&gt;&gt; This patch has added a tag:<br>
+              &gt;&gt;&gt;<br>
+              &gt;&gt;&gt; Signed-off-by: TANG
+              Tiancheng<a class="moz-txt-link-rfc2396E" href="mailto:tangtiancheng.ttc@alibaba-inc.com">&lt;tangtiancheng.ttc@alibaba-inc.com&gt;</a><br>
+              &gt;&gt;&gt;<br>
+              &gt;&gt;&gt;<br>
+              &gt;&gt;&gt; Do you mean we should add the same tag twice?<br>
+              &gt;&gt;<br>
+              &gt;&gt; The from line is "Swung0x48
+              <a class="moz-txt-link-rfc2396E" href="mailto:swung0x48@outlook.com">&lt;swung0x48@outlook.com&gt;</a>".<br>
+              &gt;&gt; If this is an alternate email for TANG Tiancheng,<br>
+              &gt; <br>
+              &gt; No, Swung0x48 is another author.<br>
+              <br>
+              Then we need a proper Signed-off-by line from that author.<br>
+              <br>
+              <br>
+              r~<br>
+            </div>
+          </span></font></div>
+    </blockquote>
+  </body>
+</html>
+
+--------------0zcXMjZUsgBUHcKiOYt0JBFS--
 
