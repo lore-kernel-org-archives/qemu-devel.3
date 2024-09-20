@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B4D4CF58C0
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 03:14:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6764CF58CB
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Sep 2024 04:21:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srU5f-0007ZI-3E; Thu, 19 Sep 2024 23:13:51 -0400
+	id 1srV7p-0000dE-Gw; Fri, 20 Sep 2024 00:20:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1srU5c-0007Y3-CC
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 23:13:48 -0400
-Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1srU5Y-0006rV-Lw
- for qemu-devel@nongnu.org; Thu, 19 Sep 2024 23:13:47 -0400
-Received: by mail-oa1-x29.google.com with SMTP id
- 586e51a60fabf-277f0540c3aso895868fac.3
- for <qemu-devel@nongnu.org>; Thu, 19 Sep 2024 20:13:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1726802022; x=1727406822;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BmUsHFn9JTPDrQbK+9MV1H6hgDJhBv/nUw3WUVpLAcI=;
- b=qWxZ79ZAUPZ80mPU1wef3Cus0+fpF9N1KfAM2tpQf+3/mM0lEATGqSdE1Z7FuxWCOZ
- fnq4xmhPDmmbOmhDUX4uNLDN9JaYvudkv9vvsbRxAUAdpF1v8k9lYHXnxBb0c9y5koSd
- RI/EqeBTNMU1S326VUV+NYssyUIfyjlZxj5AihHUi1UcMBHTjpVTQZTexg5Rt/cYPjKK
- 9oSaZasGfBmRWKQqPxzXgfvzswtY4GvfLrY6SivlIA5YkhH6at85GcTvusQ3rRpFZCG7
- oD2SW5qge0XcXRjr9iO9Kks7kzLK8+Wa2+Ebfe1Vj616JPSxFk+b4a1UbC5eS3QbbLXX
- H5rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726802022; x=1727406822;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BmUsHFn9JTPDrQbK+9MV1H6hgDJhBv/nUw3WUVpLAcI=;
- b=tAnR55XVP1Kf9v1LeBO2kPJ51wwDVVquZRX+5X7jy7T4lNxYFWt2lDdujTGQ4iDDPO
- ugRU2soTIOVGmBMUZ1M0io781+M+Twj3ZkX1KfFLX4yEHQeHkv+N94b2wCcICGXG+lzH
- 3kbBuFIq7d7QQT2P1QifZN8LJkPZmgkJKSqmHCWNSsu4a9/Z2b9i/9YNJsfrVOEk9Kc7
- 0DKxJkpRNJi8aTTwctD05RLji94kXVyskbWtS1cvHCEML212xX5yJK5L4uHBunRTD0lU
- AXnOfUMBy2kHeMXvgSkMR6DU3K4eayrO2UkQxeD4QnRpWqJ+2MLfLZpMFP0GY9O/1SlT
- fNdA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV15b/M1TS0dE+/FyW+jJ358wZKxE2N0u1A4AeDEcj0Efzj+BUbbBzuJ0/i398IhmgkGgNOPuhhHiHq@nongnu.org
-X-Gm-Message-State: AOJu0YyEaYS1caMNPMdMU1LntQmXl1Cc8+eu4izavMm0TZATY3MwJ7rv
- RUN1nRTscYvL6WJaOd9MV4lYJ+7OffCUpnxD1VfNAuBeVyePgWnhnLZkxubpN5epqDgU7/bL1e6
- 1AY7rfFZkMYSvl9h18B32lJy3rt7SxQJr2XKqPQ==
-X-Google-Smtp-Source: AGHT+IGQ4NZTZxx4lsapjmFZNQ0vVe8Kpww+dEnkwDWKEiGZ7AFhQzznnLNkA4w9Ivb5vfHyF0Eosks5I8YQowoK6Qw=
-X-Received: by 2002:a05:6870:82a9:b0:270:3139:59fe with SMTP id
- 586e51a60fabf-2803cf2bb48mr637456fac.12.1726802021697; Thu, 19 Sep 2024
- 20:13:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1srV7n-0000b0-Dg; Fri, 20 Sep 2024 00:20:07 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1srV7k-0006RM-S2; Fri, 20 Sep 2024 00:20:07 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 8C7B990795;
+ Fri, 20 Sep 2024 07:19:31 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1172D1408B9;
+ Fri, 20 Sep 2024 07:19:50 +0300 (MSK)
+Message-ID: <9bdb65d0-2f7f-4e3d-9234-8a6aab348abd@tls.msk.ru>
+Date: Fri, 20 Sep 2024 07:19:36 +0300
 MIME-Version: 1.0
-References: <cover.1726390098.git.yong.huang@smartx.com>
- <531750c8d7b6c09f877b5f335a60fab402c168be.1726390098.git.yong.huang@smartx.com>
- <87msk7z4l3.fsf@suse.de>
- <CAK9dgmb_rK5HJOGTG=KXKgH=e2e8JV8aqoOWUHBEyjnc-+kiqg@mail.gmail.com>
- <ZuxxOObKqS_G0Ela@x1n>
-In-Reply-To: <ZuxxOObKqS_G0Ela@x1n>
-From: Yong Huang <yong.huang@smartx.com>
-Date: Fri, 20 Sep 2024 11:13:25 +0800
-Message-ID: <CAK9dgmY=PV28Wg0wGubQGg-opnsEzoawxD8esao2Hkt+nR_aDg@mail.gmail.com>
-Subject: Re: [PATCH v1 1/7] migration: Introduce structs for background sync
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, David Hildenbrand <david@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000019e9330622846d64"
-Received-SPF: pass client-ip=2001:4860:4864:20::29;
- envelope-from=yong.huang@smartx.com; helo=mail-oa1-x29.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+User-Agent: Mozilla Thunderbird
+From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: [ANNOUNCE] QEMU 7.2.14 Stable released
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+Content-Language: en-US, ru-RU
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------2QzKX1nwXH8Goby9jELfgldR"
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,317 +102,267 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000019e9330622846d64
-Content-Type: text/plain; charset="UTF-8"
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------2QzKX1nwXH8Goby9jELfgldR
+Content-Type: multipart/mixed; boundary="------------JYf3GJIJZZqhaxNbWpWGb2II";
+ protected-headers="v1"
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+Message-ID: <9bdb65d0-2f7f-4e3d-9234-8a6aab348abd@tls.msk.ru>
+Subject: [ANNOUNCE] QEMU 7.2.14 Stable released
+
+--------------JYf3GJIJZZqhaxNbWpWGb2II
+Content-Type: multipart/mixed; boundary="------------3fND6wALOo0XjhzHJ3D0B2Vt"
+
+--------------3fND6wALOo0XjhzHJ3D0B2Vt
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+
+SGkgZXZlcnlvbmUsDQoNClRoZSBRRU1VIHY3LjIuMTQgc3RhYmxlIHJlbGVhc2UgaXMgbm93
+IGF2YWlsYWJsZS4NCg0KWW91IGNhbiBncmFiIHRoZSB0YXJiYWxsIGZyb20gb3VyIGRvd25s
+b2FkIHBhZ2UgaGVyZToNCg0KICAgaHR0cHM6Ly93d3cucWVtdS5vcmcvZG93bmxvYWQvI3Nv
+dXJjZQ0KDQogICBodHRwczovL2Rvd25sb2FkLnFlbXUub3JnL3FlbXUtNy4yLjE0LnRhci54
+eg0KICAgaHR0cHM6Ly9kb3dubG9hZC5xZW11Lm9yZy9xZW11LTcuMi4xNC50YXIueHouc2ln
+IChzaWduYXR1cmUpDQoNCnY3LjIuMTQgaXMgbm93IHRhZ2dlZCBpbiB0aGUgb2ZmaWNpYWwg
+cWVtdS5naXQgcmVwb3NpdG9yeSwgYW5kIHRoZQ0Kc3RhYmxlLTcuMiBicmFuY2ggaGFzIGJl
+ZW4gdXBkYXRlZCBhY2NvcmRpbmdseToNCg0KICAgaHR0cHM6Ly9naXRsYWIuY29tL3FlbXUt
+cHJvamVjdC9xZW11Ly0vY29tbWl0cy9zdGFibGUtNy4yDQoNClRoZXJlIGFyZSA0NyBjaGFu
+Z2VzIHNpbmNlIHRoZSBwcmV2aW91cyB2Ny4yLjEzIHJlbGVhc2UuDQoNClRoYW5rIHlvdSBl
+dmVyeW9uZSB3aG8gaGFzIGJlZW4gaW52b2x2ZWQgYW5kIGhlbHBlZCB3aXRoIHRoZSBzdGFi
+bGUgc2VyaWVzIQ0KDQovbWp0DQoNCkNoYW5nZWxvZyAoc3RhYmxlLTcuMi1oYXNoIG1hc3Rl
+ci1oYXNoIEF1dGhvciBOYW1lOiBDb21tbWl0LVN1YmplY3QpOg0KDQoyYzdmOWRjYTE0IE1p
+Y2hhZWwgVG9rYXJldjoNCiAgVXBkYXRlIHZlcnNpb24gZm9yIDcuMi4xNCByZWxlYXNlDQpj
+ZGMwNDhlODEwIDExMDY4NGM5YTYgSmFuIEtsw7Z0emtlOg0KICBody9pbnRjL2FybV9naWM6
+IGZpeCBzcHVyaW91cyBsZXZlbCB0cmlnZ2VyZWQgaW50ZXJydXB0cw0KMTBhYzAwZjdiMiBk
+MDA2OGI3NDZhIEFsZXggQmVubsOpZToNCiAgdGVzdHMvZG9ja2VyOiByZW1vdmUgZGViaWFu
+LWFybWVsLWNyb3NzDQpiNjBjNjFkYmI4IGQ2MTkyZjNmNzUgSGFvcmFuIFpoYW5nOg0KICBo
+dy9kaXNwbGF5L3Zob3N0LXVzZXItZ3B1LmM6IGZpeCB2aG9zdF91c2VyX2dwdV9jaHJfcmVh
+ZCgpDQpiODM2ZTlmOGMzIGU2YzA5ZWE0ZjkgRGFuaWVsIFAuIEJlcnJhbmfDqToNCiAgY3J5
+cHRvOiBjaGVjayBnbnV0bHMgJiBnY3J5cHQgc3VwcG9ydCB0aGUgcmVxdWVzdGVkIHBia2Rm
+IGhhc2gNCmQwYzk5ZWRmOTUgYzcyY2FiNWFkOSBUaWFnbyBQYXNxdWFsaW5pOg0KICBjcnlw
+dG86IHJ1biBxY3J5cHRvX3Bia2RmMl9jb3VudF9pdGVycyBpbiBhIG5ldyB0aHJlYWQNCjIx
+Y2UyZmI4ZjMgYjg0ZjA2YzJiZSBEYXZpZCBIaWxkZW5icmFuZDoNCiAgc29mdG1tdS9waHlz
+bWVtOiBmaXggbWVtb3J5IGxlYWsgaW4gZGlydHlfbWVtb3J5X2V4dGVuZCgpDQowMjc4Mzlm
+ZTAzIDEwOGQ5OTc0MmEgQWxleCBCZW5uw6llOg0KICBnaXRsYWI6IG1pZ3JhdGUgdGhlIHMz
+OTB4IGN1c3RvbSBtYWNoaW5lIHRvIDIyLjA0DQphNjM4MTdkMDM0IDg3ZTAxMmYyOWYgUGV0
+ZXIgTWF5ZGVsbDoNCiAgY3J5cHRvL3Rsc2NyZWRzcHNrOiBGcmVlIHVzZXJuYW1lIG9uIGZp
+bmFsaXplDQpmNGU4ZDk4MGZjIDk0MGQ4MDJiMjQgQWxleGFuZGVyIEl2YW5vdjoNCiAgbW9k
+dWxlOiBQcmV2ZW50IGNyYXNoIGJ5IHJlc2V0dGluZyBsb2NhbF9lcnIgaW4gbW9kdWxlX2xv
+YWRfcW9tX2FsbCgpDQo2ZWZmZDZhZDcyIDQxNmYyYjE2YzAgUmljaGFyZCBIZW5kZXJzb246
+DQogIHRhcmdldC9pMzg2OiBEbyBub3QgYXBwbHkgUkVYIHRvIE1NWCBvcGVyYW5kcw0KNGVj
+ZDI4MmFkYyA1NDdjNGU1MDkyIFN0ZWZhbm8gR2FyemFyZWxsYToNCiAgYmxvY2svYmxraW86
+IHVzZSBGVUEgZmxhZyBvbiB3cml0ZSB6ZXJvZXMgb25seSBpZiBzdXBwb3J0ZWQNCmIyZWJm
+Mzc1YzAgNDQ2ZTVlOGI0NSBKaWFuemhvdSBZdWU6DQogIGh3L2NvcmUvcHRpbWVyOiBmaXgg
+dGltZXIgemVybyBwZXJpb2QgY29uZGl0aW9uIGZvciBmcmVxID4gMUdIeg0KZmU1NDc4Mzdi
+ZiAzODc0ZjVmNzNjIEVyaWMgQmxha2U6DQogIG5iZC9zZXJ2ZXI6IENWRS0yMDI0LTc0MDk6
+IEF2b2lkIHVzZS1hZnRlci1mcmVlIHdoZW4gY2xvc2luZyBzZXJ2ZXINCjlkZjVjMTMzYzkg
+M2U3ZWY3MzhjOCBFcmljIEJsYWtlOg0KICBuYmQvc2VydmVyOiBDVkUtMjAyNC03NDA5OiBD
+bG9zZSBzdHJheSBjbGllbnRzIGF0IHNlcnZlci1zdG9wDQo3ZDMxNzc2ZDdmIGI5YjcyY2Iz
+Y2UgRXJpYyBCbGFrZToNCiAgbmJkL3NlcnZlcjogQ1ZFLTIwMjQtNzQwOTogRHJvcCBub24t
+bmVnb3RpYXRpbmcgY2xpZW50cw0KZGJmOTQ2YzI1MSBjOGE3NmRiZDkwIEVyaWMgQmxha2U6
+DQogIG5iZC9zZXJ2ZXI6IENWRS0yMDI0LTc0MDk6IENhcCBkZWZhdWx0IG1heC1jb25uZWN0
+aW9ucyB0byAxMDANCmNiNDhhNzA4OWIgZmIxYzJhYWE5OCBFcmljIEJsYWtlOg0KICBuYmQv
+c2VydmVyOiBQbHVtYiBpbiBuZXcgYXJncyB0byBuYmRfY2xpZW50X2FkZCgpDQpjMTc5NzU0
+YzNjIGM4ZjYwYmZiNDMgQW1qYWQgQWxzaGFyYWZpOg0KICBpb3Rlc3RzOiBBZGQgYHZ2ZmF0
+YCB0ZXN0cw0KM2YyN2ZkOTUzNiA1ZWVkM2RiMzM2IEFtamFkIEFsc2hhcmFmaToNCiAgdnZm
+YXQ6IEZpeCByZWFkaW5nIGZpbGVzIHdpdGggbm9uLWNvbnRpbnVvdXMgY2x1c3RlcnMNCmUy
+MTcxZjI0YmUgZjYwYTZmN2UxNyBBbWphZCBBbHNoYXJhZmk6DQogIHZ2ZmF0OiBGaXggd3Jv
+bmcgY2hlY2tzIGZvciBjbHVzdGVyIG1hcHBpbmdzIGludmFyaWFudA0KN2RjY2I0ZmQwYiAy
+MWIyNWEwZTQ2IEFtamFkIEFsc2hhcmFmaToNCiAgdnZmYXQ6IEZpeCB1c2FnZSBvZiBgaW5m
+by5maWxlLm9mZnNldGANCjE3OTYyZTFlYTggYjg4MWNmMDBjOSBBbWphZCBBbHNoYXJhZmk6
+DQogIHZ2ZmF0OiBGaXggYnVnIGluIHdyaXRpbmcgdG8gbWlkZGxlIG9mIGZpbGUNCmZjMmU3
+MDZmNGMgZWQ1YTE1OWMzZCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqToNCiAgaHcvc2Qvc2Ro
+Y2k6IFJlc2V0IEBkYXRhX2NvdW50IGluZGV4IG9uIGludmFsaWQgQURNQSB0cmFuc2ZlcnMN
+CjY4MWUzMzhlZTYgZjkzNzMwOWZiZCB0aG9tYXM6DQogIHZpcnRpby1uZXQ6IEZpeCBuZXR3
+b3JrIHN0YWxsIGF0IHRoZSBob3N0IHNpZGUgd2FpdGluZyBmb3Iga2ljaw0KZDI0NzZjZWQy
+ZSBmMTU5NWNlYjlhIEFraWhpa28gT2Rha2k6DQogIHZpcnRpby1uZXQ6IEVuc3VyZSBxdWV1
+ZSBpbmRleCBmaXRzIHdpdGggUlNTDQozMThhMGIwNTU2IDU1ZjlmNGVlMDEgUGV0ZXIgTWF5
+ZGVsbDoNCiAgdGFyZ2V0L2FybTogSGFuZGxlIGRlbm9ybWFscyBjb3JyZWN0bHkgZm9yIEZN
+T1BBICh3aWRlbmluZykNCjljZTA1ZmJjOTggNWE1NThiZTkzYSBNYXJjbyBQYWx1bWJpOg0K
+ICBody9hcm0vbXBzMi10ei5jOiBmaXggUlgvVFggaW50ZXJydXB0cyBvcmRlcg0KNDFlMGNh
+OGJjOCA5YTQ1YjA3NjE2IFBldGVyIE1heWRlbGw6DQogIGh3L2kzODYvYW1kX2lvbW11OiBE
+b24ndCBsZWFrIG1lbW9yeSBpbiBhbWR2aV91cGRhdGVfaW90bGIoKQ0KNzAxMjAyYTVhNCA0
+OGU1YjVmOTk0IFBldGVyIE1heWRlbGw6DQogIGRvY3Mvc3BoaW54L2RlcGZpbGUucHk6IEhh
+bmRsZSBlbnYuZG9jMnBhdGgoKSByZXR1cm5pbmcgYSBQYXRoIG5vdCBhIHN0cg0KNzNjMjU4
+YzllZCBmNTczYWMwNTllIFBldGVyIE1heWRlbGw6DQogIHRhcmdldC9hcm06IElnbm9yZSBT
+TUNSX0VMMi5MRU4gYW5kIFNWQ1JfRUwyLkxFTiBpZiBFTDIgaXMgbm90IGVuYWJsZWQNCjA4
+NjdjN2ZhMzMgNzY5MTZkZmE4OSBQZXRlciBNYXlkZWxsOg0KICB0YXJnZXQvYXJtOiBBdm9p
+ZCBzaGlmdHMgYnkgLTEgaW4gdHN6aW1tX3NocigpIGFuZCB0c3ppbW1fc2hsKCkNCjU5YjRj
+MjM3OGMgZWEzZjVhOTBmMCBQZXRlciBNYXlkZWxsOg0KICB0YXJnZXQvYXJtOiBGaXggVU1P
+UEEvVU1PUFMgb2YgMTYtYml0IHZhbHVlcw0KODdmZDg0ODcyOSA1NmYxYzBkYjkyIFBldGVy
+IE1heWRlbGw6DQogIHRhcmdldC9hcm06IERvbid0IGFzc2VydCBmb3IgMTI4LWJpdCB0aWxl
+IGFjY2Vzc2VzIHdoZW4gU1ZMIGlzIDEyOA0KNWQ2NDI3NTUxNyAwODkyZmZmYzJhIFBldGVy
+IE1heWRlbGw6DQogIGh3L21pc2MvYmNtMjgzNV9wcm9wZXJ0eTogRml4IGhhbmRsaW5nIG9m
+IEZSQU1FQlVGRkVSX1NFVF9QQUxFVFRFDQpkNzNmZGJiMWQ0IDU0NmQ1NzRiMTEgRnJlZGVy
+aWsgdmFuIEjDtnZlbGw6DQogIGh3L2NoYXIvYmNtMjgzNV9hdXg6IEZpeCBhc3NlcnQgd2hl
+biByZWNlaXZlIEZJRk8gZmlsbHMgdXANCmU5MjliOTE4NmUgODMzNDAxOTNiOSBSaWNoYXJk
+IEhlbmRlcnNvbjoNCiAgdGFyZ2V0L3J4OiBVc2UgdGFyZ2V0X3Vsb25nIGZvciBhZGRyZXNz
+IGluIExJDQo0YWEzNTk4MTcwIGQ3MjQ3OWIxMTcgVGhvbWFzIEh1dGg6DQogIGh3L3ZpcnRp
+bzogRml4IHRoZSBkZS1pbml0aWFsaXphdGlvbiBvZiB2aG9zdC11c2VyIGRldmljZXMNCmYw
+NDNmN2Q4YmUgODUxNDk1NTcxZCBQZXRlciBNYXlkZWxsOg0KICB1dGlsL2FzeW5jLmM6IEZv
+cmJpZCBuZWdhdGl2ZSBtaW4vbWF4IGluIA0KYWlvX2NvbnRleHRfc2V0X3RocmVhZF9wb29s
+X3BhcmFtcygpDQpjYTgzNGJjYzRkIDI0NjVjODlmYjkgQmlibyBNYW86DQogIGh3L2ludGMv
+bG9vbmdzb25faXBpOiBBY2Nlc3MgbWVtb3J5IGluIGxpdHRsZSBlbmRpYW4NCjRkMmUyOGJm
+MmQgOTAzY2M5ZTExNyBzb25nemltaW5nOg0KICBjaGFyZGV2L2NoYXItd2luLXN0ZGlvLmM6
+IHJlc3RvcmUgb2xkIGNvbnNvbGUgbW9kZQ0KYWRmZTk1ZTFjYSAxM2JlOTI5YWZmIFBhb2xv
+IEJvbnppbmk6DQogIHRhcmdldC9pMzg2OiBkbyBub3QgY3Jhc2ggaWYgbWljcm92bSBndWVz
+dCB1c2VzIFNHWCBDUFVJRCBsZWF2ZXMNCjcxODJmNGRmMjIgYTNjOGQ3ZTM4NSBDbMOpbWVu
+dCBNYXRoaWV1LS1EcmlmOg0KICBpbnRlbF9pb21tdTogZml4IEZSQ0QgY29uc3RydWN0aW9u
+IG1hY3JvDQo4YmZlMGY4ZGRhIGEyMDdkNWY4N2QgWmhhbyBMaXU6DQogIGh3L2N4bC9jeGwt
+aG9zdDogRml4IHNlZ21lbnRhdGlvbiBmYXVsdCB3aGVuIGdldHRpbmcgY3hsLWZtdyBwcm9w
+ZXJ0eQ0KODI3NDk3ZGNmZSBjNTEwZmU3OGYxIFpoZXl1IE1hOg0KICBody9udm1lOiBmaXgg
+bWVtb3J5IGxlYWsgaW4gbnZtZV9kc20NCmQ1MzczZDdiZGIgMjA3ZDMwYjVmZCBSaWNoYXJk
+IEhlbmRlcnNvbjoNCiAgdGFyZ2V0L2FybTogVXNlIEZQU1RfRjE2IGZvciBTTUUgRk1PUEEg
+KHdpZGVuaW5nKQ0KYmU3MzU1MzNkNSAzMWQ5M2ZlZGY0IERhbml5YWwgS2hhbjoNCiAgdGFy
+Z2V0L2FybTogVXNlIGZsb2F0X3N0YXR1cyBjb3B5IGluIHNtZV9mbW9wYV9zDQpmYWEzYjZk
+Njc4IDNiZWNjOTM5MDggTWFya3VzIEFybWJydXN0ZXI6DQogIHFhcGkvcW9tOiBEb2N1bWVu
+dCBmZWF0dXJlIHVuc3RhYmxlIG9mIEB4LXZmaW8tdXNlci1zZXJ2ZXINCg0K
+--------------3fND6wALOo0XjhzHJ3D0B2Vt
+Content-Type: application/pgp-keys; name="OpenPGP_0x61AD3D98ECDF2C8E.asc"
+Content-Disposition: attachment; filename="OpenPGP_0x61AD3D98ECDF2C8E.asc"
+Content-Description: OpenPGP public key
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 20, 2024 at 2:45=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
+-----BEGIN PGP PUBLIC KEY BLOCK-----
 
-> On Tue, Sep 17, 2024 at 02:48:03PM +0800, Yong Huang wrote:
-> > On Tue, Sep 17, 2024 at 5:11=E2=80=AFAM Fabiano Rosas <farosas@suse.de>=
- wrote:
-> >
-> > > Hyman Huang <yong.huang@smartx.com> writes:
-> > >
-> > > > shadow_bmap, iter_bmap and iter_dirty_pages are introduced
-> > > > to satisfy the need for background sync.
-> > > >
-> > > > Meanwhile, introduce enumeration of sync method.
-> > > >
-> > > > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
-> > > > ---
-> > > >  include/exec/ramblock.h | 45
-> +++++++++++++++++++++++++++++++++++++++++
-> > > >  migration/ram.c         |  6 ++++++
-> > > >  2 files changed, 51 insertions(+)
-> > > >
-> > > > diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
-> > > > index 0babd105c0..0e327bc0ae 100644
-> > > > --- a/include/exec/ramblock.h
-> > > > +++ b/include/exec/ramblock.h
-> > > > @@ -24,6 +24,30 @@
-> > > >  #include "qemu/rcu.h"
-> > > >  #include "exec/ramlist.h"
-> > > >
-> > > > +/* Possible bits for cpu_physical_memory_sync_dirty_bitmap */
-> > > > +
-> > > > +/*
-> > > > + * The old-fashioned sync, which is, in turn, used for CPU
-> > > > + * throttle and memory transfer.
-> > >
-> >
-> > Using the traditional sync method, the page sending logic iterates
-> > the "bmap" to transfer dirty pages while the CPU throttle logic
-> > counts the amount of new dirty pages and detects convergence.
-> > There are two uses for "bmap".
-> >
-> > Using the modern sync method, "bmap" is used for transfer
-> > dirty pages and "iter_bmap" is used to track new dirty pages.
-> >
-> >
-> > > I'm not sure I follow what "in turn" is supposed to mean in this
-> > > sentence. Could you clarify?
-> > >
-> >
-> > Here I want to express "in sequence".  But failed obviously. :(
-> >
-> >
-> > >
-> > > > + */
-> > > > +#define RAMBLOCK_SYN_LEGACY_ITER   (1U << 0)
-> > >
-> > > So ITER is as opposed to background? I'm a bit confused with the term=
-s.
-> > >
-> >
-> > Yes.
-> >
-> >
-> > >
-> > > > +
-> > > > +/*
-> > > > + * The modern sync, which is, in turn, used for CPU throttle
-> > > > + * and memory transfer.
-> > > > + */
-> > > > +#define RAMBLOCK_SYN_MODERN_ITER   (1U << 1)
-> > > > +
-> > > > +/* The modern sync, which is used for CPU throttle only */
-> > > > +#define RAMBLOCK_SYN_MODERN_BACKGROUND    (1U << 2)
-> > >
-> > > What's the plan for the "legacy" part? To be removed soon? Do we want
-> to
-> > > remove it now? Maybe better to not use the modern/legacy terms unless
-> we
-> > > want to give the impression that the legacy one is discontinued.
-> > >
-> >
-> > The bitmap they utilized to track the dirty page information was the
-> > distinction between the "legacy iteration" and the "modern iteration."
-> > The "iter_bmap" field is used by the "modern iteration" while the "bmap=
-"
-> > field is used by the "legacy iteration."
-> >
-> > Since the refinement is now transparent and there is no API available t=
-o
-> > change the sync method, I actually want to remove it right now in order
-> > to simplify the logic. I'll include it in the next version.
->
-> How confident do we think the new way is better than the old?
->
-> If it'll be 100% / always better, I agree we can consider removing the ol=
-d.
-> But is it always better?  At least it consumes much more resources..
->
-> Otherwise, we can still leave that logic as-is but use a migration proper=
-ty
-> to turn it on only on new machines I think.
->
-> Besides, could you explain why the solution needs to be this complex?  My
-> previous question was that we sync dirty too less, while auto converge
-> relies on dirty information, so that means auto converge can be adjusted
-> too unfrequently.
->
-> However I wonder whether that can be achieved in a simpler manner by
-> e.g. invoke migration_bitmap_sync_precopy() more frequently during
-> migration, for example, in ram_save_iterate() - not every time but the
-> iterate() is invoked much more frequent, and maybe we can do sync from ti=
-me
-> to time.
->
-> I also don't see why we need a separate thread, plus two new bitmaps, to
->
+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
+YU3lDguR31r4RETwuvI=3D
+=3D/6h1
+-----END PGP PUBLIC KEY BLOCK-----
 
-You mean we could do the background sync in the migration thread or
-in the main thread( eg, using a timer) ?
+--------------3fND6wALOo0XjhzHJ3D0B2Vt--
 
+--------------JYf3GJIJZZqhaxNbWpWGb2II--
 
-> achieve this..  I didn't read in-depth yet, but I thought dirty sync
-> requires bql anyway, then I don't yet understand why the two bitmaps are
-> required.  If the bitmaps are introduced in the 1st patch, IMO it'll be
-> great to explain clearly on why they're needed here.
->
-> Thanks,
->
-> --
-> Peter Xu
->
->
+--------------2QzKX1nwXH8Goby9jELfgldR
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
---=20
-Best regards
+-----BEGIN PGP SIGNATURE-----
 
---00000000000019e9330622846d64
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+iQIzBAEBCgAdFiEEZKoqtTHVaQM2a/75gqpKJDselHgFAmbs99kACgkQgqpKJDse
+lHg77hAAt2V8dIk9ipZgXer+mBuL8DmiH9T37qpDXYDV9VeKU8VFDr1mKSE+Oi1W
+3f2P1oL+iKPBFGrvxuYn1Jms53/EPYoqGyRyOGe2VaR26NIOQEhzF1kJBYgVFJO0
+yrsabGrwOZBk1X0aLhD06w2vVdU31ix1BfyPYezQ+0x+OJY4JW1eP8vZRfj0F3Aa
+3K8OwBZAyrHh0d/kiWEP7OfjEHiiYsgt1d02Z9ziFodN9KQg1GPxsQRUL17QOzUl
+7pV0N5sm0KUpiyq8WBJr8zvUCCaFsPFU3sQhYq2uhMWFSOxdQT/64b/DBmEjsinP
+G0GO7aXzNkNsvF/VLPhz15uTmMzlUAISsGjJqeGTE0lZGRgdapS2RLBkKg272RQ1
+bbQHIhGax3ionXXF1bkN7a7Zh2B88nDu3Qn6RY0MZlc1QJ2s4/iYunqJMe/OYJh3
+Z0jbiitHC80Y8fYpPEoLHD51Q/NH1og8DTjNRLweRJVL5g5JiAOrE7re6b2612yl
+EXOhHx2N3BZPluDaRulrcEW3KmcV4kH3CSMdr5YvFMljxnjWaFovygLRdWAfEI3S
+P/Ziw3wconGCJLI91WrEpHLVrAfTBtNcD6IDoEKzL5WHo33dhlwcgUd1MG66mMpj
+vib45bGA8DfPRAJ/ZOb7UgfNxCkSuRC6Ea4I4FyqC2uNe3vtL8g=
+=gm+2
+-----END PGP SIGNATURE-----
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
-t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
-ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Sep 20, 20=
-24 at 2:45=E2=80=AFAM Peter Xu &lt;<a href=3D"mailto:peterx@redhat.com">pet=
-erx@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:sol=
-id;border-left-color:rgb(204,204,204);padding-left:1ex">On Tue, Sep 17, 202=
-4 at 02:48:03PM +0800, Yong Huang wrote:<br>
-&gt; On Tue, Sep 17, 2024 at 5:11=E2=80=AFAM Fabiano Rosas &lt;<a href=3D"m=
-ailto:farosas@suse.de" target=3D"_blank">farosas@suse.de</a>&gt; wrote:<br>
-&gt; <br>
-&gt; &gt; Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" target=
-=3D"_blank">yong.huang@smartx.com</a>&gt; writes:<br>
-&gt; &gt;<br>
-&gt; &gt; &gt; shadow_bmap, iter_bmap and iter_dirty_pages are introduced<b=
-r>
-&gt; &gt; &gt; to satisfy the need for background sync.<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; Meanwhile, introduce enumeration of sync method.<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yong.huang@=
-smartx.com" target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
-&gt; &gt; &gt; ---<br>
-&gt; &gt; &gt;=C2=A0 include/exec/ramblock.h | 45 +++++++++++++++++++++++++=
-++++++++++++++++<br>
-&gt; &gt; &gt;=C2=A0 migration/ram.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=
-=A0 6 ++++++<br>
-&gt; &gt; &gt;=C2=A0 2 files changed, 51 insertions(+)<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; diff --git a/include/exec/ramblock.h b/include/exec/ramblock=
-.h<br>
-&gt; &gt; &gt; index 0babd105c0..0e327bc0ae 100644<br>
-&gt; &gt; &gt; --- a/include/exec/ramblock.h<br>
-&gt; &gt; &gt; +++ b/include/exec/ramblock.h<br>
-&gt; &gt; &gt; @@ -24,6 +24,30 @@<br>
-&gt; &gt; &gt;=C2=A0 #include &quot;qemu/rcu.h&quot;<br>
-&gt; &gt; &gt;=C2=A0 #include &quot;exec/ramlist.h&quot;<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; +/* Possible bits for cpu_physical_memory_sync_dirty_bitmap =
-*/<br>
-&gt; &gt; &gt; +<br>
-&gt; &gt; &gt; +/*<br>
-&gt; &gt; &gt; + * The old-fashioned sync, which is, in turn, used for CPU<=
-br>
-&gt; &gt; &gt; + * throttle and memory transfer.<br>
-&gt; &gt;<br>
-&gt; <br>
-&gt; Using the traditional sync method, the page sending logic iterates<br>
-&gt; the &quot;bmap&quot; to transfer dirty pages while the CPU throttle lo=
-gic<br>
-&gt; counts the amount of new dirty pages and detects convergence.<br>
-&gt; There are two uses for &quot;bmap&quot;.<br>
-&gt; <br>
-&gt; Using the modern sync method, &quot;bmap&quot; is used for transfer<br=
->
-&gt; dirty pages and &quot;iter_bmap&quot; is used to track new dirty pages=
-.<br>
-&gt; <br>
-&gt; <br>
-&gt; &gt; I&#39;m not sure I follow what &quot;in turn&quot; is supposed to=
- mean in this<br>
-&gt; &gt; sentence. Could you clarify?<br>
-&gt; &gt;<br>
-&gt; <br>
-&gt; Here I want to express &quot;in sequence&quot;.=C2=A0 But failed obvio=
-usly. :(<br>
-&gt; <br>
-&gt; <br>
-&gt; &gt;<br>
-&gt; &gt; &gt; + */<br>
-&gt; &gt; &gt; +#define RAMBLOCK_SYN_LEGACY_ITER=C2=A0 =C2=A0(1U &lt;&lt; 0=
-)<br>
-&gt; &gt;<br>
-&gt; &gt; So ITER is as opposed to background? I&#39;m a bit confused with =
-the terms.<br>
-&gt; &gt;<br>
-&gt; <br>
-&gt; Yes.<br>
-&gt; <br>
-&gt; <br>
-&gt; &gt;<br>
-&gt; &gt; &gt; +<br>
-&gt; &gt; &gt; +/*<br>
-&gt; &gt; &gt; + * The modern sync, which is, in turn, used for CPU throttl=
-e<br>
-&gt; &gt; &gt; + * and memory transfer.<br>
-&gt; &gt; &gt; + */<br>
-&gt; &gt; &gt; +#define RAMBLOCK_SYN_MODERN_ITER=C2=A0 =C2=A0(1U &lt;&lt; 1=
-)<br>
-&gt; &gt; &gt; +<br>
-&gt; &gt; &gt; +/* The modern sync, which is used for CPU throttle only */<=
-br>
-&gt; &gt; &gt; +#define RAMBLOCK_SYN_MODERN_BACKGROUND=C2=A0 =C2=A0 (1U &lt=
-;&lt; 2)<br>
-&gt; &gt;<br>
-&gt; &gt; What&#39;s the plan for the &quot;legacy&quot; part? To be remove=
-d soon? Do we want to<br>
-&gt; &gt; remove it now? Maybe better to not use the modern/legacy terms un=
-less we<br>
-&gt; &gt; want to give the impression that the legacy one is discontinued.<=
-br>
-&gt; &gt;<br>
-&gt; <br>
-&gt; The bitmap they utilized to track the dirty page information was the<b=
-r>
-&gt; distinction between the &quot;legacy iteration&quot; and the &quot;mod=
-ern iteration.&quot;<br>
-&gt; The &quot;iter_bmap&quot; field is used by the &quot;modern iteration&=
-quot; while the &quot;bmap&quot;<br>
-&gt; field is used by the &quot;legacy iteration.&quot;<br>
-&gt; <br>
-&gt; Since the refinement is now transparent and there is no API available =
-to<br>
-&gt; change the sync method, I actually want to remove it right now in orde=
-r<br>
-&gt; to simplify the logic. I&#39;ll include it in the next version.<br>
-<br>
-How confident do we think the new way is better than the old?<br>
-<br>
-If it&#39;ll be 100% / always better, I agree we can consider removing the =
-old.<br>
-But is it always better?=C2=A0 At least it consumes much more resources..<b=
-r>
-<br>
-Otherwise, we can still leave that logic as-is but use a migration property=
-<br>
-to turn it on only on new machines I think.<br>
-<br>
-Besides, could you explain why the solution needs to be this complex?=C2=A0=
- My<br>
-previous question was that we sync dirty too less, while auto converge<br>
-relies on dirty information, so that means auto converge can be adjusted<br=
->
-too unfrequently.<br>
-<br>
-However I wonder whether that can be achieved in a simpler manner by<br>
-e.g. invoke migration_bitmap_sync_precopy() more frequently during<br>
-migration, for example, in ram_save_iterate() - not every time but the<br>
-iterate() is invoked much more frequent, and maybe we can do sync from time=
-<br>
-to time.<br>
-<br>
-I also don&#39;t see why we need a separate thread, plus two new bitmaps, t=
-o<br></blockquote><div><br></div><div><div style=3D"font-family:&quot;comic=
- sans ms&quot;,sans-serif" class=3D"gmail_default">You mean we could do the=
- background sync in the migration thread or=C2=A0</div><div style=3D"font-f=
-amily:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_default">in the =
-main thread( eg, using a timer) ?</div></div><div>=C2=A0</div><blockquote c=
-lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1p=
-x;border-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1=
-ex">
-achieve this..=C2=A0 I didn&#39;t read in-depth yet, but I thought dirty sy=
-nc<br>
-requires bql anyway, then I don&#39;t yet understand why the two bitmaps ar=
-e<br>
-required.=C2=A0 If the bitmaps are introduced in the 1st patch, IMO it&#39;=
-ll be<br>
-great to explain clearly on why they&#39;re needed here.<br>
-<br>
-Thanks,<br>
-<br>
--- <br>
-Peter Xu<br>
-<br>
-</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
-gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
-iv dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font>=
-</div></div></div>
-
---00000000000019e9330622846d64--
+--------------2QzKX1nwXH8Goby9jELfgldR--
 
