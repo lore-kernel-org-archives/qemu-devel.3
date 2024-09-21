@@ -4,100 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE7D7CF9C69
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Sep 2024 17:18:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB6C4CF9C5B
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Sep 2024 22:49:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ss3jp-0004jT-AP; Sat, 21 Sep 2024 13:17:41 -0400
+	id 1ss8uA-0002hr-4t; Sat, 21 Sep 2024 18:48:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ss3jn-0004hj-Dg
- for qemu-devel@nongnu.org; Sat, 21 Sep 2024 13:17:39 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ss3jl-0003RS-8h
- for qemu-devel@nongnu.org; Sat, 21 Sep 2024 13:17:39 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2068bee21d8so32346395ad.2
- for <qemu-devel@nongnu.org>; Sat, 21 Sep 2024 10:17:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1726939055; x=1727543855; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5QIfwYnj28dbyfqQGicsC1g7gzc3sH3uQhlT+pdMYmo=;
- b=bI+3MsxYhW7MZjRG+0JmuoircYrFap/bU0uL54fcW3uAGPT7MtmsKGvYSnSdBHZuRb
- Bjmyqpm05/EYaekHRieM6V0I9wt3PhI6RIW5MiJKw88AYOmsVb1Dj6XCVggGghPuerlN
- EpsRRf/dRNR1cgHBVmNnxi6GeOZrxsplewbbSGmW3zgBk8YCFbGdLI0+Rz2WCE0gQLAN
- EJBQuVXTTctqzXJV6JXzxRj3TEUU4qjKhy3DYCutQMTYj8AGnro38PLbdBKlJ15r08JS
- iBHYKSFQab38WKV/5GhMGA01YdFQLypF0kAL5cPdJl1yG1M3upaPyKNRse5tx3Y8f4Cl
- Qjig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726939055; x=1727543855;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5QIfwYnj28dbyfqQGicsC1g7gzc3sH3uQhlT+pdMYmo=;
- b=Qd6zvHRjyUpfMerrzQ3dFJW6MklPvj77HV6WVdwwOUliKP2LqtzQZZG8ImaDG77o0h
- 96t5qmxkaXLWXOuAzgGmhWsAE9u5O3+xU+bkpwHAFcq+D4WiH5TvuvPxot9LvVMqAuTQ
- ZemYAOelgf5GutIDqKnp/laHvMKPmAUrQypNUXGENaOjPLcO50qIc63+CMYAWA9WCC1G
- 5Xuev7o7pXB4eYrcyl4WRU0sGPlQH/QOmFZKUVyxSH/veAdDHO71AqJwi8u8YT9d5w70
- WFIOBFTtE1oNkiKIo2BDK5fZMVeXUltSQ7pdMD3yhkPGZWcnznHjMPMyKS/c3fp1qQKg
- nKPg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDPT9a3AJehR0COjaGePyiPBy8ylmCbGBls1hhA6VknKaMU2cDiImDrUlsanf+y3ExYOYvxRysdiGV@nongnu.org
-X-Gm-Message-State: AOJu0Ywx3lyk5OOjdv8RaRCC8da4zesDOfTqK+RTaQA0IEtKquDLsBYk
- 0vR0NMhPG4aIVI7JFS3Wtd9u/PfoRSke0+RYS477P+IGxXKGvGi3ICWXy1xkxVw=
-X-Google-Smtp-Source: AGHT+IGCHq6dHoF1hLQSzBS4ZKckpDb60o8d8hEbpkrNX9vslc2M5CPcylcCFp+oZu4yq1Ajo8nb3Q==
-X-Received: by 2002:a17:902:f689:b0:205:5f36:ffb1 with SMTP id
- d9443c01a7336-208d844719amr77488215ad.37.1726939055499; 
- Sat, 21 Sep 2024 10:17:35 -0700 (PDT)
-Received: from [192.168.68.110] ([187.101.184.93])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-207946d2928sm110835495ad.120.2024.09.21.10.17.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Sep 2024 10:17:35 -0700 (PDT)
-Message-ID: <b14b124d-7a46-44eb-8f49-8efca8f4a31f@ventanamicro.com>
-Date: Sat, 21 Sep 2024 14:17:30 -0300
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1ss8u7-0002hL-Kx
+ for qemu-devel@nongnu.org; Sat, 21 Sep 2024 18:48:39 -0400
+Received: from speedy.comstyle.com ([2607:f938:3000:8::2]
+ helo=mail.comstyle.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1ss8u6-0007xq-6i
+ for qemu-devel@nongnu.org; Sat, 21 Sep 2024 18:48:39 -0400
+Received: from mail.comstyle.com (localhost [127.0.0.1])
+ by mail.comstyle.com (Postfix) with ESMTP id 4XB4DN0QKcz8PbP;
+ Sat, 21 Sep 2024 18:48:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=default;
+ bh=V++nPvaTpltyl2ZXSq+LDZVdJ0r60msILi9Qce36m1w=; b=i53u4z0BRXgz
+ QbdcjT0CFHMeWGle8MvGztDMaFYDTIxVbyX1+ua01Ef7sZ6WgbZjx5Gk77cKu2g8
+ Iz/WqgjaQX+8P2/kCiFxaBlyG+xSw8DTjB6aRsKnrANdp5VaRma5inSCC6YLApQT
+ 75GRfmoajpTo29/qLKVYYoizPLVLU9E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=message-id
+ :date:mime-version:subject:to:cc:references:from:in-reply-to
+ :content-type:content-transfer-encoding; q=dns; s=default; b=XcK
+ dlrEejfmiF8ErqQboc1XbQ8ay6+Eu8KyqEsUAyQlQh7W/0xDg+I9pf/wl+OE3ytj
+ +GJ0bUgMS1CiZyZTkPDCOHh0hBz5NhhqIG0Ksjcn3YehxmVi1P9KQ6ogOSa3bV+A
+ eCSxPfX89IVtXE0Wrty++06AiWklBAFClehrjPlg=
+Received: from [IPV6:2001:470:b050:6:cc31:46d5:f26a:a82b] (unknown
+ [IPv6:2001:470:b050:6:cc31:46d5:f26a:a82b])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: brad)
+ by mail.comstyle.com (Postfix) with ESMTPSA id 4XB4DM4XzQz8PbN;
+ Sat, 21 Sep 2024 18:48:35 -0400 (EDT)
+Message-ID: <58b41976-15aa-401d-9935-2ea5bb911e78@comstyle.com>
+Date: Sat, 21 Sep 2024 18:48:34 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 02/12] tcg/riscv: Add basic support for vector
-To: 0x48 Swung <swung0x48@outlook.com>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "liwei1518@gmail.com" <liwei1518@gmail.com>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "palmer@dabbelt.com" <palmer@dabbelt.com>,
- "alistair.francis@wdc.com" <alistair.francis@wdc.com>,
- "bmeng.cn@gmail.com" <bmeng.cn@gmail.com>,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-References: <20240911132630.461-1-zhiwei_liu@linux.alibaba.com>
- <20240911132630.461-3-zhiwei_liu@linux.alibaba.com>
- <0d591570-02c6-48c9-9e3f-ef47ac20ce7d@linaro.org>
- <b87e7a7e-41fd-4b26-bde3-9adca9babb24@linux.alibaba.com>
- <33101e38-080d-4444-a8c3-9d01827e243f@linaro.org>
- <b88244bc-aaf7-42f9-a90f-e4027ac72ebf@linux.alibaba.com>
- <20e20fde-830f-4314-a944-e7973bda5d8c@linaro.org>
- <SY8P300MB02825DF878585DDC68EB088CE06C2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM>
- <a7973dea-a430-473f-b0e9-c85fdeda1ac3@linux.alibaba.com>
- <SY8P300MB02821B61B859969B5A044EB6E06D2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM>
+Subject: Re: [PATCH] contrib/plugins: ensure build does not pick up a system
+ copy of plugin header
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+References: <Zu4063fjfHC5hHUl@humpty.home.comstyle.com>
+ <87msk1dv45.fsf@draig.linaro.org>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <SY8P300MB02821B61B859969B5A044EB6E06D2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM>
+From: Brad Smith <brad@comstyle.com>
+In-Reply-To: <87msk1dv45.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x633.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f938:3000:8::2;
+ envelope-from=brad@comstyle.com; helo=mail.comstyle.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,131 +82,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCk9uIDkvMjEvMjQgMTI6NTYgUE0sIDB4NDggU3d1bmcgd3JvdGU6DQo+IFNpZ25lZC1v
-ZmYtYnk6IEh1YW5nIFNoaXl1YW4gPHN3dW5nMHg0OEBvdXRsb29rLmNvbSA8bWFpbHRvOnN3
-dW5nMHg0OEBvdXRsb29rLmNvbT4+DQo+IA0KPiBUaGlzIGlzIHRoZSB0YWcuIElzIHRoaXMg
-ZmluZSBvciBkbyBJIG5lZWQgdG8gZG8gc29tZXRoaW5nIGVsc2U/IFRoYW5rcyBmb3IgdGhl
-IGhlbHAgZnJvbSBldmVyeWJvZHkgaW4gdGhpcyBsaXN0IQ0KDQpUaGFua3MhIFRoaXMgaXMg
-ZW5vdWdoLiBaaGl3ZWkgY2FuIGFkZCB0aGUgdGFnIGluIHRoZSBwYXRjaCBpbiB2NS4NCg0K
-DQpEYW5pZWwNCg0KPiANCj4+IOWcqCAyMDI05bm0OeaciDIw5pel77yMMjI6MjjvvIxMSVUg
-Wmhpd2VpIDx6aGl3ZWlfbGl1QGxpbnV4LmFsaWJhYmEuY29tPiDlhpnpgZPvvJoNCj4+DQo+
-PiDvu78NCj4+DQo+Pg0KPj4gT24gMjAyNC85LzIwIDEyOjAxLCAweDQ4IFN3dW5nIHdyb3Rl
-Og0KPj4+IEhleSBldmVyeW9uZSEgTGF0ZSB0byB0aGUgcGFydHkuIExpZmUgaGFwcGVucyBz
-b21ldGltZXMgOykNCj4+PiBKdXN0IGRpc2NvdmVyZWQgdGhpcyBwYXRjaCBhbmQgdGhpcyBt
-YWlsIGxpc3QsIGFuZCBJJ2QgbGlrZSB0byBwcm92aWRlIHNvbWUgYmFja2dyb3VuZCBzdG9y
-eSBoZXJlLg0KPj4+IEkgb3JpZ2luYWxseSBwcm92aWRlZCBteSBpbml0aWFsIGltcGxlbWVu
-dGF0aW9uIGluIGEgZG93bnN0cmVhbSByZXBvIGxhc3QgeWVhciwgbmFtZWx5IGh0dHBzOi8v
-Z2l0aHViLmNvbS9wbGN0bGFiL3BsY3QtcWVtdS90cmVlL3BsY3QtcmlzY3YtYmFja2VuZC1y
-dnbCoC4NCj4+PiBJJ20gbmV3IHRvIGNvbnRyaWJ1dGluZyB0byBxZW11IGFuZCBhbHNvIHRh
-a2UgcGFydCBpbiB0aGUgb3Blbi1zb3VyY2UgY29tbXVuaXR5IHVwc3RyZWFtaW5nIHByb2Nl
-c3MgYXMgYSB3aG9sZSwgc28gSSBtYXkgbWFrZSBtaXN0YWtlcyBpbiBteSBmb2xsb3dpbmcg
-Y2xhaW1zLCBidXQgSSBzZWUgc29tZSBjb25mdXNpb24gaGVyZToNCj4+PiAxLiBUaGUgUExD
-VCBicmFuY2ggKHdoaWNoIGluY2x1ZGVzIG15IG9yaWdpbmFsIGNvbW1pdHMpIGlzIG9wZW4t
-c291cmNlZCB1c2luZyBHUEx2Miwgd2hpY2ggZm9sbG93cyBRRU1VJ3MgdXBzdHJlYW0gcmVw
-by4gU28gYWNjb3JkaW5nIHRvIHRoZSBsaWNlbnNlLCBteSBtb2RpZmljYXRpb24gc2hvdWxk
-IGJlIEVYUExJQ0lUTFkgc2hvd24gaW4gdGhlIHBhdGNoLCBidXQgSSBoYXZlbid0IHNlZW4g
-YW55Lg0KPj4+IDIuIEkgZG8gY29uc2VudCB1cHN0cmVhbWluZyBteSBwYXRjaCBsYXN0IHll
-YXIsIGluIHRoZSBmb3JtIG9mIGEgcGF0Y2ggc3VibWl0dGVkIHdpdGggbW9kaWZpY2F0aW9u
-cyBmcm9tIFQtaGVhZCwgYW5kIG9uIGJlaGFsZiBvZiB0aGVtLiBBbmQgaXQgd2FzIGFncmVl
-ZCBiYWNrIGluIHRoZSBkYXlzIHRoYXQgSSBjYW4gYmUgbWVudGlvbmVkIGFzIG9uZSBvZiB0
-aGUgYXV0aG9ycy4gQnV0IGl0IHR1cm5zb3V0IHRoYXQgdGhlcmUncyBubyAic2lnbi1vZmYi
-LCAiYXV0aG9yIiwgImNvLWF1dGhvciIgbGluZSBtZW50aW9uaW5nIG1lLiBJZiBJIGRvbid0
-IHNwZWFrIG91dCBpbiB0aGlzIHNpdHVhdGlvbiwgZG9lcyBpdCBpbXBseSB0aGF0IHRoaXMg
-cGF0Y2ggaXMgcHVyZWx5IExJVSBaaGl3ZWkncyB3b3JrIGFuZCBoYXZlIG5vdGhpbmcgdG8g
-ZG8gd2l0aCBtZT8NCj4+Pg0KPj4+IEknZCBsaWtlIExJVSB0byBzZXBhcmF0ZSBteSBwYXRj
-aCBhbmQgaGlzIG1vZGlmaWNhdGlvbiB0byB0d28gc2VwYXJhdGUgcGF0Y2hlcywgYW5kIGV4
-cGxpY2l0bHkgbmFtZSB3aGVyZSBhcmUgdGhvc2UgcGF0Y2hlcyBjb21pbmcgZnJvbSwgc28g
-dGhhdCB0aGlzIHBhdGNoIGNhbiBjb21wbHkgdG8gR1BMdjIgbGljZW5zZSBhbmQgY2FuIHdl
-IGNsYXJpZnkgdGhvc2UgbWlzdW5kZXJzdGFuZGluZ3MuDQo+Pj4NCj4+PiBJIGRvbid0IHdh
-bnQgdG8gdGFrZSBpdCBwZXJzb25hbGx5ICwgYnV0IEkgZG8gc21lbGwgc29tZXRoaW5nJ3Mg
-d3JvbmcgZ29pbmcgb24gaGVyZS4uLg0KPj4NCj4+IEkgdGhpbmsgdGhlcmUgd2FzIGEgbWlz
-dW5kZXJzdGFuZGluZy4gQnV0IEkgd2lsbCBub3QgZXhwbGFpbiBpdCB0b28gbXVjaCBoZXJl
-LiBJZiB5b3UgYWdyZWUsIHBsZWFzZSBkb24ndCBibG9jayB0aGlzIHdvcmsgYW5kIHNlbmQg
-dGhlIHRhZyBhcyBEYW5pZWwgYW5kIE1hcmt1cyBwb2ludCBvdXQuDQo+Pg0KPj4gVGhhbmtz
-LA0KPj4gWmhpd2VpDQo+Pg0KPj4+DQo+Pj4gQmVzdCBSZWdhcmRzLA0KPj4+IFN3dW5nMHg0
-OCAoYWthLiBIdWFuZyBTaGl5dWFuKQ0KPj4+DQo+Pj4gR2V0IE91dGxvb2sgZm9yIEFuZHJv
-aWQgPGh0dHBzOi8vYWthLm1zL0FBYjl5c2c+DQo+Pj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQo+
-Pj4gKkZyb206KiBSaWNoYXJkIEhlbmRlcnNvbiA8cmljaGFyZC5oZW5kZXJzb25AbGluYXJv
-Lm9yZz4NCj4+PiAqU2VudDoqIFdlZG5lc2RheSwgU2VwdGVtYmVyIDE4LCAyMDI0IDEwOjI3
-OjE2IFBNDQo+Pj4gKlRvOiogTElVIFpoaXdlaSA8emhpd2VpX2xpdUBsaW51eC5hbGliYWJh
-LmNvbT47IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZyA8cWVtdS1kZXZlbEBub25nbnUub3JnPg0K
-Pj4+ICpDYzoqIHFlbXUtcmlzY3ZAbm9uZ251Lm9yZyA8cWVtdS1yaXNjdkBub25nbnUub3Jn
-PjsgcGFsbWVyQGRhYmJlbHQuY29tIDxwYWxtZXJAZGFiYmVsdC5jb20+OyBhbGlzdGFpci5m
-cmFuY2lzQHdkYy5jb20gPGFsaXN0YWlyLmZyYW5jaXNAd2RjLmNvbT47IGRiYXJib3phQHZl
-bnRhbmFtaWNyby5jb20gPGRiYXJib3phQHZlbnRhbmFtaWNyby5jb20+OyBsaXdlaTE1MThA
-Z21haWwuY29tIDxsaXdlaTE1MThAZ21haWwuY29tPjsgYm1lbmcuY25AZ21haWwuY29tIDxi
-bWVuZy5jbkBnbWFpbC5jb20+OyBTd3VuZzB4NDggPHN3dW5nMHg0OEBvdXRsb29rLmNvbT47
-IFRBTkcgVGlhbmNoZW5nIDx0YW5ndGlhbmNoZW5nLnR0Y0BhbGliYWJhLWluYy5jb20+DQo+
-Pj4gKlN1YmplY3Q6KiBSZTogW1BBVENIIHY0IDAyLzEyXSB0Y2cvcmlzY3Y6IEFkZCBiYXNp
-YyBzdXBwb3J0IGZvciB2ZWN0b3INCj4+PiBPbiA5LzE4LzI0IDEyOjQzLCBMSVUgWmhpd2Vp
-IHdyb3RlOg0KPj4+ID4gDQo+Pj4gPiBPbiAyMDI0LzkvMTggMTg6MTEsIFJpY2hhcmQgSGVu
-ZGVyc29uIHdyb3RlOg0KPj4+ID4+IE9uIDkvMTgvMjQgMDc6MTcsIExJVSBaaGl3ZWkgd3Jv
-dGU6DQo+Pj4gPj4+DQo+Pj4gPj4+IE9uIDIwMjQvOS8xMiAyOjQxLCBSaWNoYXJkIEhlbmRl
-cnNvbiB3cm90ZToNCj4+PiA+Pj4+IE9uIDkvMTEvMjQgMDY6MjYsIExJVSBaaGl3ZWkgd3Jv
-dGU6DQo+Pj4gPj4+Pj4gRnJvbTogU3d1bmcweDQ4PHN3dW5nMHg0OEBvdXRsb29rLmNvbT4N
-Cj4+PiA+Pj4+Pg0KPj4+ID4+Pj4+IFRoZSBSSVNDLVYgdmVjdG9yIGluc3RydWN0aW9uIHNl
-dCB1dGlsaXplcyB0aGUgTE1VTCBmaWVsZCB0byBncm91cA0KPj4+ID4+Pj4+IG11bHRpcGxl
-IHJlZ2lzdGVycywgZW5hYmxpbmcgdmFyaWFibGUtbGVuZ3RoIHZlY3RvciByZWdpc3RlcnMu
-IFRoaXMNCj4+PiA+Pj4+PiBpbXBsZW1lbnRhdGlvbiB1c2VzIG9ubHkgdGhlIGZpcnN0IHJl
-Z2lzdGVyIG51bWJlciBvZiBlYWNoIGdyb3VwIHdoaWxlDQo+Pj4gPj4+Pj4gcmVzZXJ2aW5n
-IHRoZSBvdGhlciByZWdpc3RlciBudW1iZXJzIHdpdGhpbiB0aGUgZ3JvdXAuDQo+Pj4gPj4+
-Pj4NCj4+PiA+Pj4+PiBJbiBUQ0csIGVhY2ggVkVDX0lSIGNhbiBoYXZlIDMgdHlwZXMgKFRD
-R19UWVBFX1Y2NC8xMjgvMjU2KSwgYW5kIHRoZQ0KPj4+ID4+Pj4+IGhvc3QgcnVudGltZSBu
-ZWVkcyB0byBhZGp1c3QgTE1VTCBiYXNlZCBvbiB0aGUgdHlwZSB0byB1c2UgZGlmZmVyZW50
-DQo+Pj4gPj4+Pj4gcmVnaXN0ZXIgZ3JvdXBzLg0KPj4+ID4+Pj4+DQo+Pj4gPj4+Pj4gVGhp
-cyBwcmVzZW50cyBjaGFsbGVuZ2VzIGZvciBUQ0cncyByZWdpc3RlciBhbGxvY2F0aW9uLiBD
-dXJyZW50bHksIHdlDQo+Pj4gPj4+Pj4gYXZvaWQgbW9kaWZ5aW5nIHRoZSByZWdpc3RlciBh
-bGxvY2F0aW9uIHBhcnQgb2YgVENHIGFuZCBvbmx5IGV4cG9zZSB0aGUNCj4+PiA+Pj4+PiBt
-aW5pbXVtIG51bWJlciBvZiB2ZWN0b3IgcmVnaXN0ZXJzLg0KPj4+ID4+Pj4+DQo+Pj4gPj4+
-Pj4gRm9yIGV4YW1wbGUsIHdoZW4gdGhlIGhvc3QgdmxlbiBpcyA2NCBiaXRzIGFuZCB0eXBl
-IGlzIFRDR19UWVBFX1YyNTYsIHdpdGgNCj4+PiA+Pj4+PiBMTVVMIGVxdWFsIHRvIDQsIHdl
-IHVzZSA0IHZlY3RvciByZWdpc3RlcnMgYXMgb25lIHJlZ2lzdGVyIGdyb3VwLiBXZSBjYW4N
-Cj4+PiA+Pj4+PiB1c2UgYSBtYXhpbXVtIG9mIDggcmVnaXN0ZXIgZ3JvdXBzLCBidXQgdGhl
-IFYwIHJlZ2lzdGVyIG51bWJlciBpcyByZXNlcnZlZA0KPj4+ID4+Pj4+IGFzIGEgbWFzayBy
-ZWdpc3Rlciwgc28gd2UgY2FuIGVmZmVjdGl2ZWx5IHVzZSBhdCBtb3N0IDcgcmVnaXN0ZXIg
-Z3JvdXBzLg0KPj4+ID4+Pj4+IE1vcmVvdmVyLCB3aGVuIHR5cGUgaXMgc21hbGxlciB0aGFu
-IFRDR19UWVBFX1YyNTYsIG9ubHkgNyByZWdpc3RlcnMgYXJlDQo+Pj4gPj4+Pj4gZm9yY2Vk
-IHRvIGJlIHVzZWQuIFRoaXMgaXMgYmVjYXVzZSBUQ0cgY2Fubm90IHlldCBkeW5hbWljYWxs
-eSBjb25zdHJhaW4NCj4+PiA+Pj4+PiByZWdpc3RlcnMgd2l0aCB0eXBlOyBsaWtld2lzZSwg
-d2hlbiB0aGUgaG9zdCB2bGVuIGlzIDEyOCBiaXRzIGFuZA0KPj4+ID4+Pj4+IFRDR19UWVBF
-X1YyNTYsIHdlIGNhbiB1c2UgYXQgbW9zdCAxNSByZWdpc3RlcnMuDQo+Pj4gPj4+Pj4NCj4+
-PiA+Pj4+PiBUaGVyZSBpcyBub3QgbXVjaCBwcmVzc3VyZSBvbiB2ZWN0b3IgcmVnaXN0ZXIg
-YWxsb2NhdGlvbiBpbiBUQ0cgbm93LCBzbw0KPj4+ID4+Pj4+IHVzaW5nIDcgcmVnaXN0ZXJz
-IGlzIGZlYXNpYmxlIGFuZCB3aWxsIG5vdCBoYXZlIGEgbWFqb3IgaW1wYWN0IG9uIGNvZGUN
-Cj4+PiA+Pj4+PiBnZW5lcmF0aW9uLg0KPj4+ID4+Pj4+DQo+Pj4gPj4+Pj4gVGhpcyBwYXRj
-aDoNCj4+PiA+Pj4+PiAxLiBSZXNlcnZlcyB2ZWN0b3IgcmVnaXN0ZXIgMCBmb3IgdXNlIGFz
-IGEgbWFzayByZWdpc3Rlci4NCj4+PiA+Pj4+PiAyLiBXaGVuIHVzaW5nIHJlZ2lzdGVyIGdy
-b3VwcywgcmVzZXJ2ZXMgdGhlIGFkZGl0aW9uYWwgcmVnaXN0ZXJzIHdpdGhpbg0KPj4+ID4+
-Pj4+IMKgwqDCoCBlYWNoIGdyb3VwLg0KPj4+ID4+Pj4+DQo+Pj4gPj4+Pj4gU2lnbmVkLW9m
-Zi1ieTogVEFORyBUaWFuY2hlbmc8dGFuZ3RpYW5jaGVuZy50dGNAYWxpYmFiYS1pbmMuY29t
-Pg0KPj4+ID4+Pj4+IENvLWF1dGhvcmVkLWJ5OiBUQU5HIFRpYW5jaGVuZzx0YW5ndGlhbmNo
-ZW5nLnR0Y0BhbGliYWJhLWluYy5jb20+DQo+Pj4gPj4+Pg0KPj4+ID4+Pj4gSWYgdGhlcmUg
-aXMgYSBjby1hdXRob3IsIHRoZXJlIHNob3VsZCBiZSBhbm90aGVyIFNpZ25lZC1vZmYtYnku
-DQo+Pj4gPj4+DQo+Pj4gPj4+IFRoaXMgcGF0Y2ggaGFzIGFkZGVkIGEgdGFnOg0KPj4+ID4+
-Pg0KPj4+ID4+PiBTaWduZWQtb2ZmLWJ5OiBUQU5HIFRpYW5jaGVuZzx0YW5ndGlhbmNoZW5n
-LnR0Y0BhbGliYWJhLWluYy5jb20+DQo+Pj4gPj4+DQo+Pj4gPj4+DQo+Pj4gPj4+IERvIHlv
-dSBtZWFuIHdlIHNob3VsZCBhZGQgdGhlIHNhbWUgdGFnIHR3aWNlPw0KPj4+ID4+DQo+Pj4g
-Pj4gVGhlIGZyb20gbGluZSBpcyAiU3d1bmcweDQ4IDxzd3VuZzB4NDhAb3V0bG9vay5jb20+
-Ii4NCj4+PiA+PiBJZiB0aGlzIGlzIGFuIGFsdGVybmF0ZSBlbWFpbCBmb3IgVEFORyBUaWFu
-Y2hlbmcsDQo+Pj4gPiANCj4+PiA+IE5vLCBTd3VuZzB4NDggaXMgYW5vdGhlciBhdXRob3Iu
-DQo+Pj4NCj4+PiBUaGVuIHdlIG5lZWQgYSBwcm9wZXIgU2lnbmVkLW9mZi1ieSBsaW5lIGZy
-b20gdGhhdCBhdXRob3IuDQo+Pj4NCj4+Pg0KPj4+IHJ+DQo=
+On 2024-09-21 8:55 a.m., Alex Benn=C3=A9e wrote:
+> Brad Smith <brad@comstyle.com> writes:
+>
+>> contrib/plugins: ensure build does not pick up a system copy of plugin
+>> header
+> I'm confused because this changes the ordering of the GLIB inclusion. W=
+e
+> shouldn't be including the whole QEMU include path.
+
+That's intentional. The GLIB header paths cannot come before the header p=
+ath
+for the plugin header otherwise it pulls in the older plugin header from =
+the
+installed copy of QEMU and breaks. The QEMU include path is necessary
+for the plugin header.
+
+
+cc=C2=A0 -O2 -g=C2=A0 -I/usr/local/include/glib-2.0=20
+-I/usr/local/lib/glib-2.0/include -I/usr/local/include -fPIC -Wall=20
+-I/home/brad/tmp/qemu/contrib/plugins/../../include/qemu -c -o execlog.o=20
+/home/brad/tmp/qemu/contrib/plugins/execlog.c
+/home/brad/tmp/qemu/contrib/plugins/execlog.c:262:41: error: too many=20
+arguments to function call, expected single argument 'insn', have 3=20
+arguments
+ =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qemu_=
+plugin_insn_data(insn, &insn_opcode, sizeof(insn_opcode));
+ =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ~~~~~=
+~~~~~~~~~~~~~~~~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/local/include/qemu-plugin.h:407:13: note: 'qemu_plugin_insn_data'=20
+declared here
+const void *qemu_plugin_insn_data(const struct qemu_plugin_insn *insn);
+ =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^
+1 error generated.
+
+> How does this fail?
+>
+>> With the ordering of the header path if a copy of QEMU is installed it
+>> will pickup the system copy of the header before the build paths copy
+>> and the build will fail.
+>>
+>> Signed-off-by: Brad Smith <brad@comstyle.com>
+>> ---
+>>   contrib/plugins/Makefile | 5 +++--
+>>   1 file changed, 3 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
+>> index 05a2a45c5c..52fc390376 100644
+>> --- a/contrib/plugins/Makefile
+>> +++ b/contrib/plugins/Makefile
+>> @@ -41,9 +41,10 @@ SONAMES :=3D $(addsuffix $(SO_SUFFIX),$(addprefix l=
+ib,$(NAMES)))
+>>  =20
+>>   # The main QEMU uses Glib extensively so it is perfectly fine to use=
+ it
+>>   # in plugins (which many example do).
+>> -PLUGIN_CFLAGS :=3D $(shell $(PKG_CONFIG) --cflags glib-2.0)
+>> -PLUGIN_CFLAGS +=3D -fPIC -Wall
+>> +GLIB_CFLAGS :=3D $(shell $(PKG_CONFIG) --cflags glib-2.0)
+>>   PLUGIN_CFLAGS +=3D -I$(TOP_SRC_PATH)/include/qemu
+> Not withstanding the fact I've just borrowed bswap.h for a test plugin
+> maybe we should actually copy qemu-plugin.h to an entirely new location
+> during the build and then include from there to avoid any other
+> potential pollutions?
+
+I don't see how that would make any difference, but either way as long=20
+as the header
+path ordering is corrected so this new path is not passed last on the=20
+command line
+getting the ordering wrong.
+
+>
+>> +PLUGIN_CFLAGS +=3D $(GLIB_CFLAGS)
+>> +PLUGIN_CFLAGS +=3D -fPIC -Wall
+>>  =20
+>>   # Helper that honours V=3D1 so we get some output when compiling
+>>   quiet-@ =3D $(if $(V),,@$(if $1,printf "  %-7s %s\n" "$(strip $1)" "=
+$(strip $2)" && ))
 
