@@ -4,56 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42DEBCF9C69
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Sep 2024 16:44:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE7D7CF9C69
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Sep 2024 17:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ss3DD-0008RF-8h; Sat, 21 Sep 2024 12:43:59 -0400
+	id 1ss3jp-0004jT-AP; Sat, 21 Sep 2024 13:17:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@nikitashushura.com>)
- id 1ss3DA-0008Q2-Rf
- for qemu-devel@nongnu.org; Sat, 21 Sep 2024 12:43:56 -0400
-Received: from mail-40136.proton.ch ([185.70.40.136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@nikitashushura.com>)
- id 1ss3D8-0004xm-KT
- for qemu-devel@nongnu.org; Sat, 21 Sep 2024 12:43:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nikitashushura.com;
- s=protonmail; t=1726937031; x=1727196231;
- bh=uizx5SWZKrWYNvGBPRM27GXCaCZbelVqxcGRBJNt/MM=;
- h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
- Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=F+/CN7sq2Lf5gL6ZsTsdJiVqFhZ7jbLZaP6I1JfnXh2Vd8LG/TCqcY0f59FGcd8p5
- UUiT/+yDIBbx+QttAX1Zid2edOv0HXn+5ipGrsZt3Ai59368J4DoyRJCkn/Nalzp4s
- P7MA62b7QpQDRuQPbL11oxsiHr1kIoZH+T5Sr/QpuB3AtnKyTnJkRE88IirVzgZwbb
- c/5flY0OuHcPWNLGv/torr/oVDw0O9+n1Ha1wnd0UhojjhAVpLh52eQW59kF9G1Hi+
- bnKGIOyNVqxzu7Gz0/2JYYtxD7lD/G5vOet2dLhxFnlKecDxcJcLRrh4/t1ZAjbMlG
- u+NUnVHdRcQAw==
-Date: Sat, 21 Sep 2024 16:43:47 +0000
-To: qemu-devel@nongnu.org
-From: Nikita Shushura <me@nikitashushura.com>
-Cc: Nikita Shushura <me@nikitashushura.com>,
- =?utf-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>,
- Frederic Konrad <konrad.frederic@yahoo.fr>
-Subject: [PATCH v2 1/2] hw/intc/grlib_irqmp: add support for extended
- interrupts
-Message-ID: <20240921164322.1883-1-me@nikitashushura.com>
-Feedback-ID: 120968030:user:proton
-X-Pm-Message-ID: 9ece10798d86a71ba647845c59ef906910b122fe
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1ss3jn-0004hj-Dg
+ for qemu-devel@nongnu.org; Sat, 21 Sep 2024 13:17:39 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1ss3jl-0003RS-8h
+ for qemu-devel@nongnu.org; Sat, 21 Sep 2024 13:17:39 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2068bee21d8so32346395ad.2
+ for <qemu-devel@nongnu.org>; Sat, 21 Sep 2024 10:17:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1726939055; x=1727543855; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5QIfwYnj28dbyfqQGicsC1g7gzc3sH3uQhlT+pdMYmo=;
+ b=bI+3MsxYhW7MZjRG+0JmuoircYrFap/bU0uL54fcW3uAGPT7MtmsKGvYSnSdBHZuRb
+ Bjmyqpm05/EYaekHRieM6V0I9wt3PhI6RIW5MiJKw88AYOmsVb1Dj6XCVggGghPuerlN
+ EpsRRf/dRNR1cgHBVmNnxi6GeOZrxsplewbbSGmW3zgBk8YCFbGdLI0+Rz2WCE0gQLAN
+ EJBQuVXTTctqzXJV6JXzxRj3TEUU4qjKhy3DYCutQMTYj8AGnro38PLbdBKlJ15r08JS
+ iBHYKSFQab38WKV/5GhMGA01YdFQLypF0kAL5cPdJl1yG1M3upaPyKNRse5tx3Y8f4Cl
+ Qjig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726939055; x=1727543855;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5QIfwYnj28dbyfqQGicsC1g7gzc3sH3uQhlT+pdMYmo=;
+ b=Qd6zvHRjyUpfMerrzQ3dFJW6MklPvj77HV6WVdwwOUliKP2LqtzQZZG8ImaDG77o0h
+ 96t5qmxkaXLWXOuAzgGmhWsAE9u5O3+xU+bkpwHAFcq+D4WiH5TvuvPxot9LvVMqAuTQ
+ ZemYAOelgf5GutIDqKnp/laHvMKPmAUrQypNUXGENaOjPLcO50qIc63+CMYAWA9WCC1G
+ 5Xuev7o7pXB4eYrcyl4WRU0sGPlQH/QOmFZKUVyxSH/veAdDHO71AqJwi8u8YT9d5w70
+ WFIOBFTtE1oNkiKIo2BDK5fZMVeXUltSQ7pdMD3yhkPGZWcnznHjMPMyKS/c3fp1qQKg
+ nKPg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWDPT9a3AJehR0COjaGePyiPBy8ylmCbGBls1hhA6VknKaMU2cDiImDrUlsanf+y3ExYOYvxRysdiGV@nongnu.org
+X-Gm-Message-State: AOJu0Ywx3lyk5OOjdv8RaRCC8da4zesDOfTqK+RTaQA0IEtKquDLsBYk
+ 0vR0NMhPG4aIVI7JFS3Wtd9u/PfoRSke0+RYS477P+IGxXKGvGi3ICWXy1xkxVw=
+X-Google-Smtp-Source: AGHT+IGCHq6dHoF1hLQSzBS4ZKckpDb60o8d8hEbpkrNX9vslc2M5CPcylcCFp+oZu4yq1Ajo8nb3Q==
+X-Received: by 2002:a17:902:f689:b0:205:5f36:ffb1 with SMTP id
+ d9443c01a7336-208d844719amr77488215ad.37.1726939055499; 
+ Sat, 21 Sep 2024 10:17:35 -0700 (PDT)
+Received: from [192.168.68.110] ([187.101.184.93])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-207946d2928sm110835495ad.120.2024.09.21.10.17.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 21 Sep 2024 10:17:35 -0700 (PDT)
+Message-ID: <b14b124d-7a46-44eb-8f49-8efca8f4a31f@ventanamicro.com>
+Date: Sat, 21 Sep 2024 14:17:30 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=185.70.40.136; envelope-from=me@nikitashushura.com;
- helo=mail-40136.proton.ch
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 02/12] tcg/riscv: Add basic support for vector
+To: 0x48 Swung <swung0x48@outlook.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "liwei1518@gmail.com" <liwei1518@gmail.com>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "palmer@dabbelt.com" <palmer@dabbelt.com>,
+ "alistair.francis@wdc.com" <alistair.francis@wdc.com>,
+ "bmeng.cn@gmail.com" <bmeng.cn@gmail.com>,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240911132630.461-1-zhiwei_liu@linux.alibaba.com>
+ <20240911132630.461-3-zhiwei_liu@linux.alibaba.com>
+ <0d591570-02c6-48c9-9e3f-ef47ac20ce7d@linaro.org>
+ <b87e7a7e-41fd-4b26-bde3-9adca9babb24@linux.alibaba.com>
+ <33101e38-080d-4444-a8c3-9d01827e243f@linaro.org>
+ <b88244bc-aaf7-42f9-a90f-e4027ac72ebf@linux.alibaba.com>
+ <20e20fde-830f-4314-a944-e7973bda5d8c@linaro.org>
+ <SY8P300MB02825DF878585DDC68EB088CE06C2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM>
+ <a7973dea-a430-473f-b0e9-c85fdeda1ac3@linux.alibaba.com>
+ <SY8P300MB02821B61B859969B5A044EB6E06D2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <SY8P300MB02821B61B859969B5A044EB6E06D2@SY8P300MB0282.AUSP300.PROD.OUTLOOK.COM>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_FMBLA_NEWDOM=1.499, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,175 +114,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Nikita Shushura <me@nikitashushura.com>
----
- hw/intc/grlib_irqmp.c | 69 +++++++++++++++++++++++++++++++------------
- 1 file changed, 50 insertions(+), 19 deletions(-)
-
-diff --git a/hw/intc/grlib_irqmp.c b/hw/intc/grlib_irqmp.c
-index 37ac63fd80..e9414c054a 100644
---- a/hw/intc/grlib_irqmp.c
-+++ b/hw/intc/grlib_irqmp.c
-@@ -1,8 +1,6 @@
- /*
-  * QEMU GRLIB IRQMP Emulator
-  *
-- * (Extended interrupt not supported)
-- *
-  * SPDX-License-Identifier: MIT
-  *
-  * Copyright (c) 2010-2024 AdaCore
-@@ -38,25 +36,29 @@
- #include "qemu/module.h"
- #include "qom/object.h"
-=20
--#define IRQMP_MAX_CPU 16
--#define IRQMP_REG_SIZE 256      /* Size of memory mapped registers */
-+#define IRQMP_MAX_CPU (16)
-+#define IRQMP_REG_SIZE (256)    /* Size of memory mapped registers */
-=20
- /* Memory mapped register offsets */
--#define LEVEL_OFFSET     0x00
--#define PENDING_OFFSET   0x04
--#define FORCE0_OFFSET    0x08
--#define CLEAR_OFFSET     0x0C
--#define MP_STATUS_OFFSET 0x10
--#define BROADCAST_OFFSET 0x14
--#define MASK_OFFSET      0x40
--#define FORCE_OFFSET     0x80
--#define EXTENDED_OFFSET  0xC0
-+#define LEVEL_OFFSET     (0x00)
-+#define PENDING_OFFSET   (0x04)
-+#define FORCE0_OFFSET    (0x08)
-+#define CLEAR_OFFSET     (0x0C)
-+#define MP_STATUS_OFFSET (0x10)
-+#define BROADCAST_OFFSET (0x14)
-+#define MASK_OFFSET      (0x40)
-+#define FORCE_OFFSET     (0x80)
-+#define EXTENDED_OFFSET  (0xC0)
-=20
- /* Multiprocessor Status Register  */
- #define MP_STATUS_CPU_STATUS_MASK ((1 << IRQMP_MAX_CPU)-2)
--#define MP_STATUS_NCPU_SHIFT      28
-+#define MP_STATUS_NCPU_SHIFT      (28)
-+#define MP_STATUS_EIRQ_OFFSET     (16)
-+
-+#define MAX_PILS_STD (16)
-+#define MAX_PILS_EXT (32)
-=20
--#define MAX_PILS 16
-+#define DEFAULT_EIRQ (12)
-=20
- OBJECT_DECLARE_SIMPLE_TYPE(IRQMP, GRLIB_IRQMP)
-=20
-@@ -68,6 +70,7 @@ struct IRQMP {
-     MemoryRegion iomem;
-=20
-     unsigned int ncpus;
-+    unsigned int eirq;
-     IRQMPState *state;
-     qemu_irq start_signal[IRQMP_MAX_CPU];
-     qemu_irq irq[IRQMP_MAX_CPU];
-@@ -89,13 +92,26 @@ struct IRQMPState {
-=20
- static void grlib_irqmp_check_irqs(IRQMPState *state)
- {
--    int i;
-+    int i, j;
-=20
-     assert(state !=3D NULL);
-     assert(state->parent !=3D NULL);
-=20
-     for (i =3D 0; i < state->parent->ncpus; i++) {
-         uint32_t pend =3D (state->pending | state->force[i]) & state->mask=
-[i];
-+
-+        /*
-+         * Checks is pending interrupt extended.
-+         * If so, sets pending to EIRQ and acknowledges
-+         * extended interrupt
-+         */
-+        for (j =3D MAX_PILS_STD; j < MAX_PILS_EXT; j++) {
-+            if ((pend & (1 << j)) !=3D 0) {
-+                pend =3D (1 << state->parent->eirq);
-+                state->extended[i] =3D (j & 0xffff);
-+            }
-+        }
-+
-         uint32_t level0 =3D pend & ~state->level;
-         uint32_t level1 =3D pend &  state->level;
-=20
-@@ -110,6 +126,10 @@ static void grlib_irqmp_check_irqs(IRQMPState *state)
- static void grlib_irqmp_ack_mask(IRQMPState *state, unsigned int cpu,
-                                  uint32_t mask)
- {
-+    if ((mask & (1 << state->parent->eirq)) !=3D 0) {
-+        mask |=3D (1 << state->extended[cpu]);
-+    }
-+
-     /* Clear registers */
-     state->pending  &=3D ~mask;
-     state->force[cpu] &=3D ~mask;
-@@ -144,7 +164,6 @@ static void grlib_irqmp_set_irq(void *opaque, int irq, =
-int level)
-     assert(s         !=3D NULL);
-     assert(s->parent !=3D NULL);
-=20
--
-     if (level) {
-         trace_grlib_irqmp_set_irq(irq);
-=20
-@@ -278,6 +297,9 @@ static void grlib_irqmp_write(void *opaque, hwaddr addr=
-,
-                 state->mpstatus &=3D ~(1 << i);
-             }
-         }
-+
-+        /* Writing EIRQ number */
-+        state->mpstatus |=3D (state->parent->eirq << MP_STATUS_EIRQ_OFFSET=
-);
-         return;
-=20
-     case BROADCAST_OFFSET:
-@@ -345,7 +367,8 @@ static void grlib_irqmp_reset(DeviceState *d)
-     memset(irqmp->state, 0, sizeof *irqmp->state);
-     irqmp->state->parent =3D irqmp;
-     irqmp->state->mpstatus =3D ((irqmp->ncpus - 1) << MP_STATUS_NCPU_SHIFT=
-) |
--        ((1 << irqmp->ncpus) - 2);
-+        ((1 << irqmp->ncpus) - 2) |
-+        (irqmp->eirq << MP_STATUS_EIRQ_OFFSET);
- }
-=20
- static void grlib_irqmp_realize(DeviceState *dev, Error **errp)
-@@ -359,7 +382,14 @@ static void grlib_irqmp_realize(DeviceState *dev, Erro=
-r **errp)
-         return;
-     }
-=20
--    qdev_init_gpio_in(dev, grlib_irqmp_set_irq, MAX_PILS);
-+    if ((!irqmp->eirq) || (irqmp->eirq >=3D MAX_PILS_STD)) {
-+        error_setg(errp, "Invalid eirq properties: "
-+                   "%u, must be 0 < eirq < %u.", irqmp->eirq,
-+                   MAX_PILS_STD);
-+        return;
-+    }
-+
-+    qdev_init_gpio_in(dev, grlib_irqmp_set_irq, MAX_PILS_EXT);
-=20
-     /*
-      * Transitionning from 0 to 1 starts the CPUs. The opposite can't
-@@ -378,6 +408,7 @@ static void grlib_irqmp_realize(DeviceState *dev, Error=
- **errp)
-=20
- static Property grlib_irqmp_properties[] =3D {
-     DEFINE_PROP_UINT32("ncpus", IRQMP, ncpus, 1),
-+    DEFINE_PROP_UINT32("eirq", IRQMP, eirq, DEFAULT_EIRQ),
-     DEFINE_PROP_END_OF_LIST(),
- };
-=20
---=20
-2.46.1
-
-
+DQoNCk9uIDkvMjEvMjQgMTI6NTYgUE0sIDB4NDggU3d1bmcgd3JvdGU6DQo+IFNpZ25lZC1v
+ZmYtYnk6IEh1YW5nIFNoaXl1YW4gPHN3dW5nMHg0OEBvdXRsb29rLmNvbSA8bWFpbHRvOnN3
+dW5nMHg0OEBvdXRsb29rLmNvbT4+DQo+IA0KPiBUaGlzIGlzIHRoZSB0YWcuIElzIHRoaXMg
+ZmluZSBvciBkbyBJIG5lZWQgdG8gZG8gc29tZXRoaW5nIGVsc2U/IFRoYW5rcyBmb3IgdGhl
+IGhlbHAgZnJvbSBldmVyeWJvZHkgaW4gdGhpcyBsaXN0IQ0KDQpUaGFua3MhIFRoaXMgaXMg
+ZW5vdWdoLiBaaGl3ZWkgY2FuIGFkZCB0aGUgdGFnIGluIHRoZSBwYXRjaCBpbiB2NS4NCg0K
+DQpEYW5pZWwNCg0KPiANCj4+IOWcqCAyMDI05bm0OeaciDIw5pel77yMMjI6MjjvvIxMSVUg
+Wmhpd2VpIDx6aGl3ZWlfbGl1QGxpbnV4LmFsaWJhYmEuY29tPiDlhpnpgZPvvJoNCj4+DQo+
+PiDvu78NCj4+DQo+Pg0KPj4gT24gMjAyNC85LzIwIDEyOjAxLCAweDQ4IFN3dW5nIHdyb3Rl
+Og0KPj4+IEhleSBldmVyeW9uZSEgTGF0ZSB0byB0aGUgcGFydHkuIExpZmUgaGFwcGVucyBz
+b21ldGltZXMgOykNCj4+PiBKdXN0IGRpc2NvdmVyZWQgdGhpcyBwYXRjaCBhbmQgdGhpcyBt
+YWlsIGxpc3QsIGFuZCBJJ2QgbGlrZSB0byBwcm92aWRlIHNvbWUgYmFja2dyb3VuZCBzdG9y
+eSBoZXJlLg0KPj4+IEkgb3JpZ2luYWxseSBwcm92aWRlZCBteSBpbml0aWFsIGltcGxlbWVu
+dGF0aW9uIGluIGEgZG93bnN0cmVhbSByZXBvIGxhc3QgeWVhciwgbmFtZWx5IGh0dHBzOi8v
+Z2l0aHViLmNvbS9wbGN0bGFiL3BsY3QtcWVtdS90cmVlL3BsY3QtcmlzY3YtYmFja2VuZC1y
+dnbCoC4NCj4+PiBJJ20gbmV3IHRvIGNvbnRyaWJ1dGluZyB0byBxZW11IGFuZCBhbHNvIHRh
+a2UgcGFydCBpbiB0aGUgb3Blbi1zb3VyY2UgY29tbXVuaXR5IHVwc3RyZWFtaW5nIHByb2Nl
+c3MgYXMgYSB3aG9sZSwgc28gSSBtYXkgbWFrZSBtaXN0YWtlcyBpbiBteSBmb2xsb3dpbmcg
+Y2xhaW1zLCBidXQgSSBzZWUgc29tZSBjb25mdXNpb24gaGVyZToNCj4+PiAxLiBUaGUgUExD
+VCBicmFuY2ggKHdoaWNoIGluY2x1ZGVzIG15IG9yaWdpbmFsIGNvbW1pdHMpIGlzIG9wZW4t
+c291cmNlZCB1c2luZyBHUEx2Miwgd2hpY2ggZm9sbG93cyBRRU1VJ3MgdXBzdHJlYW0gcmVw
+by4gU28gYWNjb3JkaW5nIHRvIHRoZSBsaWNlbnNlLCBteSBtb2RpZmljYXRpb24gc2hvdWxk
+IGJlIEVYUExJQ0lUTFkgc2hvd24gaW4gdGhlIHBhdGNoLCBidXQgSSBoYXZlbid0IHNlZW4g
+YW55Lg0KPj4+IDIuIEkgZG8gY29uc2VudCB1cHN0cmVhbWluZyBteSBwYXRjaCBsYXN0IHll
+YXIsIGluIHRoZSBmb3JtIG9mIGEgcGF0Y2ggc3VibWl0dGVkIHdpdGggbW9kaWZpY2F0aW9u
+cyBmcm9tIFQtaGVhZCwgYW5kIG9uIGJlaGFsZiBvZiB0aGVtLiBBbmQgaXQgd2FzIGFncmVl
+ZCBiYWNrIGluIHRoZSBkYXlzIHRoYXQgSSBjYW4gYmUgbWVudGlvbmVkIGFzIG9uZSBvZiB0
+aGUgYXV0aG9ycy4gQnV0IGl0IHR1cm5zb3V0IHRoYXQgdGhlcmUncyBubyAic2lnbi1vZmYi
+LCAiYXV0aG9yIiwgImNvLWF1dGhvciIgbGluZSBtZW50aW9uaW5nIG1lLiBJZiBJIGRvbid0
+IHNwZWFrIG91dCBpbiB0aGlzIHNpdHVhdGlvbiwgZG9lcyBpdCBpbXBseSB0aGF0IHRoaXMg
+cGF0Y2ggaXMgcHVyZWx5IExJVSBaaGl3ZWkncyB3b3JrIGFuZCBoYXZlIG5vdGhpbmcgdG8g
+ZG8gd2l0aCBtZT8NCj4+Pg0KPj4+IEknZCBsaWtlIExJVSB0byBzZXBhcmF0ZSBteSBwYXRj
+aCBhbmQgaGlzIG1vZGlmaWNhdGlvbiB0byB0d28gc2VwYXJhdGUgcGF0Y2hlcywgYW5kIGV4
+cGxpY2l0bHkgbmFtZSB3aGVyZSBhcmUgdGhvc2UgcGF0Y2hlcyBjb21pbmcgZnJvbSwgc28g
+dGhhdCB0aGlzIHBhdGNoIGNhbiBjb21wbHkgdG8gR1BMdjIgbGljZW5zZSBhbmQgY2FuIHdl
+IGNsYXJpZnkgdGhvc2UgbWlzdW5kZXJzdGFuZGluZ3MuDQo+Pj4NCj4+PiBJIGRvbid0IHdh
+bnQgdG8gdGFrZSBpdCBwZXJzb25hbGx5ICwgYnV0IEkgZG8gc21lbGwgc29tZXRoaW5nJ3Mg
+d3JvbmcgZ29pbmcgb24gaGVyZS4uLg0KPj4NCj4+IEkgdGhpbmsgdGhlcmUgd2FzIGEgbWlz
+dW5kZXJzdGFuZGluZy4gQnV0IEkgd2lsbCBub3QgZXhwbGFpbiBpdCB0b28gbXVjaCBoZXJl
+LiBJZiB5b3UgYWdyZWUsIHBsZWFzZSBkb24ndCBibG9jayB0aGlzIHdvcmsgYW5kIHNlbmQg
+dGhlIHRhZyBhcyBEYW5pZWwgYW5kIE1hcmt1cyBwb2ludCBvdXQuDQo+Pg0KPj4gVGhhbmtz
+LA0KPj4gWmhpd2VpDQo+Pg0KPj4+DQo+Pj4gQmVzdCBSZWdhcmRzLA0KPj4+IFN3dW5nMHg0
+OCAoYWthLiBIdWFuZyBTaGl5dWFuKQ0KPj4+DQo+Pj4gR2V0IE91dGxvb2sgZm9yIEFuZHJv
+aWQgPGh0dHBzOi8vYWthLm1zL0FBYjl5c2c+DQo+Pj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQo+
+Pj4gKkZyb206KiBSaWNoYXJkIEhlbmRlcnNvbiA8cmljaGFyZC5oZW5kZXJzb25AbGluYXJv
+Lm9yZz4NCj4+PiAqU2VudDoqIFdlZG5lc2RheSwgU2VwdGVtYmVyIDE4LCAyMDI0IDEwOjI3
+OjE2IFBNDQo+Pj4gKlRvOiogTElVIFpoaXdlaSA8emhpd2VpX2xpdUBsaW51eC5hbGliYWJh
+LmNvbT47IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZyA8cWVtdS1kZXZlbEBub25nbnUub3JnPg0K
+Pj4+ICpDYzoqIHFlbXUtcmlzY3ZAbm9uZ251Lm9yZyA8cWVtdS1yaXNjdkBub25nbnUub3Jn
+PjsgcGFsbWVyQGRhYmJlbHQuY29tIDxwYWxtZXJAZGFiYmVsdC5jb20+OyBhbGlzdGFpci5m
+cmFuY2lzQHdkYy5jb20gPGFsaXN0YWlyLmZyYW5jaXNAd2RjLmNvbT47IGRiYXJib3phQHZl
+bnRhbmFtaWNyby5jb20gPGRiYXJib3phQHZlbnRhbmFtaWNyby5jb20+OyBsaXdlaTE1MThA
+Z21haWwuY29tIDxsaXdlaTE1MThAZ21haWwuY29tPjsgYm1lbmcuY25AZ21haWwuY29tIDxi
+bWVuZy5jbkBnbWFpbC5jb20+OyBTd3VuZzB4NDggPHN3dW5nMHg0OEBvdXRsb29rLmNvbT47
+IFRBTkcgVGlhbmNoZW5nIDx0YW5ndGlhbmNoZW5nLnR0Y0BhbGliYWJhLWluYy5jb20+DQo+
+Pj4gKlN1YmplY3Q6KiBSZTogW1BBVENIIHY0IDAyLzEyXSB0Y2cvcmlzY3Y6IEFkZCBiYXNp
+YyBzdXBwb3J0IGZvciB2ZWN0b3INCj4+PiBPbiA5LzE4LzI0IDEyOjQzLCBMSVUgWmhpd2Vp
+IHdyb3RlOg0KPj4+ID4gDQo+Pj4gPiBPbiAyMDI0LzkvMTggMTg6MTEsIFJpY2hhcmQgSGVu
+ZGVyc29uIHdyb3RlOg0KPj4+ID4+IE9uIDkvMTgvMjQgMDc6MTcsIExJVSBaaGl3ZWkgd3Jv
+dGU6DQo+Pj4gPj4+DQo+Pj4gPj4+IE9uIDIwMjQvOS8xMiAyOjQxLCBSaWNoYXJkIEhlbmRl
+cnNvbiB3cm90ZToNCj4+PiA+Pj4+IE9uIDkvMTEvMjQgMDY6MjYsIExJVSBaaGl3ZWkgd3Jv
+dGU6DQo+Pj4gPj4+Pj4gRnJvbTogU3d1bmcweDQ4PHN3dW5nMHg0OEBvdXRsb29rLmNvbT4N
+Cj4+PiA+Pj4+Pg0KPj4+ID4+Pj4+IFRoZSBSSVNDLVYgdmVjdG9yIGluc3RydWN0aW9uIHNl
+dCB1dGlsaXplcyB0aGUgTE1VTCBmaWVsZCB0byBncm91cA0KPj4+ID4+Pj4+IG11bHRpcGxl
+IHJlZ2lzdGVycywgZW5hYmxpbmcgdmFyaWFibGUtbGVuZ3RoIHZlY3RvciByZWdpc3RlcnMu
+IFRoaXMNCj4+PiA+Pj4+PiBpbXBsZW1lbnRhdGlvbiB1c2VzIG9ubHkgdGhlIGZpcnN0IHJl
+Z2lzdGVyIG51bWJlciBvZiBlYWNoIGdyb3VwIHdoaWxlDQo+Pj4gPj4+Pj4gcmVzZXJ2aW5n
+IHRoZSBvdGhlciByZWdpc3RlciBudW1iZXJzIHdpdGhpbiB0aGUgZ3JvdXAuDQo+Pj4gPj4+
+Pj4NCj4+PiA+Pj4+PiBJbiBUQ0csIGVhY2ggVkVDX0lSIGNhbiBoYXZlIDMgdHlwZXMgKFRD
+R19UWVBFX1Y2NC8xMjgvMjU2KSwgYW5kIHRoZQ0KPj4+ID4+Pj4+IGhvc3QgcnVudGltZSBu
+ZWVkcyB0byBhZGp1c3QgTE1VTCBiYXNlZCBvbiB0aGUgdHlwZSB0byB1c2UgZGlmZmVyZW50
+DQo+Pj4gPj4+Pj4gcmVnaXN0ZXIgZ3JvdXBzLg0KPj4+ID4+Pj4+DQo+Pj4gPj4+Pj4gVGhp
+cyBwcmVzZW50cyBjaGFsbGVuZ2VzIGZvciBUQ0cncyByZWdpc3RlciBhbGxvY2F0aW9uLiBD
+dXJyZW50bHksIHdlDQo+Pj4gPj4+Pj4gYXZvaWQgbW9kaWZ5aW5nIHRoZSByZWdpc3RlciBh
+bGxvY2F0aW9uIHBhcnQgb2YgVENHIGFuZCBvbmx5IGV4cG9zZSB0aGUNCj4+PiA+Pj4+PiBt
+aW5pbXVtIG51bWJlciBvZiB2ZWN0b3IgcmVnaXN0ZXJzLg0KPj4+ID4+Pj4+DQo+Pj4gPj4+
+Pj4gRm9yIGV4YW1wbGUsIHdoZW4gdGhlIGhvc3QgdmxlbiBpcyA2NCBiaXRzIGFuZCB0eXBl
+IGlzIFRDR19UWVBFX1YyNTYsIHdpdGgNCj4+PiA+Pj4+PiBMTVVMIGVxdWFsIHRvIDQsIHdl
+IHVzZSA0IHZlY3RvciByZWdpc3RlcnMgYXMgb25lIHJlZ2lzdGVyIGdyb3VwLiBXZSBjYW4N
+Cj4+PiA+Pj4+PiB1c2UgYSBtYXhpbXVtIG9mIDggcmVnaXN0ZXIgZ3JvdXBzLCBidXQgdGhl
+IFYwIHJlZ2lzdGVyIG51bWJlciBpcyByZXNlcnZlZA0KPj4+ID4+Pj4+IGFzIGEgbWFzayBy
+ZWdpc3Rlciwgc28gd2UgY2FuIGVmZmVjdGl2ZWx5IHVzZSBhdCBtb3N0IDcgcmVnaXN0ZXIg
+Z3JvdXBzLg0KPj4+ID4+Pj4+IE1vcmVvdmVyLCB3aGVuIHR5cGUgaXMgc21hbGxlciB0aGFu
+IFRDR19UWVBFX1YyNTYsIG9ubHkgNyByZWdpc3RlcnMgYXJlDQo+Pj4gPj4+Pj4gZm9yY2Vk
+IHRvIGJlIHVzZWQuIFRoaXMgaXMgYmVjYXVzZSBUQ0cgY2Fubm90IHlldCBkeW5hbWljYWxs
+eSBjb25zdHJhaW4NCj4+PiA+Pj4+PiByZWdpc3RlcnMgd2l0aCB0eXBlOyBsaWtld2lzZSwg
+d2hlbiB0aGUgaG9zdCB2bGVuIGlzIDEyOCBiaXRzIGFuZA0KPj4+ID4+Pj4+IFRDR19UWVBF
+X1YyNTYsIHdlIGNhbiB1c2UgYXQgbW9zdCAxNSByZWdpc3RlcnMuDQo+Pj4gPj4+Pj4NCj4+
+PiA+Pj4+PiBUaGVyZSBpcyBub3QgbXVjaCBwcmVzc3VyZSBvbiB2ZWN0b3IgcmVnaXN0ZXIg
+YWxsb2NhdGlvbiBpbiBUQ0cgbm93LCBzbw0KPj4+ID4+Pj4+IHVzaW5nIDcgcmVnaXN0ZXJz
+IGlzIGZlYXNpYmxlIGFuZCB3aWxsIG5vdCBoYXZlIGEgbWFqb3IgaW1wYWN0IG9uIGNvZGUN
+Cj4+PiA+Pj4+PiBnZW5lcmF0aW9uLg0KPj4+ID4+Pj4+DQo+Pj4gPj4+Pj4gVGhpcyBwYXRj
+aDoNCj4+PiA+Pj4+PiAxLiBSZXNlcnZlcyB2ZWN0b3IgcmVnaXN0ZXIgMCBmb3IgdXNlIGFz
+IGEgbWFzayByZWdpc3Rlci4NCj4+PiA+Pj4+PiAyLiBXaGVuIHVzaW5nIHJlZ2lzdGVyIGdy
+b3VwcywgcmVzZXJ2ZXMgdGhlIGFkZGl0aW9uYWwgcmVnaXN0ZXJzIHdpdGhpbg0KPj4+ID4+
+Pj4+IMKgwqDCoCBlYWNoIGdyb3VwLg0KPj4+ID4+Pj4+DQo+Pj4gPj4+Pj4gU2lnbmVkLW9m
+Zi1ieTogVEFORyBUaWFuY2hlbmc8dGFuZ3RpYW5jaGVuZy50dGNAYWxpYmFiYS1pbmMuY29t
+Pg0KPj4+ID4+Pj4+IENvLWF1dGhvcmVkLWJ5OiBUQU5HIFRpYW5jaGVuZzx0YW5ndGlhbmNo
+ZW5nLnR0Y0BhbGliYWJhLWluYy5jb20+DQo+Pj4gPj4+Pg0KPj4+ID4+Pj4gSWYgdGhlcmUg
+aXMgYSBjby1hdXRob3IsIHRoZXJlIHNob3VsZCBiZSBhbm90aGVyIFNpZ25lZC1vZmYtYnku
+DQo+Pj4gPj4+DQo+Pj4gPj4+IFRoaXMgcGF0Y2ggaGFzIGFkZGVkIGEgdGFnOg0KPj4+ID4+
+Pg0KPj4+ID4+PiBTaWduZWQtb2ZmLWJ5OiBUQU5HIFRpYW5jaGVuZzx0YW5ndGlhbmNoZW5n
+LnR0Y0BhbGliYWJhLWluYy5jb20+DQo+Pj4gPj4+DQo+Pj4gPj4+DQo+Pj4gPj4+IERvIHlv
+dSBtZWFuIHdlIHNob3VsZCBhZGQgdGhlIHNhbWUgdGFnIHR3aWNlPw0KPj4+ID4+DQo+Pj4g
+Pj4gVGhlIGZyb20gbGluZSBpcyAiU3d1bmcweDQ4IDxzd3VuZzB4NDhAb3V0bG9vay5jb20+
+Ii4NCj4+PiA+PiBJZiB0aGlzIGlzIGFuIGFsdGVybmF0ZSBlbWFpbCBmb3IgVEFORyBUaWFu
+Y2hlbmcsDQo+Pj4gPiANCj4+PiA+IE5vLCBTd3VuZzB4NDggaXMgYW5vdGhlciBhdXRob3Iu
+DQo+Pj4NCj4+PiBUaGVuIHdlIG5lZWQgYSBwcm9wZXIgU2lnbmVkLW9mZi1ieSBsaW5lIGZy
+b20gdGhhdCBhdXRob3IuDQo+Pj4NCj4+Pg0KPj4+IHJ+DQo=
 
