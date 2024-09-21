@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4F84CF9C69
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Sep 2024 12:22:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70933CF9C69
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Sep 2024 12:56:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srz7c-0002Hn-Ng; Sat, 21 Sep 2024 08:21:56 -0400
+	id 1srze8-0001hb-0k; Sat, 21 Sep 2024 08:55:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1srz7b-0002E1-Iy
- for qemu-devel@nongnu.org; Sat, 21 Sep 2024 08:21:55 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1srze6-0001h5-8N
+ for qemu-devel@nongnu.org; Sat, 21 Sep 2024 08:55:30 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1srz7a-0000iK-5z
- for qemu-devel@nongnu.org; Sat, 21 Sep 2024 08:21:55 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-2dee71e47c5so124096a91.0
- for <qemu-devel@nongnu.org>; Sat, 21 Sep 2024 05:21:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1srze4-00041l-Nd
+ for qemu-devel@nongnu.org; Sat, 21 Sep 2024 08:55:29 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-42cd46f3a26so24783625e9.2
+ for <qemu-devel@nongnu.org>; Sat, 21 Sep 2024 05:55:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1726921313; x=1727526113; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nslfQPwOKA80pbWqblASkGA0VIK8Eg+jfKDmlfALEtE=;
- b=kWFKhgz4qZi6ItJAt/OBN7eqJSKg4nib7BkD/BDMjmJusWf8NTwXxluyG7smdGQ8kj
- CZ4xRs24gisCwLm6QCjCSwti+fv7m7rtH+mXFLVSYikT7Wx9UVXRal0NFZALExQZdX9E
- abcKBTFZRSaRyONDHp7NUf1iqY+Ny9y1cr62JiNfGllAWnTrEuWhH/NbmcQKtDfCZfT3
- 7Aa6ipsTKiMplXVWhOyfUCl7qChqc5Pi0FuaOmQqoMkRxLG12N0EaTde0wZchTte1os0
- SCocg4lwGrNphM0eeohFFEiaOYXvK5mbPLrrt3rG7ZeP6o94oXRcfEJ6wUDOGh+E8ehn
- r/KQ==
+ d=linaro.org; s=google; t=1726923325; x=1727528125; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6gUvtAHxnIrcy8adA/Qi2GWUz41NH0JY2w4an8OtCNY=;
+ b=rfSQ1a+bxMA8EDRMcAOWnbMdYXK4NUiyYsgiiZDOCtNp1Li6OAXrmxK1k13Oyt9RQO
+ 3Fx/+089NR8+kAzindAB3TCGSBopvEWe/Wb792TJV7HCakeZ/MyYH39fwGyo7gs9MciN
+ Nnky6KyANIGl0RqrdQwIrt+w9NfbnAqMfAOBCBmvr22JZsfChh2+DhNAKMUdj/TMXIS2
+ NI+zKYk5MWsT46Ngm8G8DQBDrfmHFN6bOGcDTnoODgibOWrocO+atNkAUXAMz/McoNbP
+ GLYUmJtGQM1U6Ws958iXqKHShfpcyB/zqQBk/MQ51lcBoR88MiCq6uDxWBP2l3a3il0q
+ 7mcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726921313; x=1727526113;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nslfQPwOKA80pbWqblASkGA0VIK8Eg+jfKDmlfALEtE=;
- b=LQWfm7Kqw2W4NFdvuC4Alx8iceH/rki8mECTtmmCj5wSje55LnKz8+lFKUd7GzSgaw
- eq6D0DBfQJ3B8eeg6q3ATeG8gdCndoQL/hDL86wgtw20oy1630rDHKIZGpezdBCOyHQ4
- jRRSbs0M+sjjE9kR6U1KOIAqdWNNclBDwfTK16towmmi3dC2wPrKnHX4VCVSxEyODlp0
- EQQv9In9x+6GDAlR2r0vcssc9cRQ7F8m2jJqdaxPJLsGVEMcUxgN6sxFC+/ObFjh+n48
- im+fggGxAkCT3VJ0VK1/ju95IxiE9Qvt9K88F0JXxRWV4JjGajgerH8IBhTkQXJ5+0Tc
- EAUA==
+ d=1e100.net; s=20230601; t=1726923325; x=1727528125;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=6gUvtAHxnIrcy8adA/Qi2GWUz41NH0JY2w4an8OtCNY=;
+ b=OG3cL7cdoKR08GQHY/WNomakwQ6+xrA4zK8jTzy3nkxnxFbxQit1o5HtdTU2Y6w73s
+ SxjJ2RrJxaUm47ENx6cEQg3R717uSVuokrxL8yIYVR20+hsHFvDnFsm6QsZ82i6WemRS
+ 7oI/7SLBkmigf6V0zsWLEEOD3ecs684TrL8vnGdal27ICthQdl2kqUG7r+dDRfDxeAEq
+ 8BNcn8foGnsZe3KtITCXBnLdSA5+iR0VC8CnBV4LyQwEO2tK2RYjuWiMbi7k8mrwysii
+ mtXDFHyOd0PJLAPEUZUfpXoTnsofj0s+ZJ/ndtXgQXjLPRXrYwsw4H/9oO80yYHObbe1
+ x3aw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWKnRAzuvdQ83Ck0SmYqiEDX8ip1jQ4INUhOUlrMpxn7ucozgYC3pdtiAhHlePFKwOK0bOD+Jko6res@nongnu.org
-X-Gm-Message-State: AOJu0Yx8IdHWpTgNgATRM2RCs+PKWpJ9uLDzStW3V6H0xSBsw4W7Q/au
- G2zpPUk6Nhf0fmfrq9ommWnEPqp4pWH4HgbmuPXMZ3Uv751+xg6u4tiFQLHqf9o=
-X-Google-Smtp-Source: AGHT+IGCNTj+p+9Uj0HSaDGFLGNQBhCxmrexMAAxn3SP1rZiTEqMsuTirItP5FHw0loQwuYI3kMr7w==
-X-Received: by 2002:a17:90b:2dc7:b0:2d3:d8b0:967b with SMTP id
- 98e67ed59e1d1-2dd80c966b4mr8145055a91.27.1726921312738; 
- Sat, 21 Sep 2024 05:21:52 -0700 (PDT)
-Received: from [192.168.68.110] ([187.101.184.93])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2dd7f87ba50sm3779810a91.28.2024.09.21.05.21.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Sep 2024 05:21:52 -0700 (PDT)
-Message-ID: <813f43e9-744e-46e3-859a-f9241b29c0b0@ventanamicro.com>
-Date: Sat, 21 Sep 2024 09:21:47 -0300
+ AJvYcCUxau8oA5gGLOxTCipmRlSNCk4gDNSnkZsFol631mIgtitmJl2brndzsoaiaXhbui0dy6VhO5UhqBLZ@nongnu.org
+X-Gm-Message-State: AOJu0YwVU5Xgw7yHMteldGYUYvb/sOAtbU5kDOL+d1hpHCkTiDeUR1oI
+ FIbPTrognNFdbcur7ONvBjvfEnclNrHWc2FYFBxmE58RZwjEW+aQO5SGmTt3tYI=
+X-Google-Smtp-Source: AGHT+IHmjVwhgpsTJPQ9MKO1m+Z0zsSWvRmeMTZI0bnu8Ln5rD6/fqTaol1Cx/98kUqulMUEsmcOvA==
+X-Received: by 2002:a05:600c:1c04:b0:426:6e86:f82 with SMTP id
+ 5b1f17b1804b1-42e7ad921a7mr53366455e9.22.1726923324530; 
+ Sat, 21 Sep 2024 05:55:24 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-378e78054cesm20088279f8f.108.2024.09.21.05.55.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 21 Sep 2024 05:55:23 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id CBCD65F80B;
+ Sat, 21 Sep 2024 13:55:22 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Brad Smith <brad@comstyle.com>
+Cc: Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud Mandour
+ <ma.mandourr@gmail.com>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] contrib/plugins: ensure build does not pick up a system
+ copy of plugin header
+In-Reply-To: <Zu4063fjfHC5hHUl@humpty.home.comstyle.com> (Brad Smith's message
+ of "Fri, 20 Sep 2024 22:52:27 -0400")
+References: <Zu4063fjfHC5hHUl@humpty.home.comstyle.com>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Sat, 21 Sep 2024 13:55:22 +0100
+Message-ID: <87msk1dv45.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/10] target/riscv: Add `ext_smdbltrp` in RISCVCPUConfig.
-To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
- qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>
-Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>, Ved Shanbhogue <ved@rivosinc.com>,
- Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org
-References: <20240912084832.2906991-1-cleger@rivosinc.com>
- <20240912084832.2906991-7-cleger@rivosinc.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240912084832.2906991-7-cleger@rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102c.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,32 +102,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Brad Smith <brad@comstyle.com> writes:
 
+> contrib/plugins: ensure build does not pick up a system copy of plugin
+> header
 
-On 9/12/24 5:48 AM, Clément Léger wrote:
-> This variable is used to determine if the Smdbltrp extension is enabled.
-> 
-> Signed-off-by: Clément Léger <cleger@rivosinc.com>
+I'm confused because this changes the ordering of the GLIB inclusion. We
+shouldn't be including the whole QEMU include path.
+
+How does this fail?
+
+> With the ordering of the header path if a copy of QEMU is installed it
+> will pickup the system copy of the header before the build paths copy
+> and the build will fail.
+>
+> Signed-off-by: Brad Smith <brad@comstyle.com>
 > ---
+>  contrib/plugins/Makefile | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
+> index 05a2a45c5c..52fc390376 100644
+> --- a/contrib/plugins/Makefile
+> +++ b/contrib/plugins/Makefile
+> @@ -41,9 +41,10 @@ SONAMES :=3D $(addsuffix $(SO_SUFFIX),$(addprefix lib,=
+$(NAMES)))
+>=20=20
+>  # The main QEMU uses Glib extensively so it is perfectly fine to use it
+>  # in plugins (which many example do).
+> -PLUGIN_CFLAGS :=3D $(shell $(PKG_CONFIG) --cflags glib-2.0)
+> -PLUGIN_CFLAGS +=3D -fPIC -Wall
+> +GLIB_CFLAGS :=3D $(shell $(PKG_CONFIG) --cflags glib-2.0)
+>  PLUGIN_CFLAGS +=3D -I$(TOP_SRC_PATH)/include/qemu
 
-Similar with patch 1, I would also merge this with patch 07 since the bool is
-being used there. Thanks,
+Not withstanding the fact I've just borrowed bswap.h for a test plugin
+maybe we should actually copy qemu-plugin.h to an entirely new location
+during the build and then include from there to avoid any other
+potential pollutions?
 
-Daniel
+> +PLUGIN_CFLAGS +=3D $(GLIB_CFLAGS)
+> +PLUGIN_CFLAGS +=3D -fPIC -Wall
+>=20=20
+>  # Helper that honours V=3D1 so we get some output when compiling
+>  quiet-@ =3D $(if $(V),,@$(if $1,printf "  %-7s %s\n" "$(strip $1)" "$(st=
+rip $2)" && ))
 
->   target/riscv/cpu_cfg.h | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index dd804f95d4..4c4caa2b39 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -78,6 +78,7 @@ struct RISCVCPUConfig {
->       bool ext_sstc;
->       bool ext_smcntrpmf;
->       bool ext_ssdbltrp;
-> +    bool ext_smdbltrp;
->       bool ext_svadu;
->       bool ext_svinval;
->       bool ext_svnapot;
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
