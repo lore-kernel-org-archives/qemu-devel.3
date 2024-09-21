@@ -4,75 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC701CF9C68
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Sep 2024 08:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 620BDCF9C5B
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Sep 2024 10:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1srvvl-0000XK-So; Sat, 21 Sep 2024 04:57:30 -0400
+	id 1srxer-0003kP-Rw; Sat, 21 Sep 2024 06:48:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=987a91bd1=graf@amazon.de>)
- id 1srvvk-0000Wr-VY
- for qemu-devel@nongnu.org; Sat, 21 Sep 2024 04:57:29 -0400
-Received: from smtp-fw-9102.amazon.com ([207.171.184.29])
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1srxeq-0003jN-8j
+ for qemu-devel@nongnu.org; Sat, 21 Sep 2024 06:48:08 -0400
+Received: from zproxy4.enst.fr ([2001:660:330f:2::df])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=987a91bd1=graf@amazon.de>)
- id 1srvvj-0004YC-50
- for qemu-devel@nongnu.org; Sat, 21 Sep 2024 04:57:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1726909047; x=1758445047;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=zfJdqe1IJdQW0d6SJLFbLqRuxD3+g0D+efBNQCBVVkU=;
- b=gXAZc7WO2Ck84xuSlYOt6zYY2oClPGhqk1PX2foyRP9F5eRrBbaEt/F1
- PHQF9V7PoKyzzOkKvVFQB8peUP8yyz6IjTy2R0Ibry+3IUzIq154SKqpl
- 9tWP2H4D/dms/mHHa7fSlGJBl6pCt/tAepclMcoUcKzTRrXs9j8Fuo0BH Y=;
-X-IronPort-AV: E=Sophos;i="6.10,246,1719878400"; d="scan'208";a="456493463"
-Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.214])
- by smtp-border-fw-9102.sea19.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2024 08:57:16 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [10.0.7.35:28473]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.10.6:2525] with
- esmtp (Farcaster)
- id 3ae63f9d-424e-4065-bad6-bdfae432a88c; Sat, 21 Sep 2024 08:57:15 +0000 (UTC)
-X-Farcaster-Flow-ID: 3ae63f9d-424e-4065-bad6-bdfae432a88c
-Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Sat, 21 Sep 2024 08:57:15 +0000
-Received: from dev-dsk-graf-1a-5ce218e4.eu-west-1.amazon.com (10.253.83.51) by
- EX19D020UWC004.ant.amazon.com (10.13.138.149) with Microsoft SMTP
- Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Sat, 21 Sep 2024 08:57:14 +0000
-From: Alexander Graf <graf@amazon.com>
-To: <qemu-devel@nongnu.org>
-CC: Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>, "Jan
- Kiszka" <jan.kiszka@siemens.com>, Eduard Vlad <evlad@amazon.de>
-Subject: [PATCH v3] target-i386: Walk NPT in guest real mode
-Date: Sat, 21 Sep 2024 08:57:12 +0000
-Message-ID: <20240921085712.28902-1-graf@amazon.com>
-X-Mailer: git-send-email 2.40.1
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1srxeo-00077e-AR
+ for qemu-devel@nongnu.org; Sat, 21 Sep 2024 06:48:08 -0400
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy4.enst.fr (Postfix) with ESMTP id 58DA1208BA;
+ Sat, 21 Sep 2024 12:47:59 +0200 (CEST)
+Received: from zproxy4.enst.fr ([IPv6:::1])
+ by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
+ id YUaLc-NxmzMk; Sat, 21 Sep 2024 12:47:58 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy4.enst.fr (Postfix) with ESMTP id 5BE7B2086D;
+ Sat, 21 Sep 2024 12:47:58 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy4.enst.fr 5BE7B2086D
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1726915678;
+ bh=0pVAqxiPaA2S/dR+37De1xxytrmjckNs4R5fwwNcvgA=;
+ h=From:To:Date:Message-ID:MIME-Version;
+ b=PBQdB+YQRzJn9jmUTMD5k7LZI/p5NtrGFw1mCaLg2cYIZbGsIU+/nr6JCbIhpM/90
+ Ug/FKHUNz/gS0ItUPg4XH6xNEMuasFVr0ZKFkb52kJ/dNbAETzoDlKGjrwwCsjc/aQ
+ ozKKNAghMglF/0q8QkQqR5BLJixKuJvRxxpz6O6c=
+X-Virus-Scanned: amavis at enst.fr
+Received: from zproxy4.enst.fr ([IPv6:::1])
+ by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
+ id IOPiI3cNoYkc; Sat, 21 Sep 2024 12:47:58 +0200 (CEST)
+Received: from inesv-Inspiron-3501.enst.fr (unknown
+ [IPv6:2a04:8ec0:0:124::190c])
+ by zproxy4.enst.fr (Postfix) with ESMTPSA id 8156F20843;
+ Sat, 21 Sep 2024 12:47:57 +0200 (CEST)
+From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
+To: qemu-devel@nongnu.org
+Cc: Samuel Tardieu <sam@rfc1149.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Jacob Abrams <satur9nine@gmail.com>,
+ =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
+Subject: [PATCH] MAINTAINERS: Update STM32L4x5 and B-L475E-IOT01A maintainers
+Date: Sat, 21 Sep 2024 12:47:16 +0200
+Message-ID: <20240921104751.43671-1-ines.varhol@telecom-paris.fr>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-X-Originating-IP: [10.253.83.51]
-X-ClientProxiedBy: EX19D032UWB002.ant.amazon.com (10.13.139.190) To
- EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=207.171.184.29;
- envelope-from=prvs=987a91bd1=graf@amazon.de; helo=smtp-fw-9102.amazon.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2001:660:330f:2::df;
+ envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy4.enst.fr
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,106 +82,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When translating virtual to physical address with a guest CPU that
-supports nested paging (NPT), we need to perform every page table walk
-access indirectly through the NPT, which we correctly do.
+It has been a learning experience to contribute to QEMU for our
+end-of-studies project. For a few months now, Arnaud and I aren't
+actively involved anymore as we lack time and access to the hardware.
+Therefore it's high time to update the maintainers file: from now on,
+Samuel Tardieu who is behind the project will be taking up the role of
+maintainer.
 
-However, we treat real mode (no page table walk) special: In that case,
-we currently just skip any walks and translate VA -> PA. With NPT
-enabled, we also need to then perform NPT walk to do GVA -> GPA -> HPA
-which we fail to do so far.
+This commit updates maintainers and the list of files, and places the
+two devices in alphabetical order.
 
-The net result of that is that TCG VMs with NPT enabled that execute
-real mode code (like SeaBIOS) end up with GPA==HPA mappings which means
-the guest accesses host code and data. This typically shows as failure
-to boot guests.
-
-This patch changes the page walk logic for NPT enabled guests so that we
-always perform a GVA -> GPA translation and then skip any logic that
-requires an actual PTE.
-
-That way, all remaining logic to walk the NPT stays and we successfully
-walk the NPT in real mode.
-
-Fixes: fe441054bb3f0 ("target-i386: Add NPT support")
-
-Signed-off-by: Alexander Graf <graf@amazon.com>
-Reported-by: Eduard Vlad <evlad@amazon.de>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
+Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
 ---
+ MAINTAINERS | 41 +++++++++++++++++++++--------------------
+ 1 file changed, 21 insertions(+), 20 deletions(-)
 
-v1 -> v2:
-
-  - Remove hack where we fake a PTE and instead just set the
-    corresponding resolved variables and jump straight to the
-    stage2 code.
-
-v2 -> v3:
-
-  - Fix comment
----
- target/i386/tcg/sysemu/excp_helper.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-index 8fb05b1f53..24dd6935f9 100644
---- a/target/i386/tcg/sysemu/excp_helper.c
-+++ b/target/i386/tcg/sysemu/excp_helper.c
-@@ -298,7 +298,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-         /* combine pde and pte nx, user and rw protections */
-         ptep &= pte ^ PG_NX_MASK;
-         page_size = 4096;
--    } else {
-+    } else if (pg_mode) {
-         /*
-          * Page table level 2
-          */
-@@ -343,6 +343,15 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-         ptep &= pte | PG_NX_MASK;
-         page_size = 4096;
-         rsvd_mask = 0;
-+    } else {
-+        /*
-+         * No paging (real mode), let's tentatively resolve the address as 1:1
-+         * here, but conditionally still perform an NPT walk on it later.
-+         */
-+        page_size = 0x40000000;
-+        paddr = in->addr;
-+        prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-+        goto stage2;
-     }
- 
- do_check_protect:
-@@ -420,6 +429,7 @@ do_check_protect_pse36:
- 
-     /* merge offset within page */
-     paddr = (pte & PG_ADDRESS_MASK & ~(page_size - 1)) | (addr & (page_size - 1));
-+stage2:
- 
-     /*
-      * Note that NPT is walked (for both paging structures and final guest
-@@ -562,7 +572,7 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
-             addr = (uint32_t)addr;
-         }
- 
--        if (likely(env->cr[0] & CR0_PG_MASK)) {
-+        if (likely(env->cr[0] & CR0_PG_MASK || use_stage2)) {
-             in.cr3 = env->cr[3];
-             in.mmu_idx = mmu_idx;
-             in.ptw_idx = use_stage2 ? MMU_NESTED_IDX : MMU_PHYS_IDX;
--- 
-2.40.1
-
-
-
-
-Amazon Web Services Development Center Germany GmbH
-Krausenstr. 38
-10117 Berlin
-Geschaeftsfuehrung: Christian Schlaeger, Jonathan Weiss
-Eingetragen am Amtsgericht Charlottenburg unter HRB 257764 B
-Sitz: Berlin
-Ust-ID: DE 365 538 597
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ffacd60f40..7fa2172df6 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -706,6 +706,14 @@ F: include/hw/timer/armv7m_systick.h
+ F: include/hw/misc/armv7m_ras.h
+ F: tests/qtest/test-arm-mptimer.c
+=20
++B-L475E-IOT01A IoT Node
++M: Samuel Tardieu <sam@rfc1149.net>
++L: qemu-arm@nongnu.org
++S: Maintained
++F: hw/arm/b-l475e-iot01a.c
++F: hw/display/dm163.c
++F: tests/qtest/dm163-test.c
++
+ Exynos
+ M: Igor Mitsyanko <i.mitsyanko@gmail.com>
+ M: Peter Maydell <peter.maydell@linaro.org>
+@@ -991,6 +999,19 @@ F: include/hw/input/gamepad.h
+ F: include/hw/timer/stellaris-gptm.h
+ F: docs/system/arm/stellaris.rst
+=20
++STM32L4x5 SoC Family
++M: Samuel Tardieu <sam@rfc1149.net>
++L: qemu-arm@nongnu.org
++S: Maintained
++F: hw/arm/stm32l4x5_soc.c
++F: hw/char/stm32l4x5_usart.c
++F: hw/misc/stm32l4x5_exti.c
++F: hw/misc/stm32l4x5_syscfg.c
++F: hw/misc/stm32l4x5_rcc.c
++F: hw/gpio/stm32l4x5_gpio.c
++F: include/hw/*/stm32l4x5_*.h
++F: tests/qtest/stm32l4x5*
++
+ STM32VLDISCOVERY
+ M: Alexandre Iooss <erdnaxe@crans.org>
+ L: qemu-arm@nongnu.org
+@@ -1117,26 +1138,6 @@ L: qemu-arm@nongnu.org
+ S: Maintained
+ F: hw/arm/olimex-stm32-h405.c
+=20
+-STM32L4x5 SoC Family
+-M: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+-M: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+-L: qemu-arm@nongnu.org
+-S: Maintained
+-F: hw/arm/stm32l4x5_soc.c
+-F: hw/char/stm32l4x5_usart.c
+-F: hw/misc/stm32l4x5_exti.c
+-F: hw/misc/stm32l4x5_syscfg.c
+-F: hw/misc/stm32l4x5_rcc.c
+-F: hw/gpio/stm32l4x5_gpio.c
+-F: include/hw/*/stm32l4x5_*.h
+-
+-B-L475E-IOT01A IoT Node
+-M: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+-M: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+-L: qemu-arm@nongnu.org
+-S: Maintained
+-F: hw/arm/b-l475e-iot01a.c
+-
+ SmartFusion2
+ M: Subbaraya Sundeep <sundeep.lkml@gmail.com>
+ M: Peter Maydell <peter.maydell@linaro.org>
+--=20
+2.45.2
 
 
