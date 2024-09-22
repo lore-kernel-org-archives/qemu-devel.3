@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35FD6CF9C69
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Sep 2024 04:47:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89915CF9C69
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Sep 2024 04:52:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssEUh-0001NB-RT; Sun, 22 Sep 2024 00:46:47 -0400
+	id 1ssEZI-0006GV-J3; Sun, 22 Sep 2024 00:51:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ssEUZ-0001Jw-6j
- for qemu-devel@nongnu.org; Sun, 22 Sep 2024 00:46:41 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1ssEZF-0006Fh-TE
+ for qemu-devel@nongnu.org; Sun, 22 Sep 2024 00:51:29 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ssEUX-0000HL-OH
- for qemu-devel@nongnu.org; Sun, 22 Sep 2024 00:46:38 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5c5b9d2195eso839176a12.1
- for <qemu-devel@nongnu.org>; Sat, 21 Sep 2024 21:46:37 -0700 (PDT)
+ id 1ssEZ3-0000mV-JW
+ for qemu-devel@nongnu.org; Sun, 22 Sep 2024 00:51:20 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a8d24f98215so422939566b.1
+ for <qemu-devel@nongnu.org>; Sat, 21 Sep 2024 21:51:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1726980395; x=1727585195; darn=nongnu.org;
+ d=linaro.org; s=google; t=1726980674; x=1727585474; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Z4wRGO3WMtZOMMRmXRpzMnVueAGeW7bgzBASsvxYp40=;
- b=erWiYaw02YajNjKiubaVAhOU7jBSOtbkN6pcfYQbFSyRTi3hm3KLJOCVWm6hNj9DW3
- daHQjzBgmNsogRfAcRSRwZEfOmcuoZyfk2U+VxGyaOQGOOKeS44ThRTL0mOf8zn+bHEL
- kPiDvJsjjJw1pIBHfx+A/42vdpZ9szWsNYJjk9UR5HhDRd1IVC/4EF2XZe6d2uc3GtDr
- NGj93lqo+wZpYx3avkmfEBG3oKsKyVJHGsghvzbOuDM1jZyhwo1gzOGVYCh1FsRZIBve
- Sl9D77zxP4ivMNg/UWN54nwpK0RYQ47nW3i58Wg8xeAbKwweI5hlPZVV8oWqaDP3hONE
- 4zuw==
+ bh=qs5rZ46TcEKYNsXBCBfK6ReHsB3/7m3x4PxTv3KVeEY=;
+ b=W8QuY4UmE/ercKCna6JRJ4PIKgSJIDoAhiPLMVOEJpncALpplj6TPLqLZHwozV4mL3
+ C59isaWoH/83NqbeNsKsj4rCpAPtOT6bX6kklqfLoY5f6c+3iRcBCbHbJquxJbf8mRK+
+ 6P59jk/OoqR2bGxJtttoMDGo6ykfy6ZrgQhQWxZHArbCz59x4Z+dJs3ODaj/aHTAYytC
+ uUSQlqvq86yDAdiiDZCsaXIw00Nc8kuU0fmVGvPUxsIr2cQX7tY8tVLYG50I32gOtj5H
+ vYuV0psUzeX/H7F07ECMiLM2VXH+LId0sQDOq00tY589jj9dOoIuaCII1mn5T+O5EV2x
+ aA2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1726980395; x=1727585195;
+ d=1e100.net; s=20230601; t=1726980674; x=1727585474;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Z4wRGO3WMtZOMMRmXRpzMnVueAGeW7bgzBASsvxYp40=;
- b=BZ5A3uNeVBuXBqnJNwddfDThQVqQ3lMcJYOoY9odDatSFdbV1iyV2XYIHhLro4QqJt
- +Npd/zTqG1Nd4C+Gexk7J3CzKRuhKGtAzJbuGMiJvVLqecx0g2JRR1BZ1x5G/6LNy0Gm
- kS3VBz0oDAi2SwT2Y4m5sXEq7XVO3w6MHR0dAGD8ql8svnfdEJdLbRcEB6+rmuNvJ1ly
- s+gM4OqQttfA4LHcJYTkX9dcETzyhYQO0984/DxJotm649H9VkCWDWVKg9QGZ4/BD77m
- 19nHANRNbaFS5ggJK+kMB23tVbmklOeBI1jL3YW8zczXz8bahdgDlq98z9FW1ihAIs3Y
- gZqQ==
+ bh=qs5rZ46TcEKYNsXBCBfK6ReHsB3/7m3x4PxTv3KVeEY=;
+ b=ZfKPWwprztItTj2k/9skK5VPN+KSuaRJbZtLBxT3MSCf4aSDG7M1wfL9j3GZ8xdWos
+ Y6nV57FMaVnNHd4XFlAEcG+baymTblrEW3KtHBokgn92G7+0/ntv4hqBWWEMVHy2ic6z
+ Q4pBwe4st9n2TaHrAHbdCA6evjwcycOMYkNiBy0KW81DCon6wHz0tSGUOUQxbgqUYyrS
+ //ZD6DOC7mhbelQPtnvN/ECRBcpo7fU3LcH1imJNU+SJ5KzDTc3vXIioHV11+/8GxkI+
+ 7FMmFtVGOHp97jTK87GJYC+pdo76c22iEN6TCd5W62kZAvb5zBZZqFUPHf5tI76EC7RH
+ Qakg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWnlEVB6apddWKEb9JT2P8v2MxLxCNUE+VbQdfl/sA2dIDK1h7ZUTF067H6pOcZrF8whPGtL1OiTt48@nongnu.org
-X-Gm-Message-State: AOJu0YzPi2vALqK70H5GofXkjB/+zLwcLjyP7T3rKc8HoqvI9C/180FR
- V9JYv11QIwN+mR3oJxt0+YvTUwrMBN7/6ZzaawAZKSb5ZZulhFznnRiv+0l7/UlyK1WtK68ijqT
- /t9mLZg==
-X-Google-Smtp-Source: AGHT+IFmYr52nzzI+F6Vk4Fnvs9/GvGw/ClnP4UBcO5sxIdB1mzMPxNCU+G/hSj6t51AUVaTgpXXHA==
-X-Received: by 2002:a05:6402:208a:b0:5c4:bcd1:9c7a with SMTP id
- 4fb4d7f45d1cf-5c4bcd19f20mr6736153a12.8.1726980395294; 
- Sat, 21 Sep 2024 21:46:35 -0700 (PDT)
+ AJvYcCXFFhoVCqU3TlJb6m5SbvmqAVvbxspVCp/fu0v9ieOvMEYJOH3CbBoXHTa4A3G9z8F4jNc6fP4i3+kL@nongnu.org
+X-Gm-Message-State: AOJu0YxSBdHOsYbXOThGNuh+5WxRlj5qyO+iZB4m3QJtXAwE+xQ5Ouh2
+ iLHcj0n9b5taRMPXRgNkHE5JObvTyMYAFbXCOq3pwlXWK2DThf+2SO0TzU0kRPFuefaalse1Sen
+ fdBHriA==
+X-Google-Smtp-Source: AGHT+IEmQv2DTAe7oaDfnfenCEIKxTQXsZbStt2El3XomYZaXyKKwxExfd+5cnI0lwr4k/Yd622OGA==
+X-Received: by 2002:a17:907:e612:b0:a8d:3e29:a82d with SMTP id
+ a640c23a62f3a-a90d5000fa9mr648813966b.37.1726980674550; 
+ Sat, 21 Sep 2024 21:51:14 -0700 (PDT)
 Received: from [10.5.50.249] (90-181-218-29.rco.o2.cz. [90.181.218.29])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c42bb559d8sm8856309a12.22.2024.09.21.21.46.34
+ a640c23a62f3a-a906109669fsm1039496366b.3.2024.09.21.21.51.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Sep 2024 21:46:34 -0700 (PDT)
-Message-ID: <0dba42ab-83fb-44f8-9802-1f2e53bb89ba@linaro.org>
-Date: Sun, 22 Sep 2024 06:46:32 +0200
+ Sat, 21 Sep 2024 21:51:14 -0700 (PDT)
+Message-ID: <e7682112-412c-4a1a-9ded-1593d03c8994@linaro.org>
+Date: Sun, 22 Sep 2024 06:51:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 03/12] tcg/riscv: Add vset{i}vli and ld/st vec ops
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-References: <20240911132630.461-1-zhiwei_liu@linux.alibaba.com>
- <20240911132630.461-4-zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH 0/7] tests/functional: Convert the advent calendar tests
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
+References: <20240919185749.71222-1-thuth@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240911132630.461-4-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20240919185749.71222-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,21 +102,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/11/24 15:26, LIU Zhiwei wrote:
-> @@ -2129,6 +2389,7 @@ static void tcg_target_qemu_prologue(TCGContext *s)
->   
->   static void tcg_out_tb_start(TCGContext *s)
->   {
-> +    s->riscv_cur_type = TCG_TYPE_COUNT;
->       /* nothing to do */
->   }
->   
+On 9/19/24 20:57, Thomas Huth wrote:
+> Thomas Huth (7):
+>    tests/functional/qemu_test: Add a function for launching kernels more
+>      easily
+>    tests/functional: Convert the vexpressa9 Avocado test
+>    tests/functional: Convert the xtensa lx60 Avocado test
+>    tests/functional: Convert the SPARCStation Avocado test
+>    tests/functional: Convert the e500 ppc64 Avocado test
+>    tests/functional: Convert the mac ppc Avocado tests
+>    tests/functional: Convert the r2d sh4 Avocado test
 
-I recently realized that the vector config is call-clobbered.
-We need this reset as well in tcg_out_call_int(), and prepare_host_addr().
-
-In prepare_host_addr, place the reset just after the two calls to new_ldst_label().
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
