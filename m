@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59540CF9C64
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8545BCF9C6C
 	for <qemu-devel@archiver.kernel.org>; Sun, 22 Sep 2024 14:33:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssNdS-0005cp-0l; Sun, 22 Sep 2024 10:32:26 -0400
+	id 1ssNdV-0005sg-Ta; Sun, 22 Sep 2024 10:32:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ribalda@chromium.org>)
- id 1ssNdQ-0005bL-Ni
- for qemu-devel@nongnu.org; Sun, 22 Sep 2024 10:32:24 -0400
-Received: from mail-qv1-xf30.google.com ([2607:f8b0:4864:20::f30])
+ id 1ssNdU-0005oh-Tn
+ for qemu-devel@nongnu.org; Sun, 22 Sep 2024 10:32:28 -0400
+Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ribalda@chromium.org>)
- id 1ssNdN-0008Tz-Uy
- for qemu-devel@nongnu.org; Sun, 22 Sep 2024 10:32:24 -0400
-Received: by mail-qv1-xf30.google.com with SMTP id
- 6a1803df08f44-6c548eb3354so28241226d6.2
- for <qemu-devel@nongnu.org>; Sun, 22 Sep 2024 07:32:21 -0700 (PDT)
+ id 1ssNdT-0008UM-E7
+ for qemu-devel@nongnu.org; Sun, 22 Sep 2024 10:32:28 -0400
+Received: by mail-qv1-xf34.google.com with SMTP id
+ 6a1803df08f44-6c51d1df755so30127876d6.1
+ for <qemu-devel@nongnu.org>; Sun, 22 Sep 2024 07:32:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1727015541; x=1727620341; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=6n8uu98JW3p9HIkkqL6tJyuEOISV6y2Jmx3W9SB87lg=;
- b=RWTdqC+YZ+LShPPCI5LBI3WCDoQfDlC/PFElkkkKPoOMpB5ccrA/QCfHkti6x52hKr
- WpB3RANpOenp4LOubGBj++yPhI0yrQ2sYDT7vUI2Q5bdppWZTxTn1lkluUX+MRjOQCVE
- KM3Rm95Vhx/gIMOksbOvm5kGUtb/EzQmIJbu0=
+ d=chromium.org; s=google; t=1727015545; x=1727620345; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=e36ZfoJHjFKyIPloG9KFhoN84Whs6fQqjPKWB4YXiC8=;
+ b=fTCuOerFdUm31MD/1Y2TrDbpYWyIiYYjI6uNcg3OUCKArksex6UFi3zFy8Z7tw0sCU
+ X7IP3e42UyoZNh3pP0IuRI3Fi6OGaSYTj/NKc0QvagxDRJPSiM2rqx0EutHrIcHHw8b7
+ 1kLvp3YjL683Cgd1iOsvm2pMbWJUWuZhDBmrg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727015541; x=1727620341;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6n8uu98JW3p9HIkkqL6tJyuEOISV6y2Jmx3W9SB87lg=;
- b=b/4R2i1hJNmLIicRaqfDBPRdRhp+16mQ1QDAwZ4qWN6urQv+z+ZQBmcdV4GOkuQvsT
- 0j/pAwGf+iQg4AohINjL5MM+CBDKKWrMWMc9mg/WP/CKZwJ3Uil03OA3oNr1ipAPDDcM
- sRVLKofOgcMVN8wzJgCCCbSGfujEnPTMPJthPPGUTIhBl+UeoioNlExnOm9KVKtZABCN
- NALO3AMAmhrNrFDJFNSlcIzDH2yqEC73G64Uuk3MnUNsJyY3BfNkbMDVRSlHrETLnCzN
- W7jJ5yZYFitQGY6SnAP5lL/YX0b/xLhANtFgQYsujI3nSZInbRbe1/r8ZFXrVNzel9Dj
- bp3A==
+ d=1e100.net; s=20230601; t=1727015545; x=1727620345;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=e36ZfoJHjFKyIPloG9KFhoN84Whs6fQqjPKWB4YXiC8=;
+ b=ZvxOG7qVkOIOee2Agl+jbBQ1MRMX6Hq2NJf4dwNwVnEMGexdK8MWhUAzpzKUpA4Bxp
+ UxmvVmvufzEp86Hj/z3c5RDBXCfFgLONUiftkaWaMv37fpFR5tgPRiVs01nUZCS85geb
+ SwIBUVt73i11uktSgaiwnd7GaNvbiLg3L5CRjnr7y+fspuRnGwsegYYBjKNb7WCf0mDD
+ WyJpYUcO25CEgzfmXN3xg6AxL1KUYPUwmphDDtVcjYptLl/wP/VglswhR93uiMQP9f7n
+ 6rtw2ftIE9jg7BShFWfdHtNuuWj1C4Txr1WbtIniIKy5W1tHLB4VnxMvRy8lbIWMVpxb
+ FTww==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVj+2k8yijB09hg7dOU7AVxogS13bT5m6jLLYJOu8b1sBjdFc2zlbGXKfseDxjqU/HHfeGr7rYRuobG@nongnu.org
-X-Gm-Message-State: AOJu0YyJxgmOBz3le7UTzKkaIE+tKyJ4evYj31GFt5qgF0jGOM5nBOqa
- ojpNpFRI6yDnzYPot/MIePnJBO9DAhO1AEDSZjSVj0Ic0sm6eq6qXl6Kjeqehg==
-X-Google-Smtp-Source: AGHT+IEOW1lHmBpHqJRjdv3TRzWdC8qqi4QXxOYsWfbZ9JhhucrEJr06ZZ5n9qJp/xLLIDZ2afKTUg==
-X-Received: by 2002:a05:6214:54c3:b0:6c3:5db2:d99d with SMTP id
- 6a1803df08f44-6c7bd54841bmr156122896d6.21.1727015540882; 
- Sun, 22 Sep 2024 07:32:20 -0700 (PDT)
+ AJvYcCWT2Mk3k/4x9xR0CiFMcmT64+/q/xGnppQuVV+UxQs/be6MmSUy3GKTC+JVlWcLn1HReVCDH0HaRE2S@nongnu.org
+X-Gm-Message-State: AOJu0Yxm+W8ukxHgpWWPP6FBeevSpzR631HNG28NDMwO1CLftqxdRUSP
+ qNenFv/bR56cuef287fEa3K5HDVZ6GdTq+nwKjGWEEhXlq5Lvi9OADQWtubI2g==
+X-Google-Smtp-Source: AGHT+IHnOG69LdDdnXzyx3ecdQUNZvX7KRasBG098wYvvMHQHfnDcBtvGkEcTDVkVgYiNZgI64DPrw==
+X-Received: by 2002:a05:6214:2f83:b0:6c5:4f37:2b51 with SMTP id
+ 6a1803df08f44-6c7bd51f466mr172603916d6.28.1727015545223; 
+ Sun, 22 Sep 2024 07:32:25 -0700 (PDT)
 Received: from denia.c.googlers.com.com
  (122.213.145.34.bc.googleusercontent.com. [34.145.213.122])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6c75e557d6csm37956366d6.98.2024.09.22.07.32.19
+ 6a1803df08f44-6c75e557d6csm37956366d6.98.2024.09.22.07.32.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Sep 2024 07:32:20 -0700 (PDT)
+ Sun, 22 Sep 2024 07:32:23 -0700 (PDT)
 From: Ricardo Ribalda <ribalda@chromium.org>
 To: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Ani Sinha <anisinha@redhat.com>,
@@ -66,14 +67,16 @@ To: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Cc: Ricardo Ribalda <ribalda@chromium.org>
-Subject: [PATCH 0/3] Fix WinXP ISO boot using the dc390/am53C974 SCSI device
-Date: Sun, 22 Sep 2024 14:31:08 +0000
-Message-ID: <20240922143216.662873-1-ribalda@chromium.org>
+Subject: [PATCH 2/3] hw/i386/acpi-build: return a non-var package from _PRT()
+Date: Sun, 22 Sep 2024 14:31:10 +0000
+Message-ID: <20240922143216.662873-3-ribalda@chromium.org>
 X-Mailer: git-send-email 2.46.0.792.g87dc391469-goog
+In-Reply-To: <20240922143216.662873-1-ribalda@chromium.org>
+References: <20240922143216.662873-1-ribalda@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f30;
- envelope-from=ribalda@chromium.org; helo=mail-qv1-xf30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
+ envelope-from=ribalda@chromium.org; helo=mail-qv1-xf34.google.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -96,48 +99,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mark Cave-Ayland reported that after landing the pre-computed _PRT, the
-above mentioned testcase failed to pass.
+Windows XP seems to have issues when _PRT() returns a variable package.
+We know in advance the size, so we can return a fixed package instead.
 
-It seems that it is due to WinXP not handling properly a variable
-package. Let's replace it.
-
-
-Unfortunately, the ASL diff is not the best (or I cannot produce
-something better):
-
-12c12
-<  *     Length           0x00003917 (14615)
+https://lore.kernel.org/qemu-devel/c82d9331-a8ce-4bb0-b51f-2ee789e27c86@ilande.co.uk/T/#m541190c942676bccf7a7f7fbcb450d94a4e2da53
+Reported-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Fixes: 99cb2c6c7b ("hw/i386/acpi-build: Return a pre-computed _PRT table")
+Closes: https://lore.kernel.org/all/eb11c984-ebe4-4a09-9d71-1e9db7fe7e6f@ilande.co.uk/
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
->  *     Length           0x00003914 (14612)
-14c14
-<  *     Checksum         0xD9
----
->  *     Checksum         0x09
+ hw/i386/acpi-build.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Ricardo Ribalda (3):
-  tests/acpi: pc: allow DSDT acpi table changes
-  hw/i386/acpi-build: return a non-var package from _PRT()
-  tests/acpi: pc: update golden masters for DSDT
-
- hw/i386/acpi-build.c                 |   2 +-
- tests/data/acpi/x86/pc/DSDT          | Bin 8527 -> 8526 bytes
- tests/data/acpi/x86/pc/DSDT.acpierst | Bin 8438 -> 8437 bytes
- tests/data/acpi/x86/pc/DSDT.acpihmat | Bin 9852 -> 9851 bytes
- tests/data/acpi/x86/pc/DSDT.bridge   | Bin 15398 -> 15397 bytes
- tests/data/acpi/x86/pc/DSDT.cphp     | Bin 8991 -> 8990 bytes
- tests/data/acpi/x86/pc/DSDT.dimmpxm  | Bin 10181 -> 10180 bytes
- tests/data/acpi/x86/pc/DSDT.hpbridge | Bin 8478 -> 8477 bytes
- tests/data/acpi/x86/pc/DSDT.hpbrroot | Bin 5034 -> 5033 bytes
- tests/data/acpi/x86/pc/DSDT.ipmikcs  | Bin 8599 -> 8598 bytes
- tests/data/acpi/x86/pc/DSDT.memhp    | Bin 9886 -> 9885 bytes
- tests/data/acpi/x86/pc/DSDT.nohpet   | Bin 8385 -> 8384 bytes
- tests/data/acpi/x86/pc/DSDT.numamem  | Bin 8533 -> 8532 bytes
- tests/data/acpi/x86/pc/DSDT.roothp   | Bin 12320 -> 12319 bytes
- tests/data/acpi/x86/q35/DSDT.cxl     | Bin 13148 -> 13146 bytes
- tests/data/acpi/x86/q35/DSDT.viot    | Bin 14615 -> 14612 bytes
- 16 files changed, 1 insertion(+), 1 deletion(-)
-
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 4967aa7459..e7db51afba 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -741,7 +741,7 @@ static Aml *build_prt(bool is_pci0_prt)
+     int pin;
+ 
+     method = aml_method("_PRT", 0, AML_NOTSERIALIZED);
+-    rt_pkg = aml_varpackage(nroutes);
++    rt_pkg = aml_package(nroutes);
+ 
+     for (pin = 0; pin < nroutes; pin++) {
+         Aml *pkg = aml_package(4);
 -- 
 2.46.0.792.g87dc391469-goog
 
