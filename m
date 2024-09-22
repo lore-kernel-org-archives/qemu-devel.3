@@ -4,80 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39CF1CF9C64
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Sep 2024 12:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5044FCF9C64
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Sep 2024 12:45:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssLHx-0002jp-QR; Sun, 22 Sep 2024 08:02:05 -0400
+	id 1ssLwv-0004o0-0E; Sun, 22 Sep 2024 08:44:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ssLHJ-0000vl-JE
- for qemu-devel@nongnu.org; Sun, 22 Sep 2024 08:01:33 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ssLHE-0002Mz-2m
- for qemu-devel@nongnu.org; Sun, 22 Sep 2024 08:01:24 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a8d0d0aea3cso465511166b.3
- for <qemu-devel@nongnu.org>; Sun, 22 Sep 2024 05:01:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727006478; x=1727611278; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/08vmd3pJmcPxGI9Dvd5g1DO6IpTA5tvF/u1ewyB0/g=;
- b=SaSbg2XAvqY8xSeUpt2HSnkNVxUiEkJGUFf/pqQoYr013l68zn0Taeygz8nrxwcU1x
- d8CbhPgLKsQ0uXLtQ9nSvjvIVix5BnrrewId1aos2rqkrdz3diuuppsrPsx4we0GP1rX
- fdE4T5YGxOIIz7ox3c8emQMLFzRMiP+aE9ySwcCZX4fITjkcjcDNzvWw51kJB1R/r2kf
- Uf7uV3rTafE0cdav4aR2D3nth1OFldix98Iwxgzzy4GsV4neozrK20KuVJHUKZ8INu7H
- SVuEtWkTnvSYhP3n7W28cZmsnlydxx3fPcmgg9DifnjB/BPVg6yMeWfeT0GyN2PAzNZb
- dnKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727006478; x=1727611278;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/08vmd3pJmcPxGI9Dvd5g1DO6IpTA5tvF/u1ewyB0/g=;
- b=So5gT4UsCwzVbvy53FPCowU7msUimrodrLDuIJuVb3IOh1xK0FvQA7dCtapzZX+agm
- UbmnGJyCN4BJjkBVatjlFwrKOgiVYOamC9cufjod36kcD6WZnRs6CitYIxUp8CpCQAea
- dC/pubqhIL6R1JxkVZCTmsRKewNnn+4dIHeQZM7Eba0bZDHC+UqkUqd+f2Abw0Hal9vH
- 5di7mjQWhPGfjqtugsLMdN/xR3ny805xFTqDbRrZKilRniAMemMlcN8XkEIzaMfJqt4O
- T7ZPWMH/R94QRB2A0jBI8dY00na7IkTB8rdVlCyKGzB4mo/f1xsRt2mSTdc6u4hZsI2M
- A2dA==
-X-Gm-Message-State: AOJu0YzT7NLZitktcgcnaarDmhYAwDfi1p6s/X6sYHLPLqWVWqwYKsT9
- YQK2QlIXnxK7LDeVEIe2glDy1cNZyjkYM1tzMygS8fSqd6U9dPiemC9ZZNSORtn/bNxSbAMxknh
- 15PQ=
-X-Google-Smtp-Source: AGHT+IGO1OVWVjckRxqbG1TK3n2GrGQmTm9/YXASMM+LviK15f4FB1BqSwSO2HheUmVZ891NILrb9A==
-X-Received: by 2002:a17:907:d26:b0:a8a:cc5a:7f3a with SMTP id
- a640c23a62f3a-a90d51270f2mr859065366b.49.1727006477920; 
- Sun, 22 Sep 2024 05:01:17 -0700 (PDT)
-Received: from stoup.. (90-181-218-29.rco.o2.cz. [90.181.218.29])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90612df525sm1067909966b.159.2024.09.22.05.01.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Sep 2024 05:01:17 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PULL 07/31] tcg/i386: Do not expand cmpsel_vec early
-Date: Sun, 22 Sep 2024 14:00:48 +0200
-Message-ID: <20240922120112.5067-8-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240922120112.5067-1-richard.henderson@linaro.org>
-References: <20240922120112.5067-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1ssLwt-0004nR-HH
+ for qemu-devel@nongnu.org; Sun, 22 Sep 2024 08:44:23 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1ssLwr-0007is-Mz
+ for qemu-devel@nongnu.org; Sun, 22 Sep 2024 08:44:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=88Ku+xzJp+s2JUCdl87cjJjwqKBmN77zB8CURmOlaXo=; b=KtIQ+stMAkmFqmAF8aiCl0wkmf
+ ISzLibGBgHWaZNNvVxG9xIxpnkfT/VnbRHZ454EkFSdm9wCA4fmJ+urEkjTKXlo9PjoP0pXFj3pOa
+ WwtCAGHXhOsc62zSlR6y0RvytxmypcW6KvDrdocBJH7GbXenlVvHBUFcEm7Uj4LsHw9ajWa1n1dZy
+ +o+fnNVL+hcoIFq92Q70udd2Wev62+undpwtQfgJfRjOkSYXflsrvJtlLGc6bhwpumu3i+rS87sZ6
+ 9S2XIcReFkwcTqWqu4nmc/ub7FqvrgSLKW0dnW8BI1Ewk933XYYzyvWPZpTBQs7bJ1VK9JKs5RAFq
+ KZ/VSoQXmRQEqtPdXxxjALAtbSXW7DqZq/tx4YlaSLOZPWhMyQEvJk+1657JzwB+JTUlnC+NB3e1x
+ Ye45E31LKntWTTmu0hSj9oFwpdM2DLCafkI3BZvuMIx7GzBmwZuk+N4RlR6L2KZj9HwVsQVpzL5Cj
+ Vcgqi/KaVJTXP734shb4lasq9atAYblUPnX6jlR6xvuVhWUPuBcuFJhKSh+ESIR7ZcweIxNNnfLdU
+ A4kvIAlAyOu70BpqW6zTyaOhZ8SjsgYMWYAZepGmBh4LVqKytuXTvTWID6scJy6VTsVqQVy9wpjp9
+ R9VdwNnNUVLhPC6zTWfBJLHyABm0EC0Zxm53Xmuuk=;
+Received: from [2a00:23c4:8bb8:7000:41b:8fca:3a2a:2286]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1ssLwe-0009Iq-JZ; Sun, 22 Sep 2024 13:44:12 +0100
+Message-ID: <11610cb4-ad33-46ec-b5c1-f57a9cd8dd3c@ilande.co.uk>
+Date: Sun, 22 Sep 2024 13:44:11 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x629.google.com
+User-Agent: Mozilla Thunderbird
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
+References: <20240919185749.71222-1-thuth@redhat.com>
+ <20240919185749.71222-5-thuth@redhat.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20240919185749.71222-5-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:7000:41b:8fca:3a2a:2286
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 4/7] tests/functional: Convert the SPARCStation Avocado
+ test
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,217 +108,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expand during output instead of during opcode generation.
-Remove x86_vpblendvb_vec opcode, this this removes the only user.
+On 19/09/2024 19:57, Thomas Huth wrote:
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/i386/tcg-target-con-set.h |  1 +
- tcg/i386/tcg-target.h         |  2 +-
- tcg/i386/tcg-target.opc.h     |  1 -
- tcg/i386/tcg-target.c.inc     | 84 +++++++++++++++++++++--------------
- 4 files changed, 53 insertions(+), 35 deletions(-)
+> Use the new launch_kernel function to convert this test in a simple way.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   MAINTAINERS                          |  1 +
+>   tests/avocado/boot_linux_console.py  |  8 --------
+>   tests/functional/meson.build         |  4 ++++
+>   tests/functional/test_sparc_sun4m.py | 25 +++++++++++++++++++++++++
+>   4 files changed, 30 insertions(+), 8 deletions(-)
+>   create mode 100755 tests/functional/test_sparc_sun4m.py
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index a75d6ba7d2..b85a3fc529 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1693,6 +1693,7 @@ F: include/hw/nvram/sun_nvram.h
+>   F: include/hw/sparc/sparc32_dma.h
+>   F: include/hw/sparc/sun4m_iommu.h
+>   F: pc-bios/openbios-sparc32
+> +F: tests/functional/test_sparc_sun4m.py
+>   
+>   Sun4u
+>   M: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
+> index cf58499c84..900af67412 100644
+> --- a/tests/avocado/boot_linux_console.py
+> +++ b/tests/avocado/boot_linux_console.py
+> @@ -1019,11 +1019,3 @@ def test_sh4_r2d(self):
+>           tar_hash = 'fe06a4fd8ccbf2e27928d64472939d47829d4c7e'
+>           self.vm.add_args('-append', 'console=ttySC1')
+>           self.do_test_advcal_2018('09', tar_hash, 'zImage', console=1)
+> -
+> -    def test_sparc_ss20(self):
+> -        """
+> -        :avocado: tags=arch:sparc
+> -        :avocado: tags=machine:SS-20
+> -        """
+> -        tar_hash = 'b18550d5d61c7615d989a06edace051017726a9f'
+> -        self.do_test_advcal_2018('11', tar_hash, 'zImage.elf')
+> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+> index 8fd852f4ab..8aacd15cf3 100644
+> --- a/tests/functional/meson.build
+> +++ b/tests/functional/meson.build
+> @@ -125,6 +125,10 @@ tests_s390x_system_thorough = [
+>     's390x_topology',
+>   ]
+>   
+> +tests_sparc_system_thorough = [
+> +  'sparc_sun4m',
+> +]
+> +
+>   tests_sparc64_system_thorough = [
+>     'sparc64_sun4u',
+>   ]
+> diff --git a/tests/functional/test_sparc_sun4m.py b/tests/functional/test_sparc_sun4m.py
+> new file mode 100755
+> index 0000000000..b334375820
+> --- /dev/null
+> +++ b/tests/functional/test_sparc_sun4m.py
+> @@ -0,0 +1,25 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Functional test that boots a Linux kernel on a sparc sun4m machine
+> +# and checks the console
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +from qemu_test import LinuxKernelTest, Asset
+> +from qemu_test.utils import archive_extract
+> +
+> +class Sun4mTest(LinuxKernelTest):
+> +
+> +    ASSET_DAY11 = Asset(
+> +        'https://www.qemu-advent-calendar.org/2018/download/day11.tar.xz',
+> +        'c776533ba756bf4dd3f1fc4c024fb50ef0d853e05c5f5ddf0900a32d1eaa49e0')
+> +
+> +    def test_sparc_ss20(self):
+> +        self.set_machine('SS-20')
+> +        file_path = self.ASSET_DAY11.fetch()
+> +        archive_extract(file_path, self.workdir)
+> +        self.launch_kernel(self.workdir + '/day11/zImage.elf',
+> +                           wait_for='QEMU advent calendar')
+> +
+> +if __name__ == '__main__':
+> +    LinuxKernelTest.main()
 
-diff --git a/tcg/i386/tcg-target-con-set.h b/tcg/i386/tcg-target-con-set.h
-index e24241cfa2..da4411d96b 100644
---- a/tcg/i386/tcg-target-con-set.h
-+++ b/tcg/i386/tcg-target-con-set.h
-@@ -50,6 +50,7 @@ C_N1_I2(r, r, r)
- C_N1_I2(r, r, rW)
- C_O1_I3(x, 0, x, x)
- C_O1_I3(x, x, x, x)
-+C_O1_I4(x, x, x, x, x)
- C_O1_I4(r, r, reT, r, 0)
- C_O1_I4(r, r, r, ri, ri)
- C_O2_I1(r, r, L)
-diff --git a/tcg/i386/tcg-target.h b/tcg/i386/tcg-target.h
-index 2f67a97e05..342be30c4c 100644
---- a/tcg/i386/tcg-target.h
-+++ b/tcg/i386/tcg-target.h
-@@ -223,7 +223,7 @@ typedef enum {
- #define TCG_TARGET_HAS_sat_vec          1
- #define TCG_TARGET_HAS_minmax_vec       1
- #define TCG_TARGET_HAS_bitsel_vec       have_avx512vl
--#define TCG_TARGET_HAS_cmpsel_vec       -1
-+#define TCG_TARGET_HAS_cmpsel_vec       1
- #define TCG_TARGET_HAS_tst_vec          0
- 
- #define TCG_TARGET_deposit_i32_valid(ofs, len) \
-diff --git a/tcg/i386/tcg-target.opc.h b/tcg/i386/tcg-target.opc.h
-index b5f403e35e..4ffc084bda 100644
---- a/tcg/i386/tcg-target.opc.h
-+++ b/tcg/i386/tcg-target.opc.h
-@@ -25,7 +25,6 @@
-  */
- 
- DEF(x86_shufps_vec, 1, 2, 1, IMPLVEC)
--DEF(x86_vpblendvb_vec, 1, 3, 0, IMPLVEC)
- DEF(x86_blend_vec, 1, 2, 1, IMPLVEC)
- DEF(x86_packss_vec, 1, 2, 0, IMPLVEC)
- DEF(x86_packus_vec, 1, 2, 0, IMPLVEC)
-diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
-index 278e567b56..a04dc7d270 100644
---- a/tcg/i386/tcg-target.c.inc
-+++ b/tcg/i386/tcg-target.c.inc
-@@ -3115,6 +3115,19 @@ static void tcg_out_cmp_vec(TCGContext *s, TCGType type, unsigned vece,
-     }
- }
- 
-+static void tcg_out_cmpsel_vec(TCGContext *s, TCGType type, unsigned vece,
-+                               TCGReg v0, TCGReg c1, TCGReg c2,
-+                               TCGReg v3, TCGReg v4, TCGCond cond)
-+{
-+    if (tcg_out_cmp_vec_noinv(s, type, vece, TCG_TMP_VEC, c1, c2, cond)) {
-+        TCGReg swap = v3;
-+        v3 = v4;
-+        v4 = swap;
-+    }
-+    tcg_out_vex_modrm_type(s, OPC_VPBLENDVB, v0, v4, v3, type);
-+    tcg_out8(s, (TCG_TMP_VEC - TCG_REG_XMM0) << 4);
-+}
-+
- static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-                            unsigned vecl, unsigned vece,
-                            const TCGArg args[TCG_MAX_OP_ARGS],
-@@ -3320,6 +3333,11 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-         tcg_out_cmp_vec(s, type, vece, a0, a1, a2, args[3]);
-         break;
- 
-+    case INDEX_op_cmpsel_vec:
-+        tcg_out_cmpsel_vec(s, type, vece, a0, a1, a2,
-+                           args[3], args[4], args[5]);
-+        break;
-+
-     case INDEX_op_andc_vec:
-         insn = OPC_PANDN;
-         tcg_out_vex_modrm_type(s, insn, a0, a2, a1, type);
-@@ -3431,11 +3449,6 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-         tcg_out8(s, sub);
-         break;
- 
--    case INDEX_op_x86_vpblendvb_vec:
--        tcg_out_vex_modrm_type(s, OPC_VPBLENDVB, a0, a1, a2, type);
--        tcg_out8(s, args[3] << 4);
--        break;
--
-     case INDEX_op_x86_psrldq_vec:
-         tcg_out_vex_modrm(s, OPC_GRP14, 3, a0, a1);
-         tcg_out8(s, a2);
-@@ -3701,8 +3714,9 @@ static TCGConstraintSetIndex tcg_target_op_def(TCGOpcode op)
-         return C_O1_I3(x, 0, x, x);
- 
-     case INDEX_op_bitsel_vec:
--    case INDEX_op_x86_vpblendvb_vec:
-         return C_O1_I3(x, x, x, x);
-+    case INDEX_op_cmpsel_vec:
-+        return C_O1_I4(x, x, x, x, x);
- 
-     default:
-         g_assert_not_reached();
-@@ -4038,8 +4052,8 @@ static void expand_vec_mul(TCGType type, unsigned vece,
-     }
- }
- 
--static void expand_vec_cmp(TCGType type, unsigned vece, TCGv_vec v0,
--                           TCGv_vec v1, TCGv_vec v2, TCGCond cond)
-+static TCGCond expand_vec_cond(TCGType type, unsigned vece,
-+                               TCGArg *a1, TCGArg *a2, TCGCond cond)
- {
-     /*
-      * Without AVX512, there are no 64-bit unsigned comparisons.
-@@ -4047,46 +4061,50 @@ static void expand_vec_cmp(TCGType type, unsigned vece, TCGv_vec v0,
-      * All other swapping and inversion are handled during code generation.
-      */
-     if (vece == MO_64 && is_unsigned_cond(cond)) {
-+        TCGv_vec v1 = temp_tcgv_vec(arg_temp(*a1));
-+        TCGv_vec v2 = temp_tcgv_vec(arg_temp(*a2));
-         TCGv_vec t1 = tcg_temp_new_vec(type);
-         TCGv_vec t2 = tcg_temp_new_vec(type);
-         TCGv_vec t3 = tcg_constant_vec(type, vece, 1ull << ((8 << vece) - 1));
- 
-         tcg_gen_sub_vec(vece, t1, v1, t3);
-         tcg_gen_sub_vec(vece, t2, v2, t3);
--        v1 = t1;
--        v2 = t2;
-+        *a1 = tcgv_vec_arg(t1);
-+        *a2 = tcgv_vec_arg(t2);
-         cond = tcg_signed_cond(cond);
-     }
--
--    /* Expand directly; do not recurse.  */
--    vec_gen_4(INDEX_op_cmp_vec, type, vece,
--              tcgv_vec_arg(v0), tcgv_vec_arg(v1), tcgv_vec_arg(v2), cond);
-+    return cond;
- }
- 
--static void expand_vec_cmpsel(TCGType type, unsigned vece, TCGv_vec v0,
--                              TCGv_vec c1, TCGv_vec c2,
--                              TCGv_vec v3, TCGv_vec v4, TCGCond cond)
-+static void expand_vec_cmp(TCGType type, unsigned vece, TCGArg a0,
-+                           TCGArg a1, TCGArg a2, TCGCond cond)
- {
--    TCGv_vec t = tcg_temp_new_vec(type);
-+    cond = expand_vec_cond(type, vece, &a1, &a2, cond);
-+    /* Expand directly; do not recurse.  */
-+    vec_gen_4(INDEX_op_cmp_vec, type, vece, a0, a1, a2, cond);
-+}
- 
--    expand_vec_cmp(type, vece, t, c1, c2, cond);
--    vec_gen_4(INDEX_op_x86_vpblendvb_vec, type, vece,
--              tcgv_vec_arg(v0), tcgv_vec_arg(v4),
--              tcgv_vec_arg(v3), tcgv_vec_arg(t));
--    tcg_temp_free_vec(t);
-+static void expand_vec_cmpsel(TCGType type, unsigned vece, TCGArg a0,
-+                              TCGArg a1, TCGArg a2,
-+                              TCGArg a3, TCGArg a4, TCGCond cond)
-+{
-+    cond = expand_vec_cond(type, vece, &a1, &a2, cond);
-+    /* Expand directly; do not recurse.  */
-+    vec_gen_6(INDEX_op_cmpsel_vec, type, vece, a0, a1, a2, a3, a4, cond);
- }
- 
- void tcg_expand_vec_op(TCGOpcode opc, TCGType type, unsigned vece,
-                        TCGArg a0, ...)
- {
-     va_list va;
--    TCGArg a2;
--    TCGv_vec v0, v1, v2, v3, v4;
-+    TCGArg a1, a2, a3, a4, a5;
-+    TCGv_vec v0, v1, v2;
- 
-     va_start(va, a0);
--    v0 = temp_tcgv_vec(arg_temp(a0));
--    v1 = temp_tcgv_vec(arg_temp(va_arg(va, TCGArg)));
-+    a1 = va_arg(va, TCGArg);
-     a2 = va_arg(va, TCGArg);
-+    v0 = temp_tcgv_vec(arg_temp(a0));
-+    v1 = temp_tcgv_vec(arg_temp(a1));
- 
-     switch (opc) {
-     case INDEX_op_shli_vec:
-@@ -4122,15 +4140,15 @@ void tcg_expand_vec_op(TCGOpcode opc, TCGType type, unsigned vece,
-         break;
- 
-     case INDEX_op_cmp_vec:
--        v2 = temp_tcgv_vec(arg_temp(a2));
--        expand_vec_cmp(type, vece, v0, v1, v2, va_arg(va, TCGArg));
-+        a3 = va_arg(va, TCGArg);
-+        expand_vec_cmp(type, vece, a0, a1, a2, a3);
-         break;
- 
-     case INDEX_op_cmpsel_vec:
--        v2 = temp_tcgv_vec(arg_temp(a2));
--        v3 = temp_tcgv_vec(arg_temp(va_arg(va, TCGArg)));
--        v4 = temp_tcgv_vec(arg_temp(va_arg(va, TCGArg)));
--        expand_vec_cmpsel(type, vece, v0, v1, v2, v3, v4, va_arg(va, TCGArg));
-+        a3 = va_arg(va, TCGArg);
-+        a4 = va_arg(va, TCGArg);
-+        a5 = va_arg(va, TCGArg);
-+        expand_vec_cmpsel(type, vece, a0, a1, a2, a3, a4, a5);
-         break;
- 
-     default:
--- 
-2.43.0
+Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+
+
+ATB,
+
+Mark.
 
 
