@@ -4,96 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2613BCF9C69
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Sep 2024 19:31:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D892CF9C64
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Sep 2024 19:52:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssSHl-0000wx-7x; Sun, 22 Sep 2024 15:30:21 -0400
+	id 1ssScK-0002Z9-NV; Sun, 22 Sep 2024 15:51:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1ssSHj-0000w6-Bg
- for qemu-devel@nongnu.org; Sun, 22 Sep 2024 15:30:19 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1ssScJ-0002YB-8t
+ for qemu-devel@nongnu.org; Sun, 22 Sep 2024 15:51:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1ssSHg-0000l0-C9
- for qemu-devel@nongnu.org; Sun, 22 Sep 2024 15:30:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=Cqsz0cqk6OhLiipbNFGl3ThzTke/E2rxtY4Wroghn68=; b=OFa1/DoA0sjhiHhpJbnwFwG8et
- WMlmmcBPs25wBOkmYbGsDz9w8YtfVAz4UbNlXKSFypA5nJj/vwoIBIOVIGcb0x5ZpBrYWhul/5Vd0
- ajAew2UKs4V+g0VS72cQ2ld6ggXVGY8REefOf/sLZeppivvRu8yv0sI/L2ACVJ+vbIzwM11Yv61DZ
- KBQgSfRp0ESMtTgS0/MWL6274q+I7AItcaRGGieTMlsFtAyByuobTheqdguqCd8JaMWfmJc/Fng+I
- LAmp/ROqwBhDPSO5wcI+Q3ntka5dDpxB0Sa8XPZztFbPNktT+MhyoFizxEe4eZMDdHc0sdztTRFlM
- yH9DzFn0hTdQRzXpTncJb0M1rZ3ThoYqIL+Fje2KSYiErW38n3uZi/ySWzJWTUkVhNIFP3wQoQUx3
- QHRA5ekJV8T7ORlxSD8dmSVwI4LuWg4Li/OCIQeKGFNtt6Ponvlz9utuEo/X3PoSkYWBDp3uN+LNp
- B4Q1+KDB++VBM5IuxTPfhZMqmRjzaacXckFEErpC5iKhPfXK7kOatacyBj9Nks4oF7M9xV3qtzeki
- alK95TDOU2aguHvIROvPxDhwBOfkg0JyXhgIQrJNy8TTs5kc7KGrfNBBWY36sQjO57rl/f9LsaK7x
- k+QM+eltC1lqiw7l0xfHAPF13Ffsg5sEarmVe18e8=;
-Received: from [2a00:23c4:8bb8:7000:1f10:bbb5:a62c:f41d]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1ssSHS-000BPK-Eq; Sun, 22 Sep 2024 20:30:06 +0100
-Message-ID: <97971f2e-aa25-49ae-a1cc-c5faddb8abb0@ilande.co.uk>
-Date: Sun, 22 Sep 2024 20:30:05 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Ricardo Ribalda <ribalda@chromium.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1ssScG-0002bz-O5
+ for qemu-devel@nongnu.org; Sun, 22 Sep 2024 15:51:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727034691;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PZwO3B8a0SJJkCjSItdsWZeHKBOFw8q0OGwn4/9kxLc=;
+ b=T8VL+M9aE3wvXCqyy4QNHHFLRXnuS5/4Vzb7tl/fMJ2ZP83D7EdwC4JmBxXS2hl0SVDTUJ
+ uXEgjY1xyNdQJHAtRbutFLolugM4jhEv4kTCG4I+H+jGWbSx12W9dbFvTSL2ztXYzdWuKn
+ RJjcythNjNtU18yw+Frgi1up1FpVjeM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-j5x3pjPUNPyw1g89feSGyQ-1; Sun,
+ 22 Sep 2024 15:51:27 -0400
+X-MC-Unique: j5x3pjPUNPyw1g89feSGyQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AAB9019CC955; Sun, 22 Sep 2024 19:51:26 +0000 (UTC)
+Received: from localhost (unknown [10.42.28.3])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B84C0195608A; Sun, 22 Sep 2024 19:51:23 +0000 (UTC)
+Date: Sun, 22 Sep 2024 20:51:22 +0100
+From: "Richard W.M. Jones" <rjones@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Peter Lieven <pl@kamp.de>, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org
-References: <20240922143216.662873-1-ribalda@chromium.org>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20240922143216.662873-1-ribalda@chromium.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:7000:1f10:bbb5:a62c:f41d
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 0/3] Fix WinXP ISO boot using the dc390/am53C974 SCSI
- device
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
+Subject: Re: [PATCH for-9.1 6/9] block/nbd: Use URI parsing code from glib
+Message-ID: <20240922195122.GK5140@redhat.com>
+References: <20240328140607.2433889-1-thuth@redhat.com>
+ <20240328140607.2433889-7-thuth@redhat.com>
+ <20240328141342.GK7636@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240328141342.GK7636@redhat.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=rjones@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.129,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,59 +91,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/09/2024 15:31, Ricardo Ribalda wrote:
-
-> Mark Cave-Ayland reported that after landing the pre-computed _PRT, the
-> above mentioned testcase failed to pass.
+On Thu, Mar 28, 2024 at 02:13:42PM +0000, Richard W.M. Jones wrote:
+> On Thu, Mar 28, 2024 at 03:06:03PM +0100, Thomas Huth wrote:
+> > Since version 2.66, glib has useful URI parsing functions, too.
+> > Use those instead of the QEMU-internal ones to be finally able
+> > to get rid of the latter. The g_uri_get_host() also takes care
+> > of removing the square brackets from IPv6 addresses, so we can
+> > drop that part of the QEMU code now, too.
+> > 
+> > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> > ---
+> >  block/nbd.c | 66 ++++++++++++++++++++++++++++++-----------------------
+> >  1 file changed, 38 insertions(+), 28 deletions(-)
+> > 
+> > diff --git a/block/nbd.c b/block/nbd.c
+> > index ef05f7cdfd..95b507f872 100644
+> > --- a/block/nbd.c
+> > +++ b/block/nbd.c
+> > @@ -31,7 +31,6 @@
+> >  #include "qemu/osdep.h"
+> >  
+> >  #include "trace.h"
+> > -#include "qemu/uri.h"
+> >  #include "qemu/option.h"
+> >  #include "qemu/cutils.h"
+> >  #include "qemu/main-loop.h"
+> > @@ -1514,30 +1513,34 @@ static void nbd_client_close(BlockDriverState *bs)
+> >  
+> >  static int nbd_parse_uri(const char *filename, QDict *options)
+> >  {
+> > -    URI *uri;
+> > +    GUri *uri;
+> >      const char *p;
+> > -    QueryParams *qp = NULL;
+> > +    GHashTable *qp = NULL;
+> > +    int qp_n;
+> >      int ret = 0;
+> >      bool is_unix;
+> > +    const char *uri_scheme, *uri_query, *uri_server;
+> > +    int uri_port;
+> >  
+> > -    uri = uri_parse(filename);
+> > +    uri = g_uri_parse(filename, G_URI_FLAGS_NONE, NULL);
+> >      if (!uri) {
+> >          return -EINVAL;
+> >      }
+> >  
+> >      /* transport */
+> > -    if (!g_strcmp0(uri->scheme, "nbd")) {
+> > +    uri_scheme = g_uri_get_scheme(uri);
+> > +    if (!g_strcmp0(uri_scheme, "nbd")) {
+> >          is_unix = false;
+> > -    } else if (!g_strcmp0(uri->scheme, "nbd+tcp")) {
+> > +    } else if (!g_strcmp0(uri_scheme, "nbd+tcp")) {
+> >          is_unix = false;
+> > -    } else if (!g_strcmp0(uri->scheme, "nbd+unix")) {
+> > +    } else if (!g_strcmp0(uri_scheme, "nbd+unix")) {
+> >          is_unix = true;
+> >      } else {
+> >          ret = -EINVAL;
+> >          goto out;
+> >      }
+> >  
+> > -    p = uri->path ? uri->path : "";
+> > +    p = g_uri_get_path(uri) ?: "";
+> >      if (p[0] == '/') {
+> >          p++;
+> >      }
+> > @@ -1545,51 +1548,58 @@ static int nbd_parse_uri(const char *filename, QDict *options)
+> >          qdict_put_str(options, "export", p);
+> >      }
+> >  
+> > -    qp = query_params_parse(uri->query);
+> > -    if (qp->n > 1 || (is_unix && !qp->n) || (!is_unix && qp->n)) {
+> > -        ret = -EINVAL;
+> > -        goto out;
+> > +    uri_query = g_uri_get_query(uri);
+> > +    if (uri_query) {
+> > +        qp = g_uri_parse_params(uri_query, -1, "&", G_URI_PARAMS_NONE, NULL);
+> > +        if (!qp) {
+> > +            ret = -EINVAL;
+> > +            goto out;
+> > +        }
+> > +        qp_n = g_hash_table_size(qp);
+> > +        if (qp_n > 1 || (is_unix && !qp_n) || (!is_unix && qp_n)) {
+> > +            ret = -EINVAL;
+> > +            goto out;
+> > +        }
+> > +     }
+> > +
+> > +    uri_server = g_uri_get_host(uri);
+> > +    if (uri_server && !uri_server[0]) {
+> > +        uri_server = NULL;
+> >      }
+> > +    uri_port = g_uri_get_port(uri);
+> >  
+> >      if (is_unix) {
+> >          /* nbd+unix:///export?socket=path */
+> > -        if (uri->server || uri->port || strcmp(qp->p[0].name, "socket")) {
+> > +        const char *uri_socket = g_hash_table_lookup(qp, "socket");
+> > +        if (uri_server || uri_port != -1 || !uri_socket) {
+> >              ret = -EINVAL;
+> >              goto out;
+> >          }
+> >          qdict_put_str(options, "server.type", "unix");
+> > -        qdict_put_str(options, "server.path", qp->p[0].value);
+> > +        qdict_put_str(options, "server.path", uri_socket);
+> >      } else {
+> > -        QString *host;
+> >          char *port_str;
+> >  
+> >          /* nbd[+tcp]://host[:port]/export */
+> > -        if (!uri->server) {
+> > +        if (!uri_server) {
+> >              ret = -EINVAL;
+> >              goto out;
+> >          }
+> >  
+> > -        /* strip braces from literal IPv6 address */
+> > -        if (uri->server[0] == '[') {
+> > -            host = qstring_from_substr(uri->server, 1,
+> > -                                       strlen(uri->server) - 1);
+> > -        } else {
+> > -            host = qstring_from_str(uri->server);
+> > -        }
+> > -
+> >          qdict_put_str(options, "server.type", "inet");
+> > -        qdict_put(options, "server.host", host);
+> > +        qdict_put_str(options, "server.host", uri_server);
+> >  
+> > -        port_str = g_strdup_printf("%d", uri->port ?: NBD_DEFAULT_PORT);
+> > +        port_str = g_strdup_printf("%d", uri_port != -1 ? uri_port
+> > +                                                        : NBD_DEFAULT_PORT);
+> >          qdict_put_str(options, "server.port", port_str);
+> >          g_free(port_str);
+> >      }
+> >  
+> >  out:
+> >      if (qp) {
+> > -        query_params_free(qp);
+> > +        g_hash_table_destroy(qp);
+> >      }
+> > -    uri_free(uri);
+> > +    g_uri_unref(uri);
+> >      return ret;
+> >  }
 > 
-> It seems that it is due to WinXP not handling properly a variable
-> package. Let's replace it.
-> 
-> 
-> Unfortunately, the ASL diff is not the best (or I cannot produce
-> something better):
-> 
-> 12c12
-> <  *     Length           0x00003917 (14615)
-> ---
->>   *     Length           0x00003914 (14612)
-> 14c14
-> <  *     Checksum         0xD9
-> ---
->>   *     Checksum         0x09
-> 
-> Ricardo Ribalda (3):
->    tests/acpi: pc: allow DSDT acpi table changes
->    hw/i386/acpi-build: return a non-var package from _PRT()
->    tests/acpi: pc: update golden masters for DSDT
-> 
->   hw/i386/acpi-build.c                 |   2 +-
->   tests/data/acpi/x86/pc/DSDT          | Bin 8527 -> 8526 bytes
->   tests/data/acpi/x86/pc/DSDT.acpierst | Bin 8438 -> 8437 bytes
->   tests/data/acpi/x86/pc/DSDT.acpihmat | Bin 9852 -> 9851 bytes
->   tests/data/acpi/x86/pc/DSDT.bridge   | Bin 15398 -> 15397 bytes
->   tests/data/acpi/x86/pc/DSDT.cphp     | Bin 8991 -> 8990 bytes
->   tests/data/acpi/x86/pc/DSDT.dimmpxm  | Bin 10181 -> 10180 bytes
->   tests/data/acpi/x86/pc/DSDT.hpbridge | Bin 8478 -> 8477 bytes
->   tests/data/acpi/x86/pc/DSDT.hpbrroot | Bin 5034 -> 5033 bytes
->   tests/data/acpi/x86/pc/DSDT.ipmikcs  | Bin 8599 -> 8598 bytes
->   tests/data/acpi/x86/pc/DSDT.memhp    | Bin 9886 -> 9885 bytes
->   tests/data/acpi/x86/pc/DSDT.nohpet   | Bin 8385 -> 8384 bytes
->   tests/data/acpi/x86/pc/DSDT.numamem  | Bin 8533 -> 8532 bytes
->   tests/data/acpi/x86/pc/DSDT.roothp   | Bin 12320 -> 12319 bytes
->   tests/data/acpi/x86/q35/DSDT.cxl     | Bin 13148 -> 13146 bytes
->   tests/data/acpi/x86/q35/DSDT.viot    | Bin 14615 -> 14612 bytes
->   16 files changed, 1 insertion(+), 1 deletion(-)
+> Looks ok,
+>
+> Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
 
-This passes my WinXP test (and also a local run of "make check") so it looks good to 
-me. I'm not familiar enough with ACPI to give an R-B tag, but it certainly solves the 
-issue so:
+Or maybe not.  This caused a regression in the nbdkit test suite (when
+we use qemu-img from 9.1).  It seems the exportname part of the NBD
+URI gets munged:
 
-Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+https://gitlab.com/qemu-project/qemu/-/issues/2584
 
+Rich.
 
-ATB,
-
-Mark.
+-- 
+Richard Jones, Virtualization Group, Red Hat http://people.redhat.com/~rjones
+Read my programming and virtualization blog: http://rwmj.wordpress.com
+virt-builder quickly builds VMs from scratch
+http://libguestfs.org/virt-builder.1.html
 
 
