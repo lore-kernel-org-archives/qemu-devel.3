@@ -4,69 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB6C4CF9C5B
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Sep 2024 22:49:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3036FCF9C69
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Sep 2024 04:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ss8uA-0002hr-4t; Sat, 21 Sep 2024 18:48:43 -0400
+	id 1ssEJP-0003EK-Mo; Sun, 22 Sep 2024 00:35:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1ss8u7-0002hL-Kx
- for qemu-devel@nongnu.org; Sat, 21 Sep 2024 18:48:39 -0400
-Received: from speedy.comstyle.com ([2607:f938:3000:8::2]
- helo=mail.comstyle.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1ss8u6-0007xq-6i
- for qemu-devel@nongnu.org; Sat, 21 Sep 2024 18:48:39 -0400
-Received: from mail.comstyle.com (localhost [127.0.0.1])
- by mail.comstyle.com (Postfix) with ESMTP id 4XB4DN0QKcz8PbP;
- Sat, 21 Sep 2024 18:48:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=default;
- bh=V++nPvaTpltyl2ZXSq+LDZVdJ0r60msILi9Qce36m1w=; b=i53u4z0BRXgz
- QbdcjT0CFHMeWGle8MvGztDMaFYDTIxVbyX1+ua01Ef7sZ6WgbZjx5Gk77cKu2g8
- Iz/WqgjaQX+8P2/kCiFxaBlyG+xSw8DTjB6aRsKnrANdp5VaRma5inSCC6YLApQT
- 75GRfmoajpTo29/qLKVYYoizPLVLU9E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=message-id
- :date:mime-version:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding; q=dns; s=default; b=XcK
- dlrEejfmiF8ErqQboc1XbQ8ay6+Eu8KyqEsUAyQlQh7W/0xDg+I9pf/wl+OE3ytj
- +GJ0bUgMS1CiZyZTkPDCOHh0hBz5NhhqIG0Ksjcn3YehxmVi1P9KQ6ogOSa3bV+A
- eCSxPfX89IVtXE0Wrty++06AiWklBAFClehrjPlg=
-Received: from [IPV6:2001:470:b050:6:cc31:46d5:f26a:a82b] (unknown
- [IPv6:2001:470:b050:6:cc31:46d5:f26a:a82b])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: brad)
- by mail.comstyle.com (Postfix) with ESMTPSA id 4XB4DM4XzQz8PbN;
- Sat, 21 Sep 2024 18:48:35 -0400 (EDT)
-Message-ID: <58b41976-15aa-401d-9935-2ea5bb911e78@comstyle.com>
-Date: Sat, 21 Sep 2024 18:48:34 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ssEJO-0003DK-8T
+ for qemu-devel@nongnu.org; Sun, 22 Sep 2024 00:35:06 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ssEJM-0007bW-PW
+ for qemu-devel@nongnu.org; Sun, 22 Sep 2024 00:35:05 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5c3d2f9f896so4533453a12.1
+ for <qemu-devel@nongnu.org>; Sat, 21 Sep 2024 21:35:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1726979702; x=1727584502; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VLt7zZYnCvXHyj2WLIUmKdIVQcyUAHHPI9LgFWgT2rw=;
+ b=TugRfFdruMnN6cxfjQabfmzyvu4kpUMcp1o5J567cdSaDmGZUlW7FP4LVjusgIxvY+
+ nJo7gYSFpURSbTpxBYZTG5rJlHDuaA+L8nwMJG67Dh4JDFkXrvrRgvQrfQVnrh7wNtNI
+ 4snsif8eDPfwIl67yLL6ERb7Px5fMSOH74oyXhT69/1Y7nhQIK+94FsWRNi5AflLcqlY
+ +0XE6VjwPGS0G5CZJLZwpyEMhVmS3Ci4oCCM1hllfk6eARODXcTgdbD9Z4W2hpPKWWFi
+ tYiPk3PlfVjpkvFzsEJo+EZmyeieTnPLo2IlEWOt/8h5ZDH5IEcNlTY6udMYNPE974c3
+ fGGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1726979702; x=1727584502;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VLt7zZYnCvXHyj2WLIUmKdIVQcyUAHHPI9LgFWgT2rw=;
+ b=YgoonaW3CGENrGC7P5+ajjYq4asYNVb81Z8pepkV/1R2QFiwYdahc5QKJg0W3KR/pU
+ Niw6pjgiqwwRUI4rdc5OivIkD2LLAgFOHv+OSB3itsVR7DuQ8ZNIL8ORJ0RULm30k/54
+ nJN1Y/5W9mNPkIkfcK56pCzyyw/bo8HaezGyzJ+BGF+953Vwvk0k16v00ODLMrjXzult
+ OFoW+li3lcK+VWZ06VW+aoRFrMNfzltyGDdnCHJBGiiwU6Ptsn4esLFcXxC1MBPzIEc9
+ tZ2Teft5JErYDjbJYIq7OmDmFGB/Kj3hfNqJu/boP4UPK8XjOV2NdXeE134D3LCiTnjP
+ dOfQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWhb8buPGu3mdxhupESwLe8LxhcdEbSKCeYZPvLoZUmhejAtf14CYPbsARlYVXO1vttQu78Y7J4CLPO@nongnu.org
+X-Gm-Message-State: AOJu0Yx+4mp9jjkbg4lig4tv242YI6dHy68SRE8Grs9pQvebu/9iE76m
+ +K/AkII1VoP78z1Mfp01yJ05eQnQJhGiOwFe9XnIwZiYq9bqKmEFo+F9LMcsq5g=
+X-Google-Smtp-Source: AGHT+IHMP5WpgxzGsUOSZCn+3OwDGfkjU5e0augtOX9msTJKVm+hwRwOnxVfxCKlWKEeCcLSZd/D9A==
+X-Received: by 2002:a05:6402:380f:b0:5c3:c4d9:5e0f with SMTP id
+ 4fb4d7f45d1cf-5c464a41653mr6189666a12.16.1726979702320; 
+ Sat, 21 Sep 2024 21:35:02 -0700 (PDT)
+Received: from [10.5.50.249] (90-181-218-29.rco.o2.cz. [90.181.218.29])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5c42bb89e07sm8841392a12.76.2024.09.21.21.35.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 21 Sep 2024 21:35:01 -0700 (PDT)
+Message-ID: <dfd50fee-81d8-4208-9082-29efa5c6c830@linaro.org>
+Date: Sun, 22 Sep 2024 06:34:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] contrib/plugins: ensure build does not pick up a system
- copy of plugin header
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-References: <Zu4063fjfHC5hHUl@humpty.home.comstyle.com>
- <87msk1dv45.fsf@draig.linaro.org>
+Subject: Re: [PATCH] configs: Fix typo in the sh4-softmmu devices config file
+To: Thomas Huth <thuth@redhat.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org
+References: <20240920161045.84622-1-thuth@redhat.com>
 Content-Language: en-US
-From: Brad Smith <brad@comstyle.com>
-In-Reply-To: <87msk1dv45.fsf@draig.linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240920161045.84622-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f938:3000:8::2;
- envelope-from=brad@comstyle.com; helo=mail.comstyle.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,81 +98,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024-09-21 8:55 a.m., Alex Benn=C3=A9e wrote:
-> Brad Smith <brad@comstyle.com> writes:
->
->> contrib/plugins: ensure build does not pick up a system copy of plugin
->> header
-> I'm confused because this changes the ordering of the GLIB inclusion. W=
-e
-> shouldn't be including the whole QEMU include path.
+On 9/20/24 18:10, Thomas Huth wrote:
+> This is the config file for the little endian target, so there
+> should not be a "eb" in here.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   configs/devices/sh4-softmmu/default.mak | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/configs/devices/sh4-softmmu/default.mak b/configs/devices/sh4-softmmu/default.mak
+> index aa821e4b60..efb401bfb1 100644
+> --- a/configs/devices/sh4-softmmu/default.mak
+> +++ b/configs/devices/sh4-softmmu/default.mak
+> @@ -1,4 +1,4 @@
+> -# Default configuration for sh4eb-softmmu
+> +# Default configuration for sh4-softmmu
+>   
+>   # Uncomment the following lines to disable these optional devices:
+>   #
 
-That's intentional. The GLIB header paths cannot come before the header p=
-ath
-for the plugin header otherwise it pulls in the older plugin header from =
-the
-installed copy of QEMU and breaks. The QEMU include path is necessary
-for the plugin header.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-
-cc=C2=A0 -O2 -g=C2=A0 -I/usr/local/include/glib-2.0=20
--I/usr/local/lib/glib-2.0/include -I/usr/local/include -fPIC -Wall=20
--I/home/brad/tmp/qemu/contrib/plugins/../../include/qemu -c -o execlog.o=20
-/home/brad/tmp/qemu/contrib/plugins/execlog.c
-/home/brad/tmp/qemu/contrib/plugins/execlog.c:262:41: error: too many=20
-arguments to function call, expected single argument 'insn', have 3=20
-arguments
- =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qemu_=
-plugin_insn_data(insn, &insn_opcode, sizeof(insn_opcode));
- =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ~~~~~=
-~~~~~~~~~~~~~~~~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/usr/local/include/qemu-plugin.h:407:13: note: 'qemu_plugin_insn_data'=20
-declared here
-const void *qemu_plugin_insn_data(const struct qemu_plugin_insn *insn);
- =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^
-1 error generated.
-
-> How does this fail?
->
->> With the ordering of the header path if a copy of QEMU is installed it
->> will pickup the system copy of the header before the build paths copy
->> and the build will fail.
->>
->> Signed-off-by: Brad Smith <brad@comstyle.com>
->> ---
->>   contrib/plugins/Makefile | 5 +++--
->>   1 file changed, 3 insertions(+), 2 deletions(-)
->>
->> diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
->> index 05a2a45c5c..52fc390376 100644
->> --- a/contrib/plugins/Makefile
->> +++ b/contrib/plugins/Makefile
->> @@ -41,9 +41,10 @@ SONAMES :=3D $(addsuffix $(SO_SUFFIX),$(addprefix l=
-ib,$(NAMES)))
->>  =20
->>   # The main QEMU uses Glib extensively so it is perfectly fine to use=
- it
->>   # in plugins (which many example do).
->> -PLUGIN_CFLAGS :=3D $(shell $(PKG_CONFIG) --cflags glib-2.0)
->> -PLUGIN_CFLAGS +=3D -fPIC -Wall
->> +GLIB_CFLAGS :=3D $(shell $(PKG_CONFIG) --cflags glib-2.0)
->>   PLUGIN_CFLAGS +=3D -I$(TOP_SRC_PATH)/include/qemu
-> Not withstanding the fact I've just borrowed bswap.h for a test plugin
-> maybe we should actually copy qemu-plugin.h to an entirely new location
-> during the build and then include from there to avoid any other
-> potential pollutions?
-
-I don't see how that would make any difference, but either way as long=20
-as the header
-path ordering is corrected so this new path is not passed last on the=20
-command line
-getting the ordering wrong.
-
->
->> +PLUGIN_CFLAGS +=3D $(GLIB_CFLAGS)
->> +PLUGIN_CFLAGS +=3D -fPIC -Wall
->>  =20
->>   # Helper that honours V=3D1 so we get some output when compiling
->>   quiet-@ =3D $(if $(V),,@$(if $1,printf "  %-7s %s\n" "$(strip $1)" "=
-$(strip $2)" && ))
+r~
 
