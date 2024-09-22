@@ -4,95 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53C3BCF9C64
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Sep 2024 11:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7583CF9C6C
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Sep 2024 12:02:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssLDr-0004xc-6O; Sun, 22 Sep 2024 07:57:51 -0400
+	id 1ssLHZ-0001GN-Jk; Sun, 22 Sep 2024 08:01:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1ssLDp-0004x6-Bi
- for qemu-devel@nongnu.org; Sun, 22 Sep 2024 07:57:49 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1ssLDn-0001kY-I3
- for qemu-devel@nongnu.org; Sun, 22 Sep 2024 07:57:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=4frdvPwgJ+kiRi8Yuh/O4hxXpitZpmRM0nyZ2nU7V7s=; b=YLQ2Vy9OsXmq8QBTs2fH2f6GK5
- henW8Hn3FmPE57yCQcxwQZh5YsA5dxSEqvMk9I+qd4gfo6r/nvSm2B534t4imSnLLaTnAVzJ56uM7
- pyv5iZy+bo56ZkRkhDWSWQ3Lujt8MYhlUXsDkCLwUW7xRTb8PtTc5wyXgHLaQtyO62TSVTWCtTfSV
- kzHfnc0E5/cr+En15faUoW0K0ErG3OoOwbm4IYmSXAtE3mnxulIG36hgsc7KdJUFQN+2rp5ly8cRG
- R3OD90jNiaOadKdR937RIw8iRPIE6wjxpYUBT+gxBo+qcPf1jNBu/uBQsqXcLxVlpyhkLCYdbx7c6
- FTG4SYOWaQSF3dbfh2XXD6T3fH6MOoh5LkZniM3Inl+dxQSjPbjFMZuzeJDyiFDeQu3SpzO8hWLOH
- YXkDhx+zR9jB9WNcrgJvuOjYfPzyV+XuO6uMliBNMpNjeSlhG/hwefjjIfK/JbJlxaBz6VSQGfj3z
- A/SWw3yOlNGf+wp/1GLf2NFW3vWXKuy8XzTnd7yz2V5rELesNEhYHWYVuBpsML2+wyq8vlmi6FM3r
- fz5Dq7XAPzH5j0mat4Gb1GK40LfBVLJ5fnewkd6ViuVLuEQvwf7n+Z8oCkmL4KFtu0juKmhBOWg0I
- IHKcSUTMpdNUK1kGKOT2joSbPxkSwdfSqppRoc72M=;
-Received: from [2a00:23c4:8bb8:7000:41b:8fca:3a2a:2286]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1ssLDZ-00092u-1q; Sun, 22 Sep 2024 12:57:37 +0100
-Message-ID: <eb11c984-ebe4-4a09-9d71-1e9db7fe7e6f@ilande.co.uk>
-Date: Sun, 22 Sep 2024 12:57:32 +0100
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ssLHL-0000vu-Mr
+ for qemu-devel@nongnu.org; Sun, 22 Sep 2024 08:01:33 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ssLHG-0002NE-Kh
+ for qemu-devel@nongnu.org; Sun, 22 Sep 2024 08:01:25 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5c5b9bf9d8bso792752a12.1
+ for <qemu-devel@nongnu.org>; Sun, 22 Sep 2024 05:01:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727006479; x=1727611279; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=m+T4dcqyJxvJdq82j2M/HcYPFc2eysHobPrKz3oAZqo=;
+ b=VuRph7SI8Ah1L66ezIYU9FfBD9xtLGIwymSavHihPqW3f+x82NYptF8smoaEcbdFP7
+ XzU2duGsV40deO9ZLgKjymsaTTR8rAwZY0c+9eIauSiSFeIwwj8d5jm0eLoAdVbwC54w
+ EmUqUoEnj2apocOuLw1kA5VkxHfFPZb13axeYaYFOMW6PBffDLDB0eFJNGVc0tDwMqSC
+ R7FP8M+b/3BnbupPQbRrAv0pz1YHtGojbkPVwbyinCOELr4SO9cI25d5iOBA7Uwz6cAE
+ IMRncruslLnJ0kZfsO85KVY0AjEskt4HUfQYHDIgVTakb2qMHNB9YcqpQ+yg5DspBHDP
+ ZwdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727006479; x=1727611279;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=m+T4dcqyJxvJdq82j2M/HcYPFc2eysHobPrKz3oAZqo=;
+ b=BgHTs15QQ4139qVusaSLWsgAyTIBdIUgfjTiNEammD8v5Srzp+fK9kjUfV48XpGIhQ
+ 9Wdu/YhkonB+hAutjCqAXPXyjRd0WUB02E0n/4t/d7POY5s5S70whAq9xGEMhcoOKJtr
+ WzFXGtm/do10Y3OUxjU/pBxkhoyYUfabdcrO5t47q10uymLaA4BIRqh4Sl6RBbz4UPOj
+ Vd7RWCNlny8MlmaZBKK8AhfC+iI2rTNq6ep8nCjUksVSsa8SKSd/ajv8dBm7Da3cAL9B
+ AfqgNQU+/YEfn4Hf2H84XEd3VxcuiQIJRMzOVBxYbSZtSUxi/zMDXgRv3/CBr21tXCmx
+ IkLA==
+X-Gm-Message-State: AOJu0YzhL7Vw4IlLwvwsfQuFWRrlHP2mv2ryyS3JaVpAEsKztLL4iz0k
+ TDw3LAHj4CSI9EEk7dgbWg7Mts2UYRZguQi5BfNWd4CyJywu0p/epbpvs8WznlPpJkau/Jpcl1B
+ o/9I=
+X-Google-Smtp-Source: AGHT+IH4p30YPAgibEfGd1QQrz5qhxQxsq2vyAwhjG8RdCEoTODdEcy5E/Hu5ku04Z09CzsU0XbghQ==
+X-Received: by 2002:a05:6402:1cc1:b0:5c4:2fca:b11 with SMTP id
+ 4fb4d7f45d1cf-5c464a7e8d2mr11480336a12.35.1727006479116; 
+ Sun, 22 Sep 2024 05:01:19 -0700 (PDT)
+Received: from stoup.. (90-181-218-29.rco.o2.cz. [90.181.218.29])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a90612df525sm1067909966b.159.2024.09.22.05.01.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 22 Sep 2024 05:01:18 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+Subject: [PULL 09/31] tcg/s390x: Do not expand cmp_vec early
+Date: Sun, 22 Sep 2024 14:00:50 +0200
+Message-ID: <20240922120112.5067-10-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240922120112.5067-1-richard.henderson@linaro.org>
+References: <20240922120112.5067-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Igor Mammedov <imammedo@redhat.com>, Ricardo Ribalda <ribalda@chromium.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
- righi.andrea@gmail.com
-References: <20240814115736.1580337-1-ribalda@chromium.org>
- <20240821164553.63007e25@imammedo.users.ipa.redhat.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20240821164553.63007e25@imammedo.users.ipa.redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:7000:41b:8fca:3a2a:2286
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v5 0/3] hw/i386/acpi: Pre-compute the _PRT table
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,89 +94,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/08/2024 15:45, Igor Mammedov wrote:
+Move expansion to opcode generation.
 
-> On Wed, 14 Aug 2024 11:56:08 +0000
-> Ricardo Ribalda <ribalda@chromium.org> wrote:
-> 
->> Today for x86 the _PRT() table is computed in runtime.
->> Under some configurations, computing the _PRT table can take more than
->> 30 seconds and the ACPI timeout is violated.
->>
->> This patchset modifies _PRT() to return a pre-computed table.
-> 
-> To be sure we are not breaking anything boot tested it with
-> rhel6.7/9.0, winxp, ws2022
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/s390x/tcg-target.c.inc | 139 +++++++++++++++++--------------------
+ 1 file changed, 65 insertions(+), 74 deletions(-)
 
-Hi Ricardo/Igor,
-
-Unfortunately it seems that this series (and in particular commit 99cb2c6c7b 
-("hw/i386/acpi-build: Return a pre-computed _PRT table") breaks my WinXP ISO boot 
-test case using the dc390/am53C974 SCSI device.
-
-Current master hangs when booting WinXP from a dc390 SCSI CD just after loading the 
-kernel device drivers and displaying "Setup is starting Windows" instead of 
-proceeding to the "Welcome to Setup" screen.
-
-Note that there is a separate timeout issue caused by a bug in SeaBIOS which is fixed 
-in the SeaBIOS repository as commit 2424e4c0 ("esp-scsi: indicate acceptance of 
-MESSAGE IN phase data"). As the QEMU SeaBIOS binaries haven't yet been updated to 
-contain this fix, I've uploaded a pre-built bios.bin to 
-https://www.ilande.co.uk/tmp/qemu/bios.bin to help reproduce the issue.
-
-Once the above file is downloaded the issue can be reproduced with the command line 
-below:
-
-./qemu-system-x86_64 \
-   -m 1G \
-   -device dc390,id=scsi0 \
-   -device scsi-cd,drive=drive0,bus=scsi0.0,channel=0,scsi-id=6,lun=0 \
-   -drive file=winxp.iso,if=none,id=drive0 \
-   -vga cirrus \
-   -boot d \
-   -trace 'esp*' \
-   -bios bios.bin
-
-With the ESP tracing enabled it is possible to see that WinXP appears to get stuck in 
-a loop trying to send a SCSI command followed by a "Bus Reset". Reverting 99cb2c6c7b 
-allows the WinXP ISO to boot to the "Welcome to Setup" screen as before.
-
-
-ATB,
-
-Mark.
-
->> Changelog v3->v4 Thanks Richard:
->> - Make link_name struct static
->>
->> Changelog v3->v4 Thanks Igor:
->> - Add missing files to tests/qtest/bios-tables-test-allowed-diff.h
->>
->> Changelog v2->v3 Thanks Michael:
->> - Code style
->> - Add cover letter
->>
->> Ricardo Ribalda (3):
->>    tests/acpi: pc: allow DSDT acpi table changes
->>    hw/i386/acpi-build: Return a pre-computed _PRT table
->>    tests/acpi: pc: update golden masters for DSDT
->>
->>   hw/i386/acpi-build.c                 | 120 +++++----------------------
->>   tests/data/acpi/x86/pc/DSDT          | Bin 6830 -> 8527 bytes
->>   tests/data/acpi/x86/pc/DSDT.acpierst | Bin 6741 -> 8438 bytes
->>   tests/data/acpi/x86/pc/DSDT.acpihmat | Bin 8155 -> 9852 bytes
->>   tests/data/acpi/x86/pc/DSDT.bridge   | Bin 13701 -> 15398 bytes
->>   tests/data/acpi/x86/pc/DSDT.cphp     | Bin 7294 -> 8991 bytes
->>   tests/data/acpi/x86/pc/DSDT.dimmpxm  | Bin 8484 -> 10181 bytes
->>   tests/data/acpi/x86/pc/DSDT.hpbridge | Bin 6781 -> 8478 bytes
->>   tests/data/acpi/x86/pc/DSDT.hpbrroot | Bin 3337 -> 5034 bytes
->>   tests/data/acpi/x86/pc/DSDT.ipmikcs  | Bin 6902 -> 8599 bytes
->>   tests/data/acpi/x86/pc/DSDT.memhp    | Bin 8189 -> 9886 bytes
->>   tests/data/acpi/x86/pc/DSDT.nohpet   | Bin 6688 -> 8385 bytes
->>   tests/data/acpi/x86/pc/DSDT.numamem  | Bin 6836 -> 8533 bytes
->>   tests/data/acpi/x86/pc/DSDT.roothp   | Bin 10623 -> 12320 bytes
->>   tests/data/acpi/x86/q35/DSDT.cxl     | Bin 9714 -> 13148 bytes
->>   tests/data/acpi/x86/q35/DSDT.viot    | Bin 9464 -> 14615 bytes
->>   16 files changed, 22 insertions(+), 98 deletions(-)
+diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
+index ad587325fc..23935fd0f0 100644
+--- a/tcg/s390x/tcg-target.c.inc
++++ b/tcg/s390x/tcg-target.c.inc
+@@ -2841,6 +2841,67 @@ static void tcg_out_dupi_vec(TCGContext *s, TCGType type, unsigned vece,
+     tcg_out_insn(s, VRX, VLREP, dst, TCG_TMP0, TCG_REG_NONE, 0, MO_64);
+ }
+ 
++static bool tcg_out_cmp_vec_noinv(TCGContext *s, unsigned vece, TCGReg a0,
++                                  TCGReg a1, TCGReg a2, TCGCond cond)
++{
++    bool need_swap = false, need_inv = false;
++
++    switch (cond) {
++    case TCG_COND_EQ:
++    case TCG_COND_GT:
++    case TCG_COND_GTU:
++        break;
++    case TCG_COND_NE:
++    case TCG_COND_LE:
++    case TCG_COND_LEU:
++        need_inv = true;
++        break;
++    case TCG_COND_LT:
++    case TCG_COND_LTU:
++        need_swap = true;
++        break;
++    case TCG_COND_GE:
++    case TCG_COND_GEU:
++        need_swap = need_inv = true;
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
++    if (need_inv) {
++        cond = tcg_invert_cond(cond);
++    }
++    if (need_swap) {
++        TCGReg swap = a1;
++        a1 = a2;
++        a2 = swap;
++        cond = tcg_swap_cond(cond);
++    }
++
++    switch (cond) {
++    case TCG_COND_EQ:
++        tcg_out_insn(s, VRRc, VCEQ, a0, a1, a2, vece);
++        break;
++    case TCG_COND_GT:
++        tcg_out_insn(s, VRRc, VCH, a0, a1, a2, vece);
++        break;
++    case TCG_COND_GTU:
++        tcg_out_insn(s, VRRc, VCHL, a0, a1, a2, vece);
++        break;
++    default:
++        g_assert_not_reached();
++    }
++    return need_inv;
++}
++
++static void tcg_out_cmp_vec(TCGContext *s, unsigned vece, TCGReg a0,
++                            TCGReg a1, TCGReg a2, TCGCond cond)
++{
++    if (tcg_out_cmp_vec_noinv(s, vece, a0, a1, a2, cond)) {
++        tcg_out_insn(s, VRRc, VNO, a0, a0, a0, 0);
++    }
++}
++
+ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+                            unsigned vecl, unsigned vece,
+                            const TCGArg args[TCG_MAX_OP_ARGS],
+@@ -2959,19 +3020,7 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+         break;
+ 
+     case INDEX_op_cmp_vec:
+-        switch ((TCGCond)args[3]) {
+-        case TCG_COND_EQ:
+-            tcg_out_insn(s, VRRc, VCEQ, a0, a1, a2, vece);
+-            break;
+-        case TCG_COND_GT:
+-            tcg_out_insn(s, VRRc, VCH, a0, a1, a2, vece);
+-            break;
+-        case TCG_COND_GTU:
+-            tcg_out_insn(s, VRRc, VCHL, a0, a1, a2, vece);
+-            break;
+-        default:
+-            g_assert_not_reached();
+-        }
++        tcg_out_cmp_vec(s, vece, a0, a1, a2, args[3]);
+         break;
+ 
+     case INDEX_op_s390_vuph_vec:
+@@ -3024,8 +3073,8 @@ int tcg_can_emit_vec_op(TCGOpcode opc, TCGType type, unsigned vece)
+     case INDEX_op_umax_vec:
+     case INDEX_op_umin_vec:
+     case INDEX_op_xor_vec:
+-        return 1;
+     case INDEX_op_cmp_vec:
++        return 1;
+     case INDEX_op_cmpsel_vec:
+     case INDEX_op_rotrv_vec:
+         return -1;
+@@ -3039,68 +3088,14 @@ int tcg_can_emit_vec_op(TCGOpcode opc, TCGType type, unsigned vece)
+     }
+ }
+ 
+-static bool expand_vec_cmp_noinv(TCGType type, unsigned vece, TCGv_vec v0,
+-                                 TCGv_vec v1, TCGv_vec v2, TCGCond cond)
+-{
+-    bool need_swap = false, need_inv = false;
+-
+-    switch (cond) {
+-    case TCG_COND_EQ:
+-    case TCG_COND_GT:
+-    case TCG_COND_GTU:
+-        break;
+-    case TCG_COND_NE:
+-    case TCG_COND_LE:
+-    case TCG_COND_LEU:
+-        need_inv = true;
+-        break;
+-    case TCG_COND_LT:
+-    case TCG_COND_LTU:
+-        need_swap = true;
+-        break;
+-    case TCG_COND_GE:
+-    case TCG_COND_GEU:
+-        need_swap = need_inv = true;
+-        break;
+-    default:
+-        g_assert_not_reached();
+-    }
+-
+-    if (need_inv) {
+-        cond = tcg_invert_cond(cond);
+-    }
+-    if (need_swap) {
+-        TCGv_vec t1;
+-        t1 = v1, v1 = v2, v2 = t1;
+-        cond = tcg_swap_cond(cond);
+-    }
+-
+-    vec_gen_4(INDEX_op_cmp_vec, type, vece, tcgv_vec_arg(v0),
+-              tcgv_vec_arg(v1), tcgv_vec_arg(v2), cond);
+-
+-    return need_inv;
+-}
+-
+-static void expand_vec_cmp(TCGType type, unsigned vece, TCGv_vec v0,
+-                           TCGv_vec v1, TCGv_vec v2, TCGCond cond)
+-{
+-    if (expand_vec_cmp_noinv(type, vece, v0, v1, v2, cond)) {
+-        tcg_gen_not_vec(vece, v0, v0);
+-    }
+-}
+-
+ static void expand_vec_cmpsel(TCGType type, unsigned vece, TCGv_vec v0,
+                               TCGv_vec c1, TCGv_vec c2,
+                               TCGv_vec v3, TCGv_vec v4, TCGCond cond)
+ {
+     TCGv_vec t = tcg_temp_new_vec(type);
+ 
+-    if (expand_vec_cmp_noinv(type, vece, t, c1, c2, cond)) {
+-        /* Invert the sense of the compare by swapping arguments.  */
+-        tcg_gen_bitsel_vec(vece, v0, t, v4, v3);
+-    } else {
+-        tcg_gen_bitsel_vec(vece, v0, t, v3, v4);
+-    }
++    tcg_gen_cmp_vec(cond, vece, t, c1, c2);
++    tcg_gen_bitsel_vec(vece, v0, t, v3, v4);
+     tcg_temp_free_vec(t);
+ }
+ 
+@@ -3153,10 +3148,6 @@ void tcg_expand_vec_op(TCGOpcode opc, TCGType type, unsigned vece,
+     v2 = temp_tcgv_vec(arg_temp(va_arg(va, TCGArg)));
+ 
+     switch (opc) {
+-    case INDEX_op_cmp_vec:
+-        expand_vec_cmp(type, vece, v0, v1, v2, va_arg(va, TCGArg));
+-        break;
+-
+     case INDEX_op_cmpsel_vec:
+         v3 = temp_tcgv_vec(arg_temp(va_arg(va, TCGArg)));
+         v4 = temp_tcgv_vec(arg_temp(va_arg(va, TCGArg)));
+-- 
+2.43.0
 
 
