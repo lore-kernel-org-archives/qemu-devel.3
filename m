@@ -4,99 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FEEECF9C64
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2613BCF9C69
 	for <qemu-devel@archiver.kernel.org>; Sun, 22 Sep 2024 19:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssSHt-00016b-VJ; Sun, 22 Sep 2024 15:30:29 -0400
+	id 1ssSHl-0000wx-7x; Sun, 22 Sep 2024 15:30:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
- id 1ssSHp-00015v-Rd
- for qemu-devel@nongnu.org; Sun, 22 Sep 2024 15:30:25 -0400
-Received: from mx0a-00190b01.pphosted.com ([67.231.149.131])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1ssSHj-0000w6-Bg
+ for qemu-devel@nongnu.org; Sun, 22 Sep 2024 15:30:19 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
- id 1ssSHn-0000Yf-CM
- for qemu-devel@nongnu.org; Sun, 22 Sep 2024 15:30:25 -0400
-Received: from pps.filterd (m0409409.ppops.net [127.0.0.1])
- by m0409409.ppops.net-00190b01. (8.18.1.2/8.18.1.2) with ESMTP id
- 48MHo0RC016258; Sun, 22 Sep 2024 20:29:39 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=jan2016.eng;
- bh=ZksYdjXX6xnlBu3k0eV8lP8yi+W69pQVELSsLsJaNTo=; b=mUDf5rnl9G6K
- G8IUCUwej4puZFIxA6tJyC+VscVrOcmzjHp68s6Z+AdDsOFlpXWz9QMHNawCOAa3
- Ope9WLe7S/3DJJV0NDYzTH97ceHN4+EuVwqyjoXSbbRRHvwaAbHH/DyTc3lpOzCp
- Rlrr0MbieOTQH5Z8uSwUkTomli14sB86sDLddob7lYunZDvlcapdUnIPCEOR1QUT
- 3qRphylJhitzlpgMZcCQ2SZqxjUSkDOFr49exTCfhiSEAgs1CTKXXZJp/AIsMwoh
- rvPWUItnXIqhSA/e7g6DTQyPyB1+3iVZJHqh5WmQK8xvhpkdveiOPRLdPnvYxCLT
- KLpD/+f0Mw==
-Received: from prod-mail-ppoint8
- (a72-247-45-34.deploy.static.akamaitechnologies.com [72.247.45.34] (may be
- forged))
- by m0409409.ppops.net-00190b01. (PPS) with ESMTPS id 41t7ft9mu2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 22 Sep 2024 20:29:39 +0100 (BST)
-Received: from pps.filterd (prod-mail-ppoint8.akamai.com [127.0.0.1])
- by prod-mail-ppoint8.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
- 48MD2nv9012780; Sun, 22 Sep 2024 15:29:38 -0400
-Received: from prod-mail-relay19.dfw02.corp.akamai.com ([172.27.165.173])
- by prod-mail-ppoint8.akamai.com (PPS) with ESMTP id 41ssfxrn93-1;
- Sun, 22 Sep 2024 15:29:37 -0400
-Received: from [100.64.0.1] (prod-aoa-dallas2clt14.dfw02.corp.akamai.com
- [172.27.166.123])
- by prod-mail-relay19.dfw02.corp.akamai.com (Postfix) with ESMTP id 9089163691; 
- Sun, 22 Sep 2024 19:29:34 +0000 (GMT)
-Message-ID: <027c4f24-f515-4fdb-8770-6bf2433e0f43@akamai.com>
-Date: Sun, 22 Sep 2024 14:29:27 -0500
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1ssSHg-0000l0-C9
+ for qemu-devel@nongnu.org; Sun, 22 Sep 2024 15:30:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=Cqsz0cqk6OhLiipbNFGl3ThzTke/E2rxtY4Wroghn68=; b=OFa1/DoA0sjhiHhpJbnwFwG8et
+ WMlmmcBPs25wBOkmYbGsDz9w8YtfVAz4UbNlXKSFypA5nJj/vwoIBIOVIGcb0x5ZpBrYWhul/5Vd0
+ ajAew2UKs4V+g0VS72cQ2ld6ggXVGY8REefOf/sLZeppivvRu8yv0sI/L2ACVJ+vbIzwM11Yv61DZ
+ KBQgSfRp0ESMtTgS0/MWL6274q+I7AItcaRGGieTMlsFtAyByuobTheqdguqCd8JaMWfmJc/Fng+I
+ LAmp/ROqwBhDPSO5wcI+Q3ntka5dDpxB0Sa8XPZztFbPNktT+MhyoFizxEe4eZMDdHc0sdztTRFlM
+ yH9DzFn0hTdQRzXpTncJb0M1rZ3ThoYqIL+Fje2KSYiErW38n3uZi/ySWzJWTUkVhNIFP3wQoQUx3
+ QHRA5ekJV8T7ORlxSD8dmSVwI4LuWg4Li/OCIQeKGFNtt6Ponvlz9utuEo/X3PoSkYWBDp3uN+LNp
+ B4Q1+KDB++VBM5IuxTPfhZMqmRjzaacXckFEErpC5iKhPfXK7kOatacyBj9Nks4oF7M9xV3qtzeki
+ alK95TDOU2aguHvIROvPxDhwBOfkg0JyXhgIQrJNy8TTs5kc7KGrfNBBWY36sQjO57rl/f9LsaK7x
+ k+QM+eltC1lqiw7l0xfHAPF13Ffsg5sEarmVe18e8=;
+Received: from [2a00:23c4:8bb8:7000:1f10:bbb5:a62c:f41d]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1ssSHS-000BPK-Eq; Sun, 22 Sep 2024 20:30:06 +0100
+Message-ID: <97971f2e-aa25-49ae-a1cc-c5faddb8abb0@ilande.co.uk>
+Date: Sun, 22 Sep 2024 20:30:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
-To: "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>
-Cc: Gonglei <arei.gonglei@huawei.com>, qemu-devel@nongnu.org,
- yu.zhang@ionos.com, elmar.gerdes@ionos.com, zhengchuan@huawei.com,
- berrange@redhat.com, armbru@redhat.com, lizhijian@fujitsu.com,
- pbonzini@redhat.com, xiexiangyou@huawei.com,
- linux-rdma@vger.kernel.org, lixiao91@huawei.com, jinpu.wang@ionos.com,
- Jialin Wang <wangjialin23@huawei.com>
-References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
- <Zs4z7tKWif6K4EbT@x1n> <20240827165643-mutt-send-email-mst@kernel.org>
+To: Ricardo Ribalda <ribalda@chromium.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org
+References: <20240922143216.662873-1-ribalda@chromium.org>
 Content-Language: en-US
-From: Michael Galaxy <mgalaxy@akamai.com>
-In-Reply-To: <20240827165643-mutt-send-email-mst@kernel.org>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20240922143216.662873-1-ribalda@chromium.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-22_19,2024-09-19_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- phishscore=0 spamscore=0
- mlxscore=0 mlxlogscore=999 adultscore=0 malwarescore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2408220000
- definitions=main-2409220150
-X-Proofpoint-GUID: GyWlgh7Tvyv0VqHMkvHLJyxugqdrXxJP
-X-Proofpoint-ORIG-GUID: GyWlgh7Tvyv0VqHMkvHLJyxugqdrXxJP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- priorityscore=1501
- mlxscore=0 bulkscore=0 suspectscore=0 impostorscore=0 spamscore=0
- clxscore=1011 malwarescore=0 adultscore=0 lowpriorityscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
- definitions=main-2409220151
-Received-SPF: pass client-ip=67.231.149.131; envelope-from=mgalaxy@akamai.com;
- helo=mx0a-00190b01.pphosted.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:7000:1f10:bbb5:a62c:f41d
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 0/3] Fix WinXP ISO boot using the dc390/am53C974 SCSI
+ device
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.129,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,106 +109,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi All,
+On 22/09/2024 15:31, Ricardo Ribalda wrote:
 
-I have met with the team from IONOS about their testing on actual IB 
-hardware here at KVM Forum today and the requirements are starting to 
-make more sense to me. I didn't say much in our previous thread because 
-I misunderstood the requirements, so let me try to explain and see if 
-we're all on the same page. There appears to be a fundamental limitation 
-here with rsocket, for which I don't see how it is possible to overcome.
+> Mark Cave-Ayland reported that after landing the pre-computed _PRT, the
+> above mentioned testcase failed to pass.
+> 
+> It seems that it is due to WinXP not handling properly a variable
+> package. Let's replace it.
+> 
+> 
+> Unfortunately, the ASL diff is not the best (or I cannot produce
+> something better):
+> 
+> 12c12
+> <  *     Length           0x00003917 (14615)
+> ---
+>>   *     Length           0x00003914 (14612)
+> 14c14
+> <  *     Checksum         0xD9
+> ---
+>>   *     Checksum         0x09
+> 
+> Ricardo Ribalda (3):
+>    tests/acpi: pc: allow DSDT acpi table changes
+>    hw/i386/acpi-build: return a non-var package from _PRT()
+>    tests/acpi: pc: update golden masters for DSDT
+> 
+>   hw/i386/acpi-build.c                 |   2 +-
+>   tests/data/acpi/x86/pc/DSDT          | Bin 8527 -> 8526 bytes
+>   tests/data/acpi/x86/pc/DSDT.acpierst | Bin 8438 -> 8437 bytes
+>   tests/data/acpi/x86/pc/DSDT.acpihmat | Bin 9852 -> 9851 bytes
+>   tests/data/acpi/x86/pc/DSDT.bridge   | Bin 15398 -> 15397 bytes
+>   tests/data/acpi/x86/pc/DSDT.cphp     | Bin 8991 -> 8990 bytes
+>   tests/data/acpi/x86/pc/DSDT.dimmpxm  | Bin 10181 -> 10180 bytes
+>   tests/data/acpi/x86/pc/DSDT.hpbridge | Bin 8478 -> 8477 bytes
+>   tests/data/acpi/x86/pc/DSDT.hpbrroot | Bin 5034 -> 5033 bytes
+>   tests/data/acpi/x86/pc/DSDT.ipmikcs  | Bin 8599 -> 8598 bytes
+>   tests/data/acpi/x86/pc/DSDT.memhp    | Bin 9886 -> 9885 bytes
+>   tests/data/acpi/x86/pc/DSDT.nohpet   | Bin 8385 -> 8384 bytes
+>   tests/data/acpi/x86/pc/DSDT.numamem  | Bin 8533 -> 8532 bytes
+>   tests/data/acpi/x86/pc/DSDT.roothp   | Bin 12320 -> 12319 bytes
+>   tests/data/acpi/x86/q35/DSDT.cxl     | Bin 13148 -> 13146 bytes
+>   tests/data/acpi/x86/q35/DSDT.viot    | Bin 14615 -> 14612 bytes
+>   16 files changed, 1 insertion(+), 1 deletion(-)
 
-The basic problem is that rsocket is trying to present a stream 
-abstraction, a concept that is fundamentally incompatible with RDMA. The 
-whole point of using RDMA in the first place is to avoid using the CPU, 
-and to do that, all of the memory (potentially hundreds of gigabytes) 
-need to be registered with the hardware *in advance* (this is how the 
-original implementation works).
+This passes my WinXP test (and also a local run of "make check") so it looks good to 
+me. I'm not familiar enough with ACPI to give an R-B tag, but it certainly solves the 
+issue so:
 
-The need to fake a socket/bytestream abstraction eventually breaks down 
-=> There is a limit (a few GB) in rsocket (which the IONOS team previous 
-reported in testing.... see that email), it appears that means that 
-rsocket is only going to be able to map a certain limited amount of 
-memory with the hardware until its internal "buffer" runs out before it 
-can then unmap and remap the next batch of memory with the hardware to 
-continue along with the fake bytestream. This is very much sticking a 
-square peg in a round hole. If you were to "relax" the rsocket 
-implementation to register the entire VM memory space (as my original 
-implementation does), then there wouldn't be any need for rsocket in the 
-first place.
+Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-I think there is just some misunderstanding here in the group in the way 
-infiniband is intended to work. Does that make sense so far? I do 
-understand the need for testing, but rsocket is simply not intended to 
-be used for kind of massive bulk data transfer purposes that we're 
-proposing using it here for, simply for the purposes of making our lives 
-better in testing.
 
-Regarding testing: During our previous thread earlier this summer, why 
-did we not consider making a better integration test to solve the test 
-burden problem? To explain better: If a new integration test were 
-written for QEMU and submitted and reviewed (a reasonably complex test 
-that was in line with a traditional live migration integration test that 
-actually spins up QEMU) which used softRoCE in a localhost configuration 
-that has full libibverbs supports and still allowed for compatibility 
-testing with QEMU, would such an integration not be sufficient to handle 
-the testing burden?
+ATB,
 
-Comments welcome,
-- Michael
+Mark.
 
-On 8/27/24 15:57, Michael S. Tsirkin wrote:
-> !-------------------------------------------------------------------|
->    This Message Is From an External Sender
->    This message came from outside your organization.
-> |-------------------------------------------------------------------!
->
-> On Tue, Aug 27, 2024 at 04:15:42PM -0400, Peter Xu wrote:
->> On Tue, Jun 04, 2024 at 08:14:06PM +0800, Gonglei wrote:
->>> From: Jialin Wang <wangjialin23@huawei.com>
->>>
->>> Hi,
->>>
->>> This patch series attempts to refactor RDMA live migration by
->>> introducing a new QIOChannelRDMA class based on the rsocket API.
->>>
->>> The /usr/include/rdma/rsocket.h provides a higher level rsocket API
->>> that is a 1-1 match of the normal kernel 'sockets' API, which hides the
->>> detail of rdma protocol into rsocket and allows us to add support for
->>> some modern features like multifd more easily.
->>>
->>> Here is the previous discussion on refactoring RDMA live migration using
->>> the rsocket API:
->>>
->>> https://urldefense.com/v3/__https://lore.kernel.org/qemu-devel/20240328130255.52257-1-philmd@linaro.org/__;!!GjvTz_vk!TuRaotO-yMj82o2kQo3x743jLoDElYgrXmp2wOfMTuCS1Y4k2Son1WGsRnZG_YYS9ZgBZ8uRHQ$
->>>
->>> We have encountered some bugs when using rsocket and plan to submit them to
->>> the rdma-core community.
->>>
->>> In addition, the use of rsocket makes our programming more convenient,
->>> but it must be noted that this method introduces multiple memory copies,
->>> which can be imagined that there will be a certain performance degradation,
->>> hoping that friends with RDMA network cards can help verify, thank you!
->>>
->>> Jialin Wang (6):
->>>    migration: remove RDMA live migration temporarily
->>>    io: add QIOChannelRDMA class
->>>    io/channel-rdma: support working in coroutine
->>>    tests/unit: add test-io-channel-rdma.c
->>>    migration: introduce new RDMA live migration
->>>    migration/rdma: support multifd for RDMA migration
->> This series has been idle for a while; we still need to know how to move
->> forward.
->
-> What exactly is the question? This got a bunch of comments,
-> the first thing to do would be to address them.
->
->
->>   I guess I lost the latest status quo..
->>
->> Any update (from anyone..) on what stage are we in?
->>
->> Thanks,
->> -- 
->> Peter Xu
 
