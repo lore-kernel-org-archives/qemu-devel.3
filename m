@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECF1BCF9C6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 16:24:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43564CF9C6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 16:24:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sslpy-0007rO-Pz; Mon, 23 Sep 2024 12:22:58 -0400
+	id 1sslpz-0007vY-Rr; Mon, 23 Sep 2024 12:22:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sslpW-0006TD-9A
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 12:22:30 -0400
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sslpY-0006VA-1E
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 12:22:32 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sslpQ-0000bD-9d
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 12:22:25 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48NEBjmJ018607;
- Mon, 23 Sep 2024 16:22:20 GMT
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sslpR-0000bd-EF
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 12:22:31 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48N3wj6h003277;
+ Mon, 23 Sep 2024 16:22:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=H/4pU4i5/TvIp
- LOuS2srJQ6STt98S9+c6PDZGCJOhcs=; b=D88uY6FZCf9y6dqnYhWp1VUK2+kFb
- EMz6jBsjklzpdgXBJi1VePQtE2c1LYo+z5KErW9Mga8gpuZhI23QHmxOx3Mx/6aV
- 3viTLMlazkxnbZD5qYfKauW+SsxgQC7YOiWHQBQRAF7+tRvGpg1eMSBT/olDcbR/
- QDSkKqKXkC3373UXhjSlE3z7Rt9AFlHUIhpmF1AucFYRFKhDg59l1qsoTMkQc0qH
- 5mm+WK2IaFqEWNBUxsvqx5tZPIufsng0u6yGCG4rH/YJIS9x30AnvxB5lte9UZA6
- Bqlf+z8WlXe9vj1DW4PQqKvfmFDS5ezNHeZJzNXVwj3qQwje/AieUBQPw==
+ :mime-version:content-transfer-encoding; s=pp1; bh=nNWVkv5mLwwcN
+ NcNmuX3ooqqW+WAxupmxKS6va9bJB4=; b=MRoa7A4IUtG78DK7Mj/gcs5RvkIz9
+ ayc24nJL5RZqdp/R3Spn4F97dfEKcHHr7Yf05kfhTQwIQVqrMcXAkkLASA55Actx
+ Wjwgju1lOAktT4J98d8echoaMt2rw1GOR2zv9/bZKEfzmT9na9KvVHBnTdn8iDpW
+ Wp2IdC+aOg2CixKWRLZVP1gP8NfPbPT8AfAcHB9/6lqC0pPUceQwSLrktKp62ceC
+ f8gH/7okd/rSWQo+qdkAcmvVh0wX3MKo2NIyQoLQHJir+BV0+CaiUxhiEfORXkSs
+ 8X92cj8EQgCfCMbqTstp8cd1bkWPzUCy1HrRfkVz+78txb4AWvNT5sdgw==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41skjrd0ed-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41smjjmwd9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 23 Sep 2024 16:22:20 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48NGMJuP024285;
- Mon, 23 Sep 2024 16:22:19 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41skjrd0e9-1
+ Mon, 23 Sep 2024 16:22:23 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48NGMNOb026030;
+ Mon, 23 Sep 2024 16:22:23 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41smjjmwd4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 23 Sep 2024 16:22:19 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48NEF4Sb012489;
- Mon, 23 Sep 2024 16:22:19 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41t9fpqg06-1
+ Mon, 23 Sep 2024 16:22:23 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48NE2YCB008688;
+ Mon, 23 Sep 2024 16:22:22 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41t8v0ym0j-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 23 Sep 2024 16:22:19 +0000
+ Mon, 23 Sep 2024 16:22:22 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48NGMHX349414524
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48NGMK5i57999638
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 23 Sep 2024 16:22:17 GMT
+ Mon, 23 Sep 2024 16:22:20 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 18AF620043;
- Mon, 23 Sep 2024 16:22:17 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 9D49C20040;
+ Mon, 23 Sep 2024 16:22:20 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ADF2620040;
- Mon, 23 Sep 2024 16:22:16 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3FAC02004B;
+ Mon, 23 Sep 2024 16:22:20 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.179.24.235])
  by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 23 Sep 2024 16:22:16 +0000 (GMT)
+ Mon, 23 Sep 2024 16:22:20 +0000 (GMT)
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 01/18] gdbstub: Make gdb_get_char() static
-Date: Mon, 23 Sep 2024 18:12:56 +0200
-Message-ID: <20240923162208.90745-2-iii@linux.ibm.com>
+Subject: [PATCH 09/18] qemu-timer: Provide qemu_clock_enable() stub for
+ qemu-user
+Date: Mon, 23 Sep 2024 18:13:04 +0200
+Message-ID: <20240923162208.90745-10-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240923162208.90745-1-iii@linux.ibm.com>
 References: <20240923162208.90745-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: hMpXotHra_VQdfz7B4WDiTsAqgEylC6I
-X-Proofpoint-ORIG-GUID: -9953Ptl3K7PnSGlBKiOWkYgTlKHvMUV
+X-Proofpoint-ORIG-GUID: 2mLLUPLqT0H6K1cmR3lDgLbE3ha58Cvh
+X-Proofpoint-GUID: bQGPXrUsNl-6tVsClkm71FPCVDUgHpxd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-23_12,2024-09-23_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 priorityscore=1501
- spamscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0
- clxscore=1015 malwarescore=0 mlxlogscore=931 bulkscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
- definitions=main-2409230117
+ priorityscore=1501
+ impostorscore=0 adultscore=0 malwarescore=0 suspectscore=0 bulkscore=0
+ spamscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
+ mlxlogscore=627 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409230121
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -115,41 +116,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's user-only since commit a7e0f9bd2ace ("gdbstub: abstract target
-specific details from gdb_put_packet_binary").
+Sharing pause_all_vcpus() with qemu-user requires a no-op
+implementation of qemu_clock_enable().
 
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- gdbstub/internals.h | 2 --
- gdbstub/user.c      | 2 +-
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ stubs/meson.build  | 4 ++++
+ stubs/qemu-timer.c | 6 ++++++
+ 2 files changed, 10 insertions(+)
+ create mode 100644 stubs/qemu-timer.c
 
-diff --git a/gdbstub/internals.h b/gdbstub/internals.h
-index bf5a5c63029..5acc36846f3 100644
---- a/gdbstub/internals.h
-+++ b/gdbstub/internals.h
-@@ -142,8 +142,6 @@ void gdb_create_default_process(GDBState *s);
- int gdb_signal_to_target(int sig);
- int gdb_target_signal_to_gdb(int sig);
+diff --git a/stubs/meson.build b/stubs/meson.build
+index ab4b98a0e18..9e78a0b9745 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -46,6 +46,10 @@ if have_block or have_ga
+   stub_ss.add(files('qmp-quit.c'))
+ endif
  
--int gdb_get_char(void); /* user only */
--
- /**
-  * gdb_continue() - handle continue in mode specific way.
-  */
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index b36033bc7a2..6a493c5ba3a 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -103,7 +103,7 @@ typedef struct {
- 
- static GDBUserState gdbserver_user_state;
- 
--int gdb_get_char(void)
-+static int gdb_get_char(void)
- {
-     uint8_t ch;
-     int ret;
++if have_user
++  stub_ss.add(files('qemu-timer.c'))
++endif
++
+ if have_block or have_ga or have_user
+   stub_ss.add(files('replay-mutex.c'))
+ endif
+diff --git a/stubs/qemu-timer.c b/stubs/qemu-timer.c
+new file mode 100644
+index 00000000000..27b67f7b313
+--- /dev/null
++++ b/stubs/qemu-timer.c
+@@ -0,0 +1,6 @@
++#include "qemu/osdep.h"
++#include "qemu/timer.h"
++
++void qemu_clock_enable(QEMUClockType type, bool enabled)
++{
++}
 -- 
 2.46.0
 
