@@ -4,82 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52BB5CF9C6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 16:46:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06A7BCF9C6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 16:57:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssmCa-0005lP-ML; Mon, 23 Sep 2024 12:46:20 -0400
+	id 1ssmMN-00043r-RS; Mon, 23 Sep 2024 12:56:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ssmCY-0005kp-FT
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 12:46:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ssmCU-0003Eo-UI
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 12:46:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727109972;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0/E046NKuLRix9wdg4Ky8Uw42deeirBI7YPgJV80iJo=;
- b=BBd84IJZrMJ57kNINxMDYKdhaJ8PV/nRBbwI5xcZT3azhWxwsfguNR2nwDIoMb2GRlKq0u
- UEH/ymIVJOLsMzD7+k2Qe6FdW+issNTVsrgJS8aden6lKSQQ+Uc7V9DDubt2IPxVjq4qDY
- Rx/bQuNUKwWEbK+DsLzDbud83eg43EE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-135-ZWtIzqyqMGCw09XgifZNqw-1; Mon,
- 23 Sep 2024 12:46:09 -0400
-X-MC-Unique: ZWtIzqyqMGCw09XgifZNqw-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F2F36195FE0E; Mon, 23 Sep 2024 16:46:07 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.224.47])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C0BFD19560A3; Mon, 23 Sep 2024 16:46:01 +0000 (UTC)
-Date: Mon, 23 Sep 2024 18:45:57 +0200
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
- John Snow <jsnow@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v2] Add -build-info and -build-info-json CLI arguments
-Message-ID: <ZvGbRWSPPLJDx7BX@redhat.com>
-References: <20240923-feature-build-info-cli-v2-1-66b3462f16a1@linaro.org>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ssmMI-000433-AF
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 12:56:22 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ssmMF-0004CG-Mq
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 12:56:21 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2057835395aso51404395ad.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Sep 2024 09:56:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727110577; x=1727715377; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7qQ87IPGGtDCW4jW+QKPXTHFGz97URmfGU21fFqSPPo=;
+ b=n/qV1AmReFX5lmYbGAAFCRvnmIhzkxhELW9Qsxsg79aOoybCqiEfzlmalbUqMMbyhK
+ arc8f4qe/7If8IUudgSP4uiWttHeHEzSeu2/fL39g/n3xHQrz8+Qzf0l23rCNIsgxetD
+ PY2xlCShMurrRpefo9E8Hrpm+pKl6bvrqnyepDmSUaiiMycXCcrOVWIJ/PVP8G/4lw6h
+ SZ5s6Q2m625vxj/Mbn4OxhnwRIjYAHXaC1TDKKl5IX7285kiycarqWliytPXJZ3venT3
+ eR0f+xN57n7k+u0ZBpwqi8Uk76tapU4qITMH7OaUnxlS0m8fppndzY1YitS5eNifocNz
+ HZsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727110577; x=1727715377;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7qQ87IPGGtDCW4jW+QKPXTHFGz97URmfGU21fFqSPPo=;
+ b=GtfLFPi0oCa7Db4ToVFAXagR5+wxti8sS5J3WH9RFypDcmSl2KD0e5qOiDI1yXGfTd
+ Qd/vlkR7nlkWKAOHnDOsyKFgJ0SUbmJ6Z7SnBPJsXQv+6gS+jlr0kYvLPMrxdALT7KZ0
+ 20TOe3b47kE7JWmIWvwpC5iLpRyayT4BDr+feD1kFf27HCYLXoAyra9JO03Y8uO1iCyy
+ TZR9B9ubm+gTnZZxSCh3JBMpScFxu3WyicKwe11fBj4N0Frb4TOkKwniVbXBfN4+UjBz
+ 5BJAkDBd1kSePyV/gUTOHTRXFhK8FBxtnxF/Erij6j55gDuzVklSXEoeKenVrhGfVCJo
+ qFKw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXldzzYI0g4hJH2xHw9rrmA7pHLiy97Ja3bdcobX67g1gDqsTcuUP/Okzjs9o6n24VxcqKJF3A4m0jP@nongnu.org
+X-Gm-Message-State: AOJu0YzayRYwxmmtkvSMVf1ygY85OffIyvZiRQvszK9fJmo+VrHSNs8n
+ SU9RFyRwFo/HHqtW9ihF+KQ33GlJoahP5oLSBguhe2gEAbW1APXcC6ZElwOTGHI=
+X-Google-Smtp-Source: AGHT+IFwy7kfbxkQ30ro8HlCVknEMtG7k2XRFGI0LWQUe/ICN2dY4K8gu0ZJtCraJTGV4c/jqrndBw==
+X-Received: by 2002:a17:903:2311:b0:207:1848:394e with SMTP id
+ d9443c01a7336-208d831346fmr174374105ad.8.1727110577536; 
+ Mon, 23 Sep 2024 09:56:17 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20794730bd1sm134775245ad.260.2024.09.23.09.56.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 23 Sep 2024 09:56:15 -0700 (PDT)
+Message-ID: <d4980c51-1828-4615-bb23-34abc9bd7956@linaro.org>
+Date: Mon, 23 Sep 2024 09:56:14 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] Add -build-info and -build-info-json CLI arguments
+Content-Language: en-US
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+Cc: Cleber Rosa <crosa@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240923-feature-build-info-cli-v2-1-66b3462f16a1@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 In-Reply-To: <20240923-feature-build-info-cli-v2-1-66b3462f16a1@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,474 +101,260 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 23, 2024 at 09:05:24AM +0300, Manos Pitsidianakis wrote:
-> Add -build-info and -build-info-json CLI arguments for human and machine
-> readable output of build/compile-time configuration data. The source for
-> this data is the meson generated config-host.h.
-> 
-> This information is mainly of interest to developers and other folk who
-> deal with many different builds of QEMU and need a way to properly
-> differentiate them.
-> 
-> Because there's always the chance someone will want to consume an
-> interface programmatically, also add a -json option that does the same
-> but outputs a machine-readable JSON object.
-
-This turns our build system configuration information into a
-defacto public API, and while its using JSON, it isn't yusing
-QAPI.
-
-To some degree we leak our build system config names externally
-because the "if" stanzas in the QAPI schema get copied into the
-docs.
-
-Overall though I don't think we should be exposing this build
-config infomation externally. We've had many times, particularly
-with testing, where people have wanted to access CONFIG_XXX info
-about a QEMU binary, but IIRC we've always steered people towards
-querying for the actual feature they want, rather than looking
-at CONFIG_XXX settings.
-
-ie, look a query-audiodevs to discover what audio baxckends are
-built-in, don't look for CONFIG_XXX settings related to audio.
-If there are gaps in information we can query from QMP, we should
-aim to close those gaps.
-
-IOW, I don't think we should expose this build info info in either
-human readable or machine readable format.
-
-> 
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> ---
-> Changes in v2:
-> - Fixed alignment of command and documentation in -h output.
-> - Link to v1: https://lore.kernel.org/r/20240923-feature-build-info-cli-v1-1-e8c42d845390@linaro.org
-> ---
-> Notes:
-> Sample output:
-> 
-> $ ./qemu-system-aarch64 -build-info
-> ./qemu-system-aarch64 version 9.1.50 (v9.0.0-3444-g8d988656d8) build information
-> 
->   configuration key          key value
->   -----------------          ---------
->   accept4                    
->   af_vsock                   
->   asan_iface_fiber           
->   atomic64                   
->   attr                       
->   audio_alsa                 
->   audio_drivers              pa,sndio,oss
->   audio_oss                  
->   audio_pa                   
->   audio_pipewire             
->   audio_sdl                  
->   audio_sndio                
->   avx2_opt                   
->   avx512bw_opt               
->   bdrv_ro_whitelist          
->   bdrv_rw_whitelist          
->   bindir                     /usr/local/bin
->   blkzoned                   
->   brlapi                     
->   capstone                   
->   clock_adjtime              
->   close_range                
->   coroutine_pool             
->   cpuid_h                    
->   curl                       
->   curses                     
->   dbus_display               
->   debug_graph_lock           
->   debug_mutex                
->   debug_tcg                  
->   dup3                       
->   ebpf                       
->   epoll                      
->   epoll_create1              
->   eventfd                    
->   fallocate                  
->   fallocate_punch_hole       
->   fallocate_zero_range       
->   fdatasync                  
->   fdt                        
->   fiemap                     
->   fsfreeze                   
->   fstrim                     
->   fuse                       
->   fuse_lseek                 
->   gbm                        
->   getauxval                  
->   getcpu                     
->   getrandom                  
->   gettid                     
->   gio                        
->   gnutls                     
->   gnutls_crypto              
->   gtk                        
->   hexagon_idef_parser        
->   host_dsosuf                .so
->   iasl                       /bin/iasl
->   inotify                    
->   inotify1                   
->   int128                     
->   int128_type                
->   iovec                      
->   keyutils                   
->   kvm_targets                i386-softmmu,x86_64-softmmu
->   l2tpv3                     
->   libdw                      
->   libudev                    
->   linux                      
->   linux_io_uring             
->   linux_magic_h              
->   madvise                    
->   malloc_trim                
->   memalign                   
->   memfd                      
->   opengl                     
->   open_by_handle             
->   pixman                     
->   plugin                     
->   png                        
->   posix                      
->   posix_fallocate            
->   posix_madvise              
->   posix_memalign             
->   ppoll                      
->   prctl_pr_set_timerslack    
->   preadv                     
->   prefix                     /usr/local
->   pthread_affinity_np        
->   pthread_setname_np_w_tid   
->   qemu_confdir               /usr/local/etc/qemu
->   qemu_datadir               /usr/local/share/qemu
->   qemu_desktopdir            /usr/local/share/applications
->   qemu_firmwarepath          /usr/local/share/qemu-firmware
->   qemu_helperdir             /usr/local/libexec
->   qemu_icondir               /usr/local/share/icons
->   qemu_localedir             /usr/local/share/locale
->   qemu_localstatedir         /var/local
->   qemu_moddir                /usr/local/lib/x86_64-linux-gnu/qemu
->   qom_cast_debug             
->   relocatable                
->   replication                
->   rtnetlink                  
->   sdl                        
->   seccomp                    
->   seccomp_sysrawrc           
->   secret_keyring             
->   selinux                    
->   sendfile                   
->   setns                      
->   signalfd                   
->   slirp                      
->   smbd_command               /usr/sbin/smbd
->   splice                     
->   statx                      
->   statx_mnt_id               
->   syncfs                     
->   sync_file_range            
->   sysconfdir                 /usr/local/etc
->   sysmacros                  
->   tasn1                      
->   tcg                        1
->   timerfd                    
->   tls_priority               NORMAL
->   tpm                        
->   trace_file                 trace
->   trace_log                  
->   usbfs                      
->   usb_libusb                 
->   valgrind_h                 
->   valloc                     
->   vduse_blk_export           
->   vhost                      
->   vhost_crypto               
->   vhost_kernel               
->   vhost_net                  
->   vhost_net_user             
->   vhost_net_vdpa             
->   vhost_user                 
->   vhost_user_blk_server      
->   vhost_vdpa                 
->   virtfs                     
->   vnc                        
->   vnc_jpeg                   
->   vte                        
->   x11                        
->   xen_backend                
->   xen_ctrl_interface_version 41700
->   xkbcommon                  
->   zstd                       
->   blk_zone_rep_capacity      
->   btrfs_h                    
->   copy_file_range            
->   drm_h                      
->   fsxattr                    
->   getifaddrs                 
->   host_block_device          
->   ipproto_mptcp              
->   mlockall                   
->   openpty                    
->   pty_h                      
->   strchrnul                  
->   struct_stat_st_atim        
->   system_function            
->   utmpx                      
->   virgl_d3d_info_ext         
->   host_x86_64                1
->   qemu_version               9.1.50
->   qemu_version_major         9
->   qemu_version_micro         50
->   qemu_version_minor         1
-> 
-> To: qemu-devel@nongnu.org
-> Cc: "Cleber Rosa" <crosa@redhat.com>
-> Cc: "Daniel P. Berrangé" <berrange@redhat.com>
-> Cc: "John Snow" <jsnow@redhat.com>
-> Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
-> Cc: "Paolo Bonzini" <pbonzini@redhat.com>
-> Cc: "Alex Bennée" <alex.bennee@linaro.org>
-> Cc: "Gustavo Romero" <gustavo.romero@linaro.org>
-> Cc: "Peter Maydell" <peter.maydell@linaro.org>
-> Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
-> Cc: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>
-> Cc: "Richard Henderson" <richard.henderson@linaro.org>
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> ---
->  meson.build               | 15 +++++++-
->  qemu-options.hx           | 15 ++++++++
->  scripts/build_info_gen.py | 91 +++++++++++++++++++++++++++++++++++++++++++++++
->  system/vl.c               | 41 +++++++++++++++++++++
->  4 files changed, 161 insertions(+), 1 deletion(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index 10464466ff..eff2ee323a 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -3292,7 +3292,20 @@ endif
->  # Generated sources #
->  #####################
->  
-> -genh += configure_file(output: 'config-host.h', configuration: config_host_data)
-> +config_host_h = configure_file(output: 'config-host.h', configuration: config_host_data)
-> +genh += config_host_h
-> +
-> +build_info_h = custom_target('build-info.h',
-> +                             output: 'build-info.h',
-> +                             command: [
-> +                               find_program('scripts/build_info_gen.py'),
-> +                               '--config-headers',
-> +                               config_host_h
-> +                             ],
-> +                             capture: true,
-> +                             build_by_default: true,
-> +                             build_always_stale: true)
-> +genh += build_info_h
->  
->  hxtool = find_program('scripts/hxtool')
->  shaderinclude = find_program('scripts/shaderinclude.py')
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index d94e2cbbae..6a32e0624f 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -24,6 +24,21 @@ SRST
->      Display version information and exit
->  ERST
->  
-> +DEF("build-info", 0, QEMU_OPTION_build_info,
-> +    "-build-info     display build information of executable and exit\n", QEMU_ARCH_ALL)
-> +SRST
-> +``-build-info``
-> +    Display build information of executable and exit
-> +ERST
-> +
-> +DEF("build-info-json", 0, QEMU_OPTION_build_info_json,
-> +    "-build-info-json\n"
-> +    "                dump build information of executable in JSON format and exit\n", QEMU_ARCH_ALL)
-> +SRST
-> +``-build-info-json``
-> +    Dump build information of executable in JSON format and exit
-> +ERST
-> +
->  DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
->      "-machine [type=]name[,prop[=value][,...]]\n"
->      "                selects emulated machine ('-machine help' for list)\n"
-> diff --git a/scripts/build_info_gen.py b/scripts/build_info_gen.py
-> new file mode 100755
-> index 0000000000..37a9421651
-> --- /dev/null
-> +++ b/scripts/build_info_gen.py
-> @@ -0,0 +1,91 @@
-> +#!/usr/bin/env python3
-> +
-> +"""
-> +Generate build information header, build-info.h,
-> +for output of -build-info* command line arguments.
-> +
-> +SPDX-FileContributor: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> +SPDX-FileCopyrightText: 2024 Linaro Ltd.
-> +SPDX-License-Identifier: GPL-2.0-or-later
-> +"""
-> +
-> +# Formatted with black --line-length 80 scripts/build-info-gen.py
-> +
-> +import argparse
-> +import logging
-> +
-> +
-> +def generate_key_val(header: str) -> str:
-> +    # pylint: disable=missing-function-docstring
-> +
-> +    with open(header, encoding="utf-8") as cfg:
-> +        config = [l.split()[1:] for l in cfg if l.startswith("#define")]
-> +
-> +    for cfg in config:
-> +        if cfg[0].startswith("HAVE_"):
-> +            yield (cfg[0].removeprefix("HAVE_").lower(), None)
-> +            continue
-> +        yield (
-> +            cfg[0].removeprefix("CONFIG_").lower(),
-> +            (
-> +                cfg[1]
-> +                if len(cfg) == 2
-> +                else "".join(cfg[1:]).replace('"', "") if len(cfg) > 2 else None
-> +            ),
-> +        )
-> +
-> +
-> +def main() -> None:
-> +    # pylint: disable=missing-function-docstring
-> +    parser = argparse.ArgumentParser()
-> +    parser.add_argument("-v", "--verbose", action="store_true")
-> +    parser.add_argument(
-> +        "--config-headers",
-> +        metavar="CONFIG_HEADER",
-> +        action="append",
-> +        dest="config_headers",
-> +        help="paths to configuration host C headers (*.h files)",
-> +        required=False,
-> +        default=[],
-> +    )
-> +    args = parser.parse_args()
-> +    if args.verbose:
-> +        logging.basicConfig(level=logging.ERROR)
-> +    logging.debug("args: %s", args)
-> +    print(
-> +        """// @generated by scripts/build-info-gen.py
-> +
-> +#include <stddef.h>"""
-> +    )
-> +    print(
-> +        """static struct build_info_t {
-> +    const char *key;
-> +    const char *value;
-> +} BUILD_INFO[] = {"""
-> +    )
-> +    total = 0
-> +    header_width = 0
-> +    for header in args.config_headers:
-> +        for key, val in generate_key_val(header):
-> +            total += 1
-> +            header_width = max(header_width, len(key))
-> +            print(
-> +                '{"',
-> +                key,
-> +                '", "',
-> +                val.strip('"').strip(",").strip('"') if val else "",
-> +                '"},',
-> +                sep="",
-> +            )
-> +    print("};")
-> +    print("\nstatic size_t BUILD_INFO_SIZE = ", total, ";", sep="")
-> +    print(
-> +        "static unsigned int BUILD_INFO_HEADER_WIDTH = ",
-> +        header_width,
-> +        ";",
-> +        sep="",
-> +    )
-> +
-> +
-> +if __name__ == "__main__":
-> +    main()
-> diff --git a/system/vl.c b/system/vl.c
-> index fe547ca47c..5266b85d22 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -908,6 +908,41 @@ static void help(int exitcode)
->      exit(exitcode);
->  }
->  
-> +static void build_info(const char *execname, bool as_json)
-> +{
-> +#include "build-info.h"
-> +    if (as_json) {
-> +        printf("{\n");
-> +        for (size_t i = 0; i + 1 < BUILD_INFO_SIZE ; i++) {
-> +            printf("\"%s\":\"%s\",\n",
-> +                   BUILD_INFO[i].key,
-> +                   BUILD_INFO[i].value);
-> +        }
-> +        if (BUILD_INFO_SIZE > 0) {
-> +            printf("\"%s\":\"%s\"\n",
-> +                   BUILD_INFO[BUILD_INFO_SIZE - 1].key,
-> +                   BUILD_INFO[BUILD_INFO_SIZE - 1].value);
-> +        }
-> +        printf("}\n");
-> +    } else {
-> +        printf("%s version "
-> +               QEMU_FULL_VERSION
-> +               " build information\n\n", execname ?:"QEMU");
-> +        printf("  %-*s key value\n",
-> +               BUILD_INFO_HEADER_WIDTH,
-> +               "configuration key");
-> +        printf("  %-*s ---------\n",
-> +               BUILD_INFO_HEADER_WIDTH,
-> +               "-----------------");
-> +        for (size_t i = 0; i < BUILD_INFO_SIZE ; i++) {
-> +            printf("  %-*s %s\n",
-> +                   BUILD_INFO_HEADER_WIDTH,
-> +                   BUILD_INFO[i].key,
-> +                   BUILD_INFO[i].value);
-> +        }
-> +    }
-> +}
-> +
->  enum {
->  
->  #define DEF(option, opt_arg, opt_enum, opt_help, arch_mask)     \
-> @@ -3019,6 +3054,12 @@ void qemu_init(int argc, char **argv)
->                  version();
->                  exit(0);
->                  break;
-> +            case QEMU_OPTION_build_info:
-> +                /* fallthrough */
-> +            case QEMU_OPTION_build_info_json:
-> +                build_info(argv[0], popt->index != QEMU_OPTION_build_info);
-> +                exit(0);
-> +                break;
->              case QEMU_OPTION_m:
->                  opts = qemu_opts_parse_noisily(qemu_find_opts("memory"), optarg, true);
->                  if (opts == NULL) {
-> 
-> ---
-> base-commit: 01dc65a3bc262ab1bec8fe89775e9bbfa627becb
-> change-id: 20240922-feature-build-info-cli-c9e08e34c34b
-> 
-> --
-> γαῖα πυρί μιχθήτω
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+T24gOS8yMi8yNCAyMzowNSwgTWFub3MgUGl0c2lkaWFuYWtpcyB3cm90ZToNCj4gQWRkIC1i
+dWlsZC1pbmZvIGFuZCAtYnVpbGQtaW5mby1qc29uIENMSSBhcmd1bWVudHMgZm9yIGh1bWFu
+IGFuZCBtYWNoaW5lDQo+IHJlYWRhYmxlIG91dHB1dCBvZiBidWlsZC9jb21waWxlLXRpbWUg
+Y29uZmlndXJhdGlvbiBkYXRhLiBUaGUgc291cmNlIGZvcg0KPiB0aGlzIGRhdGEgaXMgdGhl
+IG1lc29uIGdlbmVyYXRlZCBjb25maWctaG9zdC5oLg0KPiANCj4gVGhpcyBpbmZvcm1hdGlv
+biBpcyBtYWlubHkgb2YgaW50ZXJlc3QgdG8gZGV2ZWxvcGVycyBhbmQgb3RoZXIgZm9sayB3
+aG8NCj4gZGVhbCB3aXRoIG1hbnkgZGlmZmVyZW50IGJ1aWxkcyBvZiBRRU1VIGFuZCBuZWVk
+IGEgd2F5IHRvIHByb3Blcmx5DQo+IGRpZmZlcmVudGlhdGUgdGhlbS4NCj4gDQo+IEJlY2F1
+c2UgdGhlcmUncyBhbHdheXMgdGhlIGNoYW5jZSBzb21lb25lIHdpbGwgd2FudCB0byBjb25z
+dW1lIGFuDQo+IGludGVyZmFjZSBwcm9ncmFtbWF0aWNhbGx5LCBhbHNvIGFkZCBhIC1qc29u
+IG9wdGlvbiB0aGF0IGRvZXMgdGhlIHNhbWUNCj4gYnV0IG91dHB1dHMgYSBtYWNoaW5lLXJl
+YWRhYmxlIEpTT04gb2JqZWN0Lg0KPiANCj4gU2lnbmVkLW9mZi1ieTogTWFub3MgUGl0c2lk
+aWFuYWtpcyA8bWFub3MucGl0c2lkaWFuYWtpc0BsaW5hcm8ub3JnPg0KPiAtLS0NCj4gQ2hh
+bmdlcyBpbiB2MjoNCj4gLSBGaXhlZCBhbGlnbm1lbnQgb2YgY29tbWFuZCBhbmQgZG9jdW1l
+bnRhdGlvbiBpbiAtaCBvdXRwdXQuDQo+IC0gTGluayB0byB2MTogaHR0cHM6Ly9sb3JlLmtl
+cm5lbC5vcmcvci8yMDI0MDkyMy1mZWF0dXJlLWJ1aWxkLWluZm8tY2xpLXYxLTEtZThjNDJk
+ODQ1MzkwQGxpbmFyby5vcmcNCj4gLS0tDQo+IE5vdGVzOg0KPiBTYW1wbGUgb3V0cHV0Og0K
+PiANCj4gJCAuL3FlbXUtc3lzdGVtLWFhcmNoNjQgLWJ1aWxkLWluZm8NCj4gLi9xZW11LXN5
+c3RlbS1hYXJjaDY0IHZlcnNpb24gOS4xLjUwICh2OS4wLjAtMzQ0NC1nOGQ5ODg2NTZkOCkg
+YnVpbGQgaW5mb3JtYXRpb24NCj4gDQo+ICAgIGNvbmZpZ3VyYXRpb24ga2V5ICAgICAgICAg
+IGtleSB2YWx1ZQ0KPiAgICAtLS0tLS0tLS0tLS0tLS0tLSAgICAgICAgICAtLS0tLS0tLS0N
+Cj4gICAgYWNjZXB0NA0KPiAgICBhZl92c29jaw0KPiAgICBhc2FuX2lmYWNlX2ZpYmVyDQo+
+ICAgIGF0b21pYzY0DQo+ICAgIGF0dHINCj4gICAgYXVkaW9fYWxzYQ0KPiAgICBhdWRpb19k
+cml2ZXJzICAgICAgICAgICAgICBwYSxzbmRpbyxvc3MNCj4gICAgYXVkaW9fb3NzDQo+ICAg
+IGF1ZGlvX3BhDQo+ICAgIGF1ZGlvX3BpcGV3aXJlDQo+ICAgIGF1ZGlvX3NkbA0KPiAgICBh
+dWRpb19zbmRpbw0KPiAgICBhdngyX29wdA0KPiAgICBhdng1MTJid19vcHQNCj4gICAgYmRy
+dl9yb193aGl0ZWxpc3QNCj4gICAgYmRydl9yd193aGl0ZWxpc3QNCj4gICAgYmluZGlyICAg
+ICAgICAgICAgICAgICAgICAgL3Vzci9sb2NhbC9iaW4NCj4gICAgYmxrem9uZWQNCj4gICAg
+YnJsYXBpDQo+ICAgIGNhcHN0b25lDQo+ICAgIGNsb2NrX2FkanRpbWUNCj4gICAgY2xvc2Vf
+cmFuZ2UNCj4gICAgY29yb3V0aW5lX3Bvb2wNCj4gICAgY3B1aWRfaA0KPiAgICBjdXJsDQo+
+ICAgIGN1cnNlcw0KPiAgICBkYnVzX2Rpc3BsYXkNCj4gICAgZGVidWdfZ3JhcGhfbG9jaw0K
+PiAgICBkZWJ1Z19tdXRleA0KPiAgICBkZWJ1Z190Y2cNCj4gICAgZHVwMw0KPiAgICBlYnBm
+DQo+ICAgIGVwb2xsDQo+ICAgIGVwb2xsX2NyZWF0ZTENCj4gICAgZXZlbnRmZA0KPiAgICBm
+YWxsb2NhdGUNCj4gICAgZmFsbG9jYXRlX3B1bmNoX2hvbGUNCj4gICAgZmFsbG9jYXRlX3pl
+cm9fcmFuZ2UNCj4gICAgZmRhdGFzeW5jDQo+ICAgIGZkdA0KPiAgICBmaWVtYXANCj4gICAg
+ZnNmcmVlemUNCj4gICAgZnN0cmltDQo+ICAgIGZ1c2UNCj4gICAgZnVzZV9sc2Vlaw0KPiAg
+ICBnYm0NCj4gICAgZ2V0YXV4dmFsDQo+ICAgIGdldGNwdQ0KPiAgICBnZXRyYW5kb20NCj4g
+ICAgZ2V0dGlkDQo+ICAgIGdpbw0KPiAgICBnbnV0bHMNCj4gICAgZ251dGxzX2NyeXB0bw0K
+PiAgICBndGsNCj4gICAgaGV4YWdvbl9pZGVmX3BhcnNlcg0KPiAgICBob3N0X2Rzb3N1ZiAg
+ICAgICAgICAgICAgICAuc28NCj4gICAgaWFzbCAgICAgICAgICAgICAgICAgICAgICAgL2Jp
+bi9pYXNsDQo+ICAgIGlub3RpZnkNCj4gICAgaW5vdGlmeTENCj4gICAgaW50MTI4DQo+ICAg
+IGludDEyOF90eXBlDQo+ICAgIGlvdmVjDQo+ICAgIGtleXV0aWxzDQo+ICAgIGt2bV90YXJn
+ZXRzICAgICAgICAgICAgICAgIGkzODYtc29mdG1tdSx4ODZfNjQtc29mdG1tdQ0KPiAgICBs
+MnRwdjMNCj4gICAgbGliZHcNCj4gICAgbGlidWRldg0KPiAgICBsaW51eA0KPiAgICBsaW51
+eF9pb191cmluZw0KPiAgICBsaW51eF9tYWdpY19oDQo+ICAgIG1hZHZpc2UNCj4gICAgbWFs
+bG9jX3RyaW0NCj4gICAgbWVtYWxpZ24NCj4gICAgbWVtZmQNCj4gICAgb3BlbmdsDQo+ICAg
+IG9wZW5fYnlfaGFuZGxlDQo+ICAgIHBpeG1hbg0KPiAgICBwbHVnaW4NCj4gICAgcG5nDQo+
+ICAgIHBvc2l4DQo+ICAgIHBvc2l4X2ZhbGxvY2F0ZQ0KPiAgICBwb3NpeF9tYWR2aXNlDQo+
+ICAgIHBvc2l4X21lbWFsaWduDQo+ICAgIHBwb2xsDQo+ICAgIHByY3RsX3ByX3NldF90aW1l
+cnNsYWNrDQo+ICAgIHByZWFkdg0KPiAgICBwcmVmaXggICAgICAgICAgICAgICAgICAgICAv
+dXNyL2xvY2FsDQo+ICAgIHB0aHJlYWRfYWZmaW5pdHlfbnANCj4gICAgcHRocmVhZF9zZXRu
+YW1lX25wX3dfdGlkDQo+ICAgIHFlbXVfY29uZmRpciAgICAgICAgICAgICAgIC91c3IvbG9j
+YWwvZXRjL3FlbXUNCj4gICAgcWVtdV9kYXRhZGlyICAgICAgICAgICAgICAgL3Vzci9sb2Nh
+bC9zaGFyZS9xZW11DQo+ICAgIHFlbXVfZGVza3RvcGRpciAgICAgICAgICAgIC91c3IvbG9j
+YWwvc2hhcmUvYXBwbGljYXRpb25zDQo+ICAgIHFlbXVfZmlybXdhcmVwYXRoICAgICAgICAg
+IC91c3IvbG9jYWwvc2hhcmUvcWVtdS1maXJtd2FyZQ0KPiAgICBxZW11X2hlbHBlcmRpciAg
+ICAgICAgICAgICAvdXNyL2xvY2FsL2xpYmV4ZWMNCj4gICAgcWVtdV9pY29uZGlyICAgICAg
+ICAgICAgICAgL3Vzci9sb2NhbC9zaGFyZS9pY29ucw0KPiAgICBxZW11X2xvY2FsZWRpciAg
+ICAgICAgICAgICAvdXNyL2xvY2FsL3NoYXJlL2xvY2FsZQ0KPiAgICBxZW11X2xvY2Fsc3Rh
+dGVkaXIgICAgICAgICAvdmFyL2xvY2FsDQo+ICAgIHFlbXVfbW9kZGlyICAgICAgICAgICAg
+ICAgIC91c3IvbG9jYWwvbGliL3g4Nl82NC1saW51eC1nbnUvcWVtdQ0KPiAgICBxb21fY2Fz
+dF9kZWJ1Zw0KPiAgICByZWxvY2F0YWJsZQ0KPiAgICByZXBsaWNhdGlvbg0KPiAgICBydG5l
+dGxpbmsNCj4gICAgc2RsDQo+ICAgIHNlY2NvbXANCj4gICAgc2VjY29tcF9zeXNyYXdyYw0K
+PiAgICBzZWNyZXRfa2V5cmluZw0KPiAgICBzZWxpbnV4DQo+ICAgIHNlbmRmaWxlDQo+ICAg
+IHNldG5zDQo+ICAgIHNpZ25hbGZkDQo+ICAgIHNsaXJwDQo+ICAgIHNtYmRfY29tbWFuZCAg
+ICAgICAgICAgICAgIC91c3Ivc2Jpbi9zbWJkDQo+ICAgIHNwbGljZQ0KPiAgICBzdGF0eA0K
+PiAgICBzdGF0eF9tbnRfaWQNCj4gICAgc3luY2ZzDQo+ICAgIHN5bmNfZmlsZV9yYW5nZQ0K
+PiAgICBzeXNjb25mZGlyICAgICAgICAgICAgICAgICAvdXNyL2xvY2FsL2V0Yw0KPiAgICBz
+eXNtYWNyb3MNCj4gICAgdGFzbjENCj4gICAgdGNnICAgICAgICAgICAgICAgICAgICAgICAg
+MQ0KPiAgICB0aW1lcmZkDQo+ICAgIHRsc19wcmlvcml0eSAgICAgICAgICAgICAgIE5PUk1B
+TA0KPiAgICB0cG0NCj4gICAgdHJhY2VfZmlsZSAgICAgICAgICAgICAgICAgdHJhY2UNCj4g
+ICAgdHJhY2VfbG9nDQo+ICAgIHVzYmZzDQo+ICAgIHVzYl9saWJ1c2INCj4gICAgdmFsZ3Jp
+bmRfaA0KPiAgICB2YWxsb2MNCj4gICAgdmR1c2VfYmxrX2V4cG9ydA0KPiAgICB2aG9zdA0K
+PiAgICB2aG9zdF9jcnlwdG8NCj4gICAgdmhvc3Rfa2VybmVsDQo+ICAgIHZob3N0X25ldA0K
+PiAgICB2aG9zdF9uZXRfdXNlcg0KPiAgICB2aG9zdF9uZXRfdmRwYQ0KPiAgICB2aG9zdF91
+c2VyDQo+ICAgIHZob3N0X3VzZXJfYmxrX3NlcnZlcg0KPiAgICB2aG9zdF92ZHBhDQo+ICAg
+IHZpcnRmcw0KPiAgICB2bmMNCj4gICAgdm5jX2pwZWcNCj4gICAgdnRlDQo+ICAgIHgxMQ0K
+PiAgICB4ZW5fYmFja2VuZA0KPiAgICB4ZW5fY3RybF9pbnRlcmZhY2VfdmVyc2lvbiA0MTcw
+MA0KPiAgICB4a2Jjb21tb24NCj4gICAgenN0ZA0KPiAgICBibGtfem9uZV9yZXBfY2FwYWNp
+dHkNCj4gICAgYnRyZnNfaA0KPiAgICBjb3B5X2ZpbGVfcmFuZ2UNCj4gICAgZHJtX2gNCj4g
+ICAgZnN4YXR0cg0KPiAgICBnZXRpZmFkZHJzDQo+ICAgIGhvc3RfYmxvY2tfZGV2aWNlDQo+
+ICAgIGlwcHJvdG9fbXB0Y3ANCj4gICAgbWxvY2thbGwNCj4gICAgb3BlbnB0eQ0KPiAgICBw
+dHlfaA0KPiAgICBzdHJjaHJudWwNCj4gICAgc3RydWN0X3N0YXRfc3RfYXRpbQ0KPiAgICBz
+eXN0ZW1fZnVuY3Rpb24NCj4gICAgdXRtcHgNCj4gICAgdmlyZ2xfZDNkX2luZm9fZXh0DQo+
+ICAgIGhvc3RfeDg2XzY0ICAgICAgICAgICAgICAgIDENCj4gICAgcWVtdV92ZXJzaW9uICAg
+ICAgICAgICAgICAgOS4xLjUwDQo+ICAgIHFlbXVfdmVyc2lvbl9tYWpvciAgICAgICAgIDkN
+Cj4gICAgcWVtdV92ZXJzaW9uX21pY3JvICAgICAgICAgNTANCj4gICAgcWVtdV92ZXJzaW9u
+X21pbm9yICAgICAgICAgMQ0KPiANCg0KVGhpcyBpcyBhIG5pY2UgYWRkaXRpb24sIGFuZCBh
+biBlYXN5IHdheSB0byBnZXQgYWNjZXNzIHRvIHRoaXMgDQppbmZvcm1hdGlvbiwgaW5jbHVk
+aW5nIGZvciBhIHFlbXUgeW91IGNvbXBpbGUgeW91cnNlbGYuDQoNCklmIHRoZXJlIGFyZSBz
+b21lIGNvbmNlcm5zIGFib3V0IGl0IGJlY29taW5nIGEgInB1YmxpYyBBUEkiIGZvciANCmNv
+bnN1bWVycywgbWF5YmUgdGhlIG9wdGlvbiBjb3VsZCBzaW1wbHkgYmUgaGlkZGVuIGZyb20g
+aGVscCwgc28gb25seSANCnFlbXUgZGV2cyBrbm93IGl0J3MgdGhlcmUuDQoNCkFuIGFsdGVy
+bmF0aXZlIGNvdWxkIGJlIHRvIGRpc3RyaWJ1dGUgYSAiY29uZmlnIGZpbGUiIHdpdGggcWVt
+dSwgbGlrZSANCndoYXQgaXMgYXZhaWxhYmxlIGZvciBMaW51eCBrZXJuZWwgKGNhdCAvYm9v
+dC9jb25maWctKikuIEJ1dCBJIHJlYWxseSANCnByZWZlciBzb21ldGhpbmcgZW1iZWRkZWQg
+aW4gYmluYXJ5IGFuZCBhY2Nlc3NpYmxlIHZpYSBvcHRpb24gdG8gYmUgaG9uZXN0Lg0KDQo+
+IFRvOiBxZW11LWRldmVsQG5vbmdudS5vcmcNCj4gQ2M6ICJDbGViZXIgUm9zYSIgPGNyb3Nh
+QHJlZGhhdC5jb20+DQo+IENjOiAiRGFuaWVsIFAuIEJlcnJhbmfDqSIgPGJlcnJhbmdlQHJl
+ZGhhdC5jb20+DQo+IENjOiAiSm9obiBTbm93IiA8anNub3dAcmVkaGF0LmNvbT4NCj4gQ2M6
+ICJNYXJjLUFuZHLDqSBMdXJlYXUiIDxtYXJjYW5kcmUubHVyZWF1QHJlZGhhdC5jb20+DQo+
+IENjOiAiUGFvbG8gQm9uemluaSIgPHBib256aW5pQHJlZGhhdC5jb20+DQo+IENjOiAiQWxl
+eCBCZW5uw6llIiA8YWxleC5iZW5uZWVAbGluYXJvLm9yZz4NCj4gQ2M6ICJHdXN0YXZvIFJv
+bWVybyIgPGd1c3Rhdm8ucm9tZXJvQGxpbmFyby5vcmc+DQo+IENjOiAiUGV0ZXIgTWF5ZGVs
+bCIgPHBldGVyLm1heWRlbGxAbGluYXJvLm9yZz4NCj4gQ2M6ICJQaGlsaXBwZSBNYXRoaWV1
+LURhdWTDqSIgPHBoaWxtZEBsaW5hcm8ub3JnPg0KPiBDYzogIlBpZXJyaWNrIEJvdXZpZXIi
+IDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo+IENjOiAiUmljaGFyZCBIZW5kZXJz
+b24iIDxyaWNoYXJkLmhlbmRlcnNvbkBsaW5hcm8ub3JnPg0KPiBTaWduZWQtb2ZmLWJ5OiBN
+YW5vcyBQaXRzaWRpYW5ha2lzIDxtYW5vcy5waXRzaWRpYW5ha2lzQGxpbmFyby5vcmc+DQo+
+IC0tLQ0KPiAgIG1lc29uLmJ1aWxkICAgICAgICAgICAgICAgfCAxNSArKysrKysrLQ0KPiAg
+IHFlbXUtb3B0aW9ucy5oeCAgICAgICAgICAgfCAxNSArKysrKysrKw0KPiAgIHNjcmlwdHMv
+YnVpbGRfaW5mb19nZW4ucHkgfCA5MSArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
+KysrKysrKysrKysrKysrKw0KPiAgIHN5c3RlbS92bC5jICAgICAgICAgICAgICAgfCA0MSAr
+KysrKysrKysrKysrKysrKysrKysNCj4gICA0IGZpbGVzIGNoYW5nZWQsIDE2MSBpbnNlcnRp
+b25zKCspLCAxIGRlbGV0aW9uKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvbWVzb24uYnVpbGQg
+Yi9tZXNvbi5idWlsZA0KPiBpbmRleCAxMDQ2NDQ2NmZmLi5lZmYyZWUzMjNhIDEwMDY0NA0K
+PiAtLS0gYS9tZXNvbi5idWlsZA0KPiArKysgYi9tZXNvbi5idWlsZA0KPiBAQCAtMzI5Miw3
+ICszMjkyLDIwIEBAIGVuZGlmDQo+ICAgIyBHZW5lcmF0ZWQgc291cmNlcyAjDQo+ICAgIyMj
+IyMjIyMjIyMjIyMjIyMjIyMjDQo+ICAgDQo+IC1nZW5oICs9IGNvbmZpZ3VyZV9maWxlKG91
+dHB1dDogJ2NvbmZpZy1ob3N0LmgnLCBjb25maWd1cmF0aW9uOiBjb25maWdfaG9zdF9kYXRh
+KQ0KPiArY29uZmlnX2hvc3RfaCA9IGNvbmZpZ3VyZV9maWxlKG91dHB1dDogJ2NvbmZpZy1o
+b3N0LmgnLCBjb25maWd1cmF0aW9uOiBjb25maWdfaG9zdF9kYXRhKQ0KPiArZ2VuaCArPSBj
+b25maWdfaG9zdF9oDQo+ICsNCj4gK2J1aWxkX2luZm9faCA9IGN1c3RvbV90YXJnZXQoJ2J1
+aWxkLWluZm8uaCcsDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG91dHB1dDog
+J2J1aWxkLWluZm8uaCcsDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNvbW1h
+bmQ6IFsNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBmaW5kX3Byb2dyYW0o
+J3NjcmlwdHMvYnVpbGRfaW5mb19nZW4ucHknKSwNCj4gKyAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAnLS1jb25maWctaGVhZGVycycsDQo+ICsgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgY29uZmlnX2hvc3RfaA0KPiArICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICBdLA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjYXB0dXJlOiB0cnVl
+LA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICBidWlsZF9ieV9kZWZhdWx0OiB0
+cnVlLA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICBidWlsZF9hbHdheXNfc3Rh
+bGU6IHRydWUpDQo+ICtnZW5oICs9IGJ1aWxkX2luZm9faA0KPiAgIA0KPiAgIGh4dG9vbCA9
+IGZpbmRfcHJvZ3JhbSgnc2NyaXB0cy9oeHRvb2wnKQ0KPiAgIHNoYWRlcmluY2x1ZGUgPSBm
+aW5kX3Byb2dyYW0oJ3NjcmlwdHMvc2hhZGVyaW5jbHVkZS5weScpDQo+IGRpZmYgLS1naXQg
+YS9xZW11LW9wdGlvbnMuaHggYi9xZW11LW9wdGlvbnMuaHgNCj4gaW5kZXggZDk0ZTJjYmJh
+ZS4uNmEzMmUwNjI0ZiAxMDA2NDQNCj4gLS0tIGEvcWVtdS1vcHRpb25zLmh4DQo+ICsrKyBi
+L3FlbXUtb3B0aW9ucy5oeA0KPiBAQCAtMjQsNiArMjQsMjEgQEAgU1JTVA0KPiAgICAgICBE
+aXNwbGF5IHZlcnNpb24gaW5mb3JtYXRpb24gYW5kIGV4aXQNCj4gICBFUlNUDQo+ICAgDQo+
+ICtERUYoImJ1aWxkLWluZm8iLCAwLCBRRU1VX09QVElPTl9idWlsZF9pbmZvLA0KPiArICAg
+ICItYnVpbGQtaW5mbyAgICAgZGlzcGxheSBidWlsZCBpbmZvcm1hdGlvbiBvZiBleGVjdXRh
+YmxlIGFuZCBleGl0XG4iLCBRRU1VX0FSQ0hfQUxMKQ0KPiArU1JTVA0KPiArYGAtYnVpbGQt
+aW5mb2BgDQo+ICsgICAgRGlzcGxheSBidWlsZCBpbmZvcm1hdGlvbiBvZiBleGVjdXRhYmxl
+IGFuZCBleGl0DQo+ICtFUlNUDQo+ICsNCj4gK0RFRigiYnVpbGQtaW5mby1qc29uIiwgMCwg
+UUVNVV9PUFRJT05fYnVpbGRfaW5mb19qc29uLA0KPiArICAgICItYnVpbGQtaW5mby1qc29u
+XG4iDQo+ICsgICAgIiAgICAgICAgICAgICAgICBkdW1wIGJ1aWxkIGluZm9ybWF0aW9uIG9m
+IGV4ZWN1dGFibGUgaW4gSlNPTiBmb3JtYXQgYW5kIGV4aXRcbiIsIFFFTVVfQVJDSF9BTEwp
+DQo+ICtTUlNUDQo+ICtgYC1idWlsZC1pbmZvLWpzb25gYA0KPiArICAgIER1bXAgYnVpbGQg
+aW5mb3JtYXRpb24gb2YgZXhlY3V0YWJsZSBpbiBKU09OIGZvcm1hdCBhbmQgZXhpdA0KPiAr
+RVJTVA0KPiArDQo+ICAgREVGKCJtYWNoaW5lIiwgSEFTX0FSRywgUUVNVV9PUFRJT05fbWFj
+aGluZSwgXA0KPiAgICAgICAiLW1hY2hpbmUgW3R5cGU9XW5hbWVbLHByb3BbPXZhbHVlXVss
+Li4uXV1cbiINCj4gICAgICAgIiAgICAgICAgICAgICAgICBzZWxlY3RzIGVtdWxhdGVkIG1h
+Y2hpbmUgKCctbWFjaGluZSBoZWxwJyBmb3IgbGlzdClcbiINCj4gZGlmZiAtLWdpdCBhL3Nj
+cmlwdHMvYnVpbGRfaW5mb19nZW4ucHkgYi9zY3JpcHRzL2J1aWxkX2luZm9fZ2VuLnB5DQo+
+IG5ldyBmaWxlIG1vZGUgMTAwNzU1DQo+IGluZGV4IDAwMDAwMDAwMDAuLjM3YTk0MjE2NTEN
+Cj4gLS0tIC9kZXYvbnVsbA0KPiArKysgYi9zY3JpcHRzL2J1aWxkX2luZm9fZ2VuLnB5DQo+
+IEBAIC0wLDAgKzEsOTEgQEANCj4gKyMhL3Vzci9iaW4vZW52IHB5dGhvbjMNCj4gKw0KPiAr
+IiIiDQo+ICtHZW5lcmF0ZSBidWlsZCBpbmZvcm1hdGlvbiBoZWFkZXIsIGJ1aWxkLWluZm8u
+aCwNCj4gK2ZvciBvdXRwdXQgb2YgLWJ1aWxkLWluZm8qIGNvbW1hbmQgbGluZSBhcmd1bWVu
+dHMuDQo+ICsNCj4gK1NQRFgtRmlsZUNvbnRyaWJ1dG9yOiBNYW5vcyBQaXRzaWRpYW5ha2lz
+IDxtYW5vcy5waXRzaWRpYW5ha2lzQGxpbmFyby5vcmc+DQo+ICtTUERYLUZpbGVDb3B5cmln
+aHRUZXh0OiAyMDI0IExpbmFybyBMdGQuDQo+ICtTUERYLUxpY2Vuc2UtSWRlbnRpZmllcjog
+R1BMLTIuMC1vci1sYXRlcg0KPiArIiIiDQo+ICsNCj4gKyMgRm9ybWF0dGVkIHdpdGggYmxh
+Y2sgLS1saW5lLWxlbmd0aCA4MCBzY3JpcHRzL2J1aWxkLWluZm8tZ2VuLnB5DQo+ICsNCj4g
+K2ltcG9ydCBhcmdwYXJzZQ0KPiAraW1wb3J0IGxvZ2dpbmcNCj4gKw0KPiArDQo+ICtkZWYg
+Z2VuZXJhdGVfa2V5X3ZhbChoZWFkZXI6IHN0cikgLT4gc3RyOg0KPiArICAgICMgcHlsaW50
+OiBkaXNhYmxlPW1pc3NpbmctZnVuY3Rpb24tZG9jc3RyaW5nDQo+ICsNCj4gKyAgICB3aXRo
+IG9wZW4oaGVhZGVyLCBlbmNvZGluZz0idXRmLTgiKSBhcyBjZmc6DQo+ICsgICAgICAgIGNv
+bmZpZyA9IFtsLnNwbGl0KClbMTpdIGZvciBsIGluIGNmZyBpZiBsLnN0YXJ0c3dpdGgoIiNk
+ZWZpbmUiKV0NCj4gKw0KPiArICAgIGZvciBjZmcgaW4gY29uZmlnOg0KPiArICAgICAgICBp
+ZiBjZmdbMF0uc3RhcnRzd2l0aCgiSEFWRV8iKToNCj4gKyAgICAgICAgICAgIHlpZWxkIChj
+ZmdbMF0ucmVtb3ZlcHJlZml4KCJIQVZFXyIpLmxvd2VyKCksIE5vbmUpDQo+ICsgICAgICAg
+ICAgICBjb250aW51ZQ0KPiArICAgICAgICB5aWVsZCAoDQo+ICsgICAgICAgICAgICBjZmdb
+MF0ucmVtb3ZlcHJlZml4KCJDT05GSUdfIikubG93ZXIoKSwNCj4gKyAgICAgICAgICAgICgN
+Cj4gKyAgICAgICAgICAgICAgICBjZmdbMV0NCj4gKyAgICAgICAgICAgICAgICBpZiBsZW4o
+Y2ZnKSA9PSAyDQo+ICsgICAgICAgICAgICAgICAgZWxzZSAiIi5qb2luKGNmZ1sxOl0pLnJl
+cGxhY2UoJyInLCAiIikgaWYgbGVuKGNmZykgPiAyIGVsc2UgTm9uZQ0KPiArICAgICAgICAg
+ICAgKSwNCj4gKyAgICAgICAgKQ0KPiArDQo+ICsNCj4gK2RlZiBtYWluKCkgLT4gTm9uZToN
+Cj4gKyAgICAjIHB5bGludDogZGlzYWJsZT1taXNzaW5nLWZ1bmN0aW9uLWRvY3N0cmluZw0K
+PiArICAgIHBhcnNlciA9IGFyZ3BhcnNlLkFyZ3VtZW50UGFyc2VyKCkNCj4gKyAgICBwYXJz
+ZXIuYWRkX2FyZ3VtZW50KCItdiIsICItLXZlcmJvc2UiLCBhY3Rpb249InN0b3JlX3RydWUi
+KQ0KPiArICAgIHBhcnNlci5hZGRfYXJndW1lbnQoDQo+ICsgICAgICAgICItLWNvbmZpZy1o
+ZWFkZXJzIiwNCj4gKyAgICAgICAgbWV0YXZhcj0iQ09ORklHX0hFQURFUiIsDQo+ICsgICAg
+ICAgIGFjdGlvbj0iYXBwZW5kIiwNCj4gKyAgICAgICAgZGVzdD0iY29uZmlnX2hlYWRlcnMi
+LA0KPiArICAgICAgICBoZWxwPSJwYXRocyB0byBjb25maWd1cmF0aW9uIGhvc3QgQyBoZWFk
+ZXJzICgqLmggZmlsZXMpIiwNCj4gKyAgICAgICAgcmVxdWlyZWQ9RmFsc2UsDQo+ICsgICAg
+ICAgIGRlZmF1bHQ9W10sDQo+ICsgICAgKQ0KPiArICAgIGFyZ3MgPSBwYXJzZXIucGFyc2Vf
+YXJncygpDQo+ICsgICAgaWYgYXJncy52ZXJib3NlOg0KPiArICAgICAgICBsb2dnaW5nLmJh
+c2ljQ29uZmlnKGxldmVsPWxvZ2dpbmcuRVJST1IpDQo+ICsgICAgbG9nZ2luZy5kZWJ1Zygi
+YXJnczogJXMiLCBhcmdzKQ0KPiArICAgIHByaW50KA0KPiArICAgICAgICAiIiIvLyBAZ2Vu
+ZXJhdGVkIGJ5IHNjcmlwdHMvYnVpbGQtaW5mby1nZW4ucHkNCj4gKw0KPiArI2luY2x1ZGUg
+PHN0ZGRlZi5oPiIiIg0KPiArICAgICkNCj4gKyAgICBwcmludCgNCj4gKyAgICAgICAgIiIi
+c3RhdGljIHN0cnVjdCBidWlsZF9pbmZvX3Qgew0KPiArICAgIGNvbnN0IGNoYXIgKmtleTsN
+Cj4gKyAgICBjb25zdCBjaGFyICp2YWx1ZTsNCj4gK30gQlVJTERfSU5GT1tdID0geyIiIg0K
+PiArICAgICkNCj4gKyAgICB0b3RhbCA9IDANCj4gKyAgICBoZWFkZXJfd2lkdGggPSAwDQo+
+ICsgICAgZm9yIGhlYWRlciBpbiBhcmdzLmNvbmZpZ19oZWFkZXJzOg0KPiArICAgICAgICBm
+b3Iga2V5LCB2YWwgaW4gZ2VuZXJhdGVfa2V5X3ZhbChoZWFkZXIpOg0KPiArICAgICAgICAg
+ICAgdG90YWwgKz0gMQ0KPiArICAgICAgICAgICAgaGVhZGVyX3dpZHRoID0gbWF4KGhlYWRl
+cl93aWR0aCwgbGVuKGtleSkpDQo+ICsgICAgICAgICAgICBwcmludCgNCj4gKyAgICAgICAg
+ICAgICAgICAneyInLA0KPiArICAgICAgICAgICAgICAgIGtleSwNCj4gKyAgICAgICAgICAg
+ICAgICAnIiwgIicsDQo+ICsgICAgICAgICAgICAgICAgdmFsLnN0cmlwKCciJykuc3RyaXAo
+IiwiKS5zdHJpcCgnIicpIGlmIHZhbCBlbHNlICIiLA0KPiArICAgICAgICAgICAgICAgICci
+fSwnLA0KPiArICAgICAgICAgICAgICAgIHNlcD0iIiwNCj4gKyAgICAgICAgICAgICkNCj4g
+KyAgICBwcmludCgifTsiKQ0KPiArICAgIHByaW50KCJcbnN0YXRpYyBzaXplX3QgQlVJTERf
+SU5GT19TSVpFID0gIiwgdG90YWwsICI7Iiwgc2VwPSIiKQ0KPiArICAgIHByaW50KA0KPiAr
+ICAgICAgICAic3RhdGljIHVuc2lnbmVkIGludCBCVUlMRF9JTkZPX0hFQURFUl9XSURUSCA9
+ICIsDQo+ICsgICAgICAgIGhlYWRlcl93aWR0aCwNCj4gKyAgICAgICAgIjsiLA0KPiArICAg
+ICAgICBzZXA9IiIsDQo+ICsgICAgKQ0KPiArDQo+ICsNCj4gK2lmIF9fbmFtZV9fID09ICJf
+X21haW5fXyI6DQo+ICsgICAgbWFpbigpDQo+IGRpZmYgLS1naXQgYS9zeXN0ZW0vdmwuYyBi
+L3N5c3RlbS92bC5jDQo+IGluZGV4IGZlNTQ3Y2E0N2MuLjUyNjZiODVkMjIgMTAwNjQ0DQo+
+IC0tLSBhL3N5c3RlbS92bC5jDQo+ICsrKyBiL3N5c3RlbS92bC5jDQo+IEBAIC05MDgsNiAr
+OTA4LDQxIEBAIHN0YXRpYyB2b2lkIGhlbHAoaW50IGV4aXRjb2RlKQ0KPiAgICAgICBleGl0
+KGV4aXRjb2RlKTsNCj4gICB9DQo+ICAgDQo+ICtzdGF0aWMgdm9pZCBidWlsZF9pbmZvKGNv
+bnN0IGNoYXIgKmV4ZWNuYW1lLCBib29sIGFzX2pzb24pDQo+ICt7DQo+ICsjaW5jbHVkZSAi
+YnVpbGQtaW5mby5oIg0KPiArICAgIGlmIChhc19qc29uKSB7DQo+ICsgICAgICAgIHByaW50
+Zigie1xuIik7DQo+ICsgICAgICAgIGZvciAoc2l6ZV90IGkgPSAwOyBpICsgMSA8IEJVSUxE
+X0lORk9fU0laRSA7IGkrKykgew0KPiArICAgICAgICAgICAgcHJpbnRmKCJcIiVzXCI6XCIl
+c1wiLFxuIiwNCj4gKyAgICAgICAgICAgICAgICAgICBCVUlMRF9JTkZPW2ldLmtleSwNCj4g
+KyAgICAgICAgICAgICAgICAgICBCVUlMRF9JTkZPW2ldLnZhbHVlKTsNCj4gKyAgICAgICAg
+fQ0KPiArICAgICAgICBpZiAoQlVJTERfSU5GT19TSVpFID4gMCkgew0KPiArICAgICAgICAg
+ICAgcHJpbnRmKCJcIiVzXCI6XCIlc1wiXG4iLA0KPiArICAgICAgICAgICAgICAgICAgIEJV
+SUxEX0lORk9bQlVJTERfSU5GT19TSVpFIC0gMV0ua2V5LA0KPiArICAgICAgICAgICAgICAg
+ICAgIEJVSUxEX0lORk9bQlVJTERfSU5GT19TSVpFIC0gMV0udmFsdWUpOw0KPiArICAgICAg
+ICB9DQo+ICsgICAgICAgIHByaW50ZigifVxuIik7DQo+ICsgICAgfSBlbHNlIHsNCj4gKyAg
+ICAgICAgcHJpbnRmKCIlcyB2ZXJzaW9uICINCj4gKyAgICAgICAgICAgICAgIFFFTVVfRlVM
+TF9WRVJTSU9ODQo+ICsgICAgICAgICAgICAgICAiIGJ1aWxkIGluZm9ybWF0aW9uXG5cbiIs
+IGV4ZWNuYW1lID86IlFFTVUiKTsNCj4gKyAgICAgICAgcHJpbnRmKCIgICUtKnMga2V5IHZh
+bHVlXG4iLA0KPiArICAgICAgICAgICAgICAgQlVJTERfSU5GT19IRUFERVJfV0lEVEgsDQo+
+ICsgICAgICAgICAgICAgICAiY29uZmlndXJhdGlvbiBrZXkiKTsNCj4gKyAgICAgICAgcHJp
+bnRmKCIgICUtKnMgLS0tLS0tLS0tXG4iLA0KPiArICAgICAgICAgICAgICAgQlVJTERfSU5G
+T19IRUFERVJfV0lEVEgsDQo+ICsgICAgICAgICAgICAgICAiLS0tLS0tLS0tLS0tLS0tLS0i
+KTsNCj4gKyAgICAgICAgZm9yIChzaXplX3QgaSA9IDA7IGkgPCBCVUlMRF9JTkZPX1NJWkUg
+OyBpKyspIHsNCj4gKyAgICAgICAgICAgIHByaW50ZigiICAlLSpzICVzXG4iLA0KPiArICAg
+ICAgICAgICAgICAgICAgIEJVSUxEX0lORk9fSEVBREVSX1dJRFRILA0KPiArICAgICAgICAg
+ICAgICAgICAgIEJVSUxEX0lORk9baV0ua2V5LA0KPiArICAgICAgICAgICAgICAgICAgIEJV
+SUxEX0lORk9baV0udmFsdWUpOw0KPiArICAgICAgICB9DQo+ICsgICAgfQ0KPiArfQ0KPiAr
+DQo+ICAgZW51bSB7DQo+ICAgDQo+ICAgI2RlZmluZSBERUYob3B0aW9uLCBvcHRfYXJnLCBv
+cHRfZW51bSwgb3B0X2hlbHAsIGFyY2hfbWFzaykgICAgIFwNCj4gQEAgLTMwMTksNiArMzA1
+NCwxMiBAQCB2b2lkIHFlbXVfaW5pdChpbnQgYXJnYywgY2hhciAqKmFyZ3YpDQo+ICAgICAg
+ICAgICAgICAgICAgIHZlcnNpb24oKTsNCj4gICAgICAgICAgICAgICAgICAgZXhpdCgwKTsN
+Cj4gICAgICAgICAgICAgICAgICAgYnJlYWs7DQo+ICsgICAgICAgICAgICBjYXNlIFFFTVVf
+T1BUSU9OX2J1aWxkX2luZm86DQo+ICsgICAgICAgICAgICAgICAgLyogZmFsbHRocm91Z2gg
+Ki8NCj4gKyAgICAgICAgICAgIGNhc2UgUUVNVV9PUFRJT05fYnVpbGRfaW5mb19qc29uOg0K
+PiArICAgICAgICAgICAgICAgIGJ1aWxkX2luZm8oYXJndlswXSwgcG9wdC0+aW5kZXggIT0g
+UUVNVV9PUFRJT05fYnVpbGRfaW5mbyk7DQo+ICsgICAgICAgICAgICAgICAgZXhpdCgwKTsN
+Cj4gKyAgICAgICAgICAgICAgICBicmVhazsNCj4gICAgICAgICAgICAgICBjYXNlIFFFTVVf
+T1BUSU9OX206DQo+ICAgICAgICAgICAgICAgICAgIG9wdHMgPSBxZW11X29wdHNfcGFyc2Vf
+bm9pc2lseShxZW11X2ZpbmRfb3B0cygibWVtb3J5IiksIG9wdGFyZywgdHJ1ZSk7DQo+ICAg
+ICAgICAgICAgICAgICAgIGlmIChvcHRzID09IE5VTEwpIHsNCj4gDQo+IC0tLQ0KPiBiYXNl
+LWNvbW1pdDogMDFkYzY1YTNiYzI2MmFiMWJlYzhmZTg5Nzc1ZTliYmZhNjI3YmVjYg0KPiBj
+aGFuZ2UtaWQ6IDIwMjQwOTIyLWZlYXR1cmUtYnVpbGQtaW5mby1jbGktYzllMDhlMzRjMzRi
+DQo+IA0KPiAtLQ0KPiDOs86x4b+WzrEgz4DPhc+Bzq8gzrzOuc+HzrjOrs+Ez4kNCj4gDQo=
 
 
