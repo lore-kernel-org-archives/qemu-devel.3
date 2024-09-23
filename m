@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AC1FCF9C6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:33:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1D52CF9C5B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:33:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssfQD-0004xw-Ea; Mon, 23 Sep 2024 05:31:57 -0400
+	id 1ssfPY-0002Dv-2i; Mon, 23 Sep 2024 05:31:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPy-0003u0-0a; Mon, 23 Sep 2024 05:31:42 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1ssfPV-00025j-US; Mon, 23 Sep 2024 05:31:13 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPv-00072J-GQ; Mon, 23 Sep 2024 05:31:40 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a8d43657255so661922666b.0; 
- Mon, 23 Sep 2024 02:31:38 -0700 (PDT)
+ id 1ssfPT-0006xg-9y; Mon, 23 Sep 2024 05:31:12 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a8d2b24b7a8so940166866b.1; 
+ Mon, 23 Sep 2024 02:31:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727083895; x=1727688695; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727083868; x=1727688668; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=M9bzZ/GFOvwUoR1zPglVl2k74UkcypgW81AHz/hJj94=;
- b=YhpoN0gpgd04lWaJCP03YjJUjm0acLgrUfcfj8ZVSg9YLclSFiEwAM4cpcFwSdUgtF
- pTKPl3DmnXN94f7KBCIQ7xdhjTbD0zJQyYZDZV4Knyfz4N109SujFjyisLVtxViSXcgd
- hhb19ngo93FuTykH6g3XfPibeY8medFQDnErBwp1afVF+btNcQ9VZUSg8ui9CjJGjpCj
- hrnEp9qFjNnPhdALIw2g3gJP7tT5lQzPmMaupU3CDnA4jqzvmWU7iL5R/28yOPISBIvK
- Md2wAxC36dFGc62pqwPjscmBzSuxph4kqGpAmuajzjsGZDQkK9KzBh4OdKirbc3mLA7w
- y3Wg==
+ bh=w4QKCLTnYRmG6RbJry6AnrnojW0x9+VCIRXbxcRAKqY=;
+ b=DHaLVgxo6VVLPM5cUV/BFL+h+bmrCxlWzDEJIEDvNeNGztLnwTe3OPvOjDXvkewEXH
+ STdpYuhBWNDKT81u/xOFUbF3LiuEjeL+S7w9zL+g6fQu9LXPPZvcSvDy+l2Q8bTka/xn
+ d5So9e5ZTFTNaMaWrsVuwI+eSKsI37oF3lAdgTkb0ac7aAR6nXIU2dyXYqJFpO/vn8j2
+ iXGMVlhBE/sufw52RZVSee9NbKuwEwBmPxLTQnqdEju6KEXgWU94xv8Z82i6evheOpbT
+ XlygGBO0M/DEkiYKWrpYqEM3Wh0DpwNZot2eeCNeiAH/frUTdvR230jhkrTFaI9Ae743
+ 7Mag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727083895; x=1727688695;
+ d=1e100.net; s=20230601; t=1727083868; x=1727688668;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=M9bzZ/GFOvwUoR1zPglVl2k74UkcypgW81AHz/hJj94=;
- b=PvNfMiBYMiHx/zJN+K+63DBMdNbwPULptCwL/Xk1truVguErYKe3XRA2KM148XkwCe
- /GS8errOhrSjJ8Ci177PJB2IPcVkE8Tu5thhpBvpA+rtIKs/zRJ4zrxPF5lSAahdV+iV
- 3zPW/+Sq6hp3ZfH35lXoHs3o9h4g6DmLAtEwixcbAtMgcyteyp5kYq5YlNbTCDyc+OI1
- beXNE+GI1ami2f1VAhi4asMV/VXLRnp1Ne9Xn1+8DbH/uCl4rGyiAcbt9i4EoRP3Gikx
- SFjBFzvsdp1XE7uhuuP+OHfzarWzpu4w2J+uOs76HpOTO1Gl9z4ajLkpwINzJtisTqpH
- AXJQ==
+ bh=w4QKCLTnYRmG6RbJry6AnrnojW0x9+VCIRXbxcRAKqY=;
+ b=K0wD7zbc49WYyJXLv+hP7QB4/Zk8Zf5As7j4URU/IET8rEowNIywkO6wSXQglSZJjG
+ f0fRuadVCybs0N7PTQ/9dXCKPU+0C2AEijE9KjcSvc2FVx3XVYeLMH2GJJVsRVijWXAt
+ WtfH8Z1BUwWMKoFXoMx3qO6/vfOQZWFkR2g1U1sDV0EPAXywQ1kph1p4G3/GpGGtc6ml
+ ZIDI0LMx/BNl3RZxNxu6Owq8paCX6QxFCCYkNOlyin+git7ya9hmy6UoZ9hMoCyPaQMa
+ UYYNRTx9gXk5VqilaZiT0fzyUh+C3ODUx85+KwH0AMCRHtrnpI++Yn9AVpGfrrv6ogL9
+ 9vMA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCULcOnd/hXa8QvJwKbCyIewAMYFPBSCRpXfstBHxDXwSJFgMP8QWsjLHpI3ciCj/ZSbBCiDLZd/KY8=@nongnu.org,
- AJvYcCUkV3ztk4eB5MkL6dLkkKO+n9/uY+rqBObspaB9uNcmaqqzhnK89++Dq2jb0VM0ekafalqR9nv22iJW@nongnu.org
-X-Gm-Message-State: AOJu0YwuzTx9prqLhrsz6rR+VKiF4WzV0StYb91C1yTkFzQLMFIgJcVx
- bSybKK9KzwxrqPAX7pXaUUimWdBQfwGT/6XOqK1QJJcUAlWy9e6kiD2oyg==
-X-Google-Smtp-Source: AGHT+IElN7sgu8F6nrOsHxOV3IX+3sDJSzhAOAJB09zFAe31ce4ait1ch6jgYpJyOrr3muBTSzdnag==
-X-Received: by 2002:a17:907:3f25:b0:a8a:ead3:8515 with SMTP id
- a640c23a62f3a-a90d514a83fmr1115869666b.65.1727083895462; 
- Mon, 23 Sep 2024 02:31:35 -0700 (PDT)
+ AJvYcCUacCS3oRPF07xKBd1HRFhSclBHF7LF55jOASskpiInuQ5ia4xs26S89GyQwDtPeJ/t7Jq7uJ3hoCJY@nongnu.org,
+ AJvYcCWiJ1+XNF8f896sujxWHilT8dW7hj0SUm4nvvNo9cTvLJuHf8bRv2Y1SZROTN25PG68Um+BzUB9kgU=@nongnu.org
+X-Gm-Message-State: AOJu0YzNcHqRdY9nbP4ytIqiS55jQXCBWB2XN6wUSRECh1Lez5wBPkPu
+ A5J33B6a4wGCzxizxVI5gFx39ehVo5TTJdnA468AK3voWu3IQHW3G8sb9w==
+X-Google-Smtp-Source: AGHT+IGPr5k4lTfDwH8Hzdc+kNUjPn/92EN4rGVwxClEJG/iwvJPVOVc1ujyM8Ee/YYCEoDnxYji9Q==
+X-Received: by 2002:a17:907:a0e:b0:a90:3494:2aa9 with SMTP id
+ a640c23a62f3a-a90c1c363c1mr1628386966b.2.1727083868126; 
+ Mon, 23 Sep 2024 02:31:08 -0700 (PDT)
 Received: from archlinux.. (90-181-218-29.rco.o2.cz. [90.181.218.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.33
+ a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Sep 2024 02:31:34 -0700 (PDT)
+ Mon, 23 Sep 2024 02:31:07 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
@@ -71,16 +71,17 @@ Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 21/23] hw/rtc/ds1338: Prefer DEFINE_TYPES() macro
-Date: Mon, 23 Sep 2024 11:30:14 +0200
-Message-ID: <20240923093016.66437-22-shentey@gmail.com>
+Subject: [PATCH 05/23] hw/ppc/e500: Add missing device tree properties to i2c
+ controller node
+Date: Mon, 23 Sep 2024 11:29:58 +0200
+Message-ID: <20240923093016.66437-6-shentey@gmail.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240923093016.66437-1-shentey@gmail.com>
 References: <20240923093016.66437-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,47 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
----
- hw/rtc/ds1338.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+When compiling a decompiled device tree blob created with dumpdtb, dtc complains
+with:
 
-diff --git a/hw/rtc/ds1338.c b/hw/rtc/ds1338.c
-index a5fe221418..6de13caf99 100644
---- a/hw/rtc/ds1338.c
-+++ b/hw/rtc/ds1338.c
-@@ -14,7 +14,6 @@
- #include "hw/i2c/i2c.h"
- #include "migration/vmstate.h"
- #include "qemu/bcd.h"
--#include "qemu/module.h"
- #include "qom/object.h"
- #include "sysemu/rtc.h"
+  /soc@e0000000/i2c@3000: incorrect #address-cells for I2C bus
+  /soc@e0000000/i2c@3000: incorrect #size-cells for I2C bus
+
+Fix this by adding the missing device tree properties.
+
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/ppc/e500.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index 228287b457..e2a4f265a5 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -196,6 +196,8 @@ static void dt_i2c_create(void *fdt, const char *soc, const char *mpic,
+     qemu_fdt_setprop_cells(fdt, i2c, "cell-index", 0);
+     qemu_fdt_setprop_cells(fdt, i2c, "interrupts", irq0, 0x2);
+     qemu_fdt_setprop_phandle(fdt, i2c, "interrupt-parent", mpic);
++    qemu_fdt_setprop_cell(fdt, i2c, "#size-cells", 0);
++    qemu_fdt_setprop_cell(fdt, i2c, "#address-cells", 1);
+     qemu_fdt_setprop_string(fdt, "/aliases", alias, i2c);
  
-@@ -227,16 +226,13 @@ static void ds1338_class_init(ObjectClass *klass, void *data)
-     dc->vmsd = &vmstate_ds1338;
- }
- 
--static const TypeInfo ds1338_info = {
--    .name          = TYPE_DS1338,
--    .parent        = TYPE_I2C_SLAVE,
--    .instance_size = sizeof(DS1338State),
--    .class_init    = ds1338_class_init,
-+static const TypeInfo types[] = {
-+    {
-+        .name          = TYPE_DS1338,
-+        .parent        = TYPE_I2C_SLAVE,
-+        .instance_size = sizeof(DS1338State),
-+        .class_init    = ds1338_class_init,
-+    },
- };
- 
--static void ds1338_register_types(void)
--{
--    type_register_static(&ds1338_info);
--}
--
--type_init(ds1338_register_types)
-+DEFINE_TYPES(types)
+     g_free(i2c);
 -- 
 2.46.1
 
