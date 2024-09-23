@@ -4,94 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84ACECF9C72
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 16:30:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1636ACF9C72
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 16:38:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sslpu-0007S3-Fr; Mon, 23 Sep 2024 12:22:54 -0400
+	id 1ssm42-0000W4-8S; Mon, 23 Sep 2024 12:37:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sslpb-0006Xj-U9
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 12:22:36 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1ssm3r-0008C6-1r
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 12:37:19 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sslpX-0000cn-P6
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 12:22:34 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48N8nkus021322;
- Mon, 23 Sep 2024 16:22:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=a19Q13gsnFLHt
- WGFByfdJRJnGzYniaISkm/mDVLQxWU=; b=VqmGNyx/BeDw/DyGWEZVFY6pU9puP
- 4xczTWB8ap6V4OfYAyAwvIZDtm7tuZN+87m73BBbf0ZB+MeuVHb5O49q5n5hgWXr
- hyJyTMElCOHStvfRC0Mi3lOyajwQ2mNqTbAdWGe3KGsXMOTIubVPxyg3LZRO5hel
- Z6M0ZKoEzmaLbl2zYnndzTraHoEVmjCsyJyWMRnYzr/MBH2FR+GFxlNZVFYIm04u
- 6Jp4upVFlhCGuBPDkEiGpJG0xmk/X2k/XN/2ZiVtoovK2X2mTTxJ1qFGfrtDR9fr
- nKFZkFNyvJtX6q6hw5ZBoea6VQgDxkZcFza48F/0A8AlZ6ptDSgy1z0Zg==
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1ssm3n-0002RN-SW
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 12:37:18 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48N2mlcQ011766;
+ Mon, 23 Sep 2024 16:37:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:subject:from:to:cc:date:in-reply-to:references
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ Ka9pSNVQmHjIUyexwJHXesfqr0pJBh36w4kiIGgBMm8=; b=OVFTggYUpVi4jia9
+ 0r/z4yCUP8Es4atukY8vucXhx1XTl413Jm05/e1kJd8L3iTFfNHmRuV61fJ+ne1j
+ kfHQUj1reR2rr+ncQruAszqO5/fKy9blXEtzzH20kAZ6kOGYN3/rRSdFLlZFfrw+
+ 3ytdFejkimGHIH6ddia7jj9gvovaUokp3BzU3Zf4WJfX5v18vhVJ0Xs+ZW10bbPJ
+ bTfgHYVnOb2Yh8GfylaLmDjBJESfzbQz4uMj7kdM2JVvVLppKk7ub9w8Eo/fVgPl
+ jr5qFnPvMwIL7K0pbuHEpWIK8YHG4LEhpKgBWSTdZPCKiPwzmWvajNC/ViFKy2XV
+ 13cTow==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41snvaw5ju-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41snt14rnj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 23 Sep 2024 16:22:28 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48NGKSuw022836;
- Mon, 23 Sep 2024 16:22:27 GMT
+ Mon, 23 Sep 2024 16:37:13 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48NGbD7a024657;
+ Mon, 23 Sep 2024 16:37:13 GMT
 Received: from ppma22.wdc07v.mail.ibm.com
  (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41snvaw5jk-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41snt14rng-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 23 Sep 2024 16:22:27 +0000 (GMT)
+ Mon, 23 Sep 2024 16:37:13 +0000 (GMT)
 Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48NE0r4t008712;
- Mon, 23 Sep 2024 16:22:24 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41t8v0ym0k-1
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48NE2YGK008688;
+ Mon, 23 Sep 2024 16:37:12 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41t8v0yny1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 23 Sep 2024 16:22:24 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48NGMMoQ49545572
+ Mon, 23 Sep 2024 16:37:12 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48NGbAq712255566
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 23 Sep 2024 16:22:22 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5488220040;
- Mon, 23 Sep 2024 16:22:22 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F406D20043;
- Mon, 23 Sep 2024 16:22:21 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.179.24.235])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 23 Sep 2024 16:22:21 +0000 (GMT)
+ Mon, 23 Sep 2024 16:37:10 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 75F532004B;
+ Mon, 23 Sep 2024 16:37:10 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F00AB20040;
+ Mon, 23 Sep 2024 16:37:09 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 23 Sep 2024 16:37:09 +0000 (GMT)
+Message-ID: <c9b5a4f2171371d29bbbc3e61cd49c441ab0d3d6.camel@linux.ibm.com>
+Subject: Re: [PATCH 00/18] Stop all qemu-cpu threads on a breakpoint
 From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 13/18] cpu: Implement cpu_thread_is_idle() for qemu-user
-Date: Mon, 23 Sep 2024 18:13:08 +0200
-Message-ID: <20240923162208.90745-14-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.46.0
+To: Richard Henderson <richard.henderson@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=
+ <alex.bennee@linaro.org>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Date: Mon, 23 Sep 2024 18:37:09 +0200
 In-Reply-To: <20240923162208.90745-1-iii@linux.ibm.com>
 References: <20240923162208.90745-1-iii@linux.ibm.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: H1unpGehqrO8G9EApNiV1mjYh5yafUKj
-X-Proofpoint-GUID: YrAN4IlKWBOSBVA4SXcT3j0wTiQKe2fD
+X-Proofpoint-ORIG-GUID: UY49uTG9QuG_S64pqryLqnUJeP-cu2S_
+X-Proofpoint-GUID: 25ZUjRom1hEf4Vst9sfdO0OEABU4pNvv
+Content-Transfer-Encoding: base64
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-23_12,2024-09-23_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- priorityscore=1501 phishscore=0 clxscore=1015 spamscore=0 mlxscore=0
- adultscore=0 impostorscore=0 bulkscore=0 malwarescore=0 suspectscore=0
- mlxlogscore=926 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409230121
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ adultscore=0 mlxlogscore=686
+ priorityscore=1501 suspectscore=0 mlxscore=0 clxscore=1015 impostorscore=0
+ malwarescore=0 bulkscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2409230122
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -115,123 +118,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stopped CPUs are parked until cpu_thread_is_idle() is true, so
-implement it for qemu-user. Share a part of the qemu-system's
-implementation.
-
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- accel/tcg/user-exec.c     | 12 ++++++++++++
- cpu-common.c              | 19 +++++++++++++++++++
- include/exec/cpu-common.h |  3 +++
- include/sysemu/cpus.h     |  1 -
- system/cpus.c             | 17 ++++-------------
- 5 files changed, 38 insertions(+), 14 deletions(-)
-
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 3ebace1e833..57a13c81fc4 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -1317,3 +1317,15 @@ void cpu_exit_syscall(CPUState *cs)
- {
-     cs->in_syscall = false;
- }
-+
-+bool cpu_is_stopped(CPUState *cpu)
-+{
-+    return cpu->stopped;
-+}
-+
-+bool cpu_thread_is_idle(CPUState *cpu)
-+{
-+    int ret = cpu_thread_is_idle_common(cpu);
-+
-+    return ret == -1 ? true : ret;
-+}
-diff --git a/cpu-common.c b/cpu-common.c
-index cb7c10a3915..2822ee9373d 100644
---- a/cpu-common.c
-+++ b/cpu-common.c
-@@ -497,3 +497,22 @@ void run_on_cpu(CPUState *cpu, run_on_cpu_func func, run_on_cpu_data data)
- {
-     do_run_on_cpu(cpu, func, data, &bql);
- }
-+
-+bool cpu_work_list_empty(CPUState *cpu)
-+{
-+    return QSIMPLEQ_EMPTY_ATOMIC(&cpu->work_list);
-+}
-+
-+int cpu_thread_is_idle_common(CPUState *cpu)
-+{
-+    if (cpu->stop || !cpu_work_list_empty(cpu)) {
-+        return 0;
-+    }
-+    if (cpu_is_stopped(cpu)) {
-+        return 1;
-+    }
-+    if (!cpu->halted || cpu_has_work(cpu)) {
-+        return 0;
-+    }
-+    return -1;
-+}
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 32bd3cad83f..d7fc24bc13d 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -231,6 +231,9 @@ int cpu_exec_user(CPUState *cs);
- void cpu_enter_syscall(CPUState *cs);
- void cpu_exit_syscall(CPUState *cs);
- 
-+int cpu_thread_is_idle_common(CPUState *cpu);
-+bool cpu_thread_is_idle(CPUState *cpu);
-+
- /**
-  * env_archcpu(env)
-  * @env: The architecture environment
-diff --git a/include/sysemu/cpus.h b/include/sysemu/cpus.h
-index b4a566cfe75..bfa3fd45650 100644
---- a/include/sysemu/cpus.h
-+++ b/include/sysemu/cpus.h
-@@ -21,7 +21,6 @@ void dummy_start_vcpu_thread(CPUState *);
- 
- void cpus_kick_thread(CPUState *cpu);
- bool cpu_work_list_empty(CPUState *cpu);
--bool cpu_thread_is_idle(CPUState *cpu);
- bool all_cpu_threads_idle(void);
- bool cpu_can_run(CPUState *cpu);
- void qemu_wait_io_event_common(CPUState *cpu);
-diff --git a/system/cpus.c b/system/cpus.c
-index fe84b822798..13072be26fa 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -75,21 +75,12 @@ bool cpu_is_stopped(CPUState *cpu)
-     return cpu->stopped || !runstate_is_running();
- }
- 
--bool cpu_work_list_empty(CPUState *cpu)
--{
--    return QSIMPLEQ_EMPTY_ATOMIC(&cpu->work_list);
--}
--
- bool cpu_thread_is_idle(CPUState *cpu)
- {
--    if (cpu->stop || !cpu_work_list_empty(cpu)) {
--        return false;
--    }
--    if (cpu_is_stopped(cpu)) {
--        return true;
--    }
--    if (!cpu->halted || cpu_has_work(cpu)) {
--        return false;
-+    int ret = cpu_thread_is_idle_common(cpu);
-+
-+    if (ret != -1) {
-+        return ret;
-     }
-     if (cpus_accel->cpu_thread_is_idle) {
-         return cpus_accel->cpu_thread_is_idle(cpu);
--- 
-2.46.0
-
+T24gTW9uLCAyMDI0LTA5LTIzIGF0IDE4OjEyICswMjAwLCBJbHlhIExlb3Noa2V2aWNoIHdyb3Rl
+Ogo+IEhpLAo+IAo+IE9uIHJlcG9ydGluZyBhIGJyZWFrcG9pbnQgaW4gYSBub24tbm9uLXN0b3Ag
+bW9kZSwgR0RCIHJlbW90ZXMgbXVzdAo+IHN0b3AKPiBhbGwgdGhyZWFkcy4gQ3VycmVudGx5IHFl
+bXUtdXNlciBkb2Vzbid0IGRvIHRoYXQsIGJyZWFraW5nIHRoZQo+IGRlYnVnZ2luZyBzZXNzaW9u
+IGZvciBhdCBsZWFzdCB0d28gcmVhc29uczogY29uY3VycmVudCBhY2Nlc3MgdG8gdGhlCj4gR0RC
+IHNvY2tldCwgYW5kIGFuIGFzc2VydGlvbiB3aXRoaW4gR0RCIFsxXS4KPiAKPiBUaGlzIHNlcmll
+cyBmaXhlcyB0aGlzIGJ5IGltcG9ydGluZyBwYXVzZV9hbGxfdmNwdXMoKSBmcm9tIHFlbXUtCj4g
+c3lzdGVtLgo+IFRoaXMgaW4gdHVybiByZXF1aXJlcyBpbnRyb2R1Y2luZyBCUUwgYW5kIGEgZmV3
+IHN0dWJzIHRvIHFlbXUtdXNlci4KPiAKPiBCZXN0IHJlZ2FyZHMsCj4gSWx5YQo+IAo+IFsxXSBo
+dHRwczovL2dpdGxhYi5jb20vcWVtdS1wcm9qZWN0L3FlbXUvLS9pc3N1ZXMvMjQ2NQo+IAo+IEls
+eWEgTGVvc2hrZXZpY2ggKDE4KToKPiDCoCBnZGJzdHViOiBNYWtlIGdkYl9nZXRfY2hhcigpIHN0
+YXRpYwo+IMKgIGdkYnN0dWI6IE1vdmUgcGh5X21lbW9yeV9tb2RlIHRvIEdEQlN5c3RlbVN0YXRl
+Cj4gwqAgZ2Ric3R1YjogTW92ZSBnZGJfc3lzY2FsbF9tb2RlIHRvIEdEQlN5c2NhbGxTdGF0ZQo+
+IMKgIGdkYnN0dWI6IEZhY3RvciBvdXQgZ2RiX3RyeV9zdG9wKCkKPiDCoCBhY2NlbC90Y2c6IEZh
+Y3RvciBvdXQgY3B1X2V4ZWNfdXNlcigpCj4gwqAgcWVtdS10aHJlYWQ6IEludHJvZHVjZSBRRU1V
+X01VVEVYX0lOSVRJQUxJWkVSCj4gwqAgcWVtdS10aHJlYWQ6IEludHJvZHVjZSBRRU1VX0NPTkRf
+SU5JVElBTElaRVIKPiDCoCByZXBsYXk6IEFkZCByZXBsYXlfbXV0ZXhfe2xvY2ssdW5sb2NrfSgp
+IHN0dWJzIGZvciBxZW11LXVzZXIKPiDCoCBxZW11LXRpbWVyOiBQcm92aWRlIHFlbXVfY2xvY2tf
+ZW5hYmxlKCkgc3R1YiBmb3IgcWVtdS11c2VyCj4gwqAgY3B1OiBVc2UgQlFMIGluIHFlbXUtdXNl
+cgo+IMKgIGFjY2VsL3RjZzogVW5pZnkgdXNlciBpbXBsZW1lbnRhdGlvbnMgb2YgcWVtdV9jcHVf
+a2ljaygpCj4gwqAgY3B1OiBUcmFjayBDUFVzIGV4ZWN1dGluZyBzeXNjYWxscwo+IMKgIGNwdTog
+SW1wbGVtZW50IGNwdV90aHJlYWRfaXNfaWRsZSgpIGZvciBxZW11LXVzZXIKPiDCoCBjcHU6IElu
+dHJvZHVjZSBjcHVfaXNfcGF1c2VkKCkKPiDCoCBjcHU6IFNldCBjdXJyZW50X2NwdSBlYXJseSBp
+biBxZW11LXVzZXIKPiDCoCBjcHU6IEFsbG93IHBhdXNpbmcgYW5kIHJlc3VtaW5nIENQVXMgaW4g
+cWVtdS11c2VyCj4gwqAgZ2Ric3R1YjogUGF1c2UgYWxsIENQVXMgYmVmb3JlIHNlbmRpbmcgc3Rv
+cCByZXBsaWVzCj4gwqAgdGVzdHMvdGNnOiBTdHJlc3MgdGVzdCB0aHJlYWQgYnJlYWtwb2ludHMK
+PiAKPiDCoGFjY2VsL3RjZy91c2VyLWV4ZWMtc3R1Yi5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqAgfMKgwqAgNCAtCj4gwqBhY2NlbC90Y2cvdXNlci1leGVjLmPCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgIDU1ICsrKysrKwo+
+IMKgYnNkLXVzZXIvYWFyY2g2NC90YXJnZXRfYXJjaF9jcHUuaMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgfMKgwqAgNiArLQo+IMKgYnNkLXVzZXIvYXJtL3RhcmdldF9hcmNoX2NwdS5owqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgIDUgKy0KPiDCoGJzZC11c2VyL2ZyZWVic2Qvb3Mt
+c3lzY2FsbC5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgIDEwICsKPiDCoGJz
+ZC11c2VyL2kzODYvdGFyZ2V0X2FyY2hfY3B1LmjCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+IHzCoMKgIDUgKy0KPiDCoGJzZC11c2VyL21haW4uY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCA4ICstCj4gwqBic2QtdXNl
+ci94ODZfNjQvdGFyZ2V0X2FyY2hfY3B1LmjCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqAg
+NSArLQo+IMKgY3B1LWNvbW1vbi5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwgMTc5Cj4gKysrKysrKysrKysrKysrKysr
+Cj4gwqBnZGJzdHViL2dkYnN0dWIuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoCAxNyArLQo+IMKgZ2Ric3R1Yi9pbnRlcm5hbHMuaMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqAg
+NCArLQo+IMKgZ2Ric3R1Yi9zeXNjYWxscy5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoCAyMCArLQo+IMKgZ2Ric3R1Yi9zeXN0ZW0uY8Kg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+fMKgIDE4ICstCj4gwqBnZGJzdHViL3VzZXIuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoCAyOCArKy0KPiDCoGluY2x1ZGUv
+ZXhlYy9jcHUtY29tbW9uLmjCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+IHzCoCAxNSArKwo+IMKgaW5jbHVkZS9leGVjL3JlcGxheS1jb3JlLmjCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgMTMgKysKPiDCoGluY2x1ZGUvaHcvY29yZS9jcHUu
+aMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCAx
+ICsKPiDCoGluY2x1ZGUvcWVtdS90aHJlYWQtcG9zaXguaMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCB8wqDCoCA4ICsKPiDCoGluY2x1ZGUvcWVtdS90aHJlYWQtd2luMzIuaMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCA4ICsKPiDCoGluY2x1ZGUv
+c3lzZW11L2NwdXMuaMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCB8wqDCoCA2IC0KPiDCoGluY2x1ZGUvc3lzZW11L3JlcGxheS5owqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgIDEzIC0tCj4gwqBsaW51eC11c2VyL2Fh
+cmNoNjQvY3B1X2xvb3AuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgIDUg
+Ky0KPiDCoGxpbnV4LXVzZXIvYWxwaGEvY3B1X2xvb3AuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCB8wqDCoCA1ICstCj4gwqBsaW51eC11c2VyL2FybS9jcHVfbG9vcC5jwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCA1ICstCj4gwqBsaW51
+eC11c2VyL2hleGFnb24vY3B1X2xvb3AuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+IHzCoMKgIDUgKy0KPiDCoGxpbnV4LXVzZXIvaHBwYS9jcHVfbG9vcC5jwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqAgNSArLQo+IMKgbGludXgtdXNlci9pMzg2L2Nw
+dV9sb29wLmPCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCA1ICst
+Cj4gwqBsaW51eC11c2VyL2xvb25nYXJjaDY0L2NwdV9sb29wLmPCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgfMKgwqAgNSArLQo+IMKgbGludXgtdXNlci9tNjhrL2NwdV9sb29wLmPCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCA1ICstCj4gwqBsaW51eC11c2VyL21h
+aW4uY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgIHzCoMKgIDkgKy0KPiDCoGxpbnV4LXVzZXIvbWljcm9ibGF6ZS9jcHVfbG9vcC5jwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqAgNSArLQo+IMKgbGludXgtdXNlci9taXBzL2NwdV9s
+b29wLmPCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCA1ICstCj4g
+wqBsaW51eC11c2VyL29wZW5yaXNjL2NwdV9sb29wLmPCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgfMKgwqAgNSArLQo+IMKgbGludXgtdXNlci9wcGMvY3B1X2xvb3AuY8KgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqAgNSArLQo+IMKgbGludXgtdXNlci9y
+aXNjdi9jcHVfbG9vcC5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKg
+IDUgKy0KPiDCoGxpbnV4LXVzZXIvczM5MHgvY3B1X2xvb3AuY8KgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCB8wqDCoCA1ICstCj4gwqBsaW51eC11c2VyL3NoNC9jcHVfbG9vcC5j
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCA1ICstCj4gwqBs
+aW51eC11c2VyL3NwYXJjL2NwdV9sb29wLmPCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgfMKgwqAgNSArLQo+IMKgbGludXgtdXNlci9zeXNjYWxsLmPCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgMTIgKysKPiDCoGxpbnV4LXVz
+ZXIveHRlbnNhL2NwdV9sb29wLmPCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzC
+oMKgIDUgKy0KPiDCoHJlcGxheS9zdHVicy1zeXN0ZW0uY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCA4ICsKPiDCoHN0dWJzL21lc29uLmJ1aWxk
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+fMKgwqAgOCArCj4gwqBzdHVicy9xZW11LXRpbWVyLmPCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqAgNiArCj4gwqBzdHVicy9yZXBsYXkt
+bXV0ZXguY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+IHzCoCAxMCArCj4gwqBzdHVicy9yZXBsYXktdG9vbHMuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgIDggLQo+IMKgc3lzdGVtL2NwdXMuY8Kg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgfCAxNzIgKy0tLS0tLS0tLS0tLS0tLQo+IC0KPiDCoHRlc3RzL3RjZy9tdWx0aWFyY2gv
+TWFrZWZpbGUudGFyZ2V0wqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgIDEzICstCj4gwqAuLi4vZ2Ri
+c3R1Yi90ZXN0LXRocmVhZC1icmVha3BvaW50LXN0cmVzcy5wecKgIHzCoCAyOCArKysKPiDCoC4u
+Li90Y2cvbXVsdGlhcmNoL3RocmVhZC1icmVha3BvaW50LXN0cmVzcy5jwqAgfMKgIDkyICsrKysr
+KysrKwo+IMKgNDkgZmlsZXMgY2hhbmdlZCwgNTUyIGluc2VydGlvbnMoKyksIDMyNyBkZWxldGlv
+bnMoLSkKPiDCoGNyZWF0ZSBtb2RlIDEwMDY0NCBzdHVicy9xZW11LXRpbWVyLmMKPiDCoGNyZWF0
+ZSBtb2RlIDEwMDY0NCBzdHVicy9yZXBsYXktbXV0ZXguYwo+IMKgY3JlYXRlIG1vZGUgMTAwNjQ0
+IHRlc3RzL3RjZy9tdWx0aWFyY2gvZ2Ric3R1Yi90ZXN0LXRocmVhZC0KPiBicmVha3BvaW50LXN0
+cmVzcy5weQo+IMKgY3JlYXRlIG1vZGUgMTAwNjQ0IHRlc3RzL3RjZy9tdWx0aWFyY2gvdGhyZWFk
+LWJyZWFrcG9pbnQtc3RyZXNzLmMKCkNvcnJlY3Rpb246IHRoZSBzdWJqZWN0IHNob3VsZCBoYXZl
+ICJxZW11LXVzZXIiIGluc3RlYWQgb2YgInFlbXUtY3B1Ii4K
 
