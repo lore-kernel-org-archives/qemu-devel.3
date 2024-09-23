@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 684EBCF9C72
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 651EFCF9C71
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 19:44:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssoyL-0003hf-5T; Mon, 23 Sep 2024 15:43:50 -0400
+	id 1ssoyN-0003kD-1N; Mon, 23 Sep 2024 15:43:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mvogt@redhat.com>) id 1ssoyH-0003fn-07
+ (Exim 4.90_1) (envelope-from <mvogt@redhat.com>) id 1ssoyH-0003gI-NL
  for qemu-devel@nongnu.org; Mon, 23 Sep 2024 15:43:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mvogt@redhat.com>) id 1ssoyD-0004fm-3I
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 15:43:44 -0400
+ (Exim 4.90_1) (envelope-from <mvogt@redhat.com>) id 1ssoyD-0004g7-3r
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 15:43:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727120615;
+ s=mimecast20190719; t=1727120618;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=wliavXaA4V9yE5oMctpD/KUSKvoUnvA4IKL6JxEY1R0=;
- b=RL5XYu6rnhlI3XGv/YQw2W/gRAvvWBRZeSiQ6NYms+v1n2ZDAGzgWL4MZtHoAgl7V9RkAI
- WNebaYwaX9ryrOVteW6hG/5cUMjztT/VVzFH5YuWHrtZFj4YJy3SGsHWR7kSzNRhupArWC
- zgfd+Iwlh3S7wWZRWkrJIrl4FFHxIOk=
-Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
- [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fYc2HfSrfHAs2q5vz/ty/RnPNOXbdUZyj2YEt7OUJqc=;
+ b=DoPPbc7a4VlsBoKmfOMx6N5N+PuKbiuEj8sa2yJoZPj60GXJ1kRO1TXi2ND1cBuk31x5Ks
+ vlVVRZbJzlmWTNouAn//r38ETGKA58aQoaWsc/Q3yrkkJd/jG9xCFquE6RJSgYBXY/bYGJ
+ q6/IUVrFzJXvbZzXt4jdVHo5Xh9Sepk=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-Eu26RONsM8u_WBKsnEGMjg-1; Mon, 23 Sep 2024 15:43:34 -0400
-X-MC-Unique: Eu26RONsM8u_WBKsnEGMjg-1
-Received: by mail-lj1-f197.google.com with SMTP id
- 38308e7fff4ca-2f759001cb1so35656101fa.0
- for <qemu-devel@nongnu.org>; Mon, 23 Sep 2024 12:43:34 -0700 (PDT)
+ us-mta-219-zSSPHoZ5O6OSIvO9vfRazQ-1; Mon, 23 Sep 2024 15:43:35 -0400
+X-MC-Unique: zSSPHoZ5O6OSIvO9vfRazQ-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a8ff95023b6so365120766b.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Sep 2024 12:43:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727120612; x=1727725412;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wliavXaA4V9yE5oMctpD/KUSKvoUnvA4IKL6JxEY1R0=;
- b=E5vH10ElQsZTGnYGEFR9/UL4Bls/zi6JEmgbzA0zoDmhmwByTA3/I+zqjWe7ovukCQ
- AQ66uLuoOEjVBaHZHruJyH3tH1PmaPzVckh6Qe0fvw2GQXuFqS2bWkfZhh6XeXDVZiza
- ZQn/ca8LYrXhk6ajiJ7QwpjjLR7fBFgveRUlHMGIbG2ESv0wxaeS0AJJbVKW/8KhtjjE
- HLJmF0T/uLkcm4/PztXwMVaui+fcnz5nIOVrotHe+HO6nWWp4Rel4eA81RNvDT7rTqIY
- lzsGYhA99bHPFlfSTdTMpccWbvOzytWuztW6Ki64TWj2O7Z7i7Ym5Z7FVCFBfBaDax0V
- w/Og==
-X-Gm-Message-State: AOJu0YzxAaattZXAIcINYS9K0DgSqrZ6Ih1UO0yO4AYJu9Ebabeb1fpv
- Gg55ukjlfKYN9VK9oaDPLttBB6n4tfShmpnQ5FKfMtVK4Kn9F4uKX2wRL+5E/haHyS4ctKbdWZ/
- kI6rmp6WRlatRq4dz0VMoQ09BNZ0HLYH53qLSb/rUHPiNBlRUjKO6CkDqT4D8YK3/Va5Vqa3Z6e
- o/z/ctkEFLkk0jE6TbyDIsmjOAWOfGx5+C
-X-Received: by 2002:a05:6512:33ca:b0:52e:936e:a237 with SMTP id
- 2adb3069b0e04-536ac2e5b7amr7556188e87.16.1727120612036; 
+ d=1e100.net; s=20230601; t=1727120613; x=1727725413;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fYc2HfSrfHAs2q5vz/ty/RnPNOXbdUZyj2YEt7OUJqc=;
+ b=CzXgYYtJIG+1VQYNHkh02NKnVC3xfk8DXdYTATzsfabphAMJaqz3tPhhRcSfztDvpm
+ 8UC6DtYmzhJ4A7S7Bls1MIMF9WtpbdNbxjhmOAe+yZvUhg2k793EliSfPsTYeSu3FjzG
+ 4pdJpsoVyPRh418XdTDo4ixUCzOr9PMnVQv652Kq3Ikg0tGDLd1iEcIf60U0OujlD/8o
+ ABToWzBsRcuMYvvBzAUzn3oZdNoyVdaSbXaBALE3wnMUhj0uza/9Rrrmue3uLSaublQ+
+ ZA9CE5T5vC8fi3KYTXD1B8c03CUoYDsf0HQxySOG5KezW06QI5e1EacSk+tmdO/tZKS6
+ Tv5g==
+X-Gm-Message-State: AOJu0YwDA5n5Aj9tdpYFFJ/KfOySQkYrDPZiNVqzYRtOHJgASm22/YLy
+ Bt/hD54CxT1kCZ1B7ei6YcYyKbVhKqbazUXIr9Imox0SVs4d39kxz75hEaHEqC2XzZhTmrepRUm
+ amM7rFW1bu3N3To77BtS5WixlPki7lPt1CVuowIe1dLNDq07nBJ+Zfjxh74oE8Buh30CTontIN8
+ Gdhqt3P9Y1e14sNcpq7oLQ1oOnHq5iO5yM
+X-Received: by 2002:a17:906:c108:b0:a8a:1ffe:70f1 with SMTP id
+ a640c23a62f3a-a90d50efd99mr1364345866b.50.1727120612741; 
  Mon, 23 Sep 2024 12:43:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGy9j6xGkr6FlYGTY7u4KMvjUo6P2qiCh19pr0w1xWQ8aIP1r36HLvvBhqZi5PZL3ArqOujng==
-X-Received: by 2002:a05:6512:33ca:b0:52e:936e:a237 with SMTP id
- 2adb3069b0e04-536ac2e5b7amr7556156e87.16.1727120611430; 
- Mon, 23 Sep 2024 12:43:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IECsKNyewGaZexg0x3wjTdFwDi6b7zcbU08J+qD4ZRTJKi0MoJnKloWuu9mS/eKalctLyzJ5A==
+X-Received: by 2002:a17:906:c108:b0:a8a:1ffe:70f1 with SMTP id
+ a640c23a62f3a-a90d50efd99mr1364343066b.50.1727120612218; 
+ Mon, 23 Sep 2024 12:43:32 -0700 (PDT)
 Received: from top.fritz.box (p4fd6b76f.dip0.t-ipconnect.de. [79.214.183.111])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90612df5cfsm1289084366b.146.2024.09.23.12.43.30
+ a640c23a62f3a-a90612df5cfsm1289084366b.146.2024.09.23.12.43.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 23 Sep 2024 12:43:31 -0700 (PDT)
 From: Michael Vogt <mvogt@redhat.com>
@@ -68,13 +69,15 @@ To: qemu-devel@nongnu.org
 Cc: Michael Vogt <michael.vogt@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>, Michael Vogt <mvogt@redhat.com>
-Subject: [PATCH v7 0/2] linux-user: add openat2 support in linux-user
-Date: Mon, 23 Sep 2024 21:37:48 +0200
-Message-ID: <cover.1727119903.git.mvogt@redhat.com>
+Subject: [PATCH v7 1/2] linux-user: add openat2 support in linux-user
+Date: Mon, 23 Sep 2024 21:37:49 +0200
+Message-ID: <b0820319bcdc7f619fa875a168da7ac163955c3b.1727119903.git.mvogt@redhat.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <cover.1727119903.git.mvogt@redhat.com>
+References: <cover.1727119903.git.mvogt@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mvogt@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mvogt@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -99,102 +102,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is v7 of the openat2 support in linux-user. Thanks for the
-excellent feedback from Richard on v6, really appreciated.
+This commit adds support for the `openat2()` syscall in the
+`linux-user` userspace emulator.
 
-This version addresses the feedback for v6. The fix for the LTP
-failure requires to pass the "resolve" flags to maybe_do_fake_open()
-and check for RESOLVE_NO_{MAGIC,SYM}LINKS in /proc/self/exe. This is
-the only magic link we support currently via the faked files. The
-check is not perfect as dirfd is not honored. But if dirfd is used no
-fake open will be performed anyway and the host openat2 call will
-honor the resolve flags.
+It is implemented by extracting a new helper `maybe_do_fake_open()`
+out of the exiting `do_guest_openat()` and share that with the
+new `do_guest_openat2()`. Unfortunately we cannot just make
+do_guest_openat2() a superset of do_guest_openat() because the
+openat2() syscall is stricter with the argument checking and
+will return an error for invalid flags or mode combinations (which
+open()/openat() will ignore).
 
-I split adding openat2 support to strace.c into a separate commit
-but if a single commit is preferred I'm happy to do this of course.
-The second commit keeps copy_struct_from_user() in syscall.c, maybe
-uaccess.c is a better place, but to move we would also have to do
-something about check_zeroed_user() so I decided to keep the diff
-small (but happy to change that too if preferred).
+The implementation is similar to SYSCALL_DEFINE(openat2), i.e.
+a new `copy_struct_from_user()` is used that works the same
+as the kernels version to support backwards-compatibility
+for struct syscall argument.
 
-In the second commit I also had to move open_how_v0 so that strace.c
-can use it. I moved it into syscall_defs.h but it seems not a great
-fit, suggestions for a better place welcome (or a different approach,
-I could e.g. always rely on openat2.h in strace.c).
+Instead of including openat2.h we create a copy of `open_how`
+as `open_how_ver0` to ensure that if the structure grows we
+can log a LOG_UNIMP warning.
 
-The second diff also gives me an error in checkpatch.pl:
- +UNUSED static const struct flags openat2_resolve_flags[] = {
-which looks like a false postive to me as all the structs are
-formated this way in strace.c (but maybe I'm missing something?).
+Note that in this commit using openat2() for a "faked" file in
+/proc will honor the "resolve" flags for
+RESOLVE_NO_{MAGIC,SYM}LINKS for path based access to /proc/self/exe
+(which is the only magic link we support for faked files).
+Note it will not catch special access via e.g. dirfd. This is not
+great but it seems similar to the exiting behavior when openat()
+is called with a dirfd to "/proc". Here too the fake file lookup
+may not catch the special file because no dirfd is used to
+determine if the path is in /proc.
 
-Looking forward to your feedback/ideas!
+Signed-off-by: Michael Vogt <mvogt@redhat.com>
+Buglink: https://github.com/osbuild/bootc-image-builder/issues/619
+---
+ linux-user/syscall.c      | 105 +++++++++++++++++++++++++++++++++++++-
+ linux-user/syscall_defs.h |  13 +++++
+ 2 files changed, 116 insertions(+), 2 deletions(-)
 
-Thanks,
- Michael
-
-
-v6 -> v7
-- use abi_ulong in guest_size
-- use TARGET_ABI_FMT_lu to format guest size in qemu_log_mask()
-- drop #ifdef for TARGET_NR_openat2
-- fix LTP test by checking for RESOLVE_NO_{MAGIC,SYM}LINKS in
-  maybe_do_fake_open()
-- add support for openat2 in strace.c
-- add copy_struct_from_user definition to qemu.h
-- add open_how_v0 to syscall_defs.h
-
-v5 -> v6
-- do not use get_errno(fd) in do_guest_openat()
-- do not put declarations in the middle of the code
-- do not return early in do_openat2() when we get a faked file
-
-v4 -> v5
-- drop "*use_returned_fd" from maybe_do_fake_open() and use return value
-  -2 to signal to the caller to continue
-- keep "pathname" in parameter to do_guest_openat() for a cleaner diff
-- fix two missing get_errno(fd)
-
-v3 -> v4:
-- fix typos in the commit message
-
-v2 -> v3:
-- fix coding style (braches)
-- improve argument args/naming in do_openat2()
-- merge do_openat2/do_guest_openat2
-- do size checks first in do_openat2
-- add "copy_struct_from_user" and use in "do_openat2()"
-- drop using openat2.h and create "struct open_how_v0"
-- log if open_how guest struct is bigger than our supported struct
-
-v1 -> v2:
-- do not include <sys/syscall.h>
-- drop do_guest_openat2 from qemu.h and make static
-- drop "safe" from do_guest_openat2
-- ensure maybe_do_fake_open() is correct about when the result should
-  be used or not
-- Extract do_openat2() helper from do_syscall1()
-- Call user_unlock* if a lock call fails
-- Fix silly incorrect use of "target_open_how" when "open_how" is required
-- Fix coding style comments
-- Fix validation of arg4 in openat2
-- Fix missing zero initialization of open_how
-- Define target_open_how with abi_* types
-- Warn about unimplemented size if "size" of openat2 is bigger than
-  target_open_how
-
-
-Michael Vogt (2):
-  linux-user: add openat2 support in linux-user
-  linux-user: add strace support for openat2
-
- linux-user/qemu.h         |  9 ++++
- linux-user/strace.c       | 40 ++++++++++++++++
- linux-user/strace.list    |  3 ++
- linux-user/syscall.c      | 99 ++++++++++++++++++++++++++++++++++++++-
- linux-user/syscall_defs.h | 18 +++++++
- meson.build               |  1 +
- 6 files changed, 168 insertions(+), 2 deletions(-)
-
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index b693aeff5b..8c5d68ef85 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -602,6 +602,34 @@ static int check_zeroed_user(abi_long addr, size_t ksize, size_t usize)
+     return 1;
+ }
+ 
++/*
++ * Copies a target struct to a host struct, in a way that guarantees
++ * backwards-compatibility for struct syscall arguments.
++ *
++ * Similar to kernels uaccess.h:copy_struct_from_user()
++ */
++static int
++copy_struct_from_user(void *dst, size_t ksize, abi_ptr src, size_t usize)
++{
++    size_t size = MIN(ksize, usize);
++    size_t rest = MAX(ksize, usize) - size;
++
++    /* Deal with trailing bytes. */
++    if (usize < ksize) {
++        memset(dst + size, 0, rest);
++    } else if (usize > ksize) {
++        int ret = check_zeroed_user(src, ksize, usize);
++        if (ret <= 0) {
++            return ret ?: -TARGET_E2BIG;
++        }
++    }
++    /* Copy the interoperable parts of the struct. */
++    if (copy_from_user(dst, src, size)) {
++        return -TARGET_EFAULT;
++    }
++    return 0;
++}
++
+ #define safe_syscall0(type, name) \
+ static type safe_##name(void) \
+ { \
+@@ -653,6 +681,15 @@ safe_syscall3(ssize_t, read, int, fd, void *, buff, size_t, count)
+ safe_syscall3(ssize_t, write, int, fd, const void *, buff, size_t, count)
+ safe_syscall4(int, openat, int, dirfd, const char *, pathname, \
+               int, flags, mode_t, mode)
++
++struct open_how_ver0 {
++    __u64 flags;
++    __u64 mode;
++    __u64 resolve;
++};
++safe_syscall4(int, openat2, int, dirfd, const char *, pathname, \
++              const struct open_how_ver0 *, how, size_t, size)
++
+ #if defined(TARGET_NR_wait4) || defined(TARGET_NR_waitpid)
+ safe_syscall4(pid_t, wait4, pid_t, pid, int *, status, int, options, \
+               struct rusage *, rusage)
+@@ -8334,8 +8371,9 @@ static int open_net_route(CPUArchState *cpu_env, int fd)
+ }
+ #endif
+ 
+-int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
+-                    int flags, mode_t mode, bool safe)
++static int maybe_do_fake_open(CPUArchState *cpu_env, int dirfd,
++                              const char *fname, int flags, mode_t mode,
++                              int openat2_resolve, bool safe)
+ {
+     g_autofree char *proc_name = NULL;
+     const char *pathname;
+@@ -8372,6 +8410,12 @@ int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
+     }
+ 
+     if (is_proc_myself(pathname, "exe")) {
++        /* Honor openat2 resolve flags */
++        if ((openat2_resolve & RESOLVE_NO_MAGICLINKS) ||
++            (openat2_resolve & RESOLVE_NO_SYMLINKS)) {
++            errno = ELOOP;
++            return -1;
++        }
+         if (safe) {
+             return safe_openat(dirfd, exec_path, flags, mode);
+         } else {
+@@ -8418,6 +8462,17 @@ int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
+         return fd;
+     }
+ 
++    return -2;
++}
++
++int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *pathname,
++                    int flags, mode_t mode, bool safe)
++{
++    int fd = maybe_do_fake_open(cpu_env, dirfd, pathname, flags, mode, 0, safe);
++    if (fd > -2) {
++        return fd;
++    }
++
+     if (safe) {
+         return safe_openat(dirfd, path(pathname), flags, mode);
+     } else {
+@@ -8425,6 +8480,49 @@ int do_guest_openat(CPUArchState *cpu_env, int dirfd, const char *fname,
+     }
+ }
+ 
++
++static int do_openat2(CPUArchState *cpu_env, abi_long dirfd,
++                      abi_ptr guest_pathname, abi_ptr guest_open_how,
++                      abi_ulong guest_size)
++{
++    struct open_how_ver0 how = {0};
++    char *pathname;
++    int ret;
++
++    if (guest_size < sizeof(struct target_open_how_ver0)) {
++        return -TARGET_EINVAL;
++    }
++    ret = copy_struct_from_user(&how, sizeof(how), guest_open_how, guest_size);
++    if (ret) {
++        if (ret == -TARGET_E2BIG) {
++            qemu_log_mask(LOG_UNIMP,
++                          "Unimplemented openat2 open_how size: "
++                          TARGET_ABI_FMT_lu "\n", guest_size);
++        }
++        return ret;
++    }
++    pathname = lock_user_string(guest_pathname);
++    if (!pathname) {
++        return -TARGET_EFAULT;
++    }
++
++    how.flags = target_to_host_bitmask(how.flags, fcntl_flags_tbl);
++    how.mode = tswap64(how.mode);
++    how.resolve = tswap64(how.resolve);
++    int fd = maybe_do_fake_open(cpu_env, dirfd, pathname, how.flags, how.mode,
++                                how.resolve, true);
++    if (fd > -2) {
++        ret = get_errno(fd);
++    } else {
++        ret = get_errno(safe_openat2(dirfd, pathname, &how,
++                                     sizeof(struct open_how_ver0)));
++    }
++
++    fd_trans_unregister(ret);
++    unlock_user(pathname, guest_pathname, 0);
++    return ret;
++}
++
+ ssize_t do_guest_readlink(const char *pathname, char *buf, size_t bufsiz)
+ {
+     ssize_t ret;
+@@ -9197,6 +9295,9 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+         fd_trans_unregister(ret);
+         unlock_user(p, arg2, 0);
+         return ret;
++    case TARGET_NR_openat2:
++        ret = do_openat2(cpu_env, arg1, arg2, arg3, arg4);
++        return ret;
+ #if defined(TARGET_NR_name_to_handle_at) && defined(CONFIG_OPEN_BY_HANDLE)
+     case TARGET_NR_name_to_handle_at:
+         ret = do_name_to_handle_at(arg1, arg2, arg3, arg4, arg5);
+diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+index 8ed53904ed..9a2f2ef8f7 100644
+--- a/linux-user/syscall_defs.h
++++ b/linux-user/syscall_defs.h
+@@ -2753,4 +2753,17 @@ struct target_sched_param {
+     abi_int sched_priority;
+ };
+ 
++/* from kernel's include/uapi/linux/openat2.h */
++struct target_open_how_ver0 {
++    abi_ullong flags;
++    abi_ullong mode;
++    abi_ullong resolve;
++};
++#ifndef RESOLVE_NO_MAGICLINKS
++#define RESOLVE_NO_MAGICLINKS   0x02
++#endif
++#ifndef RESOLVE_NO_SYMLINKS
++#define RESOLVE_NO_SYMLINKS     0x04
++#endif
++
+ #endif
 -- 
 2.45.2
 
