@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE966CF9C6F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B24CCF9C5B
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 10:18:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssg7H-0001R8-8L; Mon, 23 Sep 2024 06:16:27 -0400
+	id 1ssg7H-0001Rh-33; Mon, 23 Sep 2024 06:16:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssg7G-0001PW-5e; Mon, 23 Sep 2024 06:16:26 -0400
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ id 1ssg7G-0001PV-55; Mon, 23 Sep 2024 06:16:26 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssg7E-0003mk-AM; Mon, 23 Sep 2024 06:16:25 -0400
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2f75de9a503so36338331fa.0; 
+ id 1ssg7E-0003mm-Mk; Mon, 23 Sep 2024 06:16:25 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a8a897bd4f1so624963266b.3; 
  Mon, 23 Sep 2024 03:16:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727086581; x=1727691381; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=XmTbYRcHV1szwxyogdy38XkkEf7HJri9e6GOsnw70n4=;
- b=bi5WauPWSoxDz/O7U8SIuhTKuVhgcCNsxODuL2XhGQQ/bOc3pjPIYUSk/Enr8kCwJ2
- +reGYwVXMpAYl0GQqzUyGUsRxRU1RIARiNWZiJ+eyA07mpscyXcTsX2sE7iJWBn7mzz8
- TWQhLIqtKXZSuJ5Sa/cFFvtF6Y5EdCfToXGQv2U85KhbhVk2kAcBCYSTBz9oIh6teJsy
- OaATAupu4FGdmcFzZJ84nDcGFQAo/O5Hefmg+xqd6lsrNajDuK+AffAnxFXUmqWdK1RQ
- XgrpMBmLQn6XWcPC9Po/0Z0QvrckMygYJWqbUV5wfoVAqnu7MSeUrzI4fBOxIho1DQNc
- Vizw==
+ d=gmail.com; s=20230601; t=1727086582; x=1727691382; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3utLXrcQvqqr/ZW1nAz9brc7pd3D1v8OfO4apq/Xqhk=;
+ b=XqfQpZunjVs1i+pSG/23AJ+wjOIa4BI5ABUUEllUuw2clkJc7TKRBlL/dsdetnq31L
+ iQ1a1ZRzOm6PvkcXLNBjnpSfH1IWLe6tIkz102+YTte4Chuxjf7PQn7lYNFJObHaY90H
+ op9wihY1w8skasyhts3lUvwaVnmNur19VbEnSJJure5mM33Rn4IrwjvYKb9zAj4y7QD3
+ Fba3zeVOlkAY7hGh7hMJxvTwTqjAQPCTPwvBLvHVkpGaqK+jTR14IXt4cTV628JXx++3
+ hYBidvThxCb5eerorR06x+xVM17MnkjS1t7Pn0kq/3novE9DaO47jWNqeDvJFmzkd45n
+ g7ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727086581; x=1727691381;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XmTbYRcHV1szwxyogdy38XkkEf7HJri9e6GOsnw70n4=;
- b=M7gyKgtJoPOtD/TwCczv/cArSqkMcmDVWEo9/8ODzxEE1fARHA8JXhM2fsmkje8BGR
- aN2r0/DssrfHt8xAFVo9dcX3G5oudW1JkFVs+ffboIqPnz71I2WgTC2W/vxMbSKye0US
- 8WlXy/9/AiJj+TdzjwOs4p7ncl83UeQh/4rxAVC8zd5G15SGJqNiVUdlwE6AYaCXDbaP
- Jx6i63NOJAJvS1vyS2Wo/gG1cEazBQKG1Uj4Lwt+XeNCIEYlZfIaVpJlaUXlWr3wUWHo
- VvJ2E9nXTEVIFGZu3ZZ5pARc63zTfhSTdTer7egEGpLl3o4zMCjWxi57LBIyvW1y2hSb
- OSMA==
+ d=1e100.net; s=20230601; t=1727086582; x=1727691382;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3utLXrcQvqqr/ZW1nAz9brc7pd3D1v8OfO4apq/Xqhk=;
+ b=VzL5HsQfc1GTAwWabdSo23nIUiDDNw2baI+duoNgMvcSkBUpBNj3AwNEkQQllwlp4s
+ CYNNzwXIFInsGkv9e/oRsUC384unhevRTJeD/XyFOEPZKoQtdGB8PnJ00NWBWd8W+Pbw
+ 4WLIbM416v8TeuCnNOntD6SFkZ7FM/Blg9zpfZ5hbtsPqjvC3YLdbX2iLV70cKhsJXcs
+ lvQJjTeUi8p5gMamBwiSekqSwKX05w7Cyr0/F36ocOwdizL0+YIk8O/6lEvdPU/Jt3Wl
+ NFjekcx/Gl30ISPF393eNoBZH73pxFi51TpjfpMWigs2vggAIJ6VooQStxhLp9c9VJax
+ jNVg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUftdsvgXiL5sBRVbuCUFuUiiOFNGznaMBYuD3LTg2pk9sWCNP1SaJfSdfFYE9lC5Nkbh8qGR8XMQ==@nongnu.org
-X-Gm-Message-State: AOJu0YyQe9uLfE5d43ndVcgmV0rAJrYUCoF+1N+ypucJf49R046ErT6H
- Fn7bKPrWdiZKJTZ3GDQgiWHCah+tD9jNWwAInwt8GMRifpc+rQi796kxLg==
-X-Google-Smtp-Source: AGHT+IEl3RLBf+T7KBeevSUObenHaaxKhemqRlAOTV4Kr5qpUk6fDFqTwxJijZdNsY5u/KwKJE1Ijw==
-X-Received: by 2002:a05:6512:31d2:b0:536:536f:c663 with SMTP id
- 2adb3069b0e04-536ac2e5296mr5676109e87.22.1727086581139; 
+ AJvYcCWi3x/vkMoNoyYLnD/sHlmYQK9xfTVLCsmPHuC7xbSgsg3ZHVebGX5pD4IH6TrpOsZFXR9in3u0MQ==@nongnu.org
+X-Gm-Message-State: AOJu0YwhGpEr8QS9Xv9oYbbkU7vMyCtxxsxkLiCAgP2ND03aDC2N11kq
+ tWcSrKoUwNspqsqcWpIX4iirXrPMF973dL3HhLhK95jPdNE79Ba9ljZSMw==
+X-Google-Smtp-Source: AGHT+IFY7rj9BR6buLIywCchIL+hMutgPcCCTGbm/4hFYhN+DllbfuJvy9sKWlcqvW/SzhsB4uLQ5A==
+X-Received: by 2002:a17:907:e246:b0:a90:d1e1:eeb3 with SMTP id
+ a640c23a62f3a-a90d50d0521mr1036149666b.44.1727086581944; 
  Mon, 23 Sep 2024 03:16:21 -0700 (PDT)
 Received: from archlinux.. (90-181-218-29.rco.o2.cz. [90.181.218.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90610f43e9sm1187655566b.72.2024.09.23.03.16.20
+ a640c23a62f3a-a90610f43e9sm1187655566b.72.2024.09.23.03.16.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Sep 2024 03:16:20 -0700 (PDT)
+ Mon, 23 Sep 2024 03:16:21 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 0/3] Split TYPE_GPIOPWR and reuse in E500 machines
-Date: Mon, 23 Sep 2024 12:15:51 +0200
-Message-ID: <20240923101554.12900-1-shentey@gmail.com>
+Subject: [PATCH 1/3] MAINTAINERS: Add hw/gpio/gpio_pwr.c
+Date: Mon, 23 Sep 2024 12:15:52 +0200
+Message-ID: <20240923101554.12900-2-shentey@gmail.com>
 X-Mailer: git-send-email 2.46.1
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20240923101554.12900-1-shentey@gmail.com>
+References: <20240923101554.12900-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=shentey@gmail.com; helo=mail-lj1-x236.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,59 +95,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series is part of a bigger series exploring data-driven machine creati=
-on=0D
-using device tree blobs on top of the e500 machines [1]. The idea is to=0D
-instantiate a QEMU device model for each device tree node containing a=0D
-compatible property. [1] achieves feature-parity with the hardcoded machine=
-s=0D
-when supplied the same device tree blob that the hardcoded machine would=0D
-generate.=0D
-=0D
-Just like the ARM virt machine, the ppce500 machine implements a=0D
-"gpio-poweroff"-compatible device tree node. Unfortunately, the implementat=
-ion=0D
-isn't shared which this series fixes. In order to reflect device tree which=
- has=0D
-separate bindings for gpio-poweroff and gpio-reset, and to prepare for the=
-=0D
-above, the gpio-pwr device model is split.=0D
-=0D
-Note: If the split seems too fine-grained, the existing gpio-pwr device mod=
-el=0D
-could probably be reused in ppce500, too.=0D
-=0D
-Testing done:=0D
-* Build qemu_ppc64_e5500_defconfig in Buildroot, run it in the ppce500 mach=
-ine=0D
-  and issue the `poweroff` command. Observe that QEMU is shut down cleanly.=
-=0D
-* ARM virt: How to test the secure path?=0D
-=0D
-[1] https://github.com/shentok/qemu/tree/e500-fdt=0D
-=0D
-Bernhard Beschow (3):=0D
-  MAINTAINERS: Add hw/gpio/gpio_pwr.c=0D
-  hw/gpio/gpio_pwr: Split into separate gpio_poweroff and gpio_restart=0D
-    devices=0D
-  hw/ppc/e500: Reuse TYPE_GPIO_POWEROFF=0D
-=0D
- MAINTAINERS             |  2 ++=0D
- hw/arm/virt.c           | 32 +++++++++++++------=0D
- hw/gpio/gpio_poweroff.c | 51 ++++++++++++++++++++++++++++++=0D
- hw/gpio/gpio_pwr.c      | 70 -----------------------------------------=0D
- hw/gpio/gpio_restart.c  | 51 ++++++++++++++++++++++++++++++=0D
- hw/ppc/e500.c           | 15 ++-------=0D
- hw/arm/Kconfig          |  3 +-=0D
- hw/gpio/Kconfig         |  5 ++-=0D
- hw/gpio/meson.build     |  3 +-=0D
- hw/ppc/Kconfig          |  1 +=0D
- 10 files changed, 138 insertions(+), 95 deletions(-)=0D
- create mode 100644 hw/gpio/gpio_poweroff.c=0D
- delete mode 100644 hw/gpio/gpio_pwr.c=0D
- create mode 100644 hw/gpio/gpio_restart.c=0D
-=0D
--- =0D
-2.46.1=0D
-=0D
+The device is only used in the ARM virt machine and designed to be used on top
+of pl061 for use cases such as ARM Trusted Firmware. Add it to the same section
+as hw/gpio/pl061.c.
+
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ffacd60f40..7e0d3509e8 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -656,6 +656,7 @@ F: hw/display/pl110*
+ F: hw/dma/pl080.c
+ F: include/hw/dma/pl080.h
+ F: hw/dma/pl330.c
++F: hw/gpio/gpio_pwr.c
+ F: hw/gpio/pl061.c
+ F: hw/input/pl050.c
+ F: include/hw/input/pl050.h
+-- 
+2.46.1
+
 
