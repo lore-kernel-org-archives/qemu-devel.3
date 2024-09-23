@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D4DCF9C6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 06:01:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69B73CF9C6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 06:06:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssc7q-0003gk-E1; Mon, 23 Sep 2024 02:00:46 -0400
+	id 1sscCV-00085D-NF; Mon, 23 Sep 2024 02:05:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ssc7p-0003fc-0w
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 02:00:45 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1sscCS-00083g-US
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 02:05:34 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ssc7m-0003zb-LW
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 02:00:44 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-374c1120a32so2482884f8f.1
- for <qemu-devel@nongnu.org>; Sun, 22 Sep 2024 23:00:41 -0700 (PDT)
+ id 1sscCQ-0004N7-Hz
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 02:05:32 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-42cb806623eso32219455e9.2
+ for <qemu-devel@nongnu.org>; Sun, 22 Sep 2024 23:05:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727071240; x=1727676040; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727071529; x=1727676329; darn=nongnu.org;
  h=cc:to:message-id:content-transfer-encoding:mime-version:subject
  :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gXblLKYupWhqyM5BOi2ivhHAJ3SEUqdFVB7cIyAHMqw=;
- b=T0oyVqq6rc1BWlrQlAwR3Kf2rTE8UcYhXg5sAg7gMS48LaFj4uD8cMGcaqRcAMEtW3
- HKCZ8BXpA7qmAFIUL/k8n8XBiDcn4biMHBGGpt6aMkaWe9tpLXngPjVQ7IISRgzCZw+n
- wu23/+4EIIdbJLNVTgWPssPNJeiarIOdRMl1JkBNH0wAFtQr4QEMkxbbSXVHu2qYgAZA
- 92pcR6RQeSlPovt0ruAVM0cACl7G9InEQxdc22eX3x3jclt0tE2qn1LjG2WHh1hcHvfO
- R7XtEQMnD2p/tFDtUkSYVCv8dBN3yvmNpI2fvDMm6+po1W2/qVnIugqotU5UUGlKIa/H
- tYOA==
+ bh=AK60c3rGPv0Vxm966ds2VwWlnvpAQkcKWEabfhnA/V4=;
+ b=ojAYDHRsOs2rzoOuKXnffg9fzptibIgo9Pzjrb96IGkf+N1KDz7lXW48UR75TfPL8g
+ XoEC6ykyKnqtlFqYDjHYf4wLZ+W4520j9cCRSYGfh9ZjRdojVLiy9HL+yjUllyn7cI+N
+ cNj1hMlFvKZQtVR0xGjBB5fip+UITMQgcKWd1iCLRqWOrbmWosQY5Gr+gS2yvscQRbAt
+ CXIwlj3eJPwMP0x622Sx8VrJioqczwLZLKcQug0tsKO5Tknp/TEWX97YfpnBcb8vJApY
+ TaAp71wSTpusVTBpNVv3QWtlFaBzZ3+Z6mPdT8jBj9YBInzAvPcrB13bnDPHxvxcwiw5
+ yTmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727071240; x=1727676040;
+ d=1e100.net; s=20230601; t=1727071529; x=1727676329;
  h=cc:to:message-id:content-transfer-encoding:mime-version:subject
  :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gXblLKYupWhqyM5BOi2ivhHAJ3SEUqdFVB7cIyAHMqw=;
- b=pwrzvA32i17zD7NXmYsEVdru0RDkcx7yJoApFUobqdTOG5LirGpGCdqlw0ss3/5ErG
- roEslCcm3rbCjlZ+pGiRK+gxYIUAt4X3pqgOim07aqq0cC6kJESlMLrmWFvnUnAsUMUv
- a3g2fNixkm7dJOJKyF/zDvE4gIzDkf9g7ijUOOfNPqp82nj9rzIlTKP9rB6cojcct6HN
- 9ycMhDUXr7Y8Wvx6vanBBmCQ9LmFKrhD0EO3e+EafHTihJaivZwaTgq2oKXaS8PGXvaY
- B+9PO+qqVvcCud1/7R/UCPht4fxe08sja0Meg+59TgBebh6tYUg6N+i5RvaVyrQhBYol
- kycw==
-X-Gm-Message-State: AOJu0YxEZ5Yc29fHunaF4cQGxX9K3a2RdzpxvzTzu9T6pr4nHilpXi1C
- hOjuXTMw/HKfwnb9p9rYRhYFcCOfwd1Q8RY1cnYb3IqlaHHcPc4hgweIW/BTAYE=
-X-Google-Smtp-Source: AGHT+IHLALtlbx8aAXR61q6eNHQUTKcCBeTy2DLyF1/tWkYjmoJFh4rHBgYKaKC6IYGlO0v9xrvWfQ==
-X-Received: by 2002:adf:e810:0:b0:37a:26f4:18a2 with SMTP id
- ffacd0b85a97d-37a42252b8dmr5448188f8f.4.1727071238699; 
- Sun, 22 Sep 2024 23:00:38 -0700 (PDT)
+ bh=AK60c3rGPv0Vxm966ds2VwWlnvpAQkcKWEabfhnA/V4=;
+ b=N4QlcVUiLXqbdZ+T+Jifqxf18/jTD91zr1+K51pVa0FhxapaWJGxhfIuJFn1BJnXyq
+ 07rV6tkIG53G2pLWbmLanAKHzmXXAuFyd+RBeuAXGF1txP8eZCuqFMObLw0xXlUVolGz
+ Z5Nn0eEKBB6Ke+Wzq3OCAbSxzSzN4K4mlYwy0d/A5wRdF2nvlt/sNacWEkBhGH2GqZjS
+ uBKnfsM2jsY+dzpGnBs90fKwbl7SQ4v65MCTsV9NeUkxGs1GOIz0JJ6tKgNrYpsyYR8h
+ hsEkHdF/vrquVQAxRsHALApBr4t+HtBDePC2JUcjMVClXKh/2SW1niDKu2MbpNyzwu2A
+ XQJQ==
+X-Gm-Message-State: AOJu0YzPCp5NHzBXadi5QiRW/HSZb5qbfMkv+nU63XSPZs4x1lZoHOqW
+ xAqKJH2bf3lNfjFPMyQNXIVKHM/LF3Ck5GhyFB95/eOXSUSM2p6IDsDCzPhD+R4=
+X-Google-Smtp-Source: AGHT+IEyS8NRtgxRsAWZzsIFkKgJeP5b2qPerbNSnY2bDGlaZuenDzINxafwKK0N1zMhjEZY11niOw==
+X-Received: by 2002:a05:600c:3b17:b0:42c:bd4d:e8ba with SMTP id
+ 5b1f17b1804b1-42e7abe7af6mr76310415e9.8.1727071528684; 
+ Sun, 22 Sep 2024 23:05:28 -0700 (PDT)
 Received: from [127.0.1.1] (adsl-13.37.6.161.tellas.gr. [37.6.161.13])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42e754c5627sm117257725e9.40.2024.09.22.23.00.36
+ 5b1f17b1804b1-42e75450aa0sm116102185e9.22.2024.09.22.23.05.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 22 Sep 2024 23:00:37 -0700 (PDT)
+ Sun, 22 Sep 2024 23:05:28 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 23 Sep 2024 09:00:03 +0300
-Subject: [PATCH] Add -build-info and -build-info-json CLI arguments
+Date: Mon, 23 Sep 2024 09:05:24 +0300
+Subject: [PATCH v2] Add -build-info and -build-info-json CLI arguments
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240923-feature-build-info-cli-v1-1-e8c42d845390@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAOID8WYC/x3MQQ5AMBBG4avIrE1S1QWuIhZaf5lESlpEIu6us
- fwW7z2UEAWJuuKhiEuSbCGjKgtyyxhmsEzZpJU2qtWaPcbjjGB7yjqxBL+xW4VdC9WgNq42lnK
- 8R3i5/3E/vO8HdZKojGgAAAA=
+Message-Id: <20240923-feature-build-info-cli-v2-1-66b3462f16a1@linaro.org>
+X-B4-Tracking: v=1; b=H4sIACMF8WYC/3WNQQqDMBBFryKz7pSYpKBd9R7iQuOoA5KUiYYW8
+ e5NhS67fA/++ztEEqYI92IHocSRg8+gLwW4ufMTIQ+ZQSttVa01jtStmxD2Gy8Dsh8DuoXR1aQ
+ qMtYZ20MeP4VGfp3hps08c1yDvM+fVH7tL2n+JVOJJVLlrB4qezO1eizsOwnXIBO0x3F8AFiFD
+ Bi9AAAA
 To: qemu-devel@nongnu.org
-Cc: Cleber Rosa <crosa@redhat.com>, 
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ Cleber Rosa <crosa@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  John Snow <jsnow@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
@@ -78,33 +80,32 @@ Cc: Cleber Rosa <crosa@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=13688;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=14513;
  i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=hVmfkLPg5hxNk2AqV81ijNzvPtOZctLfTlE7WtE6sC8=;
+ bh=N3cSLs2qzFLZte8H6uk/j+EcwzX5RHqZWC6V4/QKdrg=;
  b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm04UVFFa0RKWlhUWE1vM2g3Rytob3g2Z1BOWjlJCllSOTdhQ01OaDdyZGNsR3pp
- Q1NKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnZFRUJBQUt
- DUkIzS2Nkd2YzNEowQ3VURUFDZWlaa0JDbERvNXNtQlNhTVRhTlgxRVl6S216aEZ3YVEybWVQVg
- pVZFIrbXJjY0IxSmtyYllaY0xVc3ViTUxPSkNCcVNYR1h4MklqSU9iYnZTZU9ELzlkRS9tM0FhN
- DZqNEdyaXFyCkFvMmNHTTNVT0ZpSHlNSWc3Q3RhSVFmSUdiSEJReTB1K04rSzlJV29YSkd0TXU2
- M0Q2dEIxUllyMFJRcWluM1kKS29IRThEK09KVldoeGVqMkR5eHJTOEsxK1M0NmpqdElVbW1YVy9
- mU0FDZlJlZVVjTlZIQi9wQ2F4M2RzQ0ErQgpwbEZ0Z0szL3pHaHVTUCtrQVVjOWlDT1U2VjJYSk
- 55cG5SK29hdXlMR1k4cHhienBhSGJWc1Z1elhzZ0hnemtnCmlNUEQ2Y3JEc1B1aDF4K3hpQk1jK
- 2xidllIRjRzSmhsL1lYL1RHbTkyM3BGUUJlWHlDaHNUQWc3ZzhObVJRRkIKR25udEhXcXRLWGpS
- eVRlUGsrRkZRN242cGNuMHJLRW94blNpTVN2Q1U2RjZ0VHdyTSs4Ym5mNytMbzFLZHltUgp0dUx
- BbDUrTGtnYmJ3MW05aVgxcnp4VGtCTysvZ2txd3RnaFBvTDRsNEFFelJrRW12MmE5Ynl0a2p0dn
- JVcTIrCjZVNi9vMjBhTEU0OTBYdTJyd0g5L2JGVmJkcTlRcWdIUzQvc25XQStCdlFSOCt4WVRjY
- k16eC9ZWUZlYXBRZEIKQjAzMmk3eERXTEk4eUsxem1wb2JhaUh6QTV1WlM0ZHlpMDJVaWJ5YlRU
- K1NNbjkxbTZhZTNHcW15UEEydXZhZAo1SEJPR0M3NERhNWxPRXBIVmo2enhjVDZxQ0M5ZGlnVlF
- NaEJpVDZIdjZUN0lpUWNGcEwzMDBwM2RpSXJtcm1QCjB1cmlXdz09Cj02MzFICi0tLS0tRU5EIF
+ 25RQWNzbVlnQm04UVVtU2pSZmVOOTkvZlI4UE5TYnlwdFBYUFoyCjJVaU1WeWJGWG96RUZxck1x
+ VXVKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnZFRkpnQUt
+ DUkIzS2Nkd2YzNEowRWhVRC80cS9jWGNJTEpBenQ5UVQ2bXJOUk1kUTlDYTNQalFuZDRIakd1Tw
+ pjUjIvRGlpR3Z0KzBXUGVIb2U2dkwycU1kN2pJYnB0RzJFOFhrcVpFam93VHhvYmc4ZVlmclQ2N
+ mdHc1o1U1hmCnZWOXpIbnlrcXhqRituRWhRV3d5bExBY0tjSWVidUVGQ3h0MkZOOVE1WWp5VWU5
+ TWtmVkRQYzJNdWM2MFpoMHMKTmVxVkptWmxCeDVHYjFqcHpPeUlzbjdhL0tETmZmUUZvNkxhcTB
+ hd3Bwa0hXYUNQQWVMZWNudXJhcERYQUNBVgp4bWs3STZIMU9VaUkrMm1oZnJlTFVVUlVOYkVCYV
+ d2Zno1OWo1V0Y1MCtBajU0ckIvQlZjejdDU3BkUTV3MXdECkR4WmtUcmhrSktZK1huZUJMVWg2S
+ TB5OUJVQkVyT202QlZ5L24vbHA2eE4wTk1uZEFzQisxZnMrRVlxN2tKYy8KMldjNUdaY3dXY01Y
+ YzZwWkpJa0F3YXRHR1p6dnJ1RjdBRXZIY0FOQ284bHpDejFCdHViSkZwUWdYOWpON1luRQpKVzN
+ raWNoYmVCTkVsZE9JZ0pGSTA1c1FqeGxhMzU3WTB6YjMxT0xJZHBXSDIvcVNMQVlub2pNdXZWRW
+ hYSWNtCkZ3Mm94dG85WXRkWHBLVGsxR2c1R0x6ME5XRkdBYVUzT3pkU1pRdjc0SzlIOXJOUW1ZV
+ 09mTmdRaGNKbVp4TWkKTkI0ZXJOa3lSdTZoMWpxUXUwYm9BaEFveGxqcy9yVlBDZUR1dFE3ais1
+ ZkRXS2ZyNEkrazVHQlRlTlZJcjhJbgpFdDFkVndleUkwbmVYdzNRam5FK3QzZjFJZWJPa2U0dll
+ IY2NEczM5OGJNOTc1dVd3aHkvUmUwWWpiSm5MdWxNCmlkMFBsdz09Cj1nNVJqCi0tLS0tRU5EIF
  BHUCBNRVNTQUdFLS0tLS0K
 X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
  fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -140,6 +141,10 @@ interface programmatically, also add a -json option that does the same
 but outputs a machine-readable JSON object.
 
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+Changes in v2:
+- Fixed alignment of command and documentation in -h output.
+- Link to v1: https://lore.kernel.org/r/20240923-feature-build-info-cli-v1-1-e8c42d845390@linaro.org
 ---
 Notes:
 Sample output:
@@ -319,12 +324,26 @@ $ ./qemu-system-aarch64 -build-info
   qemu_version_major         9
   qemu_version_micro         50
   qemu_version_minor         1
+
+To: qemu-devel@nongnu.org
+Cc: "Cleber Rosa" <crosa@redhat.com>
+Cc: "Daniel P. Berrangé" <berrange@redhat.com>
+Cc: "John Snow" <jsnow@redhat.com>
+Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
+Cc: "Paolo Bonzini" <pbonzini@redhat.com>
+Cc: "Alex Bennée" <alex.bennee@linaro.org>
+Cc: "Gustavo Romero" <gustavo.romero@linaro.org>
+Cc: "Peter Maydell" <peter.maydell@linaro.org>
+Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
+Cc: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>
+Cc: "Richard Henderson" <richard.henderson@linaro.org>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
  meson.build               | 15 +++++++-
- qemu-options.hx           | 14 ++++++++
+ qemu-options.hx           | 15 ++++++++
  scripts/build_info_gen.py | 91 +++++++++++++++++++++++++++++++++++++++++++++++
  system/vl.c               | 41 +++++++++++++++++++++
- 4 files changed, 160 insertions(+), 1 deletion(-)
+ 4 files changed, 161 insertions(+), 1 deletion(-)
 
 diff --git a/meson.build b/meson.build
 index 10464466ff..eff2ee323a 100644
@@ -353,22 +372,23 @@ index 10464466ff..eff2ee323a 100644
  hxtool = find_program('scripts/hxtool')
  shaderinclude = find_program('scripts/shaderinclude.py')
 diff --git a/qemu-options.hx b/qemu-options.hx
-index d94e2cbbae..3f17b7371b 100644
+index d94e2cbbae..6a32e0624f 100644
 --- a/qemu-options.hx
 +++ b/qemu-options.hx
-@@ -24,6 +24,20 @@ SRST
+@@ -24,6 +24,21 @@ SRST
      Display version information and exit
  ERST
  
 +DEF("build-info", 0, QEMU_OPTION_build_info,
-+    "-build-info        display build information of executable and exit\n", QEMU_ARCH_ALL)
++    "-build-info     display build information of executable and exit\n", QEMU_ARCH_ALL)
 +SRST
 +``-build-info``
 +    Display build information of executable and exit
 +ERST
 +
 +DEF("build-info-json", 0, QEMU_OPTION_build_info_json,
-+    "-build-info-json        dump build information of executable in JSON format and exit\n", QEMU_ARCH_ALL)
++    "-build-info-json\n"
++    "                dump build information of executable in JSON format and exit\n", QEMU_ARCH_ALL)
 +SRST
 +``-build-info-json``
 +    Dump build information of executable in JSON format and exit
