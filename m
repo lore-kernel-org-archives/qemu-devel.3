@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2B4FCF9C6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 07:02:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D8EFCF9C5B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 07:57:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssd5H-0007e6-76; Mon, 23 Sep 2024 03:02:11 -0400
+	id 1ssdvi-0008Pv-Bk; Mon, 23 Sep 2024 03:56:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1ssd5D-0007dU-O9
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 03:02:07 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1ssdvg-0008PP-6x
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 03:56:20 -0400
+Received: from fout-a2-smtp.messagingengine.com ([103.168.172.145])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1ssd5C-0000iP-8b
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 03:02:07 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48MAbD5r003950
- for <qemu-devel@nongnu.org>; Mon, 23 Sep 2024 07:02:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:mime-version:subject:from:to:references
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=w
- TjxMdVHgWhF1HE9tdWWerhntVVyIxwoemYIuz4FMew=; b=eo9jZ4VhL7ksJMjeQ
- aMzh5tdQheS6mZhjok8jTeraRGFBHJadjnzcp863lYW7kHqnmmDzax6I/lBe9+nI
- YiQNW9+oHGgIhZgpcVeN8jDfAMYM1XZTXD0t6XSYTF8TcpBu90x3tmGGq1qXF6JB
- oKk5Q0IvpQ2YItxRFTpSvtzjr8yo3F8VA5G4rUU5uOJdIB0agJLP8tJxBrRDoMWQ
- ZI5/xmkQTxdk+uMdG4zKBbcj8n3GUYMTuG4duhC8pyjRh19GiofWmTXG6RFoTIqm
- KHAaoXp2VfClf4W02Kitmx5EkeJSkxWP7bHBH4DvdmhzXt0SFVfQmCHkXP2vxrq/
- Wvrvw==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41smjjhxp4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 23 Sep 2024 07:02:04 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48N3iOKI012524
- for <qemu-devel@nongnu.org>; Mon, 23 Sep 2024 07:02:04 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41t9fpn1yg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 23 Sep 2024 07:02:03 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48N720eT35586694
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 23 Sep 2024 07:02:00 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2967A20049;
- Mon, 23 Sep 2024 07:02:00 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7CD9420040;
- Mon, 23 Sep 2024 07:01:59 +0000 (GMT)
-Received: from [9.109.199.38] (unknown [9.109.199.38])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 23 Sep 2024 07:01:59 +0000 (GMT)
-Message-ID: <2f2aaa21-a533-4249-9f6e-c1e01f3fd3c6@linux.ibm.com>
-Date: Mon, 23 Sep 2024 12:31:58 +0530
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1ssdvc-000616-57
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 03:56:19 -0400
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal
+ [10.202.2.49])
+ by mailfout.phl.internal (Postfix) with ESMTP id 59C88138026F;
+ Mon, 23 Sep 2024 03:56:12 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-09.internal (MEProxy); Mon, 23 Sep 2024 03:56:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm1; t=1727078172; x=
+ 1727164572; bh=eTz99Eakisq4ROFL2DK/NTXgm+4NR1A4pe1EaoYocC0=; b=C
+ tsAFO9b+vuuOQjOFddt0+OiL394U2sJkA5wAWHXhkSCLTopestQtH+cf1xP/dH9u
+ yj+ZqySiReaScDj5E4TqD+xAhSOP/A8L3bj+AgMDWwhhHegT2NX70CCy6YRvPVzy
+ 3uevZSD0q4GfVOwUtnrJE6vkLufXiwEnkzDOtw5El9dAel17+V+IemTBZMuyYjX9
+ ejOrWtEJ9P46WRlxmp56giMyV93xwf12UqTWebH1fsP0Wb1lHIiG/+UM9mmQK7kp
+ WKORXzR1fBWKQvqoK9szUHJkpPEG4PDGhohAe0Izdgsmy5DCKPr/xTLJs74eLAAe
+ SRlXo1PeFacC+kYZMrZVg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm2; t=1727078172; x=1727164572; bh=eTz99Eakisq4ROFL2DK/NTXgm+4N
+ R1A4pe1EaoYocC0=; b=Mk6Hkz+ZY/Mwvknb84FA/PIeGS3d1NTMwstRDmyCJxrc
+ E1hBJogrIcFi47NIhTeDI4+ISbH3TWk3wyXinPK0D+TOoVmoxNhizuuJ42XhVwvh
+ SiAXa5mnXW9iqAXuG10zd736/0o9CYkw8Q2RNFqogwgTz1AYOU6LX32UGgUp43q/
+ swZDos/qELBreCosk4k/AulDIsZD5kraq3RryjZXAzeye+/OjtF5faWaba6YAAcz
+ EVV2p0r+gA3hPZX8w1+V4cUBuJt/ET2RbmA9AenOgZjHD8V7rCPl97GZ14jkE+in
+ vbt4CBJz1L4xG+1B+f7ccuEQhQqVAbBAA7UE16MkHA==
+X-ME-Sender: <xms:Gx_xZkA06_TIRUhXQFoPnqMGYkr0FJAM1mX3ho2ntgmgr94J798a_Q>
+ <xme:Gx_xZmjbDIxHkwoSefILdNd5LMQlNpRn7xAU-nAGpj-pOKrDOL0mOH13KB8f0Uysh
+ ImCxiQpO6PJccdELzw>
+X-ME-Received: <xmr:Gx_xZnkz2ZkzfT7TojkK4gplMprH3hEI_Zv_i5vYqQ7TtIM1AFL9RxeL_hHEgQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudelkedguddvkecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+ uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+ evuffkfhggtggujgesthdtredttddtjeenucfhrhhomhepmfhlrghushculfgvnhhsvghn
+ uceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvghrnhepveejtd
+ ejteevfefhffehiedvffdvudelvdeigfekfeevledtieetffehgeeggfdunecuvehluhhs
+ thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtshesihhrrhgvlh
+ gvvhgrnhhtrdgukhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhr
+ tghpthhtoheprghruhhnrdhkkhgrsehsrghmshhunhhgrdgtohhmpdhrtghpthhtohepqh
+ gvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehksghushgthhes
+ khgvrhhnvghlrdhorhhgpdhrtghpthhtohepfhhoshhsseguvghfmhgrtghrohdrihhtpd
+ hrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukh
+X-ME-Proxy: <xmx:Gx_xZqwMKUyG1bIp1lmVYT5A3mR3BCnVrOJ6-XACciXK4JBQGyRdow>
+ <xmx:Gx_xZpSxsGFTh4sbXMPs9eOdzWXCgRkz5yZuXXUjX0guvg1inrDbyA>
+ <xmx:Gx_xZlYwHeXHISyAiNijDNEQZpXnSKDe4UftLtJAxcx-rMI_QzzZ2A>
+ <xmx:Gx_xZiRqwFwwJo07hADZGb4GHiffg9MwdosJd8W0cS8U4uVwwPEBlg>
+ <xmx:HB_xZiKeXk05h4uLuXIM5yaRdv4QqLyeBNgMUZDLVyAz9uppoaT2q7x9>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Sep 2024 03:56:10 -0400 (EDT)
+Date: Mon, 23 Sep 2024 09:56:09 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Arun Kumar <arun.kka@samsung.com>
+Cc: qemu-devel@nongnu.org, kbusch@kernel.org, foss@defmacro.it
+Subject: Re: [PATCH] hw/nvme: clear masked events from the aer queue
+Message-ID: <ZvEfGe6rSCuUEvie@AALNPWKJENSEN.aal.scsc.local>
+References: <CGME20240906052849epcas5p2602787ff0700a8feca81ad173f957ffb@epcas5p2.samsung.com>
+ <20240905235859.3416741-1-arun.kka@samsung.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] typo: Fix description of '--disable-debug-info'
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: qemu-devel@nongnu.org
-References: <20240923065605.2170454-1-adityag@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <20240923065605.2170454-1-adityag@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: -nEf7YzGvIqHa25iPc5dkhphyPNuzXZy
-X-Proofpoint-GUID: -nEf7YzGvIqHa25iPc5dkhphyPNuzXZy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-23_03,2024-09-19_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- impostorscore=0 adultscore=0 malwarescore=0 suspectscore=0 bulkscore=0
- spamscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409230047
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240905235859.3416741-1-arun.kka@samsung.com>
+Received-SPF: pass client-ip=103.168.172.145; envelope-from=its@irrelevant.dk;
+ helo=fout-a2-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,54 +108,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-Seems there are more confusing option descriptions like:
-
-
-+  printf "%s\n" '  --disable-install-blobs  install provided firmware 
-blobs'
-...
-+  printf "%s\n" '  --disable-coroutine-pool coroutine freelist (better 
-performance)'
-
-
-Should we change them ?
-
-
-Thanks,
-
-Aditya Gupta
-
-
-On 23/09/24 12:26, Aditya Gupta wrote:
-> The existing description of '--disable-debug-info' seems to have a typo.
->
-> Later scripts/meson-buildoptions.sh does the following based on option:
->
-> +    --enable-debug-info) printf "%s" -Ddebug=true ;;
-> +    --disable-debug-info) printf "%s" -Ddebug=false ;;
->
-> With above logic, the description should be 'Disable debug symbols...'
-> instead of 'Enable debug symbols...', Fix the typo by replacing Enable
-> with Disable.
->
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+On Sep  6 05:28, Arun Kumar wrote:
+> clear masked events from the aer queue when get log page is issued with
+> rae=0 without checking for the presence of outstanding aer requests
+> 
+> Signed-off-by: Arun Kumar <arun.kka@samsung.com>
 > ---
->   scripts/meson-buildoptions.sh | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-> index cfadb5ea86af..81c053a0fffa 100644
-> --- a/scripts/meson-buildoptions.sh
-> +++ b/scripts/meson-buildoptions.sh
-> @@ -12,7 +12,7 @@ meson_options_help() {
->     printf "%s\n" '                           affects only QEMU, not tools like qemu-img)'
->     printf "%s\n" '  --datadir=VALUE          Data file directory [share]'
->     printf "%s\n" '  --disable-coroutine-pool coroutine freelist (better performance)'
-> -  printf "%s\n" '  --disable-debug-info     Enable debug symbols and other information'
-> +  printf "%s\n" '  --disable-debug-info     Disable debug symbols and other information'
->     printf "%s\n" '  --disable-hexagon-idef-parser'
->     printf "%s\n" '                           use idef-parser to automatically generate TCG'
->     printf "%s\n" '                           code for the Hexagon frontend'
+
+Hi Arun,
+
+Thanks, LGTM. One small nit below.
+
+>  hw/nvme/ctrl.c | 9 ++++++++-
+>  1 file changed, 8 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index 127c3d2383..85039779da 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -1649,9 +1649,16 @@ static void nvme_smart_event(NvmeCtrl *n, uint8_t event)
+>  
+>  static void nvme_clear_events(NvmeCtrl *n, uint8_t event_type)
+>  {
+> +    NvmeAsyncEvent *event, *next;
+>      n->aer_mask &= ~(1 << event_type);
+>      if (!QTAILQ_EMPTY(&n->aer_queue)) {
+
+It's safe to remove the QTAILQ_EMTPY check as well.
+
+> -        nvme_process_aers(n);
+> +        QTAILQ_FOREACH_SAFE(event, &n->aer_queue, entry, next) {
+> +            if (event->result.event_type == event_type) {
+> +                QTAILQ_REMOVE(&n->aer_queue, event, entry);
+> +                n->aer_queued--;
+> +                g_free(event);
+> +            }
+> +        }
+>      }
+>  }
+
+We may want to check the mask when inserting as well? Currently
+nvme_enqueue_event does not check the aer_mask and always inserts an
+event, even if we have posted an AEN for a particular event type (but
+event type has not been cleared yet).
 
