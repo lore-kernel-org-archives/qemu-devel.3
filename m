@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F109DCF9C71
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:33:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64C7CCF9C6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:33:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssfPv-0003nb-JW; Mon, 23 Sep 2024 05:31:39 -0400
+	id 1ssfPR-0001o7-MY; Mon, 23 Sep 2024 05:31:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPm-00038k-2v; Mon, 23 Sep 2024 05:31:30 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ id 1ssfPP-0001eR-5Y; Mon, 23 Sep 2024 05:31:07 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPk-00070l-Gd; Mon, 23 Sep 2024 05:31:29 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a8d4979b843so515733366b.3; 
- Mon, 23 Sep 2024 02:31:27 -0700 (PDT)
+ id 1ssfPN-0006wj-Cq; Mon, 23 Sep 2024 05:31:06 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a7aa086b077so540730966b.0; 
+ Mon, 23 Sep 2024 02:31:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727083886; x=1727688686; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727083863; x=1727688663; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zl1UfkNK4uOLHCCNuOFOWU9ZrQRdFQX35RLscGjdLrg=;
- b=ZI6DeI83QKfJ4XJyOPtFx6yd82FRXvckX31wtc9R1JN5ZWc22mNR1PQS+Ds14Ltn63
- jRYyDbfxxPRaHLXIGoudNMa8vtxWVpmj9ccUKc8zxV03mwu2Jab55LF9ExIO2I07LOr7
- 24q25ryAOmaQb44s/PhkMGLU/yYyxbbMEbnSGJj9gxozLKT0zS8QIqoiULW+TFqJWPXe
- Yt0UsjqoO2jQD49/Usd1MUTHiRjOFdkEJe+D6v5tN7IkJaLTc5/J3Sbs+QNIpVFBJdJc
- I35ElocJkkNnmlQu0QdRPYXfsarurLqdrtlnyagUIVUYGsSOnfip40EKMeLEqBRDNkHR
- 0S1Q==
+ bh=MGd/V7b3/Zz9r6wp7tpzWusPdgXCdziXM20jKtJvMrg=;
+ b=PRbDOIaaVuJWoU7MTE8lFolwD/FpXSz/bwsBM2iR868OQ3SpTkDaUQDfp4/cT5n1y3
+ TsjoGgeOqUhUoD2E8PYMXcRXluEmuJhc7pop0NAHOr1vF4Qe8wxD+KAB1ed2lW5BrLPL
+ gL+AzwYxSME24tMl5qt5aConABzVEsbZc8DVBKFh4xANW5d8Nyg4cmkhBxjchGCAs79i
+ bPmaDLdqRpPJ53EwdwYL9NiUDbB4R67BtRgVTlRfHzNcU9GL6vNqP5seUMnNiriE/mDp
+ bFSB2loGR5t0r5LH3JRtK5LzIDRD6bNzS7vjhcXHTn9Hk7FSzXU7L/M8r0h+8HgSF2pH
+ 9PCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727083886; x=1727688686;
+ d=1e100.net; s=20230601; t=1727083863; x=1727688663;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zl1UfkNK4uOLHCCNuOFOWU9ZrQRdFQX35RLscGjdLrg=;
- b=pFS+sXWsfEV8jODDdpazqEZriP+xK3E5leOLGxn6vkm+RpUARlncutOXaKtugk6Z+M
- JaUQApxo6CoX3JWrlvN0u0ZI2eWFtdjOP53lQ0hZSrHCzumqpVd6HUsogqnWf4Qy0QAq
- f8Xd4w8qHm4bPbZFX+gh5W2AkQ4f5wAUF7kK7xymDapXHFZ5fYFBovEKRziaPUHPCFee
- PCWwNUl2zUXK0WJTZ5Kx+0w4AlHzcG+1eGb7YdiU2IWoNS4OhsGcL03tEr19nUc5w3uD
- GzcsPeOEJKd+rU4tljKM7q9RrihsE8Z5O4Fw9ZkSXeN3YtcsXUGd5Eu8/BxIxSyrlpdV
- DC+Q==
+ bh=MGd/V7b3/Zz9r6wp7tpzWusPdgXCdziXM20jKtJvMrg=;
+ b=gJSQcvEVXcjvhkMCWe8CVnV6zJT5LbjBUNpTKFZSppkSTbAOcs/Pt9VcW4oHX8hniY
+ FT/UGMXqt78PsXA+P7L3UoIlt9yV9BnG0Y5hswqyjRwETOmqXhwYCndskwm2rJLcfUQc
+ 27gtfmfvt+/P8xAhg8lcrotlKsUbcDVqPKj/zJ/fv9sr+nOU2MnKkOJu1C/OXPO5Popf
+ BTys8Is/gKR9dQeQ6h5d8nkJ/cah2yCPfZDWibezLnLEKFzyZODBFGtaI9nJyqppurd7
+ +GpuCx+sY6t0w/yA6+MJXEpDcLn1eftow98tnFCK7qDf9awpeY1Cxp7FtpdjMq7Wi93L
+ 6dpw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVpfj2jCN4ygkE0Bed0+qvecp6kefa7Xol3obw3BHfLeAoIiFkAlKdhs8br8Ez4fMgjn3Rn8LP9+ME=@nongnu.org,
- AJvYcCXg51gwYCMSFyabTyvUY77WtL2tjqOEEc5wHlkm1LXJDIu1U7omlUq11pWUpGoRJWGl3NmOeWXYr8gj@nongnu.org
-X-Gm-Message-State: AOJu0YyknBVhsY/iNMz3K4XviiXWBNrTO7zV0HHDmVzHPTGmCpP1NCun
- Fs/f7C6NVjYEqTFtaCaxKF1dYpq8yGRZbtjaJCIOqWpYr4eAtOtwbu6nZQ==
-X-Google-Smtp-Source: AGHT+IEKW+H3JsoS1O6yo6rqI9yZQ5idQ/Pyi1NG+Wti/sIMHZ50/3bbzras5gWuWJo45UTyamhbSQ==
-X-Received: by 2002:a17:907:e603:b0:a90:344a:7db6 with SMTP id
- a640c23a62f3a-a90d583ba97mr1079142466b.62.1727083885793; 
- Mon, 23 Sep 2024 02:31:25 -0700 (PDT)
+ AJvYcCU0wzWY4UYB6Ikt//oNFvTr3PRYnhYASf9nLCSy7Y9uOt+nUkwRaQO97LzGlaHqnFg56HRDpIkEs3w=@nongnu.org,
+ AJvYcCWHpUYeSPKe7fQj523c6Sj+kzRfhmTEmhc89IymlkkcmUL/ORdQn8LHqU85+KPsSwqtpzonWf9LVJ/r@nongnu.org
+X-Gm-Message-State: AOJu0Yytnm2MFxGPGhCyCukEq4WUuu9Ub2bDxCPOVwYTWqp6rNKZZqhb
+ HLaLCIHUe517GmOEGgYN0JN5HmYA8frYxcEMEqHRNOfngQrrdV5cExbs8A==
+X-Google-Smtp-Source: AGHT+IFZV6X+LEmYS9LvHtJMLinZpKZu/as0ldzmato/mZN18YzhQpOjheM4uufr+/O8oqcvM2o5vA==
+X-Received: by 2002:a17:907:9708:b0:a83:8591:7505 with SMTP id
+ a640c23a62f3a-a90d5167dc8mr1306071866b.59.1727083862426; 
+ Mon, 23 Sep 2024 02:31:02 -0700 (PDT)
 Received: from archlinux.. (90-181-218-29.rco.o2.cz. [90.181.218.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.24
+ a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Sep 2024 02:31:25 -0700 (PDT)
+ Mon, 23 Sep 2024 02:31:01 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
@@ -71,16 +71,16 @@ Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 15/23] hw/ppc/mpc8544_guts: Prefer DEFINE_TYPES() macro
-Date: Mon, 23 Sep 2024 11:30:08 +0200
-Message-ID: <20240923093016.66437-16-shentey@gmail.com>
+Subject: [PATCH 02/23] hw/ppc/e500: Reduce scope of env pointer
+Date: Mon, 23 Sep 2024 11:29:55 +0200
+Message-ID: <20240923093016.66437-3-shentey@gmail.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240923093016.66437-1-shentey@gmail.com>
 References: <20240923093016.66437-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,48 +103,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The env pointer isn't used outside the for loop, so move it inside. After that,
+the firstenv pointer is never read, so remove it.
+
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/ppc/mpc8544_guts.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ hw/ppc/e500.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/hw/ppc/mpc8544_guts.c b/hw/ppc/mpc8544_guts.c
-index 6688fd44c3..cbb1e3adda 100644
---- a/hw/ppc/mpc8544_guts.c
-+++ b/hw/ppc/mpc8544_guts.c
-@@ -18,7 +18,6 @@
-  */
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index 75b051009f..f68779a1ea 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -899,7 +899,6 @@ void ppce500_init(MachineState *machine)
+     const PPCE500MachineClass *pmc = PPCE500_MACHINE_GET_CLASS(machine);
+     MachineClass *mc = MACHINE_CLASS(pmc);
+     PCIBus *pci_bus;
+-    CPUPPCState *env = NULL;
+     uint64_t loadaddr;
+     hwaddr kernel_base = -1LL;
+     int kernel_size = 0;
+@@ -921,7 +920,6 @@ void ppce500_init(MachineState *machine)
+     IrqLines *irqs;
+     DeviceState *dev, *mpicdev;
+     DriveInfo *dinfo;
+-    CPUPPCState *firstenv = NULL;
+     MemoryRegion *ccsr_addr_space;
+     SysBusDevice *s;
+     PPCE500CCSRState *ccsr;
+@@ -930,6 +928,7 @@ void ppce500_init(MachineState *machine)
+     irqs = g_new0(IrqLines, smp_cpus);
+     for (i = 0; i < smp_cpus; i++) {
+         PowerPCCPU *cpu;
++        CPUPPCState *env;
+         CPUState *cs;
  
- #include "qemu/osdep.h"
--#include "qemu/module.h"
- #include "qemu/log.h"
- #include "sysemu/runstate.h"
- #include "cpu.h"
-@@ -141,16 +140,13 @@ static void mpc8544_guts_initfn(Object *obj)
-     sysbus_init_mmio(d, &s->iomem);
- }
+         cpu = POWERPC_CPU(object_new(machine->cpu_type));
+@@ -950,10 +949,6 @@ void ppce500_init(MachineState *machine)
+                                  &error_abort);
+         qdev_realize_and_unref(DEVICE(cs), NULL, &error_fatal);
  
--static const TypeInfo mpc8544_guts_info = {
--    .name          = TYPE_MPC8544_GUTS,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(GutsState),
--    .instance_init = mpc8544_guts_initfn,
-+static const TypeInfo types[] = {
-+    {
-+        .name          = TYPE_MPC8544_GUTS,
-+        .parent        = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(GutsState),
-+        .instance_init = mpc8544_guts_initfn,
-+    },
- };
- 
--static void mpc8544_guts_register_types(void)
--{
--    type_register_static(&mpc8544_guts_info);
--}
+-        if (!firstenv) {
+-            firstenv = env;
+-        }
 -
--type_init(mpc8544_guts_register_types)
-+DEFINE_TYPES(types)
+         irqs[i].irq[OPENPIC_OUTPUT_INT] =
+             qdev_get_gpio_in(DEVICE(cpu), PPCE500_INPUT_INT);
+         irqs[i].irq[OPENPIC_OUTPUT_CINT] =
+@@ -974,8 +969,6 @@ void ppce500_init(MachineState *machine)
+         }
+     }
+ 
+-    env = firstenv;
+-
+     if (!QEMU_IS_ALIGNED(machine->ram_size, RAM_SIZES_ALIGN)) {
+         error_report("RAM size must be multiple of %" PRIu64, RAM_SIZES_ALIGN);
+         exit(EXIT_FAILURE);
 -- 
 2.46.1
 
