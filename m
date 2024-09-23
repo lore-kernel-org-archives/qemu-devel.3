@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8519BCF9C6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:32:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C821DCF9C72
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:32:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssfPp-0003LG-1M; Mon, 23 Sep 2024 05:31:33 -0400
+	id 1ssfPl-00037h-Ti; Mon, 23 Sep 2024 05:31:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPi-0002qH-3b; Mon, 23 Sep 2024 05:31:26 -0400
+ id 1ssfPg-0002lu-Ti; Mon, 23 Sep 2024 05:31:25 -0400
 Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPg-0006za-Jx; Mon, 23 Sep 2024 05:31:25 -0400
+ id 1ssfPc-0006z3-Dn; Mon, 23 Sep 2024 05:31:22 -0400
 Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a83562f9be9so468925266b.0; 
- Mon, 23 Sep 2024 02:31:22 -0700 (PDT)
+ a640c23a62f3a-a8d64b27c45so766462866b.3; 
+ Mon, 23 Sep 2024 02:31:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727083881; x=1727688681; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727083877; x=1727688677; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OUh+oh7tSH9I4rc1ZsB6pfl2pyJWratf071Tqy+tkcU=;
- b=U+oPZC+hysKG6aM191gij5dmDFhms3o2ff3YiZ0ce7Sd2KOu1NQ+Z71Lb9aKE+4N9R
- 9z/2UT3enCcrRRl5fg/d66XbMuy3wCkEg1FsFrMhL1mqtpkB8xP29OSHoqypKdewDvxC
- JrRxYNHg/Us+ODVxarOEQKrLNv/lm3JEHxAXMuIjLZQMi+ubRKRpNd11NPreCbe5T1Li
- YpUHfj+GWQk3CYl4BbbTH13eC2zZYWJgybiwBy17JH7w/dJII/pQTRn4uSSZvg3N5k4J
- AIQfZ0mi2432k/5Vf5d/NJpWvgvsvDvpQplOeJTC88yijbeU8mxk9aaNvc1tj7C9cKgg
- PeKg==
+ bh=Gk0TI6PhzPVX9iexQrZ/MM+nIP2rF3HI992oH7AdJ4I=;
+ b=ETqgGm81KZtoYruwD95OXByzSBBliL2PqzOpLoUAGLpenfEO2ihQVxFzk0Ln/hePyR
+ Z0cxx8Blcka21YTQjQQJh+HOl+P//eEOGCqHewNphHS9WJhQXiCkKzo1sH0jOYzUYT2O
+ pJxtH5OgqS7u4JjGMeYmeJjxVCW1xPWy1hwVS8g/mhkob2p4yJ2Stqq2y0/5b5sPF5aB
+ 0/ao+KgLRMvwYAEWUyTyBMjucKeFglQ2UCSAL+F0zPYtnA1XXPK+EKiJ2jfSf3GJLppS
+ t3LjQMo5GRnlxhkzhX//B+uFO2mn8eK9teNK4xOMjkwPDtrzsQvbdEj53lbV4w0oXemY
+ Oxlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727083881; x=1727688681;
+ d=1e100.net; s=20230601; t=1727083877; x=1727688677;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OUh+oh7tSH9I4rc1ZsB6pfl2pyJWratf071Tqy+tkcU=;
- b=UH8wmIgaZOfS57N4SIWlIfpBn2/ZSD26ugsbyyfNSmkroLYqmacGQpmZQjoORjalJt
- yPpfPadAeOkPc0NnfH+sXBdNxVrsTHnAN5n8xX0EFl+z6ydhyKKhM1YlxKgBiFz7NBkR
- g/5r8WQFSLt+koHbtONx1CQ2Q5Rf6GcvIJigwhy+/9/43dn2iCKZYQ6sizhz3j1V+Ojl
- sO1OzqIuMaf0gxk0ZfyLx8oVylfHC8gu+QhGbHvt8W0Xz5n68peUR6X2NDvm1mmj4cWy
- B7YDht06coh8wQrgG9rrK+qKgQBEw8N/kFm8dnpdyAmAg84+j88RPh9LiQ0v5JAFHIoi
- B/HQ==
+ bh=Gk0TI6PhzPVX9iexQrZ/MM+nIP2rF3HI992oH7AdJ4I=;
+ b=oqKVBWqzgM8VpGlZQ+vuShalMCvoE4D1cgT/DMBz9u+D6tIpopFBJpXcfwv64nOx5b
+ 9DxrilE8fYCNxOfHTm8Qo+gFTfi96fo9lFdeS/NBN/nlJf2Tyl8s5OW+J8P6e6ww4DmM
+ 19hwXXUZPiJ4K2iTy8X7OtxWIEaNoYwejuS1wIeRHZJDNtRldOOR4rt4DCC4Yg16t5lr
+ 5wmGkiSVuI9svGqpOccCc0Bi0C5yj+ET4Um/SKf8LZQu+IIjCnRHh6QK6JLhev0XX7Fy
+ AJRDuqRRAQB3m1fs3O/vUbkQGSZWg7hUhFi+20HYH3IsP8XG0wSxDqMy5vpVEDE1v6H/
+ gVRw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV3x1d2JoBw6qwGqvLjyUJqcFFCe+O2MNstP6c6ZvSJOslODXP9DXMz0DQAPsgevYBE6A6zI6Q3v8k=@nongnu.org,
- AJvYcCXlSnthZfqBUShHlk29/28ouxjhsengkA+EJF+17QRqRXbiMOZngFqGMTzTh2Zaqkn0ZfNuqe2YRkOh@nongnu.org
-X-Gm-Message-State: AOJu0Yw/NFhZVbU7ZTtlugPTcd+UYU3971ogzZKHVvZR7qDeWrdnSLD/
- 5ALr3Ljb9+GLjc6r2Uz3Zmt4hdH/T9XcvUvT8UMp6V/t+5nKFnv0r+eVYg==
-X-Google-Smtp-Source: AGHT+IGhZPbR4sS92Yd3klCUpgb6yNV+VJtM3enhxhrJr4m2BQw7iB/OEqxNo6fgEFeILE3Fo616ig==
-X-Received: by 2002:a17:906:730c:b0:a8d:55ce:fb86 with SMTP id
- a640c23a62f3a-a90d5122bd7mr1185738166b.57.1727083881148; 
- Mon, 23 Sep 2024 02:31:21 -0700 (PDT)
+ AJvYcCWuddZY8NIUan//EeKJ37ENar9K94NhorIWclHdlHVp7nFeNOt93Z8Hlr3dZIfziLBWV7KCShkqt2K0@nongnu.org,
+ AJvYcCX5iQCPakbWA27mRv+N4tSF6z4fC5mnL8+zMGxtWKoLfRIMwudRB0qtwtRcOYsnhtpNeRjwV432zdA=@nongnu.org
+X-Gm-Message-State: AOJu0YzWw3+q2G48PWnKT03OYX96hTL+CMcK4FzRNMDHBOH+Agd1z4dj
+ jPyHoYdODrXl1CZyHjwVZ8NY7lGhq2FUAHwWH8eiNljryC4jLZrEiDiADA==
+X-Google-Smtp-Source: AGHT+IG92EfphYA6j4+HK3yEweb6tY+YoKcMJvzq5HMag6Rs4+rgGUCH1A9CByPd72K2RFeKFLI9dg==
+X-Received: by 2002:a17:907:e655:b0:a8d:5472:b56c with SMTP id
+ a640c23a62f3a-a90d4ffdc5dmr1030574266b.22.1727083877205; 
+ Mon, 23 Sep 2024 02:31:17 -0700 (PDT)
 Received: from archlinux.. (90-181-218-29.rco.o2.cz. [90.181.218.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.19
+ a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Sep 2024 02:31:20 -0700 (PDT)
+ Mon, 23 Sep 2024 02:31:16 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
@@ -71,10 +71,10 @@ Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 12/23] hw/pci-host/ppce500: Reuse TYPE_PPC_E500_PCI_BRIDGE
- define
-Date: Mon, 23 Sep 2024 11:30:05 +0200
-Message-ID: <20240923093016.66437-13-shentey@gmail.com>
+Subject: [PATCH 10/23] hw/i2c/mpc_i2c: Convert DPRINTF to trace events for
+ register access
+Date: Mon, 23 Sep 2024 11:30:03 +0200
+Message-ID: <20240923093016.66437-11-shentey@gmail.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240923093016.66437-1-shentey@gmail.com>
 References: <20240923093016.66437-1-shentey@gmail.com>
@@ -104,26 +104,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer a macro rather than a string literal when instantiaging device models.
-
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/pci-host/ppce500.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/i2c/mpc_i2c.c    | 9 +++++----
+ hw/i2c/trace-events | 5 +++++
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
-index 97e5d47cec..d7ff2ba778 100644
---- a/hw/pci-host/ppce500.c
-+++ b/hw/pci-host/ppce500.c
-@@ -475,7 +475,7 @@ static void e500_pcihost_realize(DeviceState *dev, Error **errp)
-     address_space_init(&s->bm_as, &s->bm, "pci-bm");
-     pci_setup_iommu(b, &ppce500_iommu_ops, s);
+diff --git a/hw/i2c/mpc_i2c.c b/hw/i2c/mpc_i2c.c
+index 2467d1a9aa..3d79c15653 100644
+--- a/hw/i2c/mpc_i2c.c
++++ b/hw/i2c/mpc_i2c.c
+@@ -24,6 +24,7 @@
+ #include "hw/sysbus.h"
+ #include "migration/vmstate.h"
+ #include "qom/object.h"
++#include "trace.h"
  
--    pci_create_simple(b, 0, "e500-host-bridge");
-+    pci_create_simple(b, 0, TYPE_PPC_E500_PCI_BRIDGE);
+ /* #define DEBUG_I2C */
  
-     memory_region_init(&s->container, OBJECT(h), "pci-container", PCIE500_ALL_SIZE);
-     memory_region_init_io(&h->conf_mem, OBJECT(h), &pci_host_conf_be_ops, h,
+@@ -224,8 +225,8 @@ static uint64_t mpc_i2c_read(void *opaque, hwaddr addr, unsigned size)
+         break;
+     }
+ 
+-    DPRINTF("%s: addr " HWADDR_FMT_plx " %02" PRIx32 "\n", __func__,
+-                                         addr, value);
++    trace_mpc_i2c_read(addr, value);
++
+     return (uint64_t)value;
+ }
+ 
+@@ -234,8 +235,8 @@ static void mpc_i2c_write(void *opaque, hwaddr addr,
+ {
+     MPCI2CState *s = opaque;
+ 
+-    DPRINTF("%s: addr " HWADDR_FMT_plx " val %08" PRIx64 "\n", __func__,
+-                                             addr, value);
++    trace_mpc_i2c_write(addr, value);
++
+     switch (addr) {
+     case MPC_I2C_ADR:
+         s->adr = value & CADR_MASK;
+diff --git a/hw/i2c/trace-events b/hw/i2c/trace-events
+index 6900e06eda..f708a7ace1 100644
+--- a/hw/i2c/trace-events
++++ b/hw/i2c/trace-events
+@@ -35,6 +35,11 @@ aspeed_i2c_bus_write(uint32_t busid, uint64_t offset, unsigned size, uint64_t va
+ aspeed_i2c_bus_send(const char *mode, int i, int count, uint8_t byte) "%s send %d/%d 0x%02x"
+ aspeed_i2c_bus_recv(const char *mode, int i, int count, uint8_t byte) "%s recv %d/%d 0x%02x"
+ 
++# mpc_i2c.c
++
++mpc_i2c_read(uint64_t addr, uint32_t value) "[0x%" PRIx64 "] -> 0x%02" PRIx32
++mpc_i2c_write(uint64_t addr, uint32_t value) "[0x%" PRIx64 "] <- 0x%02" PRIx32
++
+ # npcm7xx_smbus.c
+ 
+ npcm7xx_smbus_read(const char *id, uint64_t offset, uint64_t value, unsigned size) "%s offset: 0x%04" PRIx64 " value: 0x%02" PRIx64 " size: %u"
 -- 
 2.46.1
 
