@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB7BECF9C72
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 16:23:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DCA3CF9C6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 16:23:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sslpc-0006X2-2m; Mon, 23 Sep 2024 12:22:36 -0400
+	id 1sslpc-0006XM-NP; Mon, 23 Sep 2024 12:22:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sslpW-0006TE-9S
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 12:22:31 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sslpW-0006TC-8m
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 12:22:30 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sslpQ-0000bO-Mi
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sslpQ-0000bH-QN
  for qemu-devel@nongnu.org; Mon, 23 Sep 2024 12:22:29 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48NCtDAh025675;
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48N7xkQ8012410;
  Mon, 23 Sep 2024 16:22:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=pzYh8X61AcOIy
- slGUInFv/uLPzcvCXA28/NcWxm1j+U=; b=Lsaldixk0STnk+oeblgT17rFBSo+N
- FT9S/uAyc+gmiG5lnunPWGhe0keowVIVvozdqjcX2gycbbuFqwBgz4J7Z8EpS8ha
- ONvf1ZTAP3UwfXYawR5+r++2KESKF98+VwGZb17L2nCs7EzRmQ23exLk17aEEENx
- 1+Zr7en7EwJK+7OIeEYqtlnFMhLtey5ntR6ZBx44nRsSsAOUUBXzYufq8h7AIiBp
- RUwmjm92jA4XxPsrR3Xjl7iHxcP/aTJKwD8iogOm3tQ5scdh4okCXFTxOEOy7Kmq
- 0t/8h7Pr84td9JjZG/yQpuoB8x8bpPfCdPMzLmENgljxjbBOcR8Z/5znA==
+ :mime-version:content-transfer-encoding; s=pp1; bh=uMkf2IlyXZQN4
+ ANh6mm1/Fa3BXo2aYu81eFDQ0qfVGw=; b=jOueSf0wDe5LXWcEEPWMXO/D3ZTaW
+ a+Xf4lg8KyNyHqqNjxLqfDg1CkjZ3BGTANmcI5mrDgQ8x4oxQYu4XrspA9HrKOO4
+ LykTj9wiEKPJQAi7zlEq6CE6ji00Itn9AePPbb7qzNg5mHNB3RFYiFEcXzlJNQo/
+ DSADgR4qa0vAIkWe5UNbfsEWdQXYbxecxt11XlKzixyhBVJmotcEGuSrCvzZQ4gm
+ lGEC8FsTVMAibGbySZykIZeaeevqe6pDvRUwheNqrojfvGB3J3j48I86i5lQG6Gv
+ gMLzbHt/O5xcGe8fl6dfNxzH9Pj5n4Z0zrC8M6JveKjGKBizcCX9S6RKg==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41sntw558m-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 23 Sep 2024 16:22:21 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48NGMLfE032081;
- Mon, 23 Sep 2024 16:22:21 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41sntw558g-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41snt14pcf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Mon, 23 Sep 2024 16:22:20 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48NDhh9Y008707;
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48NGHZWS014888;
+ Mon, 23 Sep 2024 16:22:20 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41snt14pcc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 23 Sep 2024 16:22:20 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48NFtG1o020820;
  Mon, 23 Sep 2024 16:22:19 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41t8v0ym0d-1
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 41tb62y41d-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Mon, 23 Sep 2024 16:22:19 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48NGMHRs49414526
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48NGMIWb34996876
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 23 Sep 2024 16:22:17 GMT
+ Mon, 23 Sep 2024 16:22:18 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7FC0120043;
+ by IMSVA (Postfix) with ESMTP id EC61120043;
  Mon, 23 Sep 2024 16:22:17 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2B58820040;
+ by IMSVA (Postfix) with ESMTP id 93F8020040;
  Mon, 23 Sep 2024 16:22:17 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.179.24.235])
  by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
@@ -70,28 +70,28 @@ To: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 02/18] gdbstub: Move phy_memory_mode to GDBSystemState
-Date: Mon, 23 Sep 2024 18:12:57 +0200
-Message-ID: <20240923162208.90745-3-iii@linux.ibm.com>
+Subject: [PATCH 03/18] gdbstub: Move gdb_syscall_mode to GDBSyscallState
+Date: Mon, 23 Sep 2024 18:12:58 +0200
+Message-ID: <20240923162208.90745-4-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240923162208.90745-1-iii@linux.ibm.com>
 References: <20240923162208.90745-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 2T6xRTnjojjEAELqIszvBUvxMcVRvHJn
-X-Proofpoint-GUID: pBESDwe66eSkFIzXN5gi8L_ej87KlQMW
+X-Proofpoint-ORIG-GUID: M_rOjN1FMfvqPioJZsSNErU0xhDxW20W
+X-Proofpoint-GUID: B6Rp2P3c-aMiM_eTlpfA_HUGod6nxFL5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-23_12,2024-09-23_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1015
- priorityscore=1501 adultscore=0 mlxlogscore=999 bulkscore=0 phishscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409230121
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ adultscore=0 mlxlogscore=999
+ priorityscore=1501 suspectscore=0 mlxscore=0 clxscore=1015 impostorscore=0
+ malwarescore=0 bulkscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2409230121
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -120,59 +120,60 @@ be inside a single struct.
 
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- gdbstub/system.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ gdbstub/syscalls.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/gdbstub/system.c b/gdbstub/system.c
-index 1ad87fe7fdf..5ce357c6c2b 100644
---- a/gdbstub/system.c
-+++ b/gdbstub/system.c
-@@ -35,6 +35,7 @@
+diff --git a/gdbstub/syscalls.c b/gdbstub/syscalls.c
+index 4e1295b782d..42307f0abb1 100644
+--- a/gdbstub/syscalls.c
++++ b/gdbstub/syscalls.c
+@@ -24,6 +24,11 @@
  typedef struct {
-     CharBackend chr;
-     Chardev *mon_chr;
-+    int phy_memory_mode;
- } GDBSystemState;
+     char syscall_buf[256];
+     gdb_syscall_complete_cb current_syscall_cb;
++    enum {
++        GDB_SYS_UNKNOWN,
++        GDB_SYS_ENABLED,
++        GDB_SYS_DISABLED,
++    } mode;
+ } GDBSyscallState;
  
- GDBSystemState gdbserver_system_state;
-@@ -445,14 +446,12 @@ void gdb_qemu_exit(int code)
- /*
-  * Memory access
-  */
--static int phy_memory_mode;
+ static GDBSyscallState gdbserver_syscall_state;
+@@ -37,12 +42,6 @@ static bool gdb_attached(void)
+     return gdbserver_state.init && gdbserver_state.c_cpu;
+ }
+ 
+-static enum {
+-    GDB_SYS_UNKNOWN,
+-    GDB_SYS_ENABLED,
+-    GDB_SYS_DISABLED,
+-} gdb_syscall_mode;
 -
- int gdb_target_memory_rw_debug(CPUState *cpu, hwaddr addr,
-                                uint8_t *buf, int len, bool is_write)
+ /* Decide if either remote gdb syscalls or native file IO should be used. */
+ int use_gdb_syscalls(void)
  {
-     CPUClass *cc;
+@@ -57,16 +56,17 @@ int use_gdb_syscalls(void)
  
--    if (phy_memory_mode) {
-+    if (gdbserver_system_state.phy_memory_mode) {
-         if (is_write) {
-             cpu_physical_memory_write(addr, buf, len);
-         } else {
-@@ -491,7 +490,8 @@ bool gdb_can_reverse(void)
- void gdb_handle_query_qemu_phy_mem_mode(GArray *params,
-                                         void *ctx)
- {
--    g_string_printf(gdbserver_state.str_buf, "%d", phy_memory_mode);
-+    g_string_printf(gdbserver_state.str_buf, "%d",
-+                    gdbserver_system_state.phy_memory_mode);
-     gdb_put_strbuf();
+     /* -semihosting-config target=auto */
+     /* On the first call check if gdb is connected and remember. */
+-    if (gdb_syscall_mode == GDB_SYS_UNKNOWN) {
+-        gdb_syscall_mode = gdb_attached() ? GDB_SYS_ENABLED : GDB_SYS_DISABLED;
++    if (gdbserver_syscall_state.mode == GDB_SYS_UNKNOWN) {
++        gdbserver_syscall_state.mode = gdb_attached() ? GDB_SYS_ENABLED :
++                                                        GDB_SYS_DISABLED;
+     }
+-    return gdb_syscall_mode == GDB_SYS_ENABLED;
++    return gdbserver_syscall_state.mode == GDB_SYS_ENABLED;
  }
  
-@@ -503,9 +503,9 @@ void gdb_handle_set_qemu_phy_mem_mode(GArray *params, void *ctx)
-     }
- 
-     if (!gdb_get_cmd_param(params, 0)->val_ul) {
--        phy_memory_mode = 0;
-+        gdbserver_system_state.phy_memory_mode = 0;
-     } else {
--        phy_memory_mode = 1;
-+        gdbserver_system_state.phy_memory_mode = 1;
-     }
-     gdb_put_packet("OK");
+ /* called when the stub detaches */
+ void gdb_disable_syscalls(void)
+ {
+-    gdb_syscall_mode = GDB_SYS_DISABLED;
++    gdbserver_syscall_state.mode = GDB_SYS_DISABLED;
  }
+ 
+ void gdb_syscall_reset(void)
 -- 
 2.46.0
 
