@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21203CF9C6F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37020CF9C71
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:33:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssfPs-0003Wk-3n; Mon, 23 Sep 2024 05:31:36 -0400
+	id 1ssfPV-00025Z-Uk; Mon, 23 Sep 2024 05:31:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPp-0003Pw-Vt; Mon, 23 Sep 2024 05:31:34 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1ssfPT-0001tT-01; Mon, 23 Sep 2024 05:31:11 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPo-00071H-8Z; Mon, 23 Sep 2024 05:31:33 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a8d2b24b7a8so940227366b.1; 
- Mon, 23 Sep 2024 02:31:29 -0700 (PDT)
+ id 1ssfPR-0006xQ-F5; Mon, 23 Sep 2024 05:31:10 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a8d13b83511so502550966b.2; 
+ Mon, 23 Sep 2024 02:31:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727083888; x=1727688688; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727083866; x=1727688666; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=N6N1zWPO8DnSJg1Q/8i6UHf3EekeeyOAcUgqB8xGeAc=;
- b=icgvvAMd72sAmyGs1SlwBR/nBdkThAGhBpapsgSnMvepseDYIu1Eb932rCOr/5eOGv
- 9b+hW68Gj9c0pqYx6O1K/lyZCcs+U8qvLKrzlRBLIyUJ9yWhj/ernKEiVd2icguS1Tmv
- eIvnzHYaG7ALQaz69s4eMddykYxrwmFOLD0ontFhlQi1y/5HEF8TEYNbpd04rfcQut3c
- y8GE2UkUyF0qiytjq4iY36hvMCDauTNjq+nGJOb4rbC3uKhJBo6Mz/q2byYrunRDkhvM
- lTxyXKi2WPsL3rHYPOzvnb5PUxqSrmSFl3EpsCWcrK0IeunYBQbh6qTnZybiivbmH9Ak
- 60mw==
+ bh=wIcGbmtd7uHKf6ZYKTXQmr65WTCHDsrdSE+qbZuFBjw=;
+ b=Hs7sL7T074QKfuAcE8oIi58WQCANh1GPJdpKcOQFZouIWJwpbMeNbti8cy1CYMKlxR
+ cHUdUCYcm68a2yUAkAvjPbGCUxFU6+Ia0xJlVXsqWUfspWM0uPthyVrBaL1q2+dR9/2t
+ T/gn0i6g6V8HSmF0MHWAjuCt6iUWsv8eDFB7KTvAwpk/DzLyVVXugqtWW8hEDyvJdobg
+ YXGwXTs66n4yHQX3tZHevY+3i6QIZJ4T8zydw5raZd2ugB+8Mm/4h3rFB98N1qv3+U0t
+ tdlNxuPxIn292yeQhP/i9C2dyKUdQ0a+91tr2bjNpe3zEnY8FATUHYq+koUGTLHHu220
+ gczw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727083888; x=1727688688;
+ d=1e100.net; s=20230601; t=1727083866; x=1727688666;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=N6N1zWPO8DnSJg1Q/8i6UHf3EekeeyOAcUgqB8xGeAc=;
- b=MXAy+Nap37XHhzM/RqyCMx2Lk4I4mCUQlvVyLVWZsWLZncTd0zcNcRsZgG3QE05CIa
- MT6M3hA4ygv7JZRIg7urMEkTr8dSUI8aJZ09/CGNQtsBv+kxaItuEpvL8h6GI9WaykVO
- nWENVY4JhEX0BZ5OI3Vtv5mqJvwdVkR5tJXbpmID4PMXvwan8GaQDrdNwILL1vYZ8SR0
- CuWM1XkFn1GXFE9ZFoHgwUrQKR8NK7xGn+PmRzuXQI/DMdKGy8HROOqoq8om2lc0HtrS
- cuc9mK0LKXj3+MW72X1TjiqK7HwT9KrbrbEck1XFNHU2zSr7JXhsa6USzTe8rlttAn9h
- RxOg==
+ bh=wIcGbmtd7uHKf6ZYKTXQmr65WTCHDsrdSE+qbZuFBjw=;
+ b=gom+9xeptDQCjikyBBtxXw9ciytcZw0Nrm74FURZ8OPwOEpq4e/1CVIMcdNttCWOKa
+ p5k/vE48z36ySWyIDoHIuQP6IHOPsxQvOdf98/Bws2hcRb8P9lKxRzNv7eGSX/Pth1CD
+ 8Lc93Sa79L/bX7c/ngU3h/RW/MjIvjMOPa5Nktm4AN5M8bbNymjlPok5Jx5jJSCchWnu
+ Lsiln68/l/VzI/7sjCtbRUgg7NBfByqnOPrYntuJ+nfxRrFl/TpnM9JeZ7NOEWo+hkYi
+ 6oxhWlWZcNrDR2q4f9m49InUwElWPFRThRMiBmf2ZJvjwpwBcD7qrgR8fouewPns7s4r
+ J+LQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUG59p9Yg6uiJoPVDEeRWItRVi2VwvmDyvAPmJlA6EAhLzrM+ZXE23TOA9UknFgZHDs5KXN0v53LhM=@nongnu.org,
- AJvYcCWbzpKrJgO8OVOApfJ9Qqil908HwwrClUiwEfs8wf3Q4e0BR1c63Ph5XnBiR7xd6VTrdUKbVOOnDYcE@nongnu.org
-X-Gm-Message-State: AOJu0YwFC8y3YHBP3R7qUtS0fNsa3HDUxhVsmxx2zfJujknW6A48FrkU
- x0sHVxLQEB5eci/D/osYcmwIUvWvwNmsgVF+/TU/Zz8v2t3HhyVmctq9gw==
-X-Google-Smtp-Source: AGHT+IEzfruuAabaD+oBvcCRqz8chteMFhJRScR73hbZjHbHlB2rxyLnv/Ws0MbJsapmh7VM5amC6Q==
-X-Received: by 2002:a17:907:2da5:b0:a8d:6dab:b8ee with SMTP id
- a640c23a62f3a-a90d362ce84mr1207410366b.23.1727083888464; 
- Mon, 23 Sep 2024 02:31:28 -0700 (PDT)
+ AJvYcCURx5eUpJBgO0tCI3TwC1Ckt9plKCwRjWA8uebkPyx4hzAq/cwHehkNGB+hw5E+CgykmSsMd1mJpUQ=@nongnu.org,
+ AJvYcCXeDe1ZGzCeW2ZbKbK7e2NojaafhOWV4BUQl9ch0frKOneW7oXWmEgKo+hzY00/Spr4VCGtzh1Blw0g@nongnu.org
+X-Gm-Message-State: AOJu0YyfdtInBDAMtCA14InainBI5qIcA3Vx1U5wS3flzqUPSrjfIamg
+ zPtRwkvjSRd6Qc8xPFiZySHpd6H3nLzvxwtP+M+d7TfvWMDYu2hpNpS4zA==
+X-Google-Smtp-Source: AGHT+IF/pl/EoqM31sD4DdIC4SGsQT23Gm2p4puQIXkv2O1256sSVS/pMpvPk6LxXZHDUa2tjaknFw==
+X-Received: by 2002:a17:907:98a:b0:a8d:5d28:8e07 with SMTP id
+ a640c23a62f3a-a90d59292f6mr1148839466b.42.1727083866119; 
+ Mon, 23 Sep 2024 02:31:06 -0700 (PDT)
 Received: from archlinux.. (90-181-218-29.rco.o2.cz. [90.181.218.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.27
+ a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Sep 2024 02:31:27 -0700 (PDT)
+ Mon, 23 Sep 2024 02:31:04 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
@@ -71,17 +71,16 @@ Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 17/23] hw/intc: Guard openpic_kvm.c by dedicated OPENPIC_KVM
- Kconfig switch
-Date: Mon, 23 Sep 2024 11:30:10 +0200
-Message-ID: <20240923093016.66437-18-shentey@gmail.com>
+Subject: [PATCH 04/23] hw/ppc/e500: Remove unused "irqs" parameter
+Date: Mon, 23 Sep 2024 11:29:57 +0200
+Message-ID: <20240923093016.66437-5-shentey@gmail.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240923093016.66437-1-shentey@gmail.com>
 References: <20240923093016.66437-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,57 +103,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allows to clearly mark code sections relying on this device type.
-
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/ppc/e500.c       | 2 +-
- hw/intc/Kconfig     | 4 ++++
- hw/intc/meson.build | 3 +--
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ hw/ppc/e500.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index 4ee4304a8a..149e608324 100644
+index 32996c188e..228287b457 100644
 --- a/hw/ppc/e500.c
 +++ b/hw/ppc/e500.c
-@@ -828,7 +828,7 @@ static DeviceState *ppce500_init_mpic_qemu(PPCE500MachineState *pms,
+@@ -825,7 +825,7 @@ static DeviceState *ppce500_init_mpic_qemu(PPCE500MachineState *pms,
+ }
+ 
  static DeviceState *ppce500_init_mpic_kvm(const PPCE500MachineClass *pmc,
-                                           Error **errp)
+-                                          IrqLines *irqs, Error **errp)
++                                          Error **errp)
  {
--#ifdef CONFIG_KVM
-+#ifdef CONFIG_OPENPIC_KVM
+ #ifdef CONFIG_KVM
      DeviceState *dev;
-     CPUState *cs;
+@@ -865,7 +865,7 @@ static DeviceState *ppce500_init_mpic(PPCE500MachineState *pms,
+         Error *err = NULL;
  
-diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
-index dd405bdb5d..a3df98ae59 100644
---- a/hw/intc/Kconfig
-+++ b/hw/intc/Kconfig
-@@ -16,6 +16,10 @@ config OPENPIC
-     bool
-     select MSI_NONBROKEN
- 
-+config OPENPIC_KVM
-+    bool
-+    depends on OPENPIC && KVM
-+
- config APIC
-     bool
-     select MSI_NONBROKEN
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index 6bfdc4eb33..b9de6bf5c6 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -48,8 +48,7 @@ specific_ss.add(when: 'CONFIG_IOAPIC', if_true: files('ioapic.c'))
- specific_ss.add(when: 'CONFIG_LOONGSON_LIOINTC', if_true: files('loongson_liointc.c'))
- specific_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('mips_gic.c'))
- specific_ss.add(when: 'CONFIG_OMPIC', if_true: files('ompic.c'))
--specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_OPENPIC'],
--		if_true: files('openpic_kvm.c'))
-+specific_ss.add(when: 'CONFIG_OPENPIC_KVM', if_true: files('openpic_kvm.c'))
- specific_ss.add(when: 'CONFIG_POWERNV', if_true: files('xics_pnv.c', 'pnv_xive.c', 'pnv_xive2.c'))
- specific_ss.add(when: 'CONFIG_PPC_UIC', if_true: files('ppc-uic.c'))
- specific_ss.add(when: 'CONFIG_RX_ICU', if_true: files('rx_icu.c'))
+         if (kvm_kernel_irqchip_allowed()) {
+-            dev = ppce500_init_mpic_kvm(pmc, irqs, &err);
++            dev = ppce500_init_mpic_kvm(pmc, &err);
+         }
+         if (kvm_kernel_irqchip_required() && !dev) {
+             error_reportf_err(err,
 -- 
 2.46.1
 
