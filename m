@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DC26CF9C6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:35:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C69A1CF9C6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:35:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssfPm-0003Bw-Un; Mon, 23 Sep 2024 05:31:30 -0400
+	id 1ssfPm-00039I-BV; Mon, 23 Sep 2024 05:31:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPl-00034k-1k; Mon, 23 Sep 2024 05:31:29 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1ssfPj-0002yf-N3; Mon, 23 Sep 2024 05:31:27 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPj-00070D-8m; Mon, 23 Sep 2024 05:31:28 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a8d100e9ce0so504498866b.2; 
- Mon, 23 Sep 2024 02:31:26 -0700 (PDT)
+ id 1ssfPh-0006zl-Si; Mon, 23 Sep 2024 05:31:27 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a8d24f98215so558192966b.1; 
+ Mon, 23 Sep 2024 02:31:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727083884; x=1727688684; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727083882; x=1727688682; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FkfWI02D70VtzWbR0yhpKcWeB0nhAn0RHoWdU2Bvhx8=;
- b=Z0aEFxLluermHTNH9TbKDeQjZMrIDk4GIoCo4GU+VmKgx+RqV1fX7nFtT/Ov3tky2V
- imosaai1ExCm5PUqakwXXT2LPLjB2WB9NkHqKi8QIRCohbr1VGzo3fFc+rHHk62YiN0M
- Fgv0LP8B2qrghHC8JPJNCE24GQon4+Uo+n2jjQHKqfhCANpCKZi2qwUwlCe19sRWcdmJ
- yNQNZ36Y9X5pREmdRuV/jKyeBh8g6E/AiuT6yaPoNEcrvIjSycOYYT0IGQDMqd27y2Cd
- PPRFkSWPzeh/UZZNiNgVE8AH+ykkm1gDmWEUwZolx1scNp/ovtxdD7AGpDrZcXg0R78J
- NMFg==
+ bh=mHGjpUSmV1BY/gesAqJRCAT6c0HlF78YEs0jV0SsyRc=;
+ b=RezEmTP+0B9V9xAQlssH/HvqrlhtUVxB5C3jyeQwA+rWKt8Qw6Drf5kChjwSXQ6N3G
+ 0txnLf3P0eb7xMAdmxx2+6SckolIP6N3tSWUFuoGbwgy/xdWS2cXQuFtXEvfD9nmiVnE
+ oZbP04aF4YBNda7X2FZr7F4mf1Zeiu6dQA7uMqKtvEeUu3nwgeZTiHW6iAntaNv110HU
+ TlVsq5fRQjzRI06KdZcYTgHGJsneLuHK77UreWLRCdc+w+Jnzx+U8xULR7gMuitJlzJC
+ bCuVlHMYH17h8FFcNbVi2JIxZ+kINP2H+KMa0LRHdGog5HFgeb7h6RJG8e1EoxgwUKcc
+ epPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727083884; x=1727688684;
+ d=1e100.net; s=20230601; t=1727083882; x=1727688682;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FkfWI02D70VtzWbR0yhpKcWeB0nhAn0RHoWdU2Bvhx8=;
- b=J85MbTf1Do24GvXNKs8vxvVzam1oMioO/eY8AKGrt3ctxvyvcUJP0xVcDvNrL+ffBa
- weSVPi9JsddJ+6Wicig6nTl7vYpe2LLETMu96p6A1t2RPivHtUspGUjopBJOh6eNb4+g
- 51dDPCu4J+CpychfLceT6d0jyAx9o6iRZGfsaGZtl3iXtbrCUKuphsCYc2I4hPXi8Nui
- EEyuCFNOF7qR82ifrlYgfEgnoVd2YGPpCZtSTrFEPMTQZqGVuFT1kgc/kpo029OTVHZ3
- JqSYJjmue4bdXoSDTFhe6Ocir7E3goMnLGV46A9eya7GVVGxU8SuEuXEZVidg1InkCLV
- R1bg==
+ bh=mHGjpUSmV1BY/gesAqJRCAT6c0HlF78YEs0jV0SsyRc=;
+ b=rVg3ZMq0fYmn40JJ+MKLumcfvw4gc8Idee9gbaRbJURfP/lEOtzdT2iGtyABW7AqK/
+ i7AVK8iBN4SjKuU6Z7fo3wd/+bWuqMbw+C0sd2jppq31HRua1d+ZfjURDvDOwjRhYHhc
+ ohx4b/D2w7FMBPJXZTunzCDneIKSFPrjyVCx8ZVaZ6SWOheL6r6dxNWTggCB+4BPjnaZ
+ EaigOHKbzw9Md5kPtYRQg0OPAXMRWJR2UtHPgJDkpuWTqw69j/5zYH8nWLN8ISm0Bclm
+ w3qoeK7M0T+4MciT3BqEAiQmdPHsejf9KDaAnyUYbNwRx/pzfq6Sd1BifLyMBzWkAsE6
+ d4wg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUhVejjQy2g+HWUg/wdulwkPe5czkdKEgdiQm2Dl10Lv+9GVPFAsllS1ZLteGzapPTkMyyGsNLoXOzb@nongnu.org,
- AJvYcCVI0CLD69P6hVmiVa4Ip5nV9SXkfeerxMxwKwjEJbw9XLCzF/INEwFOQYZ3se0M8z4EB//RFtDxzPs=@nongnu.org
-X-Gm-Message-State: AOJu0YwC88DqiYQb56BOj4zq7NHU2p0xkZt50SbOceaJGfUZuqaqeFAX
- gF21hGiq8IJ+EP6SU2A+BbjPx6ZCw+h4HBSkyMWJ4GosuUIRfHLxTsRKBg==
-X-Google-Smtp-Source: AGHT+IFh8CFek9hxkLL6felu5Vk0iaQ0t1buQG+uvDFXzx6tJpapcMekUUu6CXC49EH5lOCdZ4cPCQ==
-X-Received: by 2002:a17:906:c155:b0:a8d:6712:2ddd with SMTP id
- a640c23a62f3a-a90d549c063mr1162954866b.2.1727083884281; 
- Mon, 23 Sep 2024 02:31:24 -0700 (PDT)
+ AJvYcCVrZhP0StLAXq9PjRTZVRnnD8+F4bPjz66U15j4oM2YWqj5jNGdfvTCAgAQalqcRcnDcgQnVyKxvsU=@nongnu.org,
+ AJvYcCXTjghBkQC7b8qmGgYzX1dAxGIEPRBdlpBYSON/eAM6sUdVnQpKI8e9svSRMneTcnsyQazB+odtyxrw@nongnu.org
+X-Gm-Message-State: AOJu0YxrddgaffZDTHBRik9BTdYsX5dizhzuS+HOy+1JA6CeolP5GXaO
+ GZcL/6PR6gB7k07JuAmPKZlLRgNKNYEymJ/Vfh57AgRc5gRWha3ut7hFmA==
+X-Google-Smtp-Source: AGHT+IE9itsyK/LlKe4r9Sa82Dr7vX3q9d1qBslDtDQJTMKiRyiljh/d26vV1d5PbCDgs7EEI/Z2ag==
+X-Received: by 2002:a17:907:d2db:b0:a8d:f04:b19b with SMTP id
+ a640c23a62f3a-a90d4fbcfd5mr1101262466b.2.1727083882399; 
+ Mon, 23 Sep 2024 02:31:22 -0700 (PDT)
 Received: from archlinux.. (90-181-218-29.rco.o2.cz. [90.181.218.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.22
+ a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Sep 2024 02:31:23 -0700 (PDT)
+ Mon, 23 Sep 2024 02:31:21 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
@@ -71,16 +71,16 @@ Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 14/23] hw/gpio/mpc8xxx: Prefer DEFINE_TYPES() macro
-Date: Mon, 23 Sep 2024 11:30:07 +0200
-Message-ID: <20240923093016.66437-15-shentey@gmail.com>
+Subject: [PATCH 13/23] hw/pci-host/ppce500: Prefer DEFINE_TYPES() macro
+Date: Mon, 23 Sep 2024 11:30:06 +0200
+Message-ID: <20240923093016.66437-14-shentey@gmail.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240923093016.66437-1-shentey@gmail.com>
 References: <20240923093016.66437-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,47 +105,74 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/gpio/mpc8xxx.c | 22 +++++++++-------------
- 1 file changed, 9 insertions(+), 13 deletions(-)
+ hw/pci-host/ppce500.c | 42 ++++++++++++++++++------------------------
+ 1 file changed, 18 insertions(+), 24 deletions(-)
 
-diff --git a/hw/gpio/mpc8xxx.c b/hw/gpio/mpc8xxx.c
-index 63b7a5c881..de183c3be5 100644
---- a/hw/gpio/mpc8xxx.c
-+++ b/hw/gpio/mpc8xxx.c
-@@ -23,7 +23,6 @@
- #include "hw/irq.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
+diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
+index d7ff2ba778..1ce79ea20c 100644
+--- a/hw/pci-host/ppce500.c
++++ b/hw/pci-host/ppce500.c
+@@ -21,7 +21,6 @@
+ #include "hw/pci/pci_device.h"
+ #include "hw/pci/pci_host.h"
+ #include "qemu/bswap.h"
 -#include "qemu/module.h"
+ #include "hw/pci-host/ppce500.h"
  #include "qom/object.h"
  
- #define TYPE_MPC8XXX_GPIO "mpc8xxx_gpio"
-@@ -208,17 +207,14 @@ static void mpc8xxx_gpio_class_init(ObjectClass *klass, void *data)
-     device_class_set_legacy_reset(dc, mpc8xxx_gpio_reset);
+@@ -508,17 +507,6 @@ static void e500_host_bridge_class_init(ObjectClass *klass, void *data)
+     dc->user_creatable = false;
  }
  
--static const TypeInfo mpc8xxx_gpio_info = {
--    .name          = TYPE_MPC8XXX_GPIO,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(MPC8XXXGPIOState),
--    .instance_init = mpc8xxx_gpio_initfn,
--    .class_init    = mpc8xxx_gpio_class_init,
+-static const TypeInfo e500_host_bridge_info = {
+-    .name          = TYPE_PPC_E500_PCI_BRIDGE,
+-    .parent        = TYPE_PCI_DEVICE,
+-    .instance_size = sizeof(PPCE500PCIBridgeState),
+-    .class_init    = e500_host_bridge_class_init,
+-    .interfaces = (InterfaceInfo[]) {
+-        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+-        { },
+-    },
+-};
+-
+ static Property pcihost_properties[] = {
+     DEFINE_PROP_UINT32("first_slot", PPCE500PCIState, first_slot, 0x11),
+     DEFINE_PROP_UINT32("first_pin_irq", PPCE500PCIState, first_pin_irq, 0x1),
+@@ -535,17 +523,23 @@ static void e500_pcihost_class_init(ObjectClass *klass, void *data)
+     dc->vmsd = &vmstate_ppce500_pci;
+ }
+ 
+-static const TypeInfo e500_pcihost_info = {
+-    .name          = TYPE_PPC_E500_PCI_HOST_BRIDGE,
+-    .parent        = TYPE_PCI_HOST_BRIDGE,
+-    .instance_size = sizeof(PPCE500PCIState),
+-    .class_init    = e500_pcihost_class_init,
 +static const TypeInfo types[] = {
 +    {
-+        .name          = TYPE_MPC8XXX_GPIO,
-+        .parent        = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(MPC8XXXGPIOState),
-+        .instance_init = mpc8xxx_gpio_initfn,
-+        .class_init    = mpc8xxx_gpio_class_init,
++        .name          = TYPE_PPC_E500_PCI_BRIDGE,
++        .parent        = TYPE_PCI_DEVICE,
++        .instance_size = sizeof(PPCE500PCIBridgeState),
++        .class_init    = e500_host_bridge_class_init,
++        .interfaces    = (InterfaceInfo[]) {
++            { INTERFACE_CONVENTIONAL_PCI_DEVICE },
++            { },
++        },
++    },
++    {
++        .name          = TYPE_PPC_E500_PCI_HOST_BRIDGE,
++        .parent        = TYPE_PCI_HOST_BRIDGE,
++        .instance_size = sizeof(PPCE500PCIState),
++        .class_init    = e500_pcihost_class_init,
 +    },
  };
  
--static void mpc8xxx_gpio_register_types(void)
+-static void e500_pci_register_types(void)
 -{
--    type_register_static(&mpc8xxx_gpio_info);
+-    type_register_static(&e500_pcihost_info);
+-    type_register_static(&e500_host_bridge_info);
 -}
 -
--type_init(mpc8xxx_gpio_register_types)
+-type_init(e500_pci_register_types)
 +DEFINE_TYPES(types)
 -- 
 2.46.1
