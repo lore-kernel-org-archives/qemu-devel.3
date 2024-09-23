@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37020CF9C71
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB63ECF9C6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:33:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssfPV-00025Z-Uk; Mon, 23 Sep 2024 05:31:13 -0400
+	id 1ssfPv-0003oA-O1; Mon, 23 Sep 2024 05:31:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPT-0001tT-01; Mon, 23 Sep 2024 05:31:11 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1ssfPt-0003eG-DZ; Mon, 23 Sep 2024 05:31:37 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPR-0006xQ-F5; Mon, 23 Sep 2024 05:31:10 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a8d13b83511so502550966b.2; 
- Mon, 23 Sep 2024 02:31:08 -0700 (PDT)
+ id 1ssfPr-00071q-PI; Mon, 23 Sep 2024 05:31:37 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a8d56155f51so496305366b.2; 
+ Mon, 23 Sep 2024 02:31:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727083866; x=1727688666; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727083892; x=1727688692; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wIcGbmtd7uHKf6ZYKTXQmr65WTCHDsrdSE+qbZuFBjw=;
- b=Hs7sL7T074QKfuAcE8oIi58WQCANh1GPJdpKcOQFZouIWJwpbMeNbti8cy1CYMKlxR
- cHUdUCYcm68a2yUAkAvjPbGCUxFU6+Ia0xJlVXsqWUfspWM0uPthyVrBaL1q2+dR9/2t
- T/gn0i6g6V8HSmF0MHWAjuCt6iUWsv8eDFB7KTvAwpk/DzLyVVXugqtWW8hEDyvJdobg
- YXGwXTs66n4yHQX3tZHevY+3i6QIZJ4T8zydw5raZd2ugB+8Mm/4h3rFB98N1qv3+U0t
- tdlNxuPxIn292yeQhP/i9C2dyKUdQ0a+91tr2bjNpe3zEnY8FATUHYq+koUGTLHHu220
- gczw==
+ bh=xjFxdBHFisGMgmJV+yxy4OCzd9gwLLwjEyXicrgoEOs=;
+ b=LS1GK+bRTaKOMqhMIw53/20qK4hnig4f7NGKvnVxID2YkufRd/73L9UaAGu2Jm9M+Z
+ YJdQguWca+64qYfiolAc2V7VqHrEONCEYp6c8vG0pLZChoC1tfX+EAHXLMbO3ZG1Fxxz
+ INF3FlQMngRmHCAx/CetSWHy3arsm4THUDFSLA2u7AWgMNRJTa2JWk5JfKAE8ZINZsIF
+ GfInWbplTH1AOzGroI5GzYvrlsAeKeRb7ZlDZA/IZdEFHKIec7B3I+v8KPE4iM7PyJBf
+ SYCY5hR/q2b52yiueZuWSgOUSNy/M5UYuix4s3EVoAqj9ZGgNY6M55cLXbPUw7MbVoLw
+ Y0NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727083866; x=1727688666;
+ d=1e100.net; s=20230601; t=1727083892; x=1727688692;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wIcGbmtd7uHKf6ZYKTXQmr65WTCHDsrdSE+qbZuFBjw=;
- b=gom+9xeptDQCjikyBBtxXw9ciytcZw0Nrm74FURZ8OPwOEpq4e/1CVIMcdNttCWOKa
- p5k/vE48z36ySWyIDoHIuQP6IHOPsxQvOdf98/Bws2hcRb8P9lKxRzNv7eGSX/Pth1CD
- 8Lc93Sa79L/bX7c/ngU3h/RW/MjIvjMOPa5Nktm4AN5M8bbNymjlPok5Jx5jJSCchWnu
- Lsiln68/l/VzI/7sjCtbRUgg7NBfByqnOPrYntuJ+nfxRrFl/TpnM9JeZ7NOEWo+hkYi
- 6oxhWlWZcNrDR2q4f9m49InUwElWPFRThRMiBmf2ZJvjwpwBcD7qrgR8fouewPns7s4r
- J+LQ==
+ bh=xjFxdBHFisGMgmJV+yxy4OCzd9gwLLwjEyXicrgoEOs=;
+ b=qQOgpqJxAokCQC6HLW6Ia0wVhMLUean5fJQVbpiTG+qytBpppjELy41Jtm6vDpDrhj
+ q/dmdaJ96W+D/dxvef1l30F41GZ9Gm8c4Jpk1Z3Lw6z0r45d4MxHZtBoaYxDsqzo1ABM
+ t0wToucXyloQRYp9VX83dz69g6oJK6hIocwbIcEjuIFQHtcCNYgR65YbfVqWLGi1eabY
+ odF4eAlxD4PlXUePE/ojgkVHxvH2pgZCRZdxH+f2zhnoG/4TVtgx/kVSzxRAaaqQ2zj7
+ JtPtN0o3ymjf9Sqj+64kz6wV0NgrAjgpnmrn3VSEh+wekLy8v1P2lkQUDo2X6YeSWG4S
+ c1Og==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURx5eUpJBgO0tCI3TwC1Ckt9plKCwRjWA8uebkPyx4hzAq/cwHehkNGB+hw5E+CgykmSsMd1mJpUQ=@nongnu.org,
- AJvYcCXeDe1ZGzCeW2ZbKbK7e2NojaafhOWV4BUQl9ch0frKOneW7oXWmEgKo+hzY00/Spr4VCGtzh1Blw0g@nongnu.org
-X-Gm-Message-State: AOJu0YyfdtInBDAMtCA14InainBI5qIcA3Vx1U5wS3flzqUPSrjfIamg
- zPtRwkvjSRd6Qc8xPFiZySHpd6H3nLzvxwtP+M+d7TfvWMDYu2hpNpS4zA==
-X-Google-Smtp-Source: AGHT+IF/pl/EoqM31sD4DdIC4SGsQT23Gm2p4puQIXkv2O1256sSVS/pMpvPk6LxXZHDUa2tjaknFw==
-X-Received: by 2002:a17:907:98a:b0:a8d:5d28:8e07 with SMTP id
- a640c23a62f3a-a90d59292f6mr1148839466b.42.1727083866119; 
- Mon, 23 Sep 2024 02:31:06 -0700 (PDT)
+ AJvYcCUbkpcYtJrPV2Idh0JAkpVtvDsItd9zdWabOrMrEZM5UG8t2/UqSD4rTku9d/WUUG4LiKYugPh3WHk=@nongnu.org,
+ AJvYcCVbvmr9frZz9/Of2aWFC92qCS/Eb3NKWUyZUrgX3r1kKvfF0/K7yWf7sfPIAjmrciK6bSmPB7aQu4l2@nongnu.org
+X-Gm-Message-State: AOJu0YxBG63W9iEFgcI2cFBoRH1qHkkPxvOKnRJZ7B8dyZqMdWE+Krfn
+ f1Axcec6QGSKo14dmavljQV7z6VFTgFaPwwTe3KcMGOdnWc4JfI43ry0Xg==
+X-Google-Smtp-Source: AGHT+IHgNIv65lwph6phtyyhYNvgu3BbDU7C3wE3C8+IvpPtkEKiPaPFW+Dm3TLnNwK18hUSoHQpyg==
+X-Received: by 2002:a17:907:2684:b0:a86:8917:fcd6 with SMTP id
+ a640c23a62f3a-a90d512f9a6mr1064726866b.60.1727083892232; 
+ Mon, 23 Sep 2024 02:31:32 -0700 (PDT)
 Received: from archlinux.. (90-181-218-29.rco.o2.cz. [90.181.218.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.03
+ a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Sep 2024 02:31:04 -0700 (PDT)
+ Mon, 23 Sep 2024 02:31:31 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
@@ -71,16 +71,16 @@ Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 04/23] hw/ppc/e500: Remove unused "irqs" parameter
-Date: Mon, 23 Sep 2024 11:29:57 +0200
-Message-ID: <20240923093016.66437-5-shentey@gmail.com>
+Subject: [PATCH 19/23] hw/block/pflash_cfi01: Prefer DEFINE_TYPES() macro
+Date: Mon, 23 Sep 2024 11:30:12 +0200
+Message-ID: <20240923093016.66437-20-shentey@gmail.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240923093016.66437-1-shentey@gmail.com>
 References: <20240923093016.66437-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,31 +105,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/ppc/e500.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/block/pflash_cfi01.c | 21 ++++++++-------------
+ 1 file changed, 8 insertions(+), 13 deletions(-)
 
-diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index 32996c188e..228287b457 100644
---- a/hw/ppc/e500.c
-+++ b/hw/ppc/e500.c
-@@ -825,7 +825,7 @@ static DeviceState *ppce500_init_mpic_qemu(PPCE500MachineState *pms,
+diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
+index 7b6ec64442..cf11dada29 100644
+--- a/hw/block/pflash_cfi01.c
++++ b/hw/block/pflash_cfi01.c
+@@ -47,7 +47,6 @@
+ #include "qemu/bitops.h"
+ #include "qemu/host-utils.h"
+ #include "qemu/log.h"
+-#include "qemu/module.h"
+ #include "qemu/option.h"
+ #include "hw/sysbus.h"
+ #include "migration/vmstate.h"
+@@ -947,20 +946,16 @@ static void pflash_cfi01_class_init(ObjectClass *klass, void *data)
+     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
  }
  
- static DeviceState *ppce500_init_mpic_kvm(const PPCE500MachineClass *pmc,
--                                          IrqLines *irqs, Error **errp)
-+                                          Error **errp)
- {
- #ifdef CONFIG_KVM
-     DeviceState *dev;
-@@ -865,7 +865,7 @@ static DeviceState *ppce500_init_mpic(PPCE500MachineState *pms,
-         Error *err = NULL;
+-
+-static const TypeInfo pflash_cfi01_info = {
+-    .name           = TYPE_PFLASH_CFI01,
+-    .parent         = TYPE_SYS_BUS_DEVICE,
+-    .instance_size  = sizeof(PFlashCFI01),
+-    .class_init     = pflash_cfi01_class_init,
++static const TypeInfo types[] = {
++    {
++        .name           = TYPE_PFLASH_CFI01,
++        .parent         = TYPE_SYS_BUS_DEVICE,
++        .instance_size  = sizeof(PFlashCFI01),
++        .class_init     = pflash_cfi01_class_init,
++    },
+ };
  
-         if (kvm_kernel_irqchip_allowed()) {
--            dev = ppce500_init_mpic_kvm(pmc, irqs, &err);
-+            dev = ppce500_init_mpic_kvm(pmc, &err);
-         }
-         if (kvm_kernel_irqchip_required() && !dev) {
-             error_reportf_err(err,
+-static void pflash_cfi01_register_types(void)
+-{
+-    type_register_static(&pflash_cfi01_info);
+-}
+-
+-type_init(pflash_cfi01_register_types)
++DEFINE_TYPES(types)
+ 
+ PFlashCFI01 *pflash_cfi01_register(hwaddr base,
+                                    const char *name,
 -- 
 2.46.1
 
