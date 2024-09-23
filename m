@@ -4,94 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D8EFCF9C5B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 07:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1EF1CF9C5B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 08:16:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssdvi-0008Pv-Bk; Mon, 23 Sep 2024 03:56:22 -0400
+	id 1sseEo-0007Xj-Og; Mon, 23 Sep 2024 04:16:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1ssdvg-0008PP-6x
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 03:56:20 -0400
-Received: from fout-a2-smtp.messagingengine.com ([103.168.172.145])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1ssdvc-000616-57
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 03:56:19 -0400
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal
- [10.202.2.49])
- by mailfout.phl.internal (Postfix) with ESMTP id 59C88138026F;
- Mon, 23 Sep 2024 03:56:12 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-09.internal (MEProxy); Mon, 23 Sep 2024 03:56:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1727078172; x=
- 1727164572; bh=eTz99Eakisq4ROFL2DK/NTXgm+4NR1A4pe1EaoYocC0=; b=C
- tsAFO9b+vuuOQjOFddt0+OiL394U2sJkA5wAWHXhkSCLTopestQtH+cf1xP/dH9u
- yj+ZqySiReaScDj5E4TqD+xAhSOP/A8L3bj+AgMDWwhhHegT2NX70CCy6YRvPVzy
- 3uevZSD0q4GfVOwUtnrJE6vkLufXiwEnkzDOtw5El9dAel17+V+IemTBZMuyYjX9
- ejOrWtEJ9P46WRlxmp56giMyV93xwf12UqTWebH1fsP0Wb1lHIiG/+UM9mmQK7kp
- WKORXzR1fBWKQvqoK9szUHJkpPEG4PDGhohAe0Izdgsmy5DCKPr/xTLJs74eLAAe
- SRlXo1PeFacC+kYZMrZVg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; t=1727078172; x=1727164572; bh=eTz99Eakisq4ROFL2DK/NTXgm+4N
- R1A4pe1EaoYocC0=; b=Mk6Hkz+ZY/Mwvknb84FA/PIeGS3d1NTMwstRDmyCJxrc
- E1hBJogrIcFi47NIhTeDI4+ISbH3TWk3wyXinPK0D+TOoVmoxNhizuuJ42XhVwvh
- SiAXa5mnXW9iqAXuG10zd736/0o9CYkw8Q2RNFqogwgTz1AYOU6LX32UGgUp43q/
- swZDos/qELBreCosk4k/AulDIsZD5kraq3RryjZXAzeye+/OjtF5faWaba6YAAcz
- EVV2p0r+gA3hPZX8w1+V4cUBuJt/ET2RbmA9AenOgZjHD8V7rCPl97GZ14jkE+in
- vbt4CBJz1L4xG+1B+f7ccuEQhQqVAbBAA7UE16MkHA==
-X-ME-Sender: <xms:Gx_xZkA06_TIRUhXQFoPnqMGYkr0FJAM1mX3ho2ntgmgr94J798a_Q>
- <xme:Gx_xZmjbDIxHkwoSefILdNd5LMQlNpRn7xAU-nAGpj-pOKrDOL0mOH13KB8f0Uysh
- ImCxiQpO6PJccdELzw>
-X-ME-Received: <xmr:Gx_xZnkz2ZkzfT7TojkK4gplMprH3hEI_Zv_i5vYqQ7TtIM1AFL9RxeL_hHEgQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudelkedguddvkecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
- uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
- evuffkfhggtggujgesthdtredttddtjeenucfhrhhomhepmfhlrghushculfgvnhhsvghn
- uceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvghrnhepveejtd
- ejteevfefhffehiedvffdvudelvdeigfekfeevledtieetffehgeeggfdunecuvehluhhs
- thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtshesihhrrhgvlh
- gvvhgrnhhtrdgukhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhr
- tghpthhtoheprghruhhnrdhkkhgrsehsrghmshhunhhgrdgtohhmpdhrtghpthhtohepqh
- gvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehksghushgthhes
- khgvrhhnvghlrdhorhhgpdhrtghpthhtohepfhhoshhsseguvghfmhgrtghrohdrihhtpd
- hrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukh
-X-ME-Proxy: <xmx:Gx_xZqwMKUyG1bIp1lmVYT5A3mR3BCnVrOJ6-XACciXK4JBQGyRdow>
- <xmx:Gx_xZpSxsGFTh4sbXMPs9eOdzWXCgRkz5yZuXXUjX0guvg1inrDbyA>
- <xmx:Gx_xZlYwHeXHISyAiNijDNEQZpXnSKDe4UftLtJAxcx-rMI_QzzZ2A>
- <xmx:Gx_xZiRqwFwwJo07hADZGb4GHiffg9MwdosJd8W0cS8U4uVwwPEBlg>
- <xmx:HB_xZiKeXk05h4uLuXIM5yaRdv4QqLyeBNgMUZDLVyAz9uppoaT2q7x9>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Sep 2024 03:56:10 -0400 (EDT)
-Date: Mon, 23 Sep 2024 09:56:09 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: Arun Kumar <arun.kka@samsung.com>
-Cc: qemu-devel@nongnu.org, kbusch@kernel.org, foss@defmacro.it
-Subject: Re: [PATCH] hw/nvme: clear masked events from the aer queue
-Message-ID: <ZvEfGe6rSCuUEvie@AALNPWKJENSEN.aal.scsc.local>
-References: <CGME20240906052849epcas5p2602787ff0700a8feca81ad173f957ffb@epcas5p2.samsung.com>
- <20240905235859.3416741-1-arun.kka@samsung.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sseEl-0007SU-5C
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 04:16:03 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sseEa-0008EW-Hr
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 04:16:02 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-378c16a4d3eso4398527f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Sep 2024 01:15:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727079350; x=1727684150; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=c3Onvi9UHbad6ukc7arbUZKYIPfwRyBIrmeNY5wtelU=;
+ b=BofDlAmWEg6E6hEQ82QWx3RJpKgSNp7wq/Er+b5Gbzx0Vwlidf1inJ7LpYQ423FLHi
+ h/1so7gy5qa1O2Nw1bn8sCCRFNXxJv6+k/9wWskxlB24yeqypr32/oPSM047A8KykX7M
+ 8Fp2M6nUH4MmMmlWLg7LmehoNh16hs5TCl7Kair6wFF/uzbxGwOPe1i1cVi3697Cro4b
+ BVlF+2RPLBSdFgXimgut6lrgcpE6QydxXQKSt1dTCZPZNJw2DphE0hAUCLOyIOR4t8RW
+ luIoOtBo+SQyoG8eRJGv8XgMLYM5n27/UQMxS+MnRBSUblaEoiyvZuSN3/SSoSWYfZo5
+ Y5JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727079350; x=1727684150;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=c3Onvi9UHbad6ukc7arbUZKYIPfwRyBIrmeNY5wtelU=;
+ b=eOYJDp4hEPqSv58rgyQGTEG6t9NtLFM2sA/W2oXz+aWqbE6E0FtBU5vAMXLNepcByz
+ Wo2wmZF0qbnbdeBIfBouF4FG6OMr8po2/iEDPe1dVeuWWe3bVe7aHIENvsTUrJAhi4kL
+ qbHKakFpppr4k4I8K0DmKIJFPoqqrogCSkNYXndqIluy3utUMh7j4uYpPzWEYQIroYCU
+ SmDpVCBvBo2l+gNGu8gqYvXEoKGLHq3EWjl/xlkIEVpvnSBWBJf7uL0py5a3TUBKJIfZ
+ wbzXHI1JvKL+vMoGxGMIJuQ4fPxGnVW4DT7jXunP0mbQg32FDWTchXdZTujw8ZG5brUQ
+ Y6HA==
+X-Gm-Message-State: AOJu0YzX6Y3T9eeCt1i/UAPT2O6DxeK8qmQS5yvYTP683BG/2W2rxH3T
+ cvn6MdApkmRcU/MSqI4Djute9oZaTZuRzgH/KQbw6IsZo5rEbwsN1weMjS8EnAM=
+X-Google-Smtp-Source: AGHT+IG2BMXe+umsdDAemAmgjZQvn/opiBsYMNMkGVh8XZB5q0DXjNMByQ9UetTIcKFFSQxMkvBQVg==
+X-Received: by 2002:a5d:4741:0:b0:374:c6b8:50b5 with SMTP id
+ ffacd0b85a97d-37a422783aamr8559730f8f.17.1727079349933; 
+ Mon, 23 Sep 2024 01:15:49 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a906109669fsm1175032566b.3.2024.09.23.01.15.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 23 Sep 2024 01:15:49 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 81CC15F8A6;
+ Mon, 23 Sep 2024 09:15:48 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH] testing: bump mips64el cross to bookworm and allow to fail
+Date: Mon, 23 Sep 2024 09:15:37 +0100
+Message-Id: <20240923081537.3846145-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240905235859.3416741-1-arun.kka@samsung.com>
-Received-SPF: pass client-ip=103.168.172.145; envelope-from=its@irrelevant.dk;
- helo=fout-a2-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,47 +97,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sep  6 05:28, Arun Kumar wrote:
-> clear masked events from the aer queue when get log page is issued with
-> rae=0 without checking for the presence of outstanding aer requests
-> 
-> Signed-off-by: Arun Kumar <arun.kka@samsung.com>
-> ---
+The mips64el cross setup is very broken for bullseye which has now
+entered LTS support so is unlikely to be fixed. While we still can't
+build the container for bookworm due to a single missing dependency
+that will hopefully get fixed in due course. For the sake of keeping
+the CI green we mark it as allow_fail for the time being.
 
-Hi Arun,
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: Michael Tokarev <mjt@tls.msk.ru>
+---
+ .gitlab-ci.d/container-cross.yml                      |  3 +++
+ tests/docker/dockerfiles/debian-mips64el-cross.docker | 10 ++++------
+ tests/lcitool/refresh                                 |  2 +-
+ 3 files changed, 8 insertions(+), 7 deletions(-)
 
-Thanks, LGTM. One small nit below.
+diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
+index 34c0e729ad..c567926182 100644
+--- a/.gitlab-ci.d/container-cross.yml
++++ b/.gitlab-ci.d/container-cross.yml
+@@ -49,6 +49,9 @@ i686-debian-cross-container:
+ mips64el-debian-cross-container:
+   extends: .container_job_template
+   stage: containers
++  # Currently waiting for Debian to fix:
++  #  libgl1-mesa-dri:mips64el : Depends: libllvm15:mips64el but it is not going to be installed
++  allow_failure: true
+   variables:
+     NAME: debian-mips64el-cross
+ 
+diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+index 2862785692..69d6e8cd11 100644
+--- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
++++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+@@ -1,10 +1,10 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all --cross-arch mips64el debian-11 qemu
++#  $ lcitool dockerfile --layers all --cross-arch mips64el debian-12 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
+ 
+-FROM docker.io/library/debian:11-slim
++FROM docker.io/library/debian:12-slim
+ 
+ RUN export DEBIAN_FRONTEND=noninteractive && \
+     apt-get update && \
+@@ -48,16 +48,15 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-opencv \
+                       python3-pillow \
+                       python3-pip \
+-                      python3-setuptools \
+                       python3-sphinx \
+                       python3-sphinx-rtd-theme \
+                       python3-venv \
+-                      python3-wheel \
+                       python3-yaml \
+                       rpm2cpio \
+                       sed \
+                       socat \
+                       sparse \
++                      swtpm \
+                       tar \
+                       tesseract-ocr \
+                       tesseract-ocr-eng \
+@@ -69,8 +68,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     dpkg-reconfigure locales && \
+     rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
+ 
+-RUN /usr/bin/pip3 install tomli
+-
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+ ENV MAKE "/usr/bin/make"
+@@ -143,6 +140,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       libvdeplug-dev:mips64el \
+                       libvirglrenderer-dev:mips64el \
+                       libvte-2.91-dev:mips64el \
++                      libxdp-dev:mips64el \
+                       libzstd-dev:mips64el \
+                       nettle-dev:mips64el \
+                       systemtap-sdt-dev:mips64el \
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 92381f3c46..a78219f7bc 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -166,7 +166,7 @@ try:
+                                             "x86_64-linux-user,"
+                                             "i386-softmmu,i386-linux-user"))
+ 
+-    generate_dockerfile("debian-mips64el-cross", "debian-11",
++    generate_dockerfile("debian-mips64el-cross", "debian-12",
+                         cross="mips64el",
+                         trailer=cross_build("mips64el-linux-gnuabi64-",
+                                             "mips64el-softmmu,mips64el-linux-user"))
+-- 
+2.39.5
 
->  hw/nvme/ctrl.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index 127c3d2383..85039779da 100644
-> --- a/hw/nvme/ctrl.c
-> +++ b/hw/nvme/ctrl.c
-> @@ -1649,9 +1649,16 @@ static void nvme_smart_event(NvmeCtrl *n, uint8_t event)
->  
->  static void nvme_clear_events(NvmeCtrl *n, uint8_t event_type)
->  {
-> +    NvmeAsyncEvent *event, *next;
->      n->aer_mask &= ~(1 << event_type);
->      if (!QTAILQ_EMPTY(&n->aer_queue)) {
-
-It's safe to remove the QTAILQ_EMTPY check as well.
-
-> -        nvme_process_aers(n);
-> +        QTAILQ_FOREACH_SAFE(event, &n->aer_queue, entry, next) {
-> +            if (event->result.event_type == event_type) {
-> +                QTAILQ_REMOVE(&n->aer_queue, event, entry);
-> +                n->aer_queued--;
-> +                g_free(event);
-> +            }
-> +        }
->      }
->  }
-
-We may want to check the mask when inserting as well? Currently
-nvme_enqueue_event does not check the aer_mask and always inserts an
-event, even if we have posted an AEN for a particular event type (but
-event type has not been cleared yet).
 
