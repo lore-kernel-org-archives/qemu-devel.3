@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0635DCF9C6C
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 01:35:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E1B2CF9C5B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 03:57:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssXxn-0004u2-MN; Sun, 22 Sep 2024 21:34:07 -0400
+	id 1ssaBp-0006PG-Ny; Sun, 22 Sep 2024 23:56:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yu.chen@h3c.com>) id 1ssXxk-0004tO-Qq
- for qemu-devel@nongnu.org; Sun, 22 Sep 2024 21:34:04 -0400
-Received: from smtp.h3c.com ([60.191.123.50] helo=h3cspam02-ex.h3c.com)
+ (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1ssaBo-0006Mp-2y; Sun, 22 Sep 2024 23:56:44 -0400
+Received: from dedi548.your-server.de ([85.10.215.148])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yu.chen@h3c.com>) id 1ssXxh-0004ZN-GK
- for qemu-devel@nongnu.org; Sun, 22 Sep 2024 21:34:04 -0400
-Received: from mail.maildlp.com ([172.25.15.154])
- by h3cspam02-ex.h3c.com with ESMTP id 48N1XXex047829;
- Mon, 23 Sep 2024 09:33:33 +0800 (+08) (envelope-from yu.chen@h3c.com)
-Received: from DAG6EX09-BJD.srv.huawei-3com.com (unknown [10.153.34.11])
- by mail.maildlp.com (Postfix) with ESMTP id B33512004749;
- Mon, 23 Sep 2024 09:39:30 +0800 (CST)
-Received: from DAG6EX10-BJD.srv.huawei-3com.com (10.153.34.12) by
- DAG6EX09-BJD.srv.huawei-3com.com (10.153.34.11) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.27; Mon, 23 Sep 2024 09:33:13 +0800
-Received: from DAG6EX10-BJD.srv.huawei-3com.com ([fe80::ade6:b219:16f8:9aa8])
- by DAG6EX10-BJD.srv.huawei-3com.com ([fe80::ade6:b219:16f8:9aa8%6])
- with mapi id 15.02.1258.027; Mon, 23 Sep 2024 09:33:13 +0800
-From: Yuchen <yu.chen@h3c.com>
-To: Peter Xu <peterx@redhat.com>
-CC: "farosas@suse.de" <farosas@suse.de>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-Subject: =?utf-8?B?5Zue5aSNOiBbUEFUQ0hdIG1pZ3JhdGlvbi9tdWx0aWZkOiByZWNlaXZlIGNo?=
- =?utf-8?Q?annel_socket_needs_to_be_set_to_non-blocking?=
-Thread-Topic: [PATCH] migration/multifd: receive channel socket needs to be
- set to non-blocking
-Thread-Index: AQHbC3U8kllvt81F5ESZZsYZ1aAx+rJklaQw
-Date: Mon, 23 Sep 2024 01:33:13 +0000
-Message-ID: <28e81cd8edfd4aaa9e6648e742f37d45@h3c.com>
-References: <37febc26060949f891aedea01de724fc@h3c.com> <Zu2aYw4BOXE4KXQG@x1n>
-In-Reply-To: <Zu2aYw4BOXE4KXQG@x1n>
-Accept-Language: zh-CN, en-UM, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.99.196.41]
-x-sender-location: DAG2
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1ssaBm-00013E-12; Sun, 22 Sep 2024 23:56:43 -0400
+Received: from sslproxy04.your-server.de ([78.46.152.42])
+ by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1ssaBh-0004WL-0g; Mon, 23 Sep 2024 05:56:37 +0200
+Received: from [82.100.198.138] (helo=mail.embedded-brains.de)
+ by sslproxy04.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1ssaBh-0002vG-1n; Mon, 23 Sep 2024 05:56:36 +0200
+Received: from localhost (localhost [127.0.0.1])
+ by mail.embedded-brains.de (Postfix) with ESMTP id 64F4648006F;
+ Mon, 23 Sep 2024 05:56:36 +0200 (CEST)
+Received: from mail.embedded-brains.de ([127.0.0.1])
+ by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
+ with ESMTP id na2rX6Ff2n7Q; Mon, 23 Sep 2024 05:56:35 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by mail.embedded-brains.de (Postfix) with ESMTP id BBA7B4801B4;
+ Mon, 23 Sep 2024 05:56:35 +0200 (CEST)
+X-Virus-Scanned: amavis at zimbra.eb.localhost
+Received: from mail.embedded-brains.de ([127.0.0.1])
+ by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id 1gEO8IJpPNGn; Mon, 23 Sep 2024 05:56:35 +0200 (CEST)
+Received: from zimbra.eb.localhost (unknown [192.168.96.242])
+ by mail.embedded-brains.de (Postfix) with ESMTPSA id 980404801AF;
+ Mon, 23 Sep 2024 05:56:35 +0200 (CEST)
+From: Sebastian Huber <sebastian.huber@embedded-brains.de>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH 2/2] hw/arm/xilinx_zynq: Add CPU1 reset
+Date: Mon, 23 Sep 2024 05:56:32 +0200
+Message-Id: <20240923035632.81304-3-sebastian.huber@embedded-brains.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240923035632.81304-1-sebastian.huber@embedded-brains.de>
+References: <20240923035632.81304-1-sebastian.huber@embedded-brains.de>
 MIME-Version: 1.0
-X-DNSRBL: 
-X-MAIL: h3cspam02-ex.h3c.com 48N1XXex047829
-Received-SPF: pass client-ip=60.191.123.50; envelope-from=yu.chen@h3c.com;
- helo=h3cspam02-ex.h3c.com
+Content-Transfer-Encoding: quoted-printable
+X-Authenticated-Sender: smtp-embedded@poldi-networks.de
+X-Virus-Scanned: Clear (ClamAV 1.0.5/27406/Sun Sep 22 10:30:52 2024)
+Received-SPF: pass client-ip=85.10.215.148;
+ envelope-from=sebastian.huber@embedded-brains.de; helo=dedi548.your-server.de
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -78,119 +78,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS3pgq7ku7bljp/ku7YtLS0tLQ0KPiDlj5Hku7bkuro6IFBldGVyIFh1IDxwZXRl
-cnhAcmVkaGF0LmNvbT4NCj4g5Y+R6YCB5pe26Ze0OiAyMDI05bm0OeaciDIw5pelIDIzOjUzDQo+
-IOaUtuS7tuS6ujogeXVjaGVuIChDQ1NQTCkgPHl1LmNoZW5AaDNjLmNvbT4NCj4g5oqE6YCBOiBm
-YXJvc2FzQHN1c2UuZGU7IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZw0KPiDkuLvpopg6IFJlOiBbUEFU
-Q0hdIG1pZ3JhdGlvbi9tdWx0aWZkOiByZWNlaXZlIGNoYW5uZWwgc29ja2V0IG5lZWRzIHRvIGJl
-IHNldCB0bw0KPiBub24tYmxvY2tpbmcNCj4gDQo+IE9uIEZyaSwgU2VwIDIwLCAyMDI0IGF0IDEw
-OjA1OjQyQU0gKzAwMDAsIFl1Y2hlbiB3cm90ZToNCj4gPiBXaGVuIHRoZSBtaWdyYXRpb24gbmV0
-d29yayBpcyBkaXNjb25uZWN0ZWQsIHRoZSBzb3VyY2UgcWVtdSBjYW4gZXhpdA0KPiA+IG5vcm1h
-bGx5IHdpdGggYW4gZXJyb3IsIGJ1dCB0aGUgZGVzdGluYXRpb24gcWVtdSBpcyBhbHdheXMgYmxv
-Y2tlZCBpbg0KPiA+IHJlY3Ztc2coKSwgY2F1c2VzIHRoZSBkZXN0aW5hdGlvbiBxZW11IG1haW4g
-dGhyZWFkIHRvIGJlIGJsb2NrZWQuDQo+ID4NCj4gPiBUaGUgZGVzdGluYXRpb24gcWVtdSBibG9j
-ayBzdGFjazoNCj4gPiBUaHJlYWQgMTMgKFRocmVhZCAweDdmMDE3OGJmYTY0MCAoTFdQIDE4OTU5
-MDYpICJtdWx0aWZkcmVjdl82Iik6DQo+ID4gIzAgIDB4MDAwMDdmMDQxYjVhZjU2ZiBpbiByZWN2
-bXNnICgpDQo+ID4gIzEgIDB4MDAwMDU1NTczZWJkMGI0MiBpbiBxaW9fY2hhbm5lbF9zb2NrZXRf
-cmVhZHYNCj4gPiAjMiAgMHgwMDAwNTU1NzNlYmNlODNmIGluIHFpb19jaGFubmVsX3JlYWR2DQo+
-ID4gIzMgIHFpb19jaGFubmVsX3JlYWR2X2FsbF9lb2YNCj4gPiAjNCAgMHgwMDAwNTU1NzNlYmNl
-OTA5IGluIHFpb19jaGFubmVsX3JlYWR2X2FsbA0KPiA+ICM1ICAweDAwMDA1NTU3M2VhYTFiMWYg
-aW4gbXVsdGlmZF9yZWN2X3RocmVhZA0KPiA+ICM2ICAweDAwMDA1NTU3M2VjMmYwYjkgaW4gcWVt
-dV90aHJlYWRfc3RhcnQNCj4gPiAjNyAgMHgwMDAwN2YwNDFiNTJiZjdhIGluIHN0YXJ0X3RocmVh
-ZA0KPiA+ICM4ICAweDAwMDA3ZjA0MWI1YWU2MDAgaW4gY2xvbmUzDQo+ID4NCj4gPiBUaHJlYWQg
-MSAoVGhyZWFkIDB4N2YwNDEwYzYyMjQwIChMV1AgMTg5NTE1NikgImt2bSIpOg0KPiA+ICMwICAw
-eDAwMDA3ZjA0MWI1MjhhZTIgaW4gX19mdXRleF9hYnN0aW1lZF93YWl0X2NvbW1vbiAoKQ0KPiA+
-ICMxICAweDAwMDA3ZjA0MWI1MzM4YjggaW4gX19uZXdfc2VtX3dhaXRfc2xvdzY0LmNvbnN0cHJv
-cC4wDQo+ID4gIzIgIDB4MDAwMDU1NTczZWMyZmQzNCBpbiBxZW11X3NlbV93YWl0IChzZW09MHg1
-NTU3NDJiNWE0ZTApDQo+ID4gIzMgIDB4MDAwMDU1NTczZWFhMmYwOSBpbiBtdWx0aWZkX3JlY3Zf
-c3luY19tYWluICgpDQo+ID4gIzQgIDB4MDAwMDU1NTczZTdkNTkwZCBpbiByYW1fbG9hZF9wcmVj
-b3B5DQo+IChmPWZAZW50cnk9MHg1NTU3NDIyOTFjMjApDQo+ID4gIzUgIDB4MDAwMDU1NTczZTdk
-NWNiZiBpbiByYW1fbG9hZCAob3BhcXVlPTxvcHRpbWl6ZWQgb3V0PiwNCj4gPiB2ZXJzaW9uX2lk
-PTxvcHRpbWl6ZWQgb3V0PiwgZj0weDU1NTc0MjI5MWMyMCkNCj4gPiAjNiAgcmFtX2xvYWRfZW50
-cnkgKGY9MHg1NTU3NDIyOTFjMjAsIG9wYXF1ZT08b3B0aW1pemVkIG91dD4sDQo+ID4gdmVyc2lv
-bl9pZD08b3B0aW1pemVkIG91dD4pDQo+ID4gIzcgIDB4MDAwMDU1NTczZWE5MzJlNyBpbiBxZW11
-X2xvYWR2bV9zZWN0aW9uX3BhcnRfZW5kDQo+ID4gKG1pcz0weDU1NTc0MTEzNmMwMCwgZj0weDU1
-NTc0MjI5MWMyMCkNCj4gPiAjOCAgcWVtdV9sb2Fkdm1fc3RhdGVfbWFpbiAoZj1mQGVudHJ5PTB4
-NTU1NzQyMjkxYzIwLA0KPiA+IG1pcz1taXNAZW50cnk9MHg1NTU3NDExMzZjMDApDQo+ID4gIzkg
-IDB4MDAwMDU1NTczZWE5NDQxOCBpbiBxZW11X2xvYWR2bV9zdGF0ZSAoZj0weDU1NTc0MjI5MWMy
-MCwNCj4gPiBtb2RlPW1vZGVAZW50cnk9Vk1TX01JR1JBVEUpDQo+ID4gIzEwIDB4MDAwMDU1NTcz
-ZWE4OGJlMSBpbiBwcm9jZXNzX2luY29taW5nX21pZ3JhdGlvbl9jbw0KPiA+IChvcGFxdWU9PG9w
-dGltaXplZCBvdXQ+KQ0KPiA+ICMxMSAweDAwMDA1NTU3M2VjNDNkMTMgaW4gY29yb3V0aW5lX3Ry
-YW1wb2xpbmUgKGkwPTxvcHRpbWl6ZWQgb3V0PiwNCj4gPiBpMT08b3B0aW1pemVkIG91dD4pDQo+
-ID4gIzEyIDB4MDAwMDdmMDQxYjRmNWQ5MCBpbiA/PyAoKSBmcm9tIHRhcmdldDovdXNyL2xpYjY0
-L2xpYmMuc28uNg0KPiA+ICMxMyAweDAwMDA3ZmZjMTE4OTAyNzAgaW4gPz8gKCkNCj4gPiAjMTQg
-MHgwMDAwMDAwMDAwMDAwMDAwIGluID8/ICgpDQo+ID4NCj4gPiBTZXR0aW5nIHRoZSByZWNlaXZl
-IGNoYW5uZWwgdG8gbm9uLWJsb2NraW5nIGNhbiBzb2x2ZSB0aGUgcHJvYmxlbS4NCj4gDQo+IE11
-bHRpZmQgdGhyZWFkcyBhcmUgcmVhbCB0aHJlYWRzIGFuZCB0aGVyZSdzIG5vIGNvcm91dGluZSwg
-SSdtIHNsaWdodGx5IGNvbmZ1c2VkDQo+IHdoeSBpdCBuZWVkcyB0byB1c2Ugbm9uYmxvY2suDQo+
-IA0KPiBXaHkgcmVjdm1zZygpIGRpZG4ndCBnZXQga2lja2VkIG91dCB3aGVuIGRpc2Nvbm5lY3Q/
-ICBJcyBpdCBhIGdlbmVyaWMgTGludXgNCj4ga2VybmVsIGFyZSB5b3UgdXNpbmc/DQo+IA0KTXkg
-c3RlcHMgdG8gcmVwcm9kdWNlOg0KaWZkb3duIG1pZ3JhdGlvbiBuZXR3b3JrLCBvciBkaXNhYmxl
-IG1pZ3JhdGlvbiBuZXR3b3JrIHVzaW5nIGlwdGFibGVzLiANClRoZSBwcm9iYWJpbGl0eSBvZiBy
-ZWN1cnJlbmNlIG9mIHRoZXNlIHR3byBtZXRob2RzIGlzIHZlcnkgaGlnaC4NCg0KTXkgdGVzdCBl
-bnZpcm9ubWVudCB1c2VzIGlzIGxpbnV4LTUuMTAuMTM2Lg0KDQptdWx0aWZkIHRocmVhZCBibG9j
-ayBpbiBrZXJuZWw6DQojIGNhdCAvcHJvYy8zNDE2MTkwL3N0YWNrIA0KWzwwPl0gd2FpdF93b2tl
-bisweDQzLzB4ODANCls8MD5dIHNrX3dhaXRfZGF0YSsweDEyMy8weDE0MA0KWzwwPl0gdGNwX3Jl
-Y3Ztc2crMHg0ZjgvMHhhNTANCls8MD5dIGluZXQ2X3JlY3Ztc2crMHg1ZS8weDEyMA0KWzwwPl0g
-X19fX3N5c19yZWN2bXNnKzB4ODcvMHgxODANCls8MD5dIF9fX3N5c19yZWN2bXNnKzB4ODIvMHgx
-MTANCls8MD5dIF9fc3lzX3JlY3Ztc2crMHg1Ni8weGEwDQpbPDA+XSBkb19zeXNjYWxsXzY0KzB4
-M2QvMHg4MA0KWzwwPl0gZW50cnlfU1lTQ0FMTF82NF9hZnRlcl9od2ZyYW1lKzB4NjEvMHhjNg0K
-DQo+IEkgd29uZGVyIHdoZXRoZXIgdGhhdCdzIHRoZSBleHBlY3RlZCBiZWhhdmlvciBmb3Igc29j
-a2V0cy4gIEUuZy4sIHdlIGRvIGhhdmUNCj4gbXVsdGlmZC9jYW5jZWwgdGVzdCAodGVzdF9tdWx0
-aWZkX3RjcF9jYW5jZWwpIGFuZCBJIHRoaW5rIHRoYXQgcnVucyB0aGlzIHBhdGggdG9vDQo+IHdp
-dGggaXQgYWx3YXlzIGluIGJsb2NrIG1vZGUgYXMgb2Ygbm93Li4NCj4gDQpNeSBwcmV2aW91cyBz
-dGF0ZW1lbnQgbWF5IG5vdCBiZSBhY2N1cmF0ZS4gVGhlIG1pZ3JhdGlvbiBuZXR3b3JrIHNvY2tl
-dCBpcyBub3QgZGlzY29ubmVjdGVkLiANCkkgdXNlIGlmZG93biBvciBpcHRhYmxlcyB0byBzaW11
-bGF0ZSB0aGUgbmV0d29yayBjYXJkIGZhaWx1cmUuIA0KQmVjYXVzZSB0aGUgVENQIGNvbm5lY3Rp
-b24gd2FzIG5vdCBkaXNjb25uZWN0ZWQsIHNvIHJlY3Ztc2coKSB3YXMgYmxvY2tlZC4NCk9yZGlu
-YXJ5IHByZWNvcHkgbWlncmF0aW9uLCB0aGUgZGVzdGluYXRpb24gYWxzbyB1c2VzIG5vbi1ibG9j
-a2luZywgSSB0aGluayBpdCdzIHRvIGF2b2lkIG5vbi1ibG9ja2luZy4NClFlbXUgbWFzdGVyIGxh
-c3Rlc3QgY29kZToNCi8qKiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICANCiAqIG1pZ3JhdGlvbl9pbmNvbWluZ19zZXR1cDogU2V0
-dXAgaW5jb21pbmcgbWlncmF0aW9uICAgICAgICAgICAgICANCiAqIEBmOiBmaWxlIGZvciBtYWlu
-IG1pZ3JhdGlvbiBjaGFubmVsICAgICAgICAgICAgICAgICAgICAgICAgICAgICANCiAqLyAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICANCnN0YXRpYyB2b2lkIG1pZ3JhdGlvbl9pbmNvbWluZ19zZXR1cChRRU1VRmlsZSAqZikgICAg
-ICAgICAgICAgICAgICANCnsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICANCiAgICBNaWdyYXRpb25JbmNvbWluZ1N0YXRlICpt
-aXMgPSBtaWdyYXRpb25faW5jb21pbmdfZ2V0X2N1cnJlbnQoKTsNCiAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICANCiAgICBp
-ZiAoIW1pcy0+ZnJvbV9zcmNfZmlsZSkgeyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICANCiAgICAgICAgbWlzLT5mcm9tX3NyY19maWxlID0gZjsgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICANCiAgICB9ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICANCiAgICBxZW11X2ZpbGVfc2V0X2Jsb2NraW5n
-KGYsIGZhbHNlKTsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICANCn0gICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICANCg0K
-PiA+DQo+ID4gU2lnbmVkLW9mZi1ieTogWXVDaGVuIDxZdS5DaGVuQGgzYy5jb20+DQo+ID4gLS0t
-DQo+ID4gIG1pZ3JhdGlvbi9tdWx0aWZkLmMgfCAyICsrDQo+ID4gIDEgZmlsZSBjaGFuZ2VkLCAy
-IGluc2VydGlvbnMoKykNCj4gPg0KPiA+IGRpZmYgLS1naXQgYS9taWdyYXRpb24vbXVsdGlmZC5j
-IGIvbWlncmF0aW9uL211bHRpZmQuYyBpbmRleA0KPiA+IDliMjAwZjRhZDkuLjdiMmE3NjhmMDUg
-MTAwNjQ0DQo+ID4gLS0tIGEvbWlncmF0aW9uL211bHRpZmQuYw0KPiA+ICsrKyBiL21pZ3JhdGlv
-bi9tdWx0aWZkLmMNCj4gPiBAQCAtMTMxOCw2ICsxMzE4LDggQEAgdm9pZCBtdWx0aWZkX3JlY3Zf
-bmV3X2NoYW5uZWwoUUlPQ2hhbm5lbCAqaW9jLA0KPiBFcnJvciAqKmVycnApDQo+ID4gICAgICAg
-ICAgaWQgPSBxYXRvbWljX3JlYWQoJm11bHRpZmRfcmVjdl9zdGF0ZS0+Y291bnQpOw0KPiA+ICAg
-ICAgfQ0KPiA+DQo+ID4gKyAgICBxaW9fY2hhbm5lbF9zZXRfYmxvY2tpbmcoaW9jLCBmYWxzZSwg
-TlVMTCk7DQo+ID4gKw0KPiA+ICAgICAgcCA9ICZtdWx0aWZkX3JlY3Zfc3RhdGUtPnBhcmFtc1tp
-ZF07DQo+ID4gICAgICBpZiAocC0+YyAhPSBOVUxMKSB7DQo+ID4gICAgICAgICAgZXJyb3Jfc2V0
-ZygmbG9jYWxfZXJyLCAibXVsdGlmZDogcmVjZWl2ZWQgaWQgJyVkJyBhbHJlYWR5DQo+ID4gc2V0
-dXAnIiwNCj4gPiAtLQ0KPiA+IDIuMzAuMg0KPiA+IC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCj4gPiAtLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0N
-Cj4gPiDmnKzpgq7ku7blj4rlhbbpmYTku7blkKvmnInmlrDljY7kuInpm4blm6LnmoTkv53lr4bk
-v6Hmga/vvIzku4XpmZDkuo7lj5HpgIHnu5nkuIrpnaLlnLDlnYDkuK0NCj4g5YiX5Ye6DQo+ID4g
-55qE5Liq5Lq65oiW576k57uE44CC56aB5q2i5Lu75L2V5YW25LuW5Lq65Lul5Lu75L2V5b2i5byP
-5L2/55So77yI5YyF5ous5L2G5LiN6ZmQ5LqO5YWo6YOo5oiWDQo+IOmDqOWIhuWcsOazhOmcsuOA
-geWkjeWItuOAgQ0KPiA+IOaIluaVo+WPke+8ieacrOmCruS7tuS4reeahOS/oeaBr+OAguWmguae
-nOaCqOmUmeaUtuS6huacrOmCruS7tu+8jOivt+aCqOeri+WNs+eUteivneaIlumCruS7tg0KPiDp
-gJrnn6Xlj5Hku7bkurrlubbliKDpmaTmnKwNCj4gPiDpgq7ku7bvvIENCj4gPiBUaGlzIGUtbWFp
-bCBhbmQgaXRzIGF0dGFjaG1lbnRzIGNvbnRhaW4gY29uZmlkZW50aWFsIGluZm9ybWF0aW9uIGZy
-b20NCj4gPiBOZXcgSDNDLCB3aGljaCBpcyBpbnRlbmRlZCBvbmx5IGZvciB0aGUgcGVyc29uIG9y
-IGVudGl0eSB3aG9zZSBhZGRyZXNzDQo+ID4gaXMgbGlzdGVkIGFib3ZlLiBBbnkgdXNlIG9mIHRo
-ZSBpbmZvcm1hdGlvbiBjb250YWluZWQgaGVyZWluIGluIGFueQ0KPiA+IHdheSAoaW5jbHVkaW5n
-LCBidXQgbm90IGxpbWl0ZWQgdG8sIHRvdGFsIG9yIHBhcnRpYWwgZGlzY2xvc3VyZSwNCj4gPiBy
-ZXByb2R1Y3Rpb24sIG9yIGRpc3NlbWluYXRpb24pIGJ5IHBlcnNvbnMgb3RoZXIgdGhhbiB0aGUg
-aW50ZW5kZWQNCj4gPiByZWNpcGllbnQocykgaXMgcHJvaGliaXRlZC4gSWYgeW91IHJlY2VpdmUg
-dGhpcyBlLW1haWwgaW4gZXJyb3IsDQo+ID4gcGxlYXNlIG5vdGlmeSB0aGUgc2VuZGVyIGJ5IHBo
-b25lIG9yIGVtYWlsIGltbWVkaWF0ZWx5IGFuZCBkZWxldGUgaXQhDQo+IA0KPiAtLQ0KPiBQZXRl
-ciBYdQ0KDQo=
+After a system reset (SRST), the CPU1 should execute a wfe instruction
+and then load the start address from 0xfffffff0:
+
+https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Starting-Code-on-CPU=
+-1
+
+Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
+---
+ hw/arm/xilinx_zynq.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+index 37c234f5ab..0ee4a39a28 100644
+--- a/hw/arm/xilinx_zynq.c
++++ b/hw/arm/xilinx_zynq.c
+@@ -64,6 +64,8 @@ static const int dma_irqs[8] =3D {
+=20
+ #define BOARD_SETUP_ADDR        0x100
+=20
++#define SECONDARY_SETUP_ADDR    0xFFFFFFE8
++
+ #define SLCR_LOCK_OFFSET        0x004
+ #define SLCR_UNLOCK_OFFSET      0x008
+ #define SLCR_ARM_PLL_OFFSET     0x100
+@@ -112,6 +114,28 @@ static void zynq_write_board_setup(ARMCPU *cpu,
+                        sizeof(board_setup_blob), BOARD_SETUP_ADDR);
+ }
+=20
++static void zynq_secondary_cpu_reset(ARMCPU *cpu,
++                                     const struct arm_boot_info *info)
++{
++    /*
++     * After a system reset (SRST), the CPU1 should execute a wfe instru=
+ction
++     * and then load the start address from 0xfffffff0:
++     *
++     * https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Starting-Cod=
+e-on-CPU-1
++     */
++    uint32_t secondary_setup_blob[] =3D {
++        0xe320f002, /* wfe */
++        0xe51ff004, /* ldr pc, [pc, #-4] */
++        SECONDARY_SETUP_ADDR
++    };
++    for (int n =3D 0; n < ARRAY_SIZE(secondary_setup_blob); n++) {
++        secondary_setup_blob[n] =3D tswap32(secondary_setup_blob[n]);
++    }
++    rom_add_blob_fixed("secondary-setup", secondary_setup_blob,
++                       sizeof(secondary_setup_blob), SECONDARY_SETUP_ADD=
+R);
++    cpu_set_pc(CPU(cpu), SECONDARY_SETUP_ADDR);
++}
++
+ static struct arm_boot_info zynq_binfo =3D {};
+=20
+ static void gem_init(uint32_t base, qemu_irq irq)
+@@ -378,6 +402,7 @@ static void zynq_init(MachineState *machine)
+     zynq_binfo.loader_start =3D 0;
+     zynq_binfo.board_setup_addr =3D BOARD_SETUP_ADDR;
+     zynq_binfo.write_board_setup =3D zynq_write_board_setup;
++    zynq_binfo.secondary_cpu_reset_hook =3D zynq_secondary_cpu_reset;
+=20
+     arm_load_kernel(zynq_machine->cpu[0], machine, &zynq_binfo);
+ }
+--=20
+2.35.3
+
 
