@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E1B2CF9C5B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 03:57:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 944C0CF9C6E
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 03:57:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssaBp-0006PG-Ny; Sun, 22 Sep 2024 23:56:45 -0400
+	id 1ssaBp-0006PT-Pc; Sun, 22 Sep 2024 23:56:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1ssaBo-0006Mp-2y; Sun, 22 Sep 2024 23:56:44 -0400
+ id 1ssaBo-0006Mo-2R; Sun, 22 Sep 2024 23:56:44 -0400
 Received: from dedi548.your-server.de ([85.10.215.148])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1ssaBm-00013E-12; Sun, 22 Sep 2024 23:56:43 -0400
+ id 1ssaBm-00013D-3Y; Sun, 22 Sep 2024 23:56:43 -0400
 Received: from sslproxy04.your-server.de ([78.46.152.42])
  by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1ssaBh-0004WL-0g; Mon, 23 Sep 2024 05:56:37 +0200
+ id 1ssaBg-0004WH-2f; Mon, 23 Sep 2024 05:56:37 +0200
 Received: from [82.100.198.138] (helo=mail.embedded-brains.de)
  by sslproxy04.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1ssaBh-0002vG-1n; Mon, 23 Sep 2024 05:56:36 +0200
+ id 1ssaBh-0002tv-0Y; Mon, 23 Sep 2024 05:56:36 +0200
 Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id 64F4648006F;
+ by mail.embedded-brains.de (Postfix) with ESMTP id 0CB27480199;
  Mon, 23 Sep 2024 05:56:36 +0200 (CEST)
 Received: from mail.embedded-brains.de ([127.0.0.1])
  by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
- with ESMTP id na2rX6Ff2n7Q; Mon, 23 Sep 2024 05:56:35 +0200 (CEST)
+ with ESMTP id BHj_8TPmRsSL; Mon, 23 Sep 2024 05:56:35 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id BBA7B4801B4;
+ by mail.embedded-brains.de (Postfix) with ESMTP id B4F6F48006F;
  Mon, 23 Sep 2024 05:56:35 +0200 (CEST)
 X-Virus-Scanned: amavis at zimbra.eb.localhost
 Received: from mail.embedded-brains.de ([127.0.0.1])
  by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
- with ESMTP id 1gEO8IJpPNGn; Mon, 23 Sep 2024 05:56:35 +0200 (CEST)
+ with ESMTP id fwJZ0RC4QexY; Mon, 23 Sep 2024 05:56:35 +0200 (CEST)
 Received: from zimbra.eb.localhost (unknown [192.168.96.242])
- by mail.embedded-brains.de (Postfix) with ESMTPSA id 980404801AF;
+ by mail.embedded-brains.de (Postfix) with ESMTPSA id 86FED480199;
  Mon, 23 Sep 2024 05:56:35 +0200 (CEST)
 From: Sebastian Huber <sebastian.huber@embedded-brains.de>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 2/2] hw/arm/xilinx_zynq: Add CPU1 reset
-Date: Mon, 23 Sep 2024 05:56:32 +0200
-Message-Id: <20240923035632.81304-3-sebastian.huber@embedded-brains.de>
+Subject: [PATCH 1/2] hw/arm/boot: Use hooks if PSCI is disabled
+Date: Mon, 23 Sep 2024 05:56:31 +0200
+Message-Id: <20240923035632.81304-2-sebastian.huber@embedded-brains.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240923035632.81304-1-sebastian.huber@embedded-brains.de>
 References: <20240923035632.81304-1-sebastian.huber@embedded-brains.de>
@@ -78,70 +78,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After a system reset (SRST), the CPU1 should execute a wfe instruction
-and then load the start address from 0xfffffff0:
+In arm_load_kernel(), use the secondary boot hooks provided by the
+platform if PSCI is disabled also while booting a non-Linux kernel.
+While booting Linux with PSCI disabled, provide default hooks if needed.
 
-https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Starting-Code-on-CPU=
--1
+In do_cpu_reset(), use the secondary CPU reset hook provided by the
+platform for resetting a non-Linux kernel.
+
+This change allows a more accurate simulation of the platform reset
+behaviour.
 
 Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
 ---
- hw/arm/xilinx_zynq.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ hw/arm/boot.c | 30 +++++++++++++++++++-----------
+ 1 file changed, 19 insertions(+), 11 deletions(-)
 
-diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
-index 37c234f5ab..0ee4a39a28 100644
---- a/hw/arm/xilinx_zynq.c
-+++ b/hw/arm/xilinx_zynq.c
-@@ -64,6 +64,8 @@ static const int dma_irqs[8] =3D {
+diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+index 5301d8d318..cad7f41f46 100644
+--- a/hw/arm/boot.c
++++ b/hw/arm/boot.c
+@@ -720,7 +720,11 @@ static void do_cpu_reset(void *opaque)
+                 g_assert_not_reached();
+             }
 =20
- #define BOARD_SETUP_ADDR        0x100
+-            cpu_set_pc(cs, entry);
++            if (cs =3D=3D first_cpu || !info->secondary_cpu_reset_hook) =
+{
++                cpu_set_pc(cs, entry);
++            } else {
++                info->secondary_cpu_reset_hook(cpu, info);
++            }
+         } else {
+             /*
+              * If we are booting Linux then we might need to do so at:
+@@ -1299,20 +1303,24 @@ void arm_load_kernel(ARMCPU *cpu, MachineState *m=
+s, struct arm_boot_info *info)
+         }
+     }
 =20
-+#define SECONDARY_SETUP_ADDR    0xFFFFFFE8
-+
- #define SLCR_LOCK_OFFSET        0x004
- #define SLCR_UNLOCK_OFFSET      0x008
- #define SLCR_ARM_PLL_OFFSET     0x100
-@@ -112,6 +114,28 @@ static void zynq_write_board_setup(ARMCPU *cpu,
-                        sizeof(board_setup_blob), BOARD_SETUP_ADDR);
- }
-=20
-+static void zynq_secondary_cpu_reset(ARMCPU *cpu,
-+                                     const struct arm_boot_info *info)
-+{
-+    /*
-+     * After a system reset (SRST), the CPU1 should execute a wfe instru=
-ction
-+     * and then load the start address from 0xfffffff0:
-+     *
-+     * https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Starting-Cod=
-e-on-CPU-1
-+     */
-+    uint32_t secondary_setup_blob[] =3D {
-+        0xe320f002, /* wfe */
-+        0xe51ff004, /* ldr pc, [pc, #-4] */
-+        SECONDARY_SETUP_ADDR
-+    };
-+    for (int n =3D 0; n < ARRAY_SIZE(secondary_setup_blob); n++) {
-+        secondary_setup_blob[n] =3D tswap32(secondary_setup_blob[n]);
-+    }
-+    rom_add_blob_fixed("secondary-setup", secondary_setup_blob,
-+                       sizeof(secondary_setup_blob), SECONDARY_SETUP_ADD=
-R);
-+    cpu_set_pc(CPU(cpu), SECONDARY_SETUP_ADDR);
-+}
-+
- static struct arm_boot_info zynq_binfo =3D {};
-=20
- static void gem_init(uint32_t base, qemu_irq irq)
-@@ -378,6 +402,7 @@ static void zynq_init(MachineState *machine)
-     zynq_binfo.loader_start =3D 0;
-     zynq_binfo.board_setup_addr =3D BOARD_SETUP_ADDR;
-     zynq_binfo.write_board_setup =3D zynq_write_board_setup;
-+    zynq_binfo.secondary_cpu_reset_hook =3D zynq_secondary_cpu_reset;
-=20
-     arm_load_kernel(zynq_machine->cpu[0], machine, &zynq_binfo);
- }
+-    if (info->psci_conduit =3D=3D QEMU_PSCI_CONDUIT_DISABLED &&
+-        info->is_linux && nb_cpus > 1) {
++    if (info->psci_conduit =3D=3D QEMU_PSCI_CONDUIT_DISABLED && nb_cpus =
+> 1) {
+         /*
+-         * We're booting Linux but not using PSCI, so for SMP we need
+-         * to write a custom secondary CPU boot loader stub, and arrange
+-         * for the secondary CPU reset to make the accompanying initiali=
+zation.
++         * We're not using PSCI, so for SMP we may need to write a custo=
+m
++         * secondary CPU boot loader stub, and arrange for the secondary=
+ CPU
++         * reset to make the accompanying initialization.
+          */
+-        if (!info->secondary_cpu_reset_hook) {
+-            info->secondary_cpu_reset_hook =3D default_reset_secondary;
++        if (info->is_linux) {
++            /* For the Linux boot, use default hooks if needed */
++            if (!info->secondary_cpu_reset_hook) {
++                info->secondary_cpu_reset_hook =3D default_reset_seconda=
+ry;
++            }
++            if (!info->write_secondary_boot) {
++                info->write_secondary_boot =3D default_write_secondary;
++            }
+         }
+-        if (!info->write_secondary_boot) {
+-            info->write_secondary_boot =3D default_write_secondary;
++        if (info->write_secondary_boot) {
++            info->write_secondary_boot(cpu, info);
+         }
+-        info->write_secondary_boot(cpu, info);
+     } else {
+         /*
+          * No secondary boot stub; don't use the reset hook that would
 --=20
 2.35.3
 
