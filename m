@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E93CF9C6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:20:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E2BECF9C5B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:21:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssfEB-0003PR-It; Mon, 23 Sep 2024 05:19:31 -0400
+	id 1ssfFT-0005ID-RK; Mon, 23 Sep 2024 05:20:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1ssfE8-0003Ov-MP
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 05:19:28 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1ssfFR-0005CS-Gk
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 05:20:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1ssfE6-0005i0-Uc
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 05:19:28 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1ssfFP-0005wy-9Y
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 05:20:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727083166;
+ s=mimecast20190719; t=1727083246;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=j5fG0lLbYplVa37YWM2Q3XKhVOviSxv2J1sukYh0Wxc=;
- b=MQUPU2J58VgTQ4aWJVxycVgWAxRzk0Dj+JD7sTznSkzv95is1iFuoqj7XGomT3Eozs9sI5
- pU5rSIT/X9dbwYI1/QHAbH42LRD1zUk1/1bZZeiSlxPwebIjW81+sWiGgrlFmDetjsQMfs
- j2cSDUMY6Mijpvz8OAhfA7X1XwHI+jc=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=JwhMkgDIwaLechj2SCRa6AoGsGiC4aL9PLtYAJgdANs=;
+ b=JzQalQ10RYVOcE2BMPD+2MjZMdQ5cITYBDByjxsM7V+t4NnUwRgSojRWadYb33YDQ5W1zN
+ uFGakvZODKAoIcIcMawdkd+d5hLwcPbbHm8LAAzvL07sx/Ddms3gRDmdIdaKvLpO2TsWpJ
+ Wd+TV3j5jTJvfT8eb6niQ6aSkt9X2Jg=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-45-g05rg7uAOVO8ItA-snOrdQ-1; Mon, 23 Sep 2024 05:19:23 -0400
-X-MC-Unique: g05rg7uAOVO8ItA-snOrdQ-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a8a6fee3ab1so394341866b.3
- for <qemu-devel@nongnu.org>; Mon, 23 Sep 2024 02:19:22 -0700 (PDT)
+ us-mta-329-T-1jWm0MOPqmQGC2kITTyg-1; Mon, 23 Sep 2024 05:20:44 -0400
+X-MC-Unique: T-1jWm0MOPqmQGC2kITTyg-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a8d2ecdf414so314242466b.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Sep 2024 02:20:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727083157; x=1727687957;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=j5fG0lLbYplVa37YWM2Q3XKhVOviSxv2J1sukYh0Wxc=;
- b=uKbE6ZhWBPeeXZw0IdXFP9QL2ulgl6+Lv5D/gST65TdvFcAr+idj7Bi5fdvhP42ByI
- BcyIp5POKGgTYMEOfw8pujD7rzohpawnxsS6lvXKIAXH7EiRYLHN6HUaVory03luEfTo
- Ce9ZNYgR0NwdQ6XnIF3LW5eqkdgMPPnBAZ9R1nI77mj9WO6vxpQkCSs2Lz4VWdGFEjHN
- FItHvlPjeENau3c/6fGfMMkTcegGYzgLS8QJPwc8JBHr7i6dtOxpKiliHgWO7JivXxMV
- fj1qfYhLSG28wpdrTscI+Mf8FHN35fBI63kKaBnFtFoj/KhFmDmoiazWCMsCkN7gVMbM
- GUBQ==
-X-Gm-Message-State: AOJu0YzhZi0X/LKlBAjH5W99cz5SHS/H4v+pwF+4CeRwAYrJlokXEuro
- Tt3NDKcZqZDSROweQgqQSAtZlY5rR6xb/I2XT8yYfKkegULoJ+oDppacPDqXg/fcXk4kDoE3dYW
- MpGwmNl0o00pn0NVNy7yMvaQfoVc3+iwoDYnABYdOmbDqCkT+tOKK4C0AXjUAJqGZki8eGaSPO1
- CbgWEfpD3XY9t3zZZY8XbdJz3lkxNWIkk4vr4=
-X-Received: by 2002:a17:907:7ea5:b0:a8c:d6a3:d02e with SMTP id
- a640c23a62f3a-a90d5186d9bmr1181194966b.63.1727083156700; 
- Mon, 23 Sep 2024 02:19:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IERc07o6pMqBfs6WiGGU4GXwPaFfszp0fpuv7RzIswZFdazjkO1nR1kIbBchkfBuUmIQHKgkA==
-X-Received: by 2002:a17:907:7ea5:b0:a8c:d6a3:d02e with SMTP id
- a640c23a62f3a-a90d5186d9bmr1181190266b.63.1727083156081; 
- Mon, 23 Sep 2024 02:19:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1727083243; x=1727688043;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=JwhMkgDIwaLechj2SCRa6AoGsGiC4aL9PLtYAJgdANs=;
+ b=wmQv+BvxT2kxwWvAM6hBDdhgKxDOereJJxsRV/m0v9LQBoPHCblx+RBZj3YGbK/mh1
+ +gUMoAdPX8hkyI2Jh4k3nOFCSz4caosFX5lHFBdXY3ARdyanhZBQrQrn7BaeWo9PeXZk
+ DKBzT316jllMI/29oW1vLo0bsJjOuF+DtatoDw8tsFKVfZEVa0H+oLGyowlEezGSXbY4
+ oK9IOju+0fQhxgoqqHhoVHsPsn6Qmg82TCqMu6AngAdMJ98ZWaZgyf4L0KTkt+VcNIov
+ inCvPD+5kojhV+RzPYReWeXpcBPMskXznSRHyJKDisQEhdbzIL1Oa3FCXOLkX9RPZgPF
+ /3TA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXSwJjhTc8nDVAPPmP9vg/z8s3U+r2UCktt9/XaRTVJ0KnXUpMdtPeX8mIATNcX3hUVTsDDYe4rhXIm@nongnu.org
+X-Gm-Message-State: AOJu0YzwCkIUuf6UnrT7z9B46kAQSJ1AepgymkC0kURp/jdKwTNUIcwP
+ PayW8dIYe1s7GsKgegIVW9SjRiE6Q0S6k8ou9VJl2MY29KVdullqF4Wo8MPJiUFRvXpczOIC8D1
+ W/L9UprH46/PUA376GuV/9HstcW1To8AoBYNVH5yHFMTJwp1HeF5C
+X-Received: by 2002:a17:906:fe47:b0:a86:7514:e649 with SMTP id
+ a640c23a62f3a-a90d515130amr1167294366b.52.1727083243393; 
+ Mon, 23 Sep 2024 02:20:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGPV7WsBO5HHz6TJ/2qR53HnkLc2m0JuFyEwlOz2LrLjwtvE/KB2k0qGTjD828qTVCpI3P1lw==
+X-Received: by 2002:a17:906:fe47:b0:a86:7514:e649 with SMTP id
+ a640c23a62f3a-a90d515130amr1167292566b.52.1727083242993; 
+ Mon, 23 Sep 2024 02:20:42 -0700 (PDT)
 Received: from [10.5.48.152] (90-181-218-29.rco.o2.cz. [90.181.218.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9061096784sm1186026766b.1.2024.09.23.02.19.15
+ a640c23a62f3a-a9061096a08sm1188944466b.2.2024.09.23.02.20.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Sep 2024 02:19:15 -0700 (PDT)
-Message-ID: <8503e69e-f5fa-437f-8ff9-e61f297ce6c2@redhat.com>
-Date: Mon, 23 Sep 2024 11:19:14 +0200
+ Mon, 23 Sep 2024 02:20:42 -0700 (PDT)
+Message-ID: <d2793284-e5e7-4ae3-8c2c-52cdad917c6a@redhat.com>
+Date: Mon, 23 Sep 2024 11:20:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 01/14] s390x/s390-virtio-ccw: don't crash on weird RAM
- sizes
-To: qemu-devel@nongnu.org
+Subject: Re: [PATCH v1 06/14] s390x: introduce s390_get_memory_limit()
+To: Nina Schoetterl-Glausch <nsg@linux.ibm.com>, qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
@@ -80,9 +80,12 @@ Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Janosch Frank <frankja@linux.ibm.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>
 References: <20240910175809.2135596-1-david@redhat.com>
- <20240910175809.2135596-2-david@redhat.com>
-Content-Language: en-US
+ <20240910175809.2135596-7-david@redhat.com>
+ <a2cb5304c1bf326455030f7d370155ecba3cd7d2.camel@linux.ibm.com>
+ <e91fa726-2a72-486a-a687-ec3a29100cc0@redhat.com>
+ <229425cd92897e4ff3b5f4456c1c75215668358e.camel@linux.ibm.com>
 From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
  dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
@@ -128,7 +131,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20240910175809.2135596-2-david@redhat.com>
+In-Reply-To: <229425cd92897e4ff3b5f4456c1c75215668358e.camel@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
@@ -156,52 +159,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.09.24 19:57, David Hildenbrand wrote:
-> KVM is not happy when starting a VM with weird RAM sizes:
-> 
->    # qemu-system-s390x --enable-kvm --nographic -m 1234K
->    qemu-system-s390x: kvm_set_user_memory_region: KVM_SET_USER_MEMORY_REGION
->      failed, slot=0, start=0x0, size=0x244000: Invalid argument
->    kvm_set_phys_mem: error registering slot: Invalid argument
->    Aborted (core dumped)
-> 
-> Let's handle that in a better way by rejecting such weird RAM sizes
-> right from the start:
-> 
->    # qemu-system-s390x --enable-kvm --nographic -m 1234K
->    qemu-system-s390x: ram size must be multiples of 1 MiB
-> 
-> Signed-off-by: David Hildenbrand <david@redhat.com>
-> ---
->   hw/s390x/s390-virtio-ccw.c | 11 +++++++++++
->   1 file changed, 11 insertions(+)
-> 
-> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-> index 18240a0fd8..e30cf0a2a1 100644
-> --- a/hw/s390x/s390-virtio-ccw.c
-> +++ b/hw/s390x/s390-virtio-ccw.c
-> @@ -180,6 +180,17 @@ static void s390_memory_init(MemoryRegion *ram)
->   {
->       MemoryRegion *sysmem = get_system_memory();
->   
-> +    if (!QEMU_IS_ALIGNED(memory_region_size(ram), 1 * MiB)) {
-> +        /*
-> +         * The SCLP cannot possibly expose smaller granularity right now and KVM
-> +         * cannot handle smaller granularity. As we don't support NUMA, the
-> +         * region size directly corresponds to machine->ram_size, and the region
-> +         * is a single RAM memory region.
-> +         */
-> +        error_report("ram size must be multiples of 1 MiB");
-> +        exit(EXIT_FAILURE);
-> +    }
 
-I'll switch to
+> 
+> Looks good.
+> 
+> Looking at the patch again I'm wondering if using globals in qemu is still encouraged.
+> I know it's a common pattern today, but seeing efforts like the multiarch binary or Unicorn
+> I'm wondering if there is aspirations to do things more "cleanly", in general, for far out benefits?
+> I.e. memory_limit could be a machine property instead.
 
-	error_setg(&error_fatal, "ram size must be multiples of 1 MiB");
+Yes, I'll rework that code to simply store it in the machine, moving 
+that code out of cpu-sysemu.c int s390-virtio-ccw.c.
 
-here, to avoid the manual exit().
-
-Please someone shout if I should keep it as is.
+Same for patch #12, thanks!
 
 -- 
 Cheers,
