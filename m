@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E900CF9C6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 10:44:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79A70CF9C6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 10:47:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssgXU-00012Z-68; Mon, 23 Sep 2024 06:43:32 -0400
+	id 1ssgaT-0006Ci-85; Mon, 23 Sep 2024 06:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1ssgXQ-00010i-41; Mon, 23 Sep 2024 06:43:28 -0400
+ id 1ssgaP-0006AK-CH; Mon, 23 Sep 2024 06:46:34 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1ssgXN-0006wJ-TS; Mon, 23 Sep 2024 06:43:27 -0400
+ id 1ssgaN-0007Ha-VG; Mon, 23 Sep 2024 06:46:33 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D50264E600E;
- Mon, 23 Sep 2024 12:43:21 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id BA6364E6027;
+ Mon, 23 Sep 2024 12:46:29 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 6qXiybbTzREs; Mon, 23 Sep 2024 12:43:19 +0200 (CEST)
+ with ESMTP id VYw76h4hGhwg; Mon, 23 Sep 2024 12:46:27 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id E58334E6027; Mon, 23 Sep 2024 12:43:19 +0200 (CEST)
+ id C07BD4E600E; Mon, 23 Sep 2024 12:46:27 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E3BA6746F60;
- Mon, 23 Sep 2024 12:43:19 +0200 (CEST)
-Date: Mon, 23 Sep 2024 12:43:19 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id BE494757B1C;
+ Mon, 23 Sep 2024 12:46:27 +0200 (CEST)
+Date: Mon, 23 Sep 2024 12:46:27 +0200 (CEST)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Bernhard Beschow <shentey@gmail.com>
 cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>, 
@@ -43,12 +43,12 @@ cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-block@nongnu.org, 
  Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>, 
  =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-Subject: Re: [PATCH 09/23] hw/ppc/mpc8544_guts: Populate POR PLL ratio status
- register
-In-Reply-To: <20240923093016.66437-10-shentey@gmail.com>
-Message-ID: <3037d1f0-6e44-98ee-48fc-1bb206ebc624@eik.bme.hu>
+Subject: Re: [PATCH 12/23] hw/pci-host/ppce500: Reuse TYPE_PPC_E500_PCI_BRIDGE
+ define
+In-Reply-To: <20240923093016.66437-13-shentey@gmail.com>
+Message-ID: <4962d86d-8eb3-cd11-cfa9-3392cf3955e5@eik.bme.hu>
 References: <20240923093016.66437-1-shentey@gmail.com>
- <20240923093016.66437-10-shentey@gmail.com>
+ <20240923093016.66437-13-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
@@ -75,50 +75,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon, 23 Sep 2024, Bernhard Beschow wrote:
-> Populate this read-only register with some arbitrary values which avoids
-> U-Boot's get_clocks() to hang().
-
-Maybe this should be a property settable by the machine as each board may 
-have different values and it may need to use the correct value for the 
-machine.
-
-Regards,
-BALATON Zoltan
-
+> Prefer a macro rather than a string literal when instantiaging device models.
+>
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+
 > ---
-> hw/ppc/mpc8544_guts.c | 12 ++++++++++++
-> 1 file changed, 12 insertions(+)
+> hw/pci-host/ppce500.c | 2 +-
+> 1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/hw/ppc/mpc8544_guts.c b/hw/ppc/mpc8544_guts.c
-> index e3540b0281..6688fd44c3 100644
-> --- a/hw/ppc/mpc8544_guts.c
-> +++ b/hw/ppc/mpc8544_guts.c
-> @@ -29,6 +29,12 @@
-> #define MPC8544_GUTS_RSTCR_RESET      0x02
+> diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
+> index 97e5d47cec..d7ff2ba778 100644
+> --- a/hw/pci-host/ppce500.c
+> +++ b/hw/pci-host/ppce500.c
+> @@ -475,7 +475,7 @@ static void e500_pcihost_realize(DeviceState *dev, Error **errp)
+>     address_space_init(&s->bm_as, &s->bm, "pci-bm");
+>     pci_setup_iommu(b, &ppce500_iommu_ops, s);
 >
-> #define MPC8544_GUTS_ADDR_PORPLLSR    0x00
-> +REG32(GUTS_PORPLLSR, 0x00)
-> +    FIELD(GUTS_PORPLLSR, E500_1_RATIO, 16, 6)
-> +    FIELD(GUTS_PORPLLSR, E500_0_RATIO, 16, 6)
-> +    FIELD(GUTS_PORPLLSR, DDR_RATIO, 9, 5)
-> +    FIELD(GUTS_PORPLLSR, PLAT_RATIO, 1, 5)
-> +
-> #define MPC8544_GUTS_ADDR_PORBMSR     0x04
-> #define MPC8544_GUTS_ADDR_PORIMPSCR   0x08
-> #define MPC8544_GUTS_ADDR_PORDEVSR    0x0C
-> @@ -75,6 +81,12 @@ static uint64_t mpc8544_guts_read(void *opaque, hwaddr addr,
+> -    pci_create_simple(b, 0, "e500-host-bridge");
+> +    pci_create_simple(b, 0, TYPE_PPC_E500_PCI_BRIDGE);
 >
->     addr &= MPC8544_GUTS_MMIO_SIZE - 1;
->     switch (addr) {
-> +    case MPC8544_GUTS_ADDR_PORPLLSR:
-> +        value = FIELD_DP32(value, GUTS_PORPLLSR, E500_1_RATIO, 3); /* 3:2 */
-> +        value = FIELD_DP32(value, GUTS_PORPLLSR, E500_0_RATIO, 3); /* 3:2 */
-> +        value = FIELD_DP32(value, GUTS_PORPLLSR, DDR_RATIO, 6); /* 6:1 */
-> +        value = FIELD_DP32(value, GUTS_PORPLLSR, PLAT_RATIO, 4); /* 4:1 */
-> +        break;
->     case MPC8544_GUTS_ADDR_PVR:
->         value = env->spr[SPR_PVR];
->         break;
+>     memory_region_init(&s->container, OBJECT(h), "pci-container", PCIE500_ALL_SIZE);
+>     memory_region_init_io(&h->conf_mem, OBJECT(h), &pci_host_conf_be_ops, h,
 >
 
