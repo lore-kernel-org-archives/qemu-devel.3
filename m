@@ -4,76 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D892CF9C64
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Sep 2024 19:52:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11D6ECF9C6C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 01:05:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssScK-0002Z9-NV; Sun, 22 Sep 2024 15:51:36 -0400
+	id 1ssXVI-0006hM-O9; Sun, 22 Sep 2024 21:04:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1ssScJ-0002YB-8t
- for qemu-devel@nongnu.org; Sun, 22 Sep 2024 15:51:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <arei.gonglei@huawei.com>)
+ id 1ssXVG-0006gs-RB
+ for qemu-devel@nongnu.org; Sun, 22 Sep 2024 21:04:38 -0400
+Received: from szxga06-in.huawei.com ([45.249.212.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1ssScG-0002bz-O5
- for qemu-devel@nongnu.org; Sun, 22 Sep 2024 15:51:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727034691;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PZwO3B8a0SJJkCjSItdsWZeHKBOFw8q0OGwn4/9kxLc=;
- b=T8VL+M9aE3wvXCqyy4QNHHFLRXnuS5/4Vzb7tl/fMJ2ZP83D7EdwC4JmBxXS2hl0SVDTUJ
- uXEgjY1xyNdQJHAtRbutFLolugM4jhEv4kTCG4I+H+jGWbSx12W9dbFvTSL2ztXYzdWuKn
- RJjcythNjNtU18yw+Frgi1up1FpVjeM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-j5x3pjPUNPyw1g89feSGyQ-1; Sun,
- 22 Sep 2024 15:51:27 -0400
-X-MC-Unique: j5x3pjPUNPyw1g89feSGyQ-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AAB9019CC955; Sun, 22 Sep 2024 19:51:26 +0000 (UTC)
-Received: from localhost (unknown [10.42.28.3])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B84C0195608A; Sun, 22 Sep 2024 19:51:23 +0000 (UTC)
-Date: Sun, 22 Sep 2024 20:51:22 +0100
-From: "Richard W.M. Jones" <rjones@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Peter Lieven <pl@kamp.de>, qemu-devel@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH for-9.1 6/9] block/nbd: Use URI parsing code from glib
-Message-ID: <20240922195122.GK5140@redhat.com>
-References: <20240328140607.2433889-1-thuth@redhat.com>
- <20240328140607.2433889-7-thuth@redhat.com>
- <20240328141342.GK7636@redhat.com>
+ (Exim 4.90_1) (envelope-from <arei.gonglei@huawei.com>)
+ id 1ssXVD-0001Zo-Ah
+ for qemu-devel@nongnu.org; Sun, 22 Sep 2024 21:04:38 -0400
+Received: from mail.maildlp.com (unknown [172.19.88.234])
+ by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4XBlBW0q9Kz1ymDV;
+ Mon, 23 Sep 2024 09:04:19 +0800 (CST)
+Received: from dggpeml100006.china.huawei.com (unknown [7.185.36.169])
+ by mail.maildlp.com (Postfix) with ESMTPS id F34DD140259;
+ Mon, 23 Sep 2024 09:04:17 +0800 (CST)
+Received: from dggpemf200006.china.huawei.com (7.185.36.61) by
+ dggpeml100006.china.huawei.com (7.185.36.169) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 23 Sep 2024 09:04:17 +0800
+Received: from dggpemf200006.china.huawei.com ([7.185.36.61]) by
+ dggpemf200006.china.huawei.com ([7.185.36.61]) with mapi id 15.02.1544.011;
+ Mon, 23 Sep 2024 09:04:17 +0800
+To: Michael Galaxy <mgalaxy@akamai.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Peter Xu <peterx@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "yu.zhang@ionos.com"
+ <yu.zhang@ionos.com>, "elmar.gerdes@ionos.com" <elmar.gerdes@ionos.com>,
+ zhengchuan <zhengchuan@huawei.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>,
+ "lizhijian@fujitsu.com" <lizhijian@fujitsu.com>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>, Xiexiangyou <xiexiangyou@huawei.com>,
+ "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>, "lixiao (H)"
+ <lixiao91@huawei.com>, "jinpu.wang@ionos.com" <jinpu.wang@ionos.com>,
+ Wangjialin <wangjialin23@huawei.com>
+Subject: RE: [PATCH 0/6] refactor RDMA live migration based on rsocket API
+Thread-Topic: [PATCH 0/6] refactor RDMA live migration based on rsocket API
+Thread-Index: AQHatni5B+Psi4bf8k2CmAL8rvKhtrI7iLoAgAALpYCAKMQMgIAA4w2Q
+Date: Mon, 23 Sep 2024 01:04:17 +0000
+Message-ID: <84c74f1a95a648b18c9d41b8c5ef2f60@huawei.com>
+References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
+ <Zs4z7tKWif6K4EbT@x1n> <20240827165643-mutt-send-email-mst@kernel.org>
+ <027c4f24-f515-4fdb-8770-6bf2433e0f43@akamai.com>
+In-Reply-To: <027c4f24-f515-4fdb-8770-6bf2433e0f43@akamai.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.173.124.235]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240328141342.GK7636@redhat.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=rjones@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.129,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+Received-SPF: pass client-ip=45.249.212.32;
+ envelope-from=arei.gonglei@huawei.com; helo=szxga06-in.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,171 +82,124 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Gonglei (Arei)" <arei.gonglei@huawei.com>
+From:  "Gonglei (Arei)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 28, 2024 at 02:13:42PM +0000, Richard W.M. Jones wrote:
-> On Thu, Mar 28, 2024 at 03:06:03PM +0100, Thomas Huth wrote:
-> > Since version 2.66, glib has useful URI parsing functions, too.
-> > Use those instead of the QEMU-internal ones to be finally able
-> > to get rid of the latter. The g_uri_get_host() also takes care
-> > of removing the square brackets from IPv6 addresses, so we can
-> > drop that part of the QEMU code now, too.
-> > 
-> > Signed-off-by: Thomas Huth <thuth@redhat.com>
-> > ---
-> >  block/nbd.c | 66 ++++++++++++++++++++++++++++++-----------------------
-> >  1 file changed, 38 insertions(+), 28 deletions(-)
-> > 
-> > diff --git a/block/nbd.c b/block/nbd.c
-> > index ef05f7cdfd..95b507f872 100644
-> > --- a/block/nbd.c
-> > +++ b/block/nbd.c
-> > @@ -31,7 +31,6 @@
-> >  #include "qemu/osdep.h"
-> >  
-> >  #include "trace.h"
-> > -#include "qemu/uri.h"
-> >  #include "qemu/option.h"
-> >  #include "qemu/cutils.h"
-> >  #include "qemu/main-loop.h"
-> > @@ -1514,30 +1513,34 @@ static void nbd_client_close(BlockDriverState *bs)
-> >  
-> >  static int nbd_parse_uri(const char *filename, QDict *options)
-> >  {
-> > -    URI *uri;
-> > +    GUri *uri;
-> >      const char *p;
-> > -    QueryParams *qp = NULL;
-> > +    GHashTable *qp = NULL;
-> > +    int qp_n;
-> >      int ret = 0;
-> >      bool is_unix;
-> > +    const char *uri_scheme, *uri_query, *uri_server;
-> > +    int uri_port;
-> >  
-> > -    uri = uri_parse(filename);
-> > +    uri = g_uri_parse(filename, G_URI_FLAGS_NONE, NULL);
-> >      if (!uri) {
-> >          return -EINVAL;
-> >      }
-> >  
-> >      /* transport */
-> > -    if (!g_strcmp0(uri->scheme, "nbd")) {
-> > +    uri_scheme = g_uri_get_scheme(uri);
-> > +    if (!g_strcmp0(uri_scheme, "nbd")) {
-> >          is_unix = false;
-> > -    } else if (!g_strcmp0(uri->scheme, "nbd+tcp")) {
-> > +    } else if (!g_strcmp0(uri_scheme, "nbd+tcp")) {
-> >          is_unix = false;
-> > -    } else if (!g_strcmp0(uri->scheme, "nbd+unix")) {
-> > +    } else if (!g_strcmp0(uri_scheme, "nbd+unix")) {
-> >          is_unix = true;
-> >      } else {
-> >          ret = -EINVAL;
-> >          goto out;
-> >      }
-> >  
-> > -    p = uri->path ? uri->path : "";
-> > +    p = g_uri_get_path(uri) ?: "";
-> >      if (p[0] == '/') {
-> >          p++;
-> >      }
-> > @@ -1545,51 +1548,58 @@ static int nbd_parse_uri(const char *filename, QDict *options)
-> >          qdict_put_str(options, "export", p);
-> >      }
-> >  
-> > -    qp = query_params_parse(uri->query);
-> > -    if (qp->n > 1 || (is_unix && !qp->n) || (!is_unix && qp->n)) {
-> > -        ret = -EINVAL;
-> > -        goto out;
-> > +    uri_query = g_uri_get_query(uri);
-> > +    if (uri_query) {
-> > +        qp = g_uri_parse_params(uri_query, -1, "&", G_URI_PARAMS_NONE, NULL);
-> > +        if (!qp) {
-> > +            ret = -EINVAL;
-> > +            goto out;
-> > +        }
-> > +        qp_n = g_hash_table_size(qp);
-> > +        if (qp_n > 1 || (is_unix && !qp_n) || (!is_unix && qp_n)) {
-> > +            ret = -EINVAL;
-> > +            goto out;
-> > +        }
-> > +     }
-> > +
-> > +    uri_server = g_uri_get_host(uri);
-> > +    if (uri_server && !uri_server[0]) {
-> > +        uri_server = NULL;
-> >      }
-> > +    uri_port = g_uri_get_port(uri);
-> >  
-> >      if (is_unix) {
-> >          /* nbd+unix:///export?socket=path */
-> > -        if (uri->server || uri->port || strcmp(qp->p[0].name, "socket")) {
-> > +        const char *uri_socket = g_hash_table_lookup(qp, "socket");
-> > +        if (uri_server || uri_port != -1 || !uri_socket) {
-> >              ret = -EINVAL;
-> >              goto out;
-> >          }
-> >          qdict_put_str(options, "server.type", "unix");
-> > -        qdict_put_str(options, "server.path", qp->p[0].value);
-> > +        qdict_put_str(options, "server.path", uri_socket);
-> >      } else {
-> > -        QString *host;
-> >          char *port_str;
-> >  
-> >          /* nbd[+tcp]://host[:port]/export */
-> > -        if (!uri->server) {
-> > +        if (!uri_server) {
-> >              ret = -EINVAL;
-> >              goto out;
-> >          }
-> >  
-> > -        /* strip braces from literal IPv6 address */
-> > -        if (uri->server[0] == '[') {
-> > -            host = qstring_from_substr(uri->server, 1,
-> > -                                       strlen(uri->server) - 1);
-> > -        } else {
-> > -            host = qstring_from_str(uri->server);
-> > -        }
-> > -
-> >          qdict_put_str(options, "server.type", "inet");
-> > -        qdict_put(options, "server.host", host);
-> > +        qdict_put_str(options, "server.host", uri_server);
-> >  
-> > -        port_str = g_strdup_printf("%d", uri->port ?: NBD_DEFAULT_PORT);
-> > +        port_str = g_strdup_printf("%d", uri_port != -1 ? uri_port
-> > +                                                        : NBD_DEFAULT_PORT);
-> >          qdict_put_str(options, "server.port", port_str);
-> >          g_free(port_str);
-> >      }
-> >  
-> >  out:
-> >      if (qp) {
-> > -        query_params_free(qp);
-> > +        g_hash_table_destroy(qp);
-> >      }
-> > -    uri_free(uri);
-> > +    g_uri_unref(uri);
-> >      return ret;
-> >  }
-> 
-> Looks ok,
->
-> Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
-
-Or maybe not.  This caused a regression in the nbdkit test suite (when
-we use qemu-img from 9.1).  It seems the exportname part of the NBD
-URI gets munged:
-
-https://gitlab.com/qemu-project/qemu/-/issues/2584
-
-Rich.
-
--- 
-Richard Jones, Virtualization Group, Red Hat http://people.redhat.com/~rjones
-Read my programming and virtualization blog: http://rwmj.wordpress.com
-virt-builder quickly builds VMs from scratch
-http://libguestfs.org/virt-builder.1.html
-
+SGksDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogTWljaGFlbCBHYWxh
+eHkgW21haWx0bzptZ2FsYXh5QGFrYW1haS5jb21dDQo+IFNlbnQ6IE1vbmRheSwgU2VwdGVtYmVy
+IDIzLCAyMDI0IDM6MjkgQU0NCj4gVG86IE1pY2hhZWwgUy4gVHNpcmtpbiA8bXN0QHJlZGhhdC5j
+b20+OyBQZXRlciBYdSA8cGV0ZXJ4QHJlZGhhdC5jb20+DQo+IENjOiBHb25nbGVpIChBcmVpKSA8
+YXJlaS5nb25nbGVpQGh1YXdlaS5jb20+OyBxZW11LWRldmVsQG5vbmdudS5vcmc7DQo+IHl1Lnpo
+YW5nQGlvbm9zLmNvbTsgZWxtYXIuZ2VyZGVzQGlvbm9zLmNvbTsgemhlbmdjaHVhbg0KPiA8emhl
+bmdjaHVhbkBodWF3ZWkuY29tPjsgYmVycmFuZ2VAcmVkaGF0LmNvbTsgYXJtYnJ1QHJlZGhhdC5j
+b207DQo+IGxpemhpamlhbkBmdWppdHN1LmNvbTsgcGJvbnppbmlAcmVkaGF0LmNvbTsgWGlleGlh
+bmd5b3UNCj4gPHhpZXhpYW5neW91QGh1YXdlaS5jb20+OyBsaW51eC1yZG1hQHZnZXIua2VybmVs
+Lm9yZzsgbGl4aWFvIChIKQ0KPiA8bGl4aWFvOTFAaHVhd2VpLmNvbT47IGppbnB1LndhbmdAaW9u
+b3MuY29tOyBXYW5namlhbGluDQo+IDx3YW5namlhbGluMjNAaHVhd2VpLmNvbT4NCj4gU3ViamVj
+dDogUmU6IFtQQVRDSCAwLzZdIHJlZmFjdG9yIFJETUEgbGl2ZSBtaWdyYXRpb24gYmFzZWQgb24g
+cnNvY2tldCBBUEkNCj4gDQo+IEhpIEFsbCwNCj4gDQo+IEkgaGF2ZSBtZXQgd2l0aCB0aGUgdGVh
+bSBmcm9tIElPTk9TIGFib3V0IHRoZWlyIHRlc3Rpbmcgb24gYWN0dWFsIElCDQo+IGhhcmR3YXJl
+IGhlcmUgYXQgS1ZNIEZvcnVtIHRvZGF5IGFuZCB0aGUgcmVxdWlyZW1lbnRzIGFyZSBzdGFydGlu
+ZyB0byBtYWtlDQo+IG1vcmUgc2Vuc2UgdG8gbWUuIEkgZGlkbid0IHNheSBtdWNoIGluIG91ciBw
+cmV2aW91cyB0aHJlYWQgYmVjYXVzZSBJDQo+IG1pc3VuZGVyc3Rvb2QgdGhlIHJlcXVpcmVtZW50
+cywgc28gbGV0IG1lIHRyeSB0byBleHBsYWluIGFuZCBzZWUgaWYgd2UncmUgYWxsIG9uDQo+IHRo
+ZSBzYW1lIHBhZ2UuIFRoZXJlIGFwcGVhcnMgdG8gYmUgYSBmdW5kYW1lbnRhbCBsaW1pdGF0aW9u
+IGhlcmUgd2l0aCByc29ja2V0LA0KPiBmb3Igd2hpY2ggSSBkb24ndCBzZWUgaG93IGl0IGlzIHBv
+c3NpYmxlIHRvIG92ZXJjb21lLg0KPiANCj4gVGhlIGJhc2ljIHByb2JsZW0gaXMgdGhhdCByc29j
+a2V0IGlzIHRyeWluZyB0byBwcmVzZW50IGEgc3RyZWFtIGFic3RyYWN0aW9uLCBhDQo+IGNvbmNl
+cHQgdGhhdCBpcyBmdW5kYW1lbnRhbGx5IGluY29tcGF0aWJsZSB3aXRoIFJETUEuIFRoZSB3aG9s
+ZSBwb2ludCBvZg0KPiB1c2luZyBSRE1BIGluIHRoZSBmaXJzdCBwbGFjZSBpcyB0byBhdm9pZCB1
+c2luZyB0aGUgQ1BVLCBhbmQgdG8gZG8gdGhhdCwgYWxsIG9mIHRoZQ0KPiBtZW1vcnkgKHBvdGVu
+dGlhbGx5IGh1bmRyZWRzIG9mIGdpZ2FieXRlcykgbmVlZCB0byBiZSByZWdpc3RlcmVkIHdpdGgg
+dGhlDQo+IGhhcmR3YXJlICppbiBhZHZhbmNlKiAodGhpcyBpcyBob3cgdGhlIG9yaWdpbmFsIGlt
+cGxlbWVudGF0aW9uIHdvcmtzKS4NCj4gDQo+IFRoZSBuZWVkIHRvIGZha2UgYSBzb2NrZXQvYnl0
+ZXN0cmVhbSBhYnN0cmFjdGlvbiBldmVudHVhbGx5IGJyZWFrcyBkb3duID0+DQo+IFRoZXJlIGlz
+IGEgbGltaXQgKGEgZmV3IEdCKSBpbiByc29ja2V0ICh3aGljaCB0aGUgSU9OT1MgdGVhbSBwcmV2
+aW91cyByZXBvcnRlZA0KPiBpbiB0ZXN0aW5nLi4uLiBzZWUgdGhhdCBlbWFpbCksIGl0IGFwcGVh
+cnMgdGhhdCBtZWFucyB0aGF0IHJzb2NrZXQgaXMgb25seSBnb2luZyB0bw0KPiBiZSBhYmxlIHRv
+IG1hcCBhIGNlcnRhaW4gbGltaXRlZCBhbW91bnQgb2YgbWVtb3J5IHdpdGggdGhlIGhhcmR3YXJl
+IHVudGlsIGl0cw0KPiBpbnRlcm5hbCAiYnVmZmVyIiBydW5zIG91dCBiZWZvcmUgaXQgY2FuIHRo
+ZW4gdW5tYXAgYW5kIHJlbWFwIHRoZSBuZXh0IGJhdGNoDQo+IG9mIG1lbW9yeSB3aXRoIHRoZSBo
+YXJkd2FyZSB0byBjb250aW51ZSBhbG9uZyB3aXRoIHRoZSBmYWtlIGJ5dGVzdHJlYW0uIFRoaXMN
+Cj4gaXMgdmVyeSBtdWNoIHN0aWNraW5nIGEgc3F1YXJlIHBlZyBpbiBhIHJvdW5kIGhvbGUuIElm
+IHlvdSB3ZXJlIHRvICJyZWxheCIgdGhlDQo+IHJzb2NrZXQgaW1wbGVtZW50YXRpb24gdG8gcmVn
+aXN0ZXIgdGhlIGVudGlyZSBWTSBtZW1vcnkgc3BhY2UgKGFzIG15DQo+IG9yaWdpbmFsIGltcGxl
+bWVudGF0aW9uIGRvZXMpLCB0aGVuIHRoZXJlIHdvdWxkbid0IGJlIGFueSBuZWVkIGZvciByc29j
+a2V0IGluDQo+IHRoZSBmaXJzdCBwbGFjZS4NCj4gDQoNClRoYW5rIHlvdSBmb3IgeW91ciBvcGlu
+aW9uLiBZb3UncmUgcmlnaHQuIFJTb2NrZXQgaGFzIGVuY291bnRlcmVkIGRpZmZpY3VsdGllcyBp
+biANCnRyYW5zZmVycmluZyBsYXJnZSBhbW91bnRzIG9mIGRhdGEuIFdlIGhhdmVuJ3QgZXZlbiBm
+aWd1cmVkIGl0IG91dCB5ZXQuIEFsdGhvdWdoDQppbiB0aGlzIHByYWN0aWNlLCB3ZSBzb2x2ZWQg
+c2V2ZXJhbCBwcm9ibGVtcyB3aXRoIHJzb2NrZXQuDQoNCkluIG91ciBwcmFjdGljZSwgd2UgbmVl
+ZCB0byBxdWlja2x5IGNvbXBsZXRlIFZNIGxpdmUgbWlncmF0aW9uIGFuZCB0aGUgZG93bnRpbWUg
+DQpvZiBsaXZlIG1pZ3JhdGlvbiBtdXN0IGJlIHdpdGhpbiA1MCBtcyBvciBsZXNzLiBUaGVyZWZv
+cmUsIHdlIHVzZSBSRE1BLCB3aGljaCBpcyANCmFuIGVzc2VudGlhbCByZXF1aXJlbWVudC4gTmV4
+dCwgSSB0aGluayB3ZSdsbCBkbyBpdCBiYXNlZCBvbiBRZW11J3MgbmF0aXZlIFJETUEgDQpsaXZl
+IG1pZ3JhdGlvbiBzb2x1dGlvbi4gRHVyaW5nIHRoaXMgcGVyaW9kLCB3ZSByZWFsbHkgZG91YnRl
+ZCB3aGV0aGVyIFJETUEgbGl2ZSANCm1pZ3JhdGlvbiB3YXMgcmVhbGx5IGZlYXNpYmxlIHRocm91
+Z2ggcnNvY2tldCByZWZhY3RvcmluZywgc28gdGhlIHJlZmFjdG9yaW5nIHBsYW4gDQp3YXMgc2hl
+bHZlZC4NCg0KDQpSZWdhcmRzLA0KLUdvbmdsZWkNCg0KPiBJIHRoaW5rIHRoZXJlIGlzIGp1c3Qg
+c29tZSBtaXN1bmRlcnN0YW5kaW5nIGhlcmUgaW4gdGhlIGdyb3VwIGluIHRoZSB3YXkNCj4gaW5m
+aW5pYmFuZCBpcyBpbnRlbmRlZCB0byB3b3JrLiBEb2VzIHRoYXQgbWFrZSBzZW5zZSBzbyBmYXI/
+IEkgZG8gdW5kZXJzdGFuZA0KPiB0aGUgbmVlZCBmb3IgdGVzdGluZywgYnV0IHJzb2NrZXQgaXMg
+c2ltcGx5IG5vdCBpbnRlbmRlZCB0byBiZSB1c2VkIGZvciBraW5kIG9mDQo+IG1hc3NpdmUgYnVs
+ayBkYXRhIHRyYW5zZmVyIHB1cnBvc2VzIHRoYXQgd2UncmUgcHJvcG9zaW5nIHVzaW5nIGl0IGhl
+cmUgZm9yLA0KPiBzaW1wbHkgZm9yIHRoZSBwdXJwb3NlcyBvZiBtYWtpbmcgb3VyIGxpdmVzIGJl
+dHRlciBpbiB0ZXN0aW5nLg0KPiANCj4gUmVnYXJkaW5nIHRlc3Rpbmc6IER1cmluZyBvdXIgcHJl
+dmlvdXMgdGhyZWFkIGVhcmxpZXIgdGhpcyBzdW1tZXIsIHdoeSBkaWQgd2UNCj4gbm90IGNvbnNp
+ZGVyIG1ha2luZyBhIGJldHRlciBpbnRlZ3JhdGlvbiB0ZXN0IHRvIHNvbHZlIHRoZSB0ZXN0IGJ1
+cmRlbiBwcm9ibGVtPw0KPiBUbyBleHBsYWluIGJldHRlcjogSWYgYSBuZXcgaW50ZWdyYXRpb24g
+dGVzdCB3ZXJlIHdyaXR0ZW4gZm9yIFFFTVUgYW5kDQo+IHN1Ym1pdHRlZCBhbmQgcmV2aWV3ZWQg
+KGEgcmVhc29uYWJseSBjb21wbGV4IHRlc3QgdGhhdCB3YXMgaW4gbGluZSB3aXRoIGENCj4gdHJh
+ZGl0aW9uYWwgbGl2ZSBtaWdyYXRpb24gaW50ZWdyYXRpb24gdGVzdCB0aGF0IGFjdHVhbGx5IHNw
+aW5zIHVwIFFFTVUpIHdoaWNoDQo+IHVzZWQgc29mdFJvQ0UgaW4gYSBsb2NhbGhvc3QgY29uZmln
+dXJhdGlvbiB0aGF0IGhhcyBmdWxsIGxpYmlidmVyYnMgc3VwcG9ydHMgYW5kDQo+IHN0aWxsIGFs
+bG93ZWQgZm9yIGNvbXBhdGliaWxpdHkgdGVzdGluZyB3aXRoIFFFTVUsIHdvdWxkIHN1Y2ggYW4g
+aW50ZWdyYXRpb24gbm90DQo+IGJlIHN1ZmZpY2llbnQgdG8gaGFuZGxlIHRoZSB0ZXN0aW5nIGJ1
+cmRlbj8NCj4gDQo+IENvbW1lbnRzIHdlbGNvbWUsDQo+IC0gTWljaGFlbA0KPiANCj4gT24gOC8y
+Ny8yNCAxNTo1NywgTWljaGFlbCBTLiBUc2lya2luIHdyb3RlOg0KPiA+ICEtLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tfA0K
+PiA+ICAgIFRoaXMgTWVzc2FnZSBJcyBGcm9tIGFuIEV4dGVybmFsIFNlbmRlcg0KPiA+ICAgIFRo
+aXMgbWVzc2FnZSBjYW1lIGZyb20gb3V0c2lkZSB5b3VyIG9yZ2FuaXphdGlvbi4NCj4gPiB8LS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLSENCj4gPg0KPiA+IE9uIFR1ZSwgQXVnIDI3LCAyMDI0IGF0IDA0OjE1OjQyUE0gLTA0
+MDAsIFBldGVyIFh1IHdyb3RlOg0KPiA+PiBPbiBUdWUsIEp1biAwNCwgMjAyNCBhdCAwODoxNDow
+NlBNICswODAwLCBHb25nbGVpIHdyb3RlOg0KPiA+Pj4gRnJvbTogSmlhbGluIFdhbmcgPHdhbmdq
+aWFsaW4yM0BodWF3ZWkuY29tPg0KPiA+Pj4NCj4gPj4+IEhpLA0KPiA+Pj4NCj4gPj4+IFRoaXMg
+cGF0Y2ggc2VyaWVzIGF0dGVtcHRzIHRvIHJlZmFjdG9yIFJETUEgbGl2ZSBtaWdyYXRpb24gYnkN
+Cj4gPj4+IGludHJvZHVjaW5nIGEgbmV3IFFJT0NoYW5uZWxSRE1BIGNsYXNzIGJhc2VkIG9uIHRo
+ZSByc29ja2V0IEFQSS4NCj4gPj4+DQo+ID4+PiBUaGUgL3Vzci9pbmNsdWRlL3JkbWEvcnNvY2tl
+dC5oIHByb3ZpZGVzIGEgaGlnaGVyIGxldmVsIHJzb2NrZXQgQVBJDQo+ID4+PiB0aGF0IGlzIGEg
+MS0xIG1hdGNoIG9mIHRoZSBub3JtYWwga2VybmVsICdzb2NrZXRzJyBBUEksIHdoaWNoIGhpZGVz
+DQo+ID4+PiB0aGUgZGV0YWlsIG9mIHJkbWEgcHJvdG9jb2wgaW50byByc29ja2V0IGFuZCBhbGxv
+d3MgdXMgdG8gYWRkDQo+ID4+PiBzdXBwb3J0IGZvciBzb21lIG1vZGVybiBmZWF0dXJlcyBsaWtl
+IG11bHRpZmQgbW9yZSBlYXNpbHkuDQo+ID4+Pg0KPiA+Pj4gSGVyZSBpcyB0aGUgcHJldmlvdXMg
+ZGlzY3Vzc2lvbiBvbiByZWZhY3RvcmluZyBSRE1BIGxpdmUgbWlncmF0aW9uDQo+ID4+PiB1c2lu
+ZyB0aGUgcnNvY2tldCBBUEk6DQo+ID4+Pg0KPiA+Pj4gaHR0cHM6Ly91cmxkZWZlbnNlLmNvbS92
+My9fX2h0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvMjAyNDANCj4gPj4+DQo+IDMy
+ODEzMDI1NS41MjI1Ny0xLXBoaWxtZEBsaW5hcm8ub3JnL19fOyEhR2p2VHpfdmshVHVSYW90Ty15
+TWo4Mm8ya1FvDQo+ID4+PiAzeDc0M2pMb0RFbFlnclhtcDJ3T2ZNVHVDUzFZNGsyU29uMVdHc1Ju
+WkdfWVlTOVpnQlo4dVJIUSQNCj4gPj4+DQo+ID4+PiBXZSBoYXZlIGVuY291bnRlcmVkIHNvbWUg
+YnVncyB3aGVuIHVzaW5nIHJzb2NrZXQgYW5kIHBsYW4gdG8gc3VibWl0DQo+ID4+PiB0aGVtIHRv
+IHRoZSByZG1hLWNvcmUgY29tbXVuaXR5Lg0KPiA+Pj4NCj4gPj4+IEluIGFkZGl0aW9uLCB0aGUg
+dXNlIG9mIHJzb2NrZXQgbWFrZXMgb3VyIHByb2dyYW1taW5nIG1vcmUNCj4gPj4+IGNvbnZlbmll
+bnQsIGJ1dCBpdCBtdXN0IGJlIG5vdGVkIHRoYXQgdGhpcyBtZXRob2QgaW50cm9kdWNlcw0KPiA+
+Pj4gbXVsdGlwbGUgbWVtb3J5IGNvcGllcywgd2hpY2ggY2FuIGJlIGltYWdpbmVkIHRoYXQgdGhl
+cmUgd2lsbCBiZSBhDQo+ID4+PiBjZXJ0YWluIHBlcmZvcm1hbmNlIGRlZ3JhZGF0aW9uLCBob3Bp
+bmcgdGhhdCBmcmllbmRzIHdpdGggUkRNQSBuZXR3b3JrDQo+IGNhcmRzIGNhbiBoZWxwIHZlcmlm
+eSwgdGhhbmsgeW91IQ0KPiA+Pj4NCj4gPj4+IEppYWxpbiBXYW5nICg2KToNCj4gPj4+ICAgIG1p
+Z3JhdGlvbjogcmVtb3ZlIFJETUEgbGl2ZSBtaWdyYXRpb24gdGVtcG9yYXJpbHkNCj4gPj4+ICAg
+IGlvOiBhZGQgUUlPQ2hhbm5lbFJETUEgY2xhc3MNCj4gPj4+ICAgIGlvL2NoYW5uZWwtcmRtYTog
+c3VwcG9ydCB3b3JraW5nIGluIGNvcm91dGluZQ0KPiA+Pj4gICAgdGVzdHMvdW5pdDogYWRkIHRl
+c3QtaW8tY2hhbm5lbC1yZG1hLmMNCj4gPj4+ICAgIG1pZ3JhdGlvbjogaW50cm9kdWNlIG5ldyBS
+RE1BIGxpdmUgbWlncmF0aW9uDQo+ID4+PiAgICBtaWdyYXRpb24vcmRtYTogc3VwcG9ydCBtdWx0
+aWZkIGZvciBSRE1BIG1pZ3JhdGlvbg0KPiA+PiBUaGlzIHNlcmllcyBoYXMgYmVlbiBpZGxlIGZv
+ciBhIHdoaWxlOyB3ZSBzdGlsbCBuZWVkIHRvIGtub3cgaG93IHRvDQo+ID4+IG1vdmUgZm9yd2Fy
+ZC4NCj4gPg0KPiA+IFdoYXQgZXhhY3RseSBpcyB0aGUgcXVlc3Rpb24/IFRoaXMgZ290IGEgYnVu
+Y2ggb2YgY29tbWVudHMsIHRoZSBmaXJzdA0KPiA+IHRoaW5nIHRvIGRvIHdvdWxkIGJlIHRvIGFk
+ZHJlc3MgdGhlbS4NCj4gPg0KPiA+DQo+ID4+ICAgSSBndWVzcyBJIGxvc3QgdGhlIGxhdGVzdCBz
+dGF0dXMgcXVvLi4NCj4gPj4NCj4gPj4gQW55IHVwZGF0ZSAoZnJvbSBhbnlvbmUuLikgb24gd2hh
+dCBzdGFnZSBhcmUgd2UgaW4/DQo+ID4+DQo+ID4+IFRoYW5rcywNCj4gPj4gLS0NCj4gPj4gUGV0
+ZXIgWHUNCg0K
 
