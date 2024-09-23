@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00B7DCF9C6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F922CF9C5B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:34:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssfPl-00034g-2R; Mon, 23 Sep 2024 05:31:29 -0400
+	id 1ssfPQ-0001hp-1m; Mon, 23 Sep 2024 05:31:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPh-0002nd-DI; Mon, 23 Sep 2024 05:31:25 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1ssfPN-0001ZQ-TE; Mon, 23 Sep 2024 05:31:05 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPe-0006zO-Db; Mon, 23 Sep 2024 05:31:25 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a8d2b24b7a8so940199466b.1; 
- Mon, 23 Sep 2024 02:31:21 -0700 (PDT)
+ id 1ssfPM-0006wb-1B; Mon, 23 Sep 2024 05:31:05 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a8d446adf6eso647969666b.2; 
+ Mon, 23 Sep 2024 02:31:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727083879; x=1727688679; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727083860; x=1727688660; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=srRYZRMsYEk3Ixto2iPTmfOmvfPdHaxOey2BOrigk8E=;
- b=jc2YfGU0STqyciFqtbl0q31rJmkn3WpChis0gfnTMQdO4858G/Xzp2/DF3gFL576ex
- kMJCCtAne5dkEea2Wy1PLAqb81uIqWlZB6AT/2RIssmAnqC7v9E4o7b6xN9waX9q8oE4
- miffKv4eVeitBq0agMod7rywjSvn7esJDg9jZxyAmB3UYwfjwttA5c8UhKgmSemcbEI7
- Qbz8PSzJH49aUiLaPLsk+uSDNoozn4HL4S77reoRSI3ZJ81vjaPsHb4DkAHUFiMoSrVE
- xwrg0JLM4W3KWFlGLRxd0c+8mH4atMQGQQfHRoVIiIeOX0aMLDnDjUSBDDURXIZ+jJ1j
- cUCw==
+ bh=UacqFQWwY/RdMUHAYDpVrliqhGJbLEk5GcxMrcdJHGk=;
+ b=NyjLwOdZpoSoH2To2GYNTAPfWGYdFRZjZzXMTYgirwxTP2v/Qe3UrckNGRElJX2j+o
+ CYzAolwhD8XezeAtgtEktOf2JrRZbKSIaTYIyPan9Fgoxqm96TG/79cbOlTzxvTpP35E
+ 86QEtCZQU9eRma5Un9tB7jVnJ8jHiTA4GggtSHmSMOq8NmF+IMRdNbUVtftadBMFi1eE
+ RNglb2mtFa/Tx4rzoNgG6bRRNaShe+ib5kFsJz0W/9scXztf2jtk/b8H0xGH5MDqu4mR
+ Kajr5UmOEakeQopfOKvSr/fNegFhvR+b/UtO5p+/WBaKVlmGf0b80SDJQrnLlM3Opxw6
+ wKNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727083879; x=1727688679;
+ d=1e100.net; s=20230601; t=1727083860; x=1727688660;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=srRYZRMsYEk3Ixto2iPTmfOmvfPdHaxOey2BOrigk8E=;
- b=aBKcQL0xGmuvQ1LIUI//J2CLDd3h53nsqoReSDR4EoEEmeisgt/xqH0G6To/Z9kNxN
- 0AuU9KpVhkhqUvZYGLGg0RufvC5dBv4wqp3gezpXXwqrud+tPd/UOsUDT6PUjyW37MRf
- XBT8ym5+VozBDRvmitiGeoV/1T2eHOBSAA91o6/czOLAMARZIa4ORAHM2yWKmOVnLqkI
- DsLbKb1sBEMKp5kqg9hWSBu6Xr7+Qfkz84gTSotpHZn8Uy8R0FpuSOX9A9btyfk4BzBA
- XzcP8GyusAJBkwHn15E9nzucjVy3RnnK4wrCBrdao1nhKEPuwxwTPU0uQyvW3CAapGAe
- hlXw==
+ bh=UacqFQWwY/RdMUHAYDpVrliqhGJbLEk5GcxMrcdJHGk=;
+ b=ZOacUta6jL06Pz8Tbj1cIMTlCV5oqghNcfWTqaL0AjIyO1ysLylK4OauG3r5PY9/N7
+ OzfD1NLshzBvug/zrBxjEDdq3kEJgsE5Z5sSH9EJUnHvZT/qZ+JdroxbejCjED+9zPwx
+ A/whvEZEPMWM/Zn3pFg4+aHthOtSkObpb5OjgfS43ccwBKeX4Y/SEeDU0rewUWJuBfkQ
+ Od4XqInE8zZebMu1vrai048HdWO2i3f5h5Yemjbmp5YjsC7MU4sEfXW3LMh2f3YoQXsM
+ ses3kZECJboQstjtyO7EOGJz7W/VudmxWd71QvDt5opHUGeNFTZWBXow5ebMcoJZuGxP
+ hsTQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVnfj/wZT/1+Crdtjy3oj7zmWvN2QdF9sDdo3emja5hToGN/vCMPPyLdc27lGx6nYPiJIHNtMrLjdU=@nongnu.org,
- AJvYcCXGH1kmcrkVk+eDY3SXdve7M87H4KgmkIhzaJ0VgI8r1RA4nB1WAzKqSmh8Lp3187hQfegAmMu2UEbG@nongnu.org
-X-Gm-Message-State: AOJu0Yzj7+Ne/Uu5EoPLhOTljELhPM+Wg99f678/Egzvy9j8SbQpUryl
- KqmNV5picyf9LZbLBKSEc5A0L7+QiY9CSTWFU3Dgm7/ETv5hgweoQS1Ijw==
-X-Google-Smtp-Source: AGHT+IGfeWFYVL1ZnurH8y2RgNyV0q51OrlWBMpDvZNfEhv7B0BE07Vg/HsuHiEsPEHr4fiPnh61GQ==
-X-Received: by 2002:a17:907:7254:b0:a7c:d284:4f1d with SMTP id
- a640c23a62f3a-a90d3644733mr1149971966b.28.1727083879191; 
- Mon, 23 Sep 2024 02:31:19 -0700 (PDT)
+ AJvYcCVT2mapbusWfUldAYmODVYASdHAqOvfJjdTzTFXMvDALb5TXzlFWqu0AYzXFEorxwbw8HMdGep1So48@nongnu.org,
+ AJvYcCVo2Wgmj5MSN7i2lICE9QcKQ/SpF7TLPKy9foAXi9rHGxS2TiLsDkXQ1SoOwJ8dMUQXujzZcDVAni8=@nongnu.org
+X-Gm-Message-State: AOJu0Yyvlciovs4us9xpK4yFUKqiC5JbdmmbqQ4byJOe2dQ7xBU6jyNH
+ T60OgUJ5unNx2FHbFfsLzeyP9ePtazje/4utNt6hlUesSZXzDqHAB1IXmA==
+X-Google-Smtp-Source: AGHT+IGNRJb28XANS441MzHqrZmf6zgrrGW6A35kGGoV2FP+oJji9k/8fcBegCp2m1HTQS03XKjsKg==
+X-Received: by 2002:a17:907:7da5:b0:a8a:8dd1:b2d1 with SMTP id
+ a640c23a62f3a-a90d5109321mr1065095566b.55.1727083860425; 
+ Mon, 23 Sep 2024 02:31:00 -0700 (PDT)
 Received: from archlinux.. (90-181-218-29.rco.o2.cz. [90.181.218.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.17
+ a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.30.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Sep 2024 02:31:17 -0700 (PDT)
+ Mon, 23 Sep 2024 02:30:59 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
@@ -71,16 +71,16 @@ Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 11/23] hw/i2c/mpc_i2c: Prefer DEFINE_TYPES() macro
-Date: Mon, 23 Sep 2024 11:30:04 +0200
-Message-ID: <20240923093016.66437-12-shentey@gmail.com>
+Subject: [PATCH 01/23] hw/ppc/e500: Do not leak struct boot_info
+Date: Mon, 23 Sep 2024 11:29:54 +0200
+Message-ID: <20240923093016.66437-2-shentey@gmail.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240923093016.66437-1-shentey@gmail.com>
 References: <20240923093016.66437-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,48 +103,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The struct is allocated once with g_new0() but never free()'d. Fix the leakage
+by adding an attribute to struct PPCE500MachineState which avoids the
+allocation.
+
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/i2c/mpc_i2c.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ hw/ppc/e500.h |  8 ++++++++
+ hw/ppc/e500.c | 17 ++++-------------
+ 2 files changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/hw/i2c/mpc_i2c.c b/hw/i2c/mpc_i2c.c
-index 3d79c15653..16f4309ea9 100644
---- a/hw/i2c/mpc_i2c.c
-+++ b/hw/i2c/mpc_i2c.c
-@@ -20,7 +20,6 @@
- #include "qemu/osdep.h"
- #include "hw/i2c/i2c.h"
- #include "hw/irq.h"
--#include "qemu/module.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
+diff --git a/hw/ppc/e500.h b/hw/ppc/e500.h
+index 8c09ef92e4..557ce6ad93 100644
+--- a/hw/ppc/e500.h
++++ b/hw/ppc/e500.h
+@@ -5,10 +5,18 @@
+ #include "hw/platform-bus.h"
  #include "qom/object.h"
-@@ -345,16 +344,13 @@ static void mpc_i2c_class_init(ObjectClass *klass, void *data)
-     dc->desc = "MPC I2C Controller";
+ 
++typedef struct boot_info {
++    uint32_t dt_base;
++    uint32_t dt_size;
++    uint32_t entry;
++} boot_info;
++
+ struct PPCE500MachineState {
+     /*< private >*/
+     MachineState parent_obj;
+ 
++    boot_info boot_info;
++
+     /* points to instance of TYPE_PLATFORM_BUS_DEVICE if
+      * board supports dynamic sysbus devices
+      */
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index 3bd12b54ab..75b051009f 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -80,13 +80,6 @@
+ 
+ #define PLATFORM_CLK_FREQ_HZ       (400 * 1000 * 1000)
+ 
+-struct boot_info
+-{
+-    uint32_t dt_base;
+-    uint32_t dt_size;
+-    uint32_t entry;
+-};
+-
+ static uint32_t *pci_map_create(void *fdt, uint32_t mpic, int first_slot,
+                                 int nr_slots, int *len)
+ {
+@@ -919,7 +912,6 @@ void ppce500_init(MachineState *machine)
+     bool kernel_as_payload;
+     hwaddr bios_entry = 0;
+     target_long payload_size;
+-    struct boot_info *boot_info = NULL;
+     int dt_size;
+     int i;
+     unsigned int smp_cpus = machine->smp.cpus;
+@@ -974,9 +966,8 @@ void ppce500_init(MachineState *machine)
+         /* Register reset handler */
+         if (!i) {
+             /* Primary CPU */
+-            boot_info = g_new0(struct boot_info, 1);
+             qemu_register_reset(ppce500_cpu_reset, cpu);
+-            env->load_info = boot_info;
++            env->load_info = &pms->boot_info;
+         } else {
+             /* Secondary CPUs */
+             qemu_register_reset(ppce500_cpu_reset_sec, cpu);
+@@ -1274,9 +1265,9 @@ void ppce500_init(MachineState *machine)
+     }
+     assert(dt_size < DTB_MAX_SIZE);
+ 
+-    boot_info->entry = bios_entry;
+-    boot_info->dt_base = dt_base;
+-    boot_info->dt_size = dt_size;
++    pms->boot_info.entry = bios_entry;
++    pms->boot_info.dt_base = dt_base;
++    pms->boot_info.dt_size = dt_size;
  }
  
--static const TypeInfo mpc_i2c_type_info = {
--    .name          = TYPE_MPC_I2C,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(MPCI2CState),
--    .class_init    = mpc_i2c_class_init,
-+static const TypeInfo types[] = {
-+    {
-+        .name          = TYPE_MPC_I2C,
-+        .parent        = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(MPCI2CState),
-+        .class_init    = mpc_i2c_class_init,
-+    },
- };
- 
--static void mpc_i2c_register_types(void)
--{
--    type_register_static(&mpc_i2c_type_info);
--}
--
--type_init(mpc_i2c_register_types)
-+DEFINE_TYPES(types)
+ static void e500_ccsr_initfn(Object *obj)
 -- 
 2.46.1
 
