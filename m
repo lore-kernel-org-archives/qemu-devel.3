@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DBF8CF9C5B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21203CF9C6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:33:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssfPT-0001vH-Kk; Mon, 23 Sep 2024 05:31:11 -0400
+	id 1ssfPs-0003Wk-3n; Mon, 23 Sep 2024 05:31:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPR-0001lk-1a; Mon, 23 Sep 2024 05:31:09 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1ssfPp-0003Pw-Vt; Mon, 23 Sep 2024 05:31:34 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPP-0006x3-9k; Mon, 23 Sep 2024 05:31:08 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5c42e7adbe0so4713528a12.2; 
- Mon, 23 Sep 2024 02:31:06 -0700 (PDT)
+ id 1ssfPo-00071H-8Z; Mon, 23 Sep 2024 05:31:33 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a8d2b24b7a8so940227366b.1; 
+ Mon, 23 Sep 2024 02:31:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727083864; x=1727688664; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727083888; x=1727688688; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=y0cE0YFArCBzwLd1JwfRPTOm56ohUC4IOprmiVi2Nc4=;
- b=U2WSo1sxiQv21OI3Q6KNyACnRavsyRE0I6hRsb4Uxo8b/xw2gO+1sMi0N/16wwD9y8
- E6EWhClx0apUIV4S2iznNbdzSQVQLG04ZEdADyDdksEt3/Swey7F7I9BUQJfn/Qc+TMY
- 6zZecRltV5xqYAFXGdc59oHGmny8TNBRiUkL5drlHJ182jJUEqcqlJbfA+SGuqwB473q
- dBzlUDssSTeD5N2M8Cpp6m2Qfpoi4/r6y3spfZVqeYrYg5Uvl4r2BR/Xs9uUOCnKbmxN
- mqBN3bEzZBtzSKTwl7up+R1gwzrMdH3RvKqOiiaAOJa7k0gpHf9Sc/41hwj0PAhc5uXf
- fwGg==
+ bh=N6N1zWPO8DnSJg1Q/8i6UHf3EekeeyOAcUgqB8xGeAc=;
+ b=icgvvAMd72sAmyGs1SlwBR/nBdkThAGhBpapsgSnMvepseDYIu1Eb932rCOr/5eOGv
+ 9b+hW68Gj9c0pqYx6O1K/lyZCcs+U8qvLKrzlRBLIyUJ9yWhj/ernKEiVd2icguS1Tmv
+ eIvnzHYaG7ALQaz69s4eMddykYxrwmFOLD0ontFhlQi1y/5HEF8TEYNbpd04rfcQut3c
+ y8GE2UkUyF0qiytjq4iY36hvMCDauTNjq+nGJOb4rbC3uKhJBo6Mz/q2byYrunRDkhvM
+ lTxyXKi2WPsL3rHYPOzvnb5PUxqSrmSFl3EpsCWcrK0IeunYBQbh6qTnZybiivbmH9Ak
+ 60mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727083864; x=1727688664;
+ d=1e100.net; s=20230601; t=1727083888; x=1727688688;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=y0cE0YFArCBzwLd1JwfRPTOm56ohUC4IOprmiVi2Nc4=;
- b=FeT9Z3ckgUk01n1UmeoYWL4RfzlvKkXlSSMyvd1M1LcAi92Hc7T/g4QbDWlTgK92IX
- Xl2oLYBEpY6cUMhMDDIoPsJ8MkTXRY2OpXcetBJiBKTFiCFi43SyJXTHXDiP1PgeTRe3
- KiJDAH2Y2XtniESxhYELmbauZjKAC1sqds0Dh72dEKt98NDMW2cHF5iqvbmYLFiHBi/7
- eI1OigK8UVO7lr5vhCw27Y6A1XsekmfckGxmjscQU6aUWi5Cik17iC2ie+hDHRsyyV06
- sa77Hv4kelCYKnNL8bXx30tBJrisGXM+/XQAe4fvyO7xsGMUoUSoiEbHH0K1sdfCYSpp
- tWNA==
+ bh=N6N1zWPO8DnSJg1Q/8i6UHf3EekeeyOAcUgqB8xGeAc=;
+ b=MXAy+Nap37XHhzM/RqyCMx2Lk4I4mCUQlvVyLVWZsWLZncTd0zcNcRsZgG3QE05CIa
+ MT6M3hA4ygv7JZRIg7urMEkTr8dSUI8aJZ09/CGNQtsBv+kxaItuEpvL8h6GI9WaykVO
+ nWENVY4JhEX0BZ5OI3Vtv5mqJvwdVkR5tJXbpmID4PMXvwan8GaQDrdNwILL1vYZ8SR0
+ CuWM1XkFn1GXFE9ZFoHgwUrQKR8NK7xGn+PmRzuXQI/DMdKGy8HROOqoq8om2lc0HtrS
+ cuc9mK0LKXj3+MW72X1TjiqK7HwT9KrbrbEck1XFNHU2zSr7JXhsa6USzTe8rlttAn9h
+ RxOg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVsyTK+8VsLqp7yFUqucg7WG2SGy1FZ9hP0mfASDBkm84EodT4F/lq+gKYNrpVULJ6eeuFvHA0bOnSF@nongnu.org,
- AJvYcCX75EM6pM+VOkGE8l7qQfZBKZMqPw/YmtjAKNKayVXJ3/ZZ+7JssX7eGOr4Frx/AnilnvpErLYGCVs=@nongnu.org
-X-Gm-Message-State: AOJu0Yy3a5nIlxpeNoMt3y9OLXiwm8WOGBTFwsS2gLEHEAbN+IqISnsm
- GyYAlpirpOIbFH0HZc1QHQEbyOSx7TSoK+ew0fnj7FuTT6NpEvN5f3k1Vg==
-X-Google-Smtp-Source: AGHT+IGHMW9H011FvW9gPouGu3vNVkb9qXZqbDxVmp6W7xZBs3Z9KnuendsEMBoJjyT630FEivBQsw==
-X-Received: by 2002:a17:907:25c2:b0:a8a:780f:4faf with SMTP id
- a640c23a62f3a-a90d5925392mr946568966b.47.1727083863792; 
- Mon, 23 Sep 2024 02:31:03 -0700 (PDT)
+ AJvYcCUG59p9Yg6uiJoPVDEeRWItRVi2VwvmDyvAPmJlA6EAhLzrM+ZXE23TOA9UknFgZHDs5KXN0v53LhM=@nongnu.org,
+ AJvYcCWbzpKrJgO8OVOApfJ9Qqil908HwwrClUiwEfs8wf3Q4e0BR1c63Ph5XnBiR7xd6VTrdUKbVOOnDYcE@nongnu.org
+X-Gm-Message-State: AOJu0YwFC8y3YHBP3R7qUtS0fNsa3HDUxhVsmxx2zfJujknW6A48FrkU
+ x0sHVxLQEB5eci/D/osYcmwIUvWvwNmsgVF+/TU/Zz8v2t3HhyVmctq9gw==
+X-Google-Smtp-Source: AGHT+IEzfruuAabaD+oBvcCRqz8chteMFhJRScR73hbZjHbHlB2rxyLnv/Ws0MbJsapmh7VM5amC6Q==
+X-Received: by 2002:a17:907:2da5:b0:a8d:6dab:b8ee with SMTP id
+ a640c23a62f3a-a90d362ce84mr1207410366b.23.1727083888464; 
+ Mon, 23 Sep 2024 02:31:28 -0700 (PDT)
 Received: from archlinux.. (90-181-218-29.rco.o2.cz. [90.181.218.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.02
+ a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Sep 2024 02:31:03 -0700 (PDT)
+ Mon, 23 Sep 2024 02:31:27 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
@@ -71,16 +71,17 @@ Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 03/23] hw/ppc/e500: Prefer QOM cast
-Date: Mon, 23 Sep 2024 11:29:56 +0200
-Message-ID: <20240923093016.66437-4-shentey@gmail.com>
+Subject: [PATCH 17/23] hw/intc: Guard openpic_kvm.c by dedicated OPENPIC_KVM
+ Kconfig switch
+Date: Mon, 23 Sep 2024 11:30:10 +0200
+Message-ID: <20240923093016.66437-18-shentey@gmail.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240923093016.66437-1-shentey@gmail.com>
 References: <20240923093016.66437-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,33 +104,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Allows to clearly mark code sections relying on this device type.
+
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/ppc/e500.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/ppc/e500.c       | 2 +-
+ hw/intc/Kconfig     | 4 ++++
+ hw/intc/meson.build | 3 +--
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index f68779a1ea..32996c188e 100644
+index 4ee4304a8a..149e608324 100644
 --- a/hw/ppc/e500.c
 +++ b/hw/ppc/e500.c
-@@ -1008,7 +1008,7 @@ void ppce500_init(MachineState *machine)
-     sysbus_connect_irq(s, 0, qdev_get_gpio_in(mpicdev, MPC8544_I2C_IRQ));
-     memory_region_add_subregion(ccsr_addr_space, MPC8544_I2C_REGS_OFFSET,
-                                 sysbus_mmio_get_region(s, 0));
--    i2c = (I2CBus *)qdev_get_child_bus(dev, "i2c");
-+    i2c = I2C_BUS(qdev_get_child_bus(dev, "i2c"));
-     i2c_slave_create_simple(i2c, "ds1338", RTC_REGS_OFFSET);
+@@ -828,7 +828,7 @@ static DeviceState *ppce500_init_mpic_qemu(PPCE500MachineState *pms,
+ static DeviceState *ppce500_init_mpic_kvm(const PPCE500MachineClass *pmc,
+                                           Error **errp)
+ {
+-#ifdef CONFIG_KVM
++#ifdef CONFIG_OPENPIC_KVM
+     DeviceState *dev;
+     CPUState *cs;
  
-     /* eSDHC */
-@@ -1057,7 +1057,7 @@ void ppce500_init(MachineState *machine)
-     memory_region_add_subregion(ccsr_addr_space, MPC8544_PCI_REGS_OFFSET,
-                                 sysbus_mmio_get_region(s, 0));
+diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
+index dd405bdb5d..a3df98ae59 100644
+--- a/hw/intc/Kconfig
++++ b/hw/intc/Kconfig
+@@ -16,6 +16,10 @@ config OPENPIC
+     bool
+     select MSI_NONBROKEN
  
--    pci_bus = (PCIBus *)qdev_get_child_bus(dev, "pci.0");
-+    pci_bus = PCI_BUS(qdev_get_child_bus(dev, "pci.0"));
-     if (!pci_bus)
-         printf("couldn't create PCI controller!\n");
- 
++config OPENPIC_KVM
++    bool
++    depends on OPENPIC && KVM
++
+ config APIC
+     bool
+     select MSI_NONBROKEN
+diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+index 6bfdc4eb33..b9de6bf5c6 100644
+--- a/hw/intc/meson.build
++++ b/hw/intc/meson.build
+@@ -48,8 +48,7 @@ specific_ss.add(when: 'CONFIG_IOAPIC', if_true: files('ioapic.c'))
+ specific_ss.add(when: 'CONFIG_LOONGSON_LIOINTC', if_true: files('loongson_liointc.c'))
+ specific_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('mips_gic.c'))
+ specific_ss.add(when: 'CONFIG_OMPIC', if_true: files('ompic.c'))
+-specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_OPENPIC'],
+-		if_true: files('openpic_kvm.c'))
++specific_ss.add(when: 'CONFIG_OPENPIC_KVM', if_true: files('openpic_kvm.c'))
+ specific_ss.add(when: 'CONFIG_POWERNV', if_true: files('xics_pnv.c', 'pnv_xive.c', 'pnv_xive2.c'))
+ specific_ss.add(when: 'CONFIG_PPC_UIC', if_true: files('ppc-uic.c'))
+ specific_ss.add(when: 'CONFIG_RX_ICU', if_true: files('rx_icu.c'))
 -- 
 2.46.1
 
