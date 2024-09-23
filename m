@@ -4,84 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1EF1CF9C5B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 08:16:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E93CF9C6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:20:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sseEo-0007Xj-Og; Mon, 23 Sep 2024 04:16:07 -0400
+	id 1ssfEB-0003PR-It; Mon, 23 Sep 2024 05:19:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sseEl-0007SU-5C
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 04:16:03 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sseEa-0008EW-Hr
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 04:16:02 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-378c16a4d3eso4398527f8f.1
- for <qemu-devel@nongnu.org>; Mon, 23 Sep 2024 01:15:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727079350; x=1727684150; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=c3Onvi9UHbad6ukc7arbUZKYIPfwRyBIrmeNY5wtelU=;
- b=BofDlAmWEg6E6hEQ82QWx3RJpKgSNp7wq/Er+b5Gbzx0Vwlidf1inJ7LpYQ423FLHi
- h/1so7gy5qa1O2Nw1bn8sCCRFNXxJv6+k/9wWskxlB24yeqypr32/oPSM047A8KykX7M
- 8Fp2M6nUH4MmMmlWLg7LmehoNh16hs5TCl7Kair6wFF/uzbxGwOPe1i1cVi3697Cro4b
- BVlF+2RPLBSdFgXimgut6lrgcpE6QydxXQKSt1dTCZPZNJw2DphE0hAUCLOyIOR4t8RW
- luIoOtBo+SQyoG8eRJGv8XgMLYM5n27/UQMxS+MnRBSUblaEoiyvZuSN3/SSoSWYfZo5
- Y5JQ==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1ssfE8-0003Ov-MP
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 05:19:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1ssfE6-0005i0-Uc
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 05:19:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727083166;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=j5fG0lLbYplVa37YWM2Q3XKhVOviSxv2J1sukYh0Wxc=;
+ b=MQUPU2J58VgTQ4aWJVxycVgWAxRzk0Dj+JD7sTznSkzv95is1iFuoqj7XGomT3Eozs9sI5
+ pU5rSIT/X9dbwYI1/QHAbH42LRD1zUk1/1bZZeiSlxPwebIjW81+sWiGgrlFmDetjsQMfs
+ j2cSDUMY6Mijpvz8OAhfA7X1XwHI+jc=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-45-g05rg7uAOVO8ItA-snOrdQ-1; Mon, 23 Sep 2024 05:19:23 -0400
+X-MC-Unique: g05rg7uAOVO8ItA-snOrdQ-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a8a6fee3ab1so394341866b.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Sep 2024 02:19:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727079350; x=1727684150;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=c3Onvi9UHbad6ukc7arbUZKYIPfwRyBIrmeNY5wtelU=;
- b=eOYJDp4hEPqSv58rgyQGTEG6t9NtLFM2sA/W2oXz+aWqbE6E0FtBU5vAMXLNepcByz
- Wo2wmZF0qbnbdeBIfBouF4FG6OMr8po2/iEDPe1dVeuWWe3bVe7aHIENvsTUrJAhi4kL
- qbHKakFpppr4k4I8K0DmKIJFPoqqrogCSkNYXndqIluy3utUMh7j4uYpPzWEYQIroYCU
- SmDpVCBvBo2l+gNGu8gqYvXEoKGLHq3EWjl/xlkIEVpvnSBWBJf7uL0py5a3TUBKJIfZ
- wbzXHI1JvKL+vMoGxGMIJuQ4fPxGnVW4DT7jXunP0mbQg32FDWTchXdZTujw8ZG5brUQ
- Y6HA==
-X-Gm-Message-State: AOJu0YzX6Y3T9eeCt1i/UAPT2O6DxeK8qmQS5yvYTP683BG/2W2rxH3T
- cvn6MdApkmRcU/MSqI4Djute9oZaTZuRzgH/KQbw6IsZo5rEbwsN1weMjS8EnAM=
-X-Google-Smtp-Source: AGHT+IG2BMXe+umsdDAemAmgjZQvn/opiBsYMNMkGVh8XZB5q0DXjNMByQ9UetTIcKFFSQxMkvBQVg==
-X-Received: by 2002:a5d:4741:0:b0:374:c6b8:50b5 with SMTP id
- ffacd0b85a97d-37a422783aamr8559730f8f.17.1727079349933; 
- Mon, 23 Sep 2024 01:15:49 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a906109669fsm1175032566b.3.2024.09.23.01.15.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Sep 2024 01:15:49 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 81CC15F8A6;
- Mon, 23 Sep 2024 09:15:48 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH] testing: bump mips64el cross to bookworm and allow to fail
-Date: Mon, 23 Sep 2024 09:15:37 +0100
-Message-Id: <20240923081537.3846145-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ d=1e100.net; s=20230601; t=1727083157; x=1727687957;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=j5fG0lLbYplVa37YWM2Q3XKhVOviSxv2J1sukYh0Wxc=;
+ b=uKbE6ZhWBPeeXZw0IdXFP9QL2ulgl6+Lv5D/gST65TdvFcAr+idj7Bi5fdvhP42ByI
+ BcyIp5POKGgTYMEOfw8pujD7rzohpawnxsS6lvXKIAXH7EiRYLHN6HUaVory03luEfTo
+ Ce9ZNYgR0NwdQ6XnIF3LW5eqkdgMPPnBAZ9R1nI77mj9WO6vxpQkCSs2Lz4VWdGFEjHN
+ FItHvlPjeENau3c/6fGfMMkTcegGYzgLS8QJPwc8JBHr7i6dtOxpKiliHgWO7JivXxMV
+ fj1qfYhLSG28wpdrTscI+Mf8FHN35fBI63kKaBnFtFoj/KhFmDmoiazWCMsCkN7gVMbM
+ GUBQ==
+X-Gm-Message-State: AOJu0YzhZi0X/LKlBAjH5W99cz5SHS/H4v+pwF+4CeRwAYrJlokXEuro
+ Tt3NDKcZqZDSROweQgqQSAtZlY5rR6xb/I2XT8yYfKkegULoJ+oDppacPDqXg/fcXk4kDoE3dYW
+ MpGwmNl0o00pn0NVNy7yMvaQfoVc3+iwoDYnABYdOmbDqCkT+tOKK4C0AXjUAJqGZki8eGaSPO1
+ CbgWEfpD3XY9t3zZZY8XbdJz3lkxNWIkk4vr4=
+X-Received: by 2002:a17:907:7ea5:b0:a8c:d6a3:d02e with SMTP id
+ a640c23a62f3a-a90d5186d9bmr1181194966b.63.1727083156700; 
+ Mon, 23 Sep 2024 02:19:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IERc07o6pMqBfs6WiGGU4GXwPaFfszp0fpuv7RzIswZFdazjkO1nR1kIbBchkfBuUmIQHKgkA==
+X-Received: by 2002:a17:907:7ea5:b0:a8c:d6a3:d02e with SMTP id
+ a640c23a62f3a-a90d5186d9bmr1181190266b.63.1727083156081; 
+ Mon, 23 Sep 2024 02:19:16 -0700 (PDT)
+Received: from [10.5.48.152] (90-181-218-29.rco.o2.cz. [90.181.218.29])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9061096784sm1186026766b.1.2024.09.23.02.19.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 23 Sep 2024 02:19:15 -0700 (PDT)
+Message-ID: <8503e69e-f5fa-437f-8ff9-e61f297ce6c2@redhat.com>
+Date: Mon, 23 Sep 2024 11:19:14 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 01/14] s390x/s390-virtio-ccw: don't crash on weird RAM
+ sizes
+To: qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Janosch Frank <frankja@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>
+References: <20240910175809.2135596-1-david@redhat.com>
+ <20240910175809.2135596-2-david@redhat.com>
+Content-Language: en-US
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
+ dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
+ QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
+ XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
+ Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
+ PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
+ WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
+ UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
+ jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
+ B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
+ ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
+ 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
+ rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
+ wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
+ 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
+ pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
+ KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
+ BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
+ 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
+ 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
+ M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
+ Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
+ T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
+ 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
+ CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
+ NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
+ 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
+ 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
+ lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
+ AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
+ N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
+ AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
+ boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
+ 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
+ XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
+ a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
+ Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
+ 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
+ kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
+ th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
+ jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20240910175809.2135596-2-david@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.129,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,100 +156,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The mips64el cross setup is very broken for bullseye which has now
-entered LTS support so is unlikely to be fixed. While we still can't
-build the container for bookworm due to a single missing dependency
-that will hopefully get fixed in due course. For the sake of keeping
-the CI green we mark it as allow_fail for the time being.
+On 10.09.24 19:57, David Hildenbrand wrote:
+> KVM is not happy when starting a VM with weird RAM sizes:
+> 
+>    # qemu-system-s390x --enable-kvm --nographic -m 1234K
+>    qemu-system-s390x: kvm_set_user_memory_region: KVM_SET_USER_MEMORY_REGION
+>      failed, slot=0, start=0x0, size=0x244000: Invalid argument
+>    kvm_set_phys_mem: error registering slot: Invalid argument
+>    Aborted (core dumped)
+> 
+> Let's handle that in a better way by rejecting such weird RAM sizes
+> right from the start:
+> 
+>    # qemu-system-s390x --enable-kvm --nographic -m 1234K
+>    qemu-system-s390x: ram size must be multiples of 1 MiB
+> 
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+> ---
+>   hw/s390x/s390-virtio-ccw.c | 11 +++++++++++
+>   1 file changed, 11 insertions(+)
+> 
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index 18240a0fd8..e30cf0a2a1 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -180,6 +180,17 @@ static void s390_memory_init(MemoryRegion *ram)
+>   {
+>       MemoryRegion *sysmem = get_system_memory();
+>   
+> +    if (!QEMU_IS_ALIGNED(memory_region_size(ram), 1 * MiB)) {
+> +        /*
+> +         * The SCLP cannot possibly expose smaller granularity right now and KVM
+> +         * cannot handle smaller granularity. As we don't support NUMA, the
+> +         * region size directly corresponds to machine->ram_size, and the region
+> +         * is a single RAM memory region.
+> +         */
+> +        error_report("ram size must be multiples of 1 MiB");
+> +        exit(EXIT_FAILURE);
+> +    }
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: Michael Tokarev <mjt@tls.msk.ru>
----
- .gitlab-ci.d/container-cross.yml                      |  3 +++
- tests/docker/dockerfiles/debian-mips64el-cross.docker | 10 ++++------
- tests/lcitool/refresh                                 |  2 +-
- 3 files changed, 8 insertions(+), 7 deletions(-)
+I'll switch to
 
-diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
-index 34c0e729ad..c567926182 100644
---- a/.gitlab-ci.d/container-cross.yml
-+++ b/.gitlab-ci.d/container-cross.yml
-@@ -49,6 +49,9 @@ i686-debian-cross-container:
- mips64el-debian-cross-container:
-   extends: .container_job_template
-   stage: containers
-+  # Currently waiting for Debian to fix:
-+  #  libgl1-mesa-dri:mips64el : Depends: libllvm15:mips64el but it is not going to be installed
-+  allow_failure: true
-   variables:
-     NAME: debian-mips64el-cross
- 
-diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-index 2862785692..69d6e8cd11 100644
---- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-@@ -1,10 +1,10 @@
- # THIS FILE WAS AUTO-GENERATED
- #
--#  $ lcitool dockerfile --layers all --cross-arch mips64el debian-11 qemu
-+#  $ lcitool dockerfile --layers all --cross-arch mips64el debian-12 qemu
- #
- # https://gitlab.com/libvirt/libvirt-ci
- 
--FROM docker.io/library/debian:11-slim
-+FROM docker.io/library/debian:12-slim
- 
- RUN export DEBIAN_FRONTEND=noninteractive && \
-     apt-get update && \
-@@ -48,16 +48,15 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-opencv \
-                       python3-pillow \
-                       python3-pip \
--                      python3-setuptools \
-                       python3-sphinx \
-                       python3-sphinx-rtd-theme \
-                       python3-venv \
--                      python3-wheel \
-                       python3-yaml \
-                       rpm2cpio \
-                       sed \
-                       socat \
-                       sparse \
-+                      swtpm \
-                       tar \
-                       tesseract-ocr \
-                       tesseract-ocr-eng \
-@@ -69,8 +68,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     dpkg-reconfigure locales && \
-     rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
- 
--RUN /usr/bin/pip3 install tomli
--
- ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
- ENV LANG "en_US.UTF-8"
- ENV MAKE "/usr/bin/make"
-@@ -143,6 +140,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libvdeplug-dev:mips64el \
-                       libvirglrenderer-dev:mips64el \
-                       libvte-2.91-dev:mips64el \
-+                      libxdp-dev:mips64el \
-                       libzstd-dev:mips64el \
-                       nettle-dev:mips64el \
-                       systemtap-sdt-dev:mips64el \
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 92381f3c46..a78219f7bc 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -166,7 +166,7 @@ try:
-                                             "x86_64-linux-user,"
-                                             "i386-softmmu,i386-linux-user"))
- 
--    generate_dockerfile("debian-mips64el-cross", "debian-11",
-+    generate_dockerfile("debian-mips64el-cross", "debian-12",
-                         cross="mips64el",
-                         trailer=cross_build("mips64el-linux-gnuabi64-",
-                                             "mips64el-softmmu,mips64el-linux-user"))
+	error_setg(&error_fatal, "ram size must be multiples of 1 MiB");
+
+here, to avoid the manual exit().
+
+Please someone shout if I should keep it as is.
+
 -- 
-2.39.5
+Cheers,
+
+David / dhildenb
 
 
