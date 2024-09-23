@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00B73CF9C5B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:35:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13C26CF9C71
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:35:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssfPt-0003eA-Dp; Mon, 23 Sep 2024 05:31:37 -0400
+	id 1ssfPm-0003Bq-Tt; Mon, 23 Sep 2024 05:31:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPr-0003V6-B7; Mon, 23 Sep 2024 05:31:35 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1ssfPd-0002as-W1; Mon, 23 Sep 2024 05:31:25 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPp-00071i-C8; Mon, 23 Sep 2024 05:31:34 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a8b155b5e9eso610137966b.1; 
- Mon, 23 Sep 2024 02:31:32 -0700 (PDT)
+ id 1ssfPa-0006yl-VC; Mon, 23 Sep 2024 05:31:20 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a8d24f98215so558177066b.1; 
+ Mon, 23 Sep 2024 02:31:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727083890; x=1727688690; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727083875; x=1727688675; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZEqt+B/rZIxMfU9E+WiGg5KsOPuW4FR5+eD/WT3GDlU=;
- b=HEQKLQUIJgQnCWo6SPZYMhEIPM1W5wvYb8q9/RL2ADJPbKQMkorGzNzcDpWKRAXVBq
- ZmWoBx0bFf0rgUc+1YPNtGlKs6dT01HhfF0X7CiwRxlMEyT1wIDBjA2do4ye5HqzjHwk
- 7UUptFgjV4uLrRRJL7hARl0Nc69x1WZDCkGWcw7yChYwACVL8cLAUrk5mn136mAabfE8
- oKxrj2EPKz7TCt732m8957vabuwhxE7ED6didRJZO/tn/pY/Ys0XJlfx9EEaYw8kIJ6b
- MT/5DN6o2upd8HXjlsfD/GxOHnnsps1Ii9N7hqZcSYlY8+fdkmX8l72ga+kKB/33QU5T
- uiAg==
+ bh=K6CZQD1xJ4Za1UOZKzua0E5ijXIgQYfhe3Y1vJtCOdo=;
+ b=CM+3vsSazaMGn3z6d6FG3nEQEzZv6kPaR/5sxZs/M3wp9iwkz8xidfTxYqKZFUMQd9
+ COIQmmq6O1djNBPTO1XC7eg/VKC/0d2yZwWPcXnxWj4ly5wUW+7Tieh/JzecetwqiUJ+
+ d/GEHsBacMOrqkRk0ksvtqtmObEHESV/Y5nqrGpSDgGq5gbZN/+Fg+kCqMsWVfmuBkRk
+ m2G3oTmoGgE9+C7Op6sR/+r9rEl7RygFKfXLryclfhNyg0+feqSVfelcaAiaCUzhSl0L
+ rcxEGF8sZTAH1BVeJkf1OQj7D7CdnPQCJ+u0OqssYxmQ9yja7kLU92rBB5ndRxipAnHp
+ +gLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727083890; x=1727688690;
+ d=1e100.net; s=20230601; t=1727083875; x=1727688675;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZEqt+B/rZIxMfU9E+WiGg5KsOPuW4FR5+eD/WT3GDlU=;
- b=iAnMo5XM5TUaa0GNSPSka8Fx+URqxbhUXoV/zONV0NJY5yQuhz3ZP+PmI+ccsF6RWL
- oQyGNf3NR0Bt0t0COsGnA+jD++U+4Kt+PDS1wCgWBfks+txxeN0bUnWyraohVRU4USoB
- 7sjkJc71ozKfQKXOy+XN67Vvej2+jBAa9zRxPbmsiA5BEE0M9FF1BiKe2A0JWae4IQgp
- Z6K+5Oe2mk8T2n7uVJm/bKDRYXDmLI8G3qJmk5/KRh1HlCOqp/hXMR05CtM9iDuypLMi
- 2df3HWZaK0R7lFFpsJA9bW+PCXtJjjZPjYyXiSCphyOs4dm70D0tRLndvookvzgbRMg4
- GkgQ==
+ bh=K6CZQD1xJ4Za1UOZKzua0E5ijXIgQYfhe3Y1vJtCOdo=;
+ b=YHiRSCd+7d+kjao1Mr7n4VXqpp9Dm/Z2dd3sqFXFsjCRfzmlxPbgNILpzwPhtXNo/j
+ BJY4KMQuozNzqF27WUR3I3Hs3yso9sgZWF+lDOHC2Z88FrQQacXipaiAufZ7BsEwk7r/
+ HsaCBiWikdVLS1Bg65pjO1bFIJn7Io0d6lbo7lWn/bHOIaBzvu5tVsZGCAl4DlNY3hv/
+ RuLMMTt8Lhe42J+EqGoPCNVQX97FbibraS75TgzeZCgyyLhqr0yONsd9RUfjhidumyWq
+ yc/kjDUGiNzQNO94Gp0UJrhzpdfCUcy9ozcQDBjUh4qf4K/pTdyOTc3Gg8OKZLvFY79G
+ Eg/Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUVEZmNjqvEK9pjpmDZ7HvDiuKRP+wop+nMKh/tdYNdNe28LekVqT26XB7IH/FtcXzP02a1shGHJKbJ@nongnu.org,
- AJvYcCX9B2vAESRmRrSasllVIbEsDRyhGJRKW0Ip5O4gNrvOdazto9tiW8lIlGI8gPgrW5o+mpFmYqWEwCg=@nongnu.org
-X-Gm-Message-State: AOJu0Yxnss38cNF3HfBdOchfc8v5oifks8Mcz9QT1eFh0wHdxjHzwu9I
- dDv1pEKXcdqxz5ejFTPoaJOmhMsVIm64nrIn0YTd+ltOtC/WrC7yiThKAQ==
-X-Google-Smtp-Source: AGHT+IGPs86AeQbW3UBi24h3sOmCWRRsJfhjcOsSwwgsnpFlauMcEEzR1MYD2C8rEAjfyxYwJIFCpA==
-X-Received: by 2002:a17:907:d3e1:b0:a8a:71d5:1094 with SMTP id
- a640c23a62f3a-a90d50eec25mr1022663666b.46.1727083890042; 
- Mon, 23 Sep 2024 02:31:30 -0700 (PDT)
+ AJvYcCV934OXNruIixzdHDhGKTqNYPp9ShY3qIXqJIkpS5QT/vn67g1SRVL93KzH45p/YqHbmRYzf2GqGKw=@nongnu.org,
+ AJvYcCWRp/C9NGL6nzyEYXGqMrXvJgz0x85JI238OQ3GQgGBkfUvagNm44Cpz0Phz+LXyvIQV8HRYm2uO8pH@nongnu.org
+X-Gm-Message-State: AOJu0Yx6fzsskuOCAF5wkV35ZVUgc7LInndWTvrjS7Y+Dpn0azZflC8V
+ K5c8FTBcklHbK3Cg0LTawlU1fNOgFgDUoK+qGNuEtNRZFXxwyxxYUl9ZnA==
+X-Google-Smtp-Source: AGHT+IEwJQIEHhCll5yjtbAaJ8IDBYP3vjsdaQHZgaoq4obMSCgozPrBBVQgRoQONBW/Xw0hlKXfJA==
+X-Received: by 2002:a17:906:d262:b0:a86:851e:3a2b with SMTP id
+ a640c23a62f3a-a90d4ffc82dmr1075343066b.29.1727083875320; 
+ Mon, 23 Sep 2024 02:31:15 -0700 (PDT)
 Received: from archlinux.. (90-181-218-29.rco.o2.cz. [90.181.218.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.28
+ a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Sep 2024 02:31:29 -0700 (PDT)
+ Mon, 23 Sep 2024 02:31:14 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
@@ -71,16 +71,17 @@ Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 18/23] hw/sd/sdhci: Prefer DEFINE_TYPES() macro
-Date: Mon, 23 Sep 2024 11:30:11 +0200
-Message-ID: <20240923093016.66437-19-shentey@gmail.com>
+Subject: [PATCH 09/23] hw/ppc/mpc8544_guts: Populate POR PLL ratio status
+ register
+Date: Mon, 23 Sep 2024 11:30:02 +0200
+Message-ID: <20240923093016.66437-10-shentey@gmail.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240923093016.66437-1-shentey@gmail.com>
 References: <20240923093016.66437-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,111 +104,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Populate this read-only register with some arbitrary values which avoids
+U-Boot's get_clocks() to hang().
+
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/sd/sdhci.c | 62 +++++++++++++++++++++------------------------------
- 1 file changed, 26 insertions(+), 36 deletions(-)
+ hw/ppc/mpc8544_guts.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 87122e4245..3ed2d8658a 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -37,7 +37,6 @@
- #include "migration/vmstate.h"
- #include "sdhci-internal.h"
- #include "qemu/log.h"
--#include "qemu/module.h"
- #include "trace.h"
- #include "qom/object.h"
+diff --git a/hw/ppc/mpc8544_guts.c b/hw/ppc/mpc8544_guts.c
+index e3540b0281..6688fd44c3 100644
+--- a/hw/ppc/mpc8544_guts.c
++++ b/hw/ppc/mpc8544_guts.c
+@@ -29,6 +29,12 @@
+ #define MPC8544_GUTS_RSTCR_RESET      0x02
  
-@@ -1598,15 +1597,6 @@ static void sdhci_sysbus_class_init(ObjectClass *klass, void *data)
-     sdhci_common_class_init(klass, data);
- }
+ #define MPC8544_GUTS_ADDR_PORPLLSR    0x00
++REG32(GUTS_PORPLLSR, 0x00)
++    FIELD(GUTS_PORPLLSR, E500_1_RATIO, 16, 6)
++    FIELD(GUTS_PORPLLSR, E500_0_RATIO, 16, 6)
++    FIELD(GUTS_PORPLLSR, DDR_RATIO, 9, 5)
++    FIELD(GUTS_PORPLLSR, PLAT_RATIO, 1, 5)
++
+ #define MPC8544_GUTS_ADDR_PORBMSR     0x04
+ #define MPC8544_GUTS_ADDR_PORIMPSCR   0x08
+ #define MPC8544_GUTS_ADDR_PORDEVSR    0x0C
+@@ -75,6 +81,12 @@ static uint64_t mpc8544_guts_read(void *opaque, hwaddr addr,
  
--static const TypeInfo sdhci_sysbus_info = {
--    .name = TYPE_SYSBUS_SDHCI,
--    .parent = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(SDHCIState),
--    .instance_init = sdhci_sysbus_init,
--    .instance_finalize = sdhci_sysbus_finalize,
--    .class_init = sdhci_sysbus_class_init,
--};
--
- /* --- qdev bus master --- */
- 
- static void sdhci_bus_class_init(ObjectClass *klass, void *data)
-@@ -1617,13 +1607,6 @@ static void sdhci_bus_class_init(ObjectClass *klass, void *data)
-     sbc->set_readonly = sdhci_set_readonly;
- }
- 
--static const TypeInfo sdhci_bus_info = {
--    .name = TYPE_SDHCI_BUS,
--    .parent = TYPE_SD_BUS,
--    .instance_size = sizeof(SDBus),
--    .class_init = sdhci_bus_class_init,
--};
--
- /* --- qdev i.MX eSDHC --- */
- 
- #define USDHC_MIX_CTRL                  0x48
-@@ -1882,12 +1865,6 @@ static void imx_usdhc_init(Object *obj)
-     s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
- }
- 
--static const TypeInfo imx_usdhc_info = {
--    .name = TYPE_IMX_USDHC,
--    .parent = TYPE_SYSBUS_SDHCI,
--    .instance_init = imx_usdhc_init,
--};
--
- /* --- qdev Samsung s3c --- */
- 
- #define S3C_SDHCI_CONTROL2      0x80
-@@ -1946,18 +1923,31 @@ static void sdhci_s3c_init(Object *obj)
-     s->io_ops = &sdhci_s3c_mmio_ops;
- }
- 
--static const TypeInfo sdhci_s3c_info = {
--    .name = TYPE_S3C_SDHCI  ,
--    .parent = TYPE_SYSBUS_SDHCI,
--    .instance_init = sdhci_s3c_init,
-+static const TypeInfo types[] = {
-+    {
-+        .name = TYPE_SDHCI_BUS,
-+        .parent = TYPE_SD_BUS,
-+        .instance_size = sizeof(SDBus),
-+        .class_init = sdhci_bus_class_init,
-+    },
-+    {
-+        .name = TYPE_SYSBUS_SDHCI,
-+        .parent = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(SDHCIState),
-+        .instance_init = sdhci_sysbus_init,
-+        .instance_finalize = sdhci_sysbus_finalize,
-+        .class_init = sdhci_sysbus_class_init,
-+    },
-+    {
-+        .name = TYPE_IMX_USDHC,
-+        .parent = TYPE_SYSBUS_SDHCI,
-+        .instance_init = imx_usdhc_init,
-+    },
-+    {
-+        .name = TYPE_S3C_SDHCI,
-+        .parent = TYPE_SYSBUS_SDHCI,
-+        .instance_init = sdhci_s3c_init,
-+    },
- };
- 
--static void sdhci_register_types(void)
--{
--    type_register_static(&sdhci_sysbus_info);
--    type_register_static(&sdhci_bus_info);
--    type_register_static(&imx_usdhc_info);
--    type_register_static(&sdhci_s3c_info);
--}
--
--type_init(sdhci_register_types)
-+DEFINE_TYPES(types)
+     addr &= MPC8544_GUTS_MMIO_SIZE - 1;
+     switch (addr) {
++    case MPC8544_GUTS_ADDR_PORPLLSR:
++        value = FIELD_DP32(value, GUTS_PORPLLSR, E500_1_RATIO, 3); /* 3:2 */
++        value = FIELD_DP32(value, GUTS_PORPLLSR, E500_0_RATIO, 3); /* 3:2 */
++        value = FIELD_DP32(value, GUTS_PORPLLSR, DDR_RATIO, 6); /* 6:1 */
++        value = FIELD_DP32(value, GUTS_PORPLLSR, PLAT_RATIO, 4); /* 4:1 */
++        break;
+     case MPC8544_GUTS_ADDR_PVR:
+         value = env->spr[SPR_PVR];
+         break;
 -- 
 2.46.1
 
