@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C821DCF9C72
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:32:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C017CF9C5B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:32:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssfPl-00037h-Ti; Mon, 23 Sep 2024 05:31:29 -0400
+	id 1ssfPq-0003Rz-Os; Mon, 23 Sep 2024 05:31:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPg-0002lu-Ti; Mon, 23 Sep 2024 05:31:25 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1ssfPn-0003Eo-Da; Mon, 23 Sep 2024 05:31:31 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPc-0006z3-Dn; Mon, 23 Sep 2024 05:31:22 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a8d64b27c45so766462866b.3; 
- Mon, 23 Sep 2024 02:31:19 -0700 (PDT)
+ id 1ssfPl-000710-RF; Mon, 23 Sep 2024 05:31:31 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a7a843bef98so554382366b.2; 
+ Mon, 23 Sep 2024 02:31:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727083877; x=1727688677; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727083887; x=1727688687; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Gk0TI6PhzPVX9iexQrZ/MM+nIP2rF3HI992oH7AdJ4I=;
- b=ETqgGm81KZtoYruwD95OXByzSBBliL2PqzOpLoUAGLpenfEO2ihQVxFzk0Ln/hePyR
- Z0cxx8Blcka21YTQjQQJh+HOl+P//eEOGCqHewNphHS9WJhQXiCkKzo1sH0jOYzUYT2O
- pJxtH5OgqS7u4JjGMeYmeJjxVCW1xPWy1hwVS8g/mhkob2p4yJ2Stqq2y0/5b5sPF5aB
- 0/ao+KgLRMvwYAEWUyTyBMjucKeFglQ2UCSAL+F0zPYtnA1XXPK+EKiJ2jfSf3GJLppS
- t3LjQMo5GRnlxhkzhX//B+uFO2mn8eK9teNK4xOMjkwPDtrzsQvbdEj53lbV4w0oXemY
- Oxlg==
+ bh=vTAYFcyEYOewFDEdRGbYScC4E5SZ9wSdgr4ijamJJiA=;
+ b=PLQ00/hKHClPGaUAWOkwfju8iYzqyLRmN2deK3KaScJfD/l+yO51C8RnO6AFBWnonk
+ Aw9E7/otsr1AgKPToUjDY3dExtPGM9FQ5NuplW2GUUo5pJdmTLcfymvp+E5eitWJ/J3x
+ F0G6hktYBQ9aVighKq/bay172H/rsDLxyfeXr+kvC1GBYXmaEGyca87oUBPs+ciQPoD/
+ /8OBLdE24xGqeZthdp9dC720VaxiLGiThuB78VDsQnhGyPHsFlcM+nhfHRLYhntLJO3x
+ t/oW3mCl2+lza+dVE95SVyi404sihN5PE4n4jWQmVCYBFnv0d2R7dDYjyFaU3BZQmIRn
+ QP6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727083877; x=1727688677;
+ d=1e100.net; s=20230601; t=1727083887; x=1727688687;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Gk0TI6PhzPVX9iexQrZ/MM+nIP2rF3HI992oH7AdJ4I=;
- b=oqKVBWqzgM8VpGlZQ+vuShalMCvoE4D1cgT/DMBz9u+D6tIpopFBJpXcfwv64nOx5b
- 9DxrilE8fYCNxOfHTm8Qo+gFTfi96fo9lFdeS/NBN/nlJf2Tyl8s5OW+J8P6e6ww4DmM
- 19hwXXUZPiJ4K2iTy8X7OtxWIEaNoYwejuS1wIeRHZJDNtRldOOR4rt4DCC4Yg16t5lr
- 5wmGkiSVuI9svGqpOccCc0Bi0C5yj+ET4Um/SKf8LZQu+IIjCnRHh6QK6JLhev0XX7Fy
- AJRDuqRRAQB3m1fs3O/vUbkQGSZWg7hUhFi+20HYH3IsP8XG0wSxDqMy5vpVEDE1v6H/
- gVRw==
+ bh=vTAYFcyEYOewFDEdRGbYScC4E5SZ9wSdgr4ijamJJiA=;
+ b=CB97WnazrMfu5BK/6J3z440QJwhdLioeJJ8Xmjtre78/efdEiPyWpDDbFQYMHDRt+A
+ 2d2fIyTRPV6/nxNppf+SzzE2dwASzX369N1RtANtxSyPgiWc7FDqhbCrY6To+KVHnRkK
+ fRLErew2R1PknEOEWRytEyhfw2yIJ+oHsDGZvL6RbEU4JaoNb8sTyB3O5FN/Mw8kMtCg
+ eP8CpjG/E9ExWxT44PuYuxMmu4oDjZYnqW+XK3uljXRcVUqH3hrOxXgRjwDy/0mQEY47
+ nSict8mKaL+nOlnk5A4fFkrNV7+fADTKXlHMUq8vfp8sjFC5q9e79X/mzrBR0qRnLZ50
+ 5yfw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWuddZY8NIUan//EeKJ37ENar9K94NhorIWclHdlHVp7nFeNOt93Z8Hlr3dZIfziLBWV7KCShkqt2K0@nongnu.org,
- AJvYcCX5iQCPakbWA27mRv+N4tSF6z4fC5mnL8+zMGxtWKoLfRIMwudRB0qtwtRcOYsnhtpNeRjwV432zdA=@nongnu.org
-X-Gm-Message-State: AOJu0YzWw3+q2G48PWnKT03OYX96hTL+CMcK4FzRNMDHBOH+Agd1z4dj
- jPyHoYdODrXl1CZyHjwVZ8NY7lGhq2FUAHwWH8eiNljryC4jLZrEiDiADA==
-X-Google-Smtp-Source: AGHT+IG92EfphYA6j4+HK3yEweb6tY+YoKcMJvzq5HMag6Rs4+rgGUCH1A9CByPd72K2RFeKFLI9dg==
-X-Received: by 2002:a17:907:e655:b0:a8d:5472:b56c with SMTP id
- a640c23a62f3a-a90d4ffdc5dmr1030574266b.22.1727083877205; 
- Mon, 23 Sep 2024 02:31:17 -0700 (PDT)
+ AJvYcCUWb8OlSvFhKIG9Q3hw9BLoOzsuprEEyerbSJJm4UIaQFfD9rO6kaylAoEjL4IS4n961utuimR405ed@nongnu.org,
+ AJvYcCXjE0lvwM1ZU6OIecR96YVb+PJDzTHtmwVvsrgpssGU1ZNU09CiaGN1zM/YJsGV0znXRqeBPiGBXpk=@nongnu.org
+X-Gm-Message-State: AOJu0YwxT22xCV1arOWqIT1BpMHfg6yeN7Ktw6z/gEN7yv1otjwdoqBH
+ LHwMmGiiC2hJ5LSGV71gVnqQoZWTFmK4Swd/a58HdnSt32KdlZooqLqSfg==
+X-Google-Smtp-Source: AGHT+IH7kOrGrs11twdPlGMngsYp2+d8ZkGLvegXkfNGuiCd4ENUXx5IN9HSNg7mJ0Qd0ZRKninr8g==
+X-Received: by 2002:a17:906:d25b:b0:a86:f960:411d with SMTP id
+ a640c23a62f3a-a90d4fdf842mr1140067166b.2.1727083887158; 
+ Mon, 23 Sep 2024 02:31:27 -0700 (PDT)
 Received: from archlinux.. (90-181-218-29.rco.o2.cz. [90.181.218.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.15
+ a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Sep 2024 02:31:16 -0700 (PDT)
+ Mon, 23 Sep 2024 02:31:26 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
@@ -71,17 +71,16 @@ Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 10/23] hw/i2c/mpc_i2c: Convert DPRINTF to trace events for
- register access
-Date: Mon, 23 Sep 2024 11:30:03 +0200
-Message-ID: <20240923093016.66437-11-shentey@gmail.com>
+Subject: [PATCH 16/23] hw/net/fsl_etsec/etsec: Prefer DEFINE_TYPES() macro
+Date: Mon, 23 Sep 2024 11:30:09 +0200
+Message-ID: <20240923093016.66437-17-shentey@gmail.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240923093016.66437-1-shentey@gmail.com>
 References: <20240923093016.66437-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,60 +105,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/i2c/mpc_i2c.c    | 9 +++++----
- hw/i2c/trace-events | 5 +++++
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ hw/net/fsl_etsec/etsec.c | 22 +++++++++-------------
+ 1 file changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/hw/i2c/mpc_i2c.c b/hw/i2c/mpc_i2c.c
-index 2467d1a9aa..3d79c15653 100644
---- a/hw/i2c/mpc_i2c.c
-+++ b/hw/i2c/mpc_i2c.c
-@@ -24,6 +24,7 @@
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
- #include "qom/object.h"
-+#include "trace.h"
+diff --git a/hw/net/fsl_etsec/etsec.c b/hw/net/fsl_etsec/etsec.c
+index 3fdd16ef2e..9bd886b996 100644
+--- a/hw/net/fsl_etsec/etsec.c
++++ b/hw/net/fsl_etsec/etsec.c
+@@ -36,7 +36,6 @@
+ #include "registers.h"
+ #include "qapi/error.h"
+ #include "qemu/log.h"
+-#include "qemu/module.h"
  
- /* #define DEBUG_I2C */
- 
-@@ -224,8 +225,8 @@ static uint64_t mpc_i2c_read(void *opaque, hwaddr addr, unsigned size)
-         break;
-     }
- 
--    DPRINTF("%s: addr " HWADDR_FMT_plx " %02" PRIx32 "\n", __func__,
--                                         addr, value);
-+    trace_mpc_i2c_read(addr, value);
-+
-     return (uint64_t)value;
+ /* #define HEX_DUMP */
+ /* #define DEBUG_REGISTER */
+@@ -431,17 +430,14 @@ static void etsec_class_init(ObjectClass *klass, void *data)
+     dc->user_creatable = true;
  }
  
-@@ -234,8 +235,8 @@ static void mpc_i2c_write(void *opaque, hwaddr addr,
- {
-     MPCI2CState *s = opaque;
+-static const TypeInfo etsec_info = {
+-    .name                  = TYPE_ETSEC_COMMON,
+-    .parent                = TYPE_SYS_BUS_DEVICE,
+-    .instance_size         = sizeof(eTSEC),
+-    .class_init            = etsec_class_init,
+-    .instance_init         = etsec_instance_init,
++static const TypeInfo types[] = {
++    {
++        .name          = TYPE_ETSEC_COMMON,
++        .parent        = TYPE_SYS_BUS_DEVICE,
++        .instance_size = sizeof(eTSEC),
++        .class_init    = etsec_class_init,
++        .instance_init = etsec_instance_init,
++    },
+ };
  
--    DPRINTF("%s: addr " HWADDR_FMT_plx " val %08" PRIx64 "\n", __func__,
--                                             addr, value);
-+    trace_mpc_i2c_write(addr, value);
-+
-     switch (addr) {
-     case MPC_I2C_ADR:
-         s->adr = value & CADR_MASK;
-diff --git a/hw/i2c/trace-events b/hw/i2c/trace-events
-index 6900e06eda..f708a7ace1 100644
---- a/hw/i2c/trace-events
-+++ b/hw/i2c/trace-events
-@@ -35,6 +35,11 @@ aspeed_i2c_bus_write(uint32_t busid, uint64_t offset, unsigned size, uint64_t va
- aspeed_i2c_bus_send(const char *mode, int i, int count, uint8_t byte) "%s send %d/%d 0x%02x"
- aspeed_i2c_bus_recv(const char *mode, int i, int count, uint8_t byte) "%s recv %d/%d 0x%02x"
- 
-+# mpc_i2c.c
-+
-+mpc_i2c_read(uint64_t addr, uint32_t value) "[0x%" PRIx64 "] -> 0x%02" PRIx32
-+mpc_i2c_write(uint64_t addr, uint32_t value) "[0x%" PRIx64 "] <- 0x%02" PRIx32
-+
- # npcm7xx_smbus.c
- 
- npcm7xx_smbus_read(const char *id, uint64_t offset, uint64_t value, unsigned size) "%s offset: 0x%04" PRIx64 " value: 0x%02" PRIx64 " size: %u"
+-static void etsec_register_types(void)
+-{
+-    type_register_static(&etsec_info);
+-}
+-
+-type_init(etsec_register_types)
++DEFINE_TYPES(types)
 -- 
 2.46.1
 
