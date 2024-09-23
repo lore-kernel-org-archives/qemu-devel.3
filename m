@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1D52CF9C5B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F109DCF9C71
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Sep 2024 09:33:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssfPY-0002Dv-2i; Mon, 23 Sep 2024 05:31:16 -0400
+	id 1ssfPv-0003nb-JW; Mon, 23 Sep 2024 05:31:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPV-00025j-US; Mon, 23 Sep 2024 05:31:13 -0400
+ id 1ssfPm-00038k-2v; Mon, 23 Sep 2024 05:31:30 -0400
 Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1ssfPT-0006xg-9y; Mon, 23 Sep 2024 05:31:12 -0400
+ id 1ssfPk-00070l-Gd; Mon, 23 Sep 2024 05:31:29 -0400
 Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a8d2b24b7a8so940166866b.1; 
- Mon, 23 Sep 2024 02:31:10 -0700 (PDT)
+ a640c23a62f3a-a8d4979b843so515733366b.3; 
+ Mon, 23 Sep 2024 02:31:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727083868; x=1727688668; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727083886; x=1727688686; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w4QKCLTnYRmG6RbJry6AnrnojW0x9+VCIRXbxcRAKqY=;
- b=DHaLVgxo6VVLPM5cUV/BFL+h+bmrCxlWzDEJIEDvNeNGztLnwTe3OPvOjDXvkewEXH
- STdpYuhBWNDKT81u/xOFUbF3LiuEjeL+S7w9zL+g6fQu9LXPPZvcSvDy+l2Q8bTka/xn
- d5So9e5ZTFTNaMaWrsVuwI+eSKsI37oF3lAdgTkb0ac7aAR6nXIU2dyXYqJFpO/vn8j2
- iXGMVlhBE/sufw52RZVSee9NbKuwEwBmPxLTQnqdEju6KEXgWU94xv8Z82i6evheOpbT
- XlygGBO0M/DEkiYKWrpYqEM3Wh0DpwNZot2eeCNeiAH/frUTdvR230jhkrTFaI9Ae743
- 7Mag==
+ bh=zl1UfkNK4uOLHCCNuOFOWU9ZrQRdFQX35RLscGjdLrg=;
+ b=ZI6DeI83QKfJ4XJyOPtFx6yd82FRXvckX31wtc9R1JN5ZWc22mNR1PQS+Ds14Ltn63
+ jRYyDbfxxPRaHLXIGoudNMa8vtxWVpmj9ccUKc8zxV03mwu2Jab55LF9ExIO2I07LOr7
+ 24q25ryAOmaQb44s/PhkMGLU/yYyxbbMEbnSGJj9gxozLKT0zS8QIqoiULW+TFqJWPXe
+ Yt0UsjqoO2jQD49/Usd1MUTHiRjOFdkEJe+D6v5tN7IkJaLTc5/J3Sbs+QNIpVFBJdJc
+ I35ElocJkkNnmlQu0QdRPYXfsarurLqdrtlnyagUIVUYGsSOnfip40EKMeLEqBRDNkHR
+ 0S1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727083868; x=1727688668;
+ d=1e100.net; s=20230601; t=1727083886; x=1727688686;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=w4QKCLTnYRmG6RbJry6AnrnojW0x9+VCIRXbxcRAKqY=;
- b=K0wD7zbc49WYyJXLv+hP7QB4/Zk8Zf5As7j4URU/IET8rEowNIywkO6wSXQglSZJjG
- f0fRuadVCybs0N7PTQ/9dXCKPU+0C2AEijE9KjcSvc2FVx3XVYeLMH2GJJVsRVijWXAt
- WtfH8Z1BUwWMKoFXoMx3qO6/vfOQZWFkR2g1U1sDV0EPAXywQ1kph1p4G3/GpGGtc6ml
- ZIDI0LMx/BNl3RZxNxu6Owq8paCX6QxFCCYkNOlyin+git7ya9hmy6UoZ9hMoCyPaQMa
- UYYNRTx9gXk5VqilaZiT0fzyUh+C3ODUx85+KwH0AMCRHtrnpI++Yn9AVpGfrrv6ogL9
- 9vMA==
+ bh=zl1UfkNK4uOLHCCNuOFOWU9ZrQRdFQX35RLscGjdLrg=;
+ b=pFS+sXWsfEV8jODDdpazqEZriP+xK3E5leOLGxn6vkm+RpUARlncutOXaKtugk6Z+M
+ JaUQApxo6CoX3JWrlvN0u0ZI2eWFtdjOP53lQ0hZSrHCzumqpVd6HUsogqnWf4Qy0QAq
+ f8Xd4w8qHm4bPbZFX+gh5W2AkQ4f5wAUF7kK7xymDapXHFZ5fYFBovEKRziaPUHPCFee
+ PCWwNUl2zUXK0WJTZ5Kx+0w4AlHzcG+1eGb7YdiU2IWoNS4OhsGcL03tEr19nUc5w3uD
+ GzcsPeOEJKd+rU4tljKM7q9RrihsE8Z5O4Fw9ZkSXeN3YtcsXUGd5Eu8/BxIxSyrlpdV
+ DC+Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUacCS3oRPF07xKBd1HRFhSclBHF7LF55jOASskpiInuQ5ia4xs26S89GyQwDtPeJ/t7Jq7uJ3hoCJY@nongnu.org,
- AJvYcCWiJ1+XNF8f896sujxWHilT8dW7hj0SUm4nvvNo9cTvLJuHf8bRv2Y1SZROTN25PG68Um+BzUB9kgU=@nongnu.org
-X-Gm-Message-State: AOJu0YzNcHqRdY9nbP4ytIqiS55jQXCBWB2XN6wUSRECh1Lez5wBPkPu
- A5J33B6a4wGCzxizxVI5gFx39ehVo5TTJdnA468AK3voWu3IQHW3G8sb9w==
-X-Google-Smtp-Source: AGHT+IGPr5k4lTfDwH8Hzdc+kNUjPn/92EN4rGVwxClEJG/iwvJPVOVc1ujyM8Ee/YYCEoDnxYji9Q==
-X-Received: by 2002:a17:907:a0e:b0:a90:3494:2aa9 with SMTP id
- a640c23a62f3a-a90c1c363c1mr1628386966b.2.1727083868126; 
- Mon, 23 Sep 2024 02:31:08 -0700 (PDT)
+ AJvYcCVpfj2jCN4ygkE0Bed0+qvecp6kefa7Xol3obw3BHfLeAoIiFkAlKdhs8br8Ez4fMgjn3Rn8LP9+ME=@nongnu.org,
+ AJvYcCXg51gwYCMSFyabTyvUY77WtL2tjqOEEc5wHlkm1LXJDIu1U7omlUq11pWUpGoRJWGl3NmOeWXYr8gj@nongnu.org
+X-Gm-Message-State: AOJu0YyknBVhsY/iNMz3K4XviiXWBNrTO7zV0HHDmVzHPTGmCpP1NCun
+ Fs/f7C6NVjYEqTFtaCaxKF1dYpq8yGRZbtjaJCIOqWpYr4eAtOtwbu6nZQ==
+X-Google-Smtp-Source: AGHT+IEKW+H3JsoS1O6yo6rqI9yZQ5idQ/Pyi1NG+Wti/sIMHZ50/3bbzras5gWuWJo45UTyamhbSQ==
+X-Received: by 2002:a17:907:e603:b0:a90:344a:7db6 with SMTP id
+ a640c23a62f3a-a90d583ba97mr1079142466b.62.1727083885793; 
+ Mon, 23 Sep 2024 02:31:25 -0700 (PDT)
 Received: from archlinux.. (90-181-218-29.rco.o2.cz. [90.181.218.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.06
+ a640c23a62f3a-a90612b3f6fsm1188747166b.107.2024.09.23.02.31.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Sep 2024 02:31:07 -0700 (PDT)
+ Mon, 23 Sep 2024 02:31:25 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
@@ -71,10 +71,9 @@ Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 05/23] hw/ppc/e500: Add missing device tree properties to i2c
- controller node
-Date: Mon, 23 Sep 2024 11:29:58 +0200
-Message-ID: <20240923093016.66437-6-shentey@gmail.com>
+Subject: [PATCH 15/23] hw/ppc/mpc8544_guts: Prefer DEFINE_TYPES() macro
+Date: Mon, 23 Sep 2024 11:30:08 +0200
+Message-ID: <20240923093016.66437-16-shentey@gmail.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240923093016.66437-1-shentey@gmail.com>
 References: <20240923093016.66437-1-shentey@gmail.com>
@@ -104,32 +103,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When compiling a decompiled device tree blob created with dumpdtb, dtc complains
-with:
-
-  /soc@e0000000/i2c@3000: incorrect #address-cells for I2C bus
-  /soc@e0000000/i2c@3000: incorrect #size-cells for I2C bus
-
-Fix this by adding the missing device tree properties.
-
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/ppc/e500.c | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/ppc/mpc8544_guts.c | 20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index 228287b457..e2a4f265a5 100644
---- a/hw/ppc/e500.c
-+++ b/hw/ppc/e500.c
-@@ -196,6 +196,8 @@ static void dt_i2c_create(void *fdt, const char *soc, const char *mpic,
-     qemu_fdt_setprop_cells(fdt, i2c, "cell-index", 0);
-     qemu_fdt_setprop_cells(fdt, i2c, "interrupts", irq0, 0x2);
-     qemu_fdt_setprop_phandle(fdt, i2c, "interrupt-parent", mpic);
-+    qemu_fdt_setprop_cell(fdt, i2c, "#size-cells", 0);
-+    qemu_fdt_setprop_cell(fdt, i2c, "#address-cells", 1);
-     qemu_fdt_setprop_string(fdt, "/aliases", alias, i2c);
+diff --git a/hw/ppc/mpc8544_guts.c b/hw/ppc/mpc8544_guts.c
+index 6688fd44c3..cbb1e3adda 100644
+--- a/hw/ppc/mpc8544_guts.c
++++ b/hw/ppc/mpc8544_guts.c
+@@ -18,7 +18,6 @@
+  */
  
-     g_free(i2c);
+ #include "qemu/osdep.h"
+-#include "qemu/module.h"
+ #include "qemu/log.h"
+ #include "sysemu/runstate.h"
+ #include "cpu.h"
+@@ -141,16 +140,13 @@ static void mpc8544_guts_initfn(Object *obj)
+     sysbus_init_mmio(d, &s->iomem);
+ }
+ 
+-static const TypeInfo mpc8544_guts_info = {
+-    .name          = TYPE_MPC8544_GUTS,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(GutsState),
+-    .instance_init = mpc8544_guts_initfn,
++static const TypeInfo types[] = {
++    {
++        .name          = TYPE_MPC8544_GUTS,
++        .parent        = TYPE_SYS_BUS_DEVICE,
++        .instance_size = sizeof(GutsState),
++        .instance_init = mpc8544_guts_initfn,
++    },
+ };
+ 
+-static void mpc8544_guts_register_types(void)
+-{
+-    type_register_static(&mpc8544_guts_info);
+-}
+-
+-type_init(mpc8544_guts_register_types)
++DEFINE_TYPES(types)
 -- 
 2.46.1
 
