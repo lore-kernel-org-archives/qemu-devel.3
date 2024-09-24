@@ -4,113 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3A39CCFA15
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 05:24:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0336CCFA15
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 05:29:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stgyW-0005ou-LN; Thu, 26 Sep 2024 01:23:36 -0400
+	id 1sth3r-0003rn-Un; Thu, 26 Sep 2024 01:29:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <arun.kka@samsung.com>)
- id 1stgyU-0005mc-Pu
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 01:23:34 -0400
-Received: from mailout1.samsung.com ([203.254.224.24])
+ id 1sth3n-0003pT-2H
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 01:29:04 -0400
+Received: from mailout4.samsung.com ([203.254.224.34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <arun.kka@samsung.com>)
- id 1stgyR-0005wl-NF
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 01:23:34 -0400
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
- by mailout1.samsung.com (KnoxPortal) with ESMTP id
- 20240926052326epoutp018e471256da825a4acd63f46ed0198216~4s9okdl1R3171831718epoutp01j
- for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 05:23:26 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
- 20240926052326epoutp018e471256da825a4acd63f46ed0198216~4s9okdl1R3171831718epoutp01j
+ id 1sth3j-0006et-0T
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 01:29:01 -0400
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+ by mailout4.samsung.com (KnoxPortal) with ESMTP id
+ 20240926052307epoutp049790a9dd10a229b89c1b89259b6557ba~4s9WZv5oQ1660416604epoutp04X
+ for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 05:23:07 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
+ 20240926052307epoutp049790a9dd10a229b89c1b89259b6557ba~4s9WZv5oQ1660416604epoutp04X
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1727328206;
- bh=BV7E1RcZ6RTTMImVJgR4fSD+gghd5R8oeDqVS1kiug8=;
- h=From:To:Cc:Subject:Date:References:From;
- b=Lu02VTEsDPt9D2KLZ+hSFvJ71P+0hxqlo3U6yaJL+R+vwgsygQ/Q2yxFyw/V8yBRc
- JoAMZ3Hb66zVN+zrRbyAdQOpxjmSGBn455SkKL/4TAzR2SdlO8dxv8Qxqg8zgAVvoQ
- PbLo166EMWhlqFQcaCI7A53SVVUK6ZhS9Lib4h94=
+ s=mail20170921; t=1727328187;
+ bh=NwAXpFbZQ/UU+GUG2NszcuJRuUTioG4BJ5Y4IAR6feM=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=vPsNv16tTBHTlxqW98w7I51TPHi1GQaVHPRcd2Ig24xx7sBZ0KRfsTsY48QX6mNvr
+ GZ60aehwJfIKuYJtAeDeEgCuhiRXTue9LxzM93bBKApvEJgQKCrdjq1ROSI+Q4OHZy
+ x7eeRIYe7xw8dPQPhGIqxrSSM5v/tWjz/l4mdDNs=
 Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
  epcas5p3.samsung.com (KnoxPortal) with ESMTP id
- 20240926052326epcas5p3cea8a0969cd96faaa226068a1c26898c~4s9oLfmbE3153931539epcas5p3x;
- Thu, 26 Sep 2024 05:23:26 +0000 (GMT)
-Received: from epsmges5p2new.samsung.com (unknown [182.195.38.179]) by
- epsnrtp3.localdomain (Postfix) with ESMTP id 4XDhp3664rz4x9QG; Thu, 26 Sep
- 2024 05:23:23 +0000 (GMT)
-Received: from epcas5p4.samsung.com ( [182.195.41.42]) by
- epsmges5p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
- BF.15.09743.BCFE4F66; Thu, 26 Sep 2024 14:23:23 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
- epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
- 20240925061501epcas5p26c161f5c7cae08faa15a8db8391ab417~4aBYU-h8M2274922749epcas5p2o;
- Wed, 25 Sep 2024 06:15:01 +0000 (GMT)
+ 20240926052306epcas5p32df6cb1097df2e7c3de802feb06e4174~4s9WAbe_43026130261epcas5p3e;
+ Thu, 26 Sep 2024 05:23:06 +0000 (GMT)
+Received: from epsmgec5p1-new.samsung.com (unknown [182.195.38.175]) by
+ epsnrtp3.localdomain (Postfix) with ESMTP id 4XDhnj2dn9z4x9Pp; Thu, 26 Sep
+ 2024 05:23:05 +0000 (GMT)
+Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
+ epsmgec5p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ C9.01.19863.6BFE4F66; Thu, 26 Sep 2024 14:23:02 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+ epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+ 20240924064831epcas5p197915617b154342dd1286fd35a40b72e~4G1WJA6lH2270722707epcas5p1M;
+ Tue, 24 Sep 2024 06:48:31 +0000 (GMT)
 Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
- epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
- 20240925061501epsmtrp2bd74fda0a0a7a72164fa80b07de692ea~4aBYUQQWx2674826748epsmtrp25;
- Wed, 25 Sep 2024 06:15:01 +0000 (GMT)
-X-AuditID: b6c32a4a-9e9a3a800000260f-08-66f4efcb423d
+ epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+ 20240924064831epsmtrp18dad354cbfe046a7f4c672a166ad7be3~4G1WIWk5F0827108271epsmtrp1c;
+ Tue, 24 Sep 2024 06:48:31 +0000 (GMT)
+X-AuditID: b6c32a50-c73ff70000004d97-bc-66f4efb6262e
 Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
  epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
- BF.81.08456.56AA3F66; Wed, 25 Sep 2024 15:15:01 +0900 (KST)
-Received: from open-sourcing.sa.corp.samsungelectronics.net (unknown
- [107.99.41.223]) by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
- 20240925061500epsmtip2752b70d5fa2aebae7b9f10fcf1fa20d4~4aBXS2kdl0508305083epsmtip2T;
- Wed, 25 Sep 2024 06:14:59 +0000 (GMT)
+ 52.6E.08456.FB062F66; Tue, 24 Sep 2024 15:48:31 +0900 (KST)
+Received: from open-sourcing (unknown [107.99.41.223]) by
+ epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+ 20240924064830epsmtip23f77231d2327d629c33f480e11899928~4G1VEp9W12752327523epsmtip2K;
+ Tue, 24 Sep 2024 06:48:30 +0000 (GMT)
+Date: Tue, 24 Sep 2024 06:48:32 +0530
 From: Arun Kumar <arun.kka@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, Arun Kumar
- <arun.kka@samsung.com>, Klaus Jensen <k.jensen@samsung.com>
-Subject: [PATCH v2] hw/nvme: i/o cmd set independent namespace data structure
-Date: Wed, 25 Sep 2024 06:14:07 +0530
-Message-ID: <20240925004407.3521406-1-arun.kka@samsung.com>
-X-Mailer: git-send-email 2.43.0
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org, Klaus Jensen
+ <k.jensen@samsung.com>
+Subject: Re: [PATCH] hw/nvme: add knob for CTRATT.MEM
+Message-ID: <jth4qww2u6jvpto5kwhr73s3nvfugop2xrn45ossptczjye4id@ow3tjrsfsgyz>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrHKsWRmVeSWpSXmKPExsWy7bCmlu7p91/SDLqu61vMuW9hcWJKmMX+
- g99YLU427mG1mHToGqPF8d4dLA5sHlOmXWP3OLfjPLvHplWdbB5Prm1m8ujbsooxgDUq2yYj
- NTEltUghNS85PyUzL91WyTs43jne1MzAUNfQ0sJcSSEvMTfVVsnFJ0DXLTMH6AAlhbLEnFKg
- UEBicbGSvp1NUX5pSapCRn5xia1SakFKToFJgV5xYm5xaV66Xl5qiZWhgYGRKVBhQnbGhx2X
- 2QuaTCru3FrD1sB4Rb2LkZNDQsBE4tT5BcxdjFwcQgK7GSXOrXgD5XxilGi+dYwJwvnGKLHp
- wDcmmJbXczeyQyT2Mkr0vWqDaulikuhdO5UVpIpNQF1i7cwdYB0iApISv7tOM4PYzAItjBJH
- VgaC2MIC/hIH1+wGq2cRUJV4vXM2O4jNK2At8Xf2KTaIbfISi3csZ4aIC0qcnPmEBWKOvETz
- 1tlgiyUEjrFLnP51iBGiwUVid+skKFtY4tXxLewQtpTE53d7oYbWS5yZuQfqnQ5GiaffoWrs
- JS7u+QsU5wBaoCmxfpc+RFhWYuqpdUwQe/kken8/gWrlldgxD8ZWkri39SfUGAmJOVe+Q53g
- IdGytx/sZiGBWIn+DRfZJjDKz0Lyziwk78xC2LyAkXkVo2RqQXFuemqxaYFRXmo5PGaT83M3
- MYITopbXDsaHDz7oHWJk4mA8xCjBwawkwjvp5sc0Id6UxMqq1KL8+KLSnNTiQ4ymwDCeyCwl
- mpwPTMl5JfGGJpYGJmZmZiaWxmaGSuK8r1vnpggJpCeWpGanphakFsH0MXFwSjUwsZlxiJ9c
- 8k1baLO+CNtlAW6NetnfJuqcgo3Sx5KvrOHNl3/5oSPzSMr77S5dF2puBxRE8W2xdKzbpMh4
- suCieEa3rch6EauK16Lr3W6bzI/7t8wvSnvPln1n55i9uWpuzXDw3fm0C9YP5Kc8/el1LGf1
- 5vZZ38WmLQnsr/dcmmKRpp7+Zt/+pmvrN+hcl9Uu+8ypc8lSyembxf93QRUPvxuc030TanxW
- bXcEa7Ry6K7KrUcuX2h12258PcYoPvJ2YPz3WB0h8V83DcJf1PouMvmx7mvn3tNOOw85bd8y
- M9b1Ym5Rk8eiiU+FbR+4qyfqhZb1uCov6JjEMmWRHX9MueTOp4/2dPjYXL7Mv/iNEktxRqKh
- FnNRcSIA+bmARxEEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrFLMWRmVeSWpSXmKPExsWy7bCSvG7qqs9pBpOPs1rMuW9hcWJKmMX+
- g99YLU427mG1mHToGqPF8d4dLA5sHlOmXWP3OLfjPLvHplWdbB5Prm1m8ujbsooxgDWKyyYl
- NSezLLVI3y6BK+PDjsvsBU0mFXdurWFrYLyi3sXIySEhYCLxeu5G9i5GLg4hgd2MEk3r7jNC
- JCQkfnz5BmULS6z89xyqqINJ4vGWaewgCTYBdYm1M3cwgdgiApISv7tOM4MUMQt0MUpsu3OD
- FSQhLOArcf7YYWYQm0VAVeL1ztlgzbwC1hJ/Z59ig9ggL7F4x3JmiLigxMmZT1hAbGagePPW
- 2cwTGPlmIUnNQpJawMi0ilEytaA4Nz232LDAKC+1XK84Mbe4NC9dLzk/dxMjODi1tHYw7ln1
- Qe8QIxMH4yFGCQ5mJRHeSTc/pgnxpiRWVqUW5ccXleakFh9ilOZgURLn/fa6N0VIID2xJDU7
- NbUgtQgmy8TBKdXA5DlDRCG2v2h/wo/1DKbPjyg8sph/QOrq1+NGkWudLogsmVK8VufSVT9+
- c5nH2ouOL3miX5Oqb9mZX/3Y8ZLW8envjn3/afFyygWjjQfFoivDtkuci1R6X2EWbLRUw+XU
- 8qLo2Z/CPxzpvLRk83b3ye8+ijgxvElWaGmR1vpXeueo/InTKTIeEwWl56069PbalDtvU54w
- 9d+NerqhLUPrYsUeq5Jzenw7F6/we6SycHbVLf9wp6Pcoir6Sfnn3vutY5xmutTO96xg5YEb
- 8TyuGc3tB+yCQhq/K1hrPGpPWZ798fpVwVfcnsV/xH56GtwoTPw0ue/8069Ze41eN05LeJK7
- z2CFfOuiduXEE/ZtXEosxRmJhlrMRcWJAD2Wd829AgAA
-X-CMS-MailID: 20240925061501epcas5p26c161f5c7cae08faa15a8db8391ab417
+In-Reply-To: <20240924-add-ctratt-mem-knob-v1-1-0674de9b88b4@samsung.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupkk+LIzCtJLcpLzFFi42LZdlhTXXfb+y9pBk82cVucmBJmsf/gN1aL
+ k417WC0mHbrGaDHrXTubxfHeHSwObB5Tpl1j9zi34zy7x6ZVnWweT65tZvLo27KKMYA1Ktsm
+ IzUxJbVIITUvOT8lMy/dVsk7ON453tTMwFDX0NLCXEkhLzE31VbJxSdA1y0zB+gCJYWyxJxS
+ oFBAYnGxkr6dTVF+aUmqQkZ+cYmtUmpBSk6BSYFecWJucWleul5eaomVoYGBkSlQYUJ2xpM5
+ bcwF8wQrlsy7zdbA2MXXxcjJISFgIvH+wCmmLkYuDiGBPYwSq2/sYYNwPjFKbL/3HCrzjVGi
+ 58IVNpiWAwd7oBJ7GSXaGvqZQBJCAq8ZJXa95gGxWQRUJa7Pe88IYrMJqEusnbkDrEZEQEXi
+ 6b+9LCDNzALzGSX27L0ANlVYwFRi5sK7QEUcHLwCvhJttyRBwrwCghInZz5hAbE5BTwlpk+Z
+ xgrSKyHwkV3iRs8DVpB6CQEXiXcf1CGOE5Z4dXwLO4QtJfGyvw3Krpc4M3MPE4TdwSjx9DtU
+ 3F7i4p6/YGuZBTIkJuzzhQjLSkw9tQ6snFmAT6L39xOoVl6JHfNgbCWJe1t/Qo2RkJhz5Tsj
+ hO0hcenOZFZI+MxhlPjR/JdtAqPcLCTvzEJYNwtshZVE54cmVoiwtMTyfxwQpqbE+l36CxhZ
+ VzFKpRYU56anJpsWGOrmpZbD4zg5P3cTIzhNagXsYFy94a/eIUYmDsZDjBIczEoivJNufkwT
+ 4k1JrKxKLcqPLyrNSS0+xGgKjJ6JzFKiyfnARJ1XEm9oYmlgYmZmZmJpbGaoJM77unVuipBA
+ emJJanZqakFqEUwfEwenVANT34G56z+96PidtWHK4588nxo0X+m0yDLv1eh/Inz0jG+PXGC4
+ joXTqnuXohbX57F2XrrK5nHkjDVjTqtwksylHzXtimubdi3LbVD/mz53ssFBSZPfGqlXAzZt
+ qz/27cg/s16d0w8K1qWus5mktnn+fK/9izwZi7leLDjjvOvJ9dRv0mceqWdP4mhXabUrNpri
+ s7GRP8V/VqVChOqjyDtddUtrkvOE8p8xyuq+MrqmeZCHP+Beu4BTaWF99rKXj5Z+2CssIXxK
+ +NpSX9aEjoztN2/xVGZejFbcXP5qy/Mvs/3yrrZsm7vORTTpo9q/10VRfm+SWY7c5lgxe7t4
+ DkPYk4XuC7drbawqXiTRJJKsxFKckWioxVxUnAgAV2UsqRwEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrLLMWRmVeSWpSXmKPExsWy7bCSvO7+hE9pBpN+cFucmBJmsf/gN1aL
+ k417WC0mHbrGaDHrXTubxfHeHSwObB5Tpl1j9zi34zy7x6ZVnWweT65tZvLo27KKMYA1issm
+ JTUnsyy1SN8ugSujYd8KloILfBVnnr9gbmC8xt3FyMkhIWAiceBgD1MXIxeHkMBuRomTV8+z
+ QCQkJH58+cYIYQtLrPz3nB2i6CWjxKRjH9lBEiwCqhLX570HK2ITUJdYO3MHE4gtIqAi8fTf
+ XhaQBmaBeYwSHev3gBUJC5hKzFx4F6iIg4NXwFei7ZYkxNA5jBL/OxaDDeUVEJQ4OfMJ2BXM
+ AmYS8zY/ZAapZxaQllj+jwMkzCngKTF9yjTWCYwCs5B0zELSMQuhYwEj8ypGydSC4tz03GLD
+ AqO81HK94sTc4tK8dL3k/NxNjOAQ19Lawbhn1Qe9Q4xMHIyHGCU4mJVEeCfd/JgmxJuSWFmV
+ WpQfX1Sak1p8iFGag0VJnPfb694UIYH0xJLU7NTUgtQimCwTB6dUA1MXl+Apbq0jB75x/hS9
+ ecZjef/Ry5VpnxVuVxYe9g1hFsy+IxXDYO+ga/GltnLlt608Yec0k9cs8J9245PU3s6IPWs2
+ vv7w2VPffeEfd6nciaLrZ/j82fA4msFC4vX72uydAt5JibrPMrSmz6uWz581ba7UV9/VrFMs
+ fpxPvPG5e512X87eq5mzNt90uXxjzoOSdc3yjy3vmvhev973L7f3Z+nzS5y1v3ynBf7eKtfB
+ +aX/29N4z28ZoVWPLRf3Hbpx301Ldsf264u+sbZZJlz9tM0k7b35UlvJlM3ds/Rq614o2hfz
+ 6uud/qv1XtVG16zu0EX9NeyskVXvm/g/K+5dJV6ziC2necqX55s8SsuVWIozEg21mIuKEwFr
+ yYdG4AIAAA==
+X-CMS-MailID: 20240924064831epcas5p197915617b154342dd1286fd35a40b72e
 X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
+Content-Type: multipart/mixed;
+ boundary="----lj09sVyn-tOB2AKWHI53LLLuzUygR0h9jjkNdS9akYNnxuib=_4f1fc_"
 X-Sendblock-Type: REQ_APPROVE
 CMS-TYPE: 105P
 DLP-Filter: Pass
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20240925061501epcas5p26c161f5c7cae08faa15a8db8391ab417
-References: <CGME20240925061501epcas5p26c161f5c7cae08faa15a8db8391ab417@epcas5p2.samsung.com>
-Received-SPF: pass client-ip=203.254.224.24; envelope-from=arun.kka@samsung.com;
- helo=mailout1.samsung.com
+X-CMS-RootMailID: 20240924063550epcas5p46118c878bebe3289884819017cb0b11b
+References: <CGME20240924063550epcas5p46118c878bebe3289884819017cb0b11b@epcas5p4.samsung.com>
+ <20240924-add-ctratt-mem-knob-v1-1-0674de9b88b4@samsung.com>
+Received-SPF: pass client-ip=203.254.224.34; envelope-from=arun.kka@samsung.com;
+ helo=mailout4.samsung.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
@@ -134,185 +137,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-add support for i/o command set independent namespace data
-structure(cns=8h and cns=1fh)
+------lj09sVyn-tOB2AKWHI53LLLuzUygR0h9jjkNdS9akYNnxuib=_4f1fc_
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Disposition: inline
 
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-Signed-off-by: Arun Kumar <arun.kka@samsung.com>
----
- hw/nvme/ctrl.c       | 31 +++++++++++++++++++++++++++++++
- hw/nvme/ns.c         |  6 +++++-
- hw/nvme/nvme.h       |  1 +
- hw/nvme/trace-events |  1 +
- include/block/nvme.h | 22 ++++++++++++++++++++--
- 5 files changed, 58 insertions(+), 3 deletions(-)
+Hi Klaus,
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 127c3d2383..cef2c3fa19 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -5498,6 +5498,33 @@ static uint16_t nvme_identify_sec_ctrl_list(NvmeCtrl *n, NvmeRequest *req)
-     return nvme_c2h(n, (uint8_t *)&list, sizeof(list), req);
- }
- 
-+static uint16_t nvme_identify_ns_ind(NvmeCtrl *n, NvmeRequest *req, bool alloc)
-+{
-+    NvmeNamespace *ns;
-+    NvmeIdentify *c = (NvmeIdentify *)&req->cmd;
-+    uint32_t nsid = le32_to_cpu(c->nsid);
-+
-+    trace_pci_nvme_identify_ns_ind(nsid);
-+
-+    if (!nvme_nsid_valid(n, nsid) || nsid == NVME_NSID_BROADCAST) {
-+        return NVME_INVALID_NSID | NVME_DNR;
-+    }
-+
-+    ns = nvme_ns(n, nsid);
-+    if (unlikely(!ns)) {
-+        if (alloc) {
-+            ns = nvme_subsys_ns(n->subsys, nsid);
-+            if (!ns) {
-+                return nvme_rpt_empty_id_struct(n, req);
-+            }
-+        } else {
-+            return nvme_rpt_empty_id_struct(n, req);
-+        }
-+    }
-+
-+    return nvme_c2h(n, (uint8_t *)&ns->id_ns_ind, sizeof(NvmeIdNsInd), req);
-+}
-+
- static uint16_t nvme_identify_ns_csi(NvmeCtrl *n, NvmeRequest *req,
-                                      bool active)
- {
-@@ -5732,6 +5759,10 @@ static uint16_t nvme_identify(NvmeCtrl *n, NvmeRequest *req)
-         return nvme_identify_sec_ctrl_list(n, req);
-     case NVME_ID_CNS_CS_NS:
-         return nvme_identify_ns_csi(n, req, true);
-+    case NVME_ID_CNS_CS_IND_NS:
-+        return nvme_identify_ns_ind(n, req, false);
-+    case NVME_ID_CNS_CS_IND_NS_ALLOCATED:
-+        return nvme_identify_ns_ind(n, req, true);
-     case NVME_ID_CNS_CS_NS_PRESENT:
-         return nvme_identify_ns_csi(n, req, false);
-     case NVME_ID_CNS_CTRL:
-diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-index ea8db175db..6dbdcb49bf 100644
---- a/hw/nvme/ns.c
-+++ b/hw/nvme/ns.c
-@@ -62,6 +62,7 @@ static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
-     static uint64_t ns_count;
-     NvmeIdNs *id_ns = &ns->id_ns;
-     NvmeIdNsNvm *id_ns_nvm = &ns->id_ns_nvm;
-+    NvmeIdNsInd *id_ns_ind = &ns->id_ns_ind;
-     uint8_t ds;
-     uint16_t ms;
-     int i;
-@@ -75,7 +76,9 @@ static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
-     id_ns->nsfeat |= (0x4 | 0x10);
- 
-     if (ns->params.shared) {
--        id_ns->nmic |= NVME_NMIC_NS_SHARED;
-+        id_ns->nmic |= NVME_ID_NS_IND_NMIC_SHRNS;
-+        id_ns_ind->nmic = NVME_ID_NS_IND_NMIC_SHRNS;
-+        id_ns_ind->nstat = NVME_ID_NS_IND_NSTAT_NRDY;
-     }
- 
-     /* Substitute a missing EUI-64 by an autogenerated one */
-@@ -770,6 +773,7 @@ static void nvme_ns_realize(DeviceState *dev, Error **errp)
-         subsys->namespaces[nsid] = ns;
- 
-         ns->id_ns.endgid = cpu_to_le16(0x1);
-+        ns->id_ns_ind.endgrpid = cpu_to_le16(0x1);
- 
-         if (ns->params.detached) {
-             return;
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index bed8191bd5..b0268efe84 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -228,6 +228,7 @@ typedef struct NvmeNamespace {
-     int64_t      moff;
-     NvmeIdNs     id_ns;
-     NvmeIdNsNvm  id_ns_nvm;
-+    NvmeIdNsInd  id_ns_ind;
-     NvmeLBAF     lbaf;
-     unsigned int nlbaf;
-     size_t       lbasz;
-diff --git a/hw/nvme/trace-events b/hw/nvme/trace-events
-index 3a67680c6a..6be0bfa1c1 100644
---- a/hw/nvme/trace-events
-+++ b/hw/nvme/trace-events
-@@ -56,6 +56,7 @@ pci_nvme_identify(uint16_t cid, uint8_t cns, uint16_t ctrlid, uint8_t csi) "cid
- pci_nvme_identify_ctrl(void) "identify controller"
- pci_nvme_identify_ctrl_csi(uint8_t csi) "identify controller, csi=0x%"PRIx8""
- pci_nvme_identify_ns(uint32_t ns) "nsid %"PRIu32""
-+pci_nvme_identify_ns_ind(uint32_t nsid) "nsid %"PRIu32""
- pci_nvme_identify_ctrl_list(uint8_t cns, uint16_t cntid) "cns 0x%"PRIx8" cntid %"PRIu16""
- pci_nvme_identify_pri_ctrl_cap(uint16_t cntlid) "identify primary controller capabilities cntlid=%"PRIu16""
- pci_nvme_identify_sec_ctrl_list(uint16_t cntlid, uint8_t numcntl) "identify secondary controller list cntlid=%"PRIu16" numcntl=%"PRIu8""
-diff --git a/include/block/nvme.h b/include/block/nvme.h
-index bb231d0b9a..47af651354 100644
---- a/include/block/nvme.h
-+++ b/include/block/nvme.h
-@@ -1068,6 +1068,7 @@ enum NvmeIdCns {
-     NVME_ID_CNS_CS_NS                 = 0x05,
-     NVME_ID_CNS_CS_CTRL               = 0x06,
-     NVME_ID_CNS_CS_NS_ACTIVE_LIST     = 0x07,
-+    NVME_ID_CNS_CS_IND_NS             = 0x08,
-     NVME_ID_CNS_NS_PRESENT_LIST       = 0x10,
-     NVME_ID_CNS_NS_PRESENT            = 0x11,
-     NVME_ID_CNS_NS_ATTACHED_CTRL_LIST = 0x12,
-@@ -1077,6 +1078,7 @@ enum NvmeIdCns {
-     NVME_ID_CNS_CS_NS_PRESENT_LIST    = 0x1a,
-     NVME_ID_CNS_CS_NS_PRESENT         = 0x1b,
-     NVME_ID_CNS_IO_COMMAND_SET        = 0x1c,
-+    NVME_ID_CNS_CS_IND_NS_ALLOCATED   = 0x1f,
- };
- 
- typedef struct QEMU_PACKED NvmeIdCtrl {
-@@ -1400,6 +1402,20 @@ typedef struct QEMU_PACKED NvmeIdNsNvm {
-     uint8_t     rsvd268[3828];
- } NvmeIdNsNvm;
- 
-+typedef struct QEMU_PACKED NvmeIdNsInd {
-+    uint8_t     nsfeat;
-+    uint8_t     nmic;
-+    uint8_t     rescap;
-+    uint8_t     fpi;
-+    uint32_t    anagrpid;
-+    uint8_t     nsattr;
-+    uint8_t     rsvd9;
-+    uint16_t    nvmsetid;
-+    uint16_t    endgrpid;
-+    uint8_t     nstat;
-+    uint8_t     rsvd15[4081];
-+} NvmeIdNsInd;
-+
- typedef struct QEMU_PACKED NvmeIdNsDescr {
-     uint8_t nidt;
-     uint8_t nidl;
-@@ -1420,8 +1436,9 @@ enum NvmeNsIdentifierType {
-     NVME_NIDT_CSI               = 0x04,
- };
- 
--enum NvmeIdNsNmic {
--    NVME_NMIC_NS_SHARED         = 1 << 0,
-+enum NvmeIdNsIndependent {
-+    NVME_ID_NS_IND_NMIC_SHRNS   = 0x01,
-+    NVME_ID_NS_IND_NSTAT_NRDY   = 0x01,
- };
- 
- enum NvmeCsi {
-@@ -1854,6 +1871,7 @@ static inline void _nvme_check_size(void)
-     QEMU_BUILD_BUG_ON(sizeof(NvmeLBAF) != 4);
-     QEMU_BUILD_BUG_ON(sizeof(NvmeLBAFE) != 16);
-     QEMU_BUILD_BUG_ON(sizeof(NvmeIdNs) != 4096);
-+    QEMU_BUILD_BUG_ON(sizeof(NvmeIdNsInd) != 4096);
-     QEMU_BUILD_BUG_ON(sizeof(NvmeIdNsNvm) != 4096);
-     QEMU_BUILD_BUG_ON(sizeof(NvmeIdNsZoned) != 4096);
-     QEMU_BUILD_BUG_ON(sizeof(NvmeSglDescriptor) != 16);
--- 
-2.43.0
+LGTM.
 
+On 24/09/24 08:35AM, Klaus Jensen wrote:
+>From: Klaus Jensen <k.jensen@samsung.com>
+>
+>Add a boolean prop (ctratt.mem) for setting CTRATT.MEM and default it to
+>unset (false) to keep existing behavior of the device intact.
+>
+>Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+>---
+> hw/nvme/ctrl.c | 7 ++++++-
+> hw/nvme/nvme.h | 4 ++++
+> 2 files changed, 10 insertions(+), 1 deletion(-)
+>
+>diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+>index f36c45931821..8556f3e61fa0 100644
+>--- a/hw/nvme/ctrl.c
+>+++ b/hw/nvme/ctrl.c
+>@@ -8492,7 +8492,11 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
+>     id->cntlid = cpu_to_le16(n->cntlid);
+>
+>     id->oaes = cpu_to_le32(NVME_OAES_NS_ATTR);
+>-    ctratt = NVME_CTRATT_ELBAS | NVME_CTRATT_MEM;
+>+
+>+    ctratt = NVME_CTRATT_ELBAS;
+>+    if (n->params.ctratt.mem) {
+>+        ctratt |= NVME_CTRATT_MEM;
+>+    }
+>
+>     id->rab = 6;
+>
+>@@ -8751,6 +8755,7 @@ static Property nvme_props[] = {
+>                      false),
+>     DEFINE_PROP_UINT16("mqes", NvmeCtrl, params.mqes, 0x7ff),
+>     DEFINE_PROP_UINT16("spdm_port", PCIDevice, spdm_port, 0),
+>+    DEFINE_PROP_BOOL("ctratt.mem", NvmeCtrl, params.ctratt.mem, false),
+>     DEFINE_PROP_END_OF_LIST(),
+> };
+>
+>diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+>index 781985754d0d..bd3c6ba33a67 100644
+>--- a/hw/nvme/nvme.h
+>+++ b/hw/nvme/nvme.h
+>@@ -538,6 +538,10 @@ typedef struct NvmeParams {
+>     uint32_t  sriov_max_vq_per_vf;
+>     uint32_t  sriov_max_vi_per_vf;
+>     bool     msix_exclusive_bar;
+>+
+>+    struct {
+>+        bool mem;
+>+    } ctratt;
+> } NvmeParams;
+>
+> typedef struct NvmeCtrl {
+>
+>---
+>base-commit: 3245de3f3d002bc9ce2ecae61e8d86cb9e375808
+>change-id: 20240924-add-ctratt-mem-knob-ae4431251cb1
+>
+>Best regards,
+>-- 
+>Klaus Jensen <k.jensen@samsung.com>
+>
+>
+
+------lj09sVyn-tOB2AKWHI53LLLuzUygR0h9jjkNdS9akYNnxuib=_4f1fc_
+Content-Type: text/plain; charset="utf-8"
+
+
+------lj09sVyn-tOB2AKWHI53LLLuzUygR0h9jjkNdS9akYNnxuib=_4f1fc_--
 
