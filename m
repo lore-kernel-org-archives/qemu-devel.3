@@ -4,90 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E670FCF9C6B
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 08:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A208CF9C6B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 08:46:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1st12f-0000it-Cy; Tue, 24 Sep 2024 04:37:05 -0400
+	id 1st1B5-0006sy-ES; Tue, 24 Sep 2024 04:45:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1st12d-0000he-Q9
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 04:37:03 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1st1B1-0006sE-W9
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 04:45:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1st12c-0002b6-DP
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 04:37:03 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1st1Az-0003dL-8t
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 04:45:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727167020;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1727167540;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rfMUqXO6ITrOFTtY48f3adVxnaUQkMn2zyEFSmxcMP8=;
- b=gljMTkg5as0Wy7USjj9AjBPJpqSJraWRKbfjd6vdJqSNue94dOyeXKKFpR6kECOeMr4pPt
- w1H41bwoAx87Bn3cpnBnJh5edIjOCkk4BGfsjC4/Ahp/VJm3Bh2qsoqf3OSuKO4LDuzftV
- UuqkGKS4RsuEmpxjNeXw9Hh0LPP+2Ak=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-90-IPsLhQzyNbKHw77eC5MPlQ-1; Tue, 24 Sep 2024 04:36:59 -0400
-X-MC-Unique: IPsLhQzyNbKHw77eC5MPlQ-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a8d26b5857cso418688866b.0
- for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 01:36:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727167018; x=1727771818;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rfMUqXO6ITrOFTtY48f3adVxnaUQkMn2zyEFSmxcMP8=;
- b=QpYH65mmH3s/Nhnf08C0KgB/KbblP/SyZBH8HQs9WyygUIATgYt0VbdVrp/KgwpIGQ
- teHv2QklVRIoss+qxFBhjCvG0lzKEw/WEUgW513Vc1NmNDUdRgT3F5VVb4H0/0CMwYFE
- AKjWCxTxVKUPXgj7wQX/Ajn1c9A0FTGbAl7xWcKTevqQyhvoOv0j6WOwGIeYug5Uzgjz
- TBE1VSCeB4zXlhcP0zeMm7vc1NOAAaaPbVoG8q/Ey7kGUtsClvv5q+/706KJo3/DHVpd
- tdw5/WQsUdENWezO7Or5Bo/P1QqykekDaxOoh6n0ngPL630mgXZ8YDhAe5m9qXEvmB/3
- c/yg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVBPjgEXqkM8/n7B38NfmzKLnMvbOwFN2wdGI+BhbyDs0Vg1D23U74B0/F9XuXxonDilAoO2Gau6KMX@nongnu.org
-X-Gm-Message-State: AOJu0YyxcHfLUjxN0xNrce1TtpCoua6p2JxUND3TCiUMbLpwJq1XElPE
- dduHhs7ym6xqgtHz5yX/6DB1fZzagLcW94+2GOmZsc+M1IpVM5Gxqyx6NYhU3v0Zd/V1ofEQy4e
- hw+DB7re1wtMr1DoKJYQwcNxq0rmshDA4yuextqraHCgySORSrrin
-X-Received: by 2002:a17:907:e6a1:b0:a77:cf9d:f495 with SMTP id
- a640c23a62f3a-a90d5813b2fmr1571659766b.40.1727167018131; 
- Tue, 24 Sep 2024 01:36:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGvcfy1Uum7K7uDFwVkIENTwGFKKlIHfa/QweyRbXsBnrZDjR5JDRfUionFhMPx8UEc7Q/5+g==
-X-Received: by 2002:a17:907:e6a1:b0:a77:cf9d:f495 with SMTP id
- a640c23a62f3a-a90d5813b2fmr1571657366b.40.1727167017738; 
- Tue, 24 Sep 2024 01:36:57 -0700 (PDT)
-Received: from [10.5.51.18] (90-181-218-29.rco.o2.cz. [90.181.218.29])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a93930cae67sm56425266b.121.2024.09.24.01.36.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Sep 2024 01:36:57 -0700 (PDT)
-Message-ID: <3270bf81-eebb-451b-a1ed-bc53890498e1@redhat.com>
-Date: Tue, 24 Sep 2024 10:36:55 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 23/23] hw/vfio/platform: Let
- vfio_start_eventfd_injection() take VFIOPlatformDevice pointer
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Corey Minyard <cminyard@mvista.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ bh=XMBhLuLKAGj/L7UU0MwXAH+HXBYid+z2XzbTcY25Lsg=;
+ b=IJ7YjwG8zJrOe9pCN6Ml3AVPuHcYv80Hjfk6mtC24yfGZo3dGBYuB6oFKIt6R8imuPOJZL
+ upsdmb7r9b6xN1SEBe6BTzVpkgmuQWi+37uMRz0w/K2DT6WAPmr8pGFzsZlDJh5/Cy6GWN
+ dn9VIqxP8JsutO+1MuWhNpWOBMsWz+A=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-zR08SeqEMxaz-JVnv2xlbg-1; Tue,
+ 24 Sep 2024 04:45:35 -0400
+X-MC-Unique: zR08SeqEMxaz-JVnv2xlbg-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1BCAF19030BD; Tue, 24 Sep 2024 08:45:34 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.29])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7706119560AE; Tue, 24 Sep 2024 08:45:29 +0000 (UTC)
+Date: Tue, 24 Sep 2024 10:45:25 +0200
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ John Snow <jsnow@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-block@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>
-References: <20240923093016.66437-1-shentey@gmail.com>
- <20240923093016.66437-24-shentey@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240923093016.66437-24-shentey@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Alex =?utf-8?B?QmVubsOp?= e <alex.bennee@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v2] Add -build-info and -build-info-json CLI arguments
+Message-ID: <ZvJ8JblXVH-kJGi1@redhat.com>
+References: <20240923-feature-build-info-cli-v2-1-66b3462f16a1@linaro.org>
+ <ZvGbRWSPPLJDx7BX@redhat.com> <ka5ia.wqlrej2ef9q@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+In-Reply-To: <ka5ia.wqlrej2ef9q@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -109,56 +93,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/23/24 11:30, Bernhard Beschow wrote:
-> Avoids one downcast, making the code more type-safe.
+On Mon, Sep 23, 2024 at 10:09:32PM +0300, Manos Pitsidianakis wrote:
+> Hello Daniel,
 > 
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-
-That's a bit unrelated to your e500 series. Anyhow,
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-
-Thanks,
-
-C.
-
-
-> ---
->   hw/vfio/platform.c | 7 +++----
->   1 file changed, 3 insertions(+), 4 deletions(-)
+> On Mon, 23 Sep 2024 19:45, "Daniel P. Berrangé" <berrange@redhat.com> wrote:
+> > On Mon, Sep 23, 2024 at 09:05:24AM +0300, Manos Pitsidianakis wrote:
+> > > Add -build-info and -build-info-json CLI arguments for human and machine
+> > > readable output of build/compile-time configuration data. The source for
+> > > this data is the meson generated config-host.h.
+> > > 
+> > > This information is mainly of interest to developers and other folk who
+> > > deal with many different builds of QEMU and need a way to properly
+> > > differentiate them.
+> > > 
+> > > Because there's always the chance someone will want to consume an
+> > > interface programmatically, also add a -json option that does the same
+> > > but outputs a machine-readable JSON object.
+> > 
+> > This turns our build system configuration information into a
+> > defacto public API, and while its using JSON, it isn't yusing
+> > QAPI.
+> > 
+> > To some degree we leak our build system config names externally
+> > because the "if" stanzas in the QAPI schema get copied into the
+> > docs.
+> > 
+> > Overall though I don't think we should be exposing this build
+> > config infomation externally. We've had many times, particularly
+> > with testing, where people have wanted to access CONFIG_XXX info
+> > about a QEMU binary, but IIRC we've always steered people towards
+> > querying for the actual feature they want, rather than looking
+> > at CONFIG_XXX settings.
+> > 
+> > ie, look a query-audiodevs to discover what audio baxckends are
+> > built-in, don't look for CONFIG_XXX settings related to audio.
+> > If there are gaps in information we can query from QMP, we should
+> > aim to close those gaps.
+> > 
+> > IOW, I don't think we should expose this build info info in either
+> > human readable or machine readable format.
 > 
-> diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-> index a85c199c76..77bbfbf62c 100644
-> --- a/hw/vfio/platform.c
-> +++ b/hw/vfio/platform.c
-> @@ -318,13 +318,12 @@ static void vfio_platform_eoi(VFIODevice *vbasedev)
->   /**
->    * vfio_start_eventfd_injection - starts the virtual IRQ injection using
->    * user-side handled eventfds
-> - * @sbdev: the sysbus device handle
-> + * @vdev: the VFIO platform device handle
->    * @irq: the qemu irq handle
->    */
->   
-> -static void vfio_start_eventfd_injection(SysBusDevice *sbdev, qemu_irq irq)
-> +static void vfio_start_eventfd_injection(VFIOPlatformDevice *vdev, qemu_irq irq)
->   {
-> -    VFIOPlatformDevice *vdev = VFIO_PLATFORM_DEVICE(sbdev);
->       VFIOINTp *intp;
->   
->       QLIST_FOREACH(intp, &vdev->intp_list, next) {
-> @@ -417,7 +416,7 @@ fail_vfio:
->       kvm_irqchip_remove_irqfd_notifier(kvm_state, intp->interrupt, irq);
->       abort();
->   fail_irqfd:
-> -    vfio_start_eventfd_injection(sbdev, irq);
-> +    vfio_start_eventfd_injection(vdev, irq);
->       return;
->   }
->   
+> QAPI/QMP is not the perspective of this patch, this is for people who use
+> custom-built (i.e. not from a distro) binaries and want to be able to
+> identify how it was built. Launching a binary to query stuff is
+> unnecessarily complex for this task, and the info is not generally
+> interesting to the API consumers as you said.
+
+Launching QEMU to talk QMP is our defined public API for querying
+anything about the capabilities of QEMU. We're worked hard to get
+away from providing ad-hoc ways to query QEMU from the command
+line and going back to that is not desirable. It may be slightly
+more complicated, but not by very much.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
