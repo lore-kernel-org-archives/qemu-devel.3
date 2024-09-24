@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E82CF9C69
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 22:21:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 646AFCF9C6B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 22:21:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stDtd-0006qs-57; Tue, 24 Sep 2024 18:20:37 -0400
+	id 1stDrM-0003P7-Cz; Tue, 24 Sep 2024 18:18:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1stDtH-00055G-7L
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:20:17 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1stDrK-0003HG-6t
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:18:14 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1stDtD-0001yK-9R
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:20:14 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-719b17b2da1so2459655b3a.0
- for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 15:20:10 -0700 (PDT)
+ id 1stDrI-0001bv-D4
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:18:13 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-71b0722f221so577317b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 15:18:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727216409; x=1727821209; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727216290; x=1727821090; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dUaBAQ2R0O3HskPzaR10RqZVIGyIUjyGLR24zdWubmM=;
- b=VIuJNgpxomEWxhLo+FG/m+4x+ZqqmCTs95miujchAq8G1QzOiKKyomf6NuVoH7aAM2
- OwFuvYr3GCPYrJKRLFRyod898aJoidduESFGrMdAD0JaWvf6lEjvh5D4TVq5SQ/wU7ou
- oHXM05eHRzpwS5S4FABYX5vzcVXEh+HYIqjD8e98p8tRsGoqR+A48j54uVHBTO7tsuAL
- 41e2uOrI5Xny147AEXaKRDEJ1BTOV6LSr+dZdV0Qg0kN7UCWzbJ5bnDN5rM3oYPkIQVK
- vT8UwZzZuFbIi86SPHjZNClDHhhx+QBbhZzNFn1SURZtHOiOv4FmSfu0aqCXZnpFtYVO
- e8PA==
+ bh=yhZO+94GaT1byduM0n2KThYqhoa0Ze0i19VYeIMvM8E=;
+ b=kBsbnGrqHg5gbQchsJmrqYldITOI5b6YOW4UWWAUX4uQvU8ebfyFX3/NQZ3SyCBScz
+ YCmkUiaMpOEXC7QhBr9u11ba0XytiSEMfK4LujkEKy6ossKsLidccPATBekB6tZPi2GD
+ ijbTy33N38/sA7E0hX4urITEVjLDuHWdn/sDvTQ72AoZ52a1jbX202awO+p9W270KK/M
+ RsRhBEXmyBgdKiFYmr8iKgQHn1cXuQJSAi7//OpZj0/oFpuHwagw52MOoNwwAIgdOQjo
+ TXxFw0D6yrxqxcuOO2JONlBv9Tz5Z4Gl85p5VNyjBj3NUiKFfye9ZuniF3zqIZGyywaT
+ pxyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727216409; x=1727821209;
+ d=1e100.net; s=20230601; t=1727216290; x=1727821090;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dUaBAQ2R0O3HskPzaR10RqZVIGyIUjyGLR24zdWubmM=;
- b=DHHdlzTg+xlo/qh+ckd/FAuTYaJyjppHeKgHoHG+6CHCO9AkmGx8K4zGdfoz+O/18Z
- 8KpKx2Zq3vliTrKJTJCB6iXMo1hP6QJpe0YjG+tNj9L+tVu4t8yhwai40F2ZVbFO+sMR
- XM6duPfTPx9ewgW+BHCcEXhV1vfKWY2x8ewoYZahi5kkRRM67BuYzSBJhoEr/LKPtyQl
- RHCgSosNJMMBNEKsnrDns+INxVzgB1w6pVRQGzN/S2mxDXRpm83TsVTRSdcbQ2E8R4iS
- uZpLzB6NTJbKFAMPEHF2hTzUAjy9gAMtHWwhE4bjddtnGacNNolRhV3A24d/UMsp+DqW
- foXg==
-X-Gm-Message-State: AOJu0YyiRBj9H34d4rmycDUlaJeZSyAahdXg/kKSSoqte87314Vc6XUD
- 9o0Qf1yQQe51m7EHrH7CngrTl+LdGSEthLgPw0SHsKXE1AmOGrWHkzqX5w==
-X-Google-Smtp-Source: AGHT+IGNg30UR6iBPo6YYJ9zedCf2irbM55i7PaOCaX9KjSDd30it1SdWzc1ELq3dkWshLNn1FyVXw==
-X-Received: by 2002:a05:6a00:4606:b0:718:ea3c:35c3 with SMTP id
- d2e1a72fcca58-71b0aae9553mr836565b3a.15.1727216409234; 
- Tue, 24 Sep 2024 15:20:09 -0700 (PDT)
+ bh=yhZO+94GaT1byduM0n2KThYqhoa0Ze0i19VYeIMvM8E=;
+ b=vm3bAwnHs+W0VezGmLsbZwOAmdERtikBmbm63s6bA0Lupd/jHx8HAVSU5Cc/XnixxC
+ zS5OJNfK1QtZWV62uEOkkQiw/fhF44YwacHbprOjs3ukVrcS2FnViIrkgxckUTulcUg4
+ ohF1hXCCJUflqbcJpqxtJIzxOuYBKYNQqk0+f8I4HZ6BoKvEYMQebTSlWk4/65E7Lo8Q
+ 6Xp3CBGCVnozjEI0VzeUMV9X9HEXzaujqKF64Iul9ltSHOn4NlN5VBbhxmPl/acpJBP1
+ gGpofnBJsUwssR2LVUT3KjVpI8ApSAjUm3i4KCHhoOmMjcM8qc/6OG+ceU7++YA+ixfT
+ U7rw==
+X-Gm-Message-State: AOJu0Ywsa/GLFpYWJA0WJ0vQgj3zCRwsYoKTtZVElmAi1J9prKDGhK3B
+ srYLFlG2W2x/g9aS/G2sgTDwOIkiOqD+YDADguM25ij8vBwFYaICLefq8w==
+X-Google-Smtp-Source: AGHT+IGDkLcenMMlzHXL1wqEEhw3icqQ/N4bTtC/99WA5uuAciI8V1ehkswBnbTk1k/Ymph1XfzA+A==
+X-Received: by 2002:a05:6a00:99f:b0:714:21f0:c799 with SMTP id
+ d2e1a72fcca58-71b0aab1563mr1174877b3a.12.1727216290474; 
+ Tue, 24 Sep 2024 15:18:10 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71afc8342easm1665310b3a.11.2024.09.24.15.20.04
+ d2e1a72fcca58-71afc8342easm1665310b3a.11.2024.09.24.15.18.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Sep 2024 15:20:08 -0700 (PDT)
+ Tue, 24 Sep 2024 15:18:09 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Mark Corbin <mark@dibsco.co.uk>,
- Ajeet Singh <itachis@FreeBSD.org>, Jessica Clarke <jrtc27@jrtc27.com>,
- Kyle Evans <kevans@FreeBSD.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: alistair23@gmail.com, Haibo Xu <haibo1.xu@intel.com>,
+ Sunil V L <sunilvl@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 39/47] bsd-user: Add RISC-V thread setup and initialization
- support
-Date: Wed, 25 Sep 2024 08:17:40 +1000
-Message-ID: <20240924221751.2688389-40-alistair.francis@wdc.com>
+Subject: [PULL v2 03/47] tests/qtest/bios-tables-test.c: Enable numamem
+ testing for RISC-V
+Date: Wed, 25 Sep 2024 08:17:04 +1000
+Message-ID: <20240924221751.2688389-4-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240924221751.2688389-1-alistair.francis@wdc.com>
 References: <20240924221751.2688389-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,80 +100,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Corbin <mark@dibsco.co.uk>
+From: Haibo Xu <haibo1.xu@intel.com>
 
-Implemented functions for setting up and initializing threads in the
-RISC-V architecture.
-The 'target_thread_set_upcall' function sets up the stack pointer,
-program counter, and function argument for new threads.
-The 'target_thread_init' function initializes thread registers based on
-the provided image information.
+Add ACPI SRAT table test case for RISC-V when NUMA was enabled.
 
-Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
-Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
-Co-authored-by: Jessica Clarke <jrtc27@jrtc27.com>
-Co-authored-by: Kyle Evans <kevans@FreeBSD.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240916155119.14610-10-itachis@FreeBSD.org>
+Signed-off-by: Haibo Xu <haibo1.xu@intel.com>
+Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <a6f7e1a4b20ff7eb199e94ca0c8aa2e6794ce5b2.1723172696.git.haibo1.xu@intel.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- bsd-user/riscv/target_arch_thread.h | 47 +++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
- create mode 100644 bsd-user/riscv/target_arch_thread.h
+ tests/qtest/bios-tables-test.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/bsd-user/riscv/target_arch_thread.h b/bsd-user/riscv/target_arch_thread.h
-new file mode 100644
-index 0000000000..95cd0b6ad7
---- /dev/null
-+++ b/bsd-user/riscv/target_arch_thread.h
-@@ -0,0 +1,47 @@
-+/*
-+ *  RISC-V thread support
-+ *
-+ *  Copyright (c) 2019 Mark Corbin
-+ *
-+ *  This program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2 of the License, or
-+ *  (at your option) any later version.
-+ *
-+ *  This program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#ifndef TARGET_ARCH_THREAD_H
-+#define TARGET_ARCH_THREAD_H
-+
-+/* Compare with cpu_set_upcall() in riscv/riscv/vm_machdep.c */
-+static inline void target_thread_set_upcall(CPURISCVState *regs,
-+    abi_ulong entry, abi_ulong arg, abi_ulong stack_base,
-+    abi_ulong stack_size)
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index 36e5c0adde..e79f3a03df 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -1706,6 +1706,32 @@ static void test_acpi_microvm_ioapic2_tcg(void)
+     free_test_data(&data);
+ }
+ 
++static void test_acpi_riscv64_virt_tcg_numamem(void)
 +{
-+    abi_ulong sp;
++    test_data data = {
++        .machine = "virt",
++        .arch = "riscv64",
++        .tcg_only = true,
++        .uefi_fl1 = "pc-bios/edk2-riscv-code.fd",
++        .uefi_fl2 = "pc-bios/edk2-riscv-vars.fd",
++        .cd = "tests/data/uefi-boot-images/bios-tables-test.riscv64.iso.qcow2",
++        .ram_start = 0x80000000ULL,
++        .scan_len = 128ULL * 1024 * 1024,
++    };
 +
-+    sp = ROUND_DOWN(stack_base + stack_size, 16);
-+
-+    regs->gpr[xSP] = sp;
-+    regs->pc = entry;
-+    regs->gpr[xA0] = arg;
++    data.variant = ".numamem";
++    /*
++     * RHCT will have ISA string encoded. To reduce the effort
++     * of updating expected AML file for any new default ISA extension,
++     * use the profile rva22s64.
++     */
++    test_acpi_one(" -cpu rva22s64"
++                  " -object memory-backend-ram,id=ram0,size=128M"
++                  " -numa node,memdev=ram0",
++                  &data);
++    free_test_data(&data);
 +}
 +
-+/* Compare with exec_setregs() in riscv/riscv/machdep.c */
-+static inline void target_thread_init(struct target_pt_regs *regs,
-+    struct image_info *infop)
-+{
-+    regs->sepc = infop->entry;
-+    regs->regs[xRA] = infop->entry;
-+    regs->regs[xA0] = infop->start_stack;
-+    regs->regs[xSP] = ROUND_DOWN(infop->start_stack, 16);
-+}
-+
-+#endif /* TARGET_ARCH_THREAD_H */
+ static void test_acpi_aarch64_virt_tcg_numamem(void)
+ {
+     test_data data = {
+@@ -2466,6 +2492,8 @@ int main(int argc, char *argv[])
+     } else if (strcmp(arch, "riscv64") == 0) {
+         if (has_tcg && qtest_has_device("virtio-blk-pci")) {
+             qtest_add_func("acpi/virt", test_acpi_riscv64_virt_tcg);
++            qtest_add_func("acpi/virt/numamem",
++                           test_acpi_riscv64_virt_tcg_numamem);
+         }
+     }
+     ret = g_test_run();
 -- 
 2.46.1
 
