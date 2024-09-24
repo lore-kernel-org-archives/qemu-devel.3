@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D239CF9C69
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 22:20:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E82CF9C69
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 22:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stDsM-0007mv-Jq; Tue, 24 Sep 2024 18:19:19 -0400
+	id 1stDtd-0006qs-57; Tue, 24 Sep 2024 18:20:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1stDsK-0007Z1-T9
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:19:16 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1stDtH-00055G-7L
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:20:17 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1stDsI-0001ho-QE
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:19:16 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-71afb729f24so958803b3a.0
- for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 15:19:14 -0700 (PDT)
+ id 1stDtD-0001yK-9R
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:20:14 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-719b17b2da1so2459655b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 15:20:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727216353; x=1727821153; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727216409; x=1727821209; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0BO3VTz4VjA0FAlWrTyWxgOVi7HXtL57ufa94tDCq+M=;
- b=mtylWszkDT5UiyP9YgylvyME3i4F+VHegiBaOeG7/hIrYwywi4ryKTk5I4m3VGUdt5
- b+/2zrJLqNl+n8e+3gvKYE6VynDxmFWpx0jaou7EAGAJZGgY2OlYfoGPXb6ofwrlIynG
- J0E1O+kpFHyzHqsK6hU3gk0EXstfKcBU84Vk1y8AsrpYirqhcZ75YhJ14KasC32ivIHK
- cluKNRamkk6SoLjnow6QwG8lQ+tv9ZJE506wfiWNHvvVA9zx2NtZA94z42YYzBTnQGEz
- lP+aXunOBVMY4K4Z7tDbwBWg0TRldpQiOf2eAbLxJI+PD+SsBkvjwIPHVoC5z/zgRQEX
- cjQA==
+ bh=dUaBAQ2R0O3HskPzaR10RqZVIGyIUjyGLR24zdWubmM=;
+ b=VIuJNgpxomEWxhLo+FG/m+4x+ZqqmCTs95miujchAq8G1QzOiKKyomf6NuVoH7aAM2
+ OwFuvYr3GCPYrJKRLFRyod898aJoidduESFGrMdAD0JaWvf6lEjvh5D4TVq5SQ/wU7ou
+ oHXM05eHRzpwS5S4FABYX5vzcVXEh+HYIqjD8e98p8tRsGoqR+A48j54uVHBTO7tsuAL
+ 41e2uOrI5Xny147AEXaKRDEJ1BTOV6LSr+dZdV0Qg0kN7UCWzbJ5bnDN5rM3oYPkIQVK
+ vT8UwZzZuFbIi86SPHjZNClDHhhx+QBbhZzNFn1SURZtHOiOv4FmSfu0aqCXZnpFtYVO
+ e8PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727216353; x=1727821153;
+ d=1e100.net; s=20230601; t=1727216409; x=1727821209;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0BO3VTz4VjA0FAlWrTyWxgOVi7HXtL57ufa94tDCq+M=;
- b=S8tB5i2aC2pZk8Jut+rE2UhJ75I3wawlBZfjOJJXtEEkoVqvkk7GP3TmXzpv04s8Jd
- Fvp7uyFTsSjK0XNP7tsusfAB5DuhodA1eOVkoBJA9XB48A6DDkrtNpAuF63Ckl1GxRpP
- z3rem912raDzK8fS/w977/qKl8D7Wt8gjrJwPUrbCUxHqU1yVDE5yxHcK5JeW0rn7MKX
- gHvTPjDSEvfHVeKjAN7/iLgDJYO7AEk6gnC0q0rzqbgDBJtM/D3QbViQt8dRZUqFkvAE
- SNjAYm24BaYQc1jnixM3uA4QizpfxH9RpXcjo+Y2CWWq+v7LxzovMMLMBENs27H5HE4N
- dRDw==
-X-Gm-Message-State: AOJu0Yyfym3KalOkBtCvQJ6+azVonp3W57J/2S58SyajnO+Ru5YXHtS8
- xAIrQgw55bRVvsKcMwCBTmAuFQrJkMIOIVwlzt2F/0A1GYb+7Az1xEPYvQ==
-X-Google-Smtp-Source: AGHT+IEH+PWeye1wK7RzCRdrzc26XbHCI8v/7nvTsfjb3hrcPVizAl4ESSk/PB98tChhVU5w4DAHEg==
-X-Received: by 2002:a05:6a00:18a1:b0:719:1f54:73a5 with SMTP id
- d2e1a72fcca58-71b0aa94cfamr1134847b3a.2.1727216353085; 
- Tue, 24 Sep 2024 15:19:13 -0700 (PDT)
+ bh=dUaBAQ2R0O3HskPzaR10RqZVIGyIUjyGLR24zdWubmM=;
+ b=DHHdlzTg+xlo/qh+ckd/FAuTYaJyjppHeKgHoHG+6CHCO9AkmGx8K4zGdfoz+O/18Z
+ 8KpKx2Zq3vliTrKJTJCB6iXMo1hP6QJpe0YjG+tNj9L+tVu4t8yhwai40F2ZVbFO+sMR
+ XM6duPfTPx9ewgW+BHCcEXhV1vfKWY2x8ewoYZahi5kkRRM67BuYzSBJhoEr/LKPtyQl
+ RHCgSosNJMMBNEKsnrDns+INxVzgB1w6pVRQGzN/S2mxDXRpm83TsVTRSdcbQ2E8R4iS
+ uZpLzB6NTJbKFAMPEHF2hTzUAjy9gAMtHWwhE4bjddtnGacNNolRhV3A24d/UMsp+DqW
+ foXg==
+X-Gm-Message-State: AOJu0YyiRBj9H34d4rmycDUlaJeZSyAahdXg/kKSSoqte87314Vc6XUD
+ 9o0Qf1yQQe51m7EHrH7CngrTl+LdGSEthLgPw0SHsKXE1AmOGrWHkzqX5w==
+X-Google-Smtp-Source: AGHT+IGNg30UR6iBPo6YYJ9zedCf2irbM55i7PaOCaX9KjSDd30it1SdWzc1ELq3dkWshLNn1FyVXw==
+X-Received: by 2002:a05:6a00:4606:b0:718:ea3c:35c3 with SMTP id
+ d2e1a72fcca58-71b0aae9553mr836565b3a.15.1727216409234; 
+ Tue, 24 Sep 2024 15:20:09 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71afc8342easm1665310b3a.11.2024.09.24.15.19.10
+ d2e1a72fcca58-71afc8342easm1665310b3a.11.2024.09.24.15.20.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Sep 2024 15:19:12 -0700 (PDT)
+ Tue, 24 Sep 2024 15:20:08 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Tomasz Jeznach <tjeznach@rivosinc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Frank Chang <frank.chang@sifive.com>,
+Cc: alistair23@gmail.com, Mark Corbin <mark@dibsco.co.uk>,
+ Ajeet Singh <itachis@FreeBSD.org>, Jessica Clarke <jrtc27@jrtc27.com>,
+ Kyle Evans <kevans@FreeBSD.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 23/47] hw/riscv/riscv-iommu: add DBG support
-Date: Wed, 25 Sep 2024 08:17:24 +1000
-Message-ID: <20240924221751.2688389-24-alistair.francis@wdc.com>
+Subject: [PULL v2 39/47] bsd-user: Add RISC-V thread setup and initialization
+ support
+Date: Wed, 25 Sep 2024 08:17:40 +1000
+Message-ID: <20240924221751.2688389-40-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240924221751.2688389-1-alistair.francis@wdc.com>
 References: <20240924221751.2688389-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,150 +102,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
+From: Mark Corbin <mark@dibsco.co.uk>
 
-DBG support adds three additional registers: tr_req_iova, tr_req_ctl and
-tr_response.
+Implemented functions for setting up and initializing threads in the
+RISC-V architecture.
+The 'target_thread_set_upcall' function sets up the stack pointer,
+program counter, and function argument for new threads.
+The 'target_thread_init' function initializes thread registers based on
+the provided image information.
 
-The DBG cap is always enabled. No on/off toggle is provided for it.
-
-Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240903201633.93182-11-dbarboza@ventanamicro.com>
+Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
+Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Co-authored-by: Jessica Clarke <jrtc27@jrtc27.com>
+Co-authored-by: Kyle Evans <kevans@FreeBSD.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240916155119.14610-10-itachis@FreeBSD.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/riscv-iommu-bits.h | 17 +++++++++++
- hw/riscv/riscv-iommu.c      | 59 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 76 insertions(+)
+ bsd-user/riscv/target_arch_thread.h | 47 +++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+ create mode 100644 bsd-user/riscv/target_arch_thread.h
 
-diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-index 96a994b9aa..6359ae0353 100644
---- a/hw/riscv/riscv-iommu-bits.h
-+++ b/hw/riscv/riscv-iommu-bits.h
-@@ -82,6 +82,7 @@ struct riscv_iommu_pq_record {
- #define RISCV_IOMMU_CAP_ATS             BIT_ULL(25)
- #define RISCV_IOMMU_CAP_T2GPA           BIT_ULL(26)
- #define RISCV_IOMMU_CAP_IGS             GENMASK_ULL(29, 28)
-+#define RISCV_IOMMU_CAP_DBG             BIT_ULL(31)
- #define RISCV_IOMMU_CAP_PAS             GENMASK_ULL(37, 32)
- #define RISCV_IOMMU_CAP_PD8             BIT_ULL(38)
- #define RISCV_IOMMU_CAP_PD17            BIT_ULL(39)
-@@ -184,6 +185,22 @@ enum {
-     RISCV_IOMMU_INTR_COUNT
- };
- 
-+/* 5.24 Translation request IOVA (64bits) */
-+#define RISCV_IOMMU_REG_TR_REQ_IOVA     0x0258
+diff --git a/bsd-user/riscv/target_arch_thread.h b/bsd-user/riscv/target_arch_thread.h
+new file mode 100644
+index 0000000000..95cd0b6ad7
+--- /dev/null
++++ b/bsd-user/riscv/target_arch_thread.h
+@@ -0,0 +1,47 @@
++/*
++ *  RISC-V thread support
++ *
++ *  Copyright (c) 2019 Mark Corbin
++ *
++ *  This program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2 of the License, or
++ *  (at your option) any later version.
++ *
++ *  This program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
 +
-+/* 5.25 Translation request control (64bits) */
-+#define RISCV_IOMMU_REG_TR_REQ_CTL      0x0260
-+#define RISCV_IOMMU_TR_REQ_CTL_GO_BUSY  BIT_ULL(0)
-+#define RISCV_IOMMU_TR_REQ_CTL_NW       BIT_ULL(3)
-+#define RISCV_IOMMU_TR_REQ_CTL_PID      GENMASK_ULL(31, 12)
-+#define RISCV_IOMMU_TR_REQ_CTL_DID      GENMASK_ULL(63, 40)
++#ifndef TARGET_ARCH_THREAD_H
++#define TARGET_ARCH_THREAD_H
 +
-+/* 5.26 Translation request response (64bits) */
-+#define RISCV_IOMMU_REG_TR_RESPONSE     0x0268
-+#define RISCV_IOMMU_TR_RESPONSE_FAULT   BIT_ULL(0)
-+#define RISCV_IOMMU_TR_RESPONSE_S       BIT_ULL(9)
-+#define RISCV_IOMMU_TR_RESPONSE_PPN     RISCV_IOMMU_PPN_FIELD
-+
- /* 5.27 Interrupt cause to vector (64bits) */
- #define RISCV_IOMMU_REG_ICVEC           0x02F8
- #define RISCV_IOMMU_ICVEC_CIV           GENMASK_ULL(3, 0)
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 50740442bb..135f461ccf 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -1769,6 +1769,50 @@ static void riscv_iommu_process_pq_control(RISCVIOMMUState *s)
-     riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_PQCSR, ctrl_set, ctrl_clr);
- }
- 
-+static void riscv_iommu_process_dbg(RISCVIOMMUState *s)
++/* Compare with cpu_set_upcall() in riscv/riscv/vm_machdep.c */
++static inline void target_thread_set_upcall(CPURISCVState *regs,
++    abi_ulong entry, abi_ulong arg, abi_ulong stack_base,
++    abi_ulong stack_size)
 +{
-+    uint64_t iova = riscv_iommu_reg_get64(s, RISCV_IOMMU_REG_TR_REQ_IOVA);
-+    uint64_t ctrl = riscv_iommu_reg_get64(s, RISCV_IOMMU_REG_TR_REQ_CTL);
-+    unsigned devid = get_field(ctrl, RISCV_IOMMU_TR_REQ_CTL_DID);
-+    unsigned pid = get_field(ctrl, RISCV_IOMMU_TR_REQ_CTL_PID);
-+    RISCVIOMMUContext *ctx;
-+    void *ref;
++    abi_ulong sp;
 +
-+    if (!(ctrl & RISCV_IOMMU_TR_REQ_CTL_GO_BUSY)) {
-+        return;
-+    }
++    sp = ROUND_DOWN(stack_base + stack_size, 16);
 +
-+    ctx = riscv_iommu_ctx(s, devid, pid, &ref);
-+    if (ctx == NULL) {
-+        riscv_iommu_reg_set64(s, RISCV_IOMMU_REG_TR_RESPONSE,
-+                                 RISCV_IOMMU_TR_RESPONSE_FAULT |
-+                                 (RISCV_IOMMU_FQ_CAUSE_DMA_DISABLED << 10));
-+    } else {
-+        IOMMUTLBEntry iotlb = {
-+            .iova = iova,
-+            .perm = ctrl & RISCV_IOMMU_TR_REQ_CTL_NW ? IOMMU_RO : IOMMU_RW,
-+            .addr_mask = ~0,
-+            .target_as = NULL,
-+        };
-+        int fault = riscv_iommu_translate(s, ctx, &iotlb, false);
-+        if (fault) {
-+            iova = RISCV_IOMMU_TR_RESPONSE_FAULT | (((uint64_t) fault) << 10);
-+        } else {
-+            iova = iotlb.translated_addr & ~iotlb.addr_mask;
-+            iova >>= TARGET_PAGE_BITS;
-+            iova &= RISCV_IOMMU_TR_RESPONSE_PPN;
-+
-+            /* We do not support superpages (> 4kbs) for now */
-+            iova &= ~RISCV_IOMMU_TR_RESPONSE_S;
-+        }
-+        riscv_iommu_reg_set64(s, RISCV_IOMMU_REG_TR_RESPONSE, iova);
-+    }
-+
-+    riscv_iommu_reg_mod64(s, RISCV_IOMMU_REG_TR_REQ_CTL, 0,
-+        RISCV_IOMMU_TR_REQ_CTL_GO_BUSY);
-+    riscv_iommu_ctx_put(s, ref);
++    regs->gpr[xSP] = sp;
++    regs->pc = entry;
++    regs->gpr[xA0] = arg;
 +}
 +
- typedef void riscv_iommu_process_fn(RISCVIOMMUState *s);
- 
- static void riscv_iommu_update_icvec(RISCVIOMMUState *s, uint64_t data)
-@@ -1922,6 +1966,12 @@ static MemTxResult riscv_iommu_mmio_write(void *opaque, hwaddr addr,
- 
-         return MEMTX_OK;
- 
-+    case RISCV_IOMMU_REG_TR_REQ_CTL:
-+        process_fn = riscv_iommu_process_dbg;
-+        regb = RISCV_IOMMU_REG_TR_REQ_CTL;
-+        busy = RISCV_IOMMU_TR_REQ_CTL_GO_BUSY;
-+        break;
++/* Compare with exec_setregs() in riscv/riscv/machdep.c */
++static inline void target_thread_init(struct target_pt_regs *regs,
++    struct image_info *infop)
++{
++    regs->sepc = infop->entry;
++    regs->regs[xRA] = infop->entry;
++    regs->regs[xA0] = infop->start_stack;
++    regs->regs[xSP] = ROUND_DOWN(infop->start_stack, 16);
++}
 +
-     default:
-         break;
-     }
-@@ -2094,6 +2144,9 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
-         s->cap |= RISCV_IOMMU_CAP_SV32X4 | RISCV_IOMMU_CAP_SV39X4 |
-                   RISCV_IOMMU_CAP_SV48X4 | RISCV_IOMMU_CAP_SV57X4;
-     }
-+    /* Enable translation debug interface */
-+    s->cap |= RISCV_IOMMU_CAP_DBG;
-+
-     /* Report QEMU target physical address space limits */
-     s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS,
-                        TARGET_PHYS_ADDR_SPACE_BITS);
-@@ -2150,6 +2203,12 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
-     stl_le_p(&s->regs_wc[RISCV_IOMMU_REG_IPSR], ~0);
-     stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_ICVEC], 0);
-     stq_le_p(&s->regs_rw[RISCV_IOMMU_REG_DDTP], s->ddtp);
-+    /* If debug registers enabled. */
-+    if (s->cap & RISCV_IOMMU_CAP_DBG) {
-+        stq_le_p(&s->regs_ro[RISCV_IOMMU_REG_TR_REQ_IOVA], 0);
-+        stq_le_p(&s->regs_ro[RISCV_IOMMU_REG_TR_REQ_CTL],
-+            RISCV_IOMMU_TR_REQ_CTL_GO_BUSY);
-+    }
- 
-     /* Memory region for downstream access, if specified. */
-     if (s->target_mr) {
++#endif /* TARGET_ARCH_THREAD_H */
 -- 
 2.46.1
 
