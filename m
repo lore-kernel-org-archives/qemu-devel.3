@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91B17CF9C6B
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 22:21:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C67DCF9C6B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 22:21:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stDtU-0005s6-QT; Tue, 24 Sep 2024 18:20:30 -0400
+	id 1stDrd-0004HB-Dr; Tue, 24 Sep 2024 18:18:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1stDtB-0004f4-DL
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:20:12 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1stDrb-0004Bk-1y
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:18:31 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1stDt8-0001xp-7U
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:20:07 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-7179802b8fcso4315953b3a.1
- for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 15:20:05 -0700 (PDT)
+ id 1stDrZ-0001dY-Jf
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:18:30 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-6bce380eb96so3904319a12.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 15:18:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727216404; x=1727821204; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727216308; x=1727821108; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DJwxZp62y1C27+GAPjWKTnxi+l8BSEYvPi6A+WTJHx8=;
- b=cif+PKt4py3vknXHT/w/fcj2j+TMwwPIhuLYaHAR4FEvSzCcGNmY06rxDWvfy+8D5B
- 21/ozNKyaK27kxJg0DVckaKrIpsPuaksyK235QoIvi9qeDrnUh9OKAdE+zOUhNj14Qst
- eP91zXc7lkiigUqenN9Kn7s8cYf7ibnUpfs64RqHFAS9gRHnPJdob4gOMqOM1//9zF1Z
- Ffwp8cPoVoQ5rOJugn67dS63IZ39jmH8rEVk7kSFicXpy6MApdtkwp/R768sizFRLeGD
- L7cOja9swXcABymZ5Sh/l7WIZoW2b0EhyJ5nT5I56lYoBtoa2xYAT0ss9orJotlwEsia
- mXFQ==
+ bh=Xa9h2PzZFv3YrIHuXdWRrispjI/kDmtuk2RaDtDfx7g=;
+ b=Mip1fkpWoW2bi9aQd7qt7MnxiLFRHPxjejnA60ngK5kJ4XELL02vks7jTN0UlMhQ9d
+ rsOBjJBXfxSi3qpujMs/7V2inASKzvvWsilziynh3aerTVLE95C0XQDmkn8qp4tO6uJ+
+ yLERBmxXKhpL2JXohaPOH+i4wtFgODxSx9JNWI7r0wPDhkli0uUbJscBOc8yxzY+P0rP
+ MHlBV/xSl77HNXjOl/WZzACfIeJREVRPANc2yJlHtrmZFnlMVRGKOtogsvOrsUwypR9H
+ hvirQ3uOKYUAYPLzyep4e7baa9XzD3btbyNJaROh4SGlMvZeoriS8RFqiVW0sf4JYECK
+ oSmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727216404; x=1727821204;
+ d=1e100.net; s=20230601; t=1727216308; x=1727821108;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DJwxZp62y1C27+GAPjWKTnxi+l8BSEYvPi6A+WTJHx8=;
- b=tbglnUksgG5L0yW3wX65DAorK2pNz/KI0bK0Ek+XlcZ5bYUg29LTywS+Dyuv4qcrLj
- CfPjrUcsVXmAeHz2dUPn++Zurxv6C+Slg+J5YhJ23qpR9BFnKFingQPukConWN67Q4hj
- zMlNp/gLfLmAiPVTYJG9qsZF4NVWSa4cXQ2s3bkjw9nGptRuNmDsL9dr7NAHtAaBKfZM
- mj4jB9t3UeYnvAbSo1rkKqCNX40s773Nxq37hbOUi2biyHJ57U+AdKoJu+xqPOP6tMst
- dNrrbc/NLAdMlqsjhBaUW+9wFcmlMp1vLDE5VPR5Tiq7iVHDPWITwBIibusQp6cQia4o
- 3QPw==
-X-Gm-Message-State: AOJu0Yytnv3xJc4RLxrwTfKWZSoPvCAYqpqnkiCAPn3XdmfPuUESN7On
- 3QAxwCtBAxZc1z9806scTwSrACQTYhW//ZK52RPhLD8u3a80tNdyVBvweQ==
-X-Google-Smtp-Source: AGHT+IFOAfKxP/14P6wU3JaShae6JLYdE66KljenOE7+Btxrhg+Y6rbII+gQuCllDAMmTvNENlXOGg==
-X-Received: by 2002:a05:6a00:1827:b0:717:d4e3:df1a with SMTP id
- d2e1a72fcca58-71b0aab42a5mr946688b3a.9.1727216404455; 
- Tue, 24 Sep 2024 15:20:04 -0700 (PDT)
+ bh=Xa9h2PzZFv3YrIHuXdWRrispjI/kDmtuk2RaDtDfx7g=;
+ b=FxPH/mnJFpJE2F7x+ze/oyP2YKk20yi5gikrF11MhCxouNyaibIFLUk5vUe8dZZYDE
+ Bwbs5LTdIn/xBjITXa0WgM020nXuKYIkZbP2ABnceBUbhY/cge6z+19QqBLrBODcS8ox
+ XU5qaUTVaDBOeC3n34Yse5D0Zr+/7U2zTt9ihhmLeyDl0fE/qNWUWhXn8ekmoNN4erHX
+ LR88JdK1cxaUnzfVCVRFY+8prQsBRP6XfYO3EXkuGoHUWa2X3E9M40lJGLqgeBHnzREz
+ rcvdKFDjFCluAjEilPzpxTNkp/EBdFphcbf1iNTNQJ7U/pdWueQCW8xPCpps1ojGbpsI
+ PTWA==
+X-Gm-Message-State: AOJu0YzXM5vw7w/XS2B2PZdiXCZZYsmXdJVzUjYU5PZHhpO/ZPFsLgzm
+ IRLqOal5RQSM2u5gbqCcqMwPniGG6y44tMZpJuv+siLDmU6EJwXyo6pr8w==
+X-Google-Smtp-Source: AGHT+IGHA0RQgFyVImdeoY3zN2r5UCWVMKWP3Wd0qAMweLTFwitrgHvJjLCgRQuI04b2TeNKuwWtmQ==
+X-Received: by 2002:a05:6a20:9d8e:b0:1d0:2531:b2b9 with SMTP id
+ adf61e73a8af0-1d4e0bbec01mr684509637.36.1727216307914; 
+ Tue, 24 Sep 2024 15:18:27 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71afc8342easm1665310b3a.11.2024.09.24.15.20.00
+ d2e1a72fcca58-71afc8342easm1665310b3a.11.2024.09.24.15.18.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Sep 2024 15:20:03 -0700 (PDT)
+ Tue, 24 Sep 2024 15:18:27 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Mark Corbin <mark@dibsco.co.uk>,
- Ajeet Singh <itachis@FreeBSD.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: alistair23@gmail.com, Andrew Jones <ajones@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 38/47] bsd-user: Implement RISC-V sysarch system call
- emulation
-Date: Wed, 25 Sep 2024 08:17:39 +1000
-Message-ID: <20240924221751.2688389-39-alistair.francis@wdc.com>
+Subject: [PULL v2 09/47] target/riscv: Stop timer with infinite timecmp
+Date: Wed, 25 Sep 2024 08:17:10 +1000
+Message-ID: <20240924221751.2688389-10-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240924221751.2688389-1-alistair.francis@wdc.com>
 References: <20240924221751.2688389-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,70 +98,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Corbin <mark@dibsco.co.uk>
+From: Andrew Jones <ajones@ventanamicro.com>
 
-Added the 'do_freebsd_arch_sysarch' function to emulate the 'sysarch'
-system call for the RISC-V architecture.
-Currently, this function returns '-TARGET_EOPNOTSUPP' to indicate that
-the operation is not supported.
+While the spec doesn't state it, setting timecmp to UINT64_MAX is
+another way to stop a timer, as it's considered setting the next
+timer event to occur at infinity. And, even if the time CSR does
+eventually reach UINT64_MAX, the very next tick will bring it back to
+zero, once again less than timecmp. For this reason
+riscv_timer_write_timecmp() special cases UINT64_MAX. However, if a
+previously set timecmp has not yet expired, then setting timecmp to
+UINT64_MAX to disable / stop it would not work, as the special case
+left the previous QEMU timer active, which would then still deliver
+an interrupt at that previous timecmp time. Ensure the stopped timer
+will not still deliver an interrupt by also deleting the QEMU timer
+in the UINT64_MAX special case.
 
-Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
-Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240916155119.14610-9-itachis@FreeBSD.org>
+Fixes: ae0edf2188b3 ("target/riscv: No need to re-start QEMU timer when timecmp == UINT64_MAX")
+Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20240829084002.1805006-2-ajones@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- bsd-user/riscv/target_arch_sysarch.h | 41 ++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
- create mode 100644 bsd-user/riscv/target_arch_sysarch.h
+ target/riscv/time_helper.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/bsd-user/riscv/target_arch_sysarch.h b/bsd-user/riscv/target_arch_sysarch.h
-new file mode 100644
-index 0000000000..9af42331b4
---- /dev/null
-+++ b/bsd-user/riscv/target_arch_sysarch.h
-@@ -0,0 +1,41 @@
-+/*
-+ *  RISC-V sysarch() system call emulation
-+ *
-+ *  Copyright (c) 2019 Mark Corbin
-+ *
-+ *  This program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2 of the License, or
-+ *  (at your option) any later version.
-+ *
-+ *  This program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#ifndef TARGET_ARCH_SYSARCH_H
-+#define TARGET_ARCH_SYSARCH_H
-+
-+#include "target_syscall.h"
-+#include "target_arch.h"
-+
-+static inline abi_long do_freebsd_arch_sysarch(CPURISCVState *env, int op,
-+        abi_ulong parms)
-+{
-+
-+    return -TARGET_EOPNOTSUPP;
-+}
-+
-+static inline void do_freebsd_arch_print_sysarch(
-+        const struct syscallname *name, abi_long arg1, abi_long arg2,
-+        abi_long arg3, abi_long arg4, abi_long arg5, abi_long arg6)
-+{
-+
-+    gemu_log("UNKNOWN OP: %d, " TARGET_ABI_FMT_lx ")", (int)arg1, arg2);
-+}
-+
-+#endif /* TARGET_ARCH_SYSARCH_H */
+diff --git a/target/riscv/time_helper.c b/target/riscv/time_helper.c
+index 8d245bed3a..bc0d9a0c4c 100644
+--- a/target/riscv/time_helper.c
++++ b/target/riscv/time_helper.c
+@@ -92,6 +92,7 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
+      * equals UINT64_MAX.
+      */
+     if (timecmp == UINT64_MAX) {
++        timer_del(timer);
+         return;
+     }
+ 
 -- 
 2.46.1
 
