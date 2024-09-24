@@ -4,65 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E811CF9C69
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 21:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B9F5CF9C72
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 21:12:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stCjv-0006jB-GH; Tue, 24 Sep 2024 17:06:31 -0400
+	id 1stCpP-0003cI-Tc; Tue, 24 Sep 2024 17:12:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1stCjt-0006fm-9G; Tue, 24 Sep 2024 17:06:29 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1stCpO-0003bh-Tm
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 17:12:10 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1stCjq-0001VM-7H; Tue, 24 Sep 2024 17:06:28 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 0AF874E602B;
- Tue, 24 Sep 2024 23:06:22 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 3dgbEMkEQyEW; Tue, 24 Sep 2024 23:06:20 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 0F6D84E6030; Tue, 24 Sep 2024 23:06:20 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 0DAD3757B27;
- Tue, 24 Sep 2024 23:06:20 +0200 (CEST)
-Date: Tue, 24 Sep 2024 23:06:20 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>, 
- qemu-ppc@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
- Corey Minyard <cminyard@mvista.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- Jason Wang <jasowang@redhat.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-block@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>, 
- =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-Subject: Re: [PATCH 09/23] hw/ppc/mpc8544_guts: Populate POR PLL ratio status
- register
-In-Reply-To: <3A538E68-B44E-4BA6-B48B-B411D108369C@gmail.com>
-Message-ID: <f176519b-242f-f82d-4259-ae0b25d1db91@eik.bme.hu>
-References: <20240923093016.66437-1-shentey@gmail.com>
- <20240923093016.66437-10-shentey@gmail.com>
- <3037d1f0-6e44-98ee-48fc-1bb206ebc624@eik.bme.hu>
- <56E67259-70A9-44E5-A3C2-6E40363A73C2@gmail.com>
- <da2c3d7a-8d75-0e7c-e47e-ab329d64841a@eik.bme.hu>
- <3A538E68-B44E-4BA6-B48B-B411D108369C@gmail.com>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1stCpM-0002NN-Sd
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 17:12:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References;
+ bh=yFVQQxJI/m+KYLvfB8oRoVs+nG4g9XfCs/D0W7McpgA=; b=JBtk8w6YtK6G37CJBAM4rlKIJU
+ gnlXGXZm9b37blyZzSokANwGN66ILrrgltYGpIki/EeVgYIp3vCTUUEFqepgZKLVP7VWZV2u/kyzB
+ qrRt1o23t4itRxffnAm60G8BYM/ZXC0vsME6lLhwSnR4U5DrqaCP0V8k9/tL0muXudPJ6rE+91UBW
+ by5OtEpsCZBS2r7zojUzeugjKFFwDy+/bXhLchb7r8gzH6y4WnFMzL32YK1bOOBjkm4my31pD/Pg1
+ i2fAiNEQdMpcUMcQdGyjjBYGtA22QmSoJBHPdFM8A4SWb3pXzx4rHylZLqsoOVWq019/OdgB78Ubt
+ mgARngFxQZQinsoERuX7MmofhbeqTv7OvhIcTeoah0ib/b3/N93Zjg+AlqD/9tXIEVvnmUG5NWxXp
+ U+n3eu1fk2b2VvDHlAB736ByiEJsRo7SW7DG8oHoDIPFriKNltCkLGNbwiq4T+Dhz75Q0TtUlaUDr
+ Eep9j26rZ2pOWhWum9JHp40azfajf9BATY5wpXQ83/0iYap5djXyO1JsRmD2lqZYIerINlthCPPXv
+ 86IpfB/l9N0D+GTsVZ7qCy/rSh/KrJLc9Qe2f5kEm//OUCpAy97GEcyJHr/y/VAT4mNMt6ONIUQqL
+ rio2Q8gVHq7uHdsSybBuhEUgG2oeIzyQSZaXi2Mbc=;
+Received: from [2a00:23c4:8bb8:7000:995a:ab79:688d:baed]
+ (helo=localhost.localdomain)
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1stCp8-0002Zr-JQ; Tue, 24 Sep 2024 22:11:58 +0100
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To: qemu-devel@nongnu.org,
+	peter.maydell@linaro.org
+Date: Tue, 24 Sep 2024 22:11:52 +0100
+Message-Id: <20240924211153.1473771-1-mark.cave-ayland@ilande.co.uk>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:7000:995a:ab79:688d:baed
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: [PULL 0/1] qemu-openbios queue 20240924
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,37 +76,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 24 Sep 2024, Bernhard Beschow wrote:
-> Am 24. September 2024 09:59:21 UTC schrieb BALATON Zoltan <balaton@eik.bme.hu>:
->> On Mon, 23 Sep 2024, Bernhard Beschow wrote:
->>> Am 23. September 2024 10:43:19 UTC schrieb BALATON Zoltan <balaton@eik.bme.hu>:
->>>> On Mon, 23 Sep 2024, Bernhard Beschow wrote:
->>>>> Populate this read-only register with some arbitrary values which avoids
->>>>> U-Boot's get_clocks() to hang().
->>>>
->>>> Maybe this should be a property settable by the machine as each board may have different values and it may need to use the correct value for the machine.
->>>
->>> I actually considered this but went with the pragmatic solution to avoid over-engineering. In particular, I wanted to avoid further machine-specitic attributes in the machine class struct. Or do you expect a new e500 machine to be added? In that case I'd set above arbitrary values as default and expect a new machine to override these properties.
->>
->> Can't override if there's no property for it. There's one machine I may be interested in that uses a Freescale e500 SoC. That one seems to use 0x0606180c for this value which I think corresponds to 0/1 Ratio both 3:1, DDR Ratio 12:1 and Plat Ratio 6:1. I think one property to set the 32 bit value without individual fields would be enough and we can put comments next to the value if needed to note what components it comes from. Or if you just need any value here maybe you could take this one then that would be good for me as well.
->
-> Let's use your numbers then without a property. Any specific machine I 
-> should mention in the commit message? Tabor?
+The following changes since commit 01dc65a3bc262ab1bec8fe89775e9bbfa627becb:
 
-That's also OK with me. No need to mention any specific machine as I'm not 
-sure I'll ever finish it. So far it's only an experiment and only planned 
-to submit the small patches that came out of it but it's not emulating any 
-machine yet.
+  Merge tag 'pull-target-arm-20240919' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-09-19 14:15:15 +0100)
 
->> (I have some patches adding second i2c bus and SPD data that are needed for U-Boot for memory detection but it needs more clean up before I can submit it and also waiting for these patches to avoid conflict.)
->
-> Neat. That means we'll get DDR3 support?
+are available in the Git repository at:
 
-That's the plan eventually but I don't know when will I have time to do 
-that. So far I had a hard coded SPD data for testing but I wanted to 
-update the generating function for a while but lacked time for it. This 
-gives another reason to do that finally but may take a while.
+  https://github.com/mcayland/qemu.git tags/qemu-openbios-20240924
 
-Regards,
-BALATON Zoltan
+for you to fetch changes up to 972208be775a37dccb3047702ea1582e9936102c:
+
+  roms/openbios: update OpenBIOS images to c3a19c1e built from submodule (2024-09-24 20:58:54 +0100)
+
+----------------------------------------------------------------
+qemu-openbios queue
+- Update OpenBIOS images to c3a19c1e built from submodule
+
+----------------------------------------------------------------
+Mark Cave-Ayland (1):
+      roms/openbios: update OpenBIOS images to c3a19c1e built from submodule
+
+ pc-bios/openbios-ppc     | Bin 677196 -> 677200 bytes
+ pc-bios/openbios-sparc32 | Bin 382080 -> 382080 bytes
+ pc-bios/openbios-sparc64 | Bin 1593408 -> 1593408 bytes
+ roms/openbios            |   2 +-
+ 4 files changed, 1 insertion(+), 1 deletion(-)
 
