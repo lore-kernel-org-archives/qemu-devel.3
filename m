@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73AF2CF9C6F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31D6BCF9C6B
 	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:25:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1st5Wi-00035J-FV; Tue, 24 Sep 2024 09:24:26 -0400
+	id 1st5X3-0004ov-Ui; Tue, 24 Sep 2024 09:24:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1st5WX-0002io-Fx
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:24:13 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <ribalda@chromium.org>)
+ id 1st5X0-0004ie-Sj
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:24:42 -0400
+Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1st5WV-0002rq-LJ
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:24:13 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-42cb2191107so45580335e9.1
- for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 06:24:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ribalda@chromium.org>)
+ id 1st5Wz-0002vu-5W
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:24:42 -0400
+Received: by mail-qt1-x833.google.com with SMTP id
+ d75a77b69052e-4581e0ed0f2so53516701cf.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 06:24:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1727184250; x=1727789050; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=hygWiGR1dFzAlDfX23cZESU/Xew9gCSHl1aDomvzy8o=;
- b=c6wt0NUzyaVsqatiM3ZR9bbRijnf6EnbXm56/+Wi709ratUEPtoRRVt5/8CirTuRcJ
- aXaFUVK+GSH49mZKP5Jn2vjCxbw6EpTsxtLA9FiTpZRlq/rXymkZRM+kAZZODMZeWuzA
- sLU0OR1lda+ayzE5s5OY5cRfPANsDm/fSa6u1F5bqOyp9m/EcSa0/CLhJGeMXtNtyC1k
- 9SrwZj5rgpvcSrcMcJpDzlobv50F1j6BnQXEAfc+WPA+2JjT1Q9iyEcOphsglV+wEJIl
- YBg1299Prp7Vp+mWFZBuE/veDOVPqIVEZB+lpKyq9n9YrRBEFoStmcj8OZYBNiDXjs5k
- F2RA==
+ d=chromium.org; s=google; t=1727184279; x=1727789079; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=My/SSfrXFxfEwFJIIpw6G7rBWumzz76QNdrts7qfjC4=;
+ b=XK/pMzwVTmHUDaNS4+FH0RD7ZRFCQkNN3YDlxD32jgeav90rvay/C8ZR7DkMO0fXCk
+ 5mRD6whu6jhOmnBVGz1m5Wbn13sBRwA1qZaWiLfok6G3GNTOP2IDM/20qXcvGPphAGcb
+ bDIa+jjUmJKa7swaJiBlAo5+5m01FEHiZeUo8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727184250; x=1727789050;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hygWiGR1dFzAlDfX23cZESU/Xew9gCSHl1aDomvzy8o=;
- b=UD/qebjlaLlbTdnxCzfdckErI5r5OdAxKYo1ha8Sv5InO3AT1gT3hOqAMu7z/y+6Xk
- e0TmWTKCVU8yAbUvRRtMkwd8HqmJF1J9VFbGlRvk6A9AwotI7kRjfuFd5VlqC3NtoJ+K
- Ih6C2+rFN5ZyHWRkSgim0tMeryCxNxgICLGHQRiuUqgUgtc++3K3OEHeMFGVtJPeAZei
- 68jEnFh6JiA/1c7bGgncFGBSKqJLyO5ee1yjwtgAIIy6TUFUXVESXg584Qkn5XXx/YLn
- Vf/sGibRBGJvA3y6aqXFnTXd9lvBVrZaBwHTxjVG44sigAzVDGx4RQpepxQr8+8CgVrr
- OEpg==
-X-Gm-Message-State: AOJu0YzQLU8XUuxWu8S+ZN02R64Cbc4x4YU2b5r85GelL0V9Kfy7BBS2
- bV9kVDXMPLPLlXPHFxK8NcturMdXSFTxzH1YiXGKcFNeDg6K8LoZUFyK9FUJR5c=
-X-Google-Smtp-Source: AGHT+IEeAQDAZXWlUT3vg4QMpdCJRHUrMsBCVuqgzdN+F7vE9JSTF6hLqBrkBnDUKTf437i2ThyHmA==
-X-Received: by 2002:a05:600c:1f10:b0:427:ff3b:7a20 with SMTP id
- 5b1f17b1804b1-42e7c1949fdmr90847415e9.27.1727184249894; 
- Tue, 24 Sep 2024 06:24:09 -0700 (PDT)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ d=1e100.net; s=20230601; t=1727184279; x=1727789079;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=My/SSfrXFxfEwFJIIpw6G7rBWumzz76QNdrts7qfjC4=;
+ b=NtSpnsCXuoh/aYV2DWDJB2iQdGcewU4C4XQ55lb5tgZDpXatQP4GuLxJBD6fugWoim
+ G56awpf0TNErI6OByElXVbb1kWkLDohq75N/JKck/esf1fnSpuj6lrDVGRh0dN6hC+YO
+ j9+b69sQyIVb4aMOnvj4EQf8Ry7LnRLXrHn93bb1wFmKjzoHUflWlHQq9chciKYaN8cL
+ fdoS6BgjJODcZnxEuAI1MLlJugux/VceIErYVbirPthiifcUlmPjILvGCr7KLV6Ozkio
+ HqPxY/bh9bmY5wMnl+1rlsWaRM0JIPNaE6HoWnkcMF4X5+CNAJMXhek4lku6gZeyv4TO
+ eMRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWEJVX66hCZK/Uzkf6027+hn2JqaTxf5y4JAIxPf7mKreYAirzUY/+T1s7LIlwQU4kwK1Ut+BoVSTQW@nongnu.org
+X-Gm-Message-State: AOJu0YwqDD8BDvjlR4oN6g6yi/BalaubgN4jJ2VoVvpIVqIg9q/nVGiM
+ bEOYK+auO/VkAB67C6RxcgTdpu+ic+awgx1/JrQIoxp1WgF2t2WTzx4YnuAbmQ==
+X-Google-Smtp-Source: AGHT+IGWDhmEPKYZ61x8nyPP0m5IvVvTfJrxxFayPu4RNfKJRm/+FS8JYtoKhQ380v+ZRVTiHN4KcQ==
+X-Received: by 2002:ac8:7d4c:0:b0:458:209b:5ec2 with SMTP id
+ d75a77b69052e-45b4fa22749mr53984471cf.29.1727184279295; 
+ Tue, 24 Sep 2024 06:24:39 -0700 (PDT)
+Received: from denia.c.googlers.com.com
+ (76.224.245.35.bc.googleusercontent.com. [35.245.224.76])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42e9025c517sm19897285e9.0.2024.09.24.06.24.09
+ d75a77b69052e-45b52579daesm6248411cf.25.2024.09.24.06.24.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Sep 2024 06:24:09 -0700 (PDT)
-Date: Tue, 24 Sep 2024 15:24:08 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: zhouquan@iscas.ac.cn
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, dbarboza@ventanamicro.com
-Subject: Re: [PATCH 2/2] target/riscv/kvm: Update kvm exts to Linux v6.11
-Message-ID: <20240924-4ed57d7311448f6bc23f7cdf@orel>
-References: <cover.1727164986.git.zhouquan@iscas.ac.cn>
- <ada40759a79c0728652ace59579aa843cb7bf53f.1727164986.git.zhouquan@iscas.ac.cn>
+ Tue, 24 Sep 2024 06:24:38 -0700 (PDT)
+From: Ricardo Ribalda <ribalda@chromium.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: Ricardo Ribalda <ribalda@chromium.org>
+Subject: [PATCH v2 0/3] Fix WinXP ISO boot using the dc390/am53C974 SCSI device
+Date: Tue, 24 Sep 2024 13:24:09 +0000
+Message-ID: <20240924132417.739809-1-ribalda@chromium.org>
+X-Mailer: git-send-email 2.46.0.792.g87dc391469-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ada40759a79c0728652ace59579aa843cb7bf53f.1727164986.git.zhouquan@iscas.ac.cn>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
+ envelope-from=ribalda@chromium.org; helo=mail-qt1-x833.google.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.09,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,45 +96,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 24, 2024 at 04:30:01PM GMT, zhouquan@iscas.ac.cn wrote:
-> From: Quan Zhou <zhouquan@iscas.ac.cn>
-> 
-> Add support for a few Zc* extensions, Zimop, Zcmop and Zawrs.
-> 
-> Signed-off-by: Quan Zhou <zhouquan@iscas.ac.cn>
-> ---
->  target/riscv/kvm/kvm-cpu.c | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index f6e3156b8d..428aaee552 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -281,7 +281,10 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] = {
->      KVM_EXT_CFG("zihintntl", ext_zihintntl, KVM_RISCV_ISA_EXT_ZIHINTNTL),
->      KVM_EXT_CFG("zihintpause", ext_zihintpause, KVM_RISCV_ISA_EXT_ZIHINTPAUSE),
->      KVM_EXT_CFG("zihpm", ext_zihpm, KVM_RISCV_ISA_EXT_ZIHPM),
-> +    KVM_EXT_CFG("zimop", ext_zimop, KVM_RISCV_ISA_EXT_ZIMOP),
-> +    KVM_EXT_CFG("zcmop", ext_zcmop, KVM_RISCV_ISA_EXT_ZCMOP),
->      KVM_EXT_CFG("zacas", ext_zacas, KVM_RISCV_ISA_EXT_ZACAS),
-> +    KVM_EXT_CFG("zawrs", ext_zawrs, KVM_RISCV_ISA_EXT_ZAWRS),
->      KVM_EXT_CFG("zfa", ext_zfa, KVM_RISCV_ISA_EXT_ZFA),
->      KVM_EXT_CFG("zfh", ext_zfh, KVM_RISCV_ISA_EXT_ZFH),
->      KVM_EXT_CFG("zfhmin", ext_zfhmin, KVM_RISCV_ISA_EXT_ZFHMIN),
-> @@ -292,6 +295,10 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] = {
->      KVM_EXT_CFG("zbkc", ext_zbkc, KVM_RISCV_ISA_EXT_ZBKC),
->      KVM_EXT_CFG("zbkx", ext_zbkx, KVM_RISCV_ISA_EXT_ZBKX),
->      KVM_EXT_CFG("zbs", ext_zbs, KVM_RISCV_ISA_EXT_ZBS),
-> +    KVM_EXT_CFG("zca", ext_zca, KVM_RISCV_ISA_EXT_ZCA),
-> +    KVM_EXT_CFG("zcb", ext_zcb, KVM_RISCV_ISA_EXT_ZCB),
-> +    KVM_EXT_CFG("zcd", ext_zcd, KVM_RISCV_ISA_EXT_ZCD),
-> +    KVM_EXT_CFG("zcf", ext_zcf, KVM_RISCV_ISA_EXT_ZCF),
->      KVM_EXT_CFG("zknd", ext_zknd, KVM_RISCV_ISA_EXT_ZKND),
->      KVM_EXT_CFG("zkne", ext_zkne, KVM_RISCV_ISA_EXT_ZKNE),
->      KVM_EXT_CFG("zknh", ext_zknh, KVM_RISCV_ISA_EXT_ZKNH),
-> -- 
-> 2.34.1
->
+Mark Cave-Ayland reported that after landing the pre-computed _PRT, the
+above mentioned testcase failed to pass.
 
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+It seems that it is due to WinXP not handling properly a variable
+package. Let's replace it.
+
+
+Unfortunately, the ASL diff is not the best (or I cannot produce
+something better):
+
+12c12
+<  *     Length           0x00003917 (14615)
+---
+>  *     Length           0x00003914 (14612)
+14c14
+<  *     Checksum         0xD9
+---
+>  *     Checksum         0x09
+
+Diff v1:
+  - Add assert(), Thanks Igor
+
+Ricardo Ribalda (3):
+  tests/acpi: pc: allow DSDT acpi table changes
+  hw/i386/acpi-build: return a non-var package from _PRT()
+  tests/acpi: pc: update golden masters for DSDT
+
+ hw/i386/acpi-build.c                 |   3 ++-
+ tests/data/acpi/x86/pc/DSDT          | Bin 8527 -> 8526 bytes
+ tests/data/acpi/x86/pc/DSDT.acpierst | Bin 8438 -> 8437 bytes
+ tests/data/acpi/x86/pc/DSDT.acpihmat | Bin 9852 -> 9851 bytes
+ tests/data/acpi/x86/pc/DSDT.bridge   | Bin 15398 -> 15397 bytes
+ tests/data/acpi/x86/pc/DSDT.cphp     | Bin 8991 -> 8990 bytes
+ tests/data/acpi/x86/pc/DSDT.dimmpxm  | Bin 10181 -> 10180 bytes
+ tests/data/acpi/x86/pc/DSDT.hpbridge | Bin 8478 -> 8477 bytes
+ tests/data/acpi/x86/pc/DSDT.hpbrroot | Bin 5034 -> 5033 bytes
+ tests/data/acpi/x86/pc/DSDT.ipmikcs  | Bin 8599 -> 8598 bytes
+ tests/data/acpi/x86/pc/DSDT.memhp    | Bin 9886 -> 9885 bytes
+ tests/data/acpi/x86/pc/DSDT.nohpet   | Bin 8385 -> 8384 bytes
+ tests/data/acpi/x86/pc/DSDT.numamem  | Bin 8533 -> 8532 bytes
+ tests/data/acpi/x86/pc/DSDT.roothp   | Bin 12320 -> 12319 bytes
+ tests/data/acpi/x86/q35/DSDT.cxl     | Bin 13148 -> 13146 bytes
+ tests/data/acpi/x86/q35/DSDT.viot    | Bin 14615 -> 14612 bytes
+ 16 files changed, 2 insertions(+), 1 deletion(-)
+
+-- 
+2.46.0.792.g87dc391469-goog
+
 
