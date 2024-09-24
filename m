@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31D2CCF9C6B
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 14:23:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA9D1CF9C6B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 14:30:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1st6Qp-0002gM-1d; Tue, 24 Sep 2024 10:22:23 -0400
+	id 1st6Xk-0000CS-Ht; Tue, 24 Sep 2024 10:29:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1st6Qm-0002ew-7O
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 10:22:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1st6Xh-0000B0-J8
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 10:29:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1st6Qj-0001X8-BL
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 10:22:19 -0400
+ id 1st6Xc-0003f9-LT
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 10:29:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727187736;
+ s=mimecast20190719; t=1727188162;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VoZa4zqQjW81YwIeOoL58+zfBF5NMfYG+heFg2EMnik=;
- b=BQrvQFX1H7CU4q5bo3DUmuc2fybtKlMCeZOKU9B5aAuzDNjmEPqkgwJs1HVCxaENxo/gHr
- dbG0umDfwww/6b2G1V5ISHW0BIwyCU6IE91CJY1w3Q6qnjVT298Zvg/zOy0JfFgfl9wdoE
- 8/5bMNIg8AyIRt9eonqquhEhHt+i0YA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1YyH42C9GrHIfxB6/cez2HW11STB126WUWZwtd/0DrY=;
+ b=hsAHthqXaj/E0pDKksOdp0jI6iXGHJX0f7AKsiYG+ctrtXhpU7A3IRIa9GCgZeEOgs2FOl
+ XtpsJdslJvTeUR7vcrLlrmZg/Jm/enwWtJQVRhhr38l6gSEwjbEuVSefto7AH/VWVu8Y3t
+ 8GkYPkUIDvg3eTkXNTx+YPzKtMuCrck=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-588-y1vJz58TPBes-JWI9f0xCg-1; Tue, 24 Sep 2024 10:22:15 -0400
-X-MC-Unique: y1vJz58TPBes-JWI9f0xCg-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42cb857fc7dso43685995e9.0
- for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 07:22:13 -0700 (PDT)
+ us-mta-643-DHDQd9McPYaskTZDCkMhLQ-1; Tue, 24 Sep 2024 10:29:20 -0400
+X-MC-Unique: DHDQd9McPYaskTZDCkMhLQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42cb33e6299so37036985e9.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 07:29:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727187733; x=1727792533;
+ d=1e100.net; s=20230601; t=1727188159; x=1727792959;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VoZa4zqQjW81YwIeOoL58+zfBF5NMfYG+heFg2EMnik=;
- b=X4t5M0XHdmBdGrdf67mxz4s+eSaVSHFHd5+lqTefS5f+DqSlt/Dj2YQNUtxsAu8Rb6
- zEyFfs18pmGNVf4jFTUC1YLb7SoKaB2/6lkYtV62riZymgFZK6g+uX6CypUEFm2ZBGNU
- X6pJ+nHqWw48PhZObpAXctbk4KnVnqMhKzQwPmJ8vOmKyT1xoFSOhBV/EWStODlvqiaD
- QTqOUqgBlkHBkafqZTm4HunPobHeVnd3ZxOwGoITTvL8oSCqxEYoajdL49j9WYtgshT7
- GoV0SKY0RDCw3vK9udhrH2r2m3YB4haFKdAlR6XTEBTVCNoOFfWmfhDUdQuYeIjNlR91
- d3OA==
+ bh=1YyH42C9GrHIfxB6/cez2HW11STB126WUWZwtd/0DrY=;
+ b=AN0jSr10MyiNQsJvxn0F1Bxgba2Vi/VVrYlZk7aRJaWTGjq83sEWohBSP+BeplPJHQ
+ i7s1kajCiB5YQSulhWgB7tSy1+CwJoHdkY1lKcUr+lwqEqBkZEImMkUL3xFw4mujMBCK
+ 8oWRFIxXmrOkqlXiEl9EyxYU4D2mPzw4/vKik+S2d1rdLuzpX3jn3DpFkjsIJpSVNJbW
+ TEPnvU95wJYBOdunqQ8gMAS7QXmRIBKl6NJn2XIFNtfRJ3xyuRlvH/kDlKIS1e5PUhNt
+ HZc7b85/Onk2fuxhar2qGKWwCspaE6qV6xAoYIGmrp/Oh5adqjzdF3M6KdLuZFJfp/K5
+ Yvdg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVege/Yljxxz3oqyH8csVm06veGntbP9POZDe51PNC93N96Q621UoooZuuTGZ/tdmOW9mFFZHh+sj7V@nongnu.org
-X-Gm-Message-State: AOJu0Yz3KnealPxKtUutrjpzz93D9VlE6r5BJ+y5hE/mDiDoKHyM2EYf
- uplJ6nCzWA9Xx1xapqOkZLsKPJUXXEEVZ/8v13VHWR1V1t09FfVRyjZRtt98cEL6GkuI1JcmG0p
- OfAGcbeABf3+F4pYj9zFdlEJxon8Qzz5Kr+bc5MCsT0ak65Vu4q2d
-X-Received: by 2002:a05:600c:4fc8:b0:42c:ba83:3f0e with SMTP id
- 5b1f17b1804b1-42e7c159bffmr116616185e9.7.1727187732634; 
- Tue, 24 Sep 2024 07:22:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFFsnBE7YaNVfTzbBWmlUdrnMjjt0ZV2wU/VApTD9A3d1PXfgzvXsJqJyIcuKsLGT5DQol3VQ==
-X-Received: by 2002:a05:600c:4fc8:b0:42c:ba83:3f0e with SMTP id
- 5b1f17b1804b1-42e7c159bffmr116615895e9.7.1727187732093; 
- Tue, 24 Sep 2024 07:22:12 -0700 (PDT)
+ AJvYcCVqJpWPEwr924vZxd0u0aDikTSMNckfqNSjAtd0s1Rtf5Yrfzn4rRPYkdZl7gRyb4cdro5mglLSVxjo@nongnu.org
+X-Gm-Message-State: AOJu0YyvieBfBnENi/xebl/tFrTn8h+LStcN2Sqeg5oU6lnNGTfhXPkB
+ L1zEMCBcoKt+Nr8nc2XG48vYTNRk0Uy/aMAb6RFlyDFmFCbfv6V+7WXpQ1kYdmnqw2wdd7f5Del
+ L1bXOonWLj6/7Xocl2KxIHLgAbMe8wGgd4U6AqdMEwn//c6sGgN0t
+X-Received: by 2002:a05:600c:4f82:b0:42c:bdb0:c61e with SMTP id
+ 5b1f17b1804b1-42e7abf9544mr121579305e9.13.1727188159466; 
+ Tue, 24 Sep 2024 07:29:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGx9+RwmkPsq1aH9yBlgRJ75r9wwbG2YlsKN8LHNDJEirtlA+seICT7ifOIfVp/0bul8i2OzQ==
+X-Received: by 2002:a05:600c:4f82:b0:42c:bdb0:c61e with SMTP id
+ 5b1f17b1804b1-42e7abf9544mr121579095e9.13.1727188159034; 
+ Tue, 24 Sep 2024 07:29:19 -0700 (PDT)
 Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
  [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42e7540f59csm159390415e9.7.2024.09.24.07.22.11
+ 5b1f17b1804b1-42e9029eed4sm24245935e9.24.2024.09.24.07.29.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Sep 2024 07:22:11 -0700 (PDT)
-Date: Tue, 24 Sep 2024 16:22:10 +0200
+ Tue, 24 Sep 2024 07:29:18 -0700 (PDT)
+Date: Tue, 24 Sep 2024 16:29:18 +0200
 From: Igor Mammedov <imammedo@redhat.com>
-To: Ricardo Ribalda <ribalda@chromium.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org, Mark
- Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: Re: [PATCH v2 3/3] tests/acpi: pc: update golden masters for DSDT
-Message-ID: <20240924162210.2d4d94c8@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240924132417.739809-4-ribalda@chromium.org>
-References: <20240924132417.739809-1-ribalda@chromium.org>
- <20240924132417.739809-4-ribalda@chromium.org>
+To: Hal Martin <hal.martin@gmail.com>
+Cc: mst@redhat.com, qemu-devel@nongnu.org, anisinha@redhat.com
+Subject: Re: [PATCH v2] hw/smbios: support for type 7 (cache information)
+Message-ID: <20240924162918.3be98058@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240921072955.7150-1-hal.martin@gmail.com>
+References: <20240911071848-mutt-send-email-mst@kernel.org>
+ <20240921072955.7150-1-hal.martin@gmail.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -109,217 +105,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 24 Sep 2024 13:24:12 +0000
-Ricardo Ribalda <ribalda@chromium.org> wrote:
+On Sat, 21 Sep 2024 07:29:55 +0000
+Hal Martin <hal.martin@gmail.com> wrote:
 
-> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-
-Acked-by: Igor Mammedov <imammedo@redhat.com>
-
+> This patch adds support for SMBIOS type 7 (Cache Information) to qemu.
+> 
+> level: cache level (1-8)
+> size: cache size in bytes
+> 
+> Example usage:
+> -smbios type=7,level=1,size=0x8000
+> 
+> Signed-off-by: Hal Martin <hal.martin@gmail.com>
 > ---
->  tests/data/acpi/x86/pc/DSDT                 | Bin 8527 -> 8526 bytes
->  tests/data/acpi/x86/pc/DSDT.acpierst        | Bin 8438 -> 8437 bytes
->  tests/data/acpi/x86/pc/DSDT.acpihmat        | Bin 9852 -> 9851 bytes
->  tests/data/acpi/x86/pc/DSDT.bridge          | Bin 15398 -> 15397 bytes
->  tests/data/acpi/x86/pc/DSDT.cphp            | Bin 8991 -> 8990 bytes
->  tests/data/acpi/x86/pc/DSDT.dimmpxm         | Bin 10181 -> 10180 bytes
->  tests/data/acpi/x86/pc/DSDT.hpbridge        | Bin 8478 -> 8477 bytes
->  tests/data/acpi/x86/pc/DSDT.hpbrroot        | Bin 5034 -> 5033 bytes
->  tests/data/acpi/x86/pc/DSDT.ipmikcs         | Bin 8599 -> 8598 bytes
->  tests/data/acpi/x86/pc/DSDT.memhp           | Bin 9886 -> 9885 bytes
->  tests/data/acpi/x86/pc/DSDT.nohpet          | Bin 8385 -> 8384 bytes
->  tests/data/acpi/x86/pc/DSDT.numamem         | Bin 8533 -> 8532 bytes
->  tests/data/acpi/x86/pc/DSDT.roothp          | Bin 12320 -> 12319 bytes
->  tests/data/acpi/x86/q35/DSDT.cxl            | Bin 13148 -> 13146 bytes
->  tests/data/acpi/x86/q35/DSDT.viot           | Bin 14615 -> 14612 bytes
->  tests/qtest/bios-tables-test-allowed-diff.h |  15 ---------------
->  16 files changed, 15 deletions(-)
+>  hw/smbios/smbios.c           | 64 ++++++++++++++++++++++++++++++++++++
+>  include/hw/firmware/smbios.h | 18 ++++++++++
+>  qemu-options.hx              |  2 ++
+>  3 files changed, 84 insertions(+)
 > 
-> diff --git a/tests/data/acpi/x86/pc/DSDT b/tests/data/acpi/x86/pc/DSDT
-> index 92225236e717b2e522a2ee00492fb0ded418dc7b..8b8235fe79e2fa08a6f840c8479edb75f5a047b9 100644
-> GIT binary patch
-> delta 50
-> zcmX@_bk2#(CD<jzPmzIvF>@oAE|a9ky!c?JcmeN{0B27F5towqfS?eDB|_fCn**8t
-> G$pHX!zYhWc
-> 
-> delta 51
-> zcmX@-bl!=}CD<jzUy*@<F>)i9E|Zk!y!c?Jcmbc10B27F5!aIVfS?eDCBi<%T$=-!
-> H{>cFVe<%+E  
-> 
-> diff --git a/tests/data/acpi/x86/pc/DSDT.acpierst b/tests/data/acpi/x86/pc/DSDT.acpierst
-> index 25b39955059409b177870800949eaf937cd39005..06829b9c6c6d726d955dc7c99bc9f42448e22aeb 100644
-> GIT binary patch
-> delta 50
-> zcmez7_|=iiCD<k8s{#W9<ED*Vx=fND^WuY@;sv}*0-QY!L|jVZ1A;;rmI!$lZw_Qy
-> GDhB|jb`RtL
-> 
-> delta 51
-> zcmezB_|1{aCD<k8n*sv^<D!jRx=d1@^WuY@;stz40-QY!L|jYa1A;;rmI(V4b8QY_
-> HS}F$svl<WN
-> 
-> diff --git a/tests/data/acpi/x86/pc/DSDT.acpihmat b/tests/data/acpi/x86/pc/DSDT.acpihmat
-> index 73a9ce59e9426b180fea0ec5820c4841ebdb6700..2fe355ebdbb858fa9247d09112e21712e3eddc45 100644
-> GIT binary patch
-> delta 50
-> zcmez4^V^5ZCD<jTT8)8$QEelaE|a9ky!c?JcmeN{0B27F5towqfS?eDB|_fCn**7&
-> FRRD#m4w3)>  
-> 
-> delta 51
-> zcmezE^T&tFCD<jTMvZ}iQEVfZE|Zk!y!c?Jcmbc10B27F5!aIVfS?eDCBi<%T$=-!
-> Gv{e9+a1N3H
-> 
-> diff --git a/tests/data/acpi/x86/pc/DSDT.bridge b/tests/data/acpi/x86/pc/DSDT.bridge
-> index 4cef454e379e1009141694e0f4036a2a701c80d7..4d4067c182a6625db1e877408eb7436113884b50 100644
-> GIT binary patch
-> delta 50
-> zcmZ2hv9yBACD<iI)rNtAv3w(!E|a9ky!c?JcmeN{0B27F5towqfS?eDB|_fCn**7y
-> GS^@xfwGR#e
-> 
-> delta 51
-> zcmZ2lv8;m2CD<iI&4z)2F?}PKE|Zk!y!c?Jcmbc10B27F5!aIVfS?eDCBi<%T$=-!
-> Hu37>BgE$Wk  
-> 
-> diff --git a/tests/data/acpi/x86/pc/DSDT.cphp b/tests/data/acpi/x86/pc/DSDT.cphp
-> index 1dc928333d7ae7e4df6bb51d850af5e1cb480158..045a52e75b7fcd4e5f840a758c548231498b96e4 100644
-> GIT binary patch
-> delta 50
-> zcmbR5HqVXACD<iIPMLv$@$5z}T_#D7dGWzc@dDl@0nVNVA}%HI0YM=QON6|OHwQAE
-> GQvd*IF%Gf-
-> 
-> delta 51
-> zcmbQ|Hs6iQCD<iIUYUV`aqmVhT_!2ddGWzc@d7?20nVNVBCaLz0YM=QON4!jxi$wd
-> Hol^h+ba)Q3
-> 
-> diff --git a/tests/data/acpi/x86/pc/DSDT.dimmpxm b/tests/data/acpi/x86/pc/DSDT.dimmpxm
-> index 9f71d2e58b1707e733584e38dab7f73f9bda5eb7..205219b99d903555125c4b07fc047c42993eb338 100644
-> GIT binary patch
-> delta 50
-> zcmX@=f5e~5CD<k8h&lrU<IIg*x=fND^WuY@;sv}*0-QY!L|jVZ1A;;rmI!$lZw_QC
-> GQ3U{wR1Yx#
-> 
-> delta 51
-> zcmX@&f7GALCD<k8s5%1!W9LRLT_!2ddGWzc@d7?20nVNVBCaLz0YM=QON4!jxi$wd
-> Hm8b#$nr{y=
-> 
-> diff --git a/tests/data/acpi/x86/pc/DSDT.hpbridge b/tests/data/acpi/x86/pc/DSDT.hpbridge
-> index db420593a3c51eced25cd57420353fbb9ccdf63c..8fa8b519ec65bd5099c45f4e1c85b11b47a23845 100644
-> GIT binary patch
-> delta 50
-> zcmbQ|G}npCCD<iIR*`{$aqdPgT_#D7dGWzc@dDl@0nVNVA}%HI0YM=QON6|OHwQAE
-> Gl>-1^5)N_z  
-> 
-> delta 51
-> zcmbR1G|!34CD<iIPLY9uv3DbvE|Zk!y!c?Jcmbc10B27F5!aIVfS?eDCBi<%T$=-!
-> H&dLD*Ya9-8
-> 
-> diff --git a/tests/data/acpi/x86/pc/DSDT.hpbrroot b/tests/data/acpi/x86/pc/DSDT.hpbrroot
-> index 31b6adb4eb941e5bf0c02ec8c3819c9213adf022..01719462a72fd6d40ce433dac601e4b94eae574c 100644
-> GIT binary patch
-> delta 49
-> zcmZ3bzEYjbCD<ior7!~nWA8++2a+E1;)9*y1-wfFoIMRhTuR~tf<hRU2zeK8W?@_=
-> F1ORu)4$=Ss
-> 
-> delta 50
-> zcmZ3fzDk|TCD<iol`sPXW9>w)2U4E%;)9*y1$;^ZoIMRhTub5uf<hRU2>TRsZDwX%
-> GCIkS3!Vb~^
-> 
-> diff --git a/tests/data/acpi/x86/pc/DSDT.ipmikcs b/tests/data/acpi/x86/pc/DSDT.ipmikcs
-> index c2a0330d97d495298889b9e28bde2f90235cea88..0ca664688b16baa3a06b8440181de4f17511c6b0 100644
-> GIT binary patch
-> delta 50
-> zcmbR4Jk6QQCD<ionj!-O<I{~?x=fND^WuY@;sv}*0-QY!L|jVZ1A;;rmI!$lZw_Q~
-> GlLr8LI1Zrz
-> 
-> delta 51
-> zcmbQ{Jl&bgCD<iox*`Ju<JFB^x=d1@^WuY@;stz40-QY!L|jYa1A;;rmI(V4b8QY_
-> Ha+3!Dh4&7j
-> 
-> diff --git a/tests/data/acpi/x86/pc/DSDT.memhp b/tests/data/acpi/x86/pc/DSDT.memhp
-> index c15a9fae947bb3929a30c60b7c0f2092705868f8..03ff464ba4e72082fce0921815cfc09ca20b561a 100644
-> GIT binary patch
-> delta 50
-> zcmbQ|JJ*-XCD<iot{MXaWAsKYT_#D7dGWzc@dDl@0nVNVA}%HI0YM=QON6|OHwQBL
-> GssI3QI1W(&
-> 
-> delta 51
-> zcmbR1JI|NPCD<ioo*DxKqxVKGT_!2ddGWzc@d7?20nVNVBCaLz0YM=QON4!jxi$wd
-> H`KkZ_dYcYW
-> 
-> diff --git a/tests/data/acpi/x86/pc/DSDT.nohpet b/tests/data/acpi/x86/pc/DSDT.nohpet
-> index dd29f5cb620e5164601e303e37524530ddb12684..b081030f0ed171e52b13e28cfdc8770a04c2806e 100644
-> GIT binary patch
-> delta 50
-> zcmX@;c)*d%CD<k8fC2*pqwz*AT_#D7dGWzc@dDl@0nVNVA}%HI0YM=QON6|OHwQ8m
-> G$N>O%X%3M9  
-> 
-> delta 51
-> zcmX@$c+io{CD<k8paKH}qw+>BT_!2ddGWzc@d7?20nVNVBCaLz0YM=QON4!jxi$wd
-> H703Yqg6|HI
-> 
-> diff --git a/tests/data/acpi/x86/pc/DSDT.numamem b/tests/data/acpi/x86/pc/DSDT.numamem
-> index 8a6b56fe7da18bf42c339d13b863aabf81780527..2c98cafbff5db04410b35a1151eaf18723a4dad7 100644
-> GIT binary patch
-> delta 50
-> zcmccWbj69wCD<h-M3I4kQFtSlE|a9ky!c?JcmeN{0B27F5towqfS?eDB|_fCn**6x
-> F<N;{*4aEQe
-> 
-> delta 51
-> zcmccObk&K=CD<h-RFQ#!k$EGRE|Zk!y!c?Jcmbc10B27F5!aIVfS?eDCBi<%T$=-!
-> GSmXh88x6$(
-> 
-> diff --git a/tests/data/acpi/x86/pc/DSDT.roothp b/tests/data/acpi/x86/pc/DSDT.roothp
-> index a16b0d9d4becec47fa3cf57ed0077ff6cff88908..da018dca9e3102e811107994248719ab5278c505 100644
-> GIT binary patch
-> delta 50
-> zcmZ3GFh7CICD<iI-hhFD@#{t|T_#D7dGWzc@dDl@0nVNVA}%HI0YM=QON6|OHwQAE
-> G*98E3GY>2P  
-> 
-> delta 51
-> zcmbQAupoiUCD<iI!GM8*@##h`T_!2ddGWzc@d7?20nVNVBCaLz0YM=QON4!jxi$wd
-> Ho!12bhUO0}
-> 
-> diff --git a/tests/data/acpi/x86/q35/DSDT.cxl b/tests/data/acpi/x86/q35/DSDT.cxl
-> index f561750cab8b061c123c041fe2209d74c7a740f1..3c34d4dcab16783abe65f6fa5e64eb69d40795fb 100644
-> GIT binary patch
-> delta 89
-> zcmcbUb}Nm`CD<h-%9w$HF?%DIuq>BTe@uL^Q+#xj=Vo<TD@JaYlK6n25QZf}-o={}
-> U)&1Eg?@<j!RwS*4q3Aa^0Nj2Y6aWAK
-> 
-> delta 91
-> zcmcbWb|;O?CD<h-#+ZSD(R(A8uq>Bze@uL^Q+#xj*JgEDD@GpIlK6n25QZhfKE+&{
-> V<JJAyC+}7bMOG!HhN<c|Hvs;691s8i
-> 
-> diff --git a/tests/data/acpi/x86/q35/DSDT.viot b/tests/data/acpi/x86/q35/DSDT.viot
-> index 8d98dd8845a60a08df5aff27097646bea4913b75..4c93dfd5c4b362714d3f9aa606a838d4625b3369 100644
-> GIT binary patch
-> delta 115
-> zcmbPUG^L2kCD<iI#FBx5k#i%Luq>BfLri?IQ+#xj>tuD=rQ9wh@c}_03`>N(i#Okp
-> Z4P{4`H&;cKf1!#h@2-m~|3g=v8vqA!B?tfj
-> 
-> delta 127
-> zcmbPIG`)z+CD<iI+>(KT@#aP@VOcK!hM4$Zr}*e5x5?_VOL<&N;sb(07?ue86mxC9
-> gE*r{@tiVhaLxC6jWCLApWJRvJSQKrxH@(UX0RQ4B(*OVf
-> 
-> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-> index f81f4e2469..dfb8523c8b 100644
-> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> @@ -1,16 +1 @@
->  /* List of comma-separated changed AML files to ignore */
-> -"tests/data/acpi/x86/pc/DSDT",
-> -"tests/data/acpi/x86/pc/DSDT.acpierst",
-> -"tests/data/acpi/x86/pc/DSDT.acpihmat",
-> -"tests/data/acpi/x86/pc/DSDT.bridge",
-> -"tests/data/acpi/x86/pc/DSDT.cphp",
-> -"tests/data/acpi/x86/pc/DSDT.dimmpxm",
-> -"tests/data/acpi/x86/pc/DSDT.hpbridge",
-> -"tests/data/acpi/x86/pc/DSDT.hpbrroot",
-> -"tests/data/acpi/x86/pc/DSDT.ipmikcs",
-> -"tests/data/acpi/x86/pc/DSDT.memhp",
-> -"tests/data/acpi/x86/pc/DSDT.nohpet",
-> -"tests/data/acpi/x86/pc/DSDT.numamem",
-> -"tests/data/acpi/x86/pc/DSDT.roothp",
-> -"tests/data/acpi/x86/q35/DSDT.cxl",
-> -"tests/data/acpi/x86/q35/DSDT.viot",
+> diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+> index a394514264..b71d5b0a92 100644
+> --- a/hw/smbios/smbios.c
+> +++ b/hw/smbios/smbios.c
+> @@ -83,6 +83,12 @@ static struct {
+>      .processor_family = 0x01, /* Other */
+>  };
+>  
+> +struct type7_instance {
+> +    uint16_t level, size;
+> +    QTAILQ_ENTRY(type7_instance) next;
+> +};
+> +static QTAILQ_HEAD(, type7_instance) type7 = QTAILQ_HEAD_INITIALIZER(type7);
+> +
+>  struct type8_instance {
+>      const char *internal_reference, *external_reference;
+>      uint8_t connector_type, port_type;
+> @@ -330,6 +336,23 @@ static const QemuOptDesc qemu_smbios_type4_opts[] = {
+>      { /* end of list */ }
+>  };
+>  
+> +static const QemuOptDesc qemu_smbios_type7_opts[] = {
+> +    {
+> +        .name = "type",
+> +        .type = QEMU_OPT_NUMBER,
+> +        .help = "SMBIOS element type",
+> +    },{
+> +        .name = "level",
+> +        .type = QEMU_OPT_NUMBER,
+> +        .help = "cache level",
+> +    },{
+> +        .name = "size",
+> +        .type = QEMU_OPT_NUMBER,
+> +        .help = "cache size",
+> +    },
+> +    { /* end of list */ }
+> +};
+> +
+>  static const QemuOptDesc qemu_smbios_type8_opts[] = {
+>      {
+>          .name = "type",
+> @@ -733,6 +756,33 @@ static void smbios_build_type_4_table(MachineState *ms, unsigned instance,
+>      smbios_type4_count++;
+>  }
+>  
+> +static void smbios_build_type_7_table(void)
+> +{
+> +    unsigned instance = 0;
+> +    struct type7_instance *t7;
+> +    char designation[20];
+> +
+> +    QTAILQ_FOREACH(t7, &type7, next) {
+> +        SMBIOS_BUILD_TABLE_PRE(7, T0_BASE + instance, true);
+> +        sprintf(designation, "CPU Internal L%d", t7->level);
+> +        SMBIOS_TABLE_SET_STR(7, socket_designation, designation);
+> +        /* cache not socketed, enabled, write back */
+> +        t->cache_configuration =  0x180 | ((t7->level) - 1);
+> +        t->installed_size =  t7->size;
+> +        t->maximum_cache_size =  t7->size; /* set max to installed */
+> +        t->supported_sram_type = 0x10; /* pipeline burst */
+> +        t->current_sram_type = 0x10; /* pipeline burst */
+> +        t->cache_speed = 0x1; /* 1 ns */
+> +        t->error_correction_type = 0x6; /* Multi-bit ECC */
+> +        t->system_cache_type = 0x05; /* Unified */
+> +        t->associativity = 0x6; /* Fully Associative */
+> +        t->maximum_cache_size2 = t7->size;
+> +        t->installed_cache_size2 = t7->size;
+
+for any field that is larger that 1 byte, please use cpu_to_leX
+to make sure it won't break on big-endian host
+
+> +        SMBIOS_BUILD_TABLE_POST;
+> +        instance++;
+> +    }
+> +}
+> +
+>  static void smbios_build_type_8_table(void)
+>  {
+>      unsigned instance = 0;
+> @@ -1120,6 +1170,7 @@ static bool smbios_get_tables_ep(MachineState *ms,
+>          }
+>      }
+>  
+> +    smbios_build_type_7_table();
+>      smbios_build_type_8_table();
+>      smbios_build_type_9_table(errp);
+>      smbios_build_type_11_table();
+> @@ -1478,6 +1529,19 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
+>                             UINT16_MAX);
+>              }
+>              return;
+> +        case 7:
+> +            if (!qemu_opts_validate(opts, qemu_smbios_type7_opts, errp)) {
+> +                return;
+> +            }
+> +            struct type7_instance *t7_i;
+> +            t7_i = g_new0(struct type7_instance, 1);
+> +            t7_i->level = qemu_opt_get_number(opts, "level", 0x0);
+> +            t7_i->size = qemu_opt_get_number(opts, "size", 0x0200);
+> +            /* Only cache levels 1-8 are permitted */
+> +            if (t7_i->level > 0 && t7_i->level < 9) {
+> +                QTAILQ_INSERT_TAIL(&type7, t7_i, next);
+> +            }
+> +            return;
+>          case 8:
+>              if (!qemu_opts_validate(opts, qemu_smbios_type8_opts, errp)) {
+>                  return;
+> diff --git a/include/hw/firmware/smbios.h b/include/hw/firmware/smbios.h
+> index f066ab7262..1ea1506b46 100644
+> --- a/include/hw/firmware/smbios.h
+> +++ b/include/hw/firmware/smbios.h
+> @@ -220,6 +220,24 @@ typedef enum smbios_type_4_len_ver {
+>      SMBIOS_TYPE_4_LEN_V30 = offsetofend(struct smbios_type_4, thread_count2),
+>  } smbios_type_4_len_ver;
+>  
+> +/* SMBIOS type 7 - Cache Information (v2.0+) */
+> +struct smbios_type_7 {
+> +    struct smbios_structure_header header;
+> +    uint8_t socket_designation;
+> +    uint16_t cache_configuration;
+> +    uint16_t maximum_cache_size;
+> +    uint16_t installed_size;
+> +    uint16_t supported_sram_type;
+> +    uint16_t current_sram_type;
+> +    uint8_t cache_speed;
+> +    uint8_t error_correction_type;
+> +    uint8_t system_cache_type;
+> +    uint8_t associativity;
+> +    uint32_t maximum_cache_size2;
+> +    uint32_t installed_cache_size2;
+> +    /* contained elements follow */
+> +} QEMU_PACKED;
+> +
+>  /* SMBIOS type 8 - Port Connector Information */
+>  struct smbios_type_8 {
+>      struct smbios_structure_header header;
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index d94e2cbbae..21c05821d5 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -2706,6 +2706,8 @@ DEF("smbios", HAS_ARG, QEMU_OPTION_smbios,
+>      "              [,asset=str][,part=str][,max-speed=%d][,current-speed=%d]\n"
+>      "              [,processor-family=%d][,processor-id=%d]\n"
+>      "                specify SMBIOS type 4 fields\n"
+> +    "-smbios type=7[,level=%d][,size=%d]\n"
+> +    "                specify SMBIOS type 7 fields\n"
+>      "-smbios type=8[,external_reference=str][,internal_reference=str][,connector_type=%d][,port_type=%d]\n"
+>      "                specify SMBIOS type 8 fields\n"
+>      "-smbios type=11[,value=str][,path=filename]\n"
 
 
