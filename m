@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1B6ECF9C6B
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:09:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6341DCF9C6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:09:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1st5Gf-0005Xg-2P; Tue, 24 Sep 2024 09:07:49 -0400
+	id 1st5Hl-0002BF-Ki; Tue, 24 Sep 2024 09:08:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1st5G1-0002D0-5M
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:07:12 -0400
+ id 1st5HP-0000ul-FL
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:08:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1st5Fx-0000YU-3l
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:07:08 -0400
+ id 1st5HM-0000qj-SZ
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:08:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727183222;
+ s=mimecast20190719; t=1727183265;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N8oWnyTYg8AgJWFNvI249dMhAmQigPL79FgF3CC8NN0=;
- b=aiopCLVLIJH1mEjFyEV5I9aUhR65PuZ7Hybg6u2/kgI/EiReMhNotdvwfXlS4BRWBcMmbE
- iclmg90WRIVYtxFZwo01/6c5J1ltEfAbQyjDFSJ3W7pH2Ga37Ug43iOv0+2BTINooScdsV
- idVXZXnsRe7N+yJPKo1OWi1WoQaMSC4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=NAK9HSEf/74uNdIIqZP2L3zUsV6HNSqDIlQaYXiyyvc=;
+ b=JOCFnI4A7WuZsLbZj+ZAghTKyTJ45OxETJe9z3xvtvODrnvKvdl3cr0awBK4wGwNwXN/Gj
+ ugLBabPLDMF2/1MVnQOxKhsxd0gDCQvMvVWBWlvWA8mrfyn11FTGW164Th9fqpxz5umsx8
+ viLf18Bd0GBiXLJBstP8cP//SdDunuY=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-70-9mhNB2XGMKeO-mP1wQPUiA-1; Tue,
- 24 Sep 2024 09:06:57 -0400
-X-MC-Unique: 9mhNB2XGMKeO-mP1wQPUiA-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-168-lRfZJdgqMi2yoww-yyD_Bw-1; Tue,
+ 24 Sep 2024 09:07:42 -0400
+X-MC-Unique: lRfZJdgqMi2yoww-yyD_Bw-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C2BB51918DC0; Tue, 24 Sep 2024 13:06:54 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 40A201902F6B; Tue, 24 Sep 2024 13:07:38 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.3])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 07DBE197701F; Tue, 24 Sep 2024 13:06:49 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 30EDA1955EB3; Tue, 24 Sep 2024 13:07:30 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
@@ -73,16 +73,15 @@ Cc: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Stefano Garzarella <sgarzare@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 10/22] hw/sdhci: fix -Werror=maybe-uninitialized
- false-positive
-Date: Tue, 24 Sep 2024 17:05:41 +0400
-Message-ID: <20240924130554.749278-11-marcandre.lureau@redhat.com>
+Subject: [PATCH v2 17/22] tests: fix -Werror=maybe-uninitialized false-positive
+Date: Tue, 24 Sep 2024 17:05:48 +0400
+Message-ID: <20240924130554.749278-18-marcandre.lureau@redhat.com>
 In-Reply-To: <20240924130554.749278-1-marcandre.lureau@redhat.com>
 References: <20240924130554.749278-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -111,28 +110,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../hw/sd/sdhci.c:846:16: error: ‘res’ may be used uninitialized [-Werror=maybe-uninitialized]
-
-False-positive, because "length" is non-null.
+../tests/unit/test-block-iothread.c:773:17: error: ‘job’ may be used uninitialized [-Werror=maybe-uninitialized]
+/usr/include/glib-2.0/glib/gtestutils.h:73:53: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/sd/sdhci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/unit/test-bdrv-drain.c     | 2 +-
+ tests/unit/test-block-iothread.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 87122e4245..ed01499391 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -747,7 +747,7 @@ static void sdhci_do_adma(SDHCIState *s)
-     const uint16_t block_size = s->blksize & BLOCK_SIZE_MASK;
-     const MemTxAttrs attrs = { .memory = true };
-     ADMADescr dscr = {};
--    MemTxResult res;
-+    MemTxResult res = MEMTX_ERROR;
-     int i;
+diff --git a/tests/unit/test-bdrv-drain.c b/tests/unit/test-bdrv-drain.c
+index 666880472b..c112d5b189 100644
+--- a/tests/unit/test-bdrv-drain.c
++++ b/tests/unit/test-bdrv-drain.c
+@@ -722,7 +722,7 @@ static void test_blockjob_common_drain_node(enum drain_type drain_type,
+     BlockJob *job;
+     TestBlockJob *tjob;
+     IOThread *iothread = NULL;
+-    int ret;
++    int ret = -1;
  
-     if (s->trnmod & SDHC_TRNS_BLK_CNT_EN && !s->blkcnt) {
+     src = bdrv_new_open_driver(&bdrv_test, "source", BDRV_O_RDWR,
+                                &error_abort);
+diff --git a/tests/unit/test-block-iothread.c b/tests/unit/test-block-iothread.c
+index 3766d5de6b..20ed54f570 100644
+--- a/tests/unit/test-block-iothread.c
++++ b/tests/unit/test-block-iothread.c
+@@ -745,7 +745,7 @@ static void test_propagate_mirror(void)
+     AioContext *main_ctx = qemu_get_aio_context();
+     BlockDriverState *src, *target, *filter;
+     BlockBackend *blk;
+-    Job *job;
++    Job *job = NULL;
+     Error *local_err = NULL;
+ 
+     /* Create src and target*/
 -- 
 2.45.2.827.g557ae147e6
 
