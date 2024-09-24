@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 496F9CF9C6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:11:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D30FCCF9C6B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:11:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1st5HP-0000fL-8v; Tue, 24 Sep 2024 09:08:35 -0400
+	id 1st5Il-0006pq-TC; Tue, 24 Sep 2024 09:10:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1st5Gg-0005t7-Q4
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:07:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1st5Gp-0006bg-TM
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:08:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1st5Gc-0000qg-Jq
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:07:48 -0400
+ id 1st5Gi-0000se-LZ
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:07:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727183265;
+ s=mimecast20190719; t=1727183270;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=U9mSRuRV9kL6i+j8O8fsCuIK9js7cJJ4qwxGkLMTjwY=;
- b=RglbVqKJYnOOORxfZywJoQFvngzQIxMTwfY2pQsNUawsCZt1tn/21otXVikKhu62/BichE
- 3WhoZZjskQxTJw8P7eIwFV/tUCYHG2VgFvl4XNX96jv/gz5y0Wgv4i7XcEePUpAJVUq5oF
- qSN9Bk09pzBfpYXC2E+7f6C1BmGZ1Oc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=8kITW/qOItfiafJDWQ5dEslsyyB81A9V60goYSoquHw=;
+ b=Z21gq+XPSPBdkJHtce0rZH3nB6sHghFv7IH+kvwUYh2JFTZU3Eg0FAmftsIAJbeAAQybwD
+ hZyID65mipl5Tq3p+4pDZQRjpJIMWeF6K2dP03wKDd4ts40Dc00OuuhMAkPx3rF4NNk0Yk
+ S6RAJNqtziVHybBR0zZ+YFu1pgp+OI8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-35-CM4lndipOgayGbb1Z5RQRQ-1; Tue,
- 24 Sep 2024 09:07:42 -0400
-X-MC-Unique: CM4lndipOgayGbb1Z5RQRQ-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-322-2T_0FyEAN5myzxBGqR1yOQ-1; Tue,
+ 24 Sep 2024 09:07:47 -0400
+X-MC-Unique: 2T_0FyEAN5myzxBGqR1yOQ-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0C58118DB7EA; Tue, 24 Sep 2024 13:07:39 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 787561896E34; Tue, 24 Sep 2024 13:07:44 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.3])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AE9BA195394E; Tue, 24 Sep 2024 13:07:37 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5275B19560AA; Tue, 24 Sep 2024 13:07:41 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
@@ -73,17 +73,16 @@ Cc: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Stefano Garzarella <sgarzare@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 18/22] hw/virtio: fix -Werror=maybe-uninitialized
- false-positive
-Date: Tue, 24 Sep 2024 17:05:49 +0400
-Message-ID: <20240924130554.749278-19-marcandre.lureau@redhat.com>
+Subject: [PATCH v2 19/22] block: fix -Werror=maybe-uninitialized false-positive
+Date: Tue, 24 Sep 2024 17:05:50 +0400
+Message-ID: <20240924130554.749278-20-marcandre.lureau@redhat.com>
 In-Reply-To: <20240924130554.749278-1-marcandre.lureau@redhat.com>
 References: <20240924130554.749278-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -111,26 +110,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../hw/virtio/vhost-shadow-virtqueue.c:545:13: error: ‘r’ may be used uninitialized [-Werror=maybe-uninitialized]
+../block/file-posix.c:1405:17: error: ‘zoned’ may be used uninitialized [-Werror=maybe-uninitialized]
+ 1405 |     if (ret < 0 || zoned == BLK_Z_NONE) {
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/virtio/vhost-shadow-virtqueue.c | 2 +-
+ block/file-posix.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index fc5f408f77..cd29cc795b 100644
---- a/hw/virtio/vhost-shadow-virtqueue.c
-+++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -526,7 +526,7 @@ static void vhost_svq_flush(VhostShadowVirtqueue *svq,
- size_t vhost_svq_poll(VhostShadowVirtqueue *svq, size_t num)
+diff --git a/block/file-posix.c b/block/file-posix.c
+index ff928b5e85..90fa54352c 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -1398,7 +1398,7 @@ static void raw_refresh_zoned_limits(BlockDriverState *bs, struct stat *st,
+                                      Error **errp)
  {
-     size_t len = 0;
--    uint32_t r;
-+    uint32_t r = 0;
+     BDRVRawState *s = bs->opaque;
+-    BlockZoneModel zoned;
++    BlockZoneModel zoned = BLK_Z_NONE;
+     int ret;
  
-     while (num--) {
-         int64_t start_us = g_get_monotonic_time();
+     ret = get_sysfs_zoned_model(st, &zoned);
 -- 
 2.45.2.827.g557ae147e6
 
