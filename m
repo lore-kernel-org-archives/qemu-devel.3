@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8392CF9C6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:07:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52E78CF9C6B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:07:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1st5GG-0003MI-43; Tue, 24 Sep 2024 09:07:25 -0400
+	id 1st5GF-0003Lz-TN; Tue, 24 Sep 2024 09:07:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1st5FQ-0007Ri-Mo
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:06:34 -0400
+ id 1st5Fz-00027v-Sg
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:07:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1st5FL-0000SZ-TR
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:06:29 -0400
+ id 1st5Fw-0000YG-WF
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:07:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727183187;
+ s=mimecast20190719; t=1727183220;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JGOe2Dnp1wJG1ukQSWN3HzZdCz5Em4HGNnPdjOs5MqI=;
- b=jL3ESGwRkWnrfyqw4izVmZvZPh1XDdEjqenYIGUA4HXUe55riR1hD8hvcvacz+2LFgCKEj
- yDooY6tfFvCw24YA1gjVMpLhXrSQu3QwlgiaoNaGrYFAAwI0gTMtaYOCV+m2seJH2dY9VE
- mgu59kLO9LsFRMXLRuDD/UORDNkE9FU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=B+ucgqP3hQbgCJa08uMSdP/HbUHRRexmcehpH46W1TY=;
+ b=HuuOg4qIc/CIUqVV3i2aGms1OXvpZhIJgdM0ZGx1TjKo6H0YDnQSd/QlyOYUGeyD3x5/fX
+ RKxaoATLhN48T7+47jHU1DLrAzh5RicE6CAosZiSMJlkGgEcPPdoGkbTDNxD8iFt0h8GvS
+ khYgpMjaY5IJoHAmN8DFvsjFgVvd3Fk=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-KiF6AAusOZys16h76pkVMw-1; Tue,
- 24 Sep 2024 09:06:24 -0400
-X-MC-Unique: KiF6AAusOZys16h76pkVMw-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-671-04O56AknPxedKabWtkXorA-1; Tue,
+ 24 Sep 2024 09:06:57 -0400
+X-MC-Unique: 04O56AknPxedKabWtkXorA-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3B53518E6E3F; Tue, 24 Sep 2024 13:06:20 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 63FA91895D70; Tue, 24 Sep 2024 13:06:54 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.3])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0139119560AD; Tue, 24 Sep 2024 13:06:18 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7EE471954B1C; Tue, 24 Sep 2024 13:06:44 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
@@ -73,15 +73,15 @@ Cc: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Stefano Garzarella <sgarzare@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 04/22] nbd: fix -Werror=maybe-uninitialized false-positive
-Date: Tue, 24 Sep 2024 17:05:35 +0400
-Message-ID: <20240924130554.749278-5-marcandre.lureau@redhat.com>
+Subject: [PATCH v2 09/22] hw/vhost-scsi: fix -Werror=maybe-uninitialized
+Date: Tue, 24 Sep 2024 17:05:40 +0400
+Message-ID: <20240924130554.749278-10-marcandre.lureau@redhat.com>
 In-Reply-To: <20240924130554.749278-1-marcandre.lureau@redhat.com>
 References: <20240924130554.749278-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,27 +110,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../nbd/client-connection.c:419:8: error: ‘wait_co’ may be used uninitialized [-Werror=maybe-uninitialized]
+../hw/scsi/vhost-scsi.c:173:12: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
+
+It can be reached when num_queues=0. It probably doesn't make much sense
+to instantiate a vhost-scsi with 0 IO queues though. For now, make
+vhost_scsi_set_workers() return success/0 anyway, when no workers have
+been setup.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
 ---
- nbd/client-connection.c | 2 +-
+ hw/scsi/vhost-scsi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/nbd/client-connection.c b/nbd/client-connection.c
-index f9da67c87e..b11e266807 100644
---- a/nbd/client-connection.c
-+++ b/nbd/client-connection.c
-@@ -410,7 +410,7 @@ nbd_co_establish_connection(NBDClientConnection *conn, NBDExportInfo *info,
-  */
- void nbd_co_establish_connection_cancel(NBDClientConnection *conn)
- {
--    Coroutine *wait_co;
-+    Coroutine *wait_co = NULL;
+diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
+index 49cff2a0cb..22d16dc26b 100644
+--- a/hw/scsi/vhost-scsi.c
++++ b/hw/scsi/vhost-scsi.c
+@@ -172,7 +172,7 @@ static int vhost_scsi_set_workers(VHostSCSICommon *vsc, bool per_virtqueue)
+     struct vhost_dev *dev = &vsc->dev;
+     struct vhost_vring_worker vq_worker;
+     struct vhost_worker_state worker;
+-    int i, ret;
++    int i, ret = 0;
  
-     WITH_QEMU_LOCK_GUARD(&conn->mutex) {
-         wait_co = g_steal_pointer(&conn->wait_co);
+     /* Use default worker */
+     if (!per_virtqueue || dev->nvqs == VHOST_SCSI_VQ_NUM_FIXED + 1) {
 -- 
 2.45.2.827.g557ae147e6
 
