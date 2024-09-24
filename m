@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA96CF9C6B
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 22:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99C75CF9C74
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 22:21:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stDs4-0005rq-H6; Tue, 24 Sep 2024 18:19:00 -0400
+	id 1stDrI-00039f-F0; Tue, 24 Sep 2024 18:18:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1stDs2-0005fC-56
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:18:58 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1stDrE-00031J-B1
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:18:08 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1stDs0-0001gD-BZ
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:18:57 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-718d6ad6050so4451652b3a.0
- for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 15:18:55 -0700 (PDT)
+ id 1stDrC-0001bK-KN
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:18:08 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-71781f42f75so5522100b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 15:18:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727216334; x=1727821134; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727216284; x=1727821084; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bEmBPhRtysBtPpiKelgvSVTEamC5FPrpVzPYJCYDzDI=;
- b=dgNveYE/UZfRXZJu251CiOY+ongKce0lnjLseIqxnmjAxX5wUwU4K1+pfDqS3EPKDY
- QSXP3JcPQme1cMIUiXwR1ltritgLJ96J1y5aO4/NI6XOmGbBqRIYzKEdKS3vJdvjaSOB
- 0MTAikhk9HRqG9Tjf0ufthTgNFvh3dj3cotU/5KqQfJr9N48OQSmSo4XHBQtZsqrM6QL
- thFjMdWAWmpOyEg96YzeumPzedAqeqX4Ckc7DQUSp35bpglvPHZdw6smgeG6PscRBftK
- LQ4nzttm3RdQSNuAMbyOq5nzGMDye5TtZoB4OGIub+lxb1v5jjx/nwkGzmp404Qk9kNY
- K1Xw==
+ bh=tNALoGxYT8shTu5z76fc9Bj/Xb/aPmADmGUdV2UZRFg=;
+ b=m6sH3iQZXoWkyroPzmoRqkysTGZRuQbSFuYkiuSQ4yla0D6/JlGuSAzSeZ2WIwoHyC
+ QirYChhRpLua+eWvTyTfvDBK6zB49HtfT71e9Qr/EPtiE3BcpRbDtNtT7K2hYEFQkPJ4
+ N6QT35PoOe9HVR5q6B5PTy5b930+lJyHO9zRwxzc2jlrwO8JYCWjy+oCD1QLDnu7eq+O
+ KjNYtzz05qqlFvZwZgdSuuQChAIzhcwdhhkrpm2uSOK35E6zndq/gjgkx1BrT61W6ur6
+ QLKJO4FksZR4N1CrDjAZN7NQJyXoMu+wDgCgItnptQnfti23oou8gwv44gyBnzBUJizj
+ ZbWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727216334; x=1727821134;
+ d=1e100.net; s=20230601; t=1727216284; x=1727821084;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bEmBPhRtysBtPpiKelgvSVTEamC5FPrpVzPYJCYDzDI=;
- b=Ea3xGlbla/IVE0iz1eOnNEpJ5thKHgDlqgtMn8xD8/6wkPUJf0iv6R3QY7PgaFTMAM
- E7nX6APpJ+KXmAN+rtxGUS0qMQu5sgtkA4OyLoL8uGiyyoZ4evvsdIgfnJtJYTfbY5ww
- 7Ee1JON4Sjyqe9ph6U88mq6kvAjA3TDjCJHEsMpoSE+UkJ3NZA3f8reJG4FULU1T5a3M
- 7kfUzo1m2JwvG/BWhd9qMPS4tANkPKANqX998zPKhEn5q+OSq/hhft0vHbToD/rXq67w
- 4EtxnT5bqIN8oTMFqk1O68+L/NwVCG8RDe8C9B3c9lsplZBfbACMaPoreSnkULV4SeoE
- J5Bg==
-X-Gm-Message-State: AOJu0Yywb24RW96lwK2pHJxL+gQi7XDZCQRF0tRtBLqKFj9zob+YAYEd
- igaheIL6UKsczy0pN8w7MoYJY/U7JsDRXAxCd/5ZFRU2885JEOsmPzJ5xA==
-X-Google-Smtp-Source: AGHT+IGmVBiIcMqIz7GjcuK2NSBRqQEWSkGU8FAyP6bCACz/D0pYPi2xSk+SPO4eRgzIiKn7N2tQFw==
-X-Received: by 2002:a05:6a00:1702:b0:717:8f0d:ec37 with SMTP id
- d2e1a72fcca58-71b0acc4177mr923028b3a.25.1727216333608; 
- Tue, 24 Sep 2024 15:18:53 -0700 (PDT)
+ bh=tNALoGxYT8shTu5z76fc9Bj/Xb/aPmADmGUdV2UZRFg=;
+ b=hN/uE0XjTtqoL7RWEjvHbQlzlheBtlIudyZ2zP5u8GO4lKVvYmJef2J+tZHoIVHWq6
+ pRNdF6h+5Py4kM8aiJN8q++I41VESz82dxJNsKRHWlOZc1opjLtxA4Sj2Aa1O08/sZZx
+ uOlZNNbUC7eZ5tuE9oATCZuXBxr5ixOvO7S8nVgvUobmTDxVW7cIw/n+FB9kn3E3UZqs
+ xHjL8ukzIYfCWqmFEmyYgUwZG78zfwuaTtJVHKqRWg6EKxbTUBWQLUKJ58xFf+sM6Flf
+ S+QRGw2vDFKfz7o9LKxVfNSrxUOzvqpDOaX4KaR0vdoJpcx7OR30UZQg2BatVevyMxEw
+ Vwvw==
+X-Gm-Message-State: AOJu0Ywq3ZyKxAnfLic57WnI2oJYQQU6/SWYi6ph6FszfomKyP89JfSm
+ f0HvFX0+YMqfNIC400fSxj4NP0jBErOpXKuFCowuMyT9nzRqOoi35RYVew==
+X-Google-Smtp-Source: AGHT+IES2g/ikU9Qe+9lJ0wSLRPqKPvkNFUTX8b/oJSwzP24hG8X9SZDCE+zUdofc6L+LXdu4OrbLQ==
+X-Received: by 2002:a05:6a21:164e:b0:1cf:5aba:eac4 with SMTP id
+ adf61e73a8af0-1d4e0ba3dc5mr847624637.41.1727216284292; 
+ Tue, 24 Sep 2024 15:18:04 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71afc8342easm1665310b3a.11.2024.09.24.15.18.50
+ d2e1a72fcca58-71afc8342easm1665310b3a.11.2024.09.24.15.18.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Sep 2024 15:18:53 -0700 (PDT)
+ Tue, 24 Sep 2024 15:18:03 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Frank Chang <frank.chang@sifive.com>,
+Cc: alistair23@gmail.com, Jason Chien <jason.chien@sifive.com>,
+ Frank Chang <frank.chang@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 17/47] pci-ids.rst: add Red Hat pci-id for RISC-V IOMMU
- device
-Date: Wed, 25 Sep 2024 08:17:18 +1000
-Message-ID: <20240924221751.2688389-18-alistair.francis@wdc.com>
+Subject: [PULL v2 01/47] target/riscv: Add a property to set vl to ceil(AVL/2)
+Date: Wed, 25 Sep 2024 08:17:02 +1000
+Message-ID: <20240924221751.2688389-2-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240924221751.2688389-1-alistair.francis@wdc.com>
 References: <20240924221751.2688389-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,62 +99,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Jason Chien <jason.chien@sifive.com>
 
-The RISC-V IOMMU PCI device we're going to add next is a reference
-implementation of the riscv-iommu spec [1], which predicts that the
-IOMMU can be implemented as a PCIe device.
+RVV spec allows implementations to set vl with values within
+[ceil(AVL/2),VLMAX] when VLMAX < AVL < 2*VLMAX. This commit adds a
+property "rvv_vl_half_avl" to enable setting vl = ceil(AVL/2). This
+behavior helps identify compiler issues and bugs.
 
-However, RISC-V International (RVI), the entity that ratified the
-riscv-iommu spec, didn't bother assigning a PCI ID for this IOMMU PCIe
-implementation that the spec predicts. This puts us in an uncommon
-situation because we want to add the reference IOMMU PCIe implementation
-but we don't have a PCI ID for it.
-
-Given that RVI doesn't provide a PCI ID for it we reached out to Red Hat
-and Gerd Hoffman, and they were kind enough to give us a PCI ID for the
-RISC-V IOMMU PCI reference device.
-
-Thanks Red Hat and Gerd for this RISC-V IOMMU PCIe device ID.
-
-[1] https://github.com/riscv-non-isa/riscv-iommu/releases/tag/v1.0.0
-
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Jason Chien <jason.chien@sifive.com>
 Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20240903201633.93182-5-dbarboza@ventanamicro.com>
+Message-ID: <20240722175004.23666-1-jason.chien@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- docs/specs/pci-ids.rst | 2 ++
- include/hw/pci/pci.h   | 1 +
- 2 files changed, 3 insertions(+)
+ target/riscv/cpu_cfg.h       | 1 +
+ target/riscv/cpu.c           | 1 +
+ target/riscv/vector_helper.c | 2 ++
+ 3 files changed, 4 insertions(+)
 
-diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
-index 328ab31fe8..261b0f359f 100644
---- a/docs/specs/pci-ids.rst
-+++ b/docs/specs/pci-ids.rst
-@@ -98,6 +98,8 @@ PCI devices (other than virtio):
-   PCI ACPI ERST device (``-device acpi-erst``)
- 1b36:0013
-   PCI UFS device (``-device ufs``)
-+1b36:0014
-+  PCI RISC-V IOMMU device
+diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+index 8b272fb826..96fe26d4ea 100644
+--- a/target/riscv/cpu_cfg.h
++++ b/target/riscv/cpu_cfg.h
+@@ -127,6 +127,7 @@ struct RISCVCPUConfig {
+     bool ext_smepmp;
+     bool rvv_ta_all_1s;
+     bool rvv_ma_all_1s;
++    bool rvv_vl_half_avl;
  
- All these devices are documented in :doc:`index`.
+     uint32_t mvendorid;
+     uint64_t marchid;
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 4bda754b01..cc5552500a 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2661,6 +2661,7 @@ static Property riscv_cpu_properties[] = {
  
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index eb26cac810..35d4fe0bbf 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -116,6 +116,7 @@ extern bool pci_available;
- #define PCI_DEVICE_ID_REDHAT_PVPANIC     0x0011
- #define PCI_DEVICE_ID_REDHAT_ACPI_ERST   0x0012
- #define PCI_DEVICE_ID_REDHAT_UFS         0x0013
-+#define PCI_DEVICE_ID_REDHAT_RISCV_IOMMU 0x0014
- #define PCI_DEVICE_ID_REDHAT_QXL         0x0100
+     DEFINE_PROP_BOOL("rvv_ta_all_1s", RISCVCPU, cfg.rvv_ta_all_1s, false),
+     DEFINE_PROP_BOOL("rvv_ma_all_1s", RISCVCPU, cfg.rvv_ma_all_1s, false),
++    DEFINE_PROP_BOOL("rvv_vl_half_avl", RISCVCPU, cfg.rvv_vl_half_avl, false),
  
- #define FMT_PCIBUS                      PRIx64
+     /*
+      * write_misa() is marked as experimental for now so mark
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 10a52ceb5b..072bd444b1 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -75,6 +75,8 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+     vlmax = vext_get_vlmax(cpu->cfg.vlenb, vsew, lmul);
+     if (s1 <= vlmax) {
+         vl = s1;
++    } else if (s1 < 2 * vlmax && cpu->cfg.rvv_vl_half_avl) {
++        vl = (s1 + 1) >> 1;
+     } else {
+         vl = vlmax;
+     }
 -- 
 2.46.1
 
