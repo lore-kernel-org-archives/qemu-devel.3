@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37618CF9C73
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA96CF9C6B
 	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 22:21:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stDru-0005Fu-Bv; Tue, 24 Sep 2024 18:18:50 -0400
+	id 1stDs4-0005rq-H6; Tue, 24 Sep 2024 18:19:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1stDrr-0005DY-3t
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:18:48 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1stDs2-0005fC-56
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:18:58 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1stDrp-0001fZ-Kf
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:18:46 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-718f4fd89e5so5122024b3a.0
- for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 15:18:44 -0700 (PDT)
+ id 1stDs0-0001gD-BZ
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:18:57 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-718d6ad6050so4451652b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 15:18:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727216322; x=1727821122; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727216334; x=1727821134; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PhYz7dkNA7U6Hw9OuujVyqU2ppo5YtJiB+wYW6uzsrY=;
- b=KO9RbWC0vZEtIDrkumOWhYq5ngfWIfth3B7zgdEnmRiwWek51YiV1FyeXdmb70SIBH
- s+5b8KyS477MJRhjJxj2T6bg79zCMcKe4F6tHwPyRBlgvDmEVdqhMaI6jjSvuj3O1xKA
- E/Lr9yKa+XuQMcymdSwC/DglTWfMDjlkCpdkxkwL/QqPS+iMMsr8PP83zuFJ03xcPCdQ
- 40MB0KbYXAsxV3/EnJDH1VAQZFbNYIT6ec/d/8a6AFxGaSuUEGOrj64V8DsYH7DrfOIR
- 8w9pugNhdvJvKz83FwJd/nBfgEs3lqhL4E0s5IXoNQmTeo4BGK0DqcKVnkFHOekd0xYU
- 8W9Q==
+ bh=bEmBPhRtysBtPpiKelgvSVTEamC5FPrpVzPYJCYDzDI=;
+ b=dgNveYE/UZfRXZJu251CiOY+ongKce0lnjLseIqxnmjAxX5wUwU4K1+pfDqS3EPKDY
+ QSXP3JcPQme1cMIUiXwR1ltritgLJ96J1y5aO4/NI6XOmGbBqRIYzKEdKS3vJdvjaSOB
+ 0MTAikhk9HRqG9Tjf0ufthTgNFvh3dj3cotU/5KqQfJr9N48OQSmSo4XHBQtZsqrM6QL
+ thFjMdWAWmpOyEg96YzeumPzedAqeqX4Ckc7DQUSp35bpglvPHZdw6smgeG6PscRBftK
+ LQ4nzttm3RdQSNuAMbyOq5nzGMDye5TtZoB4OGIub+lxb1v5jjx/nwkGzmp404Qk9kNY
+ K1Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727216322; x=1727821122;
+ d=1e100.net; s=20230601; t=1727216334; x=1727821134;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PhYz7dkNA7U6Hw9OuujVyqU2ppo5YtJiB+wYW6uzsrY=;
- b=mrOvd9KfKQqQNhWEEOW8PwYk9QdDsDlokv6ZXQesm8LppXrvm2DI2FZi5KmAv+S4fU
- LfH0FGHdIR7vQnNmuCpYTP/sGjnI0HNnXrfMwtKJpEVe8PqFMkZMGktB3dpPh1HjjedH
- XhBIBwuRKLFp43KATNcZycTF2NWs/KoS7pFiHGEC+cIzcbTEQB2wDULURoWAs6e9Q/Tt
- OnYo8697/HH+MM3NpZs6nRkt84ObF79AuNISEoNNAB7tdgIx7x5oqGlWPknICQ3+okVP
- A/g9Q1psTbrHm7+l9HR5WWhdU23e66xFjjQ2L1YfH2xsR8C/Q5w3J2Noq8KRdQBYa1Ab
- Xfog==
-X-Gm-Message-State: AOJu0Yw291za/m4zNzKB3P9LOmVG5+MiQhiBoweHJMamhhxHPXxN+rsQ
- JpYmZcePj2GOpS8l3vzcPzA9/dUFbONCIXfTtsxaicq4NOiFWjW+G1l9YA==
-X-Google-Smtp-Source: AGHT+IH0wRhrknwaBOJfLbjpzfPIy0lNUEwlT6/7sOKP1ESbfW07Snwx0WZ0k3qVng1bw/jjFB6dZQ==
-X-Received: by 2002:a05:6a21:118a:b0:1cf:6953:2872 with SMTP id
- adf61e73a8af0-1d4e0befdaamr732823637.48.1727216322643; 
- Tue, 24 Sep 2024 15:18:42 -0700 (PDT)
+ bh=bEmBPhRtysBtPpiKelgvSVTEamC5FPrpVzPYJCYDzDI=;
+ b=Ea3xGlbla/IVE0iz1eOnNEpJ5thKHgDlqgtMn8xD8/6wkPUJf0iv6R3QY7PgaFTMAM
+ E7nX6APpJ+KXmAN+rtxGUS0qMQu5sgtkA4OyLoL8uGiyyoZ4evvsdIgfnJtJYTfbY5ww
+ 7Ee1JON4Sjyqe9ph6U88mq6kvAjA3TDjCJHEsMpoSE+UkJ3NZA3f8reJG4FULU1T5a3M
+ 7kfUzo1m2JwvG/BWhd9qMPS4tANkPKANqX998zPKhEn5q+OSq/hhft0vHbToD/rXq67w
+ 4EtxnT5bqIN8oTMFqk1O68+L/NwVCG8RDe8C9B3c9lsplZBfbACMaPoreSnkULV4SeoE
+ J5Bg==
+X-Gm-Message-State: AOJu0Yywb24RW96lwK2pHJxL+gQi7XDZCQRF0tRtBLqKFj9zob+YAYEd
+ igaheIL6UKsczy0pN8w7MoYJY/U7JsDRXAxCd/5ZFRU2885JEOsmPzJ5xA==
+X-Google-Smtp-Source: AGHT+IGmVBiIcMqIz7GjcuK2NSBRqQEWSkGU8FAyP6bCACz/D0pYPi2xSk+SPO4eRgzIiKn7N2tQFw==
+X-Received: by 2002:a05:6a00:1702:b0:717:8f0d:ec37 with SMTP id
+ d2e1a72fcca58-71b0acc4177mr923028b3a.25.1727216333608; 
+ Tue, 24 Sep 2024 15:18:53 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71afc8342easm1665310b3a.11.2024.09.24.15.18.39
+ d2e1a72fcca58-71afc8342easm1665310b3a.11.2024.09.24.15.18.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Sep 2024 15:18:42 -0700 (PDT)
+ Tue, 24 Sep 2024 15:18:53 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Tomasz Jeznach <tjeznach@rivosinc.com>,
- Frank Chang <frank.chang@sifive.com>, Jason Chien <jason.chien@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PULL v2 14/47] exec/memtxattr: add process identifier to the
- transaction attributes
-Date: Wed, 25 Sep 2024 08:17:15 +1000
-Message-ID: <20240924221751.2688389-15-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Frank Chang <frank.chang@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL v2 17/47] pci-ids.rst: add Red Hat pci-id for RISC-V IOMMU
+ device
+Date: Wed, 25 Sep 2024 08:17:18 +1000
+Message-ID: <20240924221751.2688389-18-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240924221751.2688389-1-alistair.francis@wdc.com>
 References: <20240924221751.2688389-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,39 +100,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Extend memory transaction attributes with process identifier to allow
-per-request address translation logic to use requester_id / process_id
-to identify memory mapping (e.g. enabling IOMMU w/ PASID translations).
+The RISC-V IOMMU PCI device we're going to add next is a reference
+implementation of the riscv-iommu spec [1], which predicts that the
+IOMMU can be implemented as a PCIe device.
 
-Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Jason Chien <jason.chien@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+However, RISC-V International (RVI), the entity that ratified the
+riscv-iommu spec, didn't bother assigning a PCI ID for this IOMMU PCIe
+implementation that the spec predicts. This puts us in an uncommon
+situation because we want to add the reference IOMMU PCIe implementation
+but we don't have a PCI ID for it.
+
+Given that RVI doesn't provide a PCI ID for it we reached out to Red Hat
+and Gerd Hoffman, and they were kind enough to give us a PCI ID for the
+RISC-V IOMMU PCI reference device.
+
+Thanks Red Hat and Gerd for this RISC-V IOMMU PCIe device ID.
+
+[1] https://github.com/riscv-non-isa/riscv-iommu/releases/tag/v1.0.0
+
+Cc: Gerd Hoffmann <kraxel@redhat.com>
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20240903201633.93182-2-dbarboza@ventanamicro.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20240903201633.93182-5-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/exec/memattrs.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ docs/specs/pci-ids.rst | 2 ++
+ include/hw/pci/pci.h   | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
-index 14cdd8d582..e27c18f3dc 100644
---- a/include/exec/memattrs.h
-+++ b/include/exec/memattrs.h
-@@ -52,6 +52,11 @@ typedef struct MemTxAttrs {
-     unsigned int memory:1;
-     /* Requester ID (for MSI for example) */
-     unsigned int requester_id:16;
-+
-+    /*
-+     * PID (PCI PASID) support: Limited to 8 bits process identifier.
-+     */
-+    unsigned int pid:8;
- } MemTxAttrs;
+diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
+index 328ab31fe8..261b0f359f 100644
+--- a/docs/specs/pci-ids.rst
++++ b/docs/specs/pci-ids.rst
+@@ -98,6 +98,8 @@ PCI devices (other than virtio):
+   PCI ACPI ERST device (``-device acpi-erst``)
+ 1b36:0013
+   PCI UFS device (``-device ufs``)
++1b36:0014
++  PCI RISC-V IOMMU device
  
- /* Bus masters which don't specify any attributes will get this,
+ All these devices are documented in :doc:`index`.
+ 
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index eb26cac810..35d4fe0bbf 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -116,6 +116,7 @@ extern bool pci_available;
+ #define PCI_DEVICE_ID_REDHAT_PVPANIC     0x0011
+ #define PCI_DEVICE_ID_REDHAT_ACPI_ERST   0x0012
+ #define PCI_DEVICE_ID_REDHAT_UFS         0x0013
++#define PCI_DEVICE_ID_REDHAT_RISCV_IOMMU 0x0014
+ #define PCI_DEVICE_ID_REDHAT_QXL         0x0100
+ 
+ #define FMT_PCIBUS                      PRIx64
 -- 
 2.46.1
 
