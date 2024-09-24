@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5DCECF9C6B
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:05:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AA36CF9C73
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:05:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1st5DR-0002bz-B7; Tue, 24 Sep 2024 09:04:29 -0400
+	id 1st5DN-0002EO-EV; Tue, 24 Sep 2024 09:04:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1st5DP-0002Q9-Af
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:04:27 -0400
+ id 1st5D3-0001er-7Z
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:04:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1st5DN-00006d-B2
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:04:26 -0400
+ id 1st5D0-0008Ue-57
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:04:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727183064;
+ s=mimecast20190719; t=1727183041;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lM3KpPrye86/Cu4EqGuleHP2TkpZj/gEzbpsHn25xPs=;
- b=i1zUT4MkG6apaWthuRqGCgams2qM8FcGOgB7rQZpSHej8EvynrZKVXxH4D0zbrtB/G4Mkm
- +qT3alAOS57aI9EhRq3Rr8yPGkKiY8jiCreZZchFz3jPB6LUqlhyeE3KC8LJw4hsQ3ItpB
- J7/2mOLqwtr8OGhLnZBymQCFDI/FTLw=
+ bh=L9TzJiPbue6ZM4XJgTlzabYUdWmkITNbnAqP3qVgNyk=;
+ b=SajSPJLst2G2CwXt/fCboALQsupqFas0nlq3yQkNAQJu7fx6ly98VbGHcsLcGp217Bb8mt
+ iFYjbbB55GCWM9qUxFIsH9cNTAhIOwN9GTu5bPhwY+hMSQpIDiHFQWpGVicCex7AUJvTU9
+ z3Ek7pNdOlo548VC9lYA9zggtkbbVi8=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-322-R_gybxswObq09NUN_dEzfg-1; Tue,
- 24 Sep 2024 09:03:14 -0400
-X-MC-Unique: R_gybxswObq09NUN_dEzfg-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-75-3h8Om9LSNWWEozj5_S4ECA-1; Tue,
+ 24 Sep 2024 09:02:52 -0400
+X-MC-Unique: 3h8Om9LSNWWEozj5_S4ECA-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E3B1B1895D6A; Tue, 24 Sep 2024 13:03:11 +0000 (UTC)
+ id EEA2B188FE97; Tue, 24 Sep 2024 13:02:47 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.3])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6CD8019560AA; Tue, 24 Sep 2024 13:03:06 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DCC481956048; Tue, 24 Sep 2024 13:02:45 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -73,16 +73,16 @@ Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>, qemu-block@nongnu.org,
  Bin Meng <bin.meng@windriver.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 06/22] block/mirror: fix -Werror=maybe-uninitialized
- false-positive
-Date: Tue, 24 Sep 2024 17:02:05 +0400
-Message-ID: <20240924130222.748369-7-marcandre.lureau@redhat.com>
+Subject: [PATCH v2 03/22] hw/qxl: fix -Werror=maybe-uninitialized
+ false-positives
+Date: Tue, 24 Sep 2024 17:02:02 +0400
+Message-ID: <20240924130222.748369-4-marcandre.lureau@redhat.com>
 In-Reply-To: <20240924130222.748369-1-marcandre.lureau@redhat.com>
 References: <20240924130222.748369-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -111,46 +111,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../block/mirror.c:404:5: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
-../block/mirror.c:895:12: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
-../block/mirror.c:578:12: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
+../hw/display/qxl.c:1352:5: error: ‘pci_region’ may be used uninitialized [-Werror=maybe-uninitialized]
+../hw/display/qxl.c:1365:22: error: ‘pci_start’ may be used uninitialized [-Werror=maybe-uninitialized]
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- block/mirror.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ hw/display/qxl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/mirror.c b/block/mirror.c
-index 54e3a7ea9d..fd55a580fb 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -349,7 +349,7 @@ static void coroutine_fn mirror_co_read(void *opaque)
-     MirrorOp *op = opaque;
-     MirrorBlockJob *s = op->s;
-     int nb_chunks;
--    uint64_t ret;
-+    uint64_t ret = -1;
-     uint64_t max_bytes;
- 
-     max_bytes = s->granularity * s->max_iov;
-@@ -565,7 +565,7 @@ static void coroutine_fn GRAPH_UNLOCKED mirror_iteration(MirrorBlockJob *s)
- 
-     bitmap_set(s->in_flight_bitmap, offset / s->granularity, nb_chunks);
-     while (nb_chunks > 0 && offset < s->bdev_length) {
--        int ret;
-+        int ret = -1;
-         int64_t io_bytes;
-         int64_t io_bytes_acct;
-         MirrorMethod mirror_method = MIRROR_METHOD_COPY;
-@@ -841,7 +841,7 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
-     int64_t offset;
-     BlockDriverState *bs;
-     BlockDriverState *target_bs = blk_bs(s->target);
--    int ret;
-+    int ret = -1;
-     int64_t count;
- 
-     bdrv_graph_co_rdlock();
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index 3c2b5182ca..20e13ee98d 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -1301,8 +1301,8 @@ static int qxl_add_memslot(PCIQXLDevice *d, uint32_t slot_id, uint64_t delta,
+     };
+     uint64_t guest_start;
+     uint64_t guest_end;
+-    int pci_region;
+-    pcibus_t pci_start;
++    int pci_region = -1;
++    pcibus_t pci_start = -1;
+     pcibus_t pci_end;
+     MemoryRegion *mr;
+     intptr_t virt_start;
 -- 
 2.45.2.827.g557ae147e6
 
