@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F2F6CF9C71
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 05:53:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DFB5CF9C71
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 05:59:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssyTD-0007BW-12; Tue, 24 Sep 2024 01:52:19 -0400
+	id 1ssyZu-0003Ht-RG; Tue, 24 Sep 2024 01:59:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1ssyTB-0007B2-QR
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 01:52:17 -0400
-Received: from fout-a8-smtp.messagingengine.com ([103.168.172.151])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1ssyZt-0003HK-Bx
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 01:59:13 -0400
+Received: from fhigh-a5-smtp.messagingengine.com ([103.168.172.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1ssyT9-0002mH-LT
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 01:52:17 -0400
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal
- [10.202.2.41])
- by mailfout.phl.internal (Postfix) with ESMTP id D18AC13802C5;
- Tue, 24 Sep 2024 01:52:13 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-01.internal (MEProxy); Tue, 24 Sep 2024 01:52:13 -0400
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1ssyZr-0003M6-Nx
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 01:59:13 -0400
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal
+ [10.202.2.48])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id ADF89114022F;
+ Tue, 24 Sep 2024 01:59:10 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-08.internal (MEProxy); Tue, 24 Sep 2024 01:59:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-type:content-type:date:date:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1727157133; x=
- 1727243533; bh=eI9ro2mKoJNPQv96D4OI51cnTwOq2/8QSKG/Co3T0z4=; b=L
- JUct/CjeW/u/gRQ7PLkFN4A9rtJ1yxWGMfMyBF8QkqesF6Qz7ojNwbM3xtue1pSV
- nt9C9Aj5htKmwtOTZPli0t3e46GciR/aYtP9gSBUDVAQh1Yb/eUcOK9zle+cF0i6
- CqfTEq4hff8pAVyDLCWEXys4IY2zSuaYW+LoMA8Us6lbh4GFflm747RuZMjqaIkh
- 9Bk0/gU2fNI0OJqGnEkOx4vcChbAyc1lZJ/YQXL8IhTnaxx6dmBUgdwM9GXU+evs
- y+/Z5WvzVQhacyy0aw5oSNTbievsAzQoiBNsG6WEsRc7mIIe0w21QDHAF62XFto6
- 2OsB0SpplxOAXAjCXtIfw==
+ :reply-to:subject:subject:to:to; s=fm1; t=1727157550; x=
+ 1727243950; bh=Ec2oowZ6rd9S8fFAe2a4ygdDPBkyHaKdasP7RFTO2Z8=; b=e
+ JpsOjzuC31mc/wyjdEw9Eoj41o/E0ZIgwRegb7y/TRhDeUuAWupBVSA9LZBnoZp5
+ k0DVlXES5/j1TIIi13NuUbY9SWW4Vj9yhffpFlrFJKDFaCF59/ZE7wCNPxEIJ58F
+ YxzXlw6inrzekrFRnM65efMoW8bRSVX/Y9TxcrphvlqMlP8XkeFpp+EjxDSYzAVJ
+ ak60wsaR06PO+bZYFFxPpDR9hBjAVOLsuRGPuHS/TEKH6x/4OF/TWpBbWdZPNjwg
+ wFww+lgDsHzTQgKX71mXf4Bygj4fpjgzM6Ut/SUHs/MY6bmO2MTyYoeoS0uZR6xZ
+ Noj38T+FMV5SyN8u6yu2Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-type:content-type:date:date
  :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
  :message-id:mime-version:references:reply-to:subject:subject:to
  :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; t=1727157133; x=1727243533; bh=eI9ro2mKoJNPQv96D4OI51cnTwOq
- 2/8QSKG/Co3T0z4=; b=IXtvNp1Oz/IQePttriUEVjxJB4D/P3bQXDMaq9RzzzkZ
- 7dFY6FHmxr13r3sFWxhrzJ0wxvzCyQ6QhOKbVJ2gV5kzvJucfWYUZzzlz+ZOcZM9
- pd3/dNZemncOd7hLrJK+Z0KQXZFiFXLCK2vEszs/o33P2pEj0K86ZvXMTEhb4Z4D
- m3KL+NWbgnlrzqbgjD6JhHRo3HmBYCM+qFZZDfj89m6KL5b49uirZ91SaqjwwpgM
- g+WNcbCzE56bvKYTXgNa3nMo2WGTyYX0p8H7FL9WWCMnOaxyR4LWWs2JItCllhim
- QEPGgyoCci0RXv44FxZ7xbg0IRSu6/B4QWERLAKPAA==
-X-ME-Sender: <xms:jFPyZsPpU60bd94Ocb286xi3pgbajJuDOKEqTcp8HmQOsd9SMgM1xg>
- <xme:jFPyZi_WeRJhVWSq9qNXaJ3QY6HTnM2sRgSrEWwWv0Fp9b83yZb07QJkVWgkuCu0U
- v2iS-9agKbLl-ZfKb8>
-X-ME-Received: <xmr:jFPyZjTEAoGKQLEksyTboOGk6zlSnEsJeGxhwOcQja2qHMsmXzRR-YOHQEaE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtuddgieelucetufdoteggodetrfdotf
+ fm2; t=1727157550; x=1727243950; bh=Ec2oowZ6rd9S8fFAe2a4ygdDPBky
+ HaKdasP7RFTO2Z8=; b=FMKiTZuVQS+qpTbcB0l3wk+MvJs/7fxSZix/ChcDWSv7
+ K01PJFPZkIhD3AiUcYnKiFr7jXSdS9yGcjA0p0ZSKrpmMhkXsnYUDjuTqw3BN0S0
+ eslTjUJHRMAYyjcwqP6VyKuvh4AhilGNC7Mt/2qxF7xfKjDESWCtuLjjXEPfKpr9
+ QtP0gda9I/O/sV8GpYkBhGgbg1d9QvrbUyqSwzsorLx3kQXk2F8wHKXxDk32SZOX
+ oRKwPoxqsht8eI/GuJjwoq8S2cQGr7jXggxk8Z4urCvUKUaHvYh3OUwUbA4X6OX/
+ mhETU8Q+4o3wem4U8ZhK1b9nbYBS5BAlfKsErMRoDw==
+X-ME-Sender: <xms:LlXyZuy6SqRgS9Q4GTXD3VTqXq6VqGPTlfSwmKtFwFB-luzUSCdUtg>
+ <xme:LlXyZqS6R1nW6Frk5useG8MfD_s8SRUJU_v0fhbWzbSsyaEC0W8bQjMEpQbDD2EVr
+ 956c_0N9AMYByvETjQ>
+X-ME-Received: <xmr:LlXyZgUoyrOMX-QnlcEUV8qh7JyU4oNFnkMT0YBzwmrDzRDZ4VEzqK7oF0S16g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtuddgjedtucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
- rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
- htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtjeen
- ucfhrhhomhepmfhlrghushculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrd
- gukheqnecuggftrfgrthhtvghrnhepveejtdejteevfefhffehiedvffdvudelvdeigfek
- feevledtieetffehgeeggfdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
- hmrghilhhfrhhomhepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthht
- ohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprgihuhhshhdrmhehheessh
- grmhhsuhhnghdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhu
- rdhorhhgpdhrtghpthhtohepkhgsuhhstghhsehkvghrnhgvlhdrohhrghdprhgtphhtth
- hopehfohhsshesuggvfhhmrggtrhhordhithdprhgtphhtthhopehithhssehirhhrvghl
- vghvrghnthdrughk
-X-ME-Proxy: <xmx:jFPyZkuuR6dpMxUvq1SAhM7o0g11Y48j7yBbwoAKQDOlX8uPhsFjCA>
- <xmx:jFPyZkdchJOLEPrUs1vXevSg6HnSYMR-nbTktnso2tuXHfLEQhjzhQ>
- <xmx:jFPyZo2wnd5R6Kl5FwpXAD_DVX5FRocHhjAjZyg07cXGgRnWOUX-vA>
- <xmx:jFPyZo9rXPA8zJYoRix9W3ByNirCNSk4p8Zo3D1yr75E0rYpZW8_UA>
- <xmx:jVPyZpG9VMQkFLIdW2ZsXr2RGzNUZFLOGR_bJtM6WwafsoIjrUGcXWKV>
+ rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+ fukfhfgggtuggjsehttdertddttdejnecuhfhrohhmpefmlhgruhhsucflvghnshgvnhcu
+ oehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtthgvrhhnpeevjedtje
+ etveefhfffheeivdffvdduledviefgkeefveeltdeiteffheeggefgudenucevlhhushht
+ vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehithhssehirhhrvghlvg
+ hvrghnthdrughkpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgt
+ phhtthhopegrrhhunhdrkhhkrgesshgrmhhsuhhnghdrtghomhdprhgtphhtthhopehqvg
+ hmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepkhgsuhhstghhsehk
+ vghrnhgvlhdrohhrghdprhgtphhtthhopehfohhsshesuggvfhhmrggtrhhordhithdprh
+ gtphhtthhopehkrdhjvghnshgvnhesshgrmhhsuhhnghdrtghomhdprhgtphhtthhopehi
+ thhssehirhhrvghlvghvrghnthdrughk
+X-ME-Proxy: <xmx:LlXyZkj0hqzYBGzuV2H8nTVRV0ivHKGXn3i-AkHERsWP9dAFjLf0_g>
+ <xmx:LlXyZgB3kpPPa8M_VjZHLwGkL2sp9tiuVsSeduuCyv0S4XgFvDCokw>
+ <xmx:LlXyZlJHLaHNiCF7OaZbbO33FqFSUWRli3uIcAexCv1XA6nwEtHYQw>
+ <xmx:LlXyZnCbkJxrQq3qLdhtN4MtB8ByY2w_qSdmKiUFEMLYOSlBUU1euA>
+ <xmx:LlXyZi2zzCqok9JqhzNYGOHEJdluEMmfI6fZ5lrgVOMAmd882G4m5fuk>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Sep 2024 01:52:12 -0400 (EDT)
-Date: Tue, 24 Sep 2024 07:52:10 +0200
+ 24 Sep 2024 01:59:09 -0400 (EDT)
+Date: Tue, 24 Sep 2024 07:59:08 +0200
 From: Klaus Jensen <its@irrelevant.dk>
-To: Ayush Mishra <ayush.m55@samsung.com>
-Cc: qemu-devel@nongnu.org, kbusch@kernel.org, foss@defmacro.it
-Subject: Re: [PATCH] hw/nvme: Adding support for NPDAL and NPDGL
-Message-ID: <ZvJTioFwLD0jf1lT@AALNPWKJENSEN.aal.scsc.local>
-References: <CGME20240923115650epcas5p4750a5c44184b2439d7dc012e950db99e@epcas5p4.samsung.com>
- <20240923062651.3511358-1-ayush.m55@samsung.com>
+To: Arun Kumar <arun.kka@samsung.com>
+Cc: qemu-devel@nongnu.org, kbusch@kernel.org, foss@defmacro.it,
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: Re: [PATCH] hw/nvme: i/o cmd set independent namespace data structure
+Message-ID: <ZvJVLF9ZBCLFAlTW@AALNPWKJENSEN.aal.scsc.local>
+References: <CGME20240920055116epcas5p248fe98a4d8d9de8eddfaa4cfe85b4424@epcas5p2.samsung.com>
+ <20240920002116.3494712-1-arun.kka@samsung.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240923062651.3511358-1-ayush.m55@samsung.com>
-Received-SPF: pass client-ip=103.168.172.151; envelope-from=its@irrelevant.dk;
- helo=fout-a8-smtp.messagingengine.com
+In-Reply-To: <20240920002116.3494712-1-arun.kka@samsung.com>
+Received-SPF: pass client-ip=103.168.172.156; envelope-from=its@irrelevant.dk;
+ helo=fhigh-a5-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -109,70 +110,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sep 23 11:56, Ayush Mishra wrote:
-> Adding support for new 32 bit NPDGL and NPDAL fields to address the
-> needs of larger granularities.
+On Sep 20 05:51, Arun Kumar wrote:
+> add support for i/o command set independent namespace data
+> structure(cns=8h and cns=1fh)
 > 
-> Signed-off-by: Ayush Mishra <ayush.m55@samsung.com>
+> Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+> Signed-off-by: Arun Kumar <arun.kka@samsung.com>
 > ---
->  hw/nvme/ns.c         | 5 ++++-
->  include/block/nvme.h | 7 ++++++-
->  2 files changed, 10 insertions(+), 2 deletions(-)
+>  hw/nvme/ctrl.c       | 37 +++++++++++++++++++++++++++++++++++++
+>  hw/nvme/trace-events |  1 +
+>  include/block/nvme.h | 17 +++++++++++++++++
+>  3 files changed, 55 insertions(+)
 > 
-> diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-> index ea8db175db..8b2ea37a1b 100644
-> --- a/hw/nvme/ns.c
-> +++ b/hw/nvme/ns.c
-> @@ -30,6 +30,7 @@
->  void nvme_ns_init_format(NvmeNamespace *ns)
->  {
->      NvmeIdNs *id_ns = &ns->id_ns;
-> +    NvmeIdNsNvm *id_ns_nvm = &ns->id_ns_nvm;
->      BlockDriverInfo bdi;
->      int npdg, ret;
->      int64_t nlbas;
-> @@ -55,6 +56,8 @@ void nvme_ns_init_format(NvmeNamespace *ns)
->      }
->  
->      id_ns->npda = id_ns->npdg = npdg - 1;
-> +    id_ns_nvm->npdal = npdg;
-> +    id_ns_nvm->npdgl = npdg;
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index 127c3d2383..73af48591d 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -5498,6 +5498,39 @@ static uint16_t nvme_identify_sec_ctrl_list(NvmeCtrl *n, NvmeRequest *req)
+>      return nvme_c2h(n, (uint8_t *)&list, sizeof(list), req);
 >  }
 >  
->  static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
-> @@ -72,7 +75,7 @@ static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
->      ns->id_ns.dlfeat = 0x1;
->  
->      /* support DULBE and I/O optimization fields */
-> -    id_ns->nsfeat |= (0x4 | 0x10);
-> +    id_ns->nsfeat |= (0x4 | 0x30);
+> +static uint16_t nvme_identify_ns_ind(NvmeCtrl *n, NvmeRequest *req, bool alloc)
+> +{
+> +    NvmeNamespace *ns;
+> +    NvmeIdentify *c = (NvmeIdentify *)&req->cmd;
+> +    uint32_t nsid = le32_to_cpu(c->nsid);
+> +    NvmeIdNsIndependent id;
+> +
+> +    trace_pci_nvme_identify_ns_ind(nsid);
+> +
+> +    if (!nvme_nsid_valid(n, nsid) || nsid == NVME_NSID_BROADCAST) {
+> +        return NVME_INVALID_NSID | NVME_DNR;
+> +    }
+> +
+> +    ns = nvme_ns(n, nsid);
+> +    if (unlikely(!ns)) {
+> +        if (alloc) {
+> +            ns = nvme_subsys_ns(n->subsys, nsid);
+> +            if (!ns) {
+> +                return nvme_rpt_empty_id_struct(n, req);
+> +            }
+> +        } else {
+> +            return nvme_rpt_empty_id_struct(n, req);
+> +        }
+> +    }
+> +
+> +    id = (NvmeIdNsIndependent) {
+> +        .nmic = ns->params.shared ? NVME_NMIC_NS_SHARED : 0x0,
+> +        .nstat = 0x1,
 
-This is a good opportunity to add some defines in include/block/nvme.h
-for these spec values.
+Since the NSTAT and NMIC fields recently got some acronyms for the bits,
+something like
 
->  
->      if (ns->params.shared) {
->          id_ns->nmic |= NVME_NMIC_NS_SHARED;
-> diff --git a/include/block/nvme.h b/include/block/nvme.h
-> index 5298bc4a28..fdf3d999c0 100644
-> --- a/include/block/nvme.h
-> +++ b/include/block/nvme.h
-> @@ -1413,7 +1413,12 @@ typedef struct QEMU_PACKED NvmeIdNsNvm {
->      uint8_t     pic;
->      uint8_t     rsvd9[3];
->      uint32_t    elbaf[NVME_MAX_NLBAF];
-> -    uint8_t     rsvd268[3828];
-> +    uint32_t    npdgl;
-> +    uint32_t    nprg;
-> +    uint32_t    npra;
-> +    uint32_t    nors;
-> +    uint32_t    npdal;
-> +    uint8_t     rsvd288[3808];
->  } NvmeIdNsNvm;
->  
->  typedef struct QEMU_PACKED NvmeIdNsDescr {
-> -- 
-> 2.43.0
-> 
-> 
+  enum NvmeIdNsInd {
+      NVME_ID_NS_IND_NMIC_SHRNS = 0x1,
+      NVME_ID_NS_IND_NSTAT_NRDY = 0x1,
+  };
+
+would be nice to add to include/block/nvme.h and use here.
 
