@@ -4,61 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 696ABCF9C6B
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 10:00:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2937CF9C74
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 10:04:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1st2KS-00058C-BO; Tue, 24 Sep 2024 05:59:32 -0400
+	id 1st2OY-0002B4-UF; Tue, 24 Sep 2024 06:03:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1st2KP-00052x-Ke; Tue, 24 Sep 2024 05:59:29 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1st2OT-0002A6-BF
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 06:03:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1st2KN-0002TR-5j; Tue, 24 Sep 2024 05:59:29 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 484414E601B;
- Tue, 24 Sep 2024 11:59:23 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id TIINK_EQ5Wn4; Tue, 24 Sep 2024 11:59:21 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 4C1994E6000; Tue, 24 Sep 2024 11:59:21 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4961A746F60;
- Tue, 24 Sep 2024 11:59:21 +0200 (CEST)
-Date: Tue, 24 Sep 2024 11:59:21 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>, 
- qemu-ppc@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
- Corey Minyard <cminyard@mvista.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- Jason Wang <jasowang@redhat.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-block@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>, 
- =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-Subject: Re: [PATCH 09/23] hw/ppc/mpc8544_guts: Populate POR PLL ratio status
- register
-In-Reply-To: <56E67259-70A9-44E5-A3C2-6E40363A73C2@gmail.com>
-Message-ID: <da2c3d7a-8d75-0e7c-e47e-ab329d64841a@eik.bme.hu>
-References: <20240923093016.66437-1-shentey@gmail.com>
- <20240923093016.66437-10-shentey@gmail.com>
- <3037d1f0-6e44-98ee-48fc-1bb206ebc624@eik.bme.hu>
- <56E67259-70A9-44E5-A3C2-6E40363A73C2@gmail.com>
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1st2OQ-00030F-O6
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 06:03:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727172216;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=19fqvUIpG/96Z4atEJdayVh7MYUeWohJuGDm3Vbnbf4=;
+ b=VOCs/g63h7DNRVKnuYyV80Nfxa04jEM8JYWWXdUuYbSxPXO/fH3/8FoMcoptgdFEjlHSvG
+ KLD7aEsdi7W49n2P5giTDWJunXandgUpL2akZXjj3yvpha99n+NXNyWGMvUJuwP7Z/c/9s
+ XdOjai/6tvCPsjSJmYcO9POsd+is8Qk=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-EBMMurcuPO6p3inxxDxBvg-1; Tue,
+ 24 Sep 2024 06:03:34 -0400
+X-MC-Unique: EBMMurcuPO6p3inxxDxBvg-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8210618E68FF; Tue, 24 Sep 2024 10:03:33 +0000 (UTC)
+Received: from t14s.redhat.com (unknown [10.22.16.106])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 55D121956052; Tue, 24 Sep 2024 10:03:31 +0000 (UTC)
+From: David Hildenbrand <david@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: [PULL 0/6] Host Memory Backends and Memory devices queue 2024-09-24
+Date: Tue, 24 Sep 2024 12:03:23 +0200
+Message-ID: <20240924100329.248738-1-david@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -76,74 +79,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Sep 2024, Bernhard Beschow wrote:
-> Am 23. September 2024 10:43:19 UTC schrieb BALATON Zoltan <balaton@eik.bme.hu>:
->> On Mon, 23 Sep 2024, Bernhard Beschow wrote:
->>> Populate this read-only register with some arbitrary values which avoids
->>> U-Boot's get_clocks() to hang().
->>
->> Maybe this should be a property settable by the machine as each board 
->> may have different values and it may need to use the correct value for 
->> the machine.
->
-> I actually considered this but went with the pragmatic solution to avoid 
-> over-engineering. In particular, I wanted to avoid further 
-> machine-specitic attributes in the machine class struct. Or do you 
-> expect a new e500 machine to be added? In that case I'd set above 
-> arbitrary values as default and expect a new machine to override these 
-> properties.
+Hi,
 
-Can't override if there's no property for it. There's one machine I may be 
-interested in that uses a Freescale e500 SoC. That one seems to use 
-0x0606180c for this value which I think corresponds to 0/1 Ratio both 3:1, 
-DDR Ratio 12:1 and Plat Ratio 6:1. I think one property to set the 32 bit 
-value without individual fields would be enough and we can put comments 
-next to the value if needed to note what components it comes from. Or if 
-you just need any value here maybe you could take this one then that would 
-be good for me as well. (I have some patches adding second i2c bus and SPD 
-data that are needed for U-Boot for memory detection but it needs more 
-clean up before I can submit it and also waiting for these patches to 
-avoid conflict.)
+due to reset changes this contains a bit of churn that touches various
+architectures, but it's all fairly minimal and straight-forward.
 
-Regards,
-BALATON Zoltan
+The following changes since commit 01dc65a3bc262ab1bec8fe89775e9bbfa627becb:
 
->>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
->>> ---
->>> hw/ppc/mpc8544_guts.c | 12 ++++++++++++
->>> 1 file changed, 12 insertions(+)
->>>
->>> diff --git a/hw/ppc/mpc8544_guts.c b/hw/ppc/mpc8544_guts.c
->>> index e3540b0281..6688fd44c3 100644
->>> --- a/hw/ppc/mpc8544_guts.c
->>> +++ b/hw/ppc/mpc8544_guts.c
->>> @@ -29,6 +29,12 @@
->>> #define MPC8544_GUTS_RSTCR_RESET      0x02
->>>
->>> #define MPC8544_GUTS_ADDR_PORPLLSR    0x00
->>> +REG32(GUTS_PORPLLSR, 0x00)
->>> +    FIELD(GUTS_PORPLLSR, E500_1_RATIO, 16, 6)
->>> +    FIELD(GUTS_PORPLLSR, E500_0_RATIO, 16, 6)
->>> +    FIELD(GUTS_PORPLLSR, DDR_RATIO, 9, 5)
->>> +    FIELD(GUTS_PORPLLSR, PLAT_RATIO, 1, 5)
->>> +
->>> #define MPC8544_GUTS_ADDR_PORBMSR     0x04
->>> #define MPC8544_GUTS_ADDR_PORIMPSCR   0x08
->>> #define MPC8544_GUTS_ADDR_PORDEVSR    0x0C
->>> @@ -75,6 +81,12 @@ static uint64_t mpc8544_guts_read(void *opaque, hwaddr addr,
->>>
->>>     addr &= MPC8544_GUTS_MMIO_SIZE - 1;
->>>     switch (addr) {
->>> +    case MPC8544_GUTS_ADDR_PORPLLSR:
->>> +        value = FIELD_DP32(value, GUTS_PORPLLSR, E500_1_RATIO, 3); /* 3:2 */
->>> +        value = FIELD_DP32(value, GUTS_PORPLLSR, E500_0_RATIO, 3); /* 3:2 */
->>> +        value = FIELD_DP32(value, GUTS_PORPLLSR, DDR_RATIO, 6); /* 6:1 */
->>> +        value = FIELD_DP32(value, GUTS_PORPLLSR, PLAT_RATIO, 4); /* 4:1 */
->>> +        break;
->>>     case MPC8544_GUTS_ADDR_PVR:
->>>         value = env->spr[SPR_PVR];
->>>         break;
->>>
->
->
+  Merge tag 'pull-target-arm-20240919' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-09-19 14:15:15 +0100)
+
+are available in the Git repository at:
+
+  https://github.com/davidhildenbrand/qemu.git tags/mem-2024-09-24
+
+for you to fetch changes up to 78c8f780d3f0d6d17aa93d6f99ff72960080fdd7:
+
+  hostmem: Apply merge property after the memory region is initialized (2024-09-24 11:33:35 +0200)
+
+----------------------------------------------------------------
+Hi,
+
+"Host Memory Backends" and "Memory devices" queue ("mem"):
+- Kconfig fix for virtio-based memory devices
+- virtio-mem support for suspend+wake-up with plugged memory
+- hostmem fix when specifying "merge=off"
+
+----------------------------------------------------------------
+Gavin Shan (1):
+      hostmem: Apply merge property after the memory region is initialized
+
+Juraj Marcin (4):
+      reset: Use ResetType for qemu_devices_reset() and MachineClass::reset()
+      reset: Add RESET_TYPE_WAKEUP
+      virtio-mem: Use new Resettable framework instead of LegacyReset
+      virtio-mem: Add support for suspend+wake-up with plugged memory
+
+Paolo Bonzini (1):
+      virtio: kconfig: memory devices are PCI only
+
+ backends/hostmem.c             |  2 +-
+ docs/devel/reset.rst           | 12 ++++++++++-
+ hw/arm/aspeed.c                |  4 ++--
+ hw/arm/mps2-tz.c               |  4 ++--
+ hw/core/reset.c                |  5 +----
+ hw/hppa/machine.c              |  4 ++--
+ hw/i386/microvm.c              |  4 ++--
+ hw/i386/pc.c                   |  6 +++---
+ hw/ppc/pegasos2.c              |  4 ++--
+ hw/ppc/pnv.c                   |  4 ++--
+ hw/ppc/spapr.c                 |  6 +++---
+ hw/s390x/s390-virtio-ccw.c     |  4 ++--
+ hw/virtio/Kconfig              | 11 ++++++++++
+ hw/virtio/virtio-mem.c         | 48 ++++++++++++++++++++++++++++++------------
+ hw/virtio/virtio-qmp.c         |  3 +++
+ include/hw/boards.h            |  3 ++-
+ include/hw/resettable.h        |  2 ++
+ include/hw/virtio/virtio-mem.h |  4 ++++
+ include/sysemu/reset.h         |  5 +++--
+ system/runstate.c              | 13 ++++++++++--
+ 20 files changed, 103 insertions(+), 45 deletions(-)
+-- 
+2.46.1
+
 
