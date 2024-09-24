@@ -4,141 +4,175 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7752ACF9C6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 11:27:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEBCBCF9C6B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 11:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1st3gA-00082L-SM; Tue, 24 Sep 2024 07:26:02 -0400
+	id 1st468-0000hT-Vt; Tue, 24 Sep 2024 07:52:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Shivasagar.Myana@amd.com>)
- id 1st3g8-00081l-Ef
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 07:26:00 -0400
-Received: from mail-dm6nam10on2087.outbound.protection.outlook.com
- ([40.107.93.87] helo=NAM10-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1st45s-0000ce-LM
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 07:52:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Shivasagar.Myana@amd.com>)
- id 1st3g6-000592-5l
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 07:26:00 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vO6ruu8yO4LWyZcAUprpdDtOZRqglXIo6sQR1Gdsbt2LdFcCXv43JonAQ/OyQEIj7dabSdDSIdgJH4U6ziAbyCfeKVvILMCAW7HzC18wtE1knQkzX3OCUXD+dvqFNaNFqlsylWSpx78EjsHFuQk7Iw5qAhZQ4/VNTdNEDS2mW521Gd3kf6AHjizQY0lwux1eogv4EJKpghg9Rii5xH+m6NYd65Vw/2NWC20K5uuWwALfFmr54evj/WrQzXO625lOebK3+fgqtDrnuBkhpHqlz8eM4f3j6SLvkj0iGKaLm19ncAkP0NGANw8Z+eCdZbsxUM+Okly6upYVhZONvBkqXg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Mp34u6J0OmgCowXF4yMeXBMEsfgrvk3hl1LwES3ojDs=;
- b=YBc3QoPMfIXXI17EyDDSyf12cNRw4D24ChnVBXC4BTIrbPayXVtmU5bStAn44Dc1wcQSwFZgr/Uz6EAUnUSeEr3Fc8WnEn/TngQLBF5zETdGxA062/4LOKHALpsbsrfvV8MpoRz6nmm0hNnif+LS4De+tDG/vIHkpt6Kez6SOXXCGE9Y1vrOfWseAX+EmsWO/751VwDBgilFmZZCuiHc7dgTC5Ius/P6CVBDF5EglDaaJe1UKaQqEKiT2PRBSgYq/ylgowFUhz+JvkjeKSMTQkCPNNh5gRjnC+Q/8L4iaLF8z+E6qqiZYrlt8iB2wF0FWGZBqQw/hvVa1aN0ADTxQw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Mp34u6J0OmgCowXF4yMeXBMEsfgrvk3hl1LwES3ojDs=;
- b=ADGaylnohenh/rKCM+BXmMpCpvV/1w2HIAA2AyADa5jwtvaEIDQwmh5KNrOUvnnyLk7nlHbBYTKC9wOnvDiPNbmBYoJk5h5ozxbCIvKDoCYf7m64zyK0wnkXSecN4AfWM4hqb0uHa4Zaa3rRurIAnnzDjFGduOwy8vYUCy5OPI4=
-Received: from BN8PR15CA0043.namprd15.prod.outlook.com (2603:10b6:408:80::20)
- by BY5PR12MB4132.namprd12.prod.outlook.com (2603:10b6:a03:209::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7982.23; Tue, 24 Sep
- 2024 11:20:51 +0000
-Received: from BN3PEPF0000B374.namprd21.prod.outlook.com
- (2603:10b6:408:80:cafe::f9) by BN8PR15CA0043.outlook.office365.com
- (2603:10b6:408:80::20) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7962.30 via Frontend
- Transport; Tue, 24 Sep 2024 11:20:50 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
-Received: from SATLEXMB03.amd.com (165.204.84.17) by
- BN3PEPF0000B374.mail.protection.outlook.com (10.167.243.171) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8026.0 via Frontend Transport; Tue, 24 Sep 2024 11:20:49 +0000
-Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 24 Sep
- 2024 06:20:49 -0500
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB05.amd.com
- (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 24 Sep
- 2024 06:20:48 -0500
-Received: from xhdsaipava41.xilinx.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.39 via
- Frontend Transport; Tue, 24 Sep 2024 06:20:47 -0500
-From: Shiva sagar Myana <Shivasagar.Myana@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: <alistair@alistair23.me>, <francisco.iglesias@amd.Com>,
- <sai.pavan.boddu@amd.com>
-Subject: [PATCH 1/1] hw/ssi/xilinx_spips: Fix flash earse assert in dual
- parallel configuration
-Date: Tue, 24 Sep 2024 16:50:35 +0530
-Message-ID: <20240924112035.1320865-1-Shivasagar.Myana@amd.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1st45r-00082J-1o
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 07:52:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727178752;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Rtnq8t61UErQCzPeVRr9owhJtnRVnr5vTKkDQPJL3J4=;
+ b=hgxBMDO1N//6K0ZPaCMzOI6BL3Qw4kIAlelwqHzT5tJiFYN2wtj68XwzFJMBLEx5WdEoGh
+ qJipBM0UD/zjwJ6lIYxcNcNpUba+281fJKxjSYjEVkYLCn6J7RGn5ooFUipNObawj2gFGr
+ iRigCaZwOWCYNgH3O3x+YlHEnVEox08=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-608-AWBhaucDMTqRmoOHxeG5tg-1; Tue, 24 Sep 2024 07:52:31 -0400
+X-MC-Unique: AWBhaucDMTqRmoOHxeG5tg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42cb08ed3a6so29809515e9.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 04:52:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727178750; x=1727783550;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Rtnq8t61UErQCzPeVRr9owhJtnRVnr5vTKkDQPJL3J4=;
+ b=bGhmZDiHFfCazwxq39zjKrAf/9WaeToZlgnJQYav3Mqw9vRuIrd76H/Tut5DBX4gjg
+ 7qlv4x6s+K8ANuAEN6307aHcdVj276vLZJvfof9g5RmYe/9qIavvfByA6U/H3kyYjsgX
+ wkderMotCegZ0LxWVdjPLlkzMI3ULlO4evHFsd4je06V9bk295NIXg8Qg3kIbQ6snhbj
+ sDbkVX0+CnUEXkaUKZscUG3TOsOJ+dJD82eKPVHcQEOW7M1yeYX+2LvjXUs5ZuOcFZby
+ xZtgHylgRaUbz3QSQADzyZyLBjZsNtY7L2yMjMlXS7BLWLXJG0bnwo39eskZkJxQSPpL
+ HVIQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVEQeWAWTuw66+ZiCdBiiq/gPuBq3RP3nDIfcHRHXocO73sLXeRQnNaxcNt2ZQcDHw0xwn5sv3VeS2N@nongnu.org
+X-Gm-Message-State: AOJu0YwPnwthKykqKy97Gt3DDUZCBaNzKAxSWHReblNE4MRSkMLHgUro
+ Ba6CUGBOsBZA8rwanuJ1UgnU2nBwRWEWG8PJZZF9LAX1T4wc9TzsDFC3mqgPW8r35bMtEQmVX/4
+ 1bV8d3/NVbkO6fcQct5A2eDLssU2mpSzpnGrEm/VzMLk8tvms6abz
+X-Received: by 2002:a05:600c:3b96:b0:42c:b67b:816b with SMTP id
+ 5b1f17b1804b1-42e8f344801mr17127385e9.1.1727178750235; 
+ Tue, 24 Sep 2024 04:52:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHCaCQOypC9dIJt30TjDI/z2Jbp/uWrY50rNI+2OFqHWBLiexY+BZ9H6O7eh0yLLo11lf008A==
+X-Received: by 2002:a05:600c:3b96:b0:42c:b67b:816b with SMTP id
+ 5b1f17b1804b1-42e8f344801mr17127075e9.1.1727178749850; 
+ Tue, 24 Sep 2024 04:52:29 -0700 (PDT)
+Received: from [10.202.148.89] (nat-pool-brq-u.redhat.com. [213.175.37.12])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42e902b680fsm19874965e9.35.2024.09.24.04.52.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 24 Sep 2024 04:52:29 -0700 (PDT)
+Message-ID: <a65a3201-d8bf-4ca3-81a3-60ad2d3d63f0@redhat.com>
+Date: Tue, 24 Sep 2024 13:52:27 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: None (SATLEXMB05.amd.com: Shivasagar.Myana@amd.com does not
- designate permitted sender hosts)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B374:EE_|BY5PR12MB4132:EE_
-X-MS-Office365-Filtering-Correlation-Id: fff9120c-db8f-491e-125d-08dcdc8af1bc
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700013|376014|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?QfCT8IwBLBvF5PxuXc4/S/UZGqJ9VX7XpJm4qmSrTABL4H1jIgbsmzJFtB9h?=
- =?us-ascii?Q?HUaNB2lZPRAZgh1ityU+9415Iwl8RsCZUeSqJkmNkiYNwuHQrQonSxw6wXSm?=
- =?us-ascii?Q?m6mC/HXD4mEVaG9oszjfiolzfDZX9TQ9OpD8nYWmfbMiS3/L67W+1pAhsIiQ?=
- =?us-ascii?Q?HRH8fq6SPpcnnk0hf/1hde9FRtJxGCFKkwa81E+Tc6vhgki7TqfXLZBebcNq?=
- =?us-ascii?Q?DY5OmKb6+v8ju92VljVPD7hElaGlUbxB9exNVNXZ8Re9Kj/5YVikuimKzsdF?=
- =?us-ascii?Q?uTJJokHxQvN4hXie3DnRcxUDwoIpqaAqMRgRIrSC+nXi5RTPXFC8sWvJjbZ2?=
- =?us-ascii?Q?73znXPAWxBeb5MyQgJnHsHmrmZ9G1Ren/BLf16n1SmURPRSQGLwn02rLu5Nt?=
- =?us-ascii?Q?5DEmAMKnJrkJauCF33xe6R4YcSU1zCa121EPIgHt/xmvYDZjE3qXAptf7Lp/?=
- =?us-ascii?Q?nAy239orTm+fCxZ0OorAYmDhEhrS4LRfm2qxN+RT9zduG6xAvozD4TEiMXuR?=
- =?us-ascii?Q?1bjU5Tkdus/Kadz7EvwF3taDm8fT7dD+JsRPYrb04CBxc3T6EIkANX+Hg6ke?=
- =?us-ascii?Q?T5QZrvbTgvSJrKNMVz34INGFTvz1os1rnkMszWqcjesWrsG7nR9MdNTzB56Y?=
- =?us-ascii?Q?jExSMatEovvIeQe6XTXI35/U1wnWKGaqNLP7ZpNWq7vd+JHUZKEWTtSzTAU7?=
- =?us-ascii?Q?VsxZgBOj92ofTY3cmH57ryiiMBvRylpt7WW89VlpnXY+kTyhdxZJf49xPxYc?=
- =?us-ascii?Q?JxvxQkirKAj7HiE576QM+djePyx3p61cb0j4CmiKFsexR45+QGUFFvicD8+H?=
- =?us-ascii?Q?f/cMGtojqPT+zWJsvwHn8xWYfGOwTV0cmACReugw6Wff2Ylu4qomKxguAjND?=
- =?us-ascii?Q?vK6NeJv/yqNMvhuAAx7YvSXB4pw94Y2az69GCVrY+l1qJNca7cNtnoCcajUE?=
- =?us-ascii?Q?7xfdWqdnebW5CTOfHAJhQn47vsGlC5FRR0EN190I0Y9ivpFXTsVgKn3Nq5+e?=
- =?us-ascii?Q?vk39ny+pflPQ7gAVfpxOQP4aOZfvg7qPWtktoe284TgmfSZXWJO2020vlikr?=
- =?us-ascii?Q?b1IB+igJFP9g3p9V+uINTixwKcmr8cKhotusPlXjoZ+g4D2fWRpWMC6iyt0T?=
- =?us-ascii?Q?j6A9MiM4mu1lv1pdTVUEv4+PADxXBrRZVIJlYlPr/K6qNNGH9wb+mndUfCS1?=
- =?us-ascii?Q?8kFNzEYaZxOOqz8rUSjVoW2xptCdRggBUm1NJYbCOTD8iXjgKvxVRXxyXQlm?=
- =?us-ascii?Q?SelUjP35bjYM6/9wYEePKqrQdQo1i3Jct7o9eFe0UACvhW3lsAvl4YQOWoIE?=
- =?us-ascii?Q?kTlRegGoMae3gkHG4ZqOwMi8QMehYpO0uUTYy8zfTgmlIsyuR690UyMv/FW6?=
- =?us-ascii?Q?S4bM7yIhJE2tOfNsBjIFAmxUm37sHHjK8PXZ0VoL2Mw5REMiW0RGCK0jccu5?=
- =?us-ascii?Q?M8gOCEQen8vvA2Y3/V6wpigrlIdqSB7B?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700013)(376014)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2024 11:20:49.8218 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: fff9120c-db8f-491e-125d-08dcdc8af1bc
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB03.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B374.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4132
-Received-SPF: permerror client-ip=40.107.93.87;
- envelope-from=Shivasagar.Myana@amd.com;
- helo=NAM10-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.09,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 30/34] migration: remove return after
+ g_assert_not_reached()
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Hyman Huang <yong.huang@smartx.com>, Halil Pasic <pasic@linux.ibm.com>,
+ kvm@vger.kernel.org, Bin Meng <bmeng.cn@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-s390x@nongnu.org,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, Hanna Reitz
+ <hreitz@redhat.com>, Klaus Jensen <its@irrelevant.dk>,
+ Corey Minyard <minyard@acm.org>, Laurent Vivier <laurent@vivier.eu>,
+ WANG Xuerui <git@xen0n.name>, Rob Herring <robh@kernel.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Nicholas Piggin <npiggin@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Ani Sinha <anisinha@redhat.com>, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Fam Zheng <fam@euphon.net>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Keith Busch <kbusch@kernel.org>, Jean-Christophe Dubois
+ <jcd@tribudubois.net>, qemu-riscv@nongnu.org,
+ Igor Mammedov <imammedo@redhat.com>, Akihiko Odaki
+ <akihiko.odaki@daynix.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ "Richard W.M. Jones" <rjones@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Markus Armbruster
+ <armbru@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-arm@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-block@nongnu.org,
+ Joel Stanley <joel@jms.id.au>, Weiwei Li <liwei1518@gmail.com>,
+ Kevin Wolf <kwolf@redhat.com>, Helge Deller <deller@gmx.de>,
+ Yanan Wang <wangyanan55@huawei.com>, Michael Rolnik <mrolnik@gmail.com>,
+ Jesper Devantier <foss@defmacro.it>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240919044641.386068-1-pierrick.bouvier@linaro.org>
+ <20240919044641.386068-31-pierrick.bouvier@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240919044641.386068-31-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.09,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.898, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,32 +188,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ensure that the FIFO is checked for emptiness before popping data from it.
-Previously, the code directly popped the data from FIFO without checking, which
-could cause an assertion failure:
-../util/fifo8.c:67: fifo8_pop: Assertion `fifo->num > 0
+On 19/09/2024 06.46, Pierrick Bouvier wrote:
+> This patch is part of a series that moves towards a consistent use of
+> g_assert_not_reached() rather than an ad hoc mix of different
+> assertion mechanisms.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   migration/dirtyrate.c    | 1 -
+>   migration/postcopy-ram.c | 7 -------
+>   migration/ram.c          | 2 --
+>   3 files changed, 10 deletions(-)
 
-Signed-off-by: Shiva sagar Myana <Shivasagar.Myana@amd.com>
----
- hw/ssi/xilinx_spips.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/hw/ssi/xilinx_spips.c b/hw/ssi/xilinx_spips.c
-index 71952a410d..adaf404f54 100644
---- a/hw/ssi/xilinx_spips.c
-+++ b/hw/ssi/xilinx_spips.c
-@@ -620,7 +620,9 @@ static void xilinx_spips_flush_txfifo(XilinxSPIPS *s)
-         } else if (s->snoop_state == SNOOP_STRIPING ||
-                    s->snoop_state == SNOOP_NONE) {
-             for (i = 0; i < num_effective_busses(s); ++i) {
--                tx_rx[i] = fifo8_pop(&s->tx_fifo);
-+                if (!fifo8_is_empty(&s->tx_fifo)) {
-+                    tx_rx[i] = fifo8_pop(&s->tx_fifo);
-+                }
-             }
-             stripe8(tx_rx, num_effective_busses(s), false);
-         } else if (s->snoop_state >= SNOOP_ADDR) {
--- 
-2.34.1
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
