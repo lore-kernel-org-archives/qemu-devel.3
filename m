@@ -4,42 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14984CF9C6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 12:56:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA038CF9C6B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 12:56:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1st55r-0006Z6-Sr; Tue, 24 Sep 2024 08:56:39 -0400
+	id 1st55x-0007Df-DZ; Tue, 24 Sep 2024 08:56:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1st55Y-0005YQ-P1; Tue, 24 Sep 2024 08:56:23 -0400
+ id 1st55Y-0005YR-Ou; Tue, 24 Sep 2024 08:56:23 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1st55V-0007Yj-83; Tue, 24 Sep 2024 08:56:20 -0400
+ id 1st55U-0007Yk-Ga; Tue, 24 Sep 2024 08:56:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
- Content-Type; bh=tpLXs/X3dkLCvuJc0G9fwwV2L2T0iqxITW/TDrmt2gA=; b=fXuNBRrAC927
- qTq4PhfVKEIzwRK1zNkxsKUIeEb1b0WwnJYMQ8p/axlxF8RxUNLPMW6Bdl/D/PhSbPV4kmcB8H1mY
- WDQTxglTqJEDYl9/eX2ReiOelltS1siSrnWzp1MS9tCA/GPybPVpeaCi92QLkKf6nD6Iyj5MWGPrN
- /GSCHR8zJIHcYdmhTbPfBidG9RdRi4r6vdhrpIlAHMQpeTfepjHMLSvKVSXQVWCLss0HKL3avzbgz
- XF5RnQzXheoNAeoQcOC36yPYNFPR9hSAq5LFX5JpZhAshp24lN5X3KTGmOEjGKX1eh/IqJhJ/7fbM
- 5YPOqNMLh8gj76EqHsdr1g==;
+ Content-Type; bh=pnHpVA2l5CDhMpgeIkIR2CZqgq8C3/4Nc0dAahvQGcQ=; b=L558auwxWPJK
+ CvQ3XmuRVAfMDPgghrzipdNM2IjVJMmByX8nObvWfqh1HvqWlCwht0mHzrzM3xUaqnUM7DF3i4c1D
+ c3f0btGOuI3QUn6F2uAI/2Wrl4TRAErI/JXSJ4qmHqxuphAJ44c4RfJL+7aF6EurOna/732ae49A8
+ yiGSAKsTukaLdfqAzbF2vqvLzIh8nCuQ8rzmx3fSANImcGkXZR8KBRn9/DZm0eLHeST7pruUiNP2+
+ 6ta9+n1DNeF73n6KC9t5gEjnXqkXWGQSM+/mR1BXnDPFSZYEKWzM6Rv9+EQAYTLhfzO30GtYc3oMa
+ iNThjGX94OxViSmEYkMyvA==;
 Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1st52L-004Gjl-1n;
+ (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1st52L-004Gjl-1y;
  Tue, 24 Sep 2024 14:56:00 +0200
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
  eesposit@redhat.com, vsementsov@yandex-team.ru,
  andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [Bug Report][RFC PATCH 0/1] block: fix failing assert on paused VM
+Subject: [Bug Report][RFC PATCH 1/1] block: fix failing assert on paused VM
  migration
-Date: Tue, 24 Sep 2024 15:56:10 +0300
-Message-Id: <20240924125611.664315-1-andrey.drobyshev@virtuozzo.com>
+Date: Tue, 24 Sep 2024 15:56:11 +0300
+Message-Id: <20240924125611.664315-2-andrey.drobyshev@virtuozzo.com>
 X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240924125611.664315-1-andrey.drobyshev@virtuozzo.com>
+References: <20240924125611.664315-1-andrey.drobyshev@virtuozzo.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=130.117.225.111;
@@ -67,74 +69,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There's a bug (failing assert) which is reproduced during migration of
-a paused VM.  I am able to reproduce it on a stand with 2 nodes and a common
-NFS share, with VM's disk on that share.
+Instead of throwing an assert let's just ignore that flag is already set
+and return.  We assume that it's going to be safe to ignore.  Otherwise
+this assert fails when migrating a paused VM back and forth.
 
-root@fedora40-1-vm:~# virsh domblklist alma8-vm
- Target   Source
-------------------------------------------
- sda      /mnt/shared/images/alma8.qcow2
+Ideally we'd like to have a more sophisticated solution, e.g. not even
+scan the nodes which should be inactive at this point.
 
-root@fedora40-1-vm:~# df -Th /mnt/shared
-Filesystem          Type  Size  Used Avail Use% Mounted on
-127.0.0.1:/srv/nfsd nfs4   63G   16G   48G  25% /mnt/shared
-
-On the 1st node:
-
-root@fedora40-1-vm:~# virsh start alma8-vm ; virsh suspend alma8-vm
-root@fedora40-1-vm:~# virsh migrate --compressed --p2p --persistent --undefinesource --live alma8-vm qemu+ssh://fedora40-2-vm/system
-
-Then on the 2nd node:
-
-root@fedora40-2-vm:~# virsh migrate --compressed --p2p --persistent --undefinesource --live alma8-vm qemu+ssh://fedora40-1-vm/system
-error: operation failed: domain is not running
-
-root@fedora40-2-vm:~# tail -3 /var/log/libvirt/qemu/alma8-vm.log
-2024-09-19 13:53:33.336+0000: initiating migration
-qemu-system-x86_64: ../block.c:6976: int bdrv_inactivate_recurse(BlockDriverState *): Assertion `!(bs->open_flags & BDRV_O_INACTIVE)' failed.
-2024-09-19 13:53:42.991+0000: shutting down, reason=crashed
-
-Backtrace:
-
-(gdb) bt
-#0  0x00007f7eaa2f1664 in __pthread_kill_implementation () at /lib64/libc.so.6
-#1  0x00007f7eaa298c4e in raise () at /lib64/libc.so.6
-#2  0x00007f7eaa280902 in abort () at /lib64/libc.so.6
-#3  0x00007f7eaa28081e in __assert_fail_base.cold () at /lib64/libc.so.6
-#4  0x00007f7eaa290d87 in __assert_fail () at /lib64/libc.so.6
-#5  0x0000563c38b95eb8 in bdrv_inactivate_recurse (bs=0x563c3b6c60c0) at ../block.c:6976
-#6  0x0000563c38b95aeb in bdrv_inactivate_all () at ../block.c:7038
-#7  0x0000563c3884d354 in qemu_savevm_state_complete_precopy_non_iterable (f=0x563c3b700c20, in_postcopy=false, inactivate_disks=true)
-    at ../migration/savevm.c:1571
-#8  0x0000563c3884dc1a in qemu_savevm_state_complete_precopy (f=0x563c3b700c20, iterable_only=false, inactivate_disks=true) at ../migration/savevm.c:1631
-#9  0x0000563c3883a340 in migration_completion_precopy (s=0x563c3b4d51f0, current_active_state=<optimized out>) at ../migration/migration.c:2780
-#10 migration_completion (s=0x563c3b4d51f0) at ../migration/migration.c:2844
-#11 migration_iteration_run (s=0x563c3b4d51f0) at ../migration/migration.c:3270
-#12 migration_thread (opaque=0x563c3b4d51f0) at ../migration/migration.c:3536
-#13 0x0000563c38dbcf14 in qemu_thread_start (args=0x563c3c2d5bf0) at ../util/qemu-thread-posix.c:541
-#14 0x00007f7eaa2ef6d7 in start_thread () at /lib64/libc.so.6
-#15 0x00007f7eaa373414 in clone () at /lib64/libc.so.6
-
-What happens here is that after 1st migration BDS related to HDD remains
-inactive as VM is still paused.  Then when we initiate 2nd migration,
-bdrv_inactivate_all() leads to the attempt to set BDRV_O_INACTIVE flag
-on that node which is already set, thus assert fails.
-
-Attached patch which simply skips setting flag if it's already set is more
-of a kludge than a clean solution.  Should we use more sophisticated logic
-which allows some of the nodes be in inactive state prior to the migration,
-and takes them into account during bdrv_inactivate_all()?  Comments would
-be appreciated.
-
-Andrey
-
-Andrey Drobyshev (1):
-  block: do not fail when inactivating node which is inactive
-
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+---
  block.c | 10 +++++++++-
  1 file changed, 9 insertions(+), 1 deletion(-)
 
+diff --git a/block.c b/block.c
+index 7d90007cae..c1dcf906d1 100644
+--- a/block.c
++++ b/block.c
+@@ -6973,7 +6973,15 @@ static int GRAPH_RDLOCK bdrv_inactivate_recurse(BlockDriverState *bs)
+         return 0;
+     }
+ 
+-    assert(!(bs->open_flags & BDRV_O_INACTIVE));
++    if (bs->open_flags & BDRV_O_INACTIVE) {
++        /*
++         * Return here instead of throwing assert as a workaround to
++         * prevent failure on migrating paused VM.
++         * Here we assume that if we're trying to inactivate BDS that's
++         * already inactive, it's safe to just ignore it.
++         */
++        return 0;
++    }
+ 
+     /* Inactivate this node */
+     if (bs->drv->bdrv_inactivate) {
 -- 
 2.39.3
 
