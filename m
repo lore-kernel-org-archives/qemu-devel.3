@@ -4,75 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9FF8CF9C5B
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 01:29:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DA1ECF9C73
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 01:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssuMG-0005WD-97; Mon, 23 Sep 2024 21:28:52 -0400
+	id 1ssuaE-0002cP-Tk; Mon, 23 Sep 2024 21:43:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1ssuMD-0005Vk-1g
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 21:28:49 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1ssuM9-00023O-EC
- for qemu-devel@nongnu.org; Mon, 23 Sep 2024 21:28:48 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxxujDFfJm85wNAA--.30545S3;
- Tue, 24 Sep 2024 09:28:35 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMDxcNbBFfJmZ1oNAA--.8468S3;
- Tue, 24 Sep 2024 09:28:35 +0800 (CST)
-Subject: Re: [PATCH v4 2/2] target/loongarch: Implement lbt registers
- save/restore function
-To: yangtiezhu <yangtiezhu@loongson.cn>
-Cc: gaosong <gaosong@loongson.cn>, Huacai Chen <chenhuacai@kernel.org>,
- qemu-devel@nongnu.org
-References: <20240904061859.86615-1-maobibo@loongson.cn>
- <20240904061859.86615-3-maobibo@loongson.cn>
- <c14c8927-bb9b-9c3f-dca7-c86f79e73770@loongson.cn>
- <7ddb45a0-e685-2af0-749a-821cc08f22e8@loongson.cn>
- <a15a6f5d-5f9b-2bde-1300-81bd53ca25fa@loongson.cn>
- <c7257d12-dad4-7d1e-2fb7-876599a820a8@loongson.cn>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <e844b0f8-e85e-a026-72b3-3af4d1af19d9@loongson.cn>
-Date: Tue, 24 Sep 2024 09:28:33 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1ssua4-0002aq-G8; Mon, 23 Sep 2024 21:43:09 -0400
+Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1ssua2-0003l6-0A; Mon, 23 Sep 2024 21:43:08 -0400
+Received: by mail-vk1-xa2f.google.com with SMTP id
+ 71dfb90a1353d-503f943f115so729705e0c.0; 
+ Mon, 23 Sep 2024 18:43:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1727142183; x=1727746983; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=faDkYXV1K6yqYIsnvz9xZ5HD/5PpfXc6TjNjAsstgWI=;
+ b=cn1D4AWveaRThqvp1H/euTxZrf+vFlRroDbRoizAqy6pDankR3rIVk4Sm7StAk7bFi
+ WYCVu8YXAFulhIi/1txiHxhdq7+LRYu62Pj3vcqsQtttmlWDhv3o+UFpW/9BVuCdUXxa
+ PUuMvLrmQm2p9b5EZK15YyQzgv3tIs0ct/DW8QwSseUVvgfiicjKy+rDHrtTDVkowYmw
+ RidOh3x909u8i7ItTKDbLE38/LUuBIS2FRGwWgHEgA02OKn7cZB8kiQz7vbnx8Mf9B6h
+ RyMOKX0FylKyFUMB6q6E/MEr1zyxD16R1na4G5JkEeo6jsqrFMRNP5H6QpTXj85q0DD3
+ QZ7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727142183; x=1727746983;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=faDkYXV1K6yqYIsnvz9xZ5HD/5PpfXc6TjNjAsstgWI=;
+ b=KDKU1R0qa6TvPK0+WmEF/x6VjTkZelT5Q7VOQ05J62SnbMOlwMTVlON5hzYo8ronxK
+ foFOVMfTrA3g0bLxF++ANJGdJoRnldeILgHiDsOw4kMr/fyQa2pTP6n66HVKT8W1sIeH
+ GaGYJ5hgN1lL+WLrBMPgREuOgI1VuxnoXdmF6SSeeHItNeZX0P4Di74T5En2HBhv8RaW
+ iEWlb7pwDH4MCZn7cehgIlVP2sG2X6n7wcFo33z4Mehg7+Hj6wwMgMbKiB2+bz+85U5U
+ jpPFf3Rripvbd/2cTyQZRDy1CjRAFgokDdmlcjFTfdcjEgbMqBex8oEdAq9hG6uHD9TC
+ LQJQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXLLkQnm4iTl2EJVVl68AMefID1jYdLFf50Q8jiuDA8NZWLAGC28gTY2r96quA/qea6rDNu85+P11Fp@nongnu.org
+X-Gm-Message-State: AOJu0YwwIBHNRGqgwsbV7IKex2Ro2Niq4kTFzCXqpDmwMwSHD0CClWny
+ +I+FOyHfKzdEWWUeq5waW+6NlmW8jbBuVuiXEMzOs8WK634904+Gq52JuxzJEmVsKmvP/4PHcuk
+ XSHvVFIrMT7K1D6YhyiwCknEwkbw=
+X-Google-Smtp-Source: AGHT+IFe0v+wFMqQEJOpbUMQCoPTQICUsVTxQgHMx4Kx6pBe+1nawWcXGubjN8MIaisAKo8LNYNuaMr7Yq/xDmKaGrg=
+X-Received: by 2002:a05:6122:3c4a:b0:501:2851:b3bb with SMTP id
+ 71dfb90a1353d-503e03d8808mr8634152e0c.1.1727142182656; Mon, 23 Sep 2024
+ 18:43:02 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <c7257d12-dad4-7d1e-2fb7-876599a820a8@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDxcNbBFfJmZ1oNAA--.8468S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Zr18Zr1DXw1ktrW3Xry5Awc_yoW8Aw1xpa
- sxAF45KFWUJrZ7Aw4ag3W8XrZ0qr1xGr12qw1fJry8Grs0kr1Fqr48t3sFkF9rX3yrGFyj
- qr4UW343uF1DZabCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.417,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240916155119.14610-1-itachis@FreeBSD.org>
+In-Reply-To: <20240916155119.14610-1-itachis@FreeBSD.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 24 Sep 2024 11:42:36 +1000
+Message-ID: <CAKmqyKOA1uWHm12s8dJ=ZPSW4VOzn=XgisX7sRuJyxC3DaPCrQ@mail.gmail.com>
+Subject: Re: [PATCH v7 00/17] bsd-user: Comprehensive RISCV Support
+To: Ajeet Singh <itachis6234@gmail.com>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>, 
+ Mark Corbin <mark@dibsco.co.uk>, qemu-riscv@nongnu.org,
+ Warner Losh <imp@bsdimp.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Ajeet Singh <itachis@freebsd.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,74 +94,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tiezhu,
+On Tue, Sep 17, 2024 at 1:54=E2=80=AFAM Ajeet Singh <itachis6234@gmail.com>=
+ wrote:
+>
+> Key Changes Compared to Version 6:
+> Included "signal-common.h" in target_arch_cpu.h
+>
+> Mark Corbin (15):
+>   bsd-user: Implement RISC-V CPU initialization and main loop
+>   bsd-user: Add RISC-V CPU execution loop and syscall handling
+>   bsd-user: Implement RISC-V CPU register cloning and reset functions
+>   bsd-user: Implement RISC-V TLS register setup
+>   bsd-user: Add RISC-V ELF definitions and hardware capability detection
+>   bsd-user: Define RISC-V register structures and register copying
+>   bsd-user: Add RISC-V signal trampoline setup function
+>   bsd-user: Implement RISC-V sysarch system call emulation
+>   bsd-user: Add RISC-V thread setup and initialization support
+>   bsd-user: Define RISC-V VM parameters and helper functions
+>   bsd-user: Define RISC-V system call structures and constants
+>   bsd-user: Define RISC-V signal handling structures and constants
+>   bsd-user: Implement RISC-V signal trampoline setup functions
+>   bsd-user: Implement 'get_mcontext' for RISC-V
+>   bsd-user: Implement set_mcontext and get_ucontext_sigreturn for RISCV
+>
+> Warner Losh (2):
+>   bsd-user: Add generic RISC-V64 target definitions
+>   bsd-user: Add RISC-V 64-bit Target Configuration and Debug XML Files
 
-Does mainline gdb support to dump LBT register now?
+Thanks!
 
-Regards
-Bibo Mao
+Applied to riscv-to-apply.next
 
-On 2024/9/23 下午9:02, gaosong wrote:
-> 在 2024/9/10 上午10:24, maobibo 写道:
->>
->>
->> On 2024/9/9 下午9:13, gaosong wrote:
->>> 在 2024/9/9 下午7:52, gaosong 写道:
->>>>
->>>>
->>>> 在 2024/9/4 下午2:18, Bibo Mao 写道:
->>>>> Six registers scr0 - scr3, eflags and ftop are added in percpu 
->>>>> vmstate.
->>>>> And two functions kvm_loongarch_get_lbt/kvm_loongarch_put_lbt are 
->>>>> added
->>>>> to save/restore lbt registers.
->>>>>
->>>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->>>>> ---
->>>>>   target/loongarch/cpu.h     | 12 ++++++++
->>>>>   target/loongarch/kvm/kvm.c | 60 
->>>>> ++++++++++++++++++++++++++++++++++++++
->>>>>   target/loongarch/machine.c | 24 +++++++++++++++
->>>>>   3 files changed, 96 insertions(+)
->>>>>
->>>>
->>>> Reviewed-by: Song Gao <gaosong@loongson.cn>
->>>>
->>>> Thanks
->>>> Song Gao
->>> Hi,  this patch need rebase.
->>>
->>> Applying: target/loongarch: Implement lbt registers save/restore 
->>> function
->>> error: sha1 information is lacking or useless 
->>> (target/loongarch/kvm/kvm.c).
->>> error: could not build fake ancestor
->>> Patch failed at 0001 target/loongarch: Implement lbt registers 
->>> save/restore function
->>
->> Hi Song,
->>
->> It can apply with the latest qemu version on my side, only that it 
->> fails to compile since kvm uapi header files need be updated.
->>
->> LBT patch on qemu side can be skipped here since it depends on LBT 
->> patch merged on kernel side firstly.
->>
-> Hi,
-> 
-> The LBT patches already merged on kernel side.
-> Could you update this series  and add a patch to support gdb LBT feature ?
-> 
-> Thanks.
-> Song Gao
-> 
->> Regards
->> Bibo Mao
->>>
->>>
->>> Thanks.
->>> Song Gao.
->>>
-> 
+Alistair
 
+>
+>  bsd-user/riscv/signal.c               | 170 ++++++++++++++++++++++++++
+>  bsd-user/riscv/target.h               |  20 +++
+>  bsd-user/riscv/target_arch.h          |  27 ++++
+>  bsd-user/riscv/target_arch_cpu.c      |  29 +++++
+>  bsd-user/riscv/target_arch_cpu.h      | 148 ++++++++++++++++++++++
+>  bsd-user/riscv/target_arch_elf.h      |  42 +++++++
+>  bsd-user/riscv/target_arch_reg.h      |  88 +++++++++++++
+>  bsd-user/riscv/target_arch_signal.h   |  75 ++++++++++++
+>  bsd-user/riscv/target_arch_sigtramp.h |  41 +++++++
+>  bsd-user/riscv/target_arch_sysarch.h  |  41 +++++++
+>  bsd-user/riscv/target_arch_thread.h   |  47 +++++++
+>  bsd-user/riscv/target_arch_vmparam.h  |  53 ++++++++
+>  bsd-user/riscv/target_syscall.h       |  38 ++++++
+>  configs/targets/riscv64-bsd-user.mak  |   4 +
+>  14 files changed, 823 insertions(+)
+>  create mode 100644 bsd-user/riscv/signal.c
+>  create mode 100644 bsd-user/riscv/target.h
+>  create mode 100644 bsd-user/riscv/target_arch.h
+>  create mode 100644 bsd-user/riscv/target_arch_cpu.c
+>  create mode 100644 bsd-user/riscv/target_arch_cpu.h
+>  create mode 100644 bsd-user/riscv/target_arch_elf.h
+>  create mode 100644 bsd-user/riscv/target_arch_reg.h
+>  create mode 100644 bsd-user/riscv/target_arch_signal.h
+>  create mode 100644 bsd-user/riscv/target_arch_sigtramp.h
+>  create mode 100644 bsd-user/riscv/target_arch_sysarch.h
+>  create mode 100644 bsd-user/riscv/target_arch_thread.h
+>  create mode 100644 bsd-user/riscv/target_arch_vmparam.h
+>  create mode 100644 bsd-user/riscv/target_syscall.h
+>  create mode 100644 configs/targets/riscv64-bsd-user.mak
+>
+> --
+> 2.34.1
+>
+>
 
