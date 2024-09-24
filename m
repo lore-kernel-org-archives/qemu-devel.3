@@ -4,83 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A086BCF9C73
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 11:55:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71E95CF9C77
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 12:03:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1st489-0005Qw-7n; Tue, 24 Sep 2024 07:54:57 -0400
+	id 1st4FX-0004lO-Jc; Tue, 24 Sep 2024 08:02:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1st486-0005K8-1h
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 07:54:54 -0400
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ id 1st4FU-0004jk-W4
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 08:02:33 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1st484-0008DI-1H
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 07:54:53 -0400
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-5365392cfafso5659680e87.0
- for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 04:54:51 -0700 (PDT)
+ id 1st4FS-0000q1-Rq
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 08:02:32 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a8d446adf6eso840850866b.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 05:02:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727178889; x=1727783689; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727179348; x=1727784148; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=an8OCBlDzGH6BEuuhsfez2SdrFAj2zXulAr/zH2d/G8=;
- b=JP8Exja+8dj7fuukKSKzaQaQuXsm7VKh+aEAoWDUF/3q4d78ymjlodvL8J8N+gKsOy
- sGQRwgu47bNfKxexgEFoxgGTfigECw5qTXdyj/WD2WzwaFqJ0YonIqzDasK4OuhN+BgX
- h96SVWLAaY1gqigDOPxdh51KLelH+dgVQq0+K8PqK6SghfBiJxm1VvLef4yXKTloH2+a
- dOHrwVdOaemDM2l6yeurkB6c/a3NkD6gSsAFh959cuOkqnBV3yexxzUYQTDAEtAKgEjS
- XmfgLbF6RXFi53oqFzd0G8ocf5JsvAkCv1v6NTtuCrr0E7nQ8YmgJHBdpr4RfanMim8m
- fvOw==
+ bh=fuuvURNEDrn7DdCUH9sba2r2p+y/5CSIHv9Ue4dmD8k=;
+ b=L3OeUYyEF8IM2lL/BzV4WfG82v6omBmn+QWnX/a76FO+TOymIU/hk9EumjJv+Nbc0z
+ r1FhuPHE2wnrmscWrHTks8Xmih0goXKZqaK2lvWydXUMzZTzZ86iShj5y0aDc8tTnVmj
+ CMM0K1RTnwN6DndJ21pntY3/1Qd5lbAB3wWwPUlomW3jxLT0Zs/MMZKB8aQ9lTcO1Kke
+ oggjjuqG0eUwFVPJ3tj6JG8vMnRxGBFVefJ4ecT5v5JS0cSdB/eBbs/J5EwL65mnVYWz
+ bEHCbqDPqY96BNIT8pEwil9Qa//jQTZfNYx1tc0LcP3IYF5wlCJ+LaFTinZQDdjxOisW
+ Uk5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727178889; x=1727783689;
+ d=1e100.net; s=20230601; t=1727179348; x=1727784148;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=an8OCBlDzGH6BEuuhsfez2SdrFAj2zXulAr/zH2d/G8=;
- b=cml771qXwTVrEWAXdxKJL7evSATK9ykQXu23QbihCChNot5rTfSQXdtlS/P4tAe65V
- iwWyaKrXBkjiJvLaQh4pCNzsy7LLKPxC6ALtc+X1DyMza9MGRDijhOTMXAYYqsUnz8Ur
- SMoZ0hziC9t7xWWc/VAghwwODT2JTgO2AoZspz8WjAsPSZikVn1FXEtgRF+CJqVv8DW8
- T+svHJylTIw5r6xOTlon6DIMEZCNf0UUX412bzNQAGnka1o9MQaqw4FX9gbH6uaNKSeV
- gDf8ZBuCM/8bFZ85t9ARAbrNTpCXS1k1vntfg7zcuFFi8yqmRxt34C+x9K7FhnwVU3By
- z69A==
+ bh=fuuvURNEDrn7DdCUH9sba2r2p+y/5CSIHv9Ue4dmD8k=;
+ b=EEL4AvlA9bdWKttUD1xRxBAvwZBsW6+G84vaeNvrordArsGU37wDJmLq9/5WHC4Drt
+ J19XofrEWQemFl3GMGeDGlHO20bu05dC/H3GDC7DUNxq8i3k726d0/omu9cp/RuNsq4K
+ VKvSImCCLdttxXEqzZ/XmNNvS6MRf6RR0iXQLvmVe1LH3i3C4NlA+0jcaqpJJGVZhSor
+ Ys9QXQAIsOG6aUUhVOjIBVW0Mp8JaNV3gL0y1Qt5Mk3z/dypkdcoFibryKeGc8lfRf8S
+ rT1GIrWpxwhV8IZL0tXsNNYg8arQUQkcxO0NsHiI+WoXXnLtGT/6GGQUiDNcJIyDjy8p
+ iHkQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUQm/RuxrysrROcekDnfkmOLV+JK7xHgGK8WJJILiXo7/S1uwwTguK8sZcV3BiRoRM7UR3sOPu1LE29@nongnu.org
-X-Gm-Message-State: AOJu0YwtIThASdY8+ZL+oZmaBt1ctE4uOn2CRoHIrG44qxCDTJcBbb51
- xj4jgYzztN0xPYhR7Ghw5K2yOvreRvRo/uZOEIINcpPaRVR7yDXvzA9GrXlhSyA=
-X-Google-Smtp-Source: AGHT+IFjHmtAsyVtQRc+JSgkR190nsiPb6rIql3kW8OwkFlsbxQ30zC90lQh7AIVH+2RcGNZ/oxLYw==
-X-Received: by 2002:a05:6512:693:b0:52e:a63d:e5c1 with SMTP id
- 2adb3069b0e04-536ac2f5147mr7935280e87.30.1727178889291; 
- Tue, 24 Sep 2024 04:54:49 -0700 (PDT)
+ AJvYcCVKz2/1XL2yxQxzLl5qYv5ipU42Q+sAT7Fg1zl1K8vO/3lSfTpgwQuh5qE6FtMJ9/FaE0mB5408D4Fa@nongnu.org
+X-Gm-Message-State: AOJu0YzNzGqS9ufh7A92fKekXZXQzgonRv08PtWvDOdKjDZjoEDxtZrw
+ OjNuZmTMjzPYrgE2+adt28JvrXUnGmJ6Xvis/oUk/Ul4yOGMz2qUF/JTDq6VQTw=
+X-Google-Smtp-Source: AGHT+IFcdicU5SIrsvSBEfNYHGJVgbHjDDJh4o4Notn7yy6ZiPIftuCqV3AArnxU/ME+0vopkGBrmw==
+X-Received: by 2002:a17:907:f1d6:b0:a8d:2671:4999 with SMTP id
+ a640c23a62f3a-a90d5012dc2mr1263558766b.39.1727179348293; 
+ Tue, 24 Sep 2024 05:02:28 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a93930fb413sm74841966b.187.2024.09.24.04.54.48
+ a640c23a62f3a-a9392f3490csm76303066b.21.2024.09.24.05.02.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Sep 2024 04:54:48 -0700 (PDT)
+ Tue, 24 Sep 2024 05:02:27 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C6CFC5F77C;
- Tue, 24 Sep 2024 12:54:46 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id E16FB5F77C;
+ Tue, 24 Sep 2024 13:02:26 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,  Philippe =?utf-8?Q?Ma?=
- =?utf-8?Q?thieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Thomas Huth <thuth@redhat.com>,  Wainer dos Santos
- Moschetta <wainersm@redhat.com>,  qemu-devel@nongnu.org,  Peter Maydell
- <peter.maydell@linaro.org>, Mahesh Bodapati <mbodapat@xilinx.com>
-Subject: Re: [PATCH] tests/docker: Fix microblaze atomics
-In-Reply-To: <20240919152308.10440-1-iii@linux.ibm.com> (Ilya Leoshkevich's
- message of "Thu, 19 Sep 2024 17:23:04 +0200")
-References: <20240919152308.10440-1-iii@linux.ibm.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org,
+ Cleber Rosa <crosa@redhat.com>,  John Snow <jsnow@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Paolo
+ Bonzini
+ <pbonzini@redhat.com>,  Gustavo Romero <gustavo.romero@linaro.org>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@linaro.org>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v2] Add -build-info and -build-info-json CLI arguments
+In-Reply-To: <CAAjaMXZ8q0is2-7-kjyBs=YsBc03=0R2XcYiR-fp05=bcerD6Q@mail.gmail.com>
+ (Manos Pitsidianakis's message of "Tue, 24 Sep 2024 12:25:50 +0300")
+References: <20240923-feature-build-info-cli-v2-1-66b3462f16a1@linaro.org>
+ <ZvGbRWSPPLJDx7BX@redhat.com> <ka5ia.wqlrej2ef9q@linaro.org>
+ <ZvJ8JblXVH-kJGi1@redhat.com>
+ <CAAjaMXZ8q0is2-7-kjyBs=YsBc03=0R2XcYiR-fp05=bcerD6Q@mail.gmail.com>
 User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Tue, 24 Sep 2024 12:54:46 +0100
-Message-ID: <87wmj1clmh.fsf@draig.linaro.org>
+Date: Tue, 24 Sep 2024 13:02:26 +0100
+Message-ID: <87setpcl9p.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x136.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,92 +111,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ilya Leoshkevich <iii@linux.ibm.com> writes:
+Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
 
-(add Mahesh to CC)
-
-> GCC produces invalid code for microblaze atomics.
+> Hello Daniel,
 >
-> The fix is unfortunately not upstream, so fetch it from an external
-> location and apply it locally.
-
-Queued to testing/next, thanks.
-
-However I didn't see any tests failing so I'm curious where you saw the
-problem? Would it be worth adding an atomics test (microblaze or
-generic) to catch this?
-
-Also for the Microblaze guys is there any push to upstream the patches
-you have into GCC or have an easily distributively binary build we could
-convert our dockerfiles to?
-
+> On Tue, 24 Sept 2024 at 11:45, Daniel P. Berrang=C3=A9 <berrange@redhat.c=
+om> wrote:
+>>
+>> On Mon, Sep 23, 2024 at 10:09:32PM +0300, Manos Pitsidianakis wrote:
+>> > Hello Daniel,
+>> >
+>> > On Mon, 23 Sep 2024 19:45, "Daniel P. Berrang=C3=A9" <berrange@redhat.=
+com> wrote:
+>> > > On Mon, Sep 23, 2024 at 09:05:24AM +0300, Manos Pitsidianakis wrote:
+<snip>
+>> > > ie, look a query-audiodevs to discover what audio baxckends are
+>> > > built-in, don't look for CONFIG_XXX settings related to audio.
+>> > > If there are gaps in information we can query from QMP, we should
+>> > > aim to close those gaps.
+>> > >
+>> > > IOW, I don't think we should expose this build info info in either
+>> > > human readable or machine readable format.
+>> >
+>> > QAPI/QMP is not the perspective of this patch, this is for people who =
+use
+>> > custom-built (i.e. not from a distro) binaries and want to be able to
+>> > identify how it was built. Launching a binary to query stuff is
+>> > unnecessarily complex for this task, and the info is not generally
+>> > interesting to the API consumers as you said.
+>>
+>> Launching QEMU to talk QMP is our defined public API for querying
+>> anything about the capabilities of QEMU. We're worked hard to get
+>> away from providing ad-hoc ways to query QEMU from the command
+>> line and going back to that is not desirable. It may be slightly
+>> more complicated, but not by very much.
 >
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> ---
->  .../debian-microblaze-cross.d/build-toolchain.sh          | 8 ++++++++
->  tests/docker/dockerfiles/debian-toolchain.docker          | 7 +++++++
->  2 files changed, 15 insertions(+)
->
-> diff --git a/tests/docker/dockerfiles/debian-microblaze-cross.d/build-too=
-lchain.sh b/tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolch=
-ain.sh
-> index 23ec0aa9a72..c5cd0aa931c 100755
-> --- a/tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.=
-sh
-> +++ b/tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.=
-sh
-> @@ -10,6 +10,8 @@ TOOLCHAIN_INSTALL=3D/usr/local
->  TOOLCHAIN_BIN=3D${TOOLCHAIN_INSTALL}/bin
->  CROSS_SYSROOT=3D${TOOLCHAIN_INSTALL}/$TARGET/sys-root
->=20=20
-> +GCC_PATCH0_URL=3Dhttps://raw.githubusercontent.com/Xilinx/meta-xilinx/re=
-fs/tags/xlnx-rel-v2024.1/meta-microblaze/recipes-devtools/gcc/gcc-12/0009-P=
-atch-microblaze-Fix-atomic-boolean-return-value.patch
-> +
->  export PATH=3D${TOOLCHAIN_BIN}:$PATH
->=20=20
->  #
-> @@ -31,6 +33,12 @@ mv gcc-11.2.0 src-gcc
->  mv musl-1.2.2 src-musl
->  mv linux-5.10.70 src-linux
->=20=20
-> +#
-> +# Patch gcc
-> +#
-> +
-> +wget -O - ${GCC_PATCH0_URL} | patch -d src-gcc -p1
-> +
->  mkdir -p bld-hdr bld-binu bld-gcc bld-musl
->  mkdir -p ${CROSS_SYSROOT}/usr/include
->=20=20
-> diff --git a/tests/docker/dockerfiles/debian-toolchain.docker b/tests/doc=
-ker/dockerfiles/debian-toolchain.docker
-> index 687a97fec4a..ab4ce29533d 100644
-> --- a/tests/docker/dockerfiles/debian-toolchain.docker
-> +++ b/tests/docker/dockerfiles/debian-toolchain.docker
-> @@ -10,6 +10,8 @@ FROM docker.io/library/debian:11-slim
->  # ??? The build-dep isn't working, missing a number of
->  # minimal build dependiencies, e.g. libmpc.
->=20=20
-> +RUN sed 's/^deb /deb-src /' </etc/apt/sources.list >/etc/apt/sources.lis=
-t.d/deb-src.list
-> +
->  RUN apt update && \
->      DEBIAN_FRONTEND=3Dnoninteractive apt install -yy eatmydata && \
->      DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
-> @@ -33,6 +35,11 @@ RUN cd /root && ./build-toolchain.sh
->  # and the build trees by restoring the original image,
->  # then copying the built toolchain from stage 0.
->  FROM docker.io/library/debian:11-slim
-> +RUN apt update && \
-> +    DEBIAN_FRONTEND=3Dnoninteractive apt install -yy eatmydata && \
-> +    DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
-> +    apt install -y --no-install-recommends \
-> +        libmpc3
->  COPY --from=3D0 /usr/local /usr/local
->  # As a final step configure the user (if env is defined)
->  ARG USER
+> Again, this is not a "capabilities discovery" API. It lists the
+> build-time configuration of the binary. Perhaps we can expose it in a
+> different way so that people don't end up confused?
+
+I think the problem is however much we might say it's not a capabilities
+discovery API it's very existence encourages users to use it as one.
+
+What about a script:
+
+  qemu-get-build-info </path/to/qemu>
+
+which would launch the binary and query it over QMP? Would that work?
 
 --=20
 Alex Benn=C3=A9e
