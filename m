@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 276BACF9C69
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 22:21:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91B17CF9C6B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 22:21:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stDsB-0006NZ-Dv; Tue, 24 Sep 2024 18:19:07 -0400
+	id 1stDtU-0005s6-QT; Tue, 24 Sep 2024 18:20:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1stDs7-00067o-FF
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:19:03 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1stDtB-0004f4-DL
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:20:12 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1stDs5-0001gr-QZ
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:19:03 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-718e9c8bd83so222095b3a.1
- for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 15:19:01 -0700 (PDT)
+ id 1stDt8-0001xp-7U
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:20:07 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-7179802b8fcso4315953b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 15:20:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727216340; x=1727821140; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727216404; x=1727821204; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JDWkIALoLBcGO3kcfhgP6uCTD1Div6iRtmaz0O6swdM=;
- b=ljxhWo79ukotnQFitjc1KX6qmtB8L1C3ntfZFLa0xI29s1KYTCCTN599+e/mpBUKXh
- mSXVogDRgE9X6rDDXOTpsOFusSKCxx368Rn5lu4E2BxJ44jD6h/ILIYniPUel3Ox1MIX
- F3TdYls8Goh+9ruUEkl6Z/616lN2uxw4bymWjCsI3sknfzLaf5Hx77Ji6WeXupYK62mb
- uRR/oivbwMGY8zebB4thb/8dUqr6pH5gi76wfnl6XA1v8A16Xb80dvDHSSoxEhNVmeHe
- d44+LvL63zN97eQ6EjzUXYvGh6pIhjzKXxyOpVj15396UUJ6HqvcNYOCRnywNKmUR8Wt
- gCfQ==
+ bh=DJwxZp62y1C27+GAPjWKTnxi+l8BSEYvPi6A+WTJHx8=;
+ b=cif+PKt4py3vknXHT/w/fcj2j+TMwwPIhuLYaHAR4FEvSzCcGNmY06rxDWvfy+8D5B
+ 21/ozNKyaK27kxJg0DVckaKrIpsPuaksyK235QoIvi9qeDrnUh9OKAdE+zOUhNj14Qst
+ eP91zXc7lkiigUqenN9Kn7s8cYf7ibnUpfs64RqHFAS9gRHnPJdob4gOMqOM1//9zF1Z
+ Ffwp8cPoVoQ5rOJugn67dS63IZ39jmH8rEVk7kSFicXpy6MApdtkwp/R768sizFRLeGD
+ L7cOja9swXcABymZ5Sh/l7WIZoW2b0EhyJ5nT5I56lYoBtoa2xYAT0ss9orJotlwEsia
+ mXFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727216340; x=1727821140;
+ d=1e100.net; s=20230601; t=1727216404; x=1727821204;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JDWkIALoLBcGO3kcfhgP6uCTD1Div6iRtmaz0O6swdM=;
- b=hU4JBe1hjpcTDYD26s1IpFjZlIjnLa9CudBq2pPtwYmy+bwmENFYVg5qnJb8XWCH5c
- ix725/jESP9x+8d89WIRDYSmukuT6YtzF+sT7MyBWN46r4RrZdyYIASU+R4pBQ/Mybku
- jxOoH7CsECuhlGQr5X5wpruGg14tk3udG+gvTrN3wY2yBRsEGLyLU3D441PUkR2KspdI
- WSzP+jwumDxFMs5jdib7dsrazoqmNKEInZ/p7uPbOisYNHB9aFz66hOD0wMh6+5MSQUj
- F0DHhhNd6mu596BjHqKFCa1Nc8j0xwWsMf+qxO158AwJfAtQvqgl5qzcNu4iMHqIbTxW
- zzMg==
-X-Gm-Message-State: AOJu0YzFLu9sVIHbMjZVOa/VygCyMfuyqSs/ygkIjApEThiGuVZO8MCM
- ywHrVVAUPt400NfFqEEWtoxJYGAGQUu5rzNr4iwhkC2q/hSpoEWQNX8n3w==
-X-Google-Smtp-Source: AGHT+IEKjLDIbbmJVrFab57YEBErlWJOaAJXJI10I2Qz1x9FdBmpTUQZyAootEQYrev042R4ImD47g==
-X-Received: by 2002:a05:6a20:c909:b0:1cf:38cf:dfb6 with SMTP id
- adf61e73a8af0-1d4c6ecece2mr889639637.20.1727216340128; 
- Tue, 24 Sep 2024 15:19:00 -0700 (PDT)
+ bh=DJwxZp62y1C27+GAPjWKTnxi+l8BSEYvPi6A+WTJHx8=;
+ b=tbglnUksgG5L0yW3wX65DAorK2pNz/KI0bK0Ek+XlcZ5bYUg29LTywS+Dyuv4qcrLj
+ CfPjrUcsVXmAeHz2dUPn++Zurxv6C+Slg+J5YhJ23qpR9BFnKFingQPukConWN67Q4hj
+ zMlNp/gLfLmAiPVTYJG9qsZF4NVWSa4cXQ2s3bkjw9nGptRuNmDsL9dr7NAHtAaBKfZM
+ mj4jB9t3UeYnvAbSo1rkKqCNX40s773Nxq37hbOUi2biyHJ57U+AdKoJu+xqPOP6tMst
+ dNrrbc/NLAdMlqsjhBaUW+9wFcmlMp1vLDE5VPR5Tiq7iVHDPWITwBIibusQp6cQia4o
+ 3QPw==
+X-Gm-Message-State: AOJu0Yytnv3xJc4RLxrwTfKWZSoPvCAYqpqnkiCAPn3XdmfPuUESN7On
+ 3QAxwCtBAxZc1z9806scTwSrACQTYhW//ZK52RPhLD8u3a80tNdyVBvweQ==
+X-Google-Smtp-Source: AGHT+IFOAfKxP/14P6wU3JaShae6JLYdE66KljenOE7+Btxrhg+Y6rbII+gQuCllDAMmTvNENlXOGg==
+X-Received: by 2002:a05:6a00:1827:b0:717:d4e3:df1a with SMTP id
+ d2e1a72fcca58-71b0aab42a5mr946688b3a.9.1727216404455; 
+ Tue, 24 Sep 2024 15:20:04 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71afc8342easm1665310b3a.11.2024.09.24.15.18.57
+ d2e1a72fcca58-71afc8342easm1665310b3a.11.2024.09.24.15.20.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Sep 2024 15:18:59 -0700 (PDT)
+ Tue, 24 Sep 2024 15:20:03 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Tomasz Jeznach <tjeznach@rivosinc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Frank Chang <frank.chang@sifive.com>,
+Cc: alistair23@gmail.com, Mark Corbin <mark@dibsco.co.uk>,
+ Ajeet Singh <itachis@FreeBSD.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 19/47] hw/riscv/virt.c: support for RISC-V IOMMU PCIDevice
- hotplug
-Date: Wed, 25 Sep 2024 08:17:20 +1000
-Message-ID: <20240924221751.2688389-20-alistair.francis@wdc.com>
+Subject: [PULL v2 38/47] bsd-user: Implement RISC-V sysarch system call
+ emulation
+Date: Wed, 25 Sep 2024 08:17:39 +1000
+Message-ID: <20240924221751.2688389-39-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240924221751.2688389-1-alistair.francis@wdc.com>
 References: <20240924221751.2688389-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,88 +101,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
+From: Mark Corbin <mark@dibsco.co.uk>
 
-Generate device tree entry for riscv-iommu PCI device, along with
-mapping all PCI device identifiers to the single IOMMU device instance.
+Added the 'do_freebsd_arch_sysarch' function to emulate the 'sysarch'
+system call for the RISC-V architecture.
+Currently, this function returns '-TARGET_EOPNOTSUPP' to indicate that
+the operation is not supported.
 
-Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240903201633.93182-7-dbarboza@ventanamicro.com>
+Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
+Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240916155119.14610-9-itachis@FreeBSD.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/virt.c | 33 ++++++++++++++++++++++++++++++++-
- 1 file changed, 32 insertions(+), 1 deletion(-)
+ bsd-user/riscv/target_arch_sysarch.h | 41 ++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+ create mode 100644 bsd-user/riscv/target_arch_sysarch.h
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index cef41c150a..63d553ac98 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -32,6 +32,7 @@
- #include "hw/core/sysbus-fdt.h"
- #include "target/riscv/pmu.h"
- #include "hw/riscv/riscv_hart.h"
-+#include "hw/riscv/iommu.h"
- #include "hw/riscv/virt.h"
- #include "hw/riscv/boot.h"
- #include "hw/riscv/numa.h"
-@@ -1032,6 +1033,30 @@ static void create_fdt_virtio_iommu(RISCVVirtState *s, uint16_t bdf)
-                            bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
- }
- 
-+static void create_fdt_iommu(RISCVVirtState *s, uint16_t bdf)
+diff --git a/bsd-user/riscv/target_arch_sysarch.h b/bsd-user/riscv/target_arch_sysarch.h
+new file mode 100644
+index 0000000000..9af42331b4
+--- /dev/null
++++ b/bsd-user/riscv/target_arch_sysarch.h
+@@ -0,0 +1,41 @@
++/*
++ *  RISC-V sysarch() system call emulation
++ *
++ *  Copyright (c) 2019 Mark Corbin
++ *
++ *  This program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2 of the License, or
++ *  (at your option) any later version.
++ *
++ *  This program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef TARGET_ARCH_SYSARCH_H
++#define TARGET_ARCH_SYSARCH_H
++
++#include "target_syscall.h"
++#include "target_arch.h"
++
++static inline abi_long do_freebsd_arch_sysarch(CPURISCVState *env, int op,
++        abi_ulong parms)
 +{
-+    const char comp[] = "riscv,pci-iommu";
-+    void *fdt = MACHINE(s)->fdt;
-+    uint32_t iommu_phandle;
-+    g_autofree char *iommu_node = NULL;
-+    g_autofree char *pci_node = NULL;
 +
-+    pci_node = g_strdup_printf("/soc/pci@%lx",
-+                               (long) virt_memmap[VIRT_PCIE_ECAM].base);
-+    iommu_node = g_strdup_printf("%s/iommu@%x", pci_node, bdf);
-+    iommu_phandle = qemu_fdt_alloc_phandle(fdt);
-+    qemu_fdt_add_subnode(fdt, iommu_node);
-+
-+    qemu_fdt_setprop(fdt, iommu_node, "compatible", comp, sizeof(comp));
-+    qemu_fdt_setprop_cell(fdt, iommu_node, "#iommu-cells", 1);
-+    qemu_fdt_setprop_cell(fdt, iommu_node, "phandle", iommu_phandle);
-+    qemu_fdt_setprop_cells(fdt, iommu_node, "reg",
-+                           bdf << 8, 0, 0, 0, 0);
-+    qemu_fdt_setprop_cells(fdt, pci_node, "iommu-map",
-+                           0, iommu_phandle, 0, bdf,
-+                           bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
++    return -TARGET_EOPNOTSUPP;
 +}
 +
- static void finalize_fdt(RISCVVirtState *s)
- {
-     uint32_t phandle = 1, irq_mmio_phandle = 1, msi_pcie_phandle = 1;
-@@ -1738,9 +1763,11 @@ static HotplugHandler *virt_machine_get_hotplug_handler(MachineState *machine,
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
- 
-     if (device_is_dynamic_sysbus(mc, dev) ||
--        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
-+        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
-+        object_dynamic_cast(OBJECT(dev), TYPE_RISCV_IOMMU_PCI)) {
-         return HOTPLUG_HANDLER(machine);
-     }
++static inline void do_freebsd_arch_print_sysarch(
++        const struct syscallname *name, abi_long arg1, abi_long arg2,
++        abi_long arg3, abi_long arg4, abi_long arg5, abi_long arg6)
++{
 +
-     return NULL;
- }
- 
-@@ -1761,6 +1788,10 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
-     if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
-         create_fdt_virtio_iommu(s, pci_get_bdf(PCI_DEVICE(dev)));
-     }
++    gemu_log("UNKNOWN OP: %d, " TARGET_ABI_FMT_lx ")", (int)arg1, arg2);
++}
 +
-+    if (object_dynamic_cast(OBJECT(dev), TYPE_RISCV_IOMMU_PCI)) {
-+        create_fdt_iommu(s, pci_get_bdf(PCI_DEVICE(dev)));
-+    }
- }
- 
- static void virt_machine_class_init(ObjectClass *oc, void *data)
++#endif /* TARGET_ARCH_SYSARCH_H */
 -- 
 2.46.1
 
