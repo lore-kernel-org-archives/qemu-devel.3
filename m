@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA7CACF9C6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9F0FCF9C6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:06:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1st5DZ-0003ZZ-UY; Tue, 24 Sep 2024 09:04:37 -0400
+	id 1st5Dc-0003vK-JY; Tue, 24 Sep 2024 09:04:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1st5DX-0003O9-Py
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:04:35 -0400
+ id 1st5Da-0003ie-OM
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:04:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1st5DW-00007W-4P
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:04:35 -0400
+ id 1st5DZ-000080-6Y
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:04:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727183073;
+ s=mimecast20190719; t=1727183076;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=T0MLcA6aNzv2RR1lKUo89sny5RQMOplmDT7BSRDnP8M=;
- b=iRvwLdnbW7/yGiPQLlc4y8Kh875czz9mZh8WJVLDTj+aigLm5lcOaSpmjYL3JfWY5u0bw6
- TwJmWzjjIWuv/OOxeGI7c+pC+dgymEPNtA0j5N4mLGukNWE6ibMk0DL7eLwUkiMD7i0Ub8
- i1iBk/mIcbyJIhWn7DLgZ5/+gwUKMqM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=TbV9ZakF44C4gPu/dzMAxSKaBPNMHPS3TqhrfNh0O0w=;
+ b=U3F3/by7eQxW+C/fcmN+YxibLEsvpkNAG+6ZnAbhHRWyak94eg8CVb8cXTpN1PqmmXA3T5
+ L1VyTAccEHGJ3cM2PxnjZRU7JkJajLQZTNm2D5U4axu/PIHe5+6uV78m2vUA6jDrsS0mTx
+ auUvFBO8g99T7pm/gg3DvenbqVWCA+0=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-551-4Ckfsq_OOhyf83cqw0YumA-1; Tue,
- 24 Sep 2024 09:03:22 -0400
-X-MC-Unique: 4Ckfsq_OOhyf83cqw0YumA-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-zgH54WJ5Mgi6sUCnCjq_Rg-1; Tue,
+ 24 Sep 2024 09:03:28 -0400
+X-MC-Unique: zgH54WJ5Mgi6sUCnCjq_Rg-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 07F7C196C434; Tue, 24 Sep 2024 13:03:20 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5270518EBF15; Tue, 24 Sep 2024 13:03:25 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.3])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D01731956053; Tue, 24 Sep 2024 13:03:17 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 917E830001A1; Tue, 24 Sep 2024 13:03:23 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -73,16 +73,16 @@ Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>, qemu-block@nongnu.org,
  Bin Meng <bin.meng@windriver.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 07/22] block/stream: fix -Werror=maybe-uninitialized
- false-positives
-Date: Tue, 24 Sep 2024 17:02:06 +0400
-Message-ID: <20240924130222.748369-8-marcandre.lureau@redhat.com>
+Subject: [PATCH v2 08/22] hw/ahci: fix -Werror=maybe-uninitialized
+ false-positive
+Date: Tue, 24 Sep 2024 17:02:07 +0400
+Message-ID: <20240924130222.748369-9-marcandre.lureau@redhat.com>
 In-Reply-To: <20240924130222.748369-1-marcandre.lureau@redhat.com>
 References: <20240924130222.748369-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -111,40 +111,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../block/stream.c:193:19: error: ‘unfiltered_bs’ may be used uninitialized [-Werror=maybe-uninitialized]
-../block/stream.c:176:5: error: ‘len’ may be used uninitialized [-Werror=maybe-uninitialized]
-trace/trace-block.h:906:9: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
+../hw/ide/ahci.c:989:58: error: ‘tbl_entry_size’ may be used uninitialized [-Werror=maybe-uninitialized]
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Acked-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- block/stream.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ hw/ide/ahci.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/block/stream.c b/block/stream.c
-index 7031eef12b..9076203193 100644
---- a/block/stream.c
-+++ b/block/stream.c
-@@ -155,8 +155,8 @@ static void stream_clean(Job *job)
- static int coroutine_fn stream_run(Job *job, Error **errp)
- {
-     StreamBlockJob *s = container_of(job, StreamBlockJob, common.job);
--    BlockDriverState *unfiltered_bs;
--    int64_t len;
-+    BlockDriverState *unfiltered_bs = NULL;
-+    int64_t len = -1;
-     int64_t offset = 0;
-     int error = 0;
-     int64_t n = 0; /* bytes */
-@@ -177,7 +177,7 @@ static int coroutine_fn stream_run(Job *job, Error **errp)
+diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+index 7fc2a08df2..d700986c39 100644
+--- a/hw/ide/ahci.c
++++ b/hw/ide/ahci.c
+@@ -948,7 +948,6 @@ static int ahci_populate_sglist(AHCIDevice *ad, QEMUSGList *sglist,
+     uint64_t sum = 0;
+     int off_idx = -1;
+     int64_t off_pos = -1;
+-    int tbl_entry_size;
+     IDEBus *bus = &ad->port;
+     BusState *qbus = BUS(bus);
  
-     for ( ; offset < len; offset += n) {
-         bool copy;
--        int ret;
-+        int ret = -1;
- 
-         /* Note that even when no rate limit is applied we need to yield
-          * with no pending I/O here so that bdrv_drain_all() returns.
+@@ -976,6 +975,8 @@ static int ahci_populate_sglist(AHCIDevice *ad, QEMUSGList *sglist,
+     /* Get entries in the PRDT, init a qemu sglist accordingly */
+     if (prdtl > 0) {
+         AHCI_SG *tbl = (AHCI_SG *)prdt;
++        int tbl_entry_size = -1;
++
+         sum = 0;
+         for (i = 0; i < prdtl; i++) {
+             tbl_entry_size = prdt_tbl_entry_size(&tbl[i]);
 -- 
 2.45.2.827.g557ae147e6
 
