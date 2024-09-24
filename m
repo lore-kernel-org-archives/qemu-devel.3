@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D30FCCF9C6B
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65C52CF9C6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:11:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1st5Il-0006pq-TC; Tue, 24 Sep 2024 09:10:00 -0400
+	id 1st5Gk-0005tU-12; Tue, 24 Sep 2024 09:07:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1st5Gp-0006bg-TM
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:08:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1st5Fl-00013a-8h
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:06:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1st5Gi-0000se-LZ
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:07:55 -0400
+ id 1st5Fh-0000WH-Rz
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:06:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727183270;
+ s=mimecast20190719; t=1727183208;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8kITW/qOItfiafJDWQ5dEslsyyB81A9V60goYSoquHw=;
- b=Z21gq+XPSPBdkJHtce0rZH3nB6sHghFv7IH+kvwUYh2JFTZU3Eg0FAmftsIAJbeAAQybwD
- hZyID65mipl5Tq3p+4pDZQRjpJIMWeF6K2dP03wKDd4ts40Dc00OuuhMAkPx3rF4NNk0Yk
- S6RAJNqtziVHybBR0zZ+YFu1pgp+OI8=
+ bh=T0MLcA6aNzv2RR1lKUo89sny5RQMOplmDT7BSRDnP8M=;
+ b=jMaE/nD7q0ba3cD6eGCFYbf9wkv+fGZfMF0DoK1yBDxFVYIt7AjehfXy0veR8i3V5Mr7SZ
+ ls3yOA3jcvr50Zwr4NHJFojaCMSeDoLbgi+n2kzbDRri2AtVeF9bLcDQVmuSzwK9OcQhUP
+ 4L4podrQLQ8Y/N7YwvGFktDcjC9Nj1E=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-322-2T_0FyEAN5myzxBGqR1yOQ-1; Tue,
- 24 Sep 2024 09:07:47 -0400
-X-MC-Unique: 2T_0FyEAN5myzxBGqR1yOQ-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-5-I4TH7hFOOxaQSTYEdX2Aag-1; Tue,
+ 24 Sep 2024 09:06:46 -0400
+X-MC-Unique: I4TH7hFOOxaQSTYEdX2Aag-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 787561896E34; Tue, 24 Sep 2024 13:07:44 +0000 (UTC)
+ id AF5BF1896E3D; Tue, 24 Sep 2024 13:06:36 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.3])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5275B19560AA; Tue, 24 Sep 2024 13:07:41 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D7C3F30001A1; Tue, 24 Sep 2024 13:06:34 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
@@ -73,16 +73,17 @@ Cc: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Stefano Garzarella <sgarzare@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 19/22] block: fix -Werror=maybe-uninitialized false-positive
-Date: Tue, 24 Sep 2024 17:05:50 +0400
-Message-ID: <20240924130554.749278-20-marcandre.lureau@redhat.com>
+Subject: [PATCH v2 07/22] block/stream: fix -Werror=maybe-uninitialized
+ false-positives
+Date: Tue, 24 Sep 2024 17:05:38 +0400
+Message-ID: <20240924130554.749278-8-marcandre.lureau@redhat.com>
 In-Reply-To: <20240924130554.749278-1-marcandre.lureau@redhat.com>
 References: <20240924130554.749278-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -110,27 +111,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../block/file-posix.c:1405:17: error: ‘zoned’ may be used uninitialized [-Werror=maybe-uninitialized]
- 1405 |     if (ret < 0 || zoned == BLK_Z_NONE) {
+../block/stream.c:193:19: error: ‘unfiltered_bs’ may be used uninitialized [-Werror=maybe-uninitialized]
+../block/stream.c:176:5: error: ‘len’ may be used uninitialized [-Werror=maybe-uninitialized]
+trace/trace-block.h:906:9: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Acked-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- block/file-posix.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/stream.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index ff928b5e85..90fa54352c 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -1398,7 +1398,7 @@ static void raw_refresh_zoned_limits(BlockDriverState *bs, struct stat *st,
-                                      Error **errp)
+diff --git a/block/stream.c b/block/stream.c
+index 7031eef12b..9076203193 100644
+--- a/block/stream.c
++++ b/block/stream.c
+@@ -155,8 +155,8 @@ static void stream_clean(Job *job)
+ static int coroutine_fn stream_run(Job *job, Error **errp)
  {
-     BDRVRawState *s = bs->opaque;
--    BlockZoneModel zoned;
-+    BlockZoneModel zoned = BLK_Z_NONE;
-     int ret;
+     StreamBlockJob *s = container_of(job, StreamBlockJob, common.job);
+-    BlockDriverState *unfiltered_bs;
+-    int64_t len;
++    BlockDriverState *unfiltered_bs = NULL;
++    int64_t len = -1;
+     int64_t offset = 0;
+     int error = 0;
+     int64_t n = 0; /* bytes */
+@@ -177,7 +177,7 @@ static int coroutine_fn stream_run(Job *job, Error **errp)
  
-     ret = get_sysfs_zoned_model(st, &zoned);
+     for ( ; offset < len; offset += n) {
+         bool copy;
+-        int ret;
++        int ret = -1;
+ 
+         /* Note that even when no rate limit is applied we need to yield
+          * with no pending I/O here so that bdrv_drain_all() returns.
 -- 
 2.45.2.827.g557ae147e6
 
