@@ -4,79 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DA1ECF9C73
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 01:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A42DECF9C72
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 02:45:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ssuaE-0002cP-Tk; Mon, 23 Sep 2024 21:43:19 -0400
+	id 1ssvY9-00057E-Tu; Mon, 23 Sep 2024 22:45:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ssua4-0002aq-G8; Mon, 23 Sep 2024 21:43:09 -0400
-Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
+ (Exim 4.90_1) (envelope-from <alexjlzheng@gmail.com>)
+ id 1ssvY4-000538-Cr
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 22:45:09 -0400
+Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ssua2-0003l6-0A; Mon, 23 Sep 2024 21:43:08 -0400
-Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-503f943f115so729705e0c.0; 
- Mon, 23 Sep 2024 18:43:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alexjlzheng@gmail.com>)
+ id 1ssvY2-0001an-Ry
+ for qemu-devel@nongnu.org; Mon, 23 Sep 2024 22:45:08 -0400
+Received: by mail-yb1-xb2c.google.com with SMTP id
+ 3f1490d57ef6-e1a80979028so4957771276.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Sep 2024 19:45:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727142183; x=1727746983; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727145905; x=1727750705; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=faDkYXV1K6yqYIsnvz9xZ5HD/5PpfXc6TjNjAsstgWI=;
- b=cn1D4AWveaRThqvp1H/euTxZrf+vFlRroDbRoizAqy6pDankR3rIVk4Sm7StAk7bFi
- WYCVu8YXAFulhIi/1txiHxhdq7+LRYu62Pj3vcqsQtttmlWDhv3o+UFpW/9BVuCdUXxa
- PUuMvLrmQm2p9b5EZK15YyQzgv3tIs0ct/DW8QwSseUVvgfiicjKy+rDHrtTDVkowYmw
- RidOh3x909u8i7ItTKDbLE38/LUuBIS2FRGwWgHEgA02OKn7cZB8kiQz7vbnx8Mf9B6h
- RyMOKX0FylKyFUMB6q6E/MEr1zyxD16R1na4G5JkEeo6jsqrFMRNP5H6QpTXj85q0DD3
- QZ7g==
+ bh=Go996ja8pnME94dYqTEfeEJM1TlbQCtq2FuhI7Uc1PM=;
+ b=hBejaqU6KSWFXuiBs/yVJ9jDMUDiYfp2So8TjTHf302KJQ8Z4Rvje7DwQf5ze+cWGV
+ gddcWUt33p8wk0PP9cez4YKvs57YFVyHj0tz3WBr0PyFYVLt8FDhbj6NiwrvYUZd6v85
+ 16J9wEDXskr9LsI7u/MljzUTyG8oHV5Jmj8wnbeewN3MhffKCe9SgYdjXYDHA9Yuy/2R
+ s2i7xQyA+ahg/a0FP3NVGux+OjGQADrUvlpb2oZ829sdpaF1D1tWqpZWhd8WkELH/1A8
+ KPnPlJiQ/Bn+gn79y4/r5/LgGdvXuDIomUQbBrPvH4Wp/wxX1pdxqroZTO3jevavRfIy
+ +dMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727142183; x=1727746983;
+ d=1e100.net; s=20230601; t=1727145905; x=1727750705;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=faDkYXV1K6yqYIsnvz9xZ5HD/5PpfXc6TjNjAsstgWI=;
- b=KDKU1R0qa6TvPK0+WmEF/x6VjTkZelT5Q7VOQ05J62SnbMOlwMTVlON5hzYo8ronxK
- foFOVMfTrA3g0bLxF++ANJGdJoRnldeILgHiDsOw4kMr/fyQa2pTP6n66HVKT8W1sIeH
- GaGYJ5hgN1lL+WLrBMPgREuOgI1VuxnoXdmF6SSeeHItNeZX0P4Di74T5En2HBhv8RaW
- iEWlb7pwDH4MCZn7cehgIlVP2sG2X6n7wcFo33z4Mehg7+Hj6wwMgMbKiB2+bz+85U5U
- jpPFf3Rripvbd/2cTyQZRDy1CjRAFgokDdmlcjFTfdcjEgbMqBex8oEdAq9hG6uHD9TC
- LQJQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXLLkQnm4iTl2EJVVl68AMefID1jYdLFf50Q8jiuDA8NZWLAGC28gTY2r96quA/qea6rDNu85+P11Fp@nongnu.org
-X-Gm-Message-State: AOJu0YwwIBHNRGqgwsbV7IKex2Ro2Niq4kTFzCXqpDmwMwSHD0CClWny
- +I+FOyHfKzdEWWUeq5waW+6NlmW8jbBuVuiXEMzOs8WK634904+Gq52JuxzJEmVsKmvP/4PHcuk
- XSHvVFIrMT7K1D6YhyiwCknEwkbw=
-X-Google-Smtp-Source: AGHT+IFe0v+wFMqQEJOpbUMQCoPTQICUsVTxQgHMx4Kx6pBe+1nawWcXGubjN8MIaisAKo8LNYNuaMr7Yq/xDmKaGrg=
-X-Received: by 2002:a05:6122:3c4a:b0:501:2851:b3bb with SMTP id
- 71dfb90a1353d-503e03d8808mr8634152e0c.1.1727142182656; Mon, 23 Sep 2024
- 18:43:02 -0700 (PDT)
+ bh=Go996ja8pnME94dYqTEfeEJM1TlbQCtq2FuhI7Uc1PM=;
+ b=E2Vq0XhuuYSfPQqcf2SChRZ6k98GQ1PEoeJULrBKKoUoaNrqR+ZLN1RhawsF+A91EH
+ omougGoSW9VE4Z+2N6gWBTvS3T+LC66KvvASte3FXWAtolsa7C+OOHbctA4d4Uyvrica
+ UVmPv+UgOElwQkxULBk784OfxKTo7cyEgNGpCqLpQoehgRmlUKeFxc1ZLuXEMkwPegDU
+ GNUC/38MCpqgNyl+8PGV6KQ90urmEcyoKQR3FnguhsLpLnDhHUobzTMb5bqaNmQQQ9v9
+ A/2P0WZXz9SB4VOF2gk2rZgc/yDW3yJHjsUHl7NlBWhwLwiuKV/WeFrPZgO2jvGosWoS
+ NTug==
+X-Gm-Message-State: AOJu0YwQToR5680mNWkJsMLncXTJlLWjM1k+haWe5gRHje1oo8WdH2os
+ +XaM78yOH8yhAEWctjuVkYsmISTuqitQ2SBDiypVkQ/E29VOuEnHp9BL9yqTMN00kQo3cr1auyL
+ gLCYm6nLPOy2v33NwX2ICsAAUHauVgQ==
+X-Google-Smtp-Source: AGHT+IHjr1f60UbjdJBwB9IA6nzrcXABlT+CfC2gj+gxSEEH9bAMTIhiYf5asfI745j4um/JKZjvnSB+mnl2Yno0/A8=
+X-Received: by 2002:a05:6902:e0a:b0:e20:2031:c86e with SMTP id
+ 3f1490d57ef6-e2250ccd4b9mr9832703276.38.1727145904968; Mon, 23 Sep 2024
+ 19:45:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240916155119.14610-1-itachis@FreeBSD.org>
-In-Reply-To: <20240916155119.14610-1-itachis@FreeBSD.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 24 Sep 2024 11:42:36 +1000
-Message-ID: <CAKmqyKOA1uWHm12s8dJ=ZPSW4VOzn=XgisX7sRuJyxC3DaPCrQ@mail.gmail.com>
-Subject: Re: [PATCH v7 00/17] bsd-user: Comprehensive RISCV Support
-To: Ajeet Singh <itachis6234@gmail.com>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>, 
- Mark Corbin <mark@dibsco.co.uk>, qemu-riscv@nongnu.org,
- Warner Losh <imp@bsdimp.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Ajeet Singh <itachis@freebsd.org>
+References: <20240915145339.1368029-1-alexjlzheng@tencent.com>
+In-Reply-To: <20240915145339.1368029-1-alexjlzheng@tencent.com>
+From: Jinliang Zheng <alexjlzheng@gmail.com>
+Date: Tue, 24 Sep 2024 10:44:53 +0800
+Message-ID: <CAHwU0gC-Kna-eJzBaqfe2nzft_iy4rd7FR+evdqJgBBORz3hVA@mail.gmail.com>
+Subject: Re: [PATCH] qom: fix NULL pointer in object_initialize_with_type()
+To: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net
+Cc: qemu-devel@nongnu.org, Jinliang Zheng <alexjlzheng@tencent.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
+ envelope-from=alexjlzheng@gmail.com; helo=mail-yb1-xb2c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -94,72 +89,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 17, 2024 at 1:54=E2=80=AFAM Ajeet Singh <itachis6234@gmail.com>=
- wrote:
->
-> Key Changes Compared to Version 6:
-> Included "signal-common.h" in target_arch_cpu.h
->
-> Mark Corbin (15):
->   bsd-user: Implement RISC-V CPU initialization and main loop
->   bsd-user: Add RISC-V CPU execution loop and syscall handling
->   bsd-user: Implement RISC-V CPU register cloning and reset functions
->   bsd-user: Implement RISC-V TLS register setup
->   bsd-user: Add RISC-V ELF definitions and hardware capability detection
->   bsd-user: Define RISC-V register structures and register copying
->   bsd-user: Add RISC-V signal trampoline setup function
->   bsd-user: Implement RISC-V sysarch system call emulation
->   bsd-user: Add RISC-V thread setup and initialization support
->   bsd-user: Define RISC-V VM parameters and helper functions
->   bsd-user: Define RISC-V system call structures and constants
->   bsd-user: Define RISC-V signal handling structures and constants
->   bsd-user: Implement RISC-V signal trampoline setup functions
->   bsd-user: Implement 'get_mcontext' for RISC-V
->   bsd-user: Implement set_mcontext and get_ucontext_sigreturn for RISCV
->
-> Warner Losh (2):
->   bsd-user: Add generic RISC-V64 target definitions
->   bsd-user: Add RISC-V 64-bit Target Configuration and Debug XML Files
+ping
 
-Thanks!
-
-Applied to riscv-to-apply.next
-
-Alistair
-
+<alexjlzheng@gmail.com> =E4=BA=8E2024=E5=B9=B49=E6=9C=8815=E6=97=A5=E5=91=
+=A8=E6=97=A5 22:53=E5=86=99=E9=81=93=EF=BC=9A
 >
->  bsd-user/riscv/signal.c               | 170 ++++++++++++++++++++++++++
->  bsd-user/riscv/target.h               |  20 +++
->  bsd-user/riscv/target_arch.h          |  27 ++++
->  bsd-user/riscv/target_arch_cpu.c      |  29 +++++
->  bsd-user/riscv/target_arch_cpu.h      | 148 ++++++++++++++++++++++
->  bsd-user/riscv/target_arch_elf.h      |  42 +++++++
->  bsd-user/riscv/target_arch_reg.h      |  88 +++++++++++++
->  bsd-user/riscv/target_arch_signal.h   |  75 ++++++++++++
->  bsd-user/riscv/target_arch_sigtramp.h |  41 +++++++
->  bsd-user/riscv/target_arch_sysarch.h  |  41 +++++++
->  bsd-user/riscv/target_arch_thread.h   |  47 +++++++
->  bsd-user/riscv/target_arch_vmparam.h  |  53 ++++++++
->  bsd-user/riscv/target_syscall.h       |  38 ++++++
->  configs/targets/riscv64-bsd-user.mak  |   4 +
->  14 files changed, 823 insertions(+)
->  create mode 100644 bsd-user/riscv/signal.c
->  create mode 100644 bsd-user/riscv/target.h
->  create mode 100644 bsd-user/riscv/target_arch.h
->  create mode 100644 bsd-user/riscv/target_arch_cpu.c
->  create mode 100644 bsd-user/riscv/target_arch_cpu.h
->  create mode 100644 bsd-user/riscv/target_arch_elf.h
->  create mode 100644 bsd-user/riscv/target_arch_reg.h
->  create mode 100644 bsd-user/riscv/target_arch_signal.h
->  create mode 100644 bsd-user/riscv/target_arch_sigtramp.h
->  create mode 100644 bsd-user/riscv/target_arch_sysarch.h
->  create mode 100644 bsd-user/riscv/target_arch_thread.h
->  create mode 100644 bsd-user/riscv/target_arch_vmparam.h
->  create mode 100644 bsd-user/riscv/target_syscall.h
->  create mode 100644 configs/targets/riscv64-bsd-user.mak
+> From: Jinliang Zheng <alexjlzheng@tencent.com>
 >
+> Currently, object_initialize_with_type() calls object_class_property_init=
+_all()
+> before initializing Object->properties. This may cause Object->properties=
+ to
+> still be NULL when we call object_property_add() on Object.
+>
+> For exmaple, if we extend DEFINE_PROP_ARRAY() to a version with a default=
+ value
+> other than 0:
+>         #define DEFINE_PROP_ARRAY_EXAMPLE(_name, _state, _field,        \
+>                                 _arrayfield, _arrayprop, _arraytype)    \
+>                 DEFINE_PROP((PROP_ARRAY_LEN_PREFIX _name),              \
+>                         _state, _field, qdev_prop_arraylen_virtio_net,  \
+>                         uint32_t,                                       \
+>                         .set_default =3D true,                           =
+ \
+>                         .defval.u =3D <non-zero>,                        =
+ \
+>                         .arrayinfo =3D &(_arrayprop),                    =
+ \
+>                         .arrayfieldsize =3D sizeof(_arraytype),          =
+ \
+>                         .arrayoffset =3D offsetof(_state, _arrayfield))
+> We should have:
+>         object_initialize_with_type
+>           object_class_property_init_all
+>             ObjectProperty->init() / object_property_init_defval
+>               ...
+>                 set_prop_arraylen
+>                   object_property_add
+>                     object_property_try_add
+>                       g_hash_table_insert(Object->properties)   <- NULL
+>           obj->properties =3D g_hash_table_new_full()             <- init=
+ializing
+>
+> This patch fixes the above problem by exchanging the order of Ojbect->pro=
+perties
+> initialization and object_class_property_init_all().
+>
+> Signed-off-by: Jinliang Zheng <alexjlzheng@tencent.com>
+> ---
+>  qom/object.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/qom/object.c b/qom/object.c
+> index 157a45c5f8..734b52f048 100644
+> --- a/qom/object.c
+> +++ b/qom/object.c
+> @@ -556,9 +556,9 @@ static void object_initialize_with_type(Object *obj, =
+size_t size, TypeImpl *type
+>      memset(obj, 0, type->instance_size);
+>      obj->class =3D type->class;
+>      object_ref(obj);
+> -    object_class_property_init_all(obj);
+>      obj->properties =3D g_hash_table_new_full(g_str_hash, g_str_equal,
+>                                              NULL, object_property_free);
+> +    object_class_property_init_all(obj);
+>      object_init_with_type(obj, type);
+>      object_post_init_with_type(obj, type);
+>  }
 > --
-> 2.34.1
->
+> 2.41.1
 >
 
