@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9F0FCF9C6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:06:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C80FCF9C6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:06:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1st5Dc-0003vK-JY; Tue, 24 Sep 2024 09:04:40 -0400
+	id 1st5DP-0002Oo-4S; Tue, 24 Sep 2024 09:04:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1st5Da-0003ie-OM
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:04:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1st5D2-0001aK-5d
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:04:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1st5DZ-000080-6Y
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:04:38 -0400
+ id 1st5Cz-0008UX-JT
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:04:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727183076;
+ s=mimecast20190719; t=1727183041;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TbV9ZakF44C4gPu/dzMAxSKaBPNMHPS3TqhrfNh0O0w=;
- b=U3F3/by7eQxW+C/fcmN+YxibLEsvpkNAG+6ZnAbhHRWyak94eg8CVb8cXTpN1PqmmXA3T5
- L1VyTAccEHGJ3cM2PxnjZRU7JkJajLQZTNm2D5U4axu/PIHe5+6uV78m2vUA6jDrsS0mTx
- auUvFBO8g99T7pm/gg3DvenbqVWCA+0=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=juoBgupwWMoqhWmjH7vChMoVIcRlJCGErn3vcRAITy4=;
+ b=LoRqTkPuvONftjhcawsdwtMEkOuLjzZoV7HF3XdymADzd7fjfN6iKKjtYdtypZo4dZSUYt
+ B63HcwHbhUUntewtC9WkdDIWEtvK0rTzytH+4AL+CckKBjM532Jk3H16SDwZexZlX5EPGr
+ /00+GvYFFNd7MOdez/d+cEB8wLAUtbA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-zgH54WJ5Mgi6sUCnCjq_Rg-1; Tue,
- 24 Sep 2024 09:03:28 -0400
-X-MC-Unique: zgH54WJ5Mgi6sUCnCjq_Rg-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-ceS1XBl1Nk2ZVCuOG0TegA-1; Tue,
+ 24 Sep 2024 09:02:45 -0400
+X-MC-Unique: ceS1XBl1Nk2ZVCuOG0TegA-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5270518EBF15; Tue, 24 Sep 2024 13:03:25 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E393718E6CFC; Tue, 24 Sep 2024 13:02:41 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.3])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 917E830001A1; Tue, 24 Sep 2024 13:03:23 +0000 (UTC)
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 10C12195608A; Tue, 24 Sep 2024 13:02:39 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -73,17 +73,17 @@ Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>, qemu-block@nongnu.org,
  Bin Meng <bin.meng@windriver.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 08/22] hw/ahci: fix -Werror=maybe-uninitialized
+Subject: [PATCH v2 02/22] util/timer: fix -Werror=maybe-uninitialized
  false-positive
-Date: Tue, 24 Sep 2024 17:02:07 +0400
-Message-ID: <20240924130222.748369-9-marcandre.lureau@redhat.com>
+Date: Tue, 24 Sep 2024 17:02:01 +0400
+Message-ID: <20240924130222.748369-3-marcandre.lureau@redhat.com>
 In-Reply-To: <20240924130222.748369-1-marcandre.lureau@redhat.com>
 References: <20240924130222.748369-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -111,34 +111,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../hw/ide/ahci.c:989:58: error: ‘tbl_entry_size’ may be used uninitialized [-Werror=maybe-uninitialized]
+../util/qemu-timer.c:198:24: error: ‘expire_time’ may be used uninitialized [-Werror=maybe-uninitialized]
+../util/qemu-timer.c:476:8: error: ‘rearm’ may be used uninitialized [-Werror=maybe-uninitialized]
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/ide/ahci.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ util/qemu-timer.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
-index 7fc2a08df2..d700986c39 100644
---- a/hw/ide/ahci.c
-+++ b/hw/ide/ahci.c
-@@ -948,7 +948,6 @@ static int ahci_populate_sglist(AHCIDevice *ad, QEMUSGList *sglist,
-     uint64_t sum = 0;
-     int off_idx = -1;
-     int64_t off_pos = -1;
--    int tbl_entry_size;
-     IDEBus *bus = &ad->port;
-     BusState *qbus = BUS(bus);
+diff --git a/util/qemu-timer.c b/util/qemu-timer.c
+index 213114be68..c948cb1b72 100644
+--- a/util/qemu-timer.c
++++ b/util/qemu-timer.c
+@@ -182,7 +182,7 @@ bool qemu_clock_has_timers(QEMUClockType type)
  
-@@ -976,6 +975,8 @@ static int ahci_populate_sglist(AHCIDevice *ad, QEMUSGList *sglist,
-     /* Get entries in the PRDT, init a qemu sglist accordingly */
-     if (prdtl > 0) {
-         AHCI_SG *tbl = (AHCI_SG *)prdt;
-+        int tbl_entry_size = -1;
-+
-         sum = 0;
-         for (i = 0; i < prdtl; i++) {
-             tbl_entry_size = prdt_tbl_entry_size(&tbl[i]);
+ bool timerlist_expired(QEMUTimerList *timer_list)
+ {
+-    int64_t expire_time;
++    int64_t expire_time = 0;
+ 
+     if (!qatomic_read(&timer_list->active_timers)) {
+         return false;
+@@ -212,7 +212,7 @@ bool qemu_clock_expired(QEMUClockType type)
+ int64_t timerlist_deadline_ns(QEMUTimerList *timer_list)
+ {
+     int64_t delta;
+-    int64_t expire_time;
++    int64_t expire_time = 0;
+ 
+     if (!qatomic_read(&timer_list->active_timers)) {
+         return -1;
+@@ -461,7 +461,7 @@ void timer_mod_ns(QEMUTimer *ts, int64_t expire_time)
+ void timer_mod_anticipate_ns(QEMUTimer *ts, int64_t expire_time)
+ {
+     QEMUTimerList *timer_list = ts->timer_list;
+-    bool rearm;
++    bool rearm = false;
+ 
+     WITH_QEMU_LOCK_GUARD(&timer_list->active_timers_lock) {
+         if (ts->expire_time == -1 || ts->expire_time > expire_time) {
 -- 
 2.45.2.827.g557ae147e6
 
