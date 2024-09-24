@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAFFBCF9C6B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFDCFCF9C73
 	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 12:46:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1st4ty-0003Jh-MN; Tue, 24 Sep 2024 08:44:22 -0400
+	id 1st4u7-0003tm-Cu; Tue, 24 Sep 2024 08:44:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1st4tx-0003EM-20
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 08:44:21 -0400
-Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ id 1st4u5-0003m1-HD
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 08:44:29 -0400
+Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1st4tv-0005sh-By
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 08:44:20 -0400
-Received: by mail-vk1-xa2d.google.com with SMTP id
- 71dfb90a1353d-502c8f50c5dso1498379e0c.0
- for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 05:44:19 -0700 (PDT)
+ id 1st4u4-0005uN-2m
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 08:44:29 -0400
+Received: by mail-vk1-xa30.google.com with SMTP id
+ 71dfb90a1353d-50108a42fa9so1550498e0c.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 05:44:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1727181858; x=1727786658; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1727181867; x=1727786667; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3ZnjQxTMhjoEY0Z6cRJChvJCZU9mx95m8bwJRe3bcaw=;
- b=d613en6drmUlETcKBZH2Bn/wlcIUO7wgRefGJWcRCiEJ50wiCUwyEzrya64leQqz7c
- uNaAjKaRo8ajLf6aPNJKGJNollXqDEOm8XKWdcbrwZ+44xa3w5l4CNjinO2OVuyjqEmy
- KmcDcObHOsDLwe0pcrggE8GKa0YkohXKHycFS/VSbem+sphxOjyfzkhQeOk5eqFfYoR+
- aQB1iP6ZsePTCJPgt7tGq33j8pKFN+Om9DgFh+wVrlgC5eMervmLScdQUQDk7yOMmUCp
- 4xQSt3rzYqw5IRXOLAukaMXIyoGARlfSj9yqIP9SNckRIMieNRBLWnXIxXSi+KIGtA04
- 4V2Q==
+ bh=zRTK5I7NFMS9CrB62Z8+YS9pz/eTcEjdmLZgOi2DrpE=;
+ b=I7L57b1Ba0wRQs7cjMXVHAI0n6UcUTMV/nGrlGMaTwzyHy8wUuZ0Y2EfPKd2tWZZTL
+ AkfaEOO7Br6Rjh/s9bedCrl4LEXAPfJXUXZ1sGw/Qw7YjSVgcIgFTW+49h4mVKRG1POj
+ Ma68Cn5nSGWHuZAeH4tfkx45ph97AbY37QO4nYB9zbLN91eo64KpFHzclf3Pt3j3/8TG
+ h6qfmGz1pumHybt+mXJZsP+nhhKJ1zSBGnqhTPUdA0lr5hzf3T+DyahJjNVGLPH0swsn
+ iyMROuqnC3sQ/tXLFdZz/+UCtr7tSaJ3zKZjhWXy+Ff+19L1YMZsZlJA1EKtICuqogl5
+ EPXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727181858; x=1727786658;
+ d=1e100.net; s=20230601; t=1727181867; x=1727786667;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3ZnjQxTMhjoEY0Z6cRJChvJCZU9mx95m8bwJRe3bcaw=;
- b=jUvmCoGC10XxEtBAZLi4+5qzxkz214HwEPDXn+Jsb8rkvBDwTS8BrDCeFgELA0LNgo
- b+KVYH4bZwJrLIDMBcChg49To8aoVrIyY9PTdAbg3DbotA/oxaO3k53IbVyghuPxaQvF
- tzsFLqDnW8fdYceGtsWMnpBK6AqlpdCFAPrmNKGewu+Qo2ukOIcudmAZTY0SLwYrok6q
- CA5I9LpqEPmYuttebCQ7+DQvKlh1fTFNQZ7r3RRF5vnNSaebEHq1rZfgwkq4ohD6SzWD
- 7y0QYoUf/VbCYDgf+R11sRuG4xzFKKlsfGMsqT0LI+No5YSyu5ldQo8c4aBkalkw6uJ/
- 6h+Q==
-X-Gm-Message-State: AOJu0Yxj1wtgBl4XrKitzxAiCMgIr3GSZeY5iCvEUwsRaTqpilfjnjCE
- VtyBLuyi4t9Vzvh/8Y9oYV9+4dJYw5rOEsalvueYCvGVs2Cj8jGJMDC5AXq0NVvDP16XRa98I0F
+ bh=zRTK5I7NFMS9CrB62Z8+YS9pz/eTcEjdmLZgOi2DrpE=;
+ b=ehxEwEARYTm8caAc3m8WOUub2I8wIX2rsojxPtU7zG3/2hnIF3GNyXVHMwacxDS/n1
+ K8GnDDYWDpiAwulXdz0Ly3D+hSH6lvxpnSMJrKh6iWhtAt8e+BPzrBDoBSnqM/hbhUP+
+ ttj/Rq7HZZkWAEdmthyWhTG42wR4jNAhLOkPHKXRoQ4MDQwlk8NCodFPlIWTZ9so2lzo
+ 87VL7lyjpDiabqmqvRXy7FaAshs8b2QCcbnovGMYknHnWPnwat0jJzi7X2zO+B1Z4So1
+ MSB8sp3LKiuljnOwIgELzaG19H1CcT6itSCMT3u+59rCROTZem2VDXoLS6z1nb1kQ83a
+ Xidw==
+X-Gm-Message-State: AOJu0YyA/+B0VTgpJzee68MH2CaeYLgqRPLudHEaDLNNImAmxyeq1AQI
+ b+kBqUhAeWmOo67Yr5ytzPlZSeQsFxt5XEGcyq2IJf7xdJ/bZP3yMNU7vGcMZ3Kx/JzC/o5U9Fb
  7
-X-Google-Smtp-Source: AGHT+IHG5jeRz54hOcUW+zhSXcsCGwMuwqIxtZolEqAZoN93XKg17gUk2dqeUrsvlSpMBihoP0DSUA==
-X-Received: by 2002:a05:6122:2020:b0:4ed:12b:ec99 with SMTP id
- 71dfb90a1353d-503e4076f7cmr8912241e0c.3.1727181857901; 
- Tue, 24 Sep 2024 05:44:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEYQXV8QUmt+M0ZCsXm9bRzxZpLTti2uXsoIbDtJnNoPAh1Lpl/2bD/QZ2ki8uWX26DLWs+Sw==
+X-Received: by 2002:a05:6122:8ce:b0:4f5:254e:e111 with SMTP id
+ 71dfb90a1353d-503e4113966mr8542643e0c.7.1727181866743; 
+ Tue, 24 Sep 2024 05:44:26 -0700 (PDT)
 Received: from grind.dc1.ventanamicro.com ([187.101.184.93])
  by smtp.gmail.com with ESMTPSA id
- 71dfb90a1353d-505aa10a8fbsm767830e0c.49.2024.09.24.05.44.14
+ 71dfb90a1353d-505aa10a8fbsm767830e0c.49.2024.09.24.05.44.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Sep 2024 05:44:16 -0700 (PDT)
+ Tue, 24 Sep 2024 05:44:26 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  ajones@ventanamicro.com,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH 1/4] target/riscv/kvm: set 'aia_mode' to default in error path
-Date: Tue, 24 Sep 2024 09:44:04 -0300
-Message-ID: <20240924124407.766495-2-dbarboza@ventanamicro.com>
+Subject: [PATCH 4/4] target/riscv/kvm: deprecate riscv-aia string prop
+Date: Tue, 24 Sep 2024 09:44:07 -0300
+Message-ID: <20240924124407.766495-5-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240924124407.766495-1-dbarboza@ventanamicro.com>
 References: <20240924124407.766495-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-vk1-xa2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-vk1-xa30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,69 +97,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When failing to set the selected AIA mode, 'aia_mode' is left untouched.
-This means that 'aia_mode' will not reflect the actual AIA mode,
-retrieved in 'default_aia_mode',
+We want to use the new boolean properties instead: riscv-aia-emul,
+riscv-aia-hwaccel and riscv-aia-auto.
 
-This is benign for now, but it will impact QMP query commands that will
-expose the 'aia_mode' value, retrieving the wrong value.
-
-Set 'aia_mode' to 'default_aia_mode' if we fail to change the AIA mode
-in KVM.
-
-While we're at it, rework the log/warning messages to be a bit less
-verbose. Instead of:
-
-KVM AIA: default mode is emul
-qemu-system-riscv64: warning: KVM AIA: failed to set KVM AIA mode
-
-We can use a single warning message:
-
-qemu-system-riscv64: warning: KVM AIA: failed to set KVM AIA mode 'auto', using default host mode 'emul'
+Mark the string prop 'riscv-aia' for deprecation.
 
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
- target/riscv/kvm/kvm-cpu.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ docs/about/deprecated.rst  | 8 ++++++++
+ target/riscv/kvm/kvm-cpu.c | 1 +
+ 2 files changed, 9 insertions(+)
 
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index ed31d4b0b2..d3e0e3e303 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -463,6 +463,14 @@ available firmwares that are using the current (wrong) name.  The
+ property is kept as is in 9.1, together with "riscv,delegation", to
+ give more time for firmware developers to change their code.
+ 
++RISC-V "riscv-aia" KVM property (since 9.2)
++''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++This property was deprecated in favor of using the boolean properties
++'riscv-aia-emul', 'riscv-aia-hwaccel' and 'riscv-aia-auto'.  The
++motivation behind it is to make it easier to expose the internal
++state of the KVM accelerator in APIs such as query-cpu-model-expansion.
++
+ Migration
+ ---------
+ 
 diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 341af901c5..970a7ab2f1 100644
+index e256e3fc48..610057870f 100644
 --- a/target/riscv/kvm/kvm-cpu.c
 +++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1711,18 +1711,26 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
-         error_report("KVM AIA: failed to get current KVM AIA mode");
-         exit(1);
-     }
--    qemu_log("KVM AIA: default mode is %s\n",
--             kvm_aia_mode_str(default_aia_mode));
- 
--    if (default_aia_mode != aia_mode) {
-+    if (default_aia_mode == aia_mode) {
-+        qemu_log("KVM AIA: using default host mode '%s'\n",
-+                  kvm_aia_mode_str(default_aia_mode));
-+    } else {
-         ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
-                                 KVM_DEV_RISCV_AIA_CONFIG_MODE,
-                                 &aia_mode, true, NULL);
--        if (ret < 0)
--            warn_report("KVM AIA: failed to set KVM AIA mode");
--        else
--            qemu_log("KVM AIA: set current mode to %s\n",
-+        if (ret < 0) {
-+            warn_report("KVM AIA: failed to set KVM AIA mode '%s', using "
-+                        "default host mode '%s'",
-+                        kvm_aia_mode_str(aia_mode),
-+                        kvm_aia_mode_str(default_aia_mode));
-+
-+            /* failed to change AIA mode, use default */
-+            aia_mode = default_aia_mode;
-+        } else {
-+            qemu_log("KVM AIA: setting current mode to %s\n",
-                      kvm_aia_mode_str(aia_mode));
-+        }
-     }
- 
-     ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
+@@ -1732,6 +1732,7 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
+     object_class_property_add_str(oc, "riscv-aia", riscv_get_kvm_aia,
+                                   riscv_set_kvm_aia);
+     object_class_property_set_description(oc, "riscv-aia",
++        "DEPRECATED: use riscv-aia-<mode> properties instead. "
+         "Set KVM AIA mode. Valid values are 'emul', 'hwaccel' and 'auto'. "
+         "Changing KVM AIA modes relies on host support. Defaults to 'auto' "
+         "if the host supports it");
 -- 
 2.45.2
 
