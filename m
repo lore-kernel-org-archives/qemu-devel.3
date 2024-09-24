@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90F90CF9C6F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:12:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2704ACF9C6F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 13:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1st5KJ-0006M7-7g; Tue, 24 Sep 2024 09:11:35 -0400
+	id 1st5Iw-0007ZP-Nb; Tue, 24 Sep 2024 09:10:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1st5HR-00018s-Dp
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:08:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1st5H9-0008G4-QY
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:08:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1st5HP-0000tR-5I
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:08:37 -0400
+ id 1st5H4-0000j7-DV
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 09:08:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727183276;
+ s=mimecast20190719; t=1727183254;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lUrGKd55q1ZNBh1Nc+f+485x2fmivUGDYmWx4uvjSn4=;
- b=REwfVtQvIwzMHzlu5HIr/FXXreHnzPhJabKz5v81+kvQCV03aYajpvCswiYyHSmbpfjuQq
- KCYEpo1+Q0bzQcdtj3pAOil+4IUVT5gJGRyNG2+oVV4C5XFweL090D6ASqu6LZHkuYmVZW
- YrpETgyR3SENF4LML1LdLPRuXX0mDpI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=BfBhqR3KsMwXG+cr6KFYY/4Qsqr6mxnmMhogyoKBMRk=;
+ b=KvZ7PMFgyH5fAcJvzjjH3kIGeQWrk1B2SB1kTegTuIqofxwTkTyA0zKbMWK8tJbN68hfs2
+ BN/LjpOA6spfybTtKym5JLWTLz1UWM/yO6EAPtqIqHNaT2V4QqFhe0uHyi/l0CmVtKibMR
+ 9r1fpRm3S0U05hz09INQyEx2BYTCqPo=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-413-VEGB2Zl4NgCd0KFx5v39jA-1; Tue,
- 24 Sep 2024 09:07:52 -0400
-X-MC-Unique: VEGB2Zl4NgCd0KFx5v39jA-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-570-8aGgty-3OU-7Xf8qfEb8JQ-1; Tue,
+ 24 Sep 2024 09:07:30 -0400
+X-MC-Unique: 8aGgty-3OU-7Xf8qfEb8JQ-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 93DBF18E6DA6; Tue, 24 Sep 2024 13:07:49 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A90A518C44FF; Tue, 24 Sep 2024 13:07:27 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.3])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 30C36195608A; Tue, 24 Sep 2024 13:07:47 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 67C321955DCB; Tue, 24 Sep 2024 13:07:11 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
@@ -73,16 +73,17 @@ Cc: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Stefano Garzarella <sgarzare@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 20/22] qom/object: fix -Werror=maybe-uninitialized
-Date: Tue, 24 Sep 2024 17:05:51 +0400
-Message-ID: <20240924130554.749278-21-marcandre.lureau@redhat.com>
+Subject: [PATCH v2 14/22] migration: fix -Werror=maybe-uninitialized
+ false-positive
+Date: Tue, 24 Sep 2024 17:05:45 +0400
+Message-ID: <20240924130554.749278-15-marcandre.lureau@redhat.com>
 In-Reply-To: <20240924130554.749278-1-marcandre.lureau@redhat.com>
 References: <20240924130554.749278-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -110,36 +111,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-object_resolve_path_type() didn't always set *ambiguousp.
+../migration/ram.c:1873:23: error: ‘dirty’ may be used uninitialized [-Werror=maybe-uninitialized]
+
+When 'block' != NULL, 'dirty' is initialized.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Acked-by: Peter Xu <peterx@redhat.com>
 ---
- qom/object.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ migration/ram.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/qom/object.c b/qom/object.c
-index 157a45c5f8..b2120f7dc5 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -2202,6 +2202,9 @@ Object *object_resolve_path_type(const char *path, const char *typename,
-         }
-     } else {
-         obj = object_resolve_abs_path(object_get_root(), parts + 1, typename);
-+        if (ambiguousp) {
-+            *ambiguousp = false;
-+        }
-     }
- 
-     g_strfreev(parts);
-@@ -2227,7 +2230,7 @@ Object *object_resolve_path_at(Object *parent, const char *path)
- 
- Object *object_resolve_type_unambiguous(const char *typename, Error **errp)
+diff --git a/migration/ram.c b/migration/ram.c
+index 67ca3d5d51..502368a3a6 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -1795,7 +1795,7 @@ static bool get_queued_page(RAMState *rs, PageSearchStatus *pss)
  {
--    bool ambig;
-+    bool ambig = false;
-     Object *o = object_resolve_path_type("", typename, &ambig);
+     RAMBlock  *block;
+     ram_addr_t offset;
+-    bool dirty;
++    bool dirty = false;
  
-     if (ambig) {
+     do {
+         block = unqueue_page(rs, &offset);
 -- 
 2.45.2.827.g557ae147e6
 
