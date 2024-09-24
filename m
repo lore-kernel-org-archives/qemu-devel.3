@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93EC9CF9C73
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FB8BCF9C74
 	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 22:23:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stDt3-0003uA-Cz; Tue, 24 Sep 2024 18:20:01 -0400
+	id 1stDsl-0002Nv-4o; Tue, 24 Sep 2024 18:19:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1stDsq-00038D-TU
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:19:50 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1stDsh-000284-TV
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:19:40 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1stDsp-0001kK-1K
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:19:48 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-7191fb54147so4430958b3a.2
- for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 15:19:46 -0700 (PDT)
+ id 1stDsg-0001jf-0X
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:19:39 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-7db637d1e4eso4426747a12.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 15:19:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727216385; x=1727821185; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727216376; x=1727821176; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nGgFxZGfm9ekyoaWZ4grTX9986f5O+aJN6pNlI6SJRk=;
- b=WHLANgu2N3DFuusl+XL4uhtdmiBC6uYh26P7X1SW3d+ZdWhFJzyBRHUKLfc/YjZMGD
- NQUS9tb4jLBvjBlhdRufq4tuPLqkKlfrhHpaaiFz9MUtEpZJBRL7IQ7NcvAcosyEUX6E
- vlMj2AvzgRUa31TjXl9jrLmu2SABpHAdx3oxahbPYsOS0Ro6K0rskQj9Ooz2cwI9kfvR
- Dc8GClR2ruNRzcdlQtKh8y2EV0ASkq4SmPiD6d7lLnoUwzyh/OHgjsEfNbrS/qeEtz+e
- N01wpWxy4vv/MC4FMCryv0zg2VGRKJKcQbn9RLX6CgrXEFk5Cmlohegjx5dkq/c2a2Ps
- NNLQ==
+ bh=0NpLwXmiI9pWqjhROMmRmzba4bQXSWO9US9Anawe7Nw=;
+ b=AEF62NhKDyCHGEWl1ytxvUxBiUWZVNjaeiIHD2BbgseWwSWaE2ZRPCbgAfqcbyLA/i
+ atqgZXzAN3ptZIvhuNH0dhsXqTnXM9zPmNdyJ6hVTBCXUCIRel+tKtmsoUQJWvYDr+09
+ eNoZcDpe9nLJj7t02CjyV426WWfF9FtygfFkuu3Le6JZ2wjdEZoRcwci4MCxGv1GAKb/
+ T3H8goRoH0n27zfL4Pa0yVFxT8luUozGBAr8sxlWbgU+4UyO9Fr2jVfwGztOvSoGB72+
+ 6gfCln03hsfKMAJMRX1wkiVfvHIp8khev0tsyNSM5CxcyvdG5YHLYCBEByB6l1932awl
+ neeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727216385; x=1727821185;
+ d=1e100.net; s=20230601; t=1727216376; x=1727821176;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nGgFxZGfm9ekyoaWZ4grTX9986f5O+aJN6pNlI6SJRk=;
- b=EWHK0kgv6T3C6qRO5iZTfsXkxnkno3Ri35WASLZEow8J5pUAhTGqlwHuMxdg4vu4Ym
- 1h4P6XM1W7aUwibQS4XtyvZkB+nMbgLsfn+ZUhLBLLmA4dSmdF3KKc4/ZYuAAcWxPODN
- Z721Xtfa3VBEGbfjGiOPseZkgDGGH056P6tpM91ebRO3K/W9BfRnwi/v5Tpvz9CEZVwi
- Bf5vexWqHxT+fJJtzto3C6RFJ8MqTDGahoDuSFKdpmeyIaGMMeLS2QvPVKhtLQPSDTJO
- Qb8PE1sz7+OTglTnkFCjcEiELF1yxrvZEukHl3vVNJisY+joES/svJbxYxJEhZUJ3esZ
- hN2w==
-X-Gm-Message-State: AOJu0Yye+J4xqUonwmGOeJ6xZ7eIVLBYwRy4Cl87gXL/3bnkP4bCSYAt
- t7CtEL2RAFF05ol8wPcWcdwM08PMycTh5szyfgzcKionV3zJF/HQ0IrRbw==
-X-Google-Smtp-Source: AGHT+IEqGKN38J8hmv3R8xg5w5CpvuiY8JclIG36w2O0DKtUMn+GOCpDyQJb9G53u9MZsiWuOk/8LQ==
-X-Received: by 2002:a05:6a00:1acf:b0:714:2198:26bd with SMTP id
- d2e1a72fcca58-71b0aab426dmr1186515b3a.11.1727216385389; 
- Tue, 24 Sep 2024 15:19:45 -0700 (PDT)
+ bh=0NpLwXmiI9pWqjhROMmRmzba4bQXSWO9US9Anawe7Nw=;
+ b=n5Q7refV21ZayTpekbzmISNeqD8DNOrxHNkK4tF51oUPogXmIS72WfGSkRb3O3gA9U
+ e1byPe1p5S4q03U7u78H3xYok7s+WHQhPZjQxDJDa573U8HSmVX0n170Qp5nAhRo/WcE
+ Jhc17xyjIO9pWCx+A5oqvZmSN2PELKj7Wfm1WBXAv7mU2JdxRAdJtJ85CUhdV4zq44LY
+ Y6fXgalO8Q60rwZU+KBQPkAANpLkvfwAW0iQUnCkWH1JqtehCOs/Mt3miQkN4CYKQlvP
+ hQooCtSwMJYoyof4djSTw5Leej+HKiYbiNJnbHbYqT7VJ+QJIWn2pru7HpTxyhvYHatm
+ fXlw==
+X-Gm-Message-State: AOJu0YzzOG+GR8B/d/J13j9I1kP8XhNy7fpKDj696ZEiE+a2L5V4A9e7
+ S/yF46hzf7b3QiAKJEHun1uan8onl1RwJOq84VoUdTxV+fhjcIcOFtyXvw==
+X-Google-Smtp-Source: AGHT+IFjffdHGYG7DN6m9bUcb/pXjwFyfpN4l629kf/WB2RmvZELIASXTUndVOey625YHDrRzky0zA==
+X-Received: by 2002:a05:6a21:1693:b0:1d2:e84a:2cb0 with SMTP id
+ adf61e73a8af0-1d4c6f2f22amr763823637.10.1727216376335; 
+ Tue, 24 Sep 2024 15:19:36 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71afc8342easm1665310b3a.11.2024.09.24.15.19.41
+ d2e1a72fcca58-71afc8342easm1665310b3a.11.2024.09.24.15.19.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Sep 2024 15:19:44 -0700 (PDT)
+ Tue, 24 Sep 2024 15:19:35 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Mark Corbin <mark@dibsco.co.uk>,
- Ajeet Singh <itachis@FreeBSD.org>,
+ Ajeet Singh <itachis@FreeBSD.org>, Jessica Clarke <jrtc27@jrtc27.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 33/47] bsd-user: Implement RISC-V CPU register cloning and
- reset functions
-Date: Wed, 25 Sep 2024 08:17:34 +1000
-Message-ID: <20240924221751.2688389-34-alistair.francis@wdc.com>
+Subject: [PULL v2 31/47] bsd-user: Implement RISC-V CPU initialization and
+ main loop
+Date: Wed, 25 Sep 2024 08:17:32 +1000
+Message-ID: <20240924221751.2688389-32-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <20240924221751.2688389-1-alistair.francis@wdc.com>
 References: <20240924221751.2688389-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,41 +103,67 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Corbin <mark@dibsco.co.uk>
 
-Added functions for cloning CPU registers and resetting the CPU state
-for RISC-V architecture.
+Added the initial implementation for RISC-V CPU initialization and main
+loop. This includes setting up the general-purpose registers and
+program counter based on the provided target architecture definitions.
 
 Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Co-authored-by: Jessica Clarke <jrtc27@jrtc27.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240916155119.14610-4-itachis@FreeBSD.org>
+Message-ID: <20240916155119.14610-2-itachis@FreeBSD.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- bsd-user/riscv/target_arch_cpu.h | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ bsd-user/riscv/target_arch_cpu.h | 40 ++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
+ create mode 100644 bsd-user/riscv/target_arch_cpu.h
 
 diff --git a/bsd-user/riscv/target_arch_cpu.h b/bsd-user/riscv/target_arch_cpu.h
-index 9c31d9dc4c..a93ea3915a 100644
---- a/bsd-user/riscv/target_arch_cpu.h
+new file mode 100644
+index 0000000000..f8d85e01ad
+--- /dev/null
 +++ b/bsd-user/riscv/target_arch_cpu.h
-@@ -131,4 +131,18 @@ static inline void target_cpu_loop(CPURISCVState *env)
-     }
- }
- 
-+static inline void target_cpu_clone_regs(CPURISCVState *env, target_ulong newsp)
+@@ -0,0 +1,40 @@
++/*
++ *  RISC-V CPU init and loop
++ *
++ *  Copyright (c) 2019 Mark Corbin
++ *
++ *  This program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2 of the License, or
++ *  (at your option) any later version.
++ *
++ *  This program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef TARGET_ARCH_CPU_H
++#define TARGET_ARCH_CPU_H
++
++#include "target_arch.h"
++#include "signal-common.h"
++
++#define TARGET_DEFAULT_CPU_MODEL "max"
++
++static inline void target_cpu_init(CPURISCVState *env,
++        struct target_pt_regs *regs)
 +{
-+    if (newsp) {
-+        env->gpr[xSP] = newsp;
++    int i;
++
++    for (i = 1; i < 32; i++) {
++        env->gpr[i] = regs->regs[i];
 +    }
 +
-+    env->gpr[xA0] = 0;
-+    env->gpr[xT0] = 0;
++    env->pc = regs->sepc;
 +}
 +
-+static inline void target_cpu_reset(CPUArchState *env)
-+{
-+}
-+
- #endif /* TARGET_ARCH_CPU_H */
++#endif /* TARGET_ARCH_CPU_H */
 -- 
 2.46.1
 
