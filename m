@@ -4,121 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8112CF9C6B
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 04:14:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D39CF9C6B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 05:32:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sswvu-0005Yi-VW; Tue, 24 Sep 2024 00:13:50 -0400
+	id 1ssy8m-0001cq-3M; Tue, 24 Sep 2024 01:31:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ayush.m55@samsung.com>)
- id 1sswvp-0005Xl-2t
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 00:13:47 -0400
-Received: from mailout2.samsung.com ([203.254.224.25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ayush.m55@samsung.com>)
- id 1sswvj-0001pQ-17
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 00:13:44 -0400
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
- by mailout2.samsung.com (KnoxPortal) with ESMTP id
- 20240924041326epoutp02bb2de16dd7f5828e2ae7568ac966e010~4Et8feeP12141121411epoutp02c
- for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 04:13:26 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com
- 20240924041326epoutp02bb2de16dd7f5828e2ae7568ac966e010~4Et8feeP12141121411epoutp02c
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1727151206;
- bh=iyNskUAt0AE4meTXsXgejL5F0mzFDfpPi7FcLpZQry8=;
- h=From:To:Cc:Subject:Date:References:From;
- b=CKz34t+6ufEw5CVcv4EUEQfMNCUpdAGE5aq53JQkTdOgjueUAKUEOHbGO/70Trs+y
- HgbWkjek0OLRrsIFnVw078Fjhr0fGrGgm61nV78Bd0DSJUGtPvRKNzZlogBpa1cGwn
- wy2h6tcAueDx9PEmAM/6u5XkujjV1xEs7O8SW6cY=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
- epcas5p1.samsung.com (KnoxPortal) with ESMTP id
- 20240924041325epcas5p1086a28d6ccadbc565f4fad72559d0ae6~4Et7uD0W_2335823358epcas5p1f;
- Tue, 24 Sep 2024 04:13:25 +0000 (GMT)
-Received: from epsmgec5p1-new.samsung.com (unknown [182.195.38.177]) by
- epsnrtp1.localdomain (Postfix) with ESMTP id 4XCRLD44X6z4x9Q7; Tue, 24 Sep
- 2024 04:13:24 +0000 (GMT)
-Received: from epcas5p2.samsung.com ( [182.195.41.40]) by
- epsmgec5p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
- DE.DA.19863.36C32F66; Tue, 24 Sep 2024 13:13:23 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
- epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
- 20240923115650epcas5p4750a5c44184b2439d7dc012e950db99e~33ZQOZgp-0164501645epcas5p4k;
- Mon, 23 Sep 2024 11:56:50 +0000 (GMT)
-Received: from epsmgmcp1.samsung.com (unknown [182.195.42.82]) by
- epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
- 20240923115650epsmtrp196d2fd794a9088cdc5f48e492f507f7a~33ZQNzLft2531025310epsmtrp1x;
- Mon, 23 Sep 2024 11:56:50 +0000 (GMT)
-X-AuditID: b6c32a50-c73ff70000004d97-dc-66f23c6353a7
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
- epsmgmcp1.samsung.com (Symantec Messaging Gateway) with SMTP id
- 28.80.19367.18751F66; Mon, 23 Sep 2024 20:56:49 +0900 (KST)
-Received: from open-sourcing.sa.corp.samsungelectronics.net (unknown
- [107.99.41.223]) by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
- 20240923115649epsmtip1d9509b16166de302c22b487866ee70e4~33ZPWjrZ41737917379epsmtip1B;
- Mon, 23 Sep 2024 11:56:49 +0000 (GMT)
-From: Ayush Mishra <ayush.m55@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, Ayush Mishra
- <ayush.m55@samsung.com>
-Subject: [PATCH] hw/nvme: Adding support for NPDAL and NPDGL
-Date: Mon, 23 Sep 2024 11:56:51 +0530
-Message-ID: <20240923062651.3511358-1-ayush.m55@samsung.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1ssy8k-0001bq-Jl
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 01:31:10 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1ssy8i-00016H-Ie
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 01:31:10 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-7d50e865b7aso4147451a12.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Sep 2024 22:31:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1727155866; x=1727760666; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=80suF47J/GFPhDYzGECkE+nj+M5jtOeHgrFyIZ8z8uc=;
+ b=g/+MVjJvPjVEQ38TmzOa2iyIftZc155sBrnQLzwKqQBtZOHG7MtQng+q0mNhHcNwns
+ tuFFti5rO8OAxyKI91ORPq1IcRcXgonAJp4Ou0+NY4xNTRs402k/ZC6Ai2msctUFvoL9
+ +xgA0/B0GrMYnZwHrViEbV/5S6vbYyjFibnLUjWUx/b6d8xwID7zz6Rxlg47jY0okNkf
+ 5/OPC/S8qL2XD8bFtf4Zn4AX4oUjLJwjqSE6zst/6dUvGEvPK6oxLQ1KB9UQ9J4hrT63
+ 9/zOcv7bZVCmguMKOCrucUcIO9XVUtzJgz3TZE4ahu9FPBtNPrat9uNBJ3sXC1xGTyvL
+ VfJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727155866; x=1727760666;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=80suF47J/GFPhDYzGECkE+nj+M5jtOeHgrFyIZ8z8uc=;
+ b=saRD3zd9xgTUmR0Byr0ProTTcbYb2FyGAPX49ztIMVAytUM4vMfwnsSgG4XCoSiX7D
+ GjWRAOnU69PZ2HOdYGll+nQ5DfxOxlpVaRfS8Mwhztl85/GAYDG5B3ckBqSBcM21Su/w
+ UM/OFWfLlbPXrrZ9WMedaO0hYQnKZKc0/etknPYpnj24zv6baqiUwi9ivcJHxuqIMKR2
+ zHa/Jfcdop4/UUaNRwYyLC3V6Az5xpY1ypURsww4J/HnOKD3LpswLRbO4b+WPIOSgEzX
+ L00Vn5yIH8I33ff2zZHwMsW5Jv+Cx/CPWcDJwsQZTzcWnfT64quTSxuOvmfwWC5cBTLT
+ fqaA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXrgHSy+ktWRXXszGb2GpC3HtLbWq7FrQrFVzhY9hsD1Cyc8Cr5R6dLC99g7mccq6tz559MgPN21X1Q@nongnu.org
+X-Gm-Message-State: AOJu0Yz93i5haquec9C2+yRJp3omOMl3kx7Qi57RqymZEn0uR3XPWBV3
+ SG4AbcNtAY9VWi7N+Ds+YfUtl9AFShU6M4q28xSzibN1C5R2s/Q1
+X-Google-Smtp-Source: AGHT+IHttqCWKyk4g7RqacPbgv+B6d8azvhAJlK8IOCYUHGqPmDznOSqTLt2x+JwsSeIiMcAfJKcJA==
+X-Received: by 2002:a17:90b:4d0f:b0:2c9:7ebd:b957 with SMTP id
+ 98e67ed59e1d1-2dd80c17863mr19109667a91.11.1727155866477; 
+ Mon, 23 Sep 2024 22:31:06 -0700 (PDT)
+Received: from valdaarhun.localnet ([223.233.85.39])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2dd6ef361b0sm10381115a91.44.2024.09.23.22.31.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 23 Sep 2024 22:31:05 -0700 (PDT)
+From: Sahil <icegambit91@gmail.com>
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org,
+ Sahil Siddiq <sahilcdq@proton.me>
+Subject: Re: [RFC v3 3/3] vhost: Allocate memory for packed vring
+Date: Tue, 24 Sep 2024 11:01:00 +0530
+Message-ID: <3311761.aeNJFYEL58@valdaarhun>
+In-Reply-To: <2196636.irdbgypaU6@valdaarhun>
+References: <20240802112138.46831-1-sahilcdq@proton.me>
+ <CAJaqyWeCYrMW8zbLh=kHx_qQWAdXyR8oGpDgfopNeBabXrPovA@mail.gmail.com>
+ <2196636.irdbgypaU6@valdaarhun>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrOKsWRmVeSWpSXmKPExsWy7bCmhm6yzac0g3ddgha3J/NYnJgSZrH/
- 4DdWi0mHrjFaHO/dweLA6jFl2jV2j3M7zrN7bFrVyebx5NpmJo++LasYA1ijsm0yUhNTUosU
- UvOS81My89JtlbyD453jTc0MDHUNLS3MlRTyEnNTbZVcfAJ03TJzgHYrKZQl5pQChQISi4uV
- 9O1sivJLS1IVMvKLS2yVUgtScgpMCvSKE3OLS/PS9fJSS6wMDQyMTIEKE7IzXtywLHjEW/F1
- 6lLWBsbtXF2MnBwSAiYSl95fZ+1i5OIQEtjDKPH/6G82COcTo8TDlZ9Y4ZyP/WeZYFoe7DoC
- VbWTUeJBTzcLhNPFJPG++xobSBWbgJbEvZe3WEBsEQFJid9dp5m7GDk4mAWSJLo+a4OEhQVs
- JD5fmQNWziKgKrF100WwBbxA8Q/tmxkhlslLLN6xnBkiLihxcuYTsJHMQPHmrbOZQfZKCGxj
- lzi+pA2qwUVi65/zUJcKS7w6voUdwpaSeNnfBmVnS8xp/QZVXyKxdt41FgjbXuLinr9MEHdq
- SqzfpQ8RlpWYemodE8RePone30+gxvNK7Jj3BKxcQkBZoueQAURYUuLJ6y9sELaHxJelj8Fs
- IYFYie0v7rBNYJSfheSbWUi+mYWweAEj8ypGqdSC4tz01GTTAkPdvNRyeLwm5+duYgSnQK2A
- HYyrN/zVO8TIxMF4iFGCg1lJhHfSzY9pQrwpiZVVqUX58UWlOanFhxhNgWE8kVlKNDkfmITz
- SuINTSwNTMzMzEwsjc0MlcR5X7fOTRESSE8sSc1OTS1ILYLpY+LglGpgcg6o+RN95+x59vY2
- 0QiNxcyev4RC3r+yqbA803qSQdGRT/npbzFbz8mRgoxb6/bfNdAszjuf2MSqWv/v3vNtkzo6
- UlY/0Jy+XSNA/KL5Tr0NVRUmqzZebFDddeF8/zetqgcivz+xMVf37BAJNWDJv9SQ7pvCojNZ
- YY5KplPmhngVjbu/TCQmXWlvdlJS2+K4ZWM4X+10uRUWjz9vrGRX8GVvPco+wdtU9Mx+P2EX
- xSV/f2nNrzSMK73peN5Jz5NRdf2ZK6kp5s4Xwi2WN2zY486/afWdT0krlLwWvouYsHnf3+3x
- G1sOFh0Q+fFh34/KcjarvLy5h+YXqma++mTuvUI+Y6r4zKVMYh9PzjmnxFKckWioxVxUnAgA
- lec59woEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprHLMWRmVeSWpSXmKPExsWy7bCSnG5j+Mc0gzmTrS1uT+axODElzGL/
- wW+sFpMOXWO0ON67g8WB1WPKtGvsHud2nGf32LSqk83jybXNTB59W1YxBrBGcdmkpOZklqUW
- 6dslcGW8uGFZ8Ii34uvUpawNjNu5uhg5OSQETCQe7DrC1sXIxSEksJ1RYsWxnewQCUmJudu+
- sULYwhIr/z0HiwsJdDBJtO2XBrHZBLQk7r28xQJiiwDV/+46zQxiMwukSXxtecwGYgsL2Eh8
- vjIHzGYRUJXYuukiE4jNCxT/0L6ZEWK+vMTiHcuZIeKCEidnPmGBmCMv0bx1NvMERr5ZSFKz
- kKQWMDKtYhRNLSjOTc9NLjDUK07MLS7NS9dLzs/dxAgOQq2gHYzL1v/VO8TIxMF4iFGCg1lJ
- hHfdk7dpQrwpiZVVqUX58UWlOanFhxilOViUxHmVczpThATSE0tSs1NTC1KLYLJMHJxSDUw6
- 6doBl3YdyZrMXLFsyUf/W0LOU7huvz2k/2alv9VJ/htGPz+cc96zwfDdrRjlQEd3IVvm1V8n
- l0pu7Pnp2F2/Kdy/lfvpSoFnU/bvKLf2+Df5xAKNC9e2iJ+tqJZLXZy3OMQ8OengyX1+oSVs
- jwX2KT28XmcZe5bJTN6jvTyizW//fRPdypfPzh8s6SwJfyux1dvYRP80w+fson3OVzbxFd/n
- dLT/I6hivrzzob7/QZ1DPpOqNDRnTf5h7vZo947kA9rLNv70KLyW9ZbhndCyczb2Iv8MZGPS
- 8nUdcv4J+5xunvXRfcUMf1m9klXtz/0bXjH+2d2tm1mwIEq0iPFZQdLqGRIGy443T4i1uqnE
- UpyRaKjFXFScCABNJDVPsQIAAA==
-X-CMS-MailID: 20240923115650epcas5p4750a5c44184b2439d7dc012e950db99e
-X-Msg-Generator: CA
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20240923115650epcas5p4750a5c44184b2439d7dc012e950db99e
-References: <CGME20240923115650epcas5p4750a5c44184b2439d7dc012e950db99e@epcas5p4.samsung.com>
-Received-SPF: pass client-ip=203.254.224.25;
- envelope-from=ayush.m55@samsung.com; helo=mailout2.samsung.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
- DKIMWL_WL_HIGH=-0.144, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=icegambit91@gmail.com; helo=mail-pg1-x52b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,64 +99,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adding support for new 32 bit NPDGL and NPDAL fields to address the
-needs of larger granularities.
+Hi,
 
-Signed-off-by: Ayush Mishra <ayush.m55@samsung.com>
----
- hw/nvme/ns.c         | 5 ++++-
- include/block/nvme.h | 7 ++++++-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+I have a small update.
 
-diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-index ea8db175db..8b2ea37a1b 100644
---- a/hw/nvme/ns.c
-+++ b/hw/nvme/ns.c
-@@ -30,6 +30,7 @@
- void nvme_ns_init_format(NvmeNamespace *ns)
- {
-     NvmeIdNs *id_ns = &ns->id_ns;
-+    NvmeIdNsNvm *id_ns_nvm = &ns->id_ns_nvm;
-     BlockDriverInfo bdi;
-     int npdg, ret;
-     int64_t nlbas;
-@@ -55,6 +56,8 @@ void nvme_ns_init_format(NvmeNamespace *ns)
-     }
- 
-     id_ns->npda = id_ns->npdg = npdg - 1;
-+    id_ns_nvm->npdal = npdg;
-+    id_ns_nvm->npdgl = npdg;
- }
- 
- static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
-@@ -72,7 +75,7 @@ static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
-     ns->id_ns.dlfeat = 0x1;
- 
-     /* support DULBE and I/O optimization fields */
--    id_ns->nsfeat |= (0x4 | 0x10);
-+    id_ns->nsfeat |= (0x4 | 0x30);
- 
-     if (ns->params.shared) {
-         id_ns->nmic |= NVME_NMIC_NS_SHARED;
-diff --git a/include/block/nvme.h b/include/block/nvme.h
-index 5298bc4a28..fdf3d999c0 100644
---- a/include/block/nvme.h
-+++ b/include/block/nvme.h
-@@ -1413,7 +1413,12 @@ typedef struct QEMU_PACKED NvmeIdNsNvm {
-     uint8_t     pic;
-     uint8_t     rsvd9[3];
-     uint32_t    elbaf[NVME_MAX_NLBAF];
--    uint8_t     rsvd268[3828];
-+    uint32_t    npdgl;
-+    uint32_t    nprg;
-+    uint32_t    npra;
-+    uint32_t    nors;
-+    uint32_t    npdal;
-+    uint8_t     rsvd288[3808];
- } NvmeIdNsNvm;
- 
- typedef struct QEMU_PACKED NvmeIdNsDescr {
--- 
-2.43.0
+On Monday, September 16, 2024 10:04:28=E2=80=AFAM GMT+5:30 Sahil wrote:
+> On Thursday, September 12, 2024 3:24:27=E2=80=AFPM GMT+5:30 Eugenio Perez=
+ Martin wrote:
+> [...]
+> > The function that gets the features from vhost-vdpa in QEMU is
+> > hw/virtio/vhost-vdpa.c:vhost_vdpa_get_features. Can you check that it
+> > returns bit 34 (offset starts with 0 here)? If it returns it, can you
+> > keep debugging until you see what clears it?
+> >=20
+> > If it comes clear, then we need to check the kernel.
+>=20
+> Got it. I'll start debugging from here.
+
+I am printing the value of "*features & (1ULL << 34)" in
+hw/virtio/vhost-vdpa.c:vhost_vdpa_get_features and I see it is 1.
+I guess that means the vhost device has the packed feature bit
+turned on in L1.
+
+I am also printing out the values of "host_features", "guest_features"
+and "backend_features" set in "VirtIODevice vdev" in
+hw/virtio/virtio-pci.c:virtio_pci_common_read under "case
+VIRTIO_PCI_COMMON_DF". I observed the following values:
+
+dev name: virtio-net
+host features: 0x10150bfffa7
+guest features: 0x0
+backend features: 0x10150bfffa7
+
+The host features and backend features match but guest features
+is 0. Is this because the value of guest features has not been set yet
+or is it because the driver hasn't selected any of the features?
+
+I am not entirely sure but I think it's the former considering that the
+value of /sys/devices/pci0000:00/0000:00:07.0/virtio1/features is
+0x10110afffa7. Please let me know if I am wrong.
+
+I found a few other issues as well. When I shut down the L2 VM,
+I get the following errors just after shutdown:
+
+qemu-system-x86_64: vhost VQ 0 ring restore failed: -1: Operation not permi=
+tted (1)
+qemu-system-x86_64: vhost VQ 1 ring restore failed: -1: Operation not permi=
+tted (1)
+qemu-system-x86_64: vhost VQ 2 ring restore failed: -1: Operation not permi=
+tted (1)
+
+This is printed in hw/virtio/vhost.c:vhost_virtqueue_stop. According to the=
+ comments,
+this is because the connection to the backend is broken.
+
+I booted L1 by running:
+
+$ ./qemu/build/qemu-system-x86_64 -enable-kvm \
+=2Ddrive file=3D//home/valdaarhun/valdaarhun/qcow2_img/L1.qcow2,media=3Ddis=
+k,if=3Dvirtio -net nic,model=3Dvirtio -net user,hostfwd=3Dtcp::2222-:22 \
+=2Ddevice intel-iommu,snoop-control=3Don \
+=2Ddevice virtio-net-pci,netdev=3Dnet0,disable-legacy=3Don,disable-modern=
+=3Doff,iommu_platform=3Don,event_idx=3Doff,packed=3Don,bus=3Dpcie.0,addr=3D=
+0x4 \
+=2Dnetdev tap,id=3Dnet0,script=3Dno,downscript=3Dno \
+=2Dnographic \
+=2Dm 8G \
+=2Dsmp 4 \
+=2DM q35 \
+=2Dcpu host 2>&1 | tee vm.log
+
+And I booted L2 by running:
+
+# ./qemu/build/qemu-system-x86_64 \
+=2Dnographic \
+=2Dm 4G \
+=2Denable-kvm \
+=2DM q35 \
+=2Ddrive file=3D//root/L2.qcow2,media=3Ddisk,if=3Dvirtio \
+=2Dnetdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-0,id=3Dvhost-vdpa0 \
+=2Ddevice virtio-net-pci,netdev=3Dvhost-vdpa0,disable-legacy=3Don,disable-m=
+odern=3Doff,event_idx=3Doff,bus=3Dpcie.0,addr=3D0x7 \
+=2Dsmp 4 \
+=2Dcpu host \
+2>&1 | tee vm.log
+
+Am I missing something here?
+
+When booting L2, I also noticed that the control flow does not enter the
+following "if" block in hw/virtio/vhost-vdpa.c:vhost_vdpa_init.
+
+if (dev->migration_blocker =3D=3D NULL && !v->shadow_vqs_enabled) {
+        ...
+        vhost_svq_valid_features(features, &dev->migration_blocker);
+}
+
+So "vhost_svq_valid_features" is never called. According to the comments
+this is because the device was not started with x-svq=3Don. Could this be a
+result (or reason) of the broken connection to the backend? Is there a way
+to manually set this option?
+
+Thanks,
+Sahil
+
 
 
