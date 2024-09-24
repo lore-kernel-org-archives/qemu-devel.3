@@ -4,92 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E6B5CF9C69
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 22:52:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6FB0CF9C6B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Sep 2024 22:53:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stEOB-0000IO-JZ; Tue, 24 Sep 2024 18:52:11 -0400
+	id 1stEOb-0002AR-2Z; Tue, 24 Sep 2024 18:52:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1stEOA-0000FA-Or
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:52:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1stEOO-00018Z-5o; Tue, 24 Sep 2024 18:52:24 -0400
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1stEO8-0005PB-Nl
- for qemu-devel@nongnu.org; Tue, 24 Sep 2024 18:52:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727218327;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7TxogcYoM1yG0npSOzAM1BVRqLz/9NioED9yVLrbqiQ=;
- b=PejEiVu6+wn/bvYB+oj+8XKrm9tDJrt2wRHsW1yyO7kGLmuY5posm0C0kpyVZ7B9I+rWrY
- rGF44sifG8AzY8noBMzuN0kuwAye2P8mPaiq+Ta5O9/YMDAkIuAJROoIyR14CSFh7dCaWT
- ZxVOCSGlNB3F/ZaQ5+FQddUHbhPvrh0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-149-gZdwBCL-NtaxCjShLFnghg-1; Tue, 24 Sep 2024 18:52:05 -0400
-X-MC-Unique: gZdwBCL-NtaxCjShLFnghg-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42cb857fc7dso46768715e9.0
- for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 15:52:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727218324; x=1727823124;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7TxogcYoM1yG0npSOzAM1BVRqLz/9NioED9yVLrbqiQ=;
- b=XwxEGvmMD4/v0EPmgr+J4rGWaJhv4Wgvl49WpJF75h3CVxcRU0GK1Xy6LK8gO8Tsxw
- oOvsnd98VDzYhmUgENBirkIt58j9hAJF5E507ovy1PXsl5/8HS2bovmzD1vSWANdnXsU
- revzT00CLt8N1jNAMRmw4aJi6ap0ilu8nddLPqbSYwqWjrpxoYHJRE4iG7hWdqcbtqr/
- dgwT9ErtgO9jlcxrCx1TTV2+yT/ltB2NHiBAiO5UvXOiJ3Md/OTvfrta6GZCM5jxcsY3
- LVRQwBNlfcfJd8kUhQ5YhbQRUhXt9h1VN6LiB+663wMTYPg+XH7ibxXeAps/pEVDkHFI
- /5uA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUr3Ip/A8iT28qf0J/s/hvp2crBHQndZkgNxa1QCYIGCkxcb20dQT3w4HGh8Xc/uBrrhM3xF3KjgXuj@nongnu.org
-X-Gm-Message-State: AOJu0Yzgz6OoZsMqfX3Mv68VqbKhBgwPXilQmn6wWCxhuvhtN2vWgP0L
- MlKaRNU+hptthmuLecgl4zq2QIzoVf6BNZFEGEP3OazlVJdmcDANUBLlgdKGjkDg/PlDiELEfKl
- /hrCasdkjx+78W1vL7GGFZ/4XRWrbcj4O1QZ3tP9INtQNO1Fw6q3Q
-X-Received: by 2002:a05:600c:45cf:b0:42c:c4c8:7090 with SMTP id
- 5b1f17b1804b1-42e9610b567mr3684325e9.9.1727218324292; 
- Tue, 24 Sep 2024 15:52:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF6caV6wDZ2CQ1LXAcBooYvH0iOS8G7bwJUX14W6eBID9LopwnAGL4QCR6DHT3ptdn0vm9now==
-X-Received: by 2002:a05:600c:45cf:b0:42c:c4c8:7090 with SMTP id
- 5b1f17b1804b1-42e9610b567mr3684205e9.9.1727218323906; 
- Tue, 24 Sep 2024 15:52:03 -0700 (PDT)
-Received: from redhat.com ([2a06:c701:7405:9900:56a3:401a:f419:5de9])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42e969e194bsm1337115e9.1.2024.09.24.15.52.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Sep 2024 15:52:02 -0700 (PDT)
-Date: Tue, 24 Sep 2024 18:51:59 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Ricardo Ribalda <ribalda@chromium.org>
-Cc: Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: Re: [PATCH 0/3] Fix WinXP ISO boot using the dc390/am53C974 SCSI
- device
-Message-ID: <20240924185147-mutt-send-email-mst@kernel.org>
-References: <20240922143216.662873-1-ribalda@chromium.org>
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1stEOM-0005Pp-7k; Tue, 24 Sep 2024 18:52:23 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id E8B51A436CB;
+ Tue, 24 Sep 2024 22:52:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5956C4CEC4;
+ Tue, 24 Sep 2024 22:52:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1727218340;
+ bh=xQpOvywgOWN6qJxEerQMGxk4joNwzFDiRM0Ga93qiVk=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+ b=G3UVntH7Rgdg6YtAsss+/ZpocJDYDDP8IdxeAkQeNKerGwggQDASv7CP6q5iMBpLp
+ oTIYQ5YKmMQVAD8/81V/K551BBYIZBi2axQDo6kcVVBuUiOnKpD9AoG99gRObEooQ5
+ wg5jyDOWB/3BnbVlaAAWZqC5F0o7j/F0FleQouvGaJp1HYdpJ0CDJV/601t3SH+9ed
+ OFOY6jcn0bklrUK8lp9HHMTIbtUrc0yV6M1BXVZKpKNJ+LXzS4WEof1eBNnNOLKEoG
+ yQ+3x4HZDmFhxz3ubr6wrTycPj2meqsjpWGX1K9NWrf5jFUPpFev/YGmfg1IeUyyc9
+ DMl6qOzxzLkmw==
+Date: Tue, 24 Sep 2024 15:52:17 -0700 (PDT)
+From: Stefano Stabellini <sstabellini@kernel.org>
+X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+cc: qemu-devel@nongnu.org, sstabellini@kernel.org, anthony@xenproject.org, 
+ paul@xen.org, peter.maydell@linaro.org, alex.bennee@linaro.org, 
+ edgar.iglesias@amd.com, xen-devel@lists.xenproject.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-arm@nongnu.org
+Subject: Re: [PATCH v2 2/4] hw/xen: xenpvh: Disable buffered IOREQs for ARM
+In-Reply-To: <20240923145520.1323504-3-edgar.iglesias@gmail.com>
+Message-ID: <alpine.DEB.2.22.394.2409241552100.1417852@ubuntu-linux-20-04-desktop>
+References: <20240923145520.1323504-1-edgar.iglesias@gmail.com>
+ <20240923145520.1323504-3-edgar.iglesias@gmail.com>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240922143216.662873-1-ribalda@chromium.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=sstabellini@kernel.org; helo=nyc.source.kernel.org
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.09,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,53 +76,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Sep 22, 2024 at 02:31:08PM +0000, Ricardo Ribalda wrote:
-> Mark Cave-Ayland reported that after landing the pre-computed _PRT, the
-> above mentioned testcase failed to pass.
+On Mon, 23 Sep 2024, Edgar E. Iglesias wrote:
+> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 > 
-> It seems that it is due to WinXP not handling properly a variable
-> package. Let's replace it.
+> Add a way to enable/disable buffered IOREQs for PVH machines
+> and disable them for ARM. ARM does not support buffered
+> IOREQ's nor the legacy way to map IOREQ info pages.
+> 
+> See the following for more details:
+> https://xenbits.xen.org/gitweb/?p=xen.git;a=commitdiff;h=2fbd7e609e1803ac5e5c26e22aa8e4b5a6cddbb1
+> https://xenbits.xen.org/gitweb/?p=xen.git;a=blob;f=xen/arch/arm/ioreq.c;h=2e829d2e7f3760401b96fa7c930e2015fb1cf463;hb=HEAD#l138
+> 
+> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 
 
-Thanks, will merge
-
-> 
-> Unfortunately, the ASL diff is not the best (or I cannot produce
-> something better):
-> 
-> 12c12
-> <  *     Length           0x00003917 (14615)
 > ---
-> >  *     Length           0x00003914 (14612)
-> 14c14
-> <  *     Checksum         0xD9
-> ---
-> >  *     Checksum         0x09
+>  hw/arm/xen-pvh.c                | 3 +++
+>  hw/i386/xen/xen-pvh.c           | 3 +++
+>  hw/xen/xen-pvh-common.c         | 2 +-
+>  include/hw/xen/xen-pvh-common.h | 3 +++
+>  4 files changed, 10 insertions(+), 1 deletion(-)
 > 
-> Ricardo Ribalda (3):
->   tests/acpi: pc: allow DSDT acpi table changes
->   hw/i386/acpi-build: return a non-var package from _PRT()
->   tests/acpi: pc: update golden masters for DSDT
-> 
->  hw/i386/acpi-build.c                 |   2 +-
->  tests/data/acpi/x86/pc/DSDT          | Bin 8527 -> 8526 bytes
->  tests/data/acpi/x86/pc/DSDT.acpierst | Bin 8438 -> 8437 bytes
->  tests/data/acpi/x86/pc/DSDT.acpihmat | Bin 9852 -> 9851 bytes
->  tests/data/acpi/x86/pc/DSDT.bridge   | Bin 15398 -> 15397 bytes
->  tests/data/acpi/x86/pc/DSDT.cphp     | Bin 8991 -> 8990 bytes
->  tests/data/acpi/x86/pc/DSDT.dimmpxm  | Bin 10181 -> 10180 bytes
->  tests/data/acpi/x86/pc/DSDT.hpbridge | Bin 8478 -> 8477 bytes
->  tests/data/acpi/x86/pc/DSDT.hpbrroot | Bin 5034 -> 5033 bytes
->  tests/data/acpi/x86/pc/DSDT.ipmikcs  | Bin 8599 -> 8598 bytes
->  tests/data/acpi/x86/pc/DSDT.memhp    | Bin 9886 -> 9885 bytes
->  tests/data/acpi/x86/pc/DSDT.nohpet   | Bin 8385 -> 8384 bytes
->  tests/data/acpi/x86/pc/DSDT.numamem  | Bin 8533 -> 8532 bytes
->  tests/data/acpi/x86/pc/DSDT.roothp   | Bin 12320 -> 12319 bytes
->  tests/data/acpi/x86/q35/DSDT.cxl     | Bin 13148 -> 13146 bytes
->  tests/data/acpi/x86/q35/DSDT.viot    | Bin 14615 -> 14612 bytes
->  16 files changed, 1 insertion(+), 1 deletion(-)
-> 
+> diff --git a/hw/arm/xen-pvh.c b/hw/arm/xen-pvh.c
+> index 04cb9855af..28af3910ea 100644
+> --- a/hw/arm/xen-pvh.c
+> +++ b/hw/arm/xen-pvh.c
+> @@ -66,6 +66,9 @@ static void xen_arm_machine_class_init(ObjectClass *oc, void *data)
+>       */
+>      mc->max_cpus = GUEST_MAX_VCPUS;
+>  
+> +    /* Xen/ARM does not use buffered IOREQs.  */
+> +    xpc->handle_bufioreq = HVM_IOREQSRV_BUFIOREQ_OFF;
+> +
+>      /* List of supported features known to work on PVH ARM.  */
+>      xpc->has_tpm = true;
+>      xpc->has_virtio_mmio = true;
+> diff --git a/hw/i386/xen/xen-pvh.c b/hw/i386/xen/xen-pvh.c
+> index 45645667e9..f1f02d3311 100644
+> --- a/hw/i386/xen/xen-pvh.c
+> +++ b/hw/i386/xen/xen-pvh.c
+> @@ -89,6 +89,9 @@ static void xen_pvh_machine_class_init(ObjectClass *oc, void *data)
+>      /* We have an implementation specific init to create CPU objects.  */
+>      xpc->init = xen_pvh_init;
+>  
+> +    /* Enable buffered IOREQs.  */
+> +    xpc->handle_bufioreq = HVM_IOREQSRV_BUFIOREQ_ATOMIC;
+> +
+>      /*
+>       * PCI INTX routing.
+>       *
+> diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
+> index 08641fdcec..76a9b2b945 100644
+> --- a/hw/xen/xen-pvh-common.c
+> +++ b/hw/xen/xen-pvh-common.c
+> @@ -195,7 +195,7 @@ static void xen_pvh_init(MachineState *ms)
+>  
+>      xen_pvh_init_ram(s, sysmem);
+>      xen_register_ioreq(&s->ioreq, ms->smp.max_cpus,
+> -                       HVM_IOREQSRV_BUFIOREQ_ATOMIC,
+> +                       xpc->handle_bufioreq,
+>                         &xen_memory_listener);
+>  
+>      if (s->cfg.virtio_mmio_num) {
+> diff --git a/include/hw/xen/xen-pvh-common.h b/include/hw/xen/xen-pvh-common.h
+> index bc09eea936..5cdd23c2f4 100644
+> --- a/include/hw/xen/xen-pvh-common.h
+> +++ b/include/hw/xen/xen-pvh-common.h
+> @@ -43,6 +43,9 @@ struct XenPVHMachineClass {
+>       */
+>      int (*set_pci_link_route)(uint8_t line, uint8_t irq);
+>  
+> +    /* Allow implementations to optionally enable buffered ioreqs.  */
+> +    uint8_t handle_bufioreq;
+> +
+>      /*
+>       * Each implementation can optionally enable features that it
+>       * supports and are known to work.
 > -- 
-> 2.46.0.792.g87dc391469-goog
-
+> 2.43.0
+> 
 
