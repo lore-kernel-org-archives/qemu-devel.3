@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E73E1C369D0
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:13:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D68C7C369CC
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:13:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stPvd-0000k4-TX; Wed, 25 Sep 2024 07:11:29 -0400
+	id 1stPxP-00017u-96; Wed, 25 Sep 2024 07:13:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPva-0000Yr-Sr
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPwB-0004Hn-0o
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:12:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPvZ-0003YS-3z
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:26 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPw8-0003nB-Tn
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:12:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727262684;
+ s=mimecast20190719; t=1727262719;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cSQmsoJI50CYehCgeJcog8+69WQRfLBe7hu3u3O/2uY=;
- b=bNZ2NgObMsf7zoYgbE3gpFw/wFZmVqil6KfU11TeMqZEr8amcy8zy+SsiqnHnoEDMILDV8
- iAzvACjc7WJ7Qq25AiukBSSEvmawxV7HVeUw/eTImd2iRqGLU3+IpjsFOwyUEz7sGWxYoQ
- EOutnT8etdadgVHDm9Du4EfGRDfwMFo=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Iu/VgyOBAMNIm9BxndVV79VY98Fkfv3UB6OxtHbaZ38=;
+ b=Joi3QXzmLazNUi2QaXq+jkuu8LDxHoMvkPi/eneCezaUoFAKxbQ5S8cS+ItjEc/cmtM+Eh
+ lNe+Qt66CAFy3yX1vfW1eoRItzBrpOZCJNglDa7osd3gRj9ROtF2Tz6EOChdrRxu62gb0s
+ yk+diDbhIv1X6Z7bJuV3eK/V09cE6q8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-530-XszUVQqtOSCRIm5kVenwaQ-1; Wed,
- 25 Sep 2024 07:11:21 -0400
-X-MC-Unique: XszUVQqtOSCRIm5kVenwaQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-205-mP0B9BYKMTK0TuxZZhIEAw-1; Wed,
+ 25 Sep 2024 07:11:55 -0400
+X-MC-Unique: mP0B9BYKMTK0TuxZZhIEAw-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
  [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 173E219773DE; Wed, 25 Sep 2024 11:11:20 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DA683193E8EF; Wed, 25 Sep 2024 11:11:54 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.206])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A03301956094; Wed, 25 Sep 2024 11:11:18 +0000 (UTC)
+ id 7601A1956094; Wed, 25 Sep 2024 11:11:53 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 16/44] hw/hyperv: replace assert(false) with
- g_assert_not_reached()
-Date: Wed, 25 Sep 2024 13:09:57 +0200
-Message-ID: <20240925111029.24082-17-thuth@redhat.com>
+Subject: [PULL 30/44] target/riscv: remove break after g_assert_not_reached()
+Date: Wed, 25 Sep 2024 13:10:11 +0200
+Message-ID: <20240925111029.24082-31-thuth@redhat.com>
 In-Reply-To: <20240925111029.24082-1-thuth@redhat.com>
 References: <20240925111029.24082-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -89,102 +88,45 @@ g_assert_not_reached() rather than an ad hoc mix of different
 assertion mechanisms.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20240919044641.386068-9-pierrick.bouvier@linaro.org>
+Message-ID: <20240919044641.386068-23-pierrick.bouvier@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/hyperv/hyperv_testdev.c |  6 +++---
- hw/hyperv/vmbus.c          | 12 ++++++------
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ target/riscv/monitor.c                  | 1 -
+ target/riscv/insn_trans/trans_rvv.c.inc | 2 --
+ 2 files changed, 3 deletions(-)
 
-diff --git a/hw/hyperv/hyperv_testdev.c b/hw/hyperv/hyperv_testdev.c
-index 9a56ddf83f..ef50e490c4 100644
---- a/hw/hyperv/hyperv_testdev.c
-+++ b/hw/hyperv/hyperv_testdev.c
-@@ -88,7 +88,7 @@ static TestSintRoute *sint_route_find(HypervTestDev *dev,
-             return sint_route;
-         }
+diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
+index f5b1ffe6c3..100005ea4e 100644
+--- a/target/riscv/monitor.c
++++ b/target/riscv/monitor.c
+@@ -184,7 +184,6 @@ static void mem_info_svxx(Monitor *mon, CPUArchState *env)
+         break;
+     default:
+         g_assert_not_reached();
+-        break;
      }
--    assert(false);
-+    g_assert_not_reached();
-     return NULL;
+ 
+     /* calculate virtual address bits */
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 3a3896ba06..f8928c44a8 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -3172,7 +3172,6 @@ static void load_element(TCGv_i64 dest, TCGv_ptr base,
+         break;
+     default:
+         g_assert_not_reached();
+-        break;
+     }
  }
  
-@@ -187,7 +187,7 @@ static void msg_conn_destroy(HypervTestDev *dev, uint8_t conn_id)
-             return;
-         }
+@@ -3257,7 +3256,6 @@ static void store_element(TCGv_i64 val, TCGv_ptr base,
+         break;
+     default:
+         g_assert_not_reached();
+-        break;
      }
--    assert(false);
-+    g_assert_not_reached();
- }
- 
- static void evt_conn_handler(EventNotifier *notifier)
-@@ -237,7 +237,7 @@ static void evt_conn_destroy(HypervTestDev *dev, uint8_t conn_id)
-             return;
-         }
-     }
--    assert(false);
-+    g_assert_not_reached();
- }
- 
- static uint64_t hv_test_dev_read(void *opaque, hwaddr addr, unsigned size)
-diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
-index 15e0d600c7..03f415bf22 100644
---- a/hw/hyperv/vmbus.c
-+++ b/hw/hyperv/vmbus.c
-@@ -1874,7 +1874,7 @@ static void send_create_gpadl(VMBus *vmbus)
-         }
-     }
- 
--    assert(false);
-+    g_assert_not_reached();
- }
- 
- static bool complete_create_gpadl(VMBus *vmbus)
-@@ -1889,7 +1889,7 @@ static bool complete_create_gpadl(VMBus *vmbus)
-         }
-     }
- 
--    assert(false);
-+    g_assert_not_reached();
-     return false;
- }
- 
-@@ -1931,7 +1931,7 @@ static void send_teardown_gpadl(VMBus *vmbus)
-         }
-     }
- 
--    assert(false);
-+    g_assert_not_reached();
- }
- 
- static bool complete_teardown_gpadl(VMBus *vmbus)
-@@ -1946,7 +1946,7 @@ static bool complete_teardown_gpadl(VMBus *vmbus)
-         }
-     }
- 
--    assert(false);
-+    g_assert_not_reached();
-     return false;
- }
- 
-@@ -1996,7 +1996,7 @@ static void send_open_channel(VMBus *vmbus)
-         }
-     }
- 
--    assert(false);
-+    g_assert_not_reached();
- }
- 
- static bool complete_open_channel(VMBus *vmbus)
-@@ -2020,7 +2020,7 @@ static bool complete_open_channel(VMBus *vmbus)
-         }
-     }
- 
--    assert(false);
-+    g_assert_not_reached();
-     return false;
  }
  
 -- 
