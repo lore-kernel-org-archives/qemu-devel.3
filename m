@@ -4,44 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96DA3CF9C6F
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 14:12:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80726CF9C6B
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 14:14:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stSk3-0007ZR-Oy; Wed, 25 Sep 2024 10:11:43 -0400
+	id 1stSlr-0004P6-1H; Wed, 25 Sep 2024 10:13:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1stSjj-0006Je-TQ; Wed, 25 Sep 2024 10:11:25 -0400
+ id 1stSlp-0004Mu-KV; Wed, 25 Sep 2024 10:13:33 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1stSjh-0000SX-KY; Wed, 25 Sep 2024 10:11:23 -0400
+ id 1stSlo-0001Ed-0x; Wed, 25 Sep 2024 10:13:33 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XDJSJ4m5Xz6HJbb;
- Wed, 25 Sep 2024 22:06:40 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XDJWZ6Snkz6LCdm;
+ Wed, 25 Sep 2024 22:09:30 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id C5C49140498;
- Wed, 25 Sep 2024 22:11:17 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id D6AB9140FA6;
+ Wed, 25 Sep 2024 22:13:28 +0800 (CST)
 Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 25 Sep
- 2024 16:11:17 +0200
-Date: Wed, 25 Sep 2024 15:11:15 +0100
+ 2024 16:13:28 +0200
+Date: Wed, 25 Sep 2024 15:13:27 +0100
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 CC: Igor Mammedov <imammedo@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, Peter Maydell
- <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>,
- <linux-kernel@vger.kernel.org>, <qemu-arm@nongnu.org>,
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 03/15] acpi/ghes: simplify the per-arch caller to build
- HEST table
-Message-ID: <20240925151115.00005b15@Huawei.com>
-In-Reply-To: <6305bca3d0c4fc02853fe2794eeb39f46823c733.1727236561.git.mchehab+huawei@kernel.org>
+ Dongjiu Geng <gengdongjiu1@gmail.com>, <linux-kernel@vger.kernel.org>,
+ <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 04/15] acpi/ghes: better handle source_id and notification
+Message-ID: <20240925151327.0000202b@Huawei.com>
+In-Reply-To: <a3b54a74158fdff44e600cf0949a430891c8cb22.1727236561.git.mchehab+huawei@kernel.org>
 References: <cover.1727236561.git.mchehab+huawei@kernel.org>
- <6305bca3d0c4fc02853fe2794eeb39f46823c733.1727236561.git.mchehab+huawei@kernel.org>
+ <a3b54a74158fdff44e600cf0949a430891c8cb22.1727236561.git.mchehab+huawei@kernel.org>
 Organization: Huawei Technologies Research and Development (UK) Ltd.
 X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
@@ -75,27 +72,36 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 25 Sep 2024 06:04:08 +0200
+On Wed, 25 Sep 2024 06:04:09 +0200
 Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-> The GHES driver requires not only a HEST table, but also a
-> separate firmware file to store Error Structure records.
-> It can't do one without the other.
+> GHES has two fields that are stored on HEST error source
+> blocks:
 > 
-> Simplify the caller logic for it to require one function.
+> - notification type, which is a number defined at the ACPI spec
+>   containing several arch-specific synchronous and assynchronous
+>   types;
+> - source id, which is a HW/FW defined number, used to distinguish
+>   between different implemented hardware report mechanisms.
 > 
-> This prepares for further changes where the HEST table
-> generation will become more generic.
+> Cleanup the logic to fill those, as they should be handled
+> independently.
 > 
-> No functional changes.
+> This is a preparation for a future patch that will shift
+> those fields to the HEST init function call.
 > 
 > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Trivial comment inline.
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
 > 
 > ---
 > 
-> Changes from v10:
-> - Removed the logic which associates notification and source
->   ID. This will be placed on a separate patch.
+> Chenges from v10:
+Changes
+
+> 
+> - Some changes got moved to the previous patch.
 > 
 > Changes from v8:
 > - Non-rename/cleanup changes merged altogether;
@@ -103,8 +109,32 @@ Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 >   That should make easier to add support for 86.
 > 
 > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Odd sign off here ;)
-Otherwise seems reasonable to me.
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> ---
+>  hw/acpi/ghes.c | 23 +++++++++--------------
+>  1 file changed, 9 insertions(+), 14 deletions(-)
+> 
+> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> index 7b42ed59cd15..7460cd1a8d56 100644
+> --- a/hw/acpi/ghes.c
+> +++ b/hw/acpi/ghes.c
+> @@ -284,9 +284,13 @@ static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
+>  }
+>  
+>  /* Build Generic Hardware Error Source version 2 (GHESv2) */
+> -static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
+> +static void build_ghes_v2(GArray *table_data,
+> +                          BIOSLinker *linker,
+> +                          enum AcpiGhesNotifyType notify,
+> +                          uint16_t source_id)
+>  {
+>      uint64_t address_offset;
+> +
+Technically a stray change but meh there should have always been a blank
+line here.
+
+>      /*
+>       * Type:
+>       * Generic Hardware Error Source version 2(GHESv2 - Type 10)
+> @@ -316,18 +320,8 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
 
 
