@@ -4,52 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6560CF9C74
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 03:36:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C33C8CF9C74
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 04:06:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stIoP-0004GF-4I; Tue, 24 Sep 2024 23:35:33 -0400
+	id 1stJGp-0005bo-5k; Wed, 25 Sep 2024 00:04:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1stIo9-0003z3-EI; Tue, 24 Sep 2024 23:35:18 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1stJGn-0005ZW-7F; Wed, 25 Sep 2024 00:04:53 -0400
+Received: from nyc.source.kernel.org ([147.75.193.91])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1stIo6-0007FP-88; Tue, 24 Sep 2024 23:35:16 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 25 Sep
- 2024 11:34:55 +0800
-Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 25 Sep 2024 11:34:55 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v2 4/6] hw/gpio/aspeed: Fix clear incorrect interrupt status
- for GPIO index mode
-Date: Wed, 25 Sep 2024 11:34:52 +0800
-Message-ID: <20240925033454.4117445-5-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240925033454.4117445-1-jamin_lin@aspeedtech.com>
-References: <20240925033454.4117445-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1stJGl-0001xC-AM; Wed, 25 Sep 2024 00:04:52 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 514E2A43B53;
+ Wed, 25 Sep 2024 04:04:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03FC1C4CEC3;
+ Wed, 25 Sep 2024 04:04:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1727237088;
+ bh=uYZ5dxTIe+VsUJtAek0OqcRidDumQi2sjdVoy0tc9tA=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=shmB2GV2jeSyZHkxcWITr6JxIxZWdrV+rsIwj58fQHHlmBJonzOmxFUWik9+wAWKd
+ GuLpllCdXjk9tguWvXqJiNTtnm18zFNTVr+ACpTPrXI+MJogzijJIE2S+n8xlQk1Fh
+ lvO7Kmou37MGQQsm30798oEX9dBJaihJ9uXra+QZqfq9uvjuy8OKmH+mrCkEM1uumx
+ KYaqZoqNO+LL1LRylNsBv4ym10uXIjRyNjluKT0NwCNPXmyw4jAK/dhN7/4vFT7WRs
+ 6GC7qV1AkKJMKBqEtkvs2H1QKmQf1ad9ygPnhpObgdo1a91vHcHH2NCIiIn3mcY4/N
+ VsN4eyk2WiOEw==
+Received: from mchehab by mail.kernel.org with local (Exim 4.98)
+ (envelope-from <mchehab+huawei@kernel.org>)
+ id 1stJGg-0000000827p-0Y4E; Wed, 25 Sep 2024 06:04:46 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Dongjiu Geng <gengdongjiu1@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, linux-kernel@vger.kernel.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH 03/15] acpi/ghes: simplify the per-arch caller to build HEST
+ table
+Date: Wed, 25 Sep 2024 06:04:08 +0200
+Message-ID: <6305bca3d0c4fc02853fe2794eeb39f46823c733.1727236561.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.46.1
+In-Reply-To: <cover.1727236561.git.mchehab+huawei@kernel.org>
+References: <cover.1727236561.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Received-SPF: pass client-ip=147.75.193.91;
+ envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.09,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,101 +76,103 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The interrupt status field is W1C, where a set bit on read indicates an
-interrupt is pending. If the bit extracted from data is set it should
-clear the corresponding bit in group_value. However, if the extracted
-bit is clear then the value of the corresponding bit in group_value
-should be unchanged.
+The GHES driver requires not only a HEST table, but also a
+separate firmware file to store Error Structure records.
+It can't do one without the other.
 
-SHARED_FIELD_EX32() extracts the interrupt status bit from the write
-(data). group_value is set to the set's interrupt status, which means
-that for any pin with an interrupt pending, the corresponding bit is
-set. The deposit32() call updates the bit at pin_idx in the group,
-using the value extracted from the write (data).
+Simplify the caller logic for it to require one function.
 
-The result is that if multiple interrupt status bits
-were pending and the write was acknowledging specific one bit,
-then the all interrupt status bits will be cleared.
-However, it is index mode and should only clear the corresponding bit.
+This prepares for further changes where the HEST table
+generation will become more generic.
 
-For example, say we have an interrupt pending for GPIOA0, where the
-following statements are true:
+No functional changes.
 
-   set->int_status == 0b01
-   s->pending == 1
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-Before it is acknowledged, an interrupt becomes pending for GPIOA1:
-
-   set->int_status == 0b11
-   s->pending == 2
-
-A write is issued to acknowledge the interrupt for GPIOA0. This causes
-the following sequence:
-
-   reg_value == 0b11
-   pending == 2
-   s->pending = 0
-   set->int_status == 0b00
-
-It should only clear bit 0 in index mode and the correct result
-should be as following.
-
-   set->int_status == 0b11
-   s->pending == 2
-
-   pending == 1
-   s->pending = 1
-   set->int_status == 0b10
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/gpio/aspeed_gpio.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
-index 6e6ab48b56..58ae63e3c1 100644
---- a/hw/gpio/aspeed_gpio.c
-+++ b/hw/gpio/aspeed_gpio.c
-@@ -642,7 +642,7 @@ static void aspeed_gpio_write_index_mode(void *opaque, hwaddr offset,
-     uint32_t pin_idx = reg_idx_number % ASPEED_GPIOS_PER_SET;
-     uint32_t group_idx = pin_idx / GPIOS_PER_GROUP;
-     uint32_t reg_value = 0;
--    uint32_t cleared;
-+    uint32_t pending = 0;
+Changes from v10:
+- Removed the logic which associates notification and source
+  ID. This will be placed on a separate patch.
+
+Changes from v8:
+- Non-rename/cleanup changes merged altogether;
+- source ID is now more generic, defined per guest target.
+  That should make easier to add support for 86.
+
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+---
+ hw/acpi/ghes.c           | 7 +++++--
+ hw/arm/virt-acpi-build.c | 5 ++---
+ include/hw/acpi/ghes.h   | 4 ++--
+ 3 files changed, 9 insertions(+), 7 deletions(-)
+
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index dacbd4d0c093..7b42ed59cd15 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -233,7 +233,7 @@ static int acpi_ghes_record_mem_error(uint64_t error_block_address,
+  * Initialize "etc/hardware_errors" and "etc/hardware_errors_addr" fw_cfg blobs.
+  * See docs/specs/acpi_hest_ghes.rst for blobs format.
+  */
+-void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
++static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
+ {
+     int i, error_status_block_offset;
  
-     set = &s->sets[set_idx];
-     props = &agc->props[set_idx];
-@@ -705,15 +705,16 @@ static void aspeed_gpio_write_index_mode(void *opaque, hwaddr offset,
-         set->int_sens_2 = update_value_control_source(set, set->int_sens_2,
-                                                       reg_value);
-         /* set interrupt status */
--        reg_value = set->int_status;
--        reg_value = deposit32(reg_value, pin_idx, 1,
--                              FIELD_EX32(data, GPIO_INDEX_REG, INT_STATUS));
--        cleared = ctpop32(reg_value & set->int_status);
--        if (s->pending && cleared) {
--            assert(s->pending >= cleared);
--            s->pending -= cleared;
-+        if (FIELD_EX32(data, GPIO_INDEX_REG, INT_STATUS)) {
-+            pending = extract32(set->int_status, pin_idx, 1);
-+            if (pending) {
-+                if (s->pending) {
-+                    assert(s->pending >= pending);
-+                    s->pending -= pending;
-+                }
-+                set->int_status = deposit32(set->int_status, pin_idx, 1, 0);
-+            }
-         }
--        set->int_status &= ~reg_value;
-         break;
-     case gpio_reg_idx_debounce:
-         reg_value = set->debounce_1;
+@@ -356,12 +356,15 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
+ }
+ 
+ /* Build Hardware Error Source Table */
+-void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
++void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
++                     BIOSLinker *linker,
+                      const char *oem_id, const char *oem_table_id)
+ {
+     AcpiTable table = { .sig = "HEST", .rev = 1,
+                         .oem_id = oem_id, .oem_table_id = oem_table_id };
+ 
++    build_ghes_error_table(hardware_errors, linker);
++
+     acpi_table_begin(&table, table_data);
+ 
+     /* Error Source Count */
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index f76fb117adff..bafd9a56c217 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -943,10 +943,9 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+     build_dbg2(tables_blob, tables->linker, vms);
+ 
+     if (vms->ras) {
+-        build_ghes_error_table(tables->hardware_errors, tables->linker);
+         acpi_add_table(table_offsets, tables_blob);
+-        acpi_build_hest(tables_blob, tables->linker, vms->oem_id,
+-                        vms->oem_table_id);
++        acpi_build_hest(tables_blob, tables->hardware_errors, tables->linker,
++                        vms->oem_id, vms->oem_table_id);
+     }
+ 
+     if (ms->numa_state->num_nodes > 0) {
+diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+index 59e3b8fb24b9..20016c226d1f 100644
+--- a/include/hw/acpi/ghes.h
++++ b/include/hw/acpi/ghes.h
+@@ -68,8 +68,8 @@ typedef struct AcpiGhesState {
+     bool present; /* True if GHES is present at all on this board */
+ } AcpiGhesState;
+ 
+-void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker);
+-void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
++void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
++                     BIOSLinker *linker,
+                      const char *oem_id, const char *oem_table_id);
+ void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
+                           GArray *hardware_errors);
 -- 
-2.34.1
+2.46.1
 
 
