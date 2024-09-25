@@ -4,113 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1DCEC369AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 08:20:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D5E9C369AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 08:34:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stNEp-0008N8-JR; Wed, 25 Sep 2024 04:19:07 -0400
+	id 1stNSd-0005QL-Tx; Wed, 25 Sep 2024 04:33:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1stNEl-0008Ki-Nx
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 04:19:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1stNSc-0005PR-BO; Wed, 25 Sep 2024 04:33:22 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1stNEj-0006fB-Nf
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 04:19:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727252337;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HpkyUdOzGGtgiYaf9SMUo11EoLRQMvJlyHEEAsAF+KQ=;
- b=AlTHRnV234hVZP7gpB4hjS08+eqWVKM+vpnvEgevNlLt0hw/wMdXbFJr6eTolu/b2ej8vb
- notgQKG6YrxhOh3hW/buNEhu/QwcTMpbxLzvWxEcl+cQ8qNdd0Z6VigCwRsSmQ39HXCEdN
- CJf/0T6iiKxXalCmTNIxvjpjLHTegSI=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-621-om3I5JEvO6K3VctKGY35vQ-1; Wed, 25 Sep 2024 04:18:56 -0400
-X-MC-Unique: om3I5JEvO6K3VctKGY35vQ-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a8a6fee3ab1so556326366b.3
- for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 01:18:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727252335; x=1727857135;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HpkyUdOzGGtgiYaf9SMUo11EoLRQMvJlyHEEAsAF+KQ=;
- b=NOyu67PCTz6ycq2kpcdAmnY47AdSGaQM++q54mi2MdoF8UJy9ywrYZxTp7FK7xFYKV
- qQQ890hn4kuVqWqSKy7SMHWkm3Y9EWw1p7rwoA8o9hlmwr4yj4t4iqWA6QrLvv3ewluR
- ABOjzZlo0ucytZWQdRvXIq7i/8E9oHx+g6OnGTBSM7RbH8KJAZvbbfRO2DMjkpZzSgIH
- MH0AiucDhAJymixZZgSn0yY/A35po6uKK+Q66aJgksHoPfw57hc43q4GLtvWRnSkzgoM
- alc+qWO4uiMC2lv3fFXZGHe3kf7S5qUTBj1n2thth+mLenc1rWnF67mEjSr+YHrMAvOy
- MRNg==
-X-Gm-Message-State: AOJu0YyR3qZu5MP+Nt6BNp6DZfCwwVJcfwbv3TiTeoyEl+fQQRUB2A0o
- /Kn1csPzpoNrHdK6D5Tp0PoOGIKPocBlvtBpptQShpdshs9Ucm78v0yU4LMeL0TpnbZNugNIjwt
- UVnoAPyafh9yzUOopE0EsNC4OO/RCFbYxP56leXJi9X4jPIGOxNr7
-X-Received: by 2002:a17:906:bc14:b0:a8d:2e3a:5303 with SMTP id
- a640c23a62f3a-a93a03c529amr144412066b.39.1727252334908; 
- Wed, 25 Sep 2024 01:18:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF7MN3WMhLdu2CJsXgAz1l8t1ed2J+yuZu+KojuCxVD9rOvYP7VC29wEdYYMf3BeDK5G7c9KA==
-X-Received: by 2002:a17:906:bc14:b0:a8d:2e3a:5303 with SMTP id
- a640c23a62f3a-a93a03c529amr144407166b.39.1727252334256; 
- Wed, 25 Sep 2024 01:18:54 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-46-200-231.retail.telecomitalia.it.
- [79.46.200.231]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a93930caf21sm181725266b.98.2024.09.25.01.18.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Sep 2024 01:18:53 -0700 (PDT)
-Date: Wed, 25 Sep 2024 10:18:48 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: marcandre.lureau@redhat.com, eperezma@redhat.com
-Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>, 
- Peter Xu <peterx@redhat.com>, Bin Meng <bmeng.cn@gmail.com>, 
- Mahmoud Mandour <ma.mandourr@gmail.com>, Hyman Huang <yong.huang@smartx.com>, 
- Klaus Jensen <its@irrelevant.dk>, Alexandre Iooss <erdnaxe@crans.org>, 
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- John Snow <jsnow@redhat.com>, 
- Jesper Devantier <foss@defmacro.it>, Bin Meng <bin.meng@windriver.com>,
- Greg Kurz <groug@kaod.org>, 
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, 
- Yuval Shaia <yuval.shaia.ml@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- Keith Busch <kbusch@kernel.org>, 
- Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, 
- Laurent Vivier <laurent@vivier.eu>, Gerd Hoffmann <kraxel@redhat.com>,
- Fam Zheng <fam@euphon.net>, 
- Eduardo Habkost <eduardo@habkost.net>, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v2 22/22] RFC: hw/virtio: a potential leak fix
-Message-ID: <ix3rgyh4bepu23qazun5ywx7qnhce7s5eq76k5nqq37v27ngpv@bbfnw5fax5qo>
-References: <20240924130554.749278-1-marcandre.lureau@redhat.com>
- <20240924130554.749278-23-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1stNSZ-0008Os-9Z; Wed, 25 Sep 2024 04:33:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1727253199; x=1758789199;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=UTcln1KFBK7MFrcaJYe3yuRWnXHRMJdd+GUaX7PtpJk=;
+ b=bVbGfu9GK4LYbzpitLsu7sSGz7KfdaljRMl/qeViIiu6ZCg8OP8P2M88
+ Hg2b4rQf/oW4z/+ACoOzgUxpVwCsqLMqWPLffzTIJIyTzdBalY6YIgwRF
+ nVANIcizCAPhtlUT4Zrp9KzoNqlX09z4YoH3/Sk09MSL7+XKGcNSwg94i
+ egj1nV5CC5OA7HR09FEMRTp9mVmzPbmSQkDSeiqoSyfGGwN7mep1K+i49
+ TkjR8MmMeM32kIZfavXBCDBFLpzthNpASQKpCktg+W78ZvBLuvVFExDaj
+ FHugtFfQD6zTECfLW7Cl/ySiBitQd92J64WuInZ77np+FH62L+hjVmHhE A==;
+X-CSE-ConnectionGUID: i6/seoBkTa+B3Ekg16Qw0g==
+X-CSE-MsgGUID: vtFPWxY0S3+9kkIZt5G9og==
+X-IronPort-AV: E=McAfee;i="6700,10204,11205"; a="29173398"
+X-IronPort-AV: E=Sophos;i="6.10,256,1719903600"; d="scan'208";a="29173398"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Sep 2024 01:33:14 -0700
+X-CSE-ConnectionGUID: okhitTIxSxSw0rJzj+QotQ==
+X-CSE-MsgGUID: xu4++olyRHaOEUIFJvEFfA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,256,1719903600"; d="scan'208";a="71341526"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa007.fm.intel.com with ESMTP; 25 Sep 2024 01:33:12 -0700
+Date: Wed, 25 Sep 2024 16:49:19 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Chuang Xu <xuchuangxclwt@bytedance.com>, qemu-devel@nongnu.org,
+ pbonzini@redhat.com, xieyongji@bytedance.com,
+ chaiwen.cc@bytedance.com, qemu-stable@nongnu.org,
+ Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v3] i386/cpu: fixup number of addressable IDs for logical
+ processors in the physical package
+Message-ID: <ZvPOj82NvTbGlxsV@intel.com>
+References: <20240918131815.8543-1-xuchuangxclwt@bytedance.com>
+ <ZuxtmjZBGGwNaVwl@intel.com>
+ <20240920130827.751ccfb1@imammedo.users.ipa.redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240924130554.749278-23-marcandre.lureau@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.09,
+In-Reply-To: <20240920130827.751ccfb1@imammedo.users.ipa.redhat.com>
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.09,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,58 +87,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 24, 2024 at 05:05:53PM GMT, marcandre.lureau@redhat.com wrote:
->From: Marc-André Lureau <marcandre.lureau@redhat.com>
->
->vhost_svq_get_buf() may return a VirtQueueElement that should be freed.
->
->It's unclear to me if the vhost_svq_get_buf() call should always return NULL.
->
->Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->---
-> hw/virtio/vhost-shadow-virtqueue.c | 4 +++-
-> 1 file changed, 3 insertions(+), 1 deletion(-)
->
->diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
->index cd29cc795b..93742d9ddc 100644
->--- a/hw/virtio/vhost-shadow-virtqueue.c
->+++ b/hw/virtio/vhost-shadow-virtqueue.c
->@@ -414,6 +414,7 @@ static uint16_t vhost_svq_last_desc_of_chain(const VhostShadowVirtqueue *svq,
->     return i;
-> }
->
->+G_GNUC_WARN_UNUSED_RESULT
-> static VirtQueueElement *vhost_svq_get_buf(VhostShadowVirtqueue *svq,
->                                            uint32_t *len)
-> {
->@@ -529,6 +530,7 @@ size_t vhost_svq_poll(VhostShadowVirtqueue *svq, size_t num)
->     uint32_t r = 0;
->
->     while (num--) {
->+        g_autofree VirtQueueElement *elem = NULL;
+On Fri, Sep 20, 2024 at 01:08:27PM +0200, Igor Mammedov wrote:
+> Date: Fri, 20 Sep 2024 13:08:27 +0200
+> From: Igor Mammedov <imammedo@redhat.com>
+> Subject: Re: [PATCH v3] i386/cpu: fixup number of addressable IDs for
+>  logical processors in the physical package
+> X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+> 
+> On Fri, 20 Sep 2024 02:29:46 +0800
+> Zhao Liu <zhao1.liu@intel.com> wrote:
+> 
+> > Hi Chuang and Igor,
+> > 
+> > Sorry for late reply,
+> > 
+> > On Wed, Sep 18, 2024 at 09:18:15PM +0800, Chuang Xu wrote:
+> > > Date: Wed, 18 Sep 2024 21:18:15 +0800
+> > > From: Chuang Xu <xuchuangxclwt@bytedance.com>
+> > > Subject: [PATCH v3] i386/cpu: fixup number of addressable IDs for logical
+> > >  processors in the physical package
+> > > X-Mailer: git-send-email 2.24.3 (Apple Git-128)
+> > > 
+> > > When QEMU is started with:
+> > > -cpu host,migratable=on,host-cache-info=on,l3-cache=off
+> > > -smp 180,sockets=2,dies=1,cores=45,threads=2
+> > > 
+> > > Try to execute "cpuid -1 -l 1 -r" in guest, we'll obtain a value of 90 for
+> > > CPUID.01H.EBX[23:16], while the expected value is 128. And Try to
+> > > execute "cpuid -1 -l 4 -r" in guest, we'll obtain a value of 63 for
+> > > CPUID.04H.EAX[31:26] as expected.
+> > > 
+> > > As (1+CPUID.04H.EAX[31:26]) round up to the nearest power-of-2 integer,
+> > > we'd beter round up CPUID.01H.EBX[23:16] to the nearest power-of-2
+> > > integer too. Otherwise we may encounter unexpected results in guest.
+> > > 
+> > > For example, when QEMU is started with CLI above and xtopology is disabled,
+> > > guest kernel 5.15.120 uses CPUID.01H.EBX[23:16]/(1+CPUID.04H.EAX[31:26]) to
+> > > calculate threads-per-core in detect_ht(). Then guest will get "90/(1+63)=1"
+> > > as the result, even though theads-per-core should actually be 2.
+> > > 
+> > > So let us round up CPUID.01H.EBX[23:16] to the nearest power-of-2 integer
+> > > to solve the unexpected result.
+> > > 
+> > > Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+> > > Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
+> > > Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+> > > ---
+> > >  target/i386/cpu.c | 2 +-
+> > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > > 
+> > > diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> > > index 4c2e6f3a71..3710ae5283 100644
+> > > --- a/target/i386/cpu.c
+> > > +++ b/target/i386/cpu.c
+> > > @@ -6417,7 +6417,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+> > >          }
+> > >          *edx = env->features[FEAT_1_EDX];
+> > >          if (threads_per_pkg > 1) {
+> > > -            *ebx |= threads_per_pkg << 16;
+> > > +            *ebx |= pow2ceil(threads_per_pkg) << 16;  
+> > 
+> > Yes, the fix is right.
+> > 
+> > About the "Maximum number of addressable IDs", the commit 88dd4ca06c83
+> > ("i386/cpu: Use APIC ID info to encode cache topo in CPUID[4]")
+> > introduced the new way to calculate.
+> > 
+> > The pow2ceil() works for current SMP topology, but may be wrong on
+> > hybrid topology, as the reason I listed in the commit message:
+> > 
+> > > The nearest power-of-2 integer can be calculated by pow2ceil() or by
+> > > using APIC ID offset/width (like L3 topology using 1 << die_offset [3]).  
+> > 
+> > > But in fact, CPUID.04H:EAX[bits 25:14] and CPUID.04H:EAX[bits 31:26]
+> > > are associated with APIC ID. For example, in linux kernel, the field
+> > > "num_threads_sharing" (Bits 25 - 14) is parsed with APIC ID. And for
+> > > another example, on Alder Lake P, the CPUID.04H:EAX[bits 31:26] is not
+> > > matched with actual core numbers and it's calculated by:
+> > > "(1 << (pkg_offset - core_offset)) - 1".  
+> > 
+> > Using APIC ID offset to calculate is the hardware's approach, so I tried
+> > to use APIC ID instead of pow2ceil() and replaced all pow2ceil() case.
+> 
+> Well, hybrid case needs some more explanation then.
+> 
+> 'pow2ceil(threads_per_pkg) << 16' - does exactly what SDM says for CPUID.01H.EBX[23:16]
+> 
+> Can you point to a spec that confirms that above is wrong and
+> explain in more details how hybrid case is supposed to work
+> and where it's documented?
+>  
 
-Yes, indeed it sounds like we should release the buffer, although from
-the name of the function here, it sounds like we are just trying to
-figure out if the queue has elements, so I expect there is another
-function that is then called to process the buffers.
+This is mainly about the meaning of "addressable ID". There's a spec
+"Intel 64 Architecture Processor Topology Enumeration" [1].
 
-There's still a potential problem here that I pointed out in the other
-patch, but I think we need Eugenio here.
+In the section 1.5.3, it mentions the "addressable ID" of CPUID.01H.
+EBX[23:16] indicates the "initial APIC ID". And for CPUID.04H:EAX[bits
+31:26], that field is "core_id", which is the part of initial APIC ID.
 
->         int64_t start_us = g_get_monotonic_time();
->
->         do {
->@@ -541,7 +543,7 @@ size_t vhost_svq_poll(VhostShadowVirtqueue *svq, size_t num)
->             }
->         } while (true);
->
->-        vhost_svq_get_buf(svq, &r);
->+        elem = vhost_svq_get_buf(svq, &r);
->         len += r;
->     }
->
->-- 
->2.45.2.827.g557ae147e6
->
+Therefore, "maximum number of addressable IDs" indicates the maximum
+number of IDs that each subfield of the APIC ID (we create based on the
+smp topology) can hold, which is related to width.
+
+For example, if the width of the APIC sub ID for the thread level is 2,
+then it will hold a maximum of 4 sub IDs. For the smp system, the
+sub-topology fields of the APIC IDs are filled, so pow2ceil() is always
+valid.
+
+For hybrid, there will be holes in the sub fields, for example, 4 E
+cores form a module and a P core is exclusive to a module, for the core
+field of the E core's APIC ID, the width of the core field is at least 2
+to accommodate the IDs of the 4 cores, while the P core, though only 1
+bit width is needed, still uses the same width as the E core in order to
+align with the E core. In this case, pow2ceil() fails.
+
+And the example I mentioned before ("on Alder Lake P, the CPUID.04H:EAX[
+bits 31:26] is not matched with actual core numbers and it's calculated
+by: '(1 << (pkg_offset - core_offset)) - 1'."), has the same reason,
+that's because the APIC ID layout has the holes, and the possible APIC
+IDs are more than actual cores.
+
+[1]: https://cdrdv2-public.intel.com/759067/intel-64-architecture-processor-topology-enumeration.pdfi
+
+Regards,
+Zhao
 
 
