@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01179C369D0
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:14:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AFDBC369D1
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:14:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stPxN-0000pf-HV; Wed, 25 Sep 2024 07:13:19 -0400
+	id 1stPxi-0002qv-M1; Wed, 25 Sep 2024 07:13:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPwC-0004PZ-II
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:12:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPwX-0005yR-6T
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:12:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPwA-0003oA-Pn
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:12:04 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPwV-0003xk-K9
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:12:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727262721;
+ s=mimecast20190719; t=1727262742;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AWrnKoybkcOqIXNneCbZ6Rc49euB/UmGK8Q/kaILYgw=;
- b=EjBy7yWlsRyLgHnDiHn4YezYN+5rbc16IGwiydjXtp69WgFKZH5Ls78g6U9Y4QDd3pm20/
- PvH18GahpgDDjYKRmQRKNJktDpKoC4eajVuydpPGaXIwhHoixZUzad4QPkBLyzBkD2tIsM
- QEzepONq+TdHaV+MiDb/jQcNog4JIY0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Vyo/LNnRGhGjQKrTujAh2NlkCB5//86Ns8KFFI34pWI=;
+ b=UnvHQGl6cUnta7lbJ9H36jrEBQg7o0USmKJAuLVHXklGYnhkGRH+tOrYw7EAV84F4yRBEW
+ 9oiV6gBS0VwV8tUgLznKLeZjN4LrG4CiN8R0tuO8EU6VqH8r2AiSHZpDpoa5z7tco8o7RQ
+ S36utVO0nhLEGbccdo+9cKBSED5F7+4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-354-oTYSWKH0PLuOQ16GchQi0Q-1; Wed,
- 25 Sep 2024 07:12:00 -0400
-X-MC-Unique: oTYSWKH0PLuOQ16GchQi0Q-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-B50DJvwZMZq296UnqNY2dQ-1; Wed,
+ 25 Sep 2024 07:12:18 -0400
+X-MC-Unique: B50DJvwZMZq296UnqNY2dQ-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
  [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 608A1196CE02; Wed, 25 Sep 2024 11:11:59 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8BBFC1977034; Wed, 25 Sep 2024 11:12:17 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.206])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D42E51956094; Wed, 25 Sep 2024 11:11:57 +0000 (UTC)
+ id AE74A1956094; Wed, 25 Sep 2024 11:12:15 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 32/44] tcg/loongarch64: remove break after
- g_assert_not_reached()
-Date: Wed, 25 Sep 2024 13:10:13 +0200
-Message-ID: <20240925111029.24082-33-thuth@redhat.com>
+Subject: [PULL 39/44] qobject: remove return after g_assert_not_reached()
+Date: Wed, 25 Sep 2024 13:10:20 +0200
+Message-ID: <20240925111029.24082-40-thuth@redhat.com>
 In-Reply-To: <20240925111029.24082-1-thuth@redhat.com>
 References: <20240925111029.24082-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -90,24 +89,48 @@ assertion mechanisms.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20240919044641.386068-25-pierrick.bouvier@linaro.org>
+Message-ID: <20240919044641.386068-32-pierrick.bouvier@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tcg/loongarch64/tcg-target.c.inc | 1 -
- 1 file changed, 1 deletion(-)
+ qobject/qnum.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index 5b7ed5c176..973601aec3 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -650,7 +650,6 @@ static int tcg_out_setcond_int(TCGContext *s, TCGCond cond, TCGReg ret,
- 
-     default:
-         g_assert_not_reached();
--        break;
+diff --git a/qobject/qnum.c b/qobject/qnum.c
+index 2138b563a9..dd8ea49565 100644
+--- a/qobject/qnum.c
++++ b/qobject/qnum.c
+@@ -86,7 +86,6 @@ bool qnum_get_try_int(const QNum *qn, int64_t *val)
      }
  
-     return ret | flags;
+     g_assert_not_reached();
+-    return false;
+ }
+ 
+ /**
+@@ -124,7 +123,6 @@ bool qnum_get_try_uint(const QNum *qn, uint64_t *val)
+     }
+ 
+     g_assert_not_reached();
+-    return false;
+ }
+ 
+ /**
+@@ -157,7 +155,6 @@ double qnum_get_double(QNum *qn)
+     }
+ 
+     g_assert_not_reached();
+-    return 0.0;
+ }
+ 
+ char *qnum_to_string(QNum *qn)
+@@ -173,7 +170,6 @@ char *qnum_to_string(QNum *qn)
+     }
+ 
+     g_assert_not_reached();
+-    return NULL;
+ }
+ 
+ /**
 -- 
 2.46.0
 
