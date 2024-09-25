@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C8A0C369CC
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:16:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BFA8C369D0
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:16:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stPvR-0008CX-7O; Wed, 25 Sep 2024 07:11:17 -0400
+	id 1stPwR-0005Rf-C0; Wed, 25 Sep 2024 07:12:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPvP-000813-5h
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPwE-0004Vj-1L
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:12:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPvN-0003W4-Om
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:14 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPwC-0003pA-FO
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:12:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727262673;
+ s=mimecast20190719; t=1727262723;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9wA9ErZOcHxomx3D/S9htm5cMrsPvqAXtUE6ybaQrZM=;
- b=QOoyOWuY54k9eD4nLPjiakDqLlhyi1fWFTINeBfdu4vF1FOiEwsx7KCBfv0tDeuXVjfGdB
- l6psmze6Oe7xu4jvJvB08NCcJWcOP6iQ8gQIHKMx5zv2OIRkk8DjZP85Cur0idT1XAuPM4
- O04ppuauyOBcxpyrTyfwE+rxooZLwyM=
+ bh=tI4/cDzqMiZaX+QC57XjuOqEXcKPrBnOpVVF8uKbOJE=;
+ b=WDwpQEjCorzA02e2gmacsGRPUDnGkYk+kt7oGXpaKWKfpU1922jSV213tcXKkwCTn08lVh
+ 6bdwhpw8Yw91LKkBW3BKPstd7LIGSYToP/pyLyIKc+uwjJTs1QXqRiinDPydri8hJvJED9
+ a7ubkug3hGoJaOYo9A61bxKX1yxt84E=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-36-wiqXa1snP76_u_53dr6UZA-1; Wed,
- 25 Sep 2024 07:11:09 -0400
-X-MC-Unique: wiqXa1snP76_u_53dr6UZA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-QJAW_vO_Nze3j5PZXM-tVw-1; Wed,
+ 25 Sep 2024 07:12:02 -0400
+X-MC-Unique: QJAW_vO_Nze3j5PZXM-tVw-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
  [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 14BFB193EF48; Wed, 25 Sep 2024 11:11:08 +0000 (UTC)
+ id 8061A19367B8; Wed, 25 Sep 2024 11:12:01 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.206])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6516A1956094; Wed, 25 Sep 2024 11:11:05 +0000 (UTC)
+ id ED93E1956094; Wed, 25 Sep 2024 11:11:59 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 11/44] hw/net: replace assert(0) with g_assert_not_reached()
-Date: Wed, 25 Sep 2024 13:09:52 +0200
-Message-ID: <20240925111029.24082-12-thuth@redhat.com>
+Subject: [PULL 33/44] include/qemu: remove return after g_assert_not_reached()
+Date: Wed, 25 Sep 2024 13:10:14 +0200
+Message-ID: <20240925111029.24082-34-thuth@redhat.com>
 In-Reply-To: <20240925111029.24082-1-thuth@redhat.com>
 References: <20240925111029.24082-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -89,25 +89,24 @@ assertion mechanisms.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20240919044641.386068-4-pierrick.bouvier@linaro.org>
+Message-ID: <20240919044641.386068-26-pierrick.bouvier@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/net/i82596.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/qemu/pmem.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/net/i82596.c b/hw/net/i82596.c
-index 6cc8292a65..cd416a00ff 100644
---- a/hw/net/i82596.c
-+++ b/hw/net/i82596.c
-@@ -282,7 +282,7 @@ static void command_loop(I82596State *s)
-         case CmdDump:
-         case CmdDiagnose:
-             printf("FIXME Command %d !!\n", cmd & 7);
--            assert(0);
-+            g_assert_not_reached();
-         }
+diff --git a/include/qemu/pmem.h b/include/qemu/pmem.h
+index d2d7ad085c..e12a67ba2c 100644
+--- a/include/qemu/pmem.h
++++ b/include/qemu/pmem.h
+@@ -22,7 +22,6 @@ pmem_memcpy_persist(void *pmemdest, const void *src, size_t len)
+     /* If 'pmem' option is 'on', we should always have libpmem support,
+        or qemu will report a error and exit, never come here. */
+     g_assert_not_reached();
+-    return NULL;
+ }
  
-         /* update status */
+ static inline void
 -- 
 2.46.0
 
