@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94960C369D0
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:12:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD058C369CC
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:12:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stPw1-00037H-Jg; Wed, 25 Sep 2024 07:11:56 -0400
+	id 1stPwA-00047J-KA; Wed, 25 Sep 2024 07:12:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPvq-00028F-Do
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:42 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPvx-0003B2-8N
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPvo-0003bY-7k
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:42 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPvv-0003k8-DX
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727262699;
+ s=mimecast20190719; t=1727262706;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3jDoCFaq6ptf4xbGNRtIyIgr5N+u+K+f5r+zr4TCbOU=;
- b=GcFM7sQLrsNffY7wrFo4zaz/4Aw+Y0r6T/YSIzc3321Rd5dl3vHVl233CXXsTsIuq+elqm
- 4928KAdutnwqAZplLhYT7O5+DA/msqe/4gS8HySspwdZNwH0yszUR78uXvTiWjmodqrpDS
- wkBYqHMK7GTpMRHvXLnLekwa6gDXXEY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Y0nJbBNCKMab2Zx5w4V0rPW6WltkzyIXae2zmTSbYNw=;
+ b=jU2L+mHzAvojXsnkZeC9mC/dxlKL/Vs+hLxy9jp00U/cuqBU/xk1hMJAjxy/3yE/MOsrNR
+ m9WNhsXeONYS+LYJVcWz32uCNI4tWTf9w9ISxO3mIvMy+JPEKEoV99N2C3VzXQmGCJJIWm
+ mXISMphY1kcvDxmwJxZi3vgYu3Q5oQo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-486-JtXRXY7kODOHfbu2bkXKwQ-1; Wed,
- 25 Sep 2024 07:11:38 -0400
-X-MC-Unique: JtXRXY7kODOHfbu2bkXKwQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-126-5u35doFDP92V06F5ol9Uvg-1; Wed,
+ 25 Sep 2024 07:11:43 -0400
+X-MC-Unique: 5u35doFDP92V06F5ol9Uvg-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
  [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5E61419344E9; Wed, 25 Sep 2024 11:11:37 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B6893193E8F6; Wed, 25 Sep 2024 11:11:42 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.206])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B90B31956094; Wed, 25 Sep 2024 11:11:34 +0000 (UTC)
+ id E46011956094; Wed, 25 Sep 2024 11:11:40 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 23/44] accel/tcg: remove break after g_assert_not_reached()
-Date: Wed, 25 Sep 2024 13:10:04 +0200
-Message-ID: <20240925111029.24082-24-thuth@redhat.com>
+Subject: [PULL 25/44] hw/acpi: remove break after g_assert_not_reached()
+Date: Wed, 25 Sep 2024 13:10:06 +0200
+Message-ID: <20240925111029.24082-26-thuth@redhat.com>
 In-Reply-To: <20240925111029.24082-1-thuth@redhat.com>
 References: <20240925111029.24082-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -89,24 +89,24 @@ assertion mechanisms.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20240919044641.386068-16-pierrick.bouvier@linaro.org>
+Message-ID: <20240919044641.386068-18-pierrick.bouvier@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- accel/tcg/plugin-gen.c | 1 -
+ hw/acpi/aml-build.c | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index ec89a085b4..2ee4c22bef 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -251,7 +251,6 @@ static void inject_mem_cb(struct qemu_plugin_dyn_cb *cb,
+diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+index 006c506a37..34e0ddbde8 100644
+--- a/hw/acpi/aml-build.c
++++ b/hw/acpi/aml-build.c
+@@ -535,7 +535,6 @@ void aml_append(Aml *parent_ctx, Aml *child)
          break;
      default:
          g_assert_not_reached();
 -        break;
      }
- }
- 
+     build_append_array(parent_ctx->buf, buf);
+     build_free_array(buf);
 -- 
 2.46.0
 
