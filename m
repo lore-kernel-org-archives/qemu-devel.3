@@ -4,75 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FCDCC369A3
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 07:40:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF0C8C369A4
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 07:44:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stMce-0008Bq-0M; Wed, 25 Sep 2024 03:39:40 -0400
+	id 1stMgo-0005tS-6g; Wed, 25 Sep 2024 03:43:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pankaj.gupta.linux@gmail.com>)
- id 1stMcX-0008As-B5
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 03:39:33 -0400
-Received: from mail-oa1-x34.google.com ([2001:4860:4864:20::34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pankaj.gupta.linux@gmail.com>)
- id 1stMcV-00011y-Iy
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 03:39:33 -0400
-Received: by mail-oa1-x34.google.com with SMTP id
- 586e51a60fabf-277f35c01f5so3147873fac.0
- for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 00:39:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727249969; x=1727854769; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Kc9k10rSZo9QKTYxcciOx1iH3io5xAgI5hPOVhjTmkE=;
- b=QayuTU/4ipDny9W98IufKY+l6P6eCCk27GrkENISzY8XwMfG0WX4xRGCxtKhbHx4RG
- umdUN7qSCBhmrX01iWJ4bXbhLwNUa6jcHyoaQaJ5UM8d0MC13Dc8Lv6Qjd/67JU9nwRI
- Bjlza+APObUk2f9FpfZQjzrDbrjpiFdJgERKmjnfyXsZQJU/EoQcXcHX4F2vYeg1KM+E
- Rv+Y2BtQm++eIsJ0A3+PXZ7BVhp+je61pyIqJETJoOTaoJxVnd9WjUzq7087HpyFNdH2
- 9C1ReNMRp98UWqvgcl8SKJA/8hUw+d3uuLM8IKgteq8Sj4PMSSVaznHGMIoPXtQThRW3
- RLbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727249969; x=1727854769;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Kc9k10rSZo9QKTYxcciOx1iH3io5xAgI5hPOVhjTmkE=;
- b=FkCM/pNJv0GkwkX3MKgzpJBb9UHZemvCttZGkvoJ88pOMXxcFrYtf/8x7U4cUzJ68G
- 9zP4wE59I9esa9uHyZC8ZY5eIVfCi69uXw/MLkaDoUtjeT9sp8dfPUEm2tjND2t9yqfu
- p5cggnUFgm6yXjRrW0i4ok6iRzm3EdRbVnlytlIQjVW0Qb0hznchbVt61ZcqwF9J6/4W
- ny/XlVjVb6EngQQPgIP9YBpJkoVGUfNPPpWwWs+irTyPzIegsiEOiDyKlgNUGloMDwO9
- RC1lsVrDuxpHABtKQ82loh6tbi+f6mQQgUBxjVteIB5MfwZ5Es0gX+ZTcfki57G9sDsM
- Wr9Q==
-X-Gm-Message-State: AOJu0YwC0pVFyM8+7DhC1NsBMW1UeQ/tMZw9fPgQyuNgNAIXxH7CDlK2
- T3w+/CYjRNJN77HXirZBY4W9/rlKDF4ijrY4kRAwAwk8ORmomI6mHlTU7O2OgIgRFPrTM1a/FRo
- KhlXa8YPoJo0RIS1y0wiD44RWQHs=
-X-Google-Smtp-Source: AGHT+IFMu1GdFL5Jb2KHOhBJ/z3ssJQGW2NhTxg66+6Y0qjgxgqqvNiqc6Ncj7cE1L4a5t8wdt1eL4zRPk9YUUDyhrE=
-X-Received: by 2002:a05:6871:28a8:b0:277:f16a:97e8 with SMTP id
- 586e51a60fabf-286e1600470mr2038322fac.38.1727249969572; Wed, 25 Sep 2024
- 00:39:29 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240906101658.514470-1-pbonzini@redhat.com>
-In-Reply-To: <20240906101658.514470-1-pbonzini@redhat.com>
-From: Pankaj Gupta <pankaj.gupta.linux@gmail.com>
-Date: Wed, 25 Sep 2024 09:39:18 +0200
-Message-ID: <CAM9Jb+gZ4+M1GOvRy6x8eg8OgOCyoEkBwKS6ZYQhGOOYndh6_g@mail.gmail.com>
-Subject: Re: [PATCH v2] virtio: kconfig: memory devices are PCI only
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>, 
- Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1stMgk-0005sL-JY
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 03:43:55 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1stMgg-0001hz-6M
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 03:43:53 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48P1WfJO018831;
+ Wed, 25 Sep 2024 07:43:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:subject:from:to:cc:date:in-reply-to:references
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ pXrC7f+t+lMB5Sq5gbY789Nr1jHVCSaxJnljDWU1jvk=; b=WduWZc9s5OIbi0+2
+ Q5mRljiHeb9aFQrBG93/6X8mqou91JVRo7/vj8llDAN9cspUNLcKsVy32mwk6qqE
+ tnQkrnXV3fTJ4YlZdkqE5HQA9+guu/jISwXqIg3OlItp3F/V3PYi7cmd4Foh8gHH
+ odrHvPY7OhwkKK2wLsqZLwr7o9a9+QpN3pF+labij3Uj7T2GILsFNDPqjZTYjX+N
+ dUAURKH/OVi/PVsS9i1C2B2gZm+36Dq46XLI8VN76l+7W0FZbVIwjgBCLNe3KQ6g
+ eDeFYeO2WP7LuKeHmpt5B6XuzvIpzwcqrVViY6DPZGq5ey4qycVVY/pYJC+VknIJ
+ b1VD8w==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41skjrpjs6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 25 Sep 2024 07:43:45 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48P7hjlJ015250;
+ Wed, 25 Sep 2024 07:43:45 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41skjrpjs2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 25 Sep 2024 07:43:45 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48P716ed005810;
+ Wed, 25 Sep 2024 07:43:44 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 41tapmg0gk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 25 Sep 2024 07:43:44 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48P7hgqo56164722
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 25 Sep 2024 07:43:42 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B15B32004E;
+ Wed, 25 Sep 2024 07:43:42 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 454CE20043;
+ Wed, 25 Sep 2024 07:43:42 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 25 Sep 2024 07:43:42 +0000 (GMT)
+Message-ID: <7164df57c9c3eae2e6f27be7f6c890081740b2cc.camel@linux.ibm.com>
+Subject: Re: [PATCH 00/18] Stop all qemu-cpu threads on a breakpoint
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=
+ <alex.bennee@linaro.org>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Date: Wed, 25 Sep 2024 09:43:41 +0200
+In-Reply-To: <8c7ed3d0-15c2-426b-baf5-304a984d2559@linaro.org>
+References: <20240923162208.90745-1-iii@linux.ibm.com>
+ <8c7ed3d0-15c2-426b-baf5-304a984d2559@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2001:4860:4864:20::34;
- envelope-from=pankaj.gupta.linux@gmail.com; helo=mail-oa1-x34.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: d1n06rUN4v3cvs8UobQsh3WK5kjq60X6
+X-Proofpoint-ORIG-GUID: _A8D7WAOvZX6LdVS78eyZHc6rEChyEKr
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-24_02,2024-09-24_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 priorityscore=1501
+ spamscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0
+ clxscore=1015 malwarescore=0 mlxlogscore=463 bulkscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2409250053
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,86 +119,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Virtio memory devices rely on PCI BARs to expose the contents of memory.
-> Because of this they cannot be used (yet) with virtio-mmio or virtio-ccw.
-> In fact the code that is common to virtio-mem and virtio-pmem, which
-> is in hw/virtio/virtio-md-pci.c, is only included if CONFIG_VIRTIO_PCI
-> is set.  Reproduce the same condition in the Kconfig file, only allowing
-> VIRTIO_MEM and VIRTIO_PMEM to be defined if the transport supports it.
->
-> Without this patch it is possible to create a configuration with
-> CONFIG_VIRTIO_PCI=n and CONFIG_VIRTIO_MEM=y, but that causes a
-> linking failure.
+On Tue, 2024-09-24 at 13:46 +0200, Richard Henderson wrote:
+> On 9/23/24 18:12, Ilya Leoshkevich wrote:
+> > Hi,
+> >=20
+> > On reporting a breakpoint in a non-non-stop mode, GDB remotes must
+> > stop
+> > all threads. Currently qemu-user doesn't do that, breaking the
+> > debugging session for at least two reasons: concurrent access to
+> > the
+> > GDB socket, and an assertion within GDB [1].
+> >=20
+> > This series fixes this by importing pause_all_vcpus() from qemu-
+> > system.
+> > This in turn requires introducing BQL and a few stubs to qemu-user.
+>=20
+> I would have expected you to reuse (some portion of) start_exclusive,
+> which is already=20
+> part of qemu-user.=C2=A0 Is there a reason you chose a solution which
+> requires...
+>=20
+> > =C2=A0=C2=A0 replay: Add replay_mutex_{lock,unlock}() stubs for qemu-us=
+er
+> > =C2=A0=C2=A0 qemu-timer: Provide qemu_clock_enable() stub for qemu-user
+> > =C2=A0=C2=A0 cpu: Use BQL in qemu-user
+>=20
+> all sorts of other infrastructure?
+>=20
+>=20
+> r~
 
-Just curious what is required to make virtio-mem & virtio-pmem compatible with
-virtio-mmio?
+I don't think start_exclusive() would protect the gdb socket from
+concurrent accesses (e.g., if two threads are simultaneously stopped).
 
-Maybe late but still:
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+I have a patch [1] that introduces a big gdbstub lock for that, but it
+looks more complex than just extending BQL to qemu-user. Also, the
+BQL-based pause/resume code already works for the system mode and is
+well tested.
 
-Thanks,
-Pankaj
-
->
-> Cc: David Hildenbrand <david@redhat.com>
-> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  hw/virtio/Kconfig | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
-> index aa63ff7fd41..0afec2ae929 100644
-> --- a/hw/virtio/Kconfig
-> +++ b/hw/virtio/Kconfig
-> @@ -16,6 +16,7 @@ config VIRTIO_PCI
->      default y if PCI_DEVICES
->      depends on PCI
->      select VIRTIO
-> +    select VIRTIO_MD_SUPPORTED
->
->  config VIRTIO_MMIO
->      bool
-> @@ -35,10 +36,17 @@ config VIRTIO_CRYPTO
->      default y
->      depends on VIRTIO
->
-> +# not all virtio transports support memory devices; if none does,
-> +# no need to include the code
-> +config VIRTIO_MD_SUPPORTED
-> +    bool
-> +
->  config VIRTIO_MD
->      bool
-> +    depends on VIRTIO_MD_SUPPORTED
->      select MEM_DEVICE
->
-> +# selected by the board if it has the required support code
->  config VIRTIO_PMEM_SUPPORTED
->      bool
->
-> @@ -46,9 +54,11 @@ config VIRTIO_PMEM
->      bool
->      default y
->      depends on VIRTIO
-> +    depends on VIRTIO_MD_SUPPORTED
->      depends on VIRTIO_PMEM_SUPPORTED
->      select VIRTIO_MD
->
-> +# selected by the board if it has the required support code
->  config VIRTIO_MEM_SUPPORTED
->      bool
->
-> @@ -57,6 +67,7 @@ config VIRTIO_MEM
->      default y
->      depends on VIRTIO
->      depends on LINUX
-> +    depends on VIRTIO_MD_SUPPORTED
->      depends on VIRTIO_MEM_SUPPORTED
->      select VIRTIO_MD
->
-> --
-> 2.46.0
->
->
+[1]
+https://gitlab.com/iii-i/qemu/-/commit/0944716218820f8bdfdcf80acc6c39a48b91=
+670c
 
