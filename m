@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C403AC369AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 07:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B31E6C369AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 08:00:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stMuZ-0003UA-2a; Wed, 25 Sep 2024 03:58:11 -0400
+	id 1stMw3-0006tg-4L; Wed, 25 Sep 2024 03:59:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1stMuX-0003Tg-PA
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 03:58:09 -0400
+ id 1stMw0-0006ka-TH
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 03:59:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1stMuV-0003a7-Tz
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 03:58:09 -0400
+ id 1stMvz-0003l7-An
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 03:59:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727251086;
+ s=mimecast20190719; t=1727251178;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WqzX0PV3OArbYOuyuFGxJuSMi6W9uisoy9et5b64Sb0=;
- b=GJwFyhZITsZkgBSpj8JW2cPdLb1HXxfZOkn05rlVu3BJ86KLN3RwEtp2oaKqdbzGKuJ6W0
- y71vDZ7hToeWJrS3iMZYUWEgwWONua7P/yzaNu0OadBp6gm13HISQgkmEeXxegru9f7H0B
- 4w9hpy3oPb3tDGFz3xPp15BSOw4MTDE=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9vORUZ9yLt/DuyLPUQolVYTXxD/OK9j8T1sgweROpHE=;
+ b=F8rUf/y7lHVoP+hgNvnkTS0Bn4q5Mr9HQdCPRMwg5KhELEbcqutgGdXWqNEeZxlPLwlTU/
+ 2XpSVif10ewSPrVHONxhBjoe1qpp6xDp32laZMsj4xjkBZrxImqHQwumHt/ZOXl06XVNo3
+ hDm/EwXkXTP/ZoXKZDlbfPl4LpJ0KW4=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-472-cKQkRYU9M6-ISxSVkRljpg-1; Wed, 25 Sep 2024 03:58:02 -0400
-X-MC-Unique: cKQkRYU9M6-ISxSVkRljpg-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5c3c205df73so3449599a12.1
- for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 00:58:02 -0700 (PDT)
+ us-mta-354-O8PZIaBWMGSuVdg4OIYRCw-1; Wed, 25 Sep 2024 03:59:37 -0400
+X-MC-Unique: O8PZIaBWMGSuVdg4OIYRCw-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-5c4230b10a0so5270541a12.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 00:59:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727251082; x=1727855882;
+ d=1e100.net; s=20230601; t=1727251176; x=1727855976;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WqzX0PV3OArbYOuyuFGxJuSMi6W9uisoy9et5b64Sb0=;
- b=fmWouOupY+dt/JmFG/TKDP/DbPAqhe+72zloo6HeOQ3b6qVce0aRue/+SJRPXE6pX5
- Kmo7TTxJTF6IEO0EmV3Svcl7bUXRaGudGlIf2rDIlCbW+j2Q574MylITkAwo94wu3uVO
- njUyFreUiLX0iEbOsbuFV7BQR//64dYRNLGHzQfa+b/a2uw2bPBOUD6wM/y30JxUqDkJ
- vnYMifFZFl7AnVzc7yVxoZR3Xj88pBEyXjAQztiWCDI0EqiCC0GeKGNmPSUo2uQqH7io
- 2BhBI8rPSn7LlZRKZss5lfd1GG3ozkHZ003oykzIHa0UIKQJ0vkfjWX3sy2UyVb0VnoN
- dTIw==
-X-Gm-Message-State: AOJu0Yzrg5ezjurWXbNjR27roTw9jS/QRmMM5rDsGMPLyO89g0nCv8t5
- J2bEE1TWnPGE/HhLk12j2yKa3/GnoXqE39dwc4pJ9ZUbrMx20IM8QhdrlxH5ValIruTum/3QYmW
- W2WDJUwuxkwAR1jkC+9RCTbJthSuwjp96b0S+t83mUKnWQIbBfQPs
-X-Received: by 2002:a05:6402:34c6:b0:5c2:7699:fb6f with SMTP id
- 4fb4d7f45d1cf-5c720624c8fmr989245a12.15.1727251081723; 
- Wed, 25 Sep 2024 00:58:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE6GlX/kZMmsqXiMzeG89EtbwC8Mtv3OSGori/C918WzZSJ63yMHVB5VSn40zdGxl70J5iOhA==
-X-Received: by 2002:a05:6402:34c6:b0:5c2:7699:fb6f with SMTP id
- 4fb4d7f45d1cf-5c720624c8fmr989210a12.15.1727251081082; 
- Wed, 25 Sep 2024 00:58:01 -0700 (PDT)
+ bh=9vORUZ9yLt/DuyLPUQolVYTXxD/OK9j8T1sgweROpHE=;
+ b=RxpytyeVBAud9EyNDG8Wt2rRl5XQlnbSD71qb++ZBf9Mdgv4+abT31lcMFb3RnjXC6
+ 8mJekfwO0UguziSVU9sPawGeHHKLeUu4bqH6q+pG4kaTktHCum50zS+svowMzV0R/luv
+ FdUIWyXKhvkftCAs2aQR4pzgxyPc4/myZ3jRJnv4mNjkCTR+IgLtAwNoElIh0vBcPj2Z
+ ZZdUPMF/3urtE+OQ4lLCQ90Wkr/SWYnVNluYw8/TYdOe5LjI32X1lGwW47DrYhjcmmlc
+ 1+4UetjXdws7LQM1eTvchIpcFJX5dBt4HAoBKMuPE+x7AY4cQmySvTx+N6/L5s0qXtYJ
+ OKPg==
+X-Gm-Message-State: AOJu0YzDG/vFsOOLxHEhNFosApCARqvdUc19OtAFvyvq7OtAKzEE8LNV
+ O9KmzPpASKlRlRcZUuMQUi9bl3B/lZqa83BC7GrwypsCTZS68h4dxVCI5wIY0Fj4ikd3DVeCp5U
+ GKf7SUMsXfuPDENeuph5LuO49C8ECM/L6lnb546islrgKoqan1eBj
+X-Received: by 2002:a17:907:6d17:b0:a8d:5d28:8e0d with SMTP id
+ a640c23a62f3a-a93a0607b4emr181768066b.45.1727251176159; 
+ Wed, 25 Sep 2024 00:59:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEWi/7lFzJ0qEYQyfX1b7V/zsDGkndKZPcY8KlykF7bcZ9xeP6FYxU0BFcX1DL8Calc6/4poQ==
+X-Received: by 2002:a17:907:6d17:b0:a8d:5d28:8e0d with SMTP id
+ a640c23a62f3a-a93a0607b4emr181764766b.45.1727251175424; 
+ Wed, 25 Sep 2024 00:59:35 -0700 (PDT)
 Received: from sgarzare-redhat (host-79-46-200-231.retail.telecomitalia.it.
  [79.46.200.231]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c5cf48c238sm1575412a12.7.2024.09.25.00.57.59
+ a640c23a62f3a-a9392f65dafsm179935266b.97.2024.09.25.00.59.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Sep 2024 00:58:00 -0700 (PDT)
-Date: Wed, 25 Sep 2024 09:57:55 +0200
+ Wed, 25 Sep 2024 00:59:34 -0700 (PDT)
+Date: Wed, 25 Sep 2024 09:59:29 +0200
 From: Stefano Garzarella <sgarzare@redhat.com>
 To: marcandre.lureau@redhat.com
 Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>, 
@@ -92,15 +92,16 @@ Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>,
  Laurent Vivier <laurent@vivier.eu>, Gerd Hoffmann <kraxel@redhat.com>,
  Fam Zheng <fam@euphon.net>, 
  Eduardo Habkost <eduardo@habkost.net>, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v2 09/22] hw/vhost-scsi: fix -Werror=maybe-uninitialized
-Message-ID: <muurrvm7xjkjsdlq3ux6fvfdu5pjnhsl3j4o5ripnmoqs6bh4o@rvpokrpdmdoe>
+Subject: Re: [PATCH v2 13/22] hw/virtio-blk: fix -Werror=maybe-uninitialized
+ false-positive
+Message-ID: <ppl7p4nqvok7wrrwwilxqmerecdqy75w7ozpm4wvlnqlmjp65b@ymkvzhnyky7x>
 References: <20240924130554.749278-1-marcandre.lureau@redhat.com>
- <20240924130554.749278-10-marcandre.lureau@redhat.com>
+ <20240924130554.749278-14-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240924130554.749278-10-marcandre.lureau@redhat.com>
+In-Reply-To: <20240924130554.749278-14-marcandre.lureau@redhat.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -126,49 +127,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 24, 2024 at 05:05:40PM GMT, marcandre.lureau@redhat.com wrote:
+On Tue, Sep 24, 2024 at 05:05:44PM GMT, marcandre.lureau@redhat.com wrote:
 >From: Marc-André Lureau <marcandre.lureau@redhat.com>
 >
->../hw/scsi/vhost-scsi.c:173:12: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
->
->It can be reached when num_queues=0. It probably doesn't make much sense
->to instantiate a vhost-scsi with 0 IO queues though. For now, make
->vhost_scsi_set_workers() return success/0 anyway, when no workers have
->been setup.
-
-I agree, for vhost_scsi_set_workers() point of view, it doesn't need to
-add a new worker in that case, so it should be fine to return 0.
-
-If we really want to fail when num_queues=0, maybe it should be in
-vhost_scsi_realize().
-
+>../hw/block/virtio-blk.c:1212:12: error: ‘rq’ may be used uninitialized [-Werror=maybe-uninitialized]
 >
 >Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+>Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 >---
-> hw/scsi/vhost-scsi.c | 2 +-
+> hw/block/virtio-blk.c | 2 +-
 > 1 file changed, 1 insertion(+), 1 deletion(-)
->
->diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
->index 49cff2a0cb..22d16dc26b 100644
->--- a/hw/scsi/vhost-scsi.c
->+++ b/hw/scsi/vhost-scsi.c
->@@ -172,7 +172,7 @@ static int vhost_scsi_set_workers(VHostSCSICommon *vsc, bool per_virtqueue)
->     struct vhost_dev *dev = &vsc->dev;
->     struct vhost_vring_worker vq_worker;
->     struct vhost_worker_state worker;
->-    int i, ret;
->+    int i, ret = 0;
->
->     /* Use default worker */
->     if (!per_virtqueue || dev->nvqs == VHOST_SCSI_VQ_NUM_FIXED + 1) {
-
-Another option could have been to edit this check:
-       if (!per_virtqueue || dev->nvqs <= VHOST_SCSI_VQ_NUM_FIXED + 1) {
-           return 0;
-       }
-
-But I'm fine with your change:
 
 Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+
+>
+>diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+>index 115795392c..9166d7974d 100644
+>--- a/hw/block/virtio-blk.c
+>+++ b/hw/block/virtio-blk.c
+>@@ -1060,7 +1060,7 @@ static void virtio_blk_dma_restart_cb(void *opaque, bool running,
+>     VirtIOBlock *s = opaque;
+>     uint16_t num_queues = s->conf.num_queues;
+>     g_autofree VirtIOBlockReq **vq_rq = NULL;
+>-    VirtIOBlockReq *rq;
+>+    VirtIOBlockReq *rq = NULL;
+>
+>     if (!running) {
+>         return;
+>-- 
+>2.45.2.827.g557ae147e6
+>
 
 
