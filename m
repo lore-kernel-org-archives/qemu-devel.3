@@ -4,91 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04E13CCF9ED
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 19:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD8FCCF9ED
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 19:39:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stXhT-0006QO-2d; Wed, 25 Sep 2024 15:29:23 -0400
+	id 1stXqz-0001Ob-A6; Wed, 25 Sep 2024 15:39:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1stXh6-00065B-M9; Wed, 25 Sep 2024 15:29:03 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1stXh3-0001vv-5P; Wed, 25 Sep 2024 15:28:59 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5c5cc65a8abso107179a12.3; 
- Wed, 25 Sep 2024 12:28:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727292535; x=1727897335; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=U3+SlUNTbfPD0SQJHqh5QoPHZOskcO4CWEQCEnsUaPE=;
- b=NWu8SH2qiEf9WbSHrhxQpptM4UMzUZmm0sjyffdjNlAqzOO4DglYldT4GyvtKRHDBs
- cV/raZj6wLql0ASPjVVWBlgkjs4ph04PLSN37WaU1xAgE3y3GKNkX8rM+Kn6pEUzDTla
- tGwHgWGJbaimFitTOaD1fM5NuqMt8xHy/fp93rLjsjyYxdsJCCrcntJCs8k4Sc7T2o27
- B9V0xeSFFEMkSHqcWesSaiLm3yOZDMocXSPC3K+Dni1OzZkOEnGwBqhgDiWiPIOnCOr0
- kPjaJHf7qgP8sFWH6oVHD3IfCBh/G8Uaxhr0UxSXFAEq4+8O3fTxqAGlf1d0GtzhBFfE
- R9jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727292535; x=1727897335;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=U3+SlUNTbfPD0SQJHqh5QoPHZOskcO4CWEQCEnsUaPE=;
- b=s8RknAaE7Y1KEfZdkBYnjl5rV0FJLsUE81stDwnwB4b/3gEVRAmE73qBDv+8PKm1mg
- WLqI0iFfpleYqk6pR8dPrY5AVXJOnFhWFToyc0D9iS5dkq4R3FLqEwH5A3/F9jDpIm0c
- jNSlhanaaK/dqikIZjIWLr1G/Xq1UMysJtHRIoGcq0QVExy/31UxCxAFwRX5eJSTdkc2
- jwVrtAaKg2khXNFLHrWwsfnEgArKdtDJp+IEPa6IlN9dYoauTHukx3BZ2BapmdnYX9IT
- KDycUtsleVW8sYxhqpKS3+0yDRliU1LPEClHj3jaP25LY0hfz5+CWHxS7nh4nOyPGTUk
- XwGQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUq8kj9YLuX8D9YNsaH8WNtpVcAwHyeGoIIAWhZxC10jaHYxtiYQnjfFO9A5++azetHXI5A6W51TsQYjw==@nongnu.org,
- AJvYcCVwzqW8voj+la3NsCYWkiK1Oqm0cWtsFfMz5aTTC3ZZ5k5Y5rM42KTEEuucDntgaEJ0SQYn9Tm461g=@nongnu.org,
- AJvYcCXsl6p8c+uQZ/3RcQrsXezSuO484BPn055WrXVIH1U4mlaSbdTy4rxdva54DbSnxrKynjNI3EuKbmbC@nongnu.org
-X-Gm-Message-State: AOJu0Yz1oA4w+kMhuwtZR/JvdQawZC8yiZMiXVwJkY8qlW34B4tIKE/M
- KSDw9T9mRp0Gd8OHX6/ZBkMsfiIFEN+L/2irlrhzC2cQ7EwaZp2p
-X-Google-Smtp-Source: AGHT+IEyDJYfCKDn3dUyslfQIHSywgK6UpGlOvornPmd+JaGDFGXZmP6wTFBhyHHg+f7NYpkiKZkQg==
-X-Received: by 2002:a05:6402:2788:b0:5c7:2131:5d3 with SMTP id
- 4fb4d7f45d1cf-5c721310723mr2526646a12.12.1727292534735; 
- Wed, 25 Sep 2024 12:28:54 -0700 (PDT)
-Received: from [127.0.0.1] (dynamic-077-011-049-158.77.11.pool.telefonica.de.
- [77.11.49.158]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c5cf4d7926sm2242229a12.93.2024.09.25.12.28.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Sep 2024 12:28:54 -0700 (PDT)
-Date: Wed, 25 Sep 2024 19:03:20 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-CC: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Corey Minyard <cminyard@mvista.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-block@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>
-Subject: Re: [PATCH 01/23] hw/ppc/e500: Do not leak struct boot_info
-In-Reply-To: <72a2d6aa-07c2-403f-9db5-5a17d98de6ad@redhat.com>
-References: <20240923093016.66437-1-shentey@gmail.com>
- <20240923093016.66437-2-shentey@gmail.com>
- <72a2d6aa-07c2-403f-9db5-5a17d98de6ad@redhat.com>
-Message-ID: <72A24E73-2163-44B8-B466-1108481DACD7@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+ (Exim 4.90_1) (envelope-from <kinsey.moore@oarcorp.com>)
+ id 1stXqv-0001N9-HM
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 15:39:10 -0400
+Received: from mail-mw2nam04on2105.outbound.protection.outlook.com
+ ([40.107.101.105] helo=NAM04-MW2-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kinsey.moore@oarcorp.com>)
+ id 1stXqu-00065v-17
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 15:39:09 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cAfYlhttOKmVj8e+VQfHTS8uex09fLn+W8jQ9tcGrfwl70sAh5/ULSF7K3Yj/oCirXKI7KOX2kZsugtTP7fwaC/byguY4eaofTEWYgkS1dt6e1ETTQpAgU9gIihQ7RMiD9Tqxlpc7LvBDrZQibxfkrn5lf5YUdWXaJwJkxku7NnVA0sZ6KATOC0dAJycTgjAn1G/Xuyc3cSwG32CsWyp/kWthuD7c5CQLPA4xk8ApZToQwFcYLyXGTlc6d2AXfhJ7XWzoaOewYjRNp87mIWH+M6kin6pOMhAAFtnZWyp6kIEmq5touRJBP5VfnobLZTW1aycJDzEnFMx1G52otdJYg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sG1E0g3AzYci7upXkys2I2RrxRHA+fNWWFr8Zynrp08=;
+ b=Yq/vQjemTQPmB8xZGeHYZWEG9C5VC9RrBVq/25BKsyeu3xBHkZDIdicLC4GJLO4lzlxKsOT1mitbNiYti5A6sBogWs1VVPWYHqP57YOiFQ1WwTFjqHQWjJzguKovqBIQMbMmNa5UktNcvRa3hdC5aets4OGJsminh26a4NN7G3cLSL5B2YW5/tVeSjAOjeILCDRFshTLiMdBLO82mpw+bske9ZSJLoj5AVhVLSiD6B2uNNBX6sW7lk8cOW4FWXodpB3HAVhVaQKCZrJ7xYE3sIV+j6wnOqyHw8njjPSQ2CNMyeIhuXDNQty2Rg9FH6RYVm9gXs5vThT14HsW2Swidw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oarcorp.com; dmarc=pass action=none header.from=oarcorp.com;
+ dkim=pass header.d=oarcorp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oarcorp.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=sG1E0g3AzYci7upXkys2I2RrxRHA+fNWWFr8Zynrp08=;
+ b=IDlVQvjgPB/2mSSfpOy7oSWkET0hquuPgSMvlbRGe47aD205L2/K+/UFsaByiMpzipzZBZoY0I/oJeLRk+n/t72Zkb78t9TEe7PEz3u4F3nKp7UZR1MNGFUyRzXh7SYDxBfsTArBObjDkbE/9m0tUYb02PC+b4UsZMOGrUzGzhs=
+Received: from LV3PR19MB8278.namprd19.prod.outlook.com (2603:10b6:408:1a5::17)
+ by SA3PR19MB8195.namprd19.prod.outlook.com (2603:10b6:806:381::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7982.28; Wed, 25 Sep
+ 2024 19:34:02 +0000
+Received: from LV3PR19MB8278.namprd19.prod.outlook.com
+ ([fe80::5dc:f2fa:e0cf:9b38]) by LV3PR19MB8278.namprd19.prod.outlook.com
+ ([fe80::5dc:f2fa:e0cf:9b38%4]) with mapi id 15.20.7982.022; Wed, 25 Sep 2024
+ 19:34:02 +0000
+From: Kinsey Moore <kinsey.moore@oarcorp.com>
+To: Francisco Iglesias <frasse.iglesias@gmail.com>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "philmd@linaro.org"
+ <philmd@linaro.org>
+Subject: RE: [PATCH v2] hw/arm/xlnx: Connect secondary CGEM IRQs
+Thread-Topic: [PATCH v2] hw/arm/xlnx: Connect secondary CGEM IRQs
+Thread-Index: AQHZoGAwP9LGbfXnJEiNArWf/R9l+6+Pm4+AgCOUEICCuJLNMA==
+Date: Wed, 25 Sep 2024 19:34:02 +0000
+Message-ID: <LV3PR19MB82782241F7CFA4A66D762D5D90692@LV3PR19MB8278.namprd19.prod.outlook.com>
+References: <20230616143803.73926-1-kinsey.moore@oarcorp.com>
+ <e36a681f-53e2-8379-078e-25e43fc3966e@linaro.org>
+ <20230710140948.GJ6984@fralle-msi>
+In-Reply-To: <20230710140948.GJ6984@fralle-msi>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oarcorp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: LV3PR19MB8278:EE_|SA3PR19MB8195:EE_
+x-ms-office365-filtering-correlation-id: 661fbe7f-c228-4b8f-fec9-08dcdd990298
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|10070799003|1800799024|38070700018; 
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?flO0NnUD7n4vw9UqPGu2KaN9JiG7w2eDn48GhprkyiDYVhn8GuDaMa+8zN?=
+ =?iso-8859-1?Q?m1ba9381Wjd4azx7FVECmdIPi33EoU6QqFFAvhsf38mVfWb9lfrJXkAwqG?=
+ =?iso-8859-1?Q?7RmoHDd8WZ+gI8yIbc1covGra9kXv6/RZ1OjJ+KuDrrUsAFrqEVaAYefpa?=
+ =?iso-8859-1?Q?N2pCQuSobqnI4HSUGgmByR5txZpVoe3Kay3S9kHqpQrCJl/LUQE8rdcyZS?=
+ =?iso-8859-1?Q?mTGaTt8luqEQ7EOsmXzLDbpFm4Qx2qIk08Gl12y4J3CNRCd4FWGak9PrWu?=
+ =?iso-8859-1?Q?wwWMCBJ3beAOWvLag/J3Tur2SiFy4R8veRfIzXj61ERoGyo/eDnAIsK8kR?=
+ =?iso-8859-1?Q?4BIQS0/GiXsYj1fj6WpA0yPnxLFgWZ9VPP7fLsVnC8bz+RefhX7MmwlMiY?=
+ =?iso-8859-1?Q?6ONPrqarz+jBbhZ3bDL3OJUbRQ+vjP3K+iMFb04/NXwOBAFanbxfM5wO1E?=
+ =?iso-8859-1?Q?eviIqTb2ydDqGTdmn6gpHAiK3EXswYCv1aN54uZBOoSQ28sBWx9saRXqdH?=
+ =?iso-8859-1?Q?VYxryCbrWGcItOzPIRJHJWPEH0SwA34yv2mJo/EImOftFw1zuN5swBfKXo?=
+ =?iso-8859-1?Q?kUjyIe89nMdxMaW+zvh09RkA+5Rv3RX+zAyuWHN6DF1a7v5b9NsoCKmrkt?=
+ =?iso-8859-1?Q?unuYdz/DrL7gduo/uA8JSKaiBU0A8c78XnlL4F5KqwhmkXIHhFxTSCIDUP?=
+ =?iso-8859-1?Q?ALc5FHYop6YM4GHtL/4o86YIA7mixvtaDqK8L1D14kLz+suFPlvdOQ7vuV?=
+ =?iso-8859-1?Q?dwiR5H+VEx2qrZr62fUPCLxls8LJ2uYrjkj3xnu2XpsrhUrN1FEqLo17VL?=
+ =?iso-8859-1?Q?dH8FAsjmxPF/KVk65+BxTgiAVQU5lLJjvYhectVXfxrsvYrtgSVXvMMf7v?=
+ =?iso-8859-1?Q?4KXhq1IEBSwLAX7I3TXGdSOwYbfg6QFvmsC9w/fWQm1zfOiQzDBG1CYzp3?=
+ =?iso-8859-1?Q?QWm9ul+ThqIhDSaruK23QGr5SGy6rGdxk3JPVyKxindbfjkJ6eBmND3B6c?=
+ =?iso-8859-1?Q?TJ2fGLXK+HZPInHYi34J6iEPSV5U5Oozf+CxRDcHXSuEGUi3sC1CpzP+n/?=
+ =?iso-8859-1?Q?flPjPBYH8ct6ET9PCx3i/DuMUg6KmdgGdcm8UJUxu7Bzz2FRI94896qjR7?=
+ =?iso-8859-1?Q?F17OVSAzMv6vOn7Nz1nu5VLc63b5I5384tv3AKxbwhALOGjw1hdK07hC5R?=
+ =?iso-8859-1?Q?PbaYSqdDoYI0Cnx9ZH5FadhqeTSe5RhFwHTqRZs5Pu1triqXRFSyPqqQBp?=
+ =?iso-8859-1?Q?SKRV/cnCAOR5BrHFdWioxNNuEQC7JXiPs82v+h/oTr4vZ0ItxhCCQ9R8w8?=
+ =?iso-8859-1?Q?07Tu1UtAG28ZasymsDbqFucwX7MiBOMZ9ZxCm7FJZ5J2Fl6vfKTZIQlAr/?=
+ =?iso-8859-1?Q?3NJD3Mi/O1QlA7kZrFHQTMcDSptT2RlnXyb9msDpGzXMvYmugvGO1tbnPf?=
+ =?iso-8859-1?Q?uVKS3laBBDqOfvZQyupML7skALh9Ozkav2jb1g=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:LV3PR19MB8278.namprd19.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(10070799003)(1800799024)(38070700018); DIR:OUT;
+ SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?rToyVxFxmes7MuU4dsYJukZgqSMj1WBM6WG6h4hYWDIU8MCn3fCmJ4snx0?=
+ =?iso-8859-1?Q?D8X6BBcr2a/sctr0dwVlcqg87UkZ/FTCiq61lJk03K/AjlwMcRMck3c+7R?=
+ =?iso-8859-1?Q?napPjb7NXuTxI9yH5XBN3h+7Tf1+BCCyzui6nYwREbp9wDtgzA0ULrO+e0?=
+ =?iso-8859-1?Q?fvDHLswTb5/563cueePm0epUsVo2hO0lsKqMs/W/V6BCjfHLfdjfOXt+45?=
+ =?iso-8859-1?Q?cEHNmNeU5985iWxhnYFGMNUNeFZ73S0fLm+5i/w85LZM/9a6VWSzye/2a6?=
+ =?iso-8859-1?Q?up4QuXoqlwVAsxgqHnRX0XBF2H4OlJiCjGat92lyM8/q5/PK+pK3SARgV6?=
+ =?iso-8859-1?Q?EwqYjS/BkzAb1pAT8Z/ys+NanbyjWl5X79qqi+/UtNF5iL++3RucMmFPvh?=
+ =?iso-8859-1?Q?8hQBoLprjLwHG3ywk5w2L8EE1WHm7ABRO9QKI9L3qzlS/SPehfYnKhIGbm?=
+ =?iso-8859-1?Q?YECP+UJdrY0eAYmIY4bFOOOp3fbjeuqcaxjXxf0jAVdIwy0Qmk7cVVheqX?=
+ =?iso-8859-1?Q?Fh0DHGA2BdQndVFc/y4r2b14/2rca5MgrGglpGeqjXJLT+sGxQCMdD1bnl?=
+ =?iso-8859-1?Q?nsZ9GhFvVmK3nxFfhNBvh5LNE2xZVJIEqhhbWzSWbizzf1bHAwI9UhfWY/?=
+ =?iso-8859-1?Q?/qLOEF08J1sB618IfqSGlRd7lc2jKi0LLEjNRoKb37BWzBTHAMMWFXEbzx?=
+ =?iso-8859-1?Q?AWH2zE3UwnGcUoB7bW2ktUW72u/IJpTlj8DItKcY+lzUj+dklKw3jxFNim?=
+ =?iso-8859-1?Q?J58ui2Mff3mpKwoA3campLfR1aKPKHXb3A+2+3ucyDNe5qmIZp36NFsEpI?=
+ =?iso-8859-1?Q?EHKGvH7rNCocpnq6RbxspCJPbpMuuP7rXTeY1wb+Y7x/0iUHdT0SpyKTl3?=
+ =?iso-8859-1?Q?GroiEJkUi15m0CtJ6fWaFaIh7AL4AHeAv6oqNKC8jAKL7tmW0ZFqUCSztP?=
+ =?iso-8859-1?Q?NVXm8MwRyaNhPcZWZn3nDL+wK1kydm/bLynZEuo9uqRChxSJK/3apKxcZm?=
+ =?iso-8859-1?Q?zVeuA5mES/btqgv8iCXPZM2yldHkKN8Gos4YQ1UeGfCUjsPGUri0yjRV0M?=
+ =?iso-8859-1?Q?HIByJqhoFJTYHWg5QvCW9wRzEm1TZ7w7FlyKP0v5WttOceDHl1vceQqs68?=
+ =?iso-8859-1?Q?WYUyUpyIF68oPzX+vFaTVzoCqBCWw+3M0oKD29XS7ITswBmAnpQXgzmqG6?=
+ =?iso-8859-1?Q?maj3ac1cjd4d8KahZBkJct76kXNJuATdh0j5YAk5pdtn+77DrcmI0lX6Bh?=
+ =?iso-8859-1?Q?7m1FwAhW5yPvu+D5dVjHwR4Wx+L4nlI86olmEvs8MxlJIya6lViYOD4lsg?=
+ =?iso-8859-1?Q?eoro7Zwfb+Ri8EDPP7sG1yPTC+1h9rp3hOu+hacjzly5AFTpB5okRJ9pWW?=
+ =?iso-8859-1?Q?EbOft/Uie+79Yrrh2Cy9FMBKpjDQjHnEdHhtCPWhCSzeX0RoZxdzcDfdiG?=
+ =?iso-8859-1?Q?QlpurJY9OeFO2dWA6BclCvPMR+28Ud+c7Vtu1/HE8+M0ix85GZ9ztbj2/0?=
+ =?iso-8859-1?Q?RiUSDoPZW3QJ2z8gm0R1FD3NbIgcxykTTS8HQYUlvF+U/IxHB5VyzuQAju?=
+ =?iso-8859-1?Q?p/cU00tBMwYo87mdSJOiafNk+2CW3Nq0jj8pIQIzs/STmv8sEn8TpD+6Gy?=
+ =?iso-8859-1?Q?bm20WJtGelGMzEn+/QZK8j3F9sMlVVHI/+SbhUltKLfSgOEl2fuMPpgWg2?=
+ =?iso-8859-1?Q?Zj039YTbTGSMtTn4BpI=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+MIME-Version: 1.0
+X-OriginatorOrg: oarcorp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: LV3PR19MB8278.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 661fbe7f-c228-4b8f-fec9-08dcdd990298
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Sep 2024 19:34:02.2735 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7bdf32a6-03de-4c70-a71b-8665ba1294e3
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 4aYUewaBdAzFJ6b2qpStxrbUGLedAExyLcekVbPAAKICekDJV2M2Hq42gTNYlUoN+MLHIpvqaJoiPN8+qQJpGQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR19MB8195
+Received-SPF: pass client-ip=40.107.101.105;
+ envelope-from=kinsey.moore@oarcorp.com;
+ helo=NAM04-MW2-obe.outbound.protection.outlook.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-0.828, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,106 +170,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hey,
+I just wanted to check on the status of this patch since it's been sitting =
+for a bit now and I noticed it hasn't gone into any branches. Is this waiti=
+ng on something from me?
+
+Thanks,
+Kinsey
+
+-----Original Message-----
+From: Francisco Iglesias <frasse.iglesias@gmail.com>=20
+Sent: Monday, July 10, 2023 09:10
+To: peter.maydell@linaro.org
+Cc: Kinsey Moore <kinsey.moore@oarcorp.com>; qemu-devel@nongnu.org; philmd@=
+linaro.org
+Subject: Re: [PATCH v2] hw/arm/xlnx: Connect secondary CGEM IRQs
 
 
-Am 25=2E September 2024 15:35:15 UTC schrieb "C=C3=A9dric Le Goater" <clg@=
-redhat=2Ecom>:
->On 9/23/24 11:29, Bernhard Beschow wrote:
->> The struct is allocated once with g_new0() but never free()'d=2E Fix th=
-e leakage
->> by adding an attribute to struct PPCE500MachineState which avoids the
->> allocation=2E
->>=20
->> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->> ---
->>   hw/ppc/e500=2Eh |  8 ++++++++
->>   hw/ppc/e500=2Ec | 17 ++++-------------
->>   2 files changed, 12 insertions(+), 13 deletions(-)
->>=20
->> diff --git a/hw/ppc/e500=2Eh b/hw/ppc/e500=2Eh
->> index 8c09ef92e4=2E=2E557ce6ad93 100644
->> --- a/hw/ppc/e500=2Eh
->> +++ b/hw/ppc/e500=2Eh
->> @@ -5,10 +5,18 @@
->>   #include "hw/platform-bus=2Eh"
->>   #include "qom/object=2Eh"
->>   +typedef struct boot_info {
->> +    uint32_t dt_base;
->> +    uint32_t dt_size;
->> +    uint32_t entry;
->> +} boot_info;
->
->or simply move the fields under the machine state struct to avoif
->the struct boot_info which doesn't seem that necessary=2E Is it ?
-
-Yes, this works=2E Good idea=2E
++PMM (I think this one might have fallen throught the cracks)
 
 Best regards,
-Bernhard
+Francisco Iglesias
 
->
->
->Thanks,
->
->C=2E
->
->
->
->> +
->>   struct PPCE500MachineState {
->>       /*< private >*/
->>       MachineState parent_obj;
->>   +    boot_info boot_info;
->> +
->>       /* points to instance of TYPE_PLATFORM_BUS_DEVICE if
->>        * board supports dynamic sysbus devices
->>        */
->> diff --git a/hw/ppc/e500=2Ec b/hw/ppc/e500=2Ec
->> index 3bd12b54ab=2E=2E75b051009f 100644
->> --- a/hw/ppc/e500=2Ec
->> +++ b/hw/ppc/e500=2Ec
->> @@ -80,13 +80,6 @@
->>     #define PLATFORM_CLK_FREQ_HZ       (400 * 1000 * 1000)
->>   -struct boot_info
->> -{
->> -    uint32_t dt_base;
->> -    uint32_t dt_size;
->> -    uint32_t entry;
->> -};
->> -
->>   static uint32_t *pci_map_create(void *fdt, uint32_t mpic, int first_s=
-lot,
->>                                   int nr_slots, int *len)
->>   {
->> @@ -919,7 +912,6 @@ void ppce500_init(MachineState *machine)
->>       bool kernel_as_payload;
->>       hwaddr bios_entry =3D 0;
->>       target_long payload_size;
->> -    struct boot_info *boot_info =3D NULL;
->>       int dt_size;
->>       int i;
->>       unsigned int smp_cpus =3D machine->smp=2Ecpus;
->> @@ -974,9 +966,8 @@ void ppce500_init(MachineState *machine)
->>           /* Register reset handler */
->>           if (!i) {
->>               /* Primary CPU */
->> -            boot_info =3D g_new0(struct boot_info, 1);
->>               qemu_register_reset(ppce500_cpu_reset, cpu);
->> -            env->load_info =3D boot_info;
->> +            env->load_info =3D &pms->boot_info;
->>           } else {
->>               /* Secondary CPUs */
->>               qemu_register_reset(ppce500_cpu_reset_sec, cpu);
->> @@ -1274,9 +1265,9 @@ void ppce500_init(MachineState *machine)
->>       }
->>       assert(dt_size < DTB_MAX_SIZE);
->>   -    boot_info->entry =3D bios_entry;
->> -    boot_info->dt_base =3D dt_base;
->> -    boot_info->dt_size =3D dt_size;
->> +    pms->boot_info=2Eentry =3D bios_entry;
->> +    pms->boot_info=2Edt_base =3D dt_base;
->> +    pms->boot_info=2Edt_size =3D dt_size;
->>   }
->>     static void e500_ccsr_initfn(Object *obj)
->
+On [2023 Jun 18] Sun 00:50:47, Philippe Mathieu-Daud=E9 wrote:
+> On 16/6/23 16:38, Kinsey Moore wrote:
+> > The Cadence GEM peripherals as configured for Zynq MPSoC and Versal
+> > platforms have two priority queues with separate interrupt sources for
+> > each. If the interrupt source for the second priority queue is not
+> > connected, they work in polling mode only. This change connects the
+> > second interrupt source for platforms where it is available. This patch
+> > has been tested using the lwIP stack with a Xilinx-supplied driver from
+> > their embeddedsw repository.
+> >=20
+> > Signed-off-by: Kinsey Moore <kinsey.moore@oarcorp.com>
+> > ---
+> >   hw/arm/xlnx-versal.c         | 12 +++++++++++-
+> >   hw/arm/xlnx-zynqmp.c         | 11 ++++++++++-
+> >   include/hw/arm/xlnx-versal.h |  1 +
+> >   include/hw/arm/xlnx-zynqmp.h |  1 +
+> >   4 files changed, 23 insertions(+), 2 deletions(-)
+>=20
+> Reviewed-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
+>=20
+>=20
 
