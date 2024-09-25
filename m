@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAC85CCF9EC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0FA2CCF9E7
 	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 19:30:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stXhD-00069D-OX; Wed, 25 Sep 2024 15:29:07 -0400
+	id 1stXhT-0006S0-6a; Wed, 25 Sep 2024 15:29:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1stXh6-000659-LG; Wed, 25 Sep 2024 15:29:03 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1stXh7-00065D-UG; Wed, 25 Sep 2024 15:29:03 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1stXh2-0001ux-QL; Wed, 25 Sep 2024 15:28:58 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5c46680a71bso128109a12.2; 
- Wed, 25 Sep 2024 12:28:53 -0700 (PDT)
+ id 1stXh4-0001wc-Gj; Wed, 25 Sep 2024 15:29:01 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a8ce5db8668so32124466b.1; 
+ Wed, 25 Sep 2024 12:28:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727292532; x=1727897332; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727292536; x=1727897336; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EpNIGUqoKh3ApSswDw2WgMUn4lBLGk7X9nmAv792NQ0=;
- b=BqJgN/bcfa7u3tT+EIQohiId0USDg6SPNC6ID2HbgL4f1s0gT90sXCcBEd6fKOKKBv
- H0tuH/CtpTm/jNCcy98esdHEEyv4ghCyKTpWVTtj6X2BXCIduE1WeawHWoTasV0ZngbU
- idWDMbVIPCWT3iWMnUCSQjYe3xM/VUuNbNs4jPZlT7gPXm//9D00R36mZo0aTsqtbFow
- CA05Xez8+ksBl/pvaReQKUyWJ7y/Vn01ArcLQ6rNRPDyTZYAwOAYF16/5jmAei8ELv7Z
- k5O0wpw3ylw16q+ZukkAMxuwI8wH5S4Lis8oPEOu3T+jrlH4Nem1tV/px5zi17JHRjrm
- 17JA==
+ bh=Mg74pexZQVTEGPDGWQhe3MOWTkYe255JTpYjTNv1AQs=;
+ b=UaKwXaDbi0s7w1wPoMEyDq7jcV52qXDMV7xEg8aRIqfPwK4WH0twCnVeILq8eTdtnU
+ NrhcD5c2X/lA5Idwqi+fW7gFkS1s/VZYjsf65WCOQlh+i+i/dWeGk8Sxnz30EE9ERhWp
+ 4nc4pEqIhe0cnYgQCBP57EyMA1apnBcxlQxbzX4SmheducJ9nQE2zidSnTiag4Co8PW6
+ AwF7WLwQStvxS1PZUd2M5TSNOIiM0Je66+WS1I4iStNf7Jm3AeoZEb91S1YfYFZQ1yom
+ tKQ37HjgoP09CpXlY6SnYAxGwN2IFquLnzYl4DlSGmdlI7ecDD6YGsxbfvAxwCJAddwe
+ RGRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727292532; x=1727897332;
+ d=1e100.net; s=20230601; t=1727292536; x=1727897336;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EpNIGUqoKh3ApSswDw2WgMUn4lBLGk7X9nmAv792NQ0=;
- b=nXsr0X2L7HAPP33fOzBvFHBsBvfbk8IqfPDcuhQvfx9DnAymJB7gCFZQem8dDtZR8/
- 90jWfpBtcCbCrThJ/QfjEvSDYrhgGIE9MVIQWKWG9myNdrBZrK6OCeZnZJHqQnyjRV4W
- vkmd/wgi7Xhrg3+9d4XTzOsQ0yslRYtt34sHUG/g18ohGbKdIb6HZPFbz3N24dvHQClM
- IKoSmeRYO0pOG0SfMdFyDdEIxEHFX9Jw3PD5wcQ2eSsbZW5PajQ6K3Vv9AbqiUmLTC6d
- Y2DcbnRuhGynD7dEBsURPjfB1nw61iRP1F4FJznqvICXUoxaigEIkxwW3KhlCq0D/Clv
- D3NA==
+ bh=Mg74pexZQVTEGPDGWQhe3MOWTkYe255JTpYjTNv1AQs=;
+ b=UVCWk6vp6kc5qg5OpiB2ezaA3+w+gDTV1i3ctlakOhVgepVKkCICnpbwlZy11+1ggT
+ z0aOOHv7fgYsyHsCle0wgj46O4NV/Rp3v3dO+W24YXRSjbnP8znrNCvijmRIKoJRHrKF
+ IvN9zyQ3nDL9RVDxQYNNEw95LL+HybMqkv5+uGBgfu1KYmeOE4F044+eKl4hThZjfOFE
+ OX5eCnJVnMm3J3cmwDxRuh5h9NPmQXNii/vYWbAZ/v4EPVfc1E9SN+QDca8Qphxs2Vua
+ Ba6hvin6eKSGOK0l+slDSExaGsXl1ZaZc/M9HvWJWyP4Lducm+NyWw1MrLf32ocKvXSh
+ DxSw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWj5jstiBD4Lphl3c4hzcF0hEnMSFdanJjzjSMTaA86KU6dLQhJF+cCcRE+dOMVyFwIciSirveoO8ON@nongnu.org,
- AJvYcCXTwVRiv+Boo3w9cG48ennhjuxk6c0BEvT0yLGtLSn0TcNJpJUIDDSEasaLB5+UkzMx1NNF6K4nYRA=@nongnu.org
-X-Gm-Message-State: AOJu0YyIVj1iyuiZrTeHbkyb05B3r/wVT5fxNbkoK4Z2Qf5ClYcH6i9A
- rOien2KIavFp+K05ERr/B9eAM6zzlV11gg5QpHpy0LHBZSZyHjA8
-X-Google-Smtp-Source: AGHT+IEUcFZhlWCmeCpdutgH6haBxSnNkJoLs42N0w309Gn5ImNa/rOeZM+0fk4NjYRMvaWsy4WstQ==
-X-Received: by 2002:a05:6402:354a:b0:5c7:1ffc:f58c with SMTP id
- 4fb4d7f45d1cf-5c720641103mr3131855a12.28.1727292531804; 
- Wed, 25 Sep 2024 12:28:51 -0700 (PDT)
+ AJvYcCVdwAV2g0wMIJOeFTsiFv8+ISX04PXqh2EcQIdRnwEjJww8nuG9Y/osIRSPwVqpxw9K+Z2FdJ4AMYf2+w==@nongnu.org,
+ AJvYcCWq2Yh59s0dXU2bRIhuGdfFuH9Td7McgM2ZzQIrfd8JdIuDzxNopkNtGU2yMNv+3DYW6o8LFcPajB7E@nongnu.org,
+ AJvYcCXRKkKU+DePU0GHmqM24P7l/Wlu42HndRBiMUjT+Iz6k5FDk5P5xWd7qj12K2IvGPOTniXthM17bng=@nongnu.org
+X-Gm-Message-State: AOJu0YwcJobxQ1gUnhSb92NwxsWnIZvG7gWLcfnX2CY15dSS5VdnM5vt
+ 6mPAsWvGI4QokS4TJBRmvZxJTcCESu1Zwzf4rk1qmlzJXTFrC2c5
+X-Google-Smtp-Source: AGHT+IFIDzUskRFoEacWXBZVclm5bn5PTmav9Z+bnMT0ShXzl+/0qAwUr+TAzaO+GnMVzhChYqC76Q==
+X-Received: by 2002:a17:907:ea8:b0:a90:c411:24f8 with SMTP id
+ a640c23a62f3a-a93a03380dfmr414025066b.2.1727292536132; 
+ Wed, 25 Sep 2024 12:28:56 -0700 (PDT)
 Received: from [127.0.0.1] (dynamic-077-011-049-158.77.11.pool.telefonica.de.
  [77.11.49.158]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c5cf4c4fd8sm2246241a12.69.2024.09.25.12.28.50
+ a640c23a62f3a-a9392f51e82sm249305966b.71.2024.09.25.12.28.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Sep 2024 12:28:51 -0700 (PDT)
-Date: Wed, 25 Sep 2024 19:09:38 +0000
+ Wed, 25 Sep 2024 12:28:55 -0700 (PDT)
+Date: Wed, 25 Sep 2024 19:02:00 +0000
 From: Bernhard Beschow <shentey@gmail.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-CC: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
+To: =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+CC: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
  Kevin Wolf <kwolf@redhat.com>, Corey Minyard <cminyard@mvista.com>,
  =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Jason Wang <jasowang@redhat.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-block@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
- =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
+ Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>
 Subject: Re: [PATCH 02/23] hw/ppc/e500: Reduce scope of env pointer
-In-Reply-To: <87efb774-720a-9628-9335-fbec17e68d12@eik.bme.hu>
+In-Reply-To: <9ee5b660-c3d1-49a4-8123-e15219fe2d60@redhat.com>
 References: <20240923093016.66437-1-shentey@gmail.com>
  <20240923093016.66437-3-shentey@gmail.com>
- <87efb774-720a-9628-9335-fbec17e68d12@eik.bme.hu>
-Message-ID: <296CB8D6-C7D5-4A13-B84B-B44D437454E2@gmail.com>
+ <9ee5b660-c3d1-49a4-8123-e15219fe2d60@redhat.com>
+Message-ID: <22897BC3-DDAC-4EEC-83DE-41B573232DF9@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,82 +106,85 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 23=2E September 2024 10:04:48 UTC schrieb BALATON Zoltan <balaton@eik=
-=2Ebme=2Ehu>:
->On Mon, 23 Sep 2024, Bernhard Beschow wrote:
+Am 25=2E September 2024 15:37:22 UTC schrieb "C=C3=A9dric Le Goater" <clg@=
+redhat=2Ecom>:
+>On 9/23/24 11:29, Bernhard Beschow wrote:
 >> The env pointer isn't used outside the for loop, so move it inside=2E A=
 fter that,
 >> the firstenv pointer is never read, so remove it=2E
 >
->It's probably the other way arouns, you remove firstenv (which is the big=
-ger part of this patch) then it's clear env is not needed outside of the lo=
-op any more so can be moved there=2E The purpose of this seems to be to pre=
-serve the env of the first CPU but as it's unused yet maybe it can be remov=
-ed for now and readded later when needed=2E
+>Just wondering, have you considered introducing an PowerPCCPU array
+>under the machine state ?
+>
+>This would be an intermediate step towards the introduction of an SoC
+>model (in the long term)
 
-I'll fix the commit message=2E
+Well, there seem to be many members in the QorIQ family with incompatible =
+offsets=2E So I experimented with dtb-driven machine creation instead to si=
+destep the whole problem=2E Once this series is merged I plan to submit an =
+RFC for that=2E
 
 Best regards,
 Bernhard
 
 >
->Regards,
->BALATON Zoltan
+>Thanks,
+>
+>C=2E
+>
+>
 >
 >> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
 >> ---
->> hw/ppc/e500=2Ec | 9 +--------
->> 1 file changed, 1 insertion(+), 8 deletions(-)
+>>   hw/ppc/e500=2Ec | 9 +--------
+>>   1 file changed, 1 insertion(+), 8 deletions(-)
 >>=20
 >> diff --git a/hw/ppc/e500=2Ec b/hw/ppc/e500=2Ec
 >> index 75b051009f=2E=2Ef68779a1ea 100644
 >> --- a/hw/ppc/e500=2Ec
 >> +++ b/hw/ppc/e500=2Ec
 >> @@ -899,7 +899,6 @@ void ppce500_init(MachineState *machine)
->>     const PPCE500MachineClass *pmc =3D PPCE500_MACHINE_GET_CLASS(machin=
-e);
->>     MachineClass *mc =3D MACHINE_CLASS(pmc);
->>     PCIBus *pci_bus;
+>>       const PPCE500MachineClass *pmc =3D PPCE500_MACHINE_GET_CLASS(mach=
+ine);
+>>       MachineClass *mc =3D MACHINE_CLASS(pmc);
+>>       PCIBus *pci_bus;
 >> -    CPUPPCState *env =3D NULL;
->>     uint64_t loadaddr;
->>     hwaddr kernel_base =3D -1LL;
->>     int kernel_size =3D 0;
+>>       uint64_t loadaddr;
+>>       hwaddr kernel_base =3D -1LL;
+>>       int kernel_size =3D 0;
 >> @@ -921,7 +920,6 @@ void ppce500_init(MachineState *machine)
->>     IrqLines *irqs;
->>     DeviceState *dev, *mpicdev;
->>     DriveInfo *dinfo;
+>>       IrqLines *irqs;
+>>       DeviceState *dev, *mpicdev;
+>>       DriveInfo *dinfo;
 >> -    CPUPPCState *firstenv =3D NULL;
->>     MemoryRegion *ccsr_addr_space;
->>     SysBusDevice *s;
->>     PPCE500CCSRState *ccsr;
+>>       MemoryRegion *ccsr_addr_space;
+>>       SysBusDevice *s;
+>>       PPCE500CCSRState *ccsr;
 >> @@ -930,6 +928,7 @@ void ppce500_init(MachineState *machine)
->>     irqs =3D g_new0(IrqLines, smp_cpus);
->>     for (i =3D 0; i < smp_cpus; i++) {
->>         PowerPCCPU *cpu;
+>>       irqs =3D g_new0(IrqLines, smp_cpus);
+>>       for (i =3D 0; i < smp_cpus; i++) {
+>>           PowerPCCPU *cpu;
 >> +        CPUPPCState *env;
->>         CPUState *cs;
->>=20
->>         cpu =3D POWERPC_CPU(object_new(machine->cpu_type));
+>>           CPUState *cs;
+>>             cpu =3D POWERPC_CPU(object_new(machine->cpu_type));
 >> @@ -950,10 +949,6 @@ void ppce500_init(MachineState *machine)
->>                                  &error_abort);
->>         qdev_realize_and_unref(DEVICE(cs), NULL, &error_fatal);
->>=20
->> -        if (!firstenv) {
+>>                                    &error_abort);
+>>           qdev_realize_and_unref(DEVICE(cs), NULL, &error_fatal);
+>>   -        if (!firstenv) {
 >> -            firstenv =3D env;
 >> -        }
 >> -
->>         irqs[i]=2Eirq[OPENPIC_OUTPUT_INT] =3D
->>             qdev_get_gpio_in(DEVICE(cpu), PPCE500_INPUT_INT);
->>         irqs[i]=2Eirq[OPENPIC_OUTPUT_CINT] =3D
+>>           irqs[i]=2Eirq[OPENPIC_OUTPUT_INT] =3D
+>>               qdev_get_gpio_in(DEVICE(cpu), PPCE500_INPUT_INT);
+>>           irqs[i]=2Eirq[OPENPIC_OUTPUT_CINT] =3D
 >> @@ -974,8 +969,6 @@ void ppce500_init(MachineState *machine)
->>         }
->>     }
->>=20
->> -    env =3D firstenv;
+>>           }
+>>       }
+>>   -    env =3D firstenv;
 >> -
->>     if (!QEMU_IS_ALIGNED(machine->ram_size, RAM_SIZES_ALIGN)) {
->>         error_report("RAM size must be multiple of %" PRIu64, RAM_SIZES=
-_ALIGN);
->>         exit(EXIT_FAILURE);
->>=20
+>>       if (!QEMU_IS_ALIGNED(machine->ram_size, RAM_SIZES_ALIGN)) {
+>>           error_report("RAM size must be multiple of %" PRIu64, RAM_SIZ=
+ES_ALIGN);
+>>           exit(EXIT_FAILURE);
+>
 
