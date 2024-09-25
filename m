@@ -4,114 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B31E6C369AA
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 08:00:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2441C369A8
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 08:06:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stMw3-0006tg-4L; Wed, 25 Sep 2024 03:59:43 -0400
+	id 1stN11-0005jB-Mj; Wed, 25 Sep 2024 04:04:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1stMw0-0006ka-TH
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 03:59:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1stN10-0005iZ-Ac
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 04:04:50 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1stMvz-0003l7-An
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 03:59:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727251178;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9vORUZ9yLt/DuyLPUQolVYTXxD/OK9j8T1sgweROpHE=;
- b=F8rUf/y7lHVoP+hgNvnkTS0Bn4q5Mr9HQdCPRMwg5KhELEbcqutgGdXWqNEeZxlPLwlTU/
- 2XpSVif10ewSPrVHONxhBjoe1qpp6xDp32laZMsj4xjkBZrxImqHQwumHt/ZOXl06XVNo3
- hDm/EwXkXTP/ZoXKZDlbfPl4LpJ0KW4=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-354-O8PZIaBWMGSuVdg4OIYRCw-1; Wed, 25 Sep 2024 03:59:37 -0400
-X-MC-Unique: O8PZIaBWMGSuVdg4OIYRCw-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5c4230b10a0so5270541a12.1
- for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 00:59:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727251176; x=1727855976;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9vORUZ9yLt/DuyLPUQolVYTXxD/OK9j8T1sgweROpHE=;
- b=RxpytyeVBAud9EyNDG8Wt2rRl5XQlnbSD71qb++ZBf9Mdgv4+abT31lcMFb3RnjXC6
- 8mJekfwO0UguziSVU9sPawGeHHKLeUu4bqH6q+pG4kaTktHCum50zS+svowMzV0R/luv
- FdUIWyXKhvkftCAs2aQR4pzgxyPc4/myZ3jRJnv4mNjkCTR+IgLtAwNoElIh0vBcPj2Z
- ZZdUPMF/3urtE+OQ4lLCQ90Wkr/SWYnVNluYw8/TYdOe5LjI32X1lGwW47DrYhjcmmlc
- 1+4UetjXdws7LQM1eTvchIpcFJX5dBt4HAoBKMuPE+x7AY4cQmySvTx+N6/L5s0qXtYJ
- OKPg==
-X-Gm-Message-State: AOJu0YzDG/vFsOOLxHEhNFosApCARqvdUc19OtAFvyvq7OtAKzEE8LNV
- O9KmzPpASKlRlRcZUuMQUi9bl3B/lZqa83BC7GrwypsCTZS68h4dxVCI5wIY0Fj4ikd3DVeCp5U
- GKf7SUMsXfuPDENeuph5LuO49C8ECM/L6lnb546islrgKoqan1eBj
-X-Received: by 2002:a17:907:6d17:b0:a8d:5d28:8e0d with SMTP id
- a640c23a62f3a-a93a0607b4emr181768066b.45.1727251176159; 
- Wed, 25 Sep 2024 00:59:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEWi/7lFzJ0qEYQyfX1b7V/zsDGkndKZPcY8KlykF7bcZ9xeP6FYxU0BFcX1DL8Calc6/4poQ==
-X-Received: by 2002:a17:907:6d17:b0:a8d:5d28:8e0d with SMTP id
- a640c23a62f3a-a93a0607b4emr181764766b.45.1727251175424; 
- Wed, 25 Sep 2024 00:59:35 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-46-200-231.retail.telecomitalia.it.
- [79.46.200.231]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9392f65dafsm179935266b.97.2024.09.25.00.59.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Sep 2024 00:59:34 -0700 (PDT)
-Date: Wed, 25 Sep 2024 09:59:29 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>, 
- Peter Xu <peterx@redhat.com>, Bin Meng <bmeng.cn@gmail.com>, 
- Mahmoud Mandour <ma.mandourr@gmail.com>, Hyman Huang <yong.huang@smartx.com>, 
- Klaus Jensen <its@irrelevant.dk>, Alexandre Iooss <erdnaxe@crans.org>, 
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- John Snow <jsnow@redhat.com>, 
- Jesper Devantier <foss@defmacro.it>, Bin Meng <bin.meng@windriver.com>,
- Greg Kurz <groug@kaod.org>, 
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, 
- Yuval Shaia <yuval.shaia.ml@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- Keith Busch <kbusch@kernel.org>, 
- Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, 
- Laurent Vivier <laurent@vivier.eu>, Gerd Hoffmann <kraxel@redhat.com>,
- Fam Zheng <fam@euphon.net>, 
- Eduardo Habkost <eduardo@habkost.net>, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v2 13/22] hw/virtio-blk: fix -Werror=maybe-uninitialized
- false-positive
-Message-ID: <ppl7p4nqvok7wrrwwilxqmerecdqy75w7ozpm4wvlnqlmjp65b@ymkvzhnyky7x>
-References: <20240924130554.749278-1-marcandre.lureau@redhat.com>
- <20240924130554.749278-14-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1stN0y-0004TL-94
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 04:04:50 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 6E0115C5CDB;
+ Wed, 25 Sep 2024 08:04:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1118BC4CEC3;
+ Wed, 25 Sep 2024 08:04:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1727251486;
+ bh=XtTR+0xNDM4kXU9yTQYoYa57KB86//G17A4RfWnZ188=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=PJ6IjScG7UBcmzhhkAjyhX58+TQg5ouqzFWdHJeruf/9Y5ar3O03lMTj7HdFP+Z/x
+ hbkUsB3ConnnjJJbGTz6jtmMlfbp9d/xlesXJat702M9qOAJVf5FfetDf/A914IH+E
+ zatJDvh5I5iudsMbgzq9JOwvuEZ6Sdf83oF98NzLsFKMTJNBqAQA0YToWTynQ2oxng
+ DEr7eZMxCa1wiOcv+U4b731Fy6MFRcPLldDrsgHXiuYineQqIXEpEgQPBxaABI4jW/
+ hoF+QRRen6qZJswZhV0J/Y9RlcXEPDmmH5vOSzMG2TKBVC2c+DRWLCccgZlE23eZDw
+ +oomspFu6VsyQ==
+Date: Wed, 25 Sep 2024 10:04:41 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Peter Xu <peterx@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>, "Michael
+ S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ linux-kernel@vger.kernel.org, qemu-devel@nongnu.org, Fabiano Rosas
+ <farosas@suse.de>
+Subject: Re: [PATCH v10 02/21] acpi/generic_event_device: Update GHES
+ migration to cover hest addr
+Message-ID: <20240925100441.229790ba@foz.lan>
+In-Reply-To: <ZumetxyRro8RfC8h@x1n>
+References: <cover.1726293808.git.mchehab+huawei@kernel.org>
+ <bed4b2da51e0c894cc255f712b67e2e57295d826.1726293808.git.mchehab+huawei@kernel.org>
+ <20240917111921.7e95726b@imammedo.users.ipa.redhat.com>
+ <ZumetxyRro8RfC8h@x1n>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240924130554.749278-14-marcandre.lureau@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.09,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=139.178.84.217;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -71
+X-Spam_score: -7.2
+X-Spam_bar: -------
+X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.09,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,35 +80,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 24, 2024 at 05:05:44PM GMT, marcandre.lureau@redhat.com wrote:
->From: Marc-André Lureau <marcandre.lureau@redhat.com>
->
->../hw/block/virtio-blk.c:1212:12: error: ‘rq’ may be used uninitialized [-Werror=maybe-uninitialized]
->
->Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
->---
-> hw/block/virtio-blk.c | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
+Em Tue, 17 Sep 2024 11:22:31 -0400
+Peter Xu <peterx@redhat.com> escreveu:
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+> On Tue, Sep 17, 2024 at 11:19:21AM +0200, Igor Mammedov wrote:
+> > On Sat, 14 Sep 2024 08:13:23 +0200
+> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> >   
 
->
->diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
->index 115795392c..9166d7974d 100644
->--- a/hw/block/virtio-blk.c
->+++ b/hw/block/virtio-blk.c
->@@ -1060,7 +1060,7 @@ static void virtio_blk_dma_restart_cb(void *opaque, bool running,
->     VirtIOBlock *s = opaque;
->     uint16_t num_queues = s->conf.num_queues;
->     g_autofree VirtIOBlockReq **vq_rq = NULL;
->-    VirtIOBlockReq *rq;
->+    VirtIOBlockReq *rq = NULL;
->
->     if (!running) {
->         return;
->-- 
->2.45.2.827.g557ae147e6
->
+> > what I would do:
+> >   add ghes_needed_v2(): return  s->ghes_state.hest_addr_le;
+> > 
+> > and then instead of reusing vmstate_ghes_state would add new
+> > vmstate_ghes_v2_state subsection that migrates only 
+> >   VMSTATE_UINT64(hest_addr_le, AcpiGhesState)
+> > field.
+> > 
+> > btw: we probably don't need ghes_addr_le for new code that
+> > uses HEST to lookup relevant error status block.
+> > but we should still keep it for 9.1 and older machine types
+> > as they expect/use it. Separate subsections would work with
+> > this req just fine.  
+
+Ok, so, if I understood it right, the enclosed patch should do the
+job, right?
+
+> Right, if we need bi-directional migration we need above and a compat
+> property (or VMSTATE_UINT64_TEST() would work too, iiuc).
+> 
+> OTOH VMSD versioning only works for forward migration, not backward.
+
+I don't think bi-directional migration would work. See, with
+old version, we have:
+
+- Just one Error source block structure, only for ARMv8 using synchronous
+  notification (SEA).
+- The offsets to access the error block structure and the memory
+  position where the OSPM will acknowledge the error assumes a single
+  error source;
+- such offsets come from ghes_addr_le bios pointer (we will rename it to
+  hw_addr_le at the cleanup patch series).
+
+With the new versions, we'll have:
+
+- at least two notification sources on ARMv8 (SEA and GPIO). We may
+  end adding more with time;
+- other architectures may also have support for bios-first hardware
+  errors;
+- the number of error block structures is now read from HEST table
+  (so it needs that hest_addr_le will be stored at AcpiGedState;
+- the offsets to retrieve the addresses are now relative to the offset
+  at hest_addr_le.
+
+The new error injection code, which uses either hest_addr_le or
+ghes_addr_le (now hw_addr_le) should be able to properly generate
+errors from a VM created on 9.1, as it will check if hest_addr_le
+is not zero. If it is zero, it will call a backward-compatible
+code:
+
+    acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,
+                                                       NULL));
+    if (!acpi_ged_state) {
+        error_setg(errp, "Can't find ACPI_GED object");
+        return;
+    }
+    ags = &acpi_ged_state->ghes_state;
+
+    if (!ags->hest_addr_le) {
+	/* Assumes just a single source_id */
+        get_ghes_offsets(le64_to_cpu(ags->hw_error_le),
+                         &cper_addr, &read_ack_register_addr);
+    } else {
+	/* do a for at the HEST table seeking for an specific source_id */
+        get_hest_offsets(source_id, le64_to_cpu(ags->hest_addr_le),
+                         &cper_addr, &read_ack_register_addr, errp);
+    }
+
+Now, a VM created with 9.2 will have multiple sources. The location of the
+read_ack_register_addr depends on the number of sources, which can't be
+retrieved without a VIOS pointer to the location of the HEST table
+(e. g. ags->hest_addr_le).
+
+So, a 9.1 QEMU with a VM created on 9.2 won't be doing the right thing
+with regards to the vaule of the ack offset, thus with RAS errors not
+working. I can't see any way to make it work.
+
+> >   
+> > >  static const VMStateDescription vmstate_ghes_state = {
+> > >      .name = "acpi-ged/ghes",
+> > > -    .version_id = 1,
+> > > -    .minimum_version_id = 1,
+> > > +    .version_id = 2,
+> > > +    .minimum_version_id = 2,  
+> 
+> (and IIUC if we set min ver=2, even forward migration should fail.. better
+>  test it with an old binary, migrating back and forth)
+> 
+> > >      .needed = ghes_needed,
+> > >      .fields = (const VMStateField[]) {
+> > >          VMSTATE_STRUCT(ghes_state, AcpiGedState, 1,  
+> >   
+> 
+> Thanks,
+> 
+
+Thanks,
+Mauro
+
+---
+
+[PATCH] acpi/generic_event_device: Update GHES migration to cover hest addr
+
+The GHES migration logic at GED should now support HEST table
+location too.
+
+Increase migration version and change needed to check for both
+ghes_addr_le and hest_addr_le.
+
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+
+diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+index c5acfb204e5f..bd996d01390c 100644
+--- a/hw/acpi/generic_event_device.c
++++ b/hw/acpi/generic_event_device.c
+@@ -377,6 +377,34 @@ static const VMStateDescription vmstate_ghes_state = {
+     }
+ };
+ 
++static const VMStateDescription vmstate_hest = {
++    .name = "acpi-ghes",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64(hest_addr_le, AcpiGhesState),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
++static bool hest_needed(void *opaque)
++{
++    AcpiGedState *s = opaque;
++    return s->ghes_state.hest_addr_le;
++}
++
++static const VMStateDescription vmstate_hest_state = {
++    .name = "acpi-ged/ghes",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = hest_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_STRUCT(ghes_state, AcpiGedState, 1,
++                       vmstate_hest, AcpiGhesState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static const VMStateDescription vmstate_acpi_ged = {
+     .name = "acpi-ged",
+     .version_id = 1,
+@@ -388,6 +416,7 @@ static const VMStateDescription vmstate_acpi_ged = {
+     .subsections = (const VMStateDescription * const []) {
+         &vmstate_memhp_state,
+         &vmstate_ghes_state,
++        &vmstate_hest_state,
+         NULL
+     }
+ };
 
 
