@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7B65C369D0
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD556C369CC
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:12:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stPvr-0002BK-Tm; Wed, 25 Sep 2024 07:11:43 -0400
+	id 1stPwD-0004Np-He; Wed, 25 Sep 2024 07:12:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPvm-0001m2-P0
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPw3-0003gO-4H
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPvl-0003b8-9y
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:38 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPw1-0003lE-AT
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727262696;
+ s=mimecast20190719; t=1727262712;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cAeg+Ie663IEIZWiQO7e2V0IGemFx0hvCtiNmWMksEg=;
- b=djdQEcQXcOCBBiXjpHfl30ds//7iXZbhwQ4+9Uz8FJaVb3dwVpF/VqNDZXYrCUSxD1TOQ1
- TcSHwIfkNt4WBonsDrWdGpWjvhHC6i55I3vNw4DyKKGrRhrVC7tgXnIcJl1GuQYAWxvyQU
- 7gzqbNYahUiPc5jFuepI1m+7et76SZg=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=tZVzphQdjGjCU5nXoYO6/Y8Dt9zYl8M8DQY574lUcWs=;
+ b=eqLAtk/ftcVN8VIRROLVYzbISHGcF4K+uzhtY/Ml65/NJe5RV1KCEjk2iTiEUZlOWJX7/s
+ bUsmNSmyx9bWsNMbkOJ4Fs2cu4zDUmauz6qPl3xFvKvdE1V1noEH1QFNHCVKELDV+mYVBF
+ SBoiXLDRIjIzv15EKvp//YIjmyaahMM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-44-Wj6-SXTePXSxtUlXXGQk5Q-1; Wed,
- 25 Sep 2024 07:11:32 -0400
-X-MC-Unique: Wj6-SXTePXSxtUlXXGQk5Q-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-x7kOWLPNOi2uCKuvlviotA-1; Wed,
+ 25 Sep 2024 07:11:48 -0400
+X-MC-Unique: x7kOWLPNOi2uCKuvlviotA-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
  [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9192D1944DF9; Wed, 25 Sep 2024 11:11:31 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CFD9F193E8F2; Wed, 25 Sep 2024 11:11:47 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.206])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E50731956096; Wed, 25 Sep 2024 11:11:29 +0000 (UTC)
+ id 72F881956094; Wed, 25 Sep 2024 11:11:45 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 21/44] migration: replace assert(false) with
- g_assert_not_reached()
-Date: Wed, 25 Sep 2024 13:10:02 +0200
-Message-ID: <20240925111029.24082-22-thuth@redhat.com>
+Subject: [PULL 27/44] hw/scsi: remove break after g_assert_not_reached()
+Date: Wed, 25 Sep 2024 13:10:08 +0200
+Message-ID: <20240925111029.24082-28-thuth@redhat.com>
 In-Reply-To: <20240925111029.24082-1-thuth@redhat.com>
 References: <20240925111029.24082-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -88,29 +87,27 @@ This patch is part of a series that moves towards a consistent use of
 g_assert_not_reached() rather than an ad hoc mix of different
 assertion mechanisms.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20240919044641.386068-14-pierrick.bouvier@linaro.org>
+Message-ID: <20240919044641.386068-20-pierrick.bouvier@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- migration/dirtyrate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/scsi/virtio-scsi.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c
-index 1d9db81299..c03b13b624 100644
---- a/migration/dirtyrate.c
-+++ b/migration/dirtyrate.c
-@@ -228,7 +228,7 @@ static int time_unit_to_power(TimeUnit time_unit)
-     case TIME_UNIT_MILLISECOND:
-         return -3;
+diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
+index 9f02ceea09..6637cfeaf5 100644
+--- a/hw/scsi/virtio-scsi.c
++++ b/hw/scsi/virtio-scsi.c
+@@ -357,7 +357,6 @@ static void virtio_scsi_do_one_tmf_bh(VirtIOSCSIReq *req)
+ 
      default:
--        assert(false); /* unreachable */
-+        g_assert_not_reached();
-         return 0;
+         g_assert_not_reached();
+-        break;
      }
- }
+ 
+ out:
 -- 
 2.46.0
 
