@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9675BCCF9E8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99DD0CCF9EB
 	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 17:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stVYf-0000yZ-IZ; Wed, 25 Sep 2024 13:12:10 -0400
+	id 1stVYT-0000MP-Tr; Wed, 25 Sep 2024 13:11:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1stVYO-0000K5-CI
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:11:55 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1stVYL-0000Ix-7W
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:11:50 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1stVYJ-0000bW-By
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:11:51 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-42cb2191107so229325e9.1
- for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 10:11:47 -0700 (PDT)
+ id 1stVYJ-0000bG-9W
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:11:48 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42e7b7bef42so146135e9.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 10:11:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727284306; x=1727889106; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727284303; x=1727889103; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EDuKUu/6yQVewIifCo34+Vf5uNGO51ibdAtzIBiO5J8=;
- b=AA/Nv/cD5A5XNGyTS9Byh0ZEgbCYPbTcrz8vRn3LDi+wP+jvx0Hcp2lT5MAzMeGROU
- DWEoOFPhe1Z2cnYO+6SRvfeBIKtUn4OkcMd16mrfLrIyVR+elBsUElfoPhcJeCvj869H
- D8CNrQxZo8VFjfk2xQyqEQfQQBvLAjyynspWG0GMO+biKiPIxqjO3ffbFNhD5vRi2Q5l
- vfC2451j6u/Lug0+Cqf0NYHbesRDiT5TOvVRvcUXBqeZ6JRNAoJj53jC7DwhgHPrZvzU
- 4JXcYBF61WsO1BGqdD3xTef0q5cnCxcNyZ2b9rHps6HL7a4NW/dbJTEms0e1HYfQwnz9
- rTVA==
+ bh=nULHsaLuBuujYUxGLl/yUjxpzYZCDveoFrPVw941m7Y=;
+ b=dzRGTvWcNv9RjcdRDMFMPAsy48smb0H9FKAPk9C1Y28uFsjSdbMFUOdZC1k9Z+HKx5
+ 0efMBKjBjjrlxp9w5qSWAs/wH3GNS7BXvv1NH6t8jlLIDuYv+ENeJtoS1ivnrbJ9lcwf
+ 2BuwzEEw+wI9Ma+vCXbJMvxwspSfxfkSQqaXJuyYqQFepR/TL3IlF3ApMi55tuPB8jIV
+ i9SeQymripEtxv9C09Lw5Uma7gQSYHrFWGgsD1gZuZyM9ZJJbERoSvtmdQg8XEVoK/6h
+ 1Z9Rf+Aqp0Ni3VlEKJyqmwtDkmX7GT2hTKtEgh55FGQ/PyhlNX387wNgyX3WsGLmYFCN
+ btIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727284306; x=1727889106;
+ d=1e100.net; s=20230601; t=1727284303; x=1727889103;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EDuKUu/6yQVewIifCo34+Vf5uNGO51ibdAtzIBiO5J8=;
- b=YDu8hDIgfZ4SFBnRvhS7Y86NxWr3QRa5+bwmNzGqoto56p5CGo6tO4pL4nKp0gvUOT
- NGQOGO4vaz68ty1AAa0UZlrA1G0SOGiX6FU8Jf1DzK8QoFgJ7lPyw1PG1CTBEssTEvvX
- c2Qc/F1wtEKP5SqZt1E20WWX7xnCmTpC9CWRRmgUFkX5D6VUK4RwQX8bQCbpASchh8+t
- VSel95tpjJHCAxuNpbtYvsCGH8VWFV6o1UoxflObPioZxxeGCN9/N2Ohc9BbGxSyePa6
- G3i1GUMlSrrN2+urgLlWfoz/M489sxTCUxquaAiep2Rdlrsp44wwGZiE98phBWsjzqcu
- +OSw==
-X-Gm-Message-State: AOJu0YwCjImnrvYIcXHW6YTgdlfi/OdVFoeUPYCTZUgj096UrXNAnv4F
- 98pXU5LeCpmr5jO3Voqjn3PuXISlV1K7uOFxX166CLSvP1v4bp32/kjvOxUxgkI=
-X-Google-Smtp-Source: AGHT+IEA9zk5J4EgLwcu9iKTkG6OebG0V871ScTHwgvkLHU/Z/qAW1uTvFwLsqIXWyXSVXC9pmkYyw==
-X-Received: by 2002:a05:600c:a085:b0:42f:310f:de9 with SMTP id
- 5b1f17b1804b1-42f310f1005mr13936295e9.15.1727284305716; 
- Wed, 25 Sep 2024 10:11:45 -0700 (PDT)
+ bh=nULHsaLuBuujYUxGLl/yUjxpzYZCDveoFrPVw941m7Y=;
+ b=hPpbCnZRu7WQHkbO1i7EyCFFPMKO+hx+uJPBba8eaATF4tBIdB8iXw/nYr5m8I7sKv
+ 0V0STVA/LZpTdMwYmOfUykjxqzYK+rCGRQPqNJwUtpaj/hbpCfdpZ5Cr4q8pRGFozH/h
+ TUUsTqBj1Ygw9Vc5ZKdF/jo36eZtw1BVGrI/ZlXwAv69S8pNtP0Ssj4IELSqggrxdK/N
+ 3O0tz4Pm46rtm3YPU4u20omx/EX9m92aZjoM9cTU3AFlFDvgZfF/Y/zPbPaiwsl9cf36
+ zJNgn09EpTtZ9tmDLl4P5gVKtgsAOlAGsQjMNWhyGbqM/0IyTb/FQTSkATFgtFpszQAn
+ 56Hg==
+X-Gm-Message-State: AOJu0YzcUN/m17fOZJILEY/B/WmTREb/YGn8MdwdBwNiqUr2uNbS3e4I
+ iXbLS2nqBqs5dlnK6MUAGvkViSepUt48rsJsawz+X6wypYTQkJpFaKNwcCSJB9g=
+X-Google-Smtp-Source: AGHT+IEORzqVBB16eZ00Qj5TJ8YpgmN6tE1vpCu+cktnO6IgKyCPHtWZVud/qUVLpXrUdIz4Dy+68Q==
+X-Received: by 2002:adf:fa41:0:b0:368:4910:8f49 with SMTP id
+ ffacd0b85a97d-37cc246b405mr2347263f8f.12.1727284303257; 
+ Wed, 25 Sep 2024 10:11:43 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42e969e18f7sm24065735e9.5.2024.09.25.10.11.42
+ ffacd0b85a97d-37cbc3187a4sm4466876f8f.90.2024.09.25.10.11.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Sep 2024 10:11:44 -0700 (PDT)
+ Wed, 25 Sep 2024 10:11:41 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E015C5FA3D;
+ by draig.lan (Postfix) with ESMTP id B47BE5FA12;
  Wed, 25 Sep 2024 18:11:40 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -81,18 +81,17 @@ Cc: Zhao Liu <zhao1.liu@intel.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <thuth@redhat.com>,
  Beraldo Leal <bleal@redhat.com>
-Subject: [PATCH 06/10] target/i386: fix build warning (gcc-12
- -fsanitize=thread)
-Date: Wed, 25 Sep 2024 18:11:36 +0100
-Message-Id: <20240925171140.1307033-7-alex.bennee@linaro.org>
+Subject: [PATCH 04/10] MAINTAINERS: mention my testing/next tree
+Date: Wed, 25 Sep 2024 18:11:34 +0100
+Message-Id: <20240925171140.1307033-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20240925171140.1307033-1-alex.bennee@linaro.org>
 References: <20240925171140.1307033-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,50 +113,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+I put it under my name as there may be other maintainer testing trees
+as well.
 
-Found on debian stable.
-
-../target/i386/kvm/kvm.c: In function ‘kvm_handle_rdmsr’:
-../target/i386/kvm/kvm.c:5345:1: error: control reaches end of non-void function [-Werror=return-type]
- 5345 | }
-      | ^
-../target/i386/kvm/kvm.c: In function ‘kvm_handle_wrmsr’:
-../target/i386/kvm/kvm.c:5364:1: error: control reaches end of non-void function [-Werror=return-type]
- 5364 | }
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240910174013.1433331-3-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/i386/kvm/kvm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index ada581c5d6..c8056ef83d 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5771,7 +5771,7 @@ static int kvm_handle_rdmsr(X86CPU *cpu, struct kvm_run *run)
-         }
-     }
- 
--    assert(false);
-+    g_assert_not_reached();
- }
- 
- static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
-@@ -5790,7 +5790,7 @@ static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
-         }
-     }
- 
--    assert(false);
-+    g_assert_not_reached();
- }
- 
- static bool has_sgx_provisioning;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ffacd60f40..7ac2252303 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4114,6 +4114,7 @@ Build and test automation
+ -------------------------
+ Build and test automation, general continuous integration
+ M: Alex Bennée <alex.bennee@linaro.org>
++T: git https://gitlab.com/stsquad/qemu testing/next
+ M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ M: Thomas Huth <thuth@redhat.com>
+ R: Wainer dos Santos Moschetta <wainersm@redhat.com>
 -- 
 2.39.5
 
