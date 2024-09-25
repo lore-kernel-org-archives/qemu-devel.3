@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6265C369CC
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:16:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD68EC369D0
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:16:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stPwR-0005Rj-Ce; Wed, 25 Sep 2024 07:12:20 -0400
+	id 1stPxu-0004Jg-Dy; Wed, 25 Sep 2024 07:13:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPw5-0003r0-KF
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPwP-0005Lm-Dy
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:12:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPw3-0003lp-3x
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:57 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPwN-0003uQ-Vb
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:12:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727262714;
+ s=mimecast20190719; t=1727262734;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7DEh6045OUJp99Ba8zmy2nR/KEr7ul1oZPdI/Kx0ia4=;
- b=bWVZZ5gKcmAfZezb7qrskzizYC5zdobcEJh+CXXPmoLxW3h9VVZN+9axLxQFTGS2kKcnzN
- r4rbD9vfwF8XHFq0UreTBVCFR54rth+njKddEnQNJnnM8A20DfuJk0CyC3ogMu9j6VxZA7
- LIFAOqTza/4MPYx58PWmQgTekQ5cPbQ=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=/hiFZFF8hncyDRf8D3JNk/9vZTYM/dpbNvOPLfGO2Lc=;
+ b=eo/iEryQbrDCCi+8X26dqThv51IIhJuELVXboKB847gst1xEYzPtEf0f//nNHSo59b6HbY
+ IJfFk8FeedMf03LQs+tuNRnq2yZLdZDNbW5djfNH2zGBem8fSXIegmIVLtYmRRA/HsbNTu
+ M5CJ2w7WBcuFjZweF7nh1nW76fElqGc=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-449-Mcut2KtkNPqbmUO8A6Lngg-1; Wed,
- 25 Sep 2024 07:11:51 -0400
-X-MC-Unique: Mcut2KtkNPqbmUO8A6Lngg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-286-V0vj0oYUPJmBobGw0GdNCw-1; Wed,
+ 25 Sep 2024 07:12:13 -0400
+X-MC-Unique: V0vj0oYUPJmBobGw0GdNCw-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
  [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 396B81935868; Wed, 25 Sep 2024 11:11:50 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E8471944D69; Wed, 25 Sep 2024 11:12:12 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.206])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5BB021956094; Wed, 25 Sep 2024 11:11:48 +0000 (UTC)
+ id 5D9441956094; Wed, 25 Sep 2024 11:12:09 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 28/44] hw/tpm: remove break after g_assert_not_reached()
-Date: Wed, 25 Sep 2024 13:10:09 +0200
-Message-ID: <20240925111029.24082-29-thuth@redhat.com>
+Subject: [PULL 37/44] hw/ppc: remove return after g_assert_not_reached()
+Date: Wed, 25 Sep 2024 13:10:18 +0200
+Message-ID: <20240925111029.24082-38-thuth@redhat.com>
 In-Reply-To: <20240925111029.24082-1-thuth@redhat.com>
 References: <20240925111029.24082-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -87,26 +88,40 @@ This patch is part of a series that moves towards a consistent use of
 g_assert_not_reached() rather than an ad hoc mix of different
 assertion mechanisms.
 
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20240919044641.386068-21-pierrick.bouvier@linaro.org>
+Message-ID: <20240919044641.386068-30-pierrick.bouvier@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/tpm/tpm_spapr.c | 1 -
- 1 file changed, 1 deletion(-)
+ hw/ppc/ppc.c          | 1 -
+ hw/ppc/spapr_events.c | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/hw/tpm/tpm_spapr.c b/hw/tpm/tpm_spapr.c
-index e084e987e6..5f7a0dfc61 100644
---- a/hw/tpm/tpm_spapr.c
-+++ b/hw/tpm/tpm_spapr.c
-@@ -206,7 +206,6 @@ static int tpm_spapr_do_crq(struct SpaprVioDevice *dev, uint8_t *crq_data)
-                 break;
-             default:
-                 g_assert_not_reached();
--                break;
-             }
-             trace_tpm_spapr_do_crq_get_version(be32_to_cpu(local_crq.data));
-             spapr_tpm_send_crq(dev, &local_crq);
+diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+index e6fa5580c0..fde4619412 100644
+--- a/hw/ppc/ppc.c
++++ b/hw/ppc/ppc.c
+@@ -267,7 +267,6 @@ static void power9_set_irq(void *opaque, int pin, int level)
+         break;
+     default:
+         g_assert_not_reached();
+-        return;
+     }
+ }
+ 
+diff --git a/hw/ppc/spapr_events.c b/hw/ppc/spapr_events.c
+index 38ac1cb786..4dbf8e2e2e 100644
+--- a/hw/ppc/spapr_events.c
++++ b/hw/ppc/spapr_events.c
+@@ -646,7 +646,6 @@ static void spapr_hotplug_req_event(uint8_t hp_id, uint8_t hp_action,
+          * that don't support them
+          */
+         g_assert_not_reached();
+-        return;
+     }
+ 
+     if (hp_id == RTAS_LOG_V6_HP_ID_DRC_COUNT) {
 -- 
 2.46.0
 
