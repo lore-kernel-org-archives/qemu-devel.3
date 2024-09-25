@@ -4,41 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BBD3CF9C6B
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 14:10:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96DA3CF9C6F
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 14:12:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stSi7-0002TO-KE; Wed, 25 Sep 2024 10:09:43 -0400
+	id 1stSk3-0007ZR-Oy; Wed, 25 Sep 2024 10:11:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1stSi5-0002PU-KI; Wed, 25 Sep 2024 10:09:41 -0400
+ id 1stSjj-0006Je-TQ; Wed, 25 Sep 2024 10:11:25 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1stSi3-0000A1-5l; Wed, 25 Sep 2024 10:09:40 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XDJR53vnjz6D8gq;
- Wed, 25 Sep 2024 22:05:37 +0800 (CST)
+ id 1stSjh-0000SX-KY; Wed, 25 Sep 2024 10:11:23 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XDJSJ4m5Xz6HJbb;
+ Wed, 25 Sep 2024 22:06:40 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 7E119140B39;
- Wed, 25 Sep 2024 22:09:35 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id C5C49140498;
+ Wed, 25 Sep 2024 22:11:17 +0800 (CST)
 Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 25 Sep
- 2024 16:09:34 +0200
-Date: Wed, 25 Sep 2024 15:09:33 +0100
+ 2024 16:11:17 +0200
+Date: Wed, 25 Sep 2024 15:11:15 +0100
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 CC: Igor Mammedov <imammedo@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, <linux-kernel@vger.kernel.org>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 02/15] acpi/ghes: simplify acpi_ghes_record_errors() code
-Message-ID: <20240925150933.0000373d@Huawei.com>
-In-Reply-To: <45dcc7644e2b2a04645a37e561ed7294482b0744.1727236561.git.mchehab+huawei@kernel.org>
+ Dongjiu Geng <gengdongjiu1@gmail.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>,
+ <linux-kernel@vger.kernel.org>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 03/15] acpi/ghes: simplify the per-arch caller to build
+ HEST table
+Message-ID: <20240925151115.00005b15@Huawei.com>
+In-Reply-To: <6305bca3d0c4fc02853fe2794eeb39f46823c733.1727236561.git.mchehab+huawei@kernel.org>
 References: <cover.1727236561.git.mchehab+huawei@kernel.org>
- <45dcc7644e2b2a04645a37e561ed7294482b0744.1727236561.git.mchehab+huawei@kernel.org>
+ <6305bca3d0c4fc02853fe2794eeb39f46823c733.1727236561.git.mchehab+huawei@kernel.org>
 Organization: Huawei Technologies Research and Development (UK) Ltd.
 X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
@@ -72,111 +75,36 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 25 Sep 2024 06:04:07 +0200
+On Wed, 25 Sep 2024 06:04:08 +0200
 Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-> Reduce the ident of the function and prepares it for
-> the next changes.
+> The GHES driver requires not only a HEST table, but also a
+> separate firmware file to store Error Structure records.
+> It can't do one without the other.
+> 
+> Simplify the caller logic for it to require one function.
+> 
+> This prepares for further changes where the HEST table
+> generation will become more generic.
 > 
 > No functional changes.
 > 
 > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Some of the alignment doesn't seem to match local style which
-is either align after ( or align 4 spaces in from line above for
-multiple line argument lists.
-
-Code is fine as I guess the later structure is to prepare
-for additions that prevent early returns being sensible.
-
-With that in mind.
-
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
-> ---
->  hw/acpi/ghes.c | 56 ++++++++++++++++++++++++++------------------------
->  1 file changed, 29 insertions(+), 27 deletions(-)
 > 
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index dc217694deb9..dacbd4d0c093 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -402,40 +402,42 @@ int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
->  
->      start_addr = le64_to_cpu(ags->ghes_addr_le);
->  
-> -    if (physical_address) {
-> +    if (!physical_address) {
-> +        return -1;
-> +    }
->  
-> -        if (source_id < ACPI_GHES_ERROR_SOURCE_COUNT) {
-> -            start_addr += source_id * sizeof(uint64_t);
-> -        }
-> +    if (source_id < ACPI_GHES_ERROR_SOURCE_COUNT) {
-> +        start_addr += source_id * sizeof(uint64_t);
-> +    }
->  
-> -        cpu_physical_memory_read(start_addr, &error_block_addr,
-> -                                 sizeof(error_block_addr));
-> +    cpu_physical_memory_read(start_addr, &error_block_addr,
-> +                                sizeof(error_block_addr));
->  
-> -        error_block_addr = le64_to_cpu(error_block_addr);
-> +    error_block_addr = le64_to_cpu(error_block_addr);
->  
-> -        read_ack_register_addr = start_addr +
-> -            ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t);
-> +    read_ack_register_addr = start_addr +
-> +        ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t);
->  
-> -        cpu_physical_memory_read(read_ack_register_addr,
-> -                                 &read_ack_register, sizeof(read_ack_register));
-> +    cpu_physical_memory_read(read_ack_register_addr,
-> +                                &read_ack_register, sizeof(read_ack_register));
-
-Alignment looks fishy plus maybe move &read_ack_register up a line.
-
-
->  
-> -        /* zero means OSPM does not acknowledge the error */
-> -        if (!read_ack_register) {
-> -            error_report("OSPM does not acknowledge previous error,"
-> -                " so can not record CPER for current error anymore");
-> -        } else if (error_block_addr) {
-> -            read_ack_register = cpu_to_le64(0);
-> -            /*
-> -             * Clear the Read Ack Register, OSPM will write it to 1 when
-> -             * it acknowledges this error.
-> -             */
-> -            cpu_physical_memory_write(read_ack_register_addr,
-> -                &read_ack_register, sizeof(uint64_t));
-> +    /* zero means OSPM does not acknowledge the error */
-> +    if (!read_ack_register) {
-> +        error_report("OSPM does not acknowledge previous error,"
-> +            " so can not record CPER for current error anymore");
-I guess later changes make it unwise to just return -1 here.	
-
-> +    } else if (error_block_addr) {
-> +        read_ack_register = cpu_to_le64(0);
-> +        /*
-> +         * Clear the Read Ack Register, OSPM will write it to 1 when
-> +         * it acknowledges this error.
-> +         */
-> +        cpu_physical_memory_write(read_ack_register_addr,
-> +            &read_ack_register, sizeof(uint64_t));
->  
-> -            ret = acpi_ghes_record_mem_error(error_block_addr,
-> -                                             physical_address);
-> -        } else
-> -            error_report("can not find Generic Error Status Block");
-> +        ret = acpi_ghes_record_mem_error(error_block_addr,
-> +                                            physical_address);
-or return here.
-> +    } else {
-> +        error_report("can not find Generic Error Status Block");
->      }
->  
->      return ret;
+> ---
+> 
+> Changes from v10:
+> - Removed the logic which associates notification and source
+>   ID. This will be placed on a separate patch.
+> 
+> Changes from v8:
+> - Non-rename/cleanup changes merged altogether;
+> - source ID is now more generic, defined per guest target.
+>   That should make easier to add support for 86.
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Odd sign off here ;)
+Otherwise seems reasonable to me.
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
 
