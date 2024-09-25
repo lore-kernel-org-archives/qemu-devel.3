@@ -4,76 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E33CECCF9E8
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 16:40:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9675BCCF9E8
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 17:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stV2p-0006Mx-Qu; Wed, 25 Sep 2024 12:39:15 -0400
+	id 1stVYf-0000yZ-IZ; Wed, 25 Sep 2024 13:12:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1stV2n-0006LM-KJ
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 12:39:13 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1stVYO-0000K5-CI
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:11:55 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1stV2m-0005Tw-35
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 12:39:13 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a8d4979b843so5090466b.3
- for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 09:39:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1stVYJ-0000bW-By
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:11:51 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-42cb2191107so229325e9.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 10:11:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1727282350; x=1727887150; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=1Z435ziM7/tTwXvzSmTfZy2EC4XDAX34xouZ7aIOlIs=;
- b=LwY0OXgteTGCTGimU5Js2JGUcwhWKj38pGphZ/qZJ7iHVz1GAEPBS5qGdq4N4PxkCQ
- PCHk+2f0x90FYwCStR9iogfoiMOnM3qpFzGXgUDG1WsL4t6IUmOmTsOVnHMehBFCUW5c
- f6qYsqzxo9ImzdDl4K9uBXcSdWTBYRmPJWNBc/ssof9YxzVxW6I8xjFdzvEybjdceKkI
- xRwpLfu2aEvO/omXweedMEY3zIcG0SFIIumqYK29ScV3b9Rh8RhBr65dP2dXbIdoStiM
- F8pnqBFkWjERGpcuWWSP1PLKVi2/nX2YRUe3Z4DQo0/T1gq3s7Km9i7vIeUckqchYq39
- 2gLw==
+ d=linaro.org; s=google; t=1727284306; x=1727889106; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EDuKUu/6yQVewIifCo34+Vf5uNGO51ibdAtzIBiO5J8=;
+ b=AA/Nv/cD5A5XNGyTS9Byh0ZEgbCYPbTcrz8vRn3LDi+wP+jvx0Hcp2lT5MAzMeGROU
+ DWEoOFPhe1Z2cnYO+6SRvfeBIKtUn4OkcMd16mrfLrIyVR+elBsUElfoPhcJeCvj869H
+ D8CNrQxZo8VFjfk2xQyqEQfQQBvLAjyynspWG0GMO+biKiPIxqjO3ffbFNhD5vRi2Q5l
+ vfC2451j6u/Lug0+Cqf0NYHbesRDiT5TOvVRvcUXBqeZ6JRNAoJj53jC7DwhgHPrZvzU
+ 4JXcYBF61WsO1BGqdD3xTef0q5cnCxcNyZ2b9rHps6HL7a4NW/dbJTEms0e1HYfQwnz9
+ rTVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727282350; x=1727887150;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1Z435ziM7/tTwXvzSmTfZy2EC4XDAX34xouZ7aIOlIs=;
- b=YBEjAyAeEkMEvrtop1ckXnF9X6G+BbMkz6Sbv04fo8Udr2Sz6C/L9hiD+l0+2pnQpN
- LCnbldyRwgjHFjqgtIjdy/cHZeO9iyIJOy/vCZ+j9XKmP2X/mVh5/diC6HX7TfpKkMRO
- jZpHB73YIVmxaxlIouxoz4q9RaVKXmlxafXEpYHqtm/92HziD6fb34Ap8y3L+0jjOE/z
- 2GHVaC6qH2UieP9uZlpTQYvfqknh9+bIob5eKeIQ8U38XoMbR/C+JQCkMRew/ox5KBV5
- S9FhlI72ECEdYkJynJ52r8A2YwRvtFoyDytcyGVV5jPufVr5rycy19HLtAa99oyDwfZW
- 3Kkg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU46iTeus2yoBuLFT3HFKEQ258QTWZ/9qMzw7yyeEEKzX3ojiBBwdQbzhxp+I4qaqrO4DXxF1KETbgI@nongnu.org
-X-Gm-Message-State: AOJu0YyYnRos61KEUiqMp1qXTjIqnOrfIDhXigUb6RN/PK+fKI5bMjuj
- 5LK/W4/rR6aXYOK8CbZiOQBGWSXnLk/+543+pRZqqVi9mE6vtwFqrH5To99XqKs=
-X-Google-Smtp-Source: AGHT+IERX02swcPEoiblQuuic3gAEeqmOswgPsVWcbmUh+C8ghu3DeH4LxWkSEre3wbkr5Qvqi67YQ==
-X-Received: by 2002:a17:907:9487:b0:a7a:8586:d36b with SMTP id
- a640c23a62f3a-a93a03305a3mr326532566b.3.1727282349900; 
- Wed, 25 Sep 2024 09:39:09 -0700 (PDT)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9392f4fb94sm228009766b.58.2024.09.25.09.39.09
+ d=1e100.net; s=20230601; t=1727284306; x=1727889106;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EDuKUu/6yQVewIifCo34+Vf5uNGO51ibdAtzIBiO5J8=;
+ b=YDu8hDIgfZ4SFBnRvhS7Y86NxWr3QRa5+bwmNzGqoto56p5CGo6tO4pL4nKp0gvUOT
+ NGQOGO4vaz68ty1AAa0UZlrA1G0SOGiX6FU8Jf1DzK8QoFgJ7lPyw1PG1CTBEssTEvvX
+ c2Qc/F1wtEKP5SqZt1E20WWX7xnCmTpC9CWRRmgUFkX5D6VUK4RwQX8bQCbpASchh8+t
+ VSel95tpjJHCAxuNpbtYvsCGH8VWFV6o1UoxflObPioZxxeGCN9/N2Ohc9BbGxSyePa6
+ G3i1GUMlSrrN2+urgLlWfoz/M489sxTCUxquaAiep2Rdlrsp44wwGZiE98phBWsjzqcu
+ +OSw==
+X-Gm-Message-State: AOJu0YwCjImnrvYIcXHW6YTgdlfi/OdVFoeUPYCTZUgj096UrXNAnv4F
+ 98pXU5LeCpmr5jO3Voqjn3PuXISlV1K7uOFxX166CLSvP1v4bp32/kjvOxUxgkI=
+X-Google-Smtp-Source: AGHT+IEA9zk5J4EgLwcu9iKTkG6OebG0V871ScTHwgvkLHU/Z/qAW1uTvFwLsqIXWyXSVXC9pmkYyw==
+X-Received: by 2002:a05:600c:a085:b0:42f:310f:de9 with SMTP id
+ 5b1f17b1804b1-42f310f1005mr13936295e9.15.1727284305716; 
+ Wed, 25 Sep 2024 10:11:45 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42e969e18f7sm24065735e9.5.2024.09.25.10.11.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Sep 2024 09:39:09 -0700 (PDT)
-From: Andrew Jones <ajones@ventanamicro.com>
-To: qemu-riscv@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com
-Subject: [PATCH] hw/riscv/virt: Comment absence of #msi-cells
-Date: Wed, 25 Sep 2024 18:39:09 +0200
-Message-ID: <20240925163908.215456-2-ajones@ventanamicro.com>
-X-Mailer: git-send-email 2.46.0
+ Wed, 25 Sep 2024 10:11:44 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E015C5FA3D;
+ Wed, 25 Sep 2024 18:11:40 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, kvm@vger.kernel.org,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ devel@lists.libvirt.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <thuth@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Subject: [PATCH 06/10] target/i386: fix build warning (gcc-12
+ -fsanitize=thread)
+Date: Wed, 25 Sep 2024 18:11:36 +0100
+Message-Id: <20240925171140.1307033-7-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20240925171140.1307033-1-alex.bennee@linaro.org>
+References: <20240925171140.1307033-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=ajones@ventanamicro.com; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,38 +114,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-commit 6df664f87c73 ("Revert "hw/riscv/virt.c: imsics DT: add
-'#msi-cells'"") removed #msi-cells. Now that we have a Linux
-commit to reference add a comment explaining why it was removed
-to avoid it getting added back due to DT validation failures.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+Found on debian stable.
+
+../target/i386/kvm/kvm.c: In function ‘kvm_handle_rdmsr’:
+../target/i386/kvm/kvm.c:5345:1: error: control reaches end of non-void function [-Werror=return-type]
+ 5345 | }
+      | ^
+../target/i386/kvm/kvm.c: In function ‘kvm_handle_wrmsr’:
+../target/i386/kvm/kvm.c:5364:1: error: control reaches end of non-void function [-Werror=return-type]
+ 5364 | }
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20240910174013.1433331-3-pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- hw/riscv/virt.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ target/i386/kvm/kvm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index cef41c150aaf..4fd9c0edf038 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -552,6 +552,16 @@ static void create_fdt_one_imsic(RISCVVirtState *s, hwaddr base_addr,
-                           FDT_IMSIC_INT_CELLS);
-     qemu_fdt_setprop(ms->fdt, imsic_name, "interrupt-controller", NULL, 0);
-     qemu_fdt_setprop(ms->fdt, imsic_name, "msi-controller", NULL, 0);
-+    /*
-+     * Per the DT binding, we should also add #msi-cells with a value of zero.
-+     * But, Linux which does not include commit db8e81132cf0 ("of/irq: Support
-+     * #msi-cells=<0> in of_msi_get_domain") does not properly handle #msi-cells
-+     * with a value of zero. For this reason, the property has intentionally
-+     * been left out. It's harmless to not add it since the absence of the
-+     * property and a value of zero for the property mean the same thing.
-+     * However, since the DT binding requires the property, DT validation may
-+     * fail.
-+     */
-     qemu_fdt_setprop(ms->fdt, imsic_name, "interrupts-extended",
-                      imsic_cells, ms->smp.cpus * sizeof(uint32_t) * 2);
-     qemu_fdt_setprop(ms->fdt, imsic_name, "reg", imsic_regs,
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index ada581c5d6..c8056ef83d 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -5771,7 +5771,7 @@ static int kvm_handle_rdmsr(X86CPU *cpu, struct kvm_run *run)
+         }
+     }
+ 
+-    assert(false);
++    g_assert_not_reached();
+ }
+ 
+ static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
+@@ -5790,7 +5790,7 @@ static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
+         }
+     }
+ 
+-    assert(false);
++    g_assert_not_reached();
+ }
+ 
+ static bool has_sgx_provisioning;
 -- 
-2.46.0
+2.39.5
 
 
