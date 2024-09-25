@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D181C369CC
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:15:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91F7CC369CC
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:15:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stPvf-0000qv-RB; Wed, 25 Sep 2024 07:11:32 -0400
+	id 1stPvU-0008WI-Hr; Wed, 25 Sep 2024 07:11:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPvb-0000Zb-2K
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPvR-0008Cg-6j
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPvZ-0003Yb-EF
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:26 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPvN-0003W6-S6
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727262684;
+ s=mimecast20190719; t=1727262673;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IGGPvMcSuORdD/jdCdMnCbXbJ4EG485+NacBfw/i2Xc=;
- b=M0LZw/echS6CU7bR2mls1WwAyTmiJi0BkcziLC+csdBCunFM9XfpIsAqJ2J0/uHFHvcKi5
- IO++O1NArhZnvj8CaA/+X4uVWJWZOICIXP1xznrj7mS1hO3P1Ic6Hculfh225jvvSRL1Ee
- +10ZwCYWCUdKZx9/yBlk0WGqLPiSlTw=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=3rG65tNp8WBpfFC12CRuEEP/MkfjZPyk7nXSdbTG2z4=;
+ b=JPW2/xc5UFUfIQLbhhND7ur+7bh0Hqn0/IiwfNlHN09DL1TyVpAdd+cbAbQsLwGnsvRduJ
+ vtOYWGwsYNNUDHQQhqEoctoGehKKot4YhI34e8fO5iBzqlILvSRiTL5QSdPr2ie3wqrML6
+ 5KKNr1qKHZepQLM1VLI0vg5ERzQlgrw=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-r6bsu79aN7qwezR8HAdfTg-1; Wed,
- 25 Sep 2024 07:11:23 -0400
-X-MC-Unique: r6bsu79aN7qwezR8HAdfTg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-438-KCXOxyUGN1eH6vVnrQvPPg-1; Wed,
+ 25 Sep 2024 07:11:02 -0400
+X-MC-Unique: KCXOxyUGN1eH6vVnrQvPPg-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
  [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 71B2A1935873; Wed, 25 Sep 2024 11:11:22 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C5AB11944DF4; Wed, 25 Sep 2024 11:10:58 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.206])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B0A9E1956094; Wed, 25 Sep 2024 11:11:20 +0000 (UTC)
+ id DEE2B1956094; Wed, 25 Sep 2024 11:10:56 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 17/44] hw/net: replace assert(false) with g_assert_not_reached()
-Date: Wed, 25 Sep 2024 13:09:58 +0200
-Message-ID: <20240925111029.24082-18-thuth@redhat.com>
+Subject: [PULL 07/44] tests/functional: Convert the r2d sh4 Avocado test
+Date: Wed, 25 Sep 2024 13:09:48 +0200
+Message-ID: <20240925111029.24082-8-thuth@redhat.com>
 In-Reply-To: <20240925111029.24082-1-thuth@redhat.com>
 References: <20240925111029.24082-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -81,61 +81,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+This is the last test that is using the do_test_advcal_2018()
+function, so we can now remove that function from boot_linux_console.py,
+too.
 
-This patch is part of a series that moves towards a consistent use of
-g_assert_not_reached() rather than an ad hoc mix of different
-assertion mechanisms.
-
+Message-ID: <20240919185749.71222-8-thuth@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20240919044641.386068-10-pierrick.bouvier@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/net/e1000e_core.c | 2 +-
- hw/net/igb_core.c    | 2 +-
- hw/net/net_rx_pkt.c  | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ MAINTAINERS                         |  1 +
+ tests/avocado/boot_linux_console.py | 25 -----------------------
+ tests/functional/meson.build        |  4 ++++
+ tests/functional/test_sh4_r2d.py    | 31 +++++++++++++++++++++++++++++
+ 4 files changed, 36 insertions(+), 25 deletions(-)
+ create mode 100755 tests/functional/test_sh4_r2d.py
 
-diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
-index 3ae2a184d5..248381f976 100644
---- a/hw/net/e1000e_core.c
-+++ b/hw/net/e1000e_core.c
-@@ -561,7 +561,7 @@ e1000e_rss_calc_hash(E1000ECore *core,
-         type = NetPktRssIpV6Ex;
-         break;
-     default:
--        assert(false);
-+        g_assert_not_reached();
-         return 0;
-     }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 63eb306d6e..62f5255f40 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1679,6 +1679,7 @@ F: hw/pci-host/sh_pci.c
+ F: hw/timer/sh_timer.c
+ F: include/hw/sh4/sh_intc.h
+ F: include/hw/timer/tmu012.h
++F: tests/functional/test_sh4_r2d.py
  
-diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-index bcd5f6cd9c..6be6140771 100644
---- a/hw/net/igb_core.c
-+++ b/hw/net/igb_core.c
-@@ -397,7 +397,7 @@ igb_rss_calc_hash(IGBCore *core, struct NetRxPkt *pkt, E1000E_RSSInfo *info)
-         type = NetPktRssIpV6Udp;
-         break;
-     default:
--        assert(false);
-+        g_assert_not_reached();
-         return 0;
-     }
+ SPARC Machines
+ --------------
+diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
+index f5dc9e9cfa..759fda9cc8 100644
+--- a/tests/avocado/boot_linux_console.py
++++ b/tests/avocado/boot_linux_console.py
+@@ -882,17 +882,6 @@ def test_arm_orangepi_uboot_netbsd9(self):
+         # Wait for user-space
+         wait_for_console_pattern(self, 'Starting root file system check')
  
-diff --git a/hw/net/net_rx_pkt.c b/hw/net/net_rx_pkt.c
-index 32e5f3f9cf..6b9c4c9559 100644
---- a/hw/net/net_rx_pkt.c
-+++ b/hw/net/net_rx_pkt.c
-@@ -375,7 +375,7 @@ net_rx_pkt_calc_rss_hash(struct NetRxPkt *pkt,
-         _net_rx_rss_prepare_udp(&rss_input[0], pkt, &rss_length);
-         break;
-     default:
--        assert(false);
-+        g_assert_not_reached();
-         break;
-     }
+-    def do_test_advcal_2018(self, day, tar_hash, kernel_name, console=0):
+-        tar_url = ('https://qemu-advcal.gitlab.io'
+-                   '/qac-best-of-multiarch/download/day' + day + '.tar.xz')
+-        file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
+-        archive.extract(file_path, self.workdir)
+-        self.vm.set_console(console_index=console)
+-        self.vm.add_args('-kernel',
+-                         self.workdir + '/day' + day + '/' + kernel_name)
+-        self.vm.launch()
+-        self.wait_for_console_pattern('QEMU advent calendar')
+-
+     def test_arm_ast2600_debian(self):
+         """
+         :avocado: tags=arch:arm
+@@ -964,17 +953,3 @@ def test_ppc_powernv10(self):
+         :avocado: tags=accel:tcg
+         """
+         self.do_test_ppc64_powernv('P10')
+-
+-    # This test has a 6-10% failure rate on various hosts that look
+-    # like issues with a buggy kernel. As a result we don't want it
+-    # gating releases on Gitlab.
+-    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
+-    def test_sh4_r2d(self):
+-        """
+-        :avocado: tags=arch:sh4
+-        :avocado: tags=machine:r2d
+-        :avocado: tags=flaky
+-        """
+-        tar_hash = 'fe06a4fd8ccbf2e27928d64472939d47829d4c7e'
+-        self.vm.add_args('-append', 'console=ttySC1')
+-        self.do_test_advcal_2018('09', tar_hash, 'zImage', console=1)
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 449c6a95ea..56a541530f 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -127,6 +127,10 @@ tests_s390x_system_thorough = [
+   's390x_topology',
+ ]
  
++tests_sh4_system_thorough = [
++  'sh4_r2d',
++]
++
+ tests_sparc_system_thorough = [
+   'sparc_sun4m',
+ ]
+diff --git a/tests/functional/test_sh4_r2d.py b/tests/functional/test_sh4_r2d.py
+new file mode 100755
+index 0000000000..5fe8cf9f8d
+--- /dev/null
++++ b/tests/functional/test_sh4_r2d.py
+@@ -0,0 +1,31 @@
++#!/usr/bin/env python3
++#
++# Boot a Linux kernel on a r2d sh4 machine and check the console
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import os
++
++from qemu_test import LinuxKernelTest, Asset
++from qemu_test.utils import archive_extract
++from unittest import skipUnless
++
++class R2dTest(LinuxKernelTest):
++
++    ASSET_DAY09 = Asset(
++        'https://www.qemu-advent-calendar.org/2018/download/day09.tar.xz',
++        'a61b44d2630a739d1380cc4ff4b80981d47ccfd5992f1484ccf48322c35f09ac')
++
++    # This test has a 6-10% failure rate on various hosts that look
++    # like issues with a buggy kernel.
++    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable')
++    def test_r2d(self):
++        self.set_machine('r2d')
++        file_path = self.ASSET_DAY09.fetch()
++        archive_extract(file_path, self.workdir)
++        self.vm.add_args('-append', 'console=ttySC1')
++        self.launch_kernel(self.workdir + '/day09/zImage', console_index=1,
++                           wait_for='QEMU advent calendar')
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
 2.46.0
 
