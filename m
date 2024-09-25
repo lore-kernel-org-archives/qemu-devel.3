@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B63E6C369D5
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:59:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67B22C369D5
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:59:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stQfC-0005lS-Qp; Wed, 25 Sep 2024 07:58:35 -0400
+	id 1stQf1-0004ve-8g; Wed, 25 Sep 2024 07:58:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1stQew-0004lt-NS
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:58:18 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1stQev-0004ih-A7
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:58:17 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1stQeu-0000g0-Jx
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:58:18 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-42cba6cdf32so62133805e9.1
- for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 04:58:16 -0700 (PDT)
+ id 1stQes-0000fa-13
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:58:17 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-42cb57f8b41so84957435e9.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 04:58:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1727265495; x=1727870295;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1727265491; x=1727870291;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=h97nUszG9qKo4bXzeGQ8cjaR38u/eSqQ0yAMBnAx8VQ=;
- b=J3vDJZZ3Y6JwR2kO4j2MF6IjuHaaDci68RbmXPV+bgMDxAOKYcDQUNIrIRbFKpEqyd
- nE+rQo2r7KWbbh1RvqY3MJBT+D2DmTP3nCMkSGpaRrp70WD49w962gtxPVwwm2FmE2zX
- I9ksM81toK1xrcKfgyLF61tthJw2XNl03yj1BOZk6DS0nSOvtWa4qAG/dZGFCauMygbT
- sagP2jTvgzuo+ZYGwtfWA4eE3FjICF+zkUgcNHNK4yaxhS6HrmlygmHFlXHljvIsicCb
- wAs8F/HZgE2lVX1zGdx3aiDxcg5F4gAaQTIc5WCgZ7oF5T7ONdJe3cLfDqF6/dfqipmg
- hiFg==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=JdiM/vMC6kwB+47P6/N1vNq+bAgMUMJgOFL7dhTNZgw=;
+ b=pCptGC9F3B00IgBr4OC7iTw0xuTIo3nzotWJBTDOo5RSP6+QYuDceUpv+LL4zU3rqE
+ arlts4DM7llhTT3b87vjSvUxdhVrV34EtAuuP/5jQ5udEtqenOyiUOgS7/oRiP6MvRWx
+ 93sOrcDgfQpZ+IyC+Uk6uljOlkRTjk4jlIh0Q81qNaq1RM9wcauNNd01iEnnO5vLlu0s
+ Iosv8rUk2DIrUCfJv+Zw39UGT9hv3SJ2hbfYcJ1wuKT/i+Sry/v6fY3gkaKVrG0cpUVe
+ 39Tk5O/xiyQv4mGV+TIR/3eMgZTfteu0pMb0xzRScs87NE0Crr8WLPe+Rn16khBlaiDE
+ mTOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727265495; x=1727870295;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=h97nUszG9qKo4bXzeGQ8cjaR38u/eSqQ0yAMBnAx8VQ=;
- b=mol/H/sqTOQzMWF86AjQqbGOHIuYlM1WlgiOS9KtcUBphPkxvP/RmhA8HqAAUqwC2V
- kvBonnGaJcbAbgeqNHpkntHENDd4PibF4wnTtS2MLX6EeCFJ4FDu93jsCOrYLBtj9ZcC
- VMsmCpnSyu4evXAbZzAvCnns/Q/7+jHWQqDJTm9d1EsXtn6SDQROVR5qiHVZCdE7G5ym
- MK9tXYwP8pze+0dnmuEUrvkHjGREZ6eexnwwhVxTJ98lNJK9pKma/2FWeVyPc58nCnEV
- sMKTeln1jZqKonve7y+b0FTcb/Z7qGh4DzaJGd9Hq7zO1MKUi63Ki6bKbv4DIZs+z0yy
- yRSQ==
+ d=1e100.net; s=20230601; t=1727265491; x=1727870291;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JdiM/vMC6kwB+47P6/N1vNq+bAgMUMJgOFL7dhTNZgw=;
+ b=WlNcc+ZzFwkvxIk7YHrZCorv+Y57UHisyC/p4buIcqD96Sa3sghR61/yvVkI8mroiM
+ t3lKKyXN6sULf5bt7886+4PueAeEmjg27bYBzec/BWQZeYCsLX+i27oACTTeqLZpxRfF
+ sD56Q2/KSBCSGBFi5B0SR4DVywyd5EGvA8H+UXWVKYK8OXfQU2mJJShB3YGBTQ98homa
+ fGoLljA9/fGDwwhZ5dJ4DB56w44rMj1zYhKOsE73bQS66hyHEk7O9uDP/S22kcpKf7vE
+ zV0+Hw5LKSWIdjtMJNo15fxYNjor0bQ4czOyiEI97L7M+mSoXgwXrkOGfbME/fwrRgJy
+ 0CsQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWHKkQOxph/wMzn+owRvCkVf7j3smoERcKr8PHLy69Q0OkSCKQrDk09X3osTdYdpsNc+dHzS/fiJAo+@nongnu.org
-X-Gm-Message-State: AOJu0YyY93rTPtFrnuSBNfUxbsBEfInEM+y9CFGTHoJLM7vRq8twhw5K
- aGvvku39jUwpOxJIw6GwHEDYD1rDx7otxICJJ1xZc6RFKNd4L/SA4WL52Eoq3yU=
-X-Google-Smtp-Source: AGHT+IEux2+xmeRLkl6/aTHmFK4VN9m6gD69zhYir9hGxIxHWyzTFcMo4poXkhV+c6MN7/W9yQR81Q==
-X-Received: by 2002:a05:600c:1c26:b0:42c:bb41:a079 with SMTP id
- 5b1f17b1804b1-42e96103bbdmr18084935e9.1.1727265494770; 
- Wed, 25 Sep 2024 04:58:14 -0700 (PDT)
+ AJvYcCXUfZRtxy2o7RI1aiU3EQN3RBUrwhj0fXuYFlsmxSJQQGF9iKYfnlgAM+XZ8DjxMhAwRg0PRGUDL6a9@nongnu.org
+X-Gm-Message-State: AOJu0YxWEK8xgz0NoXrR0BZgHyOzsNjRSGNQ78PipbiP74HPjN4lTpPG
+ HF0AWPQupgEuh4W+zfLtBw4U0101hD+Md3lqQeLhjjocknFVMw6056JQ6dnYqDg=
+X-Google-Smtp-Source: AGHT+IEV+cIsOEV126sZXs3gVba1AruvI4sBTXxPR6SNxpG5Ajzq7PQCa3v1NPbaOK5H88LFD0ciug==
+X-Received: by 2002:a05:6000:50f:b0:374:c3cd:73de with SMTP id
+ ffacd0b85a97d-37cc24852c5mr2078500f8f.35.1727265491103; 
+ Wed, 25 Sep 2024 04:58:11 -0700 (PDT)
 Received: from carbon-x1.. ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cbc2ab52fsm3770612f8f.13.2024.09.25.04.58.13
+ ffacd0b85a97d-37cbc2ab52fsm3770612f8f.13.2024.09.25.04.58.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Sep 2024 04:58:13 -0700 (PDT)
+ Wed, 25 Sep 2024 04:58:10 -0700 (PDT)
 From: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>
 To: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>,
@@ -71,17 +70,16 @@ Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Ved Shanbhogue <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH v2 3/8] target/riscv: Implement Ssdbltrp exception handling
-Date: Wed, 25 Sep 2024 13:58:01 +0200
-Message-ID: <20240925115808.77874-4-cleger@rivosinc.com>
+Subject: [PATCH v2 0/8] target/riscv: Add support for Smdbltrp and Ssdbltrp
+ extensions
+Date: Wed, 25 Sep 2024 13:57:58 +0200
+Message-ID: <20240925115808.77874-1-cleger@rivosinc.com>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240925115808.77874-1-cleger@rivosinc.com>
-References: <20240925115808.77874-1-cleger@rivosinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=cleger@rivosinc.com; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=cleger@rivosinc.com; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,140 +101,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the Ssdbltrp ISA extension is enabled, if a trap happens in S-mode
-while SSTATUS.SDT isn't cleared, generate a double trap exception to
-M-mode.
+A double trap typically arises during a sensitive phase in trap handling
+operations — when an exception or interrupt occurs while the trap
+handler (the component responsible for managing these events) is in a
+non-reentrant state. This non-reentrancy usually occurs in the early
+phase of trap handling, wherein the trap handler has not yet preserved
+the necessary state to handle and resume from the trap. The occurrence
+of such event is unlikely but can happen when dealing with hardware
+errors.
 
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
+This series adds support for Ssdbltrp and Smdbltrp ratified ISA
+extensions [1]. It is based on the Smrnmi series [6].
+
+Ssdbltrp can be tested using qemu[2], opensbi[3], linux[4] and
+kvm-unit-tests[5]. Assuming you have a riscv environment available and
+configured (CROSS_COMPILE), it can be built for riscv64 using the
+following instructions:
+
+Qemu:
+  $ git clone https://github.com/rivosinc/qemu.git
+  $ cd qemu
+  $ git switch -C dbltrp_v2 dev/cleger/dbltrp_v2
+  $ mkdir build && cd build
+  $ ../configure --target-list=riscv64-softmmu
+  $ make
+
+OpenSBI:
+  $ git clone https://github.com/rivosinc/opensbi.git
+  $ cd opensbi
+  $ git switch -C dbltrp_v3 dev/cleger/dbltrp_v3
+  $ make O=build PLATFORM_RISCV_XLEN=64 PLATFORM=generic
+
+Linux:
+  $ git clone https://github.com/rivosinc/linux.git
+  $ cd linux
+  $ git switch -C dbltrp_v1 dev/cleger/dbltrp_v1
+  $ export ARCH=riscv
+  $ make O=build defconfig
+  $ ./script/config --file build/.config --enable RISCV_DBLTRP
+  $ make O=build
+
+kvm-unit-tests:
+  $ git clone https://github.com/clementleger/kvm-unit-tests.git
+  $ cd kvm-unit-tests
+  $ git switch -C dbltrp_v1 dev/cleger/dbltrp_v1
+  $ ./configure --arch=riscv64 --cross-prefix=$CROSS_COMPILE
+  $ make
+
+You will also need kvmtool in your rootfs.
+
+Run with kvm-unit-test test as kernel:
+  $ qemu-system-riscv64 \
+    -M virt \
+    -cpu rv64,ssdbltrp=true,smdbltrp=true \
+    -nographic \
+    -serial mon:stdio \
+    -bios opensbi/build/platform/generic/firmware/fw_jump.bin \
+    -kernel kvm-unit-tests-dbltrp/riscv/sbi_dbltrp.flat
+  ...
+  [OpenSBI boot partially elided]
+  Boot HART ISA Extensions  : sscofpmf,sstc,zicntr,zihpm,zicboz,zicbom,sdtrig,svadu,ssdbltrp
+  ...
+  ##########################################################################
+  #    kvm-unit-tests
+  ##########################################################################
+
+  PASS: sbi: fwft: FWFT extension probing no error
+  PASS: sbi: fwft: FWFT extension is present
+  PASS: sbi: fwft: dbltrp: Get double trap enable feature value
+  PASS: sbi: fwft: dbltrp: Set double trap enable feature value == 0
+  PASS: sbi: fwft: dbltrp: Get double trap enable feature value == 0
+  PASS: sbi: fwft: dbltrp: Double trap disabled, trap first time ok
+  PASS: sbi: fwft: dbltrp: Set double trap enable feature value == 1
+  PASS: sbi: fwft: dbltrp: Get double trap enable feature value == 1
+  PASS: sbi: fwft: dbltrp: Trapped twice allowed ok
+  INFO: sbi: fwft: dbltrp: Should generate a double trap and crash !
+
+  sbi_trap_error: hart0: trap0: double trap handler failed (error -10)
+
+  sbi_trap_error: hart0: trap0: mcause=0x0000000000000010 mtval=0x0000000000000000
+  sbi_trap_error: hart0: trap0: mtval2=0x0000000000000003 mtinst=0x0000000000000000
+  sbi_trap_error: hart0: trap0: mepc=0x00000000802000d8 mstatus=0x8000000a01006900
+  sbi_trap_error: hart0: trap0: ra=0x00000000802001fc sp=0x0000000080213e70
+  sbi_trap_error: hart0: trap0: gp=0x0000000000000000 tp=0x0000000080088000
+  sbi_trap_error: hart0: trap0: s0=0x0000000080213e80 s1=0x0000000000000001
+  sbi_trap_error: hart0: trap0: a0=0x0000000080213e80 a1=0x0000000080208193
+  sbi_trap_error: hart0: trap0: a2=0x000000008020dc20 a3=0x000000000000000f
+  sbi_trap_error: hart0: trap0: a4=0x0000000080210cd8 a5=0x00000000802110d0
+  sbi_trap_error: hart0: trap0: a6=0x00000000802136e4 a7=0x0000000046574654
+  sbi_trap_error: hart0: trap0: s2=0x0000000080210cd9 s3=0x0000000000000000
+  sbi_trap_error: hart0: trap0: s4=0x0000000000000000 s5=0x0000000000000000
+  sbi_trap_error: hart0: trap0: s6=0x0000000000000000 s7=0x0000000000000001
+  sbi_trap_error: hart0: trap0: s8=0x0000000000002000 s9=0x0000000080083700
+  sbi_trap_error: hart0: trap0: s10=0x0000000000000000 s11=0x0000000000000000
+  sbi_trap_error: hart0: trap0: t0=0x0000000000000000 t1=0x0000000080213ed8
+  sbi_trap_error: hart0: trap0: t2=0x0000000000001000 t3=0x0000000080213ee0
+  sbi_trap_error: hart0: trap0: t4=0x0000000000000000 t5=0x000000008020f8d0
+  sbi_trap_error: hart0: trap0: t6=0x0000000000000000
+
+Run with linux and kvm-unit-test test in kvm (testing VS-mode):
+  $ qemu-system-riscv64 \
+    -M virt \
+    -cpu rv64,ssdbltrp=true,smdbltrp=true \
+    -nographic \
+    -serial mon:stdio \
+    -bios opensbi/build/platform/generic/firmware/fw_jump.bin \
+    -kernel linux/build/arch/riscv/boot/Image
+  ...
+  [Linux boot partially elided]
+  [    0.735079] riscv-dbltrp: Double trap handling registered
+  ...
+
+  $ lkvm run -k sbi_dbltrp.flat -m 128 -c 2
+  ##########################################################################
+  #    kvm-unit-tests
+  ##########################################################################
+
+  PASS: sbi: fwft: FWFT extension probing no error
+  PASS: sbi: fwft: FWFT extension is present
+  PASS: sbi: fwft: dbltrp: Get double trap enable feature value
+  PASS: sbi: fwft: dbltrp: Set double trap enable feature value == 0
+  PASS: sbi: fwft: dbltrp: Get double trap enable feature value == 0
+  PASS: sbi: fwft: dbltrp: Double trap disabled, trap first time ok
+  PASS: sbi: fwft: dbltrp: Set double trap enable feature value == 1
+  PASS: sbi: fwft: dbltrp: Get double trap enable feature value == 1
+  PASS: sbi: fwft: dbltrp: Trapped twice allowed ok
+  INFO: sbi: fwft: dbltrp: Should generate a double trap and crash !
+  [   51.939077] Guest double trap
+  [   51.939323] kvm [93]: VCPU exit error -95
+  [   51.939683] kvm [93]: SEPC=0x802000d8 SSTATUS=0x200004520 HSTATUS=0x200200180
+  [   51.939947] kvm [93]: SCAUSE=0x10 STVAL=0x0 HTVAL=0x3 HTINST=0x0
+  KVM_RUN failed: Operation not supported
+  $
+
+Testing Smbdbltrp can be done using gdb and trigger some trap. For
+instance, interrupt M-mode firmware at some point, set mstatus.mdt = 1
+and corrupt some register to generate a NULL pointer exception.
+
+Link: https://github.com/riscv/riscv-isa-manual/commit/52a5742d5ab5a0792019033631b2035a493ad981 [1]
+Link: https://github.com/rivosinc/qemu/tree/dev/cleger/dbltrp_v2 [2]
+Link: https://github.com/rivosinc/opensbi/tree/dev/cleger/dbltrp_v3 [3]
+Link: https://github.com/rivosinc/linux/tree/dev/cleger/dbltrp_v1 [4]
+Link: https://github.com/clementleger/kvm-unit-tests/tree/dev/cleger/dbltrp_v1 [5]
+Link: https://lore.kernel.org/all/CAKmqyKO9k93OLX_pxtkHcUAvC=NUNxtp6mDCb2J2ZWHMnfbNYQ@mail.gmail.com/T/ [6]
+
 ---
- target/riscv/cpu.c        |  2 +-
- target/riscv/cpu_bits.h   |  1 +
- target/riscv/cpu_helper.c | 47 ++++++++++++++++++++++++++++++++++-----
- 3 files changed, 43 insertions(+), 7 deletions(-)
+V2:
+ - Squashed commits that added ext_s{s|m}dbltrp as suggested by Daniel
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index cf06cd741a..65347ccd5a 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -284,7 +284,7 @@ static const char * const riscv_excp_names[] = {
-     "load_page_fault",
-     "reserved",
-     "store_page_fault",
--    "reserved",
-+    "double_trap",
-     "reserved",
-     "reserved",
-     "reserved",
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index 3a5588d4df..5557a86348 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -699,6 +699,7 @@ typedef enum RISCVException {
-     RISCV_EXCP_INST_PAGE_FAULT = 0xc, /* since: priv-1.10.0 */
-     RISCV_EXCP_LOAD_PAGE_FAULT = 0xd, /* since: priv-1.10.0 */
-     RISCV_EXCP_STORE_PAGE_FAULT = 0xf, /* since: priv-1.10.0 */
-+    RISCV_EXCP_DOUBLE_TRAP = 0x10,
-     RISCV_EXCP_SW_CHECK = 0x12, /* since: priv-1.13.0 */
-     RISCV_EXCP_HW_ERR = 0x13, /* since: priv-1.13.0 */
-     RISCV_EXCP_INST_GUEST_PAGE_FAULT = 0x14,
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 395d8235ce..69da3c3384 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -575,7 +575,9 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env)
-         mstatus_mask |= MSTATUS_FS;
-     }
-     bool current_virt = env->virt_enabled;
--
-+    if (riscv_env_smode_dbltrp_enabled(env, current_virt)) {
-+        mstatus_mask |= MSTATUS_SDT;
-+    }
-     g_assert(riscv_has_ext(env, RVH));
- 
-     if (current_virt) {
-@@ -1707,6 +1709,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-     CPURISCVState *env = &cpu->env;
-     bool virt = env->virt_enabled;
-     bool write_gva = false;
-+    bool vsmode_exc;
-     uint64_t s;
-     int mode;
- 
-@@ -1721,6 +1724,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-         !(env->mip & (1 << cause));
-     bool vs_injected = env->hvip & (1 << cause) & env->hvien &&
-         !(env->mip & (1 << cause));
-+    bool smode_double_trap = false;
-+    uint64_t hdeleg = async ? env->hideleg : env->hedeleg;
-     target_ulong tval = 0;
-     target_ulong tinst = 0;
-     target_ulong htval = 0;
-@@ -1837,13 +1842,35 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-                 !async &&
-                 mode == PRV_M;
- 
-+    vsmode_exc = env->virt_enabled && (((hdeleg >> cause) & 1) || vs_injected);
-+    /*
-+     * Check double trap condition only if already in S-mode and targeting
-+     * S-mode
-+     */
-+    if (cpu->cfg.ext_ssdbltrp && env->priv == PRV_S && mode == PRV_S) {
-+        bool dte = (env->menvcfg & MENVCFG_DTE) != 0;
-+        bool sdt = (env->mstatus & MSTATUS_SDT) != 0;
-+        /* In VS or HS */
-+        if (riscv_has_ext(env, RVH)) {
-+            if (vsmode_exc) {
-+                /* VS -> VS */
-+                /* Stay in VS mode, use henvcfg instead of menvcfg*/
-+                dte = (env->henvcfg & HENVCFG_DTE) != 0;
-+            } else if (env->virt_enabled) {
-+                /* VS -> HS */
-+                dte = false;
-+            }
-+        }
-+        smode_double_trap = dte && sdt;
-+        if (smode_double_trap) {
-+            mode = PRV_M;
-+        }
-+    }
-+
-     if (mode == PRV_S) {
-         /* handle the trap in S-mode */
-         if (riscv_has_ext(env, RVH)) {
--            uint64_t hdeleg = async ? env->hideleg : env->hedeleg;
--
--            if (env->virt_enabled &&
--                (((hdeleg >> cause) & 1) || vs_injected)) {
-+            if (vsmode_exc) {
-                 /* Trap to VS mode */
-                 /*
-                  * See if we need to adjust cause. Yes if its VS mode interrupt
-@@ -1876,6 +1903,9 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-         s = set_field(s, MSTATUS_SPIE, get_field(s, MSTATUS_SIE));
-         s = set_field(s, MSTATUS_SPP, env->priv);
-         s = set_field(s, MSTATUS_SIE, 0);
-+        if (riscv_env_smode_dbltrp_enabled(env, virt)) {
-+            s = set_field(s, MSTATUS_SDT, 1);
-+        }
-         env->mstatus = s;
-         env->scause = cause | ((target_ulong)async << (TARGET_LONG_BITS - 1));
-         env->sepc = env->pc;
-@@ -1909,9 +1939,14 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-         s = set_field(s, MSTATUS_MIE, 0);
-         env->mstatus = s;
-         env->mcause = cause | ~(((target_ulong)-1) >> async);
-+        if (smode_double_trap) {
-+            env->mtval2 = env->mcause;
-+            env->mcause = RISCV_EXCP_DOUBLE_TRAP;
-+        } else {
-+            env->mtval2 = mtval2;
-+        }
-         env->mepc = env->pc;
-         env->mtval = tval;
--        env->mtval2 = mtval2;
-         env->mtinst = tinst;
- 
-         if (cpu->cfg.ext_smrnmi && nmi_execp) {
+Clément Léger (8):
+  target/riscv: Add Ssdbltrp CSRs handling
+  target/riscv: Implement Ssdbltrp sret, mret and mnret behavior
+  target/riscv: Implement Ssdbltrp exception handling
+  target/riscv: Add Ssdbltrp ISA extension enable switch
+  target/riscv: Add Smdbltrp CSRs handling
+  target/riscv: Implement Smdbltrp sret, mret and mnret behavior
+  target/riscv: Implement Smdbltrp behavior
+  target/riscv: Add Smdbltrp ISA extension enable switch
+
+ target/riscv/cpu.c        |  9 +++-
+ target/riscv/cpu.h        |  1 +
+ target/riscv/cpu_bits.h   |  8 ++++
+ target/riscv/cpu_cfg.h    |  2 +
+ target/riscv/cpu_helper.c | 98 +++++++++++++++++++++++++++++++++------
+ target/riscv/csr.c        | 60 ++++++++++++++++++++----
+ target/riscv/op_helper.c  | 47 ++++++++++++++++++-
+ 7 files changed, 198 insertions(+), 27 deletions(-)
+
 -- 
 2.45.2
 
