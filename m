@@ -4,58 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BFA8C369D0
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:16:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E134CC369D0
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:17:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stPwR-0005Rf-C0; Wed, 25 Sep 2024 07:12:20 -0400
+	id 1stQ1M-0006r4-QR; Wed, 25 Sep 2024 07:17:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPwE-0004Vj-1L
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:12:06 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stQ1I-0006Sz-Vg
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:17:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPwC-0003pA-FO
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:12:05 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stQ1H-0004Vi-0h
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:17:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727262723;
+ s=mimecast20190719; t=1727263035;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tI4/cDzqMiZaX+QC57XjuOqEXcKPrBnOpVVF8uKbOJE=;
- b=WDwpQEjCorzA02e2gmacsGRPUDnGkYk+kt7oGXpaKWKfpU1922jSV213tcXKkwCTn08lVh
- 6bdwhpw8Yw91LKkBW3BKPstd7LIGSYToP/pyLyIKc+uwjJTs1QXqRiinDPydri8hJvJED9
- a7ubkug3hGoJaOYo9A61bxKX1yxt84E=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-QJAW_vO_Nze3j5PZXM-tVw-1; Wed,
- 25 Sep 2024 07:12:02 -0400
-X-MC-Unique: QJAW_vO_Nze3j5PZXM-tVw-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8061A19367B8; Wed, 25 Sep 2024 11:12:01 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.193.206])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ED93E1956094; Wed, 25 Sep 2024 11:11:59 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 33/44] include/qemu: remove return after g_assert_not_reached()
-Date: Wed, 25 Sep 2024 13:10:14 +0200
-Message-ID: <20240925111029.24082-34-thuth@redhat.com>
-In-Reply-To: <20240925111029.24082-1-thuth@redhat.com>
-References: <20240925111029.24082-1-thuth@redhat.com>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=CrxmWhZm2WeEWFH/BSvjYAadyyaZCQ8asT+3faJ5gTw=;
+ b=bjFPQL/4jyGEfkK1EOu1w/x8Iw7RiEoE6vOIo9zluK9lMGXzndE7JS56YMvkIyhQpX69mA
+ LmXSu5RmtfVfwt6JC/tyeLTY7y8folc2z0HLtAMA9sCVQ5XomjotIkAaGQGICRUVSPac5F
+ 9HL2cB2Zi0kEYTwbGAoVZQHZOj1gJ/g=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-686-wuxx2JcZO0ukpThzyRPHJQ-1; Wed, 25 Sep 2024 07:17:14 -0400
+X-MC-Unique: wuxx2JcZO0ukpThzyRPHJQ-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-42cb2c9027dso51040955e9.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 04:17:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727263033; x=1727867833;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CrxmWhZm2WeEWFH/BSvjYAadyyaZCQ8asT+3faJ5gTw=;
+ b=StfD3xeshpKPDSQbZh1Wb1By1lNua8sZgL/RglJW30jr9UFhny0JOCWTLPUz01jssW
+ pLN1g+EjyoRuWGZH9XS6jeO6vYjSG+QyezxGgsGpRurq7BolX38Gs3kUpepixGT9bNX+
+ mZTG0wPvdeuj+P8cJhLENYrdgx57KXtLIkgqmwOsWoeLlyM8BkFSEBZHytv6jSJEvzLT
+ Dfw5Iz08TUMxhnADQG2HcvBt/i6UTqVrCKPdWwIcr3spTZYhwmjuEWk2+QXa6ZtbOohV
+ MhXGil/OytAf0bmtb1lxGBOd2lJntUgEWufrDsGTTgWcje+HrjOgKW0J85lA4vDipwbq
+ 6kKQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVV3TPUb+0nMM51ViXNGTwUoeZYasolf8frbRLI7fEyM+QVpYkW97GDgLYminDHPC4ADskHc/E3Bhyx@nongnu.org
+X-Gm-Message-State: AOJu0YyJ9uMhmNj8EDdrGIYKsG/u64oWEvyvFmFJvmCcBibjMn/Rw37K
+ vsFoIbomOgGHKDuG5PapCGmT6y3GVDn66ptkdWA2aptd+fLJAWNqCQz9amdL3JSfHogUQribb6k
+ dJITJgU+CKGY1lqhZZ+7BgXQGjlXU9N32CPti23DfLmAbURe4QVfl
+X-Received: by 2002:a05:600c:1549:b0:42c:bd27:4be4 with SMTP id
+ 5b1f17b1804b1-42e9610972fmr16392105e9.8.1727263032808; 
+ Wed, 25 Sep 2024 04:17:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHO3ozH1W6NbHhH1+dw/ILbpNUmEPTP5C8G4VqvXKQFezJinJ8sq/aCmkHAEE4/oHC/IPoA4Q==
+X-Received: by 2002:a05:600c:1549:b0:42c:bd27:4be4 with SMTP id
+ 5b1f17b1804b1-42e9610972fmr16391845e9.8.1727263032324; 
+ Wed, 25 Sep 2024 04:17:12 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-48-176.web.vodafone.de.
+ [109.42.48.176]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42e96a1f327sm14830735e9.46.2024.09.25.04.17.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Sep 2024 04:17:11 -0700 (PDT)
+Message-ID: <a3644805-e4ba-4cfb-a429-0604d7282f06@redhat.com>
+Date: Wed, 25 Sep 2024 13:17:10 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] testing: bump mips64el cross to bookworm and allow to fail
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20240923081537.3846145-1-alex.bennee@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240923081537.3846145-1-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -81,33 +150,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On 23/09/2024 10.15, Alex Bennée wrote:
+> The mips64el cross setup is very broken for bullseye which has now
+> entered LTS support so is unlikely to be fixed. While we still can't
+> build the container for bookworm due to a single missing dependency
+> that will hopefully get fixed in due course. For the sake of keeping
+> the CI green we mark it as allow_fail for the time being.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Cc: Michael Tokarev <mjt@tls.msk.ru>
+> ---
+...
+> @@ -143,6 +140,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+>                         libvdeplug-dev:mips64el \
+>                         libvirglrenderer-dev:mips64el \
+>                         libvte-2.91-dev:mips64el \
+> +                      libxdp-dev:mips64el \
+>                         libzstd-dev:mips64el \
+>                         nettle-dev:mips64el \
+>                         systemtap-sdt-dev:mips64el \
 
-This patch is part of a series that moves towards a consistent use of
-g_assert_not_reached() rather than an ad hoc mix of different
-assertion mechanisms.
+We could also do a temporary manual hack and remove the problematic packages 
+from the list that cause the failure. I guess removing libdrm-dev:mips64el , 
+libgtk-3-dev:mips64el and the SDL2 packages might help to avoid that the 
+mesa stuff gets installed (which causes the trouble)...
+Of course this will be overwritten the next time someone runs lcitool again, 
+but with a little bit of luck, Debian already got fixed at that point in 
+time. What do you think?
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20240919044641.386068-26-pierrick.bouvier@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- include/qemu/pmem.h | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/include/qemu/pmem.h b/include/qemu/pmem.h
-index d2d7ad085c..e12a67ba2c 100644
---- a/include/qemu/pmem.h
-+++ b/include/qemu/pmem.h
-@@ -22,7 +22,6 @@ pmem_memcpy_persist(void *pmemdest, const void *src, size_t len)
-     /* If 'pmem' option is 'on', we should always have libpmem support,
-        or qemu will report a error and exit, never come here. */
-     g_assert_not_reached();
--    return NULL;
- }
- 
- static inline void
--- 
-2.46.0
+  Thomas
 
 
