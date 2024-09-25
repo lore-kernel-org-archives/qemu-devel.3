@@ -4,81 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADE19C369CA
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 10:25:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09FD6C369C8
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 10:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stPBy-0007T5-As; Wed, 25 Sep 2024 06:24:18 -0400
+	id 1stPV0-00051d-5t; Wed, 25 Sep 2024 06:43:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1stPBu-0007ST-Ih
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 06:24:14 -0400
-Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1stPUx-0004zO-Uw
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 06:43:56 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1stPBs-0005Ma-IG
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 06:24:14 -0400
-Received: by mail-oo1-xc32.google.com with SMTP id
- 006d021491bc7-5dfaccba946so3616188eaf.1
- for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 03:24:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1stPUr-0007jh-Hi
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 06:43:53 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a8a7cdfdd80so910555066b.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 03:43:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1727259850; x=1727864650;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1727261027; x=1727865827; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/BcYxG48VHJ8CFNLldQd9O9l/coWDklnL64Nf2pQz5M=;
- b=TVdGtqxla5eVo9Av5qLwKUUIpRgrOBsExPpggSPhO71BtNmPUHKElzPi5f4Tom9p3z
- H40LR47RsQL7VNfb/ESTaVsU8vUDLaDe6dj0tnZaYjUjOvysU0i5xv3UFUG+VBaRUFaR
- kkjTlkZW0jYRKdQrecKLJKKXMstgh/0TFI7OY61P7R9rmDe+nXgkvWfm56Z6xgqMowt0
- K7V6ZdEZ0ZnJjV0xbULNrnlcjNkiEpHpLKfAfIroFS/R6U2a53htNdLf/6sp3dxAxYY4
- KfM7h0NyJnVRe1ta+nq5B8LaO3ETSTLFnvO7Glpe9DrJxf7Qk/j28UGC7bHfoXlBVrIs
- 3AFA==
+ bh=KEyLcbbUmoimlSxWtCc/AqtMImzoDYNz7E3YoARLTFU=;
+ b=sw2Hsjm2fmCwAreQCKrPmv+HoqZvTCZ7blj3Odb+YlP6JPPXR/IUfrW/dkfgOuIJp0
+ e+Ut5HPV4fDyrRWqffquMDFG263vMoMx4XL/i8B2spdtDt6sT7Cmf6663j/N4ix6+gny
+ 8d7SqZPhqTR9twm1zMaZ+AokyQv40asBF/TSQojQJ1S+ZOhTu9SCP9+BwLG+kFcpw0Up
+ QGhPqDY6LY1bVqZz3QJliieXLsW/rhJ4vnd4e31uYqgHeSVC2k9XRViEH1kRywvhUs/g
+ CcVdxr8geo/X5lz1Q/E+eN1QKidrjde4BS1rXf1n1E3ekA4yQy5/8GkT29lkg9djusnC
+ elZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727259850; x=1727864650;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/BcYxG48VHJ8CFNLldQd9O9l/coWDklnL64Nf2pQz5M=;
- b=aI9lHcWpjCRQDXDi83QWT4iSMZgYa8X6/66QNL07SWZA6S3vtN4cPC4seHYJDGeoNn
- YHvZMx50RMSW0XvBNH/gTluE9GQIfnomzO/UbHvbNIlCsFl8XvQ/pjHa5r6WyTTrsEtg
- BVFMqDtZA1wZWEFl2Zb1gdxe4JnikUKxOFWexHAeB4JMbWiYoXr7W0Gs6g4cmcGIi171
- LAzHowEuseEKfQGzb/iXXZmMGzKKq7m3hHT6hLsDf7+cyVc0GrCXmqWKh86dpZr2Be+C
- euIYfDzRlt7SJ6dROfIVO115cvOTwXLPJEGKTaugiQkdGUkIRjxXv2hbbCXjOoo0gt6A
- UNAQ==
-X-Gm-Message-State: AOJu0Yy77Su7+2EBy8RkNyPN5JI2HjMymMubp1Dqk4ATG9/YomcuiOUe
- 4EklPg67Auk8xgdtG42J/5Mdq1xUkVQOLEhAcp9nzeX5miYUTMQH8rBPO2mE3GbaF9slYowACVd
- 12MyDPr0ZS6Ef52Il6d+iuvG9W6nL8DNYv2eonA==
-X-Google-Smtp-Source: AGHT+IGOCQD5cni/e4FPJCuf3PafZ3dNHOjHretvq9tKkpQ/bP4hpWmaZZOtrtyF+KWxarTzzgqbFnQ0ixWtdsrdPgM=
-X-Received: by 2002:a05:6820:1ac1:b0:5e1:e65d:5148 with SMTP id
- 006d021491bc7-5e5c6a4a98dmr1287473eaf.6.1727259850231; Wed, 25 Sep 2024
- 03:24:10 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1727261027; x=1727865827;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=KEyLcbbUmoimlSxWtCc/AqtMImzoDYNz7E3YoARLTFU=;
+ b=gve0DyFrHOjUyD5nLuCU2GTcL2wLxAGV4UsHQf3Ux4NNUk/xEsUFwWAJeHDm2WYMb+
+ DV2ugicE3EkBUDXlxWPOm9YwNtndAZeoaQhIwy6kOGR0BaObr3lij12fgl609LmiHjXn
+ xAOvwmFXHDwdI8KxlVCym01h055mRFyQAr722hZxNE3PDKkvXkpVPr4TwMi20MLrd68I
+ VYjMDalhDmadFst4utEL0Z42TYgcT7+M8zSh0UAB20vgn9c02QpQf20P/I6etbUfscO0
+ 0igasbx5f0TLjIcujDqobwEP5MYOi/ODveDE/Im20NCNP0UaFyJKZdrjq7AuUFzzqqA0
+ yBMA==
+X-Gm-Message-State: AOJu0YxovNJuU02ze3bJpMWPi6rxJSyshHtsvhyv6r2Q+AVpBrfv0vZX
+ PjAByzzvajtXs34NeVdxWM/oXaqCA2B1tIWNv8ZijtAl9CPAIXKFDfNxNHfPues=
+X-Google-Smtp-Source: AGHT+IHLwSMuBlfv82ofByDVJBnGyj1eTbb5/5Lk5t91jXVWPw3N612xva9I7YnIAmKK8vq2mQmT6g==
+X-Received: by 2002:a17:906:cac9:b0:a8d:44a5:1c2f with SMTP id
+ a640c23a62f3a-a93a03200e6mr198321266b.6.1727261027535; 
+ Wed, 25 Sep 2024 03:43:47 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a93930f470asm194654166b.151.2024.09.25.03.43.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Sep 2024 03:43:46 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E309F5F885;
+ Wed, 25 Sep 2024 11:43:45 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Wainer dos Santos Moschetta
+ <wainersm@redhat.com>,  Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Ilya Leoshkevich
+ <iii@linux.ibm.com>,  David Hildenbrand <david@redhat.com>,  =?utf-8?Q?Ma?=
+ =?utf-8?Q?rc-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?= <philmd@linaro.org>,  kvm@vger.kernel.org,  Thomas Huth
+ <thuth@redhat.com>,  Marcelo Tosatti <mtosatti@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  qemu-s390x@nongnu.org,
+ Beraldo Leal <bleal@redhat.com>
+Subject: Re: [PATCH v3 0/3] build qemu with gcc and tsan
+In-Reply-To: <20240910174013.1433331-1-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Tue, 10 Sep 2024 10:40:10 -0700")
+References: <20240910174013.1433331-1-pierrick.bouvier@linaro.org>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Wed, 25 Sep 2024 11:43:45 +0100
+Message-ID: <87wmj0ypwe.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20240819135455.2957406-1-mnissler@rivosinc.com>
- <6c94975d-2c8e-4698-a035-1e62549c2d4a@tls.msk.ru>
-In-Reply-To: <6c94975d-2c8e-4698-a035-1e62549c2d4a@tls.msk.ru>
-From: Mattias Nissler <mnissler@rivosinc.com>
-Date: Wed, 25 Sep 2024 12:23:59 +0200
-Message-ID: <CAGNS4Tbw_JSfzyir2TKBN59n6jkrerGoy6E9hEW8xcq0y3tO4w@mail.gmail.com>
-Subject: Re: [PATCH] softmmu: Support concurrent bounce buffers
-To: mjt@tls.msk.ru
-Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- stefanha@redhat.com, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c32;
- envelope-from=mnissler@rivosinc.com; helo=mail-oo1-xc32.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,60 +106,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 25, 2024 at 12:03=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> w=
-rote:
->
-> 19.08.2024 16:54, Mattias Nissler wrote:
-> > When DMA memory can't be directly accessed, as is the case when
-> > running the device model in a separate process without shareable DMA
-> > file descriptors, bounce buffering is used.
-> >
-> > It is not uncommon for device models to request mapping of several DMA
-> > regions at the same time. Examples include:
-> >   * net devices, e.g. when transmitting a packet that is split across
-> >     several TX descriptors (observed with igb)
-> >   * USB host controllers, when handling a packet with multiple data TRB=
-s
-> >     (observed with xhci)
-> >
-> > Previously, qemu only provided a single bounce buffer per AddressSpace
-> > and would fail DMA map requests while the buffer was already in use. In
-> > turn, this would cause DMA failures that ultimately manifest as hardwar=
-e
-> > errors from the guest perspective.
-> >
-> > This change allocates DMA bounce buffers dynamically instead of
-> > supporting only a single buffer. Thus, multiple DMA mappings work
-> > correctly also when RAM can't be mmap()-ed.
-> >
-> > The total bounce buffer allocation size is limited individually for eac=
-h
-> > AddressSpace. The default limit is 4096 bytes, matching the previous
-> > maximum buffer size. A new x-max-bounce-buffer-size parameter is
-> > provided to configure the limit for PCI devices.
->
-> So, the issue has now become CVE-2024-8612 (information leak), with this
-> commit (v9.1.0-134-g637b0aa139) being the fix.
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-Interesting. IIUC, this is triggered by device implementations calling
-dma_memory_unmap with an incorrect size parameter as provided by a
-hostile guest. Shouldn't the device implementations be fixed to
-validate the parameter as well? Maybe this has already happened? It
-would seem the more targeted fix to me.
+> While working on a concurrency bug, I gave a try to tsan builds for QEMU.=
+ I
+> noticed it didn't build out of the box with recent gcc, so I fixed compil=
+ation.
+> In more, updated documentation to explain how to build a sanitized glib t=
+o avoid
+> false positives related to glib synchronisation primitives.
 
->
-> Should we back-port it to previous stable releases of qemu?
-> (it applies to 9.1 but not to 9.0, and I haven't tested it even in 9.1.
-> If anything it needs some work for 9.0 and before)
+Queued to testing/next, thanks.
 
-FWIW, I've been running with earlier variants of this since at least
-8.0.50, so a backport shouldn't be hard. Note that if we decide to
-backport, we should also include "mac_dbdma: Remove leftover
-`dma_memory_unmap` calls", which fixes a bug uncovered in mac_dbdma
-uncovered by the concurrent bounce buffers change.
-
->
-> Thanks,
->
-> /mjt
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
