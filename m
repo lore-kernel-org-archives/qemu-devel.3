@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFE24CCF9E8
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 17:12:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8CBCCF9E7
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 17:13:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stVYd-0000rg-An; Wed, 25 Sep 2024 13:12:08 -0400
+	id 1stVYp-0001mD-1F; Wed, 25 Sep 2024 13:12:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1stVYR-0000Kk-Ej
+ id 1stVYO-0000KW-Le
  for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:11:55 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1stVYM-0000bi-12
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:11:53 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3770320574aso10932f8f.2
- for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 10:11:48 -0700 (PDT)
+ id 1stVYK-0000bS-4W
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:11:51 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-378f90ad32dso31612f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 10:11:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727284307; x=1727889107; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FXjwiUjPDmRUKmjejukivCx1FVXlutJ/frWtXF30WgI=;
- b=DmvUCoMWt6YjzQP5P9iNrwQIT794xzg1V+2HKnXggV2KY56PniGD3AHAQXp43laCqG
- I96q95z4osqcz05t+VfffePQgkvlKUuKpd36LJARnVjiyNC6buf3LeCboPoUyiDnMbIm
- k9gzTGec18NfMoBLbsyqyoRv/rIhEn1ieUdqUxInd6WxPdxH+uS8ht4yDsX/4A8sTnep
- WFLm6LxUAg38ltdBr7UMUsHAwAJfY6udakoNB97gkQdIevaON8HYeNaf+QbF6dg3JVTh
- w5vMPcyShbGyMjhFOmbBoK+5ooU6qyinH0TfE4viO1eH4mVu+LnsQd3Lu3biYgXc8oU8
- Ey5g==
+ d=linaro.org; s=google; t=1727284305; x=1727889105; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=YKiMcMVIgaI1u5EOrQ7wt/HfEOtyQ4ZcHqLFruvQEk8=;
+ b=qgf8hvTyZaRG1U8A0vyqHLwZ5tG11Q4AgfZ4CB89J8o8N36qsW2P+678Su8vRvxdFr
+ xOmsZF2ecKibrpKKZkiIt9oNKM4zZgbsOW4Gsl+JCPWvUZgJ0kk1RT1s25ITNliAHXXT
+ i17GdsiqMk8jHcg2Ctb2mDI+H7z+VfQoIUmInBpGYf3+wMJ25CYd9TShiOelsc0k52jD
+ /57viSVYljb/RQMVBb00oGIQg2TLmyFwtbyhGI7W80WDXLAvxRhsEkQ0FZUXFazbn/oF
+ kV104mLOWrhqB7GeqMIRBQBjarsguexRkO6YxIjvwXWHUBAm6/9paXsA6EL5BmFs1cip
+ 2E6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727284307; x=1727889107;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FXjwiUjPDmRUKmjejukivCx1FVXlutJ/frWtXF30WgI=;
- b=PeOOQoyRHbdnqhVQ3kKpGS1xukwkGOBdd2Bh9h88c3vBWYbtS6bNah3TMMYFcwZY+e
- 6ghC/0lWJWKZP1o6+ATbKG1jwcjIz7nFS6HiEUfo8Pbd1geBwjnF5i/93RVgJi2LS4WT
- hRUfF8caAzx9hG9LIQysN7x8zhywaP6Xzkj51H44fEbimR2+k5ujp1veq5cwmf5O4r2Q
- OFL/vFcCc2OIRsF5f1UOLQIZgikjVtlPUsU3qfQbABERkIYRlfhXWlMHhQOJngD17b5P
- Onwk4TIf2D8Qamj9UaEXBQRyoZ9piQSoFTqHcy5b8vsQd66zrYJ9dKxR7PNIcZivpCaw
- T+iw==
-X-Gm-Message-State: AOJu0YydLh+g+P475EgISW9e+sIqCcr5H7nxnoAyob3ZpfvYvpj8aCS/
- SI+Mfp8xMaRFnY8VSEw5OhjC8H3jUSYRqJYIykytRFZ0+lVX5FD17PdGS5Acwiw=
-X-Google-Smtp-Source: AGHT+IHV6HV/eWaJfeffMpjzbiz3n6OhSG/OKMDSorPfnryDAPUV5GyUbaXuXJP53F/aVYvFjacx1g==
-X-Received: by 2002:a5d:6685:0:b0:374:c977:7453 with SMTP id
- ffacd0b85a97d-37cc24762e0mr2263987f8f.25.1727284307287; 
- Wed, 25 Sep 2024 10:11:47 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42e90274aa0sm35547145e9.0.2024.09.25.10.11.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ d=1e100.net; s=20230601; t=1727284305; x=1727889105;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YKiMcMVIgaI1u5EOrQ7wt/HfEOtyQ4ZcHqLFruvQEk8=;
+ b=fE/gV6THGdCbpITSzQZ4LQVT7xaY6V6bS3MVhJq8ZWJ1tgh76zNYlUAlIJ9eHWDZOl
+ 0HuUC3lKIF1wm3/mCIsVLmTVnYIEiD8AehkDRxnje7ZLLxUjn4408pdbhXMqMEvvsckh
+ Q/m6Kacx5M5AIv+pqcyCgbV14j08tSDwlQ6hIgHZyMOI6p2IEZt7np6951TSf5SIbcqE
+ RsiBQAtPraejGPPeJ63TgEuY2alyxuHWHoNYGhvnFSsf/2xOrBQF6nqVQELaiwofNjAE
+ eMbhTCEBPC9JLLTITuLMW4Rma4bhk9OL92tU0nSSMN1no9SVTot1D7vZGCA1jl1CSkMq
+ iGlA==
+X-Gm-Message-State: AOJu0YzfGPnWCz8DtU/j0nR+vkfiCskPR52vrtWu9SX0auQX1GC2+nlz
+ 0BVH37voejtXjQeaJ2TuEdeDdgkcA0lygc5lHDSpnmRF4CCUmQxH9Par+p+p/+4=
+X-Google-Smtp-Source: AGHT+IGlSP0Jlk8NPTfdGfqLOuwAKaNghDViO1/OMw6Z7pw6Tee/O07cZuWwhv/1xXRFpiFAXO7XGg==
+X-Received: by 2002:adf:fac5:0:b0:374:b685:672 with SMTP id
+ ffacd0b85a97d-37cc248b5b4mr2184119f8f.26.1727284304867; 
  Wed, 25 Sep 2024 10:11:44 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37cbc2c226esm4455006f8f.36.2024.09.25.10.11.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Sep 2024 10:11:41 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8619C5F92F;
+ by draig.lan (Postfix) with ESMTP id 542CF5F8E4;
  Wed, 25 Sep 2024 18:11:40 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -80,18 +79,16 @@ Cc: Zhao Liu <zhao1.liu@intel.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Marcelo Tosatti <mtosatti@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <thuth@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 02/10] tests/docker: Fix microblaze atomics
-Date: Wed, 25 Sep 2024 18:11:32 +0100
-Message-Id: <20240925171140.1307033-3-alex.bennee@linaro.org>
+ Beraldo Leal <bleal@redhat.com>
+Subject: [PATCH 00/10] maintainer updates (testing, gdbstub)
+Date: Wed, 25 Sep 2024 18:11:30 +0100
+Message-Id: <20240925171140.1307033-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20240925171140.1307033-1-alex.bennee@linaro.org>
-References: <20240925171140.1307033-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,73 +110,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+Welcome to the first post KVM forum series. We have:
 
-GCC produces invalid code for microblaze atomics.
+  - fix from Ilya for microblaze atomics
+  - Pierrick's tsan updates
+  - I've added my testing and gdbstub trees to MAINTAINERS
+  - enabled a very basic aarch64_be-linux-user test
+  - fixed the missing gdb XML fails that cause aarch64_be-linux-user to assert
+  - finally I've made the mips64el cross compiler bookworm and allow_fail
 
-The fix is unfortunately not upstream, so fetch it from an external
-location and apply it locally.
+Alex Bennée (6):
+  testing: bump mips64el cross to bookworm and allow to fail
+  tests/docker: add NOFETCH env variable for testing
+  MAINTAINERS: mention my testing/next tree
+  MAINTAINERS: mention my gdbstub/next tree
+  config/targets: update aarch64_be-linux-user gdb XML list
+  tests/tcg: enable basic testing for aarch64_be-linux-user
 
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-Id: <20240919152308.10440-1-iii@linux.ibm.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- .../debian-microblaze-cross.d/build-toolchain.sh          | 8 ++++++++
- tests/docker/dockerfiles/debian-toolchain.docker          | 7 +++++++
- 2 files changed, 15 insertions(+)
+Ilya Leoshkevich (1):
+  tests/docker: Fix microblaze atomics
 
-diff --git a/tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.sh b/tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.sh
-index 23ec0aa9a7..c5cd0aa931 100755
---- a/tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.sh
-+++ b/tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.sh
-@@ -10,6 +10,8 @@ TOOLCHAIN_INSTALL=/usr/local
- TOOLCHAIN_BIN=${TOOLCHAIN_INSTALL}/bin
- CROSS_SYSROOT=${TOOLCHAIN_INSTALL}/$TARGET/sys-root
- 
-+GCC_PATCH0_URL=https://raw.githubusercontent.com/Xilinx/meta-xilinx/refs/tags/xlnx-rel-v2024.1/meta-microblaze/recipes-devtools/gcc/gcc-12/0009-Patch-microblaze-Fix-atomic-boolean-return-value.patch
-+
- export PATH=${TOOLCHAIN_BIN}:$PATH
- 
- #
-@@ -31,6 +33,12 @@ mv gcc-11.2.0 src-gcc
- mv musl-1.2.2 src-musl
- mv linux-5.10.70 src-linux
- 
-+#
-+# Patch gcc
-+#
-+
-+wget -O - ${GCC_PATCH0_URL} | patch -d src-gcc -p1
-+
- mkdir -p bld-hdr bld-binu bld-gcc bld-musl
- mkdir -p ${CROSS_SYSROOT}/usr/include
- 
-diff --git a/tests/docker/dockerfiles/debian-toolchain.docker b/tests/docker/dockerfiles/debian-toolchain.docker
-index 687a97fec4..ab4ce29533 100644
---- a/tests/docker/dockerfiles/debian-toolchain.docker
-+++ b/tests/docker/dockerfiles/debian-toolchain.docker
-@@ -10,6 +10,8 @@ FROM docker.io/library/debian:11-slim
- # ??? The build-dep isn't working, missing a number of
- # minimal build dependiencies, e.g. libmpc.
- 
-+RUN sed 's/^deb /deb-src /' </etc/apt/sources.list >/etc/apt/sources.list.d/deb-src.list
-+
- RUN apt update && \
-     DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
-     DEBIAN_FRONTEND=noninteractive eatmydata \
-@@ -33,6 +35,11 @@ RUN cd /root && ./build-toolchain.sh
- # and the build trees by restoring the original image,
- # then copying the built toolchain from stage 0.
- FROM docker.io/library/debian:11-slim
-+RUN apt update && \
-+    DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
-+    DEBIAN_FRONTEND=noninteractive eatmydata \
-+    apt install -y --no-install-recommends \
-+        libmpc3
- COPY --from=0 /usr/local /usr/local
- # As a final step configure the user (if env is defined)
- ARG USER
+Pierrick Bouvier (3):
+  meson: hide tsan related warnings
+  target/i386: fix build warning (gcc-12 -fsanitize=thread)
+  docs/devel: update tsan build documentation
+
+ MAINTAINERS                                   |  2 ++
+ docs/devel/testing/main.rst                   | 26 +++++++++++---
+ configure                                     |  5 +++
+ configs/targets/aarch64_be-linux-user.mak     |  2 +-
+ meson.build                                   | 10 +++++-
+ target/i386/kvm/kvm.c                         |  4 +--
+ tests/tcg/aarch64_be/hello.c                  | 35 +++++++++++++++++++
+ .gitlab-ci.d/container-cross.yml              |  3 ++
+ tests/docker/Makefile.include                 |  5 +--
+ .../build-toolchain.sh                        |  8 +++++
+ .../dockerfiles/debian-mips64el-cross.docker  | 10 +++---
+ .../dockerfiles/debian-toolchain.docker       |  7 ++++
+ tests/lcitool/refresh                         |  2 +-
+ tests/tcg/Makefile.target                     |  7 +++-
+ tests/tcg/aarch64_be/Makefile.target          | 17 +++++++++
+ 15 files changed, 125 insertions(+), 18 deletions(-)
+ create mode 100644 tests/tcg/aarch64_be/hello.c
+ create mode 100644 tests/tcg/aarch64_be/Makefile.target
+
 -- 
 2.39.5
 
