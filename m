@@ -4,92 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DAF4CCF9EB
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 18:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B909CCCF9EC
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 19:06:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stX9E-0002IJ-8O; Wed, 25 Sep 2024 14:54:00 -0400
+	id 1stXKR-00035W-E2; Wed, 25 Sep 2024 15:05:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1stX9D-0002HH-0P
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 14:53:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1stX9B-0004dv-4N
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 14:53:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727290435;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LG4Cutq86AkJ0WQVP1Yt63RcYjizB+cGV84tmNcTnTs=;
- b=XESpogCMpu334DpiAVTRGlCTZ4QPOEQO/fZrjq+pPrh20N6pyHapjqFDR8kLhLbtnpES5v
- MppjIyFFHZ/Gnbu5M383PYy0+93l38z48cNOj6nMuDA9xjFhdDxyZesnatKZx2wNLcyb9x
- A2LkFH+wA+E6LBxb1ABeWx+BUCb2BaM=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-301-gG7gsYbTMoSOiLwE1JPblw-1; Wed, 25 Sep 2024 14:53:54 -0400
-X-MC-Unique: gG7gsYbTMoSOiLwE1JPblw-1
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-20aee551ec1so908425ad.3
- for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 11:53:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727290433; x=1727895233;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <hal.martin@gmail.com>)
+ id 1stXKP-00034Q-4q
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 15:05:33 -0400
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hal.martin@gmail.com>)
+ id 1stXKN-0005ne-7A
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 15:05:32 -0400
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-535694d67eeso237424e87.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 12:05:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1727291128; x=1727895928; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LG4Cutq86AkJ0WQVP1Yt63RcYjizB+cGV84tmNcTnTs=;
- b=CBSFD9schOWcl7PDolu8021s4zNAh+HGMRwE4bp4jllPd/Pth8DYjS3JBE1dprgqwT
- Di5vdN9KMZ5EDDhws3j3XsEAnI1PgY4S5ZZeShbEWyq2zqjFF8/N2UIdQhOO9ndP7S6w
- QeOSmFVLR670B5taeBhJCC3RPjpS7OqHXu/9CnssW3ZIZ50hsvQJQ9RYmlsErb2Myl++
- INAjVv4UI2HRqU7zV/kb3K21+wO1YRyijIsL4XFBU4M9sl3iKG30fJnOG4XQ3tyEM6zD
- fjxZ4E+iAmts03AlRLNDaYEE0gfccLlzYTPegyHyzCFY6lhkLiRHWttpTC0vXsRV6gW6
- K5+w==
-X-Gm-Message-State: AOJu0Yydz8z/7a7NrmEMzb0fsmIg/OaemGaaOa85O8LRF3ZgYw9DwcFE
- wF6UHuS/czfRrzHo1VysukkgiTPj/3tktKg+ZhUdP5CqYiE6MP6g2IvSPJqIQHQp6c1TZ/SfZEq
- gAtbwSMXgQsrhUVQhbZKmcg++vsgvWhQlMaQy0/xS58hr8dyFVf+P
-X-Received: by 2002:a17:903:2304:b0:206:b79e:5780 with SMTP id
- d9443c01a7336-20afc465a0cmr41818045ad.24.1727290432865; 
- Wed, 25 Sep 2024 11:53:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGJ88sF8H6jU4MJ6OfzwqPmOlZ7AfenpUpkdD5K2bsEK2q94SRXM2mcsLwnz+1RMXsNma/8Pw==
-X-Received: by 2002:a17:903:2304:b0:206:b79e:5780 with SMTP id
- d9443c01a7336-20afc465a0cmr41817805ad.24.1727290432411; 
- Wed, 25 Sep 2024 11:53:52 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20af1720c98sm27306185ad.73.2024.09.25.11.53.50
+ bh=6UcRTZcKey+l4g54CJLxGmkuebFnwMhES2SY5pkGUHM=;
+ b=LWaFn+6jPlp2n0rHzDlPsBdeQ+DCZvAsDxBxNiUfgYf1wknBBwZuEwvM+rMwWD31EY
+ AnFVKfE1rkVWhAzuu6avfwE4vNezSZltelWgFUd8jHfY3gXhvzX5e4Rv52NlqDb6IOd4
+ 4h1N4fCx8QOl8L1wHQj+EomgmN4x+QZXGVctmoK2ysw2bbhGeo3bkLxMrv109eysRHSx
+ q2FuDXeTTjDKtSFBwkxEkR4bwxy8DcEHMo0c1WcmIIiE8J3eQcRvf3OIb3pWKd0Z8vnI
+ VB/rRQiVudU00fIhiz7x5lFAYT3Jgc0IPSxgM5j3iNNIWew5WV/IR4pwa9ri5EpuyqDZ
+ Q9KQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727291128; x=1727895928;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6UcRTZcKey+l4g54CJLxGmkuebFnwMhES2SY5pkGUHM=;
+ b=aGNZgzDIshxuQ15wepC8xt+1Jm/kDmXg8058AwY+k06e5//x1T2O2rlvYemTXa9sC0
+ Nu/hY5KZej+Etp6iZO3EIRrPRgX1zBVOer1CIfQZzZKtg2UUzx8cs+RP8dcRko3rL+qn
+ 6yHuS9tM3xFoq64Q5SVXS5PgequLi8WQ9k4+BLF4N02rpCP3wJ3HTUw9jrxQ7+N8SrDK
+ H0yzLUo2rcZQm/YypmKku10Y+Lk795L52fkOFkURDM+ikKC/kAEdqvKfhjY9GQXzQLAF
+ +w3rZcVMDMYYwFQcz1eUd8UzhiAelqwKZ5AF942VVxsvUK7ZFZDJOItRS3WoN8PjZvZD
+ 2edg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW22YeNRIQYU1Z+R/ucw6qD+OEO6JOJzaQ5xkECnK+BBjfx+QQ0ggsw5skZAam5bWwUcco0At8oWZQy@nongnu.org
+X-Gm-Message-State: AOJu0Yyqt9P19FMiIwkoU6n3b8ZRgPGwcd1r64USUMP4W1+3s+saO3C9
+ 7QUlNie6hEFs6J3bpkj+/9XPsMbSkIczf1/c9E4rjHmgN4wJo5CP
+X-Google-Smtp-Source: AGHT+IGWZm6dzyKfOwfneyi01xYmldIx5ikczAsNb7VhjhLU8VFI/7qOowxZKPeRtpPc5MxdGEe27A==
+X-Received: by 2002:a05:6512:1255:b0:533:4784:6aec with SMTP id
+ 2adb3069b0e04-53896bfc46bmr221463e87.27.1727291128172; 
+ Wed, 25 Sep 2024 12:05:28 -0700 (PDT)
+Received: from fitlet2.primaryno.de ([185.154.111.57])
+ by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-537a86489c7sm602736e87.195.2024.09.25.12.05.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Sep 2024 11:53:52 -0700 (PDT)
-Date: Wed, 25 Sep 2024 14:53:48 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Julia Suvorova <jusual@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Song Gao <gaosong@loongson.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 1/2] kvm: Allow kvm_arch_get/put_registers to accept
- Error**
-Message-ID: <ZvRcPBMYLlczv-3P@x1n>
-References: <20240925153625.183600-1-jusual@redhat.com>
- <20240925153625.183600-2-jusual@redhat.com>
+ Wed, 25 Sep 2024 12:05:27 -0700 (PDT)
+From: Hal Martin <hal.martin@gmail.com>
+To: mst@redhat.com
+Cc: Hal Martin <hal.martin@gmail.com>, qemu-devel@nongnu.org,
+ imammedo@redhat.com, anisinha@redhat.com
+Subject: [PATCH v3] hw/smbios: support for type 7 (cache information)
+Date: Wed, 25 Sep 2024 19:04:45 +0000
+Message-Id: <20240925190445.20700-1-hal.martin@gmail.com>
+X-Mailer: git-send-email 2.38.5
+In-Reply-To: <20240924162918.3be98058@imammedo.users.ipa.redhat.com>
+References: <20240924162918.3be98058@imammedo.users.ipa.redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240925153625.183600-2-jusual@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=hal.martin@gmail.com; helo=mail-lf1-x12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.108,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,285 +95,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 25, 2024 at 05:36:22PM +0200, Julia Suvorova wrote:
-> This is necessary to provide discernible error messages to the caller.
-> 
-> Signed-off-by: Julia Suvorova <jusual@redhat.com>
+This patch adds support for SMBIOS type 7 (Cache Information) to qemu.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+level: cache level (1-8)
+size: cache size in bytes
 
-One nitpick below:
+Example usage:
+-smbios type=7,level=1,size=0x8000
 
-> ---
->  accel/kvm/kvm-all.c        | 41 +++++++++++++++++++++++++++++---------
->  include/sysemu/kvm.h       |  4 ++--
->  target/arm/kvm.c           |  4 ++--
->  target/i386/kvm/kvm.c      |  4 ++--
->  target/loongarch/kvm/kvm.c |  4 ++--
->  target/mips/kvm.c          |  4 ++--
->  target/ppc/kvm.c           |  2 +-
->  target/riscv/kvm/kvm-cpu.c |  4 ++--
->  target/s390x/kvm/kvm.c     |  4 ++--
->  9 files changed, 47 insertions(+), 24 deletions(-)
-> 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index fe4cd721d9..19e09067b3 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -2762,9 +2762,15 @@ void kvm_flush_coalesced_mmio_buffer(void)
->  static void do_kvm_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
->  {
->      if (!cpu->vcpu_dirty && !kvm_state->guest_state_protected) {
-> -        int ret = kvm_arch_get_registers(cpu);
-> +        Error *err = NULL;
-> +        int ret = kvm_arch_get_registers(cpu, &err);
->          if (ret) {
-> -            error_report("Failed to get registers: %s", strerror(-ret));
-> +            if (err) {
-> +                error_report_err(err);
-> +            } else {
-> +                error_report("Failed to get registers: %s", strerror(-ret));
-> +            }
-> +
->              cpu_dump_state(cpu, stderr, CPU_DUMP_CODE);
->              vm_stop(RUN_STATE_INTERNAL_ERROR);
->          }
-> @@ -2782,9 +2788,15 @@ void kvm_cpu_synchronize_state(CPUState *cpu)
->  
->  static void do_kvm_cpu_synchronize_post_reset(CPUState *cpu, run_on_cpu_data arg)
->  {
-> -    int ret = kvm_arch_put_registers(cpu, KVM_PUT_RESET_STATE);
-> +    Error *err = NULL;
-> +    int ret = kvm_arch_put_registers(cpu, KVM_PUT_RESET_STATE, &err);
->      if (ret) {
-> -        error_report("Failed to put registers after reset: %s", strerror(-ret));
-> +        if (err) {
-> +            error_reportf_err(err, "Restoring resisters after reset");
+Signed-off-by: Hal Martin <hal.martin@gmail.com>
+---
+ hw/smbios/smbios.c           | 65 ++++++++++++++++++++++++++++++++++++
+ include/hw/firmware/smbios.h | 18 ++++++++++
+ qemu-options.hx              |  2 ++
+ 3 files changed, 85 insertions(+)
 
-IMO it'll be nice to use the same error report pattern, either
-error_report_err() or error_reportf_err() for all the four call sites.
-
-If to use error_reportf_err(), better add comma at the end (e.g. "PREFIX: "
-instead of "PREFIX") to make the print looks slightly better.
-
-Thanks!
-
-> +        } else {
-> +            error_report("Failed to put registers after reset: %s",
-> +                         strerror(-ret));
-> +        }
->          cpu_dump_state(cpu, stderr, CPU_DUMP_CODE);
->          vm_stop(RUN_STATE_INTERNAL_ERROR);
->      }
-> @@ -2799,9 +2811,15 @@ void kvm_cpu_synchronize_post_reset(CPUState *cpu)
->  
->  static void do_kvm_cpu_synchronize_post_init(CPUState *cpu, run_on_cpu_data arg)
->  {
-> -    int ret = kvm_arch_put_registers(cpu, KVM_PUT_FULL_STATE);
-> +    Error *err = NULL;
-> +    int ret = kvm_arch_put_registers(cpu, KVM_PUT_FULL_STATE, &err);
->      if (ret) {
-> -        error_report("Failed to put registers after init: %s", strerror(-ret));
-> +        if (err) {
-> +            error_reportf_err(err, "Putting registers after init");
-> +        } else {
-> +            error_report("Failed to put registers after init: %s",
-> +                         strerror(-ret));
-> +        }
->          exit(1);
->      }
->  
-> @@ -2991,10 +3009,15 @@ int kvm_cpu_exec(CPUState *cpu)
->          MemTxAttrs attrs;
->  
->          if (cpu->vcpu_dirty) {
-> -            ret = kvm_arch_put_registers(cpu, KVM_PUT_RUNTIME_STATE);
-> +            Error *err = NULL;
-> +            ret = kvm_arch_put_registers(cpu, KVM_PUT_RUNTIME_STATE, &err);
->              if (ret) {
-> -                error_report("Failed to put registers after init: %s",
-> -                             strerror(-ret));
-> +                if (err) {
-> +                    error_reportf_err(err, "Putting registers after init");
-> +                } else {
-> +                    error_report("Failed to put registers after init: %s",
-> +                                 strerror(-ret));
-> +                }
->                  ret = -1;
->                  break;
->              }
-> diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
-> index 613d3f7581..c3a60b2890 100644
-> --- a/include/sysemu/kvm.h
-> +++ b/include/sysemu/kvm.h
-> @@ -359,7 +359,7 @@ int kvm_arch_handle_exit(CPUState *cpu, struct kvm_run *run);
->  
->  int kvm_arch_process_async_events(CPUState *cpu);
->  
-> -int kvm_arch_get_registers(CPUState *cpu);
-> +int kvm_arch_get_registers(CPUState *cpu, Error **errp);
->  
->  /* state subset only touched by the VCPU itself during runtime */
->  #define KVM_PUT_RUNTIME_STATE   1
-> @@ -368,7 +368,7 @@ int kvm_arch_get_registers(CPUState *cpu);
->  /* full state set, modified during initialization or on vmload */
->  #define KVM_PUT_FULL_STATE      3
->  
-> -int kvm_arch_put_registers(CPUState *cpu, int level);
-> +int kvm_arch_put_registers(CPUState *cpu, int level, Error **errp);
->  
->  int kvm_arch_get_default_type(MachineState *ms);
->  
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 849e2e21b3..f1f1b5b375 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -2042,7 +2042,7 @@ static int kvm_arch_put_sve(CPUState *cs)
->      return 0;
->  }
->  
-> -int kvm_arch_put_registers(CPUState *cs, int level)
-> +int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
->  {
->      uint64_t val;
->      uint32_t fpr;
-> @@ -2226,7 +2226,7 @@ static int kvm_arch_get_sve(CPUState *cs)
->      return 0;
->  }
->  
-> -int kvm_arch_get_registers(CPUState *cs)
-> +int kvm_arch_get_registers(CPUState *cs, Error **errp)
->  {
->      uint64_t val;
->      unsigned int el;
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index ada581c5d6..039ed08825 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -5118,7 +5118,7 @@ static int kvm_get_nested_state(X86CPU *cpu)
->      return ret;
->  }
->  
-> -int kvm_arch_put_registers(CPUState *cpu, int level)
-> +int kvm_arch_put_registers(CPUState *cpu, int level, Error **errp)
->  {
->      X86CPU *x86_cpu = X86_CPU(cpu);
->      int ret;
-> @@ -5206,7 +5206,7 @@ int kvm_arch_put_registers(CPUState *cpu, int level)
->      return 0;
->  }
->  
-> -int kvm_arch_get_registers(CPUState *cs)
-> +int kvm_arch_get_registers(CPUState *cs, Error **errp)
->  {
->      X86CPU *cpu = X86_CPU(cs);
->      int ret;
-> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-> index 4786cd5efa..30ec16025d 100644
-> --- a/target/loongarch/kvm/kvm.c
-> +++ b/target/loongarch/kvm/kvm.c
-> @@ -588,7 +588,7 @@ static int kvm_loongarch_put_cpucfg(CPUState *cs)
->      return ret;
->  }
->  
-> -int kvm_arch_get_registers(CPUState *cs)
-> +int kvm_arch_get_registers(CPUState *cs, Error **errp)
->  {
->      int ret;
->  
-> @@ -616,7 +616,7 @@ int kvm_arch_get_registers(CPUState *cs)
->      return ret;
->  }
->  
-> -int kvm_arch_put_registers(CPUState *cs, int level)
-> +int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
->  {
->      int ret;
->  
-> diff --git a/target/mips/kvm.c b/target/mips/kvm.c
-> index a631ab544f..a98798c669 100644
-> --- a/target/mips/kvm.c
-> +++ b/target/mips/kvm.c
-> @@ -1172,7 +1172,7 @@ static int kvm_mips_get_cp0_registers(CPUState *cs)
->      return ret;
->  }
->  
-> -int kvm_arch_put_registers(CPUState *cs, int level)
-> +int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
->  {
->      CPUMIPSState *env = cpu_env(cs);
->      struct kvm_regs regs;
-> @@ -1207,7 +1207,7 @@ int kvm_arch_put_registers(CPUState *cs, int level)
->      return ret;
->  }
->  
-> -int kvm_arch_get_registers(CPUState *cs)
-> +int kvm_arch_get_registers(CPUState *cs, Error **errp)
->  {
->      CPUMIPSState *env = cpu_env(cs);
->      int ret = 0;
-> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-> index 907dba60d1..a361d9d23c 100644
-> --- a/target/ppc/kvm.c
-> +++ b/target/ppc/kvm.c
-> @@ -900,7 +900,7 @@ int kvmppc_put_books_sregs(PowerPCCPU *cpu)
->      return kvm_vcpu_ioctl(CPU(cpu), KVM_SET_SREGS, &sregs);
->  }
->  
-> -int kvm_arch_put_registers(CPUState *cs, int level)
-> +int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
->  {
->      PowerPCCPU *cpu = POWERPC_CPU(cs);
->      CPUPPCState *env = &cpu->env;
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index f6e3156b8d..2bfb112be0 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -1192,7 +1192,7 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
->      KVM_CAP_LAST_INFO
->  };
->  
-> -int kvm_arch_get_registers(CPUState *cs)
-> +int kvm_arch_get_registers(CPUState *cs, Error **errp)
->  {
->      int ret = 0;
->  
-> @@ -1237,7 +1237,7 @@ int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state)
->      return 0;
->  }
->  
-> -int kvm_arch_put_registers(CPUState *cs, int level)
-> +int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
->  {
->      int ret = 0;
->  
-> diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-> index 94181d9281..8ffe0159d8 100644
-> --- a/target/s390x/kvm/kvm.c
-> +++ b/target/s390x/kvm/kvm.c
-> @@ -472,7 +472,7 @@ static int can_sync_regs(CPUState *cs, int regs)
->  #define KVM_SYNC_REQUIRED_REGS (KVM_SYNC_GPRS | KVM_SYNC_ACRS | \
->                                  KVM_SYNC_CRS | KVM_SYNC_PREFIX)
->  
-> -int kvm_arch_put_registers(CPUState *cs, int level)
-> +int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
->  {
->      CPUS390XState *env = cpu_env(cs);
->      struct kvm_fpu fpu = {};
-> @@ -598,7 +598,7 @@ int kvm_arch_put_registers(CPUState *cs, int level)
->      return 0;
->  }
->  
-> -int kvm_arch_get_registers(CPUState *cs)
-> +int kvm_arch_get_registers(CPUState *cs, Error **errp)
->  {
->      CPUS390XState *env = cpu_env(cs);
->      struct kvm_fpu fpu;
-> -- 
-> 2.45.0
-> 
-
+diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+index a394514264..c8c62d8064 100644
+--- a/hw/smbios/smbios.c
++++ b/hw/smbios/smbios.c
+@@ -83,6 +83,12 @@ static struct {
+     .processor_family = 0x01, /* Other */
+ };
+ 
++struct type7_instance {
++    uint16_t level, size;
++    QTAILQ_ENTRY(type7_instance) next;
++};
++static QTAILQ_HEAD(, type7_instance) type7 = QTAILQ_HEAD_INITIALIZER(type7);
++
+ struct type8_instance {
+     const char *internal_reference, *external_reference;
+     uint8_t connector_type, port_type;
+@@ -330,6 +336,23 @@ static const QemuOptDesc qemu_smbios_type4_opts[] = {
+     { /* end of list */ }
+ };
+ 
++static const QemuOptDesc qemu_smbios_type7_opts[] = {
++    {
++        .name = "type",
++        .type = QEMU_OPT_NUMBER,
++        .help = "SMBIOS element type",
++    },{
++        .name = "level",
++        .type = QEMU_OPT_NUMBER,
++        .help = "cache level",
++    },{
++        .name = "size",
++        .type = QEMU_OPT_NUMBER,
++        .help = "cache size",
++    },
++    { /* end of list */ }
++};
++
+ static const QemuOptDesc qemu_smbios_type8_opts[] = {
+     {
+         .name = "type",
+@@ -733,6 +756,34 @@ static void smbios_build_type_4_table(MachineState *ms, unsigned instance,
+     smbios_type4_count++;
+ }
+ 
++static void smbios_build_type_7_table(void)
++{
++    unsigned instance = 0;
++    struct type7_instance *t7;
++    char designation[20];
++
++    QTAILQ_FOREACH(t7, &type7, next) {
++        SMBIOS_BUILD_TABLE_PRE(7, T0_BASE + instance, true);
++        sprintf(designation, "CPU Internal L%d", t7->level);
++        SMBIOS_TABLE_SET_STR(7, socket_designation, designation);
++        /* cache not socketed, enabled, write back */
++        t->cache_configuration =  cpu_to_le16(0x180 | ((t7->level) - 1));
++        t->installed_size =  cpu_to_le16(t7->size);
++        /* set max size to installed size */
++        t->maximum_cache_size =  cpu_to_le16(t7->size);
++        t->supported_sram_type = cpu_to_le16(0x10); /* pipeline burst */
++        t->current_sram_type = cpu_to_le16(0x10); /* pipeline burst */
++        t->cache_speed = 0x1; /* 1 ns */
++        t->error_correction_type = 0x6; /* Multi-bit ECC */
++        t->system_cache_type = 0x05; /* Unified */
++        t->associativity = 0x6; /* Fully Associative */
++        t->maximum_cache_size2 = cpu_to_le32(t7->size);
++        t->installed_cache_size2 = cpu_to_le32(t7->size);
++        SMBIOS_BUILD_TABLE_POST;
++        instance++;
++    }
++}
++
+ static void smbios_build_type_8_table(void)
+ {
+     unsigned instance = 0;
+@@ -1120,6 +1171,7 @@ static bool smbios_get_tables_ep(MachineState *ms,
+         }
+     }
+ 
++    smbios_build_type_7_table();
+     smbios_build_type_8_table();
+     smbios_build_type_9_table(errp);
+     smbios_build_type_11_table();
+@@ -1478,6 +1530,19 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
+                            UINT16_MAX);
+             }
+             return;
++        case 7:
++            if (!qemu_opts_validate(opts, qemu_smbios_type7_opts, errp)) {
++                return;
++            }
++            struct type7_instance *t7_i;
++            t7_i = g_new0(struct type7_instance, 1);
++            t7_i->level = qemu_opt_get_number(opts, "level", 0x0);
++            t7_i->size = qemu_opt_get_number(opts, "size", 0x0200);
++            /* Only cache levels 1-8 are permitted */
++            if (t7_i->level > 0 && t7_i->level < 9) {
++                QTAILQ_INSERT_TAIL(&type7, t7_i, next);
++            }
++            return;
+         case 8:
+             if (!qemu_opts_validate(opts, qemu_smbios_type8_opts, errp)) {
+                 return;
+diff --git a/include/hw/firmware/smbios.h b/include/hw/firmware/smbios.h
+index f066ab7262..1ea1506b46 100644
+--- a/include/hw/firmware/smbios.h
++++ b/include/hw/firmware/smbios.h
+@@ -220,6 +220,24 @@ typedef enum smbios_type_4_len_ver {
+     SMBIOS_TYPE_4_LEN_V30 = offsetofend(struct smbios_type_4, thread_count2),
+ } smbios_type_4_len_ver;
+ 
++/* SMBIOS type 7 - Cache Information (v2.0+) */
++struct smbios_type_7 {
++    struct smbios_structure_header header;
++    uint8_t socket_designation;
++    uint16_t cache_configuration;
++    uint16_t maximum_cache_size;
++    uint16_t installed_size;
++    uint16_t supported_sram_type;
++    uint16_t current_sram_type;
++    uint8_t cache_speed;
++    uint8_t error_correction_type;
++    uint8_t system_cache_type;
++    uint8_t associativity;
++    uint32_t maximum_cache_size2;
++    uint32_t installed_cache_size2;
++    /* contained elements follow */
++} QEMU_PACKED;
++
+ /* SMBIOS type 8 - Port Connector Information */
+ struct smbios_type_8 {
+     struct smbios_structure_header header;
+diff --git a/qemu-options.hx b/qemu-options.hx
+index d94e2cbbae..21c05821d5 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -2706,6 +2706,8 @@ DEF("smbios", HAS_ARG, QEMU_OPTION_smbios,
+     "              [,asset=str][,part=str][,max-speed=%d][,current-speed=%d]\n"
+     "              [,processor-family=%d][,processor-id=%d]\n"
+     "                specify SMBIOS type 4 fields\n"
++    "-smbios type=7[,level=%d][,size=%d]\n"
++    "                specify SMBIOS type 7 fields\n"
+     "-smbios type=8[,external_reference=str][,internal_reference=str][,connector_type=%d][,port_type=%d]\n"
+     "                specify SMBIOS type 8 fields\n"
+     "-smbios type=11[,value=str][,path=filename]\n"
 -- 
-Peter Xu
+2.42.0
 
 
