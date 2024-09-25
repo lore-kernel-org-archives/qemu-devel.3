@@ -4,77 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB6BFCCF9E7
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 17:25:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90BB0CCF9E8
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 17:28:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stVkp-0005LT-Oz; Wed, 25 Sep 2024 13:24:43 -0400
+	id 1stVo8-00039N-IX; Wed, 25 Sep 2024 13:28:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1stVkn-0005Bk-7N
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:24:41 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1stVo6-00037w-P8
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:28:06 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1stVkl-0002Wx-4f
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:24:40 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-2e078d28fe9so112882a91.2
- for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 10:24:38 -0700 (PDT)
+ id 1stVo4-0002yM-SI
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:28:06 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2da4e84c198so139844a91.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 10:28:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727285077; x=1727889877; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727285282; x=1727890082; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=lI0IF/9Wf9RfvJhUVbIzN+I/aDVIuibDlnrdMkYD+K4=;
- b=yFKPg3v5P00timOsKpUcz7OB0uVl1ykcza4c67hoKnsXThZxRkjrNaf9KVZJMfnnHj
- nHggCx5clCNW8I21fVHhEHWF8L5nrNg1G9KfIE8qbSpI/FhyjETDGokiirMedfFVkkkX
- V49vQHg3iKLfpaKH1bXGEhnVy1mkYKaFzfXxCDqSAPKj21h2ZEzPSSmfreEz8ziIq3ad
- 4epj0wL7EiPjK4q3cZ/QNEh/w8VfhiqxfUibBH+sjnUTfhUhmnflTR/Cw8oiziP+XJFo
- 22UijimY6s+3YuBdn6Oq9OtIsT5mZqUQrFI1w6lQSdMDKFLM0/L8o0m2JWii+7nxts86
- enxA==
+ bh=O+GlcJzBhj8xuwWboDHC6Ga0djIrTHTSFQCqmHJwpHc=;
+ b=rhwsshmuOqlDJKXg8b3j8x0DyN8Ywury8q/aieDbTK7zku92CF+O2jg6ipWw/jj5j/
+ QnhtSqJfrZDgWI3mXGHpD+bwZetvUp1IFAQX1IcHUd6Wychrc7XBw2wU97bob/UiHb53
+ hslgc+E5jBepeXprMxp3vPqmbWceH2Zhp4QHzeBYpykdHD5JQuzkZe0/fTyf1QVgn11B
+ P/YsdQfgwIZckMj8W/nz9OxMWKKfQKXyeBdkyUUMvRKz3AIpDdYc/XfR+/Q3TmxqwEnm
+ KUqKnLMf/y5n2y/htvJHDmbFUbFhjhztIC4WiMUN+8i4dymZ1fbtoknn1HDvBVmexgLS
+ C/Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727285077; x=1727889877;
+ d=1e100.net; s=20230601; t=1727285282; x=1727890082;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lI0IF/9Wf9RfvJhUVbIzN+I/aDVIuibDlnrdMkYD+K4=;
- b=KR+CQvHCnkzUOShYhaOlMh4GdxGdAGTt5IAMT+x6ufCQq4TdZXoZ2l81tzf+TUDP2w
- hvNvLaowNrcTLlFP+3H+jSa0mnOtsiiGmFKeUusR1DwL65kIo0c5wi4+uZCqAFedy3DB
- /itOOM/KLnE5mm4zZnE2acZqd0XeC+PQnsuIQxtwUUPF3VVibl3qWMlcoIRAgo35vhzq
- AAhkDl7O/RhcKDQOmHCiSg+rIq6qxMAJTW1F6ywrmqC8dJ36RTZvmZgYKBPU0yB9YoxS
- Zjjlm+zNQxKGHdxlSdtsMS3I2o9zvjz9vf4kBXZbOU+hJMmwCJFwagpksRUO30IAGPYb
- OXIw==
+ bh=O+GlcJzBhj8xuwWboDHC6Ga0djIrTHTSFQCqmHJwpHc=;
+ b=cU71gSmqw+0QM+gp1w/SwnyjoMr4u+R96/pQFBDnP1kDKllEzcqeAASPPdg41Lkfdf
+ DXLK4dbPibwO1gkhHTXwLruNEwOeenkvdWuOpLtPJpN+GxYt3Wr47XiwYXN4KSSbh854
+ XCV7O7kY1SRBIslY2jbqzgGAODo9aQLCxdWQV1UJ2+DGcTCQHNLVba9P16y3cshLY4Ta
+ 2bsuEUvsqqf/hZ3kb5HqXLq7TxrtA4shOhquO5t8MghWsJdzEgdUAMcexgdGYX7eh79i
+ vIWX0O7Rw+XiIjnO01YS/BP/ISK6QzjQLWr8gDgBRgOuSXoC+K9poCeEQCZWuTMSo3rH
+ g6Xw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXtFqpCh9A3IX+NdGsnU9eHNQ+ufRON/siPxYZ1+l8MSuR8/rJFe8ltnMZkueXrNrUZdqxDa6WLVg9Y@nongnu.org
-X-Gm-Message-State: AOJu0YwPxcfBCOv2Dyo1WuQvF6AhRpnAniRX+EEpCqv+OOE10zSeRof0
- A2DvMYlia+gQnpFzFNA3bO/sNEweG06HqY5bfhqEyF6cC9m6Vmnq9frSGhi2K9c=
-X-Google-Smtp-Source: AGHT+IFfz/oSXO8JPxnuCRmSa8+hVqUNRf2rtyFHArFCYrSKKC1WKiqqPLvF9tIpycBROF8nXg6V9w==
-X-Received: by 2002:a17:90b:4a11:b0:2d1:c9c8:301c with SMTP id
- 98e67ed59e1d1-2e06afbdf1bmr3698398a91.29.1727285077581; 
- Wed, 25 Sep 2024 10:24:37 -0700 (PDT)
+ AJvYcCWupIjAbwReuKhYYDKmcxTYd8YUimUT9kj7t7YgplEBM3/Py1bVbdO7/KmIyAQfxBfvXVLWNbNZYTqS@nongnu.org
+X-Gm-Message-State: AOJu0Yyhue1mSe4YDpKlQPwjKqB78L2cMYNzGsIIidQ3XV1BVkKvC6nf
+ qAy1RwFIPk2nusp46D+9r6aNdj0c8IFnhBzlRq4ReLV9S4dv+tn9JToKiCjxDi8=
+X-Google-Smtp-Source: AGHT+IGLuI1meuwLjIXwGxeMLkCg5+sCPiKLL2EDDdcZ64QB2GGXD+iT7D2LZMueoZolnAqvhbbpoQ==
+X-Received: by 2002:a17:90b:4a11:b0:2d8:a672:1869 with SMTP id
+ 98e67ed59e1d1-2e06afbfe3cmr4276068a91.32.1727285282417; 
+ Wed, 25 Sep 2024 10:28:02 -0700 (PDT)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e06e28afbasm1767831a91.43.2024.09.25.10.24.36
+ 98e67ed59e1d1-2e06e2d3ec2sm1781429a91.56.2024.09.25.10.28.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Sep 2024 10:24:37 -0700 (PDT)
-Message-ID: <86372271-318e-49ae-8fa6-83faceba9b0c@linaro.org>
-Date: Wed, 25 Sep 2024 10:24:36 -0700
+ Wed, 25 Sep 2024 10:28:01 -0700 (PDT)
+Message-ID: <8b3732ad-ff9b-40eb-a4d6-46a010f549cd@linaro.org>
+Date: Wed, 25 Sep 2024 10:28:00 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/44] Functional test conversion, and assert(0) cleanup
+Subject: Re: [PATCH v2] Add -build-info and -build-info-json CLI arguments
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-References: <20240925111029.24082-1-thuth@redhat.com>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ John Snow <jsnow@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240923-feature-build-info-cli-v2-1-66b3462f16a1@linaro.org>
+ <ZvGbRWSPPLJDx7BX@redhat.com> <ka5ia.wqlrej2ef9q@linaro.org>
+ <ZvJ8JblXVH-kJGi1@redhat.com>
+ <CAAjaMXZ8q0is2-7-kjyBs=YsBc03=0R2XcYiR-fp05=bcerD6Q@mail.gmail.com>
+ <87setpcl9p.fsf@draig.linaro.org> <ZvKrqCR5L21-6k54@redhat.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240925111029.24082-1-thuth@redhat.com>
+In-Reply-To: <ZvKrqCR5L21-6k54@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1031.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,135 +108,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/25/24 04:09, Thomas Huth wrote:
-> The following changes since commit 01dc65a3bc262ab1bec8fe89775e9bbfa627becb:
-> 
->    Merge tag 'pull-target-arm-20240919' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-09-19 14:15:15 +0100)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/thuth/qemu.git tags/pull-request-2024-09-25
-> 
-> for you to fetch changes up to dc05b2628e3913e668590ba66d9c618382d351ae:
-> 
->    .gitlab-ci.d: Make separate collapsible log sections for build and test (2024-09-25 09:42:06 +0200)
-> 
-> ----------------------------------------------------------------
-> * Convert more Avocado tests to the new functional test framework
-> * Clean up assert() statements, use g_assert_not_reached() when possible
-> * Improve output of the gitlab CI jobs
-> 
-> ----------------------------------------------------------------
-> Peter Maydell (2):
->        .gitlab-ci.d: Split build and test in cross build job templates
->        .gitlab-ci.d: Make separate collapsible log sections for build and test
-> 
-> Pierrick Bouvier (34):
->        hw/acpi: replace assert(0) with g_assert_not_reached()
->        hw/arm: replace assert(0) with g_assert_not_reached()
->        hw/net: replace assert(0) with g_assert_not_reached()
->        migration: replace assert(0) with g_assert_not_reached()
->        qobject: replace assert(0) with g_assert_not_reached()
->        target/ppc: replace assert(0) with g_assert_not_reached()
->        block: replace assert(false) with g_assert_not_reached()
->        hw/hyperv: replace assert(false) with g_assert_not_reached()
->        hw/net: replace assert(false) with g_assert_not_reached()
->        hw/nvme: replace assert(false) with g_assert_not_reached()
->        hw/pci: replace assert(false) with g_assert_not_reached()
->        hw/ppc: replace assert(false) with g_assert_not_reached()
->        migration: replace assert(false) with g_assert_not_reached()
->        target/i386/kvm: replace assert(false) with g_assert_not_reached()
->        accel/tcg: remove break after g_assert_not_reached()
->        block: remove break after g_assert_not_reached()
->        hw/acpi: remove break after g_assert_not_reached()
->        hw/net: remove break after g_assert_not_reached()
->        hw/scsi: remove break after g_assert_not_reached()
->        hw/tpm: remove break after g_assert_not_reached()
->        target/arm: remove break after g_assert_not_reached()
->        target/riscv: remove break after g_assert_not_reached()
->        fpu: remove break after g_assert_not_reached()
->        tcg/loongarch64: remove break after g_assert_not_reached()
->        include/qemu: remove return after g_assert_not_reached()
->        hw/hyperv: remove return after g_assert_not_reached()
->        hw/net: remove return after g_assert_not_reached()
->        hw/pci: remove return after g_assert_not_reached()
->        hw/ppc: remove return after g_assert_not_reached()
->        migration: remove return after g_assert_not_reached()
->        qobject: remove return after g_assert_not_reached()
->        qom: remove return after g_assert_not_reached()
->        tests/qtest: remove return after g_assert_not_reached()
->        scripts/checkpatch.pl: emit error when using assert(false)
-> 
-> Thomas Huth (8):
->        tests/functional/qemu_test: Add a function for launching kernels more easily
->        tests/functional: Convert the vexpressa9 Avocado test
->        tests/functional: Convert the xtensa lx60 Avocado test
->        tests/functional: Convert the SPARCStation Avocado test
->        tests/functional: Convert the e500 ppc64 Avocado test
->        tests/functional: Convert the mac ppc Avocado tests
->        tests/functional: Convert the r2d sh4 Avocado test
->        tests/functional: Convert the powernv tests from boot_linux_console.py
-> 
->   MAINTAINERS                               |   7 ++
->   include/qemu/pmem.h                       |   1 -
->   accel/tcg/plugin-gen.c                    |   1 -
->   block/qcow2.c                             |   2 +-
->   block/ssh.c                               |   1 -
->   hw/acpi/aml-build.c                       |   3 +-
->   hw/arm/highbank.c                         |   2 +-
->   hw/hyperv/hyperv_testdev.c                |   7 +-
->   hw/hyperv/vmbus.c                         |  15 ++--
->   hw/net/e1000e_core.c                      |   4 +-
->   hw/net/i82596.c                           |   2 +-
->   hw/net/igb_core.c                         |   4 +-
->   hw/net/net_rx_pkt.c                       |   3 +-
->   hw/net/vmxnet3.c                          |   1 -
->   hw/nvme/ctrl.c                            |   8 +-
->   hw/pci/pci-stub.c                         |   6 +-
->   hw/ppc/ppc.c                              |   1 -
->   hw/ppc/spapr_events.c                     |   3 +-
->   hw/scsi/virtio-scsi.c                     |   1 -
->   hw/tpm/tpm_spapr.c                        |   1 -
->   migration/dirtyrate.c                     |   3 +-
->   migration/migration-hmp-cmds.c            |   2 +-
->   migration/postcopy-ram.c                  |  21 ++---
->   migration/ram.c                           |   8 +-
->   qobject/qlit.c                            |   2 +-
->   qobject/qnum.c                            |  12 +--
->   qom/object.c                              |   1 -
->   target/arm/hyp_gdbstub.c                  |   1 -
->   target/i386/kvm/kvm.c                     |   4 +-
->   target/ppc/dfp_helper.c                   |   8 +-
->   target/ppc/mmu_helper.c                   |   2 +-
->   target/riscv/monitor.c                    |   1 -
->   tests/qtest/acpi-utils.c                  |   1 -
->   fpu/softfloat-parts.c.inc                 |   2 -
->   target/riscv/insn_trans/trans_rvv.c.inc   |   2 -
->   tcg/loongarch64/tcg-target.c.inc          |   1 -
->   .gitlab-ci.d/buildtest-template.yml       |  14 +++
->   .gitlab-ci.d/buildtest.yml                |   1 +
->   .gitlab-ci.d/crossbuild-template.yml      |  48 ++++++++++-
->   scripts/checkpatch.pl                     |   4 +
->   scripts/ci/gitlab-ci-section              |  29 +++++++
->   tests/avocado/boot_linux_console.py       | 138 ------------------------------
->   tests/functional/meson.build              |  15 ++++
->   tests/functional/qemu_test/linuxkernel.py |  12 +++
->   tests/functional/test_arm_vexpress.py     |  26 ++++++
->   tests/functional/test_ppc64_e500.py       |  25 ++++++
->   tests/functional/test_ppc64_powernv.py    |  42 ++++++++-
->   tests/functional/test_ppc_mac.py          |  38 ++++++++
->   tests/functional/test_sh4_r2d.py          |  31 +++++++
->   tests/functional/test_sparc_sun4m.py      |  25 ++++++
->   tests/functional/test_xtensa_lx60.py      |  26 ++++++
->   51 files changed, 384 insertions(+), 234 deletions(-)
->   create mode 100644 scripts/ci/gitlab-ci-section
->   create mode 100755 tests/functional/test_arm_vexpress.py
->   create mode 100755 tests/functional/test_ppc64_e500.py
->   create mode 100755 tests/functional/test_ppc_mac.py
->   create mode 100755 tests/functional/test_sh4_r2d.py
->   create mode 100755 tests/functional/test_sparc_sun4m.py
->   create mode 100755 tests/functional/test_xtensa_lx60.py
-> 
-
-Thanks for pulling the assert cleanup series.
+T24gOS8yNC8yNCAwNTowOCwgRGFuaWVsIFAuIEJlcnJhbmfDqSB3cm90ZToNCj4gT24gVHVl
+LCBTZXAgMjQsIDIwMjQgYXQgMDE6MDI6MjZQTSArMDEwMCwgQWxleCBCZW5uw6llIHdyb3Rl
+Og0KPj4gTWFub3MgUGl0c2lkaWFuYWtpcyA8bWFub3MucGl0c2lkaWFuYWtpc0BsaW5hcm8u
+b3JnPiB3cml0ZXM6DQo+Pg0KPj4+IEhlbGxvIERhbmllbCwNCj4+Pg0KPj4+IE9uIFR1ZSwg
+MjQgU2VwdCAyMDI0IGF0IDExOjQ1LCBEYW5pZWwgUC4gQmVycmFuZ8OpIDxiZXJyYW5nZUBy
+ZWRoYXQuY29tPiB3cm90ZToNCj4+Pj4NCj4+Pj4gT24gTW9uLCBTZXAgMjMsIDIwMjQgYXQg
+MTA6MDk6MzJQTSArMDMwMCwgTWFub3MgUGl0c2lkaWFuYWtpcyB3cm90ZToNCj4+Pj4+IEhl
+bGxvIERhbmllbCwNCj4+Pj4+DQo+Pj4+PiBPbiBNb24sIDIzIFNlcCAyMDI0IDE5OjQ1LCAi
+RGFuaWVsIFAuIEJlcnJhbmfDqSIgPGJlcnJhbmdlQHJlZGhhdC5jb20+IHdyb3RlOg0KPj4+
+Pj4+IE9uIE1vbiwgU2VwIDIzLCAyMDI0IGF0IDA5OjA1OjI0QU0gKzAzMDAsIE1hbm9zIFBp
+dHNpZGlhbmFraXMgd3JvdGU6DQo+PiA8c25pcD4NCj4+Pj4+PiBpZSwgbG9vayBhIHF1ZXJ5
+LWF1ZGlvZGV2cyB0byBkaXNjb3ZlciB3aGF0IGF1ZGlvIGJheGNrZW5kcyBhcmUNCj4+Pj4+
+PiBidWlsdC1pbiwgZG9uJ3QgbG9vayBmb3IgQ09ORklHX1hYWCBzZXR0aW5ncyByZWxhdGVk
+IHRvIGF1ZGlvLg0KPj4+Pj4+IElmIHRoZXJlIGFyZSBnYXBzIGluIGluZm9ybWF0aW9uIHdl
+IGNhbiBxdWVyeSBmcm9tIFFNUCwgd2Ugc2hvdWxkDQo+Pj4+Pj4gYWltIHRvIGNsb3NlIHRo
+b3NlIGdhcHMuDQo+Pj4+Pj4NCj4+Pj4+PiBJT1csIEkgZG9uJ3QgdGhpbmsgd2Ugc2hvdWxk
+IGV4cG9zZSB0aGlzIGJ1aWxkIGluZm8gaW5mbyBpbiBlaXRoZXINCj4+Pj4+PiBodW1hbiBy
+ZWFkYWJsZSBvciBtYWNoaW5lIHJlYWRhYmxlIGZvcm1hdC4NCj4+Pj4+DQo+Pj4+PiBRQVBJ
+L1FNUCBpcyBub3QgdGhlIHBlcnNwZWN0aXZlIG9mIHRoaXMgcGF0Y2gsIHRoaXMgaXMgZm9y
+IHBlb3BsZSB3aG8gdXNlDQo+Pj4+PiBjdXN0b20tYnVpbHQgKGkuZS4gbm90IGZyb20gYSBk
+aXN0cm8pIGJpbmFyaWVzIGFuZCB3YW50IHRvIGJlIGFibGUgdG8NCj4+Pj4+IGlkZW50aWZ5
+IGhvdyBpdCB3YXMgYnVpbHQuIExhdW5jaGluZyBhIGJpbmFyeSB0byBxdWVyeSBzdHVmZiBp
+cw0KPj4+Pj4gdW5uZWNlc3NhcmlseSBjb21wbGV4IGZvciB0aGlzIHRhc2ssIGFuZCB0aGUg
+aW5mbyBpcyBub3QgZ2VuZXJhbGx5DQo+Pj4+PiBpbnRlcmVzdGluZyB0byB0aGUgQVBJIGNv
+bnN1bWVycyBhcyB5b3Ugc2FpZC4NCj4+Pj4NCj4+Pj4gTGF1bmNoaW5nIFFFTVUgdG8gdGFs
+ayBRTVAgaXMgb3VyIGRlZmluZWQgcHVibGljIEFQSSBmb3IgcXVlcnlpbmcNCj4+Pj4gYW55
+dGhpbmcgYWJvdXQgdGhlIGNhcGFiaWxpdGllcyBvZiBRRU1VLiBXZSdyZSB3b3JrZWQgaGFy
+ZCB0byBnZXQNCj4+Pj4gYXdheSBmcm9tIHByb3ZpZGluZyBhZC1ob2Mgd2F5cyB0byBxdWVy
+eSBRRU1VIGZyb20gdGhlIGNvbW1hbmQNCj4+Pj4gbGluZSBhbmQgZ29pbmcgYmFjayB0byB0
+aGF0IGlzIG5vdCBkZXNpcmFibGUuIEl0IG1heSBiZSBzbGlnaHRseQ0KPj4+PiBtb3JlIGNv
+bXBsaWNhdGVkLCBidXQgbm90IGJ5IHZlcnkgbXVjaC4NCj4+Pg0KPj4+IEFnYWluLCB0aGlz
+IGlzIG5vdCBhICJjYXBhYmlsaXRpZXMgZGlzY292ZXJ5IiBBUEkuIEl0IGxpc3RzIHRoZQ0K
+Pj4+IGJ1aWxkLXRpbWUgY29uZmlndXJhdGlvbiBvZiB0aGUgYmluYXJ5LiBQZXJoYXBzIHdl
+IGNhbiBleHBvc2UgaXQgaW4gYQ0KPj4+IGRpZmZlcmVudCB3YXkgc28gdGhhdCBwZW9wbGUg
+ZG9uJ3QgZW5kIHVwIGNvbmZ1c2VkPw0KPj4NCj4+IEkgdGhpbmsgdGhlIHByb2JsZW0gaXMg
+aG93ZXZlciBtdWNoIHdlIG1pZ2h0IHNheSBpdCdzIG5vdCBhIGNhcGFiaWxpdGllcw0KPj4g
+ZGlzY292ZXJ5IEFQSSBpdCdzIHZlcnkgZXhpc3RlbmNlIGVuY291cmFnZXMgdXNlcnMgdG8g
+dXNlIGl0IGFzIG9uZS4NCj4+DQo+PiBXaGF0IGFib3V0IGEgc2NyaXB0Og0KPj4NCj4+ICAg
+IHFlbXUtZ2V0LWJ1aWxkLWluZm8gPC9wYXRoL3RvL3FlbXU+DQo+Pg0KPj4gd2hpY2ggd291
+bGQgbGF1bmNoIHRoZSBiaW5hcnkgYW5kIHF1ZXJ5IGl0IG92ZXIgUU1QPyBXb3VsZCB0aGF0
+IHdvcms/DQo+IA0KPiBJZiB0aGlzIGlzIHB1cmVseSBhIGRlYnVnZ2luZyBhaWQsIHdlIGNv
+dWxkIG1ha2UgdXNlIG9mIEVMRiBub3RlcyB0bw0KPiBqdXN0IHN0aWNrIHRoZSBjb25maWct
+aG9zdC5oIGNvbnRlbnQgaW50byB0aGUgYmluYXJ5LiBUaGlzIGhhcyBwcmVjZWRlbnQNCj4g
+aW4gc3lzdGVtZCBwYWNrYWdlIG5vdGVzIChodHRwczovL2dpdGh1Yi5jb20vc3lzdGVtZC9w
+YWNrYWdlLW5vdGVzKSBhbmQNCj4gaXMgbW9yZSBjbGVhcmx5ICpOT1QqIGFuIGVuZCB1c2Vy
+IENMSSBvcHRpb24sIG5vciBhIHB1YmxpYyBBUEkgaW4gUU1QLg0KPiANCj4gUXVlcnlpbmcg
+aXMgdGhlbg0KPiANCj4gICAgICBvYmpkdW1wIC1qIC5ub3RlLnFlbXUtY29uZmlnLWggLXMg
+L3VzcmJpbi9xZW11LXN5c3RlbS14ODZfNjQNCj4gDQo+IA0KPiBXaXRoIHJlZ2FyZHMsDQo+
+IERhbmllbA0KDQpUaGlzIGlzIG5lYXQhDQpATWFub3M6IGl0IHdvdWxkIGJlIGNvbnZlbmll
+bnQgdG8gc3RpbGwgaGF2ZSBhIHNjcmlwdCBhcyBBbGV4IG1lbnRpb25lZCwgDQphcyByZW1l
+bWJlcmluZyBpbiB3aGljaCBub3RlcyB0aGUgaW5mb3JtYXRpb24gaXMgaGlkZGVuIG1pZ2h0
+IGJlIGFubm95aW5nLg0K
 
