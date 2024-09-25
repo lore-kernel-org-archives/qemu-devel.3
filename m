@@ -4,59 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D57ABC369CC
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:14:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1B98C369D1
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 11:14:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stPwm-0006kE-9N; Wed, 25 Sep 2024 07:12:41 -0400
+	id 1stPv2-0006eL-Tg; Wed, 25 Sep 2024 07:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPw6-0003u8-7S
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPv1-0006dR-5D
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:10:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPw4-0003mD-QL
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:11:57 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stPuz-0003Ts-6w
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 07:10:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727262716;
+ s=mimecast20190719; t=1727262648;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Qdtu14VHAzFns9mQ0LRxyUg5oEigdbyZqaU2RCfM/Ds=;
- b=DvNV+8at1TqRLaHisqFZcFpcHgbLvYviwAszrAx//2NQWSmjEOuM4pgcnayeISFtaXNmYZ
- I5VuPFgrw3wB1OTjiIpMkv7TvLDD4thIVsgZAu507QUqhArLOcl1Oj80N6jVwrzQN9ZeRM
- FhwNBT44/UbsuKvCmo9SFXYn+pM1teU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=1AfZmwu5X3//Ua0dr5ejW3eyiRNtFXNT7N1Uas9ZK1s=;
+ b=D1WRXyyxWq2WfNApyRPbt/zHlUgvoBGtojbNO9rJupmSOEPFkusunh8KNawx/uPg+6SjLe
+ YyFwNcn76WqSZUomcOxG/D0UFHnlcq7ZdkHtogW8EU0IJNY5SQHwcgedPLK/jteFuyDL5y
+ dKSI4qS5DcsmN2aMc/Bk4dSdTP6rJ7o=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-344-r5mYz0mUPFW1p7PJSbpl9Q-1; Wed,
- 25 Sep 2024 07:11:53 -0400
-X-MC-Unique: r5mYz0mUPFW1p7PJSbpl9Q-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-37-vjCDR4myP0m9OANjCCfSSQ-1; Wed,
+ 25 Sep 2024 07:10:39 -0400
+X-MC-Unique: vjCDR4myP0m9OANjCCfSSQ-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
  [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C566B193EF4E; Wed, 25 Sep 2024 11:11:52 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 79E4C196CE3F; Wed, 25 Sep 2024 11:10:38 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.206])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D03F61956094; Wed, 25 Sep 2024 11:11:50 +0000 (UTC)
+ id 6803B1956094; Wed, 25 Sep 2024 11:10:35 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 29/44] target/arm: remove break after g_assert_not_reached()
-Date: Wed, 25 Sep 2024 13:10:10 +0200
-Message-ID: <20240925111029.24082-30-thuth@redhat.com>
-In-Reply-To: <20240925111029.24082-1-thuth@redhat.com>
-References: <20240925111029.24082-1-thuth@redhat.com>
+Subject: [PULL 00/44] Functional test conversion, and assert(0) cleanup
+Date: Wed, 25 Sep 2024 13:09:41 +0200
+Message-ID: <20240925111029.24082-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -81,33 +79,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+The following changes since commit 01dc65a3bc262ab1bec8fe89775e9bbfa627becb:
 
-This patch is part of a series that moves towards a consistent use of
-g_assert_not_reached() rather than an ad hoc mix of different
-assertion mechanisms.
+  Merge tag 'pull-target-arm-20240919' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-09-19 14:15:15 +0100)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20240919044641.386068-22-pierrick.bouvier@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- target/arm/hyp_gdbstub.c | 1 -
- 1 file changed, 1 deletion(-)
+are available in the Git repository at:
 
-diff --git a/target/arm/hyp_gdbstub.c b/target/arm/hyp_gdbstub.c
-index f120d55caa..1e861263b3 100644
---- a/target/arm/hyp_gdbstub.c
-+++ b/target/arm/hyp_gdbstub.c
-@@ -158,7 +158,6 @@ int insert_hw_watchpoint(target_ulong addr, target_ulong len, int type)
-         break;
-     default:
-         g_assert_not_reached();
--        break;
-     }
-     if (len <= 8) {
-         /* we align the address and set the bits in BAS */
--- 
-2.46.0
+  https://gitlab.com/thuth/qemu.git tags/pull-request-2024-09-25
+
+for you to fetch changes up to dc05b2628e3913e668590ba66d9c618382d351ae:
+
+  .gitlab-ci.d: Make separate collapsible log sections for build and test (2024-09-25 09:42:06 +0200)
+
+----------------------------------------------------------------
+* Convert more Avocado tests to the new functional test framework
+* Clean up assert() statements, use g_assert_not_reached() when possible
+* Improve output of the gitlab CI jobs
+
+----------------------------------------------------------------
+Peter Maydell (2):
+      .gitlab-ci.d: Split build and test in cross build job templates
+      .gitlab-ci.d: Make separate collapsible log sections for build and test
+
+Pierrick Bouvier (34):
+      hw/acpi: replace assert(0) with g_assert_not_reached()
+      hw/arm: replace assert(0) with g_assert_not_reached()
+      hw/net: replace assert(0) with g_assert_not_reached()
+      migration: replace assert(0) with g_assert_not_reached()
+      qobject: replace assert(0) with g_assert_not_reached()
+      target/ppc: replace assert(0) with g_assert_not_reached()
+      block: replace assert(false) with g_assert_not_reached()
+      hw/hyperv: replace assert(false) with g_assert_not_reached()
+      hw/net: replace assert(false) with g_assert_not_reached()
+      hw/nvme: replace assert(false) with g_assert_not_reached()
+      hw/pci: replace assert(false) with g_assert_not_reached()
+      hw/ppc: replace assert(false) with g_assert_not_reached()
+      migration: replace assert(false) with g_assert_not_reached()
+      target/i386/kvm: replace assert(false) with g_assert_not_reached()
+      accel/tcg: remove break after g_assert_not_reached()
+      block: remove break after g_assert_not_reached()
+      hw/acpi: remove break after g_assert_not_reached()
+      hw/net: remove break after g_assert_not_reached()
+      hw/scsi: remove break after g_assert_not_reached()
+      hw/tpm: remove break after g_assert_not_reached()
+      target/arm: remove break after g_assert_not_reached()
+      target/riscv: remove break after g_assert_not_reached()
+      fpu: remove break after g_assert_not_reached()
+      tcg/loongarch64: remove break after g_assert_not_reached()
+      include/qemu: remove return after g_assert_not_reached()
+      hw/hyperv: remove return after g_assert_not_reached()
+      hw/net: remove return after g_assert_not_reached()
+      hw/pci: remove return after g_assert_not_reached()
+      hw/ppc: remove return after g_assert_not_reached()
+      migration: remove return after g_assert_not_reached()
+      qobject: remove return after g_assert_not_reached()
+      qom: remove return after g_assert_not_reached()
+      tests/qtest: remove return after g_assert_not_reached()
+      scripts/checkpatch.pl: emit error when using assert(false)
+
+Thomas Huth (8):
+      tests/functional/qemu_test: Add a function for launching kernels more easily
+      tests/functional: Convert the vexpressa9 Avocado test
+      tests/functional: Convert the xtensa lx60 Avocado test
+      tests/functional: Convert the SPARCStation Avocado test
+      tests/functional: Convert the e500 ppc64 Avocado test
+      tests/functional: Convert the mac ppc Avocado tests
+      tests/functional: Convert the r2d sh4 Avocado test
+      tests/functional: Convert the powernv tests from boot_linux_console.py
+
+ MAINTAINERS                               |   7 ++
+ include/qemu/pmem.h                       |   1 -
+ accel/tcg/plugin-gen.c                    |   1 -
+ block/qcow2.c                             |   2 +-
+ block/ssh.c                               |   1 -
+ hw/acpi/aml-build.c                       |   3 +-
+ hw/arm/highbank.c                         |   2 +-
+ hw/hyperv/hyperv_testdev.c                |   7 +-
+ hw/hyperv/vmbus.c                         |  15 ++--
+ hw/net/e1000e_core.c                      |   4 +-
+ hw/net/i82596.c                           |   2 +-
+ hw/net/igb_core.c                         |   4 +-
+ hw/net/net_rx_pkt.c                       |   3 +-
+ hw/net/vmxnet3.c                          |   1 -
+ hw/nvme/ctrl.c                            |   8 +-
+ hw/pci/pci-stub.c                         |   6 +-
+ hw/ppc/ppc.c                              |   1 -
+ hw/ppc/spapr_events.c                     |   3 +-
+ hw/scsi/virtio-scsi.c                     |   1 -
+ hw/tpm/tpm_spapr.c                        |   1 -
+ migration/dirtyrate.c                     |   3 +-
+ migration/migration-hmp-cmds.c            |   2 +-
+ migration/postcopy-ram.c                  |  21 ++---
+ migration/ram.c                           |   8 +-
+ qobject/qlit.c                            |   2 +-
+ qobject/qnum.c                            |  12 +--
+ qom/object.c                              |   1 -
+ target/arm/hyp_gdbstub.c                  |   1 -
+ target/i386/kvm/kvm.c                     |   4 +-
+ target/ppc/dfp_helper.c                   |   8 +-
+ target/ppc/mmu_helper.c                   |   2 +-
+ target/riscv/monitor.c                    |   1 -
+ tests/qtest/acpi-utils.c                  |   1 -
+ fpu/softfloat-parts.c.inc                 |   2 -
+ target/riscv/insn_trans/trans_rvv.c.inc   |   2 -
+ tcg/loongarch64/tcg-target.c.inc          |   1 -
+ .gitlab-ci.d/buildtest-template.yml       |  14 +++
+ .gitlab-ci.d/buildtest.yml                |   1 +
+ .gitlab-ci.d/crossbuild-template.yml      |  48 ++++++++++-
+ scripts/checkpatch.pl                     |   4 +
+ scripts/ci/gitlab-ci-section              |  29 +++++++
+ tests/avocado/boot_linux_console.py       | 138 ------------------------------
+ tests/functional/meson.build              |  15 ++++
+ tests/functional/qemu_test/linuxkernel.py |  12 +++
+ tests/functional/test_arm_vexpress.py     |  26 ++++++
+ tests/functional/test_ppc64_e500.py       |  25 ++++++
+ tests/functional/test_ppc64_powernv.py    |  42 ++++++++-
+ tests/functional/test_ppc_mac.py          |  38 ++++++++
+ tests/functional/test_sh4_r2d.py          |  31 +++++++
+ tests/functional/test_sparc_sun4m.py      |  25 ++++++
+ tests/functional/test_xtensa_lx60.py      |  26 ++++++
+ 51 files changed, 384 insertions(+), 234 deletions(-)
+ create mode 100644 scripts/ci/gitlab-ci-section
+ create mode 100755 tests/functional/test_arm_vexpress.py
+ create mode 100755 tests/functional/test_ppc64_e500.py
+ create mode 100755 tests/functional/test_ppc_mac.py
+ create mode 100755 tests/functional/test_sh4_r2d.py
+ create mode 100755 tests/functional/test_sparc_sun4m.py
+ create mode 100755 tests/functional/test_xtensa_lx60.py
 
 
