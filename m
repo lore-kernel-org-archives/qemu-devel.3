@@ -4,38 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 979A4C369A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 07:14:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E36DEC369A1
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 07:14:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stMCv-0003Yv-H1; Wed, 25 Sep 2024 03:13:05 -0400
+	id 1stMDv-0005aU-FF; Wed, 25 Sep 2024 03:14:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ysato@users.sourceforge.jp>)
- id 1stMCu-0003Xd-1b; Wed, 25 Sep 2024 03:13:04 -0400
+ id 1stMDs-0005Oe-J8; Wed, 25 Sep 2024 03:14:04 -0400
 Received: from ik1-413-38519.vs.sakura.ne.jp ([153.127.30.23]
  helo=sakura.ysato.name) by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <ysato@users.sourceforge.jp>)
- id 1stMCs-00068F-2W; Wed, 25 Sep 2024 03:13:03 -0400
+ id 1stMDq-0006DI-OS; Wed, 25 Sep 2024 03:14:04 -0400
 Received: from SIOS1075.ysato.ml (al128006.dynamic.ppp.asahi-net.or.jp
  [111.234.128.6])
- by sakura.ysato.name (Postfix) with ESMTPSA id AB4061C01A0;
- Wed, 25 Sep 2024 16:12:55 +0900 (JST)
-Date: Wed, 25 Sep 2024 16:12:55 +0900
-Message-ID: <87a5fwjjew.wl-ysato@users.sourceforge.jp>
+ by sakura.ysato.name (Postfix) with ESMTPSA id 5D9421C01A0;
+ Wed, 25 Sep 2024 16:13:59 +0900 (JST)
+Date: Wed, 25 Sep 2024 16:13:59 +0900
+Message-ID: <878qvgjjd4.wl-ysato@users.sourceforge.jp>
 From: Yoshinori Sato <ysato@users.sourceforge.jp>
 To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,	Kevin Wolf <kwolf@redhat.com>,	Hanna Reitz
- <hreitz@redhat.com>,	qemu-block@nongnu.org,	qemu-trivial@nongnu.org,
- Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,	Magnus Damm
- <magnus.damm@gmail.com>
-Subject: Re: [PATCH] tests/qemu-iotests/testenv: Use the "r2d" machine for
- sh4/sh4eb
-In-Reply-To: <872ca5a9-2359-4a83-9031-8c82fcdb7665@redhat.com>
-References: <20240917194350.429971-1-thuth@redhat.com>
- <87bk0ikauh.wl-ysato@users.sourceforge.jp>
- <872ca5a9-2359-4a83-9031-8c82fcdb7665@redhat.com>
+Cc: qemu-devel@nongnu.org,
+	qemu-trivial@nongnu.org
+Subject: Re: [PATCH] configs: Fix typo in the sh4-softmmu devices config file
+In-Reply-To: <20240920161045.84622-1-thuth@redhat.com>
+References: <20240920161045.84622-1-thuth@redhat.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
  Emacs/29.4 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -64,61 +59,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 20 Sep 2024 17:12:47 +0900,
+On Sat, 21 Sep 2024 01:10:45 +0900,
 Thomas Huth wrote:
 > 
-> On 20/09/2024 10.06, Yoshinori Sato wrote:
-> > On Wed, 18 Sep 2024 04:43:50 +0900,
-> > Thomas Huth wrote:
-> >> 
-> >> Commit 0ea0538fae516f9b4 removed the default machine of the sh4
-> >> binaries, so a lot of iotests are failing now without such a default
-> >> machine. Teach the iotest harness to use the "r2d" machine instead
-> >> to fix this problem.
-> >> 
-> >> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> >> ---
-> >>   tests/qemu-iotests/testenv.py | 2 ++
-> >>   1 file changed, 2 insertions(+)
-> >> 
-> >> diff --git a/tests/qemu-iotests/testenv.py b/tests/qemu-iotests/testenv.py
-> >> index 0b32eec119..6326e46b7b 100644
-> >> --- a/tests/qemu-iotests/testenv.py
-> >> +++ b/tests/qemu-iotests/testenv.py
-> >> @@ -244,6 +244,8 @@ def __init__(self, source_dir: str, build_dir: str,
-> >>               ('riscv32', 'virt'),
-> >>               ('riscv64', 'virt'),
-> >>               ('rx', 'gdbsim-r5f562n8'),
-> >> +            ('sh4', 'r2d'),
-> >> +            ('sh4eb', 'r2d'),
-> >>               ('tricore', 'tricore_testboard')
-> >>           )
-> >>           for suffix, machine in machine_map:
-> >> -- 
-> >> 2.46.0
-> >> 
-> > 
-> > r2d is works only sh4 little endian mode.
+> This is the config file for the little endian target, so there
+> should not be a "eb" in here.
 > 
-> Oh, that's interesting - since there is no other machine left for sh4/sh4eb.
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  configs/devices/sh4-softmmu/default.mak | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> > There was probably no other hardware that ran in big endian.
+> diff --git a/configs/devices/sh4-softmmu/default.mak b/configs/devices/sh4-softmmu/default.mak
+> index aa821e4b60..efb401bfb1 100644
+> --- a/configs/devices/sh4-softmmu/default.mak
+> +++ b/configs/devices/sh4-softmmu/default.mak
+> @@ -1,4 +1,4 @@
+> -# Default configuration for sh4eb-softmmu
+> +# Default configuration for sh4-softmmu
+>  
+>  # Uncomment the following lines to disable these optional devices:
+>  #
+> -- 
+> 2.46.0
 > 
-> There used to be the "shix" machine, but it got removed, I assume that
-> one worked in big endian mode, too?
 
-Since shix's only external device is memory, it will work in big endian.
-r2d has some peripheral devices that do not support big endian.
-
-> > Anyway, if the r2d machine only works in little endian mode, and there
-> is apparently no other machine available anymore, I think we can
-> disable the sh4eb target completely since it is of no use now? Or is
-> there a reason to still keep it around?
-
-You're right. I haven't used sh4eb in years, and I don't think anyone needs it.
-
->  Thomas
-> 
+Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
 
 -- 
 Yosinori Sato
