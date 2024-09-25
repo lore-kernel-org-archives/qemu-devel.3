@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD53ECCF9E7
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 17:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED07CCF9ED
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 17:12:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stVYZ-0000bv-BQ; Wed, 25 Sep 2024 13:12:04 -0400
+	id 1stVYg-0001EF-UZ; Wed, 25 Sep 2024 13:12:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1stVYN-0000JP-1t
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:11:52 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1stVYS-0000L5-Sy
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:11:57 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1stVYJ-0000b0-9p
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:11:50 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-42cb5b3c57eso58905e9.2
- for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 10:11:43 -0700 (PDT)
+ id 1stVYR-0000e6-4I
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 13:11:56 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-42e82f7f36aso332005e9.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 10:11:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727284302; x=1727889102; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727284311; x=1727889111; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LfxPswSzpy5PJY7wIfJ4Znven71oBCSA3p2JUb9OqOg=;
- b=PcFROH3gAknajGRcCchqsjRW1qtoi3d+pwYDRR9R/0Gt5e66nnpvl9a122WDbm2MOf
- zuWsXRBUoNk6B2KFrz4jI7FG4nzrfwNORLPcFEf9fBQggpUFGcC4ptJZEh1t/U80R5mz
- 08wPRsZzqpcGY15jEnnIntgV3cK0Db1rcuvdAIKmagBkzGgtU0Obe9/roSMgbrspBqpZ
- LmIPrai/bRtyd+M3+w1J3/cWQebfbssQsnbPDVATERAypneUMV1TN89TyuLDItljrW0Y
- YQG5N2jN0M/JlwxI2rR8cDYNP3XFtTVYe7CpgazxSqw1OR9rGD2TZScgmWo3464D12Wx
- Uqcg==
+ bh=iZZo1oPZPqzjBeoixQ7wpptFRyTvJhgIff9wczeHXgQ=;
+ b=F+wDMAyseyCEbYjh1BMicl7R5jsvD7kwkuVevrslrVCeZFS7PtA6E+HpK+9nokbaFw
+ TQBXEvJY1Z/gsEuQEbWzbHOQpyP7EDSgRukDcMYGhAG4cfKshV0D/IGVEQ9KNRPij8zK
+ 2ZYtEWQv29/uAvL/qjLkjFhJwRXhWSKGW2Bt39SDsbkzG2xFOMbw/KistAjRnEJXF/5M
+ eD7vO747clSLrcKujff+lcNpmbDv88FiOZNEG5eCzGdT+Il0fqjvrLmaqZW2Dq6oJSEf
+ lYQdZCpQXMhRSXxQAAvVftuR5p+7Gz6LEfBJ6+5yFp5xIKeYQVz2I7+dGw7CKajQ8Moq
+ M/xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727284302; x=1727889102;
+ d=1e100.net; s=20230601; t=1727284311; x=1727889111;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LfxPswSzpy5PJY7wIfJ4Znven71oBCSA3p2JUb9OqOg=;
- b=A0b0kjcIJ9XQYcyyEaDNEbWPc5JOrPMuWTU0PwMMAGxin+Zx+/HRzbVf2ghU9PHhi+
- o4LRbsxpiJf/piWYAcUlsT06Lg6bUBZghAO9NVxE+gYx8RzDlIOO2/kRBTuVgvLZj1/y
- 2U7571821H+QElqbiKgGf+XbOqFu+xwg2AFarO+I+R7WHXELdIn0Gw1Pe4ZMsky++U2c
- sFcu8YQX3Ob17suT+G5OpV0LE1z/PkiA0rfsE+emW20FlsCl5TkUxFye5FsvMS/8jZRl
- e1pI7acpwu2pdQ+0+EvXJEK7zYlPyVlkEdEeKRv4eE3W5JzkRZUosX8ZrD0q9QEvGLrm
- 9d/A==
-X-Gm-Message-State: AOJu0Yysq8BJ1m5ACIAj5RvIYIkNBG5FaAlDV71GYQAIh9v4kKNt7dc3
- dLEtYximzTEPuPthYl1ofK+TfS67sxaKwSfwK19mFrXDUEzxWYC+24zsxWGfKSc=
-X-Google-Smtp-Source: AGHT+IHV5SzRp2SHf6HbaLc2hBK/7UiOfq+WQLl5ES6CuTB3Awe3uqUh07rnjOOYTKUVx2htHojcQw==
-X-Received: by 2002:a05:600c:3b18:b0:426:5fe1:ec7a with SMTP id
- 5b1f17b1804b1-42e96242e81mr22084905e9.31.1727284301933; 
- Wed, 25 Sep 2024 10:11:41 -0700 (PDT)
+ bh=iZZo1oPZPqzjBeoixQ7wpptFRyTvJhgIff9wczeHXgQ=;
+ b=l7bv29nrH7hogwJ7aVkjxjDjDqJLshVFsMeRONJC0YNPRd0ghdETQ/xlosX78663+2
+ 2ij2NNTNueM/B1q0Iy2tCoMq5A5LWI2YW+q08rH+2w5fBZV2vaAMHuQ8zTHR1BY0AoIE
+ UaiO/LKHuDmKmU5OY7yj6qiwrfAn64x8Jcjo1oaBRqnCEh7Xt8BWuPPjl5qU9NO0NDtU
+ HUxxaoa0sKJkkpwX2ISnzqTTDn77EDoobnm3xpUFXy+Q+R6GfybjyA1h8fDudlNkd/HV
+ CjsDWMhHarKFy34Wu5wL5Q1rqapIynIWMOpz647UPCoUJL3ZDm/e4NzS5HHsgjfUowM8
+ I6wA==
+X-Gm-Message-State: AOJu0YwJv9mMjjISgeb5/P+VUwvymU8uTO17StwrUXxJrchdY29PzmzF
+ TLR+WgdIFlIgEokw5TPj4aQRQljejH8m+DLTINaOWjXO0V+EGCmYavsrig8frUc=
+X-Google-Smtp-Source: AGHT+IFF+UGt9GzWgAvvLZ7Qs1yQKbnDMQ6FQT6ids8iYDWVRm/vi2jxBGcUDOaNTjhDnY7/U8c6BQ==
+X-Received: by 2002:a05:600c:468b:b0:42c:c401:6d8b with SMTP id
+ 5b1f17b1804b1-42e96103b5emr22700045e9.7.1727284311162; 
+ Wed, 25 Sep 2024 10:11:51 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cbc2a8a8fsm4443984f8f.15.2024.09.25.10.11.41
+ 5b1f17b1804b1-42e96a36287sm24053595e9.29.2024.09.25.10.11.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Sep 2024 10:11:41 -0700 (PDT)
+ Wed, 25 Sep 2024 10:11:44 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9DF1C5F94F;
- Wed, 25 Sep 2024 18:11:40 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 05F675FA4B;
+ Wed, 25 Sep 2024 18:11:41 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>,
@@ -81,17 +81,17 @@ Cc: Zhao Liu <zhao1.liu@intel.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <thuth@redhat.com>,
  Beraldo Leal <bleal@redhat.com>
-Subject: [PATCH 03/10] tests/docker: add NOFETCH env variable for testing
-Date: Wed, 25 Sep 2024 18:11:33 +0100
-Message-Id: <20240925171140.1307033-4-alex.bennee@linaro.org>
+Subject: [PATCH 07/10] docs/devel: update tsan build documentation
+Date: Wed, 25 Sep 2024 18:11:37 +0100
+Message-Id: <20240925171140.1307033-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20240925171140.1307033-1-alex.bennee@linaro.org>
 References: <20240925171140.1307033-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,42 +113,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Testing non-auto built docker containers (i.e. custom built compilers)
-is a bit fiddly as you couldn't continue a build with a previously
-locally built container. While you can play games with REGISTRY its
-simpler to allow a NOFETCH that will go through the cached build
-process when you run the tests.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
+Mention it's now possible to build with gcc, instead of clang, and
+explain how to build a sanitized glib version.
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20240910174013.1433331-4-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/docker/Makefile.include | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ docs/devel/testing/main.rst | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
-index 681feae744..fead7d3abe 100644
---- a/tests/docker/Makefile.include
-+++ b/tests/docker/Makefile.include
-@@ -92,10 +92,10 @@ endif
- docker-image-alpine: NOUSER=1
+diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
+index 09725e8ea9..91f4dc61fb 100644
+--- a/docs/devel/testing/main.rst
++++ b/docs/devel/testing/main.rst
+@@ -628,20 +628,38 @@ Building and Testing with TSan
+ It is possible to build and test with TSan, with a few additional steps.
+ These steps are normally done automatically in the docker.
  
- debian-toolchain-run = \
--	$(if $(NOCACHE), 						\
-+	$(if $(NOCACHE)$(NOFETCH),					\
- 		$(call quiet-command,					\
- 			$(DOCKER_SCRIPT) build -t qemu/$1 -f $< 	\
--			$(if $V,,--quiet) --no-cache 			\
-+			$(if $V,,--quiet) $(if $(NOCACHE),--no-cache)	\
- 			--registry $(DOCKER_REGISTRY) --extra-files	\
- 			$(DOCKER_FILES_DIR)/$1.d/build-toolchain.sh,	\
- 			"BUILD", $1),				        \
-@@ -177,6 +177,7 @@ docker:
- 	@echo '    NETWORK=$$BACKEND     Enable virtual network interface with $$BACKEND.'
- 	@echo '    NOUSER=1             Define to disable adding current user to containers passwd.'
- 	@echo '    NOCACHE=1            Ignore cache when build images.'
-+	@echo '    NOFETCH=1            Do not fetch from the registry.'
- 	@echo '    EXECUTABLE=<path>    Include executable in image.'
- 	@echo '    EXTRA_FILES="<path> [... <path>]"'
- 	@echo '                         Include extra files in image.'
+-There is a one time patch needed in clang-9 or clang-10 at this time:
++TSan is supported for clang and gcc.
++One particularity of sanitizers is that all the code, including shared objects
++dependencies, should be built with it.
++In the case of TSan, any synchronization primitive from glib (GMutex for
++instance) will not be recognized, and will lead to false positives.
++
++To build a tsan version of glib:
+ 
+ .. code::
+ 
+-  sed -i 's/^const/static const/g' \
+-      /usr/lib/llvm-10/lib/clang/10.0.0/include/sanitizer/tsan_interface.h
++   $ git clone --depth=1 --branch=2.81.0 https://github.com/GNOME/glib.git
++   $ cd glib
++   $ CFLAGS="-O2 -g -fsanitize=thread" meson build
++   $ ninja -C build
+ 
+ To configure the build for TSan:
+ 
+ .. code::
+ 
+-  ../configure --enable-tsan --cc=clang-10 --cxx=clang++-10 \
++  ../configure --enable-tsan \
+                --disable-werror --extra-cflags="-O0"
+ 
++When executing qemu, don't forget to point to tsan glib:
++
++.. code::
++
++   $ glib_dir=/path/to/glib
++   $ export LD_LIBRARY_PATH=$glib_dir/build/gio:$glib_dir/build/glib:$glib_dir/build/gmodule:$glib_dir/build/gobject:$glib_dir/build/gthread
++   # check correct version is used
++   $ ldd build/qemu-x86_64 | grep glib
++   $ qemu-system-x86_64 ...
++
+ The runtime behavior of TSAN is controlled by the TSAN_OPTIONS environment
+ variable.
+ 
 -- 
 2.39.5
 
