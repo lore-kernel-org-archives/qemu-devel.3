@@ -4,65 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23C89CF9C71
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 00:01:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F70CF9C69
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 00:02:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stFSX-0008U8-2t; Tue, 24 Sep 2024 20:00:45 -0400
+	id 1stFU9-0003z6-Um; Tue, 24 Sep 2024 20:02:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1stFSV-0008T8-BT; Tue, 24 Sep 2024 20:00:43 -0400
-Received: from pi.codeconstruct.com.au ([203.29.241.158]
- helo=codeconstruct.com.au)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1stFST-0003zt-HN; Tue, 24 Sep 2024 20:00:43 -0400
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1stFTr-0003nI-SN
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 20:02:08 -0400
+Received: from mail-vs1-xe2a.google.com ([2607:f8b0:4864:20::e2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1stFTq-000426-Eq
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 20:02:07 -0400
+Received: by mail-vs1-xe2a.google.com with SMTP id
+ ada2fe7eead31-49bd7809c84so1992619137.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Sep 2024 17:02:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=codeconstruct.com.au; s=2022a; t=1727222438;
- bh=jlzWUITownkYSxYBYJ9XWWY/bFQv87QCE81ZP+DBu/M=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=bjUZR+6eGRYYkYmshJcFphg7LJni+B98poN9Qw5T+Im4ke/ogwjUAXkEpOwVej86f
- MIrJuFgpYFnLVgkLdBeNZuEGvNuy7FoHTlJEwYRCAeJM9ylp+dtYxXM+fg7h2YrqDv
- zbNztaFKiR/I93ASsKJP5FeE92czIYbqSIYVC82fqpHjdwG5CHV+d9EofS2gVWa9VW
- nZB1SloPkVxPv/naq6QGsOnVU74t0LKNaJ9bRM9/vuLemNMEGh1Ay8nFXzX4vBURgr
- +VV35z2DFbvKJx+MZfUCn22+TfpJzj8yOZrMqeIm25V5Rc764fUWzulUF6THhNlwBP
- 7KFQWQKJv/eIA==
-Received: from [192.168.68.112]
- (ppp118-210-177-92.adl-adc-lon-bras34.tpg.internode.on.net [118.210.177.92])
- by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 1867A65013;
- Wed, 25 Sep 2024 08:00:38 +0800 (AWST)
-Message-ID: <622300963fae35522af6d90248bb93a6a4d91121.camel@codeconstruct.com.au>
-Subject: Re: [PATCH 4/5] hw/gpio/aspeed: Add AST2700 support
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Jamin Lin <jamin_lin@aspeedtech.com>, =?ISO-8859-1?Q?C=E9dric?= Le
- Goater <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Steven Lee
- <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Joel Stanley
- <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open
- list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>, Yunlin Tang
- <yunlin.tang@aspeedtech.com>
-Date: Wed, 25 Sep 2024 09:30:36 +0930
-In-Reply-To: <SI2PR06MB504195FD5CE33E041514C46BFC682@SI2PR06MB5041.apcprd06.prod.outlook.com>
-References: <20240923094206.1455783-1-jamin_lin@aspeedtech.com>
- <20240923094206.1455783-5-jamin_lin@aspeedtech.com>
- <e5d149765b338d4754054691cb83eacdf3e2642f.camel@codeconstruct.com.au>
- <SI2PR06MB50413C10FCB429361E467246FC682@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <SI2PR06MB504195FD5CE33E041514C46BFC682@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+ d=gmail.com; s=20230601; t=1727222524; x=1727827324; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-disposition:mime-version:references
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qFPUEkbvjR28TlN73Trl/d8UvcnnBW+povKSboVP7Cg=;
+ b=L1TwRUx1vc0oQmNi7rUMWapHkszboUHdFMpNsNeLdP0cjApiWiiygzSRjJPxTdn9bl
+ e9UpjfEfZKMgAJG1DelMBTLVRNbEzXBaKAcG82dLvJcBeOyZaowZCwcAJGSBMBJMSrLp
+ Ij4pF4HddWV44yz/4gjUSaLnLxsUq19NzDNdt0PitQkl5R0Km/IDtAYFuD17U92cfWGU
+ 2w3HeapbjXzs2kiQME1p4aFpaPtVqqAWxWNGA0wLX3Lfih/JN3RV31llc6WiWZLsF0v0
+ RZlltcpCkR2J6Vo18NCtb+Aiecr0AnvAyXMBRQzAwT9XQCBEwtpHtml4aam/QXu+/Kd6
+ j5lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727222524; x=1727827324;
+ h=user-agent:in-reply-to:content-disposition:mime-version:references
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qFPUEkbvjR28TlN73Trl/d8UvcnnBW+povKSboVP7Cg=;
+ b=HjKFAruaJKXxtuCK+cwnb5M+qHjMLweGxb1Cl3H/btRKN6PHyKfxboOJ8Tlh2vNBjs
+ a7rg1d19veNcsEFhPGqoozjNhYkegQk9SGEOWZ6tXfdVRDctXxPR1ADotTCIAgSvQJTj
+ 806VwiFpd/dGGSZ9IhIM9CWCZY1aC4G6RKfaokdh9OPFxukjXfDpvQdG5fXRGgyFgEr+
+ v44/AKSWFVZ204qlNo0QuQIdzqhlS8RRDBkrlw8TMUVTICrWYUzMzKOD5IHoMLXayRMe
+ R8c5rVdUTzNP2+E7rOJNLfw/4ZSeM8nSXU1ijN08i748NjqCbH14oAsJnrpAHEbzKbEU
+ fAJw==
+X-Gm-Message-State: AOJu0YwKTYfZhafS+VP9HVOSELiEVPOQlq8gtpvUHN5WS44bOIzJSJE5
+ KKvTWWsckLuXYqRtisiPP+HiAPiY3B3/t7orVJ5SfpctwvAI/OiX
+X-Google-Smtp-Source: AGHT+IFbAEDrrmp8yqwrJUdACyCvwUiIzrpuYxe84Y8eGByUxuYpEt8gNw1f7UzviQnDdvpA84BT9A==
+X-Received: by 2002:a05:6102:f13:b0:49d:433b:a601 with SMTP id
+ ada2fe7eead31-4a15dc7ad2amr1341382137.10.1727222524519; 
+ Tue, 24 Sep 2024 17:02:04 -0700 (PDT)
+Received: from gmail.com (ip190-5-140-142.intercom.com.sv. [190.5.140.142])
+ by smtp.gmail.com with ESMTPSA id
+ ada2fe7eead31-4a151763d29sm1496263137.2.2024.09.24.17.02.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Sep 2024 17:02:03 -0700 (PDT)
+Date: Wed, 25 Sep 2024 02:02:02 +0200
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: Chao Liu <chao.liu@yeah.net>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, bin.meng@windriver.com,
+ alistair@alistair23.me
+Subject: Re: [PATCH v1 2/2] xilink-zynq-devcfg: Fix up for memory address
+ range size not set correctly
+Message-ID: <ZvNS-mQAt1QVIW0E@zapote>
+References: <cover.1727008203.git.chao.liu@yeah.net>
+ <6b113649cdde1e8938393b859601dfeaba79d9af.1727008203.git.chao.liu@yeah.net>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=203.29.241.158;
- envelope-from=andrew@codeconstruct.com.au; helo=codeconstruct.com.au
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6b113649cdde1e8938393b859601dfeaba79d9af.1727008203.git.chao.liu@yeah.net>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2a;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-vs1-xe2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,116 +97,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2024-09-24 at 06:48 +0000, Jamin Lin wrote:
-> Hi Andrew,
->=20
-> > Subject: RE: [PATCH 4/5] hw/gpio/aspeed: Add AST2700 support
-> >=20
-> > Hi Andrew,
-> >=20
-> > > Subject: Re: [PATCH 4/5] hw/gpio/aspeed: Add AST2700 support
-> > >=20
-> > > Hi Jamin,
-> > >=20
-> > >=20
-> > > > +    }
-> > > > +    set->int_status &=3D ~group_value;
-> > >=20
-> > > This feels like it misbehaves in the face of multiple pending interru=
-pts.
-> > >=20
-> > > For example, say we have an interrupt pending for GPIOA0, where the
-> > > following statements are true:
-> > >=20
-> > >    set->int_status =3D=3D 0b01
-> > >    s->pending =3D=3D 1
-> > >=20
-> > > Before it is acknowledged, an interrupt becomes pending for GPIOA1:
-> > >=20
-> > >    set->int_status =3D=3D 0b11
-> > >    s->pending =3D=3D 2
-> > >=20
-> > > A write is issued to acknowledge the interrupt for GPIOA0. This cause=
-s
-> > > the following sequence:
-> > >=20
-> > >    group_value =3D=3D 0b11
-> > >    cleared =3D=3D 2
-> > >    s->pending =3D 0
-> > >    set->int_status =3D=3D 0b00
-> > >=20
-> > > It seems the pending interrupt for GPIOA1 is lost?
-> > >=20
-> > Thanks for review and input.
-> > I should check "int_status" bit of write data in write callback functio=
-n. If 1 clear
-> > status flag(group value), else should not change group value.
-> > I am checking and testing this issue and will update to you or directly=
- resend
-> > the new patch series.
->=20
-> I appreciate your review and finding this issue.
-> My changes as following.
-> If you agree, I will add them in v2 patch.
-> Thanks-Jamin
->=20
-> static void aspeed_gpio_2700_write_control_reg(AspeedGPIOState *s,
->                                 uint32_t pin, uint32_t type, uint64_t dat=
-a)
-> {
+On Sun, Sep 22, 2024 at 09:24:33PM +0800, Chao Liu wrote:
+> Signed-off-by: Chao Liu <chao.liu@yeah.net>
+
+
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+
+
 > ---
->     /* interrupt status */
->     if (SHARED_FIELD_EX32(data, GPIO_CONTROL_INT_STATUS)) {
->         cleared =3D extract32(set->int_status, pin_idx, 1);
->         if (cleared) {
->             if (s->pending) {
->                 assert(s->pending >=3D cleared);
->                 s->pending -=3D cleared;
->             }
->             set->int_status =3D deposit32(set->int_status, pin_idx, 1, 0)=
-;
->         }
->     }
-> ----
-> }
-
-The logic is easier to follow. Not sure about calling the value
-extracted from set->int_status 'cleared' though, seems confusing on
-first pass. It would feel more appropriate if it were called 'pending'.
-I think 'cleared' is derived from `SHARED_FIELD_EX32(data,
-GPIO_CONTROL_INT_STATUS)`. Anyway, that's just some quibbling over
-names.
-
->=20
-> By the way, I found the same issue in "aspeed_gpio_write_index_mode" and =
-my changes as following.
-> If you agree this change, I will create a new patch in v2 patch series.
->=20
-> static void aspeed_gpio_write_index_mode(void *opaque, hwaddr offset,
->                                                 uint64_t data, uint32_t s=
-ize)
-> {
-> ---
->     case gpio_reg_idx_interrupt:
->         if (FIELD_EX32(data, GPIO_INDEX_REG, INT_STATUS)) {
->             cleared =3D extract32(set->int_status, pin_idx, 1);
->             if (cleared) {
->                 if (s->pending) {
->                     assert(s->pending >=3D cleared);
->                     s->pending -=3D cleared;
->                 }
->                 set->int_status =3D deposit32(set->int_status, pin_idx, 1=
-, 0);
->             }
->         }
->         break;
-> ---
-> }
-
-I'll take a look in v2.
-
-Cheers,
-
-Andrew
-
+>  hw/dma/xlnx-zynq-devcfg.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
+> index b8544d0731..7170353a62 100644
+> --- a/hw/dma/xlnx-zynq-devcfg.c
+> +++ b/hw/dma/xlnx-zynq-devcfg.c
+> @@ -372,7 +372,7 @@ static void xlnx_zynq_devcfg_init(Object *obj)
+>                                s->regs_info, s->regs,
+>                                &xlnx_zynq_devcfg_reg_ops,
+>                                XLNX_ZYNQ_DEVCFG_ERR_DEBUG,
+> -                              XLNX_ZYNQ_DEVCFG_R_MAX);
+> +                              XLNX_ZYNQ_DEVCFG_R_MAX * 4);
+>      memory_region_add_subregion(&s->iomem,
+>                                  A_CTRL,
+>                                  &reg_array->mem);
+> -- 
+> 2.46.1
+> 
 
