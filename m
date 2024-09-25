@@ -4,156 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD8FCCF9ED
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 19:39:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 576A6CCF9F5
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 20:49:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stXqz-0001Ob-A6; Wed, 25 Sep 2024 15:39:13 -0400
+	id 1stYwY-0005ia-CL; Wed, 25 Sep 2024 16:49:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kinsey.moore@oarcorp.com>)
- id 1stXqv-0001N9-HM
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 15:39:10 -0400
-Received: from mail-mw2nam04on2105.outbound.protection.outlook.com
- ([40.107.101.105] helo=NAM04-MW2-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kinsey.moore@oarcorp.com>)
- id 1stXqu-00065v-17
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 15:39:09 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cAfYlhttOKmVj8e+VQfHTS8uex09fLn+W8jQ9tcGrfwl70sAh5/ULSF7K3Yj/oCirXKI7KOX2kZsugtTP7fwaC/byguY4eaofTEWYgkS1dt6e1ETTQpAgU9gIihQ7RMiD9Tqxlpc7LvBDrZQibxfkrn5lf5YUdWXaJwJkxku7NnVA0sZ6KATOC0dAJycTgjAn1G/Xuyc3cSwG32CsWyp/kWthuD7c5CQLPA4xk8ApZToQwFcYLyXGTlc6d2AXfhJ7XWzoaOewYjRNp87mIWH+M6kin6pOMhAAFtnZWyp6kIEmq5touRJBP5VfnobLZTW1aycJDzEnFMx1G52otdJYg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sG1E0g3AzYci7upXkys2I2RrxRHA+fNWWFr8Zynrp08=;
- b=Yq/vQjemTQPmB8xZGeHYZWEG9C5VC9RrBVq/25BKsyeu3xBHkZDIdicLC4GJLO4lzlxKsOT1mitbNiYti5A6sBogWs1VVPWYHqP57YOiFQ1WwTFjqHQWjJzguKovqBIQMbMmNa5UktNcvRa3hdC5aets4OGJsminh26a4NN7G3cLSL5B2YW5/tVeSjAOjeILCDRFshTLiMdBLO82mpw+bske9ZSJLoj5AVhVLSiD6B2uNNBX6sW7lk8cOW4FWXodpB3HAVhVaQKCZrJ7xYE3sIV+j6wnOqyHw8njjPSQ2CNMyeIhuXDNQty2Rg9FH6RYVm9gXs5vThT14HsW2Swidw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oarcorp.com; dmarc=pass action=none header.from=oarcorp.com;
- dkim=pass header.d=oarcorp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oarcorp.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sG1E0g3AzYci7upXkys2I2RrxRHA+fNWWFr8Zynrp08=;
- b=IDlVQvjgPB/2mSSfpOy7oSWkET0hquuPgSMvlbRGe47aD205L2/K+/UFsaByiMpzipzZBZoY0I/oJeLRk+n/t72Zkb78t9TEe7PEz3u4F3nKp7UZR1MNGFUyRzXh7SYDxBfsTArBObjDkbE/9m0tUYb02PC+b4UsZMOGrUzGzhs=
-Received: from LV3PR19MB8278.namprd19.prod.outlook.com (2603:10b6:408:1a5::17)
- by SA3PR19MB8195.namprd19.prod.outlook.com (2603:10b6:806:381::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7982.28; Wed, 25 Sep
- 2024 19:34:02 +0000
-Received: from LV3PR19MB8278.namprd19.prod.outlook.com
- ([fe80::5dc:f2fa:e0cf:9b38]) by LV3PR19MB8278.namprd19.prod.outlook.com
- ([fe80::5dc:f2fa:e0cf:9b38%4]) with mapi id 15.20.7982.022; Wed, 25 Sep 2024
- 19:34:02 +0000
-From: Kinsey Moore <kinsey.moore@oarcorp.com>
-To: Francisco Iglesias <frasse.iglesias@gmail.com>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "philmd@linaro.org"
- <philmd@linaro.org>
-Subject: RE: [PATCH v2] hw/arm/xlnx: Connect secondary CGEM IRQs
-Thread-Topic: [PATCH v2] hw/arm/xlnx: Connect secondary CGEM IRQs
-Thread-Index: AQHZoGAwP9LGbfXnJEiNArWf/R9l+6+Pm4+AgCOUEICCuJLNMA==
-Date: Wed, 25 Sep 2024 19:34:02 +0000
-Message-ID: <LV3PR19MB82782241F7CFA4A66D762D5D90692@LV3PR19MB8278.namprd19.prod.outlook.com>
-References: <20230616143803.73926-1-kinsey.moore@oarcorp.com>
- <e36a681f-53e2-8379-078e-25e43fc3966e@linaro.org>
- <20230710140948.GJ6984@fralle-msi>
-In-Reply-To: <20230710140948.GJ6984@fralle-msi>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oarcorp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: LV3PR19MB8278:EE_|SA3PR19MB8195:EE_
-x-ms-office365-filtering-correlation-id: 661fbe7f-c228-4b8f-fec9-08dcdd990298
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|366016|10070799003|1800799024|38070700018; 
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?flO0NnUD7n4vw9UqPGu2KaN9JiG7w2eDn48GhprkyiDYVhn8GuDaMa+8zN?=
- =?iso-8859-1?Q?m1ba9381Wjd4azx7FVECmdIPi33EoU6QqFFAvhsf38mVfWb9lfrJXkAwqG?=
- =?iso-8859-1?Q?7RmoHDd8WZ+gI8yIbc1covGra9kXv6/RZ1OjJ+KuDrrUsAFrqEVaAYefpa?=
- =?iso-8859-1?Q?N2pCQuSobqnI4HSUGgmByR5txZpVoe3Kay3S9kHqpQrCJl/LUQE8rdcyZS?=
- =?iso-8859-1?Q?mTGaTt8luqEQ7EOsmXzLDbpFm4Qx2qIk08Gl12y4J3CNRCd4FWGak9PrWu?=
- =?iso-8859-1?Q?wwWMCBJ3beAOWvLag/J3Tur2SiFy4R8veRfIzXj61ERoGyo/eDnAIsK8kR?=
- =?iso-8859-1?Q?4BIQS0/GiXsYj1fj6WpA0yPnxLFgWZ9VPP7fLsVnC8bz+RefhX7MmwlMiY?=
- =?iso-8859-1?Q?6ONPrqarz+jBbhZ3bDL3OJUbRQ+vjP3K+iMFb04/NXwOBAFanbxfM5wO1E?=
- =?iso-8859-1?Q?eviIqTb2ydDqGTdmn6gpHAiK3EXswYCv1aN54uZBOoSQ28sBWx9saRXqdH?=
- =?iso-8859-1?Q?VYxryCbrWGcItOzPIRJHJWPEH0SwA34yv2mJo/EImOftFw1zuN5swBfKXo?=
- =?iso-8859-1?Q?kUjyIe89nMdxMaW+zvh09RkA+5Rv3RX+zAyuWHN6DF1a7v5b9NsoCKmrkt?=
- =?iso-8859-1?Q?unuYdz/DrL7gduo/uA8JSKaiBU0A8c78XnlL4F5KqwhmkXIHhFxTSCIDUP?=
- =?iso-8859-1?Q?ALc5FHYop6YM4GHtL/4o86YIA7mixvtaDqK8L1D14kLz+suFPlvdOQ7vuV?=
- =?iso-8859-1?Q?dwiR5H+VEx2qrZr62fUPCLxls8LJ2uYrjkj3xnu2XpsrhUrN1FEqLo17VL?=
- =?iso-8859-1?Q?dH8FAsjmxPF/KVk65+BxTgiAVQU5lLJjvYhectVXfxrsvYrtgSVXvMMf7v?=
- =?iso-8859-1?Q?4KXhq1IEBSwLAX7I3TXGdSOwYbfg6QFvmsC9w/fWQm1zfOiQzDBG1CYzp3?=
- =?iso-8859-1?Q?QWm9ul+ThqIhDSaruK23QGr5SGy6rGdxk3JPVyKxindbfjkJ6eBmND3B6c?=
- =?iso-8859-1?Q?TJ2fGLXK+HZPInHYi34J6iEPSV5U5Oozf+CxRDcHXSuEGUi3sC1CpzP+n/?=
- =?iso-8859-1?Q?flPjPBYH8ct6ET9PCx3i/DuMUg6KmdgGdcm8UJUxu7Bzz2FRI94896qjR7?=
- =?iso-8859-1?Q?F17OVSAzMv6vOn7Nz1nu5VLc63b5I5384tv3AKxbwhALOGjw1hdK07hC5R?=
- =?iso-8859-1?Q?PbaYSqdDoYI0Cnx9ZH5FadhqeTSe5RhFwHTqRZs5Pu1triqXRFSyPqqQBp?=
- =?iso-8859-1?Q?SKRV/cnCAOR5BrHFdWioxNNuEQC7JXiPs82v+h/oTr4vZ0ItxhCCQ9R8w8?=
- =?iso-8859-1?Q?07Tu1UtAG28ZasymsDbqFucwX7MiBOMZ9ZxCm7FJZ5J2Fl6vfKTZIQlAr/?=
- =?iso-8859-1?Q?3NJD3Mi/O1QlA7kZrFHQTMcDSptT2RlnXyb9msDpGzXMvYmugvGO1tbnPf?=
- =?iso-8859-1?Q?uVKS3laBBDqOfvZQyupML7skALh9Ozkav2jb1g=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:LV3PR19MB8278.namprd19.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(10070799003)(1800799024)(38070700018); DIR:OUT;
- SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?rToyVxFxmes7MuU4dsYJukZgqSMj1WBM6WG6h4hYWDIU8MCn3fCmJ4snx0?=
- =?iso-8859-1?Q?D8X6BBcr2a/sctr0dwVlcqg87UkZ/FTCiq61lJk03K/AjlwMcRMck3c+7R?=
- =?iso-8859-1?Q?napPjb7NXuTxI9yH5XBN3h+7Tf1+BCCyzui6nYwREbp9wDtgzA0ULrO+e0?=
- =?iso-8859-1?Q?fvDHLswTb5/563cueePm0epUsVo2hO0lsKqMs/W/V6BCjfHLfdjfOXt+45?=
- =?iso-8859-1?Q?cEHNmNeU5985iWxhnYFGMNUNeFZ73S0fLm+5i/w85LZM/9a6VWSzye/2a6?=
- =?iso-8859-1?Q?up4QuXoqlwVAsxgqHnRX0XBF2H4OlJiCjGat92lyM8/q5/PK+pK3SARgV6?=
- =?iso-8859-1?Q?EwqYjS/BkzAb1pAT8Z/ys+NanbyjWl5X79qqi+/UtNF5iL++3RucMmFPvh?=
- =?iso-8859-1?Q?8hQBoLprjLwHG3ywk5w2L8EE1WHm7ABRO9QKI9L3qzlS/SPehfYnKhIGbm?=
- =?iso-8859-1?Q?YECP+UJdrY0eAYmIY4bFOOOp3fbjeuqcaxjXxf0jAVdIwy0Qmk7cVVheqX?=
- =?iso-8859-1?Q?Fh0DHGA2BdQndVFc/y4r2b14/2rca5MgrGglpGeqjXJLT+sGxQCMdD1bnl?=
- =?iso-8859-1?Q?nsZ9GhFvVmK3nxFfhNBvh5LNE2xZVJIEqhhbWzSWbizzf1bHAwI9UhfWY/?=
- =?iso-8859-1?Q?/qLOEF08J1sB618IfqSGlRd7lc2jKi0LLEjNRoKb37BWzBTHAMMWFXEbzx?=
- =?iso-8859-1?Q?AWH2zE3UwnGcUoB7bW2ktUW72u/IJpTlj8DItKcY+lzUj+dklKw3jxFNim?=
- =?iso-8859-1?Q?J58ui2Mff3mpKwoA3campLfR1aKPKHXb3A+2+3ucyDNe5qmIZp36NFsEpI?=
- =?iso-8859-1?Q?EHKGvH7rNCocpnq6RbxspCJPbpMuuP7rXTeY1wb+Y7x/0iUHdT0SpyKTl3?=
- =?iso-8859-1?Q?GroiEJkUi15m0CtJ6fWaFaIh7AL4AHeAv6oqNKC8jAKL7tmW0ZFqUCSztP?=
- =?iso-8859-1?Q?NVXm8MwRyaNhPcZWZn3nDL+wK1kydm/bLynZEuo9uqRChxSJK/3apKxcZm?=
- =?iso-8859-1?Q?zVeuA5mES/btqgv8iCXPZM2yldHkKN8Gos4YQ1UeGfCUjsPGUri0yjRV0M?=
- =?iso-8859-1?Q?HIByJqhoFJTYHWg5QvCW9wRzEm1TZ7w7FlyKP0v5WttOceDHl1vceQqs68?=
- =?iso-8859-1?Q?WYUyUpyIF68oPzX+vFaTVzoCqBCWw+3M0oKD29XS7ITswBmAnpQXgzmqG6?=
- =?iso-8859-1?Q?maj3ac1cjd4d8KahZBkJct76kXNJuATdh0j5YAk5pdtn+77DrcmI0lX6Bh?=
- =?iso-8859-1?Q?7m1FwAhW5yPvu+D5dVjHwR4Wx+L4nlI86olmEvs8MxlJIya6lViYOD4lsg?=
- =?iso-8859-1?Q?eoro7Zwfb+Ri8EDPP7sG1yPTC+1h9rp3hOu+hacjzly5AFTpB5okRJ9pWW?=
- =?iso-8859-1?Q?EbOft/Uie+79Yrrh2Cy9FMBKpjDQjHnEdHhtCPWhCSzeX0RoZxdzcDfdiG?=
- =?iso-8859-1?Q?QlpurJY9OeFO2dWA6BclCvPMR+28Ud+c7Vtu1/HE8+M0ix85GZ9ztbj2/0?=
- =?iso-8859-1?Q?RiUSDoPZW3QJ2z8gm0R1FD3NbIgcxykTTS8HQYUlvF+U/IxHB5VyzuQAju?=
- =?iso-8859-1?Q?p/cU00tBMwYo87mdSJOiafNk+2CW3Nq0jj8pIQIzs/STmv8sEn8TpD+6Gy?=
- =?iso-8859-1?Q?bm20WJtGelGMzEn+/QZK8j3F9sMlVVHI/+SbhUltKLfSgOEl2fuMPpgWg2?=
- =?iso-8859-1?Q?Zj039YTbTGSMtTn4BpI=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1stYwV-0005c7-S8
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 16:48:59 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1stYwT-0006bZ-63
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 16:48:59 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-208e0a021cfso1995515ad.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 13:48:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727297336; x=1727902136; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6vz+n8YKrUeBpEvMnJmtLUsCHAoDtzXyPZgp/oilgYs=;
+ b=ZwIjNguZlaQcwHWKOjrD2XLj+UQaMm4c/uqizq+O1E+ZTbiOzlihjiJ8klMJ4jXoyY
+ KSHQEOwuIDQ6/pDwuSKqL+5yfaFWUey/BIVfXyw4nYoP507TSAZCiNuoGOnCRbXnXybA
+ N44UVam1muvyqMCqFR8WVCBFnfz+M0+pBENBK5R75QiY2htJzfxHFbosqCIAIVTXUbnD
+ Gn8s4sxdSzHKs/GfwcUzBRsQFBYGGLqyIsCHXppCXHkQI8MTHaVPrSUKoPFJxUJegGpB
+ xu1AZtFZ/2UHn7GdqpnyBRLPNcJi4qbRLqv0aB6PWxmg9pGReZj2yUaeFaj4A1TS/a0U
+ OCgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727297336; x=1727902136;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6vz+n8YKrUeBpEvMnJmtLUsCHAoDtzXyPZgp/oilgYs=;
+ b=F1Vun6CJNsCmKYNciCE76lgJjJ1nKg8cEICtFndcIxh5O6m40we5ZpMKQygreeb0Ph
+ VCNVysxYfRiodBTzukcO6hg7Op9w4pWHlN9rQZzJ1Jil9Atzt4affudY4CSIPtaD/tWj
+ +daP9GX4llUIwMHF+wgPZDlJBwcRH5Hpt19uZY8BYdfhjfQMFZqDEytugwOGg3J0qzsE
+ 8kJwrxynEDW/WIqdMrky3Lr8abfvKy8tZntFBphR5VK0cj7mUh+KWovpva98wpl7ppoD
+ WNR0W/VPYPSJsVHof0O8kJCAy5KZvYM0b8zFj1RUFJW22NYOlK2/FxGhBsH4RWb994qx
+ F8TQ==
+X-Gm-Message-State: AOJu0YyWCdGn1Uv4ADJii06msLzeheJ2r2ihPYznZ2wl10EHhjTpv4+z
+ 9jI1feg8mb8BFpsWAx6/meA13RMEkEZmYblNF3TBvU5hycDMvkEgqFBiyTPNvvmgz0DThMZJtTG
+ OWe+JNsPj
+X-Google-Smtp-Source: AGHT+IFZU8kMNT5Fy2m9M8rkl9HLIVOe0g7eJIWOx0ufuXoZMndtoDz/jrnxogtwfsY+W5nRuphLlA==
+X-Received: by 2002:a17:903:22cb:b0:205:9220:aa37 with SMTP id
+ d9443c01a7336-20afc45b075mr42668765ad.22.1727297335689; 
+ Wed, 25 Sep 2024 13:48:55 -0700 (PDT)
+Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20af16e6ce6sm27991435ad.19.2024.09.25.13.48.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Sep 2024 13:48:55 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PATCH v2 2/2] contrib/plugins: remove Makefile for contrib/plugins
+Date: Wed, 25 Sep 2024 13:48:45 -0700
+Message-Id: <20240925204845.390689-3-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20240925204845.390689-1-pierrick.bouvier@linaro.org>
+References: <20240925204845.390689-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-X-OriginatorOrg: oarcorp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: LV3PR19MB8278.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 661fbe7f-c228-4b8f-fec9-08dcdd990298
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Sep 2024 19:34:02.2735 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7bdf32a6-03de-4c70-a71b-8665ba1294e3
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 4aYUewaBdAzFJ6b2qpStxrbUGLedAExyLcekVbPAAKICekDJV2M2Hq42gTNYlUoN+MLHIpvqaJoiPN8+qQJpGQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR19MB8195
-Received-SPF: pass client-ip=40.107.101.105;
- envelope-from=kinsey.moore@oarcorp.com;
- helo=NAM04-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.828, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -170,47 +100,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey,
-I just wanted to check on the status of this patch since it's been sitting =
-for a bit now and I noticed it hasn't gone into any branches. Is this waiti=
-ng on something from me?
+Now replaced by meson build.
 
-Thanks,
-Kinsey
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ configure                | 18 ---------
+ Makefile                 | 10 -----
+ contrib/plugins/Makefile | 87 ----------------------------------------
+ 3 files changed, 115 deletions(-)
+ delete mode 100644 contrib/plugins/Makefile
 
------Original Message-----
-From: Francisco Iglesias <frasse.iglesias@gmail.com>=20
-Sent: Monday, July 10, 2023 09:10
-To: peter.maydell@linaro.org
-Cc: Kinsey Moore <kinsey.moore@oarcorp.com>; qemu-devel@nongnu.org; philmd@=
-linaro.org
-Subject: Re: [PATCH v2] hw/arm/xlnx: Connect secondary CGEM IRQs
+diff --git a/configure b/configure
+index aa7aae70fa1..934336e5286 100755
+--- a/configure
++++ b/configure
+@@ -1055,7 +1055,6 @@ if test "$plugins" != "no" && test $host_bits -eq 64; then
+         plugins="no"
+     else
+         plugins=yes
+-        subdirs="$subdirs contrib/plugins"
+     fi
+ fi
+ 
+@@ -1555,7 +1554,6 @@ LINKS="$LINKS .gdbinit scripts" # scripts needed by relative path in .gdbinit
+ LINKS="$LINKS tests/avocado tests/data"
+ LINKS="$LINKS tests/qemu-iotests/check tests/qemu-iotests/Makefile"
+ LINKS="$LINKS python"
+-LINKS="$LINKS contrib/plugins/Makefile "
+ for f in $LINKS ; do
+     if [ -e "$source_path/$f" ]; then
+         symlink "$source_path/$f" "$f"
+@@ -1638,22 +1636,6 @@ if test "$default_targets" = "yes"; then
+   echo "CONFIG_DEFAULT_TARGETS=y" >> $config_host_mak
+ fi
+ 
+-# contrib/plugins configuration
+-echo "# Automatically generated by configure - do not modify" > contrib/plugins/$config_host_mak
+-echo "SRC_PATH=$source_path/contrib/plugins" >> contrib/plugins/$config_host_mak
+-echo "PKG_CONFIG=${pkg_config}" >> contrib/plugins/$config_host_mak
+-echo "CC=$cc $CPU_CFLAGS" >> contrib/plugins/$config_host_mak
+-echo "CFLAGS=${CFLAGS-$default_cflags} $EXTRA_CFLAGS" >> contrib/plugins/$config_host_mak
+-if test "$host_os" = windows; then
+-  echo "DLLTOOL=$dlltool" >> contrib/plugins/$config_host_mak
+-fi
+-if test "$host_os" = darwin; then
+-  echo "CONFIG_DARWIN=y" >> contrib/plugins/$config_host_mak
+-fi
+-if test "$host_os" = windows; then
+-  echo "CONFIG_WIN32=y" >> contrib/plugins/$config_host_mak
+-fi
+-
+ # tests/tcg configuration
+ mkdir -p tests/tcg
+ echo "# Automatically generated by configure - do not modify" > tests/tcg/$config_host_mak
+diff --git a/Makefile b/Makefile
+index 917c9a34d1c..b65b0bd41a8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -187,11 +187,6 @@ SUBDIR_RULES=$(foreach t, all clean distclean, $(addsuffix /$(t), $(SUBDIRS)))
+ $(SUBDIR_RULES):
+ 	$(call quiet-command,$(MAKE) $(SUBDIR_MAKEFLAGS) -C $(dir $@) V="$(V)" TARGET_DIR="$(dir $@)" $(notdir $@),)
+ 
+-ifneq ($(filter contrib/plugins, $(SUBDIRS)),)
+-.PHONY: plugins
+-plugins: contrib/plugins/all
+-endif
+-
+ .PHONY: recurse-all recurse-clean
+ recurse-all: $(addsuffix /all, $(SUBDIRS))
+ recurse-clean: $(addsuffix /clean, $(SUBDIRS))
+@@ -307,11 +302,6 @@ help:
+ 	$(call print-help,cscope,Generate cscope index)
+ 	$(call print-help,sparse,Run sparse on the QEMU source)
+ 	@echo  ''
+-ifneq ($(filter contrib/plugins, $(SUBDIRS)),)
+-	@echo  'Plugin targets:'
+-	$(call print-help,plugins,Build the example TCG plugins)
+-	@echo  ''
+-endif
+ 	@echo  'Cleaning targets:'
+ 	$(call print-help,clean,Remove most generated files but keep the config)
+ 	$(call print-help,distclean,Remove all generated files)
+diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
+deleted file mode 100644
+index bbddd4800ff..00000000000
+--- a/contrib/plugins/Makefile
++++ /dev/null
+@@ -1,87 +0,0 @@
+-# -*- Mode: makefile -*-
+-#
+-# This Makefile example is fairly independent from the main makefile
+-# so users can take and adapt it for their build. We only really
+-# include config-host.mak so we don't have to repeat probing for
+-# programs that the main configure has already done for us.
+-#
+-
+-include config-host.mak
+-
+-TOP_SRC_PATH = $(SRC_PATH)/../..
+-
+-VPATH += $(SRC_PATH)
+-
+-NAMES :=
+-NAMES += bbv
+-NAMES += execlog
+-NAMES += hotblocks
+-NAMES += hotpages
+-NAMES += howvec
+-
+-# The lockstep example communicates using unix sockets,
+-# and can't be easily made to work on windows.
+-ifneq ($(CONFIG_WIN32),y)
+-NAMES += lockstep
+-endif
+-
+-NAMES += hwprofile
+-NAMES += cache
+-NAMES += drcov
+-NAMES += ips
+-NAMES += stoptrigger
+-NAMES += cflow
+-
+-ifeq ($(CONFIG_WIN32),y)
+-SO_SUFFIX := .dll
+-LDLIBS += $(shell $(PKG_CONFIG) --libs glib-2.0)
+-else
+-SO_SUFFIX := .so
+-endif
+-
+-SONAMES := $(addsuffix $(SO_SUFFIX),$(addprefix lib,$(NAMES)))
+-
+-# The main QEMU uses Glib extensively so it is perfectly fine to use it
+-# in plugins (which many example do).
+-PLUGIN_CFLAGS := $(shell $(PKG_CONFIG) --cflags glib-2.0)
+-PLUGIN_CFLAGS += -fPIC -Wall
+-PLUGIN_CFLAGS += -I$(TOP_SRC_PATH)/include/qemu
+-
+-# Helper that honours V=1 so we get some output when compiling
+-quiet-@ = $(if $(V),,@$(if $1,printf "  %-7s %s\n" "$(strip $1)" "$(strip $2)" && ))
+-quiet-command = $(call quiet-@,$2,$3)$1
+-
+-# for including , in command strings
+-COMMA := ,
+-
+-all: $(SONAMES)
+-
+-%.o: %.c
+-	$(call quiet-command, \
+-		$(CC) $(CFLAGS) $(PLUGIN_CFLAGS) -c -o $@ $<, \
+-	        BUILD, plugin $@)
+-
+-ifeq ($(CONFIG_WIN32),y)
+-lib%$(SO_SUFFIX): %.o win32_linker.o ../../plugins/libqemu_plugin_api.a
+-	$(call quiet-command, \
+-		$(CC) -shared -o $@ $^ $(LDLIBS), \
+-		LINK, plugin $@)
+-else ifeq ($(CONFIG_DARWIN),y)
+-lib%$(SO_SUFFIX): %.o
+-	$(call quiet-command, \
+-		$(CC) -bundle -Wl$(COMMA)-undefined$(COMMA)dynamic_lookup -o $@ $^ $(LDLIBS), \
+-		LINK, plugin $@)
+-else
+-lib%$(SO_SUFFIX): %.o
+-	$(call quiet-command, \
+-		$(CC) -shared -o $@ $^ $(LDLIBS), \
+-		LINK, plugin $@)
+-endif
+-
+-
+-clean distclean:
+-	rm -f *.o *$(SO_SUFFIX) *.d
+-	rm -Rf .libs
+-
+-.PHONY: all clean
+-.SECONDARY:
+-- 
+2.39.5
 
-
-+PMM (I think this one might have fallen throught the cracks)
-
-Best regards,
-Francisco Iglesias
-
-On [2023 Jun 18] Sun 00:50:47, Philippe Mathieu-Daud=E9 wrote:
-> On 16/6/23 16:38, Kinsey Moore wrote:
-> > The Cadence GEM peripherals as configured for Zynq MPSoC and Versal
-> > platforms have two priority queues with separate interrupt sources for
-> > each. If the interrupt source for the second priority queue is not
-> > connected, they work in polling mode only. This change connects the
-> > second interrupt source for platforms where it is available. This patch
-> > has been tested using the lwIP stack with a Xilinx-supplied driver from
-> > their embeddedsw repository.
-> >=20
-> > Signed-off-by: Kinsey Moore <kinsey.moore@oarcorp.com>
-> > ---
-> >   hw/arm/xlnx-versal.c         | 12 +++++++++++-
-> >   hw/arm/xlnx-zynqmp.c         | 11 ++++++++++-
-> >   include/hw/arm/xlnx-versal.h |  1 +
-> >   include/hw/arm/xlnx-zynqmp.h |  1 +
-> >   4 files changed, 23 insertions(+), 2 deletions(-)
->=20
-> Reviewed-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
->=20
->=20
 
