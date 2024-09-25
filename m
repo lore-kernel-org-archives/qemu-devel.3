@@ -4,65 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B478CF9C6F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01372CF9C6C
 	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 14:00:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stSYN-00039P-55; Wed, 25 Sep 2024 09:59:39 -0400
+	id 1stSYM-00031J-Bn; Wed, 25 Sep 2024 09:59:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <evgenii.prokopiev@syntacore.com>)
- id 1stORe-000602-BI; Wed, 25 Sep 2024 05:36:26 -0400
-Received: from mta-04.yadro.com ([89.207.88.248])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <evgenii.prokopiev@syntacore.com>)
- id 1stORZ-0008AE-HS; Wed, 25 Sep 2024 05:36:26 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com C936DC0002
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1727256969;
- bh=z/sx2kxPVDkp5x2w+RFTNagjW1kQB8TFAPd4Lz+i6vk=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=L8LyRf2Xk1ZqCgT5NKprAMkdNXxbEpRKAihlU4cRQ23vmjGKcJU1nmU9wIltK52h1
- DRWU3A/atd6Z51x7g7c4wwY7z2+oHYJUqe+hsjgUKunko8gdBR7AIiL6ounl5LFgZF
- mgqQx5Mm3MrtoR3nnaMJq6g7Xe9cOyAZ1W5+eUpmdMWaBIgr52vuEucnY0jOM+FlIC
- WcMZhVQ/o5fpIS0y3ZwtDon4zQgWknBcmoXwl+Ptz28wFb8Cey42c57W8KoeiyZwsY
- bRQvnzPdnAav9O+HDlSIItbU0TVDF2yDBMzTYPKvSyTK8G7C95joSjmlUFATdNTuEX
- K2CXxPdfSjilA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1727256969;
- bh=z/sx2kxPVDkp5x2w+RFTNagjW1kQB8TFAPd4Lz+i6vk=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=xGI70o6Yub1hf727+OC9diTEKTQ7u7SqAsZd/BEQZQ1IQqOz0z2XbthwdSe9k25LF
- YDRskqjmT7scfYVLLoeePzb9A0EaYvpjIwWiSKFIOJ2fo7dePd5cbp6hTF6zgwzumk
- RM7c7aDO3JZpLP1vbwyFkrHqX623lws0PHfbSsTommlLlWOK+q4UzoLlv+4qLXbX/D
- UM5YNOShIF/EIjy++b1qUJV/gpMg5PMA30+l/BqtR2bDyGbX7OzhhIY1jTmHjb07Cq
- u7uszjwQuAJhMrajuJaLNIGHcZVSjFbRKOx1ts+vssRAW7eAVN8cM8BCJjOycRTGnZ
- +5fBVsCdsertg==
-From: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
-To: <palmer@dabbelt.com>
-CC: <evgenii.prokopiev@syntacore.com>, <alistair.francis@wdc.com>,
- <bmeng.cn@gmail.com>, <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
- <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>,
- <qemu-devel@nongnu.org>
-Subject: [PATCH] target/riscv/csr.c: Fix an access to VXSAT
-Date: Wed, 25 Sep 2024 12:35:31 +0300
-Message-ID: <20240925093531.382347-1-evgenii.prokopiev@syntacore.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <yangtiezhu@loongson.cn>)
+ id 1stINh-0000ay-UX
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 23:07:58 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <yangtiezhu@loongson.cn>) id 1stINe-0004uo-VV
+ for qemu-devel@nongnu.org; Tue, 24 Sep 2024 23:07:57 -0400
+Received: from loongson.cn (unknown [113.200.148.30])
+ by gateway (Coremail) with SMTP id _____8Cx646AfvNmv40OAA--.908S3;
+ Wed, 25 Sep 2024 11:07:44 +0800 (CST)
+Received: from [10.130.0.149] (unknown [113.200.148.30])
+ by front2 (Coremail) with SMTP id qciowMAxZ8V7fvNmJsgRAA--.326S3;
+ Wed, 25 Sep 2024 11:07:40 +0800 (CST)
+Subject: Re: [PATCH v4 2/2] target/loongarch: Implement lbt registers
+ save/restore function
+To: maobibo <maobibo@loongson.cn>
+References: <20240904061859.86615-1-maobibo@loongson.cn>
+ <20240904061859.86615-3-maobibo@loongson.cn>
+ <c14c8927-bb9b-9c3f-dca7-c86f79e73770@loongson.cn>
+ <7ddb45a0-e685-2af0-749a-821cc08f22e8@loongson.cn>
+ <a15a6f5d-5f9b-2bde-1300-81bd53ca25fa@loongson.cn>
+ <c7257d12-dad4-7d1e-2fb7-876599a820a8@loongson.cn>
+ <e844b0f8-e85e-a026-72b3-3af4d1af19d9@loongson.cn>
+Cc: gaosong <gaosong@loongson.cn>, Huacai Chen <chenhuacai@kernel.org>,
+ qemu-devel@nongnu.org
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
+Message-ID: <136c79c7-4680-721b-0f0f-76b51dfd6b86@loongson.cn>
+Date: Wed, 25 Sep 2024 11:07:39 +0800
+User-Agent: Mozilla/5.0 (X11; Linux mips64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: T-EXCH-06.corp.yadro.com (172.17.10.110) To
- T-EXCH-12.corp.yadro.com (172.17.11.143)
-Received-SPF: permerror client-ip=89.207.88.248;
- envelope-from=evgenii.prokopiev@syntacore.com; helo=mta-04.yadro.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+In-Reply-To: <e844b0f8-e85e-a026-72b3-3af4d1af19d9@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID: qciowMAxZ8V7fvNmJsgRAA--.326S3
+X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29K
+ BjDU0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26c
+ xKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vE
+ j48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxV
+ AFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E
+ 14v26r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44
+ I27wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2
+ jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62
+ AI1cAE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E
+ 5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAV
+ WUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY
+ 1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI
+ 0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU
+ rNtxDUUUU
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=yangtiezhu@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.21,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Wed, 25 Sep 2024 09:59:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,44 +87,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The register VXSAT should be RW only to the first bit.
-The remaining bits should be 0.
 
-The RISC-V Instruction Set Manual Volume I: Unprivileged Architecture
 
-The vxsat CSR has a single read-write least-significant bit (vxsat[0])
-that indicates if a fixed-point instruction has had to saturate an output
-value to fit into a destination format. Bits vxsat[XLEN-1:1]
-should be written as zeros.
+On 09/24/2024 09:28 AM, maobibo wrote:
+> Hi Tiezhu,
+>
+> Does mainline gdb support to dump LBT register now?
 
-Signed-off-by: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
----
- target/riscv/csr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Yes, here are the related gdb commit and kernel code:
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index bd080f92b5..69c41212e9 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -717,7 +717,7 @@ static RISCVException write_vxrm(CPURISCVState *env, int csrno,
- static RISCVException read_vxsat(CPURISCVState *env, int csrno,
-                                  target_ulong *val)
- {
--    *val = env->vxsat;
-+    *val = env->vxsat & BIT(0);
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -727,7 +727,7 @@ static RISCVException write_vxsat(CPURISCVState *env, int csrno,
- #if !defined(CONFIG_USER_ONLY)
-     env->mstatus |= MSTATUS_VS;
- #endif
--    env->vxsat = val;
-+    env->vxsat = val & BIT(0);
-     return RISCV_EXCP_NONE;
- }
- 
--- 
-2.34.1
+https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=e4d74c01e773
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/loongarch/include/uapi/asm/ptrace.h#n59
+
+Thanks,
+Tiezhu
 
 
