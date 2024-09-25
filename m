@@ -4,95 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87E84CCF9E7
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 19:18:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAC85CCF9EC
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 19:30:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stXWT-0000SJ-Lj; Wed, 25 Sep 2024 15:18:02 -0400
+	id 1stXhD-00069D-OX; Wed, 25 Sep 2024 15:29:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1stXWI-0000RY-RU
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 15:17:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1stXWH-0007Bq-DD
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 15:17:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727291867;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Qr4KuqU53p9E7o/jifHt5fIgdBcintWUz9Gvoz+b6Gg=;
- b=AvkBEoqehT5JwjntHrK5Wkjm2JdsPJoBAalvbN9/SgLuyL1Uz2id36YuFx4QFjWfF5LKNA
- fLSiPpyfLSJWhAu17kK0OSW2qwzaH8pAyGCylCjdM0/9Pd1CCUYGvUPBzjQ/y8eC3KrjiI
- TX62Mx2VTbnMXEWMIK9HbJOmTbbb9vA=
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-417-Or_mOfrFMSWYTJHJK7tszg-1; Wed, 25 Sep 2024 15:17:43 -0400
-X-MC-Unique: Or_mOfrFMSWYTJHJK7tszg-1
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-718ea25967eso228772b3a.2
- for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 12:17:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727291862; x=1727896662;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1stXh6-000659-LG; Wed, 25 Sep 2024 15:29:03 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1stXh2-0001ux-QL; Wed, 25 Sep 2024 15:28:58 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5c46680a71bso128109a12.2; 
+ Wed, 25 Sep 2024 12:28:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1727292532; x=1727897332; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Qr4KuqU53p9E7o/jifHt5fIgdBcintWUz9Gvoz+b6Gg=;
- b=MrZltdhqFqycKGFggwNJ2jBBYD0YE+0FPe1ZIQxfxOAkxm4c+gftu+el/41MG6VXSG
- wsD4UVztrTtGTkIkJdRYgzYej7F6cAGbR9rXJAuQGp6UpWKXcJvbe1gYT5+q6DLcYL3c
- tp2C5IbV+y9Je3j9p+3WOTWscxhiKcAwUVqLGXQ/2I9HlhZrft/QZi0i4PCAfqQ+VVhs
- blFPTBWAxlF4t0qSrAk1jLtaEU2EBCC3T9kIAX0X6YxVI1pT9UBLEDKndn/kZGqHjO+Y
- 909ypO4FL4Xt0EwbarOvkkATtVeIY7jbyT7HvVHQlxTEyfGc87RBYn/5Kc+nUZk0YiaU
- 4ELQ==
+ bh=EpNIGUqoKh3ApSswDw2WgMUn4lBLGk7X9nmAv792NQ0=;
+ b=BqJgN/bcfa7u3tT+EIQohiId0USDg6SPNC6ID2HbgL4f1s0gT90sXCcBEd6fKOKKBv
+ H0tuH/CtpTm/jNCcy98esdHEEyv4ghCyKTpWVTtj6X2BXCIduE1WeawHWoTasV0ZngbU
+ idWDMbVIPCWT3iWMnUCSQjYe3xM/VUuNbNs4jPZlT7gPXm//9D00R36mZo0aTsqtbFow
+ CA05Xez8+ksBl/pvaReQKUyWJ7y/Vn01ArcLQ6rNRPDyTZYAwOAYF16/5jmAei8ELv7Z
+ k5O0wpw3ylw16q+ZukkAMxuwI8wH5S4Lis8oPEOu3T+jrlH4Nem1tV/px5zi17JHRjrm
+ 17JA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727292532; x=1727897332;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EpNIGUqoKh3ApSswDw2WgMUn4lBLGk7X9nmAv792NQ0=;
+ b=nXsr0X2L7HAPP33fOzBvFHBsBvfbk8IqfPDcuhQvfx9DnAymJB7gCFZQem8dDtZR8/
+ 90jWfpBtcCbCrThJ/QfjEvSDYrhgGIE9MVIQWKWG9myNdrBZrK6OCeZnZJHqQnyjRV4W
+ vkmd/wgi7Xhrg3+9d4XTzOsQ0yslRYtt34sHUG/g18ohGbKdIb6HZPFbz3N24dvHQClM
+ IKoSmeRYO0pOG0SfMdFyDdEIxEHFX9Jw3PD5wcQ2eSsbZW5PajQ6K3Vv9AbqiUmLTC6d
+ Y2DcbnRuhGynD7dEBsURPjfB1nw61iRP1F4FJznqvICXUoxaigEIkxwW3KhlCq0D/Clv
+ D3NA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXpX3KRkoe7gXfzfwDIA6pg3o/zS8xzddAzo2OtZisLUV0bZ/JiU6c57ESd9JQ5fWInrCr1XyZhwqxG@nongnu.org
-X-Gm-Message-State: AOJu0Yw55yZXy83UTrSyjrK8kLBLucXXBG1tb4ZSAN/o26Iwpbc7y2Z8
- D9d+tF42lOoaDI46+k0L0ohxs2UukPqe9SGFikogn1XHbnom3F3kDbAnQRHuCNrdCnZJagDmlpN
- 0fXfbluxulC9aAMNWioPmMPYzGMIycw6nDgCnFIVC4y1Vz+sry+Xk
-X-Received: by 2002:a05:6a21:399:b0:1d2:bcba:7c83 with SMTP id
- adf61e73a8af0-1d4e0c00760mr5069530637.44.1727291862085; 
- Wed, 25 Sep 2024 12:17:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH7EzkK22QnIRsSLBf5LDL3mHgjwn1K5oxJRRv5Q226TMv3zQcytbTLQrFTjOWcZO8KaP/I3w==
-X-Received: by 2002:a05:6a21:399:b0:1d2:bcba:7c83 with SMTP id
- adf61e73a8af0-1d4e0c00760mr5069511637.44.1727291861805; 
- Wed, 25 Sep 2024 12:17:41 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71afc834fdbsm3080217b3a.20.2024.09.25.12.17.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Sep 2024 12:17:40 -0700 (PDT)
-Date: Wed, 25 Sep 2024 15:17:37 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yong Huang <yong.huang@smartx.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v1 1/7] migration: Introduce structs for background sync
-Message-ID: <ZvRh0RhkUC-eLbjo@x1n>
-References: <cover.1726390098.git.yong.huang@smartx.com>
- <531750c8d7b6c09f877b5f335a60fab402c168be.1726390098.git.yong.huang@smartx.com>
- <87msk7z4l3.fsf@suse.de>
- <CAK9dgmb_rK5HJOGTG=KXKgH=e2e8JV8aqoOWUHBEyjnc-+kiqg@mail.gmail.com>
- <ZuxxOObKqS_G0Ela@x1n>
- <CAK9dgmYaE=poiwLQqD6qbjJQdgPLMn8cW8VO47xYFTBkNiUVLA@mail.gmail.com>
+ AJvYcCWj5jstiBD4Lphl3c4hzcF0hEnMSFdanJjzjSMTaA86KU6dLQhJF+cCcRE+dOMVyFwIciSirveoO8ON@nongnu.org,
+ AJvYcCXTwVRiv+Boo3w9cG48ennhjuxk6c0BEvT0yLGtLSn0TcNJpJUIDDSEasaLB5+UkzMx1NNF6K4nYRA=@nongnu.org
+X-Gm-Message-State: AOJu0YyIVj1iyuiZrTeHbkyb05B3r/wVT5fxNbkoK4Z2Qf5ClYcH6i9A
+ rOien2KIavFp+K05ERr/B9eAM6zzlV11gg5QpHpy0LHBZSZyHjA8
+X-Google-Smtp-Source: AGHT+IEUcFZhlWCmeCpdutgH6haBxSnNkJoLs42N0w309Gn5ImNa/rOeZM+0fk4NjYRMvaWsy4WstQ==
+X-Received: by 2002:a05:6402:354a:b0:5c7:1ffc:f58c with SMTP id
+ 4fb4d7f45d1cf-5c720641103mr3131855a12.28.1727292531804; 
+ Wed, 25 Sep 2024 12:28:51 -0700 (PDT)
+Received: from [127.0.0.1] (dynamic-077-011-049-158.77.11.pool.telefonica.de.
+ [77.11.49.158]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5c5cf4c4fd8sm2246241a12.69.2024.09.25.12.28.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Sep 2024 12:28:51 -0700 (PDT)
+Date: Wed, 25 Sep 2024 19:09:38 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+CC: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Corey Minyard <cminyard@mvista.com>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-block@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
+ =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
+Subject: Re: [PATCH 02/23] hw/ppc/e500: Reduce scope of env pointer
+In-Reply-To: <87efb774-720a-9628-9335-fbec17e68d12@eik.bme.hu>
+References: <20240923093016.66437-1-shentey@gmail.com>
+ <20240923093016.66437-3-shentey@gmail.com>
+ <87efb774-720a-9628-9335-fbec17e68d12@eik.bme.hu>
+Message-ID: <296CB8D6-C7D5-4A13-B84B-B44D437454E2@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAK9dgmYaE=poiwLQqD6qbjJQdgPLMn8cW8VO47xYFTBkNiUVLA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.108,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,24 +104,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 20, 2024 at 10:43:31AM +0800, Yong Huang wrote:
-> Yes, invoke migration_bitmap_sync_precopy more frequently is also my
-> first idea but it involves bitmap updating and interfere with the behavior
-> of page sending, it also affects the migration information stats and
-> interfere other migration logic such as migration_update_rates().
 
-Could you elaborate?
 
-For example, what happens if we start to sync in ram_save_iterate() for
-some time intervals (e.g. 5 seconds)?
+Am 23=2E September 2024 10:04:48 UTC schrieb BALATON Zoltan <balaton@eik=
+=2Ebme=2Ehu>:
+>On Mon, 23 Sep 2024, Bernhard Beschow wrote:
+>> The env pointer isn't used outside the for loop, so move it inside=2E A=
+fter that,
+>> the firstenv pointer is never read, so remove it=2E
+>
+>It's probably the other way arouns, you remove firstenv (which is the big=
+ger part of this patch) then it's clear env is not needed outside of the lo=
+op any more so can be moved there=2E The purpose of this seems to be to pre=
+serve the env of the first CPU but as it's unused yet maybe it can be remov=
+ed for now and readded later when needed=2E
 
-Btw, we shouldn't have this extra sync exist if auto converge is disabled
-no matter which way we use, because it's pure overhead when auto converge
-is not in use.
+I'll fix the commit message=2E
 
-Thanks,
+Best regards,
+Bernhard
 
--- 
-Peter Xu
-
+>
+>Regards,
+>BALATON Zoltan
+>
+>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>> ---
+>> hw/ppc/e500=2Ec | 9 +--------
+>> 1 file changed, 1 insertion(+), 8 deletions(-)
+>>=20
+>> diff --git a/hw/ppc/e500=2Ec b/hw/ppc/e500=2Ec
+>> index 75b051009f=2E=2Ef68779a1ea 100644
+>> --- a/hw/ppc/e500=2Ec
+>> +++ b/hw/ppc/e500=2Ec
+>> @@ -899,7 +899,6 @@ void ppce500_init(MachineState *machine)
+>>     const PPCE500MachineClass *pmc =3D PPCE500_MACHINE_GET_CLASS(machin=
+e);
+>>     MachineClass *mc =3D MACHINE_CLASS(pmc);
+>>     PCIBus *pci_bus;
+>> -    CPUPPCState *env =3D NULL;
+>>     uint64_t loadaddr;
+>>     hwaddr kernel_base =3D -1LL;
+>>     int kernel_size =3D 0;
+>> @@ -921,7 +920,6 @@ void ppce500_init(MachineState *machine)
+>>     IrqLines *irqs;
+>>     DeviceState *dev, *mpicdev;
+>>     DriveInfo *dinfo;
+>> -    CPUPPCState *firstenv =3D NULL;
+>>     MemoryRegion *ccsr_addr_space;
+>>     SysBusDevice *s;
+>>     PPCE500CCSRState *ccsr;
+>> @@ -930,6 +928,7 @@ void ppce500_init(MachineState *machine)
+>>     irqs =3D g_new0(IrqLines, smp_cpus);
+>>     for (i =3D 0; i < smp_cpus; i++) {
+>>         PowerPCCPU *cpu;
+>> +        CPUPPCState *env;
+>>         CPUState *cs;
+>>=20
+>>         cpu =3D POWERPC_CPU(object_new(machine->cpu_type));
+>> @@ -950,10 +949,6 @@ void ppce500_init(MachineState *machine)
+>>                                  &error_abort);
+>>         qdev_realize_and_unref(DEVICE(cs), NULL, &error_fatal);
+>>=20
+>> -        if (!firstenv) {
+>> -            firstenv =3D env;
+>> -        }
+>> -
+>>         irqs[i]=2Eirq[OPENPIC_OUTPUT_INT] =3D
+>>             qdev_get_gpio_in(DEVICE(cpu), PPCE500_INPUT_INT);
+>>         irqs[i]=2Eirq[OPENPIC_OUTPUT_CINT] =3D
+>> @@ -974,8 +969,6 @@ void ppce500_init(MachineState *machine)
+>>         }
+>>     }
+>>=20
+>> -    env =3D firstenv;
+>> -
+>>     if (!QEMU_IS_ALIGNED(machine->ram_size, RAM_SIZES_ALIGN)) {
+>>         error_report("RAM size must be multiple of %" PRIu64, RAM_SIZES=
+_ALIGN);
+>>         exit(EXIT_FAILURE);
+>>=20
 
