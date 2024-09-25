@@ -4,65 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C61CCF9E4
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 15:39:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6554BCCF9E4
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 15:41:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stU5p-00006U-JV; Wed, 25 Sep 2024 11:38:17 -0400
+	id 1stU8M-0003u3-Bq; Wed, 25 Sep 2024 11:40:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jusual@redhat.com>) id 1stU5f-0007jL-5L
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 11:38:07 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1stU8B-0003ED-VV
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 11:40:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jusual@redhat.com>) id 1stU5b-0004ID-4c
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 11:38:05 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1stU89-0004ez-DF
+ for qemu-devel@nongnu.org; Wed, 25 Sep 2024 11:40:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727278681;
+ s=mimecast20190719; t=1727278840;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1+S+pn0VfSktiPp1EO8nhZVaSvWv9/INWKttfCG8PGY=;
- b=b3k/23qE1OaJM6VjmnlaunBdpZ+BXYIBIofAunPmv24ge/xI1wep3MoCl6uIbTEbu/5IFm
- SkkMp4lfwTFuxLXQveQHanxS7COwAzPVWNlgK4u0eGo+jzEH8xKpmY+oONlNQ9gtNUWwwT
- WQ00x5JSc8fZtDH4DxjPzkpm0DLAu3g=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-65-wzFJPH_AOn2oxz3nh5lYfA-1; Wed,
- 25 Sep 2024 11:36:40 -0400
-X-MC-Unique: wzFJPH_AOn2oxz3nh5lYfA-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1DE141977698; Wed, 25 Sep 2024 15:36:39 +0000 (UTC)
-Received: from tpx1cg9.redhat.com (unknown [10.22.8.79])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4C71719560AA; Wed, 25 Sep 2024 15:36:35 +0000 (UTC)
-From: Julia Suvorova <jusual@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Song Gao <gaosong@loongson.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Julia Suvorova <jusual@redhat.com>
-Subject: [PATCH 1/2] kvm: Allow kvm_arch_get/put_registers to accept Error**
-Date: Wed, 25 Sep 2024 17:36:22 +0200
-Message-ID: <20240925153625.183600-2-jusual@redhat.com>
-In-Reply-To: <20240925153625.183600-1-jusual@redhat.com>
-References: <20240925153625.183600-1-jusual@redhat.com>
+ bh=jLBUvpY2V+/VYHmWgWkZYlebHvXXqsekzIkCdTaBPrs=;
+ b=bhPDVVjAS/x/4XOLBn8jKqvl2DRUUzS7o7ZOy7gMZSaPmzOgBcGfnJ8bz+L445+ETx0mbr
+ CRFC7sIOH12OYImFi+Za3/RuWN401Ray01rCKbq/EreVKC+RJJSF2a+G+BlP0KkQ8wXHE0
+ rT5e2bc+2BPuTIjbvf3sxeCtATHE8iM=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-388-_9ek-4ndOH6PKFbAPlcHag-1; Wed, 25 Sep 2024 11:40:38 -0400
+X-MC-Unique: _9ek-4ndOH6PKFbAPlcHag-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-42cb9e14ab6so45976095e9.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 08:40:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727278837; x=1727883637;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jLBUvpY2V+/VYHmWgWkZYlebHvXXqsekzIkCdTaBPrs=;
+ b=CikVZwQX8VjD9rUxVYaGlkHqLQePT1kc1rFvsjfgOKwYsF+FAxY8huRou2wFs52jvH
+ UwFBXruqNcMTy8BnCz3vuzoxdEggYI4SgSkXTX6VOIpu2t52uXDLt9SZWpsHDqp3ILbo
+ 4dc+87IXIc/VAAq688tHiPzgAYTWi6w2M8GSu+byM6whKPScWXEkLphHVJJkGary761j
+ bzz90vH80KuM6/GsX+QIWgzUPIw3l4jQlJuzNvJRWgrv1Uom+eQGZ4fu3+QQafi3IjFO
+ 5aN/uqalNgHIXkGqE7VTEU6wIbv7l3C1uDAvmTBciulpT4oGxNkPXGE1EvzX0Q2tUfKn
+ 1JtQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXXMecYQqSVuMm9eJQeBONmEBZmQgw6DXDwfvYrx6Ulc8VYDNbuXtF1QIyzlk0xrzcjHGBPFCkQMl3Y@nongnu.org
+X-Gm-Message-State: AOJu0YxUPZL6s/5KYmX7RYRtfhcHxQowEE0+VGApmF9uYBlyBy00apeC
+ a+kSnB6rIdIyJoQMMkj/nmA8/+SRrWgrou1pVhCpEUlVM3ANEd0e/lDzPeIpOf/1ZLOcRZNBlHc
+ rbk1+pya4196xMbYO0lP86PX5j/NEyeN/zfdN8LmDUiLSKh5rnf70
+X-Received: by 2002:adf:f1ca:0:b0:374:c8cc:1bb1 with SMTP id
+ ffacd0b85a97d-37cc24b575bmr2221426f8f.39.1727278836707; 
+ Wed, 25 Sep 2024 08:40:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHwiAnwsKjmfMVLuslhix0c/BZGNocD9o78nO9El99d2FH+ZD8nfGFMG7d5L9pnXuJ+cfL6sw==
+X-Received: by 2002:adf:f1ca:0:b0:374:c8cc:1bb1 with SMTP id
+ ffacd0b85a97d-37cc24b575bmr2221402f8f.39.1727278836308; 
+ Wed, 25 Sep 2024 08:40:36 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37cbc31f348sm4262635f8f.95.2024.09.25.08.40.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Sep 2024 08:40:35 -0700 (PDT)
+Message-ID: <e09810de-e744-43df-b193-aacfc4c0dcd6@redhat.com>
+Date: Wed, 25 Sep 2024 17:40:34 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/23] hw/i2c/mpc_i2c: Prefer DEFINE_TYPES() macro
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Corey Minyard <cminyard@mvista.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-block@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>
+References: <20240923093016.66437-1-shentey@gmail.com>
+ <20240923093016.66437-12-shentey@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240923093016.66437-12-shentey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jusual@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -71,7 +96,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.108,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,266 +112,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is necessary to provide discernible error messages to the caller.
+On 9/23/24 11:30, Bernhard Beschow wrote:
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 
-Signed-off-by: Julia Suvorova <jusual@redhat.com>
----
- accel/kvm/kvm-all.c        | 41 +++++++++++++++++++++++++++++---------
- include/sysemu/kvm.h       |  4 ++--
- target/arm/kvm.c           |  4 ++--
- target/i386/kvm/kvm.c      |  4 ++--
- target/loongarch/kvm/kvm.c |  4 ++--
- target/mips/kvm.c          |  4 ++--
- target/ppc/kvm.c           |  2 +-
- target/riscv/kvm/kvm-cpu.c |  4 ++--
- target/s390x/kvm/kvm.c     |  4 ++--
- 9 files changed, 47 insertions(+), 24 deletions(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index fe4cd721d9..19e09067b3 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2762,9 +2762,15 @@ void kvm_flush_coalesced_mmio_buffer(void)
- static void do_kvm_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
- {
-     if (!cpu->vcpu_dirty && !kvm_state->guest_state_protected) {
--        int ret = kvm_arch_get_registers(cpu);
-+        Error *err = NULL;
-+        int ret = kvm_arch_get_registers(cpu, &err);
-         if (ret) {
--            error_report("Failed to get registers: %s", strerror(-ret));
-+            if (err) {
-+                error_report_err(err);
-+            } else {
-+                error_report("Failed to get registers: %s", strerror(-ret));
-+            }
-+
-             cpu_dump_state(cpu, stderr, CPU_DUMP_CODE);
-             vm_stop(RUN_STATE_INTERNAL_ERROR);
-         }
-@@ -2782,9 +2788,15 @@ void kvm_cpu_synchronize_state(CPUState *cpu)
- 
- static void do_kvm_cpu_synchronize_post_reset(CPUState *cpu, run_on_cpu_data arg)
- {
--    int ret = kvm_arch_put_registers(cpu, KVM_PUT_RESET_STATE);
-+    Error *err = NULL;
-+    int ret = kvm_arch_put_registers(cpu, KVM_PUT_RESET_STATE, &err);
-     if (ret) {
--        error_report("Failed to put registers after reset: %s", strerror(-ret));
-+        if (err) {
-+            error_reportf_err(err, "Restoring resisters after reset");
-+        } else {
-+            error_report("Failed to put registers after reset: %s",
-+                         strerror(-ret));
-+        }
-         cpu_dump_state(cpu, stderr, CPU_DUMP_CODE);
-         vm_stop(RUN_STATE_INTERNAL_ERROR);
-     }
-@@ -2799,9 +2811,15 @@ void kvm_cpu_synchronize_post_reset(CPUState *cpu)
- 
- static void do_kvm_cpu_synchronize_post_init(CPUState *cpu, run_on_cpu_data arg)
- {
--    int ret = kvm_arch_put_registers(cpu, KVM_PUT_FULL_STATE);
-+    Error *err = NULL;
-+    int ret = kvm_arch_put_registers(cpu, KVM_PUT_FULL_STATE, &err);
-     if (ret) {
--        error_report("Failed to put registers after init: %s", strerror(-ret));
-+        if (err) {
-+            error_reportf_err(err, "Putting registers after init");
-+        } else {
-+            error_report("Failed to put registers after init: %s",
-+                         strerror(-ret));
-+        }
-         exit(1);
-     }
- 
-@@ -2991,10 +3009,15 @@ int kvm_cpu_exec(CPUState *cpu)
-         MemTxAttrs attrs;
- 
-         if (cpu->vcpu_dirty) {
--            ret = kvm_arch_put_registers(cpu, KVM_PUT_RUNTIME_STATE);
-+            Error *err = NULL;
-+            ret = kvm_arch_put_registers(cpu, KVM_PUT_RUNTIME_STATE, &err);
-             if (ret) {
--                error_report("Failed to put registers after init: %s",
--                             strerror(-ret));
-+                if (err) {
-+                    error_reportf_err(err, "Putting registers after init");
-+                } else {
-+                    error_report("Failed to put registers after init: %s",
-+                                 strerror(-ret));
-+                }
-                 ret = -1;
-                 break;
-             }
-diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
-index 613d3f7581..c3a60b2890 100644
---- a/include/sysemu/kvm.h
-+++ b/include/sysemu/kvm.h
-@@ -359,7 +359,7 @@ int kvm_arch_handle_exit(CPUState *cpu, struct kvm_run *run);
- 
- int kvm_arch_process_async_events(CPUState *cpu);
- 
--int kvm_arch_get_registers(CPUState *cpu);
-+int kvm_arch_get_registers(CPUState *cpu, Error **errp);
- 
- /* state subset only touched by the VCPU itself during runtime */
- #define KVM_PUT_RUNTIME_STATE   1
-@@ -368,7 +368,7 @@ int kvm_arch_get_registers(CPUState *cpu);
- /* full state set, modified during initialization or on vmload */
- #define KVM_PUT_FULL_STATE      3
- 
--int kvm_arch_put_registers(CPUState *cpu, int level);
-+int kvm_arch_put_registers(CPUState *cpu, int level, Error **errp);
- 
- int kvm_arch_get_default_type(MachineState *ms);
- 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 849e2e21b3..f1f1b5b375 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -2042,7 +2042,7 @@ static int kvm_arch_put_sve(CPUState *cs)
-     return 0;
- }
- 
--int kvm_arch_put_registers(CPUState *cs, int level)
-+int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
- {
-     uint64_t val;
-     uint32_t fpr;
-@@ -2226,7 +2226,7 @@ static int kvm_arch_get_sve(CPUState *cs)
-     return 0;
- }
- 
--int kvm_arch_get_registers(CPUState *cs)
-+int kvm_arch_get_registers(CPUState *cs, Error **errp)
- {
-     uint64_t val;
-     unsigned int el;
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index ada581c5d6..039ed08825 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5118,7 +5118,7 @@ static int kvm_get_nested_state(X86CPU *cpu)
-     return ret;
- }
- 
--int kvm_arch_put_registers(CPUState *cpu, int level)
-+int kvm_arch_put_registers(CPUState *cpu, int level, Error **errp)
- {
-     X86CPU *x86_cpu = X86_CPU(cpu);
-     int ret;
-@@ -5206,7 +5206,7 @@ int kvm_arch_put_registers(CPUState *cpu, int level)
-     return 0;
- }
- 
--int kvm_arch_get_registers(CPUState *cs)
-+int kvm_arch_get_registers(CPUState *cs, Error **errp)
- {
-     X86CPU *cpu = X86_CPU(cs);
-     int ret;
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 4786cd5efa..30ec16025d 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -588,7 +588,7 @@ static int kvm_loongarch_put_cpucfg(CPUState *cs)
-     return ret;
- }
- 
--int kvm_arch_get_registers(CPUState *cs)
-+int kvm_arch_get_registers(CPUState *cs, Error **errp)
- {
-     int ret;
- 
-@@ -616,7 +616,7 @@ int kvm_arch_get_registers(CPUState *cs)
-     return ret;
- }
- 
--int kvm_arch_put_registers(CPUState *cs, int level)
-+int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
- {
-     int ret;
- 
-diff --git a/target/mips/kvm.c b/target/mips/kvm.c
-index a631ab544f..a98798c669 100644
---- a/target/mips/kvm.c
-+++ b/target/mips/kvm.c
-@@ -1172,7 +1172,7 @@ static int kvm_mips_get_cp0_registers(CPUState *cs)
-     return ret;
- }
- 
--int kvm_arch_put_registers(CPUState *cs, int level)
-+int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
- {
-     CPUMIPSState *env = cpu_env(cs);
-     struct kvm_regs regs;
-@@ -1207,7 +1207,7 @@ int kvm_arch_put_registers(CPUState *cs, int level)
-     return ret;
- }
- 
--int kvm_arch_get_registers(CPUState *cs)
-+int kvm_arch_get_registers(CPUState *cs, Error **errp)
- {
-     CPUMIPSState *env = cpu_env(cs);
-     int ret = 0;
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index 907dba60d1..a361d9d23c 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -900,7 +900,7 @@ int kvmppc_put_books_sregs(PowerPCCPU *cpu)
-     return kvm_vcpu_ioctl(CPU(cpu), KVM_SET_SREGS, &sregs);
- }
- 
--int kvm_arch_put_registers(CPUState *cs, int level)
-+int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
-     CPUPPCState *env = &cpu->env;
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index f6e3156b8d..2bfb112be0 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1192,7 +1192,7 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
-     KVM_CAP_LAST_INFO
- };
- 
--int kvm_arch_get_registers(CPUState *cs)
-+int kvm_arch_get_registers(CPUState *cs, Error **errp)
- {
-     int ret = 0;
- 
-@@ -1237,7 +1237,7 @@ int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state)
-     return 0;
- }
- 
--int kvm_arch_put_registers(CPUState *cs, int level)
-+int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
- {
-     int ret = 0;
- 
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 94181d9281..8ffe0159d8 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -472,7 +472,7 @@ static int can_sync_regs(CPUState *cs, int regs)
- #define KVM_SYNC_REQUIRED_REGS (KVM_SYNC_GPRS | KVM_SYNC_ACRS | \
-                                 KVM_SYNC_CRS | KVM_SYNC_PREFIX)
- 
--int kvm_arch_put_registers(CPUState *cs, int level)
-+int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
- {
-     CPUS390XState *env = cpu_env(cs);
-     struct kvm_fpu fpu = {};
-@@ -598,7 +598,7 @@ int kvm_arch_put_registers(CPUState *cs, int level)
-     return 0;
- }
- 
--int kvm_arch_get_registers(CPUState *cs)
-+int kvm_arch_get_registers(CPUState *cs, Error **errp)
- {
-     CPUS390XState *env = cpu_env(cs);
-     struct kvm_fpu fpu;
--- 
-2.45.0
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+> ---
+>   hw/i2c/mpc_i2c.c | 20 ++++++++------------
+>   1 file changed, 8 insertions(+), 12 deletions(-)
+> 
+> diff --git a/hw/i2c/mpc_i2c.c b/hw/i2c/mpc_i2c.c
+> index 3d79c15653..16f4309ea9 100644
+> --- a/hw/i2c/mpc_i2c.c
+> +++ b/hw/i2c/mpc_i2c.c
+> @@ -20,7 +20,6 @@
+>   #include "qemu/osdep.h"
+>   #include "hw/i2c/i2c.h"
+>   #include "hw/irq.h"
+> -#include "qemu/module.h"
+>   #include "hw/sysbus.h"
+>   #include "migration/vmstate.h"
+>   #include "qom/object.h"
+> @@ -345,16 +344,13 @@ static void mpc_i2c_class_init(ObjectClass *klass, void *data)
+>       dc->desc = "MPC I2C Controller";
+>   }
+>   
+> -static const TypeInfo mpc_i2c_type_info = {
+> -    .name          = TYPE_MPC_I2C,
+> -    .parent        = TYPE_SYS_BUS_DEVICE,
+> -    .instance_size = sizeof(MPCI2CState),
+> -    .class_init    = mpc_i2c_class_init,
+> +static const TypeInfo types[] = {
+> +    {
+> +        .name          = TYPE_MPC_I2C,
+> +        .parent        = TYPE_SYS_BUS_DEVICE,
+> +        .instance_size = sizeof(MPCI2CState),
+> +        .class_init    = mpc_i2c_class_init,
+> +    },
+>   };
+>   
+> -static void mpc_i2c_register_types(void)
+> -{
+> -    type_register_static(&mpc_i2c_type_info);
+> -}
+> -
+> -type_init(mpc_i2c_register_types)
+> +DEFINE_TYPES(types)
 
 
