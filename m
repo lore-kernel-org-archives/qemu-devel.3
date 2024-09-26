@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E23CDE026
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 17:06:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBF6DCDE026
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 17:06:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1strvh-0000dh-8T; Thu, 26 Sep 2024 13:05:25 -0400
+	id 1strwq-0002hi-N5; Thu, 26 Sep 2024 13:06:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>) id 1strvf-0000cT-5A
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 13:05:23 -0400
-Received: from mail-m16.yeah.net ([220.197.32.17])
+ (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>) id 1strwo-0002Wm-1i
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 13:06:34 -0400
+Received: from mail-m16.yeah.net ([220.197.32.16])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <chao.liu@yeah.net>) id 1strvZ-0003kM-Qm
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 13:05:22 -0400
+ (envelope-from <chao.liu@yeah.net>) id 1strwk-0003qn-Kq
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 13:06:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
  s=s110527; h=From:Subject:Date:Message-ID:MIME-Version; bh=nj4Pj
- I6uuLYGapn6bpIBKWVqJYUrBwm0veoDZb9bxwU=; b=T79+aUShud2/dEj4cRaJb
- izN8XXDXnGr0BVg3TNCJXwSDu1uyXzyD854Igg6IJlFBt7cU3dbiRLrU/O40dUAS
- B6zGE9A6czo0r2Eycbxsjq/84OtWY7ZSQj75zUpKBVV8r1CaGIDFvXgD0kTnz9xf
- 4hhp7Tw9ighW0GmN2K1b38=
+ I6uuLYGapn6bpIBKWVqJYUrBwm0veoDZb9bxwU=; b=cjUHWROsRyz208ARAeSf/
+ 6Fd1Zn0DalFJDHMOWDyX+RLww/HenJg83Qa8w+xW5eOOVR7yK1IODZ4/tUm9QDIU
+ cO12wsEeVezEmCvR9fHUuxLBK7gFnACfSLs+35XeW1W4zpdW6hlSeePeYnvLkRSf
+ sqQTkOGKaDxD6FcLPwkiHU=
 Received: from localhost.localdomain (unknown [])
- by gzsmtp2 (Coremail) with SMTP id Ms8vCgBn5Zs4lPVmxE8yAQ--.46443S2;
- Fri, 27 Sep 2024 01:04:56 +0800 (CST)
+ by gzsmtp3 (Coremail) with SMTP id M88vCgDX9eR7lPVmRqgrAQ--.46111S2;
+ Fri, 27 Sep 2024 01:06:03 +0800 (CST)
 From: Chao Liu <chao.liu@yeah.net>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, bin.meng@windriver.com, edgar.iglesias@gmail.com,
  alistair@alistair23.me
-Subject: [PATCH v1 0/2] Re: Drop ignore_memory_transaction_failures for
+Subject: Re: [PATCH v1 0/2] Drop ignore_memory_transaction_failures for
  xilink_zynq
-Date: Fri, 27 Sep 2024 01:04:51 +0800
-Message-ID: <20240926170451.1479647-1-chao.liu@yeah.net>
+Date: Fri, 27 Sep 2024 01:05:58 +0800
+Message-ID: <20240926170558.1480007-1-chao.liu@yeah.net>
 X-Mailer: git-send-email 2.46.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: Ms8vCgBn5Zs4lPVmxE8yAQ--.46443S2
+X-CM-TRANSID: M88vCgDX9eR7lPVmRqgrAQ--.46111S2
 X-Coremail-Antispam: 1Uf129KBjvJXoW7try3WFy7KFWrKw18GF4Uurg_yoW8JFyUpr
  WUAFs8Gry8Kry3Za4fXrsrZw1ava95A34Utry3Jwn8G3W3CFnrZrZ5KanxG3WDWr1vqa1a
  qry7XF1UurnrZ3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jB9a9UUUUU=
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jeuWLUUUUU=
 X-Originating-IP: [117.173.244.102]
-X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiEg1lKGbz8ewFcgACsv
-Received-SPF: pass client-ip=220.197.32.17; envelope-from=chao.liu@yeah.net;
+X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiCQRmKGb1QAO2BAAAsh
+Received-SPF: pass client-ip=220.197.32.16; envelope-from=chao.liu@yeah.net;
  helo=mail-m16.yeah.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
