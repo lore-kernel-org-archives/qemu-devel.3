@@ -4,76 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 303F1CF9C69
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 12:53:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37FAFCDE006
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 13:44:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stnz3-0000q9-Tr; Thu, 26 Sep 2024 08:52:38 -0400
+	id 1stomL-0002eW-8q; Thu, 26 Sep 2024 09:43:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1stnyr-0000mj-RT; Thu, 26 Sep 2024 08:52:26 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1stomG-0002dP-Hm
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 09:43:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1stnyq-0000Dq-2G; Thu, 26 Sep 2024 08:52:25 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3CCAC92A7F;
- Thu, 26 Sep 2024 15:51:47 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8765F146188;
- Thu, 26 Sep 2024 15:52:16 +0300 (MSK)
-Message-ID: <d4c83e9f-e3df-4650-a0de-ffc578ffc9c7@tls.msk.ru>
-Date: Thu, 26 Sep 2024 15:52:16 +0300
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1stomE-0000eF-QE
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 09:43:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727358204;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ObesCQWwTesrjgqL1ssu7WDTVVohchSHRGqZaFMhK6M=;
+ b=RPORwZXj3WFOpVJhnsoVM7EahNs+n6sPJDsvoGmyhqhVlAC5HPj5J5L7tUMT+FopmqdSsH
+ /xtuz2IJFc3DaA+NxcEOPimhbJXv+BgJkqiHVIQ/fWd6Y5KXUDWWpUoDKiC5jOi358dNBj
+ 0Ol+1Zt2PYAW2ya83tcFqJ7jBhePP+c=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-674-BKJhvgwnMVuKuJ74wRFIWA-1; Thu, 26 Sep 2024 09:43:22 -0400
+X-MC-Unique: BKJhvgwnMVuKuJ74wRFIWA-1
+Received: by mail-oi1-f199.google.com with SMTP id
+ 5614622812f47-3e27a10adbfso868662b6e.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 06:43:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727358201; x=1727963001;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ObesCQWwTesrjgqL1ssu7WDTVVohchSHRGqZaFMhK6M=;
+ b=LMf+8q8wj0ybWumIdTwmJ1dk8QiCra8rxjWPWV01ilNlAwmH/Y7Kms3nZAbwv2NFeM
+ K97Q2rs6dwyptLiluMxyRVG6Sdsw5NTxS/uatyxQ0wZUG1UBTzO8dCJrrD3T/Z/Akkp7
+ yCCLDTukD4ea2/l1XaXZkHQ0HvN0v+hBDwKT0SBzZu7mi81vzIhIlDXS3/KdaZndNuzJ
+ 0fKRDWZLhUUHgEIWa1PY5uhk19m34UYyZ2GFPcp38+oHNb2KmotM48Kf3xgpXEmTw49V
+ 5I8XPvMcH67QZxJ4qbSczgu9IK/HaZCQTZ/JuwyyvckekfLk+iFElRL/LMEB02ArhMnC
+ jG8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUyWASN1ewwazq5Xdoi+7EDWNtz/2ZdmFCczelngJo9lTVS5zgq7WjoKr17LLNtNbPU1zQM8WtbdCCF@nongnu.org
+X-Gm-Message-State: AOJu0Yz00BnYQrznXsuCg1/yKCi/kzN3vVXcQN/rdYA5rVo6I51K/h1u
+ lYOXyFTqfJnuXN5V146hCA7iCI2n0jY0WjeuGuxz2equpqWss7gQz1BmnfgXkVa9B6l3fbF1opo
+ dMXTMjk9fWzClJzmqSZaTBqCjTf2KAByCdRql2Wh9HC7sBC+5mJh7
+X-Received: by 2002:a05:6808:2f14:b0:3e0:7d6a:a3d4 with SMTP id
+ 5614622812f47-3e29b7f360amr5772836b6e.32.1727358201683; 
+ Thu, 26 Sep 2024 06:43:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEqU9ubqrqvrTl5LE+vEYYLzhyZpVKZXxI5EoTo2dN6k4IrkWlEScYTAwgMttSvCkB+VE9azQ==
+X-Received: by 2002:a05:6808:2f14:b0:3e0:7d6a:a3d4 with SMTP id
+ 5614622812f47-3e29b7f360amr5772811b6e.32.1727358201302; 
+ Thu, 26 Sep 2024 06:43:21 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-45b526a61e7sm25898541cf.89.2024.09.26.06.43.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Sep 2024 06:43:20 -0700 (PDT)
+Message-ID: <0cb27300-5246-4859-a888-e39b235764af@redhat.com>
+Date: Thu, 26 Sep 2024 15:43:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/qemu-iotests/testenv: Use the "r2d" machine for
- sh4
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-trivial@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Magnus Damm <magnus.damm@gmail.com>
-References: <20240925072420.14656-1-thuth@redhat.com>
- <4d4a326f-ef6d-4c37-bdbe-4f42a9005375@tls.msk.ru>
- <e2a50551-dd9d-45e7-a163-b98881347791@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <e2a50551-dd9d-45e7-a163-b98881347791@redhat.com>
+Subject: Re: [PATCH] MAINTAINERS: Add myself as maintainer of e500 machines
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+References: <20240926075948.2343-1-shentey@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240926075948.2343-1-shentey@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,14 +103,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-26.09.2024 13:55, Thomas Huth wrote:
-..
-> I'm planning to provide a patch to remove sh4eb-softmmu completely (since it is useless nowadays) ... I can add it there, too.
+On 9/26/24 09:59, Bernhard Beschow wrote:
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 
-That'll do it too, for sure.
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
-/mjt
+C.
+
+
+> ---
+>   MAINTAINERS | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index ffacd60f40..0a191a03db 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1430,8 +1430,9 @@ F: hw/pci-host/ppc4xx_pci.c
+>   F: tests/functional/test_ppc_bamboo.py
+>   
+>   e500
+> +M: Bernhard Beschow <shentey@gmail.com>
+>   L: qemu-ppc@nongnu.org
+> -S: Orphan
+> +S: Odd Fixes
+>   F: hw/ppc/e500*
+>   F: hw/ppc/ppce500_spin.c
+>   F: hw/gpio/mpc8xxx.c
+> @@ -1446,8 +1447,9 @@ F: include/hw/ppc/openpic_kvm.h
+>   F: docs/system/ppc/ppce500.rst
+>   
+>   mpc8544ds
+> +M: Bernhard Beschow <shentey@gmail.com>
+>   L: qemu-ppc@nongnu.org
+> -S: Orphan
+> +S: Odd Fixes
+>   F: hw/ppc/mpc8544ds.c
+>   F: hw/ppc/mpc8544_guts.c
+>   F: tests/functional/test_ppc_mpc8544ds.py
 
 
