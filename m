@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F14DCCFA1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 11:43:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB99FCCFA19
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 11:44:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stmtf-0001fh-5u; Thu, 26 Sep 2024 07:42:59 -0400
+	id 1stmti-0001y9-L5; Thu, 26 Sep 2024 07:43:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1stmtC-0000s1-H5
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:42:31 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ id 1stmtA-0000qU-93
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:42:28 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1stmtA-0005mc-Qb
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:42:30 -0400
+ id 1stmt8-0005lh-Ar
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:42:27 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 9F7971F853;
- Thu, 26 Sep 2024 11:42:27 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 636CF21AC0;
+ Thu, 26 Sep 2024 11:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1727350947; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1727350944; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9DI5rEM33/JyPmPA9ISnjGysUOJRzoUG5DrbkoRbspA=;
- b=UNfStjeyl3XyvIboYw4+10/Vxgusp/FULaGJfcwYhGl4aBdE3mQNrrFrBDRzKzdD8nRCEv
- ntEXDyTkDvlKf5pozGjbcqrb9Q9J4B01P8KLr536KlYWkwXOWtlil1MzzDBUwUowNF2Wii
- 0SJa6JJbKZ0p5yJ2+n8v7BrhNj2pCIc=
-Authentication-Results: smtp-out2.suse.de;
+ bh=lsw1RQy2Mf+XPYHQBH2yDEpXoxmim1IQpkHxFHok+0g=;
+ b=VltBFgTj3+2gkMj0FEUiXSfhS6Wf+7ORsbCuzvLPRa3fqdmOAeOZ01ov2s2glSHXB0OSUU
+ ZSKoItGiMes0khV0mEZkINCopMxJo6b9cCmBajuu7m/3FDaloIFtGQSDxLqBKJMClpNvyG
+ z0gEgVXq4t1kXrJ+/LMyNsozQwKlF2Y=
+Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1727350947; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1727350944; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9DI5rEM33/JyPmPA9ISnjGysUOJRzoUG5DrbkoRbspA=;
- b=UNfStjeyl3XyvIboYw4+10/Vxgusp/FULaGJfcwYhGl4aBdE3mQNrrFrBDRzKzdD8nRCEv
- ntEXDyTkDvlKf5pozGjbcqrb9Q9J4B01P8KLr536KlYWkwXOWtlil1MzzDBUwUowNF2Wii
- 0SJa6JJbKZ0p5yJ2+n8v7BrhNj2pCIc=
+ bh=lsw1RQy2Mf+XPYHQBH2yDEpXoxmim1IQpkHxFHok+0g=;
+ b=VltBFgTj3+2gkMj0FEUiXSfhS6Wf+7ORsbCuzvLPRa3fqdmOAeOZ01ov2s2glSHXB0OSUU
+ ZSKoItGiMes0khV0mEZkINCopMxJo6b9cCmBajuu7m/3FDaloIFtGQSDxLqBKJMClpNvyG
+ z0gEgVXq4t1kXrJ+/LMyNsozQwKlF2Y=
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DC6C413ABC;
- Thu, 26 Sep 2024 11:42:26 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A184B13ABC;
+ Thu, 26 Sep 2024 11:42:23 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id mHy3M6JI9WbcRAAAD6G6ig
- (envelope-from <roy.hopkins@suse.com>); Thu, 26 Sep 2024 11:42:26 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id GAptJZ9I9WbcRAAAD6G6ig
+ (envelope-from <roy.hopkins@suse.com>); Thu, 26 Sep 2024 11:42:23 +0000
 From: Roy Hopkins <roy.hopkins@suse.com>
 To: qemu-devel@nongnu.org
 Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -69,10 +69,10 @@ Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Tom Lendacky <thomas.lendacky@amd.com>,
  Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
-Subject: [PATCH v6 11/16] docs/interop/firmware.json: Add igvm to
- FirmwareDevice
-Date: Thu, 26 Sep 2024 12:42:00 +0100
-Message-ID: <927995008d7c3457305155aa36dc1d531d85ded0.1727341768.git.roy.hopkins@suse.com>
+Subject: [PATCH v6 07/16] target/i386: Allow setting of R_LDTR and R_TR with
+ cpu_x86_load_seg_cache()
+Date: Thu, 26 Sep 2024 12:41:56 +0100
+Message-ID: <74042246990ccd0c702f88f1f842337979a614d3.1727341768.git.roy.hopkins@suse.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1727341768.git.roy.hopkins@suse.com>
 References: <cover.1727341768.git.roy.hopkins@suse.com>
@@ -94,14 +94,15 @@ X-Spamd-Result: default: False [-1.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  R_RATELIMIT(0.00)[to_ip_from(RLm8d31jk6dhzwhww9bgqrb1jt)];
  DKIM_SIGNED(0.00)[suse.com:s=susede1];
  FREEMAIL_ENVRCPT(0.00)[gmail.com]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=roy.hopkins@suse.com; helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=195.135.223.130;
+ envelope-from=roy.hopkins@suse.com; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,75 +118,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create an enum entry within FirmwareDevice for 'igvm' to describe that
-an IGVM file can be used to map firmware into memory as an alternative
-to pre-existing firmware devices.
+The x86 segment registers are identified by the X86Seg enumeration which
+includes LDTR and TR as well as the normal segment registers. The
+function 'cpu_x86_load_seg_cache()' uses the enum to determine which
+segment to set. However, specifying R_LDTR or R_TR results in an
+out-of-bounds access of the segment array.
+
+Possibly by coincidence, the function does correctly set LDTR or TR in
+this case as the structures for these registers immediately follow the
+array which is accessed out of bounds.
+
+This patch adds correct handling for R_LDTR and R_TR in the function.
 
 Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- docs/interop/firmware.json | 30 ++++++++++++++++++++++++++++--
- 1 file changed, 28 insertions(+), 2 deletions(-)
+ target/i386/cpu.h | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-index 57f55f6c54..9c56dbffd1 100644
---- a/docs/interop/firmware.json
-+++ b/docs/interop/firmware.json
-@@ -57,10 +57,17 @@
- #
- # @memory: The firmware is to be mapped into memory.
- #
-+# @igvm: The firmware is defined by a file conforming to the IGVM
-+#        specification and mapped into memory according to directives
-+#        defined in the file. This is similar to @memory but may
-+#        include additional processing defined by the IGVM file
-+#        including initial CPU state or population of metadata into
-+#        the guest address space. Since: 9.2
-+#
- # Since: 3.0
- ##
- { 'enum' : 'FirmwareDevice',
--  'data' : [ 'flash', 'kernel', 'memory' ] }
-+  'data' : [ 'flash', 'kernel', 'memory', 'igvm' ] }
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 14edd57a37..61d96c9344 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2261,7 +2261,14 @@ static inline void cpu_x86_load_seg_cache(CPUX86State *env,
+     SegmentCache *sc;
+     unsigned int new_hflags;
  
- ##
- # @FirmwareArchitecture:
-@@ -367,6 +374,24 @@
- { 'struct' : 'FirmwareMappingMemory',
-   'data'   : { 'filename' : 'str' } }
- 
-+##
-+# @FirmwareMappingIgvm:
-+#
-+# Describes loading and mapping properties for the firmware executable,
-+# when @FirmwareDevice is @igvm.
-+#
-+# @filename: Identifies the IGVM file containing the firmware executable
-+#            along with other information used to configure the initial
-+#            state of the guest. The IGVM file may be shared by multiple
-+#            virtual machine definitions. This corresponds to creating
-+#            an object on the command line with "-object igvm-cfg,
-+#            file=@filename".
-+#
-+# Since: 9.2
-+##
-+{ 'struct' : 'FirmwareMappingIgvm',
-+  'data'   : { 'filename' : 'str' } }
+-    sc = &env->segs[seg_reg];
++    if (seg_reg == R_LDTR) {
++        sc = &env->ldt;
++    } else if (seg_reg == R_TR) {
++        sc = &env->tr;
++    } else {
++        sc = &env->segs[seg_reg];
++    }
 +
- ##
- # @FirmwareMapping:
- #
-@@ -383,7 +408,8 @@
-   'discriminator' : 'device',
-   'data'          : { 'flash'  : 'FirmwareMappingFlash',
-                       'kernel' : 'FirmwareMappingKernel',
--                      'memory' : 'FirmwareMappingMemory' } }
-+                      'memory' : 'FirmwareMappingMemory',
-+                      'igvm'   : 'FirmwareMappingIgvm' } }
- 
- ##
- # @Firmware:
+     sc->selector = selector;
+     sc->base = base;
+     sc->limit = limit;
 -- 
 2.43.0
 
