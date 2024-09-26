@@ -4,124 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0336CCFA15
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 05:29:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D260CCCFA07
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 06:10:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sth3r-0003rn-Un; Thu, 26 Sep 2024 01:29:07 -0400
+	id 1sthgy-0003fH-1p; Thu, 26 Sep 2024 02:09:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arun.kka@samsung.com>)
- id 1sth3n-0003pT-2H
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 01:29:04 -0400
-Received: from mailout4.samsung.com ([203.254.224.34])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sthgo-0003eL-Ea
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 02:09:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arun.kka@samsung.com>)
- id 1sth3j-0006et-0T
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 01:29:01 -0400
-Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
- by mailout4.samsung.com (KnoxPortal) with ESMTP id
- 20240926052307epoutp049790a9dd10a229b89c1b89259b6557ba~4s9WZv5oQ1660416604epoutp04X
- for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 05:23:07 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
- 20240926052307epoutp049790a9dd10a229b89c1b89259b6557ba~4s9WZv5oQ1660416604epoutp04X
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1727328187;
- bh=NwAXpFbZQ/UU+GUG2NszcuJRuUTioG4BJ5Y4IAR6feM=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=vPsNv16tTBHTlxqW98w7I51TPHi1GQaVHPRcd2Ig24xx7sBZ0KRfsTsY48QX6mNvr
- GZ60aehwJfIKuYJtAeDeEgCuhiRXTue9LxzM93bBKApvEJgQKCrdjq1ROSI+Q4OHZy
- x7eeRIYe7xw8dPQPhGIqxrSSM5v/tWjz/l4mdDNs=
-Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
- epcas5p3.samsung.com (KnoxPortal) with ESMTP id
- 20240926052306epcas5p32df6cb1097df2e7c3de802feb06e4174~4s9WAbe_43026130261epcas5p3e;
- Thu, 26 Sep 2024 05:23:06 +0000 (GMT)
-Received: from epsmgec5p1-new.samsung.com (unknown [182.195.38.175]) by
- epsnrtp3.localdomain (Postfix) with ESMTP id 4XDhnj2dn9z4x9Pp; Thu, 26 Sep
- 2024 05:23:05 +0000 (GMT)
-Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
- epsmgec5p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
- C9.01.19863.6BFE4F66; Thu, 26 Sep 2024 14:23:02 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
- epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
- 20240924064831epcas5p197915617b154342dd1286fd35a40b72e~4G1WJA6lH2270722707epcas5p1M;
- Tue, 24 Sep 2024 06:48:31 +0000 (GMT)
-Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
- epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
- 20240924064831epsmtrp18dad354cbfe046a7f4c672a166ad7be3~4G1WIWk5F0827108271epsmtrp1c;
- Tue, 24 Sep 2024 06:48:31 +0000 (GMT)
-X-AuditID: b6c32a50-c73ff70000004d97-bc-66f4efb6262e
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
- epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
- 52.6E.08456.FB062F66; Tue, 24 Sep 2024 15:48:31 +0900 (KST)
-Received: from open-sourcing (unknown [107.99.41.223]) by
- epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
- 20240924064830epsmtip23f77231d2327d629c33f480e11899928~4G1VEp9W12752327523epsmtip2K;
- Tue, 24 Sep 2024 06:48:30 +0000 (GMT)
-Date: Tue, 24 Sep 2024 06:48:32 +0530
-From: Arun Kumar <arun.kka@samsung.com>
-To: Klaus Jensen <its@irrelevant.dk>
-Cc: Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org, Klaus Jensen
- <k.jensen@samsung.com>
-Subject: Re: [PATCH] hw/nvme: add knob for CTRATT.MEM
-Message-ID: <jth4qww2u6jvpto5kwhr73s3nvfugop2xrn45ossptczjye4id@ow3tjrsfsgyz>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sthgh-0002oQ-VZ
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 02:09:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727330954;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=xYlgMidlBxihLGTDW5eYp+2XaxxbSBMMiXXXK1PXi2I=;
+ b=JSUysFLCfHdAWqwFVQxgmLdoJRin4ZUJG1mnD8mtRS0KeHmaRG4bc8O2qroEuJieF75SA2
+ hKCztar1sneb/cFlENJoG+cHcrOUnkkHZn7PcQXbuOjGkkFs+rnIhK27Bh0/zG2y06CkmT
+ HKRVnfhmQ9iay7BxSa5ZwG2CbvwCZbg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-145-MMv7iZqePCudaQdw5ZXxcg-1; Thu, 26 Sep 2024 02:09:12 -0400
+X-MC-Unique: MMv7iZqePCudaQdw5ZXxcg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42cb9e14ab6so3668875e9.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 23:09:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727330951; x=1727935751;
+ h=content-transfer-encoding:in-reply-to:autocrypt:cc:from
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xYlgMidlBxihLGTDW5eYp+2XaxxbSBMMiXXXK1PXi2I=;
+ b=kEnqVBDFcBqWH721nvSZ6KGVgohKj7RexQztONM2KA5zbVELTVe73gnyD0TrUMIEZ8
+ 6g9PIYOiEcfjNjVbXjzCKuGyLFHyPeQyT+hwZw/YWnhJ9CKB3zpO9+c4CVKXVM9Mnpsj
+ syUaZEp0S2CVXd6lAKswUNKGqBK+CFfo9M5jGuPw+LnIsDx/sjfSxBSeP8ZBNQ0agiRM
+ Tqt73kwYWY66DEtNfN1KAFg4vy2J2DquRwzo3/hZEXVA0iOdwKSWspk6aFVh/Q2q7tOH
+ LQEbPzlVyv+jXSKpHaG4WjV3r+XHUKDjgbOX2Zi1bLsO9/hP3PZ7uorBn8gxs6Blh1rF
+ xgeg==
+X-Gm-Message-State: AOJu0YyNzaFrX1kfrDRFIgUNoSOoYvHmmkg5pN4Ml9MGeFFwu3ELAIR7
+ y/ddfdhlbblq/QSS2JzkrhDoYDS6XSsikpPIxYsqZ7XdiN2ykvcqIFvY+vNQ7t0lt6F/5+kFSlV
+ wfqM0UMRxwaulPscrD52Dtl3EMu8oxa2PmLlFYtWS2lx98FLtTEHEaFE49hmJoKJQKDlsIj9sAl
+ o57xDm7g0LXRTcgqveBaSWOqcyeK6Fnmr2QpE=
+X-Received: by 2002:a05:6000:2185:b0:37c:cbca:fd82 with SMTP id
+ ffacd0b85a97d-37ccbcb0633mr3422433f8f.1.1727330950923; 
+ Wed, 25 Sep 2024 23:09:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGe9NigTjtXyc+ifDFa2xhB14OCcqW8b3haReScMALsBqrG4c8AYr69VQRPGFa/VQ6TR0ujmA==
+X-Received: by 2002:a05:6000:2185:b0:37c:cbca:fd82 with SMTP id
+ ffacd0b85a97d-37ccbcb0633mr3422415f8f.1.1727330950486; 
+ Wed, 25 Sep 2024 23:09:10 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-48-176.web.vodafone.de.
+ [109.42.48.176]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42e969ddb1fsm36769535e9.3.2024.09.25.23.09.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Sep 2024 23:09:09 -0700 (PDT)
+Message-ID: <e609161b-bb13-4600-bceb-c5fe884c39ea@redhat.com>
+Date: Thu, 26 Sep 2024 08:09:07 +0200
 MIME-Version: 1.0
-In-Reply-To: <20240924-add-ctratt-mem-knob-v1-1-0674de9b88b4@samsung.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupkk+LIzCtJLcpLzFFi42LZdlhTXXfb+y9pBk82cVucmBJmsf/gN1aL
- k417WC0mHbrGaDHrXTubxfHeHSwObB5Tpl1j9zi34zy7x6ZVnWweT65tZvLo27KKMYA1Ktsm
- IzUxJbVIITUvOT8lMy/dVsk7ON453tTMwFDX0NLCXEkhLzE31VbJxSdA1y0zB+gCJYWyxJxS
- oFBAYnGxkr6dTVF+aUmqQkZ+cYmtUmpBSk6BSYFecWJucWleul5eaomVoYGBkSlQYUJ2xpM5
- bcwF8wQrlsy7zdbA2MXXxcjJISFgIvH+wCmmLkYuDiGBPYwSq2/sYYNwPjFKbL/3HCrzjVGi
- 58IVNpiWAwd7oBJ7GSXaGvqZQBJCAq8ZJXa95gGxWQRUJa7Pe88IYrMJqEusnbkDrEZEQEXi
- 6b+9LCDNzALzGSX27L0ANlVYwFRi5sK7QEUcHLwCvhJttyRBwrwCghInZz5hAbE5BTwlpk+Z
- xgrSKyHwkV3iRs8DVpB6CQEXiXcf1CGOE5Z4dXwLO4QtJfGyvw3Krpc4M3MPE4TdwSjx9DtU
- 3F7i4p6/YGuZBTIkJuzzhQjLSkw9tQ6snFmAT6L39xOoVl6JHfNgbCWJe1t/Qo2RkJhz5Tsj
- hO0hcenOZFZI+MxhlPjR/JdtAqPcLCTvzEJYNwtshZVE54cmVoiwtMTyfxwQpqbE+l36CxhZ
- VzFKpRYU56anJpsWGOrmpZbD4zg5P3cTIzhNagXsYFy94a/eIUYmDsZDjBIczEoivJNufkwT
- 4k1JrKxKLcqPLyrNSS0+xGgKjJ6JzFKiyfnARJ1XEm9oYmlgYmZmZmJpbGaoJM77unVuipBA
- emJJanZqakFqEUwfEwenVANT34G56z+96PidtWHK4588nxo0X+m0yDLv1eh/Inz0jG+PXGC4
- joXTqnuXohbX57F2XrrK5nHkjDVjTqtwksylHzXtimubdi3LbVD/mz53ssFBSZPfGqlXAzZt
- qz/27cg/s16d0w8K1qWus5mktnn+fK/9izwZi7leLDjjvOvJ9dRv0mceqWdP4mhXabUrNpri
- s7GRP8V/VqVChOqjyDtddUtrkvOE8p8xyuq+MrqmeZCHP+Beu4BTaWF99rKXj5Z+2CssIXxK
- +NpSX9aEjoztN2/xVGZejFbcXP5qy/Mvs/3yrrZsm7vORTTpo9q/10VRfm+SWY7c5lgxe7t4
- DkPYk4XuC7drbawqXiTRJJKsxFKckWioxVxUnAgAV2UsqRwEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrLLMWRmVeSWpSXmKPExsWy7bCSvO7+hE9pBpN+cFucmBJmsf/gN1aL
- k417WC0mHbrGaDHrXTubxfHeHSwObB5Tpl1j9zi34zy7x6ZVnWweT65tZvLo27KKMYA1issm
- JTUnsyy1SN8ugSujYd8KloILfBVnnr9gbmC8xt3FyMkhIWAiceBgD1MXIxeHkMBuRomTV8+z
- QCQkJH58+cYIYQtLrPz3nB2i6CWjxKRjH9lBEiwCqhLX570HK2ITUJdYO3MHE4gtIqAi8fTf
- XhaQBmaBeYwSHev3gBUJC5hKzFx4F6iIg4NXwFei7ZYkxNA5jBL/OxaDDeUVEJQ4OfMJ2BXM
- AmYS8zY/ZAapZxaQllj+jwMkzCngKTF9yjTWCYwCs5B0zELSMQuhYwEj8ypGydSC4tz03GLD
- AqO81HK94sTc4tK8dL3k/NxNjOAQ19Lawbhn1Qe9Q4xMHIyHGCU4mJVEeCfd/JgmxJuSWFmV
- WpQfX1Sak1p8iFGag0VJnPfb694UIYH0xJLU7NTUgtQimCwTB6dUA1MXl+Apbq0jB75x/hS9
- ecZjef/Ry5VpnxVuVxYe9g1hFsy+IxXDYO+ga/GltnLlt608Yec0k9cs8J9245PU3s6IPWs2
- vv7w2VPffeEfd6nciaLrZ/j82fA4msFC4vX72uydAt5JibrPMrSmz6uWz581ba7UV9/VrFMs
- fpxPvPG5e512X87eq5mzNt90uXxjzoOSdc3yjy3vmvhev973L7f3Z+nzS5y1v3ynBf7eKtfB
- +aX/29N4z28ZoVWPLRf3Hbpx301Ldsf264u+sbZZJlz9tM0k7b35UlvJlM3ds/Rq614o2hfz
- 6uud/qv1XtVG16zu0EX9NeyskVXvm/g/K+5dJV6ziC2necqX55s8SsuVWIozEg21mIuKEwFr
- yYdG4AIAAA==
-X-CMS-MailID: 20240924064831epcas5p197915617b154342dd1286fd35a40b72e
-X-Msg-Generator: CA
-Content-Type: multipart/mixed;
- boundary="----lj09sVyn-tOB2AKWHI53LLLuzUygR0h9jjkNdS9akYNnxuib=_4f1fc_"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20240924063550epcas5p46118c878bebe3289884819017cb0b11b
-References: <CGME20240924063550epcas5p46118c878bebe3289884819017cb0b11b@epcas5p4.samsung.com>
- <20240924-add-ctratt-mem-knob-v1-1-0674de9b88b4@samsung.com>
-Received-SPF: pass client-ip=203.254.224.34; envelope-from=arun.kka@samsung.com;
- helo=mailout4.samsung.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
- DKIMWL_WL_HIGH=-0.108, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 32/38] tests: add FreeBSD tests for aarch64/sbsa-ref
+To: qemu-devel@nongnu.org, Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+References: <20240919131106.3362543-1-peter.maydell@linaro.org>
+ <20240919131106.3362543-33-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240919131106.3362543-33-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.108,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,80 +146,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------lj09sVyn-tOB2AKWHI53LLLuzUygR0h9jjkNdS9akYNnxuib=_4f1fc_
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Disposition: inline
+On 19/09/2024 15.11, Peter Maydell wrote:
+> From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+> 
+> FreeBSD has longer support cycle for stable release (14.x EoL in 2028)
+> than OpenBSD (7.3 we use is already EoL). Also bugfixes are backported
+> so we can stay on 14.x for longer.
+> 
+> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+> Message-id: 20240910-b4-move-to-freebsd-v5-2-0fb66d803c93@linaro.org
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   tests/functional/test_aarch64_sbsaref.py | 43 +++++++++++++++++++++++-
+>   1 file changed, 42 insertions(+), 1 deletion(-)
+> 
+> diff --git a/tests/functional/test_aarch64_sbsaref.py b/tests/functional/test_aarch64_sbsaref.py
+> index 528882f4fa9..89d0b9587a8 100755
+> --- a/tests/functional/test_aarch64_sbsaref.py
+> +++ b/tests/functional/test_aarch64_sbsaref.py
+> @@ -1,6 +1,6 @@
+>   #!/usr/bin/env python3
+>   #
+> -# Functional test that boots a Linux kernel and checks the console
+> +# Functional test that boots a kernel and checks the console
+>   #
+>   # SPDX-FileCopyrightText: 2023-2024 Linaro Ltd.
+>   # SPDX-FileContributor: Philippe Mathieu-Daudé <philmd@linaro.org>
+> @@ -184,5 +184,46 @@ def test_sbsaref_openbsd73_max(self):
+>           self.boot_openbsd73("max")
+>   
+>   
+> +    ASSET_FREEBSD_ISO = Asset(
+> +        ('https://download.freebsd.org/releases/arm64/aarch64/ISO-IMAGES/'
+> +         '14.1/FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso'),
+> +        '44cdbae275ef1bb6dab1d5fbb59473d4f741e1c8ea8a80fd9e906b531d6ad461')
+> +
+> +    # This tests the whole boot chain from EFI to Userspace
+> +    # We only boot a whole OS for the current top level CPU and GIC
+> +    # Other test profiles should use more minimal boots
+> +    def boot_freebsd14(self, cpu=None):
+> +        self.fetch_firmware()
+> +
+> +        img_path = self.ASSET_FREEBSD_ISO.fetch()
+> +
+> +        self.vm.set_console()
+> +        self.vm.add_args(
+> +            "-drive", f"file={img_path},format=raw,snapshot=on",
+> +        )
+> +        if cpu:
+> +            self.vm.add_args("-cpu", cpu)
+> +
+> +        self.vm.launch()
+> +        wait_for_console_pattern(self, 'Welcome to FreeBSD!')
+> +
+> +    def test_sbsaref_freebsd14_cortex_a57(self):
+> +        self.boot_freebsd14("cortex-a57")
+> +
+> +    def test_sbsaref_freebsd14_default_cpu(self):
+> +        self.boot_freebsd14()
+> +
+> +    def test_sbsaref_freebsd14_max_pauth_off(self):
+> +        self.boot_freebsd14("max,pauth=off")
 
-Hi Klaus,
+  Hi Marcin,
 
-LGTM.
+these new tests cause the CI to time out in my fork of the QEMU repository:
 
-On 24/09/24 08:35AM, Klaus Jensen wrote:
->From: Klaus Jensen <k.jensen@samsung.com>
->
->Add a boolean prop (ctratt.mem) for setting CTRATT.MEM and default it to
->unset (false) to keep existing behavior of the device intact.
->
->Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
->---
-> hw/nvme/ctrl.c | 7 ++++++-
-> hw/nvme/nvme.h | 4 ++++
-> 2 files changed, 10 insertions(+), 1 deletion(-)
->
->diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
->index f36c45931821..8556f3e61fa0 100644
->--- a/hw/nvme/ctrl.c
->+++ b/hw/nvme/ctrl.c
->@@ -8492,7 +8492,11 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
->     id->cntlid = cpu_to_le16(n->cntlid);
->
->     id->oaes = cpu_to_le32(NVME_OAES_NS_ATTR);
->-    ctratt = NVME_CTRATT_ELBAS | NVME_CTRATT_MEM;
->+
->+    ctratt = NVME_CTRATT_ELBAS;
->+    if (n->params.ctratt.mem) {
->+        ctratt |= NVME_CTRATT_MEM;
->+    }
->
->     id->rab = 6;
->
->@@ -8751,6 +8755,7 @@ static Property nvme_props[] = {
->                      false),
->     DEFINE_PROP_UINT16("mqes", NvmeCtrl, params.mqes, 0x7ff),
->     DEFINE_PROP_UINT16("spdm_port", PCIDevice, spdm_port, 0),
->+    DEFINE_PROP_BOOL("ctratt.mem", NvmeCtrl, params.ctratt.mem, false),
->     DEFINE_PROP_END_OF_LIST(),
-> };
->
->diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
->index 781985754d0d..bd3c6ba33a67 100644
->--- a/hw/nvme/nvme.h
->+++ b/hw/nvme/nvme.h
->@@ -538,6 +538,10 @@ typedef struct NvmeParams {
->     uint32_t  sriov_max_vq_per_vf;
->     uint32_t  sriov_max_vi_per_vf;
->     bool     msix_exclusive_bar;
->+
->+    struct {
->+        bool mem;
->+    } ctratt;
-> } NvmeParams;
->
-> typedef struct NvmeCtrl {
->
->---
->base-commit: 3245de3f3d002bc9ce2ecae61e8d86cb9e375808
->change-id: 20240924-add-ctratt-mem-knob-ae4431251cb1
->
->Best regards,
->-- 
->Klaus Jensen <k.jensen@samsung.com>
->
->
+  https://gitlab.com/thuth/qemu/-/jobs/7915380405
+  https://gitlab.com/thuth/qemu/-/jobs/7916009309
+  https://gitlab.com/thuth/qemu/-/jobs/7914930038
 
-------lj09sVyn-tOB2AKWHI53LLLuzUygR0h9jjkNdS9akYNnxuib=_4f1fc_
-Content-Type: text/plain; charset="utf-8"
+Looking at the console.log artifacts, it seems like this 
+test_sbsaref_freebsd14_max_pauth_off is hanging at arbitrary points in time?
+
+Could this somehow be fixed, or if not, shall we add a @skipUnless decorator 
+here, too?
+
+  Thomas
 
 
-------lj09sVyn-tOB2AKWHI53LLLuzUygR0h9jjkNdS9akYNnxuib=_4f1fc_--
+> +    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
+> +    def test_sbsaref_freebsd14_max_pauth_impdef(self):
+> +        self.boot_freebsd14("max,pauth-impdef=on")
+> +
+> +    @skipUnless(os.getenv('QEMU_TEST_TIMEOUT_EXPECTED'), 'Test might timeout')
+> +    def test_sbsaref_freebsd14_max(self):
+> +        self.boot_freebsd14("max")
+> +
+> +
+>   if __name__ == '__main__':
+>       QemuSystemTest.main()
+
 
