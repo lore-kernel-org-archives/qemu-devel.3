@@ -4,86 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7590CCF9F4
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Sep 2024 20:50:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EC46CCFA0A
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 00:15:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stYwW-0005cS-EU; Wed, 25 Sep 2024 16:49:00 -0400
+	id 1stc9D-0000b6-TE; Wed, 25 Sep 2024 20:14:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1stYwU-0005b3-Bu
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 16:48:58 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1stYwS-0006bO-Lx
- for qemu-devel@nongnu.org; Wed, 25 Sep 2024 16:48:58 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-20b0b2528d8so2195225ad.2
- for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 13:48:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727297335; x=1727902135; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=W0oYs/D0tpaNOcC705VbLE/UauOtsZZGp/Aj1Bwa1e8=;
- b=DmPaRb777pqCpRhKXr/QbFpZXfMz5usaCplbFPLUcwfsmYXfpxPKZHW7Y681P6Mc+t
- fVClkVfLYRubqnD0/055UNhVHTkZiblDrxBJF0Of0XEUBnRU+GfchBA8OlUlUhEP+Piv
- ej/Ut1wd6TROXXj1bUI/qICcopBRRVD//bKBHemuovjz8a/D18u2aUee/Y1zdIVs2/ww
- Zf8Gh9Ci7F0GL+DyM6hGjtlunTzJSviJDkSiL7bitX1b0vpeEEutuKCOKKZNV6EHECNv
- RYucLWG5pPZOj8ohpTwvxyhMBL2y3Xq/EEK+NMN+mVWxdGhpVpuo4bpXzfDtJye4ODiK
- /wIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727297335; x=1727902135;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=W0oYs/D0tpaNOcC705VbLE/UauOtsZZGp/Aj1Bwa1e8=;
- b=jqaJTyMa4+D50Ac/p4xBzngfzBgqbnXv2WkfKMWKPwr9xa5HAiLS7MtJ8lTxQMN8Zg
- fYyl7AGKNUu7v+MfhhBJh/tHDwRK4iP+Ie5tH1irjP2JX+8xvohl/evodIVtu2zDllls
- JDh85VEg21D8ec1hygy8cwwlA/h5w9EKUSajMfx5qog+OrBbR1HpMbPrbn+1dTIT/mli
- nkqPB+dMrLyFrNbCgB9kiNlx7szfjnB3838n8W6Ipr5/jwdMpVI0L6mm48EdBECuu7Nr
- 7jXoV7eynu8bEGReekQzrSGtSeMWqlDy8e4qJXu+754JSA9juOLmpAngym3sDJP+qHLZ
- W5bA==
-X-Gm-Message-State: AOJu0Yz3Bd+AKbQRQvw7XSrrLnYWT/n0aqo+f0wr3SiYd7jac8cPgi3y
- taL/yVr9JIzARoAA0vzV8gNnMjtMZilI7WryYnpg75+eYixkBuqi9ZmMzrP52WvH4Qm6y3M1Kko
- EmjkxXNcM
-X-Google-Smtp-Source: AGHT+IGiWsx0IYd/XEGsURtSWTQqxYzIDFHlDVbJWyrGk2x3kX1YCokOhqDel7fZGy41kJvprg4kvw==
-X-Received: by 2002:a17:902:d501:b0:20b:f6e:a823 with SMTP id
- d9443c01a7336-20b0f6eabb2mr28611755ad.22.1727297334809; 
- Wed, 25 Sep 2024 13:48:54 -0700 (PDT)
-Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20af16e6ce6sm27991435ad.19.2024.09.25.13.48.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Sep 2024 13:48:54 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH v2 1/2] meson: build contrib/plugins with meson
-Date: Wed, 25 Sep 2024 13:48:44 -0700
-Message-Id: <20240925204845.390689-2-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20240925204845.390689-1-pierrick.bouvier@linaro.org>
-References: <20240925204845.390689-1-pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1stc9A-0000ZE-GN; Wed, 25 Sep 2024 20:14:16 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1stc97-00030Q-UL; Wed, 25 Sep 2024 20:14:15 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 374E34E600F;
+ Thu, 26 Sep 2024 02:14:06 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id aZpVqhKvLdrK; Thu, 26 Sep 2024 02:14:04 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 2F1AD4E6004; Thu, 26 Sep 2024 02:14:04 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 2977C746F60;
+ Thu, 26 Sep 2024 02:14:04 +0200 (CEST)
+Date: Thu, 26 Sep 2024 02:14:04 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
+cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, Corey Minyard <cminyard@mvista.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ Jason Wang <jasowang@redhat.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-block@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>
+Subject: Re: [PATCH 01/23] hw/ppc/e500: Do not leak struct boot_info
+In-Reply-To: <72a2d6aa-07c2-403f-9db5-5a17d98de6ad@redhat.com>
+Message-ID: <c823aedf-767f-6ddf-31f1-16ba667abeff@eik.bme.hu>
+References: <20240923093016.66437-1-shentey@gmail.com>
+ <20240923093016.66437-2-shentey@gmail.com>
+ <72a2d6aa-07c2-403f-9db5-5a17d98de6ad@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-2098699750-1727309644=:14395"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,64 +73,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tried to unify this meson.build with tests/tcg/plugins/meson.build but
-the resulting modules are not output in the right directory.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Originally proposed by Anton Kochkov, thank you!
+--3866299591-2098699750-1727309644=:14395
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Solves: https://gitlab.com/qemu-project/qemu/-/issues/1710
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- meson.build                 |  4 ++++
- contrib/plugins/meson.build | 23 +++++++++++++++++++++++
- 2 files changed, 27 insertions(+)
- create mode 100644 contrib/plugins/meson.build
+On Wed, 25 Sep 2024, Cédric Le Goater wrote:
+> On 9/23/24 11:29, Bernhard Beschow wrote:
+>> The struct is allocated once with g_new0() but never free()'d. Fix the 
+>> leakage
+>> by adding an attribute to struct PPCE500MachineState which avoids the
+>> allocation.
+>> 
+>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+>> ---
+>>   hw/ppc/e500.h |  8 ++++++++
+>>   hw/ppc/e500.c | 17 ++++-------------
+>>   2 files changed, 12 insertions(+), 13 deletions(-)
+>> 
+>> diff --git a/hw/ppc/e500.h b/hw/ppc/e500.h
+>> index 8c09ef92e4..557ce6ad93 100644
+>> --- a/hw/ppc/e500.h
+>> +++ b/hw/ppc/e500.h
+>> @@ -5,10 +5,18 @@
+>>   #include "hw/platform-bus.h"
+>>   #include "qom/object.h"
+>>   +typedef struct boot_info {
+>> +    uint32_t dt_base;
+>> +    uint32_t dt_size;
+>> +    uint32_t entry;
+>> +} boot_info;
+>
+> or simply move the fields under the machine state struct to avoif
+> the struct boot_info which doesn't seem that necessary. Is it ?
 
-diff --git a/meson.build b/meson.build
-index ceee6b22c8d..b18c2a54ab5 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3655,6 +3655,10 @@ subdir('accel')
- subdir('plugins')
- subdir('ebpf')
- 
-+if 'CONFIG_TCG' in config_all_accel
-+  subdir('contrib/plugins')
-+endif
-+
- common_user_inc = []
- 
- subdir('common-user')
-diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-new file mode 100644
-index 00000000000..a0e026d25e2
---- /dev/null
-+++ b/contrib/plugins/meson.build
-@@ -0,0 +1,23 @@
-+t = []
-+if get_option('plugins')
-+  foreach i : ['cache', 'drcov', 'execlog', 'hotblocks', 'hotpages', 'howvec',
-+               'hwprofile', 'ips', 'lockstep', 'stoptrigger']
-+    if host_os == 'windows'
-+      t += shared_module(i, files(i + '.c') + 'win32_linker.c',
-+                        include_directories: '../../include/qemu',
-+                        link_depends: [win32_qemu_plugin_api_lib],
-+                        link_args: ['-Lplugins', '-lqemu_plugin_api'],
-+                        dependencies: glib)
-+
-+    else
-+      t += shared_module(i, files(i + '.c'),
-+                        include_directories: '../../include/qemu',
-+                        dependencies: glib)
-+    endif
-+  endforeach
-+endif
-+if t.length() > 0
-+  alias_target('contrib-plugins', t)
-+else
-+  run_target('contrib-plugins', command: find_program('true'))
-+endif
--- 
-2.39.5
+It's passed to CPU reset function via env->load_info. It could be possible 
+to pass the whole machine state but it seems that's unneeded so this 
+struct just contains what's needed for this. Other machines also have 
+similar boot_info structs although they seem to be different and not 
+common to all machines. Thus I don't think merging with machine state 
+would be better than keeping is separate as this is more CPU related.
 
+Regards,
+BALATON Zoltan
+
+>
+> Thanks,
+>
+> C.
+>
+>
+>
+>> +
+>>   struct PPCE500MachineState {
+>>       /*< private >*/
+>>       MachineState parent_obj;
+>>   +    boot_info boot_info;
+>> +
+>>       /* points to instance of TYPE_PLATFORM_BUS_DEVICE if
+>>        * board supports dynamic sysbus devices
+>>        */
+>> diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+>> index 3bd12b54ab..75b051009f 100644
+>> --- a/hw/ppc/e500.c
+>> +++ b/hw/ppc/e500.c
+>> @@ -80,13 +80,6 @@
+>>     #define PLATFORM_CLK_FREQ_HZ       (400 * 1000 * 1000)
+>>   -struct boot_info
+>> -{
+>> -    uint32_t dt_base;
+>> -    uint32_t dt_size;
+>> -    uint32_t entry;
+>> -};
+>> -
+>>   static uint32_t *pci_map_create(void *fdt, uint32_t mpic, int first_slot,
+>>                                   int nr_slots, int *len)
+>>   {
+>> @@ -919,7 +912,6 @@ void ppce500_init(MachineState *machine)
+>>       bool kernel_as_payload;
+>>       hwaddr bios_entry = 0;
+>>       target_long payload_size;
+>> -    struct boot_info *boot_info = NULL;
+>>       int dt_size;
+>>       int i;
+>>       unsigned int smp_cpus = machine->smp.cpus;
+>> @@ -974,9 +966,8 @@ void ppce500_init(MachineState *machine)
+>>           /* Register reset handler */
+>>           if (!i) {
+>>               /* Primary CPU */
+>> -            boot_info = g_new0(struct boot_info, 1);
+>>               qemu_register_reset(ppce500_cpu_reset, cpu);
+>> -            env->load_info = boot_info;
+>> +            env->load_info = &pms->boot_info;
+>>           } else {
+>>               /* Secondary CPUs */
+>>               qemu_register_reset(ppce500_cpu_reset_sec, cpu);
+>> @@ -1274,9 +1265,9 @@ void ppce500_init(MachineState *machine)
+>>       }
+>>       assert(dt_size < DTB_MAX_SIZE);
+>>   -    boot_info->entry = bios_entry;
+>> -    boot_info->dt_base = dt_base;
+>> -    boot_info->dt_size = dt_size;
+>> +    pms->boot_info.entry = bios_entry;
+>> +    pms->boot_info.dt_base = dt_base;
+>> +    pms->boot_info.dt_size = dt_size;
+>>   }
+>>     static void e500_ccsr_initfn(Object *obj)
+>
+>
+>
+--3866299591-2098699750-1727309644=:14395--
 
