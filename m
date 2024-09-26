@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27776CDE021
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 16:09:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D756ECDE021
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 16:09:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1str2s-00070P-Os; Thu, 26 Sep 2024 12:08:46 -0400
+	id 1str31-0007J5-CH; Thu, 26 Sep 2024 12:08:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Z/Ab=QY=kaod.org=clg@ozlabs.org>)
- id 1str2p-0006qf-9q; Thu, 26 Sep 2024 12:08:43 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1str2y-0007EG-KS; Thu, 26 Sep 2024 12:08:52 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Z/Ab=QY=kaod.org=clg@ozlabs.org>)
- id 1str2n-00043w-3z; Thu, 26 Sep 2024 12:08:43 -0400
+ id 1str2w-00044q-Ln; Thu, 26 Sep 2024 12:08:52 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4XDz6T4Vmjz4xQr;
- Fri, 27 Sep 2024 02:08:33 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4XDz6l6zx1z4xQN;
+ Fri, 27 Sep 2024 02:08:47 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4XDz6Q046nz4xQN;
- Fri, 27 Sep 2024 02:08:29 +1000 (AEST)
-Message-ID: <100c8bbf-1a9e-429a-b49a-b96d123f753b@kaod.org>
-Date: Thu, 26 Sep 2024 18:08:11 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4XDz6h2YfGz4xGl;
+ Fri, 27 Sep 2024 02:08:44 +1000 (AEST)
+Message-ID: <8a587e5e-ea37-49d0-86af-59bbf01ddb80@kaod.org>
+Date: Thu, 26 Sep 2024 18:08:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/6] hw/gpio/aspeed: Support to set the different
- memory size
+Subject: Re: [PATCH v3 3/6] hw/gpio/aspeed: Support different memory region ops
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -41,20 +40,19 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
 References: <20240926074535.1286209-1-jamin_lin@aspeedtech.com>
- <20240926074535.1286209-3-jamin_lin@aspeedtech.com>
+ <20240926074535.1286209-4-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240926074535.1286209-3-jamin_lin@aspeedtech.com>
+In-Reply-To: <20240926074535.1286209-4-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=Z/Ab=QY=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.246, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.246, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,16 +70,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/26/24 09:45, Jamin Lin wrote:
-> According to the datasheet of ASPEED SOCs,
-> a GPIO controller owns 4KB of register space for AST2700,
-> AST2500, AST2400 and AST1030; owns 2KB of register space
-> for AST2600 1.8v and owns 2KB of register space for AST2600 3.3v.
+> It set "aspeed_gpio_ops" struct which containing
+> read and write callbacks to be used when I/O is performed
+> on the GPIO region.
 > 
-> It set the memory region size 2KB by default and it does not compatible
-> register space for AST2700.
+> Besides, in the previous design of ASPEED SOCs,
+> one register is used for setting one function for 32 GPIO pins.
+> ex: GPIO000 is used for setting data value for GPIO A, B, C and D in AST2600.
+> ex: GPIO004 is used for setting direction for GPIO A, B, C and D in AST2600.
 > 
-> Introduce a new class attribute to set the GPIO controller memory size
-> for different ASPEED SOCs.
+> However, the register set have a significant change in AST2700.
+> Each GPIO pin has their own control register. In other words, users are able to
+> set one GPIO pin’s direction, interrupt enable, input mask and so on
+> in one register. The aspeed_gpio_read/aspeed_gpio_write callback functions
+> are not compatible AST2700.
+> 
+> Introduce a new "const MemoryRegionOps *" attribute in AspeedGPIOClass and
+> use it in aspeed_gpio_realize function.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
@@ -99,67 +104,67 @@ C.
 >   2 files changed, 7 insertions(+), 1 deletion(-)
 > 
 > diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
-> index 00fb72a509..564459ad4f 100644
+> index 564459ad4f..8725606aec 100644
 > --- a/hw/gpio/aspeed_gpio.c
 > +++ b/hw/gpio/aspeed_gpio.c
-> @@ -1047,7 +1047,7 @@ static void aspeed_gpio_realize(DeviceState *dev, Error **errp)
+> @@ -1046,7 +1046,7 @@ static void aspeed_gpio_realize(DeviceState *dev, Error **errp)
+>           }
 >       }
 >   
->       memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_gpio_ops, s,
-> -            TYPE_ASPEED_GPIO, 0x800);
-> +                          TYPE_ASPEED_GPIO, agc->mem_size);
+> -    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_gpio_ops, s,
+> +    memory_region_init_io(&s->iomem, OBJECT(s), agc->reg_ops, s,
+>                             TYPE_ASPEED_GPIO, agc->mem_size);
 >   
 >       sysbus_init_mmio(sbd, &s->iomem);
->   }
-> @@ -1130,6 +1130,7 @@ static void aspeed_gpio_ast2400_class_init(ObjectClass *klass, void *data)
->       agc->nr_gpio_sets = 7;
+> @@ -1131,6 +1131,7 @@ static void aspeed_gpio_ast2400_class_init(ObjectClass *klass, void *data)
 >       agc->reg_table = aspeed_3_3v_gpios;
 >       agc->reg_table_count = GPIO_3_3V_REG_ARRAY_SIZE;
-> +    agc->mem_size = 0x1000;
+>       agc->mem_size = 0x1000;
+> +    agc->reg_ops = &aspeed_gpio_ops;
 >   }
 >   
 >   static void aspeed_gpio_2500_class_init(ObjectClass *klass, void *data)
-> @@ -1141,6 +1142,7 @@ static void aspeed_gpio_2500_class_init(ObjectClass *klass, void *data)
->       agc->nr_gpio_sets = 8;
+> @@ -1143,6 +1144,7 @@ static void aspeed_gpio_2500_class_init(ObjectClass *klass, void *data)
 >       agc->reg_table = aspeed_3_3v_gpios;
 >       agc->reg_table_count = GPIO_3_3V_REG_ARRAY_SIZE;
-> +    agc->mem_size = 0x1000;
+>       agc->mem_size = 0x1000;
+> +    agc->reg_ops = &aspeed_gpio_ops;
 >   }
 >   
 >   static void aspeed_gpio_ast2600_3_3v_class_init(ObjectClass *klass, void *data)
-> @@ -1152,6 +1154,7 @@ static void aspeed_gpio_ast2600_3_3v_class_init(ObjectClass *klass, void *data)
->       agc->nr_gpio_sets = 7;
+> @@ -1155,6 +1157,7 @@ static void aspeed_gpio_ast2600_3_3v_class_init(ObjectClass *klass, void *data)
 >       agc->reg_table = aspeed_3_3v_gpios;
 >       agc->reg_table_count = GPIO_3_3V_REG_ARRAY_SIZE;
-> +    agc->mem_size = 0x800;
+>       agc->mem_size = 0x800;
+> +    agc->reg_ops = &aspeed_gpio_ops;
 >   }
 >   
 >   static void aspeed_gpio_ast2600_1_8v_class_init(ObjectClass *klass, void *data)
-> @@ -1163,6 +1166,7 @@ static void aspeed_gpio_ast2600_1_8v_class_init(ObjectClass *klass, void *data)
->       agc->nr_gpio_sets = 2;
+> @@ -1167,6 +1170,7 @@ static void aspeed_gpio_ast2600_1_8v_class_init(ObjectClass *klass, void *data)
 >       agc->reg_table = aspeed_1_8v_gpios;
 >       agc->reg_table_count = GPIO_1_8V_REG_ARRAY_SIZE;
-> +    agc->mem_size = 0x800;
+>       agc->mem_size = 0x800;
+> +    agc->reg_ops = &aspeed_gpio_ops;
 >   }
 >   
 >   static void aspeed_gpio_1030_class_init(ObjectClass *klass, void *data)
-> @@ -1174,6 +1178,7 @@ static void aspeed_gpio_1030_class_init(ObjectClass *klass, void *data)
->       agc->nr_gpio_sets = 6;
+> @@ -1179,6 +1183,7 @@ static void aspeed_gpio_1030_class_init(ObjectClass *klass, void *data)
 >       agc->reg_table = aspeed_3_3v_gpios;
 >       agc->reg_table_count = GPIO_3_3V_REG_ARRAY_SIZE;
-> +    agc->mem_size = 0x1000;
+>       agc->mem_size = 0x1000;
+> +    agc->reg_ops = &aspeed_gpio_ops;
 >   }
 >   
 >   static const TypeInfo aspeed_gpio_info = {
 > diff --git a/include/hw/gpio/aspeed_gpio.h b/include/hw/gpio/aspeed_gpio.h
-> index 39febda9ea..8cd2ff5496 100644
+> index 8cd2ff5496..e1e6c54333 100644
 > --- a/include/hw/gpio/aspeed_gpio.h
 > +++ b/include/hw/gpio/aspeed_gpio.h
-> @@ -76,6 +76,7 @@ struct AspeedGPIOClass {
->       uint32_t nr_gpio_sets;
+> @@ -77,6 +77,7 @@ struct AspeedGPIOClass {
 >       const AspeedGPIOReg *reg_table;
 >       unsigned reg_table_count;
-> +    uint64_t mem_size;
+>       uint64_t mem_size;
+> +    const MemoryRegionOps *reg_ops;
 >   };
 >   
 >   struct AspeedGPIOState {
