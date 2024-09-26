@@ -4,74 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 004A8CDE025
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 16:44:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CFB9CDE025
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 16:53:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1straX-00067B-9Y; Thu, 26 Sep 2024 12:43:33 -0400
+	id 1strjf-0002lE-DO; Thu, 26 Sep 2024 12:52:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1straV-00066f-M2
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 12:43:31 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1strje-0002kh-9s
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 12:52:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1straT-0000a5-1y
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 12:43:31 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1strjb-00025S-VL
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 12:52:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727369007;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1727369574;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vZxC3MNIwThGMd16ClcEzxj2lFrF8POd/0a6o+TS2og=;
- b=AIq3ebl9dcfOjeiODCBsvJjfSofA845ST1bQ3ljidQ+/H2kU6wOb3nbKcV4Ileqw1OtIvS
- t/8kSXgIO2HOPOiNLbgZkdq/bNq2SOh0NMdUIoT/vL6BxEG8sCCj8sz5XjwMpC09RNPBKp
- OeBwlOq7/dTj2xM6i8CKs3O0jVNt318=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-66_kLtuDNyKXcyFKWCdmgw-1; Thu,
- 26 Sep 2024 12:43:23 -0400
-X-MC-Unique: 66_kLtuDNyKXcyFKWCdmgw-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A1DAD1955E8E; Thu, 26 Sep 2024 16:43:21 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.53])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DE2F21954B0E; Thu, 26 Sep 2024 16:43:14 +0000 (UTC)
-Date: Thu, 26 Sep 2024 17:43:11 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Hanna Reitz <hreitz@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- pkg-qemu-devel@lists.alioth.debian.org,
- Michael Tokarev <mjt@tls.msk.ru>, ncopa@alpinelinux.org,
- bofh@freebsd.org, emulation@freebsd.org, virtualization@gentoo.org,
- dilfridge@gentoo.org, hi@alyssa.is, edolstra+nixpkgs@gmail.com,
- brad@comstyle.com, Paolo Bonzini <pbonzini@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, dvzrv@archlinux.org,
- anatol.pomozov@gmail.com, Miroslav Rezanina <mrezanin@redhat.com>
-Subject: Re: Rust BoF and maintainer minutes and planning the roadmap to Rust
-Message-ID: <ZvWPH1f6ZnvH1iYZ@redhat.com>
-References: <871q16fq9c.fsf@draig.linaro.org>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=zj9vLyVeTUrkXFtErPVwTTDYQdcUkLzh1lKD/qYC/0s=;
+ b=hQzBWxDAM+ijApamYX6ry0V8Xb0ip8Oo5+29JS8KNxOBvaqXmW9uCXlljuw3DZLYZ0Gp+L
+ yGsSG5O5r3JmYYCLG9S9iVoFnAjs/h6SqA2rTQHkztnxPr1bLCGsI6luemuGS+SuA8OCO7
+ b/ElfYEks8RMsp9q4aq4JB4aCs5/WZk=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-182-m_xddXU1N5SfW4EpFUiE_g-1; Thu, 26 Sep 2024 12:52:52 -0400
+X-MC-Unique: m_xddXU1N5SfW4EpFUiE_g-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7a7fa073718so222396885a.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 09:52:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727369572; x=1727974372;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zj9vLyVeTUrkXFtErPVwTTDYQdcUkLzh1lKD/qYC/0s=;
+ b=eleYtmYtdVPNTLIiM+DRR86id+bYo+Djug9r4WbEP3ZZl4lN3GTa4qZzMQnEW9JxrV
+ JtsEOpF7jADSP+/H+QrtpP2MIfVru1IyQ5FrQdK47e8hl98faUbdFXsVfRYkCDwplvYZ
+ 6f7XzdRiX1N0ufFFapKxBhs+k841PcjpAwaJHhxmIvBZ/ImDl1ZjN5gNBnSP8N+XM+aV
+ 6g0j9LG24KemIA9HUlBWb5o4AvsyHyfeuNJyaoYuEyG4PQItHKP+mZ7mYUV5P40wPZqr
+ wC9hjJ7Nx0V/aftB4km3bvXY0+FWrHh8p0cmPCBQD2woIbVk3T+X3wyyxTnVATU4T1Ob
+ zEqg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVPKpq8wGlDoyvsFRy+54OHQLTepEI8IYPF2faBXEFna+jSMAmk+fW2Rl9QWUsxBeKC2dV+DP/8w/A0@nongnu.org
+X-Gm-Message-State: AOJu0YyZedvarRENwXU3QECSpztZeim2K6C4mQgVbPIGuCrEQecY8Ghw
+ DC57wIECDDJO/09TaH5CQzQwV1+j0frUfyt3YUjrjVeAkwDCsEaGOUIm3lUPkM6ZiyGjxl7Vr2k
+ CA5TiVzBQU+ks3yEV0LuCdCQh4DPILgpQEsEddsJsASVdARbL12Rt
+X-Received: by 2002:a05:620a:4305:b0:7ab:3511:4eda with SMTP id
+ af79cd13be357-7ae37859606mr28692585a.34.1727369572045; 
+ Thu, 26 Sep 2024 09:52:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHEc18+Y15wl3KbfQPxhfJugWm0iv4GLJ2pqlzsLF1lv3cavBK20N0dqbclFhcsiP8FYcVCfA==
+X-Received: by 2002:a05:620a:4305:b0:7ab:3511:4eda with SMTP id
+ af79cd13be357-7ae37859606mr28688285a.34.1727369571647; 
+ Thu, 26 Sep 2024 09:52:51 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7ae3782c5f1sm6537285a.74.2024.09.26.09.52.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Sep 2024 09:52:51 -0700 (PDT)
+Message-ID: <104676c7-9732-4972-b00e-8f65ce9eb259@redhat.com>
+Date: Thu, 26 Sep 2024 18:52:47 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <871q16fq9c.fsf@draig.linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 0/1] Introduce vfio-cxl to support CXL type-2 device
+ passthrough
+To: Zhi Wang <zhiw@nvidia.com>, kvm@vger.kernel.org, linux-cxl@vger.kernel.org
+Cc: alex.williamson@redhat.com, kevin.tian@intel.com, jgg@nvidia.com,
+ alison.schofield@intel.com, dan.j.williams@intel.com, dave.jiang@intel.com,
+ dave@stgolabs.net, jonathan.cameron@huawei.com, ira.weiny@intel.com,
+ vishal.l.verma@intel.com, alucerop@amd.com, qemu-devel@nongnu.org,
+ acurrid@nvidia.com, cjia@nvidia.com, smitra@nvidia.com, ankita@nvidia.com,
+ aniketa@nvidia.com, kwankhede@nvidia.com, targupta@nvidia.com,
+ zhiwang@kernel.org
+References: <20240921071440.1915876-1-zhiw@nvidia.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20240921071440.1915876-1-zhiw@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -93,193 +152,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 26, 2024 at 03:23:11PM +0100, Alex Bennée wrote:
-> During the various conversations I didn't hear anyone speak against the
-> proposed migration although some concerns where raised about review and
-> knowledge gaps.
+Hello Zhi,
 
-Yep, this apparent broad acceptance (or at least tolerance) for use of
-Rust is a clear difference from any previous discussion about introducing
-new languages in QEMU n the past.
+On 9/21/24 09:14, Zhi Wang wrote:
+> Compute Express Link (CXL) is an open standard interconnect built upon
+> industrial PCI layers to enhance the performance and efficiency of data
+> centers by enabling high-speed, low-latency communication between CPUs
+> and various types of devices such as accelerators, memory.
+> 
+> Although CXL is built upon the PCI layers, passing a CXL type-2 device can
+> be different than PCI devices according to CXL specification. Thus,
+> addtional changes on are required.
+> 
+> vfio-cxl is introduced to support the CXL type-2 device passthrough.
+> This is the QEMU VFIOStub draft changes to support it.
+> 
+> More details (patches, repos, kernel config) all what you need to test
+> and hack around, plus a demo video shows the kernel/QEMU command line
+> can be found at:
+> https://lore.kernel.org/kvm/20240920223446.1908673-7-zhiw@nvidia.com/T/
+
+
+I have started looking at the software stack and the QEMU trees
+are quite old. Could you please rebase the branches on the latest ?
+
+Also, I think having a single branch per project would be easier.
+
+For linux :
+   [v2] cxl: add Type2 device support
+   [RFC] vfio: introduce vfio-cxl to support CXL type-2
+   [RFC] samples: introduce QEMU CXL accel driver
+
+Same for QEMU.
+
+Thanks,
+
+C.
+
+
 
 > 
-> One output from this discussion should be a clear statement that we are
-> going forward with this work and the road map. A rough roadmap might
-> look like:
+> Zhi Wang (1):
+>    vfio: support CXL device in VFIO stub
 > 
->   - 9.2   --enable-rust is available and developers can build with it.
->           rust devices have -x-device or -rust-device CLI flags for
->           runtime selection.
+>   hw/vfio/common.c              |   3 +
+>   hw/vfio/pci.c                 | 134 ++++++++++++++++++++++++++++++++++
+>   hw/vfio/pci.h                 |  10 +++
+>   include/hw/pci/pci.h          |   2 +
+>   include/hw/vfio/vfio-common.h |   1 +
+>   linux-headers/linux/vfio.h    |  14 ++++
+>   6 files changed, 164 insertions(+)
 > 
->   - 10.x  rust devices feature complete and migration compatible, enabled
->           by default when rust compiler detected. No CLI selection
->           required as legacy portions won't be built. Any partial
->           conversions should be behind --enable-prototype-rust configure
->           flag.
-> 
->   - 11.x  distros have enough infrastructure to build on supported
->           platforms. Rust becomes a mandatory dependency, old C versions
->           of converted code removed from build.
-> 
->   - xx.y  QEMU becomes a pure native rust program and all C is expunged.
->           We may never get to this point.
-
-Yeah, I think this last step is soo unlikely (or far away) that we could
-reasonably just not include it at all. Perhaps any future grandchildren
-will do this part for us ;-P
-
-> We should publish the intention and the road map prominently although it
-> was unclear if a blog post would be the best place vs expanding a
-> section in the developers manual. Perhaps both make sense with a blog
-> post for the statement of intent and rough timeline and the developer
-> manual being expanded with any new rules and standards to follow?
-
-We should include plans about Rust at the top of the release notes too
-for all forthcoming versions until we have it turned on permanently.
-
-> There was some concern about the missing gaps in the support matrix
-> especially as we support a number of "legacy" TCG backends. While *-user
-> support is more insulated from the effects of rust conversions due to
-> its relatively low set of dependencies it will still be a problem if we
-> convert the core CPU QOM classes to rust.
-> 
-> Some of this is made simpler if we deprecate 32 bit host support?
-
-I feel like we're pretty close to wanting todo this regardless of
-Rust support.
-
-> What are candidates for conversion?
-> -----------------------------------
-> 
-> One area of discussion was what areas of the code base are likely to be
-> converted. This will give maintainers some idea of what to expect over
-> the next few cycles as we move ahead.
-
-There's a topical blog from Google about their experiance with
-Android that just hit LWN:
-
-  https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html
-
-"vulnerabilities decay exponentially. They have a half-life.
- ...
- the density of Android’s memory safety bugs decreased with
- the age of the code, primarily residing in recent changes.
-
-  This leads to two important takeaways:
-
-   * The problem is overwhelmingly with new code, necessitating a
-     fundamental change in how we develop code.
-  
-   * Code matures and gets safer with time, exponentially, making
-     the returns on investments like rewrites diminish over time
-     as code gets older."
-
-IOW, if we rush into conversion of existing code, we're likely to
-harm QEMU's quality in the short-medium term.
-
-We should thus encourage/prioritize use of Rust for *new* code, and
-be more cautious / targetted about converting existing code, to
-mitigate the risks inherant in any rewrites.
-
-> Manos' initial patch series [1] adds a pl011 serial device and there is
-> an intention to add a pflash device model to exercise the block layer.
-> It was suggested other device models such as a network card and watchdog
-> device would also be worth doing a conversion for to exercise other
-> common backends.
-
-If we want arbitrary new devices to be able to be written in Rust,
-we want to make sure we have the backends accessible to the Rust
-frontend device, for developers to consume.
-
-To be able to design & validate any Rust abstractions for backends,
-we need to have at least 1 Rust device consuming each different
-backend type eg, chardev, netdev, blockdev, tpm, rng, watchdog.
-Similarly for other helper code like IO channels, crypto.
-
-> Markus asked when will QAPI need rust bindings? As it is the route for
-> the public API into QEMU it is spread widely across the code base. While
-> the hand written serialisation code can likely be replaced with Rust's
-> serde crate it will need to interface to the internal APIs of both rust
-> and C modules.
-
-Probably need some kind of QAPI support sooner than we think, given how
-widely it spreads.
-
-> One issue that came up is how we handle adequately reviewing code when
-> most of the maintainers are experienced C coders but might not know much
-> about Rust. While we want to avoid the situation of developers vetoing
-> conversion there should be communication ahead of any serious work to
-> avoid rust contributions coming out of the blue. If a maintainer feels
-> they cannot maintain a bunch of unfamiliar rust code the submitter
-> should be prepared to find people willing to become a maintainers as
-> unmaintained drive-by submissions are not useful for the long term
-> health of the project.
-
-Yep, communication is critical, if proposing to rewrite existing
-functionality. Drowning maintainers in conversion patches without
-warning is a guaranteed way to create friction between people.
-
-> With relative inexperience there was a concern we could inadvertently
-> introduce technical debt in the code base (C-like Rust vs Rusty rust).
-> What can we do to mitigate that issue?
-
-On a long enough time frame, all exiting code can be considered
-technical debt. Given the relatively sparse Rust experiance
-across our community, we're guaranteed to make more design
-mistakes in the first few years. Mitigating this is important,
-but at the same time, we should also accept we're not going
-to get everything perfect.
-
-One thing our community is very good at is obsessing about
-perfection of patch series. I can forsee us doing that to an
-even greater extent with any Rust conversions of code. If we
-are not careful we could really harm  our overall productivity
-by spending too much time striving for a perfect Rust abstraction
-first time out, even though many of us would still be relative
-newcomers to Rust, such that we don't know what we don't know.
-
-IOW, we need to be pragmatic about accepting some level of
-technical debt at times. Especially if there are cases where
-our Rust design is held back by existing C code, we might be
-better off temporarily accepting sub-optimal Rust, to avoid
-immediately refactoring piles of C code, and tackle the problems
-later.
-
-> Dependencies and Packaging concerns
-> -----------------------------------
-> 
-> Finally there is the topic of dependencies and how that affects
-> packaging. One of the benefits of Rust is a large library of crates for
-> common dependencies. Typically the management of those crates is handled
-> by the cargo build tool and projects tend to regularly update their
-> dependencies to stay current with the state of the art. However this
-> cargo driven approach is at odds with a lot of distros desire to package
-> a single version of a library and manage its updates during the stable
-> lifetime of a distro. Some distros do allow exceptions for "vendoring"
-> dependencies as part of the build but it is generally discouraged.
-
-
-> Another challenge is updating versions of crates can often lead to
-> additional transitive (indirect) dependencies which then need to be
-> checked if they are supported by our distro matrix.
-
-In terms of our distro support matrix, I think we should follow the
-same practice as Python. ie we only check that the distro provides
-the required toolchain / base language, and never check the crates.
-IMHO vendoring is really the only viable option for distros with
-non-trivial applications, as IME the de-vendoring crates waaaaay
-too much busy-work in the distro.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
