@@ -4,68 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24BAACCF9E9
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 11:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3930CCFA13
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 11:34:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stmk8-00081d-QU; Thu, 26 Sep 2024 07:33:08 -0400
+	id 1stmko-0000Ea-2q; Thu, 26 Sep 2024 07:33:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berto@igalia.com>)
- id 1stmk6-0007zK-Rp; Thu, 26 Sep 2024 07:33:06 -0400
-Received: from fanzine.igalia.com ([178.60.130.6] helo=fanzine2.igalia.com)
+ (Exim 4.90_1) (envelope-from <yangyicong@huawei.com>)
+ id 1stmkm-0000DA-2Q
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:33:48 -0400
+Received: from szxga07-in.huawei.com ([45.249.212.35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berto@igalia.com>)
- id 1stmk4-00043M-Qx; Thu, 26 Sep 2024 07:33:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; 
- s=20170329;
- h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
- Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive;
- bh=gMRHXaXuORtPFdmoNZt+45T63EqxvhKVq+lNZZW1sJM=; b=f/R9k4Y6YzQ7Qpmch4Wp8NMO3O
- ptmWx+KKBbygiJrOTk3c79ESbX92IY4YneVF2Y5AJaV7Kms+XEYj2RxGUvXfLlPtAXr6NSShdEyhl
- +T8WNdorCSdlHujJfGK/y1aTQw/aO6Gabyfx9PE3qQQiA+Q8cJm4+O0wIYdY4sp61uayQtQhS6nuV
- YhR8SmudnkCFj9jqQE3WOo/7qs+PLfC5Utz9Mi08msu1h6Fw13r+0XsuwtqkPFewpaIWpugWmF4Br
- hX1/vml3ub8uSydnTdNAIzaVToSk5qKbHE0538zBrNzkbf6vZTNhaIMwe/hYT/3ERJuC6f2Tpevbp
- kCtXwkdQ==;
-Received: from maestria.local.igalia.com ([192.168.10.14] helo=mail.igalia.com)
- by fanzine2.igalia.com with esmtps 
- (Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
- id 1stmjr-001Ima-Jj; Thu, 26 Sep 2024 13:32:51 +0200
-Received: from gate.service.igalia.com ([192.168.21.52])
- by mail.igalia.com with esmtp (Exim)
- id 1stmjp-00BpyO-HI; Thu, 26 Sep 2024 13:32:51 +0200
-Received: from berto by gate.service.igalia.com with local (Exim 4.96)
- (envelope-from <berto@igalia.com>) id 1stmjp-009h7W-1C;
- Thu, 26 Sep 2024 11:32:49 +0000
-Date: Thu, 26 Sep 2024 13:32:49 +0200
-From: Alberto Garcia <berto@igalia.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Eric Blake <eblake@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Czenczek <hreitz@redhat.com>, Nir Soffer <nsoffer@redhat.com>,
- Madeeha Javed <javed@igalia.com>
-Subject: Re: [PATCH v4] scripts/qcow2-to-stdout.py: Add script to write qcow2
- images to stdout
-Message-ID: <ZvVGYbHNM0CC_IWk@igalia.com>
-References: <20240730141552.60404-1-berto@igalia.com>
+ (Exim 4.90_1) (envelope-from <yangyicong@huawei.com>)
+ id 1stmki-00048J-Ct
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:33:47 -0400
+Received: from mail.maildlp.com (unknown [172.19.88.163])
+ by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4XDs0B5KwVz1SBrV;
+ Thu, 26 Sep 2024 19:32:42 +0800 (CST)
+Received: from kwepemd200014.china.huawei.com (unknown [7.221.188.8])
+ by mail.maildlp.com (Postfix) with ESMTPS id 0382E18002B;
+ Thu, 26 Sep 2024 19:33:32 +0800 (CST)
+Received: from localhost.localdomain (10.50.165.33) by
+ kwepemd200014.china.huawei.com (7.221.188.8) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.34; Thu, 26 Sep 2024 19:33:31 +0800
+To: <mst@redhat.com>, <imammedo@redhat.com>, <peter.maydell@linaro.org>,
+ <wangyanan55@huawei.com>, <anisinha@redhat.com>,
+ <jonathan.cameron@huawei.com>, <qemu-devel@nongnu.org>
+CC: <shameerali.kolothum.thodi@huawei.com>, <alireza.sanaee@huawei.com>,
+ <prime.zeng@hisilicon.com>, <yangyicong@hisilicon.com>, <linuxarm@huawei.com>
+Subject: [PATCH 1/5] tests: virt: Allow changes to PPTT test table
+Date: Thu, 26 Sep 2024 19:33:19 +0800
+Message-ID: <20240926113323.55991-2-yangyicong@huawei.com>
+X-Mailer: git-send-email 2.31.0
+In-Reply-To: <20240926113323.55991-1-yangyicong@huawei.com>
+References: <20240926113323.55991-1-yangyicong@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240730141552.60404-1-berto@igalia.com>
-Received-SPF: pass client-ip=178.60.130.6; envelope-from=berto@igalia.com;
- helo=fanzine2.igalia.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.50.165.33]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ kwepemd200014.china.huawei.com (7.221.188.8)
+Received-SPF: pass client-ip=45.249.212.35; envelope-from=yangyicong@huawei.com;
+ helo=szxga07-in.huawei.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,13 +68,32 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Yicong Yang <yangyicong@huawei.com>
+From:  Yicong Yang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-On Tue, Jul 30, 2024 at 04:15:52PM +0200, Alberto Garcia wrote:
-> This tool converts a disk image to qcow2, writing the result directly
-> to stdout. This can be used for example to send the generated file
-> over the network.
+Allow changes to PPTT test table, preparing for adding identical
+implementation flags support and for adding a root node for all
+the system.
+
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+---
+ tests/qtest/bios-tables-test-allowed-diff.h | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..e84d6c6955 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,4 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/aarch64/virt/PPTT",
++"tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt",
++"tests/data/acpi/aarch64/virt/PPTT.topology",
+-- 
+2.24.0
+
 
