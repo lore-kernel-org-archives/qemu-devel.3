@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF77ECCFA13
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 11:34:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7260CCFA13
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 11:34:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stmkp-0000K1-6N; Thu, 26 Sep 2024 07:33:51 -0400
+	id 1stmkq-0000OB-61; Thu, 26 Sep 2024 07:33:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yangyicong@huawei.com>)
- id 1stmkm-0000DB-3D
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:33:48 -0400
-Received: from szxga05-in.huawei.com ([45.249.212.191])
+ id 1stmkn-0000Eu-Sr
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:33:49 -0400
+Received: from szxga01-in.huawei.com ([45.249.212.187])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yangyicong@huawei.com>)
- id 1stmki-00048I-Cw
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:33:47 -0400
-Received: from mail.maildlp.com (unknown [172.19.88.214])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4XDs0C05MGz2QTvq;
- Thu, 26 Sep 2024 19:32:43 +0800 (CST)
+ id 1stmkk-00048P-0g
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:33:49 -0400
+Received: from mail.maildlp.com (unknown [172.19.163.174])
+ by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4XDrzV2YF8zcbh2;
+ Thu, 26 Sep 2024 19:32:06 +0800 (CST)
 Received: from kwepemd200014.china.huawei.com (unknown [7.221.188.8])
- by mail.maildlp.com (Postfix) with ESMTPS id 7C9821A016C;
- Thu, 26 Sep 2024 19:33:31 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id EFC85140390;
+ Thu, 26 Sep 2024 19:33:32 +0800 (CST)
 Received: from localhost.localdomain (10.50.165.33) by
  kwepemd200014.china.huawei.com (7.221.188.8) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.34; Thu, 26 Sep 2024 19:33:30 +0800
+ 15.2.1258.34; Thu, 26 Sep 2024 19:33:32 +0800
 To: <mst@redhat.com>, <imammedo@redhat.com>, <peter.maydell@linaro.org>,
  <wangyanan55@huawei.com>, <anisinha@redhat.com>,
  <jonathan.cameron@huawei.com>, <qemu-devel@nongnu.org>
 CC: <shameerali.kolothum.thodi@huawei.com>, <alireza.sanaee@huawei.com>,
  <prime.zeng@hisilicon.com>, <yangyicong@hisilicon.com>, <linuxarm@huawei.com>
-Subject: [PATCH 0/5] Building PPTT with root node and identical implementation
- flag
-Date: Thu, 26 Sep 2024 19:33:18 +0800
-Message-ID: <20240926113323.55991-1-yangyicong@huawei.com>
+Subject: [PATCH 3/5] hw/acpi/aml-build: Build a root node in the PPTT table
+Date: Thu, 26 Sep 2024 19:33:21 +0800
+Message-ID: <20240926113323.55991-4-yangyicong@huawei.com>
 X-Mailer: git-send-email 2.31.0
+In-Reply-To: <20240926113323.55991-1-yangyicong@huawei.com>
+References: <20240926113323.55991-1-yangyicong@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [10.50.165.33]
 X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
  kwepemd200014.china.huawei.com (7.221.188.8)
-Received-SPF: pass client-ip=45.249.212.191;
- envelope-from=yangyicong@huawei.com; helo=szxga05-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.187;
+ envelope-from=yangyicong@huawei.com; helo=szxga01-in.huawei.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H4=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
  RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -74,33 +75,57 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Yicong Yang <yangyicong@hisilicon.com>
 
-OS like Linux is using PPTT processor node's identical implementation
-flag [1] to infer whether the whole system or a certain CPU cluster is
-homogeneous or not [2]. QEMU currently only support building homogeneous
-system, set the flag to indicate the fact. Build a root node in PPTT
-for indicates the identical implementation which is needed for a
-multi-socket system. Update the related PPTT tables as well.
+Currently we build the PPTT starting from the socket node and each
+socket will be a separate tree. For a multi-socket system it'll
+be hard for the OS to know the whole system is homogeneous or not
+(actually we're in the current implementation) since no parent node
+to telling the identical implementation informentation. Add a
+root node for indicating this.
 
-Since we'll update the test PPTT table data, upgrade the revision of PPTT
-we build to revision 3 by handy.
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+---
+ hw/acpi/aml-build.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-[1] ACPI 6.5 Table 5.158: Processor Structure Flags
-[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/acpi/pptt.c?h=v6.11-rc1#n810
-
-Yicong Yang (5):
-  tests: virt: Allow changes to PPTT test table
-  hw/acpi/aml-build: Set identical implementation flag for PPTT
-    processor nodes
-  hw/acpi/aml-build: Build a root node in the PPTT table
-  hw/acpi/aml-build: Update the revision of PPTT table
-  tests: virt: Update expected ACPI tables for virt test
-
- hw/acpi/aml-build.c                           |  26 ++++++++++++++----
- tests/data/acpi/aarch64/virt/PPTT             | Bin 76 -> 96 bytes
- .../data/acpi/aarch64/virt/PPTT.acpihmatvirt  | Bin 156 -> 176 bytes
- tests/data/acpi/aarch64/virt/PPTT.topology    | Bin 336 -> 356 bytes
- 4 files changed, 21 insertions(+), 5 deletions(-)
-
+diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+index 53a06d8c1e..e2717ee0e9 100644
+--- a/hw/acpi/aml-build.c
++++ b/hw/acpi/aml-build.c
+@@ -2059,12 +2059,25 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+     int64_t socket_id = -1, cluster_id = -1, core_id = -1;
+     uint32_t socket_offset = 0, cluster_offset = 0, core_offset = 0;
+     uint32_t pptt_start = table_data->len;
++    uint32_t root_offset;
+     int n;
+     AcpiTable table = { .sig = "PPTT", .rev = 2,
+                         .oem_id = oem_id, .oem_table_id = oem_table_id };
+ 
+     acpi_table_begin(&table, table_data);
+ 
++    /*
++     * Build a root node for all the processor nodes. Otherwise when
++     * building a multi-socket system each socket tree are separated
++     * and will be hard for the OS like Linux to know whether the
++     * system is homogeneous.
++     */
++    root_offset = table_data->len - pptt_start;
++    build_processor_hierarchy_node(table_data,
++        (1 << 0) | /* Physical package */
++        (1 << 4), /* Identical Implementation */
++        0, 0, NULL, 0);
++
+     /*
+      * This works with the assumption that cpus[n].props.*_id has been
+      * sorted from top to down levels in mc->possible_cpu_arch_ids().
+@@ -2081,7 +2094,7 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+             build_processor_hierarchy_node(table_data,
+                 (1 << 0) | /* Physical package */
+                 (1 << 4), /* Identical Implementation */
+-                0, socket_id, NULL, 0);
++                root_offset, socket_id, NULL, 0);
+         }
+ 
+         if (mc->smp_props.clusters_supported && mc->smp_props.has_clusters) {
 -- 
 2.24.0
 
