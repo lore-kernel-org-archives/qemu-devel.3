@@ -4,75 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42547CDE032
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 19:16:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E101CDE032
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 19:56:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sttxT-0000k7-AS; Thu, 26 Sep 2024 15:15:23 -0400
+	id 1stuaW-0000ca-Gy; Thu, 26 Sep 2024 15:55:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sttxR-0000je-41
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 15:15:21 -0400
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sttxP-0003Zm-Cn
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 15:15:20 -0400
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-5365cf5de24so1865817e87.1
- for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 12:15:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727378117; x=1727982917; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=HI3keaE03KoQpyWY/Ux1MPNCfNTYLMEhuJWsV6MzVFo=;
- b=LlweqClS5n9CZ2lAfBQRL3ctLaZGVASMisuFaTmvuHflmf1wR1UqmsKWbFYkd40ojC
- YVl8UenIRJrFym1BYBc99Wy/M95SsaRwUgPBOLzq5X187gV78Os7Fyhtl1NS3iqT26+5
- T6VPxeUB481tyrwzEe9MOjBEcGQ1/mCAndEBUJgp4ZfRk7zDxZHD9i7NA9F5qb8h4hhT
- fLlALkfNh0ME3JzFuBMKIwR4ptvgKg+79quhhE6S9Q95Ij9NZNQ/QO3cxOOqC1MkTzFz
- VdLgdSHva6CnSDupOCgGrLfLhMUGsjIPrvqbb/a/fo9c/OtyFxJ3M4JqXl0yZOOg0Pfv
- 62hA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1stuaS-0000c0-C7
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 15:55:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1stuaP-0008W4-Ir
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 15:55:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727380535;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tsmYR2qxCm7GhRF2pkTcLkDmIDL3JMjXPVWcUAXdIHU=;
+ b=ZtEIRdtDfCjd/zcCkt6DNyEL755OGtTYlVNryyU10WN/hm3os/844iwpW9BaNXHBw6Sc8o
+ AfULsBfTvN5nQb1eKSgW/xS3r68BKIFetmwjmEcuj6kNlDXzqs0NpgezYktbGOtBUfZ0s2
+ mNAH/3yZHS5Q+Nv+zD8qz+mjZRrgPO0=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-368-ZYmH-woEOhijDnguFTGDAQ-1; Thu, 26 Sep 2024 15:55:33 -0400
+X-MC-Unique: ZYmH-woEOhijDnguFTGDAQ-1
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-20b30341cceso4830335ad.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 12:55:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727378117; x=1727982917;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HI3keaE03KoQpyWY/Ux1MPNCfNTYLMEhuJWsV6MzVFo=;
- b=WjuPKAtqvAZ+n0TD0kH2zDqRBLXc0QgChwEUoKGsag1S2X3gctjjmKyu0q4yuIxzNX
- 81y0NQmHGZHp59i8phHSKwKkN7LMpttGdsuyaywShfhvLdl3JVw9iVKcZOvPC0t/8/nm
- HRTIO8Pyp+3EosheKqWmHRIHCIInwVqgiCI5eZby/fJ6eQmnWKlhxcvhg13F6A4vrO8C
- 3CGoEMH2Vk4ag3FE54efNHlhfXxD22Sqkw1so3aZ50zmlRrtUW0wTmg8OhNMH/X71LVJ
- duI80tMLmFi2ZyBN48U3PK+LOz3d0P99vsLvZNy9IqbPZ1cQtHz65YegXCghbV+QZLZw
- jtRw==
-X-Gm-Message-State: AOJu0YzGLWh4YHSkd67ZazykvdSiQbLKMC2Ctrxe4CLJo41rk547ErhB
- EwfyCGHzqlbmQiTot+GtFdusO57mn+TFUYvWiQmTtiEca3k91uuiaoMUniQ/nfLfy0dy+rQ5dDo
- wydfVkV7SJbz09KgHcGugbpLSzED4Lu9OcO6ang==
-X-Google-Smtp-Source: AGHT+IFyJ/g6x6a3X5k1tuMQVJxbUrGmnFsL15toJs8aN6FzRNHbsV2YKwVbGAvtx86mNVeIrXVUy96lWfBxa4qU24k=
-X-Received: by 2002:a05:6512:138d:b0:536:5364:bc7 with SMTP id
- 2adb3069b0e04-5389fcaf8cdmr429028e87.60.1727378116585; Thu, 26 Sep 2024
- 12:15:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1727380532; x=1727985332;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tsmYR2qxCm7GhRF2pkTcLkDmIDL3JMjXPVWcUAXdIHU=;
+ b=KhihzsrUmPifc4u9EzopCaaF3fTCGlm72q8dwmjkzfwI/MUfnvol8WA6w3QwC2fbp4
+ e3CDGEs7M3O6FCcbolUF30FM1tnPdetidOpIOGv1bM37nBIYUb6hJGHurMPJ7rRrkv3R
+ KHr4UNwRCUA6+fFIIFNydHZ1v1UE6PUKB3Uwo8Ip56NDyq6VuG09vIVlYDYSJYSqbkZi
+ JbJz8TTxuXsbYXB3R38b4FWX02MDouN6leKxwEo9A6zbgVMD/oPaVXkMMeWG5Zdz6kxB
+ IgX4yYKzOWrCIWUsJctmMnuuJfAlrnFjhN4gd6JOm6ABqozY9fHUiCBz/ja8mbW1DeWz
+ Lc8g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZ448oMiOCy+KB3ywgIWocf7PXVyyWCs7EyEZ0g/JuYJNuTqIyPqNh8PsmtdzQ3wHMMAzxJ2iLYGD0@nongnu.org
+X-Gm-Message-State: AOJu0YwH/RK19/DMw0JJYfMnhPjBClqn4pTrtEYytmZb7B0jiKZMOZTl
+ 5H15H8QKHqeo6YALmeCQwE05yKwQXwhEgybySQWxurx+HZChiJCVchitW7siBoiO9IIspFMVG2Q
+ aVxIOZ2qYCrlP6Jw2tCtOrhfclMGJBAUW5x0lkp7jVnYiWkpNKC7g
+X-Received: by 2002:a17:902:dac5:b0:206:aa2e:6d1f with SMTP id
+ d9443c01a7336-20b37b6cdb8mr10909275ad.46.1727380531871; 
+ Thu, 26 Sep 2024 12:55:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEtrJti12mCEqEpWdz62H3PIqr7ETbWxfmlvreGQ829CkHbx0i6QT5P/nUz5eN/E74o3Ba+iA==
+X-Received: by 2002:a17:902:dac5:b0:206:aa2e:6d1f with SMTP id
+ d9443c01a7336-20b37b6cdb8mr10909015ad.46.1727380531424; 
+ Thu, 26 Sep 2024 12:55:31 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20b37e321c4sm2058505ad.188.2024.09.26.12.55.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 26 Sep 2024 12:55:30 -0700 (PDT)
+Date: Thu, 26 Sep 2024 15:55:27 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Yong Huang <yong.huang@smartx.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v1 1/7] migration: Introduce structs for background sync
+Message-ID: <ZvW8LxJsv3pRWom_@x1n>
+References: <cover.1726390098.git.yong.huang@smartx.com>
+ <531750c8d7b6c09f877b5f335a60fab402c168be.1726390098.git.yong.huang@smartx.com>
+ <87msk7z4l3.fsf@suse.de>
+ <CAK9dgmb_rK5HJOGTG=KXKgH=e2e8JV8aqoOWUHBEyjnc-+kiqg@mail.gmail.com>
+ <ZuxxOObKqS_G0Ela@x1n>
+ <CAK9dgmYaE=poiwLQqD6qbjJQdgPLMn8cW8VO47xYFTBkNiUVLA@mail.gmail.com>
+ <ZvRh0RhkUC-eLbjo@x1n>
+ <CAK9dgmbi1VSXvxFjziH5PjaoiaQwBJ3z4ff1BAojtm26VTThUQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <20240926170451.1479647-1-chao.liu@yeah.net>
-In-Reply-To: <20240926170451.1479647-1-chao.liu@yeah.net>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 26 Sep 2024 20:15:05 +0100
-Message-ID: <CAFEAcA-r6JTOK2iiJELjBgdx=eWwTp5MNrEdPs3tiHfqR9oYwQ@mail.gmail.com>
-Subject: Re: [PATCH v1 0/2] Re: Drop ignore_memory_transaction_failures for
- xilink_zynq
-To: Chao Liu <chao.liu@yeah.net>
-Cc: qemu-devel@nongnu.org, bin.meng@windriver.com, edgar.iglesias@gmail.com, 
- alistair@alistair23.me
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAK9dgmbi1VSXvxFjziH5PjaoiaQwBJ3z4ff1BAojtm26VTThUQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,55 +113,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 26 Sept 2024 at 18:05, Chao Liu <chao.liu@yeah.net> wrote:
->
-> > The ignore_memory_transaction_failures is used for compatibility
-> > with legacy board models.
+On Fri, Sep 27, 2024 at 02:13:47AM +0800, Yong Huang wrote:
+> On Thu, Sep 26, 2024 at 3:17 AM Peter Xu <peterx@redhat.com> wrote:
+> 
+> > On Fri, Sep 20, 2024 at 10:43:31AM +0800, Yong Huang wrote:
+> > > Yes, invoke migration_bitmap_sync_precopy more frequently is also my
+> > > first idea but it involves bitmap updating and interfere with the
+> > behavior
+> > > of page sending, it also affects the migration information stats and
+> > > interfere other migration logic such as migration_update_rates().
 > >
-> > I attempted to remove this property from the
-> > xilink_zynq board and replace it with unimplemented devices to
-> > handle devices that are not implemented on the board.
+> > Could you elaborate?
 > >
-> > Chao Liu (2):
-> >   xilink_zynq: Add various missing unimplemented devices
-> >   xilink-zynq-devcfg: Fix up for memory address range size not set
-> >     correctly
+> > For example, what happens if we start to sync in ram_save_iterate() for
+> > some time intervals (e.g. 5 seconds)?
 > >
-> >  hw/arm/xilinx_zynq.c      | 44 ++++++++++++++++++++++++++++++++++++++-
-> >  hw/dma/xlnx-zynq-devcfg.c |  2 +-
-> >  2 files changed, 44 insertions(+), 2 deletions(-)
-> >
-> > --
-> > 2.46.1
->
-> Hello, maintainers,
->
-> Could you please provide any suggestions or feedback on the set of patches?
-> This is my first contribution to the QEMU community,
-> and it makes me feel very honored.
->
-> Additionally, I have used creat_unimplemented_device() to
-> add all the unimplemented devices on the Xilinx Zynq board,
-> primarily referencing the Zynq DTS, located at
->
-> roms/u-boot/arch/arm/dts/zynq-7000.dtsi.
+> 
+> I didn't try to sync in ram_save_iterate but in the
+> migration_bitmap_sync_precopy.
+> 
+> If we use the migration_bitmap_sync_precopy in the ram_save_iterate
+> function,
+> This approach seems to be correct. However, the bitmap will be updated as
+> the
+> migration thread iterates through each dirty page in the RAMBlock list.
+> Compared
+> to the existing implementation, this is different but still straightforward;
+> I'll give it a shot soon to see if it works.
 
-Hi; this is on my todo list to review, but I think the
-big question here is how much testing you have done and
-on how big a range of guest software.
+It's still serialized in the migration thread, so I'd expect it is similar
+to e.g. ->state_pending_exact() calls when QEMU flushed most dirty pages in
+the current bitmap.
 
-The reason that we set ignore_memory_transaction_failures on
-this board (and all the others) was that it kept the behaviour
-the same as before we added the support for making memory
-transactions fail for accesses to nonexistent devices. This
-was the safest thing since we didn't have access to that much guest
-software to test on all of them. Getting rid of it for this board
-is a good thing, but we need to be reasonably confident that
-we have implemented all the devices that guests might be
-touching. The cross-check against the dts is helpful there,
-but so too is running as much real works-on-the-board code
-as we can, to check it still boots.
+> 
+> 
+> > Btw, we shouldn't have this extra sync exist if auto converge is disabled
+> > no matter which way we use, because it's pure overhead when auto converge
+> > is not in use.
+> >
+> 
+> Ok, I'll add the check in the next versioni.
 
-thanks
--- PMM
+Let's start with simple, and if there's anything unsure we can discuss
+upfront, just to avoid coding something and change direction later.  Again,
+personally I think we shouldn't add too much new code to auto converge
+(unless very well justfied, but I think it's just hard.. fundamentally with
+any pure throttling solutions), hopefully something small can make it start
+to work for huge VMs.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
