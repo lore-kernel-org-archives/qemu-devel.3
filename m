@@ -4,83 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 635BACCF9E9
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 07:48:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E82CCFA13
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 07:48:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stjCd-0002Jt-0V; Thu, 26 Sep 2024 03:46:19 -0400
+	id 1stjCh-0002hS-I4; Thu, 26 Sep 2024 03:46:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1stjCW-0001xJ-OB
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 03:46:12 -0400
-Received: from mail-io1-xd2c.google.com ([2607:f8b0:4864:20::d2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1stjCQ-0006Fe-ET
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 03:46:10 -0400
-Received: by mail-io1-xd2c.google.com with SMTP id
- ca18e2360f4ac-8323b555a6aso44499839f.3
- for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 00:45:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1727336758; x=1727941558; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=EP6OpBPbhOC6nNPasYk/AM6cEN/mrc6105iISnxu3lY=;
- b=bnCa345ObKjJOxGF0PeGAIuKLnUun/CbRE199JlEkNEuP8UUNCZ9BQ6R5muRVmSKrF
- h3entf2cEIlTzyPMNbIlrXQcX4YcRBsLgzwD2LH6tBAi0wMVoBINQU4ZcYwDny02zJqc
- ndkOuZkrpotzG1gogrLplFuyXu8rTc2QlPL68nGvCMoHH1k11RGPPOQ5NZsyVda2/NMz
- Xv0CrLMwiRjDsowGLWk6rexXXI/ug9LrhxemYNInPvxKTSlBc+HVaUtcGkx3T9+acsLb
- edX9CLDiu5HKUXITrhhYgeeUGvTgcQO3N/xQlPiozP91HxRpuc366Fm3bH6caph91vkn
- g9Mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727336758; x=1727941558;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EP6OpBPbhOC6nNPasYk/AM6cEN/mrc6105iISnxu3lY=;
- b=qjaHr6rX5CXhgTbloRhSOqIrBdPzcfW6Y6SzS7gUwVv8pP+OQBDlNZyXnu8VbiHChn
- SZD+NM9tJcF72qxwgIKlYZSr6LUYsJR8Od0jcMWeG61ZesU3bf3JNwdMw83R7r27Pt9Z
- 3DcP/VagybQGRUonDyPbBN3m9agIRvxcNAwuSaocgYkHcjU0k2TwRWY82hTq1N8l6NQI
- Fmia6ww7riKE5bgapM3FEgd4lldnp/grSeJ6S/ojBNXwHvylK2MsslKu9xu4OCjy4ADN
- 6lf88ueukLViPHGrzcmXNokyvjozGx9sYcmUIZVUjhko4hX6wWRdfnk91csY1KwSIOJ2
- vF7Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW1eSpzcrme73wpMp1IgfMTu/g2PT9aYfCdo38Ru+x/gwrYtuYm6+RHn9eywNS85igK4tmY9F+n/PJ4@nongnu.org
-X-Gm-Message-State: AOJu0YyGIvCA1IYV9RQvVMT6GqxdrQ1JlhRNHHaxkN5/+7edGoCshpDv
- 4SJkwL1UXaKmJcgmiCp8bYFmPV/LNp97Hg9csAgkQqfIEosJptfht6oCbfa+Xog=
-X-Google-Smtp-Source: AGHT+IGMEaHmjhKy5xQg3QSEo5wEAboBqEmT/Z0xWA8QoOhjzobvkdLtS+AbSt7MtSCO0A2q4Wp/Yw==
-X-Received: by 2002:a05:6602:2dd2:b0:82a:4e38:b47c with SMTP id
- ca18e2360f4ac-83247cf53dbmr561906139f.1.1727336757733; 
- Thu, 26 Sep 2024 00:45:57 -0700 (PDT)
-Received: from TF4D9JK212.bytedance.net ([61.213.176.7])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7e6b7c31bb5sm3683357a12.16.2024.09.26.00.45.52
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 26 Sep 2024 00:45:57 -0700 (PDT)
-From: Changqi Lu <luchangqi.123@bytedance.com>
-To: qemu-block@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
- ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
- kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
- pizhenwei@bytedance.com, k.jensen@samsung.com,
- Changqi Lu <luchangqi.123@bytedance.com>
-Subject: [PATCH v13 00/10] Support persistent reservation operations
-Date: Thu, 26 Sep 2024 15:45:36 +0800
-Message-Id: <20240926074546.24507-1-luchangqi.123@bytedance.com>
-X-Mailer: git-send-email 2.39.2 (Apple Git-143)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1stjCf-0002Zf-F6; Thu, 26 Sep 2024 03:46:21 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1stjCa-0006Ef-GJ; Thu, 26 Sep 2024 03:46:21 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 26 Sep
+ 2024 15:45:38 +0800
+Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Thu, 26 Sep 2024 15:45:38 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <yunlin.tang@aspeedtech.com>
+Subject: [PATCH v3 6/6] aspeed/soc: Support GPIO for AST2700
+Date: Thu, 26 Sep 2024 15:45:35 +0800
+Message-ID: <20240926074535.1286209-7-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240926074535.1286209-1-jamin_lin@aspeedtech.com>
+References: <20240926074535.1286209-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2c;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-io1-xd2c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,106 +61,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Add GPIO model for AST2700 GPIO support.
+The GPIO controller registers base address is start at
+0x14C0_B000 and its address space is 0x1000.
 
-Patch v13 has been modified, thanks to Stefan for the code review.
+The AST2700 GPIO controller interrupt is connected to
+GICINT130_INTC at bit 18.
 
-v12->v13:
-- Fix byte swaps at hw/nvme/ctrl.c.
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ hw/arm/aspeed_ast27x0.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-v11->v12:
-- Fixed endian conversion during command parsing;
-- Add the maximum number of keys, currently limited to 128.
-
-v10->v11:
-- Before executing the pr operation, check whether it is supported.
-  If it is not supported, return NVME_INVALID_OPCODE directly.
-
-v9->v10:
-- When the driver does not support the pr operation, the error
-  code returned by nvme changes to Invalid Command Opcode.
-
-v8->v9:
-- Fix double-free and remove persistent reservation operations at nvme_is_write().
-
-v7->v8:
-- Fix num_keys may be less than 0 at scsi_pr_read_keys_complete().
-- Fix buf memory leak at iscsi driver.
-
-v6->v7:
-- Add buferlen size check at SCSI layer.
-- Add pr_cap calculation in bdrv_merge_limits() function at block layer,
-  so the ugly bs->file->bs->bl.pr_cap in scsi and nvme layers was
-  changed to bs->bl.pr_cap.
-- Fix memory leak at iscsi driver, and some other spelling errors.
-
-v5->v6:
-- Add relevant comments in the io layer.
-
-v4->v5:
-- Fixed a memory leak bug at hw/nvme/ctrl.c.
-
-v3->v4:
-- At the nvme layer, the two patches of enabling the ONCS
-  function and enabling rescap are combined into one.
-- At the nvme layer, add helper functions for pr capacity
-  conversion between the block layer and the nvme layer.
-
-v2->v3:
-In v2 Persist Through Power Loss(PTPL) is enable default.
-In v3 PTPL is supported, which is passed as a parameter.
-
-v1->v2:
-- Add sg_persist --report-capabilities for SCSI protocol and enable
-  oncs and rescap for NVMe protocol.
-- Add persistent reservation capabilities constants and helper functions for
-  SCSI and NVMe protocol.
-- Add comments for necessary APIs.
-
-v1:
-- Add seven APIs about persistent reservation command for block layer.
-  These APIs including reading keys, reading reservations, registering,
-  reserving, releasing, clearing and preempting.
-- Add the necessary pr-related operation APIs for both the
-  SCSI protocol and NVMe protocol at the device layer.
-- Add scsi driver at the driver layer to verify the functions
-
-
-Changqi Lu (10):
-  block: add persistent reservation in/out api
-  block/raw: add persistent reservation in/out driver
-  scsi/constant: add persistent reservation in/out protocol constants
-  scsi/util: add helper functions for persistent reservation types
-    conversion
-  hw/scsi: add persistent reservation in/out api for scsi device
-  block/nvme: add reservation command protocol constants
-  hw/nvme: add helper functions for converting reservation types
-  hw/nvme: enable ONCS and rescap function
-  hw/nvme: add reservation protocal command
-  block/iscsi: add persistent reservation in/out driver
-
- block/block-backend.c             | 403 +++++++++++++++++++++++++++
- block/io.c                        | 164 +++++++++++
- block/iscsi.c                     | 433 ++++++++++++++++++++++++++++++
- block/raw-format.c                |  56 ++++
- hw/nvme/ctrl.c                    | 362 ++++++++++++++++++++++++-
- hw/nvme/ns.c                      |  11 +
- hw/nvme/nvme.h                    |  94 +++++++
- hw/scsi/scsi-disk.c               | 374 ++++++++++++++++++++++++++
- include/block/block-common.h      |  40 +++
- include/block/block-io.h          |  20 ++
- include/block/block_int-common.h  |  84 ++++++
- include/block/nvme.h              | 107 +++++++-
- include/scsi/constants.h          |  52 ++++
- include/scsi/utils.h              |   8 +
- include/sysemu/block-backend-io.h |  24 ++
- scsi/utils.c                      |  81 ++++++
- 16 files changed, 2311 insertions(+), 2 deletions(-)
-
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 761ee11657..dca660eb6b 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -62,6 +62,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_GIC_REDIST]    =  0x12280000,
+     [ASPEED_DEV_ADC]       =  0x14C00000,
+     [ASPEED_DEV_I2C]       =  0x14C0F000,
++    [ASPEED_DEV_GPIO]      =  0x14C0B000,
+ };
+ 
+ #define AST2700_MAX_IRQ 288
+@@ -87,8 +88,7 @@ static const int aspeed_soc_ast2700_irqmap[] = {
+     [ASPEED_DEV_ADC]       = 130,
+     [ASPEED_DEV_XDMA]      = 5,
+     [ASPEED_DEV_EMMC]      = 15,
+-    [ASPEED_DEV_GPIO]      = 11,
+-    [ASPEED_DEV_GPIO_1_8V] = 130,
++    [ASPEED_DEV_GPIO]      = 130,
+     [ASPEED_DEV_RTC]       = 13,
+     [ASPEED_DEV_TIMER1]    = 16,
+     [ASPEED_DEV_TIMER2]    = 17,
+@@ -124,7 +124,7 @@ static const int aspeed_soc_ast2700_gic128_intcmap[] = {
+ static const int aspeed_soc_ast2700_gic130_intcmap[] = {
+     [ASPEED_DEV_I2C]        = 0,
+     [ASPEED_DEV_ADC]        = 16,
+-    [ASPEED_DEV_GPIO_1_8V]  = 18,
++    [ASPEED_DEV_GPIO]       = 18,
+ };
+ 
+ /* GICINT 131 */
+@@ -373,6 +373,9 @@ static void aspeed_soc_ast2700_init(Object *obj)
+ 
+     snprintf(typename, sizeof(typename), "aspeed.i2c-%s", socname);
+     object_initialize_child(obj, "i2c", &s->i2c, typename);
++
++    snprintf(typename, sizeof(typename), "aspeed.gpio-%s", socname);
++    object_initialize_child(obj, "gpio", &s->gpio, typename);
+ }
+ 
+ /*
+@@ -658,6 +661,15 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+         sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c.busses[i]), 0, irq);
+     }
+ 
++    /* GPIO */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->gpio), 0,
++                    sc->memmap[ASPEED_DEV_GPIO]);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0,
++                       aspeed_soc_get_irq(s, ASPEED_DEV_GPIO));
++
+     create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
+     create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
+     create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
 -- 
-2.20.1
+2.34.1
 
 
