@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5AB9C369CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 12:04:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81CEAC369CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 12:08:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stnDz-0006Tq-C1; Thu, 26 Sep 2024 08:03:59 -0400
+	id 1stnI7-0003Oh-Qi; Thu, 26 Sep 2024 08:08:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1stnDx-0006SH-2K; Thu, 26 Sep 2024 08:03:57 -0400
+ id 1stnI1-0003L2-4W; Thu, 26 Sep 2024 08:08:09 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1stnDv-0000to-JO; Thu, 26 Sep 2024 08:03:56 -0400
+ id 1stnHz-0001Le-DR; Thu, 26 Sep 2024 08:08:08 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XDsZk3rZqz6K9kS;
- Thu, 26 Sep 2024 19:59:10 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XDsm93tdkz6J7Y4;
+ Thu, 26 Sep 2024 20:07:21 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 5EDE11401F3;
- Thu, 26 Sep 2024 20:03:50 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 946571401F3;
+ Thu, 26 Sep 2024 20:07:56 +0800 (CST)
 Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 26 Sep
- 2024 14:03:49 +0200
-Date: Thu, 26 Sep 2024 13:03:48 +0100
+ 2024 14:07:55 +0200
+Date: Thu, 26 Sep 2024 13:07:54 +0100
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 CC: Igor Mammedov <imammedo@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, <linux-kernel@vger.kernel.org>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 10/15] acpi/ghes: move offset calculus to a separate
- function
-Message-ID: <20240926130348.00005e45@Huawei.com>
-In-Reply-To: <5e8c2f0267a21d05ed09c8af616a92d94638c474.1727236561.git.mchehab+huawei@kernel.org>
+ Dongjiu Geng <gengdongjiu1@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, <kvm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 11/15] acpi/ghes: better name GHES memory error function
+Message-ID: <20240926130754.000041ab@Huawei.com>
+In-Reply-To: <f4c031c627e761b2a48267f1cec1af3a7ad0acbb.1727236561.git.mchehab+huawei@kernel.org>
 References: <cover.1727236561.git.mchehab+huawei@kernel.org>
- <5e8c2f0267a21d05ed09c8af616a92d94638c474.1727236561.git.mchehab+huawei@kernel.org>
+ <f4c031c627e761b2a48267f1cec1af3a7ad0acbb.1727236561.git.mchehab+huawei@kernel.org>
 Organization: Huawei Technologies Research and Development (UK) Ltd.
 X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
@@ -74,47 +75,38 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 25 Sep 2024 06:04:15 +0200
+On Wed, 25 Sep 2024 06:04:16 +0200
 Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-> Currently, CPER address location is calculated as an offset of
-> the hardware_errors table. It is also badly named, as the
-> offset actually used is the address where the CPER data starts,
-> and not the beginning of the error source.
+> The current function used to generate GHES data is specific for
+> memory errors. Give a better name for it, as we now have a generic
+> function as well.
 > 
-> Move the logic which calculates such offset to a separate
-> function, in preparation for a patch that will be changing the
-> logic to calculate it from the HEST table.
-> 
-> While here, properly name the variable which stores the cper
-> address.
-> 
+> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Trivial comment inline.
+In general fine, but question below on what looks to be an unrelated change.
 
-Given this is a placeholder for more radical refactor I'll not comment on
-the maths etc being less flexible than it will hopefully end up!
+Jonathan
 
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
->  void ghes_record_cper_errors(const void *cper, size_t len,
->                               uint16_t source_id, Error **errp)
->  {
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index 849e2e21b304..57192285fb96 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -2373,7 +2373,8 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
+>               */
+>              if (code == BUS_MCEERR_AR) {
+>                  kvm_cpu_synchronize_state(c);
+> -                if (!acpi_ghes_record_errors(ACPI_HEST_SRC_ID_SEA, paddr)) {
+> +                if (!acpi_ghes_memory_errors(ARM_ACPI_HEST_SRC_ID_SYNC,
+The parameter changes seems unconnected to rest of the patch...  Maybe at least
+mention it in the patch description.
+I can't find the definition of ARM_ACPI_HEST_SRC_ID_SYNC either so where
+did that come from?
 
-> -    /*
-> -     * As the current version supports only one source, the ack offset is
-> -     * just sizeof(uint64_t).
-> -     */
-> -    read_ack_register_addr = start_addr + sizeof(uint64_t);
-> -
->      cpu_physical_memory_read(read_ack_register_addr,
-> -                                &read_ack_register, sizeof(read_ack_register));
-> +                             &read_ack_register, sizeof(read_ack_register));
->  
+> +                                             paddr)) {
+>                      kvm_inject_arm_sea(c);
+>                  } else {
+>                      error_report("failed to record the error");
 
-Wrong patch for this alignment tidy up?
-
-Or are my eyes deceiving me and there is more going on here...
-
-J
 
