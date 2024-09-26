@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FD4CCCFA15
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 04:52:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66924CCFA15
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 04:58:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stgUI-0001H0-E2; Thu, 26 Sep 2024 00:52:22 -0400
+	id 1stgZG-0006No-Qm; Thu, 26 Sep 2024 00:57:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1stgUG-0001GK-DL
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 00:52:20 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1stgZE-0006MX-Ks
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 00:57:28 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1stgUE-0002ea-Mo
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 00:52:20 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-42cd74c0d16so4719435e9.1
- for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 21:52:18 -0700 (PDT)
+ id 1stgZC-00034Z-E5
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 00:57:27 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-42e5e1e6d37so4588685e9.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 21:57:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727326337; x=1727931137; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727326644; x=1727931444; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=HLUc6IXcf4JTIyonuOIkJjvzd1HfdQYqAEJplhDCdoE=;
- b=WdYcTZ0TxhdQ2BNe3+jlQHD4WlAA6O3/QzBR2qaFW7l/J62WTg6wiUqfg0imB77nYS
- o/ngZ63Mj34Y179ho4veMUvNBO5+WRTL1wzPa+DQTcm1rEgd9/K+jMc11+o1f8hOmPuH
- QxdGGLLjsbUP6Fr1sDpsXuGmjJljPPpNDS5q+AdCX9J2XC3YQfRAM/bJbXXKHqwLa9xm
- SxAuH8ZBUzRPG5B2AZdu+FbTB/6k9ybGsfYxNbM+Qt2XoFuVtNToDsInRDh/XZSKRSaW
- f2L9vOOd/0YEx7tz3l4W7CPJNBqZGV8EiNncij2X+29obooE/UkeY5XFmw/ly/+NuH1a
- h5Wg==
+ bh=sHoO++pRV+rtvVWTvuIhS2SE/q8IjIpTMbwImJJNI3Y=;
+ b=Sd6GyfykAjCFEX+0LQc1ULyssbXifNQR0Lz2IcT4/yhI016eue3sRasjUZyxgH9UjR
+ VRwowgDTTh67GY0FmLIkvciFsh5tdpUFX3OHnFGbodDsDw3yMVt2BlawGCoa9HJVY959
+ zETP1arhNq/lh842mybwvUuTAt6jwYJ4eY3tAjtgYMPiGUYcabravGG7Jr7TTAQAriVR
+ V7DdQKmgZOHTbby9441eeBE7pAY8adijVlJ4nJH+3JqE2k0yBASnGMOvz6dgjtp6C6QJ
+ Xgquu/U5LM3FIsElHkvycp3ILFsi21VwDDm5pmUmge48bYcnNQhlTl74OpeD6zWe+T5/
+ RJJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727326337; x=1727931137;
+ d=1e100.net; s=20230601; t=1727326644; x=1727931444;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=HLUc6IXcf4JTIyonuOIkJjvzd1HfdQYqAEJplhDCdoE=;
- b=ahJUnJ6M6yWnGEa32kqC7eZLXwBHkuH5jmSjB8i8IBjLZgGs9lFJEy+M4Xe+wwpR18
- Z0PEc/uFPUwcCsROIgiRFsIvcRitjyj0860GbRQApXRDGijVFZzKXRObLfjQWYJIEQKX
- 1S34LuT+siCQVCcxYXU1M+f0yuu/DLS9zUyuJMRV61Ow2Xdfe5Gh3o+7p65gPxAto71F
- ALQBT7lJnzbX+YSweDp+PtGvWenCx0Ou8yq7/KVGVtx6KVs8FaXmdx/WujAYJNWHQ0Pt
- iWNFUFaPZKr8YVHxCzkVJ0P1XVnu6YZyLMBbZuf5LKDJKE/aJBJzvVmj/Tp6M+3W5YT0
- 1VDQ==
+ bh=sHoO++pRV+rtvVWTvuIhS2SE/q8IjIpTMbwImJJNI3Y=;
+ b=LccNVTkXTE+b5tokG33h4LTk3guN19pdH3mnhpfcKyvmfNGLpcYT4h8Hkx9JoO9N/0
+ mnNQpSwIN/T+cfYrU40PGjvz1L/DRSoChoo6zELghdVmk3fnN/MMv+5kkLlnMOii1UoL
+ V+bymV2mALRdKiQSFvUU88T9cfnEQOumvkg3UowGltlsDPbanRjuMaHy7cvb7UYMvxu1
+ x4WpBLYWE7mzWQdj4Ip8lQrjK5nUFqFp5+9T+rrNxGfBA/RgFRCpQaM4Mc3yz3GcRmbR
+ kHkXLGxYctK7Zh8eZdqBjUZblRsOiD6LQXPwFiFGGY69MrP9m7VzXALaAECCf8zy8aI2
+ bkAg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWvePZYLwRcWNsOAA9ihuFd3wyKF59OT5XJS+3kvsc/IMjGDjb/w5n90UUR9OzmiPyCGlucXyhWa88W@nongnu.org
-X-Gm-Message-State: AOJu0Yw/CJMYmOGnQHvoh5lKgyMNZ3AOo7Ssl4dtIx9wuUzsbrO3W5Ah
- 1ImnRacxLw5lDL195VQ21Mvdp0FHKdba17yrDOXFB8yaySTBTHOSbGARSQBqgwE=
-X-Google-Smtp-Source: AGHT+IEejKXfIoJnPiYBMmHJJQ6QeLqK9SorG57kY2v6ao2iHOrcoLctNWpbeg1Y2Jnwd+4PlXgMuw==
-X-Received: by 2002:a05:6000:1288:b0:374:ba2c:3028 with SMTP id
- ffacd0b85a97d-37cc24c5ad3mr2555727f8f.36.1727326336959; 
- Wed, 25 Sep 2024 21:52:16 -0700 (PDT)
-Received: from meli-email.org (adsl-13.37.6.161.tellas.gr. [37.6.161.13])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42e969f244asm35130635e9.17.2024.09.25.21.52.16
+ AJvYcCUOsVW1VXaMllsZyztUnSAPofpRYKVBCtWcDQrn6mvwZxL5NwnhrNkERl0Ck4dlJt6WIVBTv7hdZFHd@nongnu.org
+X-Gm-Message-State: AOJu0YyTLF4yeaNqqmYa1TZb10lcCzS2RoYDTR3FrFsYJCRI2Er3jUKL
+ XW2AoQ2Kx4xkSzDIkEisG1SWwsR2QDkK0Yl20hlOkJZt1xz0RzajtNGYL0aPEbw=
+X-Google-Smtp-Source: AGHT+IEa4UzQyxsP/MC89b1V28U3nplwISBAtPnskaX6qfysybRPaB7fd27cM1vA1PGJog97F+UznA==
+X-Received: by 2002:a05:600c:3b99:b0:42c:b55f:f7c with SMTP id
+ 5b1f17b1804b1-42e96119176mr29102725e9.15.1727326644114; 
+ Wed, 25 Sep 2024 21:57:24 -0700 (PDT)
+Received: from meli-email.org (adsl-109.109.242.225.tellas.gr.
+ [109.242.225.109]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42e96a0d8eesm36142865e9.30.2024.09.25.21.57.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Sep 2024 21:52:16 -0700 (PDT)
-Date: Thu, 26 Sep 2024 07:50:15 +0300
+ Wed, 25 Sep 2024 21:57:23 -0700 (PDT)
+Date: Thu, 26 Sep 2024 07:52:27 +0300
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>, 
@@ -87,18 +87,18 @@ Cc: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
  Fam Zheng <fam@euphon.net>, Eduardo Habkost <eduardo@habkost.net>, 
  Stefano Garzarella <sgarzare@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH v2 07/22] block/stream: fix -Werror=maybe-uninitialized
- false-positives
+Subject: Re: [PATCH v2 08/22] hw/ahci: fix -Werror=maybe-uninitialized
+ false-positive
 User-Agent: meli 0.8.7
 References: <20240924130554.749278-1-marcandre.lureau@redhat.com>
- <20240924130554.749278-8-marcandre.lureau@redhat.com>
-In-Reply-To: <20240924130554.749278-8-marcandre.lureau@redhat.com>
-Message-ID: <kelj3.9xegcjaacjj@linaro.org>
+ <20240924130554.749278-9-marcandre.lureau@redhat.com>
+In-Reply-To: <20240924130554.749278-9-marcandre.lureau@redhat.com>
+Message-ID: <kelrm.tpdvgy1258l3@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,44 +123,43 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, 24 Sep 2024 16:05, marcandre.lureau@redhat.com wrote:
 >From: Marc-André Lureau <marcandre.lureau@redhat.com>
 >
->../block/stream.c:193:19: error: ‘unfiltered_bs’ may be used uninitialized [-Werror=maybe-uninitialized]
->../block/stream.c:176:5: error: ‘len’ may be used uninitialized [-Werror=maybe-uninitialized]
->trace/trace-block.h:906:9: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
+>../hw/ide/ahci.c:989:58: error: ‘tbl_entry_size’ may be used uninitialized [-Werror=maybe-uninitialized]
 >
 >Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->Acked-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 >---
-> block/stream.c | 6 +++---
-> 1 file changed, 3 insertions(+), 3 deletions(-)
+> hw/ide/ahci.c | 3 ++-
+> 1 file changed, 2 insertions(+), 1 deletion(-)
 >
->diff --git a/block/stream.c b/block/stream.c
->index 7031eef12b..9076203193 100644
->--- a/block/stream.c
->+++ b/block/stream.c
->@@ -155,8 +155,8 @@ static void stream_clean(Job *job)
-> static int coroutine_fn stream_run(Job *job, Error **errp)
-> {
->     StreamBlockJob *s = container_of(job, StreamBlockJob, common.job);
->-    BlockDriverState *unfiltered_bs;
->-    int64_t len;
->+    BlockDriverState *unfiltered_bs = NULL;
->+    int64_t len = -1;
->     int64_t offset = 0;
->     int error = 0;
->     int64_t n = 0; /* bytes */
->@@ -177,7 +177,7 @@ static int coroutine_fn stream_run(Job *job, Error **errp)
+>diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+>index 7fc2a08df2..d700986c39 100644
+>--- a/hw/ide/ahci.c
+>+++ b/hw/ide/ahci.c
+>@@ -948,7 +948,6 @@ static int ahci_populate_sglist(AHCIDevice *ad, QEMUSGList *sglist,
+>     uint64_t sum = 0;
+>     int off_idx = -1;
+>     int64_t off_pos = -1;
+>-    int tbl_entry_size;
+>     IDEBus *bus = &ad->port;
+>     BusState *qbus = BUS(bus);
 > 
->     for ( ; offset < len; offset += n) {
->         bool copy;
->-        int ret;
->+        int ret = -1;
-> 
->         /* Note that even when no rate limit is applied we need to yield
->          * with no pending I/O here so that bdrv_drain_all() returns.
+>@@ -976,6 +975,8 @@ static int ahci_populate_sglist(AHCIDevice *ad, QEMUSGList *sglist,
+>     /* Get entries in the PRDT, init a qemu sglist accordingly */
+>     if (prdtl > 0) {
+>         AHCI_SG *tbl = (AHCI_SG *)prdt;
+>+        int tbl_entry_size = -1;
+>+
+
+Semantically it should be 0 instead of -1.
+
+Either way:
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+
+>         sum = 0;
+>         for (i = 0; i < prdtl; i++) {
+>             tbl_entry_size = prdt_tbl_entry_size(&tbl[i]);
 >-- 
 >2.45.2.827.g557ae147e6
 >
 >
-
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
