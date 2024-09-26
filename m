@@ -4,90 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A257BCCFA13
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 10:34:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23056CCF9E9
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 10:56:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stlpI-0007On-Rk; Thu, 26 Sep 2024 06:34:26 -0400
+	id 1stm9U-0000Bd-Qo; Thu, 26 Sep 2024 06:55:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bounce-md_30504962.66f53402.v1-468271bc01d8452aa5f20c3e490bcf15@bounce.vates.tech>)
- id 1stlpD-0006q7-AB
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 06:34:19 -0400
-Received: from mail177-9.suw61.mandrillapp.com ([198.2.177.9])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stm9Q-00007O-W9
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 06:55:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bounce-md_30504962.66f53402.v1-468271bc01d8452aa5f20c3e490bcf15@bounce.vates.tech>)
- id 1stlp3-0002IQ-JW
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 06:34:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com;
- s=mte1; t=1727345667; x=1727606167;
- bh=DRimZkyYpcmRSMJFhksb4hjZDJ7L7Xbrn74CwG57nLQ=;
- h=From:Subject:To:Cc:Message-Id:In-Reply-To:References:Feedback-ID:
- Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
- Subject:From;
- b=YxtWIggBTflIkpwreiigs3s3C/ixmLF6QvMrUtb/1YvQ5nYUTgxJvLoKQtMbpigA4
- mlxy+iQrNCUdUa0HbzUEgVo73HkzkTwQy88XYMc8LJhgyOXJIZg2jpRPMWDSxSSzNw
- wCkSsWpwoDoHg6cQlvr1gBxBU/WygD3ki25nUfrp1+byiPW516Ek9aNtqMuzW/YEvs
- SIgewiGjh5NQ6lo2EWi+Mj+P8s4C2G4lNjK0arUuh8yUK7ahOT94zg3fhVCJaAAJzm
- mLHvfufez3qWfDS1CS9Kpk63pLdrSGTzHqqXEFauEi0foa9c+/8IbBf0mVkzPggi7D
- uGCB02oVTWimA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vates.tech; s=mte1;
- t=1727345667; x=1727606167; i=anthony.perard@vates.tech;
- bh=DRimZkyYpcmRSMJFhksb4hjZDJ7L7Xbrn74CwG57nLQ=;
- h=From:Subject:To:Cc:Message-Id:In-Reply-To:References:Feedback-ID:
- Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
- Subject:From;
- b=a/jTHymjWLABeOl0YvoklvLJ2raGhtWUw1L62ibkXJLEUMfhATptKhYvxfIcmXSZ5
- yUr5kgIVpmLSLRlWVwpGvlIb7wgsC5fKxTeL0MCaYG2LCZGZZqKjMn2HAm8YiuZ7+g
- xo2bOrnKK6yzPhVZ+W1iQ2JyfjpJJdnHifFe/ksEHQXUsS1UDoNls4kipG6qNYFJoP
- wZY3v/Qq6FT/CLtbMoEbtaABtABH/9m7RoUNX0BGzsERlfPa8uz1TyIXDmVMnT2UtZ
- KaOrhrn87tnyXw8ic3k8SWNeR5OBC3IKGwHMo6ihLQTEuN1Ykf+WFcpGEzWEvZb9d5
- LxQ4i4izMNnBA==
-Received: from pmta14.mandrill.prod.suw01.rsglab.com (localhost [127.0.0.1])
- by mail177-9.suw61.mandrillapp.com (Mailchimp) with ESMTP id 4XDqFv0WdkzK5vrsx
- for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 10:14:27 +0000 (GMT)
-From: Anthony PERARD <anthony.perard@vates.tech>
-Subject: =?utf-8?Q?[PATCH=202/2]=20hw/block/xen-block:=20Update=20sector-size=20handling?=
-Received: from [37.26.189.201] by mandrillapp.com id
- 468271bc01d8452aa5f20c3e490bcf15; Thu, 26 Sep 2024 10:14:26 +0000
-X-Mailer: git-send-email 2.39.2
-X-Bm-Disclaimer: Yes
-X-Bm-Milter-Handled: 4ffbd6c1-ee69-4e1b-aabd-f977039bd3e2
-X-Bm-Transport-Timestamp: 1727345665867
-To: qemu-devel@nongnu.org
-Cc: Anthony PERARD <anthony.perard@vates.tech>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, xen-devel@lists.xenproject.org,
- qemu-block@nongnu.org
-Message-Id: <20240926101334.2388-3-anthony.perard@vates.tech>
-In-Reply-To: <20240926101334.2388-1-anthony.perard@vates.tech>
-References: <20240926101334.2388-1-anthony.perard@vates.tech>
-X-Native-Encoded: 1
-X-Report-Abuse: =?UTF-8?Q?Please=20forward=20a=20copy=20of=20this=20message,
- =20including=20all=20headers,
- =20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D30504962.468271bc01d8452aa5f20c3e490bcf15?=
-X-Mandrill-User: md_30504962
-Feedback-ID: 30504962:30504962.20240926:md
-Date: Thu, 26 Sep 2024 10:14:26 +0000
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1stm9O-0006gy-Oh
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 06:55:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727348107;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=mw9WUsJEEnUswEYVSqI4oECc5l99gcPIonY/CcwUA64=;
+ b=FKqupdk3AqFnCV03PK+4anSNR9NEg64aqEb+7Zn4PBnVaMcIWFBCYtkaZ7v/XdMVz31Yl2
+ +nO34dGwUXfupVPTk2zw7eoJ86+19NF/5PqXgAfUR7nf48Nz25Eb18haVW/Y2CPqSaR7be
+ wYPeH59rSRe3jS3UTz/odpK6A3YZtpM=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-175-hrNBaJFaOfKqfbZO43gI3w-1; Thu, 26 Sep 2024 06:55:06 -0400
+X-MC-Unique: hrNBaJFaOfKqfbZO43gI3w-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6c36310588fso33099496d6.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 03:55:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727348106; x=1727952906;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mw9WUsJEEnUswEYVSqI4oECc5l99gcPIonY/CcwUA64=;
+ b=Rf6ZH8EXh9MmkYx6B+FmdGkO1dn3al1AXtdTqhkbiR0kENYA8c4pdGgRCM+F7UCQHu
+ nqJGm5BAZwMJpmq96CsIQ0TtqHak8DxiaQXgokR7L+iNfjfz8sP9GtyqJ4MAnXHJzWQz
+ 3lk5+9hK4Q5d5LQ0ewYB6M3aInOeF07TWer9S1Vf3zeMMVl97rNnDwM2uZaMeX7/OHZJ
+ v4AcLkxLtJxE8W1MGLev25MyUW1MPpAWn6YGx3ykYSeDe0gBSaM7s/5YHcvZ00VGdlsX
+ oqArhYoK22fsc9Et09SLPJO7NyIYN3EGTQn4+WrgZbjeosjAt7TCgQ93+Xq66ZIhFJqc
+ l9Zw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU0PfAeKxYw6O8zunaM2FNqLyWV9ME2gYPD6QtgXptKlzD1FPrnzOUY8L1D3MajCa/Wnu8T/lGC0k5z@nongnu.org
+X-Gm-Message-State: AOJu0YyAY4uyYIZ1MvzUn7Z3GTHtVF1UUc+kgqcEv2CK3YfDs+dLMD1Z
+ opj09vomebCcUYszS4pOiFMZ/mUlsvKUr+j7LFZBbScp86YJ2q9J3OUVtThLRXm/awG+ofybOve
+ IL52xnXFfdiwSnx1dBcuJrhUQ4oi8al6JqyGw3s3t3Fz0htfYTlDh
+X-Received: by 2002:a05:6214:21c5:b0:6c3:69f9:fb49 with SMTP id
+ 6a1803df08f44-6cb2f2c7417mr51879896d6.16.1727348106167; 
+ Thu, 26 Sep 2024 03:55:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEc5Z5LSOeDYcdPL7vl56XgkchZXjZbHXVnF9Ny1sY22TtPK3UG2o4KWUYyRmB9c+p9fAtOXw==
+X-Received: by 2002:a05:6214:21c5:b0:6c3:69f9:fb49 with SMTP id
+ 6a1803df08f44-6cb2f2c7417mr51879416d6.16.1727348105722; 
+ Thu, 26 Sep 2024 03:55:05 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-48-176.web.vodafone.de.
+ [109.42.48.176]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6cb3951dac0sm955396d6.23.2024.09.26.03.55.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Sep 2024 03:55:05 -0700 (PDT)
+Message-ID: <e2a50551-dd9d-45e7-a163-b98881347791@redhat.com>
+Date: Thu, 26 Sep 2024 12:55:00 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.2.177.9;
- envelope-from=bounce-md_30504962.66f53402.v1-468271bc01d8452aa5f20c3e490bcf15@bounce.vates.tech;
- helo=mail177-9.suw61.mandrillapp.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tests/qemu-iotests/testenv: Use the "r2d" machine for
+ sh4
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-trivial@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>
+References: <20240925072420.14656-1-thuth@redhat.com>
+ <4d4a326f-ef6d-4c37-bdbe-4f42a9005375@tls.msk.ru>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <4d4a326f-ef6d-4c37-bdbe-4f42a9005375@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,142 +152,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The use of "feature-large-sector-size" have been removed from the
-protocol, as it hasn't been evenly implemented across all backend and
-frontend. Linux for example will happily expose "sector-size" != 512
-even when "feature-large-sector-size" hasn't been set by the frontend.
+On 26/09/2024 12.24, Michael Tokarev wrote:
+> 25.09.2024 10:24, Thomas Huth wrote:
+>> Commit 0ea0538fae516f9b4 removed the default machine of the sh4
+>> binaries, so a lot of iotests are failing now without such a default
+>> machine. Teach the iotest harness to use the "r2d" machine instead
+>> to fix this problem.
+>>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   v2: "r2d" only works on little endian, so don't try to use it for sh4eb
+> 
+> Hm.  The v1 of this patch (with sh4eb addition) has already been merged
+> to master.
+> 
+> I did a single pull request during my vacation (a week ago), and it contained
+> a very fresh patch which received further discussion after I picked it up, but
+> I haven't noticed.
+> 
+> So we should now remove the already added sh4eb from there, it looks like.. :(
+> 
+> I'll submit a patch doing that later today, hopefully.
 
-The specification have been clarified regarding what "sector" is by
-Xen commit 221f2748e8da ("blkif: reconcile protocol specification with
-in-use implementations").
+I'm planning to provide a patch to remove sh4eb-softmmu completely (since it 
+is useless nowadays) ... I can add it there, too.
 
-https://xenbits.xenproject.org/gitweb/?p=xen.git;a=commit;h=221f2748e8dabe8361b8cdfcffbeab9102c4c899
+  Thomas
 
-So change QEMU to follow the updated specification.
-
-Frontends that exposes "feature-large-sector-size" will most certainly
-misbehave if "sector-size" is different than 512, so don't even try.
-(Windows driver is likely to be the only one having implemented it.)
-
-Signed-off-by: Anthony PERARD <anthony.perard@vates.tech>
----
- hw/block/dataplane/xen-block.c | 31 ++++++++++++++++++++++---------
- hw/block/xen-block.c           |  8 ++++----
- 2 files changed, 26 insertions(+), 13 deletions(-)
-
-diff --git a/hw/block/dataplane/xen-block.c b/hw/block/dataplane/xen-block.c
-index 98501e6885..43be97b4f3 100644
---- a/hw/block/dataplane/xen-block.c
-+++ b/hw/block/dataplane/xen-block.c
-@@ -176,7 +176,11 @@ static int xen_block_parse_request(XenBlockRequest *request)
-         goto err;
-     }
- 
--    request->start = request->req.sector_number * dataplane->sector_size;
-+    request->start = request->req.sector_number * XEN_BLKIF_SECTOR_SIZE;
-+    if (!QEMU_IS_ALIGNED(request->start, dataplane->sector_size)) {
-+        error_report("error: sector_number missaligned with sector-size");
-+        goto err;
-+    }
-     for (i = 0; i < request->req.nr_segments; i++) {
-         if (i == BLKIF_MAX_SEGMENTS_PER_REQUEST) {
-             error_report("error: nr_segments too big");
-@@ -186,14 +190,23 @@ static int xen_block_parse_request(XenBlockRequest *request)
-             error_report("error: first > last sector");
-             goto err;
-         }
--        if (request->req.seg[i].last_sect * dataplane->sector_size >=
-+        if (request->req.seg[i].last_sect * XEN_BLKIF_SECTOR_SIZE >=
-             XEN_PAGE_SIZE) {
-             error_report("error: page crossing");
-             goto err;
-         }
-+        if (!QEMU_IS_ALIGNED(request->req.seg[i].first_sect,
-+                             dataplane->sector_size / XEN_BLKIF_SECTOR_SIZE)) {
-+            error_report("error: first_sect missaligned with sector-size");
-+            goto err;
-+        }
- 
-         len = (request->req.seg[i].last_sect -
--               request->req.seg[i].first_sect + 1) * dataplane->sector_size;
-+               request->req.seg[i].first_sect + 1) * XEN_BLKIF_SECTOR_SIZE;
-+        if (!QEMU_IS_ALIGNED(len, dataplane->sector_size)) {
-+            error_report("error: segment size missaligned with sector-size");
-+            goto err;
-+        }
-         request->size += len;
-     }
-     if (request->start + request->size > blk_getlength(dataplane->blk)) {
-@@ -227,17 +240,17 @@ static int xen_block_copy_request(XenBlockRequest *request)
-         if (to_domain) {
-             segs[i].dest.foreign.ref = request->req.seg[i].gref;
-             segs[i].dest.foreign.offset = request->req.seg[i].first_sect *
--                dataplane->sector_size;
-+                XEN_BLKIF_SECTOR_SIZE;
-             segs[i].source.virt = virt;
-         } else {
-             segs[i].source.foreign.ref = request->req.seg[i].gref;
-             segs[i].source.foreign.offset = request->req.seg[i].first_sect *
--                dataplane->sector_size;
-+                XEN_BLKIF_SECTOR_SIZE;
-             segs[i].dest.virt = virt;
-         }
-         segs[i].len = (request->req.seg[i].last_sect -
-                        request->req.seg[i].first_sect + 1) *
--                      dataplane->sector_size;
-+                      XEN_BLKIF_SECTOR_SIZE;
-         virt += segs[i].len;
-     }
- 
-@@ -331,12 +344,12 @@ static bool xen_block_split_discard(XenBlockRequest *request,
- 
-     /* Wrap around, or overflowing byte limit? */
-     if (sec_start + sec_count < sec_count ||
--        sec_start + sec_count > INT64_MAX / dataplane->sector_size) {
-+        sec_start + sec_count > INT64_MAX / XEN_BLKIF_SECTOR_SIZE) {
-         return false;
-     }
- 
--    byte_offset = sec_start * dataplane->sector_size;
--    byte_remaining = sec_count * dataplane->sector_size;
-+    byte_offset = sec_start * XEN_BLKIF_SECTOR_SIZE;
-+    byte_remaining = sec_count * XEN_BLKIF_SECTOR_SIZE;
- 
-     do {
-         byte_chunk = byte_remaining > BDRV_REQUEST_MAX_BYTES ?
-diff --git a/hw/block/xen-block.c b/hw/block/xen-block.c
-index aed1d5c330..8c150c6c69 100644
---- a/hw/block/xen-block.c
-+++ b/hw/block/xen-block.c
-@@ -189,10 +189,10 @@ static void xen_block_connect(XenDevice *xendev, Error **errp)
-         feature_large_sector_size = 0;
-     }
- 
--    if (feature_large_sector_size != 1 &&
-+    if (feature_large_sector_size == 1 &&
-         conf->logical_block_size != XEN_BLKIF_SECTOR_SIZE) {
--        error_setg(errp, "logical_block_size != %u not supported by frontend",
--                   XEN_BLKIF_SECTOR_SIZE);
-+        error_setg(errp,
-+                   "\"feature-large-sector-size\" not supported by backend");
-         return;
-     }
- 
-@@ -294,7 +294,7 @@ static void xen_block_set_size(XenBlockDevice *blockdev)
-     const char *type = object_get_typename(OBJECT(blockdev));
-     XenBlockVdev *vdev = &blockdev->props.vdev;
-     BlockConf *conf = &blockdev->props.conf;
--    int64_t sectors = blk_getlength(conf->blk) / conf->logical_block_size;
-+    int64_t sectors = blk_getlength(conf->blk) / XEN_BLKIF_SECTOR_SIZE;
-     XenDevice *xendev = XEN_DEVICE(blockdev);
- 
-     trace_xen_block_size(type, vdev->disk, vdev->partition, sectors);
--- 
-
-
-Anthony Perard | Vates XCP-ng Developer
-
-XCP-ng & Xen Orchestra - Vates solutions
-
-web: https://vates.tech
 
