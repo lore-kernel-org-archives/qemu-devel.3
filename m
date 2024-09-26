@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17504CCFA1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 11:43:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B14D4CCFA1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 11:43:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stmtS-00013J-Qp; Thu, 26 Sep 2024 07:42:49 -0400
+	id 1stmtl-0002H6-Mc; Thu, 26 Sep 2024 07:43:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1stmt7-0000ph-RW
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:42:26 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ id 1stmt8-0000pi-Ie
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:42:27 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1stmt5-0005ku-3e
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:42:25 -0400
+ id 1stmt6-0005lQ-JR
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:42:26 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 96B5021ABB;
- Thu, 26 Sep 2024 11:42:19 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id BAC9B1F863;
+ Thu, 26 Sep 2024 11:42:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1727350939; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1727350942; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pRe3mneT7PB3hG4jBF9uoSmQYiAElM1qiiiyqCkiTHU=;
- b=id9dIcyWHz75OPhaUAvb64vbcPONDi8IDMqvEDyGFWGrlEw+WpIxO8A4UMZXnm7+gJprtU
- Ofk3Rkhp/+r0cEEXwMD+FNMki4gvpVPZllbrlEgQbLmgf160sJTAUtMlTEJ0RX8ET5LSm0
- y6lkGrQ8rQVEqMIGurs3RosNgCplNoQ=
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.com header.s=susede1 header.b=id9dIcyW
+ bh=8yLhuXM71YMXR25B7hue3VUzsjVWVBkF+qFEQCTpXBk=;
+ b=vZPFaTK6EvzfOIsXG5d1ClMADoiugf1nmeYvIGKnEtzp2LZjVm/vLo/Qr0Cc4StbR46LLk
+ SfJ3irWsjTCuy/ulmVX/d/Y8TbWbkUUl1thQxkef8EjF5rsUv4bz5yZDXxZdEgW3XDXPX2
+ ZNIRiOUsdcuXszeskKcm/wkM5Xr3u2c=
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.com header.s=susede1 header.b=vZPFaTK6
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1727350939; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1727350942; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pRe3mneT7PB3hG4jBF9uoSmQYiAElM1qiiiyqCkiTHU=;
- b=id9dIcyWHz75OPhaUAvb64vbcPONDi8IDMqvEDyGFWGrlEw+WpIxO8A4UMZXnm7+gJprtU
- Ofk3Rkhp/+r0cEEXwMD+FNMki4gvpVPZllbrlEgQbLmgf160sJTAUtMlTEJ0RX8ET5LSm0
- y6lkGrQ8rQVEqMIGurs3RosNgCplNoQ=
+ bh=8yLhuXM71YMXR25B7hue3VUzsjVWVBkF+qFEQCTpXBk=;
+ b=vZPFaTK6EvzfOIsXG5d1ClMADoiugf1nmeYvIGKnEtzp2LZjVm/vLo/Qr0Cc4StbR46LLk
+ SfJ3irWsjTCuy/ulmVX/d/Y8TbWbkUUl1thQxkef8EjF5rsUv4bz5yZDXxZdEgW3XDXPX2
+ ZNIRiOUsdcuXszeskKcm/wkM5Xr3u2c=
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CC73613ABC;
- Thu, 26 Sep 2024 11:42:18 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0546A13ABC;
+ Thu, 26 Sep 2024 11:42:21 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id mP7jL5pI9WbcRAAAD6G6ig
- (envelope-from <roy.hopkins@suse.com>); Thu, 26 Sep 2024 11:42:18 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id uMzgOp1I9WbcRAAAD6G6ig
+ (envelope-from <roy.hopkins@suse.com>); Thu, 26 Sep 2024 11:42:21 +0000
 From: Roy Hopkins <roy.hopkins@suse.com>
 To: qemu-devel@nongnu.org
 Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -70,16 +70,17 @@ Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Tom Lendacky <thomas.lendacky@amd.com>,
  Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
-Subject: [PATCH v6 01/16] meson: Add optional dependency on IGVM library
-Date: Thu, 26 Sep 2024 12:41:50 +0100
-Message-ID: <f7e0a6c3ed1cdc912e23e035d1fd7b98b4b9fe2b.1727341768.git.roy.hopkins@suse.com>
+Subject: [PATCH v6 05/16] i386/pc_sysfw: Ensure sysfw flash configuration does
+ not conflict with IGVM
+Date: Thu, 26 Sep 2024 12:41:54 +0100
+Message-ID: <3255767a6d34297ec47f43f9ae9434116d3f17ba.1727341768.git.roy.hopkins@suse.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1727341768.git.roy.hopkins@suse.com>
 References: <cover.1727341768.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 96B5021ABB
+X-Rspamd-Queue-Id: BAC9B1F863
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-4.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  DWL_DNSWL_MED(-2.00)[suse.com:dkim]; SUSPICIOUS_RECIPS(1.50)[];
@@ -102,11 +103,11 @@ X-Spamd-Result: default: False [-4.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  R_RATELIMIT(0.00)[to_ip_from(RLgjcjk3igk5en59wt86eb8xw3)];
  RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
  DKIM_TRACE(0.00)[suse.com:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
- imap1.dmz-prg2.suse.org:helo, suse.com:dkim, suse.com:mid, suse.com:email]
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:dkim, suse.com:mid, suse.com:email,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
 X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=roy.hopkins@suse.com; helo=smtp-out1.suse.de
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=roy.hopkins@suse.com; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -128,111 +129,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The IGVM library allows Independent Guest Virtual Machine files to be
-parsed and processed. IGVM files are used to configure guest memory
-layout, initial processor state and other configuration pertaining to
-secure virtual machines.
+When using an IGVM file the configuration of the system firmware is
+defined by IGVM directives contained in the file. In this case the user
+should not configure any pflash devices.
 
-This adds the --enable-igvm configure option, enabled by default, which
-attempts to locate and link against the IGVM library via pkgconfig and
-sets CONFIG_IGVM if found.
-
-The library is added to the system_ss target in backends/meson.build
-where the IGVM parsing will be performed by the ConfidentialGuestSupport
-object.
+This commit skips initialization of the ROM mode when pflash0 is not set
+then checks to ensure no pflash devices have been configured when using
+IGVM, exiting with an error message if this is not the case.
 
 Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- backends/meson.build          | 3 +++
- meson.build                   | 8 ++++++++
- meson_options.txt             | 2 ++
- scripts/meson-buildoptions.sh | 3 +++
- 4 files changed, 16 insertions(+)
+ hw/i386/pc_sysfw.c | 31 ++++++++++++++++++++++++++++---
+ 1 file changed, 28 insertions(+), 3 deletions(-)
 
-diff --git a/backends/meson.build b/backends/meson.build
-index da714b93d1..b092a19efc 100644
---- a/backends/meson.build
-+++ b/backends/meson.build
-@@ -32,6 +32,9 @@ if have_vhost_user_crypto
- endif
- system_ss.add(when: gio, if_true: files('dbus-vmstate.c'))
- system_ss.add(when: 'CONFIG_SGX', if_true: files('hostmem-epc.c'))
-+if igvm.found()
-+  system_ss.add(igvm)
-+endif
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index ef80281d28..f5e40b3ef6 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -219,7 +219,13 @@ void pc_system_firmware_init(PCMachineState *pcms,
+     BlockBackend *pflash_blk[ARRAY_SIZE(pcms->flash)];
  
- system_ss.add(when: 'CONFIG_SPDM_SOCKET', if_true: files('spdm-socket.c'))
+     if (!pcmc->pci_enabled) {
+-        x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, true);
++        /*
++         * If an IGVM file is specified then the firmware must be provided
++         * in the IGVM file.
++         */
++        if (!X86_MACHINE(pcms)->igvm) {
++            x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, true);
++        }
+         return;
+     }
  
-diff --git a/meson.build b/meson.build
-index 10464466ff..03ab8184b3 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1316,6 +1316,12 @@ if host_os == 'linux' and (have_system or have_tools)
-                        method: 'pkg-config',
-                        required: get_option('libudev'))
- endif
-+igvm = not_found
-+if not get_option('igvm').auto() or have_system
-+  igvm = dependency('igvm', version: '>= 0.3.0',
-+                    method: 'pkg-config',
-+                    required: get_option('igvm'))
-+endif
+@@ -239,8 +245,13 @@ void pc_system_firmware_init(PCMachineState *pcms,
+     }
  
- mpathlibs = [libudev]
- mpathpersist = not_found
-@@ -2450,6 +2456,7 @@ config_host_data.set('CONFIG_CFI', get_option('cfi'))
- config_host_data.set('CONFIG_SELINUX', selinux.found())
- config_host_data.set('CONFIG_XEN_BACKEND', xen.found())
- config_host_data.set('CONFIG_LIBDW', libdw.found())
-+config_host_data.set('CONFIG_IGVM', igvm.found())
- if xen.found()
-   # protect from xen.version() having less than three components
-   xen_version = xen.version().split('.') + ['0', '0']
-@@ -4550,6 +4557,7 @@ summary_info += {'seccomp support':   seccomp}
- summary_info += {'GlusterFS support': glusterfs}
- summary_info += {'hv-balloon support': hv_balloon}
- summary_info += {'TPM support':       have_tpm}
-+summary_info += {'IGVM support':      igvm}
- summary_info += {'libssh support':    libssh}
- summary_info += {'lzo support':       lzo}
- summary_info += {'snappy support':    snappy}
-diff --git a/meson_options.txt b/meson_options.txt
-index 783b56bcb9..03af9d0f11 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -113,6 +113,8 @@ option('dbus_display', type: 'feature', value: 'auto',
-        description: '-display dbus support')
- option('tpm', type : 'feature', value : 'auto',
-        description: 'TPM support')
-+option('igvm', type: 'feature', value: 'auto',
-+       description: 'Independent Guest Virtual Machine (IGVM) file support')
+     if (!pflash_blk[0]) {
+-        /* Machine property pflash0 not set, use ROM mode */
+-        x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, false);
++        /*
++         * Machine property pflash0 not set, use ROM mode unless using IGVM,
++         * in which case the firmware must be provided by the IGVM file.
++         */
++        if (!X86_MACHINE(pcms)->igvm) {
++            x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, false);
++        }
+     } else {
+         if (kvm_enabled() && !kvm_readonly_mem_enabled()) {
+             /*
+@@ -256,6 +267,20 @@ void pc_system_firmware_init(PCMachineState *pcms,
+     }
  
- # Do not enable it by default even for Mingw32, because it doesn't
- # work on Wine.
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index 107a8f69ce..ea16e51231 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -129,6 +129,7 @@ meson_options_help() {
-   printf "%s\n" '  hv-balloon      hv-balloon driver (requires Glib 2.68+ GTree API)'
-   printf "%s\n" '  hvf             HVF acceleration support'
-   printf "%s\n" '  iconv           Font glyph conversion support'
-+  printf "%s\n" '  igvm            IGVM file support'
-   printf "%s\n" '  jack            JACK sound support'
-   printf "%s\n" '  keyring         Linux keyring support'
-   printf "%s\n" '  kvm             KVM acceleration support'
-@@ -347,6 +348,8 @@ _meson_option_parse() {
-     --iasl=*) quote_sh "-Diasl=$2" ;;
-     --enable-iconv) printf "%s" -Diconv=enabled ;;
-     --disable-iconv) printf "%s" -Diconv=disabled ;;
-+    --enable-igvm) printf "%s" -Digvm=enabled ;;
-+    --disable-igvm) printf "%s" -Digvm=disabled ;;
-     --includedir=*) quote_sh "-Dincludedir=$2" ;;
-     --enable-install-blobs) printf "%s" -Dinstall_blobs=true ;;
-     --disable-install-blobs) printf "%s" -Dinstall_blobs=false ;;
+     pc_system_flash_cleanup_unused(pcms);
++
++    /*
++     * The user should not have specified any pflash devices when using IGVM
++     * to configure the guest.
++     */
++    if (X86_MACHINE(pcms)->igvm) {
++        for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
++            if (pcms->flash[i]) {
++                error_report("pflash devices cannot be configured when "
++                             "using IGVM");
++                exit(1);
++            }
++        }
++    }
+ }
+ 
+ void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
 -- 
 2.43.0
 
