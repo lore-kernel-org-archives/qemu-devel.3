@@ -4,80 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43CF5CCF9E9
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 08:52:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EB8ACCF9E9
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 09:04:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stkDn-0007hD-LE; Thu, 26 Sep 2024 04:51:35 -0400
+	id 1stkQ2-0006ih-VG; Thu, 26 Sep 2024 05:04:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1stkDX-0007fz-EB
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 04:51:20 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1stkQ1-0006hV-II
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 05:04:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1stkDV-000665-NV
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 04:51:19 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1stkPz-0007CW-VW
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 05:04:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727340674;
+ s=mimecast20190719; t=1727341451;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=OBi+OzjBUbVlaARH/a7ZS2dMIXFXTuH8z/wBb3xJupk=;
- b=i4MFtAVhUxq4XXLi7074qYsDjtZLym4z3PqWg3S3++aNC6Yt71CMIVzEbVNMTrT4WBAEvu
- QoZA9sxs7eZXRp/dmlyaI9jzd45CmPsP4vsr9nRZ8fgEjO0YZRj7gxFruarHGUQM7VomKb
- hm5PWnKbqh6Dx904RxIjdtRQVPBeiT8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/HbPVO229pJ3/N0oRwUykc1qsx1QjTc3QyCx1nxt2yU=;
+ b=RigH7KYsCA6aF/6fh4Kmt0Z40jZiTXB5jtQs/6NtrMAvjQkiBSaB9iXAN+7omlv8D7w2rz
+ b2vyqJ8OtCfHhiAtdkAvQi7Gg2xF8WSlA/zGkAnEwGSq7m7J2ME8Vo5MGLGlh6s20jVswe
+ 33kuaTLZUWUO+cVIoWCmCSE6HQCcIG0=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-7-S5tEveuUNECcHDIRpoRVCg-1; Thu, 26 Sep 2024 04:51:13 -0400
-X-MC-Unique: S5tEveuUNECcHDIRpoRVCg-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42e8bf0f5e8so4377555e9.2
- for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 01:51:13 -0700 (PDT)
+ us-mta-425-1LlzH7G5PXyEaWnJ3IjgCg-1; Thu, 26 Sep 2024 05:04:07 -0400
+X-MC-Unique: 1LlzH7G5PXyEaWnJ3IjgCg-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-42cb471a230so5395065e9.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 02:04:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727340672; x=1727945472;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OBi+OzjBUbVlaARH/a7ZS2dMIXFXTuH8z/wBb3xJupk=;
- b=g/DAG2b16OQaqTTDYxb7YdSfDbg7CEIOrb5/jba+czfVtW5jBW202dIUw1m2B6KC5s
- TwjE3+1Zlf2t106UjVV9yMQGjg8kg0+u2KqKGGrEG/CTnMVyuddFzhIq5DTxdULY5ous
- D8laxyZXjaA3qhZUKlvIwpk/YTjnpPuM+e6CAfGp8B9uOqMfw9Gj3YBw3f5T0ULRnotw
- Hm9X8JV7ha/K5KmpUbYP21IqBXfc6G/buywC+Oj3/lxPhUd4TFgOwMIHQn17Odbk2iml
- j9vwWqAGyONsWT3eM5NhdnHrFKqpqZKYWvgZkiIm8PoOmBxdGBSATKpWu9HpNGsv2xqZ
- HmSA==
-X-Gm-Message-State: AOJu0YwSkwotqVV0Xe7mplJZNywRnH2y4IWlxjycBphyP9AFu4fk2xMF
- Su3dMu8NW26gxPi7i7/0gM03wgS4jEvkioX7X4GLoT1AnqgleT/rmjL4IowF6QiBMy7ANDvHLgg
- UMrFsP22UUq/XCEaiLHu4khLEdhSTb6+aGr/cxNDMT2ZefzkUyOpp
-X-Received: by 2002:a05:600c:3556:b0:42c:baf9:beed with SMTP id
- 5b1f17b1804b1-42e96146c41mr36312885e9.27.1727340672054; 
- Thu, 26 Sep 2024 01:51:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGXlsm9xoACKF6f2D7DIqQ9dCKh4gG2SS8L7pepaH/41ooQJcVRfcW6W9rZCcnzFX8aB2LG3g==
-X-Received: by 2002:a05:600c:3556:b0:42c:baf9:beed with SMTP id
- 5b1f17b1804b1-42e96146c41mr36312725e9.27.1727340671616; 
- Thu, 26 Sep 2024 01:51:11 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1727341446; x=1727946246;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:references:cc:to:from:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=/HbPVO229pJ3/N0oRwUykc1qsx1QjTc3QyCx1nxt2yU=;
+ b=v0e/2vcgXu5BurBJehV9kkEgnbyRz4/iLFyL01pWccYmYeAvV0SMsA1PQmJRFba+MX
+ SeyzIGSnTToq5z6jPSi4VC07FEyRC1/NIZ5+iA1xH9WyZ37zjzrMs2xmAYkNwGn1mVY4
+ RWzNzAMTKrp3Z2yYyqL5j9eZiQcBpOP7zyeUlBMzILzKlXh/3YvVmo3ff9yHFIHYGCSN
+ YY6+v21UG/yWhrP0qGXd7dMfD9AItF+TUS1UPzHtp/dsQAJAoJyXd949Jh7rMG+PLWc/
+ LYBQVvdZrYHTu6gseeHVe4d8NdYtcGZ0QeSoKmz5rb6jPj+mGJBxIFmPaePvYOhT/+Fm
+ 6wFg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVMtXP0zoYfP0uvF0CJH4Hr8lLYklBoXZiBgWlKJDonrJE9nlogJLNh9fGFqZOSz+po2C89pLIde+0B@nongnu.org
+X-Gm-Message-State: AOJu0YwQPvWxaZ+QZ5dh0jHuFnXfbylvVnTUk1aZjxvRj6Pm+XeLttlk
+ aBupAPHKTQAPN4+qlQmRRIBbPiEa9fUjWkAUHzB1c4tf8TXducFB7bzBNhWDc8C4S+LOwdIbjwm
+ UFmmv/FsMgGllBbgdOTPkcrK81sYJEvisR4hDtC9vnOvjXi1b7FgTWCuNzOuk
+X-Received: by 2002:a05:600c:510f:b0:42c:b22e:fc2e with SMTP id
+ 5b1f17b1804b1-42e96113c15mr34462415e9.15.1727341446214; 
+ Thu, 26 Sep 2024 02:04:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGz+wqikPLXlDQVnoByPzwH2OsiL/7lb1qr66tpfD9PrVPXvlLi9V/Bs6WRAMmygfFQRCdMbw==
+X-Received: by 2002:a05:600c:510f:b0:42c:b22e:fc2e with SMTP id
+ 5b1f17b1804b1-42e96113c15mr34462215e9.15.1727341445788; 
+ Thu, 26 Sep 2024 02:04:05 -0700 (PDT)
 Received: from ?IPV6:2003:cb:c744:ac00:ef5c:b66d:1075:254a?
  (p200300cbc744ac00ef5cb66d1075254a.dip0.t-ipconnect.de.
  [2003:cb:c744:ac00:ef5c:b66d:1075:254a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cbc1560a7sm5965160f8f.0.2024.09.26.01.51.10
+ ffacd0b85a97d-37cbc2a8be2sm5918967f8f.24.2024.09.26.02.04.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Sep 2024 01:51:11 -0700 (PDT)
-Message-ID: <b43b821e-3fe9-47fe-af68-79e75f872b20@redhat.com>
-Date: Thu, 26 Sep 2024 10:51:10 +0200
+ Thu, 26 Sep 2024 02:04:05 -0700 (PDT)
+Message-ID: <5d065b58-2686-4b6f-bc4b-6f62f1f86e5b@redhat.com>
+Date: Thu, 26 Sep 2024 11:04:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] virtio: kconfig: memory devices are PCI only
-To: Pankaj Gupta <pankaj.gupta.linux@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-References: <20240906101658.514470-1-pbonzini@redhat.com>
- <CAM9Jb+gZ4+M1GOvRy6x8eg8OgOCyoEkBwKS6ZYQhGOOYndh6_g@mail.gmail.com>
-Content-Language: en-US
+Subject: Re: [PATCH v1 10/14] s390x/pv: check initial, not maximum RAM size
 From: David Hildenbrand <david@redhat.com>
+To: Nina Schoetterl-Glausch <nsg@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Janosch Frank <frankja@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>
+References: <20240910175809.2135596-1-david@redhat.com>
+ <20240910175809.2135596-11-david@redhat.com>
+ <c6d51e5a0bd3e222a1fb3354e31bf2edcc3a59d2.camel@linux.ibm.com>
+ <72e7a377-60ab-45ed-9136-327fa4dd9e4c@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
  dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
@@ -123,7 +132,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <CAM9Jb+gZ4+M1GOvRy6x8eg8OgOCyoEkBwKS6ZYQhGOOYndh6_g@mail.gmail.com>
+In-Reply-To: <72e7a377-60ab-45ed-9136-327fa4dd9e4c@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
@@ -135,7 +144,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.108,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,36 +160,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25.09.24 09:39, Pankaj Gupta wrote:
->> Virtio memory devices rely on PCI BARs to expose the contents of memory.
->> Because of this they cannot be used (yet) with virtio-mmio or virtio-ccw.
->> In fact the code that is common to virtio-mem and virtio-pmem, which
->> is in hw/virtio/virtio-md-pci.c, is only included if CONFIG_VIRTIO_PCI
->> is set.  Reproduce the same condition in the Kconfig file, only allowing
->> VIRTIO_MEM and VIRTIO_PMEM to be defined if the transport supports it.
+On 24.09.24 22:17, David Hildenbrand wrote:
+> On 24.09.24 18:22, Nina Schoetterl-Glausch wrote:
+>> On Tue, 2024-09-10 at 19:58 +0200, David Hildenbrand wrote:
+>>> We actually want to check the available RAM, not the maximum RAM size.
+>>>
+>>> Signed-off-by: David Hildenbrand <david@redhat.com>
 >>
->> Without this patch it is possible to create a configuration with
->> CONFIG_VIRTIO_PCI=n and CONFIG_VIRTIO_MEM=y, but that causes a
->> linking failure.
+>> Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+>> Nit below.
+>>> ---
+>>>    target/s390x/kvm/pv.c | 2 +-
+>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/target/s390x/kvm/pv.c b/target/s390x/kvm/pv.c
+>>> index dde836d21a..424cce75ca 100644
+>>> --- a/target/s390x/kvm/pv.c
+>>> +++ b/target/s390x/kvm/pv.c
+>>> @@ -133,7 +133,7 @@ bool s390_pv_vm_try_disable_async(S390CcwMachineState *ms)
+>>>         * If the feature is not present or if the VM is not larger than 2 GiB,
+>>>         * KVM_PV_ASYNC_CLEANUP_PREPARE fill fail; no point in attempting it.
+>>>         */
+>>> -    if ((MACHINE(ms)->maxram_size <= 2 * GiB) ||
+>>> +    if ((MACHINE(ms)->ram_size <= 2 * GiB) ||
+>>>            !kvm_check_extension(kvm_state, KVM_CAP_S390_PROTECTED_ASYNC_DISABLE)) {
+>>>            return false;
+>>>        }
+>>
+>> If I understood the kernel code right, the decision is made wrt
+>> the size of the gmap address space, which is the same as the
+>> limit set for the VM. So using s390_get_memory_limit would be
+>> semantically cleaner.
 > 
-> Just curious what is required to make virtio-mem & virtio-pmem compatible with
-> virtio-mmio?
+> I wonder if we should just drop the RAM size check. Not convinced the
+> slightly faster reboot for such small VMs is really relevant? Makes the
+> code more complicated than really necessary.
 
-I assume not that much: primarily implementing the virtio-md-mmio 
-abstraction, and the virtio-mem-mmio/virtio-pmem-mmio proxy devices. 
-Then, it needs to be wired up in the machine hotplug code.
+Thinking about it,
 
-I posted the virtio-ccw variant a couple of days ago [1].
+diff --git a/target/s390x/kvm/pv.c b/target/s390x/kvm/pv.c
+index 424cce75ca..bbb2108546 100644
+--- a/target/s390x/kvm/pv.c
++++ b/target/s390x/kvm/pv.c
+@@ -133,7 +133,7 @@ bool s390_pv_vm_try_disable_async(S390CcwMachineState *ms)
+       * If the feature is not present or if the VM is not larger than 2 GiB,
+       * KVM_PV_ASYNC_CLEANUP_PREPARE fill fail; no point in attempting it.
+       */
+-    if ((MACHINE(ms)->ram_size <= 2 * GiB) ||
++    if (s390_get_memory_limit(ms) < 2 * GiB ||
+          !kvm_check_extension(kvm_state, KVM_CAP_S390_PROTECTED_ASYNC_DISABLE)) {
+          return false;
+      }
 
-> 
-> Maybe late but still:
-> Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Is probably the easiest change, thanks!
 
-I already sent a merge request that includes this change. If I have to 
-resend it, I'll include that. Thanks!
-
-
-[1] https://lkml.kernel.org/r/20240910175809.2135596-1-david@redhat.com
 
 -- 
 Cheers,
