@@ -4,77 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3835CCF9E9
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 10:33:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E42C9CCF9E9
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 10:33:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stlni-0003f6-CT; Thu, 26 Sep 2024 06:32:46 -0400
+	id 1stloK-00040f-Sl; Thu, 26 Sep 2024 06:33:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <BATV+fb624aaec14ab9bc5bbd+7704+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1stlnd-0003bN-Ks
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 06:32:41 -0400
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ <bounce-md_30504962.66f53402.v1-bed7b4e8d2e64ca6923f6d14752892a7@bounce.vates.tech>)
+ id 1stloJ-0003vc-7n
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 06:33:23 -0400
+Received: from mail136-20.atl41.mandrillapp.com ([198.2.136.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <BATV+fb624aaec14ab9bc5bbd+7704+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1stlnb-00028j-D8
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 06:32:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=wrfrf7Fn+jxiFTa1PMAWH5GDj3SnTIZdArt9j/TFPTk=; b=PrB8eEL6VO1ujfQnR26kdZkB+A
- /PH8P529rcWFoeGdptrDS0gRlokhW+5LP61faQxvbQuOoSDVbKBW1uaZ0XkmURM5ZlJ6uz7QKxaVh
- uBL06R3ZlNnErGR4ZIG+/gE3Yb4mK6MOMVxzAgBzk1qaTyS8z/jJQgCPMfKxtu9MduIqLU4qI0ghN
- yvapx36keZ2zfqQpA8SHMF3vVB3J0jiMna3Hm3jCOP5gzm/H3d9ZnMa89bsf3UBoMCe5X8g1JlGn8
- gQzQnm5+/4GEqmoNp3wZrzcdUYPBk5Tw0waNHPDmZTtGFVwIrgBAv3KE2j5nWpqXra4QEEUoR1rsX
- u08oHEOg==;
-Received: from [2001:8b0:10b:5:16cf:fc6a:25d9:f696]
- (helo=u3832b3a9db3152.ant.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1stln6-00000006P6m-26UX; Thu, 26 Sep 2024 10:32:09 +0000
-Message-ID: <9ef2c0c758825fa1e9daff9dd74d41c2eb6e5d8f.camel@infradead.org>
-Subject: Re: [PATCH v6] ptp: Add support for the AMZNC10C 'vmclock' device
-From: David Woodhouse <dwmw2@infradead.org>
-To: Paolo Abeni <pabeni@redhat.com>, Richard Cochran
- <richardcochran@gmail.com>,  Peter Hilber <peter.hilber@opensynergy.com>,
- linux-kernel@vger.kernel.org, virtualization@lists.linux.dev, 
- linux-arm-kernel@lists.infradead.org, linux-rtc@vger.kernel.org, "Ridoux,
- Julien" <ridouxj@amazon.com>, virtio-dev@lists.linux.dev, "Luu, Ryan"
- <rluu@amazon.com>,  "Chashper, David" <chashper@amazon.com>, "Mohamed
- Abuelfotoh, Hazem" <abuehaze@amazon.com>
-Cc: "Christopher S . Hall" <christopher.s.hall@intel.com>, Jason Wang
- <jasowang@redhat.com>, John Stultz <jstultz@google.com>, "Michael S .
- Tsirkin" <mst@redhat.com>, netdev@vger.kernel.org, Stephen Boyd
- <sboyd@kernel.org>,  Thomas Gleixner <tglx@linutronix.de>, Xuan Zhuo
- <xuanzhuo@linux.alibaba.com>, Marc Zyngier <maz@kernel.org>,  Mark Rutland
- <mark.rutland@arm.com>, Daniel Lezcano <daniel.lezcano@linaro.org>,
- Alessandro Zummo <a.zummo@towertech.it>, Alexandre Belloni
- <alexandre.belloni@bootlin.com>,  qemu-devel <qemu-devel@nongnu.org>, Simon
- Horman <horms@kernel.org>
-Date: Thu, 26 Sep 2024 11:32:08 +0100
-In-Reply-To: <ec30359e-11a6-48fd-9d06-c030307f970c@redhat.com>
-References: <00fb5876322d2fb77816304b5e2c31731d383b76.camel@infradead.org>
- <ec30359e-11a6-48fd-9d06-c030307f970c@redhat.com>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-oj8Z86FuLUB16F3WpaXP"
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ <bounce-md_30504962.66f53402.v1-bed7b4e8d2e64ca6923f6d14752892a7@bounce.vates.tech>)
+ id 1stloH-0002B9-9w
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 06:33:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com;
+ s=mte1; t=1727345667; x=1727606167;
+ bh=v3B/Sq5q797M597CcyjXUiFgMC2JpYVkeXzk/0VKvek=;
+ h=From:Subject:To:Cc:Message-Id:In-Reply-To:References:Feedback-ID:
+ Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
+ Subject:From;
+ b=tp4PIaaIl69Ttun2mNGvvB5A61t+EhtSwSsVvqLwiL5B7uZoWd0uqGre7CRd+xv+X
+ 9aiqKbbK+fmWzod7/ybr1RDcLDixpzctIn9S+3Rl9QVWzEceuuf3tDUGY9cMrP0vZB
+ Cz8alBkd9/1nKAS8licKkP5Vp/4jVFZJcdm2HUgvV5v8XfzMqeL/texwM7Zm8gMs7x
+ pZbcDSxkpNmpURHqgkVrIlaVlvhwZXu+BuL1pzQqOSp1C7kaj7gsB+oJYv8rjpXGU6
+ mPlvqFS5jjWi4B67MGFqXRyerlCixikTQBZ5SjG8VVbLdwXG47H2+HtVnRQTnGEj0j
+ R8MD2xoQcaheQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vates.tech; s=mte1;
+ t=1727345667; x=1727606167; i=anthony.perard@vates.tech;
+ bh=v3B/Sq5q797M597CcyjXUiFgMC2JpYVkeXzk/0VKvek=;
+ h=From:Subject:To:Cc:Message-Id:In-Reply-To:References:Feedback-ID:
+ Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
+ Subject:From;
+ b=JFzeOgt+OvofUo8sxjJQGQA4x58mgj2gGF5E0wMN5NsOyevINP8sScBBBnlUjOn7u
+ uPg1kewvMgLaoodpraIUfBGSrEq3owXOARAqXUE2mP83Zw3GFZ1llxhKq2DXOW+xx6
+ adHUn3pcER6S1JDkNvAAo93PHjqUUZtf9QaxeUmlTU2IDcTBrA+YKACG49LIuuUW+z
+ a44rRBI6RwpYZLkvDB4Gu8xW85XKbh5lLsPSbk3X0mpTDYwN8U9VUGNKNl2qxo0eLE
+ 2TWApaFygskt+/egL0rdWGX7xEqZvsIrKpdDMiBo25DCcLktu/hrGT/IJQRf4SBO6a
+ R5EJktSuC0pUQ==
+Received: from pmta11.mandrill.prod.atl01.rsglab.com (localhost [127.0.0.1])
+ by mail136-20.atl41.mandrillapp.com (Mailchimp) with ESMTP id
+ 4XDqFt74XgzCfBkVf
+ for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 10:14:26 +0000 (GMT)
+From: Anthony PERARD <anthony.perard@vates.tech>
+Subject: =?utf-8?Q?[PATCH=201/2]=20include:=20update=20Xen=20public=20headers=20io/blkif.h?=
+Received: from [37.26.189.201] by mandrillapp.com id
+ bed7b4e8d2e64ca6923f6d14752892a7; Thu, 26 Sep 2024 10:14:26 +0000
+X-Mailer: git-send-email 2.39.2
+X-Bm-Disclaimer: Yes
+X-Bm-Milter-Handled: 4ffbd6c1-ee69-4e1b-aabd-f977039bd3e2
+X-Bm-Transport-Timestamp: 1727345665475
+To: qemu-devel@nongnu.org
+Cc: Anthony PERARD <anthony.perard@vates.tech>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, xen-devel@lists.xenproject.org
+Message-Id: <20240926101334.2388-2-anthony.perard@vates.tech>
+In-Reply-To: <20240926101334.2388-1-anthony.perard@vates.tech>
+References: <20240926101334.2388-1-anthony.perard@vates.tech>
+X-Native-Encoded: 1
+X-Report-Abuse: =?UTF-8?Q?Please=20forward=20a=20copy=20of=20this=20message,
+ =20including=20all=20headers,
+ =20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D30504962.bed7b4e8d2e64ca6923f6d14752892a7?=
+X-Mandrill-User: md_30504962
+Feedback-ID: 30504962:30504962.20240926:md
+Date: Thu, 26 Sep 2024 10:14:26 +0000
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+fb624aaec14ab9bc5bbd+7704+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.2.136.20;
+ envelope-from=bounce-md_30504962.66f53402.v1-bed7b4e8d2e64ca6923f6d14752892a7@bounce.vates.tech;
+ helo=mail136-20.atl41.mandrillapp.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,155 +102,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Signed-off-by: Anthony PERARD <anthony.perard@vates.tech>
+---
+ include/hw/xen/interface/io/blkif.h | 52 +++++++++++++++++++++--------
+ 1 file changed, 39 insertions(+), 13 deletions(-)
 
---=-oj8Z86FuLUB16F3WpaXP
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, 2024-09-26 at 11:22 +0200, Paolo Abeni wrote:
->=20
-> Please have a better run at checkpatch before your next submission,=20
-> there are still a few ones - most relevant white-space damage.
-
-Oops, apparently I missed one. Sorry about that.
-
-I'll also add a MAINTAINERS entry, just to make checkpatch entirely
-silent. I don't think it's particularly important, and things will
-probably change as the virtio-rtc specification hopefully evolves in
-future to provide this same structure, but it doesn't hurt for now.
-
-> Anyway this is net-next material...
->=20
-> ## Form letter - net-next-closed
->=20
-> The merge window for v6.12 and therefore net-next is closed for new
-> drivers, features, code refactoring and optimizations. We are currently
-> accepting bug fixes only.
->=20
-> Please repost when net-next reopens after Sept 30th.
->
-> RFC patches sent for review only are obviously welcome at any time.
-
-Thanks. I've made those changes at
-https://git.infradead.org/?p=3Dusers/dwmw2/linux.git;a=3Dcommitdiff;h=3Dvmc=
-lock
-
-Unless you care deeply or have other feedback, I won't bother spamming
-the recipients again for the sake of a single space character; I'll
-just wait until next week.
-
-
---=-oj8Z86FuLUB16F3WpaXP
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
-ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
-EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
-FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
-aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
-EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
-VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
-ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
-QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
-rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
-ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
-U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
-DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
-BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
-dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
-BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
-QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
-CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
-xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
-IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
-kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
-eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
-KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
-1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
-OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
-x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
-5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
-DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
-VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
-UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
-MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
-ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
-oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
-SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
-xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
-RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
-bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
-NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
-KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
-5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
-C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
-gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
-VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
-by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
-b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
-BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
-QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
-c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
-AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
-qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
-v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
-Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
-tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
-Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
-YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
-ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
-IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
-ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
-GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
-h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
-9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
-P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
-2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
-BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
-7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
-lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
-lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
-AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
-Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
-FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
-BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
-cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
-aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
-LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
-BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
-cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
-Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
-lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
-WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
-hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
-IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
-dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
-NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
-xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
-DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwOTI2MTAzMjA4WjAvBgkqhkiG9w0BCQQxIgQg9B90t3fF
-+7AEBDNVMOhOA7zNlhyrxUF0dlR2FaEJB3Uwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
-A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
-dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
-DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
-MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
-Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
-lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgB3XI0qyeUmKxNnl9umoFx2d+fvkMeSSU7E
-hVlO8A4cg5nXrs9pbOwtIUnC905+8ckkf2DJTa5+6jgHnKb3MC1g0UsAaSbioNz8QcoVhGcNda4B
-X6TSGAIkfu90uGsrtDJuYSbNNpc2mMd4kB1V6C7+626MR5EDDDm5cQc8yK3WmtZ92G/M+IPrkJOf
-3GR0VGSslS8bIsoMeGeJhu5nf5qUmj8K0syfIUReVf8bx+9myTjkdpDd0wV24yq8NBEUeKR6VR36
-2rf29ZGF6aPE67TTcr2ueh0Y6dC+1BiFfPSW3UtFItiPEEFdlNhb5UFXvEEa0DwVjR3ZZqtb9TNa
-kxv/zhJH1M0ThDfBUMQ0zCPLHl6VIfFFfjDDkYOE12W+1WPNzWcyIPvMPOGxQAvBGcw80iiAWPoQ
-VTE5AoilTvf/Wfqw0tbeKN/fpV2Tr34Sla7AOt5eyRyJb0o+eFXuhn9L14fvaG7OIJ/GBNjEvU1B
-MouvODZ3xyGpYu+1pRQe/2mHqMpSs/qDoyZ6K+xcWOCg+HYitCEQIl3RNpz/lMPeHN8aHn51Lkgo
-9ls+X9DVIVFigIp6b8RTJT0hgVm+No8rYOtTL0jdmePC2GyNMLqLxuqJeRCTLLH8BIkfYTPccIG2
-xePxUoEqPSg+2nc8ZnuYq4827y3Bu6U7xuJHTWXmAAAAAAAAAA==
+diff --git a/include/hw/xen/interface/io/blkif.h b/include/hw/xen/interface/io/blkif.h
+index 22f1eef0c0..9b00d633d3 100644
+--- a/include/hw/xen/interface/io/blkif.h
++++ b/include/hw/xen/interface/io/blkif.h
+@@ -237,12 +237,16 @@
+  * sector-size
+  *      Values:         <uint32_t>
+  *
+- *      The logical block size, in bytes, of the underlying storage. This
+- *      must be a power of two with a minimum value of 512.
++ *      The logical block size, in bytes, of the underlying storage. This must
++ *      be a power of two with a minimum value of 512.  The sector size should
++ *      only be used for request segment length and alignment.
+  *
+- *      NOTE: Because of implementation bugs in some frontends this must be
+- *            set to 512, unless the frontend advertizes a non-zero value
+- *            in its "feature-large-sector-size" xenbus node. (See below).
++ *      When exposing a device that uses a logical sector size of 4096, the
++ *      only difference xenstore wise will be that 'sector-size' (and possibly
++ *      'physical-sector-size' if supported by the backend) will be 4096, but
++ *      the 'sectors' node will still be calculated using 512 byte units.  The
++ *      sector base units in the ring requests fields will all be 512 byte
++ *      based despite the logical sector size exposed in 'sector-size'.
+  *
+  * physical-sector-size
+  *      Values:         <uint32_t>
+@@ -254,9 +258,9 @@
+  * sectors
+  *      Values:         <uint64_t>
+  *
+- *      The size of the backend device, expressed in units of "sector-size".
+- *      The product of "sector-size" and "sectors" must also be an integer
+- *      multiple of "physical-sector-size", if that node is present.
++ *      The size of the backend device, expressed in units of 512b.  The
++ *      product of "sectors" * 512 must also be an integer multiple of
++ *      "physical-sector-size", if that node is present.
+  *
+  *****************************************************************************
+  *                            Frontend XenBus Nodes
+@@ -338,6 +342,7 @@
+  * feature-large-sector-size
+  *      Values:         0/1 (boolean)
+  *      Default Value:  0
++ *      Notes:          DEPRECATED, 12
+  *
+  *      A value of "1" indicates that the frontend will correctly supply and
+  *      interpret all sector-based quantities in terms of the "sector-size"
+@@ -411,6 +416,11 @@
+  *(10) The discard-secure property may be present and will be set to 1 if the
+  *     backing device supports secure discard.
+  *(11) Only used by Linux and NetBSD.
++ *(12) Possibly only ever implemented by the QEMU Qdisk backend and the Windows
++ *     PV block frontend.  Other backends and frontends supported 'sector-size'
++ *     values greater than 512 before such feature was added.  Frontends should
++ *     not expose this node, neither should backends make any decisions based
++ *     on it being exposed by the frontend.
+  */
+ 
+ /*
+@@ -619,11 +629,14 @@
+ #define BLKIF_MAX_INDIRECT_PAGES_PER_REQUEST 8
+ 
+ /*
+- * NB. 'first_sect' and 'last_sect' in blkif_request_segment, as well as
+- * 'sector_number' in blkif_request, blkif_request_discard and
+- * blkif_request_indirect are sector-based quantities. See the description
+- * of the "feature-large-sector-size" frontend xenbus node above for
+- * more information.
++ * NB. 'first_sect' and 'last_sect' in blkif_request_segment are all in units
++ * of 512 bytes, despite the 'sector-size' xenstore node possibly having a
++ * value greater than 512.
++ *
++ * The value in 'first_sect' and 'last_sect' fields must be setup so that the
++ * resulting segment offset and size is aligned to the logical sector size
++ * reported by the 'sector-size' xenstore node, see 'Backend Device Properties'
++ * section.
+  */
+ struct blkif_request_segment {
+     grant_ref_t gref;        /* reference to I/O buffer frame        */
+@@ -634,6 +647,10 @@ struct blkif_request_segment {
+ 
+ /*
+  * Starting ring element for any I/O request.
++ *
++ * The 'sector_number' field is in units of 512b, despite the value of the
++ * 'sector-size' xenstore node.  Note however that the offset in
++ * 'sector_number' must be aligned to 'sector-size'.
+  */
+ struct blkif_request {
+     uint8_t        operation;    /* BLKIF_OP_???                         */
+@@ -648,6 +665,10 @@ typedef struct blkif_request blkif_request_t;
+ /*
+  * Cast to this structure when blkif_request.operation == BLKIF_OP_DISCARD
+  * sizeof(struct blkif_request_discard) <= sizeof(struct blkif_request)
++ *
++ * The 'sector_number' field is in units of 512b, despite the value of the
++ * 'sector-size' xenstore node.  Note however that the offset in
++ * 'sector_number' must be aligned to 'sector-size'.
+  */
+ struct blkif_request_discard {
+     uint8_t        operation;    /* BLKIF_OP_DISCARD                     */
+@@ -660,6 +681,11 @@ struct blkif_request_discard {
+ };
+ typedef struct blkif_request_discard blkif_request_discard_t;
+ 
++/*
++ * The 'sector_number' field is in units of 512b, despite the value of the
++ * 'sector-size' xenstore node.  Note however that the offset in
++ * 'sector_number' must be aligned to 'sector-size'.
++ */
+ struct blkif_request_indirect {
+     uint8_t        operation;    /* BLKIF_OP_INDIRECT                    */
+     uint8_t        indirect_op;  /* BLKIF_OP_{READ/WRITE}                */
+-- 
 
 
---=-oj8Z86FuLUB16F3WpaXP--
+Anthony Perard | Vates XCP-ng Developer
+
+XCP-ng & Xen Orchestra - Vates solutions
+
+web: https://vates.tech
 
