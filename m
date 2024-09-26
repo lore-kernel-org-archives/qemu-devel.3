@@ -4,58 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35C1FCCFA1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 11:43:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78594CCFA19
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 11:43:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stmtH-0000tf-10; Thu, 26 Sep 2024 07:42:36 -0400
+	id 1stmtB-0000pj-6s; Thu, 26 Sep 2024 07:42:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1stmt7-0000ox-4p
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:42:25 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ id 1stmt6-0000oa-RB
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:42:24 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1stmt5-0005l0-12
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:42:24 -0400
+ id 1stmt3-0005kq-N4
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 07:42:23 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 585D21F818;
- Thu, 26 Sep 2024 11:42:20 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C7B6B1F815;
+ Thu, 26 Sep 2024 11:42:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1727350940; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=biuToh/ylVyYvCp0yrdqaNnN6YXfd42fbKOgawFSQj4=;
- b=J2V9m1v9gmiDVGVEycjlwdVV9yJeBUBSzb5LDo3BUCfkXs113/7YRq/N227jh2KV25OaYJ
- 7i2jS/mB/sL6Njmzba4yjo2D4TYM5IaO71HJs4yQw0wit/N7SZebujl8m0H+0YFp+ItMvq
- RIj7WDZbnodsEeD1i/MkLTBRoURZBE4=
+ t=1727350939; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Wt3kcYv9qQh8cGTMxRmqa/717oRBIkG70NUbGCMjqnU=;
+ b=QKcDgerjOgIYtDGpKw/zMA3wKs6h2+Sc2whGX8guvyuyfRz5ULxTUjTkqcbDPhGzko2rKF
+ I8ukTx3cSUtwN6L0qObkvj4a8oEJgKyVWMppUjDeooNqZG+VzAUCqlJBngbAYjUghd8EHx
+ u7KWMoVjFb7+SDm57yZj+nE5HageU9I=
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.com header.s=susede1 header.b=J2V9m1v9
+ dkim=pass header.d=suse.com header.s=susede1 header.b=gEJgeUcP
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1727350940; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=biuToh/ylVyYvCp0yrdqaNnN6YXfd42fbKOgawFSQj4=;
- b=J2V9m1v9gmiDVGVEycjlwdVV9yJeBUBSzb5LDo3BUCfkXs113/7YRq/N227jh2KV25OaYJ
- 7i2jS/mB/sL6Njmzba4yjo2D4TYM5IaO71HJs4yQw0wit/N7SZebujl8m0H+0YFp+ItMvq
- RIj7WDZbnodsEeD1i/MkLTBRoURZBE4=
+ t=1727350938; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Wt3kcYv9qQh8cGTMxRmqa/717oRBIkG70NUbGCMjqnU=;
+ b=gEJgeUcPBFIvztq4vn9qiJivTGof9uTcSa/RYYRSUiBmD6FpIjOkD2HGBuIk+fWk+H+ZIf
+ 2ufkoGmS04JLixmOdqFerV+ofPkIhnzQm0MBLGRCJQvKCA10PVyPJde6t1wKROfoKn6Lta
+ SCe4mSvzqRAVesXmi9QgN2/vq0avTf8=
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9B96513793;
- Thu, 26 Sep 2024 11:42:19 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 06FFB13793;
+ Thu, 26 Sep 2024 11:42:17 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id GEsAJJtI9WbcRAAAD6G6ig
- (envelope-from <roy.hopkins@suse.com>); Thu, 26 Sep 2024 11:42:19 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id GdtKO5lI9WbcRAAAD6G6ig
+ (envelope-from <roy.hopkins@suse.com>); Thu, 26 Sep 2024 11:42:17 +0000
 From: Roy Hopkins <roy.hopkins@suse.com>
 To: qemu-devel@nongnu.org
 Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -70,48 +68,45 @@ Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Tom Lendacky <thomas.lendacky@amd.com>,
  Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
-Subject: [PATCH v6 02/16] backends/confidential-guest-support: Add functions
- to support IGVM
-Date: Thu, 26 Sep 2024 12:41:51 +0100
-Message-ID: <d4c1b9d57285757db395d8c6de6e22b3b224f881.1727341768.git.roy.hopkins@suse.com>
+Subject: [PATCH v6 00/16] Introduce support for IGVM files
+Date: Thu, 26 Sep 2024 12:41:49 +0100
+Message-ID: <cover.1727341768.git.roy.hopkins@suse.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1727341768.git.roy.hopkins@suse.com>
-References: <cover.1727341768.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 585D21F818
-X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Rspamd-Queue-Id: C7B6B1F815
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  DWL_DNSWL_MED(-2.00)[suse.com:dkim]; SUSPICIOUS_RECIPS(1.50)[];
  NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
  R_DKIM_ALLOW(-0.20)[suse.com:s=susede1];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.com:s=susede1];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; DKIM_SIGNED(0.00)[suse.com:s=susede1];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
  RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_BLOCKED(0.00)[rspamd.com]; ARC_NA(0.00)[];
  SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_TWELVE(0.00)[19];
- MIME_TRACE(0.00)[0:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.com:email,suse.com:dkim,suse.com:mid];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- RCVD_VIA_SMTP_AUTH(0.00)[]; TAGGED_RCPT(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- FROM_EQ_ENVFROM(0.00)[];
- R_RATELIMIT(0.00)[to_ip_from(RLgjcjk3igk5en59wt86eb8xw3)];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.com:+];
- TO_DN_SOME(0.00)[];
+ ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[19];
+ MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
  FREEMAIL_CC(0.00)[suse.com,redhat.com,gmail.com,habkost.net,alistair23.me,amd.com];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; TAGGED_RCPT(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.com:+];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:mid, suse.com:dkim,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131;
  envelope-from=roy.hopkins@suse.com; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,168 +122,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation for supporting the processing of IGVM files to configure
-guests, this adds a set of functions to ConfidentialGuestSupport
-allowing configuration of secure virtual machines that can be
-implemented for each supported isolation platform type such as Intel TDX
-or AMD SEV-SNP. These functions will be called by IGVM processing code
-in subsequent patches.
+Here is v6 of the set of patches to add support for IGVM files to QEMU. This is
+based on commit a5dd9ee060 of qemu.
 
-This commit provides a default implementation of the functions that
-either perform no action or generate an error when they are called.
-Targets that support ConfidentalGuestSupport should override these
-implementations.
+This version addresses all of the review comments from v5 [1]. As always, thanks
+to those that have been following along, reviewing and testing this series. This
+v6 patch series is also available on github: [2]
 
-Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
----
- backends/confidential-guest-support.c     | 31 +++++++++++
- include/exec/confidential-guest-support.h | 67 +++++++++++++++++++++++
- 2 files changed, 98 insertions(+)
+For testing IGVM support in QEMU you need to generate an IGVM file that is
+configured for the platform you want to launch. You can use the `buildigvm`
+test tool [3] to allow generation of IGVM files for all currently supported
+platforms. Patch 11/17 contains information on how to generate an IGVM file
+using this tool.
 
-diff --git a/backends/confidential-guest-support.c b/backends/confidential-guest-support.c
-index 052fde8db0..c5cc6308f4 100644
---- a/backends/confidential-guest-support.c
-+++ b/backends/confidential-guest-support.c
-@@ -14,14 +14,45 @@
- #include "qemu/osdep.h"
- 
- #include "exec/confidential-guest-support.h"
-+#include "qapi/error.h"
- 
- OBJECT_DEFINE_ABSTRACT_TYPE(ConfidentialGuestSupport,
-                             confidential_guest_support,
-                             CONFIDENTIAL_GUEST_SUPPORT,
-                             OBJECT)
- 
-+static bool check_support(ConfidentialGuestPlatformType platform,
-+                         uint16_t platform_version, uint8_t highest_vtl,
-+                         uint64_t shared_gpa_boundary)
-+{
-+    /* Default: no support. */
-+    return false;
-+}
-+
-+static int set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
-+                           ConfidentialGuestPageType memory_type,
-+                           uint16_t cpu_index, Error **errp)
-+{
-+    error_setg(errp,
-+               "Setting confidential guest state is not supported for this platform");
-+    return -1;
-+}
-+
-+static int get_mem_map_entry(int index, ConfidentialGuestMemoryMapEntry *entry,
-+                             Error **errp)
-+{
-+    error_setg(
-+        errp,
-+        "Obtaining the confidential guest memory map is not supported for this platform");
-+    return -1;
-+}
-+
- static void confidential_guest_support_class_init(ObjectClass *oc, void *data)
- {
-+    ConfidentialGuestSupportClass *cgsc = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
-+    cgsc->check_support = check_support;
-+    cgsc->set_guest_state = set_guest_state;
-+    cgsc->get_mem_map_entry = get_mem_map_entry;
- }
- 
- static void confidential_guest_support_init(Object *obj)
-diff --git a/include/exec/confidential-guest-support.h b/include/exec/confidential-guest-support.h
-index 02dc4e518f..9c97b83d11 100644
---- a/include/exec/confidential-guest-support.h
-+++ b/include/exec/confidential-guest-support.h
-@@ -21,6 +21,7 @@
- #ifndef CONFIG_USER_ONLY
- 
- #include "qom/object.h"
-+#include "exec/hwaddr.h"
- 
- #define TYPE_CONFIDENTIAL_GUEST_SUPPORT "confidential-guest-support"
- OBJECT_DECLARE_TYPE(ConfidentialGuestSupport,
-@@ -28,6 +29,36 @@ OBJECT_DECLARE_TYPE(ConfidentialGuestSupport,
-                     CONFIDENTIAL_GUEST_SUPPORT)
- 
- 
-+typedef enum ConfidentialGuestPlatformType {
-+    CGS_PLATFORM_SEV,
-+    CGS_PLATFORM_SEV_ES,
-+    CGS_PLATFORM_SEV_SNP,
-+} ConfidentialGuestPlatformType;
-+
-+typedef enum ConfidentialGuestMemoryType {
-+    CGS_MEM_RAM,
-+    CGS_MEM_RESERVED,
-+    CGS_MEM_ACPI,
-+    CGS_MEM_NVS,
-+    CGS_MEM_UNUSABLE,
-+} ConfidentialGuestMemoryType;
-+
-+typedef struct ConfidentialGuestMemoryMapEntry {
-+    uint64_t gpa;
-+    uint64_t size;
-+    ConfidentialGuestMemoryType type;
-+} ConfidentialGuestMemoryMapEntry;
-+
-+typedef enum ConfidentialGuestPageType {
-+    CGS_PAGE_TYPE_NORMAL,
-+    CGS_PAGE_TYPE_VMSA,
-+    CGS_PAGE_TYPE_ZERO,
-+    CGS_PAGE_TYPE_UNMEASURED,
-+    CGS_PAGE_TYPE_SECRETS,
-+    CGS_PAGE_TYPE_CPUID,
-+    CGS_PAGE_TYPE_REQUIRED_MEMORY,
-+} ConfidentialGuestPageType;
-+
- struct ConfidentialGuestSupport {
-     Object parent;
- 
-@@ -66,6 +97,42 @@ typedef struct ConfidentialGuestSupportClass {
- 
-     int (*kvm_init)(ConfidentialGuestSupport *cgs, Error **errp);
-     int (*kvm_reset)(ConfidentialGuestSupport *cgs, Error **errp);
-+
-+    /*
-+     * Check to see if this confidential guest supports a particular
-+     * platform or configuration.
-+     *
-+     * Return true if supported or false if not supported.
-+     */
-+    bool (*check_support)(ConfidentialGuestPlatformType platform,
-+                         uint16_t platform_version, uint8_t highest_vtl,
-+                         uint64_t shared_gpa_boundary);
-+
-+    /*
-+     * Configure part of the state of a guest for a particular set of data, page
-+     * type and gpa. This can be used for example to pre-populate and measure
-+     * guest memory contents, define private ranges or set the initial CPU state
-+     * for one or more CPUs.
-+     *
-+     * If memory_type is CGS_PAGE_TYPE_VMSA then ptr points to the initial CPU
-+     * context for a virtual CPU. The format of the data depends on the type of
-+     * confidential virtual machine. For example, for SEV-ES ptr will point to a
-+     * vmcb_save_area structure that should be copied into guest memory at the
-+     * address specified in gpa. The cpu_index parameter contains the index of
-+     * the CPU the VMSA applies to.
-+     */
-+    int (*set_guest_state)(hwaddr gpa, uint8_t *ptr, uint64_t len,
-+                           ConfidentialGuestPageType memory_type,
-+                           uint16_t cpu_index, Error **errp);
-+
-+    /*
-+     * Iterate the system memory map, getting the entry with the given index
-+     * that can be populated into guest memory.
-+     *
-+     * Returns 0 for ok, 1 if the index is out of range and -1 on error.
-+     */
-+    int (*get_mem_map_entry)(int index, ConfidentialGuestMemoryMapEntry *entry,
-+                             Error **errp);
- } ConfidentialGuestSupportClass;
- 
- static inline int confidential_guest_kvm_init(ConfidentialGuestSupport *cgs,
+Changes in v6:
+
+Based on Stefano's review:
+* Change ConfidentialGuestSupport check_support() function to return a bool and
+  add documentation.
+* Ensure igvm_free() is called after successful or failed processing of igvm
+  file.
+* Add command-line documentation for which machine types support IGVM.
+* Update target version from 9.1 to 9.2.
+
+* Add Acked-by and Reviewed-by to relevant commits.
+
+Patch summary:
+
+1-11: Add support and documentation for processing IGVM files for SEV, SEV-ES,
+SEV-SNP and native platforms. 
+
+12-15: Processing of policy and SEV-SNP ID_BLOCK from IGVM file. 
+
+16: Add pre-processing of IGVM file to support synchronization of 'SEV_FEATURES'
+from IGVM VMSA to KVM.
+
+[1] Link to v5:
+https://lore.kernel.org/all/cover.1723560001.git.roy.hopkins@suse.com/
+
+[2] v6 patches also available here:
+https://github.com/roy-hopkins/qemu/tree/igvm_master_v6
+
+[3] `buildigvm` tool v0.2.0
+https://github.com/roy-hopkins/buildigvm/releases/tag/v0.2.0
+
+Roy Hopkins (16):
+  meson: Add optional dependency on IGVM library
+  backends/confidential-guest-support: Add functions to support IGVM
+  backends/igvm: Add IGVM loader and configuration
+  hw/i386: Add igvm-cfg object and processing for IGVM files
+  i386/pc_sysfw: Ensure sysfw flash configuration does not conflict with
+    IGVM
+  sev: Update launch_update_data functions to use Error handling
+  target/i386: Allow setting of R_LDTR and R_TR with
+    cpu_x86_load_seg_cache()
+  i386/sev: Refactor setting of reset vector and initial CPU state
+  i386/sev: Implement ConfidentialGuestSupport functions for SEV
+  docs/system: Add documentation on support for IGVM
+  docs/interop/firmware.json: Add igvm to FirmwareDevice
+  backends/confidential-guest-support: Add set_guest_policy() function
+  backends/igvm: Process initialization sections in IGVM file
+  backends/igvm: Handle policy for SEV guests
+  i386/sev: Add implementation of CGS set_guest_policy()
+  sev: Provide sev_features flags from IGVM VMSA to KVM_SEV_INIT2
+
+ backends/confidential-guest-support.c      |  43 +
+ backends/igvm-cfg.c                        |  52 ++
+ backends/igvm.c                            | 967 +++++++++++++++++++++
+ backends/igvm.h                            |  23 +
+ backends/meson.build                       |   5 +
+ docs/interop/firmware.json                 |  30 +-
+ docs/system/i386/amd-memory-encryption.rst |   2 +
+ docs/system/igvm.rst                       | 173 ++++
+ docs/system/index.rst                      |   1 +
+ hw/i386/pc.c                               |  12 +
+ hw/i386/pc_piix.c                          |  10 +
+ hw/i386/pc_q35.c                           |  10 +
+ hw/i386/pc_sysfw.c                         |  31 +-
+ include/exec/confidential-guest-support.h  |  88 ++
+ include/hw/i386/x86.h                      |   3 +
+ include/sysemu/igvm-cfg.h                  |  47 +
+ meson.build                                |   8 +
+ meson_options.txt                          |   2 +
+ qapi/qom.json                              |  17 +
+ qemu-options.hx                            |  28 +
+ scripts/meson-buildoptions.sh              |   3 +
+ target/i386/cpu.h                          |   9 +-
+ target/i386/sev.c                          | 850 ++++++++++++++++--
+ target/i386/sev.h                          | 124 +++
+ 24 files changed, 2454 insertions(+), 84 deletions(-)
+ create mode 100644 backends/igvm-cfg.c
+ create mode 100644 backends/igvm.c
+ create mode 100644 backends/igvm.h
+ create mode 100644 docs/system/igvm.rst
+ create mode 100644 include/sysemu/igvm-cfg.h
+
 -- 
 2.43.0
 
