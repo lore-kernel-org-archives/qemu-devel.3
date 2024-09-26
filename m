@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80430CCFA15
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 04:50:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FD4CCCFA15
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 04:52:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stgS4-0004pO-IT; Thu, 26 Sep 2024 00:50:04 -0400
+	id 1stgUI-0001H0-E2; Thu, 26 Sep 2024 00:52:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1stgS1-0004gV-98
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 00:50:01 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1stgUG-0001GK-DL
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 00:52:20 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1stgRz-0002Eg-69
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 00:50:01 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-37ccdc0d7f6so280824f8f.0
- for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 21:49:58 -0700 (PDT)
+ id 1stgUE-0002ea-Mo
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 00:52:20 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-42cd74c0d16so4719435e9.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Sep 2024 21:52:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727326195; x=1727930995; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727326337; x=1727931137; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=to+EWBeBhDa/Ji3aOabza393rs6Exp8hihjvwLJK1kM=;
- b=ebbHlqYUdeRCM01e1CAXho0V2R3bXAE0sEevyjVLdngN2ueKEzVQarjHhFk7e7XUci
- V5+QU7gNcJyuzVsmuGcJnOm/fbJhdPdEGNfNkvPOk6kjbRZCJv965v9PMKLPGtFZV8K9
- QAXkGBz0js8GzyvRNWp3Di2JBTLRQK5F5bNpoDAVfSJsie76p02C5clR2VI6ntR6yDXM
- 6O8UR2YE+fsiOfV+GGO5+kKQALqjEJ8ort7YyFmnRQ4sLrOz6WkLBndeq8GwwUtobvAY
- VvJVR0HZMfw/gMQUIGnvMz8dEkW9/7cBerGoUmyL77Dl3+ELRi/o8oldMxoheB9NTRzL
- xC/g==
+ bh=HLUc6IXcf4JTIyonuOIkJjvzd1HfdQYqAEJplhDCdoE=;
+ b=WdYcTZ0TxhdQ2BNe3+jlQHD4WlAA6O3/QzBR2qaFW7l/J62WTg6wiUqfg0imB77nYS
+ o/ngZ63Mj34Y179ho4veMUvNBO5+WRTL1wzPa+DQTcm1rEgd9/K+jMc11+o1f8hOmPuH
+ QxdGGLLjsbUP6Fr1sDpsXuGmjJljPPpNDS5q+AdCX9J2XC3YQfRAM/bJbXXKHqwLa9xm
+ SxAuH8ZBUzRPG5B2AZdu+FbTB/6k9ybGsfYxNbM+Qt2XoFuVtNToDsInRDh/XZSKRSaW
+ f2L9vOOd/0YEx7tz3l4W7CPJNBqZGV8EiNncij2X+29obooE/UkeY5XFmw/ly/+NuH1a
+ h5Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727326195; x=1727930995;
+ d=1e100.net; s=20230601; t=1727326337; x=1727931137;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=to+EWBeBhDa/Ji3aOabza393rs6Exp8hihjvwLJK1kM=;
- b=XFxSzo9BCukMvsf2Ns/w45swlYqw797Gu8R4rpcDZVuaaRsXundrUYh6zS1PAfq0Km
- afaFuwokg1g/ZImNks4m4jpgBReAQ6iGr/bmFEuLF5geI5N5iWFhEYVd+Rpz1Gm3xftn
- +lTRUfHjZhMzzHUCz1jEkgZU7meznDuQade/sif1R/oqCuoHZ7RGx0dBeD5MO2//SJlh
- Jxa7l1QbrOLpGnepaMwsjN+COCidjmMLvWo5zmE+RAZnaDmoXa0EiogX1ryFemi3Q5Jn
- IscQD8mXkSDeim8c7z2Ws6AeoXq900/lQo8UUyyy0dsZ6Kxw3mhFk+hTSNgmIL2F4A0w
- JBoQ==
+ bh=HLUc6IXcf4JTIyonuOIkJjvzd1HfdQYqAEJplhDCdoE=;
+ b=ahJUnJ6M6yWnGEa32kqC7eZLXwBHkuH5jmSjB8i8IBjLZgGs9lFJEy+M4Xe+wwpR18
+ Z0PEc/uFPUwcCsROIgiRFsIvcRitjyj0860GbRQApXRDGijVFZzKXRObLfjQWYJIEQKX
+ 1S34LuT+siCQVCcxYXU1M+f0yuu/DLS9zUyuJMRV61Ow2Xdfe5Gh3o+7p65gPxAto71F
+ ALQBT7lJnzbX+YSweDp+PtGvWenCx0Ou8yq7/KVGVtx6KVs8FaXmdx/WujAYJNWHQ0Pt
+ iWNFUFaPZKr8YVHxCzkVJ0P1XVnu6YZyLMBbZuf5LKDJKE/aJBJzvVmj/Tp6M+3W5YT0
+ 1VDQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCViJJzALG1sEadHjKtnNLVdY2J8cYsdQz1yvMhDb9roYE5R0QLtkbZQq+82qKQV4VGXc61wel8SAdLm@nongnu.org
-X-Gm-Message-State: AOJu0YzH4Waj+qbMIRdPOdpLdUYjOaFYAZ1BVTC4I+1L+HZTGrgF04Qu
- WCjZHGTK13CHgpkf4zWVcYjGOIomfHYVo8XeaXZt5Yaq49jLkipUrByicVJ9Ne8=
-X-Google-Smtp-Source: AGHT+IGrfmYfYXzcCez4i+t3DujBq0uw6tO3g0tH8mDmPaM4RBmsVTqKp947WJdZmuDpInw/3imcxg==
-X-Received: by 2002:adf:f405:0:b0:37c:d0f2:bab2 with SMTP id
- ffacd0b85a97d-37cd0f2bf7fmr202513f8f.3.1727326195608; 
- Wed, 25 Sep 2024 21:49:55 -0700 (PDT)
-Received: from meli-email.org (adsl-109.109.242.225.tellas.gr.
- [109.242.225.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37ccd4a0e34sm1432508f8f.91.2024.09.25.21.49.55
+ AJvYcCWvePZYLwRcWNsOAA9ihuFd3wyKF59OT5XJS+3kvsc/IMjGDjb/w5n90UUR9OzmiPyCGlucXyhWa88W@nongnu.org
+X-Gm-Message-State: AOJu0Yw/CJMYmOGnQHvoh5lKgyMNZ3AOo7Ssl4dtIx9wuUzsbrO3W5Ah
+ 1ImnRacxLw5lDL195VQ21Mvdp0FHKdba17yrDOXFB8yaySTBTHOSbGARSQBqgwE=
+X-Google-Smtp-Source: AGHT+IEejKXfIoJnPiYBMmHJJQ6QeLqK9SorG57kY2v6ao2iHOrcoLctNWpbeg1Y2Jnwd+4PlXgMuw==
+X-Received: by 2002:a05:6000:1288:b0:374:ba2c:3028 with SMTP id
+ ffacd0b85a97d-37cc24c5ad3mr2555727f8f.36.1727326336959; 
+ Wed, 25 Sep 2024 21:52:16 -0700 (PDT)
+Received: from meli-email.org (adsl-13.37.6.161.tellas.gr. [37.6.161.13])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42e969f244asm35130635e9.17.2024.09.25.21.52.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Sep 2024 21:49:55 -0700 (PDT)
-Date: Thu, 26 Sep 2024 07:45:19 +0300
+ Wed, 25 Sep 2024 21:52:16 -0700 (PDT)
+Date: Thu, 26 Sep 2024 07:50:15 +0300
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>, 
@@ -87,18 +87,18 @@ Cc: Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
  Fam Zheng <fam@euphon.net>, Eduardo Habkost <eduardo@habkost.net>, 
  Stefano Garzarella <sgarzare@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH v2 06/22] block/mirror: fix -Werror=maybe-uninitialized
- false-positive
+Subject: Re: [PATCH v2 07/22] block/stream: fix -Werror=maybe-uninitialized
+ false-positives
 User-Agent: meli 0.8.7
 References: <20240924130554.749278-1-marcandre.lureau@redhat.com>
- <20240924130554.749278-7-marcandre.lureau@redhat.com>
-In-Reply-To: <20240924130554.749278-7-marcandre.lureau@redhat.com>
-Message-ID: <kelf6.0oxhf800l0an@linaro.org>
+ <20240924130554.749278-8-marcandre.lureau@redhat.com>
+In-Reply-To: <20240924130554.749278-8-marcandre.lureau@redhat.com>
+Message-ID: <kelj3.9xegcjaacjj@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,57 +123,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, 24 Sep 2024 16:05, marcandre.lureau@redhat.com wrote:
 >From: Marc-André Lureau <marcandre.lureau@redhat.com>
 >
->../block/mirror.c:404:5: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
->../block/mirror.c:895:12: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
->../block/mirror.c:578:12: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
+>../block/stream.c:193:19: error: ‘unfiltered_bs’ may be used uninitialized [-Werror=maybe-uninitialized]
+>../block/stream.c:176:5: error: ‘len’ may be used uninitialized [-Werror=maybe-uninitialized]
+>trace/trace-block.h:906:9: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
 >
 >Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+>Acked-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 >---
-> block/mirror.c | 6 +++---
+> block/stream.c | 6 +++---
 > 1 file changed, 3 insertions(+), 3 deletions(-)
 >
->diff --git a/block/mirror.c b/block/mirror.c
->index 54e3a7ea9d..fd55a580fb 100644
->--- a/block/mirror.c
->+++ b/block/mirror.c
->@@ -349,7 +349,7 @@ static void coroutine_fn mirror_co_read(void *opaque)
->     MirrorOp *op = opaque;
->     MirrorBlockJob *s = op->s;
->     int nb_chunks;
->-    uint64_t ret;
->+    uint64_t ret = -1;
-
-This doesn't look right, `ret` should be int. It receives the return 
-result of bdrv_co_preadv() which is int and is passed as an int argument 
-to mirror_read_complete().
-
-Not related to this patch obviously. But since you're touching this code 
-maybe we could include this small cleanup?
-
-
->     uint64_t max_bytes;
+>diff --git a/block/stream.c b/block/stream.c
+>index 7031eef12b..9076203193 100644
+>--- a/block/stream.c
+>+++ b/block/stream.c
+>@@ -155,8 +155,8 @@ static void stream_clean(Job *job)
+> static int coroutine_fn stream_run(Job *job, Error **errp)
+> {
+>     StreamBlockJob *s = container_of(job, StreamBlockJob, common.job);
+>-    BlockDriverState *unfiltered_bs;
+>-    int64_t len;
+>+    BlockDriverState *unfiltered_bs = NULL;
+>+    int64_t len = -1;
+>     int64_t offset = 0;
+>     int error = 0;
+>     int64_t n = 0; /* bytes */
+>@@ -177,7 +177,7 @@ static int coroutine_fn stream_run(Job *job, Error **errp)
 > 
->     max_bytes = s->granularity * s->max_iov;
->@@ -565,7 +565,7 @@ static void coroutine_fn GRAPH_UNLOCKED mirror_iteration(MirrorBlockJob *s)
-> 
->     bitmap_set(s->in_flight_bitmap, offset / s->granularity, nb_chunks);
->     while (nb_chunks > 0 && offset < s->bdev_length) {
+>     for ( ; offset < len; offset += n) {
+>         bool copy;
 >-        int ret;
 >+        int ret = -1;
->         int64_t io_bytes;
->         int64_t io_bytes_acct;
->         MirrorMethod mirror_method = MIRROR_METHOD_COPY;
->@@ -841,7 +841,7 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
->     int64_t offset;
->     BlockDriverState *bs;
->     BlockDriverState *target_bs = blk_bs(s->target);
->-    int ret;
->+    int ret = -1;
->     int64_t count;
 > 
->     bdrv_graph_co_rdlock();
+>         /* Note that even when no rate limit is applied we need to yield
+>          * with no pending I/O here so that bdrv_drain_all() returns.
 >-- 
 >2.45.2.827.g557ae147e6
 >
 >
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
