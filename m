@@ -4,78 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 772D4CCFA07
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 07:01:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F393CCFA13
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Sep 2024 07:46:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stiUj-00006W-9Q; Thu, 26 Sep 2024 03:00:57 -0400
+	id 1stjCJ-0001Ju-JT; Thu, 26 Sep 2024 03:45:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1stiUP-0008WV-1J
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 03:00:37 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1stiUM-0000rb-7Y
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 03:00:35 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a8d3cde1103so85331966b.2
- for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 00:00:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727334031; x=1727938831; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=i+xeIXtEc6kRNFTUYzQAyKLlvH2lNiGwM74kIZ7VoZY=;
- b=kOyqPNQtI1kWsJTYrnONoLR5aankdcgafUPN9BC2LBcxoagbaU1BkTmZ+PmDv1WnhS
- F/ok3eKGqN/w9za1LmnS9/vgECcjScosYcosoUatD7VnoxcbyevwS02Aq97fHaNzpkhO
- I9oDE/dP3fhODBU4f0dFVZhcyHmOCS5F/Qle/iYJgQSC6p41px1jSvxErMlS7iFcAv1/
- lZ5w4HAmj3XKUaYqD6Ac9JUald8iVHTRkawsHrH1NSF3ur5h9+Hkq0zd4/yk2DBAgISo
- 3/4cdr0/iSO1OUNUsLThE5QVYNLYMbANepy5bLqtminFOlkODCAgklIga++iyGL6hIn0
- rn7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727334031; x=1727938831;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=i+xeIXtEc6kRNFTUYzQAyKLlvH2lNiGwM74kIZ7VoZY=;
- b=k7OJ698/QWz3MXCI4PWUTnC0IQW6PDhejHwNOKTNPeRdDcByrvrctzZaA1dq5EIrpU
- Us7B8vzr1T0fZJZv92xDtWplfEh0UVfksDAGlCtpYak5jI4Slyx+F3/3rXEzE6cRsXXW
- 0LG5GllF/bAfDvLMjuSURFKTiDibXgLdY9shGPRmOHPc+uqc/xZ3Y20UWCvyJIX88jlZ
- WSJRhe6P5CtyzCXPMCU+GF+R2koxEpaIFNQ6+n2w3Dd5MrclRxeQCceeEy8xQyQfU8Ck
- LLlNxDTgJQH7VWxGJ75XH+ROSFc9JCtAkvptmyuy0ySsW7TMHn3xN8/hUM0G/E+LD2jx
- ueHA==
-X-Gm-Message-State: AOJu0YywHfITTODxgdSuWyzvuTW2KHyVgqagz0LQsx0t9I1r0pWSDreQ
- eGZwUjNcYJHNRkEvgDWy1/x5J9Bne5L9qr3d3lWBX2Rn9OdPRyNLkY/V2Q==
-X-Google-Smtp-Source: AGHT+IGv1LSKo9RRkdIRTryR4MJltN9pQJQRMTvvB75NTvoXKuvjYadmXLUPeSt8buyrLjR0Vqi0Mg==
-X-Received: by 2002:a17:907:1c22:b0:a80:7193:bd93 with SMTP id
- a640c23a62f3a-a93a037eb2bmr602026866b.25.1727334029879; 
- Thu, 26 Sep 2024 00:00:29 -0700 (PDT)
-Received: from [127.0.0.1] (dynamic-078-054-081-221.78.54.pool.telefonica.de.
- [78.54.81.221]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a93930f598asm314163266b.154.2024.09.26.00.00.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Sep 2024 00:00:29 -0700 (PDT)
-Date: Thu, 26 Sep 2024 07:00:28 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, dave@treblig.org, pbonzini@redhat.com
-CC: "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH v2] qemu-timer: Remove unused timer functions
-In-Reply-To: <20240919144124.309646-1-dave@treblig.org>
-References: <20240919144124.309646-1-dave@treblig.org>
-Message-ID: <51F83A2C-583D-4272-A462-C82518EB7C54@gmail.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1stjC6-0001G5-BC; Thu, 26 Sep 2024 03:45:47 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1stjC4-0006Ef-4G; Thu, 26 Sep 2024 03:45:46 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 26 Sep
+ 2024 15:45:36 +0800
+Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Thu, 26 Sep 2024 15:45:36 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <yunlin.tang@aspeedtech.com>
+Subject: [PATCH v3 0/6] Support GPIO for AST2700
+Date: Thu, 26 Sep 2024 15:45:29 +0800
+Message-ID: <20240926074535.1286209-1-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,88 +59,30 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 19=2E September 2024 14:41:24 UTC schrieb dave@treblig=2Eorg:
->From: "Dr=2E David Alan Gilbert" <dave@treblig=2Eorg>
->
->qemu_clock_get_main_loop_timerlist and timerlist_get_clock have been
->unused since they were originally added in
->  ff83c66ecc ("aio / timers: Split QEMUClock into QEMUClock and QEMUTimer=
-List")
->
->Remove them=2E
->
->Signed-off-by: Dr=2E David Alan Gilbert <dave@treblig=2Eorg>
+v1: Support GPIO for AST2700
+v2: Fix clear incorrect interrupt status and adds reviewer suggestions
+v3: remove nested conditionals and adds reviewer suggestions
 
-Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+Jamin Lin (6):
+  hw/gpio/aspeed: Fix coding style
+  hw/gpio/aspeed: Support to set the different memory size
+  hw/gpio/aspeed: Support different memory region ops
+  hw/gpio/aspeed: Fix clear incorrect interrupt status for GPIO index
+    mode
+  hw/gpio/aspeed: Add AST2700 support
+  aspeed/soc: Support GPIO for AST2700
 
->---
-> include/qemu/timer=2Eh | 21 ---------------------
-> util/qemu-timer=2Ec    | 10 ----------
-> 2 files changed, 31 deletions(-)
->
->diff --git a/include/qemu/timer=2Eh b/include/qemu/timer=2Eh
->index fa56ec9481=2E=2Ecc167bd825 100644
->--- a/include/qemu/timer=2Eh
->+++ b/include/qemu/timer=2Eh
->@@ -190,16 +190,6 @@ bool qemu_clock_use_for_deadline(QEMUClockType type)=
-;
->  */
-> int64_t qemu_clock_deadline_ns_all(QEMUClockType type, int attr_mask);
->=20
->-/**
->- * qemu_clock_get_main_loop_timerlist:
->- * @type: the clock type
->- *
->- * Return the default timer list associated with a clock=2E
->- *
->- * Returns: the default timer list
->- */
->-QEMUTimerList *qemu_clock_get_main_loop_timerlist(QEMUClockType type);
->-
-> /**
->  * qemu_clock_nofify:
->  * @type: the clock type
->@@ -326,17 +316,6 @@ bool timerlist_expired(QEMUTimerList *timer_list);
->  */
-> int64_t timerlist_deadline_ns(QEMUTimerList *timer_list);
->=20
->-/**
->- * timerlist_get_clock:
->- * @timer_list: the timer list to operate on
->- *
->- * Determine the clock type associated with a timer list=2E
->- *
->- * Returns: the clock type associated with the
->- * timer list=2E
->- */
->-QEMUClockType timerlist_get_clock(QEMUTimerList *timer_list);
->-
-> /**
->  * timerlist_run_timers:
->  * @timer_list: the timer list to use
->diff --git a/util/qemu-timer=2Ec b/util/qemu-timer=2Ec
->index 213114be68=2E=2Edf9327657a 100644
->--- a/util/qemu-timer=2Ec
->+++ b/util/qemu-timer=2Ec
->@@ -286,16 +286,6 @@ int64_t qemu_clock_deadline_ns_all(QEMUClockType typ=
-e, int attr_mask)
->     return deadline;
-> }
->=20
->-QEMUClockType timerlist_get_clock(QEMUTimerList *timer_list)
->-{
->-    return timer_list->clock->type;
->-}
->-
->-QEMUTimerList *qemu_clock_get_main_loop_timerlist(QEMUClockType type)
->-{
->-    return main_loop_tlg=2Etl[type];
->-}
->-
-> void timerlist_notify(QEMUTimerList *timer_list)
-> {
->     if (timer_list->notify_cb) {
+ hw/arm/aspeed_ast27x0.c       |  18 +-
+ hw/gpio/aspeed_gpio.c         | 427 ++++++++++++++++++++++++++++++++--
+ include/hw/gpio/aspeed_gpio.h |   4 +-
+ 3 files changed, 430 insertions(+), 19 deletions(-)
+
+-- 
+2.34.1
+
 
