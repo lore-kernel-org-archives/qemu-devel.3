@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F90CEBF69
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 04:09:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3C77CEBF76
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 04:09:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1su2H8-0002hP-V9; Fri, 27 Sep 2024 00:08:14 -0400
+	id 1su2HI-0003HE-63; Fri, 27 Sep 2024 00:08:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1su2H7-0002fu-KD
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 00:08:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1su2HH-0003E6-9F
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 00:08:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1su2H6-0006FL-6L
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 00:08:13 -0400
+ id 1su2HF-0006GG-V0
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 00:08:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727410090;
+ s=mimecast20190719; t=1727410100;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sUtLn6mEP9jXNcxiSkfFT1wOD+LMw57OEZ4rKSa6gWQ=;
- b=FMECw8lSA/EIvWU1/g+ffC6szcEHYcZWQj6PYqgOXriOBdn98QP3uwVNz2a+XW3DEab2Zj
- /SyhITCBe4GWPNuUtW9uCOn7yvQDoAAV0v1QIfpGDVJ17HiDW2oajeYKPlaK9IfUx/RDw5
- PYrqZZ6YQfm8cbfbDtaJkEhTjycwzkY=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OTnve1IY/xn72fTWJAMzWxStRePV28Y6ecYTjxfYJng=;
+ b=f6s3o+1RUaHr3ZViu0q3QZ/xw3LEr48S1nx429rPNvq+/FeBlrCxghfH+Yz1ZmvXiEW0jW
+ GKF7oD/aod8RtyIYCWDUUUowSZC4mCEkut49zBvRRY374d/eRoFKkIWjkPFA1uutVT2OM+
+ NkwEZQsYp3YR3cCBeT5A7foWqMm+x68=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-37-ehLebv4KP22xl5NuH8Vz7A-1; Fri, 27 Sep 2024 00:08:07 -0400
-X-MC-Unique: ehLebv4KP22xl5NuH8Vz7A-1
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2e072f4300cso2282457a91.1
- for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 21:08:07 -0700 (PDT)
+ us-mta-512-tPuHmQxKNJy5msdCUei9bA-1; Fri, 27 Sep 2024 00:08:15 -0400
+X-MC-Unique: tPuHmQxKNJy5msdCUei9bA-1
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2e08a2b07bcso1719356a91.2
+ for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 21:08:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727410087; x=1728014887;
+ d=1e100.net; s=20230601; t=1727410094; x=1728014894;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sUtLn6mEP9jXNcxiSkfFT1wOD+LMw57OEZ4rKSa6gWQ=;
- b=BE3EEzBf0qYKGDlwAh1fuBPb+BDgQxHmdK2Fjs48TZT53n9tB3PCRp25ayJ/sRtAJC
- HuZ7HS4mYSPYQWWwMBl5tqMSQBOKYRrUcgm/ik4XJ5P6aEu1N9FRIz3evEcsVc0NvvXw
- d9pTTH56xIPYK422JzBpjgKuMgd/9mEpIUQh9pfMfgwNWjNi6yCA0QMiwneeIIN+RzKm
- q2gS4rmLbuIjzptbtmt3wjz06jUxAxfy5ffKFad3T+vFmV3X5XRW5q5k5H0SxKRtcXr9
- 3pgynBwpL/R5n3KhwBMhVMcBROj5n5rHr0RtLHGxV46PzHetCI+IfD9iG8hjQQBJCd+P
- vwbw==
-X-Gm-Message-State: AOJu0Yx7jiL2ZBghO6CnGIZvVjcHQG0ll6d1tcyS8NZuoaLd96GLMqKv
- AUcgM2Nhu/04UQfgg2MLMzcgEaxWq1yfMdJGwXEBG0gCT62QDlVMQ52cRp9OsI4Q+C9djVJuW7d
- Cziw7Qnn1wQ7MrpWQCk4qDSoEHTR3MxfHPry4O4x1zgQ+O2Jq95q9RU8j9NodK4snk5JS5bTOJP
- 1sfQvDQO4JCEil8tbk5tCIgphZWI8=
-X-Received: by 2002:a17:90a:2d89:b0:2da:5acb:5b76 with SMTP id
- 98e67ed59e1d1-2e0b8c42223mr2372269a91.23.1727410086833; 
- Thu, 26 Sep 2024 21:08:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHzeTlrLgBJdduA4DgIe748utw0KK5PmFMBJrdZtAY8L79tg/Ht9DDQZK2vABspJkK++8a2UVntRZtPH0TXZyo=
-X-Received: by 2002:a17:90a:2d89:b0:2da:5acb:5b76 with SMTP id
- 98e67ed59e1d1-2e0b8c42223mr2372248a91.23.1727410086323; Thu, 26 Sep 2024
- 21:08:06 -0700 (PDT)
+ bh=OTnve1IY/xn72fTWJAMzWxStRePV28Y6ecYTjxfYJng=;
+ b=Y51awHgcq2Jhr5s07N2oLqJn4qQV3r+JQgK0MD6eavbAPsUa0HRM6TjgkpFYEFp2Kl
+ G1NqEZUul6Sxx4PJi1BTtjT0lJDGSgAaEtybAAjLBaUUvMn5hekk5Rv7Q1eYIm/k7SGd
+ om6rvV5dRfCThkOc1Y1IhNvS84KqIB45r3t5kPEnMQHrZOzoywsklwJ3eOdBRkoM1TyX
+ ZucqW4B+pLuwlbbiYHYx9LGDJ3KWoj6r1ZXrsJe2+uXbZdz/lryKN/889icP0wD4UN0t
+ wAjYS/hx1bZqS7gVPsKDX+As5+D1gfJ7/9RWYya7ib+MeC02tj5cvwuYhz7wJJ94zTpT
+ odyg==
+X-Gm-Message-State: AOJu0YyKV/r1Fe78xDqCywM8qsNHVL3VUPs8w/XiCtLnRUYJiCClwwwz
+ 0sEzeBuCtetS918e8IczzV/NFTm12wT3u9p5frZMzTcNakQM6VTQRd0kA0SrPdn13/8jNePPRNF
+ aHVEisTsw2gsPvNEh5BYRKK0LA1tBoAxWPtuAk3xwQtfvtc6YFlTl+dw0uHvvloYKBjrCesvkEg
+ sYS9zJbsuzS8L2/u4b4wb76ffEuXk=
+X-Received: by 2002:a17:90b:3546:b0:2da:5edd:c165 with SMTP id
+ 98e67ed59e1d1-2e0b8ea136dmr2306264a91.30.1727410094526; 
+ Thu, 26 Sep 2024 21:08:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFYm+WBFGbQAUVPMQ6yA/ki8tiQQxuizZmzk1CaawuCTquaeLGoSYgLlsN0BXpoHHpOit4YaREZlxrhp3Zk3YM=
+X-Received: by 2002:a17:90b:3546:b0:2da:5edd:c165 with SMTP id
+ 98e67ed59e1d1-2e0b8ea136dmr2306236a91.30.1727410094054; Thu, 26 Sep 2024
+ 21:08:14 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240911052255.1294071-1-zhenzhong.duan@intel.com>
- <20240911052255.1294071-8-zhenzhong.duan@intel.com>
-In-Reply-To: <20240911052255.1294071-8-zhenzhong.duan@intel.com>
+ <20240911052255.1294071-11-zhenzhong.duan@intel.com>
+In-Reply-To: <20240911052255.1294071-11-zhenzhong.duan@intel.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 27 Sep 2024 12:07:53 +0800
-Message-ID: <CACGkMEt5dv-Hs_89Ev2XkAuve_wbX37_=2FBrLLZP6DXzTHKyg@mail.gmail.com>
-Subject: Re: [PATCH v3 07/17] intel_iommu: Check if the input address is
- canonical
+Date: Fri, 27 Sep 2024 12:08:01 +0800
+Message-ID: <CACGkMEuJix+AXU7Fmwaw9yfwr6P1+1s2gsp1GmKieLLQkbgKzQ@mail.gmail.com>
+Subject: Re: [PATCH v3 10/17] intel_iommu: Process PASID-based iotlb
+ invalidation
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com, 
  eric.auger@redhat.com, mst@redhat.com, peterx@redhat.com, jgg@nvidia.com, 
@@ -81,7 +81,7 @@ Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -109,14 +109,15 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Sep 11, 2024 at 1:26=E2=80=AFPM Zhenzhong Duan <zhenzhong.duan@inte=
 l.com> wrote:
 >
-> From: Cl=C3=A9ment Mathieu--Drif <clement.mathieu--drif@eviden.com>
+> PASID-based iotlb (piotlb) is used during walking Intel
+> VT-d stage-1 page table.
 >
-> First stage translation must fail if the address to translate is
-> not canonical.
+> This emulates the stage-1 page table iotlb invalidation requested
+> by a PASID-based IOTLB Invalidate Descriptor (P_IOTLB).
 >
-> Signed-off-by: Cl=C3=A9ment Mathieu--Drif <clement.mathieu--drif@eviden.c=
-om>
+> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Reviewed-by: Cl=C3=A9ment Mathieu--Drif<clement.mathieu--drif@eviden.com>
 > ---
 
 Acked-by: Jason Wang <jasowang@redhat.com>
