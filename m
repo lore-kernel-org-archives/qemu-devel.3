@@ -4,75 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1A93CF6480
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 21:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58E85CF6483
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 21:33:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suIaN-0007u8-QJ; Fri, 27 Sep 2024 17:33:11 -0400
+	id 1suIaI-0007if-5C; Fri, 27 Sep 2024 17:33:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1suIaL-0007rz-Ni
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 17:33:09 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1suIaF-0007hy-Nn
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 17:33:04 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1suIaK-0002BQ-9r
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 17:33:09 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-37a413085cbso2568052f8f.1
- for <qemu-devel@nongnu.org>; Fri, 27 Sep 2024 14:33:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1suIaE-0002Aj-7d
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 17:33:03 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-37cc60c9838so1506751f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Sep 2024 14:33:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727472786; x=1728077586; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=I9zm+sBpkfOJThBc4nEo/SB2oeHmD37YPA9r+McQzdo=;
- b=Qra+TMPc/b0QyGOoz//7ETyjm0476XUcEtOJ/xJ9EgmlygBeQ97qvv/+IVs07ilzwZ
- nGedaF7rvPtKuRP6yM1UDLt1MjfKmU0t4C0BPWmM/iBvnXZWkcTxWrNDGCTxsdaKnvmp
- 3c1//UknS4BctewQYAJsMKxbZmnHK+aUtwQKm/pGQwlCHg4nHgeqZIlwvpn0lLdto86u
- lygx0Pwynhi0CI+ung1KE2k8VIXVHdk7Qs+TCREmCbO70mEFYGfz4JQkj1Vt/YlyHpA4
- dEZhaRaAFkK9j3/kucc0SP6u1cGecC/znPJBp3RFPn/asREc3CxLYiTyajDvJTbBXPYP
- XQcA==
+ d=linaro.org; s=google; t=1727472779; x=1728077579; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QKBasu/qwstNMCkaYsJNHzojroDLlrGD1uq6uVGqcGI=;
+ b=yvOQ19hIhIPctajjogTgdRqwDUGyZ1V1u4V+IOYB106omtRrQWXh5iW9fnRW/s+U2U
+ RNBtJtZLeiUSsXzDvcTz/Xhjl9qcP1c4GzPD8kwpcUNFPFaKuW+ny8tVsdCh1nYoi4/i
+ 3UyO+1Gk9DfbEouemn630WNsGmJYiQ6nANlAT1bC5zhNFnov2F65mUwFzfdWTwtt6pqp
+ 8TpSY8DH/QylwtsVoM/fINPHD5r2FOQ6/fQkYKZQgMBhg7RKMRUzTfLOUfJ+UMpB7oFj
+ jPseS6xmaOMj3awFV5+L9yUDdb0nOD41HupieA+B5dY21J/hixraJI1cWDKT0DkPsmAD
+ HwBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727472786; x=1728077586;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=I9zm+sBpkfOJThBc4nEo/SB2oeHmD37YPA9r+McQzdo=;
- b=tgf72xFwEjS3PPEbHtN8AjaJpmELVH+a2pd/8xW2L5C/RadpNG9KLoOaG+/mXd9B0x
- 7ahOHOftC0v7OwmuVhFrIVQstugxGEXn+G8B7MNH3GtYoTlTBIZHJxOwR4Gd/MHKFtvv
- 3q/M3FB4LJhWAos6/70SHPXFpX4UVZ5Fshax6pjOY/ET/zRDlHFgKcTe6eTTYlXyclBP
- dZYPVLnKEEskwbGG8h5r/+NsuBaxfN1F6UxrrShvRUyixsoR1KwuV47L5MWmvxz+/W6g
- /YI549v1X1rPw4HvuJv/1DDyZruZ8I2Jee6I1i6U+yQ/U+m6afTEnc7IFwfdHXC9LjLg
- dqjg==
-X-Gm-Message-State: AOJu0YywhrxCK/2YePFgfs3fcEympKFEW9q5op1ZWARVOBQv0nBI7+Hg
- QOmyToJP6muuBEDkkUa/sV068UI5+6MM3W1zetO3uCgFq7y7pDEMHCRaswOVu9qpPV1WV7bl5/J
- Q
-X-Google-Smtp-Source: AGHT+IEd9QCfarIuSK4tIer5YBAuAYtsJ/NoGnne/z+pIZ+V2zG/c7LQJfoyV1fpoHWzJs2StKVyCA==
-X-Received: by 2002:a5d:634c:0:b0:379:5c8:33fa with SMTP id
- ffacd0b85a97d-37ccda6c493mr5507631f8f.0.1727472785696; 
- Fri, 27 Sep 2024 14:33:05 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1727472779; x=1728077579;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QKBasu/qwstNMCkaYsJNHzojroDLlrGD1uq6uVGqcGI=;
+ b=samppA8YeXBg8vqppxwdATWhOW9RXl2JAM9R3t3jC+qRQMtGPo6MfTd3/KJnYJ6jJR
+ sGcypoVbMZtKz2RTbNPyk5h0Az+lBeGdg4qyo7Xtww5BpH+l4YzW7GcGuBHljGTLp/6C
+ jj/ALZX1vZCFkXFvK1rxDhG0NPk40M2iaF4Ziw2X5rujR3t0IU0/mGLpkfYp6hN9GLTo
+ XfwXxfU6GXOqqXuESxR5J5FIcYhTN3ZpTyBXrYBqgeQztmwhNewf92xnwo3UPcd7BkcQ
+ E1WA3XqOKqtKrVfQjjE5U1ZhOWhDl70r87hXIzMaQNMxb4JoFokHujfTaDhB7tIuseVo
+ gteg==
+X-Gm-Message-State: AOJu0YzL08+3jBfiR8R/s8Z5kftrxXIVMNkmCyXN3Rkce+tSE7Tdczj5
+ 9GCgg1pyGEY6kFNvYnXnCTo2+u9zzqCFeSE6IC6dIMXTawzoV3I0G8qC+rLo+0xKrhPtQhQMQ2I
+ Y
+X-Google-Smtp-Source: AGHT+IEg0/BbEW2p78Mbm7GbEw4svQprxWs0p7rW0jJvAX4leqcs9M1brqCG3j7bjYIjpbMfcPrxFw==
+X-Received: by 2002:adf:f710:0:b0:371:6fc7:d45d with SMTP id
+ ffacd0b85a97d-37cd56750c5mr3113340f8f.2.1727472779380; 
+ Fri, 27 Sep 2024 14:32:59 -0700 (PDT)
 Received: from localhost.localdomain ([176.187.217.136])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd575c830sm3350556f8f.111.2024.09.27.14.33.03
+ ffacd0b85a97d-37cd5730e6fsm3357571f8f.83.2024.09.27.14.32.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 27 Sep 2024 14:33:05 -0700 (PDT)
+ Fri, 27 Sep 2024 14:32:58 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Song Gao <gaosong@loongson.cn>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/2] hw/loongarch/virt: Remove unnecessary 'cpu.h' inclusion
-Date: Fri, 27 Sep 2024 23:32:53 +0200
-Message-ID: <20240927213254.17552-2-philmd@linaro.org>
+Subject: [PATCH 0/2] hw/loongarch: Build fw_cfg.c as common object
+Date: Fri, 27 Sep 2024 23:32:52 +0200
+Message-ID: <20240927213254.17552-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240927213254.17552-1-philmd@linaro.org>
-References: <20240927213254.17552-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -94,23 +91,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/loongarch/virt.h | 1 -
- 1 file changed, 1 deletion(-)
+LoongArch fw_cfg.c doesn't use target specific declarations,
+build it as common object.
 
-diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-index c373e48f27..9ba47793ef 100644
---- a/include/hw/loongarch/virt.h
-+++ b/include/hw/loongarch/virt.h
-@@ -8,7 +8,6 @@
- #ifndef HW_LOONGARCH_H
- #define HW_LOONGARCH_H
- 
--#include "target/loongarch/cpu.h"
- #include "hw/boards.h"
- #include "qemu/queue.h"
- #include "hw/block/flash.h"
+Philippe Mathieu-Daudé (2):
+  hw/loongarch/virt: Remove unnecessary 'cpu.h' inclusion
+  hw/loongarch/fw_cfg: Build in common_ss[]
+
+ include/hw/loongarch/virt.h | 1 -
+ hw/loongarch/meson.build    | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
 -- 
 2.45.2
 
