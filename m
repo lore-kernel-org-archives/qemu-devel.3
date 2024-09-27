@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D815CEBF78
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 06:12:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70EC0CEBF76
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 06:13:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1su4Dc-0000u1-An; Fri, 27 Sep 2024 02:12:44 -0400
+	id 1su4DB-00071m-Vd; Fri, 27 Sep 2024 02:12:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1su4DX-0000Y3-LV; Fri, 27 Sep 2024 02:12:40 -0400
+ id 1su4D8-0006ns-PV; Fri, 27 Sep 2024 02:12:15 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1su4DV-0003TM-3B; Fri, 27 Sep 2024 02:12:39 -0400
+ id 1su4D6-0003Sb-Uo; Fri, 27 Sep 2024 02:12:14 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0404492D21;
- Fri, 27 Sep 2024 09:10:52 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C8F6492D1E;
+ Fri, 27 Sep 2024 09:10:51 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 73D08146713;
+ by tsrv.corpit.ru (Postfix) with SMTP id 44B72146710;
  Fri, 27 Sep 2024 09:11:22 +0300 (MSK)
-Received: (nullmailer pid 573387 invoked by uid 1000);
+Received: (nullmailer pid 573377 invoked by uid 1000);
  Fri, 27 Sep 2024 06:11:21 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 16/27] qemu-img: snapshot: refresh options/--help
-Date: Fri, 27 Sep 2024 09:11:10 +0300
-Message-Id: <20240927061121.573271-17-mjt@tls.msk.ru>
+Subject: [PATCH 13/27] qemu-img: map: refresh options/--help
+Date: Fri, 27 Sep 2024 09:11:07 +0300
+Message-Id: <20240927061121.573271-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20240927061121.573271-1-mjt@tls.msk.ru>
 References: <20240927061121.573271-1-mjt@tls.msk.ru>
@@ -62,37 +62,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Add missing long options and --help output.
 
+While at it, remove unused option_index variable.
+
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- qemu-img.c | 45 ++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 36 insertions(+), 9 deletions(-)
+ qemu-img.c | 34 ++++++++++++++++++++++++----------
+ 1 file changed, 24 insertions(+), 10 deletions(-)
 
 diff --git a/qemu-img.c b/qemu-img.c
-index 967f6343de..62f9ce4069 100644
+index 34c4cd86de..84e2e53fb7 100644
 --- a/qemu-img.c
 +++ b/qemu-img.c
-@@ -3609,26 +3609,51 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-     for(;;) {
+@@ -3454,7 +3454,6 @@ static int img_map(const img_cmd_t *ccmd, int argc, char **argv)
+ 
+     fmt = NULL;
+     for (;;) {
+-        int option_index = 0;
          static const struct option long_options[] = {
              {"help", no_argument, 0, 'h'},
-+            {"quiet", no_argument, 0, 'q'},
-             {"object", required_argument, 0, OPTION_OBJECT},
-+            {"format", required_argument, 0, 'f'},
-             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
-             {"force-share", no_argument, 0, 'U'},
-+            {"list", no_argument, 0, SNAPSHOT_LIST},
-+            {"apply", no_argument, 0, SNAPSHOT_APPLY},
-+            {"create", no_argument, 0, SNAPSHOT_CREATE},
-+            {"delete", no_argument, 0, SNAPSHOT_DELETE},
+             {"format", required_argument, 0, 'f'},
+@@ -3466,20 +3465,33 @@ static int img_map(const img_cmd_t *ccmd, int argc, char **argv)
+             {"max-length", required_argument, 0, 'l'},
              {0, 0, 0, 0}
          };
--        c = getopt_long(argc, argv, ":la:c:d:f:hqU",
-+        c = getopt_long(argc, argv, "la:c:d:f:hqU",
-                         long_options, NULL);
+-        c = getopt_long(argc, argv, ":f:s:l:hU",
+-                        long_options, &option_index);
++        c = getopt_long(argc, argv, "f:s:l:hU",
++                        long_options, NULL);
          if (c == -1) {
              break;
          }
-         switch(c) {
+         switch (c) {
 -        case ':':
 -            missing_argument(argv[optind - 1]);
 -            break;
@@ -101,38 +101,30 @@ index 967f6343de..62f9ce4069 100644
 -            break;
          case 'h':
 -            help();
--            return 0;
 +            cmd_help(ccmd,
-+"[-f FMT | --image-opts] [-l | -a|-c|-d SNAPSHOT]\n"
-+"        [-U] [--object OBJDEF] FILENAME\n"
++"[-f FMT | --image-opts] [--object OBJDEF] [--output human|json]\n"
++"        [--start-offset OFFSET] [--max-length LENGTH] [-U] FILENAME\n"
 +,
-+"  -q, --quiet\n"
-+"      quiet operations\n"
 +"  -f, --format FMT\n"
-+"      specify FILENAME format explicitly\n"
++"     specify FILENAME image format explicitly\n"
 +"  --image-opts\n"
-+"      indicates that FILENAME is a complete image specification\n"
-+"   instead of a file name (incompatible with --format)\n"
++"     indicates that FILENAME is a complete image specification\n"
++"     instead of a file name (incompatible with --format)\n"
++"  --start-offset OFFSET\n"
++"  --max-length LENGTH\n"
++"  --output human|json\n"
++"     specify output format name (default human)\n"
 +"  -U, --force-share\n"
-+"      open image in shared mode for concurrent access\n"
++"     open image in shared mode for concurrent access\n"
 +"  --object OBJDEF\n"
-+"      QEMU user-creatable object (eg encryption key)\n"
-+"  Operation, one of:\n"
-+"    -l, --list\n"
-+"       list snapshots in FILENAME (the default)\n"
-+"    -c, --create SNAPSHOT\n"
-+"       create named snapshot\n"
-+"    -a, --apply SNAPSHOT\n"
-+"       apply named snapshot to the base\n"
-+"    -d, --delete SNAPSHOT\n"
-+"       delete named snapshot\n"
-+"  FILENAME - image file name (or specification with --image-opts)\n"
++"     QEMU user-creatable object (eg encryption key)\n"
++"  FILENAME\n"
++"     image file name (or specification with --image-opts)\n"
 +);
-+            break;
+             break;
          case 'f':
              fmt = optarg;
-             break;
-@@ -3655,6 +3680,8 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
+@@ -3508,6 +3520,8 @@ static int img_map(const img_cmd_t *ccmd, int argc, char **argv)
          case OPTION_IMAGE_OPTS:
              image_opts = true;
              break;
@@ -140,7 +132,7 @@ index 967f6343de..62f9ce4069 100644
 +            tryhelp(argv[0]);
          }
      }
- 
+     if (optind != argc - 1) {
 -- 
 2.39.5
 
