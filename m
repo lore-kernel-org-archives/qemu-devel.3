@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5106FCEBF66
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 00:54:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EE62CEBF60
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 00:54:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stzCz-00034d-U0; Thu, 26 Sep 2024 20:51:45 -0400
+	id 1stzCn-0002EC-BT; Thu, 26 Sep 2024 20:51:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1stzCy-0002wu-1e; Thu, 26 Sep 2024 20:51:44 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1stzCl-0002C2-JN; Thu, 26 Sep 2024 20:51:31 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1stzCu-0007HG-Pl; Thu, 26 Sep 2024 20:51:43 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48QEnJpK021746;
- Fri, 27 Sep 2024 00:51:39 GMT
+ id 1stzCj-0007Ee-HB; Thu, 26 Sep 2024 20:51:31 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48QG9Xh4021418;
+ Fri, 27 Sep 2024 00:51:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=DuxyK50HbustP
- xZDd5uoYLDv0JAe+6bQCiMOs0cEEF0=; b=gPbx1+xcA1ccItXcD0Ma+dfWOTmpf
- l9xEQzH1bBukJ4MJ5zCfi1BgzM4bGXSG6I3reaD7K1uTDbAFedP++Zyw+2iJ4aeP
- nWyu84ZAlp2mZfh7zUpoWjm7fdXL4AFzmG8/F8IK+luQjrAqbcbaDFQbrQk55WE4
- jioYwEDsC8ZDOUq6gytjzEz9Gfd0lycZud48LRvYbv6VDSKkll/HKwxyHkfYpHoU
- gEzyf28JWus/mZG/AKuSIubWkxaGnP6uAwO95hL976s4RJ6l9b4aSaIr7Y/nuTqu
- F3HYhkgc9ZZ2WPCTMHMXL3Ahb9WZg4bKILF41H8PdeU9drckRVbjmVE8g==
+ :mime-version:content-transfer-encoding; s=pp1; bh=Zc+UqtXlqTuKR
+ 1tNaSMpWLawwgcVbIxSBFOpo/f52TU=; b=hNNV4sLJkLV0JoOZPJQzLCohVUdZP
+ V9XZB8swMBjYlTsJBBKAY9RGDAQb0YF5qE4VVk0VPq3zCMCUzmCCCdq6qYhclaVu
+ l8+jpCOQ0j3sBYArDBfKd4HvAtmlEWOjIlHKtwHdFck9tZPde1Tyxf2QfdUqDpld
+ vd9RWo0W3NLdntqMquBp0F15b3/yB+sXC1L0hBSKv5Jv8ouoZx2n7Y3ANGF3Itzs
+ OawqC6/hpOWOcl9o0UjL+4WYFopt+n+j/OglGUJCz5I0wJwUrJFfZklV3Zlhqs/n
+ J8llFBDD+HeKRDZ3pVnBA6SfSQgD8BHKyk0q531/xphzSURPORe6BJxXw==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41snvbhjdb-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41skjs16bv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Sep 2024 00:51:39 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48R0pcwu028887;
- Fri, 27 Sep 2024 00:51:38 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41snvbhjd7-1
+ Fri, 27 Sep 2024 00:51:25 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48R0pPN1008052;
+ Fri, 27 Sep 2024 00:51:25 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41skjs16bt-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Sep 2024 00:51:38 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48QLHFiM012489;
- Fri, 27 Sep 2024 00:51:37 GMT
+ Fri, 27 Sep 2024 00:51:25 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48QNI7P3005862;
+ Fri, 27 Sep 2024 00:51:24 GMT
 Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41t9fqa622-1
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 41tapmsxgy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Sep 2024 00:51:37 +0000
+ Fri, 27 Sep 2024 00:51:24 +0000
 Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
  [10.241.53.104])
  by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48R0paqc39911896
+ 48R0pNT242598780
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 27 Sep 2024 00:51:36 GMT
+ Fri, 27 Sep 2024 00:51:23 GMT
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 10B0858056;
- Fri, 27 Sep 2024 00:51:36 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8719358056;
+ Fri, 27 Sep 2024 00:51:23 +0000 (GMT)
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9040358052;
- Fri, 27 Sep 2024 00:51:35 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1276958052;
+ Fri, 27 Sep 2024 00:51:23 +0000 (GMT)
 Received: from localhost.localdomain (unknown [9.61.154.26])
  by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 27 Sep 2024 00:51:35 +0000 (GMT)
+ Fri, 27 Sep 2024 00:51:22 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
 Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
-Subject: [PATCH 10/18] pc-bios/s390-ccw: Remove panics from DASD IPL path
-Date: Thu, 26 Sep 2024 20:51:09 -0400
-Message-ID: <20240927005117.1679506-11-jrossi@linux.ibm.com>
+Subject: [PATCH 01/18] hw/s390x/ipl: Provide more memory to the s390-ccw.img
+ firmware
+Date: Thu, 26 Sep 2024 20:51:00 -0400
+Message-ID: <20240927005117.1679506-2-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20240927005117.1679506-1-jrossi@linux.ibm.com>
 References: <20240927005117.1679506-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: DvjyTbIDL9OGKubNUDIOlZzPU2SnvZOo
-X-Proofpoint-GUID: dYo-448SLei1PqhgqAUYt-FVAw4qmVHr
+X-Proofpoint-GUID: 8aWJQzDRegPG_k0ApsG660IcZvCf_IMB
+X-Proofpoint-ORIG-GUID: uHGPOvqMKAGvYnr-WJbB52QRL6zIHuQv
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-26_06,2024-09-26_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- priorityscore=1501 phishscore=0 clxscore=1015 spamscore=0 mlxscore=0
- adultscore=0 impostorscore=0 bulkscore=0 malwarescore=0 suspectscore=0
- mlxlogscore=677 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409270002
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ mlxscore=0 priorityscore=1501
+ spamscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0
+ clxscore=1015 malwarescore=0 mlxlogscore=566 bulkscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2409270002
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -114,162 +115,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-Remove panic-on-error from DASD IPL specific functions so that error recovery
-may be possible in the future.
+We are going to link the SLOF libc into the s390-ccw.img, and this
+libc needs more memory for providing space for malloc() and friends.
+Thus bump the memory size that we reserve for the bios to 3 MiB
+instead of only 2 MiB. While we're at it, add a proper check that
+there is really enough memory assigned to the machine before blindly
+using it.
 
-Functions that would previously panic now provide a return code.
-
+Co-authored by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 
 ---
- pc-bios/s390-ccw/dasd-ipl.h |  2 +-
- pc-bios/s390-ccw/dasd-ipl.c | 66 ++++++++++++++++++++-----------------
- 2 files changed, 37 insertions(+), 31 deletions(-)
+ hw/s390x/ipl.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/pc-bios/s390-ccw/dasd-ipl.h b/pc-bios/s390-ccw/dasd-ipl.h
-index c394828906..eb1898c84a 100644
---- a/pc-bios/s390-ccw/dasd-ipl.h
-+++ b/pc-bios/s390-ccw/dasd-ipl.h
-@@ -11,6 +11,6 @@
- #ifndef DASD_IPL_H
- #define DASD_IPL_H
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+index dd71689642..c33a044d1d 100644
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -45,6 +45,7 @@
+ #define INITRD_PARM_START               0x010408UL
+ #define PARMFILE_START                  0x001000UL
+ #define ZIPL_IMAGE_START                0x009000UL
++#define BIOS_MAX_SIZE                   0x300000UL
+ #define IPL_PSW_MASK                    (PSW_MASK_32 | PSW_MASK_64)
  
--void dasd_ipl(SubChannelId schid, uint16_t cutype);
-+int dasd_ipl(SubChannelId schid, uint16_t cutype);
- 
- #endif /* DASD_IPL_H */
-diff --git a/pc-bios/s390-ccw/dasd-ipl.c b/pc-bios/s390-ccw/dasd-ipl.c
-index 99c0b93083..cd4fb884d6 100644
---- a/pc-bios/s390-ccw/dasd-ipl.c
-+++ b/pc-bios/s390-ccw/dasd-ipl.c
-@@ -111,38 +111,29 @@ static void make_readipl(void)
-     ccwIplRead->count = 0x18; /* Read 0x18 bytes of data */
- }
- 
--static void run_readipl(SubChannelId schid, uint16_t cutype)
-+static int run_readipl(SubChannelId schid, uint16_t cutype)
- {
--    if (do_cio(schid, cutype, 0x00, CCW_FMT0)) {
--        panic("dasd-ipl: Failed to run Read IPL channel program\n");
--    }
-+    return do_cio(schid, cutype, 0x00, CCW_FMT0);
- }
- 
- /*
-  * The architecture states that IPL1 data should consist of a psw followed by
-  * format-0 READ and TIC CCWs. Let's sanity check.
-  */
--static void check_ipl1(void)
-+static bool check_ipl1(void)
- {
-     Ccw0 *ccwread = (Ccw0 *)0x08;
-     Ccw0 *ccwtic = (Ccw0 *)0x10;
- 
--    if (ccwread->cmd_code != CCW_CMD_DASD_READ ||
--        ccwtic->cmd_code != CCW_CMD_TIC) {
--        panic("dasd-ipl: IPL1 data invalid. Is this disk really bootable?\n");
--    }
-+    return (ccwread->cmd_code == CCW_CMD_DASD_READ &&
-+            ccwtic->cmd_code == CCW_CMD_TIC);
- }
- 
--static void check_ipl2(uint32_t ipl2_addr)
-+static bool check_ipl2(uint32_t ipl2_addr)
- {
-     Ccw0 *ccw = u32toptr(ipl2_addr);
- 
--    if (ipl2_addr == 0x00) {
--        panic("IPL2 address invalid. Is this disk really bootable?\n");
--    }
--    if (ccw->cmd_code == 0x00) {
--        panic("IPL2 ccw data invalid. Is this disk really bootable?\n");
--    }
-+    return (ipl2_addr != 0x00 && ccw->cmd_code != 0x00);
- }
- 
- static uint32_t read_ipl2_addr(void)
-@@ -188,52 +179,67 @@ static void ipl1_fixup(void)
-     ccwSearchTic->cda = ptr2u32(ccwSearchID);
- }
- 
--static void run_ipl1(SubChannelId schid, uint16_t cutype)
-+static int run_ipl1(SubChannelId schid, uint16_t cutype)
-  {
-     uint32_t startAddr = 0x08;
- 
--    if (do_cio(schid, cutype, startAddr, CCW_FMT0)) {
--        panic("dasd-ipl: Failed to run IPL1 channel program\n");
--    }
-+    return do_cio(schid, cutype, startAddr, CCW_FMT0);
- }
- 
--static void run_ipl2(SubChannelId schid, uint16_t cutype, uint32_t addr)
-+static int run_ipl2(SubChannelId schid, uint16_t cutype, uint32_t addr)
- {
--    if (run_dynamic_ccw_program(schid, cutype, addr)) {
--        panic("dasd-ipl: Failed to run IPL2 channel program\n");
--    }
-+    return run_dynamic_ccw_program(schid, cutype, addr);
- }
- 
- /*
-  * Limitations in vfio-ccw support complicate the IPL process. Details can
-  * be found in docs/devel/s390-dasd-ipl.rst
-  */
--void dasd_ipl(SubChannelId schid, uint16_t cutype)
-+int dasd_ipl(SubChannelId schid, uint16_t cutype)
- {
-     PSWLegacy *pswl = (PSWLegacy *) 0x00;
-     uint32_t ipl2_addr;
- 
-     /* Construct Read IPL CCW and run it to read IPL1 from boot disk */
-     make_readipl();
--    run_readipl(schid, cutype);
-+    if (run_readipl(schid, cutype)) {
-+        puts("Failed to run Read IPL channel program");
-+        return -EIO;
-+    }
-+
-     ipl2_addr = read_ipl2_addr();
--    check_ipl1();
-+
-+    if (!check_ipl1()) {
-+        puts("IPL1 invalid for DASD-IPL");
-+        return -EINVAL;
-+    }
- 
-     /*
-      * Fixup IPL1 channel program to account for vfio-ccw limitations, then run
-      * it to read IPL2 channel program from boot disk.
+ static bool iplb_extended_needed(void *opaque)
+@@ -144,7 +145,14 @@ static void s390_ipl_realize(DeviceState *dev, Error **errp)
+      * even if an external kernel has been defined.
       */
-     ipl1_fixup();
--    run_ipl1(schid, cutype);
--    check_ipl2(ipl2_addr);
-+    if (run_ipl1(schid, cutype)) {
-+        puts("Failed to run IPL1 channel program");
-+        return -EIO;
-+    }
+     if (!ipl->kernel || ipl->enforce_bios) {
+-        uint64_t fwbase = (MIN(ms->ram_size, 0x80000000U) - 0x200000) & ~0xffffUL;
++        uint64_t fwbase;
 +
-+    if (!check_ipl2(ipl2_addr)) {
-+        puts("IPL2 invalid for DASD-IPL");
-+        return -EINVAL;
-+    }
++        if (ms->ram_size < BIOS_MAX_SIZE) {
++            error_setg(errp, "not enough RAM to load the BIOS file");
++            return;
++        }
++
++        fwbase = (MIN(ms->ram_size, 0x80000000U) - BIOS_MAX_SIZE) & ~0xffffUL;
  
-     /*
-      * Run IPL2 channel program to read operating system code from boot disk
-      */
--    run_ipl2(schid, cutype, ipl2_addr);
-+    if (run_ipl2(schid, cutype, ipl2_addr)) {
-+        puts("Failed to run IPL2 channel program");
-+        return -EIO;
-+    }
- 
-     /* Transfer control to the guest operating system */
-     pswl->mask |= PSW_MASK_EAMODE;   /* Force z-mode */
-     pswl->addr |= PSW_MASK_BAMODE;   /* ...          */
-     jump_to_low_kernel();
-+    return 1;
- }
+         bios_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, ipl->firmware);
+         if (bios_filename == NULL) {
 -- 
 2.45.1
 
