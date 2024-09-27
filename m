@@ -4,40 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 210EDCEBF76
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 06:12:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D815CEBF78
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 06:12:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1su4DD-0007CD-UR; Fri, 27 Sep 2024 02:12:20 -0400
+	id 1su4Dc-0000u1-An; Fri, 27 Sep 2024 02:12:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1su4DC-00073J-37; Fri, 27 Sep 2024 02:12:18 -0400
+ id 1su4DX-0000Y3-LV; Fri, 27 Sep 2024 02:12:40 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1su4DA-0003TC-6n; Fri, 27 Sep 2024 02:12:17 -0400
+ id 1su4DV-0003TM-3B; Fri, 27 Sep 2024 02:12:39 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EC6C892D20;
- Fri, 27 Sep 2024 09:10:51 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0404492D21;
+ Fri, 27 Sep 2024 09:10:52 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5C4CB146712;
+ by tsrv.corpit.ru (Postfix) with SMTP id 73D08146713;
  Fri, 27 Sep 2024 09:11:22 +0300 (MSK)
-Received: (nullmailer pid 573383 invoked by uid 1000);
+Received: (nullmailer pid 573387 invoked by uid 1000);
  Fri, 27 Sep 2024 06:11:21 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 15/27] qemu-img: snapshot: make -l (list) the default,
- simplify option handling
-Date: Fri, 27 Sep 2024 09:11:09 +0300
-Message-Id: <20240927061121.573271-16-mjt@tls.msk.ru>
+Subject: [PATCH 16/27] qemu-img: snapshot: refresh options/--help
+Date: Fri, 27 Sep 2024 09:11:10 +0300
+Message-Id: <20240927061121.573271-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20240927061121.573271-1-mjt@tls.msk.ru>
 References: <20240927061121.573271-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,131 +60,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When no -l/-a/-c/-d specified, assume -l (list).
-
-Use the same values for SNAPSHOT_LIST/etc constants as the
-option chars (lacd), this makes it possible to simplify
-option handling a lot, combining cases for 4 options into
-one.
-
-Also remove bdrv_oflags handling (only list can use RO mode).
+Add missing long options and --help output.
 
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/tools/qemu-img.rst |  2 +-
- qemu-img.c              | 52 ++++++++++++++---------------------------
- 2 files changed, 19 insertions(+), 35 deletions(-)
+ qemu-img.c | 45 ++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 36 insertions(+), 9 deletions(-)
 
-diff --git a/docs/tools/qemu-img.rst b/docs/tools/qemu-img.rst
-index 9b628c4da5..df184d15b9 100644
---- a/docs/tools/qemu-img.rst
-+++ b/docs/tools/qemu-img.rst
-@@ -256,7 +256,7 @@ Parameters to snapshot subcommand:
- 
- .. option:: -l
- 
--  Lists all snapshots in the given image
-+  Lists all snapshots in the given image (default action)
- 
- Command description:
- 
 diff --git a/qemu-img.c b/qemu-img.c
-index 8adc324496..967f6343de 100644
+index 967f6343de..62f9ce4069 100644
 --- a/qemu-img.c
 +++ b/qemu-img.c
-@@ -3585,10 +3585,11 @@ out:
-     return ret < 0;
- }
- 
--#define SNAPSHOT_LIST   1
--#define SNAPSHOT_CREATE 2
--#define SNAPSHOT_APPLY  3
--#define SNAPSHOT_DELETE 4
-+/* the same as options */
-+#define SNAPSHOT_LIST   'l'
-+#define SNAPSHOT_CREATE 'c'
-+#define SNAPSHOT_APPLY  'a'
-+#define SNAPSHOT_DELETE 'd'
- 
- static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
- {
-@@ -3596,7 +3597,7 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-     BlockDriverState *bs;
-     QEMUSnapshotInfo sn;
-     char *filename, *fmt = NULL, *snapshot_name = NULL;
--    int c, ret = 0, bdrv_oflags;
-+    int c, ret = 0;
-     int action = 0;
-     bool quiet = false;
-     Error *err = NULL;
-@@ -3604,7 +3605,6 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-     bool force_share = false;
-     int64_t rt;
- 
--    bdrv_oflags = BDRV_O_RDWR;
-     /* Parse commandline parameters */
+@@ -3609,26 +3609,51 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
      for(;;) {
          static const struct option long_options[] = {
-@@ -3632,36 +3632,15 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
+             {"help", no_argument, 0, 'h'},
++            {"quiet", no_argument, 0, 'q'},
+             {"object", required_argument, 0, OPTION_OBJECT},
++            {"format", required_argument, 0, 'f'},
+             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
+             {"force-share", no_argument, 0, 'U'},
++            {"list", no_argument, 0, SNAPSHOT_LIST},
++            {"apply", no_argument, 0, SNAPSHOT_APPLY},
++            {"create", no_argument, 0, SNAPSHOT_CREATE},
++            {"delete", no_argument, 0, SNAPSHOT_DELETE},
+             {0, 0, 0, 0}
+         };
+-        c = getopt_long(argc, argv, ":la:c:d:f:hqU",
++        c = getopt_long(argc, argv, "la:c:d:f:hqU",
+                         long_options, NULL);
+         if (c == -1) {
+             break;
+         }
+         switch(c) {
+-        case ':':
+-            missing_argument(argv[optind - 1]);
+-            break;
+-        case '?':
+-            unrecognized_option(argv[optind - 1]);
+-            break;
+         case 'h':
+-            help();
+-            return 0;
++            cmd_help(ccmd,
++"[-f FMT | --image-opts] [-l | -a|-c|-d SNAPSHOT]\n"
++"        [-U] [--object OBJDEF] FILENAME\n"
++,
++"  -q, --quiet\n"
++"      quiet operations\n"
++"  -f, --format FMT\n"
++"      specify FILENAME format explicitly\n"
++"  --image-opts\n"
++"      indicates that FILENAME is a complete image specification\n"
++"   instead of a file name (incompatible with --format)\n"
++"  -U, --force-share\n"
++"      open image in shared mode for concurrent access\n"
++"  --object OBJDEF\n"
++"      QEMU user-creatable object (eg encryption key)\n"
++"  Operation, one of:\n"
++"    -l, --list\n"
++"       list snapshots in FILENAME (the default)\n"
++"    -c, --create SNAPSHOT\n"
++"       create named snapshot\n"
++"    -a, --apply SNAPSHOT\n"
++"       apply named snapshot to the base\n"
++"    -d, --delete SNAPSHOT\n"
++"       delete named snapshot\n"
++"  FILENAME - image file name (or specification with --image-opts)\n"
++);
++            break;
          case 'f':
              fmt = optarg;
              break;
--        case 'l':
--            if (action) {
--                error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
--                return 0;
--            }
--            action = SNAPSHOT_LIST;
--            bdrv_oflags &= ~BDRV_O_RDWR; /* no need for RW */
--            break;
--        case 'a':
-+        case SNAPSHOT_LIST:
-+        case SNAPSHOT_APPLY:
-+        case SNAPSHOT_CREATE:
-+        case SNAPSHOT_DELETE:
-             if (action) {
-                 error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
-                 return 0;
-             }
--            action = SNAPSHOT_APPLY;
--            snapshot_name = optarg;
--            break;
--        case 'c':
--            if (action) {
--                error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
--                return 0;
--            }
--            action = SNAPSHOT_CREATE;
--            snapshot_name = optarg;
--            break;
--        case 'd':
--            if (action) {
--                error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
--                return 0;
--            }
--            action = SNAPSHOT_DELETE;
-+            action = c;
-             snapshot_name = optarg;
+@@ -3655,6 +3680,8 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
+         case OPTION_IMAGE_OPTS:
+             image_opts = true;
              break;
-         case 'q':
-@@ -3684,9 +3663,14 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
++        default:
++            tryhelp(argv[0]);
+         }
      }
-     filename = argv[optind++];
  
-+    if (!action) {
-+        action = SNAPSHOT_LIST;
-+    }
-+
-     /* Open the image */
--    blk = img_open(image_opts, filename, fmt, bdrv_oflags, false, quiet,
--                   force_share);
-+    blk = img_open(image_opts, filename, fmt,
-+                   action == SNAPSHOT_LIST ? 0 : BDRV_O_RDWR,
-+                   false, quiet, force_share);
-     if (!blk) {
-         return 1;
-     }
 -- 
 2.39.5
 
