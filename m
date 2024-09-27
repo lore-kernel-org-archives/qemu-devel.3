@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A972CEBF66
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 085E9CEBF63
 	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 00:52:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stzCo-0002Ki-Ob; Thu, 26 Sep 2024 20:51:34 -0400
+	id 1stzCo-0002HX-52; Thu, 26 Sep 2024 20:51:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1stzCn-0002EY-BQ; Thu, 26 Sep 2024 20:51:33 -0400
+ id 1stzCm-0002Cl-6R; Thu, 26 Sep 2024 20:51:32 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1stzCk-0007Eu-HH; Thu, 26 Sep 2024 20:51:32 -0400
+ id 1stzCj-0007EV-83; Thu, 26 Sep 2024 20:51:31 -0400
 Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48QNIWMs026523;
- Fri, 27 Sep 2024 00:51:29 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48QFK7P3012801;
+ Fri, 27 Sep 2024 00:51:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=uY83KqUm+KHZN
- vGiK0mTiy0tDVbsqRAhkXDw2JP5ugY=; b=AdPvZbOeMV5QhbKCL4SD6GJMVZ3RN
- 8anwW8l02K3gMswo7DpU2ffbNEJT3j9/0J7jDnTw7qtykRyAteV6jQVYwVFRGVMS
- CHVA+mU3b9nUEgpHIoIkB14I69ofJvl7goj3iW5J2U+C9CQAJtuHFraFfa+AhXMO
- HwR3dbDncnydpld1xs7xN+B0anakMveANzS7LNTgE+8JYhgFHJZSGCKHtVJBk1wV
- lS9f4sL+nmmGUpgCSylg3KQ5btF2RppcCbPfCK4NI9L9uOYUjd+4RAudufhbZhZd
- RLqp28jwVZRLcyjK1SDVpxKiFMAIivewmbxtQsmjopYXE4W8BB5AHQyuA==
+ :to:cc:subject:date:message-id:content-transfer-encoding
+ :mime-version; s=pp1; bh=7HyIVBOfXuTzwYBweT3mx2FCz395Aq03lFo4KHb
+ Wxgg=; b=OheMXVO0Sx5of3jGSRHcnGLFhGsrCLFW9FfWIAMz+TU4E15yUqZ09ol
+ QgBmq1+eaFQ0uRLyoODd2RNWQ/Ey3ykv9xupsePsgShWMAn0cWr+8++KZJV/iXXh
+ UsiVW7dE6CoE/+g+J0thjU0o66PZPXLNfC1aSMq093homP8Uw7bK5VHnWBqmtoq/
+ zp0eBzbqgk3ycEnv4fhTzoun+AN6xctfZ++zxoYeEwZ18EX1Myn4rUkEJnwBSwUJ
+ pvx2sZgNeIY+tpz6r8+a7vnyYEIciT+Xf0B/gIUtBzuePW7b98ozBF+/IHxEt0YY
+ 2DQypsoqctsUHcOXs+AqpcqOTctx8xg==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41smjk91ra-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41smjk91r3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Sep 2024 00:51:29 +0000 (GMT)
+ Fri, 27 Sep 2024 00:51:24 +0000 (GMT)
 Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48R0pSXO006282;
- Fri, 27 Sep 2024 00:51:28 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41smjk91r8-1
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48R0pNe5006261;
+ Fri, 27 Sep 2024 00:51:24 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41smjk91r1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Sep 2024 00:51:28 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48QLd31q013998;
- Fri, 27 Sep 2024 00:51:28 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41t9yna5va-1
+ Fri, 27 Sep 2024 00:51:23 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48QNR6hu020838;
+ Fri, 27 Sep 2024 00:51:23 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 41tb63httk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Sep 2024 00:51:28 +0000
+ Fri, 27 Sep 2024 00:51:23 +0000
 Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
  [10.241.53.104])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48R0pQdF26411680
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48R0pLMZ14615042
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 27 Sep 2024 00:51:27 GMT
+ Fri, 27 Sep 2024 00:51:21 GMT
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AFF5E58052;
- Fri, 27 Sep 2024 00:51:26 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8D3CF58056;
+ Fri, 27 Sep 2024 00:51:21 +0000 (GMT)
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2F1D258056;
- Fri, 27 Sep 2024 00:51:26 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 149585805D;
+ Fri, 27 Sep 2024 00:51:21 +0000 (GMT)
 Received: from localhost.localdomain (unknown [9.61.154.26])
  by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 27 Sep 2024 00:51:26 +0000 (GMT)
+ Fri, 27 Sep 2024 00:51:20 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
 Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
-Subject: [PATCH 03/18] pc-bios/s390-ccw: Link the netboot code into the main
- s390-ccw.img binary
-Date: Thu, 26 Sep 2024 20:51:02 -0400
-Message-ID: <20240927005117.1679506-4-jrossi@linux.ibm.com>
+Subject: [PATCH V2 0/18] s390x: Add Full Boot Order Support
+Date: Thu, 26 Sep 2024 20:50:59 -0400
+Message-ID: <20240927005117.1679506-1-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20240927005117.1679506-1-jrossi@linux.ibm.com>
-References: <20240927005117.1679506-1-jrossi@linux.ibm.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: PSAYaF-yu9nFZa2GmWS5gslCiSYY6UVk
-X-Proofpoint-GUID: 2Ars6sV8zuAJ-DggJGxYVqxHYAhS5gEN
+X-Proofpoint-ORIG-GUID: 1vVjV5cwmaArNAVjRRslSWyv-CYcgNNq
+X-Proofpoint-GUID: qi3kEbY-WV3SSVojsOLndT5FElhwuE4E
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-26_06,2024-09-26_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  priorityscore=1501
  impostorscore=0 adultscore=0 malwarescore=0 suspectscore=0 bulkscore=0
- spamscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
- mlxlogscore=926 classifier=spam adjust=0 reason=mlx scancount=1
+ spamscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0 clxscore=1011
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2408220000 definitions=main-2409270002
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
@@ -115,248 +113,107 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-We originally built a separate binary for the netboot code since it
-was considered as experimental and we could not be sure that the
-necessary SLOF module had been checked out. Time passed, the code
-proved its usefulness, and the build system nowadays makes sure that
-the SLOF module is checked out if you have a s390x compiler available
-for building the s390-ccw bios. So there is no real compelling reason
-anymore to keep the netboot code in a separate binary. Linking the
-code together with the main s390-ccw.img will make future enhancements
-much easier, like supporting more than one boot device.
+Loosely a v2, this updated patch set is a significant rework to most aspects of
+the initially proposed multi-device boot order. Of particular note, the
+original patch set used code jumps to restart the IPL while this version
+does not. In order to remove the code jumps, two significant prerequisite
+changes are required for the pc-bios. Firstly, the netboot code is linked into
+the main s390-ccw.img, which allows for return after a failed netboot, based on
+the patch set from Thomas Huth <thuth@redhat.com>
+(https://lists.gnu.org/archive/html/qemu-devel/2024-06/msg03956.html).
+Secondly, IPL errors that result in an immediate termination are converted
+to instead provide a return value back to the main IPL calling function.
 
-Co-authored by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+The routines for building and loading fallback device IPLBs are largely
+unchanged: An IPLB is built for each device with a boot index
+specified (up to 8 devices). The IPLBs location in memory is passed to the guest
+using the global QIPL structure, which is stored at a fixed address. If the
+first device in the boot order successfully IPLs, then the additional IPLBs are
+never used; however, if the first device fails, subsequent IPLBs are retrieved
+from memory and the IPL process restarts using the specifications contained in
+the new IPLB.
 
----
- pc-bios/s390-ccw/netboot.mak | 14 --------------
- pc-bios/s390-ccw/cio.h       |  2 ++
- pc-bios/s390-ccw/iplb.h      |  4 ++--
- pc-bios/s390-ccw/s390-ccw.h  |  3 +++
- pc-bios/s390-ccw/virtio.h    |  1 -
- pc-bios/s390-ccw/bootmap.c   |  2 +-
- pc-bios/s390-ccw/main.c      | 10 +++++++---
- pc-bios/s390-ccw/netmain.c   | 15 ++-------------
- pc-bios/s390-ccw/Makefile    | 13 +++++++------
- 9 files changed, 24 insertions(+), 40 deletions(-)
+This continues until IPL is successful or there are no IPLBs left to try.
 
-diff --git a/pc-bios/s390-ccw/netboot.mak b/pc-bios/s390-ccw/netboot.mak
-index d2b3d8ee74..0a24257ff4 100644
---- a/pc-bios/s390-ccw/netboot.mak
-+++ b/pc-bios/s390-ccw/netboot.mak
-@@ -1,18 +1,4 @@
- 
--NETOBJS := start.o sclp.o cio.o virtio.o virtio-net.o jump2ipl.o netmain.o
--
--LIBNET_INC := -I$(SLOF_DIR)/lib/libnet
--
--NETLDFLAGS := $(LDFLAGS) -Wl,-Ttext=0x7800000
--
--$(NETOBJS): EXTRA_CFLAGS += $(LIBC_INC) $(LIBNET_INC)
--
--s390-netboot.elf: $(NETOBJS) libnet.a libc.a
--	$(call quiet-command,$(CC) $(NETLDFLAGS) -o $@ $^,Linking)
--
--s390-netboot.img: s390-netboot.elf
--	$(call quiet-command,$(STRIP) --strip-unneeded $< -o $@,Stripping $< into)
--
- # libc files:
- 
- LIBC_CFLAGS = $(EXTRA_CFLAGS) $(CFLAGS) $(LIBC_INC) $(LIBNET_INC) \
-diff --git a/pc-bios/s390-ccw/cio.h b/pc-bios/s390-ccw/cio.h
-index 8b18153deb..6a5e86ba01 100644
---- a/pc-bios/s390-ccw/cio.h
-+++ b/pc-bios/s390-ccw/cio.h
-@@ -361,6 +361,8 @@ typedef struct CcwSearchIdData {
-     uint8_t record;
- } __attribute__((packed)) CcwSearchIdData;
- 
-+extern SubChannelId net_schid;
-+
- int enable_mss_facility(void);
- void enable_subchannel(SubChannelId schid);
- uint16_t cu_type(SubChannelId schid);
-diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
-index cb6ac8a880..3758698468 100644
---- a/pc-bios/s390-ccw/iplb.h
-+++ b/pc-bios/s390-ccw/iplb.h
-@@ -87,9 +87,9 @@ extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
- struct QemuIplParameters {
-     uint8_t  qipl_flags;
-     uint8_t  reserved1[3];
--    uint64_t netboot_start_addr;
-+    uint64_t reserved2;
-     uint32_t boot_menu_timeout;
--    uint8_t  reserved2[12];
-+    uint8_t  reserved3[12];
- } __attribute__ ((packed));
- typedef struct QemuIplParameters QemuIplParameters;
- 
-diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-index 9b622e616a..0ed7eb8ade 100644
---- a/pc-bios/s390-ccw/s390-ccw.h
-+++ b/pc-bios/s390-ccw/s390-ccw.h
-@@ -55,6 +55,9 @@ void write_iplb_location(void);
- unsigned int get_loadparm_index(void);
- void main(void);
- 
-+/* netmain.c */
-+void netmain(void);
-+
- /* sclp.c */
- void sclp_print(const char *string);
- void sclp_set_write_mask(uint32_t receive_mask, uint32_t send_mask);
-diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
-index 85bd9d1695..6f9a558ff5 100644
---- a/pc-bios/s390-ccw/virtio.h
-+++ b/pc-bios/s390-ccw/virtio.h
-@@ -253,7 +253,6 @@ struct VDev {
-     uint8_t scsi_dev_heads;
-     bool scsi_device_selected;
-     ScsiDevice selected_scsi_device;
--    uint64_t netboot_start_addr;
-     uint32_t max_transfer;
-     uint32_t guest_features[2];
- };
-diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-index 3cc79706be..414c3f1b47 100644
---- a/pc-bios/s390-ccw/bootmap.c
-+++ b/pc-bios/s390-ccw/bootmap.c
-@@ -929,7 +929,7 @@ void zipl_load(void)
-     }
- 
-     if (virtio_get_device_type() == VIRTIO_ID_NET) {
--        jump_to_IPL_code(vdev->netboot_start_addr);
-+        netmain();
-     }
- 
-     ipl_scsi();
-diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index 73093d3f14..2345432abb 100644
---- a/pc-bios/s390-ccw/main.c
-+++ b/pc-bios/s390-ccw/main.c
-@@ -38,8 +38,13 @@ LowCore *lowcore; /* Yes, this *is* a pointer to address 0 */
-  */
- void write_subsystem_identification(void)
- {
--    lowcore->subchannel_id = blk_schid.sch_id;
--    lowcore->subchannel_nr = blk_schid.sch_no;
-+    if (cutype == CU_TYPE_VIRTIO && virtio_get_device_type() == VIRTIO_ID_NET) {
-+        lowcore->subchannel_id = net_schid.sch_id;
-+        lowcore->subchannel_nr = net_schid.sch_no;
-+    } else {
-+        lowcore->subchannel_id = blk_schid.sch_id;
-+        lowcore->subchannel_nr = blk_schid.sch_no;
-+    }
-     lowcore->io_int_parm = 0;
- }
- 
-@@ -231,7 +236,6 @@ static int virtio_setup(void)
-     switch (vdev->senseid.cu_model) {
-     case VIRTIO_ID_NET:
-         puts("Network boot device detected");
--        vdev->netboot_start_addr = qipl.netboot_start_addr;
-         return 0;
-     case VIRTIO_ID_BLOCK:
-         ret = virtio_blk_setup_device(blk_schid);
-diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
-index 509119be15..bc6ad8695f 100644
---- a/pc-bios/s390-ccw/netmain.c
-+++ b/pc-bios/s390-ccw/netmain.c
-@@ -41,7 +41,6 @@
- #define DEFAULT_TFTP_RETRIES 20
- 
- extern char _start[];
--void write_iplb_location(void) {}
- 
- #define KERNEL_ADDR             ((void *)0L)
- #define KERNEL_MAX_SIZE         ((long)_start)
-@@ -50,10 +49,9 @@ void write_iplb_location(void) {}
- /* STSI 3.2.2 offset of first vmdb + offset of uuid inside vmdb */
- #define STSI322_VMDB_UUID_OFFSET ((8 + 12) * 4)
- 
--IplParameterBlock iplb __attribute__((aligned(PAGE_SIZE)));
- static char cfgbuf[2048];
- 
--static SubChannelId net_schid = { .one = 1 };
-+SubChannelId net_schid = { .one = 1 };
- static uint8_t mac[6];
- static uint64_t dest_timer;
- 
-@@ -438,15 +436,6 @@ static int net_try_direct_tftp_load(filename_ip_t *fn_ip)
-     return rc;
- }
- 
--void write_subsystem_identification(void)
--{
--    SubChannelId *schid = (SubChannelId *) 184;
--    uint32_t *zeroes = (uint32_t *) 188;
--
--    *schid = net_schid;
--    *zeroes = 0;
--}
--
- static bool find_net_dev(Schib *schib, int dev_no)
- {
-     int i, r;
-@@ -509,7 +498,7 @@ static void virtio_setup(void)
-     IPL_assert(found, "No virtio net device found");
- }
- 
--void main(void)
-+void netmain(void)
- {
-     filename_ip_t fn_ip;
-     int rc, fnlen;
-diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
-index 3f4232636e..cf6859823a 100644
---- a/pc-bios/s390-ccw/Makefile
-+++ b/pc-bios/s390-ccw/Makefile
-@@ -32,19 +32,20 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
- 
- .PHONY : all clean build-all distclean
- 
--OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o \
--	  virtio.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o
-+OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
-+	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o
- 
- SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
- 
- LIBC_INC := -nostdinc -I$(SLOF_DIR)/lib/libc/include
-+LIBNET_INC := -I$(SLOF_DIR)/lib/libnet
- 
- EXTRA_CFLAGS += -Wall
- EXTRA_CFLAGS += -ffreestanding -fno-delete-null-pointer-checks -fno-common -fPIE
- EXTRA_CFLAGS += -fwrapv -fno-strict-aliasing -fno-asynchronous-unwind-tables
- EXTRA_CFLAGS += -msoft-float
- EXTRA_CFLAGS += -std=gnu99
--EXTRA_CFLAGS += $(LIBC_INC)
-+EXTRA_CFLAGS += $(LIBC_INC) $(LIBNET_INC)
- LDFLAGS += -Wl,-pie -nostdlib -z noexecstack
- 
- cc-test = $(CC) -Werror $1 -c -o /dev/null -xc /dev/null >/dev/null 2>/dev/null
-@@ -62,9 +63,9 @@ config-cc.mak: Makefile
- 
- include $(SRC_PATH)/netboot.mak
- 
--build-all: s390-ccw.img s390-netboot.img
-+build-all: s390-ccw.img
- 
--s390-ccw.elf: $(OBJECTS) libc.a
-+s390-ccw.elf: $(OBJECTS) libnet.a libc.a
- 	$(call quiet-command,$(CC) $(LDFLAGS) -o $@ $^,Linking)
- 
- s390-ccw.img: s390-ccw.elf
-@@ -72,7 +73,7 @@ s390-ccw.img: s390-ccw.elf
- 
- $(OBJECTS): Makefile
- 
--ALL_OBJS = $(sort $(OBJECTS) $(NETOBJS) $(LIBCOBJS) $(LIBNETOBJS))
-+ALL_OBJS = $(sort $(OBJECTS) $(LIBCOBJS) $(LIBNETOBJS))
- -include $(ALL_OBJS:%.o=%.d)
- 
- clean:
+The per-device loadparm attribute is still uniformly added to CCW devices
+although it may only be assigned a value if the device has a boot index.
+This will need further rework if a more targeted approach is desired.
+
+Two automated test cases are planned for v3: a minimal test where a guest has
+two boot devices defined and the first fails, and also a limit test where the
+guest has 8 boot devices defined but only the last one can actually IPL.
+
+Changes v1 -> v2:
+
+- Use the libc from SLOF and replace sclp_print calls with put/printf
+- Merge netboot into the main s390-ccw.img
+- Rework pc-bios to return on error instead of panic
+- Handle non-archetected IPLB types (QEMU SCSI) from DIAG308
+- Remove code jumps and instead restart the IPL using a traditional loop
+
+Jared Rossi (18):
+  hw/s390x/ipl: Provide more memory to the s390-ccw.img firmware
+  pc-bios/s390-ccw: Use the libc from SLOF and remove sclp prints
+  pc-bios/s390-ccw: Link the netboot code into the main s390-ccw.img
+    binary
+  hw/s390x: Remove the possibility to load the s390-netboot.img binary
+  pc-bios/s390-ccw: Merge netboot.mak into the main Makefile
+  docs/system/s390x/bootdevices: Update the documentation about network
+    booting
+  pc-bios/s390-ccw: Remove panics from ISO IPL path
+  pc-bios/s390-ccw: Remove panics from SCSI IPL path
+  pc-bios/s390-ccw: Remove panics from ECKD IPL path
+  pc-bios/s390-ccw: Remove panics from DASD IPL path
+  pc-bios/s390-ccw: Remove panics from netboot IPL path
+  pc-bios/s390-ccw: Enable failed IPL to return after error
+  include/hw/s390x: Add include files for common IPL structs
+  s390x: Add individual loadparm assignment to CCW device
+  s390x: Build an IPLB for each boot device
+  s390x: Rebuild IPLB for SCSI device directly from DIAG308
+  pc-bios/s390x: Enable multi-device boot loop
+  docs/system: Update documentation for s390x IPL
+
+ docs/system/bootindex.rst         |   7 +-
+ docs/system/s390x/bootdevices.rst |  29 +-
+ pc-bios/s390-ccw/netboot.mak      |  62 -----
+ hw/s390x/ccw-device.h             |   2 +
+ hw/s390x/ipl.h                    | 123 +--------
+ include/hw/s390x/ipl/qipl.h       | 126 +++++++++
+ pc-bios/s390-ccw/bootmap.h        |  21 +-
+ pc-bios/s390-ccw/cio.h            |   2 +
+ pc-bios/s390-ccw/dasd-ipl.h       |   2 +-
+ pc-bios/s390-ccw/iplb.h           | 107 ++------
+ pc-bios/s390-ccw/libc.h           |  89 -------
+ pc-bios/s390-ccw/s390-ccw.h       |  36 +--
+ pc-bios/s390-ccw/virtio.h         |   3 +-
+ hw/s390x/ccw-device.c             |  46 ++++
+ hw/s390x/ipl.c                    | 314 +++++++++++-----------
+ hw/s390x/s390-virtio-ccw.c        |  28 +-
+ hw/s390x/sclp.c                   |   3 +-
+ pc-bios/s390-ccw/bootmap.c        | 428 ++++++++++++++++++++----------
+ pc-bios/s390-ccw/cio.c            |  81 +++---
+ pc-bios/s390-ccw/dasd-ipl.c       |  71 ++---
+ pc-bios/s390-ccw/jump2ipl.c       |  22 +-
+ pc-bios/s390-ccw/libc.c           |  88 ------
+ pc-bios/s390-ccw/main.c           | 125 ++++-----
+ pc-bios/s390-ccw/menu.c           |  51 ++--
+ pc-bios/s390-ccw/netmain.c        |  44 ++-
+ pc-bios/s390-ccw/sclp.c           |   7 +-
+ pc-bios/s390-ccw/virtio-blkdev.c  |  14 +-
+ pc-bios/s390-ccw/virtio-net.c     |   7 +-
+ pc-bios/s390-ccw/virtio-scsi.c    | 164 ++++++++----
+ pc-bios/s390-ccw/virtio.c         |  67 +++--
+ target/s390x/diag.c               |   9 +-
+ pc-bios/meson.build               |   1 -
+ pc-bios/s390-ccw/Makefile         |  69 ++++-
+ pc-bios/s390-netboot.img          | Bin 67232 -> 0 bytes
+ 34 files changed, 1143 insertions(+), 1105 deletions(-)
+ delete mode 100644 pc-bios/s390-ccw/netboot.mak
+ create mode 100644 include/hw/s390x/ipl/qipl.h
+ delete mode 100644 pc-bios/s390-ccw/libc.h
+ delete mode 100644 pc-bios/s390-ccw/libc.c
+ delete mode 100644 pc-bios/s390-netboot.img
+
 -- 
 2.45.1
 
