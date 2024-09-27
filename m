@@ -4,66 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6869ECEBF93
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 10:49:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A779FCEBF8F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 10:51:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1su8WM-0002ed-U3; Fri, 27 Sep 2024 06:48:22 -0400
+	id 1su8ZE-0005QK-I5; Fri, 27 Sep 2024 06:51:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jusual@redhat.com>) id 1su8WA-0002Ui-RD
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 06:48:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1su8Z8-0005HW-Gs
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 06:51:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jusual@redhat.com>) id 1su8W9-00057e-0b
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 06:48:10 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1su8Z6-0005Xt-7C
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 06:51:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727434087;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ s=mimecast20190719; t=1727434254;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2i38XQLbWv+SEY2dU4OizYXpVxC4MhnmTiy6+KO+3kc=;
- b=TBmP7n1BNJ8PZ/5MAenmG7fgvbWT/StdluPSIzHlm5NKsm3F9fuCh/YyShpjKpLBsPfzvh
- xOESMvIHaCmGhXomEy8BReeq8fxHnQw+sM+/Lfge2F3kzqUnwWNkzpRxup+4QQwjtpjaHq
- F5wPtV+FbtlDdDJQuO3I05SI2FOhCRE=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=mFToqpFLrVdpaSn8ZSYksOPcDnl7+r7uJJzFlzyEnuU=;
+ b=CsxRiFw/iwUDbGrhBoqqHMjbSMCuJTDBIt7eOlA3DstdDrbc1B3td3J+Wg2qRCuU1E2W2p
+ 3XhbJv7AQZBXbTfhHbg/lEjBzDWsDAufAoV2fqHxbH1uSr/utdzu6RNuFP3ViafIWBqZpt
+ 701VkUcphYFzMtTYiPHD6W8fXFpnOY8=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-490-8PWRarqxOXiO8ntGWEnDYA-1; Fri,
- 27 Sep 2024 06:48:04 -0400
-X-MC-Unique: 8PWRarqxOXiO8ntGWEnDYA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-LfQHs5LmOMqzAGyReOByFA-1; Fri,
+ 27 Sep 2024 06:50:51 -0400
+X-MC-Unique: LfQHs5LmOMqzAGyReOByFA-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
  [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E7C3518F774B; Fri, 27 Sep 2024 10:48:02 +0000 (UTC)
-Received: from tpx1cg9.redhat.com (unknown [10.39.192.103])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C3A511956086; Fri, 27 Sep 2024 10:47:58 +0000 (UTC)
-From: Julia Suvorova <jusual@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Song Gao <gaosong@loongson.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Julia Suvorova <jusual@redhat.com>
-Subject: [PATCH v2 2/2] target/i386/kvm: Report which action failed in
- kvm_arch_put/get_registers
-Date: Fri, 27 Sep 2024 12:47:41 +0200
-Message-ID: <20240927104743.218468-3-jusual@redhat.com>
-In-Reply-To: <20240927104743.218468-1-jusual@redhat.com>
-References: <20240927104743.218468-1-jusual@redhat.com>
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 017E919034EC; Fri, 27 Sep 2024 10:50:50 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.169])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 39B991956086; Fri, 27 Sep 2024 10:50:44 +0000 (UTC)
+Date: Fri, 27 Sep 2024 11:50:42 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, eblake@redhat.com,
+ armbru@redhat.com, ajones@ventanamicro.com
+Subject: Re: [PATCH] qapi, machine-qmp-cmds.c: query-accelerator support
+Message-ID: <ZvaN7-W4VLr6TGsm@redhat.com>
+References: <20240919112056.620917-1-dbarboza@ventanamicro.com>
+ <ZuwXjyqhxwHBEvR_@redhat.com>
+ <f4c52806-1722-43fc-b4b4-ab17c930d4cd@ventanamicro.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <f4c52806-1722-43fc-b4b4-ab17c930d4cd@ventanamicro.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jusual@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -85,167 +88,216 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To help debug and triage future failure reports (akin to [1,2]) that
-may occur during kvm_arch_put/get_registers, the error path of each
-action is accompanied by unique error message.
+Markus: QAPI design Qs for you at the bottom
 
-[1] https://issues.redhat.com/browse/RHEL-7558
-[2] https://issues.redhat.com/browse/RHEL-21761
+On Wed, Sep 25, 2024 at 10:19:33AM -0300, Daniel Henrique Barboza wrote:
+> 
+> 
+> On 9/19/24 9:22 AM, Daniel P. Berrangé wrote:
+> > On Thu, Sep 19, 2024 at 08:20:56AM -0300, Daniel Henrique Barboza wrote:
+> > > Add a QMP command that shows all specific properties of the current
+> > > accelerator in use.
+> > 
+> > Why do we need to expose /everything/ ?
+> 
+> I wouldn't mind pick and choose advertised properties for the accelerators
+> like we do with other APIs.
+> 
+> This would mean that each arch should choose what to advertise or not, given that
+> some accelerator properties might be relevant just for some archs. The API would
+> be implemented by each arch individually.
 
-Signed-off-by: Julia Suvorova <jusual@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
----
- target/i386/kvm/kvm.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+Well with qemu-system-any we might get multiple arches reporting
+info in the same binary, so we'll need to fan out to fill in the
+per-arch info, after doing a common base.
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 039ed08825..7cdc87f855 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5133,6 +5133,7 @@ int kvm_arch_put_registers(CPUState *cpu, int level, Error **errp)
-     if (level >= KVM_PUT_RESET_STATE) {
-         ret = kvm_put_msr_feature_control(x86_cpu);
-         if (ret < 0) {
-+            error_setg_errno(errp, -ret, "Failed to set feature control MSR");
-             return ret;
-         }
-     }
-@@ -5140,12 +5141,14 @@ int kvm_arch_put_registers(CPUState *cpu, int level, Error **errp)
-     /* must be before kvm_put_nested_state so that EFER.SVME is set */
-     ret = has_sregs2 ? kvm_put_sregs2(x86_cpu) : kvm_put_sregs(x86_cpu);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to set special registers");
-         return ret;
-     }
- 
-     if (level >= KVM_PUT_RESET_STATE) {
-         ret = kvm_put_nested_state(x86_cpu);
-         if (ret < 0) {
-+            error_setg_errno(errp, -ret, "Failed to set nested state");
-             return ret;
-         }
-     }
-@@ -5163,6 +5166,7 @@ int kvm_arch_put_registers(CPUState *cpu, int level, Error **errp)
-     if (xen_mode == XEN_EMULATE && level == KVM_PUT_FULL_STATE) {
-         ret = kvm_put_xen_state(cpu);
-         if (ret < 0) {
-+            error_setg_errno(errp, -ret, "Failed to set Xen state");
-             return ret;
-         }
-     }
-@@ -5170,37 +5174,45 @@ int kvm_arch_put_registers(CPUState *cpu, int level, Error **errp)
- 
-     ret = kvm_getput_regs(x86_cpu, 1);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to set general purpose registers");
-         return ret;
-     }
-     ret = kvm_put_xsave(x86_cpu);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to set XSAVE");
-         return ret;
-     }
-     ret = kvm_put_xcrs(x86_cpu);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to set XCRs");
-         return ret;
-     }
-     ret = kvm_put_msrs(x86_cpu, level);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to set MSRs");
-         return ret;
-     }
-     ret = kvm_put_vcpu_events(x86_cpu, level);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to set vCPU events");
-         return ret;
-     }
-     if (level >= KVM_PUT_RESET_STATE) {
-         ret = kvm_put_mp_state(x86_cpu);
-         if (ret < 0) {
-+            error_setg_errno(errp, -ret, "Failed to set MP state");
-             return ret;
-         }
-     }
- 
-     ret = kvm_put_tscdeadline_msr(x86_cpu);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to set TSC deadline MSR");
-         return ret;
-     }
-     ret = kvm_put_debugregs(x86_cpu);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to set debug registers");
-         return ret;
-     }
-     return 0;
-@@ -5215,6 +5227,7 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
- 
-     ret = kvm_get_vcpu_events(cpu);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to get vCPU events");
-         goto out;
-     }
-     /*
-@@ -5223,44 +5236,54 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
-      */
-     ret = kvm_get_mp_state(cpu);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to get MP state");
-         goto out;
-     }
-     ret = kvm_getput_regs(cpu, 0);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to get general purpose registers");
-         goto out;
-     }
-     ret = kvm_get_xsave(cpu);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to get XSAVE");
-         goto out;
-     }
-     ret = kvm_get_xcrs(cpu);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to get XCRs");
-         goto out;
-     }
-     ret = has_sregs2 ? kvm_get_sregs2(cpu) : kvm_get_sregs(cpu);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to get special registers");
-         goto out;
-     }
-     ret = kvm_get_msrs(cpu);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to get MSRs");
-         goto out;
-     }
-     ret = kvm_get_apic(cpu);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to get APIC");
-         goto out;
-     }
-     ret = kvm_get_debugregs(cpu);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to get debug registers");
-         goto out;
-     }
-     ret = kvm_get_nested_state(cpu);
-     if (ret < 0) {
-+        error_setg_errno(errp, -ret, "Failed to get nested state");
-         goto out;
-     }
- #ifdef CONFIG_XEN_EMU
-     if (xen_mode == XEN_EMULATE) {
-         ret = kvm_get_xen_state(cs);
-         if (ret < 0) {
-+            error_setg_errno(errp, -ret, "Failed to get Xen state");
-             goto out;
-         }
-     }
+Hmmm, i wonder if qemu-system-any will support mixing KVM and TCG ?
+ie KVM for the host native accelerator, combined with TCG for the
+foreign archs ??? Hopefully not !
+
+> > > This can be used as a complement of other APIs like query-machines and
+> > > query-cpu-model-expansion, allowing management to get a more complete
+> > > picture of the running QEMU process.
+> > 
+> > query-machines doesn't return every single QOM property, just
+> > a hand selected set of information pieces.
+> > 
+> > The query-cpu-model-expansion does return everything, but I
+> > consider that command to be bad design, as it doesn't distinguish
+> > between hardware CPU features, and QEMU QOM properties
+> > 
+> > > 
+> > > This is the output with a x86_64 TCG guest:
+> > > 
+> > > $ ./build/qemu-system-x86_64 -S  -display none -accel tcg -qmp tcp:localhost:1234,server,wait=off
+> > > 
+> > > $ ./scripts/qmp/qmp-shell localhost:1234
+> > > Welcome to the QMP low-level shell!
+> > > Connected to QEMU 9.1.50
+> > > 
+> > > (QEMU) query-accelerator
+> > > {"return": {"name": "tcg", "props": {"one-insn-per-tb": false, "thread": "multi", "tb-size": 0, "split-wx": false, "type": "tcg-accel"}}}
+> > > 
+> > > And for a x86_64 KVM guest:
+> > > 
+> > > $ ./build/qemu-system-x86_64 -S  -display none -accel kvm -qmp tcp:localhost:1234,server,wait=off
+> > > 
+> > > $ ./scripts/qmp/qmp-shell localhost:1234
+> > > Welcome to the QMP low-level shell!
+> > > Connected to QEMU 9.1.50
+> > > 
+> > > (QEMU) query-accelerator
+> > > {"return": {"name": "KVM", "props": {"mem-container-smram[0]": "", "xen-gnttab-max-frames": 64, "device": "", "xen-version": 0, "mem-smram[0]": "", "notify-window": 0, "dirty-ring-size": 0, "kvm-shadow-mem": -1, "type": "kvm-accel", "notify-vmexit": "run", "xen-evtchn-max-pirq": 256}}}
+> > > 
+> > > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> > > ---
+> > >   hw/core/machine-qmp-cmds.c | 34 ++++++++++++++++++++++++++++++++++
+> > >   qapi/machine.json          | 27 +++++++++++++++++++++++++++
+> > >   2 files changed, 61 insertions(+)
+> > > 
+> > > diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+> > > index 130217da8f..eac803bf36 100644
+> > > --- a/hw/core/machine-qmp-cmds.c
+> > > +++ b/hw/core/machine-qmp-cmds.c
+> > 
+> > > +AccelInfo *qmp_query_accelerator(Error **errp)
+> > > +{
+> > > +    AccelState *accel = current_accel();
+> > > +    AccelClass *acc = ACCEL_GET_CLASS(accel);
+> > > +    AccelInfo *info = g_new0(AccelInfo, 1);
+> > > +    QDict *qdict_out = qdict_new();
+> > > +    ObjectPropertyIterator iter;
+> > > +    ObjectProperty *prop;
+> > > +
+> > > +    info->name = g_strdup(acc->name);
+> > > +
+> > > +    object_property_iter_init(&iter, OBJECT(accel));
+> > > +    while ((prop = object_property_iter_next(&iter))) {
+> > > +        QObject *value;
+> > > +
+> > > +        if (!prop->get) {
+> > > +            continue;
+> > > +        }
+> > > +
+> > > +        value = object_property_get_qobject(OBJECT(accel), prop->name,
+> > > +                                                  &error_abort);
+> > > +        qdict_put_obj(qdict_out, prop->name, value);
+> > > +    }
+> > 
+> > I'm not at all convinced trhat we should be exposing every single
+> > QOM property on the accelerator class as public QMP data
+> > 
+> > > +
+> > > +    if (!qdict_size(qdict_out)) {
+> > > +        qobject_unref(qdict_out);
+> > > +    } else {
+> > > +        info->props = QOBJECT(qdict_out);
+> > > +    }
+> > > +
+> > > +    return info;
+> > > +}
+> > > diff --git a/qapi/machine.json b/qapi/machine.json
+> > > index a6b8795b09..d0d527d1eb 100644
+> > > --- a/qapi/machine.json
+> > > +++ b/qapi/machine.json
+> > > @@ -1898,3 +1898,30 @@
+> > >   { 'command': 'x-query-interrupt-controllers',
+> > >     'returns': 'HumanReadableText',
+> > >     'features': [ 'unstable' ]}
+> > > +
+> > > +##
+> > > +# @AccelInfo:
+> > > +#
+> > > +# Information about the current accelerator.
+> > > +#
+> > > +# @name: the name of the current accelerator being used
+> > > +#
+> > > +# @props: a dictionary of the accelerator properties
+> > > +#
+> > > +# Since: 9.2
+> > > +##
+> > > +{ 'struct': 'AccelInfo',
+> > > +  'data': { 'name': 'str',
+> > > +            '*props': 'any' } }
+> > 
+> > This is way too open ended. IMHO ideally we would never add more
+> > instances of the 'any' type, as it has many downsides
+> > 
+> >   - zero documentation about what is available
+> >   - no version info about when each prop was introduced
+> >   - no ability to tag fields as deprecated
+> > 
+> > For this new API, IMHO 'name' should be an enumeration of the
+> > accelerator types, and thenm 'props' should be a discrinated
+> > union of accelerator specific structs
+> 
+> We have accelerator properties that differs from arch to arch, e.g. x86 has properties like
+> notify-vmexit, declared in kvm_arch_accel_class_init() from target/i386/kvm/kvm.c, that no
+> other arch has access to. RISC-V has its own share of these properties too.
+> 
+> Is it possible to declare specific structs based on arch for the API? In a quick glance
+> it seems like we're doing something like that with query-cpus-fast, where s390x has
+> additional properties that are exposed.
+
+To allow for qemu-system-any, which will eventually have multiple arches in
+one, I guess we'll need multiple levels of nesting. Perhaps  something like
+this:
+
+  { 'enum': 'AccelType',
+    'data': ['tcg', 'kvm', ....] }
+
+  { 'union': 'AccelInfo',
+    'type': 'AccelType',
+    'data': {
+        'tcg': 'AccelInfoTCG',
+	'kvm': 'AccelInfoKVM',
+    } }
+
+  { 'struct': 'AccelInfoTCGX86',
+    'data': {
+        'notify-vmexit': ...
+    } }
+
+  { 'struct': 'AccelInfoTCGArch',
+    'data': {
+       'x86': 'AccelInfoTCGX86',
+       'riscv': 'AccelInfoTCGRiscV',
+       ...etc...
+    }
+
+  { 'struct': 'AccelInfoTCG',
+    'data': {
+         ...non-arch specific fields...,
+	 'arch': 'AccelInfoTCGArch',
+    } }
+
+ ...equiv AccelInfoKVM* structs....
+
+Markus:  any other/better ideas ?
+
+> > > +
+> > > +##
+> > > +# @query-accelerator:
+> > > +#
+> > > +# Shows information about the accelerator in use.
+> > > +#
+> > > +# Returns: a CpuModelExpansionInfo describing the expanded CPU model
+> > > +#
+> > > +# Since: 9.2
+> > > +##
+> > > +{ 'command': 'query-accelerator',
+> > > +  'returns': 'AccelInfo' }
+> > > -- 
+
+With regards,
+Daniel
 -- 
-2.45.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
