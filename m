@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F57BCEBF78
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 06:12:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 210EDCEBF76
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 06:12:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1su4Cf-0004fZ-6w; Fri, 27 Sep 2024 02:11:45 -0400
+	id 1su4DD-0007CD-UR; Fri, 27 Sep 2024 02:12:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1su4CS-0004Ra-MJ; Fri, 27 Sep 2024 02:11:33 -0400
+ id 1su4DC-00073J-37; Fri, 27 Sep 2024 02:12:18 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1su4CP-0003ER-GT; Fri, 27 Sep 2024 02:11:32 -0400
+ id 1su4DA-0003TC-6n; Fri, 27 Sep 2024 02:12:17 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1DCE092D11;
+ by isrv.corpit.ru (Postfix) with ESMTP id EC6C892D20;
  Fri, 27 Sep 2024 09:10:51 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 7E183146703;
- Fri, 27 Sep 2024 09:11:21 +0300 (MSK)
-Received: (nullmailer pid 573337 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 5C4CB146712;
+ Fri, 27 Sep 2024 09:11:22 +0300 (MSK)
+Received: (nullmailer pid 573383 invoked by uid 1000);
  Fri, 27 Sep 2024 06:11:21 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- Kevin Wolf <kwolf@redhat.com>
-Subject: [PATCH resend v3 00/27] qemu-img: refersh options and --help handling,
- cleanups
-Date: Fri, 27 Sep 2024 09:10:54 +0300
-Message-Id: <20240927061121.573271-1-mjt@tls.msk.ru>
+Cc: qemu-block@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH 15/27] qemu-img: snapshot: make -l (list) the default,
+ simplify option handling
+Date: Fri, 27 Sep 2024 09:11:09 +0300
+Message-Id: <20240927061121.573271-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20240927061121.573271-1-mjt@tls.msk.ru>
+References: <20240927061121.573271-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,85 +62,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a re-send of this patchset from Apr-24, after multiple pings.
-I rebased it on top of current qemu/master, though nothing has really
-changed - it is still the same changes.  We should either apply it or
-drop it if it is not appropriate for some reason.  Complete silence
-for half a year isn't really nice, I think :)
-----
+When no -l/-a/-c/-d specified, assume -l (list).
 
-Quite big patchset trying to implement normal, readable qemu-img --help
-(and qemu-img COMMAND --help) output with readable descriptions, and
-adding many long options in the process.
+Use the same values for SNAPSHOT_LIST/etc constants as the
+option chars (lacd), this makes it possible to simplify
+option handling a lot, combining cases for 4 options into
+one.
 
-In the end I stopped using qemu-img-opts.hx in qemu-img.c, perhaps
-this can be avoided, with only list of commands and their desrciptions
-kept there, but I don't see big advantage here.  The same list should
-be included in docs/tools/qemu-img.rst, - this is not done now.
+Also remove bdrv_oflags handling (only list can use RO mode).
 
-Also each command syntax isn't reflected in the doc for now, because
-I want to give good names for options first, - and there, we've quite
-some inconsistences and questions.  For example, measure --output=OFMT
--O OFMT, - this is priceless :)  I've no idea why we have this ugly
---output=json thing, why not have --json? ;)  I gave the desired
-format long name --target-format to avoid clash with --output.
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ docs/tools/qemu-img.rst |  2 +-
+ qemu-img.c              | 52 ++++++++++++++---------------------------
+ 2 files changed, 19 insertions(+), 35 deletions(-)
 
-For rebase, src vs tgt probably should be renamed in local variables
-too, and I'm not even sure I've got the caches right. For caches,
-the thing is inconsistent across commands.
-
-For compare, I used --a-format/--b-format (for -f/-F), - this can
-be made --souce-format and --target-format, to compare source (file1)
-with target (file2).
-
-For bitmap, things are scary, I'm not sure what -b SRC_FILENAME
-really means, - for now I gave it --source option, but this does
-not make it more clear, suggestions welcome.
-
-There are many other inconsistencies, I can't fix them all in one go.
-
-Changes since v2:
-
- - added Dan's R-Bs
- - refined couple cvtnum conversions
- - dropped "stop printing error twice in a few places"
-
-Michael Tokarev (27):
-  qemu-img: measure: convert img_size to signed, simplify handling
-  qemu-img: create: convert img_size to signed, simplify handling
-  qemu-img: global option processing and error printing
-  qemu-img: pass current cmd info into command handlers
-  qemu-img: create: refresh options/--help
-  qemu-img: factor out parse_output_format() and use it in the code
-  qemu-img: check: refresh options/--help
-  qemu-img: simplify --repair error message
-  qemu-img: commit: refresh options/--help
-  qemu-img: compare: refresh options/--help
-  qemu-img: convert: refresh options/--help
-  qemu-img: info: refresh options/--help
-  qemu-img: map: refresh options/--help
-  qemu-img: snapshot: allow specifying -f fmt
-  qemu-img: snapshot: make -l (list) the default, simplify option handling
-  qemu-img: snapshot: refresh options/--help
-  qemu-img: rebase: refresh options/--help
-  qemu-img: resize: do not always eat last argument
-  qemu-img: resize: refresh options/--help
-  qemu-img: amend: refresh options/--help
-  qemu-img: bench: refresh options/--help
-  qemu-img: bitmap: refresh options/--help
-  qemu-img: dd: refresh options/--help
-  qemu-img: measure: refresh options/--help
-  qemu-img: implement short --help, remove global help() function
-  qemu-img: inline list of supported commands, remove qemu-img-cmds.h
-    include
-  qemu-img: extend cvtnum() and use it in more places
-
- docs/tools/qemu-img.rst    |    4 +-
- qemu-img-cmds.hx           |    4 +-
- qemu-img.c                 | 1311 ++++++++++++++++++++++--------------
- tests/qemu-iotests/049.out |    9 +-
- 4 files changed, 821 insertions(+), 507 deletions(-)
-
+diff --git a/docs/tools/qemu-img.rst b/docs/tools/qemu-img.rst
+index 9b628c4da5..df184d15b9 100644
+--- a/docs/tools/qemu-img.rst
++++ b/docs/tools/qemu-img.rst
+@@ -256,7 +256,7 @@ Parameters to snapshot subcommand:
+ 
+ .. option:: -l
+ 
+-  Lists all snapshots in the given image
++  Lists all snapshots in the given image (default action)
+ 
+ Command description:
+ 
+diff --git a/qemu-img.c b/qemu-img.c
+index 8adc324496..967f6343de 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -3585,10 +3585,11 @@ out:
+     return ret < 0;
+ }
+ 
+-#define SNAPSHOT_LIST   1
+-#define SNAPSHOT_CREATE 2
+-#define SNAPSHOT_APPLY  3
+-#define SNAPSHOT_DELETE 4
++/* the same as options */
++#define SNAPSHOT_LIST   'l'
++#define SNAPSHOT_CREATE 'c'
++#define SNAPSHOT_APPLY  'a'
++#define SNAPSHOT_DELETE 'd'
+ 
+ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
+ {
+@@ -3596,7 +3597,7 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
+     BlockDriverState *bs;
+     QEMUSnapshotInfo sn;
+     char *filename, *fmt = NULL, *snapshot_name = NULL;
+-    int c, ret = 0, bdrv_oflags;
++    int c, ret = 0;
+     int action = 0;
+     bool quiet = false;
+     Error *err = NULL;
+@@ -3604,7 +3605,6 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
+     bool force_share = false;
+     int64_t rt;
+ 
+-    bdrv_oflags = BDRV_O_RDWR;
+     /* Parse commandline parameters */
+     for(;;) {
+         static const struct option long_options[] = {
+@@ -3632,36 +3632,15 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
+         case 'f':
+             fmt = optarg;
+             break;
+-        case 'l':
+-            if (action) {
+-                error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
+-                return 0;
+-            }
+-            action = SNAPSHOT_LIST;
+-            bdrv_oflags &= ~BDRV_O_RDWR; /* no need for RW */
+-            break;
+-        case 'a':
++        case SNAPSHOT_LIST:
++        case SNAPSHOT_APPLY:
++        case SNAPSHOT_CREATE:
++        case SNAPSHOT_DELETE:
+             if (action) {
+                 error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
+                 return 0;
+             }
+-            action = SNAPSHOT_APPLY;
+-            snapshot_name = optarg;
+-            break;
+-        case 'c':
+-            if (action) {
+-                error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
+-                return 0;
+-            }
+-            action = SNAPSHOT_CREATE;
+-            snapshot_name = optarg;
+-            break;
+-        case 'd':
+-            if (action) {
+-                error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
+-                return 0;
+-            }
+-            action = SNAPSHOT_DELETE;
++            action = c;
+             snapshot_name = optarg;
+             break;
+         case 'q':
+@@ -3684,9 +3663,14 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
+     }
+     filename = argv[optind++];
+ 
++    if (!action) {
++        action = SNAPSHOT_LIST;
++    }
++
+     /* Open the image */
+-    blk = img_open(image_opts, filename, fmt, bdrv_oflags, false, quiet,
+-                   force_share);
++    blk = img_open(image_opts, filename, fmt,
++                   action == SNAPSHOT_LIST ? 0 : BDRV_O_RDWR,
++                   false, quiet, force_share);
+     if (!blk) {
+         return 1;
+     }
 -- 
 2.39.5
 
