@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96EE9CEBF60
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 00:14:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 102FDCEBF60
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 00:15:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stycg-0004cs-W8; Thu, 26 Sep 2024 20:14:15 -0400
+	id 1stydp-0001E0-9n; Thu, 26 Sep 2024 20:15:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1stycf-0004W5-4i
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 20:14:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1stydn-00018q-VX
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 20:15:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1stycd-0003F6-Ma
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 20:14:12 -0400
+ id 1stydm-0003hG-Ad
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 20:15:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727396050;
+ s=mimecast20190719; t=1727396121;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZxkK39iWIhBklipRPm+D7bJoC3g+gRtIqmTFuPN8jd8=;
- b=a3vfLX7Jy7yDNRojgNZ+Budey9pu36ROEjsmqOMBQQmuQz4ZSdrnDGNk5ut6RvsYqKVpaS
- cYwmbdowYY3EgenPFK1jKPg+dZJGTXKg0PBYExrUlxCQqfacJ6ldWV+kpo/jb7TLbcxHxT
- /n+d+/Tqxf7S0ZdxDj/ctNly+iVyYCM=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ud5A4VAgVF8b5EEsyioFITmSEJz2VSzDpIimyJT1wnA=;
+ b=Uc0EsREt7mJ3zpvni5/h5Pv8hs+4OoInIFQq4574GT4LWnKglHO/7NlNQAn+kJW70VK5bX
+ cu9qgkyrS9fuiMFLZz64SDX9UT/NyOCcHV7nP9eJEaTA9m8HKAZeaUzYJ+YJ173Fmil6ek
+ H7i0LUuoT1qe5fs/AYGYmGRxj0gs/dk=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-78-idxw-bOCM_uohB6_8KvW5A-1; Thu, 26 Sep 2024 20:14:09 -0400
-X-MC-Unique: idxw-bOCM_uohB6_8KvW5A-1
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2e09b55778fso1713423a91.3
- for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 17:14:09 -0700 (PDT)
+ us-mta-675-uDLw5mDEPVqGQpJOUTbcgw-1; Thu, 26 Sep 2024 20:15:19 -0400
+X-MC-Unique: uDLw5mDEPVqGQpJOUTbcgw-1
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-204e310e050so16683465ad.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 17:15:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727396048; x=1728000848;
+ d=1e100.net; s=20230601; t=1727396118; x=1728000918;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZxkK39iWIhBklipRPm+D7bJoC3g+gRtIqmTFuPN8jd8=;
- b=JA25cDozWT+k7C6pqWbnK6CXLggkC2wHuL7y13lRIaccKG5Eb0a3rDZaf/GnsU0Yc+
- FVr4Ze+c78Pqk1Ic4V7NtMFAg7sJRGiJpcA3ayl4V+dmISZKj7hlsMJbcKOGdhD02QeC
- 3d7ATyiEynUsuXgzBdN9oy7SrJ0aG3M98fjwOMDMMfPFWhYRcMldBjiW6Ka5DRyh052Z
- rsMGKCZP2uo23yzU075hV1YPZOSF03R50dJQwqBwBNBivLleNCm6grglDGY10ErREJcO
- E4pe3q5Py69Gz4ikozqPkh62qoxmIqg11ikt2YsqWR5TKDrN6qLjVjwC5Ea6IpTuklzD
- RquQ==
-X-Gm-Message-State: AOJu0YyYMz7Zla6uLc7cLKEsJteqdmD0Qr48tfG03hm05jcPLnBZzeBV
- SiFTKT9mSeX9eHJrTd4rN+owaL44OJo93sw/8VetDu1EoGkKL54kgmI+rpP7Ow8KIkPefhq5cvI
- KIPu1WDOjrPTail0BSBH2JO8vuF87VuuS8zj+zroc/kXfy3sfxkAeJOj2687CdS+kkNPXDJb3QU
- Dtc1oOeinR8DhNUXqcb6ogLme60WM=
-X-Received: by 2002:a17:90b:3d2:b0:2d8:8ab3:2889 with SMTP id
- 98e67ed59e1d1-2e0b89dec14mr1764237a91.11.1727396048285; 
- Thu, 26 Sep 2024 17:14:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHzJPe3rWJEWpPXcRdQI0Oyz8/V+GyLlZClnc1VU6Yyex6eXSed6jOrjZziym6guegBaIUuBOWv+rsFU3u+KKg=
-X-Received: by 2002:a17:90b:3d2:b0:2d8:8ab3:2889 with SMTP id
- 98e67ed59e1d1-2e0b89dec14mr1764198a91.11.1727396047803; Thu, 26 Sep 2024
- 17:14:07 -0700 (PDT)
+ bh=ud5A4VAgVF8b5EEsyioFITmSEJz2VSzDpIimyJT1wnA=;
+ b=dxUON0xEPb6Dsq1CABvt6dUDqpAXyBDzqPJGKlISvWIL3FBBGwiuytaq5CIgxJ8ici
+ boYOJpKGJcTAf7FoDBgwgaDQG/smRjYHe145hVrGfsoyuXuqZepyUpImj+zWBq926idW
+ ++TROnZ1vX0XCZ1bw3H7BeVy2pG3MRx+Fsy3HLnZ7Jb3ngg3fxTnoz6UdQgylNCIko2B
+ MciTAj+OwgFUW9OEWPnZBP9Fm3n3inzyTnkmRHg9y8h77ycnTLNxfSMftp0kM3q7sSEv
+ pDAw+1BVYcEZ8QjPIjrSZ05VcIMNk8ISk6mDyerAVJjvlo5bpc2RqZUo4dKGSvADCKfj
+ r3qw==
+X-Gm-Message-State: AOJu0Yxlit4lEK8quksJU0jJ4wic9V5al+s2/aTvr1raSf3y4LsCi1Xr
+ /3JiAinX8UwIX/NXgBikXmVnk50z6LcpUwMyc9zt3LqxCuv83KlcrdVybaxquBnLU0p6/FxKv0P
+ Of57JoutxzV3sXX9eyEY7ugIy4AN+nnNX9Ot4MYMEZ251+bwqQkuagZC7iuJ6+qRE5xu3svqCp6
+ mInM1e8iN+p74TEk4I5J2yC5QSH/I=
+X-Received: by 2002:a17:902:c40a:b0:202:1bb6:1897 with SMTP id
+ d9443c01a7336-20b367e4b7emr24012955ad.14.1727396117998; 
+ Thu, 26 Sep 2024 17:15:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHo0AkeQJOjLuqDHn7Byxm01Vb1VfXUR654KsN2cHykUMUjMpWR5QGdQL78FpesGWVeMIuVaupQVevWVEVK3V0=
+X-Received: by 2002:a17:902:c40a:b0:202:1bb6:1897 with SMTP id
+ d9443c01a7336-20b367e4b7emr24012455ad.14.1727396117594; Thu, 26 Sep 2024
+ 17:15:17 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240911052255.1294071-1-zhenzhong.duan@intel.com>
- <20240911052255.1294071-3-zhenzhong.duan@intel.com>
-In-Reply-To: <20240911052255.1294071-3-zhenzhong.duan@intel.com>
+ <20240911052255.1294071-4-zhenzhong.duan@intel.com>
+In-Reply-To: <20240911052255.1294071-4-zhenzhong.duan@intel.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 27 Sep 2024 08:13:54 +0800
-Message-ID: <CACGkMEuj5+HVa-kK3yow0SUtXSg047f5nCvWdT3qcQ9pDTVyCQ@mail.gmail.com>
-Subject: Re: [PATCH v3 02/17] intel_iommu: Make pasid entry type check accurate
+Date: Fri, 27 Sep 2024 08:15:04 +0800
+Message-ID: <CACGkMEsz6hN5jENhfZeixfv-Fjp0cKsnSXrKxfokzo8g6esAsA@mail.gmail.com>
+Subject: Re: [PATCH v3 03/17] intel_iommu: Add a placeholder variable for
+ scalable modern mode
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com, 
  eric.auger@redhat.com, mst@redhat.com, peterx@redhat.com, jgg@nvidia.com, 
  nicolinc@nvidia.com, joao.m.martins@oracle.com, 
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com, 
- chao.p.peng@intel.com, Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+ chao.p.peng@intel.com, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -108,18 +109,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Sep 11, 2024 at 1:26=E2=80=AFPM Zhenzhong Duan <zhenzhong.duan@inte=
 l.com> wrote:
 >
-> When guest configures Nested Translation(011b) or First-stage Translation=
- only
-> (001b), type check passed unaccurately.
+> Add an new element scalable_mode in IntelIOMMUState to mark scalable
+> modern mode, this element will be exposed as an intel_iommu property
+> finally.
 >
-> Fails the type check in those cases as their simulation isn't supported y=
-et.
+> For now, it's only a placehholder and used for address width
+> compatibility check and block host device passthrough until nesting
+> is supported.
 >
-> Fixes: fb43cf739e1 ("intel_iommu: scalable mode emulation")
-> Suggested-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Reviewed-by: Cl=C3=A9ment Mathieu--Drif<clement.mathieu--drif@eviden.com>
-> Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 > ---
 
 Acked-by: Jason Wang <jasowang@redhat.com>
