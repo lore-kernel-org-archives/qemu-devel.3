@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8512CDD1D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 20:20:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 559F0CDD1D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 20:27:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suHQy-0004ps-Hp; Fri, 27 Sep 2024 16:19:24 -0400
+	id 1suHY8-0001G9-3Q; Fri, 27 Sep 2024 16:26:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1suHQx-0004pD-Cj
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 16:19:23 -0400
+ id 1suHY6-0001F9-Up
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 16:26:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1suHQt-0000nE-RJ
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 16:19:22 -0400
+ id 1suHXy-0002P0-Ux
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 16:26:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727468356;
+ s=mimecast20190719; t=1727468797;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AySi5D3ljbTpaTmQBhtLY91bjoABGKRgTPQ+fMtGr5I=;
- b=DEbSFMm4os9WduzD89ZeKkqhFxsro9h/ChzWja1QyX06cgx+C4OuDplhv64VRCCo6Q0ESx
- UrGfzLs4hupgyxK2qZ6nwte4JcicGhTJO3ZyK7YVTib0xPmXl4CEgCDp4FyLS/a8MpdA1h
- ZjVl4TP3AOEjcPFvm8PA9dCSTz7pfjg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nGZkDKq7T/LiC60K6zbnsmg0M2mHJ0hN/DpGtlM0qdE=;
+ b=HE9iHuQiGLSh+9rRGLBJhsiM/QIeYDfAP/GZSQpJFaDetgK+IRon4BDi2HHZEimXPpere0
+ pXh4rhXTuRKBWE3L9MYzq7/I0KCOKDq24NnvB9jlx+63qo4XxfeyXrK6+xEtuLNIZKBf/F
+ 3Y01Dx11Y1jFGtqrYBJPqqky/np/4qQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-445-PA1YUXUhPxuE-iDRNoSXAg-1; Fri, 27 Sep 2024 16:19:15 -0400
-X-MC-Unique: PA1YUXUhPxuE-iDRNoSXAg-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42cb050acc3so13854635e9.1
- for <qemu-devel@nongnu.org>; Fri, 27 Sep 2024 13:19:14 -0700 (PDT)
+ us-mta-635-Z9EYdZVqNuWmbx93QywCtg-1; Fri, 27 Sep 2024 16:26:32 -0400
+X-MC-Unique: Z9EYdZVqNuWmbx93QywCtg-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-37cdb0e9eb7so384862f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 27 Sep 2024 13:26:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727468354; x=1728073154;
+ d=1e100.net; s=20230601; t=1727468791; x=1728073591;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AySi5D3ljbTpaTmQBhtLY91bjoABGKRgTPQ+fMtGr5I=;
- b=szQAEwroxVBRoQGd7RKltAg3kfStdqs9oZUASHqRw1Ln5clzA+ZIiZeDTS9KqBvhx/
- TCkaiaojxwsNlqSwND1wUjSoZ3kRWEujDmE1SVsPHMh+GyHnCCPWcEopnrxYNIYcUhug
- 2wkvBlbP7WW2zgYliUJ3q8M5GLg5YnbqldFIwcO83qHvuENQabU6O48NXk4hW510f8aT
- jMX09jJOhXQJhP8Hg2wj7ciUcr4F0euueNnW6a3czigWZSyBarVtRFNtmdwuZ7snX3Gl
- wAEmnlV6OAhhTApa1mm261aJabJDdkG1tGORMTbAtwZYV6FUYq6YKxA3Jd/RrwFX8E6C
- P2sA==
-X-Gm-Message-State: AOJu0Yz8/7xy/1nte6X+Wj7pyEVAayMUllKZPTGdyfNcb9XMXsBeIEqo
- pHOr2my1P4wztc17vT60htc8HTrOp/plT+ol0F3PtjVmohMAJhm0JJU81RJAnlweML06F34G7Cv
- xp8zknwyXQ0T4GOE7FUX3wAMoxID/1H0lWJ3l3IQn97KL9l7/8CcIcEcF7JNxeCfTjPGAQsH8K5
- fVQH8rv3I/yB+7lqSoJg2+5ESt9XU=
-X-Received: by 2002:a05:600c:3542:b0:42c:bd4d:e8d6 with SMTP id
- 5b1f17b1804b1-42f57f5d908mr27816595e9.3.1727468353820; 
- Fri, 27 Sep 2024 13:19:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH/07ggdRM2zDzwQ+pMjoQCDLsCUYhwU3XD2rWYsM6mlkw191Mv8PDFm/0vE6GpKK5i+v0SaGgyEAq+eR7Jxyg=
-X-Received: by 2002:a05:600c:3542:b0:42c:bd4d:e8d6 with SMTP id
- 5b1f17b1804b1-42f57f5d908mr27816525e9.3.1727468353466; Fri, 27 Sep 2024
- 13:19:13 -0700 (PDT)
+ bh=nGZkDKq7T/LiC60K6zbnsmg0M2mHJ0hN/DpGtlM0qdE=;
+ b=JDvhTjcvetQ3Jh7pasgPs8Q0miWvP54LMC8keVMKMKXvYix8qKHMMZwkHqvUQeQn8o
+ 1gAe8wL6J4JQM9aRrEJxgPmTea8FjoejYVDs5sTv91ihwOKHDUyX5n6xD8loalHJ9SoS
+ ZCTLno7IuE3l0AfAGuIErhcK/ajpr0DUdr695//KaPRJuHD2hg4C1UAeRWX690XQK+P/
+ xFdr7fgA19q/4NptAL3XkNNMDRV5UHBKBJsSA9ilzBdpev5ydy3yGVcFqp5qG+lmXGHo
+ 3aWoweXH2mmoNb6tixYPFyRrL1v3xefOH5UOWUQu9RftfpALC7H6nsN4mVUYX9oKVHJ6
+ JxUQ==
+X-Gm-Message-State: AOJu0YxgmHIgcNNrKwW8dyFeW/fnY0vU9i8CJydj7eOq//0mbqp6j4jD
+ UYQs476UzNA8ZlE4w3CtcNJdSJOb6LhoQ5JE3IqpsAoopxA8ieUqW52hI7gQ4jFAct97yqViltz
+ 3SsrMTJ5r2HZLIgfSYik3wkAVO50vVo1xwUCcgayd0E7zmUpPhQGdLnzMb96zW2EzW0apKKd4p9
+ GF3x6+rB0uzBQIxaXMYW6Tu01l8uE=
+X-Received: by 2002:adf:eac5:0:b0:374:ca43:cda5 with SMTP id
+ ffacd0b85a97d-37cd59e250amr2836367f8f.0.1727468791565; 
+ Fri, 27 Sep 2024 13:26:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEjqQtr6LZs5hAhnjw5XASX4VK5S3sr4fi//QjzfoLhVJ6S+gzyLXsv12oOxCzJL6WR/PwuFC37THEsjBGxgQk=
+X-Received: by 2002:adf:eac5:0:b0:374:ca43:cda5 with SMTP id
+ ffacd0b85a97d-37cd59e250amr2836354f8f.0.1727468791230; Fri, 27 Sep 2024
+ 13:26:31 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240701145853.1394967-1-pbonzini@redhat.com>
  <20240701145853.1394967-4-pbonzini@redhat.com>
- <ZvbY0PMWmJPZN7Sq@redhat.com>
-In-Reply-To: <ZvbY0PMWmJPZN7Sq@redhat.com>
+ <CAJSP0QU3iT9REzdciVZBhRWLtQXtoabJ9Jb=S9Maun1cDb+WFw@mail.gmail.com>
+In-Reply-To: <CAJSP0QU3iT9REzdciVZBhRWLtQXtoabJ9Jb=S9Maun1cDb+WFw@mail.gmail.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 27 Sep 2024 22:19:00 +0200
-Message-ID: <CABgObfZFPtACPKLgkFninr+Nm5YYG7qent-G4YTYBX2pORAMsg@mail.gmail.com>
+Date: Fri, 27 Sep 2024 22:26:19 +0200
+Message-ID: <CABgObfY=Lm_868Me7xqEk2zA+UGARbeH-4ELvBJn4tYucUCXJg@mail.gmail.com>
 Subject: Re: [PATCH 03/14] rust: define traits and pointer wrappers to convert
  from/to C representations
-To: Kevin Wolf <kwolf@redhat.com>
+To: Stefan Hajnoczi <stefanha@gmail.com>
 Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, 
@@ -106,102 +106,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 27, 2024 at 6:10=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wrote=
-:
-> Am 01.07.2024 um 16:58 hat Paolo Bonzini geschrieben:
-> > The qemu::util::foreign module provides:
-> >
-> > - A trait for structs that can be converted to a C ("foreign") represen=
-tation
-> >   (CloneToForeign)
-> >
-> > - A trait for structs that can be built from a C ("foreign") representa=
-tion
-> >   (FromForeign), and the utility IntoNative that can be used with less =
-typing
-> >   (similar to the standard library's From and Into pair)
+On Fri, Sep 27, 2024 at 9:36=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail.com=
+> wrote:
 >
-> It makes sense to me that we'll need something to convert data and that
-> this usually means creating a new instance, i.e. cloning. However, while
-> it's obvious that this is similar to From/Into, the part I'm missing
-> here is what's different from it.
+> On Mon, 1 Jul 2024 at 11:02, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> > +/// A type for which there is a canonical representation as a C datum.
+> > +pub trait CloneToForeign {
+> > +    /// The representation of `Self` as a C datum.  Typically a
+> > +    /// `struct`, though there are exceptions for example `c_char`
+> > +    /// for strings, since C strings are of `char *` type).
+> > +    type Foreign;
+> > +
+> > +    /// Free the C datum pointed to by `p`.
+> > +    ///
+> > +    /// # Safety
+> > +    ///
+> > +    /// `p` must be `NULL` or point to valid data.
+> > +    unsafe fn free_foreign(p: *mut Self::Foreign);
+> > +
+> > +    /// Convert a native Rust object to a foreign C struct, copying
+> > +    /// everything pointed to by `self` (same as `to_glib_full` in `gl=
+ib-rs`)
+> > +    fn clone_to_foreign(&self) -> OwnedPointer<Self>;
 >
-> In other words, couldn't we just implement the normal From trait between
-> FFI types and the native equivalent?
+> I expected the return type to be OwnedPointer<Self::Foreign>. Is this a t=
+ypo?
 
-In general yes. Using new traits has two advantages (all IMHO of
-course). First, it makes it possible to tie the implementation to the
-availability of a freeing function; second, it makes it possible to
-define this always, whereas From is limited by the orphan rule (you
-cannot provide implementations of a trait for a struct unless you are
-the crate that defines either the struct or the trait).
+Kevin noticed the same. I'd have to check if I am missing something
+but it seems to be just tunnel vision.
 
-> > - Automatic implementations of the above traits for Option<>, supportin=
-g NULL
-> >   pointers
->
-> This is nice.
+> Also, why is the return type OwnedPointer<T> instead of just T? I
+> guess it's common to want a heap-allocated value here so you decided
+> to hard-code OwnedPointer<>, but I'm not sure.
 
-... for example, you can't have such a blanket implementation "impl<T,
-U: From<T>> From<T> for Option<U> {}".
+Because at this point it looks like the most important conversion is
+to have a clone (meaning its lifetime is independent of the copy) and
+a value that is not movable (moves can be unpredictable and then usage
+in C is messy). The main example is creating a QEMU Error from
+something that implements the Rust std::error::Error trait.
 
-> > - A wrapper for a pointer that automatically frees the contained data. =
- If
-> >   a struct XYZ implements CloneToForeign, you can build an OwnedPointer=
-<XYZ>
-> >   and it will free the contents automatically unless you retrieve it wi=
-th
-> >   owned_ptr.into_inner()
->
-> Something here feels off to me.
->
-> At first, I thought it might be only about naming. This is not about
-> owning the pointer (which you probably do anyway), but that the pointer
-> owns the object it points to. This concept has in fact a name in Rust:
-> It's a Box.
->
-> The major difference compared to Box is that we're using a different
-> allocator. Not sure if the allocator APIs would actually be viable, but
-> they're not stable anyway - but let's at least name this thing in way
-> that draws the obvious parallel. Maybe ForeignBox.
-> But the other thing that doesn't feel quite right is how this is coupled
-> with CloneToForeign. Freeing is different from cloning, and it really
-> relates to the foreign type itself, and not to the one that can be
-> cloned into a foreign type.
-
-I am not 100% convinced of the ForeignBox name but I see your point.
-You'd prefer to have "impl FreeForeign for c_char" and "impl
-CloneToForeign for str", where it's the CloneToForeign::Foreign
-associated type (in this case c_char) that must implement FreeForeign.
-Also, clone_to_foreign() for a str would return an
-OwnedPointer<c_char>, not an OwnedPointer<str>. Never be too
-optimistic about Rust, but that should be doable and I agree it is
-better.
-
-> Bringing both together, what a Box doesn't usually have is a function
-> pointer for freeing. We probably don't need it here either, almost
-> everything needs g_free().
-
-Is that true? For example we could have qobject_unref, or qapi_free_*
-as implementations of FreeForeign.
-
-> There is a different free_foreign()
-> implementation for Error, but arguably this could be changed:
-> bindings::Error should then implement Drop for the inner value (with an
-> error_free_inner() which needs to be exported separately from C first),
-> and then ForeignBox can just drop the Error object and g_free() the
-> pointer itself like it would do with any other value.
-
-I think that's a bit too magical. Making Error always represent an
-owned object seems a bit risky; instead I'm treating the bindings::XYZ
-structs as very C-like objects, that are usually managed through
-either OwnedPointer<...> (e.g. for a parameter) or *mut XYZ (for a
-return value).
-
-Thanks for looking at this. This kind of review is something that
-we'll have to do a lot and it's better to have some early experience
-of what they look like, independent of whether this code ultimately
-will or will not be part of QEMU.
+Actually I have written extra code that _borrows_ into a foreign
+object (so a CStr can be used as a *const c_char for as long as the
+CStr is alive), but I didn't really have a user and wrote it only to
+validate the concept.
 
 Paolo
 
