@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01619CEBF8A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C52FCEBF86
 	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 08:53:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1su6i7-0005M8-Af; Fri, 27 Sep 2024 04:52:23 -0400
+	id 1su6i7-0005Kx-Hx; Fri, 27 Sep 2024 04:52:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>) id 1su6i5-0005KY-R5
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 04:52:21 -0400
-Received: from mail-m16.yeah.net ([220.197.32.18])
+ (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>) id 1su6i4-0005J5-Id
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 04:52:20 -0400
+Received: from mail-m16.yeah.net ([220.197.32.19])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <chao.liu@yeah.net>) id 1su6hz-0005od-PJ
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 04:52:21 -0400
+ (envelope-from <chao.liu@yeah.net>) id 1su6hz-0005oa-LR
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 04:52:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
- s=s110527; h=From:Subject:Date:Message-ID:MIME-Version; bh=9ZoQa
- 4iIChW1XyvkqEYZejNvmSqeCMWROLPSRnxYNwM=; b=B3l+3loBQ3PR01hrXosAS
- 8NMf0hxeb6v8mSukZEB+AWhmF7NVwj/+nayLIwvZkl9uTGiQG6wi0zI0NQp/xyqw
- NSdnP3JWlku7iAsziDyQBhohda1Cu92naBmSFn1APQUH6FnLeryjZ/ML3uf58tRT
- fZr8Gsbdnt6Ud1TkOC/4gU=
+ s=s110527; h=From:Subject:Date:Message-ID:MIME-Version; bh=Blphx
+ XN4un5YW9VRPae4/DTWRYrwXOalOhZwPQUcgHY=; b=ZbSQO6g96cDUGib7CF2U1
+ Lpay5/+GQ0GJNVDvzN6/hH8WuuN299Dc7isI32KvN6+4I4+MUKECRR3FxlLkXXF+
+ kz9AdNtVVmV8EcJHVp6IMRg01Dk5k8KrOl0NoH6zm9TNeaZIy5FosOQJm15Kcsr7
+ jTLYbRjkIWOtvMK5bqAS1c=
 Received: from localhost.localdomain (unknown [])
- by gzsmtp1 (Coremail) with SMTP id Mc8vCgD31KoOcvZmhEQ4AQ--.49283S3;
- Fri, 27 Sep 2024 16:51:26 +0800 (CST)
+ by gzsmtp1 (Coremail) with SMTP id Mc8vCgD31KoOcvZmhEQ4AQ--.49283S4;
+ Fri, 27 Sep 2024 16:51:27 +0800 (CST)
 From: Chao Liu <chao.liu@yeah.net>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, bin.meng@windriver.com, edgar.iglesias@gmail.com,
  alistair@alistair23.me, Chao Liu <chao.liu@yeah.net>
-Subject: [PATCH v2 1/2] xilink_zynq: Add various missing unimplemented devices
-Date: Fri, 27 Sep 2024 16:51:18 +0800
-Message-ID: <e908ac801a37947a8efa02cf87c06578b5212ac7.1727425255.git.chao.liu@yeah.net>
+Subject: [PATCH v2 2/2] xilink-zynq-devcfg: Fix up for memory address range
+ size not set correctly
+Date: Fri, 27 Sep 2024 16:51:19 +0800
+Message-ID: <adc52fbbf80a7eeb5f9d62f3989cf30d268e8c81.1727425255.git.chao.liu@yeah.net>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <cover.1727425255.git.chao.liu@yeah.net>
 References: <cover.1727425255.git.chao.liu@yeah.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: Mc8vCgD31KoOcvZmhEQ4AQ--.49283S3
-X-Coremail-Antispam: 1Uf129KBjvJXoWxCF45Kr13Aw1UtF45AFWfAFb_yoW5uFy8pF
- 45CFW5KrW8JrZrZ3yfXrn2qFyaqws5Cas8J34Iy348uFZ2kr1kAr4vq3Z3JFWrXayDt3W3
- XFyayF15Kr1jk3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07j6uWJUUUUU=
+X-CM-TRANSID: Mc8vCgD31KoOcvZmhEQ4AQ--.49283S4
+X-Coremail-Antispam: 1Uf129KBjvdXoWrWr4kCw47CF1ftFy5Jr4Utwb_yoWxXrg_C3
+ 45Aay3Wr4DJr4UZwnYyrW8tr1SvwnYkr1SgF1jk34DXF4UGF4fZr45t3Wvq3Z7X3yUCrsx
+ uF129F9rXay5XjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IUevtAtUUUUU==
 X-Originating-IP: [117.173.247.123]
-X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiCQ1nKGb2J2jWFAAAsW
-Received-SPF: pass client-ip=220.197.32.18; envelope-from=chao.liu@yeah.net;
+X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiEghnKGb2KtTLgAABsx
+Received-SPF: pass client-ip=220.197.32.19; envelope-from=chao.liu@yeah.net;
  helo=mail-m16.yeah.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -71,88 +72,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add PMU, CAN, GPIO, I2C, and other as unimplemented devices.
-
-Remove a ignore_memory_transaction_failures concurrently.
-
-This allows operating systems such as Linux to run emulations such as xilinx_zynq-7000
-
 Signed-off-by: Chao Liu <chao.liu@yeah.net>
 ---
- hw/arm/xilinx_zynq.c | 46 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 45 insertions(+), 1 deletion(-)
+ hw/dma/xlnx-zynq-devcfg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
-index 37c234f5ab..535e1b35a2 100644
---- a/hw/arm/xilinx_zynq.c
-+++ b/hw/arm/xilinx_zynq.c
-@@ -34,6 +34,7 @@
- #include "hw/net/cadence_gem.h"
- #include "hw/cpu/a9mpcore.h"
- #include "hw/qdev-clock.h"
-+#include "hw/misc/unimp.h"
- #include "sysemu/reset.h"
- #include "qom/object.h"
- #include "exec/tswap.h"
-@@ -232,6 +233,50 @@ static void zynq_init(MachineState *machine)
-     /* DDR remapped to address zero.  */
-     memory_region_add_subregion(address_space_mem, 0, machine->ram);
- 
-+    /* Compatible RAZ/WI behavior for accessing memory */
-+    create_unimplemented_device("znyq.unimp", 0, 4 * GiB);
-+
-+    /* PMU */
-+    create_unimplemented_device("pmu.region0", 0xf8891000, 0x1000);
-+    create_unimplemented_device("pmu.region1", 0xf8893000, 0x1000);
-+
-+    /* CAN */
-+    create_unimplemented_device("amba.can0", 0xe0008000, 0x1000);
-+    create_unimplemented_device("amba.can1", 0xe0009000, 0x1000);
-+
-+    /* GPIO */
-+    create_unimplemented_device("amba.gpio0", 0xe000a000, 0x1000);
-+
-+    /* I2C */
-+    create_unimplemented_device("amba.i2c0", 0xe0004000, 0x1000);
-+    create_unimplemented_device("amba.i2c1", 0xe0005000, 0x1000);
-+
-+    /* Interrupt-Controller */
-+    create_unimplemented_device("amba.intc.region0", 0xf8f00100, 0x100);
-+    create_unimplemented_device("amba.intc.region1", 0xf8f01000, 0x1000);
-+
-+    /* Memory-Controller */
-+    create_unimplemented_device("amba.mc", 0xf8006000, 0x1000);
-+
-+    /* SMCC */
-+    create_unimplemented_device("amba.smcc", 0xe000e000, 0x1000);
-+    create_unimplemented_device("amba.smcc.nand0", 0xe1000000, 0x1000000);
-+
-+    /* Timer */
-+    create_unimplemented_device("amba.global_timer", 0xf8f00200, 0x20);
-+    create_unimplemented_device("amba.scutimer", 0xf8f00600, 0x20);
-+
-+    /* WatchDog */
-+    create_unimplemented_device("amba.watchdog0", 0xf8005000, 0x1000);
-+
-+    /* Other */
-+    create_unimplemented_device("amba.efuse", 0xf800d000, 0x20);
-+    create_unimplemented_device("amba.etb", 0xf8801000, 0x1000);
-+    create_unimplemented_device("amba.tpiu", 0xf8803000, 0x1000);
-+    create_unimplemented_device("amba.funnel", 0xf8804000, 0x1000);
-+    create_unimplemented_device("amba.ptm.region0", 0xf889c000, 0x1000);
-+    create_unimplemented_device("amba.ptm.region1", 0xf889d000, 0x1000);
-+
-     /* 256K of on-chip memory */
-     memory_region_init_ram(ocm_ram, NULL, "zynq.ocm_ram", 256 * KiB,
-                            &error_fatal);
-@@ -394,7 +439,6 @@ static void zynq_machine_class_init(ObjectClass *oc, void *data)
-     mc->init = zynq_init;
-     mc->max_cpus = ZYNQ_MAX_CPUS;
-     mc->no_sdcard = 1;
--    mc->ignore_memory_transaction_failures = true;
-     mc->valid_cpu_types = valid_cpu_types;
-     mc->default_ram_id = "zynq.ext_ram";
-     prop = object_class_property_add_str(oc, "boot-mode", NULL,
+diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
+index b8544d0731..7170353a62 100644
+--- a/hw/dma/xlnx-zynq-devcfg.c
++++ b/hw/dma/xlnx-zynq-devcfg.c
+@@ -372,7 +372,7 @@ static void xlnx_zynq_devcfg_init(Object *obj)
+                               s->regs_info, s->regs,
+                               &xlnx_zynq_devcfg_reg_ops,
+                               XLNX_ZYNQ_DEVCFG_ERR_DEBUG,
+-                              XLNX_ZYNQ_DEVCFG_R_MAX);
++                              XLNX_ZYNQ_DEVCFG_R_MAX * 4);
+     memory_region_add_subregion(&s->iomem,
+                                 A_CTRL,
+                                 &reg_array->mem);
 -- 
 2.46.1
 
