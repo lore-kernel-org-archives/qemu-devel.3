@@ -4,92 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0FA3CDD1D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 18:30:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E624CDD1D3
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 18:35:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suFie-00058v-04; Fri, 27 Sep 2024 14:29:32 -0400
+	id 1suFoA-0001J3-D1; Fri, 27 Sep 2024 14:35:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1suFib-00055f-Mj
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 14:29:29 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1suFo4-0001Fk-2e
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 14:35:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1suFia-0000MU-9n
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 14:29:29 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1suFnz-0001GE-Tv
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 14:35:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727461764;
+ s=mimecast20190719; t=1727462101;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Qm9UY9inFHPc/Wk8/EDjPdoXvEj0EeMpj1MaVF3gRcY=;
- b=H1uRNFHjMZzDEJcFvK3Nlrb6Bh7EpbXIuWHJPDwPEc8UBsQFq9VAE75bMiAcsypjqMzdvr
- ZjnxMY7xOF05xIYUYcx67eo5VelOCFT4LeeVZyQIySorYmrctgYMfzzZuJN416C2z982Fy
- PfQfJqCqLlA92mX7rmhkuKrgHdBamX8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GWg8vZp/Vb4oBnw7lR4TAf+m8i+ZfkkiFBOpaXgJQ20=;
+ b=grvxR7YmEmb/gC7koSCGddG1lCd52mkkYFYxDgJKnXI3Ik8nIc8smJOsvCVt6E0wlLp/th
+ Fw3iKRfFb25PfEX3XMNHtRIw1SmoisOL7ViA+CfsrrPWru5VHzeqnmRrMzdSPba/bIOjVN
+ 7uLPzToHbB9xOTy/umQ0Yh4XQbrmukM=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-478-nR9mZtBUMFqXmUyeVbipug-1; Fri, 27 Sep 2024 14:29:22 -0400
-X-MC-Unique: nR9mZtBUMFqXmUyeVbipug-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-37ccc21ceb1so1026728f8f.2
- for <qemu-devel@nongnu.org>; Fri, 27 Sep 2024 11:29:22 -0700 (PDT)
+ us-mta-622-rqek2BIGPLSAiTcABoT7fg-1; Fri, 27 Sep 2024 14:35:00 -0400
+X-MC-Unique: rqek2BIGPLSAiTcABoT7fg-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-42e77b5d3dcso15174495e9.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Sep 2024 11:35:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727461761; x=1728066561;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=Qm9UY9inFHPc/Wk8/EDjPdoXvEj0EeMpj1MaVF3gRcY=;
- b=CiMRBoT4HOGSX9MbPQPOpsH9znst19rcDcnAnefg0YGjh0MmVe0RQ4/JZmONQfN6/e
- KEkG1GEY5ITlo7eruidrEkZyYLxJ1EXyUVGbs6EN7pJMqOd8E0YcvbvdlV6GucMCWsMF
- fzHj/GFQyc++CaTkkBuWTplXOSEoJyHxXU6x5ECkDNpGetJ4aQO8TmltfJkstgrbVZ84
- OWUVk6O2rDLq2ZWcLMjRICGB8VCis+FmEKjbCfKy/6SDl1XKebifjmlpzyY+MJLhd6we
- detnG/ZdQZkE78Zly4szjw/FM2oSe0YhNELcS+UWjjCtZpm3Dj9BkwmDO66J4yRoiBPJ
- yvmw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUy0dHLv0mz6PeqYB8LOaFs5yXKeEU7TGOXMHCB3gk0e9l672TtgoJt9R2FV6BxniI3huJrtrGb+IWW@nongnu.org
-X-Gm-Message-State: AOJu0Yyx14FxD8OdxMhrzeBK7LsHjCmDVdIsAf/i7puU/7og6/V6EzJ9
- wP7tHA8tvcCeGyZIvd1JhHL4PHzh3AELvzFOw9GUiy2t4BWaZVYHfnIpXQ7E9+VlNwaM4gSi3x0
- v1hdFymPjPpYUDhKR2XIctzN4J2kVr9v8GtPeCNlffNO+Y9L4JsfS
-X-Received: by 2002:a05:6000:10c3:b0:37c:d23f:e465 with SMTP id
- ffacd0b85a97d-37cd5b07333mr2554576f8f.55.1727461761278; 
- Fri, 27 Sep 2024 11:29:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFZ+4A7Mn70oXPSZa2wtJdRmNmIx+gxb/oHlhXNMMwUC+dKeXERasZ5Mvt5HgmZ+xRAnOuZGw==
-X-Received: by 2002:a05:6000:10c3:b0:37c:d23f:e465 with SMTP id
- ffacd0b85a97d-37cd5b07333mr2554562f8f.55.1727461760857; 
- Fri, 27 Sep 2024 11:29:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1727462099; x=1728066899;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GWg8vZp/Vb4oBnw7lR4TAf+m8i+ZfkkiFBOpaXgJQ20=;
+ b=Womv9SFB5DXsmcSiA/Mka4RtQWoKG5umiLJCXAi+IfLbZoLwi52sZDqHaWgplydZVN
+ W3J82e1N8k7mUDPf1ht0RsVhSuzMWq7YEFpfqFfwJ05w3xGNNzOphFmkMJW/PJCSImrL
+ aWedu7idKK3+09o/h6NviCDHohe7e2R/RPsk5LTn8b8Uq1/miKWUOf5aaC4kB+gYZ9Su
+ CnczZtjBDgNE+bGHA1PCaO4L+AK/qXoODa9Rb4qSzjB4mUAqgX4sMBy+L3ktBaidsnwR
+ BOX1J71pGi0TqYyj0gONJaY5yokVyqD6ZUXsl0M34DQfsqtj5MklZ5AFRsPpMat/zpE3
+ rwuA==
+X-Gm-Message-State: AOJu0YzWL59jkA+PeTDHYAZgqvBXlEebYQUH41T2XN5PJxFxOMJ12CmN
+ CRfULFGMqj8TU41r1FUQ1FFuBzXRjShvKkBWZnQqxU21dYCoWtKKZtnnrg0xdVyfX+BnXS2JaFx
+ vCuop0RRtkRtXIwBsTyuE8M1yIq8Z7lnRpZIQhHP0WB2XVDhra0Hp
+X-Received: by 2002:a05:600c:4454:b0:42c:b58d:98ad with SMTP id
+ 5b1f17b1804b1-42f5843312amr29433625e9.14.1727462098862; 
+ Fri, 27 Sep 2024 11:34:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF6H+yZEmNMA0ASqZfwXS3WTR9568RxWFI73244sjafb7ND/+iaAPWNrG/VdCY7t1D7SxMiMw==
+X-Received: by 2002:a05:600c:4454:b0:42c:b58d:98ad with SMTP id
+ 5b1f17b1804b1-42f5843312amr29433415e9.14.1727462098312; 
+ Fri, 27 Sep 2024 11:34:58 -0700 (PDT)
 Received: from ?IPV6:2003:cb:c709:8000:b502:8c1c:3624:99d4?
  (p200300cbc7098000b5028c1c362499d4.dip0.t-ipconnect.de.
  [2003:cb:c709:8000:b502:8c1c:3624:99d4])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd5764c50sm3077777f8f.112.2024.09.27.11.29.19
+ 5b1f17b1804b1-42f57dec19bsm34387485e9.26.2024.09.27.11.34.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Sep 2024 11:29:20 -0700 (PDT)
-Message-ID: <7aea51e4-5514-44e7-9da0-cf6aa7a31439@redhat.com>
-Date: Fri, 27 Sep 2024 20:29:19 +0200
+ Fri, 27 Sep 2024 11:34:57 -0700 (PDT)
+Message-ID: <a5b9e4e7-b1af-425e-8fc6-07e194c7bf08@redhat.com>
+Date: Fri, 27 Sep 2024 20:34:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 00/14] s390x: virtio-mem support
-To: Halil Pasic <pasic@linux.ibm.com>
-Cc: Cornelia Huck <cohuck@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Janosch Frank <frankja@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
+Subject: Re: [PATCH v1 07/14] s390x/s390-hypercall: introduce DIAG500
+ STORAGE_LIMIT
+To: Halil Pasic <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Eric Farman <farman@linux.ibm.com>, Janosch Frank <frankja@linux.ibm.com>, 
+ Claudio Imbrenda <imbrenda@linux.ibm.com>, qemu-s390x@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>
+ Ilya Leoshkevich <iii@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>
 References: <20240910175809.2135596-1-david@redhat.com>
- <4429b29a-a022-4507-a358-1a16b5032395@linux.ibm.com>
- <9dc58bde-7979-4ffb-9ba7-a501d9fcc416@redhat.com>
- <20240911100415-mutt-send-email-mst@kernel.org> <871q1qurol.fsf@redhat.com>
- <ae1eb296-2737-4871-8769-cee78e459bca@redhat.com>
- <20240927202019.6d721171.pasic@linux.ibm.com>
-From: David Hildenbrand <david@redhat.com>
+ <20240910175809.2135596-8-david@redhat.com>
+ <6636c963-228f-4bea-87c5-bd4f75521c75@redhat.com>
+ <20240927200525.5a90f172.pasic@linux.ibm.com>
 Content-Language: en-US
+From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
  dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
@@ -135,7 +131,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20240927202019.6d721171.pasic@linux.ibm.com>
+In-Reply-To: <20240927200525.5a90f172.pasic@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
@@ -147,7 +143,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.15,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,31 +159,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27.09.24 20:20, Halil Pasic wrote:
-> On Wed, 11 Sep 2024 21:09:27 +0200
-> David Hildenbrand <david@redhat.com> wrote:
+On 27.09.24 20:05, Halil Pasic wrote:
+> On Thu, 12 Sep 2024 10:19:00 +0200
+> Thomas Huth <thuth@redhat.com> wrote:
 > 
->>> Anyway, if we want to proceed with the gitlab project, would it make
->>> sense to create an org for it, so that it doesn't look like David's
->>> personal project?
+>>> diff --git a/hw/s390x/s390-hypercall.h b/hw/s390x/s390-hypercall.h
+>>> index b7ac29f444..f0ca62bcbb 100644
+>>> --- a/hw/s390x/s390-hypercall.h
+>>> +++ b/hw/s390x/s390-hypercall.h
+>>> @@ -18,6 +18,7 @@
+>>>    #define DIAG500_VIRTIO_RESET            1 /* legacy */
+>>>    #define DIAG500_VIRTIO_SET_STATUS       2 /* legacy */
+>>>    #define DIAG500_VIRTIO_CCW_NOTIFY       3 /* KVM_S390_VIRTIO_CCW_NOTIFY */
+>>> +#define DIAG500_STORAGE_LIMIT           4
+>>>    
+>>>    int handle_diag_500(CPUS390XState *env);
+>>
+>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>>
+>> Sounds very reasonable to me - but it would be good to get an
+>> Ack/Reviewed-by from IBM folks here (in case they prefer a different
+>> interface)... hope they'll join the discussion!
+>>
+>>    Thomas
 > 
-> Frankly, I would prefer making Documentation/virt/kvm/s390/s390-diag.rst
-> the authoritative documentation on DIAGs.
-> 
-> My train of thought is DIAG 500 is a KVM thing, and KVM is a linux
-> kernel thing, so it just feels right for the documentatio to
-> live within the linux source tree.
+> According to Documentation/virt/kvm/s390/s390-diag.rst in the
+> linux source tree DIAG 500 is for kvm virtio funcions.
 
-QEMU/TCG is the proof that KVM is not necessarily involved.
-
-Are you sure that no other OS out there besides Linux implements virtio 
-on s390x, or would want to implement it? :)
+I assume you skimmed the QEMU patches, including the one that suggest 
+changing (or rather extending) that.
 
 > 
-> I may have missed some of the discussion: what were the benefits
-> of having this in its separate project/repository?
+> Based on the commit message this storagelimit DIAG is rather loosely
+> tied to virtio if at all, so from that perspective DIAG may not be a
+> perfect fit. OTOH I don't see a better fit either. I would prefer to
+> have Christian's opinion on this. I have no strong opinion myself.
+> 
+ > If we decide to go with a DIAG, I would like to see> 
+Documentation/virt/kvm/s390/s390-diag.rst
+> updated accordingly.
 
-Having it independent of the implementation.
+I'll document wherever people fancy. I'll even document in multiple 
+locations :)
+
+> 
+> Also if decide to go with DIAG 500, maybe leaving some space
+> between the codes more closely tied to virtio and between
+> the ones less closely tied to virito (for the unlikely case
+> that we end up wanting another DIAG 500 subcode for virtio)
+> might make sense. I.e e could make DIAG500_STORAGE_LIMIT
+> 8 or 16 instead of 4. Again nothing important, just an idea.
+
+I don't see a reason to do that, but in the end I don't care as long as 
+people let me know what to do instead.
+
+Thanks for taking a look!
 
 -- 
 Cheers,
