@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3C77CEBF76
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E518ACEBF77
 	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 04:09:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1su2HI-0003HE-63; Fri, 27 Sep 2024 00:08:24 -0400
+	id 1su2HG-000393-1U; Fri, 27 Sep 2024 00:08:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1su2HH-0003E6-9F
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 00:08:23 -0400
+ id 1su2HE-000346-RC
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 00:08:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1su2HF-0006GG-V0
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 00:08:23 -0400
+ id 1su2HD-0006G1-GT
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 00:08:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727410100;
+ s=mimecast20190719; t=1727410096;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OTnve1IY/xn72fTWJAMzWxStRePV28Y6ecYTjxfYJng=;
- b=f6s3o+1RUaHr3ZViu0q3QZ/xw3LEr48S1nx429rPNvq+/FeBlrCxghfH+Yz1ZmvXiEW0jW
- GKF7oD/aod8RtyIYCWDUUUowSZC4mCEkut49zBvRRY374d/eRoFKkIWjkPFA1uutVT2OM+
- NkwEZQsYp3YR3cCBeT5A7foWqMm+x68=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3J50xKQ+QB1VBzFCFjRhZUWwg8xtzJm5W8vJLUmJzhc=;
+ b=c1rMUe1aLXbR5t5a0JJ4z9GrET+ACwHNVf2lUrYXerhI9OcdIRzRuJE5iWYGd/DLz8ZV17
+ 2KHB6NSuLNpy6fG2/SgXLsxElRFiObniFaOL/xN5sF10BH5cSBfe7vrl4u1on9QT8jgCAX
+ UqXN1XifM7QsNzpXeU9qzo0xaPnQKPw=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-512-tPuHmQxKNJy5msdCUei9bA-1; Fri, 27 Sep 2024 00:08:15 -0400
-X-MC-Unique: tPuHmQxKNJy5msdCUei9bA-1
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-2e08a2b07bcso1719356a91.2
- for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 21:08:15 -0700 (PDT)
+ us-mta-434-sdiaT96FNt6UYgkHAwnQ1g-1; Fri, 27 Sep 2024 00:08:14 -0400
+X-MC-Unique: sdiaT96FNt6UYgkHAwnQ1g-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2e08735ed9dso2134984a91.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 21:08:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727410094; x=1728014894;
+ d=1e100.net; s=20230601; t=1727410093; x=1728014893;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OTnve1IY/xn72fTWJAMzWxStRePV28Y6ecYTjxfYJng=;
- b=Y51awHgcq2Jhr5s07N2oLqJn4qQV3r+JQgK0MD6eavbAPsUa0HRM6TjgkpFYEFp2Kl
- G1NqEZUul6Sxx4PJi1BTtjT0lJDGSgAaEtybAAjLBaUUvMn5hekk5Rv7Q1eYIm/k7SGd
- om6rvV5dRfCThkOc1Y1IhNvS84KqIB45r3t5kPEnMQHrZOzoywsklwJ3eOdBRkoM1TyX
- ZucqW4B+pLuwlbbiYHYx9LGDJ3KWoj6r1ZXrsJe2+uXbZdz/lryKN/889icP0wD4UN0t
- wAjYS/hx1bZqS7gVPsKDX+As5+D1gfJ7/9RWYya7ib+MeC02tj5cvwuYhz7wJJ94zTpT
- odyg==
-X-Gm-Message-State: AOJu0YyKV/r1Fe78xDqCywM8qsNHVL3VUPs8w/XiCtLnRUYJiCClwwwz
- 0sEzeBuCtetS918e8IczzV/NFTm12wT3u9p5frZMzTcNakQM6VTQRd0kA0SrPdn13/8jNePPRNF
- aHVEisTsw2gsPvNEh5BYRKK0LA1tBoAxWPtuAk3xwQtfvtc6YFlTl+dw0uHvvloYKBjrCesvkEg
- sYS9zJbsuzS8L2/u4b4wb76ffEuXk=
-X-Received: by 2002:a17:90b:3546:b0:2da:5edd:c165 with SMTP id
- 98e67ed59e1d1-2e0b8ea136dmr2306264a91.30.1727410094526; 
- Thu, 26 Sep 2024 21:08:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFYm+WBFGbQAUVPMQ6yA/ki8tiQQxuizZmzk1CaawuCTquaeLGoSYgLlsN0BXpoHHpOit4YaREZlxrhp3Zk3YM=
-X-Received: by 2002:a17:90b:3546:b0:2da:5edd:c165 with SMTP id
- 98e67ed59e1d1-2e0b8ea136dmr2306236a91.30.1727410094054; Thu, 26 Sep 2024
- 21:08:14 -0700 (PDT)
+ bh=3J50xKQ+QB1VBzFCFjRhZUWwg8xtzJm5W8vJLUmJzhc=;
+ b=vJkm6c/7kIn0R+zUFgSEDBwn8vJsx8qMHmgVoleuelWCAyD1pW1b4SHTeBugfD13Zs
+ YRaLT724jhiO2OSXtwyMQUrguEP2QzQUN7YpLXYmMglEjYqEKySFE2bCJuJ0Dz/RN++E
+ yyA/SuCup6/jNmSnsrbS14hE4zvk7ihK8Y1O6C86NsjdFkvBMn7Ixe5rM09StNR82jph
+ o/kVf481d9XkSf7iCKep7UAP/fk5DK6ADZ//laaJk1gS451RIyiSzt66nrn/TOxrfBIR
+ hLVKQT2fOrtwTudVIBdVwP3/ipGuU1Yuqe56owADLM9980KghiCaVD7iaXQGr4mOiy22
+ UTnw==
+X-Gm-Message-State: AOJu0YzYVu8yl/NWGjWV+ZirLp07TZSNHn5l171IsU3Go+Ee5VJjLW/P
+ LsXXJhRGDW3QJCUiyV7XGpkgvpLbsxrT3fzoK543rtCuCRqnp7X2fYEvldKa91HwZzb1v/CDB5i
+ 48h2x/6LUbNbk8K7C04SUsC3LsuKSHMuOD8t6/ajoT1dlZWJICXk22fvo13JFqJab5CRFku/W/d
+ 9Dl+WDQ4pWrktxIp4Z3jWDGUds93s=
+X-Received: by 2002:a17:90a:bf03:b0:2dd:6969:208e with SMTP id
+ 98e67ed59e1d1-2e0b899c3admr2379712a91.3.1727410093334; 
+ Thu, 26 Sep 2024 21:08:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG7ONwEGYQvT5BBjI+rRKYZNPQDO//6uQgLqdEzAZYSWrTt4OwCidrkXX1+JI/pxuua/6Y3fAP361N8v75bdDY=
+X-Received: by 2002:a17:90a:bf03:b0:2dd:6969:208e with SMTP id
+ 98e67ed59e1d1-2e0b899c3admr2379691a91.3.1727410092905; Thu, 26 Sep 2024
+ 21:08:12 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240911052255.1294071-1-zhenzhong.duan@intel.com>
- <20240911052255.1294071-11-zhenzhong.duan@intel.com>
-In-Reply-To: <20240911052255.1294071-11-zhenzhong.duan@intel.com>
+ <20240911052255.1294071-10-zhenzhong.duan@intel.com>
+In-Reply-To: <20240911052255.1294071-10-zhenzhong.duan@intel.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 27 Sep 2024 12:08:01 +0800
-Message-ID: <CACGkMEuJix+AXU7Fmwaw9yfwr6P1+1s2gsp1GmKieLLQkbgKzQ@mail.gmail.com>
-Subject: Re: [PATCH v3 10/17] intel_iommu: Process PASID-based iotlb
+Date: Fri, 27 Sep 2024 12:07:59 +0800
+Message-ID: <CACGkMEvN6gHjuoeHtZWLwKXUpDNqWZCGcFnGwhJRRy64XL9ZkA@mail.gmail.com>
+Subject: Re: [PATCH v3 09/17] intel_iommu: Flush stage-1 cache in iotlb
  invalidation
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com, 
@@ -109,13 +109,25 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Sep 11, 2024 at 1:26=E2=80=AFPM Zhenzhong Duan <zhenzhong.duan@inte=
 l.com> wrote:
 >
-> PASID-based iotlb (piotlb) is used during walking Intel
-> VT-d stage-1 page table.
+> According to spec, Page-Selective-within-Domain Invalidation (11b):
 >
-> This emulates the stage-1 page table iotlb invalidation requested
-> by a PASID-based IOTLB Invalidate Descriptor (P_IOTLB).
+> 1. IOTLB entries caching second-stage mappings (PGTT=3D010b) or pass-thro=
+ugh
+> (PGTT=3D100b) mappings associated with the specified domain-id and the
+> input-address range are invalidated.
+> 2. IOTLB entries caching first-stage (PGTT=3D001b) or nested (PGTT=3D011b=
+)
+> mapping associated with specified domain-id are invalidated.
 >
-> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+> So per spec definition the Page-Selective-within-Domain Invalidation
+> needs to flush first stage and nested cached IOTLB enties as well.
+>
+> We don't support nested yet and pass-through mapping is never cached,
+> so what in iotlb cache are only first-stage and second-stage mappings.
+>
+> Add a tag pgtt in VTDIOTLBEntry to mark PGTT type of the mapping and
+> invalidate entries based on PGTT type.
+>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > Reviewed-by: Cl=C3=A9ment Mathieu--Drif<clement.mathieu--drif@eviden.com>
 > ---
