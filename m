@@ -4,75 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C573CEBF8A
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 09:32:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6382ECEBF8E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 10:49:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1su7Kt-00069e-JE; Fri, 27 Sep 2024 05:32:27 -0400
+	id 1su8W1-0002Kh-Jm; Fri, 27 Sep 2024 06:48:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1su7Ks-00063j-1a
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 05:32:26 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1su7Kq-00030R-AJ
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 05:32:25 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5c26815e174so2342360a12.0
- for <qemu-devel@nongnu.org>; Fri, 27 Sep 2024 02:32:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727429542; x=1728034342; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=NeLzLn8y0XZDBEY9KKK8lH2JIymsBq5bE/4ZDfwDvo8=;
- b=yb87XhxXz60ASu1aWX9hGc1exN7k5YqfKyyqSACoJTAGWsFTJU10fKMagcAwhdVTSc
- maZ2G/u+Jf5UmEiyKg4QrRJtbEsn7LmFZJWbR5aKd5PoCYMAgQ4oI8chvy5yd+8zQSCB
- PggkYbm0aYd8o+ba1OmGDfHj8YqnqsfKxgxpiarUVLZJdf88NOJSLr8XqdatOImgiyla
- tEnJl9fDzaifKKzgdZrQmZ29WW4GWhfyDBKqsnjnHvWpq3E6D760as+buuhFZA9V3Epn
- j2GttqN+/SL3xKeGvoBLjz/JaNF4+lIJHlE/m/e4CYPi2yYP9FPhPgeYlfcVrH7X58b+
- WYww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727429542; x=1728034342;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=NeLzLn8y0XZDBEY9KKK8lH2JIymsBq5bE/4ZDfwDvo8=;
- b=Ze/5KEJtQhUas7OSTbq6heIB8ogXVJjUasI7BunX6ijT8w3ozUshC7wDx5M7Eg3uGG
- 6AJvkXUTCylIE0wXT/bg4ualT2KsHk/S+dGWeR5Kzl/vlmyit9OTl1nPagg8Dsa+5Rl7
- 7T8PevT78chGGEbAwm0PpZQQMPqGlo903wHuheCTiJlcuIaYL2UG8USBA94GB0FcdZkk
- 9FW0bzaz8UZ6VxyJZBYTrgbGSISxt5Iex+LtxEvjGokyR25GsIk7gAQEX/b6lVkc76M0
- FyNcE/UsvC9sGopmpYqVK1uEvEZOfYQXkfqZhgic85ebro+6/IHrzZDiMM8ye9h7pKDF
- mPpw==
-X-Gm-Message-State: AOJu0YxMxQdOkhkpjkAt5wUIEapiBI/LnnVSBkfWyMX3jWpP6UPIAbc8
- 0MpuWTQFE9P3SZIwtWmeCWGhrVziRgRFWIhVVsKXe2qQo36SxXA9bTRCzXruYUDN0txw5h1sVoh
- y4cMfq9XZjio+qeTkdk0yCuFw6p4pv4q2p/iXBQ==
-X-Google-Smtp-Source: AGHT+IFL87iTRXD1OtWeR9sIhN3y5dQ4K4OweMIhUxdWMfFOBIBbTBx7jQfnT3jZv6nhsK0mWEgiYLDK9/ABTQCCY/E=
-X-Received: by 2002:a05:6402:280d:b0:5c4:23b2:ec35 with SMTP id
- 4fb4d7f45d1cf-5c8824e5166mr2074528a12.10.1727429542502; Fri, 27 Sep 2024
- 02:32:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jusual@redhat.com>) id 1su8W0-0002KA-7a
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 06:48:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jusual@redhat.com>) id 1su8Vy-00056P-7P
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 06:47:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727434076;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=eDwNjzYvzNb05JfJ9Jj4EDMG+8f2fEE27qxBG5rcjrw=;
+ b=NX2e8xy50F1x/Z/ho+HmgXT83BCoWq6FX2W2H0qSRD2rlutof8pa7V+/s3BYG+kkaYkxFJ
+ 9lyh2J3frgswUVN6usmcvEcDaR/kHhAirnXLRbdR9qY80/YozvYglE9MsNzg3zh28XUO7R
+ DziNu4sKMkqZHaczaDdLbcwFszpvA8A=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-pOxnD33rN5emDBVh9KDUcA-1; Fri,
+ 27 Sep 2024 06:47:53 -0400
+X-MC-Unique: pOxnD33rN5emDBVh9KDUcA-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D67A21975AE8; Fri, 27 Sep 2024 10:47:51 +0000 (UTC)
+Received: from tpx1cg9.redhat.com (unknown [10.39.192.103])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 924821956086; Fri, 27 Sep 2024 10:47:46 +0000 (UTC)
+From: Julia Suvorova <jusual@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Song Gao <gaosong@loongson.cn>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Julia Suvorova <jusual@redhat.com>
+Subject: [PATCH v2 0/2] kvm: Improve register failure reports for migration
+Date: Fri, 27 Sep 2024 12:47:39 +0200
+Message-ID: <20240927104743.218468-1-jusual@redhat.com>
 MIME-Version: 1.0
-References: <20240924100329.248738-1-david@redhat.com>
-In-Reply-To: <20240924100329.248738-1-david@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 27 Sep 2024 10:32:11 +0100
-Message-ID: <CAFEAcA84GzWXByn+PPHV9DGmpzqV9bMNdL62-eoH2nwbU4-x5g@mail.gmail.com>
-Subject: Re: [PULL 0/6] Host Memory Backends and Memory devices queue
- 2024-09-24
-To: David Hildenbrand <david@redhat.com>
-Cc: qemu-devel@nongnu.org, Igor Mammedov <imammedo@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jusual@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,40 +84,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 24 Sept 2024 at 11:03, David Hildenbrand <david@redhat.com> wrote:
->
-> Hi,
->
-> due to reset changes this contains a bit of churn that touches various
-> architectures, but it's all fairly minimal and straight-forward.
->
-> The following changes since commit 01dc65a3bc262ab1bec8fe89775e9bbfa627becb:
->
->   Merge tag 'pull-target-arm-20240919' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-09-19 14:15:15 +0100)
->
-> are available in the Git repository at:
->
->   https://github.com/davidhildenbrand/qemu.git tags/mem-2024-09-24
->
-> for you to fetch changes up to 78c8f780d3f0d6d17aa93d6f99ff72960080fdd7:
->
->   hostmem: Apply merge property after the memory region is initialized (2024-09-24 11:33:35 +0200)
->
-> ----------------------------------------------------------------
-> Hi,
->
-> "Host Memory Backends" and "Memory devices" queue ("mem"):
-> - Kconfig fix for virtio-based memory devices
-> - virtio-mem support for suspend+wake-up with plugged memory
-> - hostmem fix when specifying "merge=off"
->
+There were a few bugs with silent cpu failures during migrations [1].
+The failures are no longer silent thanks to [2], but still
+indistinguishable, making diagnostics difficult.
 
+This patchset reworks kvm_arch_get/put_registers to handle Error** and
+return a correct message, with x86_64 as a start.
 
+[1] https://issues.redhat.com/browse/RHEL-7558
+[2] 7191f24c7fcf "accel/kvm/kvm-all: Handle register access errors"
 
-Applied, thanks.
+--
+v2:
+    * made all reports as error_reportf_err() and fixed prefixes [Peter]
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
+Julia Suvorova (2):
+  kvm: Allow kvm_arch_get/put_registers to accept Error**
+  target/i386/kvm: Report which action failed in
+    kvm_arch_put/get_registers
 
--- PMM
+ accel/kvm/kvm-all.c        | 41 +++++++++++++++++++++++++++++---------
+ include/sysemu/kvm.h       |  4 ++--
+ target/arm/kvm.c           |  4 ++--
+ target/i386/kvm/kvm.c      | 27 +++++++++++++++++++++++--
+ target/loongarch/kvm/kvm.c |  4 ++--
+ target/mips/kvm.c          |  4 ++--
+ target/ppc/kvm.c           |  2 +-
+ target/riscv/kvm/kvm-cpu.c |  4 ++--
+ target/s390x/kvm/kvm.c     |  4 ++--
+ 9 files changed, 70 insertions(+), 24 deletions(-)
+
+-- 
+2.45.0
+
 
