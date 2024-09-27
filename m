@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C61C7CEBF69
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 03:48:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35C6FCEBF77
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 04:08:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1su1xu-0001su-3q; Thu, 26 Sep 2024 23:48:22 -0400
+	id 1su2HB-0002qn-IR; Fri, 27 Sep 2024 00:08:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1su1xn-0001cQ-Qx
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 23:48:17 -0400
+ id 1su2H7-0002fv-KK
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 00:08:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1su1xm-00044n-Ft
- for qemu-devel@nongnu.org; Thu, 26 Sep 2024 23:48:15 -0400
+ id 1su2H5-0006F7-2D
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 00:08:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727408893;
+ s=mimecast20190719; t=1727410088;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MM82ZaPdPNddLYlZkcMD5iQEK6tWC6oNQk2ZDw2sZos=;
- b=QQt9Zk7GeONkHHmvOKFE1b8Qm0/IFEMORLpO9VdSnjqRsHY2/ZsIT3BpC6nymyIXVkpYab
- 8n2VUWWwK8umyHiq8DjLjdLYWE+xMntpqQ2nBlOEhOs31h646skfFsIY09AQBJ/YrrlgnK
- kZAuM5chf5DDOw95wmBHT/ObPk5U0iU=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nHWfqUI9XgNZZmDWMTNXZNktqEyDqUCQnJ+3MuzTrZc=;
+ b=hIx4Mdt9Cx83cXA6RNTAPDVR8DCYmR/GBdwix7w4rIVZlOiXEXjvzGPWF0hI4WwThID8CW
+ LCWvi+Y0LhiFCVIvUgrAGRCMYzX7cr90fdmAN3fqPE6zBQjTv4DP2a+yBb1VMevgodrLFI
+ M3fEkSHJNKaKns86FvOtW5tB4/1EeWI=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-21-eSPZHKLINOefxUMSzi3clg-1; Thu, 26 Sep 2024 23:48:11 -0400
-X-MC-Unique: eSPZHKLINOefxUMSzi3clg-1
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-2e08517d5afso1681908a91.1
- for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 20:48:11 -0700 (PDT)
+ us-mta-683-Tly60PMiPgChIXhhyecMGA-1; Fri, 27 Sep 2024 00:08:04 -0400
+X-MC-Unique: Tly60PMiPgChIXhhyecMGA-1
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-7d4fc1a2bb7so1641252a12.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 21:08:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727408890; x=1728013690;
+ d=1e100.net; s=20230601; t=1727410083; x=1728014883;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MM82ZaPdPNddLYlZkcMD5iQEK6tWC6oNQk2ZDw2sZos=;
- b=uXjhddR730DAhitRJVCkEmDqM81b6dB8/fbVpwDCMIeNYNP6RHjtvJBLGKolg0EbZA
- ynygl5EAEt8qUiq0/TF8PuPnA72gSHqal8KBrtiO6EngJ3+KU3XGnBGG0SEmSTfEA8jh
- 4eEQbvyf+sj65FeeGwtMFPfFlj5zUrIki2wNS7RQ13VeBX+PT6h6uCqnSUQ2Qzl/lVYb
- 6ZZT2vvsROWn46dYsbwWJtQmHiHotdRKkc59z9gfkULmp63hsyTN2lrdGL4QHSBSGKN7
- hJb+6/4b3MxDH7sEtZuyay78qB6ol042NoBcsqCCuoqTzHVwRPOrm1y6RWlVF9+P4dVm
- JfdQ==
-X-Gm-Message-State: AOJu0YzLFMsXiVu3zzypoufteQIPFjyHjWMWXmkM9YxtBxEDFeuo1UL6
- DMVkij9h5jErb0jvMwqsc8RC1W/sQp/hpK/wOtIJ5OQ0DvUEV/MEWxFA2soizTvm3yLvxM3hUIv
- 54u8frw2L9AlYIJTyocMI+9ItZ7doPWuoP4jI2kV0SA6X1vOG/imhESOWcMhEdexpRdwrWdpQUI
- 5EIVsNWBBmZQa2z65bvqnKH9HJTR/hpS4hYjTLiQ==
-X-Received: by 2002:a17:90a:c391:b0:2e0:a9e8:bb95 with SMTP id
- 98e67ed59e1d1-2e0a9e8cf94mr5002037a91.3.1727408890181; 
- Thu, 26 Sep 2024 20:48:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEB5oUp+f6NEqqYu9t+FF6nxNN6rIJXpt7gZhgJKKdm+ATBI+ZU5myMaiZKE1wgVMSluM9r/82e93zgXbR6z1Q=
-X-Received: by 2002:a17:90a:c391:b0:2e0:a9e8:bb95 with SMTP id
- 98e67ed59e1d1-2e0a9e8cf94mr5002004a91.3.1727408889761; Thu, 26 Sep 2024
- 20:48:09 -0700 (PDT)
+ bh=nHWfqUI9XgNZZmDWMTNXZNktqEyDqUCQnJ+3MuzTrZc=;
+ b=CYq/nAT7Dh72ObxkKti1Al3OgX4brJWZ7IECb1W8eSgL08NVHCiiYu7Dl/gbialoCx
+ Jls7l7QRLwIvH9jVBgzOAtE8usL32OwirYESzfzbJvfR3FUNiP18frfQF+G0rGWfAxNF
+ Vi80U9NH5KiRToR17quZI2rjOeahUHwP6Uj+0Sft2gmK0n7Yi8nIYM5e+bP0Yip66PZ+
+ /LV/1mbLp4TZASgFMHluUa5rtjE4FKK5vKbtsdC5dWp5QjjJiBs0uBUYENNEmAt/NR4z
+ Lp7/4qyoeOUT3xOsCqY2D/BxiwEUJhEIQqsI04/rcdkycwsrqsjhbnM6lMgDoTg8WOQM
+ OoQQ==
+X-Gm-Message-State: AOJu0YxOsbaAy5kKkN4h0cy1IidE1QeCZBqgBiWhl9pVuoRsOYA4lE7m
+ /HorpdHmDLlp6g1cSGE3gm35HIpv3VpxDIJHdys0/sYNf56e1hrsOzgnBrFDoXBys2JweuqzmG5
+ 8tYfNP3kTNvq53+aqT4U8HBuPYuYZs/tZDROT89IBQSvUsKRF01LMnlLo61srg1z6Zo79ZP/tUG
+ dQLf0+rqEbvg1UC9yiu4q4oujD3js=
+X-Received: by 2002:a05:6a20:d8a:b0:1cc:b22d:979f with SMTP id
+ adf61e73a8af0-1d4fa64d9demr2509396637.4.1727410083299; 
+ Thu, 26 Sep 2024 21:08:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IErX511WGaIsppD4u1Xmjg9WpbncQPZOoUq9XGJ53Vx4/PY1i0axD+TjnYQ70Z3RFk/8KSaZ7R16IXP2hW2N7A=
+X-Received: by 2002:a05:6a20:d8a:b0:1cc:b22d:979f with SMTP id
+ adf61e73a8af0-1d4fa64d9demr2509368637.4.1727410082887; Thu, 26 Sep 2024
+ 21:08:02 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240911052255.1294071-1-zhenzhong.duan@intel.com>
- <20240911052255.1294071-6-zhenzhong.duan@intel.com>
-In-Reply-To: <20240911052255.1294071-6-zhenzhong.duan@intel.com>
+ <20240911052255.1294071-7-zhenzhong.duan@intel.com>
+In-Reply-To: <20240911052255.1294071-7-zhenzhong.duan@intel.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 27 Sep 2024 11:47:58 +0800
-Message-ID: <CACGkMEt=uc+XQFx3qu326PT14gniatB4AKGoS84SEUJ2Bt0aSA@mail.gmail.com>
-Subject: Re: [PATCH v3 05/17] intel_iommu: Rename slpte to pte
+Date: Fri, 27 Sep 2024 12:07:50 +0800
+Message-ID: <CACGkMEv3v3uwDEmEquBcfJPbcfNO5f3g76CxJK+AE-gbDXnoTA@mail.gmail.com>
+Subject: Re: [PATCH v3 06/17] intel_iommu: Implement stage-1 translation
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com, 
  eric.auger@redhat.com, mst@redhat.com, peterx@redhat.com, jgg@nvidia.com, 
@@ -110,11 +110,8 @@ l.com> wrote:
 >
 > From: Yi Liu <yi.l.liu@intel.com>
 >
-> Because we will support both FST(a.k.a, FLT) and SST(a.k.a, SLT) translat=
-ion,
-> rename variable and functions from slpte to pte whenever possible.
->
-> But some are SST only, they are renamed with sl_ prefix.
+> This adds stage-1 page table walking to support stage-1 only
+> transltion in scalable modern mode.
 >
 > Signed-off-by: Yi Liu <yi.l.liu@intel.com>
 > Co-developed-by: Cl=C3=A9ment Mathieu--Drif <clement.mathieu--drif@eviden=
