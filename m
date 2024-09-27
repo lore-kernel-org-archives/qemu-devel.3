@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7F68CDD1CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 16:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10001CDD1CD
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 16:36:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suDXt-0001PO-C1; Fri, 27 Sep 2024 12:10:17 -0400
+	id 1suDwr-0000jw-0j; Fri, 27 Sep 2024 12:36:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1suDXr-0001Ou-Ss
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 12:10:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1suDXp-0002Hd-A7
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 12:10:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727453411;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RcdjwEczBXXLMYU7XQLo2UcGlLTHVRmPrG5upxPDo/E=;
- b=g2s1HCTCZyRYzH8yi4rYbB5xKDtLC1A1JfilBxkdKfKk6LB+sH6amtmv8ar2en2TcA6h2g
- L2Pzn3sOzEEGhAm1JZTvECqkRsWt8c8frd0525wvu6U7TnxHPf2yzJI4mQ6IsCpDBMeQFs
- gqYyR+ZGujdrhMSHD86LrJznmXlb3/o=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-171-I8R8NuOjMKOqz2aGyMmhAA-1; Fri,
- 27 Sep 2024 12:10:07 -0400
-X-MC-Unique: I8R8NuOjMKOqz2aGyMmhAA-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79F92191FCCB; Fri, 27 Sep 2024 16:10:06 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.193.237])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CB69C184AE37; Fri, 27 Sep 2024 16:09:57 +0000 (UTC)
-Date: Fri, 27 Sep 2024 18:09:52 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PATCH 03/14] rust: define traits and pointer wrappers to
- convert from/to C representations
-Message-ID: <ZvbY0PMWmJPZN7Sq@redhat.com>
-References: <20240701145853.1394967-1-pbonzini@redhat.com>
- <20240701145853.1394967-4-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1suDwh-0000j1-1n
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 12:36:00 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1suDwe-0005d2-Ru
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 12:35:54 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2f759688444so22497681fa.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Sep 2024 09:35:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727454950; x=1728059750; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=V2GAq7tB+L4IAzwWfPYqEMrwyNYstQi+2hV5jhbNtlQ=;
+ b=cyarNA5jypGVrhOXcaWN/a5mS1MpiTuDerfHDx5+Mfw9xos6WszkX7kZVXD1GHOMA4
+ UfY5WGgH7yxt1Fz1miq9u/gfp4hCf9aErEPqTIBIneS3Mgiryjg5+IFJ274R+oKfyCVR
+ sz0BakKEsQyOwfQeV070+tr0q9zgR5L5JRsh5XPOB2tx7Ks4YRHIE7mQt0iCQt4401N1
+ pUNFTC3RDi0ruWTRCw9D83pKvvrUn9j0erRwFmFece8cH0D6Yx1OjtXXKSnJi3gR+fQI
+ CV0k+6PQEeuT+N4BqtpdBxV0ZnTpU4Q5ozoo2fh5PIA6JX6yjQJzY2TRRYZG0jHJnPjA
+ oMrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727454950; x=1728059750;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=V2GAq7tB+L4IAzwWfPYqEMrwyNYstQi+2hV5jhbNtlQ=;
+ b=A8bbIsBJwMlmIzgz7diLWzC2QX55lsjh2NqNZwQBJScsmXqMU5r2W1QwXWPkLzLRJU
+ yjb4o9996uIceRchpx8OODMwRuy71Kj/zXD23TlWv/4coIN0JnrJWb+/05wzGz3fmMeO
+ VrSZPucfuE9CdOY3hZ4XuURQLoHd3RbKtbtcyhq8Xe4lNiQPq8KAp18LJwE2tQfFvbOL
+ IxqRTMs7ADZ93dn6dddhkSXMyqBw2/Y4x/LENT2tkLN9rTGqHZAi42kvC+FplNFKWAKu
+ UyDGBxje7tMzAq0aq7eTfMIqqLUy1Sh+XJkDJjKLFQjroR8yVj4GbBxKKlSiqvph0elp
+ SeYw==
+X-Gm-Message-State: AOJu0YxfQSeogajKYsO83cBbHCnZI2z/w2fh29PDSSgMplfIE22WB1Fn
+ 4/FF2wQQ5gXcK4+t49nhTJN4UDTBTvNL+/8kQuK5t0pBZIErHaekw2rBRyiE51Nt59ZGQIulgC0
+ aUvlETbfhgjOgHlrHfkMpfRceKUREe0nnZ0EduQ==
+X-Google-Smtp-Source: AGHT+IEZdgm1YyY5YWJ/IWOaN88s+bHW77FKWmhFA0d7ZJw/DY1AXOLmEFTDGTDs1Rqa9KPJQNCANt+f2bMZpC4pfpc=
+X-Received: by 2002:a05:651c:1a0c:b0:2fa:bba7:2691 with SMTP id
+ 38308e7fff4ca-2fabba72790mr12239611fa.14.1727454949812; Fri, 27 Sep 2024
+ 09:35:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240701145853.1394967-4-pbonzini@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20240921104751.43671-1-ines.varhol@telecom-paris.fr>
+In-Reply-To: <20240921104751.43671-1-ines.varhol@telecom-paris.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 27 Sep 2024 17:35:38 +0100
+Message-ID: <CAFEAcA-e719+Rg7Y_8wiOVVOFaaazUfPCfZDYdG6TCaEpa4djA@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: Update STM32L4x5 and B-L475E-IOT01A
+ maintainers
+To: =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>
+Cc: qemu-devel@nongnu.org, Samuel Tardieu <sam@rfc1149.net>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Jacob Abrams <satur9nine@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.15,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,69 +92,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+On Sat, 21 Sept 2024 at 11:48, In=C3=A8s Varhol <ines.varhol@telecom-paris.=
+fr> wrote:
+>
+> It has been a learning experience to contribute to QEMU for our
+> end-of-studies project. For a few months now, Arnaud and I aren't
+> actively involved anymore as we lack time and access to the hardware.
+> Therefore it's high time to update the maintainers file: from now on,
+> Samuel Tardieu who is behind the project will be taking up the role of
+> maintainer.
+>
+> This commit updates maintainers and the list of files, and places the
+> two devices in alphabetical order.
 
-as you asked me at KVM Forum to have a look at this, I'm going through
-it now.
+Thank you for your contributions to the project; I hope you
+have enjoyed working on QEMU.
 
-Am 01.07.2024 um 16:58 hat Paolo Bonzini geschrieben:
-> The qemu::util::foreign module provides:
-> 
-> - A trait for structs that can be converted to a C ("foreign") representation
->   (CloneToForeign)
-> 
-> - A trait for structs that can be built from a C ("foreign") representation
->   (FromForeign), and the utility IntoNative that can be used with less typing
->   (similar to the standard library's From and Into pair)
+Applied to target-arm.next, thanks.
 
-It makes sense to me that we'll need something to convert data and that
-this usually means creating a new instance, i.e. cloning. However, while
-it's obvious that this is similar to From/Into, the part I'm missing
-here is what's different from it.
-
-In other words, couldn't we just implement the normal From trait between
-FFI types and the native equivalent?
-
-> - Automatic implementations of the above traits for Option<>, supporting NULL
->   pointers
-
-This is nice.
-
-> - A wrapper for a pointer that automatically frees the contained data.  If
->   a struct XYZ implements CloneToForeign, you can build an OwnedPointer<XYZ>
->   and it will free the contents automatically unless you retrieve it with
->   owned_ptr.into_inner()
-
-Something here feels off to me.
-
-At first, I thought it might be only about naming. This is not about
-owning the pointer (which you probably do anyway), but that the pointer
-owns the object it points to. This concept has in fact a name in Rust:
-It's a Box.
-
-The major difference compared to Box is that we're using a different
-allocator. Not sure if the allocator APIs would actually be viable, but
-they're not stable anyway - but let's at least name this thing in way
-that draws the obvious parallel. Maybe ForeignBox.
-
-But the other thing that doesn't feel quite right is how this is coupled
-with CloneToForeign. Freeing is different from cloning, and it really
-relates to the foreign type itself, and not to the one that can be
-cloned into a foreign type.
-
-Bringing both together, what a Box doesn't usually have is a function
-pointer for freeing. We probably don't need it here either, almost
-everything needs g_free(). There is a different free_foreign()
-implementation for Error, but arguably this could be changed:
-bindings::Error should then implement Drop for the inner value (with an
-error_free_inner() which needs to be exported separately from C first),
-and then ForeignBox can just drop the Error object and g_free() the
-pointer itself like it would do with any other value.
-
-(Your implementation actually calls free() instead of g_free(). We
-generally try to avoid that in our C code, so we should probably avoid
-it in Rust, too.)
-
-Kevin
-
+-- PMM
 
