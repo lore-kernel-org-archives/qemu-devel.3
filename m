@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27704CF6483
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 21:46:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08E99CF6482
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 21:46:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suImg-0004B1-M2; Fri, 27 Sep 2024 17:45:54 -0400
+	id 1suIml-0004Ss-4J; Fri, 27 Sep 2024 17:45:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1suIme-00041w-E1
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 17:45:52 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1suImk-0004Pa-7i
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 17:45:58 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1suImc-0003ul-D7
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 17:45:52 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-42cb57f8b41so31140305e9.0
- for <qemu-devel@nongnu.org>; Fri, 27 Sep 2024 14:45:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1suImi-0003w1-Oa
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 17:45:58 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-42cbb08a1a5so23862415e9.3
+ for <qemu-devel@nongnu.org>; Fri, 27 Sep 2024 14:45:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727473548; x=1728078348; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727473555; x=1728078355; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=22wtNkwk6lzPh2EtQj85F8jLpnswm9ZtwKSArURcwyA=;
- b=kckBDP6Gj8mRwxqqub8ykpcyjo9SSY8HO2InTJsE555j0cClfcPJckjrJ24KZ98AQU
- 83o24sXLCICkhf3uykxlhbqGTcCXJMGtBmiySu0cHK928bCb9axT4eG2HFLZ0+WsEbQJ
- FTTz41TczOF11z9UYtlDAOp9gej0nucMJOMlvF40BFbrTBRJVk97TXykdNgLcc/edTKY
- rm2546QzsSmRueIjv6n/uYy2XoXWdleXrjm3CzXvMlbx7R78ujFnRAF+GRQ0OuTkj6FY
- Cs35ndeETsiI2jQlqMTEYrE3gpKxfvz3akxBfvJPZYgJ1PtjwBXD61T+C14sQ6Waq+nv
- RJ3g==
+ bh=Fbocd4kmjbgTZkW00sKJRg9Q/JlRfFmMDabLRJXpjXw=;
+ b=K4SJx18e3KP8qa1ATO9TlXGNmoSyGlFxcD0ybXAGMZvYR2Gyu3aHwbpKbhyMWk3IhW
+ 4B67Rvbkb6W1K+xEF7eeSDIemCPvbqe2la+YW3DeZwIahQTkTGQ8SFl7Ajnsi3aE6LQY
+ NkEFgQlAlOTvyUB0qaKb+riX4olt2uMfmWMCTbXyU+l2VD1A+FKjqJkAALOjmoE0mriA
+ wHKUDtN+dbgyy2b6NqUFzWY9eeOBf99E1ej368gnNeJp1x3Z3+arROwwVcebgsfHuUVO
+ eF5fbpxx53K1B0sNc6aQvbfun5gg6Mdgku0VpFUW6QinR4dp4LyfbhZbfUYI8YH8NMaR
+ gryw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727473548; x=1728078348;
+ d=1e100.net; s=20230601; t=1727473555; x=1728078355;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=22wtNkwk6lzPh2EtQj85F8jLpnswm9ZtwKSArURcwyA=;
- b=M9V3JONEa4gPPBVK70xsldO1OvbjauMECKzAj1T1u7CgtmOcj4iBYu6c0xs48Jiw/e
- tLfbKIm7gJXRDZhNf/zy+r1AwMnxqgVwXWAMXBJlHUzcE780WsrqOEp7u41IhF0vuISC
- 9B/U1ZA2wRCKvr4+VkKD6NZy50ho/4skY07I980MZLpM34jM8TIcR2JxzxwLRFck276S
- +eF4sIFW5RpjpNWlWGgCtnsdE7UMorGZKLMaOWSFweLuPrTe8P69S1lhgql+EUYx0KQc
- vXZdb76GZFPMr9yYnbxX57i/dBhLC4n6J6lyH7h5k5rBBs7AD/C/C72fF5vtnrgyVNqv
- NWRA==
-X-Gm-Message-State: AOJu0YwgLmB9KI+4i70IkHJCJbSS+naK0TCxIurEzOP81xj93hly3n+T
- 0p0t3n8JKQD+Haab6rH62vNGF2+W8jl1bmEHhF8nG1JS5/MHyqbHlIptWBnYaTGFAGUuDC0j9LF
- e
-X-Google-Smtp-Source: AGHT+IGpYOfRFumm9XZdJwLyZz8guaI/2hF7CixvTFkmE+6dfS5poM0464o5AoPoz4/J6RPtwL0Z+Q==
-X-Received: by 2002:a05:600c:1d1e:b0:42b:ac3d:3abc with SMTP id
- 5b1f17b1804b1-42f584976b0mr42968425e9.24.1727473548533; 
- Fri, 27 Sep 2024 14:45:48 -0700 (PDT)
+ bh=Fbocd4kmjbgTZkW00sKJRg9Q/JlRfFmMDabLRJXpjXw=;
+ b=ZMa8kCXHlrvEWd04n9UJZnQ4HmXmv3Gj0WS3tToemRYcgg4aP/GQ7vgbX/3pZ5+68x
+ szKhi09RCnCUFGjzfqlRSJ0YvUEO6et25pLiuYWPKbMa9SvlXcSigh+8M5wdVE4JQAhu
+ TmGW/ZGZFiLg5sWmKG6QvBOtecejdm37K8fgfaNGt1BwdvXggdO+ETBBttdnS+mcOgWz
+ FH4SqG2axah7qmowbZiwDe+ivieDyD5jugI6UpcwOCSj5EQbkJUwWTjLYZwRJw/KbhSG
+ Kgyik35hOI/Jac/iwyrFAq/zRmIh06BuXBbGksa0WVQAYVnBOiDurDh6KQW0grKpP5WA
+ QRFg==
+X-Gm-Message-State: AOJu0YxgJUdzY3udCtJD8uSTJMBz5pcoLYf31UPUfSWYGT9IlvgQHRRk
+ 24q77CsIYKibFZJ4pDjFKQJXRrnC42Pv3ECTMRO/P43ngmjLxC88/rt0mCfBo6BPPzEFUlstOWJ
+ L
+X-Google-Smtp-Source: AGHT+IEbJWrZPp/+ZGCMU0ft1/0/FCAkzhRKqmgKFLU4Vqi++7MsZCs4bsrNHIWVsCOhD8zi4cIVJQ==
+X-Received: by 2002:a05:600c:45ce:b0:42c:df54:1908 with SMTP id
+ 5b1f17b1804b1-42f5844ba2bmr35683315e9.18.1727473554875; 
+ Fri, 27 Sep 2024 14:45:54 -0700 (PDT)
 Received: from localhost.localdomain ([176.187.217.136])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd564ce91sm3460609f8f.2.2024.09.27.14.45.45
+ 5b1f17b1804b1-42e96a52308sm84020965e9.43.2024.09.27.14.45.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 27 Sep 2024 14:45:47 -0700 (PDT)
+ Fri, 27 Sep 2024 14:45:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
@@ -66,17 +66,17 @@ Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Jason Wang <jasowang@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/4] hw/ppc/spapr_vof: Simplify LD/ST API uses
-Date: Fri, 27 Sep 2024 23:45:29 +0200
-Message-ID: <20240927214531.20242-3-philmd@linaro.org>
+Subject: [PATCH 3/4] hw/ppc/vof: Simplify LD/ST API uses
+Date: Fri, 27 Sep 2024 23:45:30 +0200
+Message-ID: <20240927214531.20242-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240927214531.20242-1-philmd@linaro.org>
 References: <20240927214531.20242-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -98,53 +98,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Directly call ldn_be_p once instead of ldl_be_p / ldq_be_p.
+Directly call ldn_be_p once instead of be32_to_cpu / ldq_be_p.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/ppc/spapr_vof.c | 27 +++++++++------------------
- 1 file changed, 9 insertions(+), 18 deletions(-)
+ hw/ppc/vof.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/hw/ppc/spapr_vof.c b/hw/ppc/spapr_vof.c
-index c02eaacfed..d238a44d88 100644
---- a/hw/ppc/spapr_vof.c
-+++ b/hw/ppc/spapr_vof.c
-@@ -136,26 +136,17 @@ bool spapr_vof_setprop(MachineState *ms, const char *path, const char *propname,
-             vof->bootargs = g_strndup(val, vallen);
-             return true;
-         }
--        if (strcmp(propname, "linux,initrd-start") == 0) {
--            if (vallen == sizeof(uint32_t)) {
--                spapr->initrd_base = ldl_be_p(val);
--                return true;
-+        switch (vallen) {
-+        case 4:
-+        case 8:
-+            if (strcmp(propname, "linux,initrd-start") == 0) {
-+                spapr->initrd_base = ldn_be_p(val, vallen);
-             }
--            if (vallen == sizeof(uint64_t)) {
--                spapr->initrd_base = ldq_be_p(val);
--                return true;
--            }
--            return false;
--        }
--        if (strcmp(propname, "linux,initrd-end") == 0) {
--            if (vallen == sizeof(uint32_t)) {
--                spapr->initrd_size = ldl_be_p(val) - spapr->initrd_base;
--                return true;
--            }
--            if (vallen == sizeof(uint64_t)) {
--                spapr->initrd_size = ldq_be_p(val) - spapr->initrd_base;
--                return true;
-+            if (strcmp(propname, "linux,initrd-end") == 0) {
-+                spapr->initrd_size = ldn_be_p(val, vallen);
-             }
-+            return true;
-+        default:
-             return false;
-         }
-     }
+diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
+index b5b6514d79..fb152efbe0 100644
+--- a/hw/ppc/vof.c
++++ b/hw/ppc/vof.c
+@@ -645,11 +645,7 @@ static void vof_dt_memory_available(void *fdt, GArray *claimed, uint64_t base)
+ 
+     mem0_reg = fdt_getprop(fdt, offset, "reg", &proplen);
+     g_assert(mem0_reg && proplen == sizeof(uint32_t) * (ac + sc));
+-    if (sc == 2) {
+-        mem0_end = ldq_be_p(mem0_reg + sizeof(uint32_t) * ac);
+-    } else {
+-        mem0_end = be32_to_cpu(*(uint32_t *)(mem0_reg + sizeof(uint32_t) * ac));
+-    }
++    mem0_end = ldn_be_p(mem0_reg + sizeof(uint32_t) * ac, 4 * sc);
+ 
+     g_array_sort(claimed, of_claimed_compare_func);
+     vof_claimed_dump(claimed);
 -- 
 2.45.2
 
