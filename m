@@ -4,142 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E624CDD1D3
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 18:35:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93DF0CDD1D3
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 18:40:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suFoA-0001J3-D1; Fri, 27 Sep 2024 14:35:15 -0400
+	id 1suFsi-0006UJ-PC; Fri, 27 Sep 2024 14:39:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1suFo4-0001Fk-2e
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 14:35:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <annie.li@oracle.com>)
+ id 1suFsg-0006Jr-2k; Fri, 27 Sep 2024 14:39:54 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1suFnz-0001GE-Tv
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 14:35:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727462101;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=GWg8vZp/Vb4oBnw7lR4TAf+m8i+ZfkkiFBOpaXgJQ20=;
- b=grvxR7YmEmb/gC7koSCGddG1lCd52mkkYFYxDgJKnXI3Ik8nIc8smJOsvCVt6E0wlLp/th
- Fw3iKRfFb25PfEX3XMNHtRIw1SmoisOL7ViA+CfsrrPWru5VHzeqnmRrMzdSPba/bIOjVN
- 7uLPzToHbB9xOTy/umQ0Yh4XQbrmukM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-622-rqek2BIGPLSAiTcABoT7fg-1; Fri, 27 Sep 2024 14:35:00 -0400
-X-MC-Unique: rqek2BIGPLSAiTcABoT7fg-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-42e77b5d3dcso15174495e9.1
- for <qemu-devel@nongnu.org>; Fri, 27 Sep 2024 11:35:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727462099; x=1728066899;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GWg8vZp/Vb4oBnw7lR4TAf+m8i+ZfkkiFBOpaXgJQ20=;
- b=Womv9SFB5DXsmcSiA/Mka4RtQWoKG5umiLJCXAi+IfLbZoLwi52sZDqHaWgplydZVN
- W3J82e1N8k7mUDPf1ht0RsVhSuzMWq7YEFpfqFfwJ05w3xGNNzOphFmkMJW/PJCSImrL
- aWedu7idKK3+09o/h6NviCDHohe7e2R/RPsk5LTn8b8Uq1/miKWUOf5aaC4kB+gYZ9Su
- CnczZtjBDgNE+bGHA1PCaO4L+AK/qXoODa9Rb4qSzjB4mUAqgX4sMBy+L3ktBaidsnwR
- BOX1J71pGi0TqYyj0gONJaY5yokVyqD6ZUXsl0M34DQfsqtj5MklZ5AFRsPpMat/zpE3
- rwuA==
-X-Gm-Message-State: AOJu0YzWL59jkA+PeTDHYAZgqvBXlEebYQUH41T2XN5PJxFxOMJ12CmN
- CRfULFGMqj8TU41r1FUQ1FFuBzXRjShvKkBWZnQqxU21dYCoWtKKZtnnrg0xdVyfX+BnXS2JaFx
- vCuop0RRtkRtXIwBsTyuE8M1yIq8Z7lnRpZIQhHP0WB2XVDhra0Hp
-X-Received: by 2002:a05:600c:4454:b0:42c:b58d:98ad with SMTP id
- 5b1f17b1804b1-42f5843312amr29433625e9.14.1727462098862; 
- Fri, 27 Sep 2024 11:34:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF6H+yZEmNMA0ASqZfwXS3WTR9568RxWFI73244sjafb7ND/+iaAPWNrG/VdCY7t1D7SxMiMw==
-X-Received: by 2002:a05:600c:4454:b0:42c:b58d:98ad with SMTP id
- 5b1f17b1804b1-42f5843312amr29433415e9.14.1727462098312; 
- Fri, 27 Sep 2024 11:34:58 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c709:8000:b502:8c1c:3624:99d4?
- (p200300cbc7098000b5028c1c362499d4.dip0.t-ipconnect.de.
- [2003:cb:c709:8000:b502:8c1c:3624:99d4])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f57dec19bsm34387485e9.26.2024.09.27.11.34.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Sep 2024 11:34:57 -0700 (PDT)
-Message-ID: <a5b9e4e7-b1af-425e-8fc6-07e194c7bf08@redhat.com>
-Date: Fri, 27 Sep 2024 20:34:55 +0200
+ (Exim 4.90_1) (envelope-from <annie.li@oracle.com>)
+ id 1suFsd-00023L-Sy; Fri, 27 Sep 2024 14:39:53 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48RHMYSn018961;
+ Fri, 27 Sep 2024 18:39:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+ from:to:cc:subject:date:message-id:reply-to:mime-version
+ :content-transfer-encoding; s=corp-2023-11-20; bh=xzUGtAdgxkNul6
+ OaJBZ5qH9GhwfsHkG4fW8fJ8LxdbA=; b=UxqcE0i0FSmpvQiF2h2y0BVbVVZ/Cs
+ wO4otFEpQyk2Kaqm1P46ay2klk0fIFh4MS1mLDAXELovB7GmoSttKO8H9uehGgZ/
+ gwsoUdjX1MFt3nPvpJtNcpAyHoxjkkU86aRjKXOG9y3KdPgbKbofFxb5oFNVh1nf
+ Olyha9g0URA44691UFtwQ2PI6cNCgmMN55sb63MHEZbhgSLpdDiV+Y3BUBQY1G50
+ tAcYKw6DnFu96Qe2ucPTimufJW9xS60BpDPm7rWDF56fDr/PZhjVQb+PH18v/JKD
+ h3i0O1woPA8njmxPQTY7NJBKg8Xgj7js06/19bY3zFy9dkFiH4nUBZ3Q==
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 41smr1gh6e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 27 Sep 2024 18:39:20 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 48RHrdwV032809; Fri, 27 Sep 2024 18:39:19 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 41smkm8fgs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 27 Sep 2024 18:39:19 +0000
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48RIdIoT009004;
+ Fri, 27 Sep 2024 18:39:18 GMT
+Received: from localhost.localdomain (dhcp-10-175-14-34.vpn.oracle.com
+ [10.175.14.34])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
+ 41smkm8ff6-1; Fri, 27 Sep 2024 18:39:18 +0000
+From: Annie Li <annie.li@oracle.com>
+To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, imammedo@redhat.com
+Cc: dave@treblig.org, mst@redhat.com, anisinha@redhat.com,
+ shannon.zhaosl@gmail.com, peter.maydell@linaro.org,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, pbonzini@redhat.com,
+ richard.henderson@linaro.org, eblake@redhat.com, armbru@redhat.com,
+ annie.li@oracle.com, miguel.luis@oracle.com
+Subject: [RFC V2 PATCH 00/11] Support ACPI Control Method Sleep button
+Date: Fri, 27 Sep 2024 14:38:55 -0400
+Message-ID: <20240927183906.1248-1-annie.li@oracle.com>
+X-Mailer: git-send-email 2.45.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 07/14] s390x/s390-hypercall: introduce DIAG500
- STORAGE_LIMIT
-To: Halil Pasic <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Eric Farman <farman@linux.ibm.com>, Janosch Frank <frankja@linux.ibm.com>, 
- Claudio Imbrenda <imbrenda@linux.ibm.com>, qemu-s390x@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>
-References: <20240910175809.2135596-1-david@redhat.com>
- <20240910175809.2135596-8-david@redhat.com>
- <6636c963-228f-4bea-87c5-bd4f75521c75@redhat.com>
- <20240927200525.5a90f172.pasic@linux.ibm.com>
-Content-Language: en-US
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20240927200525.5a90f172.pasic@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-27_06,2024-09-27_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ phishscore=0 suspectscore=0
+ mlxlogscore=999 malwarescore=0 adultscore=0 bulkscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2408220000
+ definitions=main-2409270135
+X-Proofpoint-ORIG-GUID: 5DoZ81OIzEPzTofC9vi9E3wYjyzrbORz
+X-Proofpoint-GUID: 5DoZ81OIzEPzTofC9vi9E3wYjyzrbORz
+Received-SPF: pass client-ip=205.220.165.32; envelope-from=annie.li@oracle.com;
+ helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.15,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
@@ -156,68 +98,141 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: miguel.luis@oracle.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27.09.24 20:05, Halil Pasic wrote:
-> On Thu, 12 Sep 2024 10:19:00 +0200
-> Thomas Huth <thuth@redhat.com> wrote:
-> 
->>> diff --git a/hw/s390x/s390-hypercall.h b/hw/s390x/s390-hypercall.h
->>> index b7ac29f444..f0ca62bcbb 100644
->>> --- a/hw/s390x/s390-hypercall.h
->>> +++ b/hw/s390x/s390-hypercall.h
->>> @@ -18,6 +18,7 @@
->>>    #define DIAG500_VIRTIO_RESET            1 /* legacy */
->>>    #define DIAG500_VIRTIO_SET_STATUS       2 /* legacy */
->>>    #define DIAG500_VIRTIO_CCW_NOTIFY       3 /* KVM_S390_VIRTIO_CCW_NOTIFY */
->>> +#define DIAG500_STORAGE_LIMIT           4
->>>    
->>>    int handle_diag_500(CPUS390XState *env);
->>
->> Reviewed-by: Thomas Huth <thuth@redhat.com>
->>
->> Sounds very reasonable to me - but it would be good to get an
->> Ack/Reviewed-by from IBM folks here (in case they prefer a different
->> interface)... hope they'll join the discussion!
->>
->>    Thomas
-> 
-> According to Documentation/virt/kvm/s390/s390-diag.rst in the
-> linux source tree DIAG 500 is for kvm virtio funcions.
+The ACPI sleep button can be implemented as a fixed hardware button
+or Control Method Sleep button.
 
-I assume you skimmed the QEMU patches, including the one that suggest 
-changing (or rather extending) that.
+The patch of implementing a fixed hardware sleep button was posted
+here 1). More discussions can be found here 2). Essentially, the
+discussion mainly focuses on whether the sleep button is implemented
+as a fixed hardware button or Control Method Sleep button. The latter
+benefits various architectures since the code can be shared among
+them.
 
-> 
-> Based on the commit message this storagelimit DIAG is rather loosely
-> tied to virtio if at all, so from that perspective DIAG may not be a
-> perfect fit. OTOH I don't see a better fit either. I would prefer to
-> have Christian's opinion on this. I have no strong opinion myself.
-> 
- > If we decide to go with a DIAG, I would like to see> 
-Documentation/virt/kvm/s390/s390-diag.rst
-> updated accordingly.
+This patch set implements Control Method Sleep button for both x86
+and ARM platform.(The patch set was posted previously here 3). We
+rebase all the patches on QEMU9.1.0 and re-post it).
 
-I'll document wherever people fancy. I'll even document in multiple 
-locations :)
+For x86, a sleep button GPE event handler is implemented, so a GPE
+event is triggered to indicate the OSPM the sleep button is pressed.
+Tests have been done for Linux guest, and Windows Server guest,
+the sleep button works as expected.
 
-> 
-> Also if decide to go with DIAG 500, maybe leaving some space
-> between the codes more closely tied to virtio and between
-> the ones less closely tied to virito (for the unlikely case
-> that we end up wanting another DIAG 500 subcode for virtio)
-> might make sense. I.e e could make DIAG500_STORAGE_LIMIT
-> 8 or 16 instead of 4. Again nothing important, just an idea.
+For ARM, a GED event is triggered to notify the OSPM. With proper
+debug knobs it is possible to see the guest OSPM acknowledges the
+sleep event:
 
-I don't see a reason to do that, but in the end I don't care as long as 
-people let me know what to do instead.
+(qemu) system_sleep
+(qemu) [6.744138] exregion-0179 ex_system_memory_space: System-Memory (width 32) R/W 0 Address=0000000009080000
+[6.746003] evmisc-0132 ev_queue_notify_reques: Dispatching Notify on [SLPB] (Device) Value 0x80 (Status Change) Node 00000000f0e6819e
+[6.802873] PM: suspend entry (s2idle)
+[6.806201] Filesystems sync: 0.002 seconds
+[6.807580] Freezing user space processes
+[6.809478] Freezing user space processes completed (elapsed 0.001 seconds)
+[6.810602] OOM killer disabled.
+[6.811111] Freezing remaining freezable tasks
+[6.812953] Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
+[6.814126] printk: Suspending console(s) (use no_console_suspend to debug)
 
-Thanks for taking a look!
+But that seems to be all, depicting that sleep/wakeup for ARM is broken
+and there are still missing some pieces of the puzzle.
+
+Nonetheless, we would like to take this RFC as an opportunity for updates
+on this subject as possible roadmaps.
+
+1) https://lists.gnu.org/archive/html/qemu-devel/2017-07/msg06478.html
+2) https://lore.kernel.org/all/20210920095316.2dd133be@redhat.com/T/#mfe24f89778020deeacfe45083f3eea3cf9f55961
+3) https://lore.kernel.org/all/20231205002143.562-1-annie.li@oracle.com/T/
+
+
+Annie Li (6):
+  acpi: hmp/qmp: Add hmp/qmp support for system_sleep
+  acpi: Implement control method sleep button
+  test/acpi: allow DSDT table changes
+  acpi: Support Control Method sleep button for x86
+  tests/acpi: Update DSDT tables for Control method sleep button
+  acpi: Send the GPE event of suspend and wakeup for x86
+
+Miguel Luis (5):
+  hw/acpi: Add ACPI GED support for the sleep event
+  tests/acpi: allow FACP and DSDT table changes for arm/virt
+  hw/arm: enable sleep support for arm/virt
+  tests/acpi: Update FACP and DSDT tables for sleep button
+  arm/virt: enable sleep support
+
+ hmp-commands.hx                               |  14 +++++
+ hw/acpi/control_method_device.c               |  54 ++++++++++++++++++
+ hw/acpi/core.c                                |  17 ++++--
+ hw/acpi/generic_event_device.c                |   9 +++
+ hw/acpi/meson.build                           |   1 +
+ hw/arm/virt-acpi-build.c                      |  13 +++++
+ hw/arm/virt.c                                 |  14 ++++-
+ hw/core/machine-hmp-cmds.c                    |   5 ++
+ hw/core/machine-qmp-cmds.c                    |  11 ++++
+ hw/i386/acpi-build.c                          |   9 +++
+ include/hw/acpi/acpi.h                        |   1 +
+ include/hw/acpi/acpi_dev_interface.h          |   1 +
+ include/hw/acpi/control_method_device.h       |  25 ++++++++
+ include/hw/acpi/generic_event_device.h        |   1 +
+ include/hw/arm/virt.h                         |   1 +
+ include/monitor/hmp.h                         |   1 +
+ qapi/machine.json                             |  18 ++++++
+ qapi/pragma.json                              |   1 +
+ tests/data/acpi/aarch64/virt/DSDT             | Bin 5196 -> 5278 bytes
+ .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5282 -> 5364 bytes
+ tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6557 -> 6639 bytes
+ tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7679 -> 7761 bytes
+ tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5398 -> 5480 bytes
+ tests/data/acpi/aarch64/virt/FACP             | Bin 276 -> 276 bytes
+ tests/data/acpi/x86/pc/DSDT                   | Bin 6830 -> 7012 bytes
+ tests/data/acpi/x86/pc/DSDT.acpierst          | Bin 6741 -> 6923 bytes
+ tests/data/acpi/x86/pc/DSDT.acpihmat          | Bin 8155 -> 8337 bytes
+ tests/data/acpi/x86/pc/DSDT.bridge            | Bin 13701 -> 13883 bytes
+ tests/data/acpi/x86/pc/DSDT.cphp              | Bin 7294 -> 7476 bytes
+ tests/data/acpi/x86/pc/DSDT.dimmpxm           | Bin 8484 -> 8666 bytes
+ tests/data/acpi/x86/pc/DSDT.hpbridge          | Bin 6781 -> 6963 bytes
+ tests/data/acpi/x86/pc/DSDT.hpbrroot          | Bin 3337 -> 3519 bytes
+ tests/data/acpi/x86/pc/DSDT.ipmikcs           | Bin 6902 -> 7084 bytes
+ tests/data/acpi/x86/pc/DSDT.memhp             | Bin 8189 -> 8371 bytes
+ tests/data/acpi/x86/pc/DSDT.nohpet            | Bin 6688 -> 6870 bytes
+ tests/data/acpi/x86/pc/DSDT.numamem           | Bin 6836 -> 7018 bytes
+ tests/data/acpi/x86/pc/DSDT.roothp            | Bin 10623 -> 10805 bytes
+ tests/data/acpi/x86/q35/DSDT                  | Bin 8355 -> 8537 bytes
+ tests/data/acpi/x86/q35/DSDT.acpierst         | Bin 8372 -> 8554 bytes
+ tests/data/acpi/x86/q35/DSDT.acpihmat         | Bin 9680 -> 9862 bytes
+ .../acpi/x86/q35/DSDT.acpihmat-noinitiator    | Bin 8634 -> 8816 bytes
+ tests/data/acpi/x86/q35/DSDT.applesmc         | Bin 8401 -> 8583 bytes
+ tests/data/acpi/x86/q35/DSDT.bridge           | Bin 11968 -> 12150 bytes
+ tests/data/acpi/x86/q35/DSDT.core-count       | Bin 12913 -> 13095 bytes
+ tests/data/acpi/x86/q35/DSDT.core-count2      | Bin 33770 -> 33952 bytes
+ tests/data/acpi/x86/q35/DSDT.cphp             | Bin 8819 -> 9001 bytes
+ tests/data/acpi/x86/q35/DSDT.cxl              | Bin 9714 -> 9896 bytes
+ tests/data/acpi/x86/q35/DSDT.dimmpxm          | Bin 10009 -> 10191 bytes
+ tests/data/acpi/x86/q35/DSDT.ipmibt           | Bin 8430 -> 8612 bytes
+ tests/data/acpi/x86/q35/DSDT.ipmismbus        | Bin 8443 -> 8625 bytes
+ tests/data/acpi/x86/q35/DSDT.ivrs             | Bin 8372 -> 8554 bytes
+ tests/data/acpi/x86/q35/DSDT.memhp            | Bin 9714 -> 9896 bytes
+ tests/data/acpi/x86/q35/DSDT.mmio64           | Bin 9485 -> 9667 bytes
+ tests/data/acpi/x86/q35/DSDT.multi-bridge     | Bin 13208 -> 13390 bytes
+ tests/data/acpi/x86/q35/DSDT.noacpihp         | Bin 8235 -> 8417 bytes
+ tests/data/acpi/x86/q35/DSDT.nohpet           | Bin 8213 -> 8395 bytes
+ tests/data/acpi/x86/q35/DSDT.numamem          | Bin 8361 -> 8543 bytes
+ tests/data/acpi/x86/q35/DSDT.pvpanic-isa      | Bin 8456 -> 8638 bytes
+ tests/data/acpi/x86/q35/DSDT.thread-count     | Bin 12913 -> 13095 bytes
+ tests/data/acpi/x86/q35/DSDT.thread-count2    | Bin 33770 -> 33952 bytes
+ tests/data/acpi/x86/q35/DSDT.tis.tpm12        | Bin 8961 -> 9143 bytes
+ tests/data/acpi/x86/q35/DSDT.tis.tpm2         | Bin 8987 -> 9169 bytes
+ tests/data/acpi/x86/q35/DSDT.type4-count      | Bin 18589 -> 18771 bytes
+ tests/data/acpi/x86/q35/DSDT.viot             | Bin 9464 -> 9646 bytes
+ tests/data/acpi/x86/q35/DSDT.xapic            | Bin 35718 -> 35900 bytes
+ 65 files changed, 191 insertions(+), 5 deletions(-)
+ create mode 100644 hw/acpi/control_method_device.c
+ create mode 100644 include/hw/acpi/control_method_device.h
 
 -- 
-Cheers,
-
-David / dhildenb
+2.43.5
 
 
