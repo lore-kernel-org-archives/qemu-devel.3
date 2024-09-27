@@ -4,81 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D75FDCDD1D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 19:37:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 891CBCDD1D4
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 19:50:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suGlo-0003tC-5k; Fri, 27 Sep 2024 15:36:52 -0400
+	id 1suGyS-0002NL-V3; Fri, 27 Sep 2024 15:49:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1suGll-0003sc-TJ
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 15:36:49 -0400
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1suGlW-0001qX-LW
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 15:36:49 -0400
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-3e04b7b3c6dso1280748b6e.2
- for <qemu-devel@nongnu.org>; Fri, 27 Sep 2024 12:36:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727465793; x=1728070593; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MGxUslVb/JD7odAm9wNpYa0ugEjNTxHtH2g+q40DFlM=;
- b=PqQhTon8lz1OEl9fm1QEwbfJBwsfO/VallwjpQCstovPt06o2FJvHYFdhv/zeOzwdV
- zmty21JRRa1XpD5nccKQML+gvHve2ufRTBzmz4YuZ6u+0/BSZaqyCb/DVNSNzJid1SCz
- NdzhSbPOvsGWW5DAprGRm2ZOGzNAVUwYll5tv199osAlUs7eIvXd8bJzj++vTW2wa4sY
- egBOlWSI0/ErNu1RjNG3j87G1r3L2IA9f0ipHoqJfDF+9WijuJyYfdz83paclioPtnSu
- 72y9kxs7//Jc0d9Z8BneRMaFVbdC3hPtCWc7BzIVWiOOWI0myxmozKW5cpI8d39eMj+d
- rMjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727465793; x=1728070593;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MGxUslVb/JD7odAm9wNpYa0ugEjNTxHtH2g+q40DFlM=;
- b=Kc+KFh2wGsi4U+G+l2TKzC09v+nA/47RgRX2QaHLbtMzJtAR3lk00G8qMfaJvPHadW
- 3J31s7Pys7Zw7FgzemFk3KJHpe8UorP+C9xGl24eRE4qNXU85wXycIM4sWapOpARru+a
- 9AHBQBtbmS3EJifEln21NeaxWawQ9byd6BsBUDmOJbRX/ibDIdO5+N+cJd+8c618KLXH
- nPHoIAtBXywyD4o63wpDeU2nMOuSFlPD+Rk70TLsNibPIhQmcsUpWSLNApSt8ayyfzID
- 25/yhd3wUVqKXV1YL+EKRH2R18Fmr55VAbJkcXhFKKjr4ltz/jJFF85bnsYCffmxPnJf
- vv6A==
-X-Gm-Message-State: AOJu0Yx53eyLRc483JCetrjWtb3gnFoGVOVqpbkRs4zjT65HE0BQIGK2
- jgQqEX6pQZYaCLF3YVryQ+mRn6voRibSNjjEXPD7lnnJHMq0d/FawbI6ScWE5CJ3QkXLb4vETh6
- 526LtelG0fOtpYF4zo9xPWvEioAw=
-X-Google-Smtp-Source: AGHT+IHJqjBaRrBQe1XNaIbEsyZNNTN0mceA2psHxx4GqZtRKzEuTIdJqtovXaOX8jpM67pR0nny1pyquj9J3+0DBY8=
-X-Received: by 2002:a05:6808:3091:b0:3e0:4546:49a1 with SMTP id
- 5614622812f47-3e3939dd089mr2658247b6e.35.1727465793097; Fri, 27 Sep 2024
- 12:36:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1suGyP-0002AC-Cl; Fri, 27 Sep 2024 15:49:53 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1suGy8-0004hZ-PO; Fri, 27 Sep 2024 15:49:52 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:6401:0:640:7e6f:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 0C60560A96;
+ Fri, 27 Sep 2024 22:49:28 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b735::1:26] (unknown
+ [2a02:6b8:b081:b735::1:26])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id QncdV00XmKo0-Q6w94BQi; Fri, 27 Sep 2024 22:49:27 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1727466567;
+ bh=5USaEMkv4jDR/BPQFvDb8f32jRrQ1EoPZpO806QPYaM=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=TgbdUO5Gep1m0UNglQj1zJueXYnc6/Iln++37F4Cfyda//QNRGuGzh0L+lga3dOpB
+ at5cv243twWWoPAz78v4uknlK9fcimnRWp028vZVe08fX5wjv8YIYzPl609Co3cXcH
+ onVsH+9agtc/11Pldn94QI+DINptrMAlV993ER6U=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <cbe6383f-711a-43b7-8d45-43447b1a945b@yandex-team.ru>
+Date: Fri, 27 Sep 2024 22:49:26 +0300
 MIME-Version: 1.0
-References: <20240701145853.1394967-1-pbonzini@redhat.com>
- <20240701145853.1394967-4-pbonzini@redhat.com>
-In-Reply-To: <20240701145853.1394967-4-pbonzini@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Fri, 27 Sep 2024 15:36:21 -0400
-Message-ID: <CAJSP0QU3iT9REzdciVZBhRWLtQXtoabJ9Jb=S9Maun1cDb+WFw@mail.gmail.com>
-Subject: Re: [PATCH 03/14] rust: define traits and pointer wrappers to convert
- from/to C representations
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=stefanha@gmail.com; helo=mail-oi1-x22f.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] util/co-shared-resource: Remove unused
+ co_try_get_from_shres
+To: dave@treblig.org, jsnow@redhat.com
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
+References: <20240918124220.27871-1-dave@treblig.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20240918124220.27871-1-dave@treblig.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Yandex-Filter: 1
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,28 +75,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 1 Jul 2024 at 11:02, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> +/// A type for which there is a canonical representation as a C datum.
-> +pub trait CloneToForeign {
-> +    /// The representation of `Self` as a C datum.  Typically a
-> +    /// `struct`, though there are exceptions for example `c_char`
-> +    /// for strings, since C strings are of `char *` type).
-> +    type Foreign;
-> +
-> +    /// Free the C datum pointed to by `p`.
-> +    ///
-> +    /// # Safety
-> +    ///
-> +    /// `p` must be `NULL` or point to valid data.
-> +    unsafe fn free_foreign(p: *mut Self::Foreign);
-> +
-> +    /// Convert a native Rust object to a foreign C struct, copying
-> +    /// everything pointed to by `self` (same as `to_glib_full` in `glib-rs`)
-> +    fn clone_to_foreign(&self) -> OwnedPointer<Self>;
+On 18.09.24 15:42, dave@treblig.org wrote:
+> From: "Dr. David Alan Gilbert"<dave@treblig.org>
+> 
+> co_try_get_from_shres hasn't been used since it was added in
+>    55fa54a789 ("co-shared-resource: protect with a mutex")
+> 
+> (Everyone uses the _locked version)
+> Remove it.
+> 
+> Signed-off-by: Dr. David Alan Gilbert<dave@treblig.org>
 
-I expected the return type to be OwnedPointer<Self::Foreign>. Is this a typo?
+Thanks, applied to my block branch.
 
-Also, why is the return type OwnedPointer<T> instead of just T? I
-guess it's common to want a heap-allocated value here so you decided
-to hard-code OwnedPointer<>, but I'm not sure.
+-- 
+Best regards,
+Vladimir
+
 
