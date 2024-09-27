@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F1C0CDD1D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 18:41:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E149ACDD1D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 18:42:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suFsu-00076R-NR; Fri, 27 Sep 2024 14:40:08 -0400
+	id 1suFtW-0008Sa-Mz; Fri, 27 Sep 2024 14:40:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <annie.li@oracle.com>)
- id 1suFsr-0006we-0A; Fri, 27 Sep 2024 14:40:05 -0400
+ id 1suFtO-0007x0-5i; Fri, 27 Sep 2024 14:40:39 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <annie.li@oracle.com>)
- id 1suFso-00024U-Rj; Fri, 27 Sep 2024 14:40:04 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48RHMavk018461;
- Fri, 27 Sep 2024 18:39:35 GMT
+ id 1suFtM-0002Kx-3x; Fri, 27 Sep 2024 14:40:37 -0400
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48RHMaeg032276;
+ Fri, 27 Sep 2024 18:40:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
  from:to:cc:subject:date:message-id:in-reply-to:references
  :reply-to:mime-version:content-transfer-encoding; s=
- corp-2023-11-20; bh=Y2ScNx7uhiDnRyw9+fg5cWmlnPTsA01dpbRI8RLsQyY=; b=
- QSTmCtlZLvKrPAWlcjMXi61cwKD5Dawmox9VOnaaeUHXZgDtCjKQaqTQBMzCUza8
- +a5Wgk7D8oZEK1uT08oIP9GdZfZ2M8KGMa0o2J4CK08CGyJ0+67TlzoYovrmPI/f
- zhhf10bzFSXRwUGq63lRg+o0ZBCMH+tEZR3fiJChLoq2dWjH/BAarNxYMooO69cE
- c96pck/9xaxIijMXBpb9G9e4B6XCInHjDUM4W7BAhEsGu3NmC3biB7sgSlKSV5P5
- La/t7+up3QPllTWLYQ1N/9Tf6ncV6s78lyBSClxCa3ChJz+42VDvOwMBVpx95wMk
- rSKXGb1t9bcUzy6COMrW0Q==
+ corp-2023-11-20; bh=h61Gm34lZnRD9yK0JNtobZVXv9um/pHmr3hWMI6anxQ=; b=
+ iX9kGP2ZGTEhoTOU3oc/YsRvA+ildsCGN57lQOZOn4VbJRpUzOVOuqi1+neJsEv4
+ pd3xbFVQjh/Tqlr+Rw9rh5qPRC5qO9S4bXjCKHwLKXzoH7zyGI2YqGvKLNA4SY2M
+ /rbTofNuGyuseU86zqBWmjN8TYpYemx++rmFxRjjKVW0GbPNLnHIFbBK2TOWZEqZ
+ joyvan5T6UsxXqCTNHEBROVKn5WgyzPT09fAzAKZL7NX5YEf7bcpyYjbezTz2BMl
+ Pt23Htl9Hp3n7ERJAxWOK4RtgHbQRPsyeLYQj7O/+onIKiBbLpHb6JD87wWNrqwA
+ FC/TAECiBIuFW+VMKvquKg==
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 41sn2d0jw8-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 41sp1ar9ek-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 27 Sep 2024 18:39:34 +0000 (GMT)
+ Fri, 27 Sep 2024 18:40:28 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 48RHSZDh032841; Fri, 27 Sep 2024 18:39:33 GMT
+ with ESMTP id 48RH67Nd032904; Fri, 27 Sep 2024 18:40:26 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 41smkm8fma-1
+ 41smkm8gvj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 27 Sep 2024 18:39:33 +0000
+ Fri, 27 Sep 2024 18:40:26 +0000
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48RIdIoX009004;
- Fri, 27 Sep 2024 18:39:32 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48RIdIon009004;
+ Fri, 27 Sep 2024 18:40:26 GMT
 Received: from localhost.localdomain (dhcp-10-175-14-34.vpn.oracle.com
  [10.175.14.34])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 41smkm8ff6-3; Fri, 27 Sep 2024 18:39:32 +0000
+ 41smkm8ff6-11; Fri, 27 Sep 2024 18:40:25 +0000
 From: Annie Li <annie.li@oracle.com>
 To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, imammedo@redhat.com
 Cc: dave@treblig.org, mst@redhat.com, anisinha@redhat.com,
@@ -61,9 +61,10 @@ Cc: dave@treblig.org, mst@redhat.com, anisinha@redhat.com,
  wangyanan55@huawei.com, zhao1.liu@intel.com, pbonzini@redhat.com,
  richard.henderson@linaro.org, eblake@redhat.com, armbru@redhat.com,
  annie.li@oracle.com, miguel.luis@oracle.com
-Subject: [RFC V2 PATCH 02/11] acpi: Implement control method sleep button
-Date: Fri, 27 Sep 2024 14:38:57 -0400
-Message-ID: <20240927183906.1248-3-annie.li@oracle.com>
+Subject: [RFC V2 PATCH 10/11] tests/acpi: Update FACP and DSDT tables for
+ sleep button
+Date: Fri, 27 Sep 2024 14:39:05 -0400
+Message-ID: <20240927183906.1248-11-annie.li@oracle.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240927183906.1248-1-annie.li@oracle.com>
 References: <20240927183906.1248-1-annie.li@oracle.com>
@@ -77,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  mlxlogscore=999 malwarescore=0 adultscore=0 bulkscore=0 mlxscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2408220000
  definitions=main-2409270135
-X-Proofpoint-GUID: 0dNhWGXxYG-hmIw3q3XSreHD5bhy5CA9
-X-Proofpoint-ORIG-GUID: 0dNhWGXxYG-hmIw3q3XSreHD5bhy5CA9
+X-Proofpoint-ORIG-GUID: 549awtULSwg0gET17eDMHkDPXHh6nYH3
+X-Proofpoint-GUID: 549awtULSwg0gET17eDMHkDPXHh6nYH3
 Received-SPF: pass client-ip=205.220.165.32; envelope-from=annie.li@oracle.com;
  helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
@@ -105,120 +106,250 @@ Reply-To: miguel.luis@oracle.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The control method sleep button is added, as well as its GPE event
-handler.
+From: Miguel Luis <miguel.luis@oracle.com>
 
-Co-developed-by: Miguel Luis <miguel.luis@oracle.com>
-Signed-off-by: Annie Li <annie.li@oracle.com>
+ [000h 0000   4]                    Signature : "FACP"    [Fixed ACPI Description Table (FADT)]
+ [004h 0004   4]                 Table Length : 00000114
+ [008h 0008   1]                     Revision : 06
+-[009h 0009   1]                     Checksum : 12
++[009h 0009   1]                     Checksum : DF
+ [00Ah 0010   6]                       Oem ID : "BOCHS "
+ [010h 0016   8]                 Oem Table ID : "BXPC    "
+ [018h 0024   4]                 Oem Revision : 00000001
+ [01Ch 0028   4]              Asl Compiler ID : "BXPC"
+ [020h 0032   4]        Asl Compiler Revision : 00000001
+
+ [024h 0036   4]                 FACS Address : 00000000
+ [028h 0040   4]                 DSDT Address : 00000000
+ [02Ch 0044   1]                        Model : 00
+ [02Dh 0045   1]                   PM Profile : 00 [Unspecified]
+ [02Eh 0046   2]                SCI Interrupt : 0000
+ [030h 0048   4]             SMI Command Port : 00000000
+ [034h 0052   1]            ACPI Enable Value : 00
+ [035h 0053   1]           ACPI Disable Value : 00
+ [036h 0054   1]               S4BIOS Command : 00
+ [037h 0055   1]              P-State Control : 00
+@@ -148,50 +148,50 @@
+ [0DCh 0220   1]                     Space ID : 00 [SystemMemory]
+ [0DDh 0221   1]                    Bit Width : 00
+ [0DEh 0222   1]                   Bit Offset : 00
+ [0DFh 0223   1]         Encoded Access Width : 00 [Undefined/Legacy]
+ [0E0h 0224   8]                      Address : 0000000000000000
+
+ [0E8h 0232  12]                   GPE1 Block : [Generic Address Structure]
+ [0E8h 0232   1]                     Space ID : 00 [SystemMemory]
+ [0E9h 0233   1]                    Bit Width : 00
+ [0EAh 0234   1]                   Bit Offset : 00
+ [0EBh 0235   1]         Encoded Access Width : 00 [Undefined/Legacy]
+ [0ECh 0236   8]                      Address : 0000000000000000
+
+ [0F4h 0244  12]       Sleep Control Register : [Generic Address Structure]
+ [0F4h 0244   1]                     Space ID : 00 [SystemMemory]
+-[0F5h 0245   1]                    Bit Width : 00
++[0F5h 0245   1]                    Bit Width : 08
+ [0F6h 0246   1]                   Bit Offset : 00
+ [0F7h 0247   1]         Encoded Access Width : 00 [Undefined/Legacy]
+-[0F8h 0248   8]                      Address : 0000000000000000
++[0F8h 0248   8]                      Address : 0000000009080000
+
+ [100h 0256  12]        Sleep Status Register : [Generic Address Structure]
+ [100h 0256   1]                     Space ID : 00 [SystemMemory]
+-[101h 0257   1]                    Bit Width : 00
++[101h 0257   1]                    Bit Width : 08
+ [102h 0258   1]                   Bit Offset : 00
+ [103h 0259   1]         Encoded Access Width : 00 [Undefined/Legacy]
+-[104h 0260   8]                      Address : 0000000000000000
++[104h 0260   8]                      Address : 0000000009080001
+
+ [10Ch 0268   8]                Hypervisor ID : 00000000554D4551
+
+ Raw Table Data: Length 276 (0x114)
+
+-    0000: 46 41 43 50 14 01 00 00 06 12 42 4F 43 48 53 20  // FACP......BOCHS
++    0000: 46 41 43 50 14 01 00 00 06 DF 42 4F 43 48 53 20  // FACP......BOCHS
+     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+     0020: 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+     0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+     0040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+     0050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+     0060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+     0070: 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+     0080: 00 03 00 03 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+     0090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+     00A0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+     00B0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+     00C0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+     00D0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+     00E0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+-    00F0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+-    0100: 00 00 00 00 00 00 00 00 00 00 00 00 51 45 4D 55  // ............QEMU
++    00F0: 00 00 00 00 00 08 00 00 00 00 08 09 00 00 00 00  // ................
++    0100: 00 08 00 00 01 00 08 09 00 00 00 00 51 45 4D 55  // ............QEMU
+     0110: 00 00 00 00                                      // ....
+
+  * Original Table Header:
+  *     Signature        "DSDT"
+- *     Length           0x0000144C (5196)
++ *     Length           0x0000149E (5278)
+  *     Revision         0x02
+- *     Checksum         0x1B
++ *     Checksum         0x97
+  *     OEM ID           "BOCHS "
+  *     OEM Table ID     "BXPC    "
+  *     OEM Revision     0x00000001 (1)
+  *     Compiler ID      "BXPC"
+  *     Compiler Version 0x00000001 (1)
+  */
+ DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
+ {
+     Scope (\_SB)
+     {
+         Device (C000)
+         {
+             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
+             Name (_UID, Zero)  // _UID: Unique ID
+         }
+
+@@ -1876,27 +1876,48 @@
+                     0x00000029,
+                 }
+             })
+             OperationRegion (EREG, SystemMemory, 0x09080000, 0x04)
+             Field (EREG, DWordAcc, NoLock, WriteAsZeros)
+             {
+                 ESEL,   32
+             }
+
+             Method (_EVT, 1, Serialized)  // _EVT: Event
+             {
+                 Local0 = ESEL /* \_SB_.GED_.ESEL */
+                 If (((Local0 & 0x02) == 0x02))
+                 {
+                     Notify (PWRB, 0x80) // Status Change
+                 }
++
++                If (((Local0 & 0x10) == 0x10))
++                {
++                    Notify (SLPB, 0x80) // Status Change
++                }
+             }
+         }
+
+         Device (PWRB)
+         {
+             Name (_HID, "PNP0C0C" /* Power Button Device */)  // _HID: Hardware ID
+             Name (_UID, Zero)  // _UID: Unique ID
+         }
++
++        Device (\_SB.SLPB)
++        {
++            Name (_HID, EisaId ("PNP0C0E") /* Sleep Button Device */)  // _HID: Hardware ID
++            Name (_PRW, Package (0x02)  // _PRW: Power Resources for Wake
++            {
++                One,
++                0x04
++            })
++            OperationRegion (\B**, SystemIO, 0x0201, One)
++            Field (\B**, ByteAcc, NoLock, WriteAsZeros)
++            {
++                SBP,    1,
++                SBW,    1
++            }
++        }
+     }
+ }
+
+Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
 ---
- hw/acpi/control_method_device.c         | 54 +++++++++++++++++++++++++
- hw/acpi/meson.build                     |  1 +
- include/hw/acpi/control_method_device.h | 25 ++++++++++++
- 3 files changed, 80 insertions(+)
+ tests/data/acpi/aarch64/virt/DSDT             | Bin 5196 -> 5278 bytes
+ .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5282 -> 5364 bytes
+ tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6557 -> 6639 bytes
+ tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7679 -> 7761 bytes
+ tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5398 -> 5480 bytes
+ tests/data/acpi/aarch64/virt/FACP             | Bin 276 -> 276 bytes
+ tests/qtest/bios-tables-test-allowed-diff.h   |   6 ------
+ 7 files changed, 6 deletions(-)
 
-diff --git a/hw/acpi/control_method_device.c b/hw/acpi/control_method_device.c
-new file mode 100644
-index 0000000000..f52c190352
---- /dev/null
-+++ b/hw/acpi/control_method_device.c
-@@ -0,0 +1,54 @@
-+/*
-+ * Control method devices
-+ *
-+ * Copyright (c) 2023 Oracle and/or its affiliates.
-+ *
-+ *
-+ * Authors:
-+ *     Annie Li <annie.li@oracle.com>
-+ *
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/acpi/control_method_device.h"
-+#include "hw/mem/nvdimm.h"
-+
-+void acpi_dsdt_add_sleep_button(Aml *scope)
-+{
-+    Aml *dev = aml_device("\\_SB."ACPI_SLEEP_BUTTON_DEVICE);
-+    aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0C0E")));
-+    Aml *pkg = aml_package(2);
-+    aml_append(pkg, aml_int(0x01));
-+    aml_append(pkg, aml_int(0x04));
-+    aml_append(dev, aml_name_decl("_PRW", pkg));
-+    aml_append(dev, aml_operation_region("\\Boo", AML_SYSTEM_IO,
-+                                         aml_int(0x201), 0x1));
-+    Aml *field = aml_field("\\Boo", AML_BYTE_ACC, AML_NOLOCK,
-+                           AML_WRITE_AS_ZEROS);
-+    aml_append(field, aml_named_field("SBP", 1));
-+    aml_append(field, aml_named_field("SBW", 1));
-+    aml_append(dev, field);
-+    aml_append(scope, dev);
-+}
-+
-+void acpi_dsdt_add_sleep_gpe_event_handler(Aml *scope)
-+{
-+     Aml *method = aml_method("_L07", 0, AML_NOTSERIALIZED);
-+     Aml *condition = aml_if(aml_name("\\_SB.SLPB.SBP"));
-+     aml_append(condition, aml_store(aml_int(1), aml_name("\\_SB.SLPB.SBP")));
-+     aml_append(condition,
-+                aml_notify(aml_name("\\_SB."ACPI_SLEEP_BUTTON_DEVICE),
-+                                    aml_int(0x80)));
-+     aml_append(method, condition);
-+     condition = aml_if(aml_name("\\_SB.SLPB.SBW"));
-+     aml_append(condition, aml_store(aml_int(1), aml_name("\\_SB.SLPB.SBW")));
-+     aml_append(condition,
-+                aml_notify(aml_name("\\_SB."ACPI_SLEEP_BUTTON_DEVICE),
-+                                    aml_int(0x2)));
-+     aml_append(method, condition);
-+     aml_append(scope, method);
-+}
-diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
-index fa5c07db90..0b4f1b432d 100644
---- a/hw/acpi/meson.build
-+++ b/hw/acpi/meson.build
-@@ -17,6 +17,7 @@ acpi_ss.add(when: 'CONFIG_ACPI_PCI', if_true: files('pci.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_CXL', if_true: files('cxl.c'), if_false: files('cxl-stub.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_VMGENID', if_true: files('vmgenid.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_HW_REDUCED', if_true: files('generic_event_device.c'))
-+acpi_ss.add(when: 'CONFIG_ACPI_HW_REDUCED', if_true: files('control_method_device.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_HMAT', if_true: files('hmat.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_APEI', if_true: files('ghes.c'), if_false: files('ghes-stub.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_PIIX4', if_true: files('piix4.c'))
-diff --git a/include/hw/acpi/control_method_device.h b/include/hw/acpi/control_method_device.h
-new file mode 100644
-index 0000000000..87f8d6fd59
---- /dev/null
-+++ b/include/hw/acpi/control_method_device.h
-@@ -0,0 +1,25 @@
-+/*
-+ * Control method devices
-+ *
-+ * Copyright (c) 2023 Oracle and/or its affiliates.
-+ *
-+ *
-+ * Authors:
-+ *     Annie Li <annie.li@oracle.com>
-+ *
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ *
-+ */
-+
-+
-+#ifndef HW_ACPI_CONTROL_METHOD_DEVICE_H
-+#define HW_ACPI_CONTROL_NETHOD_DEVICE_H
-+
-+#define ACPI_SLEEP_BUTTON_DEVICE "SLPB"
-+
-+void acpi_dsdt_add_sleep_button(Aml *scope);
-+void acpi_dsdt_add_sleep_gpe_event_handler(Aml *scope);
-+
-+#endif
+diff --git a/tests/data/acpi/aarch64/virt/DSDT b/tests/data/acpi/aarch64/virt/DSDT
+index 36d3e5d5a5e47359b6dcb3706f98b4f225677591..348e66bcd52ca4a2c0bb751ac7fc0dd5f36f73c5 100644
+GIT binary patch
+delta 146
+zcmX@3F;A1rCD<ioo(Ka2)AWg4(oCK18`WnBGdXiiJ}4Zltrzba7Q$KJ8tm$mus~pP
+zbpjU?0~b?UKzNW7R|7;qfPqV(E!ZbuvYv>XV|0^!j9z@OQ#??>i6h>_(}l<J0uLWY
+qd_YjR5GxZS7fW<Qj8lGoJR>(F6JvCvAeiGA>=Y2s80-`t&j<jVM<)CL
+
+delta 63
+zcmbQIc}9cFCD<jzM}&caNqQoeG*i3NM)euOOit{R4+;lM$;P{eg>V+Q2D|zsED)Gn
+ToxsJ!z{S)S5FRwyUPKN67!MG;
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt b/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt
+index e6154d0355f84fdcc51387b4db8f9ee63acae4e9..919a08d1fb2aae5664d65c9e29164a2c10b261db 100644
+GIT binary patch
+delta 148
+zcmZ3a`9+h<CD<k8iwFY)Q^-UvX{LUkjq2}&nVdN$i;Dy^>P^lTk;z>kFu6K`OMrn(
+zpe@)Zz=^9Nx=Au1JjjV7-ow*{H^48zz}di=fg?WD(}f|r$v#FeKG-Q9q!O%v$MFIW
+sA4hyZP`D5)6C)Q(bVH0&ettY7HzN~cbfX}c;~4A|5YHIw6dunA0JnK2!vFvP
+
+delta 66
+zcmeyOxk!`CCD<iokq83=(~XH-(oDVX8`a+lGdZzO78eO-l%1R{A|oB$BpDDM<irv0
+W;pxH~;1^)vY~akm5g+R5!T<nyRS|Ij
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.memhp b/tests/data/acpi/aarch64/virt/DSDT.memhp
+index 33f011d6b635035a04c0b39ce9b4e219f7ae74b7..9e713db27df6502c8d7a1cbd2dfddaada3863de4 100644
+GIT binary patch
+delta 126
+zcmbPh{N9+$CD<k8y(9wz)A5O1(o9`*Hmc7MW^&@5d{8);$(MDqn1~nu0)ffZ30wjU
+zTmo&uJ^@af<3#LP9iyA<WAx&Ko#H`49Pu8WE<BDGc=$Nt1A@YZSeY2PSfU$ZobvPI
+Z8Mzsm7^52n!5qh6r+|3IV5jhSMgZvrA_)Kh
+
+delta 44
+zcmaEFJlB}ZCD<iot|S8klg&gfX{L_p8`WnBGdXfiJ}4Z_<ij#qOvGz*p@=Oj03*B%
+AQ~&?~
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.pxb b/tests/data/acpi/aarch64/virt/DSDT.pxb
+index c0fdc6e9c1396cc2259dc4bc665ba023adcf4c9b..95a4075dae670f6f039338ac19ac44eb8b7f6a66 100644
+GIT binary patch
+delta 123
+zcmexwebI)?CD<h-P>z9tiFqQIG*i!`jq2XAOwJsWOJsu?^(LQ?mEl_;Fu6K`OMrn(
+zpe@)ZVDdv*ImhTG`xw3WV5fMXfD=c&ho=jV;{_f*j`)C}a3NMEMlP1<h8U;({CGxg
+XMkdDSMnN#gG1w^}o-x=dJf0B%TvZ_~
+
+delta 66
+zcmca;^WU1wCD<k8zbpd-Q^!OuX{N5b8`ZsKnVi@sm&gV)%1%BZD<d7<BpDDM<irv0
+W;pxH~;1^)vY~akm5g+R5!T<oW?Gmg2
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.topology b/tests/data/acpi/aarch64/virt/DSDT.topology
+index 029d03eecc4efddc001e5377e85ac8e831294362..5a513726f3659c2af590bf852a0ffb4c8a52d3c2 100644
+GIT binary patch
+delta 123
+zcmbQH^+JowCD<h-LzIDmse2-qG*ffPM)f2SCTEVx-6Fw^dXw*q$nY%?m|UH}CBVQX
+z&=%|yF!_gwoMUv8eT-gwuv0uxz=<Q?!_$Sw@d6JYM|?m~xDYE7BNt0_LyS{?emo;L
+XBNJnEqac{$80-`f&lv0!9?u8>I`AOw
+
+delta 42
+ycmaE%HBF1lCD<iIOq79viGL!OG*hGhM)f2SCMWjE-6Fw^vXk$N$V}!Dl?DLi4hnq$
+
+diff --git a/tests/data/acpi/aarch64/virt/FACP b/tests/data/acpi/aarch64/virt/FACP
+index da0c3644cc4536a0a0141603ed470bd11492b678..d8f3658df25a63b6994ee135ad3006a3e1f48e89 100644
+GIT binary patch
+delta 50
+tcmbQjG=+)F&CxkPgpq-P?fyir*YX?;K)}HXA{l^eMkqVb)i)F*1OU=O23r6C
+
+delta 30
+kcmbQjG=+)F&CxkPgpq-PO=u$5>xl;99D%OBp$tF(0A~>f8~^|S
+
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dcc7c2306d..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,7 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/virt/DSDT",
+-"tests/data/acpi/virt/DSDT.acpihmatvirt",
+-"tests/data/acpi/virt/DSDT.memhp",
+-"tests/data/acpi/virt/DSDT.pxb",
+-"tests/data/acpi/virt/DSDT.topology",
+-"tests/data/acpi/virt/FACP",
 -- 
 2.43.5
 
