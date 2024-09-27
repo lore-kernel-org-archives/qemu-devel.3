@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26BD8CEBF76
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 06:15:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E208CEBF76
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 06:15:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1su4Ck-00058g-F9; Fri, 27 Sep 2024 02:11:50 -0400
+	id 1su4EM-0005E7-Od; Fri, 27 Sep 2024 02:13:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1su4Cf-0004lp-3h; Fri, 27 Sep 2024 02:11:45 -0400
+ id 1su4E6-0003bu-RC; Fri, 27 Sep 2024 02:13:15 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1su4Cd-0003Gj-Gv; Fri, 27 Sep 2024 02:11:44 -0400
+ id 1su4E1-0003Wq-Nd; Fri, 27 Sep 2024 02:13:11 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8B1BD92D19;
- Fri, 27 Sep 2024 09:10:51 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7B0A592D28;
+ Fri, 27 Sep 2024 09:10:52 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 06E2014670B;
+ by tsrv.corpit.ru (Postfix) with SMTP id EAC9214671A;
  Fri, 27 Sep 2024 09:11:22 +0300 (MSK)
-Received: (nullmailer pid 573362 invoked by uid 1000);
+Received: (nullmailer pid 573410 invoked by uid 1000);
  Fri, 27 Sep 2024 06:11:21 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 08/27] qemu-img: simplify --repair error message
-Date: Fri, 27 Sep 2024 09:11:02 +0300
-Message-Id: <20240927061121.573271-9-mjt@tls.msk.ru>
+Subject: [PATCH 23/27] qemu-img: dd: refresh options/--help
+Date: Fri, 27 Sep 2024 09:11:17 +0300
+Message-Id: <20240927061121.573271-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20240927061121.573271-1-mjt@tls.msk.ru>
 References: <20240927061121.573271-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,28 +60,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add missing long options and --help output.
+
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qemu-img.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ qemu-img.c | 39 +++++++++++++++++++++++++++++----------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
 
 diff --git a/qemu-img.c b/qemu-img.c
-index 1bd88fcf63..9157a6b45d 100644
+index 7c20a5772d..b3e521bc09 100644
 --- a/qemu-img.c
 +++ b/qemu-img.c
-@@ -859,8 +859,9 @@ static int img_check(const img_cmd_t *ccmd, int argc, char **argv)
-             } else if (!strcmp(optarg, "all")) {
-                 fix = BDRV_FIX_LEAKS | BDRV_FIX_ERRORS;
-             } else {
--                error_exit(argv[0], "Unknown option value for -r "
--                           "(expecting 'leaks' or 'all'): %s", optarg);
-+                error_exit(argv[0],
-+                           "--repair (-r) expects 'leaks' or 'all' not '%s'",
-+                           optarg);
-             }
+@@ -5504,31 +5504,48 @@ static int img_dd(const img_cmd_t *ccmd, int argc, char **argv)
+     const struct option long_options[] = {
+         { "help", no_argument, 0, 'h'},
+         { "object", required_argument, 0, OPTION_OBJECT},
++        { "format", required_argument, 0, 'f'},
++        { "output-format", required_argument, 0, 'O'},
+         { "image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
+         { "force-share", no_argument, 0, 'U'},
+         { 0, 0, 0, 0 }
+     };
+ 
+-    while ((c = getopt_long(argc, argv, ":hf:O:U", long_options, NULL))) {
++    while ((c = getopt_long(argc, argv, "hf:O:U", long_options, NULL))) {
+         if (c == EOF) {
              break;
-         case OPTION_OUTPUT:
+         }
+         switch (c) {
++        case 'h':
++            cmd_help(ccmd,
++"[-f FMT|--image-opts] [-O OUTPUT_FMT] [-U]\n"
++"        [bs=BLOCK_SIZE] [count=BLOCKS] if=INPUT of=OUTPUT\n"
++,
++"  -f, --format FMT\n"
++"     specify format for INPUT explicitly\n"
++"  --image-opts\n"
++"     indicates that INPUT is a complete image specification\n"
++"     instead of a file name (incompatible with --format)\n"
++"  -O, --output-format OUTPUT_FMT\n"
++"     format of the OUTPUT (default raw)\n"
++"  -U, --force-share\n"
++"     open images in shared mode for concurrent access\n"
++"  bs=BLOCK_SIZE[kKMGTP]\n"
++"     size of I/O block (default 512)\n"
++"  count=COUNT\n"
++"     number of blocks to convert (default whole INPUT)\n"
++"  if=INPUT\n"
++"     input file name (or image specification with --image-opts)\n"
++"  of=OUTPUT\n"
++"     output file name to create\n"
++);
++            break;
+         case 'O':
+             out_fmt = optarg;
+             break;
+         case 'f':
+             fmt = optarg;
+             break;
+-        case ':':
+-            missing_argument(argv[optind - 1]);
+-            break;
+-        case '?':
+-            unrecognized_option(argv[optind - 1]);
+-            break;
+-        case 'h':
+-            help();
+-            break;
+         case 'U':
+             force_share = true;
+             break;
+@@ -5538,6 +5555,8 @@ static int img_dd(const img_cmd_t *ccmd, int argc, char **argv)
+         case OPTION_IMAGE_OPTS:
+             image_opts = true;
+             break;
++        default:
++            tryhelp(argv[0]);
+         }
+     }
+ 
 -- 
 2.39.5
 
