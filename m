@@ -4,97 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 958BECDD1CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 16:46:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D2D0CDD1CD
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 16:49:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suE60-0005rO-Fq; Fri, 27 Sep 2024 12:45:33 -0400
+	id 1suE9V-0001hV-44; Fri, 27 Sep 2024 12:49:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1suE5h-0005qV-3n
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 12:45:13 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1suE9T-0001h1-VC
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 12:49:08 -0400
+Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1suE5a-0006UP-Re
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 12:45:12 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-718d6ad6050so1944673b3a.0
- for <qemu-devel@nongnu.org>; Fri, 27 Sep 2024 09:45:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1suE9S-0006pk-BJ
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 12:49:07 -0400
+Received: by mail-lf1-x12a.google.com with SMTP id
+ 2adb3069b0e04-53988c54ec8so985092e87.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Sep 2024 09:49:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1727455504; x=1728060304;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1727455744; x=1728060544; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mRrYeoZ2vrk2HfqspxkUqdPoJZWVYEIuQPeMGyAYvZU=;
- b=XWqTsZAP2z8N5pKsdpaDaxe8mudbzDSBuJzaeftARuxobIpB5AxDWK+2NG0fPKFpb4
- vhOaDJO5X/hOQZzQCZQN1KUT38vg/B49QUX5YqMcUg2C4anZHwnsSPaaJbUNvnf82brb
- rNfrNZHZW4aqCRxYfDgqcvruZS7JdaPdTfx0ribwp9ZkOQOOzyywO8OGxtPZtshWbHTn
- IJ44dasWiYnuq2kbHpVbIj10xpjhcpNGHHEVFRow6XACMTwI7ollqFZTxulC+MvehtGa
- Gh5EeV9KsgCrSn6XQeqtxF72iRCg1Tqe0CETpj+pUXkzOXyrv2LkRlKlVxd3/qCOVPsh
- LYEA==
+ bh=Rw7kc6ewZR873XR44ypiXj1tN1+A6FgdVu2Q3D9pdFQ=;
+ b=eb39epAZh4SABisZPaso0IxC/MN4CGY7y3cKLKNwsVw9P5CSinomu9HzzKI2knsVPy
+ qwvVxVWG6IBmHdeBrx3/bC7QVsc0hB8UQoIGdNqjXt6LZDp0nJf+GS71pBJU9g2ysDTu
+ CvPD4rxKWlhnfQ93BboIYbJ+P5t/xYHuUxGgdGF067ja4eIU54B+aqHMEUsPnWPK6uNr
+ +FaRLNeYhTubiaqyYNedrgAE1L1AWJolMSfuY6WcNo+CoRrfv/jkoVlUDwNZFwXr7qD2
+ P+6MQY8xmsHgJ90dgEaxJ/xxF88IjHcl62ezlaq5/Vre4sFkuCTlDewmOukQ+LjW28Ze
+ hCgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727455504; x=1728060304;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=mRrYeoZ2vrk2HfqspxkUqdPoJZWVYEIuQPeMGyAYvZU=;
- b=YvVlIPaIZEBx6o+iUjE0YuP3nGmdxk3ZSmYwnqDbEo5hIhlCRpSK5G9q4YG5IVHUpD
- obiZ5DgrKBZUNnVKAw1nBTb0ADnihat0uUlvZgm293aaOBidfCFBx9oMvD633leQwILT
- qtNF4IJNjIINiMNvdOFZtyOU+NrHzdZ9PfzBkf3Gu0MCV7tdpBQdt9afvulzpCijAyAz
- FNuG4TOgs+J7x0IFmyIH+Mjo7Bs7p9ZhjAPeE/tg9wWex8QOSdgGxf6NSAWYdzQPmGoJ
- bjhrSMxrBa0k9duNN8rdhsjBwWw+l9gOeL21Gd3qhTW/2Fy+eCDQTxSlWBPgQhOEBp/R
- DXzQ==
+ d=1e100.net; s=20230601; t=1727455744; x=1728060544;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Rw7kc6ewZR873XR44ypiXj1tN1+A6FgdVu2Q3D9pdFQ=;
+ b=WAPtpYECg9K20veeQkjlTyWIf49GHVnR0vwnHea/PvcRGh1LfkIJSj6YqodjrErFmT
+ HD/yP/PW0kPQ30DA7kOmVdXVWlUENUgm/4mG9nSkRCfJXGf4oaqjou7PnOHnXb+v4d8e
+ EvGaME8WVOZrBGkGUXOxEDe5WVyLYHy0/kRuqvYkr0FsjveEBGfRTsd93mu2AN9c5qgZ
+ 2ONJTByVTlT/eMWdiHg3qttLQugdPxZJh9VUox0M6tI1WaYgVLjGSE5+ZsppX3LdwR7v
+ 7+3zpEDRPpte8denivYoDFzt6JC/1As0LiolLwMEthlyI+QoFzzInZxtL37pUT1zVHr4
+ uopA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX7KlEzagm+PeyRIy7M0gfukT6ylpoo+9N1eVC80YxleYcAEA2l4GlNP8sM/HSUWpBfWrv3YvTTb/yj@nongnu.org
-X-Gm-Message-State: AOJu0Yy2r5M2fD4eeADbZYiXdL1ociNAT6SMdfIa797GJfB1RmZoQFhM
- IW/bqJol3pFhZKDrazsKsY5Xkh/bKS2NQE/eF4079LWAOfGv4nnx7kfONOUFXqI=
-X-Google-Smtp-Source: AGHT+IEt3VL7noxJs1eAsCrq+mbLPdmnloBIcH6kuao1ZwLTF8u3DeGwADrRhJXsT2hk6TwzA0/mBQ==
-X-Received: by 2002:a05:6a00:9287:b0:718:d5fb:2fc4 with SMTP id
- d2e1a72fcca58-71b25f38c9emr5817102b3a.9.1727455503056; 
- Fri, 27 Sep 2024 09:45:03 -0700 (PDT)
-Received: from [26.26.26.1] ([165.154.21.247])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71b2649a29asm1870801b3a.19.2024.09.27.09.45.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Sep 2024 09:45:02 -0700 (PDT)
-Message-ID: <32cf163b-b985-4be5-bc7b-e729cdd7ce2d@smartx.com>
-Date: Sat, 28 Sep 2024 00:44:57 +0800
+ AJvYcCWsIsW0WCmhq+tpNkPjNMF3/yLc5uvd/GOxbdwyQbdK7JcjLS7cUUQA9g9IfoZ42iqgUyUuA+Iu5P+i@nongnu.org
+X-Gm-Message-State: AOJu0YxV1gt+5W7NIhXTAIrNQhpHOCv5g5J/J+50uouHTp8tzGnArToL
+ yP3wS0KYImkcYMHJfHwmQAntSaAqV4rBeicD/ProDaMdmPdiA6ET9O4O7BGH2djlgAYiiourbCs
+ 8HEyLYacudtLAVsfeINzCV4d3ss0cWbjNPEHYbA==
+X-Google-Smtp-Source: AGHT+IGyqyHRnrcK+x5TN86I65uNFwih03Kn5S4AIT6TWLynUTS3SiOIyQZVQ+t0vz9nXw5DjjaKfNtG3muqgHcJft8=
+X-Received: by 2002:a05:6512:3095:b0:533:4620:ebfb with SMTP id
+ 2adb3069b0e04-5389fc3c405mr3204090e87.21.1727455744305; Fri, 27 Sep 2024
+ 09:49:04 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/7] migration: Introduce structs for background sync
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <cover.1726390098.git.yong.huang@smartx.com>
- <531750c8d7b6c09f877b5f335a60fab402c168be.1726390098.git.yong.huang@smartx.com>
- <87msk7z4l3.fsf@suse.de>
- <CAK9dgmb_rK5HJOGTG=KXKgH=e2e8JV8aqoOWUHBEyjnc-+kiqg@mail.gmail.com>
- <ZuxxOObKqS_G0Ela@x1n>
- <CAK9dgmYaE=poiwLQqD6qbjJQdgPLMn8cW8VO47xYFTBkNiUVLA@mail.gmail.com>
- <ZvRh0RhkUC-eLbjo@x1n>
- <CAK9dgmbi1VSXvxFjziH5PjaoiaQwBJ3z4ff1BAojtm26VTThUQ@mail.gmail.com>
- <ZvW8LxJsv3pRWom_@x1n>
- <CAK9dgma-RFQ3akWDFHW5VhMPOdbT4nizSrixQK9x4W7W249raQ@mail.gmail.com>
- <ZvbQ0RQx-zxOeo4Y@x1n>
-From: Hyman Huang <yong.huang@smartx.com>
-In-Reply-To: <ZvbQ0RQx-zxOeo4Y@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=yong.huang@smartx.com; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_SBL=0.141, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+References: <20230616143803.73926-1-kinsey.moore@oarcorp.com>
+ <e36a681f-53e2-8379-078e-25e43fc3966e@linaro.org>
+ <20230710140948.GJ6984@fralle-msi>
+ <LV3PR19MB82782241F7CFA4A66D762D5D90692@LV3PR19MB8278.namprd19.prod.outlook.com>
+In-Reply-To: <LV3PR19MB82782241F7CFA4A66D762D5D90692@LV3PR19MB8278.namprd19.prod.outlook.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 27 Sep 2024 17:48:53 +0100
+Message-ID: <CAFEAcA_k3JuPMtT6rAmx7xAqSeTYj_HEup16=2Zr6FA_5dPE4g@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/arm/xlnx: Connect secondary CGEM IRQs
+To: Kinsey Moore <kinsey.moore@oarcorp.com>
+Cc: Francisco Iglesias <frasse.iglesias@gmail.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "philmd@linaro.org" <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,75 +95,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-在 2024/9/27 23:35, Peter Xu 写道:
-> On Fri, Sep 27, 2024 at 10:50:01AM +0800, Yong Huang wrote:
->> On Fri, Sep 27, 2024 at 3:55 AM Peter Xu <peterx@redhat.com> wrote:
->>
->>> On Fri, Sep 27, 2024 at 02:13:47AM +0800, Yong Huang wrote:
->>>> On Thu, Sep 26, 2024 at 3:17 AM Peter Xu <peterx@redhat.com> wrote:
->>>>
->>>>> On Fri, Sep 20, 2024 at 10:43:31AM +0800, Yong Huang wrote:
->>>>>> Yes, invoke migration_bitmap_sync_precopy more frequently is also my
->>>>>> first idea but it involves bitmap updating and interfere with the
->>>>> behavior
->>>>>> of page sending, it also affects the migration information stats and
->>>>>> interfere other migration logic such as migration_update_rates().
->>>>> Could you elaborate?
->>>>>
->>>>> For example, what happens if we start to sync in ram_save_iterate() for
->>>>> some time intervals (e.g. 5 seconds)?
->>>>>
->>>> I didn't try to sync in ram_save_iterate but in the
->>>> migration_bitmap_sync_precopy.
->>>>
->>>> If we use the migration_bitmap_sync_precopy in the ram_save_iterate
->>>> function,
->>>> This approach seems to be correct. However, the bitmap will be updated as
->>>> the
->>>> migration thread iterates through each dirty page in the RAMBlock list.
->>>> Compared
->>>> to the existing implementation, this is different but still
->>> straightforward;
->>>> I'll give it a shot soon to see if it works.
->>> It's still serialized in the migration thread, so I'd expect it is similar
->>>
->> What does "serialized" mean?
-> I meant sync() never happens before concurrently with RAM pages being
-> iterated, simply because sync() previously only happens in the migration
-> thread, which is still the same thread that initiate the movement of pages.
+On Wed, 25 Sept 2024 at 20:34, Kinsey Moore <kinsey.moore@oarcorp.com> wrot=
+e:
 >
->> How about we:
->> 1. invoke the migration_bitmap_sync_precopy in a timer(bg_sync_timer) hook,
->>     every 5 seconds.
->> 2. register the bg_sync_timer in the main loop when the machine starts like
->>      throttle_timer
->> 3. activate the timer when ram_save_iterate gets called and deactivate it in
->>      the ram_save_cleanup gracefully during migration.
->>
->> I think it is simple enough and also isn't "serialized"?
-> If you want to do that with timer that's ok, but then IIUC it doesn't need
-> to involve ram.c code at all.
+> Hey,
+> I just wanted to check on the status of this patch since it's been sittin=
+g for a bit now and I noticed it hasn't gone into any branches. Is this wai=
+ting on something from me?
+
+No, I'm afraid I just hadn't noticed it to pick it up.
+I've applied it to target-arm.next now; sorry about the delay.
+
+(Generally if nothing seems to have happened to a patch
+you can 'ping' it on the mailing list after a couple of weeks
+to get somebody's attention on it.)
+
+thanks
+-- PMM
+
+
+> Thanks,
+> Kinsey
 >
-> You can rely on cpu_throttle_get_percentage() too just like the throttle
-> timer, and it'll work naturally with migration because outside migration
-> the throttle will be cleared (cpu_throttle_stop() at finish/fail/cancel..).
+> -----Original Message-----
+> From: Francisco Iglesias <frasse.iglesias@gmail.com>
+> Sent: Monday, July 10, 2023 09:10
+> To: peter.maydell@linaro.org
+> Cc: Kinsey Moore <kinsey.moore@oarcorp.com>; qemu-devel@nongnu.org; philm=
+d@linaro.org
+> Subject: Re: [PATCH v2] hw/arm/xlnx: Connect secondary CGEM IRQs
 >
-> Then it also gracefully align the async thread sync() that it only happens
-> with auto-converge is enabled.  Yeh that may look better.. and stick the
-> code together with cpu-throttle.c seems nice.
-
-Ok, Thanks for the advices, i'll check it and see how it goes.
-
 >
-> Side note: one thing regarind to sync() is ram_init_bitmaps() sync once,
-> while I don't see why it's necessary.  I remember I tried to remove it but
-> maybe I hit some issues and I didn't dig further.  If you're working on
-> sync() anyway not sure whether you'd like to have a look.
-
-Agree, I'll try it after working out current series.
-
-
-Yong
-
+> +PMM (I think this one might have fallen throught the cracks)
+>
+> Best regards,
+> Francisco Iglesias
+>
+> On [2023 Jun 18] Sun 00:50:47, Philippe Mathieu-Daud=C3=A9 wrote:
+> > On 16/6/23 16:38, Kinsey Moore wrote:
+> > > The Cadence GEM peripherals as configured for Zynq MPSoC and Versal
+> > > platforms have two priority queues with separate interrupt sources fo=
+r
+> > > each. If the interrupt source for the second priority queue is not
+> > > connected, they work in polling mode only. This change connects the
+> > > second interrupt source for platforms where it is available. This pat=
+ch
+> > > has been tested using the lwIP stack with a Xilinx-supplied driver fr=
+om
+> > > their embeddedsw repository.
+> > >
+> > > Signed-off-by: Kinsey Moore <kinsey.moore@oarcorp.com>
+> > > ---
+> > >   hw/arm/xlnx-versal.c         | 12 +++++++++++-
+> > >   hw/arm/xlnx-zynqmp.c         | 11 ++++++++++-
+> > >   include/hw/arm/xlnx-versal.h |  1 +
+> > >   include/hw/arm/xlnx-zynqmp.h |  1 +
+> > >   4 files changed, 23 insertions(+), 2 deletions(-)
+> >
+> > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> >
+> >
 
