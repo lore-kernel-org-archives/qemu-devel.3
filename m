@@ -4,54 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31E1ACEBF81
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 08:36:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2A14CEBF89
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 08:53:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1su6Qu-0007Qq-8a; Fri, 27 Sep 2024 04:34:36 -0400
+	id 1su6i9-0005R1-B3; Fri, 27 Sep 2024 04:52:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1su6QU-00070L-Cb; Fri, 27 Sep 2024 04:34:10 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1su6QR-0003ff-Tb; Fri, 27 Sep 2024 04:34:09 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Fri, 27 Sep
- 2024 16:33:52 +0800
-Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Fri, 27 Sep 2024 16:33:52 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>, Laurent Vivier
- <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
- BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <yunlin.tang@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
- <clg@redhat.com>
-Subject: [PATCH v5 3/7] hw/gpio/aspeed: Support different memory region ops
-Date: Fri, 27 Sep 2024 16:33:47 +0800
-Message-ID: <20240927083351.2637798-4-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240927083351.2637798-1-jamin_lin@aspeedtech.com>
-References: <20240927083351.2637798-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>) id 1su6i4-0005J6-Li
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 04:52:20 -0400
+Received: from mail-m16.yeah.net ([220.197.32.17])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <chao.liu@yeah.net>) id 1su6i0-0005oR-5f
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 04:52:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
+ s=s110527; h=From:Subject:Date:Message-ID:MIME-Version; bh=cH1uO
+ /jZ4N875H+lKdc9i+XyQ72WmTPa9RRpilxjzNI=; b=XFXyDhBIW0ZwAODcvxhWL
+ HEgIYbcSB6r/C+X8ful4F6bWoSOnbre5GYneJTwLg/bKT+6gpYsZdHpUp5/4ZlaJ
+ tIc9xaw6e5xjZn4A9WA0Yg90OGfRfTbj+8Q4EcGnROkNvchnutaC28UnXidINOjY
+ BVmpAT40XLJlJr8l8U1cj8=
+Received: from localhost.localdomain (unknown [])
+ by gzsmtp1 (Coremail) with SMTP id Mc8vCgD31KoOcvZmhEQ4AQ--.49283S2;
+ Fri, 27 Sep 2024 16:51:26 +0800 (CST)
+From: Chao Liu <chao.liu@yeah.net>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, bin.meng@windriver.com, edgar.iglesias@gmail.com,
+ alistair@alistair23.me, Chao Liu <chao.liu@yeah.net>
+Subject: [PATCH v2 0/2] Drop ignore_memory_transaction_failures for xilink_zynq
+Date: Fri, 27 Sep 2024 16:51:17 +0800
+Message-ID: <cover.1727425255.git.chao.liu@yeah.net>
+X-Mailer: git-send-email 2.46.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-CM-TRANSID: Mc8vCgD31KoOcvZmhEQ4AQ--.49283S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7Cw4DAr13tFy3CrWrAr17GFg_yoW8try5pr
+ 4rKa15KryrGrn7XrZ3Wan7GF4Fqwn3Aan5Gr47A34agFZxCr9ay395KayYq347WFnFqF1f
+ Xr1jva1F9w17taDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jXku7UUUUU=
+X-Originating-IP: [117.173.247.123]
+X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiCxhnKGb2K8rKhAAAsj
+Received-SPF: pass client-ip=220.197.32.17; envelope-from=chao.liu@yeah.net;
+ helo=mail-m16.yeah.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,101 +66,70 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It set "aspeed_gpio_ops" struct which containing read and write callbacks
-to be used when I/O is performed on the GPIO region.
+Hi, thank you for your prompt reply, it's a great encouragement to me!
 
-Besides, in the previous design of ASPEED SOCs, one register is used for
-setting one function for 32 GPIO pins.
-ex: GPIO000 is used for setting data value for GPIO A, B, C and D in AST2600.
-ex: GPIO004 is used for setting direction for GPIO A, B, C and D in AST2600.
+Based on your review suggestions, I have improved the v1 patch.
 
-However, the register set have a significant change in AST2700.
-Each GPIO pin has their own control register. In other words, users are able to
-set one GPIO pin’s direction, interrupt enable, input mask and so on
-in one register. The aspeed_gpio_read/aspeed_gpio_write callback functions
-are not compatible AST2700.
+By using create_unimplemented_device() during the initialization phase,
+I added a "znyq.umip" device early on, which covers the 32-bit address space
+of GPA. This can better serve as a replacement for the effect of the
+ignore_memory_transaction_failures flag.
 
-Introduce a new "const MemoryRegionOps *" attribute in AspeedGPIOClass and
-use it in aspeed_gpio_realize function.
+Since create_unimplemented_device() sets the priority of the
+memory region (mr) to -100, normally created devices will override the address
+segments corresponding to the unimplemented devices.
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- hw/gpio/aspeed_gpio.c         | 7 ++++++-
- include/hw/gpio/aspeed_gpio.h | 1 +
- 2 files changed, 7 insertions(+), 1 deletion(-)
+Even if our test set is not sufficiently comprehensive, we can create an
+unimp_device for the maximum address space allowed by the board. This prevents
+the guest system from triggering unexpected exceptions when accessing
+unimplemented devices or regions.
 
-diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
-index 564459ad4f..8725606aec 100644
---- a/hw/gpio/aspeed_gpio.c
-+++ b/hw/gpio/aspeed_gpio.c
-@@ -1046,7 +1046,7 @@ static void aspeed_gpio_realize(DeviceState *dev, Error **errp)
-         }
-     }
- 
--    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_gpio_ops, s,
-+    memory_region_init_io(&s->iomem, OBJECT(s), agc->reg_ops, s,
-                           TYPE_ASPEED_GPIO, agc->mem_size);
- 
-     sysbus_init_mmio(sbd, &s->iomem);
-@@ -1131,6 +1131,7 @@ static void aspeed_gpio_ast2400_class_init(ObjectClass *klass, void *data)
-     agc->reg_table = aspeed_3_3v_gpios;
-     agc->reg_table_count = GPIO_3_3V_REG_ARRAY_SIZE;
-     agc->mem_size = 0x1000;
-+    agc->reg_ops = &aspeed_gpio_ops;
- }
- 
- static void aspeed_gpio_2500_class_init(ObjectClass *klass, void *data)
-@@ -1143,6 +1144,7 @@ static void aspeed_gpio_2500_class_init(ObjectClass *klass, void *data)
-     agc->reg_table = aspeed_3_3v_gpios;
-     agc->reg_table_count = GPIO_3_3V_REG_ARRAY_SIZE;
-     agc->mem_size = 0x1000;
-+    agc->reg_ops = &aspeed_gpio_ops;
- }
- 
- static void aspeed_gpio_ast2600_3_3v_class_init(ObjectClass *klass, void *data)
-@@ -1155,6 +1157,7 @@ static void aspeed_gpio_ast2600_3_3v_class_init(ObjectClass *klass, void *data)
-     agc->reg_table = aspeed_3_3v_gpios;
-     agc->reg_table_count = GPIO_3_3V_REG_ARRAY_SIZE;
-     agc->mem_size = 0x800;
-+    agc->reg_ops = &aspeed_gpio_ops;
- }
- 
- static void aspeed_gpio_ast2600_1_8v_class_init(ObjectClass *klass, void *data)
-@@ -1167,6 +1170,7 @@ static void aspeed_gpio_ast2600_1_8v_class_init(ObjectClass *klass, void *data)
-     agc->reg_table = aspeed_1_8v_gpios;
-     agc->reg_table_count = GPIO_1_8V_REG_ARRAY_SIZE;
-     agc->mem_size = 0x800;
-+    agc->reg_ops = &aspeed_gpio_ops;
- }
- 
- static void aspeed_gpio_1030_class_init(ObjectClass *klass, void *data)
-@@ -1179,6 +1183,7 @@ static void aspeed_gpio_1030_class_init(ObjectClass *klass, void *data)
-     agc->reg_table = aspeed_3_3v_gpios;
-     agc->reg_table_count = GPIO_3_3V_REG_ARRAY_SIZE;
-     agc->mem_size = 0x1000;
-+    agc->reg_ops = &aspeed_gpio_ops;
- }
- 
- static const TypeInfo aspeed_gpio_info = {
-diff --git a/include/hw/gpio/aspeed_gpio.h b/include/hw/gpio/aspeed_gpio.h
-index 8cd2ff5496..e1e6c54333 100644
---- a/include/hw/gpio/aspeed_gpio.h
-+++ b/include/hw/gpio/aspeed_gpio.h
-@@ -77,6 +77,7 @@ struct AspeedGPIOClass {
-     const AspeedGPIOReg *reg_table;
-     unsigned reg_table_count;
-     uint64_t mem_size;
-+    const MemoryRegionOps *reg_ops;
- };
- 
- struct AspeedGPIOState {
+Additionally, I still use create_unimplemented_device() for other
+unimplemented devices. This makes it easier to debug when these devices
+are added later.
+
+Finally, here are my testing steps:
+
+Step 1, Referring to the Xilinx Wiki,
+I compiled a Linux kernel binary image for convenience in testing.
+You can directly obtain it via:
+
+git clone https://github.com/zevorn/QEMU_CPUFreq_Zynq.git
+
+Step 2, Use the following command to run the QEMU:
+
+./qemu/build/qemu-system-arm -M xilinx-zynq-a9 \
+-serial /dev/null \
+-serial mon:stdio \
+-display none \
+-kernel QEMU_CPUFreq_Zynq/Prebuilt_functional/kernel_standard_linux/uImage \
+-dtb QEMU_CPUFreq_Zynq/Prebuilt_functional/my_devicetree.dtb \
+--initrd QEMU_CPUFreq_Zynq/Prebuilt_functional/umy_ramdisk.image.gz
+
+If there are no issues during execution and it boots successfully
+into the terminal, for example:
+
+...
+
+PetaLinux 2016.4 zedboard-zynq7 /dev/ttyPS0
+zedboard-zynq7 login: 
+root
+root@zedboard-zynq7:~#
+
+
+Chao Liu (2):
+  xilink_zynq: Add various missing unimplemented devices
+  xilink-zynq-devcfg: Fix up for memory address range size not set
+    correctly
+
+ hw/arm/xilinx_zynq.c      | 46 ++++++++++++++++++++++++++++++++++++++-
+ hw/dma/xlnx-zynq-devcfg.c |  2 +-
+ 2 files changed, 46 insertions(+), 2 deletions(-)
+
 -- 
-2.34.1
+2.46.1
 
 
