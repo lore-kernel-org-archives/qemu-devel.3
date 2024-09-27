@@ -4,100 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE6C1CEBF63
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 00:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D42D0CEBF63
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 00:54:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stzD0-00036N-DS; Thu, 26 Sep 2024 20:51:46 -0400
+	id 1stzFB-0000nA-Cu; Thu, 26 Sep 2024 20:54:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1stzCy-0002z3-Jq; Thu, 26 Sep 2024 20:51:44 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1stzF9-0000Wk-Am
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 20:53:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1stzCv-0007Hc-Q1; Thu, 26 Sep 2024 20:51:44 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48QG1riK018857;
- Fri, 27 Sep 2024 00:51:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=pjsOy5v4RY7Kx
- ugvGDD1gypGyUBMIafK8bhPD7Jiecc=; b=h2zjXPGB4ef0gBelAQmhDN++5Ue+S
- 8VszAoQJM1pZNv1yYf6MRIX6QN9IZc962/Cqa/n720U5qg9GCGj0QHR4ffFhWA6P
- 5DLCjJxxU374LFA+dczGaAJjRnfLeMui82XIo4qAXfBQSoTketkCkkHAAb5oz704
- P0K0TOBFDj4jIrWZxcfu2C7lJkn6bdmoVZoRWSkIqNcgAuulE1dn+ide7rO3OHAt
- t2IJ47ThnvqLv9ooVYHXvgk+aE8HyN3/HzwLKK7+Tk+MEsmt0Asd6NaeJn/JZ5li
- mQNOmoAAUSW3FNsYrq9pQWOv79XIlRrzmXzt2aiLcd+rqnHOtZ8QKbJwg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41skjs16ce-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Sep 2024 00:51:40 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48R0pdhP008879;
- Fri, 27 Sep 2024 00:51:40 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41skjs16cc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Sep 2024 00:51:39 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48R0WxOM000636;
- Fri, 27 Sep 2024 00:51:39 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 41t8fv2c4x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Sep 2024 00:51:39 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48R0pcsf41550082
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 27 Sep 2024 00:51:38 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 70F6A58052;
- Fri, 27 Sep 2024 00:51:38 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EF82358056;
- Fri, 27 Sep 2024 00:51:37 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.61.154.26])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 27 Sep 2024 00:51:37 +0000 (GMT)
-From: jrossi@linux.ibm.com
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
-Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
-Subject: [PATCH 12/18] pc-bios/s390-ccw: Enable failed IPL to return after
- error
-Date: Thu, 26 Sep 2024 20:51:11 -0400
-Message-ID: <20240927005117.1679506-13-jrossi@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20240927005117.1679506-1-jrossi@linux.ibm.com>
-References: <20240927005117.1679506-1-jrossi@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1stzF6-0007RL-D5
+ for qemu-devel@nongnu.org; Thu, 26 Sep 2024 20:53:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727398434;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8KFM1bycWDdJ3Vk9tr5hq5/j4A2n3wGdK5MGT+ogX7c=;
+ b=SCNBcBgR8kwwnbeSU2/JhTDVWhGQn9A0ksItABXByaRgngLj1RT0NoBMuYI92QYQNeVWvY
+ 8UePgDhroEePE635Rl2do5bcdMCOh3eJIBUQGf8dzyhWy7H3lq+GsS/D1c66RCWFwjiK1f
+ pZ1N6ClJquEqsvJHsuQ1133bpcjl2CY=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-44-ZpZtjjYsNSm1n1WmJ9DEOA-1; Thu, 26 Sep 2024 20:53:51 -0400
+X-MC-Unique: ZpZtjjYsNSm1n1WmJ9DEOA-1
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2e0a022ea3aso1056183a91.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Sep 2024 17:53:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727398429; x=1728003229;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8KFM1bycWDdJ3Vk9tr5hq5/j4A2n3wGdK5MGT+ogX7c=;
+ b=TvmoV3COY4/6wuFVDD0jsx/d61bP/WjdkmzD84bdg9trJ+PESo8H4s8j/WEQt7mZ5b
+ 417ff/WDKwkQGH1yasEq+YHcHGs2QQZWD38O9DrqFqyBWnenUHPf/x+aflME9A+6Mekx
+ Q4IjwRxC7X+cRPW1fJ+irORBt6rhw7X6Doxm/5lhN7VZOrMYTRse/0AUOtpvTV044Ol8
+ yEw8pDyQi2TVwO3/j0+jirLT9QFKUftDEuKvyIGboAbxEs2+i3trO9fj8LRVj0JKjsp+
+ Fe9T5LY/5DXHea8SW9b8i7Nj/yzO9+aTV8mHvUmHjo9WoWUMKWIPvZE3AY5GcFucs0CS
+ U3FA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWqK/mwv5KMtu3X8pO1bjs9qtNGFTt8MeEl8MRavGUTu/Tl8oMeUgk9H5GvogikfAlqG+ilj/sI8cpb@nongnu.org
+X-Gm-Message-State: AOJu0YwPaxJuPeuTGtg0AYCQxrU/opN9prGL/q1I4oockiC2EMPegysJ
+ M+2Yj0GbQ88CDaHG7R2jrVTdBi21xvznudbQFA2dDV/mVC3yAkjgSacrtmDjubl5Z9ZSTMgE1zq
+ kQN1Em4MC877Fvw8SsyVNSnqorPLC9Fbkr4D+2q/W05vBnlK/+HZa
+X-Received: by 2002:a17:90a:ea0f:b0:2e0:9d79:4a02 with SMTP id
+ 98e67ed59e1d1-2e0b8b1cd40mr1892750a91.20.1727398429390; 
+ Thu, 26 Sep 2024 17:53:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEIb4dZpZ/r2h9EM6oapUA+GIFliE1yXZ61jYuZJNm7qkziNKC3KKCl7O7ZLQlOtB6x4hclrw==
+X-Received: by 2002:a17:90a:ea0f:b0:2e0:9d79:4a02 with SMTP id
+ 98e67ed59e1d1-2e0b8b1cd40mr1892728a91.20.1727398428983; 
+ Thu, 26 Sep 2024 17:53:48 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e06e1ae753sm4206814a91.14.2024.09.26.17.53.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 26 Sep 2024 17:53:48 -0700 (PDT)
+Date: Thu, 26 Sep 2024 20:53:44 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 08/17] migration: Add load_finish handler and
+ associated functions
+Message-ID: <ZvYCGFnI_68B_w3h@x1n>
+References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
+ <1a7599896decdbae61cee385739dc0badc9b4364.1724701542.git.maciej.szmigiero@oracle.com>
+ <Zt9UjvvbeUZQlGNY@x1n>
+ <d245c8b6-b765-42e1-a5ec-bdb46494cec4@maciej.szmigiero.name>
+ <ZuyTjQJujZo6tw9p@x1n>
+ <bbed8165-de5c-4ebe-a6cc-ff33f9ea363a@maciej.szmigiero.name>
+ <Zu2mvrKOvmD1WtvD@x1n>
+ <848ba96d-c3ca-4fbb-9ec4-92023230c026@maciej.szmigiero.name>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: kHsGbwZt-4qny2ymLFY0ZPeOlcWyO_hN
-X-Proofpoint-ORIG-GUID: MurYYiWf4cjOhtGDv7_RRoIMsXziK63E
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-26_06,2024-09-26_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 priorityscore=1501
- spamscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0
- clxscore=1015 malwarescore=0 mlxlogscore=999 bulkscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
- definitions=main-2409270002
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <848ba96d-c3ca-4fbb-9ec4-92023230c026@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,441 +114,269 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+On Fri, Sep 27, 2024 at 12:34:31AM +0200, Maciej S. Szmigiero wrote:
+> On 20.09.2024 18:45, Peter Xu wrote:
+> > On Fri, Sep 20, 2024 at 05:23:08PM +0200, Maciej S. Szmigiero wrote:
+> > > On 19.09.2024 23:11, Peter Xu wrote:
+> > > > On Thu, Sep 19, 2024 at 09:49:10PM +0200, Maciej S. Szmigiero wrote:
+> > > > > On 9.09.2024 22:03, Peter Xu wrote:
+> > > > > > On Tue, Aug 27, 2024 at 07:54:27PM +0200, Maciej S. Szmigiero wrote:
+> > > > > > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> > > > > > > 
+> > > > > > > load_finish SaveVMHandler allows migration code to poll whether
+> > > > > > > a device-specific asynchronous device state loading operation had finished.
+> > > > > > > 
+> > > > > > > In order to avoid calling this handler needlessly the device is supposed
+> > > > > > > to notify the migration code of its possible readiness via a call to
+> > > > > > > qemu_loadvm_load_finish_ready_broadcast() while holding
+> > > > > > > qemu_loadvm_load_finish_ready_lock.
+> > > > > > > 
+> > > > > > > Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+> > > > > > > ---
+> > > > > > >     include/migration/register.h | 21 +++++++++++++++
+> > > > > > >     migration/migration.c        |  6 +++++
+> > > > > > >     migration/migration.h        |  3 +++
+> > > > > > >     migration/savevm.c           | 52 ++++++++++++++++++++++++++++++++++++
+> > > > > > >     migration/savevm.h           |  4 +++
+> > > > > > >     5 files changed, 86 insertions(+)
+> > > > > > > 
+> > > > > > > diff --git a/include/migration/register.h b/include/migration/register.h
+> > > > > > > index 4a578f140713..44d8cf5192ae 100644
+> > > > > > > --- a/include/migration/register.h
+> > > > > > > +++ b/include/migration/register.h
+> > > > > > > @@ -278,6 +278,27 @@ typedef struct SaveVMHandlers {
+> > > > > > >         int (*load_state_buffer)(void *opaque, char *data, size_t data_size,
+> > > > > > >                                  Error **errp);
+> > > > > > > +    /**
+> > > > > > > +     * @load_finish
+> > > > > > > +     *
+> > > > > > > +     * Poll whether all asynchronous device state loading had finished.
+> > > > > > > +     * Not called on the load failure path.
+> > > > > > > +     *
+> > > > > > > +     * Called while holding the qemu_loadvm_load_finish_ready_lock.
+> > > > > > > +     *
+> > > > > > > +     * If this method signals "not ready" then it might not be called
+> > > > > > > +     * again until qemu_loadvm_load_finish_ready_broadcast() is invoked
+> > > > > > > +     * while holding qemu_loadvm_load_finish_ready_lock.
+> > > > > > 
+> > > > > > [1]
+> > > > > > 
+> > > > > > > +     *
+> > > > > > > +     * @opaque: data pointer passed to register_savevm_live()
+> > > > > > > +     * @is_finished: whether the loading had finished (output parameter)
+> > > > > > > +     * @errp: pointer to Error*, to store an error if it happens.
+> > > > > > > +     *
+> > > > > > > +     * Returns zero to indicate success and negative for error
+> > > > > > > +     * It's not an error that the loading still hasn't finished.
+> > > > > > > +     */
+> > > > > > > +    int (*load_finish)(void *opaque, bool *is_finished, Error **errp);
+> > > > > > 
+> > > > > > The load_finish() semantics is a bit weird, especially above [1] on "only
+> > > > > > allowed to be called once if ..." and also on the locks.
+> > > > > 
+> > > > > The point of this remark is that a driver needs to call
+> > > > > qemu_loadvm_load_finish_ready_broadcast() if it wants for the migration
+> > > > > core to call its load_finish handler again.
+> > > > > 
+> > > > > > It looks to me vfio_load_finish() also does the final load of the device.
+> > > > > > 
+> > > > > > I wonder whether that final load can be done in the threads,
+> > > > > 
+> > > > > Here, the problem is that current VFIO VMState has to be loaded from the main
+> > > > > migration thread as it internally calls QEMU core address space modification
+> > > > > methods which explode if called from another thread(s).
+> > > > 
+> > > > Ahh, I see.  I'm trying to make dest qemu loadvm in a thread too and yield
+> > > > BQL if possible, when that's ready then in your case here IIUC you can
+> > > > simply take BQL in whichever thread that loads it.. but yeah it's not ready
+> > > > at least..
+> > > 
+> > > Yeah, long term we might want to work on making these QEMU core address space
+> > > modification methods somehow callable from multiple threads but that's
+> > > definitely not something for the initial patch set.
+> > > 
+> > > > Would it be possible vfio_save_complete_precopy_async_thread_config_state()
+> > > > be done in VFIO's save_live_complete_precopy() through the main channel
+> > > > somehow?  IOW, does it rely on iterative data to be fetched first from
+> > > > kernel, or completely separate states?
+> > > 
+> > > The device state data needs to be fully loaded first before "activating"
+> > > the device by loading its config state.
+> > > 
+> > > > And just curious: how large is it
+> > > > normally (and I suppose this decides whether it's applicable to be sent via
+> > > > the main channel at all..)?
+> > > 
+> > > Config data is *much* smaller than device state data - as far as I remember
+> > > it was on order of kilobytes.
+> > > 
+> > > > > 
+> > > > > > then after
+> > > > > > everything loaded the device post a semaphore telling the main thread to
+> > > > > > continue.  See e.g.:
+> > > > > > 
+> > > > > >        if (migrate_switchover_ack()) {
+> > > > > >            qemu_loadvm_state_switchover_ack_needed(mis);
+> > > > > >        }
+> > > > > > 
+> > > > > > IIUC, VFIO can register load_complete_ack similarly so it only sem_post()
+> > > > > > when all things are loaded?  We can then get rid of this slightly awkward
+> > > > > > interface.  I had a feeling that things can be simplified (e.g., if the
+> > > > > > thread will take care of loading the final vmstate then the mutex is also
+> > > > > > not needed? etc.).
+> > > > > 
+> > > > > With just a single call to switchover_ack_needed per VFIO device it would
+> > > > > need to do a blocking wait for the device buffers and config state load
+> > > > > to finish, therefore blocking other VFIO devices from potentially loading
+> > > > > their config state if they are ready to begin this operation earlier.
+> > > > 
+> > > > I am not sure I get you here, loading VFIO device states (I mean, the
+> > > > non-iterable part) will need to be done sequentially IIUC due to what you
+> > > > said and should rely on BQL, so I don't know how that could happen
+> > > > concurrently for now.  But I think indeed BQL is a problem.
+> > > Consider that we have two VFIO devices (A and B), with the following order
+> > > of switchover_ack_needed handler calls for them: first A get this call,
+> > > once the call for A finishes then B gets this call.
+> > > 
+> > > Now consider what happens if B had loaded all its buffers (in the loading
+> > > thread) and it is ready for its config load before A finished loading its
+> > > buffers.
+> > > 
+> > > B has to wait idle in this situation (even though it could have been already
+> > > loading its config) since the switchover_ack_needed handler for A won't
+> > > return until A is fully done.
+> > 
+> > This sounds like a performance concern, and I wonder how much this impacts
+> > the real workload (that you run a test and measure, with/without such
+> > concurrency) when we can save two devices in parallel anyway; I would
+> > expect the real diff is small due to the fact I mentioned that we save >1
+> > VFIO devices concurrently via multifd.
+> > 
+> > Do you think we can start with a simpler approach?
+> 
+> I don't think introducing a performance/scalability issue like that is
+> a good thing, especially that we already have a design that avoids it.
+> 
+> Unfortunately, my current setup does not allow live migrating VMs with
+> more than 4 VFs so I can't benchmark that.
 
-Remove panic-on-error from IPL functions such that a return code is propagated
-back to the main IPL calling function (rather than terminating immediately),
-which facilitates possible error recovery in the future.
+/me wonders why benchmarking it requires more than 4 VFs.
 
-A select few panics remain, which indicate fatal non-devices errors that must
-result in termination.
+> 
+> But I almost certain that with more VFs the situation with devices being
+> ready out-of-order will get even more likely.
 
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+If the config space is small, why loading it in sequence would be a
+problem?
 
----
- pc-bios/s390-ccw/s390-ccw.h      |  2 +-
- pc-bios/s390-ccw/virtio.h        |  2 +-
- pc-bios/s390-ccw/bootmap.c       | 53 ++++++++++++++++++--------
- pc-bios/s390-ccw/cio.c           |  3 +-
- pc-bios/s390-ccw/jump2ipl.c      |  5 ++-
- pc-bios/s390-ccw/main.c          | 35 +++++++++--------
- pc-bios/s390-ccw/virtio-blkdev.c |  8 ++--
- pc-bios/s390-ccw/virtio.c        | 65 +++++++++++++++++++++-----------
- 8 files changed, 113 insertions(+), 60 deletions(-)
+Have you measured how much time it needs to load one VF's config space that
+you're using?  I suppose that's vfio_load_device_config_state() alone?
 
-diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-index 8dac070257..7e49da46a5 100644
---- a/pc-bios/s390-ccw/s390-ccw.h
-+++ b/pc-bios/s390-ccw/s390-ccw.h
-@@ -78,7 +78,7 @@ void zipl_load(void);
- 
- /* jump2ipl.c */
- void write_reset_psw(uint64_t psw);
--void jump_to_IPL_code(uint64_t address);
-+int jump_to_IPL_code(uint64_t address);
- void jump_to_low_kernel(void);
- 
- /* menu.c */
-diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
-index 6f9a558ff5..9faf3986b1 100644
---- a/pc-bios/s390-ccw/virtio.h
-+++ b/pc-bios/s390-ccw/virtio.h
-@@ -274,7 +274,7 @@ void vring_send_buf(VRing *vr, void *p, int len, int flags);
- int vr_poll(VRing *vr);
- int vring_wait_reply(void);
- int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd);
--void virtio_setup_ccw(VDev *vdev);
-+int virtio_setup_ccw(VDev *vdev);
- 
- int virtio_net_init(void *mac_addr);
- 
-diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-index 9459e19ffb..6e1f47821e 100644
---- a/pc-bios/s390-ccw/bootmap.c
-+++ b/pc-bios/s390-ccw/bootmap.c
-@@ -62,15 +62,34 @@ static void *s2_prev_blk = _s2;
- static void *s2_cur_blk = _s2 + MAX_SECTOR_SIZE;
- static void *s2_next_blk = _s2 + MAX_SECTOR_SIZE * 2;
- 
--static inline void verify_boot_info(BootInfo *bip)
-+static inline int verify_boot_info(BootInfo *bip)
- {
--    IPL_assert(magic_match(bip->magic, ZIPL_MAGIC), "No zIPL sig in BootInfo");
--    IPL_assert(bip->version == BOOT_INFO_VERSION, "Wrong zIPL version");
--    IPL_assert(bip->bp_type == BOOT_INFO_BP_TYPE_IPL, "DASD is not for IPL");
--    IPL_assert(bip->dev_type == BOOT_INFO_DEV_TYPE_ECKD, "DASD is not ECKD");
--    IPL_assert(bip->flags == BOOT_INFO_FLAGS_ARCH, "Not for this arch");
--    IPL_assert(block_size_ok(bip->bp.ipl.bm_ptr.eckd.bptr.size),
--               "Bad block size in zIPL section of the 1st record.");
-+    if (!magic_match(bip->magic, ZIPL_MAGIC)) {
-+        puts("No zIPL sig in BootInfo");
-+        return -EINVAL;
-+    }
-+    if (bip->version != BOOT_INFO_VERSION) {
-+        puts("Wrong zIPL version");
-+        return -EINVAL;
-+    }
-+    if (bip->bp_type != BOOT_INFO_BP_TYPE_IPL) {
-+        puts("DASD is not for IPL");
-+        return -ENODEV;
-+    }
-+    if (bip->dev_type != BOOT_INFO_DEV_TYPE_ECKD) {
-+        puts("DASD is not ECKD");
-+        return -ENODEV;
-+    }
-+    if (bip->flags != BOOT_INFO_FLAGS_ARCH) {
-+        puts("Not for this arch");
-+        return -EINVAL;
-+    }
-+    if (!block_size_ok(bip->bp.ipl.bm_ptr.eckd.bptr.size)) {
-+        puts("Bad block size in zIPL section of 1st record");
-+        return -EINVAL;
-+    }
-+
-+    return 0;
- }
- 
- static void eckd_format_chs(ExtEckdBlockPtr *ptr,  bool ldipl,
-@@ -368,8 +387,8 @@ static int run_eckd_boot_script(block_number_t bmt_block_nr,
-         puts("Unknown script entry type");
-         return -EINVAL;
-     }
--    write_reset_psw(bms->entry[i].address.load_address); /* no return */
--    jump_to_IPL_code(0); /* no return */
-+    write_reset_psw(bms->entry[i].address.load_address);
-+    jump_to_IPL_code(0);
-     return 1;
- }
- 
-@@ -1054,16 +1073,19 @@ void zipl_load(void)
- 
-     if (vdev->is_cdrom) {
-         ipl_iso_el_torito();
--        panic("\n! Cannot IPL this ISO image !\n");
-+        puts("Failed to IPL this ISO image!");
-+        return;
-     }
- 
-     if (virtio_get_device_type() == VIRTIO_ID_NET) {
-         netmain();
--        panic("\n! Cannot IPL from this network !\n");
-+        puts("Failed to IPL from this network!");
-+        return;
-     }
- 
-     if (ipl_scsi()) {
--        panic("\n! Cannot IPL this device !\n");
-+        puts("Failed to IPL from this device!");
-+        return;
-     }
- 
-     switch (virtio_get_device_type()) {
-@@ -1074,8 +1096,9 @@ void zipl_load(void)
-         zipl_load_vscsi();
-         break;
-     default:
--        panic("\n! Unknown IPL device type !\n");
-+        puts("Unknown IPL device type!");
-+        return;
-     }
- 
--    puts("zIPL load failed.");
-+    puts("zIPL load failed!");
- }
-diff --git a/pc-bios/s390-ccw/cio.c b/pc-bios/s390-ccw/cio.c
-index 758e74965e..35b08ba7c1 100644
---- a/pc-bios/s390-ccw/cio.c
-+++ b/pc-bios/s390-ccw/cio.c
-@@ -59,7 +59,8 @@ uint16_t cu_type(SubChannelId schid)
-     };
- 
-     if (do_cio(schid, CU_TYPE_UNKNOWN, ptr2u32(&sense_id_ccw), CCW_FMT1)) {
--        panic("Failed to run SenseID CCw\n");
-+        puts("Failed to run SenseID CCW");
-+        return CU_TYPE_UNKNOWN;
-     }
- 
-     return sense_data.cu_type;
-diff --git a/pc-bios/s390-ccw/jump2ipl.c b/pc-bios/s390-ccw/jump2ipl.c
-index 80b7f6a1f3..d45aec6694 100644
---- a/pc-bios/s390-ccw/jump2ipl.c
-+++ b/pc-bios/s390-ccw/jump2ipl.c
-@@ -33,7 +33,7 @@ static void jump_to_IPL_addr(void)
-     /* should not return */
- }
- 
--void jump_to_IPL_code(uint64_t address)
-+int jump_to_IPL_code(uint64_t address)
- {
-     /* store the subsystem information _after_ the bootmap was loaded */
-     write_subsystem_identification();
-@@ -68,7 +68,8 @@ void jump_to_IPL_code(uint64_t address)
-     asm volatile("lghi %%r1,1\n\t"
-                  "diag %%r1,%%r1,0x308\n\t"
-                  : : : "1", "memory");
--    panic("\n! IPL returns !\n");
-+    puts("IPL code jump failed");
-+    return 1;
- }
- 
- void jump_to_low_kernel(void)
-diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index 2345432abb..f818bd7210 100644
---- a/pc-bios/s390-ccw/main.c
-+++ b/pc-bios/s390-ccw/main.c
-@@ -77,6 +77,9 @@ static int is_dev_possibly_bootable(int dev_no, int sch_no)
- 
-     enable_subchannel(blk_schid);
-     cutype = cu_type(blk_schid);
-+    if (cutype == CU_TYPE_UNKNOWN) {
-+        return -EIO;
-+    }
- 
-     /*
-      * Note: we always have to run virtio_is_supported() here to make
-@@ -194,10 +197,10 @@ static void boot_setup(void)
-     have_iplb = store_iplb(&iplb);
- }
- 
--static void find_boot_device(void)
-+static bool find_boot_device(void)
- {
-     VDev *vdev = virtio_get_device();
--    bool found;
-+    bool found = false;
- 
-     switch (iplb.pbt) {
-     case S390_IPL_TYPE_CCW:
-@@ -215,10 +218,10 @@ static void find_boot_device(void)
-         found = find_subch(iplb.scsi.devno);
-         break;
-     default:
--        panic("List-directed IPL not supported yet!\n");
-+        puts("Invalid IPLB");
-     }
- 
--    IPL_assert(found, "Boot device not found\n");
-+    return found;
- }
- 
- static int virtio_setup(void)
-@@ -244,11 +247,13 @@ static int virtio_setup(void)
-         ret = virtio_scsi_setup_device(blk_schid);
-         break;
-     default:
--        panic("\n! No IPL device available !\n");
-+        puts("\n! No IPL device available !\n");
-+        return 1;
-     }
- 
--    if (!ret) {
--        IPL_assert(virtio_ipl_disk_is_valid(), "No valid IPL device detected");
-+    if (!ret && !virtio_ipl_disk_is_valid()) {
-+        puts("No valid IPL device detected");
-+        return -ENODEV;
-     }
- 
-     return ret;
-@@ -259,16 +264,16 @@ static void ipl_boot_device(void)
-     switch (cutype) {
-     case CU_TYPE_DASD_3990:
-     case CU_TYPE_DASD_2107:
--        dasd_ipl(blk_schid, cutype); /* no return */
-+        dasd_ipl(blk_schid, cutype);
-         break;
-     case CU_TYPE_VIRTIO:
--        if (virtio_setup() == 0) {
--            zipl_load();             /* Only returns in case of errors */
-+        if (virtio_setup()) {
-+            return;    /* Only returns in case of errors */
-         }
-+        zipl_load();
-         break;
-     default:
-         printf("Attempting to boot from unexpected device type 0x%X", cutype);
--        panic("\nBoot failed.\n");
-     }
- }
- 
-@@ -288,7 +293,8 @@ static void probe_boot_device(void)
-                 break;
-             }
-             if (ret == true) {
--                ipl_boot_device();      /* Only returns if unsuccessful */
-+                ipl_boot_device(); /* Only returns if unsuccessful */
-+                return;
-             }
-         }
-     }
-@@ -301,12 +307,11 @@ void main(void)
-     sclp_setup();
-     css_setup();
-     boot_setup();
--    if (have_iplb) {
--        find_boot_device();
-+    if (have_iplb && find_boot_device()) {
-         ipl_boot_device();
-     } else {
-         probe_boot_device();
-     }
- 
--    panic("Failed to load OS from hard disk\n");
-+    panic("Failed to IPL. Halting...");
- }
-diff --git a/pc-bios/s390-ccw/virtio-blkdev.c b/pc-bios/s390-ccw/virtio-blkdev.c
-index 2666326801..5ef273bdc0 100644
---- a/pc-bios/s390-ccw/virtio-blkdev.c
-+++ b/pc-bios/s390-ccw/virtio-blkdev.c
-@@ -59,8 +59,8 @@ int virtio_read_many(unsigned long sector, void *load_addr, int sec_num)
-     case VIRTIO_ID_SCSI:
-         return virtio_scsi_read_many(vdev, sector, load_addr, sec_num);
-     }
--    panic("\n! No readable IPL device !\n");
--    return -1;
-+
-+    return 1;
- }
- 
- unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list2,
-@@ -73,13 +73,13 @@ unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list
-     unsigned long addr = (unsigned long)load_addr;
- 
-     if (sec_len != virtio_get_block_size()) {
--        return -1;
-+        return 0;
-     }
- 
-     printf(".");
-     status = virtio_read_many(sec, (void *)addr, sec_num);
-     if (status) {
--        panic("I/O Error");
-+        return 0;
-     }
-     addr += sec_num * virtio_get_block_size();
- 
-diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
-index 8c6b0a8a92..e3fdb95b3c 100644
---- a/pc-bios/s390-ccw/virtio.c
-+++ b/pc-bios/s390-ccw/virtio.c
-@@ -217,16 +217,19 @@ int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd)
-     return 0;
- }
- 
--void virtio_setup_ccw(VDev *vdev)
-+int virtio_setup_ccw(VDev *vdev)
- {
--    int i, rc, cfg_size = 0;
-+    int i, cfg_size = 0;
-     uint8_t status;
-     struct VirtioFeatureDesc {
-         uint32_t features;
-         uint8_t index;
-     } __attribute__((packed)) feats;
- 
--    IPL_assert(virtio_is_supported(vdev->schid), "PE");
-+    if (!virtio_is_supported(vdev->schid)) {
-+        puts("PE");
-+        return -ENODEV;
-+    }
-     /* device ID has been established now */
- 
-     vdev->config.blk.blk_size = 0; /* mark "illegal" - setup started... */
-@@ -235,8 +238,10 @@ void virtio_setup_ccw(VDev *vdev)
-     run_ccw(vdev, CCW_CMD_VDEV_RESET, NULL, 0, false);
- 
-     status = VIRTIO_CONFIG_S_ACKNOWLEDGE;
--    rc = run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false);
--    IPL_assert(rc == 0, "Could not write ACKNOWLEDGE status to host");
-+    if (run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false)) {
-+        puts("Could not write ACKNOWLEDGE status to host");
-+        return -EIO;
-+    }
- 
-     switch (vdev->senseid.cu_model) {
-     case VIRTIO_ID_NET:
-@@ -255,27 +260,37 @@ void virtio_setup_ccw(VDev *vdev)
-         cfg_size = sizeof(vdev->config.scsi);
-         break;
-     default:
--        panic("Unsupported virtio device\n");
-+        puts("Unsupported virtio device");
-+        return -ENODEV;
-     }
- 
-     status |= VIRTIO_CONFIG_S_DRIVER;
--    rc = run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false);
--    IPL_assert(rc == 0, "Could not write DRIVER status to host");
-+    if (run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false)) {
-+        puts("Could not write DRIVER status to host");
-+        return -EIO;
-+    }
- 
-     /* Feature negotiation */
-     for (i = 0; i < ARRAY_SIZE(vdev->guest_features); i++) {
-         feats.features = 0;
-         feats.index = i;
--        rc = run_ccw(vdev, CCW_CMD_READ_FEAT, &feats, sizeof(feats), false);
--        IPL_assert(rc == 0, "Could not get features bits");
-+        if (run_ccw(vdev, CCW_CMD_READ_FEAT, &feats, sizeof(feats), false)) {
-+            puts("Could not get features bits");
-+            return -EIO;
-+        }
-+
-         vdev->guest_features[i] &= bswap32(feats.features);
-         feats.features = bswap32(vdev->guest_features[i]);
--        rc = run_ccw(vdev, CCW_CMD_WRITE_FEAT, &feats, sizeof(feats), false);
--        IPL_assert(rc == 0, "Could not set features bits");
-+        if (run_ccw(vdev, CCW_CMD_WRITE_FEAT, &feats, sizeof(feats), false)) {
-+            puts("Could not set features bits");
-+            return -EIO;
-+        }
-     }
- 
--    rc = run_ccw(vdev, CCW_CMD_READ_CONF, &vdev->config, cfg_size, false);
--    IPL_assert(rc == 0, "Could not get virtio device configuration");
-+    if (run_ccw(vdev, CCW_CMD_READ_CONF, &vdev->config, cfg_size, false)) {
-+        puts("Could not get virtio device configuration");
-+        return -EIO;
-+    }
- 
-     for (i = 0; i < vdev->nr_vqs; i++) {
-         VqInfo info = {
-@@ -289,19 +304,27 @@ void virtio_setup_ccw(VDev *vdev)
-             .num = 0,
-         };
- 
--        rc = run_ccw(vdev, CCW_CMD_READ_VQ_CONF, &config, sizeof(config), false);
--        IPL_assert(rc == 0, "Could not get virtio device VQ configuration");
-+        if (run_ccw(vdev, CCW_CMD_READ_VQ_CONF, &config, sizeof(config),
-+                false)) {
-+            puts("Could not get virtio device VQ config");
-+            return -EIO;
-+        }
-         info.num = config.num;
-         vring_init(&vdev->vrings[i], &info);
-         vdev->vrings[i].schid = vdev->schid;
--        IPL_assert(
--            run_ccw(vdev, CCW_CMD_SET_VQ, &info, sizeof(info), false) == 0,
--            "Cannot set VQ info");
-+        if (run_ccw(vdev, CCW_CMD_SET_VQ, &info, sizeof(info), false)) {
-+            puts("Cannot set VQ info");
-+            return -EIO;
-+        }
-     }
- 
-     status |= VIRTIO_CONFIG_S_DRIVER_OK;
--    rc = run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false);
--    IPL_assert(rc == 0, "Could not write DRIVER_OK status to host");
-+    if (run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false)) {
-+        puts("Could not write DRIVER_OK status to host");
-+        return -EIO;
-+    }
-+
-+    return 0;
- }
- 
- bool virtio_is_supported(SubChannelId schid)
+> 
+> > So what I'm thinking could be very clean is, we just discussed about
+> > MIG_CMD_SWITCHOVER and looks like you also think it's an OK approach.  I
+> > wonder when with it why not we move one step further to have
+> > MIG_CMD_SEND_NON_ITERABE just to mark that "iterable devices all done,
+> > ready to send non-iterable".  It can be controlled by the same migration
+> > property so we only send these two flags in 9.2+ machine types.
+> > 
+> > Then IIUC VFIO can send config data through main wire (just like most of
+> > other pci devices! which is IMHO a good fit..) and on destination VFIO
+> > holds off loading them until passing the MIG_CMD_SEND_NON_ITERABE phase.
+> 
+> Starting the config load only on MIG_CMD_SEND_NON_ITERABE would (in addition
+> to the considerations above) also delay starting the config load until all
+> iterable devices were read/transferred/loaded and also would complicate
+> future efforts at loading that config data in parallel.
+
+However I wonder whether we can keep it simple in that VFIO's config space
+is still always saved in vfio_save_state().  I still think it's easier we
+stick with the main channel whenever possible.  For this specific case, if
+the config space is small I think it's tricky you bypass this with:
+
+    if (migration->multifd_transfer) {
+        /* Emit dummy NOP data */
+        qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
+        return;
+    }
+
+Then squash this as the tail of the iterable data.
+
+On the src, I think it could use a per-device semaphore, so that iterable
+save() thread will post() only if it finishes dumping all the data, then
+that orders VFIO iterable data v.s. config space save().
+
+On the dst, after a 2nd thought, MIG_CMD_SEND_NON_ITERABE may not work or
+needed indeed, because multifd bypasses the main channel, so if we send
+anything like MIG_CMD_SEND_NON_ITERABE on the main channel it won't
+guarantee multifd load all complete.  However IIUC that can be used in a
+similar way as the src qemu I mentioned above with a per-device semaphore,
+so that only all the iterable data of this device loaded and applied to the
+HW would it post(), before that, vfio_load_state() should wait() on that
+sem waiting for data to ready (while multifd threads will be doing that
+part).  I wonder whether we may reuse the multifd recv thread in the
+initial version, so maybe we don't need any other threads on destination.
+
+The load_finish() interface is currently not able to be reused right,
+afaict.  Just have a look at its definition:
+
+    /**
+     * @load_finish
+     *
+     * Poll whether all asynchronous device state loading had finished.
+     * Not called on the load failure path.
+     *
+     * Called while holding the qemu_loadvm_load_finish_ready_lock.
+     *
+     * If this method signals "not ready" then it might not be called
+     * again until qemu_loadvm_load_finish_ready_broadcast() is invoked
+     * while holding qemu_loadvm_load_finish_ready_lock.
+     *
+     * @opaque: data pointer passed to register_savevm_live()
+     * @is_finished: whether the loading had finished (output parameter)
+     * @errp: pointer to Error*, to store an error if it happens.
+     *
+     * Returns zero to indicate success and negative for error
+     * It's not an error that the loading still hasn't finished.
+     */
+    int (*load_finish)(void *opaque, bool *is_finished, Error **errp);
+
+It's over complicated on defining all its details:
+
+  - Not re-entrant by default.. this is so weirdly designed so that the
+    caller needs to know which is even the "1st invocation of the
+    function"... It is just weird.
+
+  - Requires one more global mutex that non vmstate handler ever requested,
+    that I feel like perhaps can be replaced by a sem (then to drop the
+    condvar)?
+
+  - How qemu_loadvm_load_finish_ready_broadcast() interacts with all
+    above..
+
+So if you really think it matters to load whatever VFIO device who's
+iterable data is ready first, then let's try come up with some better
+interface..  I can try to think about it too, but please answer me
+questions above so I can understand what I am missing on why that's
+important.  Numbers could help, even if 4 VF and I wonder how much diff
+there can be.  Mostly, I don't know why it's slow right now if it is; I
+thought it should be pretty fast, at least not a concern in VFIO migration
+world (which can take seconds of downtime or more..).
+
+IOW, it sounds more reasonalbe to me that no matter whether vfio will
+support multifd, it'll be nice we stick with vfio_load_state() /
+vfio_save_state() for config space, and hopefully it's also easier it
+always go via the main channel to everyone.  In these two hooks, VFIO can
+do whatever it wants to sync with other things (on src, sync with
+concurrent thread pool saving iterable data and dumping things to multifd
+channels; on dst, sync with multifd concurrent loads). I think it can
+remove the requirement on the load_finish() interface completely.  Yes,
+this can only load VFIO's pci config space one by one, but I think this is
+much simpler, and I hope it's also not that slow, but I'm not sure.
+
+Thanks,
+
 -- 
-2.45.1
+Peter Xu
 
 
