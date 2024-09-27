@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66311CF6483
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80FC8CF6482
 	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 21:52:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suIrx-0001h6-3j; Fri, 27 Sep 2024 17:51:21 -0400
+	id 1suIrv-0001Ye-Ar; Fri, 27 Sep 2024 17:51:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1suIrq-0001CH-Ur
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 17:51:15 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1suIrp-0004XQ-Jj
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1suIrm-0000vG-Tr
  for qemu-devel@nongnu.org; Fri, 27 Sep 2024 17:51:14 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-5398996acbeso1320321e87.1
- for <qemu-devel@nongnu.org>; Fri, 27 Sep 2024 14:51:13 -0700 (PDT)
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1suIrk-0004Wk-BL
+ for qemu-devel@nongnu.org; Fri, 27 Sep 2024 17:51:09 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-37cdb6ebc1cso557105f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Sep 2024 14:51:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727473871; x=1728078671; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727473865; x=1728078665; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=e1vHxexCTLbdRB8r0KvJgoIHaBve1hvZ62MNg9aoNm0=;
- b=oBMIBkWw4/mAGSdEwQB+XCf5Ee2YWdXHuQ7fHkruq7pyb7qBrudcCXSdoCwEOGBC0g
- HA+t1waJj8/pRKEdP/mSSz38+dK+Pt19z4XBFpNERQdiZRGohl+zvYb92QWY+Xb6QReQ
- p3+fGQ5QhSn+99vQHULFdCxxvF4vBeG6HzdjR8DT3d8X2kAyAhAJ26jdH3FYCr+CnIVB
- rsaNMQTjogCULAVUtRr7KGh5oCa+5Feq7EshjVwRTwpXz5D2giDwyRDBkIMt2CoAgkum
- Wnygvd9diFfpiJCPJkHalxOs+X+drIeDw15+D4wkIUMlz+pFomtgCJ3WtS49XNslcEBt
- ae3Q==
+ bh=ncMwuXMgt8w0SPLSq4FNQgB95v0Fxit0yyRMSKvDcb8=;
+ b=scF2UBIIBiYiLDbYDnsB3QYay6mBwhBxAgIghWKzonYoLiGLKitRMA8Oi9rm7OkZau
+ StavgAwciko8YWhNNPF4zLopqce67vrrXmAsZQmPVEfh6tuobs/DEY2lB4ahCaGoODG5
+ 3EoqZINZAfL8MrXZ7hr72/e0tE5u3yzMVqw8XXndflzsTVVPCNyxhC3+H8A+sP4V+Wrt
+ GCEmM0aQwOvxyXiqPkCL9LgZB6G93g+ldLCPNcV1046Qy7CUh9SpA7G9dOVkiTCUQvU9
+ bR5ekydBwGTOKEoYSxKE0gPfkCIWI8anFXPf3ccZruY7MspXJLdBnK1lkST9XlyZdr+B
+ E1pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727473871; x=1728078671;
+ d=1e100.net; s=20230601; t=1727473865; x=1728078665;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=e1vHxexCTLbdRB8r0KvJgoIHaBve1hvZ62MNg9aoNm0=;
- b=ZikVl3BM6qkedCCcz/yf3AMYhjuEhzgwaGVgS+Ya0OUm4FyIi3PxD5vwLkRlvaZ7uu
- eaTYkgoMjDkoIYYNszNcuPpTaexGfFzztJYQkINyk9zc6azT5dsK3oFsEdhXQ5/0OFZ8
- Z5LLMOPXaOoeTYZorAPy5lQ/eftlTo5Gh0gFeoGf27PL9BrjRW61rqzwMeivSxJ1FAf1
- tnENnNfzE6mROwxl/dT4cMSquENWHP1Riip9vR55YTZ/uD6bJr6jJy7GtA+paQy1eNuf
- r1rWPHYHfl732bFQVosiidZ+dOlvEM3+h/bRzV0H2VXiAWWaTvnyCNV4+BzMvAzBqPMv
- MLVQ==
-X-Gm-Message-State: AOJu0Yy4M2Jv0JJtTEPUDKItMexrZvGrxx3Ut1ihZwRwjE6nWId139EK
- /mPbWWArwH+o65vJa5TKcIfS2U3bP+1x7QiARkg8fJYkmVjZXRBr08X6p+McYB1J0x36XQlEy/8
- l
-X-Google-Smtp-Source: AGHT+IGyY1J87woCfyiNgDUY1qadKJHfnYaK5GEM/3dq/7Kt8EFtEtDdrqQle5uUrzCN1adCphqn9w==
-X-Received: by 2002:a05:6512:1384:b0:533:4327:b4cc with SMTP id
- 2adb3069b0e04-5389fc810ecmr3283260e87.52.1727473871210; 
- Fri, 27 Sep 2024 14:51:11 -0700 (PDT)
+ bh=ncMwuXMgt8w0SPLSq4FNQgB95v0Fxit0yyRMSKvDcb8=;
+ b=eLZ9UiJW6ePYEDuUuqsC8iV+7OY3pNmjlsIjMaKZCrM5OdZGauqNdOoj1/YI3jJ0j5
+ Hiar4iWnVrJNps3RXBKw65qcgSKqXBNoyOxoQjaUO5UAqQVl4ZyNgn+LC10EcRoSzf7T
+ DlH+8rYsnpDZH5s6Vo57BPQ2OK1K4HTpcTdYaUZ1K6JAADwnVPTnLaWnbf4iIKtV37L1
+ yehzYGms/8VwQd1uAaQD52Te3eMCKraFyUHi0nxCs37+ceKfoSLLtRebOZpO6z27cJ/X
+ A2f8E74rOpEQNOnF24UChsPzf+zolE/1g35LDNHy6WZ0+Y4ak3mjAbNVI9Fw65Far9X8
+ MQog==
+X-Gm-Message-State: AOJu0YwB5lDF+w8PVweCO6l482qufhBcLUqYK4gjiMYf1W5frOaSnJ5b
+ loh/3FUMZkrlEFzVYe2jaWZJnnbliaQWKmAaFBYo4u7hZSyp0c7/w6+3/TiB8lCNkGiv7hByQ8B
+ +
+X-Google-Smtp-Source: AGHT+IEBAbxD2guHS7kxHuoSHqUr9V2OViIGn0xcMxSiEVBN4ZIL2QhZTS4108ZUqyKQMoygrsHxSQ==
+X-Received: by 2002:a05:6000:52:b0:37c:d244:bdb1 with SMTP id
+ ffacd0b85a97d-37cd5ad83c8mr2643155f8f.26.1727473865525; 
+ Fri, 27 Sep 2024 14:51:05 -0700 (PDT)
 Received: from localhost.localdomain ([176.187.217.136])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42e90cd8c5asm111112965e9.1.2024.09.27.14.51.09
+ ffacd0b85a97d-37cd565dd86sm3420517f8f.27.2024.09.27.14.51.02
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 27 Sep 2024 14:51:10 -0700 (PDT)
+ Fri, 27 Sep 2024 14:51:04 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
@@ -65,17 +65,17 @@ Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
  Alexey Kardashevskiy <aik@ozlabs.ru>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 4/4] net/l2tpv3: Simplify LD/ST API uses
-Date: Fri, 27 Sep 2024 23:50:40 +0200
-Message-ID: <20240927215040.20552-5-philmd@linaro.org>
+Subject: [PATCH v2 3/4] hw/ppc/vof: Simplify LD/ST API uses
+Date: Fri, 27 Sep 2024 23:50:39 +0200
+Message-ID: <20240927215040.20552-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240927215040.20552-1-philmd@linaro.org>
 References: <20240927215040.20552-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x129.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -97,30 +97,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Directly call ldn_be_p once instead of ldl_be_p / ldq_be_p.
+Instead of be32_to_cpu (equivalent of ldl_be_p) and ldq_be_p,
+use ldn_be_p(). Similarly instead of cpu_to_be32 (equiv. stl_be_p)
+and cpu_to_be64 (equiv. stq_be_p), use stn_be_p().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- net/l2tpv3.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ hw/ppc/vof.c | 26 +++++++++-----------------
+ 1 file changed, 9 insertions(+), 17 deletions(-)
 
-diff --git a/net/l2tpv3.c b/net/l2tpv3.c
-index b5547cb917..7a0d5dcfe9 100644
---- a/net/l2tpv3.c
-+++ b/net/l2tpv3.c
-@@ -318,11 +318,7 @@ static int l2tpv3_verify_header(NetL2TPV3State *s, uint8_t *buf)
-     */
+diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
+index b5b6514d79..e2549ab786 100644
+--- a/hw/ppc/vof.c
++++ b/hw/ppc/vof.c
+@@ -628,6 +628,7 @@ static void vof_dt_memory_available(void *fdt, GArray *claimed, uint64_t base)
+     const uint8_t *mem0_reg;
+     g_autofree uint8_t *avail = NULL;
+     uint8_t *availcur;
++    size_t elsz;
  
-     if (s->cookie) {
--        if (s->cookie_is_64) {
--            cookie = ldq_be_p(buf + s->cookie_offset);
+     if (!fdt || !claimed) {
+         return;
+@@ -645,11 +646,8 @@ static void vof_dt_memory_available(void *fdt, GArray *claimed, uint64_t base)
+ 
+     mem0_reg = fdt_getprop(fdt, offset, "reg", &proplen);
+     g_assert(mem0_reg && proplen == sizeof(uint32_t) * (ac + sc));
+-    if (sc == 2) {
+-        mem0_end = ldq_be_p(mem0_reg + sizeof(uint32_t) * ac);
+-    } else {
+-        mem0_end = be32_to_cpu(*(uint32_t *)(mem0_reg + sizeof(uint32_t) * ac));
+-    }
++    elsz = sc * sizeof(uint32_t);
++    mem0_end = ldn_be_p(mem0_reg + sizeof(uint32_t) * ac, elsz);
+ 
+     g_array_sort(claimed, of_claimed_compare_func);
+     vof_claimed_dump(claimed);
+@@ -674,18 +672,12 @@ static void vof_dt_memory_available(void *fdt, GArray *claimed, uint64_t base)
+             size = mem0_end - start;
+         }
+ 
+-        if (ac == 2) {
+-            *(uint64_t *) availcur = cpu_to_be64(start);
 -        } else {
--            cookie = ldl_be_p(buf + s->cookie_offset) & 0xffffffffULL;
+-            *(uint32_t *) availcur = cpu_to_be32(start);
 -        }
-+        cookie = ldn_be_p(buf + s->cookie_offset, s->cookie_is_64 ? 8 : 4);
-         if (cookie != s->rx_cookie) {
-             if (!s->header_mismatch) {
-                 error_report("unknown cookie id");
+-        availcur += sizeof(uint32_t) * ac;
+-        if (sc == 2) {
+-            *(uint64_t *) availcur = cpu_to_be64(size);
+-        } else {
+-            *(uint32_t *) availcur = cpu_to_be32(size);
+-        }
+-        availcur += sizeof(uint32_t) * sc;
++        elsz = ac * sizeof(uint32_t);
++        stn_be_p(&availcur, elsz, start);
++        availcur += elsz;
++        elsz = sc * sizeof(uint32_t);
++        stn_be_p(&availcur, elsz, size);
++        availcur += elsz;
+ 
+         if (size) {
+             trace_vof_avail(c.start + c.size, c.start + c.size + size, size);
 -- 
 2.45.2
 
