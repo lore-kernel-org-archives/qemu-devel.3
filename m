@@ -4,83 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E894CEBF7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 07:29:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83C1DCEBF7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 07:32:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1su5PQ-0004ni-4Y; Fri, 27 Sep 2024 03:29:00 -0400
+	id 1su5SR-0001Rk-Oi; Fri, 27 Sep 2024 03:32:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1su5PO-0004me-9r
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 03:28:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1su5SO-0001Ki-Jw; Fri, 27 Sep 2024 03:32:05 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1su5PM-0003hw-6Q
- for qemu-devel@nongnu.org; Fri, 27 Sep 2024 03:28:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727422133;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lZlhgHa5oCyR8W4JGBxbbHBPORbeVYoXF5r7knvJEH4=;
- b=EaMH6FWm3YgEX0BsUwgb/SFGwcyHuvq0lGcRUynbBI6utbK9ldLA9peYMfDgPLhZkEkSYp
- QAkiC4pWu37n9pNIAnQ0f7zaxjmw7eG+IsdB/hbr2t93dlntFRMcCkCbOeAGw8rwTqh40d
- bn0BRQ8sZmp+1h4EHXVLCLYisIwAYPA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-198-yKZolCNkM3Cm3ao-9UD-tQ-1; Fri,
- 27 Sep 2024 03:28:49 -0400
-X-MC-Unique: yKZolCNkM3Cm3ao-9UD-tQ-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 60353193610E; Fri, 27 Sep 2024 07:28:47 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.47])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2E1951956086; Fri, 27 Sep 2024 07:28:46 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2BBE721E6A28; Fri, 27 Sep 2024 09:28:43 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  qemu-devel
- <qemu-devel@nongnu.org>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Hanna Reitz <hreitz@redhat.com>,  Peter
- Maydell <peter.maydell@linaro.org>,
- pkg-qemu-devel@lists.alioth.debian.org,  Michael Tokarev
- <mjt@tls.msk.ru>,  ncopa@alpinelinux.org,  bofh@freebsd.org,
- emulation@freebsd.org,  virtualization@gentoo.org,  dilfridge@gentoo.org,
- hi@alyssa.is,  edolstra+nixpkgs@gmail.com,  brad@comstyle.com,  Paolo
- Bonzini <pbonzini@redhat.com>,  Thomas Huth <thuth@redhat.com>,  Stefan
- Hajnoczi <stefanha@redhat.com>,  dvzrv@archlinux.org,
- anatol.pomozov@gmail.com,  Miroslav Rezanina <mrezanin@redhat.com>
-Subject: Re: Rust BoF and maintainer minutes and planning the roadmap to Rust
-In-Reply-To: <ZvWPH1f6ZnvH1iYZ@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Thu, 26 Sep 2024 17:43:11 +0100")
-References: <871q16fq9c.fsf@draig.linaro.org> <ZvWPH1f6ZnvH1iYZ@redhat.com>
-Date: Fri, 27 Sep 2024 09:28:43 +0200
-Message-ID: <875xqh4kt0.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1su5SL-0004DY-KS; Fri, 27 Sep 2024 03:32:04 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Fri, 27 Sep
+ 2024 15:31:44 +0800
+Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Fri, 27 Sep 2024 15:31:44 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
+ BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <yunlin.tang@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>
+Subject: [PATCH v4 1/7] hw/gpio/aspeed: Fix coding style
+Date: Fri, 27 Sep 2024 15:31:38 +0800
+Message-ID: <20240927073144.2303522-2-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240927073144.2303522-1-jamin_lin@aspeedtech.com>
+References: <20240927073144.2303522-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,63 +64,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Fix coding style issues from checkpatch.pl
 
-> On Thu, Sep 26, 2024 at 03:23:11PM +0100, Alex Benn=C3=A9e wrote:
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/gpio/aspeed_gpio.c         | 6 +++---
+ include/hw/gpio/aspeed_gpio.h | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-[...]
-
->> One issue that came up is how we handle adequately reviewing code when
->> most of the maintainers are experienced C coders but might not know much
->> about Rust. While we want to avoid the situation of developers vetoing
->> conversion there should be communication ahead of any serious work to
->> avoid rust contributions coming out of the blue. If a maintainer feels
->> they cannot maintain a bunch of unfamiliar rust code the submitter
->> should be prepared to find people willing to become a maintainers as
->> unmaintained drive-by submissions are not useful for the long term
->> health of the project.
->
-> Yep, communication is critical, if proposing to rewrite existing
-> functionality. Drowning maintainers in conversion patches without
-> warning is a guaranteed way to create friction between people.
->
->> With relative inexperience there was a concern we could inadvertently
->> introduce technical debt in the code base (C-like Rust vs Rusty rust).
->> What can we do to mitigate that issue?
->
-> On a long enough time frame, all exiting code can be considered
-> technical debt. Given the relatively sparse Rust experiance
-> across our community, we're guaranteed to make more design
-> mistakes in the first few years. Mitigating this is important,
-> but at the same time, we should also accept we're not going
-> to get everything perfect.
->
-> One thing our community is very good at is obsessing about
-> perfection of patch series. I can forsee us doing that to an
-> even greater extent with any Rust conversions of code. If we
-> are not careful we could really harm  our overall productivity
-> by spending too much time striving for a perfect Rust abstraction
-> first time out, even though many of us would still be relative
-> newcomers to Rust, such that we don't know what we don't know.
->
-> IOW, we need to be pragmatic about accepting some level of
-> technical debt at times. Especially if there are cases where
-> our Rust design is held back by existing C code, we might be
-> better off temporarily accepting sub-optimal Rust, to avoid
-> immediately refactoring piles of C code, and tackle the problems
-> later.
-
-A deliberate approach to explore some before we go all in could mitigate
-the risk of taking on too much technical debt.
-
-We obviously need to write instances of each interesting class of things
-to ferret out the problems, and design good interfaces.  I'd recommend
-to write few instances, ideally one, then let them mature some before we
-create many more of them.  Prioritize gaining experience over quantity.
-
-[...]
+diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
+index 71756664dd..00fb72a509 100644
+--- a/hw/gpio/aspeed_gpio.c
++++ b/hw/gpio/aspeed_gpio.c
+@@ -340,7 +340,8 @@ static void aspeed_gpio_set_pin_level(AspeedGPIOState *s, uint32_t set_idx,
+         value &= ~pin_mask;
+     }
+ 
+-    aspeed_gpio_update(s, &s->sets[set_idx], value, ~s->sets[set_idx].direction);
++    aspeed_gpio_update(s, &s->sets[set_idx], value,
++                       ~s->sets[set_idx].direction);
+ }
+ 
+ /*
+@@ -629,7 +630,6 @@ static uint64_t aspeed_gpio_read(void *opaque, hwaddr offset, uint32_t size)
+ static void aspeed_gpio_write_index_mode(void *opaque, hwaddr offset,
+                                                 uint64_t data, uint32_t size)
+ {
+-
+     AspeedGPIOState *s = ASPEED_GPIO(opaque);
+     AspeedGPIOClass *agc = ASPEED_GPIO_GET_CLASS(s);
+     const GPIOSetProperties *props;
+@@ -963,7 +963,7 @@ static void aspeed_gpio_set_pin(Object *obj, Visitor *v, const char *name,
+     aspeed_gpio_set_pin_level(s, set_idx, pin, level);
+ }
+ 
+-/****************** Setup functions ******************/
++/* Setup functions */
+ static const GPIOSetProperties ast2400_set_props[ASPEED_GPIO_MAX_NR_SETS] = {
+     [0] = {0xffffffff,  0xffffffff,  {"A", "B", "C", "D"} },
+     [1] = {0xffffffff,  0xffffffff,  {"E", "F", "G", "H"} },
+diff --git a/include/hw/gpio/aspeed_gpio.h b/include/hw/gpio/aspeed_gpio.h
+index 90a12ae318..39febda9ea 100644
+--- a/include/hw/gpio/aspeed_gpio.h
++++ b/include/hw/gpio/aspeed_gpio.h
+@@ -88,7 +88,7 @@ struct AspeedGPIOState {
+     qemu_irq irq;
+     qemu_irq gpios[ASPEED_GPIO_MAX_NR_SETS][ASPEED_GPIOS_PER_SET];
+ 
+-/* Parallel GPIO Registers */
++    /* Parallel GPIO Registers */
+     uint32_t debounce_regs[ASPEED_GPIO_NR_DEBOUNCE_REGS];
+     struct GPIOSets {
+         uint32_t data_value; /* Reflects pin values */
+-- 
+2.34.1
 
 
