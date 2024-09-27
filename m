@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F0BCEBF60
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 00:53:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE6C1CEBF63
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Sep 2024 00:53:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1stzD1-0003BP-LL; Thu, 26 Sep 2024 20:51:47 -0400
+	id 1stzD0-00036N-DS; Thu, 26 Sep 2024 20:51:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1stzD0-00036i-DL; Thu, 26 Sep 2024 20:51:46 -0400
+ id 1stzCy-0002z3-Jq; Thu, 26 Sep 2024 20:51:44 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1stzCy-0007I5-Aw; Thu, 26 Sep 2024 20:51:46 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48QFG0m4012911;
- Fri, 27 Sep 2024 00:51:43 GMT
+ id 1stzCv-0007Hc-Q1; Thu, 26 Sep 2024 20:51:44 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48QG1riK018857;
+ Fri, 27 Sep 2024 00:51:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=V99b9X2b4iNUr
- gngEcv5yFcbXuUgqhWzPJSArfGwsDQ=; b=tBx8Hy8vRMM2eTdefZnxrRTLrJu/2
- mHQcduxHHbjzlVN8L5o2XlbS6qH4Y1GOUMP+q6CbG6FCTtwHYg5tYc7eNgNayY+G
- ppM2OyBFHiDvI6qJUzs9hYnM4K4hy6TBJR0JR7EgGPrKYBbyxrc9TqzAZGUBv/s3
- 2ntaXJAk3YcXJrlDEZ/4w8ALANEVbgo9yxdYndpAG/QCylu6HN1dBfrdc8MCxwHA
- zklbFvv7H8UJ6FZPzpqo/0YgRGtMMLt2Ey3y8I+/oc2JCrzLbyAYamuNTXb3+DEz
- V+1njgToLuEzWzvxhcPW7Kmsn1lwy9b2idGxkmN96wvme4pWtMAy+UcWA==
+ :mime-version:content-transfer-encoding; s=pp1; bh=pjsOy5v4RY7Kx
+ ugvGDD1gypGyUBMIafK8bhPD7Jiecc=; b=h2zjXPGB4ef0gBelAQmhDN++5Ue+S
+ 8VszAoQJM1pZNv1yYf6MRIX6QN9IZc962/Cqa/n720U5qg9GCGj0QHR4ffFhWA6P
+ 5DLCjJxxU374LFA+dczGaAJjRnfLeMui82XIo4qAXfBQSoTketkCkkHAAb5oz704
+ P0K0TOBFDj4jIrWZxcfu2C7lJkn6bdmoVZoRWSkIqNcgAuulE1dn+ide7rO3OHAt
+ t2IJ47ThnvqLv9ooVYHXvgk+aE8HyN3/HzwLKK7+Tk+MEsmt0Asd6NaeJn/JZ5li
+ mQNOmoAAUSW3FNsYrq9pQWOv79XIlRrzmXzt2aiLcd+rqnHOtZ8QKbJwg==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41smjk91rx-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41skjs16ce-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Sep 2024 00:51:42 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48R0pg1J006614;
- Fri, 27 Sep 2024 00:51:42 GMT
+ Fri, 27 Sep 2024 00:51:40 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48R0pdhP008879;
+ Fri, 27 Sep 2024 00:51:40 GMT
 Received: from ppma12.dal12v.mail.ibm.com
  (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41smjk91rt-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41skjs16cc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Sep 2024 00:51:42 +0000 (GMT)
+ Fri, 27 Sep 2024 00:51:39 +0000 (GMT)
 Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48QL2x5g001138;
- Fri, 27 Sep 2024 00:51:41 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 41t8fv2c52-1
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48R0WxOM000636;
+ Fri, 27 Sep 2024 00:51:39 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 41t8fv2c4x-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Sep 2024 00:51:41 +0000
+ Fri, 27 Sep 2024 00:51:39 +0000
 Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
  [10.241.53.104])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48R0pdjO20775640
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48R0pcsf41550082
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 27 Sep 2024 00:51:40 GMT
+ Fri, 27 Sep 2024 00:51:38 GMT
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B9B885805D;
- Fri, 27 Sep 2024 00:51:39 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 70F6A58052;
+ Fri, 27 Sep 2024 00:51:38 +0000 (GMT)
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 445E658052;
- Fri, 27 Sep 2024 00:51:39 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id EF82358056;
+ Fri, 27 Sep 2024 00:51:37 +0000 (GMT)
 Received: from localhost.localdomain (unknown [9.61.154.26])
  by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 27 Sep 2024 00:51:39 +0000 (GMT)
+ Fri, 27 Sep 2024 00:51:37 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
 Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
-Subject: [PATCH 13/18] include/hw/s390x: Add include files for common IPL
- structs
-Date: Thu, 26 Sep 2024 20:51:12 -0400
-Message-ID: <20240927005117.1679506-14-jrossi@linux.ibm.com>
+Subject: [PATCH 12/18] pc-bios/s390-ccw: Enable failed IPL to return after
+ error
+Date: Thu, 26 Sep 2024 20:51:11 -0400
+Message-ID: <20240927005117.1679506-13-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20240927005117.1679506-1-jrossi@linux.ibm.com>
 References: <20240927005117.1679506-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: uELw-bkMTt2Ms-xLmut0-eLzNQzWpb_n
-X-Proofpoint-GUID: 1c8FPnFB-tuXVAQ1i8ZLMvMBO1C8XO-s
+X-Proofpoint-GUID: kHsGbwZt-4qny2ymLFY0ZPeOlcWyO_hN
+X-Proofpoint-ORIG-GUID: MurYYiWf4cjOhtGDv7_RRoIMsXziK63E
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-26_06,2024-09-26_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- impostorscore=0 adultscore=0 malwarescore=0 suspectscore=0 bulkscore=0
- spamscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409270002
+ mlxscore=0 priorityscore=1501
+ spamscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0
+ clxscore=1015 malwarescore=0 mlxlogscore=999 bulkscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2409270002
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
@@ -115,386 +115,438 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-Currently, structures defined in both hw/s390x/ipl.h and pc-bios/s390-ccw/iplb.h
-must be kept in sync, which is prone to error. Instead, create a new directory
-at include/hw/s390x/ipl/ to contain the definitions that must be shared.
+Remove panic-on-error from IPL functions such that a return code is propagated
+back to the main IPL calling function (rather than terminating immediately),
+which facilitates possible error recovery in the future.
+
+A select few panics remain, which indicate fatal non-devices errors that must
+result in termination.
 
 Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 
 ---
- hw/s390x/ipl.h              | 104 +-----------------------------
- include/hw/s390x/ipl/qipl.h | 123 ++++++++++++++++++++++++++++++++++++
- pc-bios/s390-ccw/iplb.h     |  84 ++----------------------
- pc-bios/s390-ccw/Makefile   |   2 +-
- 4 files changed, 130 insertions(+), 183 deletions(-)
- create mode 100644 include/hw/s390x/ipl/qipl.h
+ pc-bios/s390-ccw/s390-ccw.h      |  2 +-
+ pc-bios/s390-ccw/virtio.h        |  2 +-
+ pc-bios/s390-ccw/bootmap.c       | 53 ++++++++++++++++++--------
+ pc-bios/s390-ccw/cio.c           |  3 +-
+ pc-bios/s390-ccw/jump2ipl.c      |  5 ++-
+ pc-bios/s390-ccw/main.c          | 35 +++++++++--------
+ pc-bios/s390-ccw/virtio-blkdev.c |  8 ++--
+ pc-bios/s390-ccw/virtio.c        | 65 +++++++++++++++++++++-----------
+ 8 files changed, 113 insertions(+), 60 deletions(-)
 
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index b2105b616a..fa394c339d 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -16,95 +16,11 @@
- #include "cpu.h"
- #include "exec/address-spaces.h"
- #include "hw/qdev-core.h"
-+#include "hw/s390x/ipl/qipl.h"
- #include "qom/object.h"
+diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+index 8dac070257..7e49da46a5 100644
+--- a/pc-bios/s390-ccw/s390-ccw.h
++++ b/pc-bios/s390-ccw/s390-ccw.h
+@@ -78,7 +78,7 @@ void zipl_load(void);
  
--struct IPLBlockPVComp {
--    uint64_t tweak_pref;
--    uint64_t addr;
--    uint64_t size;
--} QEMU_PACKED;
--typedef struct IPLBlockPVComp IPLBlockPVComp;
--
--struct IPLBlockPV {
--    uint8_t  reserved18[87];    /* 0x18 */
--    uint8_t  version;           /* 0x6f */
--    uint32_t reserved70;        /* 0x70 */
--    uint32_t num_comp;          /* 0x74 */
--    uint64_t pv_header_addr;    /* 0x78 */
--    uint64_t pv_header_len;     /* 0x80 */
--    struct IPLBlockPVComp components[0];
--} QEMU_PACKED;
--typedef struct IPLBlockPV IPLBlockPV;
--
--struct IplBlockCcw {
--    uint8_t  reserved0[85];
--    uint8_t  ssid;
--    uint16_t devno;
--    uint8_t  vm_flags;
--    uint8_t  reserved3[3];
--    uint32_t vm_parm_len;
--    uint8_t  nss_name[8];
--    uint8_t  vm_parm[64];
--    uint8_t  reserved4[8];
--} QEMU_PACKED;
--typedef struct IplBlockCcw IplBlockCcw;
--
--struct IplBlockFcp {
--    uint8_t  reserved1[305 - 1];
--    uint8_t  opt;
--    uint8_t  reserved2[3];
--    uint16_t reserved3;
--    uint16_t devno;
--    uint8_t  reserved4[4];
--    uint64_t wwpn;
--    uint64_t lun;
--    uint32_t bootprog;
--    uint8_t  reserved5[12];
--    uint64_t br_lba;
--    uint32_t scp_data_len;
--    uint8_t  reserved6[260];
--    uint8_t  scp_data[0];
--} QEMU_PACKED;
--typedef struct IplBlockFcp IplBlockFcp;
--
--struct IplBlockQemuScsi {
--    uint32_t lun;
--    uint16_t target;
--    uint16_t channel;
--    uint8_t  reserved0[77];
--    uint8_t  ssid;
--    uint16_t devno;
--} QEMU_PACKED;
--typedef struct IplBlockQemuScsi IplBlockQemuScsi;
--
- #define DIAG308_FLAGS_LP_VALID 0x80
+ /* jump2ipl.c */
+ void write_reset_psw(uint64_t psw);
+-void jump_to_IPL_code(uint64_t address);
++int jump_to_IPL_code(uint64_t address);
+ void jump_to_low_kernel(void);
  
--union IplParameterBlock {
--    struct {
--        uint32_t len;
--        uint8_t  reserved0[3];
--        uint8_t  version;
--        uint32_t blk0_len;
--        uint8_t  pbt;
--        uint8_t  flags;
--        uint16_t reserved01;
--        uint8_t  loadparm[8];
--        union {
--            IplBlockCcw ccw;
--            IplBlockFcp fcp;
--            IPLBlockPV pv;
--            IplBlockQemuScsi scsi;
--        };
--    } QEMU_PACKED;
--    struct {
--        uint8_t  reserved1[110];
--        uint16_t devno;
--        uint8_t  reserved2[88];
--        uint8_t  reserved_ext[4096 - 200];
--    } QEMU_PACKED;
--} QEMU_PACKED;
--typedef union IplParameterBlock IplParameterBlock;
--
- int s390_ipl_set_loadparm(uint8_t *loadparm);
- void s390_ipl_update_diag308(IplParameterBlock *iplb);
- int s390_ipl_prepare_pv_header(Error **errp);
-@@ -131,24 +47,6 @@ void s390_ipl_clear_reset_request(void);
- #define QIPL_FLAG_BM_OPTS_CMD   0x80
- #define QIPL_FLAG_BM_OPTS_ZIPL  0x40
+ /* menu.c */
+diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
+index 6f9a558ff5..9faf3986b1 100644
+--- a/pc-bios/s390-ccw/virtio.h
++++ b/pc-bios/s390-ccw/virtio.h
+@@ -274,7 +274,7 @@ void vring_send_buf(VRing *vr, void *p, int len, int flags);
+ int vr_poll(VRing *vr);
+ int vring_wait_reply(void);
+ int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd);
+-void virtio_setup_ccw(VDev *vdev);
++int virtio_setup_ccw(VDev *vdev);
  
--/*
-- * The QEMU IPL Parameters will be stored at absolute address
-- * 204 (0xcc) which means it is 32-bit word aligned but not
-- * double-word aligned. Placement of 64-bit data fields in this
-- * area must account for their alignment needs.
-- * The total size of the struct must never exceed 28 bytes.
-- * This definition must be kept in sync with the definition
-- * in pc-bios/s390-ccw/iplb.h.
-- */
--struct QemuIplParameters {
--    uint8_t  qipl_flags;
--    uint8_t  reserved1[3];
--    uint64_t reserved2;
--    uint32_t boot_menu_timeout;
--    uint8_t  reserved3[12];
--} QEMU_PACKED;
--typedef struct QemuIplParameters QemuIplParameters;
--
- #define TYPE_S390_IPL "s390-ipl"
- OBJECT_DECLARE_SIMPLE_TYPE(S390IPLState, S390_IPL)
+ int virtio_net_init(void *mac_addr);
  
-diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-new file mode 100644
-index 0000000000..d21a8f91e3
---- /dev/null
-+++ b/include/hw/s390x/ipl/qipl.h
-@@ -0,0 +1,123 @@
-+/*
-+ * S/390 boot structures
-+ *
-+ * Copyright 2024 IBM Corp.
-+ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or (at
-+ * your option) any later version. See the COPYING file in the top-level
-+ * directory.
-+ */
-+
-+#ifndef S390X_QIPL_H
-+#define S390X_QIPL_H
-+
-+/* Boot Menu flags */
-+#define QIPL_FLAG_BM_OPTS_CMD   0x80
-+#define QIPL_FLAG_BM_OPTS_ZIPL  0x40
-+
-+#define QIPL_ADDRESS  0xcc
-+#define LOADPARM_LEN    8
-+
-+/*
-+ * The QEMU IPL Parameters will be stored at absolute address
-+ * 204 (0xcc) which means it is 32-bit word aligned but not
-+ * double-word aligned. Placement of 64-bit data fields in this
-+ * area must account for their alignment needs.
-+ * The total size of the struct must never exceed 28 bytes.
-+ */
-+struct QemuIplParameters {
-+    uint8_t  qipl_flags;
-+    uint8_t  reserved1[3];
-+    uint64_t reserved2;
-+    uint32_t boot_menu_timeout;
-+    uint8_t  reserved3[12];
-+} QEMU_PACKED;
-+typedef struct QemuIplParameters QemuIplParameters;
-+
-+struct IPLBlockPVComp {
-+    uint64_t tweak_pref;
-+    uint64_t addr;
-+    uint64_t size;
-+}  QEMU_PACKED;
-+typedef struct IPLBlockPVComp IPLBlockPVComp;
-+
-+struct IPLBlockPV {
-+    uint8_t  reserved18[87];    /* 0x18 */
-+    uint8_t  version;           /* 0x6f */
-+    uint32_t reserved70;        /* 0x70 */
-+    uint32_t num_comp;          /* 0x74 */
-+    uint64_t pv_header_addr;    /* 0x78 */
-+    uint64_t pv_header_len;     /* 0x80 */
-+    struct IPLBlockPVComp components[0];
-+}  QEMU_PACKED;
-+typedef struct IPLBlockPV IPLBlockPV;
-+
-+struct IplBlockCcw {
-+    uint8_t  reserved0[85];
-+    uint8_t  ssid;
-+    uint16_t devno;
-+    uint8_t  vm_flags;
-+    uint8_t  reserved3[3];
-+    uint32_t vm_parm_len;
-+    uint8_t  nss_name[8];
-+    uint8_t  vm_parm[64];
-+    uint8_t  reserved4[8];
-+}  QEMU_PACKED;
-+typedef struct IplBlockCcw IplBlockCcw;
-+
-+struct IplBlockFcp {
-+    uint8_t  reserved1[305 - 1];
-+    uint8_t  opt;
-+    uint8_t  reserved2[3];
-+    uint16_t reserved3;
-+    uint16_t devno;
-+    uint8_t  reserved4[4];
-+    uint64_t wwpn;
-+    uint64_t lun;
-+    uint32_t bootprog;
-+    uint8_t  reserved5[12];
-+    uint64_t br_lba;
-+    uint32_t scp_data_len;
-+    uint8_t  reserved6[260];
-+    uint8_t  scp_data[0];
-+}  QEMU_PACKED;
-+typedef struct IplBlockFcp IplBlockFcp;
-+
-+struct IplBlockQemuScsi {
-+    uint32_t lun;
-+    uint16_t target;
-+    uint16_t channel;
-+    uint8_t  reserved0[77];
-+    uint8_t  ssid;
-+    uint16_t devno;
-+}  QEMU_PACKED;
-+typedef struct IplBlockQemuScsi IplBlockQemuScsi;
-+
-+union IplParameterBlock {
-+    struct {
-+        uint32_t len;
-+        uint8_t  reserved0[3];
-+        uint8_t  version;
-+        uint32_t blk0_len;
-+        uint8_t  pbt;
-+        uint8_t  flags;
-+        uint16_t reserved01;
-+        uint8_t  loadparm[LOADPARM_LEN];
-+        union {
-+            IplBlockCcw ccw;
-+            IplBlockFcp fcp;
-+            IPLBlockPV pv;
-+            IplBlockQemuScsi scsi;
-+        };
-+    }  QEMU_PACKED;
-+    struct {
-+        uint8_t  reserved1[110];
-+        uint16_t devno;
-+        uint8_t  reserved2[88];
-+        uint8_t  reserved_ext[4096 - 200];
-+    }  QEMU_PACKED;
-+}  QEMU_PACKED;
-+typedef union IplParameterBlock IplParameterBlock;
-+
-+#endif
-diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
-index 3758698468..16643f5879 100644
---- a/pc-bios/s390-ccw/iplb.h
-+++ b/pc-bios/s390-ccw/iplb.h
-@@ -12,88 +12,14 @@
- #ifndef IPLB_H
- #define IPLB_H
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index 9459e19ffb..6e1f47821e 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -62,15 +62,34 @@ static void *s2_prev_blk = _s2;
+ static void *s2_cur_blk = _s2 + MAX_SECTOR_SIZE;
+ static void *s2_next_blk = _s2 + MAX_SECTOR_SIZE * 2;
  
--#define LOADPARM_LEN    8
-+#ifndef QEMU_PACKED
-+#define QEMU_PACKED __attribute__((packed))
-+#endif
+-static inline void verify_boot_info(BootInfo *bip)
++static inline int verify_boot_info(BootInfo *bip)
+ {
+-    IPL_assert(magic_match(bip->magic, ZIPL_MAGIC), "No zIPL sig in BootInfo");
+-    IPL_assert(bip->version == BOOT_INFO_VERSION, "Wrong zIPL version");
+-    IPL_assert(bip->bp_type == BOOT_INFO_BP_TYPE_IPL, "DASD is not for IPL");
+-    IPL_assert(bip->dev_type == BOOT_INFO_DEV_TYPE_ECKD, "DASD is not ECKD");
+-    IPL_assert(bip->flags == BOOT_INFO_FLAGS_ARCH, "Not for this arch");
+-    IPL_assert(block_size_ok(bip->bp.ipl.bm_ptr.eckd.bptr.size),
+-               "Bad block size in zIPL section of the 1st record.");
++    if (!magic_match(bip->magic, ZIPL_MAGIC)) {
++        puts("No zIPL sig in BootInfo");
++        return -EINVAL;
++    }
++    if (bip->version != BOOT_INFO_VERSION) {
++        puts("Wrong zIPL version");
++        return -EINVAL;
++    }
++    if (bip->bp_type != BOOT_INFO_BP_TYPE_IPL) {
++        puts("DASD is not for IPL");
++        return -ENODEV;
++    }
++    if (bip->dev_type != BOOT_INFO_DEV_TYPE_ECKD) {
++        puts("DASD is not ECKD");
++        return -ENODEV;
++    }
++    if (bip->flags != BOOT_INFO_FLAGS_ARCH) {
++        puts("Not for this arch");
++        return -EINVAL;
++    }
++    if (!block_size_ok(bip->bp.ipl.bm_ptr.eckd.bptr.size)) {
++        puts("Bad block size in zIPL section of 1st record");
++        return -EINVAL;
++    }
++
++    return 0;
+ }
  
--struct IplBlockCcw {
--    uint8_t  reserved0[85];
--    uint8_t  ssid;
--    uint16_t devno;
--    uint8_t  vm_flags;
--    uint8_t  reserved3[3];
--    uint32_t vm_parm_len;
--    uint8_t  nss_name[8];
--    uint8_t  vm_parm[64];
--    uint8_t  reserved4[8];
--} __attribute__ ((packed));
--typedef struct IplBlockCcw IplBlockCcw;
--
--struct IplBlockFcp {
--    uint8_t  reserved1[305 - 1];
--    uint8_t  opt;
--    uint8_t  reserved2[3];
--    uint16_t reserved3;
--    uint16_t devno;
--    uint8_t  reserved4[4];
--    uint64_t wwpn;
--    uint64_t lun;
--    uint32_t bootprog;
--    uint8_t  reserved5[12];
--    uint64_t br_lba;
--    uint32_t scp_data_len;
--    uint8_t  reserved6[260];
--    uint8_t  scp_data[];
--} __attribute__ ((packed));
--typedef struct IplBlockFcp IplBlockFcp;
--
--struct IplBlockQemuScsi {
--    uint32_t lun;
--    uint16_t target;
--    uint16_t channel;
--    uint8_t  reserved0[77];
--    uint8_t  ssid;
--    uint16_t devno;
--} __attribute__ ((packed));
--typedef struct IplBlockQemuScsi IplBlockQemuScsi;
--
--struct IplParameterBlock {
--    uint32_t len;
--    uint8_t  reserved0[3];
--    uint8_t  version;
--    uint32_t blk0_len;
--    uint8_t  pbt;
--    uint8_t  flags;
--    uint16_t reserved01;
--    uint8_t  loadparm[LOADPARM_LEN];
--    union {
--        IplBlockCcw ccw;
--        IplBlockFcp fcp;
--        IplBlockQemuScsi scsi;
--    };
--} __attribute__ ((packed));
--typedef struct IplParameterBlock IplParameterBlock;
--
--extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
--
--#define QIPL_ADDRESS  0xcc
--
--/* Boot Menu flags */
--#define QIPL_FLAG_BM_OPTS_CMD   0x80
--#define QIPL_FLAG_BM_OPTS_ZIPL  0x40
--
--/*
-- * This definition must be kept in sync with the definition
-- * in hw/s390x/ipl.h
-- */
--struct QemuIplParameters {
--    uint8_t  qipl_flags;
--    uint8_t  reserved1[3];
--    uint64_t reserved2;
--    uint32_t boot_menu_timeout;
--    uint8_t  reserved3[12];
--} __attribute__ ((packed));
--typedef struct QemuIplParameters QemuIplParameters;
-+#include <qipl.h>
+ static void eckd_format_chs(ExtEckdBlockPtr *ptr,  bool ldipl,
+@@ -368,8 +387,8 @@ static int run_eckd_boot_script(block_number_t bmt_block_nr,
+         puts("Unknown script entry type");
+         return -EINVAL;
+     }
+-    write_reset_psw(bms->entry[i].address.load_address); /* no return */
+-    jump_to_IPL_code(0); /* no return */
++    write_reset_psw(bms->entry[i].address.load_address);
++    jump_to_IPL_code(0);
+     return 1;
+ }
  
- extern QemuIplParameters qipl;
-+extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
+@@ -1054,16 +1073,19 @@ void zipl_load(void)
  
- #define S390_IPL_TYPE_FCP 0x00
- #define S390_IPL_TYPE_CCW 0x02
-diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
-index 27cbb354af..db9e8f0892 100644
---- a/pc-bios/s390-ccw/Makefile
-+++ b/pc-bios/s390-ccw/Makefile
-@@ -3,7 +3,7 @@ all: build-all
- 	@true
+     if (vdev->is_cdrom) {
+         ipl_iso_el_torito();
+-        panic("\n! Cannot IPL this ISO image !\n");
++        puts("Failed to IPL this ISO image!");
++        return;
+     }
  
- include config-host.mak
--CFLAGS = -O2 -g
-+CFLAGS = -O2 -g -I $(SRC_PATH)/../../include/hw/s390x/ipl
- MAKEFLAGS += -rR
+     if (virtio_get_device_type() == VIRTIO_ID_NET) {
+         netmain();
+-        panic("\n! Cannot IPL from this network !\n");
++        puts("Failed to IPL from this network!");
++        return;
+     }
  
- GIT_SUBMODULES = roms/SLOF
+     if (ipl_scsi()) {
+-        panic("\n! Cannot IPL this device !\n");
++        puts("Failed to IPL from this device!");
++        return;
+     }
+ 
+     switch (virtio_get_device_type()) {
+@@ -1074,8 +1096,9 @@ void zipl_load(void)
+         zipl_load_vscsi();
+         break;
+     default:
+-        panic("\n! Unknown IPL device type !\n");
++        puts("Unknown IPL device type!");
++        return;
+     }
+ 
+-    puts("zIPL load failed.");
++    puts("zIPL load failed!");
+ }
+diff --git a/pc-bios/s390-ccw/cio.c b/pc-bios/s390-ccw/cio.c
+index 758e74965e..35b08ba7c1 100644
+--- a/pc-bios/s390-ccw/cio.c
++++ b/pc-bios/s390-ccw/cio.c
+@@ -59,7 +59,8 @@ uint16_t cu_type(SubChannelId schid)
+     };
+ 
+     if (do_cio(schid, CU_TYPE_UNKNOWN, ptr2u32(&sense_id_ccw), CCW_FMT1)) {
+-        panic("Failed to run SenseID CCw\n");
++        puts("Failed to run SenseID CCW");
++        return CU_TYPE_UNKNOWN;
+     }
+ 
+     return sense_data.cu_type;
+diff --git a/pc-bios/s390-ccw/jump2ipl.c b/pc-bios/s390-ccw/jump2ipl.c
+index 80b7f6a1f3..d45aec6694 100644
+--- a/pc-bios/s390-ccw/jump2ipl.c
++++ b/pc-bios/s390-ccw/jump2ipl.c
+@@ -33,7 +33,7 @@ static void jump_to_IPL_addr(void)
+     /* should not return */
+ }
+ 
+-void jump_to_IPL_code(uint64_t address)
++int jump_to_IPL_code(uint64_t address)
+ {
+     /* store the subsystem information _after_ the bootmap was loaded */
+     write_subsystem_identification();
+@@ -68,7 +68,8 @@ void jump_to_IPL_code(uint64_t address)
+     asm volatile("lghi %%r1,1\n\t"
+                  "diag %%r1,%%r1,0x308\n\t"
+                  : : : "1", "memory");
+-    panic("\n! IPL returns !\n");
++    puts("IPL code jump failed");
++    return 1;
+ }
+ 
+ void jump_to_low_kernel(void)
+diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+index 2345432abb..f818bd7210 100644
+--- a/pc-bios/s390-ccw/main.c
++++ b/pc-bios/s390-ccw/main.c
+@@ -77,6 +77,9 @@ static int is_dev_possibly_bootable(int dev_no, int sch_no)
+ 
+     enable_subchannel(blk_schid);
+     cutype = cu_type(blk_schid);
++    if (cutype == CU_TYPE_UNKNOWN) {
++        return -EIO;
++    }
+ 
+     /*
+      * Note: we always have to run virtio_is_supported() here to make
+@@ -194,10 +197,10 @@ static void boot_setup(void)
+     have_iplb = store_iplb(&iplb);
+ }
+ 
+-static void find_boot_device(void)
++static bool find_boot_device(void)
+ {
+     VDev *vdev = virtio_get_device();
+-    bool found;
++    bool found = false;
+ 
+     switch (iplb.pbt) {
+     case S390_IPL_TYPE_CCW:
+@@ -215,10 +218,10 @@ static void find_boot_device(void)
+         found = find_subch(iplb.scsi.devno);
+         break;
+     default:
+-        panic("List-directed IPL not supported yet!\n");
++        puts("Invalid IPLB");
+     }
+ 
+-    IPL_assert(found, "Boot device not found\n");
++    return found;
+ }
+ 
+ static int virtio_setup(void)
+@@ -244,11 +247,13 @@ static int virtio_setup(void)
+         ret = virtio_scsi_setup_device(blk_schid);
+         break;
+     default:
+-        panic("\n! No IPL device available !\n");
++        puts("\n! No IPL device available !\n");
++        return 1;
+     }
+ 
+-    if (!ret) {
+-        IPL_assert(virtio_ipl_disk_is_valid(), "No valid IPL device detected");
++    if (!ret && !virtio_ipl_disk_is_valid()) {
++        puts("No valid IPL device detected");
++        return -ENODEV;
+     }
+ 
+     return ret;
+@@ -259,16 +264,16 @@ static void ipl_boot_device(void)
+     switch (cutype) {
+     case CU_TYPE_DASD_3990:
+     case CU_TYPE_DASD_2107:
+-        dasd_ipl(blk_schid, cutype); /* no return */
++        dasd_ipl(blk_schid, cutype);
+         break;
+     case CU_TYPE_VIRTIO:
+-        if (virtio_setup() == 0) {
+-            zipl_load();             /* Only returns in case of errors */
++        if (virtio_setup()) {
++            return;    /* Only returns in case of errors */
+         }
++        zipl_load();
+         break;
+     default:
+         printf("Attempting to boot from unexpected device type 0x%X", cutype);
+-        panic("\nBoot failed.\n");
+     }
+ }
+ 
+@@ -288,7 +293,8 @@ static void probe_boot_device(void)
+                 break;
+             }
+             if (ret == true) {
+-                ipl_boot_device();      /* Only returns if unsuccessful */
++                ipl_boot_device(); /* Only returns if unsuccessful */
++                return;
+             }
+         }
+     }
+@@ -301,12 +307,11 @@ void main(void)
+     sclp_setup();
+     css_setup();
+     boot_setup();
+-    if (have_iplb) {
+-        find_boot_device();
++    if (have_iplb && find_boot_device()) {
+         ipl_boot_device();
+     } else {
+         probe_boot_device();
+     }
+ 
+-    panic("Failed to load OS from hard disk\n");
++    panic("Failed to IPL. Halting...");
+ }
+diff --git a/pc-bios/s390-ccw/virtio-blkdev.c b/pc-bios/s390-ccw/virtio-blkdev.c
+index 2666326801..5ef273bdc0 100644
+--- a/pc-bios/s390-ccw/virtio-blkdev.c
++++ b/pc-bios/s390-ccw/virtio-blkdev.c
+@@ -59,8 +59,8 @@ int virtio_read_many(unsigned long sector, void *load_addr, int sec_num)
+     case VIRTIO_ID_SCSI:
+         return virtio_scsi_read_many(vdev, sector, load_addr, sec_num);
+     }
+-    panic("\n! No readable IPL device !\n");
+-    return -1;
++
++    return 1;
+ }
+ 
+ unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list2,
+@@ -73,13 +73,13 @@ unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list
+     unsigned long addr = (unsigned long)load_addr;
+ 
+     if (sec_len != virtio_get_block_size()) {
+-        return -1;
++        return 0;
+     }
+ 
+     printf(".");
+     status = virtio_read_many(sec, (void *)addr, sec_num);
+     if (status) {
+-        panic("I/O Error");
++        return 0;
+     }
+     addr += sec_num * virtio_get_block_size();
+ 
+diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
+index 8c6b0a8a92..e3fdb95b3c 100644
+--- a/pc-bios/s390-ccw/virtio.c
++++ b/pc-bios/s390-ccw/virtio.c
+@@ -217,16 +217,19 @@ int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd)
+     return 0;
+ }
+ 
+-void virtio_setup_ccw(VDev *vdev)
++int virtio_setup_ccw(VDev *vdev)
+ {
+-    int i, rc, cfg_size = 0;
++    int i, cfg_size = 0;
+     uint8_t status;
+     struct VirtioFeatureDesc {
+         uint32_t features;
+         uint8_t index;
+     } __attribute__((packed)) feats;
+ 
+-    IPL_assert(virtio_is_supported(vdev->schid), "PE");
++    if (!virtio_is_supported(vdev->schid)) {
++        puts("PE");
++        return -ENODEV;
++    }
+     /* device ID has been established now */
+ 
+     vdev->config.blk.blk_size = 0; /* mark "illegal" - setup started... */
+@@ -235,8 +238,10 @@ void virtio_setup_ccw(VDev *vdev)
+     run_ccw(vdev, CCW_CMD_VDEV_RESET, NULL, 0, false);
+ 
+     status = VIRTIO_CONFIG_S_ACKNOWLEDGE;
+-    rc = run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false);
+-    IPL_assert(rc == 0, "Could not write ACKNOWLEDGE status to host");
++    if (run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false)) {
++        puts("Could not write ACKNOWLEDGE status to host");
++        return -EIO;
++    }
+ 
+     switch (vdev->senseid.cu_model) {
+     case VIRTIO_ID_NET:
+@@ -255,27 +260,37 @@ void virtio_setup_ccw(VDev *vdev)
+         cfg_size = sizeof(vdev->config.scsi);
+         break;
+     default:
+-        panic("Unsupported virtio device\n");
++        puts("Unsupported virtio device");
++        return -ENODEV;
+     }
+ 
+     status |= VIRTIO_CONFIG_S_DRIVER;
+-    rc = run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false);
+-    IPL_assert(rc == 0, "Could not write DRIVER status to host");
++    if (run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false)) {
++        puts("Could not write DRIVER status to host");
++        return -EIO;
++    }
+ 
+     /* Feature negotiation */
+     for (i = 0; i < ARRAY_SIZE(vdev->guest_features); i++) {
+         feats.features = 0;
+         feats.index = i;
+-        rc = run_ccw(vdev, CCW_CMD_READ_FEAT, &feats, sizeof(feats), false);
+-        IPL_assert(rc == 0, "Could not get features bits");
++        if (run_ccw(vdev, CCW_CMD_READ_FEAT, &feats, sizeof(feats), false)) {
++            puts("Could not get features bits");
++            return -EIO;
++        }
++
+         vdev->guest_features[i] &= bswap32(feats.features);
+         feats.features = bswap32(vdev->guest_features[i]);
+-        rc = run_ccw(vdev, CCW_CMD_WRITE_FEAT, &feats, sizeof(feats), false);
+-        IPL_assert(rc == 0, "Could not set features bits");
++        if (run_ccw(vdev, CCW_CMD_WRITE_FEAT, &feats, sizeof(feats), false)) {
++            puts("Could not set features bits");
++            return -EIO;
++        }
+     }
+ 
+-    rc = run_ccw(vdev, CCW_CMD_READ_CONF, &vdev->config, cfg_size, false);
+-    IPL_assert(rc == 0, "Could not get virtio device configuration");
++    if (run_ccw(vdev, CCW_CMD_READ_CONF, &vdev->config, cfg_size, false)) {
++        puts("Could not get virtio device configuration");
++        return -EIO;
++    }
+ 
+     for (i = 0; i < vdev->nr_vqs; i++) {
+         VqInfo info = {
+@@ -289,19 +304,27 @@ void virtio_setup_ccw(VDev *vdev)
+             .num = 0,
+         };
+ 
+-        rc = run_ccw(vdev, CCW_CMD_READ_VQ_CONF, &config, sizeof(config), false);
+-        IPL_assert(rc == 0, "Could not get virtio device VQ configuration");
++        if (run_ccw(vdev, CCW_CMD_READ_VQ_CONF, &config, sizeof(config),
++                false)) {
++            puts("Could not get virtio device VQ config");
++            return -EIO;
++        }
+         info.num = config.num;
+         vring_init(&vdev->vrings[i], &info);
+         vdev->vrings[i].schid = vdev->schid;
+-        IPL_assert(
+-            run_ccw(vdev, CCW_CMD_SET_VQ, &info, sizeof(info), false) == 0,
+-            "Cannot set VQ info");
++        if (run_ccw(vdev, CCW_CMD_SET_VQ, &info, sizeof(info), false)) {
++            puts("Cannot set VQ info");
++            return -EIO;
++        }
+     }
+ 
+     status |= VIRTIO_CONFIG_S_DRIVER_OK;
+-    rc = run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false);
+-    IPL_assert(rc == 0, "Could not write DRIVER_OK status to host");
++    if (run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false)) {
++        puts("Could not write DRIVER_OK status to host");
++        return -EIO;
++    }
++
++    return 0;
+ }
+ 
+ bool virtio_is_supported(SubChannelId schid)
 -- 
 2.45.1
 
