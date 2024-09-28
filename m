@@ -4,76 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2408FCF6493
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Sep 2024 13:34:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A34B4CF6493
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Sep 2024 13:37:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suXaE-0005lu-CW; Sat, 28 Sep 2024 09:34:02 -0400
+	id 1suXdX-0001ey-0Z; Sat, 28 Sep 2024 09:37:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1suXaC-0005lO-Pt
- for qemu-devel@nongnu.org; Sat, 28 Sep 2024 09:34:01 -0400
-Received: from mail-vs1-xe2c.google.com ([2607:f8b0:4864:20::e2c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1suXdT-0001dB-H9
+ for qemu-devel@nongnu.org; Sat, 28 Sep 2024 09:37:23 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1suXaB-0003KF-2v
- for qemu-devel@nongnu.org; Sat, 28 Sep 2024 09:34:00 -0400
-Received: by mail-vs1-xe2c.google.com with SMTP id
- ada2fe7eead31-49bc12c0041so1042830137.0
- for <qemu-devel@nongnu.org>; Sat, 28 Sep 2024 06:33:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1suXdR-0003oo-PC
+ for qemu-devel@nongnu.org; Sat, 28 Sep 2024 09:37:23 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-5c88e45f467so193389a12.1
+ for <qemu-devel@nongnu.org>; Sat, 28 Sep 2024 06:37:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1727530437; x=1728135237;
- darn=nongnu.org; 
+ d=linaro.org; s=google; t=1727530637; x=1728135437; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=vm3htQug5IegHhPT7cgIzFuuhqyJyuEF+dcjUhM6fq0=;
- b=LOJqj7rtUHRPq6Yvr2RRag9jTvEs/1LVc699OimAvXFmrjGOgtBMMw9owpLSew7vu6
- uG3aeB0GaefqsoA2WrZCGAuIK4kn45q5DuP425E2HiQrPInhH020cjca+BUmulNzy21m
- LkjVxIseZjqJsERsgJ+hCmVaJK0AYyLJgdbg3lo7cgyDCToy9Ie42msSia1VLZg62qw5
- AQ56NbzfRdS9Sk4P+HIvSfIOytTZjvGFxEYLFBNtb99Hf4WdPKaGYvsKSr0hhaHMoQZK
- 7KgV+VOz+NtebuMu9MSfDVL7NDuFPXsR17ft0BNDvJVP9I3s9FJgPpDS+jlC909iMpS7
- SRFQ==
+ bh=6ZXJr4Z/EXRnC3lGSd24LwuHAyw55BDlaA2Oi+7Q/68=;
+ b=U5qMXh+KV2XdWFWip+3Q2tYz1hETB9OrejCr8DJcNzsHgs1wtRy89B39LX30BTqZp0
+ SZmS3bCRTATLF28JewQ6gYExGbqzJuEQsV8rnJ744qBBFPo811xUVfoKcwVHBiq7wnrB
+ rZ8r9Y27pfmpzU4HKYQW2EH3sMIXGSyH0LLqF98tJRLdnEXxEQ8vyvdeuwXvgB9ZNXWi
+ 0guocLzpw/VUfaf+wwi3SsvC6l+M+rjHYRhiqk2JC5A0cK9Ll4P/rlugFhonh+YeKuYE
+ 5kk7jWCXM7I5I7bU+VUX9I8UpbiYf8zmqwDqIRuMAEvkarkfyKzDtGJh9d1jf7tB/V1L
+ T8cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727530437; x=1728135237;
+ d=1e100.net; s=20230601; t=1727530637; x=1728135437;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=vm3htQug5IegHhPT7cgIzFuuhqyJyuEF+dcjUhM6fq0=;
- b=OUMLMoD+yonhFs80oHNOV0MZrBMKuO4Q4P3Ls+zucPga51UNi/B92A2iuZSgRApTgJ
- S9prQP1mlLL4CIno91HtJkwI+Ws0/NeLVyixeMJ2QyXoz1DJJOtA+uo9SarsVSX5WF0Z
- YiSHP1gsIWMiB9Xp8miK+SgQ3XsH8zaaKAThnd+rtH0OFq3yCVZbC0DitNWMiYFZkWMe
- M7oyPVh3JDykr9fZrGlmGjdkpG4JOlz1hsDxnL6xxNWa4rxza2ZHmNywae6BPW3ZLbfV
- a5T6salgAxpYKM9c4aJgd1/mBV44I/pOWTm5QQDgYOeu2EVvfAdz4B2g3gb5J1UjhVo3
- 3OtA==
-X-Gm-Message-State: AOJu0Yzm07aZdn2YLRQVN5Jts/cuyv8jnQ3xaPiefQrcryad9WaGeIMC
- rI95UkZUiXq+/2E6fF8h3bTf+InnRG07Gd6xlN9IUCCQWLj6KjtdymDadUOtlE6GypjFPoAZkNj
- YvwdGOOfb9DHBUT8QBmtZS/foQ5goa/jpRIv5Amh07Ik9L8DxKA==
-X-Google-Smtp-Source: AGHT+IE91n9KdpjE94C24E1+vbgSdz/DJUsqVGIYk9t1eMY5kEeqJQyAykdm7BxFpVU0KRcle3WlgQUWjQ1yWW3m2XI=
-X-Received: by 2002:a05:6102:370b:b0:495:6a25:d1ed with SMTP id
- ada2fe7eead31-4a2e1154ad4mr5128492137.25.1727530437233; Sat, 28 Sep 2024
- 06:33:57 -0700 (PDT)
+ bh=6ZXJr4Z/EXRnC3lGSd24LwuHAyw55BDlaA2Oi+7Q/68=;
+ b=J9Qbx9keTKRIUyB42zuBuGK2t98DV0W37cPb05sJL3AeoHw4MLtLlvk771AJ8dNOzf
+ 9b5NQjEoUTya+IKk88LYrr8WPoujxN+BaNOPnWwXXRdDBfKaM+Om6CuUZe3pOzNXZ2g9
+ GOV5yqfOJn2E0M3aXdGO3r2hBxXxHIDSCASsOSJarHT6VlIZM42MxFq9p1tDQjHGNOZL
+ I60jqe87kNMiJxbX2JvnuW3YrNVs4U3dam7wIWcVixuVwPOLacSAkXn4px2SrWc6Uzuy
+ Wz4PpptB5y2bgvA7awQ8TlD+jt3fslbgozjpnACSCanBlDJxxjSecdDObnWBchaKkDaS
+ UR3Q==
+X-Gm-Message-State: AOJu0YwxT5uGIs8Ac2lVicCTGhzA/+wmcVTT6E4LjLJ0vxlhQ/o7M6kX
+ /uNpTIQqJAjOgRJ5SkBA14krJO7+0Saom4jBzrkzSuBjGJpYTaKWYh8olkYsxlCUDpkXP+hByvp
+ XwQoWIM5wGUA9swtam6DARmd7U6Ai9d06ZGwxyv/m/BqJ3wZp
+X-Google-Smtp-Source: AGHT+IEnP3pOUzRdswqDvpl6pUzqymhONNRgxccyCEB72u3l82H0fkcS5e3CXghW0pAyUA8bQNJjUNCz8GoIk/8yeys=
+X-Received: by 2002:a05:6402:26ce:b0:5c5:bda8:8635 with SMTP id
+ 4fb4d7f45d1cf-5c88244aac9mr6635787a12.8.1727530637037; Sat, 28 Sep 2024
+ 06:37:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240928085727.56883-1-phil@philjordan.eu>
- <20240928085727.56883-3-phil@philjordan.eu>
- <67acdfdc-348d-fcd2-7891-06a38349beb1@eik.bme.hu>
-In-Reply-To: <67acdfdc-348d-fcd2-7891-06a38349beb1@eik.bme.hu>
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-Date: Sat, 28 Sep 2024 15:33:46 +0200
-Message-ID: <CAAibmn2reoq9K0cWorWp2jJ+dUwjdjOT3oa=2RRP15dtOb02Ww@mail.gmail.com>
-Subject: Re: [PATCH v3 02/14] hw/display/apple-gfx: Adds PCI implementation
-To: BALATON Zoltan <balaton@eik.bme.hu>
+References: <20240924211153.1473771-1-mark.cave-ayland@ilande.co.uk>
+In-Reply-To: <20240924211153.1473771-1-mark.cave-ayland@ilande.co.uk>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 28 Sep 2024 14:37:05 +0100
+Message-ID: <CAFEAcA_3p=X0sb==TRAsGTvMK32AzuR0kTbtsZCZapw81+S2Rw@mail.gmail.com>
+Subject: Re: [PULL 0/1] qemu-openbios queue 20240924
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000000cee1106232e0656"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::e2c;
- envelope-from=phil@philjordan.eu; helo=mail-vs1-xe2c.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001,
- SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,51 +86,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000000cee1106232e0656
-Content-Type: text/plain; charset="UTF-8"
-
-On Sat, 28 Sept 2024 at 12:39, BALATON Zoltan <balaton@eik.bme.hu> wrote:
-
-> > +typedef struct AppleGFXPCIState {
-> > +    PCIDevice parent_obj;
-> > +
-> > +    AppleGFXState common;
-> > +} AppleGFXPCIState;
+On Tue, 24 Sept 2024 at 22:12, Mark Cave-Ayland
+<mark.cave-ayland@ilande.co.uk> wrote:
 >
-> You don't need typedef here because OBJECT_DECLARE_SIMPLE_TYPE will add
-> that. You can also put the struct AppleGFXPCIState definition after the
-> OBJECT_DECLARE_SIMPLE_TYPE line. (See other devices for example.)
+> The following changes since commit 01dc65a3bc262ab1bec8fe89775e9bbfa627becb:
 >
+>   Merge tag 'pull-target-arm-20240919' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-09-19 14:15:15 +0100)
 >
-Thanks for pointing that out. I've locally applied that advice to this and
-the other relevant type declarations in the series, it'll be in v4.
-
-Phil
-
---0000000000000cee1106232e0656
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Sat, 28 Sept 2024 at 12:39, BALATO=
-N Zoltan &lt;<a href=3D"mailto:balaton@eik.bme.hu">balaton@eik.bme.hu</a>&g=
-t; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
-x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">&gt; +=
-typedef struct AppleGFXPCIState {<br>
-&gt; +=C2=A0 =C2=A0 PCIDevice parent_obj;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 AppleGFXState common;<br>
-&gt; +} AppleGFXPCIState;<br>
-<br>
-You don&#39;t need typedef here because OBJECT_DECLARE_SIMPLE_TYPE will add=
- <br>
-that. You can also put the struct AppleGFXPCIState definition after the <br=
+> are available in the Git repository at:
 >
-OBJECT_DECLARE_SIMPLE_TYPE line. (See other devices for example.)<br>
-<br></blockquote><div><br></div><div>Thanks for pointing that out. I&#39;ve=
- locally applied that advice to this and the other relevant type declaratio=
-ns in the series, it&#39;ll be in v4.</div><div><br></div><div>Phil</div><d=
-iv><br></div></div></div>
+>   https://github.com/mcayland/qemu.git tags/qemu-openbios-20240924
+>
+> for you to fetch changes up to 972208be775a37dccb3047702ea1582e9936102c:
+>
+>   roms/openbios: update OpenBIOS images to c3a19c1e built from submodule (2024-09-24 20:58:54 +0100)
+>
+> ----------------------------------------------------------------
+> qemu-openbios queue
+> - Update OpenBIOS images to c3a19c1e built from submodule
+>
+> ----------------------------------------------------------------
+> Mark Cave-Ayland (1):
+>       roms/openbios: update OpenBIOS images to c3a19c1e built from submodule
+>
 
---0000000000000cee1106232e0656--
+
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
+
+-- PMM
 
