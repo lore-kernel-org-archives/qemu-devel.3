@@ -4,81 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9C99CF6493
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Sep 2024 10:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF704CF6495
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Sep 2024 10:40:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suUK3-0005ki-I1; Sat, 28 Sep 2024 06:05:07 -0400
+	id 1suUs5-0005n9-C8; Sat, 28 Sep 2024 06:40:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1suUK1-0005jy-6Z
- for qemu-devel@nongnu.org; Sat, 28 Sep 2024 06:05:05 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1suUJy-0003kv-Em
- for qemu-devel@nongnu.org; Sat, 28 Sep 2024 06:05:04 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-42cb8dac900so27491145e9.3
- for <qemu-devel@nongnu.org>; Sat, 28 Sep 2024 03:05:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1727517900; x=1728122700;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=RNQxvE8WZGw6V+rm60m0nnsO2Elk2meTcImZqxrGrWg=;
- b=ifXQvY8bTCEG7PlMuta7rZ3bjJkkk3+jYmHsyDcPoOuv0oN1DGuv+/yK/vKtDXXPgN
- bH5t+nuiwlEmbNBoKFtsq/EUe1hPTSBZsVS5oO6gMi8/MT3nnVtVuaQKNyrw7Bxg7oKJ
- 6A1cWjbGsRb4y3P5+2ARaLZB+l+HNCF4bulhAV5CfFI7J0PUEYy7c8mPGpdIHI4tOYDd
- kXH7gM8UOKt5RTwntu/+lQLEKZn/VQqva5rDR2kP/evzb7Sc+qd8ArRb3En9Ya23V/4W
- YdZUIaBvMFFXQ+mlJEZYreZpx4lgJct9ov59Ayh6YELYLFPA6IFwN0Fn96XsXM4wCrrW
- MvNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727517900; x=1728122700;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RNQxvE8WZGw6V+rm60m0nnsO2Elk2meTcImZqxrGrWg=;
- b=kvqoYRwTxzI0aWF/gWUtCAWNfBBpBJcEKrHRxiVyiVmYW4cdXU16CUwPGHPKrjo+zy
- /gMFoh6yXluw8zDcyUXR6IizFcCtppoPlpix2tiyeQhF4tv9pkF3YtETMR6/AWcn+hj6
- +UroNhtynxqnAy0lv1+EJK8zwpH6VrX6rGARrGqnL8JvcDwWwlLmiV6AVDIN76gAl+wp
- p+wF4hePEt5kRLLbE5COgdNOi1o7ptZqe1S8z17vbqWXj8sl9PZi5eYh1bH6tgpxFW3a
- CO4Z+bggIg8Risj0B8et9G+Uep2oqXCXOLFrnQccT8cX7ws2f8FTH4uf6I4sXwcmAo+5
- iiBw==
-X-Gm-Message-State: AOJu0YyxfQKAr8wDPQ6NNrM/IxJD2wivazFxwR4GVk7GE2IK4nqU38ip
- AAW0p0c+Glo0ape/daX+B9E0W6vmtLMOjDHFz4auV/Rx/0qU0tRjxobk6+tW1PAftIxM7Xkb9fD
- CCA==
-X-Google-Smtp-Source: AGHT+IHOo17TyP/2evU3KAhkhFzidvuzdcBBDAY/dK2tOLcGmS4ESE9Btxjti9Ag/fSgBd3/cfl1vA==
-X-Received: by 2002:a05:600c:a4b:b0:42c:b6e4:e3aa with SMTP id
- 5b1f17b1804b1-42f5840d0e8mr45267825e9.5.1727517899739; 
- Sat, 28 Sep 2024 03:04:59 -0700 (PDT)
-Received: from localhost.localdomain ([2001:4bb8:2ae:e42d:d5c5:e3c:35e8:188b])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42e96a56fd1sm95434715e9.48.2024.09.28.03.04.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 28 Sep 2024 03:04:59 -0700 (PDT)
-From: phil@philjordan.eu
-To: qemu-devel@nongnu.org
-Cc: dirty@apple.com, rbolshakov@ddn.com, lists@philjordan.eu,
- philmd@linaro.org, minhquangbui99@gmail.com, akihiko.odaki@daynix.com,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v2] i386/hvf: Integrates x2APIC support with hvf accel
-Date: Sat, 28 Sep 2024 12:04:50 +0200
-Message-Id: <20240928100450.1666-1-phil@philjordan.eu>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1suUs2-0005lz-LJ
+ for qemu-devel@nongnu.org; Sat, 28 Sep 2024 06:40:14 -0400
+Received: from mout.kundenserver.de ([212.227.126.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1suUs0-0000Mr-Qc
+ for qemu-devel@nongnu.org; Sat, 28 Sep 2024 06:40:14 -0400
+Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
+ (mreue010 [213.165.67.103]) with ESMTPSA (Nemesis) id
+ 1MQuwR-1sWU6g3FLT-00Jq0U; Sat, 28 Sep 2024 12:40:01 +0200
+Message-ID: <09a456b8-b8e4-4cf4-af4b-bb79f7b1bfb5@vivier.eu>
+Date: Sat, 28 Sep 2024 12:40:00 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 2/2] linux-user: add strace support for openat2
+To: Michael Vogt <mvogt@redhat.com>, qemu-devel@nongnu.org
+Cc: Michael Vogt <michael.vogt@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <cover.1727119903.git.mvogt@redhat.com>
+ <dba054de9c2285aa0908cae22ede2c082ed5af7c.1727119903.git.mvogt@redhat.com>
+Content-Language: fr
+From: Laurent Vivier <laurent@vivier.eu>
+Autocrypt: addr=laurent@vivier.eu; keydata=
+ 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
+In-Reply-To: <dba054de9c2285aa0908cae22ede2c082ed5af7c.1727119903.git.mvogt@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::32e;
- envelope-from=phil@philjordan.eu; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+X-Provags-ID: V03:K1:QpB4qgc7zZTD8GEUMz8XPG1Irx2PUxNhlBsNjZS1FPqNfv7loZP
+ 7noz5fzjd4Ut39ZMqEn9gUlPt/U9r5qto9+PZEDLTuxdleLyMIJXoSGQyH4s1MduCUHZ1fw
+ Q9jkECuLWSnIEgxbuf0g+ingRycWvqwNrnDYf/anGai6epYsp3BEyNnB0xz31QoyHpFeBFl
+ oAmtB8QWc8DLYVscJt4xw==
+UI-OutboundReport: notjunk:1;M01:P0:vVNyz16ZyOU=;EgF+7bUtwCzeAOpwn85tlwUkPDd
+ HeV1JqvWHKx5S5Vl+QwcWzMy1T3uAG14xdSjogr9Fe43sNkN4BkjfnK9USEWAJrTd4A5eAPNh
+ Jqukk7c5Ohfpyx57YAQjENcS4xGcjlWHpe1SRcJXpkViyy/oq8/4zD/cfZ1o0dzCGBVgLaOPM
+ LNiA/yLYc1hFXc5QibENUHX9nP2z0rTSeBvXR2DxqjrltohCupLuyAXPi7QCl/jY+8bavPpbB
+ jAmd3xol7+i56CHL1DIyM1cUVIJL0q7cDB0Lnj+NO6FWii1pxlbPclIkYfma/7dc1y85g/J6q
+ oqmakNHy5hYVeukEoOak1dT2epfeoO9aqiOgf9f7BucbRi4kk5BaNirZRr9zrU30UdoJ+3u2f
+ UWnDH1o5i/33GupeHFg9ylMw13QDIgCfgSiCzbdQ5o3SVQZpPBAC8ePFKMuEJad4KC96KeFd7
+ /g2XfWAf2KOtIQ3K8nY0Adz5XVnRhJQyK5ghquugQncsauB8+hy7bZzKhIu6pTehczbHV/K+0
+ Kw+s0Gj1CSP5Mky4RtYpGvabmoDpVIS2+PJwXVzixHWeTrL09Ykg487aMMtY969G3r6ZmDD7H
+ mMltCL8AohCqIZ7IEovewrBQIhRTYLtjqBYs1GCOrrmM4zi10kGabmVu+S2oSRPvn9W1Wco4Q
+ fplQXHG4AUAmvzg4bJaWwhveP4zdiTyzi//NRCSdmlKZ0kiiUllIorG6ePYCInY3OITPpAuj/
+ LvTcWt1mbhTMyqVbpJ8uCqwJ+bGep29og==
+Received-SPF: pass client-ip=212.227.126.131; envelope-from=laurent@vivier.eu;
+ helo=mout.kundenserver.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
- SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,97 +118,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Phil Dennis-Jordan <phil@philjordan.eu>
+Le 23/09/2024 à 21:37, Michael Vogt a écrit :
+> This commit adds support for the `openat2()` to `QEMU_STRACE`. It
+> will use the `openat2.h` header if available to create user
+> readable flags for the `resolve` argument but does not require
+> the header otherwise.
+> 
+> It also makes `copy_struct_from_user()` available via `qemu.h`
+> and `open_how_ver0` via `syscall_defs.h` so that strace.c can use
+> them.
+> 
+> Signed-off-by: Michael Vogt <mvogt@redhat.com>
+> ---
+>   linux-user/qemu.h         |  9 +++++++++
+>   linux-user/strace.c       | 40 +++++++++++++++++++++++++++++++++++++++
+>   linux-user/strace.list    |  3 +++
+>   linux-user/syscall.c      |  8 +-------
+>   linux-user/syscall_defs.h |  5 +++++
+>   meson.build               |  1 +
+>   6 files changed, 59 insertions(+), 7 deletions(-)
+> 
+> diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+> index 2e90a97175..98ad848ab2 100644
+> --- a/linux-user/qemu.h
+> +++ b/linux-user/qemu.h
+> @@ -313,6 +313,15 @@ static inline bool access_ok(CPUState *cpu, int type,
+>   int copy_from_user(void *hptr, abi_ulong gaddr, ssize_t len);
+>   int copy_to_user(abi_ulong gaddr, void *hptr, ssize_t len);
+>   
+> +/*
+> + * copy_struct_from_user() copies a target struct to a host struct, in
+> + * a way that guarantees backwards-compatibility for struct syscall
+> + * arguments.
+> + *
+> + * Similar to kernels uaccess.h:copy_struct_from_user()
+> + */
+> +int copy_struct_from_user(void *dst, size_t ksize, abi_ptr src, size_t usize);
+> +
+>   /* Functions for accessing guest memory.  The tget and tput functions
+>      read/write single values, byteswapping as necessary.  The lock_user function
+>      gets a pointer to a contiguous area of guest memory, but does not perform
+> diff --git a/linux-user/strace.c b/linux-user/strace.c
+> index b4d1098170..77d5108e5d 100644
+> --- a/linux-user/strace.c
+> +++ b/linux-user/strace.c
+> @@ -13,6 +13,9 @@
+>   #include <linux/if_packet.h>
+>   #include <linux/in6.h>
+>   #include <linux/netlink.h>
+> +#ifdef HAVE_OPENAT2_H
+> +#include <linux/openat2.h>
+> +#endif
+>   #include <sched.h>
+>   #include "qemu.h"
+>   #include "user-internals.h"
+> @@ -1063,6 +1066,18 @@ UNUSED static const struct flags open_flags[] = {
+>       FLAG_END,
+>   };
+>   
+> +UNUSED static const struct flags openat2_resolve_flags[] = {
+> +#ifdef HAVE_OPENAT2_H
+> +    FLAG_GENERIC(RESOLVE_NO_XDEV),
+> +    FLAG_GENERIC(RESOLVE_NO_MAGICLINKS),
+> +    FLAG_GENERIC(RESOLVE_NO_SYMLINKS),
+> +    FLAG_GENERIC(RESOLVE_BENEATH),
+> +    FLAG_GENERIC(RESOLVE_IN_ROOT),
+> +    FLAG_GENERIC(RESOLVE_CACHED),
+> +#endif
+> +    FLAG_END,
+> +};
+> +
+>   UNUSED static const struct flags mount_flags[] = {
+>   #ifdef MS_BIND
+>       FLAG_GENERIC(MS_BIND),
+> @@ -3483,6 +3498,31 @@ print_openat(CPUArchState *cpu_env, const struct syscallname *name,
+>   }
+>   #endif
+>   
+> +#ifdef TARGET_NR_openat2
+> +static void
+> +print_openat2(CPUArchState *cpu_env, const struct syscallname *name,
+> +              abi_long arg0, abi_long arg1, abi_long arg2,
+> +              abi_long arg3, abi_long arg4, abi_long arg5)
+> +{
+> +    struct open_how_ver0 how = {0};
+> +
+> +    print_syscall_prologue(name);
+> +    print_at_dirfd(arg0, 0);
+> +    print_string(arg1, 0);
+> +    if (copy_struct_from_user(&how, sizeof(how), arg2, arg3) == 0) {
 
-Support for x2APIC mode was recently introduced in the software emulated
-APIC implementation for TCG. Enabling it when using macOS’s hvf
-accelerator is useful and significantly helps performance, as Qemu
-currently uses the emulated APIC when running on hvf as well.
+I think you need also to tswap64() all the fields of how.
 
-This change wires up the read & write operations for the MSR VM exits
-and allow-lists the CPUID flag in the x86 hvf runtime.
+> +        print_open_flags(how.flags, 0);
+> +        if (how.flags & TARGET_O_CREAT) {
+> +            print_file_mode(how.mode, 0);
+> +        }
+> +        print_flags(openat2_resolve_flags, how.resolve, 0);
+> +    } else {
+> +        print_pointer(arg2, 0);
+> +    }
+> +    print_raw_param("size=" TARGET_ABI_FMT_lu, arg3, 1);
 
-Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Acked-by: Bui Quang Minh <minhquangbui99@gmail.com>
----
-v2:
- * Rebased on latest upstream post v9.1 release
- * Minor cleanup in x2APIC MSR index calculation
+Why the "size="?
+You can write: print_raw_param(TARGET_ABI_FMT_lu, arg3, 1);
 
- target/i386/hvf/x86_cpuid.c |  4 ++--
- target/i386/hvf/x86_emu.c   | 29 +++++++++++++++++++++++++++++
- 2 files changed, 31 insertions(+), 2 deletions(-)
-
-diff --git a/target/i386/hvf/x86_cpuid.c b/target/i386/hvf/x86_cpuid.c
-index e56cd8411b..4f260d46a8 100644
---- a/target/i386/hvf/x86_cpuid.c
-+++ b/target/i386/hvf/x86_cpuid.c
-@@ -64,8 +64,8 @@ uint32_t hvf_get_supported_cpuid(uint32_t func, uint32_t idx,
-              CPUID_PAT | CPUID_PSE36 | CPUID_CLFLUSH | CPUID_MMX |
-              CPUID_FXSR | CPUID_SSE | CPUID_SSE2 | CPUID_SS;
-         ecx &= CPUID_EXT_SSE3 | CPUID_EXT_PCLMULQDQ | CPUID_EXT_SSSE3 |
--             CPUID_EXT_FMA | CPUID_EXT_CX16 | CPUID_EXT_PCID |
--             CPUID_EXT_SSE41 | CPUID_EXT_SSE42 | CPUID_EXT_MOVBE |
-+             CPUID_EXT_FMA | CPUID_EXT_CX16 | CPUID_EXT_PCID | CPUID_EXT_SSE41 |
-+             CPUID_EXT_SSE42 | CPUID_EXT_X2APIC | CPUID_EXT_MOVBE |
-              CPUID_EXT_POPCNT | CPUID_EXT_AES | CPUID_EXT_XSAVE |
-              CPUID_EXT_AVX | CPUID_EXT_F16C | CPUID_EXT_RDRAND;
-         ecx |= CPUID_EXT_HYPERVISOR;
-diff --git a/target/i386/hvf/x86_emu.c b/target/i386/hvf/x86_emu.c
-index 38c782b8e3..f90c79e083 100644
---- a/target/i386/hvf/x86_emu.c
-+++ b/target/i386/hvf/x86_emu.c
-@@ -663,6 +663,15 @@ static void exec_lods(CPUX86State *env, struct x86_decode *decode)
-     env->eip += decode->len;
- }
- 
-+static void raise_exception(CPUX86State *env, int exception_index,
-+                            int error_code)
-+{
-+    env->exception_nr = exception_index;
-+    env->error_code = error_code;
-+    env->has_error_code = true;
-+    env->exception_injected = 1;
-+}
-+
- void simulate_rdmsr(CPUX86State *env)
- {
-     X86CPU *cpu = env_archcpu(env);
-@@ -677,6 +686,16 @@ void simulate_rdmsr(CPUX86State *env)
-     case MSR_IA32_APICBASE:
-         val = cpu_get_apic_base(cpu->apic_state);
-         break;
-+    case MSR_APIC_START ... MSR_APIC_END: {
-+        int ret;
-+        int index = msr - MSR_APIC_START;
-+
-+        ret = apic_msr_read(index, &val);
-+        if (ret < 0) {
-+            raise_exception(env, EXCP0D_GPF, 0);
-+        }
-+        break;
-+    }
-     case MSR_IA32_UCODE_REV:
-         val = cpu->ucode_rev;
-         break;
-@@ -777,6 +796,16 @@ void simulate_wrmsr(CPUX86State *env)
-     case MSR_IA32_APICBASE:
-         cpu_set_apic_base(cpu->apic_state, data);
-         break;
-+    case MSR_APIC_START ... MSR_APIC_END: {
-+        int ret;
-+        int index = msr - MSR_APIC_START;
-+
-+        ret = apic_msr_write(index, data);
-+        if (ret < 0) {
-+            raise_exception(env, EXCP0D_GPF, 0);
-+        }
-+        break;
-+    }
-     case MSR_FSBASE:
-         wvmcs(cs->accel->fd, VMCS_GUEST_FS_BASE, data);
-         break;
--- 
-2.39.3 (Apple Git-146)
-
+Thanks,
+Laurent
 
