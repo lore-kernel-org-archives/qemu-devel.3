@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A34B4CF6493
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Sep 2024 13:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10781CF6491
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Sep 2024 13:37:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suXdX-0001ey-0Z; Sat, 28 Sep 2024 09:37:28 -0400
+	id 1suXdh-0001qq-UU; Sat, 28 Sep 2024 09:37:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1suXdT-0001dB-H9
- for qemu-devel@nongnu.org; Sat, 28 Sep 2024 09:37:23 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1suXdg-0001pu-E3
+ for qemu-devel@nongnu.org; Sat, 28 Sep 2024 09:37:36 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1suXdR-0003oo-PC
- for qemu-devel@nongnu.org; Sat, 28 Sep 2024 09:37:23 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5c88e45f467so193389a12.1
- for <qemu-devel@nongnu.org>; Sat, 28 Sep 2024 06:37:18 -0700 (PDT)
+ id 1suXdf-0003pt-0D
+ for qemu-devel@nongnu.org; Sat, 28 Sep 2024 09:37:36 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a910860e4dcso479005266b.3
+ for <qemu-devel@nongnu.org>; Sat, 28 Sep 2024 06:37:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727530637; x=1728135437; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727530653; x=1728135453; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=6ZXJr4Z/EXRnC3lGSd24LwuHAyw55BDlaA2Oi+7Q/68=;
- b=U5qMXh+KV2XdWFWip+3Q2tYz1hETB9OrejCr8DJcNzsHgs1wtRy89B39LX30BTqZp0
- SZmS3bCRTATLF28JewQ6gYExGbqzJuEQsV8rnJ744qBBFPo811xUVfoKcwVHBiq7wnrB
- rZ8r9Y27pfmpzU4HKYQW2EH3sMIXGSyH0LLqF98tJRLdnEXxEQ8vyvdeuwXvgB9ZNXWi
- 0guocLzpw/VUfaf+wwi3SsvC6l+M+rjHYRhiqk2JC5A0cK9Ll4P/rlugFhonh+YeKuYE
- 5kk7jWCXM7I5I7bU+VUX9I8UpbiYf8zmqwDqIRuMAEvkarkfyKzDtGJh9d1jf7tB/V1L
- T8cg==
+ bh=pW30RmH0L4XgjHBSPNM08gntjSXW5CENyWLPiFHiUHg=;
+ b=mnoKden6AsR0Wf8tJdpnbOVSuraLKBb1afVeUmwEYxMw1N0YyqsIDudoxvboGtPZgx
+ os9KQ/OYonuQdB4Q5fbFgAV6MuxRJ2N/JZUDV0Ot2VInP/pNESS3ZcVVNXjvr60Pz7xa
+ BBKltsQvBWNaUUOCBKCPvf4vlwou7dregowEg/krMWzrjcb0vhY96T0v/dGBk0IVfFbd
+ 1xjQF5qVbrcSNIETRoB9E+FTSuCiJiq2iF7QGjRwapbQxO5u8GMluhbxdcKYDDuu2gNx
+ g6JuKgCS4IrrKSDmBuW2Vcz/5Xw7X3RnPt8dPLX01DVuUNeO1akUyOSL9PgFBfnLoChw
+ risw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727530637; x=1728135437;
+ d=1e100.net; s=20230601; t=1727530653; x=1728135453;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=6ZXJr4Z/EXRnC3lGSd24LwuHAyw55BDlaA2Oi+7Q/68=;
- b=J9Qbx9keTKRIUyB42zuBuGK2t98DV0W37cPb05sJL3AeoHw4MLtLlvk771AJ8dNOzf
- 9b5NQjEoUTya+IKk88LYrr8WPoujxN+BaNOPnWwXXRdDBfKaM+Om6CuUZe3pOzNXZ2g9
- GOV5yqfOJn2E0M3aXdGO3r2hBxXxHIDSCASsOSJarHT6VlIZM42MxFq9p1tDQjHGNOZL
- I60jqe87kNMiJxbX2JvnuW3YrNVs4U3dam7wIWcVixuVwPOLacSAkXn4px2SrWc6Uzuy
- Wz4PpptB5y2bgvA7awQ8TlD+jt3fslbgozjpnACSCanBlDJxxjSecdDObnWBchaKkDaS
- UR3Q==
-X-Gm-Message-State: AOJu0YwxT5uGIs8Ac2lVicCTGhzA/+wmcVTT6E4LjLJ0vxlhQ/o7M6kX
- /uNpTIQqJAjOgRJ5SkBA14krJO7+0Saom4jBzrkzSuBjGJpYTaKWYh8olkYsxlCUDpkXP+hByvp
- XwQoWIM5wGUA9swtam6DARmd7U6Ai9d06ZGwxyv/m/BqJ3wZp
-X-Google-Smtp-Source: AGHT+IEnP3pOUzRdswqDvpl6pUzqymhONNRgxccyCEB72u3l82H0fkcS5e3CXghW0pAyUA8bQNJjUNCz8GoIk/8yeys=
-X-Received: by 2002:a05:6402:26ce:b0:5c5:bda8:8635 with SMTP id
- 4fb4d7f45d1cf-5c88244aac9mr6635787a12.8.1727530637037; Sat, 28 Sep 2024
- 06:37:17 -0700 (PDT)
+ bh=pW30RmH0L4XgjHBSPNM08gntjSXW5CENyWLPiFHiUHg=;
+ b=dOHu3ne+/t5Q9BgyaO3CMOMZ/L428b5Ballxnzme2hVc+ro2UW8GKlV7fC2aJYabaw
+ M3EVdA+HH4oojr8gq60TpZlRUh9ljMAPeRBgqvK0SIRx92jkMVf8diij90J5VKA8d9+U
+ tn8nfZdt2OsZwqCLg+NDi1QQVA9gJQ4JcTErz5jdjRlChyeW6NdqM3+luHHNiZRGSGDK
+ pnFrzkuiURF5vODXrYmzAywt9n9/6Ap6GVtRyEderXIhHXDbrH+02uwAN7pKc6OIhj4D
+ bYUrAHt8bXZNsVYSfliZx1T7ab3tHXpZcw7aHbcerw0DmOaRxKAevSyROmnf+yJlJH0f
+ Tfng==
+X-Gm-Message-State: AOJu0YwNSnRk2lW+kYKoyY0luJdmcyAOO4AR252rHezoijMxG4Q29Rlf
+ 8kUSI/4J3otVP3akqrbY6iBkb+KkgxjEIZDtLiORooM6OdDfjqjTwZjiqqb5efj0JMto8kRaWkq
+ 1MuqgsN3U6bXog05fjaPtu2I2kvVFbXUDDrnT2w==
+X-Google-Smtp-Source: AGHT+IEPaWVsgSEmdedl4I5+4SeJrOqzZ6P5viUTHI9ZAaBNEyyXTTUzxe4Zlr03hi7I79evv+NAVVy7z7juARr+MFQ=
+X-Received: by 2002:a17:907:36c5:b0:a8d:592d:f76 with SMTP id
+ a640c23a62f3a-a93c4a67db4mr789235166b.48.1727530653332; Sat, 28 Sep 2024
+ 06:37:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240924211153.1473771-1-mark.cave-ayland@ilande.co.uk>
-In-Reply-To: <20240924211153.1473771-1-mark.cave-ayland@ilande.co.uk>
+References: <20240925111029.24082-1-thuth@redhat.com>
+In-Reply-To: <20240925111029.24082-1-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 28 Sep 2024 14:37:05 +0100
-Message-ID: <CAFEAcA_3p=X0sb==TRAsGTvMK32AzuR0kTbtsZCZapw81+S2Rw@mail.gmail.com>
-Subject: Re: [PULL 0/1] qemu-openbios queue 20240924
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: qemu-devel@nongnu.org
+Date: Sat, 28 Sep 2024 14:37:22 +0100
+Message-ID: <CAFEAcA8tFGRgdVDZZz03xWXVRL2GSsKaAogr8dboCuK55P43hw@mail.gmail.com>
+Subject: Re: [PULL 00/44] Functional test conversion, and assert(0) cleanup
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -86,8 +86,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 24 Sept 2024 at 22:12, Mark Cave-Ayland
-<mark.cave-ayland@ilande.co.uk> wrote:
+On Wed, 25 Sept 2024 at 12:10, Thomas Huth <thuth@redhat.com> wrote:
 >
 > The following changes since commit 01dc65a3bc262ab1bec8fe89775e9bbfa627becb:
 >
@@ -95,19 +94,16 @@ On Tue, 24 Sept 2024 at 22:12, Mark Cave-Ayland
 >
 > are available in the Git repository at:
 >
->   https://github.com/mcayland/qemu.git tags/qemu-openbios-20240924
+>   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-09-25
 >
-> for you to fetch changes up to 972208be775a37dccb3047702ea1582e9936102c:
+> for you to fetch changes up to dc05b2628e3913e668590ba66d9c618382d351ae:
 >
->   roms/openbios: update OpenBIOS images to c3a19c1e built from submodule (2024-09-24 20:58:54 +0100)
->
-> ----------------------------------------------------------------
-> qemu-openbios queue
-> - Update OpenBIOS images to c3a19c1e built from submodule
+>   .gitlab-ci.d: Make separate collapsible log sections for build and test (2024-09-25 09:42:06 +0200)
 >
 > ----------------------------------------------------------------
-> Mark Cave-Ayland (1):
->       roms/openbios: update OpenBIOS images to c3a19c1e built from submodule
+> * Convert more Avocado tests to the new functional test framework
+> * Clean up assert() statements, use g_assert_not_reached() when possible
+> * Improve output of the gitlab CI jobs
 >
 
 
