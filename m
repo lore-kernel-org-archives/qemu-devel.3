@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B6EFCF6496
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79AC5CF6493
 	for <qemu-devel@archiver.kernel.org>; Sat, 28 Sep 2024 08:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suTHj-0000YY-OH; Sat, 28 Sep 2024 04:58:39 -0400
+	id 1suTHY-00008C-Ok; Sat, 28 Sep 2024 04:58:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1suTHh-0000WD-Ai
- for qemu-devel@nongnu.org; Sat, 28 Sep 2024 04:58:37 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1suTHW-0008So-Hq
+ for qemu-devel@nongnu.org; Sat, 28 Sep 2024 04:58:26 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1suTHf-0002K8-Gh
- for qemu-devel@nongnu.org; Sat, 28 Sep 2024 04:58:37 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-37ce18b042fso216868f8f.1
- for <qemu-devel@nongnu.org>; Sat, 28 Sep 2024 01:58:34 -0700 (PDT)
+ id 1suTHT-0002IA-R2
+ for qemu-devel@nongnu.org; Sat, 28 Sep 2024 04:58:26 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-42ca4e0299eso23834685e9.2
+ for <qemu-devel@nongnu.org>; Sat, 28 Sep 2024 01:58:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1727513913; x=1728118713;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1727513902; x=1728118702;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FfeuSle8WU9lgCf9lWNy2Qa389vC+1vrwCadU13cu6o=;
- b=jfBK+BRtJtF+gp8/N0evWYVshHEtFatc4vAU4REkpfEMwyNia872Xoha5jSnAopaeU
- DfgzpwHUF2pq/rRy0W8zWKTQVbfQXhkrKLvSCT3Wj+hPNCq15zgCji/E8iuN8dPDpEEC
- NjTijvUIQjt9fiAmyZd2AmGMrhm1iDa+cQ1gMEYscSAOgWKz3omVZzF3dEZ3EMTOmLES
- wjAC5/tlnWJPdugl019d664yNF/TKwlJzsthnXWc9x4xhyUFh+unUm8RumFJEJvPdvmU
- wcfDLOjiEEJQLFhdMKejW+mrLWY/vDJ2XXjfJ8J2zQSI17CxMIWmjdBcwmoGtJnzH8Gr
- uDjg==
+ bh=emwXegwM6KYIW65+ci8KhXuSLLm423iSwF1B6mw4630=;
+ b=1sfp+CL/g/+VkSzEQGRev3AFaYxZfjMq1CJijVh0cxtsqzgvINfzWOfbtQ+TT/jmfv
+ zRTQNJitI2fJqtYTld/ukvszKDthNhqql79E+poP7Q0JZZHwktAfiWUtgRyee4mGcLT6
+ gkxoHuprk4RoV/YqdHaG3REuZkfGApkDoS9ZXXMZe99w20hDl/ZPqRnmkvPBUnArlDAP
+ HmF9aurIYkId4/p9FIv+eGia6GBYXO6afHI7h184EtYU/+RfjVc6+YKa97MQYvUaqd7t
+ 8m2+3Lfetav2CLtCyo00seW6UuNPMMCv2dc3Pc9zij6r59xbG6Enx0DpFeXwnJedFSHG
+ VtHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727513913; x=1728118713;
+ d=1e100.net; s=20230601; t=1727513902; x=1728118702;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FfeuSle8WU9lgCf9lWNy2Qa389vC+1vrwCadU13cu6o=;
- b=fF+dr/fWB+TJE81U7rWzED+BUqaSH70XsNLRQ8lNtEGRvgkwfBTC/F3cJ5BWF2Q6Uu
- ifyAgBIQ3vdjsk9yEGRnLum3k6nCzpvvROjDoNkCjy/YSeOxn0HXUdJy5pRUyXY7ZKvH
- 0vjda0KbK+V+jMRSxZnbjPg32WtCWQO/megDIFHmQEnrAwYBZUutVHlJMEbdMEZRwAjO
- uF4Ddyt5W6o3hkzmbFyzCc5WkbXj0GHBi10kjL/MAPp2rJ2XSb4znjIPXET8YN05Fidc
- plbgwaGTKIwIE32jo4BqS8B2XDkxr4TxmUBfo0hOEDzDyOXGcKplcJhVQ2XjXhS9XqSw
- rLPQ==
-X-Gm-Message-State: AOJu0YwdY9INzal3+lnRY+iW5TgLfmLQ0bKvFgzDEZ3N9X7yhV7Ln74J
- meRQkiivIcNgVei5xDFjMfctbwuGV+XyHCjqQcMcqvCA8uSwTLAzqjaXjRbQ+15i7bQfKDssbP7
- j8g==
-X-Google-Smtp-Source: AGHT+IGADEFUjJjdNj/ScMmbJthalbIvRiUmnE9lhPF6mFJEgYEg6JrbjYyhU/VLvr5+ABiN29vhig==
-X-Received: by 2002:a5d:404a:0:b0:371:a8a3:f9a1 with SMTP id
- ffacd0b85a97d-37cd5a831fcmr3731857f8f.11.1727513913081; 
- Sat, 28 Sep 2024 01:58:33 -0700 (PDT)
+ bh=emwXegwM6KYIW65+ci8KhXuSLLm423iSwF1B6mw4630=;
+ b=Ps/bHlJAXz8rqoPvOOOu2hG1qlscPfODkMxpvGjEp+fGxBtzLrkz1rhmAYfmcmypDu
+ npPncjDWLON6FxrkKq96z0be6S3Pi8FmSKcAGXsXSa3kTZwj3JHryYyxCpdhcGYNRj6H
+ xoHKE71eUWlpcZDAMlQojSH6anVdo2Y65HJq42Wm0TRSFfgVsmWFbJ3gluX2yLH5lv5F
+ 7NL1UkIvu21KT6+Fl2MRCD9NTQMIA9aeQdC03P3CCnEBR6bIDdjwVODcqOt3ak8sE1jY
+ G6bIciBaHI0gFUA/Yfups0cnWLAfXVvM4M2rG4fR367FYdoF4gVKlOSpxaspRwcFX3uN
+ fXQw==
+X-Gm-Message-State: AOJu0Yw+vcQtzWvoJH/O9QbHzxwOTbehV5hdVP0bYNI90n1U0S+AgJKg
+ kIUiRh1pdEY1lzpVVh2vFT7mxjWSlqtdS3tVISWUv/Wvmk48MXkE+e2cYaK+Uq9+46HJZYOeBk0
+ tjQ==
+X-Google-Smtp-Source: AGHT+IGXZBOV88uGQzmNeyQjuqZ1N5iL/ed4zCI6+RTC9fgfOp2UZt4ohgSuxmg97vD1wvnjItC9Ig==
+X-Received: by 2002:a05:600c:4f82:b0:428:1310:b6b5 with SMTP id
+ 5b1f17b1804b1-42f5849c3demr41288325e9.34.1727513902024; 
+ Sat, 28 Sep 2024 01:58:22 -0700 (PDT)
 Received: from localhost.localdomain ([2001:4bb8:2ae:e42d:7dbb:76ba:120d:8a28])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd57423afsm4313167f8f.90.2024.09.28.01.58.28
+ ffacd0b85a97d-37cd57423afsm4313167f8f.90.2024.09.28.01.58.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 28 Sep 2024 01:58:32 -0700 (PDT)
+ Sat, 28 Sep 2024 01:58:21 -0700 (PDT)
 From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org
 Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
@@ -74,18 +74,17 @@ Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
  jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, berrange@redhat.com,
  akihiko.odaki@daynix.com, qemu-arm@nongnu.org, qemu-block@nongnu.org,
  qemu-riscv@nongnu.org
-Subject: [PATCH v3 05/14] MAINTAINERS: Add myself as maintainer for apple-gfx,
- reviewer for HVF
-Date: Sat, 28 Sep 2024 10:57:18 +0200
-Message-Id: <20240928085727.56883-6-phil@philjordan.eu>
+Subject: [PATCH v3 03/14] ui/cocoa: Adds non-app runloop on main thread mode
+Date: Sat, 28 Sep 2024 10:57:16 +0200
+Message-Id: <20240928085727.56883-4-phil@philjordan.eu>
 X-Mailer: git-send-email 2.39.3 (Apple Git-145)
 In-Reply-To: <20240928085727.56883-1-phil@philjordan.eu>
 References: <20240928085727.56883-1-phil@philjordan.eu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::436;
- envelope-from=phil@philjordan.eu; helo=mail-wr1-x436.google.com
+Received-SPF: neutral client-ip=2a00:1450:4864:20::334;
+ envelope-from=phil@philjordan.eu; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -107,55 +106,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I'm happy to take responsibility for the macOS PV graphics code. As
-HVF patches don't seem to get much attention at the moment, I'm also
-adding myself as designated reviewer for HVF and x86 HVF to try and
-improve that.
+Various system frameworks on macOS and other Apple platforms
+require a main runloop to be processing events on the process’s
+main thread. The Cocoa UI’s requirement to run the process as a
+Cocoa application automatically enables this runloop, but it
+can be useful to have the runloop handling events even without
+the Cocoa UI active.
 
-I anticipate that the resulting workload should be covered by the
-funding I'm receiving for improving Qemu in combination with macOS. As
-of right now this runs out at the end of 2024; I expect the workload on
-apple-gfx should be relatively minor and manageable in my spare time
-beyond that. I may have to remove myself from more general HVF duties
-once the contract runs out if it's more than I can manage.
+This change adds a non-app runloop mode to the cocoa_main
+function. This can be requested by other code, while the Cocoa UI
+additionally enables app mode. This arrangement ensures there is
+only one qemu_main function switcheroo, and the Cocoa UI’s app
+mode requirement and other subsystems’ runloop requests don’t
+conflict with each other.
+
+The main runloop is required for the AppleGFX PV graphics device,
+so the runloop request call has been added to its initialisation.
 
 Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 ---
- MAINTAINERS | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/display/apple-gfx.m |  3 +++
+ include/qemu-main.h    |  2 ++
+ ui/cocoa.m             | 15 +++++++++++++--
+ 3 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ffacd60f407..0133b874847 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -510,6 +510,7 @@ F: target/arm/hvf/
- X86 HVF CPUs
- M: Cameron Esfahani <dirty@apple.com>
- M: Roman Bolshakov <rbolshakov@ddn.com>
-+R: Phil Dennis-Jordan <phil@philjordan.eu>
- W: https://wiki.qemu.org/Features/HVF
- S: Maintained
- F: target/i386/hvf/
-@@ -517,6 +518,7 @@ F: target/i386/hvf/
- HVF
- M: Cameron Esfahani <dirty@apple.com>
- M: Roman Bolshakov <rbolshakov@ddn.com>
-+R: Phil Dennis-Jordan <phil@philjordan.eu>
- W: https://wiki.qemu.org/Features/HVF
- S: Maintained
- F: accel/hvf/
-@@ -2624,6 +2626,11 @@ F: hw/display/edid*
- F: include/hw/display/edid.h
- F: qemu-edid.c
+diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
+index 837300f9cd4..6ef1048d93d 100644
+--- a/hw/display/apple-gfx.m
++++ b/hw/display/apple-gfx.m
+@@ -14,6 +14,7 @@
  
-+macOS PV Graphics (apple-gfx)
-+M: Phil Dennis-Jordan <phil@philjordan.eu>
-+S: Maintained
-+F: hw/display/apple-gfx*
+ #include "apple-gfx.h"
+ #include "trace.h"
++#include "qemu-main.h"
+ #include "qemu/main-loop.h"
+ #include "ui/console.h"
+ #include "monitor/monitor.h"
+@@ -299,6 +300,8 @@ void apple_gfx_common_init(Object *obj, AppleGFXState *s, const char* obj_name)
+             error_report_err(local_err);
+         }
+     }
 +
- PIIX4 South Bridge (i82371AB)
- M: Hervé Poussineau <hpoussin@reactos.org>
- M: Philippe Mathieu-Daudé <philmd@linaro.org>
++    cocoa_enable_runloop_on_main_thread();
+ }
+ 
+ static void apple_gfx_register_task_mapping_handlers(AppleGFXState *s,
+diff --git a/include/qemu-main.h b/include/qemu-main.h
+index 940960a7dbc..da4516e69eb 100644
+--- a/include/qemu-main.h
++++ b/include/qemu-main.h
+@@ -8,4 +8,6 @@
+ int qemu_default_main(void);
+ extern int (*qemu_main)(void);
+ 
++void cocoa_enable_runloop_on_main_thread(void);
++
+ #endif /* QEMU_MAIN_H */
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index 4c2dd335323..40f65d7a45d 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -2028,6 +2028,7 @@ static void cocoa_clipboard_request(QemuClipboardInfo *info,
+     exit(status);
+ }
+ 
++static bool run_as_cocoa_app = false;
+ static int cocoa_main(void)
+ {
+     QemuThread thread;
+@@ -2040,7 +2041,11 @@ static int cocoa_main(void)
+ 
+     // Start the main event loop
+     COCOA_DEBUG("Main thread: entering OSX run loop\n");
+-    [NSApp run];
++    if (run_as_cocoa_app) {
++        [NSApp run];
++    } else {
++        CFRunLoopRun();
++    }
+     COCOA_DEBUG("Main thread: left OSX run loop, which should never happen\n");
+ 
+     abort();
+@@ -2114,13 +2119,19 @@ static void cocoa_cursor_define(DisplayChangeListener *dcl, QEMUCursor *cursor)
+     });
+ }
+ 
++void cocoa_enable_runloop_on_main_thread(void)
++{
++    qemu_main = cocoa_main;
++}
++
+ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
+ {
+     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+ 
+     COCOA_DEBUG("qemu_cocoa: cocoa_display_init\n");
+ 
+-    qemu_main = cocoa_main;
++    run_as_cocoa_app = true;
++    cocoa_enable_runloop_on_main_thread();
+ 
+     // Pull this console process up to being a fully-fledged graphical
+     // app with a menubar and Dock icon
 -- 
 2.39.3 (Apple Git-145)
 
