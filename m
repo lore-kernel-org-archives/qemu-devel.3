@@ -4,58 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 830A3CF6495
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Sep 2024 10:49:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30323CF6495
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Sep 2024 11:35:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suUzt-0003YK-GW; Sat, 28 Sep 2024 06:48:21 -0400
+	id 1suViX-0005LU-W2; Sat, 28 Sep 2024 07:34:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuzenghui@huawei.com>)
- id 1suUzr-0003XG-VK
- for qemu-devel@nongnu.org; Sat, 28 Sep 2024 06:48:19 -0400
-Received: from szxga02-in.huawei.com ([45.249.212.188])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuzenghui@huawei.com>)
- id 1suUzp-00015m-E7
- for qemu-devel@nongnu.org; Sat, 28 Sep 2024 06:48:19 -0400
-Received: from mail.maildlp.com (unknown [172.19.88.194])
- by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4XG3rm0pPQzfc3m;
- Sat, 28 Sep 2024 18:45:28 +0800 (CST)
-Received: from kwepemm600007.china.huawei.com (unknown [7.193.23.208])
- by mail.maildlp.com (Postfix) with ESMTPS id AB291140392;
- Sat, 28 Sep 2024 18:47:46 +0800 (CST)
-Received: from [10.174.178.219] (10.174.178.219) by
- kwepemm600007.china.huawei.com (7.193.23.208) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Sat, 28 Sep 2024 18:47:45 +0800
-Subject: Re: RTC time could run slow 3s than host time when clock=vm & base=UTC
-To: =?UTF-8?B?6LS+5bqG5b2k?= <jiaqingtong@huawei.com>
-References: <eba4b2cf-cf64-4237-aaf6-8aa521c77007@huawei.com>
-CC: <qemu-devel@nongnu.org>, <mst@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, <artem.k.pisarenko@gmail.com>
-Message-ID: <081379a0-a34f-49ae-e8f3-8fd497fea97a@huawei.com>
-Date: Sat, 28 Sep 2024 18:47:45 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.1
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1suViW-0005Ku-Bj
+ for qemu-devel@nongnu.org; Sat, 28 Sep 2024 07:34:28 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1suViU-00076t-JP
+ for qemu-devel@nongnu.org; Sat, 28 Sep 2024 07:34:28 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a8ce5db8668so485815566b.1
+ for <qemu-devel@nongnu.org>; Sat, 28 Sep 2024 04:34:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727523263; x=1728128063; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=oa+O+Qdevwxsp4agPgwENth31zthndTfKkPIDFq4wzY=;
+ b=IHWYVtjRGvZ+QmNIEUUXOl79C6W34akVxV6ApIurAMRpa9exUbL9k9jJuT67xScVyI
+ iOb+35Mig00sKpkBEXuLX8xVe4yhhILpTpnpm6nMSyOEjMK0LFiddqVfa6t6Cv+xuo91
+ yRpKttgN2OLDbD5UaFdjiIbC4NdEBjEELXHzatN/AAOvz/n4mqNtUzyvdeTHyhlhDncq
+ 4K8+DpqOjpLMOhePezlFCgXU15uxXiw4JrQJZnKDmcDyitLpwfu7Lc8sfDLXUZFvrfoH
+ upgJDhGIiz9QDZ4RljnvVGFZMl2eofipjVM+HL70UXq07QCPRDiCUcgsP31IUDPFTGHD
+ kSFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727523263; x=1728128063;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=oa+O+Qdevwxsp4agPgwENth31zthndTfKkPIDFq4wzY=;
+ b=GaTXIFsGMNsuQPxhoILsmypvL2DE4h0OypHhP2SfvZY1VvEI2m1wwbP4yuGO2UkV4X
+ VXXjDx47hUwtXLhajZvhgCSCp6fIUOP3V/fdCcaertKFYowXGEgFbJLBMLjJO7D+HgYE
+ 99kuuZ617OUYqloKQdFjbLjojDRhybSECldU/oBXRsWx4yPTBNeI5WOTUd1sL5h0T838
+ jPfJ/IifPGHZMvm5FQSkLsV7qltAr2kve1AZwbIT7s96MA1yevGLQUC4iCi6UhkJUiYN
+ rNtM7PQvfKM0VhT+4hp/nzxs13MFLA0YhDyX80Ixf14IEagK/6wvRpdiQjimlkxDd6F5
+ Ss5g==
+X-Gm-Message-State: AOJu0YxXcK2K6WMQcNqJuJbEcAETaetxAucBoGslLusTkvUrEiOocABH
+ pQLhPCoLaC89pCoc+ITQbT2GHqq4BxRhauu5B6fVc22MSr1pvC8wv6nnEgzys0je4P9JtB8dWlP
+ lhKWKytWVEJ5D/yOnsCmPU0Hc1zb8NxeHjbCLOw==
+X-Google-Smtp-Source: AGHT+IFLwkOVmlSL+OXL5Cizs5fKOpMUPc5+w/y/IwcDhjwTdLvAm2ExTGkrs/tFggVSWshPuxgiMGFVeK+/yLK3prk=
+X-Received: by 2002:a17:907:1b92:b0:a80:d913:be07 with SMTP id
+ a640c23a62f3a-a93c492a39emr396679766b.36.1727523263277; Sat, 28 Sep 2024
+ 04:34:23 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <eba4b2cf-cf64-4237-aaf6-8aa521c77007@huawei.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.174.178.219]
-X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
- kwepemm600007.china.huawei.com (7.193.23.208)
-Received-SPF: pass client-ip=45.249.212.188; envelope-from=yuzenghui@huawei.com;
- helo=szxga02-in.huawei.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.165,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240924221751.2688389-1-alistair.francis@wdc.com>
+In-Reply-To: <20240924221751.2688389-1-alistair.francis@wdc.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 28 Sep 2024 12:34:11 +0100
+Message-ID: <CAFEAcA9Sb-fpNhm-6DPwss5zMpw=nEp31Wt6q1OA6DqCg3wKEg@mail.gmail.com>
+Subject: Re: [PULL v2 00/47] riscv-to-apply queue
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,82 +83,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Zenghui Yu <yuzenghui@huawei.com>
-From:  Zenghui Yu via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Cc maintainers and author of [1]
+On Tue, 24 Sept 2024 at 23:18, Alistair Francis <alistair23@gmail.com> wrote:
+>
+> The following changes since commit 01dc65a3bc262ab1bec8fe89775e9bbfa627becb:
+>
+>   Merge tag 'pull-target-arm-20240919' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-09-19 14:15:15 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20240925-1
+>
+> for you to fetch changes up to 6bfa92c5757fe7a9580e1f6e065076777cae650f:
+>
+>   bsd-user: Add RISC-V 64-bit Target Configuration and Debug XML Files (2024-09-24 12:53:16 +1000)
+>
+> ----------------------------------------------------------------
+> RISC-V PR for 9.2
+>
+> * Add a property to set vl to ceil(AVL/2)
+> * Enable numamem testing for RISC-V
+> * Consider MISA bit choice in implied rule
+> * Fix the za64rs priv spec requirements
+> * Enable Bit Manip for OpenTitan Ibex CPU
+> * Fix the group bit setting of AIA with KVM
+> * Stop timer with infinite timecmp
+> * Add 'fcsr' register to QEMU log as a part of F extension
+> * Fix riscv64 build on musl libc
+> * Add preliminary textra trigger CSR functions
+> * RISC-V IOMMU support
+> * RISC-V bsd-user support
+> * Respect firmware ELF entry point
+> * Add Svvptc extension support
+> * Fix masking of rv32 physical address
+> * Fix linking problem with semihosting disabled
+> * Fix IMSIC interrupt state updates
+>
 
-On 2024/9/21 19:33, 贾庆彤 via wrote:
-> When start qemu with -rtc base=utc,clock=vm, sometime guest time can
-> slower 3s than host.
-> 
-> There's no problem (also didn't be noticed) as we often start ntp
-> service, who will adjust our system time.
-> 
-> But let's talk about if we havn't enable NTP service(for example system
-> just booted)
-> 
-> After inspect into the code, i found that there are two problem we
-> should think about:
-> 
-> 1） The RTC time accuracy problem
-> 
-> 1. in the call chains
-> rtc_realizefn->rtc_set_date_from_host->qemu_get_timedate->qemu_ref_timedate,
-> 
-> 
-> the qemu_clock_get_ms(clock) / 1000 will lost ~0.999s at max.
-> 
-> 2. In the call chains cmos_ioport_read->rtc_update_time, the guest_sec =
-> guest_nsec / NANOSECONDS_PER_SECOND
-> 
-> will also lost ~0.999s at max.
-> 
-> 3. after this[1] merged, in configure_rtc, the rtc_ref_start_datetime =
-> qemu_clock_get_ms(QEMU_CLOCK_HOST) / 1000
-> 
-> will also lost ~0.999s at max.
-> 
-> Therefore, total about 3s the guest time will behind the host.
-> 
-> So what precision should we offer? the RTC Hardware's precision is
-> second(that means the smallest step is 1 second,
-> 
-> not the accurate like time error about 8.6 to 1.7 seconds per day),
-> 
-> 
-> 2）The ref start datetime
-> 
-> After this[1] merged, which intend to solve the -rtc
-> base=DATETIME,clock=vm's problem ("It restores determinism
-> 
-> of guest execution when used with clock=vm and specified base value.").
-> 
-> "-rtc base=utc,clock=vm"'s ref start date time changed from the host
-> time of the current executing code to
-> 
-> the const time of executing configure_rtc(rtc_ref_start_datetime =
-> qemu_clock_get_ms(QEMU_CLOCK_HOST) / 1000;).
-> 
-> This will add additional time(current approx. 0.4s or other, depend on
-> code executing time and how many class_init
-> 
->  executed etc.),which start from configure_rtc to rtc device init, into
-> guest time.
-> 
-> Hence, should we try to split -rtc base=utc,clock=vm's ref start date
-> time to the original current host time
-> 
-> qemu_clock_get_ms(QEMU_CLOCK_HOST),not the time(rtc_ref_start_datetime)
-> save in configure_rtc,
-> 
-> to achieve more accurate time?(or other better method)
-> 
-> 
-> [1] https://lists.gnu.org/archive/html/qemu-devel/2018-10/msg03577.html
-> 
-> 
-> .
+This fails the riscv qos-tests on s390x. My guess is that the new
+IOMMU support has endianness bugs and fails on bigendian hosts.
+
+https://gitlab.com/qemu-project/qemu/-/jobs/7942189143
+
+full test log (4MB) at
+https://qemu-project.gitlab.io/-/qemu/-/jobs/7942189143/artifacts/build/meson-logs/testlog.txt
+
+The assertion failure is
+ERROR:../tests/qtest/riscv-iommu-test.c:72:test_reg_reset: assertion
+failed (cap & RISCV_IOMMU_CAP_VERSION == 0x10): (0 == 16)
+
+but there are a lot of virtio errors before that so the
+problem probably happened rather earlier.
+
+thanks
+-- PMM
 
