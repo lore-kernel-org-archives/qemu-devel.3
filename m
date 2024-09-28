@@ -4,64 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17926CF6491
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Sep 2024 15:00:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 701A0CF6493
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Sep 2024 17:53:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suYvE-000488-Jh; Sat, 28 Sep 2024 10:59:48 -0400
+	id 1subcY-0005Q2-Ls; Sat, 28 Sep 2024 13:52:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+de8e11e1c91ffdbc9cc5+7706+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1suYvC-00047Y-PO
- for qemu-devel@nongnu.org; Sat, 28 Sep 2024 10:59:46 -0400
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
+ id 1subcW-0005Ov-Bo
+ for qemu-devel@nongnu.org; Sat, 28 Sep 2024 13:52:40 -0400
+Received: from mx0a-00190b01.pphosted.com ([2620:100:9001:583::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+de8e11e1c91ffdbc9cc5+7706+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1suYvA-00054M-5e
- for qemu-devel@nongnu.org; Sat, 28 Sep 2024 10:59:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=a/MdCWTHPuBCAeQSIKlOD0+vBZHeJwdYTR8tdHPIvZ4=; b=qhJC5rJ3SdzKp/t2WC1Yozt17j
- PzeI5N77GGeZuJ1iLgGX81AMvO11Zfe//t1TAIfASHtD9+rxwULlKRdhGwIf31t4W7PG3slHKRWRJ
- KcuiEzLcxtAgJCfFZUhv1IqfW2CZ5yOIaRkhe5vmiXli5He4KPfLdaKDejb03ArF4aRwjpVjaOnmK
- M2AoecaB5PtDiVowxsq4WpB+2IRxrckiXIEWvsJ0fTPWPJzDAKCuFBkJPUOA3yqpLC9Z1hEYHxPv+
- OrvI1JfB5ShOU8XOs3rqcZuJ2aAan0jvOZ8w4zYpvwE2aTGhg95a8G+ItYbzczLwm1pgS8G6Bzahd
- 87FvAoFg==;
-Received: from [2001:8b0:10b:5:13ca:f694:91f6:1d11]
- (helo=u3832b3a9db3152.ant.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1suYuy-0000000CWQL-1f76; Sat, 28 Sep 2024 14:59:33 +0000
-Message-ID: <a80c99b0e10e71a5a301c884d699eeaff3893349.camel@infradead.org>
-Subject: Re: More than 255 vcpus Windows VM setup without viommu ?
-From: David Woodhouse <dwmw2@infradead.org>
-To: Sandesh Patel <sandesh.patel@nutanix.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-Cc: Rob Scheepens <rob.scheepens@nutanix.com>, Prerna Saxena
- <confluence@nutanix.com>, Alexander Graf <agraf@csgraf.de>
-Date: Sat, 28 Sep 2024 15:59:32 +0100
-In-Reply-To: <B75A5788-630B-4898-8758-52B57D3D5895@nutanix.com>
-References: <B75A5788-630B-4898-8758-52B57D3D5895@nutanix.com>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-i+kFV2wV6yvca/lA14Az"
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
+ id 1subcT-0001IM-Tq
+ for qemu-devel@nongnu.org; Sat, 28 Sep 2024 13:52:40 -0400
+Received: from pps.filterd (m0050093.ppops.net [127.0.0.1])
+ by m0050093.ppops.net-00190b01. (8.18.1.2/8.18.1.2) with ESMTP id
+ 48SCpFIW030351; Sat, 28 Sep 2024 18:52:13 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=jan2016.eng;
+ bh=ie0LCEcENIwV73hfguoA+liqqqaFCLk1QjoV60a5HAQ=; b=bHzdUnoX5pRV
+ JEZ3hCw4NSZn89FhKYDCQdWdckhJjmQWQWcYxqiMywgsho2EL84bLEdNOGbNhZuM
+ zIKGlesLdagIXNxF4LIE7JNGY9SkDzUImyB6e3qHuisNYfpTw7z5pVq6Yz9DIsHk
+ ttiz/yjUjZXw7AJltXb709mzlgcskl8GDXANmuv+NTStGyyiJFxXspXtdlZrZ7oT
+ 6xEn5jQwMoupARrPD+W/ICUHMnLQKZhnLOevFKmsrMl91maZ9NfOfSNNcgKRojua
+ iYKkMPU58yWe43WaUbqJQm6BNis39sgvyaA3sf3+a7kGMYtXxCtHBr8F/Zjj7x0+
+ EPqSlk5buw==
+Received: from prod-mail-ppoint2 (prod-mail-ppoint2.akamai.com [184.51.33.19]
+ (may be forged))
+ by m0050093.ppops.net-00190b01. (PPS) with ESMTPS id 41x92sf53s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 28 Sep 2024 18:52:13 +0100 (BST)
+Received: from pps.filterd (prod-mail-ppoint2.akamai.com [127.0.0.1])
+ by prod-mail-ppoint2.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
+ 48SEsAN9004274; Sat, 28 Sep 2024 13:52:11 -0400
+Received: from prod-mail-relay10.akamai.com ([172.27.118.251])
+ by prod-mail-ppoint2.akamai.com (PPS) with ESMTP id 41xd4w9dkt-1;
+ Sat, 28 Sep 2024 13:52:11 -0400
+Received: from [100.64.0.1] (prod-aoa-csiteclt14.bos01.corp.akamai.com
+ [172.27.97.51])
+ by prod-mail-relay10.akamai.com (Postfix) with ESMTP id 97BFB65EC1;
+ Sat, 28 Sep 2024 17:52:09 +0000 (GMT)
+Message-ID: <0730fa9b-49cd-46e4-9264-afabe2486154@akamai.com>
+Date: Sat, 28 Sep 2024 12:52:08 -0500
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+de8e11e1c91ffdbc9cc5+7706+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
+To: Sean Hefty <shefty@nvidia.com>, Peter Xu <peterx@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "yu.zhang@ionos.com" <yu.zhang@ionos.com>,
+ "elmar.gerdes@ionos.com" <elmar.gerdes@ionos.com>,
+ zhengchuan <zhengchuan@huawei.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>,
+ "lizhijian@fujitsu.com" <lizhijian@fujitsu.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ Xiexiangyou <xiexiangyou@huawei.com>,
+ "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
+ "lixiao (H)" <lixiao91@huawei.com>,
+ "jinpu.wang@ionos.com" <jinpu.wang@ionos.com>,
+ Wangjialin <wangjialin23@huawei.com>
+References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
+ <Zs4z7tKWif6K4EbT@x1n> <20240827165643-mutt-send-email-mst@kernel.org>
+ <027c4f24-f515-4fdb-8770-6bf2433e0f43@akamai.com>
+ <84c74f1a95a648b18c9d41b8c5ef2f60@huawei.com> <ZvQnbzV9SlXKlarV@x1n>
+ <DM6PR12MB431364C7A2D94609B4AAF9A8BD6B2@DM6PR12MB4313.namprd12.prod.outlook.com>
+Content-Language: en-US
+From: Michael Galaxy <mgalaxy@akamai.com>
+In-Reply-To: <DM6PR12MB431364C7A2D94609B4AAF9A8BD6B2@DM6PR12MB4313.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-28_12,2024-09-27_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ mlxlogscore=999
+ adultscore=0 phishscore=0 bulkscore=0 suspectscore=0 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2408220000 definitions=main-2409280137
+X-Proofpoint-GUID: fKK--ENlmgw7CIP8wLUF9LIkdKzVtEM-
+X-Proofpoint-ORIG-GUID: fKK--ENlmgw7CIP8wLUF9LIkdKzVtEM-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ bulkscore=0
+ suspectscore=0 lowpriorityscore=0 adultscore=0 clxscore=1011 spamscore=0
+ mlxlogscore=959 impostorscore=0 priorityscore=1501 phishscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2409280137
+Received-SPF: pass client-ip=2620:100:9001:583::1;
+ envelope-from=mgalaxy@akamai.com; helo=mx0a-00190b01.pphosted.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.095,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,164 +120,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 9/27/24 16:45, Sean Hefty wrote:
+> !-------------------------------------------------------------------|
+>    This Message Is From an External Sender
+>    This message came from outside your organization.
+> |-------------------------------------------------------------------!
+>
+>>>> I have met with the team from IONOS about their testing on actual IB
+>>>> hardware here at KVM Forum today and the requirements are starting
+>>>> to make more sense to me. I didn't say much in our previous thread
+>>>> because I misunderstood the requirements, so let me try to explain
+>>>> and see if we're all on the same page. There appears to be a
+>>>> fundamental limitation here with rsocket, for which I don't see how it is
+>> possible to overcome.
+>>>> The basic problem is that rsocket is trying to present a stream
+>>>> abstraction, a concept that is fundamentally incompatible with RDMA.
+>>>> The whole point of using RDMA in the first place is to avoid using
+>>>> the CPU, and to do that, all of the memory (potentially hundreds of
+>>>> gigabytes) need to be registered with the hardware *in advance* (this is
+>> how the original implementation works).
+>>>> The need to fake a socket/bytestream abstraction eventually breaks
+>>>> down => There is a limit (a few GB) in rsocket (which the IONOS team
+>>>> previous reported in testing.... see that email), it appears that
+>>>> means that rsocket is only going to be able to map a certain limited
+>>>> amount of memory with the hardware until its internal "buffer" runs
+>>>> out before it can then unmap and remap the next batch of memory with
+>>>> the hardware to continue along with the fake bytestream. This is
+>>>> very much sticking a square peg in a round hole. If you were to
+>>>> "relax" the rsocket implementation to register the entire VM memory
+>>>> space (as my original implementation does), then there wouldn't be any
+>> need for rsocket in the first place.
+>>
+>> Yes, some test like this can be helpful.
+>>
+>> And thanks for the summary.  That's definitely helpful.
+>>
+>> One question from my side (as someone knows nothing on RDMA/rsocket): is
+>> that "a few GBs" limitation a software guard?  Would it be possible that rsocket
+>> provide some option to allow user opt-in on setting that value, so that it might
+>> work for VM use case?  Would that consume similar resources v.s. the current
+>> QEMU impl but allows it to use rsockets with no perf regressions?
+> Rsockets is emulated the streaming socket API.  The amount of memory dedicated to a single rsocket is controlled through a wmem_default configuration setting.  It is also configurable via rsetsockopt() SO_SNDBUF.  Both of those are similar to TCP settings.  The SW field used to store this value is 32-bits.
+>
+> This internal buffer acts as a bounce buffer to convert the synchronous socket API calls into the asynchronous RDMA transfers.  Rsockets uses the CPU for data copies, but the transport is offloaded to the NIC, including kernel bypass.
+Understood.
+> Does your kernel allocate > 4 GBs of buffer space to an individual socket?
+Yes, it absolutely does. We're dealing with virtual machines here, 
+right? It is possible (and likely) to have a virtual machine that is 
+hundreds of GBs of RAM in size.
 
---=-i+kFV2wV6yvca/lA14Az
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+A bounce buffer defeats the entire purpose of using RDMA in these cases. 
+When using RDMA for very large transfers like this, the goal here is to 
+map the entire memory region at once and avoid all CPU interactions 
+(except for message management within libibverbs) so that the NIC is 
+doing all of the work.
 
-On Tue, 2024-07-02 at 05:17 +0000, Sandesh Patel wrote:
->=20
-> The error is due to invalid MSIX routing entry passed to KVM.
->=20
-> The VM boots fine if we attach a vIOMMU but adding a vIOMMU can
-> potentially result in IO performance loss in guest.
-> I was interested to know if someone could boot a large Windows VM by
-> some other means like kvm-msi-ext-dest-id.
+I'm sure rsocket has its place with much smaller transfer sizes, but 
+this is very different.
 
-I think I may (with Alex Graf's suggestion) have found the Windows bug
-with Intel IOMMU.
+- Michael
 
-It looks like when interrupt remapping is enabled with an AMD CPU,
-Windows *assumes* it can generate AMD-style MSI messages even if the
-IOMMU is an Intel one. If we put a little hack into the IOMMU interrupt
-remapping to make it interpret an AMD-style message, Windows seems to
-boot at least a little bit further than it did before...
-
-
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -3550,9 +3550,14 @@ static int vtd_interrupt_remap_msi(IntelIOMMUState *=
-iommu,
-=20
-     /* This is compatible mode. */
-     if (addr.addr.int_mode !=3D VTD_IR_INT_FORMAT_REMAP) {
--        memcpy(translated, origin, sizeof(*origin));
--        goto out;
--    }
-+        if (0) {
-+            memcpy(translated, origin, sizeof(*origin));
-+            goto out;
-+        }
-+        /* Pretend it's an AMD-format remappable MSI (Yay Windows!) */
-+        index =3D origin->data & 0x7ff;
-+        printf("Compat mode index 0x%x\n", index);
-+    } else
-=20
-     index =3D addr.addr.index_h << 15 | addr.addr.index_l;
-=20
-
-
---=-i+kFV2wV6yvca/lA14Az
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
-ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
-EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
-FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
-aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
-EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
-VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
-ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
-QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
-rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
-ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
-U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
-DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
-BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
-dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
-BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
-QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
-CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
-xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
-IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
-kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
-eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
-KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
-1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
-OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
-x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
-5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
-DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
-VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
-UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
-MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
-ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
-oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
-SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
-xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
-RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
-bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
-NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
-KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
-5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
-C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
-gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
-VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
-by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
-b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
-BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
-QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
-c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
-AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
-qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
-v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
-Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
-tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
-Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
-YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
-ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
-IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
-ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
-GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
-h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
-9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
-P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
-2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
-BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
-7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
-lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
-lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
-AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
-Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
-FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
-BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
-cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
-aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
-LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
-BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
-cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
-Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
-lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
-WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
-hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
-IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
-dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
-NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
-xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
-DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwOTI4MTQ1OTMyWjAvBgkqhkiG9w0BCQQxIgQgMjEK0JJ3
-Vef48kGQKSg41Hv9T5wzLLOjtfcBw61NzuIwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
-A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
-dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
-DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
-MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
-Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
-lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgBinxfArhWbMf4de1lKWSqCcVrHOumnEB0O
-eeb8YDD2gmyRUs0+dsyJ8qRilz2n8U92+Yms89HE3vkN2yNU5L+kHfzbv7NM/y+1IAETHNrXdJ3s
-wWQPjYiPf2Tpb0u5agCKgGeEQFF6FpRwtAc3WJc1B09fI12LnrRyFhXPpc1B3N+uGRrDKad6/qOu
-ix+sON5jMgF6plCWxHNo/3rOJqJVy5QsfDElUWxKtKlxSFLYnhksabjhl/BZ4iaIIjjpJRfLED1Z
-aN4ZbrHtuo10qWL39MUrEt1f/GTxlDq9U8P/aFoSvuiAw2EewUeMLe4YzjgajWYcrjhoe8FLrg+p
-HemXwRJLv+Vud8OOmhMEYYIDFfxfUWFHRBrFAcdSC34B45+5yr4HsEZqlOtz8ivkPEfHZVtKtbeo
-cPuR4tr/JhyZFPJBc0pxA4LewB1gIBYuCITg27Kyw3RceN3hK1GoHUi2EqApokvxlbnCsEE1gfSh
-A0yFCpMUF5XN0ovsJ8yVGTPdri9r8mYL+mLGI1jaZDx9EIDkT/KZLS2w2TOehqbQLrtNlUE9mGVi
-JlnZPp9UWsGDNfWwQpe6rhhMRIHsXv53TyRbaxvrOtYoTHvIUNs4nPVjI/DRmWmGrDO0Xzc4Pp0/
-YwFy41DgGZY1u9WxkrW0tbJiNiby/4Qzki5h2rML4gAAAAAAAA==
-
-
---=-i+kFV2wV6yvca/lA14Az--
 
