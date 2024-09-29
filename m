@@ -4,38 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B26CCF6495
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Sep 2024 08:36:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CFD0CF649E
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Sep 2024 08:36:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1supOc-0006iy-E6; Sun, 29 Sep 2024 04:35:14 -0400
+	id 1supOn-00071n-Ac; Sun, 29 Sep 2024 04:35:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1supOZ-0006hZ-E8
- for qemu-devel@nongnu.org; Sun, 29 Sep 2024 04:35:12 -0400
+ id 1supOd-0006nI-On
+ for qemu-devel@nongnu.org; Sun, 29 Sep 2024 04:35:16 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1supOS-0006Gd-83
- for qemu-devel@nongnu.org; Sun, 29 Sep 2024 04:35:07 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1supOa-0006SE-Er
+ for qemu-devel@nongnu.org; Sun, 29 Sep 2024 04:35:15 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxrnMwEflmz70DAA--.3376S3;
- Sun, 29 Sep 2024 16:34:56 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Dx+3I+Eflm7r0DAA--.3252S3;
+ Sun, 29 Sep 2024 16:35:10 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMBxn+QtEflmFt0UAA--.54891S2;
- Sun, 29 Sep 2024 16:34:53 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBxn+QtEflmFt0UAA--.54891S7;
+ Sun, 29 Sep 2024 16:35:08 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PULL 0/7] loongarch-to-apply queue
-Date: Sun, 29 Sep 2024 16:17:17 +0800
-Message-Id: <20240929081724.2139556-1-gaosong@loongson.cn>
+Cc: peter.maydell@linaro.org, Bibo Mao <maobibo@loongson.cn>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 5/7] target/loongarch: Avoid bits shift exceeding width of bool
+ type
+Date: Sun, 29 Sep 2024 16:17:22 +0800
+Message-Id: <20240929081724.2139556-6-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20240929081724.2139556-1-gaosong@loongson.cn>
+References: <20240929081724.2139556-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxn+QtEflmFt0UAA--.54891S2
+X-CM-TRANSID: qMiowMBxn+QtEflmFt0UAA--.54891S7
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -63,43 +66,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 3b14a767eaca3df5534a162851f04787b363670e:
+From: Bibo Mao <maobibo@loongson.cn>
 
-  Merge tag 'qemu-openbios-20240924' of https://github.com/mcayland/qemu into staging (2024-09-28 12:34:44 +0100)
+Variable env->cf[i] is defined as bool type, it is treated as int type
+with shift operation. However the max possible width is 56 for the shift
+operation, exceeding the width of int type. And there is existing api
+read_fcc() which is converted to u64 type with bitwise shift, it can be
+used to dump fp registers into coredump note segment.
 
-are available in the Git repository at:
+Resolves: Coverity CID 1561133
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240914064645.2099169-1-maobibo@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ target/loongarch/arch_dump.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-  https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240929
-
-for you to fetch changes up to f7c8ef7bad7495d8c84b262a8b243efe39e56b13:
-
-  hw/loongarch/fw_cfg: Build in common_ss[] (2024-09-29 16:22:56 +0800)
-
-----------------------------------------------------------------
-pull-loongarch-20240929
-
-----------------------------------------------------------------
-Bibo Mao (3):
-      acpi: ged: Add macro for acpi sleep control register
-      hw/loongarch/virt: Add FDT table support with acpi ged pm register
-      target/loongarch: Avoid bits shift exceeding width of bool type
-
-Jiaxun Yang (2):
-      hw/loongarch/boot: Refactor EFI booting protocol generation
-      hw/loongarch/boot: Rework boot code generation
-
-Philippe Mathieu-Daudé (2):
-      hw/loongarch/virt: Remove unnecessary 'cpu.h' inclusion
-      hw/loongarch/fw_cfg: Build in common_ss[]
-
- hw/acpi/generic_event_device.c         |   6 +-
- hw/loongarch/boot.c                    | 321 +++++++++++++++++++++------------
- hw/loongarch/meson.build               |   2 +-
- hw/loongarch/virt.c                    |  39 ++++
- include/hw/acpi/generic_event_device.h |   7 +-
- include/hw/loongarch/boot.h            | 106 +++++++++--
- include/hw/loongarch/virt.h            |   1 -
- target/loongarch/arch_dump.c           |   6 +-
- 8 files changed, 342 insertions(+), 146 deletions(-)
+diff --git a/target/loongarch/arch_dump.c b/target/loongarch/arch_dump.c
+index 4986db970e..d9e1120333 100644
+--- a/target/loongarch/arch_dump.c
++++ b/target/loongarch/arch_dump.c
+@@ -97,11 +97,7 @@ static int loongarch_write_elf64_fprpreg(WriteCoreDumpFunction f,
+ 
+     loongarch_note_init(&note, s, "CORE", 5, NT_PRFPREG, sizeof(note.fpu));
+     note.fpu.fcsr = cpu_to_dump64(s, env->fcsr0);
+-
+-    for (i = 0; i < 8; i++) {
+-        note.fpu.fcc |= env->cf[i] << (8 * i);
+-    }
+-    note.fpu.fcc = cpu_to_dump64(s, note.fpu.fcc);
++    note.fpu.fcc = cpu_to_dump64(s, read_fcc(env));
+ 
+     for (i = 0; i < 32; ++i) {
+         note.fpu.fpr[i] = cpu_to_dump64(s, env->fpr[i].vreg.UD[0]);
+-- 
+2.34.1
 
 
