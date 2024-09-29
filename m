@@ -4,55 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB248CF6495
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Sep 2024 18:08:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECAEECF6495
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Sep 2024 18:14:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suyKl-0003k3-39; Sun, 29 Sep 2024 14:07:51 -0400
+	id 1suyR8-0007xJ-2R; Sun, 29 Sep 2024 14:14:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ardb@kernel.org>) id 1suyKa-0003Xc-Nb
- for qemu-devel@nongnu.org; Sun, 29 Sep 2024 14:07:41 -0400
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1suyR6-0007w6-1r
+ for qemu-devel@nongnu.org; Sun, 29 Sep 2024 14:14:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ardb@kernel.org>) id 1suyKZ-0008Ul-1a
- for qemu-devel@nongnu.org; Sun, 29 Sep 2024 14:07:40 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 48B7E5C35DE;
- Sun, 29 Sep 2024 18:07:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1307CC4CEC5;
- Sun, 29 Sep 2024 18:07:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1727633258;
- bh=zugxR724dlw5HRjvz+NLeFunLq6E0krl84kUd9AxbSk=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=o/6tOhddQLXy22KKCtRvIH1q4jyjRlkiwLODq8IrHvnGVPEEf75Jk/gDgIJhMQ++g
- DzgT03CFq8MKsujusipgk/qihC6mGhGw2H5wwnGtW9bek4di5nwsM8D6LsjVfl0Ooi
- uWmofnICXJAghxSHXMiJfBcJuO3TC0njWXreq/cZr3TyYRBEt97/lzZYbnp4jPgBid
- kpwcCDl3l1Kgt9dsKmnitjcdhy1kUn/MR6kQZZCWZK08wKTEjfUgFXjQhMOmg62Ih+
- qcVrvW9L/BHoie8s6R/DvbFolTb6d+dgrPcEqLupVF6+G6xgy9B672rMKkULJg/IRl
- aHAvjHC7RQ6Vw==
-From: Ard Biesheuvel <ardb@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH v2 2/2] hw/x86: Always treat the PVH entrypoint as a 32-bit LE
- field
-Date: Sun, 29 Sep 2024 20:06:58 +0200
-Message-Id: <20240929180659.3598-3-ardb@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20240929180659.3598-1-ardb@kernel.org>
-References: <20240929180659.3598-1-ardb@kernel.org>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1suyR4-0000lh-Ow
+ for qemu-devel@nongnu.org; Sun, 29 Sep 2024 14:14:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727633661;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=w7MT4iAPcSuYS0WNQDhSnN5OL6KGtI0jtO/g+U2dGa4=;
+ b=FNek92bl6VAt2ozp9s4Zl8ydieuF0NWuiaRTPdY+9oP5lbrjIlGyhm5KSY+3XLQohRDZCa
+ s7mBx9AfFJbw3HDfzdq6byISSTwIloEQte8brHLPWm/pg+vG8B4LJZVzGLHDUod1slUIdw
+ LoNgNxtCmW6ul7VNUDDK5cimchnNhW0=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-189-UcMnG6oBPBuez4fj7RAPsQ-1; Sun, 29 Sep 2024 14:14:19 -0400
+X-MC-Unique: UcMnG6oBPBuez4fj7RAPsQ-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-5c883ccaf4cso1316309a12.3
+ for <qemu-devel@nongnu.org>; Sun, 29 Sep 2024 11:14:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727633658; x=1728238458;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=w7MT4iAPcSuYS0WNQDhSnN5OL6KGtI0jtO/g+U2dGa4=;
+ b=PnRf9NMUJtw/nZDWoQrgW5RhPbs4Ps8yn2MbNlSP8qWITQsvcLMimC864nZZkikTJr
+ GBg8s6LZIhE+EYKyVVSr3W33E66GiXJYVRu21qKkzWg1dI93GnLRQsWr22c4ZfHMpY8e
+ AGrocUFAqKCx7H0raF9YKjHt2Toz+KRNTTG+/3jV0FJUCwCcLitFvH+ee2464/2uzdu+
+ Dpmw5vCv+w6ohPRxDXvCXngEuaIPg52vrjkoYbdu6YEYOfEy26VjbsVi12wTjIKeCNP9
+ cp1QEL04/I8YKThJBtXO7atXIeWr4vJq4//U6i78cmF3Vtd/lT1Fvqh8vzjAMyt9ZRhq
+ 6qxw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXbsHTdhvLr5wQ4hkLM12Kb7pDeBU52EvijIviW21L/PdpJ22ar24jFyERJsv6Y4eQmHGKUaUeuCBcs@nongnu.org
+X-Gm-Message-State: AOJu0YzV4qEB2OicLXBgM9+6SG7x4xj0VbJEM6+uGQOAItejB2wltQ8A
+ jafuSj3dgV2tsjdCqUgBENppICa5nr1Cdb9tVGXzDjBqp5EAZaiqLwCVH4TaXftedcpF8Jt5yqz
+ ivJylcqbLDv92G9PVlDfNhMyXoeb4VDJexubGLckoSHHd9i+YXb9J
+X-Received: by 2002:a05:6402:42c2:b0:5c5:da5e:68e with SMTP id
+ 4fb4d7f45d1cf-5c8824cd05fmr16304826a12.3.1727633658305; 
+ Sun, 29 Sep 2024 11:14:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFsBCMaav1yffVzptAr2TDEl7+U/4t+yG7PheIxWQ0FtDlMqAlga+SPFy9Hc18UupZRNnhYkg==
+X-Received: by 2002:a05:6402:42c2:b0:5c5:da5e:68e with SMTP id
+ 4fb4d7f45d1cf-5c8824cd05fmr16304783a12.3.1727633657918; 
+ Sun, 29 Sep 2024 11:14:17 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:17b:822e:847c:4023:a734:1389])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a93c2978beesm417265966b.147.2024.09.29.11.14.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 29 Sep 2024 11:14:17 -0700 (PDT)
+Date: Sun, 29 Sep 2024 14:14:08 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Michael Galaxy <mgalaxy@akamai.com>
+Cc: Sean Hefty <shefty@nvidia.com>, Peter Xu <peterx@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "yu.zhang@ionos.com" <yu.zhang@ionos.com>,
+ "elmar.gerdes@ionos.com" <elmar.gerdes@ionos.com>,
+ zhengchuan <zhengchuan@huawei.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "lizhijian@fujitsu.com" <lizhijian@fujitsu.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ Xiexiangyou <xiexiangyou@huawei.com>,
+ "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
+ "lixiao (H)" <lixiao91@huawei.com>,
+ "jinpu.wang@ionos.com" <jinpu.wang@ionos.com>,
+ Wangjialin <wangjialin23@huawei.com>
+Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
+Message-ID: <20240929141323-mutt-send-email-mst@kernel.org>
+References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
+ <Zs4z7tKWif6K4EbT@x1n>
+ <20240827165643-mutt-send-email-mst@kernel.org>
+ <027c4f24-f515-4fdb-8770-6bf2433e0f43@akamai.com>
+ <84c74f1a95a648b18c9d41b8c5ef2f60@huawei.com>
+ <ZvQnbzV9SlXKlarV@x1n>
+ <DM6PR12MB431364C7A2D94609B4AAF9A8BD6B2@DM6PR12MB4313.namprd12.prod.outlook.com>
+ <0730fa9b-49cd-46e4-9264-afabe2486154@akamai.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=ardb@kernel.org; helo=dfw.source.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0730fa9b-49cd-46e4-9264-afabe2486154@akamai.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.095,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,61 +121,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PVH entrypoint is entered in 32-bit mode, and is documented as being
-a 32-bit field. Linux happens to widen the field in the ELF note to 64
-bits so treating it as a 64-bit field works for booting the kernel.
+On Sat, Sep 28, 2024 at 12:52:08PM -0500, Michael Galaxy wrote:
+> A bounce buffer defeats the entire purpose of using RDMA in these cases.
+> When using RDMA for very large transfers like this, the goal here is to map
+> the entire memory region at once and avoid all CPU interactions (except for
+> message management within libibverbs) so that the NIC is doing all of the
+> work.
+> 
+> I'm sure rsocket has its place with much smaller transfer sizes, but this is
+> very different.
 
-However, Xen documents the ELF note with the following example
+To clarify, are you actively using rdma based migration in production? Stepping up
+to help maintain it?
 
-  ELFNOTE(Xen, XEN_ELFNOTE_PHYS32_ENTRY, .long, xen_start32)
-
-and uses .long in the code as well, and so reading more than 32 bits
-here is risky. And dereferencing a size_t* in portable code is just
-bizarre, so let's use a uint32_t specifically in all cases here.
-
-While at it, read the field as little-endian explicitly, so things work
-as expected on big endian hosts too.
-
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
----
- hw/i386/x86-common.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
-
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index 992ea1f25e..44e5c365f1 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -539,7 +539,7 @@ DeviceState *ioapic_init_secondary(GSIState *gsi_state)
-  */
- static uint64_t read_pvh_start_addr(void *arg1, void *arg2, bool is64)
- {
--    size_t *elf_note_data_addr;
-+    void *elf_note_data_addr;
- 
-     /* Check if ELF Note header passed in is valid */
-     if (arg1 == NULL) {
-@@ -555,8 +555,6 @@ static uint64_t read_pvh_start_addr(void *arg1, void *arg2, bool is64)
-         elf_note_data_addr =
-             ((void *)nhdr64) + nhdr_size64 +
-             QEMU_ALIGN_UP(nhdr_namesz, phdr_align);
--
--        pvh_start_addr = *elf_note_data_addr;
-     } else {
-         struct elf32_note *nhdr32 = (struct elf32_note *)arg1;
-         uint32_t nhdr_size32 = sizeof(struct elf32_note);
-@@ -566,10 +564,9 @@ static uint64_t read_pvh_start_addr(void *arg1, void *arg2, bool is64)
-         elf_note_data_addr =
-             ((void *)nhdr32) + nhdr_size32 +
-             QEMU_ALIGN_UP(nhdr_namesz, phdr_align);
--
--        pvh_start_addr = *(uint32_t *)elf_note_data_addr;
-     }
- 
-+    pvh_start_addr = ldl_le_p(elf_note_data_addr);
-     return pvh_start_addr;
- }
- 
 -- 
-2.39.5
+MST
 
 
