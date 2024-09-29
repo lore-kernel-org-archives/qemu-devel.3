@@ -4,43 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C5CCF6497
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Sep 2024 18:08:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB248CF6495
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Sep 2024 18:08:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suyKc-0003Xd-44; Sun, 29 Sep 2024 14:07:42 -0400
+	id 1suyKl-0003k3-39; Sun, 29 Sep 2024 14:07:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ardb@kernel.org>) id 1suyKV-0003WL-Jq
- for qemu-devel@nongnu.org; Sun, 29 Sep 2024 14:07:37 -0400
+ (Exim 4.90_1) (envelope-from <ardb@kernel.org>) id 1suyKa-0003Xc-Nb
+ for qemu-devel@nongnu.org; Sun, 29 Sep 2024 14:07:41 -0400
 Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ardb@kernel.org>) id 1suyKS-0008U7-Ql
- for qemu-devel@nongnu.org; Sun, 29 Sep 2024 14:07:34 -0400
+ (Exim 4.90_1) (envelope-from <ardb@kernel.org>) id 1suyKZ-0008Ul-1a
+ for qemu-devel@nongnu.org; Sun, 29 Sep 2024 14:07:40 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id EE5E75C1188;
- Sun, 29 Sep 2024 18:07:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88D7C4CEC5;
- Sun, 29 Sep 2024 18:07:19 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 48B7E5C35DE;
+ Sun, 29 Sep 2024 18:07:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1307CC4CEC5;
+ Sun, 29 Sep 2024 18:07:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1727633243;
- bh=WNDDcwiuv4gSzeEIfI1rj90jQNxFFr3Yoykr3N3sSso=;
- h=From:To:Cc:Subject:Date:From;
- b=C2eoglBU5IO8s2JENaFxUSpXW2yK8Cq8Rt1qzHur5raW87nBFXRCGMr302JjtSima
- 9nqNzTr/UfrHaonSIrGTEApFHDO55EMucEG2cEKgrehCS2wdOCB4wuSZHn2Fbos8rS
- YfbRlRhxtMwbhVmAJhNW1xqBpwNz5N5bfv3u8N7OjJu329nfBemYYP9C1RYulBuVkX
- 2+PAu093lo3Vgirrxp7lbQwptHiHVrBdFk+T2uFkVZ4gGuUfE/9BXBIzV879meYroQ
- hIsxEQTAXzW267KTpwzSr7BBK8UEUS4SQrBx7yd4KkQIwqGkEjZFedlxUZscqz1CL8
- 96MrdXnJg08EQ==
+ s=k20201202; t=1727633258;
+ bh=zugxR724dlw5HRjvz+NLeFunLq6E0krl84kUd9AxbSk=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=o/6tOhddQLXy22KKCtRvIH1q4jyjRlkiwLODq8IrHvnGVPEEf75Jk/gDgIJhMQ++g
+ DzgT03CFq8MKsujusipgk/qihC6mGhGw2H5wwnGtW9bek4di5nwsM8D6LsjVfl0Ooi
+ uWmofnICXJAghxSHXMiJfBcJuO3TC0njWXreq/cZr3TyYRBEt97/lzZYbnp4jPgBid
+ kpwcCDl3l1Kgt9dsKmnitjcdhy1kUn/MR6kQZZCWZK08wKTEjfUgFXjQhMOmg62Ih+
+ qcVrvW9L/BHoie8s6R/DvbFolTb6d+dgrPcEqLupVF6+G6xgy9B672rMKkULJg/IRl
+ aHAvjHC7RQ6Vw==
 From: Ard Biesheuvel <ardb@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com,
 	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH v2 0/2] Fix PVH entrypoint parsing
-Date: Sun, 29 Sep 2024 20:06:56 +0200
-Message-Id: <20240929180659.3598-1-ardb@kernel.org>
+Subject: [PATCH v2 2/2] hw/x86: Always treat the PVH entrypoint as a 32-bit LE
+ field
+Date: Sun, 29 Sep 2024 20:06:58 +0200
+Message-Id: <20240929180659.3598-3-ardb@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20240929180659.3598-1-ardb@kernel.org>
+References: <20240929180659.3598-1-ardb@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2604:1380:4641:c500::1;
@@ -66,18 +69,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix the handling of the ELF note that describes the PVH entrypoint
+The PVH entrypoint is entered in 32-bit mode, and is documented as being
+a 32-bit field. Linux happens to widen the field in the ELF note to 64
+bits so treating it as a 64-bit field works for booting the kernel.
 
-v2: fix broken ELF note handling on big endian hosts
+However, Xen documents the ELF note with the following example
 
-Ard Biesheuvel (2):
-  hw/elf_ops: Implement missing endian swabbing for ELF notes
-  hw/x86: Always treat the PVH entrypoint as a 32-bit LE field
+  ELFNOTE(Xen, XEN_ELFNOTE_PHYS32_ENTRY, .long, xen_start32)
 
- hw/i386/x86-common.c     |  7 ++-----
- include/hw/elf_ops.h.inc | 19 +++++++++++++++++--
- 2 files changed, 19 insertions(+), 7 deletions(-)
+and uses .long in the code as well, and so reading more than 32 bits
+here is risky. And dereferencing a size_t* in portable code is just
+bizarre, so let's use a uint32_t specifically in all cases here.
 
+While at it, read the field as little-endian explicitly, so things work
+as expected on big endian hosts too.
+
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+---
+ hw/i386/x86-common.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index 992ea1f25e..44e5c365f1 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -539,7 +539,7 @@ DeviceState *ioapic_init_secondary(GSIState *gsi_state)
+  */
+ static uint64_t read_pvh_start_addr(void *arg1, void *arg2, bool is64)
+ {
+-    size_t *elf_note_data_addr;
++    void *elf_note_data_addr;
+ 
+     /* Check if ELF Note header passed in is valid */
+     if (arg1 == NULL) {
+@@ -555,8 +555,6 @@ static uint64_t read_pvh_start_addr(void *arg1, void *arg2, bool is64)
+         elf_note_data_addr =
+             ((void *)nhdr64) + nhdr_size64 +
+             QEMU_ALIGN_UP(nhdr_namesz, phdr_align);
+-
+-        pvh_start_addr = *elf_note_data_addr;
+     } else {
+         struct elf32_note *nhdr32 = (struct elf32_note *)arg1;
+         uint32_t nhdr_size32 = sizeof(struct elf32_note);
+@@ -566,10 +564,9 @@ static uint64_t read_pvh_start_addr(void *arg1, void *arg2, bool is64)
+         elf_note_data_addr =
+             ((void *)nhdr32) + nhdr_size32 +
+             QEMU_ALIGN_UP(nhdr_namesz, phdr_align);
+-
+-        pvh_start_addr = *(uint32_t *)elf_note_data_addr;
+     }
+ 
++    pvh_start_addr = ldl_le_p(elf_note_data_addr);
+     return pvh_start_addr;
+ }
+ 
 -- 
 2.39.5
 
