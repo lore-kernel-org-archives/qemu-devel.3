@@ -4,67 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9511ECF649D
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Sep 2024 16:03:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0AF3CF6495
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Sep 2024 16:04:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suwNh-0001Eo-5l; Sun, 29 Sep 2024 12:02:45 -0400
+	id 1suwP1-00009k-I5; Sun, 29 Sep 2024 12:04:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1suwNI-0000uN-Ju
- for qemu-devel@nongnu.org; Sun, 29 Sep 2024 12:02:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1suwNH-00053V-09
- for qemu-devel@nongnu.org; Sun, 29 Sep 2024 12:02:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727625738;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bD94lcvC8v6wGaXgi9MNfUlyhI2EIb4wEelTESyzNSU=;
- b=B9jJFkUoT/7edQ8VAD85X2oyItfa9DelPQMh5YbugVx8B3q1/O0BNRvl1CvOZIee+3V+KA
- qhmPs++jDlGa8zZPTMJ59+PcYzC7mRnkvS9NCu2QQmeQhgBQYVM41Q+uodf0uQBmoZdGLJ
- qbTCbt4xOGCz2q12+mVR5uRKVxMu7z4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-77-P__mMd4gMyiVbFJMdslqUA-1; Sun,
- 29 Sep 2024 12:01:11 -0400
-X-MC-Unique: P__mMd4gMyiVbFJMdslqUA-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0123C1933B73
- for <qemu-devel@nongnu.org>; Sun, 29 Sep 2024 16:01:11 +0000 (UTC)
-Received: from server.redhat.com (unknown [10.72.112.11])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D755F19373D7; Sun, 29 Sep 2024 16:01:07 +0000 (UTC)
-From: Cindy Lu <lulu@redhat.com>
-To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org
-Subject: [PATCH v2 3/3] virtio_net: Add the 3rd acceptable situation for Mac
- setup.
-Date: Sun, 29 Sep 2024 23:59:57 +0800
-Message-ID: <20240929160045.2133423-4-lulu@redhat.com>
-In-Reply-To: <20240929160045.2133423-1-lulu@redhat.com>
-References: <20240929160045.2133423-1-lulu@redhat.com>
+ (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
+ id 1suwP0-0008VY-14; Sun, 29 Sep 2024 12:04:06 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
+ id 1suwOy-00057i-BW; Sun, 29 Sep 2024 12:04:05 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5c40aea5c40so6513937a12.0; 
+ Sun, 29 Sep 2024 09:04:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1727625841; x=1728230641; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=lMzdzxwmN9M0KYd61XXSbXjg6SJn18G3c36++7kZssg=;
+ b=N4Fk/YcK+W43FGSf6gQ3E52/yMvtK6Kdnl+CX9ly4/VaRGySXdwH8q/0rN/q0LLTFv
+ tpBmoverFqiy6HDbMi/zz+Ymt+Kpy+kn+2l2qggj7+9oaRXetXIk8i8GDo6vhqqX3Cra
+ ON7jGNAyQQyzYOwc3QZBQ6/GpgOq6tk15+jvM9wzNKRkkFE2rXqaFp5rTN/Tw55d70/4
+ LptCJ1rkeomi19rTPa6SUP1GsBzzK2bQPy1mJfBa3SBKw2UkY1VJdYnEVziLgzECcQzH
+ uTHsdIlTYFYLIAJjwnKkdIsqqfyRJVRTMUtUQjU0mHd8udS1xtFZn9g5B8dv/CqELm8S
+ 2PKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727625841; x=1728230641;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lMzdzxwmN9M0KYd61XXSbXjg6SJn18G3c36++7kZssg=;
+ b=jHkwvBKrqK0CAuMS232GN7igJxU2fCx934WfHTQBWXDPtBvwH2FrkCs07LdFSW1twF
+ 9A2gL6XeEnVr1Y29pJhq1T9MckA837RRLs2GGfySB3HpV/vchkAn1aUdVl4It9gyjqPw
+ 72DBHAgr7j2Ik1Ca890cJ5ud0V6ZyNid3ULPc1F1CC41QfJ7Cn2O2NkP8a299wahCHB+
+ p46+8vz6YDxX6YrGQPtwn0GDn8b0KhOrgIJb6TD0hKJAtb1xKDbe2bexdatryBtFdvCC
+ Q0QNCJb94pRxnTrmDPpOiAB2tYbUX5IDkUzRXkSzCA5uu3NaYfqioqMig6NnDHv4MSvu
+ 83lg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWyFg8GmOdwBCsUlh8nhgkdpp9uMNLEhkQBt2K2VEPha5BwqUCvNMs1TFZA+odCtdMDm/nHrRh3wjv8@nongnu.org
+X-Gm-Message-State: AOJu0Yx+kR9ExF4W3frA+JgxiCPT7UPZjfRaCdwQQgSYEXSI507IkkPH
+ /eZdFkIbEZcKKSwBcQrve80ei0Fj7bDA05oDbfIsn8QQJnOuamQDRPRsSt2t
+X-Google-Smtp-Source: AGHT+IHTjuBf9D0NVk/62yMdRfWG67UhfFltyyBT8C4oJ90RfswVM9MNMAgVfbLUEi3f/UaDIkEWbw==
+X-Received: by 2002:a05:6402:2424:b0:5c4:1c89:6e36 with SMTP id
+ 4fb4d7f45d1cf-5c8777f3231mr14828881a12.19.1727625841171; 
+ Sun, 29 Sep 2024 09:04:01 -0700 (PDT)
+Received: from groves.fkb.profitbricks.net
+ (ip5f5af605.dynamic.kabel-deutschland.de. [95.90.246.5])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5c88245eb15sm3325666a12.49.2024.09.29.09.04.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 29 Sep 2024 09:04:00 -0700 (PDT)
+From: Sam Li <faithilikerun@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: stefanha@redhat.com, Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ dmitry.fomichev@wdc.com, dlemoal@kernel.org,
+ Hanna Reitz <hreitz@redhat.com>, Sam Li <faithilikerun@gmail.com>
+Subject: [PATCH] block/file-posix: optimize append write
+Date: Sun, 29 Sep 2024 18:03:59 +0200
+Message-Id: <20240929160359.581141-1-faithilikerun@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=faithilikerun@gmail.com; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.095,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,38 +92,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While the hardware MAC address is 0 and the MAC address in
-the QEMU command line is also 0, this configuration is
-acceptable.
+When the file-posix driver emulates append write, it holds the lock
+whenever accessing wp, which limits the IO queue depth to one.
 
-Signed-off-by: Cindy Lu <lulu@redhat.com>
+The write IO flow can be optimized to allow concurrent writes. The lock
+is held in two cases:
+1. Assumed that the write IO succeeds, update the wp before issuing the
+write.
+2. If the write IO fails, report that zone and use the reported value
+as the current wp.
+
+Signed-off-by: Sam Li <faithilikerun@gmail.com>
 ---
- hw/net/virtio-net.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ block/file-posix.c | 33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 5c610d8078..668fbed9f2 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -3620,6 +3620,17 @@ static bool virtio_net_check_vdpa_mac(NetClientState *nc, VirtIONet *n,
-             return true;
+diff --git a/block/file-posix.c b/block/file-posix.c
+index ff928b5e85..64a57fadb1 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -2489,11 +2489,19 @@ static int coroutine_fn raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr,
+ #if defined(CONFIG_BLKZONED)
+     if ((type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND)) &&
+         bs->bl.zoned != BLK_Z_NONE) {
+-        qemu_co_mutex_lock(&bs->wps->colock);
++        BlockZoneWps *wps = bs->wps;
++        int index = offset / bs->bl.zone_size;
++        qemu_co_mutex_lock(&wps->colock);
++        uint64_t *wp = &wps->wp[index];
+         if (type & QEMU_AIO_ZONE_APPEND) {
+-            int index = offset / bs->bl.zone_size;
+-            offset = bs->wps->wp[index];
++            offset = *wp;
++            *offset_ptr = offset;
++        }
++        /* Advance the wp if needed */
++        if (offset + bytes > *wp) {
++            *wp = offset + bytes;
          }
++        qemu_co_mutex_unlock(&bs->wps->colock);
      }
-+    /*
-+     * 3.The hardware MAC address is 0,
-+     *  and the MAC address in the QEMU command line is also 0.
-+     *  In this situation, qemu will use random mac address
-+     */
-+    if ((memcmp(&hwcfg.mac, &zero, sizeof(MACAddr)) == 0) &&
-+        (memcmp(cmdline_mac, &zero, sizeof(MACAddr)) == 0)) {
-+        memcpy(&n->mac[0], &n->nic_conf.macaddr, sizeof(n->mac));
-+
-+        return true;
-+    }
+ #endif
  
-     error_setg(errp,
-                "vDPA device's mac %02x:%02x:%02x:%02x:%02x:%02x"
+@@ -2540,28 +2548,19 @@ out:
+ #if defined(CONFIG_BLKZONED)
+     if ((type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND)) &&
+         bs->bl.zoned != BLK_Z_NONE) {
+-        BlockZoneWps *wps = bs->wps;
+         if (ret == 0) {
+-            uint64_t *wp = &wps->wp[offset / bs->bl.zone_size];
+-            if (!BDRV_ZT_IS_CONV(*wp)) {
+-                if (type & QEMU_AIO_ZONE_APPEND) {
+-                    *offset_ptr = *wp;
+-                    trace_zbd_zone_append_complete(bs, *offset_ptr
+-                        >> BDRV_SECTOR_BITS);
+-                }
+-                /* Advance the wp if needed */
+-                if (offset + bytes > *wp) {
+-                    *wp = offset + bytes;
+-                }
++            if (type & QEMU_AIO_ZONE_APPEND) {
++                trace_zbd_zone_append_complete(bs, *offset_ptr
++                    >> BDRV_SECTOR_BITS);
+             }
+         } else {
++            qemu_co_mutex_lock(&bs->wps->colock);
+             /*
+              * write and append write are not allowed to cross zone boundaries
+              */
+             update_zones_wp(bs, s->fd, offset, 1);
++            qemu_co_mutex_unlock(&bs->wps->colock);
+         }
+-
+-        qemu_co_mutex_unlock(&wps->colock);
+     }
+ #endif
+     return ret;
 -- 
-2.45.0
+2.34.1
 
 
