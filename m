@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CFD0CF649E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 871CBCF6498
 	for <qemu-devel@archiver.kernel.org>; Sun, 29 Sep 2024 08:36:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1supOn-00071n-Ac; Sun, 29 Sep 2024 04:35:25 -0400
+	id 1supOg-0006vK-RM; Sun, 29 Sep 2024 04:35:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1supOd-0006nI-On
- for qemu-devel@nongnu.org; Sun, 29 Sep 2024 04:35:16 -0400
+ id 1supOc-0006kO-MC
+ for qemu-devel@nongnu.org; Sun, 29 Sep 2024 04:35:14 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1supOa-0006SE-Er
- for qemu-devel@nongnu.org; Sun, 29 Sep 2024 04:35:15 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1supOZ-0006Rp-Dk
+ for qemu-devel@nongnu.org; Sun, 29 Sep 2024 04:35:14 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Dx+3I+Eflm7r0DAA--.3252S3;
- Sun, 29 Sep 2024 16:35:10 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxrrM6Eflm370DAA--.4627S3;
+ Sun, 29 Sep 2024 16:35:06 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMBxn+QtEflmFt0UAA--.54891S7;
- Sun, 29 Sep 2024 16:35:08 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBxn+QtEflmFt0UAA--.54891S3;
+ Sun, 29 Sep 2024 16:35:05 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, Bibo Mao <maobibo@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 5/7] target/loongarch: Avoid bits shift exceeding width of bool
- type
-Date: Sun, 29 Sep 2024 16:17:22 +0800
-Message-Id: <20240929081724.2139556-6-gaosong@loongson.cn>
+ Igor Mammedov <imammedo@redhat.com>
+Subject: [PULL 1/7] acpi: ged: Add macro for acpi sleep control register
+Date: Sun, 29 Sep 2024 16:17:18 +0800
+Message-Id: <20240929081724.2139556-2-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240929081724.2139556-1-gaosong@loongson.cn>
 References: <20240929081724.2139556-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxn+QtEflmFt0UAA--.54891S7
+X-CM-TRANSID: qMiowMBxn+QtEflmFt0UAA--.54891S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -68,38 +67,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-Variable env->cf[i] is defined as bool type, it is treated as int type
-with shift operation. However the max possible width is 56 for the shift
-operation, exceeding the width of int type. And there is existing api
-read_fcc() which is converted to u64 type with bitwise shift, it can be
-used to dump fp registers into coredump note segment.
+Macro definition is added for acpi sleep control register, ged emulation
+driver can use the macro , also it can be used in FDT table if ged is
+exposed with FDT table.
 
-Resolves: Coverity CID 1561133
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240914064645.2099169-1-maobibo@loongson.cn>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20240918014206.2165821-2-maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- target/loongarch/arch_dump.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ hw/acpi/generic_event_device.c         | 6 +++---
+ include/hw/acpi/generic_event_device.h | 7 +++++--
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/target/loongarch/arch_dump.c b/target/loongarch/arch_dump.c
-index 4986db970e..d9e1120333 100644
---- a/target/loongarch/arch_dump.c
-+++ b/target/loongarch/arch_dump.c
-@@ -97,11 +97,7 @@ static int loongarch_write_elf64_fprpreg(WriteCoreDumpFunction f,
+diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+index 15b4c3ebbf..d00f5a6c1c 100644
+--- a/hw/acpi/generic_event_device.c
++++ b/hw/acpi/generic_event_device.c
+@@ -201,9 +201,9 @@ static void ged_regs_write(void *opaque, hwaddr addr, uint64_t data,
  
-     loongarch_note_init(&note, s, "CORE", 5, NT_PRFPREG, sizeof(note.fpu));
-     note.fpu.fcsr = cpu_to_dump64(s, env->fcsr0);
--
--    for (i = 0; i < 8; i++) {
--        note.fpu.fcc |= env->cf[i] << (8 * i);
--    }
--    note.fpu.fcc = cpu_to_dump64(s, note.fpu.fcc);
-+    note.fpu.fcc = cpu_to_dump64(s, read_fcc(env));
+     switch (addr) {
+     case ACPI_GED_REG_SLEEP_CTL:
+-        slp_typ = (data >> 2) & 0x07;
+-        slp_en  = (data >> 5) & 0x01;
+-        if (slp_en && slp_typ == 5) {
++        slp_typ = (data >> ACPI_GED_SLP_TYP_POS) & ACPI_GED_SLP_TYP_MASK;
++        slp_en  = !!(data & ACPI_GED_SLP_EN);
++        if (slp_en && slp_typ == ACPI_GED_SLP_TYP_S5) {
+             qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+         }
+         return;
+diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
+index 40af3550b5..d2dac87b4a 100644
+--- a/include/hw/acpi/generic_event_device.h
++++ b/include/hw/acpi/generic_event_device.h
+@@ -81,8 +81,11 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
+ /* ACPI_GED_REG_RESET value for reset*/
+ #define ACPI_GED_RESET_VALUE       0x42
  
-     for (i = 0; i < 32; ++i) {
-         note.fpu.fpr[i] = cpu_to_dump64(s, env->fpr[i].vreg.UD[0]);
+-/* ACPI_GED_REG_SLEEP_CTL.SLP_TYP value for S5 (aka poweroff) */
+-#define ACPI_GED_SLP_TYP_S5        0x05
++/* [ACPI 5.0 Chapter 4.8.3.7] Sleep Control and Status Register */
++#define ACPI_GED_SLP_TYP_POS       0x2   /* SLP_TYPx Bit Offset */
++#define ACPI_GED_SLP_TYP_MASK      0x07  /* SLP_TYPx 3-bit mask */
++#define ACPI_GED_SLP_TYP_S5        0x05  /* System _S5 State (Soft Off) */
++#define ACPI_GED_SLP_EN            0x20  /* SLP_EN write-only bit */
+ 
+ #define GED_DEVICE      "GED"
+ #define AML_GED_EVT_REG "EREG"
 -- 
 2.34.1
 
