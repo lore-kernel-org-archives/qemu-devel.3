@@ -4,77 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECAEECF6495
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Sep 2024 18:14:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAE49CF6497
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Sep 2024 20:28:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1suyR8-0007xJ-2R; Sun, 29 Sep 2024 14:14:26 -0400
+	id 1sv0W3-0000bA-1Y; Sun, 29 Sep 2024 16:27:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1suyR6-0007w6-1r
- for qemu-devel@nongnu.org; Sun, 29 Sep 2024 14:14:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
+ id 1sv0W0-0000af-RD
+ for qemu-devel@nongnu.org; Sun, 29 Sep 2024 16:27:36 -0400
+Received: from mx0b-00190b01.pphosted.com ([67.231.157.127])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1suyR4-0000lh-Ow
- for qemu-devel@nongnu.org; Sun, 29 Sep 2024 14:14:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727633661;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=w7MT4iAPcSuYS0WNQDhSnN5OL6KGtI0jtO/g+U2dGa4=;
- b=FNek92bl6VAt2ozp9s4Zl8ydieuF0NWuiaRTPdY+9oP5lbrjIlGyhm5KSY+3XLQohRDZCa
- s7mBx9AfFJbw3HDfzdq6byISSTwIloEQte8brHLPWm/pg+vG8B4LJZVzGLHDUod1slUIdw
- LoNgNxtCmW6ul7VNUDDK5cimchnNhW0=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-189-UcMnG6oBPBuez4fj7RAPsQ-1; Sun, 29 Sep 2024 14:14:19 -0400
-X-MC-Unique: UcMnG6oBPBuez4fj7RAPsQ-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5c883ccaf4cso1316309a12.3
- for <qemu-devel@nongnu.org>; Sun, 29 Sep 2024 11:14:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727633658; x=1728238458;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=w7MT4iAPcSuYS0WNQDhSnN5OL6KGtI0jtO/g+U2dGa4=;
- b=PnRf9NMUJtw/nZDWoQrgW5RhPbs4Ps8yn2MbNlSP8qWITQsvcLMimC864nZZkikTJr
- GBg8s6LZIhE+EYKyVVSr3W33E66GiXJYVRu21qKkzWg1dI93GnLRQsWr22c4ZfHMpY8e
- AGrocUFAqKCx7H0raF9YKjHt2Toz+KRNTTG+/3jV0FJUCwCcLitFvH+ee2464/2uzdu+
- Dpmw5vCv+w6ohPRxDXvCXngEuaIPg52vrjkoYbdu6YEYOfEy26VjbsVi12wTjIKeCNP9
- cp1QEL04/I8YKThJBtXO7atXIeWr4vJq4//U6i78cmF3Vtd/lT1Fvqh8vzjAMyt9ZRhq
- 6qxw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXbsHTdhvLr5wQ4hkLM12Kb7pDeBU52EvijIviW21L/PdpJ22ar24jFyERJsv6Y4eQmHGKUaUeuCBcs@nongnu.org
-X-Gm-Message-State: AOJu0YzV4qEB2OicLXBgM9+6SG7x4xj0VbJEM6+uGQOAItejB2wltQ8A
- jafuSj3dgV2tsjdCqUgBENppICa5nr1Cdb9tVGXzDjBqp5EAZaiqLwCVH4TaXftedcpF8Jt5yqz
- ivJylcqbLDv92G9PVlDfNhMyXoeb4VDJexubGLckoSHHd9i+YXb9J
-X-Received: by 2002:a05:6402:42c2:b0:5c5:da5e:68e with SMTP id
- 4fb4d7f45d1cf-5c8824cd05fmr16304826a12.3.1727633658305; 
- Sun, 29 Sep 2024 11:14:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFsBCMaav1yffVzptAr2TDEl7+U/4t+yG7PheIxWQ0FtDlMqAlga+SPFy9Hc18UupZRNnhYkg==
-X-Received: by 2002:a05:6402:42c2:b0:5c5:da5e:68e with SMTP id
- 4fb4d7f45d1cf-5c8824cd05fmr16304783a12.3.1727633657918; 
- Sun, 29 Sep 2024 11:14:17 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:17b:822e:847c:4023:a734:1389])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a93c2978beesm417265966b.147.2024.09.29.11.14.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 29 Sep 2024 11:14:17 -0700 (PDT)
-Date: Sun, 29 Sep 2024 14:14:08 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Michael Galaxy <mgalaxy@akamai.com>
+ (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
+ id 1sv0Vy-0007HS-DE
+ for qemu-devel@nongnu.org; Sun, 29 Sep 2024 16:27:36 -0400
+Received: from pps.filterd (m0409410.ppops.net [127.0.0.1])
+ by m0409410.ppops.net-00190b01. (8.18.1.2/8.18.1.2) with ESMTP id
+ 48TJcOOj031468; Sun, 29 Sep 2024 21:27:02 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=jan2016.eng;
+ bh=WLSaVWkT/8QIj9C+qWbo6D/jnJyng7ssSQNByIiYOv4=; b=LhQMI2zDf+/a
+ tVsB3i1u4JAmD/Ae6W20tY32EZwIWpDe8jgRXERQa151Ag1mVcgyPdQbC5ljZbwi
+ NVI19D339baK4OyuHYChLuaIgLwYXUmTWksrLEIHvek3+YOClUsuZZR4tZSXC+nk
+ 1nkBI25NaggNu5cA5kVoOSBQvoeNJUAYfqAs1Q7gUCyIjLW0vdvq6TwLdGn1S34k
+ LM94NZkpwYJjHCPlbfTelW16gH9fD+QvyiEFTdxr0dxXRGTxkvETzBhbAXxQtbNT
+ bnf4TIa0MjQ1icYmQBIgzkabbQy5AIF8ejW5Z/HsRTlQ8dCrLJiVu/RUSS45k6aw
+ UnucRpyJnQ==
+Received: from prod-mail-ppoint5 (prod-mail-ppoint5.akamai.com [184.51.33.60]
+ (may be forged))
+ by m0409410.ppops.net-00190b01. (PPS) with ESMTPS id 41xvqfpafn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 29 Sep 2024 21:27:02 +0100 (BST)
+Received: from pps.filterd (prod-mail-ppoint5.akamai.com [127.0.0.1])
+ by prod-mail-ppoint5.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
+ 48THK3Cp012118; Sun, 29 Sep 2024 13:27:01 -0700
+Received: from prod-mail-relay11.akamai.com ([172.27.118.250])
+ by prod-mail-ppoint5.akamai.com (PPS) with ESMTP id 41xfs8m46j-1;
+ Sun, 29 Sep 2024 13:27:01 -0700
+Received: from [100.64.0.1] (prod-aoa-csiteclt14.bos01.corp.akamai.com
+ [172.27.97.51])
+ by prod-mail-relay11.akamai.com (Postfix) with ESMTP id 4858534188;
+ Sun, 29 Sep 2024 20:26:59 +0000 (GMT)
+Message-ID: <46f8e54e-64a4-4d90-9b02-4fd699b54e41@akamai.com>
+Date: Sun, 29 Sep 2024 15:26:58 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
+To: "Michael S. Tsirkin" <mst@redhat.com>
 Cc: Sean Hefty <shefty@nvidia.com>, Peter Xu <peterx@redhat.com>,
  "Gonglei (Arei)" <arei.gonglei@huawei.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
  "yu.zhang@ionos.com" <yu.zhang@ionos.com>,
  "elmar.gerdes@ionos.com" <elmar.gerdes@ionos.com>,
- zhengchuan <zhengchuan@huawei.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
+ zhengchuan <zhengchuan@huawei.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>,
  "lizhijian@fujitsu.com" <lizhijian@fujitsu.com>,
  "pbonzini@redhat.com" <pbonzini@redhat.com>,
  Xiexiangyou <xiexiangyou@huawei.com>,
@@ -82,28 +68,44 @@ Cc: Sean Hefty <shefty@nvidia.com>, Peter Xu <peterx@redhat.com>,
  "lixiao (H)" <lixiao91@huawei.com>,
  "jinpu.wang@ionos.com" <jinpu.wang@ionos.com>,
  Wangjialin <wangjialin23@huawei.com>
-Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
-Message-ID: <20240929141323-mutt-send-email-mst@kernel.org>
 References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
- <Zs4z7tKWif6K4EbT@x1n>
- <20240827165643-mutt-send-email-mst@kernel.org>
+ <Zs4z7tKWif6K4EbT@x1n> <20240827165643-mutt-send-email-mst@kernel.org>
  <027c4f24-f515-4fdb-8770-6bf2433e0f43@akamai.com>
- <84c74f1a95a648b18c9d41b8c5ef2f60@huawei.com>
- <ZvQnbzV9SlXKlarV@x1n>
+ <84c74f1a95a648b18c9d41b8c5ef2f60@huawei.com> <ZvQnbzV9SlXKlarV@x1n>
  <DM6PR12MB431364C7A2D94609B4AAF9A8BD6B2@DM6PR12MB4313.namprd12.prod.outlook.com>
  <0730fa9b-49cd-46e4-9264-afabe2486154@akamai.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0730fa9b-49cd-46e4-9264-afabe2486154@akamai.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ <20240929141323-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: Michael Galaxy <mgalaxy@akamai.com>
+In-Reply-To: <20240929141323-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-29_19,2024-09-27_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxscore=0 mlxlogscore=999
+ malwarescore=0 spamscore=0 bulkscore=0 suspectscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2408220000
+ definitions=main-2409290159
+X-Proofpoint-ORIG-GUID: DrUfjuSp5PNXAajFwMcCv4Pidzts2pN3
+X-Proofpoint-GUID: DrUfjuSp5PNXAajFwMcCv4Pidzts2pN3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ suspectscore=0
+ mlxlogscore=782 priorityscore=1501 clxscore=1015 adultscore=0 mlxscore=0
+ phishscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2409290160
+Received-SPF: pass client-ip=67.231.157.127; envelope-from=mgalaxy@akamai.com;
+ helo=mx0b-00190b01.pphosted.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.095,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -121,20 +123,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Sep 28, 2024 at 12:52:08PM -0500, Michael Galaxy wrote:
-> A bounce buffer defeats the entire purpose of using RDMA in these cases.
-> When using RDMA for very large transfers like this, the goal here is to map
-> the entire memory region at once and avoid all CPU interactions (except for
-> message management within libibverbs) so that the NIC is doing all of the
-> work.
-> 
-> I'm sure rsocket has its place with much smaller transfer sizes, but this is
-> very different.
 
-To clarify, are you actively using rdma based migration in production? Stepping up
-to help maintain it?
+On 9/29/24 13:14, Michael S. Tsirkin wrote:
+> !-------------------------------------------------------------------|
+>    This Message Is From an External Sender
+>    This message came from outside your organization.
+> |-------------------------------------------------------------------!
+>
+> On Sat, Sep 28, 2024 at 12:52:08PM -0500, Michael Galaxy wrote:
+>> A bounce buffer defeats the entire purpose of using RDMA in these cases.
+>> When using RDMA for very large transfers like this, the goal here is to map
+>> the entire memory region at once and avoid all CPU interactions (except for
+>> message management within libibverbs) so that the NIC is doing all of the
+>> work.
+>>
+>> I'm sure rsocket has its place with much smaller transfer sizes, but this is
+>> very different.
+> To clarify, are you actively using rdma based migration in production? Stepping up
+> to help maintain it?
+>
+Yes, both Huawei and IONOS have both been contributing here in this 
+email thread.
 
--- 
-MST
+They are both using it in production.
 
+- Michael
 
