@@ -4,110 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAE49CF6497
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Sep 2024 20:28:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB39CF6497
+	for <qemu-devel@archiver.kernel.org>; Sun, 29 Sep 2024 20:54:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sv0W3-0000bA-1Y; Sun, 29 Sep 2024 16:27:39 -0400
+	id 1sv0vC-0007TL-QD; Sun, 29 Sep 2024 16:53:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
- id 1sv0W0-0000af-RD
- for qemu-devel@nongnu.org; Sun, 29 Sep 2024 16:27:36 -0400
-Received: from mx0b-00190b01.pphosted.com ([67.231.157.127])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
- id 1sv0Vy-0007HS-DE
- for qemu-devel@nongnu.org; Sun, 29 Sep 2024 16:27:36 -0400
-Received: from pps.filterd (m0409410.ppops.net [127.0.0.1])
- by m0409410.ppops.net-00190b01. (8.18.1.2/8.18.1.2) with ESMTP id
- 48TJcOOj031468; Sun, 29 Sep 2024 21:27:02 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=jan2016.eng;
- bh=WLSaVWkT/8QIj9C+qWbo6D/jnJyng7ssSQNByIiYOv4=; b=LhQMI2zDf+/a
- tVsB3i1u4JAmD/Ae6W20tY32EZwIWpDe8jgRXERQa151Ag1mVcgyPdQbC5ljZbwi
- NVI19D339baK4OyuHYChLuaIgLwYXUmTWksrLEIHvek3+YOClUsuZZR4tZSXC+nk
- 1nkBI25NaggNu5cA5kVoOSBQvoeNJUAYfqAs1Q7gUCyIjLW0vdvq6TwLdGn1S34k
- LM94NZkpwYJjHCPlbfTelW16gH9fD+QvyiEFTdxr0dxXRGTxkvETzBhbAXxQtbNT
- bnf4TIa0MjQ1icYmQBIgzkabbQy5AIF8ejW5Z/HsRTlQ8dCrLJiVu/RUSS45k6aw
- UnucRpyJnQ==
-Received: from prod-mail-ppoint5 (prod-mail-ppoint5.akamai.com [184.51.33.60]
- (may be forged))
- by m0409410.ppops.net-00190b01. (PPS) with ESMTPS id 41xvqfpafn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 29 Sep 2024 21:27:02 +0100 (BST)
-Received: from pps.filterd (prod-mail-ppoint5.akamai.com [127.0.0.1])
- by prod-mail-ppoint5.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
- 48THK3Cp012118; Sun, 29 Sep 2024 13:27:01 -0700
-Received: from prod-mail-relay11.akamai.com ([172.27.118.250])
- by prod-mail-ppoint5.akamai.com (PPS) with ESMTP id 41xfs8m46j-1;
- Sun, 29 Sep 2024 13:27:01 -0700
-Received: from [100.64.0.1] (prod-aoa-csiteclt14.bos01.corp.akamai.com
- [172.27.97.51])
- by prod-mail-relay11.akamai.com (Postfix) with ESMTP id 4858534188;
- Sun, 29 Sep 2024 20:26:59 +0000 (GMT)
-Message-ID: <46f8e54e-64a4-4d90-9b02-4fd699b54e41@akamai.com>
-Date: Sun, 29 Sep 2024 15:26:58 -0500
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sv0vB-0007Sf-Hr
+ for qemu-devel@nongnu.org; Sun, 29 Sep 2024 16:53:37 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sv0v9-0004FS-KQ
+ for qemu-devel@nongnu.org; Sun, 29 Sep 2024 16:53:37 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2e07d85e956so3225328a91.3
+ for <qemu-devel@nongnu.org>; Sun, 29 Sep 2024 13:53:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1727643213; x=1728248013; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fTFQlkJrJVrpzlGSwxjon+8wlDep549zB/F+gjHjH1k=;
+ b=P04QU/lAAAFtBBlvsw6/LyMxy/MLcmlVqv2w9eLN5N2g3PrkovyikxjkQNS7CLOrQC
+ coucBRN6TgloaG1WE3lyqfm//sv78uhTAgN7cPI5B0P5+MO/FglglaupjbUjwTvifaz9
+ jjrlkpA75CUnQffN5lR71svzCzDjp8o49uW3gCoZDyuiTaOgCMKABftuRp/muea+HCHk
+ 35ftIbu/tuvKNhASAoAOm0Zvr52gX0MmIIxalsWurbwq3BLl+J95KA20AsLY+hdvehnD
+ FlEcoiyK1Oh8oln7OAcWYJEaXkZWKhCcko/iu1CaDVCXQSCat7ulEfmpHTdeHKxJih0G
+ D1ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727643213; x=1728248013;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fTFQlkJrJVrpzlGSwxjon+8wlDep549zB/F+gjHjH1k=;
+ b=sU2P1nKjEE+2uoE+roF+L0nHJzMU2acYUtTvpFFDZwTLzMYrz87GH4Yfcd9w0/2LgJ
+ TgfCDKHprJkdiECvz4zwGdCrVNhYXoAYKHB+PGhTbboeIJAp0PFqBb5ukCO5dWARWt6N
+ RMhWz13T20A+wbRMWfcZp8qsXyFz7R0BAriXxotAgbtfoAiWZrpnF72uow0S1AS2WG1w
+ vWJD0gMPgQShKeoxZnlA2eRVUf10ieTUW/HVaPiuZwinmyHB/J/Zae9lp/Xte+qT62Xn
+ lxCVQONvRdLZMwZ5AxPSCkibhE91wo1gUT94+uH/zmF+Ws96re0V89Tgrqcy78mC0PMY
+ ydzw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW6mBF3sV+S84k3XlI7Csufs/uVzXb9CrsjM/EZXN/wjuXsg39hqRGrUlp5sEhBFKHInmkD6RcadtgM@nongnu.org
+X-Gm-Message-State: AOJu0Yxl63iTGulUWiDNitL4Hc3PC7FpCJtrW8nn1JuYoFILmynIaUaY
+ KB8gxxLA0NRGgUUGbSylNqDixPUhrTfg5IqH6/92MMzRps7gJWSzrg42vVnA8GK9aBdkPDelK7X
+ a
+X-Google-Smtp-Source: AGHT+IGHIOPgVWQSEnL5NI6wgsqyMOKvcBhtcLHjLnrvMbjbARhRfknwEPRgbcjS3D5tnwg0mTnHKA==
+X-Received: by 2002:a17:90a:f006:b0:2d8:ea11:1c68 with SMTP id
+ 98e67ed59e1d1-2e0b8ea0f26mr11759993a91.31.1727643213269; 
+ Sun, 29 Sep 2024 13:53:33 -0700 (PDT)
+Received: from [192.168.68.110] (200-206-229-93.dsl.telesp.net.br.
+ [200.206.229.93]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e06e1bae46sm9832426a91.22.2024.09.29.13.53.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 29 Sep 2024 13:53:32 -0700 (PDT)
+Message-ID: <096029d7-269c-44f8-88d3-6f0c52af58fa@ventanamicro.com>
+Date: Sun, 29 Sep 2024 17:53:29 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Sean Hefty <shefty@nvidia.com>, Peter Xu <peterx@redhat.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "yu.zhang@ionos.com" <yu.zhang@ionos.com>,
- "elmar.gerdes@ionos.com" <elmar.gerdes@ionos.com>,
- zhengchuan <zhengchuan@huawei.com>, "berrange@redhat.com"
- <berrange@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>,
- "lizhijian@fujitsu.com" <lizhijian@fujitsu.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- Xiexiangyou <xiexiangyou@huawei.com>,
- "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
- "lixiao (H)" <lixiao91@huawei.com>,
- "jinpu.wang@ionos.com" <jinpu.wang@ionos.com>,
- Wangjialin <wangjialin23@huawei.com>
-References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
- <Zs4z7tKWif6K4EbT@x1n> <20240827165643-mutt-send-email-mst@kernel.org>
- <027c4f24-f515-4fdb-8770-6bf2433e0f43@akamai.com>
- <84c74f1a95a648b18c9d41b8c5ef2f60@huawei.com> <ZvQnbzV9SlXKlarV@x1n>
- <DM6PR12MB431364C7A2D94609B4AAF9A8BD6B2@DM6PR12MB4313.namprd12.prod.outlook.com>
- <0730fa9b-49cd-46e4-9264-afabe2486154@akamai.com>
- <20240929141323-mutt-send-email-mst@kernel.org>
+Subject: Re: [PULL v2 00/47] riscv-to-apply queue
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20240924221751.2688389-1-alistair.francis@wdc.com>
+ <CAFEAcA9Sb-fpNhm-6DPwss5zMpw=nEp31Wt6q1OA6DqCg3wKEg@mail.gmail.com>
+ <13ee9889-b503-45ea-a074-ffafbd052c4e@ventanamicro.com>
+ <CAFEAcA_nn2fUyo9Pkd8jW2NG1oJLbAJrfiC7sziuhGthqL3=4Q@mail.gmail.com>
 Content-Language: en-US
-From: Michael Galaxy <mgalaxy@akamai.com>
-In-Reply-To: <20240929141323-mutt-send-email-mst@kernel.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <CAFEAcA_nn2fUyo9Pkd8jW2NG1oJLbAJrfiC7sziuhGthqL3=4Q@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-29_19,2024-09-27_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxscore=0 mlxlogscore=999
- malwarescore=0 spamscore=0 bulkscore=0 suspectscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2408220000
- definitions=main-2409290159
-X-Proofpoint-ORIG-GUID: DrUfjuSp5PNXAajFwMcCv4Pidzts2pN3
-X-Proofpoint-GUID: DrUfjuSp5PNXAajFwMcCv4Pidzts2pN3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- suspectscore=0
- mlxlogscore=782 priorityscore=1501 clxscore=1015 adultscore=0 mlxscore=0
- phishscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
- definitions=main-2409290160
-Received-SPF: pass client-ip=67.231.157.127; envelope-from=mgalaxy@akamai.com;
- helo=mx0b-00190b01.pphosted.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.095,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,28 +102,53 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 9/29/24 13:14, Michael S. Tsirkin wrote:
-> !-------------------------------------------------------------------|
->    This Message Is From an External Sender
->    This message came from outside your organization.
-> |-------------------------------------------------------------------!
->
-> On Sat, Sep 28, 2024 at 12:52:08PM -0500, Michael Galaxy wrote:
->> A bounce buffer defeats the entire purpose of using RDMA in these cases.
->> When using RDMA for very large transfers like this, the goal here is to map
->> the entire memory region at once and avoid all CPU interactions (except for
->> message management within libibverbs) so that the NIC is doing all of the
->> work.
+
+On 9/29/24 12:38 PM, Peter Maydell wrote:
+> On Sat, 28 Sept 2024 at 21:40, Daniel Henrique Barboza
+> <dbarboza@ventanamicro.com> wrote:
 >>
->> I'm sure rsocket has its place with much smaller transfer sizes, but this is
->> very different.
-> To clarify, are you actively using rdma based migration in production? Stepping up
-> to help maintain it?
->
-Yes, both Huawei and IONOS have both been contributing here in this 
-email thread.
+>>
+>>
+>> On 9/28/24 8:34 AM, Peter Maydell wrote:
+>>> The assertion failure is
+>>> ERROR:../tests/qtest/riscv-iommu-test.c:72:test_reg_reset: assertion
+>>> failed (cap & RISCV_IOMMU_CAP_VERSION == 0x10): (0 == 16)
+>>
+>> The root cause is that the qtests I added aren't considering the endianess of the
+>> host. The RISC-V IOMMU is being implemented as LE only and all regs are being
+>> read/written in memory as LE. The qtest read/write helpers must take the qtest
+>> endianess into account. We make this type of handling in other qtest archs like
+>> ppc64.
+>>
+>> I have a fix for the tests but I'm unable to run the ubuntu-22.04-s390x-all-system
+>> job to verify it, even after setting Cirrus like Thomas taught me a week ago. In
+>> fact I have no 'ubuntu-22-*' jobs available to run.
+> 
+> It's on the private s390 VM we have, so it's set up only to
+> be available on the main CI run (there's not enough capacity
+> on the machine to do any more than that). If you want to point
+> me at a gitlab branch I can do a quick "make check" on that
+> if you like.
 
-They are both using it in production.
+I appreciate it. This is the repo:
 
-- Michael
+https://gitlab.com/danielhb/qemu/-/tree/pull_fix
+
+If this is enough to fix the tests, I'll amend it in the new IOMMU version.
+If we still failing then I'll need to set this s390 VM.
+
+By the way, if you have any recipe/pointers to set this s390 VM to share,
+that would be great.
+
+
+Thanks,
+
+
+Daniel
+
+
+
+> 
+> thanks
+> -- PMM
 
