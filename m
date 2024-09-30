@@ -4,54 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE46ACDD1D6
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 20:05:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44414CEBF73
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 20:24:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svMe5-00031C-3d; Mon, 30 Sep 2024 16:05:25 -0400
+	id 1svMvo-00045J-DJ; Mon, 30 Sep 2024 16:23:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jlu@pengutronix.de>)
- id 1svMe1-0002nz-2A
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 16:05:21 -0400
-Received: from metis.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::104])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1svMvn-00044a-3X
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 16:23:43 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jlu@pengutronix.de>)
- id 1svMdz-0005IX-3s
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 16:05:20 -0400
-Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77]
- helo=[127.0.0.1])
- by metis.whiteo.stw.pengutronix.de with esmtp (Exim 4.92)
- (envelope-from <jlu@pengutronix.de>)
- id 1svMdt-00061J-9h; Mon, 30 Sep 2024 22:05:13 +0200
-Message-ID: <d6e9f2f8d7185e90e7b80dff7b222fd99c899903.camel@pengutronix.de>
-Subject: Re: [PATCH] hw/sd/sdcard: Fix handling of disabled boot partitions
-From: Jan =?ISO-8859-1?Q?L=FCbbe?= <jlu@pengutronix.de>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>, Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org
-Date: Mon, 30 Sep 2024 22:01:58 +0200
-In-Reply-To: <CAFEAcA-_=vrtqVPUdu02ryUtdH5MwifEnHgeQVq=V4Z2Jp_dUg@mail.gmail.com>
-References: <20240906164834.130257-1-jlu@pengutronix.de>
- <CAFEAcA-_=vrtqVPUdu02ryUtdH5MwifEnHgeQVq=V4Z2Jp_dUg@mail.gmail.com>
-Organization: Pengutronix
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1svMvk-0006vm-A2
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 16:23:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=p+NISuZrpNFaCkcIlqbVPEw1U9loKEq4pr26KoOj0EQ=; b=TnBCo6IBp/op66PZ
+ gKpkVZ8Jenq58qg/fhAPgdjNyh73qji0zmYTdotF2gnM3z5Kl5O9KaVcr+0L+CgHRpI2rDV+54E1F
+ +gef/lEQGcMF/7En0CsWDVNl5/IIH5zH7lSSeeQzHpKDf7qr774ffJDSoTpuNyYpbpCe8PkqhkAio
+ 0K13VV5+lY7zlA87Qo9MPR7pSQ/tqKSZLYtPJcrRCiCKhUdmwu00P0ItWw9GQ2hNAqXhQGxqXGOc/
+ lOYCe5R+UCMchlCFbz0KsnLTghDzapNjmr1jxvo1DnCzXwv9SYW3VfxWW8IlFLOPYwPr30L3jEpqC
+ aTkP/kcsvAheAbKMcw==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1svMve-0084Zx-1e;
+ Mon, 30 Sep 2024 20:23:34 +0000
+Date: Mon, 30 Sep 2024 20:23:34 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Peter Xu <peterx@redhat.com>
+Cc: farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 6/7] migration/postcopy: Use uffd helpers
+Message-ID: <ZvsIxkKRvC8vN9ME@gallifrey>
+References: <20240919134626.166183-1-dave@treblig.org>
+ <20240919134626.166183-7-dave@treblig.org> <ZvsBPQzODYXJQ52L@x1n>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:900:1d::77
-X-SA-Exim-Mail-From: jlu@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de);
- SAEximRunCond expanded to false
-X-PTX-Original-Recipient: qemu-devel@nongnu.org
-Received-SPF: pass client-ip=2a0a:edc0:2:b01:1d::104;
- envelope-from=jlu@pengutronix.de; helo=metis.whiteo.stw.pengutronix.de
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZvsBPQzODYXJQ52L@x1n>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 20:22:52 up 145 days,  7:36,  1 user,  load average: 0.05, 0.01, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,53 +68,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: jlu@pengutronix.de
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2024-09-30 at 15:18 +0100, Peter Maydell wrote:
-> On Fri, 6 Sept 2024 at 17:51, Jan Luebbe <jlu@pengutronix.de> wrote:
-> >=20
-> > The enable bits in the EXT_CSD_PART_CONFIG ext_csd register do *not*
-> > specify whether the boot partitions exist, but whether they are enabled
-> > for booting. Existence of the boot partitions is specified by a
-> > EXT_CSD_BOOT_MULT !=3D 0.
-> >=20
-> > Currently, in the case of boot-partition-size=3D1M and boot-config=3D0,
-> > Linux detects boot partitions of 1M. But as sd_bootpart_offset always
-> > returns 0, all reads/writes are mapped to the same offset in the backin=
-g
-> > file.
-> >=20
-> > Fix this bug by calculating the offset independent of which partition i=
-s
-> > enabled for booting.
->=20
-> Looking at the spec this change seems correct to me.
->=20
-> Can you elaborate on when users might run into this bug?
-> As far as I can see only aspeed.c sets boot-partition-size,
-> and when it does so it also sets boot-config to 8. Or are
-> we fixing this for the benefit of future board types?
+* Peter Xu (peterx@redhat.com) wrote:
+> On Thu, Sep 19, 2024 at 02:46:25PM +0100, dave@treblig.org wrote:
+> > From: "Dr. David Alan Gilbert" <dave@treblig.org>
+> > 
+> > Use the uffd_copy_page, uffd_zero_page and uffd_wakeup helpers
+> > rather than calling ioctl ourselves.
+> > 
+> > They return -errno on error, and print an error_report themselves.
+> > I think this actually makes postcopy_place_page actually more
+> > consistent in it's callers.
+> > 
+> > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+> > ---
+> >  migration/postcopy-ram.c | 47 +++++++++++-----------------------------
+> >  1 file changed, 13 insertions(+), 34 deletions(-)
+> > 
+> > diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+> > index 1c374b7ea1..e2b318d3da 100644
+> > --- a/migration/postcopy-ram.c
+> > +++ b/migration/postcopy-ram.c
+> > @@ -746,18 +746,9 @@ int postcopy_wake_shared(struct PostCopyFD *pcfd,
+> >                           RAMBlock *rb)
+> >  {
+> >      size_t pagesize = qemu_ram_pagesize(rb);
+> > -    struct uffdio_range range;
+> > -    int ret;
+> >      trace_postcopy_wake_shared(client_addr, qemu_ram_get_idstr(rb));
+> > -    range.start = ROUND_DOWN(client_addr, pagesize);
+> > -    range.len = pagesize;
+> > -    ret = ioctl(pcfd->fd, UFFDIO_WAKE, &range);
+> > -    if (ret) {
+> > -        error_report("%s: Failed to wake: %zx in %s (%s)",
+> > -                     __func__, (size_t)client_addr, qemu_ram_get_idstr(rb),
+> > -                     strerror(errno));
+> > -    }
+> > -    return ret;
+> > +    return uffd_wakeup(pcfd->fd, (void *)ROUND_DOWN(client_addr, pagesize),
+> > +                       pagesize);
+> >  }
+> 
+> There's a build issue on i386:
+> 
+> ../migration/postcopy-ram.c: In function ‘postcopy_wake_shared’:
+> ../migration/postcopy-ram.c:750:34: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+>   750 |     return uffd_wakeup(pcfd->fd, (void *)ROUND_DOWN(client_addr, pagesize),
+>       |                                  ^
+> 
+> The plan is to squash below fix:
 
-I stumbled across this when trying to use the eMMC emulation for the RAUC t=
-est
-suite (with some unrelated local hacks, which I still need to clean up for
-submission) [1]. Future boards would be affected as well.
+Thanks!
 
-One other possible issue would be disabling the boot partition by using 'mm=
-c
-bootpart enable 0 0 /dev/mmcblk0' (or similar) from Linux. The layout of th=
-e
-backing file shouldn't change in that case.
+Dave
 
-Regards,
-Jan
-
-[1] https://github.com/rauc/rauc/tree/master/test
---=20
-Pengutronix e.K.                           |                             |
-Industrial Linux Solutions                 | http://www.pengutronix.de/  |
-Peiner Str. 6-8, 31137 Hildesheim, Germany | Phone: +49-5121-206917-0    |
-Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
+> =========8<===========
+> diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+> index 03a63ef5cd..83f6160a36 100644
+> --- a/migration/postcopy-ram.c
+> +++ b/migration/postcopy-ram.c
+> -@@ -747,7 +747,8 @@ int postcopy_wake_shared(struct PostCopyFD *pcfd,
+>  {
+>      size_t pagesize = qemu_ram_pagesize(rb);
+>      trace_postcopy_wake_shared(client_addr, qemu_ram_get_idstr(rb));
+> -    return uffd_wakeup(pcfd->fd, (void *)ROUND_DOWN(client_addr, pagesize),
+> +    return uffd_wakeup(pcfd->fd,
+> +                       (void *)(uintptr_t)ROUND_DOWN(client_addr, pagesize),
+>                         pagesize);
+>  }
+> =========8<===========
+> 
+> Thanks,
+> 
+> -- 
+> Peter Xu
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
