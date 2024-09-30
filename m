@@ -4,143 +4,167 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9706CCE8375
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 17:24:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E0ECE835D
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 17:40:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svK7r-0008Ql-PV; Mon, 30 Sep 2024 13:23:59 -0400
+	id 1svKMK-0001Yp-Dh; Mon, 30 Sep 2024 13:38:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svK7o-0008Iy-QN
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 13:23:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <doug.miller@cornelisnetworks.com>)
+ id 1svKMI-0001WN-5a
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 13:38:54 -0400
+Received: from mail-eastusazon11020103.outbound.protection.outlook.com
+ ([52.101.51.103] helo=BL2PR02CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svK7m-0003Kb-DD
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 13:23:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727717033;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=4LDQtPphMyA/0U4IG62h7xNaFE628DgR4mj2eO2lw9s=;
- b=Pe2w3UrcZXyPaBZQOApyf87wYNbwFc55ztrMIM7kHYYJaCaxGj7JFrGS9wig6fCsqv90K3
- /OpFaBzSkwvvgX4KRueCWFsDEvDsOmMMdSM7Ba2bujTwVSic+DRAnfuDwX7FFzUYchcb2X
- /dVPl9UUhPIexh5/0Deb7KH7uBhCDGo=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-bHjSyHPwNyyI7i8Pg12mDQ-1; Mon, 30 Sep 2024 13:23:50 -0400
-X-MC-Unique: bHjSyHPwNyyI7i8Pg12mDQ-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6cb2e16ea95so82685346d6.1
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 10:23:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727717029; x=1728321829;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4LDQtPphMyA/0U4IG62h7xNaFE628DgR4mj2eO2lw9s=;
- b=e1vCMCdF05ksUyeqfpn8iAIMtQ+5y9TTf69KElaHxuo3FtdZxOlKzUnTHekmJQi+m/
- wUJ1E4itgH8L7kbWAsns6l9fdrx6UXe68lSYhC7+aSMdgX4YJZhFsoG4rbKwPaWfUjxn
- 3NUvC5oa+VwaW2aQs1yBdcliInUWtauevEOBBg2iX2wo6ABkobLrLv6Uw3I0Xck3Z9f7
- 4Zzm0odHokKZhmJot01ckGhmJKD3mHShO/6CtnB2ZFnJqjGAIj2hl+9pnMi4hANjXOwF
- W/EI4iOJ5z8Lamnr7k2wd8WTE0OdX/OZk5Q49eY0LMWi/0nYSgtZBjxO6QT4hZMfBSOM
- oyXw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWYeCx1vDm5RPoj8r/rf/PoBWDydYF+rE9NsKrMIhPUgIlWg41bhWaY4wuLgbavSkwvOFR4Hz0WGUXp@nongnu.org
-X-Gm-Message-State: AOJu0YwuorEsd4w9xK80b/5nNKNPTx2OwwiGBDQ2csMPKp9OHcRI5+u1
- FIOOob6mkKcoMVdDtm1Ou1FwRPK/yIvswTejSqSwQG/rk8kg6v5PjJQLTjtId8TFhcQElvoG3TC
- CWW0SRoyti4dUruiAJAWnf+ufZnW0lOvOm2SU7nCeQ2/sZiZRe2xB
-X-Received: by 2002:a05:6214:2d41:b0:6cb:5a37:1997 with SMTP id
- 6a1803df08f44-6cb5a371ac7mr89811686d6.12.1727717029561; 
- Mon, 30 Sep 2024 10:23:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEPuB8UGSAjtNxci/mfIiQpEtWDgwbBUcB2kWO6Eo9c1oQwft6ClLeGxgQUKlhMojhUbSPuag==
-X-Received: by 2002:a05:6214:2d41:b0:6cb:5a37:1997 with SMTP id
- 6a1803df08f44-6cb5a371ac7mr89811416d6.12.1727717029174; 
- Mon, 30 Sep 2024 10:23:49 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-48-176.web.vodafone.de.
- [109.42.48.176]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6cb3b6819b8sm41771526d6.125.2024.09.30.10.23.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Sep 2024 10:23:48 -0700 (PDT)
-Message-ID: <283b488e-1f39-472a-806d-7b9031a8afb2@redhat.com>
-Date: Mon, 30 Sep 2024 19:23:44 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <doug.miller@cornelisnetworks.com>)
+ id 1svKMG-000526-8F
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 13:38:53 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rDvjimtYZcG0HQa/MHvaRRguIy0gcegLN7d8dG0I8AWauv7h8EXcJZajjcKtWIzdsiZZP2rqDO95HkkPX/ME3+hCVx9MHKEYnFXC3GIx++G2FNopomLLsAvzCwT/cOhQly/O/z5cmab2Jy0jZs7FXerB+HY1jG8teUommsu4NALKN7//tqnOrdYAah5ABicgoue+YhYKIXF1AimLeMsg1snClhdQWYGEM3YTf3Qmw3Sh3fgiFFxuc9uZwQS8H/dEB1BAb3oYmZVTbIES/ECH8jrR0H94Owks75a8X6kqMTD0XDAQc6oDV9qP2y6vA1ObD5aOc7IohMbotapR5nK7yg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ecrZxVhB1ItkhbMc/ZVwWcfEtFYtzylxKtRdY3HSnsc=;
+ b=sSU0e1O+SnW9y9ehKP0XSUlrNdhjcAN+vAsbrVe8GPoetjxDgpLL1QX70Y7WM/Xb/G1o11/mhRadNe0dcIRrfr9Z/VnTnQqyBK+57ipFFXka4yqY+DggWp6g46ZmmHZ8lKlww4wu1r6euAraZpH7R3SQQ/s+LFZjcZotyyAKv4BEt9h/6ks3hB/e8N5Y/XIKtVypTDHT/qWvC4OIARRxbMHwYtAblB6DLh074eRyDt6bY++AhyHjNgbbSWdVTZVXKO849kUscxZnScuxOcYwLnzW6/6ZRgyspvcQ75gBkCTw8zTak1MRsWbbCLQMusP14hAKgPSdA1Xl4RH5sMTxiw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=cornelisnetworks.com; dmarc=pass action=none
+ header.from=cornelisnetworks.com; dkim=pass header.d=cornelisnetworks.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cornelisnetworks.com; 
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ecrZxVhB1ItkhbMc/ZVwWcfEtFYtzylxKtRdY3HSnsc=;
+ b=NqTx612fMrXOz8blVXGyb9Uk+pwPN18EGYyF62fhCVA/HNaQd8WH428thC4OHQWUAvc9eGGeptcL40zSAb27inBcKp57rt7nUjhOwXreHmRVUVl0HkFLBlWrnCoGYy7GXzw7gGKlpyx3tc0UYVZZS7vX0G+Y0b8Kje4JGzC1QcL8NKrjV3UUV6eBXuwXGAKWKd5EQjj/WyF7J6wLmGU1cKpQFLGe5lzJTY/dpBkl8WuaZ8HupiTHlxNHiLhruvgQUSJysvjuLVlEXUvNOFII4N64eXXmUmRqxsyjeH1QWoX3mlOjlBlt6lR+N+VXYBG35wpC+A/XF3MBoDBL3f69Mw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=cornelisnetworks.com;
+Received: from PH7PR01MB8146.prod.exchangelabs.com (2603:10b6:510:2bd::18) by
+ PH7PR01MB7584.prod.exchangelabs.com (2603:10b6:510:1d0::11) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7982.28; Mon, 30 Sep 2024 17:33:45 +0000
+Received: from PH7PR01MB8146.prod.exchangelabs.com
+ ([fe80::2972:642:93d1:e9d4]) by PH7PR01MB8146.prod.exchangelabs.com
+ ([fe80::2972:642:93d1:e9d4%5]) with mapi id 15.20.7982.031; Mon, 30 Sep 2024
+ 17:33:44 +0000
+Message-ID: <245f4ea2-3434-43ab-a265-d050c168e464@cornelisnetworks.com>
+Date: Mon, 30 Sep 2024 12:33:42 -0500
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 8/8] hw/gpio/aspeed: Add test case for AST2700
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20240930085239.3089901-1-jamin_lin@aspeedtech.com>
- <20240930085239.3089901-9-jamin_lin@aspeedtech.com>
- <e3f31190-85fb-41c9-9ecb-eefdaa8c5c49@redhat.com>
- <2d7ef0e9-02ba-4a93-91c5-f6101c64b576@kaod.org>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: Looking for help and advice on using RPMSG-over-VIRTIO
+From: Doug Miller <doug.miller@cornelisnetworks.com>
+To: qemu-devel@nongnu.org, virtualization@lists.linux.dev,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Cc: "Dalessandro, Dennis" <dennis.dalessandro@cornelisnetworks.com>
+References: <8da76a79-444b-46f4-96db-309d03689220@cornelisnetworks.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <2d7ef0e9-02ba-4a93-91c5-f6101c64b576@kaod.org>
+In-Reply-To: <8da76a79-444b-46f4-96db-309d03689220@cornelisnetworks.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: quoted-printable
+X-ClientProxiedBy: CH3P220CA0004.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:610:1e8::28) To PH7PR01MB8146.prod.exchangelabs.com
+ (2603:10b6:510:2bd::18)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR01MB8146:EE_|PH7PR01MB7584:EE_
+X-MS-Office365-Filtering-Correlation-Id: 76f17f4f-b97a-4e25-1680-08dce1760883
+X-MS-Exchange-AtpMessageProperties: SA
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?NkhzZHUxN21hMUhnK0luQVIzeHZ1cTVhSEFXWklMTXBFWFpaczhwR2VNRXQz?=
+ =?utf-8?B?dk5yVkdLSjV1dlk0UW9EclI5M002dGVNYnRzc3B0SlE2N1doc3lhNytSckJO?=
+ =?utf-8?B?Q25uVDRabVVrdkRSTXROdzJxVm02UFFLeFkxR1BPREZwOXdVdjhLclJ3SWsy?=
+ =?utf-8?B?L1RDaGlBK0FWeGlTT3htQlBBMW9wZzJGQUw5M01vbExUeVlQaGJtUVJDaEdR?=
+ =?utf-8?B?RGV1amo2M3NvMi9XT3ZkZjVkcWZCUXlDclYycEdNRng5VXRZMnAwaDVrYm1U?=
+ =?utf-8?B?V1pDbUVYSVpRS2d3MUhpeVhYY0l0d29uY0hGZUJhV1YxVEZwbVlMVVdtRzlB?=
+ =?utf-8?B?cURJYldjenRJVlI2TU5NS2RrQ2ozVGlEQXd6TC9vL21SdlVTRGtKT05KV0gz?=
+ =?utf-8?B?QlNUdmdKSkxxV3N6bmN5SWRha0xTY0p0OHloYkcyZGxpUWZVemJwc0srdFhL?=
+ =?utf-8?B?endINi9YazEzOFNub1FQaEx4dTE1Y3pMS0NRUUJiSGRKanRpdzNmR0RIeStW?=
+ =?utf-8?B?SERTb2FNRC9FK0xvM0swNTErSEJxWS9uV3dOaVpFT3RvZmlZSGkyL2FxU3c4?=
+ =?utf-8?B?NWhGQTB5YWlzc0VPUkhHcE1WalVUSFpxYzlqZ2haVmpWM1BpSit5bVJLM1Z6?=
+ =?utf-8?B?ZmowcHpta3JUWHUrbnRzaUtYQytZVFVKR1ZvRXcxVEpoSkF1TFI2VHpxZit2?=
+ =?utf-8?B?RjkyZDh0a0VrVmtBdU1reEtVNE5Kd3M0M2pqV0ZwblB3KytZOHhLbTVVeHhP?=
+ =?utf-8?B?QWRxckpEWUEwSUVCV1J2Y25QUTVnQmNQZ3J6VXk5L0FHZ1VaVk9XK1FOV1Fv?=
+ =?utf-8?B?L0RGVmwvbzRDZG5iWGtKNkoySHdSWWR6U1VYNGZYRlVuTlNWaUp1WHE5VTBN?=
+ =?utf-8?B?NHYzbHVKVldjQk5SeVJZWmQ4ZDJLNjJpN0U5MS9FSlNsdGE3Zm9LM0o1SEFw?=
+ =?utf-8?B?eUIrK0trQWNXcjZVYnFhazNLVHdzS3V2MG13dTVIanE5UkM5TCtYMEsxTXdD?=
+ =?utf-8?B?ODhqTDVVZzR5dEF0eWtzay9KM0hEMnVFUnpteFNBVlBQNk1tYzVXSjRkMERH?=
+ =?utf-8?B?YkI0VXFmdUg2Y1BBRlAxcmIyRmdsdlYzbG8rZWJzRWlXRXlqWmhpL1V5VVlp?=
+ =?utf-8?B?V2RabHEyTGdCZVNmais5eDRmOEtubkhSYWRYSXZQTmJ4T2RzSnFXbFJPSFRB?=
+ =?utf-8?B?NHVOVU93bXR2MjdiSlIyVXZGWkFtUjl5QzVycnl5dW14L3dWcUF1a240RDIz?=
+ =?utf-8?B?NlpuSGxJSWM0OTZrZVhZdUh2WFBuLzZIS0VVL1Y1dFpQbE5NMGU4R0YwM1U1?=
+ =?utf-8?B?VWh0NXdCVFlsUDdHTko0VHNTcTY5R2dodkl6ODNWU1Y5Z2dUVysrSTZCUUtx?=
+ =?utf-8?B?UUdtOU9LeEF5RzcxUTlCL051VkhjakI4b2JpZ3dsd1lVK2hZeW1mWkQ3THRJ?=
+ =?utf-8?B?YjZoYTV2dkdGekNuVTRnWXF6ZG5hUVUrNDIxSjZoYk83Q0grbFNSM1pZOWNE?=
+ =?utf-8?B?bm1Qa1lGS0lxMUJyZEZSWHRVQ1p6M2tHMS80NDYralJuL0REVStaZEJGOFhi?=
+ =?utf-8?B?NmJiQUJpVlRtSm5WV2lyajk1dGVmVndtV2ZMNEdpcWF3V0ZTaWwwRmM4SlYy?=
+ =?utf-8?B?N2xtd3JRbkhjWld3TGlMRm4vdUJJTTlXZWJmRk1pRXRkMXY2YlV5ckNKQ0lw?=
+ =?utf-8?B?N3FJZWdZN0I3SWZ5dFJvdDMrb2VaYlVMMmgrSExEQzJLWVYvYnVRNnl4VzN2?=
+ =?utf-8?B?OFdmNlJBVTIrd0M2VERZUG9BK2JXdVBnRGRDeUZHQkhyZ1JwU3R1UG51Nm40?=
+ =?utf-8?B?Y1RvVHFmd1hLeW1KeDF5UT09?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH7PR01MB8146.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QmtEaTV1Si9MUnVYaFE3TkZTN3V4bHpDWWxmZkFJU25reDE0UGpUTTIzWXU3?=
+ =?utf-8?B?Nmx4V0Zwcy9CY3VCQUZoUUgxb3h2UlRVS1ZBT1dlVG1hVVRETjY1dXVudklS?=
+ =?utf-8?B?cmdGMFpIL2VsRzZtNzdLVDNxTDJOZnJMTElzaitxVXNMMC9kTHBjK0FrOXFI?=
+ =?utf-8?B?TVZHMDcrT0lmbXZEQkRLTW4yZDZiZ2dWYzBQZVVmNlFud3ZWM0x1QzJXT3JJ?=
+ =?utf-8?B?dzJkWVprZXQwVTc2RExHTDZ1OG9qYlZYK01Ua1MvQUlhM0ZGN1FoNEV6TFhs?=
+ =?utf-8?B?SFdPZTFIcmI5Ri9yek1UTkRwS3hCYys3emJDdlF3d0pqeFpaVWZnVDN6clJF?=
+ =?utf-8?B?MjM2Z0dHV0tlcXZ0aU84ZjhJOUNIZ1E5SUo5ZnJvVHBzWlhaMkFJdTJiV25q?=
+ =?utf-8?B?NmZtU2wrUm1oakk5ZXJwYzhlcjloVG4wRW9mVm50K3pZSFp0ZmtVcjZkMmto?=
+ =?utf-8?B?QWZjUWhMWXV2S21mY2tOMEdaSDNwQTdlMjVScGRadmhjN3ZCb2wwdmQ1QWxz?=
+ =?utf-8?B?ZEVpRHkrcHlNUVRQc1JPdmFHd1JNRmtPY0VuMEF0cklFQ1ROQ1p2NHF4QUU2?=
+ =?utf-8?B?Nmx6aEswME90enE2TFoxbFA1amRKMnlITGpkMXJTUGVEVEJ2ZVVGdFR6NmM0?=
+ =?utf-8?B?ajJMemtORkRxenJuZ3JuNlB5NUZVMW9rV3FXYkYzRWpkRk5TNFROSmhLeEFi?=
+ =?utf-8?B?QUwwaWNtTDRqSEZrVkpMSHFtak1YcWl4WWdXMDhjVDNjNU9BRDBXcE5mblU5?=
+ =?utf-8?B?cUN0WXo1OThLTDNMK2EvYitRTkVEWkRQWnNKRjRDcXFiWFVtcmZlWE9nUGV3?=
+ =?utf-8?B?SituMFJmTUJvQWxHVVZvYTFveSs5NXVNbjUreHF4eW95S0JEVVBqWEQwUzZE?=
+ =?utf-8?B?SGhLUGsyYTlVWjZqYitYSW05YWhPL3FWNmZwN0ticWVaMWxnQk83My9GbE1I?=
+ =?utf-8?B?WE9KVkZSMGw0alc0eFBvaVVwYmdla3VCTXJpY2tYbFcySmo0dHJIMFZ6RDZV?=
+ =?utf-8?B?MW4zZ0tMRlVBZDhOZzkvTTQ2eXl5UnQ3bnFqV08vSnhLWXZnZ0xac3pXZkxS?=
+ =?utf-8?B?dFdxRTlwaGI3TVNUSWk1UlJVTDJUcUxPcU1vYjFEYm9rcDhLaTdIcGdsbjVk?=
+ =?utf-8?B?RXFEdU1mUytNblE4NW82MzI0dnpsaVVWd1VYa0piaVk1SEZneUNkTFN5ZFdH?=
+ =?utf-8?B?c1Z0L1N5ZWZNMGlEV0dBTXhaMyt1YkM3Q2QzWXpQSkZvY1pXZXh3ZXVoNi9s?=
+ =?utf-8?B?NER1MzhBV09sYWlHa1hhSFptWitHeWVHWWJmQTZwSzRrQSt3QldYTG5hcVBq?=
+ =?utf-8?B?c21XUXo2TEZFZlh0NE9hekM2M2FDM1pkbmMyaTZzNEtDY0I1NloxMTZqdDE1?=
+ =?utf-8?B?aThyejNMRDRvT0FxcWZGdzd4MG9kbnRxS2xTREpvdjA5bGNEMnJxSi9vZzVF?=
+ =?utf-8?B?SmZVR09EQXUxZElkVlVVVWxkck1NSHdmMHZpZkdPWTllUEEraXNCQklQcjlr?=
+ =?utf-8?B?dG9hbFdQNkZEZzY5SU5RNi94cFlUTlNDdHVPNGIrODV2RHVGcjFFejdEMnNC?=
+ =?utf-8?B?Yms4T05ZQWtXc05xNmNyMzBpVEVHWExBV3VnWGpwSUlxUElpQUh1c2NibWhm?=
+ =?utf-8?B?YjVMUDBsMkx2dTE5QTVPRC9ndmI5RFpUU2k2WSszN1Iyb2lBd05Dclowc2V5?=
+ =?utf-8?B?TzJMdXZiUlJvSXBsTVF0OGZIcGV5RUw3UVFNMUlxdGhsL3B3ejJtUEtrMnVR?=
+ =?utf-8?B?MkhPbzZEcTJ0RklyTUd6MG9CZ05jcW1GYXI0SFNKMm5IZWpYYXRNeFc5UVUw?=
+ =?utf-8?B?TzNQQ1NpRzgySlloMzhsWU1waGJEbzBrNHJTRVIxSCs3Z0JCWnpkZDcyemVK?=
+ =?utf-8?B?cEsxQUl4NkpLTGNFS0ZGQktQUXMrT3ZNdkQ3MDZoYWlYRlpkN3dJUzdHNEE4?=
+ =?utf-8?B?aDNUaDlQSU56dFJ2d3VNd29oTWdOdFQ2L2I5aVFUam5qOXExVUxXdFV5ZXkv?=
+ =?utf-8?B?MSt5UUtwUXVyN3hwbk9EL21uVklHK1ZnR1hqU3dkQW0vQWc1dERNMzhVRGJJ?=
+ =?utf-8?B?RWtySnBwWGl1cy9pdmc2a0lGWGlCVk9CWERueExvOG9PeWVUV3diaFRGOWpp?=
+ =?utf-8?B?cURWS2xTdjlsY3EyeHRJT0Z3WVlGdE5PR0VSdDNwTm5ZV3pmQ3BxbElZZjk1?=
+ =?utf-8?Q?pG2sh1n5zrTcS9aRjSqDSxs=3D?=
+X-OriginatorOrg: cornelisnetworks.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 76f17f4f-b97a-4e25-1680-08dce1760883
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR01MB8146.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Sep 2024 17:33:44.6560 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4dbdb7da-74ee-4b45-8747-ef5ce5ebe68a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: m8YxfaxS7e3Xs3Fbwr1UNI5scPn0GJP1VBAQjjm1x5OPch0LhlB3wudiFsfG1jscTTMk2LKkLbSQlt/cZzx7p92jnKpaMzjx4K92/5ptsn9lOBNJEJ/JfFme5CNHT3EX
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR01MB7584
+Received-SPF: pass client-ip=52.101.51.103;
+ envelope-from=doug.miller@cornelisnetworks.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,135 +180,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/09/2024 18.48, Cédric Le Goater wrote:
-> On 9/30/24 18:36, Thomas Huth wrote:
->> On 30/09/2024 10.52, Jamin Lin wrote:
->>> Add test case to test GPIO output and input pins from A0 to D7 for AST2700.
->>>
->>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
->>> ---
->>>   tests/qtest/aspeed_gpio-test.c | 77 ++++++++++++++++++++++++++++++++--
->>>   tests/qtest/meson.build        |  3 ++
->>>   2 files changed, 76 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/tests/qtest/aspeed_gpio-test.c b/tests/qtest/aspeed_gpio-test.c
->>> index d38f51d719..03b3b1c2b2 100644
->>> --- a/tests/qtest/aspeed_gpio-test.c
->>> +++ b/tests/qtest/aspeed_gpio-test.c
->>> @@ -33,6 +33,10 @@
->>>   #define GPIO_ABCD_DATA_VALUE 0x000
->>>   #define GPIO_ABCD_DIRECTION  0x004
->>> +/* AST2700 */
->>> +#define AST2700_GPIO_BASE 0x14C0B000
->>> +#define GPIOA0_CONTROL 0x180
->>> +
->>>   static void test_set_colocated_pins(const void *data)
->>>   {
->>>       QTestState *s = (QTestState *)data;
->>> @@ -72,17 +76,82 @@ static void test_set_input_pins(const void *data)
->>>       g_assert_cmphex(value, ==, 0xffffffff);
->>>   }
->>> +static void test_2700_output_pins(const void *data)
->>> +{
->>> +    QTestState *s = (QTestState *)data;
->>> +    uint32_t offset = 0;
->>> +    uint32_t value = 0;
->>> +    uint32_t pin = 0;
->>> +
->>> +    for (char c = 'A'; c <= 'D'; c++) {
->>> +        for (int i = 0; i < 8; i++) {
->>> +            offset = AST2700_GPIO_BASE + GPIOA0_CONTROL + (pin * 4);
->>> +
->>> +            /* output direction and output hi */
->>> +            qtest_writel(s, offset, 0x00000003);
->>> +            value = qtest_readl(s, offset);
->>> +            g_assert_cmphex(value, ==, 0x00000003);
->>> +
->>> +            /* output direction and output low */
->>> +            qtest_writel(s, offset, 0x00000002);
->>> +            value = qtest_readl(s, offset);
->>> +            g_assert_cmphex(value, ==, 0x00000002);
->>> +            pin++;
->>> +        }
->>> +    }
->>> +}
->>> +
->>> +static void test_2700_input_pins(const void *data)
->>> +{
->>> +    QTestState *s = (QTestState *)data;
->>> +    char name[16];
->>> +    uint32_t offset = 0;
->>> +    uint32_t value = 0;
->>> +    uint32_t pin = 0;
->>> +
->>> +    for (char c = 'A'; c <= 'D'; c++) {
->>> +        for (int i = 0; i < 8; i++) {
->>> +            sprintf(name, "gpio%c%d", c, i);
->>> +            offset = AST2700_GPIO_BASE + GPIOA0_CONTROL + (pin * 4);
->>> +            /* input direction */
->>> +            qtest_writel(s, offset, 0);
->>> +
->>> +            /* set input */
->>> +            qtest_qom_set_bool(s, "/machine/soc/gpio", name, true);
->>> +            value = qtest_readl(s, offset);
->>> +            g_assert_cmphex(value, ==, 0x00002000);
->>> +
->>> +            /* clear input */
->>> +            qtest_qom_set_bool(s, "/machine/soc/gpio", name, false);
->>> +            value = qtest_readl(s, offset);
->>> +            g_assert_cmphex(value, ==, 0);
->>> +            pin++;
->>> +        }
->>> +    }
->>> +}
->>
->> As far as I can see, there is nothing in these two functions that requires 
->> any of the other code in this file ...
->>
->>> +
->>>   int main(int argc, char **argv)
->>>   {
->>> +    const char *arch = qtest_get_arch();
->>>       QTestState *s;
->>>       int r;
->>>       g_test_init(&argc, &argv, NULL);
->>> -    s = qtest_init("-machine ast2600-evb");
->>> -    qtest_add_data_func("/ast2600/gpio/set_colocated_pins", s,
->>> -                        test_set_colocated_pins);
->>> -    qtest_add_data_func("/ast2600/gpio/set_input_pins", s, 
->>> test_set_input_pins);
->>> +    if (strcmp(arch, "aarch64") == 0) {
->>> +        s = qtest_init("-machine ast2700-evb");
->>> +        qtest_add_data_func("/ast2700/gpio/input_pins",
->>> +                            s, test_2700_input_pins);
->>> +        qtest_add_data_func("/ast2700/gpio/out_pins", s, 
->>> test_2700_output_pins);
->>> +    } else {
->>> +        s = qtest_init("-machine ast2600-evb");
->>> +        qtest_add_data_func("/ast2600/gpio/set_colocated_pins", s,
->>> +                            test_set_colocated_pins);
->>> +        qtest_add_data_func("/ast2600/gpio/set_input_pins", s,
->>> +                            test_set_input_pins);
->>> +    }
->>
->> ... so the more I look at this, the more I think your new test should 
->> reside in a separate file that only gets executed for aarch64, while this 
->> file here should stay for arm 32-bit. Or is there a real compelling reason 
->> for putting your code in this file here?
-> 
-> Because it is related to the Aspeed GPIO controllers. Unless we
-> want to introduce a new set of test files for 64-bit Aspeed SoC
-> controllers ? why not.
-> 
-> I am ok with both options. Option 1 is simpler to implement, but
-> there may be reasons to separate the tests based on architecture,
-> although I'm not aware of any at the moment. Would you rather prefer
-> option 2 ? How should we name the test file ?
+On 9/19/2024 7:26 AM, Doug Miller wrote:
+> I am working on adding SR-IOV for a new adapter and need to find a way
+> to communicate between guest and host drivers without using the
+> adapter hardware. I have been looking at RPMSG-over-VIRTIO as a way to
+> this, but have not been able to figure out how the host would setup
+> the RPMSG device needed for this.
+>
+> I have seen at least one bug in virtio_rpmsg_bus that was discovered
+> and fixed by qemu developers, and so am hoping there may be some
+> experience with rpmsg here that can help.
+>
+> I see an example in the Linux kernel for using rpmsg from the guest
+> (client) side, in samples/rpmsg/rpmsg_client_sample.c. What I'm having
+> difficulty with is finding examples or documentation on how to do the
+> host side. I have heard that the VMMs may also play a role in setting
+> this up, or are doing something similar, but so far I am not able to
+> find code examples in qemu or libvert.
+>
+> Any help would be appreciated,
+> Doug
+>
+I see a comment in drivers/pci/controller/pci-hyperv.c that describes
+what I'm looking, but what I need must work for any (independently of)
+hypervisor/VMM.
 
-Since all arm 32-bit tests are currently completely separate from the 
-aarch64 tests, I think a separate file would be better, indeed.
-Simply call it ast2700-gpio-test.c ?
+"Hyper-V SR-IOV provides a backchannel mechanism in software for
+communication between a VF driver and a PF driver..."
 
-  Thomas
+It certainly seems like rpmsg-over-virtio would accomplish this, but
+even some other facility that is VMM-independent would be fine. I'm
+looking for any sort of solution that does not require (major)
+modification of the kernel. Can anyone state authoritatively that
+rpmsg-over-virtio is not capable of this? Is there something like this
+backchannel offered in the linux kernel? Is there something else that
+can be used to accomplish this PF-VF communication using existing kernel
+facilities?
 
+External recipient
 
