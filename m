@@ -4,62 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB69CCF649D
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 09:29:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 926C4CF649D
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 09:30:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svCiu-0006gO-Qw; Mon, 30 Sep 2024 05:29:44 -0400
+	id 1svCj5-0007Rb-2u; Mon, 30 Sep 2024 05:29:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1svCit-0006Zb-12
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:29:43 -0400
+ id 1svCj3-0007Js-FG
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:29:53 -0400
 Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1svCiq-0006mv-G6
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:29:42 -0400
+ id 1svCj1-0006o0-OO
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:29:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1727688580; x=1759224580;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=1z5y/ZrhxOMlPGO2v3B2B57N+0ZV/2D1npEB/7zK6w4=;
- b=mSnekJ7NY1cpGc1OmnwGTvRcej7QSkPmlqMLfd5PJzLsvmOEI67nMjb3
- NyHSuQZsn/KHqdbLM6jaYJeRC6wJHznpOYNlfwsB1dZyA7DyV8ZbfNAOU
- FyT5/ghFtleGfzXlkTpzodY8cPRZxxgNye9aU7bXFIvBF/CtMWKWHfAcS
- V18FojSgJ16rvh/LLXjQsCHz9hgFxEWHgzYVQlC88S2siQ/LgL6RblZDI
- FzcaqA3mY4gcTRHnmumSc5t9uqaFJGJiUFI0R67BtOW0KmrIS5MjVhUJo
- 0iQWP5Z5kiZp85k//5SCQ9O0tBN57DE8MC0oi5UBPVn2WpM6/EoitNXsw g==;
-X-CSE-ConnectionGUID: mAxs5XcCTtiy/9k2llHPjw==
-X-CSE-MsgGUID: m9Yg2W07TZO9wF4KFcJSww==
-X-IronPort-AV: E=McAfee;i="6700,10204,11210"; a="26721608"
-X-IronPort-AV: E=Sophos;i="6.11,165,1725346800"; d="scan'208";a="26721608"
+ t=1727688591; x=1759224591;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=gnpoItB8OykRzImkHfvn4umMels6c6DcQB3Ca7Ao5lo=;
+ b=TZEHsc5dviKYewYB6tiO5EHnpF3kYmZzq6WXXVsC5lPrSDVeAbRwkoeL
+ /Y5sxsCT6T/SVGVTo1dod6umoKBHpiloH7Tv1FLxwEqvjVQ29MbFcc/yC
+ LT8+nDu8IvT2fLF8NopmdlR4fOhnO4KrQ768JxIAOTW6lJ4IJoY5FyfhB
+ IkdYO+2qi3G/u/AGFc8zOnAI8tbI7TNmZvQ260MAlVaDLc/WytLTUCrDz
+ 0MdPiobPu26uj7MjV22my6w2nUR80fBf3397d3EzkOCdWNj6brwuv3Uea
+ C+gh3f59TltVp6pvB09Cx4v5QF7+1DJ4LqJgmqLuSXvuQAyumT0fjrJUV g==;
+X-CSE-ConnectionGUID: UEvHEbg4TN+bNkNbwEt4Vw==
+X-CSE-MsgGUID: UEhXjbBWRtmG3FsAwBcHEQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11210"; a="26721658"
+X-IronPort-AV: E=Sophos;i="6.11,165,1725346800"; d="scan'208";a="26721658"
 Received: from fmviesa004.fm.intel.com ([10.60.135.144])
  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Sep 2024 02:29:37 -0700
-X-CSE-ConnectionGUID: Gw7z+QwqS/KGiDir3Yp0aw==
-X-CSE-MsgGUID: bvB0RmjtQoS2ebmKKEuT9g==
+ 30 Sep 2024 02:29:51 -0700
+X-CSE-ConnectionGUID: p3DSyiGcQ7y5ytIEoUbbPw==
+X-CSE-MsgGUID: 6nwumABpQ+iyzrWdLjiKsw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,165,1725346800"; d="scan'208";a="77749375"
+X-IronPort-AV: E=Sophos;i="6.11,165,1725346800"; d="scan'208";a="77749405"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Sep 2024 02:29:34 -0700
+ 30 Sep 2024 02:29:46 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v4 00/17] intel_iommu: Enable stage-1 translation for emulated
- device
-Date: Mon, 30 Sep 2024 17:26:14 +0800
-Message-Id: <20240930092631.2997543-1-zhenzhong.duan@intel.com>
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v4 03/17] intel_iommu: Add a placeholder variable for scalable
+ modern mode
+Date: Mon, 30 Sep 2024 17:26:17 +0800
+Message-Id: <20240930092631.2997543-4-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240930092631.2997543-1-zhenzhong.duan@intel.com>
+References: <20240930092631.2997543-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.21;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -85,114 +90,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Add an new element scalable_mode in IntelIOMMUState to mark scalable
+modern mode, this element will be exposed as an intel_iommu property
+finally.
 
-Per Jason Wang's suggestion, iommufd nesting series[1] is split into
-"Enable stage-1 translation for emulated device" series and
-"Enable stage-1 translation for passthrough device" series.
+For now, it's only a placehholder and used for address width
+compatibility check and block host device passthrough until nesting
+is supported.
 
-This series enables stage-1 translation support for emulated device
-in intel iommu which we called "modern" mode.
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+---
+ include/hw/i386/intel_iommu.h |  1 +
+ hw/i386/intel_iommu.c         | 23 ++++++++++++++++++-----
+ 2 files changed, 19 insertions(+), 5 deletions(-)
 
-PATCH1-5:  Some preparing work before support stage-1 translation
-PATCH6-8:  Implement stage-1 translation for emulated device
-PATCH9-13: Emulate iotlb invalidation of stage-1 mapping
-PATCH14:   Set default aw_bits to 48 in scalable modren mode
-PATCH15-16:Expose scalable modern mode "x-fls" and "fs1gp" to cmdline
-PATCH17:   Add qtest
-
-Note in spec revision 3.4, it renames "First-level" to "First-stage",
-"Second-level" to "Second-stage". But the scalable mode was added
-before that change. So we keep old favor using First-level/fl/Second-level/sl
-in code but change to use stage-1/stage-2 in commit log.
-But keep in mind First-level/fl/stage-1 all have same meaning,
-same for Second-level/sl/stage-2.
-
-Qemu code can be found at [2]
-The whole nesting series can be found at [3]
-
-[1] https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg02740.html
-[2] https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_stage1_emu_v4
-[3] https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_rfcv2
-
-Thanks
-Zhenzhong
-
-Changelog:
-v4:
-- s/Scalable legacy/Scalable in logging (Clement)
-- test the mode first to make the intention clearer (Clement)
-- s/x-cap-fs1gp/fs1gp and s/VTD_FL_RW_MASK/VTD_FL_RW (Jason)
-- introduce x-fls instead of updating x-scalable-mode (Jason)
-- Refine comment log in patch4 (jason)
-- s/tansltion/translation/ and s/VTD_SPTE_RSVD_LEN/VTD_FPTE_RSVD_LEN/ (Liuyi)
-- Update the order and naming of VTD_FPTE_PAGE_* (Liuyi)
-
-v3:
-- drop unnecessary !(s->ecap & VTD_ECAP_SMTS) (Clement)
-- simplify calculation of return value for vtd_iova_fl_check_canonical() (Liuyi)
-- make A/D bit setting atomic (Liuyi)
-- refine error msg (Clement, Liuyi)
-
-v2:
-- check ecap/cap bits instead of s->scalable_modern in vtd_pe_type_check() (Clement)
-- declare VTD_ECAP_FLTS/FS1GP after the feature is implemented (Clement)
-- define VTD_INV_DESC_PIOTLB_G (Clement)
-- make error msg consistent in vtd_process_piotlb_desc() (Clement)
-- refine commit log in patch16 (Clement)
-- add VTD_ECAP_IR to ECAP_MODERN_FIXED1 (Clement)
-- add a knob x-cap-fs1gp to control stage-1 1G paging capability
-- collect Clement's R-B
-
-v1:
-- define VTD_HOST_AW_AUTO (Clement)
-- passing pgtt as a parameter to vtd_update_iotlb (Clement)
-- prefix sl_/fl_ to second/first level specific functions (Clement)
-- pick reserved bit check from Clement, add his Co-developed-by
-- Update test without using libqtest-single.h (Thomas)
-
-rfcv2:
-- split from nesting series (Jason)
-- merged some commits from Clement
-- add qtest (jason)
-
-
-Clément Mathieu--Drif (4):
-  intel_iommu: Check if the input address is canonical
-  intel_iommu: Set accessed and dirty bits during first stage
-    translation
-  intel_iommu: Add an internal API to find an address space with PASID
-  intel_iommu: Add support for PASID-based device IOTLB invalidation
-
-Yi Liu (2):
-  intel_iommu: Rename slpte to pte
-  intel_iommu: Implement stage-1 translation
-
-Yu Zhang (1):
-  intel_iommu: Use the latest fault reasons defined by spec
-
-Zhenzhong Duan (10):
-  intel_iommu: Make pasid entry type check accurate
-  intel_iommu: Add a placeholder variable for scalable modern mode
-  intel_iommu: Flush stage-2 cache in PASID-selective PASID-based iotlb
-    invalidation
-  intel_iommu: Flush stage-1 cache in iotlb invalidation
-  intel_iommu: Process PASID-based iotlb invalidation
-  intel_iommu: piotlb invalidation should notify unmap
-  intel_iommu: Set default aw_bits to 48 in scalable modern mode
-  intel_iommu: Introduce a property x-fls for scalable modern mode
-  intel_iommu: Introduce a property to control FS1GP cap bit setting
-  tests/qtest: Add intel-iommu test
-
- MAINTAINERS                    |   1 +
- hw/i386/intel_iommu_internal.h |  92 ++++-
- include/hw/i386/intel_iommu.h  |   8 +-
- hw/i386/intel_iommu.c          | 681 +++++++++++++++++++++++++++------
- tests/qtest/intel-iommu-test.c |  65 ++++
- tests/qtest/meson.build        |   1 +
- 6 files changed, 716 insertions(+), 132 deletions(-)
- create mode 100644 tests/qtest/intel-iommu-test.c
-
+diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+index 1eb05c29fc..788ed42477 100644
+--- a/include/hw/i386/intel_iommu.h
++++ b/include/hw/i386/intel_iommu.h
+@@ -262,6 +262,7 @@ struct IntelIOMMUState {
+ 
+     bool caching_mode;              /* RO - is cap CM enabled? */
+     bool scalable_mode;             /* RO - is Scalable Mode supported? */
++    bool scalable_modern;           /* RO - is modern SM supported? */
+     bool snoop_control;             /* RO - is SNP filed supported? */
+ 
+     dma_addr_t root;                /* Current root table pointer */
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index be7c8a670b..9e6ef0cb99 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -3872,7 +3872,13 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
+         return false;
+     }
+ 
+-    return true;
++    if (!s->scalable_modern) {
++        /* All checks requested by VTD non-modern mode pass */
++        return true;
++    }
++
++    error_setg(errp, "host device is unsupported in scalable modern mode yet");
++    return false;
+ }
+ 
+ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+@@ -4257,14 +4263,21 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
+         }
+     }
+ 
+-    /* Currently only address widths supported are 39 and 48 bits */
+-    if ((s->aw_bits != VTD_HOST_AW_39BIT) &&
+-        (s->aw_bits != VTD_HOST_AW_48BIT)) {
+-        error_setg(errp, "Supported values for aw-bits are: %d, %d",
++    if (!s->scalable_modern && s->aw_bits != VTD_HOST_AW_39BIT &&
++        s->aw_bits != VTD_HOST_AW_48BIT) {
++        error_setg(errp, "%s mode: supported values for aw-bits are: %d, %d",
++                   s->scalable_mode ? "Scalable" : "Legacy",
+                    VTD_HOST_AW_39BIT, VTD_HOST_AW_48BIT);
+         return false;
+     }
+ 
++    if (s->scalable_modern && s->aw_bits != VTD_HOST_AW_48BIT) {
++        error_setg(errp,
++                   "Scalable modern mode: supported values for aw-bits is: %d",
++                   VTD_HOST_AW_48BIT);
++        return false;
++    }
++
+     if (s->scalable_mode && !s->dma_drain) {
+         error_setg(errp, "Need to set dma_drain for scalable mode");
+         return false;
 -- 
 2.34.1
 
