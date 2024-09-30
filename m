@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B69DCCF649D
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 10:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0F2DCF649D
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 10:14:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svDO9-0004o8-Ir; Mon, 30 Sep 2024 06:12:21 -0400
+	id 1svDPZ-0007Sa-Pn; Mon, 30 Sep 2024 06:13:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svDNz-0004iE-Ey
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 06:12:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svDPS-00074c-Na
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 06:13:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svDNv-0003OC-L8
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 06:12:09 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svDPR-0003Vp-BD
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 06:13:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727691126;
+ s=mimecast20190719; t=1727691220;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Fp7/SaUYbjuSbxP51QoStwEB85xLjve2nhlHHltpWhc=;
- b=dmQNetQGR2SU7FSaYh6dJbQqGH6a4MGi8ns6fE8B1NKAwoBCIQAkgJ15X9aHtbu2y9EAiB
- jFJeaWJDbzC0H6N3hXN1Jqb1NhjLMjX4pilZpiTWDsD3zA5PiRsN6jtg7KjiKDncuc+ZyU
- NjWH2ZVqNdv52xL3E0l22Ri+dHAnH0c=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1iX1T/ydGnsYoCCF4+XNIlRa0Q6zUBWhTbMYe7r3Gd8=;
+ b=JKzpLCxDZCs1yxabi7GMMy+Eq+UGjNm9nao3C1+wVU5x9iSw8DboKztCQlfG2iFqdmejsJ
+ oCmiODh1eavmv2944GyV8jTHaAwodfw5CxY08R/jrbuoBcQ+gOzqBUdrOH0FZ9HvMkIXYm
+ 8d1IuXltulZ5JAdmoi4voCI4CTxfgC0=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-652-3I1V7Q8gMjiqpQkXxGETuQ-1; Mon, 30 Sep 2024 06:12:02 -0400
-X-MC-Unique: 3I1V7Q8gMjiqpQkXxGETuQ-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7a9a6634b08so733704385a.0
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 03:12:02 -0700 (PDT)
+ us-mta-231-UDENrCcBOmqLHb0Q9A987g-1; Mon, 30 Sep 2024 06:13:38 -0400
+X-MC-Unique: UDENrCcBOmqLHb0Q9A987g-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6cb27fb4c98so54612836d6.1
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 03:13:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727691122; x=1728295922;
+ d=1e100.net; s=20230601; t=1727691218; x=1728296018;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ :references:cc:to:from:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Fp7/SaUYbjuSbxP51QoStwEB85xLjve2nhlHHltpWhc=;
- b=IccM+NjW/uqzZYwhytEMU5m75elv7MmhNmz3oZZJSapRn5gne5DV2jLLg7JV3+wy/y
- mrFOnM6UDPMWwoE1+7Tte9kIpIxdzvIFbNHNrXHgbXTMBgy4Do2pUqtVcYfGXg+BxnGB
- IxwzHPWRu2X15ZzLkNMGdC8LODDe36pi8X1Fv9oziG0glP0VEdsRyWz/zoQv4Onwd9ds
- Hg0UaBdKsNlznJ0pwS0hcVfmBPIz5E3FGlAuYANnm4+9SLX3u/H3A0a+wyfwoitCjUjy
- pIn9ViGuFI6UIC3SrMuUGF4cR0wfN9LnJGRpsb13Zxs0krD9oAQ6jsvNapYHzVrsedPb
- /JUw==
+ bh=1iX1T/ydGnsYoCCF4+XNIlRa0Q6zUBWhTbMYe7r3Gd8=;
+ b=HtNaTPXjfNsAM8fGDNq/bTMUutVSZcEEaS7fwmeFkoXUg+AFgAfwjtZMc8XslpMGLx
+ YFOFb2D8+g1QvCmAi//AB0w/B3Ixdf75i6eBjIUgOhso+NfSSMOuvht/0/cSDVhfVAKT
+ /RyiC3YJyJaHRKh5kAqf6bI8M4KLBi+Xgb3CjPKMcKcxtG3FG4gFzHMs/L1c6Ln9CgJi
+ 3Rhw7hiCd6/D8KNVpSb9X/NsMHF7+beBEpm7GqBlxXHGLGT+ZI3oDcfsB54gjP9qlg5k
+ 0q7DumuEFYKZbL9sAYuH3sERqeCY7TZNr/MYin5drTTZ9Olh7PbqMMpZ2orPfoDqMto2
+ 2fUg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXlFjIPFuSefy4C5WHVOELEwk/7j2NRsqf5VK9LNrbNtdafQo3ek9aDTT+ljfgoSXti6Hk0msN6MOgf@nongnu.org
-X-Gm-Message-State: AOJu0Yzm5v9YHr34POFQvvKmqgA0TZwi6ROujMCIoFutuYwmM/lvnl8+
- N7/T/Am1c08MxpQFcqHjVKKRdyQ6tvlWClpO7sA001fOSQ9ZDOTU/33TmJKVhm1bP01a2sfDhj/
- NT3C9cTVYMyu3cVatS3HsDN+1il3WlhXb+FajOw/VZl6VBP5UTOqe
-X-Received: by 2002:a05:620a:424a:b0:7ac:a9b2:9374 with SMTP id
- af79cd13be357-7ae2c5ec905mr2454137485a.4.1727691122013; 
- Mon, 30 Sep 2024 03:12:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGeDwLLbkThJpQpgveVTxxJXmbkCnGQj5Y4eoSBsleMuDVLDKVAtI0uatprk+GP3VvUYKhNVw==
-X-Received: by 2002:a05:620a:424a:b0:7ac:a9b2:9374 with SMTP id
- af79cd13be357-7ae2c5ec905mr2454134685a.4.1727691121617; 
- Mon, 30 Sep 2024 03:12:01 -0700 (PDT)
+ AJvYcCWJIcwuasddbYHQSD1TkMN4Sa1oBUFRE3UMVhfxDUMF6D5bx0V7bm6/v9J083UUtRK03AwtLzKDQyhW@nongnu.org
+X-Gm-Message-State: AOJu0YwRtGVqhLcxei6nCptNS+CkfPGT/w6PiutrSfiDAji1noYhn2a1
+ +UTPRCird4xA1g/rQ/m+p2xH9br7haYv8xmD9UH3+TOoO9hpk1r65Z2d7WD7RiJBOZ+obuqTPX1
+ DW7dXPyptSWtUEVYCANolLs7vdnk19qfI66X9HEgPGl5ph76AqliK
+X-Received: by 2002:a05:6214:5bca:b0:6cb:579b:b4ce with SMTP id
+ 6a1803df08f44-6cb579bb6e9mr90502956d6.38.1727691218395; 
+ Mon, 30 Sep 2024 03:13:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHwxPGlFZ2Lid3w3kUMZOcmSjNBXqb42zq3rUF1R9KCVJNrB7afpJ1R3dTbofOG6i/YayvZvQ==
+X-Received: by 2002:a05:6214:5bca:b0:6cb:579b:b4ce with SMTP id
+ 6a1803df08f44-6cb579bb6e9mr90502736d6.38.1727691218024; 
+ Mon, 30 Sep 2024 03:13:38 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-48-176.web.vodafone.de.
  [109.42.48.176]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7ae377bccddsm400945885a.14.2024.09.30.03.11.59
+ 6a1803df08f44-6cb3b6106c1sm38791576d6.44.2024.09.30.03.13.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Sep 2024 03:12:01 -0700 (PDT)
-Message-ID: <e935ee2e-6e6e-44fa-a580-e0ac848d7686@redhat.com>
-Date: Mon, 30 Sep 2024 12:11:56 +0200
+ Mon, 30 Sep 2024 03:13:37 -0700 (PDT)
+Message-ID: <441fa08e-dae5-40d8-abd1-fbcdda7ed635@redhat.com>
+Date: Mon, 30 Sep 2024 12:13:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/18] pc-bios/s390-ccw: Enable failed IPL to return after
- error
+Subject: Re: [PATCH 09/18] pc-bios/s390-ccw: Remove panics from SCSI IPL path
+From: Thomas Huth <thuth@redhat.com>
 To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
 Cc: frankja@linux.ibm.com
 References: <20240927005117.1679506-1-jrossi@linux.ibm.com>
- <20240927005117.1679506-13-jrossi@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
+ <20240927005117.1679506-10-jrossi@linux.ibm.com>
+ <f0d95299-48ca-4c23-bf68-dda8e499ad7f@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -120,10 +120,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240927005117.1679506-13-jrossi@linux.ibm.com>
+In-Reply-To: <f0d95299-48ca-4c23-bf68-dda8e499ad7f@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -132,7 +132,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.095,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,140 +148,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/09/2024 02.51, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
+On 30/09/2024 09.48, Thomas Huth wrote:
+> On 27/09/2024 02.51, jrossi@linux.ibm.com wrote:
+>> From: Jared Rossi <jrossi@linux.ibm.com>
+>>
+>> Remove panic-on-error from virtio-scsi IPL specific functions so that error
+>> recovery may be possible in the future.
+>>
+>> Functions that would previously panic now provide a return code.
+>>
+>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+>>
+>> ---
+> ...
+>> @@ -572,23 +575,37 @@ static void zipl_load_segment(ComponentEntry *entry)
+>>               }
+>>               address = virtio_load_direct(cur_desc[0], cur_desc[1], 0,
+>>                                            (void *)address);
+>> -            IPL_assert(address != -1, "zIPL load segment failed");
+>> +            if (!address) {
 > 
-> Remove panic-on-error from IPL functions such that a return code is propagated
-> back to the main IPL calling function (rather than terminating immediately),
-> which facilitates possible error recovery in the future.
+> Shouldn't that be "if (address == -1)" or "if (address < 0)" instead?
 > 
-> A select few panics remain, which indicate fatal non-devices errors that must
-> result in termination.
+> Hmm, virtio_load_direct() seems to return an "unsigned long", so maybe that 
+> one rather needs to be fixed, too?
+
+(see my comments on patch 12)
+
+>> +                puts("zIPL load segment failed");
+>> +                return -EIO;
+>> +            }
+>>           }
+>>       } while (blockno);
+>> +
+>> +    return 0;
+>>   }
+> ...
+>> @@ -78,24 +84,30 @@ static void prepare_request(VDev *vdev, const void 
+>> *cdb, int cdb_size,
+>>       }
+>>   }
+>> -static inline void vs_io_assert(bool term, const char *msg)
+>> +static inline bool vs_io_assert(bool term, const char *msg)
+>>   {
+>> -    if (!term) {
+>> -        virtio_scsi_verify_response(&resp, msg);
+>> +    if (!term && !virtio_scsi_verify_response(&resp, msg)) {
 > 
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> 
-> ---
-...
-> @@ -1054,16 +1073,19 @@ void zipl_load(void)
->   
->       if (vdev->is_cdrom) {
->           ipl_iso_el_torito();
-> -        panic("\n! Cannot IPL this ISO image !\n");
-> +        puts("Failed to IPL this ISO image!");
-> +        return;
->       }
->   
->       if (virtio_get_device_type() == VIRTIO_ID_NET) {
->           netmain();
-> -        panic("\n! Cannot IPL from this network !\n");
-> +        puts("Failed to IPL from this network!");
-> +        return;
->       }
->   
->       if (ipl_scsi()) {
-> -        panic("\n! Cannot IPL this device !\n");
-> +        puts("Failed to IPL from this device!");
+> Should that be "||" instead of "&&" ?
 
-I'd maybe say "Failed to IPL from this SCSI device" now, just to make sure 
-that it is easier to match the message with one of the boot device types later?
-
-> +        return;
->       }
-...
->   void jump_to_low_kernel(void)
-> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-> index 2345432abb..f818bd7210 100644
-> --- a/pc-bios/s390-ccw/main.c
-> +++ b/pc-bios/s390-ccw/main.c
-> @@ -77,6 +77,9 @@ static int is_dev_possibly_bootable(int dev_no, int sch_no)
->   
->       enable_subchannel(blk_schid);
->       cutype = cu_type(blk_schid);
-> +    if (cutype == CU_TYPE_UNKNOWN) {
-> +        return -EIO;
-> +    }
->   
->       /*
->        * Note: we always have to run virtio_is_supported() here to make
-> @@ -194,10 +197,10 @@ static void boot_setup(void)
->       have_iplb = store_iplb(&iplb);
->   }
->   
-> -static void find_boot_device(void)
-> +static bool find_boot_device(void)
->   {
->       VDev *vdev = virtio_get_device();
-> -    bool found;
-> +    bool found = false;
->   
->       switch (iplb.pbt) {
->       case S390_IPL_TYPE_CCW:
-> @@ -215,10 +218,10 @@ static void find_boot_device(void)
->           found = find_subch(iplb.scsi.devno);
->           break;
->       default:
-> -        panic("List-directed IPL not supported yet!\n");
-> +        puts("Invalid IPLB");
-
-Maybe rather say "Unsupported IPLB" ? At least the original message sounds 
-like it was rather something that has not been implemented yet, and not 
-something that is wrong on the disk...?
-
->       }
->   
-> -    IPL_assert(found, "Boot device not found\n");
-> +    return found;
->   }
-
-...
->   unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list2,
-> @@ -73,13 +73,13 @@ unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list
->       unsigned long addr = (unsigned long)load_addr;
->   
->       if (sec_len != virtio_get_block_size()) {
-> -        return -1;
-> +        return 0;
->       }
->   
->       printf(".");
->       status = virtio_read_many(sec, (void *)addr, sec_num);
->       if (status) {
-> -        panic("I/O Error");
-> +        return 0;
->       }
->       addr += sec_num * virtio_get_block_size();
-
-Ah, here's the fix for virtio_load_direct() ... since you changed the call 
-site in patch 09 already, I think you should move this hunk to patch 09, too.
-
-> diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
-> index 8c6b0a8a92..e3fdb95b3c 100644
-> --- a/pc-bios/s390-ccw/virtio.c
-> +++ b/pc-bios/s390-ccw/virtio.c
-> @@ -217,16 +217,19 @@ int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd)
->       return 0;
->   }
->   
-> -void virtio_setup_ccw(VDev *vdev)
-> +int virtio_setup_ccw(VDev *vdev)
->   {
-> -    int i, rc, cfg_size = 0;
-> +    int i, cfg_size = 0;
->       uint8_t status;
->       struct VirtioFeatureDesc {
->           uint32_t features;
->           uint8_t index;
->       } __attribute__((packed)) feats;
->   
-> -    IPL_assert(virtio_is_supported(vdev->schid), "PE");
-> +    if (!virtio_is_supported(vdev->schid)) {
-> +        puts("PE");
-
-Do you remember what "PE" means here? ... might be a good opportunity to fix 
-this error message as well...
-
-> +        return -ENODEV;
-> +    }
+Ah, never mind, I got it wrong, the "&&" should be fine here.
 
   Thomas
 
