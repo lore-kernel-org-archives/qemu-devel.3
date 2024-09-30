@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CACD0CF6497
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A2E4CF6491
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:17:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svBaL-0004fK-Ik; Mon, 30 Sep 2024 04:16:49 -0400
+	id 1svBa9-0004Gg-JD; Mon, 30 Sep 2024 04:16:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1svBZZ-00033M-9g
+ id 1svBZQ-000326-GT
  for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:16:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1svBZX-0005ha-2P
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:16:01 -0400
+ id 1svBZP-0005gy-1T
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:15:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727684156;
+ s=mimecast20190719; t=1727684149;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=foZ7CWBn2Ic+QnOUkHIFPNTfKtf84lHEG4IMdgmc9Bo=;
- b=UolBVoaHy9u0ahn2/K/tYeRuSD9nJrrzV0Kgm4UxyDWhaFMGqVVmjnuWCJBpUrum0nlHoV
- ZhmiWVznXTvMmPvRaou+tlq6ekQzk0PLl4q9BhWCz+t/hFlpagLONsRLk1mE1ldF1NSozQ
- odsFlunL4TH4BSRKaijghMrUF7pyk+I=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=JGOe2Dnp1wJG1ukQSWN3HzZdCz5Em4HGNnPdjOs5MqI=;
+ b=BH/FSsxlpQdoHG6k/lEGYHpBEhfpIMvyTRk5nkzkMbBkmNQswIsI2Zm/4IVkEZOd60S4Y7
+ IG8KyMvt6G2tPp++JOcpqt2zfAGzRR8W3uVaGPE3FXm1qplMzjQSYL2CD79stLv3LK/6KR
+ NjjOy3CIeYQ8Q1UGkWyeSJVJ/hMcd4w=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-p26o-aStMY6I-7rQbcmqPA-1; Mon,
- 30 Sep 2024 04:15:51 -0400
-X-MC-Unique: p26o-aStMY6I-7rQbcmqPA-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-557-VoWTd4U_NMm__e1k2s0xLQ-1; Mon,
+ 30 Sep 2024 04:15:45 -0400
+X-MC-Unique: VoWTd4U_NMm__e1k2s0xLQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F34E1944DDD; Mon, 30 Sep 2024 08:15:48 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CEE881979040; Mon, 30 Sep 2024 08:15:42 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.36])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7C8D019560AA; Mon, 30 Sep 2024 08:15:46 +0000 (UTC)
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 325231979060; Mon, 30 Sep 2024 08:15:26 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>,
@@ -72,16 +72,15 @@ Cc: Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Yuval Shaia <yuval.shaia.ml@gmail.com>, Bin Meng <bin.meng@windriver.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v3 05/22] block/mirror: fix -Werror=maybe-uninitialized
- false-positive
-Date: Mon, 30 Sep 2024 12:14:40 +0400
-Message-ID: <20240930081458.1926382-6-marcandre.lureau@redhat.com>
+Subject: [PATCH v3 04/22] nbd: fix -Werror=maybe-uninitialized false-positive
+Date: Mon, 30 Sep 2024 12:14:39 +0400
+Message-ID: <20240930081458.1926382-5-marcandre.lureau@redhat.com>
 In-Reply-To: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
 References: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -92,7 +91,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.095,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,27 +109,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../block/mirror.c:1066:22: error: ‘iostatus’ may be used uninitialized [-Werror=maybe-uninitialized]
+../nbd/client-connection.c:419:8: error: ‘wait_co’ may be used uninitialized [-Werror=maybe-uninitialized]
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Eric Blake <eblake@redhat.com>
 ---
- block/mirror.c | 2 +-
+ nbd/client-connection.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/mirror.c b/block/mirror.c
-index 61f0a717b7..54e3a7ea9d 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -931,7 +931,7 @@ static int coroutine_fn mirror_run(Job *job, Error **errp)
-     MirrorBDSOpaque *mirror_top_opaque = s->mirror_top_bs->opaque;
-     BlockDriverState *target_bs = blk_bs(s->target);
-     bool need_drain = true;
--    BlockDeviceIoStatus iostatus;
-+    BlockDeviceIoStatus iostatus = BLOCK_DEVICE_IO_STATUS__MAX;
-     int64_t length;
-     int64_t target_length;
-     BlockDriverInfo bdi;
+diff --git a/nbd/client-connection.c b/nbd/client-connection.c
+index f9da67c87e..b11e266807 100644
+--- a/nbd/client-connection.c
++++ b/nbd/client-connection.c
+@@ -410,7 +410,7 @@ nbd_co_establish_connection(NBDClientConnection *conn, NBDExportInfo *info,
+  */
+ void nbd_co_establish_connection_cancel(NBDClientConnection *conn)
+ {
+-    Coroutine *wait_co;
++    Coroutine *wait_co = NULL;
+ 
+     WITH_QEMU_LOCK_GUARD(&conn->mutex) {
+         wait_co = g_steal_pointer(&conn->wait_co);
 -- 
 2.45.2.827.g557ae147e6
 
