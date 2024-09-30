@@ -4,112 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11BF3CE835C
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 15:01:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DB80CE8359
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 15:17:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svHtQ-0006Dq-Vo; Mon, 30 Sep 2024 11:00:58 -0400
+	id 1svI9B-000633-U3; Mon, 30 Sep 2024 11:17:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
- id 1svHtN-0006D5-Nn
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 11:00:54 -0400
-Received: from mx0a-00190b01.pphosted.com ([2620:100:9001:583::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
- id 1svHtL-0002rm-0z
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 11:00:53 -0400
-Received: from pps.filterd (m0050095.ppops.net [127.0.0.1])
- by m0050095.ppops.net-00190b01. (8.18.1.2/8.18.1.2) with ESMTP id
- 48UBbZcD023891; Mon, 30 Sep 2024 16:00:23 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=jan2016.eng;
- bh=UPnBmrmpwqmpGEU3WAric6506SD0FdwqXwgM7diaTHU=; b=GHs+wPwov+cR
- Gq1jdZuzofGoLDVHxohdGq5vagrPqsgT+bX/+JER0DZ8kpaHD5VmH9COY/uFwY4c
- TQoW134TK9IU55eoF5rZ5juTloZJKuJOuwrFq/ZPHIgm4CtpPh6OIzj9phlIAv5b
- esVO25w0pJ7RdATatUgZDfb/YW40k17D417hFpTHzJSNb7v38jGHRVmTefo+zR+k
- 8hip9NkTk19yToKnP2cmsjmXEG/qo4AeVPk7JYP/+Q47Ht+Pf6ReYbSztMe7eKQq
- NcUZxHB4HKUvujIwQ7JTVmNGINXiXcBQbSJgOtOII10Rs0yveRNuQq3fKxNL7H0p
- iqKRPUys1A==
-Received: from prod-mail-ppoint1 (prod-mail-ppoint1.akamai.com [184.51.33.18]
- (may be forged))
- by m0050095.ppops.net-00190b01. (PPS) with ESMTPS id 41x9b9an9x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 30 Sep 2024 16:00:23 +0100 (BST)
-Received: from pps.filterd (prod-mail-ppoint1.akamai.com [127.0.0.1])
- by prod-mail-ppoint1.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
- 48UENqbF011154; Mon, 30 Sep 2024 11:00:21 -0400
-Received: from prod-mail-relay11.akamai.com ([172.27.118.250])
- by prod-mail-ppoint1.akamai.com (PPS) with ESMTP id 41xd4wqfdk-1;
- Mon, 30 Sep 2024 11:00:21 -0400
-Received: from [100.64.0.1] (prod-aoa-csiteclt14.bos01.corp.akamai.com
- [172.27.97.51])
- by prod-mail-relay11.akamai.com (Postfix) with ESMTP id 06E3E33B25;
- Mon, 30 Sep 2024 15:00:18 +0000 (GMT)
-Message-ID: <ce4dc43a-69d7-4623-abc4-b40b681595b2@akamai.com>
-Date: Mon, 30 Sep 2024 10:00:18 -0500
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1svI99-0005zP-Lt
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 11:17:11 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1svI96-000592-Ew
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 11:17:10 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5c881aa669fso4692947a12.0
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 08:17:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727709426; x=1728314226; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=u8jF7f97obPQbQPRwah5xs/l/E1L4LlJnkZkiyAlH64=;
+ b=NYUp0l60I1B20jsg9yNZZXJ9vlq6C4zPjyxm/kCXzwjexxfSRmlt2bbhtaVhCSCwEk
+ iT8AFaP5tZLvGEDShAWlTLRdo7D0GAriaVxZyA0yfPDqSiwaIIMrxlPgBE5LXOAw0UMA
+ K5TDlBn9keWvJB595xkhJSLEQ+JJ7dVJjKrAOfi211cLbIpZL305tz2fpOTnyschZSB3
+ nOg5t+cJKo3jg2sZilbWpJgwXb3vkA1BTgklN1bInHYgTRnL70Od+/zP4SQJfWQ/f4XZ
+ Ruee+tXXtOIzC9rrHC1k7v7dpNdohv1W5HFv6HJXQiogRI5u3a9p3vLchZtWZGk+/PsK
+ TAdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727709426; x=1728314226;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=u8jF7f97obPQbQPRwah5xs/l/E1L4LlJnkZkiyAlH64=;
+ b=pqZ4LdKL6O/Capc9dRLIppMP1VwOmFkuXRx2mqE/e1BxnFF4U+euce9SFTFE4YJsOT
+ kfATFQkj3FA03ykYFu2JR20+7YtrRdD3iUnEJ+enpFPbJk4g13EDJdZVg8PMS0AU3Mz6
+ mgTrSS9Gzl2cDVsFNwRuGbltAKnsnwb777EOLnQlcP8mq0PqUgh+KK7u+F1IH5qoKOLu
+ CYnLovfB9I6KdvUzDZM2LoEJVKVs1MyKHGh7XrWBWrEozr2F3C7Ee2TWtYNGqa9ds0SA
+ rVM/WPbI0X0uG9GHXjIeWx+ruZ4Fkk3FegP5cFVyL295p1WC5JTRgqrwRX5o0fxhCkk6
+ COpw==
+X-Gm-Message-State: AOJu0YyexuNpk3In2hG/EdCW478DBJay8w1fN++LDhvXwWLBxTVJIsRY
+ xO80A8b0T6AXJ2X7961is6oIcTwMd1Xvw1Xo5wgzeUxshMemaTYdfxRRsttdvKruFBxZdz/wymM
+ ridJ7PzlRgNZSXcZ6OZISu4kg0Q/HOnwBw9r/tQ==
+X-Google-Smtp-Source: AGHT+IFkgeSFAkioxGj0RD+6KLgaY1E9MXTCCPYDhdJc+g6tObyUCVHRIbfLXqqxsuUCdcbYZVob9s21d11wVgsZC74=
+X-Received: by 2002:a05:6402:d07:b0:5c2:4dcc:b90a with SMTP id
+ 4fb4d7f45d1cf-5c88260791cmr11853419a12.34.1727709426303; Mon, 30 Sep 2024
+ 08:17:06 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Sean Hefty <shefty@nvidia.com>, Peter Xu <peterx@redhat.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "yu.zhang@ionos.com" <yu.zhang@ionos.com>,
- "elmar.gerdes@ionos.com" <elmar.gerdes@ionos.com>,
- zhengchuan <zhengchuan@huawei.com>, "berrange@redhat.com"
- <berrange@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>,
- "lizhijian@fujitsu.com" <lizhijian@fujitsu.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- Xiexiangyou <xiexiangyou@huawei.com>,
- "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
- "lixiao (H)" <lixiao91@huawei.com>,
- "jinpu.wang@ionos.com" <jinpu.wang@ionos.com>,
- Wangjialin <wangjialin23@huawei.com>
-References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
- <Zs4z7tKWif6K4EbT@x1n> <20240827165643-mutt-send-email-mst@kernel.org>
- <027c4f24-f515-4fdb-8770-6bf2433e0f43@akamai.com>
- <84c74f1a95a648b18c9d41b8c5ef2f60@huawei.com> <ZvQnbzV9SlXKlarV@x1n>
- <DM6PR12MB431364C7A2D94609B4AAF9A8BD6B2@DM6PR12MB4313.namprd12.prod.outlook.com>
- <0730fa9b-49cd-46e4-9264-afabe2486154@akamai.com>
- <20240929141323-mutt-send-email-mst@kernel.org>
- <46f8e54e-64a4-4d90-9b02-4fd699b54e41@akamai.com>
- <20240929182538-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: Michael Galaxy <mgalaxy@akamai.com>
-In-Reply-To: <20240929182538-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-09-30_14,2024-09-30_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- suspectscore=0 bulkscore=0
- malwarescore=0 mlxlogscore=999 mlxscore=0 phishscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2408220000
- definitions=main-2409300107
-X-Proofpoint-ORIG-GUID: i_eQ30-H7HGwGlZJcK3o1G7MT3C5iZUG
-X-Proofpoint-GUID: i_eQ30-H7HGwGlZJcK3o1G7MT3C5iZUG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- lowpriorityscore=0 adultscore=0
- priorityscore=1501 spamscore=0 clxscore=1015 impostorscore=0
- malwarescore=0 mlxscore=0 phishscore=0 suspectscore=0 mlxlogscore=857
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409300108
-Received-SPF: pass client-ip=2620:100:9001:583::1;
- envelope-from=mgalaxy@akamai.com; helo=mx0a-00190b01.pphosted.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20240923035632.81304-1-sebastian.huber@embedded-brains.de>
+ <20240923035632.81304-2-sebastian.huber@embedded-brains.de>
+In-Reply-To: <20240923035632.81304-2-sebastian.huber@embedded-brains.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 30 Sep 2024 16:16:54 +0100
+Message-ID: <CAFEAcA8Wf-PzAC-YGdma3YVETyuatLJHmvjrrb_kG2NjDSGs+Q@mail.gmail.com>
+Subject: Re: [PATCH 1/2] hw/arm/boot: Use hooks if PSCI is disabled
+To: Sebastian Huber <sebastian.huber@embedded-brains.de>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,65 +88,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 9/29/24 17:26, Michael S. Tsirkin wrote:
-> !-------------------------------------------------------------------|
->    This Message Is From an External Sender
->    This message came from outside your organization.
-> |-------------------------------------------------------------------!
+On Mon, 23 Sept 2024 at 04:57, Sebastian Huber
+<sebastian.huber@embedded-brains.de> wrote:
 >
-> On Sun, Sep 29, 2024 at 03:26:58PM -0500, Michael Galaxy wrote:
->> On 9/29/24 13:14, Michael S. Tsirkin wrote:
->>> !-------------------------------------------------------------------|
->>>     This Message Is From an External Sender
->>>     This message came from outside your organization.
->>> |-------------------------------------------------------------------!
->>>
->>> On Sat, Sep 28, 2024 at 12:52:08PM -0500, Michael Galaxy wrote:
->>>> A bounce buffer defeats the entire purpose of using RDMA in these cases.
->>>> When using RDMA for very large transfers like this, the goal here is to map
->>>> the entire memory region at once and avoid all CPU interactions (except for
->>>> message management within libibverbs) so that the NIC is doing all of the
->>>> work.
->>>>
->>>> I'm sure rsocket has its place with much smaller transfer sizes, but this is
->>>> very different.
->>> To clarify, are you actively using rdma based migration in production? Stepping up
->>> to help maintain it?
->>>
->> Yes, both Huawei and IONOS have both been contributing here in this email
->> thread.
->>
->> They are both using it in production.
->>
->> - Michael
-> Well, any plans to work on it? for example, postcopy does not really
-> do zero copy last time I checked, there's also a long TODO list.
+> In arm_load_kernel(), use the secondary boot hooks provided by the
+> platform if PSCI is disabled also while booting a non-Linux kernel.
+> While booting Linux with PSCI disabled, provide default hooks if needed.
 >
-I apologize, I'm not following the question here. Isn't that what this 
-thread is about?
+> In do_cpu_reset(), use the secondary CPU reset hook provided by the
+> platform for resetting a non-Linux kernel.
+>
+> This change allows a more accurate simulation of the platform reset
+> behaviour.
 
-So, some background is missing here, perhaps: A few months ago, there 
-was a proposal
-to remove native RDMA support from live migration due to concerns about 
-lack of testability.
-Both IONOS and Huawei have stepped up that they are using it and are 
-engaging with the
-community here. I also proposed transferring over maintainership to them 
-as well.  (I  no longer
-have any of this hardware, so I cannot provide testing support anymore).
+So, the difficulty with this is that it's effectively
+introducing an extra way of booting. At the moment we
+have two boot approaches for Arm guests:
 
-During that time, rsocket was proposed as an alternative, but as I have 
-laid out above, I believe
-it cannot work for technical reasons.
+(1) Booting Linux -- the boot.c code simulates what the BIOS,
+boot rom etc, does, both to set up the 1st CPU for the kernel
+boot entry, and to set up the secondaries in whatever way
+the bootrom does that the kernel expects to release them from.
 
-I also asked earlier in the thread if we can cover the community's 
-testing concerns using softroce,
-so that an integration test can be made to work (presumably through 
-avocado or something similar).
+(2) Booting bare-metal -- boot.c assumes the guest code is going
+to do whatever the BIOS/bootrom does, so you get what you get
+for real-hardware CPU reset. (Either the secondaries start
+in power-off state and the primary will release them via some
+kind of power controller device, or else all the CPUs start at
+once at the reset vector and the bootrom is going to sort the
+secondaries out and put them in a pen.)
 
-Does that history make sense?
+What you want is a third thing:
 
-- Michael
+(3) Booting not-a-kernel but not 100% bare-metal: emulate what
+the bootrom does for primary and secondary CPUs but don't
+boot the guest binary as if it was a Linux kernel.
 
+The problem with adding that is that we don't have any
+way to distinguish whether the user wanted that or our
+existing type (2), because both are "user gave us a binary
+that isn't a Linux kernel". (It also has a bit of a
+"continuously expanding job" problem because the bootrom
+could do arbitrarily complicated things, like boot directly
+from SD cards, which we have historically not wanted to
+emulate within QEMU itself.)
+
+There are other platforms where the real hardware's bootrom
+has a particular "this is what a bare-metal-under-the-bootrom
+startup looks like" definition, notably the raspberry pi
+boards. There too we don't currently implement that, and
+instead effectively tell users "pick one of the two boot
+paradigms we do support"...
+
+thanks
+-- PMM
 
