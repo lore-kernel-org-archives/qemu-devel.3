@@ -4,101 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FA83CE835C
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 15:32:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AC6FCE835E
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 15:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svIMw-0005VL-LB; Mon, 30 Sep 2024 11:31:26 -0400
+	id 1svITu-00022B-CK; Mon, 30 Sep 2024 11:38:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
- id 1svIMu-0005Ud-UP
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 11:31:25 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1svITs-00021h-7J
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 11:38:36 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
- id 1svIMr-00075Z-Rt
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 11:31:24 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a8d2b4a5bf1so622889266b.2
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 08:31:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1svITq-0007kd-9t
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 11:38:35 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5c88b5c375fso2993930a12.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 08:38:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ionos.com; s=google; t=1727710278; x=1728315078; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/BXX468qL0r2NQKwVpnTOoFA8mwwQGqQCuV9lJ2ZWO0=;
- b=OcgwZJ+IrCtCopXbE38iY24MrjbJrLjSed2ApRXEicG1Wgzd4R8o3J79JqTRoTaY7U
- 8gcfcqGBIjn3kAOj7pV3iYj5O34MGKi/Wcuy0rjsFh1gfi2tPUlpkP7UVRIvrUscVL6D
- jhvs/4fBU4MAa0rVwUmOJv2GZMwpOKgfNrZGejQ96wVmwxEYyPhVk9xEdYjjQaiNvY3i
- PVwU2lGOzF1mlda5g2MTF3UbRZNGBSWeExvExGN/G7MwiKhNEnqG331pCU3XuQOU+EXe
- 3aU12BAeQeQIOgRR/lfI7yfxJiGOOBocSqvGy+BpIGlhaWyNKvEpD2+CtiU6xlymgkS3
- bVgQ==
+ d=linaro.org; s=google; t=1727710712; x=1728315512; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=NDUaLykjQpA0k0/b9nwJpP5Bl7EtsznFNhLpL07taJU=;
+ b=qw5GNqycPEO72e2/cGyRKqiodMjjDMQijsO5AaeKHwCeOd7ZYA2ggG853oOTyy9hA8
+ OhorI+lxgNwU6VYaDwuPfzE1QrAut1gTYXg1qpmEE/B+Kzc6sivQWwG3bVYYe3PsV373
+ tGyg3h+XIXPoOKe8aGF80I+1kXncNlROYHvZ2Mit/OH2s5hAc/TmvN7Odf6DyaIZj+oj
+ 1WGTMwYzGpaSR5+efVPj4/vIxXyC0kzgiCZUKC08ForUuSdRVbW2LrkfmEJAnZhaa+sr
+ yU7QxEODxNkgUhDlB42FAuTffcX5vpm6oSK+sOZTirFTWAn6elGDm5rbDGoDTHRCdAY/
+ mnKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727710278; x=1728315078;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/BXX468qL0r2NQKwVpnTOoFA8mwwQGqQCuV9lJ2ZWO0=;
- b=EnB/QtChSRxfb+LQpBdn6yrx/E/2gIa42d6uz8Xb6WakhIljH6iFPYUBUnC4Z4Amb5
- mv6IJXwrwML9StHDK1bwQ7MEmhlewjOTt//HwqYbkZfTt+Y+/5xn+9+B/sYWHHIh8YDY
- J0lkaLSwN+l069qDbs16SKPtrjIGM+k8/xpgFJxIzjgdwCwGv2fOCHPNzyWiRRKumUPU
- 2D6rXpsEKU5uTsDOlRM8V+q1aMD9u6nrdJsDTuNyTOOiobllWPBiQvNPY4Y8bgomyseJ
- ESseWj/2tMph7bM6N7YCCvm8LCzQu2UilQswbyWbELXaxkr6JZSQxAaKYJ5MFEZ9CjrL
- 2NyA==
+ d=1e100.net; s=20230601; t=1727710712; x=1728315512;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NDUaLykjQpA0k0/b9nwJpP5Bl7EtsznFNhLpL07taJU=;
+ b=jP7mnAIl9OcEnVSyd9c48oludQ+cFNx7fqJcz8JZfdG327WnhUZf+3TECWV+kdarOk
+ B/Nt371puNu+8LIsrgQYXs3V/q+H+4ybu8QWFRUa2oOg5RR4Ad7xrTUqMFX8RPzevkjR
+ rARnjH+6QnF9fMmqi4pN/RqpwtUC/9VHIyn5V8YZrdYAL2vLOArVk8mXyfduibyOnwkE
+ GxWSF1dUJd573U4OeliMJrnq8HRXloHZ7Lm/3mYyQQcRTVQoc/85zy7Gzla9ibjs1JhX
+ wDrP/AJ52GLLj0vjPcvDB+dw/qdAwR8HG0FaC2xW1GsLXvA4n0vvCkWyZ87iUXPX2O84
+ D7BA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU3oKMa9FGkPaOwqvUEtaXicquXyFvp5s6FSlb9zaMzsEcWlfqx5JYYFJLhpfjKTtZ/KqNcYMBQiv6L@nongnu.org
-X-Gm-Message-State: AOJu0Yw2N4UZvhSGZPsxkeWeipgnW6PlUGjd2pxej1WBM06bPlKOwT7A
- /iovAbCFbJvY7paY3h3jNWUos7SoXrnZ97hvNUPrXZUYEjxK2lH30bnKD1e1BTZY1xCHJ1bcqbJ
- VpgAFayX1Be1xmcBnnhNUGU6nsk1i+Rpz9A6AVQ==
-X-Google-Smtp-Source: AGHT+IHluEb4B7Koo7MifzrpmBQfMoz7nnODdaANxlpzG/ANSBzF2DKPiSP0Dt8XFQq+rifbj4YkwrlR9chPCXX5rOU=
-X-Received: by 2002:a17:907:6d1b:b0:a8d:64af:dc4c with SMTP id
- a640c23a62f3a-a93c4909952mr1461012166b.25.1727710278245; Mon, 30 Sep 2024
- 08:31:18 -0700 (PDT)
+ AJvYcCXCietuQqOGCHDlkIFGDOPyRd9cCqN/ehDSSVXRlMOdmNWry0FE2Ek/GF53iNcBnP+9ghTPqpqXZypM@nongnu.org
+X-Gm-Message-State: AOJu0YzClKFLU4oUN0ISzXVAkvItggw2hqJpYpF4QpukNVhKYQ5s2d5F
+ mq4YeGV9SiiVJZcCSCu97P/+1tSkaW5coXYnSvRvy01dEdYssRLlcBEU37RjFNk3hAAodvCY0u4
+ teAoxHvN61OwNEanotU+Ug303QpesXoal6o+TlQ==
+X-Google-Smtp-Source: AGHT+IGkqH3JmkfH7BL5H0B3Bu+z47h4nTUl0RSy81pzWQ/yplo6+yYdCrSkey9u4rovtC3mj7PwJPkMBMs5AzN0mQY=
+X-Received: by 2002:a05:6402:42c4:b0:5c5:cbfd:b3a8 with SMTP id
+ 4fb4d7f45d1cf-5c8824ccc12mr10713522a12.1.1727710712150; Mon, 30 Sep 2024
+ 08:38:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
- <Zs4z7tKWif6K4EbT@x1n> <20240827165643-mutt-send-email-mst@kernel.org>
- <027c4f24-f515-4fdb-8770-6bf2433e0f43@akamai.com>
- <84c74f1a95a648b18c9d41b8c5ef2f60@huawei.com>
- <ZvQnbzV9SlXKlarV@x1n>
- <DM6PR12MB431364C7A2D94609B4AAF9A8BD6B2@DM6PR12MB4313.namprd12.prod.outlook.com>
- <0730fa9b-49cd-46e4-9264-afabe2486154@akamai.com>
- <20240929141323-mutt-send-email-mst@kernel.org>
- <46f8e54e-64a4-4d90-9b02-4fd699b54e41@akamai.com>
- <20240929182538-mutt-send-email-mst@kernel.org>
- <ce4dc43a-69d7-4623-abc4-b40b681595b2@akamai.com>
-In-Reply-To: <ce4dc43a-69d7-4623-abc4-b40b681595b2@akamai.com>
-From: Yu Zhang <yu.zhang@ionos.com>
-Date: Mon, 30 Sep 2024 17:31:07 +0200
-Message-ID: <CAHEcVy4737zxRhOeXg=W-49e0ffhik6+gr1KxSLepWA_dVf4xw@mail.gmail.com>
-Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
-To: Michael Galaxy <mgalaxy@akamai.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Sean Hefty <shefty@nvidia.com>, Peter Xu <peterx@redhat.com>, 
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "elmar.gerdes@ionos.com" <elmar.gerdes@ionos.com>,
- zhengchuan <zhengchuan@huawei.com>, 
- "berrange@redhat.com" <berrange@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>, 
- "lizhijian@fujitsu.com" <lizhijian@fujitsu.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>, 
- Xiexiangyou <xiexiangyou@huawei.com>, 
- "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
- "lixiao (H)" <lixiao91@huawei.com>, 
- "jinpu.wang@ionos.com" <jinpu.wang@ionos.com>,
- Wangjialin <wangjialin23@huawei.com>
+References: <20240915145339.1368029-1-alexjlzheng@tencent.com>
+In-Reply-To: <20240915145339.1368029-1-alexjlzheng@tencent.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 30 Sep 2024 16:38:20 +0100
+Message-ID: <CAFEAcA81qhzHDmzZC0ywfrxjvQcRytb942b+CAh7VKCsnLLVWw@mail.gmail.com>
+Subject: Re: [PATCH] qom: fix NULL pointer in object_initialize_with_type()
+To: alexjlzheng@gmail.com
+Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net, 
+ qemu-devel@nongnu.org, Jinliang Zheng <alexjlzheng@tencent.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: permerror client-ip=2a00:1450:4864:20::633;
- envelope-from=yu.zhang@ionos.com; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,90 +90,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Michael,
+On Sun, 15 Sept 2024 at 17:12, <alexjlzheng@gmail.com> wrote:
+>
+> From: Jinliang Zheng <alexjlzheng@tencent.com>
+>
+> Currently, object_initialize_with_type() calls object_class_property_init_all()
+> before initializing Object->properties. This may cause Object->properties to
+> still be NULL when we call object_property_add() on Object.
+>
+> For exmaple, if we extend DEFINE_PROP_ARRAY() to a version with a default value
+> other than 0:
+>         #define DEFINE_PROP_ARRAY_EXAMPLE(_name, _state, _field,        \
+>                                 _arrayfield, _arrayprop, _arraytype)    \
+>                 DEFINE_PROP((PROP_ARRAY_LEN_PREFIX _name),              \
+>                         _state, _field, qdev_prop_arraylen_virtio_net,  \
+>                         uint32_t,                                       \
+>                         .set_default = true,                            \
+>                         .defval.u = <non-zero>,                         \
+>                         .arrayinfo = &(_arrayprop),                     \
+>                         .arrayfieldsize = sizeof(_arraytype),           \
+>                         .arrayoffset = offsetof(_state, _arrayfield))
+> We should have:
+>         object_initialize_with_type
+>           object_class_property_init_all
+>             ObjectProperty->init() / object_property_init_defval
+>               ...
+>                 set_prop_arraylen
 
-That's true. To my understanding, to ease the maintenance, Gonglei's
-team has taken efforts to refactorize the RDMA migration code by using
-rsocket. However, due to a certain limitation in rsocket, it turned
-out that only small VM (in terms of core number and memory) can be
-migrated successfully. As long as this limitation persists, no
-progress can be achieved in this direction. One the other hand, a
-proper test environment and integration / regression test cases are
-expected to catch any possible regression due to new changes. It seems
-that currently, we can go in this direction.
+There's no set_prop_arraylen function in the codebase. Which
+function do you mean here ?
 
-Best regards,
-Yu Zhang @ IONOS cloud
+>                   object_property_add
+>                     object_property_try_add
+>                       g_hash_table_insert(Object->properties)   <- NULL
+>           obj->properties = g_hash_table_new_full()             <- initializing
+>
+> This patch fixes the above problem by exchanging the order of Ojbect->properties
+> initialization and object_class_property_init_all().
 
-On Mon, Sep 30, 2024 at 5:00=E2=80=AFPM Michael Galaxy <mgalaxy@akamai.com>=
- wrote:
+So this happens only if the initializer for a class property attempts
+to add a property to the object, right? That seems quite niche,
+and it would be good to clarify that in the commit message.
+
+I do wonder if it's something we ever intended to support.
+In particular note that you cannot currently validly add a *class*
+property to the class in the initializer for a class property
+(because it would invalidate the iterator over the class properties).
+
+Do you have a more concrete example of something you want to do
+that you're currently running into this with?
+
+> Signed-off-by: Jinliang Zheng <alexjlzheng@tencent.com>
+> ---
+>  qom/object.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
->
-> On 9/29/24 17:26, Michael S. Tsirkin wrote:
-> > !-------------------------------------------------------------------|
-> >    This Message Is From an External Sender
-> >    This message came from outside your organization.
-> > |-------------------------------------------------------------------!
-> >
-> > On Sun, Sep 29, 2024 at 03:26:58PM -0500, Michael Galaxy wrote:
-> >> On 9/29/24 13:14, Michael S. Tsirkin wrote:
-> >>> !-------------------------------------------------------------------|
-> >>>     This Message Is From an External Sender
-> >>>     This message came from outside your organization.
-> >>> |-------------------------------------------------------------------!
-> >>>
-> >>> On Sat, Sep 28, 2024 at 12:52:08PM -0500, Michael Galaxy wrote:
-> >>>> A bounce buffer defeats the entire purpose of using RDMA in these ca=
-ses.
-> >>>> When using RDMA for very large transfers like this, the goal here is=
- to map
-> >>>> the entire memory region at once and avoid all CPU interactions (exc=
-ept for
-> >>>> message management within libibverbs) so that the NIC is doing all o=
-f the
-> >>>> work.
-> >>>>
-> >>>> I'm sure rsocket has its place with much smaller transfer sizes, but=
- this is
-> >>>> very different.
-> >>> To clarify, are you actively using rdma based migration in production=
-? Stepping up
-> >>> to help maintain it?
-> >>>
-> >> Yes, both Huawei and IONOS have both been contributing here in this em=
-ail
-> >> thread.
-> >>
-> >> They are both using it in production.
-> >>
-> >> - Michael
-> > Well, any plans to work on it? for example, postcopy does not really
-> > do zero copy last time I checked, there's also a long TODO list.
-> >
-> I apologize, I'm not following the question here. Isn't that what this
-> thread is about?
->
-> So, some background is missing here, perhaps: A few months ago, there
-> was a proposal
-> to remove native RDMA support from live migration due to concerns about
-> lack of testability.
-> Both IONOS and Huawei have stepped up that they are using it and are
-> engaging with the
-> community here. I also proposed transferring over maintainership to them
-> as well.  (I  no longer
-> have any of this hardware, so I cannot provide testing support anymore).
->
-> During that time, rsocket was proposed as an alternative, but as I have
-> laid out above, I believe
-> it cannot work for technical reasons.
->
-> I also asked earlier in the thread if we can cover the community's
-> testing concerns using softroce,
-> so that an integration test can be made to work (presumably through
-> avocado or something similar).
->
-> Does that history make sense?
->
-> - Michael
->
+> diff --git a/qom/object.c b/qom/object.c
+> index 157a45c5f8..734b52f048 100644
+> --- a/qom/object.c
+> +++ b/qom/object.c
+> @@ -556,9 +556,9 @@ static void object_initialize_with_type(Object *obj, size_t size, TypeImpl *type
+>      memset(obj, 0, type->instance_size);
+>      obj->class = type->class;
+>      object_ref(obj);
+> -    object_class_property_init_all(obj);
+>      obj->properties = g_hash_table_new_full(g_str_hash, g_str_equal,
+>                                              NULL, object_property_free);
+> +    object_class_property_init_all(obj);
+>      object_init_with_type(obj, type);
+>      object_post_init_with_type(obj, type);
+>  }
+
+On the other hand doing the initialization in this order
+is certainly safe, so if it's all we need to do to handle
+class prop initializers adding object properties maybe it's
+fine to do so.
+
+thanks
+-- PMM
 
