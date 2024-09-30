@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A457CCF6497
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:07:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD126CF649D
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:07:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svBQW-0000Yt-Gy; Mon, 30 Sep 2024 04:06:40 -0400
+	id 1svBQs-0002Gt-Qf; Mon, 30 Sep 2024 04:07:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svBQS-0000Kk-Sy
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:06:37 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svBQq-00022k-T9
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:07:01 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svBQR-0004Wi-6R
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:06:36 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5c42e7adbddso5870466a12.2
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 01:06:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svBQp-0004Zw-0r
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:07:00 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a8a7cdfdd80so675769966b.0
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 01:06:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727683593; x=1728288393; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727683616; x=1728288416; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RyfJ60ZwiZ7J7acEGIws/WvnHoIJtgQD50MT+DOE6Vo=;
- b=Iw0cw9jhyQwNqBFrpvhQ77Dxdt+3h42LsCxDc+IX7f0c/GPASvAfsjk4kaFnhcCeD3
- GnEavYHO8gfNS1MyrcRrBc87Er3pWS7bbhdxrDvhIWTM7OeUtFQeS5AtYYYIqhxgJqDr
- l6fqpC+ARHTVUxVUQcm1iZpoj1zCWZYJSJQc2ia+H4Ml1Yn5wZSeTt1IbjqpyspLsd30
- 5ObOwj6TBtzbHu5aETkGbPisxZcAZnKnDp0YyMdW6wrm8hRZ0ZFvdf4W/p4N3e9ZS+Yp
- oE2WBWWNaQDNHjQgRojaAjzUEWjQYWRMQQDogSK5r15nhxcWSVDvstjnfcgc/6A5FXJr
- EY2A==
+ bh=PDKmxhtETyeu/iYuY2neXJ4cpuVufAHpcFENKpKvuEg=;
+ b=xVF6KTM+0CFj485bBWdgFq0qOxYKOhacrjn1HJ2nJ1V/pVC4H8398JBBgo0SRDGs6S
+ vYw5ByKwjXvhdQOdFYlEQmritoE35GTfaHbBi4AIF8XCjn4sB6mjRHvuCNFDdhG/EZJz
+ bLHOykP+sbslfqLzENUZQtkyz61obuKx03/M7eI/xAIq0QPsWrox7wWOplULL2qHceZh
+ spFMGitNckIBz9EJUT5nTMHMYLyuJ9FQshMFlGtwaDAs3zriC1R++GTqHSJ5/1iNmCzT
+ J2dSJlhhA+STFeoELbwdbz48h9DFt4HFolZ5BH0T6tj3k7a261jOpD3RvS+qPZ7Tn30G
+ n0VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727683593; x=1728288393;
+ d=1e100.net; s=20230601; t=1727683616; x=1728288416;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RyfJ60ZwiZ7J7acEGIws/WvnHoIJtgQD50MT+DOE6Vo=;
- b=KLh/E/mcesqWcx266+Iu/eCWQr7ZunnDlZYsUqVWPopRahQHJdUcNVolQERUBx638t
- hRHQ/SvQIPoimpzmNTOjg8/MSiLvMB7FOiUxeglFVxtoZ/JSCkDjYV4TLAh6vKyNBGQY
- mrPIso3R7UfH1dVVhEl8pA52U3teaKLxwagR+OiDBGFD6Cev2WeG0mbegxJMmcfkXXEH
- IgH6APZFr1ofd/FXssB96SROfy2gPwwCh1kxx0DooEIOhC+IG0p8Ew67E5DoiuHA0NuO
- fVdc0BjEKXl+kJWPyX8SfwZDmL+bE6+jXQv2BPA9fjBxD1BczKycrpwYP29S8FoC1px0
- MhsQ==
-X-Gm-Message-State: AOJu0YwiBa+FKfcbUmioPRGnGbAtRWO4O992qpnTYzpXy4P7leglapez
- 8duLVD0VO8cumw5gn0lsRjCsM+yRF5Ulw782koGmFtY7PS2WYtaFFAGo7Xqq9tEEW70ZF+1gjwT
- vhiM=
-X-Google-Smtp-Source: AGHT+IG2gsv4mq4+t28yXE71qvp6d8mpB4wSDB4DPNTelRdnOp6bYuTIvq+usLJM1DB/dwuL1E7PwA==
-X-Received: by 2002:a05:600c:45c9:b0:426:63b4:73b0 with SMTP id
- 5b1f17b1804b1-42f5849731fmr76872605e9.34.1727681770017; 
- Mon, 30 Sep 2024 00:36:10 -0700 (PDT)
+ bh=PDKmxhtETyeu/iYuY2neXJ4cpuVufAHpcFENKpKvuEg=;
+ b=k+ovtGvfdRtdcrX5LounSyeWQ27Z8pX7w0XHj5ayKb8BEOOB3uQdT6JuJ1cU8uJbkz
+ L3jcOAqxvqorJsWpClMVux8VyUNG9zk+8kxBabRjGv633maEY6l/ewOpHEZ7c3ENKUgV
+ tf/o/n+KLNV4QFvnG8TWPh6oBTCznV6XdRTgpjA0fvYqOIoph3DNigs/W3S2KtgnpI4T
+ q2M+K+z9xmEct/6kgvyEQYIvDaNzqewmSBXtd5mCSIJn+nEYqE86Q7CNFts5thnN94vO
+ nZAFrNZ/D/onnxAW9sosrTF+Yzq8hYovoQU6PQq8FarHIwuRa+xlx4vcKNpcfTFyfsFA
+ jAtg==
+X-Gm-Message-State: AOJu0YxUvjCHAAqiFggJLVPmdCd+9o3jqmJZcGJj4kcLUQuAZmJrWGjc
+ ruGoZ4nhjDDMqD8qunePdJ7ljGXuyGJet5hRgbFgyTfE7vwegTGpD+EhZ3jUTmWUflfwC9etfRx
+ JCaI=
+X-Google-Smtp-Source: AGHT+IHYEAXZvTMQIghMVZv8Pw1TDOBPf+W7tpo+teIiQ7939xyVfth4qR6F5Ris9NSp4atmfNQHng==
+X-Received: by 2002:a05:600c:3b93:b0:426:689b:65b7 with SMTP id
+ 5b1f17b1804b1-42f58485cc1mr80571605e9.25.1727681720993; 
+ Mon, 30 Sep 2024 00:35:20 -0700 (PDT)
 Received: from localhost.localdomain (186.red-88-28-13.dynamicip.rima-tde.net.
  [88.28.13.186]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42e96a52308sm141836745e9.43.2024.09.30.00.36.07
+ ffacd0b85a97d-37cd5742a23sm8324073f8f.105.2024.09.30.00.35.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 30 Sep 2024 00:36:09 -0700 (PDT)
+ Mon, 30 Sep 2024 00:35:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
@@ -73,17 +73,17 @@ Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
  Aurelien Jarno <aurelien@aurel32.net>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Max Filippov <jcmvbkbc@gmail.com>, Paul Burton <paulburton@kernel.org>
-Subject: [PATCH 09/13] exec/memory_ldst_phys: Introduce ld/st_endian_phys() API
-Date: Mon, 30 Sep 2024 09:34:46 +0200
-Message-ID: <20240930073450.33195-10-philmd@linaro.org>
+Subject: [PATCH 03/13] target/arm/ptw: Use the ld/st_endian_p() API
+Date: Mon, 30 Sep 2024 09:34:40 +0200
+Message-ID: <20240930073450.33195-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240930073450.33195-1-philmd@linaro.org>
 References: <20240930073450.33195-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,128 +105,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce the ld/st_endian_phys() API, which takes an extra
-boolean argument to dispatch to ld/st_{be,le}_phys() methods.
+Refactor to use the recently introduced ld/st_endian_p() API
+No logical change intended.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
-TODO: Update docstring regexp
----
- include/exec/memory_ldst_phys.h.inc | 66 +++++++++++++++++++++++++++++
- 1 file changed, 66 insertions(+)
+ target/arm/ptw.c | 19 ++++---------------
+ 1 file changed, 4 insertions(+), 15 deletions(-)
 
-diff --git a/include/exec/memory_ldst_phys.h.inc b/include/exec/memory_ldst_phys.h.inc
-index ecd678610d..8ea162b40d 100644
---- a/include/exec/memory_ldst_phys.h.inc
-+++ b/include/exec/memory_ldst_phys.h.inc
-@@ -74,6 +74,16 @@ static inline uint16_t glue(lduw_be_phys, SUFFIX)(ARG1_DECL, hwaddr addr)
-                                                MEMTXATTRS_UNSPECIFIED, NULL);
- }
- 
-+static inline uint16_t glue(lduw_endian_phys, SUFFIX)(bool big_endian,
-+                                                      ARG1_DECL, hwaddr addr)
-+{
-+    return big_endian
-+           ? glue(address_space_lduw_le, SUFFIX)(ARG1, addr,
-+                                                 MEMTXATTRS_UNSPECIFIED, NULL)
-+           : glue(address_space_lduw_be, SUFFIX)(ARG1, addr,
-+                                                 MEMTXATTRS_UNSPECIFIED, NULL);
-+}
-+
- static inline uint32_t glue(ldl_le_phys, SUFFIX)(ARG1_DECL, hwaddr addr)
- {
-     return glue(address_space_ldl_le, SUFFIX)(ARG1, addr,
-@@ -86,6 +96,16 @@ static inline uint32_t glue(ldl_be_phys, SUFFIX)(ARG1_DECL, hwaddr addr)
-                                               MEMTXATTRS_UNSPECIFIED, NULL);
- }
- 
-+static inline uint32_t glue(ldl_endian_phys, SUFFIX)(bool big_endian,
-+                                                     ARG1_DECL, hwaddr addr)
-+{
-+    return big_endian
-+           ? glue(address_space_ldl_le, SUFFIX)(ARG1, addr,
-+                                                MEMTXATTRS_UNSPECIFIED, NULL)
-+           : glue(address_space_ldl_be, SUFFIX)(ARG1, addr,
-+                                                MEMTXATTRS_UNSPECIFIED, NULL);
-+}
-+
- static inline uint64_t glue(ldq_le_phys, SUFFIX)(ARG1_DECL, hwaddr addr)
- {
-     return glue(address_space_ldq_le, SUFFIX)(ARG1, addr,
-@@ -98,6 +118,16 @@ static inline uint64_t glue(ldq_be_phys, SUFFIX)(ARG1_DECL, hwaddr addr)
-                                               MEMTXATTRS_UNSPECIFIED, NULL);
- }
- 
-+static inline uint32_t glue(ldq_endian_phys, SUFFIX)(bool big_endian,
-+                                                     ARG1_DECL, hwaddr addr)
-+{
-+    return big_endian
-+           ? glue(address_space_ldq_le, SUFFIX)(ARG1, addr,
-+                                                MEMTXATTRS_UNSPECIFIED, NULL)
-+           : glue(address_space_ldq_be, SUFFIX)(ARG1, addr,
-+                                                MEMTXATTRS_UNSPECIFIED, NULL);
-+}
-+
- static inline void glue(stb_phys, SUFFIX)(ARG1_DECL, hwaddr addr, uint8_t val)
- {
-     glue(address_space_stb, SUFFIX)(ARG1, addr, val,
-@@ -116,6 +146,18 @@ static inline void glue(stw_be_phys, SUFFIX)(ARG1_DECL, hwaddr addr, uint16_t va
-                                        MEMTXATTRS_UNSPECIFIED, NULL);
- }
- 
-+static inline void glue(stw_endian_phys, SUFFIX)(bool big_endian, ARG1_DECL,
-+                                                 hwaddr addr, uint16_t val)
-+{
-+    if (big_endian) {
-+        glue(address_space_stw_be, SUFFIX)(ARG1, addr, val,
-+                                           MEMTXATTRS_UNSPECIFIED, NULL);
-+   } else {
-+        glue(address_space_stw_le, SUFFIX)(ARG1, addr, val,
-+                                           MEMTXATTRS_UNSPECIFIED, NULL);
-+    }
-+}
-+
- static inline void glue(stl_le_phys, SUFFIX)(ARG1_DECL, hwaddr addr, uint32_t val)
- {
-     glue(address_space_stl_le, SUFFIX)(ARG1, addr, val,
-@@ -128,6 +170,18 @@ static inline void glue(stl_be_phys, SUFFIX)(ARG1_DECL, hwaddr addr, uint32_t va
-                                        MEMTXATTRS_UNSPECIFIED, NULL);
- }
- 
-+static inline void glue(stl_endian_phys, SUFFIX)(bool big_endian, ARG1_DECL,
-+                                                 hwaddr addr, uint32_t val)
-+{
-+    if (big_endian) {
-+        glue(address_space_stl_be, SUFFIX)(ARG1, addr, val,
-+                                           MEMTXATTRS_UNSPECIFIED, NULL);
-+   } else {
-+        glue(address_space_stl_le, SUFFIX)(ARG1, addr, val,
-+                                           MEMTXATTRS_UNSPECIFIED, NULL);
-+    }
-+}
-+
- static inline void glue(stq_le_phys, SUFFIX)(ARG1_DECL, hwaddr addr, uint64_t val)
- {
-     glue(address_space_stq_le, SUFFIX)(ARG1, addr, val,
-@@ -139,6 +193,18 @@ static inline void glue(stq_be_phys, SUFFIX)(ARG1_DECL, hwaddr addr, uint64_t va
-     glue(address_space_stq_be, SUFFIX)(ARG1, addr, val,
-                                        MEMTXATTRS_UNSPECIFIED, NULL);
- }
-+
-+static inline void glue(stq_endian_phys, SUFFIX)(bool big_endian, ARG1_DECL,
-+                                                 hwaddr addr, uint64_t val)
-+{
-+    if (big_endian) {
-+        glue(address_space_stq_be, SUFFIX)(ARG1, addr, val,
-+                                           MEMTXATTRS_UNSPECIFIED, NULL);
-+   } else {
-+        glue(address_space_stq_le, SUFFIX)(ARG1, addr, val,
-+                                           MEMTXATTRS_UNSPECIFIED, NULL);
-+    }
-+}
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index defd6b84de..a1a6b1fec3 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -699,11 +699,7 @@ static uint64_t arm_ldq_ptw(CPUARMState *env, S1Translate *ptw,
+             data = le64_to_cpu(data);
+         }
+ #else
+-        if (ptw->out_be) {
+-            data = ldq_be_p(host);
+-        } else {
+-            data = ldq_le_p(host);
+-        }
++        data = ldq_endian_p(ptw->out_be, host);
  #endif
- 
- #undef ARG1_DECL
+     } else {
+         /* Page tables are in MMIO. */
+@@ -860,16 +856,9 @@ static uint64_t arm_casq_ptw(CPUARMState *env, uint64_t old_val,
+     if (!locked) {
+         bql_lock();
+     }
+-    if (ptw->out_be) {
+-        cur_val = ldq_be_p(host);
+-        if (cur_val == old_val) {
+-            stq_be_p(host, new_val);
+-        }
+-    } else {
+-        cur_val = ldq_le_p(host);
+-        if (cur_val == old_val) {
+-            stq_le_p(host, new_val);
+-        }
++    cur_val = ldq_endian_p(ptw->out_be, host);
++    if (cur_val == old_val) {
++        stq_endian_p(ptw->out_be, host, new_val);
+     }
+     if (!locked) {
+         bql_unlock();
 -- 
 2.45.2
 
