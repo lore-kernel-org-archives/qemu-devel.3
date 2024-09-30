@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 773AACF6491
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 079A9CF6497
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:52:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svC7U-0002rR-LU; Mon, 30 Sep 2024 04:51:04 -0400
+	id 1svC86-0005wM-UX; Mon, 30 Sep 2024 04:51:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1svC7S-0002hY-73; Mon, 30 Sep 2024 04:51:02 -0400
+ id 1svC84-0005mL-DX; Mon, 30 Sep 2024 04:51:40 -0400
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1svC7Q-0001vu-D8; Mon, 30 Sep 2024 04:51:01 -0400
+ id 1svC82-00020Y-Q3; Mon, 30 Sep 2024 04:51:40 -0400
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c23:1301:0:640:a2b5:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 61C4360D88;
- Mon, 30 Sep 2024 11:50:56 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 1752C60D09;
+ Mon, 30 Sep 2024 11:51:36 +0300 (MSK)
 Received: from [IPV6:2a02:6b8:b081:b737::1:2c] (unknown
  [2a02:6b8:b081:b737::1:2c])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id poUIoD1IfW20-T8pF4pGP; Mon, 30 Sep 2024 11:50:55 +0300
+ ESMTPSA id YpUioD1IeOs0-cLMdnX6n; Mon, 30 Sep 2024 11:51:35 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1727686255;
- bh=VBAc0b4GWRYvqnXUoNfMlhRue1lsqzLFJgmyrbCMQyQ=;
+ s=default; t=1727686295;
+ bh=Hyvwr1+aCxFb1IHVspT2j06tOBwpnBzg4sr8KhSVjxk=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=SZOTPdeOTWymz9wM1pyaw9UEuMdXsv3Lfob/zIYmn8lPLlmtzN28cjCcAaVjCOfu0
- M8jJHS0fSVCZW+V/rBZvitU6+w2PNxBgWvQQrTNqfXcfgMp0h6APMiDS4Si3RXpFe0
- MTThOcqlYCvKsA73zHTtekQ6GSlqzJ2aij9lqwUE=
+ b=kHwGP+weifJrRhDC6m0L2PoQp6qKItW1G1zdMOkApc8p6lgZfEjoCOW27cKLi1U6A
+ NyUtoMrqUunCG2AbpjVKspF5Dawl/OZoPylSLJ+YJHomSCbRVWTsyR8+n0//HUDh8p
+ bTK+Y5mIeMyqmbCyhMoqa5gc8VGK6OKS9NuwcQmk=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <a5a353f7-1a0e-4893-b244-0071f1cfc442@yandex-team.ru>
-Date: Mon, 30 Sep 2024 11:50:50 +0300
+Message-ID: <10b8748a-cb8c-44f4-9d59-f9fdf275e318@yandex-team.ru>
+Date: Mon, 30 Sep 2024 11:51:34 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/22] block/mirror: fix -Werror=maybe-uninitialized
- false-positive
+Subject: Re: [PATCH v3 11/22] block/block-copy: fix
+ -Werror=maybe-uninitialized false-positive
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>,
  Christian Schoenebeck <qemu_oss@crudebyte.com>, Fam Zheng <fam@euphon.net>,
@@ -66,10 +66,10 @@ Cc: Hanna Reitz <hreitz@redhat.com>,
  <berrange@redhat.com>, Yuval Shaia <yuval.shaia.ml@gmail.com>,
  Bin Meng <bin.meng@windriver.com>
 References: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
- <20240930081458.1926382-7-marcandre.lureau@redhat.com>
+ <20240930081458.1926382-12-marcandre.lureau@redhat.com>
 Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20240930081458.1926382-7-marcandre.lureau@redhat.com>
+In-Reply-To: <20240930081458.1926382-12-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Yandex-Filter: 1
@@ -99,12 +99,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 30.09.24 11:14, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau<marcandre.lureau@redhat.com>
 > 
-> ../block/mirror.c:404:5: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
-> ../block/mirror.c:895:12: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
-> ../block/mirror.c:578:12: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
-> 
-> Change a variable to int, as suggested by Manos: "bdrv_co_preadv()
-> which is int and is passed as an int argument to mirror_read_complete()"
+> ../block/block-copy.c:591:12: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
 > 
 > Signed-off-by: Marc-André Lureau<marcandre.lureau@redhat.com>
 
