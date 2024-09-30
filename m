@@ -4,79 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B819CE835D
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 17:17:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAC6ECE8375
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 17:19:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svK1F-0003of-5R; Mon, 30 Sep 2024 13:17:09 -0400
+	id 1svK2n-0007j6-IA; Mon, 30 Sep 2024 13:18:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1svK1A-0003nU-65
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 13:17:06 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svK2l-0007eQ-JI
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 13:18:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1svK17-0002UF-Eh
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 13:17:03 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svK2j-0002e2-L7
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 13:18:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727716619;
+ s=mimecast20190719; t=1727716720;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=KLX2vmXpWw5EKUCP7TCclqtuxtBat0RwNdVyLDJm5xc=;
- b=ZsLypoC5MGpXjc+IL2kqnDl/SSwVeIXgc+hbdqbu5Hmt1SVib3qCXdWEK/0VDDXT6FQs+s
- LcmAo9EIcm9uEgaOLkkKH9G+AMRbtbzT+kryetLSel/X03E8VhK5rouT4/z5UDD4qNJqW/
- Vm5PaP2xvi9Awx9hbt8ZJsUipZjxggQ=
-Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
- [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-639-MZsrUe88N--07e4Ekq3EQA-1; Mon, 30 Sep 2024 13:16:57 -0400
-X-MC-Unique: MZsrUe88N--07e4Ekq3EQA-1
-Received: by mail-oi1-f198.google.com with SMTP id
- 5614622812f47-3e27a0f8613so2888958b6e.2
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 10:16:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727716614; x=1728321414;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KLX2vmXpWw5EKUCP7TCclqtuxtBat0RwNdVyLDJm5xc=;
- b=n1Uv8UKJv6c96/p2EnY4O5m3eJKdLrf36iibF+0F69FAMN1XR2d8CxWO//3wY57t67
- /GMrNAWoemwT4Ti/YfLCukUZvI7NQTewc102iOtxjiCXp6FNazSbCg3usOJoZ+6MY7sU
- PhXPc442mr1EImVH5RUviEflOic9l7jw5L3Q5JuRu9a2v/vCO+M+NwODMPwlwaBBwBoy
- G0tozVRB+wXaHfxMoK2R3nF2LA4c3YNJOYVroWEBrKNv6xFk1ThGhqRiIAN7qH4UXdEJ
- dpPim4sBOURBGEA7cjEXcR8xksaxQEZr/UFSCc86yAn+rw4+i/XufzUNOjh43LBIxGcy
- V2CQ==
-X-Gm-Message-State: AOJu0Yx8vRyDReTx/K7cNHJ95X3xLn4MehA3LQuaGQTv9avzD+PWSv9O
- bijS9CVhNX/KPeuhUTaD2u5U9IpMZdPvgRV2iDfVh8NU6D2H1aEcvsxi/nuPkGz+xbiNg1E9pwC
- JVtHn6ua9oPqyLKNMRz+PnWVgZShInaDhTOgHTeYHpOTdee7wUVPWuqBxFuEUUYxo0boDLSJs+W
- pL8dpFAdEPoF3kDxSwh7a/+XJOdwlL5rE5AGRpRg==
-X-Received: by 2002:a05:6808:1b0a:b0:3e0:71c9:cbd9 with SMTP id
- 5614622812f47-3e393961603mr8473187b6e.13.1727716614507; 
- Mon, 30 Sep 2024 10:16:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGKnSvEwGPKHmgdoSdlxe0NndrHh8GpuLrhxlyHhh32itcjAembOMnMOOfJssFUHQQGntskPSPgcjoFAgNr4ag=
-X-Received: by 2002:a05:6808:1b0a:b0:3e0:71c9:cbd9 with SMTP id
- 5614622812f47-3e393961603mr8473153b6e.13.1727716614161; Mon, 30 Sep 2024
- 10:16:54 -0700 (PDT)
-MIME-Version: 1.0
-From: John Snow <jsnow@redhat.com>
-Date: Mon, 30 Sep 2024 13:16:42 -0400
-Message-ID: <CAFn=p-bfv=uRCGzODQDyK4mO1ct-7tG3REfN9pm0o=n2GBGKug@mail.gmail.com>
-Subject: Minimum sphinx version?
-To: qemu-devel <qemu-devel@nongnu.org>
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=bqvw77jbh2X4/KSQzQ76+gpWGbDMmo0yU3nHztD5afE=;
+ b=W09N81lIR4vbRYFdf5TUjkMRQy1KGXpFr2MfervtDDOL03NgIzkXDRqt++YtvVK488jMmc
+ ljYOZsYQp8I9Un79ScMMRodH7Azk8ayXRJ0RmDOfRJK85LAuFm2t3n46+a6eZ1e1itgatG
+ XJSl6Qg5bXqgO6sIEPYWoUv5fEC52UQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-343-oU3Wcjw_PDmbZbinKG3KnQ-1; Mon,
+ 30 Sep 2024 13:18:39 -0400
+X-MC-Unique: oU3Wcjw_PDmbZbinKG3KnQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1BDD21944D24; Mon, 30 Sep 2024 17:18:38 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.141])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D17391956088; Mon, 30 Sep 2024 17:18:35 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Daniel Berrange <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000000f64730623595fe5"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] tests/functional: Switch back to the gitlab URLs for the
+ advent calendar tests
+Date: Mon, 30 Sep 2024 19:18:34 +0200
+Message-ID: <20240930171834.51701-1-thuth@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,122 +79,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000000f64730623595fe5
-Content-Type: text/plain; charset="UTF-8"
+Shortly after we switched to the original URLs on qemu-advent-calendar.org,
+the server went offline - looks like we are better off using the gitlab
+URLs again instead.
 
-Hi, following up from my KVM forum talk (
-https://www.youtube.com/watch?v=GGbz3WwvqLw ) I wanted to ask about what
-version of Sphinx we could use as a minimum version to help ease the burden
-of modernizing our QMP docs without a long backwards compatibility tail
-(and hundreds of lines of compatibility goop to make it happen.)
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/functional/test_arm_vexpress.py            | 2 +-
+ tests/functional/test_m68k_mcf5208evb.py         | 2 +-
+ tests/functional/test_microblazeel_s3adsp1800.py | 4 ++--
+ tests/functional/test_or1k_sim.py                | 2 +-
+ tests/functional/test_ppc64_e500.py              | 2 +-
+ tests/functional/test_ppc_mac.py                 | 2 +-
+ tests/functional/test_sh4_r2d.py                 | 2 +-
+ tests/functional/test_sparc_sun4m.py             | 2 +-
+ tests/functional/test_xtensa_lx60.py             | 2 +-
+ 9 files changed, 10 insertions(+), 10 deletions(-)
 
-First, some necessary background on the current state of our Python
-environment and build system:
-
-Paolo and I worked on a Python virtual environment tied to the QEMU build
-system (python/scripts/mkvenv.py) which performs various setup actions
-necessary to instantiate python *stuff* to ensure the build works and is
-always using the correct, configured Python interpreter.
-
-Currently, configure will invoke mkvenv in such a fashion that it prefers
-any local packages you have installed: notably, meson, sphinx, and
-sphinx-rtd-theme if you already have them installed from your distro's
-repository will be used *if they use the version of python you specified to
-configure* (or they match the version that configure guessed if you didn't
-specify one.)
-
-For meson, if you don't meet the minimum version, we will install a version
-for you from our vendored whl files in the repository/tarball.
-
-For sphinx, if you don't meet the minimum version and you have specified
---enable-docs, we'll install a version from the internet, from PyPI. If you
-did not specify --enable-docs, we disable docs.
-
-We did it this way because:
-- It's *really fast* if you already have the dependencies you need
-- meson is easy to vendor as a .whl because it's pure python, has *zero*
-dependencies, and it's absolutely required for the build.
-- docs are not *required* to build QEMU
-- We went out of our way to ensure that QEMU could be built in an offline,
-isolated environment on all of our supported platforms.
-
-That being said:
-
-The current reality is that Sphinx 3.4.3 is our minimum because RHEL 9
-offers that as the distro package and I have not dared bump our version
-beyond that for fear of disrupting our ability to build docs on RHEL 9
-without internet.
-
-What I'd like to ask is: How adamant are we that we can build docs on older
-platforms? Do we consider it part of our platform promise? Can we bump
-Sphinx to a slightly newer version at the expense of offline doc builds for
-RHEL 9?
-
-To reiterate: interactive developer builds from git or source tarballs
-would continue to work (and be able to build docs just fine) so long as
---enable-docs is passed, but will require an internet connection to set up
-the python environment with a new-enough sphinx. RHEL 9 rpm builds of
-bleeding edge QEMU may be cut off from building docs in isolated RPMBUILD
-environments unless that repository backports a newer sphinx that can be
-identified as a dependency in the specfile.
-
-How much of a problem do we consider that to be?
-
-CCing the usual suspects.
-
---js
-
---0000000000000f64730623595fe5
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi, following up from my KVM forum talk ( <a href=3D"=
-https://www.youtube.com/watch?v=3DGGbz3WwvqLw">https://www.youtube.com/watc=
-h?v=3DGGbz3WwvqLw</a> ) I wanted to ask about what version of Sphinx we cou=
-ld use as a minimum version to help ease the burden of modernizing our QMP =
-docs without a long backwards compatibility tail (and hundreds of lines of =
-compatibility goop to make it happen.)<br></div><div><br></div><div>First, =
-some necessary background on the current state of our Python environment an=
-d build system:<br></div><div><br></div><div>Paolo and I worked on a Python=
- virtual environment tied to the QEMU build system (python/scripts/mkvenv.p=
-y) which performs various setup actions necessary to instantiate python *st=
-uff* to ensure the build works and is always using the correct, configured =
-Python interpreter.<br></div><div><br></div><div>Currently, configure will =
-invoke mkvenv in such a fashion that it prefers any local packages you have=
- installed: notably, meson, sphinx, and sphinx-rtd-theme if you already hav=
-e them installed from your distro&#39;s repository will be used *if they us=
-e the version of python you specified to configure* (or they match the vers=
-ion that configure guessed if you didn&#39;t specify one.)</div><div><br></=
-div><div>For meson, if you don&#39;t meet the minimum version, we will inst=
-all a version for you from our vendored whl files in the repository/tarball=
-.</div><div><br></div><div>For sphinx, if you don&#39;t meet the minimum ve=
-rsion and you have specified --enable-docs, we&#39;ll install a version fro=
-m the internet, from PyPI. If you did not specify --enable-docs, we disable=
- docs.</div><div><br></div><div>We did it this way because:</div><div>- It&=
-#39;s *really fast* if you already have the dependencies you need<br></div>=
-<div>- meson is easy to vendor as a .whl because it&#39;s pure python, has =
-*zero* dependencies, and it&#39;s absolutely required for the build.<br></d=
-iv><div>- docs are not *required* to build QEMU</div><div>- We went out of =
-our way to ensure that QEMU could be built in an offline, isolated environm=
-ent on all of our supported platforms.</div><div><br></div><div>That being =
-said:<br></div><div><br></div><div>The current reality is that Sphinx 3.4.3=
- is our minimum because RHEL 9 offers that as the distro package and I have=
- not dared bump our version beyond that for fear of disrupting our ability =
-to build docs on RHEL 9 without internet.</div><div><br></div><div>What I&#=
-39;d like to ask is: How adamant are we that we can build docs on older pla=
-tforms? Do we consider it part of our platform promise? Can we bump Sphinx =
-to a slightly newer version at the expense of offline doc builds for RHEL 9=
-?</div><div><br></div><div>To reiterate: interactive developer builds from =
-git or source tarballs would continue to work (and be able to build docs ju=
-st fine) so long as --enable-docs is passed, but will require an internet c=
-onnection to set up the python environment with a new-enough sphinx. RHEL 9=
- rpm builds of bleeding edge QEMU may be cut off from building docs in isol=
-ated RPMBUILD environments unless that repository backports a newer sphinx =
-that can be identified as a dependency in the specfile.<br></div><div><br><=
-/div><div>How much of a problem do we consider that to be?</div><div><br></=
-div><div>CCing the usual suspects.<br></div><div><br></div><div>--js<br></d=
-iv><div><br></div></div>
-
---0000000000000f64730623595fe5--
+diff --git a/tests/functional/test_arm_vexpress.py b/tests/functional/test_arm_vexpress.py
+index cc6015112b..6bd6290030 100755
+--- a/tests/functional/test_arm_vexpress.py
++++ b/tests/functional/test_arm_vexpress.py
+@@ -11,7 +11,7 @@
+ class VExpressTest(LinuxKernelTest):
+ 
+     ASSET_DAY16 = Asset(
+-        'https://www.qemu-advent-calendar.org/2018/download/day16.tar.xz',
++        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day16.tar.xz',
+         '63311adb2d4c4e7a73214a86d29988add87266a909719c56acfadd026b4110a7')
+ 
+     def test_arm_vexpressa9(self):
+diff --git a/tests/functional/test_m68k_mcf5208evb.py b/tests/functional/test_m68k_mcf5208evb.py
+index 869ccc88df..00c59590c3 100755
+--- a/tests/functional/test_m68k_mcf5208evb.py
++++ b/tests/functional/test_m68k_mcf5208evb.py
+@@ -13,7 +13,7 @@
+ class Mcf5208EvbTest(LinuxKernelTest):
+ 
+     ASSET_DAY07 = Asset(
+-        'https://www.qemu-advent-calendar.org/2018/download/day07.tar.xz',
++        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day07.tar.xz',
+         '753c2f3837126b7c6ba92d0b1e0b156e8a2c5131d2d576bb0b9a763fae73c08a')
+ 
+     def test_m68k_mcf5208evb(self):
+diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/functional/test_microblazeel_s3adsp1800.py
+index faa3927f2e..47c941d487 100755
+--- a/tests/functional/test_microblazeel_s3adsp1800.py
++++ b/tests/functional/test_microblazeel_s3adsp1800.py
+@@ -18,8 +18,8 @@ class MicroblazeelMachine(QemuSystemTest):
+     timeout = 90
+ 
+     ASSET_IMAGE = Asset(
+-        ('http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
+-        'b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22')
++        ('https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day13.tar.xz'),
++        '67e4c502651f8801e724ecc26403f1d0cdbc00549b033166e2e8cd14e9d49fef')
+ 
+     def test_microblazeel_s3adsp1800(self):
+         self.require_netdev('user')
+diff --git a/tests/functional/test_or1k_sim.py b/tests/functional/test_or1k_sim.py
+index aa2a1f08d2..10e0437c50 100755
+--- a/tests/functional/test_or1k_sim.py
++++ b/tests/functional/test_or1k_sim.py
+@@ -13,7 +13,7 @@
+ class OpenRISC1kSimTest(LinuxKernelTest):
+ 
+     ASSET_DAY20 = Asset(
+-        'https://www.qemu-advent-calendar.org/2018/download/day20.tar.xz',
++        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day20.tar.xz',
+         'ff9d7dd7c6bdba325bd85ee85c02db61ff653e129558aeffe6aff55bffb6763a')
+ 
+     def test_or1k_sim(self):
+diff --git a/tests/functional/test_ppc64_e500.py b/tests/functional/test_ppc64_e500.py
+index 3558ae0c8c..f1af92373e 100755
+--- a/tests/functional/test_ppc64_e500.py
++++ b/tests/functional/test_ppc64_e500.py
+@@ -10,7 +10,7 @@
+ class E500Test(LinuxKernelTest):
+ 
+     ASSET_DAY19 = Asset(
+-        'https://www.qemu-advent-calendar.org/2018/download/day19.tar.xz',
++        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day19.tar.xz',
+         '20b1bb5a8488c664defbb5d283addc91a05335a936c63b3f5ff7eee74b725755')
+ 
+     def test_ppc64_e500(self):
+diff --git a/tests/functional/test_ppc_mac.py b/tests/functional/test_ppc_mac.py
+index a6b1ca2d4c..3f45e37a45 100755
+--- a/tests/functional/test_ppc_mac.py
++++ b/tests/functional/test_ppc_mac.py
+@@ -10,7 +10,7 @@
+ class MacTest(LinuxKernelTest):
+ 
+     ASSET_DAY15 = Asset(
+-        'https://www.qemu-advent-calendar.org/2018/download/day15.tar.xz',
++        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day15.tar.xz',
+         '03e0757c131d2959decf293a3572d3b96c5a53587165bf05ce41b2818a2bccd5')
+ 
+     def do_day15_test(self):
+diff --git a/tests/functional/test_sh4_r2d.py b/tests/functional/test_sh4_r2d.py
+index 5fe8cf9f8d..c3cfff79ad 100755
+--- a/tests/functional/test_sh4_r2d.py
++++ b/tests/functional/test_sh4_r2d.py
+@@ -13,7 +13,7 @@
+ class R2dTest(LinuxKernelTest):
+ 
+     ASSET_DAY09 = Asset(
+-        'https://www.qemu-advent-calendar.org/2018/download/day09.tar.xz',
++        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day09.tar.xz',
+         'a61b44d2630a739d1380cc4ff4b80981d47ccfd5992f1484ccf48322c35f09ac')
+ 
+     # This test has a 6-10% failure rate on various hosts that look
+diff --git a/tests/functional/test_sparc_sun4m.py b/tests/functional/test_sparc_sun4m.py
+index b334375820..573f85222a 100755
+--- a/tests/functional/test_sparc_sun4m.py
++++ b/tests/functional/test_sparc_sun4m.py
+@@ -11,7 +11,7 @@
+ class Sun4mTest(LinuxKernelTest):
+ 
+     ASSET_DAY11 = Asset(
+-        'https://www.qemu-advent-calendar.org/2018/download/day11.tar.xz',
++        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day11.tar.xz',
+         'c776533ba756bf4dd3f1fc4c024fb50ef0d853e05c5f5ddf0900a32d1eaa49e0')
+ 
+     def test_sparc_ss20(self):
+diff --git a/tests/functional/test_xtensa_lx60.py b/tests/functional/test_xtensa_lx60.py
+index 8ce5206a4f..d4ad92dc6c 100755
+--- a/tests/functional/test_xtensa_lx60.py
++++ b/tests/functional/test_xtensa_lx60.py
+@@ -11,7 +11,7 @@
+ class XTensaLX60Test(LinuxKernelTest):
+ 
+     ASSET_DAY02 = Asset(
+-        'https://www.qemu-advent-calendar.org/2018/download/day02.tar.xz',
++        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day02.tar.xz',
+         '68ff07f9b3fd3df36d015eb46299ba44748e94bfbb2d5295fddc1a8d4a9fd324')
+ 
+     def test_xtensa_lx60(self):
+-- 
+2.46.1
 
 
