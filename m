@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F23ACF6491
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:20:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 582AACF6491
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:21:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svBc0-0004Mb-Pd; Mon, 30 Sep 2024 04:18:32 -0400
+	id 1svBco-0007Te-8R; Mon, 30 Sep 2024 04:19:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1svBaj-0005ui-Ax
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:17:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1svBaO-0005Ea-Je
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:17:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1svBah-0005vR-Hq
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:17:13 -0400
+ id 1svBaL-0005sH-N8
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:16:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727684230;
+ s=mimecast20190719; t=1727684205;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OZ0uMH++ziZ4lbJCoyPSFSxUGAl32qZ9iuOXGGoM+e4=;
- b=QAYjKFYyG8Ognd/OcWRCxul/0uknBUegfdeqxqkHpGMFCOr3ogfNHvwnpgHpO0LdGbnE+3
- tUFyUJ13VB7UEpy9BdBvVN5cp+RwV8JNpATBdlhtHV/rixaxPHbu6NtzH1bQCqrEf3L8Ed
- MH1m5HLKS7Ii3YlY/ZfQgMwCRdWV7Gw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=NBIdUVg4Ambg7bYy+M68UshrEz83KnaBQNGOPS+kl2w=;
+ b=BL16SZV9MT7VREegDOOGcT5WLFv1+yM3hk3nxd4j1iJjiffzv+fVpz2G3mvsE0qtAw/hqS
+ fBVjY2Cmw4w3i0noON/9tSZSCoQknlTXPw3RovvSL0YeN2bStFma4G1vfveO3s9LAkYAJe
+ e8GrnoXJNQ0q2rAQJc6s2fvzJOkSEJs=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-573-PX0tQrKbP1Wbriuy_NjBpA-1; Mon,
- 30 Sep 2024 04:17:06 -0400
-X-MC-Unique: PX0tQrKbP1Wbriuy_NjBpA-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-392-muZz1Fg8Peq94dAr0jhFLA-1; Mon,
+ 30 Sep 2024 04:16:41 -0400
+X-MC-Unique: muZz1Fg8Peq94dAr0jhFLA-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 11C8A1956064; Mon, 30 Sep 2024 08:17:04 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1F24A190598D; Mon, 30 Sep 2024 08:16:38 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.36])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0F0C53003E5F; Mon, 30 Sep 2024 08:17:01 +0000 (UTC)
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 65E7619373D7; Mon, 30 Sep 2024 08:16:32 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>,
@@ -72,16 +72,17 @@ Cc: Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Yuval Shaia <yuval.shaia.ml@gmail.com>, Bin Meng <bin.meng@windriver.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v3 18/22] hw/virtio: fix -Werror=maybe-uninitialized
-Date: Mon, 30 Sep 2024 12:14:53 +0400
-Message-ID: <20240930081458.1926382-19-marcandre.lureau@redhat.com>
+Subject: [PATCH v3 13/22] hw/virtio-blk: fix -Werror=maybe-uninitialized
+ false-positive
+Date: Mon, 30 Sep 2024 12:14:48 +0400
+Message-ID: <20240930081458.1926382-14-marcandre.lureau@redhat.com>
 In-Reply-To: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
 References: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -109,32 +110,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../hw/virtio/vhost-shadow-virtqueue.c:545:13: error: ‘r’ may be used uninitialized [-Werror=maybe-uninitialized]
-
-Set `r` to 0 at every loop, since we don't check vhost_svq_get_buf()
-return value.
+../hw/block/virtio-blk.c:1212:12: error: ‘rq’ may be used uninitialized [-Werror=maybe-uninitialized]
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- hw/virtio/vhost-shadow-virtqueue.c | 2 +-
+ hw/block/virtio-blk.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index fc5f408f77..3b2beaea24 100644
---- a/hw/virtio/vhost-shadow-virtqueue.c
-+++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -526,10 +526,10 @@ static void vhost_svq_flush(VhostShadowVirtqueue *svq,
- size_t vhost_svq_poll(VhostShadowVirtqueue *svq, size_t num)
- {
-     size_t len = 0;
--    uint32_t r;
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index 115795392c..9166d7974d 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -1060,7 +1060,7 @@ static void virtio_blk_dma_restart_cb(void *opaque, bool running,
+     VirtIOBlock *s = opaque;
+     uint16_t num_queues = s->conf.num_queues;
+     g_autofree VirtIOBlockReq **vq_rq = NULL;
+-    VirtIOBlockReq *rq;
++    VirtIOBlockReq *rq = NULL;
  
-     while (num--) {
-         int64_t start_us = g_get_monotonic_time();
-+        uint32_t r = 0;
- 
-         do {
-             if (vhost_svq_more_used(svq)) {
+     if (!running) {
+         return;
 -- 
 2.45.2.827.g557ae147e6
 
