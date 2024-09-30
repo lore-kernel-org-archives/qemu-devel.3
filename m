@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 780FACDD1D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 19:42:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF370CDD1A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 19:42:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svMGh-0007YY-Uj; Mon, 30 Sep 2024 15:41:15 -0400
+	id 1svMGn-0007sC-8N; Mon, 30 Sep 2024 15:41:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1svMGg-0007S7-92
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:41:14 -0400
+ id 1svMGh-0007XP-IT
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:41:15 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1svMGe-00022e-IN
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:41:14 -0400
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48UIuZLu012955;
- Mon, 30 Sep 2024 19:41:09 GMT
+ id 1svMGf-00022q-Ri
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:41:15 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48UIuX8T007871;
+ Mon, 30 Sep 2024 19:41:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
  from:to:cc:subject:date:message-id:in-reply-to:references; s=
- corp-2023-11-20; bh=8vZzoDeG4Kcr9FpFs4fJZKz1RExKfJTK3zERs/AOiqE=; b=
- IHuIs4wyZKeV/klLV1yKDc/N9sHrXcwzqdOi+6sEYbTLQYs0mIMyURsKC4POW5Ij
- HaPU1kW7tv9pO3xrDf3eUhLc8nBgsqhET1hx3mXhzhFuKMWqLhnE1tHY4n0rCtsg
- Uf9/Zc4CkX9hbW7VBEhNV8EE8kG6LQentWrI0Y0HX8JB9mBhHXRWmMBqp7taaA2G
- ezGIwe1LlW9tKGpYqIoiNR4PtoRJL5EW9fLpmBaunXnyyIB6q5TrOq43YOcUn5/k
- BwnwR8nanbPGJb5a0M5RhphZy1YBOuOgbbgOhTAwdtsdP5zR9wFHJusARDnb7HjP
- 5nQgct9lIt4NY/hNYCgKiQ==
+ corp-2023-11-20; bh=2GEiIcSxrwEcMxbQLQ6IYADhuLjJTqizq+JqDue8yiE=; b=
+ lzKZ97gdnKk4CJpYkZBPd/Yi0/gySxm3gS7ph1kHXgdUBIkC5v5AWmGOvFT0bFcn
+ BZHW0Iis2tiwrg4kV8weQMXsO0CUUmnFkPAJL6qUV0qjdL/3EGO4RQ0cbAMRAumZ
+ LEgSZIhViWhOQIrNhL9AvdRRwmtDLm2FCz2TqE1ORB8vb43bl+aKuAdFdxi3dmBT
+ 0+HyWu6aHMBKKBuj7dLK6ZsVyB82S8FPmeNBJwYPhqcrea/FemhZNF5t1wTlaUuI
+ e8JEst+o2H0u/GK1M0fRY7ROIg1RPTraZC9oHLa8em96vwTcMO99BUSHiWW9M6jh
+ DmqAavIWEHjLSeYW8HOGZQ==
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 41x9p9mgc3-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 41xabtmhkf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 30 Sep 2024 19:41:08 +0000 (GMT)
+ Mon, 30 Sep 2024 19:41:10 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 48UIWjRa012524; Mon, 30 Sep 2024 19:41:07 GMT
+ with ESMTP id 48UJLfmD012516; Mon, 30 Sep 2024 19:41:08 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 41x8868u2n-1
+ 41x8868u3u-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 30 Sep 2024 19:41:07 +0000
+ Mon, 30 Sep 2024 19:41:08 +0000
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48UJepV6028204;
- Mon, 30 Sep 2024 19:41:06 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48UJepV8028204;
+ Mon, 30 Sep 2024 19:41:08 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 41x8868thj-12; Mon, 30 Sep 2024 19:41:06 +0000
+ ESMTP id 41x8868thj-13; Mon, 30 Sep 2024 19:41:08 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V2 11/13] migration: cpr-uri option
-Date: Mon, 30 Sep 2024 12:40:42 -0700
-Message-Id: <1727725244-105198-12-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V2 12/13] migration: split qmp_migrate
+Date: Mon, 30 Sep 2024 12:40:43 -0700
+Message-Id: <1727725244-105198-13-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
 References: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
@@ -78,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  malwarescore=0 mlxscore=0 spamscore=0 suspectscore=0 adultscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2408220000 definitions=main-2409300142
-X-Proofpoint-ORIG-GUID: 9Bh9KE7V43fcwDj3GhVKaUAMn6xqu10A
-X-Proofpoint-GUID: 9Bh9KE7V43fcwDj3GhVKaUAMn6xqu10A
+X-Proofpoint-ORIG-GUID: 664ZMXleHMpAYR5RcsvEHDatdvogWzfz
+X-Proofpoint-GUID: 664ZMXleHMpAYR5RcsvEHDatdvogWzfz
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -105,80 +105,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define the cpr-uri QEMU command-line option to specify the URI from
-which CPR vmstate is loaded for cpr-transfer mode.
+Split qmp_migrate into start and finish functions.  Finish will be
+called asynchronously in a subsequent patch, but for now, call it
+immediately.  No functional change.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- include/migration/cpr.h | 1 +
- migration/cpr.c         | 7 +++++++
- qemu-options.hx         | 8 ++++++++
- system/vl.c             | 3 +++
- 4 files changed, 19 insertions(+)
+ migration/migration.c | 36 ++++++++++++++++++++++++++++--------
+ 1 file changed, 28 insertions(+), 8 deletions(-)
 
-diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-index 51c19ed..e886c98 100644
---- a/include/migration/cpr.h
-+++ b/include/migration/cpr.h
-@@ -25,6 +25,7 @@ int cpr_find_fd(const char *name, int id);
- int cpr_walk_fd(cpr_walk_fd_cb cb);
- void cpr_resave_fd(const char *name, int id, int fd);
- 
-+void cpr_set_cpr_uri(const char *uri);
- int cpr_state_save(Error **errp);
- int cpr_state_load(Error **errp);
- void cpr_state_close(void);
-diff --git a/migration/cpr.c b/migration/cpr.c
-index 7514c4e..86f66c1 100644
---- a/migration/cpr.c
-+++ b/migration/cpr.c
-@@ -163,6 +163,13 @@ QIOChannel *cpr_state_ioc(void)
-     return qemu_file_get_ioc(cpr_state_file);
+diff --git a/migration/migration.c b/migration/migration.c
+index 868bf0e..3301583 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2073,6 +2073,9 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
+     return true;
  }
  
-+static char *cpr_uri;
++static void qmp_migrate_finish(MigrationAddress *addr, bool resume_requested,
++                               Error **errp);
 +
-+void cpr_set_cpr_uri(const char *uri)
-+{
-+    cpr_uri = g_strdup(uri);
+ void qmp_migrate(const char *uri, bool has_channels,
+                  MigrationChannelList *channels, bool has_detach, bool detach,
+                  bool has_resume, bool resume, Error **errp)
+@@ -2120,12 +2123,6 @@ void qmp_migrate(const char *uri, bool has_channels,
+         return;
+     }
+ 
+-    if (!resume_requested) {
+-        if (!yank_register_instance(MIGRATION_YANK_INSTANCE, errp)) {
+-            return;
+-        }
+-    }
+-
+     if (migrate_mode_is_cpr(s)) {
+         int ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+         if (ret < 0) {
+@@ -2139,6 +2136,30 @@ void qmp_migrate(const char *uri, bool has_channels,
+         goto out;
+     }
+ 
++    qmp_migrate_finish(addr, resume_requested, errp);
++
++out:
++    if (local_err) {
++        migrate_fd_error(s, local_err);
++        error_propagate(errp, local_err);
++        if (stopped) {
++            vm_resume(s->vm_old_state);
++        }
++    }
 +}
 +
- int cpr_state_save(Error **errp)
- {
-     int ret;
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 90ab943..2c88229 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4963,6 +4963,14 @@ SRST
- 
- ERST
- 
-+DEF("cpr-uri", HAS_ARG, QEMU_OPTION_cpr_uri, \
-+    "-cpr-uri unix:socketpath\n",
-+    QEMU_ARCH_ALL)
-+SRST
-+``-cpr-uri unix:socketpath``
-+    URI for incoming CPR state, for the cpr-transfer migration mode.
-+ERST
++static void qmp_migrate_finish(MigrationAddress *addr, bool resume_requested,
++                               Error **errp)
++{
++    MigrationState *s = migrate_get_current();
++    Error *local_err = NULL;
 +
- DEF("incoming", HAS_ARG, QEMU_OPTION_incoming, \
-     "-incoming tcp:[host]:port[,to=maxport][,ipv4=on|off][,ipv6=on|off]\n" \
-     "-incoming rdma:host:port[,ipv4=on|off][,ipv6=on|off]\n" \
-diff --git a/system/vl.c b/system/vl.c
-index 565d932..1ac6b0b 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -3490,6 +3490,9 @@ void qemu_init(int argc, char **argv)
-                     exit(1);
-                 }
-                 break;
-+            case QEMU_OPTION_cpr_uri:
-+                cpr_set_cpr_uri(optarg);
-+                break;
-             case QEMU_OPTION_incoming:
-                 if (!incoming) {
-                     runstate_set(RUN_STATE_INMIGRATE);
++    if (!resume_requested) {
++        if (!yank_register_instance(MIGRATION_YANK_INSTANCE, errp)) {
++            return;
++        }
++    }
++
+     if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET) {
+         SocketAddress *saddr = &addr->u.socket;
+         if (saddr->type == SOCKET_ADDRESS_TYPE_INET ||
+@@ -2163,14 +2184,13 @@ void qmp_migrate(const char *uri, bool has_channels,
+                           MIGRATION_STATUS_FAILED);
+     }
+ 
+-out:
+     if (local_err) {
+         if (!resume_requested) {
+             yank_unregister_instance(MIGRATION_YANK_INSTANCE);
+         }
+         migrate_fd_error(s, local_err);
+         error_propagate(errp, local_err);
+-        if (stopped) {
++        if (migrate_mode_is_cpr(s)) {
+             vm_resume(s->vm_old_state);
+         }
+         return;
 -- 
 1.8.3.1
 
