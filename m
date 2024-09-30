@@ -4,78 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74D2DCF649E
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 09:33:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BB0ACF6497
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 09:33:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svCjd-0001Qi-6o; Mon, 30 Sep 2024 05:30:29 -0400
+	id 1svCmL-0000zd-Lu; Mon, 30 Sep 2024 05:33:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1svCjW-0000wu-JD
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:30:26 -0400
-Received: from mgamail.intel.com ([198.175.65.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1svCjU-000759-11
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:30:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1727688620; x=1759224620;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=J6R3jnEybu2xjaU4h8pul7wPSvHytISEdK4qub/X37M=;
- b=OvlFzB2tTjl6ZaCZph0fSIvyNqliRDIWqqlDkz5kug9nfkOFb84ifJN4
- NDE+fPMPQQBPND55T59ts+Eg5bza1AC91NyjLrdGkMZcvw/0s8mG+yjaq
- hh/VHjcI//E9hhI8WYeaSH6YoxLsDT5YtFpo+4UziADSxjNC4T5siIICp
- OQwbTyFKz79OZCX0VsCcNQxvOLgTIRbUn8IiO53ocokCX+9X/W49DtByn
- bJr+xARmBe3vfZ3N8aNe+ym/leAxnF8U+Y0CdrFIA6r9Pa4sgq5y8aodU
- SkhJcIcLGyb579d06wxyZx6aDyabKEXO2TMXSqTEGJ/KuPij/or5KFrut w==;
-X-CSE-ConnectionGUID: HMLursxKQqmdwlgoKfVlHw==
-X-CSE-MsgGUID: Jof3Ww6tTqqbM7TSeCLLOw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11210"; a="26721784"
-X-IronPort-AV: E=Sophos;i="6.11,165,1725346800"; d="scan'208";a="26721784"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Sep 2024 02:30:18 -0700
-X-CSE-ConnectionGUID: +bYwufUXRwix3GZs0S0HtQ==
-X-CSE-MsgGUID: HRemzdvBTFW7UUJclRB6PQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,165,1725346800"; d="scan'208";a="77749826"
-Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
- by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Sep 2024 02:30:14 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v4 09/17] intel_iommu: Flush stage-1 cache in iotlb
- invalidation
-Date: Mon, 30 Sep 2024 17:26:23 +0800
-Message-Id: <20240930092631.2997543-10-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240930092631.2997543-1-zhenzhong.duan@intel.com>
-References: <20240930092631.2997543-1-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1svCm9-00006K-9G
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:33:12 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1svCm5-0007OJ-7q
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:33:02 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a8d29b7edc2so586176866b.1
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 02:32:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727688778; x=1728293578; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SIQ5oy6F0LgxLI7PQPhdHvHZLISU/dLKj0n+QWStUjw=;
+ b=pImUMimVu83/iQTdnIa3tR69Le102HCW0SygWLd8eynbr/WlAkHxLGerqiKrr6qmw/
+ CpnTX3NEUxBH5cqMRVa6Y0431DMwcvAMF5hNoXbfd3WJE16b+8aXTj+9qk3QuaOHsLHC
+ 81ivjUHYLy5sZ/DeX3m8sPSDyaL6Togc9tBbHvUzH9Fr4jj6kqjK1WPN56O6kf6LZ4UO
+ xBweXl4+ZCJd3yBAMofAq9WfibRh/ekTEWFXaJQPzTZ7GPw0sMpSMCW1Qn9W3tDHj/ct
+ XUL5lbrU4guA4T7zS/oWEkyi57vRafsRfoVeW5Ll9jwlmgHp0UenQrzScKCy/EGUeiXL
+ 1+pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727688778; x=1728293578;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SIQ5oy6F0LgxLI7PQPhdHvHZLISU/dLKj0n+QWStUjw=;
+ b=ReviM37JDkcvRZUVSsqOB48qBS9UtY51urcsmaAESWyuoaTiSd07ZdkwAwLNX/JzWl
+ o55HRAZx9UvxajvG7UxHHWieLax613ZDSUeoKAEwOa7Pd5oL2An1B2zZmxpminRC+eMh
+ B7hmdYJJgSFEFOkxT9DqK5v7vkyaL55JmDsBjffM+P0XnWe0HeT7KXNd89oqZjMh0CP9
+ 4EeBw2ygcAdKj4vS6z5LarPUPFuMhdZ9+S1QTnafhMO3yA7lwzidk+X0wWpyemfu+mMv
+ LxPpa3dPpVRY235n3HRsrFNkXwAs6FgdXzBiuFkcbGlyGsVIkMhNVhUayV8TbJCRTZx4
+ K6eg==
+X-Gm-Message-State: AOJu0Yz0A9ZZUu3ehdPn9J2/4Tiz9L1BS0kccaQDX7USfEyg/RAUU0d5
+ qmlctPu77Q0SwhcXU1zdLNNLyA8aeKFCE647iC62XJ60wE898lc4D0/1Wl7pirg=
+X-Google-Smtp-Source: AGHT+IHUhlVWNtN/w1WwPKrmVQZHaP7RTUXtvsmLiyFI/PHmI3L3gOtOvGILAIAkiwywdcJZXCTn0w==
+X-Received: by 2002:a17:907:6d12:b0:a77:b4e3:4fca with SMTP id
+ a640c23a62f3a-a93c48f711amr1288165866b.9.1727688777629; 
+ Mon, 30 Sep 2024 02:32:57 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a93c2997d20sm499296266b.196.2024.09.30.02.32.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 30 Sep 2024 02:32:56 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 2AD515F7CB;
+ Mon, 30 Sep 2024 10:32:56 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,  Michael Tokarev <mjt@tls.msk.ru>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Wainer dos Santos
+ Moschetta <wainersm@redhat.com>,  Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: Re: [PATCH] testing: bump mips64el cross to bookworm and allow to fail
+In-Reply-To: <a3644805-e4ba-4cfb-a429-0604d7282f06@redhat.com> (Thomas Huth's
+ message of "Wed, 25 Sep 2024 13:17:10 +0200")
+References: <20240923081537.3846145-1-alex.bennee@linaro.org>
+ <a3644805-e4ba-4cfb-a429-0604d7282f06@redhat.com>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Mon, 30 Sep 2024 10:32:56 +0100
+Message-ID: <874j5xpjuf.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.21;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.095,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,120 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to spec, Page-Selective-within-Domain Invalidation (11b):
+Thomas Huth <thuth@redhat.com> writes:
 
-1. IOTLB entries caching second-stage mappings (PGTT=010b) or pass-through
-(PGTT=100b) mappings associated with the specified domain-id and the
-input-address range are invalidated.
-2. IOTLB entries caching first-stage (PGTT=001b) or nested (PGTT=011b)
-mapping associated with specified domain-id are invalidated.
+> On 23/09/2024 10.15, Alex Benn=C3=A9e wrote:
+>> The mips64el cross setup is very broken for bullseye which has now
+>> entered LTS support so is unlikely to be fixed. While we still can't
+>> build the container for bookworm due to a single missing dependency
+>> that will hopefully get fixed in due course. For the sake of keeping
+>> the CI green we mark it as allow_fail for the time being.
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> Cc: Michael Tokarev <mjt@tls.msk.ru>
+>> ---
+> ...
+>> @@ -143,6 +140,7 @@ RUN export DEBIAN_FRONTEND=3Dnoninteractive && \
+>>                         libvdeplug-dev:mips64el \
+>>                         libvirglrenderer-dev:mips64el \
+>>                         libvte-2.91-dev:mips64el \
+>> +                      libxdp-dev:mips64el \
+>>                         libzstd-dev:mips64el \
+>>                         nettle-dev:mips64el \
+>>                         systemtap-sdt-dev:mips64el \
+>
+> We could also do a temporary manual hack and remove the problematic
+> packages from the list that cause the failure. I guess removing
+> libdrm-dev:mips64el , libgtk-3-dev:mips64el and the SDL2 packages
+> might help to avoid that the mesa stuff gets installed (which causes
+> the trouble)...
+> Of course this will be overwritten the next time someone runs lcitool
+> again, but with a little bit of luck, Debian already got fixed at that
+> point in time. What do you think?
 
-So per spec definition the Page-Selective-within-Domain Invalidation
-needs to flush first stage and nested cached IOTLB enties as well.
+I was hoping the blockage would get cleared by now but I guess not. If
+the distros no longer have enough eyeballs to care about mips64el and we
+have it as Odd Fixes then I think the allow_fail approach allows us to
+move forward without manual hacks.
 
-We don't support nested yet and pass-through mapping is never cached,
-so what in iotlb cache are only first-stage and second-stage mappings.
+If the CI runs and is green great, if not it doesn't hold anything up.
 
-Add a tag pgtt in VTDIOTLBEntry to mark PGTT type of the mapping and
-invalidate entries based on PGTT type.
-
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
----
- include/hw/i386/intel_iommu.h |  1 +
- hw/i386/intel_iommu.c         | 27 +++++++++++++++++++++------
- 2 files changed, 22 insertions(+), 6 deletions(-)
-
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index fe9057c50d..b843d069cc 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -155,6 +155,7 @@ struct VTDIOTLBEntry {
-     uint64_t pte;
-     uint64_t mask;
-     uint8_t access_flags;
-+    uint8_t pgtt;
- };
- 
- /* VT-d Source-ID Qualifier types */
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 99bb3f42ea..46bde1ad40 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -305,9 +305,21 @@ static gboolean vtd_hash_remove_by_page(gpointer key, gpointer value,
-     VTDIOTLBPageInvInfo *info = (VTDIOTLBPageInvInfo *)user_data;
-     uint64_t gfn = (info->addr >> VTD_PAGE_SHIFT_4K) & info->mask;
-     uint64_t gfn_tlb = (info->addr & entry->mask) >> VTD_PAGE_SHIFT_4K;
--    return (entry->domain_id == info->domain_id) &&
--            (((entry->gfn & info->mask) == gfn) ||
--             (entry->gfn == gfn_tlb));
-+
-+    if (entry->domain_id != info->domain_id) {
-+        return false;
-+    }
-+
-+    /*
-+     * According to spec, IOTLB entries caching first-stage (PGTT=001b) or
-+     * nested (PGTT=011b) mapping associated with specified domain-id are
-+     * invalidated. Nested isn't supported yet, so only need to check 001b.
-+     */
-+    if (entry->pgtt == VTD_SM_PASID_ENTRY_FLT) {
-+        return true;
-+    }
-+
-+    return (entry->gfn & info->mask) == gfn || entry->gfn == gfn_tlb;
- }
- 
- /* Reset all the gen of VTDAddressSpace to zero and set the gen of
-@@ -382,7 +394,7 @@ out:
- static void vtd_update_iotlb(IntelIOMMUState *s, uint16_t source_id,
-                              uint16_t domain_id, hwaddr addr, uint64_t pte,
-                              uint8_t access_flags, uint32_t level,
--                             uint32_t pasid)
-+                             uint32_t pasid, uint8_t pgtt)
- {
-     VTDIOTLBEntry *entry = g_malloc(sizeof(*entry));
-     struct vtd_iotlb_key *key = g_malloc(sizeof(*key));
-@@ -400,6 +412,7 @@ static void vtd_update_iotlb(IntelIOMMUState *s, uint16_t source_id,
-     entry->access_flags = access_flags;
-     entry->mask = vtd_pt_level_page_mask(level);
-     entry->pasid = pasid;
-+    entry->pgtt = pgtt;
- 
-     key->gfn = gfn;
-     key->sid = source_id;
-@@ -2069,7 +2082,7 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
-     bool is_fpd_set = false;
-     bool reads = true;
-     bool writes = true;
--    uint8_t access_flags;
-+    uint8_t access_flags, pgtt;
-     bool rid2pasid = (pasid == PCI_NO_PASID) && s->root_scalable;
-     VTDIOTLBEntry *iotlb_entry;
- 
-@@ -2177,9 +2190,11 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
-     if (s->scalable_modern && s->root_scalable) {
-         ret_fr = vtd_iova_to_flpte(s, &ce, addr, is_write, &pte, &level,
-                                    &reads, &writes, s->aw_bits, pasid);
-+        pgtt = VTD_SM_PASID_ENTRY_FLT;
-     } else {
-         ret_fr = vtd_iova_to_slpte(s, &ce, addr, is_write, &pte, &level,
-                                    &reads, &writes, s->aw_bits, pasid);
-+        pgtt = VTD_SM_PASID_ENTRY_SLT;
-     }
-     if (ret_fr) {
-         vtd_report_fault(s, -ret_fr, is_fpd_set, source_id,
-@@ -2190,7 +2205,7 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
-     page_mask = vtd_pt_level_page_mask(level);
-     access_flags = IOMMU_ACCESS_FLAG(reads, writes);
-     vtd_update_iotlb(s, source_id, vtd_get_domain_id(s, &ce, pasid),
--                     addr, pte, access_flags, level, pasid);
-+                     addr, pte, access_flags, level, pasid, pgtt);
- out:
-     vtd_iommu_unlock(s);
-     entry->iova = addr & page_mask;
--- 
-2.34.1
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
