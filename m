@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12FB4CDD1D6
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 20:01:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AE06CDD1D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 20:01:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svMYW-0004hR-Dm; Mon, 30 Sep 2024 15:59:40 -0400
+	id 1svMYc-00057A-N0; Mon, 30 Sep 2024 15:59:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1svMY5-0004AN-MK
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:59:15 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1svMXx-00045N-G2
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:59:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1svMY3-00048s-Ql
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:59:13 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1svMXt-00041x-SC
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:59:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727726351;
+ s=mimecast20190719; t=1727726340;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0IVNh8rkuBzemuMWp2WPFFN8HowcfvDmFRDqv1ADWW0=;
- b=gSqmtYi0SQ4mYMazWZhULR6Jl95z5t2VT3LBWu7nwkVeWMo3cgypwEGDcvi0owJoka+c7m
- xz4ySB6Mlmdl3sFo9TdMr6seSQxqX1w5aYZJt0SFjWWqPeg45o4GfT7TbW1RHtDOVgc9XQ
- IGMDC4lKjqmjr5mHc8iJEA3UogjzHc8=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=64NuNC1LXyWR9BlyqFsA8AEgcMwuGH1wwkajjFosllk=;
+ b=P+weIxhKjRs0gWY1vpHk4f12pj+LURxyNYL8l5tu39fCh7ivrIJp0ZGIWX57D582WW39Ku
+ TlYjLbLLMu0biKy7JoV3VlAABzv72VBtKN4GsswoQLaz7AEvMDSNsc0GtHSBgUxMebB+1D
+ DR6hxBzomFiip4DkhIz1RhObFgEjzwc=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-557-gC2mVLvGO8qfST2PGrVE-Q-1; Mon, 30 Sep 2024 15:59:09 -0400
-X-MC-Unique: gC2mVLvGO8qfST2PGrVE-Q-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6cb3d5736a4so70540996d6.2
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 12:59:09 -0700 (PDT)
+ us-mta-471-w37P3WYJP4ihE5VuugavLA-1; Mon, 30 Sep 2024 15:58:59 -0400
+X-MC-Unique: w37P3WYJP4ihE5VuugavLA-1
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-45b172569a2so57190211cf.0
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 12:58:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727726349; x=1728331149;
+ d=1e100.net; s=20230601; t=1727726337; x=1728331137;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0IVNh8rkuBzemuMWp2WPFFN8HowcfvDmFRDqv1ADWW0=;
- b=VG1EmUdsIZto3oqFsB6AwO1Ev+RR5CkkMorjQHQ3FzIRQFhTBwJn8Cq4VwXYIHRYBC
- v+E6DTTtiUbklrNwQ0hD+jUrTQfYvq+pHYtYMqMqkGZOihkhhCd6DgkaOyOx3YKFzzOZ
- R3mQorJ4vAzGWdz6JXDd0H4Pzpan0LpTm+czwQZgLEpqoHYiwBYb9321iD7onSjSVlrj
- oHLkGzi9mtZZySdPeNZSUS+lpH3wQhuzjxTK80dcoaPiS4SQiOnqxSXihURj/Fc/OzQQ
- njALQFGBwpHjGsJ9Ytd2CxU2V+FRDFqxmH+DUPJ5+3POJK9ExluEISmt4lP5EkKqV+h1
- Ts7Q==
-X-Gm-Message-State: AOJu0Yz0ueHEnx1BFapz7rSH3fM+nWEuVajgR9auicpcI04viQ87AjRs
- 8Jc1Bqg6b0DvHxsYV/5WUPOIiJkPlDbSHj3YsuXMiMpbFOjCowKYHKaUoWPjwstSQ7tmC4idTI9
- BQr98KYV9yCV5FDdV0TPyGcA3HTbS6rflWOzmOPW6doXDR8XM/6Nkr7GnCUYgNuryTpLsQwbDS7
- uco+ZrRwj8SGsSpck/vMTGSbH+PGWej3DrFw==
-X-Received: by 2002:a05:6214:328e:b0:6cb:2ad6:78ef with SMTP id
- 6a1803df08f44-6cb3b5c6732mr186119366d6.4.1727726348852; 
- Mon, 30 Sep 2024 12:59:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFVzVpt6MhFCkdOiTIb7rTrFVkeUwAuegBYrxZJiBIgstHCiSjypMXUonr8bOYSr/TzXdewRw==
-X-Received: by 2002:a05:6214:328e:b0:6cb:2ad6:78ef with SMTP id
- 6a1803df08f44-6cb3b5c6732mr186119176d6.4.1727726348511; 
- Mon, 30 Sep 2024 12:59:08 -0700 (PDT)
+ bh=64NuNC1LXyWR9BlyqFsA8AEgcMwuGH1wwkajjFosllk=;
+ b=o3kKthrGP22o4tACQJyjDNo00P4bnMUxAhQD/INphVJVEoAcgVQBZY9kqTJyAKH1d5
+ 33Lt+a764kYMa23uWcyASKHTp1k43wYjIJDATDyRVo07gnaVxhS0/CK/wSjNhnW7chwn
+ 4knoODfD5FzI1kB4I8KUkZRwuKCrFQwJ89NxH386xP4tiaskegRVX+fYcrSGxPeVlPYW
+ sHWBGbiWc4MO59jYabqdq41hjmi1pCFKQXwr8vAVF00sfYF8C/0XfV4G4rZjrtkBwjRz
+ Wr3M2vq2zG11DAiOrUtJmMj8PIkSMC9Z9uodcPRQjKG60IIG71BlvkzkRkT1qdBMlKiN
+ Iykg==
+X-Gm-Message-State: AOJu0Yydmbmkho5Dd9M7SXcJV4paGTcJ8E98hKZISxuXG+SqAoNJ1iHo
+ yZmSs7afUoRvoz3NfJ5Ii6gG6h7p0SLgZ1cqltsvCU8wkGjXLAHdFAyhG1xPOZlyklsXJ5CP2IV
+ W1vHtRYo1qcknZojw44z3ZBWfhKzbNOebYb9AwjZbbuZ1jIDMXzXpt714mHB1/S3wIVc4miXbmA
+ tWp6j80kXPYt6c1Vec51aImkQdPb3nJO8ZGw==
+X-Received: by 2002:ac8:5756:0:b0:458:1749:e195 with SMTP id
+ d75a77b69052e-45c9f1b1fe4mr164506131cf.10.1727726336702; 
+ Mon, 30 Sep 2024 12:58:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGqiB7b3fIawvfRZqUY0ehIHYZkiFiRJyfeO1PLeLl54hB4ha+h6XAsGKJ/AVLigYDn5juGaA==
+X-Received: by 2002:ac8:5756:0:b0:458:1749:e195 with SMTP id
+ d75a77b69052e-45c9f1b1fe4mr164505841cf.10.1727726336208; 
+ Mon, 30 Sep 2024 12:58:56 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-45c9f28e481sm38879371cf.16.2024.09.30.12.59.04
+ d75a77b69052e-45c9f28e481sm38879371cf.16.2024.09.30.12.58.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Sep 2024 12:59:05 -0700 (PDT)
+ Mon, 30 Sep 2024 12:58:53 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Prasad Pandit <ppandit@redhat.com>, Julia Suvorova <jusual@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, peterx@redhat.com,
  Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
  "Dr . David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH 7/7] hmp: Add "info migrationthreads"
-Date: Mon, 30 Sep 2024 15:58:37 -0400
-Message-ID: <20240930195837.825728-8-peterx@redhat.com>
+Subject: [PATCH 4/7] migration: Simplify migration-threads API
+Date: Mon, 30 Sep 2024 15:58:34 -0400
+Message-ID: <20240930195837.825728-5-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240930195837.825728-1-peterx@redhat.com>
 References: <20240930195837.825728-1-peterx@redhat.com>
@@ -103,87 +103,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QMP command was added in 671326201d ("migration: Introduce interface
-query-migrationthreads", v8.0).  Add the HMP version of it.
+There's no need to return a thread struct, because both the add/remove APIs
+must be used in the working threads so tid would work.
 
-Cc: Markus Armbruster <armbru@redhat.com>
-Cc: Dr. David Alan Gilbert <dave@treblig.org>
+Similar to the fact we don't need to pass in tid in each call sites, we
+don't need the thread struct for removal too because tid is always in the
+context.  Remove it in both add & remove APIs.  Instead making sure when
+remove a thread the tid is always there.
+
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/monitor/hmp.h          |  1 +
- migration/migration-hmp-cmds.c | 25 +++++++++++++++++++++++++
- hmp-commands-info.hx           | 13 +++++++++++++
- 3 files changed, 39 insertions(+)
+ migration/threadinfo.h |  4 ++--
+ migration/migration.c  |  5 ++---
+ migration/multifd.c    |  5 ++---
+ migration/threadinfo.c | 19 ++++++++++++++-----
+ 4 files changed, 20 insertions(+), 13 deletions(-)
 
-diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index ae116d9804..e44a399e4a 100644
---- a/include/monitor/hmp.h
-+++ b/include/monitor/hmp.h
-@@ -31,6 +31,7 @@ void hmp_info_mice(Monitor *mon, const QDict *qdict);
- void hmp_info_migrate(Monitor *mon, const QDict *qdict);
- void hmp_info_migrate_capabilities(Monitor *mon, const QDict *qdict);
- void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict);
-+void hmp_info_migrationthreads(Monitor *mon, const QDict *qdict);
- void hmp_info_cpus(Monitor *mon, const QDict *qdict);
- void hmp_info_vnc(Monitor *mon, const QDict *qdict);
- void hmp_info_spice(Monitor *mon, const QDict *qdict);
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 20d1a6e219..63a6ea61f2 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -814,3 +814,28 @@ void loadvm_completion(ReadLineState *rs, int nb_args, const char *str)
-         vm_completion(rs, str);
-     }
- }
-+
-+void hmp_info_migrationthreads(Monitor *mon, const QDict *qdict)
-+{
-+    MigrationThreadInfoList *list;
-+    MigrationThreadInfo *entry;
-+    Error *err = NULL;
-+
-+    list = qmp_query_migrationthreads(&err);
-+
-+    if (!list) {
-+        monitor_printf(mon, "No migration threads found\n");
-+        return;
-+    }
-+
-+    monitor_printf(mon, "%-16s%s\n", "TID", "Thread Name");
-+    while (list) {
-+        entry = list->value;
-+        monitor_printf(mon, "%-16" PRId64 "%s\n",
-+                       entry->thread_id, entry->name);
-+        list = list->next;
-+    }
-+
-+    qapi_free_MigrationThreadInfoList(list);
-+    hmp_handle_error(mon, err);
-+}
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index c59cd6637b..a8dc55dbd2 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -512,6 +512,19 @@ SRST
-     Show current migration parameters.
- ERST
+diff --git a/migration/threadinfo.h b/migration/threadinfo.h
+index d0e4ab0aa3..7c86ae8763 100644
+--- a/migration/threadinfo.h
++++ b/migration/threadinfo.h
+@@ -21,5 +21,5 @@ struct MigrationThread {
+     QLIST_ENTRY(MigrationThread) node;
+ };
  
-+    {
-+        .name       = "migrationthreads",
-+        .args_type  = "",
-+        .params     = "",
-+        .help       = "show migration threads information",
-+        .cmd        = hmp_info_migrationthreads,
-+    },
+-MigrationThread *migration_threads_add(const char *name);
+-void migration_threads_remove(MigrationThread *info);
++void migration_threads_add(const char *name);
++void migration_threads_remove(void);
+diff --git a/migration/migration.c b/migration/migration.c
+index 1ddcf54a70..74b2c1c627 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -3460,14 +3460,13 @@ static void qemu_savevm_wait_unplug(MigrationState *s, int old_state,
+ static void *migration_thread(void *opaque)
+ {
+     MigrationState *s = opaque;
+-    MigrationThread *thread = NULL;
+     int64_t setup_start = qemu_clock_get_ms(QEMU_CLOCK_HOST);
+     MigThrError thr_error;
+     bool urgent = false;
+     Error *local_err = NULL;
+     int ret;
+ 
+-    thread = migration_threads_add(MIGRATION_THREAD_SRC_MAIN);
++    migration_threads_add(MIGRATION_THREAD_SRC_MAIN);
+ 
+     rcu_register_thread();
+ 
+@@ -3566,7 +3565,7 @@ out:
+     migration_iteration_finish(s);
+     object_unref(OBJECT(s));
+     rcu_unregister_thread();
+-    migration_threads_remove(thread);
++    migration_threads_remove();
+     return NULL;
+ }
+ 
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 04db886c7e..2738d78407 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -570,12 +570,11 @@ int multifd_send_sync_main(void)
+ static void *multifd_send_thread(void *opaque)
+ {
+     MultiFDSendParams *p = opaque;
+-    MigrationThread *thread = NULL;
+     Error *local_err = NULL;
+     int ret = 0;
+     bool use_packets = multifd_use_packets();
+ 
+-    thread = migration_threads_add(p->name);
++    migration_threads_add(p->name);
+ 
+     trace_multifd_send_thread_start(p->id);
+     rcu_register_thread();
+@@ -669,7 +668,7 @@ out:
+     }
+ 
+     rcu_unregister_thread();
+-    migration_threads_remove(thread);
++    migration_threads_remove();
+     trace_multifd_send_thread_end(p->id, p->packets_sent);
+ 
+     return NULL;
+diff --git a/migration/threadinfo.c b/migration/threadinfo.c
+index 8069413091..25e77404e2 100644
+--- a/migration/threadinfo.c
++++ b/migration/threadinfo.c
+@@ -23,7 +23,7 @@ static void __attribute__((constructor)) migration_threads_init(void)
+     qemu_mutex_init(&migration_threads_lock);
+ }
+ 
+-MigrationThread *migration_threads_add(const char *name)
++void migration_threads_add(const char *name)
+ {
+     MigrationThread *thread =  g_new0(MigrationThread, 1);
+ 
+@@ -33,17 +33,26 @@ MigrationThread *migration_threads_add(const char *name)
+     WITH_QEMU_LOCK_GUARD(&migration_threads_lock) {
+         QLIST_INSERT_HEAD(&migration_threads, thread, node);
+     }
+-
+-    return thread;
+ }
+ 
+-void migration_threads_remove(MigrationThread *thread)
++void migration_threads_remove(void)
+ {
++    int tid = qemu_get_thread_id();
++    MigrationThread *thread;
 +
-+SRST
-+  ``info migrationthreads``
-+    Show migration threads information.
-+ERST
+     QEMU_LOCK_GUARD(&migration_threads_lock);
+-    if (thread) {
 +
-     {
-         .name       = "balloon",
-         .args_type  = "",
++    QLIST_FOREACH(thread, &migration_threads, node) {
++        if (tid != thread->thread_id) {
++            continue;
++        }
++
+         QLIST_REMOVE(thread, node);
+         g_free(thread);
++        return;
+     }
++
++    g_assert_not_reached();
+ }
+ 
+ MigrationThreadInfoList *qmp_query_migrationthreads(Error **errp)
 -- 
 2.45.0
 
