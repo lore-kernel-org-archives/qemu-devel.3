@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F63ACF6497
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 09:13:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17FA7CF649D
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 09:14:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svCSH-00047B-4r; Mon, 30 Sep 2024 05:12:33 -0400
+	id 1svCRA-0007m0-I0; Mon, 30 Sep 2024 05:11:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svCS7-0003NJ-5F
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:12:25 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svCR8-0007ep-Gp
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:11:22 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svCS5-0004fk-D2
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:12:22 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-42f6bec84b5so4486685e9.1
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 02:12:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svCR6-0004UL-Ty
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:11:22 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-37ce8458ae3so785137f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 02:11:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727687539; x=1728292339; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727687479; x=1728292279; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=b77I1JPh4FFui3m8ARcyeS7xVA2tnhUm1eKsfIObl9M=;
- b=PdNt4p/RdUVDbUtNy0KaPTGMBnjdXXJuB8xM8vil4//+bNgExELSuC/Qw1b3UMwwvC
- Z8IqTQUfNp73c1jD6lGaUU29vTIClLijH0c9Zoz/O4iPzuK/tCjP4oEeZZicXyu/IyT1
- wByZ+xCtxNSi5dQ4PKJ5Q3VonlgoGK562gyxRkhD38R7X10O3+yvGzHOcHC6OSoZJZfy
- y9Vjwgx4y1O7YzmTElyIgsqp0VEppqs9ovIXl6OIwDnDgEOss+7Hn+FER+M93jzZwAFN
- TYn6seKVSR/121tLHKJIOLmygbMxfuKKPEXqyD+HCyNpRjo2e6pRIEuOaxWwAKOLIxkp
- 7ljQ==
+ bh=gTfK1Y7AoteS474Co0RWkp3B9nFmF0nIHDb3RW7qOck=;
+ b=H4BRA/NGY8u5uyAmg0L+UL0hiDkf3e75Lu6iPFJ0oYGSXV3j1cN9fLUbork1xJZTeo
+ HY1mO5z24Q08Di1/Gd6+guYis1rrQpqpjj5xFWzmSrO/x2iKQ7D9fOH01Tk8JZrRIS8t
+ /q6uB3SafbOjebHuhF0Ly5MLsiQQXlHKIVN6nA3QHbwkid57VvP6L8ztTovcq8yYBwTK
+ 91BLFvsURauN02zSE8vdVu/Opy/hANoinvVzKSgd2IkpUkUa9fyfIUhdbWNWAOPR0zNB
+ /Ub/uWvzb47NS+aFPitKOCm1MCUwVdBGpF6QKtBYJOgbdvnYnR1LOrV19y0FJuNashkc
+ CFXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727687539; x=1728292339;
+ d=1e100.net; s=20230601; t=1727687479; x=1728292279;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=b77I1JPh4FFui3m8ARcyeS7xVA2tnhUm1eKsfIObl9M=;
- b=K0npIrWfUU01EroetKwb0TCwFECVIyzGwPoOp5A8Q42PSSKzD1GoQeNEUepOJCdNyQ
- 9FpIC62xWI8g1yEWgq3JY+rHvMo86T5zAZwklXvuQDCO9j/uaVh7ld+daduoBKERWrKa
- lUR+O+Z5Hq+i4Uq1gc2PQD39hgPRISTVVCiNRDSLUUU9nwFtecm4dSIzxuE/t40K5nLF
- hN+/VcUbyZHIZ7HW4lZ6nBdjFuGsXG5/n0PDF7TT0kiZ1oF3QOptsURLyLvZeYx6OqVA
- 6Csj1KpyLhfMWHbwST8PFqPFyfCQcjwatbklgWZjLpM6f4zZQ4yU6yuTsJP+sKrzxclD
- Bj+A==
-X-Gm-Message-State: AOJu0Yw3W33IIqsUUMkpe61qGmI813LVx+KoSeXRju9SscXtA/fu9Ie2
- U84exW9j66+6LTv7kEFKmcXhuQYrGv4chmuWGo/tCEz3OQt9V7VVIUssYsuLAjcWVkvY7w/DzNX
- c
-X-Google-Smtp-Source: AGHT+IFwxcPXPCcwzJxfDAGB6L56t56fLXhjD9Oy/3J9Aq658n/SIKQz75HLX0iq+yh/L4uBikgyNg==
-X-Received: by 2002:a05:600c:3b8c:b0:42c:be90:fa1b with SMTP id
- 5b1f17b1804b1-42f584335f0mr86822345e9.14.1727687538838; 
- Mon, 30 Sep 2024 02:12:18 -0700 (PDT)
+ bh=gTfK1Y7AoteS474Co0RWkp3B9nFmF0nIHDb3RW7qOck=;
+ b=HPIH/RmpIBokBWXrjutVLNeT/R/mBr/M9/tcOgMhm8O+TfaLVDMrufrdoEh/ETmCli
+ A8p5sYOYgfhS2ZpdVVg1NyPEVw72WpFVY3h3lC9QjvrDIMhgBDUpIid4DvafeNePMj3X
+ vP/ucZ3eP23QgDL5aN8aRQh7TQ8Sid/QVzohrn67RymtHCjTFfSZPw6pDH0Y1hnPk44O
+ WIWdPeJ533mxfzRQ59ep2Urh4HKNfbUUseTT9ExLnevqtHZppRwQPkL5tu5sL6RPF/1R
+ /AM8BrvGoM60mcWdXUcf6WnYoDYM4e8XLQJT+k5yLfFGAZnnWdHeRFKGTY3mW8MvB/MS
+ JKCA==
+X-Gm-Message-State: AOJu0Yx9HerL4EWtXnm4HsGpFZEIJnqRMqqq24cmU4e7wa9CDyu/SQ8Q
+ vPBJsoxh81o0XHu0HNiRVz4oB0mOGNxGVG0TUv5F5a6NwlwSeF95PZhl6qBwrC5VjhRTUOsbcxq
+ 7
+X-Google-Smtp-Source: AGHT+IHLyDLMvH7R5jMc9L6T+pPt/e4XTSIzrVwfL5PG/fZEBYYRyWYqTKGotxGPWdA1evhWYP0TuA==
+X-Received: by 2002:a5d:4b8e:0:b0:37c:d123:f3bf with SMTP id
+ ffacd0b85a97d-37cd5a69735mr11617422f8f.3.1727687478879; 
+ Mon, 30 Sep 2024 02:11:18 -0700 (PDT)
 Received: from localhost.localdomain (183.red-88-28-18.dynamicip.rima-tde.net.
  [88.28.18.183]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd565de3asm8524894f8f.29.2024.09.30.02.12.16
+ ffacd0b85a97d-37cd57429e5sm8486235f8f.98.2024.09.30.02.11.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 30 Sep 2024 02:12:18 -0700 (PDT)
+ Mon, 30 Sep 2024 02:11:18 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
@@ -66,18 +66,17 @@ Cc: Thomas Huth <thuth@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH 10/12] hw/mips: Have mips_cpu_create_with_clock() take an
- endianness argument
-Date: Mon, 30 Sep 2024 11:10:59 +0200
-Message-ID: <20240930091101.40591-11-philmd@linaro.org>
+Subject: [PATCH 02/12] target/mips: Introduce mo_endian_env() helper
+Date: Mon, 30 Sep 2024 11:10:51 +0200
+Message-ID: <20240930091101.40591-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240930091101.40591-1-philmd@linaro.org>
 References: <20240930091101.40591-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,127 +98,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-mips_cpu_create_with_clock() creates a vCPU. Pass it the vCPU
-endianness requested by argument. Update the board call sites.
+Introduce mo_endian_env() which returns the endian
+MemOp corresponding to the vCPU env.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/mips/cpu.h        | 4 +++-
- hw/mips/fuloong2e.c      | 2 +-
- hw/mips/jazz.c           | 2 +-
- hw/mips/loongson3_virt.c | 2 +-
- hw/mips/malta.c          | 3 ++-
- hw/mips/mipssim.c        | 2 +-
- target/mips/cpu.c        | 5 ++++-
- 7 files changed, 13 insertions(+), 7 deletions(-)
+ target/mips/internal.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-index 070e11fe0d..a4a46ebbe9 100644
---- a/target/mips/cpu.h
-+++ b/target/mips/cpu.h
-@@ -1376,12 +1376,14 @@ static inline void cpu_get_tb_cpu_state(CPUMIPSState *env, vaddr *pc,
-  * mips_cpu_create_with_clock:
-  * @typename: a MIPS CPU type.
-  * @cpu_refclk: this cpu input clock (an output clock of another device)
-+ * @is_big_endian: whether this CPU is configured in big endianness
-  *
-  * Instantiates a MIPS CPU, set the input clock of the CPU to @cpu_refclk,
-  * then realizes the CPU.
-  *
-  * Returns: A #CPUState or %NULL if an error occurred.
-  */
--MIPSCPU *mips_cpu_create_with_clock(const char *cpu_type, Clock *cpu_refclk);
-+MIPSCPU *mips_cpu_create_with_clock(const char *cpu_type, Clock *cpu_refclk,
-+                                    bool is_big_endian);
+diff --git a/target/mips/internal.h b/target/mips/internal.h
+index 1ce2bbf62d..5fe1af22ff 100644
+--- a/target/mips/internal.h
++++ b/target/mips/internal.h
+@@ -293,6 +293,11 @@ static inline bool cpu_is_bigendian_env(CPUMIPSState *env)
+     return extract32(env->CP0_Config0, CP0C0_BE, 1);
+ }
  
- #endif /* MIPS_CPU_H */
-diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
-index 4fe5108845..50a3f06723 100644
---- a/hw/mips/fuloong2e.c
-+++ b/hw/mips/fuloong2e.c
-@@ -230,7 +230,7 @@ static void mips_fuloong2e_init(MachineState *machine)
-     clock_set_hz(cpuclk, 533080000); /* ~533 MHz */
- 
-     /* init CPUs */
--    cpu = mips_cpu_create_with_clock(machine->cpu_type, cpuclk);
-+    cpu = mips_cpu_create_with_clock(machine->cpu_type, cpuclk, false);
-     env = &cpu->env;
- 
-     qemu_register_reset(main_cpu_reset, cpu);
-diff --git a/hw/mips/jazz.c b/hw/mips/jazz.c
-index 0d44e19707..812e8cbcab 100644
---- a/hw/mips/jazz.c
-+++ b/hw/mips/jazz.c
-@@ -212,7 +212,7 @@ static void mips_jazz_init(MachineState *machine,
-                          * ext_clk[jazz_model].pll_mult);
- 
-     /* init CPUs */
--    cpu = mips_cpu_create_with_clock(machine->cpu_type, cpuclk);
-+    cpu = mips_cpu_create_with_clock(machine->cpu_type, cpuclk, TARGET_BIG_ENDIAN);
-     env = &cpu->env;
-     qemu_register_reset(main_cpu_reset, cpu);
- 
-diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
-index 2067b4fecb..25fa94ee68 100644
---- a/hw/mips/loongson3_virt.c
-+++ b/hw/mips/loongson3_virt.c
-@@ -567,7 +567,7 @@ static void mips_loongson3_virt_init(MachineState *machine)
-         int ip;
- 
-         /* init CPUs */
--        cpu = mips_cpu_create_with_clock(machine->cpu_type, cpuclk);
-+        cpu = mips_cpu_create_with_clock(machine->cpu_type, cpuclk, false);
- 
-         /* Init internal devices */
-         cpu_mips_irq_init_cpu(cpu);
-diff --git a/hw/mips/malta.c b/hw/mips/malta.c
-index a0757f251a..71cc11fc45 100644
---- a/hw/mips/malta.c
-+++ b/hw/mips/malta.c
-@@ -1035,7 +1035,8 @@ static void create_cpu_without_cps(MachineState *ms, MaltaState *s,
-     int i;
- 
-     for (i = 0; i < ms->smp.cpus; i++) {
--        cpu = mips_cpu_create_with_clock(ms->cpu_type, s->cpuclk);
-+        cpu = mips_cpu_create_with_clock(ms->cpu_type, s->cpuclk,
-+                                         TARGET_BIG_ENDIAN);
- 
-         /* Init internal devices */
-         cpu_mips_irq_init_cpu(cpu);
-diff --git a/hw/mips/mipssim.c b/hw/mips/mipssim.c
-index 9170d6c474..80b4a2c00d 100644
---- a/hw/mips/mipssim.c
-+++ b/hw/mips/mipssim.c
-@@ -160,7 +160,7 @@ mips_mipssim_init(MachineState *machine)
- #endif
- 
-     /* Init CPUs. */
--    cpu = mips_cpu_create_with_clock(machine->cpu_type, cpuclk);
-+    cpu = mips_cpu_create_with_clock(machine->cpu_type, cpuclk, TARGET_BIG_ENDIAN);
-     env = &cpu->env;
- 
-     reset_info = g_new0(ResetData, 1);
-diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-index 982f5bb4e2..02e2e72f2d 100644
---- a/target/mips/cpu.c
-+++ b/target/mips/cpu.c
-@@ -646,12 +646,15 @@ static void mips_cpu_register_types(void)
- type_init(mips_cpu_register_types)
- 
- /* Could be used by generic CPU object */
--MIPSCPU *mips_cpu_create_with_clock(const char *cpu_type, Clock *cpu_refclk)
-+MIPSCPU *mips_cpu_create_with_clock(const char *cpu_type, Clock *cpu_refclk,
-+                                    bool is_big_endian)
++static inline MemOp mo_endian_env(CPUMIPSState *env)
++{
++    return cpu_is_bigendian_env(env) ? MO_BE : MO_LE;
++}
++
+ static inline void compute_hflags(CPUMIPSState *env)
  {
-     DeviceState *cpu;
- 
-     cpu = DEVICE(object_new(cpu_type));
-     qdev_connect_clock_in(cpu, "clk-in", cpu_refclk);
-+    object_property_set_bool(OBJECT(cpu), "big-endian", is_big_endian,
-+                             &error_abort);
-     qdev_realize(cpu, NULL, &error_abort);
- 
-     return MIPS_CPU(cpu);
+     env->hflags &= ~(MIPS_HFLAG_COP1X | MIPS_HFLAG_64 | MIPS_HFLAG_CP0 |
 -- 
 2.45.2
 
