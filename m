@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A44BDCF6497
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:21:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93308CF6497
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:21:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svBck-0007Bm-Fo; Mon, 30 Sep 2024 04:19:18 -0400
+	id 1svBbm-0002SD-L9; Mon, 30 Sep 2024 04:18:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1svBau-0006gi-Dw
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:17:28 -0400
+ id 1svBa1-0003sk-Os
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:16:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1svBat-0005xC-1g
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:17:24 -0400
+ id 1svBZw-0005kV-3U
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:16:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727684241;
+ s=mimecast20190719; t=1727684181;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8kITW/qOItfiafJDWQ5dEslsyyB81A9V60goYSoquHw=;
- b=P3rDpfLXB+AcTLcsMY0S/fYyhIPwxi2RhbTXXl1wSdd1xYbVsBK2lSrr/atDkKyV/2UUmT
- gRrXhwMCIH9rK6KpV2PoBz1jA/8QOegrgf4rg8lVIQ2lLi2aCk/DrrjZEICTCv2VaVol0j
- 8ACDc3tLCNEwpRF79yaY8ob9reHUTVU=
+ bh=N8oWnyTYg8AgJWFNvI249dMhAmQigPL79FgF3CC8NN0=;
+ b=PyG4rq1J0X+SOZEXywDZkomMDX12FwwVL9Q9keCVxww5u/ypVQs0+/GOh7+XN54ftpBRSt
+ shiLunwMim8ZO/tWUb3qmYBgUB22eTHuvOx5tTBjaY3dl9hPc2ywBNKo+6wLkgyMpUSjwx
+ gqLlVFkAJx2ERmxWUpdpuMTy8EyLNZg=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-mgmFkAefPY2KVlXjPH7jTA-1; Mon,
- 30 Sep 2024 04:17:18 -0400
-X-MC-Unique: mgmFkAefPY2KVlXjPH7jTA-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-352-FcsLGfHaO6e6DF-46-XCUw-1; Mon,
+ 30 Sep 2024 04:16:20 -0400
+X-MC-Unique: FcsLGfHaO6e6DF-46-XCUw-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2F3A21944DF0; Mon, 30 Sep 2024 08:17:15 +0000 (UTC)
+ id 24E5F1953957; Mon, 30 Sep 2024 08:16:17 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.36])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E95703003E5F; Mon, 30 Sep 2024 08:17:13 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0BD421955DC7; Mon, 30 Sep 2024 08:16:15 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>,
@@ -72,15 +72,16 @@ Cc: Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Yuval Shaia <yuval.shaia.ml@gmail.com>, Bin Meng <bin.meng@windriver.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v3 20/22] block: fix -Werror=maybe-uninitialized false-positive
-Date: Mon, 30 Sep 2024 12:14:55 +0400
-Message-ID: <20240930081458.1926382-21-marcandre.lureau@redhat.com>
+Subject: [PATCH v3 10/22] hw/sdhci: fix -Werror=maybe-uninitialized
+ false-positive
+Date: Mon, 30 Sep 2024 12:14:45 +0400
+Message-ID: <20240930081458.1926382-11-marcandre.lureau@redhat.com>
 In-Reply-To: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
 References: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -109,27 +110,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../block/file-posix.c:1405:17: error: ‘zoned’ may be used uninitialized [-Werror=maybe-uninitialized]
- 1405 |     if (ret < 0 || zoned == BLK_Z_NONE) {
+../hw/sd/sdhci.c:846:16: error: ‘res’ may be used uninitialized [-Werror=maybe-uninitialized]
+
+False-positive, because "length" is non-null.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- block/file-posix.c | 2 +-
+ hw/sd/sdhci.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index ff928b5e85..90fa54352c 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -1398,7 +1398,7 @@ static void raw_refresh_zoned_limits(BlockDriverState *bs, struct stat *st,
-                                      Error **errp)
- {
-     BDRVRawState *s = bs->opaque;
--    BlockZoneModel zoned;
-+    BlockZoneModel zoned = BLK_Z_NONE;
-     int ret;
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index 87122e4245..ed01499391 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -747,7 +747,7 @@ static void sdhci_do_adma(SDHCIState *s)
+     const uint16_t block_size = s->blksize & BLOCK_SIZE_MASK;
+     const MemTxAttrs attrs = { .memory = true };
+     ADMADescr dscr = {};
+-    MemTxResult res;
++    MemTxResult res = MEMTX_ERROR;
+     int i;
  
-     ret = get_sysfs_zoned_model(st, &zoned);
+     if (s->trnmod & SDHC_TRNS_BLK_CNT_EN && !s->blkcnt) {
 -- 
 2.45.2.827.g557ae147e6
 
