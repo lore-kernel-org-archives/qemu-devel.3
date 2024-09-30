@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 737D5CF6497
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:02:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99EC5CF6491
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:02:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svBM0-0007m8-FH; Mon, 30 Sep 2024 04:02:01 -0400
+	id 1svBMN-0001hs-4o; Mon, 30 Sep 2024 04:02:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svBLs-0007dn-Gi
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:01:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svBML-0001ZD-9s
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:02:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svBLq-0003kp-3s
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:01:52 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svBMI-0003pO-CH
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:02:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727683308;
+ s=mimecast20190719; t=1727683337;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=gFp792KiYkMcspOv6jogDxfYkblBolu9/DJtSswKON0=;
- b=UP7FHYx6HxMx/36CIkE8TQJ7JX83gxIm0MCsktlgA0qtFNZ4jDc36j5nXVOLbPWN75lofk
- TIPIabDq5OJfp0jr9TK0AFu5bw107cghFatXP92mMXg7kxTmSlDbLpYYRjpTKO/R1sczIu
- BhJykKlbhR1jjsJMA+aPYbJKZri08wU=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iNtMwZTj/+c0HKUmVd3UmfiXisfu1RQCgpnUTXEh/lg=;
+ b=SGmax21TVsOUIMbGY/IEC/8Lb+qXCwhKMKNIi/RmO6S9WLEL1XvNTPu5uCB2RxeMNYj7Zp
+ AcWceG5VgqoWIno5P+2z/3B2OJ7yXr+HxDenxE99v+BrJoal+2TW0tKs3D8L2O+k9ggJbM
+ JCzz+TAbX3T1VgIKGgw6zrr+87VKl9A=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-517-aY0cJEOtPPibUXEkuiWj0A-1; Mon, 30 Sep 2024 04:01:46 -0400
-X-MC-Unique: aY0cJEOtPPibUXEkuiWj0A-1
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7ae55f12031so34723485a.1
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 01:01:46 -0700 (PDT)
+ us-mta-348-x4hq7sujOCGH1w-hgGf6Aw-1; Mon, 30 Sep 2024 04:02:14 -0400
+X-MC-Unique: x4hq7sujOCGH1w-hgGf6Aw-1
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-4582182b6afso94284601cf.0
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 01:02:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727683306; x=1728288106;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gFp792KiYkMcspOv6jogDxfYkblBolu9/DJtSswKON0=;
- b=ToAX2K1ZvDDp6BuQVqflaTKoiVMNxG7nmIPRAK1iwUszki6V6Ngh53kI42z8aYY2jJ
- UF9ZYfdiOqWqMbSzTF5yZABk4zetzivzjILGMRqFPIjadXEVhCTje4juZZqHXRXGNCN0
- GtF1lf/n/hqfKwQIqB2kPvrW8DnX8+v+KCr9n0g6MpJRZ8s+SYWV12cFWEXwCJZhE7Ww
- 4DGoVQbhxbZa3+6o0K/pCIAdyEWfD4yWhvAg6uUCeW+taZI1RJKiQeqo74Q8kS9kckrz
- t9+vVhP1Bx26JGBOV9erVa0rYSvaBpCQGbEAP5CMYlNJR14vNhutk5Xd9QU+JPlzgW1L
- XCBQ==
+ d=1e100.net; s=20230601; t=1727683334; x=1728288134;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=iNtMwZTj/+c0HKUmVd3UmfiXisfu1RQCgpnUTXEh/lg=;
+ b=w+7CujcRPpH4uybJ5luwDCpwBs1AbUHJoAO4fEk0oZYi7nNJJ2qqGiUFOlvNQjaR3y
+ rfwWNkYbxJkOXjbzg998SZlm9CnBEcKbuZhHZSD5Lbj203NmESPDlLRpDdsnPFg0PflH
+ +VREilHGCOVr06kaMAMXTinQk+0epHOuHmlqHGH5ahXnMNhYd+zqXaOtT+kZekgLxQCg
+ +CQKWoslm60ZXQHhpDXthQv1ScDEFc1bbIuhZgMi+35+yPAzmW7sFkN8TGwxRN6G+HmK
+ jBmQhDgvnbbeWhN5+j0yHb4aBd+VZeEUJK1jrvwirkYeLOZM8J5C4hGBEkOrpDFeFJgi
+ F9WA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVgj4BtZ4kOekJGZTLucgAH7Ql2ZX8BnY5d7/QR+VF2pSTdw3z14JKQqepwfAjxoo+m0fsgUBuqsQGs@nongnu.org
-X-Gm-Message-State: AOJu0YzqnO1+TP37qWROp4vmS/rARDDWA+pGoFvHwLRqTypQg+ksXhaq
- kEE0kBhnbccKxOYgis6oCh+cNg2y4B7T0MNaP21EaTjAXrZ9p9Z0y1zJt61LZsn5RcAPS0+MQoK
- dlQcqFJQEALpzKCPzMa3ioG/Lkal9TNmIBsf6lH+31kMpB1Gj4dvh
-X-Received: by 2002:a05:620a:4688:b0:7a2:32e:3c47 with SMTP id
- af79cd13be357-7ae3784b744mr1801936585a.34.1727683306244; 
- Mon, 30 Sep 2024 01:01:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFH3w6f5fa09+ADawoYDjcUoKiB8ZctWNlB9ImTPayBuSQ6yNMk5L8FEw4pFn0zZfLwr1vBGQ==
-X-Received: by 2002:a05:620a:4688:b0:7a2:32e:3c47 with SMTP id
- af79cd13be357-7ae3784b744mr1801933585a.34.1727683305843; 
- Mon, 30 Sep 2024 01:01:45 -0700 (PDT)
+ AJvYcCUCn79ULBXel/E++9p2tm/6uE7LTYm9xcSpO+Jm+7pNAC1MzItWgduVyycbfjHZHcK9wWIuq5/CItS6@nongnu.org
+X-Gm-Message-State: AOJu0Yy0iSbOQvXFR30ba58RBV1Z3ilE9SiwS7tyg6tmIlu5LVgAa7Ky
+ MVf6sOQCvyXaCjAywo5yt5mnyGeqi6T+oltiWfYv86bEbYFVzMZhdHYFQ4YRcRaS5jC+NW77+47
+ 7iuEu7cI8B3JM5mpKQQNlrtUi+64T7ziPHMXOwC2eXG7iu7Hu9mqy
+X-Received: by 2002:ac8:5ad6:0:b0:458:3399:5177 with SMTP id
+ d75a77b69052e-45c9f247689mr149788471cf.27.1727683334102; 
+ Mon, 30 Sep 2024 01:02:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEUx+v9SItV2YqlBSD4XGpqH8JtO92dp/LqjiB59mDXatDBZnuxEatq3qtLyb+8RH5SnmSnpg==
+X-Received: by 2002:ac8:5ad6:0:b0:458:3399:5177 with SMTP id
+ d75a77b69052e-45c9f247689mr149788191cf.27.1727683333685; 
+ Mon, 30 Sep 2024 01:02:13 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-48-176.web.vodafone.de.
  [109.42.48.176]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7ae377d5143sm391500985a.32.2024.09.30.01.01.43
+ d75a77b69052e-45c9f2b6d4asm34282481cf.21.2024.09.30.01.02.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Sep 2024 01:01:45 -0700 (PDT)
-Message-ID: <25a7c940-5a08-4f53-a2ea-80883cbaab13@redhat.com>
-Date: Mon, 30 Sep 2024 10:01:40 +0200
+ Mon, 30 Sep 2024 01:02:13 -0700 (PDT)
+Message-ID: <963571ae-84ea-4290-ba24-794cb5008b84@redhat.com>
+Date: Mon, 30 Sep 2024 10:02:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/loongarch/virt: Remove unnecessary 'cpu.h'
- inclusion
+Subject: Re: [PATCH 2/2] hw/loongarch/fw_cfg: Build in common_ss[]
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>,
- QEMU Trivial <qemu-trivial@nongnu.org>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>
 References: <20240927213254.17552-1-philmd@linaro.org>
- <20240927213254.17552-2-philmd@linaro.org>
-Content-Language: en-US
+ <20240927213254.17552-3-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -122,10 +120,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240927213254.17552-2-philmd@linaro.org>
+In-Reply-To: <20240927213254.17552-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -134,7 +132,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.095,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,23 +149,27 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 27/09/2024 23.32, Philippe Mathieu-Daudé wrote:
+> Nothing in LoongArch fw_cfg.c requires target specific definitions.
+> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/loongarch/virt.h | 1 -
->   1 file changed, 1 deletion(-)
+>   hw/loongarch/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-> index c373e48f27..9ba47793ef 100644
-> --- a/include/hw/loongarch/virt.h
-> +++ b/include/hw/loongarch/virt.h
-> @@ -8,7 +8,6 @@
->   #ifndef HW_LOONGARCH_H
->   #define HW_LOONGARCH_H
+> diff --git a/hw/loongarch/meson.build b/hw/loongarch/meson.build
+> index bce7ebac97..005f017e21 100644
+> --- a/hw/loongarch/meson.build
+> +++ b/hw/loongarch/meson.build
+> @@ -1,8 +1,8 @@
+>   loongarch_ss = ss.source_set()
+>   loongarch_ss.add(files(
+> -    'fw_cfg.c',
+>       'boot.c',
+>   ))
+> +common_ss.add(when: 'CONFIG_LOONGARCH_VIRT', if_true: files('fw_cfg.c'))
+>   loongarch_ss.add(when: 'CONFIG_LOONGARCH_VIRT', if_true: files('virt.c'))
+>   loongarch_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-build.c'))
 >   
-> -#include "target/loongarch/cpu.h"
->   #include "hw/boards.h"
->   #include "qemu/queue.h"
->   #include "hw/block/flash.h"
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
