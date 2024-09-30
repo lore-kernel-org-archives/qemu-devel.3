@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ACCECDD1D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 20:00:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0974CDD1D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 20:00:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svMYW-0004gc-8v; Mon, 30 Sep 2024 15:59:40 -0400
+	id 1svMYK-0004Qw-Gj; Mon, 30 Sep 2024 15:59:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1svMXw-000436-2t
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:59:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1svMY2-00049Q-MG
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:59:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1svMXm-0003xU-QZ
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:59:03 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1svMY0-00047c-Tj
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:59:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727726332;
+ s=mimecast20190719; t=1727726347;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AsdoBAm4/H/7Jy2H83poWUQ7xQPm3c8gUhD4CXkcCgo=;
- b=ancHlzBpOK4eCIoVymHJQpizwEoFMWUVxMQIae5pnLCoH2d+R++cyloHMerph69YiOKgIC
- IFcpbNknZfclasbQ+rMbn4ms0mG0wfRfZC8KkzakMgH52LmukAFZiGy4Mo6JvUuM7fY9VS
- vr0F9WMfA2DbBHZ7WkKkOI5xBaHevY8=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yDBWKslzG5nwdIt7YxzIRAMdilvoFhU+JDma5UP115Q=;
+ b=cl+EtGGnys4iz0IciZh2L47g0TxlojJlbYWnzpqOGP0YYf2nuBSsZU07E9hgykTUx69Liz
+ KVTr7X/gigJIeyWliLeFqeEk/t0iA0F8InOAn6ycIASWkCNGlq4U/L+7w+ofIB36AVIcTj
+ VyawdcAz1NdnXArPWKdtkMy+Aa8XptQ=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-153-NO7T5VowO7KvxgBRt3ktfQ-1; Mon, 30 Sep 2024 15:58:49 -0400
-X-MC-Unique: NO7T5VowO7KvxgBRt3ktfQ-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-458260b3dccso96613651cf.2
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 12:58:49 -0700 (PDT)
+ us-mta-448-NstkanWxMuSETVVL5Fm1sw-1; Mon, 30 Sep 2024 15:59:06 -0400
+X-MC-Unique: NstkanWxMuSETVVL5Fm1sw-1
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-45856a29545so99100651cf.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 12:59:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727726324; x=1728331124;
+ d=1e100.net; s=20230601; t=1727726345; x=1728331145;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AsdoBAm4/H/7Jy2H83poWUQ7xQPm3c8gUhD4CXkcCgo=;
- b=nXwYT//p1Pde4zs8R0S+qNydMlPkvbug605CfDMtrmnwhD6mfdKSSLWI41tV7Irh2J
- 5jc/Bt3wHSFpMsU4nm91pGbWZSr5ZHWBWPMncMfiqn0naxqcx2kJAP4dEqfxSSNp5lll
- K9YstgsLqa/lwzyS+vUxBTQ8XFgPZwGzUasI64ah/4ymmNVbi2tAIdahNChSOwRXRGXE
- 9eKaIWjX1QRGDu3lahayOeBmYO+aWF/k8rOBxU3qGCSjeAn+xTZrfUWDZyutt+M9UPaF
- SfJgyO/4rZXzP2qBAETjedb2URvA2rZHWlBJFu9vRnKMOZmgNmmTkj0yI4kODQIVfKs8
- F3EA==
-X-Gm-Message-State: AOJu0YyTzLMIkg51ml5v2nFUaDgiiWKaui6C0ua11HurVmx//TuykoVG
- J/0a/5CIoazVr9PCDrM3QQhZY5ZEG/JYdn83XJ6WTAnoUYc0JzyesGBA4r88QMbEncs5TGxH0PR
- fifwln9EXLV+rEum15B8NZf52MuBJ9gXT9JWqAl+ArGWKQZ9JUsMxMYB7llT74FCoVfXbM9nwy4
- r4YcrDZbMDOZBvroI0q/Al5axMvcqxE5IRQA==
-X-Received: by 2002:a05:622a:d1:b0:458:34df:1e6a with SMTP id
- d75a77b69052e-45c9f292b5bmr212843431cf.48.1727726324003; 
- Mon, 30 Sep 2024 12:58:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFGTck3+ESskPrGJHCUxQNvDlQUXbp+UL5AXiNPooCEFu2ayCsK4lii6fSwoOVPAExbiEAsxg==
-X-Received: by 2002:a05:622a:d1:b0:458:34df:1e6a with SMTP id
- d75a77b69052e-45c9f292b5bmr212843141cf.48.1727726323572; 
- Mon, 30 Sep 2024 12:58:43 -0700 (PDT)
+ bh=yDBWKslzG5nwdIt7YxzIRAMdilvoFhU+JDma5UP115Q=;
+ b=VOfuzNAqvQpLJP3ppZ4feFchwm4XcETngCcCZdQTkz1lgda7G1Q1d9WsShvij6/OSN
+ oUkjYd26uYR6EtjzYOzVLTTK+NphMR2rSioH+59ymkm5UOYEtN0XKQ2BH1ctRc+TOtAk
+ 9X2Wfa8G4NlJR8mgMD4GwKaGgyCjDreC0xrgq+o8sJYbpqmCa4xqZr/B9J/oMHadbLnE
+ iNpZF1Fiy+k2o9AGvvKanPrmxZCdgDv3RaNjp7aLeeHwnMshwVDxH9PgLkWRXF0MXnTE
+ NUSR4LdYudOyyaPzgjs+UmJnrljhr9irCAtPx++DaJubIRhhExoC68187fW4BdGvfKvK
+ c+QQ==
+X-Gm-Message-State: AOJu0Yz21JXGVP6AMRu4pzy8YwlO+bt6ImM6dJFZqS3ciaTGmykabR3p
+ tQa5JGH2PIoVotJIKEw14wFHCag5LcLdQ6JTz2vV5E3sLTQjj2l7++CpQnDRe1wJALg1fiFe6xo
+ eNpO6ktfe6OefQgD/gUUPO7tU7TGyzQkpvV398ANETtzLy7vN70Bs8KSgl5wTKpLrXhb2AzAJKB
+ D72sjF8PFUe5KUPUC8M1q17EPsrsmpTqwEJw==
+X-Received: by 2002:ac8:7f09:0:b0:45b:5596:f785 with SMTP id
+ d75a77b69052e-45c9f2a3ccamr217341481cf.44.1727726344594; 
+ Mon, 30 Sep 2024 12:59:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF00fm5R2Yl9uT792JudZsOBV9gQxJc9d2Ztjd5aqJ+8ReyVARVuAaZm4316X4jDrwIXTThdA==
+X-Received: by 2002:ac8:7f09:0:b0:45b:5596:f785 with SMTP id
+ d75a77b69052e-45c9f2a3ccamr217341161cf.44.1727726344203; 
+ Mon, 30 Sep 2024 12:59:04 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-45c9f28e481sm38879371cf.16.2024.09.30.12.58.39
+ d75a77b69052e-45c9f28e481sm38879371cf.16.2024.09.30.12.59.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Sep 2024 12:58:40 -0700 (PDT)
+ Mon, 30 Sep 2024 12:59:01 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Prasad Pandit <ppandit@redhat.com>, Julia Suvorova <jusual@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, peterx@redhat.com,
  Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
  "Dr . David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH 1/7] migration: Unify names of migration src main thread
-Date: Mon, 30 Sep 2024 15:58:31 -0400
-Message-ID: <20240930195837.825728-2-peterx@redhat.com>
+Subject: [PATCH 6/7] migration: Remove MigrationThread and threadinfo.h
+Date: Mon, 30 Sep 2024 15:58:36 -0400
+Message-ID: <20240930195837.825728-7-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240930195837.825728-1-peterx@redhat.com>
 References: <20240930195837.825728-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -103,64 +103,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make pthread name match with what we report in query-migrationthreads.
+The MigrationThread struct is mostly the same as MigrationThreadInfoList,
+except that it's a double-linked list so removal doesn't need to remember
+prev pointer.
 
-We used to report the same, but not anymore after 60ce47675d ("migration:
-Rename thread debug names").  Not a huge deal but it was still good to
-follow.
+That might not be necessary, especially considering that the defintion of
+that struct is the only thing in threadinfo.h now.
 
-Multifd threads are still matched because at least on the src the QMP
-facility reused p->name.  The QMP command missed dest multifd threads
-though, but that's another thing to address later.
+Reuse MigrationThreadInfoList, then let's drop the header.  Need to manage
+a single list entry removal, but after I saw the diff, it's not so bad.
 
-Not copy stable, as we'd better keep the names not changed for stable
-branches in QMP responses (even though we shouldn't guarantee ABI stability
-on the names anyway).
+With that, query-migrationthreads is much easier, as we can simply do
+QAPI_CLONE() now.
 
-Cc: Juraj Marcin <jmarcin@redhat.com>
-Reported-by: Prasad Pandit <ppandit@redhat.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.h | 2 ++
- migration/migration.c | 5 +++--
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ migration/threadinfo.h | 22 -------------------
+ migration/migration.c  |  1 -
+ migration/multifd.c    |  1 -
+ migration/threadinfo.c | 50 +++++++++++++++++++++---------------------
+ 4 files changed, 25 insertions(+), 49 deletions(-)
+ delete mode 100644 migration/threadinfo.h
 
-diff --git a/migration/migration.h b/migration/migration.h
-index 38aa1402d5..519455796d 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -28,6 +28,8 @@
- #include "sysemu/runstate.h"
- #include "migration/misc.h"
- 
-+#define  MIGRATION_THREAD_SRC_MAIN  "mig/src/main"
-+
- struct PostcopyBlocktimeContext;
- 
- #define  MIGRATION_RESUME_ACK_VALUE  (1)
+diff --git a/migration/threadinfo.h b/migration/threadinfo.h
+deleted file mode 100644
+index 59f334af21..0000000000
+--- a/migration/threadinfo.h
++++ /dev/null
+@@ -1,22 +0,0 @@
+-/*
+- *  Migration Threads info
+- *
+- *  Copyright (c) 2022 HUAWEI TECHNOLOGIES CO., LTD.
+- *
+- *  Authors:
+- *  Jiang Jiacheng <jiangjiacheng@huawei.com>
+- *
+- *  This work is licensed under the terms of the GNU GPL, version 2 or later.
+- *  See the COPYING file in the top-level directory.
+- */
+-
+-#include "qapi/error.h"
+-#include "qapi/qapi-commands-migration.h"
+-
+-typedef struct MigrationThread MigrationThread;
+-
+-struct MigrationThread {
+-    const char *name; /* the name of migration thread */
+-    int thread_id; /* ID of the underlying host thread */
+-    QLIST_ENTRY(MigrationThread) node;
+-};
 diff --git a/migration/migration.c b/migration/migration.c
-index ae2be31557..505b62c8f3 100644
+index 04c4272e46..1034668a90 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -3467,7 +3467,8 @@ static void *migration_thread(void *opaque)
-     Error *local_err = NULL;
-     int ret;
+@@ -57,7 +57,6 @@
+ #include "net/announce.h"
+ #include "qemu/queue.h"
+ #include "multifd.h"
+-#include "threadinfo.h"
+ #include "qemu/yank.h"
+ #include "sysemu/cpus.h"
+ #include "yank_functions.h"
+diff --git a/migration/multifd.c b/migration/multifd.c
+index b96aaffebb..0baa760ccf 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -26,7 +26,6 @@
+ #include "qemu-file.h"
+ #include "trace.h"
+ #include "multifd.h"
+-#include "threadinfo.h"
+ #include "options.h"
+ #include "qemu/yank.h"
+ #include "io/channel-file.h"
+diff --git a/migration/threadinfo.c b/migration/threadinfo.c
+index 73db26dc82..6c1278b4ea 100644
+--- a/migration/threadinfo.c
++++ b/migration/threadinfo.c
+@@ -13,11 +13,13 @@
+ #include "qemu/osdep.h"
+ #include "qemu/queue.h"
+ #include "qemu/lockable.h"
+-#include "threadinfo.h"
+ #include "migration.h"
++#include "qapi/qapi-commands-migration.h"
++#include "qapi/qapi-visit-migration.h"
++#include "qapi/clone-visitor.h"
  
--    thread = migration_threads_add("live_migration", qemu_get_thread_id());
-+    thread = migration_threads_add(MIGRATION_THREAD_SRC_MAIN,
-+                                   qemu_get_thread_id());
+ QemuMutex migration_threads_lock;
+-static QLIST_HEAD(, MigrationThread) migration_threads;
++static MigrationThreadInfoList *migration_threads;
  
-     rcu_register_thread();
+ static void __attribute__((constructor)) migration_threads_init(void)
+ {
+@@ -26,31 +28,40 @@ static void __attribute__((constructor)) migration_threads_init(void)
  
-@@ -3820,7 +3821,7 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
-         qemu_thread_create(&s->thread, "mig/snapshot",
-                 bg_migration_thread, s, QEMU_THREAD_JOINABLE);
-     } else {
--        qemu_thread_create(&s->thread, "mig/src/main",
-+        qemu_thread_create(&s->thread, MIGRATION_THREAD_SRC_MAIN,
-                 migration_thread, s, QEMU_THREAD_JOINABLE);
+ void migration_threads_add(const char *name)
+ {
+-    MigrationThread *thread =  g_new0(MigrationThread, 1);
++    MigrationThreadInfo *thread = g_new0(MigrationThreadInfo, 1);
+ 
+-    thread->name = name;
++    thread->name = g_strdup(name);
+     thread->thread_id = qemu_get_thread_id();
+ 
+     WITH_QEMU_LOCK_GUARD(&migration_threads_lock) {
+-        QLIST_INSERT_HEAD(&migration_threads, thread, node);
++        QAPI_LIST_PREPEND(migration_threads, thread);
      }
-     s->migration_thread_running = true;
+ }
+ 
+ void migration_threads_remove(void)
+ {
+     int tid = qemu_get_thread_id();
+-    MigrationThread *thread;
++    MigrationThreadInfoList *thread, *prev;
+ 
+     QEMU_LOCK_GUARD(&migration_threads_lock);
+ 
+-    QLIST_FOREACH(thread, &migration_threads, node) {
+-        if (tid != thread->thread_id) {
+-            continue;
+-        }
++    prev = NULL;
++    thread = migration_threads;
+ 
+-        QLIST_REMOVE(thread, node);
+-        g_free(thread);
+-        return;
++    while (thread) {
++        if (tid == thread->value->thread_id) {
++            if (!prev) {
++                migration_threads = thread->next;
++            } else {
++                prev->next = thread->next;
++            }
++            /* Terminate this single object to not free the rest */
++            thread->next = NULL;
++            qapi_free_MigrationThreadInfoList(thread);
++            return;
++        }
++        prev = thread;
++        thread = thread->next;
+     }
+ 
+     g_assert_not_reached();
+@@ -58,18 +69,7 @@ void migration_threads_remove(void)
+ 
+ MigrationThreadInfoList *qmp_query_migrationthreads(Error **errp)
+ {
+-    MigrationThreadInfoList *head = NULL;
+-    MigrationThreadInfoList **tail = &head;
+-    MigrationThread *thread = NULL;
+-
+     QEMU_LOCK_GUARD(&migration_threads_lock);
+-    QLIST_FOREACH(thread, &migration_threads, node) {
+-        MigrationThreadInfo *info = g_new0(MigrationThreadInfo, 1);
+-        info->name = g_strdup(thread->name);
+-        info->thread_id = thread->thread_id;
+-
+-        QAPI_LIST_APPEND(tail, info);
+-    }
+ 
+-    return head;
++    return QAPI_CLONE(MigrationThreadInfoList, migration_threads);
+ }
 -- 
 2.45.0
 
