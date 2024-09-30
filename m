@@ -4,80 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81782CF6497
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 10:49:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0BADCF6497
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 10:51:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svDxQ-0003rR-7L; Mon, 30 Sep 2024 06:48:48 -0400
+	id 1svDzl-000087-2f; Mon, 30 Sep 2024 06:51:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svDxO-0003q7-Qr
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 06:48:46 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svDxM-0007J7-VZ
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 06:48:46 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5c721803a89so5489296a12.1
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 03:48:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727693323; x=1728298123; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=yW121K7iqKVBU9p/lfgSl+R8CtQoPDe7TXh+4M8KVuw=;
- b=yLiL3DgRmtw9rhaFLyUDp6zdwCiO1vmL7ppgR35O4/ctvzKwGgtHi1+iFGAh/G/MiV
- vIl+4VohYDlHJZfRk1ynjVCVZUF3o4c3J45nQKUQ7USPQg9kk1ZKWRzCzDTIsLjyu0rK
- k0qa3amuQiTurS07kFB/TX/oZorY2m1lEDKA+zRI3LqyadGBjT8J7fFUhI4NXEGZMoQs
- edvNII0WVFg/AgUSjvR4MGwGp8E28d9hJVoA6kkBHnXK8jVuyBMpRl1Aeoe63LGRZlD8
- FVAoZMi/jchOupgAbb66WG9gqesHLtcoXBlTqjbB4A1kvg7FMGKMpDVGwb81S16JUZMK
- r/Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727693323; x=1728298123;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yW121K7iqKVBU9p/lfgSl+R8CtQoPDe7TXh+4M8KVuw=;
- b=FtOuAO1DRxWwgZH4Uf2qGewXSXWj+uadDIY+beTxxx9NqmZdSpyuztO5gh765pR163
- 9jyY3ReHpptERm+4gfi+3b20gRaRjbs+TJH12g4wBryAMFH2mx2ElrS49ulr1Bk3otLX
- PSM9M/3SnkKBXJ6A+6clJ3Gujard+tum6khnAdmuvYu5loAm0iXhm4epDVkZM9DboGmV
- PocYoEEhqsE4RdN1lUbIjqY+F0JZySxutdeVOwiG/RAA1cvamSkOwYsg9VZ3nmkpOCSx
- ERBdYfD0OgrGf+yt/kblFbGleFnf6YDjlCHn0ksXJFza378uGHl55vWP5boxSlUt7dkm
- MWjA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUmUNYPf8ep2MEEUH42JaW5ngflgltYJZQtaRJpqau/2/PciFAXOMgw5nDA5aF+I1x8A+8Yq1mVmfhL@nongnu.org
-X-Gm-Message-State: AOJu0YyXQ31EbNOg6MzrUTtwoGBAlZkjuwtmAXZLmkdZFX45YH8g/2e9
- unS081LfYzeRACBpmGPixG6hYrIK22gVX8Yf9CMWPB+47/6SYpG2Hp3Sjxvxdqa7Grkke+Lsnmd
- E+H46dJDnwmuvRncVDT0cGes63bgMFV9Za4k5Uw==
-X-Google-Smtp-Source: AGHT+IHPUC/m1RVSh9BesYX6DAPM9W+m7BSmHliQjd1Kda6tj5lrYFcFZWBiHUB0iy7xt8x9hsvguGr+XqYjVQfmasg=
-X-Received: by 2002:a05:6402:e9e:b0:5c0:c10c:7c1d with SMTP id
- 4fb4d7f45d1cf-5c88260359fmr10343066a12.23.1727693322927; Mon, 30 Sep 2024
- 03:48:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1svDzi-0008Vv-Nx; Mon, 30 Sep 2024 06:51:10 -0400
+Received: from fhigh-a1-smtp.messagingengine.com ([103.168.172.152])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1svDzd-0007ZV-8D; Mon, 30 Sep 2024 06:51:10 -0400
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal
+ [10.202.2.42])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id B631F114025D;
+ Mon, 30 Sep 2024 06:51:03 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-02.internal (MEProxy); Mon, 30 Sep 2024 06:51:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm1; t=1727693463; x=
+ 1727779863; bh=mX5T3NblIPkbDeCd4cxbkHscVIkvHih143wN+MlvKKc=; b=M
+ PN6ofDVinWTyZmi17gPi5Vy0gjYiIezmFpIt0Q7/+gql55QgPDd6e0ALoxSDf4nF
+ AuYtkrtbk5iHBDD3FEnK7SW7sIvtU8lKYVrhMYSoRrbvsQ9RIXiDXrmfer30r8kV
+ ZMyrTGLndQknqmHmUeQNl0ZAaBR39OjvWXFVBQXqIUJtTEmjFb5xxxnAMe+TBfrJ
+ eqlwShetvnQfL+AKbbZvtKuS5KtpaijwBvYnoN1mLEcL39BHRvNEYraotzkrXkkw
+ ObUOwpSL9Ot9kGmlRTY8OuylEeH4NOIYRpLRBr94qf5DJAE96N2SrXUvt8Lf0M9T
+ 1vE+l5p83E/xuqLtlorBQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm2; t=1727693463; x=1727779863; bh=mX5T3NblIPkbDeCd4cxbkHscVIkv
+ Hih143wN+MlvKKc=; b=X7DqS014M8kUpeHASfeQK9FJzAggzMFi/Fq0NipaZ8ww
+ Bhglk7WqMgGDeqJ13JD12c1v4x8uC2mp7Pq8gIZE6rL35tMwK5m5NOET4I0BuXBB
+ bdHMJfXcIyGC9gFnAFNC+IowepYHjrG+Th5hhQGs9/1/wSbIH/YoVL8sdBniPygP
+ WCvY8VJH/nMadwvLtMXyF+88kgIhsghIuZN84Vzo0G12XDzlHZZade6899Q3VZwr
+ ejhA39CIcA87HbIObIvU5Wh6VNrNyoOUbUKCMfSqaL4CyrWM6f1PAS6NY/1K+ZsK
+ /A1PfVwxheSs0/lW8Yi/pAaxkweQhEi/qEEwYPNVZw==
+X-ME-Sender: <xms:l4L6ZqVlldv9f92vrSs37xv_J_VYhmGBt5v9fd8ntCH_VOgZli-5Rw>
+ <xme:l4L6ZmmhAMpXgVF1RHgj41cWQpO2ZcuKJpWgcq9-BASGhGPIS0NzM0Pdyz6gRtd7R
+ fCP4xjAQGTktCdcTPQ>
+X-ME-Received: <xmr:l4L6ZuZndWVUAdUZ8KlciKDvR5h7VTlTroNI0idoJ7HJWAm-Es5sKppgtxNh>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedgfeefucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+ rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+ htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeen
+ ucfhrhhomhepmfhlrghushculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrd
+ gukheqnecuggftrfgrthhtvghrnhepjefgjeefffdvuefhieefhffggfeuleehudekveej
+ vedtuddugeeigeetffffjeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+ hmrghilhhfrhhomhepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthht
+ ohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprghlrghnrdgruggrmhhsoh
+ hnsehorhgrtghlvgdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhg
+ nhhurdhorhhgpdhrtghpthhtohepkhgsuhhstghhsehkvghrnhgvlhdrohhrghdprhgtph
+ htthhopehqvghmuhdqsghlohgtkhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepihht
+ shesihhrrhgvlhgvvhgrnhhtrdgukh
+X-ME-Proxy: <xmx:l4L6ZhVNQS_gHhOIbGUfhzOKgKSYIX0aAf0d9K6oR8KWAxNC2PbNVg>
+ <xmx:l4L6Zkl0rktLuDMQLuAPTHptwP2EOrAOR_4uqrlTgzpZpkMKn9NQjw>
+ <xmx:l4L6Zme18_fhAvrAv_LNp_vlpLgGJnObPwZfoQHjfL1QvLMhzyQJbg>
+ <xmx:l4L6ZmFYUIdrcbm3u2JbDgion8HluxgRaQQTOSGpCeBWhVYyWTPOLg>
+ <xmx:l4L6ZjtCUIjGWnUVgBGzTocUuoa07ozyH9CXrOkGX3SzbUwvHS4f3fbE>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 30 Sep 2024 06:51:03 -0400 (EDT)
+Date: Mon, 30 Sep 2024 12:51:01 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Alan Adamson <alan.adamson@oracle.com>
+Cc: qemu-devel@nongnu.org, kbusch@kernel.org, qemu-block@nongnu.org
+Subject: Re: [PATCH v3 0/1] hw/nvme: add atomic write support
+Message-ID: <ZvqClfdYdTHbhtN2@AALNPWKJENSEN.aal.scsc.local>
+References: <20240926212458.32449-1-alan.adamson@oracle.com>
 MIME-Version: 1.0
-References: <20240924221751.2688389-1-alistair.francis@wdc.com>
- <CAFEAcA9Sb-fpNhm-6DPwss5zMpw=nEp31Wt6q1OA6DqCg3wKEg@mail.gmail.com>
- <13ee9889-b503-45ea-a074-ffafbd052c4e@ventanamicro.com>
- <CAFEAcA_nn2fUyo9Pkd8jW2NG1oJLbAJrfiC7sziuhGthqL3=4Q@mail.gmail.com>
- <096029d7-269c-44f8-88d3-6f0c52af58fa@ventanamicro.com>
-In-Reply-To: <096029d7-269c-44f8-88d3-6f0c52af58fa@ventanamicro.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 30 Sep 2024 11:48:31 +0100
-Message-ID: <CAFEAcA_ZYghG9QoefNnxGFd4Si=viyCWzTD=z19Hr6s+p5rQ1Q@mail.gmail.com>
-Subject: Re: [PULL v2 00/47] riscv-to-apply queue
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org, 
- Alistair Francis <alistair.francis@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="ori9GLEWMAeLKnN3"
+Content-Disposition: inline
+In-Reply-To: <20240926212458.32449-1-alan.adamson@oracle.com>
+Received-SPF: pass client-ip=103.168.172.152; envelope-from=its@irrelevant.dk;
+ helo=fhigh-a1-smtp.messagingengine.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,78 +108,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 29 Sept 2024 at 21:53, Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
->
->
-> On 9/29/24 12:38 PM, Peter Maydell wrote:
-> > On Sat, 28 Sept 2024 at 21:40, Daniel Henrique Barboza
-> > <dbarboza@ventanamicro.com> wrote:
-> >>
-> >>
-> >>
-> >> On 9/28/24 8:34 AM, Peter Maydell wrote:
-> >>> The assertion failure is
-> >>> ERROR:../tests/qtest/riscv-iommu-test.c:72:test_reg_reset: assertion
-> >>> failed (cap & RISCV_IOMMU_CAP_VERSION == 0x10): (0 == 16)
-> >>
-> >> The root cause is that the qtests I added aren't considering the endianess of the
-> >> host. The RISC-V IOMMU is being implemented as LE only and all regs are being
-> >> read/written in memory as LE. The qtest read/write helpers must take the qtest
-> >> endianess into account. We make this type of handling in other qtest archs like
-> >> ppc64.
-> >>
-> >> I have a fix for the tests but I'm unable to run the ubuntu-22.04-s390x-all-system
-> >> job to verify it, even after setting Cirrus like Thomas taught me a week ago. In
-> >> fact I have no 'ubuntu-22-*' jobs available to run.
-> >
-> > It's on the private s390 VM we have, so it's set up only to
-> > be available on the main CI run (there's not enough capacity
-> > on the machine to do any more than that). If you want to point
-> > me at a gitlab branch I can do a quick "make check" on that
-> > if you like.
->
-> I appreciate it. This is the repo:
->
-> https://gitlab.com/danielhb/qemu/-/tree/pull_fix
 
-This doesn't fix the assertion. This is because the test (now) does:
+--ori9GLEWMAeLKnN3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  qpci_memread(&r_iommu->dev, r_iommu->reg_bar, reg_offset,
-               &reg, sizeof(reg));
+On Sep 26 14:24, Alan Adamson wrote:
+> Changelog:
+> v3:	- Use cpu_to_le16() to properly handle endianness.
+>         - Use 'continue' rather than'break' when walking SQs.
+>         - No need to lock all the SQs when walking them so remove atomic_=
+lock
+>           since it is running from the main loop.
+>=20
+> v2:	- Include changes suggested by Klaus
+> 	- Check for READ/WRITE commmands when walking SQs.
+> 	- Updated the "cover-letter" below with new fio example.
+>=20
 
-  if (riscv_iommu_qtest_big_endian()) {
-      reg = bswap32(reg);
-  }
+Hi Alan,
 
-where riscv_iommu_qtest_big_endian() is a wrapper for
-qtest_big_endian(). But qtest_big_endian() queries the
-endianness of the *guest*, and so for riscv it will
-always return false and we will never bswap.
+Applied to nvme-next!
 
-If you need to do swapping inline in a test you can use
-  reg = le32_to_cpu(reg);
-which swaps an LE value read from the guest to the host
-CPU's endianness ordering (and similarly with cpu_to_le32
-on the write path).
 
-But it turns out that libqos provides already functions
-to read/write 32 and 64 bit values from PCI devices:
-   reg = qpci_io_readl(&r_iommu->dev, r_iommu->reg_bar, reg_offset);
-which do the byteswap for you.
-Similarly qpci_io_writel() etc. (The functions work for
-both IO and MEM PCI BARs.)
+Thanks!
+Klaus
 
-> If this is enough to fix the tests, I'll amend it in the new IOMMU version.
-> If we still failing then I'll need to set this s390 VM.
->
-> By the way, if you have any recipe/pointers to set this s390 VM to share,
-> that would be great.
+--ori9GLEWMAeLKnN3
+Content-Type: application/pgp-signature; name="signature.asc"
 
-It's a VM provided by IBM under their "Community Cloud"
-umbrella: https://community.ibm.com/zsystems/l1cc/
+-----BEGIN PGP SIGNATURE-----
 
-thanks
--- PMM
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmb6gpUACgkQTeGvMW1P
+DeloeAf/eYB7lL7A8Lirz3AoJNfdQkjndyKV/2K1VwsspteJ3oQK/k/qz7dejK5Z
+1/bxoJS3OYTwLlxl656lw4ZVGXdDApB/+pjiwnht91nDVXmofM5D6e5n5Q8iI2ai
+OzH6n1x6/eFiTO6XuM31MHjC5mgvDGjYljGlxHKw5WZFi3UimIloXo83yAGgEszo
+rcnX43fyarSviw0jT5EjQIFWueaBgX/gLSgMmQLVxXfBiIb9ijVzDcaqCF1dYOFm
+Wa2RSJv0Q1lbcnXnAPepO5V/qIGE63cM2pZqruiwXH9BabKUlK7vsf9pIpXNMOeo
+EfCjNt5dENMUhwYVlqhBPj4xi1Y8xQ==
+=5WEY
+-----END PGP SIGNATURE-----
+
+--ori9GLEWMAeLKnN3--
 
