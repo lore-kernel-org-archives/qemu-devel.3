@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40DCBCF6497
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:54:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 793FCCF6491
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:54:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svC9m-0005Rz-UK; Mon, 30 Sep 2024 04:53:26 -0400
+	id 1svC9l-0005IW-Kf; Mon, 30 Sep 2024 04:53:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1svC9T-0003pr-9R; Mon, 30 Sep 2024 04:53:08 -0400
+ id 1svC9N-0003Q9-E9; Mon, 30 Sep 2024 04:53:03 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1svC9R-00025U-Bs; Mon, 30 Sep 2024 04:53:06 -0400
+ id 1svC9L-00025U-L5; Mon, 30 Sep 2024 04:53:01 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 30 Sep
- 2024 16:52:41 +0800
+ 2024 16:52:40 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Mon, 30 Sep 2024 16:52:41 +0800
+ Transport; Mon, 30 Sep 2024 16:52:40 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -34,15 +34,16 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v6 6/8] aspeed/soc: Correct GPIO irq 130 for AST2700
-Date: Mon, 30 Sep 2024 16:52:37 +0800
-Message-ID: <20240930085239.3089901-7-jamin_lin@aspeedtech.com>
+Subject: [PATCH v6 4/8] hw/gpio/aspeed: Fix clear incorrect interrupt status
+ for GPIO index mode
+Date: Mon, 30 Sep 2024 16:52:35 +0800
+Message-ID: <20240930085239.3089901-5-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240930085239.3089901-1-jamin_lin@aspeedtech.com>
 References: <20240930085239.3089901-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -68,46 +69,105 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The register set of GPIO have a significant change since AST2700.
-Each GPIO pin has their own individual control register and users are able to
-set one GPIO pin’s direction, interrupt enable, input mask and so on in the
-same one control register.
+The interrupt status field is W1C, where a set bit on read indicates an
+interrupt is pending. If the bit extracted from data is set it should
+clear the corresponding bit in reg_value. However, if the extracted
+bit is clear then the value of the corresponding bit in reg_value
+should be unchanged.
 
-AST2700 does not have GPIO18_XXX registers for GPIO 1.8v, removes
-ASPEED_DEV_GPIO_1_8V. It is enough to only have ASPEED_DEV_GPIO
-device in AST2700.
+SHARED_FIELD_EX32() extracts the interrupt status bit from the write
+(data). reg_value is set to the set's interrupt status, which means
+that for any pin with an interrupt pending, the corresponding bit is
+set. The deposit32() call updates the bit at pin_idx in the
+reg_value, using the value extracted from the write (data).
 
-The AST2700 GPIO controller interrupt is connected to GICINT130_INTC at
-bit 18. Therefore, correct GPIO irq 130.
+The result is that if multiple interrupt status bits
+were pending and the write was acknowledging specific one bit,
+then the all interrupt status bits will be cleared.
+However, it is index mode and should only clear the corresponding bit.
+
+For example, say we have an interrupt pending for GPIOA0, where the
+following statements are true:
+
+   set->int_status == 0b01
+   s->pending == 1
+
+Before it is acknowledged, an interrupt becomes pending for GPIOA1:
+
+   set->int_status == 0b11
+   s->pending == 2
+
+A write is issued to acknowledge the interrupt for GPIOA0. This causes
+the following sequence:
+
+   reg_value == 0b11
+   pending == 2
+   s->pending == 0
+   set->int_status == 0b00
+
+It should only clear bit 0 in index mode and the correct result
+should be as following.
+
+   set->int_status == 0b11
+   s->pending == 2
+
+   pending == 1
+   s->pending == 1
+   set->int_status == 0b10
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Suggested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 ---
- hw/arm/aspeed_ast27x0.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ hw/gpio/aspeed_gpio.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 761ee11657..99135edc1e 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -87,8 +87,7 @@ static const int aspeed_soc_ast2700_irqmap[] = {
-     [ASPEED_DEV_ADC]       = 130,
-     [ASPEED_DEV_XDMA]      = 5,
-     [ASPEED_DEV_EMMC]      = 15,
--    [ASPEED_DEV_GPIO]      = 11,
--    [ASPEED_DEV_GPIO_1_8V] = 130,
-+    [ASPEED_DEV_GPIO]      = 130,
-     [ASPEED_DEV_RTC]       = 13,
-     [ASPEED_DEV_TIMER1]    = 16,
-     [ASPEED_DEV_TIMER2]    = 17,
-@@ -124,7 +123,7 @@ static const int aspeed_soc_ast2700_gic128_intcmap[] = {
- static const int aspeed_soc_ast2700_gic130_intcmap[] = {
-     [ASPEED_DEV_I2C]        = 0,
-     [ASPEED_DEV_ADC]        = 16,
--    [ASPEED_DEV_GPIO_1_8V]  = 18,
-+    [ASPEED_DEV_GPIO]       = 18,
- };
+diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
+index 8725606aec..16c18ea2f7 100644
+--- a/hw/gpio/aspeed_gpio.c
++++ b/hw/gpio/aspeed_gpio.c
+@@ -641,7 +641,7 @@ static void aspeed_gpio_write_index_mode(void *opaque, hwaddr offset,
+     uint32_t pin_idx = reg_idx_number % ASPEED_GPIOS_PER_SET;
+     uint32_t group_idx = pin_idx / GPIOS_PER_GROUP;
+     uint32_t reg_value = 0;
+-    uint32_t cleared;
++    uint32_t pending = 0;
  
- /* GICINT 131 */
+     set = &s->sets[set_idx];
+     props = &agc->props[set_idx];
+@@ -703,16 +703,23 @@ static void aspeed_gpio_write_index_mode(void *opaque, hwaddr offset,
+                               FIELD_EX32(data, GPIO_INDEX_REG, INT_SENS_2));
+         set->int_sens_2 = update_value_control_source(set, set->int_sens_2,
+                                                       reg_value);
+-        /* set interrupt status */
+-        reg_value = set->int_status;
+-        reg_value = deposit32(reg_value, pin_idx, 1,
+-                              FIELD_EX32(data, GPIO_INDEX_REG, INT_STATUS));
+-        cleared = ctpop32(reg_value & set->int_status);
+-        if (s->pending && cleared) {
+-            assert(s->pending >= cleared);
+-            s->pending -= cleared;
++        /* interrupt status */
++        if (FIELD_EX32(data, GPIO_INDEX_REG, INT_STATUS)) {
++            /* pending is either 1 or 0 for a 1-bit field */
++            pending = extract32(set->int_status, pin_idx, 1);
++
++            assert(s->pending >= pending);
++
++            /* No change to s->pending if pending is 0 */
++            s->pending -= pending;
++
++            /*
++             * The write acknowledged the interrupt regardless of whether it
++             * was pending or not. The post-condition is that it mustn't be
++             * pending. Unconditionally clear the status bit.
++             */
++            set->int_status = deposit32(set->int_status, pin_idx, 1, 0);
+         }
+-        set->int_status &= ~reg_value;
+         break;
+     case gpio_reg_idx_debounce:
+         reg_value = set->debounce_1;
 -- 
 2.34.1
 
