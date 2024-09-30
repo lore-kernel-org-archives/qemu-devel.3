@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6552ECF6497
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 12:33:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4DAECF6497
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 12:35:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svFZq-0006D8-1v; Mon, 30 Sep 2024 08:32:34 -0400
+	id 1svFc3-0001CO-QH; Mon, 30 Sep 2024 08:34:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svFZX-00067q-Lo
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 08:32:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svFbo-0000hl-Ud
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 08:34:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svFZT-0003qA-Q2
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 08:32:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svFbm-0004FS-J7
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 08:34:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727699530;
+ s=mimecast20190719; t=1727699673;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=K1fxgswvmt4vnUCpv6T/e9kvIB0GgmrR3JEpc6xnhx8=;
- b=EJhIODxKt2fRtkFApGdFtEPY7Bp1T1DMaP3nBgfp0kP6HdyHQN0u8ukY8e8xSCysxZu5BP
- YT3PKUtlP8nrbRpn3qhprs0WAATRCzfN8B7ztMSuwt3GGaSE1tRKZSNBl227ZAxGptpjDC
- NOuoHyME9kMIg767c9yKPnrOsMlM72M=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aoSeuLY9UWFmpMQ+AY7vlw3aBU62b1kgsIBRGluWfww=;
+ b=csCpKTfga5N+4YELsZwLJrgZstR3t0qevB14aV3v5Rxad+6qfZdFBipkQRyyQ1e7fvClKt
+ 4guKmU19Fksh49ISHdHVE8Kqx5SoaIi3TcV0j71HnVWrXnTZp1LLy/mXYi/MiqRCn7184x
+ I/wq0nYLXqsvshYaBWbCE++hYgvXlY4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-528-O4SNn5hiNROrLgHLVIoVuA-1; Mon, 30 Sep 2024 08:32:05 -0400
-X-MC-Unique: O4SNn5hiNROrLgHLVIoVuA-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37ccc96d3e6so1640142f8f.1
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 05:32:05 -0700 (PDT)
+ us-mta-157-GJM3VuVoO7C-SYu6w0acmA-1; Mon, 30 Sep 2024 08:34:30 -0400
+X-MC-Unique: GJM3VuVoO7C-SYu6w0acmA-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-42cb33e6299so32923095e9.2
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 05:34:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727699524; x=1728304324;
+ d=1e100.net; s=20230601; t=1727699669; x=1728304469;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K1fxgswvmt4vnUCpv6T/e9kvIB0GgmrR3JEpc6xnhx8=;
- b=PlkTFzEhRHgUwbkRN1ZdL3Md97s+6Tzpn0CXxWPQGZyvC7dv4sFHDqYKXKy7EYfqVZ
- l9yhFwOv7RUGLDSGfeiVfxGaz+7L8E97qXsyGyyN6lxN5ihD8o7GS2OrBah85pYuiCr5
- 9eSPsQTVVCgmCrCG35pTu+K7SNWFn9InZoU9NgBe53Qwv1h4/29qPCYzm/OnKs1CdIdr
- 2Ejf5fE9lwk5IoGtLH8WIKVTXeRRlwcbKcg3uvO9wLVnGXg/wVSDHBiuIgrcOl18WIXD
- hT0h7kCVQRnTxcmi78TfFJswz6jJ0u9w8Y/BKCh4cKZH3suDpcEdh+Jv+hmE0/wQW1+g
- dcmA==
+ bh=aoSeuLY9UWFmpMQ+AY7vlw3aBU62b1kgsIBRGluWfww=;
+ b=diL3nFB4dLA02o1SC74500ZU5RGz7fr3VVfWLE6ET8psWl55dNaquNnURokfbj63pE
+ 2ZQ3Ht/s0PX5zT2ergdv6pfUqE+IGOLN1dceqPj8ZkwqhhFhCzA0mqgPGKmp37Vv+F4I
+ C4BmUgGOQrC5rrhw5kufX95PqjMGbHWbymYHgMpGfPD5CNpSpK42OmF7QMYUIqpROfF2
+ Ahle7lmu1Jpp0STU/NHdHhPc9o1ECkAt4OxS5NJ6yIRxUpPvI+E3xKQ7jl3GzrQ8cPPB
+ O0Gpw1sRNNpOPR/ioJARj3/8a6K5sBlYJ6LhNwNx4RqcNb9y7esv4JO3Q14xt4qkuij5
+ rNJQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU/Sy6iPztEZXnLF6ZFaaHsUcNyxSTl584guxbrr/6mmUsG2tAZFnO0Oxfqbey21pb8DmuhwLf6xHhw@nongnu.org
-X-Gm-Message-State: AOJu0Yyj4brz4iCGI6IsZ9uiTgjhb1G/vmyNBgs1aZK3yozlJysZmhrs
- jYY1agq2idfMZbTRPfyZ+zJAPHljVkFzyyNQ2D99KNSr9H5KgFUnjohXoiCVJ1biZSDCQ0I+qU5
- jTEws96EMx4rhZuVXbsNc7Gw0bs1FBozzP86cjRSc6I8ps7Y6pX2R
-X-Received: by 2002:a5d:554e:0:b0:37c:d20d:447c with SMTP id
- ffacd0b85a97d-37cd5ab758emr6956587f8f.29.1727699524336; 
- Mon, 30 Sep 2024 05:32:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFrzcQdpewlO77c2w94P9ZZJJVnxL1o6TMW4auYzRtFyc1RI42eE8oPJl1TH0YtfTKPxwJSKA==
-X-Received: by 2002:a5d:554e:0:b0:37c:d20d:447c with SMTP id
- ffacd0b85a97d-37cd5ab758emr6956572f8f.29.1727699523856; 
- Mon, 30 Sep 2024 05:32:03 -0700 (PDT)
+ AJvYcCUGxhlbJqT2K7CGUjzMoGLIpekNKYAMhH9j+E22HhwTv/83ef/lPiQEq5bmsMz7f1zHp9OgqZ2/Ct93@nongnu.org
+X-Gm-Message-State: AOJu0YwUjvEhraWxnEsgyU/1NbYGL5WycZTO/lbc4UMSSLsR1s7lauuX
+ htfEG73Om4CdU6THlg5yIV3K62mpZHNM9ymhLdLCD9ImE/cS2FpSWE/oY0DffzdJyFvax/W79zy
+ fVh+s2+m9XLBy4vvBDgMoBAS4w8eQiFBNvmhwhNTiflLqFHDdijAU
+X-Received: by 2002:a05:600c:a02:b0:42c:c003:edd8 with SMTP id
+ 5b1f17b1804b1-42f5840a6d1mr87723085e9.6.1727699669251; 
+ Mon, 30 Sep 2024 05:34:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEzBAvvZCoqg82YsY5diXu6p9StCnYziyc9ZcjsGLBE0CSFo7OFDijwoBSfw5jJk80sPqe0Zg==
+X-Received: by 2002:a05:600c:a02:b0:42c:c003:edd8 with SMTP id
+ 5b1f17b1804b1-42f5840a6d1mr87722855e9.6.1727699668839; 
+ Mon, 30 Sep 2024 05:34:28 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-48-176.web.vodafone.de.
  [109.42.48.176]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd572fbebsm8963338f8f.72.2024.09.30.05.32.02
+ ffacd0b85a97d-37cd572fa3bsm8977125f8f.70.2024.09.30.05.34.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Sep 2024 05:32:03 -0700 (PDT)
-Message-ID: <344b4f1b-8d51-4e32-8d9b-88bc71b0d3bd@redhat.com>
-Date: Mon, 30 Sep 2024 14:32:01 +0200
+ Mon, 30 Sep 2024 05:34:28 -0700 (PDT)
+Message-ID: <b92d7158-90e6-47b4-afe3-685b9ebb7b1a@redhat.com>
+Date: Mon, 30 Sep 2024 14:34:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 17/18] pc-bios/s390x: Enable multi-device boot loop
+Subject: Re: [PATCH 18/18] docs/system: Update documentation for s390x IPL
 To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
 Cc: frankja@linux.ibm.com
 References: <20240927005117.1679506-1-jrossi@linux.ibm.com>
- <20240927005117.1679506-18-jrossi@linux.ibm.com>
+ <20240927005117.1679506-19-jrossi@linux.ibm.com>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -119,10 +119,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240927005117.1679506-18-jrossi@linux.ibm.com>
+In-Reply-To: <20240927005117.1679506-19-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -150,154 +150,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 27/09/2024 02.51, jrossi@linux.ibm.com wrote:
 > From: Jared Rossi <jrossi@linux.ibm.com>
 > 
-> Allow attempts to boot from multiple IPL devices. If the first device fails to
-> IPL, select the pre-built IPLB for the next device in the boot order and attempt
-> to IPL from it. Continue this process until IPL is successful or there are no
-> devices left to try.
+> Update docs to show that s390x PC BIOS can support more than one boot device.
 > 
 > Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 > 
 > ---
-...
-> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-> index d7c457e0ed..e38eedd83a 100644
-> --- a/pc-bios/s390-ccw/main.c
-> +++ b/pc-bios/s390-ccw/main.c
-> @@ -23,7 +23,7 @@ static SubChannelId blk_schid = { .one = 1 };
->   static char loadparm_str[LOADPARM_LEN + 1];
->   QemuIplParameters qipl;
->   IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
-> -static bool have_iplb;
-> +bool have_iplb;
->   static uint16_t cutype;
->   LowCore *lowcore; /* Yes, this *is* a pointer to address 0 */
+>   docs/system/bootindex.rst         | 7 ++++---
+>   docs/system/s390x/bootdevices.rst | 9 ++++++---
+>   2 files changed, 10 insertions(+), 6 deletions(-)
+> 
+> diff --git a/docs/system/bootindex.rst b/docs/system/bootindex.rst
+> index 8b057f812f..142ae1a0a2 100644
+> --- a/docs/system/bootindex.rst
+> +++ b/docs/system/bootindex.rst
+> @@ -49,10 +49,11 @@ Limitations
+>   -----------
 >   
-> @@ -55,6 +55,12 @@ void write_iplb_location(void)
->       }
->   }
->   
-> +static void copy_qipl(void)
-> +{
-> +    QemuIplParameters *early_qipl = (QemuIplParameters *)QIPL_ADDRESS;
-> +    memcpy(&qipl, early_qipl, sizeof(QemuIplParameters));
-> +}
-> +
->   unsigned int get_loadparm_index(void)
->   {
->       return atoi(loadparm_str);
-> @@ -152,6 +158,7 @@ static void menu_setup(void)
->   
->       /* If loadparm was set to any other value, then do not enable menu */
->       if (memcmp(loadparm_str, LOADPARM_EMPTY, LOADPARM_LEN) != 0) {
-> +        menu_set_parms(qipl.qipl_flags && ~BOOT_MENU_FLAG_MASK, 0);
->           return;
->       }
->   
-> @@ -183,7 +190,10 @@ static void css_setup(void)
->   static void boot_setup(void)
->   {
->       char lpmsg[] = "LOADPARM=[________]\n";
-> -    have_iplb = store_iplb(&iplb);
-> +
-> +    if (!have_iplb) {
-> +        have_iplb = store_iplb(&iplb);
-> +    }
->   
->       if (memcmp(iplb.loadparm, "@@@@@@@@", LOADPARM_LEN) != 0) {
->           ebcdic_to_ascii((char *) iplb.loadparm, loadparm_str, LOADPARM_LEN);
-> @@ -191,6 +201,10 @@ static void boot_setup(void)
->           sclp_get_loadparm_ascii(loadparm_str);
->       }
->   
-> +    if (have_iplb) {
-> +        menu_setup();
-> +    }
-> +
->       memcpy(lpmsg + 10, loadparm_str, 8);
->       puts(lpmsg);
->   
-> @@ -208,6 +222,7 @@ static bool find_boot_device(void)
->   
->       switch (iplb.pbt) {
->       case S390_IPL_TYPE_CCW:
-> +        vdev->scsi_device_selected = false;
->           debug_print_int("device no. ", iplb.ccw.devno);
->           blk_schid.ssid = iplb.ccw.ssid & 0x3;
->           debug_print_int("ssid ", blk_schid.ssid);
-> @@ -231,15 +246,8 @@ static bool find_boot_device(void)
->   static int virtio_setup(void)
->   {
->       VDev *vdev = virtio_get_device();
-> -    QemuIplParameters *early_qipl = (QemuIplParameters *)QIPL_ADDRESS;
->       int ret;
->   
-> -    memcpy(&qipl, early_qipl, sizeof(QemuIplParameters));
-> -
-> -    if (have_iplb) {
-> -        menu_setup();
-> -    }
-> -
->       switch (vdev->senseid.cu_model) {
->       case VIRTIO_ID_NET:
->           puts("Network boot device detected");
-> @@ -281,41 +289,19 @@ static void ipl_boot_device(void)
->       }
->   }
->   
-> -/*
-> - * No boot device has been specified, so we have to scan through the
-> - * channels to find one.
-> - */
-> -static void probe_boot_device(void)
-> -{
-> -    int ssid, sch_no, ret;
-> -
-> -    for (ssid = 0; ssid < 0x3; ssid++) {
-> -        blk_schid.ssid = ssid;
-> -        for (sch_no = 0; sch_no < 0x10000; sch_no++) {
-> -            ret = is_dev_possibly_bootable(-1, sch_no);
-> -            if (ret < 0) {
-> -                break;
-> -            }
-> -            if (ret == true) {
-> -                ipl_boot_device(); /* Only returns if unsuccessful */
-> -                return;
-> -            }
-> -        }
-> -    }
-> -
-> -    puts("Could not find a suitable boot device (none specified)");
-> -}
-> -
->   void main(void)
->   {
-> +    copy_qipl();
->       sclp_setup();
->       css_setup();
-> -    boot_setup();
-> -    if (have_iplb && find_boot_device()) {
-> -        ipl_boot_device();
-> -    } else {
-> -        probe_boot_device();
-> -    }
-> +    do {
-> +        boot_setup();
-> +        if (have_iplb && find_boot_device()) {
-> +            ipl_boot_device();
-> +        }
-> +        have_iplb = load_next_iplb();
-> +    } while (have_iplb);
-> +
-> +    panic("No suitable device for IPL. Halting...");
->   
-> -    panic("Failed to IPL. Halting...");
->   }
+>   Some firmware has limitations on which devices can be considered for
+> -booting.  For instance, the PC BIOS boot specification allows only one
+> -disk to be bootable.  If boot from disk fails for some reason, the BIOS
+> +booting.  For instance, the x86 PC BIOS boot specification allows only one
+> +disk to be bootable.  If boot from disk fails for some reason, the x86 BIOS
+>   won't retry booting from other disk.  It can still try to boot from
+> -floppy or net, though.
+> +floppy or net, though. In the case of s390x PC BIOS, the BIOS will try up to
+> +8 total devices, any number of which may be disks.
 
-Can we please keep the possibility to boot from any device (i.e. the 
-probe_boot_device() stuff), in case the user did not specify any boot index 
-property at all?
+I'd just say "s390x BIOS" - or "s390x firmware", but using the term "PC" 
+with s390x sounds wrong to me ;-)
 
-  Thanks,
-   Thomas
+  Thomas
 
 
