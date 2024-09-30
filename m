@@ -4,98 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBDE6CF649D
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 10:44:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19335CF6497
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 10:46:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svDsH-0007wR-3e; Mon, 30 Sep 2024 06:43:29 -0400
+	id 1svDuX-0007Mh-6Q; Mon, 30 Sep 2024 06:45:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1svDsC-0007bR-AZ; Mon, 30 Sep 2024 06:43:25 -0400
-Received: from fhigh-a1-smtp.messagingengine.com ([103.168.172.152])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1svDuU-0007La-DW; Mon, 30 Sep 2024 06:45:46 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1svDsA-0006lJ-9x; Mon, 30 Sep 2024 06:43:24 -0400
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal
- [10.202.2.43])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 2B762114026C;
- Mon, 30 Sep 2024 06:43:19 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-03.internal (MEProxy); Mon, 30 Sep 2024 06:43:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1727692999; x=
- 1727779399; bh=+xzMrWQfA83GBXMHQQLKdN3CFWXJpwqpCOm73SLu0Io=; b=U
- QZf8HMe4GsGXvFF0wyqvCgxpU5YuJuQElCfm6YqdF3F/fy1KsMFXKTpIE2iVizPx
- fmM1Qy9hV08a4WGGCYANzlfEk+r9ab4ePRVbpunBx6hgwUK2lmd9Cj/NWjXEwnxY
- CL4DapIEcQVulU7UJbgdP64AGrbd1mzqd1U6w6k7/VhY2agXO0i0ocsbsyKp1Bcq
- qPLbT86bKijD/CM2S/rY5ckPpRNcZAxbQ95dhClv2h01W50YR4akHeKG3ALWCa7T
- vl+I+gwXdY/5hcTgFXeZN6Wzuz4Sd43eb+QRsKJCOXANDsWB+TI432lr/w93Xp5A
- SNRTM10ctPDztDcMGoPog==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; t=1727692999; x=1727779399; bh=+xzMrWQfA83GBXMHQQLKdN3CFWXJ
- pwqpCOm73SLu0Io=; b=d3fSaKZnFqVtgBm2CaywVlYhpipuEcyFx6df4Tg/Fdzs
- WV25a7lSgJklD7Ut7HDJted43zTsrwwyp7hp6ikcl36RSajoAvr4jnFgYK7pWGrZ
- kzvU+AiC6OXQ3HUiM6zmxmVYFPydwhSxoVvB3J/7oDMq9wFUK23ZgMi7hXgE26hB
- MNWMOdOoA8Q8rBU9tXZDB8gJ0b4JsrdYHHGAHOnEbkDBSpxvOh0nsOvIvNQrymIE
- n2SEwopuNYcFRmKLN5N9lsldbEahVu3vuqKm1D4Gi5pGmfJ3b5vem2KxPp5CffCK
- Y8KIIrucxx1QW+MoBcH11iusRDGVvgH2dbVhP7XJJg==
-X-ME-Sender: <xms:xYD6Zodrid-aKK0GXq5SuKL9gbg0jcvXBOYAodUuHRfvt88TycgD8g>
- <xme:xYD6ZqMuiB609WR3h5zpvCG7PXXhyhD-4VpqwNcUHEfd-xdQmyNqJE9vWiMALgzNB
- NxvKjkDRMd0i-1B_m0>
-X-ME-Received: <xmr:xYD6ZpilhqlNWPH8Q0vhC7jEm_tFAJNrZtOGPKADQdkbbWaVUlyppPezTHPC>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedgfeduucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
- rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
- htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeen
- ucfhrhhomhepmfhlrghushculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrd
- gukheqnecuggftrfgrthhtvghrnhepjefgjeefffdvuefhieefhffggfeuleehudekveej
- vedtuddugeeigeetffffjeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
- hmrghilhhfrhhomhepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthht
- ohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgsuhhstghhsehkvghrnh
- gvlhdrohhrghdprhgtphhtthhopehfohhsshesuggvfhhmrggtrhhordhithdprhgtphht
- thhopegrrhhunhdrkhhkrgesshgrmhhsuhhnghdrtghomhdprhgtphhtthhopehqvghmuh
- dqsghlohgtkhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghl
- sehnohhnghhnuhdrohhrghdprhgtphhtthhopehkrdhjvghnshgvnhesshgrmhhsuhhngh
- drtghomhdprhgtphhtthhopehithhssehirhhrvghlvghvrghnthdrughk
-X-ME-Proxy: <xmx:xYD6Zt99HuQ8pPn8W3OZQB-_gIuFpywfH7W4UFFpTVz-oS8Dabp-Vw>
- <xmx:xYD6Zku26S1jAsGzbMiR7c48BBxDBny0SbXnDUi0lQh2Prsgm5-lRg>
- <xmx:xYD6ZkGcVB6detHQoND-MUkWYOgnl9ZhyCkfUv6VL0Hurn7DR6zGsA>
- <xmx:xYD6ZjN_8spkg8ypAbpd7_kYDYxjJ-n62wneUQI8B3pm-w2ktNSBqA>
- <xmx:x4D6Zp-nNgWelMTPuooAtJc4EehpXFwEfcw2Eg6iGkqHDWatrnvSwiL3>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Sep 2024 06:43:17 -0400 (EDT)
-Date: Mon, 30 Sep 2024 12:43:16 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
- Arun Kumar <arun.kka@samsung.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Klaus Jensen <k.jensen@samsung.com>
-Subject: Re: [PATCH] hw/nvme: add knob for CTRATT.MEM
-Message-ID: <ZvqAxASMwl-Q-frr@AALNPWKJENSEN.aal.scsc.local>
-References: <20240924-add-ctratt-mem-knob-v1-1-0674de9b88b4@samsung.com>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1svDuR-00072r-K0; Mon, 30 Sep 2024 06:45:45 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XHHgB1rhQz6LD6x;
+ Mon, 30 Sep 2024 18:41:26 +0800 (CST)
+Received: from frapeml100006.china.huawei.com (unknown [7.182.85.201])
+ by mail.maildlp.com (Postfix) with ESMTPS id 1E038140155;
+ Mon, 30 Sep 2024 18:45:32 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml100006.china.huawei.com (7.182.85.201) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 30 Sep 2024 12:45:31 +0200
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Mon, 30 Sep 2024 12:45:31 +0200
+To: Nicolin Chen <nicolinc@nvidia.com>
+CC: Eric Auger <eric.auger@redhat.com>, Mostafa Saleh <smostafa@google.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, "Jason
+ Gunthorpe" <jgg@nvidia.com>, Jean-Philippe Brucker
+ <jean-philippe@linaro.org>, Moritz Fischer <mdf@kernel.org>, Michael Shavit
+ <mshavit@google.com>, "Andrea Bolognani" <abologna@redhat.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, "Peter Xu" <peterx@redhat.com>
+Subject: RE: nested-smmuv3 topic, Sep 2024
+Thread-Topic: nested-smmuv3 topic, Sep 2024
+Thread-Index: AQHa/21fMRq+vkBZBEO3I0aIbruIbrJJJAMQgABy+wCAJrBFsA==
+Date: Mon, 30 Sep 2024 10:45:31 +0000
+Message-ID: <e06e0a8a89d74d88b653d4f49d0b08fe@huawei.com>
+References: <ZtlrLJzZqpnUrZQf@Asurada-Nvidia>
+ <d0e3a60713da4ff1bb10245e789ecf24@huawei.com> <ZtoWVjmSXfQStlkF@nvidia.com>
+In-Reply-To: <ZtoWVjmSXfQStlkF@nvidia.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="JDHB02o2sbCBFCjU"
-Content-Disposition: inline
-In-Reply-To: <20240924-add-ctratt-mem-knob-v1-1-0674de9b88b4@samsung.com>
-Received-SPF: pass client-ip=103.168.172.152; envelope-from=its@irrelevant.dk;
- helo=fhigh-a1-smtp.messagingengine.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,95 +77,108 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---JDHB02o2sbCBFCjU
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Sep 24 08:35, Klaus Jensen wrote:
-> From: Klaus Jensen <k.jensen@samsung.com>
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: Thursday, September 5, 2024 9:37 PM
+> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+> Cc: Eric Auger <eric.auger@redhat.com>; Mostafa Saleh
+> <smostafa@google.com>; qemu-arm@nongnu.org; qemu-
+> devel@nongnu.org; Peter Maydell <peter.maydell@linaro.org>; Jason
+> Gunthorpe <jgg@nvidia.com>; Jean-Philippe Brucker <jean-
+> philippe@linaro.org>; Moritz Fischer <mdf@kernel.org>; Michael Shavit
+> <mshavit@google.com>; Andrea Bolognani <abologna@redhat.com>;
+> Michael S. Tsirkin <mst@redhat.com>; Peter Xu <peterx@redhat.com>
+> Subject: Re: nested-smmuv3 topic, Sep 2024
 >=20
-> Add a boolean prop (ctratt.mem) for setting CTRATT.MEM and default it to
-> unset (false) to keep existing behavior of the device intact.
+> Hi Shameer,
 >=20
-> Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-> ---
->  hw/nvme/ctrl.c | 7 ++++++-
->  hw/nvme/nvme.h | 4 ++++
->  2 files changed, 10 insertions(+), 1 deletion(-)
+> Thanks for the reply!
 >=20
-> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index f36c45931821..8556f3e61fa0 100644
-> --- a/hw/nvme/ctrl.c
-> +++ b/hw/nvme/ctrl.c
-> @@ -8492,7 +8492,11 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice =
-*pci_dev)
->      id->cntlid =3D cpu_to_le16(n->cntlid);
-> =20
->      id->oaes =3D cpu_to_le32(NVME_OAES_NS_ATTR);
-> -    ctratt =3D NVME_CTRATT_ELBAS | NVME_CTRATT_MEM;
-> +
-> +    ctratt =3D NVME_CTRATT_ELBAS;
-> +    if (n->params.ctratt.mem) {
-> +        ctratt |=3D NVME_CTRATT_MEM;
-> +    }
-> =20
->      id->rab =3D 6;
-> =20
-> @@ -8751,6 +8755,7 @@ static Property nvme_props[] =3D {
->                       false),
->      DEFINE_PROP_UINT16("mqes", NvmeCtrl, params.mqes, 0x7ff),
->      DEFINE_PROP_UINT16("spdm_port", PCIDevice, spdm_port, 0),
-> +    DEFINE_PROP_BOOL("ctratt.mem", NvmeCtrl, params.ctratt.mem, false),
->      DEFINE_PROP_END_OF_LIST(),
->  };
-> =20
-> diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-> index 781985754d0d..bd3c6ba33a67 100644
-> --- a/hw/nvme/nvme.h
-> +++ b/hw/nvme/nvme.h
-> @@ -538,6 +538,10 @@ typedef struct NvmeParams {
->      uint32_t  sriov_max_vq_per_vf;
->      uint32_t  sriov_max_vi_per_vf;
->      bool     msix_exclusive_bar;
-> +
-> +    struct {
-> +        bool mem;
-> +    } ctratt;
->  } NvmeParams;
-> =20
->  typedef struct NvmeCtrl {
+> On Thu, Sep 05, 2024 at 12:55:52PM +0000, Shameerali Kolothum Thodi
+> wrote:
+> > > The main takeaway from the discussion is to
+> > > 1) Turn the vSMMU module into a pluggable one, like intel-iommu
+> > > 2) Move the per-SMMU pxb bus and device auto-assign into libvirt
+> > >
+> > > Apart from the multi-vSMMU thing, there's basic nesting series:
+> > > 0) Keep updating to the latest kernel uAPIs to support nesting
+> >
+> > By this you mean the old HWPT based nested-smmuv3 support?
 >=20
-> ---
-> base-commit: 3245de3f3d002bc9ce2ecae61e8d86cb9e375808
-> change-id: 20240924-add-ctratt-mem-knob-ae4431251cb1
+> HWPT + vIOMMU. The for-viommu/virq branches that I shared in my
+> kernel series have those changes. Invalidations is done via the
+> vIOMMU infrastructure.
 >=20
-> Best regards,
-> --=20
-> Klaus Jensen <k.jensen@samsung.com>
->=20
->=20
+> > >
+> > > I was trying to do all these three, but apparently too ambitious.
+> > > The kernel side of work is still taking a lot of my bandwidth. So
+> > > far I had almost-zero progress on task (1) and completely-zero on
+> > > task (2).
+> > >
+> > > <-- Help Needed --->
+> > > So, I'm wondering if anyone(s) might have some extra bandwidth in
+> > > the following months helping these two tasks, either of which can
+> > > be a standalone project I think.
+> > >
+> > > For task (0), I think I can keep updating the uAPI part, although
+> > > it'd need some help for reviews, which I was hoping to occur after
+> > > Intel sends the QEMU nesting backend patches. Once we know how big
+> > > the rework is going to be, we may need to borrow some help at that
+> > > point once again..
+> >
+> > I might have some bandwidth starting October and can take a look at
+> > task 1 above. I haven't gone through the VIOMMU API model completely
+> > yet and plan to do that soon.
+>
 
-Applied to nvme-next.
+I had  an initial look at this and also had some discussions with Eric at K=
+VM
+Forum(Thanks Eric!).
 
---JDHB02o2sbCBFCjU
-Content-Type: application/pgp-signature; name="signature.asc"
+Going through the code, is it ok to introduce a "pci-bus" for the proposed
+nested SMMUv3 device which will create the link between the SMMUv3 dev=20
+and the associated root complex(pxb-pcie).
 
------BEGIN PGP SIGNATURE-----
+Something like below,
 
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmb6gMEACgkQTeGvMW1P
-Dem9TQf+MYsh+Z/D735Kh/6665Oclm8gh+Hehg0CaZCYAXm1yMHFz3Y62izDov2W
-aQOseTh/jV8Mm0VEzd02X0DA51bG+yC0G2V960hJrhau32h3y0sDMHzUj/fPbmrN
-L9UDCCFNgMhm1UXhFJ9mrhZLsIcw9qmlEy2Rzd1MwWUkfXqahVGLIfzW/kHRVQll
-D08zpCgSWUD3uaYvhC00X/+3/f2r/0+Kcaa5dij6eT6N222aJcZ3nL7VAK+uay2P
-dhh3J0BZxkH1XubJZTeWWG6k5Xai+iHxicqEUrq5ajlPlAObPv/E7C2oTYw0mRsi
-yNaPXg/jiqY1VZBk2SG3VulCEzn7dg==
-=SIqB
------END PGP SIGNATURE-----
+-device pxb-pcie,id=3Dpcie.1,bus_nr=3D2,bus=3Dpcie.0 \
+-device arm-nested-smmuv3,pci-bus=3Dpcie.1 \
+-device pcie-root-port,id=3Dpcie.port1,bus=3Dpcie.1 \
+-device vfio-pci,host=3D0000:75:00.1, bus=3Dpcie.port1 \
+...
+-device pxb-pcie,id=3Dpcie.2,bus_nr=3D8,bus=3Dpcie.0 \
+-device arm-nested-smmuv3,pci-bus=3Dpcie.2 \
+-device pcie-root-port,id=3Dpcie.port2,bus=3Dpcie.2 \
+-device vfio-pci,host=3D0000:75:00.2, bus=3Dpcie.port2 \
 
---JDHB02o2sbCBFCjU--
+This way we can invoke the pci_setup_iommu() with the=20
+right PCIBus during the nested SMMUv3 device realize fn.
+
+Please let me know, if this works/scales with all the use cases we have.
+
+Also Eric mentioned that when he initially added the support for SMMUv3,
+the initial approach was -device based solution, but later changed to machi=
+ne
+option instead based on review comments. I managed to find the link where
+this change was proposed(by Peter),
+
+https://lore.kernel.org/all/CAFEAcA_H+sraWNVhEZc48eS11n6dC9CyEwTL44tPERiPBO=
++hbw@mail.gmail.com/
+
+I hope the use cases we now have make it reasonable to introduce a "-device=
+ arm-nested-smmuv3" model.
+Please let me know if there are still objections to going this way.
+
+Thanks,
+Shameer
+
+
+
 
