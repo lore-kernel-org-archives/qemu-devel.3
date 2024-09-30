@@ -4,59 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00CB4CE8372
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 16:49:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C7BCE8372
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 16:52:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svJa9-0004Yr-Dj; Mon, 30 Sep 2024 12:49:10 -0400
+	id 1svJdW-0002lr-8a; Mon, 30 Sep 2024 12:52:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=qSCK=Q4=kaod.org=clg@ozlabs.org>)
- id 1svJa7-0004RG-F3; Mon, 30 Sep 2024 12:49:07 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=qSCK=Q4=kaod.org=clg@ozlabs.org>)
- id 1svJa3-0007On-Ef; Mon, 30 Sep 2024 12:49:07 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4XHRqD6V6Xz4wd0;
- Tue,  1 Oct 2024 02:48:56 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4XHRpm4Fqrz4wbr;
- Tue,  1 Oct 2024 02:48:32 +1000 (AEST)
-Message-ID: <2d7ef0e9-02ba-4a93-91c5-f6101c64b576@kaod.org>
-Date: Mon, 30 Sep 2024 18:48:25 +0200
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1svJdO-0002jo-Ez
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 12:52:31 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1svJdM-0007gp-N7
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 12:52:30 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-37cd26c6dd1so3538291f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 09:52:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727715147; x=1728319947; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=w7+4LyPUn3BSiPp2jA9MzLm5uuzh2ViMS9BZ6fxN0i8=;
+ b=LfNu4/FJA6qeLwC/cDbknzAyN/8akCQFVgZX+4OY1+6d+07TvrhRaDdnIa42kHsGVw
+ bDt3c3MDrDJ8I57BgOormoOaW8vx13UsxQRdKPsjNU1QFisoqAO7LKeXUyW4yWCw5dT9
+ fWSgMbeUdlDqXs328+RC67rolx8Wy9A6D+Ivmo+rUeuWaCVJj+B9Q7RQ+ILlQebnBiDg
+ pSjja2Tub2cVQiGnpZ5FJjoy4rczmQPckbqxWKOYVpvZiwrmOOFDIDnB2u7O2TIPxof2
+ 7q23IEHB8roZAjkNXaoVyEO77vdiVegdzsofbHg99vGsn/bQmSZiJxfURurzVShdsVKt
+ VViw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727715147; x=1728319947;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=w7+4LyPUn3BSiPp2jA9MzLm5uuzh2ViMS9BZ6fxN0i8=;
+ b=SrflZ2U0ALHHI6PGEsxvI+QpjmX6DU1znryt0r3Jusk7uYwUok2lXUqmptUu/DyG79
+ lxHHZ6+Z9qcnzlTd8H33vMwUMYqWRCeiPbTKIjTLcbK9KPoML+b7VNBgwivb4b9bKctf
+ ezWyRdkRnv0S5DUQFvsdl4y/OMzajGFfEqLnen3dNNYSHLnKlRay5Sjp9sQQ9U762tc2
+ 1vjJ/0Cxazxx7O5UUDLBQoDtCY2UzrezVAcK9vuTH4cjpfHqKfQCBkfL19a5lGE63ZXm
+ yoQ8k5zd+eqO0Dn5zjO5bMySM+dJST9PTxxUqu3ZQYDLmdQolYNxG6E9dYd1kcEyvp6D
+ ceSw==
+X-Gm-Message-State: AOJu0Yw5BXqSnTibZP3H6VcjFgRec4mo61kCMoTT1yTNm+yGpxxUIpQv
+ Jgnyo3eH8+6cx5pliBLDy2/9gd7lTazupyXM2Ic+l1zNRgS2BMACWOmosr1yPOU=
+X-Google-Smtp-Source: AGHT+IE4G9d3Ebu2tYa/ufpssUI5xng2Pol3VFzB369BwSoI2SdH/+Sef63AzEmYIndvs/KzD5BzNw==
+X-Received: by 2002:a5d:5708:0:b0:374:c3e4:d6b1 with SMTP id
+ ffacd0b85a97d-37cd5b04daamr10634795f8f.44.1727715146737; 
+ Mon, 30 Sep 2024 09:52:26 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a93c2777be5sm567176866b.17.2024.09.30.09.52.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 30 Sep 2024 09:52:25 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 1DCFD5F716;
+ Mon, 30 Sep 2024 17:52:24 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org,  qemu-s390x@nongnu.org,  Thomas Huth
+ <thuth@redhat.com>,  Richard Henderson <richard.henderson@linaro.org>,
+ qemu-ppc@nongnu.org,  Ilya Leoshkevich <iii@linux.ibm.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,  Eduardo Habkost
+ <eduardo@habkost.net>,  Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>,  Nicholas Piggin
+ <npiggin@gmail.com>,  David Hildenbrand <david@redhat.com>,
+ devel@lists.libvirt.org,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Zhao
+ Liu <zhao1.liu@intel.com>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,  Elisha Hollander
+ <just4now666666@gmail.com>,  qemu-stable@nongnu.org
+Subject: Re: [PATCH v2 14/18] util/timer: avoid deadlock when shutting down
+In-Reply-To: <1f749bb5-66e1-4ad2-b9d7-b31bfb7327f2@tls.msk.ru> (Michael
+ Tokarev's message of "Mon, 30 Sep 2024 19:16:45 +0300")
+References: <20240916085400.1046925-1-alex.bennee@linaro.org>
+ <20240916085400.1046925-15-alex.bennee@linaro.org>
+ <1f749bb5-66e1-4ad2-b9d7-b31bfb7327f2@tls.msk.ru>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Mon, 30 Sep 2024 17:52:24 +0100
+Message-ID: <87h69xnkxj.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 8/8] hw/gpio/aspeed: Add test case for AST2700
-To: Thomas Huth <thuth@redhat.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20240930085239.3089901-1-jamin_lin@aspeedtech.com>
- <20240930085239.3089901-9-jamin_lin@aspeedtech.com>
- <e3f31190-85fb-41c9-9ecb-eefdaa8c5c49@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <e3f31190-85fb-41c9-9ecb-eefdaa8c5c49@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=qSCK=Q4=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,158 +111,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/30/24 18:36, Thomas Huth wrote:
-> On 30/09/2024 10.52, Jamin Lin wrote:
->> Add test case to test GPIO output and input pins from A0 to D7 for AST2700.
->>
->> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
->> ---
->>   tests/qtest/aspeed_gpio-test.c | 77 ++++++++++++++++++++++++++++++++--
->>   tests/qtest/meson.build        |  3 ++
->>   2 files changed, 76 insertions(+), 4 deletions(-)
->>
->> diff --git a/tests/qtest/aspeed_gpio-test.c b/tests/qtest/aspeed_gpio-test.c
->> index d38f51d719..03b3b1c2b2 100644
->> --- a/tests/qtest/aspeed_gpio-test.c
->> +++ b/tests/qtest/aspeed_gpio-test.c
->> @@ -33,6 +33,10 @@
->>   #define GPIO_ABCD_DATA_VALUE 0x000
->>   #define GPIO_ABCD_DIRECTION  0x004
->> +/* AST2700 */
->> +#define AST2700_GPIO_BASE 0x14C0B000
->> +#define GPIOA0_CONTROL 0x180
->> +
->>   static void test_set_colocated_pins(const void *data)
->>   {
->>       QTestState *s = (QTestState *)data;
->> @@ -72,17 +76,82 @@ static void test_set_input_pins(const void *data)
->>       g_assert_cmphex(value, ==, 0xffffffff);
->>   }
->> +static void test_2700_output_pins(const void *data)
->> +{
->> +    QTestState *s = (QTestState *)data;
->> +    uint32_t offset = 0;
->> +    uint32_t value = 0;
->> +    uint32_t pin = 0;
->> +
->> +    for (char c = 'A'; c <= 'D'; c++) {
->> +        for (int i = 0; i < 8; i++) {
->> +            offset = AST2700_GPIO_BASE + GPIOA0_CONTROL + (pin * 4);
->> +
->> +            /* output direction and output hi */
->> +            qtest_writel(s, offset, 0x00000003);
->> +            value = qtest_readl(s, offset);
->> +            g_assert_cmphex(value, ==, 0x00000003);
->> +
->> +            /* output direction and output low */
->> +            qtest_writel(s, offset, 0x00000002);
->> +            value = qtest_readl(s, offset);
->> +            g_assert_cmphex(value, ==, 0x00000002);
->> +            pin++;
->> +        }
->> +    }
->> +}
->> +
->> +static void test_2700_input_pins(const void *data)
->> +{
->> +    QTestState *s = (QTestState *)data;
->> +    char name[16];
->> +    uint32_t offset = 0;
->> +    uint32_t value = 0;
->> +    uint32_t pin = 0;
->> +
->> +    for (char c = 'A'; c <= 'D'; c++) {
->> +        for (int i = 0; i < 8; i++) {
->> +            sprintf(name, "gpio%c%d", c, i);
->> +            offset = AST2700_GPIO_BASE + GPIOA0_CONTROL + (pin * 4);
->> +            /* input direction */
->> +            qtest_writel(s, offset, 0);
->> +
->> +            /* set input */
->> +            qtest_qom_set_bool(s, "/machine/soc/gpio", name, true);
->> +            value = qtest_readl(s, offset);
->> +            g_assert_cmphex(value, ==, 0x00002000);
->> +
->> +            /* clear input */
->> +            qtest_qom_set_bool(s, "/machine/soc/gpio", name, false);
->> +            value = qtest_readl(s, offset);
->> +            g_assert_cmphex(value, ==, 0);
->> +            pin++;
->> +        }
->> +    }
->> +}
-> 
-> As far as I can see, there is nothing in these two functions that requires any of the other code in this file ...
-> 
->> +
->>   int main(int argc, char **argv)
->>   {
->> +    const char *arch = qtest_get_arch();
->>       QTestState *s;
->>       int r;
->>       g_test_init(&argc, &argv, NULL);
->> -    s = qtest_init("-machine ast2600-evb");
->> -    qtest_add_data_func("/ast2600/gpio/set_colocated_pins", s,
->> -                        test_set_colocated_pins);
->> -    qtest_add_data_func("/ast2600/gpio/set_input_pins", s, test_set_input_pins);
->> +    if (strcmp(arch, "aarch64") == 0) {
->> +        s = qtest_init("-machine ast2700-evb");
->> +        qtest_add_data_func("/ast2700/gpio/input_pins",
->> +                            s, test_2700_input_pins);
->> +        qtest_add_data_func("/ast2700/gpio/out_pins", s, test_2700_output_pins);
->> +    } else {
->> +        s = qtest_init("-machine ast2600-evb");
->> +        qtest_add_data_func("/ast2600/gpio/set_colocated_pins", s,
->> +                            test_set_colocated_pins);
->> +        qtest_add_data_func("/ast2600/gpio/set_input_pins", s,
->> +                            test_set_input_pins);
->> +    }
-> 
-> ... so the more I look at this, the more I think your new test should reside in a separate file that only gets executed for aarch64, while this file here should stay for arm 32-bit. Or is there a real compelling reason for putting your code in this file here?
+Michael Tokarev <mjt@tls.msk.ru> writes:
 
-Because it is related to the Aspeed GPIO controllers. Unless we
-want to introduce a new set of test files for 64-bit Aspeed SoC
-controllers ? why not.
+> On 16.09.2024 11:53, Alex Benn=C3=A9e wrote:
+>> When we shut down a guest we disable the timers. However this can
+>> cause deadlock if the guest has queued some async work that is trying
+>> to advance system time and spins forever trying to wind time forward.
+>> Pay attention to the return code and bail early if we can't wind time
+>> forward.
+>
+> I wonder if this is another qemu-stable piece?
 
-I am ok with both options. Option 1 is simpler to implement, but
-there may be reasons to separate the tests based on architecture,
-although I'm not aware of any at the moment. Would you rather prefer
-option 2 ? How should we name the test file ?
+I guess. The code that causes this particular mode was added to 9.1.
 
+>
+> Thanks,
+>
+> /mjt
 
-Thanks,
-
-C.
-
-
-
-
-
->   Thomas
-> 
-> 
->>       r = g_test_run();
->>       qtest_quit(s);
->> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
->> index 310865e49c..292980e3ad 100644
->> --- a/tests/qtest/meson.build
->> +++ b/tests/qtest/meson.build
->> @@ -209,6 +209,8 @@ qtests_aspeed = \
->>     ['aspeed_hace-test',
->>      'aspeed_smc-test',
->>      'aspeed_gpio-test']
->> +qtests_aspeed64 = \
->> +  ['aspeed_gpio-test']
->>   qtests_stm32l4x5 = \
->>     ['stm32l4x5_exti-test',
->> @@ -247,6 +249,7 @@ qtests_aarch64 = \
->>     (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test'] : []) +  \
->>     (config_all_accel.has_key('CONFIG_TCG') and                                            \
->>      config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
->> +  (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
->>     ['arm-cpu-features',
->>      'numa-test',
->>      'boot-serial-test',
-> 
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
