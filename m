@@ -4,92 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD126CF649D
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:07:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95E4BCF6491
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:08:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svBQs-0002Gt-Qf; Mon, 30 Sep 2024 04:07:02 -0400
+	id 1svBSS-0000a2-RE; Mon, 30 Sep 2024 04:08:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svBQq-00022k-T9
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:07:01 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svBQp-0004Zw-0r
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:07:00 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a8a7cdfdd80so675769966b.0
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 01:06:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727683616; x=1728288416; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PDKmxhtETyeu/iYuY2neXJ4cpuVufAHpcFENKpKvuEg=;
- b=xVF6KTM+0CFj485bBWdgFq0qOxYKOhacrjn1HJ2nJ1V/pVC4H8398JBBgo0SRDGs6S
- vYw5ByKwjXvhdQOdFYlEQmritoE35GTfaHbBi4AIF8XCjn4sB6mjRHvuCNFDdhG/EZJz
- bLHOykP+sbslfqLzENUZQtkyz61obuKx03/M7eI/xAIq0QPsWrox7wWOplULL2qHceZh
- spFMGitNckIBz9EJUT5nTMHMYLyuJ9FQshMFlGtwaDAs3zriC1R++GTqHSJ5/1iNmCzT
- J2dSJlhhA+STFeoELbwdbz48h9DFt4HFolZ5BH0T6tj3k7a261jOpD3RvS+qPZ7Tn30G
- n0VQ==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1svBSO-0000Mb-IK
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:08:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1svBSM-0004hS-RQ
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:08:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727683713;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gLcrxA89quyj9PBJmO6u8kraN+hv3PjIw3p//FZwKrE=;
+ b=DGPuIVpmLJgpk4pSHT3agUkdLBwMAufxG65jqNbB+/ckW8q7Fc+HmANQtJPnR0YeVKhMsG
+ ZRgZgkrhdPhdvuJh394TK/Ys2uhptOj9J+f3FbX023x2AjLNi7OsYLy92Z4JspSc7pXDq2
+ 02GtIP9kEjJbqrVKW/oLipTeCvozs9c=
+Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
+ [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-663-7fojj74eMDuZn6o33oQx-A-1; Mon, 30 Sep 2024 04:08:32 -0400
+X-MC-Unique: 7fojj74eMDuZn6o33oQx-A-1
+Received: by mail-yb1-f199.google.com with SMTP id
+ 3f1490d57ef6-e25d62bfe12so5786796276.0
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 01:08:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727683616; x=1728288416;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1727683711; x=1728288511;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PDKmxhtETyeu/iYuY2neXJ4cpuVufAHpcFENKpKvuEg=;
- b=k+ovtGvfdRtdcrX5LounSyeWQ27Z8pX7w0XHj5ayKb8BEOOB3uQdT6JuJ1cU8uJbkz
- L3jcOAqxvqorJsWpClMVux8VyUNG9zk+8kxBabRjGv633maEY6l/ewOpHEZ7c3ENKUgV
- tf/o/n+KLNV4QFvnG8TWPh6oBTCznV6XdRTgpjA0fvYqOIoph3DNigs/W3S2KtgnpI4T
- q2M+K+z9xmEct/6kgvyEQYIvDaNzqewmSBXtd5mCSIJn+nEYqE86Q7CNFts5thnN94vO
- nZAFrNZ/D/onnxAW9sosrTF+Yzq8hYovoQU6PQq8FarHIwuRa+xlx4vcKNpcfTFyfsFA
- jAtg==
-X-Gm-Message-State: AOJu0YxUvjCHAAqiFggJLVPmdCd+9o3jqmJZcGJj4kcLUQuAZmJrWGjc
- ruGoZ4nhjDDMqD8qunePdJ7ljGXuyGJet5hRgbFgyTfE7vwegTGpD+EhZ3jUTmWUflfwC9etfRx
- JCaI=
-X-Google-Smtp-Source: AGHT+IHYEAXZvTMQIghMVZv8Pw1TDOBPf+W7tpo+teIiQ7939xyVfth4qR6F5Ris9NSp4atmfNQHng==
-X-Received: by 2002:a05:600c:3b93:b0:426:689b:65b7 with SMTP id
- 5b1f17b1804b1-42f58485cc1mr80571605e9.25.1727681720993; 
- Mon, 30 Sep 2024 00:35:20 -0700 (PDT)
-Received: from localhost.localdomain (186.red-88-28-13.dynamicip.rima-tde.net.
- [88.28.13.186]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd5742a23sm8324073f8f.105.2024.09.30.00.35.18
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 30 Sep 2024 00:35:20 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Jason Wang <jasowang@redhat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Anton Johansson <anjo@rev.ng>,
- Peter Maydell <peter.maydell@linaro.org>,
- Huacai Chen <chenhuacai@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Sven Schnelle <svens@stackframe.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-arm@nongnu.org,
- Aurelien Jarno <aurelien@aurel32.net>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Max Filippov <jcmvbkbc@gmail.com>, Paul Burton <paulburton@kernel.org>
-Subject: [PATCH 03/13] target/arm/ptw: Use the ld/st_endian_p() API
-Date: Mon, 30 Sep 2024 09:34:40 +0200
-Message-ID: <20240930073450.33195-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240930073450.33195-1-philmd@linaro.org>
-References: <20240930073450.33195-1-philmd@linaro.org>
+ bh=gLcrxA89quyj9PBJmO6u8kraN+hv3PjIw3p//FZwKrE=;
+ b=mM2fKQtXL87C3I1Qng2otFawUvDxeScrHvJ2jH865U6ruLRXUHUeqwMswj7dXdVDFx
+ tIKb+Kx4IliR4zDmbCrcNf3wG2E4AaspKmuxqzmdpzs59lHnJ/2JSIlurfW8H75Qb246
+ 8FP8Flicu0uU56Au8E7s61Wjx1VkEmMDotmMiX0Lqk5Rm24EJKBh1ksh2kAJIvgGhEBD
+ XZR18rYp4VmLOuZr+PXmC+uv8ZbG+rkLxPOa1U3LLSGOewge5na0fi0Lx8fzpy6HNOmC
+ bR22CcGn8baQEW9c8A3QFck3yFkf4tOGs9OwxPrE1N8lWHypglV894RlQBJlP1z+HD/u
+ DXnQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWSbKZIoOHZkwt79CAjvyrRUJ8uIfRZUpBIgU+9kgjmjz4yZSBNsIb+EqD07Vz4CmWPC/U4DcVxQKj4@nongnu.org
+X-Gm-Message-State: AOJu0YydHA8jxq2DQyVu8/gD8hUBeBUVx0B3DqPp/NiSDJbBxzzMqKgO
+ amwCgXRQxrp1ev0kHYfBTkT1zBejyGzgBxr00hsi+EsDRKj/ObEBhfptwUO1Sedcac1EaG7m6gn
+ ZUhlBD3yP3MRokUHn+agPZQm202q9rlVZDV2VY661OQ0wYBYI8lxpKQq7qIv/TJxibJi9Y/9qyI
+ oTLKmDLRNG3hH1+3lVZkDnUgxAt7Y=
+X-Received: by 2002:a05:6902:f85:b0:e25:dace:d4a8 with SMTP id
+ 3f1490d57ef6-e2604c7b5bbmr6888059276.41.1727683711453; 
+ Mon, 30 Sep 2024 01:08:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHRflEfSbdkEu8iRCF5fXida0/ho3N+UK72uEp4JsuhGeW5kZlgKMq9AMetxBZVQTR32oj11R/wLwm7ze3ievU=
+X-Received: by 2002:a05:6902:f85:b0:e25:dace:d4a8 with SMTP id
+ 3f1490d57ef6-e2604c7b5bbmr6888053276.41.1727683711006; Mon, 30 Sep 2024
+ 01:08:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240924130554.749278-1-marcandre.lureau@redhat.com>
+ <20240924130554.749278-19-marcandre.lureau@redhat.com>
+ <CAJaqyWegTNj7dBjueoV_-WVUSKYZQ=ELesmE_7PPiuWeNwoFJA@mail.gmail.com>
+In-Reply-To: <CAJaqyWegTNj7dBjueoV_-WVUSKYZQ=ELesmE_7PPiuWeNwoFJA@mail.gmail.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
+Date: Mon, 30 Sep 2024 10:08:19 +0200
+Message-ID: <CAGxU2F67P0rJLgXz-UowDgPVsE-6uyemvcefoej40qpAL97N5w@mail.gmail.com>
+Subject: Re: [PATCH v2 18/22] hw/virtio: fix -Werror=maybe-uninitialized
+ false-positive
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org, 
+ Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
+ Bin Meng <bmeng.cn@gmail.com>, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Hyman Huang <yong.huang@smartx.com>, 
+ Klaus Jensen <its@irrelevant.dk>, Alexandre Iooss <erdnaxe@crans.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ John Snow <jsnow@redhat.com>, Jesper Devantier <foss@defmacro.it>,
+ Bin Meng <bin.meng@windriver.com>, 
+ Greg Kurz <groug@kaod.org>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Fabiano Rosas <farosas@suse.de>,
+ Keith Busch <kbusch@kernel.org>, Eric Blake <eblake@redhat.com>,
+ qemu-block@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Gerd Hoffmann <kraxel@redhat.com>, 
+ Fam Zheng <fam@euphon.net>, Eduardo Habkost <eduardo@habkost.net>,
+ Hanna Reitz <hreitz@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.095,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,52 +124,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refactor to use the recently introduced ld/st_endian_p() API
-No logical change intended.
+On Fri, Sep 27, 2024 at 3:05=E2=80=AFPM Eugenio Perez Martin
+<eperezma@redhat.com> wrote:
+>
+> On Tue, Sep 24, 2024 at 3:07=E2=80=AFPM <marcandre.lureau@redhat.com> wro=
+te:
+> >
+> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> > ../hw/virtio/vhost-shadow-virtqueue.c:545:13: error: =E2=80=98r=E2=80=
+=99 may be used uninitialized [-Werror=3Dmaybe-uninitialized]
+> >
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >  hw/virtio/vhost-shadow-virtqueue.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shado=
+w-virtqueue.c
+> > index fc5f408f77..cd29cc795b 100644
+> > --- a/hw/virtio/vhost-shadow-virtqueue.c
+> > +++ b/hw/virtio/vhost-shadow-virtqueue.c
+> > @@ -526,7 +526,7 @@ static void vhost_svq_flush(VhostShadowVirtqueue *s=
+vq,
+> >  size_t vhost_svq_poll(VhostShadowVirtqueue *svq, size_t num)
+> >  {
+> >      size_t len =3D 0;
+> > -    uint32_t r;
+> > +    uint32_t r =3D 0;
+> >
+>
+> I understand this is a bulk changeset to avoid the warning, but does
+> this mean we cannot use pointer arguments to just return information
+> anymore? vhost_svq_get_buf just write to it, it never reads it.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/arm/ptw.c | 19 ++++---------------
- 1 file changed, 4 insertions(+), 15 deletions(-)
+Sure we can, the problem here is that vhost_svq_get_buf() might return
+without having written there (in the error path).
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index defd6b84de..a1a6b1fec3 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -699,11 +699,7 @@ static uint64_t arm_ldq_ptw(CPUARMState *env, S1Translate *ptw,
-             data = le64_to_cpu(data);
-         }
- #else
--        if (ptw->out_be) {
--            data = ldq_be_p(host);
--        } else {
--            data = ldq_le_p(host);
--        }
-+        data = ldq_endian_p(ptw->out_be, host);
- #endif
-     } else {
-         /* Page tables are in MMIO. */
-@@ -860,16 +856,9 @@ static uint64_t arm_casq_ptw(CPUARMState *env, uint64_t old_val,
-     if (!locked) {
-         bql_lock();
-     }
--    if (ptw->out_be) {
--        cur_val = ldq_be_p(host);
--        if (cur_val == old_val) {
--            stq_be_p(host, new_val);
--        }
--    } else {
--        cur_val = ldq_le_p(host);
--        if (cur_val == old_val) {
--            stq_le_p(host, new_val);
--        }
-+    cur_val = ldq_endian_p(ptw->out_be, host);
-+    if (cur_val == old_val) {
-+        stq_endian_p(ptw->out_be, host, new_val);
-     }
-     if (!locked) {
-         bql_unlock();
--- 
-2.45.2
+>
+> If you post a second version and it is convenient for you, it would be
+> useful to move it inside of the while.
+
+I think it is the only way, if we keep it out we have the problem from
+the second loop on (always in the error path).
+
+>
+> Any way we solve it,
+>
+> Acked-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+>
+> >      while (num--) {
+> >          int64_t start_us =3D g_get_monotonic_time();
+> > --
+> > 2.45.2.827.g557ae147e6
+> >
+>
 
 
