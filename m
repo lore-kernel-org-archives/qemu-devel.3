@@ -4,75 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6022CCE8374
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 16:48:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00CB4CE8372
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 16:49:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svJYg-0001kr-7e; Mon, 30 Sep 2024 12:47:38 -0400
+	id 1svJa9-0004Yr-Dj; Mon, 30 Sep 2024 12:49:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svJYe-0001kN-Ss
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 12:47:36 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svJYd-000791-0F
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 12:47:36 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5c5b9bf9d8bso3310601a12.1
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 09:47:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727714853; x=1728319653; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BRHZ8tXK+So2K4ER9/3su8ZchMoCflm2dMQ0P2QDrYk=;
- b=BUYaGtwl7pImzYfx6uh7Iu0TGfxqzBJRA/pqtTx9ULy1Ghf68gDivcXNa3tuEJyM6b
- m3Oy2uciX8ZUQIE35Es7CjMu7z0gZNbi6Gou5KZKTxQQwVCDEBaz7Y3Ix154JxDv3KGA
- roXw6ntDQ+GcWM+XJBQzqIsNn/S4rgA09tlE117CGgdkZx5F7JPUyQm07QmPXpAav4Mc
- +HZL22dOqVY8wUJX/m4zvS0MHUkzNZYE2fxJ/dD+5dBk0h3n8uBju7oL+p+suusRxI3e
- lUWYWbsLOePwj7jlqZqg7umM+/3PKVb8NmN9rWWvqA/fIpGM5EPlAnJaN7Xb6VCC0tjt
- cwag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727714853; x=1728319653;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BRHZ8tXK+So2K4ER9/3su8ZchMoCflm2dMQ0P2QDrYk=;
- b=otHSwbgo4djaKhBqEZ5cdjcRizmD6QonPQ1cafXstdgNOhUNlna+3vz8Mq/A+Pl6Re
- wu3g1mmnmmlvIBiLat4xOVP64iwDT//KUueJooyt13JbP9fHVem7O+yGiOuEQWovgpdK
- BHM3gi8ad4/7t8T36YH/O4Dw/rc5pclYSIk4hPc4nhLyktcElWruN2XyClwQPooC2k+G
- 0J8pG+i3GOdJlijx02CsnrXTnzZIJEFYox5JvoSsLGzVYxHcB43EPS2/6XRJqcYRLMsv
- 6G8g1suz6nFO82XHBTCHanq1XgZK4dOnDDA6YAFsM/LdjGY4uRbGDPKNePL8E5Fg7FW6
- k5lA==
-X-Gm-Message-State: AOJu0Yw1/5/YsjC1cU++QETuGArjFga7bnh0wnI/LcORJoZsquwq2QZz
- vIC+UpKGUvarirAEmgNX0ubkknvJvBAZXyJ8MCbg/sxASOmm5WdMaUJ5/SPnDjZOMkFpSbQ+8uH
- w9MJPd5oLtvGbWVR+c1pqtKRJ+vIxTC1DbZR9Jw==
-X-Google-Smtp-Source: AGHT+IFDfJ1Vj57zUyr8tesDER+152wQ96Tph7WYtvx/I0USBN5m7Wg+zWTXHHvhDkpIyjKMDBeIJ0gtRfRrSNxargI=
-X-Received: by 2002:a05:6402:51c9:b0:5c8:84a8:5170 with SMTP id
- 4fb4d7f45d1cf-5c884a852e8mr12766690a12.34.1727714852738; Mon, 30 Sep 2024
- 09:47:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <SRS0=qSCK=Q4=kaod.org=clg@ozlabs.org>)
+ id 1svJa7-0004RG-F3; Mon, 30 Sep 2024 12:49:07 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=qSCK=Q4=kaod.org=clg@ozlabs.org>)
+ id 1svJa3-0007On-Ef; Mon, 30 Sep 2024 12:49:07 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4XHRqD6V6Xz4wd0;
+ Tue,  1 Oct 2024 02:48:56 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4XHRpm4Fqrz4wbr;
+ Tue,  1 Oct 2024 02:48:32 +1000 (AEST)
+Message-ID: <2d7ef0e9-02ba-4a93-91c5-f6101c64b576@kaod.org>
+Date: Mon, 30 Sep 2024 18:48:25 +0200
 MIME-Version: 1.0
-References: <20240925111029.24082-1-thuth@redhat.com>
- <20240925111029.24082-3-thuth@redhat.com>
-In-Reply-To: <20240925111029.24082-3-thuth@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 30 Sep 2024 17:47:21 +0100
-Message-ID: <CAFEAcA-rkkxVRsWJqHOeA2cqSg5hnVqvH4-iZRSadxKmfey9nw@mail.gmail.com>
-Subject: Re: [PULL 02/44] tests/functional: Convert the vexpressa9 Avocado test
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 8/8] hw/gpio/aspeed: Add test case for AST2700
+To: Thomas Huth <thuth@redhat.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20240930085239.3089901-1-jamin_lin@aspeedtech.com>
+ <20240930085239.3089901-9-jamin_lin@aspeedtech.com>
+ <e3f31190-85fb-41c9-9ecb-eefdaa8c5c49@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <e3f31190-85fb-41c9-9ecb-eefdaa8c5c49@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=qSCK=Q4=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,34 +72,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 25 Sept 2024 at 12:10, Thomas Huth <thuth@redhat.com> wrote:
->
-> Use the new launch_kernel function to convert this test in a simple way.
->
-> Message-ID: <20240919185749.71222-3-thuth@redhat.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  MAINTAINERS                           |  1 +
->  tests/avocado/boot_linux_console.py   |  9 ---------
->  tests/functional/meson.build          |  1 +
->  tests/functional/test_arm_vexpress.py | 26 ++++++++++++++++++++++++++
->  4 files changed, 28 insertions(+), 9 deletions(-)
->  create mode 100755 tests/functional/test_arm_vexpress.py
+On 9/30/24 18:36, Thomas Huth wrote:
+> On 30/09/2024 10.52, Jamin Lin wrote:
+>> Add test case to test GPIO output and input pins from A0 to D7 for AST2700.
+>>
+>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>> ---
+>>   tests/qtest/aspeed_gpio-test.c | 77 ++++++++++++++++++++++++++++++++--
+>>   tests/qtest/meson.build        |  3 ++
+>>   2 files changed, 76 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/tests/qtest/aspeed_gpio-test.c b/tests/qtest/aspeed_gpio-test.c
+>> index d38f51d719..03b3b1c2b2 100644
+>> --- a/tests/qtest/aspeed_gpio-test.c
+>> +++ b/tests/qtest/aspeed_gpio-test.c
+>> @@ -33,6 +33,10 @@
+>>   #define GPIO_ABCD_DATA_VALUE 0x000
+>>   #define GPIO_ABCD_DIRECTION  0x004
+>> +/* AST2700 */
+>> +#define AST2700_GPIO_BASE 0x14C0B000
+>> +#define GPIOA0_CONTROL 0x180
+>> +
+>>   static void test_set_colocated_pins(const void *data)
+>>   {
+>>       QTestState *s = (QTestState *)data;
+>> @@ -72,17 +76,82 @@ static void test_set_input_pins(const void *data)
+>>       g_assert_cmphex(value, ==, 0xffffffff);
+>>   }
+>> +static void test_2700_output_pins(const void *data)
+>> +{
+>> +    QTestState *s = (QTestState *)data;
+>> +    uint32_t offset = 0;
+>> +    uint32_t value = 0;
+>> +    uint32_t pin = 0;
+>> +
+>> +    for (char c = 'A'; c <= 'D'; c++) {
+>> +        for (int i = 0; i < 8; i++) {
+>> +            offset = AST2700_GPIO_BASE + GPIOA0_CONTROL + (pin * 4);
+>> +
+>> +            /* output direction and output hi */
+>> +            qtest_writel(s, offset, 0x00000003);
+>> +            value = qtest_readl(s, offset);
+>> +            g_assert_cmphex(value, ==, 0x00000003);
+>> +
+>> +            /* output direction and output low */
+>> +            qtest_writel(s, offset, 0x00000002);
+>> +            value = qtest_readl(s, offset);
+>> +            g_assert_cmphex(value, ==, 0x00000002);
+>> +            pin++;
+>> +        }
+>> +    }
+>> +}
+>> +
+>> +static void test_2700_input_pins(const void *data)
+>> +{
+>> +    QTestState *s = (QTestState *)data;
+>> +    char name[16];
+>> +    uint32_t offset = 0;
+>> +    uint32_t value = 0;
+>> +    uint32_t pin = 0;
+>> +
+>> +    for (char c = 'A'; c <= 'D'; c++) {
+>> +        for (int i = 0; i < 8; i++) {
+>> +            sprintf(name, "gpio%c%d", c, i);
+>> +            offset = AST2700_GPIO_BASE + GPIOA0_CONTROL + (pin * 4);
+>> +            /* input direction */
+>> +            qtest_writel(s, offset, 0);
+>> +
+>> +            /* set input */
+>> +            qtest_qom_set_bool(s, "/machine/soc/gpio", name, true);
+>> +            value = qtest_readl(s, offset);
+>> +            g_assert_cmphex(value, ==, 0x00002000);
+>> +
+>> +            /* clear input */
+>> +            qtest_qom_set_bool(s, "/machine/soc/gpio", name, false);
+>> +            value = qtest_readl(s, offset);
+>> +            g_assert_cmphex(value, ==, 0);
+>> +            pin++;
+>> +        }
+>> +    }
+>> +}
+> 
+> As far as I can see, there is nothing in these two functions that requires any of the other code in this file ...
+> 
+>> +
+>>   int main(int argc, char **argv)
+>>   {
+>> +    const char *arch = qtest_get_arch();
+>>       QTestState *s;
+>>       int r;
+>>       g_test_init(&argc, &argv, NULL);
+>> -    s = qtest_init("-machine ast2600-evb");
+>> -    qtest_add_data_func("/ast2600/gpio/set_colocated_pins", s,
+>> -                        test_set_colocated_pins);
+>> -    qtest_add_data_func("/ast2600/gpio/set_input_pins", s, test_set_input_pins);
+>> +    if (strcmp(arch, "aarch64") == 0) {
+>> +        s = qtest_init("-machine ast2700-evb");
+>> +        qtest_add_data_func("/ast2700/gpio/input_pins",
+>> +                            s, test_2700_input_pins);
+>> +        qtest_add_data_func("/ast2700/gpio/out_pins", s, test_2700_output_pins);
+>> +    } else {
+>> +        s = qtest_init("-machine ast2600-evb");
+>> +        qtest_add_data_func("/ast2600/gpio/set_colocated_pins", s,
+>> +                            test_set_colocated_pins);
+>> +        qtest_add_data_func("/ast2600/gpio/set_input_pins", s,
+>> +                            test_set_input_pins);
+>> +    }
+> 
+> ... so the more I look at this, the more I think your new test should reside in a separate file that only gets executed for aarch64, while this file here should stay for arm 32-bit. Or is there a real compelling reason for putting your code in this file here?
 
-Hi. This sequence of patches changed us from
-getting our CI images for the advent calendar tests
-from URLs like
- https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day16.tar.xz
-to ones like
- https://www.qemu-advent-calendar.org/2018/download/day16.tar.xz
+Because it is related to the Aspeed GPIO controllers. Unless we
+want to introduce a new set of test files for 64-bit Aspeed SoC
+controllers ? why not.
 
-This new site has just stopped working: download
-attempts return a 503. This breaks our CI:
-https://gitlab.com/qemu-project/qemu/-/jobs/7955655569
+I am ok with both options. Option 1 is simpler to implement, but
+there may be reasons to separate the tests based on architecture,
+although I'm not aware of any at the moment. Would you rather prefer
+option 2 ? How should we name the test file ?
 
-Should we switch back?
 
-thanks
--- PMM
+Thanks,
+
+C.
+
+
+
+
+
+>   Thomas
+> 
+> 
+>>       r = g_test_run();
+>>       qtest_quit(s);
+>> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+>> index 310865e49c..292980e3ad 100644
+>> --- a/tests/qtest/meson.build
+>> +++ b/tests/qtest/meson.build
+>> @@ -209,6 +209,8 @@ qtests_aspeed = \
+>>     ['aspeed_hace-test',
+>>      'aspeed_smc-test',
+>>      'aspeed_gpio-test']
+>> +qtests_aspeed64 = \
+>> +  ['aspeed_gpio-test']
+>>   qtests_stm32l4x5 = \
+>>     ['stm32l4x5_exti-test',
+>> @@ -247,6 +249,7 @@ qtests_aarch64 = \
+>>     (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test'] : []) +  \
+>>     (config_all_accel.has_key('CONFIG_TCG') and                                            \
+>>      config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
+>> +  (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
+>>     ['arm-cpu-features',
+>>      'numa-test',
+>>      'boot-serial-test',
+> 
+
 
