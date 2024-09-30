@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 461A3CF6491
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:01:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2158ECF6491
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:02:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svBL5-0005h7-K2; Mon, 30 Sep 2024 04:01:03 -0400
+	id 1svBLf-0006Y7-2D; Mon, 30 Sep 2024 04:01:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svBL3-0005dp-6P
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:01:01 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svBLO-0006A2-U0
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:01:33 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svBL1-0003g6-AM
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:01:00 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5c5bca6603aso4750296a12.1
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 01:00:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svBLN-0003i2-AH
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:01:22 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-5398e53ca28so1296609e87.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 01:01:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727683257; x=1728288057; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727683279; x=1728288079; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Dt537SuyKX8S7JgDRKIhn/HH1R6QVwglbjLetvuqYf0=;
- b=G/jtgVKdVuHgxz/nrLFTiQ/HbQ6BT5IUG3YYGsV2h99SldLxswUi4DFD3M2akT1cSD
- +vfiEtyCWSy6qKVenTxN0pgH2IQjOGVXi1aP+HjAqGWt2ZFexf1lT3QqCE5i0PYPiZJg
- qodHsu0v8uou18Q7VHiRsepMCtfpoo9kym6ihfTVvm4doM8n39XIjy+aHe58v30L93PI
- fQyp5RCfTYHej2USARxCD7beiSreTVLPTqXttvrNtw0y7TNts8P/BMgUuw8JUokBEyWK
- 4X/VGFr9+x15XeLVJg+fQNg/XwQxPqOgfW58lT8njEBq8ntoJ/Ta+k/8krjFN4YnhVxJ
- EAZA==
+ bh=qgFNx5loGg07bkVRCAPUaZ+t66SDahiEcwbYBeR9pKk=;
+ b=OcrhSLLdI4UVTTegTKcFLkH0S9eazbZxrXRy5HY1H1dHikwJ6dyfEssgYEmmGLroA7
+ fGzoUJwWP1L+QG/mkERMnA6l+O+FU+zq8Ux4/fCq56Y5m+aazUaSVVMy8+u6kE8PKBA9
+ qn6qNrsRbaIXkd8at07+uGWqzFqeS+VapKWX3vIf75kRs1YbFIwHiEz/ORi/x4dqMvDp
+ okNse1YW0LJKq3PG5V6kj+sb754EeKnZcH6zZXoOk0r1kjALfq1X4lb+CZyoG1gwFfRY
+ 5TPx3RdXIT4HQgl1X8gPtjxXpLFt19ES7lEo/KPFi48RP7wAl9AHanx9qwa0qF1ge3vQ
+ vXTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727683257; x=1728288057;
+ d=1e100.net; s=20230601; t=1727683279; x=1728288079;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Dt537SuyKX8S7JgDRKIhn/HH1R6QVwglbjLetvuqYf0=;
- b=hgIcueZcPXnD2tberq5jlEl+xfauoFIJKjVnFq6jkadPcSzTxJPTGWEFXy7QDzmlwH
- 1cZkf8BpuuFNHOk0iYRUji9pck23CUshW7hz+to8xlyNaTLusXkLqv8JrDAkL0TMcAj6
- M7Gm7Us96vkCn4f4u9SqeUxIWnGubfA/AI0FVGT92sdORftMbmyK2HO9JUXa3GTMshmF
- 9MHRt73gtQoanRkxc59X1ggQPFd1CTTjs9qBcnZjJaSLYsg/9EW0R9vjwstv48/hoUyn
- WdSXToHIdIZ13nDYalANgfJPxCp25xfVCNXuE2l+TSkhIto9kzEgp4Q+60KznOGoMW0w
- fkmg==
-X-Gm-Message-State: AOJu0YwaXhptLO1v8+P/XsfvTgyOKkoCwwR/NxTzdzZUtWdC6QkQVbaH
- zrrKKOzeJCxjCcxZegUYzPnuCfqgfB5IdzdakB52y3v7pQhBYa3S9/99oNvvefYMmb7K5zBejPq
- UbaE=
-X-Google-Smtp-Source: AGHT+IFFqjO07Ex6VXaJnBp0fLXrztRoPGuiC1qPJjA4ACoyyr6faMY/cMGoyF46pDMcCkFmfDJSuA==
-X-Received: by 2002:a05:600c:310e:b0:42c:c28c:e477 with SMTP id
- 5b1f17b1804b1-42f58488779mr69873155e9.23.1727681705036; 
- Mon, 30 Sep 2024 00:35:05 -0700 (PDT)
+ bh=qgFNx5loGg07bkVRCAPUaZ+t66SDahiEcwbYBeR9pKk=;
+ b=fTh9ExoiIZSSy4AhEfMbtc1vNVXBf2Ek6gp3Vft4DhJDaw60RBjfG4Qpp77iAGWcUp
+ UU0sRfeg0d0dBE2HoqDWlbuMC52a5obvA/jg1MtpUGYhgRO7kO/wSiTL17RGcaF3ATy7
+ OSWkeZawis8aypo8P4VNjZ512evFaLQszlbU5aBNVkYEiUOJnEJxB/B+AC6bF+80cBah
+ E4ZVOYmHdw2Ppqp8oVwByaBcaD2kNO7i6RrBVs2VxpUVZNDJGpTmaRYHGmzAmS9FMG/8
+ oGDDvSn9HpnkDs4gDi5Q/nGxhQSLEDLgu9aB9ANp/CdaMxbBRsVJIArC9T1Aq77Kq87b
+ eZbQ==
+X-Gm-Message-State: AOJu0Yx+MJ4eZC6YOhPoqNLobRpCZmWeiJNrMCY96WupR+tKwcgbr/KZ
+ auAOzT6fejY7TSMWFtc155HngEMzHlqzzemP9QgndJ6CZLKyfozvuvNS1c7VVxa07LZIrcV56nN
+ C8ys=
+X-Google-Smtp-Source: AGHT+IFvV+g71WyrICzKtY9MUw0GkbE1ssnGCcVYI5UdtoKHuB2gzrZM3sxXfntbw5eYtIk8XvapDw==
+X-Received: by 2002:adf:8bd3:0:b0:37c:cd0d:3433 with SMTP id
+ ffacd0b85a97d-37cd5a9e0f3mr6507614f8f.29.1727681802055; 
+ Mon, 30 Sep 2024 00:36:42 -0700 (PDT)
 Received: from localhost.localdomain (186.red-88-28-13.dynamicip.rima-tde.net.
  [88.28.13.186]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f57debe5csm94870215e9.24.2024.09.30.00.35.01
+ ffacd0b85a97d-37cd57427c6sm8356329f8f.96.2024.09.30.00.36.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 30 Sep 2024 00:35:04 -0700 (PDT)
+ Mon, 30 Sep 2024 00:36:41 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
@@ -73,23 +73,23 @@ Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
  Aurelien Jarno <aurelien@aurel32.net>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Max Filippov <jcmvbkbc@gmail.com>, Paul Burton <paulburton@kernel.org>
-Subject: [PATCH 01/13] qemu/bswap: Introduce ld/st_endian_p() API
-Date: Mon, 30 Sep 2024 09:34:38 +0200
-Message-ID: <20240930073450.33195-2-philmd@linaro.org>
+Subject: [PATCH 13/13] hw/net/tulip: Use ld/st_endian_pci_dma() API
+Date: Mon, 30 Sep 2024 09:34:50 +0200
+Message-ID: <20240930073450.33195-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240930073450.33195-1-philmd@linaro.org>
 References: <20240930073450.33195-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,44 +105,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce the ld/st_endian_p() API, which takes an extra
-boolean argument to dispatch to ld/st_{be,le}_p() methods.
+Refactor to use the recently introduced ld/st_endian_pci_dma()
+API. No logical change intended.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
-TODO: Update docstring regexp
----
- include/qemu/bswap.h | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ hw/net/tulip.c | 32 ++++++++++----------------------
+ 1 file changed, 10 insertions(+), 22 deletions(-)
 
-diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
-index ad22910a5d..ec813a756d 100644
---- a/include/qemu/bswap.h
-+++ b/include/qemu/bswap.h
-@@ -433,4 +433,23 @@ DO_STN_LDN_P(be)
- #undef le_bswaps
- #undef be_bswaps
+diff --git a/hw/net/tulip.c b/hw/net/tulip.c
+index 9df3e17162..6c67958da7 100644
+--- a/hw/net/tulip.c
++++ b/hw/net/tulip.c
+@@ -71,36 +71,24 @@ static void tulip_desc_read(TULIPState *s, hwaddr p,
+         struct tulip_descriptor *desc)
+ {
+     const MemTxAttrs attrs = { .memory = true };
++    bool use_big_endian = s->csr[0] & CSR0_DBO;
  
-+#define lduw_endian_p(big_endian, p) \
-+                     (big_endian) ? lduw_be_p(p) : lduw_le_p(p)
-+#define ldsw_endian_p(big_endian, p) \
-+                     (big_endian) ? ldsw_be_p(p) : ldsw_be_p(p)
-+#define ldl_endian_p(big_endian, p) \
-+                    (big_endian) ? ldl_be_p(p) : ldl_le_p(p)
-+#define ldq_endian_p(big_endian, p) \
-+                    (big_endian) ? ldq_be_p(p) : ldq_le_p(p)
-+#define stw_endian_p(big_endian, p, v) \
-+                    (big_endian) ? stw_be_p(p, v) : stw_le_p(p, v)
-+#define stl_endian_p(big_endian, p, v) \
-+                    (big_endian) ? stl_be_p(p, v) : stl_le_p(p, v)
-+#define stq_endian_p(big_endian, p, v) \
-+                    (big_endian) ? stq_be_p(p, v) : stq_le_p(p, v)
-+#define ldn_endian_p(big_endian, p, sz) \
-+                     (big_endian) ? ldn_be_p(p, sz) : ldn_le_p(p, sz)
-+#define stn_endian_p(big_endian, p, sz, v) \
-+                    (big_endian) ? stn_be_p(p, sz, v) : stn_le_p(p, sz, v)
-+
- #endif /* BSWAP_H */
+-    if (s->csr[0] & CSR0_DBO) {
+-        ldl_be_pci_dma(&s->dev, p, &desc->status, attrs);
+-        ldl_be_pci_dma(&s->dev, p + 4, &desc->control, attrs);
+-        ldl_be_pci_dma(&s->dev, p + 8, &desc->buf_addr1, attrs);
+-        ldl_be_pci_dma(&s->dev, p + 12, &desc->buf_addr2, attrs);
+-    } else {
+-        ldl_le_pci_dma(&s->dev, p, &desc->status, attrs);
+-        ldl_le_pci_dma(&s->dev, p + 4, &desc->control, attrs);
+-        ldl_le_pci_dma(&s->dev, p + 8, &desc->buf_addr1, attrs);
+-        ldl_le_pci_dma(&s->dev, p + 12, &desc->buf_addr2, attrs);
+-    }
++    ldl_endian_pci_dma(use_big_endian, &s->dev, p, &desc->status, attrs);
++    ldl_endian_pci_dma(use_big_endian, &s->dev, p + 4, &desc->control, attrs);
++    ldl_endian_pci_dma(use_big_endian, &s->dev, p + 8, &desc->buf_addr1, attrs);
++    ldl_endian_pci_dma(use_big_endian, &s->dev, p + 12, &desc->buf_addr2, attrs);
+ }
+ 
+ static void tulip_desc_write(TULIPState *s, hwaddr p,
+         struct tulip_descriptor *desc)
+ {
+     const MemTxAttrs attrs = { .memory = true };
++    bool use_big_endian = s->csr[0] & CSR0_DBO;
+ 
+-    if (s->csr[0] & CSR0_DBO) {
+-        stl_be_pci_dma(&s->dev, p, desc->status, attrs);
+-        stl_be_pci_dma(&s->dev, p + 4, desc->control, attrs);
+-        stl_be_pci_dma(&s->dev, p + 8, desc->buf_addr1, attrs);
+-        stl_be_pci_dma(&s->dev, p + 12, desc->buf_addr2, attrs);
+-    } else {
+-        stl_le_pci_dma(&s->dev, p, desc->status, attrs);
+-        stl_le_pci_dma(&s->dev, p + 4, desc->control, attrs);
+-        stl_le_pci_dma(&s->dev, p + 8, desc->buf_addr1, attrs);
+-        stl_le_pci_dma(&s->dev, p + 12, desc->buf_addr2, attrs);
+-    }
++    stl_endian_pci_dma(use_big_endian, &s->dev, p, desc->status, attrs);
++    stl_endian_pci_dma(use_big_endian, &s->dev, p + 4, desc->control, attrs);
++    stl_endian_pci_dma(use_big_endian, &s->dev, p + 8, desc->buf_addr1, attrs);
++    stl_endian_pci_dma(use_big_endian, &s->dev, p + 12, desc->buf_addr2, attrs);
+ }
+ 
+ static void tulip_update_int(TULIPState *s)
 -- 
 2.45.2
 
