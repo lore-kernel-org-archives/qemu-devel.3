@@ -4,138 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7642CF6497
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 11:35:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23BFACF6499
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 11:38:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svEgQ-0000Qi-1Z; Mon, 30 Sep 2024 07:35:18 -0400
+	id 1svEiw-00050r-Bf; Mon, 30 Sep 2024 07:37:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svEgL-0000Nq-CC
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 07:35:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <imbrenda@linux.ibm.com>)
+ id 1svEiu-000506-FW; Mon, 30 Sep 2024 07:37:52 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svEgI-00057g-Fu
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 07:35:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727696109;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=DlxVc26i/wYXVR3w+gAXY72xSur4XL/SRO1x/TFQAZ4=;
- b=aqXA7dl9DcMc1tJQXAIW+GmPGznZD+o8Ol4CseOB7yg0wCSE35QGKdO9tBEM9L+GiGguxw
- ZWvGao1wvL3cnV4mQodtIEbGBGW7CAn+AkUc1t48hKhW35ubtgCTAnBjUMsar1TFXQ9cug
- xoFWTfqwnERWY32ZDlFAl4ea1q085y8=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-132-DNgT1p36PUKiHkFFLZgDFg-1; Mon, 30 Sep 2024 07:35:05 -0400
-X-MC-Unique: DNgT1p36PUKiHkFFLZgDFg-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7acca6cbe87so115942185a.1
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 04:35:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727696105; x=1728300905;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DlxVc26i/wYXVR3w+gAXY72xSur4XL/SRO1x/TFQAZ4=;
- b=TpIMdJZ1NPTnLhzVvQoCfLqxk7a238djIOVY3M+OC+rqp3Z09yJ5q/jHk2YaRGUX/t
- SJm3rJGIF6CiQ/z3PoPPUAQZEUt1cIPsAH4Ax8ocW4uR7ylROldrdqT67SSOTXW+Ti1S
- N1Qf2XwngXo8PJHjYNbV7BugP73db21KF8NNp4jDcMM8q18DaBDbHF1OXbqVZorp64R9
- qI/PABRVEsKWxORBh6JqT5fy40M4H3sDttDzq4XU3rbfE8QpWM7bs0kyBHn5ly5/OY6Y
- XvYvTnAvFYe4EDB9tBhb1OFPtBWIDH4x5Dg1UiXWc6x7R2zroHKvF4NWoVtAr5oTNjKa
- tGCQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVX16ypkXacsBpBHbais0GNdpzfWjDN0dgI8XZvyr0E4Fk+xn11uPCyunpQRACmIm4qR40XoJhH5XcT@nongnu.org
-X-Gm-Message-State: AOJu0YxbINdcSejqcrzQMUsbvI7PVvc7sfGO63DJSn9qBrQMIG+Y0vgB
- dIYD/N/MEOAcmyUbTl3c5xWVMJJjaftgvNWpC1v/oCHTRP6cszQp9Yusfl1UORBiA1+rHk8zRa5
- 0633iv8qKpEYScMOHj7u3LQ/EFkFR0BAiGNcRAg2jebcvl7/IGUR3
-X-Received: by 2002:a05:620a:4005:b0:7ac:9b07:dbd9 with SMTP id
- af79cd13be357-7ae378d7a50mr1822074385a.65.1727696105055; 
- Mon, 30 Sep 2024 04:35:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGE308ljj+QT7iuqrMOMeoS3uor7FrteRBCehrMS+Gtjd8PV9UqqMPFRE7Q2OQQolLPirM0UQ==
-X-Received: by 2002:a05:620a:4005:b0:7ac:9b07:dbd9 with SMTP id
- af79cd13be357-7ae378d7a50mr1822071285a.65.1727696104639; 
- Mon, 30 Sep 2024 04:35:04 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-48-176.web.vodafone.de.
- [109.42.48.176]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7ae377c0a14sm404026685a.7.2024.09.30.04.35.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Sep 2024 04:35:04 -0700 (PDT)
-Message-ID: <c09f8552-7362-4fb8-a072-37dd03dbdfa5@redhat.com>
-Date: Mon, 30 Sep 2024 13:35:00 +0200
+ (Exim 4.90_1) (envelope-from <imbrenda@linux.ibm.com>)
+ id 1svEis-0005VX-A5; Mon, 30 Sep 2024 07:37:52 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48U8nZLW015089;
+ Mon, 30 Sep 2024 11:37:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date
+ :from:to:cc:subject:message-id:in-reply-to:references
+ :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
+ Lz4tpttVp4u/YGed44zx34u+ZGyOlM2zE1pRTdGByK4=; b=dqkpFprZS00wGNSa
+ E6DGyKjsJxe4nLGM3nN7EO9pYBXnhRZv/ukLNc8FPnSN5VHp0OGOA2iJyjeKIGCG
+ YeiopPkUXnTwsApc7dHFE4VrdNbmEAJ9AVDId6SkN6E+lDXESNY7QW2UGW/V5BrG
+ VcnTEtP3SjoQwfOzHgS+YHqGowhAd6kXu6NI/wHqfWOKtwCU0esmkiWyMfVRTf4z
+ Axae7Q6XOabQGCP2E+hMSP90M6KQqP25RS8e0ANoNhGGm9uZgjAlxPAkj1NQ26bh
+ J1lttcw+U3+dVXpl1J6zCic+M5IsFEkXy0SFNH42qXV7hbHU9Lsnn/GyQuA69MZL
+ ABNNyw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41x9f8142b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 30 Sep 2024 11:37:46 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48UBbjBG026849;
+ Mon, 30 Sep 2024 11:37:45 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41x9f81429-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 30 Sep 2024 11:37:45 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48UB5EID017836;
+ Mon, 30 Sep 2024 11:37:45 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41xw4mpa85-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 30 Sep 2024 11:37:44 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48UBbf0g52232692
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 30 Sep 2024 11:37:41 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4992A20043;
+ Mon, 30 Sep 2024 11:37:41 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D9D1F20040;
+ Mon, 30 Sep 2024 11:37:40 +0000 (GMT)
+Received: from p-imbrenda.boeblingen.de.ibm.com (unknown [9.152.224.66])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 30 Sep 2024 11:37:40 +0000 (GMT)
+Date: Mon, 30 Sep 2024 13:37:39 +0200
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
+To: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: David Hildenbrand <david@redhat.com>, Nina Schoetterl-Glausch
+ <nsg@linux.ibm.com>, qemu-devel@nongnu.org, qemu-s390x@nongnu.org, Paolo
+ Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>, Halil Pasic
+ <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, Richard
+ Henderson <richard.henderson@linaro.org>, Ilya Leoshkevich
+ <iii@linux.ibm.com>, Janosch Frank <frankja@linux.ibm.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>
+Subject: Re: [PATCH v1 10/14] s390x/pv: check initial, not maximum RAM size
+Message-ID: <20240930133739.5fed4790@p-imbrenda.boeblingen.de.ibm.com>
+In-Reply-To: <8938437c-dd89-4c9a-bb53-7949c5fc3a67@linux.ibm.com>
+References: <20240910175809.2135596-1-david@redhat.com>
+ <20240910175809.2135596-11-david@redhat.com>
+ <c6d51e5a0bd3e222a1fb3354e31bf2edcc3a59d2.camel@linux.ibm.com>
+ <72e7a377-60ab-45ed-9136-327fa4dd9e4c@redhat.com>
+ <8938437c-dd89-4c9a-bb53-7949c5fc3a67@linux.ibm.com>
+Organization: IBM
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 00/47] riscv-to-apply queue
-From: Thomas Huth <thuth@redhat.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20240924221751.2688389-1-alistair.francis@wdc.com>
- <CAFEAcA9Sb-fpNhm-6DPwss5zMpw=nEp31Wt6q1OA6DqCg3wKEg@mail.gmail.com>
- <13ee9889-b503-45ea-a074-ffafbd052c4e@ventanamicro.com>
- <CAFEAcA_nn2fUyo9Pkd8jW2NG1oJLbAJrfiC7sziuhGthqL3=4Q@mail.gmail.com>
- <096029d7-269c-44f8-88d3-6f0c52af58fa@ventanamicro.com>
- <7d60d882-3b59-428d-b63e-7d7444bd96fa@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <7d60d882-3b59-428d-b63e-7d7444bd96fa@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 3auEwaJQtrREthYcYjAVMMaF_sTA6Yk0
+X-Proofpoint-ORIG-GUID: XP1u7ieatO3nWRb1Cf65ov_7GG6jf3q4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-09-30_10,2024-09-27_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ phishscore=0 clxscore=1011 adultscore=0 mlxscore=0 impostorscore=0
+ bulkscore=0 suspectscore=0 mlxlogscore=999 malwarescore=0 spamscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409300082
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=imbrenda@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -153,61 +125,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/09/2024 12.58, Thomas Huth wrote:
-> On 29/09/2024 22.53, Daniel Henrique Barboza wrote:
->>
->>
->> On 9/29/24 12:38 PM, Peter Maydell wrote:
->>> On Sat, 28 Sept 2024 at 21:40, Daniel Henrique Barboza
->>> <dbarboza@ventanamicro.com> wrote:
->>>>
->>>>
->>>>
->>>> On 9/28/24 8:34 AM, Peter Maydell wrote:
->>>>> The assertion failure is
->>>>> ERROR:../tests/qtest/riscv-iommu-test.c:72:test_reg_reset: assertion
->>>>> failed (cap & RISCV_IOMMU_CAP_VERSION == 0x10): (0 == 16)
->>>>
->>>> The root cause is that the qtests I added aren't considering the 
->>>> endianess of the
->>>> host. The RISC-V IOMMU is being implemented as LE only and all regs are 
->>>> being
->>>> read/written in memory as LE. The qtest read/write helpers must take the 
->>>> qtest
->>>> endianess into account. We make this type of handling in other qtest 
->>>> archs like
->>>> ppc64.
->>>>
->>>> I have a fix for the tests but I'm unable to run the ubuntu-22.04-s390x- 
->>>> all-system
->>>> job to verify it, even after setting Cirrus like Thomas taught me a week 
->>>> ago. In
->>>> fact I have no 'ubuntu-22-*' jobs available to run.
->>>
->>> It's on the private s390 VM we have, so it's set up only to
->>> be available on the main CI run (there's not enough capacity
->>> on the machine to do any more than that). If you want to point
->>> me at a gitlab branch I can do a quick "make check" on that
->>> if you like.
->>
->> I appreciate it. This is the repo:
->>
->> https://gitlab.com/danielhb/qemu/-/tree/pull_fix
->>
->> If this is enough to fix the tests, I'll amend it in the new IOMMU version.
->> If we still failing then I'll need to set this s390 VM.
->>
->> By the way, if you have any recipe/pointers to set this s390 VM to share,
->> that would be great.
-> 
-> You can also use Travis-CI for testing QEMU on a s390x host, see e.g. my 
-> runs here:
-> 
->   https://app.travis-ci.com/github/huth/qemu
+On Mon, 30 Sep 2024 13:15:52 +0200
+Christian Borntraeger <borntraeger@linux.ibm.com> wrote:
 
-... apart from the fact, that it currently seems to be completely broken 
-again :-( ... I guess that means: Never mind, sorry for the distraction!
+> Am 24.09.24 um 22:17 schrieb David Hildenbrand:
+> > On 24.09.24 18:22, Nina Schoetterl-Glausch wrote: =20
+> >> On Tue, 2024-09-10 at 19:58 +0200, David Hildenbrand wrote: =20
+> >>> We actually want to check the available RAM, not the maximum RAM size.
+> >>>
+> >>> Signed-off-by: David Hildenbrand <david@redhat.com> =20
+> >>
+> >> Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+> >> Nit below. =20
+> >>> ---
+> >>> =C2=A0 target/s390x/kvm/pv.c | 2 +-
+> >>> =C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)
+> >>>
+> >>> diff --git a/target/s390x/kvm/pv.c b/target/s390x/kvm/pv.c
+> >>> index dde836d21a..424cce75ca 100644
+> >>> --- a/target/s390x/kvm/pv.c
+> >>> +++ b/target/s390x/kvm/pv.c
+> >>> @@ -133,7 +133,7 @@ bool s390_pv_vm_try_disable_async(S390CcwMachineS=
+tate *ms)
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * If the feature is not present =
+or if the VM is not larger than 2 GiB,
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * KVM_PV_ASYNC_CLEANUP_PREPARE f=
+ill fail; no point in attempting it.
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 */
+> >>> -=C2=A0=C2=A0=C2=A0 if ((MACHINE(ms)->maxram_size <=3D 2 * GiB) ||
+> >>> +=C2=A0=C2=A0=C2=A0 if ((MACHINE(ms)->ram_size <=3D 2 * GiB) ||
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 !kvm_check_ext=
+ension(kvm_state, KVM_CAP_S390_PROTECTED_ASYNC_DISABLE)) {
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 } =20
+> >>
+> >> If I understood the kernel code right, the decision is made wrt
+> >> the size of the gmap address space, which is the same as the
+> >> limit set for the VM. So using s390_get_memory_limit would be
+> >> semantically cleaner. =20
+> >=20
+> > I wonder if we should just drop the RAM size check. Not convinced the s=
+lightly faster reboot for such small VMs is really relevant? Makes the code=
+ more complicated than really necessary. =20
+>=20
+> IIRC there have been functional issues with small guests and asnyc. Claud=
+io, do you remember?
 
-  Thomas
+if we are <2G, KVM allocates a segment table as the highest level table
+for the gmap ASCE. there are pointers lurking around in the reverse
+mapping prefix_tree, which point directly into segment tables.
+
+if the ASCE is region3 or higher, that's not an issue. if it's a
+segment table, then it's an issue, because those pointers will end up
+pointing into freed memory, once the old asce is freed.
+
+in short, we have to guarantee that we will never set aside a gmap ASCE
+if it is a segment table.
 
 
