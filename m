@@ -4,85 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 683C2CF64A6
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 12:54:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A743CF64B1
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 12:58:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svFuL-0007zb-GC; Mon, 30 Sep 2024 08:53:45 -0400
+	id 1svFy0-0007Ao-8F; Mon, 30 Sep 2024 08:57:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svFuJ-0007ro-Ll
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 08:53:43 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svFuH-0006XJ-Fo
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 08:53:43 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3770320574aso2876327f8f.2
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 05:53:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727700819; x=1728305619; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Gtv6IX/KV3JKuyckPwlUPbMBU1EPVCs+bl/6v1epcQg=;
- b=i3VM0qHDQ8Wzpow6zGMOrnoaOKnOGjXReO7NPUhYO1fqCAQPTLwcR8TvPIscWk2YAL
- U2+xtfTUaKSR83F+s/gt/rFE07001rb4CWsfk/AIYI7CN/BJjRjEe5eT2Uhw003A8Maq
- 1Pb6f9JXScG5LTsB3pF8/UJ0F5TWHlIUqtS+AuiptIEmIgPwRJMluJCDNIhBIiOCYOew
- aSOLODDs6gShLWcfJU3B22rWhMOJncJ4KHjCiMIXVm9AYJngw+G/ikrcT3FUSPS4pmKE
- uiTtvt+erbmY5MoItpSr0qq6lYzv4fBwafISh2tMLV5yJfGSuJvNcV9aFw6DvACtlTvG
- EBAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727700819; x=1728305619;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Gtv6IX/KV3JKuyckPwlUPbMBU1EPVCs+bl/6v1epcQg=;
- b=S0r2TDw6xqze54siXMYL4e6dlTBEL7eYAuqdcsMR5kfEZNyfxJfOEYKT3VQNXTauQw
- ZOqB7XMIVuaoJDb2vCyZlqgdWJOnlLb4FCD4TqfLpGFy8ZrTomZnjd1ccccKNPYK0eiR
- lhAOPCXcfryK2Ts+nARIUCJK9sHHr3gYND8+Tv1Ig/CbQ0utkQJquoblDSY8Q5k7L/gb
- knVv34n9Wz15xfkhXpWCsVePv1Txw11j4J/zJeFHwS5jQMBQPBtf+p9l4YRAlgfS9bTN
- qk4cvU/8yx9KDfmtaL7c9ctqE5cnUW6HDYs3b2ejM5TsK7YBQJ2URMsEhjQgAgxqkzyT
- 0mww==
-X-Gm-Message-State: AOJu0YzdxvKjjN1qW9wLxB17tkapruGle6T0cg/is0L8dKLbVmfcuZah
- hgbE8C39jRRMaWeHgSNUck0JE3PxI3oRS9vDgD8GYhOMJPtCZX1bI+za/g4ViiE7GHCX/9jkRx1
- zNwQ=
-X-Google-Smtp-Source: AGHT+IGvlyMVD8GqdUuXqC7ZuTDpdqn6SoaisFx8JGE/Rxou76lyPx6d2syn+uUCOCW350lIfgVirA==
-X-Received: by 2002:a5d:4d0e:0:b0:374:cbe8:6f43 with SMTP id
- ffacd0b85a97d-37cd5a9c921mr6466471f8f.33.1727700819587; 
- Mon, 30 Sep 2024 05:53:39 -0700 (PDT)
-Received: from localhost.localdomain ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd56e6547sm9077147f8f.58.2024.09.30.05.53.38
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 30 Sep 2024 05:53:39 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Nicholas Piggin <npiggin@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-ppc@nongnu.org,
- Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/3] hw/ppc/virtex_ml507: Replace tswap32() by stl_endian_p()
-Date: Mon, 30 Sep 2024 14:53:23 +0200
-Message-ID: <20240930125323.54671-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240930125323.54671-1-philmd@linaro.org>
-References: <20240930125323.54671-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
+ id 1svFxw-00076I-U0; Mon, 30 Sep 2024 08:57:28 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
+ id 1svFxt-0006rc-R1; Mon, 30 Sep 2024 08:57:27 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48U5EFGC024730;
+ Mon, 30 Sep 2024 12:57:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date
+ :from:to:cc:subject:message-id:in-reply-to:references
+ :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
+ pt3JDjSc8/SaggM9rTbWMDMOM44uxTukwctz3UQB1UE=; b=BmlX991DdlgFmJcB
+ ntfpZNA2CWHtahTiZN4S0AkmeZ487XXFM2bVsUHNgTSgwnBddhhebomQLgSLQOk4
+ ZYCh6RfX+QydgwBzMGBbuHC1fWTWD4uCBJunlAcUE+pdmq3VWMwEZRyV+wOhLJyx
+ 9/+LicqUTdjJPUkYXsDYKGFgu6dxshxn+8DKtC5gQePsX1kikOWo6pZQmpVa9VQl
+ NHhm2bnX1bN3nYG4nAZe47oJmcxJL94pKXDMgL2jnSjDA+VxSQLPUJG+BWG85IPc
+ Jz8SEWcMRLwcgFVn9bkT8NbmeWDN6jm7ViT0SvyR2YV2hWkkVt4UMU85mjbTnJ8E
+ D1VAuw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41x9ap9yf6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 30 Sep 2024 12:57:20 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48UCjdlD022484;
+ Mon, 30 Sep 2024 12:57:20 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41x9ap9yex-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 30 Sep 2024 12:57:20 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48UBAcr2013975;
+ Mon, 30 Sep 2024 12:57:19 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41xwmjxgnj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 30 Sep 2024 12:57:18 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 48UCvFEQ56557986
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 30 Sep 2024 12:57:15 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2C45120043;
+ Mon, 30 Sep 2024 12:57:15 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6F71620040;
+ Mon, 30 Sep 2024 12:57:14 +0000 (GMT)
+Received: from li-ce58cfcc-320b-11b2-a85c-85e19b5285e0 (unknown [9.179.8.58])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Mon, 30 Sep 2024 12:57:14 +0000 (GMT)
+Date: Mon, 30 Sep 2024 14:57:12 +0200
+From: Halil Pasic <pasic@linux.ibm.com>
+To: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
+ qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>, Janosch Frank
+ <frankja@linux.ibm.com>,
+ Claudio Imbrenda <imbrenda@linux.ibm.com>, qemu-s390x@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Richard
+ Henderson <richard.henderson@linaro.org>, Ilya Leoshkevich
+ <iii@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck
+ <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>
+Subject: Re: [PATCH v1 07/14] s390x/s390-hypercall: introduce DIAG500
+ STORAGE_LIMIT
+Message-ID: <20240930145712.526a1c79.pasic@linux.ibm.com>
+In-Reply-To: <10165d22-c3e8-4db1-9874-8b63ca59afe9@linux.ibm.com>
+References: <20240910175809.2135596-1-david@redhat.com>
+ <20240910175809.2135596-8-david@redhat.com>
+ <6636c963-228f-4bea-87c5-bd4f75521c75@redhat.com>
+ <20240927200525.5a90f172.pasic@linux.ibm.com>
+ <10165d22-c3e8-4db1-9874-8b63ca59afe9@linux.ibm.com>
+Organization: IBM
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: oLU-o_WXle-1RBnIJyeeE9a8rLkKiPUj
+X-Proofpoint-GUID: jb5ETNHKHNrJp2_sthaOKTxnBEeRmkJZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-09-30_10,2024-09-30_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0
+ lowpriorityscore=0 mlxlogscore=629 malwarescore=0 priorityscore=1501
+ phishscore=0 mlxscore=0 suspectscore=0 adultscore=0 clxscore=1015
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409300091
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=pasic@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,30 +127,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the target-specific tswap32() call by stl_endian_p()
-which does the same but takes the endianness as argument, thus
-is target-agnostic.
-Get the vCPU endianness calling ppc_cpu_is_big_endian().
+On Mon, 30 Sep 2024 13:11:31 +0200
+Christian Borntraeger <borntraeger@linux.ibm.com> wrote:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/ppc/virtex_ml507.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> We do have kvm_stat counters for 500, not sure if people debugging virtio
+> will care.
 
-diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
-index c49da1f46f..135dcbde06 100644
---- a/hw/ppc/virtex_ml507.c
-+++ b/hw/ppc/virtex_ml507.c
-@@ -141,7 +141,7 @@ static void main_cpu_reset(void *opaque)
- 
-     /* Create a mapping for the kernel.  */
-     mmubooke_create_initial_mapping(env, 0, 0);
--    env->gpr[6] = tswap32(EPAPR_MAGIC);
-+    stl_endian_p(ppc_cpu_is_big_endian(CPU(cpu)), &env->gpr[6], EPAPR_MAGIC);
-     env->gpr[7] = bi->ima_size;
- }
- 
--- 
-2.45.2
+Could end up being confusing, as currently we can assume each and every
+DIAG 500 is a virtio doorbell. But I don't think the chance of this
+causing real headache is big.
 
+> The only important question for me is, what code is generated by gcc for
+> the switch statement and will any variant slow down the virtio doorbell.
+> diag.c has
+>          if (!vcpu->kvm->arch.css_support ||
+>              (vcpu->run->s.regs.gprs[1] != KVM_S390_VIRTIO_CCW_NOTIFY))
+>                  return -EOPNOTSUPP;
+> 
+> So 500+4 should probably not cause any harm apart from branch prediction
+> going wrong the first 2 or 3 notifies.
+> 
+> 502 will make kvm_s390_handle_diag larger.
+
+What do you mean by this last paragraph?
+
+I suppose we are talking about
+int kvm_s390_handle_diag(struct kvm_vcpu *vcpu)                                 
+{                                                                               
+        int code = kvm_s390_get_base_disp_rs(vcpu, NULL) & 0xffff;              
+                                                                                
+        if (vcpu->arch.sie_block->gpsw.mask & PSW_MASK_PSTATE)                  
+                return kvm_s390_inject_program_int(vcpu, PGM_PRIVILEGED_OP);    
+                                                                                
+        trace_kvm_s390_handle_diag(vcpu, code);                                 
+        switch (code) {                                                         
+        case 0x10:                                                              
+                return diag_release_pages(vcpu);                                
+        case 0x44:                                                              
+                return __diag_time_slice_end(vcpu);                             
+        case 0x9c:                                                              
+                return __diag_time_slice_end_directed(vcpu);                    
+        case 0x258:                                                             
+                return __diag_page_ref_service(vcpu);                           
+        case 0x308:                                                             
+                return __diag_ipl_functions(vcpu);                              
+        case 0x500:                                                             
+                return __diag_virtio_hypercall(vcpu);                           
+        default:                                                                
+                vcpu->stat.instruction_diagnose_other++;                        
+                return -EOPNOTSUPP;                                             
+        }                                                                       
+}
+
+and my understanding is that the default branch of the switch 
+statement would be already suitable for DIAG 502 as it is today
+for DIAG 502. So I'm quite confused by your statement that
+502 will make kvm_s390_handle_diag larger (as the only meaning
+of larger I can think of is more code). Can you please clarify?
+
+Regards,
+Halil
 
