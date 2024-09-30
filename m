@@ -4,92 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 255E9CF6491
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:09:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E74ACF6497
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:11:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svBSE-000852-Og; Mon, 30 Sep 2024 04:08:26 -0400
+	id 1svBVB-0004Sq-2S; Mon, 30 Sep 2024 04:11:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svBS7-0007jd-Qy
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:08:22 -0400
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svBS6-0004gM-3p
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:08:19 -0400
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-539983beb19so260803e87.3
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 01:08:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727683696; x=1728288496; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=olm5MEqTuo7Wlc02c6b6qRoX+TEZG1pRsM1M0qwZSUk=;
- b=zqYpeUnr5WZA45prmYu8Gq1tJDrjSlC5TvyqDbwUsFFYlrq4fDUwdTtmg+1DYtILMf
- 9Ql0337t9wlEqMnUALEeIKRpg4UUySrFkTIW9DiXqAG0e7N1fDdh85PaGLBCVFm4oW1/
- 64yhC179Lxti3xaxkj+tKf6s8pJ9F4tRShTPuH9NKzaLAXYatEy8qtJ1WBPLF9fiStEW
- bX9E0ccFGLmJZLAHyJpqh4DM7mfedJOCwFKHviBHESiGtkdX2cA+6sbh1ZkguugJuP7Q
- tQNcbunvwrzJ2mL3CJRoePe8XoYJ5qeG25ZSYR7x39139YzksZpDmLHYnYr/dtZ5OsAW
- 9uTQ==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1svBV8-0004FT-1D
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:11:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1svBV6-00059C-54
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:11:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727683883;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9smea9MQS9nrF0kQil3og1DBQ94/GfdG9cC42+9p/lY=;
+ b=h65LFLnp9EUH6mfWnA9GAC+5yAa6qzbjQOsXv/BRPFHHzCAuj7Tlofv+hIxVZBhSogofWD
+ R6glH17pwt/AXYu+FME235ja8A0aDanuHpx1VkZzBKA+EpPkwTxb/GDgdlKmrZ2dWDpRL3
+ 8uZRtAqWCrZdxqypLG6hpgSDmVNExi8=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-177-6OO9GN7uNOa7MMAjiKqqRg-1; Mon, 30 Sep 2024 04:11:21 -0400
+X-MC-Unique: 6OO9GN7uNOa7MMAjiKqqRg-1
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-6e000d68bb1so59520507b3.1
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 01:11:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727683696; x=1728288496;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1727683881; x=1728288681;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=olm5MEqTuo7Wlc02c6b6qRoX+TEZG1pRsM1M0qwZSUk=;
- b=s6e5oV/mHVEbXYdZBnrjg5mvv+VStNyuvQq2AsvdD+8jhLn+4SacmB6Kqm5wNXd8mc
- 3887/QRzD+zDPy07pRaaK1SczqIwRs+o12PDf8+3mdifhuEi2aZz1r1f2/6zSTQR4ggG
- F8RaVJcl7Bs4Fgy+Y69nxCN47ALj5YTM4NiIcgt9v58cWFuUMkgDZd2h7BNSW0/burvg
- cO9Vi6NqHAfHa7sboPqfPXlhkEUmtlWoZgdOcOA2VC/HdiATNOFvR97uJsZWu69nBKmQ
- n/FDBVelehWuHzqP7rvf0H7L8ie94dtZ4+gAzOdAVePBzSqfXBw/uBcBg0bin1XKO3u+
- P51A==
-X-Gm-Message-State: AOJu0Yxnzes+YMx1m+SzTqHjHzXADtHInBGYuEW/x5ofjyvWp34rw6qs
- o3fsX3Q+zz9h1YCELbKqfWmuHz802/4ZA+kdDBjSECSa6Vr5nGlfhyEfFOHAgr+/mUIBubMqIsF
- CRZw=
-X-Google-Smtp-Source: AGHT+IFJ/LX8GVVEsOLDWrfB7Tgyojyz4e841ap2Xfa6UE1pQYhd3FzF3SxsSMfp08WAfw2JTro3Mg==
-X-Received: by 2002:a5d:690f:0:b0:37c:d4ba:1127 with SMTP id
- ffacd0b85a97d-37cd5a8791dmr6298056f8f.16.1727681786225; 
- Mon, 30 Sep 2024 00:36:26 -0700 (PDT)
-Received: from localhost.localdomain (186.red-88-28-13.dynamicip.rima-tde.net.
- [88.28.13.186]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd56e6665sm8343859f8f.54.2024.09.30.00.36.23
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 30 Sep 2024 00:36:25 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Jason Wang <jasowang@redhat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Anton Johansson <anjo@rev.ng>,
- Peter Maydell <peter.maydell@linaro.org>,
- Huacai Chen <chenhuacai@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Sven Schnelle <svens@stackframe.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-arm@nongnu.org,
- Aurelien Jarno <aurelien@aurel32.net>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Max Filippov <jcmvbkbc@gmail.com>, Paul Burton <paulburton@kernel.org>
-Subject: [PATCH 11/13] hw/pci/pci_device: Add PCI_DMA_DEFINE_LDST_END() macro
-Date: Mon, 30 Sep 2024 09:34:48 +0200
-Message-ID: <20240930073450.33195-12-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240930073450.33195-1-philmd@linaro.org>
-References: <20240930073450.33195-1-philmd@linaro.org>
+ bh=9smea9MQS9nrF0kQil3og1DBQ94/GfdG9cC42+9p/lY=;
+ b=KFAHQRFAeR4FkTW83R/JCuLlQP8tbI8OydVNcVj5SHq6uHimkJiYEAmHOWq3YKcyDU
+ OnT/NFLEw75p5Nw2cSCwtaa0+7KT5bkPlSGtrn4nyrREFZTeLWHchNsCokVGsxCxNARr
+ hvB7HdIqEoZWcBx9GFBeGas96VeGIZJ41t8GMl6bvXxo8ODB9XKsY+aSg8N6UQFqWIHN
+ J5v732Rxai9g/Y1XKHmDVuXHkyfHVq+Y2yvycd4viiDR7WiX4gicwQg92O1DfRydf/g9
+ M0/OPEwDa1ES9U2tawljOwaTeKYsLwfrLMVEdxHZ/3CyE+rtz8SpVGG2AJQnwKGgVROf
+ AZLw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWUtHW+mUH0GORoR+Ro981FRh3MzZrSRSCufmYZDSlWcRwzyzeP2IWVJ8NvbznXGCGTaNH5KHNuIL2R@nongnu.org
+X-Gm-Message-State: AOJu0YySN/bsJDIleunbWmGYug7vo2mPzRG2RveIH4YBWyJjHn9GSS6O
+ 9EyhVviZeDkC5I6kGS5mElXKA/0nZulcRI25eOJHaccZWC0A592upcM8XRt+o0H+oCp3pv4DrpB
+ WrIrSuvQDmQGAmaO6GLne1FPyD9bOfp7fsGcmlppSiQDI1fdBJ/atbUBAFYbN0yu+XFp0+aXbFl
+ Fxiing4jTZF2VYkke6utqprH3j7Us=
+X-Received: by 2002:a25:d652:0:b0:e11:579f:9a6a with SMTP id
+ 3f1490d57ef6-e25ca9125c9mr9671260276.13.1727683881029; 
+ Mon, 30 Sep 2024 01:11:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFkA5X/p+DdvVLB9NA9xEwNqk7tDbE5DrPLf0cSWx/1r2lygEzEc9f0BntSjWqNgnkYWkWt+6DbuUwIg4xWA/4=
+X-Received: by 2002:a25:d652:0:b0:e11:579f:9a6a with SMTP id
+ 3f1490d57ef6-e25ca9125c9mr9671215276.13.1727683880649; Mon, 30 Sep 2024
+ 01:11:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240924130554.749278-1-marcandre.lureau@redhat.com>
+ <20240924130554.749278-19-marcandre.lureau@redhat.com>
+ <swzpet5rpne5arwq32i5vrinpguremvrq4sqb73byfw5n2uuzx@s4hi7thksiif>
+ <CAJaqyWeO925F6W6OgNRainpiqECXdB27AkDyUhF-6o9i7BPjoA@mail.gmail.com>
+In-Reply-To: <CAJaqyWeO925F6W6OgNRainpiqECXdB27AkDyUhF-6o9i7BPjoA@mail.gmail.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
+Date: Mon, 30 Sep 2024 10:11:09 +0200
+Message-ID: <CAGxU2F6GJXZKcfs=1iaKqt8xy5=T+S2yJG6cOxptYmeZJmYfcA@mail.gmail.com>
+Subject: Re: [PATCH v2 18/22] hw/virtio: fix -Werror=maybe-uninitialized
+ false-positive
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org, 
+ Song Gao <gaosong@loongson.cn>, Peter Xu <peterx@redhat.com>,
+ Bin Meng <bmeng.cn@gmail.com>, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Hyman Huang <yong.huang@smartx.com>, 
+ Klaus Jensen <its@irrelevant.dk>, Alexandre Iooss <erdnaxe@crans.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ John Snow <jsnow@redhat.com>, Jesper Devantier <foss@defmacro.it>,
+ Bin Meng <bin.meng@windriver.com>, 
+ Greg Kurz <groug@kaod.org>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Fabiano Rosas <farosas@suse.de>,
+ Keith Busch <kbusch@kernel.org>, Eric Blake <eblake@redhat.com>,
+ qemu-block@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Gerd Hoffmann <kraxel@redhat.com>, 
+ Fam Zheng <fam@euphon.net>, Eduardo Habkost <eduardo@habkost.net>,
+ Hanna Reitz <hreitz@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.095,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,41 +125,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define both endianness variants with a single macro.
-Useful to add yet other endian specific definitions
-in the next commit.
+On Fri, Sep 27, 2024 at 3:08=E2=80=AFPM Eugenio Perez Martin
+<eperezma@redhat.com> wrote:
+>
+> On Wed, Sep 25, 2024 at 10:08=E2=80=AFAM Stefano Garzarella <sgarzare@red=
+hat.com> wrote:
+> >
+> > On Tue, Sep 24, 2024 at 05:05:49PM GMT, marcandre.lureau@redhat.com wro=
+te:
+> > >From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> > For the title: I don't think it is a false positive, but a real fix,
+> > indeed maybe not a complete one.
+> >
+> > >
+> > >../hw/virtio/vhost-shadow-virtqueue.c:545:13: error: =E2=80=98r=E2=80=
+=99 may be used uninitialized [-Werror=3Dmaybe-uninitialized]
+> > >
+> > >Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > >---
+> > > hw/virtio/vhost-shadow-virtqueue.c | 2 +-
+> > > 1 file changed, 1 insertion(+), 1 deletion(-)
+> > >
+> > >diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shad=
+ow-virtqueue.c
+> > >index fc5f408f77..cd29cc795b 100644
+> > >--- a/hw/virtio/vhost-shadow-virtqueue.c
+> > >+++ b/hw/virtio/vhost-shadow-virtqueue.c
+> > >@@ -526,7 +526,7 @@ static void vhost_svq_flush(VhostShadowVirtqueue *=
+svq,
+> > > size_t vhost_svq_poll(VhostShadowVirtqueue *svq, size_t num)
+> > > {
+> > >     size_t len =3D 0;
+> > >-    uint32_t r;
+> > >+    uint32_t r =3D 0;
+> > >
+> > >     while (num--) {
+> >
+> > I think we should move the initialization to 0 here in the loop:
+> >
+> >            uint32_t r =3D 0;
+> >
+> > >         int64_t start_us =3D g_get_monotonic_time();
+> >
+> > ...
+> >
+> >            vhost_svq_get_buf(svq, &r);
+> >            len +=3D r;
+> >        }
+> >
+> > This because we don't check vhost_svq_get_buf() return value.
+> >
+> > IIUC, in that function, `r` is set only if the return value of
+> > vhost_svq_get_buf() is not null, so if we don't check its return value,
+> > we should set `r` to 0 on every cycle (or check the return value of
+> > course).
+> >
+>
+> Sorry I missed this mail and I proposed the same :). I do think it is
+> a real false positive though, in the sense that if we embed the
+> vhost_svq_get_buf here the warning would go away.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/pci/pci_device.h | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+I don't think so, I mean if we embed it and check the error path
+better, yes, but now in vhost_svq_get_buf() if we fail, we return
+NULL, but we don't set "len" to 0, so we would have the same warning.
 
-diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-index 91df40f989..ff619241a4 100644
---- a/include/hw/pci/pci_device.h
-+++ b/include/hw/pci/pci_device.h
-@@ -298,13 +298,14 @@ static inline MemTxResult pci_dma_write(PCIDevice *dev, dma_addr_t addr,
-         return st##_s##_dma(pci_get_address_space(dev), addr, val, attrs); \
-     }
- 
-+#define PCI_DMA_DEFINE_LDST_END(_l, _s, _bits) \
-+    PCI_DMA_DEFINE_LDST(_l##_le, _s##_le, _bits) \
-+    PCI_DMA_DEFINE_LDST(_l##_be, _s##_be, _bits)
-+
- PCI_DMA_DEFINE_LDST(ub, b, 8);
--PCI_DMA_DEFINE_LDST(uw_le, w_le, 16)
--PCI_DMA_DEFINE_LDST(l_le, l_le, 32);
--PCI_DMA_DEFINE_LDST(q_le, q_le, 64);
--PCI_DMA_DEFINE_LDST(uw_be, w_be, 16)
--PCI_DMA_DEFINE_LDST(l_be, l_be, 32);
--PCI_DMA_DEFINE_LDST(q_be, q_be, 64);
-+PCI_DMA_DEFINE_LDST_END(uw, w, 16)
-+PCI_DMA_DEFINE_LDST_END(l,  l, 32)
-+PCI_DMA_DEFINE_LDST_END(q,  q, 64)
- 
- #undef PCI_DMA_DEFINE_LDST
- 
--- 
-2.45.2
+Thanks,
+Stefano
+
+>
+> But I understand it is better to change this function than trust the
+> reviews long term.
+>
 
 
