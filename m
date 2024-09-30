@@ -4,57 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAC6ECE8375
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 17:19:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA48FCE835D
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 17:22:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svK2n-0007j6-IA; Mon, 30 Sep 2024 13:18:45 -0400
+	id 1svK5V-0004Er-4P; Mon, 30 Sep 2024 13:21:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svK2l-0007eQ-JI
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 13:18:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svK5T-0004ED-FH
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 13:21:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svK2j-0002e2-L7
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 13:18:43 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svK5R-00036r-Ft
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 13:21:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727716720;
+ s=mimecast20190719; t=1727716888;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=bqvw77jbh2X4/KSQzQ76+gpWGbDMmo0yU3nHztD5afE=;
- b=W09N81lIR4vbRYFdf5TUjkMRQy1KGXpFr2MfervtDDOL03NgIzkXDRqt++YtvVK488jMmc
- ljYOZsYQp8I9Un79ScMMRodH7Azk8ayXRJ0RmDOfRJK85LAuFm2t3n46+a6eZ1e1itgatG
- XJSl6Qg5bXqgO6sIEPYWoUv5fEC52UQ=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-343-oU3Wcjw_PDmbZbinKG3KnQ-1; Mon,
- 30 Sep 2024 13:18:39 -0400
-X-MC-Unique: oU3Wcjw_PDmbZbinKG3KnQ-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1BDD21944D24; Mon, 30 Sep 2024 17:18:38 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.141])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D17391956088; Mon, 30 Sep 2024 17:18:35 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] tests/functional: Switch back to the gitlab URLs for the
- advent calendar tests
-Date: Mon, 30 Sep 2024 19:18:34 +0200
-Message-ID: <20240930171834.51701-1-thuth@redhat.com>
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=upobEXMG/RzLFVN9eBI5IRc6qkBKCo2xzKaECq73Tyo=;
+ b=aG2tVEx+/8sNXRE44088565u3tmo5DMfEXPA2RG/XOKF0pmekHfbrNwdJozAHeMfAHcrHc
+ f9B4RCO3N1U8rKlY8wDLbHXBIOHCoA0FXa4+Ob1WcaeC5iJP7neC+AzeuKxSOSEfh562rO
+ RBRPcTDK6xG5gA4mdy+stL6kCQ2vJaY=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-316-b6HbB72xPnaynBgDyFsHaw-1; Mon, 30 Sep 2024 13:21:26 -0400
+X-MC-Unique: b6HbB72xPnaynBgDyFsHaw-1
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-4584224c8ffso107490371cf.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 10:21:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727716886; x=1728321686;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=upobEXMG/RzLFVN9eBI5IRc6qkBKCo2xzKaECq73Tyo=;
+ b=ewKq647nmW2GhNheSn5ZDboEitN+7n8eGz8QXnjhvsjirOn+9QDKfkozxixQiSHrF1
+ wqk6ExAtkUd+Q4PT3hx3zBu3SrllvbjXjkmupwAY/E/lRm1/SLOSS75xqrp5+td4K6Fv
+ ZNU1Eqyqt0Cmj6qttb1PPE0z7JhDXHsYcP7ADQXtHtbHC+i2Spa46ez/EOlbqV0QgCwY
+ TdHC5PkPUc5IpzltZYlwFeOer23fiq42vzGvtlNg+ckqHo62LZ5893srLb98owFgIDPb
+ hdMMWesIPNaClS384NhQeS4v4pI68rtJec2nURpdSbQ5o5H7+ZocpouR4cueSw11OxrL
+ yFCA==
+X-Gm-Message-State: AOJu0YxdJI5f9AmHkXp6edrdoEzWTTIRXoM9AObQMf2gphFcP1zTw73Y
+ 2diof1o/0oB8hoqSKWKl0SHgqZ+508zM6UMQdeZZbMQ+LgiqM1Ig71GN9+Diewg0X0lULYR17El
+ 4vYfXZTWypbu1HBJy81DZ62jD13oMCqKLigAiO/qN0rbt9znv+dVM
+X-Received: by 2002:ac8:5f54:0:b0:457:9b12:2297 with SMTP id
+ d75a77b69052e-45c9f23569cmr237561271cf.35.1727716886068; 
+ Mon, 30 Sep 2024 10:21:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGj7tUXYZan30gYMCBUxhVbqMfyzXbhi5MA0QAAO6lkdR+xCTKtsHZUtLQqFwa3/g6x6eVirw==
+X-Received: by 2002:ac8:5f54:0:b0:457:9b12:2297 with SMTP id
+ d75a77b69052e-45c9f23569cmr237561091cf.35.1727716885768; 
+ Mon, 30 Sep 2024 10:21:25 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-48-176.web.vodafone.de.
+ [109.42.48.176]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-45c9f2f5e89sm38067821cf.55.2024.09.30.10.21.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 30 Sep 2024 10:21:25 -0700 (PDT)
+Message-ID: <704f2528-f672-4fca-97ac-61de7ee7b3bb@redhat.com>
+Date: Mon, 30 Sep 2024 19:21:21 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 02/44] tests/functional: Convert the vexpressa9 Avocado test
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20240925111029.24082-1-thuth@redhat.com>
+ <20240925111029.24082-3-thuth@redhat.com>
+ <CAFEAcA-rkkxVRsWJqHOeA2cqSg5hnVqvH4-iZRSadxKmfey9nw@mail.gmail.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAFEAcA-rkkxVRsWJqHOeA2cqSg5hnVqvH4-iZRSadxKmfey9nw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -79,143 +146,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Shortly after we switched to the original URLs on qemu-advent-calendar.org,
-the server went offline - looks like we are better off using the gitlab
-URLs again instead.
+On 30/09/2024 18.47, Peter Maydell wrote:
+> On Wed, 25 Sept 2024 at 12:10, Thomas Huth <thuth@redhat.com> wrote:
+>>
+>> Use the new launch_kernel function to convert this test in a simple way.
+>>
+>> Message-ID: <20240919185749.71222-3-thuth@redhat.com>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   MAINTAINERS                           |  1 +
+>>   tests/avocado/boot_linux_console.py   |  9 ---------
+>>   tests/functional/meson.build          |  1 +
+>>   tests/functional/test_arm_vexpress.py | 26 ++++++++++++++++++++++++++
+>>   4 files changed, 28 insertions(+), 9 deletions(-)
+>>   create mode 100755 tests/functional/test_arm_vexpress.py
+> 
+> Hi. This sequence of patches changed us from
+> getting our CI images for the advent calendar tests
+> from URLs like
+>   https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day16.tar.xz
+> to ones like
+>   https://www.qemu-advent-calendar.org/2018/download/day16.tar.xz
+> 
+> This new site has just stopped working: download
+> attempts return a 503. This breaks our CI:
+> https://gitlab.com/qemu-project/qemu/-/jobs/7955655569
+> 
+> Should we switch back?
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/functional/test_arm_vexpress.py            | 2 +-
- tests/functional/test_m68k_mcf5208evb.py         | 2 +-
- tests/functional/test_microblazeel_s3adsp1800.py | 4 ++--
- tests/functional/test_or1k_sim.py                | 2 +-
- tests/functional/test_ppc64_e500.py              | 2 +-
- tests/functional/test_ppc_mac.py                 | 2 +-
- tests/functional/test_sh4_r2d.py                 | 2 +-
- tests/functional/test_sparc_sun4m.py             | 2 +-
- tests/functional/test_xtensa_lx60.py             | 2 +-
- 9 files changed, 10 insertions(+), 10 deletions(-)
+Yes, patch sent:
 
-diff --git a/tests/functional/test_arm_vexpress.py b/tests/functional/test_arm_vexpress.py
-index cc6015112b..6bd6290030 100755
---- a/tests/functional/test_arm_vexpress.py
-+++ b/tests/functional/test_arm_vexpress.py
-@@ -11,7 +11,7 @@
- class VExpressTest(LinuxKernelTest):
- 
-     ASSET_DAY16 = Asset(
--        'https://www.qemu-advent-calendar.org/2018/download/day16.tar.xz',
-+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day16.tar.xz',
-         '63311adb2d4c4e7a73214a86d29988add87266a909719c56acfadd026b4110a7')
- 
-     def test_arm_vexpressa9(self):
-diff --git a/tests/functional/test_m68k_mcf5208evb.py b/tests/functional/test_m68k_mcf5208evb.py
-index 869ccc88df..00c59590c3 100755
---- a/tests/functional/test_m68k_mcf5208evb.py
-+++ b/tests/functional/test_m68k_mcf5208evb.py
-@@ -13,7 +13,7 @@
- class Mcf5208EvbTest(LinuxKernelTest):
- 
-     ASSET_DAY07 = Asset(
--        'https://www.qemu-advent-calendar.org/2018/download/day07.tar.xz',
-+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day07.tar.xz',
-         '753c2f3837126b7c6ba92d0b1e0b156e8a2c5131d2d576bb0b9a763fae73c08a')
- 
-     def test_m68k_mcf5208evb(self):
-diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/functional/test_microblazeel_s3adsp1800.py
-index faa3927f2e..47c941d487 100755
---- a/tests/functional/test_microblazeel_s3adsp1800.py
-+++ b/tests/functional/test_microblazeel_s3adsp1800.py
-@@ -18,8 +18,8 @@ class MicroblazeelMachine(QemuSystemTest):
-     timeout = 90
- 
-     ASSET_IMAGE = Asset(
--        ('http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
--        'b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22')
-+        ('https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day13.tar.xz'),
-+        '67e4c502651f8801e724ecc26403f1d0cdbc00549b033166e2e8cd14e9d49fef')
- 
-     def test_microblazeel_s3adsp1800(self):
-         self.require_netdev('user')
-diff --git a/tests/functional/test_or1k_sim.py b/tests/functional/test_or1k_sim.py
-index aa2a1f08d2..10e0437c50 100755
---- a/tests/functional/test_or1k_sim.py
-+++ b/tests/functional/test_or1k_sim.py
-@@ -13,7 +13,7 @@
- class OpenRISC1kSimTest(LinuxKernelTest):
- 
-     ASSET_DAY20 = Asset(
--        'https://www.qemu-advent-calendar.org/2018/download/day20.tar.xz',
-+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day20.tar.xz',
-         'ff9d7dd7c6bdba325bd85ee85c02db61ff653e129558aeffe6aff55bffb6763a')
- 
-     def test_or1k_sim(self):
-diff --git a/tests/functional/test_ppc64_e500.py b/tests/functional/test_ppc64_e500.py
-index 3558ae0c8c..f1af92373e 100755
---- a/tests/functional/test_ppc64_e500.py
-+++ b/tests/functional/test_ppc64_e500.py
-@@ -10,7 +10,7 @@
- class E500Test(LinuxKernelTest):
- 
-     ASSET_DAY19 = Asset(
--        'https://www.qemu-advent-calendar.org/2018/download/day19.tar.xz',
-+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day19.tar.xz',
-         '20b1bb5a8488c664defbb5d283addc91a05335a936c63b3f5ff7eee74b725755')
- 
-     def test_ppc64_e500(self):
-diff --git a/tests/functional/test_ppc_mac.py b/tests/functional/test_ppc_mac.py
-index a6b1ca2d4c..3f45e37a45 100755
---- a/tests/functional/test_ppc_mac.py
-+++ b/tests/functional/test_ppc_mac.py
-@@ -10,7 +10,7 @@
- class MacTest(LinuxKernelTest):
- 
-     ASSET_DAY15 = Asset(
--        'https://www.qemu-advent-calendar.org/2018/download/day15.tar.xz',
-+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day15.tar.xz',
-         '03e0757c131d2959decf293a3572d3b96c5a53587165bf05ce41b2818a2bccd5')
- 
-     def do_day15_test(self):
-diff --git a/tests/functional/test_sh4_r2d.py b/tests/functional/test_sh4_r2d.py
-index 5fe8cf9f8d..c3cfff79ad 100755
---- a/tests/functional/test_sh4_r2d.py
-+++ b/tests/functional/test_sh4_r2d.py
-@@ -13,7 +13,7 @@
- class R2dTest(LinuxKernelTest):
- 
-     ASSET_DAY09 = Asset(
--        'https://www.qemu-advent-calendar.org/2018/download/day09.tar.xz',
-+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day09.tar.xz',
-         'a61b44d2630a739d1380cc4ff4b80981d47ccfd5992f1484ccf48322c35f09ac')
- 
-     # This test has a 6-10% failure rate on various hosts that look
-diff --git a/tests/functional/test_sparc_sun4m.py b/tests/functional/test_sparc_sun4m.py
-index b334375820..573f85222a 100755
---- a/tests/functional/test_sparc_sun4m.py
-+++ b/tests/functional/test_sparc_sun4m.py
-@@ -11,7 +11,7 @@
- class Sun4mTest(LinuxKernelTest):
- 
-     ASSET_DAY11 = Asset(
--        'https://www.qemu-advent-calendar.org/2018/download/day11.tar.xz',
-+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day11.tar.xz',
-         'c776533ba756bf4dd3f1fc4c024fb50ef0d853e05c5f5ddf0900a32d1eaa49e0')
- 
-     def test_sparc_ss20(self):
-diff --git a/tests/functional/test_xtensa_lx60.py b/tests/functional/test_xtensa_lx60.py
-index 8ce5206a4f..d4ad92dc6c 100755
---- a/tests/functional/test_xtensa_lx60.py
-+++ b/tests/functional/test_xtensa_lx60.py
-@@ -11,7 +11,7 @@
- class XTensaLX60Test(LinuxKernelTest):
- 
-     ASSET_DAY02 = Asset(
--        'https://www.qemu-advent-calendar.org/2018/download/day02.tar.xz',
-+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day02.tar.xz',
-         '68ff07f9b3fd3df36d015eb46299ba44748e94bfbb2d5295fddc1a8d4a9fd324')
- 
-     def test_xtensa_lx60(self):
--- 
-2.46.1
+https://lore.kernel.org/qemu-devel/20240930171834.51701-1-thuth@redhat.com/
+
+  Thomas
 
 
