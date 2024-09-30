@@ -4,85 +4,177 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D664ACF6491
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 05:35:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F5FCCF6497
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 05:53:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sv93O-0006JT-3a; Mon, 30 Sep 2024 01:34:38 -0400
+	id 1sv9LC-00038F-81; Mon, 30 Sep 2024 01:53:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1sv93M-0006Iw-DV
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 01:34:36 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1sv93K-0000V8-KR
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 01:34:36 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-71c5e1ad01cso1597616b3a.0
- for <qemu-devel@nongnu.org>; Sun, 29 Sep 2024 22:34:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727674473; x=1728279273; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SWVQCXh46X6Dm+jfJZs4Wpdvcs3Rp3HzhsNj+Bf4UrY=;
- b=maucThfoj0IG5GjzLpTxJ5nErbBuGddkcH5pSU7HOD3cqV6J/sC6Lu0XdRoyU3JBcc
- dy6Mdox3Ax9eu1qaoDnxiwqDvVRBHwy3FqYLVa9VigjU5wqQtLiPFqVND5Z7NkCLIjEB
- ZbqDEm2vubez96RJM02q/aUXK67EC/Xd/15DUsYOZp+Z3U7Z7reW1dZQ0u+arS24gvDl
- x3gj9d+fGmv0SVwqmrerPk1vW7ohWYwE5u7JSv07Rxm42ta4GQSlJ/yBKNpmcMA2/cp+
- JEhnwjAko2sDTegR7FCKQsvroiJa28JibRHihVqqyXFn1uSEtak2u5WLTVtKqGA2+T86
- g63Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727674473; x=1728279273;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SWVQCXh46X6Dm+jfJZs4Wpdvcs3Rp3HzhsNj+Bf4UrY=;
- b=Jf262Tr5etGOf9VbMnxuEMe6g2DO02hFq27NgaqnGqVmh/5x8txqOA5jWEgDrLU8g8
- +5JFuYbAwmwAzWqzv0001wLr1QA6gkO8golKQE3qJxdWd5q/i6l3AU8SupAlHpRGsyyS
- 5/tSkVeJRskFgCVv/vO563AjVJOq5/BmpwhX1vBHjhTdriZ42ya/M8UbO78KWiC3Ne3r
- UPpUXLFjYzJB5Yt5Zsb5tnT1s9tRzqeeQqBT12gzxtR8+AhaQzS1Fu0/8sREWksxtpF7
- S8pjNtj/xjkqJdVPJYHH0zrmELL/AlfE5GDtrX7d7ZJx8f/vDQsNPFuzuaFFum5dtnO4
- v2Zg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXhI7QcvOGHoy97k9uQjC+g4K8dFNoysmfZhj9rvHjZGL66ucF5rze1XAvAtTnQvtNA50EbfdR0wLgf@nongnu.org
-X-Gm-Message-State: AOJu0YzfrH+U6FJXFLm3wikH2+q/aC4QyN3LIGwBDg2MrMOP8bww7tMn
- CKX8xD8GPyd/OKS9jch+05g7vlNdSlO0MnuIjPhBl58hyIEKjUdJ
-X-Google-Smtp-Source: AGHT+IG3HX8IDwXWP6RcC1Z2X9dlv8iTFPlBlzTe+lZYnVqjtX1NO6wBpNX2h2uPwGcgOCl8FuzNWw==
-X-Received: by 2002:a05:6a00:2da9:b0:712:7512:add9 with SMTP id
- d2e1a72fcca58-71b260680ebmr15791820b3a.13.1727674472501; 
- Sun, 29 Sep 2024 22:34:32 -0700 (PDT)
-Received: from valdaarhun.localnet ([223.233.85.39])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71b264bc3f7sm5448048b3a.77.2024.09.29.22.34.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 29 Sep 2024 22:34:31 -0700 (PDT)
-From: Sahil <icegambit91@gmail.com>
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org,
- Sahil Siddiq <sahilcdq@proton.me>
-Subject: Re: [RFC v3 3/3] vhost: Allocate memory for packed vring
-Date: Mon, 30 Sep 2024 11:04:28 +0530
-Message-ID: <1904291.tdWV9SEqCh@valdaarhun>
-In-Reply-To: <CAJaqyWeus1zqEqE4ZzoGOzrY=w=_vEMdPGoHrv+Gxvc6zhiNmw@mail.gmail.com>
-References: <20240802112138.46831-1-sahilcdq@proton.me>
- <3311761.aeNJFYEL58@valdaarhun>
- <CAJaqyWeus1zqEqE4ZzoGOzrY=w=_vEMdPGoHrv+Gxvc6zhiNmw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1sv9L4-00034R-5c; Mon, 30 Sep 2024 01:52:55 -0400
+Received: from mail-psaapc01on2071c.outbound.protection.outlook.com
+ ([2a01:111:f400:feae::71c]
+ helo=APC01-PSA-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1sv9Kt-00027i-TA; Mon, 30 Sep 2024 01:52:50 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=n7e8YbyZBrijDV+372vamI6SqEFIR7n5xKDa3WiM8wP60Y1ojjzbbYzgkdLGeb0pn9lJEShE6wVjOVj64ybxmQ67taenLuoREcjy+/CuUcY3Zq0odT82xgIpmhLfkSY53cuAk+jITlAH9Ga6rTmwflImr9v84ZUiIQfYfV+6AYmJ7pWe0HIUhOEHkM+LeKJ3hj6Vhv9sN5MiwpSl1qYXBt2OjNwD68UwWt0YA/01ecvv5kSUbe6zR11Kttt+rewVq3kAo7k8oLgmZiYyOxJkG0YkUCLAaIwLbkT1Ku/p2iFhnYK4UiBjSXtMXkDuHtFHa4zt3gKMYPMQpdtgBqVy4w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2RNEJxm1Dat9VSjpTxlfkBbizuYJBTBFfp26uW6Ig20=;
+ b=QLYshJNHY4dFIrp63hiDMC6ypppDdJzgE3W7nxmduEHJXAYKngO5Mqy4rF7zwBe1+ZkFkHgyVlQOU7mz9EL0TSotmK85wOM3EETXBp+xUIz9RcmUYvEzBUAPyyG3S74Hu3TBE1A+AX2yixdDFaNGRC5jub4r1FtakDB0oQRGxYspIDam1UUSzqcO7la38lDUM7fdEt3giAAkLF9hyLkvM/L3J86exrF1eEdceGCwG6qeHb5zC62iGKdrBqBOKMTCz0YHhQTg11udCGoAGQ1eILWKDLbtMbV68Vfq0FQiW9Vj+/6vfiY0LtFVwYBfakWx4CfFzj5MA5PYEvz5Alz4FQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2RNEJxm1Dat9VSjpTxlfkBbizuYJBTBFfp26uW6Ig20=;
+ b=USoSUweXHckQZwcyzoWjxDSs3bECIgD3jJ/AUuUxmAMP9AgXvL6syld4oC2lqVW1tIDAMMCjevL0Zh8xNjKQe/oIcjyY5jpz8408BJH/uyoc7qRyEi1OoWeY6tTGv5NdDEZK0QyCAX/c8W0q9Eq+J6CZu5kK6dPQNeheL2lZxSd+hONEqsoAFEw+eKCDw1dxRJA4XHoyx9XfnH7IqxtGqNaFSlv/KmMS2dpc3wHz8lHSzU6nWAnsPmJpkYLhIZ7Km+Y5eXXAvqW9aQU3qlAvZH4huURAjahF/08azi4NkI6c051yBhf5mfEYFC15iqw8FfCiqwDajPjx/NsswaN3PA==
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
+ KL1PR06MB6134.apcprd06.prod.outlook.com (2603:1096:820:d0::11) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8005.26; Mon, 30 Sep 2024 05:52:29 +0000
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56%6]) with mapi id 15.20.8005.017; Mon, 30 Sep 2024
+ 05:52:29 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
+ BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Yunlin Tang
+ <yunlin.tang@aspeedtech.com>
+Subject: RE: [PATCH v5 6/7] aspeed/soc: Support GPIO for AST2700 and correct
+ irq 130
+Thread-Topic: [PATCH v5 6/7] aspeed/soc: Support GPIO for AST2700 and correct
+ irq 130
+Thread-Index: AQHbELgAmmlHHufB3U+CQM6c2glst7JrXgmAgAR6MeA=
+Date: Mon, 30 Sep 2024 05:52:29 +0000
+Message-ID: <SI2PR06MB5041238576DF09A6FAC72D84FC762@SI2PR06MB5041.apcprd06.prod.outlook.com>
+References: <20240927083351.2637798-1-jamin_lin@aspeedtech.com>
+ <20240927083351.2637798-7-jamin_lin@aspeedtech.com>
+ <a3ae007e-2e82-4370-84a2-63c06719f47d@kaod.org>
+In-Reply-To: <a3ae007e-2e82-4370-84a2-63c06719f47d@kaod.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|KL1PR06MB6134:EE_
+x-ms-office365-filtering-correlation-id: f7bf2172-5bb1-4b11-84c9-08dce11411ed
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|7416014|366016|1800799024|38070700018|921020; 
+x-microsoft-antispam-message-info: =?utf-8?B?SjZHYmtTWFdjSEhNMkRzWVRGRllYb1BsR2dFQ3BlQkxxUUNJbHBycVBRYnhD?=
+ =?utf-8?B?TGFIdGI1eE5kOU9CRGdjV0VaWUhKdlI0bnF3eWR1WldWZFAyZG5LdVp3djR0?=
+ =?utf-8?B?VXdvRENVdHZ6QWk3QytHVHg5TFh6QkFMNm52dlpkWWRKamF6ekJxa1ZSYitn?=
+ =?utf-8?B?SXhhbTNOWSs0MkxHS0dkaWxqbFV1ZzZMNDU1NHpHOWQzWTNYQ25Fb0VVSUla?=
+ =?utf-8?B?TzRXaFR2SnE5OUJUczNKZVpuOWEzazVibGdad20zdTZSZHVrSDludG5WQlg2?=
+ =?utf-8?B?Z1UyZUxZb08zTURxTkR0OEk3ZExCa2RKQkExWnNPZTRHcS9UUnFRbDZNTHpq?=
+ =?utf-8?B?Kzh2RjdEd2dtaHoxZE5FMHBXR0JvNDFqb0NTdHdjWXRTcytjUm81QjI0M2lK?=
+ =?utf-8?B?MlBNRGRvZTFLSkNMRkJrVzlreDRnODlPaHF5emMrT2tKbGJpZzg1R3VVUzFI?=
+ =?utf-8?B?NkwxNnJxSjB3TzV0RStSSCtaaWJzTHptd3BYNUZyMnMxZnpIcTc5UzZFcUs3?=
+ =?utf-8?B?UkcvSkhpYnJHbXJFTks3Y0JzMXdJTFpiUWJRdlZXSGIxRUZWY0dCcnRrTkgv?=
+ =?utf-8?B?QnZQazFQY1lzblBqSmV3WklsdWZ2TEF4LzZDSFdaUEtUYjRtZ2dyUGxJd2NR?=
+ =?utf-8?B?MW8zUkMwTWZieEVZSHU5L04rVWllTmp1QndCSExLRHBDSDIza0FPZ3hCKzRm?=
+ =?utf-8?B?SlFMYmZ4WXZJcVRwQVRReElPNXg4NjFJa3BOTFNnd2xQbkFMWjg4aStITENH?=
+ =?utf-8?B?ME0vYitJZFU4UmtMWHBqZzdoS0RtVURpSnJ5ck1MYUd1aXNvMWcwaU9UdVdk?=
+ =?utf-8?B?Qnp2OS92R2lQVHdudzJpOWFQTno1dW1UZjhoUEdTK3Y0T2Y1Z29nVE9ueXpN?=
+ =?utf-8?B?Um4vd2NHc0VEdkV2U0pVUmkwVFd4QzMwbFJFbjNlL0VGSE9aZDN1eXdrclpT?=
+ =?utf-8?B?L09sTlFxR3NKSDJKM1NlRjVJY0tGQzZnZERpbjF3dTVCeVBLQ3FDdUd1WGd4?=
+ =?utf-8?B?RVFoZEwyRGdwbzE0MStNRzR5ZUIyTU1CbEVFVnFqQUR0TUlwRjc4OUFzbUtK?=
+ =?utf-8?B?cEN1bUV2WXRoUVh2N1V5RzBPYldoSzF6d08zUk5rYSttckRpRk1LVFJxRkNz?=
+ =?utf-8?B?TllIb203RUZ4UjAzeXlwYnpaSHB5cmtmbS9LaW5YeTB3V0pjU2QrQk1UREFS?=
+ =?utf-8?B?eDY1eHVyWUpmZFU0OVVNWkl0WXV5OUVLaHdSSjNKaGo4NFZuRURQWW5IbThm?=
+ =?utf-8?B?ODZHemNEUGMyR0dNZjNEZHRsR0IyN0pXQlE2TTFqenlaQ0R3UU9qVU8wbW1M?=
+ =?utf-8?B?cHdwRWdzMHZPekRLaU4yS2VCa0I3VDhJREdUNXo0c1JuRzFKSG55T0NJSkJl?=
+ =?utf-8?B?dHEyci9CWWFTSnNvUS9LczRRVm5BR3ZNL3VDMGtwS0R1OEJJd01xamR3bkxh?=
+ =?utf-8?B?MVhCZURQU2g0UFU1RFJCNkZhREhlZmI2VllUd1VwSyttY2swUzlUNmFHVy93?=
+ =?utf-8?B?eWVjSkQzU0RoL2taTHF5VkxEN3V6dmJrbC8yVXNwaytRdTN3L2o4R0NUTmlr?=
+ =?utf-8?B?UTJkTHFTTEtOUzF6UVA5TUp4K1g1eTl1MThNdG56RmV0bW5USGNla1ArZnBN?=
+ =?utf-8?B?cDNaWXltWEZFMHpUN082cVNjYmIvQ1F2RWVxRGg3R21DWFpZWjgyWEh3UU1F?=
+ =?utf-8?B?eEVsWXYrZ1gwNEF0MnNpejlOaGNIcUwzSzd0bmJDcUszNWFGWXo1azMvd0RP?=
+ =?utf-8?B?MERTQmVvdU42emt3Wms5Z1FGV3RyaHZObVBTSGNzK0d6SVpzL2NDUktrWFlJ?=
+ =?utf-8?B?dnV0MmVSN0tVSnhHU041ZDd4SXJwdGhnYmdwaTdLMFIxdUE3aUtZNEpzU1pS?=
+ =?utf-8?B?dDJGMVA1R0dDWXFZdjE2QXN1bjM0TGhqc01ZRis5bnh6V0E4TjdjYkhTOUYz?=
+ =?utf-8?Q?L8zUFxFu9tU=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024)(38070700018)(921020);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?UlRlQXdUbVdWSmwvR21ra0xkY3h6R2pnQitxbDVYWnlERWFkaHB1M0s0WThR?=
+ =?utf-8?B?bXdLZllBZXR6azdkNEpFc0tWNXVuSHRyTDZvQVJrbHBYWGNqS2I3VC8xQXo0?=
+ =?utf-8?B?RlJZdXhoTS9rVlVaeVY5RENkRnkrRDRQUUd3cVJCeFJBR1VFOXpxNHdER01D?=
+ =?utf-8?B?OVBaWWhlVHhjcUFPTjdsSG15ckZXdmFHMlBzUU9hQ28zSjlWRXJBbHlxTDRR?=
+ =?utf-8?B?bDVhSE1VdU5DWFhrYVhIbnpGaG9NK00vcmVYT3F2anI5dTJXcnlvYmVsVzY0?=
+ =?utf-8?B?UWh0ejJHME9mRFpsbCtvR2VVSm1KVjlpeGttNkl5TzIvL3BaRTI4bkorblFW?=
+ =?utf-8?B?QzNPNTdvNVJ1LzgvbkhiTWl2SmtVT0lBSU4yQlBmTnFLYS9yUlVLTXkxTmdQ?=
+ =?utf-8?B?MkJNZnR4RWdGVUFiRlRUM0kwRjRXV2NVY3FtQ1pFQVMxZGRYaEQ5blBDYmRp?=
+ =?utf-8?B?M0d1ekcrbkdsSGxaYVdNS3NiWU5jMXI4cDE1WmxXYTRBOXA3a0ZiUmNuclk5?=
+ =?utf-8?B?cEFybmEyNU5Qemt1b1hJV3ZEYThzR0U5R0FremhyWHVCQVdRdktpeUs4cEhT?=
+ =?utf-8?B?bFdXenoxckdIdjRJVVh0WHRPakVTMUI4am9PWVN3MlFrdG1FRW14NlNRbDdj?=
+ =?utf-8?B?Ykk1ZW5Zb3l0NUJxaG1OVnU4Tnc0Tks1NENPUWZoMG5TbnlVa0x5UTE2dkdP?=
+ =?utf-8?B?S01WUkRaeVJ1L2N3bkY2dEpGRzAxZHloTE8reVRFVXh6RWc0dm1tYzUwOVFk?=
+ =?utf-8?B?aTdudHVJSThybVZnS2lpUGlxRzIwSytuUWtZdmN2QnczTjhBMkVNQUhqQkZQ?=
+ =?utf-8?B?WTFNU1pkaXZkSmJkRjVWTEVVVHBPRU1LRUdROE13am45VjdIZXhHQkNjMUNS?=
+ =?utf-8?B?dngwTVZJN045Tlc2TjRMd2QrNEQxU3BVcmh3RU9RRzF3eHVvM0dldjRHTnJs?=
+ =?utf-8?B?R2pYSFl2bkZqVk43UXpHNGdEY3NFZ1M3bFdJbGVPVzJDNmpxN0VocmxpQlla?=
+ =?utf-8?B?M04rOFdncEtiZDJ1M0hsZFp2azEwbEd0TkVJU3RtZHhnRVI2SG5sdGF0SnpM?=
+ =?utf-8?B?b0lIWlZuc0x4WHJoVFI0NzUwTXlVWTJUT0VlTm4zS0VDWHU2UktPTm1hN2R1?=
+ =?utf-8?B?UVplQTVkS0o0QmxBRWhrUVhiaVIyRjIrdXVTT0hGNjFWNm1iNWc0NVZ5Uld4?=
+ =?utf-8?B?UDBEYlhkaDZLSkZIWUdRR1VESTFnQ3Y0bUdrcDVaZUtjcXM5ZEZrVXF5amJu?=
+ =?utf-8?B?TzQ3THg1REZQVTZnWHZJY3pScWk0bU1UYTJmTnU2LzJjQTN3U1cyU0JEbVph?=
+ =?utf-8?B?REJ5ZzhiWE1VYWliWHpZWFJPY2lTOE13aFpNek5yck9WSU56MXlsMTgxejd6?=
+ =?utf-8?B?MGc1THBMNExwbnQ5RkxKa1I2NlZLMUVyRURYTlgzYVFPY3dVU1ZDY1hkSGl3?=
+ =?utf-8?B?YjJTQ2RrWmtuVlh2NUE1K0h2WXAwbzZZNi9BcEZWWTVVTU4raHhmbkRtTUZ2?=
+ =?utf-8?B?U1Rma0Z2Smh6ZmRNdGtRa1FHTlFmVmw1d3d0ZXU1NkZxQXcvVENaR0lHOGtF?=
+ =?utf-8?B?dVZGakFlbm5sc1RaUHRWY3hOdkFuelJ5L1VRd2t6ZzZrV2tsTytKYmo5Yit0?=
+ =?utf-8?B?YVhEcCswVXd1REQvVE9hdnVuLzlTS2xPV29xWXVIc2FUMmxkenZKSmJnT3VV?=
+ =?utf-8?B?L1EvT3RHOTM3OTNpQ04zcXRwRmhHOFRHQ3VUN1ZjV0xma1VQYnBLSE5xOThy?=
+ =?utf-8?B?NFpGbVpRUk5OK3FacisrelR0VUVCVnlDemtGRWFiUmJLd2t6MnNBdDJrZ0I3?=
+ =?utf-8?B?NksxcjZPU1NWVEd5Q25ZVys0WlYzTVVqb01IdTlveFlEdEhlcXFBNDdRaWxy?=
+ =?utf-8?B?OVplZXVhU3JLYXhzaWFaUm5XZDg0SWIrVnprVExnRytTWVZzcWlQTFhRMjJ1?=
+ =?utf-8?B?MVVGUS9YOWJmK0pRUnMrNUtNcW9kWFhEUlY4YUNIZUcwNmMrVmdmdmtqN0xR?=
+ =?utf-8?B?UjVDWklTc2ExV1BwOER3WkkyN3F5NTR1T0dTRHhISHJDVmFWVWpiVUJJU3Er?=
+ =?utf-8?B?c2hDV0lPb1JKQ1BVSHorbmlBaTlxUnQ3MHlPRWxZVWVHRzl3OWZZWnRoTTl0?=
+ =?utf-8?Q?6oZzN6Khg1qv1tvy9w4GzPBv/?=
 Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=icegambit91@gmail.com; helo=mail-pf1-x432.google.com
-X-Spam_score_int: 15
-X-Spam_score: 1.5
-X-Spam_bar: +
-X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f7bf2172-5bb1-4b11-84c9-08dce11411ed
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Sep 2024 05:52:29.5899 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 3EopoD7UUOcfKmEmk4LRYibhHhbHeXQO8VcM2Wxh+w+Xo+Ywm1cgAJwnttcDgxFks7NAyK+0BroYZ/TPXGqGAWly5rYt+vDniHOVKHjqmrs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6134
+Received-SPF: pass client-ip=2a01:111:f400:feae::71c;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=APC01-PSA-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,177 +190,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-On Tuesday, September 24, 2024 4:16:26=E2=80=AFPM GMT+5:30 Eugenio Perez Ma=
-rtin wrote:
-> On Tue, Sep 24, 2024 at 7:31=E2=80=AFAM Sahil <icegambit91@gmail.com> wro=
-te:
-> > Hi,
-> >=20
-> > I have a small update.
-> >=20
-> > On Monday, September 16, 2024 10:04:28=E2=80=AFAM GMT+5:30 Sahil wrote:
-> > > On Thursday, September 12, 2024 3:24:27=E2=80=AFPM GMT+5:30 Eugenio P=
-erez Martin
-> > > wrote: [...]
-> > >=20
-> > > > The function that gets the features from vhost-vdpa in QEMU is
-> > > > hw/virtio/vhost-vdpa.c:vhost_vdpa_get_features. Can you check that =
-it
-> > > > returns bit 34 (offset starts with 0 here)? If it returns it, can y=
-ou
-> > > > keep debugging until you see what clears it?
-> > > >=20
-> > > > If it comes clear, then we need to check the kernel.
-> > >=20
-> > > Got it. I'll start debugging from here.
-> >=20
-> > I am printing the value of "*features & (1ULL << 34)" in
-> > hw/virtio/vhost-vdpa.c:vhost_vdpa_get_features and I see it is 1.
-> > I guess that means the vhost device has the packed feature bit
-> > turned on in L1.
->=20
-> Not quite. That means the device exports the _F_PACKED feature bit.
-> Now we need to check if the guest acks it. You can look to
-> vhost_vdpa_set_features for that.
-
-Thank you for your reply. I have understood this now. I realized that the
-guest was not acking the packed feature bit.
-
-> > I am also printing out the values of "host_features", "guest_features"
-> > and "backend_features" set in "VirtIODevice vdev" in
-> > hw/virtio/virtio-pci.c:virtio_pci_common_read under "case
-> > VIRTIO_PCI_COMMON_DF". I observed the following values:
-> >=20
-> > dev name: virtio-net
-> > host features: 0x10150bfffa7
-> > guest features: 0x0
-> > backend features: 0x10150bfffa7
-> >=20
-> > The host features and backend features match but guest features
-> > is 0. Is this because the value of guest features has not been set yet
-> > or is it because the driver hasn't selected any of the features?
-> >=20
-> > I am not entirely sure but I think it's the former considering that the
-> > value of /sys/devices/pci0000:00/0000:00:07.0/virtio1/features is
-> > 0x10110afffa7. Please let me know if I am wrong.
->=20
-> Right, it's the former. _DF is the guest selecting on what 32-bit half
-> of the 64-bit features willread.
->=20
-> You can check the virtio_pci_common_write function,
-> VIRTIO_PCI_COMMON_GF case when proxy->gfselect =3D=3D 1. But it should end
-> in vhost_vdpa_set_features when the driver writes DRIVER_OK, so maybe
-> that one is easier.
->=20
-> > I found a few other issues as well. When I shut down the L2 VM,
-> > I get the following errors just after shutdown:
-> >=20
-> > qemu-system-x86_64: vhost VQ 0 ring restore failed: -1: Operation not
-> > permitted (1) qemu-system-x86_64: vhost VQ 1 ring restore failed: -1:
-> > Operation not permitted (1) qemu-system-x86_64: vhost VQ 2 ring restore
-> > failed: -1: Operation not permitted (1)
-> >=20
-> > This is printed in hw/virtio/vhost.c:vhost_virtqueue_stop. According to
-> > the comments, this is because the connection to the backend is broken.
->=20
-> Can you trace vhost_vdpa_get_vring_base to be sure? In particular, if
-> dev->fd is valid.
->
-> > I booted L1 by running:
-> >=20
-> > $ ./qemu/build/qemu-system-x86_64 -enable-kvm \
-> > -drive
-> > file=3D//home/valdaarhun/valdaarhun/qcow2_img/L1.qcow2,media=3Ddisk,if=
-=3Dvirtio
-> > -net nic,model=3Dvirtio -net user,hostfwd=3Dtcp::2222-:22 \ -device
-> > intel-iommu,snoop-control=3Don \
-> > -device
-> > virtio-net-pci,netdev=3Dnet0,disable-legacy=3Don,disable-modern=3Doff,i=
-ommu_pla
-> > tform=3Don,event_idx=3Doff,packed=3Don,bus=3Dpcie.0,addr=3D0x4 \ -netdev
-> > tap,id=3Dnet0,script=3Dno,downscript=3Dno \
-> > -nographic \
-> > -m 8G \
-> > -smp 4 \
-> > -M q35 \
-> > -cpu host 2>&1 | tee vm.log
-> >=20
-> > And I booted L2 by running:
-> >=20
-> > # ./qemu/build/qemu-system-x86_64 \
-> > -nographic \
-> > -m 4G \
-> > -enable-kvm \
-> > -M q35 \
-> > -drive file=3D//root/L2.qcow2,media=3Ddisk,if=3Dvirtio \
-> > -netdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-0,id=3Dvhost-vdpa0=
- \
-> > -device
-> > virtio-net-pci,netdev=3Dvhost-vdpa0,disable-legacy=3Don,disable-modern=
-=3Doff,ev
-> > ent_idx=3Doff,bus=3Dpcie.0,addr=3D0x7 \ -smp 4 \
-> > -cpu host \
-> > 2>&1 | tee vm.log
-> >=20
-> > Am I missing something here?
-> >=20
-> > When booting L2, I also noticed that the control flow does not enter the
-> > following "if" block in hw/virtio/vhost-vdpa.c:vhost_vdpa_init.
-> >=20
-> > if (dev->migration_blocker =3D=3D NULL && !v->shadow_vqs_enabled) {
-> >=20
-> >         ...
-> >         vhost_svq_valid_features(features, &dev->migration_blocker);
-> >=20
-> > }
-> >=20
-> > So "vhost_svq_valid_features" is never called. According to the comments
-> > this is because the device was not started with x-svq=3Don. Could this =
-be a
-> > result (or reason) of the broken connection to the backend? Is there a =
-way
-> > to manually set this option?
->=20
-> Yes, you can set it in -netdev vhost-vdpa,x-svq=3Don.
-
-I haven't checked that dev->fd is valid yet. I started debugging with
-the x-svq=3Don option, and I realized I was booting the L2 VM without
-setting packed=3Don.
-
-On Tue, Sep 24, 2024 at 7:31=E2=80=AFAM Sahil <icegambit91@gmail.com> wrote:
-> And I booted L2 by running:
->=20
-> # ./qemu/build/qemu-system-x86_64 \
-> -nographic \
-> -m 4G \
-> -enable-kvm \
-> -M q35 \
-> -drive file=3D//root/L2.qcow2,media=3Ddisk,if=3Dvirtio \
-> -netdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-0,id=3Dvhost-vdpa0 \
-> -device virtio-net-pci,netdev=3Dvhost-vdpa0,disable-legacy=3Don,disable-m=
-odern=3Doff,event_idx=3Doff,bus=3Dpcie.0,addr=3D0x7 \
-> -smp 4 \
-> -cpu host \
-> 2>&1 | tee vm.log
->
-
-With packed=3Don in the device option, I see that the packed feature bit is
-set in L2 :)
-
-However, I see that vhost shadow virtqueues are still not being used. I am
-currently trying to find the reason behind this. I have narrowed down the
-issue to hw/virtio/vhost-vdpa.c [1]. The "vhost_vdpa_svqs_start" function
-is being called but in the loop, vhost_svq_start is never called. I think it
-might be because there's an issue with "vhost_vdpa_svq_setup".
-
-I'll send an update once I find something.
-
-Thanks,
-Sahil
-
-[1] https://github.com/qemu/qemu/blob/master/hw/virtio/vhost-vdpa.c#L1243
-
-
+SGkgQ2VkcmljLA0KDQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjUgNi83XSBhc3BlZWQvc29jOiBT
+dXBwb3J0IEdQSU8gZm9yIEFTVDI3MDAgYW5kIGNvcnJlY3QNCj4gaXJxIDEzMA0KPiANCj4gSGVs
+bG8gSmFtaW4sDQo+IA0KPiBPbiA5LzI3LzI0IDEwOjMzLCBKYW1pbiBMaW4gd3JvdGU6DQo+ID4g
+VGhlIHJlZ2lzdGVyIHNldCBvZiBHUElPIGhhdmUgYSBzaWduaWZpY2FudCBjaGFuZ2Ugc2luY2Ug
+QVNUMjcwMC4NCj4gPiBFYWNoIEdQSU8gcGluIGhhcyB0aGVpciBvd24gaW5kaXZpZHVhbCBjb250
+cm9sIHJlZ2lzdGVyIGFuZCB1c2VycyBhcmUNCj4gPiBhYmxlIHRvIHNldCBvbmUgR1BJTyBwaW7i
+gJlzIGRpcmVjdGlvbiwgaW50ZXJydXB0IGVuYWJsZSwgaW5wdXQgbWFzayBhbmQNCj4gPiBzbyBv
+biBpbiB0aGUgc2FtZSBvbmUgY29udHJvbCByZWdpc3Rlci4NCj4gPg0KPiA+IEFTVDI3MDAgZG9l
+cyBub3QgaGF2ZSBHUElPMThfWFhYIHJlZ2lzdGVycyBmb3IgR1BJTyAxLjh2LCByZW1vdmVzDQo+
+ID4gQVNQRUVEX0RFVl9HUElPXzFfOFYuIEl0IGlzIGVub3VnaCB0byBvbmx5IGhhdmUgQVNQRUVE
+X0RFVl9HUElPDQo+IGRldmljZQ0KPiA+IGluIEFTVDI3MDAuDQo+ID4NCj4gPiBBZGQgR1BJTyBt
+b2RlbCBmb3IgQVNUMjcwMCBHUElPIHN1cHBvcnQuIFRoZSBHUElPIGNvbnRyb2xsZXIgcmVnaXN0
+ZXJzDQo+ID4gYmFzZSBhZGRyZXNzIGlzIHN0YXJ0IGF0IDB4MTRDMF9CMDAwIGFuZCBpdHMgYWRk
+cmVzcyBzcGFjZSBpcyAweDEwMDAuDQo+ID4NCj4gPiBUaGUgQVNUMjcwMCBHUElPIGNvbnRyb2xs
+ZXIgaW50ZXJydXB0IGlzIGNvbm5lY3RlZCB0byBHSUNJTlQxMzBfSU5UQw0KPiA+IGF0IGJpdCAx
+OC4gVGhlcmVmb3JlLCBjb3JyZWN0IEdQSU8gaXJxIDEzMC4NCj4gDQo+IEkgd291bGQgcHJlZmVy
+IDIgcGF0Y2hlcy4gT25lIGZvciB0aGUgSVJRIG51bWJlciBmaXggYW5kIG9uZSBmb3IgIlN1cHBv
+cnQNCj4gR1BJTyBmb3IgQVNUMjcwMCINCj4gDQpUaGFua3MgZm9yIHN1Z2dlc3Rpb24uDQpXaWxs
+IGZpeA0KDQpKYW1pbg0KPiBUaGFua3MsDQo+IA0KPiBDLg0KPiANCj4gDQo+ID4NCj4gPiBTaWdu
+ZWQtb2ZmLWJ5OiBKYW1pbiBMaW4gPGphbWluX2xpbkBhc3BlZWR0ZWNoLmNvbT4NCj4gPiAtLS0N
+Cj4gPiAgIGh3L2FybS9hc3BlZWRfYXN0Mjd4MC5jIHwgMTggKysrKysrKysrKysrKysrLS0tDQo+
+ID4gICAxIGZpbGUgY2hhbmdlZCwgMTUgaW5zZXJ0aW9ucygrKSwgMyBkZWxldGlvbnMoLSkNCj4g
+Pg0KPiA+IGRpZmYgLS1naXQgYS9ody9hcm0vYXNwZWVkX2FzdDI3eDAuYyBiL2h3L2FybS9hc3Bl
+ZWRfYXN0Mjd4MC5jIGluZGV4DQo+ID4gNzYxZWUxMTY1Ny4uZGNhNjYwZWI2YiAxMDA2NDQNCj4g
+PiAtLS0gYS9ody9hcm0vYXNwZWVkX2FzdDI3eDAuYw0KPiA+ICsrKyBiL2h3L2FybS9hc3BlZWRf
+YXN0Mjd4MC5jDQo+ID4gQEAgLTYyLDYgKzYyLDcgQEAgc3RhdGljIGNvbnN0IGh3YWRkciBhc3Bl
+ZWRfc29jX2FzdDI3MDBfbWVtbWFwW10gPQ0KPiB7DQo+ID4gICAgICAgW0FTUEVFRF9HSUNfUkVE
+SVNUXSAgICA9ICAweDEyMjgwMDAwLA0KPiA+ICAgICAgIFtBU1BFRURfREVWX0FEQ10gICAgICAg
+PSAgMHgxNEMwMDAwMCwNCj4gPiAgICAgICBbQVNQRUVEX0RFVl9JMkNdICAgICAgID0gIDB4MTRD
+MEYwMDAsDQo+ID4gKyAgICBbQVNQRUVEX0RFVl9HUElPXSAgICAgID0gIDB4MTRDMEIwMDAsDQo+
+ID4gICB9Ow0KPiA+DQo+ID4gICAjZGVmaW5lIEFTVDI3MDBfTUFYX0lSUSAyODgNCj4gPiBAQCAt
+ODcsOCArODgsNyBAQCBzdGF0aWMgY29uc3QgaW50IGFzcGVlZF9zb2NfYXN0MjcwMF9pcnFtYXBb
+XSA9IHsNCj4gPiAgICAgICBbQVNQRUVEX0RFVl9BRENdICAgICAgID0gMTMwLA0KPiA+ICAgICAg
+IFtBU1BFRURfREVWX1hETUFdICAgICAgPSA1LA0KPiA+ICAgICAgIFtBU1BFRURfREVWX0VNTUNd
+ICAgICAgPSAxNSwNCj4gPiAtICAgIFtBU1BFRURfREVWX0dQSU9dICAgICAgPSAxMSwNCj4gPiAt
+ICAgIFtBU1BFRURfREVWX0dQSU9fMV84Vl0gPSAxMzAsDQo+ID4gKyAgICBbQVNQRUVEX0RFVl9H
+UElPXSAgICAgID0gMTMwLA0KPiA+ICAgICAgIFtBU1BFRURfREVWX1JUQ10gICAgICAgPSAxMywN
+Cj4gPiAgICAgICBbQVNQRUVEX0RFVl9USU1FUjFdICAgID0gMTYsDQo+ID4gICAgICAgW0FTUEVF
+RF9ERVZfVElNRVIyXSAgICA9IDE3LA0KPiA+IEBAIC0xMjQsNyArMTI0LDcgQEAgc3RhdGljIGNv
+bnN0IGludA0KPiBhc3BlZWRfc29jX2FzdDI3MDBfZ2ljMTI4X2ludGNtYXBbXSA9IHsNCj4gPiAg
+IHN0YXRpYyBjb25zdCBpbnQgYXNwZWVkX3NvY19hc3QyNzAwX2dpYzEzMF9pbnRjbWFwW10gPSB7
+DQo+ID4gICAgICAgW0FTUEVFRF9ERVZfSTJDXSAgICAgICAgPSAwLA0KPiA+ICAgICAgIFtBU1BF
+RURfREVWX0FEQ10gICAgICAgID0gMTYsDQo+ID4gLSAgICBbQVNQRUVEX0RFVl9HUElPXzFfOFZd
+ICA9IDE4LA0KPiA+ICsgICAgW0FTUEVFRF9ERVZfR1BJT10gICAgICAgPSAxOCwNCj4gPiAgIH07
+DQo+ID4NCj4gPiAgIC8qIEdJQ0lOVCAxMzEgKi8NCj4gPiBAQCAtMzczLDYgKzM3Myw5IEBAIHN0
+YXRpYyB2b2lkIGFzcGVlZF9zb2NfYXN0MjcwMF9pbml0KE9iamVjdCAqb2JqKQ0KPiA+DQo+ID4g
+ICAgICAgc25wcmludGYodHlwZW5hbWUsIHNpemVvZih0eXBlbmFtZSksICJhc3BlZWQuaTJjLSVz
+Iiwgc29jbmFtZSk7DQo+ID4gICAgICAgb2JqZWN0X2luaXRpYWxpemVfY2hpbGQob2JqLCAiaTJj
+IiwgJnMtPmkyYywgdHlwZW5hbWUpOw0KPiA+ICsNCj4gPiArICAgIHNucHJpbnRmKHR5cGVuYW1l
+LCBzaXplb2YodHlwZW5hbWUpLCAiYXNwZWVkLmdwaW8tJXMiLCBzb2NuYW1lKTsNCj4gPiArICAg
+IG9iamVjdF9pbml0aWFsaXplX2NoaWxkKG9iaiwgImdwaW8iLCAmcy0+Z3BpbywgdHlwZW5hbWUp
+Ow0KPiA+ICAgfQ0KPiA+DQo+ID4gICAvKg0KPiA+IEBAIC02NTgsNiArNjYxLDE1IEBAIHN0YXRp
+YyB2b2lkDQo+IGFzcGVlZF9zb2NfYXN0MjcwMF9yZWFsaXplKERldmljZVN0YXRlICpkZXYsIEVy
+cm9yICoqZXJycCkNCj4gPiAgICAgICAgICAgc3lzYnVzX2Nvbm5lY3RfaXJxKFNZU19CVVNfREVW
+SUNFKCZzLT5pMmMuYnVzc2VzW2ldKSwgMCwgaXJxKTsNCj4gPiAgICAgICB9DQo+ID4NCj4gPiAr
+ICAgIC8qIEdQSU8gKi8NCj4gPiArICAgIGlmICghc3lzYnVzX3JlYWxpemUoU1lTX0JVU19ERVZJ
+Q0UoJnMtPmdwaW8pLCBlcnJwKSkgew0KPiA+ICsgICAgICAgIHJldHVybjsNCj4gPiArICAgIH0N
+Cj4gPiArICAgIGFzcGVlZF9tbWlvX21hcChzLCBTWVNfQlVTX0RFVklDRSgmcy0+Z3BpbyksIDAs
+DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgc2MtPm1lbW1hcFtBU1BFRURfREVWX0dQSU9dKTsN
+Cj4gPiArICAgIHN5c2J1c19jb25uZWN0X2lycShTWVNfQlVTX0RFVklDRSgmcy0+Z3BpbyksIDAs
+DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgYXNwZWVkX3NvY19nZXRfaXJxKHMsIEFTUEVF
+RF9ERVZfR1BJTykpOw0KPiA+ICsNCj4gPiAgICAgICBjcmVhdGVfdW5pbXBsZW1lbnRlZF9kZXZp
+Y2UoImFzdDI3MDAuZHBtY3UiLCAweDExMDAwMDAwLA0KPiAweDQwMDAwKTsNCj4gPiAgICAgICBj
+cmVhdGVfdW5pbXBsZW1lbnRlZF9kZXZpY2UoImFzdDI3MDAuaW9tZW0wIiwgMHgxMjAwMDAwMCwN
+Cj4gMHgwMTAwMDAwMCk7DQo+ID4gICAgICAgY3JlYXRlX3VuaW1wbGVtZW50ZWRfZGV2aWNlKCJh
+c3QyNzAwLmlvbWVtMSIsIDB4MTQwMDAwMDAsDQo+ID4gMHgwMTAwMDAwMCk7DQoNCg==
 
