@@ -4,99 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F50CF6497
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 09:35:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 107C6CF649D
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 09:40:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svCoe-0003wv-9q; Mon, 30 Sep 2024 05:35:40 -0400
+	id 1svCsz-0004sH-Gx; Mon, 30 Sep 2024 05:40:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1svCod-0003st-6M; Mon, 30 Sep 2024 05:35:39 -0400
-Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1svCob-0007mk-31; Mon, 30 Sep 2024 05:35:38 -0400
-Received: by mail-qt1-x82a.google.com with SMTP id
- d75a77b69052e-45832b2784bso34364911cf.3; 
- Mon, 30 Sep 2024 02:35:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727688935; x=1728293735; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=CLZOndBYguupyMCtRpcMGT6av+LVhgdkjZCSsnz975A=;
- b=iWme7WG+0aPGUesYr9012r0q1tXr7Zj+LoBrq7d8OU75NKHhxKaS1o6eOC4H7KQ4qo
- yzLfEUp4y+npOSTWeIdBBeGAxspNTgTTY9WnBfvlbYDK023kSVHrhFCtR2gwY1tL/7O4
- vB91I2bVeqXTv7zslIzsflqQ8Dedm6edGlXca2AqplPXm9QxEJwEDPPyrvHOQQ++9DXM
- 33eo6RdLQeF/u368llAvZsFmJfYacfW/ehUKaN0120dFLtjZ0HgZdj0Xi9ccfb0H38UK
- wqAGG/i6MjuJPqk21F8RZMqeSIcLAFYkGLkPJ4WGErQoWjF3/LiR8+f7gEmuVR3TFMJP
- l9tg==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svCss-0004U1-In
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:40:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svCsr-00085a-3U
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:40:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727689199;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=jfa7fKCR6LzN2+7213iB+JM0KilLpAF0mx0kcl9lC6I=;
+ b=WhIjjlcYzJ1GDSSjGztlByg8bwaup3ezoIzDeM6dxPHPVPGxMiuUcXiR4Oi+/c7mw8B53q
+ osAx2hZGCQTG+uYI1s6IxpvqyNjqpXLvHA3BPqK0Zt11g2yulQ8He+oQo2tVjqMs8x8lHK
+ H1Ns5xOmQPbkg25k/qer3qCYnN8OybM=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-426-e7pkdPzgNhudwyr-FTD7ow-1; Mon, 30 Sep 2024 05:39:57 -0400
+X-MC-Unique: e7pkdPzgNhudwyr-FTD7ow-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6c57cab27faso87730806d6.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 02:39:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727688935; x=1728293735;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CLZOndBYguupyMCtRpcMGT6av+LVhgdkjZCSsnz975A=;
- b=Zz0bEtxPd5z6IQ8DEy9aOKKYQDLD0tR67TGYkB55e7UZgEe6SjirZaJHXBejzQhKjo
- EU0s3u0HQXc3m4boCt0vqCICKI2+FJEMjuzYV7Whr3b2n9USbm3MzWANZDMDA7h2AYbG
- 48zjAXe+13SpSQx+p9Py4slqlB09hBOScS0pgVcU3mYhtSCYri9meGBKjbQs6y8m/nVr
- abMHBgHbXfdVGopSkiBoIWAc8jj6dJ8gUKQiApbn4/flnGp1qZmp6Gkqqt42Ix4D+SgK
- 5GKKV82aw3pbqkpz1FRX3FfwHRJKVA+CwDXjR4LNV5cvrGtyTNTyW186iVD/x5hSp/vU
- /CxA==
+ d=1e100.net; s=20230601; t=1727689197; x=1728293997;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jfa7fKCR6LzN2+7213iB+JM0KilLpAF0mx0kcl9lC6I=;
+ b=qk32/qOYMneiXiNca1mAWCf4C8af2vhRma0LzEuqu27wjRYiZEIGFeL+jkF+hbeb11
+ nYgaIpR7XVaqABYeT4RRMkN8cbSMtFOgJf4sgRPZF4QTuf5kIkU6ed873WPah3IobJis
+ S4dC5JpEnNKe6DotyitYoDrGCoCYD2RmePEtmyg0QqCRXkVs8bQrOm1m8NLEN44axjkp
+ tDp9RcSV+uyPu9ncNsg2UtiC50AVJhghdsu4+bUJtFoqjWOMkqodO6inB0oiv6gkzUb7
+ GGmj2W4fo6+v+i3fNrHbR4CXGMTjCEYImIh7KGsskG55lUEZfAbkfnAqn7xPaIxINFmZ
+ lpzQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVXDFam6LU5pedDxMKHHcgXm06BuaRAVvOgL+bLlj6xxhoTBnfkjabJD7/NMs4RkXL8RDJjspvrgMSC@nongnu.org
-X-Gm-Message-State: AOJu0YzhQ9OWZxuTO3u9G5nsC9Nn2Z8gstfJT7AN6LUYtbzQd6ZmGiHE
- 7wExY0Nvfoc50GQMnZeN72eHnsqrcpk1bc/VlgMNOGl0XzdLM8cP1QxVXwXF4lz36BT+l5L4YEg
- T9OBKx5+txfMDujOmhLulDVynIIE=
-X-Google-Smtp-Source: AGHT+IETKuWKQi8ddr5Ss48rC1F7DwDhZdnEQanGNZh82fkwAnODh5WSPaoMl8CoIeyJ/0ZzG51nY3kV3+kUhiyI0uY=
-X-Received: by 2002:a05:622a:343:b0:458:27a7:ad66 with SMTP id
- d75a77b69052e-45c9f247590mr188388841cf.34.1727688934968; Mon, 30 Sep 2024
- 02:35:34 -0700 (PDT)
+ AJvYcCXuOTtli9/IB31VBmqa++c4f0Dd7+Q77x1PG2+feKFvt+ONg0SKxA6FrIs1BpKlEHRrMcnezts3YdT2@nongnu.org
+X-Gm-Message-State: AOJu0Yw6l5SbsF1glyASkdxND2cqe0HzlxXBoocaEEva1v0cgK3CbVmU
+ s1+fCpf1awDX3Vwq79z/raioRktcViHb35wgQGScoinp8qRXPxTH7Z0xgzN40v2dJHlsJWOWV4L
+ uJb/lb2fxVSXA416rVs5A8ryHcyufmZe1x/Ofxik5OR3NY6AZkgRQmFjWT+zqWu0=
+X-Received: by 2002:a05:6214:5b07:b0:6cb:5dd3:a3c7 with SMTP id
+ 6a1803df08f44-6cb5dd3a781mr71416496d6.39.1727689197118; 
+ Mon, 30 Sep 2024 02:39:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJ/YCNG53oja1zTVUTQ1mb4uw/nmeQ4UiJAPGkBRFhBPLLqbsaUZMEijOkfAazxoSq/4QuPg==
+X-Received: by 2002:a05:6214:5b07:b0:6cb:5dd3:a3c7 with SMTP id
+ 6a1803df08f44-6cb5dd3a781mr71416316d6.39.1727689196744; 
+ Mon, 30 Sep 2024 02:39:56 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-48-176.web.vodafone.de.
+ [109.42.48.176]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6cb3b68009esm38117256d6.114.2024.09.30.02.39.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 30 Sep 2024 02:39:56 -0700 (PDT)
+Message-ID: <8079dbae-eb38-482b-ae69-a6b1e2a83c15@redhat.com>
+Date: Mon, 30 Sep 2024 11:39:51 +0200
 MIME-Version: 1.0
-References: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
- <20240930081458.1926382-23-marcandre.lureau@redhat.com>
- <2542220.oxJn2mPQ6z@silver>
-In-Reply-To: <2542220.oxJn2mPQ6z@silver>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 30 Sep 2024 13:35:23 +0400
-Message-ID: <CAJ+F1CJfhHNWWZbi27GRuRtkkECrmE2od2m40PJWDsoCiesELA@mail.gmail.com>
-Subject: Re: [PATCH v3 22/22] fsdep/9p: fix -Werror=maybe-uninitialized
- false-positive
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Fam Zheng <fam@euphon.net>, Song Gao <gaosong@loongson.cn>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, 
- qemu-block@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Greg Kurz <groug@kaod.org>, 
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
- Gerd Hoffmann <kraxel@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
- Fabiano Rosas <farosas@suse.de>, 
- Eric Blake <eblake@redhat.com>, Hyman Huang <yong.huang@smartx.com>,
- Kevin Wolf <kwolf@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- John Snow <jsnow@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
- Jesper Devantier <foss@defmacro.it>, Peter Xu <peterx@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Klaus Jensen <its@irrelevant.dk>,
- Keith Busch <kbusch@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Yuval Shaia <yuval.shaia.ml@gmail.com>, Bin Meng <bin.meng@windriver.com>
-Content-Type: multipart/alternative; boundary="0000000000004059ad062352ed05"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/18] pc-bios/s390-ccw: Remove panics from Netboot IPL
+ path
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: frankja@linux.ibm.com
+References: <20240927005117.1679506-1-jrossi@linux.ibm.com>
+ <20240927005117.1679506-12-jrossi@linux.ibm.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20240927005117.1679506-12-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.095,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,182 +148,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004059ad062352ed05
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 27/09/2024 02.51, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+> 
+> Remove panic-on-error from Netboot specific functions so that error recovery
+> may be possible in the future.
+> 
+> Functions that would previously panic now provide a return code.
+> 
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> 
+> ---
+...
+> index bc6ad8695f..013f94d932 100644
+> --- a/pc-bios/s390-ccw/netmain.c
+> +++ b/pc-bios/s390-ccw/netmain.c
+> @@ -464,7 +464,7 @@ static bool find_net_dev(Schib *schib, int dev_no)
+>       return false;
+>   }
+>   
+> -static void virtio_setup(void)
+> +static int virtio_setup(void)
+>   {
+>       Schib schib;
+>       int ssid;
+> @@ -479,7 +479,10 @@ static void virtio_setup(void)
+>       enable_mss_facility();
+>   
+>       if (store_iplb(&iplb)) {
+> -        IPL_assert(iplb.pbt == S390_IPL_TYPE_CCW, "IPL_TYPE_CCW expected");
+> +        if (iplb.pbt != S390_IPL_TYPE_CCW) {
+> +            puts("IPL_TYPE_CCW expected");
+> +        }
 
-Hi Christian
+I think in this case, the IPL_assert() could maybe even stay: If we end up 
+here without the correct type in iplb.pbt, there was likely a bug elsewhere 
+in the earlier setup code already, or do you see a way we could end up here 
+with another type?
 
-On Mon, Sep 30, 2024 at 1:27=E2=80=AFPM Christian Schoenebeck via <
-qemu-devel@nongnu.org> wrote:
+Anyway, if you want to change it, shouldn't there be a "return false" after 
+the puts() statement?
 
-> On Monday, September 30, 2024 10:14:57 AM CEST Marc-Andr=C3=A9 Lureau wro=
-te:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > ../fsdev/9p-iov-marshal.c:93:23: error: =E2=80=98val=E2=80=99 may be us=
-ed uninitialized
-> [-Werror=3Dmaybe-uninitialized]
-> > and similar
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  fsdev/9p-iov-marshal.c | 6 +++---
-> >  1 file changed, 3 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/fsdev/9p-iov-marshal.c b/fsdev/9p-iov-marshal.c
-> > index a1c9beddd2..75fb87a490 100644
-> > --- a/fsdev/9p-iov-marshal.c
-> > +++ b/fsdev/9p-iov-marshal.c
-> > @@ -84,7 +84,7 @@ ssize_t v9fs_iov_vunmarshal(struct iovec *out_sg, int
-> out_num, size_t offset,
-> >              break;
-> >          }
-> >          case 'w': {
-> > -            uint16_t val, *valp;
-> > +            uint16_t val =3D 0, *valp;
-> >              valp =3D va_arg(ap, uint16_t *);
-> >              copied =3D v9fs_unpack(&val, out_sg, out_num, offset,
-> sizeof(val));
->
-> Another option would be inserting here:
->
->         if (copied <=3D 0) break;
->
-> Same below. But I leave it up to you:
->
-> Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
->
->
-Ok, done
+  Thomas
 
-thanks
-
-
-> /Christian
->
-> >              if (bswap) {
-> > @@ -95,7 +95,7 @@ ssize_t v9fs_iov_vunmarshal(struct iovec *out_sg, int
-> out_num, size_t offset,
-> >              break;
-> >          }
-> >          case 'd': {
-> > -            uint32_t val, *valp;
-> > +            uint32_t val =3D 0, *valp;
-> >              valp =3D va_arg(ap, uint32_t *);
-> >              copied =3D v9fs_unpack(&val, out_sg, out_num, offset,
-> sizeof(val));
-> >              if (bswap) {
-> > @@ -106,7 +106,7 @@ ssize_t v9fs_iov_vunmarshal(struct iovec *out_sg,
-> int out_num, size_t offset,
-> >              break;
-> >          }
-> >          case 'q': {
-> > -            uint64_t val, *valp;
-> > +            uint64_t val =3D 0, *valp;
-> >              valp =3D va_arg(ap, uint64_t *);
-> >              copied =3D v9fs_unpack(&val, out_sg, out_num, offset,
-> sizeof(val));
-> >              if (bswap) {
-> >
->
->
->
->
-
---=20
-Marc-Andr=C3=A9 Lureau
-
---0000000000004059ad062352ed05
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi Christian<br></div><br><div class=3D"g=
-mail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Sep 30, 2024 at 1=
-:27=E2=80=AFPM Christian Schoenebeck via &lt;<a href=3D"mailto:qemu-devel@n=
-ongnu.org">qemu-devel@nongnu.org</a>&gt; wrote:<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">On Monday, September 30, 2024 10:14:57 AM =
-CEST Marc-Andr=C3=A9 Lureau wrote:<br>
-&gt; From: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@re=
-dhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
-&gt; <br>
-&gt; ../fsdev/9p-iov-marshal.c:93:23: error: =E2=80=98val=E2=80=99 may be u=
-sed uninitialized [-Werror=3Dmaybe-uninitialized]<br>
-&gt; and similar<br>
-&gt; <br>
-&gt; Signed-off-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.=
-lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br=
->
-&gt; ---<br>
-&gt;=C2=A0 fsdev/9p-iov-marshal.c | 6 +++---<br>
-&gt;=C2=A0 1 file changed, 3 insertions(+), 3 deletions(-)<br>
-&gt; <br>
-&gt; diff --git a/fsdev/9p-iov-marshal.c b/fsdev/9p-iov-marshal.c<br>
-&gt; index a1c9beddd2..75fb87a490 100644<br>
-&gt; --- a/fsdev/9p-iov-marshal.c<br>
-&gt; +++ b/fsdev/9p-iov-marshal.c<br>
-&gt; @@ -84,7 +84,7 @@ ssize_t v9fs_iov_vunmarshal(struct iovec *out_sg, in=
-t out_num, size_t offset,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case &#39;w&#39;: {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint16_t val, *valp;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint16_t val =3D 0, *valp;<=
-br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 valp =3D va_arg(ap, ui=
-nt16_t *);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 copied =3D v9fs_unpack=
-(&amp;val, out_sg, out_num, offset, sizeof(val));<br>
-<br>
-Another option would be inserting here:<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (copied &lt;=3D 0) break;<br>
-<br>
-Same below. But I leave it up to you:<br>
-<br>
-Reviewed-by: Christian Schoenebeck &lt;<a href=3D"mailto:qemu_oss@crudebyte=
-.com" target=3D"_blank">qemu_oss@crudebyte.com</a>&gt;<br>
-<br></blockquote><div><br></div><div>Ok, done</div><div><br></div><div>than=
-ks</div><div>=C2=A0<br></div><blockquote class=3D"gmail_quote" style=3D"mar=
-gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
-ex">
-/Christian<br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (bswap) {<br>
-&gt; @@ -95,7 +95,7 @@ ssize_t v9fs_iov_vunmarshal(struct iovec *out_sg, in=
-t out_num, size_t offset,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case &#39;d&#39;: {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t val, *valp;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t val =3D 0, *valp;<=
-br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 valp =3D va_arg(ap, ui=
-nt32_t *);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 copied =3D v9fs_unpack=
-(&amp;val, out_sg, out_num, offset, sizeof(val));<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (bswap) {<br>
-&gt; @@ -106,7 +106,7 @@ ssize_t v9fs_iov_vunmarshal(struct iovec *out_sg, =
-int out_num, size_t offset,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case &#39;q&#39;: {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint64_t val, *valp;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint64_t val =3D 0, *valp;<=
-br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 valp =3D va_arg(ap, ui=
-nt64_t *);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 copied =3D v9fs_unpack=
-(&amp;val, out_sg, out_num, offset, sizeof(val));<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (bswap) {<br>
-&gt; <br>
-<br>
-<br>
-<br>
-</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
-fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=
-=A9 Lureau<br></div></div>
-
---0000000000004059ad062352ed05--
 
