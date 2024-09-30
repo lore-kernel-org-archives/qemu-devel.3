@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36C6FCE8347
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 14:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB50FCE834B
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 14:33:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svHON-0006aW-RR; Mon, 30 Sep 2024 10:28:53 -0400
+	id 1svHRw-0003sX-RK; Mon, 30 Sep 2024 10:32:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svHOL-0006YY-JF
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 10:28:49 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svHRv-0003pV-7p
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 10:32:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svHOJ-0007fb-Hv
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 10:28:49 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svHRr-0008Jm-MO
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 10:32:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727706525;
+ s=mimecast20190719; t=1727706745;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=uKCv+X8hPvYdRL8L3yV9tY6ssaG3u+jqmqCtsE4SEQc=;
- b=KVkOs5OYUa9KL6+VCw9q0Cq4da0qxjzfBVPzg45EsaxDCdBkrSYjuOSOFx2bWA/U9WRZJM
- oTM/3DG1J7uVkBlly3sI0DAuUQmB44ri53UEhQQkzfdFT80W9jgPEc5TcrxHL8cjzVvngL
- D31KdKVZo5v/zzYB7aUyVZ1H3fYnhfI=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mPMSI02Kb00GAbmUNwHQrXOfDcAxFEOqfr8eCYUCT6U=;
+ b=E1zn/sGATnzUlm+oyVf3FQVk26KgMSpEw0MsaxMZxKz8m5Jrxcam6KUdwuweCwT8WayzGY
+ zZe+NrvDpYanGcv5pOnbxgvjwefuvvE6J2e7CcveuLBx3QX4V226CvLjl9rMfZmiRkG9hu
+ H7VkVd/wLZjpJ9GtEF3ugLLbpyq4L2Q=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-421-UTHe6jbdMYi3yW5xyi4oTw-1; Mon, 30 Sep 2024 10:28:44 -0400
-X-MC-Unique: UTHe6jbdMYi3yW5xyi4oTw-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-37ccc21ceb1so1504666f8f.2
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 07:28:43 -0700 (PDT)
+ us-mta-159-6vBBMtanNAqjPrkRh7KlcQ-1; Mon, 30 Sep 2024 10:32:23 -0400
+X-MC-Unique: 6vBBMtanNAqjPrkRh7KlcQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42cb6ed7f9dso45520055e9.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 07:32:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727706523; x=1728311323;
+ d=1e100.net; s=20230601; t=1727706742; x=1728311542;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uKCv+X8hPvYdRL8L3yV9tY6ssaG3u+jqmqCtsE4SEQc=;
- b=o0+FE0H4DPREtF8mchPTMSDkNJyjfkvCgm6y+iHCwzwWbB6DUfsMIhVZwBqYNui/5p
- vhbfbz817GA4ThmdxqzlPzCXlLF1r+/bq68PbbatI/CscjkP6oMKtwk0NgYI8JGSYKqq
- 4enR4qB7tZrDpsEHhaJ63/JyR7WcNm/M7BPCpbDxwBFkU/wMvuIG3OtyKlgh2brM2chn
- wDI8rizFz4JIboPljfUBkdG3vAedaFAybR+ZXhAlhI3+nIT+kQJEHOf/GaOQd+C1ErV9
- mamiDUYYYC7ZhDVyGSQ8mOynFnwiWf+1M1M0lbdZb6c26RgCkrxVAsUN9wYhUJ5QWJaU
- fdQA==
+ bh=mPMSI02Kb00GAbmUNwHQrXOfDcAxFEOqfr8eCYUCT6U=;
+ b=jdtPQQjvRgKbqfNRYA5JqgtrRnwe12fWtLq7Rn9tBC7ZYQn2J+gDEDBY5Ow+yIVJYg
+ WZXhYRBGhfjX3ERKvuYBAxD6osygSVVBSMdKZdL8BEsAGQLNUYwoJKfFlTt/QUFhZRgE
+ Ff7d4bsNUPE1bx8NyZ8p8Bbq/Uc96aeIncj4srU3lLjrFfJZCQtPii4OLnVdOCNyzKy4
+ FDq4ZYv8cCuO+Mbmd6MtKlISCDDEII3sv4T+HJ9JlVQ1xnVZtDkhOgDfxnZ0BRH6YyWI
+ ticqQlE2lTGbYSlwu9dyufSDn6dvett3MvFycjfp7TtMXqrJ6TrxJlUvMJ2+sZgXHVIt
+ MvCw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVtLxk0q9VF8mVwfMYGS1thYLzwpa+4tSoMLx/UcLL7NyxA0C2Zw4DckhWsQ0NegXb2jwqry8flffaw@nongnu.org
-X-Gm-Message-State: AOJu0YwB3u6skx9rnSESNQu+6QinINxNqIbYJ6kQQHkASifcSS+cXS9W
- OX+hEyAQRao5tce7Ed/JHnuBWpIH9djOWpn0Ol/LtRCHlETXAjE2D/u9GFONKi2hV8rxqSG8p3b
- hUF72KZBSW8MMa4KyAZYiAil8kHhfms8ZdMuPfT29qLka5OzthfbP
-X-Received: by 2002:adf:e885:0:b0:37c:c5c4:627 with SMTP id
- ffacd0b85a97d-37cd5a692ecmr7056679f8f.5.1727706522933; 
- Mon, 30 Sep 2024 07:28:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFVLtVidqM+9UwDOlyvqjaIzAu/DH1q5lxjnwsD4/9iN+Gfo/GrSStQGZAqXxLed4L1uW2nbw==
-X-Received: by 2002:adf:e885:0:b0:37c:c5c4:627 with SMTP id
- ffacd0b85a97d-37cd5a692ecmr7056644f8f.5.1727706522460; 
- Mon, 30 Sep 2024 07:28:42 -0700 (PDT)
+ AJvYcCUJBp5z4EbFsukM+kgDajcOUKz1zKMKdBVAwpTV9nkHDMYc5X8EUfh+JrXVtpr3KfXfzjqwAS42R9dg@nongnu.org
+X-Gm-Message-State: AOJu0YwjLGk6wKLya3NG7doIyA+hAIYU/9kL6hzM1ZI/f5iCe9HwbnS0
+ /OoVhm6cMroUWdW+2RSRTrn1eIk75XRQ92vzFaxhDjRTyQyUAuk/qWQ720rVClmwHg3sS/fTBEL
+ G8g2jU0hu1gllxEgv7R9IeiLOyYbmk90exapEb+hFevU9heyar75g
+X-Received: by 2002:a05:600c:3b11:b0:42a:a6b8:f09f with SMTP id
+ 5b1f17b1804b1-42f58497683mr112602145e9.23.1727706742059; 
+ Mon, 30 Sep 2024 07:32:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHGozdsdFsjR9NB+z6Wz5LNvwn4ot70z1Xq7vR7a/5gfvkAu43hDnx1KH4N/J8Hlud4bTM3iQ==
+X-Received: by 2002:a05:600c:3b11:b0:42a:a6b8:f09f with SMTP id
+ 5b1f17b1804b1-42f58497683mr112601875e9.23.1727706741606; 
+ Mon, 30 Sep 2024 07:32:21 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-48-176.web.vodafone.de.
  [109.42.48.176]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd572fa48sm9128437f8f.66.2024.09.30.07.28.40
+ 5b1f17b1804b1-42f57debe5csm104589035e9.24.2024.09.30.07.32.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Sep 2024 07:28:42 -0700 (PDT)
-Message-ID: <dd2bc14f-c690-4c82-a915-6b39ed4c5b40@redhat.com>
-Date: Mon, 30 Sep 2024 16:28:39 +0200
+ Mon, 30 Sep 2024 07:32:21 -0700 (PDT)
+Message-ID: <257b0de0-6744-4ae8-a2c5-f05eec29a3f0@redhat.com>
+Date: Mon, 30 Sep 2024 16:32:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/13] hw/xtensa/xtfpga: Remove TARGET_BIG_ENDIAN #ifdef'ry
+Subject: Re: [PATCH 08/13] hw/xtensa/xtfpga: Replace memcpy()+tswap32() by
+ stl_endian_p()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
@@ -85,7 +86,7 @@ Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Max Filippov <jcmvbkbc@gmail.com>, Paul Burton <paulburton@kernel.org>
 References: <20240930073450.33195-1-philmd@linaro.org>
- <20240930073450.33195-8-philmd@linaro.org>
+ <20240930073450.33195-9-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -130,7 +131,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240930073450.33195-8-philmd@linaro.org>
+In-Reply-To: <20240930073450.33195-9-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -142,7 +143,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,14 +160,32 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 30/09/2024 09.34, Philippe Mathieu-Daudé wrote:
-> Move code evaluation from preprocessor to compiler so
-> both if() ladders are processed. Mostly style change.
+> Replace a pair of memcpy() + tswap32() by stl_endian_p(),
+> which also swap the value using target endianness.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/xtensa/xtfpga.c | 12 +++++++-----
->   1 file changed, 7 insertions(+), 5 deletions(-)
+>   hw/xtensa/xtfpga.c | 6 ++----
+>   1 file changed, 2 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
+> index 228f00b045..521fe84b01 100644
+> --- a/hw/xtensa/xtfpga.c
+> +++ b/hw/xtensa/xtfpga.c
+> @@ -438,11 +438,9 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
+>               const size_t boot_sz = TARGET_BIG_ENDIAN ? sizeof(boot_be)
+>                                                        : sizeof(boot_le);
+>               uint8_t *boot = TARGET_BIG_ENDIAN ? boot_be : boot_le;
+> -            uint32_t entry_pc = tswap32(entry_point);
+> -            uint32_t entry_a2 = tswap32(tagptr);
+>   
+> -            memcpy(boot + 4, &entry_pc, sizeof(entry_pc));
+> -            memcpy(boot + 8, &entry_a2, sizeof(entry_a2));
+> +            stl_endian_p(TARGET_BIG_ENDIAN, boot + 4, entry_point);
+> +            stl_endian_p(TARGET_BIG_ENDIAN, boot + 8, tagptr);
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Why don't you simply use stl_p() here?
+
+  Thomas
 
 
