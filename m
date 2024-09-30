@@ -4,179 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11724CDD1D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 19:26:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2CF0CDD1A9
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 19:27:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svM26-0004va-M3; Mon, 30 Sep 2024 15:26:10 -0400
+	id 1svM2N-000587-Sl; Mon, 30 Sep 2024 15:26:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shefty@nvidia.com>) id 1svM23-0004v7-GQ
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:26:07 -0400
-Received: from mail-dm6nam10on2058.outbound.protection.outlook.com
- ([40.107.93.58] helo=NAM10-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1svM2I-00057d-Cq
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:26:24 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shefty@nvidia.com>) id 1svM1z-00009K-FT
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:26:07 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WnehKqgTC/yuCYeW+24WH6SnXegm7qnjGaL/t+TeDo2G64F+cWz7oo4tsWp5BnhLI1GxPm3WTu3iLx3DSLKzZsv1E6//4coFAZPxvKCcaUtG6Dy76SQJyt6GtctjY19CldsGRlHeX1obXZFgwGZyTFcqvOVi4bQOZyQtkBgwkErntHfirZkrn3a/Hw1maG5+mxCP6IfFZT9YzUDbIOc31ICUR328sqnbXJywpW2TKw5s+gkqMwNb0EWVSIGw1lNzRblVjziHZovMiRaJS5YSdjBqawyTrskHEkeCM/Akjwg6VFhnkGZrWf5lSqYBCSESeygfV4TUN9TdCphaFNbXdg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YhNb31m4GU1OPFV5+/Zw7AXS668jWYM+KBaQI2OU+LI=;
- b=pjfMWzhfTVeogu0wciIQ3gXkZD2OgLyjz/G9IuohiLthbXl/tGvruemb9FfYIESU+Ji7dNOnBZ8dm79pQR4QPuJ53XQEJzOr+HsYcUXP5Wy8gknri1Xfl1AmfFN+DeQ3Y7odr/urHcOHLDvMfOBaZqLJl5PjouCbyvHnrghpexBBZ99ri+l0dFv4XJXq4wrGPH6DEM7KawFuQ16WWJqb0i4wPORxFFuOgoqgK1DttY+4JiW67H66B3cO7o8NjPaPisTb2QkEOwRa6uk667LZW4B/ugfXfRVBCuwsBHIqKouufYyxQREINNBPXg+RmS3xsXv1V7+LFSfh4LC50+HpdA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YhNb31m4GU1OPFV5+/Zw7AXS668jWYM+KBaQI2OU+LI=;
- b=NyGCWsoyMIygQvdD1bC5sC3FfhfETsvfsaULV0un170UPfvBcMZ9xU4BDTTQAyDtXdy0e/zZQIc99p4HziFHri/FNpDRmVtUhCHLYvOCKKq3LgfTyK17gA93FiLEtKTNTljAMOx5kLV1kVV2Bjkp0wi8H+AtUZVCCL5DQBsFxHa9N5gLnwSy8Lsj1m7syjhfrOay/TvqHs6p8tT7/r2EULgysuSwMFx8r1eSd3VFT7av2q3g73iaDF8E6BIeP3B0L5EFoh7oAYza4M8V+xIOZI1sd1SUaU0yCVxJp+/ZpTVhjJC6v4kkjCW9SBw7oBEDSxTwnVHOcq27Zqq9V8+eEA==
-Received: from DM6PR12MB4313.namprd12.prod.outlook.com (2603:10b6:5:21e::17)
- by IA1PR12MB8540.namprd12.prod.outlook.com (2603:10b6:208:454::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8005.26; Mon, 30 Sep
- 2024 19:20:56 +0000
-Received: from DM6PR12MB4313.namprd12.prod.outlook.com
- ([fe80::4d58:4bbc:90a5:1f13]) by DM6PR12MB4313.namprd12.prod.outlook.com
- ([fe80::4d58:4bbc:90a5:1f13%7]) with mapi id 15.20.8005.026; Mon, 30 Sep 2024
- 19:20:56 +0000
-From: Sean Hefty <shefty@nvidia.com>
-To: Peter Xu <peterx@redhat.com>, Michael Galaxy <mgalaxy@akamai.com>
-CC: "Gonglei (Arei)" <arei.gonglei@huawei.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "yu.zhang@ionos.com" <yu.zhang@ionos.com>, "elmar.gerdes@ionos.com"
- <elmar.gerdes@ionos.com>, zhengchuan <zhengchuan@huawei.com>,
- "berrange@redhat.com" <berrange@redhat.com>, "armbru@redhat.com"
- <armbru@redhat.com>, "lizhijian@fujitsu.com" <lizhijian@fujitsu.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>, Xiexiangyou
- <xiexiangyou@huawei.com>, "linux-rdma@vger.kernel.org"
- <linux-rdma@vger.kernel.org>, "lixiao (H)" <lixiao91@huawei.com>,
- "jinpu.wang@ionos.com" <jinpu.wang@ionos.com>, Wangjialin
- <wangjialin23@huawei.com>
-Subject: RE: [PATCH 0/6] refactor RDMA live migration based on rsocket API
-Thread-Topic: [PATCH 0/6] refactor RDMA live migration based on rsocket API
-Thread-Index: AQHatnjBzD0Q+/leUkmGnsu3pioCmrI8DtYAgAALpoCAKMQMgIAAXY2AgAQQioCAA47yoIABVcMAgAMrZQCAAAQ68A==
-Date: Mon, 30 Sep 2024 19:20:56 +0000
-Message-ID: <DM6PR12MB4313D6BA256740DE1ACA29E9BD762@DM6PR12MB4313.namprd12.prod.outlook.com>
-References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
- <Zs4z7tKWif6K4EbT@x1n> <20240827165643-mutt-send-email-mst@kernel.org>
- <027c4f24-f515-4fdb-8770-6bf2433e0f43@akamai.com>
- <84c74f1a95a648b18c9d41b8c5ef2f60@huawei.com> <ZvQnbzV9SlXKlarV@x1n>
- <DM6PR12MB431364C7A2D94609B4AAF9A8BD6B2@DM6PR12MB4313.namprd12.prod.outlook.com>
- <0730fa9b-49cd-46e4-9264-afabe2486154@akamai.com> <Zvrq7nSbiLfPQoIY@x1n>
-In-Reply-To: <Zvrq7nSbiLfPQoIY@x1n>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM6PR12MB4313:EE_|IA1PR12MB8540:EE_
-x-ms-office365-filtering-correlation-id: 6dd485e9-bd30-4f64-c613-08dce1850241
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|10070799003|1800799024|366016|7416014|38070700018; 
-x-microsoft-antispam-message-info: =?utf-8?B?WGtBRXlQS2t2UUg4bVRsb3pPaHUzQTN5ZUUzZ1I5RGpvWVh4R05zQnpJem9S?=
- =?utf-8?B?SFUwbGNRWUEwSGx2VGM1amhlK1lVL0dvRUwvYjVETkpQdVRIbENNVXN4bnhu?=
- =?utf-8?B?MmZDaTNUdCsxNXNyNU0vNHU0NFdTTjZDb3o3YXZCNkFmR0lPdlhuR2RocDBP?=
- =?utf-8?B?dFcwRHVJNnZUdG41eTR5RWpzbXhMWDlCaGxmdjl6emRFOGlTOWJ3WVV4SmtW?=
- =?utf-8?B?VllhRHVVM3N0Nzh6ZDliei9RbktHYWRRNVcycVJXYXhGamRzTDZ0RFJjakpJ?=
- =?utf-8?B?dytpbTdXbStsOWdNSU1nM1ZUN3lPM0Raei8wcmxrWUg0cW4rUHp6MnlULzBB?=
- =?utf-8?B?U2V6Y1JRTGgvblpjd0d0WVErMFZKbUlNbDdmSFZWbjJIbTEzRFFTKzFRMTBx?=
- =?utf-8?B?YVpZV3l4M2RTZnBxZ0pTTldKUUpxVDJkOFNpcSsyYjZLTTAvcFBGY0ZjbnBk?=
- =?utf-8?B?Ky9qT0dKRmlSMFNDNXJoekpyeWVHODJ4aFJTeUNKZ1Y0UVRJVHdhVEgzZ0Fy?=
- =?utf-8?B?VFhUS1hCc2FJRDVGNktSU1ZZNFBQWDdXSkxOQ2pFcVNYN3dhVUFaOTFrUEUv?=
- =?utf-8?B?bDBVOVJia0NoRVQ1VE5hOXNwRC9OU3gxQlVITWh0WDQzYkRKQ1lTampzdDdN?=
- =?utf-8?B?S3dLM2VPMmg2QUtiZHNGLzZURHNpUkEwY3NwbVl1NHZpNnBsMWtJQnI0MDBK?=
- =?utf-8?B?OVAwMno3bG1Vb1Q0cTRqVjBYL0hJYTRwQ1YrU1AweW1kbGVkd2RuUjVoSUdr?=
- =?utf-8?B?aE9YUEIrUWVmekFZVFh3NFJNYk5ubXZNWjJJM3QvN1M3Vmc3ZlBvY2x1aUMv?=
- =?utf-8?B?ZFZVSytLU2ZQSW9CUFcxRFJtbnNvejBMaWtzWDZ4UW9OMENoWk1CWGd2R3hR?=
- =?utf-8?B?a0ZVRzI5QzY4Wm12TGdqSFRuL3loOTFCTzlPVGtsRkI5eGZHdlYyRjd2VVVn?=
- =?utf-8?B?M3BQM1djSXpuMzRUc25IZWpuMzVxcHpCZWJLaHBCQWRJMml3d2x3SUtXMkMw?=
- =?utf-8?B?YXpkWEpvbEF2c0wzNkNYRU9BQkIyUS8yR2lZZldLYXJhTFFwSXlUbllpUjVQ?=
- =?utf-8?B?YUdWMmxUWFlobDNGQmgzM09Ramo3eTdacEo0cmVnRURraVh1eHcvMmZ4aEZy?=
- =?utf-8?B?d2hxZ2o1dW85WVBnR2ExalhxbDBEa2FyaDQ2a1ZtVkZubDN4bEovRkFXbith?=
- =?utf-8?B?TEN2RlV1bEFEOUFrMVRtclhiN1dORDB5RmRVVzVJNjRxWm5LYUdHVXJCeXdV?=
- =?utf-8?B?K29OdUFUbHhDUmRvZ0xlY3dQK1lKeDZrMnUvcGcxUkZWRStFcStrQTJjMENq?=
- =?utf-8?B?RFpSTVFGdkE0cFRRR291YTVaMlZhYmV2dmNZV2xKaS96YmZWUmFBYmpjb2w0?=
- =?utf-8?B?L1A2algvSklSN3ZibHFIMU9Wbmw0bFNEZ2pJank2QURwVlZ0ZDdkaWxPaUtj?=
- =?utf-8?B?cW1HQXlOQTl1MUhwbjNBbTBmQkdrUE5paVVPdk9zdEh5TTc1b3ZDRnRnRU1U?=
- =?utf-8?B?d0N1WWJMbElWVFdFdVZHc05CeDJuUzNvS1ZSVlFLSTByNzUxSlh2c0ZTamRX?=
- =?utf-8?B?eUNTLzZ6OVhVQlhEd2Z2VE5mQWp1QXF2TDlmajkzMlNVbFlRN1d6ZnVOWFo3?=
- =?utf-8?B?cWdrY3B6SWlVNCtXTGV6VEFUNTBqMm1IQlF0TG1pMDhWWlBSeGREQm1BMEdp?=
- =?utf-8?B?WFFRRU9HNmx2YVhOYWhzT3NNSUc3QXZVR1ZzZHZCeWQ1dUs4c3NabGsyamkz?=
- =?utf-8?B?cGlmeGhGK3dqNnE4RGZMM1RiYVJiOUtQcXNjUXJmbEthZkZkRkd5WlVlaTZM?=
- =?utf-8?B?TzdqQmNrd2xQL2pyeUIvdz09?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR12MB4313.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(10070799003)(1800799024)(366016)(7416014)(38070700018);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?aW9ZN0g3NzAwZlFtM1JETDdUQ3B2UzNTdVBtWW9XdVVWN2tPS3RrQU9adURs?=
- =?utf-8?B?VjFNSTBoQk9iaG1VZGhaRlpkOXhTUk9wNzE2VFFCb2tYVVVUd25vWVRTNTV0?=
- =?utf-8?B?VFMycDR3UUJHRVJYR2RINFlJWFJYc0JEanExaXhpSmwrREJWdDY3M1hvbWd0?=
- =?utf-8?B?RmRTOVNHejl3cVc5dU9rcStORVBCL01Kakh1NUNNUmJFTElUVThTdkx4WUg1?=
- =?utf-8?B?S1g0L2l6TFJ3alRoeEZnWGc3SnByT0I4NDAyWmUwZzAyUThTcjI2R3FKRWJ5?=
- =?utf-8?B?aUQ4ajRYY2FRNWJ6QWh2UVcwMTZCVVpSNFRBcExuYmhxZUVmc3dxaFREREdX?=
- =?utf-8?B?dzBHdDdvMHI2enFla2VFWXQyb29UUVhqRTZzRlpVLzljYitBNmNHTUtZZmh0?=
- =?utf-8?B?S3djdDFzQVhkUmdDcVF2dW5malhXVXZNamIxQjkycXdsWDg3VnpRL2pwelFT?=
- =?utf-8?B?dFZzT0JldkxPZ0w5b0h3T1JhZStFRHVOUVdBcjN3ZHJnSHoyU2JyUitTOUl0?=
- =?utf-8?B?N2xydUFEK2NOVExObkVzSnVab0lZektxV09pYlFPaVJ4NjMzK1lGU1V2ZS92?=
- =?utf-8?B?ZHZSL1p0SVp5MDNUcGV0blF2NHlrQWdneDk0YVFhN3ptRStEWVRWa1lpdVdx?=
- =?utf-8?B?MVBoazFoTlVUVzhHR1laLy9menA4NHNVTzltWllUM2YxRWlmNCtiUnV3SkUx?=
- =?utf-8?B?NnNpR1Z5enNxWlR4bGF0NTAzMmZxY2t0MVM1MG5XaXlGdDdKb3l5VFdvVWgv?=
- =?utf-8?B?UDZuU0NuNzY4VEY0dUZZOHJUMHU0ZElsbVNmRGxLdXRkMkNvTEJZNDZ0SWlp?=
- =?utf-8?B?TE1WR2k0djJnbnJOQ1V4WmhUN1lIRjhKeXhHTnpkNEhveEFDRzU3TmdFbmRy?=
- =?utf-8?B?b1VQdW1xbllaZVBuTmFlN2QrTExQSFdvS2FiV2hwZFQxOVhJZlUxRW5DenJi?=
- =?utf-8?B?QkRRUmFsZncvZ0N2LzVnODZheVBRRm1yUjlqRlgyd3MxZUtpc3pKR2VBQ3cr?=
- =?utf-8?B?cWgwa2hyT3l2V0ttTTlMU1ZIdU9VYnJoZ0NUeHJJVWg5NlhqeFlqM3BLaW1u?=
- =?utf-8?B?YW4xdkU1MS9jV2pTN2FvUUl2Skh2ZlhMY2U4QTFaYXJueGhpTFFtRzRJMmt5?=
- =?utf-8?B?Q1AxM3J2SmtlMkppRE1IQzQ0UlM3V3FPejFlc3JOa1VLUzRGaUNNSlNXMFhS?=
- =?utf-8?B?Zk5wY2VCUDhaeWlZVWQ0V3doRldLMWlnbDZtcVYzUTFobTM0aXBJdmp3WVBq?=
- =?utf-8?B?MXBHdHU3L3RWTXRsR29QTlF3eEpmTkVxLzRXZ3I2ckhFRXZxTVB2K1BHaUV3?=
- =?utf-8?B?eFdvS09NbGsydk9ESjI5aGNQL1F6dWNHMWRZUC83TUJ4QzF0aXFZb3Y2dUpr?=
- =?utf-8?B?TnErUTNHTDQrSkJtaThHSGJ0UTlQb0FVM1dXVDdPWUU4K0JRWDVzZkNXeVJ0?=
- =?utf-8?B?RnFQOXZOLzA2VjY5dU9LZjBLZGQvUjkzdnl1TkNkVG5pd0JWcUtEYTYrUEd3?=
- =?utf-8?B?VU1EK3ZPVFc1TjBPSEtOOFBZdzJhNkhkRHpmWEF1eGlMdUVwSTlXVG5DeTRD?=
- =?utf-8?B?emE0U1lHMEJBNERHbDFsM2psT29rVTNCb0dPN0xjK1UySm1zQkpWanhTc3NP?=
- =?utf-8?B?ZlVJeEZMYU56YlRLUjN0ZVRLVXhiWG5XTUQ0ZnVvWWtVZ2VCMElqQTlaaHRQ?=
- =?utf-8?B?aUYwMlpSQjlTczUrbmFWYnZlTm1BNVJkTGs2Q0pmSEFSa2RicDE1VlBNenVK?=
- =?utf-8?B?U0N2bUF4ZHFlZk9QejRYTFVhME9yL251eWVHTWtyQjVyZnZZTW1kYnJ4ZjNr?=
- =?utf-8?B?UWhuTytZOHRQNGJMaGRYQ2p5UWJLRWd5amI3d0Nic2plTEVkdWZvNmMydk5W?=
- =?utf-8?B?T2pBL055eDJWZUJCeXlsVUtpODlRQkpybWUvQlNaUTVYVlBib0RWbGQwOWxh?=
- =?utf-8?B?WnZtWlU0OFVnODZmemRpT0gzWnNnV092S3QyOEgxRWEvOE1NMXZITTZPdTFZ?=
- =?utf-8?B?ZU42UUR4b3N0Q1B1OFQwZHVUOFlZZXVlV0JxeSsrUXd2cnhZb0lpVmpxcUtW?=
- =?utf-8?B?QmtSbEY5UmQvUXFpK2VjV2EwMEZmMFRyR29HQUgyMXVpYVcxcU9MTjh2ZjJW?=
- =?utf-8?B?dFFPWURDaTdaajFWTGhNeWpQTUdCNHdBdS9IQVQ3eXRVcVpHdzFzY0MvWk5y?=
- =?utf-8?B?V3c9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1svM2C-00009V-SD
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:26:21 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1svM1y-000000007ik-14F8; Mon, 30 Sep 2024 19:26:02 +0000
+Message-ID: <c013f26f-6e55-4426-9ec9-e160e8179a7a@maciej.szmigiero.name>
+Date: Mon, 30 Sep 2024 21:25:54 +0200
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4313.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6dd485e9-bd30-4f64-c613-08dce1850241
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Sep 2024 19:20:56.3954 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 8BbHBsfWMYRyRh0MVVpuzJ22RUc/8BrR/3I2kERp019GUKhnM0q0O+qx/7sqqzv985p/60YIoN1uHpyLnCZEHA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8540
-Received-SPF: softfail client-ip=40.107.93.58; envelope-from=shefty@nvidia.com;
- helo=NAM10-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [PATCH v2 08/17] migration: Add load_finish handler and
+ associated functions
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+References: <cover.1724701542.git.maciej.szmigiero@oracle.com>
+ <1a7599896decdbae61cee385739dc0badc9b4364.1724701542.git.maciej.szmigiero@oracle.com>
+ <Zt9UjvvbeUZQlGNY@x1n>
+ <d245c8b6-b765-42e1-a5ec-bdb46494cec4@maciej.szmigiero.name>
+ <ZuyTjQJujZo6tw9p@x1n>
+ <bbed8165-de5c-4ebe-a6cc-ff33f9ea363a@maciej.szmigiero.name>
+ <Zu2mvrKOvmD1WtvD@x1n>
+ <848ba96d-c3ca-4fbb-9ec4-92023230c026@maciej.szmigiero.name>
+ <ZvYCGFnI_68B_w3h@x1n>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <ZvYCGFnI_68B_w3h@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -192,20 +117,366 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PiA+IEknbSBzdXJlIHJzb2NrZXQgaGFzIGl0cyBwbGFjZSB3aXRoIG11Y2ggc21hbGxlciB0cmFu
-c2ZlciBzaXplcywgYnV0DQo+ID4gdGhpcyBpcyB2ZXJ5IGRpZmZlcmVudC4NCj4gDQo+IElzIGl0
-IHBvc3NpYmxlIHRvIG1ha2UgcnNvY2tldCBiZSBmcmllbmRseSB3aXRoIGxhcmdlIGJ1ZmZlcnMg
-KD40R0IpIGxpa2UgdGhlIFZNDQo+IHVzZSBjYXNlPw0KDQpJZiB5b3UgY2FuIHBlcmZvcm0gbGFy
-Z2UgVk0gbWlncmF0aW9ucyB1c2luZyBzdHJlYW1pbmcgc29ja2V0cywgcnNvY2tldHMgaXMgbGlr
-ZWx5IHVzYWJsZSwgYnV0IGl0IHdpbGwgaW52b2x2ZSBkYXRhIGNvcGllcy4gIFRoZSBwcm9ibGVt
-IGlzIHRoZSBzb2NrZXQgQVBJIHNlbWFudGljcy4NCg0KVGhlcmUgYXJlIHJzb2NrZXQgQVBJIGV4
-dGVuc2lvbnMgKHJpb3dyaXRlLCByaW9tYXApIHRvIHN1cHBvcnQgUkRNQSB3cml0ZSBvcGVyYXRp
-b25zLiAgVGhpcyBhdm9pZHMgdGhlIGRhdGEgY29weSBhdCB0aGUgdGFyZ2V0LCBidXQgbm90IHRo
-ZSBzZW5kZXIuICAgKHJpb3dyaXRlIGZvbGxvd3MgdGhlIHNvY2tldCBzZW5kIHNlbWFudGljcyBv
-biBidWZmZXIgb3duZXJzaGlwLikNCg0KSXQgbWF5IGJlIHBvc3NpYmxlIHRvIGVuaGFuY2UgcnNv
-Y2tldHMgd2l0aCBNU0dfWkVST0NPUFkgb3IgaW9fdXJpbmcgZXh0ZW5zaW9ucyB0byBlbmFibGUg
-emVyby1jb3B5IGZvciBsYXJnZSB0cmFuc2ZlcnMsIGJ1dCB0aGF0J3Mgbm90IHNvbWV0aGluZyBJ
-J3ZlIGxvb2tlZCBhdC4gIFRydWUgemVybyBjb3B5IG1heSByZXF1aXJlIGNvbWJpbmluZyBNU0df
-WkVST0NPUFkgd2l0aCByaW93cml0ZSwgYnV0IHRoZW4gdGhhdCBtb3ZlcyBmdXJ0aGVyIGF3YXkg
-ZnJvbSB1c2luZyB0cmFkaXRpb25hbCBzb2NrZXQgY2FsbHMuDQoNCi0gU2Vhbg0K
+On 27.09.2024 02:53, Peter Xu wrote:
+> On Fri, Sep 27, 2024 at 12:34:31AM +0200, Maciej S. Szmigiero wrote:
+>> On 20.09.2024 18:45, Peter Xu wrote:
+>>> On Fri, Sep 20, 2024 at 05:23:08PM +0200, Maciej S. Szmigiero wrote:
+>>>> On 19.09.2024 23:11, Peter Xu wrote:
+>>>>> On Thu, Sep 19, 2024 at 09:49:10PM +0200, Maciej S. Szmigiero wrote:
+>>>>>> On 9.09.2024 22:03, Peter Xu wrote:
+>>>>>>> On Tue, Aug 27, 2024 at 07:54:27PM +0200, Maciej S. Szmigiero wrote:
+>>>>>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>>>>>>
+>>>>>>>> load_finish SaveVMHandler allows migration code to poll whether
+>>>>>>>> a device-specific asynchronous device state loading operation had finished.
+>>>>>>>>
+>>>>>>>> In order to avoid calling this handler needlessly the device is supposed
+>>>>>>>> to notify the migration code of its possible readiness via a call to
+>>>>>>>> qemu_loadvm_load_finish_ready_broadcast() while holding
+>>>>>>>> qemu_loadvm_load_finish_ready_lock.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>>>>>>>> ---
+>>>>>>>>      include/migration/register.h | 21 +++++++++++++++
+>>>>>>>>      migration/migration.c        |  6 +++++
+>>>>>>>>      migration/migration.h        |  3 +++
+>>>>>>>>      migration/savevm.c           | 52 ++++++++++++++++++++++++++++++++++++
+>>>>>>>>      migration/savevm.h           |  4 +++
+>>>>>>>>      5 files changed, 86 insertions(+)
+>>>>>>>>
+>>>>>>>> diff --git a/include/migration/register.h b/include/migration/register.h
+>>>>>>>> index 4a578f140713..44d8cf5192ae 100644
+>>>>>>>> --- a/include/migration/register.h
+>>>>>>>> +++ b/include/migration/register.h
+>>>>>>>> @@ -278,6 +278,27 @@ typedef struct SaveVMHandlers {
+>>>>>>>>          int (*load_state_buffer)(void *opaque, char *data, size_t data_size,
+>>>>>>>>                                   Error **errp);
+>>>>>>>> +    /**
+>>>>>>>> +     * @load_finish
+>>>>>>>> +     *
+>>>>>>>> +     * Poll whether all asynchronous device state loading had finished.
+>>>>>>>> +     * Not called on the load failure path.
+>>>>>>>> +     *
+>>>>>>>> +     * Called while holding the qemu_loadvm_load_finish_ready_lock.
+>>>>>>>> +     *
+>>>>>>>> +     * If this method signals "not ready" then it might not be called
+>>>>>>>> +     * again until qemu_loadvm_load_finish_ready_broadcast() is invoked
+>>>>>>>> +     * while holding qemu_loadvm_load_finish_ready_lock.
+>>>>>>>
+>>>>>>> [1]
+>>>>>>>
+>>>>>>>> +     *
+>>>>>>>> +     * @opaque: data pointer passed to register_savevm_live()
+>>>>>>>> +     * @is_finished: whether the loading had finished (output parameter)
+>>>>>>>> +     * @errp: pointer to Error*, to store an error if it happens.
+>>>>>>>> +     *
+>>>>>>>> +     * Returns zero to indicate success and negative for error
+>>>>>>>> +     * It's not an error that the loading still hasn't finished.
+>>>>>>>> +     */
+>>>>>>>> +    int (*load_finish)(void *opaque, bool *is_finished, Error **errp);
+>>>>>>>
+>>>>>>> The load_finish() semantics is a bit weird, especially above [1] on "only
+>>>>>>> allowed to be called once if ..." and also on the locks.
+>>>>>>
+>>>>>> The point of this remark is that a driver needs to call
+>>>>>> qemu_loadvm_load_finish_ready_broadcast() if it wants for the migration
+>>>>>> core to call its load_finish handler again.
+>>>>>>
+>>>>>>> It looks to me vfio_load_finish() also does the final load of the device.
+>>>>>>>
+>>>>>>> I wonder whether that final load can be done in the threads,
+>>>>>>
+>>>>>> Here, the problem is that current VFIO VMState has to be loaded from the main
+>>>>>> migration thread as it internally calls QEMU core address space modification
+>>>>>> methods which explode if called from another thread(s).
+>>>>>
+>>>>> Ahh, I see.  I'm trying to make dest qemu loadvm in a thread too and yield
+>>>>> BQL if possible, when that's ready then in your case here IIUC you can
+>>>>> simply take BQL in whichever thread that loads it.. but yeah it's not ready
+>>>>> at least..
+>>>>
+>>>> Yeah, long term we might want to work on making these QEMU core address space
+>>>> modification methods somehow callable from multiple threads but that's
+>>>> definitely not something for the initial patch set.
+>>>>
+>>>>> Would it be possible vfio_save_complete_precopy_async_thread_config_state()
+>>>>> be done in VFIO's save_live_complete_precopy() through the main channel
+>>>>> somehow?  IOW, does it rely on iterative data to be fetched first from
+>>>>> kernel, or completely separate states?
+>>>>
+>>>> The device state data needs to be fully loaded first before "activating"
+>>>> the device by loading its config state.
+>>>>
+>>>>> And just curious: how large is it
+>>>>> normally (and I suppose this decides whether it's applicable to be sent via
+>>>>> the main channel at all..)?
+>>>>
+>>>> Config data is *much* smaller than device state data - as far as I remember
+>>>> it was on order of kilobytes.
+>>>>
+>>>>>>
+>>>>>>> then after
+>>>>>>> everything loaded the device post a semaphore telling the main thread to
+>>>>>>> continue.  See e.g.:
+>>>>>>>
+>>>>>>>         if (migrate_switchover_ack()) {
+>>>>>>>             qemu_loadvm_state_switchover_ack_needed(mis);
+>>>>>>>         }
+>>>>>>>
+>>>>>>> IIUC, VFIO can register load_complete_ack similarly so it only sem_post()
+>>>>>>> when all things are loaded?  We can then get rid of this slightly awkward
+>>>>>>> interface.  I had a feeling that things can be simplified (e.g., if the
+>>>>>>> thread will take care of loading the final vmstate then the mutex is also
+>>>>>>> not needed? etc.).
+>>>>>>
+>>>>>> With just a single call to switchover_ack_needed per VFIO device it would
+>>>>>> need to do a blocking wait for the device buffers and config state load
+>>>>>> to finish, therefore blocking other VFIO devices from potentially loading
+>>>>>> their config state if they are ready to begin this operation earlier.
+>>>>>
+>>>>> I am not sure I get you here, loading VFIO device states (I mean, the
+>>>>> non-iterable part) will need to be done sequentially IIUC due to what you
+>>>>> said and should rely on BQL, so I don't know how that could happen
+>>>>> concurrently for now.  But I think indeed BQL is a problem.
+>>>> Consider that we have two VFIO devices (A and B), with the following order
+>>>> of switchover_ack_needed handler calls for them: first A get this call,
+>>>> once the call for A finishes then B gets this call.
+>>>>
+>>>> Now consider what happens if B had loaded all its buffers (in the loading
+>>>> thread) and it is ready for its config load before A finished loading its
+>>>> buffers.
+>>>>
+>>>> B has to wait idle in this situation (even though it could have been already
+>>>> loading its config) since the switchover_ack_needed handler for A won't
+>>>> return until A is fully done.
+>>>
+>>> This sounds like a performance concern, and I wonder how much this impacts
+>>> the real workload (that you run a test and measure, with/without such
+>>> concurrency) when we can save two devices in parallel anyway; I would
+>>> expect the real diff is small due to the fact I mentioned that we save >1
+>>> VFIO devices concurrently via multifd.
+>>>
+>>> Do you think we can start with a simpler approach?
+>>
+>> I don't think introducing a performance/scalability issue like that is
+>> a good thing, especially that we already have a design that avoids it.
+>>
+>> Unfortunately, my current setup does not allow live migrating VMs with
+>> more than 4 VFs so I can't benchmark that.
+> 
+> /me wonders why benchmarking it requires more than 4 VFs.
+
+My point here was that the scalability problem will most likely get more
+pronounced with more VFs.
+
+>>
+>> But I almost certain that with more VFs the situation with devices being
+>> ready out-of-order will get even more likely.
+> 
+> If the config space is small, why loading it in sequence would be a
+> problem?
+> 
+> Have you measured how much time it needs to load one VF's config space that
+> you're using?  I suppose that's vfio_load_device_config_state() alone?
+
+It's not the amount of data to load matters here but that these address
+space operations are slow.
+
+The whole config load takes ~70 ms per device - that's time equivalent
+of transferring 875 MiB of device state via a 100 GBit/s link.
+
+>>
+>>> So what I'm thinking could be very clean is, we just discussed about
+>>> MIG_CMD_SWITCHOVER and looks like you also think it's an OK approach.  I
+>>> wonder when with it why not we move one step further to have
+>>> MIG_CMD_SEND_NON_ITERABE just to mark that "iterable devices all done,
+>>> ready to send non-iterable".  It can be controlled by the same migration
+>>> property so we only send these two flags in 9.2+ machine types.
+>>>
+>>> Then IIUC VFIO can send config data through main wire (just like most of
+>>> other pci devices! which is IMHO a good fit..) and on destination VFIO
+>>> holds off loading them until passing the MIG_CMD_SEND_NON_ITERABE phase.
+>>
+>> Starting the config load only on MIG_CMD_SEND_NON_ITERABE would (in addition
+>> to the considerations above) also delay starting the config load until all
+>> iterable devices were read/transferred/loaded and also would complicate
+>> future efforts at loading that config data in parallel.
+> 
+> However I wonder whether we can keep it simple in that VFIO's config space
+> is still always saved in vfio_save_state().  I still think it's easier we
+> stick with the main channel whenever possible.  For this specific case, if
+> the config space is small I think it's tricky you bypass this with:
+> 
+>      if (migration->multifd_transfer) {
+>          /* Emit dummy NOP data */
+>          qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
+>          return;
+>      }
+> 
+> Then squash this as the tail of the iterable data.
+> 
+> On the src, I think it could use a per-device semaphore, so that iterable
+> save() thread will post() only if it finishes dumping all the data, then
+> that orders VFIO iterable data v.s. config space save().
+
+In the future we want to not only transfer but also load the config data
+in parallel.
+
+So going back to transferring this data serialized via the main migration
+channel would be taking a step back here.
+
+By the way, we already have a serialization point in
+qemu_savevm_state_complete_precopy_iterable() after iterables have been sent -
+waiting for device state sending threads to finish their work.
+
+Whether this thread_pool_wait() operation will be implemented using
+semaphores I'm not sure yet - will depend on how well this will fit other
+GThreadPool internals.
+
+> On the dst, after a 2nd thought, MIG_CMD_SEND_NON_ITERABE may not work or
+> needed indeed, because multifd bypasses the main channel, so if we send
+> anything like MIG_CMD_SEND_NON_ITERABE on the main channel it won't
+> guarantee multifd load all complete.  However IIUC that can be used in a
+> similar way as the src qemu I mentioned above with a per-device semaphore,
+> so that only all the iterable data of this device loaded and applied to the
+> HW would it post(), before that, vfio_load_state() should wait() on that
+> sem waiting for data to ready (while multifd threads will be doing that
+> part).  I wonder whether we may reuse the multifd recv thread in the
+> initial version, so maybe we don't need any other threads on destination.
+> 
+> The load_finish() interface is currently not able to be reused right,
+> afaict.  Just have a look at its definition:
+> 
+>      /**
+>       * @load_finish
+>       *
+>       * Poll whether all asynchronous device state loading had finished.
+>       * Not called on the load failure path.
+>       *
+>       * Called while holding the qemu_loadvm_load_finish_ready_lock.
+>       *
+>       * If this method signals "not ready" then it might not be called
+>       * again until qemu_loadvm_load_finish_ready_broadcast() is invoked
+>       * while holding qemu_loadvm_load_finish_ready_lock.
+>       *
+>       * @opaque: data pointer passed to register_savevm_live()
+>       * @is_finished: whether the loading had finished (output parameter)
+>       * @errp: pointer to Error*, to store an error if it happens.
+>       *
+>       * Returns zero to indicate success and negative for error
+>       * It's not an error that the loading still hasn't finished.
+>       */
+>      int (*load_finish)(void *opaque, bool *is_finished, Error **errp);
+> 
+> It's over complicated on defining all its details:
+> 
+>    - Not re-entrant by default.. 
+
+What do you mean by "re-entrant" here?
+
+This handler is called only from single migration thread, so it cannot
+be re-entered anyway since the control doesn't return to the migration
+code until this handler exits (and obviously the handler won't call
+itself recursively).
+
+> this is so weirdly designed so that the
+>      caller needs to know which is even the "1st invocation of the
+>      function"... It is just weird.
+
+I don't quite understand that - why do you think that caller needs to
+know whether this is the "1st invocation of the function"?
+
+The caller only tracks whether all these handlers reported that they
+finished their work:
+>       bool all_ready = true;
+>       QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+>           bool this_ready;
+> 
+>           ret = se->ops->load_finish(se->opaque, &this_ready, &local_err);
+>           if (ret) {
+>           } else if (!this_ready) {
+>               all_ready = false;
+>           }
+>
+>       }
+>       if (all_ready) {
+>             break;
+>       }
+
+
+>    - Requires one more global mutex that non vmstate handler ever requested,
+
+Could you elaborate what do you mean by "that non vmstate handler ever requested"?
+
+>      that I feel like perhaps can be replaced by a sem (then to drop the
+>      condvar)?
+
+Once we have ability to load device config state outside main migration
+thread replacing "load_finish" handler with a semaphore should indeed be
+possible (that's internal migration API so there should be no issue
+removing it as not necessary anymore at this point).
+
+But for now, the devices need to have ability to run their config load
+code on the main migration thread, and for that they need to be called
+from this handler "load_finish".
+
+>    - How qemu_loadvm_load_finish_ready_broadcast() interacts with all
+>      above..
+> 
+> So if you really think it matters to load whatever VFIO device who's
+> iterable data is ready first, then let's try come up with some better
+> interface..  I can try to think about it too, but please answer me
+> questions above so I can understand what I am missing on why that's
+> important.  Numbers could help, even if 4 VF and I wonder how much diff
+> there can be.  Mostly, I don't know why it's slow right now if it is; I
+> thought it should be pretty fast, at least not a concern in VFIO migration
+> world (which can take seconds of downtime or more..).
+> 
+> IOW, it sounds more reasonalbe to me that no matter whether vfio will
+> support multifd, it'll be nice we stick with vfio_load_state() /
+> vfio_save_state() for config space, and hopefully it's also easier it
+> always go via the main channel to everyone.  In these two hooks, VFIO can
+> do whatever it wants to sync with other things (on src, sync with
+> concurrent thread pool saving iterable data and dumping things to multifd
+> channels; on dst, sync with multifd concurrent loads). I think it can
+> remove the requirement on the load_finish() interface completely.  Yes,
+> this can only load VFIO's pci config space one by one, but I think this is
+> much simpler, and I hope it's also not that slow, but I'm not sure.
+
+To be clear, I made a following diagram describing how the patch set
+is supposed to work right now, including changing per-device
+VFIO_MIG_FLAG_DEV_DATA_STATE_COMPLETE into a common MIG_CMD_SWITCHOVER.
+
+Time flows on it left to right (->).
+
+----------- DIAGRAM START -----------
+Source overall flow:
+Main channel: live VM phase data -> MIG_CMD_SWITCHOVER -> iterable                                                                          -> non iterable
+Multifd channels:                                       \ multifd device state read and queue (1) -> multifd config data read and queue (1) /
+
+Target overall flow:
+Main channel: live VM phase data -> MIG_CMD_SWITCHOVER -> iterable -> non iterable -> config data load operations
+Multifd channels:                                       \ multifd device state (1) -> multifd config data read (1)
+
+Target config data load operations flow:
+multifd config data read (1) -> config data load (2)
+
+Notes:
+(1): per device threads running in parallel
+(2): currently serialized (only one such operation running at a particular time), will hopefully be parallelized in the future
+----------- DIAGRAM END -----------
+
+Hope the diagram survived being pasted into an e-mail message.
+
+One can see, that even now there's a bit of "low hanging fruit" of missing
+possible parallelism:
+It seems that the source could wait for multifd device state + multifd config
+data *after* non-iterables are sent rather than before as it is done
+currently - so they will be sent in parallel with multifd data.
+
+Since written description is often prone to misunderstanding
+could you please annotate that diagram with your proposed new flow?
+
+Thanks,
+Maciej
 
