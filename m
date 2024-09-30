@@ -4,66 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F3DDCF6497
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 09:26:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C5DCCF649D
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 09:26:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svCf5-00069W-Pi; Mon, 30 Sep 2024 05:25:47 -0400
+	id 1svCg0-0002ad-VY; Mon, 30 Sep 2024 05:26:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1svCf2-0005yl-Vm; Mon, 30 Sep 2024 05:25:44 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1svCfz-0002UC-A0; Mon, 30 Sep 2024 05:26:43 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1svCf0-0006NI-El; Mon, 30 Sep 2024 05:25:44 -0400
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c23:1301:0:640:a2b5:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 1EADB60D30;
- Mon, 30 Sep 2024 12:25:37 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b737::1:2c] (unknown
- [2a02:6b8:b081:b737::1:2c])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id aPVMAE1IWKo0-jEv0KO1r; Mon, 30 Sep 2024 12:25:36 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1727688336;
- bh=yNd2tEXVFldbPpGa92EU28elQt4tdL/SOMDRSmaK1qA=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=vBKQJ+zNBX1x9Jbv8603UwNUae+AbqWED/5PFZKye0V33I4qnruM509HMEVwGaOeJ
- cKZcKqxz6k19lH4Rm8yM99burRtTv7+zFUUZrVatwtof26MwwPwuJmxfLVqLborKOB
- qZrZkGTZP+O5RktRE7LdLfhaIa/frep+K2eM9HHg=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <6fb3340a-f685-422f-acaf-ad968e854847@yandex-team.ru>
-Date: Mon, 30 Sep 2024 12:25:36 +0300
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1svCfv-0006RG-Lt; Mon, 30 Sep 2024 05:26:43 -0400
+To: qemu-devel@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Song Gao <gaosong@loongson.cn>,
+ Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-block@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>,
+ Philippe =?ISO-8859-1?Q?Mathieu=2DDaud=E9?= <philmd@linaro.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Greg Kurz <groug@kaod.org>,
+ Eugenio =?ISO-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Hyman Huang <yong.huang@smartx.com>, Kevin Wolf <kwolf@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, John Snow <jsnow@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Jesper Devantier <foss@defmacro.it>,
+ Peter Xu <peterx@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Klaus Jensen <its@irrelevant.dk>, Keith Busch <kbusch@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?ISO-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, Bin Meng <bin.meng@windriver.com>,
+ =?ISO-8859-1?Q?Marc=2DAndr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ marcandre.lureau@redhat.com
+Subject: Re: [PATCH v3 22/22] fsdep/9p: fix -Werror=maybe-uninitialized
+ false-positive
+Date: Mon, 30 Sep 2024 11:26:26 +0200
+Message-ID: <2542220.oxJn2mPQ6z@silver>
+In-Reply-To: <20240930081458.1926382-23-marcandre.lureau@redhat.com>
+References: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
+ <20240930081458.1926382-23-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Bug Report][RFC PATCH 1/1] block: fix failing assert on paused
- VM migration
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- eesposit@redhat.com, den@virtuozzo.com, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-References: <20240924125611.664315-1-andrey.drobyshev@virtuozzo.com>
- <20240924125611.664315-2-andrey.drobyshev@virtuozzo.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20240924125611.664315-2-andrey.drobyshev@virtuozzo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Yandex-Filter: 1
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,56 +73,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Christian Schoenebeck <qemu_oss@crudebyte.com>
+From:  Christian Schoenebeck via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[add migration maintainers]
-
-On 24.09.24 15:56, Andrey Drobyshev wrote:
-> Instead of throwing an assert let's just ignore that flag is already set
-> and return.  We assume that it's going to be safe to ignore.  Otherwise
-> this assert fails when migrating a paused VM back and forth.
-> 
-> Ideally we'd like to have a more sophisticated solution, e.g. not even
-> scan the nodes which should be inactive at this point.
-> 
-> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+On Monday, September 30, 2024 10:14:57 AM CEST Marc-Andr=C3=A9 Lureau wrote:
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>=20
+> ../fsdev/9p-iov-marshal.c:93:23: error: =E2=80=98val=E2=80=99 may be used=
+ uninitialized [-Werror=3Dmaybe-uninitialized]
+> and similar
+>=20
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > ---
->   block.c | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/block.c b/block.c
-> index 7d90007cae..c1dcf906d1 100644
-> --- a/block.c
-> +++ b/block.c
-> @@ -6973,7 +6973,15 @@ static int GRAPH_RDLOCK bdrv_inactivate_recurse(BlockDriverState *bs)
->           return 0;
->       }
->   
-> -    assert(!(bs->open_flags & BDRV_O_INACTIVE));
-> +    if (bs->open_flags & BDRV_O_INACTIVE) {
-> +        /*
-> +         * Return here instead of throwing assert as a workaround to
-> +         * prevent failure on migrating paused VM.
-> +         * Here we assume that if we're trying to inactivate BDS that's
-> +         * already inactive, it's safe to just ignore it.
-> +         */
-> +        return 0;
-> +    }
->   
->       /* Inactivate this node */
->       if (bs->drv->bdrv_inactivate) {
+>  fsdev/9p-iov-marshal.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/fsdev/9p-iov-marshal.c b/fsdev/9p-iov-marshal.c
+> index a1c9beddd2..75fb87a490 100644
+> --- a/fsdev/9p-iov-marshal.c
+> +++ b/fsdev/9p-iov-marshal.c
+> @@ -84,7 +84,7 @@ ssize_t v9fs_iov_vunmarshal(struct iovec *out_sg, int o=
+ut_num, size_t offset,
+>              break;
+>          }
+>          case 'w': {
+> -            uint16_t val, *valp;
+> +            uint16_t val =3D 0, *valp;
+>              valp =3D va_arg(ap, uint16_t *);
+>              copied =3D v9fs_unpack(&val, out_sg, out_num, offset, sizeof=
+(val));
 
-I doubt that this a correct way to go.
+Another option would be inserting here:
 
-As far as I understand, "inactive" actually means that "storage is not belong to qemu, but to someone else (another qemu process for example), and may be changed transparently". In turn this means that Qemu should do nothing with inactive disks. So the problem is that nobody called bdrv_activate_all on target, and we shouldn't ignore that.
+	if (copied <=3D 0) break;
 
-Hmm, I see in process_incoming_migration_bh() we do call bdrv_activate_all(), but only in some scenarios. May be, the condition should be less strict here.
+Same below. But I leave it up to you:
 
-Why we need any condition here at all? Don't we want to activate block-layer on target after migration anyway?
+Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
--- 
-Best regards,
-Vladimir
+/Christian
+
+>              if (bswap) {
+> @@ -95,7 +95,7 @@ ssize_t v9fs_iov_vunmarshal(struct iovec *out_sg, int o=
+ut_num, size_t offset,
+>              break;
+>          }
+>          case 'd': {
+> -            uint32_t val, *valp;
+> +            uint32_t val =3D 0, *valp;
+>              valp =3D va_arg(ap, uint32_t *);
+>              copied =3D v9fs_unpack(&val, out_sg, out_num, offset, sizeof=
+(val));
+>              if (bswap) {
+> @@ -106,7 +106,7 @@ ssize_t v9fs_iov_vunmarshal(struct iovec *out_sg, int=
+ out_num, size_t offset,
+>              break;
+>          }
+>          case 'q': {
+> -            uint64_t val, *valp;
+> +            uint64_t val =3D 0, *valp;
+>              valp =3D va_arg(ap, uint64_t *);
+>              copied =3D v9fs_unpack(&val, out_sg, out_num, offset, sizeof=
+(val));
+>              if (bswap) {
+>=20
+
 
 
