@@ -4,138 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E7B5CE8341
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 13:13:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27361CE8342
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 13:15:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svGDA-0003Mn-Es; Mon, 30 Sep 2024 09:13:12 -0400
+	id 1svGEw-0006w8-5c; Mon, 30 Sep 2024 09:15:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1svGD8-0003LG-Vc
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 09:13:10 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svGEm-0006mY-RV
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 09:14:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1svGD7-0000Hp-5L
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 09:13:10 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svGEk-0000PB-P1
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 09:14:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727701987;
+ s=mimecast20190719; t=1727702090;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=X8Uf3cu7w3bXxHu8T4ZklhMVj6zaADm6SnqRePR7DC0=;
- b=gnnLKgxCRKFg4X4U7x7A6oAuvfXbk3EezBHOV4PuzvdljfIgUzltxs1B086NeKE6jwLk3Z
- nWa5+jhzJ1Q3fjYjGEFNcjX5q5alyWliM4CPgouQopM6TfNfIEXRYB7UXT6ewd7eyNgFyw
- mCZyYTrDCRuXdxrzFPAZbkV3MkI5Rtk=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BOD+9OutAaKoolfoS5fZxVX4Jsf45trbsSArSEZRRLE=;
+ b=WLcT9RBf1aTjsnvNI/S/jFK/aJry95BJxZHimZ9vExTKQ2BytfYi/JC6j6aPYEJ8Kko7It
+ ZefLYkTvuvD0mAk9cXMWIPLR5HlZtjrCHHrA5sd9h8fLps4sGpTz8w8dSl9jVZSiNGjLzk
+ hilnXA6l7PQblMiI7MknYF4peir2wE4=
+Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
+ [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-658-wppeF18LOUyTAaeO_2tMUA-1; Mon, 30 Sep 2024 09:13:06 -0400
-X-MC-Unique: wppeF18LOUyTAaeO_2tMUA-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-42cb940cd67so44168665e9.0
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 06:13:05 -0700 (PDT)
+ us-mta-414-1NGlHEUyPpiAmr9IBll1fg-1; Mon, 30 Sep 2024 09:14:48 -0400
+X-MC-Unique: 1NGlHEUyPpiAmr9IBll1fg-1
+Received: by mail-oo1-f72.google.com with SMTP id
+ 006d021491bc7-5e56a096565so2186523eaf.2
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 06:14:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727701985; x=1728306785;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=X8Uf3cu7w3bXxHu8T4ZklhMVj6zaADm6SnqRePR7DC0=;
- b=c6bk9MBYM7kOpYw9cytS08zNHGWE5C/8Q+BIK7KQ1GYgNGT6fgzzaS3gGEyrJFncE6
- tyFs2v/DWISpHhoalWhA7UPag4iRX0COtrkMG7nIHXxLu3N7StPgDe1fTThWLDwv/Ce6
- XdTtdqe65bx/1wqG0QJxLAqN4Ld9Fh1xeKeVuxTEBT/hzaf4ii0FCgDFhPoF7cJh6Na3
- 5Z+Y+yxi84o1zGOzx4AZhpgISex64aU+57b10Rj4ZeHpY97ut3aSa53kgeatcgrdMGwf
- wV62mUsf1albVgHH9elIBKoujTs35tQPauFbNpqcLWdLZ8XYBvv6ehRU79IW4uxGrcTV
- we5g==
-X-Gm-Message-State: AOJu0YzDva3cE10gXp8jWN78VGERqX6zHH5Fs22Lgt+19VPhLDe/Z2NS
- 5L82MKCcAFnEDNuZU5TpYrcNk0ccJojNoQJqXWp5RC0zgzB+rCyoQw6/YYiWOrH//Vjwyjocgyi
- WdwF/rpKBl8O2M6N4O/MRUO5IGdXL4B9+QPFHDW0OGviRuYBGQuHE
-X-Received: by 2002:a05:600c:4f51:b0:42c:bb58:a077 with SMTP id
- 5b1f17b1804b1-42f5843498emr130531095e9.14.1727701984702; 
- Mon, 30 Sep 2024 06:13:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEWGQpls7zSP0rBv9kF7n4UXlmrW+HVkKZqizj2py2BjAgmASh5CDYIDjg2bEosdHmCs13LwQ==
-X-Received: by 2002:a05:600c:4f51:b0:42c:bb58:a077 with SMTP id
- 5b1f17b1804b1-42f5843498emr130530785e9.14.1727701984320; 
- Mon, 30 Sep 2024 06:13:04 -0700 (PDT)
-Received: from ?IPV6:2a09:80c0:192:0:5dac:bf3d:c41:c3e7?
- ([2a09:80c0:192:0:5dac:bf3d:c41:c3e7])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f57e138e9sm103015295e9.36.2024.09.30.06.13.02
+ d=1e100.net; s=20230601; t=1727702088; x=1728306888;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BOD+9OutAaKoolfoS5fZxVX4Jsf45trbsSArSEZRRLE=;
+ b=gn1wK/UmA1PHDjfFbR9NOgym7Llle/XHiSFYazfdWjXTCaFqOSER/iwaWUvqEQD0UJ
+ bwC4GUuM6znnVRNDIZmDiZmYBkCysMPw4aFFwyRl2C61TLUjUWsRbDP2yO21RGixKzn5
+ FCDppZSKrvDemT11CK5r+xrsULus27ju5GIhQmMNxueEv4f3l/wtkToMBi3SIQPRgX3S
+ LIgnbmlPwx/8vgwF4xv2saaUFDt/ikfaxuuWvpUwmG0ojExun4oLZ8kehy9tAYv7dQO8
+ 75ur+kxmi5n+RBahkDouuWlCMMJSOu25ua5UeE67AiXICDr1LV4f5BpeweVc014wueX8
+ fFgw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWfvmGvo+07z2aJTo2yqbTwmbyZ1GoNqPCh17Aq+c8XwdzF+fPHBeXslJpfNkdJxfB62gYXahRamtJ0@nongnu.org
+X-Gm-Message-State: AOJu0YyUGB2rqH1rPiqMmVaWkvwI6JoCh7UH73ggFTVLpAr7RWDHuc/h
+ paouYBpJCTjKIXKp/bTbLDlenN3A918Inaf5HgxBS2No32gCgjiUDY1ATaBE8x0hOvaF7+cLkl8
+ Bd2KU6zQbyDG9YKhLSw2xmHM/P/UKq0BYLb+BnlDwaVPOUnusqqm9
+X-Received: by 2002:a05:6359:8488:b0:1b7:ed21:a29a with SMTP id
+ e5c5f4694b2df-1becbb9705amr249167055d.15.1727702088045; 
+ Mon, 30 Sep 2024 06:14:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGBaqS1QYVCdkpzUeWY7PBSp4D8dkNB03CcUicMEUtaZcPsJk5Orku49tBl4MEJwnsix4aUSg==
+X-Received: by 2002:a05:6359:8488:b0:1b7:ed21:a29a with SMTP id
+ e5c5f4694b2df-1becbb9705amr249163255d.15.1727702087532; 
+ Mon, 30 Sep 2024 06:14:47 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-48-176.web.vodafone.de.
+ [109.42.48.176]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7ae377ebd9fsm405875485a.56.2024.09.30.06.14.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Sep 2024 06:13:03 -0700 (PDT)
-Message-ID: <e21140df-d79e-4599-ba77-018d10db3ee5@redhat.com>
-Date: Mon, 30 Sep 2024 15:13:02 +0200
+ Mon, 30 Sep 2024 06:14:47 -0700 (PDT)
+Message-ID: <11deab13-116a-415e-bc44-82fd80dd516a@redhat.com>
+Date: Mon, 30 Sep 2024 15:14:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 07/14] s390x/s390-hypercall: introduce DIAG500
- STORAGE_LIMIT
-To: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>,
- Claudio Imbrenda <imbrenda@linux.ibm.com>, qemu-s390x@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>
-References: <20240910175809.2135596-1-david@redhat.com>
- <20240910175809.2135596-8-david@redhat.com>
- <6636c963-228f-4bea-87c5-bd4f75521c75@redhat.com>
- <20240927200525.5a90f172.pasic@linux.ibm.com>
- <10165d22-c3e8-4db1-9874-8b63ca59afe9@linux.ibm.com>
+Subject: Re: [PATCH V2 0/18] s390x: Add Full Boot Order Support
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: frankja@linux.ibm.com
+References: <20240927005117.1679506-1-jrossi@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <10165d22-c3e8-4db1-9874-8b63ca59afe9@linux.ibm.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240927005117.1679506-1-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -144,7 +130,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,70 +146,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.09.24 13:11, Christian Borntraeger wrote:
-> Am 27.09.24 um 20:05 schrieb Halil Pasic:
->> On Thu, 12 Sep 2024 10:19:00 +0200
->> Thomas Huth <thuth@redhat.com> wrote:
->>
->>>> diff --git a/hw/s390x/s390-hypercall.h b/hw/s390x/s390-hypercall.h
->>>> index b7ac29f444..f0ca62bcbb 100644
->>>> --- a/hw/s390x/s390-hypercall.h
->>>> +++ b/hw/s390x/s390-hypercall.h
->>>> @@ -18,6 +18,7 @@
->>>>     #define DIAG500_VIRTIO_RESET            1 /* legacy */
->>>>     #define DIAG500_VIRTIO_SET_STATUS       2 /* legacy */
->>>>     #define DIAG500_VIRTIO_CCW_NOTIFY       3 /* KVM_S390_VIRTIO_CCW_NOTIFY */
->>>> +#define DIAG500_STORAGE_LIMIT           4
->>>>     
->>>>     int handle_diag_500(CPUS390XState *env);
->>>
->>> Reviewed-by: Thomas Huth <thuth@redhat.com>
->>>
->>> Sounds very reasonable to me - but it would be good to get an
->>> Ack/Reviewed-by from IBM folks here (in case they prefer a different
->>> interface)... hope they'll join the discussion!
->>>
->>>     Thomas
->>
->> According to Documentation/virt/kvm/s390/s390-diag.rst in the
->> linux source tree DIAG 500 is for kvm virtio funcions.
->>
->> Based on the commit message this storagelimit DIAG is rather loosely
->> tied to virtio if at all, so from that perspective DIAG may not be a
->> perfect fit. OTOH I don't see a better fit either. I would prefer to
->> have Christian's opinion on this. I have no strong opinion myself.
+On 27/09/2024 02.50, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
 > 
-> Some remarks:
-> 500 with a new subcode would work, it is marked as KVM hypervisor call
-> in our docs. 501 was used in the past for software breakpoints.
-
-Right, we use it in the absence of KVM_CAP_S390_USER_INSTR0.
-
-> So we could use 502 as the next free one (This is reserved for KVM).
-> We do have kvm_stat counters for 500, not sure if people debugging virtio
-> will care.
-
-It would be one additional trigger during system boot, so likely not 
-really an issue. We could always add new stats for selected subcodes 
-(i.e, KVM_S390_VIRTIO_CCW_NOTIFY).
-
-> The only important question for me is, what code is generated by gcc for
-> the switch statement and will any variant slow down the virtio doorbell.
-> diag.c has
->           if (!vcpu->kvm->arch.css_support ||
->               (vcpu->run->s.regs.gprs[1] != KVM_S390_VIRTIO_CCW_NOTIFY))
->                   return -EOPNOTSUPP;
+> Loosely a v2, this updated patch set is a significant rework to most aspects of
+> the initially proposed multi-device boot order. Of particular note, the
+> original patch set used code jumps to restart the IPL while this version
+> does not. In order to remove the code jumps, two significant prerequisite
+> changes are required for the pc-bios. Firstly, the netboot code is linked into
+> the main s390-ccw.img, which allows for return after a failed netboot, based on
+> the patch set from Thomas Huth <thuth@redhat.com>
+> (https://lists.gnu.org/archive/html/qemu-devel/2024-06/msg03956.html).
+> Secondly, IPL errors that result in an immediate termination are converted
+> to instead provide a return value back to the main IPL calling function.
 > 
-> So 500+4 should probably not cause any harm apart from branch prediction
-> going wrong the first 2 or 3 notifies.
+> The routines for building and loading fallback device IPLBs are largely
+> unchanged: An IPLB is built for each device with a boot index
+> specified (up to 8 devices). The IPLBs location in memory is passed to the guest
+> using the global QIPL structure, which is stored at a fixed address. If the
+> first device in the boot order successfully IPLs, then the additional IPLBs are
+> never used; however, if the first device fails, subsequent IPLBs are retrieved
+> from memory and the IPL process restarts using the specifications contained in
+> the new IPLB.
+> 
+> This continues until IPL is successful or there are no IPLBs left to try.
+> 
+> The per-device loadparm attribute is still uniformly added to CCW devices
+> although it may only be assigned a value if the device has a boot index.
+> This will need further rework if a more targeted approach is desired.
+> 
+> Two automated test cases are planned for v3: a minimal test where a guest has
+> two boot devices defined and the first fails, and also a limit test where the
+> guest has 8 boot devices defined but only the last one can actually IPL.
 
-Right, it's very unlikely to be noticeable at all.
+Thanks, this looks already much better than the "jump back to start" stuff 
+in v1 !
 
-Thanks for the feedback!
+One thing I noticed while testing your patches: Booting from ISO images 
+seems to be broken for me now, e.g. something like:
 
--- 
-Cheers,
+./qemu-system-s390x -nographic -accel kvm -m 1G \
+  -bios pc-bios/s390-ccw/s390-ccw.img \
+  -drive 
+if=none,id=d1,file=Fedora-Server-dvd-s390x-38-1.6.iso,format=raw,media=cdrom \
+  -device virtio-scsi -device scsi-cd,drive=d1,bootindex=1
 
-David / dhildenb
+used to work fine in the past, but gives me a "Failed to IPL this ISO 
+image!" error now.
+
+Does ISO IPL-ing work for you?
+
+  Thomas
+
 
 
