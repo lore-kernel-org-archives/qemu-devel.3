@@ -4,66 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3BFFCE835C
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 15:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56593CE835C
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 15:53:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svIfU-0003Ln-EC; Mon, 30 Sep 2024 11:50:37 -0400
+	id 1svIi5-0001HB-RF; Mon, 30 Sep 2024 11:53:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+d85baba0dd44d3e2cbbf+7708+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1svIfS-0003ET-MF
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 11:50:34 -0400
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+d85baba0dd44d3e2cbbf+7708+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1svIfQ-0000Xn-5a
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 11:50:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=FV1aADBTzrLAK7G63lf2zmNcusuud/wQyRz87RsgH0c=; b=TLASOMfkKvkFPeXO6lzdROzgug
- hVh87UbiPfvQjrvqcES5nWE/RXLNZ/QFhVoTwYMZIqcE+A/cir65tqyxxuIwgNVRtMaezWOswqFA4
- L283bQ7J5h88ttfoyBcFVm9MXMxXJ8aul4PrPRYVM0awMHUNqSA5HuOgxk+5dGgvUoCNIHyX5mqIy
- QM8uabK91UoiFQcxgxtpJuVOSwTebofsDUpR7ay08DntcYNKhsDfyXj4I9J5/uOi0j/0eO5KKNi1P
- gW4hbl7jRnQZV+Dx9acObJ2OlW+dtAiKzvZ3fVODs3QjNKO3//OXB159rxIPiEXO0pYvzShicoKlC
- yI/Lq7Qg==;
-Received: from [2001:8b0:10b:5:30ed:4be7:8b5d:b42b]
- (helo=u3832b3a9db3152.ant.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1svIfG-000000002Ap-12SM; Mon, 30 Sep 2024 15:50:23 +0000
-Message-ID: <7571cdc42d6d69db0ac98ffc99801d11de1de129.camel@infradead.org>
-Subject: Re: More than 255 vcpus Windows VM setup without viommu ?
-From: David Woodhouse <dwmw2@infradead.org>
-To: Sandesh Patel <sandesh.patel@nutanix.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, paul <paul@xen.org>
-Cc: Rob Scheepens <rob.scheepens@nutanix.com>, Prerna Saxena
- <confluence@nutanix.com>, Alexander Graf <agraf@csgraf.de>
-Date: Mon, 30 Sep 2024 16:50:21 +0100
-In-Reply-To: <a80c99b0e10e71a5a301c884d699eeaff3893349.camel@infradead.org>
-References: <B75A5788-630B-4898-8758-52B57D3D5895@nutanix.com>
- <a80c99b0e10e71a5a301c884d699eeaff3893349.camel@infradead.org>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-pczrRdHH39HKmHAHqZLd"
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1svIi4-0001Gh-HX
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 11:53:16 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1svIi2-0000iR-TY
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 11:53:16 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5c87853df28so5055809a12.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 08:53:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727711593; x=1728316393; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=OSehD90NmzxSOd4476TeuH3zyinKxJl//eu/9d6Q3fs=;
+ b=Eqzix3tp+mZC+JGUUI6aANT5VBcnZhfpIoHvu6eEw3vKNczYSHbkKSesvKlDkEMNrI
+ Sf3X9ymWTcflJ7V5Kt0ej/fJDwnYMQXGnrbMGOp/7U43UumaObXNZlwBfn3EhMhNZfAS
+ 1/zx7EyUiFUOkOPrQvdM4bDrbtiVYqphXuERgTrRwOkblI+FeiF7cEWpnwYuqQIhXIvV
+ zg3ydvY6/W7FQ5PNlNIUQb1K3LFDrtSUxA0IuuovJ0MJOASdGjF334Mhqn8/Eljv3kND
+ Yx7lt1mUVzMAEbAJYD/wvm9qq7R4naRUrnrz/fEAomdH4t7tl0ey/uYmirdgT/i/P3MG
+ UOow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727711593; x=1728316393;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OSehD90NmzxSOd4476TeuH3zyinKxJl//eu/9d6Q3fs=;
+ b=KFodh+ZYXp4STBSuxOhOl5fINnbt/XgPtGS+D01YrHB3ex1PmPsat9ZRwJeLAM3YzM
+ bjuLGVItgJ/yxOigl6omlBrFkM6J9wUXqEmcu51Luma1yUA5SzpO0LrxG8vjrkFVklc1
+ F9b8riwvYOYk8KaFq6XDUH2hcbjGb9BjQksMRkzR7G/7lpKThZd295cnmU1slsvhxxFx
+ vqj5M8bh+EX/tf0NhkNzmQgS/AYhF6sLzAzPkb0snvePkkR70kNXeodqyKvpreum4LuJ
+ yzVJCr8S3oq4DF4wtbjBFp+5SVRwUEpR6b7ApzndBg5VGFqOEHSMezMe4c5CjJVR/sus
+ 2Nrg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXBiQfzaPgwaocKooWSk989Kv6c2a15DKRAiLgUM0kpKlTDfbYLvM8+V8DH7NpLOKqYPCUZgwK+nMVx@nongnu.org
+X-Gm-Message-State: AOJu0Ywy5nMp2Ktr1hCqntz9tcrok4+ADTnTCHI1iH6h4rlAQ4ngTUI+
+ AGhEJJEbxeEcMKOFm7UJDZm52SvnlFhNFIDf7CfnCmQLTTHKq+M+2TYQouuCxEMT+X9boUb1phY
+ kH8RYfrQowjW0CIC+m+k9KUQgmU+6jK6Ab4zaPg==
+X-Google-Smtp-Source: AGHT+IH77nXGaZWfP5aJzLG3iSTnuTPNzlZ9o5zrUXRHM3DwmDxWyew2TYF/EcBoS57nhWgQFarp1xH52g+nFR+CD0Y=
+X-Received: by 2002:a05:6402:2552:b0:5c5:c443:c22c with SMTP id
+ 4fb4d7f45d1cf-5c8824e7967mr11467707a12.15.1727711592951; Mon, 30 Sep 2024
+ 08:53:12 -0700 (PDT)
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+d85baba0dd44d3e2cbbf+7708+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240924112035.1320865-1-Shivasagar.Myana@amd.com>
+ <ZvqabpGOlBcQoZ1T@xse-figlesia-l2.amd.com>
+In-Reply-To: <ZvqabpGOlBcQoZ1T@xse-figlesia-l2.amd.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 30 Sep 2024 16:53:01 +0100
+Message-ID: <CAFEAcA8Lk17zf8SQ4YHEO1t_p+=iEyUiSX-fJgK80+FbNzjy0Q@mail.gmail.com>
+Subject: Re: [PATCH 1/1] hw/ssi/xilinx_spips: Fix flash earse assert in dual
+ parallel configuration
+To: Francisco Iglesias <francisco.iglesias@amd.com>
+Cc: Shiva sagar Myana <Shivasagar.Myana@amd.com>, qemu-devel@nongnu.org,
+ alistair@alistair23.me, sai.pavan.boddu@amd.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,224 +92,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 30 Sept 2024 at 13:38, Francisco Iglesias
+<francisco.iglesias@amd.com> wrote:
+>
+> Hi Shiva,
+>
+> On the subject:
+>
+> s/earse/erase/
+>
+> On Tue, Sep 24, 2024 at 04:50:35PM +0530, Shiva sagar Myana wrote:
+> > Ensure that the FIFO is checked for emptiness before popping data from it.
+> > Previously, the code directly popped the data from FIFO without checking, which
+>
+> I'm not native english speaking but I think "from the FIFO" sounds better to me!
+>
+> > could cause an assertion failure:
+> > ../util/fifo8.c:67: fifo8_pop: Assertion `fifo->num > 0
+> >
+> > Signed-off-by: Shiva sagar Myana <Shivasagar.Myana@amd.com>
+>
+> With above changes:
+>
+> Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
 
---=-pczrRdHH39HKmHAHqZLd
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Applied to target-arm.next, thanks (with the above commit
+message tweaks made, and restoring the truncated tail end
+of the assertion message).
 
-On Sat, 2024-09-28 at 15:59 +0100, David Woodhouse wrote:
-> On Tue, 2024-07-02 at 05:17 +0000, Sandesh Patel wrote:
-> >=20
-> > The error is due to invalid MSIX routing entry passed to KVM.
-> >=20
-> > The VM boots fine if we attach a vIOMMU but adding a vIOMMU can
-> > potentially result in IO performance loss in guest.
-> > I was interested to know if someone could boot a large Windows VM by
-> > some other means like kvm-msi-ext-dest-id.
->=20
-> I think I may (with Alex Graf's suggestion) have found the Windows bug
-> with Intel IOMMU.
->=20
-> It looks like when interrupt remapping is enabled with an AMD CPU,
-> Windows *assumes* it can generate AMD-style MSI messages even if the
-> IOMMU is an Intel one. If we put a little hack into the IOMMU interrupt
-> remapping to make it interpret an AMD-style message, Windows seems to
-> boot at least a little bit further than it did before...
-
-Sadly, Windows has *more* bugs than that.
-
-The previous hack extracted the Interrupt Remapping Table Entry (IRTE)
-index from an AMD-style MSI message, and looked it up in the Intel
-IOMMU's IR Table.
-
-That works... for the MSIs generated by the I/O APIC.
-
-However... in the Intel IOMMU model, there is a single global IRT, and
-each entry specifies which devices are permitted to invoke it. The AMD
-model is slightly nicer, in that it allows a per-device IRT.
-
-So for a PCI device, Windows just seems to configure each MSI vector in
-order, with IRTE#0, 1, onwards. Because it's a per-device number space,
-right? Which means that first MSI vector on a PCI device gets aliased
-to IRQ#0 on the I/O APIC.
-
-I dumped the whole IRT, and it isn't just that Windows is using the
-wrong index; it hasn't even set up the correct destination in *any* of
-the entries. So we can't even do a nasty trick like scanning and
-funding the Nth entry which is valid for a particular source-id.
-
-Happily, Windows has *more* bugs than that... if I run with
-`-cpu host,+hv-avic' then it puts the high bits of the target APIC ID
-into the high bits of the MSI address. This *ought* to mean that MSIs
-from device miss the APIC (at 0x00000000FEExxxxx) and scribble over
-guest memory at addresses like 0x1FEE00004. But we can add yet
-*another* hack to catch that. For now I just hacked it to move the low
-7 extra bits in to the "right" place for the 15-bit extension.
-
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -361,6 +361,14 @@ static void pci_msi_trigger(PCIDevice *dev, MSIMessage=
- msg)
-         return;
-     }
-     attrs.requester_id =3D pci_requester_id(dev);
-+    printf("Send MSI 0x%lx/0x%x from 0x%x\n", msg.address, msg.data, attrs=
-.requester_id);
-+    if (msg.address >> 32) {
-+        uint64_t ext_id =3D msg.address >> 32;
-+        msg.address &=3D 0xffffffff;
-+        msg.address |=3D ext_id << 5;
-+        printf("Now 0x%lx/0x%x with ext_id %lx\n", msg.address, msg.data, =
-ext_id);
-+    }
-+       =20
-     address_space_stl_le(&dev->bus_master_as, msg.address, msg.data,
-                          attrs, NULL);
- }
-
-We also need to stop forcing Windows to use logical mode, and force it
-to use physical mode instead:
-
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -158,7 +158,7 @@ static void init_common_fadt_data(MachineState *ms, Obj=
-ect *o,
-              * used
-              */
-             ((ms->smp.max_cpus > 8) ?
--                        (1 << ACPI_FADT_F_FORCE_APIC_CLUSTER_MODEL) : 0),
-+                        (1 << ACPI_FADT_F_FORCE_APIC_PHYSICAL_DESTINATION_=
-MODE) : 0),
-         .int_model =3D 1 /* Multiple APIC */,
-         .rtc_century =3D RTC_CENTURY,
-         .plvl2_lat =3D 0xfff /* C2 state not supported */,
-
-
-So now, with *no* IOMMU configured, Windows Server 2022 is booting and
-using CPUs > 255:
-  Send MSI 0x1fee01000/0x41b0 from 0xfa
-  Now 0xfee01020/0x41b0 with ext_id 1
-
-That trick obviously can't work the the I/O APIC, but I haven't managed
-to persuade Windows to target I/O APIC interrupts at any CPU other than
-#0 yet. I'm trying to make QEMU run with *only* higher APIC IDs, to
-test.
-
-It may be that we need to advertise an Intel IOMMU that *only* has the
-I/O APIC behind it, and all the actual PCI devices are direct, so we
-can abuse that last Windows bug.
-
---=-pczrRdHH39HKmHAHqZLd
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
-ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
-EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
-FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
-aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
-EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
-VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
-ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
-QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
-rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
-ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
-U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
-DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
-BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
-dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
-BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
-QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
-CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
-xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
-IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
-kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
-eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
-KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
-1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
-OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
-x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
-5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
-DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
-VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
-UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
-MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
-ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
-oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
-SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
-xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
-RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
-bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
-NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
-KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
-5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
-C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
-gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
-VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
-by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
-b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
-BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
-QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
-c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
-AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
-qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
-v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
-Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
-tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
-Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
-YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
-ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
-IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
-ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
-GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
-h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
-9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
-P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
-2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
-BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
-7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
-lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
-lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
-AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
-Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
-FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
-BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
-cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
-aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
-LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
-BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
-cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
-Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
-lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
-WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
-hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
-IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
-dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
-NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
-xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
-DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwOTMwMTU1MDIxWjAvBgkqhkiG9w0BCQQxIgQgbRtbe1MU
-pA0h/Smx+m8I44Az+rvJfxe12HAHLW0/4w4wgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
-A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
-dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
-DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
-MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
-Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
-lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgAOEz4Eosl517sg8Y36f3tXhKk41EcX1L2/
-E83H2djbQGNIadOeCT9Z5viVSopWawC7hRiyh3dlYi095XW7qk10zHyZi8vlDNam0Wu9N58Dt7mJ
-gw9uDD+mbb9jT4mZCqXyzeeuYpxjOGc7UCoD7kpO+nr2sLDiseaaBzze7oSvftuCZy1h2t0XQI+o
-VikiZvY1c5kEd+XHwKFZz7rxi+JwZUkYXPXjQHRVX4dhQf9zrGn7yskAEMVDOpI40QJOB1kx4lkA
-u9/68zpRhXktJnvjjd88Orh42jrqdjopzoiZ9z7JYrkmYE1h2LY9S1TAMxoSggLE7yEFC45GrgCz
-zV0NujfXHhwb7mBANYQfSzJ3N99nv92ZFoklFwvl1ygG4MaMOV4ITJo6gFyzgYBNO9nyJwZJDT3E
-DG6/ArzzeFZz4x+WoOwhpzMDGlg1+1h+/WSIwJKWT3euMWYeJsuELdma58vuAXRbU8zN2khTJehD
-lzXsOn43PKktsEbB8rET7Au9EmxOu0qggmjFTv6OOD8AAiu8+HjPdX0OcQcoP8zVMylpeq+VzUlq
-n6uqJfNJeoYgrwtcHrg/o+4ZYWmbu40rDtdo9wAjyCbsZ4sDiToQAz0mA9kdQjBKjoevlqhIBe9l
-c1DcyyAYTDm6ktznGj6ZqsZc4dFGRQ3Ja2Ci/LUgMwAAAAAAAA==
-
-
---=-pczrRdHH39HKmHAHqZLd--
+-- PMM
 
