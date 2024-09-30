@@ -4,108 +4,179 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 028ADCE8379
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 18:17:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11724CDD1D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 19:26:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svKwd-00074t-Gb; Mon, 30 Sep 2024 14:16:27 -0400
+	id 1svM26-0004va-M3; Mon, 30 Sep 2024 15:26:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1svKwb-00074M-F9
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 14:16:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <shefty@nvidia.com>) id 1svM23-0004v7-GQ
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:26:07 -0400
+Received: from mail-dm6nam10on2058.outbound.protection.outlook.com
+ ([40.107.93.58] helo=NAM10-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1svKwZ-0000vG-Hf
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 14:16:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727720179;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=g70UrLqfz9ieslzzgOkmz08fHuxDPadkSXeHrQ+so08=;
- b=bRBvp+V54Zo1YV1A5caXh98dphMZWZS4z/5UXwOiX9xjzr+qDKMbTf5IKwxHUiMeGqwdod
- AQi9+XagXsRcAi3SNsp7RfGFz8Wd5tUsJ6TivgmhWn5llz2CukAzXkcZAAUBGNSlWMXkcs
- YJx9RLHdJ0P0Yik+niL8V1GJ2pD1Cb4=
-Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com
- [209.85.161.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-350-2Z0mu0YANBivSvIcO-h-wQ-1; Mon, 30 Sep 2024 14:16:18 -0400
-X-MC-Unique: 2Z0mu0YANBivSvIcO-h-wQ-1
-Received: by mail-oo1-f69.google.com with SMTP id
- 006d021491bc7-5e1cd853298so3561397eaf.1
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 11:16:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727720178; x=1728324978;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=g70UrLqfz9ieslzzgOkmz08fHuxDPadkSXeHrQ+so08=;
- b=W+PBnRbcIr/qba3wZcAIvd6hDtwhuOtUGXukSUqSWWGZzU2mUjpTyUwobW38MfwYWL
- 9xe9kqoTNdjTmr6Lln0GOdt9NZSEif3Zd8c6K4Q9lZJyGhWgTVmru1pNytN73Bp9XdNH
- LWVc9ZkDMFRNEar8d9DZdxEi00bWQWUvLU+ccousw2qA23q9BtzqZ0U68O2TsoOpzQYm
- mAGwrbGs37qRbL84Ky2eFt77VmFEFPv6b8v5zzdaR2S/8sYFYmZaDaDcs2MgxgxtQMoW
- 1IE/W9574cSjjxK9aKEoe3YZTTEQ8w2vBPdoeZ/vUI0ul1FowAje2RcxMZFxKZTdZKVm
- 6YAg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU22oPLbT/eMF1LX5GgM6Ddzlma8Pvbjy+eLaLc4QZWA64j9eAMJVm9G1zHuVrcqz/Fmo6Jszt1V2Td@nongnu.org
-X-Gm-Message-State: AOJu0YyIZhXJDyrEVbzEZ4O0EG6Zq0/aup6NDWtN1n//EWJ8MMeFjFe/
- /xImszhkvmvASZ6m8zXOL7hYmPBhBL6zEjGxXufzTQNcElMz933TqNxh7VasP01pZb2WKST815Y
- vgeKbgoDH94cn7QEonSPAEUMFEAcpmXfj+m+2pcnasBTHwCoQq4KM
-X-Received: by 2002:a05:6358:60c7:b0:1b8:2cf8:cf5 with SMTP id
- e5c5f4694b2df-1becbc261f9mr781334555d.3.1727720177729; 
- Mon, 30 Sep 2024 11:16:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFBfqZzsABhgfZIZhmer2c2B5PqhU2BpdrwLqd2GTt5QuL/pH5CbvBqdiobgzrukVOd5H6UBw==
-X-Received: by 2002:a05:6358:60c7:b0:1b8:2cf8:cf5 with SMTP id
- e5c5f4694b2df-1becbc261f9mr781330455d.3.1727720177390; 
- Mon, 30 Sep 2024 11:16:17 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6cb3b67f23csm41656496d6.108.2024.09.30.11.16.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Sep 2024 11:16:16 -0700 (PDT)
-Date: Mon, 30 Sep 2024 14:16:14 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Michael Galaxy <mgalaxy@akamai.com>
-Cc: Sean Hefty <shefty@nvidia.com>, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "yu.zhang@ionos.com" <yu.zhang@ionos.com>,
- "elmar.gerdes@ionos.com" <elmar.gerdes@ionos.com>,
- zhengchuan <zhengchuan@huawei.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "lizhijian@fujitsu.com" <lizhijian@fujitsu.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- Xiexiangyou <xiexiangyou@huawei.com>,
- "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
- "lixiao (H)" <lixiao91@huawei.com>,
- "jinpu.wang@ionos.com" <jinpu.wang@ionos.com>,
- Wangjialin <wangjialin23@huawei.com>
-Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
-Message-ID: <Zvrq7nSbiLfPQoIY@x1n>
+ (Exim 4.90_1) (envelope-from <shefty@nvidia.com>) id 1svM1z-00009K-FT
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 15:26:07 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WnehKqgTC/yuCYeW+24WH6SnXegm7qnjGaL/t+TeDo2G64F+cWz7oo4tsWp5BnhLI1GxPm3WTu3iLx3DSLKzZsv1E6//4coFAZPxvKCcaUtG6Dy76SQJyt6GtctjY19CldsGRlHeX1obXZFgwGZyTFcqvOVi4bQOZyQtkBgwkErntHfirZkrn3a/Hw1maG5+mxCP6IfFZT9YzUDbIOc31ICUR328sqnbXJywpW2TKw5s+gkqMwNb0EWVSIGw1lNzRblVjziHZovMiRaJS5YSdjBqawyTrskHEkeCM/Akjwg6VFhnkGZrWf5lSqYBCSESeygfV4TUN9TdCphaFNbXdg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=YhNb31m4GU1OPFV5+/Zw7AXS668jWYM+KBaQI2OU+LI=;
+ b=pjfMWzhfTVeogu0wciIQ3gXkZD2OgLyjz/G9IuohiLthbXl/tGvruemb9FfYIESU+Ji7dNOnBZ8dm79pQR4QPuJ53XQEJzOr+HsYcUXP5Wy8gknri1Xfl1AmfFN+DeQ3Y7odr/urHcOHLDvMfOBaZqLJl5PjouCbyvHnrghpexBBZ99ri+l0dFv4XJXq4wrGPH6DEM7KawFuQ16WWJqb0i4wPORxFFuOgoqgK1DttY+4JiW67H66B3cO7o8NjPaPisTb2QkEOwRa6uk667LZW4B/ugfXfRVBCuwsBHIqKouufYyxQREINNBPXg+RmS3xsXv1V7+LFSfh4LC50+HpdA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YhNb31m4GU1OPFV5+/Zw7AXS668jWYM+KBaQI2OU+LI=;
+ b=NyGCWsoyMIygQvdD1bC5sC3FfhfETsvfsaULV0un170UPfvBcMZ9xU4BDTTQAyDtXdy0e/zZQIc99p4HziFHri/FNpDRmVtUhCHLYvOCKKq3LgfTyK17gA93FiLEtKTNTljAMOx5kLV1kVV2Bjkp0wi8H+AtUZVCCL5DQBsFxHa9N5gLnwSy8Lsj1m7syjhfrOay/TvqHs6p8tT7/r2EULgysuSwMFx8r1eSd3VFT7av2q3g73iaDF8E6BIeP3B0L5EFoh7oAYza4M8V+xIOZI1sd1SUaU0yCVxJp+/ZpTVhjJC6v4kkjCW9SBw7oBEDSxTwnVHOcq27Zqq9V8+eEA==
+Received: from DM6PR12MB4313.namprd12.prod.outlook.com (2603:10b6:5:21e::17)
+ by IA1PR12MB8540.namprd12.prod.outlook.com (2603:10b6:208:454::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8005.26; Mon, 30 Sep
+ 2024 19:20:56 +0000
+Received: from DM6PR12MB4313.namprd12.prod.outlook.com
+ ([fe80::4d58:4bbc:90a5:1f13]) by DM6PR12MB4313.namprd12.prod.outlook.com
+ ([fe80::4d58:4bbc:90a5:1f13%7]) with mapi id 15.20.8005.026; Mon, 30 Sep 2024
+ 19:20:56 +0000
+From: Sean Hefty <shefty@nvidia.com>
+To: Peter Xu <peterx@redhat.com>, Michael Galaxy <mgalaxy@akamai.com>
+CC: "Gonglei (Arei)" <arei.gonglei@huawei.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "yu.zhang@ionos.com" <yu.zhang@ionos.com>, "elmar.gerdes@ionos.com"
+ <elmar.gerdes@ionos.com>, zhengchuan <zhengchuan@huawei.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, "armbru@redhat.com"
+ <armbru@redhat.com>, "lizhijian@fujitsu.com" <lizhijian@fujitsu.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, Xiexiangyou
+ <xiexiangyou@huawei.com>, "linux-rdma@vger.kernel.org"
+ <linux-rdma@vger.kernel.org>, "lixiao (H)" <lixiao91@huawei.com>,
+ "jinpu.wang@ionos.com" <jinpu.wang@ionos.com>, Wangjialin
+ <wangjialin23@huawei.com>
+Subject: RE: [PATCH 0/6] refactor RDMA live migration based on rsocket API
+Thread-Topic: [PATCH 0/6] refactor RDMA live migration based on rsocket API
+Thread-Index: AQHatnjBzD0Q+/leUkmGnsu3pioCmrI8DtYAgAALpoCAKMQMgIAAXY2AgAQQioCAA47yoIABVcMAgAMrZQCAAAQ68A==
+Date: Mon, 30 Sep 2024 19:20:56 +0000
+Message-ID: <DM6PR12MB4313D6BA256740DE1ACA29E9BD762@DM6PR12MB4313.namprd12.prod.outlook.com>
 References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
- <Zs4z7tKWif6K4EbT@x1n>
- <20240827165643-mutt-send-email-mst@kernel.org>
+ <Zs4z7tKWif6K4EbT@x1n> <20240827165643-mutt-send-email-mst@kernel.org>
  <027c4f24-f515-4fdb-8770-6bf2433e0f43@akamai.com>
- <84c74f1a95a648b18c9d41b8c5ef2f60@huawei.com>
- <ZvQnbzV9SlXKlarV@x1n>
+ <84c74f1a95a648b18c9d41b8c5ef2f60@huawei.com> <ZvQnbzV9SlXKlarV@x1n>
  <DM6PR12MB431364C7A2D94609B4AAF9A8BD6B2@DM6PR12MB4313.namprd12.prod.outlook.com>
- <0730fa9b-49cd-46e4-9264-afabe2486154@akamai.com>
+ <0730fa9b-49cd-46e4-9264-afabe2486154@akamai.com> <Zvrq7nSbiLfPQoIY@x1n>
+In-Reply-To: <Zvrq7nSbiLfPQoIY@x1n>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DM6PR12MB4313:EE_|IA1PR12MB8540:EE_
+x-ms-office365-filtering-correlation-id: 6dd485e9-bd30-4f64-c613-08dce1850241
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|10070799003|1800799024|366016|7416014|38070700018; 
+x-microsoft-antispam-message-info: =?utf-8?B?WGtBRXlQS2t2UUg4bVRsb3pPaHUzQTN5ZUUzZ1I5RGpvWVh4R05zQnpJem9S?=
+ =?utf-8?B?SFUwbGNRWUEwSGx2VGM1amhlK1lVL0dvRUwvYjVETkpQdVRIbENNVXN4bnhu?=
+ =?utf-8?B?MmZDaTNUdCsxNXNyNU0vNHU0NFdTTjZDb3o3YXZCNkFmR0lPdlhuR2RocDBP?=
+ =?utf-8?B?dFcwRHVJNnZUdG41eTR5RWpzbXhMWDlCaGxmdjl6emRFOGlTOWJ3WVV4SmtW?=
+ =?utf-8?B?VllhRHVVM3N0Nzh6ZDliei9RbktHYWRRNVcycVJXYXhGamRzTDZ0RFJjakpJ?=
+ =?utf-8?B?dytpbTdXbStsOWdNSU1nM1ZUN3lPM0Raei8wcmxrWUg0cW4rUHp6MnlULzBB?=
+ =?utf-8?B?U2V6Y1JRTGgvblpjd0d0WVErMFZKbUlNbDdmSFZWbjJIbTEzRFFTKzFRMTBx?=
+ =?utf-8?B?YVpZV3l4M2RTZnBxZ0pTTldKUUpxVDJkOFNpcSsyYjZLTTAvcFBGY0ZjbnBk?=
+ =?utf-8?B?Ky9qT0dKRmlSMFNDNXJoekpyeWVHODJ4aFJTeUNKZ1Y0UVRJVHdhVEgzZ0Fy?=
+ =?utf-8?B?VFhUS1hCc2FJRDVGNktSU1ZZNFBQWDdXSkxOQ2pFcVNYN3dhVUFaOTFrUEUv?=
+ =?utf-8?B?bDBVOVJia0NoRVQ1VE5hOXNwRC9OU3gxQlVITWh0WDQzYkRKQ1lTampzdDdN?=
+ =?utf-8?B?S3dLM2VPMmg2QUtiZHNGLzZURHNpUkEwY3NwbVl1NHZpNnBsMWtJQnI0MDBK?=
+ =?utf-8?B?OVAwMno3bG1Vb1Q0cTRqVjBYL0hJYTRwQ1YrU1AweW1kbGVkd2RuUjVoSUdr?=
+ =?utf-8?B?aE9YUEIrUWVmekFZVFh3NFJNYk5ubXZNWjJJM3QvN1M3Vmc3ZlBvY2x1aUMv?=
+ =?utf-8?B?ZFZVSytLU2ZQSW9CUFcxRFJtbnNvejBMaWtzWDZ4UW9OMENoWk1CWGd2R3hR?=
+ =?utf-8?B?a0ZVRzI5QzY4Wm12TGdqSFRuL3loOTFCTzlPVGtsRkI5eGZHdlYyRjd2VVVn?=
+ =?utf-8?B?M3BQM1djSXpuMzRUc25IZWpuMzVxcHpCZWJLaHBCQWRJMml3d2x3SUtXMkMw?=
+ =?utf-8?B?YXpkWEpvbEF2c0wzNkNYRU9BQkIyUS8yR2lZZldLYXJhTFFwSXlUbllpUjVQ?=
+ =?utf-8?B?YUdWMmxUWFlobDNGQmgzM09Ramo3eTdacEo0cmVnRURraVh1eHcvMmZ4aEZy?=
+ =?utf-8?B?d2hxZ2o1dW85WVBnR2ExalhxbDBEa2FyaDQ2a1ZtVkZubDN4bEovRkFXbith?=
+ =?utf-8?B?TEN2RlV1bEFEOUFrMVRtclhiN1dORDB5RmRVVzVJNjRxWm5LYUdHVXJCeXdV?=
+ =?utf-8?B?K29OdUFUbHhDUmRvZ0xlY3dQK1lKeDZrMnUvcGcxUkZWRStFcStrQTJjMENq?=
+ =?utf-8?B?RFpSTVFGdkE0cFRRR291YTVaMlZhYmV2dmNZV2xKaS96YmZWUmFBYmpjb2w0?=
+ =?utf-8?B?L1A2algvSklSN3ZibHFIMU9Wbmw0bFNEZ2pJank2QURwVlZ0ZDdkaWxPaUtj?=
+ =?utf-8?B?cW1HQXlOQTl1MUhwbjNBbTBmQkdrUE5paVVPdk9zdEh5TTc1b3ZDRnRnRU1U?=
+ =?utf-8?B?d0N1WWJMbElWVFdFdVZHc05CeDJuUzNvS1ZSVlFLSTByNzUxSlh2c0ZTamRX?=
+ =?utf-8?B?eUNTLzZ6OVhVQlhEd2Z2VE5mQWp1QXF2TDlmajkzMlNVbFlRN1d6ZnVOWFo3?=
+ =?utf-8?B?cWdrY3B6SWlVNCtXTGV6VEFUNTBqMm1IQlF0TG1pMDhWWlBSeGREQm1BMEdp?=
+ =?utf-8?B?WFFRRU9HNmx2YVhOYWhzT3NNSUc3QXZVR1ZzZHZCeWQ1dUs4c3NabGsyamkz?=
+ =?utf-8?B?cGlmeGhGK3dqNnE4RGZMM1RiYVJiOUtQcXNjUXJmbEthZkZkRkd5WlVlaTZM?=
+ =?utf-8?B?TzdqQmNrd2xQL2pyeUIvdz09?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR12MB4313.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(10070799003)(1800799024)(366016)(7416014)(38070700018);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?aW9ZN0g3NzAwZlFtM1JETDdUQ3B2UzNTdVBtWW9XdVVWN2tPS3RrQU9adURs?=
+ =?utf-8?B?VjFNSTBoQk9iaG1VZGhaRlpkOXhTUk9wNzE2VFFCb2tYVVVUd25vWVRTNTV0?=
+ =?utf-8?B?VFMycDR3UUJHRVJYR2RINFlJWFJYc0JEanExaXhpSmwrREJWdDY3M1hvbWd0?=
+ =?utf-8?B?RmRTOVNHejl3cVc5dU9rcStORVBCL01Kakh1NUNNUmJFTElUVThTdkx4WUg1?=
+ =?utf-8?B?S1g0L2l6TFJ3alRoeEZnWGc3SnByT0I4NDAyWmUwZzAyUThTcjI2R3FKRWJ5?=
+ =?utf-8?B?aUQ4ajRYY2FRNWJ6QWh2UVcwMTZCVVpSNFRBcExuYmhxZUVmc3dxaFREREdX?=
+ =?utf-8?B?dzBHdDdvMHI2enFla2VFWXQyb29UUVhqRTZzRlpVLzljYitBNmNHTUtZZmh0?=
+ =?utf-8?B?S3djdDFzQVhkUmdDcVF2dW5malhXVXZNamIxQjkycXdsWDg3VnpRL2pwelFT?=
+ =?utf-8?B?dFZzT0JldkxPZ0w5b0h3T1JhZStFRHVOUVdBcjN3ZHJnSHoyU2JyUitTOUl0?=
+ =?utf-8?B?N2xydUFEK2NOVExObkVzSnVab0lZektxV09pYlFPaVJ4NjMzK1lGU1V2ZS92?=
+ =?utf-8?B?ZHZSL1p0SVp5MDNUcGV0blF2NHlrQWdneDk0YVFhN3ptRStEWVRWa1lpdVdx?=
+ =?utf-8?B?MVBoazFoTlVUVzhHR1laLy9menA4NHNVTzltWllUM2YxRWlmNCtiUnV3SkUx?=
+ =?utf-8?B?NnNpR1Z5enNxWlR4bGF0NTAzMmZxY2t0MVM1MG5XaXlGdDdKb3l5VFdvVWgv?=
+ =?utf-8?B?UDZuU0NuNzY4VEY0dUZZOHJUMHU0ZElsbVNmRGxLdXRkMkNvTEJZNDZ0SWlp?=
+ =?utf-8?B?TE1WR2k0djJnbnJOQ1V4WmhUN1lIRjhKeXhHTnpkNEhveEFDRzU3TmdFbmRy?=
+ =?utf-8?B?b1VQdW1xbllaZVBuTmFlN2QrTExQSFdvS2FiV2hwZFQxOVhJZlUxRW5DenJi?=
+ =?utf-8?B?QkRRUmFsZncvZ0N2LzVnODZheVBRRm1yUjlqRlgyd3MxZUtpc3pKR2VBQ3cr?=
+ =?utf-8?B?cWgwa2hyT3l2V0ttTTlMU1ZIdU9VYnJoZ0NUeHJJVWg5NlhqeFlqM3BLaW1u?=
+ =?utf-8?B?YW4xdkU1MS9jV2pTN2FvUUl2Skh2ZlhMY2U4QTFaYXJueGhpTFFtRzRJMmt5?=
+ =?utf-8?B?Q1AxM3J2SmtlMkppRE1IQzQ0UlM3V3FPejFlc3JOa1VLUzRGaUNNSlNXMFhS?=
+ =?utf-8?B?Zk5wY2VCUDhaeWlZVWQ0V3doRldLMWlnbDZtcVYzUTFobTM0aXBJdmp3WVBq?=
+ =?utf-8?B?MXBHdHU3L3RWTXRsR29QTlF3eEpmTkVxLzRXZ3I2ckhFRXZxTVB2K1BHaUV3?=
+ =?utf-8?B?eFdvS09NbGsydk9ESjI5aGNQL1F6dWNHMWRZUC83TUJ4QzF0aXFZb3Y2dUpr?=
+ =?utf-8?B?TnErUTNHTDQrSkJtaThHSGJ0UTlQb0FVM1dXVDdPWUU4K0JRWDVzZkNXeVJ0?=
+ =?utf-8?B?RnFQOXZOLzA2VjY5dU9LZjBLZGQvUjkzdnl1TkNkVG5pd0JWcUtEYTYrUEd3?=
+ =?utf-8?B?VU1EK3ZPVFc1TjBPSEtOOFBZdzJhNkhkRHpmWEF1eGlMdUVwSTlXVG5DeTRD?=
+ =?utf-8?B?emE0U1lHMEJBNERHbDFsM2psT29rVTNCb0dPN0xjK1UySm1zQkpWanhTc3NP?=
+ =?utf-8?B?ZlVJeEZMYU56YlRLUjN0ZVRLVXhiWG5XTUQ0ZnVvWWtVZ2VCMElqQTlaaHRQ?=
+ =?utf-8?B?aUYwMlpSQjlTczUrbmFWYnZlTm1BNVJkTGs2Q0pmSEFSa2RicDE1VlBNenVK?=
+ =?utf-8?B?U0N2bUF4ZHFlZk9QejRYTFVhME9yL251eWVHTWtyQjVyZnZZTW1kYnJ4ZjNr?=
+ =?utf-8?B?UWhuTytZOHRQNGJMaGRYQ2p5UWJLRWd5amI3d0Nic2plTEVkdWZvNmMydk5W?=
+ =?utf-8?B?T2pBL055eDJWZUJCeXlsVUtpODlRQkpybWUvQlNaUTVYVlBib0RWbGQwOWxh?=
+ =?utf-8?B?WnZtWlU0OFVnODZmemRpT0gzWnNnV092S3QyOEgxRWEvOE1NMXZITTZPdTFZ?=
+ =?utf-8?B?ZU42UUR4b3N0Q1B1OFQwZHVUOFlZZXVlV0JxeSsrUXd2cnhZb0lpVmpxcUtW?=
+ =?utf-8?B?QmtSbEY5UmQvUXFpK2VjV2EwMEZmMFRyR29HQUgyMXVpYVcxcU9MTjh2ZjJW?=
+ =?utf-8?B?dFFPWURDaTdaajFWTGhNeWpQTUdCNHdBdS9IQVQ3eXRVcVpHdzFzY0MvWk5y?=
+ =?utf-8?B?V3c9PQ==?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <0730fa9b-49cd-46e4-9264-afabe2486154@akamai.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4313.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6dd485e9-bd30-4f64-c613-08dce1850241
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Sep 2024 19:20:56.3954 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 8BbHBsfWMYRyRh0MVVpuzJ22RUc/8BrR/3I2kERp019GUKhnM0q0O+qx/7sqqzv985p/60YIoN1uHpyLnCZEHA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8540
+Received-SPF: softfail client-ip=40.107.93.58; envelope-from=shefty@nvidia.com;
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,74 +192,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Sep 28, 2024 at 12:52:08PM -0500, Michael Galaxy wrote:
-> On 9/27/24 16:45, Sean Hefty wrote:
-> > !-------------------------------------------------------------------|
-> >    This Message Is From an External Sender
-> >    This message came from outside your organization.
-> > |-------------------------------------------------------------------!
-> > 
-> > > > > I have met with the team from IONOS about their testing on actual IB
-> > > > > hardware here at KVM Forum today and the requirements are starting
-> > > > > to make more sense to me. I didn't say much in our previous thread
-> > > > > because I misunderstood the requirements, so let me try to explain
-> > > > > and see if we're all on the same page. There appears to be a
-> > > > > fundamental limitation here with rsocket, for which I don't see how it is
-> > > possible to overcome.
-> > > > > The basic problem is that rsocket is trying to present a stream
-> > > > > abstraction, a concept that is fundamentally incompatible with RDMA.
-> > > > > The whole point of using RDMA in the first place is to avoid using
-> > > > > the CPU, and to do that, all of the memory (potentially hundreds of
-> > > > > gigabytes) need to be registered with the hardware *in advance* (this is
-> > > how the original implementation works).
-> > > > > The need to fake a socket/bytestream abstraction eventually breaks
-> > > > > down => There is a limit (a few GB) in rsocket (which the IONOS team
-> > > > > previous reported in testing.... see that email), it appears that
-> > > > > means that rsocket is only going to be able to map a certain limited
-> > > > > amount of memory with the hardware until its internal "buffer" runs
-> > > > > out before it can then unmap and remap the next batch of memory with
-> > > > > the hardware to continue along with the fake bytestream. This is
-> > > > > very much sticking a square peg in a round hole. If you were to
-> > > > > "relax" the rsocket implementation to register the entire VM memory
-> > > > > space (as my original implementation does), then there wouldn't be any
-> > > need for rsocket in the first place.
-> > > 
-> > > Yes, some test like this can be helpful.
-> > > 
-> > > And thanks for the summary.  That's definitely helpful.
-> > > 
-> > > One question from my side (as someone knows nothing on RDMA/rsocket): is
-> > > that "a few GBs" limitation a software guard?  Would it be possible that rsocket
-> > > provide some option to allow user opt-in on setting that value, so that it might
-> > > work for VM use case?  Would that consume similar resources v.s. the current
-> > > QEMU impl but allows it to use rsockets with no perf regressions?
-> > Rsockets is emulated the streaming socket API.  The amount of memory dedicated to a single rsocket is controlled through a wmem_default configuration setting.  It is also configurable via rsetsockopt() SO_SNDBUF.  Both of those are similar to TCP settings.  The SW field used to store this value is 32-bits.
-> > 
-> > This internal buffer acts as a bounce buffer to convert the synchronous socket API calls into the asynchronous RDMA transfers.  Rsockets uses the CPU for data copies, but the transport is offloaded to the NIC, including kernel bypass.
-> Understood.
-> > Does your kernel allocate > 4 GBs of buffer space to an individual socket?
-> Yes, it absolutely does. We're dealing with virtual machines here, right? It
-> is possible (and likely) to have a virtual machine that is hundreds of GBs
-> of RAM in size.
-> 
-> A bounce buffer defeats the entire purpose of using RDMA in these cases.
-> When using RDMA for very large transfers like this, the goal here is to map
-> the entire memory region at once and avoid all CPU interactions (except for
-> message management within libibverbs) so that the NIC is doing all of the
-> work.
-> 
-> I'm sure rsocket has its place with much smaller transfer sizes, but this is
-> very different.
-
-Is it possible to make rsocket be friendly with large buffers (>4GB) like
-the VM use case?
-
-I also wonder whether there're other applications that may benefit from
-this outside of QEMU.
-
-Thanks,
-
--- 
-Peter Xu
-
+PiA+IEknbSBzdXJlIHJzb2NrZXQgaGFzIGl0cyBwbGFjZSB3aXRoIG11Y2ggc21hbGxlciB0cmFu
+c2ZlciBzaXplcywgYnV0DQo+ID4gdGhpcyBpcyB2ZXJ5IGRpZmZlcmVudC4NCj4gDQo+IElzIGl0
+IHBvc3NpYmxlIHRvIG1ha2UgcnNvY2tldCBiZSBmcmllbmRseSB3aXRoIGxhcmdlIGJ1ZmZlcnMg
+KD40R0IpIGxpa2UgdGhlIFZNDQo+IHVzZSBjYXNlPw0KDQpJZiB5b3UgY2FuIHBlcmZvcm0gbGFy
+Z2UgVk0gbWlncmF0aW9ucyB1c2luZyBzdHJlYW1pbmcgc29ja2V0cywgcnNvY2tldHMgaXMgbGlr
+ZWx5IHVzYWJsZSwgYnV0IGl0IHdpbGwgaW52b2x2ZSBkYXRhIGNvcGllcy4gIFRoZSBwcm9ibGVt
+IGlzIHRoZSBzb2NrZXQgQVBJIHNlbWFudGljcy4NCg0KVGhlcmUgYXJlIHJzb2NrZXQgQVBJIGV4
+dGVuc2lvbnMgKHJpb3dyaXRlLCByaW9tYXApIHRvIHN1cHBvcnQgUkRNQSB3cml0ZSBvcGVyYXRp
+b25zLiAgVGhpcyBhdm9pZHMgdGhlIGRhdGEgY29weSBhdCB0aGUgdGFyZ2V0LCBidXQgbm90IHRo
+ZSBzZW5kZXIuICAgKHJpb3dyaXRlIGZvbGxvd3MgdGhlIHNvY2tldCBzZW5kIHNlbWFudGljcyBv
+biBidWZmZXIgb3duZXJzaGlwLikNCg0KSXQgbWF5IGJlIHBvc3NpYmxlIHRvIGVuaGFuY2UgcnNv
+Y2tldHMgd2l0aCBNU0dfWkVST0NPUFkgb3IgaW9fdXJpbmcgZXh0ZW5zaW9ucyB0byBlbmFibGUg
+emVyby1jb3B5IGZvciBsYXJnZSB0cmFuc2ZlcnMsIGJ1dCB0aGF0J3Mgbm90IHNvbWV0aGluZyBJ
+J3ZlIGxvb2tlZCBhdC4gIFRydWUgemVybyBjb3B5IG1heSByZXF1aXJlIGNvbWJpbmluZyBNU0df
+WkVST0NPUFkgd2l0aCByaW93cml0ZSwgYnV0IHRoZW4gdGhhdCBtb3ZlcyBmdXJ0aGVyIGF3YXkg
+ZnJvbSB1c2luZyB0cmFkaXRpb25hbCBzb2NrZXQgY2FsbHMuDQoNCi0gU2Vhbg0K
 
