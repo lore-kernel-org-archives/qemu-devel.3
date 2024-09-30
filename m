@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C125CF6497
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:17:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E25CF6497
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:18:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svBbC-0007ej-Bp; Mon, 30 Sep 2024 04:17:42 -0400
+	id 1svBbj-0001Wt-Cd; Mon, 30 Sep 2024 04:18:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1svBa5-00046t-1z
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:16:34 -0400
+ id 1svBZx-0003le-Vn
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:16:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1svBa3-0005mS-4I
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:16:32 -0400
+ id 1svBZt-0005k2-Ab
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:16:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727684190;
+ s=mimecast20190719; t=1727684178;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8PUwcgtZt0hOyPV07gl666NOLQBNxh2UtOKTtC1Z66E=;
- b=QdjTPBhd9gDnyKNxNgxij9b7RGj5efZcbfh0AVZ0/yXyqvozl1CX9KswV3VUQEWVUPHIEr
- bBHDN5qXF410kaKyraiHu1M5frlzNEi+obhefiHUJOKKW2+suChqEod2ik3DOx2qcRW2HO
- PVZk1fU0t08+hXOJMc9BSFhfBXynUP8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=JWGVABklCLrU7/ALyC116NV9eFWhHW+S/KvcK29JhAU=;
+ b=eImr9MADNpTNSBNfejGhLHWzY4iirw2NMOjE/VJcWzQLznQ+JEg8lQ2+sSt2Y8/Wr/Tt1e
+ gKhRQTSILt1H/6CBfww6qccab+zRomVMUX2XFno7xWUQoXFwQkI4XVDydYtMgBxCRQwwR/
+ Uz9Hd32kVJ6qfn+UmY7cCtSFmKM6p/0=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-76-4BF36qTDObCTfvrJfya0iA-1; Mon,
- 30 Sep 2024 04:16:27 -0400
-X-MC-Unique: 4BF36qTDObCTfvrJfya0iA-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-552-bs9SLGCQNkWcNYEly4406Q-1; Mon,
+ 30 Sep 2024 04:16:15 -0400
+X-MC-Unique: bs9SLGCQNkWcNYEly4406Q-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4F19D1943CD2; Mon, 30 Sep 2024 08:16:24 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 96A7B1953951; Mon, 30 Sep 2024 08:16:12 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.36])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B4A64195419F; Mon, 30 Sep 2024 08:16:20 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8C2FD1955DC7; Mon, 30 Sep 2024 08:16:10 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>,
@@ -72,16 +72,15 @@ Cc: Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Yuval Shaia <yuval.shaia.ml@gmail.com>, Bin Meng <bin.meng@windriver.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v3 11/22] block/block-copy: fix -Werror=maybe-uninitialized
- false-positive
-Date: Mon, 30 Sep 2024 12:14:46 +0400
-Message-ID: <20240930081458.1926382-12-marcandre.lureau@redhat.com>
+Subject: [PATCH v3 09/22] hw/vhost-scsi: fix -Werror=maybe-uninitialized
+Date: Mon, 30 Sep 2024 12:14:44 +0400
+Message-ID: <20240930081458.1926382-10-marcandre.lureau@redhat.com>
 In-Reply-To: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
 References: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,26 +109,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../block/block-copy.c:591:12: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
+../hw/scsi/vhost-scsi.c:173:12: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
+
+It can be reached when num_queues=0. It probably doesn't make much sense
+to instantiate a vhost-scsi with 0 IO queues though. For now, make
+vhost_scsi_set_workers() return success/0 anyway, when no workers have
+been setup.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- block/block-copy.c | 2 +-
+ hw/scsi/vhost-scsi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/block-copy.c b/block/block-copy.c
-index cc618e4561..7265733825 100644
---- a/block/block-copy.c
-+++ b/block/block-copy.c
-@@ -568,7 +568,7 @@ static coroutine_fn int block_copy_task_entry(AioTask *task)
-     BlockCopyState *s = t->s;
-     bool error_is_read = false;
-     BlockCopyMethod method = t->method;
--    int ret;
-+    int ret = -1;
+diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
+index 49cff2a0cb..22d16dc26b 100644
+--- a/hw/scsi/vhost-scsi.c
++++ b/hw/scsi/vhost-scsi.c
+@@ -172,7 +172,7 @@ static int vhost_scsi_set_workers(VHostSCSICommon *vsc, bool per_virtqueue)
+     struct vhost_dev *dev = &vsc->dev;
+     struct vhost_vring_worker vq_worker;
+     struct vhost_worker_state worker;
+-    int i, ret;
++    int i, ret = 0;
  
-     WITH_GRAPH_RDLOCK_GUARD() {
-         ret = block_copy_do_copy(s, t->req.offset, t->req.bytes, &method,
+     /* Use default worker */
+     if (!per_virtqueue || dev->nvqs == VHOST_SCSI_VQ_NUM_FIXED + 1) {
 -- 
 2.45.2.827.g557ae147e6
 
