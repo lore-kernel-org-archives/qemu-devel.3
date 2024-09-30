@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93DB3CF6491
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:17:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1D5DCF6491
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:17:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svBb9-0007MI-IJ; Mon, 30 Sep 2024 04:17:39 -0400
+	id 1svBay-0006K0-Qb; Mon, 30 Sep 2024 04:17:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1svBZt-0003jH-Ht
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:16:27 -0400
+ id 1svBZa-00035N-KX
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:16:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1svBZl-0005jP-Qc
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:16:15 -0400
+ id 1svBZY-0005hl-EC
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:16:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727684173;
+ s=mimecast20190719; t=1727684159;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VtGkZhaSX+IxfoOdKjEfBlvK3kKNfL8AG2v9Iw0B/NQ=;
- b=ATVAHe9e9zHW5m4804mRlsS8kwcvkTrToju13v5ZqXkA0QhuaTBCF5VP22cMweo+ScCx1C
- L33+UvGpk071+8KugwMvRPDphqbAVeocV+2ZNUvo4Zqsqq3DmoSC11drM8WmUwOSzlyt90
- 1iqs5AODgY5kihi6Cs5wjjNqU59gI20=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=FCeKBonFNyUflZYNMAOxtHXtj8QpjqLDQ64BJECt8as=;
+ b=aebhQ44N1lwnZ/5hLL1xoNtvplnQ8vgs6TjCX04X0QXPoeeuuC/hLYZSgPd/mawthZNzYm
+ ga1/pzEv8sRWzijifhE7G9vVsxxQleDa5IxHWXRy9ntHtxvbLX5JoD8APOSg/syz3KYPyD
+ iUOS56kLpDykyGJ94lG8Caw+MQpVbvI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-452--SAoFAuxOiiKu13R-OO-6A-1; Mon,
- 30 Sep 2024 04:16:10 -0400
-X-MC-Unique: -SAoFAuxOiiKu13R-OO-6A-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-454-gTTXg1I8Og-16VJtiXkRWQ-1; Mon,
+ 30 Sep 2024 04:15:56 -0400
+X-MC-Unique: gTTXg1I8Og-16VJtiXkRWQ-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
  [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 21D8A193584E; Mon, 30 Sep 2024 08:16:07 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C362A192D0E1; Mon, 30 Sep 2024 08:15:53 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.36])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C7B7819373D7; Mon, 30 Sep 2024 08:16:03 +0000 (UTC)
+ id D87651979060; Mon, 30 Sep 2024 08:15:51 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>,
@@ -72,10 +72,10 @@ Cc: Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Yuval Shaia <yuval.shaia.ml@gmail.com>, Bin Meng <bin.meng@windriver.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v3 08/22] hw/ahci: fix -Werror=maybe-uninitialized
+Subject: [PATCH v3 06/22] block/mirror: fix -Werror=maybe-uninitialized
  false-positive
-Date: Mon, 30 Sep 2024 12:14:43 +0400
-Message-ID: <20240930081458.1926382-9-marcandre.lureau@redhat.com>
+Date: Mon, 30 Sep 2024 12:14:41 +0400
+Message-ID: <20240930081458.1926382-7-marcandre.lureau@redhat.com>
 In-Reply-To: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
 References: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -110,35 +110,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../hw/ide/ahci.c:989:58: error: ‘tbl_entry_size’ may be used uninitialized [-Werror=maybe-uninitialized]
+../block/mirror.c:404:5: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
+../block/mirror.c:895:12: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
+../block/mirror.c:578:12: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
+
+Change a variable to int, as suggested by Manos: "bdrv_co_preadv()
+which is int and is passed as an int argument to mirror_read_complete()"
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- hw/ide/ahci.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ block/mirror.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
-index 7fc2a08df2..0eb24304ee 100644
---- a/hw/ide/ahci.c
-+++ b/hw/ide/ahci.c
-@@ -948,7 +948,6 @@ static int ahci_populate_sglist(AHCIDevice *ad, QEMUSGList *sglist,
-     uint64_t sum = 0;
-     int off_idx = -1;
-     int64_t off_pos = -1;
--    int tbl_entry_size;
-     IDEBus *bus = &ad->port;
-     BusState *qbus = BUS(bus);
+diff --git a/block/mirror.c b/block/mirror.c
+index 54e3a7ea9d..2afe700b4d 100644
+--- a/block/mirror.c
++++ b/block/mirror.c
+@@ -349,7 +349,7 @@ static void coroutine_fn mirror_co_read(void *opaque)
+     MirrorOp *op = opaque;
+     MirrorBlockJob *s = op->s;
+     int nb_chunks;
+-    uint64_t ret;
++    int ret = -1;
+     uint64_t max_bytes;
  
-@@ -976,6 +975,8 @@ static int ahci_populate_sglist(AHCIDevice *ad, QEMUSGList *sglist,
-     /* Get entries in the PRDT, init a qemu sglist accordingly */
-     if (prdtl > 0) {
-         AHCI_SG *tbl = (AHCI_SG *)prdt;
-+        int tbl_entry_size = 0;
-+
-         sum = 0;
-         for (i = 0; i < prdtl; i++) {
-             tbl_entry_size = prdt_tbl_entry_size(&tbl[i]);
+     max_bytes = s->granularity * s->max_iov;
+@@ -565,7 +565,7 @@ static void coroutine_fn GRAPH_UNLOCKED mirror_iteration(MirrorBlockJob *s)
+ 
+     bitmap_set(s->in_flight_bitmap, offset / s->granularity, nb_chunks);
+     while (nb_chunks > 0 && offset < s->bdev_length) {
+-        int ret;
++        int ret = -1;
+         int64_t io_bytes;
+         int64_t io_bytes_acct;
+         MirrorMethod mirror_method = MIRROR_METHOD_COPY;
+@@ -841,7 +841,7 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
+     int64_t offset;
+     BlockDriverState *bs;
+     BlockDriverState *target_bs = blk_bs(s->target);
+-    int ret;
++    int ret = -1;
+     int64_t count;
+ 
+     bdrv_graph_co_rdlock();
 -- 
 2.45.2.827.g557ae147e6
 
