@@ -4,114 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A743CF64B1
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 12:58:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B774CF64B6
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 12:58:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svFy0-0007Ao-8F; Mon, 30 Sep 2024 08:57:32 -0400
+	id 1svFy6-0007hR-E1; Mon, 30 Sep 2024 08:57:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
- id 1svFxw-00076I-U0; Mon, 30 Sep 2024 08:57:28 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
- id 1svFxt-0006rc-R1; Mon, 30 Sep 2024 08:57:27 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48U5EFGC024730;
- Mon, 30 Sep 2024 12:57:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date
- :from:to:cc:subject:message-id:in-reply-to:references
- :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
- pt3JDjSc8/SaggM9rTbWMDMOM44uxTukwctz3UQB1UE=; b=BmlX991DdlgFmJcB
- ntfpZNA2CWHtahTiZN4S0AkmeZ487XXFM2bVsUHNgTSgwnBddhhebomQLgSLQOk4
- ZYCh6RfX+QydgwBzMGBbuHC1fWTWD4uCBJunlAcUE+pdmq3VWMwEZRyV+wOhLJyx
- 9/+LicqUTdjJPUkYXsDYKGFgu6dxshxn+8DKtC5gQePsX1kikOWo6pZQmpVa9VQl
- NHhm2bnX1bN3nYG4nAZe47oJmcxJL94pKXDMgL2jnSjDA+VxSQLPUJG+BWG85IPc
- Jz8SEWcMRLwcgFVn9bkT8NbmeWDN6jm7ViT0SvyR2YV2hWkkVt4UMU85mjbTnJ8E
- D1VAuw==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41x9ap9yf6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 30 Sep 2024 12:57:20 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48UCjdlD022484;
- Mon, 30 Sep 2024 12:57:20 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41x9ap9yex-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 30 Sep 2024 12:57:20 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48UBAcr2013975;
- Mon, 30 Sep 2024 12:57:19 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41xwmjxgnj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 30 Sep 2024 12:57:18 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48UCvFEQ56557986
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 30 Sep 2024 12:57:15 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2C45120043;
- Mon, 30 Sep 2024 12:57:15 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6F71620040;
- Mon, 30 Sep 2024 12:57:14 +0000 (GMT)
-Received: from li-ce58cfcc-320b-11b2-a85c-85e19b5285e0 (unknown [9.179.8.58])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with SMTP;
- Mon, 30 Sep 2024 12:57:14 +0000 (GMT)
-Date: Mon, 30 Sep 2024 14:57:12 +0200
-From: Halil Pasic <pasic@linux.ibm.com>
-To: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
- qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>, Janosch Frank
- <frankja@linux.ibm.com>,
- Claudio Imbrenda <imbrenda@linux.ibm.com>, qemu-s390x@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Richard
- Henderson <richard.henderson@linaro.org>, Ilya Leoshkevich
- <iii@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck
- <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>
-Subject: Re: [PATCH v1 07/14] s390x/s390-hypercall: introduce DIAG500
- STORAGE_LIMIT
-Message-ID: <20240930145712.526a1c79.pasic@linux.ibm.com>
-In-Reply-To: <10165d22-c3e8-4db1-9874-8b63ca59afe9@linux.ibm.com>
-References: <20240910175809.2135596-1-david@redhat.com>
- <20240910175809.2135596-8-david@redhat.com>
- <6636c963-228f-4bea-87c5-bd4f75521c75@redhat.com>
- <20240927200525.5a90f172.pasic@linux.ibm.com>
- <10165d22-c3e8-4db1-9874-8b63ca59afe9@linux.ibm.com>
-Organization: IBM
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1svFy4-0007Yx-4r
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 08:57:36 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1svFxz-0006s3-Qr
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 08:57:34 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5c883459b19so3645289a12.2
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 05:57:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727701049; x=1728305849; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=RJaI5SK5VvVN/3U0o+ob6Z1YSyfENJJm/WYJimU5npg=;
+ b=Efxuk1M5eJ7VsyFb8AreV4WWSREbzrnKjkB4GpPV4wylKkGzKcz9wsVyr9AzuiOtti
+ END9AF/LlgMpCWl3p5+Jb6+x2C9lvPb9MOwy9d789i/r3XyD4ugR/bzsDr23e2ATyQiQ
+ tR+A6Q+OBCnRblVkD9fzoCXKhao5XyRCndIAKgutn4vTL5ITPrTPr5jiWAnZmK6Vh6tu
+ lUHGUTNfLXWWwG3WdwjhJjAOfB+PHH4cSIN1ylTV4aAUXDmShu1btqnyjlKIrPuv+dbK
+ t6DVNfgKn7ZbtkE+JRKJs1OvivBAQFjb5OXBzD80iU9QZhLzJM3hkUJo3XucP1CtB1c0
+ 3L9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727701049; x=1728305849;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=RJaI5SK5VvVN/3U0o+ob6Z1YSyfENJJm/WYJimU5npg=;
+ b=c1pON0nmx2DGHk/xgrzCMPLCuj3GzAmqj2v0xKjhXcdOQcZmV6+x8hFPvVLfmFL0mF
+ MC3t1dnev97g/fw3Pom/90taPsutzX4T7YKLyy6flS8MPN3k/l/ir15p6jYPNBAibcgU
+ s7rSJGoezi3jbQDLpk5vi+mW1/Wc85952WoBKDpU6I0iH83GWcfY1JZ09QIK5gWK0s9l
+ xLK9kEyewDZUgBWpsvRTpyvFBUIAeXVeTXNrl3VhqZrfduWS14eXkY0E1w5tM0QD+3K3
+ 7RQPIxOH6ubdllN3dccqMjMmHsarbyhow+j3b+z0yfMaOS/E9yWKHIPFmp+gd0IJNkHm
+ An6Q==
+X-Gm-Message-State: AOJu0YyQmgjffbb9buwmV1zcjvdQMorPzrdEobF5Z91HwiFUD+OnX4fL
+ jk+2ENe/kyRXpL/+EE08p04L5Jgfjf9EcDB/niIGQ2+yMvpq+7Rm9By9wJrGaeBz9DIOwc3FFzZ
+ kdcaNXLKyOc3fYtf9yV2ptwiEjHKqACB0/Gya6g==
+X-Google-Smtp-Source: AGHT+IH66oD3oqN9HHFQFg/9hTQsfBlUBCmp2m7LCdYYmXaqEcswtOIkjoDmOKPa+UCoi98oSAcB3+Uew7Ry5NgVea8=
+X-Received: by 2002:a05:6402:26d3:b0:5c8:a0b1:b60 with SMTP id
+ 4fb4d7f45d1cf-5c8a0b10bedmr417956a12.4.1727701049139; Mon, 30 Sep 2024
+ 05:57:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: oLU-o_WXle-1RBnIJyeeE9a8rLkKiPUj
-X-Proofpoint-GUID: jb5ETNHKHNrJp2_sthaOKTxnBEeRmkJZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-09-30_10,2024-09-30_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0
- lowpriorityscore=0 mlxlogscore=629 malwarescore=0 priorityscore=1501
- phishscore=0 mlxscore=0 suspectscore=0 adultscore=0 clxscore=1015
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409300091
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=pasic@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20240923101554.12900-1-shentey@gmail.com>
+In-Reply-To: <20240923101554.12900-1-shentey@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 30 Sep 2024 13:57:17 +0100
+Message-ID: <CAFEAcA-69b=MJtqpOss97erRH8v01GdUEGLNydQaz3bVxbUQkg@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Split TYPE_GPIOPWR and reuse in E500 machines
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,64 +88,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 30 Sep 2024 13:11:31 +0200
-Christian Borntraeger <borntraeger@linux.ibm.com> wrote:
+On Mon, 23 Sept 2024 at 11:16, Bernhard Beschow <shentey@gmail.com> wrote:
+>
+> This series is part of a bigger series exploring data-driven machine creation
+> using device tree blobs on top of the e500 machines [1]. The idea is to
+> instantiate a QEMU device model for each device tree node containing a
+> compatible property. [1] achieves feature-parity with the hardcoded machines
+> when supplied the same device tree blob that the hardcoded machine would
+> generate.
 
-> We do have kvm_stat counters for 500, not sure if people debugging virtio
-> will care.
+FWIW, on Arm I have generally pushed back against the idea
+of "create a QEMU machine from a device tree", because the
+device tree does not in general contain sufficient information
+to create a QEMU machine. It only has the information that
+Linux needs to use the devices, which is a subset of the
+total "how do all these devices exist and get wired together".
+(There are some special cases like some Xilinx FPGA systems,
+where both the device tree and the hardware were autogenerated
+from a common source definition, and so there's enough of
+a constraint on what the hardware can be to make it workable.)
 
-Could end up being confusing, as currently we can assume each and every
-DIAG 500 is a virtio doorbell. But I don't think the chance of this
-causing real headache is big.
+> Just like the ARM virt machine, the ppce500 machine implements a
+> "gpio-poweroff"-compatible device tree node. Unfortunately, the implementation
+> isn't shared which this series fixes. In order to reflect device tree which has
+> separate bindings for gpio-poweroff and gpio-reset, and to prepare for the
+> above, the gpio-pwr device model is split.
+>
+> Note: If the split seems too fine-grained, the existing gpio-pwr device model
+> could probably be reused in ppce500, too.
 
-> The only important question for me is, what code is generated by gcc for
-> the switch statement and will any variant slow down the virtio doorbell.
-> diag.c has
->          if (!vcpu->kvm->arch.css_support ||
->              (vcpu->run->s.regs.gprs[1] != KVM_S390_VIRTIO_CCW_NOTIFY))
->                  return -EOPNOTSUPP;
-> 
-> So 500+4 should probably not cause any harm apart from branch prediction
-> going wrong the first 2 or 3 notifies.
-> 
-> 502 will make kvm_s390_handle_diag larger.
+I definitely like getting rid of the hand-coded
+qemu_allocate_irq() in e500.c. But I don't really see
+the benefit of splitting gpio_pwr into two devices.
+If you only need the power-off behaviour, you can
+leave the restart gpio input not connected to anything.
 
-What do you mean by this last paragraph?
-
-I suppose we are talking about
-int kvm_s390_handle_diag(struct kvm_vcpu *vcpu)                                 
-{                                                                               
-        int code = kvm_s390_get_base_disp_rs(vcpu, NULL) & 0xffff;              
-                                                                                
-        if (vcpu->arch.sie_block->gpsw.mask & PSW_MASK_PSTATE)                  
-                return kvm_s390_inject_program_int(vcpu, PGM_PRIVILEGED_OP);    
-                                                                                
-        trace_kvm_s390_handle_diag(vcpu, code);                                 
-        switch (code) {                                                         
-        case 0x10:                                                              
-                return diag_release_pages(vcpu);                                
-        case 0x44:                                                              
-                return __diag_time_slice_end(vcpu);                             
-        case 0x9c:                                                              
-                return __diag_time_slice_end_directed(vcpu);                    
-        case 0x258:                                                             
-                return __diag_page_ref_service(vcpu);                           
-        case 0x308:                                                             
-                return __diag_ipl_functions(vcpu);                              
-        case 0x500:                                                             
-                return __diag_virtio_hypercall(vcpu);                           
-        default:                                                                
-                vcpu->stat.instruction_diagnose_other++;                        
-                return -EOPNOTSUPP;                                             
-        }                                                                       
-}
-
-and my understanding is that the default branch of the switch 
-statement would be already suitable for DIAG 502 as it is today
-for DIAG 502. So I'm quite confused by your statement that
-502 will make kvm_s390_handle_diag larger (as the only meaning
-of larger I can think of is more code). Can you please clarify?
-
-Regards,
-Halil
+thanks
+-- PMM
 
