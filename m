@@ -4,105 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2821ACE8347
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 13:52:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6641BCE8347
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 13:56:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svGp0-000462-NX; Mon, 30 Sep 2024 09:52:18 -0400
+	id 1svGsG-0001K8-SQ; Mon, 30 Sep 2024 09:55:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1svGoy-0003yz-SI; Mon, 30 Sep 2024 09:52:17 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1svGs2-0001H5-A3; Mon, 30 Sep 2024 09:55:27 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1svGow-0004RL-97; Mon, 30 Sep 2024 09:52:16 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48UDmkUX021041;
- Mon, 30 Sep 2024 13:52:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=9
- Er3w9j3wdrFcLA+2iH89I3sh1hFcnWKsBGHzOT8xx4=; b=Qxu9zC6C+Gmw2ADjU
- 5nyez8Wj3aJwMllg2mkePr2ut1jbAmgln7ER3CBkEtwyLbtUx4SHfu5uJmbAw5HT
- /IRh0ezfIQuNkEr/PV7oFoV+ocQVFwlXyAEqgs/c7IPyNdS1ydMpthsEuNhVCRdW
- hLO1flDqLNs/MviD7OiD29VKOWH5FMXnerIwrIxMJsJ83p5PxnHW69fbLE4P8d6x
- b0Gwuey0TMnCVSbfNu7ydgf7NlJpnJmycfXtHCV2ISrbA0qQrvI7WfBqq1FNhOaY
- OsTMUIbfP5sh6E+fOm2rChUxlKf2xxgoUc/7OhWtVy/IY2+6nEqhWj3S2xuRdoU1
- 4kcfg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41x9fwt51r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 30 Sep 2024 13:52:12 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 48UDqBn4007581;
- Mon, 30 Sep 2024 13:52:11 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41x9fwt51k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 30 Sep 2024 13:52:11 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 48UDmJuL020424;
- Mon, 30 Sep 2024 13:52:11 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 41xv4ry0py-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 30 Sep 2024 13:52:10 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 48UDqABg42860852
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 30 Sep 2024 13:52:10 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8453A58058;
- Mon, 30 Sep 2024 13:52:10 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2D37258057;
- Mon, 30 Sep 2024 13:52:10 +0000 (GMT)
-Received: from [9.61.73.98] (unknown [9.61.73.98])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 30 Sep 2024 13:52:10 +0000 (GMT)
-Message-ID: <6aebad8d-5e88-407a-a8e6-f514bde764ca@linux.ibm.com>
-Date: Mon, 30 Sep 2024 09:52:09 -0400
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1svGry-0004jg-BN; Mon, 30 Sep 2024 09:55:25 -0400
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:3f48:0:640:7695:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 8568160A69;
+ Mon, 30 Sep 2024 16:55:16 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b737::1:2c] (unknown
+ [2a02:6b8:b081:b737::1:2c])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id FtZGrB13OGk0-5tQoVUfc; Mon, 30 Sep 2024 16:55:16 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1727704516;
+ bh=VwVlU+04fB5D2K3LmVcTt2nkPRsRe7vq5ILG6Ccvt2s=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=UvfzJbXGG3Rua3Qg042nidvvW2GhLTKySWgavBINtNF4NqCuPqFo/7UnSpJaNazGB
+ qwjf6c0/HY/df4+JP6lY/N+yxHzlXVt2hAJDOLCF49n/NqqOggqgl+5DOdzm5FEK5u
+ 2S05cymrieUi1eTOzQsDaOx97h70aL9LAT1TI8Dg=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <b041b1e3-6f66-4a2e-b7dd-07e97ebd7ca8@yandex-team.ru>
+Date: Mon, 30 Sep 2024 16:55:15 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 17/18] pc-bios/s390x: Enable multi-device boot loop
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: frankja@linux.ibm.com
-References: <20240927005117.1679506-1-jrossi@linux.ibm.com>
- <20240927005117.1679506-18-jrossi@linux.ibm.com>
- <6c85a009-284b-4fe1-8bab-06d55137090f@redhat.com>
+Subject: Re: [PATCH v3 2/5] block: move commit_run loop to separate function
+To: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>, qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>
+References: <20240901142405.3183874-1-libvirt-e6954efa@volkihar.be>
+ <20240901142405.3183874-3-libvirt-e6954efa@volkihar.be>
 Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <6c85a009-284b-4fe1-8bab-06d55137090f@redhat.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20240901142405.3183874-3-libvirt-e6954efa@volkihar.be>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 9Vvhq1Fi6MmNoKtxQ0djZrGmHc3cu87W
-X-Proofpoint-GUID: rTUge09WL7aQFPBNyppMBLNa0FDdKW0c
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-09-30_12,2024-09-30_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- clxscore=1015 malwarescore=0 adultscore=0 spamscore=0 impostorscore=0
- mlxscore=0 mlxlogscore=650 bulkscore=0 suspectscore=0 lowpriorityscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409300098
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 7bit
+X-Yandex-Filter: 1
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,58 +77,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 01.09.24 17:24, Vincent Vanlaer wrote:
+> Signed-off-by: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
+> ---
+>   block/commit.c | 85 ++++++++++++++++++++++++++++----------------------
+>   1 file changed, 48 insertions(+), 37 deletions(-)
+> 
+> diff --git a/block/commit.c b/block/commit.c
+> index 8dee25b313..9eedd1fa47 100644
+> --- a/block/commit.c
+> +++ b/block/commit.c
+> @@ -128,6 +128,51 @@ static void commit_clean(Job *job)
+>       blk_unref(s->top);
+>   }
+>   
+> +static int commit_iteration(CommitBlockJob *s, int64_t offset, int64_t *n, void *buf) {
+> +    int ret = 0;
+> +    bool copy;
+> +    bool error_in_source = true;
+> +
+> +    /* Copy if allocated above the base */
+> +    WITH_GRAPH_RDLOCK_GUARD() {
+> +        ret = bdrv_co_common_block_status_above(blk_bs(s->top),
+> +            s->base_overlay, true, true, offset, COMMIT_BUFFER_SIZE,
+> +            n, NULL, NULL, NULL);
+> +    }
+> +
+> +    copy = (ret >= 0 && ret & BDRV_BLOCK_ALLOCATED);
+> +    trace_commit_one_iteration(s, offset, *n, ret);
+> +    if (copy) {
+> +        assert(*n < SIZE_MAX);
+
+Probably a matter of taste, but I'd prefer working with local variable instead of dereferencing the pointer on every line.
+Like this:
+
+commit_iteration(..., int64_t bytes, int64_t *done, ...) {
+
+... work with bytes variable ...
+
+out:
+   *done = bytes;
+   return 0;
+}
 
 
-On 9/30/24 9:08 AM, Thomas Huth wrote:
-> On 27/09/2024 02.51, jrossi@linux.ibm.com wrote:
->> From: Jared Rossi <jrossi@linux.ibm.com>
->>
->> Allow attempts to boot from multiple IPL devices. If the first device 
->> fails to
->> IPL, select the pre-built IPLB for the next device in the boot order 
->> and attempt
->> to IPL from it. Continue this process until IPL is successful or 
->> there are no
->> devices left to try.
->>
->> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
->>
->> ---
-> ...
->> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
->> index d7c457e0ed..e38eedd83a 100644
->> --- a/pc-bios/s390-ccw/main.c
->> +++ b/pc-bios/s390-ccw/main.c
->> @@ -23,7 +23,7 @@ static SubChannelId blk_schid = { .one = 1 };
->>   static char loadparm_str[LOADPARM_LEN + 1];
->>   QemuIplParameters qipl;
->>   IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
->> -static bool have_iplb;
->> +bool have_iplb;
->>   static uint16_t cutype;
->>   LowCore *lowcore; /* Yes, this *is* a pointer to address 0 */
->>   @@ -55,6 +55,12 @@ void write_iplb_location(void)
->>       }
->>   }
->>   +static void copy_qipl(void)
->> +{
->> +    QemuIplParameters *early_qipl = (QemuIplParameters *)QIPL_ADDRESS;
->> +    memcpy(&qipl, early_qipl, sizeof(QemuIplParameters));
->> +}
->> +
->>   unsigned int get_loadparm_index(void)
->>   {
->>       return atoi(loadparm_str);
->> @@ -152,6 +158,7 @@ static void menu_setup(void)
->>         /* If loadparm was set to any other value, then do not enable 
->> menu */
->>       if (memcmp(loadparm_str, LOADPARM_EMPTY, LOADPARM_LEN) != 0) {
->> +        menu_set_parms(qipl.qipl_flags && ~BOOT_MENU_FLAG_MASK, 0);
->
-> That looks supsicious ... did you mean just one "&" instead of "&&" here?
->
+anyway:
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Good catch, yes it should be a single “&”.
+> +
+> +        ret = blk_co_pread(s->top, offset, *n, buf, 0);
+> +        if (ret >= 0) {
+> +            ret = blk_co_pwrite(s->base, offset, *n, buf, 0);
+> +            if (ret < 0) {
+> +                error_in_source = false;
+> +            }
+> +        }
+> +    }
+> +    if (ret < 0) {
+> +        BlockErrorAction action = block_job_error_action(&s->common, s->on_error,
+> +                                                         error_in_source, -ret);
+> +        if (action == BLOCK_ERROR_ACTION_REPORT) {
+> +            return ret;
+> +        } else {
+> +            *n = 0;
+> +            return 0;
+> +        }
+> +    }
+> +    /* Publish progress */
+> +    job_progress_update(&s->common.job, *n);
+> +
+> +    if (copy) {
+> +        block_job_ratelimit_processed_bytes(&s->common, *n);
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+>   static int coroutine_fn commit_run(Job *job, Error **errp)
+>   {
+>       CommitBlockJob *s = container_of(job, CommitBlockJob, common.job);
+> @@ -158,9 +203,6 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+>       buf = blk_blockalign(s->top, COMMIT_BUFFER_SIZE);
+>   
+>       for (offset = 0; offset < len; offset += n) {
+> -        bool copy;
+> -        bool error_in_source = true;
+> -
+>           /* Note that even when no rate limit is applied we need to yield
+>            * with no pending I/O here so that bdrv_drain_all() returns.
+>            */
+> @@ -168,42 +210,11 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+>           if (job_is_cancelled(&s->common.job)) {
+>               break;
+>           }
+> -        /* Copy if allocated above the base */
+> -        WITH_GRAPH_RDLOCK_GUARD() {
+> -            ret = bdrv_co_common_block_status_above(blk_bs(s->top),
+> -                s->base_overlay, true, true, offset, COMMIT_BUFFER_SIZE,
+> -                &n, NULL, NULL, NULL);
+> -        }
+>   
+> -        copy = (ret >= 0 && ret & BDRV_BLOCK_ALLOCATED);
+> -        trace_commit_one_iteration(s, offset, n, ret);
+> -        if (copy) {
+> -            assert(n < SIZE_MAX);
+> -
+> -            ret = blk_co_pread(s->top, offset, n, buf, 0);
+> -            if (ret >= 0) {
+> -                ret = blk_co_pwrite(s->base, offset, n, buf, 0);
+> -                if (ret < 0) {
+> -                    error_in_source = false;
+> -                }
+> -            }
+> -        }
+> -        if (ret < 0) {
+> -            BlockErrorAction action =
+> -                block_job_error_action(&s->common, s->on_error,
+> -                                       error_in_source, -ret);
+> -            if (action == BLOCK_ERROR_ACTION_REPORT) {
+> -                return ret;
+> -            } else {
+> -                n = 0;
+> -                continue;
+> -            }
+> -        }
+> -        /* Publish progress */
+> -        job_progress_update(&s->common.job, n);
+> +        ret = commit_iteration(s, offset, &n, buf);
+>   
+> -        if (copy) {
+> -            block_job_ratelimit_processed_bytes(&s->common, n);
+> +        if (ret < 0) {
+> +            return ret;
+>           }
+>       }
+>   
 
-Jared Rossi
+-- 
+Best regards,
+Vladimir
+
 
