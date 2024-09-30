@@ -4,92 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AFDBCF6497
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:02:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30DD9CF6491
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:02:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svBMp-0003f4-5v; Mon, 30 Sep 2024 04:02:51 -0400
-Received: from eggs.gnu.org ([2001:470:142:3::10])
+	id 1svAy2-0003RZ-77; Mon, 30 Sep 2024 03:37:15 -0400
+Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svBMe-00035X-T6
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:02:42 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svBMd-0003rQ-49
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 04:02:40 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2f75c56f16aso48037901fa.0
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 01:02:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727683356; x=1728288156; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yXipE1vCqUL/2GGIC/pfDOg0/7HE+1Efkqb3qV24aq0=;
- b=tx5YoGJWFUckrveB3VdNhtiMFf8LVpRUmQRun9jJ/lC67d8QYi4SMyMMbXBnljtpoj
- wkyN5usEcONB4tKJsCPpFy1CdBoBoONoZ0aZEmdrxNKBGskQWB0TtVJ3DKAXESyUpQMP
- h9s4KMYR5TtNb0MsYMpCKxhJwZ26hMokWHvFSeU31dYxC8REpQOr39Siiy+/DS1tzmwi
- Dr6+2Z7eDCJZSxl/wDviY5tM3bRno+IGXisK1nQLxJyvUlO7qvwxqHXV08VaCWdkED2b
- 4oNM+xmKYbPs9SnVIZtw2L1VinsJdC23dVvjA+mym0hShxbnDk2ywXG2diGM49+OVN2m
- iLEw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svAwG-0002u5-Rk
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 03:35:26 -0400
+Received: from [170.10.133.124] (helo=us-smtp-delivery-124.mimecast.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svAvn-0008E5-KF
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 03:35:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727681580;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=IfnLh+FexajMGKfI+GBkUj9MLb1Zaa7BjkLvbFbzyEY=;
+ b=PyN3pa6tG5ftaDB4nd3q1Ojq6SWeYkjGwwMOhcQJfILX0bsHIi+JINTRkldR8+h/xpXsL3
+ pxCl+F5ECK8efTAb8w25pTo+mL9REfeuZgG2xjkjcNlxUSZmp3a0JJnhR4JTKIZuwQJ5QD
+ C1S8PoaYT32/kINB1x3WHuie66jJf+A=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-517-uN8a6FuWO8qXjtbtTW21aw-1; Mon, 30 Sep 2024 03:24:13 -0400
+X-MC-Unique: uN8a6FuWO8qXjtbtTW21aw-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6cb2e0f3242so51538596d6.2
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 00:24:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727683356; x=1728288156;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yXipE1vCqUL/2GGIC/pfDOg0/7HE+1Efkqb3qV24aq0=;
- b=bqbv1owSjADILEY7McaMNYqeVYV0Qm6hf6IQuiJTh9dwiXzbZ6hBARlsKLg6MQT+FG
- b4lCpbqkp8udT2JOKnMeCNDBvRwRWbU2+zHOs9ujTvlB2vny1T8xrQDqy0GTR5rfoRcm
- AnErrliHxR8QziJ5ygxt6OMiuJxy2H+IhtuCbrm9UoEvdNcwjZ+j7rYVjgCAn+udrtr8
- R2BXhGZOoqqn1gvq0Yt5FUEdkYENkVwqRcNswLZtK+sHy1loE4kuYNLLulgDu5v9IxMI
- bNl/bofMIirqqAaChi+jcpz6Pg0BfS6d0LefGJSLsNfCMI/AeQchqWa6Qucg+QfPDPL8
- xeKw==
-X-Gm-Message-State: AOJu0YxWdxrHdF4xDnoXYgesAUTitpLqeqHPp0/a2sVO4J8m6HWR777D
- 1NOoBRBlARvm6lK4I2DuEn+RaMX9yJYKhcp8Gyb4LnQg28oEgQZjsu4pVKS9Axqsjd5AbaU2zTB
- ngyo=
-X-Google-Smtp-Source: AGHT+IE8wS4WpCF0/bxJggWg+4eccixi5G2yV44Nj13zqRqQ7E/h8vxjwxEQnrMTjigRWr4M/8ssTA==
-X-Received: by 2002:a05:600c:4f86:b0:42c:bae0:f066 with SMTP id
- 5b1f17b1804b1-42f58434768mr72915825e9.13.1727681712926; 
- Mon, 30 Sep 2024 00:35:12 -0700 (PDT)
-Received: from localhost.localdomain (186.red-88-28-13.dynamicip.rima-tde.net.
- [88.28.13.186]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f58c523dbsm91069205e9.38.2024.09.30.00.35.09
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 30 Sep 2024 00:35:12 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Jason Wang <jasowang@redhat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Anton Johansson <anjo@rev.ng>,
- Peter Maydell <peter.maydell@linaro.org>,
- Huacai Chen <chenhuacai@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Sven Schnelle <svens@stackframe.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-arm@nongnu.org,
- Aurelien Jarno <aurelien@aurel32.net>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Max Filippov <jcmvbkbc@gmail.com>, Paul Burton <paulburton@kernel.org>
-Subject: [PATCH 02/13] hw/virtio/virtio-access: Use the ld/st_endian_p() API
-Date: Mon, 30 Sep 2024 09:34:39 +0200
-Message-ID: <20240930073450.33195-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240930073450.33195-1-philmd@linaro.org>
-References: <20240930073450.33195-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1727681053; x=1728285853;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IfnLh+FexajMGKfI+GBkUj9MLb1Zaa7BjkLvbFbzyEY=;
+ b=tG+H4HLeMB8q1t5HHHUizBQ6YD1m8iokn6unDc6c087puKZMgteKHgpu7uOpdrajMK
+ vsPfMX/YpC6g3vpBDVH5dXlrEcdnQxZtJQ09rQHPuvtqZp9JOcJLEjZEhte2hGfs1UaV
+ GeDQzgbIjhjxIpaJmWY8fuXhoN7y3hAfr6N6L1Eff0lQasSMPYb/acsb/iEOpr66nJTS
+ wojwt6OpW9GUxMujHlr70XCyJEXxtYKmJFHUrGgGvRXHToGPwTw4VL1k+yhQnss1FDC+
+ arXLGOIOVIyzKXlVlNyLwLFVT+ZN4fTC++2lVIBdpjZBO61ppwCIee9mNMphc9nRDnc4
+ 4CqQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWR8UoqrtLpMGQ8vxacOELYohR15lNTWcL6a7dYVfN3NhIr+m9x78DyNg7Sw51dkmE7Lzp6kPzaW8Qr@nongnu.org
+X-Gm-Message-State: AOJu0YyTufTRl8MqlmZXmpDm+npL7zkTmZA8XKRWsg+podgSQp5YD9Ps
+ AiGg76pLLZ8MITfBdJFSPhJRAXa5IruMb5ghZhgNpet/nCfLRfb9BJ5s27s3tOB1x5mlYZhUUJA
+ Ip1m39hL1rWyIzoZYHgU8CnpPJc0tpgXMZA5w6VWnYwim4nYfbUYuUwlAbAXzX1Q=
+X-Received: by 2002:a05:6214:598f:b0:6c3:4c3f:691a with SMTP id
+ 6a1803df08f44-6cb3b646e7amr142592716d6.45.1727681053173; 
+ Mon, 30 Sep 2024 00:24:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF1PAMoj+i7f20OMSvoXMwtsiEHTGnX6jkweKbYGCy8aqh7S6Mu2+PbW6ndlTfsrZ6tI4cqqA==
+X-Received: by 2002:a05:6214:598f:b0:6c3:4c3f:691a with SMTP id
+ 6a1803df08f44-6cb3b646e7amr142592556d6.45.1727681052751; 
+ Mon, 30 Sep 2024 00:24:12 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-48-176.web.vodafone.de.
+ [109.42.48.176]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6cb3b681749sm37595756d6.123.2024.09.30.00.24.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 30 Sep 2024 00:24:12 -0700 (PDT)
+Message-ID: <541715c6-62a5-495c-a7a1-4ad7423422ea@redhat.com>
+Date: Mon, 30 Sep 2024 09:24:08 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/mips: Build fw_cfg.c once
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20240930070015.28244-1-philmd@linaro.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240930070015.28244-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x232.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 170.10.133.124 (deferred)
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.095,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_NONE=0.793, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,82 +149,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refactor to use the recently introduced ld/st_endian_p() API
-No logical change intended.
+On 30/09/2024 09.00, Philippe Mathieu-Daudé wrote:
+> Nothing in fw_cfg.c requires target-specific knowledge,
+> build it once for the 4 MIPS variants.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/mips/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/mips/meson.build b/hw/mips/meson.build
+> index ca37c42d90..fcbee53bb3 100644
+> --- a/hw/mips/meson.build
+> +++ b/hw/mips/meson.build
+> @@ -1,6 +1,6 @@
+>   mips_ss = ss.source_set()
+>   mips_ss.add(files('bootloader.c', 'mips_int.c'))
+> -mips_ss.add(when: 'CONFIG_FW_CFG_MIPS', if_true: files('fw_cfg.c'))
+> +common_ss.add(when: 'CONFIG_FW_CFG_MIPS', if_true: files('fw_cfg.c'))
+>   mips_ss.add(when: 'CONFIG_LOONGSON3V', if_true: files('loongson3_bootp.c', 'loongson3_virt.c'))
+>   mips_ss.add(when: 'CONFIG_MALTA', if_true: files('malta.c'))
+>   mips_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('cps.c'))
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/virtio/virtio-access.h | 36 ++++++-------------------------
- 1 file changed, 6 insertions(+), 30 deletions(-)
-
-diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virtio-access.h
-index 07aae69042..b920874be8 100644
---- a/include/hw/virtio/virtio-access.h
-+++ b/include/hw/virtio/virtio-access.h
-@@ -95,56 +95,32 @@ static inline void virtio_stl_phys(VirtIODevice *vdev, hwaddr pa,
- 
- static inline void virtio_stw_p(VirtIODevice *vdev, void *ptr, uint16_t v)
- {
--    if (virtio_access_is_big_endian(vdev)) {
--        stw_be_p(ptr, v);
--    } else {
--        stw_le_p(ptr, v);
--    }
-+    stw_endian_p(virtio_access_is_big_endian(vdev), ptr, v);
- }
- 
- static inline void virtio_stl_p(VirtIODevice *vdev, void *ptr, uint32_t v)
- {
--    if (virtio_access_is_big_endian(vdev)) {
--        stl_be_p(ptr, v);
--    } else {
--        stl_le_p(ptr, v);
--    }
-+    stl_endian_p(virtio_access_is_big_endian(vdev), ptr, v);
- }
- 
- static inline void virtio_stq_p(VirtIODevice *vdev, void *ptr, uint64_t v)
- {
--    if (virtio_access_is_big_endian(vdev)) {
--        stq_be_p(ptr, v);
--    } else {
--        stq_le_p(ptr, v);
--    }
-+    stq_endian_p(virtio_access_is_big_endian(vdev), ptr, v);
- }
- 
- static inline int virtio_lduw_p(VirtIODevice *vdev, const void *ptr)
- {
--    if (virtio_access_is_big_endian(vdev)) {
--        return lduw_be_p(ptr);
--    } else {
--        return lduw_le_p(ptr);
--    }
-+    return lduw_endian_p(virtio_access_is_big_endian(vdev), ptr);
- }
- 
- static inline int virtio_ldl_p(VirtIODevice *vdev, const void *ptr)
- {
--    if (virtio_access_is_big_endian(vdev)) {
--        return ldl_be_p(ptr);
--    } else {
--        return ldl_le_p(ptr);
--    }
-+    return ldl_endian_p(virtio_access_is_big_endian(vdev), ptr);
- }
- 
- static inline uint64_t virtio_ldq_p(VirtIODevice *vdev, const void *ptr)
- {
--    if (virtio_access_is_big_endian(vdev)) {
--        return ldq_be_p(ptr);
--    } else {
--        return ldq_le_p(ptr);
--    }
-+    return ldq_endian_p(virtio_access_is_big_endian(vdev), ptr);
- }
- 
- static inline uint16_t virtio_tswap16(VirtIODevice *vdev, uint16_t s)
--- 
-2.45.2
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
