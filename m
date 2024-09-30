@@ -4,54 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 793FCCF6491
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:54:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9510DCF6497
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:54:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svC9l-0005IW-Kf; Mon, 30 Sep 2024 04:53:25 -0400
+	id 1svC9x-0006hM-8A; Mon, 30 Sep 2024 04:53:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1svC9N-0003Q9-E9; Mon, 30 Sep 2024 04:53:03 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1svC9u-0006Lj-LO; Mon, 30 Sep 2024 04:53:34 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1svC9L-00025U-L5; Mon, 30 Sep 2024 04:53:01 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 30 Sep
- 2024 16:52:40 +0800
-Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Mon, 30 Sep 2024 16:52:40 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>, Laurent Vivier
- <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
- BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v6 4/8] hw/gpio/aspeed: Fix clear incorrect interrupt status
- for GPIO index mode
-Date: Mon, 30 Sep 2024 16:52:35 +0800
-Message-ID: <20240930085239.3089901-5-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240930085239.3089901-1-jamin_lin@aspeedtech.com>
-References: <20240930085239.3089901-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1svC9s-0002FN-T5; Mon, 30 Sep 2024 04:53:34 -0400
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:b1cb:0:640:2a1e:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id A5E9F60A82;
+ Mon, 30 Sep 2024 11:53:29 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b737::1:2c] (unknown
+ [2a02:6b8:b081:b737::1:2c])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id NrUT1U1IdiE0-PSY7miTJ; Mon, 30 Sep 2024 11:53:28 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1727686409;
+ bh=31IalTs5yR45JyTuoL2KSX6vOE1vwE3pLzEHWDHIfW8=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=ipObI/rS30nTnhOPIlhBpQoiH1R779AIAIybqot72K9yXO1NdonjlpCMpdkAEUalb
+ yNgnxkMH9vidU+YwE0u2tzNV9Iq5LeEInv5D2vjbLVYrh4PHrLjQ5NxY3stB7TFs+W
+ uau9OHKm7E33CDCogpV6zvpoWgwNvW9eU+KXOlOs=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <4a8cbc61-b299-4df0-bc69-23fbca9829d2@yandex-team.ru>
+Date: Mon, 30 Sep 2024 11:53:23 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 17/22] tests: fix -Werror=maybe-uninitialized
+ false-positive
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, Fam Zheng <fam@euphon.net>,
+ Song Gao <gaosong@loongson.cn>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-block@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Greg Kurz <groug@kaod.org>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
+ <eperezma@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
+ Eric Blake <eblake@redhat.com>, Hyman Huang <yong.huang@smartx.com>,
+ Kevin Wolf <kwolf@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, John Snow <jsnow@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Jesper Devantier <foss@defmacro.it>,
+ Peter Xu <peterx@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Klaus Jensen <its@irrelevant.dk>, Keith Busch <kbusch@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Yuval Shaia <yuval.shaia.ml@gmail.com>,
+ Bin Meng <bin.meng@windriver.com>
+References: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
+ <20240930081458.1926382-18-marcandre.lureau@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20240930081458.1926382-18-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-Yandex-Filter: 1
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,111 +93,21 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The interrupt status field is W1C, where a set bit on read indicates an
-interrupt is pending. If the bit extracted from data is set it should
-clear the corresponding bit in reg_value. However, if the extracted
-bit is clear then the value of the corresponding bit in reg_value
-should be unchanged.
+On 30.09.24 11:14, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau<marcandre.lureau@redhat.com>
+> 
+> ../tests/unit/test-block-iothread.c:773:17: error: ‘job’ may be used uninitialized [-Werror=maybe-uninitialized]
+> /usr/include/glib-2.0/glib/gtestutils.h:73:53: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
+> 
+> Signed-off-by: Marc-André Lureau<marcandre.lureau@redhat.com>
 
-SHARED_FIELD_EX32() extracts the interrupt status bit from the write
-(data). reg_value is set to the set's interrupt status, which means
-that for any pin with an interrupt pending, the corresponding bit is
-set. The deposit32() call updates the bit at pin_idx in the
-reg_value, using the value extracted from the write (data).
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-The result is that if multiple interrupt status bits
-were pending and the write was acknowledging specific one bit,
-then the all interrupt status bits will be cleared.
-However, it is index mode and should only clear the corresponding bit.
-
-For example, say we have an interrupt pending for GPIOA0, where the
-following statements are true:
-
-   set->int_status == 0b01
-   s->pending == 1
-
-Before it is acknowledged, an interrupt becomes pending for GPIOA1:
-
-   set->int_status == 0b11
-   s->pending == 2
-
-A write is issued to acknowledge the interrupt for GPIOA0. This causes
-the following sequence:
-
-   reg_value == 0b11
-   pending == 2
-   s->pending == 0
-   set->int_status == 0b00
-
-It should only clear bit 0 in index mode and the correct result
-should be as following.
-
-   set->int_status == 0b11
-   s->pending == 2
-
-   pending == 1
-   s->pending == 1
-   set->int_status == 0b10
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Suggested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
----
- hw/gpio/aspeed_gpio.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
-
-diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
-index 8725606aec..16c18ea2f7 100644
---- a/hw/gpio/aspeed_gpio.c
-+++ b/hw/gpio/aspeed_gpio.c
-@@ -641,7 +641,7 @@ static void aspeed_gpio_write_index_mode(void *opaque, hwaddr offset,
-     uint32_t pin_idx = reg_idx_number % ASPEED_GPIOS_PER_SET;
-     uint32_t group_idx = pin_idx / GPIOS_PER_GROUP;
-     uint32_t reg_value = 0;
--    uint32_t cleared;
-+    uint32_t pending = 0;
- 
-     set = &s->sets[set_idx];
-     props = &agc->props[set_idx];
-@@ -703,16 +703,23 @@ static void aspeed_gpio_write_index_mode(void *opaque, hwaddr offset,
-                               FIELD_EX32(data, GPIO_INDEX_REG, INT_SENS_2));
-         set->int_sens_2 = update_value_control_source(set, set->int_sens_2,
-                                                       reg_value);
--        /* set interrupt status */
--        reg_value = set->int_status;
--        reg_value = deposit32(reg_value, pin_idx, 1,
--                              FIELD_EX32(data, GPIO_INDEX_REG, INT_STATUS));
--        cleared = ctpop32(reg_value & set->int_status);
--        if (s->pending && cleared) {
--            assert(s->pending >= cleared);
--            s->pending -= cleared;
-+        /* interrupt status */
-+        if (FIELD_EX32(data, GPIO_INDEX_REG, INT_STATUS)) {
-+            /* pending is either 1 or 0 for a 1-bit field */
-+            pending = extract32(set->int_status, pin_idx, 1);
-+
-+            assert(s->pending >= pending);
-+
-+            /* No change to s->pending if pending is 0 */
-+            s->pending -= pending;
-+
-+            /*
-+             * The write acknowledged the interrupt regardless of whether it
-+             * was pending or not. The post-condition is that it mustn't be
-+             * pending. Unconditionally clear the status bit.
-+             */
-+            set->int_status = deposit32(set->int_status, pin_idx, 1, 0);
-         }
--        set->int_status &= ~reg_value;
-         break;
-     case gpio_reg_idx_debounce:
-         reg_value = set->debounce_1;
 -- 
-2.34.1
+Best regards,
+Vladimir
 
 
