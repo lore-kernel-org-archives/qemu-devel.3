@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6145ECF64A6
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 12:54:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58FD7CF6497
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 12:54:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svFuB-0007Lc-G5; Mon, 30 Sep 2024 08:53:35 -0400
+	id 1svFu7-00075p-Uo; Mon, 30 Sep 2024 08:53:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svFu9-0007E4-LN
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 08:53:33 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svFu5-0006wK-D3
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 08:53:29 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svFu8-0006WU-5e
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 08:53:33 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-37ccfbbd467so2515622f8f.0
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 05:53:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svFu3-0006Vv-Nt
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 08:53:29 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-37cdbdbbb1cso1238566f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 05:53:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727700810; x=1728305610; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rooDbjFBHfskknaRJcxcqLhZU7vMreorn+2suTNR1/M=;
- b=y0cfUEHL5Ooc9asoLqL1bUV7dh49poavofxCK6bhWNMeBqIW/ShyaIQat6vXd85NDb
- W5YnuRg2mxY40Zqk8RvzZhbCIygtquH61uyfGuTU7JhTBQOxPEptyVvQHUPrOgvalaV7
- r/i+BqfraHzavvdUTNBfep+pi0juEH89pyuUukosqVy1mpHUvq6sSlHMH/IcgCAyNllZ
- iKHbsJLko2B3vM9GjruGproeFC+ibhONtmri1KZAyAhP0Xdf+GJ6VYrNQ5WSgLzNMcHj
- EoSpwhlbKU0BtdaZo+OBiqYvE4o8Vv50vQJTCYqg3AgCYbWuoveuJH+YWVA2pq1QjLNh
- Dg0w==
+ d=linaro.org; s=google; t=1727700806; x=1728305606; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=UpOp8oGufmY3S6ihnzDOSjknSoy4QyFyqBbpPmz4V9I=;
+ b=hdjjrsrOwM3I71Fu8IIzA/q4m7WZttX4Vpa0YSPVHb+tUSeOGIEhWleUPW7VRJrTaj
+ bQL0A7w9qC9SvXa8DrtB5P240lgRfCbRBpyd/vQGxkOljvDjTYJvaaIWADwzRgmkUODT
+ cCeXiwqu17+QdbROPjO3tLAiY0w3n4keeB4zYF70NR5DYlLFEIX6BtEcDhy6+fuKuRvJ
+ F7wKm2da7CaTM7I//kIj3dn/feAht56JidpJwSL1qY3YfyNrcX2U5v3cOgglnAxdQP4z
+ iuQPlGlJD+fAIY5OvvVg6vOnLZfAFf0i6fdcjBHF6yYvOnbBj65QXsyOh3jGZa8iT02N
+ qzpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727700810; x=1728305610;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rooDbjFBHfskknaRJcxcqLhZU7vMreorn+2suTNR1/M=;
- b=IPWCQ+lXATCwKN5HizB0tYSRwSF2gqJpQi4oewBrzlYI4Qnbw6IyPEZmbTb8ZjckNn
- /qdZAAODGy24mW+WoQwNQxYwe+5/14c1/TpzFWXLvjU6NyyQIoTNiA/sA4c+dUMSxmgf
- guwfV6CJ/tlkU0Tk0784pCJ0kIfXYgjrvlUWc8fx3wJbUAlBLRZy23LeDfBUEebhP/7J
- jOL8IbpExSj59RXXIBTl5Tgld49TeFAp4ewXMpdjWyVtEztJ2ot+vaHhl9qJyIgwonqf
- NV/3t51KUi1Z9qpBlhl55RfShxulEQohWFWmrRnR1X0+zGyuFH/YU+oFg2AcdeipzCoQ
- +pEg==
-X-Gm-Message-State: AOJu0YzJeevab04X39BF7msju/w24HrhDfBf5MqRpkKCxyaNHaUJNBWk
- hkuRrAISjt1y3eI4MQUwgQTl5qDCDl140pdOTARx4bOERoaJ6eVRkBcZGDrSLqA75sHo+QjQqsO
- OlRs=
-X-Google-Smtp-Source: AGHT+IEW8YNikHY5Y4sAcKNQBup7VdcwTIwyAD1x6agouxae3hdwz/Zzb5hqpckP/lZ/7Zz/oUhmBw==
-X-Received: by 2002:adf:f60f:0:b0:374:b5fc:d31a with SMTP id
- ffacd0b85a97d-37cd5aaf0dcmr6187060f8f.25.1727700810335; 
- Mon, 30 Sep 2024 05:53:30 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1727700806; x=1728305606;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UpOp8oGufmY3S6ihnzDOSjknSoy4QyFyqBbpPmz4V9I=;
+ b=vlHAEGI5GKI1c6ros5JCjklKiTeRo1U5R0OTGAzLQrXZF1BRo9ihWiu4QxbuptpJhE
+ N16ibn9jTFNeo2HNYgYwRpZyOdPNzYKjlinMdvPkMyzoiNJtAFVVBtiwNUTeaE+/6/hH
+ qin5N9pftpBtBb04s8IyjELKvZwLD9MgePvySzaQOex4GG6RHJlkBNlbqOmjaVU59/m7
+ oRfD5IkDG9LrZHkijfooXND4gKpDdVgTwmR6CXbEbncH0kgsFp4TLDOx/Zf+jBJPPxtD
+ rhOJtPurriWonTVeCU4rrlQPie6JBfZXR8TCCHB4ZNyX6aSr1MKgS6L/sq6nd2MsiPAy
+ O2ig==
+X-Gm-Message-State: AOJu0Yx/QK6G5kxOMKBljagBY9EUt+h98b7QivxmtgxLV4CoNArs22XE
+ 2LN3cnRmwytzfGv1ER2g3mPCci2WEx1mlgR3GT15gkI//UlJA69HusK+Ma93EqQnOvStTAZmbiK
+ WVY8=
+X-Google-Smtp-Source: AGHT+IFKsnptfKt4VvsJnjtm8wBuhu7PhkwSJXpb//Rj8PHkouRP3ipFnT+vkd7Lo6CXLn7uNRQjQw==
+X-Received: by 2002:a5d:6749:0:b0:374:c4e2:3ca7 with SMTP id
+ ffacd0b85a97d-37cd5a62bf7mr6856121f8f.5.1727700805796; 
+ Mon, 30 Sep 2024 05:53:25 -0700 (PDT)
 Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd564d35bsm9034905f8f.21.2024.09.30.05.53.29
+ 5b1f17b1804b1-42e90cd8c5asm179023635e9.1.2024.09.30.05.53.24
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 30 Sep 2024 05:53:29 -0700 (PDT)
+ Mon, 30 Sep 2024 05:53:25 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
@@ -65,18 +64,15 @@ Cc: Thomas Huth <thuth@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-ppc@nongnu.org,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/3] target/ppc: Expose ppc_cpu_is_big_endian() prototype in
- 'cpu.h'
-Date: Mon, 30 Sep 2024 14:53:21 +0200
-Message-ID: <20240930125323.54671-2-philmd@linaro.org>
+Subject: [PATCH 0/3] hw/ppc: Replace tswap32() by stl_endian_p()
+Date: Mon, 30 Sep 2024 14:53:20 +0200
+Message-ID: <20240930125323.54671-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240930125323.54671-1-philmd@linaro.org>
-References: <20240930125323.54671-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,40 +95,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expose ppc_cpu_is_big_endian() so it can be used by hw/ code.
+Expose ppc_cpu_is_big_endian(), then use it calling the target
+agnostic stl_endian_p() method, removing the use of the target
+specific tswap32() method.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
+Philippe Mathieu-Daudé (3):
+  target/ppc: Expose ppc_cpu_is_big_endian() prototype in 'cpu.h'
+  hw/ppc/sam460ex: Replace tswap32() by stl_endian_p()
+  hw/ppc/virtex_ml507: Replace tswap32() by stl_endian_p()
+
  target/ppc/cpu.h      | 2 ++
+ hw/ppc/sam460ex.c     | 5 +++--
+ hw/ppc/virtex_ml507.c | 2 +-
  target/ppc/cpu_init.c | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ 4 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 321ed2da75..4a4911502d 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -3007,6 +3007,8 @@ static inline bool ppc_interrupts_little_endian(PowerPCCPU *cpu, bool hv)
- 
-     return ile;
- }
-+
-+bool ppc_cpu_is_big_endian(CPUState *cs);
- #endif
- 
- void dump_mmu(CPUPPCState *env);
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 23881d09e9..00e0a8bf2c 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7343,7 +7343,7 @@ static void ppc_cpu_reset_hold(Object *obj, ResetType type)
- 
- #ifndef CONFIG_USER_ONLY
- 
--static bool ppc_cpu_is_big_endian(CPUState *cs)
-+bool ppc_cpu_is_big_endian(CPUState *cs)
- {
-     cpu_synchronize_state(cs);
- 
 -- 
 2.45.2
 
