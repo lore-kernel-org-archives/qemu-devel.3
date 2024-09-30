@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3906ACF6497
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 09:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F21B1CF649E
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 09:12:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svCR5-0007SQ-Nv; Mon, 30 Sep 2024 05:11:19 -0400
+	id 1svCRb-0000he-Sz; Mon, 30 Sep 2024 05:11:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svCR2-0007IF-MJ
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:11:16 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svCRW-0000b8-9p
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:11:46 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svCR0-0004U3-WA
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:11:16 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-42cb8dac900so39516685e9.3
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 02:11:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svCRU-0004Xx-67
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 05:11:46 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-42cbface8d6so51089695e9.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 02:11:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727687472; x=1728292272; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727687502; x=1728292302; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CFaQW0OfcXDNSv5OAJ0dPlLZ03IofsgYwsxu/4pf3Z8=;
- b=lToO5Kfym4rT5yZaBIJvwvtGs8bv0dTLG8Cf3euYrN/JUrjyp1C9xUUs9JpkiK1xUx
- UjCd1iSEW042XY8yJAf7q2jz0iwRjXtOpQSnfd3dEAgOJ8jYbBSqTtZST0woAit80jw2
- 7q0dY03kGZ1xoxPuS40CYwyN6RYwDG/ayzQWcpmwV4V67CtVCKH2BxXXf+N4wZfEsdMJ
- 3WyiojyZwD2QvZryES1/sClYFlsGrMQZn2bCRJojf+dvWdWsfLK6qr2K5FlSDx4GOFGb
- 9AZT8mCxgL9LQCon3v7AsixnEu7qAJA1Aql/sY2ytnhk/pb6fGHfs7/TtCosZlmDMEPR
- lL1Q==
+ bh=8CVXM7w3ItHRS1f3yj+MesBCV77dY6lwF6BVY6QS2jI=;
+ b=BgoyjkAaEt7a5wggprWcAPqNbOxHZJMtg5dJgiNBrEvByTTxuc9ck6jYqXHWq4vIqw
+ Szz/BMIegoaF2is1Dnt5YrU/GEaHvrtjmbVWzrte6+Ysw1OOQI5RjZu32Aqrfx+d7W6Q
+ RhGYJI9cI5q4DLNWiC3uOOScL5Vg8Mo11eozsoRMbf1lR9XKc0qSkH3WDU1xPDG/SlU/
+ VGO9omdPAdcmCOLYzPDHNXXp20jCFt0YVxZ+bhonuBHyJLjmrGoE+03IJo9VK6J3Wtfu
+ 7sl8qHMw25bocHS/H7bsfOxhI38W+isOkbU5uzqMJtcR1qK2bXV7939vWt+yUgNKPXXN
+ jZMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727687472; x=1728292272;
+ d=1e100.net; s=20230601; t=1727687502; x=1728292302;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CFaQW0OfcXDNSv5OAJ0dPlLZ03IofsgYwsxu/4pf3Z8=;
- b=BxzceaqoAIWTJO4XnDj6Whc95Jlrn8jYacBcUL5SiQj30MwsNNEMe09JnW08wTZ693
- zDCgbXqmKwY8XecQ8iXw6G7BCha9FL0+rFaFTJAn2HE9vYeQPeabeMtt8XuSi9ZXYrwJ
- Z2Q4ehAToUGI7wW/jRXEIpYoRUEiU/8lWEB70u9vhPepm+hwOxVHn5lSuunoPyWVc1Nz
- LZIqY8GL2O/x1uYYerjjpG/zBVvG5nnuQFjN+hKDXeEP2yB5Ww38pGNFsYP6bS7ZyHVu
- kruwhLUD8Aj3gOrV1o15YXmiPC0Lu/F2oIJzusvoz1JwbVOeMcT0gzWukYpebyiBSe+x
- S6Cw==
-X-Gm-Message-State: AOJu0YzGI0fVOaWwRp9WHouCYiy2gaaarFOEor+FV/9QkSlUZWg1Oyk/
- 8QDAWtAXbRBQOLfLYvMsUzjBea3RE+w318DZ5BAwpRKmFUDMHSk5BpC8r/f9NJc42WiThLamuCA
- Z
-X-Google-Smtp-Source: AGHT+IEpq7EAXrM9chFNANAbCwVEd8GTqU43vv2HIljxflw96YCXEYGlw4eQsQGH/gSo3eUCxRcEOg==
-X-Received: by 2002:a05:600c:511a:b0:42c:b97a:5f7d with SMTP id
- 5b1f17b1804b1-42f5840cfd3mr92606615e9.7.1727687472033; 
- Mon, 30 Sep 2024 02:11:12 -0700 (PDT)
+ bh=8CVXM7w3ItHRS1f3yj+MesBCV77dY6lwF6BVY6QS2jI=;
+ b=F4pPeTAuoZbPb4TnISKAZvaDznEmX14jdO7vJrwHXn1dIG9Er9hh7ckYlIMdTICc1A
+ 8RNKY0C7R9SUxJmC8s4sfQMLZkREQSt+eNIFry8ssNHpX0ssNuMqagpdNyy5mJDw0CIT
+ hUisGyrMozAIVsmxOHjS0NAxkxwoTaRiOQvjNqDrn1h+C9SPzp/MKEZkaV79fs1KKyGq
+ f5C0+iA8TmrgIVNhoCdQRSHZvtvkxJ+7mQ7TubVpbMX711OC2Y4+Ck+J7AOSXDc/LSjM
+ 9ZSw+iu0ujTJjAk1qLTgnRBjC54SJp3TQ9VoOj82BKgauWXJcpYFWsOBAXGTuCwN/J3Z
+ 1HIg==
+X-Gm-Message-State: AOJu0YzpdWKnU9WpgeMZdjS/MfaluShmh0gdUVG206CWGRPGNBnbYeaj
+ QKsXsSq9y5jcr0YNa6xcV70hCzhTxjR0acJLFdNdwjPpzBicKrBUi6GQxSQ2b9Ep3JfhV/7EWYc
+ W
+X-Google-Smtp-Source: AGHT+IHtiSufjhOEkxb6X6U2Pim46ybmDAGhY9KoqDYmOKrtCyKo1QHyweB4o4obH+kaIlCsfv27Qg==
+X-Received: by 2002:a5d:574b:0:b0:37c:cf1a:b2a8 with SMTP id
+ ffacd0b85a97d-37cd59def87mr10654824f8f.0.1727687501970; 
+ Mon, 30 Sep 2024 02:11:41 -0700 (PDT)
 Received: from localhost.localdomain (183.red-88-28-18.dynamicip.rima-tde.net.
  [88.28.18.183]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42e969ddb85sm144106025e9.2.2024.09.30.02.11.10
+ ffacd0b85a97d-37cd56e8822sm8572863f8f.50.2024.09.30.02.11.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 30 Sep 2024 02:11:11 -0700 (PDT)
+ Mon, 30 Sep 2024 02:11:41 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
@@ -66,18 +66,17 @@ Cc: Thomas Huth <thuth@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH 01/12] target/mips: Declare cpu_is_bigendian_env() in
- 'internal.h'
-Date: Mon, 30 Sep 2024 11:10:50 +0200
-Message-ID: <20240930091101.40591-2-philmd@linaro.org>
+Subject: [PATCH 05/12] target/mips: Introduce mo_endian() helper
+Date: Mon, 30 Sep 2024 11:10:54 +0200
+Message-ID: <20240930091101.40591-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240930091101.40591-1-philmd@linaro.org>
 References: <20240930091101.40591-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,100 +98,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to re-use cpu_is_bigendian(), declare it on "internal.h"
-after renaming it as cpu_is_bigendian_env().
+Introduce mo_endian() which returns the endian MemOp
+corresponding to the vCPU DisasContext.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/mips/internal.h        |  6 ++++++
- target/mips/tcg/ldst_helper.c | 15 +++++----------
- 2 files changed, 11 insertions(+), 10 deletions(-)
+ target/mips/tcg/translate.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/target/mips/internal.h b/target/mips/internal.h
-index a9a22ea00e..1ce2bbf62d 100644
---- a/target/mips/internal.h
-+++ b/target/mips/internal.h
-@@ -9,6 +9,7 @@
- #define MIPS_INTERNAL_H
- 
- #include "exec/memattrs.h"
-+#include "exec/memop.h"
- #ifdef CONFIG_TCG
- #include "tcg/tcg-internal.h"
- #endif
-@@ -287,6 +288,11 @@ static inline int mips_vp_active(CPUMIPSState *env)
-     return 1;
+diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
+index 2b6646b339..54955437ef 100644
+--- a/target/mips/tcg/translate.h
++++ b/target/mips/tcg/translate.h
+@@ -240,4 +240,9 @@ static inline bool cpu_is_bigendian(DisasContext *ctx)
+     return extract32(ctx->CP0_Config0, CP0C0_BE, 1);
  }
  
-+static inline bool cpu_is_bigendian_env(CPUMIPSState *env)
++static inline MemOp mo_endian(DisasContext *dc)
 +{
-+    return extract32(env->CP0_Config0, CP0C0_BE, 1);
++    return cpu_is_bigendian(dc) ? MO_BE : MO_LE;
 +}
 +
- static inline void compute_hflags(CPUMIPSState *env)
- {
-     env->hflags &= ~(MIPS_HFLAG_COP1X | MIPS_HFLAG_64 | MIPS_HFLAG_CP0 |
-diff --git a/target/mips/tcg/ldst_helper.c b/target/mips/tcg/ldst_helper.c
-index 97056d00a2..3d5cd2fdfa 100644
---- a/target/mips/tcg/ldst_helper.c
-+++ b/target/mips/tcg/ldst_helper.c
-@@ -53,11 +53,6 @@ HELPER_LD_ATOMIC(lld, ldq, 0x7, (target_ulong))
- 
- #endif /* !CONFIG_USER_ONLY */
- 
--static inline bool cpu_is_bigendian(CPUMIPSState *env)
--{
--    return extract32(env->CP0_Config0, CP0C0_BE, 1);
--}
--
- static inline target_ulong get_lmask(CPUMIPSState *env,
-                                      target_ulong value, unsigned bits)
- {
-@@ -65,7 +60,7 @@ static inline target_ulong get_lmask(CPUMIPSState *env,
- 
-     value &= mask;
- 
--    if (!cpu_is_bigendian(env)) {
-+    if (!cpu_is_bigendian_env(env)) {
-         value ^= mask;
-     }
- 
-@@ -76,7 +71,7 @@ void helper_swl(CPUMIPSState *env, target_ulong arg1, target_ulong arg2,
-                 int mem_idx)
- {
-     target_ulong lmask = get_lmask(env, arg2, 32);
--    int dir = cpu_is_bigendian(env) ? 1 : -1;
-+    int dir = cpu_is_bigendian_env(env) ? 1 : -1;
- 
-     cpu_stb_mmuidx_ra(env, arg2, (uint8_t)(arg1 >> 24), mem_idx, GETPC());
- 
-@@ -100,7 +95,7 @@ void helper_swr(CPUMIPSState *env, target_ulong arg1, target_ulong arg2,
-                 int mem_idx)
- {
-     target_ulong lmask = get_lmask(env, arg2, 32);
--    int dir = cpu_is_bigendian(env) ? 1 : -1;
-+    int dir = cpu_is_bigendian_env(env) ? 1 : -1;
- 
-     cpu_stb_mmuidx_ra(env, arg2, (uint8_t)arg1, mem_idx, GETPC());
- 
-@@ -130,7 +125,7 @@ void helper_sdl(CPUMIPSState *env, target_ulong arg1, target_ulong arg2,
-                 int mem_idx)
- {
-     target_ulong lmask = get_lmask(env, arg2, 64);
--    int dir = cpu_is_bigendian(env) ? 1 : -1;
-+    int dir = cpu_is_bigendian_env(env) ? 1 : -1;
- 
-     cpu_stb_mmuidx_ra(env, arg2, (uint8_t)(arg1 >> 56), mem_idx, GETPC());
- 
-@@ -174,7 +169,7 @@ void helper_sdr(CPUMIPSState *env, target_ulong arg1, target_ulong arg2,
-                 int mem_idx)
- {
-     target_ulong lmask = get_lmask(env, arg2, 64);
--    int dir = cpu_is_bigendian(env) ? 1 : -1;
-+    int dir = cpu_is_bigendian_env(env) ? 1 : -1;
- 
-     cpu_stb_mmuidx_ra(env, arg2, (uint8_t)arg1, mem_idx, GETPC());
- 
+ #endif
 -- 
 2.45.2
 
