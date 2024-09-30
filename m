@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1309ACEB2C9
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 22:20:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1AB1CEB2CB
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 23:05:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svOjk-0005D3-Un; Mon, 30 Sep 2024 18:19:24 -0400
+	id 1svPRg-00057I-36; Mon, 30 Sep 2024 19:04:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svOjd-000534-EH
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 18:19:17 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1svPRd-00056n-UE
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 19:04:45 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1svOjb-0003Nj-RR
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 18:19:17 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5c42f406fa5so3618138a12.0
- for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 15:19:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1svPRc-000082-03
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 19:04:45 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-7198cb6bb02so3568901b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Sep 2024 16:04:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727734745; x=1728339545; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=dBVisv6CnK8BsPMNbVwRBZnc5TuKgu+hW3tSFwMb0qs=;
- b=b2BUzSpxX3QxSnKFmiiSFoEcP0motgSrvEurekYYcWQXWhivIXE/vTRRxd8ieQUEXV
- 476dmWNp/ZfHOQAJ+AMfdnQWg1xCaOi+v13XU/aIzj+NflYA83308yjFCFWdvz3SJN6i
- avRyxj7c15cD64LhRtVAoCaFdI+t5WSS9mypNT2mMWcnm4EWzL+i1rWLWiezAi6G4WOa
- lCQ4MxsLFD9j3Hwm9MOOaFJzT+o0ZS7rOfOVawRuLCIZY/Zf1jxZXJZK4YilIPprhLRS
- 5COsKRUSbbdEmkBPO8GRWxdQxfo7bxWknqyV28DweahBkOfZ+OEPNfn3eitzn1DaQXml
- pfzQ==
+ d=ventanamicro.com; s=google; t=1727737482; x=1728342282; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lhPtAn0FNIgR8zD7aBydQZI2nciEOVwJhYhwxleCpSM=;
+ b=AdtutiuO9xoISY0qKfwhVsgK3YX3cBc4Q2Zvrn1N3UdJQczlqOjk2yisTNhB2MlK5c
+ 3peOcBhNFw3GH0H4o8810Sr2EicvnEL1sp8ijpYeZdyOAu8LTK43Niojx3jraSOFgV7d
+ /5Z10buvwCamjw5DuL4oFi5/HvyhOPswof+XGCApAJIG49lJugoK92qr4gT7tMoXAZLe
+ 4lGNR6nYYP5LNO6DWoWQcySlU1YEC7FklHpwwBvDXsH9Y+os7DjXFnucLwSDNwtJLW4Y
+ tFXbc/mUbkPloWql93+E0eZ/VPJr3SYlArLDkFND1L1U0/f7k6X4vwFiC5aDoPkcctax
+ vPFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727734745; x=1728339545;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dBVisv6CnK8BsPMNbVwRBZnc5TuKgu+hW3tSFwMb0qs=;
- b=YtGe9Y6yZUmxUWpzKvby4R9/D1MjtR7qVG0GS2zDZB4iO/giMQZ9ckWsgFLTUyuKAF
- wBSieozmKJ6LdxEZLZRFvzEQoh6RrPL0fkRGPguE7atUS3B7QJYROvC/Yq1oR6xdUk6a
- 4UaGvPiJb7jFLjmTBA8vIbot58cTA/7zbSlwE4+DTJDvNYerOCZB7hlwSH9Vft+fQe/7
- d/85Z8/Ok191iNOgd744LIdiMd2O2wAD2Dv8uIzJgphs7K/SMcxBfEXnqhHbgekDJWzY
- UgR6RtfJyWeYAZjr8g33Y2iZKYkcyDKpbTY/pSA0uhdopqTw3R0/nhbNtgjWjt/MvZkO
- 85pg==
-X-Gm-Message-State: AOJu0YxreLgg8OhztzG/GTi9KVeIUDvBJKKcg4HPbL8YPvkeOJtH7nFo
- VvwN4by6QFMicGBaMPrwNWaW4ebXsZDBx2O5mQXbVmnRmb6TESeKPP6M+ON2mog/2cJPjqf3zXG
- AQ0I=
-X-Google-Smtp-Source: AGHT+IHOxpTvaM+STDVEyes9m3V2qBg7w84kuYxQ04CvMAqAi+3Rc2aPzXOrAoZRzPYdHNXnrHo+uw==
-X-Received: by 2002:a05:6402:4347:b0:5c4:2fca:b11 with SMTP id
- 4fb4d7f45d1cf-5c88260f022mr20417119a12.35.1727734745548; 
- Mon, 30 Sep 2024 15:19:05 -0700 (PDT)
-Received: from localhost.localdomain (46.170.88.92.rev.sfr.net. [92.88.170.46])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c8824051c2sm5002308a12.19.2024.09.30.15.19.02
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 30 Sep 2024 15:19:04 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>, Thomas Huth <thuth@redhat.com>,
- Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH 0/2] hw/core/machine: Extract compat properties to
- machine-compat.c
-Date: Tue,  1 Oct 2024 00:18:58 +0200
-Message-ID: <20240930221900.59525-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
+ d=1e100.net; s=20230601; t=1727737482; x=1728342282;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lhPtAn0FNIgR8zD7aBydQZI2nciEOVwJhYhwxleCpSM=;
+ b=cIU1mtgKjuFFNxunkXukLTPgCM2QKL37ICkyoJY9hcs8KDfBJ/LITycRW4JGsC8TpD
+ oTg1VVv/Knr61xAj5JvP8eOSK80t0bMULc3q3AGrYXEOj1E93GgcrUXDjfCDyiqJmQ1V
+ VjCLssalEvTKPPVsYYdl1zrUE1bIz/UZ2F5PjGZS0Sdt6v421phnuyS/ajJCww9uUd3K
+ E38U5V/7URLbnC7RnPTMFaHIybbEJpjedZ+t1OgcZv1u30FDMLAXsgUaOrID/65mTC7m
+ rh+L9H64gJDxdIfIB4DYUCOZfS1g9ekdbYVEsksIoS5zIV4cOdDDz1gNewkEp+Xr5j9M
+ dSLA==
+X-Gm-Message-State: AOJu0Yxp+LbJ+BsySQfA8c6Q4p4JuzjuDktJgNenSGuJx++V6RAJzSDg
+ V8+SUaHbJlz+i7l0cv1ZdjjOZCDtb5/Iy5ZOTG4k5kPtmW53zTAcY7/b1nGcLjo=
+X-Google-Smtp-Source: AGHT+IGgK4tkIUyAtsqOC3hXi9OR10OvZWowuB67XE7pRB5gSYLCug3DUy0yqqw3gjT4zXa0pFKohA==
+X-Received: by 2002:a05:6a00:3d09:b0:717:9897:1405 with SMTP id
+ d2e1a72fcca58-71b2605d8c8mr22189840b3a.17.1727737481532; 
+ Mon, 30 Sep 2024 16:04:41 -0700 (PDT)
+Received: from [192.168.68.110] (200-206-229-93.dsl.telesp.net.br.
+ [200.206.229.93]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-71b26515dbcsm6743994b3a.138.2024.09.30.16.04.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 30 Sep 2024 16:04:41 -0700 (PDT)
+Message-ID: <25d74ba0-d13a-4a13-be03-d57f53dd1bce@ventanamicro.com>
+Date: Mon, 30 Sep 2024 20:04:38 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 00/47] riscv-to-apply queue
+To: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+References: <20240924221751.2688389-1-alistair.francis@wdc.com>
+ <CAFEAcA9Sb-fpNhm-6DPwss5zMpw=nEp31Wt6q1OA6DqCg3wKEg@mail.gmail.com>
+ <13ee9889-b503-45ea-a074-ffafbd052c4e@ventanamicro.com>
+ <4e3ab59f55937b846fc214f3c3ca3e15c4afb19c.camel@linux.ibm.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <4e3ab59f55937b846fc214f3c3ca3e15c4afb19c.camel@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: 0
+X-Spam_score: -0.1
+X-Spam_bar: /
+X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URI_DOTEDU=1.999 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,22 +100,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extract machine compat properties to machine-compat.c,
-make the unit target specific to be able to compile with
-target specific compat properties.
 
-Philippe Mathieu-Daudé (2):
-  hw/core/machine: Add missing 'units.h' and 'error-report.h' headers
-  hw/core/machine: Extract compat properties to machine-compat.c
 
- MAINTAINERS              |   1 +
- hw/core/machine-compat.c | 287 +++++++++++++++++++++++++++++++++++++++
- hw/core/machine.c        | 279 +------------------------------------
- hw/core/meson.build      |   3 +
- 4 files changed, 293 insertions(+), 277 deletions(-)
- create mode 100644 hw/core/machine-compat.c
+On 9/30/24 9:10 AM, Ilya Leoshkevich wrote:
+> On Sat, 2024-09-28 at 17:40 -0300, Daniel Henrique Barboza wrote:
+>>
+>>
+>> On 9/28/24 8:34 AM, Peter Maydell wrote:
+>>> On Tue, 24 Sept 2024 at 23:18, Alistair Francis
+>>> <alistair23@gmail.com> wrote:
+>>>>
+>>>> The following changes since commit
+>>>> 01dc65a3bc262ab1bec8fe89775e9bbfa627becb:
+>>>>
+>>>>     Merge tag 'pull-target-arm-20240919' of
+>>>> https://git.linaro.org/people/pmaydell/qemu-arm into staging
+>>>> (2024-09-19 14:15:15 +0100)
+>>>>
+>>>> are available in the Git repository at:
+>>>>
+>>>>     https://github.com/alistair23/qemu.git tags/pull-riscv-to-
+>>>> apply-20240925-1
+>>>>
+>>>> for you to fetch changes up to
+>>>> 6bfa92c5757fe7a9580e1f6e065076777cae650f:
+>>>>
+>>>>     bsd-user: Add RISC-V 64-bit Target Configuration and Debug XML
+>>>> Files (2024-09-24 12:53:16 +1000)
+>>>>
+>>>> ----------------------------------------------------------------
+>>>> RISC-V PR for 9.2
+>>>>
+>>>> * Add a property to set vl to ceil(AVL/2)
+>>>> * Enable numamem testing for RISC-V
+>>>> * Consider MISA bit choice in implied rule
+>>>> * Fix the za64rs priv spec requirements
+>>>> * Enable Bit Manip for OpenTitan Ibex CPU
+>>>> * Fix the group bit setting of AIA with KVM
+>>>> * Stop timer with infinite timecmp
+>>>> * Add 'fcsr' register to QEMU log as a part of F extension
+>>>> * Fix riscv64 build on musl libc
+>>>> * Add preliminary textra trigger CSR functions
+>>>> * RISC-V IOMMU support
+>>>> * RISC-V bsd-user support
+>>>> * Respect firmware ELF entry point
+>>>> * Add Svvptc extension support
+>>>> * Fix masking of rv32 physical address
+>>>> * Fix linking problem with semihosting disabled
+>>>> * Fix IMSIC interrupt state updates
+>>>>
+>>>
+>>> This fails the riscv qos-tests on s390x. My guess is that the new
+>>> IOMMU support has endianness bugs and fails on bigendian hosts.
+>>>
+>>> https://gitlab.com/qemu-project/qemu/-/jobs/7942189143
+>>>
+>>> full test log (4MB) at
+>>> https://qemu-project.gitlab.io/-/qemu/-/jobs/7942189143/artifacts/build/meson-logs/testlog.txt
+>>>
+>>> The assertion failure is
+>>> ERROR:../tests/qtest/riscv-iommu-test.c:72:test_reg_reset:
+>>> assertion
+>>> failed (cap & RISCV_IOMMU_CAP_VERSION == 0x10): (0 == 16)
+>>
+>> The root cause is that the qtests I added aren't considering the
+>> endianess of the
+>> host. The RISC-V IOMMU is being implemented as LE only and all regs
+>> are being
+>> read/written in memory as LE. The qtest read/write helpers must take
+>> the qtest
+>> endianess into account. We make this type of handling in other qtest
+>> archs like
+>> ppc64.
+>>
+>> I have a fix for the tests but I'm unable to run the ubuntu-22.04-
+>> s390x-all-system
+>> job to verify it, even after setting Cirrus like Thomas taught me a
+>> week ago. In
+>> fact I have no 'ubuntu-22-*' jobs available to run.
+>>
+>> If there's a way to run these ubuntu s390x tests, let me know.
+>> Otherwise I'm inclined
+>> to remove the IOMMU qtests for now until I'm able to verify that
+>> they'll work in a
+>> BE host (I'll install a BE VM to verify).
+> 
+> You can get a free s390x VM here:
+> 
+> https://linuxone.cloud.marist.edu/#/register?flag=VM
 
--- 
-2.45.2
+Thanks! This was surprisingly easy to set up and run. Please send my best regards
+to the LinuxOne Community Cloud team.
 
+Peter, in fact there were some endianness problems in the code like you hinted
+before. I fixed them up and the tests are now (apparently) passing. I'll clean
+stuff up and see if I can send a new version of the whole series in the next
+few days.
+
+
+Thanks,
+
+Daniel
+
+> 
+> Best regards,
+> Ilya
+> 
+> [...]
 
