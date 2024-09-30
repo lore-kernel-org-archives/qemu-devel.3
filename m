@@ -4,83 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9510DCF6497
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:54:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 260BBCF6491
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 08:54:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svC9x-0006hM-8A; Mon, 30 Sep 2024 04:53:37 -0400
+	id 1svC9p-0005eM-EJ; Mon, 30 Sep 2024 04:53:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1svC9u-0006Lj-LO; Mon, 30 Sep 2024 04:53:34 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1svC9Z-0004HH-Fc; Mon, 30 Sep 2024 04:53:18 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1svC9s-0002FN-T5; Mon, 30 Sep 2024 04:53:34 -0400
-Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:b1cb:0:640:2a1e:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id A5E9F60A82;
- Mon, 30 Sep 2024 11:53:29 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b737::1:2c] (unknown
- [2a02:6b8:b081:b737::1:2c])
- by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id NrUT1U1IdiE0-PSY7miTJ; Mon, 30 Sep 2024 11:53:28 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1727686409;
- bh=31IalTs5yR45JyTuoL2KSX6vOE1vwE3pLzEHWDHIfW8=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=ipObI/rS30nTnhOPIlhBpQoiH1R779AIAIybqot72K9yXO1NdonjlpCMpdkAEUalb
- yNgnxkMH9vidU+YwE0u2tzNV9Iq5LeEInv5D2vjbLVYrh4PHrLjQ5NxY3stB7TFs+W
- uau9OHKm7E33CDCogpV6zvpoWgwNvW9eU+KXOlOs=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <4a8cbc61-b299-4df0-bc69-23fbca9829d2@yandex-team.ru>
-Date: Mon, 30 Sep 2024 11:53:23 +0300
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1svC9W-00025U-BY; Mon, 30 Sep 2024 04:53:11 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 30 Sep
+ 2024 16:52:41 +0800
+Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Mon, 30 Sep 2024 16:52:41 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
+ BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <yunlin.tang@aspeedtech.com>
+Subject: [PATCH v6 8/8] hw/gpio/aspeed: Add test case for AST2700
+Date: Mon, 30 Sep 2024 16:52:39 +0800
+Message-ID: <20240930085239.3089901-9-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240930085239.3089901-1-jamin_lin@aspeedtech.com>
+References: <20240930085239.3089901-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 17/22] tests: fix -Werror=maybe-uninitialized
- false-positive
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>, Fam Zheng <fam@euphon.net>,
- Song Gao <gaosong@loongson.cn>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-block@nongnu.org,
- Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Greg Kurz <groug@kaod.org>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
- <eperezma@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, Hyman Huang <yong.huang@smartx.com>,
- Kevin Wolf <kwolf@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, John Snow <jsnow@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Jesper Devantier <foss@defmacro.it>,
- Peter Xu <peterx@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Klaus Jensen <its@irrelevant.dk>, Keith Busch <kbusch@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Yuval Shaia <yuval.shaia.ml@gmail.com>,
- Bin Meng <bin.meng@windriver.com>
-References: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
- <20240930081458.1926382-18-marcandre.lureau@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20240930081458.1926382-18-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Yandex-Filter: 1
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Type: text/plain
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,21 +63,143 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.09.24 11:14, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau<marcandre.lureau@redhat.com>
-> 
-> ../tests/unit/test-block-iothread.c:773:17: error: ‘job’ may be used uninitialized [-Werror=maybe-uninitialized]
-> /usr/include/glib-2.0/glib/gtestutils.h:73:53: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
-> 
-> Signed-off-by: Marc-André Lureau<marcandre.lureau@redhat.com>
+Add test case to test GPIO output and input pins from A0 to D7 for AST2700.
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ tests/qtest/aspeed_gpio-test.c | 77 ++++++++++++++++++++++++++++++++--
+ tests/qtest/meson.build        |  3 ++
+ 2 files changed, 76 insertions(+), 4 deletions(-)
 
+diff --git a/tests/qtest/aspeed_gpio-test.c b/tests/qtest/aspeed_gpio-test.c
+index d38f51d719..03b3b1c2b2 100644
+--- a/tests/qtest/aspeed_gpio-test.c
++++ b/tests/qtest/aspeed_gpio-test.c
+@@ -33,6 +33,10 @@
+ #define GPIO_ABCD_DATA_VALUE 0x000
+ #define GPIO_ABCD_DIRECTION  0x004
+ 
++/* AST2700 */
++#define AST2700_GPIO_BASE 0x14C0B000
++#define GPIOA0_CONTROL 0x180
++
+ static void test_set_colocated_pins(const void *data)
+ {
+     QTestState *s = (QTestState *)data;
+@@ -72,17 +76,82 @@ static void test_set_input_pins(const void *data)
+     g_assert_cmphex(value, ==, 0xffffffff);
+ }
+ 
++static void test_2700_output_pins(const void *data)
++{
++    QTestState *s = (QTestState *)data;
++    uint32_t offset = 0;
++    uint32_t value = 0;
++    uint32_t pin = 0;
++
++    for (char c = 'A'; c <= 'D'; c++) {
++        for (int i = 0; i < 8; i++) {
++            offset = AST2700_GPIO_BASE + GPIOA0_CONTROL + (pin * 4);
++
++            /* output direction and output hi */
++            qtest_writel(s, offset, 0x00000003);
++            value = qtest_readl(s, offset);
++            g_assert_cmphex(value, ==, 0x00000003);
++
++            /* output direction and output low */
++            qtest_writel(s, offset, 0x00000002);
++            value = qtest_readl(s, offset);
++            g_assert_cmphex(value, ==, 0x00000002);
++            pin++;
++        }
++    }
++}
++
++static void test_2700_input_pins(const void *data)
++{
++    QTestState *s = (QTestState *)data;
++    char name[16];
++    uint32_t offset = 0;
++    uint32_t value = 0;
++    uint32_t pin = 0;
++
++    for (char c = 'A'; c <= 'D'; c++) {
++        for (int i = 0; i < 8; i++) {
++            sprintf(name, "gpio%c%d", c, i);
++            offset = AST2700_GPIO_BASE + GPIOA0_CONTROL + (pin * 4);
++            /* input direction */
++            qtest_writel(s, offset, 0);
++
++            /* set input */
++            qtest_qom_set_bool(s, "/machine/soc/gpio", name, true);
++            value = qtest_readl(s, offset);
++            g_assert_cmphex(value, ==, 0x00002000);
++
++            /* clear input */
++            qtest_qom_set_bool(s, "/machine/soc/gpio", name, false);
++            value = qtest_readl(s, offset);
++            g_assert_cmphex(value, ==, 0);
++            pin++;
++        }
++    }
++}
++
++
+ int main(int argc, char **argv)
+ {
++    const char *arch = qtest_get_arch();
+     QTestState *s;
+     int r;
+ 
+     g_test_init(&argc, &argv, NULL);
+ 
+-    s = qtest_init("-machine ast2600-evb");
+-    qtest_add_data_func("/ast2600/gpio/set_colocated_pins", s,
+-                        test_set_colocated_pins);
+-    qtest_add_data_func("/ast2600/gpio/set_input_pins", s, test_set_input_pins);
++    if (strcmp(arch, "aarch64") == 0) {
++        s = qtest_init("-machine ast2700-evb");
++        qtest_add_data_func("/ast2700/gpio/input_pins",
++                            s, test_2700_input_pins);
++        qtest_add_data_func("/ast2700/gpio/out_pins", s, test_2700_output_pins);
++    } else {
++        s = qtest_init("-machine ast2600-evb");
++        qtest_add_data_func("/ast2600/gpio/set_colocated_pins", s,
++                            test_set_colocated_pins);
++        qtest_add_data_func("/ast2600/gpio/set_input_pins", s,
++                            test_set_input_pins);
++    }
++
+     r = g_test_run();
+     qtest_quit(s);
+ 
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 310865e49c..292980e3ad 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -209,6 +209,8 @@ qtests_aspeed = \
+   ['aspeed_hace-test',
+    'aspeed_smc-test',
+    'aspeed_gpio-test']
++qtests_aspeed64 = \
++  ['aspeed_gpio-test']
+ 
+ qtests_stm32l4x5 = \
+   ['stm32l4x5_exti-test',
+@@ -247,6 +249,7 @@ qtests_aarch64 = \
+   (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test'] : []) +  \
+   (config_all_accel.has_key('CONFIG_TCG') and                                            \
+    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
++  (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
+   ['arm-cpu-features',
+    'numa-test',
+    'boot-serial-test',
 -- 
-Best regards,
-Vladimir
+2.34.1
 
 
