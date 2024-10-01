@@ -4,83 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67974CEACDD
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 15:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCBFACEACE1
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 15:38:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svewz-00022z-Ct; Tue, 01 Oct 2024 11:38:09 -0400
+	id 1svewN-0000Dq-7T; Tue, 01 Oct 2024 11:37:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1svewq-0001re-9V
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 11:38:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svewE-0008VG-Sv
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 11:37:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1svewo-0006lD-NK
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 11:38:00 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svewD-0006h5-4J
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 11:37:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727797077;
+ s=mimecast20190719; t=1727797039;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hH0FVSOczkl1o2SGmrPPZ2jT+Q/A9LLpJo05Iw0IozE=;
- b=fDMznairYc7sNAMEPg+VpwC/PkHqif72CnIjTa5dFftm+3QE/+eeRvDNlh1t0awzuzJC3B
- PCCMLfv9SI94dZ2fptP6JOTgJBWSB9oZdQjxN17M2OMHwteoS9pDOuCpfs+CP5BQp2/lGb
- ci/OmiBKieQ45ntCGbznhub1Hle4j1M=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-Yvs8tLx5MI2fgd6q4iyoqA-1; Tue, 01 Oct 2024 11:37:56 -0400
-X-MC-Unique: Yvs8tLx5MI2fgd6q4iyoqA-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6cb659e73ceso28984146d6.3
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 08:37:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727797076; x=1728401876;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hH0FVSOczkl1o2SGmrPPZ2jT+Q/A9LLpJo05Iw0IozE=;
- b=w42D+aylCeFtvFCv/vk6zKPxl9byvHEBXaNCWI2sLAFPB96SkjzV6NmpwVvh/EJp6t
- QF4NEW2oo7jjWkdpWEzxn0HQY0PZlUOViLnzHXEcAAQ8xhEd/vd/ZWErWl3XCoA1g3Cm
- QrwEdRxNLvS9bxcO104C6pDKEbviikHKw8NTDQRpp7RWvpefxZ6mXLWB/R0kMfTkpp0P
- qvy3OPIG7k5d1SWy0maCOhVxLYxYTYnTNSa5Rs0MJ1pOp2R5+669D6v1KbtyJtUdrnPS
- hOS7tq7vn0GMj3CsHi6VcSu2VMRCl2LIX+U0OOlx+7vTBlrQfmxLrScYo6Y3Np8ZUgyk
- Jl7A==
-X-Gm-Message-State: AOJu0YyclesO/rMN6kHZ7hYKnNUbgYMMsy87Tkx+0o7bOZgeRTWortcN
- QncF1s4YCoJsEd5uVHflz5p1N3XkPt/PK6LKYYl7d6EqIbtz8vHMdTfHlF1wycl8ydMUSwEY9ny
- 8xXJ0TSAeU2KcUqu0LxZNFBNmjqNwRHmBsEs+HySACWI4DI6Uswtw
-X-Received: by 2002:a05:6214:4b07:b0:6cb:28fe:ac0 with SMTP id
- 6a1803df08f44-6cb3b5f38fcmr291959086d6.23.1727797075594; 
- Tue, 01 Oct 2024 08:37:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGrsEkWTnzQ1UDk81w8UHNcxNBZJHwN1v57criK8KyGI4MJmcakOEgFA6VqnDjQ3z2PSa+C1g==
-X-Received: by 2002:a05:6214:4b07:b0:6cb:28fe:ac0 with SMTP id
- 6a1803df08f44-6cb3b5f38fcmr291958726d6.23.1727797075187; 
- Tue, 01 Oct 2024 08:37:55 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6cb3b6800a9sm50913966d6.116.2024.10.01.08.37.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 08:37:54 -0700 (PDT)
-Date: Tue, 1 Oct 2024 11:37:52 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yong Huang <yong.huang@smartx.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 3/3] migration: Support responsive CPU throttle
-Message-ID: <ZvwXUHltQU2seIM4@x1n>
-References: <cover.1727630000.git.yong.huang@smartx.com>
- <3a383e563cc57c77320af805c8b8ece4e68eebea.1727630000.git.yong.huang@smartx.com>
- <ZvsORXZDZodSrzO-@x1n>
- <CAK9dgmZ7M30xXahBUKEkmQ2ZkWoF=DA=pb8XF_=YVM9xF2zcJw@mail.gmail.com>
+ content-transfer-encoding:content-transfer-encoding;
+ bh=gMCR+RkG4Lv0PzEDIoAE1Wc9o8brLeMHdxTiCfBKE9Q=;
+ b=ODzMRkDjRT5wObGtpLWdFvGy1+vfTTa5bee5FLPsNk8qnZBSDZxJ8WeZWtW/C09UM3Trj8
+ s2+1iLYws6i8+vCfom1GN5fZvdGGIcNRqam0WaQnbuD1cNYbA/xM9yZnUe+lsiiFJP12DJ
+ rP5+9E1TICFNrGiyqiIcTa5UdJTgWq0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-286-90dqIQvmOLCG0wWERC6p9Q-1; Tue,
+ 01 Oct 2024 11:37:18 -0400
+X-MC-Unique: 90dqIQvmOLCG0wWERC6p9Q-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EA29319775F9; Tue,  1 Oct 2024 15:37:16 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.193.152])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B0AD81955DCD; Tue,  1 Oct 2024 15:37:05 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v4] testing: bump mips64el cross to bookworm and allow to fail
+Date: Tue,  1 Oct 2024 17:37:03 +0200
+Message-ID: <20241001153703.98793-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAK9dgmZ7M30xXahBUKEkmQ2ZkWoF=DA=pb8XF_=YVM9xF2zcJw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -105,84 +81,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 01, 2024 at 10:18:54AM +0800, Yong Huang wrote:
-> On Tue, Oct 1, 2024 at 4:47 AM Peter Xu <peterx@redhat.com> wrote:
-> 
-> > On Mon, Sep 30, 2024 at 01:14:28AM +0800, yong.huang@smartx.com wrote:
-> > > From: Hyman Huang <yong.huang@smartx.com>
-> > >
-> > > Currently, the convergence algorithm determines that the migration
-> > > cannot converge according to the following principle:
-> > > The dirty pages generated in current iteration exceed a specific
-> > > percentage (throttle-trigger-threshold, 50 by default) of the number
-> > > of transmissions. Let's refer to this criteria as the "dirty rate".
-> > > If this criteria is met more than or equal to twice
-> > > (dirty_rate_high_cnt >= 2), the throttle percentage increased.
-> > >
-> > > In most cases, above implementation is appropriate. However, for a
-> > > VM with high memory overload, each iteration is time-consuming.
-> > > The VM's computing performance may be throttled at a high percentage
-> > > and last for a long time due to the repeated confirmation behavior.
-> > > Which may be intolerable for some computationally sensitive software
-> > > in the VM.
-> > >
-> > > As the comment mentioned in the migration_trigger_throttle function,
-> > > in order to avoid erroneous detection, the original algorithm confirms
-> > > the criteria repeatedly. Put differently, the criteria does not need
-> > > to be validated again once the detection is more reliable.
-> > >
-> > > In the refinement, in order to make the detection more accurate, we
-> > > introduce another criteria, called the "dirty ratio" to determine
-> > > the migration convergence. The "dirty ratio" is the ratio of
-> > > bytes_xfer_period and bytes_dirty_period. When the algorithm
-> > > repeatedly detects that the "dirty ratio" of current sync is lower
-> > > than the previous, the algorithm determines that the migration cannot
-> > > converge. For the "dirty rate" and "dirty ratio", if one of the two
-> > > criteria is met, the penalty percentage would be increased. This
-> > > makes CPU throttle more responsively and therefor saves the time of
-> > > the entire iteration and therefore reduces the time of VM performance
-> > > degradation.
-> > >
-> > > In conclusion, this refinement significantly reduces the processing
-> > > time required for the throttle percentage step to its maximum while
-> > > the VM is under a high memory load.
-> >
-> > I'm a bit lost on why this patch 2-3 is still needed if patch 1 works.
-> > Wouldn't that greatly increase the chance of throttle code being inovked
-> > already?  Why we still need this?
-> >
-> 
-> Indeed, if we are considering how to increase the change of throttle.
-> Patch 1 is sufficient, and I'm not insisting.
-> 
-> If we are talking about how to detect the migration convergence, this
-> patch, IMHO, is still helpful. Anyway, it depends on your judgment. :)
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Thanks.  I really hope we can stick with patch 1 only for now, and we leave
-patches like 2-3 for future, or probably never.
+The mips64el cross setup is very broken for bullseye which has now
+entered LTS support so is unlikely to be fixed. While we still can't
+build the container with all packages for bookworm due to a single
+missing dependency that will hopefully get fixed in due course. For
+the sake of keeping the CI green we disable the problematic packages
+via the lcitool's mappings.yml file.
 
-I want to avoid more magical tunables, and I want to avoid the code harder
-to read.  Unlike most of other migration features, auto converge so far is
-already pretty heavy on the "engineering" aspect of things.  More people
-care about downtime with 100ms or even less, then it makes zero sense a
-throttle feature can stop a group of vCPUs for more than that easily.
+See also: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1081535
 
-I hope we can unite more dev/qe resources on postcopy across QEMU community
-for enterprise users.  PoCs are always good stuff for QEMU as it's a
-community project and people experiment things on it, but I hope at least
-from design level, not small tunables like this one.  We could have
-introduced 10 more tunables all over, feed them to AI and train some
-numbers that migration can improve 10%, but IMHO that doesn't hugely help.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+[thuth: Disable the problematic packages via lcitool's mappings.yml]
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ v4: Drop the "allow_failure: true" hunk
 
-If you really care about convergence issues, I want to know whether you
-agree on postcopy being a better way to go.  There're still plenty of
-things we can do better in that area on either postcopy in general, or
-downtime optimizations that lots of people are working (e.g. VFIO's), so
-again IMHO it'll be good we keep focused there.
+ .../dockerfiles/debian-mips64el-cross.docker  | 18 +++----------
+ tests/lcitool/mappings.yml                    | 26 +++++++++++++++++++
+ tests/lcitool/refresh                         |  2 +-
+ 3 files changed, 31 insertions(+), 15 deletions(-)
 
-Thanks,
-
+diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+index 2862785692..bfa96cb507 100644
+--- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
++++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+@@ -1,10 +1,10 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all --cross-arch mips64el debian-11 qemu
++#  $ lcitool dockerfile --layers all --cross-arch mips64el debian-12 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
+ 
+-FROM docker.io/library/debian:11-slim
++FROM docker.io/library/debian:12-slim
+ 
+ RUN export DEBIAN_FRONTEND=noninteractive && \
+     apt-get update && \
+@@ -48,16 +48,15 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-opencv \
+                       python3-pillow \
+                       python3-pip \
+-                      python3-setuptools \
+                       python3-sphinx \
+                       python3-sphinx-rtd-theme \
+                       python3-venv \
+-                      python3-wheel \
+                       python3-yaml \
+                       rpm2cpio \
+                       sed \
+                       socat \
+                       sparse \
++                      swtpm \
+                       tar \
+                       tesseract-ocr \
+                       tesseract-ocr-eng \
+@@ -69,8 +68,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     dpkg-reconfigure locales && \
+     rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
+ 
+-RUN /usr/bin/pip3 install tomli
+-
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+ ENV MAKE "/usr/bin/make"
+@@ -97,17 +94,13 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       libcmocka-dev:mips64el \
+                       libcurl4-gnutls-dev:mips64el \
+                       libdaxctl-dev:mips64el \
+-                      libdrm-dev:mips64el \
+-                      libepoxy-dev:mips64el \
+                       libfdt-dev:mips64el \
+                       libffi-dev:mips64el \
+                       libfuse3-dev:mips64el \
+-                      libgbm-dev:mips64el \
+                       libgcrypt20-dev:mips64el \
+                       libglib2.0-dev:mips64el \
+                       libglusterfs-dev:mips64el \
+                       libgnutls28-dev:mips64el \
+-                      libgtk-3-dev:mips64el \
+                       libibverbs-dev:mips64el \
+                       libiscsi-dev:mips64el \
+                       libjemalloc-dev:mips64el \
+@@ -126,8 +119,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       librbd-dev:mips64el \
+                       librdmacm-dev:mips64el \
+                       libsasl2-dev:mips64el \
+-                      libsdl2-dev:mips64el \
+-                      libsdl2-image-dev:mips64el \
+                       libseccomp-dev:mips64el \
+                       libselinux1-dev:mips64el \
+                       libslirp-dev:mips64el \
+@@ -141,8 +132,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       libusb-1.0-0-dev:mips64el \
+                       libusbredirhost-dev:mips64el \
+                       libvdeplug-dev:mips64el \
+-                      libvirglrenderer-dev:mips64el \
+-                      libvte-2.91-dev:mips64el \
++                      libxdp-dev:mips64el \
+                       libzstd-dev:mips64el \
+                       nettle-dev:mips64el \
+                       systemtap-sdt-dev:mips64el \
+diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
+index 03b974ad02..0ab3a89013 100644
+--- a/tests/lcitool/mappings.yml
++++ b/tests/lcitool/mappings.yml
+@@ -2,6 +2,20 @@ mappings:
+   flake8:
+     OpenSUSELeap15:
+ 
++  # Due to https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1081535 we
++  # have to disable all packages that depend on libgl1-mesa-dri:mips64el
++  gtk3:
++    mips64el-deb:
++
++  libdrm:
++    mips64el-deb:
++
++  libepoxy:
++    mips64el-deb:
++
++  mesa-libgbm:
++    mips64el-deb:
++
+   meson:
+     OpenSUSELeap15:
+ 
+@@ -60,6 +74,18 @@ mappings:
+   python3-wheel:
+     OpenSUSELeap15: python311-pip
+ 
++  sdl2:
++    mips64el-deb:
++
++  sdl2-image:
++    mips64el-deb:
++
++  virglrenderer:
++    mips64el-deb:
++
++  vte:
++    mips64el-deb:
++
+ pypi_mappings:
+   # Request more recent version
+   meson:
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 92381f3c46..a78219f7bc 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -166,7 +166,7 @@ try:
+                                             "x86_64-linux-user,"
+                                             "i386-softmmu,i386-linux-user"))
+ 
+-    generate_dockerfile("debian-mips64el-cross", "debian-11",
++    generate_dockerfile("debian-mips64el-cross", "debian-12",
+                         cross="mips64el",
+                         trailer=cross_build("mips64el-linux-gnuabi64-",
+                                             "mips64el-softmmu,mips64el-linux-user"))
 -- 
-Peter Xu
+2.46.1
 
 
