@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FD3BCEB2CB
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Sep 2024 23:44:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CB28CEB2CD
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 00:11:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svQ3Z-0005UX-5E; Mon, 30 Sep 2024 19:43:57 -0400
+	id 1svQSy-0004Xs-ME; Mon, 30 Sep 2024 20:10:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1svQ3X-0005Tr-L0
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 19:43:55 -0400
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1svQSw-0004WL-Bv
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 20:10:10 -0400
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1svQ3V-0004GR-Pv
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 19:43:55 -0400
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1svQSt-0007GZ-Mr
+ for qemu-devel@nongnu.org; Mon, 30 Sep 2024 20:10:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=jWo/dR7adezQ/5IXl4pivfZLyHDhSU527PnDHNzkopA=; b=jySSk/BgEM1yC981
- OqM3gWPqMnCNXU0NEYtV1G/AcMJ+ZHPn/OLxGJYo9a71oYUjOer26wyaPTyiTFoHlzBpkLfEk3P28
- 4oimd/qYSgWKfoFHEeTTaZda00rA1cmEiXBWp9RaSnDI+dEY5XwGjxgUugkMF/DZuzF3vGcKlctuW
- RH5Jth1yhymPRtZdHZGgOF/4ASMRIt+KPx83KpFGdPuFWINmV0f2zExDF6LyLuxejEPK/5et1eLnR
- hmBxrE9yGYzcZoN51lDS8G55k1devejzpqrE65cPvwyPSStZ06IRrYsg2qkhmkT7HavXM3/GsGPw1
- ohZ0ewHuZyUi4eoz8Q==;
+ :Subject; bh=dKxwabnYx9JJYY9VxENDiRo3ZMsGGYc7XBW5vtH4Ysw=; b=FZLmATalMg3rUenG
+ QRVEkJSskxDYbW7/QDQJqD8LqMUEJ60G+dZz4rOapdaHu9cm6SxcM06GaQHpi35S7qxHUhLVqRvyE
+ RzMaeeP20snCu66hHNTFtsFvTPFCiFNjaDMjgsbJcuJgvjhwVEMISgZ3RvK+6IBR3OwntjgugxeVt
+ 5EuAgi+7iZ/tu0dMSg/mgkw2PDoK7Jm1853CUnJ6oeX/s0IHTwHchB8MJLgPAchY052IUyGKNXmDa
+ aLJ/AXgv0PpTZmPJ79+y3Lkgjx16Rd66UxmLDsxcLrkPyVbJpJ4Hg/hiKBTKXRaHe4knEm8qY7uCt
+ 6Vj8v0LWBy561S8sxQ==;
 Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1svQ3R-0086V1-30;
- Mon, 30 Sep 2024 23:43:49 +0000
-Date: Mon, 30 Sep 2024 23:43:49 +0000
+ (envelope-from <dg@treblig.org>) id 1svQSr-0086io-04;
+ Tue, 01 Oct 2024 00:10:05 +0000
+Date: Tue, 1 Oct 2024 00:10:04 +0000
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Prasad Pandit <ppandit@redhat.com>,
- Julia Suvorova <jusual@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH 7/7] hmp: Add "info migrationthreads"
-Message-ID: <Zvs3tb80cXdlSmZW@gallifrey>
-References: <20240930195837.825728-1-peterx@redhat.com>
- <20240930195837.825728-8-peterx@redhat.com>
+To: Josh Junon <junon@oro.sh>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ armbru@redhat.com
+Subject: Re: [PATCH] hmp: allow filtering `info tlb` entries by address on i386
+Message-ID: <Zvs93PoHm0imx-r4@gallifrey>
+References: <20240824083423.9332-1-junon@oro.sh>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20240930195837.825728-8-peterx@redhat.com>
+In-Reply-To: <20240824083423.9332-1-junon@oro.sh>
 X-Chocolate: 70 percent or better cocoa solids preferably
 X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
-X-Uptime: 23:39:00 up 145 days, 10:53,  1 user,  load average: 0.08, 0.03, 0.01
+X-Uptime: 00:03:22 up 145 days, 11:17,  1 user,  load average: 0.00, 0.00, 0.00
 User-Agent: Mutt/2.2.12 (2023-09-09)
 Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
  helo=mx.treblig.org
@@ -71,98 +69,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Peter Xu (peterx@redhat.com) wrote:
-> The QMP command was added in 671326201d ("migration: Introduce interface
-> query-migrationthreads", v8.0).  Add the HMP version of it.
-> 
-> Cc: Markus Armbruster <armbru@redhat.com>
-> Cc: Dr. David Alan Gilbert <dave@treblig.org>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+* Josh Junon (junon@oro.sh) wrote:
+> This change adds an optional virtual address parameter
+> to the `info tlb` monitor command on i386 targets,
+> only printing a specific entry if found.
+
+Hi Josh,
+
+> Signed-off-by: Josh Junon <junon@oro.sh>
 > ---
->  include/monitor/hmp.h          |  1 +
->  migration/migration-hmp-cmds.c | 25 +++++++++++++++++++++++++
->  hmp-commands-info.hx           | 13 +++++++++++++
->  3 files changed, 39 insertions(+)
+>  hmp-commands-info.hx  |  5 +++++
+>  target/i386/monitor.c | 45 +++++++++++++++++++++++++++----------------
+>  2 files changed, 33 insertions(+), 17 deletions(-)
 > 
-> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-> index ae116d9804..e44a399e4a 100644
-> --- a/include/monitor/hmp.h
-> +++ b/include/monitor/hmp.h
-> @@ -31,6 +31,7 @@ void hmp_info_mice(Monitor *mon, const QDict *qdict);
->  void hmp_info_migrate(Monitor *mon, const QDict *qdict);
->  void hmp_info_migrate_capabilities(Monitor *mon, const QDict *qdict);
->  void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict);
-> +void hmp_info_migrationthreads(Monitor *mon, const QDict *qdict);
->  void hmp_info_cpus(Monitor *mon, const QDict *qdict);
->  void hmp_info_vnc(Monitor *mon, const QDict *qdict);
->  void hmp_info_spice(Monitor *mon, const QDict *qdict);
-> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-> index 20d1a6e219..63a6ea61f2 100644
-> --- a/migration/migration-hmp-cmds.c
-> +++ b/migration/migration-hmp-cmds.c
-> @@ -814,3 +814,28 @@ void loadvm_completion(ReadLineState *rs, int nb_args, const char *str)
->          vm_completion(rs, str);
->      }
+> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+> index c59cd6637b..e42427b738 100644
+> --- a/hmp-commands-info.hx
+> +++ b/hmp-commands-info.hx
+> @@ -199,8 +199,13 @@ ERST
+>      defined(TARGET_PPC) || defined(TARGET_XTENSA) || defined(TARGET_M68K)
+>      {
+>          .name       = "tlb",
+> +#if defined(TARGET_I386)
+> +        .args_type  = "virt:l?",
+> +        .params     = "[virt]",
+> +#else
+>          .args_type  = "",
+>          .params     = "",
+> +#endif
+
+I don't think we've got any other case where we only define a parameter
+on some architecture; and it feels best to avoid adding it now.
+
+>          .help       = "show virtual to physical memory mappings",
+
+The meaning of parameters should be documented in the .help;
+you could add a comment there saying 'only some architectures'
+
+>          .cmd        = hmp_info_tlb,
+>      },
+> diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+> index 2d766b2637..f54d400c97 100644
+> --- a/target/i386/monitor.c
+> +++ b/target/i386/monitor.c
+> @@ -50,10 +50,14 @@ static hwaddr addr_canonical(CPUArchState *env, hwaddr addr)
 >  }
-> +
-> +void hmp_info_migrationthreads(Monitor *mon, const QDict *qdict)
-> +{
-> +    MigrationThreadInfoList *list;
-> +    MigrationThreadInfo *entry;
-> +    Error *err = NULL;
-> +
-> +    list = qmp_query_migrationthreads(&err);
-> +
-
-I think you need to do the hmp_handle_error here rather than at
-the end, and return if there was one.
-
-Other than that it looks OK.
-
-Dave
-
-> +    if (!list) {
-> +        monitor_printf(mon, "No migration threads found\n");
+>  
+>  static void print_pte(Monitor *mon, CPUArchState *env, hwaddr addr,
+> -                      hwaddr pte, hwaddr mask)
+> +                      hwaddr pte, hwaddr mask, hwaddr *filter)
+>  {
+>      addr = addr_canonical(env, addr);
+>  
+> +    if (filter && (*filter & mask) != (addr & mask)) {
 > +        return;
 > +    }
 > +
-> +    monitor_printf(mon, "%-16s%s\n", "TID", "Thread Name");
-> +    while (list) {
-> +        entry = list->value;
-> +        monitor_printf(mon, "%-16" PRId64 "%s\n",
-> +                       entry->thread_id, entry->name);
-> +        list = list->next;
-> +    }
-> +
-> +    qapi_free_MigrationThreadInfoList(list);
-> +    hmp_handle_error(mon, err);
-> +}
-> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-> index c59cd6637b..a8dc55dbd2 100644
-> --- a/hmp-commands-info.hx
-> +++ b/hmp-commands-info.hx
-> @@ -512,6 +512,19 @@ SRST
->      Show current migration parameters.
->  ERST
+>      monitor_printf(mon, HWADDR_FMT_plx ": " HWADDR_FMT_plx
+>                     " %c%c%c%c%c%c%c%c%c\n",
+>                     addr,
+> @@ -69,7 +73,7 @@ static void print_pte(Monitor *mon, CPUArchState *env, hwaddr addr,
+>                     pte & PG_RW_MASK ? 'W' : '-');
+>  }
 >  
-> +    {
-> +        .name       = "migrationthreads",
-> +        .args_type  = "",
-> +        .params     = "",
-> +        .help       = "show migration threads information",
-> +        .cmd        = hmp_info_migrationthreads,
-> +    },
+> -static void tlb_info_32(Monitor *mon, CPUArchState *env)
+> +static void tlb_info_32(Monitor *mon, CPUArchState *env, hwaddr *filter)
+>  {
+>      unsigned int l1, l2;
+>      uint32_t pgd, pde, pte;
+> @@ -81,7 +85,7 @@ static void tlb_info_32(Monitor *mon, CPUArchState *env)
+>          if (pde & PG_PRESENT_MASK) {
+>              if ((pde & PG_PSE_MASK) && (env->cr[4] & CR4_PSE_MASK)) {
+>                  /* 4M pages */
+> -                print_pte(mon, env, (l1 << 22), pde, ~((1 << 21) - 1));
+> +                print_pte(mon, env, (l1 << 22), pde, ~((1 << 21) - 1), filter);
+>              } else {
+>                  for(l2 = 0; l2 < 1024; l2++) {
+>                      cpu_physical_memory_read((pde & ~0xfff) + l2 * 4, &pte, 4);
+> @@ -89,7 +93,8 @@ static void tlb_info_32(Monitor *mon, CPUArchState *env)
+>                      if (pte & PG_PRESENT_MASK) {
+>                          print_pte(mon, env, (l1 << 22) + (l2 << 12),
+>                                    pte & ~PG_PSE_MASK,
+> -                                  ~0xfff);
+> +                                  ~0xfff,
+> +                                  filter);
+>                      }
+>                  }
+>              }
+> @@ -97,7 +102,7 @@ static void tlb_info_32(Monitor *mon, CPUArchState *env)
+>      }
+>  }
+>  
+> -static void tlb_info_pae32(Monitor *mon, CPUArchState *env)
+> +static void tlb_info_pae32(Monitor *mon, CPUArchState *env, hwaddr *filter)
+>  {
+>      unsigned int l1, l2, l3;
+>      uint64_t pdpe, pde, pte;
+> @@ -116,7 +121,8 @@ static void tlb_info_pae32(Monitor *mon, CPUArchState *env)
+>                      if (pde & PG_PSE_MASK) {
+>                          /* 2M pages with PAE, CR4.PSE is ignored */
+>                          print_pte(mon, env, (l1 << 30) + (l2 << 21), pde,
+> -                                  ~((hwaddr)(1 << 20) - 1));
+> +                                  ~((hwaddr)(1 << 20) - 1),
+> +                                  filter);
+>                      } else {
+>                          pt_addr = pde & 0x3fffffffff000ULL;
+>                          for (l3 = 0; l3 < 512; l3++) {
+> @@ -126,7 +132,8 @@ static void tlb_info_pae32(Monitor *mon, CPUArchState *env)
+>                                  print_pte(mon, env, (l1 << 30) + (l2 << 21)
+>                                            + (l3 << 12),
+>                                            pte & ~PG_PSE_MASK,
+> -                                          ~(hwaddr)0xfff);
+> +                                          ~(hwaddr)0xfff,
+> +                                          filter);
+>                              }
+>                          }
+>                      }
+> @@ -138,7 +145,7 @@ static void tlb_info_pae32(Monitor *mon, CPUArchState *env)
+>  
+>  #ifdef TARGET_X86_64
+>  static void tlb_info_la48(Monitor *mon, CPUArchState *env,
+> -        uint64_t l0, uint64_t pml4_addr)
+> +        uint64_t l0, uint64_t pml4_addr, hwaddr *filter)
+>  {
+>      uint64_t l1, l2, l3, l4;
+>      uint64_t pml4e, pdpe, pde, pte;
+> @@ -162,7 +169,7 @@ static void tlb_info_la48(Monitor *mon, CPUArchState *env,
+>              if (pdpe & PG_PSE_MASK) {
+>                  /* 1G pages, CR4.PSE is ignored */
+>                  print_pte(mon, env, (l0 << 48) + (l1 << 39) + (l2 << 30),
+> -                        pdpe, 0x3ffffc0000000ULL);
+> +                        pdpe, 0x3ffffc0000000ULL, filter);
+>                  continue;
+>              }
+>  
+> @@ -177,7 +184,7 @@ static void tlb_info_la48(Monitor *mon, CPUArchState *env,
+>                  if (pde & PG_PSE_MASK) {
+>                      /* 2M pages, CR4.PSE is ignored */
+>                      print_pte(mon, env, (l0 << 48) + (l1 << 39) + (l2 << 30) +
+> -                            (l3 << 21), pde, 0x3ffffffe00000ULL);
+> +                            (l3 << 21), pde, 0x3ffffffe00000ULL, filter);
+>                      continue;
+>                  }
+>  
+> @@ -190,7 +197,8 @@ static void tlb_info_la48(Monitor *mon, CPUArchState *env,
+>                      if (pte & PG_PRESENT_MASK) {
+>                          print_pte(mon, env, (l0 << 48) + (l1 << 39) +
+>                                  (l2 << 30) + (l3 << 21) + (l4 << 12),
+> -                                pte & ~PG_PSE_MASK, 0x3fffffffff000ULL);
+> +                                pte & ~PG_PSE_MASK, 0x3fffffffff000ULL,
+> +                                filter);
+>                      }
+>                  }
+>              }
+> @@ -198,7 +206,7 @@ static void tlb_info_la48(Monitor *mon, CPUArchState *env,
+>      }
+>  }
+>  
+> -static void tlb_info_la57(Monitor *mon, CPUArchState *env)
+> +static void tlb_info_la57(Monitor *mon, CPUArchState *env, hwaddr *filter)
+>  {
+>      uint64_t l0;
+>      uint64_t pml5e;
+> @@ -209,7 +217,7 @@ static void tlb_info_la57(Monitor *mon, CPUArchState *env)
+>          cpu_physical_memory_read(pml5_addr + l0 * 8, &pml5e, 8);
+>          pml5e = le64_to_cpu(pml5e);
+>          if (pml5e & PG_PRESENT_MASK) {
+> -            tlb_info_la48(mon, env, l0, pml5e & 0x3fffffffff000ULL);
+> +            tlb_info_la48(mon, env, l0, pml5e & 0x3fffffffff000ULL, filter);
+>          }
+>      }
+>  }
+> @@ -219,6 +227,9 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+>  {
+>      CPUArchState *env;
+>  
+> +    hwaddr filter_addr = qdict_get_try_int(qdict, "virt", 0);
+> +    hwaddr *filter = qdict_haskey(qdict, "virt") ? &filter_addr : NULL;
 > +
-> +SRST
-> +  ``info migrationthreads``
-> +    Show migration threads information.
-> +ERST
-> +
->      {
->          .name       = "balloon",
->          .args_type  = "",
+
+I'm a bit confused about the format of the parameter you're trying to use;
+can you add an example in the commit message please.
+
+>      env = mon_get_cpu_env(mon);
+>      if (!env) {
+>          monitor_printf(mon, "No CPU available\n");
+> @@ -233,17 +244,17 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+>  #ifdef TARGET_X86_64
+>          if (env->hflags & HF_LMA_MASK) {
+>              if (env->cr[4] & CR4_LA57_MASK) {
+> -                tlb_info_la57(mon, env);
+> +                tlb_info_la57(mon, env, filter);
+>              } else {
+> -                tlb_info_la48(mon, env, 0, env->cr[3] & 0x3fffffffff000ULL);
+> +                tlb_info_la48(mon, env, 0, env->cr[3] & 0x3fffffffff000ULL, filter);
+
+I think you're over line length there.
+
+>              }
+>          } else
+>  #endif
+>          {
+> -            tlb_info_pae32(mon, env);
+> +            tlb_info_pae32(mon, env, filter);
+>          }
+>      } else {
+> -        tlb_info_32(mon, env);
+> +        tlb_info_32(mon, env, filter);
+>      }
+>  }
+>  
 > -- 
-> 2.45.0
+> 2.34.1
 > 
 -- 
  -----Open up your eyes, open up your mind, open up your code -------   
