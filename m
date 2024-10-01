@@ -4,63 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 941A5CEACCC
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAD0ECEACCC
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:28:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svdni-0005iO-PE; Tue, 01 Oct 2024 10:24:30 -0400
+	id 1svdoj-0006pU-0u; Tue, 01 Oct 2024 10:25:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1svdmb-000509-AP; Tue, 01 Oct 2024 10:23:24 -0400
-Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ (Exim 4.90_1) (envelope-from <SRS0=vEdf=Q5=kaod.org=clg@ozlabs.org>)
+ id 1svdnb-0005ex-Pu; Tue, 01 Oct 2024 10:24:26 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1svdmK-0005e3-To; Tue, 01 Oct 2024 10:23:14 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 2A966A4268E;
- Tue,  1 Oct 2024 05:29:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CABB8C4CEC6;
- Tue,  1 Oct 2024 05:29:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1727760559;
- bh=tuLz94NqQ0hls7myXaXA23/ISr3v1CUTbd7LWGCd4io=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=YBFFONSBtvJJFQ8iKLKuuaV4H9YYl59U0QKPr6g1Iyn4qPsTKZFnhnECkM7TMeCQ3
- 1HV1ROY3v9Z3rAco2EsYCwlKVzqkC31f5XgWvhkKYUaHZXxSXtwSyGTtoGOcgpreNu
- OZjGDxAqB/DCCqwTyKzfiFqZbyj2iP0bQTgtF4rNWGF0u1Y216Mh88w1XlKQsWCJsS
- XmTxNKBMiwQGSruXWIysbyCY4QJGqKLQaEdzVRLZeYX4rMhJze1xs8B49A++xgz1XN
- oypw8BLl1vABYo3B93reJG4AOdBeJ3wT4lHqPANUyvqFHygTXPmIJrNssik4+/7RJb
- G4tVBOW6CbcSw==
-Date: Tue, 1 Oct 2024 07:29:13 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-Cc: Igor Mammedov <imammedo@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, Peter Maydell
- <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>,
- <linux-kernel@vger.kernel.org>, <qemu-arm@nongnu.org>,
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 08/15] acpi/ghes: Prepare to support multiple sources on
- ghes
-Message-ID: <20241001072913.09f82e9f@foz.lan>
-In-Reply-To: <20240925152333.0000110d@Huawei.com>
-References: <cover.1727236561.git.mchehab+huawei@kernel.org>
- <05fb5c6a7d26eeb730bf5fe1f67bb6581ec6d730.1727236561.git.mchehab+huawei@kernel.org>
- <20240925152333.0000110d@Huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <SRS0=vEdf=Q5=kaod.org=clg@ozlabs.org>)
+ id 1svdnT-0005nG-5v; Tue, 01 Oct 2024 10:24:21 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4XHxH80nTdz4x8P;
+ Tue,  1 Oct 2024 21:56:20 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4XHxH271JGz4x11;
+ Tue,  1 Oct 2024 21:56:05 +1000 (AEST)
+Message-ID: <8e725955-8696-4809-a23a-87e390cccb5e@kaod.org>
+Date: Tue, 1 Oct 2024 13:56:02 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
- envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 0/8] Support GPIO for AST2700
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>,
+ Yunlin Tang <yunlin.tang@aspeedtech.com>
+References: <20241001024334.834807-1-jamin_lin@aspeedtech.com>
+ <SI2PR06MB5041260E63C468FB348E1F2BFC772@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <SI2PR06MB5041260E63C468FB348E1F2BFC772@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=vEdf=Q5=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,71 +72,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Wed, 25 Sep 2024 15:23:33 +0100
-Jonathan Cameron <Jonathan.Cameron@Huawei.com> escreveu:
-
-> On Wed, 25 Sep 2024 06:04:13 +0200
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+On 10/1/24 11:43, Jamin Lin wrote:
+> Hi all,
 > 
-> > The current code is actually dependent on having just one
-> > error structure with a single source.
-> > 
-> > As the number of sources should be arch-dependent, as it
-> > will depend on what kind of synchronous/assynchronous
-> > notifications will exist, change the logic to dynamically
-> > build the table.  
-> Not really arch dependent.  Depends on both arch and some
-> firmware implementation choices, but I guess that detail
-> doesn't matter here.
+>> Subject: [PATCH v7 0/8] Support GPIO for AST2700
+>>
 > 
-> > 
-> > Yet, for a proper support, we need to get the number of
-> > sources by reading the number from the HEST table. However,
-> > bios currently doesn't store a pointer to it.
-> > 
-> > For now just change the logic at table build time, while
-> > enforcing that it will behave like before with a single
-> > source ID.
-> > 
-> > A future patch will add a HEST table bios pointer and
-> > change the logic at acpi_ghes_record_errors() to
-> > dynamically use the new size.
-> > 
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>  
-> Trivial comment inline
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> I don't know why I send this patch series failed to the following email addresses and got the following errors.
+> open list:All patches CC here <qemu-devel@nongnu.org>
+> open list:ASPEED BMCs <qemu-arm@nongnu.org>
 > 
-> > @@ -335,9 +346,10 @@ static void build_ghes_v2(GArray *table_data,
-> >      build_append_gas(table_data, AML_AS_SYSTEM_MEMORY, 0x40, 0,
-> >                       4 /* QWord access */, 0);
-> >      bios_linker_loader_add_pointer(linker, ACPI_BUILD_TABLE_FILE,
-> > -        address_offset + GAS_ADDR_OFFSET,
-> > -        sizeof(uint64_t), ACPI_GHES_ERRORS_FW_CFG_FILE,
-> > -        (ACPI_GHES_ERROR_SOURCE_COUNT + source_id) * sizeof(uint64_t));
-> > +                                   address_offset + GAS_ADDR_OFFSET,  
+> 2024/10/1 上午 06:43:04 - Server at nongnu.org (2001:470:142:3::10) returned '451 4.4.397 Error communicating with target host. -> 421 4.2.1 Unable to connect ->
+> SocketError: Failed to connect. Winsock error code: 10051, Win32 error code: 10051'
 > 
-> I'd prefer if we avoided realigning unless absolutely necessary or
-> that it is split into a separate patch.
-> Makes things a tiny bit harder to review.
+> Do you encounter the same issue?
 
-Heh, Igor nacked a patch doing the alignment change on a separate patch,
-so let's do it at the patches that are actually changing the code.
+There seem to be an issue with the mailing list. I don't know what
+though.
 
-At least for me, it is a low easier to review patches that are properly
-aligned with parenthesis. So, yeah it may be a little more painful to
-review a patch changing alignments, but IMO it pays off on future
-revisions, specially if we place one argument per line, like in this
-function.
+> If no, I will re-send this patch series with Thomas reviewed tag in v8.
 
-> 
-> > +                                   sizeof(uint64_t),
-> > +                                   ACPI_GHES_ERRORS_FW_CFG_FILE,
-> > +                                   (num_sources + index) * sizeof(uint64_t));
-> >    
-> 
+I think we are done with this series. I was going to apply it to
+aspeed-next when I noticed b4 was not able to retrieve the patchset.
+And I don't see much changes in https://patchew.org/QEMU.
 
-
+So please wait a bit before resending. No hurries.
 
 Thanks,
-Mauro
+
+C.
+
+
+
 
