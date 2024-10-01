@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EED4CF3189
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 23:01:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DCDECF318A
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 23:16:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svlrQ-0006Po-1X; Tue, 01 Oct 2024 19:00:54 -0400
+	id 1svm63-0008Aa-0t; Tue, 01 Oct 2024 19:15:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1svlrL-0006PS-Dl
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 19:00:49 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1svm5x-0008AH-2C
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 19:15:54 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1svlrF-0007Jw-Nz
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 19:00:46 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-7179069d029so4411851b3a.2
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 16:00:41 -0700 (PDT)
+ id 1svm5v-0000m0-Nu
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 19:15:52 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-7e6afa8baeaso5195542a12.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 16:15:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1727823640; x=1728428440; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1727824550; x=1728429350; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=FPs2KIvfdwuj1YdFO0EW+j2GJnniFw+sMDZv/M52Wx8=;
- b=pW0NtS+fZSLGD72GtEAN5uzQeLpefWaddmU4MDnzpNqqhVzPBvmyPr5XBZdpdgjmHE
- kxhmYWlRtJbdSqUnuI/HMAAMCTUJRbTjksQOi//epwwZrh0H6uzElpGdUVFK+gnnTDx6
- kTBRrP2Ez/H09VfN26ZidzbbojSvGz0oHgZB+/oOuzufbcuGixd3NackUuy8i4j+k3o9
- DYmo1bAOmmS0z1shVt2toH+Gu51jtZdVtLblKv8xn27qNY23zc73ZSgTsBqJu1ZTxFza
- JF2iHYFHeVo4QcohkzpGbd4uKpSMwE9UxCGqFmcufMdK3Pf+c0aN21vdTFQ03aIfIIfW
- oHpg==
+ bh=AEQyh70Abv6mHX9uoHzYe8U9lRPr/nBUDARMG9BkecA=;
+ b=o+4rxKaBFZ1xBHhm5maC5vEwxJApqDpFUQltP/IMh3dBxnqJUmdxhzcEaooGcRmL35
+ LGNlRGA5in4lGJYvTryS+uhq3afo8XVFBxmBVw4OXgkSdEjZMhmB1nMRjBw6HSD9O57H
+ 5CzM267Nfz8NWkoHizNb1rKrrqr1C4xwWg2hMk6I2r6SFm43i/N94Wbote73VguMVbL4
+ z4YFcfSgRQPjhJaj8g6aylqakqixURGg6N2b4YMy0QQuZWmmdPsSu8XqI1nvGcUgTd7q
+ g9CIfT3J3sRI7TLRFm/wphH/yJMbBAVM2wO1JQK8GP026Kx2yym/QlPTl7kg3b4tG01+
+ 1bcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727823640; x=1728428440;
+ d=1e100.net; s=20230601; t=1727824550; x=1728429350;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FPs2KIvfdwuj1YdFO0EW+j2GJnniFw+sMDZv/M52Wx8=;
- b=QdbTnReTHDkhMOPKbajEUEPO2bqElpQ/jJoM3W1E/SkN99oiIyfvcWG16AJEHeXI2m
- x4f7RtiV0hpmkBn6JS5mHHnzs2WjDy00lc3PSl1DErdmDFuiv+6ADMv0W9ywU02/xuEK
- 4UPm5VjiNALLm8Yj8XZqXXsNnifH5FrO9H7L2W7zCh7e/u99R8Ux/03haQ5+MosnLx+9
- OCrC80sroD8sCLQ1DKlTW7BK2HV+wmTweIwtLBGIm7fdxjSVM8C5W1tWchjN5ZDRwMPc
- FIJFCqLDzeKxdRlV4ilm6qFkTvs6j4q10LUkh+BHsiwsCJJ48kHOztjUyuq7KcJmxL0b
- sVDg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX2r1tBvLnxbjgpquZHnhYGCcLEKaC6UEb7JSDc1D5jijKd0u7gEQQcACh0drfNHqArLTjIE+rQ1S8b@nongnu.org
-X-Gm-Message-State: AOJu0YxCfT0yf55vvCR8AD/KsSj9I2e7xLV0MuczWNacgJP0j7HIL4go
- PRZB5Bc/Pnn5jaJvMu7Olnj5pyRPAWsDY9N0Cg9W7mbIxwn3K21UVFIkXCx3sUo=
-X-Google-Smtp-Source: AGHT+IHExZ72fXgv6D6SfP5UnnbtIy2LdsmJb+J1iRuzeAitE+dWA1KCQBTGDl1pQMvJxTE3i1e49w==
-X-Received: by 2002:a05:6a00:1896:b0:717:8eca:95 with SMTP id
- d2e1a72fcca58-71dc5d56a3dmr2025597b3a.17.1727823640003; 
- Tue, 01 Oct 2024 16:00:40 -0700 (PDT)
+ bh=AEQyh70Abv6mHX9uoHzYe8U9lRPr/nBUDARMG9BkecA=;
+ b=IZLc/cemVU6x5t1SIC+AhDDh/Qh38TYXdSL1w0k5/5KX+zgc/VFjFado7+duLn9p5M
+ 5J6Nh7ZFWJzzY+oPYlQdS5Rug5LbNSnvXmLenMTbzUQXeV95LzV3l3YhH+66Y+ZMdYV7
+ Etl3i/gPMxBYR/j02uFxZR56eb5B3Z3LxGH4wVEsShB0sCcUXVamdZ4JfLuic+mnlj4k
+ ZdaEp1YOffmRcO0+CQqG1TdAm5c4mxF62ZTSn6xMEgilkseg3yWAIwsa2OQmhB1ZA8qk
+ wPmcdOd/JSxAB+RQEaL3kUdQbR3xLjGJy7zI3ZowwxxJMylv+1hV3BEaJnV8ejoeh1Eq
+ cQfw==
+X-Gm-Message-State: AOJu0Yx2zb57qDxGeAdYh13VuzBm0gPZbq7whzcRWWFr3zJQeDn7T3vq
+ 6hXVcLvSJasnK3bzslOFRjcoyg8rXvrGu5fli4xUK7dnBWRnuM4pcyGyCEPNICs=
+X-Google-Smtp-Source: AGHT+IGnCtO6N6Yq63xSCWKZxqjdgLQIFEHtJiSsX4GuL0ylciByg1q/OFHtCWd+9gV1wks0QkhtOg==
+X-Received: by 2002:a05:6a20:3b9a:b0:1d6:236f:bd6b with SMTP id
+ adf61e73a8af0-1d6236fc3b4mr1653375637.0.1727824550065; 
+ Tue, 01 Oct 2024 16:15:50 -0700 (PDT)
 Received: from [192.168.68.110] (200-206-229-93.dsl.telesp.net.br.
  [200.206.229.93]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71b265249b7sm8917036b3a.148.2024.10.01.16.00.37
+ 41be03b00d2f7-7e6db2b9407sm7690703a12.23.2024.10.01.16.15.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Oct 2024 16:00:39 -0700 (PDT)
-Message-ID: <fe6c6569-4623-451c-bd4f-9325f294461c@ventanamicro.com>
-Date: Tue, 1 Oct 2024 20:00:35 -0300
+ Tue, 01 Oct 2024 16:15:49 -0700 (PDT)
+Message-ID: <feeea774-3031-4a02-be92-4031d08afce6@ventanamicro.com>
+Date: Tue, 1 Oct 2024 20:15:45 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PULL v2 16/47] hw/riscv: add RISC-V IOMMU base emulation
 To: Tomasz Jeznach <tjeznach@rivosinc.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org,
- Sebastien Boeuf <seb@rivosinc.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- "frank.chang@sifive.com" <frank.chang@sifive.com>
+ Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, Sebastien Boeuf <seb@rivosinc.com>,
+ Alistair Francis <alistair.francis@wdc.com>
 References: <20240924221751.2688389-1-alistair.francis@wdc.com>
  <20240924221751.2688389-17-alistair.francis@wdc.com>
- <CAFEAcA8rdFYACFKdJga72WA4ET9NFRwrOifdbTYDBxY6G6uOXA@mail.gmail.com>
- <634d685c-7e36-409e-9b41-b9162a5acf9c@ventanamicro.com>
- <CAFEAcA-=s9zatyYYOP01BO1o7jPpY45mWkDM3N_yydD=Ka3GNw@mail.gmail.com>
- <CAH2o1u6pQXOFbo6EyJAOfkAgE6VPK7MGsuvLD=nzhVeQFfrHwA@mail.gmail.com>
+ <CAH2o1u474YJPaxkA24-JE5XpuF=3UnOMP2iWHbCu=FxTf_SvNA@mail.gmail.com>
 Content-Language: en-US
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <CAH2o1u6pQXOFbo6EyJAOfkAgE6VPK7MGsuvLD=nzhVeQFfrHwA@mail.gmail.com>
+In-Reply-To: <CAH2o1u474YJPaxkA24-JE5XpuF=3UnOMP2iWHbCu=FxTf_SvNA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,131 +101,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 10/1/24 7:14 PM, Tomasz Jeznach wrote:
-> On Sun, Sep 29, 2024 at 8:46 AM Peter Maydell <peter.maydell@linaro.org> wrote:
->>
->> On Sat, 28 Sept 2024 at 22:01, Daniel Henrique Barboza
->> <dbarboza@ventanamicro.com> wrote:
->>>
->>>
->>>
->>> On 9/28/24 5:22 PM, Peter Maydell wrote:
->>>> On Tue, 24 Sept 2024 at 23:19, Alistair Francis <alistair23@gmail.com> wrote:
->>
->>>>> +/* Register helper functions */
->>>>> +static inline uint32_t riscv_iommu_reg_mod32(RISCVIOMMUState *s,
->>>>> +    unsigned idx, uint32_t set, uint32_t clr)
->>>>> +{
->>>>> +    uint32_t val;
->>>>> +    qemu_spin_lock(&s->regs_lock);
->>>>> +    val = ldl_le_p(s->regs_rw + idx);
->>>>> +    stl_le_p(s->regs_rw + idx, (val & ~clr) | set);
->>>>> +    qemu_spin_unlock(&s->regs_lock);
->>>>> +    return val;
->>>>> +}
->>>>
->>>> This looks very weird. Nobody else's IOMMU implementation
->>>> grabs a spinlock while it is accessing guest register data.
->>>> Why is riscv special? Why a spinlock? (We use spinlocks
->>>> only very very sparingly in general.)
->>>
->>>
->>> The first versions of the IOMMU used qemu threads. I believe this is where
->>> the locks come from (both from registers and from the cache).
->>>
->>> I'm not sure if we're ever going to hit a race condition without the locks
->>> in the current code (i.e. using mmio ops only). I think I'll make an attempt
->>> to remove the locks and see if something breaks.
->>
->> Generally access to the backing for guest registers in a
->> device model is protected by the fact that the iothread lock
->> (BQL) is held while the guest is accessing a device. I think for
->> iommu devices there may be some extra complication because they
->> get called as part of the translate-this-address codepath
->> where I think the BQL is not held, and so they typically
->> have some qemu_mutex to protect themselves[*]. But they
->> don't generally need/want to do the handling at this very
->> fine-grained per-read/write level.
->>
->> [*] This is just what I've gathered from a quick read through
->> our other iommu implementations; don't take it as gospel.
->>
->> If you do need to do something complicated with locking it would
->> be good to have a comment somewhere explaining why and what
->> the locking principles are.
->>
+On 10/1/24 7:24 PM, Tomasz Jeznach wrote:
+> On Tue, Sep 24, 2024 at 3:18 PM Alistair Francis <alistair23@gmail.com> wrote:
 > 
-> Locking for the iot and ctx cache is still required as the translation
-> requests going through IOMMUMemoryRegionClass.translate callback
-> (riscv_iommu_memory_region_translate) are unlikely protected by BQL.
-> With ATS translation requests and eventually PRI notifications coming
-> to the iommu implementation, cache structures will be modified without
-> any external locking guarantees.
+>> +
+>> +/* IOMMU index for transactions without process_id specified. */
+>> +#define RISCV_IOMMU_NOPROCID 0
+>> +
+>> +static uint8_t riscv_iommu_get_icvec_vector(uint32_t icvec, uint32_t vec_type)
+>> +{
+>> +    switch (vec_type) {
+>> +    case RISCV_IOMMU_INTR_CQ:
+>> +        return icvec & RISCV_IOMMU_ICVEC_CIV;
+>> +    case RISCV_IOMMU_INTR_FQ:
+>> +        return icvec & RISCV_IOMMU_ICVEC_FIV >> 4;
 > 
-> To add some background to register access spin locks.
-> Original implementation runs all IOMMU command processing logic as a
-> separate thread, avoiding holding BQL while executing cache
-> invalidations and other commands. This was implemented to mimic real
-> hardware, where IOMMU operations are not blocking CPU execution.
-> During the review process it was suggested and modified to execute all
-> commands directly as part of the MMIO callback. Please note, that this
-> change has consequences of potentially holding CPU/BQL for unspecified
-> time as the command processing flow might be calling registered IOMMU
-> memory notifiers for ATS invalidations and page group responses.
-> Anyone implementing memory notifier callback will now execute with BQL
-> held. Also, updates to register state might happen during translation
-> fault reporting and or/pri. At least queue CSR/head/tail registers
-> updates will need some sort of protection.
-> 
-> Probably adding a comment in the code and maybe restoring the original
-> threading model would make this implementation more readable and less
-> problematic in the future.
-
-I agree that the locks makes more sense in a threading model like it was
-the case in v2. At this point it doesn't make much sense to have both
-BQL and manual locks.
-
-For context, we moved away from it back in v2, after this comment from
-Frank Chang:
-
-https://lore.kernel.org/qemu-riscv/CANzO1D35eYan8axod37tAg88r=qg4Jt0CVTvO+0AiwRLbbV64A@mail.gmail.com/
-
---------------
-In our experience, using QEMU thread increases the latency of command
-queue processing,
-which leads to the potential IOMMU fence timeout in the Linux driver
-when using IOMMU with KVM,
-e.g. booting the guest Linux.
-
-Is it possible to remove the thread from the IOMMU just like ARM, AMD,
-and Intel IOMMU models?
---------------
-
-Frank then elaborated further about IOFENCE and how they were hitting asserts
-that were solved after moving the IOMMU away from a thread model.
-
-For now I removed all locks, like Peter suggested, and in my testing with
-riscv-iommu-pci and riscv-iommu-sys I didn't see anything bad happening.
-BQL is granting enough race protection it seems.
-
-I believe we should stick with this approach, instead of rolling back
-to a threading model that Frank said back in v2 that could be problematic.
-Nothing is stopping us from moving back to a threading model later if we
-start hitting race conditions or even if we have performance improvements
-in doing so. At that point we'll be more versed in how the IOMMU is going
-to be used by everyone else too.
+> Please add missing brackets to fix operator ordering bug. Here and for
+> PM, PQ cases.
+> It should be:  return (icvec & RISCV_IOMMU_ICVEC_FIV) >> 4
 
 
-Thanks,
+Nice catch. Changed in v8. Thanks,
+
 
 Daniel
 
-
 > 
-> Thanks for the review,
+>> +    case RISCV_IOMMU_INTR_PM:
+>> +        return icvec & RISCV_IOMMU_ICVEC_PMIV >> 8;
+>> +    case RISCV_IOMMU_INTR_PQ:
+>> +        return icvec & RISCV_IOMMU_ICVEC_PIV >> 12;
+>> +    default:
+>> +        g_assert_not_reached();
+>> +    }
+>> +}
+>> +
+> 
+> thanks,
 > - Tomasz
-> 
-> 
->> thanks
->> -- PMM
 
