@@ -4,92 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0B51CEACCD
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:14:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 757A8CEACCE
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:14:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svdbh-0007Uo-QW; Tue, 01 Oct 2024 10:12:05 -0400
+	id 1svdcG-0008VW-6P; Tue, 01 Oct 2024 10:12:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1svdbe-0007Sf-Fd
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:12:02 -0400
-Received: from fout-a4-smtp.messagingengine.com ([103.168.172.147])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1svdc6-0007uH-70; Tue, 01 Oct 2024 10:12:31 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1svdbc-00034Q-ED
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:12:02 -0400
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal
- [10.202.2.51])
- by mailfout.phl.internal (Postfix) with ESMTP id 704D01381F31;
- Tue,  1 Oct 2024 03:04:35 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-11.internal (MEProxy); Tue, 01 Oct 2024 03:04:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to; s=fm1; t=1727766275; x=1727852675; bh=tVDlkG1VIM
- f1BhFI1WXmkrLMhlGmLAqcVKSJOcbyRx8=; b=fNIvkfTt/23Z3SKGrhTXus3XHA
- F3NfFyXmlg8xUmkj3dECDqDzm3LRIsHSZPa8/svPSSm2OpslZCcSOYXlcn+clRmK
- WMT9R3xWaUFHzJHHmrZe3WNBqvWjABB8XZ3TSMn8dttB2uxza5vcYtBiyPwqa9aa
- p8tDr+ddKZxbM5nHM89vXRH6thjm+Vror5acEXlDEe3mKvtLdD6jdW+uunVFRv4Z
- DrlpIs1xKCVQ/0/98ufHkqp8BQ0FKd1RX+BlFIXciiFSo6Tw47fMHWew6ckjIqBI
- 0S7mtbQeRe1ZaSk7I0hfw0vNYkYP8n6XiUavrWzJ4BLFYs4g7TCTjv20+46A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; t=1727766275; x=1727852675; bh=tVDlkG1VIMf1BhFI1WXmkrLMhlGm
- LAqcVKSJOcbyRx8=; b=l5//QZrvC0q0wnFqqD75jVlpfIQMyoCbgi4vLucCfrnX
- BBHWmAqQGzT2zDFdpDA8vlkCD0GqZD0WwWWKSGYszDfku8AfGWMz7QWdcfdIwGLO
- wnn+zPx7IgqfANBUmW9QwlNNziJAmdubaHcvfOtvhcebWC+srN0qnFx7f53X0kRU
- yMqnc3GPgGqaEY1gn/rFTCupuuKSn0/b8sUmKFVDJupUQBP3BGQuhp/zt+GBQF+E
- CkD7lW2ikG0UCqitcgNjGGu2a2WLU3chBBMM4N6mr3JqVWGZoH2qLPKMfWcJ18zj
- Ap9hN9Ey+p7EjEFdbnHX7IlGOts9cdIMBSUVYTip3g==
-X-ME-Sender: <xms:Ap_7ZgqEcEXOVif6aueidRkcWoFpjgS9qCLqYF50guq75UiQPwFAEw>
- <xme:Ap_7ZmpQt1RIxV34OngjmvAfROwegawzQ1FAZESCeLivlRvgnWAtUeS9L8CzXzLSA
- O6S_jrp0TSQdHMFaKs>
-X-ME-Received: <xmr:Ap_7ZlPRZMlO5B-qbH18ArHShaORP-NOyTa2yI4-x2VNlKWa3gAXEdqg0GqGWHbRk5J1LXHpGKh5KaBrxugc6g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduiedgudduiecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
- uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
- hnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffoggfgsedtkeertdertddtnecu
- hfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrug
- hkqeenucggtffrrghtthgvrhhnpedtvefgjeehtdevudfhleelheeujeelgeetieeukeef
- ledvhedtgeevgfekvedtvdenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhgihhtlh
- grsgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
- ohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopeefpdhmoh
- guvgepshhmthhpohhuthdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhu
- rdhorhhgpdhrtghpthhtohepphgvthgvrhdrmhgrhiguvghllheslhhinhgrrhhordhorh
- hgpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrdgtohhm
-X-ME-Proxy: <xmx:Ap_7Zn4eZYvBr7VMS-IWtEpBBS1IIzY-TQDxrd2aq6KMC_eqwIfitg>
- <xmx:Ap_7Zv7z3s-4cAjQVtpVb1YojqMNCWN4ugkwAypk_9hhDNqgEvQLJw>
- <xmx:Ap_7ZnizMoRKxzAZQoQHQ5s5jlLFKJR103FXaUM42HvXuN37X-KthA>
- <xmx:Ap_7Zp7LEcyNG43VslhDHIwVU5nzCZ78V4SlGBWYf_kKsZBV1FbjKA>
- <xmx:A5_7ZhkQAeYdziyyOoVHFjfMUt0PAp3mPOxY7nHOJ9Q2YX13UdTmVlYR>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Oct 2024 03:04:33 -0400 (EDT)
-From: Klaus Jensen <its@irrelevant.dk>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>
-Subject: [PULL 0/5] nvme queue
-Date: Tue,  1 Oct 2024 09:04:12 +0200
-Message-ID: <20241001070418.28737-1-its@irrelevant.dk>
-X-Mailer: git-send-email 2.45.2
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1svdc2-0003Bx-Rn; Tue, 01 Oct 2024 10:12:29 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 1 Oct
+ 2024 10:43:36 +0800
+Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Tue, 1 Oct 2024 10:43:36 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
+ BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <yunlin.tang@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>
+Subject: [PATCH v7 7/8] aspeed/soc: Support GPIO for AST2700
+Date: Tue, 1 Oct 2024 10:43:33 +0800
+Message-ID: <20241001024334.834807-8-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20241001024334.834807-1-jamin_lin@aspeedtech.com>
+References: <20241001024334.834807-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=103.168.172.147; envelope-from=its@irrelevant.dk;
- helo=fout-a4-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,42 +64,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+Add GPIO model for AST2700 GPIO support. The GPIO controller registers base
+address is start at 0x14C0_B000 and its address space is 0x1000.
 
-The following changes since commit 3b14a767eaca3df5534a162851f04787b363670e:
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/arm/aspeed_ast27x0.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-  Merge tag 'qemu-openbios-20240924' of https://github.com/mcayland/qemu into staging (2024-09-28 12:34:44 +0100)
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 99135edc1e..dca660eb6b 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -62,6 +62,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_GIC_REDIST]    =  0x12280000,
+     [ASPEED_DEV_ADC]       =  0x14C00000,
+     [ASPEED_DEV_I2C]       =  0x14C0F000,
++    [ASPEED_DEV_GPIO]      =  0x14C0B000,
+ };
+ 
+ #define AST2700_MAX_IRQ 288
+@@ -372,6 +373,9 @@ static void aspeed_soc_ast2700_init(Object *obj)
+ 
+     snprintf(typename, sizeof(typename), "aspeed.i2c-%s", socname);
+     object_initialize_child(obj, "i2c", &s->i2c, typename);
++
++    snprintf(typename, sizeof(typename), "aspeed.gpio-%s", socname);
++    object_initialize_child(obj, "gpio", &s->gpio, typename);
+ }
+ 
+ /*
+@@ -657,6 +661,15 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+         sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c.busses[i]), 0, irq);
+     }
+ 
++    /* GPIO */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->gpio), 0,
++                    sc->memmap[ASPEED_DEV_GPIO]);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0,
++                       aspeed_soc_get_irq(s, ASPEED_DEV_GPIO));
++
+     create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
+     create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
+     create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
+-- 
+2.34.1
 
-are available in the Git repository at:
-
-  https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20241001
-
-for you to fetch changes up to ebd1568fc73209bbc1339a449f3df0b6c9a12358:
-
-  hw/nvme: add atomic write support (2024-10-01 09:02:05 +0200)
-
-----------------------------------------------------------------
-nvme queue
-
-----------------------------------------------------------------
-Alan Adamson (1):
-      hw/nvme: add atomic write support
-
-Arun Kumar (2):
-      hw/nvme: clear masked events from the aer queue
-      hw/nvme: support CTRATT.MEM
-
-Keith Busch (1):
-      hw/nvme: report id controller metadata sgl support
-
-Klaus Jensen (1):
-      hw/nvme: add knob for CTRATT.MEM
-
- hw/nvme/ctrl.c       | 194 ++++++++++++++++++++++++++++++++++++++++++++++++---
- hw/nvme/nvme.h       |  16 +++++
- include/block/nvme.h |   3 +
- 3 files changed, 205 insertions(+), 8 deletions(-)
 
