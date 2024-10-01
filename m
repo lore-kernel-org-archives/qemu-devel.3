@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E9ECEACC8
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:15:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F4ACEACCC
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:16:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svdcC-0008Es-Fz; Tue, 01 Oct 2024 10:12:36 -0400
+	id 1svdcE-0008Lx-Fz; Tue, 01 Oct 2024 10:12:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1svdc0-0007ok-9A
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:12:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1svdbo-0007fG-97; Tue, 01 Oct 2024 10:12:14 -0400
+Received: from fout-a4-smtp.messagingengine.com ([103.168.172.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1svdbr-00038t-Pg
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:12:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727791932;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hHGZqlVbW7MCScvkF1IowomfSd7QuTBgUrlyUTAquM0=;
- b=GscK21ALxdWsvvV59tj6nvxJbWSZjY+LYL/k9r69kVmGb8/OmudAnLC7/B3AOgiH3YY4lf
- sGgp6x04H2DckFZsIjfYRkrn/kfu3r3J4XFdYgAJm5gzf9/iZ9n1TT/L8H1ObFUfkl0Bsi
- fYIeEzC7UXSgT+an8c2n2oPVzJMfISI=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-675-lZzZc48APCuOhaQkbSHOGA-1; Tue, 01 Oct 2024 05:53:43 -0400
-X-MC-Unique: lZzZc48APCuOhaQkbSHOGA-1
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-20b583a48f4so43936145ad.2
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 02:53:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727776422; x=1728381222;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hHGZqlVbW7MCScvkF1IowomfSd7QuTBgUrlyUTAquM0=;
- b=nZBimEMcAs1QRm1O81P49gFirqyzGdJBIOpQoXIaicD5XvsflZQEA8D8qRX+bFW6KI
- oHXVtZSHlHxGdlOoQkUtDkz1kHJ/3ej20nnN4llNyWAJGHvfIVs8mdlGtxPVlKMurLGG
- RyjPQy8rIYf/O31cISzagfzlmC1f8QhvweCXMQdgNawYxHAu0kv0hmQN4xFmSuSkFACq
- bk7Uq9dhitW2+eWGCdVQhb+3A7yWBRB0fVrqK7TtpcYNoYGYgVBvBAfm53W8YkavQD8m
- AMpYd8Y4AXWlBXeamxRAmrbjbrj02pCOSsePFXUtJeRwvPbhxKxchg7FvWiWfRPJbXAi
- nGkQ==
-X-Gm-Message-State: AOJu0YzUk0nM/J9DPZ6+WshkCeElVcsmtiNXl2boGgJWFmvNCWhw1jCw
- W4j6JVSzRd6T7DiWHOxrRQfRGuyRnCpZbEZvfTgzFHhwTDYg/PuxBHtCjkTtXa2g3WpPT2lTsX5
- ra/RMGxPiBFovSYHhsw4vCVuWFzGg/TwMCof1LM5QvWeorH6wvbLw
-X-Received: by 2002:a17:903:110e:b0:206:fd9d:b88d with SMTP id
- d9443c01a7336-20b37bdb78fmr187873145ad.61.1727776421932; 
- Tue, 01 Oct 2024 02:53:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHJyPS8jiSDIefK69rHM9l/vXArFcDMjlSeAyHSI9QO/iTbyxcgzwZVvH3ECPV9p3jIajveAw==
-X-Received: by 2002:a17:903:110e:b0:206:fd9d:b88d with SMTP id
- d9443c01a7336-20b37bdb78fmr187872915ad.61.1727776421435; 
- Tue, 01 Oct 2024 02:53:41 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-46-200-231.retail.telecomitalia.it.
- [79.46.200.231]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20b37e2072fsm66391385ad.128.2024.10.01.02.53.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 02:53:40 -0700 (PDT)
-Date: Tue, 1 Oct 2024 11:53:33 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Roy Hopkins <roy.hopkins@suse.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, 
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>, 
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>, 
- =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
-Subject: Re: [PATCH v6 04/16] hw/i386: Add igvm-cfg object and processing for
- IGVM files
-Message-ID: <zgjym2u5k4p7h5bwi6nef62vvs6snzw6defg5la7yey6oub5kg@ile7murbz3mt>
-References: <cover.1727341768.git.roy.hopkins@suse.com>
- <9506d5c8954c78d5890d48129156abfb93691397.1727341768.git.roy.hopkins@suse.com>
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1svdbc-000340-OB; Tue, 01 Oct 2024 10:12:11 -0400
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal
+ [10.202.2.45])
+ by mailfout.phl.internal (Postfix) with ESMTP id 86B191381F44;
+ Tue,  1 Oct 2024 03:04:39 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-05.internal (MEProxy); Tue, 01 Oct 2024 03:04:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-transfer-encoding:content-type:date:date:from
+ :from:in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm1; t=1727766279; x=
+ 1727852679; bh=5XqoLTAFqCtY2x87btFp3v8D5GoR0hqn0xoHj6uIjac=; b=i
+ 2PtjMJwsyizlr60ds1MHGn/u5tQPDIqPJ4iT97iBdQyK1FDKwxTZNPwlERQED775
+ 4xrb/XdKkkTfvTW5ucNomhpz+Ktwoz8O3Y8Zrll6aVtUoB2et5Tt9NABR1AMbuxk
+ PYCR9ZQhW6Esjj1/iOxLYc5RaPQAPTXJyWEbMe1oJAnEVFC03pAwluGY05qBbGhz
+ 1+SZhJT1/uToZ/Z1Y0Ug/gWnZJgLJyW8hQMfJdQ/6NbMhBxvqj+xUT1r6ipGrpq3
+ O+C/dcjh6JOenQAoB3za9sIgMo8RptAVmknEYtw6ZtoYyDPGihHpxlFiZ4n9FiCn
+ jRE6a214FCpCYUMpwacyw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1727766279; x=
+ 1727852679; bh=5XqoLTAFqCtY2x87btFp3v8D5GoR0hqn0xoHj6uIjac=; b=R
+ QmSEW90OBx9LCgVcL/X1VOcbyZurRcOrpC7ucTydNqnDruxNZSY0NLrrSc6BjinZ
+ JMQDcvQuGSPUVZiMLrdvT76fOINC4uWfaySj4oTupiBuYVBDFbmFgMvlH2Z0nKtY
+ ult2u5ztmTFfgzHYgkx95CJ+zH2f1YMni+vePGUhdm3lwW2+XClV6YsQjgvER6gB
+ VqznFM2+57it5pow4E3BXhENjr99+a7OoPwTP0i7DDocsHgAXKUqHQ4GRaNeLXqA
+ FNADr8YK+L15x17GreIHJH5K/XXLKK0MA8zyMC5QZp/HKfpeJi3ZZe86sP3GVyf8
+ 9yPAyj9XihyYZ3qMqGq1g==
+X-ME-Sender: <xms:B5_7Zn6oHnt4qudOmkEQveEjEZPz2PN69n5uN8HN6PxdUdXB06Cr3w>
+ <xme:B5_7Zs4Njdc6NlIqUBs1i0HKLTwMKUDdR2rbwX-QasYzhy27qvI7rvWd-Cix_Sx3_
+ acpIagp8lgsj8KhzF0>
+X-ME-Received: <xmr:B5_7ZudMvtY6qLT5RAC6b-NQElcCeYvqru8kOWxfk63wNd9veeQJdbQoV_z56Fr_EInO4tfu1TQytCkxYlqVgQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduiedgudduiecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+ uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+ hnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddt
+ necuhfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnth
+ drughkqeenucggtffrrghtthgvrhhnpeejgfeilefgieevheekueevheehkeefveegiefg
+ heefgfejjeehffefgedujedugeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+ epmhgrihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphht
+ thhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehqvghmuhdquggvvhgvlh
+ esnhhonhhgnhhurdhorhhgpdhrtghpthhtohepphgvthgvrhdrmhgrhiguvghllheslhhi
+ nhgrrhhordhorhhgpdhrtghpthhtoheprghruhhnrdhkkhgrsehsrghmshhunhhgrdgtoh
+ hmpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrdgtohhmpdhrtghpthht
+ ohepkhgsuhhstghhsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehithhssehirhhrvg
+ hlvghvrghnthdrughkpdhrtghpthhtohepfhhoshhsseguvghfmhgrtghrohdrihhtpdhr
+ tghpthhtohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrgh
+X-ME-Proxy: <xmx:B5_7ZoK09eN0s8ouv7Uu9V9nfU8omTKnS7YHWZjYjXLfLQY0SBjGlQ>
+ <xmx:B5_7ZrJr5i_yAD5yXByVNQDyIG5OBgje4TqtdUGYOEL-kdthKuApow>
+ <xmx:B5_7Zhxj3I4l-82QLv2mcRlK8kNxzuHC2d_y1UWL81KYo2s2G6f5Yw>
+ <xmx:B5_7ZnLsTu1cXRlwl-J-iEiBcGiWWSs_Mbq5FUjJNqi_rHdBPjanRA>
+ <xmx:B5_7Zi89RrNOFIz-nZsnVUkpjs0P3MZ7HXS2SP4U4pB58N9MeIMSCj-7>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Oct 2024 03:04:38 -0400 (EDT)
+From: Klaus Jensen <its@irrelevant.dk>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Arun Kumar <arun.kka@samsung.com>, Klaus Jensen <k.jensen@samsung.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
+Subject: [PULL 2/5] hw/nvme: clear masked events from the aer queue
+Date: Tue,  1 Oct 2024 09:04:14 +0200
+Message-ID: <20241001070418.28737-3-its@irrelevant.dk>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241001070418.28737-1-its@irrelevant.dk>
+References: <20241001070418.28737-1-its@irrelevant.dk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <9506d5c8954c78d5890d48129156abfb93691397.1727341768.git.roy.hopkins@suse.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=103.168.172.147; envelope-from=its@irrelevant.dk;
+ helo=fout-a4-smtp.messagingengine.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,158 +112,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 26, 2024 at 12:41:53PM GMT, Roy Hopkins wrote:
->An IGVM file contains configuration of guest state that should be
->applied during configuration of the guest, before the guest is started.
->
->This patch allows the user to add an igvm-cfg object to an X86 machine
->configuration that allows an IGVM file to be configured that will be
->applied to the guest before it is started.
->
->If an IGVM configuration is provided then the IGVM file is processed at
->the end of the board initialization, before the state transition to
->PHASE_MACHINE_INITIALIZED.
->
->Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
->Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
->---
-> hw/i386/pc.c          | 12 ++++++++++++
-> hw/i386/pc_piix.c     | 10 ++++++++++
-> hw/i386/pc_q35.c      | 10 ++++++++++
-> include/hw/i386/x86.h |  3 +++
-> qemu-options.hx       | 28 ++++++++++++++++++++++++++++
-> 5 files changed, 63 insertions(+)
+From: Arun Kumar <arun.kka@samsung.com>
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Clear masked events from the aer queue when get log page is issued with
+RAE 0 without checking for the presence of outstanding aer requests.
 
->
->diff --git a/hw/i386/pc.c b/hw/i386/pc.c
->index 8d84c22458..695fc1dbfe 100644
->--- a/hw/i386/pc.c
->+++ b/hw/i386/pc.c
->@@ -1843,6 +1843,18 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
->     object_class_property_add_bool(oc, "fd-bootchk",
->         pc_machine_get_fd_bootchk,
->         pc_machine_set_fd_bootchk);
->+
->+#if defined(CONFIG_IGVM)
->+    object_class_property_add_link(oc, "igvm-cfg",
->+                                   TYPE_IGVM_CFG,
->+                                   offsetof(X86MachineState, igvm),
->+                                   object_property_allow_set_link,
->+                                   OBJ_PROP_LINK_STRONG);
->+    object_class_property_set_description(oc, "igvm-cfg",
->+                                          "Set IGVM configuration");
->+#endif
->+
->+
-> }
->
-> static const TypeInfo pc_machine_info = {
->diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
->index 2bf6865d40..5adf7da6f4 100644
->--- a/hw/i386/pc_piix.c
->+++ b/hw/i386/pc_piix.c
->@@ -360,6 +360,16 @@ static void pc_init1(MachineState *machine, const char *pci_type)
->                                x86_nvdimm_acpi_dsmio,
->                                x86ms->fw_cfg, OBJECT(pcms));
->     }
->+
->+#if defined(CONFIG_IGVM)
->+    /* Apply guest state from IGVM if supplied */
->+    if (x86ms->igvm) {
->+        if (IGVM_CFG_GET_CLASS(x86ms->igvm)
->+                ->process(x86ms->igvm, machine->cgs, &error_fatal) < 0) {
->+            g_assert_not_reached();
->+        }
->+    }
->+#endif
-> }
->
-> typedef enum PCSouthBridgeOption {
->diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
->index 8319b6d45e..483e0a0a40 100644
->--- a/hw/i386/pc_q35.c
->+++ b/hw/i386/pc_q35.c
->@@ -324,6 +324,16 @@ static void pc_q35_init(MachineState *machine)
->                                x86_nvdimm_acpi_dsmio,
->                                x86ms->fw_cfg, OBJECT(pcms));
->     }
->+
->+#if defined(CONFIG_IGVM)
->+    /* Apply guest state from IGVM if supplied */
->+    if (x86ms->igvm) {
->+        if (IGVM_CFG_GET_CLASS(x86ms->igvm)
->+                ->process(x86ms->igvm, machine->cgs, &error_fatal) < 0) {
->+            g_assert_not_reached();
->+        }
->+    }
->+#endif
-> }
->
-> #define DEFINE_Q35_MACHINE(major, minor) \
->diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
->index d43cb3908e..01ac29acf6 100644
->--- a/include/hw/i386/x86.h
->+++ b/include/hw/i386/x86.h
->@@ -25,6 +25,7 @@
-> #include "hw/intc/ioapic.h"
-> #include "hw/isa/isa.h"
-> #include "qom/object.h"
->+#include "sysemu/igvm-cfg.h"
->
-> struct X86MachineClass {
->     /*< private >*/
->@@ -97,6 +98,8 @@ struct X86MachineState {
->      * which means no limitation on the guest's bus locks.
->      */
->     uint64_t bus_lock_ratelimit;
->+
->+    IgvmCfg *igvm;
-> };
->
-> #define X86_MACHINE_SMM              "smm"
->diff --git a/qemu-options.hx b/qemu-options.hx
->index d94e2cbbae..66292c160b 100644
->--- a/qemu-options.hx
->+++ b/qemu-options.hx
->@@ -5927,6 +5927,34 @@ SRST
->                  -machine ...,memory-encryption=sev0 \\
->                  .....
->
->+    ``-object igvm-cfg,file=file``
->+        Create an IGVM configuration object that defines the initial state
->+        of the guest using a file in that conforms to the Independent Guest
->+        Virtual Machine (IGVM) file format.
->+
->+        This is currently only supported by ``-machine q35`` and
->+        ``-machine pc``.
->+
->+        The ``file`` parameter is used to specify the IGVM file to load.
->+        When provided, the IGVM file is used to populate the initial
->+        memory of the virtual machine and, depending on the platform, can
->+        define the initial processor state, memory map and parameters.
->+
->+        The IGVM file is expected to contain the firmware for the virtual
->+        machine, therefore an ``igvm-cfg`` object cannot be provided along
->+        with other ways of specifying firmware, such as the ``-bios``
->+        parameter on x86 machines.
->+
->+        e.g to launch a machine providing the firmware in an IGVM file
->+
->+        .. parsed-literal::
->+
->+             # |qemu_system_x86| \\
->+                 ...... \\
->+                 -object igvm-cfg,id=igvm0,file=bios.igvm \\
->+                 -machine ...,igvm-cfg=igvm0 \\
->+                 .....
->+
->     ``-object authz-simple,id=id,identity=string``
->         Create an authorization object that will control access to
->         network services.
->-- 
->2.43.0
->
+Signed-off-by: Arun Kumar <arun.kka@samsung.com>
+[k.jensen: remove unnecessary QTAILQ_EMPTY check]
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+---
+ hw/nvme/ctrl.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index d5ea9ad653f2..a720dbc354a2 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -1649,9 +1649,16 @@ static void nvme_smart_event(NvmeCtrl *n, uint8_t event)
+ 
+ static void nvme_clear_events(NvmeCtrl *n, uint8_t event_type)
+ {
++    NvmeAsyncEvent *event, *next;
++
+     n->aer_mask &= ~(1 << event_type);
+-    if (!QTAILQ_EMPTY(&n->aer_queue)) {
+-        nvme_process_aers(n);
++
++    QTAILQ_FOREACH_SAFE(event, &n->aer_queue, entry, next) {
++        if (event->result.event_type == event_type) {
++            QTAILQ_REMOVE(&n->aer_queue, event, entry);
++            n->aer_queued--;
++            g_free(event);
++        }
+     }
+ }
+ 
+-- 
+2.45.2
 
 
