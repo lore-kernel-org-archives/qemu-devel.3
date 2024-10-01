@@ -4,68 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 853DBCEACD5
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:40:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC47DCEACD5
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:41:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sve11-0007mG-06; Tue, 01 Oct 2024 10:38:15 -0400
+	id 1sve3s-00043H-1Q; Tue, 01 Oct 2024 10:41:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svdz9-0006Aw-1r
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:36:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svdz1-0001t1-Vy
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:36:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727793369;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=YaaBJlvvT4aBpllk4zknfnDGkUkU3l0CNeGiHyxQqXM=;
- b=AXMXEKTadtRcbK2gi8ns0rysMRq7Jm6lYgQ7mqSZpEaCl7Kc78IcN1Tw/5Pg9Kgbo8F+U2
- 9dF8WsPs0kjCFUv7OLxKr/idQY4qU197jKPxj+urxGzwZOmHcd6Y2/ttr6xbjt2LAo6XnW
- KcPYnM2/SNsmPVxl8Ecnku+MkCxIANg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-119-ft7SIRcRO6u2D7rshFrn6A-1; Tue,
- 01 Oct 2024 08:32:57 -0400
-X-MC-Unique: ft7SIRcRO6u2D7rshFrn6A-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
- [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2AAFE1936164; Tue,  1 Oct 2024 12:32:55 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.193.152])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E0D131979064; Tue,  1 Oct 2024 12:32:49 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3] testing: bump mips64el cross to bookworm and allow to fail
-Date: Tue,  1 Oct 2024 14:32:47 +0200
-Message-ID: <20241001123247.85610-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sve3p-00041F-48
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:41:09 -0400
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sve3l-00030m-NH
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:41:08 -0400
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2facf00b0c7so19093901fa.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 07:41:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727793662; x=1728398462; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SbuUT9EGajx0g1hYB1DGCdOdT0DPQMJrhPwUaR6K6v8=;
+ b=DC6ttWAut4HJ1xl2gkpJpq+BACW0yudi9qSQzya3ViPWKhg0WBHHYpzrqhYD0w3W8+
+ +Q/BC2L8RbuqX9B2KhQtly23LDUfB7kVtOxlkCPK+ArHFc5cXN+izrogzhg/C0g6Pdgh
+ GPdfcZ3h3BRyUt4cSaGz6JmeQ6RbO4BHg4wSXFC27uWF/WHT33lUqa1BOyg9xoNP4fvh
+ MyCvzniHvyLiNWnx3rzJc/Qy+CwjUpqhcMssmiq//qkGbR6VCLKQSaO+dF3EXad3hF0E
+ QH9k9vM3evnTem0+x4vyqap5eM1wF2Sr5i4D3tgvpyQym+0EClx54oawlR9K9WiJce7T
+ V+5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727793662; x=1728398462;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SbuUT9EGajx0g1hYB1DGCdOdT0DPQMJrhPwUaR6K6v8=;
+ b=dEv/au0hwxEy1Q8c9idXWDWt3gOfvdlkizQ/zE76nFnms6q1fX0/LqUPnO2L//XgZx
+ 8HqOePzzlO9eYiP5EmivbvoVRZMc9DTTd6zTFEiylzTSneBhEXTxR/Jh5n0f2ly52aYv
+ A82cr1c/u60WcTB3RpLy7lI430N1AOqcllKo4ig63A5FaFYRolSd9RKOT1mWD/fSiN9O
+ KfhE6FGsUksVbYfJm5zbBmLdI9VU/UfjzTQqhY69dON0EXJQ7ypZlwO0hav/6gs0d31Q
+ TV7+cjc759/DhK/uy71QK5UIgNs81Jr12nD4zhk+yDB+iO82ORjXm2q8A06dquiuWKi6
+ w6BA==
+X-Gm-Message-State: AOJu0YxvhtR5txRAR5HhDE0FokzxOqgMnQpw5gpL97CNxKscQZci1RGd
+ Ty1jR+x8WnXEEK24bubBI5RcdXkIwxIgcSwh/a2YnO3cAfrdtnZGbuAD39p76GJGV+fiGV7Aq8F
+ 6NSIiRYiQGC/Dc3NEwzpYnhrF3A8QwtxnbWKqErUFXFXBeUff
+X-Google-Smtp-Source: AGHT+IGFdvj6QKOfG+IZOH1nx4C63t/O6K0scOfJNZJY58Szabr+jo343pyor7nq0Rk9wMFLyVoUp1tfMf3boaP++v4=
+X-Received: by 2002:a05:6402:1599:b0:5c3:d8fb:df6a with SMTP id
+ 4fb4d7f45d1cf-5c8a2a3199bmr3250932a12.14.1727787724017; Tue, 01 Oct 2024
+ 06:02:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20240906164834.130257-1-jlu@pengutronix.de>
+ <CAFEAcA-_=vrtqVPUdu02ryUtdH5MwifEnHgeQVq=V4Z2Jp_dUg@mail.gmail.com>
+ <d6e9f2f8d7185e90e7b80dff7b222fd99c899903.camel@pengutronix.de>
+In-Reply-To: <d6e9f2f8d7185e90e7b80dff7b222fd99c899903.camel@pengutronix.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 1 Oct 2024 14:01:51 +0100
+Message-ID: <CAFEAcA-uMnP3Zyw5f2ha_9H1+QrnZXMau4FwEjP4UXNnjs-OqA@mail.gmail.com>
+Subject: Re: [PATCH] hw/sd/sdcard: Fix handling of disabled boot partitions
+To: jlu@pengutronix.de
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x236.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,181 +93,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+On Mon, 30 Sept 2024 at 21:05, Jan L=C3=BCbbe <jlu@pengutronix.de> wrote:
+>
+> On Mon, 2024-09-30 at 15:18 +0100, Peter Maydell wrote:
+> > On Fri, 6 Sept 2024 at 17:51, Jan Luebbe <jlu@pengutronix.de> wrote:
+> > >
+> > > The enable bits in the EXT_CSD_PART_CONFIG ext_csd register do *not*
+> > > specify whether the boot partitions exist, but whether they are enabl=
+ed
+> > > for booting. Existence of the boot partitions is specified by a
+> > > EXT_CSD_BOOT_MULT !=3D 0.
+> > >
+> > > Currently, in the case of boot-partition-size=3D1M and boot-config=3D=
+0,
+> > > Linux detects boot partitions of 1M. But as sd_bootpart_offset always
+> > > returns 0, all reads/writes are mapped to the same offset in the back=
+ing
+> > > file.
+> > >
+> > > Fix this bug by calculating the offset independent of which partition=
+ is
+> > > enabled for booting.
+> >
+> > Looking at the spec this change seems correct to me.
+> >
+> > Can you elaborate on when users might run into this bug?
+> > As far as I can see only aspeed.c sets boot-partition-size,
+> > and when it does so it also sets boot-config to 8. Or are
+> > we fixing this for the benefit of future board types?
+>
+> I stumbled across this when trying to use the eMMC emulation for the RAUC=
+ test
+> suite (with some unrelated local hacks, which I still need to clean up fo=
+r
+> submission) [1]. Future boards would be affected as well.
+>
+> One other possible issue would be disabling the boot partition by using '=
+mmc
+> bootpart enable 0 0 /dev/mmcblk0' (or similar) from Linux. The layout of =
+the
+> backing file shouldn't change in that case.
 
-The mips64el cross setup is very broken for bullseye which has now
-entered LTS support so is unlikely to be fixed. While we still can't
-build the container for bookworm due to a single missing dependency
-that will hopefully get fixed in due course. For the sake of keeping
-the CI green we mark it as allow_fail for the time being and disable
-the problematic packages via the lcitool's mappings.yml file.
+Thanks for the clarification. I've applied this patch to
+target-arm.next with the following paragraph added to the
+commit message:
+ This bug is unlikely to affect many users with QEMU's current set of
+ boards, because only aspeed sets boot-partition-size, and it also
+ sets boot-config to 8. So to run into this a user would have to
+ manually mark the boot partition non-booting from within the guest.
 
-See also: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1081535
+and I cc'd it to stable.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-[thuth: Disable the problematic packages via lcitool's mappings.yml]
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- v3: Disable packages via lcitool's mappings.yml and add bugs.debian.org URLs
-
- .gitlab-ci.d/container-cross.yml              |  4 ++++
- .../dockerfiles/debian-mips64el-cross.docker  | 18 ++++----------
- tests/lcitool/mappings.yml                    | 24 +++++++++++++++++++
- tests/lcitool/refresh                         |  2 +-
- 4 files changed, 33 insertions(+), 15 deletions(-)
-
-diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
-index 34c0e729ad..4fdd0b2e77 100644
---- a/.gitlab-ci.d/container-cross.yml
-+++ b/.gitlab-ci.d/container-cross.yml
-@@ -49,6 +49,10 @@ i686-debian-cross-container:
- mips64el-debian-cross-container:
-   extends: .container_job_template
-   stage: containers
-+  # Currently waiting for Debian to fix:
-+  #  libgl1-mesa-dri:mips64el : Depends: libllvm15:mips64el but it is not going to be installed
-+  # See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1081535
-+  allow_failure: true
-   variables:
-     NAME: debian-mips64el-cross
- 
-diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-index 2862785692..bfa96cb507 100644
---- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-@@ -1,10 +1,10 @@
- # THIS FILE WAS AUTO-GENERATED
- #
--#  $ lcitool dockerfile --layers all --cross-arch mips64el debian-11 qemu
-+#  $ lcitool dockerfile --layers all --cross-arch mips64el debian-12 qemu
- #
- # https://gitlab.com/libvirt/libvirt-ci
- 
--FROM docker.io/library/debian:11-slim
-+FROM docker.io/library/debian:12-slim
- 
- RUN export DEBIAN_FRONTEND=noninteractive && \
-     apt-get update && \
-@@ -48,16 +48,15 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-opencv \
-                       python3-pillow \
-                       python3-pip \
--                      python3-setuptools \
-                       python3-sphinx \
-                       python3-sphinx-rtd-theme \
-                       python3-venv \
--                      python3-wheel \
-                       python3-yaml \
-                       rpm2cpio \
-                       sed \
-                       socat \
-                       sparse \
-+                      swtpm \
-                       tar \
-                       tesseract-ocr \
-                       tesseract-ocr-eng \
-@@ -69,8 +68,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     dpkg-reconfigure locales && \
-     rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
- 
--RUN /usr/bin/pip3 install tomli
--
- ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
- ENV LANG "en_US.UTF-8"
- ENV MAKE "/usr/bin/make"
-@@ -97,17 +94,13 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libcmocka-dev:mips64el \
-                       libcurl4-gnutls-dev:mips64el \
-                       libdaxctl-dev:mips64el \
--                      libdrm-dev:mips64el \
--                      libepoxy-dev:mips64el \
-                       libfdt-dev:mips64el \
-                       libffi-dev:mips64el \
-                       libfuse3-dev:mips64el \
--                      libgbm-dev:mips64el \
-                       libgcrypt20-dev:mips64el \
-                       libglib2.0-dev:mips64el \
-                       libglusterfs-dev:mips64el \
-                       libgnutls28-dev:mips64el \
--                      libgtk-3-dev:mips64el \
-                       libibverbs-dev:mips64el \
-                       libiscsi-dev:mips64el \
-                       libjemalloc-dev:mips64el \
-@@ -126,8 +119,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       librbd-dev:mips64el \
-                       librdmacm-dev:mips64el \
-                       libsasl2-dev:mips64el \
--                      libsdl2-dev:mips64el \
--                      libsdl2-image-dev:mips64el \
-                       libseccomp-dev:mips64el \
-                       libselinux1-dev:mips64el \
-                       libslirp-dev:mips64el \
-@@ -141,8 +132,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libusb-1.0-0-dev:mips64el \
-                       libusbredirhost-dev:mips64el \
-                       libvdeplug-dev:mips64el \
--                      libvirglrenderer-dev:mips64el \
--                      libvte-2.91-dev:mips64el \
-+                      libxdp-dev:mips64el \
-                       libzstd-dev:mips64el \
-                       nettle-dev:mips64el \
-                       systemtap-sdt-dev:mips64el \
-diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
-index 03b974ad02..33bb01a97a 100644
---- a/tests/lcitool/mappings.yml
-+++ b/tests/lcitool/mappings.yml
-@@ -2,6 +2,18 @@ mappings:
-   flake8:
-     OpenSUSELeap15:
- 
-+  gtk3:
-+    mips64el-deb:
-+
-+  libdrm:
-+    mips64el-deb:
-+
-+  libepoxy:
-+    mips64el-deb:
-+
-+  mesa-libgbm:
-+    mips64el-deb:
-+
-   meson:
-     OpenSUSELeap15:
- 
-@@ -60,6 +72,18 @@ mappings:
-   python3-wheel:
-     OpenSUSELeap15: python311-pip
- 
-+  sdl2:
-+    mips64el-deb:
-+
-+  sdl2-image:
-+    mips64el-deb:
-+
-+  virglrenderer:
-+    mips64el-deb:
-+
-+  vte:
-+    mips64el-deb:
-+
- pypi_mappings:
-   # Request more recent version
-   meson:
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 92381f3c46..a78219f7bc 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -166,7 +166,7 @@ try:
-                                             "x86_64-linux-user,"
-                                             "i386-softmmu,i386-linux-user"))
- 
--    generate_dockerfile("debian-mips64el-cross", "debian-11",
-+    generate_dockerfile("debian-mips64el-cross", "debian-12",
-                         cross="mips64el",
-                         trailer=cross_build("mips64el-linux-gnuabi64-",
-                                             "mips64el-softmmu,mips64el-linux-user"))
--- 
-2.46.1
-
+-- PMM
 
