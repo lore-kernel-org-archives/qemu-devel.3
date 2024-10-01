@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B101CEACC5
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:12:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00447CEACC9
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:12:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svdc4-0007fn-Mv; Tue, 01 Oct 2024 10:12:29 -0400
+	id 1svdbc-0007RH-Qm; Tue, 01 Oct 2024 10:12:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1svdbe-0007SB-1V; Tue, 01 Oct 2024 10:12:02 -0400
+ id 1svdbb-0007Qi-8v; Tue, 01 Oct 2024 10:11:59 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1svdbc-0002zy-Cg; Tue, 01 Oct 2024 10:12:01 -0400
+ id 1svdbX-0002zy-0F; Tue, 01 Oct 2024 10:11:57 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 1 Oct
@@ -33,17 +33,17 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v7 4/8] hw/gpio/aspeed: Fix clear incorrect interrupt status
- for GPIO index mode
-Date: Tue, 1 Oct 2024 10:43:30 +0800
-Message-ID: <20241001024334.834807-5-jamin_lin@aspeedtech.com>
+ <yunlin.tang@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>
+Subject: [PATCH v7 3/8] hw/gpio/aspeed: Support different memory region ops
+Date: Tue, 1 Oct 2024 10:43:29 +0800
+Message-ID: <20241001024334.834807-4-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241001024334.834807-1-jamin_lin@aspeedtech.com>
 References: <20241001024334.834807-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -69,105 +69,95 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The interrupt status field is W1C, where a set bit on read indicates an
-interrupt is pending. If the bit extracted from data is set it should
-clear the corresponding bit in reg_value. However, if the extracted
-bit is clear then the value of the corresponding bit in reg_value
-should be unchanged.
+It set "aspeed_gpio_ops" struct which containing read and write callbacks
+to be used when I/O is performed on the GPIO region.
 
-SHARED_FIELD_EX32() extracts the interrupt status bit from the write
-(data). reg_value is set to the set's interrupt status, which means
-that for any pin with an interrupt pending, the corresponding bit is
-set. The deposit32() call updates the bit at pin_idx in the
-reg_value, using the value extracted from the write (data).
+Besides, in the previous design of ASPEED SOCs, one register is used for
+setting one function for 32 GPIO pins.
+ex: GPIO000 is used for setting data value for GPIO A, B, C and D in AST2600.
+ex: GPIO004 is used for setting direction for GPIO A, B, C and D in AST2600.
 
-The result is that if multiple interrupt status bits
-were pending and the write was acknowledging specific one bit,
-then the all interrupt status bits will be cleared.
-However, it is index mode and should only clear the corresponding bit.
+However, the register set have a significant change in AST2700.
+Each GPIO pin has their own control register. In other words, users are able to
+set one GPIO pin’s direction, interrupt enable, input mask and so on
+in one register. The aspeed_gpio_read/aspeed_gpio_write callback functions
+are not compatible AST2700.
 
-For example, say we have an interrupt pending for GPIOA0, where the
-following statements are true:
-
-   set->int_status == 0b01
-   s->pending == 1
-
-Before it is acknowledged, an interrupt becomes pending for GPIOA1:
-
-   set->int_status == 0b11
-   s->pending == 2
-
-A write is issued to acknowledge the interrupt for GPIOA0. This causes
-the following sequence:
-
-   reg_value == 0b11
-   pending == 2
-   s->pending == 0
-   set->int_status == 0b00
-
-It should only clear bit 0 in index mode and the correct result
-should be as following.
-
-   set->int_status == 0b11
-   s->pending == 2
-
-   pending == 1
-   s->pending == 1
-   set->int_status == 0b10
+Introduce a new "const MemoryRegionOps *" attribute in AspeedGPIOClass and
+use it in aspeed_gpio_realize function.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Suggested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/gpio/aspeed_gpio.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ hw/gpio/aspeed_gpio.c         | 7 ++++++-
+ include/hw/gpio/aspeed_gpio.h | 1 +
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
-index 8725606aec..16c18ea2f7 100644
+index 564459ad4f..8725606aec 100644
 --- a/hw/gpio/aspeed_gpio.c
 +++ b/hw/gpio/aspeed_gpio.c
-@@ -641,7 +641,7 @@ static void aspeed_gpio_write_index_mode(void *opaque, hwaddr offset,
-     uint32_t pin_idx = reg_idx_number % ASPEED_GPIOS_PER_SET;
-     uint32_t group_idx = pin_idx / GPIOS_PER_GROUP;
-     uint32_t reg_value = 0;
--    uint32_t cleared;
-+    uint32_t pending = 0;
- 
-     set = &s->sets[set_idx];
-     props = &agc->props[set_idx];
-@@ -703,16 +703,23 @@ static void aspeed_gpio_write_index_mode(void *opaque, hwaddr offset,
-                               FIELD_EX32(data, GPIO_INDEX_REG, INT_SENS_2));
-         set->int_sens_2 = update_value_control_source(set, set->int_sens_2,
-                                                       reg_value);
--        /* set interrupt status */
--        reg_value = set->int_status;
--        reg_value = deposit32(reg_value, pin_idx, 1,
--                              FIELD_EX32(data, GPIO_INDEX_REG, INT_STATUS));
--        cleared = ctpop32(reg_value & set->int_status);
--        if (s->pending && cleared) {
--            assert(s->pending >= cleared);
--            s->pending -= cleared;
-+        /* interrupt status */
-+        if (FIELD_EX32(data, GPIO_INDEX_REG, INT_STATUS)) {
-+            /* pending is either 1 or 0 for a 1-bit field */
-+            pending = extract32(set->int_status, pin_idx, 1);
-+
-+            assert(s->pending >= pending);
-+
-+            /* No change to s->pending if pending is 0 */
-+            s->pending -= pending;
-+
-+            /*
-+             * The write acknowledged the interrupt regardless of whether it
-+             * was pending or not. The post-condition is that it mustn't be
-+             * pending. Unconditionally clear the status bit.
-+             */
-+            set->int_status = deposit32(set->int_status, pin_idx, 1, 0);
+@@ -1046,7 +1046,7 @@ static void aspeed_gpio_realize(DeviceState *dev, Error **errp)
          }
--        set->int_status &= ~reg_value;
-         break;
-     case gpio_reg_idx_debounce:
-         reg_value = set->debounce_1;
+     }
+ 
+-    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_gpio_ops, s,
++    memory_region_init_io(&s->iomem, OBJECT(s), agc->reg_ops, s,
+                           TYPE_ASPEED_GPIO, agc->mem_size);
+ 
+     sysbus_init_mmio(sbd, &s->iomem);
+@@ -1131,6 +1131,7 @@ static void aspeed_gpio_ast2400_class_init(ObjectClass *klass, void *data)
+     agc->reg_table = aspeed_3_3v_gpios;
+     agc->reg_table_count = GPIO_3_3V_REG_ARRAY_SIZE;
+     agc->mem_size = 0x1000;
++    agc->reg_ops = &aspeed_gpio_ops;
+ }
+ 
+ static void aspeed_gpio_2500_class_init(ObjectClass *klass, void *data)
+@@ -1143,6 +1144,7 @@ static void aspeed_gpio_2500_class_init(ObjectClass *klass, void *data)
+     agc->reg_table = aspeed_3_3v_gpios;
+     agc->reg_table_count = GPIO_3_3V_REG_ARRAY_SIZE;
+     agc->mem_size = 0x1000;
++    agc->reg_ops = &aspeed_gpio_ops;
+ }
+ 
+ static void aspeed_gpio_ast2600_3_3v_class_init(ObjectClass *klass, void *data)
+@@ -1155,6 +1157,7 @@ static void aspeed_gpio_ast2600_3_3v_class_init(ObjectClass *klass, void *data)
+     agc->reg_table = aspeed_3_3v_gpios;
+     agc->reg_table_count = GPIO_3_3V_REG_ARRAY_SIZE;
+     agc->mem_size = 0x800;
++    agc->reg_ops = &aspeed_gpio_ops;
+ }
+ 
+ static void aspeed_gpio_ast2600_1_8v_class_init(ObjectClass *klass, void *data)
+@@ -1167,6 +1170,7 @@ static void aspeed_gpio_ast2600_1_8v_class_init(ObjectClass *klass, void *data)
+     agc->reg_table = aspeed_1_8v_gpios;
+     agc->reg_table_count = GPIO_1_8V_REG_ARRAY_SIZE;
+     agc->mem_size = 0x800;
++    agc->reg_ops = &aspeed_gpio_ops;
+ }
+ 
+ static void aspeed_gpio_1030_class_init(ObjectClass *klass, void *data)
+@@ -1179,6 +1183,7 @@ static void aspeed_gpio_1030_class_init(ObjectClass *klass, void *data)
+     agc->reg_table = aspeed_3_3v_gpios;
+     agc->reg_table_count = GPIO_3_3V_REG_ARRAY_SIZE;
+     agc->mem_size = 0x1000;
++    agc->reg_ops = &aspeed_gpio_ops;
+ }
+ 
+ static const TypeInfo aspeed_gpio_info = {
+diff --git a/include/hw/gpio/aspeed_gpio.h b/include/hw/gpio/aspeed_gpio.h
+index 8cd2ff5496..e1e6c54333 100644
+--- a/include/hw/gpio/aspeed_gpio.h
++++ b/include/hw/gpio/aspeed_gpio.h
+@@ -77,6 +77,7 @@ struct AspeedGPIOClass {
+     const AspeedGPIOReg *reg_table;
+     unsigned reg_table_count;
+     uint64_t mem_size;
++    const MemoryRegionOps *reg_ops;
+ };
+ 
+ struct AspeedGPIOState {
 -- 
 2.34.1
 
