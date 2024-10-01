@@ -4,86 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03B3DCEACFC
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 19:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C49ADCEACFB
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 19:32:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sviaw-0001Rc-9L; Tue, 01 Oct 2024 15:31:38 -0400
+	id 1svibQ-0001bi-Sp; Tue, 01 Oct 2024 15:32:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1sviap-0001RN-PL; Tue, 01 Oct 2024 15:31:31 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1svibL-0001aW-9q; Tue, 01 Oct 2024 15:32:03 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1svian-0000sQ-Fo; Tue, 01 Oct 2024 15:31:31 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-37cdbcb139cso3240555f8f.1; 
- Tue, 01 Oct 2024 12:31:28 -0700 (PDT)
+ id 1svibG-0000u4-RT; Tue, 01 Oct 2024 15:32:02 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-42e82f7f36aso47715265e9.0; 
+ Tue, 01 Oct 2024 12:31:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727811087; x=1728415887; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727811113; x=1728415913; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OpXcBjNrgdlSvmssRwGHpqpdyLxDVCVuOqG07Q7VfGI=;
- b=Qtm82r3qmWUr4BJYCU9zSiuRcIhiAkO0jPsNfhL7cuBqLO8F8eQyY7I/aFLwzvqiRm
- iiNNMbx4JRE6dzmsYEwcZpU5OkRMaTGvjL9j7bY/VoilS04AkpzTlpGU8WaD+ooR3kzM
- bOfyriVxwMNHLMtHMq19GJg1I+0UocmrRVYi1/kstNiS1BSeGhq74vRYj0Bz/nMUCFQg
- 5ZJodFX75PH5oQqzea2BepZlUrcDdLC0EaZ99Rj12XawTjDfZ0DJnDtMXhJrCCntfcMi
- iWhh/LO1tfAj4bn+tOcWX1QIHHAsv4pb4Kmbp1UaO1tZzpxulNURhTnLjrKGd7oNZDBl
- rYEA==
+ bh=SCifLU40Ttl6+Yh6jb5nPSqXhIJ6hPKbRqJixaGvriM=;
+ b=aBBQujExmwwvvTgWmYadkyfDl1hiTulHZRBth/M0/nQw7SijCelqXfK9HV43lP6tkB
+ wsFcSUH+8ItG26V0ULRSLAbOwO9EMYy7HbVFkBYJPK8FsuYdeoesBSUP+vnlAlmTS8Cp
+ +q6aUs/fTnbLbll6G9sWjr+tMuGfAz2Vz2CPwvBALq6fKUSAV1CuJZ5QNucoeF73U7K4
+ u2FPB6+IE3iIerQi739ZnHSxfeodmnGoqVDOLzEasEdPR3i7XGZy5tfqbfYBitpbZmPd
+ 5em9sHAgfyJtZEBumJvfW4b6ynTQnZ7pzu1amFKniHXwmXWGMZtK+QLWd8c1dLQyrRFP
+ f0qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727811087; x=1728415887;
+ d=1e100.net; s=20230601; t=1727811113; x=1728415913;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OpXcBjNrgdlSvmssRwGHpqpdyLxDVCVuOqG07Q7VfGI=;
- b=cQu916UNV2eQD71Cs+Ky5tAAZjErBL4MJW89Aa30OMOUTy0FrvDkEn0NY6le3X0bnE
- BqHX9ISCcJmeNB47rKGrF63EGU5D6GJMuXghwp/AZxqNA3/YJuh34+KdghzMtrSfsGRY
- QIKmIt8F8BEptca0JUs92eAgzsQPlxjGya4yBiNpnRxrJiR5FnKL+yWqf6B7C+Q3k2MT
- pCt+vnxpLUFyu1FQgWwb8JAvlIkY+vLIgmJPsk4bpXJD4phK4eigPU3Iv8tSESbFo+v8
- Lmnayc88soKiZ4R0NyHTxPp952cx+X7u3CZwIIKLa9dAM3ol9AjhggejAOrAn35F9ZNq
- H66g==
+ bh=SCifLU40Ttl6+Yh6jb5nPSqXhIJ6hPKbRqJixaGvriM=;
+ b=S/OKzwpCsToUqUdqDApsCXcEd5ZpdPFGjBnPgnBM+Sfcy8N+nWU3t1kP7R1HF5popQ
+ pPjAyCM1ILJiGovDf/bnwPJDea5M9pV9uqEmr6rFtC1UuX4eTT4muSqlAuZfH6PTPkWP
+ KEsrJv2uL8j7WL8FO+7L+TonaLwgTQQZMktwaDc5hg4/vxSuAVbmRwMDZT2FCwRVW+AD
+ fF5VIcrr5fVd5wnUy8fqwXyfBbSJf0mvLxXBdvVUIQMbIDSY7n+iCtVLaNqOl4Z/cwbO
+ CDVHjA5nRnJwAskm12edf21S/C8pVdaI7SqVQTVCGoWHDjovQZzm5gbwDXev+3huVrqP
+ 5Yfg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVUu8b6UTXfvNnwFt50iS6icWgL4yvkn8+7bHFfR9XTEpbzezQ+A4SJxr0WnDg9TBkwNpuByGzLrSII@nongnu.org,
- AJvYcCWDn3kx/ta1LDszUuZCh83DO4jMcBNpjI0EzavopNaRWYF3jNPGFxS/lDaG26KAjxqmYQPLomqYPCA=@nongnu.org
-X-Gm-Message-State: AOJu0Yy75POtbV67cQ04ON/+8pjT2CBeaVAuh60CJqUnoV2CtiLmGTiG
- OVzLWUk5m2DEESCe7rRS/DZz8Vp3fS7fdeAIrBZPA/DgByxfQiWy
-X-Google-Smtp-Source: AGHT+IGYO6g79sp1MONsSwlHl3BgEWtJc19tjCLQowst6tPAPMl9hSryarNXZ2N7E9knAnAP1N3MMw==
-X-Received: by 2002:a05:6000:2cb:b0:368:445e:91cc with SMTP id
- ffacd0b85a97d-37cfb8c6c48mr486129f8f.21.1727811086578; 
- Tue, 01 Oct 2024 12:31:26 -0700 (PDT)
+ AJvYcCWPmAEUH81mXlqir0WYNZ3UGpx/lN5HIyqUCgtYybh84gk/h3fbxKioxL6/FKsvjfkK4Ruq18JUTg==@nongnu.org
+X-Gm-Message-State: AOJu0YwjKeoMkBXbKqS9IxngP7mS6EqeTc5Y3Zd19JbeR5uu/U9pPeYg
+ YnhqwRkpiYOTYX+UmC8PzKc65fg677b7fK8bBf4NSpBO9hq7iOMPy/EZsw==
+X-Google-Smtp-Source: AGHT+IER9pCvvcAsTSn72QZNF+nP82NQneF/MxO5ue66prs+34GL9tuzNSNMtn1QnbZeqHEcGZesbg==
+X-Received: by 2002:a05:600c:1d1f:b0:42c:b22e:fbfa with SMTP id
+ 5b1f17b1804b1-42f777dba40mr4151785e9.21.1727811113079; 
+ Tue, 01 Oct 2024 12:31:53 -0700 (PDT)
 Received: from [127.0.0.1] (dynamic-078-055-096-038.78.55.pool.telefonica.de.
  [78.55.96.38]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f57debf07sm139004955e9.22.2024.10.01.12.31.25
+ ffacd0b85a97d-37cd572fa48sm12424252f8f.66.2024.10.01.12.31.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Oct 2024 12:31:26 -0700 (PDT)
-Date: Tue, 01 Oct 2024 19:31:20 +0000
+ Tue, 01 Oct 2024 12:31:52 -0700 (PDT)
+Date: Tue, 01 Oct 2024 19:31:52 +0000
 From: Bernhard Beschow <shentey@gmail.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-CC: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>, qemu-ppc@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Corey Minyard <cminyard@mvista.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-block@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
- =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-Subject: Re: [PATCH 07/23] hw/ppc/e500: Extract ppce500_ccsr.c
-In-Reply-To: <7BA1D025-2B5B-4090-B9DF-A73F43BA6BB9@gmail.com>
-References: <20240923093016.66437-1-shentey@gmail.com>
- <20240923093016.66437-8-shentey@gmail.com>
- <001e172d-4046-66cc-4758-a7a206fda931@eik.bme.hu>
- <7BA1D025-2B5B-4090-B9DF-A73F43BA6BB9@gmail.com>
-Message-ID: <8E4DB99F-E981-4C35-AC7C-E25344B60E84@gmail.com>
+To: qemu-devel@nongnu.org, BALATON Zoltan <balaton@eik.bme.hu>,
+ qemu-ppc@nongnu.org
+CC: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_1/2=5D_hw/ppc=3A_Consolidate_e?=
+ =?US-ASCII?Q?500_initial_mapping_creation_functions?=
+In-Reply-To: <C252CEDD-75BE-4A32-9EA3-98FECBF36BA8@gmail.com>
+References: <cover.1721131193.git.balaton@eik.bme.hu>
+ <485a90bca642c894d94c8dbcadac58448c0bfa71.1721131193.git.balaton@eik.bme.hu>
+ <C252CEDD-75BE-4A32-9EA3-98FECBF36BA8@gmail.com>
+Message-ID: <AB32405D-9A0A-4332-98F6-174650648DB7@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,201 +102,210 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 24=2E September 2024 20:02:31 UTC schrieb Bernhard Beschow <shentey@gma=
-il=2Ecom>:
+Am 15=2E August 2024 19:01:47 UTC schrieb Bernhard Beschow <shentey@gmail=
+=2Ecom>:
 >
 >
->Am 23=2E September 2024 10:38:46 UTC schrieb BALATON Zoltan <balaton@eik=
-=2Ebme=2Ehu>:
->>On Mon, 23 Sep 2024, Bernhard Beschow wrote:
->>> The device model already has a header file=2E Also extract its impleme=
-ntation into
->>> an accompanying source file like other e500 devices=2E
->>>=20
->>> This commit is also a preparation for the next commit=2E
->>>=20
->>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->>> ---
->>> MAINTAINERS           |  2 +-
->>> hw/ppc/e500-ccsr=2Eh    |  2 ++
->>> hw/ppc/e500=2Ec         | 17 -----------------
->>> hw/ppc/ppce500_ccsr=2Ec | 38 ++++++++++++++++++++++++++++++++++++++
+>Am 16=2E Juli 2024 12:07:57 UTC schrieb BALATON Zoltan <balaton@eik=2Ebme=
+=2Ehu>:
+>>Add booke206_set_tlb() utility function and use it to replace very
+>>similar create_initial_mapping functions in e500 machines=2E
 >>
->>Maybe you could call it e500_ccsr=2Ec and also rename the header to e500=
-_ccsr=2Eh (underscore instead of dash) to match them=2E Or if you want to m=
-atch ppce500_spin=2Ec then maybe move contents of e500-ccsr=2Eh to e500=2Eh=
-?
->
->Yeah, naming is hard=2E I'd actually prefer something like fsl_immr=2E* (=
-taking inspiration from device tree here) to not confuse the whole SoC with=
- the CPU=2E With the ppce500 prefix I was sticking to the convention of the=
- PCIE device=2E Though there is also mpc-i2c and fsl_etsec=2E=2E=2E
-
-I'll name the header like the struct it defines, i=2Ee=2E ppce500_ccsr=2Eh=
-=2E
-
->
->>(More below=2E=2E=2E)
+>>Signed-off-by: BALATON Zoltan <balaton@eik=2Ebme=2Ehu>
+>>---
+>> hw/ppc/e500=2Ec         | 41 +++++++++++++++++++----------------------
+>> hw/ppc/e500=2Eh         |  2 --
+>> hw/ppc/ppce500_spin=2Ec | 30 +++++++++---------------------
+>> include/hw/ppc/ppc=2Eh  |  5 +++++
+>> 4 files changed, 33 insertions(+), 45 deletions(-)
 >>
->>> hw/ppc/meson=2Ebuild    |  1 +
->>> 5 files changed, 42 insertions(+), 18 deletions(-)
->>> create mode 100644 hw/ppc/ppce500_ccsr=2Ec
->>>=20
->>> diff --git a/MAINTAINERS b/MAINTAINERS
->>> index ffacd60f40=2E=2Eb7c8b7ae72 100644
->>> --- a/MAINTAINERS
->>> +++ b/MAINTAINERS
->>> @@ -1433,7 +1433,7 @@ e500
->>> L: qemu-ppc@nongnu=2Eorg
->>> S: Orphan
->>> F: hw/ppc/e500*
->>> -F: hw/ppc/ppce500_spin=2Ec
->>> +F: hw/ppc/ppce500_*=2Ec
->>> F: hw/gpio/mpc8xxx=2Ec
->>> F: hw/i2c/mpc_i2c=2Ec
->>> F: hw/net/fsl_etsec/
->>> diff --git a/hw/ppc/e500-ccsr=2Eh b/hw/ppc/e500-ccsr=2Eh
->>> index 249c17be3b=2E=2E3ab7e72568 100644
->>> --- a/hw/ppc/e500-ccsr=2Eh
->>> +++ b/hw/ppc/e500-ccsr=2Eh
->>> @@ -4,6 +4,8 @@
->>> #include "hw/sysbus=2Eh"
->>> #include "qom/object=2Eh"
->>>=20
->>> +#define MPC8544_CCSRBAR_SIZE       0x00100000ULL
->>> +
->>> struct PPCE500CCSRState {
->>>     /*< private >*/
->>>     SysBusDevice parent;
->>> diff --git a/hw/ppc/e500=2Ec b/hw/ppc/e500=2Ec
->>> index 2225533e33=2E=2E4ee4304a8a 100644
->>> --- a/hw/ppc/e500=2Ec
->>> +++ b/hw/ppc/e500=2Ec
->>> @@ -61,7 +61,6 @@
->>> #define RAM_SIZES_ALIGN            (64 * MiB)
->>>=20
->>> /* TODO: parameterize */
->>> -#define MPC8544_CCSRBAR_SIZE       0x00100000ULL
->>> #define MPC8544_MPIC_REGS_OFFSET   0x40000ULL
->>> #define MPC8544_MSI_REGS_OFFSET   0x41600ULL
->>> #define MPC8544_SERIAL0_REGS_OFFSET 0x4500ULL
->>> @@ -1264,21 +1263,6 @@ void ppce500_init(MachineState *machine)
->>>     pms->boot_info=2Edt_size =3D dt_size;
->>> }
->>>=20
->>> -static void e500_ccsr_initfn(Object *obj)
->>> -{
->>> -    PPCE500CCSRState *ccsr =3D CCSR(obj);
->>> -    memory_region_init(&ccsr->ccsr_space, obj, "e500-ccsr",
->>> -                       MPC8544_CCSRBAR_SIZE);
->>> -    sysbus_init_mmio(SYS_BUS_DEVICE(ccsr), &ccsr->ccsr_space);
->>> -}
->>> -
->>> -static const TypeInfo e500_ccsr_info =3D {
->>> -    =2Ename          =3D TYPE_CCSR,
->>> -    =2Eparent        =3D TYPE_SYS_BUS_DEVICE,
->>> -    =2Einstance_size =3D sizeof(PPCE500CCSRState),
->>> -    =2Einstance_init =3D e500_ccsr_initfn,
->>> -};
->>> -
->>> static const TypeInfo ppce500_info =3D {
->>>     =2Ename          =3D TYPE_PPCE500_MACHINE,
->>>     =2Eparent        =3D TYPE_MACHINE,
->>> @@ -1289,7 +1273,6 @@ static const TypeInfo ppce500_info =3D {
->>>=20
->>> static void e500_register_types(void)
->>> {
->>> -    type_register_static(&e500_ccsr_info);
->>>     type_register_static(&ppce500_info);
->>> }
->>>=20
->>> diff --git a/hw/ppc/ppce500_ccsr=2Ec b/hw/ppc/ppce500_ccsr=2Ec
->>> new file mode 100644
->>> index 0000000000=2E=2E191a9ceec3
->>> --- /dev/null
->>> +++ b/hw/ppc/ppce500_ccsr=2Ec
->>> @@ -0,0 +1,38 @@
->>> +/*
->>> + * QEMU PowerPC E500 embedded processors CCSR space emulation
->>> + *
->>> + * Copyright (C) 2009 Freescale Semiconductor, Inc=2E All rights rese=
-rved=2E
->>> + *
->>> + * Author: Yu Liu,     <yu=2Eliu@freescale=2Ecom>
->>> + *
->>> + * This file is derived from hw/ppc440_bamboo=2Ec,
->>> + * the copyright for that material belongs to the original owners=2E
->>
->>I think CCSR is a Freescale thing so likely this has nothing to do with =
-ppc440_bamboo so this sentence was for other parts of e500=2Ec not applicab=
-le to this part=2E
+>>diff --git a/hw/ppc/e500=2Ec b/hw/ppc/e500=2Ec
+>>index 3bd12b54ab=2E=2E8682bc7838 100644
+>>--- a/hw/ppc/e500=2Ec
+>>+++ b/hw/ppc/e500=2Ec
+>>@@ -721,11 +721,21 @@ static int ppce500_prep_device_tree(PPCE500Machine=
+State *machine,
+>>                                     kernel_base, kernel_size, true);
+>> }
+>>=20
+>>-hwaddr booke206_page_size_to_tlb(uint64_t size)
+>>+static hwaddr booke206_page_size_to_tlb(uint64_t size)
+>> {
+>>     return 63 - clz64(size / KiB);
+>> }
+>>=20
+>>+void booke206_set_tlb(ppcmas_tlb_t *tlb, target_ulong va, hwaddr pa,
+>>+                      hwaddr len)
+>>+{
+>>+    tlb->mas1 =3D booke206_page_size_to_tlb(len) << MAS1_TSIZE_SHIFT;
+>>+    tlb->mas1 |=3D MAS1_VALID;
+>>+    tlb->mas2 =3D va & TARGET_PAGE_MASK;
+>>+    tlb->mas7_3 =3D pa & TARGET_PAGE_MASK;
+>>+    tlb->mas7_3 |=3D MAS3_UR | MAS3_UW | MAS3_UX | MAS3_SR | MAS3_SW | =
+MAS3_SX;
+>>+}
+>>+
+>> static int booke206_initial_map_tsize(CPUPPCState *env)
+>> {
+>>     struct boot_info *bi =3D env->load_info;
+>>@@ -751,25 +761,6 @@ static uint64_t mmubooke_initial_mapsize(CPUPPCStat=
+e *env)
+>>     return (1ULL << 10 << tsize);
+>> }
+>>=20
+>>-/* Create -kernel TLB entries for BookE=2E */
+>>-static void mmubooke_create_initial_mapping(CPUPPCState *env)
+>>-{
+>>-    ppcmas_tlb_t *tlb =3D booke206_get_tlbm(env, 1, 0, 0);
+>>-    hwaddr size;
+>>-    int ps;
+>>-
+>>-    ps =3D booke206_initial_map_tsize(env);
+>>-    size =3D (ps << MAS1_TSIZE_SHIFT);
+>>-    tlb->mas1 =3D MAS1_VALID | size;
+>>-    tlb->mas2 =3D 0;
+>>-    tlb->mas7_3 =3D 0;
+>>-    tlb->mas7_3 |=3D MAS3_UR | MAS3_UW | MAS3_UX | MAS3_SR | MAS3_SW | =
+MAS3_SX;
+>>-
+>>-#ifdef CONFIG_KVM
+>>-    env->tlb_dirty =3D true;
+>>-#endif
+>>-}
+>>-
+>> static void ppce500_cpu_reset_sec(void *opaque)
+>> {
+>>     PowerPCCPU *cpu =3D opaque;
+>>@@ -786,6 +777,8 @@ static void ppce500_cpu_reset(void *opaque)
+>>     CPUState *cs =3D CPU(cpu);
+>>     CPUPPCState *env =3D &cpu->env;
+>>     struct boot_info *bi =3D env->load_info;
+>>+    uint64_t map_size =3D mmubooke_initial_mapsize(env);
+>>+    ppcmas_tlb_t *tlb =3D booke206_get_tlbm(env, 1, 0, 0);
+>>=20
+>>     cpu_reset(cs);
+>>=20
+>>@@ -796,11 +789,15 @@ static void ppce500_cpu_reset(void *opaque)
+>>     env->gpr[4] =3D 0;
+>>     env->gpr[5] =3D 0;
+>>     env->gpr[6] =3D EPAPR_MAGIC;
+>>-    env->gpr[7] =3D mmubooke_initial_mapsize(env);
+>>+    env->gpr[7] =3D map_size;
+>>     env->gpr[8] =3D 0;
+>>     env->gpr[9] =3D 0;
+>>     env->nip =3D bi->entry;
+>>-    mmubooke_create_initial_mapping(env);
+>>+    /* create initial mapping */
+>>+    booke206_set_tlb(tlb, 0, 0, map_size);
 >
->Good point=2E IANAL so erred on the safe side and copied the whole licens=
-e text=2E I'm happy to omit this and would also prefer SPDX license identif=
-iers as long as I get the confirmation that this is legal=2E
+>Both invocations of booke206_set_tlb() are followed by:
+>
+>>+#ifdef CONFIG_KVM
+>>+    env->tlb_dirty =3D true;
+>>+#endif=20
+>
+>Doesn't it make sense to move these three lines into booke206_set_tlb()? =
+The two copies you're resolving did so, too=2E
 
-I'll remove the reference to ppc440_bamboo=2Ec which is clearly not releva=
-nt here=2E Beyond that I rather leave the license text unchanged=2E
-
-Best regards,
-Bernhard
+Ping
 
 >
 >Best regards,
 >Bernhard
 >
->>
->>> + *
->>> + * This is free software; you can redistribute it and/or modify
->>> + * it under the terms of  the GNU General  Public License as publishe=
-d by
->>> + * the Free Software Foundation;  either version 2 of the  License, o=
-r
->>> + * (at your option) any later version=2E
->>> + */
->>
->>SPDX-License-Identifier seems to be preferred by some nowadays, I don't =
-have an opinion on that so just mentioning it for consideration but I'm OK =
-with this one too although it seems a bit long=2E
->>
->>Regards,
->>BALATON Zoltan
->>
->>> +
->>> +#include "qemu/osdep=2Eh"
->>> +#include "e500-ccsr=2Eh"
->>> +
->>> +static void e500_ccsr_init(Object *obj)
->>> +{
->>> +    PPCE500CCSRState *ccsr =3D CCSR(obj);
->>> +
->>> +    memory_region_init(&ccsr->ccsr_space, obj, "e500-ccsr",
->>> +                       MPC8544_CCSRBAR_SIZE);
->>> +    sysbus_init_mmio(SYS_BUS_DEVICE(ccsr), &ccsr->ccsr_space);
->>> +}
->>> +
->>> +static const TypeInfo types[] =3D {
->>> +    {
->>> +        =2Ename          =3D TYPE_CCSR,
->>> +        =2Eparent        =3D TYPE_SYS_BUS_DEVICE,
->>> +        =2Einstance_size =3D sizeof(PPCE500CCSRState),
->>> +        =2Einstance_init =3D e500_ccsr_init,
->>> +    },
->>> +};
->>> +
->>> +DEFINE_TYPES(types)
->>> diff --git a/hw/ppc/meson=2Ebuild b/hw/ppc/meson=2Ebuild
->>> index 7cd9189869=2E=2E43c746795a 100644
->>> --- a/hw/ppc/meson=2Ebuild
->>> +++ b/hw/ppc/meson=2Ebuild
->>> @@ -81,6 +81,7 @@ ppc_ss=2Eadd(when: 'CONFIG_MPC8544DS', if_true: file=
-s('mpc8544ds=2Ec'))
->>> ppc_ss=2Eadd(when: 'CONFIG_E500', if_true: files(
->>>   'e500=2Ec',
->>>   'mpc8544_guts=2Ec',
->>> +  'ppce500_ccsr=2Ec',
->>>   'ppce500_spin=2Ec'
->>> ))
->>> # PowerPC 440 Xilinx ML507 reference board=2E
->>>=20
+>> }
+>>=20
+>> static DeviceState *ppce500_init_mpic_qemu(PPCE500MachineState *pms,
+>>diff --git a/hw/ppc/e500=2Eh b/hw/ppc/e500=2Eh
+>>index 8c09ef92e4=2E=2E01db102625 100644
+>>--- a/hw/ppc/e500=2Eh
+>>+++ b/hw/ppc/e500=2Eh
+>>@@ -41,8 +41,6 @@ struct PPCE500MachineClass {
+>>=20
+>> void ppce500_init(MachineState *machine);
+>>=20
+>>-hwaddr booke206_page_size_to_tlb(uint64_t size);
+>>-
+>> #define TYPE_PPCE500_MACHINE      "ppce500-base-machine"
+>> OBJECT_DECLARE_TYPE(PPCE500MachineState, PPCE500MachineClass, PPCE500_M=
+ACHINE)
+>>=20
+>>diff --git a/hw/ppc/ppce500_spin=2Ec b/hw/ppc/ppce500_spin=2Ec
+>>index dfbe759481=2E=2E208d87569a 100644
+>>--- a/hw/ppc/ppce500_spin=2Ec
+>>+++ b/hw/ppc/ppce500_spin=2Ec
+>>@@ -33,6 +33,7 @@
+>> #include "hw/hw=2Eh"
+>> #include "hw/sysbus=2Eh"
+>> #include "sysemu/hw_accel=2Eh"
+>>+#include "hw/ppc/ppc=2Eh"
+>> #include "e500=2Eh"
+>> #include "qom/object=2Eh"
+>>=20
+>>@@ -70,30 +71,12 @@ static void spin_reset(DeviceState *dev)
+>>     }
+>> }
+>>=20
+>>-static void mmubooke_create_initial_mapping(CPUPPCState *env,
+>>-                                     target_ulong va,
+>>-                                     hwaddr pa,
+>>-                                     hwaddr len)
+>>-{
+>>-    ppcmas_tlb_t *tlb =3D booke206_get_tlbm(env, 1, 0, 1);
+>>-    hwaddr size;
+>>-
+>>-    size =3D (booke206_page_size_to_tlb(len) << MAS1_TSIZE_SHIFT);
+>>-    tlb->mas1 =3D MAS1_VALID | size;
+>>-    tlb->mas2 =3D (va & TARGET_PAGE_MASK) | MAS2_M;
+>>-    tlb->mas7_3 =3D pa & TARGET_PAGE_MASK;
+>>-    tlb->mas7_3 |=3D MAS3_UR | MAS3_UW | MAS3_UX | MAS3_SR | MAS3_SW | =
+MAS3_SX;
+>>-#ifdef CONFIG_KVM
+>>-    env->tlb_dirty =3D true;
+>>-#endif
+>>-}
+>>-
+>> static void spin_kick(CPUState *cs, run_on_cpu_data data)
+>> {
+>>     CPUPPCState *env =3D cpu_env(cs);
+>>     SpinInfo *curspin =3D data=2Ehost_ptr;
+>>-    hwaddr map_size =3D 64 * MiB;
+>>-    hwaddr map_start;
+>>+    hwaddr map_start, map_size =3D 64 * MiB;
+>>+    ppcmas_tlb_t *tlb =3D booke206_get_tlbm(env, 1, 0, 1);
+>>=20
+>>     cpu_synchronize_state(cs);
+>>     stl_p(&curspin->pir, env->spr[SPR_BOOKE_PIR]);
+>>@@ -107,7 +90,12 @@ static void spin_kick(CPUState *cs, run_on_cpu_data =
+data)
+>>     env->gpr[9] =3D 0;
+>>=20
+>>     map_start =3D ldq_p(&curspin->addr) & ~(map_size - 1);
+>>-    mmubooke_create_initial_mapping(env, 0, map_start, map_size);
+>>+    /* create initial mapping */
+>>+    booke206_set_tlb(tlb, 0, map_start, map_size);
+>>+    tlb->mas2 |=3D MAS2_M;
+>>+#ifdef CONFIG_KVM
+>>+    env->tlb_dirty =3D true;
+>>+#endif
+>>=20
+>>     cs->halted =3D 0;
+>>     cs->exception_index =3D -1;
+>>diff --git a/include/hw/ppc/ppc=2Eh b/include/hw/ppc/ppc=2Eh
+>>index d5d119ea7f=2E=2E070524b02e 100644
+>>--- a/include/hw/ppc/ppc=2Eh
+>>+++ b/include/hw/ppc/ppc=2Eh
+>>@@ -116,6 +116,11 @@ enum {
+>>=20
+>> #define PPC_SERIAL_MM_BAUDBASE 399193
+>>=20
+>>+#ifndef CONFIG_USER_ONLY
+>>+void booke206_set_tlb(ppcmas_tlb_t *tlb, target_ulong va, hwaddr pa,
+>>+                      hwaddr len);
+>>+#endif
+>>+
+>> /* ppc_booke=2Ec */
+>> void ppc_booke_timers_init(PowerPCCPU *cpu, uint32_t freq, uint32_t fla=
+gs);
+>> #endif
 
