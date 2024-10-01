@@ -4,55 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CB28CEB2CD
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 00:11:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74E14CEB2CF
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 00:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svQSy-0004Xs-ME; Mon, 30 Sep 2024 20:10:13 -0400
+	id 1svQdR-0003J3-9r; Mon, 30 Sep 2024 20:21:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1svQSw-0004WL-Bv
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 20:10:10 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
+ id 1svQdO-0003GX-W1; Mon, 30 Sep 2024 20:20:59 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1svQSt-0007GZ-Mr
- for qemu-devel@nongnu.org; Mon, 30 Sep 2024 20:10:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=dKxwabnYx9JJYY9VxENDiRo3ZMsGGYc7XBW5vtH4Ysw=; b=FZLmATalMg3rUenG
- QRVEkJSskxDYbW7/QDQJqD8LqMUEJ60G+dZz4rOapdaHu9cm6SxcM06GaQHpi35S7qxHUhLVqRvyE
- RzMaeeP20snCu66hHNTFtsFvTPFCiFNjaDMjgsbJcuJgvjhwVEMISgZ3RvK+6IBR3OwntjgugxeVt
- 5EuAgi+7iZ/tu0dMSg/mgkw2PDoK7Jm1853CUnJ6oeX/s0IHTwHchB8MJLgPAchY052IUyGKNXmDa
- aLJ/AXgv0PpTZmPJ79+y3Lkgjx16Rd66UxmLDsxcLrkPyVbJpJ4Hg/hiKBTKXRaHe4knEm8qY7uCt
- 6Vj8v0LWBy561S8sxQ==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1svQSr-0086io-04;
- Tue, 01 Oct 2024 00:10:05 +0000
-Date: Tue, 1 Oct 2024 00:10:04 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Josh Junon <junon@oro.sh>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- armbru@redhat.com
-Subject: Re: [PATCH] hmp: allow filtering `info tlb` entries by address on i386
-Message-ID: <Zvs93PoHm0imx-r4@gallifrey>
-References: <20240824083423.9332-1-junon@oro.sh>
+ (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
+ id 1svQdN-0000Qh-C5; Mon, 30 Sep 2024 20:20:58 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 5AB9B5C276E;
+ Tue,  1 Oct 2024 00:20:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB67C4CEC7;
+ Tue,  1 Oct 2024 00:20:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1727742048;
+ bh=BBOzXYji1lh4kZyMeF6kgwwRl+GigQy2WdHq9tFiyoA=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=KOQMQXhuc5NsVcLUYWh0wpYbMAntUYwUXKRUD5S218rSeXermLOJedti7srgKbNmK
+ ozalunZ+vqozr70tzboGr1xybRp1peELXYJY60SHLmBCJw8Ofs994gRKZXsIsPlcNi
+ YasTtAKrUDJtUbwdTgC21Ud9FEdIaHn3l2utk5ZloqwxDvtpTjJhx6AHB5K3xDe/4h
+ 1pHT3NjDCpr2ak6dp8u3XrJJc3XVuMdY81TcScgr+o3I/eFlBxMhefQyBqQWZOzE+E
+ EKIuxuPQsAVwFLenvb2U5uuJNTHOROhXny3uVgle5hQsuHoicAqtdr4grASzzr0zZ0
+ XhdKoN6AZLxtw==
+Message-ID: <1bf857b1-d8ee-4fa5-ae63-074a1533b5f6@kernel.org>
+Date: Tue, 1 Oct 2024 09:20:46 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20240824083423.9332-1-junon@oro.sh>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
-X-Uptime: 00:03:22 up 145 days, 11:17,  1 user,  load average: 0.00, 0.00, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] block/file-posix: optimize append write
+To: Sam Li <faithilikerun@gmail.com>, qemu-devel@nongnu.org
+Cc: stefanha@redhat.com, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, dmitry.fomichev@wdc.com,
+ Hanna Reitz <hreitz@redhat.com>
+References: <20240929160359.581141-1-faithilikerun@gmail.com>
+From: Damien Le Moal <dlemoal@kernel.org>
+Content-Language: en-US
+Organization: Western Digital Research
+In-Reply-To: <20240929160359.581141-1-faithilikerun@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=139.178.84.217; envelope-from=dlemoal@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -71
+X-Spam_score: -7.2
+X-Spam_bar: -------
+X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,222 +74,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Josh Junon (junon@oro.sh) wrote:
-> This change adds an optional virtual address parameter
-> to the `info tlb` monitor command on i386 targets,
-> only printing a specific entry if found.
-
-Hi Josh,
-
-> Signed-off-by: Josh Junon <junon@oro.sh>
+On 9/30/24 01:03, Sam Li wrote:
+> When the file-posix driver emulates append write, it holds the lock
+> whenever accessing wp, which limits the IO queue depth to one.
+> 
+> The write IO flow can be optimized to allow concurrent writes. The lock
+> is held in two cases:
+> 1. Assumed that the write IO succeeds, update the wp before issuing the
+> write.
+> 2. If the write IO fails, report that zone and use the reported value
+> as the current wp.
+> 
+> Signed-off-by: Sam Li <faithilikerun@gmail.com>
 > ---
->  hmp-commands-info.hx  |  5 +++++
->  target/i386/monitor.c | 45 +++++++++++++++++++++++++++----------------
->  2 files changed, 33 insertions(+), 17 deletions(-)
+>  block/file-posix.c | 33 ++++++++++++++++-----------------
+>  1 file changed, 16 insertions(+), 17 deletions(-)
 > 
-> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-> index c59cd6637b..e42427b738 100644
-> --- a/hmp-commands-info.hx
-> +++ b/hmp-commands-info.hx
-> @@ -199,8 +199,13 @@ ERST
->      defined(TARGET_PPC) || defined(TARGET_XTENSA) || defined(TARGET_M68K)
->      {
->          .name       = "tlb",
-> +#if defined(TARGET_I386)
-> +        .args_type  = "virt:l?",
-> +        .params     = "[virt]",
-> +#else
->          .args_type  = "",
->          .params     = "",
-> +#endif
+> diff --git a/block/file-posix.c b/block/file-posix.c
+> index ff928b5e85..64a57fadb1 100644
+> --- a/block/file-posix.c
+> +++ b/block/file-posix.c
+> @@ -2489,11 +2489,19 @@ static int coroutine_fn raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr,
+>  #if defined(CONFIG_BLKZONED)
+>      if ((type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND)) &&
+>          bs->bl.zoned != BLK_Z_NONE) {
+> -        qemu_co_mutex_lock(&bs->wps->colock);
+> +        BlockZoneWps *wps = bs->wps;
+> +        int index = offset / bs->bl.zone_size;
 
-I don't think we've got any other case where we only define a parameter
-on some architecture; and it feels best to avoid adding it now.
+A blank line after this declaration (to separate declarations from code) woule
+make this code more readable...
 
->          .help       = "show virtual to physical memory mappings",
+> +        qemu_co_mutex_lock(&wps->colock);
+> +        uint64_t *wp = &wps->wp[index];
+>          if (type & QEMU_AIO_ZONE_APPEND) {
+> -            int index = offset / bs->bl.zone_size;
+> -            offset = bs->wps->wp[index];
+> +            offset = *wp;
+> +            *offset_ptr = offset;
+> +        }
+> +        /* Advance the wp if needed */
+> +        if (offset + bytes > *wp) {
 
-The meaning of parameters should be documented in the .help;
-you could add a comment there saying 'only some architectures'
+Why the if ? offset MUST be equal to wp for writes, and for zone append we do
+not need to check the offset at all. So advancing the wp should be unconditional.
 
->          .cmd        = hmp_info_tlb,
->      },
-> diff --git a/target/i386/monitor.c b/target/i386/monitor.c
-> index 2d766b2637..f54d400c97 100644
-> --- a/target/i386/monitor.c
-> +++ b/target/i386/monitor.c
-> @@ -50,10 +50,14 @@ static hwaddr addr_canonical(CPUArchState *env, hwaddr addr)
->  }
->  
->  static void print_pte(Monitor *mon, CPUArchState *env, hwaddr addr,
-> -                      hwaddr pte, hwaddr mask)
-> +                      hwaddr pte, hwaddr mask, hwaddr *filter)
->  {
->      addr = addr_canonical(env, addr);
->  
-> +    if (filter && (*filter & mask) != (addr & mask)) {
-> +        return;
-> +    }
-> +
->      monitor_printf(mon, HWADDR_FMT_plx ": " HWADDR_FMT_plx
->                     " %c%c%c%c%c%c%c%c%c\n",
->                     addr,
-> @@ -69,7 +73,7 @@ static void print_pte(Monitor *mon, CPUArchState *env, hwaddr addr,
->                     pte & PG_RW_MASK ? 'W' : '-');
->  }
->  
-> -static void tlb_info_32(Monitor *mon, CPUArchState *env)
-> +static void tlb_info_32(Monitor *mon, CPUArchState *env, hwaddr *filter)
->  {
->      unsigned int l1, l2;
->      uint32_t pgd, pde, pte;
-> @@ -81,7 +85,7 @@ static void tlb_info_32(Monitor *mon, CPUArchState *env)
->          if (pde & PG_PRESENT_MASK) {
->              if ((pde & PG_PSE_MASK) && (env->cr[4] & CR4_PSE_MASK)) {
->                  /* 4M pages */
-> -                print_pte(mon, env, (l1 << 22), pde, ~((1 << 21) - 1));
-> +                print_pte(mon, env, (l1 << 22), pde, ~((1 << 21) - 1), filter);
->              } else {
->                  for(l2 = 0; l2 < 1024; l2++) {
->                      cpu_physical_memory_read((pde & ~0xfff) + l2 * 4, &pte, 4);
-> @@ -89,7 +93,8 @@ static void tlb_info_32(Monitor *mon, CPUArchState *env)
->                      if (pte & PG_PRESENT_MASK) {
->                          print_pte(mon, env, (l1 << 22) + (l2 << 12),
->                                    pte & ~PG_PSE_MASK,
-> -                                  ~0xfff);
-> +                                  ~0xfff,
-> +                                  filter);
->                      }
->                  }
->              }
-> @@ -97,7 +102,7 @@ static void tlb_info_32(Monitor *mon, CPUArchState *env)
->      }
->  }
->  
-> -static void tlb_info_pae32(Monitor *mon, CPUArchState *env)
-> +static void tlb_info_pae32(Monitor *mon, CPUArchState *env, hwaddr *filter)
->  {
->      unsigned int l1, l2, l3;
->      uint64_t pdpe, pde, pte;
-> @@ -116,7 +121,8 @@ static void tlb_info_pae32(Monitor *mon, CPUArchState *env)
->                      if (pde & PG_PSE_MASK) {
->                          /* 2M pages with PAE, CR4.PSE is ignored */
->                          print_pte(mon, env, (l1 << 30) + (l2 << 21), pde,
-> -                                  ~((hwaddr)(1 << 20) - 1));
-> +                                  ~((hwaddr)(1 << 20) - 1),
-> +                                  filter);
->                      } else {
->                          pt_addr = pde & 0x3fffffffff000ULL;
->                          for (l3 = 0; l3 < 512; l3++) {
-> @@ -126,7 +132,8 @@ static void tlb_info_pae32(Monitor *mon, CPUArchState *env)
->                                  print_pte(mon, env, (l1 << 30) + (l2 << 21)
->                                            + (l3 << 12),
->                                            pte & ~PG_PSE_MASK,
-> -                                          ~(hwaddr)0xfff);
-> +                                          ~(hwaddr)0xfff,
-> +                                          filter);
->                              }
->                          }
->                      }
-> @@ -138,7 +145,7 @@ static void tlb_info_pae32(Monitor *mon, CPUArchState *env)
->  
->  #ifdef TARGET_X86_64
->  static void tlb_info_la48(Monitor *mon, CPUArchState *env,
-> -        uint64_t l0, uint64_t pml4_addr)
-> +        uint64_t l0, uint64_t pml4_addr, hwaddr *filter)
->  {
->      uint64_t l1, l2, l3, l4;
->      uint64_t pml4e, pdpe, pde, pte;
-> @@ -162,7 +169,7 @@ static void tlb_info_la48(Monitor *mon, CPUArchState *env,
->              if (pdpe & PG_PSE_MASK) {
->                  /* 1G pages, CR4.PSE is ignored */
->                  print_pte(mon, env, (l0 << 48) + (l1 << 39) + (l2 << 30),
-> -                        pdpe, 0x3ffffc0000000ULL);
-> +                        pdpe, 0x3ffffc0000000ULL, filter);
->                  continue;
->              }
->  
-> @@ -177,7 +184,7 @@ static void tlb_info_la48(Monitor *mon, CPUArchState *env,
->                  if (pde & PG_PSE_MASK) {
->                      /* 2M pages, CR4.PSE is ignored */
->                      print_pte(mon, env, (l0 << 48) + (l1 << 39) + (l2 << 30) +
-> -                            (l3 << 21), pde, 0x3ffffffe00000ULL);
-> +                            (l3 << 21), pde, 0x3ffffffe00000ULL, filter);
->                      continue;
->                  }
->  
-> @@ -190,7 +197,8 @@ static void tlb_info_la48(Monitor *mon, CPUArchState *env,
->                      if (pte & PG_PRESENT_MASK) {
->                          print_pte(mon, env, (l0 << 48) + (l1 << 39) +
->                                  (l2 << 30) + (l3 << 21) + (l4 << 12),
-> -                                pte & ~PG_PSE_MASK, 0x3fffffffff000ULL);
-> +                                pte & ~PG_PSE_MASK, 0x3fffffffff000ULL,
-> +                                filter);
->                      }
->                  }
->              }
-> @@ -198,7 +206,7 @@ static void tlb_info_la48(Monitor *mon, CPUArchState *env,
->      }
->  }
->  
-> -static void tlb_info_la57(Monitor *mon, CPUArchState *env)
-> +static void tlb_info_la57(Monitor *mon, CPUArchState *env, hwaddr *filter)
->  {
->      uint64_t l0;
->      uint64_t pml5e;
-> @@ -209,7 +217,7 @@ static void tlb_info_la57(Monitor *mon, CPUArchState *env)
->          cpu_physical_memory_read(pml5_addr + l0 * 8, &pml5e, 8);
->          pml5e = le64_to_cpu(pml5e);
->          if (pml5e & PG_PRESENT_MASK) {
-> -            tlb_info_la48(mon, env, l0, pml5e & 0x3fffffffff000ULL);
-> +            tlb_info_la48(mon, env, l0, pml5e & 0x3fffffffff000ULL, filter);
+BUT ! where are the checks for "zone is full" and "offset == wp" for write
+operations ? These must be checked while holding the zone lock.
+
+> +            *wp = offset + bytes;
 >          }
+> +        qemu_co_mutex_unlock(&bs->wps->colock);
 >      }
->  }
-> @@ -219,6 +227,9 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
->  {
->      CPUArchState *env;
->  
-> +    hwaddr filter_addr = qdict_get_try_int(qdict, "virt", 0);
-> +    hwaddr *filter = qdict_haskey(qdict, "virt") ? &filter_addr : NULL;
-> +
-
-I'm a bit confused about the format of the parameter you're trying to use;
-can you add an example in the commit message please.
-
->      env = mon_get_cpu_env(mon);
->      if (!env) {
->          monitor_printf(mon, "No CPU available\n");
-> @@ -233,17 +244,17 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
->  #ifdef TARGET_X86_64
->          if (env->hflags & HF_LMA_MASK) {
->              if (env->cr[4] & CR4_LA57_MASK) {
-> -                tlb_info_la57(mon, env);
-> +                tlb_info_la57(mon, env, filter);
->              } else {
-> -                tlb_info_la48(mon, env, 0, env->cr[3] & 0x3fffffffff000ULL);
-> +                tlb_info_la48(mon, env, 0, env->cr[3] & 0x3fffffffff000ULL, filter);
-
-I think you're over line length there.
-
->              }
->          } else
 >  #endif
->          {
-> -            tlb_info_pae32(mon, env);
-> +            tlb_info_pae32(mon, env, filter);
->          }
->      } else {
-> -        tlb_info_32(mon, env);
-> +        tlb_info_32(mon, env, filter);
->      }
->  }
 >  
-> -- 
-> 2.34.1
-> 
+> @@ -2540,28 +2548,19 @@ out:
+>  #if defined(CONFIG_BLKZONED)
+>      if ((type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND)) &&
+>          bs->bl.zoned != BLK_Z_NONE) {
+> -        BlockZoneWps *wps = bs->wps;
+>          if (ret == 0) {
+> -            uint64_t *wp = &wps->wp[offset / bs->bl.zone_size];
+> -            if (!BDRV_ZT_IS_CONV(*wp)) {
+> -                if (type & QEMU_AIO_ZONE_APPEND) {
+> -                    *offset_ptr = *wp;
+> -                    trace_zbd_zone_append_complete(bs, *offset_ptr
+> -                        >> BDRV_SECTOR_BITS);
+> -                }
+> -                /* Advance the wp if needed */
+> -                if (offset + bytes > *wp) {
+> -                    *wp = offset + bytes;
+> -                }
+> +            if (type & QEMU_AIO_ZONE_APPEND) {
+> +                trace_zbd_zone_append_complete(bs, *offset_ptr
+> +                    >> BDRV_SECTOR_BITS);
+>              }
+>          } else {
+> +            qemu_co_mutex_lock(&bs->wps->colock);
+>              /*
+>               * write and append write are not allowed to cross zone boundaries
+>               */
+>              update_zones_wp(bs, s->fd, offset, 1);
+> +            qemu_co_mutex_unlock(&bs->wps->colock);
+>          }
+> -
+> -        qemu_co_mutex_unlock(&wps->colock);
+>      }
+>  #endif
+>      return ret;
+
+
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+Damien Le Moal
+Western Digital Research
 
