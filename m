@@ -4,95 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7577DCEACFC
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 19:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE51FCEACFB
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 20:18:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svicE-0002Ee-LE; Tue, 01 Oct 2024 15:32:59 -0400
+	id 1svjJK-0002RK-BM; Tue, 01 Oct 2024 16:17:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1svicA-0002CX-D7
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 15:32:54 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1svjJI-0002R6-FY
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 16:17:28 -0400
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1svic7-0000wp-W5
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 15:32:53 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 491JOafH031948;
- Tue, 1 Oct 2024 19:32:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=pp1; bh=sF2BU2LK10BL4i6hQOdXJvt9zX
- hxIEFv6oe8WWodwSs=; b=GxIwRtkFV2R+QpykVoMCPg4CE5T+Z30kXDm3dAmXKf
- WzdkGSKlFPqsKel+GUyF9XdXP46i0RjF8TVwFzN0Ab8UzttkxZaP7nK2HyB/NWSw
- 6i97FCPZZ6WS9qtJpT1FkO3QD4j9CKsgqcL5UoAbC5sAeYhRVOA0OtdkgKr3Im5I
- UzLmEKvzK64v0fJ+YKOMU/SZ+qnDr6JkoYl5+nHsZeTspCJCKFyUUFedXZSd+F49
- dEwDB9gBQvk0e7wQTIrvETKfKsWCpld9Yyp3VOhgjL0NO2tnvq/i0UNIM0+oWy+J
- 4tRoRdkrjw/d/Z3Uj/OsaPAZX2k/b705tvnb2RpEAy0g==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 420q7a015x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 01 Oct 2024 19:32:48 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 491II1HB017852;
- Tue, 1 Oct 2024 19:32:48 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41xw4mxc1u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 01 Oct 2024 19:32:48 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 491JWkfP32703004
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 1 Oct 2024 19:32:46 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4240920043;
- Tue,  1 Oct 2024 19:32:46 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BDCF620040;
- Tue,  1 Oct 2024 19:32:45 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.179.29.119])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  1 Oct 2024 19:32:45 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Laurent Vivier <laurent@vivier.eu>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH] linux-user: Trace wait4()'s and waitpid()'s wstatus
-Date: Tue,  1 Oct 2024 21:32:08 +0200
-Message-ID: <20241001193244.14939-1-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.46.2
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1svjJG-0005ms-5c
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 16:17:28 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 2B3773FA0B
+ for <qemu-devel@nongnu.org>; Tue,  1 Oct 2024 20:17:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1727813842;
+ bh=+leZFYX24pFVw73Qty1WJ9W0wkJeejQbB//FYcyMsX4=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=HxJOWW+HZkNlZ0tLGuPINNilk1vKqjmtNi8a8Ov9ddbiGnqAGhOgXZpHUcW3vWPI/
+ TSdC2PtsZFcP8h22qeQsyIglrEYe9R1ufhqx/7h3GJoxekADazLK1C03dLskNH0Rv8
+ QzuEJVtTvi23tgewHGopg63t+jA7H167cVxZEQesgmYWqGVZoWSJU1vB/ux1zv534Q
+ s+46mZ07ak5iBPU7MO6E9vXB+GEJZyCMt5AVBQ0/3mPctO4BZPI8UM7KKUM0qdN0fk
+ qJLh1w8cL8n7eozKmEIE0aKbqrc6CD9B2f55j83rZhsqBi0mYGUBDjDS0yfhH10ceo
+ AmdYiAhDpmABQ==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id DA0797EE9F
+ for <qemu-devel@nongnu.org>; Tue,  1 Oct 2024 20:17:21 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: fVJXtAfoAmZu71IcMlYJTklPHrL5CbcI
-X-Proofpoint-GUID: fVJXtAfoAmZu71IcMlYJTklPHrL5CbcI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-01_14,2024-09-30_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- suspectscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
- phishscore=0 bulkscore=0 mlxscore=0 adultscore=0 spamscore=0 clxscore=1015
- mlxlogscore=891 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2410010123
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 01 Oct 2024 20:06:33 -0000
+From: Sergio Durigan Junior <2072564@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ status=Triaged; importance=Undecided; assignee=sergio.durigan@canonical.com; 
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: dimitry.unified-streaming.com michal.fita sergiodj
+X-Launchpad-Bug-Reporter: Dimitry Andric (dimitry.unified-streaming.com)
+X-Launchpad-Bug-Modifier: Sergio Durigan Junior (sergiodj)
+References: <172053137048.3332067.13534832802726064667.malonedeb@juju-98d295-prod-launchpad-7>
+Message-Id: <172781319322.801305.16015842050255958527.malone@juju-98d295-prod-launchpad-4>
+Subject: [Bug 2072564] Re: qemu-aarch64-static segfaults running ldconfig.real
+ (amd64 host)
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="1b1ed1ad2dbfc71ee62b5c5491c975135a771bf0";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 3cb85a936a9a89f81619aa190ff6b2fa6b5408cb
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -101,119 +87,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2072564 <2072564@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Borrow the code for formatting the most frequent WIFEXITED() and
-WIFSIGNALED() special cases from from the strace's printstatus().
+FWIW, I left a comment on the bug report asking for guidance, because it
+seems to me that just reverting the commit mentioned above isn't the
+right solution (as we'd be reintroducing the bug fixed by the commit).
 
-Output examples:
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2072564
 
-    474729 wait4(-1,0x7f00767ff0a0,0,(nil)) = 474733 (wstatus={WIFEXITED(s) && WEXITSTATUS(s) == 1})
-    475833 wait4(-1,0x7f7de61ff0a0,0,(nil)) = 475837 (wstatus={WIFSIGNALED(s) && WTERMSIG(s) == SIGKILL})
-    1168 waitpid(1171,0x7f44eea00340,0) = 1171 (wstatus={WIFSIGNALED(s) && WTERMSIG(s) == SIGKILL})
+Title:
+  qemu-aarch64-static segfaults running ldconfig.real (amd64 host)
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- linux-user/strace.c    | 61 ++++++++++++++++++++++++++++++++++++++++++
- linux-user/strace.list |  6 +++--
- 2 files changed, 65 insertions(+), 2 deletions(-)
+Status in QEMU:
+  New
+Status in qemu package in Ubuntu:
+  Triaged
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index b4d1098170e..d5d1f18304d 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -4168,6 +4168,67 @@ print_ioctl(CPUArchState *cpu_env, const struct syscallname *name,
- }
- #endif
- 
-+#if defined(TARGET_NR_wait4) || defined(TARGET_NR_waitpid)
-+static void print_wstatus(int wstatus)
-+{
-+    if (WIFSIGNALED(wstatus)) {
-+        qemu_log("{WIFSIGNALED(s) && WTERMSIG(s) == ");
-+        print_signal(WTERMSIG(wstatus), 1);
-+        if (WCOREDUMP(wstatus)) {
-+            qemu_log(" && WCOREDUMP(s)");
-+        }
-+        qemu_log("}");
-+    } else if (WIFEXITED(wstatus)) {
-+        qemu_log("{WIFEXITED(s) && WEXITSTATUS(s) == %d}",
-+                 WEXITSTATUS(wstatus));
-+    } else {
-+        print_number(wstatus, 1);
-+    }
-+}
-+
-+static void print_ret_wstatus(abi_long ret, abi_long wstatus_addr)
-+{
-+    if (!print_syscall_err(ret)) {
-+        qemu_log(TARGET_ABI_FMT_ld " (wstatus=", ret);
-+        if (wstatus_addr == 0) {
-+            qemu_log("NULL");
-+        } else {
-+            int wstatus;
-+
-+            get_user_s32(wstatus, wstatus_addr);
-+            print_wstatus(wstatus);
-+        }
-+        qemu_log(")");
-+    }
-+
-+    qemu_log("\n");
-+}
-+#endif
-+
-+#ifdef TARGET_NR_wait4
-+static void
-+print_syscall_ret_wait4(CPUArchState *cpu_env,
-+                        const struct syscallname *name,
-+                        abi_long ret, abi_long arg0, abi_long arg1,
-+                        abi_long arg2, abi_long arg3, abi_long arg4,
-+                        abi_long arg5)
-+{
-+    print_ret_wstatus(ret, arg1);
-+}
-+#endif
-+
-+#ifdef TARGET_NR_waitpid
-+static void
-+print_syscall_ret_waitpid(CPUArchState *cpu_env,
-+                          const struct syscallname *name,
-+                          abi_long ret, abi_long arg0, abi_long arg1,
-+                          abi_long arg2, abi_long arg3, abi_long arg4,
-+                          abi_long arg5)
-+{
-+    print_ret_wstatus(ret, arg1);
-+}
-+#endif
-+
- /*
-  * An array of all of the syscalls we know about
-  */
-diff --git a/linux-user/strace.list b/linux-user/strace.list
-index dfd4237d14e..2bb6f2726a8 100644
---- a/linux-user/strace.list
-+++ b/linux-user/strace.list
-@@ -1659,13 +1659,15 @@
- { TARGET_NR_vserver, "vserver" , NULL, NULL, NULL },
- #endif
- #ifdef TARGET_NR_wait4
--{ TARGET_NR_wait4, "wait4" , "%s(%d,%p,%d,%p)", NULL, NULL },
-+{ TARGET_NR_wait4, "wait4" , "%s(%d,%p,%d,%p)", NULL,
-+                   print_syscall_ret_wait4 },
- #endif
- #ifdef TARGET_NR_waitid
- { TARGET_NR_waitid, "waitid" , "%s(%#x,%d,%p,%#x)", NULL, NULL },
- #endif
- #ifdef TARGET_NR_waitpid
--{ TARGET_NR_waitpid, "waitpid" , "%s(%d,%p,%#x)", NULL, NULL },
-+{ TARGET_NR_waitpid, "waitpid", "%s(%d,%p,%#x)", NULL,
-+                     print_syscall_ret_waitpid },
- #endif
- #ifdef TARGET_NR_write
- { TARGET_NR_write, "write" , "%s(%d,%#x,%d)", NULL, NULL },
--- 
-2.46.2
+Bug description:
+  This affects the qemu-user-static 1:8.2.2+ds-0ubuntu1 package on
+  Ubuntu 24.04, running on a amd64 host.
+
+  When running docker containers with Ubuntu 22.04 in them, emulating
+  arm64 with qemu-aarch64-static, invocations of ldconfig (actually
+  ldconfig.real) segfault. For example:
+
+  $ docker run -ti --platform linux/arm64/v8 ubuntu:22.04=20
+  root@8861ff640a1c:/# /sbin/ldconfig.real
+  Segmentation fault
+
+  If you copy the ldconfig.real binary to the host, and run it directly
+  via qemu-aarch64-static:
+
+  $ gdb --args qemu-aarch64-static ./ldconfig.real=20
+  GNU gdb (Ubuntu 15.0.50.20240403-0ubuntu1) 15.0.50.20240403-git
+  Copyright (C) 2024 Free Software Foundation, Inc.
+  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.h=
+tml>
+  This is free software: you are free to change and redistribute it.
+  There is NO WARRANTY, to the extent permitted by law.
+  Type "show copying" and "show warranty" for details.
+  This GDB was configured as "x86_64-linux-gnu".
+  Type "show configuration" for configuration details.
+  For bug reporting instructions, please see:
+  <https://www.gnu.org/software/gdb/bugs/>.
+  Find the GDB manual and other documentation resources online at:
+      <http://www.gnu.org/software/gdb/documentation/>.
+
+  For help, type "help".
+  Type "apropos word" to search for commands related to "word"...
+  Reading symbols from qemu-aarch64-static...
+  Reading symbols from /home/dim/.cache/debuginfod_client/86579812b213be096=
+4189499f62f176bea817bf2/debuginfo...
+  (gdb) r
+  Starting program: /usr/bin/qemu-aarch64-static ./ldconfig.real
+  [Thread debugging using libthread_db enabled]
+  Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+  [New Thread 0x7ffff76006c0 (LWP 28378)]
+
+  Thread 1 "qemu-aarch64-st" received signal SIGSEGV, Segmentation fault.
+  0x00007fffe801645b in ?? ()
+  (gdb) disassemble=20
+  No function contains program counter for selected frame.
+
+  It looks like this is a known qemu regression after v8.1.1:
+  https://gitlab.com/qemu-project/qemu/-/issues/1913
+
+  Downgrading the package to qemu-user-
+  static_8.0.4+dfsg-1ubuntu3_amd64.deb fixes the segfault.
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2072564/+subscriptions
 
 
