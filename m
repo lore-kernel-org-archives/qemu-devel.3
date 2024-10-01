@@ -4,66 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D44A2CEACC8
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA841CEACC9
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:10:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svdYp-0001db-Ai; Tue, 01 Oct 2024 10:09:07 -0400
+	id 1svdYy-0001sj-MH; Tue, 01 Oct 2024 10:09:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1svdYn-0001Wj-2m; Tue, 01 Oct 2024 10:09:05 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1svdYw-0001q4-8n; Tue, 01 Oct 2024 10:09:14 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1svdYe-00023t-As; Tue, 01 Oct 2024 10:09:04 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:8a3:0:640:33b5:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 21F976003B;
- Tue,  1 Oct 2024 12:54:07 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:8026::1:2f] (unknown
- [2a02:6b8:b081:8026::1:2f])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 5sWnJw1Iga60-O0dn97Jg; Tue, 01 Oct 2024 12:54:06 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1727776446;
- bh=uLNJt9cmEOePQhreo7TH0vvPWBVritTAxkgy9K7Bd5k=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=Rny1Cn5W1oKcWxueGsYbBPsLEuOL89UPUaySYLafHlXLFMGL0RweAMYkE4l6f/tQn
- wTmMhsWwIWY+aPb3NQbLHnN+Ik5PcFx7Uss+k+p27Mj75v7a94AlWKBkNasZCGTlIh
- brD3X8krMu0roSluQpgE3bFahnu+W5Kfr67fruF4=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <29cd78e2-be26-41a4-92c4-a327efe76177@yandex-team.ru>
-Date: Tue, 1 Oct 2024 12:54:05 +0300
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1svdYu-00029d-6g; Tue, 01 Oct 2024 10:09:13 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4917K2CL007046;
+ Tue, 1 Oct 2024 09:29:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
+ nbCvrmuGpsS6f3W8D1rszjA7eU6XX4LbT9RJ7c2hcXQ=; b=Q4JO/Dt4GhvpwXJd
+ E8uaz2QoKe0xa9Ax57RQOym247AUIboPFH+vWRekjl+99Dp9s5JKniaeKr0qGwVI
+ Km718yzncMb/DsoF5v81AIv3pnp9AjUGUx8V5v1TtQS9Q01qlNrGCD54VoOKXGYa
+ kgpUkMxtm8UtmH+F7INVC0hPMxpGdsf34vGiNzWxzHXZ2+lZyS4cI39sSuhzSoIr
+ /lMajxbi6wdzU8FaObnwRUGscfeGOyADsEQ3eZS4ln8yhfLVo1KqD5pPiCI+pr1C
+ TZjab+7zgv5n7VmD46pqm+p1fd5Gj41avxsMh39Qx6Gs9U+Y818QQGsk+oHDbwE5
+ +YjXWg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 420ckj8mh2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 01 Oct 2024 09:29:22 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4919TLpD013440;
+ Tue, 1 Oct 2024 09:29:21 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 420ckj8mh0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 01 Oct 2024 09:29:21 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49192423017866;
+ Tue, 1 Oct 2024 09:29:20 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41xw4muf8h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 01 Oct 2024 09:29:20 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4919TIVJ13369714
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 1 Oct 2024 09:29:18 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7D04E2004F;
+ Tue,  1 Oct 2024 09:29:18 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8E2FB20049;
+ Tue,  1 Oct 2024 09:29:17 +0000 (GMT)
+Received: from ltcrain34-lp1.aus.stglabs.ibm.com (unknown [9.3.101.40])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  1 Oct 2024 09:29:17 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, danielhb413@gmail.com, clg@kaod.org
+Subject: [PATCH v2 01/11] ppc/spapr: remove deprecated machine pseries-2.1
+Date: Tue,  1 Oct 2024 14:59:00 +0530
+Message-ID: <20241001092910.1030913-2-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241001092910.1030913-1-harshpb@linux.ibm.com>
+References: <20241001092910.1030913-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Bug Report][RFC PATCH 1/1] block: fix failing assert on paused
- VM migration
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- eesposit@redhat.com, den@virtuozzo.com, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-References: <20240924125611.664315-1-andrey.drobyshev@virtuozzo.com>
- <20240924125611.664315-2-andrey.drobyshev@virtuozzo.com>
- <6fb3340a-f685-422f-acaf-ad968e854847@yandex-team.ru>
- <0faf2b77-0cda-4823-8c3f-986be7d6964c@virtuozzo.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <0faf2b77-0cda-4823-8c3f-986be7d6964c@virtuozzo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Yandex-Filter: 1
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: IvzuI_jiJiT9_leM15WxCJKySJuzsnPf
+X-Proofpoint-GUID: z8Hk9Z5rWVcL5TbmDHXhvyw2XENV8zWr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-01_07,2024-09-30_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0
+ phishscore=0 adultscore=0 mlxlogscore=766 suspectscore=0 malwarescore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 mlxscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2410010058
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -81,115 +114,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.09.24 17:07, Andrey Drobyshev wrote:
-> On 9/30/24 12:25 PM, Vladimir Sementsov-Ogievskiy wrote:
->> [add migration maintainers]
->>
->> On 24.09.24 15:56, Andrey Drobyshev wrote:
->>> [...]
->>
->> I doubt that this a correct way to go.
->>
->> As far as I understand, "inactive" actually means that "storage is not
->> belong to qemu, but to someone else (another qemu process for example),
->> and may be changed transparently". In turn this means that Qemu should
->> do nothing with inactive disks. So the problem is that nobody called
->> bdrv_activate_all on target, and we shouldn't ignore that.
->>
->> Hmm, I see in process_incoming_migration_bh() we do call
->> bdrv_activate_all(), but only in some scenarios. May be, the condition
->> should be less strict here.
->>
->> Why we need any condition here at all? Don't we want to activate
->> block-layer on target after migration anyway?
->>
-> 
-> Hmm I'm not sure about the unconditional activation, since we at least
-> have to honor LATE_BLOCK_ACTIVATE cap if it's set (and probably delay it
-> in such a case).  In current libvirt upstream I see such code:
-> 
->> /* Migration capabilities which should always be enabled as long as they
->>   * are supported by QEMU. If the capability is supposed to be enabled on both
->>   * sides of migration, it won't be enabled unless both sides support it.
->>   */
->> static const qemuMigrationParamsAlwaysOnItem qemuMigrationParamsAlwaysOn[] = {
->>      {QEMU_MIGRATION_CAP_PAUSE_BEFORE_SWITCHOVER,
->>       QEMU_MIGRATION_SOURCE},
->>                                                                                  
->>      {QEMU_MIGRATION_CAP_LATE_BLOCK_ACTIVATE,
->>       QEMU_MIGRATION_DESTINATION},
->> };
-> 
-> which means that libvirt always wants LATE_BLOCK_ACTIVATE to be set.
-> 
-> The code from process_incoming_migration_bh() you're referring to:
-> 
->>      /* If capability late_block_activate is set:
->>       * Only fire up the block code now if we're going to restart the
->>       * VM, else 'cont' will do it.
->>       * This causes file locking to happen; so we don't want it to happen
->>       * unless we really are starting the VM.
->>       */
->>      if (!migrate_late_block_activate() ||
->>           (autostart && (!global_state_received() ||
->>              runstate_is_live(global_state_get_runstate())))) {
->>          /* Make sure all file formats throw away their mutable metadata.
->>           * If we get an error here, just don't restart the VM yet. */
->>          bdrv_activate_all(&local_err);
->>          if (local_err) {
->>              error_report_err(local_err);
->>              local_err = NULL;
->>              autostart = false;
->>          }
->>      }
-> 
-> It states explicitly that we're either going to start VM right at this
-> point if (autostart == true), or we wait till "cont" command happens.
-> None of this is going to happen if we start another migration while
-> still being in PAUSED state.  So I think it seems reasonable to take
-> such case into account.  For instance, this patch does prevent the crash:
-> 
->> diff --git a/migration/migration.c b/migration/migration.c
->> index ae2be31557..3222f6745b 100644
->> --- a/migration/migration.c
->> +++ b/migration/migration.c
->> @@ -733,7 +733,8 @@ static void process_incoming_migration_bh(void *opaque)
->>        */
->>       if (!migrate_late_block_activate() ||
->>            (autostart && (!global_state_received() ||
->> -            runstate_is_live(global_state_get_runstate())))) {
->> +            runstate_is_live(global_state_get_runstate()))) ||
->> +         (!autostart && global_state_get_runstate() == RUN_STATE_PAUSED)) {
->>           /* Make sure all file formats throw away their mutable metadata.
->>            * If we get an error here, just don't restart the VM yet. */
->>           bdrv_activate_all(&local_err);
-> 
-> What are your thoughts on it?
-> 
+Commit 1392617d3576 intended to tag pseries-2.1 - 2.11 machines as
+deprecated with reasons mentioned in its commit log.
+Removing pseries-2.1 specific code with this patch for now.
 
-Hmmm... Don't we violate "late-block-activate" contract by this?
+Suggested-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ hw/ppc/spapr.c | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-Me go and check:
-
-# @late-block-activate: If enabled, the destination will not activate
-#     block devices (and thus take locks) immediately at the end of
-#     migration.  (since 3.0)
-
-Yes, we'll violate it by this patch. So, for now the only exception is when autostart is enabled, but libvirt correctly use late-block-activate + !autostart.
-
-Interesting, when block layer is assumed to be activated.. Aha, only in qmp_cont().
-
-
-So, what to do with this all:
-
-Either libvirt should not use late-block-activate for migration of stopped vm. This way target would be automatically activated
-
-Or if libvirt still need postponed activation (I assume, for correctly switching shared disks, etc), Libvirt should do some additional QMP call. It can't be "cont", if we don't want to run the VM. So, probably, we need additional "block-activate" QMP command for this.
-
-And, anyway, trying to migrate inactive block layer should fail with some good error message rather than crash.
-
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 8aa3ce7449..ec906e1d77 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -5381,17 +5381,6 @@ static void spapr_machine_2_2_class_options(MachineClass *mc)
+ }
+ DEFINE_SPAPR_MACHINE(2, 2);
+ 
+-/*
+- * pseries-2.1
+- */
+-
+-static void spapr_machine_2_1_class_options(MachineClass *mc)
+-{
+-    spapr_machine_2_2_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_1, hw_compat_2_1_len);
+-}
+-DEFINE_SPAPR_MACHINE(2, 1);
+-
+ static void spapr_machine_register_types(void)
+ {
+     type_register_static(&spapr_machine_info);
 -- 
-Best regards,
-Vladimir
+2.45.2
 
 
