@@ -4,81 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E8FECEACCD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A613FCEACCF
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:25:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svdng-0005gG-G7; Tue, 01 Oct 2024 10:24:28 -0400
+	id 1svdno-0005zS-A7; Tue, 01 Oct 2024 10:24:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1svdm8-0004nH-Hn
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:23:00 -0400
-Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1svdm2-0005bH-G6
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:22:50 -0400
-Received: by mail-qv1-xf34.google.com with SMTP id
- 6a1803df08f44-6cb321145easo46247176d6.1
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 07:22:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727792565; x=1728397365; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AsxWXnfjxGZ3DY3wCUr2eO19f8E2tCESeHOUB5/59yQ=;
- b=Ht3h5sT7mTHp9Bydy3+ZNjNFccd7jxCDlBzI2Pq2Zz5CqRRUYrMGYsuTOE+IwYbivI
- KIdyQf7R8rqXndrLvRGw5wMsvQzg12zUsGjkXonj2aMdrupgahq2zL1tfnBFtp0VrN7d
- wx+kPzxM+7iut2sB5RfqpYKdXa/QFmEPHxfxFOA43sLdEPtmjGYTrqXEC/1GUPJFXatW
- 2mQfOM18duqYBIJDzXcTCRYDNw6yEOs3mKIK0gVHe76E/Co/4HuK0d0lG75npCcv8Sue
- jUKKeci+PwuCtjwkwKk+ewTl/3oc1tE3ZXUNmsPQfn7ohAcPmnZ3m7nfq/CrYG4CQO6p
- D8Eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727792565; x=1728397365;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AsxWXnfjxGZ3DY3wCUr2eO19f8E2tCESeHOUB5/59yQ=;
- b=ANHfR7IFyXdpIqxGVhKw8JNfb7RP6DAHZBjBZ4ikGSyUBTFMyOBw3VnMhiBLYu/TWs
- Ns1TQag7S0bxtEACHkOfOXRVKboIQWXiwiKizLT4FLMQneyeuJftbddeMvAnYcTIAS0m
- QqNSqEtgJZSg9FC+vzU2A1GpwAlcFCr4tMAyXFHN6vxc7k/IEaowMYUefneFenu523Fy
- lIz+q+h6BSbXAPOoK73RyZTrRH2XacHy0R3Xeia8113qdgbl4Lw9s6uOVhzOheYaskev
- Zycx8X8OTH2sw47CaIp6yhZ0vHEBjqqpduTnH6wF5pqvnk+0zF/9KYOYJGqpmy2RipaW
- IWCA==
-X-Gm-Message-State: AOJu0YyVat6Ve7c+nVShH4eM5Aqz1h/pHczLWJ73fH/LRX9eYNU4bPOE
- xMQnNlwvIRkmLFaVR+xXchuOfvoOXzfFwr74lFqQ3O1jjL8hMxOD+IVy20YHG7ucXGsESoqIJTm
- 8pUys8Lqifjanyk8fZ+X5eQopidWtMkHH
-X-Google-Smtp-Source: AGHT+IHldUhVyMXLnQ7G05SJihFIgGcahVFQevyNBrje/0VHPJEjkqrA6jJIP5kpNnhoHQXU1ZqY+3kl41AVLD0i00k=
-X-Received: by 2002:a05:6102:2921:b0:49b:d489:d467 with SMTP id
- ada2fe7eead31-4a3d5d4691bmr1712711137.8.1727789112306; Tue, 01 Oct 2024
- 06:25:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1svdma-000502-2z; Tue, 01 Oct 2024 10:23:24 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1svdmK-0005eY-VW; Tue, 01 Oct 2024 10:23:13 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4917KZJ0022423;
+ Tue, 1 Oct 2024 09:29:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
+ R7UTnw+sgGYBCJL69A7Br088g2z8HbBOQm/slScKnuY=; b=Is32p7Y4xqDsgKa5
+ A1pK70XSX9GOfKCoAV7Ybgm6tVhiRjT+OxdxVK7w9BXAa0Tdbm0mIbx1ed0mXBPk
+ k+MziFeGdHdEpvGgceqEw6qcgQYdALArU+IHZ2eS2nibKHkNCz60K38u4zeWGfne
+ e9SLoDTgZwaJKdcQe18/EGY996OkUkhLvrOQGEePOJc/XHLfCCt0UIhmMWu5Fbaf
+ 6D53OR6EhMH4zfZN/HF0LLEDYRDTh3m3wRyWxbuyt1Arz9E6UnK6N0Qu1X42Qn7I
+ /C0O0rULNwjSqoUwxno7gThbIu1ZeCjYWpGZOfKVNhG7w8+B39Z3Bu+ozDB2d8MN
+ d+iRyw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 420ckngm9s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 01 Oct 2024 09:29:26 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4919TPFq001795;
+ Tue, 1 Oct 2024 09:29:25 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 420ckngm9n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 01 Oct 2024 09:29:25 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4918h6jG007989;
+ Tue, 1 Oct 2024 09:29:25 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41xvgxukbj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 01 Oct 2024 09:29:25 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4919TNxC38404606
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 1 Oct 2024 09:29:23 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 328CD20049;
+ Tue,  1 Oct 2024 09:29:23 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 42FB620040;
+ Tue,  1 Oct 2024 09:29:22 +0000 (GMT)
+Received: from ltcrain34-lp1.aus.stglabs.ibm.com (unknown [9.3.101.40])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  1 Oct 2024 09:29:22 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, danielhb413@gmail.com, clg@kaod.org
+Subject: [PATCH v2 05/11] ppc/spapr: remove deprecated machine pseries-2.5
+Date: Tue,  1 Oct 2024 14:59:04 +0530
+Message-ID: <20241001092910.1030913-6-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241001092910.1030913-1-harshpb@linux.ibm.com>
+References: <20241001092910.1030913-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-References: <20240922094441.23802-1-dorjoychy111@gmail.com>
- <20241001091436-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20241001091436-mutt-send-email-mst@kernel.org>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Tue, 1 Oct 2024 19:25:09 +0600
-Message-ID: <CAFfO_h78jFc1w93VXYLjsK89kXMjbJ782Eo77O2XGzQLRxvX+w@mail.gmail.com>
-Subject: Re: [PATCH v7 0/5] AWS Nitro Enclave emulation support
-To: "Michael S. Tsirkin" <mst@redhat.com>, graf@amazon.com
-Cc: qemu-devel@nongnu.org, agraf@csgraf.de, stefanha@redhat.com, 
- pbonzini@redhat.com, slp@redhat.com, richard.henderson@linaro.org, 
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, berrange@redhat.com, 
- philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
- envelope-from=dorjoychy111@gmail.com; helo=mail-qv1-xf34.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: LzHUS0y4IaCAHgsKO_FDv1jk9DEhp156
+X-Proofpoint-ORIG-GUID: tbKpwKaKOVl5p_5Ln4nsFsjSuGaNx-kd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-01_07,2024-09-30_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 mlxlogscore=824
+ mlxscore=0 priorityscore=1501 clxscore=1015 spamscore=0 lowpriorityscore=0
+ adultscore=0 impostorscore=0 phishscore=0 suspectscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2410010058
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,22 +114,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 1, 2024 at 7:15=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com> =
-wrote:
->
-> On Sun, Sep 22, 2024 at 03:44:36PM +0600, Dorjoy Chowdhury wrote:
-> > [7] https://lists.oasis-open.org/archives/virtio-comment/202310/msg0038=
-7.html
->
-> That list is dead, would you mind reposting to the new list,
-> so we can vote on it?
+Commit 1392617d3576 intended to tag pseries-2.1 - 2.11 machines as
+deprecated with reasons mentioned in its commit log.
+Removing pseries-2.5 specific code with this patch for now.
 
-Yeah the URL seems to be dead too but I found the lore URL:
-https://lore.kernel.org/virtio-comment/20231025235345.17788-1-graf@amazon.c=
-om/
-Probably Alex needs to repost, right?
-cc Alex
+Suggested-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ hw/ppc/spapr.c | 19 -------------------
+ 1 file changed, 19 deletions(-)
 
-Regards,
-Dorjoy
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 9e78f94ec2..a38d4e098a 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -5315,25 +5315,6 @@ static void spapr_machine_2_6_class_options(MachineClass *mc)
+ 
+ DEFINE_SPAPR_MACHINE(2, 6);
+ 
+-/*
+- * pseries-2.5
+- */
+-
+-static void spapr_machine_2_5_class_options(MachineClass *mc)
+-{
+-    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
+-    static GlobalProperty compat[] = {
+-        { "spapr-vlan", "use-rx-buffer-pools", "off" },
+-    };
+-
+-    spapr_machine_2_6_class_options(mc);
+-    smc->use_ohci_by_default = true;
+-    compat_props_add(mc->compat_props, hw_compat_2_5, hw_compat_2_5_len);
+-    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-}
+-
+-DEFINE_SPAPR_MACHINE(2, 5);
+-
+ static void spapr_machine_register_types(void)
+ {
+     type_register_static(&spapr_machine_info);
+-- 
+2.45.2
+
 
