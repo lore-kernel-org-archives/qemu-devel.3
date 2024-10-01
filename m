@@ -4,63 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 665C4CEACD5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECA8BCEACDB
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:52:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sveAn-00047R-3b; Tue, 01 Oct 2024 10:48:21 -0400
+	id 1sveDi-0003G2-DN; Tue, 01 Oct 2024 10:51:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1sveA7-000327-Ku; Tue, 01 Oct 2024 10:47:42 -0400
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1sveA4-0004VG-JM; Tue, 01 Oct 2024 10:47:39 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 417695C5491;
- Tue,  1 Oct 2024 07:04:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1BFC4CEDA;
- Tue,  1 Oct 2024 07:04:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1727766252;
- bh=+WtTbHUT4iomth9t7xJ9WDT5mR2fPZd0bO/qGgVR9tM=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=HgmzsIvm5QyXVzHLRaeBRKGpkQJrMe/MLnxCciIFIsBApB3e3K7ZHsbmocw3fuanZ
- etV4wAB0vARrPBdx+eMRIDhivDKJmw76U0c1+qZ3dkpIhqhKZ0yvNW6/UENFUBszb5
- NeNobPOuTFA9uQMoCMJEIz2EvuO2g2CzlbHScQ6mqT4uwBMchJxP+DzdZ8HX4VDtkY
- f/lXr10EJJRtuWg1GXhE45SAgRJ7QSRCvvIt6B4MTQ5f3KoTZU9SnH8nY7kYJ2GqXK
- Ftuo09HWmVwcy4ryIIIgyXBFIya3rl4BQI2LeCqUS6fOP3G/5kkp+ur3LoynoJ3gzh
- rJeKufAR9GLVQ==
-Received: from mchehab by mail.kernel.org with local (Exim 4.98)
- (envelope-from <mchehab@kernel.org>) id 1svWvY-00000001V10-2ucP;
- Tue, 01 Oct 2024 09:04:08 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH v2 10/15] acpi/ghes: move offset calculus to a separate
- function
-Date: Tue,  1 Oct 2024 09:03:47 +0200
-Message-ID: <84226f5976fd29e23ce47d3a5cd311821c8111f8.1727766088.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <cover.1727766088.git.mchehab+huawei@kernel.org>
-References: <cover.1727766088.git.mchehab+huawei@kernel.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sveDX-0002rp-MK
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:51:12 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sveDT-0005YR-Su
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:51:09 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-42cb1e623d1so52264095e9.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 07:51:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727794266; x=1728399066; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=T1NDpBhJvX7cA4nuu6OkQSIHt4wMJgEGOAOYgzp3VUY=;
+ b=D5RCZlp6UMflUvwBJvD7Zz6KGdgIs/6xC26eVGwcSB6LlUhO0uyNK5EJKmZeZCs964
+ DXRY0m2TFyLYhMPUDkYzwp0rVuKdBiIBcl+u2rplphAe6PAQygnDlLrxMUNzhqTjg+0P
+ SI1RtsyCNUCINMDcbP5S3RKUXMB5lCJ+MB4dun8thxNZr0oLQw+lbC+m2l/IZjXI5E+H
+ IoaJEWeniMBarJT4aDQqRnAgV6+K19YM5SzctUicXsPzuvZGA2ejlgvxG9j+tBMB486t
+ blRvr7k60QatcAVQPiJmugTs5BSO4jBgPe0PHlP8nCbPiREwSzsSnoeb+osgKIQtEJpK
+ cF9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727794266; x=1728399066;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=T1NDpBhJvX7cA4nuu6OkQSIHt4wMJgEGOAOYgzp3VUY=;
+ b=WxQv8FzngyTN/ngMvm2fJD+7h7xMRmHoU9yYhO0Go7naILmNimnDJ+ik740SN0yEeE
+ o8imqmky2ZyPfvmZraUbK7t/y6ZBNlMUKuVhyO1jtukdVaffPM5n57a7rU2HF0ANlhsG
+ 51oeA1aig0EIkvjiJEQfjGs5S0Sg5+NiSzfs3VLjEtz873hrC8ikbbt8V87vjucQ7kga
+ cZJnS4dx/VZuiq5WJAQSiCVbp4s7kbCDCEoLGtEv8XzUtqOatdiA61phz+JpZKR/hV8U
+ SKH5FaS0EsbKD2GxI9OuEHszAzOnh72h0T8PcN6L+drkxv9KfHgapJAAG3MlCTd1dxzh
+ QppA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWIsADwb496Gr01ljEA0grAqY33VX6rOf0rPbvmALaSqePS9d7AkUcJIZcYftg4k1BEyqfUk4GBo6iw@nongnu.org
+X-Gm-Message-State: AOJu0Yw8BaHc+NEUN5w+A7cXGWJp1jYa261/6jg1+BQVdrMNWQAuEEoF
+ +eXNIOrcJDTKOAQhhpkxQMVQq2dEowoc24uheogaEt3bRzPBaoVdfY1SYf/HbB6UIBY3YVy7uLj
+ yifDKaQ6hXD8UH7wlERB/55VG5rsm8W7s7Zybs9Z6e6Uh14Gs
+X-Google-Smtp-Source: AGHT+IFyetdaICrfhgiWyGSW6h8+lWdURpRvGAVU800RNgK2W5F+XbB901R7+QPGm21SQQ8OJJ+e75SCdKzBsJ5SE0c=
+X-Received: by 2002:a05:6402:1ec3:b0:5c7:229a:b49d with SMTP id
+ 4fb4d7f45d1cf-5c88262bf4cmr12144866a12.30.1727774677751; Tue, 01 Oct 2024
+ 02:24:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=mchehab@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+References: <20240919215525.22398-1-strahinja.p.jankovic@gmail.com>
+ <CAFEAcA_RkwPgTksJCEP4=V0WY0wp0OiYP28PzXDJKRvpi_KWvw@mail.gmail.com>
+ <CABtshVSsXPoMQy1EZaq2veo-80UMrUX+cqkvh5wq6cujW60s7A@mail.gmail.com>
+In-Reply-To: <CABtshVSsXPoMQy1EZaq2veo-80UMrUX+cqkvh5wq6cujW60s7A@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 1 Oct 2024 10:24:26 +0100
+Message-ID: <CAFEAcA89cd3zNE3sC_+tSKo51S9V=COoGnqC-Ce37W6c4et_mg@mail.gmail.com>
+Subject: Re: [PATCH] {hw/ssi,docs/system/arm}: Allwinner A10 SPI emulation
+To: Strahinja Jankovic <strahinjapjankovic@gmail.com>
+Cc: Beniamino Galvani <b.galvani@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Alistair Francis <alistair@alistair23.me>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,108 +96,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, CPER address location is calculated as an offset of
-the hardware_errors table. It is also badly named, as the
-offset actually used is the address where the CPER data starts,
-and not the beginning of the error source.
+On Mon, 30 Sept 2024 at 22:28, Strahinja Jankovic
+<strahinjapjankovic@gmail.com> wrote:
+>
+> Hi Peter,
+>
+> Thank you very much for the review and detailed comments.
+>
+> I will try to address all comments in the v2 of the patches, but I have s=
+ome questions I added below.
+>
+> On Mon, Sep 30, 2024 at 4:45=E2=80=AFPM Peter Maydell <peter.maydell@lina=
+ro.org> wrote:
+>> > +static uint64_t allwinner_a10_spi_read(void *opaque, hwaddr offset,
+>> > +                                       unsigned size)
+>> > +{
+>> > +    uint32_t value =3D 0;
+>> > +    AWA10SPIState *s =3D opaque;
+>> > +    uint32_t index =3D offset >> 2;
+>>
+>> The MemoryRegionOps defines that size =3D=3D 1 is permitted,
+>> but this calculation of index without any validation
+>> of offset means that if the guest writes a byte to
+>> offset 1 we will treat that identically to writing a byte
+>> to offset 0. This probably isn't what the hardware does.
+>
+> I checked once more the User manual, and it does not mention
+> unaligned access (example for RXDATA)
+>
+> In 8-bits SPI bus width, this register can be accessed in byte,
+> half-word or word unit by AHB. In byte accessing method,
+> if there are words in RXFIFO, the top word is returned and
+> the RXFIFO depth is decreased by 1. In half-word accessing
+> method, the two SPI bursts are returned and the RXFIFO
+> depth is decrease by 2. In word accessing method, the four
+> SPI bursts are returned and the RXFIFO depth is decreased
+> by 4.
+>
+> I chose not to cover the half-word and word access methods,
+> since neither Linux kernel nor U-Boot use it
+> (both use only byte access).
+>
+> I guess that I could add `.valid.unaligned =3D false` when
+> initializing `MemoryRegionOps`?
 
-Move the logic which calculates such offset to a separate
-function, in preparation for a patch that will be changing the
-logic to calculate it from the HEST table.
+This wouldn't help, because a 2-byte load at offset 2
+is not "unaligned" from the memory system's point of view.
+(Also, unaligned =3D false is the default.)
 
-While here, properly name the variable which stores the cper
-address.
+Looking again at your code I see I misread it a bit:
+I thought it was doing a switch() on index, but it is on
+offset.
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- hw/acpi/ghes.c | 50 +++++++++++++++++++++++++++++++-------------------
- 1 file changed, 31 insertions(+), 19 deletions(-)
+Using a switch on offset makes it easy to handle the case
+of "bogus write to an offset that isn't the start of a
+register":
 
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 628fa9b22f4b..900f1571bc97 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -378,11 +378,36 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-     ags->present = true;
- }
- 
-+static void get_ghes_offsets(uint64_t ghes_addr,
-+                             uint64_t *cper_addr,
-+                             uint64_t *read_ack_register_addr)
-+{
-+    if (!ghes_addr) {
-+        return;
-+    }
-+
-+    /*
-+     * non-HEST version supports only one source, so no need to change
-+     * the start offset based on the source ID. Also, we can't validate
-+     * the source ID, as it is stored inside the HEST table.
-+     */
-+
-+    cpu_physical_memory_read(ghes_addr, cper_addr,
-+                             sizeof(*cper_addr));
-+
-+    *cper_addr = le64_to_cpu(*cper_addr);
-+
-+    /*
-+     * As the current version supports only one source, the ack offset is
-+     * just sizeof(uint64_t).
-+     */
-+    *read_ack_register_addr = ghes_addr + sizeof(uint64_t);
-+}
-+
- void ghes_record_cper_errors(const void *cper, size_t len,
-                              uint16_t source_id, Error **errp)
- {
--    uint64_t error_block_addr, read_ack_register_addr, read_ack_register = 0;
--    uint64_t start_addr;
-+    uint64_t cper_addr = 0, read_ack_register_addr = 0, read_ack_register;
-     AcpiGedState *acpi_ged_state;
-     AcpiGhesState *ags;
- 
-@@ -396,27 +421,14 @@ void ghes_record_cper_errors(const void *cper, size_t len,
-     g_assert(acpi_ged_state);
-     ags = &acpi_ged_state->ghes_state;
- 
--    /*
--     * Current version supports only one source, as assured during table build,
--     * so no need to change the start offset based on the source ID.
--     */
--    start_addr = le64_to_cpu(ags->ghes_addr_le);
-+    get_ghes_offsets(le64_to_cpu(ags->ghes_addr_le),
-+                     &cper_addr, &read_ack_register_addr);
- 
--    cpu_physical_memory_read(start_addr, &error_block_addr,
--                             sizeof(error_block_addr));
--
--    error_block_addr = le64_to_cpu(error_block_addr);
--    if (!error_block_addr) {
-+    if (!cper_addr) {
-         error_setg(errp, "can not find Generic Error Status Block");
-         return;
-     }
- 
--    /*
--     * As the current version supports only one source, the ack offset is
--     * just sizeof(uint64_t).
--     */
--    read_ack_register_addr = start_addr + sizeof(uint64_t);
--
-     cpu_physical_memory_read(read_ack_register_addr,
-                              &read_ack_register, sizeof(read_ack_register));
- 
-@@ -437,7 +449,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
-         &read_ack_register, sizeof(uint64_t));
- 
-     /* Write the generic error data entry into guest memory */
--    cpu_physical_memory_write(error_block_addr, cper, len);
-+    cpu_physical_memory_write(cper_addr, cper, len);
- 
-     return;
- }
--- 
-2.46.0
+   switch (offset) {
+   case SOME_REG_OFFSET:
+       /*
+        * handle it; if size 1/2/4 behave differently,
+        * then look at 'size' to do the right thing.
+        */
+       break;
+   /* etc */
+   default:
+       qemu_log_mask(LOG_GUEST_ERROR,
+                     "%s: bad offset 0x%x\n", __func__,
+                     (uint32_t)offset);
+       break;
+   }
 
+Then both the "offset that's not a defined register"
+and "offset that's not aligned to the start of a register"
+go into the default case, we log it as a guest error,
+and do nothing.
+
+thanks
+-- PMM
 
