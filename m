@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C00ACEACDD
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 15:07:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39644CEACD5
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 15:07:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sveSU-0001Al-Pg; Tue, 01 Oct 2024 11:06:38 -0400
+	id 1sveSx-0001eG-Uu; Tue, 01 Oct 2024 11:07:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sveSS-000120-KR
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 11:06:36 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sveSs-0001Xa-Bt
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 11:07:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sveSM-0001G3-KU
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 11:06:36 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 491EJZxO020002;
- Tue, 1 Oct 2024 15:06:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:content-transfer-encoding
- :mime-version; s=pp1; bh=CDZp9CuEf4wuPoEKk64KTAQTzKZUPI5Qtq2zRdo
- QAqc=; b=b52YgwPku/XwwYzwFHc29bqVUfvp9/e3cb+l04lh8qOlZSaCPoZQ+nt
- wN0W97DSISunaJeZTDUMBOQPjC/CRA9ckprp0cRwFMsIVbpQn8ZtjOZvZIKvUT7n
- /tf8SFRtrHNXTKiX2ZMy4LOL+kHCnSIOorhgJmMhVfUA4QrWe8DWr4vX1KMPnkvb
- IuOnq0FUffJMB9bPxrh8Olwhs6RPS5QRpXd1FRBkcHx0PO0ENM4uBhZ1Dh1hU3LT
- /kM5XcEAuxZ1MCZ4hmii3/eFMUqnvu5dhfvtIICEySreB/IMaEmGdUW/O4DuVYpc
- ivYmunLhvmUkL3vFVv33PU2ehnXR0cg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 420jra88p9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 01 Oct 2024 15:06:24 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 491F6OBP025406;
- Tue, 1 Oct 2024 15:06:24 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 420jra88p5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 01 Oct 2024 15:06:24 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 491EmCbZ007989;
- Tue, 1 Oct 2024 15:06:23 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41xvgxw86j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 01 Oct 2024 15:06:23 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 491F6LQM57278946
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 1 Oct 2024 15:06:21 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B9BAE2004B;
- Tue,  1 Oct 2024 15:06:21 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7748C20040;
- Tue,  1 Oct 2024 15:06:21 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.179.29.119])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  1 Oct 2024 15:06:21 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v4] tests/tcg/x86_64: Add cross-modifying code test
-Date: Tue,  1 Oct 2024 17:03:48 +0200
-Message-ID: <20241001150617.9977-1-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.46.2
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: q4nyWSi_LyRbhWVICPM5JqOUz85LeDxB
-X-Proofpoint-ORIG-GUID: ZVx-MogHAU_Jkab79SNZ7QHp5tY8tCdj
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sveSo-0001N3-SQ
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 11:07:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727795213;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hEH3qBVYTHP8CFwTdUPPeaUdYBeTi1xbeartC6vgI8o=;
+ b=iF37eSv7SdUUqwQDfs+qBSXHbBtejUis+0Wg7NdGOBUjiYN1tPL6cco4LRjKrrn8Gq3G3D
+ fUJ2pyX7cSCwueTHid21ZTNP68NWhysabt96TmmiWqT82p8SZ9nBqekhBYRjoWbZva0F4j
+ DGqk6Vthww/wG65sZLpCj52R5PFl6vE=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-615-9bmWCpynMIGBnT49eueoPA-1; Tue, 01 Oct 2024 11:06:51 -0400
+X-MC-Unique: 9bmWCpynMIGBnT49eueoPA-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7a9a85e4a85so1281269485a.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 08:06:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727795211; x=1728400011;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hEH3qBVYTHP8CFwTdUPPeaUdYBeTi1xbeartC6vgI8o=;
+ b=gK0Wt9fdCKvB25ab7qbWKFrNGzW9T2dOo3+2QZPQKlqVGuzO3RcpLYYRi7y0nlw4qn
+ rQR6bW2P5Uc+S+mX39/xF8uajtL80u9Nhyp2FUOb8kYNw663AYleVbSNhsK02G4vLJc9
+ g4oZ0BrBwA1RhmCTOS84jM516W2DVzKBMKa78IRO3CnwVt6bvbaJoW/Fe/qQ4EnvgTvR
+ ugSTusEunjn2ynciG+2jnWvosDrbmXPNq6xHhnqQjBxJyxBqzc2i4AFGX4qktM1j6aop
+ JOhl3bPXFvDNKCa1THPj5Z1GP3eemoj6ZR3Q1aRQqo70xx6N72Q2iDF7oJ8cLpJ5GUBE
+ IgdA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXBtw+ti4IrSCLImpWmo6aWQpYvuBW4D449Ww1iNwYCGR4BxBiBfv0zpAbYWlBNo9K3cYpAGlyIEdaw@nongnu.org
+X-Gm-Message-State: AOJu0YygMNmWMLfdpB6fNMlu32tEOCplQa9GWphQeu1x8qhOlV+lzJ1F
+ hdlWlMua6FXQ1UIA1Em+xdz0V7QVClFuGgKPzs7d9qVDH3848v0Z7MK+CRtk6yqSMYQh62Unjlr
+ y0BNuI4Cxr5aLKXEToOHofMdbK5nCMzKrtmNf/0Y20Z9RBY2AJIvr
+X-Received: by 2002:a05:620a:4624:b0:7a9:b9dc:1b72 with SMTP id
+ af79cd13be357-7ae626c2947mr585585a.23.1727795211088; 
+ Tue, 01 Oct 2024 08:06:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGh2srrZOw47ZH9X2y/DYSL84I+bUz8CGmxoq4lAyO+S7r2RmU7mGEjfUExjhmKahlztD+CoQ==
+X-Received: by 2002:a05:620a:4624:b0:7a9:b9dc:1b72 with SMTP id
+ af79cd13be357-7ae626c2947mr580685a.23.1727795210580; 
+ Tue, 01 Oct 2024 08:06:50 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7ae3783d086sm510953885a.107.2024.10.01.08.06.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 01 Oct 2024 08:06:50 -0700 (PDT)
+Date: Tue, 1 Oct 2024 11:06:47 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Jiang Jiacheng <jiangjiacheng@huawei.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ Prasad Pandit <ppandit@redhat.com>,
+ Julia Suvorova <jusual@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Juraj Marcin <jmarcin@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Jiang Jiacheng <jiangjiacheng@huawei.com>
+Subject: Re: [PATCH 0/7] migration: query-migrationthreads enhancements and
+ cleanups
+Message-ID: <ZvwQB1Calv407MH0@x1n>
+References: <20240930195837.825728-1-peterx@redhat.com>
+ <87o744e5pa.fsf@pond.sub.org> <ZvwGSgDnW8KfgFEh@redhat.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-01_11,2024-09-30_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 mlxscore=0
- lowpriorityscore=0 clxscore=1015 bulkscore=0 spamscore=0 phishscore=0
- mlxlogscore=999 adultscore=0 priorityscore=1501 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2410010096
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZvwGSgDnW8KfgFEh@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,147 +110,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-commit f025692c992c ("accel/tcg: Clear PAGE_WRITE before translation")
-fixed cross-modifying code handling, but did not add a test. The
-changed code was further improved recently [1], and I was not sure
-whether these modifications were safe (spoiler: they were fine).
+On Tue, Oct 01, 2024 at 03:25:14PM +0100, Daniel P. Berrangé wrote:
+> On Tue, Oct 01, 2024 at 07:46:09AM +0200, Markus Armbruster wrote:
+> > Command query-migrationthreads went in without a QAPI ACK.  Issues
+> > review should have caught:
+> > 
+> > * Flawed documentation.  Fixed in commit e6c60bf02d1.
+> > 
+> > * It should have been spelled query-migration-threads.  Not worth fixing
+> >   now, I guess.
+> > 
+> > * What are the use cases?  The commit message doesn't tell!  If it's
+> >   just for debugging, the command should be marked unstable.
+> 
+> It is hard to use too.
+> 
+> Lets say a mgmt app wants to restrict migration threads to some
+> certain pCPUs. It can't call query-migrationthreads beforehand
+> as the threads don't exist until migration is started. If it
+> calls after migration is started, then there's a window where
+> threads are running on arbitrary pCPUs that QEMU has access
+> to. There's no synchronization point where threads have been
+> created & can be queried, but are not yet sending data (and
+> thus burning CPU time)
 
-Add a test to make sure there are no regressions.
+Indeed, I suppose tricks needed if to work with such model, e.g., mgmt
+needs to turn bw=0, start migration, query TIDs, then restore bw.
 
-[1] https://lists.gnu.org/archive/html/qemu-devel/2022-09/msg00034.html
+However that still lacks at least the dest multifd threads, as currently it
+only reports src multifd threads TIDs.  I don't see why a serious mgmt
+would like to pin and care only src threads, not dest threads, which can
+also eat as much (or even more) pCPU resources.
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
+For real debugging purpose, I actually don't see a major value out of it
+either, because GDB can provide all information that this API wants to
+provide, and only better with thread stacks if we want.
 
-v3: https://lore.kernel.org/qemu-devel/20230316214711.318339-1-iii@linux.ibm.com/
-v3 -> v4: Rebase.
-          I've been looking into the .NET failures under QEMU again and
-          what this test looks for was a suspect. It turned out to be
-          https://gitlab.com/qemu-project/qemu/-/issues/2600
-          but it would be good to have this test upstream to ensure
-          there are no regressions.
+Since I don't see how this can be used right, it didn't get proper QAPI
+reviews, and further I highly suspect whether this API is consumed by
+anyone at all.. in any serious way.  Shall we remove this API (with/without
+going through the deprecation process)?
 
-v2: https://patchew.org/QEMU/20220905154944.1284289-1-iii@linux.ibm.com/
-v2 -> v3: Resend with a trivial rebase.
+I added the author Jiacheng too.
 
-v1: https://lists.gnu.org/archive/html/qemu-devel/2022-09/msg00455.html
-v1 -> v2: Fix tweaking the flags (Alex).
-          Keep the custom build rule for now.
+Thanks,
 
- tests/tcg/x86_64/Makefile.target        |  4 ++
- tests/tcg/x86_64/cross-modifying-code.c | 80 +++++++++++++++++++++++++
- 2 files changed, 84 insertions(+)
- create mode 100644 tests/tcg/x86_64/cross-modifying-code.c
-
-diff --git a/tests/tcg/x86_64/Makefile.target b/tests/tcg/x86_64/Makefile.target
-index 783ab5b21ad..d6dff559c7d 100644
---- a/tests/tcg/x86_64/Makefile.target
-+++ b/tests/tcg/x86_64/Makefile.target
-@@ -17,6 +17,7 @@ X86_64_TESTS += cmpxchg
- X86_64_TESTS += adox
- X86_64_TESTS += test-1648
- X86_64_TESTS += test-2175
-+X86_64_TESTS += cross-modifying-code
- TESTS=$(MULTIARCH_TESTS) $(X86_64_TESTS) test-x86_64
- else
- TESTS=$(MULTIARCH_TESTS)
-@@ -27,6 +28,9 @@ adox: CFLAGS=-O2
- run-test-i386-ssse3: QEMU_OPTS += -cpu max
- run-plugin-test-i386-ssse3-%: QEMU_OPTS += -cpu max
- 
-+cross-modifying-code: CFLAGS+=-pthread
-+cross-modifying-code: LDFLAGS+=-pthread
-+
- test-x86_64: LDFLAGS+=-lm -lc
- test-x86_64: test-i386.c test-i386.h test-i386-shift.h test-i386-muldiv.h
- 	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
-diff --git a/tests/tcg/x86_64/cross-modifying-code.c b/tests/tcg/x86_64/cross-modifying-code.c
-new file mode 100644
-index 00000000000..2704df6061c
---- /dev/null
-+++ b/tests/tcg/x86_64/cross-modifying-code.c
-@@ -0,0 +1,80 @@
-+/*
-+ * Test patching code, running in one thread, from another thread.
-+ *
-+ * Intel SDM calls this "cross-modifying code" and recommends a special
-+ * sequence, which requires both threads to cooperate.
-+ *
-+ * Linux kernel uses a different sequence that does not require cooperation and
-+ * involves patching the first byte with int3.
-+ *
-+ * Finally, there is user-mode software out there that simply uses atomics, and
-+ * that seems to be good enough in practice. Test that QEMU has no problems
-+ * with this as well.
-+ */
-+
-+#include <assert.h>
-+#include <pthread.h>
-+#include <stdbool.h>
-+#include <stdlib.h>
-+
-+void add1_or_nop(long *x);
-+asm(".pushsection .rwx,\"awx\",@progbits\n"
-+    ".globl add1_or_nop\n"
-+    /* addq $0x1,(%rdi) */
-+    "add1_or_nop: .byte 0x48, 0x83, 0x07, 0x01\n"
-+    "ret\n"
-+    ".popsection\n");
-+
-+#define THREAD_WAIT 0
-+#define THREAD_PATCH 1
-+#define THREAD_STOP 2
-+
-+static void *thread_func(void *arg)
-+{
-+    int val = 0x0026748d; /* nop */
-+
-+    while (true) {
-+        switch (__atomic_load_n((int *)arg, __ATOMIC_SEQ_CST)) {
-+        case THREAD_WAIT:
-+            break;
-+        case THREAD_PATCH:
-+            val = __atomic_exchange_n((int *)&add1_or_nop, val,
-+                                      __ATOMIC_SEQ_CST);
-+            break;
-+        case THREAD_STOP:
-+            return NULL;
-+        default:
-+            assert(false);
-+            __builtin_unreachable();
-+        }
-+    }
-+}
-+
-+#define INITIAL 42
-+#define COUNT 1000000
-+
-+int main(void)
-+{
-+    int command = THREAD_WAIT;
-+    pthread_t thread;
-+    long x = 0;
-+    int err;
-+    int i;
-+
-+    err = pthread_create(&thread, NULL, &thread_func, &command);
-+    assert(err == 0);
-+
-+    __atomic_store_n(&command, THREAD_PATCH, __ATOMIC_SEQ_CST);
-+    for (i = 0; i < COUNT; i++) {
-+        add1_or_nop(&x);
-+    }
-+    __atomic_store_n(&command, THREAD_STOP, __ATOMIC_SEQ_CST);
-+
-+    err = pthread_join(thread, NULL);
-+    assert(err == 0);
-+
-+    assert(x >= INITIAL);
-+    assert(x <= INITIAL + COUNT);
-+
-+    return EXIT_SUCCESS;
-+}
 -- 
-2.46.2
+Peter Xu
 
 
