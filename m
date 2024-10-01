@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2C9ACEACE8
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:47:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43D61CEACE7
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:47:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svfuI-0005IG-Pt; Tue, 01 Oct 2024 12:39:26 -0400
+	id 1svfwI-0001zw-RB; Tue, 01 Oct 2024 12:41:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfuG-0005Ha-MP
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:24 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1svfuj-0005gg-Q1
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:55 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfuE-0005zs-EZ
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:24 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-37ce18b042fso2313955f8f.1
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:39:21 -0700 (PDT)
+ id 1svfuc-00069s-Qw
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:53 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-42cba6cdf32so50973915e9.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:39:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727800760; x=1728405560; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=H3ZF4yerCxyh9jwwjaDxTUa61zbod0JocRuJ9PSQH8w=;
- b=eTN+NvjaykJrLKKJn0ep/rroHkH8AMYfwrgLYOCT7OM3pp10GsQoPXqXyxfgtUHhu6
- uezIBA3w+fs5EWQDNzZj7ZvC8nRfjRl2upvbqv3DtycLxmkipZJhChyeUoW7MtfjvPOG
- tru3AgUHDxKKdC8g0iUzdunzUDVC6eXKbQmuY2X7B+e3qvxL671vo2JaLUw/lfohYQ8p
- /UJK3a9Vnx/Rhzm6jk0nKBhW1hNsiqPY3SrZTz9VRNv4rkuDGvjWpP5RfUHq9d8Oi+7I
- gaUoCOWxYkjmnGfkRGcCCFQdwijOAacXXVXamdbpm4qJWD9X4G41VSjafMABcIGB0Su1
- BJ/Q==
+ d=linaro.org; s=google; t=1727800785; x=1728405585; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=MyQMYurSoVT4LraZt6ibHbKbByl9wat5HqHvkispgMQ=;
+ b=nijjoxqf3qqrm3VVpeD/cqYn9M9nIY2dXNs5XKCCqVzN0FBA+sx0e7AibRHO6sIw42
+ 5AlzM+uWIfv80Vs8eYeor1QHdodTaQi+rMBvbpcwfVM9SjTD+xS+2uxsITZgzotuKOnK
+ DBnhf7F8K0XxazqUUuctJ/CI6d3k7V5tAIWodWwTNFwnxhn/8mSjAMSCbWwiB7B63U96
+ RHZ3T6ioKlyvn58Gv/DCapTho1HSDK1gMNmm5bjJkjDfxa6SEw7pYcILQS8oHmyeOloo
+ 6qmUwkArD1q5+e9kPEbBcdxIrw/ZzKbJEorXGUAbpkyUpVP48WpB5/zu8teslNqmAz9H
+ sW1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727800760; x=1728405560;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=H3ZF4yerCxyh9jwwjaDxTUa61zbod0JocRuJ9PSQH8w=;
- b=K0ieHXNnB/VmuytkuNAK0bENrQ8MXs+QoBdOHYXShhUxwhRDG/XxAhd6SkxqT/uI7Z
- +FJYre8+jZU1KD6luyhyzu1rxRZMvNJMWgpddtXy7dOBu7YoA99EwHAPLIsdySwEPjct
- IjV2FmqWEGZj/bWd8XKR5xVc7SSTPOOypejg7LRRc2L7bM3Z14czTC0YsmdLV8an8ORM
- RQ9XKt6NpKPIy0DX8105Dy+0A5/0IiYE9nw5RgugcOo7GWNTJJAlpNpwUUvZKhJbMrjU
- kZ+3ptl7DzeZ4VsHObBZP4Bo8R8xlg6+/FN4wdgY41KmSILQ10jkOb5FWi20cd2BcJq1
- 0Jyw==
-X-Gm-Message-State: AOJu0YzCfBO8nGtMYC+uMkNDjuaBDZDNAe6ReYib6P6YKem/ybTNTvTa
- 1YAaSCYqK/FCOswIGBwigmcSrxlQG3hSj1X5hDLy1+mS2o28Zczz3X2CzYnvt+/xGnwvVKwEjrE
- A
-X-Google-Smtp-Source: AGHT+IGjYYIqaWr/iDlbWrc1Pmm5/rP0Tnp4rxEOcqL5vhHOZwRTA9BhW6xbS3s/eohYpylognxVxQ==
-X-Received: by 2002:adf:ffc2:0:b0:37c:cc96:d1cd with SMTP id
- ffacd0b85a97d-37cfb9d3364mr151688f8f.34.1727800760194; 
- Tue, 01 Oct 2024 09:39:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1727800785; x=1728405585;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MyQMYurSoVT4LraZt6ibHbKbByl9wat5HqHvkispgMQ=;
+ b=dtmwC+LmOe+4GStmUbCkDcjtjLKHu99CTewsYeAhPqOg6bX9qtBsRSu2yla23Vyr11
+ XYpmqw/qcj8Ohs0IQf5fIfRB+/VDbOLnB74/rjdn/3UXywM3HUjIhf/LZdzqGKnwM5Ds
+ Lsi/ATc24kpiIOzfqUIzOLNMoNm7Q5wr0zvu660QOCsOptGJ9aRAGQKbObEYYsPiS2DE
+ XIA/VDyDFinJDIVvir8KEwKZzR+YQPAjBB5Eqd1gWd872aLd1/byV0f3UPfuk0IBokx8
+ 4bMKETVdDQCT3dfngcMS/GXYOiHZAPZt9i+4MOoY8Z2pb8tHEKNkeObtjRsqH3QZgs8Q
+ kgiQ==
+X-Gm-Message-State: AOJu0YzIv30O8wkC0gKC/73YhnwT1jfSNmW9ZFjgfeDUfKcw/z7gl9An
+ UzJRS2aOd5vLqeojrTbixIzKB7R34DEfzXuR7KnZBs9sBh5se60HAd7LtiiNEfi5Zr9Ltntdf0H
+ v
+X-Google-Smtp-Source: AGHT+IFfmD0XvzsjqWUpixTLYeNsGuirSdTHgWBAepcmQSpDt9qmBYqUIAKFnv7ueU2R7b2ebXVDgA==
+X-Received: by 2002:a05:6000:1567:b0:37c:f933:48a9 with SMTP id
+ ffacd0b85a97d-37cfb8b530amr232174f8f.1.1727800785240; 
+ Tue, 01 Oct 2024 09:39:45 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd56e6547sm12243771f8f.58.2024.10.01.09.39.19
+ ffacd0b85a97d-37cd56e6547sm12243771f8f.58.2024.10.01.09.39.44
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 09:39:19 -0700 (PDT)
+ Tue, 01 Oct 2024 09:39:45 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/54] target-arm queue
-Date: Tue,  1 Oct 2024 17:38:24 +0100
-Message-Id: <20241001163918.1275441-1-peter.maydell@linaro.org>
+Subject: [PULL 46/54] hw/timer: Remove omap_gptimer
+Date: Tue,  1 Oct 2024 17:39:10 +0100
+Message-Id: <20241001163918.1275441-47-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241001163918.1275441-1-peter.maydell@linaro.org>
+References: <20241001163918.1275441-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,254 +94,577 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This pullreq has a few miscellaneous fixes, plus the
-non-controversial (and largely reviewed) parts of my
-series removing deprecated arm boards. (The rest of that
-series I will send out a v2 for once this lands.)
+The omap_gptimer device is only in the OMAP2 SoC, which we
+are removing.
 
--- PMM
-
-The following changes since commit 718780d20470c66a3a36d036b29148d5809dc855:
-
-  Merge tag 'pull-nvme-20241001' of https://gitlab.com/birkelund/qemu into staging (2024-10-01 11:34:07 +0100)
-
-are available in the Git repository at:
-
-  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20241001
-
-for you to fetch changes up to be025ce676d0f8fd094d17b34e87305a1c8fb595:
-
-  hw: Remove omap2 specific defines and enums (2024-10-01 16:08:02 +0100)
-
-----------------------------------------------------------------
-target-arm queue:
- * MAINTAINERS: Update STM32L4x5 and B-L475E-IOT01A maintainers
- * hw/arm/xlnx: Connect secondary CGEM IRQs
- * m25p80: Add SFDP table for mt35xu01g flash
- * target/arm: Avoid target_ulong for physical address lookups
- * hw/ssi/xilinx_spips: Fix flash erase assert in dual parallel configuration
- * hw: fix memory leak in IRQState allocation
- * hw/sd/sdcard: Fix handling of disabled boot partitions
- * arm: Remove deprecated board models
-
-----------------------------------------------------------------
-Ard Biesheuvel (1):
-      target/arm: Avoid target_ulong for physical address lookups
-
-Inès Varhol (1):
-      MAINTAINERS: Update STM32L4x5 and B-L475E-IOT01A maintainers
-
-Jan Luebbe (1):
-      hw/sd/sdcard: Fix handling of disabled boot partitions
-
-Kinsey Moore (1):
-      hw/arm/xlnx: Connect secondary CGEM IRQs
-
-Matheus Tavares Bernardino (1):
-      hw: fix memory leak in IRQState allocation
-
-Peter Maydell (47):
-      hw/arm: Remove deprecated akita, borzoi, spitz, terrier, tosa boards
-      hw/input: Drop ADS7846 device
-      hw/display: Remove tc6393xb device
-      hw/arm/KConfig: Replace ZAURUS with ZAURUS_SCOOP
-      hw/arm: Remove 'cheetah' machine
-      hw/arm: Remove 'connex' and 'verdex' machines
-      hw/arm: Remove 'mainstone' machine
-      hw/misc: Remove MAINSTONE_FPGA device
-      hw/arm: Remove 'z2' machine
-      hw/arm: Remove STRONGARM->PXA2XX dependency
-      hw/timer/pxa2xx_timer: Remove use of pxa.h header
-      hw/arm: Remove pxa2xx.c
-      hw/sd: Remove pxa2xx_mmci.c
-      hw/input: Remove pxa2xx_keypad
-      hw/display: Remove pxa2xx_lcd.c
-      hw/dma: Remove pxa2xx_dma
-      hw/pcmcia: Remove pxa2xx pcmcia device
-      hw/arm: Remove pxa2xx_gpio
-      hw/arm: Remove pxa2xx_pic
-      hw/timer: Remove pxa27x-timer
-      hw/arm: Remove 'n800' and 'n810' machines
-      hw/misc: Remove cbus
-      hw/display: Remove Blizzard display device
-      hw/input: Remove tsc2005 touchscreen controller
-      hw/input: Remove tsc210x device
-      hw/rtc: Remove twl92230 device
-      hw/input: Remove lm832x device
-      hw/block: Remove OneNAND device
-      hw/usb: Remove tusb6010 USB controller
-      hw/usb: Remove MUSB USB host controller
-      docs: Document removal of old Arm boards
-      hw/arm: Remove omap2.c
-      hw/gpio: Remove TYPE_OMAP2_GPIO
-      hw/char: Remove omap2_uart
-      hw/intc: Remove omap2-intc device
-      hw/sd: Remove omap2_mmc device
-      hw/misc: Remove omap_sdrc device
-      hw/misc: Remove omap_gpmc
-      hw/timer: Remove omap_gptimer
-      hw/timer: Remove omap_synctimer
-      hw/ssi: Remove omap_mcspi
-      hw/misc: Remove omap_tap device
-      hw/display: Remove omap_dss
-      hw/misc: Remove omap_l4 device
-      hw/misc/omap_clk: Remove OMAP2-specifics
-      hw/dma: Remove omap_dma4 device
-      hw: Remove omap2 specific defines and enums
-
-Shiva sagar Myana (2):
-      m25p80: Add SFDP table for mt35xu01g flash
-      hw/ssi/xilinx_spips: Fix flash erase assert in dual parallel configuration
-
- MAINTAINERS                             |   99 +-
- docs/about/deprecated.rst               |   15 -
- docs/about/removed-features.rst         |   14 +
- docs/system/arm/gumstix.rst             |   21 -
- docs/system/arm/mainstone.rst           |   25 -
- docs/system/arm/nseries.rst             |   33 -
- docs/system/arm/palm.rst                |   23 -
- docs/system/arm/xscale.rst              |   35 -
- docs/system/target-arm.rst              |    5 -
- configs/devices/arm-softmmu/default.mak |    7 -
- hw/block/m25p80_sfdp.h                  |    1 +
- include/hw/arm/omap.h                   |  350 +---
- include/hw/arm/pxa.h                    |  197 ---
- include/hw/arm/xlnx-versal.h            |    1 +
- include/hw/arm/xlnx-zynqmp.h            |    1 +
- include/hw/block/flash.h                |    3 -
- include/hw/display/blizzard.h           |   21 -
- include/hw/display/tc6393xb.h           |   21 -
- include/hw/input/lm832x.h               |   28 -
- include/hw/input/tsc2xxx.h              |   41 -
- include/hw/misc/cbus.h                  |   31 -
- include/hw/usb/hcd-musb.h               |   49 -
- target/arm/internals.h                  |    4 +-
- hw/arm/gumstix.c                        |  141 --
- hw/arm/mainstone.c                      |  175 --
- hw/arm/nseries.c                        | 1473 -----------------
- hw/arm/omap2.c                          | 2715 -------------------------------
- hw/arm/palm.c                           |  324 ----
- hw/arm/pxa2xx.c                         | 2393 ---------------------------
- hw/arm/pxa2xx_gpio.c                    |  365 -----
- hw/arm/pxa2xx_pic.c                     |  359 ----
- hw/arm/spitz.c                          | 1284 ---------------
- hw/arm/tosa.c                           |  327 ----
- hw/arm/xlnx-versal.c                    |   12 +-
- hw/arm/xlnx-zynqmp.c                    |   11 +-
- hw/arm/z2.c                             |  355 ----
- hw/block/m25p80.c                       |    3 +-
- hw/block/m25p80_sfdp.c                  |   37 +
- hw/block/onenand.c                      |  872 ----------
- hw/char/omap_uart.c                     |  113 --
- hw/core/irq.c                           |   19 +-
- hw/display/blizzard.c                   | 1026 ------------
- hw/display/omap_dss.c                   | 1093 -------------
- hw/display/pxa2xx_lcd.c                 | 1451 -----------------
- hw/display/tc6393xb.c                   |  568 -------
- hw/dma/omap_dma.c                       |  451 +----
- hw/dma/pxa2xx_dma.c                     |  591 -------
- hw/gpio/omap_gpio.c                     |  557 -------
- hw/input/ads7846.c                      |  186 ---
- hw/input/lm832x.c                       |  528 ------
- hw/input/pxa2xx_keypad.c                |  331 ----
- hw/input/tsc2005.c                      |  571 -------
- hw/input/tsc210x.c                      | 1241 --------------
- hw/intc/omap_intc.c                     |  276 ----
- hw/misc/cbus.c                          |  619 -------
- hw/misc/mst_fpga.c                      |  269 ---
- hw/misc/omap_clk.c                      |  527 +-----
- hw/misc/omap_gpmc.c                     |  898 ----------
- hw/misc/omap_l4.c                       |  162 --
- hw/misc/omap_sdrc.c                     |  167 --
- hw/misc/omap_tap.c                      |  117 --
- hw/pcmcia/pxa2xx.c                      |  248 ---
- hw/rtc/twl92230.c                       |  882 ----------
- hw/sd/omap_mmc.c                        |   63 -
- hw/sd/pxa2xx_mmci.c                     |  594 -------
- hw/sd/sd.c                              |    7 -
- hw/ssi/omap_spi.c                       |  380 -----
- hw/ssi/xilinx_spips.c                   |    4 +-
- hw/timer/omap_gptimer.c                 |  512 ------
- hw/timer/omap_synctimer.c               |  110 --
- hw/timer/pxa2xx_timer.c                 |   25 -
- hw/usb/hcd-musb.c                       | 1553 ------------------
- hw/usb/tusb6010.c                       |  850 ----------
- target/arm/ptw.c                        |   16 +-
- tests/qtest/libqos/arm-n800-machine.c   |   92 --
- hw/arm/Kconfig                          |   89 +-
- hw/arm/meson.build                      |    9 -
- hw/block/Kconfig                        |    3 -
- hw/block/meson.build                    |    1 -
- hw/display/Kconfig                      |    3 -
- hw/display/meson.build                  |    4 -
- hw/dma/meson.build                      |    1 -
- hw/gpio/Kconfig                         |    3 +
- hw/gpio/meson.build                     |    2 +-
- hw/input/Kconfig                        |   13 -
- hw/input/meson.build                    |    5 -
- hw/input/trace-events                   |    3 -
- hw/misc/meson.build                     |    6 -
- hw/pcmcia/meson.build                   |    1 -
- hw/rtc/Kconfig                          |    4 -
- hw/rtc/meson.build                      |    1 -
- hw/sd/meson.build                       |    1 -
- hw/sd/trace-events                      |    4 -
- hw/ssi/meson.build                      |    1 -
- hw/timer/Kconfig                        |    3 +
- hw/timer/meson.build                    |    4 +-
- hw/usb/Kconfig                          |    8 -
- hw/usb/meson.build                      |    2 -
- tests/avocado/machine_arm_n8x0.py       |   49 -
- tests/qtest/libqos/meson.build          |    1 -
- 100 files changed, 146 insertions(+), 29043 deletions(-)
- delete mode 100644 docs/system/arm/gumstix.rst
- delete mode 100644 docs/system/arm/mainstone.rst
- delete mode 100644 docs/system/arm/nseries.rst
- delete mode 100644 docs/system/arm/palm.rst
- delete mode 100644 docs/system/arm/xscale.rst
- delete mode 100644 include/hw/arm/pxa.h
- delete mode 100644 include/hw/display/blizzard.h
- delete mode 100644 include/hw/display/tc6393xb.h
- delete mode 100644 include/hw/input/lm832x.h
- delete mode 100644 include/hw/input/tsc2xxx.h
- delete mode 100644 include/hw/misc/cbus.h
- delete mode 100644 include/hw/usb/hcd-musb.h
- delete mode 100644 hw/arm/gumstix.c
- delete mode 100644 hw/arm/mainstone.c
- delete mode 100644 hw/arm/nseries.c
- delete mode 100644 hw/arm/omap2.c
- delete mode 100644 hw/arm/palm.c
- delete mode 100644 hw/arm/pxa2xx.c
- delete mode 100644 hw/arm/pxa2xx_gpio.c
- delete mode 100644 hw/arm/pxa2xx_pic.c
- delete mode 100644 hw/arm/spitz.c
- delete mode 100644 hw/arm/tosa.c
- delete mode 100644 hw/arm/z2.c
- delete mode 100644 hw/block/onenand.c
- delete mode 100644 hw/display/blizzard.c
- delete mode 100644 hw/display/omap_dss.c
- delete mode 100644 hw/display/pxa2xx_lcd.c
- delete mode 100644 hw/display/tc6393xb.c
- delete mode 100644 hw/dma/pxa2xx_dma.c
- delete mode 100644 hw/input/ads7846.c
- delete mode 100644 hw/input/lm832x.c
- delete mode 100644 hw/input/pxa2xx_keypad.c
- delete mode 100644 hw/input/tsc2005.c
- delete mode 100644 hw/input/tsc210x.c
- delete mode 100644 hw/misc/cbus.c
- delete mode 100644 hw/misc/mst_fpga.c
- delete mode 100644 hw/misc/omap_gpmc.c
- delete mode 100644 hw/misc/omap_l4.c
- delete mode 100644 hw/misc/omap_sdrc.c
- delete mode 100644 hw/misc/omap_tap.c
- delete mode 100644 hw/pcmcia/pxa2xx.c
- delete mode 100644 hw/rtc/twl92230.c
- delete mode 100644 hw/sd/pxa2xx_mmci.c
- delete mode 100644 hw/ssi/omap_spi.c
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240903160751.4100218-45-peter.maydell@linaro.org
+---
+ include/hw/arm/omap.h   |   8 -
+ hw/timer/omap_gptimer.c | 512 ----------------------------------------
+ hw/timer/meson.build    |   1 -
+ 3 files changed, 521 deletions(-)
  delete mode 100644 hw/timer/omap_gptimer.c
- delete mode 100644 hw/timer/omap_synctimer.c
- delete mode 100644 hw/usb/hcd-musb.c
- delete mode 100644 hw/usb/tusb6010.c
- delete mode 100644 tests/qtest/libqos/arm-n800-machine.c
- delete mode 100755 tests/avocado/machine_arm_n8x0.py
+
+diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
+index 0cbbf2fecb5..cced3d28605 100644
+--- a/include/hw/arm/omap.h
++++ b/include/hw/arm/omap.h
+@@ -676,13 +676,6 @@ struct omap_dma_lcd_channel_s {
+ # define OMAP24XX_DMA_MS		63	/* Not in OMAP2420 */
+ # define OMAP24XX_DMA_EXT_DMAREQ5	64
+ 
+-/* omap[123].c */
+-/* OMAP2 gp timer */
+-struct omap_gp_timer_s;
+-struct omap_gp_timer_s *omap_gp_timer_init(struct omap_target_agent_s *ta,
+-                qemu_irq irq, omap_clk fclk, omap_clk iclk);
+-void omap_gp_timer_reset(struct omap_gp_timer_s *s);
+-
+ /* OMAP2 sysctimer */
+ struct omap_synctimer_s;
+ struct omap_synctimer_s *omap_synctimer_init(struct omap_target_agent_s *ta,
+@@ -936,7 +929,6 @@ struct omap_mpu_state_s {
+     /* OMAP2-only peripherals */
+     struct omap_l4_s *l4;
+ 
+-    struct omap_gp_timer_s *gptimer[12];
+     struct omap_synctimer_s *synctimer;
+ 
+     struct omap_mcspi_s *mcspi[2];
+diff --git a/hw/timer/omap_gptimer.c b/hw/timer/omap_gptimer.c
+deleted file mode 100644
+index 34e6af7aff5..00000000000
+--- a/hw/timer/omap_gptimer.c
++++ /dev/null
+@@ -1,512 +0,0 @@
+-/*
+- * TI OMAP2 general purpose timers emulation.
+- *
+- * Copyright (C) 2007-2008 Nokia Corporation
+- * Written by Andrzej Zaborowski <andrew@openedhand.com>
+- *
+- * This program is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU General Public License as
+- * published by the Free Software Foundation; either version 2 or
+- * (at your option) any later version of the License.
+- *
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- * GNU General Public License for more details.
+- *
+- * You should have received a copy of the GNU General Public License along
+- * with this program; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "hw/irq.h"
+-#include "qemu/timer.h"
+-#include "hw/arm/omap.h"
+-
+-/* GP timers */
+-struct omap_gp_timer_s {
+-    MemoryRegion iomem;
+-    qemu_irq irq;
+-    qemu_irq wkup;
+-    qemu_irq in;
+-    qemu_irq out;
+-    omap_clk clk;
+-    QEMUTimer *timer;
+-    QEMUTimer *match;
+-    struct omap_target_agent_s *ta;
+-
+-    int in_val;
+-    int out_val;
+-    int64_t time;
+-    int64_t rate;
+-    int64_t ticks_per_sec;
+-
+-    int16_t config;
+-    int status;
+-    int it_ena;
+-    int wu_ena;
+-    int enable;
+-    int inout;
+-    int capt2;
+-    int pt;
+-    enum {
+-        gpt_trigger_none, gpt_trigger_overflow, gpt_trigger_both
+-    } trigger;
+-    enum {
+-        gpt_capture_none, gpt_capture_rising,
+-        gpt_capture_falling, gpt_capture_both
+-    } capture;
+-    int scpwm;
+-    int ce;
+-    int pre;
+-    int ptv;
+-    int ar;
+-    int st;
+-    int posted;
+-    uint32_t val;
+-    uint32_t load_val;
+-    uint32_t capture_val[2];
+-    uint32_t match_val;
+-    int capt_num;
+-
+-    uint16_t writeh;	/* LSB */
+-    uint16_t readh;	/* MSB */
+-};
+-
+-#define GPT_TCAR_IT	(1 << 2)
+-#define GPT_OVF_IT	(1 << 1)
+-#define GPT_MAT_IT	(1 << 0)
+-
+-static inline void omap_gp_timer_intr(struct omap_gp_timer_s *timer, int it)
+-{
+-    if (timer->it_ena & it) {
+-        if (!timer->status)
+-            qemu_irq_raise(timer->irq);
+-
+-        timer->status |= it;
+-        /* Or are the status bits set even when masked?
+-         * i.e. is masking applied before or after the status register?  */
+-    }
+-
+-    if (timer->wu_ena & it)
+-        qemu_irq_pulse(timer->wkup);
+-}
+-
+-static inline void omap_gp_timer_out(struct omap_gp_timer_s *timer, int level)
+-{
+-    if (!timer->inout && timer->out_val != level) {
+-        timer->out_val = level;
+-        qemu_set_irq(timer->out, level);
+-    }
+-}
+-
+-static inline uint32_t omap_gp_timer_read(struct omap_gp_timer_s *timer)
+-{
+-    uint64_t distance;
+-
+-    if (timer->st && timer->rate) {
+-        distance = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) - timer->time;
+-        distance = muldiv64(distance, timer->rate, timer->ticks_per_sec);
+-
+-        if (distance >= 0xffffffff - timer->val)
+-            return 0xffffffff;
+-        else
+-            return timer->val + distance;
+-    } else
+-        return timer->val;
+-}
+-
+-static inline void omap_gp_timer_sync(struct omap_gp_timer_s *timer)
+-{
+-    if (timer->st) {
+-        timer->val = omap_gp_timer_read(timer);
+-        timer->time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    }
+-}
+-
+-static inline void omap_gp_timer_update(struct omap_gp_timer_s *timer)
+-{
+-    int64_t expires, matches;
+-
+-    if (timer->st && timer->rate) {
+-        expires = muldiv64(0x100000000ll - timer->val,
+-                        timer->ticks_per_sec, timer->rate);
+-        timer_mod(timer->timer, timer->time + expires);
+-
+-        if (timer->ce && timer->match_val >= timer->val) {
+-            matches = muldiv64(timer->ticks_per_sec,
+-                               timer->match_val - timer->val, timer->rate);
+-            timer_mod(timer->match, timer->time + matches);
+-        } else
+-            timer_del(timer->match);
+-    } else {
+-        timer_del(timer->timer);
+-        timer_del(timer->match);
+-        omap_gp_timer_out(timer, timer->scpwm);
+-    }
+-}
+-
+-static inline void omap_gp_timer_trigger(struct omap_gp_timer_s *timer)
+-{
+-    if (timer->pt)
+-        /* TODO in overflow-and-match mode if the first event to
+-         * occur is the match, don't toggle.  */
+-        omap_gp_timer_out(timer, !timer->out_val);
+-    else
+-        /* TODO inverted pulse on timer->out_val == 1?  */
+-        qemu_irq_pulse(timer->out);
+-}
+-
+-static void omap_gp_timer_tick(void *opaque)
+-{
+-    struct omap_gp_timer_s *timer = opaque;
+-
+-    if (!timer->ar) {
+-        timer->st = 0;
+-        timer->val = 0;
+-    } else {
+-        timer->val = timer->load_val;
+-        timer->time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    }
+-
+-    if (timer->trigger == gpt_trigger_overflow ||
+-                    timer->trigger == gpt_trigger_both)
+-        omap_gp_timer_trigger(timer);
+-
+-    omap_gp_timer_intr(timer, GPT_OVF_IT);
+-    omap_gp_timer_update(timer);
+-}
+-
+-static void omap_gp_timer_match(void *opaque)
+-{
+-    struct omap_gp_timer_s *timer = opaque;
+-
+-    if (timer->trigger == gpt_trigger_both)
+-        omap_gp_timer_trigger(timer);
+-
+-    omap_gp_timer_intr(timer, GPT_MAT_IT);
+-}
+-
+-static void omap_gp_timer_input(void *opaque, int line, int on)
+-{
+-    struct omap_gp_timer_s *s = opaque;
+-    int trigger;
+-
+-    switch (s->capture) {
+-    default:
+-    case gpt_capture_none:
+-        trigger = 0;
+-        break;
+-    case gpt_capture_rising:
+-        trigger = !s->in_val && on;
+-        break;
+-    case gpt_capture_falling:
+-        trigger = s->in_val && !on;
+-        break;
+-    case gpt_capture_both:
+-        trigger = (s->in_val == !on);
+-        break;
+-    }
+-    s->in_val = on;
+-
+-    if (s->inout && trigger && s->capt_num < 2) {
+-        s->capture_val[s->capt_num] = omap_gp_timer_read(s);
+-
+-        if (s->capt2 == s->capt_num ++)
+-            omap_gp_timer_intr(s, GPT_TCAR_IT);
+-    }
+-}
+-
+-static void omap_gp_timer_clk_update(void *opaque, int line, int on)
+-{
+-    struct omap_gp_timer_s *timer = opaque;
+-
+-    omap_gp_timer_sync(timer);
+-    timer->rate = on ? omap_clk_getrate(timer->clk) : 0;
+-    omap_gp_timer_update(timer);
+-}
+-
+-static void omap_gp_timer_clk_setup(struct omap_gp_timer_s *timer)
+-{
+-    omap_clk_adduser(timer->clk,
+-                     qemu_allocate_irq(omap_gp_timer_clk_update, timer, 0));
+-    timer->rate = omap_clk_getrate(timer->clk);
+-}
+-
+-void omap_gp_timer_reset(struct omap_gp_timer_s *s)
+-{
+-    s->config = 0x000;
+-    s->status = 0;
+-    s->it_ena = 0;
+-    s->wu_ena = 0;
+-    s->inout = 0;
+-    s->capt2 = 0;
+-    s->capt_num = 0;
+-    s->pt = 0;
+-    s->trigger = gpt_trigger_none;
+-    s->capture = gpt_capture_none;
+-    s->scpwm = 0;
+-    s->ce = 0;
+-    s->pre = 0;
+-    s->ptv = 0;
+-    s->ar = 0;
+-    s->st = 0;
+-    s->posted = 1;
+-    s->val = 0x00000000;
+-    s->load_val = 0x00000000;
+-    s->capture_val[0] = 0x00000000;
+-    s->capture_val[1] = 0x00000000;
+-    s->match_val = 0x00000000;
+-    omap_gp_timer_update(s);
+-}
+-
+-static uint32_t omap_gp_timer_readw(void *opaque, hwaddr addr)
+-{
+-    struct omap_gp_timer_s *s = opaque;
+-
+-    switch (addr) {
+-    case 0x00:	/* TIDR */
+-        return 0x21;
+-
+-    case 0x10:	/* TIOCP_CFG */
+-        return s->config;
+-
+-    case 0x14:	/* TISTAT */
+-        /* ??? When's this bit reset? */
+-        return 1;						/* RESETDONE */
+-
+-    case 0x18:	/* TISR */
+-        return s->status;
+-
+-    case 0x1c:	/* TIER */
+-        return s->it_ena;
+-
+-    case 0x20:	/* TWER */
+-        return s->wu_ena;
+-
+-    case 0x24:	/* TCLR */
+-        return (s->inout << 14) |
+-                (s->capt2 << 13) |
+-                (s->pt << 12) |
+-                (s->trigger << 10) |
+-                (s->capture << 8) |
+-                (s->scpwm << 7) |
+-                (s->ce << 6) |
+-                (s->pre << 5) |
+-                (s->ptv << 2) |
+-                (s->ar << 1) |
+-                (s->st << 0);
+-
+-    case 0x28:	/* TCRR */
+-        return omap_gp_timer_read(s);
+-
+-    case 0x2c:	/* TLDR */
+-        return s->load_val;
+-
+-    case 0x30:	/* TTGR */
+-        return 0xffffffff;
+-
+-    case 0x34:	/* TWPS */
+-        return 0x00000000;	/* No posted writes pending.  */
+-
+-    case 0x38:	/* TMAR */
+-        return s->match_val;
+-
+-    case 0x3c:	/* TCAR1 */
+-        return s->capture_val[0];
+-
+-    case 0x40:	/* TSICR */
+-        return s->posted << 2;
+-
+-    case 0x44:	/* TCAR2 */
+-        return s->capture_val[1];
+-    }
+-
+-    OMAP_BAD_REG(addr);
+-    return 0;
+-}
+-
+-static uint32_t omap_gp_timer_readh(void *opaque, hwaddr addr)
+-{
+-    struct omap_gp_timer_s *s = opaque;
+-    uint32_t ret;
+-
+-    if (addr & 2)
+-        return s->readh;
+-    else {
+-        ret = omap_gp_timer_readw(opaque, addr);
+-        s->readh = ret >> 16;
+-        return ret & 0xffff;
+-    }
+-}
+-
+-static void omap_gp_timer_write(void *opaque, hwaddr addr, uint32_t value)
+-{
+-    struct omap_gp_timer_s *s = opaque;
+-
+-    switch (addr) {
+-    case 0x00:	/* TIDR */
+-    case 0x14:	/* TISTAT */
+-    case 0x34:	/* TWPS */
+-    case 0x3c:	/* TCAR1 */
+-    case 0x44:	/* TCAR2 */
+-        OMAP_RO_REG(addr);
+-        break;
+-
+-    case 0x10:	/* TIOCP_CFG */
+-        s->config = value & 0x33d;
+-        if (((value >> 3) & 3) == 3)				/* IDLEMODE */
+-            fprintf(stderr, "%s: illegal IDLEMODE value in TIOCP_CFG\n",
+-                            __func__);
+-        if (value & 2)						/* SOFTRESET */
+-            omap_gp_timer_reset(s);
+-        break;
+-
+-    case 0x18:	/* TISR */
+-        if (value & GPT_TCAR_IT)
+-            s->capt_num = 0;
+-        if (s->status && !(s->status &= ~value))
+-            qemu_irq_lower(s->irq);
+-        break;
+-
+-    case 0x1c:	/* TIER */
+-        s->it_ena = value & 7;
+-        break;
+-
+-    case 0x20:	/* TWER */
+-        s->wu_ena = value & 7;
+-        break;
+-
+-    case 0x24:	/* TCLR */
+-        omap_gp_timer_sync(s);
+-        s->inout = (value >> 14) & 1;
+-        s->capt2 = (value >> 13) & 1;
+-        s->pt = (value >> 12) & 1;
+-        s->trigger = (value >> 10) & 3;
+-        if (s->capture == gpt_capture_none &&
+-                        ((value >> 8) & 3) != gpt_capture_none)
+-            s->capt_num = 0;
+-        s->capture = (value >> 8) & 3;
+-        s->scpwm = (value >> 7) & 1;
+-        s->ce = (value >> 6) & 1;
+-        s->pre = (value >> 5) & 1;
+-        s->ptv = (value >> 2) & 7;
+-        s->ar = (value >> 1) & 1;
+-        s->st = (value >> 0) & 1;
+-        if (s->inout && s->trigger != gpt_trigger_none)
+-            fprintf(stderr, "%s: GP timer pin must be an output "
+-                            "for this trigger mode\n", __func__);
+-        if (!s->inout && s->capture != gpt_capture_none)
+-            fprintf(stderr, "%s: GP timer pin must be an input "
+-                            "for this capture mode\n", __func__);
+-        if (s->trigger == gpt_trigger_none)
+-            omap_gp_timer_out(s, s->scpwm);
+-        /* TODO: make sure this doesn't overflow 32-bits */
+-        s->ticks_per_sec = NANOSECONDS_PER_SECOND << (s->pre ? s->ptv + 1 : 0);
+-        omap_gp_timer_update(s);
+-        break;
+-
+-    case 0x28:	/* TCRR */
+-        s->time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-        s->val = value;
+-        omap_gp_timer_update(s);
+-        break;
+-
+-    case 0x2c:	/* TLDR */
+-        s->load_val = value;
+-        break;
+-
+-    case 0x30:	/* TTGR */
+-        s->time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-        s->val = s->load_val;
+-        omap_gp_timer_update(s);
+-        break;
+-
+-    case 0x38:	/* TMAR */
+-        omap_gp_timer_sync(s);
+-        s->match_val = value;
+-        omap_gp_timer_update(s);
+-        break;
+-
+-    case 0x40:	/* TSICR */
+-        s->posted = (value >> 2) & 1;
+-        if (value & 2)	/* How much exactly are we supposed to reset? */
+-            omap_gp_timer_reset(s);
+-        break;
+-
+-    default:
+-        OMAP_BAD_REG(addr);
+-    }
+-}
+-
+-static void omap_gp_timer_writeh(void *opaque, hwaddr addr, uint32_t value)
+-{
+-    struct omap_gp_timer_s *s = opaque;
+-
+-    if (addr & 2)
+-        omap_gp_timer_write(opaque, addr, (value << 16) | s->writeh);
+-    else
+-        s->writeh = (uint16_t) value;
+-}
+-
+-static uint64_t omap_gp_timer_readfn(void *opaque, hwaddr addr,
+-                                     unsigned size)
+-{
+-    switch (size) {
+-    case 1:
+-        return omap_badwidth_read32(opaque, addr);
+-    case 2:
+-        return omap_gp_timer_readh(opaque, addr);
+-    case 4:
+-        return omap_gp_timer_readw(opaque, addr);
+-    default:
+-        g_assert_not_reached();
+-    }
+-}
+-
+-static void omap_gp_timer_writefn(void *opaque, hwaddr addr,
+-                                  uint64_t value, unsigned size)
+-{
+-    switch (size) {
+-    case 1:
+-        omap_badwidth_write32(opaque, addr, value);
+-        break;
+-    case 2:
+-        omap_gp_timer_writeh(opaque, addr, value);
+-        break;
+-    case 4:
+-        omap_gp_timer_write(opaque, addr, value);
+-        break;
+-    default:
+-        g_assert_not_reached();
+-    }
+-}
+-
+-static const MemoryRegionOps omap_gp_timer_ops = {
+-    .read = omap_gp_timer_readfn,
+-    .write = omap_gp_timer_writefn,
+-    .valid.min_access_size = 1,
+-    .valid.max_access_size = 4,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-};
+-
+-struct omap_gp_timer_s *omap_gp_timer_init(struct omap_target_agent_s *ta,
+-                qemu_irq irq, omap_clk fclk, omap_clk iclk)
+-{
+-    struct omap_gp_timer_s *s = g_new0(struct omap_gp_timer_s, 1);
+-
+-    s->ta = ta;
+-    s->irq = irq;
+-    s->clk = fclk;
+-    s->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, omap_gp_timer_tick, s);
+-    s->match = timer_new_ns(QEMU_CLOCK_VIRTUAL, omap_gp_timer_match, s);
+-    s->in = qemu_allocate_irq(omap_gp_timer_input, s, 0);
+-    omap_gp_timer_reset(s);
+-    omap_gp_timer_clk_setup(s);
+-
+-    memory_region_init_io(&s->iomem, NULL, &omap_gp_timer_ops, s, "omap.gptimer",
+-                          omap_l4_region_size(ta, 0));
+-    omap_l4_attach(ta, 0, &s->iomem);
+-
+-    return s;
+-}
+diff --git a/hw/timer/meson.build b/hw/timer/meson.build
+index c1113eb90b1..73cb9541269 100644
+--- a/hw/timer/meson.build
++++ b/hw/timer/meson.build
+@@ -21,7 +21,6 @@ system_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('mips_gictimer.c'))
+ system_ss.add(when: 'CONFIG_MSF2', if_true: files('mss-timer.c'))
+ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_timer.c'))
+ system_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_timer.c'))
+-system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_gptimer.c'))
+ system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_synctimer.c'))
+ system_ss.add(when: 'CONFIG_PXA2XX_TIMER', if_true: files('pxa2xx_timer.c'))
+ system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_systmr.c'))
+-- 
+2.34.1
+
 
