@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12D9ECEACE7
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFD87CEACE7
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:41:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svfv9-0006fG-Qg; Tue, 01 Oct 2024 12:40:19 -0400
+	id 1svfuo-0005kT-VC; Tue, 01 Oct 2024 12:39:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfuk-0005gj-7X
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:56 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1svfuV-0005VY-Ao
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:39 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfuc-00069m-N7
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:53 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-37ccd50faafso3715676f8f.3
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:39:46 -0700 (PDT)
+ id 1svfuQ-00063n-1a
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:39 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-37ce8458ae3so2216272f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:39:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727800785; x=1728405585; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727800772; x=1728405572; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=aorc6XJkbAJ4kXWEeY1ru5peT3Lg4RYhf4yhAzIPL4U=;
- b=thByechgQ+EBt1JiXkpv/XpvZMg+83UJmFEolarWpt6G3xbA2RUxFCU1mxg+A13CvC
- tmuDTxd07dRJEAG7yjvX03poM9xoBwXP6C6A44aUQ2DqZvi6z46zgKzYf6QhET4u9O+Q
- 7m1WHgms0tOKllSeRiEGHTz6mWNjeHNbUa0rkDoIoEVtfAkbQgWGkkihlr7u65JBtu0h
- qK8eFMUf8xSaoT1uL0xoEQ3TvujvY2+XEz8HD9DgW22bCBUeDuHLo20nYUmEkzrtg5vg
- GXt+MzcNPMJGyZDrg7Bb6ZXo49EBXVTrRpjy9pIXGZ40IwG1/lgCccapJUCO92exQ4n1
- 0VYQ==
+ :reply-to; bh=mOqKHbjr/MkKqB1xjDNOHF1/FzHYLl8dwheqO9teKRk=;
+ b=c4z0hs99Bin0R4935gbyJSDjMAg2mDl5CLjDXaITO6NJYDMDOBxvgzdigYZoFDwohe
+ wceObtfVp9JpGjVtDZVXifXwY6Hq8Uy43wVI5HbMrG75Dut4Rt+s02uo8sMYOjU44bnl
+ OajiX/zkWxJiz2aoQ5mxK6s1XhS6emS4yS8mQAaEs+GHa4H1KYvqlIEZGz3MgeRSEDaL
+ VjjVgE6Vl9URVI/nmHDBNzOV0qrZWXCXYCWtSvHhhzbuiaGLVKHvXr51m+houuYbtMvh
+ NpL/l3tTLcvRHDpG/knCw51VB5n7tZOYYFupPkf8Lka5ZdwLTW2M9KG7Lkih3WAVbjrP
+ tPfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727800785; x=1728405585;
+ d=1e100.net; s=20230601; t=1727800772; x=1728405572;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aorc6XJkbAJ4kXWEeY1ru5peT3Lg4RYhf4yhAzIPL4U=;
- b=n0JqtS6SInp8yk0zElKreDmqqE90MUMIIRnU+1jaa94X7i/FN/dBwQHk2o/NusvU3G
- XZvQ/V5YCxmTPQJ+SNPYvMbo5HyM6PnQuFbx8JFklmPvl2Ls6ju8sFtBqiohgnp/GG/1
- k9JO6a0SIslFXJcPJSjZJIMqrVPF+WtxqtocNA1VSRfk6z7A1PCmLarL7wejxoKjp5aW
- 748vey7nfKmrrh5cFIgsMBW09rKZflSoUgZmMI0Hv3+4aN+v7+vRxXYroKZYGM+SH8rU
- iHjHfh0LYE0hxd/r0ZnbqrfP9mMEtez/XUYMToNghJT2tsc7CL31DppXSNjhE2s/mOBq
- NH2g==
-X-Gm-Message-State: AOJu0YzepJ4ncpulKQdqt4fVfRHUr4Z77pEe3+pCz9aNaO4TwlXV5f5u
- tmkE3r4GKj5qn/ShU6GkCJMelFW9i+wngOE8CxGhm0rxs51DtUxgBIOlEzdFu0zVtkj1bYQ97Mv
- I
-X-Google-Smtp-Source: AGHT+IHOfaEnFLY28iZfK5sjigrI1DI56l7CGESYJyPmVVpsft6JgzaOdVN2sTZDpnlkRvrxqrB8ng==
-X-Received: by 2002:adf:f34f:0:b0:37c:d200:4fea with SMTP id
- ffacd0b85a97d-37cfb9d1efdmr143164f8f.34.1727800784749; 
- Tue, 01 Oct 2024 09:39:44 -0700 (PDT)
+ bh=mOqKHbjr/MkKqB1xjDNOHF1/FzHYLl8dwheqO9teKRk=;
+ b=aPLbI8VJx2OVTYqUzDgYH7s/N6IlqxyHj05A3rKH2ZPFITchQc0553+TF1uNlUS5at
+ c7wZJMo52j8DIckzVkJYqmcHfzoAMLAMC5JE5cpfEjAPpenthT4a/J+GRPnpaqZgkMGd
+ CkAlK9CXZ3+Ird4qebx7uyIkHiAKVrqGuHDIqSeZdQ0uK7e4LMhpLeqtxVJtYXlhyQv+
+ mk2F6+o357XN4WKlggr/AxDrHhcBwXzSNC+Idwa+6MmTwk30H58suLhlGq351wRhgHLn
+ 7fCZZBdJLYivxfNofnBzu8nW6aKYDccCU2JYNSvIFHaq66zBl8jwPYgiRUCz4LLokvTS
+ MpAQ==
+X-Gm-Message-State: AOJu0YwKXZFLMPOTofkRSFjxK/kYHsCG/q7oM3d6xXnjVq/z3cPIZVZd
+ bDMYZtd5EPEGcXf9CS52QJU61BF209AWGrr/OH9jUNdRBfNLSWU6/gkGkNEDMLwYmVp2YZtAzS+
+ f
+X-Google-Smtp-Source: AGHT+IHKzDtM7dQ7MaJA/mENWkZ7Jz/YoWvxaJyEeaDf4E+/dbz5586rS2R0VpTCIPEnawLopTawGw==
+X-Received: by 2002:adf:e643:0:b0:374:ce15:9995 with SMTP id
+ ffacd0b85a97d-37cfb9d437bmr182418f8f.34.1727800772351; 
+ Tue, 01 Oct 2024 09:39:32 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd56e6547sm12243771f8f.58.2024.10.01.09.39.44
+ ffacd0b85a97d-37cd56e6547sm12243771f8f.58.2024.10.01.09.39.31
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 09:39:44 -0700 (PDT)
+ Tue, 01 Oct 2024 09:39:32 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 45/54] hw/misc: Remove omap_gpmc
-Date: Tue,  1 Oct 2024 17:39:09 +0100
-Message-Id: <20241001163918.1275441-46-peter.maydell@linaro.org>
+Subject: [PULL 23/54] hw/dma: Remove pxa2xx_dma
+Date: Tue,  1 Oct 2024 17:38:47 +0100
+Message-Id: <20241001163918.1275441-24-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241001163918.1275441-1-peter.maydell@linaro.org>
 References: <20241001163918.1275441-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,964 +94,642 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The omap_gpmc device is only in OMAP2, which we are removing.
+Remove the pxa2xx-specific pxa2xx_dma device.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240903160751.4100218-44-peter.maydell@linaro.org
+Message-id: 20240903160751.4100218-20-peter.maydell@linaro.org
 ---
- include/hw/arm/omap.h |  11 -
- hw/misc/omap_gpmc.c   | 898 ------------------------------------------
- hw/misc/meson.build   |   1 -
- 3 files changed, 910 deletions(-)
- delete mode 100644 hw/misc/omap_gpmc.c
+ include/hw/arm/pxa.h |   4 -
+ hw/dma/pxa2xx_dma.c  | 591 -------------------------------------------
+ hw/dma/meson.build   |   1 -
+ 3 files changed, 596 deletions(-)
+ delete mode 100644 hw/dma/pxa2xx_dma.c
 
-diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
-index dcd338c7c49..0cbbf2fecb5 100644
---- a/include/hw/arm/omap.h
-+++ b/include/hw/arm/omap.h
-@@ -147,15 +147,6 @@ hwaddr omap_l4_region_base(struct omap_target_agent_s *ta,
- hwaddr omap_l4_region_size(struct omap_target_agent_s *ta,
-                                        int region);
+diff --git a/include/hw/arm/pxa.h b/include/hw/arm/pxa.h
+index ef7976e1821..944926e514b 100644
+--- a/include/hw/arm/pxa.h
++++ b/include/hw/arm/pxa.h
+@@ -76,10 +76,6 @@ DeviceState *pxa2xx_gpio_init(hwaddr base,
+                               ARMCPU *cpu, DeviceState *pic, int lines);
+ void pxa2xx_gpio_read_notifier(DeviceState *dev, qemu_irq handler);
  
--/* OMAP2 general purpose memory controller */
--struct omap_gpmc_s;
--struct omap_gpmc_s *omap_gpmc_init(struct omap_mpu_state_s *mpu,
--                                   hwaddr base,
--                                   qemu_irq irq, qemu_irq drq);
--void omap_gpmc_reset(struct omap_gpmc_s *s);
--void omap_gpmc_attach(struct omap_gpmc_s *s, int cs, MemoryRegion *iomem);
--void omap_gpmc_attach_nand(struct omap_gpmc_s *s, int cs, DeviceState *nand);
+-/* pxa2xx_dma.c */
+-DeviceState *pxa255_dma_init(hwaddr base, qemu_irq irq);
+-DeviceState *pxa27x_dma_init(hwaddr base, qemu_irq irq);
 -
- /*
-  * Common IRQ numbers for level 1 interrupt handler
-  * See /usr/include/asm-arm/arch-omap/irqs.h in Linux.
-@@ -948,8 +939,6 @@ struct omap_mpu_state_s {
-     struct omap_gp_timer_s *gptimer[12];
-     struct omap_synctimer_s *synctimer;
- 
--    struct omap_gpmc_s *gpmc;
--
-     struct omap_mcspi_s *mcspi[2];
- 
-     struct omap_dss_s *dss;
-diff --git a/hw/misc/omap_gpmc.c b/hw/misc/omap_gpmc.c
+ /* pxa2xx_pcmcia.c */
+ #define TYPE_PXA2XX_PCMCIA "pxa2xx-pcmcia"
+ OBJECT_DECLARE_SIMPLE_TYPE(PXA2xxPCMCIAState, PXA2XX_PCMCIA)
+diff --git a/hw/dma/pxa2xx_dma.c b/hw/dma/pxa2xx_dma.c
 deleted file mode 100644
-index 67158eb1649..00000000000
---- a/hw/misc/omap_gpmc.c
+index 9f62f0b633b..00000000000
+--- a/hw/dma/pxa2xx_dma.c
 +++ /dev/null
-@@ -1,898 +0,0 @@
+@@ -1,591 +0,0 @@
 -/*
-- * TI OMAP general purpose memory controller emulation.
+- * Intel XScale PXA255/270 DMA controller.
 - *
-- * Copyright (C) 2007-2009 Nokia Corporation
-- * Original code written by Andrzej Zaborowski <andrew@openedhand.com>
-- * Enhancements for OMAP3 and NAND support written by Juha Riihimäki
+- * Copyright (c) 2006 Openedhand Ltd.
+- * Copyright (c) 2006 Thorsten Zitterell
+- * Written by Andrzej Zaborowski <balrog@zabor.org>
 - *
-- * This program is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU General Public License as
-- * published by the Free Software Foundation; either version 2 or
-- * (at your option) any later version of the License.
-- *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- * GNU General Public License for more details.
-- *
-- * You should have received a copy of the GNU General Public License along
-- * with this program; if not, see <http://www.gnu.org/licenses/>.
+- * This code is licensed under the GPL.
 - */
 -
 -#include "qemu/osdep.h"
+-#include "qemu/log.h"
+-#include "hw/hw.h"
 -#include "hw/irq.h"
--#include "hw/block/flash.h"
--#include "hw/arm/omap.h"
--#include "exec/memory.h"
--#include "exec/address-spaces.h"
+-#include "hw/qdev-properties.h"
+-#include "hw/arm/pxa.h"
+-#include "hw/sysbus.h"
+-#include "migration/vmstate.h"
+-#include "qapi/error.h"
+-#include "qemu/module.h"
+-#include "qom/object.h"
 -
--/* General-Purpose Memory Controller */
--struct omap_gpmc_s {
--    qemu_irq irq;
--    qemu_irq drq;
+-#define PXA255_DMA_NUM_CHANNELS 16
+-#define PXA27X_DMA_NUM_CHANNELS 32
+-
+-#define PXA2XX_DMA_NUM_REQUESTS 75
+-
+-typedef struct {
+-    uint32_t descr;
+-    uint32_t src;
+-    uint32_t dest;
+-    uint32_t cmd;
+-    uint32_t state;
+-    int request;
+-} PXA2xxDMAChannel;
+-
+-#define TYPE_PXA2XX_DMA "pxa2xx-dma"
+-OBJECT_DECLARE_SIMPLE_TYPE(PXA2xxDMAState, PXA2XX_DMA)
+-
+-struct PXA2xxDMAState {
+-    SysBusDevice parent_obj;
+-
 -    MemoryRegion iomem;
--    int accept_256;
+-    qemu_irq irq;
 -
--    uint8_t revision;
--    uint8_t sysconfig;
--    uint16_t irqst;
--    uint16_t irqen;
--    uint16_t lastirq;
--    uint16_t timeout;
--    uint16_t config;
--    struct omap_gpmc_cs_file_s {
--        uint32_t config[7];
--        MemoryRegion *iomem;
--        MemoryRegion container;
--        MemoryRegion nandiomem;
--        DeviceState *dev;
--    } cs_file[8];
--    int ecc_cs;
--    int ecc_ptr;
--    uint32_t ecc_cfg;
--    ECCState ecc[9];
--    struct prefetch {
--        uint32_t config1; /* GPMC_PREFETCH_CONFIG1 */
--        uint32_t transfercount; /* GPMC_PREFETCH_CONFIG2:TRANSFERCOUNT */
--        int startengine; /* GPMC_PREFETCH_CONTROL:STARTENGINE */
--        int fifopointer; /* GPMC_PREFETCH_STATUS:FIFOPOINTER */
--        int count; /* GPMC_PREFETCH_STATUS:COUNTVALUE */
--        MemoryRegion iomem;
--        uint8_t fifo[64];
--    } prefetch;
+-    uint32_t stopintr;
+-    uint32_t eorintr;
+-    uint32_t rasintr;
+-    uint32_t startintr;
+-    uint32_t endintr;
+-
+-    uint32_t align;
+-    uint32_t pio;
+-
+-    int channels;
+-    PXA2xxDMAChannel *chan;
+-
+-    uint8_t req[PXA2XX_DMA_NUM_REQUESTS];
+-
+-    /* Flag to avoid recursive DMA invocations.  */
+-    int running;
 -};
 -
--#define OMAP_GPMC_8BIT 0
--#define OMAP_GPMC_16BIT 1
--#define OMAP_GPMC_NOR 0
--#define OMAP_GPMC_NAND 2
+-#define DCSR0	0x0000	/* DMA Control / Status register for Channel 0 */
+-#define DCSR31	0x007c	/* DMA Control / Status register for Channel 31 */
+-#define DALGN	0x00a0	/* DMA Alignment register */
+-#define DPCSR	0x00a4	/* DMA Programmed I/O Control Status register */
+-#define DRQSR0	0x00e0	/* DMA DREQ<0> Status register */
+-#define DRQSR1	0x00e4	/* DMA DREQ<1> Status register */
+-#define DRQSR2	0x00e8	/* DMA DREQ<2> Status register */
+-#define DINT	0x00f0	/* DMA Interrupt register */
+-#define DRCMR0	0x0100	/* Request to Channel Map register 0 */
+-#define DRCMR63	0x01fc	/* Request to Channel Map register 63 */
+-#define D_CH0	0x0200	/* Channel 0 Descriptor start */
+-#define DRCMR64	0x1100	/* Request to Channel Map register 64 */
+-#define DRCMR74	0x1128	/* Request to Channel Map register 74 */
 -
--static int omap_gpmc_devtype(struct omap_gpmc_cs_file_s *f)
--{
--    return (f->config[0] >> 10) & 3;
--}
+-/* Per-channel register */
+-#define DDADR	0x00
+-#define DSADR	0x01
+-#define DTADR	0x02
+-#define DCMD	0x03
 -
--static int omap_gpmc_devsize(struct omap_gpmc_cs_file_s *f)
--{
--    /* devsize field is really 2 bits but we ignore the high
--     * bit to ensure consistent behaviour if the guest sets
--     * it (values 2 and 3 are reserved in the TRM)
--     */
--    return (f->config[0] >> 12) & 1;
--}
+-/* Bit-field masks */
+-#define DRCMR_CHLNUM		0x1f
+-#define DRCMR_MAPVLD		(1 << 7)
+-#define DDADR_STOP		(1 << 0)
+-#define DDADR_BREN		(1 << 1)
+-#define DCMD_LEN		0x1fff
+-#define DCMD_WIDTH(x)		(1 << ((((x) >> 14) & 3) - 1))
+-#define DCMD_SIZE(x)		(4 << (((x) >> 16) & 3))
+-#define DCMD_FLYBYT		(1 << 19)
+-#define DCMD_FLYBYS		(1 << 20)
+-#define DCMD_ENDIRQEN		(1 << 21)
+-#define DCMD_STARTIRQEN		(1 << 22)
+-#define DCMD_CMPEN		(1 << 25)
+-#define DCMD_FLOWTRG		(1 << 28)
+-#define DCMD_FLOWSRC		(1 << 29)
+-#define DCMD_INCTRGADDR		(1 << 30)
+-#define DCMD_INCSRCADDR		(1 << 31)
+-#define DCSR_BUSERRINTR		(1 << 0)
+-#define DCSR_STARTINTR		(1 << 1)
+-#define DCSR_ENDINTR		(1 << 2)
+-#define DCSR_STOPINTR		(1 << 3)
+-#define DCSR_RASINTR		(1 << 4)
+-#define DCSR_REQPEND		(1 << 8)
+-#define DCSR_EORINT		(1 << 9)
+-#define DCSR_CMPST		(1 << 10)
+-#define DCSR_MASKRUN		(1 << 22)
+-#define DCSR_RASIRQEN		(1 << 23)
+-#define DCSR_CLRCMPST		(1 << 24)
+-#define DCSR_SETCMPST		(1 << 25)
+-#define DCSR_EORSTOPEN		(1 << 26)
+-#define DCSR_EORJMPEN		(1 << 27)
+-#define DCSR_EORIRQEN		(1 << 28)
+-#define DCSR_STOPIRQEN		(1 << 29)
+-#define DCSR_NODESCFETCH	(1 << 30)
+-#define DCSR_RUN		(1 << 31)
 -
--/* Extract the chip-select value from the prefetch config1 register */
--static int prefetch_cs(uint32_t config1)
+-static inline void pxa2xx_dma_update(PXA2xxDMAState *s, int ch)
 -{
--    return (config1 >> 24) & 7;
--}
+-    if (ch >= 0) {
+-        if ((s->chan[ch].state & DCSR_STOPIRQEN) &&
+-                (s->chan[ch].state & DCSR_STOPINTR))
+-            s->stopintr |= 1 << ch;
+-        else
+-            s->stopintr &= ~(1 << ch);
 -
--static int prefetch_threshold(uint32_t config1)
--{
--    return (config1 >> 8) & 0x7f;
--}
+-        if ((s->chan[ch].state & DCSR_EORIRQEN) &&
+-                (s->chan[ch].state & DCSR_EORINT))
+-            s->eorintr |= 1 << ch;
+-        else
+-            s->eorintr &= ~(1 << ch);
 -
--static void omap_gpmc_int_update(struct omap_gpmc_s *s)
--{
--    /* The TRM is a bit unclear, but it seems to say that
--     * the TERMINALCOUNTSTATUS bit is set only on the
--     * transition when the prefetch engine goes from
--     * active to inactive, whereas the FIFOEVENTSTATUS
--     * bit is held high as long as the fifo has at
--     * least THRESHOLD bytes available.
--     * So we do the latter here, but TERMINALCOUNTSTATUS
--     * is set elsewhere.
--     */
--    if (s->prefetch.fifopointer >= prefetch_threshold(s->prefetch.config1)) {
--        s->irqst |= 1;
+-        if ((s->chan[ch].state & DCSR_RASIRQEN) &&
+-                (s->chan[ch].state & DCSR_RASINTR))
+-            s->rasintr |= 1 << ch;
+-        else
+-            s->rasintr &= ~(1 << ch);
+-
+-        if (s->chan[ch].state & DCSR_STARTINTR)
+-            s->startintr |= 1 << ch;
+-        else
+-            s->startintr &= ~(1 << ch);
+-
+-        if (s->chan[ch].state & DCSR_ENDINTR)
+-            s->endintr |= 1 << ch;
+-        else
+-            s->endintr &= ~(1 << ch);
 -    }
--    if ((s->irqen & s->irqst) != s->lastirq) {
--        s->lastirq = s->irqen & s->irqst;
--        qemu_set_irq(s->irq, s->lastirq);
--    }
+-
+-    if (s->stopintr | s->eorintr | s->rasintr | s->startintr | s->endintr)
+-        qemu_irq_raise(s->irq);
+-    else
+-        qemu_irq_lower(s->irq);
 -}
 -
--static void omap_gpmc_dma_update(struct omap_gpmc_s *s, int value)
+-static inline void pxa2xx_dma_descriptor_fetch(
+-                PXA2xxDMAState *s, int ch)
 -{
--    if (s->prefetch.config1 & 4) {
--        qemu_set_irq(s->drq, value);
--    }
+-    uint32_t desc[4];
+-    hwaddr daddr = s->chan[ch].descr & ~0xf;
+-    if ((s->chan[ch].descr & DDADR_BREN) && (s->chan[ch].state & DCSR_CMPST))
+-        daddr += 32;
+-
+-    cpu_physical_memory_read(daddr, desc, 16);
+-    s->chan[ch].descr = desc[DDADR];
+-    s->chan[ch].src = desc[DSADR];
+-    s->chan[ch].dest = desc[DTADR];
+-    s->chan[ch].cmd = desc[DCMD];
+-
+-    if (s->chan[ch].cmd & DCMD_FLOWSRC)
+-        s->chan[ch].src &= ~3;
+-    if (s->chan[ch].cmd & DCMD_FLOWTRG)
+-        s->chan[ch].dest &= ~3;
+-
+-    if (s->chan[ch].cmd & (DCMD_CMPEN | DCMD_FLYBYS | DCMD_FLYBYT))
+-        printf("%s: unsupported mode in channel %i\n", __func__, ch);
+-
+-    if (s->chan[ch].cmd & DCMD_STARTIRQEN)
+-        s->chan[ch].state |= DCSR_STARTINTR;
 -}
 -
--/* Access functions for when a NAND-like device is mapped into memory:
-- * all addresses in the region behave like accesses to the relevant
-- * GPMC_NAND_DATA_i register (which is actually implemented to call these)
-- */
--static uint64_t omap_nand_read(void *opaque, hwaddr addr,
--                               unsigned size)
+-static void pxa2xx_dma_run(PXA2xxDMAState *s)
 -{
--    struct omap_gpmc_cs_file_s *f = opaque;
--    uint64_t v;
--    nand_setpins(f->dev, 0, 0, 0, 1, 0);
--    switch (omap_gpmc_devsize(f)) {
--    case OMAP_GPMC_8BIT:
--        v = nand_getio(f->dev);
--        if (size == 1) {
--            return v;
+-    int c, srcinc, destinc;
+-    uint32_t n, size;
+-    uint32_t width;
+-    uint32_t length;
+-    uint8_t buffer[32];
+-    PXA2xxDMAChannel *ch;
+-
+-    if (s->running ++)
+-        return;
+-
+-    while (s->running) {
+-        s->running = 1;
+-        for (c = 0; c < s->channels; c ++) {
+-            ch = &s->chan[c];
+-
+-            while ((ch->state & DCSR_RUN) && !(ch->state & DCSR_STOPINTR)) {
+-                /* Test for pending requests */
+-                if ((ch->cmd & (DCMD_FLOWSRC | DCMD_FLOWTRG)) && !ch->request)
+-                    break;
+-
+-                length = ch->cmd & DCMD_LEN;
+-                size = DCMD_SIZE(ch->cmd);
+-                width = DCMD_WIDTH(ch->cmd);
+-
+-                srcinc = (ch->cmd & DCMD_INCSRCADDR) ? width : 0;
+-                destinc = (ch->cmd & DCMD_INCTRGADDR) ? width : 0;
+-
+-                while (length) {
+-                    size = MIN(length, size);
+-
+-                    for (n = 0; n < size; n += width) {
+-                        cpu_physical_memory_read(ch->src, buffer + n, width);
+-                        ch->src += srcinc;
+-                    }
+-
+-                    for (n = 0; n < size; n += width) {
+-                        cpu_physical_memory_write(ch->dest, buffer + n, width);
+-                        ch->dest += destinc;
+-                    }
+-
+-                    length -= size;
+-
+-                    if ((ch->cmd & (DCMD_FLOWSRC | DCMD_FLOWTRG)) &&
+-                            !ch->request) {
+-                        ch->state |= DCSR_EORINT;
+-                        if (ch->state & DCSR_EORSTOPEN)
+-                            ch->state |= DCSR_STOPINTR;
+-                        if ((ch->state & DCSR_EORJMPEN) &&
+-                                        !(ch->state & DCSR_NODESCFETCH))
+-                            pxa2xx_dma_descriptor_fetch(s, c);
+-                        break;
+-                    }
+-                }
+-
+-                ch->cmd = (ch->cmd & ~DCMD_LEN) | length;
+-
+-                /* Is the transfer complete now? */
+-                if (!length) {
+-                    if (ch->cmd & DCMD_ENDIRQEN)
+-                        ch->state |= DCSR_ENDINTR;
+-
+-                    if ((ch->state & DCSR_NODESCFETCH) ||
+-                                (ch->descr & DDADR_STOP) ||
+-                                (ch->state & DCSR_EORSTOPEN)) {
+-                        ch->state |= DCSR_STOPINTR;
+-                        ch->state &= ~DCSR_RUN;
+-
+-                        break;
+-                    }
+-
+-                    ch->state |= DCSR_STOPINTR;
+-                    break;
+-                }
+-            }
 -        }
--        v |= (nand_getio(f->dev) << 8);
--        if (size == 2) {
--            return v;
--        }
--        v |= (nand_getio(f->dev) << 16);
--        v |= (nand_getio(f->dev) << 24);
--        return v;
--    case OMAP_GPMC_16BIT:
--        v = nand_getio(f->dev);
--        if (size == 1) {
--            /* 8 bit read from 16 bit device : probably a guest bug */
--            return v & 0xff;
--        }
--        if (size == 2) {
--            return v;
--        }
--        v |= (nand_getio(f->dev) << 16);
--        return v;
--    default:
--        abort();
+-
+-        s->running --;
 -    }
 -}
 -
--static void omap_nand_setio(DeviceState *dev, uint64_t value,
--                            int nandsize, int size)
+-static uint64_t pxa2xx_dma_read(void *opaque, hwaddr offset,
+-                                unsigned size)
 -{
--    /* Write the specified value to the NAND device, respecting
--     * both size of the NAND device and size of the write access.
--     */
--    switch (nandsize) {
--    case OMAP_GPMC_8BIT:
--        switch (size) {
--        case 1:
--            nand_setio(dev, value & 0xff);
--            break;
--        case 2:
--            nand_setio(dev, value & 0xff);
--            nand_setio(dev, (value >> 8) & 0xff);
--            break;
--        case 4:
--        default:
--            nand_setio(dev, value & 0xff);
--            nand_setio(dev, (value >> 8) & 0xff);
--            nand_setio(dev, (value >> 16) & 0xff);
--            nand_setio(dev, (value >> 24) & 0xff);
--            break;
--        }
--        break;
--    case OMAP_GPMC_16BIT:
--        switch (size) {
--        case 1:
--            /* writing to a 16bit device with 8bit access is probably a guest
--             * bug; pass the value through anyway.
--             */
--        case 2:
--            nand_setio(dev, value & 0xffff);
--            break;
--        case 4:
--        default:
--            nand_setio(dev, value & 0xffff);
--            nand_setio(dev, (value >> 16) & 0xffff);
--            break;
--        }
--        break;
--    }
--}
+-    PXA2xxDMAState *s = (PXA2xxDMAState *) opaque;
+-    unsigned int channel;
 -
--static void omap_nand_write(void *opaque, hwaddr addr,
--                            uint64_t value, unsigned size)
--{
--    struct omap_gpmc_cs_file_s *f = opaque;
--    nand_setpins(f->dev, 0, 0, 0, 1, 0);
--    omap_nand_setio(f->dev, value, omap_gpmc_devsize(f), size);
--}
--
--static const MemoryRegionOps omap_nand_ops = {
--    .read = omap_nand_read,
--    .write = omap_nand_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
--};
--
--static void fill_prefetch_fifo(struct omap_gpmc_s *s)
--{
--    /* Fill the prefetch FIFO by reading data from NAND.
--     * We do this synchronously, unlike the hardware which
--     * will do this asynchronously. We refill when the
--     * FIFO has THRESHOLD bytes free, and we always refill
--     * as much data as possible starting at the top end
--     * of the FIFO.
--     * (We have to refill at THRESHOLD rather than waiting
--     * for the FIFO to empty to allow for the case where
--     * the FIFO size isn't an exact multiple of THRESHOLD
--     * and we're doing DMA transfers.)
--     * This means we never need to handle wrap-around in
--     * the fifo-reading code, and the next byte of data
--     * to read is always fifo[63 - fifopointer].
--     */
--    int fptr;
--    int cs = prefetch_cs(s->prefetch.config1);
--    int is16bit = (((s->cs_file[cs].config[0] >> 12) & 3) != 0);
--    int bytes;
--    /* Don't believe the bit of the OMAP TRM that says that COUNTVALUE
--     * and TRANSFERCOUNT are in units of 16 bit words for 16 bit NAND.
--     * Instead believe the bit that says it is always a byte count.
--     */
--    bytes = 64 - s->prefetch.fifopointer;
--    if (bytes > s->prefetch.count) {
--        bytes = s->prefetch.count;
--    }
--    if (is16bit) {
--        bytes &= ~1;
+-    if (size != 4) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad access width %u\n",
+-                      __func__, size);
+-        return 5;
 -    }
 -
--    s->prefetch.count -= bytes;
--    s->prefetch.fifopointer += bytes;
--    fptr = 64 - s->prefetch.fifopointer;
--    /* Move the existing data in the FIFO so it sits just
--     * before what we're about to read in
--     */
--    while (fptr < (64 - bytes)) {
--        s->prefetch.fifo[fptr] = s->prefetch.fifo[fptr + bytes];
--        fptr++;
--    }
--    while (fptr < 64) {
--        if (is16bit) {
--            uint32_t v = omap_nand_read(&s->cs_file[cs], 0, 2);
--            s->prefetch.fifo[fptr++] = v & 0xff;
--            s->prefetch.fifo[fptr++] = (v >> 8) & 0xff;
--        } else {
--            s->prefetch.fifo[fptr++] = omap_nand_read(&s->cs_file[cs], 0, 1);
--        }
--    }
--    if (s->prefetch.startengine && (s->prefetch.count == 0)) {
--        /* This was the final transfer: raise TERMINALCOUNTSTATUS */
--        s->irqst |= 2;
--        s->prefetch.startengine = 0;
--    }
--    /* If there are any bytes in the FIFO at this point then
--     * we must raise a DMA request (either this is a final part
--     * transfer, or we filled the FIFO in which case we certainly
--     * have THRESHOLD bytes available)
--     */
--    if (s->prefetch.fifopointer != 0) {
--        omap_gpmc_dma_update(s, 1);
--    }
--    omap_gpmc_int_update(s);
--}
+-    switch (offset) {
+-    case DRCMR64 ... DRCMR74:
+-        offset -= DRCMR64 - DRCMR0 - (64 << 2);
+-        /* Fall through */
+-    case DRCMR0 ... DRCMR63:
+-        channel = (offset - DRCMR0) >> 2;
+-        return s->req[channel];
 -
--/* Access functions for a NAND-like device when the prefetch/postwrite
-- * engine is enabled -- all addresses in the region behave alike:
-- * data is read or written to the FIFO.
-- */
--static uint64_t omap_gpmc_prefetch_read(void *opaque, hwaddr addr,
--                                        unsigned size)
--{
--    struct omap_gpmc_s *s = opaque;
--    uint32_t data;
--    if (s->prefetch.config1 & 1) {
--        /* The TRM doesn't define the behaviour if you read from the
--         * FIFO when the prefetch engine is in write mode. We choose
--         * to always return zero.
--         */
+-    case DRQSR0:
+-    case DRQSR1:
+-    case DRQSR2:
 -        return 0;
--    }
--    /* Note that trying to read an empty fifo repeats the last byte */
--    if (s->prefetch.fifopointer) {
--        s->prefetch.fifopointer--;
--    }
--    data = s->prefetch.fifo[63 - s->prefetch.fifopointer];
--    if (s->prefetch.fifopointer ==
--        (64 - prefetch_threshold(s->prefetch.config1))) {
--        /* We've drained THRESHOLD bytes now. So deassert the
--         * DMA request, then refill the FIFO (which will probably
--         * assert it again.)
--         */
--        omap_gpmc_dma_update(s, 0);
--        fill_prefetch_fifo(s);
--    }
--    omap_gpmc_int_update(s);
--    return data;
--}
 -
--static void omap_gpmc_prefetch_write(void *opaque, hwaddr addr,
--                                     uint64_t value, unsigned size)
--{
--    struct omap_gpmc_s *s = opaque;
--    int cs = prefetch_cs(s->prefetch.config1);
--    if ((s->prefetch.config1 & 1) == 0) {
--        /* The TRM doesn't define the behaviour of writing to the
--         * FIFO when the prefetch engine is in read mode. We
--         * choose to ignore the write.
--         */
--        return;
+-    case DCSR0 ... DCSR31:
+-        channel = offset >> 2;
+-        if (s->chan[channel].request)
+-            return s->chan[channel].state | DCSR_REQPEND;
+-        return s->chan[channel].state;
+-
+-    case DINT:
+-        return s->stopintr | s->eorintr | s->rasintr |
+-                s->startintr | s->endintr;
+-
+-    case DALGN:
+-        return s->align;
+-
+-    case DPCSR:
+-        return s->pio;
 -    }
--    if (s->prefetch.count == 0) {
--        /* The TRM doesn't define the behaviour of writing to the
--         * FIFO if the transfer is complete. We choose to ignore.
--         */
--        return;
--    }
--    /* The only reason we do any data buffering in postwrite
--     * mode is if we are talking to a 16 bit NAND device, in
--     * which case we need to buffer the first byte of the
--     * 16 bit word until the other byte arrives.
--     */
--    int is16bit = (((s->cs_file[cs].config[0] >> 12) & 3) != 0);
--    if (is16bit) {
--        /* fifopointer alternates between 64 (waiting for first
--         * byte of word) and 63 (waiting for second byte)
--         */
--        if (s->prefetch.fifopointer == 64) {
--            s->prefetch.fifo[0] = value;
--            s->prefetch.fifopointer--;
--        } else {
--            value = (value << 8) | s->prefetch.fifo[0];
--            omap_nand_write(&s->cs_file[cs], 0, value, 2);
--            s->prefetch.count--;
--            s->prefetch.fifopointer = 64;
+-
+-    if (offset >= D_CH0 && offset < D_CH0 + (s->channels << 4)) {
+-        channel = (offset - D_CH0) >> 4;
+-        switch ((offset & 0x0f) >> 2) {
+-        case DDADR:
+-            return s->chan[channel].descr;
+-        case DSADR:
+-            return s->chan[channel].src;
+-        case DTADR:
+-            return s->chan[channel].dest;
+-        case DCMD:
+-            return s->chan[channel].cmd;
 -        }
--    } else {
--        /* Just write the byte : fifopointer remains 64 at all times */
--        omap_nand_write(&s->cs_file[cs], 0, value, 1);
--        s->prefetch.count--;
 -    }
--    if (s->prefetch.count == 0) {
--        /* Final transfer: raise TERMINALCOUNTSTATUS */
--        s->irqst |= 2;
--        s->prefetch.startengine = 0;
--    }
--    omap_gpmc_int_update(s);
+-    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIX "\n",
+-                  __func__, offset);
+-    return 7;
 -}
 -
--static const MemoryRegionOps omap_prefetch_ops = {
--    .read = omap_gpmc_prefetch_read,
--    .write = omap_gpmc_prefetch_write,
+-static void pxa2xx_dma_write(void *opaque, hwaddr offset,
+-                             uint64_t value, unsigned size)
+-{
+-    PXA2xxDMAState *s = (PXA2xxDMAState *) opaque;
+-    unsigned int channel;
+-
+-    if (size != 4) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad access width %u\n",
+-                      __func__, size);
+-        return;
+-    }
+-
+-    switch (offset) {
+-    case DRCMR64 ... DRCMR74:
+-        offset -= DRCMR64 - DRCMR0 - (64 << 2);
+-        /* Fall through */
+-    case DRCMR0 ... DRCMR63:
+-        channel = (offset - DRCMR0) >> 2;
+-
+-        if (value & DRCMR_MAPVLD)
+-            if ((value & DRCMR_CHLNUM) > s->channels)
+-                hw_error("%s: Bad DMA channel %i\n",
+-                         __func__, (unsigned)value & DRCMR_CHLNUM);
+-
+-        s->req[channel] = value;
+-        break;
+-
+-    case DRQSR0:
+-    case DRQSR1:
+-    case DRQSR2:
+-        /* Nothing to do */
+-        break;
+-
+-    case DCSR0 ... DCSR31:
+-        channel = offset >> 2;
+-        s->chan[channel].state &= 0x0000071f & ~(value &
+-                        (DCSR_EORINT | DCSR_ENDINTR |
+-                         DCSR_STARTINTR | DCSR_BUSERRINTR));
+-        s->chan[channel].state |= value & 0xfc800000;
+-
+-        if (s->chan[channel].state & DCSR_STOPIRQEN)
+-            s->chan[channel].state &= ~DCSR_STOPINTR;
+-
+-        if (value & DCSR_NODESCFETCH) {
+-            /* No-descriptor-fetch mode */
+-            if (value & DCSR_RUN) {
+-                s->chan[channel].state &= ~DCSR_STOPINTR;
+-                pxa2xx_dma_run(s);
+-            }
+-        } else {
+-            /* Descriptor-fetch mode */
+-            if (value & DCSR_RUN) {
+-                s->chan[channel].state &= ~DCSR_STOPINTR;
+-                pxa2xx_dma_descriptor_fetch(s, channel);
+-                pxa2xx_dma_run(s);
+-            }
+-        }
+-
+-        /* Shouldn't matter as our DMA is synchronous.  */
+-        if (!(value & (DCSR_RUN | DCSR_MASKRUN)))
+-            s->chan[channel].state |= DCSR_STOPINTR;
+-
+-        if (value & DCSR_CLRCMPST)
+-            s->chan[channel].state &= ~DCSR_CMPST;
+-        if (value & DCSR_SETCMPST)
+-            s->chan[channel].state |= DCSR_CMPST;
+-
+-        pxa2xx_dma_update(s, channel);
+-        break;
+-
+-    case DALGN:
+-        s->align = value;
+-        break;
+-
+-    case DPCSR:
+-        s->pio = value & 0x80000001;
+-        break;
+-
+-    default:
+-        if (offset >= D_CH0 && offset < D_CH0 + (s->channels << 4)) {
+-            channel = (offset - D_CH0) >> 4;
+-            switch ((offset & 0x0f) >> 2) {
+-            case DDADR:
+-                s->chan[channel].descr = value;
+-                break;
+-            case DSADR:
+-                s->chan[channel].src = value;
+-                break;
+-            case DTADR:
+-                s->chan[channel].dest = value;
+-                break;
+-            case DCMD:
+-                s->chan[channel].cmd = value;
+-                break;
+-            default:
+-                goto fail;
+-            }
+-
+-            break;
+-        }
+-    fail:
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIX "\n",
+-                      __func__, offset);
+-    }
+-}
+-
+-static const MemoryRegionOps pxa2xx_dma_ops = {
+-    .read = pxa2xx_dma_read,
+-    .write = pxa2xx_dma_write,
 -    .endianness = DEVICE_NATIVE_ENDIAN,
--    .impl.min_access_size = 1,
--    .impl.max_access_size = 1,
 -};
 -
--static MemoryRegion *omap_gpmc_cs_memregion(struct omap_gpmc_s *s, int cs)
+-static void pxa2xx_dma_request(void *opaque, int req_num, int on)
 -{
--    /* Return the MemoryRegion* to map/unmap for this chipselect */
--    struct omap_gpmc_cs_file_s *f = &s->cs_file[cs];
--    if (omap_gpmc_devtype(f) == OMAP_GPMC_NOR) {
--        return f->iomem;
+-    PXA2xxDMAState *s = opaque;
+-    int ch;
+-    if (req_num < 0 || req_num >= PXA2XX_DMA_NUM_REQUESTS)
+-        hw_error("%s: Bad DMA request %i\n", __func__, req_num);
+-
+-    if (!(s->req[req_num] & DRCMR_MAPVLD))
+-        return;
+-    ch = s->req[req_num] & DRCMR_CHLNUM;
+-
+-    if (!s->chan[ch].request && on)
+-        s->chan[ch].state |= DCSR_RASINTR;
+-    else
+-        s->chan[ch].state &= ~DCSR_RASINTR;
+-    if (s->chan[ch].request && !on)
+-        s->chan[ch].state |= DCSR_EORINT;
+-
+-    s->chan[ch].request = on;
+-    if (on) {
+-        pxa2xx_dma_run(s);
+-        pxa2xx_dma_update(s, ch);
 -    }
--    if ((s->prefetch.config1 & 0x80) &&
--        (prefetch_cs(s->prefetch.config1) == cs)) {
--        /* The prefetch engine is enabled for this CS: map the FIFO */
--        return &s->prefetch.iomem;
--    }
--    return &f->nandiomem;
 -}
 -
--static void omap_gpmc_cs_map(struct omap_gpmc_s *s, int cs)
+-static void pxa2xx_dma_init(Object *obj)
 -{
--    struct omap_gpmc_cs_file_s *f = &s->cs_file[cs];
--    uint32_t mask = (f->config[6] >> 8) & 0xf;
--    uint32_t base = f->config[6] & 0x3f;
--    uint32_t size;
+-    DeviceState *dev = DEVICE(obj);
+-    PXA2xxDMAState *s = PXA2XX_DMA(obj);
+-    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
 -
--    if (!f->iomem && !f->dev) {
--        return;
--    }
+-    memset(s->req, 0, sizeof(uint8_t) * PXA2XX_DMA_NUM_REQUESTS);
 -
--    if (!(f->config[6] & (1 << 6))) {
--        /* Do nothing unless CSVALID */
--        return;
--    }
+-    qdev_init_gpio_in(dev, pxa2xx_dma_request, PXA2XX_DMA_NUM_REQUESTS);
 -
--    /* TODO: check for overlapping regions and report access errors */
--    if (mask != 0x8 && mask != 0xc && mask != 0xe && mask != 0xf
--         && !(s->accept_256 && !mask)) {
--        fprintf(stderr, "%s: invalid chip-select mask address (0x%x)\n",
--                 __func__, mask);
--    }
--
--    base <<= 24;
--    size = (0x0fffffff & ~(mask << 24)) + 1;
--    /* TODO: rather than setting the size of the mapping (which should be
--     * constant), the mask should cause wrapping of the address space, so
--     * that the same memory becomes accessible at every <i>size</i> bytes
--     * starting from <i>base</i>.  */
--    memory_region_init(&f->container, NULL, "omap-gpmc-file", size);
--    memory_region_add_subregion(&f->container, 0,
--                                omap_gpmc_cs_memregion(s, cs));
--    memory_region_add_subregion(get_system_memory(), base,
--                                &f->container);
+-    memory_region_init_io(&s->iomem, obj, &pxa2xx_dma_ops, s,
+-                          "pxa2xx.dma", 0x00010000);
+-    sysbus_init_mmio(sbd, &s->iomem);
+-    sysbus_init_irq(sbd, &s->irq);
 -}
 -
--static void omap_gpmc_cs_unmap(struct omap_gpmc_s *s, int cs)
+-static void pxa2xx_dma_realize(DeviceState *dev, Error **errp)
 -{
--    struct omap_gpmc_cs_file_s *f = &s->cs_file[cs];
--    if (!(f->config[6] & (1 << 6))) {
--        /* Do nothing unless CSVALID */
--        return;
--    }
--    if (!f->iomem && !f->dev) {
--        return;
--    }
--    memory_region_del_subregion(get_system_memory(), &f->container);
--    memory_region_del_subregion(&f->container, omap_gpmc_cs_memregion(s, cs));
--    object_unparent(OBJECT(&f->container));
--}
--
--void omap_gpmc_reset(struct omap_gpmc_s *s)
--{
+-    PXA2xxDMAState *s = PXA2XX_DMA(dev);
 -    int i;
 -
--    s->sysconfig = 0;
--    s->irqst = 0;
--    s->irqen = 0;
--    omap_gpmc_int_update(s);
--    for (i = 0; i < 8; i++) {
--        /* This has to happen before we change any of the config
--         * used to determine which memory regions are mapped or unmapped.
--         */
--        omap_gpmc_cs_unmap(s, i);
--    }
--    s->timeout = 0;
--    s->config = 0xa00;
--    s->prefetch.config1 = 0x00004000;
--    s->prefetch.transfercount = 0x00000000;
--    s->prefetch.startengine = 0;
--    s->prefetch.fifopointer = 0;
--    s->prefetch.count = 0;
--    for (i = 0; i < 8; i ++) {
--        s->cs_file[i].config[1] = 0x101001;
--        s->cs_file[i].config[2] = 0x020201;
--        s->cs_file[i].config[3] = 0x10031003;
--        s->cs_file[i].config[4] = 0x10f1111;
--        s->cs_file[i].config[5] = 0;
--        s->cs_file[i].config[6] = 0xf00;
--        /* In theory we could probe attached devices for some CFG1
--         * bits here, but we just retain them across resets as they
--         * were set initially by omap_gpmc_attach().
--         */
--        if (i == 0) {
--            s->cs_file[i].config[0] &= 0x00433e00;
--            s->cs_file[i].config[6] |= 1 << 6; /* CSVALID */
--            omap_gpmc_cs_map(s, i);
--        } else {
--            s->cs_file[i].config[0] &= 0x00403c00;
--        }
--    }
--    s->ecc_cs = 0;
--    s->ecc_ptr = 0;
--    s->ecc_cfg = 0x3fcff000;
--    for (i = 0; i < 9; i ++)
--        ecc_reset(&s->ecc[i]);
--}
--
--static int gpmc_wordaccess_only(hwaddr addr)
--{
--    /* Return true if the register offset is to a register that
--     * only permits word width accesses.
--     * Non-word accesses are only OK for GPMC_NAND_DATA/ADDRESS/COMMAND
--     * for any chipselect.
--     */
--    if (addr >= 0x60 && addr <= 0x1d4) {
--        int cs = (addr - 0x60) / 0x30;
--        addr -= cs * 0x30;
--        if (addr >= 0x7c && addr < 0x88) {
--            /* GPMC_NAND_COMMAND, GPMC_NAND_ADDRESS, GPMC_NAND_DATA */
--            return 0;
--        }
--    }
--    return 1;
--}
--
--static uint64_t omap_gpmc_read(void *opaque, hwaddr addr,
--                               unsigned size)
--{
--    struct omap_gpmc_s *s = opaque;
--    int cs;
--    struct omap_gpmc_cs_file_s *f;
--
--    if (size != 4 && gpmc_wordaccess_only(addr)) {
--        return omap_badwidth_read32(opaque, addr);
--    }
--
--    switch (addr) {
--    case 0x000:	/* GPMC_REVISION */
--        return s->revision;
--
--    case 0x010:	/* GPMC_SYSCONFIG */
--        return s->sysconfig;
--
--    case 0x014:	/* GPMC_SYSSTATUS */
--        return 1;						/* RESETDONE */
--
--    case 0x018:	/* GPMC_IRQSTATUS */
--        return s->irqst;
--
--    case 0x01c:	/* GPMC_IRQENABLE */
--        return s->irqen;
--
--    case 0x040:	/* GPMC_TIMEOUT_CONTROL */
--        return s->timeout;
--
--    case 0x044:	/* GPMC_ERR_ADDRESS */
--    case 0x048:	/* GPMC_ERR_TYPE */
--        return 0;
--
--    case 0x050:	/* GPMC_CONFIG */
--        return s->config;
--
--    case 0x054:	/* GPMC_STATUS */
--        return 0x001;
--
--    case 0x060 ... 0x1d4:
--        cs = (addr - 0x060) / 0x30;
--        addr -= cs * 0x30;
--        f = s->cs_file + cs;
--        switch (addr) {
--        case 0x60:      /* GPMC_CONFIG1 */
--            return f->config[0];
--        case 0x64:      /* GPMC_CONFIG2 */
--            return f->config[1];
--        case 0x68:      /* GPMC_CONFIG3 */
--            return f->config[2];
--        case 0x6c:      /* GPMC_CONFIG4 */
--            return f->config[3];
--        case 0x70:      /* GPMC_CONFIG5 */
--            return f->config[4];
--        case 0x74:      /* GPMC_CONFIG6 */
--            return f->config[5];
--        case 0x78:      /* GPMC_CONFIG7 */
--            return f->config[6];
--        case 0x84 ... 0x87: /* GPMC_NAND_DATA */
--            if (omap_gpmc_devtype(f) == OMAP_GPMC_NAND) {
--                return omap_nand_read(f, 0, size);
--            }
--            return 0;
--        }
--        break;
--
--    case 0x1e0:	/* GPMC_PREFETCH_CONFIG1 */
--        return s->prefetch.config1;
--    case 0x1e4:	/* GPMC_PREFETCH_CONFIG2 */
--        return s->prefetch.transfercount;
--    case 0x1ec:	/* GPMC_PREFETCH_CONTROL */
--        return s->prefetch.startengine;
--    case 0x1f0:	/* GPMC_PREFETCH_STATUS */
--        /* NB: The OMAP3 TRM is inconsistent about whether the GPMC
--         * FIFOTHRESHOLDSTATUS bit should be set when
--         * FIFOPOINTER > FIFOTHRESHOLD or when it is >= FIFOTHRESHOLD.
--         * Apparently the underlying functional spec from which the TRM was
--         * created states that the behaviour is ">=", and this also
--         * makes more conceptual sense.
--         */
--        return (s->prefetch.fifopointer << 24) |
--                ((s->prefetch.fifopointer >=
--                  ((s->prefetch.config1 >> 8) & 0x7f) ? 1 : 0) << 16) |
--                s->prefetch.count;
--
--    case 0x1f4:	/* GPMC_ECC_CONFIG */
--        return s->ecc_cs;
--    case 0x1f8:	/* GPMC_ECC_CONTROL */
--        return s->ecc_ptr;
--    case 0x1fc:	/* GPMC_ECC_SIZE_CONFIG */
--        return s->ecc_cfg;
--    case 0x200 ... 0x220:	/* GPMC_ECC_RESULT */
--        cs = (addr & 0x1f) >> 2;
--        /* TODO: check correctness */
--        return
--                ((s->ecc[cs].cp    &  0x07) <<  0) |
--                ((s->ecc[cs].cp    &  0x38) << 13) |
--                ((s->ecc[cs].lp[0] & 0x1ff) <<  3) |
--                ((s->ecc[cs].lp[1] & 0x1ff) << 19);
--
--    case 0x230:	/* GPMC_TESTMODE_CTRL */
--        return 0;
--    case 0x234:	/* GPMC_PSA_LSB */
--    case 0x238:	/* GPMC_PSA_MSB */
--        return 0x00000000;
--    }
--
--    OMAP_BAD_REG(addr);
--    return 0;
--}
--
--static void omap_gpmc_write(void *opaque, hwaddr addr,
--                            uint64_t value, unsigned size)
--{
--    struct omap_gpmc_s *s = opaque;
--    int cs;
--    struct omap_gpmc_cs_file_s *f;
--
--    if (size != 4 && gpmc_wordaccess_only(addr)) {
--        omap_badwidth_write32(opaque, addr, value);
+-    if (s->channels <= 0) {
+-        error_setg(errp, "channels value invalid");
 -        return;
 -    }
 -
--    switch (addr) {
--    case 0x000:	/* GPMC_REVISION */
--    case 0x014:	/* GPMC_SYSSTATUS */
--    case 0x054:	/* GPMC_STATUS */
--    case 0x1f0:	/* GPMC_PREFETCH_STATUS */
--    case 0x200 ... 0x220:	/* GPMC_ECC_RESULT */
--    case 0x234:	/* GPMC_PSA_LSB */
--    case 0x238:	/* GPMC_PSA_MSB */
--        OMAP_RO_REG(addr);
--        break;
+-    s->chan = g_new0(PXA2xxDMAChannel, s->channels);
 -
--    case 0x010:	/* GPMC_SYSCONFIG */
--        if ((value >> 3) == 0x3)
--            fprintf(stderr, "%s: bad SDRAM idle mode %"PRIi64"\n",
--                            __func__, value >> 3);
--        if (value & 2)
--            omap_gpmc_reset(s);
--        s->sysconfig = value & 0x19;
--        break;
--
--    case 0x018:	/* GPMC_IRQSTATUS */
--        s->irqst &= ~value;
--        omap_gpmc_int_update(s);
--        break;
--
--    case 0x01c:	/* GPMC_IRQENABLE */
--        s->irqen = value & 0xf03;
--        omap_gpmc_int_update(s);
--        break;
--
--    case 0x040:	/* GPMC_TIMEOUT_CONTROL */
--        s->timeout = value & 0x1ff1;
--        break;
--
--    case 0x044:	/* GPMC_ERR_ADDRESS */
--    case 0x048:	/* GPMC_ERR_TYPE */
--        break;
--
--    case 0x050:	/* GPMC_CONFIG */
--        s->config = value & 0xf13;
--        break;
--
--    case 0x060 ... 0x1d4:
--        cs = (addr - 0x060) / 0x30;
--        addr -= cs * 0x30;
--        f = s->cs_file + cs;
--        switch (addr) {
--        case 0x60:      /* GPMC_CONFIG1 */
--            f->config[0] = value & 0xffef3e13;
--            break;
--        case 0x64:      /* GPMC_CONFIG2 */
--            f->config[1] = value & 0x001f1f8f;
--            break;
--        case 0x68:      /* GPMC_CONFIG3 */
--            f->config[2] = value & 0x001f1f8f;
--            break;
--        case 0x6c:      /* GPMC_CONFIG4 */
--            f->config[3] = value & 0x1f8f1f8f;
--            break;
--        case 0x70:      /* GPMC_CONFIG5 */
--            f->config[4] = value & 0x0f1f1f1f;
--            break;
--        case 0x74:      /* GPMC_CONFIG6 */
--            f->config[5] = value & 0x00000fcf;
--            break;
--        case 0x78:      /* GPMC_CONFIG7 */
--            if ((f->config[6] ^ value) & 0xf7f) {
--                omap_gpmc_cs_unmap(s, cs);
--                f->config[6] = value & 0x00000f7f;
--                omap_gpmc_cs_map(s, cs);
--            }
--            break;
--        case 0x7c ... 0x7f: /* GPMC_NAND_COMMAND */
--            if (omap_gpmc_devtype(f) == OMAP_GPMC_NAND) {
--                nand_setpins(f->dev, 1, 0, 0, 1, 0); /* CLE */
--                omap_nand_setio(f->dev, value, omap_gpmc_devsize(f), size);
--            }
--            break;
--        case 0x80 ... 0x83: /* GPMC_NAND_ADDRESS */
--            if (omap_gpmc_devtype(f) == OMAP_GPMC_NAND) {
--                nand_setpins(f->dev, 0, 1, 0, 1, 0); /* ALE */
--                omap_nand_setio(f->dev, value, omap_gpmc_devsize(f), size);
--            }
--            break;
--        case 0x84 ... 0x87: /* GPMC_NAND_DATA */
--            if (omap_gpmc_devtype(f) == OMAP_GPMC_NAND) {
--                omap_nand_write(f, 0, value, size);
--            }
--            break;
--        default:
--            goto bad_reg;
--        }
--        break;
--
--    case 0x1e0:	/* GPMC_PREFETCH_CONFIG1 */
--        if (!s->prefetch.startengine) {
--            uint32_t newconfig1 = value & 0x7f8f7fbf;
--            uint32_t changed;
--            changed = newconfig1 ^ s->prefetch.config1;
--            if (changed & (0x80 | 0x7000000)) {
--                /* Turning the engine on or off, or mapping it somewhere else.
--                 * cs_map() and cs_unmap() check the prefetch config and
--                 * overall CSVALID bits, so it is sufficient to unmap-and-map
--                 * both the old cs and the new one. Note that we adhere to
--                 * the "unmap/change config/map" order (and not unmap twice
--                 * if newcs == oldcs), otherwise we'll try to delete the wrong
--                 * memory region.
--                 */
--                int oldcs = prefetch_cs(s->prefetch.config1);
--                int newcs = prefetch_cs(newconfig1);
--                omap_gpmc_cs_unmap(s, oldcs);
--                if (oldcs != newcs) {
--                    omap_gpmc_cs_unmap(s, newcs);
--                }
--                s->prefetch.config1 = newconfig1;
--                omap_gpmc_cs_map(s, oldcs);
--                if (oldcs != newcs) {
--                    omap_gpmc_cs_map(s, newcs);
--                }
--            } else {
--                s->prefetch.config1 = newconfig1;
--            }
--        }
--        break;
--
--    case 0x1e4:	/* GPMC_PREFETCH_CONFIG2 */
--        if (!s->prefetch.startengine) {
--            s->prefetch.transfercount = value & 0x3fff;
--        }
--        break;
--
--    case 0x1ec:	/* GPMC_PREFETCH_CONTROL */
--        if (s->prefetch.startengine != (value & 1)) {
--            s->prefetch.startengine = value & 1;
--            if (s->prefetch.startengine) {
--                /* Prefetch engine start */
--                s->prefetch.count = s->prefetch.transfercount;
--                if (s->prefetch.config1 & 1) {
--                    /* Write */
--                    s->prefetch.fifopointer = 64;
--                } else {
--                    /* Read */
--                    s->prefetch.fifopointer = 0;
--                    fill_prefetch_fifo(s);
--                }
--            } else {
--                /* Prefetch engine forcibly stopped. The TRM
--                 * doesn't define the behaviour if you do this.
--                 * We clear the prefetch count, which means that
--                 * we permit no more writes, and don't read any
--                 * more data from NAND. The CPU can still drain
--                 * the FIFO of unread data.
--                 */
--                s->prefetch.count = 0;
--            }
--            omap_gpmc_int_update(s);
--        }
--        break;
--
--    case 0x1f4:	/* GPMC_ECC_CONFIG */
--        s->ecc_cs = 0x8f;
--        break;
--    case 0x1f8:	/* GPMC_ECC_CONTROL */
--        if (value & (1 << 8))
--            for (cs = 0; cs < 9; cs ++)
--                ecc_reset(&s->ecc[cs]);
--        s->ecc_ptr = value & 0xf;
--        if (s->ecc_ptr == 0 || s->ecc_ptr > 9) {
--            s->ecc_ptr = 0;
--            s->ecc_cs &= ~1;
--        }
--        break;
--    case 0x1fc:	/* GPMC_ECC_SIZE_CONFIG */
--        s->ecc_cfg = value & 0x3fcff1ff;
--        break;
--    case 0x230:	/* GPMC_TESTMODE_CTRL */
--        if (value & 7)
--            fprintf(stderr, "%s: test mode enable attempt\n", __func__);
--        break;
--
--    default:
--    bad_reg:
--        OMAP_BAD_REG(addr);
--        return;
--    }
+-    for (i = 0; i < s->channels; i ++)
+-        s->chan[i].state = DCSR_STOPINTR;
 -}
 -
--static const MemoryRegionOps omap_gpmc_ops = {
--    .read = omap_gpmc_read,
--    .write = omap_gpmc_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
+-DeviceState *pxa27x_dma_init(hwaddr base, qemu_irq irq)
+-{
+-    DeviceState *dev;
+-
+-    dev = qdev_new("pxa2xx-dma");
+-    qdev_prop_set_int32(dev, "channels", PXA27X_DMA_NUM_CHANNELS);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+-
+-    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
+-    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq);
+-
+-    return dev;
+-}
+-
+-DeviceState *pxa255_dma_init(hwaddr base, qemu_irq irq)
+-{
+-    DeviceState *dev;
+-
+-    dev = qdev_new("pxa2xx-dma");
+-    qdev_prop_set_int32(dev, "channels", PXA27X_DMA_NUM_CHANNELS);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+-
+-    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
+-    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq);
+-
+-    return dev;
+-}
+-
+-static bool is_version_0(void *opaque, int version_id)
+-{
+-    return version_id == 0;
+-}
+-
+-static const VMStateDescription vmstate_pxa2xx_dma_chan = {
+-    .name = "pxa2xx_dma_chan",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_UINT32(descr, PXA2xxDMAChannel),
+-        VMSTATE_UINT32(src, PXA2xxDMAChannel),
+-        VMSTATE_UINT32(dest, PXA2xxDMAChannel),
+-        VMSTATE_UINT32(cmd, PXA2xxDMAChannel),
+-        VMSTATE_UINT32(state, PXA2xxDMAChannel),
+-        VMSTATE_INT32(request, PXA2xxDMAChannel),
+-        VMSTATE_END_OF_LIST(),
+-    },
 -};
 -
--struct omap_gpmc_s *omap_gpmc_init(struct omap_mpu_state_s *mpu,
--                                   hwaddr base,
--                                   qemu_irq irq, qemu_irq drq)
+-static const VMStateDescription vmstate_pxa2xx_dma = {
+-    .name = "pxa2xx_dma",
+-    .version_id = 1,
+-    .minimum_version_id = 0,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_UNUSED_TEST(is_version_0, 4),
+-        VMSTATE_UINT32(stopintr, PXA2xxDMAState),
+-        VMSTATE_UINT32(eorintr, PXA2xxDMAState),
+-        VMSTATE_UINT32(rasintr, PXA2xxDMAState),
+-        VMSTATE_UINT32(startintr, PXA2xxDMAState),
+-        VMSTATE_UINT32(endintr, PXA2xxDMAState),
+-        VMSTATE_UINT32(align, PXA2xxDMAState),
+-        VMSTATE_UINT32(pio, PXA2xxDMAState),
+-        VMSTATE_BUFFER(req, PXA2xxDMAState),
+-        VMSTATE_STRUCT_VARRAY_POINTER_INT32(chan, PXA2xxDMAState, channels,
+-                vmstate_pxa2xx_dma_chan, PXA2xxDMAChannel),
+-        VMSTATE_END_OF_LIST(),
+-    },
+-};
+-
+-static Property pxa2xx_dma_properties[] = {
+-    DEFINE_PROP_INT32("channels", PXA2xxDMAState, channels, -1),
+-    DEFINE_PROP_END_OF_LIST(),
+-};
+-
+-static void pxa2xx_dma_class_init(ObjectClass *klass, void *data)
 -{
--    int cs;
--    struct omap_gpmc_s *s = g_new0(struct omap_gpmc_s, 1);
+-    DeviceClass *dc = DEVICE_CLASS(klass);
 -
--    memory_region_init_io(&s->iomem, NULL, &omap_gpmc_ops, s, "omap-gpmc", 0x1000);
--    memory_region_add_subregion(get_system_memory(), base, &s->iomem);
--
--    s->irq = irq;
--    s->drq = drq;
--    s->accept_256 = cpu_is_omap3630(mpu);
--    s->revision = cpu_class_omap3(mpu) ? 0x50 : 0x20;
--    s->lastirq = 0;
--    omap_gpmc_reset(s);
--
--    /* We have to register a different IO memory handler for each
--     * chip select region in case a NAND device is mapped there. We
--     * make the region the worst-case size of 256MB and rely on the
--     * container memory region in cs_map to chop it down to the actual
--     * guest-requested size.
--     */
--    for (cs = 0; cs < 8; cs++) {
--        memory_region_init_io(&s->cs_file[cs].nandiomem, NULL,
--                              &omap_nand_ops,
--                              &s->cs_file[cs],
--                              "omap-nand",
--                              256 * 1024 * 1024);
--    }
--
--    memory_region_init_io(&s->prefetch.iomem, NULL, &omap_prefetch_ops, s,
--                          "omap-gpmc-prefetch", 256 * 1024 * 1024);
--    return s;
+-    dc->desc = "PXA2xx DMA controller";
+-    dc->vmsd = &vmstate_pxa2xx_dma;
+-    device_class_set_props(dc, pxa2xx_dma_properties);
+-    dc->realize = pxa2xx_dma_realize;
 -}
 -
--void omap_gpmc_attach(struct omap_gpmc_s *s, int cs, MemoryRegion *iomem)
+-static const TypeInfo pxa2xx_dma_info = {
+-    .name          = TYPE_PXA2XX_DMA,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(PXA2xxDMAState),
+-    .instance_init = pxa2xx_dma_init,
+-    .class_init    = pxa2xx_dma_class_init,
+-};
+-
+-static void pxa2xx_dma_register_types(void)
 -{
--    struct omap_gpmc_cs_file_s *f;
--    assert(iomem);
--
--    if (cs < 0 || cs >= 8) {
--        fprintf(stderr, "%s: bad chip-select %i\n", __func__, cs);
--        exit(-1);
--    }
--    f = &s->cs_file[cs];
--
--    omap_gpmc_cs_unmap(s, cs);
--    f->config[0] &= ~(0xf << 10);
--    f->iomem = iomem;
--    omap_gpmc_cs_map(s, cs);
+-    type_register_static(&pxa2xx_dma_info);
 -}
 -
--void omap_gpmc_attach_nand(struct omap_gpmc_s *s, int cs, DeviceState *nand)
--{
--    struct omap_gpmc_cs_file_s *f;
--    assert(nand);
--
--    if (cs < 0 || cs >= 8) {
--        fprintf(stderr, "%s: bad chip-select %i\n", __func__, cs);
--        exit(-1);
--    }
--    f = &s->cs_file[cs];
--
--    omap_gpmc_cs_unmap(s, cs);
--    f->config[0] &= ~(0xf << 10);
--    f->config[0] |= (OMAP_GPMC_NAND << 10);
--    f->dev = nand;
--    if (nand_getbuswidth(f->dev) == 16) {
--        f->config[0] |= OMAP_GPMC_16BIT << 12;
--    }
--    omap_gpmc_cs_map(s, cs);
--}
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 7c9addbe68f..122084b1694 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -75,7 +75,6 @@ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files(
- ))
- system_ss.add(when: 'CONFIG_OMAP', if_true: files(
-   'omap_clk.c',
--  'omap_gpmc.c',
-   'omap_l4.c',
-   'omap_tap.c',
- ))
+-type_init(pxa2xx_dma_register_types)
+diff --git a/hw/dma/meson.build b/hw/dma/meson.build
+index dd7781961e5..cc7810beb84 100644
+--- a/hw/dma/meson.build
++++ b/hw/dma/meson.build
+@@ -9,7 +9,6 @@ system_ss.add(when: 'CONFIG_STP2000', if_true: files('sparc32_dma.c'))
+ system_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx_dpdma.c'))
+ system_ss.add(when: 'CONFIG_XLNX_ZDMA', if_true: files('xlnx-zdma.c'))
+ system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_dma.c', 'soc_dma.c'))
+-system_ss.add(when: 'CONFIG_PXA2XX', if_true: files('pxa2xx_dma.c'))
+ system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_dma.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_PDMA', if_true: files('sifive_pdma.c'))
+ system_ss.add(when: 'CONFIG_XLNX_CSU_DMA', if_true: files('xlnx_csu_dma.c'))
 -- 
 2.34.1
 
