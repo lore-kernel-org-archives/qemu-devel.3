@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B42BCEACE8
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:45:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BD23CEACE7
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:45:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svfuO-0005Ks-8a; Tue, 01 Oct 2024 12:39:32 -0400
+	id 1svfvB-0006nB-Jp; Tue, 01 Oct 2024 12:40:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfuM-0005KZ-AV
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:30 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1svfuk-0005gk-83
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:56 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfuJ-00061Y-Hl
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:30 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-42cb57f8b41so70638075e9.0
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:39:27 -0700 (PDT)
+ id 1svfud-0006AA-Oe
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:53 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-37cc810ce73so3343571f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727800766; x=1728405566; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727800786; x=1728405586; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=3k5lSBv2taR4PDQUa2y3to1Z1kZj1MbR3EkZYcRp/F4=;
- b=gQOaIFtqHkWahDKgjmt0JO4buK3GIzvRZNxPTfmb/w/qSirav84cnoJBx37bQsCpl/
- rI498OWpO8Qnx/x9Nm8XCCz8Dh9BKA9/pWdRZaE9FiYZIHb7Avm5OMUC5TFqiPe66fI4
- 7VhrfaJXS0hWB3LsF94dvyj0UKprNsVmKymoLHSmbPPcuPIVD1jfWPqCp9Z/h78hHkiN
- XU8d/YSq6b3DcTHJUNOMwYnETl9TzUwKKjcS0Vc9Kx92viTvzyOqI3KcjoMq87HJ8IY5
- +A4QS9iNWOPkG3a4p4rp/cJejQLEKkO9d4LxW+utorRoBr2n+cR03cwfySmJQK9s2ZTu
- yVWA==
+ :reply-to; bh=rGgOylqPmA98kWK9qIr0jVYd8Pn+WsSFNAuXNokWMsE=;
+ b=XIgRnIQP68p7i2tCRyAQqHhNAR6weSDN2ih6mfepY0G7J4Q/bwWlxQldzRusN7/M0N
+ DDt/IqGCHIGIVwVIM3Jb7YxoXqtP81yRon088Qx0WW5iQ2kgwMVooVYBLp6V31srPTqp
+ LGL6VZ/hIJzzb6R6Grk8fvmaL9kOu8gvueReUNNmMBfuL+cyHjjE0VkdK+iWZCLeazrN
+ 0ox5wlYSwLWsrDexzjA0LiaZfxgPhYuHqUPkDWdM21a89qisycuA0+kG22KRSiE2O/mp
+ MZ/vOKK9FZi5tXUMS5EkAUqdWrY3rCYEEDusNuruFjr0V3MIg+F+G2Tu0n6XBkaIe+fp
+ X6OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727800766; x=1728405566;
+ d=1e100.net; s=20230601; t=1727800786; x=1728405586;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3k5lSBv2taR4PDQUa2y3to1Z1kZj1MbR3EkZYcRp/F4=;
- b=ZX5babDiU8mUMWg16hv1JaTlaEoq0jyt3ckAt+N9z9v24ChsOF8GJ5odrXsOBkho4y
- 0tf0imPIHCfA5q9bMdRqv6405v0hzklrZFqSKa2XHBWMzoTvc9Cm0curWbfvjryhsdBe
- Mjwzk6QXfYSXlZA+4JX1BqAHec2fOWZia49SYkjU6kNUXd93+KntR5cod/VUiMF2RS94
- 2BsRUm/xCf5sXTmJOe4Z2UXQu5Vb20mKKwO2xz85A5QGDsqrtlnYhLc5g3S+gcPPKbjj
- jb9Umq90M6+qMsB5r0B3LQLlfrYpCasaiqBoOU2JlnmJiEaVnPMbyyfj7IYyUyKN/fEn
- s0bg==
-X-Gm-Message-State: AOJu0YwZarFTJT7EXi/11rEROmfP35ovgQMsOItWe2Mkkh3K1dRfAMcn
- VIJiRSIQG0lCdbt16khjtwDPhM4AZLUsPAOuybuqsF47zOJrw8uMhqMgLhKMXVV5lZp3lOisJ/S
- V
-X-Google-Smtp-Source: AGHT+IGVDmBCA/8qLaYXYTsO5Q9lN7AiiZKafM3AYRkqJ2g92xTP/m5Oeb1aaSnLNOekUMZ3uzHJQA==
-X-Received: by 2002:a05:600c:1c26:b0:42c:b77a:bd21 with SMTP id
- 5b1f17b1804b1-42f777f00e0mr784795e9.28.1727800765781; 
- Tue, 01 Oct 2024 09:39:25 -0700 (PDT)
+ bh=rGgOylqPmA98kWK9qIr0jVYd8Pn+WsSFNAuXNokWMsE=;
+ b=mcC4eIGnX4Z91p+SqR5d456tyug6NXMeqnStGeGDpc6gCQH9vLBQ8wG7eDjUmTzEhe
+ oU+E0jYTul/yIa2YRiFcURVIxxcj5XZwWiitTXtTM6eJ9QHLIsPSoxLLu9d2A7m2cbLu
+ +ywpt6NXUowyw6R/SwK9MwGGrsNGo+cbx4aiRVi1Qwotf757Lbf4frVRONusmzOx/8Sm
+ pWi4x5zW+aZ+IiDXSbdT5Su+QxwSsWLEHG4i6NhMQhzXir+ib2oK9FPocNIlnI7ERt0A
+ 1MpQM03w/72vItpPG8YqAJ595ptl9rv5dE8lw4Cy8W6Ni8vQM0S8xL6Rj6c/9yNJfbyR
+ upoA==
+X-Gm-Message-State: AOJu0YyASr+UQzFOImkrMGa8yt6C3vmBsZzY+q31R3M3Lykkw5DNLypm
+ Ixr6b51vVRW44U3MmTZrN2KvMhYXnASgNYudYRnYjHK6W8XTOQaRCzLhUblBHYedTWynvPkycOb
+ x
+X-Google-Smtp-Source: AGHT+IFcCf8n9j3Xg6dSXYuq9+Vq/2mi4zKMTtUEtSIwD1gKl7tp5LK8oKvZAwzD1iaNM8ksnmRJTw==
+X-Received: by 2002:a05:6000:2a3:b0:37c:cec1:6292 with SMTP id
+ ffacd0b85a97d-37cfb8a5e9amr137908f8f.8.1727800786283; 
+ Tue, 01 Oct 2024 09:39:46 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd56e6547sm12243771f8f.58.2024.10.01.09.39.24
+ ffacd0b85a97d-37cd56e6547sm12243771f8f.58.2024.10.01.09.39.45
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 09:39:25 -0700 (PDT)
+ Tue, 01 Oct 2024 09:39:46 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/54] hw/display: Remove tc6393xb device
-Date: Tue,  1 Oct 2024 17:38:34 +0100
-Message-Id: <20241001163918.1275441-11-peter.maydell@linaro.org>
+Subject: [PULL 48/54] hw/ssi: Remove omap_mcspi
+Date: Tue,  1 Oct 2024 17:39:12 +0100
+Message-Id: <20241001163918.1275441-49-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241001163918.1275441-1-peter.maydell@linaro.org>
 References: <20241001163918.1275441-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,653 +93,445 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The tc6393xb was used only by the XScale-based Zaurus machine types.
-Now they have been removed we can remove this device too.
+The omap_mcspi device is used only in the OMAP2 SoC, which we
+are removing.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20240903160751.4100218-7-peter.maydell@linaro.org
+Message-id: 20240903160751.4100218-48-peter.maydell@linaro.org
 ---
- MAINTAINERS                   |   2 -
- include/hw/display/tc6393xb.h |  21 --
- hw/display/tc6393xb.c         | 568 ----------------------------------
- hw/display/meson.build        |   1 -
- 4 files changed, 592 deletions(-)
- delete mode 100644 include/hw/display/tc6393xb.h
- delete mode 100644 hw/display/tc6393xb.c
+ include/hw/arm/omap.h |  11 --
+ hw/ssi/omap_spi.c     | 380 ------------------------------------------
+ hw/ssi/meson.build    |   1 -
+ 3 files changed, 392 deletions(-)
+ delete mode 100644 hw/ssi/omap_spi.c
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 42e37db3b00..bb74aff54c0 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -936,7 +936,6 @@ S: Odd Fixes
- F: hw/arm/mainstone.c
- F: hw/arm/z2.c
- F: hw/*/pxa2xx*
--F: hw/display/tc6393xb.c
- F: hw/gpio/max7310.c
- F: hw/gpio/zaurus.c
- F: hw/misc/mst_fpga.c
-@@ -944,7 +943,6 @@ F: hw/adc/max111x.c
- F: include/hw/adc/max111x.h
- F: include/hw/arm/pxa.h
- F: include/hw/arm/sharpsl.h
--F: include/hw/display/tc6393xb.h
- F: docs/system/arm/mainstone.rst
+diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
+index 982341d0079..118874d8775 100644
+--- a/include/hw/arm/omap.h
++++ b/include/hw/arm/omap.h
+@@ -698,15 +698,6 @@ struct omap_uwire_s;
+ void omap_uwire_attach(struct omap_uwire_s *s,
+                 uWireSlave *slave, int chipselect);
  
- SABRELITE / i.MX6
-diff --git a/include/hw/display/tc6393xb.h b/include/hw/display/tc6393xb.h
+-/* OMAP2 spi */
+-struct omap_mcspi_s;
+-struct omap_mcspi_s *omap_mcspi_init(struct omap_target_agent_s *ta, int chnum,
+-                qemu_irq irq, qemu_irq *drq, omap_clk fclk, omap_clk iclk);
+-void omap_mcspi_attach(struct omap_mcspi_s *s,
+-                uint32_t (*txrx)(void *opaque, uint32_t, int), void *opaque,
+-                int chipselect);
+-void omap_mcspi_reset(struct omap_mcspi_s *s);
+-
+ struct I2SCodec {
+     void *opaque;
+ 
+@@ -923,8 +914,6 @@ struct omap_mpu_state_s {
+     /* OMAP2-only peripherals */
+     struct omap_l4_s *l4;
+ 
+-    struct omap_mcspi_s *mcspi[2];
+-
+     struct omap_dss_s *dss;
+ };
+ 
+diff --git a/hw/ssi/omap_spi.c b/hw/ssi/omap_spi.c
 deleted file mode 100644
-index f9263bf98a6..00000000000
---- a/include/hw/display/tc6393xb.h
+index 8f85c3e3918..00000000000
+--- a/hw/ssi/omap_spi.c
 +++ /dev/null
-@@ -1,21 +0,0 @@
+@@ -1,380 +0,0 @@
 -/*
-- * Toshiba TC6393XB I/O Controller.
-- * Found in Sharp Zaurus SL-6000 (tosa) or some
-- * Toshiba e-Series PDAs.
+- * TI OMAP processor's Multichannel SPI emulation.
 - *
-- * Copyright (c) 2007 Hervé Poussineau
+- * Copyright (C) 2007-2009 Nokia Corporation
 - *
-- * This work is licensed under the terms of the GNU GPL, version 2 or later.
-- * See the COPYING file in the top-level directory.
-- */
--
--#ifndef HW_DISPLAY_TC6393XB_H
--#define HW_DISPLAY_TC6393XB_H
--
--typedef struct TC6393xbState TC6393xbState;
--
--TC6393xbState *tc6393xb_init(struct MemoryRegion *sysmem,
--                             uint32_t base, qemu_irq irq);
--qemu_irq tc6393xb_l3v_get(TC6393xbState *s);
--
--#endif
-diff --git a/hw/display/tc6393xb.c b/hw/display/tc6393xb.c
-deleted file mode 100644
-index c7beba453b0..00000000000
---- a/hw/display/tc6393xb.c
-+++ /dev/null
-@@ -1,568 +0,0 @@
--/*
-- * Toshiba TC6393XB I/O Controller.
-- * Found in Sharp Zaurus SL-6000 (tosa) or some
-- * Toshiba e-Series PDAs.
+- * Original code for OMAP2 by Andrzej Zaborowski <andrew@openedhand.com>
 - *
-- * Most features are currently unsupported!!!
+- * This program is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU General Public License as
+- * published by the Free Software Foundation; either version 2 or
+- * (at your option) any later version of the License.
 - *
-- * This code is licensed under the GNU GPL v2.
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- * GNU General Public License for more details.
 - *
-- * Contributions after 2012-01-13 are licensed under the terms of the
-- * GNU GPL, version 2 or (at your option) any later version.
+- * You should have received a copy of the GNU General Public License along
+- * with this program; if not, write to the Free Software Foundation, Inc.,
+- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 - */
 -
 -#include "qemu/osdep.h"
--#include "qapi/error.h"
--#include "qemu/host-utils.h"
+-#include "qemu/log.h"
+-#include "hw/hw.h"
 -#include "hw/irq.h"
--#include "hw/display/tc6393xb.h"
--#include "exec/memory.h"
--#include "hw/block/flash.h"
--#include "ui/console.h"
--#include "ui/pixel_ops.h"
--#include "sysemu/blockdev.h"
+-#include "hw/arm/omap.h"
 -
--#define IRQ_TC6393_NAND		0
--#define IRQ_TC6393_MMC		1
--#define IRQ_TC6393_OHCI		2
--#define IRQ_TC6393_SERIAL	3
--#define IRQ_TC6393_FB		4
--
--#define	TC6393XB_NR_IRQS	8
--
--#define TC6393XB_GPIOS  16
--
--#define SCR_REVID	0x08		/* b Revision ID	*/
--#define SCR_ISR		0x50		/* b Interrupt Status	*/
--#define SCR_IMR		0x52		/* b Interrupt Mask	*/
--#define SCR_IRR		0x54		/* b Interrupt Routing	*/
--#define SCR_GPER	0x60		/* w GP Enable		*/
--#define SCR_GPI_SR(i)	(0x64 + (i))	/* b3 GPI Status	*/
--#define SCR_GPI_IMR(i)	(0x68 + (i))	/* b3 GPI INT Mask	*/
--#define SCR_GPI_EDER(i)	(0x6c + (i))	/* b3 GPI Edge Detect Enable */
--#define SCR_GPI_LIR(i)	(0x70 + (i))	/* b3 GPI Level Invert	*/
--#define SCR_GPO_DSR(i)	(0x78 + (i))	/* b3 GPO Data Set	*/
--#define SCR_GPO_DOECR(i) (0x7c + (i))	/* b3 GPO Data OE Control */
--#define SCR_GP_IARCR(i)	(0x80 + (i))	/* b3 GP Internal Active Register Control */
--#define SCR_GP_IARLCR(i) (0x84 + (i))	/* b3 GP INTERNAL Active Register Level Control */
--#define SCR_GPI_BCR(i)	(0x88 + (i))	/* b3 GPI Buffer Control */
--#define SCR_GPA_IARCR	0x8c		/* w GPa Internal Active Register Control */
--#define SCR_GPA_IARLCR	0x90		/* w GPa Internal Active Register Level Control */
--#define SCR_GPA_BCR	0x94		/* w GPa Buffer Control */
--#define SCR_CCR		0x98		/* w Clock Control	*/
--#define SCR_PLL2CR	0x9a		/* w PLL2 Control	*/
--#define SCR_PLL1CR	0x9c		/* l PLL1 Control	*/
--#define SCR_DIARCR	0xa0		/* b Device Internal Active Register Control */
--#define SCR_DBOCR	0xa1		/* b Device Buffer Off Control */
--#define SCR_FER		0xe0		/* b Function Enable	*/
--#define SCR_MCR		0xe4		/* w Mode Control	*/
--#define SCR_CONFIG	0xfc		/* b Configuration Control */
--#define SCR_DEBUG	0xff		/* b Debug		*/
--
--#define NAND_CFG_COMMAND    0x04    /* w Command        */
--#define NAND_CFG_BASE       0x10    /* l Control Base Address */
--#define NAND_CFG_INTP       0x3d    /* b Interrupt Pin  */
--#define NAND_CFG_INTE       0x48    /* b Int Enable     */
--#define NAND_CFG_EC         0x4a    /* b Event Control  */
--#define NAND_CFG_ICC        0x4c    /* b Internal Clock Control */
--#define NAND_CFG_ECCC       0x5b    /* b ECC Control    */
--#define NAND_CFG_NFTC       0x60    /* b NAND Flash Transaction Control */
--#define NAND_CFG_NFM        0x61    /* b NAND Flash Monitor */
--#define NAND_CFG_NFPSC      0x62    /* b NAND Flash Power Supply Control */
--#define NAND_CFG_NFDC       0x63    /* b NAND Flash Detect Control */
--
--#define NAND_DATA   0x00        /* l Data       */
--#define NAND_MODE   0x04        /* b Mode       */
--#define NAND_STATUS 0x05        /* b Status     */
--#define NAND_ISR    0x06        /* b Interrupt Status */
--#define NAND_IMR    0x07        /* b Interrupt Mask */
--
--#define NAND_MODE_WP        0x80
--#define NAND_MODE_CE        0x10
--#define NAND_MODE_ALE       0x02
--#define NAND_MODE_CLE       0x01
--#define NAND_MODE_ECC_MASK  0x60
--#define NAND_MODE_ECC_EN    0x20
--#define NAND_MODE_ECC_READ  0x40
--#define NAND_MODE_ECC_RST   0x60
--
--struct TC6393xbState {
+-/* Multichannel SPI */
+-struct omap_mcspi_s {
 -    MemoryRegion iomem;
 -    qemu_irq irq;
--    qemu_irq *sub_irqs;
--    struct {
--        uint8_t ISR;
--        uint8_t IMR;
--        uint8_t IRR;
--        uint16_t GPER;
--        uint8_t GPI_SR[3];
--        uint8_t GPI_IMR[3];
--        uint8_t GPI_EDER[3];
--        uint8_t GPI_LIR[3];
--        uint8_t GP_IARCR[3];
--        uint8_t GP_IARLCR[3];
--        uint8_t GPI_BCR[3];
--        uint16_t GPA_IARCR;
--        uint16_t GPA_IARLCR;
--        uint16_t CCR;
--        uint16_t PLL2CR;
--        uint32_t PLL1CR;
--        uint8_t DIARCR;
--        uint8_t DBOCR;
--        uint8_t FER;
--        uint16_t MCR;
--        uint8_t CONFIG;
--        uint8_t DEBUG;
--    } scr;
--    uint32_t gpio_dir;
--    uint32_t gpio_level;
--    uint32_t prev_level;
--    qemu_irq handler[TC6393XB_GPIOS];
--    qemu_irq *gpio_in;
+-    int chnum;
 -
--    struct {
--        uint8_t mode;
--        uint8_t isr;
--        uint8_t imr;
--    } nand;
--    int nand_enable;
--    uint32_t nand_phys;
--    DeviceState *flash;
--    ECCState ecc;
+-    uint32_t sysconfig;
+-    uint32_t systest;
+-    uint32_t irqst;
+-    uint32_t irqen;
+-    uint32_t wken;
+-    uint32_t control;
 -
--    QemuConsole *con;
--    MemoryRegion vram;
--    uint16_t *vram_ptr;
--    uint32_t scr_width, scr_height; /* in pixels */
--    qemu_irq l3v;
--    unsigned blank : 1,
--             blanked : 1;
+-    struct omap_mcspi_ch_s {
+-        qemu_irq txdrq;
+-        qemu_irq rxdrq;
+-        uint32_t (*txrx)(void *opaque, uint32_t, int);
+-        void *opaque;
+-
+-        uint32_t tx;
+-        uint32_t rx;
+-
+-        uint32_t config;
+-        uint32_t status;
+-        uint32_t control;
+-    } ch[4];
 -};
 -
--static void tc6393xb_gpio_set(void *opaque, int line, int level)
+-static inline void omap_mcspi_interrupt_update(struct omap_mcspi_s *s)
 -{
--//    TC6393xbState *s = opaque;
+-    qemu_set_irq(s->irq, s->irqst & s->irqen);
+-}
 -
--    if (line > TC6393XB_GPIOS) {
--        printf("%s: No GPIO pin %i\n", __func__, line);
+-static inline void omap_mcspi_dmarequest_update(struct omap_mcspi_ch_s *ch)
+-{
+-    qemu_set_irq(ch->txdrq,
+-                    (ch->control & 1) &&		/* EN */
+-                    (ch->config & (1 << 14)) &&		/* DMAW */
+-                    (ch->status & (1 << 1)) &&		/* TXS */
+-                    ((ch->config >> 12) & 3) != 1);	/* TRM */
+-    qemu_set_irq(ch->rxdrq,
+-                    (ch->control & 1) &&		/* EN */
+-                    (ch->config & (1 << 15)) &&		/* DMAW */
+-                    (ch->status & (1 << 0)) &&		/* RXS */
+-                    ((ch->config >> 12) & 3) != 2);	/* TRM */
+-}
+-
+-static void omap_mcspi_transfer_run(struct omap_mcspi_s *s, int chnum)
+-{
+-    struct omap_mcspi_ch_s *ch = s->ch + chnum;
+-
+-    if (!(ch->control & 1))				/* EN */
+-        return;
+-    if ((ch->status & (1 << 0)) &&			/* RXS */
+-                    ((ch->config >> 12) & 3) != 2 &&	/* TRM */
+-                    !(ch->config & (1 << 19)))		/* TURBO */
+-        goto intr_update;
+-    if ((ch->status & (1 << 1)) &&			/* TXS */
+-                    ((ch->config >> 12) & 3) != 1)	/* TRM */
+-        goto intr_update;
+-
+-    if (!(s->control & 1) ||				/* SINGLE */
+-                    (ch->config & (1 << 20))) {		/* FORCE */
+-        if (ch->txrx)
+-            ch->rx = ch->txrx(ch->opaque, ch->tx,	/* WL */
+-                            1 + (0x1f & (ch->config >> 7)));
+-    }
+-
+-    ch->tx = 0;
+-    ch->status |= 1 << 2;				/* EOT */
+-    ch->status |= 1 << 1;				/* TXS */
+-    if (((ch->config >> 12) & 3) != 2)			/* TRM */
+-        ch->status |= 1 << 0;				/* RXS */
+-
+-intr_update:
+-    if ((ch->status & (1 << 0)) &&			/* RXS */
+-                    ((ch->config >> 12) & 3) != 2 &&	/* TRM */
+-                    !(ch->config & (1 << 19)))		/* TURBO */
+-        s->irqst |= 1 << (2 + 4 * chnum);		/* RX_FULL */
+-    if ((ch->status & (1 << 1)) &&			/* TXS */
+-                    ((ch->config >> 12) & 3) != 1)	/* TRM */
+-        s->irqst |= 1 << (0 + 4 * chnum);		/* TX_EMPTY */
+-    omap_mcspi_interrupt_update(s);
+-    omap_mcspi_dmarequest_update(ch);
+-}
+-
+-void omap_mcspi_reset(struct omap_mcspi_s *s)
+-{
+-    int ch;
+-
+-    s->sysconfig = 0;
+-    s->systest = 0;
+-    s->irqst = 0;
+-    s->irqen = 0;
+-    s->wken = 0;
+-    s->control = 4;
+-
+-    for (ch = 0; ch < 4; ch ++) {
+-        s->ch[ch].config = 0x060000;
+-        s->ch[ch].status = 2;				/* TXS */
+-        s->ch[ch].control = 0;
+-
+-        omap_mcspi_dmarequest_update(s->ch + ch);
+-    }
+-
+-    omap_mcspi_interrupt_update(s);
+-}
+-
+-static uint64_t omap_mcspi_read(void *opaque, hwaddr addr, unsigned size)
+-{
+-    struct omap_mcspi_s *s = opaque;
+-    int ch = 0;
+-    uint32_t ret;
+-
+-    if (size != 4) {
+-        return omap_badwidth_read32(opaque, addr);
+-    }
+-
+-    switch (addr) {
+-    case 0x00:	/* MCSPI_REVISION */
+-        return 0x91;
+-
+-    case 0x10:	/* MCSPI_SYSCONFIG */
+-        return s->sysconfig;
+-
+-    case 0x14:	/* MCSPI_SYSSTATUS */
+-        return 1;					/* RESETDONE */
+-
+-    case 0x18:	/* MCSPI_IRQSTATUS */
+-        return s->irqst;
+-
+-    case 0x1c:	/* MCSPI_IRQENABLE */
+-        return s->irqen;
+-
+-    case 0x20:	/* MCSPI_WAKEUPENABLE */
+-        return s->wken;
+-
+-    case 0x24:	/* MCSPI_SYST */
+-        return s->systest;
+-
+-    case 0x28:	/* MCSPI_MODULCTRL */
+-        return s->control;
+-
+-    case 0x68: ch ++;
+-        /* fall through */
+-    case 0x54: ch ++;
+-        /* fall through */
+-    case 0x40: ch ++;
+-        /* fall through */
+-    case 0x2c:	/* MCSPI_CHCONF */
+-        return s->ch[ch].config;
+-
+-    case 0x6c: ch ++;
+-        /* fall through */
+-    case 0x58: ch ++;
+-        /* fall through */
+-    case 0x44: ch ++;
+-        /* fall through */
+-    case 0x30:	/* MCSPI_CHSTAT */
+-        return s->ch[ch].status;
+-
+-    case 0x70: ch ++;
+-        /* fall through */
+-    case 0x5c: ch ++;
+-        /* fall through */
+-    case 0x48: ch ++;
+-        /* fall through */
+-    case 0x34:	/* MCSPI_CHCTRL */
+-        return s->ch[ch].control;
+-
+-    case 0x74: ch ++;
+-        /* fall through */
+-    case 0x60: ch ++;
+-        /* fall through */
+-    case 0x4c: ch ++;
+-        /* fall through */
+-    case 0x38:	/* MCSPI_TX */
+-        return s->ch[ch].tx;
+-
+-    case 0x78: ch ++;
+-        /* fall through */
+-    case 0x64: ch ++;
+-        /* fall through */
+-    case 0x50: ch ++;
+-        /* fall through */
+-    case 0x3c:	/* MCSPI_RX */
+-        s->ch[ch].status &= ~(1 << 0);			/* RXS */
+-        ret = s->ch[ch].rx;
+-        omap_mcspi_transfer_run(s, ch);
+-        return ret;
+-    }
+-
+-    OMAP_BAD_REG(addr);
+-    return 0;
+-}
+-
+-static void omap_mcspi_write(void *opaque, hwaddr addr,
+-                             uint64_t value, unsigned size)
+-{
+-    struct omap_mcspi_s *s = opaque;
+-    int ch = 0;
+-
+-    if (size != 4) {
+-        omap_badwidth_write32(opaque, addr, value);
 -        return;
 -    }
 -
--    // FIXME: how does the chip reflect the GPIO input level change?
--}
--
--static void tc6393xb_gpio_handler_update(TC6393xbState *s)
--{
--    uint32_t level, diff;
--    int bit;
--
--    level = s->gpio_level & s->gpio_dir;
--    level &= MAKE_64BIT_MASK(0, TC6393XB_GPIOS);
--
--    for (diff = s->prev_level ^ level; diff; diff ^= 1 << bit) {
--        bit = ctz32(diff);
--        qemu_set_irq(s->handler[bit], (level >> bit) & 1);
--    }
--
--    s->prev_level = level;
--}
--
--qemu_irq tc6393xb_l3v_get(TC6393xbState *s)
--{
--    return s->l3v;
--}
--
--static void tc6393xb_l3v(void *opaque, int line, int level)
--{
--    TC6393xbState *s = opaque;
--    s->blank = !level;
--    fprintf(stderr, "L3V: %d\n", level);
--}
--
--static void tc6393xb_sub_irq(void *opaque, int line, int level) {
--    TC6393xbState *s = opaque;
--    uint8_t isr = s->scr.ISR;
--    if (level)
--        isr |= 1 << line;
--    else
--        isr &= ~(1 << line);
--    s->scr.ISR = isr;
--    qemu_set_irq(s->irq, isr & s->scr.IMR);
--}
--
--#define SCR_REG_B(N)                            \
--    case SCR_ ##N: return s->scr.N
--#define SCR_REG_W(N)                            \
--    case SCR_ ##N: return s->scr.N;             \
--    case SCR_ ##N + 1: return s->scr.N >> 8;
--#define SCR_REG_L(N)                            \
--    case SCR_ ##N: return s->scr.N;             \
--    case SCR_ ##N + 1: return s->scr.N >> 8;    \
--    case SCR_ ##N + 2: return s->scr.N >> 16;   \
--    case SCR_ ##N + 3: return s->scr.N >> 24;
--#define SCR_REG_A(N)                            \
--    case SCR_ ##N(0): return s->scr.N[0];       \
--    case SCR_ ##N(1): return s->scr.N[1];       \
--    case SCR_ ##N(2): return s->scr.N[2]
--
--static uint32_t tc6393xb_scr_readb(TC6393xbState *s, hwaddr addr)
--{
 -    switch (addr) {
--        case SCR_REVID:
--            return 3;
--        case SCR_REVID+1:
--            return 0;
--        SCR_REG_B(ISR);
--        SCR_REG_B(IMR);
--        SCR_REG_B(IRR);
--        SCR_REG_W(GPER);
--        SCR_REG_A(GPI_SR);
--        SCR_REG_A(GPI_IMR);
--        SCR_REG_A(GPI_EDER);
--        SCR_REG_A(GPI_LIR);
--        case SCR_GPO_DSR(0):
--        case SCR_GPO_DSR(1):
--        case SCR_GPO_DSR(2):
--            return (s->gpio_level >> ((addr - SCR_GPO_DSR(0)) * 8)) & 0xff;
--        case SCR_GPO_DOECR(0):
--        case SCR_GPO_DOECR(1):
--        case SCR_GPO_DOECR(2):
--            return (s->gpio_dir >> ((addr - SCR_GPO_DOECR(0)) * 8)) & 0xff;
--        SCR_REG_A(GP_IARCR);
--        SCR_REG_A(GP_IARLCR);
--        SCR_REG_A(GPI_BCR);
--        SCR_REG_W(GPA_IARCR);
--        SCR_REG_W(GPA_IARLCR);
--        SCR_REG_W(CCR);
--        SCR_REG_W(PLL2CR);
--        SCR_REG_L(PLL1CR);
--        SCR_REG_B(DIARCR);
--        SCR_REG_B(DBOCR);
--        SCR_REG_B(FER);
--        SCR_REG_W(MCR);
--        SCR_REG_B(CONFIG);
--        SCR_REG_B(DEBUG);
--    }
--    fprintf(stderr, "tc6393xb_scr: unhandled read at %08x\n", (uint32_t) addr);
--    return 0;
--}
--#undef SCR_REG_B
--#undef SCR_REG_W
--#undef SCR_REG_L
--#undef SCR_REG_A
+-    case 0x00:	/* MCSPI_REVISION */
+-    case 0x14:	/* MCSPI_SYSSTATUS */
+-    case 0x30:	/* MCSPI_CHSTAT0 */
+-    case 0x3c:	/* MCSPI_RX0 */
+-    case 0x44:	/* MCSPI_CHSTAT1 */
+-    case 0x50:	/* MCSPI_RX1 */
+-    case 0x58:	/* MCSPI_CHSTAT2 */
+-    case 0x64:	/* MCSPI_RX2 */
+-    case 0x6c:	/* MCSPI_CHSTAT3 */
+-    case 0x78:	/* MCSPI_RX3 */
+-        OMAP_RO_REG(addr);
+-        return;
 -
--#define SCR_REG_B(N)                                \
--    case SCR_ ##N: s->scr.N = value; return;
--#define SCR_REG_W(N)                                \
--    case SCR_ ##N: s->scr.N = (s->scr.N & ~0xff) | (value & 0xff); return; \
--    case SCR_ ##N + 1: s->scr.N = (s->scr.N & 0xff) | (value << 8); return
--#define SCR_REG_L(N)                                \
--    case SCR_ ##N: s->scr.N = (s->scr.N & ~0xff) | (value & 0xff); return;   \
--    case SCR_ ##N + 1: s->scr.N = (s->scr.N & ~(0xff << 8)) | (value & (0xff << 8)); return;     \
--    case SCR_ ##N + 2: s->scr.N = (s->scr.N & ~(0xff << 16)) | (value & (0xff << 16)); return;   \
--    case SCR_ ##N + 3: s->scr.N = (s->scr.N & ~(0xff << 24)) | (value & (0xff << 24)); return;
--#define SCR_REG_A(N)                                \
--    case SCR_ ##N(0): s->scr.N[0] = value; return;   \
--    case SCR_ ##N(1): s->scr.N[1] = value; return;   \
--    case SCR_ ##N(2): s->scr.N[2] = value; return
+-    case 0x10:	/* MCSPI_SYSCONFIG */
+-        if (value & (1 << 1))				/* SOFTRESET */
+-            omap_mcspi_reset(s);
+-        s->sysconfig = value & 0x31d;
+-        break;
 -
--static void tc6393xb_scr_writeb(TC6393xbState *s, hwaddr addr, uint32_t value)
--{
--    switch (addr) {
--        SCR_REG_B(ISR);
--        SCR_REG_B(IMR);
--        SCR_REG_B(IRR);
--        SCR_REG_W(GPER);
--        SCR_REG_A(GPI_SR);
--        SCR_REG_A(GPI_IMR);
--        SCR_REG_A(GPI_EDER);
--        SCR_REG_A(GPI_LIR);
--        case SCR_GPO_DSR(0):
--        case SCR_GPO_DSR(1):
--        case SCR_GPO_DSR(2):
--            s->gpio_level = (s->gpio_level & ~(0xff << ((addr - SCR_GPO_DSR(0))*8))) | ((value & 0xff) << ((addr - SCR_GPO_DSR(0))*8));
--            tc6393xb_gpio_handler_update(s);
--            return;
--        case SCR_GPO_DOECR(0):
--        case SCR_GPO_DOECR(1):
--        case SCR_GPO_DOECR(2):
--            s->gpio_dir = (s->gpio_dir & ~(0xff << ((addr - SCR_GPO_DOECR(0))*8))) | ((value & 0xff) << ((addr - SCR_GPO_DOECR(0))*8));
--            tc6393xb_gpio_handler_update(s);
--            return;
--        SCR_REG_A(GP_IARCR);
--        SCR_REG_A(GP_IARLCR);
--        SCR_REG_A(GPI_BCR);
--        SCR_REG_W(GPA_IARCR);
--        SCR_REG_W(GPA_IARLCR);
--        SCR_REG_W(CCR);
--        SCR_REG_W(PLL2CR);
--        SCR_REG_L(PLL1CR);
--        SCR_REG_B(DIARCR);
--        SCR_REG_B(DBOCR);
--        SCR_REG_B(FER);
--        SCR_REG_W(MCR);
--        SCR_REG_B(CONFIG);
--        SCR_REG_B(DEBUG);
--    }
--    fprintf(stderr, "tc6393xb_scr: unhandled write at %08x: %02x\n",
--                                        (uint32_t) addr, value & 0xff);
--}
--#undef SCR_REG_B
--#undef SCR_REG_W
--#undef SCR_REG_L
--#undef SCR_REG_A
--
--static void tc6393xb_nand_irq(TC6393xbState *s) {
--    qemu_set_irq(s->sub_irqs[IRQ_TC6393_NAND],
--            (s->nand.imr & 0x80) && (s->nand.imr & s->nand.isr));
--}
--
--static uint32_t tc6393xb_nand_cfg_readb(TC6393xbState *s, hwaddr addr) {
--    switch (addr) {
--        case NAND_CFG_COMMAND:
--            return s->nand_enable ? 2 : 0;
--        case NAND_CFG_BASE:
--        case NAND_CFG_BASE + 1:
--        case NAND_CFG_BASE + 2:
--        case NAND_CFG_BASE + 3:
--            return s->nand_phys >> (addr - NAND_CFG_BASE);
--    }
--    fprintf(stderr, "tc6393xb_nand_cfg: unhandled read at %08x\n", (uint32_t) addr);
--    return 0;
--}
--static void tc6393xb_nand_cfg_writeb(TC6393xbState *s, hwaddr addr, uint32_t value) {
--    switch (addr) {
--        case NAND_CFG_COMMAND:
--            s->nand_enable = (value & 0x2);
--            return;
--        case NAND_CFG_BASE:
--        case NAND_CFG_BASE + 1:
--        case NAND_CFG_BASE + 2:
--        case NAND_CFG_BASE + 3:
--            s->nand_phys &= ~(0xff << ((addr - NAND_CFG_BASE) * 8));
--            s->nand_phys |= (value & 0xff) << ((addr - NAND_CFG_BASE) * 8);
--            return;
--    }
--    fprintf(stderr, "tc6393xb_nand_cfg: unhandled write at %08x: %02x\n",
--                                        (uint32_t) addr, value & 0xff);
--}
--
--static uint32_t tc6393xb_nand_readb(TC6393xbState *s, hwaddr addr) {
--    switch (addr) {
--        case NAND_DATA + 0:
--        case NAND_DATA + 1:
--        case NAND_DATA + 2:
--        case NAND_DATA + 3:
--            return nand_getio(s->flash);
--        case NAND_MODE:
--            return s->nand.mode;
--        case NAND_STATUS:
--            return 0x14;
--        case NAND_ISR:
--            return s->nand.isr;
--        case NAND_IMR:
--            return s->nand.imr;
--    }
--    fprintf(stderr, "tc6393xb_nand: unhandled read at %08x\n", (uint32_t) addr);
--    return 0;
--}
--static void tc6393xb_nand_writeb(TC6393xbState *s, hwaddr addr, uint32_t value) {
--//    fprintf(stderr, "tc6393xb_nand: write at %08x: %02x\n",
--//					(uint32_t) addr, value & 0xff);
--    switch (addr) {
--        case NAND_DATA + 0:
--        case NAND_DATA + 1:
--        case NAND_DATA + 2:
--        case NAND_DATA + 3:
--            nand_setio(s->flash, value);
--            s->nand.isr |= 1;
--            tc6393xb_nand_irq(s);
--            return;
--        case NAND_MODE:
--            s->nand.mode = value;
--            nand_setpins(s->flash,
--                    value & NAND_MODE_CLE,
--                    value & NAND_MODE_ALE,
--                    !(value & NAND_MODE_CE),
--                    value & NAND_MODE_WP,
--                    0); // FIXME: gnd
--            switch (value & NAND_MODE_ECC_MASK) {
--                case NAND_MODE_ECC_RST:
--                    ecc_reset(&s->ecc);
--                    break;
--                case NAND_MODE_ECC_READ:
--                    // FIXME
--                    break;
--                case NAND_MODE_ECC_EN:
--                    ecc_reset(&s->ecc);
--            }
--            return;
--        case NAND_ISR:
--            s->nand.isr = value;
--            tc6393xb_nand_irq(s);
--            return;
--        case NAND_IMR:
--            s->nand.imr = value;
--            tc6393xb_nand_irq(s);
--            return;
--    }
--    fprintf(stderr, "tc6393xb_nand: unhandled write at %08x: %02x\n",
--                                        (uint32_t) addr, value & 0xff);
--}
--
--static void tc6393xb_draw_graphic(TC6393xbState *s, int full_update)
--{
--    DisplaySurface *surface = qemu_console_surface(s->con);
--    int i;
--    uint16_t *data_buffer;
--    uint8_t *data_display;
--
--    data_buffer = s->vram_ptr;
--    data_display = surface_data(surface);
--    for (i = 0; i < s->scr_height; i++) {
--        int j;
--        for (j = 0; j < s->scr_width; j++, data_display += 4, data_buffer++) {
--            uint16_t color = *data_buffer;
--            uint32_t dest_color = rgb_to_pixel32(
--                           ((color & 0xf800) * 0x108) >> 11,
--                           ((color & 0x7e0) * 0x41) >> 9,
--                           ((color & 0x1f) * 0x21) >> 2
--                           );
--            *(uint32_t *)data_display = dest_color;
+-    case 0x18:	/* MCSPI_IRQSTATUS */
+-        if (!((s->control & (1 << 3)) && (s->systest & (1 << 11)))) {
+-            s->irqst &= ~value;
+-            omap_mcspi_interrupt_update(s);
 -        }
--    }
--    dpy_gfx_update_full(s->con);
--}
+-        break;
 -
--static void tc6393xb_draw_blank(TC6393xbState *s, int full_update)
--{
--    DisplaySurface *surface = qemu_console_surface(s->con);
--    int i, w;
--    uint8_t *d;
+-    case 0x1c:	/* MCSPI_IRQENABLE */
+-        s->irqen = value & 0x1777f;
+-        omap_mcspi_interrupt_update(s);
+-        break;
 -
--    if (!full_update)
+-    case 0x20:	/* MCSPI_WAKEUPENABLE */
+-        s->wken = value & 1;
+-        break;
+-
+-    case 0x24:	/* MCSPI_SYST */
+-        if (s->control & (1 << 3))			/* SYSTEM_TEST */
+-            if (value & (1 << 11)) {			/* SSB */
+-                s->irqst |= 0x1777f;
+-                omap_mcspi_interrupt_update(s);
+-            }
+-        s->systest = value & 0xfff;
+-        break;
+-
+-    case 0x28:	/* MCSPI_MODULCTRL */
+-        if (value & (1 << 3))				/* SYSTEM_TEST */
+-            if (s->systest & (1 << 11)) {		/* SSB */
+-                s->irqst |= 0x1777f;
+-                omap_mcspi_interrupt_update(s);
+-            }
+-        s->control = value & 0xf;
+-        break;
+-
+-    case 0x68: ch ++;
+-        /* fall through */
+-    case 0x54: ch ++;
+-        /* fall through */
+-    case 0x40: ch ++;
+-        /* fall through */
+-    case 0x2c:	/* MCSPI_CHCONF */
+-        if ((value ^ s->ch[ch].config) & (3 << 14))	/* DMAR | DMAW */
+-            omap_mcspi_dmarequest_update(s->ch + ch);
+-        if (((value >> 12) & 3) == 3) { /* TRM */
+-            qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid TRM value (3)\n",
+-                          __func__);
+-        }
+-        if (((value >> 7) & 0x1f) < 3) { /* WL */
+-            qemu_log_mask(LOG_GUEST_ERROR,
+-                          "%s: invalid WL value (%" PRIx64 ")\n",
+-                          __func__, (value >> 7) & 0x1f);
+-        }
+-        s->ch[ch].config = value & 0x7fffff;
+-        break;
+-
+-    case 0x70: ch ++;
+-        /* fall through */
+-    case 0x5c: ch ++;
+-        /* fall through */
+-    case 0x48: ch ++;
+-        /* fall through */
+-    case 0x34:	/* MCSPI_CHCTRL */
+-        if (value & ~s->ch[ch].control & 1) {		/* EN */
+-            s->ch[ch].control |= 1;
+-            omap_mcspi_transfer_run(s, ch);
+-        } else
+-            s->ch[ch].control = value & 1;
+-        break;
+-
+-    case 0x74: ch ++;
+-        /* fall through */
+-    case 0x60: ch ++;
+-        /* fall through */
+-    case 0x4c: ch ++;
+-        /* fall through */
+-    case 0x38:	/* MCSPI_TX */
+-        s->ch[ch].tx = value;
+-        s->ch[ch].status &= ~(1 << 1);			/* TXS */
+-        omap_mcspi_transfer_run(s, ch);
+-        break;
+-
+-    default:
+-        OMAP_BAD_REG(addr);
 -        return;
--
--    w = s->scr_width * surface_bytes_per_pixel(surface);
--    d = surface_data(surface);
--    for(i = 0; i < s->scr_height; i++) {
--        memset(d, 0, w);
--        d += surface_stride(surface);
 -    }
--
--    dpy_gfx_update_full(s->con);
 -}
 -
--static void tc6393xb_update_display(void *opaque)
--{
--    TC6393xbState *s = opaque;
--    DisplaySurface *surface = qemu_console_surface(s->con);
--    int full_update;
--
--    if (s->scr_width == 0 || s->scr_height == 0)
--        return;
--
--    full_update = 0;
--    if (s->blanked != s->blank) {
--        s->blanked = s->blank;
--        full_update = 1;
--    }
--    if (s->scr_width != surface_width(surface) ||
--        s->scr_height != surface_height(surface)) {
--        qemu_console_resize(s->con, s->scr_width, s->scr_height);
--        full_update = 1;
--    }
--    if (s->blanked)
--        tc6393xb_draw_blank(s, full_update);
--    else
--        tc6393xb_draw_graphic(s, full_update);
--}
--
--
--static uint64_t tc6393xb_readb(void *opaque, hwaddr addr,
--                               unsigned size)
--{
--    TC6393xbState *s = opaque;
--
--    switch (addr >> 8) {
--        case 0:
--            return tc6393xb_scr_readb(s, addr & 0xff);
--        case 1:
--            return tc6393xb_nand_cfg_readb(s, addr & 0xff);
--    };
--
--    if ((addr &~0xff) == s->nand_phys && s->nand_enable) {
--//        return tc6393xb_nand_readb(s, addr & 0xff);
--        uint8_t d = tc6393xb_nand_readb(s, addr & 0xff);
--//        fprintf(stderr, "tc6393xb_nand: read at %08x: %02hhx\n", (uint32_t) addr, d);
--        return d;
--    }
--
--//    fprintf(stderr, "tc6393xb: unhandled read at %08x\n", (uint32_t) addr);
--    return 0;
--}
--
--static void tc6393xb_writeb(void *opaque, hwaddr addr,
--                            uint64_t value, unsigned size) {
--    TC6393xbState *s = opaque;
--
--    switch (addr >> 8) {
--        case 0:
--            tc6393xb_scr_writeb(s, addr & 0xff, value);
--            return;
--        case 1:
--            tc6393xb_nand_cfg_writeb(s, addr & 0xff, value);
--            return;
--    };
--
--    if ((addr &~0xff) == s->nand_phys && s->nand_enable)
--        tc6393xb_nand_writeb(s, addr & 0xff, value);
--    else
--        fprintf(stderr, "tc6393xb: unhandled write at %08x: %02x\n",
--                (uint32_t) addr, (int)value & 0xff);
--}
--
--static const GraphicHwOps tc6393xb_gfx_ops = {
--    .gfx_update  = tc6393xb_update_display,
+-static const MemoryRegionOps omap_mcspi_ops = {
+-    .read = omap_mcspi_read,
+-    .write = omap_mcspi_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
 -};
 -
--TC6393xbState *tc6393xb_init(MemoryRegion *sysmem, uint32_t base, qemu_irq irq)
+-struct omap_mcspi_s *omap_mcspi_init(struct omap_target_agent_s *ta, int chnum,
+-                qemu_irq irq, qemu_irq *drq, omap_clk fclk, omap_clk iclk)
 -{
--    TC6393xbState *s;
--    DriveInfo *nand;
--    static const MemoryRegionOps tc6393xb_ops = {
--        .read = tc6393xb_readb,
--        .write = tc6393xb_writeb,
--        .endianness = DEVICE_NATIVE_ENDIAN,
--        .impl = {
--            .min_access_size = 1,
--            .max_access_size = 1,
--        },
--    };
+-    struct omap_mcspi_s *s = g_new0(struct omap_mcspi_s, 1);
+-    struct omap_mcspi_ch_s *ch = s->ch;
 -
--    s = g_new0(TC6393xbState, 1);
 -    s->irq = irq;
--    s->gpio_in = qemu_allocate_irqs(tc6393xb_gpio_set, s, TC6393XB_GPIOS);
+-    s->chnum = chnum;
+-    while (chnum --) {
+-        ch->txdrq = *drq ++;
+-        ch->rxdrq = *drq ++;
+-        ch ++;
+-    }
+-    omap_mcspi_reset(s);
 -
--    s->l3v = qemu_allocate_irq(tc6393xb_l3v, s, 0);
--    s->blanked = 1;
--
--    s->sub_irqs = qemu_allocate_irqs(tc6393xb_sub_irq, s, TC6393XB_NR_IRQS);
--
--    nand = drive_get(IF_MTD, 0, 0);
--    s->flash = nand_init(nand ? blk_by_legacy_dinfo(nand) : NULL,
--                         NAND_MFR_TOSHIBA, 0x76);
--
--    memory_region_init_io(&s->iomem, NULL, &tc6393xb_ops, s, "tc6393xb", 0x10000);
--    memory_region_add_subregion(sysmem, base, &s->iomem);
--
--    memory_region_init_ram(&s->vram, NULL, "tc6393xb.vram", 0x100000,
--                           &error_fatal);
--    s->vram_ptr = memory_region_get_ram_ptr(&s->vram);
--    memory_region_add_subregion(sysmem, base + 0x100000, &s->vram);
--    s->scr_width = 480;
--    s->scr_height = 640;
--    s->con = graphic_console_init(NULL, 0, &tc6393xb_gfx_ops, s);
+-    memory_region_init_io(&s->iomem, NULL, &omap_mcspi_ops, s, "omap.mcspi",
+-                          omap_l4_region_size(ta, 0));
+-    omap_l4_attach(ta, 0, &s->iomem);
 -
 -    return s;
 -}
-diff --git a/hw/display/meson.build b/hw/display/meson.build
-index 7db05eace97..dabc0d1da6b 100644
---- a/hw/display/meson.build
-+++ b/hw/display/meson.build
-@@ -25,7 +25,6 @@ system_ss.add(when: 'CONFIG_BOCHS_DISPLAY', if_true: files('bochs-display.c'))
- system_ss.add(when: 'CONFIG_BLIZZARD', if_true: files('blizzard.c'))
- system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_fimd.c'))
- system_ss.add(when: 'CONFIG_FRAMEBUFFER', if_true: files('framebuffer.c'))
--system_ss.add(when: 'CONFIG_ZAURUS', if_true: files('tc6393xb.c'))
- 
- system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_dss.c'))
- system_ss.add(when: 'CONFIG_PXA2XX', if_true: files('pxa2xx_lcd.c'))
+-
+-void omap_mcspi_attach(struct omap_mcspi_s *s,
+-                uint32_t (*txrx)(void *opaque, uint32_t, int), void *opaque,
+-                int chipselect)
+-{
+-    if (chipselect < 0 || chipselect >= s->chnum)
+-        hw_error("%s: Bad chipselect %i\n", __func__, chipselect);
+-
+-    s->ch[chipselect].txrx = txrx;
+-    s->ch[chipselect].opaque = opaque;
+-}
+diff --git a/hw/ssi/meson.build b/hw/ssi/meson.build
+index b7ad7fca3b3..23cd425ab00 100644
+--- a/hw/ssi/meson.build
++++ b/hw/ssi/meson.build
+@@ -9,7 +9,6 @@ system_ss.add(when: 'CONFIG_XILINX_SPI', if_true: files('xilinx_spi.c'))
+ system_ss.add(when: 'CONFIG_XILINX_SPIPS', if_true: files('xilinx_spips.c'))
+ system_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal-ospi.c'))
+ system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_spi.c'))
+-system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_spi.c'))
+ system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_spi_host.c'))
+ system_ss.add(when: 'CONFIG_BCM2835_SPI', if_true: files('bcm2835_spi.c'))
+ system_ss.add(when: 'CONFIG_PNV_SPI', if_true: files('pnv_spi.c'))
 -- 
 2.34.1
 
