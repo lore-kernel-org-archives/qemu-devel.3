@@ -4,55 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 610FACEACDC
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E021CEACD5
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sveAk-000410-TE; Tue, 01 Oct 2024 10:48:18 -0400
+	id 1sveEx-0007uk-WA; Tue, 01 Oct 2024 10:52:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1sveAB-000354-6L; Tue, 01 Oct 2024 10:47:43 -0400
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1sveEt-0007LO-IA; Tue, 01 Oct 2024 10:52:35 -0400
 Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1sveA9-0004XY-5h; Tue, 01 Oct 2024 10:47:42 -0400
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1sveEr-0005qq-Oi; Tue, 01 Oct 2024 10:52:35 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id C86625C5460;
- Tue,  1 Oct 2024 07:04:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FC0C4CECE;
- Tue,  1 Oct 2024 07:04:11 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id B8EC65C2975;
+ Tue,  1 Oct 2024 08:54:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0F2C4CECD;
+ Tue,  1 Oct 2024 08:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1727766251;
- bh=EJVWpswAKBYpia55XxrfUeFsgJFUVC4eU7FXqYotZ8s=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=lbdEIOSHXyxJBttsD0hhLCe1RusKtnmHmQWlTOIgxddLpLsFEsqpcbEpB73I602zd
- GwP0gijk7IYDGWRLIrvPtxOXCYvZDPAMNOT5XwR6W12DuRxgFatuHZaedPHt2bKpFK
- jfXRFt8xAFKRysku8opfATzqaocQXoGIXWMOSYIsXob6tXdgmd+JkOWsWiYGJRKin4
- lza3R/CGU2XC/+2MdboJbLC9cXS2WJ0LbjTM3FISoMD7i0OCF6t4wttvzh2nKJkwxh
- ATOmJAN+x8zZh1SCA7t+bkznmQWQe2rnkvDZNbi7VaZNseRG5I3cFxWZyhGUOhP25/
- nKpLOxus0fK1A==
-Received: from mchehab by mail.kernel.org with local (Exim 4.98)
- (envelope-from <mchehab@kernel.org>) id 1svWvY-00000001V0o-2NKo;
- Tue, 01 Oct 2024 09:04:08 +0200
+ s=k20201202; t=1727772872;
+ bh=O5qZmitZ7A2fHApahkP4Nj4o31RxP8kbzcB8RWngS90=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=iJSTa7B5pgdIDhqA5ZkEkVfGdaNaCMsS5XlU7oowrg/lR44OYLfFSBb90vYWy1TjM
+ 8bkb9yivHYPYhuEMCoSbNKzbQOnBYYvkEpyr+tYh53KWyL6WAvr2vh3p1nQHSF3ip3
+ L3NUPLKPZmXMSPQ2n2NP5UgSyowTJDxaw0uR/0iQCMhrPtBPeeg8AZYLKO5W74R06y
+ H7tE/gmDLAEiCNZIxwoSeyS8u8+QxFoeYx9QqXn3/DOfsgvvnpq1rYjZpO1WmG+tHm
+ h9cVl8yMfxN6GpbfBuCtZ0ItIXJ0XQbk4gEL+Wz5uOsDI5vG11/IejmiTaDwEqjMWX
+ E6mo9ZKo+rsLA==
+Date: Tue, 1 Oct 2024 10:54:26 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH v2 07/15] acpi/ghes: Change the type for source_id
-Date: Tue,  1 Oct 2024 09:03:44 +0200
-Message-ID: <4149830f15bcad19f6e32981754d437493f3aeba.1727766088.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <cover.1727766088.git.mchehab+huawei@kernel.org>
-References: <cover.1727766088.git.mchehab+huawei@kernel.org>
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v9 01/12] acpi/ghes: add a firmware file with HEST address
+Message-ID: <20241001105426.48598baa@sal.lan>
+In-Reply-To: <20240916130506.293ab543@imammedo.users.ipa.redhat.com>
+References: <cover.1724556967.git.mchehab+huawei@kernel.org>
+ <34dd38395f29f57a19aef299bafdff9442830ed3.1724556967.git.mchehab+huawei@kernel.org>
+ <20240911155108.190f0fdf@imammedo.users.ipa.redhat.com>
+ <20240913074435.0eea2552@foz.lan>
+ <20240913152518.2f80ab1e@imammedo.users.ipa.redhat.com>
+ <20240914073314.46368ff6@foz.lan>
+ <20240916130506.293ab543@imammedo.users.ipa.redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=mchehab@kernel.org; helo=dfw.source.kernel.org
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
 X-Spam_score_int: -44
 X-Spam_score: -4.5
 X-Spam_bar: ----
@@ -75,56 +77,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HEST source ID is actually a 16-bit value
+Em Mon, 16 Sep 2024 13:05:06 +0200
+Igor Mammedov <imammedo@redhat.com> escreveu:
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- hw/acpi/ghes-stub.c    | 2 +-
- hw/acpi/ghes.c         | 2 +-
- include/hw/acpi/ghes.h | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+> > But no idea how to start a machine using a saved state.  
+> 
+> see https://www.linux-kvm.org/page/Migration
+> 'savevm/loadvm to an external state file (using pseudo-migration)' section
+> 
 
-diff --git a/hw/acpi/ghes-stub.c b/hw/acpi/ghes-stub.c
-index c315de1802d6..2b64cbd2819a 100644
---- a/hw/acpi/ghes-stub.c
-+++ b/hw/acpi/ghes-stub.c
-@@ -11,7 +11,7 @@
- #include "qemu/osdep.h"
- #include "hw/acpi/ghes.h"
- 
--int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
-+int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
- {
-     return -1;
- }
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 5f67322bf0f2..edc74c38bf8a 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -383,7 +383,7 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-     ags->present = true;
- }
- 
--int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
-+int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
- {
-     uint64_t error_block_addr, read_ack_register_addr, read_ack_register = 0;
-     uint64_t start_addr;
-diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 50e3a25ea384..9295e46be25e 100644
---- a/include/hw/acpi/ghes.h
-+++ b/include/hw/acpi/ghes.h
-@@ -73,7 +73,7 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
-                      const char *oem_id, const char *oem_table_id);
- void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
-                           GArray *hardware_errors);
--int acpi_ghes_record_errors(uint8_t source_id, uint64_t error_physical_addr);
-+int acpi_ghes_record_errors(uint16_t source_id, uint64_t error_physical_addr);
- 
- /**
-  * acpi_ghes_present: Report whether ACPI GHES table is present
--- 
-2.46.0
+It didn't work. Is migration currently working between 9.1 and 9.2?
 
+I did a compilation of qemu version v9.1.0-rc0 and saved the state.
+
+Then, on vanilla 9.2 (changeset 01dc65a3bc26), I tried to restore the
+state with both "virt" and "virt-9.1". None worked:
+
+
+$ qemu-system-aarch64 -m 4g,maxmem=8G,slots=8 -M type=virt-9.1,nvdimm=on,gic-version=3,ras=on -cpu max -smp 4 -numa node,nodeid=0,cpus=0-3,memdev=mem0 --nographic -monitor telnet:127.0.0.1:1234,server,nowait -incoming "exec: gzip -c -d statefile.gz" -no-reboot -bios /new_devel/edac/emulator/QEMU_EFI-silent.fd -kernel /new_devel/edac/work/arm64_build/arch/arm64/boot/Image.gz -device pcie-root-port,id=root_port1 -device virtio-blk-pci,drive=hd -device virtio-net-pci,netdev=mynet,id=bob -drive if=none,file=/new_devel/edac/emulator/debian.qcow2,format=qcow2,id=hd -object memory-backend-ram,size=4G,id=mem0 -netdev type=user,id=mynet,hostfwd=tcp::5555-:22 -qmp tcp:localhost:4445,server=on,wait=off -append 'earlycon nomodeset root=/dev/vda1 fsck.mode=skip tp_printk maxcpus=4'
+qemu-system-aarch64: error while loading state for instance 0x0 of device 'cpu'
+qemu-system-aarch64: load of migration failed: Operation not permitted
+
+$ qemu-system-aarch64 -m 4g,maxmem=8G,slots=8 -M type=virt,nvdimm=on,gic-version=3,ras=on -cpu max -smp 4 -numa node,nodeid=0,cpus=0-3,memdev=mem0 --nographic -monitor telnet:127.0.0.1:1234,server,nowait -incoming "exec: gzip -c -d statefile.gz" -no-reboot -bios /new_devel/edac/emulator/QEMU_EFI-silent.fd -kernel /new_devel/edac/work/arm64_build/arch/arm64/boot/Image.gz -device pcie-root-port,id=root_port1 -device virtio-blk-pci,drive=hd -device virtio-net-pci,netdev=mynet,id=bob -drive if=none,file=/new_devel/edac/emulator/debian.qcow2,format=qcow2,id=hd -object memory-backend-ram,size=4G,id=mem0 -netdev type=user,id=mynet,hostfwd=tcp::5555-:22 -qmp tcp:localhost:4445,server=on,wait=off -append 'earlycon nomodeset root=/dev/vda1 fsck.mode=skip tp_printk maxcpus=4'
+qemu-system-aarch64: Machine type received is 'virt-9.1' and local is 'virt-9.2'
+qemu-system-aarch64: load of migration failed: Invalid argument
+
+Did I made something wrong?
+
+Regards,
+Mauro
 
