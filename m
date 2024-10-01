@@ -4,61 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAE6BCEACDB
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:49:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37C97CEACD5
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:50:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sveAg-0003pN-DV; Tue, 01 Oct 2024 10:48:14 -0400
+	id 1sveAZ-0003bU-3g; Tue, 01 Oct 2024 10:48:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1sveAA-00032d-8d; Tue, 01 Oct 2024 10:47:43 -0400
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1sveA8-0004X8-1u; Tue, 01 Oct 2024 10:47:41 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id D2A915C546D;
- Tue,  1 Oct 2024 07:04:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB2EC4CED3;
- Tue,  1 Oct 2024 07:04:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1727766251;
- bh=TwTF2mnhrd+9LftrnNkLoqHQQWwH22SVS4oBsWanv3s=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=d7mD9MOwsa5ipXDofPPxEjhNFI5X5uGhhytuBwP2hSz373grn6kQB4pbQxJsshlKh
- T+059G+HXCwJyyW02powSBX6ZqTk0AChuTNGRMp3j6ihEZjIvh52zmZX6+RDeOkyx7
- 0qrKdbXTRKzC/xP1EYrEi+opfTwseU3Idw6D95ClVvomdOo2L4AuANytptXIUY8T9k
- bcdepUw0qozJ8ZGI47V2yUB13PQs6xJVicmsq5jNonQx1E/O+7045hLYYxNhcOYeTu
- Kmy9pgqORmM4vHdYWn1a1kjLYtdFY7rPnvCs5ZHAJI7AMy78qHq9lWBLs7Xg/ZQzIu
- TwotLzXEUkgYA==
-Received: from mchehab by mail.kernel.org with local (Exim 4.98)
- (envelope-from <mchehab@kernel.org>) id 1svWvY-00000001V0O-1IkM;
- Tue, 01 Oct 2024 09:04:08 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH v2 01/15] acpi/ghes: get rid of ACPI_HEST_SRC_ID_RESERVED
-Date: Tue,  1 Oct 2024 09:03:38 +0200
-Message-ID: <c1514e6bc32eb9bb407ebc94e3dbcea4da5a5438.1727766088.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <cover.1727766088.git.mchehab+huawei@kernel.org>
-References: <cover.1727766088.git.mchehab+huawei@kernel.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sveAJ-0003AM-Hd
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:47:54 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sveAG-0004a2-Ib
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:47:51 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5c87c7d6ad4so5751713a12.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 07:47:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727794066; x=1728398866; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=6XkU7I0K0uZBG6OSGJgu0iuzUvI5igoc/AC8//Kv2dI=;
+ b=ZPb/Gn5rzsstl2BixYE3s7DsgILojVOtZLAPkT/iTEeFSL9YM0f79rMg8AWCB/IEvl
+ uVb+oWs/TXyFyf2VrO27vfNyNFbKq+oCyxqCYXpPkciyimVB8ZncN/sThi8iBC6jQzPY
+ u0qndu4SsEMexy16QiCli4ANQ5hSkGMQLzUEYM+8ZzI/p09elujnH1O8xfjrbgorEVDJ
+ 2ZeXaDBwiChAD9RWSlMXbSC9LvBYGFFW8hU7gFlZCxy184WCQbq6UD21TcuBgY/WZsDn
+ UnxMElOPdvT84j147ZkX4iT3oOR8L5lxt1ajO39pdilkPi84nfRuEgCCWJ1hCO7H99Bd
+ rFvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727794066; x=1728398866;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6XkU7I0K0uZBG6OSGJgu0iuzUvI5igoc/AC8//Kv2dI=;
+ b=xCo40/b3oYlNPokXKN1RR35ClT+eefgqper+QMAX8DaXjp2Tkf/5+CWL9f34hOo8Vd
+ QKKGaAbjvRxD0tcE3FWYyrgH+HiB2RMGHjRcxTmr5ZVfhOSwCuf70gKPaPaH9CejYyj2
+ UInhePpC7idY/cVyET0ZaaOx2IjNRtO1ZzKTdLjxfPK56sLJjOIuOx2ZtiJad3RqrNeG
+ JAfk5ULyNOhzjV+2VJ4+FrQd+smAznlgvvz++CahqgGj4RQgvyWuNiFbo0NGXyNZrCoj
+ fMegl5GREEcnVbh3aCKvNxj+21uRAUNR5ZykM8Yc/H0MPwUmJbKxFRpFs0liipHVf7Hz
+ LqPA==
+X-Gm-Message-State: AOJu0YzcdYbe+TtiPlHzNFtj+TsM0LseEqf88FAHhedgdanB2k07ubLm
+ kLJL83hUCdLnRXyeNMFD8nkm9oDlMqMoEUEvmfIBSyfpM/K0RWmpeUzkOxGIUi4WzUlZNUycLPR
+ ymR5EFC8UIikNdctLhV6JfPgcnvuTmkItdgU4POhy1lSv02qa
+X-Google-Smtp-Source: AGHT+IE5PL3fg6W7DFYMQ5xvdPYZpCACooBukklQuAFPILLlX35gHZVVdlUytTBggwjRg74aazMux3RMkdct+HIN5Xw=
+X-Received: by 2002:a05:6402:1947:b0:5bf:50:266b with SMTP id
+ 4fb4d7f45d1cf-5c8824e7f04mr14184317a12.19.1727786638510; Tue, 01 Oct 2024
+ 05:43:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=mchehab@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 1 Oct 2024 13:43:47 +0100
+Message-ID: <CAFEAcA8N8NoaPMKQN=_Ph1mmgE1DEn=7kDOuOVMUX4zBEaBmug@mail.gmail.com>
+Subject: what is the right way for an avocado test to do "wait for text that
+ doesn't end in newline" ?
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
+ =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, John Snow <jsnow@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,64 +87,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is just duplicating ACPI_GHES_ERROR_SOURCE_COUNT, which
-has a better name. So, drop the duplication.
+One common thing to want to do in an avocado test is log into
+the guest. The obvious way to do that would seem to be:
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- hw/acpi/ghes.c         | 7 ++-----
- include/hw/acpi/ghes.h | 3 ++-
- 2 files changed, 4 insertions(+), 6 deletions(-)
+         self.wait_for_console_pattern('login:')
+         exec_command(self, 'root')
+         self.wait_for_console_pattern('Password:')
+         exec_command(self, "passw0rd")
 
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index e9511d9b8f71..dc217694deb9 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -34,9 +34,6 @@
- /* The max size in bytes for one error block */
- #define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
- 
--/* Now only support ARMv8 SEA notification type error source */
--#define ACPI_GHES_ERROR_SOURCE_COUNT        1
--
- /* Generic Hardware Error Source version 2 */
- #define ACPI_GHES_SOURCE_GENERIC_ERROR_V2   10
- 
-@@ -396,7 +393,7 @@ int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
-     AcpiGedState *acpi_ged_state;
-     AcpiGhesState *ags;
- 
--    assert(source_id < ACPI_HEST_SRC_ID_RESERVED);
-+    assert(source_id < ACPI_GHES_ERROR_SOURCE_COUNT);
- 
-     acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,
-                                                        NULL));
-@@ -407,7 +404,7 @@ int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
- 
-     if (physical_address) {
- 
--        if (source_id < ACPI_HEST_SRC_ID_RESERVED) {
-+        if (source_id < ACPI_GHES_ERROR_SOURCE_COUNT) {
-             start_addr += source_id * sizeof(uint64_t);
-         }
- 
-diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 674f6958e905..59e3b8fb24b9 100644
---- a/include/hw/acpi/ghes.h
-+++ b/include/hw/acpi/ghes.h
-@@ -59,7 +59,8 @@ enum AcpiGhesNotifyType {
- enum {
-     ACPI_HEST_SRC_ID_SEA = 0,
-     /* future ids go here */
--    ACPI_HEST_SRC_ID_RESERVED,
-+
-+    ACPI_GHES_ERROR_SOURCE_COUNT
- };
- 
- typedef struct AcpiGhesState {
--- 
-2.46.0
+This doesn't work; Thomas tells me that's because the
+wait_for_console_pattern function requires that the guest outputs
+a newline, but the 'login:' and 'Password:' prompt lines don't
+have a newline after them.
 
+What is the right way to do this common thing?
+
+In tests/avocado at the moment we have:
+
+tests/avocado/machine_aspeed.py:
+        self.wait_for_console_pattern("the last line before login:")
+        time.sleep(0.1)
+        exec_command(self, 'root')
+        time.sleep(0.1)
+        exec_command(self, "passw0rd")
+
+This is flaky -- on my machine the test times out once in every
+two or three iterations.
+run_tuxtest_tests also tries the same sleep trick.
+
+tests/functional/test_ppc64_hv.py:
+        wait_for_console_pattern(self, 'Welcome to Alpine Linux 3.18')
+        exec_command(self, 'root')
+        wait_for_console_pattern(self, 'localhost login:')
+which sends the login username and *then* waits for the login prompt.
+
+tests/avocado/boot_linux_console.py:
+doesn't try to log in, just ends the test at login:
+        self.wait_for_console_pattern('gsj login:')
+This test has been marked as "might timeout", which suggests this
+isn't actually effective...
+
+thanks
+-- PMM
 
