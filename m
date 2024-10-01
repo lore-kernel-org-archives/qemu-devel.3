@@ -4,73 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F9C9CEACE7
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:51:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B85B5CEACE8
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:52:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svfvA-0006g9-29; Tue, 01 Oct 2024 12:40:20 -0400
+	id 1svg4c-0004u1-R9; Tue, 01 Oct 2024 12:50:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfuf-0005b5-8k
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:49 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1svg4A-0004jm-Sj
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:49:39 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfuX-00067m-Eq
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:48 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-37cd5016d98so2937391f8f.1
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:39:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1svg47-00079g-8I
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:49:37 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-20bb39d97d1so8097295ad.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:49:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727800780; x=1728405580; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lN5N9PE7bzrcCssPx+iPLjtblkoFTjF/+ObX9haBXyY=;
- b=LePZVTO8gCu7+jRUMSg8OjWcBwECDpJXUCLyGywKkIB3LWTVqf3aKeCCQCCt0Lzz9G
- gi7uzi9ujtjsKnzT3a5pquOkKg6uVFajzmAcTEM+y9TTVAjdQZQJzOvUf4sREF7DZ93j
- o5zTKDBhxaDQmp5P3rXuNRsAzaAKkEA6oFtXhZMv0WVv/+GdHuDuz9xu/SINXIwh+JBJ
- JqC7lC6hsjOYsu7YcuRrHhFXj/3UnAF36qyiaK36nfYswgGZgzk9Dirl1aQflQoKWjXy
- Z4RZ9gquZSsxJREeYhWFEZJqxwX4ol0ylkkLa+cZLghIxRMuHVUq21efPoP0nrJQgYJJ
- w3UQ==
+ d=linaro.org; s=google; t=1727801373; x=1728406173; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=C+qPT+NACJyFIOiL9/uFV/1yTTDh9C+HUT43/EbwS6c=;
+ b=B4sOgTYWp9Dtbe2vOWNhMqjnq1TmBgiu5On4OmneOG02srTjHYWfJVhcEr9sEx49zt
+ rWDR/BqsBtyHsFAjELyBddIDs4kiNVB03Wn1Eo+5BT0qb9SbuKw65of+F/OsJ1dJwTwV
+ d0rCkY9PdMk3OV0oksMpuOADCjrNO8fMbQDVGA3xNBkNDvokAOZUwCC6NzVx3EKbYMJ5
+ ELa+nGfqYJi19Htepx48YajKhjHIEEysoteebR7rIMXrTVoiMIzed2slMbA2Z9BxhXPJ
+ iQn0k27cCLBBg9uNING2x2NdKij1FafTZQTJev9jQeqLirkL5E3WF7ATjbpju63FHymq
+ bTew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727800780; x=1728405580;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lN5N9PE7bzrcCssPx+iPLjtblkoFTjF/+ObX9haBXyY=;
- b=WuKdLk3nIFi7F+o6kLZGUDcZ+vGpp04dYPjiVonJSJFgfOmDsEdvRNuwbpPzgu1X90
- H8yjflm8lpJrWpdFwCYiyoBHmV9TOo+8HTcH3iUKLM+pxE9lbTkLOFGnGdXCbtK8B+P7
- cnNgdcQk2XnzTQ/oHD3SoDWFE0FEo8uuDTjiRqFPUNYXCUzFYWriUACnb3Q73tm/U70N
- cTX/z3tn06xos2vQJgMLZPHRInZI9LpBq3qA5sF5WhoZHE+/3WEA2PVWPzyYY1flrvKz
- aD3RCPBlnv8VRAyVPPFzGyEWzyXEKJ2H94qiqu4t4+ws7XU1+uGdBVFGvEJRs+chVdXD
- P+cQ==
-X-Gm-Message-State: AOJu0Yz3FViGNXa7aTDGZfgukAOyaYZCCGH93JiDVdrK3OOMApsNZhhk
- TXhhEfk80c2c0wkfdIgG0r8Ki4SVpa5Qp/sQ3QvChbTHc1KnOOpG5mxlNKBO3Nk8+8xTGMDRnGm
- 2
-X-Google-Smtp-Source: AGHT+IFxTXHPWttVmWso7Hr7rQzZK3+JRFSVmJs997ux5poRPuEGTMwL78+163ldWAaMRSuQ/bav2g==
-X-Received: by 2002:a5d:4843:0:b0:374:c142:80e7 with SMTP id
- ffacd0b85a97d-37cfb8b14eamr188074f8f.1.1727800779647; 
- Tue, 01 Oct 2024 09:39:39 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd56e6547sm12243771f8f.58.2024.10.01.09.39.39
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 09:39:39 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 36/54] hw/usb: Remove tusb6010 USB controller
-Date: Tue,  1 Oct 2024 17:39:00 +0100
-Message-Id: <20241001163918.1275441-37-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241001163918.1275441-1-peter.maydell@linaro.org>
-References: <20241001163918.1275441-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20230601; t=1727801373; x=1728406173;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:from:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=C+qPT+NACJyFIOiL9/uFV/1yTTDh9C+HUT43/EbwS6c=;
+ b=nYyWFhdGah+5MPRG/9+ZhalqhV+lmTyFJ5SGN2IEgQkdxVGFVXeF6b2bu41X7hyeMv
+ 0umPtivlxuwWFBfQ9YNGvhVEzmo3W5LOiTTwrBjSkaSa4pz8uWYZOg9S/GWhN6p//VEt
+ /u8vWXpYQbktm0civoxRbINu5FNIBp9J2MNT7FqP9KoYgBAGyY1cjS9/mc4oOM2vV+6N
+ Bu5Owb5WyVP8ke0n0H2c1UVk2oXx+41JzNdorpbYdTbARWfQXU7eXFkwVPUO53N9vcjs
+ LXelJ0PCOqW7Zzat+8VAPIuU0NTptBolyk7h5bJP16JXTw2bcVsnZjCcuVsw5rND6Pl9
+ 1NWQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWk4Bs50k17hx5VySFz9JRah1et3xFZWQmYZl12iHoNS/rgzz42yzA/QgiXWkdav+tiwPKFPlBJJX7V@nongnu.org
+X-Gm-Message-State: AOJu0YwlsIvaRhNpGgbZPAkt7me58SmxYsAFAhrojarLRd+g9E4bDfqJ
+ R3PJsOwJSz3v337ZHJ1hdg7m9qOB70jPgKgpzr9EGImKTO+qOn9NhO3dY06xzYw=
+X-Google-Smtp-Source: AGHT+IG/+CY/+drtTSPm3Ihx+uIbHBXw+i+4UIr8yMA3SsW4/6ydMhieRZEdVF6hQDUeDlRuKqLi2g==
+X-Received: by 2002:a17:902:f691:b0:20b:41ab:4370 with SMTP id
+ d9443c01a7336-20bc59a2419mr4561955ad.7.1727801373477; 
+ Tue, 01 Oct 2024 09:49:33 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20b37d913c4sm71890915ad.88.2024.10.01.09.49.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 01 Oct 2024 09:49:33 -0700 (PDT)
+Message-ID: <87945a87-30a2-481a-8ab4-230ea8a5c748@linaro.org>
+Date: Tue, 1 Oct 2024 09:49:32 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+User-Agent: Mozilla Thunderbird
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH 04/13] hw/mips: Pass BlCpuCfg argument to bootloader API
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Thomas Huth
+ <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Jason Wang <jasowang@redhat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Anton Johansson <anjo@rev.ng>,
+ Peter Maydell <peter.maydell@linaro.org>, Huacai Chen
+ <chenhuacai@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Sven Schnelle <svens@stackframe.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-arm@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>,
+ Max Filippov <jcmvbkbc@gmail.com>, Paul Burton <paulburton@kernel.org>
+References: <20240930073450.33195-1-philmd@linaro.org>
+ <20240930073450.33195-5-philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20240930073450.33195-5-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,903 +108,371 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The tusb6010 was only used by the n800/n810 machines, so it
-can be removed now.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-id: 20240903160751.4100218-34-peter.maydell@linaro.org
----
- hw/usb/tusb6010.c  | 850 ---------------------------------------------
- hw/usb/Kconfig     |   4 -
- hw/usb/meson.build |   1 -
- 3 files changed, 855 deletions(-)
- delete mode 100644 hw/usb/tusb6010.c
-
-diff --git a/hw/usb/tusb6010.c b/hw/usb/tusb6010.c
-deleted file mode 100644
-index 4a9114021b0..00000000000
---- a/hw/usb/tusb6010.c
-+++ /dev/null
-@@ -1,850 +0,0 @@
--/*
-- * Texas Instruments TUSB6010 emulation.
-- * Based on reverse-engineering of a linux driver.
-- *
-- * Copyright (C) 2008 Nokia Corporation
-- * Written by Andrzej Zaborowski <andrew@openedhand.com>
-- *
-- * This program is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU General Public License as
-- * published by the Free Software Foundation; either version 2 or
-- * (at your option) version 3 of the License.
-- *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- * GNU General Public License for more details.
-- *
-- * You should have received a copy of the GNU General Public License along
-- * with this program; if not, see <http://www.gnu.org/licenses/>.
-- */
--
--#include "qemu/osdep.h"
--#include "qemu/module.h"
--#include "qemu/timer.h"
--#include "hw/usb.h"
--#include "hw/usb/hcd-musb.h"
--#include "hw/arm/omap.h"
--#include "hw/hw.h"
--#include "hw/irq.h"
--#include "hw/sysbus.h"
--#include "qom/object.h"
--
--#define TYPE_TUSB6010 "tusb6010"
--OBJECT_DECLARE_SIMPLE_TYPE(TUSBState, TUSB6010)
--
--struct TUSBState {
--    SysBusDevice parent_obj;
--
--    MemoryRegion iomem[2];
--    qemu_irq irq;
--    MUSBState *musb;
--    QEMUTimer *otg_timer;
--    QEMUTimer *pwr_timer;
--
--    int power;
--    uint32_t scratch;
--    uint16_t test_reset;
--    uint32_t prcm_config;
--    uint32_t prcm_mngmt;
--    uint16_t otg_status;
--    uint32_t dev_config;
--    int host_mode;
--    uint32_t intr;
--    uint32_t intr_ok;
--    uint32_t mask;
--    uint32_t usbip_intr;
--    uint32_t usbip_mask;
--    uint32_t gpio_intr;
--    uint32_t gpio_mask;
--    uint32_t gpio_config;
--    uint32_t dma_intr;
--    uint32_t dma_mask;
--    uint32_t dma_map;
--    uint32_t dma_config;
--    uint32_t ep0_config;
--    uint32_t rx_config[15];
--    uint32_t tx_config[15];
--    uint32_t wkup_mask;
--    uint32_t pullup[2];
--    uint32_t control_config;
--    uint32_t otg_timer_val;
--};
--
--#define TUSB_DEVCLOCK			60000000	/* 60 MHz */
--
--#define TUSB_VLYNQ_CTRL			0x004
--
--/* Mentor Graphics OTG core registers.  */
--#define TUSB_BASE_OFFSET		0x400
--
--/* FIFO registers, 32-bit.  */
--#define TUSB_FIFO_BASE			0x600
--
--/* Device System & Control registers, 32-bit.  */
--#define TUSB_SYS_REG_BASE		0x800
--
--#define TUSB_DEV_CONF			(TUSB_SYS_REG_BASE + 0x000)
--#define	TUSB_DEV_CONF_USB_HOST_MODE	(1 << 16)
--#define	TUSB_DEV_CONF_PROD_TEST_MODE	(1 << 15)
--#define	TUSB_DEV_CONF_SOFT_ID		(1 << 1)
--#define	TUSB_DEV_CONF_ID_SEL		(1 << 0)
--
--#define TUSB_PHY_OTG_CTRL_ENABLE	(TUSB_SYS_REG_BASE + 0x004)
--#define TUSB_PHY_OTG_CTRL		(TUSB_SYS_REG_BASE + 0x008)
--#define	TUSB_PHY_OTG_CTRL_WRPROTECT	(0xa5 << 24)
--#define	TUSB_PHY_OTG_CTRL_O_ID_PULLUP	(1 << 23)
--#define	TUSB_PHY_OTG_CTRL_O_VBUS_DET_EN	(1 << 19)
--#define	TUSB_PHY_OTG_CTRL_O_SESS_END_EN	(1 << 18)
--#define	TUSB_PHY_OTG_CTRL_TESTM2	(1 << 17)
--#define	TUSB_PHY_OTG_CTRL_TESTM1	(1 << 16)
--#define	TUSB_PHY_OTG_CTRL_TESTM0	(1 << 15)
--#define	TUSB_PHY_OTG_CTRL_TX_DATA2	(1 << 14)
--#define	TUSB_PHY_OTG_CTRL_TX_GZ2	(1 << 13)
--#define	TUSB_PHY_OTG_CTRL_TX_ENABLE2	(1 << 12)
--#define	TUSB_PHY_OTG_CTRL_DM_PULLDOWN	(1 << 11)
--#define	TUSB_PHY_OTG_CTRL_DP_PULLDOWN	(1 << 10)
--#define	TUSB_PHY_OTG_CTRL_OSC_EN	(1 << 9)
--#define	TUSB_PHY_OTG_CTRL_PHYREF_CLK(v)	(((v) & 3) << 7)
--#define	TUSB_PHY_OTG_CTRL_PD		(1 << 6)
--#define	TUSB_PHY_OTG_CTRL_PLL_ON	(1 << 5)
--#define	TUSB_PHY_OTG_CTRL_EXT_RPU	(1 << 4)
--#define	TUSB_PHY_OTG_CTRL_PWR_GOOD	(1 << 3)
--#define	TUSB_PHY_OTG_CTRL_RESET		(1 << 2)
--#define	TUSB_PHY_OTG_CTRL_SUSPENDM	(1 << 1)
--#define	TUSB_PHY_OTG_CTRL_CLK_MODE	(1 << 0)
--
--/* OTG status register */
--#define TUSB_DEV_OTG_STAT		(TUSB_SYS_REG_BASE + 0x00c)
--#define	TUSB_DEV_OTG_STAT_PWR_CLK_GOOD	(1 << 8)
--#define	TUSB_DEV_OTG_STAT_SESS_END	(1 << 7)
--#define	TUSB_DEV_OTG_STAT_SESS_VALID	(1 << 6)
--#define	TUSB_DEV_OTG_STAT_VBUS_VALID	(1 << 5)
--#define	TUSB_DEV_OTG_STAT_VBUS_SENSE	(1 << 4)
--#define	TUSB_DEV_OTG_STAT_ID_STATUS	(1 << 3)
--#define	TUSB_DEV_OTG_STAT_HOST_DISCON	(1 << 2)
--#define	TUSB_DEV_OTG_STAT_LINE_STATE	(3 << 0)
--#define	TUSB_DEV_OTG_STAT_DP_ENABLE	(1 << 1)
--#define	TUSB_DEV_OTG_STAT_DM_ENABLE	(1 << 0)
--
--#define TUSB_DEV_OTG_TIMER		(TUSB_SYS_REG_BASE + 0x010)
--#define TUSB_DEV_OTG_TIMER_ENABLE	(1 << 31)
--#define TUSB_DEV_OTG_TIMER_VAL(v)	((v) & 0x07ffffff)
--#define TUSB_PRCM_REV			(TUSB_SYS_REG_BASE + 0x014)
--
--/* PRCM configuration register */
--#define TUSB_PRCM_CONF			(TUSB_SYS_REG_BASE + 0x018)
--#define	TUSB_PRCM_CONF_SFW_CPEN		(1 << 24)
--#define	TUSB_PRCM_CONF_SYS_CLKSEL(v)	(((v) & 3) << 16)
--
--/* PRCM management register */
--#define TUSB_PRCM_MNGMT			(TUSB_SYS_REG_BASE + 0x01c)
--#define	TUSB_PRCM_MNGMT_SRP_FIX_TMR(v)	(((v) & 0xf) << 25)
--#define	TUSB_PRCM_MNGMT_SRP_FIX_EN	(1 << 24)
--#define	TUSB_PRCM_MNGMT_VBUS_VAL_TMR(v)	(((v) & 0xf) << 20)
--#define	TUSB_PRCM_MNGMT_VBUS_VAL_FLT_EN	(1 << 19)
--#define	TUSB_PRCM_MNGMT_DFT_CLK_DIS	(1 << 18)
--#define	TUSB_PRCM_MNGMT_VLYNQ_CLK_DIS	(1 << 17)
--#define	TUSB_PRCM_MNGMT_OTG_SESS_END_EN	(1 << 10)
--#define	TUSB_PRCM_MNGMT_OTG_VBUS_DET_EN	(1 << 9)
--#define	TUSB_PRCM_MNGMT_OTG_ID_PULLUP	(1 << 8)
--#define	TUSB_PRCM_MNGMT_15_SW_EN	(1 << 4)
--#define	TUSB_PRCM_MNGMT_33_SW_EN	(1 << 3)
--#define	TUSB_PRCM_MNGMT_5V_CPEN		(1 << 2)
--#define	TUSB_PRCM_MNGMT_PM_IDLE		(1 << 1)
--#define	TUSB_PRCM_MNGMT_DEV_IDLE	(1 << 0)
--
--/* Wake-up source clear and mask registers */
--#define TUSB_PRCM_WAKEUP_SOURCE		(TUSB_SYS_REG_BASE + 0x020)
--#define TUSB_PRCM_WAKEUP_CLEAR		(TUSB_SYS_REG_BASE + 0x028)
--#define TUSB_PRCM_WAKEUP_MASK		(TUSB_SYS_REG_BASE + 0x02c)
--#define	TUSB_PRCM_WAKEUP_RESERVED_BITS	(0xffffe << 13)
--#define	TUSB_PRCM_WGPIO_7		(1 << 12)
--#define	TUSB_PRCM_WGPIO_6		(1 << 11)
--#define	TUSB_PRCM_WGPIO_5		(1 << 10)
--#define	TUSB_PRCM_WGPIO_4		(1 << 9)
--#define	TUSB_PRCM_WGPIO_3		(1 << 8)
--#define	TUSB_PRCM_WGPIO_2		(1 << 7)
--#define	TUSB_PRCM_WGPIO_1		(1 << 6)
--#define	TUSB_PRCM_WGPIO_0		(1 << 5)
--#define	TUSB_PRCM_WHOSTDISCON		(1 << 4)	/* Host disconnect */
--#define	TUSB_PRCM_WBUS			(1 << 3)	/* USB bus resume */
--#define	TUSB_PRCM_WNORCS		(1 << 2)	/* NOR chip select */
--#define	TUSB_PRCM_WVBUS			(1 << 1)	/* OTG PHY VBUS */
--#define	TUSB_PRCM_WID			(1 << 0)	/* OTG PHY ID detect */
--
--#define TUSB_PULLUP_1_CTRL		(TUSB_SYS_REG_BASE + 0x030)
--#define TUSB_PULLUP_2_CTRL		(TUSB_SYS_REG_BASE + 0x034)
--#define TUSB_INT_CTRL_REV		(TUSB_SYS_REG_BASE + 0x038)
--#define TUSB_INT_CTRL_CONF		(TUSB_SYS_REG_BASE + 0x03c)
--#define TUSB_USBIP_INT_SRC		(TUSB_SYS_REG_BASE + 0x040)
--#define TUSB_USBIP_INT_SET		(TUSB_SYS_REG_BASE + 0x044)
--#define TUSB_USBIP_INT_CLEAR		(TUSB_SYS_REG_BASE + 0x048)
--#define TUSB_USBIP_INT_MASK		(TUSB_SYS_REG_BASE + 0x04c)
--#define TUSB_DMA_INT_SRC		(TUSB_SYS_REG_BASE + 0x050)
--#define TUSB_DMA_INT_SET		(TUSB_SYS_REG_BASE + 0x054)
--#define TUSB_DMA_INT_CLEAR		(TUSB_SYS_REG_BASE + 0x058)
--#define TUSB_DMA_INT_MASK		(TUSB_SYS_REG_BASE + 0x05c)
--#define TUSB_GPIO_INT_SRC		(TUSB_SYS_REG_BASE + 0x060)
--#define TUSB_GPIO_INT_SET		(TUSB_SYS_REG_BASE + 0x064)
--#define TUSB_GPIO_INT_CLEAR		(TUSB_SYS_REG_BASE + 0x068)
--#define TUSB_GPIO_INT_MASK		(TUSB_SYS_REG_BASE + 0x06c)
--
--/* NOR flash interrupt source registers */
--#define TUSB_INT_SRC			(TUSB_SYS_REG_BASE + 0x070)
--#define TUSB_INT_SRC_SET		(TUSB_SYS_REG_BASE + 0x074)
--#define TUSB_INT_SRC_CLEAR		(TUSB_SYS_REG_BASE + 0x078)
--#define TUSB_INT_MASK			(TUSB_SYS_REG_BASE + 0x07c)
--#define	TUSB_INT_SRC_TXRX_DMA_DONE	(1 << 24)
--#define	TUSB_INT_SRC_USB_IP_CORE	(1 << 17)
--#define	TUSB_INT_SRC_OTG_TIMEOUT	(1 << 16)
--#define	TUSB_INT_SRC_VBUS_SENSE_CHNG	(1 << 15)
--#define	TUSB_INT_SRC_ID_STATUS_CHNG	(1 << 14)
--#define	TUSB_INT_SRC_DEV_WAKEUP		(1 << 13)
--#define	TUSB_INT_SRC_DEV_READY		(1 << 12)
--#define	TUSB_INT_SRC_USB_IP_TX		(1 << 9)
--#define	TUSB_INT_SRC_USB_IP_RX		(1 << 8)
--#define	TUSB_INT_SRC_USB_IP_VBUS_ERR	(1 << 7)
--#define	TUSB_INT_SRC_USB_IP_VBUS_REQ	(1 << 6)
--#define	TUSB_INT_SRC_USB_IP_DISCON	(1 << 5)
--#define	TUSB_INT_SRC_USB_IP_CONN	(1 << 4)
--#define	TUSB_INT_SRC_USB_IP_SOF		(1 << 3)
--#define	TUSB_INT_SRC_USB_IP_RST_BABBLE	(1 << 2)
--#define	TUSB_INT_SRC_USB_IP_RESUME	(1 << 1)
--#define	TUSB_INT_SRC_USB_IP_SUSPEND	(1 << 0)
--
--#define TUSB_GPIO_REV			(TUSB_SYS_REG_BASE + 0x080)
--#define TUSB_GPIO_CONF			(TUSB_SYS_REG_BASE + 0x084)
--#define TUSB_DMA_CTRL_REV		(TUSB_SYS_REG_BASE + 0x100)
--#define TUSB_DMA_REQ_CONF		(TUSB_SYS_REG_BASE + 0x104)
--#define TUSB_EP0_CONF			(TUSB_SYS_REG_BASE + 0x108)
--#define TUSB_EP_IN_SIZE			(TUSB_SYS_REG_BASE + 0x10c)
--#define TUSB_DMA_EP_MAP			(TUSB_SYS_REG_BASE + 0x148)
--#define TUSB_EP_OUT_SIZE		(TUSB_SYS_REG_BASE + 0x14c)
--#define TUSB_EP_MAX_PACKET_SIZE_OFFSET	(TUSB_SYS_REG_BASE + 0x188)
--#define TUSB_SCRATCH_PAD		(TUSB_SYS_REG_BASE + 0x1c4)
--#define TUSB_WAIT_COUNT			(TUSB_SYS_REG_BASE + 0x1c8)
--#define TUSB_PROD_TEST_RESET		(TUSB_SYS_REG_BASE + 0x1d8)
--
--#define TUSB_DIDR1_LO			(TUSB_SYS_REG_BASE + 0x1f8)
--#define TUSB_DIDR1_HI			(TUSB_SYS_REG_BASE + 0x1fc)
--
--/* Device System & Control register bitfields */
--#define TUSB_INT_CTRL_CONF_INT_RLCYC(v)	(((v) & 0x7) << 18)
--#define TUSB_INT_CTRL_CONF_INT_POLARITY	(1 << 17)
--#define TUSB_INT_CTRL_CONF_INT_MODE	(1 << 16)
--#define TUSB_GPIO_CONF_DMAREQ(v)	(((v) & 0x3f) << 24)
--#define TUSB_DMA_REQ_CONF_BURST_SIZE(v)	(((v) & 3) << 26)
--#define TUSB_DMA_REQ_CONF_DMA_RQ_EN(v)	(((v) & 0x3f) << 20)
--#define TUSB_DMA_REQ_CONF_DMA_RQ_ASR(v)	(((v) & 0xf) << 16)
--#define TUSB_EP0_CONFIG_SW_EN		(1 << 8)
--#define TUSB_EP0_CONFIG_DIR_TX		(1 << 7)
--#define TUSB_EP0_CONFIG_XFR_SIZE(v)	((v) & 0x7f)
--#define TUSB_EP_CONFIG_SW_EN		(1 << 31)
--#define TUSB_EP_CONFIG_XFR_SIZE(v)	((v) & 0x7fffffff)
--#define TUSB_PROD_TEST_RESET_VAL	0xa596
--
--static void tusb_intr_update(TUSBState *s)
--{
--    if (s->control_config & TUSB_INT_CTRL_CONF_INT_POLARITY)
--        qemu_set_irq(s->irq, s->intr & ~s->mask & s->intr_ok);
--    else
--        qemu_set_irq(s->irq, (!(s->intr & ~s->mask)) & s->intr_ok);
--}
--
--static void tusb_usbip_intr_update(TUSBState *s)
--{
--    /* TX interrupt in the MUSB */
--    if (s->usbip_intr & 0x0000ffff & ~s->usbip_mask)
--        s->intr |= TUSB_INT_SRC_USB_IP_TX;
--    else
--        s->intr &= ~TUSB_INT_SRC_USB_IP_TX;
--
--    /* RX interrupt in the MUSB */
--    if (s->usbip_intr & 0xffff0000 & ~s->usbip_mask)
--        s->intr |= TUSB_INT_SRC_USB_IP_RX;
--    else
--        s->intr &= ~TUSB_INT_SRC_USB_IP_RX;
--
--    /* XXX: What about TUSB_INT_SRC_USB_IP_CORE?  */
--
--    tusb_intr_update(s);
--}
--
--static void tusb_dma_intr_update(TUSBState *s)
--{
--    if (s->dma_intr & ~s->dma_mask)
--        s->intr |= TUSB_INT_SRC_TXRX_DMA_DONE;
--    else
--        s->intr &= ~TUSB_INT_SRC_TXRX_DMA_DONE;
--
--    tusb_intr_update(s);
--}
--
--static void tusb_gpio_intr_update(TUSBState *s)
--{
--    /* TODO: How is this signalled?  */
--}
--
--static uint32_t tusb_async_readb(void *opaque, hwaddr addr)
--{
--    TUSBState *s = (TUSBState *) opaque;
--
--    switch (addr & 0xfff) {
--    case TUSB_BASE_OFFSET ... (TUSB_BASE_OFFSET | 0x1ff):
--        return musb_read[0](s->musb, addr & 0x1ff);
--
--    case TUSB_FIFO_BASE ... (TUSB_FIFO_BASE | 0x1ff):
--        return musb_read[0](s->musb, 0x20 + ((addr >> 3) & 0x3c));
--    }
--
--    printf("%s: unknown register at %03x\n",
--                    __func__, (int) (addr & 0xfff));
--    return 0;
--}
--
--static uint32_t tusb_async_readh(void *opaque, hwaddr addr)
--{
--    TUSBState *s = (TUSBState *) opaque;
--
--    switch (addr & 0xfff) {
--    case TUSB_BASE_OFFSET ... (TUSB_BASE_OFFSET | 0x1ff):
--        return musb_read[1](s->musb, addr & 0x1ff);
--
--    case TUSB_FIFO_BASE ... (TUSB_FIFO_BASE | 0x1ff):
--        return musb_read[1](s->musb, 0x20 + ((addr >> 3) & 0x3c));
--    }
--
--    printf("%s: unknown register at %03x\n",
--                    __func__, (int) (addr & 0xfff));
--    return 0;
--}
--
--static uint32_t tusb_async_readw(void *opaque, hwaddr addr)
--{
--    TUSBState *s = (TUSBState *) opaque;
--    int offset = addr & 0xfff;
--    int epnum;
--    uint32_t ret;
--
--    switch (offset) {
--    case TUSB_DEV_CONF:
--        return s->dev_config;
--
--    case TUSB_BASE_OFFSET ... (TUSB_BASE_OFFSET | 0x1ff):
--        return musb_read[2](s->musb, offset & 0x1ff);
--
--    case TUSB_FIFO_BASE ... (TUSB_FIFO_BASE | 0x1ff):
--        return musb_read[2](s->musb, 0x20 + ((addr >> 3) & 0x3c));
--
--    case TUSB_PHY_OTG_CTRL_ENABLE:
--    case TUSB_PHY_OTG_CTRL:
--        return 0x00;	/* TODO */
--
--    case TUSB_DEV_OTG_STAT:
--        ret = s->otg_status;
--#if 0
--        if (!(s->prcm_mngmt & TUSB_PRCM_MNGMT_OTG_VBUS_DET_EN))
--            ret &= ~TUSB_DEV_OTG_STAT_VBUS_VALID;
--#endif
--        return ret;
--    case TUSB_DEV_OTG_TIMER:
--        return s->otg_timer_val;
--
--    case TUSB_PRCM_REV:
--        return 0x20;
--    case TUSB_PRCM_CONF:
--        return s->prcm_config;
--    case TUSB_PRCM_MNGMT:
--        return s->prcm_mngmt;
--    case TUSB_PRCM_WAKEUP_SOURCE:
--    case TUSB_PRCM_WAKEUP_CLEAR:	/* TODO: What does this one return?  */
--        return 0x00000000;
--    case TUSB_PRCM_WAKEUP_MASK:
--        return s->wkup_mask;
--
--    case TUSB_PULLUP_1_CTRL:
--        return s->pullup[0];
--    case TUSB_PULLUP_2_CTRL:
--        return s->pullup[1];
--
--    case TUSB_INT_CTRL_REV:
--        return 0x20;
--    case TUSB_INT_CTRL_CONF:
--        return s->control_config;
--
--    case TUSB_USBIP_INT_SRC:
--    case TUSB_USBIP_INT_SET:	/* TODO: What do these two return?  */
--    case TUSB_USBIP_INT_CLEAR:
--        return s->usbip_intr;
--    case TUSB_USBIP_INT_MASK:
--        return s->usbip_mask;
--
--    case TUSB_DMA_INT_SRC:
--    case TUSB_DMA_INT_SET:	/* TODO: What do these two return?  */
--    case TUSB_DMA_INT_CLEAR:
--        return s->dma_intr;
--    case TUSB_DMA_INT_MASK:
--        return s->dma_mask;
--
--    case TUSB_GPIO_INT_SRC:	/* TODO: What do these two return?  */
--    case TUSB_GPIO_INT_SET:
--    case TUSB_GPIO_INT_CLEAR:
--        return s->gpio_intr;
--    case TUSB_GPIO_INT_MASK:
--        return s->gpio_mask;
--
--    case TUSB_INT_SRC:
--    case TUSB_INT_SRC_SET:	/* TODO: What do these two return?  */
--    case TUSB_INT_SRC_CLEAR:
--        return s->intr;
--    case TUSB_INT_MASK:
--        return s->mask;
--
--    case TUSB_GPIO_REV:
--        return 0x30;
--    case TUSB_GPIO_CONF:
--        return s->gpio_config;
--
--    case TUSB_DMA_CTRL_REV:
--        return 0x30;
--    case TUSB_DMA_REQ_CONF:
--        return s->dma_config;
--    case TUSB_EP0_CONF:
--        return s->ep0_config;
--    case TUSB_EP_IN_SIZE ... (TUSB_EP_IN_SIZE + 0x3b):
--        epnum = (offset - TUSB_EP_IN_SIZE) >> 2;
--        return s->tx_config[epnum];
--    case TUSB_DMA_EP_MAP:
--        return s->dma_map;
--    case TUSB_EP_OUT_SIZE ... (TUSB_EP_OUT_SIZE + 0x3b):
--        epnum = (offset - TUSB_EP_OUT_SIZE) >> 2;
--        return s->rx_config[epnum];
--    case TUSB_EP_MAX_PACKET_SIZE_OFFSET ...
--            (TUSB_EP_MAX_PACKET_SIZE_OFFSET + 0x3b):
--        return 0x00000000;	/* TODO */
--    case TUSB_WAIT_COUNT:
--        return 0x00;		/* TODO */
--
--    case TUSB_SCRATCH_PAD:
--        return s->scratch;
--
--    case TUSB_PROD_TEST_RESET:
--        return s->test_reset;
--
--    /* DIE IDs */
--    case TUSB_DIDR1_LO:
--        return 0xa9453c59;
--    case TUSB_DIDR1_HI:
--        return 0x54059adf;
--    }
--
--    printf("%s: unknown register at %03x\n", __func__, offset);
--    return 0;
--}
--
--static void tusb_async_writeb(void *opaque, hwaddr addr,
--                uint32_t value)
--{
--    TUSBState *s = (TUSBState *) opaque;
--
--    switch (addr & 0xfff) {
--    case TUSB_BASE_OFFSET ... (TUSB_BASE_OFFSET | 0x1ff):
--        musb_write[0](s->musb, addr & 0x1ff, value);
--        break;
--
--    case TUSB_FIFO_BASE ... (TUSB_FIFO_BASE | 0x1ff):
--        musb_write[0](s->musb, 0x20 + ((addr >> 3) & 0x3c), value);
--        break;
--
--    default:
--        printf("%s: unknown register at %03x\n",
--                        __func__, (int) (addr & 0xfff));
--        return;
--    }
--}
--
--static void tusb_async_writeh(void *opaque, hwaddr addr,
--                uint32_t value)
--{
--    TUSBState *s = (TUSBState *) opaque;
--
--    switch (addr & 0xfff) {
--    case TUSB_BASE_OFFSET ... (TUSB_BASE_OFFSET | 0x1ff):
--        musb_write[1](s->musb, addr & 0x1ff, value);
--        break;
--
--    case TUSB_FIFO_BASE ... (TUSB_FIFO_BASE | 0x1ff):
--        musb_write[1](s->musb, 0x20 + ((addr >> 3) & 0x3c), value);
--        break;
--
--    default:
--        printf("%s: unknown register at %03x\n",
--                        __func__, (int) (addr & 0xfff));
--        return;
--    }
--}
--
--static void tusb_async_writew(void *opaque, hwaddr addr,
--                uint32_t value)
--{
--    TUSBState *s = (TUSBState *) opaque;
--    int offset = addr & 0xfff;
--    int epnum;
--
--    switch (offset) {
--    case TUSB_VLYNQ_CTRL:
--        break;
--
--    case TUSB_BASE_OFFSET ... (TUSB_BASE_OFFSET | 0x1ff):
--        musb_write[2](s->musb, offset & 0x1ff, value);
--        break;
--
--    case TUSB_FIFO_BASE ... (TUSB_FIFO_BASE | 0x1ff):
--        musb_write[2](s->musb, 0x20 + ((addr >> 3) & 0x3c), value);
--        break;
--
--    case TUSB_DEV_CONF:
--        s->dev_config = value;
--        s->host_mode = (value & TUSB_DEV_CONF_USB_HOST_MODE);
--        if (value & TUSB_DEV_CONF_PROD_TEST_MODE)
--            hw_error("%s: Product Test mode not allowed\n", __func__);
--        break;
--
--    case TUSB_PHY_OTG_CTRL_ENABLE:
--    case TUSB_PHY_OTG_CTRL:
--        return;		/* TODO */
--    case TUSB_DEV_OTG_TIMER:
--        s->otg_timer_val = value;
--        if (value & TUSB_DEV_OTG_TIMER_ENABLE)
--            timer_mod(s->otg_timer, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
--                            muldiv64(TUSB_DEV_OTG_TIMER_VAL(value),
--                                     NANOSECONDS_PER_SECOND, TUSB_DEVCLOCK));
--        else
--            timer_del(s->otg_timer);
--        break;
--
--    case TUSB_PRCM_CONF:
--        s->prcm_config = value;
--        break;
--    case TUSB_PRCM_MNGMT:
--        s->prcm_mngmt = value;
--        break;
--    case TUSB_PRCM_WAKEUP_CLEAR:
--        break;
--    case TUSB_PRCM_WAKEUP_MASK:
--        s->wkup_mask = value;
--        break;
--
--    case TUSB_PULLUP_1_CTRL:
--        s->pullup[0] = value;
--        break;
--    case TUSB_PULLUP_2_CTRL:
--        s->pullup[1] = value;
--        break;
--    case TUSB_INT_CTRL_CONF:
--        s->control_config = value;
--        tusb_intr_update(s);
--        break;
--
--    case TUSB_USBIP_INT_SET:
--        s->usbip_intr |= value;
--        tusb_usbip_intr_update(s);
--        break;
--    case TUSB_USBIP_INT_CLEAR:
--        s->usbip_intr &= ~value;
--        tusb_usbip_intr_update(s);
--        musb_core_intr_clear(s->musb, ~value);
--        break;
--    case TUSB_USBIP_INT_MASK:
--        s->usbip_mask = value;
--        tusb_usbip_intr_update(s);
--        break;
--
--    case TUSB_DMA_INT_SET:
--        s->dma_intr |= value;
--        tusb_dma_intr_update(s);
--        break;
--    case TUSB_DMA_INT_CLEAR:
--        s->dma_intr &= ~value;
--        tusb_dma_intr_update(s);
--        break;
--    case TUSB_DMA_INT_MASK:
--        s->dma_mask = value;
--        tusb_dma_intr_update(s);
--        break;
--
--    case TUSB_GPIO_INT_SET:
--        s->gpio_intr |= value;
--        tusb_gpio_intr_update(s);
--        break;
--    case TUSB_GPIO_INT_CLEAR:
--        s->gpio_intr &= ~value;
--        tusb_gpio_intr_update(s);
--        break;
--    case TUSB_GPIO_INT_MASK:
--        s->gpio_mask = value;
--        tusb_gpio_intr_update(s);
--        break;
--
--    case TUSB_INT_SRC_SET:
--        s->intr |= value;
--        tusb_intr_update(s);
--        break;
--    case TUSB_INT_SRC_CLEAR:
--        s->intr &= ~value;
--        tusb_intr_update(s);
--        break;
--    case TUSB_INT_MASK:
--        s->mask = value;
--        tusb_intr_update(s);
--        break;
--
--    case TUSB_GPIO_CONF:
--        s->gpio_config = value;
--        break;
--    case TUSB_DMA_REQ_CONF:
--        s->dma_config = value;
--        break;
--    case TUSB_EP0_CONF:
--        s->ep0_config = value & 0x1ff;
--        musb_set_size(s->musb, 0, TUSB_EP0_CONFIG_XFR_SIZE(value),
--                        value & TUSB_EP0_CONFIG_DIR_TX);
--        break;
--    case TUSB_EP_IN_SIZE ... (TUSB_EP_IN_SIZE + 0x3b):
--        epnum = (offset - TUSB_EP_IN_SIZE) >> 2;
--        s->tx_config[epnum] = value;
--        musb_set_size(s->musb, epnum + 1, TUSB_EP_CONFIG_XFR_SIZE(value), 1);
--        break;
--    case TUSB_DMA_EP_MAP:
--        s->dma_map = value;
--        break;
--    case TUSB_EP_OUT_SIZE ... (TUSB_EP_OUT_SIZE + 0x3b):
--        epnum = (offset - TUSB_EP_OUT_SIZE) >> 2;
--        s->rx_config[epnum] = value;
--        musb_set_size(s->musb, epnum + 1, TUSB_EP_CONFIG_XFR_SIZE(value), 0);
--        break;
--    case TUSB_EP_MAX_PACKET_SIZE_OFFSET ...
--            (TUSB_EP_MAX_PACKET_SIZE_OFFSET + 0x3b):
--        return;		/* TODO */
--    case TUSB_WAIT_COUNT:
--        return;		/* TODO */
--
--    case TUSB_SCRATCH_PAD:
--        s->scratch = value;
--        break;
--
--    case TUSB_PROD_TEST_RESET:
--        s->test_reset = value;
--        break;
--
--    default:
--        printf("%s: unknown register at %03x\n", __func__, offset);
--        return;
--    }
--}
--
--static uint64_t tusb_async_readfn(void *opaque, hwaddr addr, unsigned size)
--{
--    switch (size) {
--    case 1:
--        return tusb_async_readb(opaque, addr);
--    case 2:
--        return tusb_async_readh(opaque, addr);
--    case 4:
--        return tusb_async_readw(opaque, addr);
--    default:
--        g_assert_not_reached();
--    }
--}
--
--static void tusb_async_writefn(void *opaque, hwaddr addr,
--                               uint64_t value, unsigned size)
--{
--    switch (size) {
--    case 1:
--        tusb_async_writeb(opaque, addr, value);
--        break;
--    case 2:
--        tusb_async_writeh(opaque, addr, value);
--        break;
--    case 4:
--        tusb_async_writew(opaque, addr, value);
--        break;
--    default:
--        g_assert_not_reached();
--    }
--}
--
--static const MemoryRegionOps tusb_async_ops = {
--    .read = tusb_async_readfn,
--    .write = tusb_async_writefn,
--    .valid.min_access_size = 1,
--    .valid.max_access_size = 4,
--    .endianness = DEVICE_NATIVE_ENDIAN,
--};
--
--static void tusb_otg_tick(void *opaque)
--{
--    TUSBState *s = (TUSBState *) opaque;
--
--    s->otg_timer_val = 0;
--    s->intr |= TUSB_INT_SRC_OTG_TIMEOUT;
--    tusb_intr_update(s);
--}
--
--static void tusb_power_tick(void *opaque)
--{
--    TUSBState *s = (TUSBState *) opaque;
--
--    if (s->power) {
--        s->intr_ok = ~0;
--        tusb_intr_update(s);
--    }
--}
--
--static void tusb_musb_core_intr(void *opaque, int source, int level)
--{
--    TUSBState *s = (TUSBState *) opaque;
--    uint16_t otg_status = s->otg_status;
--
--    switch (source) {
--    case musb_set_vbus:
--        if (level)
--            otg_status |= TUSB_DEV_OTG_STAT_VBUS_VALID;
--        else
--            otg_status &= ~TUSB_DEV_OTG_STAT_VBUS_VALID;
--
--        /* XXX: only if TUSB_PHY_OTG_CTRL_OTG_VBUS_DET_EN set?  */
--        /* XXX: only if TUSB_PRCM_MNGMT_OTG_VBUS_DET_EN set?  */
--        if (s->otg_status != otg_status) {
--            s->otg_status = otg_status;
--            s->intr |= TUSB_INT_SRC_VBUS_SENSE_CHNG;
--            tusb_intr_update(s);
--        }
--        break;
--
--    case musb_set_session:
--        /* XXX: only if TUSB_PHY_OTG_CTRL_OTG_SESS_END_EN set?  */
--        /* XXX: only if TUSB_PRCM_MNGMT_OTG_SESS_END_EN set?  */
--        if (level) {
--            s->otg_status |= TUSB_DEV_OTG_STAT_SESS_VALID;
--            s->otg_status &= ~TUSB_DEV_OTG_STAT_SESS_END;
--        } else {
--            s->otg_status &= ~TUSB_DEV_OTG_STAT_SESS_VALID;
--            s->otg_status |= TUSB_DEV_OTG_STAT_SESS_END;
--        }
--
--        /* XXX: some IRQ or anything?  */
--        break;
--
--    case musb_irq_tx:
--    case musb_irq_rx:
--        s->usbip_intr = musb_core_intr_get(s->musb);
--        /* Fall through.  */
--    default:
--        if (level)
--            s->intr |= 1 << source;
--        else
--            s->intr &= ~(1 << source);
--        tusb_intr_update(s);
--        break;
--    }
--}
--
--static void tusb6010_power(TUSBState *s, int on)
--{
--    if (!on) {
--        s->power = 0;
--    } else if (!s->power && on) {
--        s->power = 1;
--        /* Pull the interrupt down after TUSB6010 comes up.  */
--        s->intr_ok = 0;
--        tusb_intr_update(s);
--        timer_mod(s->pwr_timer, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
--                  NANOSECONDS_PER_SECOND / 2);
--    }
--}
--
--static void tusb6010_irq(void *opaque, int source, int level)
--{
--    if (source) {
--        tusb_musb_core_intr(opaque, source - 1, level);
--    } else {
--        tusb6010_power(opaque, level);
--    }
--}
--
--static void tusb6010_reset(DeviceState *dev)
--{
--    TUSBState *s = TUSB6010(dev);
--    int i;
--
--    s->test_reset = TUSB_PROD_TEST_RESET_VAL;
--    s->host_mode = 0;
--    s->dev_config = 0;
--    s->otg_status = 0;	/* !TUSB_DEV_OTG_STAT_ID_STATUS means host mode */
--    s->power = 0;
--    s->mask = 0xffffffff;
--    s->intr = 0x00000000;
--    s->otg_timer_val = 0;
--    s->scratch = 0;
--    s->prcm_config = 0;
--    s->prcm_mngmt = 0;
--    s->intr_ok = 0;
--    s->usbip_intr = 0;
--    s->usbip_mask = 0;
--    s->gpio_intr = 0;
--    s->gpio_mask = 0;
--    s->gpio_config = 0;
--    s->dma_intr = 0;
--    s->dma_mask = 0;
--    s->dma_map = 0;
--    s->dma_config = 0;
--    s->ep0_config = 0;
--    s->wkup_mask = 0;
--    s->pullup[0] = s->pullup[1] = 0;
--    s->control_config = 0;
--    for (i = 0; i < 15; i++) {
--        s->rx_config[i] = s->tx_config[i] = 0;
--    }
--    musb_reset(s->musb);
--}
--
--static void tusb6010_realize(DeviceState *dev, Error **errp)
--{
--    TUSBState *s = TUSB6010(dev);
--    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
--
--    s->otg_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, tusb_otg_tick, s);
--    s->pwr_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, tusb_power_tick, s);
--    memory_region_init_io(&s->iomem[1], OBJECT(s), &tusb_async_ops, s,
--                          "tusb-async", UINT32_MAX);
--    sysbus_init_mmio(sbd, &s->iomem[0]);
--    sysbus_init_mmio(sbd, &s->iomem[1]);
--    sysbus_init_irq(sbd, &s->irq);
--    qdev_init_gpio_in(dev, tusb6010_irq, musb_irq_max + 1);
--    s->musb = musb_init(dev, 1);
--}
--
--static void tusb6010_class_init(ObjectClass *klass, void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(klass);
--
--    dc->realize = tusb6010_realize;
--    device_class_set_legacy_reset(dc, tusb6010_reset);
--}
--
--static const TypeInfo tusb6010_info = {
--    .name          = TYPE_TUSB6010,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(TUSBState),
--    .class_init    = tusb6010_class_init,
--};
--
--static void tusb6010_register_types(void)
--{
--    type_register_static(&tusb6010_info);
--}
--
--type_init(tusb6010_register_types)
-diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
-index 84bc7fbe36c..0bffcda1b19 100644
---- a/hw/usb/Kconfig
-+++ b/hw/usb/Kconfig
-@@ -61,10 +61,6 @@ config USB_DWC2
-     bool
-     select USB
- 
--config TUSB6010
--    bool
--    select USB_MUSB
--
- config USB_HUB
-     bool
-     default y
-diff --git a/hw/usb/meson.build b/hw/usb/meson.build
-index d7de1003e3d..ae901481597 100644
---- a/hw/usb/meson.build
-+++ b/hw/usb/meson.build
-@@ -27,7 +27,6 @@ system_ss.add(when: 'CONFIG_USB_MUSB', if_true: files('hcd-musb.c'))
- system_ss.add(when: 'CONFIG_USB_DWC2', if_true: files('hcd-dwc2.c'))
- system_ss.add(when: 'CONFIG_USB_DWC3', if_true: files('hcd-dwc3.c'))
- 
--system_ss.add(when: 'CONFIG_TUSB6010', if_true: files('tusb6010.c'))
- system_ss.add(when: 'CONFIG_IMX', if_true: files('chipidea.c'))
- system_ss.add(when: 'CONFIG_IMX_USBPHY', if_true: files('imx-usb-phy.c'))
- system_ss.add(when: 'CONFIG_VT82C686', if_true: files('vt82c686-uhci-pci.c'))
--- 
-2.34.1
+T24gOS8zMC8yNCAwMDozNCwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IElu
+IHByZXBhcmF0aW9uIHRvIHBhc3MgZW5kaWFubmVzcyBhbmQgdGFyZ2V0IHdvcmQgc2l6ZSB0
+bw0KPiB0aGUgYm9vdGxvYWRlciBBUEksIGludHJvZHVjZSBhbiBlbXB0eSBCbENwdUNmZyBz
+dHJ1Y3R1cmUNCj4gYW5kIHByb3BhZ2F0ZSBpdCB0byB0aGUgTUlQUyBib290bG9hZGVyIG1l
+dGhvZHMuDQo+IA0KPiBTaWduZWQtb2ZmLWJ5OiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8
+cGhpbG1kQGxpbmFyby5vcmc+DQo+IC0tLQ0KPiAgIGluY2x1ZGUvaHcvbWlwcy9ib290bG9h
+ZGVyLmggfCAgMTcgKysrLS0NCj4gICBody9taXBzL2Jvb3Rsb2FkZXIuYyAgICAgICAgIHwg
+MTQyICsrKysrKysrKysrKysrKysrKystLS0tLS0tLS0tLS0tLS0tDQo+ICAgaHcvbWlwcy9i
+b3N0b24uYyAgICAgICAgICAgICB8ICAgOSArKy0NCj4gICBody9taXBzL2Z1bG9vbmcyZS5j
+ICAgICAgICAgIHwgICAzICstDQo+ICAgaHcvbWlwcy9tYWx0YS5jICAgICAgICAgICAgICB8
+ICAyMSArKystLS0NCj4gICA1IGZpbGVzIGNoYW5nZWQsIDEwOSBpbnNlcnRpb25zKCspLCA4
+MyBkZWxldGlvbnMoLSkNCj4gDQo+IGRpZmYgLS1naXQgYS9pbmNsdWRlL2h3L21pcHMvYm9v
+dGxvYWRlci5oIGIvaW5jbHVkZS9ody9taXBzL2Jvb3Rsb2FkZXIuaA0KPiBpbmRleCBjMzJm
+NmMyODM1Li43NDRlYjExZDBlIDEwMDY0NA0KPiAtLS0gYS9pbmNsdWRlL2h3L21pcHMvYm9v
+dGxvYWRlci5oDQo+ICsrKyBiL2luY2x1ZGUvaHcvbWlwcy9ib290bG9hZGVyLmgNCj4gQEAg
+LTEwLDE3ICsxMCwyNCBAQA0KPiAgICNkZWZpbmUgSFdfTUlQU19CT09UTE9BREVSX0gNCj4g
+ICANCj4gICAjaW5jbHVkZSAiZXhlYy9jcHUtZGVmcy5oIg0KPiArI2luY2x1ZGUgImV4ZWMv
+dGFyZ2V0X2xvbmcuaCINCj4gICANCj4gLXZvaWQgYmxfZ2VuX2p1bXBfdG8odm9pZCAqKnB0
+ciwgdGFyZ2V0X3Vsb25nIGp1bXBfYWRkcik7DQo+IC12b2lkIGJsX2dlbl9qdW1wX2tlcm5l
+bCh2b2lkICoqcHRyLA0KPiArdHlwZWRlZiBzdHJ1Y3QgYmxfY3B1X2NmZyB7DQo+ICt9IEJs
+Q3B1Q2ZnOw0KPiArDQo+ICt2b2lkIGJsX2dlbl9qdW1wX3RvKGNvbnN0IEJsQ3B1Q2ZnICpj
+ZmcsIHZvaWQgKipwLCB0YXJnZXRfdWxvbmcganVtcF9hZGRyKTsNCj4gK3ZvaWQgYmxfZ2Vu
+X2p1bXBfa2VybmVsKGNvbnN0IEJsQ3B1Q2ZnICpjZmcsIHZvaWQgKipwdHIsDQo+ICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgYm9vbCBzZXRfc3AsIHRhcmdldF91bG9uZyBzcCwNCj4g
+ICAgICAgICAgICAgICAgICAgICAgICAgICBib29sIHNldF9hMCwgdGFyZ2V0X3Vsb25nIGEw
+LA0KPiAgICAgICAgICAgICAgICAgICAgICAgICAgIGJvb2wgc2V0X2ExLCB0YXJnZXRfdWxv
+bmcgYTEsDQo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgYm9vbCBzZXRfYTIsIHRhcmdl
+dF91bG9uZyBhMiwNCj4gICAgICAgICAgICAgICAgICAgICAgICAgICBib29sIHNldF9hMywg
+dGFyZ2V0X3Vsb25nIGEzLA0KPiAgICAgICAgICAgICAgICAgICAgICAgICAgIHRhcmdldF91
+bG9uZyBrZXJuZWxfYWRkcik7DQo+IC12b2lkIGJsX2dlbl93cml0ZV91bG9uZyh2b2lkICoq
+cHRyLCB0YXJnZXRfdWxvbmcgYWRkciwgdGFyZ2V0X3Vsb25nIHZhbCk7DQo+IC12b2lkIGJs
+X2dlbl93cml0ZV91MzIodm9pZCAqKnB0ciwgdGFyZ2V0X3Vsb25nIGFkZHIsIHVpbnQzMl90
+IHZhbCk7DQo+IC12b2lkIGJsX2dlbl93cml0ZV91NjQodm9pZCAqKnB0ciwgdGFyZ2V0X3Vs
+b25nIGFkZHIsIHVpbnQ2NF90IHZhbCk7DQo+ICt2b2lkIGJsX2dlbl93cml0ZV91bG9uZyhj
+b25zdCBCbENwdUNmZyAqY2ZnLCB2b2lkICoqcHRyLA0KPiArICAgICAgICAgICAgICAgICAg
+ICAgICAgdGFyZ2V0X3Vsb25nIGFkZHIsIHRhcmdldF91bG9uZyB2YWwpOw0KPiArdm9pZCBi
+bF9nZW5fd3JpdGVfdTMyKGNvbnN0IEJsQ3B1Q2ZnICpjZmcsIHZvaWQgKipwdHIsDQo+ICsg
+ICAgICAgICAgICAgICAgICAgICAgdGFyZ2V0X3Vsb25nIGFkZHIsIHVpbnQzMl90IHZhbCk7
+DQo+ICt2b2lkIGJsX2dlbl93cml0ZV91NjQoY29uc3QgQmxDcHVDZmcgKmNmZywgdm9pZCAq
+KnB0ciwNCj4gKyAgICAgICAgICAgICAgICAgICAgICB0YXJnZXRfdWxvbmcgYWRkciwgdWlu
+dDY0X3QgdmFsKTsNCj4gICANCj4gICAjZW5kaWYNCj4gZGlmZiAtLWdpdCBhL2h3L21pcHMv
+Ym9vdGxvYWRlci5jIGIvaHcvbWlwcy9ib290bG9hZGVyLmMNCj4gaW5kZXggMWRkNmVmMjA5
+Ni4uZWUxYTFjNGYyMCAxMDA2NDQNCj4gLS0tIGEvaHcvbWlwcy9ib290bG9hZGVyLmMNCj4g
+KysrIGIvaHcvbWlwcy9ib290bG9hZGVyLmMNCj4gQEAgLTU0LDcgKzU0LDcgQEAgc3RhdGlj
+IGJvb2wgYm9vdGNwdV9zdXBwb3J0c19pc2EodWludDY0X3QgaXNhX21hc2spDQo+ICAgICAg
+IHJldHVybiBjcHVfc3VwcG9ydHNfaXNhKCZNSVBTX0NQVShmaXJzdF9jcHUpLT5lbnYsIGlz
+YV9tYXNrKTsNCj4gICB9DQo+ICAgDQo+IC1zdGF0aWMgdm9pZCBzdF9ubTMyX3Aodm9pZCAq
+KnB0ciwgdWludDMyX3QgaW5zbikNCj4gK3N0YXRpYyB2b2lkIHN0X25tMzJfcChjb25zdCBC
+bENwdUNmZyAqY2ZnLCB2b2lkICoqcHRyLCB1aW50MzJfdCBpbnNuKQ0KPiAgIHsNCj4gICAg
+ICAgdWludDE2X3QgKnAgPSAqcHRyOw0KPiAgIA0KPiBAQCAtNjcsMTAgKzY3LDEwIEBAIHN0
+YXRpYyB2b2lkIHN0X25tMzJfcCh2b2lkICoqcHRyLCB1aW50MzJfdCBpbnNuKQ0KPiAgIH0N
+Cj4gICANCj4gICAvKiBCYXNlIHR5cGVzICovDQo+IC1zdGF0aWMgdm9pZCBibF9nZW5fbm9w
+KHZvaWQgKipwdHIpDQo+ICtzdGF0aWMgdm9pZCBibF9nZW5fbm9wKGNvbnN0IEJsQ3B1Q2Zn
+ICpjZmcsIHZvaWQgKipwdHIpDQo+ICAgew0KPiAgICAgICBpZiAoYm9vdGNwdV9zdXBwb3J0
+c19pc2EoSVNBX05BTk9NSVBTMzIpKSB7DQo+IC0gICAgICAgIHN0X25tMzJfcChwdHIsIDB4
+ODAwMGMwMDApOw0KPiArICAgICAgICBzdF9ubTMyX3AoY2ZnLCBwdHIsIDB4ODAwMGMwMDAp
+Ow0KPiAgICAgICB9IGVsc2Ugew0KPiAgICAgICAgICAgdWludDMyX3QgKnAgPSAqcHRyOw0K
+PiAgIA0KPiBAQCAtODAsNyArODAsOCBAQCBzdGF0aWMgdm9pZCBibF9nZW5fbm9wKHZvaWQg
+KipwdHIpDQo+ICAgICAgIH0NCj4gICB9DQo+ICAgDQo+IC1zdGF0aWMgdm9pZCBibF9nZW5f
+cl90eXBlKHZvaWQgKipwdHIsIHVpbnQ4X3Qgb3Bjb2RlLA0KPiArc3RhdGljIHZvaWQgYmxf
+Z2VuX3JfdHlwZShjb25zdCBCbENwdUNmZyAqY2ZnLA0KPiArICAgICAgICAgICAgICAgICAg
+ICAgICAgICB2b2lkICoqcHRyLCB1aW50OF90IG9wY29kZSwNCj4gICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgIGJsX3JlZyBycywgYmxfcmVnIHJ0LCBibF9yZWcgcmQsDQo+ICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICB1aW50OF90IHNoaWZ0LCB1aW50OF90IGZ1bmN0KQ0K
+PiAgIHsNCj4gQEAgLTEwMCw3ICsxMDEsOCBAQCBzdGF0aWMgdm9pZCBibF9nZW5fcl90eXBl
+KHZvaWQgKipwdHIsIHVpbnQ4X3Qgb3Bjb2RlLA0KPiAgICAgICAqcHRyID0gcDsNCj4gICB9
+DQo+ICAgDQo+IC1zdGF0aWMgdm9pZCBibF9nZW5faV90eXBlKHZvaWQgKipwdHIsIHVpbnQ4
+X3Qgb3Bjb2RlLA0KPiArc3RhdGljIHZvaWQgYmxfZ2VuX2lfdHlwZShjb25zdCBCbENwdUNm
+ZyAqY2ZnLA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgICB2b2lkICoqcHRyLCB1aW50
+OF90IG9wY29kZSwNCj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgIGJsX3JlZyBycywg
+YmxfcmVnIHJ0LCB1aW50MTZfdCBpbW0pDQo+ICAgew0KPiAgICAgICB1aW50MzJfdCAqcCA9
+ICpwdHI7DQo+IEBAIC0xMTgsMTYgKzEyMCwxNyBAQCBzdGF0aWMgdm9pZCBibF9nZW5faV90
+eXBlKHZvaWQgKipwdHIsIHVpbnQ4X3Qgb3Bjb2RlLA0KPiAgIH0NCj4gICANCj4gICAvKiBT
+aW5nbGUgaW5zdHJ1Y3Rpb25zICovDQo+IC1zdGF0aWMgdm9pZCBibF9nZW5fZHNsbCh2b2lk
+ICoqcCwgYmxfcmVnIHJkLCBibF9yZWcgcnQsIHVpbnQ4X3Qgc2EpDQo+ICtzdGF0aWMgdm9p
+ZCBibF9nZW5fZHNsbChjb25zdCBCbENwdUNmZyAqY2ZnLCB2b2lkICoqcCwNCj4gKyAgICAg
+ICAgICAgICAgICAgICAgICAgIGJsX3JlZyByZCwgYmxfcmVnIHJ0LCB1aW50OF90IHNhKQ0K
+PiAgIHsNCj4gICAgICAgaWYgKGJvb3RjcHVfc3VwcG9ydHNfaXNhKElTQV9NSVBTMykpIHsN
+Cj4gLSAgICAgICAgYmxfZ2VuX3JfdHlwZShwLCAwLCAwLCBydCwgcmQsIHNhLCAweDM4KTsN
+Cj4gKyAgICAgICAgYmxfZ2VuX3JfdHlwZShjZmcsIHAsIDAsIDAsIHJ0LCByZCwgc2EsIDB4
+MzgpOw0KPiAgICAgICB9IGVsc2Ugew0KPiAgICAgICAgICAgZ19hc3NlcnRfbm90X3JlYWNo
+ZWQoKTsgLyogdW5zdXBwb3J0ZWQgKi8NCj4gICAgICAgfQ0KPiAgIH0NCj4gICANCj4gLXN0
+YXRpYyB2b2lkIGJsX2dlbl9qYWxyKHZvaWQgKipwLCBibF9yZWcgcnMpDQo+ICtzdGF0aWMg
+dm9pZCBibF9nZW5famFscihjb25zdCBCbENwdUNmZyAqY2ZnLCB2b2lkICoqcCwgYmxfcmVn
+IHJzKQ0KPiAgIHsNCj4gICAgICAgaWYgKGJvb3RjcHVfc3VwcG9ydHNfaXNhKElTQV9OQU5P
+TUlQUzMyKSkgew0KPiAgICAgICAgICAgdWludDMyX3QgaW5zbiA9IDA7DQo+IEBAIC0xMzYs
+MTMgKzEzOSwxNCBAQCBzdGF0aWMgdm9pZCBibF9nZW5famFscih2b2lkICoqcCwgYmxfcmVn
+IHJzKQ0KPiAgICAgICAgICAgaW5zbiA9IGRlcG9zaXQzMihpbnNuLCAyMSwgNSwgQkxfUkVH
+X1JBKTsNCj4gICAgICAgICAgIGluc24gPSBkZXBvc2l0MzIoaW5zbiwgMTYsIDUsIHJzKTsN
+Cj4gICANCj4gLSAgICAgICAgc3Rfbm0zMl9wKHAsIGluc24pOw0KPiArICAgICAgICBzdF9u
+bTMyX3AoY2ZnLCBwLCBpbnNuKTsNCj4gICAgICAgfSBlbHNlIHsNCj4gLSAgICAgICAgYmxf
+Z2VuX3JfdHlwZShwLCAwLCBycywgMCwgQkxfUkVHX1JBLCAwLCAweDA5KTsNCj4gKyAgICAg
+ICAgYmxfZ2VuX3JfdHlwZShjZmcsIHAsIDAsIHJzLCAwLCBCTF9SRUdfUkEsIDAsIDB4MDkp
+Ow0KPiAgICAgICB9DQo+ICAgfQ0KPiAgIA0KPiAtc3RhdGljIHZvaWQgYmxfZ2VuX2x1aV9u
+bSh2b2lkICoqcHRyLCBibF9yZWcgcnQsIHVpbnQzMl90IGltbTIwKQ0KPiArc3RhdGljIHZv
+aWQgYmxfZ2VuX2x1aV9ubShjb25zdCBCbENwdUNmZyAqY2ZnLCB2b2lkICoqcHRyLA0KPiAr
+ICAgICAgICAgICAgICAgICAgICAgICAgICBibF9yZWcgcnQsIHVpbnQzMl90IGltbTIwKQ0K
+PiAgIHsNCj4gICAgICAgdWludDMyX3QgaW5zbiA9IDA7DQo+ICAgDQo+IEBAIC0xNTMsMTYg
+KzE1NywxOCBAQCBzdGF0aWMgdm9pZCBibF9nZW5fbHVpX25tKHZvaWQgKipwdHIsIGJsX3Jl
+ZyBydCwgdWludDMyX3QgaW1tMjApDQo+ICAgICAgIGluc24gPSBkZXBvc2l0MzIoaW5zbiwg
+MiwgMTAsIGV4dHJhY3QzMihpbW0yMCwgOSwgMTApKTsNCj4gICAgICAgaW5zbiA9IGRlcG9z
+aXQzMihpbnNuLCAwLCAxLCBzZXh0cmFjdDMyKGltbTIwLCAxOSwgMSkpOw0KPiAgIA0KPiAt
+ICAgIHN0X25tMzJfcChwdHIsIGluc24pOw0KPiArICAgIHN0X25tMzJfcChjZmcsIHB0ciwg
+aW5zbik7DQo+ICAgfQ0KPiAgIA0KPiAtc3RhdGljIHZvaWQgYmxfZ2VuX2x1aSh2b2lkICoq
+cCwgYmxfcmVnIHJ0LCB1aW50MTZfdCBpbW0pDQo+ICtzdGF0aWMgdm9pZCBibF9nZW5fbHVp
+KGNvbnN0IEJsQ3B1Q2ZnICpjZmcsIHZvaWQgKipwLA0KPiArICAgICAgICAgICAgICAgICAg
+ICAgICBibF9yZWcgcnQsIHVpbnQxNl90IGltbSkNCj4gICB7DQo+ICAgICAgIC8qIFI2OiBJ
+dCdzIGEgYWxpYXMgb2YgQVVJIHdpdGggUlMgPSAwICovDQo+IC0gICAgYmxfZ2VuX2lfdHlw
+ZShwLCAweDBmLCAwLCBydCwgaW1tKTsNCj4gKyAgICBibF9nZW5faV90eXBlKGNmZywgcCwg
+MHgwZiwgMCwgcnQsIGltbSk7DQo+ICAgfQ0KPiAgIA0KPiAtc3RhdGljIHZvaWQgYmxfZ2Vu
+X29yaV9ubSh2b2lkICoqcHRyLCBibF9yZWcgcnQsIGJsX3JlZyBycywgdWludDE2X3QgaW1t
+MTIpDQo+ICtzdGF0aWMgdm9pZCBibF9nZW5fb3JpX25tKGNvbnN0IEJsQ3B1Q2ZnICpjZmcs
+IHZvaWQgKipwdHIsDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAgIGJsX3JlZyBydCwg
+YmxfcmVnIHJzLCB1aW50MTZfdCBpbW0xMikNCj4gICB7DQo+ICAgICAgIHVpbnQzMl90IGlu
+c24gPSAwOw0KPiAgIA0KPiBAQCAtMTcyLDE1ICsxNzgsMTcgQEAgc3RhdGljIHZvaWQgYmxf
+Z2VuX29yaV9ubSh2b2lkICoqcHRyLCBibF9yZWcgcnQsIGJsX3JlZyBycywgdWludDE2X3Qg
+aW1tMTIpDQo+ICAgICAgIGluc24gPSBkZXBvc2l0MzIoaW5zbiwgMTYsIDUsIHJzKTsNCj4g
+ICAgICAgaW5zbiA9IGRlcG9zaXQzMihpbnNuLCAwLCAxMiwgaW1tMTIpOw0KPiAgIA0KPiAt
+ICAgIHN0X25tMzJfcChwdHIsIGluc24pOw0KPiArICAgIHN0X25tMzJfcChjZmcsIHB0ciwg
+aW5zbik7DQo+ICAgfQ0KPiAgIA0KPiAtc3RhdGljIHZvaWQgYmxfZ2VuX29yaSh2b2lkICoq
+cCwgYmxfcmVnIHJ0LCBibF9yZWcgcnMsIHVpbnQxNl90IGltbSkNCj4gK3N0YXRpYyB2b2lk
+IGJsX2dlbl9vcmkoY29uc3QgQmxDcHVDZmcgKmNmZywgdm9pZCAqKnAsDQo+ICsgICAgICAg
+ICAgICAgICAgICAgICAgIGJsX3JlZyBydCwgYmxfcmVnIHJzLCB1aW50MTZfdCBpbW0pDQo+
+ICAgew0KPiAtICAgIGJsX2dlbl9pX3R5cGUocCwgMHgwZCwgcnMsIHJ0LCBpbW0pOw0KPiAr
+ICAgIGJsX2dlbl9pX3R5cGUoY2ZnLCBwLCAweDBkLCBycywgcnQsIGltbSk7DQo+ICAgfQ0K
+PiAgIA0KPiAtc3RhdGljIHZvaWQgYmxfZ2VuX3N3X25tKHZvaWQgKipwdHIsIGJsX3JlZyBy
+dCwgdWludDhfdCBycywgdWludDE2X3Qgb2ZzMTIpDQo+ICtzdGF0aWMgdm9pZCBibF9nZW5f
+c3dfbm0oY29uc3QgQmxDcHVDZmcgKmNmZywgdm9pZCAqKnB0ciwNCj4gKyAgICAgICAgICAg
+ICAgICAgICAgICAgICBibF9yZWcgcnQsIHVpbnQ4X3QgcnMsIHVpbnQxNl90IG9mczEyKQ0K
+PiAgIHsNCj4gICAgICAgdWludDMyX3QgaW5zbiA9IDA7DQo+ICAgDQo+IEBAIC0xOTEsNjYg
+KzE5OSw3MSBAQCBzdGF0aWMgdm9pZCBibF9nZW5fc3dfbm0odm9pZCAqKnB0ciwgYmxfcmVn
+IHJ0LCB1aW50OF90IHJzLCB1aW50MTZfdCBvZnMxMikNCj4gICAgICAgaW5zbiA9IGRlcG9z
+aXQzMihpbnNuLCAxMiwgNCwgMGIxMDAxKTsNCj4gICAgICAgaW5zbiA9IGRlcG9zaXQzMihp
+bnNuLCAwLCAxMiwgb2ZzMTIpOw0KPiAgIA0KPiAtICAgIHN0X25tMzJfcChwdHIsIGluc24p
+Ow0KPiArICAgIHN0X25tMzJfcChjZmcsIHB0ciwgaW5zbik7DQo+ICAgfQ0KPiAgIA0KPiAt
+c3RhdGljIHZvaWQgYmxfZ2VuX3N3KHZvaWQgKipwLCBibF9yZWcgcnQsIHVpbnQ4X3QgYmFz
+ZSwgdWludDE2X3Qgb2Zmc2V0KQ0KPiArc3RhdGljIHZvaWQgYmxfZ2VuX3N3KGNvbnN0IEJs
+Q3B1Q2ZnICpjZmcsIHZvaWQgKipwLA0KPiArICAgICAgICAgICAgICAgICAgICAgIGJsX3Jl
+ZyBydCwgdWludDhfdCBiYXNlLCB1aW50MTZfdCBvZmZzZXQpDQo+ICAgew0KPiAgICAgICBp
+ZiAoYm9vdGNwdV9zdXBwb3J0c19pc2EoSVNBX05BTk9NSVBTMzIpKSB7DQo+IC0gICAgICAg
+IGJsX2dlbl9zd19ubShwLCBydCwgYmFzZSwgb2Zmc2V0KTsNCj4gKyAgICAgICAgYmxfZ2Vu
+X3N3X25tKGNmZywgcCwgcnQsIGJhc2UsIG9mZnNldCk7DQo+ICAgICAgIH0gZWxzZSB7DQo+
+IC0gICAgICAgIGJsX2dlbl9pX3R5cGUocCwgMHgyYiwgYmFzZSwgcnQsIG9mZnNldCk7DQo+
+ICsgICAgICAgIGJsX2dlbl9pX3R5cGUoY2ZnLCBwLCAweDJiLCBiYXNlLCBydCwgb2Zmc2V0
+KTsNCj4gICAgICAgfQ0KPiAgIH0NCj4gICANCj4gLXN0YXRpYyB2b2lkIGJsX2dlbl9zZCh2
+b2lkICoqcCwgYmxfcmVnIHJ0LCB1aW50OF90IGJhc2UsIHVpbnQxNl90IG9mZnNldCkNCj4g
+K3N0YXRpYyB2b2lkIGJsX2dlbl9zZChjb25zdCBCbENwdUNmZyAqY2ZnLCB2b2lkICoqcCwN
+Cj4gKyAgICAgICAgICAgICAgICAgICAgICBibF9yZWcgcnQsIHVpbnQ4X3QgYmFzZSwgdWlu
+dDE2X3Qgb2Zmc2V0KQ0KPiAgIHsNCj4gICAgICAgaWYgKGJvb3RjcHVfc3VwcG9ydHNfaXNh
+KElTQV9NSVBTMykpIHsNCj4gLSAgICAgICAgYmxfZ2VuX2lfdHlwZShwLCAweDNmLCBiYXNl
+LCBydCwgb2Zmc2V0KTsNCj4gKyAgICAgICAgYmxfZ2VuX2lfdHlwZShjZmcsIHAsIDB4M2Ys
+IGJhc2UsIHJ0LCBvZmZzZXQpOw0KPiAgICAgICB9IGVsc2Ugew0KPiAgICAgICAgICAgZ19h
+c3NlcnRfbm90X3JlYWNoZWQoKTsgLyogdW5zdXBwb3J0ZWQgKi8NCj4gICAgICAgfQ0KPiAg
+IH0NCj4gICANCj4gICAvKiBQc2V1ZG8gaW5zdHJ1Y3Rpb25zICovDQo+IC1zdGF0aWMgdm9p
+ZCBibF9nZW5fbGkodm9pZCAqKnAsIGJsX3JlZyBydCwgdWludDMyX3QgaW1tKQ0KPiArc3Rh
+dGljIHZvaWQgYmxfZ2VuX2xpKGNvbnN0IEJsQ3B1Q2ZnICpjZmcsIHZvaWQgKipwLA0KPiAr
+ICAgICAgICAgICAgICAgICAgICAgIGJsX3JlZyBydCwgdWludDMyX3QgaW1tKQ0KPiAgIHsN
+Cj4gICAgICAgaWYgKGJvb3RjcHVfc3VwcG9ydHNfaXNhKElTQV9OQU5PTUlQUzMyKSkgew0K
+PiAtICAgICAgICBibF9nZW5fbHVpX25tKHAsIHJ0LCBleHRyYWN0MzIoaW1tLCAxMiwgMjAp
+KTsNCj4gLSAgICAgICAgYmxfZ2VuX29yaV9ubShwLCBydCwgcnQsIGV4dHJhY3QzMihpbW0s
+IDAsIDEyKSk7DQo+ICsgICAgICAgIGJsX2dlbl9sdWlfbm0oY2ZnLCBwLCBydCwgZXh0cmFj
+dDMyKGltbSwgMTIsIDIwKSk7DQo+ICsgICAgICAgIGJsX2dlbl9vcmlfbm0oY2ZnLCBwLCBy
+dCwgcnQsIGV4dHJhY3QzMihpbW0sIDAsIDEyKSk7DQo+ICAgICAgIH0gZWxzZSB7DQo+IC0g
+ICAgICAgIGJsX2dlbl9sdWkocCwgcnQsIGV4dHJhY3QzMihpbW0sIDE2LCAxNikpOw0KPiAt
+ICAgICAgICBibF9nZW5fb3JpKHAsIHJ0LCBydCwgZXh0cmFjdDMyKGltbSwgMCwgMTYpKTsN
+Cj4gKyAgICAgICAgYmxfZ2VuX2x1aShjZmcsIHAsIHJ0LCBleHRyYWN0MzIoaW1tLCAxNiwg
+MTYpKTsNCj4gKyAgICAgICAgYmxfZ2VuX29yaShjZmcsIHAsIHJ0LCBydCwgZXh0cmFjdDMy
+KGltbSwgMCwgMTYpKTsNCj4gICAgICAgfQ0KPiAgIH0NCj4gICANCj4gLXN0YXRpYyB2b2lk
+IGJsX2dlbl9kbGkodm9pZCAqKnAsIGJsX3JlZyBydCwgdWludDY0X3QgaW1tKQ0KPiArc3Rh
+dGljIHZvaWQgYmxfZ2VuX2RsaShjb25zdCBCbENwdUNmZyAqY2ZnLCB2b2lkICoqcCwNCj4g
+KyAgICAgICAgICAgICAgICAgICAgICAgYmxfcmVnIHJ0LCB1aW50NjRfdCBpbW0pDQo+ICAg
+ew0KPiAtICAgIGJsX2dlbl9saShwLCBydCwgZXh0cmFjdDY0KGltbSwgMzIsIDMyKSk7DQo+
+IC0gICAgYmxfZ2VuX2RzbGwocCwgcnQsIHJ0LCAxNik7DQo+IC0gICAgYmxfZ2VuX29yaShw
+LCBydCwgcnQsIGV4dHJhY3Q2NChpbW0sIDE2LCAxNikpOw0KPiAtICAgIGJsX2dlbl9kc2xs
+KHAsIHJ0LCBydCwgMTYpOw0KPiAtICAgIGJsX2dlbl9vcmkocCwgcnQsIHJ0LCBleHRyYWN0
+NjQoaW1tLCAwLCAxNikpOw0KPiArICAgIGJsX2dlbl9saShjZmcsIHAsIHJ0LCBleHRyYWN0
+NjQoaW1tLCAzMiwgMzIpKTsNCj4gKyAgICBibF9nZW5fZHNsbChjZmcsIHAsIHJ0LCBydCwg
+MTYpOw0KPiArICAgIGJsX2dlbl9vcmkoY2ZnLCBwLCBydCwgcnQsIGV4dHJhY3Q2NChpbW0s
+IDE2LCAxNikpOw0KPiArICAgIGJsX2dlbl9kc2xsKGNmZywgcCwgcnQsIHJ0LCAxNik7DQo+
+ICsgICAgYmxfZ2VuX29yaShjZmcsIHAsIHJ0LCBydCwgZXh0cmFjdDY0KGltbSwgMCwgMTYp
+KTsNCj4gICB9DQo+ICAgDQo+IC1zdGF0aWMgdm9pZCBibF9nZW5fbG9hZF91bG9uZyh2b2lk
+ICoqcCwgYmxfcmVnIHJ0LCB0YXJnZXRfdWxvbmcgaW1tKQ0KPiArc3RhdGljIHZvaWQgYmxf
+Z2VuX2xvYWRfdWxvbmcoY29uc3QgQmxDcHVDZmcgKmNmZywgdm9pZCAqKnAsDQo+ICsgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICBibF9yZWcgcnQsIHRhcmdldF91bG9uZyBpbW0p
+DQo+ICAgew0KPiAgICAgICBpZiAoYm9vdGNwdV9zdXBwb3J0c19pc2EoSVNBX01JUFMzKSkg
+ew0KPiAtICAgICAgICBibF9nZW5fZGxpKHAsIHJ0LCBpbW0pOyAvKiA2NGJpdCAqLw0KPiAr
+ICAgICAgICBibF9nZW5fZGxpKGNmZywgcCwgcnQsIGltbSk7IC8qIDY0Yml0ICovDQo+ICAg
+ICAgIH0gZWxzZSB7DQo+IC0gICAgICAgIGJsX2dlbl9saShwLCBydCwgaW1tKTsgLyogMzJi
+aXQgKi8NCj4gKyAgICAgICAgYmxfZ2VuX2xpKGNmZywgcCwgcnQsIGltbSk7IC8qIDMyYml0
+ICovDQo+ICAgICAgIH0NCj4gICB9DQo+ICAgDQo+ICAgLyogSGVscGVycyAqLw0KPiAtdm9p
+ZCBibF9nZW5fanVtcF90byh2b2lkICoqcCwgdGFyZ2V0X3Vsb25nIGp1bXBfYWRkcikNCj4g
+K3ZvaWQgYmxfZ2VuX2p1bXBfdG8oY29uc3QgQmxDcHVDZmcgKmNmZywgdm9pZCAqKnAsIHRh
+cmdldF91bG9uZyBqdW1wX2FkZHIpDQo+ICAgew0KPiAtICAgIGJsX2dlbl9sb2FkX3Vsb25n
+KHAsIEJMX1JFR19UOSwganVtcF9hZGRyKTsNCj4gLSAgICBibF9nZW5famFscihwLCBCTF9S
+RUdfVDkpOw0KPiAtICAgIGJsX2dlbl9ub3AocCk7IC8qIGRlbGF5IHNsb3QgKi8NCj4gKyAg
+ICBibF9nZW5fbG9hZF91bG9uZyhjZmcsIHAsIEJMX1JFR19UOSwganVtcF9hZGRyKTsNCj4g
+KyAgICBibF9nZW5famFscihjZmcsIHAsIEJMX1JFR19UOSk7DQo+ICsgICAgYmxfZ2VuX25v
+cChjZmcsIHApOyAvKiBkZWxheSBzbG90ICovDQo+ICAgfQ0KPiAgIA0KPiAtdm9pZCBibF9n
+ZW5fanVtcF9rZXJuZWwodm9pZCAqKnAsDQo+ICt2b2lkIGJsX2dlbl9qdW1wX2tlcm5lbChj
+b25zdCBCbENwdUNmZyAqY2ZnLCB2b2lkICoqcCwNCj4gICAgICAgICAgICAgICAgICAgICAg
+ICAgICBib29sIHNldF9zcCwgdGFyZ2V0X3Vsb25nIHNwLA0KPiAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIGJvb2wgc2V0X2EwLCB0YXJnZXRfdWxvbmcgYTAsDQo+ICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgYm9vbCBzZXRfYTEsIHRhcmdldF91bG9uZyBhMSwNCj4gQEAgLTI1
+OSw0NSArMjcyLDQ4IEBAIHZvaWQgYmxfZ2VuX2p1bXBfa2VybmVsKHZvaWQgKipwLA0KPiAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIHRhcmdldF91bG9uZyBrZXJuZWxfYWRkcikNCj4g
+ICB7DQo+ICAgICAgIGlmIChzZXRfc3ApIHsNCj4gLSAgICAgICAgYmxfZ2VuX2xvYWRfdWxv
+bmcocCwgQkxfUkVHX1NQLCBzcCk7DQo+ICsgICAgICAgIGJsX2dlbl9sb2FkX3Vsb25nKGNm
+ZywgcCwgQkxfUkVHX1NQLCBzcCk7DQo+ICAgICAgIH0NCj4gICAgICAgaWYgKHNldF9hMCkg
+ew0KPiAtICAgICAgICBibF9nZW5fbG9hZF91bG9uZyhwLCBCTF9SRUdfQTAsIGEwKTsNCj4g
+KyAgICAgICAgYmxfZ2VuX2xvYWRfdWxvbmcoY2ZnLCBwLCBCTF9SRUdfQTAsIGEwKTsNCj4g
+ICAgICAgfQ0KPiAgICAgICBpZiAoc2V0X2ExKSB7DQo+IC0gICAgICAgIGJsX2dlbl9sb2Fk
+X3Vsb25nKHAsIEJMX1JFR19BMSwgYTEpOw0KPiArICAgICAgICBibF9nZW5fbG9hZF91bG9u
+ZyhjZmcsIHAsIEJMX1JFR19BMSwgYTEpOw0KPiAgICAgICB9DQo+ICAgICAgIGlmIChzZXRf
+YTIpIHsNCj4gLSAgICAgICAgYmxfZ2VuX2xvYWRfdWxvbmcocCwgQkxfUkVHX0EyLCBhMik7
+DQo+ICsgICAgICAgIGJsX2dlbl9sb2FkX3Vsb25nKGNmZywgcCwgQkxfUkVHX0EyLCBhMik7
+DQo+ICAgICAgIH0NCj4gICAgICAgaWYgKHNldF9hMykgew0KPiAtICAgICAgICBibF9nZW5f
+bG9hZF91bG9uZyhwLCBCTF9SRUdfQTMsIGEzKTsNCj4gKyAgICAgICAgYmxfZ2VuX2xvYWRf
+dWxvbmcoY2ZnLCBwLCBCTF9SRUdfQTMsIGEzKTsNCj4gICAgICAgfQ0KPiAgIA0KPiAtICAg
+IGJsX2dlbl9qdW1wX3RvKHAsIGtlcm5lbF9hZGRyKTsNCj4gKyAgICBibF9nZW5fanVtcF90
+byhjZmcsIHAsIGtlcm5lbF9hZGRyKTsNCj4gICB9DQo+ICAgDQo+IC12b2lkIGJsX2dlbl93
+cml0ZV91bG9uZyh2b2lkICoqcCwgdGFyZ2V0X3Vsb25nIGFkZHIsIHRhcmdldF91bG9uZyB2
+YWwpDQo+ICt2b2lkIGJsX2dlbl93cml0ZV91bG9uZyhjb25zdCBCbENwdUNmZyAqY2ZnLCB2
+b2lkICoqcCwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgIHRhcmdldF91bG9uZyBhZGRy
+LCB0YXJnZXRfdWxvbmcgdmFsKQ0KPiAgIHsNCj4gLSAgICBibF9nZW5fbG9hZF91bG9uZyhw
+LCBCTF9SRUdfSzAsIHZhbCk7DQo+IC0gICAgYmxfZ2VuX2xvYWRfdWxvbmcocCwgQkxfUkVH
+X0sxLCBhZGRyKTsNCj4gKyAgICBibF9nZW5fbG9hZF91bG9uZyhjZmcsIHAsIEJMX1JFR19L
+MCwgdmFsKTsNCj4gKyAgICBibF9nZW5fbG9hZF91bG9uZyhjZmcsIHAsIEJMX1JFR19LMSwg
+YWRkcik7DQo+ICAgICAgIGlmIChib290Y3B1X3N1cHBvcnRzX2lzYShJU0FfTUlQUzMpKSB7
+DQo+IC0gICAgICAgIGJsX2dlbl9zZChwLCBCTF9SRUdfSzAsIEJMX1JFR19LMSwgMHgwKTsN
+Cj4gKyAgICAgICAgYmxfZ2VuX3NkKGNmZywgcCwgQkxfUkVHX0swLCBCTF9SRUdfSzEsIDB4
+MCk7DQo+ICAgICAgIH0gZWxzZSB7DQo+IC0gICAgICAgIGJsX2dlbl9zdyhwLCBCTF9SRUdf
+SzAsIEJMX1JFR19LMSwgMHgwKTsNCj4gKyAgICAgICAgYmxfZ2VuX3N3KGNmZywgcCwgQkxf
+UkVHX0swLCBCTF9SRUdfSzEsIDB4MCk7DQo+ICAgICAgIH0NCj4gICB9DQo+ICAgDQo+IC12
+b2lkIGJsX2dlbl93cml0ZV91MzIodm9pZCAqKnAsIHRhcmdldF91bG9uZyBhZGRyLCB1aW50
+MzJfdCB2YWwpDQo+ICt2b2lkIGJsX2dlbl93cml0ZV91MzIoY29uc3QgQmxDcHVDZmcgKmNm
+Zywgdm9pZCAqKnAsDQo+ICsgICAgICAgICAgICAgICAgICAgICAgdGFyZ2V0X3Vsb25nIGFk
+ZHIsIHVpbnQzMl90IHZhbCkNCj4gICB7DQo+IC0gICAgYmxfZ2VuX2xpKHAsIEJMX1JFR19L
+MCwgdmFsKTsNCj4gLSAgICBibF9nZW5fbG9hZF91bG9uZyhwLCBCTF9SRUdfSzEsIGFkZHIp
+Ow0KPiAtICAgIGJsX2dlbl9zdyhwLCBCTF9SRUdfSzAsIEJMX1JFR19LMSwgMHgwKTsNCj4g
+KyAgICBibF9nZW5fbGkoY2ZnLCBwLCBCTF9SRUdfSzAsIHZhbCk7DQo+ICsgICAgYmxfZ2Vu
+X2xvYWRfdWxvbmcoY2ZnLCBwLCBCTF9SRUdfSzEsIGFkZHIpOw0KPiArICAgIGJsX2dlbl9z
+dyhjZmcsIHAsIEJMX1JFR19LMCwgQkxfUkVHX0sxLCAweDApOw0KPiAgIH0NCj4gICANCj4g
+LXZvaWQgYmxfZ2VuX3dyaXRlX3U2NCh2b2lkICoqcCwgdGFyZ2V0X3Vsb25nIGFkZHIsIHVp
+bnQ2NF90IHZhbCkNCj4gK3ZvaWQgYmxfZ2VuX3dyaXRlX3U2NChjb25zdCBCbENwdUNmZyAq
+Y2ZnLCB2b2lkICoqcCwNCj4gKyAgICAgICAgICAgICAgICAgICAgICB0YXJnZXRfdWxvbmcg
+YWRkciwgdWludDY0X3QgdmFsKQ0KPiAgIHsNCj4gLSAgICBibF9nZW5fZGxpKHAsIEJMX1JF
+R19LMCwgdmFsKTsNCj4gLSAgICBibF9nZW5fbG9hZF91bG9uZyhwLCBCTF9SRUdfSzEsIGFk
+ZHIpOw0KPiAtICAgIGJsX2dlbl9zZChwLCBCTF9SRUdfSzAsIEJMX1JFR19LMSwgMHgwKTsN
+Cj4gKyAgICBibF9nZW5fZGxpKGNmZywgcCwgQkxfUkVHX0swLCB2YWwpOw0KPiArICAgIGJs
+X2dlbl9sb2FkX3Vsb25nKGNmZywgcCwgQkxfUkVHX0sxLCBhZGRyKTsNCj4gKyAgICBibF9n
+ZW5fc2QoY2ZnLCBwLCBCTF9SRUdfSzAsIEJMX1JFR19LMSwgMHgwKTsNCj4gICB9DQo+IGRp
+ZmYgLS1naXQgYS9ody9taXBzL2Jvc3Rvbi5jIGIvaHcvbWlwcy9ib3N0b24uYw0KPiBpbmRl
+eCAxYjQ0ZmIzNTRjLi44ZTIxMDg3NmUxIDEwMDY0NA0KPiAtLS0gYS9ody9taXBzL2Jvc3Rv
+bi5jDQo+ICsrKyBiL2h3L21pcHMvYm9zdG9uLmMNCj4gQEAgLTMyNSwyMyArMzI1LDI0IEBA
+IHR5cGVfaW5pdChib3N0b25fcmVnaXN0ZXJfdHlwZXMpDQo+ICAgDQo+ICAgc3RhdGljIHZv
+aWQgZ2VuX2Zpcm13YXJlKHZvaWQgKnAsIGh3YWRkciBrZXJuZWxfZW50cnksIGh3YWRkciBm
+ZHRfYWRkcikNCj4gICB7DQo+ICsgICAgY29uc3QgQmxDcHVDZmcgYmxfY2ZnID0geyB9Ow0K
+PiAgICAgICB1aW50NjRfdCByZWdhZGRyOw0KPiAgIA0KPiAgICAgICAvKiBNb3ZlIENNIEdD
+UnMgKi8NCj4gICAgICAgcmVnYWRkciA9IGNwdV9taXBzX3BoeXNfdG9fa3NlZzEoTlVMTCwg
+R0NSX0JBU0VfQUREUiArIEdDUl9CQVNFX09GUyksDQo+IC0gICAgYmxfZ2VuX3dyaXRlX3Vs
+b25nKCZwLCByZWdhZGRyLA0KPiArICAgIGJsX2dlbl93cml0ZV91bG9uZygmYmxfY2ZnLCAm
+cCwgcmVnYWRkciwNCj4gICAgICAgICAgICAgICAgICAgICAgICAgIGJvc3Rvbl9tZW1tYXBb
+Qk9TVE9OX0NNXS5iYXNlKTsNCj4gICANCj4gICAgICAgLyogTW92ZSAmIGVuYWJsZSBHSUMg
+R0NScyAqLw0KPiAgICAgICByZWdhZGRyID0gY3B1X21pcHNfcGh5c190b19rc2VnMShOVUxM
+LCBib3N0b25fbWVtbWFwW0JPU1RPTl9DTV0uYmFzZQ0KPiAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICArIEdDUl9HSUNfQkFTRV9PRlMpLA0KPiAtICAg
+IGJsX2dlbl93cml0ZV91bG9uZygmcCwgcmVnYWRkciwNCj4gKyAgICBibF9nZW5fd3JpdGVf
+dWxvbmcoJmJsX2NmZywgJnAsIHJlZ2FkZHIsDQo+ICAgICAgICAgICAgICAgICAgICAgICAg
+ICBib3N0b25fbWVtbWFwW0JPU1RPTl9HSUNdLmJhc2UgfCBHQ1JfR0lDX0JBU0VfR0lDRU5f
+TVNLKTsNCj4gICANCj4gICAgICAgLyogTW92ZSAmIGVuYWJsZSBDUEMgR0NScyAqLw0KPiAg
+ICAgICByZWdhZGRyID0gY3B1X21pcHNfcGh5c190b19rc2VnMShOVUxMLCBib3N0b25fbWVt
+bWFwW0JPU1RPTl9DTV0uYmFzZQ0KPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICArIEdDUl9DUENfQkFTRV9PRlMpLA0KPiAtICAgIGJsX2dlbl93cml0
+ZV91bG9uZygmcCwgcmVnYWRkciwNCj4gKyAgICBibF9nZW5fd3JpdGVfdWxvbmcoJmJsX2Nm
+ZywgJnAsIHJlZ2FkZHIsDQo+ICAgICAgICAgICAgICAgICAgICAgICAgICBib3N0b25fbWVt
+bWFwW0JPU1RPTl9DUENdLmJhc2UgfCBHQ1JfQ1BDX0JBU0VfQ1BDRU5fTVNLKTsNCj4gICAN
+Cj4gICAgICAgLyoNCj4gQEAgLTM1Miw3ICszNTMsNyBAQCBzdGF0aWMgdm9pZCBnZW5fZmly
+bXdhcmUodm9pZCAqcCwgaHdhZGRyIGtlcm5lbF9lbnRyeSwgaHdhZGRyIGZkdF9hZGRyKQ0K
+PiAgICAgICAgKiBhMi8kNiA9IDANCj4gICAgICAgICogYTMvJDcgPSAwDQo+ICAgICAgICAq
+Lw0KPiAtICAgIGJsX2dlbl9qdW1wX2tlcm5lbCgmcCwNCj4gKyAgICBibF9nZW5fanVtcF9r
+ZXJuZWwoJmJsX2NmZywgJnAsDQo+ICAgICAgICAgICAgICAgICAgICAgICAgICB0cnVlLCAw
+LCB0cnVlLCAoaW50MzJfdCktMiwNCj4gICAgICAgICAgICAgICAgICAgICAgICAgIHRydWUs
+IGZkdF9hZGRyLCB0cnVlLCAwLCB0cnVlLCAwLA0KPiAgICAgICAgICAgICAgICAgICAgICAg
+ICAga2VybmVsX2VudHJ5KTsNCj4gZGlmZiAtLWdpdCBhL2h3L21pcHMvZnVsb29uZzJlLmMg
+Yi9ody9taXBzL2Z1bG9vbmcyZS5jDQo+IGluZGV4IDZlNDMwM2JhNDcuLmE5ODk2MzdkM2Ig
+MTAwNjQ0DQo+IC0tLSBhL2h3L21pcHMvZnVsb29uZzJlLmMNCj4gKysrIGIvaHcvbWlwcy9m
+dWxvb25nMmUuYw0KPiBAQCAtMTY1LDYgKzE2NSw3IEBAIHN0YXRpYyB1aW50NjRfdCBsb2Fk
+X2tlcm5lbChNSVBTQ1BVICpjcHUpDQo+ICAgc3RhdGljIHZvaWQgd3JpdGVfYm9vdGxvYWRl
+cihDUFVNSVBTU3RhdGUgKmVudiwgdWludDhfdCAqYmFzZSwNCj4gICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgIHVpbnQ2NF90IGtlcm5lbF9hZGRyKQ0KPiAgIHsNCj4gKyAgICBj
+b25zdCBCbENwdUNmZyBibF9jZmcgPSB7IH07DQo+ICAgICAgIHVpbnQzMl90ICpwOw0KPiAg
+IA0KPiAgICAgICAvKiBTbWFsbCBib290bG9hZGVyICovDQo+IEBAIC0xNzgsNyArMTc5LDcg
+QEAgc3RhdGljIHZvaWQgd3JpdGVfYm9vdGxvYWRlcihDUFVNSVBTU3RhdGUgKmVudiwgdWlu
+dDhfdCAqYmFzZSwNCj4gICAgICAgLyogU2Vjb25kIHBhcnQgb2YgdGhlIGJvb3Rsb2FkZXIg
+Ki8NCj4gICAgICAgcCA9ICh1aW50MzJfdCAqKShiYXNlICsgMHgwNDApOw0KPiAgIA0KPiAt
+ICAgIGJsX2dlbl9qdW1wX2tlcm5lbCgodm9pZCAqKikmcCwNCj4gKyAgICBibF9nZW5fanVt
+cF9rZXJuZWwoJmJsX2NmZywgKHZvaWQgKiopJnAsDQo+ICAgICAgICAgICAgICAgICAgICAg
+ICAgICB0cnVlLCBFTlZQX1ZBRERSIC0gNjQsDQo+ICAgICAgICAgICAgICAgICAgICAgICAg
+ICB0cnVlLCAyLCB0cnVlLCBFTlZQX1ZBRERSLA0KPiAgICAgICAgICAgICAgICAgICAgICAg
+ICAgdHJ1ZSwgRU5WUF9WQUREUiArIDgsDQo+IGRpZmYgLS1naXQgYS9ody9taXBzL21hbHRh
+LmMgYi9ody9taXBzL21hbHRhLmMNCj4gaW5kZXggNjY0YTJhZTBhOS4uZmM0ODVjYzg4NCAx
+MDA2NDQNCj4gLS0tIGEvaHcvbWlwcy9tYWx0YS5jDQo+ICsrKyBiL2h3L21pcHMvbWFsdGEu
+Yw0KPiBAQCAtNjI0LDYgKzYyNCw3IEBAIHN0YXRpYyB2b2lkIGJsX3NldHVwX2d0NjQxMjBf
+anVtcF9rZXJuZWwodm9pZCAqKnAsIHVpbnQ2NF90IHJ1bl9hZGRyLA0KPiAgICAgICBzdGF0
+aWMgY29uc3QgY2hhciBwY2lfcGluc19jZmdbUENJX05VTV9QSU5TXSA9IHsNCj4gICAgICAg
+ICAgIDEwLCAxMCwgMTEsIDExIC8qIFBJSVggSVJRUkNbQTpEXSAqLw0KPiAgICAgICB9Ow0K
+PiArICAgIGNvbnN0IEJsQ3B1Q2ZnIGJsX2NmZyA9IHsgfTsNCj4gICANCj4gICAgICAgLyog
+QnVzIGVuZGlhbm5lc3MgaXMgYWx3YXlzIHJldmVyc2VkICovDQo+ICAgI2lmIFRBUkdFVF9C
+SUdfRU5ESUFODQo+IEBAIC02MzUsMjkgKzYzNiwyOSBAQCBzdGF0aWMgdm9pZCBibF9zZXR1
+cF9ndDY0MTIwX2p1bXBfa2VybmVsKHZvaWQgKipwLCB1aW50NjRfdCBydW5fYWRkciwNCj4g
+ICAgICAgLyogc2V0dXAgTUVNLXRvLVBDSTAgbWFwcGluZyBhcyBkb25lIGJ5IFlBTU9OICov
+DQo+ICAgDQo+ICAgICAgIC8qIG1vdmUgR1Q2NDEyMCByZWdpc3RlcnMgZnJvbSAweDE0MDAw
+MDAwIHRvIDB4MWJlMDAwMDAgKi8NCj4gLSAgICBibF9nZW5fd3JpdGVfdTMyKHAsIC8qIEdU
+X0lTRCAqLw0KPiArICAgIGJsX2dlbl93cml0ZV91MzIoJmJsX2NmZywgcCwgLyogR1RfSVNE
+ICovDQo+ICAgICAgICAgICAgICAgICAgICAgICAgY3B1X21pcHNfcGh5c190b19rc2VnMShO
+VUxMLCAweDE0MDAwMDAwICsgMHg2OCksDQo+ICAgICAgICAgICAgICAgICAgICAgICAgY3B1
+X3RvX2d0MzIoMHgxYmUwMDAwMCA8PCAzKSk7DQo+ICAgDQo+ICAgICAgIC8qIHNldHVwIFBD
+STAgaW8gd2luZG93IHRvIDB4MTgwMDAwMDAtMHgxODFmZmZmZiAqLw0KPiAtICAgIGJsX2dl
+bl93cml0ZV91MzIocCwgLyogR1RfUENJMElPTEQgKi8NCj4gKyAgICBibF9nZW5fd3JpdGVf
+dTMyKCZibF9jZmcsIHAsIC8qIEdUX1BDSTBJT0xEICovDQo+ICAgICAgICAgICAgICAgICAg
+ICAgICAgY3B1X21pcHNfcGh5c190b19rc2VnMShOVUxMLCAweDFiZTAwMDAwICsgMHg0OCks
+DQo+ICAgICAgICAgICAgICAgICAgICAgICAgY3B1X3RvX2d0MzIoMHgxODAwMDAwMCA8PCAz
+KSk7DQo+IC0gICAgYmxfZ2VuX3dyaXRlX3UzMihwLCAvKiBHVF9QQ0kwSU9IRCAqLw0KPiAr
+ICAgIGJsX2dlbl93cml0ZV91MzIoJmJsX2NmZywgcCwgLyogR1RfUENJMElPSEQgKi8NCj4g
+ICAgICAgICAgICAgICAgICAgICAgICBjcHVfbWlwc19waHlzX3RvX2tzZWcxKE5VTEwsIDB4
+MWJlMDAwMDAgKyAweDUwKSwNCj4gICAgICAgICAgICAgICAgICAgICAgICBjcHVfdG9fZ3Qz
+MigweDA4MDAwMDAwIDw8IDMpKTsNCj4gICANCj4gICAgICAgLyogc2V0dXAgUENJMCBtZW0g
+d2luZG93cyAqLw0KPiAtICAgIGJsX2dlbl93cml0ZV91MzIocCwgLyogR1RfUENJME0wTEQg
+Ki8NCj4gKyAgICBibF9nZW5fd3JpdGVfdTMyKCZibF9jZmcsIHAsIC8qIEdUX1BDSTBNMExE
+ICovDQo+ICAgICAgICAgICAgICAgICAgICAgICAgY3B1X21pcHNfcGh5c190b19rc2VnMShO
+VUxMLCAweDFiZTAwMDAwICsgMHg1OCksDQo+ICAgICAgICAgICAgICAgICAgICAgICAgY3B1
+X3RvX2d0MzIoMHgxMDAwMDAwMCA8PCAzKSk7DQo+IC0gICAgYmxfZ2VuX3dyaXRlX3UzMihw
+LCAvKiBHVF9QQ0kwTTBIRCAqLw0KPiArICAgIGJsX2dlbl93cml0ZV91MzIoJmJsX2NmZywg
+cCwgLyogR1RfUENJME0wSEQgKi8NCj4gICAgICAgICAgICAgICAgICAgICAgICBjcHVfbWlw
+c19waHlzX3RvX2tzZWcxKE5VTEwsIDB4MWJlMDAwMDAgKyAweDYwKSwNCj4gICAgICAgICAg
+ICAgICAgICAgICAgICBjcHVfdG9fZ3QzMigweDA3ZTAwMDAwIDw8IDMpKTsNCj4gLSAgICBi
+bF9nZW5fd3JpdGVfdTMyKHAsIC8qIEdUX1BDSTBNMUxEICovDQo+ICsgICAgYmxfZ2VuX3dy
+aXRlX3UzMigmYmxfY2ZnLCBwLCAvKiBHVF9QQ0kwTTFMRCAqLw0KPiAgICAgICAgICAgICAg
+ICAgICAgICAgIGNwdV9taXBzX3BoeXNfdG9fa3NlZzEoTlVMTCwgMHgxYmUwMDAwMCArIDB4
+ODApLA0KPiAgICAgICAgICAgICAgICAgICAgICAgIGNwdV90b19ndDMyKDB4MTgyMDAwMDAg
+PDwgMykpOw0KPiAtICAgIGJsX2dlbl93cml0ZV91MzIocCwgLyogR1RfUENJME0xSEQgKi8N
+Cj4gKyAgICBibF9nZW5fd3JpdGVfdTMyKCZibF9jZmcsIHAsIC8qIEdUX1BDSTBNMUhEICov
+DQo+ICAgICAgICAgICAgICAgICAgICAgICAgY3B1X21pcHNfcGh5c190b19rc2VnMShOVUxM
+LCAweDFiZTAwMDAwICsgMHg4OCksDQo+ICAgICAgICAgICAgICAgICAgICAgICAgY3B1X3Rv
+X2d0MzIoMHgwYmMwMDAwMCA8PCAzKSk7DQo+ICAgDQo+IEBAIC02NjgsMTYgKzY2OSwxNiBA
+QCBzdGF0aWMgdm9pZCBibF9zZXR1cF9ndDY0MTIwX2p1bXBfa2VybmVsKHZvaWQgKipwLCB1
+aW50NjRfdCBydW5fYWRkciwNCj4gICAgICAgICogTG9hZCB0aGUgUElJWCBJUlFDW0E6RF0g
+cm91dGluZyBjb25maWcgYWRkcmVzcywgdGhlbg0KPiAgICAgICAgKiB3cml0ZSByb3V0aW5n
+IGNvbmZpZ3VyYXRpb24gdG8gdGhlIGNvbmZpZyBkYXRhIHJlZ2lzdGVyLg0KPiAgICAgICAg
+Ki8NCj4gLSAgICBibF9nZW5fd3JpdGVfdTMyKHAsIC8qIEdUX1BDSTBfQ0ZHQUREUiAqLw0K
+PiArICAgIGJsX2dlbl93cml0ZV91MzIoJmJsX2NmZywgcCwgLyogR1RfUENJMF9DRkdBRERS
+ICovDQo+ICAgICAgICAgICAgICAgICAgICAgICAgY3B1X21pcHNfcGh5c190b19rc2VnMShO
+VUxMLCAweDFiZTAwMDAwICsgMHhjZjgpLA0KPiAgICAgICAgICAgICAgICAgICAgICAgIHRz
+d2FwMzIoKDEgPDwgMzEpIC8qIENvbmZpZ0VuICovDQo+ICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICB8IFBDSV9CVUlMRF9CREYoMCwgUElJWDRfUENJX0RFVkZOKSA8PCA4DQo+
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8IFBJSVhfUElSUUNBKSk7DQo+IC0g
+ICAgYmxfZ2VuX3dyaXRlX3UzMihwLCAvKiBHVF9QQ0kwX0NGR0RBVEEgKi8NCj4gKyAgICBi
+bF9nZW5fd3JpdGVfdTMyKCZibF9jZmcsIHAsIC8qIEdUX1BDSTBfQ0ZHREFUQSAqLw0KPiAg
+ICAgICAgICAgICAgICAgICAgICAgIGNwdV9taXBzX3BoeXNfdG9fa3NlZzEoTlVMTCwgMHgx
+YmUwMDAwMCArIDB4Y2ZjKSwNCj4gICAgICAgICAgICAgICAgICAgICAgICB0c3dhcDMyKGxk
+bF9iZV9wKHBjaV9waW5zX2NmZykpKTsNCj4gICANCj4gLSAgICBibF9nZW5fanVtcF9rZXJu
+ZWwocCwNCj4gKyAgICBibF9nZW5fanVtcF9rZXJuZWwoJmJsX2NmZywgcCwNCj4gICAgICAg
+ICAgICAgICAgICAgICAgICAgIHRydWUsIEVOVlBfVkFERFIgLSA2NCwNCj4gICAgICAgICAg
+ICAgICAgICAgICAgICAgIC8qDQo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgKiBJZiBz
+ZW1paG9zdGluZyBpcyB1c2VkLCBhcmd1bWVudHMgaGF2ZSBhbHJlYWR5DQoNClJldmlld2Vk
+LWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo=
 
 
