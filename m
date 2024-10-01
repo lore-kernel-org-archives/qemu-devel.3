@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DE50CEACE9
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B797CEACE8
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:47:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svfup-0005lO-4w; Tue, 01 Oct 2024 12:39:59 -0400
+	id 1svfwA-000121-WF; Tue, 01 Oct 2024 12:41:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfuV-0005W9-K5
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:39 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1svfuh-0005c8-CX
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:52 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfuQ-00063z-Dj
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:39 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-42cbc38a997so34985855e9.1
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:39:34 -0700 (PDT)
+ id 1svfub-000693-0d
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:51 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-42cd74c0d16so53266455e9.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:39:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727800773; x=1728405573; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727800783; x=1728405583; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=B3HhM/XJoCTIECwJrQ/qGNjxK1ifjCoLeoXbylAJo74=;
- b=Y87L8hf2mWiW0RlssYt/oSf1j+FXiDL2R3wOxOkxt12TxxHPKofcEeMHKH4tOOIs0Z
- b/kMWzm04GjcGx6EF2ZMahGvxoP6C4abAioD4ItawPZEbELJxE3taa/aoPNN/Rj4YrZU
- aR6X0rD9Ol/6QsRB2Lsq1CXc+gmQzzHx8tqLlfBFKhtwHxkyUNGZaVa+V45V7sNJZ97n
- WNnhHWv51sUSWEoh1TkjoOe6S0UUCbNblGzH9ZKIuql4BLkPTdj+oB0WFzIuweaSIsAU
- iMa27t1Ux7OFtJWAFpnoOC68EaQ698reQWHTK6mggCNl2briHirIxKkZC8N5Jmgy4Ytq
- 83fg==
+ :reply-to; bh=EgXLimRzydeS2VstMki+XXnoUmcqMBSbBGqYFCu4uPg=;
+ b=G77HDNA1rsdiRXTlSZedTraYywjZ2wGQPXJk4qE5JdSkcdMgBuZ4AksC7SnMubd5LD
+ s0k2DtFmEtwE5+sVoiIX9OpuarwT607uWD/mn9qHuHFJzGX6tH/z5zbYQx+Jxn94xjvK
+ uUSeI7mTZbZgF8THXDwnHnx6NEL0qjkeC4moo4ME2diNVH8imFhJm2mvapXkNGR4BeH9
+ fPFpq0Vwq1Ywx3saWheU9oSGaJkW/Dwr9kb029xTSrEPyfCu8Sin+3WQVmuxt2BPJFGJ
+ KxKPOMFpvRBSXVJhN4SCcCcnG6SvsreOz2bP6GtzXtE/KdGs/n7tvxson3lak2Qs398R
+ OU3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727800773; x=1728405573;
+ d=1e100.net; s=20230601; t=1727800783; x=1728405583;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=B3HhM/XJoCTIECwJrQ/qGNjxK1ifjCoLeoXbylAJo74=;
- b=lYIBzhlXbuH+bQBBJO1raAldJmxiEkDEwmqilUA1vKqKZfCjy/XT+yZqBJixAheU3r
- 3RXbPf3buBWk6++WMrHu8W2BPiI05stt1ptP0R8FJdG+JVrjoUp7Pq7x8FGqZxJgMNW0
- KLGDaksFvfhCKn4dkEKB7FEdIyGrxMb8VN2U8fHqgiMKWgmbJFIEmL6UyIe9DafM1fv4
- OcpiCaL5ysze9i3aLF+bAtdqTvwFLRwlsEA3igpRJBYbT4CN+o5+aKxc+d4WDVKFSFNJ
- qOmApwAsn4bUeClt9CtdLDe/F+Ewz2S9UqC/9qqXhLk/QjuR18vReDpOsP21cWzDQsU4
- ikmg==
-X-Gm-Message-State: AOJu0Yxbl29NvayCEnJwO7JyD4ABOGEtLCtrb1DpO39Bjrmhh8bDm28B
- 7ClU7bQRPPEdFociUa8omRnFiTWpEPJVcllYGfL3tMui/Czy5tZeBQPdKXCfHG9+jtKE741PnNX
- s
-X-Google-Smtp-Source: AGHT+IHJCZ2C0HQQtW81cwr2m4+rzKPvwVu46j69+31Zsm9kNSPP1SAUtw2Cx/E0ftb8W08BwAvK4Q==
-X-Received: by 2002:a05:600c:1912:b0:42c:b67b:816b with SMTP id
- 5b1f17b1804b1-42f71307004mr26604425e9.1.1727800772838; 
- Tue, 01 Oct 2024 09:39:32 -0700 (PDT)
+ bh=EgXLimRzydeS2VstMki+XXnoUmcqMBSbBGqYFCu4uPg=;
+ b=liAGLyRRFait+LEJ+d0UaGb/7IA6BaYYMT7sTenrnLn0gdiXwu0aY4SUunmIto94A0
+ rO23rvaEOqJzFuS/pWj+ZCYfU8Z24+/2lbDQzsGK4dmPgx3Z8Kj3RExH5qF0y7PqP5KT
+ DsspjftOkBn+4KDWTNxYZH7zpLRVIJqfL9c+Nkdt+min8IRRIkNioJgRatWMY7i6TNkE
+ 21s31kvPYFYfoI0piEYpTWfWrLeIlrPKf5R8jDwtx2KW9fiabYYJQMWwM5purviuGMdk
+ tCJ43twVpuAYSfuPqwdFX27mAN6hl7Bi5fsZXrzcuTmzPnfJagZuWg30YZeKKzb4Uq3f
+ Ezuw==
+X-Gm-Message-State: AOJu0YwG7AcTeEdt98fENFQaa2wTdqhIG48dpbZCVUlXh8w0W0lLzdC6
+ 16le+zR8IXn1jnWeo6Yazourvbe7JNRF290yzXhka27RwlPkmVglolGQoKpZc6G3lsoIGeeG4Hj
+ y
+X-Google-Smtp-Source: AGHT+IEChcO1Z/pmssfXJw0qr5L26Uq80+YMlUrfKE+XXkydyRYyURH3HwT4DrbvET90K8soBHDjxA==
+X-Received: by 2002:a05:6000:e4e:b0:371:8cc1:2024 with SMTP id
+ ffacd0b85a97d-37cfb828e2dmr214291f8f.0.1727800783034; 
+ Tue, 01 Oct 2024 09:39:43 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd56e6547sm12243771f8f.58.2024.10.01.09.39.32
+ ffacd0b85a97d-37cd56e6547sm12243771f8f.58.2024.10.01.09.39.42
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 09:39:32 -0700 (PDT)
+ Tue, 01 Oct 2024 09:39:42 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 24/54] hw/pcmcia: Remove pxa2xx pcmcia device
-Date: Tue,  1 Oct 2024 17:38:48 +0100
-Message-Id: <20241001163918.1275441-25-peter.maydell@linaro.org>
+Subject: [PULL 42/54] hw/intc: Remove omap2-intc device
+Date: Tue,  1 Oct 2024 17:39:06 +0100
+Message-Id: <20241001163918.1275441-43-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241001163918.1275441-1-peter.maydell@linaro.org>
 References: <20241001163918.1275441-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,296 +93,322 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the pxa2xx specific pcmcia device.
+Remove the OMAP2 specific code from omap_intc.c.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240903160751.4100218-21-peter.maydell@linaro.org
+Message-id: 20240903160751.4100218-41-peter.maydell@linaro.org
 ---
- include/hw/arm/pxa.h  |   8 --
- hw/pcmcia/pxa2xx.c    | 248 ------------------------------------------
- hw/pcmcia/meson.build |   1 -
- 3 files changed, 257 deletions(-)
- delete mode 100644 hw/pcmcia/pxa2xx.c
+ hw/intc/omap_intc.c | 276 --------------------------------------------
+ 1 file changed, 276 deletions(-)
 
-diff --git a/include/hw/arm/pxa.h b/include/hw/arm/pxa.h
-index 944926e514b..5f98536bc69 100644
---- a/include/hw/arm/pxa.h
-+++ b/include/hw/arm/pxa.h
-@@ -76,12 +76,4 @@ DeviceState *pxa2xx_gpio_init(hwaddr base,
-                               ARMCPU *cpu, DeviceState *pic, int lines);
- void pxa2xx_gpio_read_notifier(DeviceState *dev, qemu_irq handler);
+diff --git a/hw/intc/omap_intc.c b/hw/intc/omap_intc.c
+index 02acece8cf1..a48e6fcd6d3 100644
+--- a/hw/intc/omap_intc.c
++++ b/hw/intc/omap_intc.c
+@@ -50,8 +50,6 @@ struct OMAPIntcState {
+     int level_only;
+     uint32_t size;
  
--/* pxa2xx_pcmcia.c */
--#define TYPE_PXA2XX_PCMCIA "pxa2xx-pcmcia"
--OBJECT_DECLARE_SIMPLE_TYPE(PXA2xxPCMCIAState, PXA2XX_PCMCIA)
+-    uint8_t revision;
 -
--int pxa2xx_pcmcia_attach(void *opaque, PCMCIACardState *card);
--int pxa2xx_pcmcia_detach(void *opaque);
--void pxa2xx_pcmcia_set_irq_cb(void *opaque, qemu_irq irq, qemu_irq cd_irq);
--
- #endif /* PXA_H */
-diff --git a/hw/pcmcia/pxa2xx.c b/hw/pcmcia/pxa2xx.c
-deleted file mode 100644
-index e3111fdf1a1..00000000000
---- a/hw/pcmcia/pxa2xx.c
-+++ /dev/null
-@@ -1,248 +0,0 @@
--/*
-- * Intel XScale PXA255/270 PC Card and CompactFlash Interface.
-- *
-- * Copyright (c) 2006 Openedhand Ltd.
-- * Written by Andrzej Zaborowski <balrog@zabor.org>
-- *
-- * This code is licensed under the GPLv2.
-- *
-- * Contributions after 2012-01-13 are licensed under the terms of the
-- * GNU GPL, version 2 or (at your option) any later version.
-- */
--
--#include "qemu/osdep.h"
--#include "hw/irq.h"
--#include "hw/sysbus.h"
--#include "qapi/error.h"
--#include "qemu/module.h"
--#include "hw/pcmcia.h"
--#include "hw/arm/pxa.h"
--
--struct PXA2xxPCMCIAState {
--    SysBusDevice parent_obj;
--
--    PCMCIASocket slot;
--    MemoryRegion container_mem;
--    MemoryRegion common_iomem;
--    MemoryRegion attr_iomem;
--    MemoryRegion iomem;
--
--    qemu_irq irq;
--    qemu_irq cd_irq;
--
--    PCMCIACardState *card;
--};
--
--static uint64_t pxa2xx_pcmcia_common_read(void *opaque,
--                hwaddr offset, unsigned size)
+     /* state */
+     uint32_t new_agr[2];
+     int sir_intr[2];
+@@ -133,26 +131,6 @@ static void omap_set_intr(void *opaque, int irq, int req)
+     }
+ }
+ 
+-/* Simplified version with no edge detection */
+-static void omap_set_intr_noedge(void *opaque, int irq, int req)
 -{
--    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
--    PCMCIACardClass *pcc;
+-    OMAPIntcState *ih = opaque;
+-    uint32_t rise;
 -
--    if (s->slot.attached) {
--        pcc = PCMCIA_CARD_GET_CLASS(s->card);
--        return pcc->common_read(s->card, offset);
+-    struct omap_intr_handler_bank_s *bank = &ih->bank[irq >> 5];
+-    int n = irq & 31;
+-
+-    if (req) {
+-        rise = ~bank->inputs & (1 << n);
+-        if (rise) {
+-            bank->irqs |= bank->inputs |= rise;
+-            omap_inth_update(ih, 0);
+-            omap_inth_update(ih, 1);
+-        }
+-    } else
+-        bank->irqs = (bank->inputs &= ~(1 << n)) | bank->swi;
+-}
+-
+ static uint64_t omap_inth_read(void *opaque, hwaddr addr,
+                                unsigned size)
+ {
+@@ -420,259 +398,6 @@ static const TypeInfo omap_intc_info = {
+     .class_init    = omap_intc_class_init,
+ };
+ 
+-static uint64_t omap2_inth_read(void *opaque, hwaddr addr,
+-                                unsigned size)
+-{
+-    OMAPIntcState *s = opaque;
+-    int offset = addr;
+-    int bank_no, line_no;
+-    struct omap_intr_handler_bank_s *bank = NULL;
+-
+-    if ((offset & 0xf80) == 0x80) {
+-        bank_no = (offset & 0x60) >> 5;
+-        if (bank_no < s->nbanks) {
+-            offset &= ~0x60;
+-            bank = &s->bank[bank_no];
+-        } else {
+-            OMAP_BAD_REG(addr);
+-            return 0;
+-        }
 -    }
 -
+-    switch (offset) {
+-    case 0x00:	/* INTC_REVISION */
+-        return s->revision;
+-
+-    case 0x10:	/* INTC_SYSCONFIG */
+-        return (s->autoidle >> 2) & 1;
+-
+-    case 0x14:	/* INTC_SYSSTATUS */
+-        return 1;						/* RESETDONE */
+-
+-    case 0x40:	/* INTC_SIR_IRQ */
+-        return s->sir_intr[0];
+-
+-    case 0x44:	/* INTC_SIR_FIQ */
+-        return s->sir_intr[1];
+-
+-    case 0x48:	/* INTC_CONTROL */
+-        return (!s->mask) << 2;					/* GLOBALMASK */
+-
+-    case 0x4c:	/* INTC_PROTECTION */
+-        return 0;
+-
+-    case 0x50:	/* INTC_IDLE */
+-        return s->autoidle & 3;
+-
+-    /* Per-bank registers */
+-    case 0x80:	/* INTC_ITR */
+-        return bank->inputs;
+-
+-    case 0x84:	/* INTC_MIR */
+-        return bank->mask;
+-
+-    case 0x88:	/* INTC_MIR_CLEAR */
+-    case 0x8c:	/* INTC_MIR_SET */
+-        return 0;
+-
+-    case 0x90:	/* INTC_ISR_SET */
+-        return bank->swi;
+-
+-    case 0x94:	/* INTC_ISR_CLEAR */
+-        return 0;
+-
+-    case 0x98:	/* INTC_PENDING_IRQ */
+-        return bank->irqs & ~bank->mask & ~bank->fiq;
+-
+-    case 0x9c:	/* INTC_PENDING_FIQ */
+-        return bank->irqs & ~bank->mask & bank->fiq;
+-
+-    /* Per-line registers */
+-    case 0x100 ... 0x300:	/* INTC_ILR */
+-        bank_no = (offset - 0x100) >> 7;
+-        if (bank_no > s->nbanks)
+-            break;
+-        bank = &s->bank[bank_no];
+-        line_no = (offset & 0x7f) >> 2;
+-        return (bank->priority[line_no] << 2) |
+-                ((bank->fiq >> line_no) & 1);
+-    }
+-    OMAP_BAD_REG(addr);
 -    return 0;
 -}
 -
--static void pxa2xx_pcmcia_common_write(void *opaque, hwaddr offset,
--                                       uint64_t value, unsigned size)
+-static void omap2_inth_write(void *opaque, hwaddr addr,
+-                             uint64_t value, unsigned size)
 -{
--    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
--    PCMCIACardClass *pcc;
+-    OMAPIntcState *s = opaque;
+-    int offset = addr;
+-    int bank_no, line_no;
+-    struct omap_intr_handler_bank_s *bank = NULL;
 -
--    if (s->slot.attached) {
--        pcc = PCMCIA_CARD_GET_CLASS(s->card);
--        pcc->common_write(s->card, offset, value);
--    }
--}
--
--static uint64_t pxa2xx_pcmcia_attr_read(void *opaque,
--                hwaddr offset, unsigned size)
--{
--    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
--    PCMCIACardClass *pcc;
--
--    if (s->slot.attached) {
--        pcc = PCMCIA_CARD_GET_CLASS(s->card);
--        return pcc->attr_read(s->card, offset);
+-    if ((offset & 0xf80) == 0x80) {
+-        bank_no = (offset & 0x60) >> 5;
+-        if (bank_no < s->nbanks) {
+-            offset &= ~0x60;
+-            bank = &s->bank[bank_no];
+-        } else {
+-            OMAP_BAD_REG(addr);
+-            return;
+-        }
 -    }
 -
--    return 0;
--}
--
--static void pxa2xx_pcmcia_attr_write(void *opaque, hwaddr offset,
--                                     uint64_t value, unsigned size)
--{
--    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
--    PCMCIACardClass *pcc;
--
--    if (s->slot.attached) {
--        pcc = PCMCIA_CARD_GET_CLASS(s->card);
--        pcc->attr_write(s->card, offset, value);
--    }
--}
--
--static uint64_t pxa2xx_pcmcia_io_read(void *opaque,
--                hwaddr offset, unsigned size)
--{
--    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
--    PCMCIACardClass *pcc;
--
--    if (s->slot.attached) {
--        pcc = PCMCIA_CARD_GET_CLASS(s->card);
--        return pcc->io_read(s->card, offset);
--    }
--
--    return 0;
--}
--
--static void pxa2xx_pcmcia_io_write(void *opaque, hwaddr offset,
--                                   uint64_t value, unsigned size)
--{
--    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
--    PCMCIACardClass *pcc;
--
--    if (s->slot.attached) {
--        pcc = PCMCIA_CARD_GET_CLASS(s->card);
--        pcc->io_write(s->card, offset, value);
--    }
--}
--
--static const MemoryRegionOps pxa2xx_pcmcia_common_ops = {
--    .read = pxa2xx_pcmcia_common_read,
--    .write = pxa2xx_pcmcia_common_write,
--    .endianness = DEVICE_NATIVE_ENDIAN
--};
--
--static const MemoryRegionOps pxa2xx_pcmcia_attr_ops = {
--    .read = pxa2xx_pcmcia_attr_read,
--    .write = pxa2xx_pcmcia_attr_write,
--    .endianness = DEVICE_NATIVE_ENDIAN
--};
--
--static const MemoryRegionOps pxa2xx_pcmcia_io_ops = {
--    .read = pxa2xx_pcmcia_io_read,
--    .write = pxa2xx_pcmcia_io_write,
--    .endianness = DEVICE_NATIVE_ENDIAN
--};
--
--static void pxa2xx_pcmcia_set_irq(void *opaque, int line, int level)
--{
--    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
--    if (!s->irq)
+-    switch (offset) {
+-    case 0x10:	/* INTC_SYSCONFIG */
+-        s->autoidle &= 4;
+-        s->autoidle |= (value & 1) << 2;
+-        if (value & 2) {                                        /* SOFTRESET */
+-            omap_inth_reset(DEVICE(s));
+-        }
 -        return;
 -
--    qemu_set_irq(s->irq, level);
+-    case 0x48:	/* INTC_CONTROL */
+-        s->mask = (value & 4) ? 0 : ~0;				/* GLOBALMASK */
+-        if (value & 2) {					/* NEWFIQAGR */
+-            qemu_set_irq(s->parent_intr[1], 0);
+-            s->new_agr[1] = ~0;
+-            omap_inth_update(s, 1);
+-        }
+-        if (value & 1) {					/* NEWIRQAGR */
+-            qemu_set_irq(s->parent_intr[0], 0);
+-            s->new_agr[0] = ~0;
+-            omap_inth_update(s, 0);
+-        }
+-        return;
+-
+-    case 0x4c:	/* INTC_PROTECTION */
+-        /* TODO: Make a bitmap (or sizeof(char)map) of access privileges
+-         * for every register, see Chapter 3 and 4 for privileged mode.  */
+-        if (value & 1)
+-            fprintf(stderr, "%s: protection mode enable attempt\n",
+-                            __func__);
+-        return;
+-
+-    case 0x50:	/* INTC_IDLE */
+-        s->autoidle &= ~3;
+-        s->autoidle |= value & 3;
+-        return;
+-
+-    /* Per-bank registers */
+-    case 0x84:	/* INTC_MIR */
+-        bank->mask = value;
+-        omap_inth_update(s, 0);
+-        omap_inth_update(s, 1);
+-        return;
+-
+-    case 0x88:	/* INTC_MIR_CLEAR */
+-        bank->mask &= ~value;
+-        omap_inth_update(s, 0);
+-        omap_inth_update(s, 1);
+-        return;
+-
+-    case 0x8c:	/* INTC_MIR_SET */
+-        bank->mask |= value;
+-        return;
+-
+-    case 0x90:	/* INTC_ISR_SET */
+-        bank->irqs |= bank->swi |= value;
+-        omap_inth_update(s, 0);
+-        omap_inth_update(s, 1);
+-        return;
+-
+-    case 0x94:	/* INTC_ISR_CLEAR */
+-        bank->swi &= ~value;
+-        bank->irqs = bank->swi & bank->inputs;
+-        return;
+-
+-    /* Per-line registers */
+-    case 0x100 ... 0x300:	/* INTC_ILR */
+-        bank_no = (offset - 0x100) >> 7;
+-        if (bank_no > s->nbanks)
+-            break;
+-        bank = &s->bank[bank_no];
+-        line_no = (offset & 0x7f) >> 2;
+-        bank->priority[line_no] = (value >> 2) & 0x3f;
+-        bank->fiq &= ~(1 << line_no);
+-        bank->fiq |= (value & 1) << line_no;
+-        return;
+-
+-    case 0x00:	/* INTC_REVISION */
+-    case 0x14:	/* INTC_SYSSTATUS */
+-    case 0x40:	/* INTC_SIR_IRQ */
+-    case 0x44:	/* INTC_SIR_FIQ */
+-    case 0x80:	/* INTC_ITR */
+-    case 0x98:	/* INTC_PENDING_IRQ */
+-    case 0x9c:	/* INTC_PENDING_FIQ */
+-        OMAP_RO_REG(addr);
+-        return;
+-    }
+-    OMAP_BAD_REG(addr);
 -}
 -
--static void pxa2xx_pcmcia_initfn(Object *obj)
--{
--    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
--    PXA2xxPCMCIAState *s = PXA2XX_PCMCIA(obj);
--
--    memory_region_init(&s->container_mem, obj, "container", 0x10000000);
--    sysbus_init_mmio(sbd, &s->container_mem);
--
--    /* Socket I/O Memory Space */
--    memory_region_init_io(&s->iomem, obj, &pxa2xx_pcmcia_io_ops, s,
--                          "pxa2xx-pcmcia-io", 0x04000000);
--    memory_region_add_subregion(&s->container_mem, 0x00000000,
--                                &s->iomem);
--
--    /* Then next 64 MB is reserved */
--
--    /* Socket Attribute Memory Space */
--    memory_region_init_io(&s->attr_iomem, obj, &pxa2xx_pcmcia_attr_ops, s,
--                          "pxa2xx-pcmcia-attribute", 0x04000000);
--    memory_region_add_subregion(&s->container_mem, 0x08000000,
--                                &s->attr_iomem);
--
--    /* Socket Common Memory Space */
--    memory_region_init_io(&s->common_iomem, obj, &pxa2xx_pcmcia_common_ops, s,
--                          "pxa2xx-pcmcia-common", 0x04000000);
--    memory_region_add_subregion(&s->container_mem, 0x0c000000,
--                                &s->common_iomem);
--
--    s->slot.irq = qemu_allocate_irq(pxa2xx_pcmcia_set_irq, s, 0);
--
--    object_property_add_link(obj, "card", TYPE_PCMCIA_CARD,
--                             (Object **)&s->card,
--                             NULL, /* read-only property */
--                             0);
--}
--
--/* Insert a new card into a slot */
--int pxa2xx_pcmcia_attach(void *opaque, PCMCIACardState *card)
--{
--    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
--    PCMCIACardClass *pcc;
--
--    if (s->slot.attached) {
--        return -EEXIST;
--    }
--
--    if (s->cd_irq) {
--        qemu_irq_raise(s->cd_irq);
--    }
--
--    s->card = card;
--    pcc = PCMCIA_CARD_GET_CLASS(s->card);
--
--    s->slot.attached = true;
--    s->card->slot = &s->slot;
--    pcc->attach(s->card);
--
--    return 0;
--}
--
--/* Eject card from the slot */
--int pxa2xx_pcmcia_detach(void *opaque)
--{
--    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
--    PCMCIACardClass *pcc;
--
--    if (!s->slot.attached) {
--        return -ENOENT;
--    }
--
--    pcc = PCMCIA_CARD_GET_CLASS(s->card);
--    pcc->detach(s->card);
--    s->card->slot = NULL;
--    s->card = NULL;
--
--    s->slot.attached = false;
--
--    if (s->irq) {
--        qemu_irq_lower(s->irq);
--    }
--    if (s->cd_irq) {
--        qemu_irq_lower(s->cd_irq);
--    }
--
--    return 0;
--}
--
--/* Who to notify on card events */
--void pxa2xx_pcmcia_set_irq_cb(void *opaque, qemu_irq irq, qemu_irq cd_irq)
--{
--    PXA2xxPCMCIAState *s = (PXA2xxPCMCIAState *) opaque;
--    s->irq = irq;
--    s->cd_irq = cd_irq;
--}
--
--static const TypeInfo pxa2xx_pcmcia_type_info = {
--    .name = TYPE_PXA2XX_PCMCIA,
--    .parent = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(PXA2xxPCMCIAState),
--    .instance_init = pxa2xx_pcmcia_initfn,
+-static const MemoryRegionOps omap2_inth_mem_ops = {
+-    .read = omap2_inth_read,
+-    .write = omap2_inth_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-    .valid = {
+-        .min_access_size = 4,
+-        .max_access_size = 4,
+-    },
 -};
 -
--static void pxa2xx_pcmcia_register_types(void)
+-static void omap2_intc_init(Object *obj)
 -{
--    type_register_static(&pxa2xx_pcmcia_type_info);
+-    DeviceState *dev = DEVICE(obj);
+-    OMAPIntcState *s = OMAP_INTC(obj);
+-    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+-
+-    s->level_only = 1;
+-    s->nbanks = 3;
+-    sysbus_init_irq(sbd, &s->parent_intr[0]);
+-    sysbus_init_irq(sbd, &s->parent_intr[1]);
+-    qdev_init_gpio_in(dev, omap_set_intr_noedge, s->nbanks * 32);
+-    memory_region_init_io(&s->mmio, obj, &omap2_inth_mem_ops, s,
+-                          "omap2-intc", 0x1000);
+-    sysbus_init_mmio(sbd, &s->mmio);
 -}
 -
--type_init(pxa2xx_pcmcia_register_types)
-diff --git a/hw/pcmcia/meson.build b/hw/pcmcia/meson.build
-index 04e29c109c0..edcb7f5d263 100644
---- a/hw/pcmcia/meson.build
-+++ b/hw/pcmcia/meson.build
-@@ -1,2 +1 @@
- system_ss.add(when: 'CONFIG_PCMCIA', if_true: files('pcmcia.c'))
--system_ss.add(when: 'CONFIG_PXA2XX', if_true: files('pxa2xx.c'))
+-static void omap2_intc_realize(DeviceState *dev, Error **errp)
+-{
+-    OMAPIntcState *s = OMAP_INTC(dev);
+-
+-    if (!s->iclk) {
+-        error_setg(errp, "omap2-intc: iclk not connected");
+-        return;
+-    }
+-    if (!s->fclk) {
+-        error_setg(errp, "omap2-intc: fclk not connected");
+-        return;
+-    }
+-}
+-
+-static Property omap2_intc_properties[] = {
+-    DEFINE_PROP_UINT8("revision", OMAPIntcState,
+-    revision, 0x21),
+-    DEFINE_PROP_END_OF_LIST(),
+-};
+-
+-static void omap2_intc_class_init(ObjectClass *klass, void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-
+-    device_class_set_legacy_reset(dc, omap_inth_reset);
+-    device_class_set_props(dc, omap2_intc_properties);
+-    /* Reason: pointer property "iclk", "fclk" */
+-    dc->user_creatable = false;
+-    dc->realize = omap2_intc_realize;
+-}
+-
+-static const TypeInfo omap2_intc_info = {
+-    .name          = "omap2-intc",
+-    .parent        = TYPE_OMAP_INTC,
+-    .instance_init = omap2_intc_init,
+-    .class_init    = omap2_intc_class_init,
+-};
+-
+ static const TypeInfo omap_intc_type_info = {
+     .name          = TYPE_OMAP_INTC,
+     .parent        = TYPE_SYS_BUS_DEVICE,
+@@ -684,7 +409,6 @@ static void omap_intc_register_types(void)
+ {
+     type_register_static(&omap_intc_type_info);
+     type_register_static(&omap_intc_info);
+-    type_register_static(&omap2_intc_info);
+ }
+ 
+ type_init(omap_intc_register_types)
 -- 
 2.34.1
 
