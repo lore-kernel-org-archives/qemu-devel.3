@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C251CEACC9
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:13:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5958ACEACC8
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:13:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svdcH-0000A0-6m; Tue, 01 Oct 2024 10:12:41 -0400
+	id 1svdcB-0008CW-Jl; Tue, 01 Oct 2024 10:12:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1svdbg-0007UN-5n; Tue, 01 Oct 2024 10:12:04 -0400
+ id 1svdbf-0007TT-IM; Tue, 01 Oct 2024 10:12:03 -0400
 Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1svdbc-00034M-UU; Tue, 01 Oct 2024 10:12:03 -0400
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal
- [10.202.2.45])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 74BB111412E9;
- Tue,  1 Oct 2024 03:04:45 -0400 (EDT)
+ id 1svdbc-00034H-Gk; Tue, 01 Oct 2024 10:12:03 -0400
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal
+ [10.202.2.52])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 1D2B81141AA5;
+ Tue,  1 Oct 2024 03:04:42 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-05.internal (MEProxy); Tue, 01 Oct 2024 03:04:45 -0400
+ by phl-compute-12.internal (MEProxy); Tue, 01 Oct 2024 03:04:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1727766285; x=
- 1727852685; bh=4x4njllrpEgg+I2ho9IlMJ6gfQVOYi2Scy0o+rUGnN0=; b=V
- zQk0g6ugK0Ih/p28IuksV9ErVKlV7+tjSOsCJUvzK12nWDpxLR3badiN2mMqDjkH
- EyGMr60psosQ5HZqZMWik2+w34O59TfmVLlkgTIGb3YLsyBh6JQNiaqxPO4ITGSs
- /U3EkXVgFlNQxJHVlQ6/oRY69NDgPCFtoX/ac8OuX2CkxKAcDxbb55z8QcA6B/rv
- YbnxJhyvwrCzjSQaFRpC8yZ2HbLsyhBb0o5wPYYeNyUqTYDdhnF+QuZDvvuXAway
- v61uckmZlFUVkvSP04j+IlZELbXGBVWSdwLFPDy2f6JOeL2uh3UiGPqcUsYcVXg+
- f56Ug8iLLW0Z7+09hFzbg==
+ :reply-to:subject:subject:to:to; s=fm1; t=1727766282; x=
+ 1727852682; bh=ytqbBQEEKPItfETLehQ2Mmw3aOWzfVEc2PMLnqbV+QE=; b=F
+ zX0nfjVYpNpaSf7G5p9uwHn2/MF4S5ncghIpLh5tDHFX1D8ZlZIYGJdgg2efZrxE
+ WQ4IrGrUURR2gyW/xNR56xTZ6It8wdokn+lwc86K8T3Tymj7JnUTn1bnim85yMQa
+ 1r/frhZ+jO61nCNwbAo8DttQpH8CEGORp7RmouiAcl3bz09cLUWYWTIAJBetRLSs
+ FhBQC0ZjmlXVkPnMkWLSluTULGsudtla/fAIiy5MOytio7FTb6v/ncdPLFmqslUj
+ btZZe+cciO7IjR9KPvud7jZlZWkIkiDP5wF//pqrJF98AlVda9Q0Tj0fDFlbGQxE
+ NaZUvACQU68MIaQObpC1A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1727766285; x=
- 1727852685; bh=4x4njllrpEgg+I2ho9IlMJ6gfQVOYi2Scy0o+rUGnN0=; b=b
- BQgzypilKB7BEDWR3EgQps9A7QidUWNKNcvhAW3rgc+5s/htJjIPJ/BlcmyX0nyw
- TbMmGmim2cVwzyrkadogc1hFdja8LdhN4N7cSLdb73nrzyGEMPGRofkHGqMq70CV
- 6oYZ5kBFKl3pk+tJo93Pk5dtFVXfc+AHvBd9BXLlphvRLhGU/vVXWU9UH7gLpA/w
- DjWNhmeUIaaneJ32AsAE+ZdSYy3rfT1xS2iVOTD6BU9k3sDDokhqm3KprU2GghQG
- IXOkvTtCDMj1QJPeE5w5qyWdLiAdU5myLS886UF4eIUNkEAr8PBXQvbbY4tGr22B
- LHgHKMvT7uBp9+dIugglQ==
-X-ME-Sender: <xms:DZ_7ZkopeKkAeL96Nwpub-LsnzJwgX7IYzEflsouM2B1RsgaX49FYw>
- <xme:DZ_7ZqoscKFMFSSud-4fAIO5tpRPekMv3vJ14hZWBhRcbm7KYx_c5x_OHMzUI7Kie
- _X1sEzna3bcifvfVjo>
-X-ME-Received: <xmr:DZ_7ZpMY_BRSWaT3O7poyhVi7sLR9KY2p8y7pplndj7q-C10zaTAXNAueXqTkGnHLPj7Ocpk2jf_XPuCNnNdZA>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1727766282; x=
+ 1727852682; bh=ytqbBQEEKPItfETLehQ2Mmw3aOWzfVEc2PMLnqbV+QE=; b=k
+ X3bRDI9eVdhSw/NNsH9gg1mTxl8GoO0sD6p0VZ8Kx2Ch/N9rpbK9p4kYKJQROC9e
+ WT7f6NBMaBgYNhG/SO6pOfJFk9HA1gehhv3PZxA5LvhHp5SZ/ADvZbXfsE7MRfw+
+ rXHevUbg1UoI6nLGfnbgUAzewwNFAt5fPg8GSvH2DE+9XmKRCrqilOAWkS3IOOLQ
+ ORBsZrAmi6moOqBktJdGlCmebV3pSy2RDl8qhxMC8R7JAaZVJzfoPU+Jmx5uGbDY
+ sRRmh2mJJlUIbUK85/xxzU1pDsyD+przcYEF+zzC8cpxr2hYfZcUnsvJLrXh0Uxf
+ gRTvvD9yLSZdgY5lU3bJQ==
+X-ME-Sender: <xms:CZ_7ZkCXOH0kBP241iyDqmVv06pr1FpdR2S7UFx79IG1sda1mFn_lQ>
+ <xme:CZ_7ZmgC8l_KTRodxc46ueS4ONxanh2DuIkODSRaHVDTP17jCNyeUzjo7V7vRUiv2
+ AFWubDddEyiDyiAaQo>
+X-ME-Received: <xmr:CZ_7ZnnOdKezqUNTccxYHDKdZLiPdOm_iE8ckFTpL75cGmdF6k-ipe2yBQnEGR8z1nYkFCZItCzu7qAQkEbg7Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduiedgudduiecutefuodetggdotefrod
  ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
  uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
  hnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddt
  necuhfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnth
  drughkqeenucggtffrrghtthgvrhhnpeejgfeilefgieevheekueevheehkeefveegiefg
- heefgfejjeehffefgedujedugeenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmh
+ heefgfejjeehffefgedujedugeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
  epmhgrihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphht
- thhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehqvghmuhdquggvvhgvlh
- esnhhonhhgnhhurdhorhhgpdhrtghpthhtohepphgvthgvrhdrmhgrhiguvghllheslhhi
- nhgrrhhordhorhhgpdhrtghpthhtoheprghlrghnrdgruggrmhhsohhnsehorhgrtghlvg
- drtghomhdprhgtphhtthhopehkrdhjvghnshgvnhesshgrmhhsuhhnghdrtghomhdprhgt
- phhtthhopehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepihhtshesih
- hrrhgvlhgvvhgrnhhtrdgukhdprhgtphhtthhopehfohhsshesuggvfhhmrggtrhhordhi
- thdprhgtphhtthhopehqvghmuhdqsghlohgtkhesnhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:DZ_7Zr700dPD4l97xGOsKGjcqhj3GDJO9y-2oN04wSf4hDLg6gtQfw>
- <xmx:DZ_7Zj6ts3F_2jEuxk1tfhxbvpM9Hir2CDIDV34w8p1KIJpLEiyFCw>
- <xmx:DZ_7ZrgTNdHnbuN8SNyMXFPEXQsUxOouy8YroJGFmwuo78BX21I0hw>
- <xmx:DZ_7Zt5GjvPID8_4H9_R9Dm5LTPxpj4zF9mxhhpTtqbPaVleybu7uA>
- <xmx:DZ_7ZttLfsZ-uvXcgCj9i6g9wdCsg-7TKmzjd6AR4vEVpuKDXIoBhTjn>
+ thhopedufedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepqhgvmhhuqdguvghvvg
+ hlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehl
+ ihhnrghrohdrohhrghdprhgtphhtthhopegrrhhunhdrkhhkrgesshgrmhhsuhhnghdrtg
+ homhdprhgtphhtthhopehkrdhjvghnshgvnhesshgrmhhsuhhnghdrtghomhdprhgtphht
+ thhopehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepihhtshesihhrrh
+ gvlhgvvhgrnhhtrdgukhdprhgtphhtthhopehfohhsshesuggvfhhmrggtrhhordhithdp
+ rhgtphhtthhopehsthgvfhgrnhhhrgesrhgvughhrghtrdgtohhmpdhrtghpthhtohepfh
+ grmhesvghuphhhohhnrdhnvght
+X-ME-Proxy: <xmx:CZ_7ZqwLrMhOEA9mgI6V_sTbQ6e2gjo8FL78NRPGnA1E_IJonLeYxw>
+ <xmx:CZ_7ZpREkSr1VwCSTgND8x2b-eOjrHekEiT72apHP643gRB50xbdlA>
+ <xmx:CZ_7ZlbHzbRYKaVkQzlEWWORxyvfoQYlTJ0L-FDv-v0azk6Lm1QnBA>
+ <xmx:CZ_7ZiS1mqZpmIPgHz9GAwHc2B_e3fK28CtyCbUTmGVFPYqaH5CqNA>
+ <xmx:Cp_7ZvBMxnxh2fkk05Ua0HyMEt3wVyc2FkRpNAHkw3xTc45sAQgLq8h_>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Oct 2024 03:04:43 -0400 (EDT)
+ 1 Oct 2024 03:04:39 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alan Adamson <alan.adamson@oracle.com>,
- Klaus Jensen <k.jensen@samsung.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Arun Kumar <arun.kka@samsung.com>, Klaus Jensen <k.jensen@samsung.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Fam Zheng <fam@euphon.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-block@nongnu.org
-Subject: [PULL 5/5] hw/nvme: add atomic write support
-Date: Tue,  1 Oct 2024 09:04:17 +0200
-Message-ID: <20241001070418.28737-6-its@irrelevant.dk>
+Subject: [PULL 3/5] hw/nvme: support CTRATT.MEM
+Date: Tue,  1 Oct 2024 09:04:15 +0200
+Message-ID: <20241001070418.28737-4-its@irrelevant.dk>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241001070418.28737-1-its@irrelevant.dk>
 References: <20241001070418.28737-1-its@irrelevant.dk>
@@ -115,328 +119,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alan Adamson <alan.adamson@oracle.com>
+From: Arun Kumar <arun.kka@samsung.com>
 
-Adds support for the controller atomic parameters: AWUN and AWUPF. Atomic
-Compare and Write Unit (ACWU) is not currently supported.
+Indicate that 'MDTS and Size Limits Exclude Metadata (MEM)' in the
+Controller Attributes (CTRATT) I/O Command Set Independent Identify
+Controller Data Structure.
 
-Writes that adhere to the ACWU and AWUPF parameters are guaranteed to be atomic.
-
-New NVMe QEMU Parameters (See NVMe Specification for details):
-       atomic.dn (default off) - Set the value of Disable Normal.
-       atomic.awun=UINT16 (default: 0)
-       atomic.awupf=UINT16 (default: 0)
-
-By default (Disable Normal set to zero), the maximum atomic write size is
-set to the AWUN value.  If Disable Normal is set, the maximum atomic write
-size is set to AWUPF.
-
-Signed-off-by: Alan Adamson <alan.adamson@oracle.com>
+Signed-off-by: Arun Kumar <arun.kka@samsung.com>
 Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+[k.jensen: updated commit message]
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- hw/nvme/ctrl.c | 158 ++++++++++++++++++++++++++++++++++++++++++++++++-
- hw/nvme/nvme.h |  12 ++++
- 2 files changed, 169 insertions(+), 1 deletion(-)
+ hw/nvme/ctrl.c       | 19 ++++++++++++++-----
+ include/block/nvme.h |  3 +++
+ 2 files changed, 17 insertions(+), 5 deletions(-)
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 119adec31274..f4e89203c1a6 100644
+index a720dbc354a2..050cb63e3390 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -40,6 +40,9 @@
-  *              sriov_vi_flexible=<N[optional]> \
-  *              sriov_max_vi_per_vf=<N[optional]> \
-  *              sriov_max_vq_per_vf=<N[optional]> \
-+ *              atomic.dn=<on|off[optional]>, \
-+ *              atomic.awun<N[optional]>, \
-+ *              atomic.awupf<N[optional]>, \
-  *              subsys=<subsys_id>
-  *      -device nvme-ns,drive=<drive_id>,bus=<bus_name>,nsid=<nsid>,\
-  *              zoned=<true|false[optional]>, \
-@@ -254,6 +257,7 @@ static const uint32_t nvme_feature_cap[NVME_FID_MAX] = {
-     [NVME_ERROR_RECOVERY]           = NVME_FEAT_CAP_CHANGE | NVME_FEAT_CAP_NS,
-     [NVME_VOLATILE_WRITE_CACHE]     = NVME_FEAT_CAP_CHANGE,
-     [NVME_NUMBER_OF_QUEUES]         = NVME_FEAT_CAP_CHANGE,
-+    [NVME_WRITE_ATOMICITY]          = NVME_FEAT_CAP_CHANGE,
-     [NVME_ASYNCHRONOUS_EVENT_CONF]  = NVME_FEAT_CAP_CHANGE,
-     [NVME_TIMESTAMP]                = NVME_FEAT_CAP_CHANGE,
-     [NVME_HOST_BEHAVIOR_SUPPORT]    = NVME_FEAT_CAP_CHANGE,
-@@ -6309,8 +6313,10 @@ defaults:
-         if (ret) {
-             return ret;
+@@ -2653,6 +2653,7 @@ static uint16_t nvme_verify(NvmeCtrl *n, NvmeRequest *req)
+     uint64_t slba = le64_to_cpu(rw->slba);
+     uint32_t nlb = le16_to_cpu(rw->nlb) + 1;
+     size_t len = nvme_l2b(ns, nlb);
++    size_t data_len = len;
+     int64_t offset = nvme_l2b(ns, slba);
+     uint8_t prinfo = NVME_RW_PRINFO(le16_to_cpu(rw->control));
+     uint32_t reftag = le32_to_cpu(rw->reftag);
+@@ -2672,7 +2673,11 @@ static uint16_t nvme_verify(NvmeCtrl *n, NvmeRequest *req)
          }
--        goto out;
-+        break;
+     }
  
-+    case NVME_WRITE_ATOMICITY:
-+        result = n->dn;
-         break;
-     default:
-         result = nvme_feature_default[fid];
-@@ -6394,6 +6400,8 @@ static uint16_t nvme_set_feature(NvmeCtrl *n, NvmeRequest *req)
-     uint8_t save = NVME_SETFEAT_SAVE(dw10);
+-    if (len > n->page_size << n->params.vsl) {
++    if (nvme_ns_ext(ns) && !(NVME_ID_CTRL_CTRATT_MEM(n->id_ctrl.ctratt))) {
++        data_len += nvme_m2b(ns, nlb);
++    }
++
++    if (data_len > (n->page_size << n->params.vsl)) {
+         return NVME_INVALID_FIELD | NVME_DNR;
+     }
+ 
+@@ -3413,7 +3418,11 @@ static uint16_t nvme_compare(NvmeCtrl *n, NvmeRequest *req)
+         len += nvme_m2b(ns, nlb);
+     }
+ 
+-    status = nvme_check_mdts(n, len);
++    if (NVME_ID_CTRL_CTRATT_MEM(n->id_ctrl.ctratt)) {
++        status = nvme_check_mdts(n, data_len);
++    } else {
++        status = nvme_check_mdts(n, len);
++    }
+     if (status) {
+         return status;
+     }
+@@ -3590,7 +3599,7 @@ static uint16_t nvme_read(NvmeCtrl *n, NvmeRequest *req)
+     BlockBackend *blk = ns->blkconf.blk;
      uint16_t status;
-     int i;
-+    NvmeIdCtrl *id = &n->id_ctrl;
-+    NvmeAtomic *atomic = &n->atomic;
  
-     trace_pci_nvme_setfeat(nvme_cid(req), nsid, fid, save, dw11);
+-    if (nvme_ns_ext(ns)) {
++    if (nvme_ns_ext(ns) && !(NVME_ID_CTRL_CTRATT_MEM(n->id_ctrl.ctratt))) {
+         mapped_size += nvme_m2b(ns, nlb);
  
-@@ -6546,6 +6554,22 @@ static uint16_t nvme_set_feature(NvmeCtrl *n, NvmeRequest *req)
-         return NVME_CMD_SEQ_ERROR | NVME_DNR;
-     case NVME_FDP_EVENTS:
-         return nvme_set_feature_fdp_events(n, ns, req);
-+    case NVME_WRITE_ATOMICITY:
-+
-+        n->dn = 0x1 & dw11;
-+
-+        if (n->dn) {
-+            atomic->atomic_max_write_size = le16_to_cpu(id->awupf) + 1;
-+        } else {
-+            atomic->atomic_max_write_size = le16_to_cpu(id->awun) + 1;
-+        }
-+
-+        if (atomic->atomic_max_write_size == 1) {
-+            atomic->atomic_writes = 0;
-+        } else {
-+            atomic->atomic_writes = 1;
-+        }
-+        break;
-     default:
-         return NVME_FEAT_NOT_CHANGEABLE | NVME_DNR;
-     }
-@@ -7243,6 +7267,81 @@ static void nvme_update_sq_tail(NvmeSQueue *sq)
-     trace_pci_nvme_update_sq_tail(sq->sqid, sq->tail);
- }
+         if (NVME_ID_NS_DPS_TYPE(ns->id_ns.dps)) {
+@@ -3702,7 +3711,7 @@ static uint16_t nvme_do_write(NvmeCtrl *n, NvmeRequest *req, bool append,
+     BlockBackend *blk = ns->blkconf.blk;
+     uint16_t status;
  
-+#define NVME_ATOMIC_NO_START        0
-+#define NVME_ATOMIC_START_ATOMIC    1
-+#define NVME_ATOMIC_START_NONATOMIC 2
-+
-+static int nvme_atomic_write_check(NvmeCtrl *n, NvmeCmd *cmd,
-+    NvmeAtomic *atomic)
-+{
-+    NvmeRwCmd *rw = (NvmeRwCmd *)cmd;
-+    uint64_t slba = le64_to_cpu(rw->slba);
-+    uint32_t nlb = (uint32_t)le16_to_cpu(rw->nlb);
-+    uint64_t elba = slba + nlb;
-+    bool cmd_atomic_wr = true;
-+    int i;
-+
-+    if ((cmd->opcode == NVME_CMD_READ) || ((cmd->opcode == NVME_CMD_WRITE) &&
-+        ((rw->nlb + 1) > atomic->atomic_max_write_size))) {
-+        cmd_atomic_wr = false;
-+    }
-+
-+    /*
-+     * Walk the queues to see if there are any atomic conflicts.
-+     */
-+    for (i = 1; i < n->params.max_ioqpairs + 1; i++) {
-+        NvmeSQueue *sq;
-+        NvmeRequest *req;
-+        NvmeRwCmd *req_rw;
-+        uint64_t req_slba;
-+        uint32_t req_nlb;
-+        uint64_t req_elba;
-+
-+        sq = n->sq[i];
-+        if (!sq) {
-+            continue;
-+        }
-+
-+        /*
-+         * Walk all the requests on a given queue.
-+         */
-+        QTAILQ_FOREACH(req, &sq->out_req_list, entry) {
-+            req_rw = (NvmeRwCmd *)&req->cmd;
-+
-+            if (((req_rw->opcode == NVME_CMD_WRITE) ||
-+                 (req_rw->opcode == NVME_CMD_READ)) &&
-+                (cmd->nsid == req->ns->params.nsid)) {
-+                req_slba = le64_to_cpu(req_rw->slba);
-+                req_nlb = (uint32_t)le16_to_cpu(req_rw->nlb);
-+                req_elba = req_slba + req_nlb;
-+
-+                if (cmd_atomic_wr) {
-+                    if ((elba >= req_slba) && (slba <= req_elba)) {
-+                        return NVME_ATOMIC_NO_START;
-+                    }
-+                } else {
-+                    if (req->atomic_write && ((elba >= req_slba) &&
-+                        (slba <= req_elba))) {
-+                        return NVME_ATOMIC_NO_START;
-+                    }
-+                }
-+            }
-+        }
-+    }
-+    if (cmd_atomic_wr) {
-+        return NVME_ATOMIC_START_ATOMIC;
-+    }
-+    return NVME_ATOMIC_START_NONATOMIC;
-+}
-+
-+static NvmeAtomic *nvme_get_atomic(NvmeCtrl *n, NvmeCmd *cmd)
-+{
-+    if (n->atomic.atomic_writes) {
-+        return &n->atomic;
-+    }
-+    return NULL;
-+}
-+
- static void nvme_process_sq(void *opaque)
- {
-     NvmeSQueue *sq = opaque;
-@@ -7259,6 +7358,9 @@ static void nvme_process_sq(void *opaque)
-     }
+-    if (nvme_ns_ext(ns)) {
++    if (nvme_ns_ext(ns) && !(NVME_ID_CTRL_CTRATT_MEM(n->id_ctrl.ctratt))) {
+         mapped_size += nvme_m2b(ns, nlb);
  
-     while (!(nvme_sq_empty(sq) || QTAILQ_EMPTY(&sq->req_list))) {
-+        NvmeAtomic *atomic;
-+        bool cmd_is_atomic;
-+
-         addr = sq->dma_addr + (sq->head << NVME_SQES);
-         if (nvme_addr_read(n, addr, (void *)&cmd, sizeof(cmd))) {
-             trace_pci_nvme_err_addr_read(addr);
-@@ -7266,6 +7368,26 @@ static void nvme_process_sq(void *opaque)
-             stl_le_p(&n->bar.csts, NVME_CSTS_FAILED);
-             break;
-         }
-+
-+        atomic = nvme_get_atomic(n, &cmd);
-+
-+        cmd_is_atomic = false;
-+        if (sq->sqid && atomic) {
-+            int ret;
-+
-+            ret = nvme_atomic_write_check(n, &cmd, atomic);
-+            switch (ret) {
-+            case NVME_ATOMIC_NO_START:
-+                qemu_bh_schedule(sq->bh);
-+                return;
-+            case NVME_ATOMIC_START_ATOMIC:
-+                cmd_is_atomic = true;
-+                break;
-+            case NVME_ATOMIC_START_NONATOMIC:
-+            default:
-+                break;
-+            }
-+        }
-         nvme_inc_sq_head(sq);
+         if (NVME_ID_NS_DPS_TYPE(ns->id_ns.dps)) {
+@@ -8483,7 +8492,7 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
+     id->cntlid = cpu_to_le16(n->cntlid);
  
-         req = QTAILQ_FIRST(&sq->req_list);
-@@ -7275,6 +7397,10 @@ static void nvme_process_sq(void *opaque)
-         req->cqe.cid = cmd.cid;
-         memcpy(&req->cmd, &cmd, sizeof(NvmeCmd));
+     id->oaes = cpu_to_le32(NVME_OAES_NS_ATTR);
+-    ctratt = NVME_CTRATT_ELBAS;
++    ctratt = NVME_CTRATT_ELBAS | NVME_CTRATT_MEM;
  
-+        if (sq->sqid && atomic) {
-+            req->atomic_write = cmd_is_atomic;
-+        }
-+
-         status = sq->sqid ? nvme_io_cmd(n, req) :
-             nvme_admin_cmd(n, req);
-         if (status != NVME_NO_COMPLETE) {
-@@ -7378,6 +7504,8 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
-     n->outstanding_aers = 0;
-     n->qs_created = false;
+     id->rab = 6;
  
-+    n->dn = n->params.atomic_dn; /* Set Disable Normal */
-+
-     nvme_update_msixcap_ts(pci_dev, n->conf_msix_qsize);
- 
-     if (pci_is_vf(pci_dev)) {
-@@ -8154,6 +8282,8 @@ static void nvme_init_state(NvmeCtrl *n)
-     NvmeSecCtrlEntry *list = n->sec_ctrl_list;
-     NvmeSecCtrlEntry *sctrl;
-     PCIDevice *pci = PCI_DEVICE(n);
-+    NvmeAtomic *atomic = &n->atomic;
-+    NvmeIdCtrl *id = &n->id_ctrl;
-     uint8_t max_vfs;
-     int i;
- 
-@@ -8211,6 +8341,29 @@ static void nvme_init_state(NvmeCtrl *n)
-                         cpu_to_le16(n->params.sriov_max_vi_per_vf) :
-                         cap->vifrt / MAX(max_vfs, 1);
-     }
-+
-+    /* Atomic Write */
-+    id->awun = cpu_to_le16(n->params.atomic_awun);
-+    id->awupf = cpu_to_le16(n->params.atomic_awupf);
-+    n->dn = n->params.atomic_dn;
-+
-+    if (id->awun || id->awupf) {
-+        if (id->awupf > id->awun) {
-+            id->awupf = 0;
-+        }
-+
-+        if (n->dn) {
-+            atomic->atomic_max_write_size = id->awupf + 1;
-+        } else {
-+            atomic->atomic_max_write_size = id->awun + 1;
-+        }
-+
-+        if (atomic->atomic_max_write_size == 1) {
-+            atomic->atomic_writes = 0;
-+        } else {
-+            atomic->atomic_writes = 1;
-+        }
-+    }
- }
- 
- static void nvme_init_cmb(NvmeCtrl *n, PCIDevice *pci_dev)
-@@ -8756,6 +8909,9 @@ static Property nvme_props[] = {
-     DEFINE_PROP_UINT16("mqes", NvmeCtrl, params.mqes, 0x7ff),
-     DEFINE_PROP_UINT16("spdm_port", PCIDevice, spdm_port, 0),
-     DEFINE_PROP_BOOL("ctratt.mem", NvmeCtrl, params.ctratt.mem, false),
-+    DEFINE_PROP_BOOL("atomic.dn", NvmeCtrl, params.atomic_dn, 0),
-+    DEFINE_PROP_UINT16("atomic.awun", NvmeCtrl, params.atomic_awun, 0),
-+    DEFINE_PROP_UINT16("atomic.awupf", NvmeCtrl, params.atomic_awupf, 0),
-     DEFINE_PROP_END_OF_LIST(),
+diff --git a/include/block/nvme.h b/include/block/nvme.h
+index 5298bc4a2867..a37be0d0da8e 100644
+--- a/include/block/nvme.h
++++ b/include/block/nvme.h
+@@ -1182,6 +1182,7 @@ enum NvmeIdCtrlOaes {
+ enum NvmeIdCtrlCtratt {
+     NVME_CTRATT_ENDGRPS = 1 <<  4,
+     NVME_CTRATT_ELBAS   = 1 << 15,
++    NVME_CTRATT_MEM     = 1 << 16,
+     NVME_CTRATT_FDPS    = 1 << 19,
  };
  
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index bd3c6ba33a67..7566b316d12d 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -220,6 +220,11 @@ typedef struct NvmeNamespaceParams {
-     } fdp;
- } NvmeNamespaceParams;
+@@ -1285,6 +1286,8 @@ enum NvmeNsAttachmentOperation {
+ #define NVME_ERR_REC_TLER(err_rec)  (err_rec & 0xffff)
+ #define NVME_ERR_REC_DULBE(err_rec) (err_rec & 0x10000)
  
-+typedef struct NvmeAtomic {
-+    uint32_t    atomic_max_write_size;
-+    bool        atomic_writes;
-+} NvmeAtomic;
++#define NVME_ID_CTRL_CTRATT_MEM(ctratt) (ctratt & NVME_CTRATT_MEM)
 +
- typedef struct NvmeNamespace {
-     DeviceState  parent_obj;
-     BlockConf    blkconf;
-@@ -421,6 +426,7 @@ typedef struct NvmeRequest {
-     NvmeCmd                 cmd;
-     BlockAcctCookie         acct;
-     NvmeSg                  sg;
-+    bool                    atomic_write;
-     QTAILQ_ENTRY(NvmeRequest)entry;
- } NvmeRequest;
- 
-@@ -542,6 +548,10 @@ typedef struct NvmeParams {
-     struct {
-         bool mem;
-     } ctratt;
-+
-+    uint16_t atomic_awun;
-+    uint16_t atomic_awupf;
-+    bool     atomic_dn;
- } NvmeParams;
- 
- typedef struct NvmeCtrl {
-@@ -623,6 +633,8 @@ typedef struct NvmeCtrl {
-         uint16_t    vqrfap;
-         uint16_t    virfap;
-     } next_pri_ctrl_cap;    /* These override pri_ctrl_cap after reset */
-+    uint32_t    dn; /* Disable Normal */
-+    NvmeAtomic  atomic;
- } NvmeCtrl;
- 
- typedef enum NvmeResetType {
+ enum NvmeFeatureIds {
+     NVME_ARBITRATION                = 0x1,
+     NVME_POWER_MANAGEMENT           = 0x2,
 -- 
 2.45.2
 
