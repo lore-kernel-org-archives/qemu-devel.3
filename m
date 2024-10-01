@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CEF2CEACE8
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B42BCEACE8
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:45:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svfus-0005tM-KB; Tue, 01 Oct 2024 12:40:02 -0400
+	id 1svfuO-0005Ks-8a; Tue, 01 Oct 2024 12:39:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfud-0005ap-2h
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:49 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1svfuM-0005KZ-AV
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:30 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfuW-00066l-C6
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:46 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-37cd831ab06so2261732f8f.0
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:39:39 -0700 (PDT)
+ id 1svfuJ-00061Y-Hl
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:30 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-42cb57f8b41so70638075e9.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:39:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727800778; x=1728405578; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727800766; x=1728405566; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=JG57QVpHrLALzZR+9s2olzjjtYqV+9hQmExoUYKYmvA=;
- b=yARlAyQ+G9mNb5RL01SF04FVyGXsic/g+5x4OgJ0ZfOpk8XU5B+SVBUeoDfPO5bbuz
- fjLupfmx5lSEapxWelZ+gZUGUjWhZzTG/fZvnMxbEGLTQJOF1qPJTlxC0a13cXPCwOMG
- 9h4NX+zpCpVbELwDFark4ljkhhOOlYdtI3YHTjNl0rMX+MgTqhWOgWWM5rWrAk34r7Yd
- 13PSQvMMxp5JQCOlSrKu4fdjC2G7KAYJBLAM950ZubU40JlWyt5+MHPasP7FvlQIXFbN
- ke8hG08MrfXsC5m+s1lFfHWmQt39NhD/z/Ozxqwnn/IP/Dm/KWJzkZcDuDSVO4naiTHB
- zQhg==
+ :reply-to; bh=3k5lSBv2taR4PDQUa2y3to1Z1kZj1MbR3EkZYcRp/F4=;
+ b=gQOaIFtqHkWahDKgjmt0JO4buK3GIzvRZNxPTfmb/w/qSirav84cnoJBx37bQsCpl/
+ rI498OWpO8Qnx/x9Nm8XCCz8Dh9BKA9/pWdRZaE9FiYZIHb7Avm5OMUC5TFqiPe66fI4
+ 7VhrfaJXS0hWB3LsF94dvyj0UKprNsVmKymoLHSmbPPcuPIVD1jfWPqCp9Z/h78hHkiN
+ XU8d/YSq6b3DcTHJUNOMwYnETl9TzUwKKjcS0Vc9Kx92viTvzyOqI3KcjoMq87HJ8IY5
+ +A4QS9iNWOPkG3a4p4rp/cJejQLEKkO9d4LxW+utorRoBr2n+cR03cwfySmJQK9s2ZTu
+ yVWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727800778; x=1728405578;
+ d=1e100.net; s=20230601; t=1727800766; x=1728405566;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JG57QVpHrLALzZR+9s2olzjjtYqV+9hQmExoUYKYmvA=;
- b=umXcT/IoMXoxe3EITcmEpj/O/xatPN+EcwtUrFNBcUf8jg6a48Os+oXIANGmLOZmXT
- h+hooVDGJwRQtPo5fM7ZoLaEsoJ3U3A8xCk7tHas7sUqtpQyn2ob9dMH4l1/ivclJIyy
- DGAYQpjCKzFmvdM8qbFga6BgqO9466hTHjIDof8bdLFDhdnTkYSFcBfofO3iBpYsAfVk
- b0CmkcW3XjgyqOpZUHIuLbR1ohrh/iBgdybJnuNCR5hbhKYyefoy3dPCp9B+dogKN6OR
- 1ovNOIfWXfx9s9q8mV1GLu597wcu2cc5iFNz2eZa3F1AMOeEsPc6XxI1vVQIRLl6j80k
- sJYA==
-X-Gm-Message-State: AOJu0YxPH0vnBo0dO9fZIf+BE5Znr4yWnsQOGcyJqC3if/xG0m04pC0y
- KJgSRr1Hb5eevkT9zONJ/35K3IZDlLy3rEKpNz29AwRnApAgFDW+QEYtu14MIu8RypwZjb2J23T
- F
-X-Google-Smtp-Source: AGHT+IFaMqaqXTiPq1GLRA6gutjgS3+O0burdaaXLEQf7uzcQIL/stMJLkN3Ua0kIrySMkbnwnjUPQ==
-X-Received: by 2002:a5d:584c:0:b0:374:ae04:c7c5 with SMTP id
- ffacd0b85a97d-37cfb9fc32bmr174137f8f.36.1727800778382; 
- Tue, 01 Oct 2024 09:39:38 -0700 (PDT)
+ bh=3k5lSBv2taR4PDQUa2y3to1Z1kZj1MbR3EkZYcRp/F4=;
+ b=ZX5babDiU8mUMWg16hv1JaTlaEoq0jyt3ckAt+N9z9v24ChsOF8GJ5odrXsOBkho4y
+ 0tf0imPIHCfA5q9bMdRqv6405v0hzklrZFqSKa2XHBWMzoTvc9Cm0curWbfvjryhsdBe
+ Mjwzk6QXfYSXlZA+4JX1BqAHec2fOWZia49SYkjU6kNUXd93+KntR5cod/VUiMF2RS94
+ 2BsRUm/xCf5sXTmJOe4Z2UXQu5Vb20mKKwO2xz85A5QGDsqrtlnYhLc5g3S+gcPPKbjj
+ jb9Umq90M6+qMsB5r0B3LQLlfrYpCasaiqBoOU2JlnmJiEaVnPMbyyfj7IYyUyKN/fEn
+ s0bg==
+X-Gm-Message-State: AOJu0YwZarFTJT7EXi/11rEROmfP35ovgQMsOItWe2Mkkh3K1dRfAMcn
+ VIJiRSIQG0lCdbt16khjtwDPhM4AZLUsPAOuybuqsF47zOJrw8uMhqMgLhKMXVV5lZp3lOisJ/S
+ V
+X-Google-Smtp-Source: AGHT+IGVDmBCA/8qLaYXYTsO5Q9lN7AiiZKafM3AYRkqJ2g92xTP/m5Oeb1aaSnLNOekUMZ3uzHJQA==
+X-Received: by 2002:a05:600c:1c26:b0:42c:b77a:bd21 with SMTP id
+ 5b1f17b1804b1-42f777f00e0mr784795e9.28.1727800765781; 
+ Tue, 01 Oct 2024 09:39:25 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd56e6547sm12243771f8f.58.2024.10.01.09.39.37
+ ffacd0b85a97d-37cd56e6547sm12243771f8f.58.2024.10.01.09.39.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 09:39:38 -0700 (PDT)
+ Tue, 01 Oct 2024 09:39:25 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 34/54] hw/input: Remove lm832x device
-Date: Tue,  1 Oct 2024 17:38:58 +0100
-Message-Id: <20241001163918.1275441-35-peter.maydell@linaro.org>
+Subject: [PULL 10/54] hw/display: Remove tc6393xb device
+Date: Tue,  1 Oct 2024 17:38:34 +0100
+Message-Id: <20241001163918.1275441-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241001163918.1275441-1-peter.maydell@linaro.org>
 References: <20241001163918.1275441-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,640 +94,653 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the lm832x keyboard-and-pwm i2c device model. This
-was only used by the n800 and n810 machines.
-
-(Although this is an i2c device and so in theory available to create
-on the command line, in practice it has an outbound IRQ line that the
-machine model needs to wire up, and the only way to inject keys events
-into it is to call the lm832x_key_event() function, so it isn't
-in practice possible to use it separately from the n800/n810.)
+The tc6393xb was used only by the XScale-based Zaurus machine types.
+Now they have been removed we can remove this device too.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-id: 20240903160751.4100218-32-peter.maydell@linaro.org
+Message-id: 20240903160751.4100218-7-peter.maydell@linaro.org
 ---
- MAINTAINERS               |   7 -
- include/hw/input/lm832x.h |  28 --
- hw/input/lm832x.c         | 528 --------------------------------------
- hw/input/Kconfig          |   4 -
- hw/input/meson.build      |   1 -
- 5 files changed, 568 deletions(-)
- delete mode 100644 include/hw/input/lm832x.h
- delete mode 100644 hw/input/lm832x.c
+ MAINTAINERS                   |   2 -
+ include/hw/display/tc6393xb.h |  21 --
+ hw/display/tc6393xb.c         | 568 ----------------------------------
+ hw/display/meson.build        |   1 -
+ 4 files changed, 592 deletions(-)
+ delete mode 100644 include/hw/display/tc6393xb.h
+ delete mode 100644 hw/display/tc6393xb.c
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 98314d157c2..4ee26995436 100644
+index 42e37db3b00..bb74aff54c0 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -870,13 +870,6 @@ F: pc-bios/npcm7xx_bootrom.bin
- F: roms/vbootrom
- F: docs/system/arm/nuvoton.rst
+@@ -936,7 +936,6 @@ S: Odd Fixes
+ F: hw/arm/mainstone.c
+ F: hw/arm/z2.c
+ F: hw/*/pxa2xx*
+-F: hw/display/tc6393xb.c
+ F: hw/gpio/max7310.c
+ F: hw/gpio/zaurus.c
+ F: hw/misc/mst_fpga.c
+@@ -944,7 +943,6 @@ F: hw/adc/max111x.c
+ F: include/hw/adc/max111x.h
+ F: include/hw/arm/pxa.h
+ F: include/hw/arm/sharpsl.h
+-F: include/hw/display/tc6393xb.h
+ F: docs/system/arm/mainstone.rst
  
--nSeries
--M: Peter Maydell <peter.maydell@linaro.org>
--L: qemu-arm@nongnu.org
--S: Odd Fixes
--F: hw/input/lm832x.c
--F: include/hw/input/lm832x.h
--
- Raspberry Pi
- M: Peter Maydell <peter.maydell@linaro.org>
- R: Philippe Mathieu-Daudé <philmd@linaro.org>
-diff --git a/include/hw/input/lm832x.h b/include/hw/input/lm832x.h
+ SABRELITE / i.MX6
+diff --git a/include/hw/display/tc6393xb.h b/include/hw/display/tc6393xb.h
 deleted file mode 100644
-index e0e5d5ef20e..00000000000
---- a/include/hw/input/lm832x.h
+index f9263bf98a6..00000000000
+--- a/include/hw/display/tc6393xb.h
 +++ /dev/null
-@@ -1,28 +0,0 @@
+@@ -1,21 +0,0 @@
 -/*
-- * National Semiconductor LM8322/8323 GPIO keyboard & PWM chips.
+- * Toshiba TC6393XB I/O Controller.
+- * Found in Sharp Zaurus SL-6000 (tosa) or some
+- * Toshiba e-Series PDAs.
 - *
-- * Copyright (C) 2008 Nokia Corporation
-- * Written by Andrzej Zaborowski <andrew@openedhand.com>
+- * Copyright (c) 2007 Hervé Poussineau
 - *
-- * This program is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU General Public License as
-- * published by the Free Software Foundation; either version 2 or
-- * (at your option) version 3 of the License.
-- *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- * GNU General Public License for more details.
-- *
-- * You should have received a copy of the GNU General Public License along
-- * with this program; if not, see <http://www.gnu.org/licenses/>.
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
 - */
 -
--#ifndef HW_INPUT_LM832X_H
--#define HW_INPUT_LM832X_H
+-#ifndef HW_DISPLAY_TC6393XB_H
+-#define HW_DISPLAY_TC6393XB_H
 -
--#define TYPE_LM8323 "lm8323"
+-typedef struct TC6393xbState TC6393xbState;
 -
--void lm832x_key_event(DeviceState *dev, int key, int state);
+-TC6393xbState *tc6393xb_init(struct MemoryRegion *sysmem,
+-                             uint32_t base, qemu_irq irq);
+-qemu_irq tc6393xb_l3v_get(TC6393xbState *s);
 -
 -#endif
-diff --git a/hw/input/lm832x.c b/hw/input/lm832x.c
+diff --git a/hw/display/tc6393xb.c b/hw/display/tc6393xb.c
 deleted file mode 100644
-index ef65ad18b89..00000000000
---- a/hw/input/lm832x.c
+index c7beba453b0..00000000000
+--- a/hw/display/tc6393xb.c
 +++ /dev/null
-@@ -1,528 +0,0 @@
+@@ -1,568 +0,0 @@
 -/*
-- * National Semiconductor LM8322/8323 GPIO keyboard & PWM chips.
+- * Toshiba TC6393XB I/O Controller.
+- * Found in Sharp Zaurus SL-6000 (tosa) or some
+- * Toshiba e-Series PDAs.
 - *
-- * Copyright (C) 2008 Nokia Corporation
-- * Written by Andrzej Zaborowski <andrew@openedhand.com>
+- * Most features are currently unsupported!!!
 - *
-- * This program is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU General Public License as
-- * published by the Free Software Foundation; either version 2 or
-- * (at your option) version 3 of the License.
+- * This code is licensed under the GNU GPL v2.
 - *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- * GNU General Public License for more details.
-- *
-- * You should have received a copy of the GNU General Public License along
-- * with this program; if not, see <http://www.gnu.org/licenses/>.
+- * Contributions after 2012-01-13 are licensed under the terms of the
+- * GNU GPL, version 2 or (at your option) any later version.
 - */
 -
 -#include "qemu/osdep.h"
--#include "hw/input/lm832x.h"
--#include "hw/i2c/i2c.h"
+-#include "qapi/error.h"
+-#include "qemu/host-utils.h"
 -#include "hw/irq.h"
--#include "migration/vmstate.h"
--#include "qemu/module.h"
--#include "qemu/timer.h"
+-#include "hw/display/tc6393xb.h"
+-#include "exec/memory.h"
+-#include "hw/block/flash.h"
 -#include "ui/console.h"
--#include "qom/object.h"
+-#include "ui/pixel_ops.h"
+-#include "sysemu/blockdev.h"
 -
--OBJECT_DECLARE_SIMPLE_TYPE(LM823KbdState, LM8323)
+-#define IRQ_TC6393_NAND		0
+-#define IRQ_TC6393_MMC		1
+-#define IRQ_TC6393_OHCI		2
+-#define IRQ_TC6393_SERIAL	3
+-#define IRQ_TC6393_FB		4
 -
--struct LM823KbdState {
--    I2CSlave parent_obj;
+-#define	TC6393XB_NR_IRQS	8
 -
--    uint8_t i2c_dir;
--    uint8_t i2c_cycle;
--    uint8_t reg;
+-#define TC6393XB_GPIOS  16
 -
--    qemu_irq nirq;
--    uint16_t model;
+-#define SCR_REVID	0x08		/* b Revision ID	*/
+-#define SCR_ISR		0x50		/* b Interrupt Status	*/
+-#define SCR_IMR		0x52		/* b Interrupt Mask	*/
+-#define SCR_IRR		0x54		/* b Interrupt Routing	*/
+-#define SCR_GPER	0x60		/* w GP Enable		*/
+-#define SCR_GPI_SR(i)	(0x64 + (i))	/* b3 GPI Status	*/
+-#define SCR_GPI_IMR(i)	(0x68 + (i))	/* b3 GPI INT Mask	*/
+-#define SCR_GPI_EDER(i)	(0x6c + (i))	/* b3 GPI Edge Detect Enable */
+-#define SCR_GPI_LIR(i)	(0x70 + (i))	/* b3 GPI Level Invert	*/
+-#define SCR_GPO_DSR(i)	(0x78 + (i))	/* b3 GPO Data Set	*/
+-#define SCR_GPO_DOECR(i) (0x7c + (i))	/* b3 GPO Data OE Control */
+-#define SCR_GP_IARCR(i)	(0x80 + (i))	/* b3 GP Internal Active Register Control */
+-#define SCR_GP_IARLCR(i) (0x84 + (i))	/* b3 GP INTERNAL Active Register Level Control */
+-#define SCR_GPI_BCR(i)	(0x88 + (i))	/* b3 GPI Buffer Control */
+-#define SCR_GPA_IARCR	0x8c		/* w GPa Internal Active Register Control */
+-#define SCR_GPA_IARLCR	0x90		/* w GPa Internal Active Register Level Control */
+-#define SCR_GPA_BCR	0x94		/* w GPa Buffer Control */
+-#define SCR_CCR		0x98		/* w Clock Control	*/
+-#define SCR_PLL2CR	0x9a		/* w PLL2 Control	*/
+-#define SCR_PLL1CR	0x9c		/* l PLL1 Control	*/
+-#define SCR_DIARCR	0xa0		/* b Device Internal Active Register Control */
+-#define SCR_DBOCR	0xa1		/* b Device Buffer Off Control */
+-#define SCR_FER		0xe0		/* b Function Enable	*/
+-#define SCR_MCR		0xe4		/* w Mode Control	*/
+-#define SCR_CONFIG	0xfc		/* b Configuration Control */
+-#define SCR_DEBUG	0xff		/* b Debug		*/
+-
+-#define NAND_CFG_COMMAND    0x04    /* w Command        */
+-#define NAND_CFG_BASE       0x10    /* l Control Base Address */
+-#define NAND_CFG_INTP       0x3d    /* b Interrupt Pin  */
+-#define NAND_CFG_INTE       0x48    /* b Int Enable     */
+-#define NAND_CFG_EC         0x4a    /* b Event Control  */
+-#define NAND_CFG_ICC        0x4c    /* b Internal Clock Control */
+-#define NAND_CFG_ECCC       0x5b    /* b ECC Control    */
+-#define NAND_CFG_NFTC       0x60    /* b NAND Flash Transaction Control */
+-#define NAND_CFG_NFM        0x61    /* b NAND Flash Monitor */
+-#define NAND_CFG_NFPSC      0x62    /* b NAND Flash Power Supply Control */
+-#define NAND_CFG_NFDC       0x63    /* b NAND Flash Detect Control */
+-
+-#define NAND_DATA   0x00        /* l Data       */
+-#define NAND_MODE   0x04        /* b Mode       */
+-#define NAND_STATUS 0x05        /* b Status     */
+-#define NAND_ISR    0x06        /* b Interrupt Status */
+-#define NAND_IMR    0x07        /* b Interrupt Mask */
+-
+-#define NAND_MODE_WP        0x80
+-#define NAND_MODE_CE        0x10
+-#define NAND_MODE_ALE       0x02
+-#define NAND_MODE_CLE       0x01
+-#define NAND_MODE_ECC_MASK  0x60
+-#define NAND_MODE_ECC_EN    0x20
+-#define NAND_MODE_ECC_READ  0x40
+-#define NAND_MODE_ECC_RST   0x60
+-
+-struct TC6393xbState {
+-    MemoryRegion iomem;
+-    qemu_irq irq;
+-    qemu_irq *sub_irqs;
+-    struct {
+-        uint8_t ISR;
+-        uint8_t IMR;
+-        uint8_t IRR;
+-        uint16_t GPER;
+-        uint8_t GPI_SR[3];
+-        uint8_t GPI_IMR[3];
+-        uint8_t GPI_EDER[3];
+-        uint8_t GPI_LIR[3];
+-        uint8_t GP_IARCR[3];
+-        uint8_t GP_IARLCR[3];
+-        uint8_t GPI_BCR[3];
+-        uint16_t GPA_IARCR;
+-        uint16_t GPA_IARLCR;
+-        uint16_t CCR;
+-        uint16_t PLL2CR;
+-        uint32_t PLL1CR;
+-        uint8_t DIARCR;
+-        uint8_t DBOCR;
+-        uint8_t FER;
+-        uint16_t MCR;
+-        uint8_t CONFIG;
+-        uint8_t DEBUG;
+-    } scr;
+-    uint32_t gpio_dir;
+-    uint32_t gpio_level;
+-    uint32_t prev_level;
+-    qemu_irq handler[TC6393XB_GPIOS];
+-    qemu_irq *gpio_in;
 -
 -    struct {
--        qemu_irq out[2];
--        int in[2][2];
--    } mux;
+-        uint8_t mode;
+-        uint8_t isr;
+-        uint8_t imr;
+-    } nand;
+-    int nand_enable;
+-    uint32_t nand_phys;
+-    DeviceState *flash;
+-    ECCState ecc;
 -
--    uint8_t config;
--    uint8_t status;
--    uint8_t acttime;
--    uint8_t error;
--    uint8_t clock;
--
--    struct {
--        uint16_t pull;
--        uint16_t mask;
--        uint16_t dir;
--        uint16_t level;
--        qemu_irq out[16];
--    } gpio;
--
--    struct {
--        uint8_t dbnctime;
--        uint8_t size;
--        uint8_t start;
--        uint8_t len;
--        uint8_t fifo[16];
--    } kbd;
--
--    struct {
--        uint16_t file[256];
--        uint8_t faddr;
--        uint8_t addr[3];
--        QEMUTimer *tm[3];
--    } pwm;
+-    QemuConsole *con;
+-    MemoryRegion vram;
+-    uint16_t *vram_ptr;
+-    uint32_t scr_width, scr_height; /* in pixels */
+-    qemu_irq l3v;
+-    unsigned blank : 1,
+-             blanked : 1;
 -};
 -
--#define INT_KEYPAD		(1 << 0)
--#define INT_ERROR		(1 << 3)
--#define INT_NOINIT		(1 << 4)
--#define INT_PWMEND(n)		(1 << (5 + n))
--
--#define ERR_BADPAR		(1 << 0)
--#define ERR_CMDUNK		(1 << 1)
--#define ERR_KEYOVR		(1 << 2)
--#define ERR_FIFOOVR		(1 << 6)
--
--static void lm_kbd_irq_update(LM823KbdState *s)
+-static void tc6393xb_gpio_set(void *opaque, int line, int level)
 -{
--    qemu_set_irq(s->nirq, !s->status);
--}
+-//    TC6393xbState *s = opaque;
 -
--static void lm_kbd_gpio_update(LM823KbdState *s)
--{
--}
--
--static void lm_kbd_reset(DeviceState *dev)
--{
--    LM823KbdState *s = LM8323(dev);
--
--    s->config = 0x80;
--    s->status = INT_NOINIT;
--    s->acttime = 125;
--    s->kbd.dbnctime = 3;
--    s->kbd.size = 0x33;
--    s->clock = 0x08;
--
--    lm_kbd_irq_update(s);
--    lm_kbd_gpio_update(s);
--}
--
--static void lm_kbd_error(LM823KbdState *s, int err)
--{
--    s->error |= err;
--    s->status |= INT_ERROR;
--    lm_kbd_irq_update(s);
--}
--
--static void lm_kbd_pwm_tick(LM823KbdState *s, int line)
--{
--}
--
--static void lm_kbd_pwm_start(LM823KbdState *s, int line)
--{
--    lm_kbd_pwm_tick(s, line);
--}
--
--static void lm_kbd_pwm0_tick(void *opaque)
--{
--    lm_kbd_pwm_tick(opaque, 0);
--}
--static void lm_kbd_pwm1_tick(void *opaque)
--{
--    lm_kbd_pwm_tick(opaque, 1);
--}
--static void lm_kbd_pwm2_tick(void *opaque)
--{
--    lm_kbd_pwm_tick(opaque, 2);
--}
--
--enum {
--    LM832x_CMD_READ_ID		= 0x80, /* Read chip ID. */
--    LM832x_CMD_WRITE_CFG	= 0x81, /* Set configuration item. */
--    LM832x_CMD_READ_INT		= 0x82, /* Get interrupt status. */
--    LM832x_CMD_RESET		= 0x83, /* Reset, same as external one */
--    LM823x_CMD_WRITE_PULL_DOWN	= 0x84, /* Select GPIO pull-up/down. */
--    LM832x_CMD_WRITE_PORT_SEL	= 0x85, /* Select GPIO in/out. */
--    LM832x_CMD_WRITE_PORT_STATE	= 0x86, /* Set GPIO pull-up/down. */
--    LM832x_CMD_READ_PORT_SEL	= 0x87, /* Get GPIO in/out. */
--    LM832x_CMD_READ_PORT_STATE	= 0x88, /* Get GPIO pull-up/down. */
--    LM832x_CMD_READ_FIFO	= 0x89, /* Read byte from FIFO. */
--    LM832x_CMD_RPT_READ_FIFO	= 0x8a, /* Read FIFO (no increment). */
--    LM832x_CMD_SET_ACTIVE	= 0x8b, /* Set active time. */
--    LM832x_CMD_READ_ERROR	= 0x8c, /* Get error status. */
--    LM832x_CMD_READ_ROTATOR	= 0x8e, /* Read rotator status. */
--    LM832x_CMD_SET_DEBOUNCE	= 0x8f, /* Set debouncing time. */
--    LM832x_CMD_SET_KEY_SIZE	= 0x90, /* Set keypad size. */
--    LM832x_CMD_READ_KEY_SIZE	= 0x91, /* Get keypad size. */
--    LM832x_CMD_READ_CFG		= 0x92, /* Get configuration item. */
--    LM832x_CMD_WRITE_CLOCK	= 0x93, /* Set clock config. */
--    LM832x_CMD_READ_CLOCK	= 0x94, /* Get clock config. */
--    LM832x_CMD_PWM_WRITE	= 0x95, /* Write PWM script. */
--    LM832x_CMD_PWM_START	= 0x96, /* Start PWM engine. */
--    LM832x_CMD_PWM_STOP		= 0x97, /* Stop PWM engine. */
--    LM832x_GENERAL_ERROR	= 0xff, /* There was one error.
--                                           Previously was represented by -1
--                                           This is not a command */
--};
--
--#define LM832x_MAX_KPX		8
--#define LM832x_MAX_KPY		12
--
--static uint8_t lm_kbd_read(LM823KbdState *s, int reg, int byte)
--{
--    int ret;
--
--    switch (reg) {
--    case LM832x_CMD_READ_ID:
--        ret = 0x0400;
--        break;
--
--    case LM832x_CMD_READ_INT:
--        ret = s->status;
--        if (!(s->status & INT_NOINIT)) {
--            s->status = 0;
--            lm_kbd_irq_update(s);
--        }
--        break;
--
--    case LM832x_CMD_READ_PORT_SEL:
--        ret = s->gpio.dir;
--        break;
--    case LM832x_CMD_READ_PORT_STATE:
--        ret = s->gpio.mask;
--        break;
--
--    case LM832x_CMD_READ_FIFO:
--        if (s->kbd.len <= 1)
--            return 0x00;
--
--        /* Example response from the two commands after a INT_KEYPAD
--         * interrupt caused by the key 0x3c being pressed:
--         * RPT_READ_FIFO: 55 bc 00 4e ff 0a 50 08 00 29 d9 08 01 c9 01
--         *     READ_FIFO: bc 00 00 4e ff 0a 50 08 00 29 d9 08 01 c9 01
--         * RPT_READ_FIFO: bc 00 00 4e ff 0a 50 08 00 29 d9 08 01 c9 01
--         *
--         * 55 is the code of the key release event serviced in the previous
--         * interrupt handling.
--         *
--         * TODO: find out whether the FIFO is advanced a single character
--         * before reading every byte or the whole size of the FIFO at the
--         * last LM832x_CMD_READ_FIFO.  This affects LM832x_CMD_RPT_READ_FIFO
--         * output in cases where there are more than one event in the FIFO.
--         * Assume 0xbc and 0x3c events are in the FIFO:
--         * RPT_READ_FIFO: 55 bc 3c 00 4e ff 0a 50 08 00 29 d9 08 01 c9
--         *     READ_FIFO: bc 3c 00 00 4e ff 0a 50 08 00 29 d9 08 01 c9
--         * Does RPT_READ_FIFO now return 0xbc and 0x3c or only 0x3c?
--         */
--        s->kbd.start ++;
--        s->kbd.start &= sizeof(s->kbd.fifo) - 1;
--        s->kbd.len --;
--
--        return s->kbd.fifo[s->kbd.start];
--    case LM832x_CMD_RPT_READ_FIFO:
--        if (byte >= s->kbd.len)
--            return 0x00;
--
--        return s->kbd.fifo[(s->kbd.start + byte) & (sizeof(s->kbd.fifo) - 1)];
--
--    case LM832x_CMD_READ_ERROR:
--        return s->error;
--
--    case LM832x_CMD_READ_ROTATOR:
--        return 0;
--
--    case LM832x_CMD_READ_KEY_SIZE:
--        return s->kbd.size;
--
--    case LM832x_CMD_READ_CFG:
--        return s->config & 0xf;
--
--    case LM832x_CMD_READ_CLOCK:
--        return (s->clock & 0xfc) | 2;
--
--    default:
--        lm_kbd_error(s, ERR_CMDUNK);
--        fprintf(stderr, "%s: unknown command %02x\n", __func__, reg);
--        return 0x00;
+-    if (line > TC6393XB_GPIOS) {
+-        printf("%s: No GPIO pin %i\n", __func__, line);
+-        return;
 -    }
 -
--    return ret >> (byte << 3);
+-    // FIXME: how does the chip reflect the GPIO input level change?
 -}
 -
--static void lm_kbd_write(LM823KbdState *s, int reg, int byte, uint8_t value)
+-static void tc6393xb_gpio_handler_update(TC6393xbState *s)
 -{
--    switch (reg) {
--    case LM832x_CMD_WRITE_CFG:
--        s->config = value;
--        /* This must be done whenever s->mux.in is updated (never).  */
--        if ((s->config >> 1) & 1)			/* MUX1EN */
--            qemu_set_irq(s->mux.out[0], s->mux.in[0][(s->config >> 0) & 1]);
--        if ((s->config >> 3) & 1)			/* MUX2EN */
--            qemu_set_irq(s->mux.out[0], s->mux.in[0][(s->config >> 2) & 1]);
--        /* TODO: check that this is issued only following the chip reset
--         * and not in the middle of operation and that it is followed by
--         * the GPIO ports re-resablishing through WRITE_PORT_SEL and
--         * WRITE_PORT_STATE (using a timer perhaps) and otherwise output
--         * warnings.  */
--        s->status = 0;
--        lm_kbd_irq_update(s);
--        s->kbd.len = 0;
--        s->kbd.start = 0;
--        s->reg = LM832x_GENERAL_ERROR;
--        break;
+-    uint32_t level, diff;
+-    int bit;
 -
--    case LM832x_CMD_RESET:
--        if (value == 0xaa)
--            lm_kbd_reset(DEVICE(s));
--        else
--            lm_kbd_error(s, ERR_BADPAR);
--        s->reg = LM832x_GENERAL_ERROR;
--        break;
+-    level = s->gpio_level & s->gpio_dir;
+-    level &= MAKE_64BIT_MASK(0, TC6393XB_GPIOS);
 -
--    case LM823x_CMD_WRITE_PULL_DOWN:
--        if (!byte)
--            s->gpio.pull = value;
--        else {
--            s->gpio.pull |= value << 8;
--            lm_kbd_gpio_update(s);
--            s->reg = LM832x_GENERAL_ERROR;
--        }
--        break;
--    case LM832x_CMD_WRITE_PORT_SEL:
--        if (!byte)
--            s->gpio.dir = value;
--        else {
--            s->gpio.dir |= value << 8;
--            lm_kbd_gpio_update(s);
--            s->reg = LM832x_GENERAL_ERROR;
--        }
--        break;
--    case LM832x_CMD_WRITE_PORT_STATE:
--        if (!byte)
--            s->gpio.mask = value;
--        else {
--            s->gpio.mask |= value << 8;
--            lm_kbd_gpio_update(s);
--            s->reg = LM832x_GENERAL_ERROR;
--        }
--        break;
--
--    case LM832x_CMD_SET_ACTIVE:
--        s->acttime = value;
--        s->reg = LM832x_GENERAL_ERROR;
--        break;
--
--    case LM832x_CMD_SET_DEBOUNCE:
--        s->kbd.dbnctime = value;
--        s->reg = LM832x_GENERAL_ERROR;
--        if (!value)
--            lm_kbd_error(s, ERR_BADPAR);
--        break;
--
--    case LM832x_CMD_SET_KEY_SIZE:
--        s->kbd.size = value;
--        s->reg = LM832x_GENERAL_ERROR;
--        if (
--                        (value & 0xf) < 3 || (value & 0xf) > LM832x_MAX_KPY ||
--                        (value >> 4) < 3 || (value >> 4) > LM832x_MAX_KPX)
--            lm_kbd_error(s, ERR_BADPAR);
--        break;
--
--    case LM832x_CMD_WRITE_CLOCK:
--        s->clock = value;
--        s->reg = LM832x_GENERAL_ERROR;
--        if ((value & 3) && (value & 3) != 3) {
--            lm_kbd_error(s, ERR_BADPAR);
--            fprintf(stderr, "%s: invalid clock setting in RCPWM\n",
--                            __func__);
--        }
--        /* TODO: Validate that the command is only issued once */
--        break;
--
--    case LM832x_CMD_PWM_WRITE:
--        if (byte == 0) {
--            if (!(value & 3) || (value >> 2) > 59) {
--                lm_kbd_error(s, ERR_BADPAR);
--                s->reg = LM832x_GENERAL_ERROR;
--                break;
--            }
--
--            s->pwm.faddr = value;
--            s->pwm.file[s->pwm.faddr] = 0;
--        } else if (byte == 1) {
--            s->pwm.file[s->pwm.faddr] |= value << 8;
--        } else if (byte == 2) {
--            s->pwm.file[s->pwm.faddr] |= value << 0;
--            s->reg = LM832x_GENERAL_ERROR;
--        }
--        break;
--    case LM832x_CMD_PWM_START:
--        s->reg = LM832x_GENERAL_ERROR;
--        if (!(value & 3) || (value >> 2) > 59) {
--            lm_kbd_error(s, ERR_BADPAR);
--            break;
--        }
--
--        s->pwm.addr[(value & 3) - 1] = value >> 2;
--        lm_kbd_pwm_start(s, (value & 3) - 1);
--        break;
--    case LM832x_CMD_PWM_STOP:
--        s->reg = LM832x_GENERAL_ERROR;
--        if (!(value & 3)) {
--            lm_kbd_error(s, ERR_BADPAR);
--            break;
--        }
--
--        timer_del(s->pwm.tm[(value & 3) - 1]);
--        break;
--
--    case LM832x_GENERAL_ERROR:
--        lm_kbd_error(s, ERR_BADPAR);
--        break;
--    default:
--        lm_kbd_error(s, ERR_CMDUNK);
--        fprintf(stderr, "%s: unknown command %02x\n", __func__, reg);
--        break;
--    }
--}
--
--static int lm_i2c_event(I2CSlave *i2c, enum i2c_event event)
--{
--    LM823KbdState *s = LM8323(i2c);
--
--    switch (event) {
--    case I2C_START_RECV:
--    case I2C_START_SEND:
--        s->i2c_cycle = 0;
--        s->i2c_dir = (event == I2C_START_SEND);
--        break;
--
--    default:
--        break;
+-    for (diff = s->prev_level ^ level; diff; diff ^= 1 << bit) {
+-        bit = ctz32(diff);
+-        qemu_set_irq(s->handler[bit], (level >> bit) & 1);
 -    }
 -
--    return 0;
+-    s->prev_level = level;
 -}
 -
--static uint8_t lm_i2c_rx(I2CSlave *i2c)
+-qemu_irq tc6393xb_l3v_get(TC6393xbState *s)
 -{
--    LM823KbdState *s = LM8323(i2c);
--
--    return lm_kbd_read(s, s->reg, s->i2c_cycle ++);
+-    return s->l3v;
 -}
 -
--static int lm_i2c_tx(I2CSlave *i2c, uint8_t data)
+-static void tc6393xb_l3v(void *opaque, int line, int level)
 -{
--    LM823KbdState *s = LM8323(i2c);
+-    TC6393xbState *s = opaque;
+-    s->blank = !level;
+-    fprintf(stderr, "L3V: %d\n", level);
+-}
 -
--    if (!s->i2c_cycle)
--        s->reg = data;
+-static void tc6393xb_sub_irq(void *opaque, int line, int level) {
+-    TC6393xbState *s = opaque;
+-    uint8_t isr = s->scr.ISR;
+-    if (level)
+-        isr |= 1 << line;
 -    else
--        lm_kbd_write(s, s->reg, s->i2c_cycle - 1, data);
--    s->i2c_cycle ++;
+-        isr &= ~(1 << line);
+-    s->scr.ISR = isr;
+-    qemu_set_irq(s->irq, isr & s->scr.IMR);
+-}
 -
+-#define SCR_REG_B(N)                            \
+-    case SCR_ ##N: return s->scr.N
+-#define SCR_REG_W(N)                            \
+-    case SCR_ ##N: return s->scr.N;             \
+-    case SCR_ ##N + 1: return s->scr.N >> 8;
+-#define SCR_REG_L(N)                            \
+-    case SCR_ ##N: return s->scr.N;             \
+-    case SCR_ ##N + 1: return s->scr.N >> 8;    \
+-    case SCR_ ##N + 2: return s->scr.N >> 16;   \
+-    case SCR_ ##N + 3: return s->scr.N >> 24;
+-#define SCR_REG_A(N)                            \
+-    case SCR_ ##N(0): return s->scr.N[0];       \
+-    case SCR_ ##N(1): return s->scr.N[1];       \
+-    case SCR_ ##N(2): return s->scr.N[2]
+-
+-static uint32_t tc6393xb_scr_readb(TC6393xbState *s, hwaddr addr)
+-{
+-    switch (addr) {
+-        case SCR_REVID:
+-            return 3;
+-        case SCR_REVID+1:
+-            return 0;
+-        SCR_REG_B(ISR);
+-        SCR_REG_B(IMR);
+-        SCR_REG_B(IRR);
+-        SCR_REG_W(GPER);
+-        SCR_REG_A(GPI_SR);
+-        SCR_REG_A(GPI_IMR);
+-        SCR_REG_A(GPI_EDER);
+-        SCR_REG_A(GPI_LIR);
+-        case SCR_GPO_DSR(0):
+-        case SCR_GPO_DSR(1):
+-        case SCR_GPO_DSR(2):
+-            return (s->gpio_level >> ((addr - SCR_GPO_DSR(0)) * 8)) & 0xff;
+-        case SCR_GPO_DOECR(0):
+-        case SCR_GPO_DOECR(1):
+-        case SCR_GPO_DOECR(2):
+-            return (s->gpio_dir >> ((addr - SCR_GPO_DOECR(0)) * 8)) & 0xff;
+-        SCR_REG_A(GP_IARCR);
+-        SCR_REG_A(GP_IARLCR);
+-        SCR_REG_A(GPI_BCR);
+-        SCR_REG_W(GPA_IARCR);
+-        SCR_REG_W(GPA_IARLCR);
+-        SCR_REG_W(CCR);
+-        SCR_REG_W(PLL2CR);
+-        SCR_REG_L(PLL1CR);
+-        SCR_REG_B(DIARCR);
+-        SCR_REG_B(DBOCR);
+-        SCR_REG_B(FER);
+-        SCR_REG_W(MCR);
+-        SCR_REG_B(CONFIG);
+-        SCR_REG_B(DEBUG);
+-    }
+-    fprintf(stderr, "tc6393xb_scr: unhandled read at %08x\n", (uint32_t) addr);
+-    return 0;
+-}
+-#undef SCR_REG_B
+-#undef SCR_REG_W
+-#undef SCR_REG_L
+-#undef SCR_REG_A
+-
+-#define SCR_REG_B(N)                                \
+-    case SCR_ ##N: s->scr.N = value; return;
+-#define SCR_REG_W(N)                                \
+-    case SCR_ ##N: s->scr.N = (s->scr.N & ~0xff) | (value & 0xff); return; \
+-    case SCR_ ##N + 1: s->scr.N = (s->scr.N & 0xff) | (value << 8); return
+-#define SCR_REG_L(N)                                \
+-    case SCR_ ##N: s->scr.N = (s->scr.N & ~0xff) | (value & 0xff); return;   \
+-    case SCR_ ##N + 1: s->scr.N = (s->scr.N & ~(0xff << 8)) | (value & (0xff << 8)); return;     \
+-    case SCR_ ##N + 2: s->scr.N = (s->scr.N & ~(0xff << 16)) | (value & (0xff << 16)); return;   \
+-    case SCR_ ##N + 3: s->scr.N = (s->scr.N & ~(0xff << 24)) | (value & (0xff << 24)); return;
+-#define SCR_REG_A(N)                                \
+-    case SCR_ ##N(0): s->scr.N[0] = value; return;   \
+-    case SCR_ ##N(1): s->scr.N[1] = value; return;   \
+-    case SCR_ ##N(2): s->scr.N[2] = value; return
+-
+-static void tc6393xb_scr_writeb(TC6393xbState *s, hwaddr addr, uint32_t value)
+-{
+-    switch (addr) {
+-        SCR_REG_B(ISR);
+-        SCR_REG_B(IMR);
+-        SCR_REG_B(IRR);
+-        SCR_REG_W(GPER);
+-        SCR_REG_A(GPI_SR);
+-        SCR_REG_A(GPI_IMR);
+-        SCR_REG_A(GPI_EDER);
+-        SCR_REG_A(GPI_LIR);
+-        case SCR_GPO_DSR(0):
+-        case SCR_GPO_DSR(1):
+-        case SCR_GPO_DSR(2):
+-            s->gpio_level = (s->gpio_level & ~(0xff << ((addr - SCR_GPO_DSR(0))*8))) | ((value & 0xff) << ((addr - SCR_GPO_DSR(0))*8));
+-            tc6393xb_gpio_handler_update(s);
+-            return;
+-        case SCR_GPO_DOECR(0):
+-        case SCR_GPO_DOECR(1):
+-        case SCR_GPO_DOECR(2):
+-            s->gpio_dir = (s->gpio_dir & ~(0xff << ((addr - SCR_GPO_DOECR(0))*8))) | ((value & 0xff) << ((addr - SCR_GPO_DOECR(0))*8));
+-            tc6393xb_gpio_handler_update(s);
+-            return;
+-        SCR_REG_A(GP_IARCR);
+-        SCR_REG_A(GP_IARLCR);
+-        SCR_REG_A(GPI_BCR);
+-        SCR_REG_W(GPA_IARCR);
+-        SCR_REG_W(GPA_IARLCR);
+-        SCR_REG_W(CCR);
+-        SCR_REG_W(PLL2CR);
+-        SCR_REG_L(PLL1CR);
+-        SCR_REG_B(DIARCR);
+-        SCR_REG_B(DBOCR);
+-        SCR_REG_B(FER);
+-        SCR_REG_W(MCR);
+-        SCR_REG_B(CONFIG);
+-        SCR_REG_B(DEBUG);
+-    }
+-    fprintf(stderr, "tc6393xb_scr: unhandled write at %08x: %02x\n",
+-                                        (uint32_t) addr, value & 0xff);
+-}
+-#undef SCR_REG_B
+-#undef SCR_REG_W
+-#undef SCR_REG_L
+-#undef SCR_REG_A
+-
+-static void tc6393xb_nand_irq(TC6393xbState *s) {
+-    qemu_set_irq(s->sub_irqs[IRQ_TC6393_NAND],
+-            (s->nand.imr & 0x80) && (s->nand.imr & s->nand.isr));
+-}
+-
+-static uint32_t tc6393xb_nand_cfg_readb(TC6393xbState *s, hwaddr addr) {
+-    switch (addr) {
+-        case NAND_CFG_COMMAND:
+-            return s->nand_enable ? 2 : 0;
+-        case NAND_CFG_BASE:
+-        case NAND_CFG_BASE + 1:
+-        case NAND_CFG_BASE + 2:
+-        case NAND_CFG_BASE + 3:
+-            return s->nand_phys >> (addr - NAND_CFG_BASE);
+-    }
+-    fprintf(stderr, "tc6393xb_nand_cfg: unhandled read at %08x\n", (uint32_t) addr);
+-    return 0;
+-}
+-static void tc6393xb_nand_cfg_writeb(TC6393xbState *s, hwaddr addr, uint32_t value) {
+-    switch (addr) {
+-        case NAND_CFG_COMMAND:
+-            s->nand_enable = (value & 0x2);
+-            return;
+-        case NAND_CFG_BASE:
+-        case NAND_CFG_BASE + 1:
+-        case NAND_CFG_BASE + 2:
+-        case NAND_CFG_BASE + 3:
+-            s->nand_phys &= ~(0xff << ((addr - NAND_CFG_BASE) * 8));
+-            s->nand_phys |= (value & 0xff) << ((addr - NAND_CFG_BASE) * 8);
+-            return;
+-    }
+-    fprintf(stderr, "tc6393xb_nand_cfg: unhandled write at %08x: %02x\n",
+-                                        (uint32_t) addr, value & 0xff);
+-}
+-
+-static uint32_t tc6393xb_nand_readb(TC6393xbState *s, hwaddr addr) {
+-    switch (addr) {
+-        case NAND_DATA + 0:
+-        case NAND_DATA + 1:
+-        case NAND_DATA + 2:
+-        case NAND_DATA + 3:
+-            return nand_getio(s->flash);
+-        case NAND_MODE:
+-            return s->nand.mode;
+-        case NAND_STATUS:
+-            return 0x14;
+-        case NAND_ISR:
+-            return s->nand.isr;
+-        case NAND_IMR:
+-            return s->nand.imr;
+-    }
+-    fprintf(stderr, "tc6393xb_nand: unhandled read at %08x\n", (uint32_t) addr);
+-    return 0;
+-}
+-static void tc6393xb_nand_writeb(TC6393xbState *s, hwaddr addr, uint32_t value) {
+-//    fprintf(stderr, "tc6393xb_nand: write at %08x: %02x\n",
+-//					(uint32_t) addr, value & 0xff);
+-    switch (addr) {
+-        case NAND_DATA + 0:
+-        case NAND_DATA + 1:
+-        case NAND_DATA + 2:
+-        case NAND_DATA + 3:
+-            nand_setio(s->flash, value);
+-            s->nand.isr |= 1;
+-            tc6393xb_nand_irq(s);
+-            return;
+-        case NAND_MODE:
+-            s->nand.mode = value;
+-            nand_setpins(s->flash,
+-                    value & NAND_MODE_CLE,
+-                    value & NAND_MODE_ALE,
+-                    !(value & NAND_MODE_CE),
+-                    value & NAND_MODE_WP,
+-                    0); // FIXME: gnd
+-            switch (value & NAND_MODE_ECC_MASK) {
+-                case NAND_MODE_ECC_RST:
+-                    ecc_reset(&s->ecc);
+-                    break;
+-                case NAND_MODE_ECC_READ:
+-                    // FIXME
+-                    break;
+-                case NAND_MODE_ECC_EN:
+-                    ecc_reset(&s->ecc);
+-            }
+-            return;
+-        case NAND_ISR:
+-            s->nand.isr = value;
+-            tc6393xb_nand_irq(s);
+-            return;
+-        case NAND_IMR:
+-            s->nand.imr = value;
+-            tc6393xb_nand_irq(s);
+-            return;
+-    }
+-    fprintf(stderr, "tc6393xb_nand: unhandled write at %08x: %02x\n",
+-                                        (uint32_t) addr, value & 0xff);
+-}
+-
+-static void tc6393xb_draw_graphic(TC6393xbState *s, int full_update)
+-{
+-    DisplaySurface *surface = qemu_console_surface(s->con);
+-    int i;
+-    uint16_t *data_buffer;
+-    uint8_t *data_display;
+-
+-    data_buffer = s->vram_ptr;
+-    data_display = surface_data(surface);
+-    for (i = 0; i < s->scr_height; i++) {
+-        int j;
+-        for (j = 0; j < s->scr_width; j++, data_display += 4, data_buffer++) {
+-            uint16_t color = *data_buffer;
+-            uint32_t dest_color = rgb_to_pixel32(
+-                           ((color & 0xf800) * 0x108) >> 11,
+-                           ((color & 0x7e0) * 0x41) >> 9,
+-                           ((color & 0x1f) * 0x21) >> 2
+-                           );
+-            *(uint32_t *)data_display = dest_color;
+-        }
+-    }
+-    dpy_gfx_update_full(s->con);
+-}
+-
+-static void tc6393xb_draw_blank(TC6393xbState *s, int full_update)
+-{
+-    DisplaySurface *surface = qemu_console_surface(s->con);
+-    int i, w;
+-    uint8_t *d;
+-
+-    if (!full_update)
+-        return;
+-
+-    w = s->scr_width * surface_bytes_per_pixel(surface);
+-    d = surface_data(surface);
+-    for(i = 0; i < s->scr_height; i++) {
+-        memset(d, 0, w);
+-        d += surface_stride(surface);
+-    }
+-
+-    dpy_gfx_update_full(s->con);
+-}
+-
+-static void tc6393xb_update_display(void *opaque)
+-{
+-    TC6393xbState *s = opaque;
+-    DisplaySurface *surface = qemu_console_surface(s->con);
+-    int full_update;
+-
+-    if (s->scr_width == 0 || s->scr_height == 0)
+-        return;
+-
+-    full_update = 0;
+-    if (s->blanked != s->blank) {
+-        s->blanked = s->blank;
+-        full_update = 1;
+-    }
+-    if (s->scr_width != surface_width(surface) ||
+-        s->scr_height != surface_height(surface)) {
+-        qemu_console_resize(s->con, s->scr_width, s->scr_height);
+-        full_update = 1;
+-    }
+-    if (s->blanked)
+-        tc6393xb_draw_blank(s, full_update);
+-    else
+-        tc6393xb_draw_graphic(s, full_update);
+-}
+-
+-
+-static uint64_t tc6393xb_readb(void *opaque, hwaddr addr,
+-                               unsigned size)
+-{
+-    TC6393xbState *s = opaque;
+-
+-    switch (addr >> 8) {
+-        case 0:
+-            return tc6393xb_scr_readb(s, addr & 0xff);
+-        case 1:
+-            return tc6393xb_nand_cfg_readb(s, addr & 0xff);
+-    };
+-
+-    if ((addr &~0xff) == s->nand_phys && s->nand_enable) {
+-//        return tc6393xb_nand_readb(s, addr & 0xff);
+-        uint8_t d = tc6393xb_nand_readb(s, addr & 0xff);
+-//        fprintf(stderr, "tc6393xb_nand: read at %08x: %02hhx\n", (uint32_t) addr, d);
+-        return d;
+-    }
+-
+-//    fprintf(stderr, "tc6393xb: unhandled read at %08x\n", (uint32_t) addr);
 -    return 0;
 -}
 -
--static int lm_kbd_post_load(void *opaque, int version_id)
--{
--    LM823KbdState *s = opaque;
+-static void tc6393xb_writeb(void *opaque, hwaddr addr,
+-                            uint64_t value, unsigned size) {
+-    TC6393xbState *s = opaque;
 -
--    lm_kbd_irq_update(s);
--    lm_kbd_gpio_update(s);
+-    switch (addr >> 8) {
+-        case 0:
+-            tc6393xb_scr_writeb(s, addr & 0xff, value);
+-            return;
+-        case 1:
+-            tc6393xb_nand_cfg_writeb(s, addr & 0xff, value);
+-            return;
+-    };
 -
--    return 0;
+-    if ((addr &~0xff) == s->nand_phys && s->nand_enable)
+-        tc6393xb_nand_writeb(s, addr & 0xff, value);
+-    else
+-        fprintf(stderr, "tc6393xb: unhandled write at %08x: %02x\n",
+-                (uint32_t) addr, (int)value & 0xff);
 -}
 -
--static const VMStateDescription vmstate_lm_kbd = {
--    .name = "LM8323",
--    .version_id = 0,
--    .minimum_version_id = 0,
--    .post_load = lm_kbd_post_load,
--    .fields = (const VMStateField[]) {
--        VMSTATE_I2C_SLAVE(parent_obj, LM823KbdState),
--        VMSTATE_UINT8(i2c_dir, LM823KbdState),
--        VMSTATE_UINT8(i2c_cycle, LM823KbdState),
--        VMSTATE_UINT8(reg, LM823KbdState),
--        VMSTATE_UINT8(config, LM823KbdState),
--        VMSTATE_UINT8(status, LM823KbdState),
--        VMSTATE_UINT8(acttime, LM823KbdState),
--        VMSTATE_UINT8(error, LM823KbdState),
--        VMSTATE_UINT8(clock, LM823KbdState),
--        VMSTATE_UINT16(gpio.pull, LM823KbdState),
--        VMSTATE_UINT16(gpio.mask, LM823KbdState),
--        VMSTATE_UINT16(gpio.dir, LM823KbdState),
--        VMSTATE_UINT16(gpio.level, LM823KbdState),
--        VMSTATE_UINT8(kbd.dbnctime, LM823KbdState),
--        VMSTATE_UINT8(kbd.size, LM823KbdState),
--        VMSTATE_UINT8(kbd.start, LM823KbdState),
--        VMSTATE_UINT8(kbd.len, LM823KbdState),
--        VMSTATE_BUFFER(kbd.fifo, LM823KbdState),
--        VMSTATE_UINT16_ARRAY(pwm.file, LM823KbdState, 256),
--        VMSTATE_UINT8(pwm.faddr, LM823KbdState),
--        VMSTATE_BUFFER(pwm.addr, LM823KbdState),
--        VMSTATE_TIMER_PTR_ARRAY(pwm.tm, LM823KbdState, 3),
--        VMSTATE_END_OF_LIST()
--    }
+-static const GraphicHwOps tc6393xb_gfx_ops = {
+-    .gfx_update  = tc6393xb_update_display,
 -};
 -
--
--static void lm8323_realize(DeviceState *dev, Error **errp)
+-TC6393xbState *tc6393xb_init(MemoryRegion *sysmem, uint32_t base, qemu_irq irq)
 -{
--    LM823KbdState *s = LM8323(dev);
+-    TC6393xbState *s;
+-    DriveInfo *nand;
+-    static const MemoryRegionOps tc6393xb_ops = {
+-        .read = tc6393xb_readb,
+-        .write = tc6393xb_writeb,
+-        .endianness = DEVICE_NATIVE_ENDIAN,
+-        .impl = {
+-            .min_access_size = 1,
+-            .max_access_size = 1,
+-        },
+-    };
 -
--    s->model = 0x8323;
--    s->pwm.tm[0] = timer_new_ns(QEMU_CLOCK_VIRTUAL, lm_kbd_pwm0_tick, s);
--    s->pwm.tm[1] = timer_new_ns(QEMU_CLOCK_VIRTUAL, lm_kbd_pwm1_tick, s);
--    s->pwm.tm[2] = timer_new_ns(QEMU_CLOCK_VIRTUAL, lm_kbd_pwm2_tick, s);
--    qdev_init_gpio_out(dev, &s->nirq, 1);
+-    s = g_new0(TC6393xbState, 1);
+-    s->irq = irq;
+-    s->gpio_in = qemu_allocate_irqs(tc6393xb_gpio_set, s, TC6393XB_GPIOS);
+-
+-    s->l3v = qemu_allocate_irq(tc6393xb_l3v, s, 0);
+-    s->blanked = 1;
+-
+-    s->sub_irqs = qemu_allocate_irqs(tc6393xb_sub_irq, s, TC6393XB_NR_IRQS);
+-
+-    nand = drive_get(IF_MTD, 0, 0);
+-    s->flash = nand_init(nand ? blk_by_legacy_dinfo(nand) : NULL,
+-                         NAND_MFR_TOSHIBA, 0x76);
+-
+-    memory_region_init_io(&s->iomem, NULL, &tc6393xb_ops, s, "tc6393xb", 0x10000);
+-    memory_region_add_subregion(sysmem, base, &s->iomem);
+-
+-    memory_region_init_ram(&s->vram, NULL, "tc6393xb.vram", 0x100000,
+-                           &error_fatal);
+-    s->vram_ptr = memory_region_get_ram_ptr(&s->vram);
+-    memory_region_add_subregion(sysmem, base + 0x100000, &s->vram);
+-    s->scr_width = 480;
+-    s->scr_height = 640;
+-    s->con = graphic_console_init(NULL, 0, &tc6393xb_gfx_ops, s);
+-
+-    return s;
 -}
--
--void lm832x_key_event(DeviceState *dev, int key, int state)
--{
--    LM823KbdState *s = LM8323(dev);
--
--    if ((s->status & INT_ERROR) && (s->error & ERR_FIFOOVR))
--        return;
--
--    if (s->kbd.len >= sizeof(s->kbd.fifo)) {
--        lm_kbd_error(s, ERR_FIFOOVR);
--        return;
--    }
--
--    s->kbd.fifo[(s->kbd.start + s->kbd.len ++) & (sizeof(s->kbd.fifo) - 1)] =
--            key | (state << 7);
--
--    /* We never set ERR_KEYOVR because we support multiple keys fine.  */
--    s->status |= INT_KEYPAD;
--    lm_kbd_irq_update(s);
--}
--
--static void lm8323_class_init(ObjectClass *klass, void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(klass);
--    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
--
--    device_class_set_legacy_reset(dc, lm_kbd_reset);
--    dc->realize = lm8323_realize;
--    k->event = lm_i2c_event;
--    k->recv = lm_i2c_rx;
--    k->send = lm_i2c_tx;
--    dc->vmsd = &vmstate_lm_kbd;
--}
--
--static const TypeInfo lm8323_info = {
--    .name          = TYPE_LM8323,
--    .parent        = TYPE_I2C_SLAVE,
--    .instance_size = sizeof(LM823KbdState),
--    .class_init    = lm8323_class_init,
--};
--
--static void lm832x_register_types(void)
--{
--    type_register_static(&lm8323_info);
--}
--
--type_init(lm832x_register_types)
-diff --git a/hw/input/Kconfig b/hw/input/Kconfig
-index 6f3ffbc5aa1..a116cb82dff 100644
---- a/hw/input/Kconfig
-+++ b/hw/input/Kconfig
-@@ -1,10 +1,6 @@
- config ADB
-     bool
+diff --git a/hw/display/meson.build b/hw/display/meson.build
+index 7db05eace97..dabc0d1da6b 100644
+--- a/hw/display/meson.build
++++ b/hw/display/meson.build
+@@ -25,7 +25,6 @@ system_ss.add(when: 'CONFIG_BOCHS_DISPLAY', if_true: files('bochs-display.c'))
+ system_ss.add(when: 'CONFIG_BLIZZARD', if_true: files('blizzard.c'))
+ system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_fimd.c'))
+ system_ss.add(when: 'CONFIG_FRAMEBUFFER', if_true: files('framebuffer.c'))
+-system_ss.add(when: 'CONFIG_ZAURUS', if_true: files('tc6393xb.c'))
  
--config LM832X
--    bool
--    depends on I2C
--
- config PCKBD
-     bool
-     select PS2
-diff --git a/hw/input/meson.build b/hw/input/meson.build
-index f12796fb695..90a214962c7 100644
---- a/hw/input/meson.build
-+++ b/hw/input/meson.build
-@@ -1,6 +1,5 @@
- system_ss.add(files('hid.c'))
- system_ss.add(when: 'CONFIG_ADB', if_true: files('adb.c', 'adb-mouse.c', 'adb-kbd.c'))
--system_ss.add(when: 'CONFIG_LM832X', if_true: files('lm832x.c'))
- system_ss.add(when: 'CONFIG_PCKBD', if_true: files('pckbd.c'))
- system_ss.add(when: 'CONFIG_PL050', if_true: files('pl050.c'))
- system_ss.add(when: 'CONFIG_PS2', if_true: files('ps2.c'))
+ system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_dss.c'))
+ system_ss.add(when: 'CONFIG_PXA2XX', if_true: files('pxa2xx_lcd.c'))
 -- 
 2.34.1
 
