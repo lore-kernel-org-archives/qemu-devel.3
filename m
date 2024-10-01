@@ -4,127 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43197CEACCD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 689F3CEACCB
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:36:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svdyY-0005ud-O7; Tue, 01 Oct 2024 10:35:46 -0400
+	id 1svdvL-0003Kv-7s; Tue, 01 Oct 2024 10:32:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svdx8-0004Fc-Lq
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:34:19 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1svduB-00020q-P2
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:31:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svdx4-0001Id-G5
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:34:12 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1svdu9-0000hT-OL
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:31:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727793247;
+ s=mimecast20190719; t=1727793068;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=NQn8D+shrjyPGWhS/ZUvzsec421pPCWRv5FAaFa1AsY=;
- b=ZSu+X/maKHwJLBRuIS3hUI/L84cEc3P0MdCILztkDn9Rf8bXkQDT3elQtj0MBM8N8XkptJ
- aTqbNptBgoTJC7dNzjhD8/XN3ydAhoUEzeI67piCnXuikBLNZuumlCuVRIXgSZv7JjDAow
- 1YQ7j4QEsDeUW4Tfw49uH6owrKMZkao=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=4NNzv58JsALzSqMsD+lcQKPY0bUNJ5HaoIAyx9nv3Mw=;
+ b=g4JzIZmjapLLv25LzcX1yxpsR+JrKMogyOFJw5CwsVw7R4xFKeuVpZTG5AJ6C49Ra1OxsC
+ 9oQHWgNMuifDQS7LldcGAYYWPMHGQJ9CAi7sGB01YVgoERC5KLi9QCnD7wuVVQWe1E5e+/
+ 3VhuIK1NqqQUlmMeSGlEBHSAMfcBxz8=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-626-a_qomncYOkm_3Sfmkkh3gQ-1; Tue, 01 Oct 2024 05:14:19 -0400
-X-MC-Unique: a_qomncYOkm_3Sfmkkh3gQ-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42cb2c9027dso40434785e9.1
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 02:14:19 -0700 (PDT)
+ us-mta-295-50ufbRhaPBuAwSbn5_SNkg-1; Tue, 01 Oct 2024 08:22:02 -0400
+X-MC-Unique: 50ufbRhaPBuAwSbn5_SNkg-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-45b6057797cso89982281cf.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 05:22:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727774058; x=1728378858;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1727785322; x=1728390122;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NQn8D+shrjyPGWhS/ZUvzsec421pPCWRv5FAaFa1AsY=;
- b=GrXS8xdE9meHNgBSN1zn/FJSluahvU6xTDgFexxYbCFwzyWBmsVfo239WGV/+x6zqi
- 0su9C370XfD4xYTK/7ndojtEtReXjNojyNz4P/I7RfVK9g8TYVL73cro5QxKN6580IUA
- yb9gYpQP+57pZsUutwdN3a3/I3EfhPpeqCAUe68KMd1MnK6ZZscuR54j6FWWhLeHsj87
- niFiLusdFICIAkJ1bgx07BulLvZLAbe41ISKuUdlZ9oHjFu0K6Ghw5HHwag9jd+6tkJC
- zc+egq70DAppBjJafa0pv7nyhYw7t3fGdIe3g6oh0k0r8X5zMVoeiaw9A8LfEubZHVpi
- XuBg==
+ bh=4NNzv58JsALzSqMsD+lcQKPY0bUNJ5HaoIAyx9nv3Mw=;
+ b=K7o5JNJkoK+x2yyGosEgHQ/4/nSmlK5Gtkq/gjnV06JSRnoA8NFh7oRYGXc05ml2HU
+ jxrr0oIeNJglEOijGA2mt0/8DSVDJGbmmYukdjKPifRsXe8Q4I8y7gUK6zpsJ1G3RZZe
+ KFgSaA+2OJEmHDxJxut0yp4qAeNMMQgPAp5KGclJFo82ZIL966KFLeT/GFP527KA4wE5
+ etktgKOGFIS3h+9laznFuxfEXDv0ohOxZawaY4fym7z33zgsBEh5MHTV4LsOZgn5wNj2
+ TeTOcR4yxJ1RmCVvCaA4VzPTeRwSMWnmHOf9AJZkhInWuVPK7at9M0ccJtEeVpS2QO0C
+ BEgg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUdJ7DlEZGm8kWqSvTZM6s+HNQkYNVdgDxaP44w7LlBDgzV1O35dWqouRg/sUFZ6f89Lc+7WSF+VMIS@nongnu.org
-X-Gm-Message-State: AOJu0Yzyha4aeag/fK14oGSenCgZIZf9V1IR6zV4a4+i/sGrLqGa2GLd
- IYRr7wZ6VV31iUCxexzW+ITQb1p9WrSk5GG01AkjDDnVoKEAwn2xoZ+DDxOuYJ84KeTl6RxUfCL
- wbLAFTtbyL9O4mS/xyaBCu2Xc60Y/UiPh7t5i1En79HEM7fuTpgzzQRbrxOzSB9M=
-X-Received: by 2002:a05:600c:5125:b0:42c:b22e:fc2e with SMTP id
- 5b1f17b1804b1-42f5844b601mr117519625e9.15.1727774058216; 
- Tue, 01 Oct 2024 02:14:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFl3f0IZNx/PKoQnuQi3oeXNgHGOTlqD7JkgdAq8cHcw60lEunsnOcyUUNMYaFvcnsgrkNaXA==
-X-Received: by 2002:a05:600c:5125:b0:42c:b22e:fc2e with SMTP id
- 5b1f17b1804b1-42f5844b601mr117519355e9.15.1727774057749; 
- Tue, 01 Oct 2024 02:14:17 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-49-143.web.vodafone.de.
- [109.42.49.143]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f57e30374sm129076285e9.42.2024.10.01.02.14.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Oct 2024 02:14:17 -0700 (PDT)
-Message-ID: <23f7bf52-af7d-4186-b773-28b15e872064@redhat.com>
-Date: Tue, 1 Oct 2024 11:14:15 +0200
+ AJvYcCVMF/L5A/lnk10ngig+09LAgR2FWAbcVtgVP+qb+y7kaKLaqW96FYVKb9rVEyNxZBfhty036KBX68Y4@nongnu.org
+X-Gm-Message-State: AOJu0YzdS1LgK479lvbfNZhKANTSU518+N5649RO2rHI0wswvUYAan1R
+ IFF0qcCgVQDken5WmhjrhKmAMaTbOA9Z47DCYbZD4y59wz9M6crynHG7Rkk4fBSr+cU5w8NNh6L
+ 7lIPqWOahI+/xave1FLyWJQL++pVh8P1nClNa7qEJqE8UHJgC8e/YURmSR1G9Z0I=
+X-Received: by 2002:a05:622a:1a87:b0:447:db4f:9f00 with SMTP id
+ d75a77b69052e-45c9f224fe4mr233173181cf.32.1727785322145; 
+ Tue, 01 Oct 2024 05:22:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEto9e2bj0OqlD39XBbA6rML/CaZgUSn6Rq2IgTgJv3oMY0rq7IM5gDhcqgIm/bUw8PXvhe1A==
+X-Received: by 2002:a05:622a:1a87:b0:447:db4f:9f00 with SMTP id
+ d75a77b69052e-45c9f224fe4mr233172711cf.32.1727785321649; 
+ Tue, 01 Oct 2024 05:22:01 -0700 (PDT)
+Received: from sgarzare-redhat (host-79-46-200-231.retail.telecomitalia.it.
+ [79.46.200.231]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-45c9f28e481sm44914141cf.16.2024.10.01.05.22.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 01 Oct 2024 05:22:01 -0700 (PDT)
+Date: Tue, 1 Oct 2024 14:21:55 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: yaozhenguo <yaozhenguo1@gmail.com>
+Cc: alex.bennee@linaro.org, mst@redhat.com, qemu-devel@nongnu.org, 
+ yaozhenguo@jd.com
+Subject: Re: [PATCH V2] virtio/vhost-user: fix qemu abort when hotunplug
+ vhost-user-net device
+Message-ID: <akeix6af5fnabwotvaxdvr6ag3xyeuopgsurs3yqtyetwnli2s@cutfouykwadf>
+References: <20240919072944.21262-1-yaozhenguo@jd.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Switch back to the gitlab URLs for the
- advent calendar tests
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>
-References: <20240930171834.51701-1-thuth@redhat.com>
- <ko5yn.bgayz532vi6@linaro.org>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <ko5yn.bgayz532vi6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20240919072944.21262-1-yaozhenguo@jd.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -149,50 +104,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/10/2024 10.50, Manos Pitsidianakis wrote:
-> Hello Thomas,
-> 
-> On Mon, 30 Sep 2024 20:18, Thomas Huth <thuth@redhat.com> wrote:
->> Shortly after we switched to the original URLs on qemu-advent-calendar.org,
->> the server went offline - looks like we are better off using the gitlab
->> URLs again instead.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
-> [snip]
->> diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/ 
->> functional/test_microblazeel_s3adsp1800.py
->> index faa3927f2e..47c941d487 100755
->> --- a/tests/functional/test_microblazeel_s3adsp1800.py
->> +++ b/tests/functional/test_microblazeel_s3adsp1800.py
->> @@ -18,8 +18,8 @@ class MicroblazeelMachine(QemuSystemTest):
->>     timeout = 90
->>
->>     ASSET_IMAGE = Asset(
->> -        ('http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
->> -        'b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22')
->> +        ('https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/ 
->> day13.tar.xz'),
->> +        '67e4c502651f8801e724ecc26403f1d0cdbc00549b033166e2e8cd14e9d49fef')
->>
->>     def test_microblazeel_s3adsp1800(self):
->>         self.require_netdev('user')
-> 
-> I downloaded both day13.tar.gz and day13.tar.xz and these archives have 
-> different file contents, is that on purpose?
+On Thu, Sep 19, 2024 at 03:29:44PM GMT, yaozhenguo wrote:
+>During the process of hot-unplug in vhost-user-net NIC, vhost_user_cleanup
+>may add same rcu node to rcu list. Function calls are as follows:
+>
+>vhost_user_cleanup
+>    ->vhost_user_host_notifier_remove
+>        ->call_rcu(n, vhost_user_host_notifier_free, rcu);
+>    ->g_free_rcu(n, rcu);
+>
+>When this happens, QEMU will abort in try_dequeue:
+>
+>if (head == &dummy && qatomic_mb_read(&tail) == &dummy.next) {
+>    abort();
+>}
+>
+>Backtrace is as follows:
+>0  __pthread_kill_implementation () at /usr/lib64/libc.so.6
+>1  raise () at /usr/lib64/libc.so.6
+>2  abort () at /usr/lib64/libc.so.6
+>3  try_dequeue () at ../util/rcu.c:235
+>4  call_rcu_thread (0) at ../util/rcu.c:288
+>5  qemu_thread_start (0) at ../util/qemu-thread-posix.c:541
+>6  start_thread () at /usr/lib64/libc.so.6
+>7  clone3 () at /usr/lib64/libc.so.6
+>
+>Reason for the abort is that adding two identical nodes to the rcu list will
+>cause it becomes a ring. After dummy node is added to the tail of the list in
+>try_dequeue, the ring is opened. But lead to a situation that only one node is
+>added to list and rcu_call_count is added twice. This will cause try_dequeue
+>abort.
+>
+>This issue happens when n->addr != 0 in vhost_user_host_notifier_remove. It can
+>happens in a hotplug stress test with a 32queue vhost-user-net type NIC.
+>Because n->addr is set in VHOST_USER_BACKEND_VRING_HOST_NOTIFIER_MSG function.
+>during device hotplug process and it is cleared in vhost_dev_stop during device
+>hot-unplug. Since VHOST_USER_BACKEND_VRING_HOST_NOTIFIER_MSG is a message sent
+>by DPDK to qemu, it is asynchronous. So, there is no guaranteed order between
+>the two processes of setting n->addr and clearing n->addr. If setting n->addr
+>in hotplug occurs after clearing n->addr in hotunplug, the issue will occur.
+>So, it is necessary to merge g_free_rcu and vhost_user_host_notifier_free into
+>one rcu node.
+>
+>Fixes: 503e355465 ("virtio/vhost-user: dynamically assign VhostUserHostNotifiers")
+>
+>Signed-off-by: yaozhenguo <yaozhenguo@jd.com>
+>---
+>
+>V1->V2:
+>    add n->addr check in vhost_user_get_vring_base and vhost_user_backend_handle_vring_host_notifier
+>    to prevent submit same node to rcu list.
+>
+>---
+> hw/virtio/vhost-user.c         | 39 +++++++++++++++++++++------------------
+> include/hw/virtio/vhost-user.h |  1 +
+> 2 files changed, 22 insertions(+), 18 deletions(-)
+>
+>diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+>index 00561da..ba4c09c 100644
+>--- a/hw/virtio/vhost-user.c
+>+++ b/hw/virtio/vhost-user.c
+>@@ -51,7 +51,6 @@
+> #else
+> #define VHOST_USER_MAX_RAM_SLOTS 512
+> #endif
+>-
+> /*
+>  * Maximum size of virtio device config space
+>  */
+>@@ -1185,9 +1184,16 @@ static int vhost_user_set_vring_num(struct vhost_dev *dev,
+>
+> static void vhost_user_host_notifier_free(VhostUserHostNotifier *n)
+> {
+>-    assert(n && n->unmap_addr);
+>-    munmap(n->unmap_addr, qemu_real_host_page_size());
+>-    n->unmap_addr = NULL;
+>+    if (n->unmap_addr) {
+>+        munmap(n->unmap_addr, qemu_real_host_page_size());
+>+        n->unmap_addr = NULL;
+>+    }
+>+    if (n->need_free) {
+>+        memory_region_transaction_begin();
+>+        object_unparent(OBJECT(&n->mr));
+>+        memory_region_transaction_commit();
+>+        g_free(n);
+>+    }
+> }
+>
+> /*
+>@@ -1195,17 +1201,20 @@ static void vhost_user_host_notifier_free(VhostUserHostNotifier *n)
+>  * under rcu.
+>  */
+> static void vhost_user_host_notifier_remove(VhostUserHostNotifier *n,
+>-                                            VirtIODevice *vdev)
+>+                                            VirtIODevice *vdev, bool free)
 
-Oh, drat! That's a different package, indeed - it's the one from 2018, not 
-the one from 2023! I didn't really notice since I did not remove my 
-tests/functional/ folder before re-running the tests, so this test was 
-silently re-using the old binary from the previous test runs :-/
-(note to myself: we should maybe remove the binaries after each test run).
+What about `destroy` instead of `free`?
 
-Thanks for spotting it!
+In that way is more clear that it should be true when called by
+`vhost_user_state_destroy()`.
 
-Meanwhile, the www.qemu-advent-calendar.org website seems to be back, so 
-maybe we don't need this patch here anymore... let's wait and see whether it 
-remains stable now...
+> {
+>     if (n->addr) {
+>         if (vdev) {
+>+            memory_region_transaction_begin();
+>             virtio_queue_set_host_notifier_mr(vdev, n->idx, &n->mr, false);
+>+            memory_region_transaction_commit();
+>         }
+>         assert(!n->unmap_addr);
+>         n->unmap_addr = n->addr;
+>         n->addr = NULL;
+>-        call_rcu(n, vhost_user_host_notifier_free, rcu);
+>     }
 
-  Thomas
+Instead of checking n->addr in the caller, I suggest to move the check
+here:
+
+       if (destroy || n->unmap_addr) {
+           s->destroy = destroy;
+           call_rcu(n, vhost_user_host_notifier_free, rcu);
+       }
+
+Thanks,
+Stefano
+
+>+    n->need_free = free;
+>+    call_rcu(n, vhost_user_host_notifier_free, rcu);
+> }
+>
+> static int vhost_user_set_vring_base(struct vhost_dev *dev,
+>@@ -1279,8 +1288,8 @@ static int vhost_user_get_vring_base(struct vhost_dev *dev,
+>     struct vhost_user *u = dev->opaque;
+>
+>     VhostUserHostNotifier *n = fetch_notifier(u->user, ring->index);
+>-    if (n) {
+>-        vhost_user_host_notifier_remove(n, dev->vdev);
+>+    if (n && n->addr) {
+>+        vhost_user_host_notifier_remove(n, dev->vdev, false);
+>     }
+>
+>     ret = vhost_user_write(dev, &msg, NULL, 0);
+>@@ -1562,7 +1571,9 @@ static int vhost_user_backend_handle_vring_host_notifier(struct vhost_dev *dev,
+>      * new mapped address.
+>      */
+>     n = fetch_or_create_notifier(user, queue_idx);
+>-    vhost_user_host_notifier_remove(n, vdev);
+>+    if (n && n->addr) {
+>+        vhost_user_host_notifier_remove(n, vdev, false);
+>+    }
+>
+>     if (area->u64 & VHOST_USER_VRING_NOFD_MASK) {
+>         return 0;
+>@@ -2737,13 +2748,7 @@ static void vhost_user_state_destroy(gpointer data)
+> {
+>     VhostUserHostNotifier *n = (VhostUserHostNotifier *) data;
+>     if (n) {
+>-        vhost_user_host_notifier_remove(n, NULL);
+>-        object_unparent(OBJECT(&n->mr));
+>-        /*
+>-         * We can't free until vhost_user_host_notifier_remove has
+>-         * done it's thing so schedule the free with RCU.
+>-         */
+>-        g_free_rcu(n, rcu);
+>+        vhost_user_host_notifier_remove(n, NULL, true);
+>     }
+> }
+>
+>@@ -2765,9 +2770,7 @@ void vhost_user_cleanup(VhostUserState *user)
+>     if (!user->chr) {
+>         return;
+>     }
+>-    memory_region_transaction_begin();
+>     user->notifiers = (GPtrArray *) g_ptr_array_free(user->notifiers, true);
+>-    memory_region_transaction_commit();
+>     user->chr = NULL;
+> }
+>
+>diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
+>index 324cd86..a171f29 100644
+>--- a/include/hw/virtio/vhost-user.h
+>+++ b/include/hw/virtio/vhost-user.h
+>@@ -54,6 +54,7 @@ typedef struct VhostUserHostNotifier {
+>     void *addr;
+>     void *unmap_addr;
+>     int idx;
+>+    bool need_free;
+> } VhostUserHostNotifier;
+>
+> /**
+>-- 
+>1.8.3.1
+>
 
 
