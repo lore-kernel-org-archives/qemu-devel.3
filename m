@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADA0BCEACEA
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 17:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1421DCEACEA
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 17:05:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svgIZ-0006Ap-0T; Tue, 01 Oct 2024 13:04:31 -0400
+	id 1svgJF-0006OT-BX; Tue, 01 Oct 2024 13:05:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1svgIU-00069u-Ks
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 13:04:26 -0400
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1svgJ4-0006G9-6O
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 13:05:03 -0400
 Received: from mout.kundenserver.de ([212.227.126.134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1svgIS-0000d5-S8
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 13:04:26 -0400
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1svgJ0-0000fF-V9
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 13:05:01 -0400
 Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
- (mreue011 [213.165.67.103]) with ESMTPSA (Nemesis) id
- 1Mzhzd-1s0yw615yz-00tcT4; Tue, 01 Oct 2024 19:04:19 +0200
-Message-ID: <da948684-bb75-44f3-8802-e771e7abfeac@vivier.eu>
-Date: Tue, 1 Oct 2024 19:04:18 +0200
+ (mreue012 [213.165.67.103]) with ESMTPSA (Nemesis) id
+ 1MoNMu-1s7CBi0ifQ-00ikte; Tue, 01 Oct 2024 19:04:54 +0200
+Message-ID: <3d8693f6-4b02-4d19-9e2f-2c79461fce05@vivier.eu>
+Date: Tue, 1 Oct 2024 19:04:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 1/2] linux-user: add openat2 support in linux-user
+Subject: Re: [PATCH v9 2/2] linux-user: add strace support for openat2
 To: Michael Vogt <mvogt@redhat.com>, qemu-devel@nongnu.org
 Cc: Michael Vogt <michael.vogt@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>
 References: <cover.1727795334.git.mvogt@redhat.com>
- <1c2c8c9db3731ed4c6fd9b10c63637c3e4caf8f5.1727795334.git.mvogt@redhat.com>
+ <f02d40c7751c03af885ced6dd94e4734d4be4d8f.1727795334.git.mvogt@redhat.com>
 Content-Language: fr
 From: Laurent Vivier <laurent@vivier.eu>
 Autocrypt: addr=laurent@vivier.eu; keydata=
@@ -75,25 +75,25 @@ Autocrypt: addr=laurent@vivier.eu; keydata=
  OpKgu3nD0ahBDqANU/ZmNNarBJEwvM2vfusmNnWm3QMIwxNuJghRyuFfx694Im1js0ZY3LEU
  JGSHFG4ZynA+ZFUPA6Xf0wHeJOxGKCGIyeKORsteIqgnkINW9fnKJw2pgk8qHkwVc3Vu+wGS
  ZiJK0xFusPQehjWTHn9WjMG1zvQ5TQQHxau/2FkP45+nRPco6vVFQe8JmgtRF8WFJA==
-In-Reply-To: <1c2c8c9db3731ed4c6fd9b10c63637c3e4caf8f5.1727795334.git.mvogt@redhat.com>
+In-Reply-To: <f02d40c7751c03af885ced6dd94e4734d4be4d8f.1727795334.git.mvogt@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:tW9glaNc5kFRgSJFcKueeeGkTbNfboF8OYklhuiBR8oZVcVySyV
- uhoa5oMreOWHlTHT2ajJfNCradSmCcj7gMJyFCgfN1uAmedPmVu/6LVyBihE4Yd2PxteyAp
- hpROvZ+74hzsxDdK7DIwj3/nU0PNVhn5r9CUUYEFoW3Z78/B4Fn6uWicNwsQaXLW4dMUXp4
- kqPbnCBt21EFg7iU/m8dA==
-UI-OutboundReport: notjunk:1;M01:P0:wcOwEtzRGOE=;3PFPAveyR37NgdreYNLS8aMCQ0z
- vIIpS5Uzc4nLxftld1DkEPvYyU/G3Fu9/pIgtFCOpcPH+47IzniTreexWnV2sb4zxgkPahDEw
- 2ZkQUE8gnJ5ojsarEqcDcgcfVm9QuOju5w6D5r7EPoB0eMz50xaAd+4lRPjaH4jtooWlNDHI0
- 6yAf4F2qyKd/YM0lUlZsZtUBM5PYelRoqeWds7fHAu+dqhzcsaum2ij3ti1Jk9iQWqIOAG/Yw
- T0LdZz/HwtAU6H6w5wq6vcL5OhSIjuFaSU0hyAWXfgdTD3pBsFkLyNJfNMI7qFXk0oDCnq2RV
- MCEcUfsFUrCQl4jO9LM6/FET5VsRxJBqKi3W0j+A72XhXudzPv7PSpKhj4Fs6hK/0hVGCUs+z
- aCRAslYsjAvu4nKNC72lzZvVUHpdDaxYlcg3tPKZoMMYQYkHxnkc4auYO3gbgR7Y2xRwbL4yh
- CCwXI5iVF43A1iD0aR1FVpaXuJCFzT279SdwMA/EEsb3MPK2LB/ZSVXieqJDeKOp0NijoBWOE
- 4lYTlMPTts5FbZj88Wrtt/ZQTtYG0xOsdyO9Rmi6HsdS7xwfDU3K/+gq1wt4viS7wJwVLzbrf
- T7gTVB0voKV5yWwiSpCVMV3e4AmUr0+CDUGe6E278lV6h92BZef5ZumloAJV1X01Y+mP30Ev4
- OQ5IMr7IAuUSvunZI2nrR9YXXd4keKEFNgePbfCgwxb1c/hEW1736j/uWOL3HJISr1TJizGnw
- nlu/qnF7b4bgnDdzIFGdzW0+LZ8EhC8aw==
+X-Provags-ID: V03:K1:PXkj5aeqScwb3HYEXIt97BP3AIuO2V3+FwZc6NVJBVv5tdhCF4q
+ LhfVcQQvQoq26k/EueqnimWtBmPv+Eo5eqxvdeUrclHZGtE6lesjMqyjhtYOKY2P8pOHsr0
+ O9vgpn24tfYVUiQuJyhSR2yInGZvZ1nxCEXD5BLz5C34HZ0zUhfTMbx4cktqx/QkJ5pG7UJ
+ T7dELWzOILL8F8zzX09yQ==
+UI-OutboundReport: notjunk:1;M01:P0:SDpY3T3oJG4=;WgYkel/SkmWastjERXo3s/71t6o
+ aWAGILsu3GYyVT9112CgOm9giudwnhb4xGpWTlTj6+Kmj+9LCak30kxRUzm8vfYGfM9h7ITAO
+ laZXrqwzq7W1gOhAWeySN5+MfjEwuWGNQkBpwbcTcPdOFiOW/LuvtQ0GU0gYviEW6Crb4dbJt
+ V/hR2Lk0AoifCK4Exijiswco6oQwfPMBAAEuVTJoonylcK4Z6ta/1eK+5e5/ZKgJcVkKXjitL
+ rTJZw9pj/luj54o8+FjIA2i8EwcA+OhzRt62RWZOgWUNqctH3SP/JwpQfBO0zuODZw+fMEGbf
+ 6driRfLFagH/bX8PzM6h3LZ4MNpYBfQjsaY0B+hjRVabqhZSDXTQZB5mj+LV8oBtDmbOkZA9Y
+ l/Y72wdIRS2G9znCnKwM7KVOhAf68XbwEqWWonDWAHXMbt1OPd+F3+/5Cgzy0mr1o5Btx/6fw
+ LFbfVU1oYdii4ard0Q0jUa9JMSzTe6oyFOlGZFjKyg3jr7ktjeDom65LLp7jM36bubFyGh+0M
+ HYCqpaLOsv8auJUdU4/4jwWtxSZor7WMGzxs1pz0jO2c/K5w8q9s/2u9YmIOTp55jLnnrao2m
+ O8s8CdgK/LWreDhLTcxB/79MxNw2cX+NzpKr7CLz4m2Pq7PM1XCjH1QWlFIn+q4ae0oPX76kI
+ m87fC4swvoQoIzL8yU9LUrXXAKpHB5DmWWoA6Q6rMmLBYrbeB7S3mRZFZytEMNEY0T4rbQsRm
+ 99cJWvS5e5tm8be380Hk/P3A0bbx9f3AA==
 Received-SPF: pass client-ip=212.227.126.134; envelope-from=laurent@vivier.eu;
  helo=mout.kundenserver.de
 X-Spam_score_int: -18
@@ -119,42 +119,25 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Le 01/10/2024 à 17:14, Michael Vogt a écrit :
-> This commit adds support for the `openat2()` syscall in the
-> `linux-user` userspace emulator.
+> This commit adds support for the `openat2()` to `QEMU_STRACE`. It
+> will use the `openat2.h` header if available to create user
+> readable flags for the `resolve` argument but does not require
+> the header otherwise.
 > 
-> It is implemented by extracting a new helper `maybe_do_fake_open()`
-> out of the exiting `do_guest_openat()` and share that with the
-> new `do_guest_openat2()`. Unfortunately we cannot just make
-> do_guest_openat2() a superset of do_guest_openat() because the
-> openat2() syscall is stricter with the argument checking and
-> will return an error for invalid flags or mode combinations (which
-> open()/openat() will ignore).
-> 
-> The implementation is similar to SYSCALL_DEFINE(openat2), i.e.
-> a new `copy_struct_from_user()` is used that works the same
-> as the kernels version to support backwards-compatibility
-> for struct syscall argument.
-> 
-> Instead of including openat2.h we create a copy of `open_how`
-> as `open_how_ver0` to ensure that if the structure grows we
-> can log a LOG_UNIMP warning.
-> 
-> Note that in this commit using openat2() for a "faked" file in
-> /proc will honor the "resolve" flags for
-> RESOLVE_NO_{MAGIC,SYM}LINKS for path based access to /proc/self/exe
-> (which is the only magic link we support for faked files).
-> Note it will not catch special access via e.g. dirfd. This is not
-> great but it seems similar to the exiting behavior when openat()
-> is called with a dirfd to "/proc". Here too the fake file lookup
-> may not catch the special file because no dirfd is used to
-> determine if the path is in /proc.
+> It also makes `copy_struct_from_user()` available via `qemu.h`
+> and `open_how_ver0` via `syscall_defs.h` so that strace.c can use
+> them.
 > 
 > Signed-off-by: Michael Vogt <mvogt@redhat.com>
-> Buglink: https://github.com/osbuild/bootc-image-builder/issues/619
 > ---
->   linux-user/syscall.c      | 105 +++++++++++++++++++++++++++++++++++++-
->   linux-user/syscall_defs.h |  13 +++++
->   2 files changed, 116 insertions(+), 2 deletions(-)
+>   linux-user/qemu.h         |  9 ++++++++
+>   linux-user/strace.c       | 44 +++++++++++++++++++++++++++++++++++++++
+>   linux-user/strace.list    |  3 +++
+>   linux-user/syscall.c      |  8 +------
+>   linux-user/syscall_defs.h |  5 +++++
+>   meson.build               |  1 +
+>   6 files changed, 63 insertions(+), 7 deletions(-)
+> 
 
 Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 
