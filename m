@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4493FCEACD5
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:43:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2456CEACD6
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:43:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sve5E-0005Ux-W9; Tue, 01 Oct 2024 10:42:37 -0400
+	id 1sve5L-0005ae-Mg; Tue, 01 Oct 2024 10:42:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sve5C-0005Rl-NX; Tue, 01 Oct 2024 10:42:34 -0400
+ id 1sve5E-0005Sg-Ed; Tue, 01 Oct 2024 10:42:36 -0400
 Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sve5B-0003Hi-70; Tue, 01 Oct 2024 10:42:34 -0400
+ id 1sve5B-0003Hj-8v; Tue, 01 Oct 2024 10:42:36 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 4421E5C4D92;
- Tue,  1 Oct 2024 11:43:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99CB5C4CED1;
+ by dfw.source.kernel.org (Postfix) with ESMTP id D98C05C4D4C;
+ Tue,  1 Oct 2024 11:43:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D11C4CECD;
  Tue,  1 Oct 2024 11:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1727782996;
- bh=IyUOOIPt26ymtGpZVs8Q3SZ/F5X7AIWjPA1DhypfsoI=;
+ bh=rH14cOwaAW34hdFT10uPKx79P1tpskTOouy7QlMnEpo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=MqkLMWwqY4LgSRssHKEOUG8SdbQoskVNezXq0ZLvCnHxw5RAMZoXBUg92txi1lzu8
- FCGzX+oDVbXdDsnSLKhsTC1b/hWGmqURIg+x+dmMSjXkedwzZD2yWIIvFpREEHORT/
- NN99RYPUfzk779N7GUDTtJDMK4i2qAGpeaBUoUiuYW5lhtb+yCsFwkDlh2lGDQl+SY
- I998W4eVY6yuiEw0+HORF0Ipz8fkqWlLCRwGNJ8D8SR3oHYrcKWAfP4or5rrn3U7ig
- GjDQl24qfdpxIbSYre5o7mYDsEZMFDdip8aSWENiYyX4GwJvzlZnjrHyvT+gNrZ3IE
- z26nyMabNTPEg==
+ b=WVJlenmFs6EVd0AgpyhvOht9k9HhhS7vq7o5/Af2o172yDc9qUewyTji3gTDzewk7
+ nVAN1NmN8k1OeZa+ml17fdbnGUQM2jDICVvOXWAF8quQ75Nxq8GjSundoyO/O0haaI
+ yM7hAbnrCx7Z1GKzmVvWmzZi3meGXiHo0RV/wS67FWq+EKhdrOjtRq2lIcBcSUJ7M8
+ xJC+DzrhvuGHiieSrHG7FsPaOhN8SqfrQPKQexSFNb+2aa3hrLY2JLAWOdI2bpuXWR
+ eI+z8rkoZcne3+o46N6j4HlyaR5sK1YgrRLu01ijvJoZLB188lvlsuzFjxsrJL+rxg
+ Jsq1V8r+uTr4g==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1svbHd-0000000Add8-3d7C; Tue, 01 Oct 2024 13:43:13 +0200
+ id 1svbHd-0000000Adcv-3IYJ; Tue, 01 Oct 2024 13:43:13 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, linux-kernel@vger.kernel.org,
+ Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
  qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH RFC 5/5] arm/virt-acpi-build: Properly handle virt-9.1
-Date: Tue,  1 Oct 2024 13:42:50 +0200
-Message-ID: <2b5b4e57eb5332c83789d4bd0f01214861cc7f0a.1727782588.git.mchehab+huawei@kernel.org>
+Subject: [PATCH RFC 2/5] acpi/ghes: Use HEST table offsets when preparing GHES
+ records
+Date: Tue,  1 Oct 2024 13:42:47 +0200
+Message-ID: <9eacb24e5e13b2028be90d19e936868a921f8e34.1727782588.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.46.1
 In-Reply-To: <cover.1727782588.git.mchehab+huawei@kernel.org>
 References: <cover.1727782588.git.mchehab+huawei@kernel.org>
@@ -77,61 +77,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A virt-9.1 machine can have only one source ID.
+There are two pointers that are needed during error injection:
+
+1. The start address of the CPER block to be stored;
+2. The address of the ack, which needs a reset before next error.
+
+Calculate them preferrable from the HEST table, as this allows
+checking the source ID, the size of the table and the type of
+HEST error block structures.
+
+Yet, keep the old code, as this is needed for migration purposes.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- hw/arm/virt-acpi-build.c | 30 ++++++++++++++++++++++++++----
- 1 file changed, 26 insertions(+), 4 deletions(-)
+ hw/acpi/ghes.c | 93 ++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 83 insertions(+), 10 deletions(-)
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 476c365851c4..8036eb5953d0 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -894,6 +894,10 @@ static const AcpiNotificationSourceId hest_ghes_notify[] = {
-     {ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA},
- };
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index 2c2cf444edeb..313a6e453af6 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -61,6 +61,23 @@
+  */
+ #define ACPI_GHES_GESB_SIZE                 20
  
-+static const AcpiNotificationSourceId hest_ghes_notify_9_1[] = {
-+    {ACPI_HEST_SRC_ID_QMP, ACPI_GHES_NOTIFY_GPIO},
-+};
++/*
++ * Offsets with regards to the start of the HEST table stored at
++ * ags->hest_addr_le, according with the memory layout map at
++ * docs/specs/acpi_hest_ghes.rst.
++ */
 +
- static
- void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
++/* ACPI 6.2: 18.3.2.8 Generic Hardware Error Source version 2
++ * Table 18-382 Generic Hardware Error Source version 2 (GHESv2) Structure
++ */
++#define HEST_GHES_V2_TABLE_SIZE  92
++#define GHES_ACK_OFFSET          (64 + GAS_ADDR_OFFSET)
++
++/* ACPI 6.2: 18.3.2.7: Generic Hardware Error Source
++ * Table 18-380: 'Error Status Address' field
++ */
++#define GHES_ERR_ST_ADDR_OFFSET  (20 + GAS_ADDR_OFFSET)
++
+ /*
+  * Values for error_severity field
+  */
+@@ -218,14 +235,6 @@ static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker,
  {
-@@ -947,10 +951,28 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
-     build_dbg2(tables_blob, tables->linker, vms);
+     int i, error_status_block_offset;
  
-     if (vms->ras) {
--        acpi_add_table(table_offsets, tables_blob);
--        acpi_build_hest(tables_blob, tables->hardware_errors, tables->linker,
--                        hest_ghes_notify, ARRAY_SIZE(hest_ghes_notify),
--                        vms->oem_id, vms->oem_table_id);
-+        AcpiGhesState *ags;
-+        AcpiGedState *acpi_ged_state;
+-    /*
+-     * TODO: Current version supports only one source.
+-     * A further patch will drop this check, after adding a proper migration
+-     * code, as, for the code to work, we need to store a bios pointer to the
+-     * HEST table.
+-     */
+-    assert(num_sources == 1);
+-
+     /* Build error_block_address */
+     for (i = 0; i < num_sources; i++) {
+         build_append_int_noprefix(hardware_errors, 0, sizeof(uint64_t));
+@@ -425,6 +434,65 @@ static void get_ghes_offsets(uint64_t ghes_addr,
+     *read_ack_register_addr = ghes_addr + sizeof(uint64_t);
+ }
+ 
++static void get_hest_offsets(uint16_t source_id, uint64_t hest_addr,
++                             uint64_t *cper_addr,
++                             uint64_t *read_ack_start_addr,
++                              Error **errp)
++{
++    uint64_t hest_err_block_addr, hest_read_ack_start_addr;
++    uint64_t err_source_struct, error_block_addr;
++    uint32_t num_sources, i;
 +
-+        acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,
-+                                                       NULL));
-+        if (acpi_ged_state) {
-+            ags = &acpi_ged_state->ghes_state;
++    if (!hest_addr) {
++        return;
++    }
 +
-+            acpi_add_table(table_offsets, tables_blob);
++    cpu_physical_memory_read(hest_addr, &num_sources, sizeof(num_sources));
 +
-+            if (!ags->hest_lookup) {
-+                acpi_build_hest(tables_blob, tables->hardware_errors,
-+                                tables->linker, hest_ghes_notify_9_1,
-+                                ARRAY_SIZE(hest_ghes_notify_9_1),
-+                                vms->oem_id, vms->oem_table_id);
-+            } else {
-+                acpi_build_hest(tables_blob, tables->hardware_errors,
-+                                tables->linker, hest_ghes_notify,
-+                                ARRAY_SIZE(hest_ghes_notify),
-+                                vms->oem_id, vms->oem_table_id);
-+            }
++    err_source_struct = hest_addr + sizeof(num_sources);
++
++    /*
++     * Currently, HEST Error source navigates only for GHESv2 tables
++     */
++
++    for (i = 0; i < num_sources; i++) {
++        uint64_t addr = err_source_struct;
++        uint16_t type, src_id;
++
++        cpu_physical_memory_read(addr, &type, sizeof(type));
++
++        /* For now, we only know the size of GHESv2 table */
++        assert(type == ACPI_GHES_SOURCE_GENERIC_ERROR_V2);
++
++        /* It is GHES. Compare CPER source address */
++        addr += sizeof(type);
++        cpu_physical_memory_read(addr, &src_id, sizeof(src_id));
++
++        if (src_id == source_id) {
++            break;
 +        }
++
++        err_source_struct += HEST_GHES_V2_TABLE_SIZE;
++    }
++    if (i == num_sources) {
++        error_setg(errp, "HEST: Source %d not found.", source_id);
++        return;
++    }
++
++    /* Navigate though table address pointers */
++    hest_err_block_addr = err_source_struct + GHES_ERR_ST_ADDR_OFFSET;
++    hest_read_ack_start_addr = err_source_struct + GHES_ACK_OFFSET;
++
++    cpu_physical_memory_read(hest_err_block_addr, &error_block_addr,
++                             sizeof(error_block_addr));
++
++    cpu_physical_memory_read(error_block_addr, cper_addr,
++                             sizeof(*cper_addr));
++
++    cpu_physical_memory_read(hest_read_ack_start_addr, read_ack_start_addr,
++                             sizeof(*read_ack_start_addr));
++}
++
+ void ghes_record_cper_errors(const void *cper, size_t len,
+                              uint16_t source_id, Error **errp)
+ {
+@@ -445,8 +513,13 @@ void ghes_record_cper_errors(const void *cper, size_t len,
      }
+     ags = &acpi_ged_state->ghes_state;
  
-     if (ms->numa_state->num_nodes > 0) {
+-    get_ghes_offsets(le64_to_cpu(ags->hw_error_le),
+-                     &cper_addr, &read_ack_register_addr);
++    if (!ags->hest_addr_le) {
++        get_ghes_offsets(le64_to_cpu(ags->hw_error_le),
++                         &cper_addr, &read_ack_register_addr);
++    } else {
++        get_hest_offsets(source_id, le64_to_cpu(ags->hest_addr_le),
++                         &cper_addr, &read_ack_register_addr, errp);
++    }
+ 
+     if (!cper_addr) {
+         error_setg(errp, "can not find Generic Error Status Block");
 -- 
 2.46.1
 
