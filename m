@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1A88CEACD5
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82E82CEACDC
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:52:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sveAh-0003vM-Q9; Tue, 01 Oct 2024 10:48:15 -0400
+	id 1sveAX-0003Za-QW; Tue, 01 Oct 2024 10:48:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1sveA6-00031x-6R; Tue, 01 Oct 2024 10:47:42 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ id 1sveAB-00035f-Dw; Tue, 01 Oct 2024 10:47:43 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1sveA4-0004VE-I8; Tue, 01 Oct 2024 10:47:37 -0400
+ id 1sveA9-0004XW-5y; Tue, 01 Oct 2024 10:47:43 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 41FC85C549B;
- Tue,  1 Oct 2024 07:04:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0606BC4CED2;
- Tue,  1 Oct 2024 07:04:12 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 68B075C105B;
+ Tue,  1 Oct 2024 07:04:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3B5C4CECF;
+ Tue,  1 Oct 2024 07:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1727766252;
- bh=sRsbSliw/+ZXQ/ZQ+dhrxx2M70UfTSUIKGoJ5MP3coc=;
+ s=k20201202; t=1727766251;
+ bh=OPn+v+8+BveQRdEyioQUgXVoI5BFnHOQMXslK4VQRmM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=LwvHTe6s+Vq2Bv/Ow3XuXGR2JU7N7lNKsHZj32WvdnHbN+H1IoS4hiExkhqBc9ruy
- 3kGaNbcdy89SUVAP18D9CxArlAhVD71sKgdiHBJa+hSXS6VDGZM4qswrOjal6j1ZC4
- OJ6KKrTTsLIIsObtOOgXQIH+fB+SE4oySlWyc+t3ZWpnlVD3VUQGy9usvLqSEnYOIZ
- MQr4bkcYrXtINiHwhnsdaYm+wmcadeIzTP/16G/rfYbpKQ8f+M8kD4hKSv4azh5+MD
- KiuvQkPtOoXP3UBWUVBi8Y+Nme8/KeKjPUmUPNRIEosodOZF2v0R4mxLP/JksyYQtC
- 9j1M9/vZSpwhg==
+ b=nX6vCR5Ry8sK/PUt1JzItEvx062H3XhEucp8Rhka53c8x/0JqWIT0p380FeK3XL4E
+ XkAKf1Blro7LrHPrnnqrsfDhhl1VNoesmb0VaT1+Eulwb1QDnrm6Ye3N7GItVRu5//
+ gnJPs2kh2+Oe62QjUNpu6TNn0n0w2HidemsIEhey2Mpwa9pMLuuoMqY7I7uRlF3jL9
+ Mg6rjW1khLrmC6kvCLrav/WgHdTIq1+ed29jDGlwAmSlw6yytDznnvYYg2e9edFoR2
+ +WgpkpdjTNYOUBh6Sj36+ZEnb8jQ/1VryyhkN3tIcIpqO0k57OSJpRdrvzA1MBipW0
+ gczzKdU5vfU8Q==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
- (envelope-from <mchehab@kernel.org>) id 1svWvY-00000001V19-3Khk;
+ (envelope-from <mchehab@kernel.org>) id 1svWvY-00000001V0l-2CWy;
  Tue, 01 Oct 2024 09:04:08 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v2 12/15] acpi/ghes: don't crash QEMU if ghes GED is not found
-Date: Tue,  1 Oct 2024 09:03:49 +0200
-Message-ID: <18c69e8c7a6b6ac365397fe1f442f3ba0cb83be8.1727766088.git.mchehab+huawei@kernel.org>
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH v2 06/15] acpi/ghes: Remove a duplicated out of bounds check
+Date: Tue,  1 Oct 2024 09:03:43 +0200
+Message-ID: <ccb2123649c35e0a268b9745e9b295c8208e92bd.1727766088.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <cover.1727766088.git.mchehab+huawei@kernel.org>
 References: <cover.1727766088.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.178.84.217; envelope-from=mchehab@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=mchehab@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,29 +75,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead, produce an error and continue working
+acpi_ghes_record_errors() has an assert() at the beginning
+to ensure that source_id will be lower than
+ACPI_GHES_ERROR_SOURCE_COUNT. Remove a duplicated check.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- hw/acpi/ghes.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ hw/acpi/ghes.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 3af1cd16d4d7..209095f67e9a 100644
+index 29cd7e4d8171..5f67322bf0f2 100644
 --- a/hw/acpi/ghes.c
 +++ b/hw/acpi/ghes.c
-@@ -418,7 +418,10 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+@@ -404,9 +404,7 @@ int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
+         return -1;
+     }
  
-     acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,
-                                                        NULL));
--    g_assert(acpi_ged_state);
-+    if (!acpi_ged_state) {
-+        error_setg(errp, "Can't find ACPI_GED object");
-+        return;
-+    }
-     ags = &acpi_ged_state->ghes_state;
+-    if (source_id < ACPI_GHES_ERROR_SOURCE_COUNT) {
+-        start_addr += source_id * sizeof(uint64_t);
+-    }
++    start_addr += source_id * sizeof(uint64_t);
  
-     get_ghes_offsets(le64_to_cpu(ags->ghes_addr_le),
+     cpu_physical_memory_read(start_addr, &error_block_addr,
+                              sizeof(error_block_addr));
 -- 
 2.46.0
 
