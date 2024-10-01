@@ -4,97 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39644CEACD5
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 15:07:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2FDBCEACDD
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 15:11:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sveSx-0001eG-Uu; Tue, 01 Oct 2024 11:07:07 -0400
+	id 1sveWG-00042i-0o; Tue, 01 Oct 2024 11:10:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sveSs-0001Xa-Bt
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 11:07:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sveSo-0001N3-SQ
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 11:07:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727795213;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hEH3qBVYTHP8CFwTdUPPeaUdYBeTi1xbeartC6vgI8o=;
- b=iF37eSv7SdUUqwQDfs+qBSXHbBtejUis+0Wg7NdGOBUjiYN1tPL6cco4LRjKrrn8Gq3G3D
- fUJ2pyX7cSCwueTHid21ZTNP68NWhysabt96TmmiWqT82p8SZ9nBqekhBYRjoWbZva0F4j
- DGqk6Vthww/wG65sZLpCj52R5PFl6vE=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-615-9bmWCpynMIGBnT49eueoPA-1; Tue, 01 Oct 2024 11:06:51 -0400
-X-MC-Unique: 9bmWCpynMIGBnT49eueoPA-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7a9a85e4a85so1281269485a.0
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 08:06:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sveWD-00041h-UE
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 11:10:30 -0400
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sveWB-0002D8-Ug
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 11:10:29 -0400
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-53992157528so2909083e87.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 08:10:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727795426; x=1728400226; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=QRgCiS1LJNxyhUxBrF5A8/PY0hT8ntX+Q5VtzEfIt2E=;
+ b=zEB10au2L/DJzT6lR8Mz+tjrSQ2q0slttigxnBotn9SJXoGfiWdnrbP8WKe277wZUs
+ R6lbBjOzm3PbO/iw4SKJHrpIIPaSoovbfsgJvHcROFQYP31CPMWyGedUEnaYJ5rMOz+m
+ eNkPCoMUCCwFK85doKSJ3HWHyQLj6mcXvN8svjlMWj0RvIHYwe6TjPweLsYgRTzFAiUQ
+ NBvvCdMrGQIjz/d59xQbwY83SkLI+8vbCbtOSXno1J08JqOcNPVijj8tollufPThOsYa
+ tMYyYcfD4qexZHRJGqf9Q5dBgqkbS8oUIWawsEcSpRoYGRGHBoe2Xxo1SOaJrpx4ZL1/
+ Umtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727795211; x=1728400011;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hEH3qBVYTHP8CFwTdUPPeaUdYBeTi1xbeartC6vgI8o=;
- b=gK0Wt9fdCKvB25ab7qbWKFrNGzW9T2dOo3+2QZPQKlqVGuzO3RcpLYYRi7y0nlw4qn
- rQR6bW2P5Uc+S+mX39/xF8uajtL80u9Nhyp2FUOb8kYNw663AYleVbSNhsK02G4vLJc9
- g4oZ0BrBwA1RhmCTOS84jM516W2DVzKBMKa78IRO3CnwVt6bvbaJoW/Fe/qQ4EnvgTvR
- ugSTusEunjn2ynciG+2jnWvosDrbmXPNq6xHhnqQjBxJyxBqzc2i4AFGX4qktM1j6aop
- JOhl3bPXFvDNKCa1THPj5Z1GP3eemoj6ZR3Q1aRQqo70xx6N72Q2iDF7oJ8cLpJ5GUBE
- IgdA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXBtw+ti4IrSCLImpWmo6aWQpYvuBW4D449Ww1iNwYCGR4BxBiBfv0zpAbYWlBNo9K3cYpAGlyIEdaw@nongnu.org
-X-Gm-Message-State: AOJu0YygMNmWMLfdpB6fNMlu32tEOCplQa9GWphQeu1x8qhOlV+lzJ1F
- hdlWlMua6FXQ1UIA1Em+xdz0V7QVClFuGgKPzs7d9qVDH3848v0Z7MK+CRtk6yqSMYQh62Unjlr
- y0BNuI4Cxr5aLKXEToOHofMdbK5nCMzKrtmNf/0Y20Z9RBY2AJIvr
-X-Received: by 2002:a05:620a:4624:b0:7a9:b9dc:1b72 with SMTP id
- af79cd13be357-7ae626c2947mr585585a.23.1727795211088; 
- Tue, 01 Oct 2024 08:06:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGh2srrZOw47ZH9X2y/DYSL84I+bUz8CGmxoq4lAyO+S7r2RmU7mGEjfUExjhmKahlztD+CoQ==
-X-Received: by 2002:a05:620a:4624:b0:7a9:b9dc:1b72 with SMTP id
- af79cd13be357-7ae626c2947mr580685a.23.1727795210580; 
- Tue, 01 Oct 2024 08:06:50 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7ae3783d086sm510953885a.107.2024.10.01.08.06.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 08:06:50 -0700 (PDT)
-Date: Tue, 1 Oct 2024 11:06:47 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Jiang Jiacheng <jiangjiacheng@huawei.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- Prasad Pandit <ppandit@redhat.com>,
- Julia Suvorova <jusual@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Juraj Marcin <jmarcin@redhat.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Jiang Jiacheng <jiangjiacheng@huawei.com>
-Subject: Re: [PATCH 0/7] migration: query-migrationthreads enhancements and
- cleanups
-Message-ID: <ZvwQB1Calv407MH0@x1n>
-References: <20240930195837.825728-1-peterx@redhat.com>
- <87o744e5pa.fsf@pond.sub.org> <ZvwGSgDnW8KfgFEh@redhat.com>
+ d=1e100.net; s=20230601; t=1727795426; x=1728400226;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QRgCiS1LJNxyhUxBrF5A8/PY0hT8ntX+Q5VtzEfIt2E=;
+ b=DB+w5aYJzcfDSKMfEcDIjcP92c8FAhbBnjrpptVOTH/Vc57m1lQzuLGMdCbCsGBJTT
+ 4Hs9EAi0fUb2M1C2SqQBWzxHd86ruoLF6tXtFi9cCVdkcNwey3hwIwGXYrNCTn+wpvYW
+ 537kzW2iU7+umaBDYepOKLeeaT7l2LHjYoPC2J67YS/+7+iw/MaPHHA0sKRMTkfr4TDS
+ E08VjO8laln62xzEmYLQQSIQZq5W9AXijPtBkPjt6YC5h+UgOVaPIsibQSIxGwfU5D7b
+ 7Yv13AVZgusMnUf7cCDDA49s2BDansswb/3llhGT+t6fLpDiszf3+wPuw7Z5l2THu++M
+ Qcbw==
+X-Gm-Message-State: AOJu0YzwM+xOpQo09ZVE2FCVba7AUl8eFQcJIUQva9jKukSmKLBtcih1
+ TEQzKFecFUdF7aF2ccy0O17Ld+irkZifrL1afRgl1d58odCXeUVfcpR3RwL0ZSsx8S5iy0CRpiB
+ lzkkKUbjDdrjgRBMPJQCr+gvxofOfw1y1zZuq24TWRamGzJx8
+X-Google-Smtp-Source: AGHT+IEihA4O+tvFH/eCC+T3SWFod80kzYE6ooWP24Q561c8zPz4WybE6riL57anc31/2UVfaRk12K98RoB/kgp1nLg=
+X-Received: by 2002:a17:907:2dac:b0:a8d:6921:e181 with SMTP id
+ a640c23a62f3a-a93c4921892mr1478132366b.16.1727784582030; Tue, 01 Oct 2024
+ 05:09:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZvwGSgDnW8KfgFEh@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+References: <20240930171834.51701-1-thuth@redhat.com>
+ <ko5yn.bgayz532vi6@linaro.org>
+ <23f7bf52-af7d-4186-b773-28b15e872064@redhat.com>
+In-Reply-To: <23f7bf52-af7d-4186-b773-28b15e872064@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Tue, 1 Oct 2024 15:09:29 +0300
+Message-ID: <CAAjaMXZ0ixQoWroJeoVVo+fmC-hVhG9Dx_+F8PrPEMTid07hyg@mail.gmail.com>
+Subject: Re: [PATCH] tests/functional: Switch back to the gitlab URLs for the
+ advent calendar tests
+To: Thomas Huth <thuth@redhat.com>
+Cc: "open list:ARM SMMU <qemu-arm@nongnu.org>, " <qemu-devel@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud_=C3=A9?= <philmd@linaro.org>
+Content-Type: multipart/alternative; boundary="00000000000042c6780623693266"
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x12f.google.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,52 +92,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 01, 2024 at 03:25:14PM +0100, Daniel P. Berrangé wrote:
-> On Tue, Oct 01, 2024 at 07:46:09AM +0200, Markus Armbruster wrote:
-> > Command query-migrationthreads went in without a QAPI ACK.  Issues
-> > review should have caught:
-> > 
-> > * Flawed documentation.  Fixed in commit e6c60bf02d1.
-> > 
-> > * It should have been spelled query-migration-threads.  Not worth fixing
-> >   now, I guess.
-> > 
-> > * What are the use cases?  The commit message doesn't tell!  If it's
-> >   just for debugging, the command should be marked unstable.
-> 
-> It is hard to use too.
-> 
-> Lets say a mgmt app wants to restrict migration threads to some
-> certain pCPUs. It can't call query-migrationthreads beforehand
-> as the threads don't exist until migration is started. If it
-> calls after migration is started, then there's a window where
-> threads are running on arbitrary pCPUs that QEMU has access
-> to. There's no synchronization point where threads have been
-> created & can be queried, but are not yet sending data (and
-> thus burning CPU time)
+--00000000000042c6780623693266
+Content-Type: text/plain; charset="UTF-8"
 
-Indeed, I suppose tricks needed if to work with such model, e.g., mgmt
-needs to turn bw=0, start migration, query TIDs, then restore bw.
+On Tue, Oct 1, 2024, 12:14 PM Thomas Huth <thuth@redhat.com> wrote:
 
-However that still lacks at least the dest multifd threads, as currently it
-only reports src multifd threads TIDs.  I don't see why a serious mgmt
-would like to pin and care only src threads, not dest threads, which can
-also eat as much (or even more) pCPU resources.
+> On 01/10/2024 10.50, Manos Pitsidianakis wrote:
+> > Hello Thomas,
+> >
+> > On Mon, 30 Sep 2024 20:18, Thomas Huth <thuth@redhat.com> wrote:
+> >> Shortly after we switched to the original URLs on
+> qemu-advent-calendar.org,
+> >> the server went offline - looks like we are better off using the gitlab
+> >> URLs again instead.
+> >>
+> >> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> >> ---
+> > [snip]
+> >> diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/
+> >> functional/test_microblazeel_s3adsp1800.py
+> >> index faa3927f2e..47c941d487 100755
+> >> --- a/tests/functional/test_microblazeel_s3adsp1800.py
+> >> +++ b/tests/functional/test_microblazeel_s3adsp1800.py
+> >> @@ -18,8 +18,8 @@ class MicroblazeelMachine(QemuSystemTest):
+> >>     timeout = 90
+> >>
+> >>     ASSET_IMAGE = Asset(
+> >> -        ('
+> http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
+> >> -
+> 'b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22')
+> >> +        ('
+> https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/
+> >> day13.tar.xz'),
+> >> +
+> '67e4c502651f8801e724ecc26403f1d0cdbc00549b033166e2e8cd14e9d49fef')
+> >>
+> >>     def test_microblazeel_s3adsp1800(self):
+> >>         self.require_netdev('user')
+> >
+> > I downloaded both day13.tar.gz and day13.tar.xz and these archives have
+> > different file contents, is that on purpose?
+>
+> Oh, drat! That's a different package, indeed - it's the one from 2018, not
+> the one from 2023! I didn't really notice since I did not remove my
+> tests/functional/ folder before re-running the tests, so this test was
+> silently re-using the old binary from the previous test runs :-/
+> (note to myself: we should maybe remove the binaries after each test run).
+>
+> Thanks for spotting it!
+>
+> Meanwhile, the www.qemu-advent-calendar.org website seems to be back, so
+> maybe we don't need this patch here anymore... let's wait and see whether
+> it
+> remains stable now...
 
-For real debugging purpose, I actually don't see a major value out of it
-either, because GDB can provide all information that this API wants to
-provide, and only better with thread stacks if we want.
 
-Since I don't see how this can be used right, it didn't get proper QAPI
-reviews, and further I highly suspect whether this API is consumed by
-anyone at all.. in any serious way.  Shall we remove this API (with/without
-going through the deprecation process)?
+Suggestion: Add a list of source URLs in Asset() so that it has a fallback
+if the first host cannot be reached, maybe you can respin the patch to do
+this?
 
-I added the author Jiacheng too.
+--00000000000042c6780623693266
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">On Tue, Oct 1, 2024, 12:14 PM Thomas Huth &lt;<a href=
+=3D"mailto:thuth@redhat.com">thuth@redhat.com</a>&gt; wrote:<br></div><bloc=
+kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
+1px solid rgb(204,204,204);padding-left:1ex">On 01/10/2024 10.50, Manos Pit=
+sidianakis wrote:<br>
+&gt; Hello Thomas,<br>
+&gt; <br>
+&gt; On Mon, 30 Sep 2024 20:18, Thomas Huth &lt;<a href=3D"mailto:thuth@red=
+hat.com" target=3D"_blank" rel=3D"noreferrer">thuth@redhat.com</a>&gt; wrot=
+e:<br>
+&gt;&gt; Shortly after we switched to the original URLs on <a href=3D"http:=
+//qemu-advent-calendar.org" rel=3D"noreferrer noreferrer" target=3D"_blank"=
+>qemu-advent-calendar.org</a>,<br>
+&gt;&gt; the server went offline - looks like we are better off using the g=
+itlab<br>
+&gt;&gt; URLs again instead.<br>
+&gt;&gt;<br>
+&gt;&gt; Signed-off-by: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com"=
+ target=3D"_blank" rel=3D"noreferrer">thuth@redhat.com</a>&gt;<br>
+&gt;&gt; ---<br>
+&gt; [snip]<br>
+&gt;&gt; diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/te=
+sts/ <br>
+&gt;&gt; functional/test_microblazeel_s3adsp1800.py<br>
+&gt;&gt; index faa3927f2e..47c941d487 100755<br>
+&gt;&gt; --- a/tests/functional/test_microblazeel_s3adsp1800.py<br>
+&gt;&gt; +++ b/tests/functional/test_microblazeel_s3adsp1800.py<br>
+&gt;&gt; @@ -18,8 +18,8 @@ class MicroblazeelMachine(QemuSystemTest):<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 timeout =3D 90<br>
+&gt;&gt;<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 ASSET_IMAGE =3D Asset(<br>
+&gt;&gt; -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (&#39;<a href=3D"http:=
+//www.qemu-advent-calendar.org/2023/download/day13.tar.gz&#39;" rel=3D"nore=
+ferrer noreferrer" target=3D"_blank">http://www.qemu-advent-calendar.org/20=
+23/download/day13.tar.gz&#39;</a>),<br>
+&gt;&gt; -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &#39;b9b3d43c5dd79db88=
+ada495cc6e0d1f591153fe41355e925d791fbf44de50c22&#39;)<br>
+&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (&#39;<a href=3D"https=
+://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/" rel=3D"noreferrer=
+ noreferrer" target=3D"_blank">https://qemu-advcal.gitlab.io/qac-best-of-mu=
+ltiarch/download/</a> <br>
+&gt;&gt; day13.tar.xz&#39;),<br>
+&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &#39;67e4c502651f8801e=
+724ecc26403f1d0cdbc00549b033166e2e8cd14e9d49fef&#39;)<br>
+&gt;&gt;<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 def test_microblazeel_s3adsp1800(self):<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 self.require_netdev(&#3=
+9;user&#39;)<br>
+&gt; <br>
+&gt; I downloaded both day13.tar.gz and day13.tar.xz and these archives hav=
+e <br>
+&gt; different file contents, is that on purpose?<br>
+<br>
+Oh, drat! That&#39;s a different package, indeed - it&#39;s the one from 20=
+18, not <br>
+the one from 2023! I didn&#39;t really notice since I did not remove my <br=
+>
+tests/functional/ folder before re-running the tests, so this test was <br>
+silently re-using the old binary from the previous test runs :-/<br>
+(note to myself: we should maybe remove the binaries after each test run).<=
+br>
+<br>
+Thanks for spotting it!<br>
+<br>
+Meanwhile, the <a href=3D"http://www.qemu-advent-calendar.org" rel=3D"noref=
+errer noreferrer" target=3D"_blank">www.qemu-advent-calendar.org</a> websit=
+e seems to be back, so <br>
+maybe we don&#39;t need this patch here anymore... let&#39;s wait and see w=
+hether it <br>
+remains stable now...</blockquote></div></div><div dir=3D"auto"><br></div><=
+div dir=3D"auto">Suggestion: Add a list of source URLs in Asset() so that i=
+t has a fallback if the first host cannot be reached, maybe you can respin =
+the patch to do this?</div><div dir=3D"auto"></div></div>
 
--- 
-Peter Xu
-
+--00000000000042c6780623693266--
 
