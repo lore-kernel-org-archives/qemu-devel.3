@@ -4,99 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F4ACEACCC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B6FACEACC8
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:16:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svdcE-0008Lx-Fz; Tue, 01 Oct 2024 10:12:38 -0400
+	id 1svdcE-0008Lb-EG; Tue, 01 Oct 2024 10:12:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1svdbo-0007fG-97; Tue, 01 Oct 2024 10:12:14 -0400
-Received: from fout-a4-smtp.messagingengine.com ([103.168.172.147])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1svdcB-0008Df-Ia; Tue, 01 Oct 2024 10:12:35 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1svdbc-000340-OB; Tue, 01 Oct 2024 10:12:11 -0400
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal
- [10.202.2.45])
- by mailfout.phl.internal (Postfix) with ESMTP id 86B191381F44;
- Tue,  1 Oct 2024 03:04:39 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-05.internal (MEProxy); Tue, 01 Oct 2024 03:04:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1727766279; x=
- 1727852679; bh=5XqoLTAFqCtY2x87btFp3v8D5GoR0hqn0xoHj6uIjac=; b=i
- 2PtjMJwsyizlr60ds1MHGn/u5tQPDIqPJ4iT97iBdQyK1FDKwxTZNPwlERQED775
- 4xrb/XdKkkTfvTW5ucNomhpz+Ktwoz8O3Y8Zrll6aVtUoB2et5Tt9NABR1AMbuxk
- PYCR9ZQhW6Esjj1/iOxLYc5RaPQAPTXJyWEbMe1oJAnEVFC03pAwluGY05qBbGhz
- 1+SZhJT1/uToZ/Z1Y0Ug/gWnZJgLJyW8hQMfJdQ/6NbMhBxvqj+xUT1r6ipGrpq3
- O+C/dcjh6JOenQAoB3za9sIgMo8RptAVmknEYtw6ZtoYyDPGihHpxlFiZ4n9FiCn
- jRE6a214FCpCYUMpwacyw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1727766279; x=
- 1727852679; bh=5XqoLTAFqCtY2x87btFp3v8D5GoR0hqn0xoHj6uIjac=; b=R
- QmSEW90OBx9LCgVcL/X1VOcbyZurRcOrpC7ucTydNqnDruxNZSY0NLrrSc6BjinZ
- JMQDcvQuGSPUVZiMLrdvT76fOINC4uWfaySj4oTupiBuYVBDFbmFgMvlH2Z0nKtY
- ult2u5ztmTFfgzHYgkx95CJ+zH2f1YMni+vePGUhdm3lwW2+XClV6YsQjgvER6gB
- VqznFM2+57it5pow4E3BXhENjr99+a7OoPwTP0i7DDocsHgAXKUqHQ4GRaNeLXqA
- FNADr8YK+L15x17GreIHJH5K/XXLKK0MA8zyMC5QZp/HKfpeJi3ZZe86sP3GVyf8
- 9yPAyj9XihyYZ3qMqGq1g==
-X-ME-Sender: <xms:B5_7Zn6oHnt4qudOmkEQveEjEZPz2PN69n5uN8HN6PxdUdXB06Cr3w>
- <xme:B5_7Zs4Njdc6NlIqUBs1i0HKLTwMKUDdR2rbwX-QasYzhy27qvI7rvWd-Cix_Sx3_
- acpIagp8lgsj8KhzF0>
-X-ME-Received: <xmr:B5_7ZudMvtY6qLT5RAC6b-NQElcCeYvqru8kOWxfk63wNd9veeQJdbQoV_z56Fr_EInO4tfu1TQytCkxYlqVgQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduiedgudduiecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
- uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
- hnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddt
- necuhfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnth
- drughkqeenucggtffrrghtthgvrhhnpeejgfeilefgieevheekueevheehkeefveegiefg
- heefgfejjeehffefgedujedugeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
- epmhgrihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphht
- thhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehqvghmuhdquggvvhgvlh
- esnhhonhhgnhhurdhorhhgpdhrtghpthhtohepphgvthgvrhdrmhgrhiguvghllheslhhi
- nhgrrhhordhorhhgpdhrtghpthhtoheprghruhhnrdhkkhgrsehsrghmshhunhhgrdgtoh
- hmpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrdgtohhmpdhrtghpthht
- ohepkhgsuhhstghhsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehithhssehirhhrvg
- hlvghvrghnthdrughkpdhrtghpthhtohepfhhoshhsseguvghfmhgrtghrohdrihhtpdhr
- tghpthhtohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrgh
-X-ME-Proxy: <xmx:B5_7ZoK09eN0s8ouv7Uu9V9nfU8omTKnS7YHWZjYjXLfLQY0SBjGlQ>
- <xmx:B5_7ZrJr5i_yAD5yXByVNQDyIG5OBgje4TqtdUGYOEL-kdthKuApow>
- <xmx:B5_7Zhxj3I4l-82QLv2mcRlK8kNxzuHC2d_y1UWL81KYo2s2G6f5Yw>
- <xmx:B5_7ZnLsTu1cXRlwl-J-iEiBcGiWWSs_Mbq5FUjJNqi_rHdBPjanRA>
- <xmx:B5_7Zi89RrNOFIz-nZsnVUkpjs0P3MZ7HXS2SP4U4pB58N9MeIMSCj-7>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Oct 2024 03:04:38 -0400 (EDT)
-From: Klaus Jensen <its@irrelevant.dk>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Arun Kumar <arun.kka@samsung.com>, Klaus Jensen <k.jensen@samsung.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
-Subject: [PULL 2/5] hw/nvme: clear masked events from the aer queue
-Date: Tue,  1 Oct 2024 09:04:14 +0200
-Message-ID: <20241001070418.28737-3-its@irrelevant.dk>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241001070418.28737-1-its@irrelevant.dk>
-References: <20241001070418.28737-1-its@irrelevant.dk>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1svdc9-0003Bx-FP; Tue, 01 Oct 2024 10:12:35 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 1 Oct
+ 2024 10:43:36 +0800
+Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Tue, 1 Oct 2024 10:43:36 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:ASPEED
+ BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <yunlin.tang@aspeedtech.com>
+Subject: [PATCH v7 8/8] tests/qtest:ast2700-gpio-test: Add GPIO test case for
+ AST2700
+Date: Tue, 1 Oct 2024 10:43:34 +0800
+Message-ID: <20241001024334.834807-9-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20241001024334.834807-1-jamin_lin@aspeedtech.com>
+References: <20241001024334.834807-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=103.168.172.147; envelope-from=its@irrelevant.dk;
- helo=fout-a4-smtp.messagingengine.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,45 +64,143 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Arun Kumar <arun.kka@samsung.com>
+Add GPIO test cases to test output and input pins from A0 to D7 for AST2700.
 
-Clear masked events from the aer queue when get log page is issued with
-RAE 0 without checking for the presence of outstanding aer requests.
-
-Signed-off-by: Arun Kumar <arun.kka@samsung.com>
-[k.jensen: remove unnecessary QTAILQ_EMPTY check]
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/nvme/ctrl.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ tests/qtest/ast2700-gpio-test.c | 95 +++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build         |  3 ++
+ 2 files changed, 98 insertions(+)
+ create mode 100644 tests/qtest/ast2700-gpio-test.c
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index d5ea9ad653f2..a720dbc354a2 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -1649,9 +1649,16 @@ static void nvme_smart_event(NvmeCtrl *n, uint8_t event)
- 
- static void nvme_clear_events(NvmeCtrl *n, uint8_t event_type)
- {
-+    NvmeAsyncEvent *event, *next;
+diff --git a/tests/qtest/ast2700-gpio-test.c b/tests/qtest/ast2700-gpio-test.c
+new file mode 100644
+index 0000000000..9275845564
+--- /dev/null
++++ b/tests/qtest/ast2700-gpio-test.c
+@@ -0,0 +1,95 @@
++/*
++ * QTest testcase for the ASPEED AST2700 GPIO Controller.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Copyright (C) 2024 ASPEED Technology Inc.
++ */
 +
-     n->aer_mask &= ~(1 << event_type);
--    if (!QTAILQ_EMPTY(&n->aer_queue)) {
--        nvme_process_aers(n);
++#include "qemu/osdep.h"
++#include "qemu/bitops.h"
++#include "qemu/timer.h"
++#include "qapi/qmp/qdict.h"
++#include "libqtest-single.h"
 +
-+    QTAILQ_FOREACH_SAFE(event, &n->aer_queue, entry, next) {
-+        if (event->result.event_type == event_type) {
-+            QTAILQ_REMOVE(&n->aer_queue, event, entry);
-+            n->aer_queued--;
-+            g_free(event);
++#define AST2700_GPIO_BASE 0x14C0B000
++#define GPIOA0_CONTROL 0x180
++
++static void test_output_pins(const char *machine, const uint32_t base)
++{
++    QTestState *s = qtest_init(machine);
++    uint32_t offset = 0;
++    uint32_t value = 0;
++    uint32_t pin = 0;
++
++    for (char c = 'A'; c <= 'D'; c++) {
++        for (int i = 0; i < 8; i++) {
++            offset = base + (pin * 4);
++
++            /* output direction and output hi */
++            qtest_writel(s, offset, 0x00000003);
++            value = qtest_readl(s, offset);
++            g_assert_cmphex(value, ==, 0x00000003);
++
++            /* output direction and output low */
++            qtest_writel(s, offset, 0x00000002);
++            value = qtest_readl(s, offset);
++            g_assert_cmphex(value, ==, 0x00000002);
++            pin++;
 +        }
-     }
- }
++    }
++
++    qtest_quit(s);
++}
++
++static void test_input_pins(const char *machine, const uint32_t base)
++{
++    QTestState *s = qtest_init(machine);
++    char name[16];
++    uint32_t offset = 0;
++    uint32_t value = 0;
++    uint32_t pin = 0;
++
++    for (char c = 'A'; c <= 'D'; c++) {
++        for (int i = 0; i < 8; i++) {
++            sprintf(name, "gpio%c%d", c, i);
++            offset = base + (pin * 4);
++            /* input direction */
++            qtest_writel(s, offset, 0);
++
++            /* set input */
++            qtest_qom_set_bool(s, "/machine/soc/gpio", name, true);
++            value = qtest_readl(s, offset);
++            g_assert_cmphex(value, ==, 0x00002000);
++
++            /* clear input */
++            qtest_qom_set_bool(s, "/machine/soc/gpio", name, false);
++            value = qtest_readl(s, offset);
++            g_assert_cmphex(value, ==, 0);
++            pin++;
++        }
++    }
++
++    qtest_quit(s);
++}
++
++static void test_2700_input_pins(void)
++{
++    test_input_pins("-machine ast2700-evb",
++                    AST2700_GPIO_BASE + GPIOA0_CONTROL);
++}
++
++static void test_2700_output_pins(void)
++{
++    test_output_pins("-machine ast2700-evb",
++                     AST2700_GPIO_BASE + GPIOA0_CONTROL);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_func("/ast2700/gpio/input_pins", test_2700_input_pins);
++    qtest_add_func("/ast2700/gpio/output_pins", test_2700_output_pins);
++
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 310865e49c..e1b62d34d8 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -209,6 +209,8 @@ qtests_aspeed = \
+   ['aspeed_hace-test',
+    'aspeed_smc-test',
+    'aspeed_gpio-test']
++qtests_aspeed64 = \
++  ['ast2700-gpio-test']
  
+ qtests_stm32l4x5 = \
+   ['stm32l4x5_exti-test',
+@@ -247,6 +249,7 @@ qtests_aarch64 = \
+   (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test'] : []) +  \
+   (config_all_accel.has_key('CONFIG_TCG') and                                            \
+    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
++  (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
+   ['arm-cpu-features',
+    'numa-test',
+    'boot-serial-test',
 -- 
-2.45.2
+2.34.1
 
 
