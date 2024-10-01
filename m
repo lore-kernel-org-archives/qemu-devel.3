@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7B8FCEACE7
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:29:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97010CEACE7
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:30:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svfja-0000W0-GV; Tue, 01 Oct 2024 12:28:22 -0400
+	id 1svfl8-0001O7-8B; Tue, 01 Oct 2024 12:29:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1svfjY-0000VG-ED; Tue, 01 Oct 2024 12:28:20 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1svfl4-0001N1-EO
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:29:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1svfjV-0004hS-Nd; Tue, 01 Oct 2024 12:28:20 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F24FA9427D;
- Tue,  1 Oct 2024 19:27:28 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 19F22149F27;
- Tue,  1 Oct 2024 19:28:06 +0300 (MSK)
-Message-ID: <ae4dc4d5-eb62-4562-9fc7-f413f193575e@tls.msk.ru>
-Date: Tue, 1 Oct 2024 19:28:06 +0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1svfkw-0004qY-M4
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:29:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727800184;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=3cDFy7QTrtWlLWJleuZ867XUu6ujNwWXzfEcAvy9Tf8=;
+ b=ZA6JGximWQUlJW0Go63rDSReAVvK8OfhDoYmfRK59P4q/gw+KWmzJytIZMkbBLfx6CSRyP
+ hH36Gf6Rn+nxw7yDqfzBbIO1XSJZWpT89p85n9aY4HBK2eggWFkixRBF5SdbT6edv/AKCM
+ mlzZdQT/Ib6oc99zdR+j+1+NR4iAdnk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-262-4_-jFcvpPKK38C9SB4tr4A-1; Tue,
+ 01 Oct 2024 12:29:43 -0400
+X-MC-Unique: 4_-jFcvpPKK38C9SB4tr4A-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (unknown
+ [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4EEFB1933E98; Tue,  1 Oct 2024 16:29:42 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.186])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A96621944CF6; Tue,  1 Oct 2024 16:29:39 +0000 (UTC)
+Date: Tue, 1 Oct 2024 17:29:36 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, Thomas Huth <thuth@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>,
+ Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ John Snow <jsnow@redhat.com>
+Subject: Re: what is the right way for an avocado test to do "wait for text
+ that doesn't end in newline" ?
+Message-ID: <ZvwjcOJaX7ax3SEk@redhat.com>
+References: <CAFEAcA8N8NoaPMKQN=_Ph1mmgE1DEn=7kDOuOVMUX4zBEaBmug@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 3/5] block/reqlist: allow adding overlapping requests
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-devel@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-block@nongnu.org, peter.maydell@linaro.org, qemu-stable@nongnu.org
-References: <20240930084325.187606-1-vsementsov@yandex-team.ru>
- <20240930084325.187606-4-vsementsov@yandex-team.ru>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240930084325.187606-4-vsementsov@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA8N8NoaPMKQN=_Ph1mmgE1DEn=7kDOuOVMUX4zBEaBmug@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,40 +85,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-30.09.2024 11:43, Vladimir Sementsov-Ogievskiy wrote:
-> From: Fiona Ebner <f.ebner@proxmox.com>
+On Tue, Oct 01, 2024 at 01:43:47PM +0100, Peter Maydell wrote:
+> One common thing to want to do in an avocado test is log into
+> the guest. The obvious way to do that would seem to be:
 > 
-> Allow overlapping request by removing the assert that made it
-> impossible. There are only two callers:
+>          self.wait_for_console_pattern('login:')
+>          exec_command(self, 'root')
+>          self.wait_for_console_pattern('Password:')
+>          exec_command(self, "passw0rd")
 > 
-> 1. block_copy_task_create()
-> 
-> It already asserts the very same condition before calling
-> reqlist_init_req().
-> 
-> 2. cbw_snapshot_read_lock()
-> 
-> There is no need to have read requests be non-overlapping in
-> copy-before-write when used for snapshot-access. In fact, there was no
-> protection against two callers of cbw_snapshot_read_lock() calling
-> reqlist_init_req() with overlapping ranges and this could lead to an
-> assertion failure [1].
-> 
-> In particular, with the reproducer script below [0], two
-> cbw_co_snapshot_block_status() callers could race, with the second
-> calling reqlist_init_req() before the first one finishes and removes
-> its conflicting request.
+> This doesn't work; Thomas tells me that's because the
+> wait_for_console_pattern function requires that the guest outputs
+> a newline, but the 'login:' and 'Password:' prompt lines don't
+> have a newline after them.
 
-Hm.  This one applies to 7.2 too (current oldest stable series), with
-the description above matching what the code is doing.
+I presume the problem is ultimately this lne of code
+which calls 'readline()'
 
-I picked it up for up to 7.2.  Please let me know if this shouldn't be
-done :)
+         try:
+            msg = console.readline().decode().strip()
+        except UnicodeDecodeError:
+            msg = None
+        if not msg:
+            continue
 
-Thanks,
+I would think we should change this to read a byte at
+a time, trying the pattern  match after each line until
+it succeeeds.
 
-/mjt
+It would have to gracefully handle unicode decode errors,
+trying to get more bytes, instead of discarding the data,
+because reading byte a time we might only have a partial
+utf8 sequence. Or we could ensure that "console" is opened
+with utf8 decoding by default instead of raw bytes.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
