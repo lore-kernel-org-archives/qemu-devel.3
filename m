@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 757A8CEACCE
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A13FCEACCC
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:14:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svdcG-0008VW-6P; Tue, 01 Oct 2024 10:12:40 -0400
+	id 1svdcH-0000Br-TA; Tue, 01 Oct 2024 10:12:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1svdc6-0007uH-70; Tue, 01 Oct 2024 10:12:31 -0400
+ id 1svdc0-0007oj-7X; Tue, 01 Oct 2024 10:12:29 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1svdc2-0003Bx-Rn; Tue, 01 Oct 2024 10:12:29 -0400
+ id 1svdbt-0002zy-TS; Tue, 01 Oct 2024 10:12:21 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 1 Oct
@@ -35,9 +35,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <clg@redhat.com>
-Subject: [PATCH v7 7/8] aspeed/soc: Support GPIO for AST2700
-Date: Tue, 1 Oct 2024 10:43:33 +0800
-Message-ID: <20241001024334.834807-8-jamin_lin@aspeedtech.com>
+Subject: [PATCH v7 6/8] aspeed/soc: Correct GPIO irq 130 for AST2700
+Date: Tue, 1 Oct 2024 10:43:32 +0800
+Message-ID: <20241001024334.834807-7-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241001024334.834807-1-jamin_lin@aspeedtech.com>
 References: <20241001024334.834807-1-jamin_lin@aspeedtech.com>
@@ -69,53 +69,47 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add GPIO model for AST2700 GPIO support. The GPIO controller registers base
-address is start at 0x14C0_B000 and its address space is 0x1000.
+The register set of GPIO have a significant change since AST2700.
+Each GPIO pin has their own individual control register and users are able to
+set one GPIO pin’s direction, interrupt enable, input mask and so on in the
+same one control register.
+
+AST2700 does not have GPIO18_XXX registers for GPIO 1.8v, removes
+ASPEED_DEV_GPIO_1_8V. It is enough to only have ASPEED_DEV_GPIO
+device in AST2700.
+
+The AST2700 GPIO controller interrupt is connected to GICINT130_INTC at
+bit 18. Therefore, correct GPIO irq 130.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_ast27x0.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ hw/arm/aspeed_ast27x0.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 99135edc1e..dca660eb6b 100644
+index 761ee11657..99135edc1e 100644
 --- a/hw/arm/aspeed_ast27x0.c
 +++ b/hw/arm/aspeed_ast27x0.c
-@@ -62,6 +62,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
-     [ASPEED_GIC_REDIST]    =  0x12280000,
-     [ASPEED_DEV_ADC]       =  0x14C00000,
-     [ASPEED_DEV_I2C]       =  0x14C0F000,
-+    [ASPEED_DEV_GPIO]      =  0x14C0B000,
+@@ -87,8 +87,7 @@ static const int aspeed_soc_ast2700_irqmap[] = {
+     [ASPEED_DEV_ADC]       = 130,
+     [ASPEED_DEV_XDMA]      = 5,
+     [ASPEED_DEV_EMMC]      = 15,
+-    [ASPEED_DEV_GPIO]      = 11,
+-    [ASPEED_DEV_GPIO_1_8V] = 130,
++    [ASPEED_DEV_GPIO]      = 130,
+     [ASPEED_DEV_RTC]       = 13,
+     [ASPEED_DEV_TIMER1]    = 16,
+     [ASPEED_DEV_TIMER2]    = 17,
+@@ -124,7 +123,7 @@ static const int aspeed_soc_ast2700_gic128_intcmap[] = {
+ static const int aspeed_soc_ast2700_gic130_intcmap[] = {
+     [ASPEED_DEV_I2C]        = 0,
+     [ASPEED_DEV_ADC]        = 16,
+-    [ASPEED_DEV_GPIO_1_8V]  = 18,
++    [ASPEED_DEV_GPIO]       = 18,
  };
  
- #define AST2700_MAX_IRQ 288
-@@ -372,6 +373,9 @@ static void aspeed_soc_ast2700_init(Object *obj)
- 
-     snprintf(typename, sizeof(typename), "aspeed.i2c-%s", socname);
-     object_initialize_child(obj, "i2c", &s->i2c, typename);
-+
-+    snprintf(typename, sizeof(typename), "aspeed.gpio-%s", socname);
-+    object_initialize_child(obj, "gpio", &s->gpio, typename);
- }
- 
- /*
-@@ -657,6 +661,15 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c.busses[i]), 0, irq);
-     }
- 
-+    /* GPIO */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {
-+        return;
-+    }
-+    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->gpio), 0,
-+                    sc->memmap[ASPEED_DEV_GPIO]);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0,
-+                       aspeed_soc_get_irq(s, ASPEED_DEV_GPIO));
-+
-     create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
-     create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
-     create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
+ /* GICINT 131 */
 -- 
 2.34.1
 
