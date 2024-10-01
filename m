@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C3DDCEACE7
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CEF2CEACE8
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:45:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svfuU-0005OZ-0K; Tue, 01 Oct 2024 12:39:38 -0400
+	id 1svfus-0005tM-KB; Tue, 01 Oct 2024 12:40:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfuS-0005No-BD
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:36 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1svfud-0005ap-2h
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:49 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfuO-00062x-Do
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:36 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-37ce6a5b785so1686145f8f.1
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:39:32 -0700 (PDT)
+ id 1svfuW-00066l-C6
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:46 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-37cd831ab06so2261732f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:39:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727800771; x=1728405571; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727800778; x=1728405578; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ocY2AihY2nS8wlo3QN2yGRF++YOPczfHqIYOMUcTMuI=;
- b=BinHN4GaPiIWCTrmRynsuxb4j2RxwK4Knr3I4Sx1uCl+PJUOXvl3oQfrLyLo96O3TQ
- Bf0vfKCEPlGs/j9oLQO2YNSWowLXwHN+10NyDDgZ/TauDRarRno6yjy0IMex5yZGc0DH
- G+0ftM98pe6tRkU+hiAdkQS9h8nHblUUHlFx1ZmE9HuaAWWcq8y++G7TJ67XvT06YO9s
- ka1EuP0LKwzsFuiBSlxjkP6jYRBvSiZh4wKB4iA9Y9bTB30NiN96Ll2G8T1EPm0Fm4VF
- B8Cw932vjgsz5TH3DI6F87xuAPeCYGMGFFvLaaFrIjIJgdkb35QQd36+i28OQRqLSvWl
- NPSg==
+ :reply-to; bh=JG57QVpHrLALzZR+9s2olzjjtYqV+9hQmExoUYKYmvA=;
+ b=yARlAyQ+G9mNb5RL01SF04FVyGXsic/g+5x4OgJ0ZfOpk8XU5B+SVBUeoDfPO5bbuz
+ fjLupfmx5lSEapxWelZ+gZUGUjWhZzTG/fZvnMxbEGLTQJOF1qPJTlxC0a13cXPCwOMG
+ 9h4NX+zpCpVbELwDFark4ljkhhOOlYdtI3YHTjNl0rMX+MgTqhWOgWWM5rWrAk34r7Yd
+ 13PSQvMMxp5JQCOlSrKu4fdjC2G7KAYJBLAM950ZubU40JlWyt5+MHPasP7FvlQIXFbN
+ ke8hG08MrfXsC5m+s1lFfHWmQt39NhD/z/Ozxqwnn/IP/Dm/KWJzkZcDuDSVO4naiTHB
+ zQhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727800771; x=1728405571;
+ d=1e100.net; s=20230601; t=1727800778; x=1728405578;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ocY2AihY2nS8wlo3QN2yGRF++YOPczfHqIYOMUcTMuI=;
- b=xOb83WLh43ThY/Kj3URi5v99XTJnXiO7A6S3tlFEvzifgQM2z1SO8stfT/37KiFgCh
- 5y7ITE0WojKVBv6dL+eWE3LZ9hVITmX+oyCYhUpYuTGQMHR0iTC7F7FgXxMkkSgUaJVw
- aHVCjwJ2iTWd9nSH9iyjn1+/m326tLNSY6bsQXDC+ltQOymgI4L6C3g+IPONMgM14r32
- SCRPhpT7VUewTRPsPIdYpkpzZOljZwHF7nOiz3a77uNmraZ3kYDewHCLke/RP4LDW0UO
- MmAgI4zauVaFlcwViXZKYWjQ+6jD298WpAoeGQCK874co+mc1Bm886fnn1alazzYnCHJ
- P+wA==
-X-Gm-Message-State: AOJu0Yzh9HUe9tXy9m/RZ+KvXtGGnGPGAFsRyO3XXH66uX2KWzqDQp8k
- xrKCgR47jdZl4UadDU1n4Nzsqm6TC1ILsEevs9++yWSKmWb25P9bM0EU3Os6zAC80/mYkzBjT3y
- c
-X-Google-Smtp-Source: AGHT+IFPJWJXWWC0eQM6/PUQi5GvKb+kMNVJgWA2sP/Miokx/A1GqLf6s9IqQnf5cobBaJ6SvQWJlw==
-X-Received: by 2002:a5d:660b:0:b0:374:adf1:9232 with SMTP id
- ffacd0b85a97d-37cfb9e00d7mr130710f8f.19.1727800770771; 
- Tue, 01 Oct 2024 09:39:30 -0700 (PDT)
+ bh=JG57QVpHrLALzZR+9s2olzjjtYqV+9hQmExoUYKYmvA=;
+ b=umXcT/IoMXoxe3EITcmEpj/O/xatPN+EcwtUrFNBcUf8jg6a48Os+oXIANGmLOZmXT
+ h+hooVDGJwRQtPo5fM7ZoLaEsoJ3U3A8xCk7tHas7sUqtpQyn2ob9dMH4l1/ivclJIyy
+ DGAYQpjCKzFmvdM8qbFga6BgqO9466hTHjIDof8bdLFDhdnTkYSFcBfofO3iBpYsAfVk
+ b0CmkcW3XjgyqOpZUHIuLbR1ohrh/iBgdybJnuNCR5hbhKYyefoy3dPCp9B+dogKN6OR
+ 1ovNOIfWXfx9s9q8mV1GLu597wcu2cc5iFNz2eZa3F1AMOeEsPc6XxI1vVQIRLl6j80k
+ sJYA==
+X-Gm-Message-State: AOJu0YxPH0vnBo0dO9fZIf+BE5Znr4yWnsQOGcyJqC3if/xG0m04pC0y
+ KJgSRr1Hb5eevkT9zONJ/35K3IZDlLy3rEKpNz29AwRnApAgFDW+QEYtu14MIu8RypwZjb2J23T
+ F
+X-Google-Smtp-Source: AGHT+IFaMqaqXTiPq1GLRA6gutjgS3+O0burdaaXLEQf7uzcQIL/stMJLkN3Ua0kIrySMkbnwnjUPQ==
+X-Received: by 2002:a5d:584c:0:b0:374:ae04:c7c5 with SMTP id
+ ffacd0b85a97d-37cfb9fc32bmr174137f8f.36.1727800778382; 
+ Tue, 01 Oct 2024 09:39:38 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd56e6547sm12243771f8f.58.2024.10.01.09.39.30
+ ffacd0b85a97d-37cd56e6547sm12243771f8f.58.2024.10.01.09.39.37
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 09:39:30 -0700 (PDT)
+ Tue, 01 Oct 2024 09:39:38 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 20/54] hw/sd: Remove pxa2xx_mmci.c
-Date: Tue,  1 Oct 2024 17:38:44 +0100
-Message-Id: <20241001163918.1275441-21-peter.maydell@linaro.org>
+Subject: [PULL 34/54] hw/input: Remove lm832x device
+Date: Tue,  1 Oct 2024 17:38:58 +0100
+Message-Id: <20241001163918.1275441-35-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241001163918.1275441-1-peter.maydell@linaro.org>
 References: <20241001163918.1275441-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,668 +94,640 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the pxa2xx-specific pxa2xx_mmci device.
+Remove the lm832x keyboard-and-pwm i2c device model. This
+was only used by the n800 and n810 machines.
+
+(Although this is an i2c device and so in theory available to create
+on the command line, in practice it has an outbound IRQ line that the
+machine model needs to wire up, and the only way to inject keys events
+into it is to call the lm832x_key_event() function, so it isn't
+in practice possible to use it separately from the n800/n810.)
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240903160751.4100218-17-peter.maydell@linaro.org
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-id: 20240903160751.4100218-32-peter.maydell@linaro.org
 ---
- include/hw/arm/pxa.h |  10 -
- hw/sd/pxa2xx_mmci.c  | 594 -------------------------------------------
- hw/sd/meson.build    |   1 -
- hw/sd/trace-events   |   4 -
- 4 files changed, 609 deletions(-)
- delete mode 100644 hw/sd/pxa2xx_mmci.c
+ MAINTAINERS               |   7 -
+ include/hw/input/lm832x.h |  28 --
+ hw/input/lm832x.c         | 528 --------------------------------------
+ hw/input/Kconfig          |   4 -
+ hw/input/meson.build      |   1 -
+ 5 files changed, 568 deletions(-)
+ delete mode 100644 include/hw/input/lm832x.h
+ delete mode 100644 hw/input/lm832x.c
 
-diff --git a/include/hw/arm/pxa.h b/include/hw/arm/pxa.h
-index bf7f868700a..cc4de0750af 100644
---- a/include/hw/arm/pxa.h
-+++ b/include/hw/arm/pxa.h
-@@ -86,16 +86,6 @@ PXA2xxLCDState *pxa2xx_lcdc_init(MemoryRegion *sysmem,
-                 hwaddr base, qemu_irq irq);
- void pxa2xx_lcd_vsync_notifier(PXA2xxLCDState *s, qemu_irq handler);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 98314d157c2..4ee26995436 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -870,13 +870,6 @@ F: pc-bios/npcm7xx_bootrom.bin
+ F: roms/vbootrom
+ F: docs/system/arm/nuvoton.rst
  
--/* pxa2xx_mmci.c */
--#define TYPE_PXA2XX_MMCI "pxa2xx-mmci"
--OBJECT_DECLARE_SIMPLE_TYPE(PXA2xxMMCIState, PXA2XX_MMCI)
+-nSeries
+-M: Peter Maydell <peter.maydell@linaro.org>
+-L: qemu-arm@nongnu.org
+-S: Odd Fixes
+-F: hw/input/lm832x.c
+-F: include/hw/input/lm832x.h
 -
--PXA2xxMMCIState *pxa2xx_mmci_init(MemoryRegion *sysmem,
--                hwaddr base,
--                qemu_irq irq, qemu_irq rx_dma, qemu_irq tx_dma);
--void pxa2xx_mmci_handlers(PXA2xxMMCIState *s, qemu_irq readonly,
--                qemu_irq coverswitch);
--
- /* pxa2xx_pcmcia.c */
- #define TYPE_PXA2XX_PCMCIA "pxa2xx-pcmcia"
- OBJECT_DECLARE_SIMPLE_TYPE(PXA2xxPCMCIAState, PXA2XX_PCMCIA)
-diff --git a/hw/sd/pxa2xx_mmci.c b/hw/sd/pxa2xx_mmci.c
+ Raspberry Pi
+ M: Peter Maydell <peter.maydell@linaro.org>
+ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+diff --git a/include/hw/input/lm832x.h b/include/hw/input/lm832x.h
 deleted file mode 100644
-index a834be7cb12..00000000000
---- a/hw/sd/pxa2xx_mmci.c
+index e0e5d5ef20e..00000000000
+--- a/include/hw/input/lm832x.h
 +++ /dev/null
-@@ -1,594 +0,0 @@
+@@ -1,28 +0,0 @@
 -/*
-- * Intel XScale PXA255/270 MultiMediaCard/SD/SDIO Controller emulation.
+- * National Semiconductor LM8322/8323 GPIO keyboard & PWM chips.
 - *
-- * Copyright (c) 2006 Openedhand Ltd.
-- * Written by Andrzej Zaborowski <balrog@zabor.org>
+- * Copyright (C) 2008 Nokia Corporation
+- * Written by Andrzej Zaborowski <andrew@openedhand.com>
 - *
-- * This code is licensed under the GPLv2.
+- * This program is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU General Public License as
+- * published by the Free Software Foundation; either version 2 or
+- * (at your option) version 3 of the License.
 - *
-- * Contributions after 2012-01-13 are licensed under the terms of the
-- * GNU GPL, version 2 or (at your option) any later version.
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- * GNU General Public License for more details.
+- *
+- * You should have received a copy of the GNU General Public License along
+- * with this program; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#ifndef HW_INPUT_LM832X_H
+-#define HW_INPUT_LM832X_H
+-
+-#define TYPE_LM8323 "lm8323"
+-
+-void lm832x_key_event(DeviceState *dev, int key, int state);
+-
+-#endif
+diff --git a/hw/input/lm832x.c b/hw/input/lm832x.c
+deleted file mode 100644
+index ef65ad18b89..00000000000
+--- a/hw/input/lm832x.c
++++ /dev/null
+@@ -1,528 +0,0 @@
+-/*
+- * National Semiconductor LM8322/8323 GPIO keyboard & PWM chips.
+- *
+- * Copyright (C) 2008 Nokia Corporation
+- * Written by Andrzej Zaborowski <andrew@openedhand.com>
+- *
+- * This program is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU General Public License as
+- * published by the Free Software Foundation; either version 2 or
+- * (at your option) version 3 of the License.
+- *
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- * GNU General Public License for more details.
+- *
+- * You should have received a copy of the GNU General Public License along
+- * with this program; if not, see <http://www.gnu.org/licenses/>.
 - */
 -
 -#include "qemu/osdep.h"
--#include "qapi/error.h"
+-#include "hw/input/lm832x.h"
+-#include "hw/i2c/i2c.h"
 -#include "hw/irq.h"
--#include "hw/sysbus.h"
 -#include "migration/vmstate.h"
--#include "hw/arm/pxa.h"
--#include "hw/sd/sd.h"
--#include "hw/qdev-properties.h"
--#include "qemu/log.h"
 -#include "qemu/module.h"
--#include "trace.h"
+-#include "qemu/timer.h"
+-#include "ui/console.h"
 -#include "qom/object.h"
 -
--#define TYPE_PXA2XX_MMCI_BUS "pxa2xx-mmci-bus"
--/* This is reusing the SDBus typedef from SD_BUS */
--DECLARE_INSTANCE_CHECKER(SDBus, PXA2XX_MMCI_BUS,
--                         TYPE_PXA2XX_MMCI_BUS)
+-OBJECT_DECLARE_SIMPLE_TYPE(LM823KbdState, LM8323)
 -
--struct PXA2xxMMCIState {
--    SysBusDevice parent_obj;
+-struct LM823KbdState {
+-    I2CSlave parent_obj;
 -
--    MemoryRegion iomem;
--    qemu_irq irq;
--    qemu_irq rx_dma;
--    qemu_irq tx_dma;
--    qemu_irq inserted;
--    qemu_irq readonly;
+-    uint8_t i2c_dir;
+-    uint8_t i2c_cycle;
+-    uint8_t reg;
 -
--    BlockBackend *blk;
--    SDBus sdbus;
+-    qemu_irq nirq;
+-    uint16_t model;
 -
--    uint32_t status;
--    uint32_t clkrt;
--    uint32_t spi;
--    uint32_t cmdat;
--    uint32_t resp_tout;
--    uint32_t read_tout;
--    int32_t blklen;
--    int32_t numblk;
--    uint32_t intmask;
--    uint32_t intreq;
--    int32_t cmd;
--    uint32_t arg;
+-    struct {
+-        qemu_irq out[2];
+-        int in[2][2];
+-    } mux;
 -
--    int32_t active;
--    int32_t bytesleft;
--    uint8_t tx_fifo[64];
--    uint32_t tx_start;
--    uint32_t tx_len;
--    uint8_t rx_fifo[32];
--    uint32_t rx_start;
--    uint32_t rx_len;
--    uint16_t resp_fifo[9];
--    uint32_t resp_len;
+-    uint8_t config;
+-    uint8_t status;
+-    uint8_t acttime;
+-    uint8_t error;
+-    uint8_t clock;
 -
--    int32_t cmdreq;
+-    struct {
+-        uint16_t pull;
+-        uint16_t mask;
+-        uint16_t dir;
+-        uint16_t level;
+-        qemu_irq out[16];
+-    } gpio;
+-
+-    struct {
+-        uint8_t dbnctime;
+-        uint8_t size;
+-        uint8_t start;
+-        uint8_t len;
+-        uint8_t fifo[16];
+-    } kbd;
+-
+-    struct {
+-        uint16_t file[256];
+-        uint8_t faddr;
+-        uint8_t addr[3];
+-        QEMUTimer *tm[3];
+-    } pwm;
 -};
 -
--static bool pxa2xx_mmci_vmstate_validate(void *opaque, int version_id)
--{
--    PXA2xxMMCIState *s = opaque;
+-#define INT_KEYPAD		(1 << 0)
+-#define INT_ERROR		(1 << 3)
+-#define INT_NOINIT		(1 << 4)
+-#define INT_PWMEND(n)		(1 << (5 + n))
 -
--    return s->tx_start < ARRAY_SIZE(s->tx_fifo)
--        && s->rx_start < ARRAY_SIZE(s->rx_fifo)
--        && s->tx_len <= ARRAY_SIZE(s->tx_fifo)
--        && s->rx_len <= ARRAY_SIZE(s->rx_fifo)
--        && s->resp_len <= ARRAY_SIZE(s->resp_fifo);
+-#define ERR_BADPAR		(1 << 0)
+-#define ERR_CMDUNK		(1 << 1)
+-#define ERR_KEYOVR		(1 << 2)
+-#define ERR_FIFOOVR		(1 << 6)
+-
+-static void lm_kbd_irq_update(LM823KbdState *s)
+-{
+-    qemu_set_irq(s->nirq, !s->status);
 -}
 -
+-static void lm_kbd_gpio_update(LM823KbdState *s)
+-{
+-}
 -
--static const VMStateDescription vmstate_pxa2xx_mmci = {
--    .name = "pxa2xx-mmci",
--    .version_id = 2,
--    .minimum_version_id = 2,
+-static void lm_kbd_reset(DeviceState *dev)
+-{
+-    LM823KbdState *s = LM8323(dev);
+-
+-    s->config = 0x80;
+-    s->status = INT_NOINIT;
+-    s->acttime = 125;
+-    s->kbd.dbnctime = 3;
+-    s->kbd.size = 0x33;
+-    s->clock = 0x08;
+-
+-    lm_kbd_irq_update(s);
+-    lm_kbd_gpio_update(s);
+-}
+-
+-static void lm_kbd_error(LM823KbdState *s, int err)
+-{
+-    s->error |= err;
+-    s->status |= INT_ERROR;
+-    lm_kbd_irq_update(s);
+-}
+-
+-static void lm_kbd_pwm_tick(LM823KbdState *s, int line)
+-{
+-}
+-
+-static void lm_kbd_pwm_start(LM823KbdState *s, int line)
+-{
+-    lm_kbd_pwm_tick(s, line);
+-}
+-
+-static void lm_kbd_pwm0_tick(void *opaque)
+-{
+-    lm_kbd_pwm_tick(opaque, 0);
+-}
+-static void lm_kbd_pwm1_tick(void *opaque)
+-{
+-    lm_kbd_pwm_tick(opaque, 1);
+-}
+-static void lm_kbd_pwm2_tick(void *opaque)
+-{
+-    lm_kbd_pwm_tick(opaque, 2);
+-}
+-
+-enum {
+-    LM832x_CMD_READ_ID		= 0x80, /* Read chip ID. */
+-    LM832x_CMD_WRITE_CFG	= 0x81, /* Set configuration item. */
+-    LM832x_CMD_READ_INT		= 0x82, /* Get interrupt status. */
+-    LM832x_CMD_RESET		= 0x83, /* Reset, same as external one */
+-    LM823x_CMD_WRITE_PULL_DOWN	= 0x84, /* Select GPIO pull-up/down. */
+-    LM832x_CMD_WRITE_PORT_SEL	= 0x85, /* Select GPIO in/out. */
+-    LM832x_CMD_WRITE_PORT_STATE	= 0x86, /* Set GPIO pull-up/down. */
+-    LM832x_CMD_READ_PORT_SEL	= 0x87, /* Get GPIO in/out. */
+-    LM832x_CMD_READ_PORT_STATE	= 0x88, /* Get GPIO pull-up/down. */
+-    LM832x_CMD_READ_FIFO	= 0x89, /* Read byte from FIFO. */
+-    LM832x_CMD_RPT_READ_FIFO	= 0x8a, /* Read FIFO (no increment). */
+-    LM832x_CMD_SET_ACTIVE	= 0x8b, /* Set active time. */
+-    LM832x_CMD_READ_ERROR	= 0x8c, /* Get error status. */
+-    LM832x_CMD_READ_ROTATOR	= 0x8e, /* Read rotator status. */
+-    LM832x_CMD_SET_DEBOUNCE	= 0x8f, /* Set debouncing time. */
+-    LM832x_CMD_SET_KEY_SIZE	= 0x90, /* Set keypad size. */
+-    LM832x_CMD_READ_KEY_SIZE	= 0x91, /* Get keypad size. */
+-    LM832x_CMD_READ_CFG		= 0x92, /* Get configuration item. */
+-    LM832x_CMD_WRITE_CLOCK	= 0x93, /* Set clock config. */
+-    LM832x_CMD_READ_CLOCK	= 0x94, /* Get clock config. */
+-    LM832x_CMD_PWM_WRITE	= 0x95, /* Write PWM script. */
+-    LM832x_CMD_PWM_START	= 0x96, /* Start PWM engine. */
+-    LM832x_CMD_PWM_STOP		= 0x97, /* Stop PWM engine. */
+-    LM832x_GENERAL_ERROR	= 0xff, /* There was one error.
+-                                           Previously was represented by -1
+-                                           This is not a command */
+-};
+-
+-#define LM832x_MAX_KPX		8
+-#define LM832x_MAX_KPY		12
+-
+-static uint8_t lm_kbd_read(LM823KbdState *s, int reg, int byte)
+-{
+-    int ret;
+-
+-    switch (reg) {
+-    case LM832x_CMD_READ_ID:
+-        ret = 0x0400;
+-        break;
+-
+-    case LM832x_CMD_READ_INT:
+-        ret = s->status;
+-        if (!(s->status & INT_NOINIT)) {
+-            s->status = 0;
+-            lm_kbd_irq_update(s);
+-        }
+-        break;
+-
+-    case LM832x_CMD_READ_PORT_SEL:
+-        ret = s->gpio.dir;
+-        break;
+-    case LM832x_CMD_READ_PORT_STATE:
+-        ret = s->gpio.mask;
+-        break;
+-
+-    case LM832x_CMD_READ_FIFO:
+-        if (s->kbd.len <= 1)
+-            return 0x00;
+-
+-        /* Example response from the two commands after a INT_KEYPAD
+-         * interrupt caused by the key 0x3c being pressed:
+-         * RPT_READ_FIFO: 55 bc 00 4e ff 0a 50 08 00 29 d9 08 01 c9 01
+-         *     READ_FIFO: bc 00 00 4e ff 0a 50 08 00 29 d9 08 01 c9 01
+-         * RPT_READ_FIFO: bc 00 00 4e ff 0a 50 08 00 29 d9 08 01 c9 01
+-         *
+-         * 55 is the code of the key release event serviced in the previous
+-         * interrupt handling.
+-         *
+-         * TODO: find out whether the FIFO is advanced a single character
+-         * before reading every byte or the whole size of the FIFO at the
+-         * last LM832x_CMD_READ_FIFO.  This affects LM832x_CMD_RPT_READ_FIFO
+-         * output in cases where there are more than one event in the FIFO.
+-         * Assume 0xbc and 0x3c events are in the FIFO:
+-         * RPT_READ_FIFO: 55 bc 3c 00 4e ff 0a 50 08 00 29 d9 08 01 c9
+-         *     READ_FIFO: bc 3c 00 00 4e ff 0a 50 08 00 29 d9 08 01 c9
+-         * Does RPT_READ_FIFO now return 0xbc and 0x3c or only 0x3c?
+-         */
+-        s->kbd.start ++;
+-        s->kbd.start &= sizeof(s->kbd.fifo) - 1;
+-        s->kbd.len --;
+-
+-        return s->kbd.fifo[s->kbd.start];
+-    case LM832x_CMD_RPT_READ_FIFO:
+-        if (byte >= s->kbd.len)
+-            return 0x00;
+-
+-        return s->kbd.fifo[(s->kbd.start + byte) & (sizeof(s->kbd.fifo) - 1)];
+-
+-    case LM832x_CMD_READ_ERROR:
+-        return s->error;
+-
+-    case LM832x_CMD_READ_ROTATOR:
+-        return 0;
+-
+-    case LM832x_CMD_READ_KEY_SIZE:
+-        return s->kbd.size;
+-
+-    case LM832x_CMD_READ_CFG:
+-        return s->config & 0xf;
+-
+-    case LM832x_CMD_READ_CLOCK:
+-        return (s->clock & 0xfc) | 2;
+-
+-    default:
+-        lm_kbd_error(s, ERR_CMDUNK);
+-        fprintf(stderr, "%s: unknown command %02x\n", __func__, reg);
+-        return 0x00;
+-    }
+-
+-    return ret >> (byte << 3);
+-}
+-
+-static void lm_kbd_write(LM823KbdState *s, int reg, int byte, uint8_t value)
+-{
+-    switch (reg) {
+-    case LM832x_CMD_WRITE_CFG:
+-        s->config = value;
+-        /* This must be done whenever s->mux.in is updated (never).  */
+-        if ((s->config >> 1) & 1)			/* MUX1EN */
+-            qemu_set_irq(s->mux.out[0], s->mux.in[0][(s->config >> 0) & 1]);
+-        if ((s->config >> 3) & 1)			/* MUX2EN */
+-            qemu_set_irq(s->mux.out[0], s->mux.in[0][(s->config >> 2) & 1]);
+-        /* TODO: check that this is issued only following the chip reset
+-         * and not in the middle of operation and that it is followed by
+-         * the GPIO ports re-resablishing through WRITE_PORT_SEL and
+-         * WRITE_PORT_STATE (using a timer perhaps) and otherwise output
+-         * warnings.  */
+-        s->status = 0;
+-        lm_kbd_irq_update(s);
+-        s->kbd.len = 0;
+-        s->kbd.start = 0;
+-        s->reg = LM832x_GENERAL_ERROR;
+-        break;
+-
+-    case LM832x_CMD_RESET:
+-        if (value == 0xaa)
+-            lm_kbd_reset(DEVICE(s));
+-        else
+-            lm_kbd_error(s, ERR_BADPAR);
+-        s->reg = LM832x_GENERAL_ERROR;
+-        break;
+-
+-    case LM823x_CMD_WRITE_PULL_DOWN:
+-        if (!byte)
+-            s->gpio.pull = value;
+-        else {
+-            s->gpio.pull |= value << 8;
+-            lm_kbd_gpio_update(s);
+-            s->reg = LM832x_GENERAL_ERROR;
+-        }
+-        break;
+-    case LM832x_CMD_WRITE_PORT_SEL:
+-        if (!byte)
+-            s->gpio.dir = value;
+-        else {
+-            s->gpio.dir |= value << 8;
+-            lm_kbd_gpio_update(s);
+-            s->reg = LM832x_GENERAL_ERROR;
+-        }
+-        break;
+-    case LM832x_CMD_WRITE_PORT_STATE:
+-        if (!byte)
+-            s->gpio.mask = value;
+-        else {
+-            s->gpio.mask |= value << 8;
+-            lm_kbd_gpio_update(s);
+-            s->reg = LM832x_GENERAL_ERROR;
+-        }
+-        break;
+-
+-    case LM832x_CMD_SET_ACTIVE:
+-        s->acttime = value;
+-        s->reg = LM832x_GENERAL_ERROR;
+-        break;
+-
+-    case LM832x_CMD_SET_DEBOUNCE:
+-        s->kbd.dbnctime = value;
+-        s->reg = LM832x_GENERAL_ERROR;
+-        if (!value)
+-            lm_kbd_error(s, ERR_BADPAR);
+-        break;
+-
+-    case LM832x_CMD_SET_KEY_SIZE:
+-        s->kbd.size = value;
+-        s->reg = LM832x_GENERAL_ERROR;
+-        if (
+-                        (value & 0xf) < 3 || (value & 0xf) > LM832x_MAX_KPY ||
+-                        (value >> 4) < 3 || (value >> 4) > LM832x_MAX_KPX)
+-            lm_kbd_error(s, ERR_BADPAR);
+-        break;
+-
+-    case LM832x_CMD_WRITE_CLOCK:
+-        s->clock = value;
+-        s->reg = LM832x_GENERAL_ERROR;
+-        if ((value & 3) && (value & 3) != 3) {
+-            lm_kbd_error(s, ERR_BADPAR);
+-            fprintf(stderr, "%s: invalid clock setting in RCPWM\n",
+-                            __func__);
+-        }
+-        /* TODO: Validate that the command is only issued once */
+-        break;
+-
+-    case LM832x_CMD_PWM_WRITE:
+-        if (byte == 0) {
+-            if (!(value & 3) || (value >> 2) > 59) {
+-                lm_kbd_error(s, ERR_BADPAR);
+-                s->reg = LM832x_GENERAL_ERROR;
+-                break;
+-            }
+-
+-            s->pwm.faddr = value;
+-            s->pwm.file[s->pwm.faddr] = 0;
+-        } else if (byte == 1) {
+-            s->pwm.file[s->pwm.faddr] |= value << 8;
+-        } else if (byte == 2) {
+-            s->pwm.file[s->pwm.faddr] |= value << 0;
+-            s->reg = LM832x_GENERAL_ERROR;
+-        }
+-        break;
+-    case LM832x_CMD_PWM_START:
+-        s->reg = LM832x_GENERAL_ERROR;
+-        if (!(value & 3) || (value >> 2) > 59) {
+-            lm_kbd_error(s, ERR_BADPAR);
+-            break;
+-        }
+-
+-        s->pwm.addr[(value & 3) - 1] = value >> 2;
+-        lm_kbd_pwm_start(s, (value & 3) - 1);
+-        break;
+-    case LM832x_CMD_PWM_STOP:
+-        s->reg = LM832x_GENERAL_ERROR;
+-        if (!(value & 3)) {
+-            lm_kbd_error(s, ERR_BADPAR);
+-            break;
+-        }
+-
+-        timer_del(s->pwm.tm[(value & 3) - 1]);
+-        break;
+-
+-    case LM832x_GENERAL_ERROR:
+-        lm_kbd_error(s, ERR_BADPAR);
+-        break;
+-    default:
+-        lm_kbd_error(s, ERR_CMDUNK);
+-        fprintf(stderr, "%s: unknown command %02x\n", __func__, reg);
+-        break;
+-    }
+-}
+-
+-static int lm_i2c_event(I2CSlave *i2c, enum i2c_event event)
+-{
+-    LM823KbdState *s = LM8323(i2c);
+-
+-    switch (event) {
+-    case I2C_START_RECV:
+-    case I2C_START_SEND:
+-        s->i2c_cycle = 0;
+-        s->i2c_dir = (event == I2C_START_SEND);
+-        break;
+-
+-    default:
+-        break;
+-    }
+-
+-    return 0;
+-}
+-
+-static uint8_t lm_i2c_rx(I2CSlave *i2c)
+-{
+-    LM823KbdState *s = LM8323(i2c);
+-
+-    return lm_kbd_read(s, s->reg, s->i2c_cycle ++);
+-}
+-
+-static int lm_i2c_tx(I2CSlave *i2c, uint8_t data)
+-{
+-    LM823KbdState *s = LM8323(i2c);
+-
+-    if (!s->i2c_cycle)
+-        s->reg = data;
+-    else
+-        lm_kbd_write(s, s->reg, s->i2c_cycle - 1, data);
+-    s->i2c_cycle ++;
+-
+-    return 0;
+-}
+-
+-static int lm_kbd_post_load(void *opaque, int version_id)
+-{
+-    LM823KbdState *s = opaque;
+-
+-    lm_kbd_irq_update(s);
+-    lm_kbd_gpio_update(s);
+-
+-    return 0;
+-}
+-
+-static const VMStateDescription vmstate_lm_kbd = {
+-    .name = "LM8323",
+-    .version_id = 0,
+-    .minimum_version_id = 0,
+-    .post_load = lm_kbd_post_load,
 -    .fields = (const VMStateField[]) {
--        VMSTATE_UINT32(status, PXA2xxMMCIState),
--        VMSTATE_UINT32(clkrt, PXA2xxMMCIState),
--        VMSTATE_UINT32(spi, PXA2xxMMCIState),
--        VMSTATE_UINT32(cmdat, PXA2xxMMCIState),
--        VMSTATE_UINT32(resp_tout, PXA2xxMMCIState),
--        VMSTATE_UINT32(read_tout, PXA2xxMMCIState),
--        VMSTATE_INT32(blklen, PXA2xxMMCIState),
--        VMSTATE_INT32(numblk, PXA2xxMMCIState),
--        VMSTATE_UINT32(intmask, PXA2xxMMCIState),
--        VMSTATE_UINT32(intreq, PXA2xxMMCIState),
--        VMSTATE_INT32(cmd, PXA2xxMMCIState),
--        VMSTATE_UINT32(arg, PXA2xxMMCIState),
--        VMSTATE_INT32(cmdreq, PXA2xxMMCIState),
--        VMSTATE_INT32(active, PXA2xxMMCIState),
--        VMSTATE_INT32(bytesleft, PXA2xxMMCIState),
--        VMSTATE_UINT32(tx_start, PXA2xxMMCIState),
--        VMSTATE_UINT32(tx_len, PXA2xxMMCIState),
--        VMSTATE_UINT32(rx_start, PXA2xxMMCIState),
--        VMSTATE_UINT32(rx_len, PXA2xxMMCIState),
--        VMSTATE_UINT32(resp_len, PXA2xxMMCIState),
--        VMSTATE_VALIDATE("fifo size incorrect", pxa2xx_mmci_vmstate_validate),
--        VMSTATE_UINT8_ARRAY(tx_fifo, PXA2xxMMCIState, 64),
--        VMSTATE_UINT8_ARRAY(rx_fifo, PXA2xxMMCIState, 32),
--        VMSTATE_UINT16_ARRAY(resp_fifo, PXA2xxMMCIState, 9),
+-        VMSTATE_I2C_SLAVE(parent_obj, LM823KbdState),
+-        VMSTATE_UINT8(i2c_dir, LM823KbdState),
+-        VMSTATE_UINT8(i2c_cycle, LM823KbdState),
+-        VMSTATE_UINT8(reg, LM823KbdState),
+-        VMSTATE_UINT8(config, LM823KbdState),
+-        VMSTATE_UINT8(status, LM823KbdState),
+-        VMSTATE_UINT8(acttime, LM823KbdState),
+-        VMSTATE_UINT8(error, LM823KbdState),
+-        VMSTATE_UINT8(clock, LM823KbdState),
+-        VMSTATE_UINT16(gpio.pull, LM823KbdState),
+-        VMSTATE_UINT16(gpio.mask, LM823KbdState),
+-        VMSTATE_UINT16(gpio.dir, LM823KbdState),
+-        VMSTATE_UINT16(gpio.level, LM823KbdState),
+-        VMSTATE_UINT8(kbd.dbnctime, LM823KbdState),
+-        VMSTATE_UINT8(kbd.size, LM823KbdState),
+-        VMSTATE_UINT8(kbd.start, LM823KbdState),
+-        VMSTATE_UINT8(kbd.len, LM823KbdState),
+-        VMSTATE_BUFFER(kbd.fifo, LM823KbdState),
+-        VMSTATE_UINT16_ARRAY(pwm.file, LM823KbdState, 256),
+-        VMSTATE_UINT8(pwm.faddr, LM823KbdState),
+-        VMSTATE_BUFFER(pwm.addr, LM823KbdState),
+-        VMSTATE_TIMER_PTR_ARRAY(pwm.tm, LM823KbdState, 3),
 -        VMSTATE_END_OF_LIST()
 -    }
 -};
 -
--#define MMC_STRPCL	0x00	/* MMC Clock Start/Stop register */
--#define MMC_STAT	0x04	/* MMC Status register */
--#define MMC_CLKRT	0x08	/* MMC Clock Rate register */
--#define MMC_SPI		0x0c	/* MMC SPI Mode register */
--#define MMC_CMDAT	0x10	/* MMC Command/Data register */
--#define MMC_RESTO	0x14	/* MMC Response Time-Out register */
--#define MMC_RDTO	0x18	/* MMC Read Time-Out register */
--#define MMC_BLKLEN	0x1c	/* MMC Block Length register */
--#define MMC_NUMBLK	0x20	/* MMC Number of Blocks register */
--#define MMC_PRTBUF	0x24	/* MMC Buffer Partly Full register */
--#define MMC_I_MASK	0x28	/* MMC Interrupt Mask register */
--#define MMC_I_REG	0x2c	/* MMC Interrupt Request register */
--#define MMC_CMD		0x30	/* MMC Command register */
--#define MMC_ARGH	0x34	/* MMC Argument High register */
--#define MMC_ARGL	0x38	/* MMC Argument Low register */
--#define MMC_RES		0x3c	/* MMC Response FIFO */
--#define MMC_RXFIFO	0x40	/* MMC Receive FIFO */
--#define MMC_TXFIFO	0x44	/* MMC Transmit FIFO */
--#define MMC_RDWAIT	0x48	/* MMC RD_WAIT register */
--#define MMC_BLKS_REM	0x4c	/* MMC Blocks Remaining register */
 -
--/* Bitfield masks */
--#define STRPCL_STOP_CLK	(1 << 0)
--#define STRPCL_STRT_CLK	(1 << 1)
--#define STAT_TOUT_RES	(1 << 1)
--#define STAT_CLK_EN	(1 << 8)
--#define STAT_DATA_DONE	(1 << 11)
--#define STAT_PRG_DONE	(1 << 12)
--#define STAT_END_CMDRES	(1 << 13)
--#define SPI_SPI_MODE	(1 << 0)
--#define CMDAT_RES_TYPE	(3 << 0)
--#define CMDAT_DATA_EN	(1 << 2)
--#define CMDAT_WR_RD	(1 << 3)
--#define CMDAT_DMA_EN	(1 << 7)
--#define CMDAT_STOP_TRAN	(1 << 10)
--#define INT_DATA_DONE	(1 << 0)
--#define INT_PRG_DONE	(1 << 1)
--#define INT_END_CMD	(1 << 2)
--#define INT_STOP_CMD	(1 << 3)
--#define INT_CLK_OFF	(1 << 4)
--#define INT_RXFIFO_REQ	(1 << 5)
--#define INT_TXFIFO_REQ	(1 << 6)
--#define INT_TINT	(1 << 7)
--#define INT_DAT_ERR	(1 << 8)
--#define INT_RES_ERR	(1 << 9)
--#define INT_RD_STALLED	(1 << 10)
--#define INT_SDIO_INT	(1 << 11)
--#define INT_SDIO_SACK	(1 << 12)
--#define PRTBUF_PRT_BUF	(1 << 0)
--
--/* Route internal interrupt lines to the global IC and DMA */
--static void pxa2xx_mmci_int_update(PXA2xxMMCIState *s)
+-static void lm8323_realize(DeviceState *dev, Error **errp)
 -{
--    uint32_t mask = s->intmask;
--    if (s->cmdat & CMDAT_DMA_EN) {
--        mask |= INT_RXFIFO_REQ | INT_TXFIFO_REQ;
+-    LM823KbdState *s = LM8323(dev);
 -
--        qemu_set_irq(s->rx_dma, !!(s->intreq & INT_RXFIFO_REQ));
--        qemu_set_irq(s->tx_dma, !!(s->intreq & INT_TXFIFO_REQ));
--    }
--
--    qemu_set_irq(s->irq, !!(s->intreq & ~mask));
+-    s->model = 0x8323;
+-    s->pwm.tm[0] = timer_new_ns(QEMU_CLOCK_VIRTUAL, lm_kbd_pwm0_tick, s);
+-    s->pwm.tm[1] = timer_new_ns(QEMU_CLOCK_VIRTUAL, lm_kbd_pwm1_tick, s);
+-    s->pwm.tm[2] = timer_new_ns(QEMU_CLOCK_VIRTUAL, lm_kbd_pwm2_tick, s);
+-    qdev_init_gpio_out(dev, &s->nirq, 1);
 -}
 -
--static void pxa2xx_mmci_fifo_update(PXA2xxMMCIState *s)
+-void lm832x_key_event(DeviceState *dev, int key, int state)
 -{
--    if (!s->active)
+-    LM823KbdState *s = LM8323(dev);
+-
+-    if ((s->status & INT_ERROR) && (s->error & ERR_FIFOOVR))
 -        return;
 -
--    if (s->cmdat & CMDAT_WR_RD) {
--        while (s->bytesleft && s->tx_len) {
--            sdbus_write_byte(&s->sdbus, s->tx_fifo[s->tx_start++]);
--            s->tx_start &= 0x1f;
--            s->tx_len --;
--            s->bytesleft --;
--        }
--        if (s->bytesleft)
--            s->intreq |= INT_TXFIFO_REQ;
--    } else
--        while (s->bytesleft && s->rx_len < 32) {
--            s->rx_fifo[(s->rx_start + (s->rx_len ++)) & 0x1f] =
--                sdbus_read_byte(&s->sdbus);
--            s->bytesleft --;
--            s->intreq |= INT_RXFIFO_REQ;
--        }
--
--    if (!s->bytesleft) {
--        s->active = 0;
--        s->intreq |= INT_DATA_DONE;
--        s->status |= STAT_DATA_DONE;
--
--        if (s->cmdat & CMDAT_WR_RD) {
--            s->intreq |= INT_PRG_DONE;
--            s->status |= STAT_PRG_DONE;
--        }
+-    if (s->kbd.len >= sizeof(s->kbd.fifo)) {
+-        lm_kbd_error(s, ERR_FIFOOVR);
+-        return;
 -    }
 -
--    pxa2xx_mmci_int_update(s);
+-    s->kbd.fifo[(s->kbd.start + s->kbd.len ++) & (sizeof(s->kbd.fifo) - 1)] =
+-            key | (state << 7);
+-
+-    /* We never set ERR_KEYOVR because we support multiple keys fine.  */
+-    s->status |= INT_KEYPAD;
+-    lm_kbd_irq_update(s);
 -}
 -
--static void pxa2xx_mmci_wakequeues(PXA2xxMMCIState *s)
--{
--    int rsplen, i;
--    SDRequest request;
--    uint8_t response[16];
--
--    s->active = 1;
--    s->rx_len = 0;
--    s->tx_len = 0;
--    s->cmdreq = 0;
--
--    request.cmd = s->cmd;
--    request.arg = s->arg;
--    request.crc = 0;	/* FIXME */
--
--    rsplen = sdbus_do_command(&s->sdbus, &request, response);
--    s->intreq |= INT_END_CMD;
--
--    memset(s->resp_fifo, 0, sizeof(s->resp_fifo));
--    switch (s->cmdat & CMDAT_RES_TYPE) {
--#define PXAMMCI_RESP(wd, value0, value1)	\
--        s->resp_fifo[(wd) + 0] |= (value0);	\
--        s->resp_fifo[(wd) + 1] |= (value1) << 8;
--    case 0:	/* No response */
--        goto complete;
--
--    case 1:	/* R1, R4, R5 or R6 */
--        if (rsplen < 4)
--            goto timeout;
--        goto complete;
--
--    case 2:	/* R2 */
--        if (rsplen < 16)
--            goto timeout;
--        goto complete;
--
--    case 3:	/* R3 */
--        if (rsplen < 4)
--            goto timeout;
--        goto complete;
--
--    complete:
--        for (i = 0; rsplen > 0; i ++, rsplen -= 2) {
--            PXAMMCI_RESP(i, response[i * 2], response[i * 2 + 1]);
--        }
--        s->status |= STAT_END_CMDRES;
--
--        if (!(s->cmdat & CMDAT_DATA_EN))
--            s->active = 0;
--        else
--            s->bytesleft = s->numblk * s->blklen;
--
--        s->resp_len = 0;
--        break;
--
--    timeout:
--        s->active = 0;
--        s->status |= STAT_TOUT_RES;
--        break;
--    }
--
--    pxa2xx_mmci_fifo_update(s);
--}
--
--static uint64_t pxa2xx_mmci_read(void *opaque, hwaddr offset, unsigned size)
--{
--    PXA2xxMMCIState *s = (PXA2xxMMCIState *) opaque;
--    uint32_t ret = 0;
--
--    switch (offset) {
--    case MMC_STRPCL:
--        break;
--    case MMC_STAT:
--        ret = s->status;
--        break;
--    case MMC_CLKRT:
--        ret = s->clkrt;
--        break;
--    case MMC_SPI:
--        ret = s->spi;
--        break;
--    case MMC_CMDAT:
--        ret = s->cmdat;
--        break;
--    case MMC_RESTO:
--        ret = s->resp_tout;
--        break;
--    case MMC_RDTO:
--        ret = s->read_tout;
--        break;
--    case MMC_BLKLEN:
--        ret = s->blklen;
--        break;
--    case MMC_NUMBLK:
--        ret = s->numblk;
--        break;
--    case MMC_PRTBUF:
--        break;
--    case MMC_I_MASK:
--        ret = s->intmask;
--        break;
--    case MMC_I_REG:
--        ret = s->intreq;
--        break;
--    case MMC_CMD:
--        ret = s->cmd | 0x40;
--        break;
--    case MMC_ARGH:
--        ret = s->arg >> 16;
--        break;
--    case MMC_ARGL:
--        ret = s->arg & 0xffff;
--        break;
--    case MMC_RES:
--        ret = (s->resp_len < 9) ? s->resp_fifo[s->resp_len++] : 0;
--        break;
--    case MMC_RXFIFO:
--        while (size-- && s->rx_len) {
--            ret |= s->rx_fifo[s->rx_start++] << (size << 3);
--            s->rx_start &= 0x1f;
--            s->rx_len --;
--        }
--        s->intreq &= ~INT_RXFIFO_REQ;
--        pxa2xx_mmci_fifo_update(s);
--        break;
--    case MMC_RDWAIT:
--        break;
--    case MMC_BLKS_REM:
--        ret = s->numblk;
--        break;
--    default:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: incorrect register 0x%02" HWADDR_PRIx "\n",
--                      __func__, offset);
--    }
--    trace_pxa2xx_mmci_read(size, offset, ret);
--
--    return ret;
--}
--
--static void pxa2xx_mmci_write(void *opaque,
--                              hwaddr offset, uint64_t value, unsigned size)
--{
--    PXA2xxMMCIState *s = (PXA2xxMMCIState *) opaque;
--
--    trace_pxa2xx_mmci_write(size, offset, value);
--    switch (offset) {
--    case MMC_STRPCL:
--        if (value & STRPCL_STRT_CLK) {
--            s->status |= STAT_CLK_EN;
--            s->intreq &= ~INT_CLK_OFF;
--
--            if (s->cmdreq && !(s->cmdat & CMDAT_STOP_TRAN)) {
--                s->status &= STAT_CLK_EN;
--                pxa2xx_mmci_wakequeues(s);
--            }
--        }
--
--        if (value & STRPCL_STOP_CLK) {
--            s->status &= ~STAT_CLK_EN;
--            s->intreq |= INT_CLK_OFF;
--            s->active = 0;
--        }
--
--        pxa2xx_mmci_int_update(s);
--        break;
--
--    case MMC_CLKRT:
--        s->clkrt = value & 7;
--        break;
--
--    case MMC_SPI:
--        s->spi = value & 0xf;
--        if (value & SPI_SPI_MODE) {
--            qemu_log_mask(LOG_GUEST_ERROR,
--                          "%s: attempted to use card in SPI mode\n", __func__);
--        }
--        break;
--
--    case MMC_CMDAT:
--        s->cmdat = value & 0x3dff;
--        s->active = 0;
--        s->cmdreq = 1;
--        if (!(value & CMDAT_STOP_TRAN)) {
--            s->status &= STAT_CLK_EN;
--
--            if (s->status & STAT_CLK_EN)
--                pxa2xx_mmci_wakequeues(s);
--        }
--
--        pxa2xx_mmci_int_update(s);
--        break;
--
--    case MMC_RESTO:
--        s->resp_tout = value & 0x7f;
--        break;
--
--    case MMC_RDTO:
--        s->read_tout = value & 0xffff;
--        break;
--
--    case MMC_BLKLEN:
--        s->blklen = value & 0xfff;
--        break;
--
--    case MMC_NUMBLK:
--        s->numblk = value & 0xffff;
--        break;
--
--    case MMC_PRTBUF:
--        if (value & PRTBUF_PRT_BUF) {
--            s->tx_start ^= 32;
--            s->tx_len = 0;
--        }
--        pxa2xx_mmci_fifo_update(s);
--        break;
--
--    case MMC_I_MASK:
--        s->intmask = value & 0x1fff;
--        pxa2xx_mmci_int_update(s);
--        break;
--
--    case MMC_CMD:
--        s->cmd = value & 0x3f;
--        break;
--
--    case MMC_ARGH:
--        s->arg &= 0x0000ffff;
--        s->arg |= value << 16;
--        break;
--
--    case MMC_ARGL:
--        s->arg &= 0xffff0000;
--        s->arg |= value & 0x0000ffff;
--        break;
--
--    case MMC_TXFIFO:
--        while (size-- && s->tx_len < 0x20)
--            s->tx_fifo[(s->tx_start + (s->tx_len ++)) & 0x1f] =
--                    (value >> (size << 3)) & 0xff;
--        s->intreq &= ~INT_TXFIFO_REQ;
--        pxa2xx_mmci_fifo_update(s);
--        break;
--
--    case MMC_RDWAIT:
--    case MMC_BLKS_REM:
--        break;
--
--    default:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: incorrect reg 0x%02" HWADDR_PRIx " "
--                      "(value 0x%08" PRIx64 ")\n", __func__, offset, value);
--    }
--}
--
--static const MemoryRegionOps pxa2xx_mmci_ops = {
--    .read = pxa2xx_mmci_read,
--    .write = pxa2xx_mmci_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
--};
--
--PXA2xxMMCIState *pxa2xx_mmci_init(MemoryRegion *sysmem,
--                hwaddr base,
--                qemu_irq irq, qemu_irq rx_dma, qemu_irq tx_dma)
--{
--    DeviceState *dev;
--
--    dev = sysbus_create_simple(TYPE_PXA2XX_MMCI, base, irq);
--    qdev_connect_gpio_out_named(dev, "rx-dma", 0, rx_dma);
--    qdev_connect_gpio_out_named(dev, "tx-dma", 0, tx_dma);
--
--    return PXA2XX_MMCI(dev);
--}
--
--static void pxa2xx_mmci_set_inserted(DeviceState *dev, bool inserted)
--{
--    PXA2xxMMCIState *s = PXA2XX_MMCI(dev);
--
--    qemu_set_irq(s->inserted, inserted);
--}
--
--static void pxa2xx_mmci_set_readonly(DeviceState *dev, bool readonly)
--{
--    PXA2xxMMCIState *s = PXA2XX_MMCI(dev);
--
--    qemu_set_irq(s->readonly, readonly);
--}
--
--void pxa2xx_mmci_handlers(PXA2xxMMCIState *s, qemu_irq readonly,
--                          qemu_irq coverswitch)
--{
--    DeviceState *dev = DEVICE(s);
--
--    s->readonly = readonly;
--    s->inserted = coverswitch;
--
--    pxa2xx_mmci_set_inserted(dev, sdbus_get_inserted(&s->sdbus));
--    pxa2xx_mmci_set_readonly(dev, sdbus_get_readonly(&s->sdbus));
--}
--
--static void pxa2xx_mmci_reset(DeviceState *d)
--{
--    PXA2xxMMCIState *s = PXA2XX_MMCI(d);
--
--    s->status = 0;
--    s->clkrt = 0;
--    s->spi = 0;
--    s->cmdat = 0;
--    s->resp_tout = 0;
--    s->read_tout = 0;
--    s->blklen = 0;
--    s->numblk = 0;
--    s->intmask = 0;
--    s->intreq = 0;
--    s->cmd = 0;
--    s->arg = 0;
--    s->active = 0;
--    s->bytesleft = 0;
--    s->tx_start = 0;
--    s->tx_len = 0;
--    s->rx_start = 0;
--    s->rx_len = 0;
--    s->resp_len = 0;
--    s->cmdreq = 0;
--    memset(s->tx_fifo, 0, sizeof(s->tx_fifo));
--    memset(s->rx_fifo, 0, sizeof(s->rx_fifo));
--    memset(s->resp_fifo, 0, sizeof(s->resp_fifo));
--}
--
--static void pxa2xx_mmci_instance_init(Object *obj)
--{
--    PXA2xxMMCIState *s = PXA2XX_MMCI(obj);
--    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
--    DeviceState *dev = DEVICE(obj);
--
--    memory_region_init_io(&s->iomem, obj, &pxa2xx_mmci_ops, s,
--                          "pxa2xx-mmci", 0x00100000);
--    sysbus_init_mmio(sbd, &s->iomem);
--    sysbus_init_irq(sbd, &s->irq);
--    qdev_init_gpio_out_named(dev, &s->rx_dma, "rx-dma", 1);
--    qdev_init_gpio_out_named(dev, &s->tx_dma, "tx-dma", 1);
--
--    qbus_init(&s->sdbus, sizeof(s->sdbus),
--              TYPE_PXA2XX_MMCI_BUS, DEVICE(obj), "sd-bus");
--}
--
--static void pxa2xx_mmci_class_init(ObjectClass *klass, void *data)
+-static void lm8323_class_init(ObjectClass *klass, void *data)
 -{
 -    DeviceClass *dc = DEVICE_CLASS(klass);
+-    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
 -
--    dc->vmsd = &vmstate_pxa2xx_mmci;
--    device_class_set_legacy_reset(dc, pxa2xx_mmci_reset);
+-    device_class_set_legacy_reset(dc, lm_kbd_reset);
+-    dc->realize = lm8323_realize;
+-    k->event = lm_i2c_event;
+-    k->recv = lm_i2c_rx;
+-    k->send = lm_i2c_tx;
+-    dc->vmsd = &vmstate_lm_kbd;
 -}
 -
--static void pxa2xx_mmci_bus_class_init(ObjectClass *klass, void *data)
--{
--    SDBusClass *sbc = SD_BUS_CLASS(klass);
--
--    sbc->set_inserted = pxa2xx_mmci_set_inserted;
--    sbc->set_readonly = pxa2xx_mmci_set_readonly;
--}
--
--static const TypeInfo pxa2xx_mmci_types[] = {
--    {
--        .name           = TYPE_PXA2XX_MMCI,
--        .parent         = TYPE_SYS_BUS_DEVICE,
--        .instance_size  = sizeof(PXA2xxMMCIState),
--        .instance_init  = pxa2xx_mmci_instance_init,
--        .class_init     = pxa2xx_mmci_class_init,
--    },
--    {
--        .name           = TYPE_PXA2XX_MMCI_BUS,
--        .parent         = TYPE_SD_BUS,
--        .instance_size  = sizeof(SDBus),
--        .class_init     = pxa2xx_mmci_bus_class_init,
--    },
+-static const TypeInfo lm8323_info = {
+-    .name          = TYPE_LM8323,
+-    .parent        = TYPE_I2C_SLAVE,
+-    .instance_size = sizeof(LM823KbdState),
+-    .class_init    = lm8323_class_init,
 -};
 -
--DEFINE_TYPES(pxa2xx_mmci_types)
-diff --git a/hw/sd/meson.build b/hw/sd/meson.build
-index bbb75af0c9b..b43d45bc564 100644
---- a/hw/sd/meson.build
-+++ b/hw/sd/meson.build
-@@ -5,7 +5,6 @@ system_ss.add(when: 'CONFIG_SDHCI_PCI', if_true: files('sdhci-pci.c'))
- system_ss.add(when: 'CONFIG_SSI_SD', if_true: files('ssi-sd.c'))
- 
- system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_mmc.c'))
--system_ss.add(when: 'CONFIG_PXA2XX', if_true: files('pxa2xx_mmci.c'))
- system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_sdhost.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_sdhci.c'))
- system_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-sdhost.c'))
-diff --git a/hw/sd/trace-events b/hw/sd/trace-events
-index 43671dc7912..db0644256d9 100644
---- a/hw/sd/trace-events
-+++ b/hw/sd/trace-events
-@@ -60,10 +60,6 @@ sdcard_set_voltage(uint16_t millivolts) "%u mV"
- sdcard_ext_csd_update(unsigned index, uint8_t oval, uint8_t nval) "index %u: 0x%02x -> 0x%02x"
- sdcard_switch(unsigned access, unsigned index, unsigned value, unsigned set) "SWITCH acc:%u idx:%u val:%u set:%u"
- 
--# pxa2xx_mmci.c
--pxa2xx_mmci_read(uint8_t size, uint32_t addr, uint32_t value) "size %d addr 0x%02x value 0x%08x"
--pxa2xx_mmci_write(uint8_t size, uint32_t addr, uint32_t value) "size %d addr 0x%02x value 0x%08x"
+-static void lm832x_register_types(void)
+-{
+-    type_register_static(&lm8323_info);
+-}
 -
- # pl181.c
- pl181_command_send(uint8_t cmd, uint32_t arg) "sending CMD%02d arg 0x%08" PRIx32
- pl181_command_sent(void) "command sent"
+-type_init(lm832x_register_types)
+diff --git a/hw/input/Kconfig b/hw/input/Kconfig
+index 6f3ffbc5aa1..a116cb82dff 100644
+--- a/hw/input/Kconfig
++++ b/hw/input/Kconfig
+@@ -1,10 +1,6 @@
+ config ADB
+     bool
+ 
+-config LM832X
+-    bool
+-    depends on I2C
+-
+ config PCKBD
+     bool
+     select PS2
+diff --git a/hw/input/meson.build b/hw/input/meson.build
+index f12796fb695..90a214962c7 100644
+--- a/hw/input/meson.build
++++ b/hw/input/meson.build
+@@ -1,6 +1,5 @@
+ system_ss.add(files('hid.c'))
+ system_ss.add(when: 'CONFIG_ADB', if_true: files('adb.c', 'adb-mouse.c', 'adb-kbd.c'))
+-system_ss.add(when: 'CONFIG_LM832X', if_true: files('lm832x.c'))
+ system_ss.add(when: 'CONFIG_PCKBD', if_true: files('pckbd.c'))
+ system_ss.add(when: 'CONFIG_PL050', if_true: files('pl050.c'))
+ system_ss.add(when: 'CONFIG_PS2', if_true: files('ps2.c'))
 -- 
 2.34.1
 
