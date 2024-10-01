@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DB86CEACE8
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:41:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55D7BCEACE7
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:41:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svfw8-0000oC-Uz; Tue, 01 Oct 2024 12:41:21 -0400
+	id 1svfv3-00069m-6z; Tue, 01 Oct 2024 12:40:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfui-0005cA-6c
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:52 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1svfum-0005ip-1T
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:58 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfub-00069O-Dc
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:51 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-37cca239886so3296169f8f.2
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:39:45 -0700 (PDT)
+ id 1svfuf-0006Ab-Nj
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:55 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-42cbbb1727eso50900195e9.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:39:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727800784; x=1728405584; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727800788; x=1728405588; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=RhbqOipw/0Q0UgKOmZRJYcOhNAbsy3Cg3OL+PeaEZ2Y=;
- b=YSHbL/x75i2nlQ71fYS/POMfY0wD9IQueojgLz4410iqNYvkhGwAyepufBTlubju+A
- 6TB4HySu9Ch/DDz8axm6DagCTIRVyIuslQCZnMRv/tIRNv5CelYT1jjQp6nlm3TOwr/x
- hsGeFPnc91SyHMvCP2epVdLXWwltIu/183w1IIg7Vq+LlpB/dt6i/S9kRhSDaBVyWAu8
- DPpW1sG8gr4+7wWaZD6QoLNVqy/yVCr+299RS/0N0Xq930UCvtNBfKyl+h42gAiwaJvm
- hEAyZgDvq5trds3mQWXoID7NjJHYvPv68OLb5ALAI8yNfFa1qmZ1ZqLvZxpW5IkurRaQ
- LlNQ==
+ :reply-to; bh=6+uHLoLXqsNtRgNN+QBAtOWDlDpnmgj31oagsZRP2ws=;
+ b=ENopzfPkR67vS4am3dT2NmQuIQoQKKjiR7oDSZtsbgg4TrmbaGFY8j5oBpuQpCDHvc
+ uKl9AOdxLvuLKPMKEa8y2FkgSmlqxdq5DFElOdZza0QaJDK2mPj441HVwDyNQU3XW7nI
+ 2+pBWwVC9lZJ2x/F7v1ifPFHQzMEKWPkwASwpJH+NVT8sw4m3VS4P5bNgvB252V7lW30
+ /KLUak75cY2yUN/sj8G0oK9PyrMCXgdogqwwne9PJayERzN5IACKIKVCvoZ3CK+k2D6Z
+ J6vQHS3RJnKyP/IMEAGQMCdDUImMYYhBiQ4rTQRwgUOes4NVLPjfUYFZXb8uQpO0jgaG
+ 0OuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727800784; x=1728405584;
+ d=1e100.net; s=20230601; t=1727800788; x=1728405588;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RhbqOipw/0Q0UgKOmZRJYcOhNAbsy3Cg3OL+PeaEZ2Y=;
- b=G7/guN1yD9rJQliwZMatSpYLFJhgkEwdU8ZbDX8WU8NfgUHQB0Fab2jOd3dR72KVy4
- 9ZSua4DHqpuHGI2HfgKvtac5Ocu0YsU+PmOcBkzoP+ggqFwRnQ8zpQGwhexG/ncU8Gl3
- gw8e+iWjJycFqMGbsrHSdwFCWB12Ys/7oC3E1hhotKvG5kt89I6vxTtGAXQdTu9Df8N8
- r6NeWvyKC1dwlEogY1h1+S8NWg87g7Yiv2/fU5TxSnjf7pHqI7NYuZy6x+NdHgkyKumy
- ZKCEBbopNU3OD7zxh1xJOJHziuBkrPd3RrLDq1AcjaVdhxNd2Ct8EGYQcUoAtqgQGnuD
- Dgig==
-X-Gm-Message-State: AOJu0YwsqcRGm1RpiDtQPew6fj39HEiAgWEMLMWZpJI70UxlT4vVRtOd
- OpJQ19u47PftdwNZCnmBhndGOgp5vA94K+SVK7AXj6bhMCXOtjlFfxYRPYESnU2EL+yNbYhEN7G
- e
-X-Google-Smtp-Source: AGHT+IGiudWhDiC9CTpo9dbslYuWPMy/rltl8jjKS69qNMpNC/19tcqrzyeytMUAFX+/7ZWdMkTXGQ==
-X-Received: by 2002:a5d:67ca:0:b0:374:c2cf:c01c with SMTP id
- ffacd0b85a97d-37cfba183camr124755f8f.48.1727800783900; 
- Tue, 01 Oct 2024 09:39:43 -0700 (PDT)
+ bh=6+uHLoLXqsNtRgNN+QBAtOWDlDpnmgj31oagsZRP2ws=;
+ b=EEKl2a8cB1rbUunS/Y0FUl8nicRtlsJWda7KK3RqkUVHP7I7LUN48qyQrVZMKvTG+5
+ MQYhpOGJFdxUjFOaO5sUZMp5nJYjr4EP4PvZig7qT36CM4nIkDuuP6waxqDXJcb++r9J
+ 1Qi9MrdNhxMbdYxs/rK0jPXLTd1KMIBPbSDMlwVLB9hU4X+/trz0XTyHeElLugobiSnQ
+ 4bGUwtxWESRTwDsp59GuCO+THMtOEb8R4NqtxGtq/83Q1ekdn/4SakBx3Jnak3phT1dm
+ JNF+MfAJBUU6YRPYlX/esARrtKF3obg7AISAMTm95pmSOi3O2X+dXUWNcVqf06l02Fsv
+ k9Fw==
+X-Gm-Message-State: AOJu0YwV4AhGkwosNeR/2J/8v9CGTHGY/xsWStkH9Hx/W7BZf4RXbo27
+ V0YrzoSDNFIu2OZOYd7qub1Cb4m7moUW6UAEZZ8TGUESxmFeU2eMGgv8ZrTOTCnSG7lu7/0yyIH
+ V
+X-Google-Smtp-Source: AGHT+IEkBdE64KcgfX4+eq2xF/+xprahYD5HIau7Pg1xAQ1YBUR8711ajNGDFJADZc8tkh3muZzylw==
+X-Received: by 2002:a05:600c:3ca9:b0:42c:b843:792b with SMTP id
+ 5b1f17b1804b1-42f777b63b9mr1041745e9.2.1727800788152; 
+ Tue, 01 Oct 2024 09:39:48 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd56e6547sm12243771f8f.58.2024.10.01.09.39.43
+ ffacd0b85a97d-37cd56e6547sm12243771f8f.58.2024.10.01.09.39.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 09:39:43 -0700 (PDT)
+ Tue, 01 Oct 2024 09:39:47 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 44/54] hw/misc: Remove omap_sdrc device
-Date: Tue,  1 Oct 2024 17:39:08 +0100
-Message-Id: <20241001163918.1275441-45-peter.maydell@linaro.org>
+Subject: [PULL 52/54] hw/misc/omap_clk: Remove OMAP2-specifics
+Date: Tue,  1 Oct 2024 17:39:16 +0100
+Message-Id: <20241001163918.1275441-53-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241001163918.1275441-1-peter.maydell@linaro.org>
 References: <20241001163918.1275441-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,229 +93,583 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The omap_sdrc device is only in OMAP2, which we are removing.
+Remove the handling for all non-OMAP1 SoCs.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240903160751.4100218-43-peter.maydell@linaro.org
+Message-id: 20240903160751.4100218-52-peter.maydell@linaro.org
 ---
- include/hw/arm/omap.h |   7 --
- hw/misc/omap_sdrc.c   | 167 ------------------------------------------
- hw/misc/meson.build   |   1 -
- 3 files changed, 175 deletions(-)
- delete mode 100644 hw/misc/omap_sdrc.c
+ hw/misc/omap_clk.c | 527 +--------------------------------------------
+ 1 file changed, 2 insertions(+), 525 deletions(-)
 
-diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
-index b0bd1e6f540..dcd338c7c49 100644
---- a/include/hw/arm/omap.h
-+++ b/include/hw/arm/omap.h
-@@ -147,12 +147,6 @@ hwaddr omap_l4_region_base(struct omap_target_agent_s *ta,
- hwaddr omap_l4_region_size(struct omap_target_agent_s *ta,
-                                        int region);
+diff --git a/hw/misc/omap_clk.c b/hw/misc/omap_clk.c
+index c77ca2fc74e..0157c9be759 100644
+--- a/hw/misc/omap_clk.c
++++ b/hw/misc/omap_clk.c
+@@ -35,9 +35,6 @@ struct clk {
+ #define CLOCK_IN_OMAP730	(1 << 11)
+ #define CLOCK_IN_OMAP1510	(1 << 12)
+ #define CLOCK_IN_OMAP16XX	(1 << 13)
+-#define CLOCK_IN_OMAP242X	(1 << 14)
+-#define CLOCK_IN_OMAP243X	(1 << 15)
+-#define CLOCK_IN_OMAP343X	(1 << 16)
+     uint32_t flags;
+     int id;
  
--/* OMAP2 SDRAM controller */
--struct omap_sdrc_s;
--struct omap_sdrc_s *omap_sdrc_init(MemoryRegion *sysmem,
--                                   hwaddr base);
--void omap_sdrc_reset(struct omap_sdrc_s *s);
--
- /* OMAP2 general purpose memory controller */
- struct omap_gpmc_s;
- struct omap_gpmc_s *omap_gpmc_init(struct omap_mpu_state_s *mpu,
-@@ -954,7 +948,6 @@ struct omap_mpu_state_s {
-     struct omap_gp_timer_s *gptimer[12];
-     struct omap_synctimer_s *synctimer;
+@@ -59,8 +56,7 @@ static struct clk xtal_osc12m = {
+ static struct clk xtal_osc32k = {
+     .name	= "xtal_osc_32k",
+     .rate	= 32768,
+-    .flags	= CLOCK_IN_OMAP1510 | CLOCK_IN_OMAP16XX | CLOCK_IN_OMAP310 |
+-            CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
++    .flags	= CLOCK_IN_OMAP1510 | CLOCK_IN_OMAP16XX | CLOCK_IN_OMAP310,
+ };
  
--    struct omap_sdrc_s *sdrc;
-     struct omap_gpmc_s *gpmc;
+ static struct clk ck_ref = {
+@@ -507,449 +503,10 @@ static struct clk i2c_ick = {
+ static struct clk clk32k = {
+     .name	= "clk32-kHz",
+     .flags	= CLOCK_IN_OMAP310 | CLOCK_IN_OMAP1510 | CLOCK_IN_OMAP16XX |
+-            CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X | ALWAYS_ENABLED,
++            ALWAYS_ENABLED,
+     .parent	= &xtal_osc32k,
+ };
  
-     struct omap_mcspi_s *mcspi[2];
-diff --git a/hw/misc/omap_sdrc.c b/hw/misc/omap_sdrc.c
-deleted file mode 100644
-index 6aa1b3ef7fb..00000000000
---- a/hw/misc/omap_sdrc.c
-+++ /dev/null
-@@ -1,167 +0,0 @@
--/*
-- * TI OMAP SDRAM controller emulation.
-- *
-- * Copyright (C) 2007-2008 Nokia Corporation
-- * Written by Andrzej Zaborowski <andrew@openedhand.com>
-- *
-- * This program is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU General Public License as
-- * published by the Free Software Foundation; either version 2 or
-- * (at your option) any later version of the License.
-- *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- * GNU General Public License for more details.
-- *
-- * You should have received a copy of the GNU General Public License along
-- * with this program; if not, see <http://www.gnu.org/licenses/>.
-- */
--#include "qemu/osdep.h"
--#include "hw/arm/omap.h"
--
--/* SDRAM Controller Subsystem */
--struct omap_sdrc_s {
--    MemoryRegion iomem;
--    uint8_t config;
+-static struct clk ref_clk = {
+-    .name	= "ref_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X | ALWAYS_ENABLED,
+-    .rate	= 12000000,	/* 12 MHz or 13 MHz or 19.2 MHz */
+-    /*.parent	= sys.xtalin */
 -};
 -
--void omap_sdrc_reset(struct omap_sdrc_s *s)
--{
--    s->config = 0x10;
--}
--
--static uint64_t omap_sdrc_read(void *opaque, hwaddr addr, unsigned size)
--{
--    struct omap_sdrc_s *s = opaque;
--
--    if (size != 4) {
--        return omap_badwidth_read32(opaque, addr);
--    }
--
--    switch (addr) {
--    case 0x00:	/* SDRC_REVISION */
--        return 0x20;
--
--    case 0x10:	/* SDRC_SYSCONFIG */
--        return s->config;
--
--    case 0x14:	/* SDRC_SYSSTATUS */
--        return 1;						/* RESETDONE */
--
--    case 0x40:	/* SDRC_CS_CFG */
--    case 0x44:	/* SDRC_SHARING */
--    case 0x48:	/* SDRC_ERR_ADDR */
--    case 0x4c:	/* SDRC_ERR_TYPE */
--    case 0x60:	/* SDRC_DLLA_SCTRL */
--    case 0x64:	/* SDRC_DLLA_STATUS */
--    case 0x68:	/* SDRC_DLLB_CTRL */
--    case 0x6c:	/* SDRC_DLLB_STATUS */
--    case 0x70:	/* SDRC_POWER */
--    case 0x80:	/* SDRC_MCFG_0 */
--    case 0x84:	/* SDRC_MR_0 */
--    case 0x88:	/* SDRC_EMR1_0 */
--    case 0x8c:	/* SDRC_EMR2_0 */
--    case 0x90:	/* SDRC_EMR3_0 */
--    case 0x94:	/* SDRC_DCDL1_CTRL */
--    case 0x98:	/* SDRC_DCDL2_CTRL */
--    case 0x9c:	/* SDRC_ACTIM_CTRLA_0 */
--    case 0xa0:	/* SDRC_ACTIM_CTRLB_0 */
--    case 0xa4:	/* SDRC_RFR_CTRL_0 */
--    case 0xa8:	/* SDRC_MANUAL_0 */
--    case 0xb0:	/* SDRC_MCFG_1 */
--    case 0xb4:	/* SDRC_MR_1 */
--    case 0xb8:	/* SDRC_EMR1_1 */
--    case 0xbc:	/* SDRC_EMR2_1 */
--    case 0xc0:	/* SDRC_EMR3_1 */
--    case 0xc4:	/* SDRC_ACTIM_CTRLA_1 */
--    case 0xc8:	/* SDRC_ACTIM_CTRLB_1 */
--    case 0xd4:	/* SDRC_RFR_CTRL_1 */
--    case 0xd8:	/* SDRC_MANUAL_1 */
--        return 0x00;
--    }
--
--    OMAP_BAD_REG(addr);
--    return 0;
--}
--
--static void omap_sdrc_write(void *opaque, hwaddr addr,
--                            uint64_t value, unsigned size)
--{
--    struct omap_sdrc_s *s = opaque;
--
--    if (size != 4) {
--        omap_badwidth_write32(opaque, addr, value);
--        return;
--    }
--
--    switch (addr) {
--    case 0x00:	/* SDRC_REVISION */
--    case 0x14:	/* SDRC_SYSSTATUS */
--    case 0x48:	/* SDRC_ERR_ADDR */
--    case 0x64:	/* SDRC_DLLA_STATUS */
--    case 0x6c:	/* SDRC_DLLB_STATUS */
--        OMAP_RO_REG(addr);
--        return;
--
--    case 0x10:	/* SDRC_SYSCONFIG */
--        if ((value >> 3) != 0x2)
--            fprintf(stderr, "%s: bad SDRAM idle mode %i\n",
--                    __func__, (unsigned)value >> 3);
--        if (value & 2)
--            omap_sdrc_reset(s);
--        s->config = value & 0x18;
--        break;
--
--    case 0x40:	/* SDRC_CS_CFG */
--    case 0x44:	/* SDRC_SHARING */
--    case 0x4c:	/* SDRC_ERR_TYPE */
--    case 0x60:	/* SDRC_DLLA_SCTRL */
--    case 0x68:	/* SDRC_DLLB_CTRL */
--    case 0x70:	/* SDRC_POWER */
--    case 0x80:	/* SDRC_MCFG_0 */
--    case 0x84:	/* SDRC_MR_0 */
--    case 0x88:	/* SDRC_EMR1_0 */
--    case 0x8c:	/* SDRC_EMR2_0 */
--    case 0x90:	/* SDRC_EMR3_0 */
--    case 0x94:	/* SDRC_DCDL1_CTRL */
--    case 0x98:	/* SDRC_DCDL2_CTRL */
--    case 0x9c:	/* SDRC_ACTIM_CTRLA_0 */
--    case 0xa0:	/* SDRC_ACTIM_CTRLB_0 */
--    case 0xa4:	/* SDRC_RFR_CTRL_0 */
--    case 0xa8:	/* SDRC_MANUAL_0 */
--    case 0xb0:	/* SDRC_MCFG_1 */
--    case 0xb4:	/* SDRC_MR_1 */
--    case 0xb8:	/* SDRC_EMR1_1 */
--    case 0xbc:	/* SDRC_EMR2_1 */
--    case 0xc0:	/* SDRC_EMR3_1 */
--    case 0xc4:	/* SDRC_ACTIM_CTRLA_1 */
--    case 0xc8:	/* SDRC_ACTIM_CTRLB_1 */
--    case 0xd4:	/* SDRC_RFR_CTRL_1 */
--    case 0xd8:	/* SDRC_MANUAL_1 */
--        break;
--
--    default:
--        OMAP_BAD_REG(addr);
--        return;
--    }
--}
--
--static const MemoryRegionOps omap_sdrc_ops = {
--    .read = omap_sdrc_read,
--    .write = omap_sdrc_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
+-static struct clk apll_96m = {
+-    .name	= "apll_96m",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X | ALWAYS_ENABLED,
+-    .rate	= 96000000,
+-    /*.parent	= ref_clk */
 -};
 -
--struct omap_sdrc_s *omap_sdrc_init(MemoryRegion *sysmem,
--                                   hwaddr base)
--{
--    struct omap_sdrc_s *s = g_new0(struct omap_sdrc_s, 1);
+-static struct clk apll_54m = {
+-    .name	= "apll_54m",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X | ALWAYS_ENABLED,
+-    .rate	= 54000000,
+-    /*.parent	= ref_clk */
+-};
 -
--    omap_sdrc_reset(s);
+-static struct clk sys_clk = {
+-    .name	= "sys_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X | ALWAYS_ENABLED,
+-    .rate	= 32768,
+-    /*.parent	= sys.xtalin */
+-};
 -
--    memory_region_init_io(&s->iomem, NULL, &omap_sdrc_ops, s, "omap.sdrc", 0x1000);
--    memory_region_add_subregion(sysmem, base, &s->iomem);
+-static struct clk sleep_clk = {
+-    .name	= "sleep_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X | ALWAYS_ENABLED,
+-    .rate	= 32768,
+-    /*.parent	= sys.xtalin */
+-};
 -
--    return s;
--}
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 01b77ca200f..7c9addbe68f 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -77,7 +77,6 @@ system_ss.add(when: 'CONFIG_OMAP', if_true: files(
-   'omap_clk.c',
-   'omap_gpmc.c',
-   'omap_l4.c',
--  'omap_sdrc.c',
-   'omap_tap.c',
- ))
- system_ss.add(when: 'CONFIG_RASPI', if_true: files(
+-static struct clk dpll_ck = {
+-    .name	= "dpll",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X | ALWAYS_ENABLED,
+-    .parent	= &ref_clk,
+-};
+-
+-static struct clk dpll_x2_ck = {
+-    .name	= "dpll_x2",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X | ALWAYS_ENABLED,
+-    .parent	= &ref_clk,
+-};
+-
+-static struct clk wdt1_sys_clk = {
+-    .name	= "wdt1_sys_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X | ALWAYS_ENABLED,
+-    .rate	= 32768,
+-    /*.parent	= sys.xtalin */
+-};
+-
+-static struct clk func_96m_clk = {
+-    .name	= "func_96m_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .divisor	= 1,
+-    .parent	= &apll_96m,
+-};
+-
+-static struct clk func_48m_clk = {
+-    .name	= "func_48m_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .divisor	= 2,
+-    .parent	= &apll_96m,
+-};
+-
+-static struct clk func_12m_clk = {
+-    .name	= "func_12m_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .divisor	= 8,
+-    .parent	= &apll_96m,
+-};
+-
+-static struct clk func_54m_clk = {
+-    .name	= "func_54m_clk",
+-    .flags	= CLOCK_IN_OMAP242X,
+-    .divisor	= 1,
+-    .parent	= &apll_54m,
+-};
+-
+-static struct clk sys_clkout = {
+-    .name	= "clkout",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &sys_clk,
+-};
+-
+-static struct clk sys_clkout2 = {
+-    .name	= "clkout2",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &sys_clk,
+-};
+-
+-static struct clk core_clk = {
+-    .name	= "core_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &dpll_x2_ck,	/* Switchable between dpll_ck and clk32k */
+-};
+-
+-static struct clk l3_clk = {
+-    .name	= "l3_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &core_clk,
+-};
+-
+-static struct clk core_l4_iclk = {
+-    .name	= "core_l4_iclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &l3_clk,
+-};
+-
+-static struct clk wu_l4_iclk = {
+-    .name	= "wu_l4_iclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &l3_clk,
+-};
+-
+-static struct clk core_l3_iclk = {
+-    .name	= "core_l3_iclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &core_clk,
+-};
+-
+-static struct clk core_l4_usb_clk = {
+-    .name	= "core_l4_usb_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &l3_clk,
+-};
+-
+-static struct clk wu_gpt1_clk = {
+-    .name	= "wu_gpt1_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &sys_clk,
+-};
+-
+-static struct clk wu_32k_clk = {
+-    .name	= "wu_32k_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &sys_clk,
+-};
+-
+-static struct clk uart1_fclk = {
+-    .name	= "uart1_fclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &func_48m_clk,
+-};
+-
+-static struct clk uart1_iclk = {
+-    .name	= "uart1_iclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &core_l4_iclk,
+-};
+-
+-static struct clk uart2_fclk = {
+-    .name	= "uart2_fclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &func_48m_clk,
+-};
+-
+-static struct clk uart2_iclk = {
+-    .name	= "uart2_iclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &core_l4_iclk,
+-};
+-
+-static struct clk uart3_fclk = {
+-    .name	= "uart3_fclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &func_48m_clk,
+-};
+-
+-static struct clk uart3_iclk = {
+-    .name	= "uart3_iclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &core_l4_iclk,
+-};
+-
+-static struct clk mpu_fclk = {
+-    .name	= "mpu_fclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &core_clk,
+-};
+-
+-static struct clk mpu_iclk = {
+-    .name	= "mpu_iclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &core_clk,
+-};
+-
+-static struct clk int_m_fclk = {
+-    .name	= "int_m_fclk",
+-    .alias	= "mpu_intc_fclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &core_clk,
+-};
+-
+-static struct clk int_m_iclk = {
+-    .name	= "int_m_iclk",
+-    .alias	= "mpu_intc_iclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &core_clk,
+-};
+-
+-static struct clk core_gpt2_clk = {
+-    .name	= "core_gpt2_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &sys_clk,
+-};
+-
+-static struct clk core_gpt3_clk = {
+-    .name	= "core_gpt3_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &sys_clk,
+-};
+-
+-static struct clk core_gpt4_clk = {
+-    .name	= "core_gpt4_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &sys_clk,
+-};
+-
+-static struct clk core_gpt5_clk = {
+-    .name	= "core_gpt5_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &sys_clk,
+-};
+-
+-static struct clk core_gpt6_clk = {
+-    .name	= "core_gpt6_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &sys_clk,
+-};
+-
+-static struct clk core_gpt7_clk = {
+-    .name	= "core_gpt7_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &sys_clk,
+-};
+-
+-static struct clk core_gpt8_clk = {
+-    .name	= "core_gpt8_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &sys_clk,
+-};
+-
+-static struct clk core_gpt9_clk = {
+-    .name	= "core_gpt9_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &sys_clk,
+-};
+-
+-static struct clk core_gpt10_clk = {
+-    .name	= "core_gpt10_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &sys_clk,
+-};
+-
+-static struct clk core_gpt11_clk = {
+-    .name	= "core_gpt11_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &sys_clk,
+-};
+-
+-static struct clk core_gpt12_clk = {
+-    .name	= "core_gpt12_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &sys_clk,
+-};
+-
+-static struct clk mcbsp1_clk = {
+-    .name	= "mcbsp1_cg",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .divisor	= 2,
+-    .parent	= &func_96m_clk,
+-};
+-
+-static struct clk mcbsp2_clk = {
+-    .name	= "mcbsp2_cg",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .divisor	= 2,
+-    .parent	= &func_96m_clk,
+-};
+-
+-static struct clk emul_clk = {
+-    .name	= "emul_ck",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &func_54m_clk,
+-};
+-
+-static struct clk sdma_fclk = {
+-    .name	= "sdma_fclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &l3_clk,
+-};
+-
+-static struct clk sdma_iclk = {
+-    .name	= "sdma_iclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &core_l3_iclk, /* core_l4_iclk for the configuration port */
+-};
+-
+-static struct clk i2c1_fclk = {
+-    .name	= "i2c1.fclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &func_12m_clk,
+-    .divisor	= 1,
+-};
+-
+-static struct clk i2c1_iclk = {
+-    .name	= "i2c1.iclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &core_l4_iclk,
+-};
+-
+-static struct clk i2c2_fclk = {
+-    .name	= "i2c2.fclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &func_12m_clk,
+-    .divisor	= 1,
+-};
+-
+-static struct clk i2c2_iclk = {
+-    .name	= "i2c2.iclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &core_l4_iclk,
+-};
+-
+-static struct clk gpio_dbclk[5] = {
+-    {
+-        .name	= "gpio1_dbclk",
+-        .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-        .parent	= &wu_32k_clk,
+-    }, {
+-        .name	= "gpio2_dbclk",
+-        .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-        .parent	= &wu_32k_clk,
+-    }, {
+-        .name	= "gpio3_dbclk",
+-        .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-        .parent	= &wu_32k_clk,
+-    }, {
+-        .name	= "gpio4_dbclk",
+-        .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-        .parent	= &wu_32k_clk,
+-    }, {
+-        .name   = "gpio5_dbclk",
+-        .flags  = CLOCK_IN_OMAP243X,
+-        .parent = &wu_32k_clk,
+-    },
+-};
+-
+-static struct clk gpio_iclk = {
+-    .name	= "gpio_iclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &wu_l4_iclk,
+-};
+-
+-static struct clk mmc_fck = {
+-    .name	= "mmc_fclk",
+-    .flags	= CLOCK_IN_OMAP242X,
+-    .parent	= &func_96m_clk,
+-};
+-
+-static struct clk mmc_ick = {
+-    .name	= "mmc_iclk",
+-    .flags	= CLOCK_IN_OMAP242X,
+-    .parent	= &core_l4_iclk,
+-};
+-
+-static struct clk spi_fclk[3] = {
+-    {
+-        .name	= "spi1_fclk",
+-        .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-        .parent	= &func_48m_clk,
+-    }, {
+-        .name	= "spi2_fclk",
+-        .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-        .parent	= &func_48m_clk,
+-    }, {
+-        .name	= "spi3_fclk",
+-        .flags	= CLOCK_IN_OMAP243X,
+-        .parent	= &func_48m_clk,
+-    },
+-};
+-
+-static struct clk dss_clk[2] = {
+-    {
+-        .name	= "dss_clk1",
+-        .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-        .parent	= &core_clk,
+-    }, {
+-        .name	= "dss_clk2",
+-        .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-        .parent	= &sys_clk,
+-    },
+-};
+-
+-static struct clk dss_54m_clk = {
+-    .name	= "dss_54m_clk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &func_54m_clk,
+-};
+-
+-static struct clk dss_l3_iclk = {
+-    .name	= "dss_l3_iclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &core_l3_iclk,
+-};
+-
+-static struct clk dss_l4_iclk = {
+-    .name	= "dss_l4_iclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    .parent	= &core_l4_iclk,
+-};
+-
+-static struct clk spi_iclk[3] = {
+-    {
+-        .name	= "spi1_iclk",
+-        .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-        .parent	= &core_l4_iclk,
+-    }, {
+-        .name	= "spi2_iclk",
+-        .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-        .parent	= &core_l4_iclk,
+-    }, {
+-        .name	= "spi3_iclk",
+-        .flags	= CLOCK_IN_OMAP243X,
+-        .parent	= &core_l4_iclk,
+-    },
+-};
+-
+-static struct clk omapctrl_clk = {
+-    .name	= "omapctrl_iclk",
+-    .flags	= CLOCK_IN_OMAP242X | CLOCK_IN_OMAP243X,
+-    /* XXX Should be in WKUP domain */
+-    .parent	= &core_l4_iclk,
+-};
+-
+ static struct clk *onchip_clks[] = {
+     /* OMAP 1 */
+ 
+@@ -1019,80 +576,6 @@ static struct clk *onchip_clks[] = {
+     &i2c_fck,
+     &i2c_ick,
+ 
+-    /* OMAP 2 */
+-
+-    &ref_clk,
+-    &apll_96m,
+-    &apll_54m,
+-    &sys_clk,
+-    &sleep_clk,
+-    &dpll_ck,
+-    &dpll_x2_ck,
+-    &wdt1_sys_clk,
+-    &func_96m_clk,
+-    &func_48m_clk,
+-    &func_12m_clk,
+-    &func_54m_clk,
+-    &sys_clkout,
+-    &sys_clkout2,
+-    &core_clk,
+-    &l3_clk,
+-    &core_l4_iclk,
+-    &wu_l4_iclk,
+-    &core_l3_iclk,
+-    &core_l4_usb_clk,
+-    &wu_gpt1_clk,
+-    &wu_32k_clk,
+-    &uart1_fclk,
+-    &uart1_iclk,
+-    &uart2_fclk,
+-    &uart2_iclk,
+-    &uart3_fclk,
+-    &uart3_iclk,
+-    &mpu_fclk,
+-    &mpu_iclk,
+-    &int_m_fclk,
+-    &int_m_iclk,
+-    &core_gpt2_clk,
+-    &core_gpt3_clk,
+-    &core_gpt4_clk,
+-    &core_gpt5_clk,
+-    &core_gpt6_clk,
+-    &core_gpt7_clk,
+-    &core_gpt8_clk,
+-    &core_gpt9_clk,
+-    &core_gpt10_clk,
+-    &core_gpt11_clk,
+-    &core_gpt12_clk,
+-    &mcbsp1_clk,
+-    &mcbsp2_clk,
+-    &emul_clk,
+-    &sdma_fclk,
+-    &sdma_iclk,
+-    &i2c1_fclk,
+-    &i2c1_iclk,
+-    &i2c2_fclk,
+-    &i2c2_iclk,
+-    &gpio_dbclk[0],
+-    &gpio_dbclk[1],
+-    &gpio_dbclk[2],
+-    &gpio_dbclk[3],
+-    &gpio_iclk,
+-    &mmc_fck,
+-    &mmc_ick,
+-    &spi_fclk[0],
+-    &spi_iclk[0],
+-    &spi_fclk[1],
+-    &spi_iclk[1],
+-    &spi_fclk[2],
+-    &spi_iclk[2],
+-    &dss_clk[0],
+-    &dss_clk[1],
+-    &dss_54m_clk,
+-    &dss_l3_iclk,
+-    &dss_l4_iclk,
+-    &omapctrl_clk,
+-
+     NULL
+ };
+ 
+@@ -1230,12 +713,6 @@ void omap_clk_init(struct omap_mpu_state_s *mpu)
+         flag = CLOCK_IN_OMAP310;
+     else if (cpu_is_omap1510(mpu))
+         flag = CLOCK_IN_OMAP1510;
+-    else if (cpu_is_omap2410(mpu) || cpu_is_omap2420(mpu))
+-        flag = CLOCK_IN_OMAP242X;
+-    else if (cpu_is_omap2430(mpu))
+-        flag = CLOCK_IN_OMAP243X;
+-    else if (cpu_is_omap3430(mpu))
+-        flag = CLOCK_IN_OMAP243X;
+     else
+         return;
+ 
 -- 
 2.34.1
 
