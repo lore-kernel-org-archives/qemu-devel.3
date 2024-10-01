@@ -4,61 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21443CEACD5
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BA09CEACDB
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:54:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sveAl-00043P-JN; Tue, 01 Oct 2024 10:48:19 -0400
+	id 1sveCZ-0001Nd-Dj; Tue, 01 Oct 2024 10:50:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1sveAB-00038E-S3; Tue, 01 Oct 2024 10:47:45 -0400
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1sveA9-0004XX-6w; Tue, 01 Oct 2024 10:47:43 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id C12BB5C5457;
- Tue,  1 Oct 2024 07:04:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236E8C4AF0C;
- Tue,  1 Oct 2024 07:04:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1727766251;
- bh=tntLg1XIn+hncV2BAYR/kFc1yc1kwy56uncyjqcuPqc=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=f0L68hy2f4IJG9ZxBgOYwS5Eu0HUkQm+enfod24NznAIqIabWQBFUOVCD3wA5T2X3
- nILFDBfEtqcVMUp1nlNNUHz2ZktzL896lMnMeEPELhdpalD/Rd4Wlw11AIDVWOsxgD
- mYEr9ALBlbxBulbx+VLZwJ8Bam9fcYdEGDBshOWHc/YWZVPI5PyEhNm2z+XqAlItLo
- bfi3/pQtJUArwmmHDzuBO8ozhfvNjZdxgX5Tp7URfJGQEmtWyzxsJQnfI2mb5FHd5t
- NFLt4Bc6UDECvMOY3e5XGFRexNBS2EGms48oiRFMiUlFvIOAXUojagKLZGvWaJxtlx
- OhJEPKzB5tXVw==
-Received: from mchehab by mail.kernel.org with local (Exim 4.98)
- (envelope-from <mchehab@kernel.org>) id 1svWvY-00000001V0X-1qOy;
- Tue, 01 Oct 2024 09:04:08 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH v2 04/15] acpi/ghes: better handle source_id and notification
-Date: Tue,  1 Oct 2024 09:03:41 +0200
-Message-ID: <1b6ddd0bdfc9ac32a35fa7d85692e635bb76da11.1727766088.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <cover.1727766088.git.mchehab+huawei@kernel.org>
-References: <cover.1727766088.git.mchehab+huawei@kernel.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sveCP-0001F5-1f
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:50:02 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sveCM-00056r-MZ
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 10:50:00 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-37cdbdbbb1cso1985421f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 07:49:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727794197; x=1728398997; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=wW4tS1JbeCnJ6FYG3DPiU/Bq1CUUdX2G31A9LRKnbYA=;
+ b=IwzISor/41pQuGL1VR5Mzg9tpxnY7MDP7/Az2kBBMbkCC+HTmitG1muiaoXWHhzmsG
+ jd40uLLafNpnGFEKSG1k9BvqA+1G32CBARaYhPWGhPHlBUNBSgxFDKv7bHs7+iHcYtIE
+ WVr8uwcpFQkxz8tWkCS4OfQBLSpvereZNPYV128kIgAV4Tchhzp1iDuHFnst3nKIur6p
+ PEAksYxKsRe1m2rfyvyg8iFiMCXYFktBKz0PWYK7SjCSbzLseLfVr3jVUBhV/BnrHrOI
+ vW09xfyhYynFK+/rrNmjDyq0gw0NvrtPeCHSY/RI3slA0cy4hHeRvREvw0UXO6XDDyJW
+ apgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727794197; x=1728398997;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wW4tS1JbeCnJ6FYG3DPiU/Bq1CUUdX2G31A9LRKnbYA=;
+ b=wJpKpyffd96yq0LAqFPiH33f68RiGXVbw/NWa9CQa253v7DJQaEakC9gmemAqjLHE9
+ EagXsiuwElErIaPY/3ZU2E9qFJsrBWHMmFqCUobeJKlI//HachM245j2JaOaHCIoVT+x
+ LVEL4Lp7UbN8RxvUFib5r6bX+vY5PTlySabTOvrNkyT+Weh5eml3gegMY/HdYmmjH/YZ
+ XqKQF4MWyuiu03Y0MczrN5TbBEbg3p9BRAFFLqBFILECxOAu+ZLXWxo8QDxoWSkzPOsp
+ 7362YPTmni7U8kGbfprGdNoInMFPWnQcyKkcyozJi9u7KkhrWKXSHrBqHXe+J6KT94C2
+ hOZw==
+X-Gm-Message-State: AOJu0Yy8UkXx3x4ErS0OPn5+ybBU17hZORmX39aT1MV0anLqkp5+P1lG
+ ZgPAAgQgJ1+h/pfVYPKwhmwOb4XVzQSXtmpEdeore1O/UEMr0za3BRmYGWwFk1Ipejg26U550c0
+ NjXqSsH9hhD13TWkGHtQ1i/RSxJgfE+jTpet+C37wPsCwSFu8
+X-Google-Smtp-Source: AGHT+IEqrGMKIHseIoiAd7jC4ommPzYuzzrXGDU2i5Na+N2YuKlaOoONoVlrNhRqriIdz2pRVdBZV3L7YlFzyMIIF9w=
+X-Received: by 2002:a05:6402:e99:b0:5c5:b9c2:c5bb with SMTP id
+ 4fb4d7f45d1cf-5c88260842dmr15880528a12.35.1727784584381; Tue, 01 Oct 2024
+ 05:09:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=mchehab@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+References: <20241001070418.28737-1-its@irrelevant.dk>
+In-Reply-To: <20241001070418.28737-1-its@irrelevant.dk>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 1 Oct 2024 13:09:33 +0100
+Message-ID: <CAFEAcA8jG-5pFk2WB1_VHBxjhqmwEPbYaGRkcMWvhF9cW3oUfg@mail.gmail.com>
+Subject: Re: [PULL 0/5] nvme queue
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, Klaus Jensen <k.jensen@samsung.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,91 +87,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GHES has two fields that are stored on HEST error source
-blocks:
+On Tue, 1 Oct 2024 at 08:04, Klaus Jensen <its@irrelevant.dk> wrote:
+>
+> From: Klaus Jensen <k.jensen@samsung.com>
+>
+> The following changes since commit 3b14a767eaca3df5534a162851f04787b363670e:
+>
+>   Merge tag 'qemu-openbios-20240924' of https://github.com/mcayland/qemu into staging (2024-09-28 12:34:44 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20241001
+>
+> for you to fetch changes up to ebd1568fc73209bbc1339a449f3df0b6c9a12358:
+>
+>   hw/nvme: add atomic write support (2024-10-01 09:02:05 +0200)
+>
+> ----------------------------------------------------------------
+> nvme queue
+>
+> ----------------------------------------------------------------
 
-- notification type, which is a number defined at the ACPI spec
-  containing several arch-specific synchronous and assynchronous
-  types;
-- source id, which is a HW/FW defined number, used to distinguish
-  between different implemented hardware report mechanisms.
 
-Cleanup the logic to fill those, as they should be handled
-independently.
+Applied, thanks.
 
-This is a preparation for a future patch that will shift
-those fields to the HEST init function call.
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
----
-
-Chenges from v10:
-
-- Some changes got moved to the previous patch.
-
-Changes from v8:
-- Non-rename/cleanup changes merged altogether;
-- source ID is now more generic, defined per guest target.
-  That should make easier to add support for 86.
-
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- hw/acpi/ghes.c | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
-
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 4a6c45bcb4be..29cd7e4d8171 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -284,9 +284,13 @@ static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
- }
- 
- /* Build Generic Hardware Error Source version 2 (GHESv2) */
--static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
-+static void build_ghes_v2(GArray *table_data,
-+                          BIOSLinker *linker,
-+                          enum AcpiGhesNotifyType notify,
-+                          uint16_t source_id)
- {
-     uint64_t address_offset;
-+
-     /*
-      * Type:
-      * Generic Hardware Error Source version 2(GHESv2 - Type 10)
-@@ -316,18 +320,8 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
-         address_offset + GAS_ADDR_OFFSET, sizeof(uint64_t),
-         ACPI_GHES_ERRORS_FW_CFG_FILE, source_id * sizeof(uint64_t));
- 
--    switch (source_id) {
--    case ACPI_HEST_SRC_ID_SEA:
--        /*
--         * Notification Structure
--         * Now only enable ARMv8 SEA notification type
--         */
--        build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_SEA);
--        break;
--    default:
--        error_report("Not support this error source");
--        abort();
--    }
-+    /* Notification Structure */
-+    build_ghes_hw_error_notification(table_data, notify);
- 
-     /* Error Status Block Length */
-     build_append_int_noprefix(table_data, ACPI_GHES_MAX_RAW_DATA_LENGTH, 4);
-@@ -369,7 +363,8 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
- 
-     /* Error Source Count */
-     build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
--    build_ghes_v2(table_data, ACPI_HEST_SRC_ID_SEA, linker);
-+    build_ghes_v2(table_data, linker,
-+                  ACPI_GHES_NOTIFY_SEA, ACPI_HEST_SRC_ID_SEA);
- 
-     acpi_table_end(linker, &table);
- }
--- 
-2.46.0
-
+-- PMM
 
