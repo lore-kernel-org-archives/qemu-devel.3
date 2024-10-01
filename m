@@ -4,82 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FBD3CEACC5
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:05:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CF2DCEACC5
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 14:06:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svdVA-0000z5-Aq; Tue, 01 Oct 2024 10:05:20 -0400
+	id 1svdVl-0001tq-4R; Tue, 01 Oct 2024 10:05:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1svdV5-0000x9-4I; Tue, 01 Oct 2024 10:05:15 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1svdVh-0001mJ-9p; Tue, 01 Oct 2024 10:05:53 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1svdUX-0000b6-6M; Tue, 01 Oct 2024 10:05:14 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:8a3:0:640:33b5:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 0834A60C24;
- Tue,  1 Oct 2024 17:04:22 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:8026::1:2f] (unknown
- [2a02:6b8:b081:8026::1:2f])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id H4b0022IjCg0-Cie0rsFw; Tue, 01 Oct 2024 17:04:21 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1727791461;
- bh=WTXvn8yZtuYQcYr8hPJx3JBwo8rHZ/olZn0CniOH4LE=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=bDnH7TJ8oDsS+DgDqH1ArTx826wjPXskRl0yKXpa33YFjJxE0kvpOnrirX4n7wAJP
- B+gL+OFwwvkeJ4RrDbwuaPVTdByFnMzf6KXW5xWeqXvNyYU5OMztcz+A+KhsiPg6oi
- r1y8Ue+ZA0LFzXcgpcKyp60aQase3bIDzyq2zOdk=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <c02e70b2-c76a-49ff-844d-3e8b66a4fe3b@yandex-team.ru>
-Date: Tue, 1 Oct 2024 17:04:17 +0300
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1svdV7-0000nu-8V; Tue, 01 Oct 2024 10:05:53 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4917KMlG021803;
+ Tue, 1 Oct 2024 09:29:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
+ 5/PW0f9xpmCw1ogXN12L5QaOyRebBmn9pXDXdy0RYAY=; b=eWdwwwKaa6d+O7X9
+ peXEhZqQaBPj+w1R+2tOUjjmwDHO9DBLFOLQCdij/88Op+6OzbbaMGll4jOOXi2u
+ Kgl1Hzk6q/t1i1EkXdZqm4Wc6bsi1mU5dAhMJ2uRz0pPXT3RAuaeEMIHpQ+Q48vg
+ cMpfFeJNg7Yfg8G7WWBpJ77GjY0C1SrtQ+KbX+rx+Iw99q6dn9BR/jWwdm8zblvU
+ 2BO0ADvu90qZ23a+i02yrvK0/u/i7EaRjWso9uV6t3bBuzBeryb3bwsMoTm+eBJm
+ K2cJHjlhYJRhc91rKa50X+ZIFsnWDvLbchlxDwKmk5NC/ZdKGjl2NNkAOeHhf3it
+ KK8Cuw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 420ckngm9k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 01 Oct 2024 09:29:25 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4919TOvE001576;
+ Tue, 1 Oct 2024 09:29:24 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 420ckngm9f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 01 Oct 2024 09:29:24 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4918anmZ007923;
+ Tue, 1 Oct 2024 09:29:24 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41xvgxukbg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 01 Oct 2024 09:29:24 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4919TMjZ31982228
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 1 Oct 2024 09:29:22 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 07D2E20049;
+ Tue,  1 Oct 2024 09:29:22 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1882520040;
+ Tue,  1 Oct 2024 09:29:21 +0000 (GMT)
+Received: from ltcrain34-lp1.aus.stglabs.ibm.com (unknown [9.3.101.40])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  1 Oct 2024 09:29:20 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, danielhb413@gmail.com, clg@kaod.org
+Subject: [PATCH v2 04/11] ppc/spapr: remove deprecated machine pseries-2.4
+Date: Tue,  1 Oct 2024 14:59:03 +0530
+Message-ID: <20241001092910.1030913-5-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241001092910.1030913-1-harshpb@linux.ibm.com>
+References: <20241001092910.1030913-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 21/22] qom/object: fix -Werror=maybe-uninitialized
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>, Fam Zheng <fam@euphon.net>,
- Song Gao <gaosong@loongson.cn>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-block@nongnu.org,
- Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Greg Kurz <groug@kaod.org>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
- <eperezma@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, Hyman Huang <yong.huang@smartx.com>,
- Kevin Wolf <kwolf@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, John Snow <jsnow@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Jesper Devantier <foss@defmacro.it>,
- Peter Xu <peterx@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Klaus Jensen <its@irrelevant.dk>, Keith Busch <kbusch@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Yuval Shaia <yuval.shaia.ml@gmail.com>,
- Bin Meng <bin.meng@windriver.com>
-References: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
- <20240930081458.1926382-22-marcandre.lureau@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20240930081458.1926382-22-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Yandex-Filter: 1
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: r1XVn5YWcP9sWtQpj9ftKmSLf-B1TuH9
+X-Proofpoint-ORIG-GUID: lG188ntF_VF2AHpd0itgugzTGge28uPE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-01_07,2024-09-30_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 mlxlogscore=863
+ mlxscore=0 priorityscore=1501 clxscore=1015 spamscore=0 lowpriorityscore=0
+ adultscore=0 impostorscore=0 phishscore=0 suspectscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2410010058
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,49 +114,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.09.24 11:14, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> object_resolve_path_type() didn't always set *ambiguousp.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   qom/object.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/qom/object.c b/qom/object.c
-> index 28c5b66eab..bdc8a2c666 100644
-> --- a/qom/object.c
-> +++ b/qom/object.c
-> @@ -2201,6 +2201,9 @@ Object *object_resolve_path_type(const char *path, const char *typename,
->           }
->       } else {
->           obj = object_resolve_abs_path(object_get_root(), parts + 1, typename);
-> +        if (ambiguousp) {
-> +            *ambiguousp = false;
-> +        }
+Commit 1392617d3576 intended to tag pseries-2.1 - 2.11 machines as
+deprecated with reasons mentioned in its commit log.
+Removing pseries-2.4 specific code with this patch for now.
 
-Doesn't this hunk in isolation fix the issue? With this object_resolve_path_type() should set the pointer on all paths if it is non-null..
+Suggested-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ hw/ppc/spapr.c | 15 ---------------
+ 1 file changed, 15 deletions(-)
 
-Hmm, called object_resolve_partial_path() also doesn't set ambiguous on every path, so this hunk is at lease incomplete.
-
-I'm unsure about what semantics expected around ambigous pointers, but it seems to me that it is set only on failure paths, as a reason, why we failed. If this is true, I think, we need only the second hunk, which initializes local "ambig".
-
->       }
->   
->       g_strfreev(parts);
-> @@ -2226,7 +2229,7 @@ Object *object_resolve_path_at(Object *parent, const char *path)
->   
->   Object *object_resolve_type_unambiguous(const char *typename, Error **errp)
->   {
-> -    bool ambig;
-> +    bool ambig = false;
->       Object *o = object_resolve_path_type("", typename, &ambig);
->   
->       if (ambig) {
-
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index f2f20aa5b5..9e78f94ec2 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -5334,21 +5334,6 @@ static void spapr_machine_2_5_class_options(MachineClass *mc)
+ 
+ DEFINE_SPAPR_MACHINE(2, 5);
+ 
+-/*
+- * pseries-2.4
+- */
+-
+-static void spapr_machine_2_4_class_options(MachineClass *mc)
+-{
+-    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
+-
+-    spapr_machine_2_5_class_options(mc);
+-    smc->dr_lmb_enabled = false;
+-    compat_props_add(mc->compat_props, hw_compat_2_4, hw_compat_2_4_len);
+-}
+-
+-DEFINE_SPAPR_MACHINE(2, 4);
+-
+ static void spapr_machine_register_types(void)
+ {
+     type_register_static(&spapr_machine_info);
 -- 
-Best regards,
-Vladimir
+2.45.2
 
 
