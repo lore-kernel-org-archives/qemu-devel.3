@@ -4,74 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF44CEACE7
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BADBCEACE7
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Oct 2024 16:54:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svfuv-0005zE-D6; Tue, 01 Oct 2024 12:40:05 -0400
+	id 1svg5p-0006jg-8r; Tue, 01 Oct 2024 12:51:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfug-0005bP-K4
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:52 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1svg5S-0006Vr-6r
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:50:58 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svfuZ-00068Y-Ob
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:39:50 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-37cc810ce73so3343519f8f.1
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:39:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1svg5Q-0007Qt-CE
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 12:50:57 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-20bb92346caso37785ad.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 09:50:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727800782; x=1728405582; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=tfg4KrY9qV5phch4jlAxFrVvFBQbI4YOGlV/cP6p8eY=;
- b=vTOBB/UA04gwZqJtSfCWU/V/N+2Znee2Mp1QciErZi+itfiLfmOpUlaEWxT1A7BJaG
- pBSzwEgd2shKzlJ987AAQjpRnnv3xIacOhPJM5rtGsG8ntNS8r1+al7ydbk1SaFNsfVJ
- DAGFrhISLQuQ5dmzGqHqkb4l71Mdl+nGlFu36wKRVl0qKfPLpFJG3160L+QYo99LkgCm
- bGUHOLEhgbkzdLe20aHob/+2B0cwtc4kfAXOC7Anstj3jfV1d23rx9ZvI8oHEWOWssa1
- bFbKyAjZjQ2CMEMe0ieRkmcv5yeXw2YOfmwQ0x5Xr2Y06lntyFHksmfwMObdxJYq25Xe
- 2jmg==
+ d=linaro.org; s=google; t=1727801455; x=1728406255; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MjsCRjwKwbWJrZPAmtn9mOW+dG68XD+K3d1r1VdPqTM=;
+ b=lCg3F2tnRrd8Qw+l4vvt70/sOlZwufhmOjXBTOAnM2SVEPDt/cCjfMbIkOijbyKgiw
+ sjws6+0WAOO64Iwb1VsRmK/qk/z5jKrgCQWGgYgRfu+cP2iGqtrsaPoVjlfjR8+xBRqp
+ YHAnsNI+2E87r8qxuEJeJh+mRb1TRIDzxWt05X/X7WBOBpGDBAm70CTj9Mkasl6IfEGo
+ /NiBOcr1dXvFNAkNUWd7m33DJIdhkhJ/OtX4BmTDD/GdSur2FKZp7cM7WXoFjZTtHZuE
+ Pio0I9kE+WEDX1LfypgGtmAMP2wz//rAVZvTPHbAvZwj7GmK+2oQ7G8MHjZxPHUSGZsF
+ WsAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727800782; x=1728405582;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tfg4KrY9qV5phch4jlAxFrVvFBQbI4YOGlV/cP6p8eY=;
- b=va1Mf3SxTop6AJY1kw0d1g1ujbg8eJKxuj5AyxpSLguW9XAJvhEAzZVUn8ViJmcXk3
- u+808EpkHDJ2xsqnJUysuRxYCZ2UL6JxgdOO55dPho1HF7+1i3SgUydHqDwkE5HLJPb+
- 30iql3dZ27dH3FxgWxDKpFn/y3pwdU+fdaPib/dmPoEQCZ6aCS1HXWVOkrF7hNKKPoBp
- 3msCa3mKc4UMTI+HyO7rTxlHXYfryWy4Gg53/LYdI3OU13pz6ndbY8DfXelGNbt4Pkni
- VxRMtQHqbKEDWyNojy3gbiILX0GHDlqdchO5PpmbTHIq1AsUljiIfwJWEinnwyFvvcf9
- IoLw==
-X-Gm-Message-State: AOJu0Ywy4s4UwJbdxLwqs5rjM3UrA2mjgWPIrUpc2Wk9FxNrLl6rATUP
- FL5Mi8ybZLjPvxilvfQY9iwuUpY0hrx1tDW76pJ7vzlEqJrvKbtsQWsFOgdVYIiX0yEBlqarHxU
- Z
-X-Google-Smtp-Source: AGHT+IEy5Z7nAbUk6E0LS2M41PrbfipQ4fUpMdZP2d/inxHf55SNY/Gc2Qr+QFqIFvzfYr0wdE7TBw==
-X-Received: by 2002:a5d:4a89:0:b0:371:82ec:206f with SMTP id
- ffacd0b85a97d-37cfb8b6274mr144436f8f.16.1727800782129; 
- Tue, 01 Oct 2024 09:39:42 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd56e6547sm12243771f8f.58.2024.10.01.09.39.41
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 09:39:41 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 40/54] hw/gpio: Remove TYPE_OMAP2_GPIO
-Date: Tue,  1 Oct 2024 17:39:04 +0100
-Message-Id: <20241001163918.1275441-41-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241001163918.1275441-1-peter.maydell@linaro.org>
-References: <20241001163918.1275441-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20230601; t=1727801455; x=1728406255;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MjsCRjwKwbWJrZPAmtn9mOW+dG68XD+K3d1r1VdPqTM=;
+ b=Nq8e1IdjXn4JfJ+BjoSmGM5MpMjyBU+OJ6+kfiBwQgWUvyVUN7QG1u7LzbcBBLCy3K
+ H7198JpV7+rbRfJp5z0dnnV91vUIINKmMTWmX7+4hInveCNJ0Qkmki41NJNb12EGWsio
+ MlSU1+khNmlpDuzOFlfWsP693rY1ixR6sO1Z6aWEQ/L/p4N1M0wYaasEdjoOTNCBOcqH
+ MOfRFF4DV7ISRnFaHAVdq97XgeBVW96SbTEvuNV165Et9IO1OivknG4C9Oe+EvoEeEHX
+ Xqgb/g75P9umSgbRFsvrz9RmWb9l+KQiq3vpLcH6WetVcSGY1NfMwA8RQCcWYd6VQWCt
+ W/2w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCmHeJGu6uFjyHemnhqitKbwWe7YP5I60girw+LkF/rgh/wQ7I04SczhvfH1fyb9Qr/DrFh3Ih3qqa@nongnu.org
+X-Gm-Message-State: AOJu0YxKYM1Vmz3bKb6Kn8JQkd708r2cKzBTmnivN00Uy8XIuoDpG0/b
+ AXhUrJaIUGJabsDX0uFzx5tPLimme+yUtzuA2Nc+zSKei3KC6MkHUoVkUyFXk4I=
+X-Google-Smtp-Source: AGHT+IH32s7bEl5N2cWi1wWENI0Ov6yAdQrBVEKK/IeDM2+oaSZ9s/KDcfNBRSLG3ADn/pvKSnuqxw==
+X-Received: by 2002:a17:902:f688:b0:206:892c:b758 with SMTP id
+ d9443c01a7336-20ba9ed2162mr60636445ad.13.1727801454993; 
+ Tue, 01 Oct 2024 09:50:54 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20b37da676fsm71883605ad.108.2024.10.01.09.50.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 01 Oct 2024 09:50:54 -0700 (PDT)
+Message-ID: <1daf5428-cbc6-4949-90c9-8aa01f60a9ee@linaro.org>
+Date: Tue, 1 Oct 2024 09:50:53 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/13] tests/tcg/plugins: Use the ld/st_endian_p() API
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Thomas Huth
+ <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Jason Wang <jasowang@redhat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Anton Johansson <anjo@rev.ng>,
+ Peter Maydell <peter.maydell@linaro.org>, Huacai Chen
+ <chenhuacai@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Sven Schnelle <svens@stackframe.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-arm@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>,
+ Max Filippov <jcmvbkbc@gmail.com>, Paul Burton <paulburton@kernel.org>
+References: <20240930073450.33195-1-philmd@linaro.org>
+ <20240930073450.33195-7-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20240930073450.33195-7-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,634 +108,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We've removed the OMAP2 SoC, so we can remove the OMAP2 GPIO
-device. (The source file remains, as it also has the model of
-the OMAP1 GPIO device.)
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240903160751.4100218-39-peter.maydell@linaro.org
----
- include/hw/arm/omap.h |   8 -
- hw/gpio/omap_gpio.c   | 557 ------------------------------------------
- 2 files changed, 565 deletions(-)
-
-diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
-index e3f50b4ab13..b569580b09e 100644
---- a/include/hw/arm/omap.h
-+++ b/include/hw/arm/omap.h
-@@ -105,17 +105,9 @@ typedef struct Omap1GpioState Omap1GpioState;
- DECLARE_INSTANCE_CHECKER(Omap1GpioState, OMAP1_GPIO,
-                          TYPE_OMAP1_GPIO)
- 
--#define TYPE_OMAP2_GPIO "omap2-gpio"
--typedef struct Omap2GpioState Omap2GpioState;
--DECLARE_INSTANCE_CHECKER(Omap2GpioState, OMAP2_GPIO,
--                         TYPE_OMAP2_GPIO)
--
- /* TODO: clock framework (see above) */
- void omap_gpio_set_clk(Omap1GpioState *gpio, omap_clk clk);
- 
--void omap2_gpio_set_iclk(Omap2GpioState *gpio, omap_clk clk);
--void omap2_gpio_set_fclk(Omap2GpioState *gpio, uint8_t i, omap_clk clk);
--
- /* OMAP2 l4 Interconnect */
- struct omap_l4_s;
- struct omap_l4_region_s {
-diff --git a/hw/gpio/omap_gpio.c b/hw/gpio/omap_gpio.c
-index 77c90f9a0d3..a47a2167a67 100644
---- a/hw/gpio/omap_gpio.c
-+++ b/hw/gpio/omap_gpio.c
-@@ -190,408 +190,6 @@ static void omap_gpio_reset(struct omap_gpio_s *s)
-     s->pins = ~0;
- }
- 
--struct omap2_gpio_s {
--    qemu_irq irq[2];
--    qemu_irq wkup;
--    qemu_irq *handler;
--    MemoryRegion iomem;
--
--    uint8_t revision;
--    uint8_t config[2];
--    uint32_t inputs;
--    uint32_t outputs;
--    uint32_t dir;
--    uint32_t level[2];
--    uint32_t edge[2];
--    uint32_t mask[2];
--    uint32_t wumask;
--    uint32_t ints[2];
--    uint32_t debounce;
--    uint8_t delay;
--};
--
--struct Omap2GpioState {
--    SysBusDevice parent_obj;
--
--    MemoryRegion iomem;
--    int mpu_model;
--    void *iclk;
--    void *fclk[6];
--    int modulecount;
--    struct omap2_gpio_s *modules;
--    qemu_irq *handler;
--    int autoidle;
--    int gpo;
--};
--
--/* General-Purpose Interface of OMAP2/3 */
--static inline void omap2_gpio_module_int_update(struct omap2_gpio_s *s,
--                                                int line)
--{
--    qemu_set_irq(s->irq[line], s->ints[line] & s->mask[line]);
--}
--
--static void omap2_gpio_module_wake(struct omap2_gpio_s *s, int line)
--{
--    if (!(s->config[0] & (1 << 2)))			/* ENAWAKEUP */
--        return;
--    if (!(s->config[0] & (3 << 3)))			/* Force Idle */
--        return;
--    if (!(s->wumask & (1 << line)))
--        return;
--
--    qemu_irq_raise(s->wkup);
--}
--
--static inline void omap2_gpio_module_out_update(struct omap2_gpio_s *s,
--                uint32_t diff)
--{
--    int ln;
--
--    s->outputs ^= diff;
--    diff &= ~s->dir;
--    while ((ln = ctz32(diff)) != 32) {
--        qemu_set_irq(s->handler[ln], (s->outputs >> ln) & 1);
--        diff &= ~(1 << ln);
--    }
--}
--
--static void omap2_gpio_module_level_update(struct omap2_gpio_s *s, int line)
--{
--    s->ints[line] |= s->dir &
--            ((s->inputs & s->level[1]) | (~s->inputs & s->level[0]));
--    omap2_gpio_module_int_update(s, line);
--}
--
--static inline void omap2_gpio_module_int(struct omap2_gpio_s *s, int line)
--{
--    s->ints[0] |= 1 << line;
--    omap2_gpio_module_int_update(s, 0);
--    s->ints[1] |= 1 << line;
--    omap2_gpio_module_int_update(s, 1);
--    omap2_gpio_module_wake(s, line);
--}
--
--static void omap2_gpio_set(void *opaque, int line, int level)
--{
--    Omap2GpioState *p = opaque;
--    struct omap2_gpio_s *s = &p->modules[line >> 5];
--
--    line &= 31;
--    if (level) {
--        if (s->dir & (1 << line) & ((~s->inputs & s->edge[0]) | s->level[1]))
--            omap2_gpio_module_int(s, line);
--        s->inputs |= 1 << line;
--    } else {
--        if (s->dir & (1 << line) & ((s->inputs & s->edge[1]) | s->level[0]))
--            omap2_gpio_module_int(s, line);
--        s->inputs &= ~(1 << line);
--    }
--}
--
--static void omap2_gpio_module_reset(struct omap2_gpio_s *s)
--{
--    s->config[0] = 0;
--    s->config[1] = 2;
--    s->ints[0] = 0;
--    s->ints[1] = 0;
--    s->mask[0] = 0;
--    s->mask[1] = 0;
--    s->wumask = 0;
--    s->dir = ~0;
--    s->level[0] = 0;
--    s->level[1] = 0;
--    s->edge[0] = 0;
--    s->edge[1] = 0;
--    s->debounce = 0;
--    s->delay = 0;
--}
--
--static uint32_t omap2_gpio_module_read(void *opaque, hwaddr addr)
--{
--    struct omap2_gpio_s *s = opaque;
--
--    switch (addr) {
--    case 0x00:	/* GPIO_REVISION */
--        return s->revision;
--
--    case 0x10:	/* GPIO_SYSCONFIG */
--        return s->config[0];
--
--    case 0x14:	/* GPIO_SYSSTATUS */
--        return 0x01;
--
--    case 0x18:	/* GPIO_IRQSTATUS1 */
--        return s->ints[0];
--
--    case 0x1c:	/* GPIO_IRQENABLE1 */
--    case 0x60:	/* GPIO_CLEARIRQENABLE1 */
--    case 0x64:	/* GPIO_SETIRQENABLE1 */
--        return s->mask[0];
--
--    case 0x20:	/* GPIO_WAKEUPENABLE */
--    case 0x80:	/* GPIO_CLEARWKUENA */
--    case 0x84:	/* GPIO_SETWKUENA */
--        return s->wumask;
--
--    case 0x28:	/* GPIO_IRQSTATUS2 */
--        return s->ints[1];
--
--    case 0x2c:	/* GPIO_IRQENABLE2 */
--    case 0x70:	/* GPIO_CLEARIRQENABLE2 */
--    case 0x74:	/* GPIO_SETIREQNEABLE2 */
--        return s->mask[1];
--
--    case 0x30:	/* GPIO_CTRL */
--        return s->config[1];
--
--    case 0x34:	/* GPIO_OE */
--        return s->dir;
--
--    case 0x38:	/* GPIO_DATAIN */
--        return s->inputs;
--
--    case 0x3c:	/* GPIO_DATAOUT */
--    case 0x90:	/* GPIO_CLEARDATAOUT */
--    case 0x94:	/* GPIO_SETDATAOUT */
--        return s->outputs;
--
--    case 0x40:	/* GPIO_LEVELDETECT0 */
--        return s->level[0];
--
--    case 0x44:	/* GPIO_LEVELDETECT1 */
--        return s->level[1];
--
--    case 0x48:	/* GPIO_RISINGDETECT */
--        return s->edge[0];
--
--    case 0x4c:	/* GPIO_FALLINGDETECT */
--        return s->edge[1];
--
--    case 0x50:	/* GPIO_DEBOUNCENABLE */
--        return s->debounce;
--
--    case 0x54:	/* GPIO_DEBOUNCINGTIME */
--        return s->delay;
--    }
--
--    OMAP_BAD_REG(addr);
--    return 0;
--}
--
--static void omap2_gpio_module_write(void *opaque, hwaddr addr,
--                uint32_t value)
--{
--    struct omap2_gpio_s *s = opaque;
--    uint32_t diff;
--    int ln;
--
--    switch (addr) {
--    case 0x00:	/* GPIO_REVISION */
--    case 0x14:	/* GPIO_SYSSTATUS */
--    case 0x38:	/* GPIO_DATAIN */
--        OMAP_RO_REG(addr);
--        break;
--
--    case 0x10:	/* GPIO_SYSCONFIG */
--        if (((value >> 3) & 3) == 3) {
--            qemu_log_mask(LOG_GUEST_ERROR,
--                          "%s: Illegal IDLEMODE value: 3\n", __func__);
--        }
--        if (value & 2)
--            omap2_gpio_module_reset(s);
--        s->config[0] = value & 0x1d;
--        break;
--
--    case 0x18:	/* GPIO_IRQSTATUS1 */
--        if (s->ints[0] & value) {
--            s->ints[0] &= ~value;
--            omap2_gpio_module_level_update(s, 0);
--        }
--        break;
--
--    case 0x1c:	/* GPIO_IRQENABLE1 */
--        s->mask[0] = value;
--        omap2_gpio_module_int_update(s, 0);
--        break;
--
--    case 0x20:	/* GPIO_WAKEUPENABLE */
--        s->wumask = value;
--        break;
--
--    case 0x28:	/* GPIO_IRQSTATUS2 */
--        if (s->ints[1] & value) {
--            s->ints[1] &= ~value;
--            omap2_gpio_module_level_update(s, 1);
--        }
--        break;
--
--    case 0x2c:	/* GPIO_IRQENABLE2 */
--        s->mask[1] = value;
--        omap2_gpio_module_int_update(s, 1);
--        break;
--
--    case 0x30:	/* GPIO_CTRL */
--        s->config[1] = value & 7;
--        break;
--
--    case 0x34:	/* GPIO_OE */
--        diff = s->outputs & (s->dir ^ value);
--        s->dir = value;
--
--        value = s->outputs & ~s->dir;
--        while ((ln = ctz32(diff)) != 32) {
--            diff &= ~(1 << ln);
--            qemu_set_irq(s->handler[ln], (value >> ln) & 1);
--        }
--
--        omap2_gpio_module_level_update(s, 0);
--        omap2_gpio_module_level_update(s, 1);
--        break;
--
--    case 0x3c:	/* GPIO_DATAOUT */
--        omap2_gpio_module_out_update(s, s->outputs ^ value);
--        break;
--
--    case 0x40:	/* GPIO_LEVELDETECT0 */
--        s->level[0] = value;
--        omap2_gpio_module_level_update(s, 0);
--        omap2_gpio_module_level_update(s, 1);
--        break;
--
--    case 0x44:	/* GPIO_LEVELDETECT1 */
--        s->level[1] = value;
--        omap2_gpio_module_level_update(s, 0);
--        omap2_gpio_module_level_update(s, 1);
--        break;
--
--    case 0x48:	/* GPIO_RISINGDETECT */
--        s->edge[0] = value;
--        break;
--
--    case 0x4c:	/* GPIO_FALLINGDETECT */
--        s->edge[1] = value;
--        break;
--
--    case 0x50:	/* GPIO_DEBOUNCENABLE */
--        s->debounce = value;
--        break;
--
--    case 0x54:	/* GPIO_DEBOUNCINGTIME */
--        s->delay = value;
--        break;
--
--    case 0x60:	/* GPIO_CLEARIRQENABLE1 */
--        s->mask[0] &= ~value;
--        omap2_gpio_module_int_update(s, 0);
--        break;
--
--    case 0x64:	/* GPIO_SETIRQENABLE1 */
--        s->mask[0] |= value;
--        omap2_gpio_module_int_update(s, 0);
--        break;
--
--    case 0x70:	/* GPIO_CLEARIRQENABLE2 */
--        s->mask[1] &= ~value;
--        omap2_gpio_module_int_update(s, 1);
--        break;
--
--    case 0x74:	/* GPIO_SETIREQNEABLE2 */
--        s->mask[1] |= value;
--        omap2_gpio_module_int_update(s, 1);
--        break;
--
--    case 0x80:	/* GPIO_CLEARWKUENA */
--        s->wumask &= ~value;
--        break;
--
--    case 0x84:	/* GPIO_SETWKUENA */
--        s->wumask |= value;
--        break;
--
--    case 0x90:	/* GPIO_CLEARDATAOUT */
--        omap2_gpio_module_out_update(s, s->outputs & value);
--        break;
--
--    case 0x94:	/* GPIO_SETDATAOUT */
--        omap2_gpio_module_out_update(s, ~s->outputs & value);
--        break;
--
--    default:
--        OMAP_BAD_REG(addr);
--        return;
--    }
--}
--
--static uint64_t omap2_gpio_module_readp(void *opaque, hwaddr addr,
--                                        unsigned size)
--{
--    return omap2_gpio_module_read(opaque, addr & ~3) >> ((addr & 3) << 3);
--}
--
--static void omap2_gpio_module_writep(void *opaque, hwaddr addr,
--                                     uint64_t value, unsigned size)
--{
--    uint32_t cur = 0;
--    uint32_t mask = 0xffff;
--
--    if (size == 4) {
--        omap2_gpio_module_write(opaque, addr, value);
--        return;
--    }
--
--    switch (addr & ~3) {
--    case 0x00:	/* GPIO_REVISION */
--    case 0x14:	/* GPIO_SYSSTATUS */
--    case 0x38:	/* GPIO_DATAIN */
--        OMAP_RO_REG(addr);
--        break;
--
--    case 0x10:	/* GPIO_SYSCONFIG */
--    case 0x1c:	/* GPIO_IRQENABLE1 */
--    case 0x20:	/* GPIO_WAKEUPENABLE */
--    case 0x2c:	/* GPIO_IRQENABLE2 */
--    case 0x30:	/* GPIO_CTRL */
--    case 0x34:	/* GPIO_OE */
--    case 0x3c:	/* GPIO_DATAOUT */
--    case 0x40:	/* GPIO_LEVELDETECT0 */
--    case 0x44:	/* GPIO_LEVELDETECT1 */
--    case 0x48:	/* GPIO_RISINGDETECT */
--    case 0x4c:	/* GPIO_FALLINGDETECT */
--    case 0x50:	/* GPIO_DEBOUNCENABLE */
--    case 0x54:	/* GPIO_DEBOUNCINGTIME */
--        cur = omap2_gpio_module_read(opaque, addr & ~3) &
--                ~(mask << ((addr & 3) << 3));
--
--        /* Fall through.  */
--    case 0x18:	/* GPIO_IRQSTATUS1 */
--    case 0x28:	/* GPIO_IRQSTATUS2 */
--    case 0x60:	/* GPIO_CLEARIRQENABLE1 */
--    case 0x64:	/* GPIO_SETIRQENABLE1 */
--    case 0x70:	/* GPIO_CLEARIRQENABLE2 */
--    case 0x74:	/* GPIO_SETIREQNEABLE2 */
--    case 0x80:	/* GPIO_CLEARWKUENA */
--    case 0x84:	/* GPIO_SETWKUENA */
--    case 0x90:	/* GPIO_CLEARDATAOUT */
--    case 0x94:	/* GPIO_SETDATAOUT */
--        value <<= (addr & 3) << 3;
--        omap2_gpio_module_write(opaque, addr, cur | value);
--        break;
--
--    default:
--        OMAP_BAD_REG(addr);
--        return;
--    }
--}
--
--static const MemoryRegionOps omap2_gpio_module_ops = {
--    .read = omap2_gpio_module_readp,
--    .write = omap2_gpio_module_writep,
--    .valid.min_access_size = 1,
--    .valid.max_access_size = 4,
--    .endianness = DEVICE_NATIVE_ENDIAN,
--};
--
- static void omap_gpif_reset(DeviceState *dev)
- {
-     Omap1GpioState *s = OMAP1_GPIO(dev);
-@@ -599,81 +197,6 @@ static void omap_gpif_reset(DeviceState *dev)
-     omap_gpio_reset(&s->omap1);
- }
- 
--static void omap2_gpif_reset(DeviceState *dev)
--{
--    Omap2GpioState *s = OMAP2_GPIO(dev);
--    int i;
--
--    for (i = 0; i < s->modulecount; i++) {
--        omap2_gpio_module_reset(&s->modules[i]);
--    }
--    s->autoidle = 0;
--    s->gpo = 0;
--}
--
--static uint64_t omap2_gpif_top_read(void *opaque, hwaddr addr, unsigned size)
--{
--    Omap2GpioState *s = opaque;
--
--    switch (addr) {
--    case 0x00:	/* IPGENERICOCPSPL_REVISION */
--        return 0x18;
--
--    case 0x10:	/* IPGENERICOCPSPL_SYSCONFIG */
--        return s->autoidle;
--
--    case 0x14:	/* IPGENERICOCPSPL_SYSSTATUS */
--        return 0x01;
--
--    case 0x18:	/* IPGENERICOCPSPL_IRQSTATUS */
--        return 0x00;
--
--    case 0x40:	/* IPGENERICOCPSPL_GPO */
--        return s->gpo;
--
--    case 0x50:	/* IPGENERICOCPSPL_GPI */
--        return 0x00;
--    }
--
--    OMAP_BAD_REG(addr);
--    return 0;
--}
--
--static void omap2_gpif_top_write(void *opaque, hwaddr addr,
--                                 uint64_t value, unsigned size)
--{
--    Omap2GpioState *s = opaque;
--
--    switch (addr) {
--    case 0x00:	/* IPGENERICOCPSPL_REVISION */
--    case 0x14:	/* IPGENERICOCPSPL_SYSSTATUS */
--    case 0x18:	/* IPGENERICOCPSPL_IRQSTATUS */
--    case 0x50:	/* IPGENERICOCPSPL_GPI */
--        OMAP_RO_REG(addr);
--        break;
--
--    case 0x10:	/* IPGENERICOCPSPL_SYSCONFIG */
--        if (value & (1 << 1))					/* SOFTRESET */
--            omap2_gpif_reset(DEVICE(s));
--        s->autoidle = value & 1;
--        break;
--
--    case 0x40:	/* IPGENERICOCPSPL_GPO */
--        s->gpo = value & 1;
--        break;
--
--    default:
--        OMAP_BAD_REG(addr);
--        return;
--    }
--}
--
--static const MemoryRegionOps omap2_gpif_top_ops = {
--    .read = omap2_gpif_top_read,
--    .write = omap2_gpif_top_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
--};
--
- static void omap_gpio_init(Object *obj)
- {
-     DeviceState *dev = DEVICE(obj);
-@@ -697,51 +220,6 @@ static void omap_gpio_realize(DeviceState *dev, Error **errp)
-     }
- }
- 
--static void omap2_gpio_realize(DeviceState *dev, Error **errp)
--{
--    Omap2GpioState *s = OMAP2_GPIO(dev);
--    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
--    int i;
--
--    if (!s->iclk) {
--        error_setg(errp, "omap2-gpio: iclk not connected");
--        return;
--    }
--
--    s->modulecount = s->mpu_model < omap2430 ? 4
--        : s->mpu_model < omap3430 ? 5
--        : 6;
--
--    if (s->mpu_model < omap3430) {
--        memory_region_init_io(&s->iomem, OBJECT(dev), &omap2_gpif_top_ops, s,
--                              "omap2.gpio", 0x1000);
--        sysbus_init_mmio(sbd, &s->iomem);
--    }
--
--    s->modules = g_new0(struct omap2_gpio_s, s->modulecount);
--    s->handler = g_new0(qemu_irq, s->modulecount * 32);
--    qdev_init_gpio_in(dev, omap2_gpio_set, s->modulecount * 32);
--    qdev_init_gpio_out(dev, s->handler, s->modulecount * 32);
--
--    for (i = 0; i < s->modulecount; i++) {
--        struct omap2_gpio_s *m = &s->modules[i];
--
--        if (!s->fclk[i]) {
--            error_setg(errp, "omap2-gpio: fclk%d not connected", i);
--            return;
--        }
--
--        m->revision = (s->mpu_model < omap3430) ? 0x18 : 0x25;
--        m->handler = &s->handler[i * 32];
--        sysbus_init_irq(sbd, &m->irq[0]); /* mpu irq */
--        sysbus_init_irq(sbd, &m->irq[1]); /* dsp irq */
--        sysbus_init_irq(sbd, &m->wkup);
--        memory_region_init_io(&m->iomem, OBJECT(dev), &omap2_gpio_module_ops, m,
--                              "omap.gpio-module", 0x1000);
--        sysbus_init_mmio(sbd, &m->iomem);
--    }
--}
--
- void omap_gpio_set_clk(Omap1GpioState *gpio, omap_clk clk)
- {
-     gpio->clk = clk;
-@@ -771,44 +249,9 @@ static const TypeInfo omap_gpio_info = {
-     .class_init    = omap_gpio_class_init,
- };
- 
--void omap2_gpio_set_iclk(Omap2GpioState *gpio, omap_clk clk)
--{
--    gpio->iclk = clk;
--}
--
--void omap2_gpio_set_fclk(Omap2GpioState *gpio, uint8_t i, omap_clk clk)
--{
--    assert(i <= 5);
--    gpio->fclk[i] = clk;
--}
--
--static Property omap2_gpio_properties[] = {
--    DEFINE_PROP_INT32("mpu_model", Omap2GpioState, mpu_model, 0),
--    DEFINE_PROP_END_OF_LIST(),
--};
--
--static void omap2_gpio_class_init(ObjectClass *klass, void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(klass);
--
--    dc->realize = omap2_gpio_realize;
--    device_class_set_legacy_reset(dc, omap2_gpif_reset);
--    device_class_set_props(dc, omap2_gpio_properties);
--    /* Reason: pointer properties "iclk", "fclk0", ..., "fclk5" */
--    dc->user_creatable = false;
--}
--
--static const TypeInfo omap2_gpio_info = {
--    .name          = TYPE_OMAP2_GPIO,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(Omap2GpioState),
--    .class_init    = omap2_gpio_class_init,
--};
--
- static void omap_gpio_register_types(void)
- {
-     type_register_static(&omap_gpio_info);
--    type_register_static(&omap2_gpio_info);
- }
- 
- type_init(omap_gpio_register_types)
--- 
-2.34.1
-
+T24gOS8zMC8yNCAwMDozNCwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IFJl
+ZmFjdG9yIHRvIHVzZSB0aGUgcmVjZW50bHkgaW50cm9kdWNlZCBsZC9zdF9lbmRpYW5fcCgp
+IEFQSQ0KPiBObyBsb2dpY2FsIGNoYW5nZSBpbnRlbmRlZC4NCj4gDQo+IFNpZ25lZC1vZmYt
+Ynk6IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9yZz4NCj4gLS0t
+DQo+ICAgdGVzdHMvdGNnL3BsdWdpbnMvbWVtLmMgfCAyNCArKysrKystLS0tLS0tLS0tLS0t
+LS0tLS0NCj4gICAxIGZpbGUgY2hhbmdlZCwgNiBpbnNlcnRpb25zKCspLCAxOCBkZWxldGlv
+bnMoLSkNCj4gDQo+IGRpZmYgLS1naXQgYS90ZXN0cy90Y2cvcGx1Z2lucy9tZW0uYyBiL3Rl
+c3RzL3RjZy9wbHVnaW5zL21lbS5jDQo+IGluZGV4IGIwZmE4YTlmMjcuLjM1ODZkMDU1ODcg
+MTAwNjQ0DQo+IC0tLSBhL3Rlc3RzL3RjZy9wbHVnaW5zL21lbS5jDQo+ICsrKyBiL3Rlc3Rz
+L3RjZy9wbHVnaW5zL21lbS5jDQo+IEBAIC0xNjMsMTMgKzE2Myw5IEBAIHN0YXRpYyB2b2lk
+IHVwZGF0ZV9yZWdpb25faW5mbyh1aW50NjRfdCByZWdpb24sIHVpbnQ2NF90IG9mZnNldCwN
+Cj4gICAgICAgew0KPiAgICAgICAgICAgdWludDE2X3QgKnAgPSAodWludDE2X3QgKikgJnJp
+LT5kYXRhW29mZnNldF07DQo+ICAgICAgICAgICBpZiAoaXNfc3RvcmUpIHsNCj4gLSAgICAg
+ICAgICAgIGlmIChiZSkgew0KPiAtICAgICAgICAgICAgICAgIHN0d19iZV9wKHAsIHZhbHVl
+LmRhdGEudTE2KTsNCj4gLSAgICAgICAgICAgIH0gZWxzZSB7DQo+IC0gICAgICAgICAgICAg
+ICAgc3R3X2xlX3AocCwgdmFsdWUuZGF0YS51MTYpOw0KPiAtICAgICAgICAgICAgfQ0KPiAr
+ICAgICAgICAgICAgc3R3X2VuZGlhbl9wKGJlLCBwLCB2YWx1ZS5kYXRhLnUxNik7DQo+ICAg
+ICAgICAgICB9IGVsc2Ugew0KPiAtICAgICAgICAgICAgdWludDE2X3QgdmFsID0gYmUgPyBs
+ZHV3X2JlX3AocCkgOiBsZHV3X2xlX3AocCk7DQo+ICsgICAgICAgICAgICB1aW50MTZfdCB2
+YWwgPSBsZHV3X2VuZGlhbl9wKGJlLCBwKTsNCj4gICAgICAgICAgICAgICB1bnNlZW5fZGF0
+YSA9IHZhbCAhPSB2YWx1ZS5kYXRhLnUxNjsNCj4gICAgICAgICAgIH0NCj4gICAgICAgICAg
+IGJyZWFrOw0KPiBAQCAtMTc4LDEzICsxNzQsOSBAQCBzdGF0aWMgdm9pZCB1cGRhdGVfcmVn
+aW9uX2luZm8odWludDY0X3QgcmVnaW9uLCB1aW50NjRfdCBvZmZzZXQsDQo+ICAgICAgIHsN
+Cj4gICAgICAgICAgIHVpbnQzMl90ICpwID0gKHVpbnQzMl90ICopICZyaS0+ZGF0YVtvZmZz
+ZXRdOw0KPiAgICAgICAgICAgaWYgKGlzX3N0b3JlKSB7DQo+IC0gICAgICAgICAgICBpZiAo
+YmUpIHsNCj4gLSAgICAgICAgICAgICAgICBzdGxfYmVfcChwLCB2YWx1ZS5kYXRhLnUzMik7
+DQo+IC0gICAgICAgICAgICB9IGVsc2Ugew0KPiAtICAgICAgICAgICAgICAgIHN0bF9sZV9w
+KHAsIHZhbHVlLmRhdGEudTMyKTsNCj4gLSAgICAgICAgICAgIH0NCj4gKyAgICAgICAgICAg
+IHN0bF9lbmRpYW5fcChiZSwgcCwgdmFsdWUuZGF0YS51MzIpOw0KPiAgICAgICAgICAgfSBl
+bHNlIHsNCj4gLSAgICAgICAgICAgIHVpbnQzMl90IHZhbCA9IGJlID8gbGRsX2JlX3AocCkg
+OiBsZGxfbGVfcChwKTsNCj4gKyAgICAgICAgICAgIHVpbnQzMl90IHZhbCA9IGxkbF9lbmRp
+YW5fcChiZSwgcCk7DQo+ICAgICAgICAgICAgICAgdW5zZWVuX2RhdGEgPSB2YWwgIT0gdmFs
+dWUuZGF0YS51MzI7DQo+ICAgICAgICAgICB9DQo+ICAgICAgICAgICBicmVhazsNCj4gQEAg
+LTE5MywxMyArMTg1LDkgQEAgc3RhdGljIHZvaWQgdXBkYXRlX3JlZ2lvbl9pbmZvKHVpbnQ2
+NF90IHJlZ2lvbiwgdWludDY0X3Qgb2Zmc2V0LA0KPiAgICAgICB7DQo+ICAgICAgICAgICB1
+aW50NjRfdCAqcCA9ICh1aW50NjRfdCAqKSAmcmktPmRhdGFbb2Zmc2V0XTsNCj4gICAgICAg
+ICAgIGlmIChpc19zdG9yZSkgew0KPiAtICAgICAgICAgICAgaWYgKGJlKSB7DQo+IC0gICAg
+ICAgICAgICAgICAgc3RxX2JlX3AocCwgdmFsdWUuZGF0YS51NjQpOw0KPiAtICAgICAgICAg
+ICAgfSBlbHNlIHsNCj4gLSAgICAgICAgICAgICAgICBzdHFfbGVfcChwLCB2YWx1ZS5kYXRh
+LnU2NCk7DQo+IC0gICAgICAgICAgICB9DQo+ICsgICAgICAgICAgICBzdHFfZW5kaWFuX3Ao
+YmUsIHAsIHZhbHVlLmRhdGEudTY0KTsNCj4gICAgICAgICAgIH0gZWxzZSB7DQo+IC0gICAg
+ICAgICAgICB1aW50NjRfdCB2YWwgPSBiZSA/IGxkcV9iZV9wKHApIDogbGRxX2xlX3AocCk7
+DQo+ICsgICAgICAgICAgICB1aW50NjRfdCB2YWwgPSBsZHFfZW5kaWFuX3AoYmUsIHApOw0K
+PiAgICAgICAgICAgICAgIHVuc2Vlbl9kYXRhID0gdmFsICE9IHZhbHVlLmRhdGEudTY0Ow0K
+PiAgICAgICAgICAgfQ0KPiAgICAgICAgICAgYnJlYWs7DQoNClJldmlld2VkLWJ5OiBQaWVy
+cmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo=
 
