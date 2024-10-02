@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AED8CF6D28
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 14:08:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D468CF6D2C
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 14:08:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sw00m-0003hW-G9; Wed, 02 Oct 2024 10:07:28 -0400
+	id 1sw00k-0003b1-O0; Wed, 02 Oct 2024 10:07:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sw00Q-0003Sy-C5; Wed, 02 Oct 2024 10:07:09 -0400
+ id 1sw00Q-0003T5-GD; Wed, 02 Oct 2024 10:07:09 -0400
 Received: from forwardcorp1d.mail.yandex.net
  ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sw00G-00058H-9M; Wed, 02 Oct 2024 10:07:00 -0400
+ id 1sw00G-00058p-U4; Wed, 02 Oct 2024 10:07:05 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:2e8b:0:640:9795:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 0BC5560A06;
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id C261860A0F;
  Wed,  2 Oct 2024 17:06:51 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:8026::1:2f])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id S6cR231IXeA0-5zxLI8J4; Wed, 02 Oct 2024 17:06:50 +0300
+ ESMTPSA id S6cR231IXeA0-OPlOovpy; Wed, 02 Oct 2024 17:06:51 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1727878010;
- bh=AEIEJcUayiK4Dtv6JDzHo0D8qPCjlxBTkSwFSQDwgAA=;
+ s=default; t=1727878011;
+ bh=kNsGBAuWorp26KUw22nD/PRdPTQO4FpyA8j9wzaB9OU=;
  h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=y9GWCS3DYInhcxJjxhkP1vrI3dVBdv0ORlVQyFGf41c78sbvYIsGBvnZkWTzx225P
- sy6sQgIJBRNWp38nprG+r4clRO85sUdxs6Ri0RKbaBCubdNxt7dmaSUJNYngBaQhAC
- d1fKxxf0Dp7KUFbVcES/e8+7LOff9UXkAONU+hlc=
+ b=sTRFIPw8V8GCoWL0zvkiXxewLWuFOlRj6FWT45IxOoWGU0ro96uPRS3AmouxkOtRZ
+ FRWJSkjReoTiU6EWNgZFAah17mKTNGpQFllERQuKta+9w5CNHmcmHgKrfU1FBWck+a
+ KW+z4lgI6ZwVnq9k87OrzjmY4aOnjg2ZgAxa6LHI=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -42,9 +42,9 @@ To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, armbru@redhat.com, eblake@redhat.com,
  devel@lists.libvirt.org, hreitz@redhat.com, kwolf@redhat.com,
  vsementsov@yandex-team.ru, jsnow@redhat.com, pkrempa@redhat.com
-Subject: [PATCH v3 5/7] qapi: add job-change
-Date: Wed,  2 Oct 2024 17:06:14 +0300
-Message-Id: <20241002140616.561652-6-vsementsov@yandex-team.ru>
+Subject: [PATCH v3 6/7] qapi/block-core: deprecate block-job-change
+Date: Wed,  2 Oct 2024 17:06:15 +0300
+Message-Id: <20241002140616.561652-7-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241002140616.561652-1-vsementsov@yandex-team.ru>
 References: <20241002140616.561652-1-vsementsov@yandex-team.ru>
@@ -74,67 +74,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new-style command job-change, doing same thing as
-block-job-change. The aim is finally deprecate block-job-* APIs and
-move to job-* APIs.
+That's a first step to move on newer job-* APIs.
 
-We add a new command to qapi/block-core.json, not to
-qapi/job.json to avoid resolving json file including loops for now.
-This all would be a lot simple to refactor when we finally drop
-deprecated block-job-* APIs.
+The difference between block-job-change and job-change is in
+find_block_job_locked() vs find_job_locked() functions. What's
+different?
+
+1. find_block_job_locked() finds only block jobs, whereas
+   find_job_locked() finds any kind of job.  job-change is a
+   compatible extension of block-job-change.
+
+2. find_block_job_locked() reports DeviceNotActive on failure, when
+   find_job_locked() reports GenericError.  Since the kind of error
+   reported isn't documented for either command, and clients
+   shouldn't rely on undocumented error details, job-change is a
+   compatible replacement for block-job-change.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- job-qmp.c            | 14 ++++++++++++++
- qapi/block-core.json | 10 ++++++++++
- 2 files changed, 24 insertions(+)
+ docs/about/deprecated.rst | 5 +++++
+ qapi/block-core.json      | 6 ++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/job-qmp.c b/job-qmp.c
-index c764bd3801..248e68f554 100644
---- a/job-qmp.c
-+++ b/job-qmp.c
-@@ -139,6 +139,20 @@ void qmp_job_dismiss(const char *id, Error **errp)
-     job_dismiss_locked(&job, errp);
- }
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 1e21fbbf77..d2461924ff 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -147,6 +147,11 @@ options are removed in favor of using explicit ``blockdev-create`` and
+ ``blockdev-add`` calls. See :doc:`/interop/live-block-operations` for
+ details.
  
-+void qmp_job_change(JobChangeOptions *opts, Error **errp)
-+{
-+    Job *job;
++``block-job-change`` (since 9.2)
++''''''''''''''''''''''''''''''''
 +
-+    JOB_LOCK_GUARD();
-+    job = find_job_locked(opts->id, errp);
++Use ``job-change`` instead.
 +
-+    if (!job) {
-+        return;
-+    }
-+
-+    job_change_locked(job, opts, errp);
-+}
-+
- /* Called with job_mutex held. */
- static JobInfo *job_query_single_locked(Job *job, Error **errp)
- {
+ Incorrectly typed ``device_add`` arguments (since 6.2)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
 diff --git a/qapi/block-core.json b/qapi/block-core.json
-index f370593037..e314734b53 100644
+index e314734b53..ed87a9dc1e 100644
 --- a/qapi/block-core.json
 +++ b/qapi/block-core.json
-@@ -3105,6 +3105,16 @@
+@@ -3100,9 +3100,15 @@
+ #
+ # Change the block job's options.
+ #
++# Features:
++#
++# @deprecated: This command is deprecated.  Use @job-change
++#     instead.
++#
+ # Since: 8.2
+ ##
  { 'command': 'block-job-change',
++  'features': ['deprecated'],
    'data': 'JobChangeOptions', 'boxed': true }
  
-+##
-+# @job-change:
-+#
-+# Change the block job's options.
-+#
-+# Since: 9.2
-+##
-+{ 'command': 'job-change',
-+  'data': 'JobChangeOptions', 'boxed': true }
-+
  ##
- # @BlockdevDiscardOptions:
- #
 -- 
 2.34.1
 
