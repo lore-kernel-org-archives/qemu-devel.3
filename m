@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D57FDCF31B0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:36:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1506CF31B0
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:40:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svwiM-0000l3-TZ; Wed, 02 Oct 2024 06:36:14 -0400
+	id 1svwm8-0001u1-1h; Wed, 02 Oct 2024 06:40:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwiM-0000ku-1J
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:36:14 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwm5-0001rb-Ku
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:40:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwiK-0001q5-Jh
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:36:13 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwm3-0002HF-UF
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:40:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727865371;
+ s=mimecast20190719; t=1727865602;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=kvxa0vwFNFX0RVdF3FP+KTc0QpzD+S8ueXhkOJ9TGjM=;
- b=Hf1fUw5puvxAVcry5a5kF8rIOZpTjJqvLvmrxIIA/buomz8kWvvvfD6vo7GSf6HJpkk2z9
- gAtpbrhH+aVBIFzt+0rwjAucP3/leN1g3/EhxnyOX4cmNEzqFXchwzOb3hRqnT8pFRBPC1
- i7xiG+wJBs69s7H+zbxno1fDRU/QSZU=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YHukl+IKOol9Bnc66BawQ4L4CvfySS29sw4jng/sBDE=;
+ b=GgFeu6DblYSnQn0iHj3K/0oHc9jM7tICN6QedLXQT2lp4L6tkwrP35FvY/gCYlw22MsoCb
+ PgccTvu2so+nBmPtcfVb3ZjE2XypbonnJVVOqoeOXscjCIdBTL8ZHHk7ggqIVm/u4MKFKe
+ qWbARtdZ8JEFDntGFbZF8bz+zdHEWz4=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-189-Ea02YWpvMP6JX6trUIPcsQ-1; Wed, 02 Oct 2024 06:36:10 -0400
-X-MC-Unique: Ea02YWpvMP6JX6trUIPcsQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-37cdb0e9eb7so1697367f8f.2
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 03:36:10 -0700 (PDT)
+ us-mta-635-CDq8Z2oiOZGe93FPc9o1pw-1; Wed, 02 Oct 2024 06:40:00 -0400
+X-MC-Unique: CDq8Z2oiOZGe93FPc9o1pw-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-37ccd39115bso4102040f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 03:40:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727865369; x=1728470169;
+ d=1e100.net; s=20230601; t=1727865599; x=1728470399;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=kvxa0vwFNFX0RVdF3FP+KTc0QpzD+S8ueXhkOJ9TGjM=;
- b=rrli+2xT/7Wu/eNXy9PpBMFCMMbQ4JIXzECSlqnHNilw9rm8ATZGAejk5T9IjAlQKd
- rFHQRWw7UK8ZDEBvTSLrNySefAn5uMbZsTDRyQUPRb8xBu4s0/Z0EkbUlFnuMohkdEP4
- 5Mif5abJyE+M7auDHiMrniJakO2nlStufq84t8rtMGg3fkS9c+BKgJp+JqTqxbe6QRlb
- BwEk6edeF3T0E/rCl9xw2W6acdWUXzOTWCH7HRxACw4FEtx/SEdDYIqQnl4iOmgvjfjb
- KcCvxyJAHk5HnQRSMSqlYhBh6pjOYTWQZr2ipAwBcBb489nxrvf1OeK9/20NUqFxkS3Z
- 73gg==
-X-Gm-Message-State: AOJu0Yw+0IFWnQnZvjHGEm6YJaGyIW8TP+wdkSqeWOsH0/3YQe8udPGi
- T5nAvOUmsVzk8g8mRt9Yv3KVWnY+MziamI8q2L+nO+oyOSVW688tf9QWTr2+bQ7FLOs6gnf/wVP
- sv1OL23Ji6kUlSiO+rtVrGzqn093AUB1wyDyIHHbzia6eQn+ed2Gh
-X-Received: by 2002:adf:cd09:0:b0:374:c101:32 with SMTP id
- ffacd0b85a97d-37cfba0a827mr1461746f8f.46.1727865369472; 
- Wed, 02 Oct 2024 03:36:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGD1axT5kRX+O9naGVftAIsg9U0ih1lYQc6r0QWxHjL8cb//+jU+/wN5uQQlAw6cH/hWDIxqA==
-X-Received: by 2002:adf:cd09:0:b0:374:c101:32 with SMTP id
- ffacd0b85a97d-37cfba0a827mr1461729f8f.46.1727865368963; 
- Wed, 02 Oct 2024 03:36:08 -0700 (PDT)
+ bh=YHukl+IKOol9Bnc66BawQ4L4CvfySS29sw4jng/sBDE=;
+ b=qQLiupz7MO2/MwiEZjc/nSqwVfdM0mRPSyDN8+n6ceXA/GoLMV1tJAqHqTVi/R32/e
+ 40bOy0qTmxbPu4zhK8hBQ0ucq57bBRDQH66kWloGNd8Fnr7ZSNhqEr8nrAxuHs4WHuCe
+ gHxwjQEBIVBYUApqvf14e61FxjRuqMlqlA2VmaQXj9Colkfo2YgzSgWcgggOdUSFq9bL
+ sSPahFQSJ1dgifkDuEKmL68pmcbSq358OlSjpq3keLq0dC3mI57lBp8WJ4GlJV91HHZH
+ h+IIx1778yI4GeN4/LYFCYgcdtmqbWTBv4HbZ8efAEMwgtj5KapOeIxdDmkE/iwni9c0
+ cGdA==
+X-Gm-Message-State: AOJu0YyPUdDSk5zeiSnaQ2P5/1AyuF5snEdIbTJ+h4Y6o5uEcTpo9aj4
+ E5t6qll8cyAY2FandbjH2CYnugwnnZy0b9S1FDjWdTE8HsqJVbdrVzzyb7kwJomdcTFEShM8vKA
+ rVApjY3FiXpUyCnSBlc19/gV/jj8r+x5Mk7yjQKfdIdCNkD1Uqn9c
+X-Received: by 2002:adf:ee4e:0:b0:374:b9a7:5ed6 with SMTP id
+ ffacd0b85a97d-37cfb8c7949mr1698706f8f.22.1727865599536; 
+ Wed, 02 Oct 2024 03:39:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGUetIOSAKZTWZGMt+jtK32PjutF92nMD/DMRknmGmNcp0qZ7LWTTiROiszy6y1mFYaYMthLw==
+X-Received: by 2002:adf:ee4e:0:b0:374:b9a7:5ed6 with SMTP id
+ ffacd0b85a97d-37cfb8c7949mr1698689f8f.22.1727865599092; 
+ Wed, 02 Oct 2024 03:39:59 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-143.web.vodafone.de.
  [109.42.49.143]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd5764c50sm13523670f8f.112.2024.10.02.03.36.08
+ 5b1f17b1804b1-42f7a01f4a4sm15077195e9.29.2024.10.02.03.39.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Oct 2024 03:36:08 -0700 (PDT)
-Message-ID: <8d3023ad-d4c4-4106-ae8f-bf75ac7eff5d@redhat.com>
-Date: Wed, 2 Oct 2024 12:36:07 +0200
+ Wed, 02 Oct 2024 03:39:58 -0700 (PDT)
+Message-ID: <6135cbe3-74bf-4452-a64a-d5e7924ec406@redhat.com>
+Date: Wed, 2 Oct 2024 12:39:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ui/cursor: remove cursor_get_mono_image
-To: dave@treblig.org, marcandre.lureau@redhat.com, berrange@redhat.com,
+Subject: Re: [PATCH] vhost: Remove unused vhost_dev_{load|save}_inflight
+To: dave@treblig.org, mst@redhat.com, sgarzare@redhat.com,
  QEMU Trivial <qemu-trivial@nongnu.org>
 Cc: qemu-devel@nongnu.org
-References: <20240917002318.331010-1-dave@treblig.org>
+References: <20240918121034.16417-1-dave@treblig.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -117,7 +117,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240917002318.331010-1-dave@treblig.org>
+In-Reply-To: <20240918121034.16417-1-dave@treblig.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -145,67 +145,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/09/2024 02.23, dave@treblig.org wrote:
+On 18/09/2024 14.10, dave@treblig.org wrote:
 > From: "Dr. David Alan Gilbert" <dave@treblig.org>
 > 
-> cursor_get_mono_image has been unused since 2018's
->    0015ca5cba ("ui: remove support for SDL1.2 in favour of SDL2")
+> vhost_dev_load_inflight and vhost_dev_save_inflight have been
+> unused since they were added in 2019 by:
 > 
-> Remove it.
+> 5ad204bf2a ("vhost-user: Support transferring inflight buffer between qemu and backend")
+> 
+> Remove them, and their helper vhost_dev_resize_inflight.
 > 
 > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 > ---
->   include/ui/console.h |  1 -
->   ui/cursor.c          | 24 ------------------------
->   2 files changed, 25 deletions(-)
+>   hw/virtio/vhost.c         | 56 ---------------------------------------
+>   include/hw/virtio/vhost.h |  2 --
+>   2 files changed, 58 deletions(-)
 > 
-> diff --git a/include/ui/console.h b/include/ui/console.h
-> index fa986ab97e..5832d52a8a 100644
-> --- a/include/ui/console.h
-> +++ b/include/ui/console.h
-> @@ -175,7 +175,6 @@ int cursor_get_mono_bpl(QEMUCursor *c);
->   void cursor_set_mono(QEMUCursor *c,
->                        uint32_t foreground, uint32_t background, uint8_t *image,
->                        int transparent, uint8_t *mask);
-> -void cursor_get_mono_image(QEMUCursor *c, int foreground, uint8_t *mask);
->   void cursor_get_mono_mask(QEMUCursor *c, int transparent, uint8_t *mask);
->   
->   typedef void *QEMUGLContext;
-> diff --git a/ui/cursor.c b/ui/cursor.c
-> index dd3853320d..6e23244fbe 100644
-> --- a/ui/cursor.c
-> +++ b/ui/cursor.c
-> @@ -197,30 +197,6 @@ void cursor_set_mono(QEMUCursor *c,
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 7c5ef81b55..76f9b2aaad 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -1930,62 +1930,6 @@ void vhost_dev_free_inflight(struct vhost_inflight *inflight)
 >       }
 >   }
 >   
-> -void cursor_get_mono_image(QEMUCursor *c, int foreground, uint8_t *image)
+> -static int vhost_dev_resize_inflight(struct vhost_inflight *inflight,
+> -                                     uint64_t new_size)
 > -{
-> -    uint32_t *data = c->data;
-> -    uint8_t bit;
-> -    int x,y,bpl;
+> -    Error *err = NULL;
+> -    int fd = -1;
+> -    void *addr = qemu_memfd_alloc("vhost-inflight", new_size,
+> -                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
+> -                                  &fd, &err);
 > -
-> -    bpl = cursor_get_mono_bpl(c);
-> -    memset(image, 0, bpl * c->height);
-> -    for (y = 0; y < c->height; y++) {
-> -        bit = 0x80;
-> -        for (x = 0; x < c->width; x++, data++) {
-> -            if (((*data & 0xff000000) == 0xff000000) &&
-> -                ((*data & 0x00ffffff) == foreground)) {
-> -                image[x/8] |= bit;
-> -            }
-> -            bit >>= 1;
-> -            if (bit == 0) {
-> -                bit = 0x80;
-> -            }
-> -        }
-> -        image += bpl;
+> -    if (err) {
+> -        error_report_err(err);
+> -        return -ENOMEM;
+> -    }
+> -
+> -    vhost_dev_free_inflight(inflight);
+> -    inflight->offset = 0;
+> -    inflight->addr = addr;
+> -    inflight->fd = fd;
+> -    inflight->size = new_size;
+> -
+> -    return 0;
+> -}
+> -
+> -void vhost_dev_save_inflight(struct vhost_inflight *inflight, QEMUFile *f)
+> -{
+> -    if (inflight->addr) {
+> -        qemu_put_be64(f, inflight->size);
+> -        qemu_put_be16(f, inflight->queue_size);
+> -        qemu_put_buffer(f, inflight->addr, inflight->size);
+> -    } else {
+> -        qemu_put_be64(f, 0);
 > -    }
 > -}
 > -
->   void cursor_get_mono_mask(QEMUCursor *c, int transparent, uint8_t *mask)
+> -int vhost_dev_load_inflight(struct vhost_inflight *inflight, QEMUFile *f)
+> -{
+> -    uint64_t size;
+> -
+> -    size = qemu_get_be64(f);
+> -    if (!size) {
+> -        return 0;
+> -    }
+> -
+> -    if (inflight->size != size) {
+> -        int ret = vhost_dev_resize_inflight(inflight, size);
+> -        if (ret < 0) {
+> -            return ret;
+> -        }
+> -    }
+> -    inflight->queue_size = qemu_get_be16(f);
+> -
+> -    qemu_get_buffer(f, inflight->addr, size);
+> -
+> -    return 0;
+> -}
+> -
+>   int vhost_dev_prepare_inflight(struct vhost_dev *hdev, VirtIODevice *vdev)
 >   {
->       uint32_t *data = c->data;
+>       int r;
+> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+> index c75be46c06..461c168c37 100644
+> --- a/include/hw/virtio/vhost.h
+> +++ b/include/hw/virtio/vhost.h
+> @@ -338,8 +338,6 @@ void vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
+>   
+>   void vhost_dev_reset_inflight(struct vhost_inflight *inflight);
+>   void vhost_dev_free_inflight(struct vhost_inflight *inflight);
+> -void vhost_dev_save_inflight(struct vhost_inflight *inflight, QEMUFile *f);
+> -int vhost_dev_load_inflight(struct vhost_inflight *inflight, QEMUFile *f);
+>   int vhost_dev_prepare_inflight(struct vhost_dev *hdev, VirtIODevice *vdev);
+>   int vhost_dev_set_inflight(struct vhost_dev *dev,
+>                              struct vhost_inflight *inflight);
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
