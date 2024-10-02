@@ -4,80 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B6CCCF6D3D
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 16:43:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4B37CEACF3
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 17:26:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sw2Qy-000340-Iz; Wed, 02 Oct 2024 12:42:42 -0400
+	id 1sw36K-0002YQ-Cg; Wed, 02 Oct 2024 13:25:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
- id 1sw2Qj-0002zM-2w
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 12:42:27 -0400
-Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sw36J-0002Xy-0d
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 13:25:23 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
- id 1sw2Qc-00074j-8z
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 12:42:24 -0400
-Received: by mail-oi1-x22a.google.com with SMTP id
- 5614622812f47-3e039666812so40783b6e.1
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 09:42:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sw36H-0006xW-6P
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 13:25:22 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-42cb58d810eso7121065e9.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 10:25:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727887334; x=1728492134; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1727889919; x=1728494719; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zHz4JqY/9NsIwQGby2TkCJeUxTR+2lqPHPLqSUFl3+s=;
- b=cInIt4AKJ1gsIiUDrQvaH+th6tYEwDd5Auu0XTEKa7Icv2WgYed6LVaGKBBq1rekHM
- jf/63JcGEKVkIXNO4hz8u62yVdgy+bGLg4bA9dFXkyuIOEQb+cY8njCdisA4PKGtd+q9
- nyaWcBt91jXoEoOW8PItTI7r+BnalV9pPxu/f5Iq6dRsUKP13dK8/Y6aUYCK7o73lDO8
- 6GXDQxjO/iN2ibt9H/KzRO+Ct634R2GGIoZcls1FfaVAaYCf28nc0LqULK+RQ346jijI
- PdczCfotoTD4RTq0UvNQdv8xnJ0JE+OLlMmPJCBch1fiP54nBvz2PNEpAeuEiPos+TkB
- dUyQ==
+ bh=sD44ncMEuMvqAzpxO9P/T/TLuuECMjOtP4kjBWrocoM=;
+ b=vnqL9EpsA7QKcfsSpbbad4KQfqY2oyKc+bKSsN2OVGuDyERigw+nslDiMBA9KFaszO
+ MbSMk9NfJPHwyZOQ8QZgGkiDyUZ4jG+63p7p1xRDDjki724Rvg/h5g1ltHmITxfcD+FO
+ nhqJfENc8IZKSoMps7jKL6961Krv6QrUKjVgysz2mcegQRfU9GQXUGxEGvTIosg35I1O
+ o9Z1gHjJHRO2YXPLJu1zVIdgg7K5oVuGAKR3C1Vx+/dsN+sMIgp6pYBVBl4f8Ixjg2WT
+ EuwRFFoRnzdwwXWOORIMsXoyoMT0QsrxdrHQwhzQI45o2zjCz4nBFMOssJP7m1oGoX+0
+ 4Zlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727887334; x=1728492134;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zHz4JqY/9NsIwQGby2TkCJeUxTR+2lqPHPLqSUFl3+s=;
- b=v4UEPahLD7er+X4HeS5Tfstsvy4JpF/ZUAcHF1MLv+jfcxiWpe6amodTtdmEnIX8wZ
- jmZ71FHHmxY+KB0BzhPIXX1hDh70LHsY4c1//d6gNC1RpjetZFCQtqydym5oHH0Fsnvm
- qcuwCwfINZH281FOA4BQJf3WpedpzKawwLeTfXb3Qo+h/sSXV0RBpiAz0Rgq/7aJaiEe
- h8/OPW7zuJV8C54iIw8hQfUpI6tsLZZscILynf1ihicfBcBLgvnAX4LdshaoZKhVWFtq
- VXiAhXdaAu2jfeje47h/oA4zV+H2ngUO+fI2QWTnjPF2uUngANpPkgUK6MWAhqi1DVsP
- RWwQ==
+ d=1e100.net; s=20230601; t=1727889919; x=1728494719;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=sD44ncMEuMvqAzpxO9P/T/TLuuECMjOtP4kjBWrocoM=;
+ b=FfbHR49FwdXa7drfjj8Ofju85IuQsABqOzHUTnFv+448SpgsoPJqU1ad71EMZ6mqP6
+ cuHF3AECt73fisWxG9BkPQ2us4TsqfS/Le0YDXfL1vt1VXLSobDPSvitMfqnRiT7qn0M
+ u3BD3El7cSLJaJUUwD7STGEcK1ujyFgWAtIwl6l+TioJVtqwEHLFLcAExLEld9yr+/rU
+ vUQwC23jIwKG2MT0iZ0Pv5gwD4805ql7naKrX7XuIjupNHdCtQ9DxiEh40a3imnHdmMF
+ vbStC04AcHPVgDLD830AxIMbydOhmOAoK4KiKiPTOKkayF0BvqM81xctQfBZJzDe2CoC
+ js0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHbtO4jiQQbNOwdSgG11LwD3u3dcahiVykx0xIBybbTBWyBTepOGOjEw6xBNfk8otNEczUew3oVOSI@nongnu.org
-X-Gm-Message-State: AOJu0YxPGWi2mJPmVNDyXyKwiE1ZHpFKkXkExE4IFtqreEyWgSbC+tCb
- CqZiGNaqTLvSLsqdymSEQaF0fbPmaCfG0WsEZ1oj8E972vwKaWa+ljFgghDCMFWcT5iMLx8ttPr
- df1tTB9P/I2gMKY5dbmv4fdOxicqUbU1D
-X-Google-Smtp-Source: AGHT+IH00fTz9bx01fYjFGL6S+z7JF1+GP1wn1F8yNj7OL7Xw1Flq7rqRBgaRA9UvkWe29ioQhqRAqnnC2lHj1PNBtA=
-X-Received: by 2002:a05:6871:810:b0:287:16f4:1862 with SMTP id
- 586e51a60fabf-28788a718e0mr2735101fac.17.1727887334417; Wed, 02 Oct 2024
- 09:42:14 -0700 (PDT)
+ AJvYcCVVPOUZb1YQbsoHvANRuv8HfllLdQLJCLQtOrmZfpLSqqSDTgCi2SGNV+N7V7vICKnIOBIe5gav8ejl@nongnu.org
+X-Gm-Message-State: AOJu0YxTIoE8ZRdBs7rRD+qNeB5k/ISzScZsIUUYHmHJzTKu2A/M0Ws+
+ io6B8RTwAnhw+6pyCDgg+B59Ao/bomSb42cvTo0xdcaCtKZsdzsNMP1kjKhxzKo=
+X-Google-Smtp-Source: AGHT+IGW9+UNdJoSoMQWQLLa+nKhbXkPBRIXb/hDHxwYLWkd9V/9I/tnlcBc7b+3OJdi0V+PDC3PLA==
+X-Received: by 2002:adf:f3cb:0:b0:374:c2bb:8387 with SMTP id
+ ffacd0b85a97d-37d04a57f53mr225935f8f.30.1727889919147; 
+ Wed, 02 Oct 2024 10:25:19 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37cd5730e9dsm14363501f8f.71.2024.10.02.10.25.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Oct 2024 10:25:18 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 71A295F780;
+ Wed,  2 Oct 2024 18:25:17 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Helge Deller <deller@kernel.org>,  Richard Henderson
+ <richard.henderson@linaro.org>,  qemu-devel@nongnu.org,
+ linux-parisc@vger.kernel.org
+Subject: Re: {PATCH] accel/tcg: Fix CPU specific unaligned behaviour
+In-Reply-To: <CAFEAcA81YtAGO0iFZRWXGjJb91DhWEDTGr+cjWbNWEW4yJDksQ@mail.gmail.com>
+ (Peter Maydell's message of "Wed, 2 Oct 2024 16:47:14 +0100")
+References: <Zvyx1kM4JljbzxQW@p100> <87cykimsb9.fsf@draig.linaro.org>
+ <CAFEAcA81YtAGO0iFZRWXGjJb91DhWEDTGr+cjWbNWEW4yJDksQ@mail.gmail.com>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Wed, 02 Oct 2024 18:25:17 +0100
+Message-ID: <877caqmn7m.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20240830223601.2796327-1-goldstein.w.n@gmail.com>
- <6109eea4230bb3aa7caf6deff526878231aa2136.camel@linux.ibm.com>
- <CAFUsyf+wYJVQHFaJZZ2mE0e3MRXMoQsr+-vk3T0qU3LYd3Dujw@mail.gmail.com>
- <731d741bb01c8157a076a3614d20732a3ea448db.camel@linux.ibm.com>
-In-Reply-To: <731d741bb01c8157a076a3614d20732a3ea448db.camel@linux.ibm.com>
-From: Noah Goldstein <goldstein.w.n@gmail.com>
-Date: Wed, 2 Oct 2024 11:42:03 -0500
-Message-ID: <CAFUsyfKhLpZF1RvwVK06jud6ArPEcG7M61cKNoQVWXLRgNaaog@mail.gmail.com>
-Subject: Re: [PATCH v1] linux-user: Add option to run `execve`d programs
- through QEMU
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: laurent@vivier.eu, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
- envelope-from=goldstein.w.n@gmail.com; helo=mail-oi1-x22a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,62 +102,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 2, 2024 at 11:39=E2=80=AFAM Ilya Leoshkevich <iii@linux.ibm.com=
-> wrote:
->
-> On Wed, 2024-10-02 at 09:05 -0500, Noah Goldstein wrote:
-> > On Wed, Oct 2, 2024 at 3:08=E2=80=AFAM Ilya Leoshkevich <iii@linux.ibm.=
-com>
-> > wrote:
-> > >
-> > > On Fri, 2024-08-30 at 15:36 -0700, Noah Goldstein wrote:
-> > > > The new option '-qemu-children' makes it so that on `execve` the
-> > > > child
-> > > > process will be launch by the same `qemu` executable that is
-> > > > currently
-> > > > running along with its current commandline arguments.
-> > > >
-> > > > The motivation for the change is to make it so that plugins
-> > > > running
-> > > > through `qemu` can continue to run on children.  Why not just
-> > > > `binfmt`?: Plugins can be desirable regardless of
-> > > > system/architecture
-> > > > emulation, and can sometimes be useful for elf files that can run
-> > > > natively. Enabling `binfmt` for all natively runnable elf files
-> > > > may
-> > > > not be desirable.
-> > >
-> > > Another reason to have this is that one may not have root
-> > > permissions
-> > > to configure binfmt-misc.
-> > >
-> > +1
-> >
-> > > There was a similar patch posted to the mailing list some years
-> > > back,
-> > > which I used to cherry-pick when I needed this. I'm not sure what
-> > > happened to that discussion though.
-> >
-> > Yes(ish):
-> > https://patchwork.ozlabs.org/project/qemu-devel/patch/1455515507-26877-=
-1-git-send-email-petrosagg@resin.io/
->
-> Thanks for finding this! Don't we need the shebang handling here as
-> well?
->
-I don't think so. In this case we aren't making it so execve can point to
-some arbitrary impl, just that we propagate the current running qemu
-env.
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-> Laurent, do you per chance know why was it not accepted back
-> then?Unfortunately I cannot find any discussion associated with v3 or
-> v4
-> [1]. There were some concerns regarding v1 [2], but from what I can see
-> they all were addressed.
+> On Wed, 2 Oct 2024 at 16:35, Alex Benn=C3=A9e <alex.bennee@linaro.org> wr=
+ote:
+>>
+>> Helge Deller <deller@kernel.org> writes:
+>>
+>> > When the emulated CPU reads or writes to a memory location
+>> > a) for which no read/write permissions exists, *and*
+>> > b) the access happens unaligned (non-natural alignment),
+>> > then the CPU should either
+>> > - trigger a permission fault, or
+>> > - trigger an unalign access fault.
+>> >
+>> > In the current code the alignment check happens before the memory
+>> > permission checks, so only unalignment faults will be triggered.
+>> >
+>> > This behaviour breaks the emulation of the PARISC architecture, where =
+the CPU
+>> > does a memory verification first. The behaviour can be tested with the=
+ testcase
+>> > from the bugzilla report.
+>> >
+>> > Add the necessary code to allow PARISC and possibly other architecture=
+s to
+>> > trigger a memory fault instead.
+>> >
+>> > Signed-off-by: Helge Deller <deller@gmx.de>
+>> > Fixes: https://bugzilla.kernel.org/show_bug.cgi?id=3D219339
+>> >
+>> >
+>> > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+>> > index 117b516739..dd1da358fb 100644
+>> > --- a/accel/tcg/cputlb.c
+>> > +++ b/accel/tcg/cputlb.c
+>> > @@ -1684,6 +1684,26 @@ static void mmu_watch_or_dirty(CPUState *cpu, M=
+MULookupPageData *data,
+>> >      data->flags =3D flags;
+>> >  }
+>> >
+>> > +/* when accessing unreadable memory unaligned, will the CPU issue
+>> > + * a alignment trap or a memory access trap ? */
+>> > +#ifdef TARGET_HPPA
+>> > +# define CPU_ALIGNMENT_CHECK_AFTER_MEMCHECK  1
+>> > +#else
+>> > +# define CPU_ALIGNMENT_CHECK_AFTER_MEMCHECK  0
+>> > +#endif
+>>
+>> I'm pretty certain we don't want to be introducing per-guest hacks into
+>> the core cputlb.c code when we are aiming to make it a compile once
+>> object.
 >
-> [1]
-> https://patchew.org/QEMU/20200730160106.16613-1-rj.bcjesus@gmail.com/
-> [2]
-> https://patchwork.kernel.org/project/qemu-devel/patch/1453091602-21843-1-=
-git-send-email-petrosagg@gmail.com/
+> There's also something curious going on here -- this patch
+> says "we check alignment before permissions, and that's wrong
+> on PARISC". But there's a comment in target/arm/ptw.c that
+> says "we check permissions before alignment, and that's
+> wrong on Arm":
+>
+>      * Enable alignment checks on Device memory.
+>      *
+>      * Per R_XCHFJ, this check is mis-ordered. The correct ordering
+>      * for alignment, permission, and stage 2 faults should be:
+>      *    - Alignment fault caused by the memory type
+>      *    - Permission fault
+>      *    - A stage 2 fault on the memory access
+>      * but due to the way the TCG softmmu TLB operates, we will have
+>      * implicitly done the permission check and the stage2 lookup in
+>      * finding the TLB entry, so the alignment check cannot be done soone=
+r.
+>
+> So do we check alignment first, or permissions first, or does
+> the order vary depending on what we're doing?
+
+If it varies by architecture and operation that is even more reason to
+encode the wanted behaviour in the MemOp.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
