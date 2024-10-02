@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D003CF31B0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:35:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D57FDCF31B0
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:36:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svwhC-0007gA-3K; Wed, 02 Oct 2024 06:35:02 -0400
+	id 1svwiM-0000l3-TZ; Wed, 02 Oct 2024 06:36:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwhA-0007eF-NL
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:35:00 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwiM-0000ku-1J
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:36:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwh9-0001ae-BN
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:35:00 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwiK-0001q5-Jh
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:36:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727865298;
+ s=mimecast20190719; t=1727865371;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=y9fuMPi5IhOlTNp4R5bwVFa+0gLsX3y2MARJkWhq9e4=;
- b=DaiP7SO/ZMe/UhI6dTZKUnfkB1B6skvSLfAtC5GD7muYaj2DOJv9At8rmuJIywb590mdz2
- 8JkRWTtKxI4YEOFWCtzNjaFgYu+UrRDPteXz6CfT8Bkk5uNopaODw3qQB4A1FH6+4jBF2R
- XiNNBFFVp8Ms4JdhUkVaQ9SGId2kL7Q=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kvxa0vwFNFX0RVdF3FP+KTc0QpzD+S8ueXhkOJ9TGjM=;
+ b=Hf1fUw5puvxAVcry5a5kF8rIOZpTjJqvLvmrxIIA/buomz8kWvvvfD6vo7GSf6HJpkk2z9
+ gAtpbrhH+aVBIFzt+0rwjAucP3/leN1g3/EhxnyOX4cmNEzqFXchwzOb3hRqnT8pFRBPC1
+ i7xiG+wJBs69s7H+zbxno1fDRU/QSZU=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-vOsO_32kNaGMyt39CR153g-1; Wed, 02 Oct 2024 06:34:57 -0400
-X-MC-Unique: vOsO_32kNaGMyt39CR153g-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-37ccbace251so3290181f8f.3
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 03:34:57 -0700 (PDT)
+ us-mta-189-Ea02YWpvMP6JX6trUIPcsQ-1; Wed, 02 Oct 2024 06:36:10 -0400
+X-MC-Unique: Ea02YWpvMP6JX6trUIPcsQ-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-37cdb0e9eb7so1697367f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 03:36:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727865296; x=1728470096;
+ d=1e100.net; s=20230601; t=1727865369; x=1728470169;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=y9fuMPi5IhOlTNp4R5bwVFa+0gLsX3y2MARJkWhq9e4=;
- b=ixqgHHGBPaM1eR/5AoA1CLcXpD167g6Y1e6gvA4Ti3loGMg8ayanoxxTUZgbOg1M3P
- ckQzVPpWI32JDPwiEcXsarimcblQKXI2iKXZGLam/5nZbM/FsZm6Gu3ZCs86jwPEAvF5
- oqAwUvrfUySNlkE410PeGTzkIj35dfAtxD3Jn2SWQYcbw+OPOX3r+2Z/Ngu8lvvJv2kA
- uQulatKSgwOSv/818aMJekRhAsIuNxVZtsDwIIJZ0suEVEGH4972jTtCO3j35ssDuvR7
- ZozYQS6Hxe7xf3+QnvUsdkfFWILB224kZuebgrbA0Gs63DRtmk4A/DjvpC1G+142UMBc
- cvvQ==
-X-Gm-Message-State: AOJu0YwA/2CnY+n/xWJ21vXgpFvHfoJoznYQCDhlzpUPpA35Gi9aOqVm
- qi6cyyJjM7Vb5Q80wAFNqXvO2tNhd7yPGI30sf/MKcN360Z6JJR32vKjm/H2FX7gqgsnX60xdJJ
- n7jwdbB48kVaZyAnPAmUcgiSMzNVwaUANI5EAmuWf2tL7b9BLjdu/
-X-Received: by 2002:a5d:5187:0:b0:374:c15a:8556 with SMTP id
- ffacd0b85a97d-37cfba19789mr1955425f8f.50.1727865296162; 
- Wed, 02 Oct 2024 03:34:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFb1Lf3H6ap3EVjUxYxjqCX9y9dMCPzlzpK7bwrfPYQL5EIOzir3tvDKQqATkMZ8K+d7frXZA==
-X-Received: by 2002:a5d:5187:0:b0:374:c15a:8556 with SMTP id
- ffacd0b85a97d-37cfba19789mr1955409f8f.50.1727865295725; 
- Wed, 02 Oct 2024 03:34:55 -0700 (PDT)
+ bh=kvxa0vwFNFX0RVdF3FP+KTc0QpzD+S8ueXhkOJ9TGjM=;
+ b=rrli+2xT/7Wu/eNXy9PpBMFCMMbQ4JIXzECSlqnHNilw9rm8ATZGAejk5T9IjAlQKd
+ rFHQRWw7UK8ZDEBvTSLrNySefAn5uMbZsTDRyQUPRb8xBu4s0/Z0EkbUlFnuMohkdEP4
+ 5Mif5abJyE+M7auDHiMrniJakO2nlStufq84t8rtMGg3fkS9c+BKgJp+JqTqxbe6QRlb
+ BwEk6edeF3T0E/rCl9xw2W6acdWUXzOTWCH7HRxACw4FEtx/SEdDYIqQnl4iOmgvjfjb
+ KcCvxyJAHk5HnQRSMSqlYhBh6pjOYTWQZr2ipAwBcBb489nxrvf1OeK9/20NUqFxkS3Z
+ 73gg==
+X-Gm-Message-State: AOJu0Yw+0IFWnQnZvjHGEm6YJaGyIW8TP+wdkSqeWOsH0/3YQe8udPGi
+ T5nAvOUmsVzk8g8mRt9Yv3KVWnY+MziamI8q2L+nO+oyOSVW688tf9QWTr2+bQ7FLOs6gnf/wVP
+ sv1OL23Ji6kUlSiO+rtVrGzqn093AUB1wyDyIHHbzia6eQn+ed2Gh
+X-Received: by 2002:adf:cd09:0:b0:374:c101:32 with SMTP id
+ ffacd0b85a97d-37cfba0a827mr1461746f8f.46.1727865369472; 
+ Wed, 02 Oct 2024 03:36:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGD1axT5kRX+O9naGVftAIsg9U0ih1lYQc6r0QWxHjL8cb//+jU+/wN5uQQlAw6cH/hWDIxqA==
+X-Received: by 2002:adf:cd09:0:b0:374:c101:32 with SMTP id
+ ffacd0b85a97d-37cfba0a827mr1461729f8f.46.1727865368963; 
+ Wed, 02 Oct 2024 03:36:08 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-143.web.vodafone.de.
  [109.42.49.143]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd564d41dsm13683593f8f.17.2024.10.02.03.34.54
+ ffacd0b85a97d-37cd5764c50sm13523670f8f.112.2024.10.02.03.36.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Oct 2024 03:34:55 -0700 (PDT)
-Message-ID: <ab19d2c3-b9ea-4107-b8ed-28ce0ece0fa1@redhat.com>
-Date: Wed, 2 Oct 2024 12:34:54 +0200
+ Wed, 02 Oct 2024 03:36:08 -0700 (PDT)
+Message-ID: <8d3023ad-d4c4-4106-ae8f-bf75ac7eff5d@redhat.com>
+Date: Wed, 2 Oct 2024 12:36:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw: Remove unused fw_cfg_init_io
-To: dave@treblig.org, philmd@linaro.org, kraxel@redhat.com,
+Subject: Re: [PATCH] ui/cursor: remove cursor_get_mono_image
+To: dave@treblig.org, marcandre.lureau@redhat.com, berrange@redhat.com,
  QEMU Trivial <qemu-trivial@nongnu.org>
 Cc: qemu-devel@nongnu.org
-References: <20240918123542.25319-1-dave@treblig.org>
+References: <20240917002318.331010-1-dave@treblig.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -117,7 +117,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240918123542.25319-1-dave@treblig.org>
+In-Reply-To: <20240917002318.331010-1-dave@treblig.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -145,48 +145,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/09/2024 14.35, dave@treblig.org wrote:
+On 17/09/2024 02.23, dave@treblig.org wrote:
 > From: "Dr. David Alan Gilbert" <dave@treblig.org>
 > 
-> fw_cfg_init_io has been unused since
->    918a7f706b ("i386: load kernel on xen using DMA")
+> cursor_get_mono_image has been unused since 2018's
+>    0015ca5cba ("ui: remove support for SDL1.2 in favour of SDL2")
 > 
 > Remove it.
 > 
 > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 > ---
->   hw/nvram/fw_cfg.c         | 5 -----
->   include/hw/nvram/fw_cfg.h | 1 -
->   2 files changed, 6 deletions(-)
+>   include/ui/console.h |  1 -
+>   ui/cursor.c          | 24 ------------------------
+>   2 files changed, 25 deletions(-)
 > 
-> diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-> index 2dadfd6e1f..b644577734 100644
-> --- a/hw/nvram/fw_cfg.c
-> +++ b/hw/nvram/fw_cfg.c
-> @@ -1171,11 +1171,6 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
->       return s;
+> diff --git a/include/ui/console.h b/include/ui/console.h
+> index fa986ab97e..5832d52a8a 100644
+> --- a/include/ui/console.h
+> +++ b/include/ui/console.h
+> @@ -175,7 +175,6 @@ int cursor_get_mono_bpl(QEMUCursor *c);
+>   void cursor_set_mono(QEMUCursor *c,
+>                        uint32_t foreground, uint32_t background, uint8_t *image,
+>                        int transparent, uint8_t *mask);
+> -void cursor_get_mono_image(QEMUCursor *c, int foreground, uint8_t *mask);
+>   void cursor_get_mono_mask(QEMUCursor *c, int transparent, uint8_t *mask);
+>   
+>   typedef void *QEMUGLContext;
+> diff --git a/ui/cursor.c b/ui/cursor.c
+> index dd3853320d..6e23244fbe 100644
+> --- a/ui/cursor.c
+> +++ b/ui/cursor.c
+> @@ -197,30 +197,6 @@ void cursor_set_mono(QEMUCursor *c,
+>       }
 >   }
 >   
-> -FWCfgState *fw_cfg_init_io(uint32_t iobase)
+> -void cursor_get_mono_image(QEMUCursor *c, int foreground, uint8_t *image)
 > -{
-> -    return fw_cfg_init_io_dma(iobase, 0, NULL);
+> -    uint32_t *data = c->data;
+> -    uint8_t bit;
+> -    int x,y,bpl;
+> -
+> -    bpl = cursor_get_mono_bpl(c);
+> -    memset(image, 0, bpl * c->height);
+> -    for (y = 0; y < c->height; y++) {
+> -        bit = 0x80;
+> -        for (x = 0; x < c->width; x++, data++) {
+> -            if (((*data & 0xff000000) == 0xff000000) &&
+> -                ((*data & 0x00ffffff) == foreground)) {
+> -                image[x/8] |= bit;
+> -            }
+> -            bit >>= 1;
+> -            if (bit == 0) {
+> -                bit = 0x80;
+> -            }
+> -        }
+> -        image += bpl;
+> -    }
 > -}
 > -
->   FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
->                                    hwaddr data_addr, uint32_t data_width,
->                                    hwaddr dma_addr, AddressSpace *dma_as)
-> diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
-> index d173998803..fa42677619 100644
-> --- a/include/hw/nvram/fw_cfg.h
-> +++ b/include/hw/nvram/fw_cfg.h
-> @@ -321,7 +321,6 @@ void fw_cfg_add_extra_pci_roots(PCIBus *bus, FWCfgState *s);
->   
->   FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
->                                   AddressSpace *dma_as);
-> -FWCfgState *fw_cfg_init_io(uint32_t iobase);
->   FWCfgState *fw_cfg_init_mem(hwaddr ctl_addr, hwaddr data_addr);
->   FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
->                                    hwaddr data_addr, uint32_t data_width,
+>   void cursor_get_mono_mask(QEMUCursor *c, int transparent, uint8_t *mask)
+>   {
+>       uint32_t *data = c->data;
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
