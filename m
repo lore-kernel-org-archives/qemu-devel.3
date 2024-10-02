@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF7D1CF3196
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 05:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40313CF3195
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 05:54:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svsHd-0006uv-8L; Wed, 02 Oct 2024 01:52:21 -0400
+	id 1svsHD-0006DK-Ld; Wed, 02 Oct 2024 01:51:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1svsHO-0006We-9g
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:52:07 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1svsGu-0005bF-3B
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:51:39 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1svsHM-0004uZ-Qt
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:52:06 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-20b7eb9e81eso33002295ad.2
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 22:52:03 -0700 (PDT)
+ id 1svsGk-0004qi-Eh
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:51:29 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-20b0b2528d8so69138765ad.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 22:51:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727848322; x=1728453122; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727848280; x=1728453080; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qJkzELxTn3OW7/j+RZmm2zMtuXmWXrkq8K/BFWuNwEw=;
- b=HeBni1ztO3iM6qiqYChm8XFfQnqtCwRHQ/55OxVBuBB13shIfPoC+tf5zd/0gW3q6a
- 5cKa2G601r7BuDWKohxlJnb5mirDlgm7A8CsfwpVNVNUUz6bkMfouPu0Fu5AURtM3FxJ
- WX+6W1xcX2GM8R/3G7K7xSVLlc7GVFaKciohmFMHSC/2o20ijNZZqd1HDWT/sQbutc8T
- sWxZGZtONBQnbrwp8Hy5n10sEWqf5IqDPTIrUOCEko68RTc+FkN8bOM6CkIINe0enBzl
- xdP4h7xzfa+7114p9T+yZYYXpdA65V4LYjy+F470T+1ITFxEmaSVvnUq2ok0dWbKbst5
- nbKA==
+ bh=3EI0kHcPUo6x2eDcs+2KIC40XgBNh/atV1LPebowvuc=;
+ b=IKmB27JSDaqpGHNMkV4VF71HMt//IxEKMKbkqb74cTKPqvN+WNJ1cIl5kLW2htkcUM
+ UMh7VksYr3P8s+BL7e9GQMcU4A5ysE5hQEYau53KrCaR5rjyIx9Xtxbnr21yntGLNqZp
+ obWFfKZQkEzoN9t5qS3kezHkLaRQPEQFLxxtaijcDm3s14tSUqI4n7TiBP4yOvSnsY8t
+ nzlNEa6xMjIXGNKGw1Hq/WjuwC0kwN/LLuPmtjgnLwgKNUTY1wp8A1Dg4tgGWGJVsmfd
+ yOTREC7IIwB9EiJRfLhRa0/Cf8eAnIOsUM/Jbo//sn4pWqpW1tgDGc08las8MBvNuyyK
+ pnWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727848322; x=1728453122;
+ d=1e100.net; s=20230601; t=1727848280; x=1728453080;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qJkzELxTn3OW7/j+RZmm2zMtuXmWXrkq8K/BFWuNwEw=;
- b=GAAvbViS2tT9O5/bkLusp2KOuIp8c8/hnUgs1HVxcLv54D/Zo/5bqYW6UXqBtVfC7N
- U4oV0sgjjviKrV3pqkUAn51bNPl3e4lREXiZtAOjq4OYXEf7FNCEQ4gH0Mo88G+BPX3q
- ESuntEVBNISR85pgV107CosPP481XGGB+b0T+uteEe1Ty2BERhOAG9+SwWRk40xDLFh3
- WRZdCQOiCNX08JoWPv+LSkDyoFN2x4rTP4hXsaqa3Q+JLQuB8e8lqmfFTfzHefHeS7af
- XFwKp7jAg+gGQyVhpUB3Qqq8MOeCOyXkTsr5+s6QaP0Z3wVWP9MfnH7M+6V9dxHUuvXL
- 0F4A==
-X-Gm-Message-State: AOJu0YzGNasP2H3rgi5JXU2vqzDsFo34nAby6lxKF6jUtEOXeeF3ZTsC
- fVUbCb0Ti5fqTADVGvuVXiefkVe5E0C4maU4RQeHN1g0ktCywdyS7XnQOAg3
-X-Google-Smtp-Source: AGHT+IFzOjUcK8kTOO+DPkc1sgu6QjSrRXtWJ9RKd/dRcOuz5jbkcgtfUqwqwi7gh0uE1WMAgE50gQ==
-X-Received: by 2002:a17:903:41cd:b0:20b:7be8:8eb9 with SMTP id
- d9443c01a7336-20bc5a791d3mr29461095ad.54.1727848321694; 
- Tue, 01 Oct 2024 22:52:01 -0700 (PDT)
+ bh=3EI0kHcPUo6x2eDcs+2KIC40XgBNh/atV1LPebowvuc=;
+ b=MZZiK31NFGaVc+/4wPWrcyQsZGxwL2D68oy7bqEAgWT9WQxTHCyWa8yMjG6KK+18Nz
+ n3bC6Y7jZnXBR0NMDlgexb+5tvRXno/wROVQpBCsCLDlXtpN+qu8WQcIjMb8dW0tBlDs
+ KEgX5A6QMiPUyaY777AEPzyFuTVXLamb+mkEx42LrPv+6KO7pqYDJ31odRf0jubLZDaR
+ nQ55b2mUBTLPn1d1vUgNth9DyqLa7QvvAUBFEwbFZ3IoJe4LI7nsxPjPShn/BWxLyiIG
+ Eb111JqSHy/BVZwhQoK92c2t1bW2EiAx/1+M2OsB2rzL23i4ne8ZlmWbPxbg5yWSoqJV
+ X/Bw==
+X-Gm-Message-State: AOJu0Ywbj59iWdrM/C8U9g3vZP6XaXFK+Jz/OZEfRxY4Catg00MIc8RW
+ pYPpZWrrEeJJPvWzVdNE6oXvtqGTt9MQD63Ms5etf1x5sOjiIS0AkuOLA4L9
+X-Google-Smtp-Source: AGHT+IGE0j1kMdboAeZwtGhDlYUMfgr+B4vNiOFZCauuscRDmdIeYKkvGqNjcsgE9liJIWFAWitTdg==
+X-Received: by 2002:a17:902:da8e:b0:20b:9062:7b08 with SMTP id
+ d9443c01a7336-20bc5a94f9dmr31384235ad.45.1727848280068; 
+ Tue, 01 Oct 2024 22:51:20 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20b37e60c76sm78324235ad.269.2024.10.01.22.51.58
+ d9443c01a7336-20b37e60c76sm78324235ad.269.2024.10.01.22.51.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 22:52:01 -0700 (PDT)
+ Tue, 01 Oct 2024 22:51:19 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Mark Corbin <mark@dibsco.co.uk>,
- Ajeet Singh <itachis@FreeBSD.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v3 21/35] bsd-user: Implement RISC-V CPU register cloning and
- reset functions
-Date: Wed,  2 Oct 2024 15:50:34 +1000
-Message-ID: <20241002055048.556083-22-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PULL v3 07/35] target: riscv: Enable Bit Manip for OpenTitan Ibex CPU
+Date: Wed,  2 Oct 2024 15:50:20 +1000
+Message-ID: <20241002055048.556083-8-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002055048.556083-1-alistair.francis@wdc.com>
 References: <20241002055048.556083-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,43 +98,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Corbin <mark@dibsco.co.uk>
+From: Alistair Francis <alistair23@gmail.com>
 
-Added functions for cloning CPU registers and resetting the CPU state
-for RISC-V architecture.
+The OpenTitan Ibex CPU now supports the the Zba, Zbb, Zbc
+and Zbs bit-manipulation sub-extensions ratified in
+v.1.0.0 of the RISC-V Bit- Manipulation ISA Extension, so let's enable
+them in QEMU as well.
 
-Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
-Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240916155119.14610-4-itachis@FreeBSD.org>
+1: https://github.com/lowRISC/opentitan/pull/9748
+
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20240823003231.3522113-1-alistair.francis@wdc.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- bsd-user/riscv/target_arch_cpu.h | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ target/riscv/cpu.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/bsd-user/riscv/target_arch_cpu.h b/bsd-user/riscv/target_arch_cpu.h
-index 9c31d9dc4c..a93ea3915a 100644
---- a/bsd-user/riscv/target_arch_cpu.h
-+++ b/bsd-user/riscv/target_arch_cpu.h
-@@ -131,4 +131,18 @@ static inline void target_cpu_loop(CPURISCVState *env)
-     }
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 0f8189bcf0..a1ca12077f 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -680,6 +680,11 @@ static void rv32_ibex_cpu_init(Object *obj)
+     cpu->cfg.ext_zicsr = true;
+     cpu->cfg.pmp = true;
+     cpu->cfg.ext_smepmp = true;
++
++    cpu->cfg.ext_zba = true;
++    cpu->cfg.ext_zbb = true;
++    cpu->cfg.ext_zbc = true;
++    cpu->cfg.ext_zbs = true;
  }
  
-+static inline void target_cpu_clone_regs(CPURISCVState *env, target_ulong newsp)
-+{
-+    if (newsp) {
-+        env->gpr[xSP] = newsp;
-+    }
-+
-+    env->gpr[xA0] = 0;
-+    env->gpr[xT0] = 0;
-+}
-+
-+static inline void target_cpu_reset(CPUArchState *env)
-+{
-+}
-+
- #endif /* TARGET_ARCH_CPU_H */
+ static void rv32_imafcu_nommu_cpu_init(Object *obj)
 -- 
 2.46.2
 
