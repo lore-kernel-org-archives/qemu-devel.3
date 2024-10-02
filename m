@@ -4,62 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D54CF3199
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 07:44:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FE75CF3199
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 07:44:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svu1w-0006pp-Pm; Wed, 02 Oct 2024 03:44:16 -0400
+	id 1svu1v-0006pJ-NR; Wed, 02 Oct 2024 03:44:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1svu1u-0006oe-Tl
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 03:44:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1svu1t-0006nt-Qb
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 03:44:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1svu1t-0008OZ-JW
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 03:44:14 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1svu1r-0008OQ-TY
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 03:44:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727855052;
+ s=mimecast20190719; t=1727855051;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NL3sAUoNIgW0yqVlbF5otXoOxGXwXch870iAwGeCdWE=;
- b=XYPz8dlllifjiR6ujx9Xm+tocXMKd96NCdE+syjPhfVXkOOPj0YtoFGFxL/DXwgtwDObSP
- UqNjaWF4UJtGM1aO7uJL6K6kiC9mCTgAlCnfKFd0ICt0bD9F98l4uwiP455dI2aKdk0WL8
- GpyCtoo4DF4shy1WGD2jZLsWnA7klw0=
+ bh=XhTwsk5bH554T+RvcRjXa11m2S/y9I12RihPOE1Qctk=;
+ b=PPInhrGWtAsDK7UgVMxW+uOSfB3a4TmmOY+swaGsbSm1dy67GZ1LCRb+jDgEdEIKJ5ccUb
+ Yr3BbdKKWjCMx/dmebAJ328QBqQliDXLfsQDhRE4zChfzuwWRu5rOcP+MRcB0AtUWTI7lb
+ kdkmSvGFMw0IN9BLoMnmynk8aseDbSs=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-374-e8A8SOc_NXK34pV3e_3D5g-1; Wed,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-41-TJaY_KQxMs-1_ds3DMc7Yw-1; Wed,
  02 Oct 2024 03:44:09 -0400
-X-MC-Unique: e8A8SOc_NXK34pV3e_3D5g-1
+X-MC-Unique: TJaY_KQxMs-1_ds3DMc7Yw-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2F7531977016; Wed,  2 Oct 2024 07:44:08 +0000 (UTC)
+ id 67F781955F41; Wed,  2 Oct 2024 07:44:08 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.47])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ADCFB19560AD; Wed,  2 Oct 2024 07:44:07 +0000 (UTC)
+ id B50411956054; Wed,  2 Oct 2024 07:44:07 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DAD1D21E692E; Wed,  2 Oct 2024 09:44:04 +0200 (CEST)
+ id D51E721E691E; Wed,  2 Oct 2024 09:44:04 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 03/10] qapi/crypto: Supply missing member documentation
-Date: Wed,  2 Oct 2024 09:43:57 +0200
-Message-ID: <20241002074404.1983368-4-armbru@redhat.com>
+Cc: peter.maydell@linaro.org
+Subject: [PULL 01/10] qapi/char: Supply missing member documentation
+Date: Wed,  2 Oct 2024 09:43:55 +0200
+Message-ID: <20241002074404.1983368-2-armbru@redhat.com>
 In-Reply-To: <20241002074404.1983368-1-armbru@redhat.com>
 References: <20241002074404.1983368-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -84,45 +82,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since we neglect to document the members of QCryptoAkCipherKeyType,
+Since we neglect to document several members of ChardevBackendKind,
 their description in the QEMU QMP Reference manual is "Not
-documented".  Fix that.
+documented".  Fix that, and improve the existing member documentation.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240911112545.2248881-4-armbru@redhat.com>
+Message-ID: <20240911112545.2248881-2-armbru@redhat.com>
 ---
- qapi/crypto.json | 4 ++++
- qapi/pragma.json | 1 -
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ qapi/char.json   | 44 ++++++++++++++++++++++++++++----------------
+ qapi/pragma.json |  1 -
+ 2 files changed, 28 insertions(+), 17 deletions(-)
 
-diff --git a/qapi/crypto.json b/qapi/crypto.json
-index 867b09d322..9431522768 100644
---- a/qapi/crypto.json
-+++ b/qapi/crypto.json
-@@ -602,6 +602,10 @@
- #
- # The type of asymmetric keys.
- #
-+# @public: public key
-+#
-+# @private: private key
-+#
- # Since: 7.1
+diff --git a/qapi/char.json b/qapi/char.json
+index ef58445cee..0d6de1ee35 100644
+--- a/qapi/char.json
++++ b/qapi/char.json
+@@ -434,37 +434,49 @@
  ##
- { 'enum': 'QCryptoAkCipherKeyType',
+ # @ChardevBackendKind:
+ #
+-# @pipe: Since 1.5
++# @file: regular files
+ #
+-# @udp: Since 1.5
++# @serial: serial host device
+ #
+-# @mux: Since 1.5
++# @parallel: parallel host device
+ #
+-# @msmouse: Since 1.5
++# @pipe: pipes (since 1.5)
+ #
+-# @wctablet: Since 2.9
++# @socket: stream socket
+ #
+-# @braille: Since 1.5
++# @udp: datagram socket (since 1.5)
+ #
+-# @testdev: Since 2.2
++# @pty: pseudo-terminal
+ #
+-# @stdio: Since 1.5
++# @null: provides no input, throws away output
+ #
+-# @console: Since 1.5
++# @mux: (since 1.5)
+ #
+-# @spicevmc: Since 1.5
++# @msmouse: emulated Microsoft serial mouse (since 1.5)
+ #
+-# @spiceport: Since 1.5
++# @wctablet: emulated Wacom Penpartner serial tablet (since 2.9)
+ #
+-# @qemu-vdagent: Since 6.1
++# @braille: Baum Braille device (since 1.5)
+ #
+-# @dbus: Since 7.0
++# @testdev: device for test-suite control (since 2.2)
+ #
+-# @vc: v1.5
++# @stdio: standard I/O (since 1.5)
+ #
+-# @ringbuf: Since 1.6
++# @console: Windows console (since 1.5)
+ #
+-# @memory: Since 1.5
++# @spicevmc: spice vm channel (since 1.5)
++#
++# @spiceport: Spice port channel (since 1.5)
++#
++# @qemu-vdagent: Spice vdagent (since 6.1)
++#
++# @dbus: D-Bus channel (since 7.0)
++#
++# @vc: virtual console (since 1.5)
++#
++# @ringbuf: memory ring buffer (since 1.6)
++#
++# @memory: synonym for @ringbuf (since 1.5)
+ #
+ # Features:
+ #
 diff --git a/qapi/pragma.json b/qapi/pragma.json
-index f03b9cc444..625eac99df 100644
+index fad3a31628..d5ae397293 100644
 --- a/qapi/pragma.json
 +++ b/qapi/pragma.json
-@@ -64,7 +64,6 @@
-         'NetClientDriver',
-         'ObjectType',
-         'PciMemoryRegion',
--        'QCryptoAkCipherKeyType',
-         'QCryptodevBackendServiceType',
-         'QKeyCode',
-         'RbdAuthMode',
+@@ -46,7 +46,6 @@
+         'BlockdevSnapshotSyncWrapper',
+         'BlockdevSnapshotWrapper',
+         'BlockdevVmdkAdapterType',
+-        'ChardevBackendKind',
+         'CxlCorErrorType',
+         'DisplayProtocol',
+         'DriveBackupWrapper',
 -- 
 2.46.0
 
