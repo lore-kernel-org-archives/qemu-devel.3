@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64053CF319D
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 07:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C82D9CF3199
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 07:43:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svtzU-0005QD-Cf; Wed, 02 Oct 2024 03:41:44 -0400
+	id 1svu1D-0006Fa-L1; Wed, 02 Oct 2024 03:43:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1svtzS-0005Q3-CW
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 03:41:42 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1svu1B-0006F6-Ci
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 03:43:29 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1svtzQ-0008Iw-MX
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 03:41:42 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4927PIjg029304;
- Wed, 2 Oct 2024 07:41:39 GMT
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1svu19-0008Mc-Q5
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 03:43:29 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4927JlZr014223;
+ Wed, 2 Oct 2024 07:43:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
  message-id:subject:from:to:cc:date:in-reply-to:references
  :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- cKa2KWb9l7tRQ7B9kBL0U2rWrbynhYWz8Tir0KrJ3S4=; b=NTnnn9SJLtkYKtq2
- P9Omem9xU801NE/hytbcfnOMxmbN5dKqYr1wNR3iCAPXUvq40eanJX3qkC1MtAcx
- vSTTVTPADRyyCtimfCSHqlZ75UwfcKQHqJinbNrJq322sDh1Zq0Cb7gL+6wki6n4
- nYT7getG4L2zojE+1oHWSLBZ4/oOcATijmo2NHS7gAi32QADAcMTgnSFmX/szl4L
- Bw/NAY3rbzJQGA/1vkFd5U5lEhSCZXoY/FVstu30BTzgp9QXJCvsUVAryNnyGTVu
- vk3Z+K5IQAukrkbhbQhac7P14lnSgDOj1oI8IfIqvjrZMVyJ9FgWTnfnKt53rLCn
- P5Xwfg==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4211s002hn-1
+ gBs+LK/l6H8+xCyydVyupmRGJoH4tOGQ19BaetR4+vc=; b=iJg8Vt17UmIXqToV
+ 3K0RWCFfz1PhutWhLXBv6M7JuFwa8c3QlGTunkQL0DH7SopLzA0mlhtrFAO4rbs6
+ xicExAaniMW9k9VXPDV4rT/jfpBV/M/R2O+ePs9SpnAp3KbbmWKbGWzOAYR5DTGO
+ SBlWSVqhaTa4p4GM3MF0bWlF0X87R4wX21e/BUxEn/922MQf/CP0r4lZ/aA3P9r9
+ B5r8LOWM3nvwcBIgnfHiDGZySkxkXfX59esovLL4HLd1vGtaXGl1bHWBtP1JuZ4A
+ OI+NhgtCyKFRwCSSCQFtPm9bvaupYMTMeHtGhrJuJP/qqjO9ps7/u1Y3HU/WqZKB
+ Dn7DTA==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4211pk831c-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Oct 2024 07:41:39 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4927Vm3j014098;
- Wed, 2 Oct 2024 07:41:38 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41xwmk8r81-1
+ Wed, 02 Oct 2024 07:43:25 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 492759oR017902;
+ Wed, 2 Oct 2024 07:43:23 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41xw4n0vgv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Oct 2024 07:41:38 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4927faI015401282
+ Wed, 02 Oct 2024 07:43:23 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4927hLBe29360854
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 2 Oct 2024 07:41:36 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 65A9020043;
- Wed,  2 Oct 2024 07:41:36 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0BF0B20040;
- Wed,  2 Oct 2024 07:41:36 +0000 (GMT)
+ Wed, 2 Oct 2024 07:43:21 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CCFF120040;
+ Wed,  2 Oct 2024 07:43:21 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 61F1C20043;
+ Wed,  2 Oct 2024 07:43:21 +0000 (GMT)
 Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  2 Oct 2024 07:41:35 +0000 (GMT)
-Message-ID: <5d5f1ed46ba17f50f0a7bdfb45c68bf7b3470d45.camel@linux.ibm.com>
-Subject: Re: [PATCH v3 3/5] linux-user: Factor print_buf_len() out
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  2 Oct 2024 07:43:21 +0000 (GMT)
+Message-ID: <5e784a82c1dc61c709937ff9567e8177e83d2317.camel@linux.ibm.com>
+Subject: Re: [PATCH v3 2/5] linux-user: Display sockaddr buffer as pointer
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Zach van Rijn <me@zv.io>, Richard Henderson <richard.henderson@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>
-Date: Wed, 02 Oct 2024 09:41:35 +0200
-In-Reply-To: <20240807124306.52903-4-philmd@linaro.org>
+Date: Wed, 02 Oct 2024 09:43:21 +0200
+In-Reply-To: <20240807124306.52903-3-philmd@linaro.org>
 References: <20240807124306.52903-1-philmd@linaro.org>
- <20240807124306.52903-4-philmd@linaro.org>
+ <20240807124306.52903-3-philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
 MIME-Version: 1.0
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: f6CfpiUAlNxxi89aYhRPO5a5EjC3MqOs
-X-Proofpoint-ORIG-GUID: f6CfpiUAlNxxi89aYhRPO5a5EjC3MqOs
+X-Proofpoint-GUID: tQZ_2i7SNDnSE6iICqAO8uOYShJtxA1j
+X-Proofpoint-ORIG-GUID: tQZ_2i7SNDnSE6iICqAO8uOYShJtxA1j
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-02_07,2024-09-30_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 mlxlogscore=682 adultscore=0 lowpriorityscore=0
- impostorscore=0 phishscore=0 bulkscore=0 spamscore=0 suspectscore=0
- mlxscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2410020055
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ impostorscore=0 spamscore=0
+ lowpriorityscore=0 phishscore=0 suspectscore=0 clxscore=1015 bulkscore=0
+ priorityscore=1501 adultscore=0 mlxscore=0 malwarescore=0 mlxlogscore=588
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2410020055
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -111,10 +111,11 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, 2024-08-07 at 14:43 +0200, Philippe Mathieu-Daud=C3=A9 wrote:
+> Rather than 'raw param', display as pointer to get
+> "NULL" instead of "0x00000000".
+>=20
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
-> =C2=A0linux-user/strace.c | 13 +++++++++----
-> =C2=A01 file changed, 9 insertions(+), 4 deletions(-)
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
