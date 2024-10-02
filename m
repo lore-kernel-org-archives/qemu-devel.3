@@ -4,69 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E789CF31B4
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 11:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E4BCCF31AF
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 11:07:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svx9G-00081q-5Z; Wed, 02 Oct 2024 07:04:06 -0400
+	id 1svxCC-0000hW-2Z; Wed, 02 Oct 2024 07:07:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1svx9D-00081b-Dh; Wed, 02 Oct 2024 07:03:59 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1svxCA-0000gv-L6
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 07:07:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1svx9A-00050Q-MC; Wed, 02 Oct 2024 07:03:58 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6AF8E9477D;
- Wed,  2 Oct 2024 14:03:10 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C173414AD7E;
- Wed,  2 Oct 2024 14:03:48 +0300 (MSK)
-Message-ID: <c0ead77d-e1f4-4af5-9f21-33b5bee0f012@tls.msk.ru>
-Date: Wed, 2 Oct 2024 14:03:48 +0300
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1svxC8-0005fm-Ui
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 07:07:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727867218;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=WbHOWPqsDYFnTNViuKfNl6jIxRFgDycYPJzFviXhA+AhBkB6RV5TE4VRX86RsD6qlV2lXK
+ 2alSnTV9tZkJOm2kXiWvXRUL0VcPKACRjU3jE5Q8lOObU4apKMUlFMs1mxqiJPHk8pP3Fu
+ pXGitCClPli8PL9oBYk+2g9vXJpKk1M=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-682-m9y3HQZGOLaX1SaHeQgIGg-1; Wed, 02 Oct 2024 07:06:57 -0400
+X-MC-Unique: m9y3HQZGOLaX1SaHeQgIGg-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-37ccd39115bso4116773f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 04:06:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727867216; x=1728472016;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=VBwFnXDcli5aHtiafjDicXC+yL5xb/Yo7UBTd6+zUvpXCC0lGaUg+4h8GOMa+S8wIz
+ oEXWYGe7pRdT8WDzL4Re43vQmq/MmXqzsnirq70nm51Z2Snli6r8TCMzemCuKAUKIC0b
+ 6iVGWmJ40qPMCYmpuJHE2PxA9t7LVru08nKrtCwaQHIntSyTrhvJkp9WEk31mP/iVkpF
+ aDG1nKbP3Ktwh46tfxLW/W70LRTsJLPIPBXoFSds4w0CfU7bglytoooa/FPmWnNgcChW
+ eAg7L+n84fdw5OxZIj+PWFaZaE5j4V3Mkso+5eKLdBtmSDt55zK+Bze+SmBjlmzI86nd
+ YJMg==
+X-Gm-Message-State: AOJu0Yw40tMHFulqo7/3+GgIaK5OBIljsIVcKlPQWo4ZTyO3yeVYHBLV
+ TLYWg1t9cKfL9eu1l4IKJ636ySn5RhTUhaiKfS0JAp9fRJsKFvQc8eFKM9gUNRcaz7r9DAjQyG8
+ wgzeNFvVPuM0n8sKM11duJ38vgPsxQQUuBL/SqxcUbiifxkWyU8I3
+X-Received: by 2002:a05:6000:2a6:b0:374:c8a0:ca8c with SMTP id
+ ffacd0b85a97d-37cfba058f8mr2027406f8f.43.1727867216258; 
+ Wed, 02 Oct 2024 04:06:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG54i823P9b5hFHlYWTlsq/iNuGQS4OZZRWJONdj70LbTZNbq+wnG9J/pULcTseDOX6QeJ1oQ==
+X-Received: by 2002:a05:6000:2a6:b0:374:c8a0:ca8c with SMTP id
+ ffacd0b85a97d-37cfba058f8mr2027381f8f.43.1727867215860; 
+ Wed, 02 Oct 2024 04:06:55 -0700 (PDT)
+Received: from avogadro.local ([151.95.43.71])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42f7a00a501sm15629885e9.44.2024.10.02.04.06.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Oct 2024 04:06:55 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Julia Suvorova <jusual@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Song Gao <gaosong@loongson.cn>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2 0/2] kvm: Improve register failure reports for migration
+Date: Wed,  2 Oct 2024 13:06:51 +0200
+Message-ID: <20241002110651.458405-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.46.1
+In-Reply-To: <20240927104743.218468-1-jusual@redhat.com>
+References: 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qemu-keymap: Release local allocation references
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org,
- QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20240723-unref-v1-1-88606ffd4552@daynix.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240723-unref-v1-1-88606ffd4552@daynix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,17 +107,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-23.07.2024 11:49, Akihiko Odaki wrote:
-> Commit 2523baf7fb4d ("qemu-keymap: Make references to allocations
-> static") made references to allocations static to ensure LeakSanitizer
-> can track them. This trick unfortunately did not work with gcc version
-> 14.0.1; that compiler is clever enough to know that the value of the
-> "state" variable is only referred in the current execution of the
-> function and to put it on the stack.
-> 
-> Release references to allocations and suppress the error once for all.
+Queued, thanks.
 
-Applied to the trivial-patches tree.  Thanks!
+Paolo
 
-/mjt
 
