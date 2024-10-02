@@ -4,69 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 078EECF6D38
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 15:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E18CF6D38
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 15:35:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sw1Ja-0002IP-C5; Wed, 02 Oct 2024 11:30:58 -0400
+	id 1sw1Nh-0003FY-Br; Wed, 02 Oct 2024 11:35:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+162bb73199c6fbf6f230+7710+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1sw1JV-0002I4-FN
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:30:53 -0400
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+162bb73199c6fbf6f230+7710+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1sw1JS-0006Eu-Rr
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:30:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=Z7gk2NGj4HHuCPs9zY+eDN59NzpFsdqDx/Zb/w7pgvw=; b=UuXjpU9rDdQccQYEXJiG31vYGN
- MhWnLXLIXIxA3Q25fikZ4qQzrnklhszZZQFOsWnH8/xZVjQjElaO3NSHAIP+i2S3jA5DMjS0fSvE2
- Y+cwphDFc4+7+cK9kMx/2vs87LcLFdAM8xHf7ABm8QMc+Aw7NDIlsKD/t8nPkhO8h6GXg3yvpopmw
- pBEZxxtWdczToklLJISAsJ1ND4gZ2L8O7nhTCPPUouCg7HPrHqFVhtlz3pmaEQkdc0f0jH+yAkMGL
- h8GYEZluWb0tOudY1dHpkHMnsEqn5eMH5CdOjCSHP2nn+EY+iKQFg7L6gGmsQhxeNK5xnEoTVJeIQ
- MSS4vaqw==;
-Received: from [2001:8b0:10b:5:4c1d:cf0d:ae20:767c]
- (helo=u3832b3a9db3152.ant.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1sw1JK-00000005fsz-1779; Wed, 02 Oct 2024 15:30:43 +0000
-Message-ID: <61419dffa5f709689edfbb93e2633b250a79a940.camel@infradead.org>
-Subject: Re: More than 255 vcpus Windows VM setup without viommu ?
-From: David Woodhouse <dwmw2@infradead.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Sandesh Patel <sandesh.patel@nutanix.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, paul <paul@xen.org>, Rob Scheepens
- <rob.scheepens@nutanix.com>, Prerna Saxena <confluence@nutanix.com>, 
- Alexander Graf <agraf@csgraf.de>
-Date: Wed, 02 Oct 2024 16:30:41 +0100
-In-Reply-To: <20241002133322.18a4f1fa@imammedo.users.ipa.redhat.com>
-References: <B75A5788-630B-4898-8758-52B57D3D5895@nutanix.com>
- <a80c99b0e10e71a5a301c884d699eeaff3893349.camel@infradead.org>
- <7571cdc42d6d69db0ac98ffc99801d11de1de129.camel@infradead.org>
- <20241002133322.18a4f1fa@imammedo.users.ipa.redhat.com>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-5CNka/+RITjRYv3PZ4Kr"
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sw1Ng-0003Et-Dw
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:35:12 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sw1Ne-0006rM-HC
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:35:12 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42cc8782869so64190405e9.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 08:35:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727883308; x=1728488108; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Kv6D0fnNT3xGR1IIrR9rSYETvaIuEB74TGsumxGegAk=;
+ b=ROJ5CFah+GFYsrcqg1NICSnUcr4ewKH0drOVipVCIGC5W2JsKrCA5hdXzfuQ9w8Lol
+ zt0yLe7lHHQ1nJXrfnKxsAUAdvm5lAjTS4zqF+s9Q840igr2Se3CTmdAvPGXNggMKKUO
+ IpL0Fhd7E7SVWSQCYUTwIl/LTjH/b+k4HvAqd5OJ4GbKbjzVJHvqyAVcQfyZrcY7r7ge
+ coGlqhfQuQvg7S8v5mb35T72P8/r2nOwHGZ1ni7DYlZQl1oiGOs7BpjE8xxD0B2n6emI
+ D196RVcLlGnyMAAWXuUzt8GcTOqgJfhC+BqdxroCL7oVUwynyrHhjY6qU8Jk4qp7GD5+
+ psZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727883308; x=1728488108;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Kv6D0fnNT3xGR1IIrR9rSYETvaIuEB74TGsumxGegAk=;
+ b=QgdTIxIpObwwGHFMZWOd5cOKi4khVKfnEgzeU6ZhqT0KWAtXVNcERlcpijjCGVI3bC
+ 0lES2PPnACaLiB0xBYuFoE+LweuiSmNIVIxj8Y7bG1WR/fhTlXv+FXlqOZo5ZO26TIfm
+ TggrqkhQti696TEnLPjWUzpggY4mIP3GYs1gzQPODwfRRhj6KvJZlNwI6Lse8bpXxQWy
+ ccN3t67yPbIM+0Jiy5DGfvuyQ0nQ98gpIboZsycW208UWk7hQJ1fJqiBs6/qZnp9sen0
+ Pxmzi6PjM/P8gcTcAfv0dQbwj6oaXmCjGdopFCGOBcKsau/B9MznLf/zLSrYS+W1M/S2
+ 4VjA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVZwxxF3YscOzlgZgLG3/pOuKXpjxkeVXcib/nvyhUMFmHnT1jYuPiye/lXFP49PpKd0Eg79wboO+B4@nongnu.org
+X-Gm-Message-State: AOJu0Yy2zKQnRyRL2cE34cuQxzO7Lpv74CZEe/gAmTBgd5ddUUsmv2eK
+ f2e/V4I8yWK02WpITKPp+jp1QpjzD3gimF0hcaQIqB0RQTUjcyoOEnMsnpIfYyc=
+X-Google-Smtp-Source: AGHT+IH1kXy/4tu8wtewLOUFrHEoFP/8lP+J1G+2LcEEnoqjITxckaRZVCvi+AMVzIy0KRPWogji6g==
+X-Received: by 2002:a05:600c:4fc1:b0:42c:b950:680b with SMTP id
+ 5b1f17b1804b1-42f777c3830mr25786205e9.20.1727883308476; 
+ Wed, 02 Oct 2024 08:35:08 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42f79d8d693sm21703755e9.2.2024.10.02.08.35.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Oct 2024 08:35:07 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C55FE5F780;
+ Wed,  2 Oct 2024 16:35:06 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Helge Deller <deller@kernel.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ qemu-devel@nongnu.org,  linux-parisc@vger.kernel.org
+Subject: Re: {PATCH] accel/tcg: Fix CPU specific unaligned behaviour
+In-Reply-To: <Zvyx1kM4JljbzxQW@p100> (Helge Deller's message of "Wed, 2 Oct
+ 2024 04:37:10 +0200")
+References: <Zvyx1kM4JljbzxQW@p100>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Wed, 02 Oct 2024 16:35:06 +0100
+Message-ID: <87cykimsb9.fsf@draig.linaro.org>
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+162bb73199c6fbf6f230+7710+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,162 +100,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Helge Deller <deller@kernel.org> writes:
 
---=-5CNka/+RITjRYv3PZ4Kr
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> When the emulated CPU reads or writes to a memory location
+> a) for which no read/write permissions exists, *and*
+> b) the access happens unaligned (non-natural alignment),
+> then the CPU should either
+> - trigger a permission fault, or
+> - trigger an unalign access fault.
+>
+> In the current code the alignment check happens before the memory
+> permission checks, so only unalignment faults will be triggered.
+>
+> This behaviour breaks the emulation of the PARISC architecture, where the=
+ CPU
+> does a memory verification first. The behaviour can be tested with the te=
+stcase
+> from the bugzilla report.
+>
+> Add the necessary code to allow PARISC and possibly other architectures to
+> trigger a memory fault instead.
+>
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> Fixes: https://bugzilla.kernel.org/show_bug.cgi?id=3D219339
+>
+>
+> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> index 117b516739..dd1da358fb 100644
+> --- a/accel/tcg/cputlb.c
+> +++ b/accel/tcg/cputlb.c
+> @@ -1684,6 +1684,26 @@ static void mmu_watch_or_dirty(CPUState *cpu, MMUL=
+ookupPageData *data,
+>      data->flags =3D flags;
+>  }
+>=20=20
+> +/* when accessing unreadable memory unaligned, will the CPU issue
+> + * a alignment trap or a memory access trap ? */
+> +#ifdef TARGET_HPPA
+> +# define CPU_ALIGNMENT_CHECK_AFTER_MEMCHECK  1
+> +#else
+> +# define CPU_ALIGNMENT_CHECK_AFTER_MEMCHECK  0
+> +#endif
 
-On Wed, 2024-10-02 at 13:33 +0200, Igor Mammedov wrote:
->=20
-> It's interesting as an experiment, to prove that Windows is riddled with =
-bugs.
-> (well, and it could serve as starting point to report issue to MS)
-> But I'd rather Microsoft fix bugs on their side, instead of putting hacks=
- in
-> QEMU.
+I'm pretty certain we don't want to be introducing per-guest hacks into
+the core cputlb.c code when we are aiming to make it a compile once
+object.
 
-Absolutely. I would very prefer Microsoft to fix the bugs, and to
-support the 15-bit destination ID enlightenment that KVM, Xen and even
-Hyper-V all define =E2=80=94 instead of randomly putting high bits into the
-address which ought to cause it to miss the APIC and scribble over
-memory.
+I guess the real question is where could we put this flag? My gut says
+we should expand the MO_ALIGN bits in MemOp to express the precedence or
+not of the alignment check in relation to permissions.
 
-The 15-bit extension supports I/O APIC and HPET interrupts too.
+> +
+> +static void mmu_check_alignment(CPUState *cpu, vaddr addr,
+> +                       uintptr_t ra, MMUAccessType type, MMULookupLocals=
+ *l)
+> +{
+> +    unsigned a_bits;
+> +
+> +    /* Handle CPU specific unaligned behaviour */
+> +    a_bits =3D get_alignment_bits(l->memop);
+> +    if (addr & ((1 << a_bits) - 1)) {
+> +        cpu_unaligned_access(cpu, addr, type, l->mmu_idx, ra);
+> +    }
+> +}
+> +
+>  /**
+>   * mmu_lookup: translate page(s)
+>   * @cpu: generic cpu state
+> @@ -1699,7 +1719,6 @@ static void mmu_watch_or_dirty(CPUState *cpu, MMULo=
+okupPageData *data,
+>  static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+>                         uintptr_t ra, MMUAccessType type, MMULookupLocals=
+ *l)
+>  {
+> -    unsigned a_bits;
+>      bool crosspage;
+>      int flags;
+>=20=20
+> @@ -1708,10 +1727,8 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, =
+MemOpIdx oi,
+>=20=20
+>      tcg_debug_assert(l->mmu_idx < NB_MMU_MODES);
+>=20=20
+> -    /* Handle CPU specific unaligned behaviour */
+> -    a_bits =3D get_alignment_bits(l->memop);
+> -    if (addr & ((1 << a_bits) - 1)) {
+> -        cpu_unaligned_access(cpu, addr, type, l->mmu_idx, ra);
+> +    if (!CPU_ALIGNMENT_CHECK_AFTER_MEMCHECK) {
 
-But I'd like to at least understand the current behaviour and whether
-there's anything we can do to work around it.
+Then this would be something like:
 
-> PS:
-> Given it's AMD cpu, I doubt very much that using intel_iommu would be
-> accepted by Microsoft as valid complaint though.
+  if (!(memop & MO_ALIGN_PP)) or something
 
-Well, that argument only makes a little bit more sense than refusing to
-support an Intel NIC with an AMD CPU. The IOMMU just isn't that tied to
-the CPU ID.
+> +        mmu_check_alignment(cpu, addr, ra, type, l);
+>      }
+>=20=20
+>      l->page[0].addr =3D addr;
+> @@ -1760,6 +1777,10 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, =
+MemOpIdx oi,
+>          tcg_debug_assert((flags & TLB_BSWAP) =3D=3D 0);
+>      }
+>=20=20
+> +    if (CPU_ALIGNMENT_CHECK_AFTER_MEMCHECK) {
+> +        mmu_check_alignment(cpu, addr, ra, type, l);
+> +    }
+> +
+>      /*
+>       * This alignment check differs from the one above, in that this is
+>       * based on the atomicity of the operation. The intended use case is
 
-But hey, it's Microsoft. However egregious their deviations from both
-standards and from common sense, they usually like to claim it's
-"Working as Designed".
-
-But to actually *initialise* the Intel IOMMU and put it into remapping
-mode, and then to send MSIs formatted for an AMD IOMMU which wasn't
-actually present in the system, would be a new low even for Microsoft.
-
-At *best* they could make a tenuous argument for not supporting the
-Intel NIC (sorry, I mean the Intel IOMMU) at *all* when running on an
-AMD CPU.
-
---=-5CNka/+RITjRYv3PZ4Kr
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
-ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
-EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
-FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
-aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
-EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
-VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
-ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
-QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
-rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
-ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
-U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
-DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
-BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
-dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
-BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
-QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
-CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
-xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
-IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
-kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
-eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
-KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
-1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
-OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
-x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
-5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
-DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
-VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
-UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
-MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
-ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
-oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
-SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
-xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
-RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
-bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
-NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
-KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
-5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
-C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
-gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
-VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
-by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
-b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
-BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
-QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
-c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
-AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
-qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
-v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
-Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
-tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
-Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
-YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
-ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
-IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
-ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
-GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
-h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
-9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
-P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
-2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
-BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
-7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
-lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
-lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
-AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
-Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
-FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
-BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
-cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
-aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
-LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
-BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
-cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
-Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
-lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
-WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
-hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
-IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
-dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
-NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
-xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
-DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQxMDAyMTUzMDQxWjAvBgkqhkiG9w0BCQQxIgQgO9URuR1K
-FwKSCilAyOVxkJ8Ce3jguwCQLRDyAW7nkUwwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
-A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
-dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
-DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
-MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
-Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
-lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgBTa6cGzyYoEng3iUX6G6abA3smiqDeNF0Q
-e+1eG/If4UKNJCJSwrdScmKNuyJoi5sRAsfjZyqLgmFIR8kM3t8Q0Yy6HFeHvZhJe0NmzkzJ/rpR
-haD+4Cmlz9vgH1RqBB1TnkLbUrzCRyKQ6UU0A1yaVTS/xA5SpEwtq4w5vtCW115f7reyYWvRIII+
-k7FBU93qfluQl3E9rOeL2qma5dERpnSlI+9I89GzR2GWX5YHzKIVMByddzu4kBbFT/LqvF2N6eBD
-/wjaU7bkGYFQ9q59X5hiAQagvfbcTHzNjy7KHAE3WlXXxrKw3RxZPSxqjGhEx3dtXvBg8odB6EmD
-O1SKwqF4PecvqMqB/XRdSzKkOemlZWrPV4Z7r0GMsynzOW1DtYzg6m5HuvuqIWEgBnig5YF7yP04
-YQOdUMJKIEHPuAPGjNBTo00cgXNc5AWeiaz431MGujkGPj8YG6Wnm7ZAJgPNRqkJYQTlQNogqu+8
-wfEQ66rmR6i47NTLiPlMDEYe0x8qmauMTioEREc2y/pvq1kISfndUM1oxSeellKLEOvDwB7MyRp4
-hqlw3xumz4MX3VBm5FlcBpYHLK/dc6ydelr7dCGsnxrwYxYsEn0v7gG5X24Yh+sxJcUbB1ToJdb0
-jjs30pFTKqwGFA/zmhm29Jwps+LkqctIs4VthpwkqwAAAAAAAA==
-
-
---=-5CNka/+RITjRYv3PZ4Kr--
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
