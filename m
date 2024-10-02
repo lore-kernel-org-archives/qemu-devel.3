@@ -4,44 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC991CF31AC
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 09:12:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 639F6CF31A9
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 09:36:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svvON-00062C-0F; Wed, 02 Oct 2024 05:11:31 -0400
+	id 1svvlS-0008Rg-7X; Wed, 02 Oct 2024 05:35:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1svvOK-00061w-5F
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 05:11:28 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1svvlR-0008RO-4i; Wed, 02 Oct 2024 05:35:21 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1svvOI-0000uH-0m
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 05:11:27 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 208D5946A8;
- Wed,  2 Oct 2024 12:10:43 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5ACF414ABE1;
- Wed,  2 Oct 2024 12:11:21 +0300 (MSK)
-Received: (nullmailer pid 995481 invoked by uid 1000);
- Wed, 02 Oct 2024 09:11:21 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH] linux-user/elfload.c: keep GNU0_MAGIC in host byte order
-Date: Wed,  2 Oct 2024 12:11:19 +0300
-Message-Id: <20241002091119.995467-1-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.5
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1svvlO-0003p7-N7; Wed, 02 Oct 2024 05:35:20 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c08:f69e:0:640:3ef4:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id CEBF060BA3;
+ Wed,  2 Oct 2024 12:35:13 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:8026::1:2f] (unknown
+ [2a02:6b8:b081:8026::1:2f])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id CZXJBm1IfW20-2eoSE32Q; Wed, 02 Oct 2024 12:35:13 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1727861713;
+ bh=EuovOURPUIwAVRZ6O/RnSyDVs85IEIFKQSmyBss3cGA=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=TQSdqrypOQQ3lO+S3liHSCyeSB9cBc/GwPcm7nazqaF/l1ikY5F80j7+EyLxV3XLG
+ JkVrwe+pqY3ty1QpcbRXf8LJ7faPLDuY0sd44VU/Es8b48W66lQ8l2wknvrcItoI+4
+ eUa/ch5ejKs7fEB0H9ZWRpydpb58NI0/mjaOnM4w=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <357a5372-4a53-4414-9d1b-a1d7230942f8@yandex-team.ru>
+Date: Wed, 2 Oct 2024 12:35:12 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/5] block: allow commit to unmap zero blocks
+To: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>, qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>
+References: <20240901142405.3183874-1-libvirt-e6954efa@volkihar.be>
+ <20240901142405.3183874-5-libvirt-e6954efa@volkihar.be>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20240901142405.3183874-5-libvirt-e6954efa@volkihar.be>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Yandex-Filter: 1
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -59,38 +78,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Other places of this file operate in host byte order.  Only
-this constant is defined as little-endian.  This does not
-work, for example, on s390x host when running an arm64 binary:
+On 01.09.24 17:24, Vincent Vanlaer wrote:
+> Non-active block commits do not discard blocks only containing zeros,
+> causing images to lose sparseness after the commit. This commit fixes
+> that by writing zero blocks using blk_co_pwrite_zeroes rather than
+> writing them out as any other arbitrary data.
+> 
+> Signed-off-by: Vincent Vanlaer<libvirt-e6954efa@volkihar.be>
 
- qemu-arm64: /usr/bin/busybox: Invalid note in PT_GNU_PROPERTY
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-This change is tested on all combinations of host/guest for
-which debian provides release architectures, namely:
-
-  amd64 arm64 armel armhf i386 mips64el ppc64el riscv64 s390x
-
-Fixes: v5.1.0-2580-g83f990eb5adb "linux-user/elfload: Parse NT_GNU_PROPERTY_TYPE_0 notes"
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2596
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- linux-user/elfload.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 0678c9d506..1c54c556fc 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -3028,7 +3028,7 @@ void probe_guest_base(const char *image_name, abi_ulong guest_loaddr,
- 
- enum {
-     /* The string "GNU\0" as a magic number. */
--    GNU0_MAGIC = const_le32('G' | 'N' << 8 | 'U' << 16),
-+    GNU0_MAGIC = 'G' | 'N' << 8 | 'U' << 16,
-     NOTE_DATA_SZ = 1 * KiB,
-     NOTE_NAME_SZ = 4,
-     ELF_GNU_PROPERTY_ALIGN = ELF_CLASS == ELFCLASS32 ? 4 : 8,
 -- 
-2.39.5
+Best regards,
+Vladimir
 
 
