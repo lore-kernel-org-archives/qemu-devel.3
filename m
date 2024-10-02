@@ -4,67 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FAACF6D28
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 15:06:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B63D8CF6D2D
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 15:11:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sw0vQ-0008Vl-20; Wed, 02 Oct 2024 11:06:00 -0400
+	id 1sw10O-00027x-CO; Wed, 02 Oct 2024 11:11:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1sw0vO-0008VM-DD
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:05:58 -0400
-Received: from smtpx.feld.cvut.cz ([147.32.210.153] helo=smtpx.fel.cvut.cz)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1sw0vK-0003GA-HI
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:05:58 -0400
-Received: from localhost (unknown [192.168.200.27])
- by smtpx.fel.cvut.cz (Postfix) with ESMTP id 13E453A408;
- Wed,  2 Oct 2024 17:05:49 +0200 (CEST)
-X-Virus-Scanned: IMAP STYX AMAVIS
-Authentication-Results: cerokez-250.feld.cvut.cz (amavis);
- dkim=pass (2048-bit key) header.d=fel.cvut.cz
-Received: from smtpx.fel.cvut.cz ([192.168.200.2])
- by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
- with ESMTP id HLa_EXDG2ejY; Wed,  2 Oct 2024 17:05:46 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
- s=felmail; t=1727881546;
- bh=+t4Ct48h3uXjz7yaHBzHssJlhzgCNmriDar/m7TGElM=;
- h=From:To:Subject:Date:From;
- b=b2tfi1nD8LODmqCx5GNGHH6DZ4jEx4cngtkbX+9kwjSnMBu2Bv0JwEfb03GFvvq4r
- tt/wMrgS20AmXaG9X58m50gd6fmpEpMP4Xo44NtdKkI+p2H9bHYvfyUhz7bZyGkH2y
- //fdnZpsbwrk62uvSUSjW7fjueGpNO6a7gC+WzsVRIkuWCJ8Z+rkHjfUzF4Cy5gsqW
- JnI43kYMrhQA/wfWdaq3d0eyN3H2EnloObpLvL5vFQxJVNjY1EnmBRoVNG25l1YeGh
- qAUH9dG8X45E51++7rqNXmukHSvwJXcZM+8hNemR0DZNkU9ZrBANEhEF+26XQtBcnu
- WzkhBNCHTRmsw==
-Received: from [147.32.86.119] (unknown [147.32.86.119])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: pisa)
- by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id 8B4183A2D4;
- Wed,  2 Oct 2024 17:05:46 +0200 (CEST)
-From: Pavel Pisa <pisa@fel.cvut.cz>
-To: Nikita Ostrenkov <n.ostrenkov@gmail.com>, qemu-devel@nongnu.org,
- Matyas Bobek <bobekmat@fel.cvut.cz>
-Subject: Plea for advice with PCIe on QEMU for iMX6 and plan to add FlexCAN
- controller support
-Date: Wed, 2 Oct 2024 17:06:01 +0200
-User-Agent: KMail/1.9.10
+ (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
+ id 1sw10K-00027b-V3
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:11:05 -0400
+Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
+ id 1sw10F-0003w7-I6
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:11:01 -0400
+Received: by mail-ot1-x330.google.com with SMTP id
+ 46e09a7af769-712422564aaso449236a34.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 08:10:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1727881858; x=1728486658; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KfExAwxfr24Vzg/kY3Ftxp0xpjfKo2CH9Xir9C5j1ZU=;
+ b=gj5xiccAKrQh4g+K2dn7NDRiEQGYbtCtbs4b+JqTzqO6QcxplvFkgvMAPBG6CQVnp1
+ CiaTTWUAi3G9eN8M2IFp5oOTAQNhmACquHW7YMaTqgk4ZNZHWudocJOzA3MUeY3YxsUt
+ 3MZdGpqlZx+/fvUoqtp2xQCscO2iheYPqAhwqQujH3oY5Cga5CY+O1kabvHYRVjoXj/f
+ aYnO5atANFZGtm09xuoG1ASgO+bEKdaNmHfu8gqcJ43Cy/zYwLV3dYAdxbCx1I48Dr0E
+ EEh5mEtVv4yunNg8YAxzGdMJAz4PBf6nHRgskzU9X+Ir6lAaPHRGfDT4UUXClzK1AFqU
+ bC2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727881858; x=1728486658;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KfExAwxfr24Vzg/kY3Ftxp0xpjfKo2CH9Xir9C5j1ZU=;
+ b=oBh2wdZRvT5Epb4ece9UFqELagYzbaorAVbhQ5a6xUi6vaFwYsmU5YdScHSUs4nCPj
+ ZsIUhasw7yCgD961euAG2+CC82Qht68nCzs1VJJJRljkvo+XecrwlS5CM6tQZTqo7/vV
+ 4DZhY3YmVFPCkH9SGpNv3u+IABtqox9Ay7OyJwDVxxyXIeAUVwDPesxGsURixfdTo971
+ Jmslimg+s3CPQFpwEiRVvMwRY+IngkStwGOc0T+fqHFd5TUSNin+Q3/hHd0U27MdhFO7
+ iBBEnlUR2bRSVr2Csk2x+4uoucfStTpR41PKRxkM20sIHIs59W6hTpHUrm7CvKtx3IIA
+ IM4g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUagNLTeYoEbnCy4a3qNs/XkEASyXmZP08VS2xs+uFtUEVVyqd3K/0PKfZr7goI4oEAkMblg/4nPZ6p@nongnu.org
+X-Gm-Message-State: AOJu0YwJmrCFpcghT5VD6xVQLQLThm3KqrSl+MFMNd1fx5vq9cdsRLBt
+ N56tBCjUE4ljNIwRnPvi6+UCNKQojCMCzzWZSKB4qmVqYx3wHpdxuNB3rwx8N1eCMITgsRpueUh
+ SsSCZx9k3mWZE5bdYkaGtPC0JDBL91/fl
+X-Google-Smtp-Source: AGHT+IHe6G3oFKHsUZv44hPSyJN6ZfYg3dYS3k4EMyvKyOh5Xa+ikub9owuMMtW5p/Sh7BR/5+HhOcF/jUQl+B3Jls4=
+X-Received: by 2002:a05:6870:548c:b0:277:ca34:27e9 with SMTP id
+ 586e51a60fabf-287875fe0ffmr1916078fac.6.1727881857756; Wed, 02 Oct 2024
+ 08:10:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-Message-Id: <202410021706.01967.pisa@fel.cvut.cz>
-Received-SPF: pass client-ip=147.32.210.153; envelope-from=pisa@fel.cvut.cz;
- helo=smtpx.fel.cvut.cz
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240830223601.2796327-1-goldstein.w.n@gmail.com>
+ <6109eea4230bb3aa7caf6deff526878231aa2136.camel@linux.ibm.com>
+ <1251d17b-71f4-4630-b71f-990860bd9366@vivier.eu>
+ <4d6c668781d12b8cd0c1fd18fbc4ef2abcf74806.camel@linux.ibm.com>
+ <CAFUsyf++kWARZRJ0MriagYaoyJoJyKaHM09cQULiFECJ=bc4Uw@mail.gmail.com>
+ <693ff38ebf2982d47cc419a406703e9e91dc79fd.camel@linux.ibm.com>
+In-Reply-To: <693ff38ebf2982d47cc419a406703e9e91dc79fd.camel@linux.ibm.com>
+From: Noah Goldstein <goldstein.w.n@gmail.com>
+Date: Wed, 2 Oct 2024 10:10:46 -0500
+Message-ID: <CAFUsyfKddfkryMX3Jn+2uDrteHDDgdzrQ3A4k5oXNpHq2FG_Gw@mail.gmail.com>
+Subject: Re: [PATCH v1] linux-user: Add option to run `execve`d programs
+ through QEMU
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
+ envelope-from=goldstein.w.n@gmail.com; helo=mail-ot1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,64 +97,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dear Nikita and other,
+On Wed, Oct 2, 2024 at 9:53=E2=80=AFAM Ilya Leoshkevich <iii@linux.ibm.com>=
+ wrote:
+>
+> On Wed, 2024-10-02 at 09:44 -0500, Noah Goldstein wrote:
+> > On Wed, Oct 2, 2024 at 9:38=E2=80=AFAM Ilya Leoshkevich <iii@linux.ibm.=
+com>
+> > wrote:
+> > >
+> > > On Wed, 2024-10-02 at 16:08 +0200, Laurent Vivier wrote:
+> > > > Le 02/10/2024 =C3=A0 10:08, Ilya Leoshkevich a =C3=A9crit :
+> > > > > On Fri, 2024-08-30 at 15:36 -0700, Noah Goldstein wrote:
+> > > > > > The new option '-qemu-children' makes it so that on `execve`
+> > > > > > the
+> > > > > > child
+> > > > > > process will be launch by the same `qemu` executable that is
+> > > > > > currently
+> > > > > > running along with its current commandline arguments.
+> > > > > >
+> > > > > > The motivation for the change is to make it so that plugins
+> > > > > > running
+> > > > > > through `qemu` can continue to run on children.  Why not just
+> > > > > > `binfmt`?: Plugins can be desirable regardless of
+> > > > > > system/architecture
+> > > > > > emulation, and can sometimes be useful for elf files that can
+> > > > > > run
+> > > > > > natively. Enabling `binfmt` for all natively runnable elf
+> > > > > > files
+> > > > > > may
+> > > > > > not be desirable.
+> > > > >
+> > > > > Another reason to have this is that one may not have root
+> > > > > permissions
+> > > > > to configure binfmt-misc.
+> > > >
+> > > > A little note on that: binfmt_misc is now part of the user
+> > > > namespace
+> > > > (since linux v6.7), so you can
+> > > > configure binfmt_misc as a non root user in a given namepace.
+> > > >
+> > > > There is helper to use it with unshare from util-linux, you can
+> > > > do
+> > > > things like that:
+> > > >
+> > > >    With 'F' flag, load the interpreter from the initial
+> > > > namespace:
+> > > >
+> > > >      $ /bin/qemu-m68k-static --version
+> > > >      qemu-m68k version 8.2.2 (qemu-8.2.2-1.fc40)
+> > > >      Copyright (c) 2003-2023 Fabrice Bellard and the QEMU Project
+> > > > developers
+> > > >      $ unshare --map-root-user --fork --pid
+> > > > --load-interp=3D":qemu-
+> > > > m68k:M::\\x7fELF\\x01\\x02\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x0
+> > > > 0\\x
+> > > > 00\\x00\\x00\\x02\\x00\\x04:\\xff\\xff\\xff\\xff\\xff\\xff\\xfe\\
+> > > > x00\
+> > > > \xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xfe\\xff\\xff:/bin/
+> > > > qemu
+> > > > -m68k-static:OCF"
+> > > > --root=3Dchroot/m68k/sid
+> > > >      # QEMU_VERSION=3D ls
+> > > >      qemu-m68k version 8.2.2 (qemu-8.2.2-1.fc40)
+> > > >      Copyright (c) 2003-2023 Fabrice Bellard and the QEMU Project
+> > > > developers
+> > > >      # /qemu-m68k  --version
+> > > >      qemu-m68k version 8.0.50 (v8.0.0-340-gb1cff5e2da95)
+> > > >      Copyright (c) 2003-2022 Fabrice Bellard and the QEMU Project
+> > > > developers
+> > > >
+> > > >    Without 'F' flag, from inside the namespace:
+> > > >
+> > > >      $ unshare --map-root-user --fork --pid
+> > > > --load-interp=3D":qemu-
+> > > > m68k:M::\\x7fELF\\x01\\x02\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x0
+> > > > 0\\x
+> > > > 00\\x00\\x00\\x02\\x00\\x04:\\xff\\xff\\xff\\xff\\xff\\xff\\xfe\\
+> > > > x00\
+> > > > \xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xfe\\xff\\xff:/qemu
+> > > > -
+> > > > m68k:OC"
+> > > > --root=3Dchroot/m68k/sid
+> > > >      # QEMU_VERSION=3D ls
+> > > >      qemu-m68k version 8.0.50 (v8.0.0-340-gb1cff5e2da95)
+> > > >      Copyright (c) 2003-2022 Fabrice Bellard and the QEMU Project
+> > > > developers
+> > > >      # /qemu-m68k  --version
+> > > >      qemu-m68k version 8.0.50 (v8.0.0-340-gb1cff5e2da95)
+> > > >      Copyright (c) 2003-2022 Fabrice Bellard and the QEMU Project
+> > > > developers
+> > > >
+> > > > Thanks,
+> > > > Laurent
+> > > >
+> > >
+> > > Thanks for posting this, I wasn't aware of this feature and it
+> > > looks
+> > > really useful.
+> > >
+> > > IIUC it also resolves the main problem this patch is dealing with:
+> >
+> > I might misunderstand, but I don't think it does in the sense
+> > that it still might not be desirable to use the same qemu flags
+> > for the entire class of executables.
+> >
+> > I.e the original motivating case was wanting to attach
+> > some plugins to a process and its children and AFAICT
+> > binfmt still doesn't give that level of control.
+>
+> I think if you start a process in a user namespace, which has a
+> binfmt_misc handler for a certain class of binaries, then this handler
+> will affect only this process and its children, and not the rest of the
+> system.
 
-my student Matyas Bobek has chosen to work
-on QEMU CAN support in a frame of his study
-final project.
+It won't also affect other binaries in the user namespace?
 
-We have identified iMX6 FlexCAN as the next interesting
-CAN controller for emulation. One of our industrial partners
-is using iMX6 based system with CAN and iMX6 SabreLite
-is supported by QEMU. iMX6 is often used in industry
-still and FlexCAN has use even for iMX8 emulation
-if it is added into QEMU in the future.
-
-In the preparatory work, we want to setup
-shared directory between host and guest
-kernel using 9P FS on PCI virtio.
-
-The development environment is based on current
-mainline QEMU and mainline Linux kernel sources.
-
-We use standard QEMU options
-
-  -virtfs local,path=shareddir,security_model=none,mount_tag=shareddir
-
-and the 1af4:1009 is seen by monitor command "info pci"
-but on the guest kernel side only "16c3:abcd" DWC_usb3 / PCIe bridge
-is seen but none from the mapped devices, virtio (1af4:1009),
-CTU CAN FD, Kvaser CAN.
-
-The imx6q-sabrelite DTS is used with standard device-tree
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm/boot/dts/nxp/imx/imx6q-sabrelite.dts
-
-We hope that all required drivers are enabled
-in the kernel. But it is possible that something
-has been overlooked.
-
-Do you have some hint or some kernel
-and QEMU working example for iMX6 PCIe
-device mapping?
-
-Thanks in advance.
-
-Best wishes,
-
-                Pavel
---
-                Pavel Pisa
-    phone:      +420 603531357
-    e-mail:     pisa@cmp.felk.cvut.cz
-    Department of Control Engineering FEE CVUT
-    Karlovo namesti 13, 121 35, Prague 2
-    university: http://control.fel.cvut.cz/
-    personal:   http://cmp.felk.cvut.cz/~pisa
-    social:     https://social.kernel.org/ppisa
-    projects:   https://www.openhub.net/accounts/ppisa
-    CAN related:http://canbus.pages.fel.cvut.cz/
-    RISC-V education: https://comparch.edu.cvut.cz/
-    Open Technologies Research Education and Exchange Services
-    https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
+>
+> > >   Enabling `binfmt` for all natively runnable elf files may
+> > >   not be desirable.
+>
 
