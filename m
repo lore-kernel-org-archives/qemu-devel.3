@@ -4,58 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F4AECF31B4
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 12:53:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B425CF31B4
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 12:54:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svyqY-0006e2-41; Wed, 02 Oct 2024 08:52:50 -0400
+	id 1svyqU-0006cU-2u; Wed, 02 Oct 2024 08:52:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svyqS-0006cK-3r
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 08:52:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svyqM-0006bD-8X
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 08:52:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svyqN-0003bV-Vp
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 08:52:42 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svyqJ-0003Zt-D4
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 08:52:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727873559;
+ s=mimecast20190719; t=1727873552;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Xmq4GC+9kCDc1p7+kptIsRu1ieSdCxQFnIYTqYQA+ro=;
- b=eWml9G6dEzxqbvMkzYHZaZzIvqvLdcQT9YUp8/Fl+S15vZO7VAP/6nr3Dv/PoQBUFL2e0z
- HdX3W+WWZFhCVJQBIaK9wxpabddt/M8hDyd01cD5WlH34vcULRn1DhCW8GJ6qNmc0VHEuj
- hwfAkbf6OoDIY+BrHiPAUMMcRbFA5rA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=HThwxNwZNRfgKJDbCFqjVZF+wGzGqXhm4mwO6948BdU=;
+ b=XpDnoooaodTsa1T43vjIEnaz5uXg4bEBUXW4MjsPqJ/zm3RZ7avuJVx8Mzw4Tw5aAGkrss
+ M3b0DayGvZVcZ/dI17sbeNgIzUkCmDl6YXgJE2XtTwU2UQ2/lWQkFwOHct3BpkFt7knejD
+ CHO/apxAZu9X9YL6PV6rBKumUk7UBDg=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-280-7YiDJIWdOaWJuc8s_dKQLw-1; Wed,
- 02 Oct 2024 08:52:38 -0400
-X-MC-Unique: 7YiDJIWdOaWJuc8s_dKQLw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-159-DQzsjjdyOXuOnzkUYq8yBg-1; Wed,
+ 02 Oct 2024 08:52:30 -0400
+X-MC-Unique: DQzsjjdyOXuOnzkUYq8yBg-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3F08C1955EB5; Wed,  2 Oct 2024 12:52:37 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BF0B91955D59; Wed,  2 Oct 2024 12:52:29 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.239])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E71A019560A3; Wed,  2 Oct 2024 12:52:35 +0000 (UTC)
+ id 5CDAA1956056; Wed,  2 Oct 2024 12:52:28 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 4/5] qemu-timer: Remove unused timer functions
-Date: Wed,  2 Oct 2024 14:52:25 +0200
-Message-ID: <20241002125226.282193-5-thuth@redhat.com>
-In-Reply-To: <20241002125226.282193-1-thuth@redhat.com>
-References: <20241002125226.282193-1-thuth@redhat.com>
+Subject: [PULL 0/5] Fix mips64el CI job + some other misc patches
+Date: Wed,  2 Oct 2024 14:52:21 +0200
+Message-ID: <20241002125226.282193-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -80,84 +78,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
+The following changes since commit 718780d20470c66a3a36d036b29148d5809dc855:
 
-qemu_clock_get_main_loop_timerlist and timerlist_get_clock have been
-unused since they were originally added in
-  ff83c66ecc ("aio / timers: Split QEMUClock into QEMUClock and QEMUTimerList")
+  Merge tag 'pull-nvme-20241001' of https://gitlab.com/birkelund/qemu into staging (2024-10-01 11:34:07 +0100)
 
-Remove them.
+are available in the Git repository at:
 
-Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <20240919144124.309646-1-dave@treblig.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- include/qemu/timer.h | 21 ---------------------
- util/qemu-timer.c    | 10 ----------
- 2 files changed, 31 deletions(-)
+  https://gitlab.com/thuth/qemu.git tags/pull-request-2024-10-02
 
-diff --git a/include/qemu/timer.h b/include/qemu/timer.h
-index fa56ec9481..cc167bd825 100644
---- a/include/qemu/timer.h
-+++ b/include/qemu/timer.h
-@@ -190,16 +190,6 @@ bool qemu_clock_use_for_deadline(QEMUClockType type);
-  */
- int64_t qemu_clock_deadline_ns_all(QEMUClockType type, int attr_mask);
- 
--/**
-- * qemu_clock_get_main_loop_timerlist:
-- * @type: the clock type
-- *
-- * Return the default timer list associated with a clock.
-- *
-- * Returns: the default timer list
-- */
--QEMUTimerList *qemu_clock_get_main_loop_timerlist(QEMUClockType type);
--
- /**
-  * qemu_clock_nofify:
-  * @type: the clock type
-@@ -326,17 +316,6 @@ bool timerlist_expired(QEMUTimerList *timer_list);
-  */
- int64_t timerlist_deadline_ns(QEMUTimerList *timer_list);
- 
--/**
-- * timerlist_get_clock:
-- * @timer_list: the timer list to operate on
-- *
-- * Determine the clock type associated with a timer list.
-- *
-- * Returns: the clock type associated with the
-- * timer list.
-- */
--QEMUClockType timerlist_get_clock(QEMUTimerList *timer_list);
--
- /**
-  * timerlist_run_timers:
-  * @timer_list: the timer list to use
-diff --git a/util/qemu-timer.c b/util/qemu-timer.c
-index 6b1533bc2a..42b74c0444 100644
---- a/util/qemu-timer.c
-+++ b/util/qemu-timer.c
-@@ -286,16 +286,6 @@ int64_t qemu_clock_deadline_ns_all(QEMUClockType type, int attr_mask)
-     return deadline;
- }
- 
--QEMUClockType timerlist_get_clock(QEMUTimerList *timer_list)
--{
--    return timer_list->clock->type;
--}
--
--QEMUTimerList *qemu_clock_get_main_loop_timerlist(QEMUClockType type)
--{
--    return main_loop_tlg.tl[type];
--}
--
- void timerlist_notify(QEMUTimerList *timer_list)
- {
-     if (timer_list->notify_cb) {
--- 
-2.46.1
+for you to fetch changes up to e5a007001824f9cde0db58cc960d4efcf1b93f27:
+
+  tests/tcg/s390x: Test modifying an EXECUTE target (2024-10-02 13:01:26 +0200)
+
+----------------------------------------------------------------
+* Fix mips64el in the CI
+* Remove unused sh4eb target
+* Add an additional EXECUTE TCG test for s390x
+
+----------------------------------------------------------------
+Alex Bennée (1):
+      testing: bump mips64el cross to bookworm and fix package list
+
+Dr. David Alan Gilbert (1):
+      qemu-timer: Remove unused timer functions
+
+Ilya Leoshkevich (1):
+      tests/tcg/s390x: Test modifying an EXECUTE target
+
+Thomas Huth (2):
+      configs: Fix typo in the sh4-softmmu devices config file
+      Remove the unused sh4eb target
+
+ configs/devices/sh4-softmmu/default.mak            |  2 +-
+ configs/devices/sh4eb-softmmu/default.mak          |  3 --
+ configs/targets/sh4eb-softmmu.mak                  |  2 -
+ qapi/machine.json                                  |  2 +-
+ include/qemu/timer.h                               | 21 --------
+ tests/qtest/endianness-test.c                      |  1 -
+ tests/qtest/machine-none-test.c                    |  1 -
+ tests/tcg/s390x/ex-smc.c                           | 57 ++++++++++++++++++++++
+ util/qemu-timer.c                                  | 10 ----
+ .gitlab-ci.d/buildtest.yml                         |  2 +-
+ .gitlab-ci.d/cirrus.yml                            |  2 +-
+ .gitlab-ci.d/crossbuilds.yml                       |  2 +-
+ .travis.yml                                        |  2 +-
+ .../dockerfiles/debian-mips64el-cross.docker       | 18 ++-----
+ tests/lcitool/mappings.yml                         | 26 ++++++++++
+ tests/lcitool/refresh                              |  2 +-
+ tests/qemu-iotests/testenv.py                      |  1 -
+ tests/qtest/meson.build                            |  1 -
+ tests/tcg/s390x/Makefile.target                    |  1 +
+ 19 files changed, 95 insertions(+), 61 deletions(-)
+ delete mode 100644 configs/devices/sh4eb-softmmu/default.mak
+ delete mode 100644 configs/targets/sh4eb-softmmu.mak
+ create mode 100644 tests/tcg/s390x/ex-smc.c
 
 
