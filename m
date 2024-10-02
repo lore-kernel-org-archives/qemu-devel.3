@@ -4,67 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0496CF31A1
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 08:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C058DCF31A1
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 08:39:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svurK-0001GY-F0; Wed, 02 Oct 2024 04:37:22 -0400
+	id 1svusD-00038e-UP; Wed, 02 Oct 2024 04:38:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1svurJ-0001GC-Ak
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 04:37:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1svusC-00031R-0q
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 04:38:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1svurF-0005fy-Qo
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 04:37:21 -0400
+ id 1svusA-0005m7-Au
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 04:38:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727858237;
+ s=mimecast20190719; t=1727858293;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=foZ7CWBn2Ic+QnOUkHIFPNTfKtf84lHEG4IMdgmc9Bo=;
- b=N3kaCO6cEqRgFz+32/0NS1GnpWTmZIwKqdh2byxH8oiKPajn69o/ejGGrpdm+MXEBm2Q1O
- y7bswJyFcsgk23LxnbQEiiBvWJReDSUzljApFtuhnnDwTKePkiMqMEr+5jJfchwH3+BZGC
- iA/oDJ/OS0WYpnkRjHUvuX9H9+vA+go=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=K8zuyWRlcmgvCrvJZZ7j0OY3Iv09WHadPXfLiGdv5Rw=;
+ b=Ie81L7E9UhXKdKLHJYL9WSBzEUw78MoJdwWZLAGXviEDdl2JmZXOW7rK59AGRCvSDvQs07
+ +qWPUqrUJBpe0dV3nRRL7JoZ2ltiGxDiZQjDhaNl9SfAwscJUrkyKrTRR78LVINnlcb+85
+ ECHM3BzDkDEwKdMu6C1xodRFFVOsHik=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-98YytAXvMZmHTuRmqAt5KA-1; Wed,
- 02 Oct 2024 04:37:15 -0400
-X-MC-Unique: 98YytAXvMZmHTuRmqAt5KA-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-153-CzVmtc_aOj2H0QqGcDcECA-1; Wed,
+ 02 Oct 2024 04:38:12 -0400
+X-MC-Unique: CzVmtc_aOj2H0QqGcDcECA-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3C10E1954228; Wed,  2 Oct 2024 08:37:14 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B62A1956088; Wed,  2 Oct 2024 08:38:11 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.36])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D91541955E8F; Wed,  2 Oct 2024 08:37:12 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 42E4B3000197; Wed,  2 Oct 2024 08:38:09 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- John Snow <jsnow@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org (open list:Block Jobs)
-Subject: [PULL 05/22] block/mirror: fix -Werror=maybe-uninitialized
- false-positive
-Date: Wed,  2 Oct 2024 12:36:28 +0400
-Message-ID: <20241002083646.2893078-6-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 17/22] tests: fix -Werror=maybe-uninitialized false-positive
+Date: Wed,  2 Oct 2024 12:36:40 +0400
+Message-ID: <20241002083646.2893078-18-marcandre.lureau@redhat.com>
 In-Reply-To: <20241002083646.2893078-1-marcandre.lureau@redhat.com>
 References: <20241002083646.2893078-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -92,27 +87,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../block/mirror.c:1066:22: error: ‘iostatus’ may be used uninitialized [-Werror=maybe-uninitialized]
+../tests/unit/test-block-iothread.c:773:17: error: ‘job’ may be used uninitialized [-Werror=maybe-uninitialized]
+/usr/include/glib-2.0/glib/gtestutils.h:73:53: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- block/mirror.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/unit/test-bdrv-drain.c     | 2 +-
+ tests/unit/test-block-iothread.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/mirror.c b/block/mirror.c
-index 61f0a717b7..54e3a7ea9d 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -931,7 +931,7 @@ static int coroutine_fn mirror_run(Job *job, Error **errp)
-     MirrorBDSOpaque *mirror_top_opaque = s->mirror_top_bs->opaque;
-     BlockDriverState *target_bs = blk_bs(s->target);
-     bool need_drain = true;
--    BlockDeviceIoStatus iostatus;
-+    BlockDeviceIoStatus iostatus = BLOCK_DEVICE_IO_STATUS__MAX;
-     int64_t length;
-     int64_t target_length;
-     BlockDriverInfo bdi;
+diff --git a/tests/unit/test-bdrv-drain.c b/tests/unit/test-bdrv-drain.c
+index 666880472b..c112d5b189 100644
+--- a/tests/unit/test-bdrv-drain.c
++++ b/tests/unit/test-bdrv-drain.c
+@@ -722,7 +722,7 @@ static void test_blockjob_common_drain_node(enum drain_type drain_type,
+     BlockJob *job;
+     TestBlockJob *tjob;
+     IOThread *iothread = NULL;
+-    int ret;
++    int ret = -1;
+ 
+     src = bdrv_new_open_driver(&bdrv_test, "source", BDRV_O_RDWR,
+                                &error_abort);
+diff --git a/tests/unit/test-block-iothread.c b/tests/unit/test-block-iothread.c
+index 3766d5de6b..20ed54f570 100644
+--- a/tests/unit/test-block-iothread.c
++++ b/tests/unit/test-block-iothread.c
+@@ -745,7 +745,7 @@ static void test_propagate_mirror(void)
+     AioContext *main_ctx = qemu_get_aio_context();
+     BlockDriverState *src, *target, *filter;
+     BlockBackend *blk;
+-    Job *job;
++    Job *job = NULL;
+     Error *local_err = NULL;
+ 
+     /* Create src and target*/
 -- 
 2.45.2.827.g557ae147e6
 
