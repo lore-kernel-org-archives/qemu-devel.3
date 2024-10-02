@@ -4,65 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E95CF31AE
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:03:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B5BCF31A9
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:07:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svwC9-0004VY-Lp; Wed, 02 Oct 2024 06:02:57 -0400
+	id 1svwGR-0005rK-VZ; Wed, 02 Oct 2024 06:07:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1svwC6-0004Uk-K7; Wed, 02 Oct 2024 06:02:55 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
+ id 1svwGP-0005qw-I4
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:07:22 -0400
+Received: from apollo.dupie.be ([51.159.20.238])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1svwC3-0006Lc-Jz; Wed, 02 Oct 2024 06:02:53 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:2e8b:0:640:9795:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id BFE4F60AA8;
- Wed,  2 Oct 2024 13:02:46 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:8026::1:2f] (unknown
- [2a02:6b8:b081:8026::1:2f])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id i2YN801IXGk0-5Iax8LYE; Wed, 02 Oct 2024 13:02:45 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1727863365;
- bh=/4sF+W7qjwLICHbD2V0te1FTlaxtlEqSN1kEajrJfAc=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=gBw6WEO/kGk2ps6Weae/it5NTl4mlZJLRPrDQ+75hjkGkoJLgKAMDY/Xl3HCfc5V5
- NIALb6cSEKi/c1yjGm5kNxwfpdccN93SmzY9aRZTV4g3H6E1iba3z/31wdXMZHhwiK
- GNTcH0fea6yfuIpzP5K3O5VvGKMmIbpkLjv+kL+s=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <a707bfb3-5180-433f-bf35-018575e1bd7e@yandex-team.ru>
-Date: Wed, 2 Oct 2024 13:02:44 +0300
+ (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
+ id 1svwGL-00070S-Ne
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:07:20 -0400
+Received: from localhost.localdomain (unknown
+ [IPv6:2a02:a03f:eafe:6901:38ac:f342:2515:2d3c])
+ by apollo.dupie.be (Postfix) with ESMTPSA id 9C7C91520F34;
+ Wed,  2 Oct 2024 12:07:12 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
+ t=1727863632;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=dm4tJxfXLcVI0lhD8xW7AqRaEeQvCHPh+5PHQtmZ2DQ=;
+ b=eOXj51lKZjMOCoVjhNdoS+hdBUA2UyAhBZ/w1Xtex3XsStMMI+9dGWr+j7IjZZA2XrpJjA
+ r/uEYZ6Q9bGHg+JyU+ggHgbvItygBAOPd3h+SxLOufyt+JCsk2Bkk/+N7lW03vRAjEX3Xo
+ v5kCUt08JA68V65QQCRb1KkuWzLPOKeZlhRtiKznWo1rWwUhcc9SLfI8Hp073bPSn4N5U6
+ 4mB7dCH8GbPArT02WISIvYSLf7MBGZtvWD0lbinAfcHlLZefBwnAT4MGq70ceuEb1zlfHe
+ PtikrUpGyDstlUQ0rGeYWGveEfKGso9VkRPwnrg/Czf0a11QRPWagpeVY1jPZw==
+From: Jean-Louis Dupond <jean-louis@dupond.be>
+To: qemu-devel@nongnu.org,
+	michael.roth@amd.com
+Cc: Jean-Louis Dupond <jean-louis@dupond.be>
+Subject: [PATCH] qga: skip bind mounts in fs list
+Date: Wed,  2 Oct 2024 12:06:35 +0200
+Message-ID: <20241002100634.162499-2-jean-louis@dupond.be>
+X-Mailer: git-send-email 2.46.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] block: add test non-active commit with zeroed data
-To: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>, qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>
-References: <20240901142405.3183874-1-libvirt-e6954efa@volkihar.be>
- <20240901142405.3183874-6-libvirt-e6954efa@volkihar.be>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20240901142405.3183874-6-libvirt-e6954efa@volkihar.be>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Yandex-Filter: 1
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=51.159.20.238; envelope-from=jean-louis@dupond.be;
+ helo=apollo.dupie.be
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,85 +69,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01.09.24 17:24, Vincent Vanlaer wrote:
-> Signed-off-by: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
-> ---
->   tests/qemu-iotests/315     | 95 ++++++++++++++++++++++++++++++++++++++
->   tests/qemu-iotests/315.out | 54 ++++++++++++++++++++++
+The filesystem list in build_fs_mount_list should skip bind mounts.
+This because we end up in locking situations when doing fsFreeze. Like
+mentioned in [1] and [2].
 
-Please place new tests in tests/qemu-iotests/tests, with human readable name, something like commit-zeroes or what you want.
+Next to that, the build_fs_mount_list call did a fallback via
+build_fs_mount_list_from_mtab if mountinfo did not exist.
+There it skipped bind mounts, but this is broken for newer OS.
+This as mounts does not return the path of the bind mount but the
+underlying dev/partition, so S_ISDIR will never return true in
+dev_major_minor call.
 
->   2 files changed, 149 insertions(+)
->   create mode 100755 tests/qemu-iotests/315
->   create mode 100644 tests/qemu-iotests/315.out
-> 
-> diff --git a/tests/qemu-iotests/315 b/tests/qemu-iotests/315
-> new file mode 100755
-> index 0000000000..84865f8001
-> --- /dev/null
-> +++ b/tests/qemu-iotests/315
-> @@ -0,0 +1,95 @@
-> +#!/usr/bin/env bash
-> +# group: rw quick
-> +#
-> +# Test for commit of discarded blocks
-> +#
-> +# This tests committing a live snapshot where some of the blocks that
-> +# are present in the base image are discarded in the intermediate image.
-> +# This intends to check that these blocks are also discarded in the base
-> +# image after the commit.
-> +#
-> +# Copyright (C) 2024 Vincent Vanlaer.
-> +#
-> +# This program is free software; you can redistribute it and/or modify
-> +# it under the terms of the GNU General Public License as published by
-> +# the Free Software Foundation; either version 2 of the License, or
-> +# (at your option) any later version.
-> +#
-> +# This program is distributed in the hope that it will be useful,
-> +# but WITHOUT ANY WARRANTY; without even the implied warranty of
-> +# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> +# GNU General Public License for more details.
-> +#
-> +# You should have received a copy of the GNU General Public License
-> +# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-> +#
-> +# creator
-> +owner=libvirt-e6954efa@volkihar.be
-> +
-> +seq=`basename $0`
-> +echo "QA output created by $seq"
-> +
-> +status=1	# failure is the default!
-> +
-> +_cleanup()
-> +{
-> +    _cleanup_qemu
-> +    _rm_test_img "${TEST_IMG}.base"
-> +    _rm_test_img "${TEST_IMG}.mid"
-> +    _cleanup_test_img
-> +}
-> +trap "_cleanup; exit \$status" 0 1 2 3 15
-> +
-> +# get standard environment, filters and checks
+This patch simply checks the existing devmajor:devminor tuple in the
+mounts, and if it already exists, this means we have the same devices
+mounted again, a bind mount. So skip this.
 
-Example of bash test in tests is tests/qemu-iotests/tests/qemu-img-bitmaps, so you'll need "cd .." here, before ". ./common.rc"
+Same approach is used in open-vm-tools [3].
 
-I know, this all looks not optimal, but still, human-readable names are much better than numbers.
+[1]: https://gitlab.com/qemu-project/qemu/-/issues/592
+[2]: https://gitlab.com/qemu-project/qemu/-/issues/520
+[3]: https://github.com/vmware/open-vm-tools/commit/d58847b497e212737007958c945af1df22a8ab58
 
-With that:
+Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+---
+ qga/commands-linux.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-Tested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-
-> +. ./common.rc
-> +. ./common.filter
-> +. ./common.qemu
-> +
-
-
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+index 51d5e3d927..426b040ab8 100644
+--- a/qga/commands-linux.c
++++ b/qga/commands-linux.c
+@@ -59,6 +59,22 @@ static int dev_major_minor(const char *devpath,
+     return -1;
+ }
+ 
++/*
++ * Check if we already have the devmajor:devminor in the mounts
++ * If thats the case return true.
++ */
++static bool dev_exists(FsMountList *mounts, unsigned int devmajor, unsigned int devminor)
++{
++    FsMount *mount;
++
++    QTAILQ_FOREACH(mount, mounts, next) {
++        if (mount->devmajor == devmajor && mount->devminor == devminor) {
++            return true;
++        }
++    }
++    return false;
++}
++
+ static bool build_fs_mount_list_from_mtab(FsMountList *mounts, Error **errp)
+ {
+     struct mntent *ment;
+@@ -89,6 +105,10 @@ static bool build_fs_mount_list_from_mtab(FsMountList *mounts, Error **errp)
+             /* Skip bind mounts */
+             continue;
+         }
++        if (dev_exists(mounts, devmajor, devminor)) {
++            /* Skip already existing devices (bind mounts) */
++            continue;
++        }
+ 
+         mount = g_new0(FsMount, 1);
+         mount->dirname = g_strdup(ment->mnt_dir);
+@@ -172,6 +192,11 @@ bool build_fs_mount_list(FsMountList *mounts, Error **errp)
+             }
+         }
+ 
++        if (dev_exists(mounts, devmajor, devminor)) {
++            /* Skip already existing devices (bind mounts) */
++            continue;
++        }
++
+         mount = g_new0(FsMount, 1);
+         mount->dirname = g_strdup(line + dir_s);
+         mount->devtype = g_strdup(dash + type_s);
 -- 
-Best regards,
-Vladimir
+2.46.2
 
 
