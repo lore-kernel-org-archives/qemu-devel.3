@@ -4,90 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61BAECF6D28
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 14:18:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E022FCF6D28
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 14:25:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sw0Ah-0003n6-3L; Wed, 02 Oct 2024 10:17:43 -0400
+	id 1sw0I7-00052I-HD; Wed, 02 Oct 2024 10:25:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sw0Af-0003mW-I5
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 10:17:41 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sw0Ad-0006cv-G1
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 10:17:41 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-7db54269325so5175801a12.2
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 07:17:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1727878654; x=1728483454; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gcXqn+w+YAGjzVkAJFCk0jl7Jt7o3WsYdT2yjIah04o=;
- b=V7V9e1irXwvIUC6l1X8rf0hNswOis8Ob0PM4owph4NltoJJ83j4aJ/jaGV0FZC+X1A
- 5FAzbwU1oZkvULPafjWxitlE5j8F0XiujU0m1lFZK7lSG8q662r5YDr1D0EMITerjhb4
- nLvN7Ii+F/7KdoQFIC2Clcm1qNHW0A0560BcrU8fu1djVOMke4zlB3dbmU6NGiLUr8Z7
- u+Y/dsxq7+nITbDsN28k23wUxSSHy0ttJm+h/mrAVOLjY8mUJbt7tVu8pxaWVUpPvYC9
- jvtldqH3ym+XuF/dNO+AwD3dYTlVV9Ra8Gg0x7oLhj8JtGQxaEB94vNFTmCRAv33MJBN
- oF/A==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sw0I1-00051r-R0
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 10:25:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sw0I0-0007DX-5n
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 10:25:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727879114;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7yYLFWSqoKhXSseNrFGZ+H7UKls7TXd7XUU0eMiJ64U=;
+ b=iR2b7CRk3bWAXvWLxf9bULOqOW7ntkckUWDIXT8Al5JKeq8z419+R1xAjaGFmTLsUtgDsd
+ fyfsCJ/H+p2VOr6u73Hp5jfHaiRquVcHaXQ+meaF/3FhgwSKHoK7+QBRSfcmc8CbuhwBnZ
+ kEpMTeVWa+9hsjdLe9jALM+JMb9/fBs=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-606-tb7LT-r_MRagraUiTvQLfg-1; Wed, 02 Oct 2024 10:25:13 -0400
+X-MC-Unique: tb7LT-r_MRagraUiTvQLfg-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-42f310f0ed2so67222905e9.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 07:25:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727878654; x=1728483454;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gcXqn+w+YAGjzVkAJFCk0jl7Jt7o3WsYdT2yjIah04o=;
- b=dTeNQE3KeJwr/NrvWWJyWNgzvxYD6+3qhqqtt6GItpCBNV7wvpFI6qV6ga+QwUS8G7
- kQO0ouidn82i84KBCIR6C2LbGsCLJNiUYeUU9WTEwPBH5XOMwhsz4W7JlSO5lRw+aFMj
- otZOl3LAd0cNdTvQxVi0EVI5ZPJx75wSeOUoU2E7PWIab5G1cKuf9N8mKERjnj37a00s
- kXplnT4Ulp8JCmIPZinfcNMHkm7MBZjMIMpPN23i44MVpdSYr1P9lMblOCMonnAhNgcF
- TAql1sYCNFdXZ7b81Mxm5BIG6H7CdelbXI/w27K8lY5nflp5XwIoBbCtFiLCaoE+FUOA
- doPQ==
+ d=1e100.net; s=20230601; t=1727879112; x=1728483912;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7yYLFWSqoKhXSseNrFGZ+H7UKls7TXd7XUU0eMiJ64U=;
+ b=keG+u6Psa1s0vBK6vb6kQEqPKLcDMdT/yapJ7WyyZWiaAzYTOKdWWHShXkjwDAOBW9
+ Icr0X10v9schGxw5pevU+jZgNLjhS1Wp//9y6Q8/Hvast2kv1GrjnMeBx56nRwR8yej2
+ ajvYGSkOHDJA04nW1NACcp/fAPtixUYU9B7W2OWiUZCv8+73fitBsHh6V4zJL7IZF7+v
+ anJT7ZcAhoHnl3bnTDGEBo+j4r3UWWeNRGHBsv9O4Ib/W/l31qQzXteadi1mqAW0kvt4
+ 54ow2DHRNNxJdRVg6bUiSJR+51llQZNzMKPowOasK4+P7idnhpxAYz9FJCUr4lh9St2B
+ eRtQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXEcJNFu2q6AI/Pyc0CuUNRWOudCEeDc1OyX/xf0H1TlHP/ysx9IqIvf4/JridnIUELArOl+lhIxR/M@nongnu.org
-X-Gm-Message-State: AOJu0Yy1g4FB7sY7jWUZM6oPYGa976eUdm9/A+sozvm5uemc16H7MlbD
- me2t0GK4GstRc6yjL4rKNcX5Q3cmr6vgayB1G+RQQHaAXx3o6o0kH8Q1Pv8S/BE=
-X-Google-Smtp-Source: AGHT+IH7mcZfXzprwL3Tf0KvStzl/DgpgXrH+41DfRks2caW9K5ZeOct8rLhfWkyf1JE5Ctn+agGzw==
-X-Received: by 2002:a17:90a:d250:b0:2d8:27c1:1d4a with SMTP id
- 98e67ed59e1d1-2e1847f3928mr4516039a91.24.1727878654273; 
- Wed, 02 Oct 2024 07:17:34 -0700 (PDT)
-Received: from [192.168.68.110] (200-206-229-93.dsl.telesp.net.br.
- [200.206.229.93]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e18f89d9a9sm1606157a91.28.2024.10.02.07.17.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Oct 2024 07:17:33 -0700 (PDT)
-Message-ID: <c08eef57-6e93-4856-a1a4-634ce687997e@ventanamicro.com>
-Date: Wed, 2 Oct 2024 11:17:28 -0300
+ AJvYcCWfdi/kbENOIXwjXQpfqnEcybyoMMHQXIml1d/XplY6T4u5hvgWjwudjc6au5rlPGkZc1dM8PZKJqZR@nongnu.org
+X-Gm-Message-State: AOJu0YygiAMtWXQ7UOjy9V7zjvwHAm/9n5goGTrECqT1jI6A8yyUF5yG
+ WTvN5UiVoDbe8BmNeVHRQACVkZN5uhCv3TK1qCg9JNYjKZ6RZw95fescF/9KWMfmqa5c+lBgHZ6
+ sJmheddZP8z6E7g0yXkrTseYeCYiG69OnLER42u8ZVOT+g4i/zJUB
+X-Received: by 2002:adf:e712:0:b0:37c:d1c6:7e45 with SMTP id
+ ffacd0b85a97d-37cfba0a614mr2591332f8f.40.1727879112094; 
+ Wed, 02 Oct 2024 07:25:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGvsBZu6kUdqGD6UWXQeMJQdhI82ZeuVK+z+lgmZ2rR4jdzCitMuuMV5JcjWjKCcTMKcXxDcg==
+X-Received: by 2002:adf:e712:0:b0:37c:d1c6:7e45 with SMTP id
+ ffacd0b85a97d-37cfba0a614mr2591309f8f.40.1727879111650; 
+ Wed, 02 Oct 2024 07:25:11 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37cd564d2aasm14147627f8f.4.2024.10.02.07.25.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Oct 2024 07:25:11 -0700 (PDT)
+Date: Wed, 2 Oct 2024 16:25:10 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
+ <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
+ <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+ linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH RFC 2/5] acpi/ghes: Use HEST table offsets when
+ preparing GHES records
+Message-ID: <20241002162510.6cb7aef6@imammedo.users.ipa.redhat.com>
+In-Reply-To: <9eacb24e5e13b2028be90d19e936868a921f8e34.1727782588.git.mchehab+huawei@kernel.org>
+References: <cover.1727782588.git.mchehab+huawei@kernel.org>
+ <9eacb24e5e13b2028be90d19e936868a921f8e34.1727782588.git.mchehab+huawei@kernel.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv/spike: Replace tswap64() by ldq_endian_p()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-riscv@nongnu.org, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Anton Johansson <anjo@rev.ng>, Palmer Dabbelt <palmer@dabbelt.com>,
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>
-References: <20240930124831.54232-1-philmd@linaro.org>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240930124831.54232-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,158 +109,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Phil, this patch breaks 'make check-avocado' in my env:
+On Tue,  1 Oct 2024 13:42:47 +0200
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-
-   AVOCADO tests/avocado
-JOB ID     : 2e98b3ea8b63d22f092ff73bdadfd975cbc27026
-JOB LOG    : /home/danielhb/work/qemu/build/tests/results/job-2024-10-02T10.48-2e98b3e/job.log
-  (01/15) tests/avocado/riscv_opensbi.py:RiscvOpenSBI.test_riscv32_spike: STARTED
-  (01/15) tests/avocado/riscv_opensbi.py:RiscvOpenSBI.test_riscv32_spike: INTERRUPTED: Test interrupted: Timeout reached (5.07 s)
-Interrupting job (failfast).
-RESULTS    : PASS 0 | ERROR 0 | FAIL 0 | SKIP 14 | WARN 0 | INTERRUPT 1 | CANCEL 0
-JOB TIME   : 7.57 s
-
-Test summary:
-01-tests/avocado/riscv_opensbi.py:RiscvOpenSBI.test_riscv32_spike: INTERRUPTED
-make[1]: *** [/home/danielhb/work/qemu/tests/Makefile.include:141: check-avocado] Error 8
-
-
-In fact, if you try to execute the 'spike' machine with --nographics, you're
-supposed to see the OpenSBI banner and boot. With this patch I don't see
-anything:
-
-
-$ ./build/qemu-system-riscv32 -M spike --nographic
-(---nothing---)
-
-
-For reference this is what I applied on top of master to test it:
-
-
-9de01b7f1c (HEAD -> review) hw/riscv/spike: Replace tswap64() by ldq_endian_p()
-202986f968 hw/net/tulip: Use ld/st_endian_pci_dma() API
-30aacb872e hw/pci/pci_device: Introduce ld/st_endian_pci_dma() API
-8ee9a2310b hw/pci/pci_device: Add PCI_DMA_DEFINE_LDST_END() macro
-54271f92e5 hw/virtio/virtio-access: Use ld/st_endian_phys() API
-54ff063593 exec/memory_ldst_phys: Introduce ld/st_endian_phys() API
-5749a411cc hw/xtensa/xtfpga: Replace memcpy()+tswap32() by stl_endian_p()
-75b7a99a5d hw/xtensa/xtfpga: Remove TARGET_BIG_ENDIAN #ifdef'ry
-652016da1e tests/tcg/plugins: Use the ld/st_endian_p() API
-d1e4d2544a hw/mips: Add cpu_is_bigendian field to BlCpuCfg structure
-6a7b3e09bb hw/mips: Pass BlCpuCfg argument to bootloader API
-0466217d0e target/arm/ptw: Use the ld/st_endian_p() API
-920a241f00 hw/virtio/virtio-access: Use the ld/st_endian_p() API
-e5fc1a2224 qemu/bswap: Introduce ld/st_endian_p() API
-062cfce8d4 (origin/master, origin/HEAD, master) Merge tag 'pull-target-arm-20241001' of https://git.linaro.org/people/pmaydell/qemu-arm into staging
-
-
-Let me know if I did something wrong. Thanks,
-
-
-Daniel
-
-On 9/30/24 9:48 AM, Philippe Mathieu-Daudé wrote:
-> Hold the target endianness in HTIFState::target_is_bigendian.
-> Pass the target endianness as argument to htif_mm_init().
-> Replace tswap64() calls by ldq_endian_p() ones.
+> There are two pointers that are needed during error injection:
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 1. The start address of the CPER block to be stored;
+> 2. The address of the ack, which needs a reset before next error.
+> 
+> Calculate them preferrable from the HEST table, as this allows
+> checking the source ID, the size of the table and the type of
+> HEST error block structures.
+> 
+> Yet, keep the old code, as this is needed for migration purposes.
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 > ---
-> Based-on: <20240930073450.33195-2-philmd@linaro.org>
->            "qemu/bswap: Introduce ld/st_endian_p() API"
+>  hw/acpi/ghes.c | 93 ++++++++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 83 insertions(+), 10 deletions(-)
 > 
-> Note: this is a non-QOM device!
-> ---
->   include/hw/char/riscv_htif.h |  4 +++-
->   hw/char/riscv_htif.c         | 17 +++++++++++------
->   hw/riscv/spike.c             |  2 +-
->   3 files changed, 15 insertions(+), 8 deletions(-)
-> 
-> diff --git a/include/hw/char/riscv_htif.h b/include/hw/char/riscv_htif.h
-> index df493fdf6b..24868ddfe1 100644
-> --- a/include/hw/char/riscv_htif.h
-> +++ b/include/hw/char/riscv_htif.h
-> @@ -35,6 +35,7 @@ typedef struct HTIFState {
->       hwaddr tohost_offset;
->       hwaddr fromhost_offset;
->       MemoryRegion mmio;
-> +    bool target_is_bigendian;
->   
->       CharBackend chr;
->       uint64_t pending_read;
-> @@ -49,6 +50,7 @@ void htif_symbol_callback(const char *st_name, int st_info, uint64_t st_value,
->   
->   /* legacy pre qom */
->   HTIFState *htif_mm_init(MemoryRegion *address_space, Chardev *chr,
-> -                        uint64_t nonelf_base, bool custom_base);
-> +                        uint64_t nonelf_base, bool custom_base,
-> +                        bool target_is_bigendian);
->   
->   #endif
-> diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
-> index 9bef60def1..77951f3c76 100644
-> --- a/hw/char/riscv_htif.c
-> +++ b/hw/char/riscv_htif.c
-> @@ -30,7 +30,6 @@
->   #include "qemu/timer.h"
->   #include "qemu/error-report.h"
->   #include "exec/address-spaces.h"
-> -#include "exec/tswap.h"
->   #include "sysemu/dma.h"
->   #include "sysemu/runstate.h"
->   
-> @@ -211,13 +210,17 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
->                       SHUTDOWN_CAUSE_GUEST_SHUTDOWN, exit_code);
->                   return;
->               } else {
-> +                bool be = s->target_is_bigendian;
->                   uint64_t syscall[8];
+> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> index 2c2cf444edeb..313a6e453af6 100644
+> --- a/hw/acpi/ghes.c
+> +++ b/hw/acpi/ghes.c
+> @@ -61,6 +61,23 @@
+>   */
+>  #define ACPI_GHES_GESB_SIZE                 20
+>  
+> +/*
+> + * Offsets with regards to the start of the HEST table stored at
+> + * ags->hest_addr_le, according with the memory layout map at
+> + * docs/specs/acpi_hest_ghes.rst.
+> + */
 > +
->                   cpu_physical_memory_read(payload, syscall, sizeof(syscall));
-> -                if (tswap64(syscall[0]) == PK_SYS_WRITE &&
-> -                    tswap64(syscall[1]) == HTIF_DEV_CONSOLE &&
-> -                    tswap64(syscall[3]) == HTIF_CONSOLE_CMD_PUTC) {
-> +                if (ldq_endian_p(be, &syscall[0]) == PK_SYS_WRITE &&
-> +                    ldq_endian_p(be, &syscall[1]) == HTIF_DEV_CONSOLE &&
-> +                    ldq_endian_p(be, &syscall[3]) == HTIF_CONSOLE_CMD_PUTC) {
->                       uint8_t ch;
-> -                    cpu_physical_memory_read(tswap64(syscall[2]), &ch, 1);
+> +/* ACPI 6.2: 18.3.2.8 Generic Hardware Error Source version 2
+> + * Table 18-382 Generic Hardware Error Source version 2 (GHESv2) Structure
+> + */
+> +#define HEST_GHES_V2_TABLE_SIZE  92
+> +#define GHES_ACK_OFFSET          (64 + GAS_ADDR_OFFSET)
 > +
-> +                    cpu_physical_memory_read(ldl_endian_p(be, &syscall[2]),
-> +                                             &ch, 1);
->                       qemu_chr_fe_write(&s->chr, &ch, 1);
->                       resp = 0x100 | (uint8_t)payload;
->                   } else {
-> @@ -320,7 +323,8 @@ static const MemoryRegionOps htif_mm_ops = {
->   };
->   
->   HTIFState *htif_mm_init(MemoryRegion *address_space, Chardev *chr,
-> -                        uint64_t nonelf_base, bool custom_base)
-> +                        uint64_t nonelf_base, bool custom_base,
-> +                        bool target_is_bigendian)
->   {
->       uint64_t base, size, tohost_offset, fromhost_offset;
->   
-> @@ -345,6 +349,7 @@ HTIFState *htif_mm_init(MemoryRegion *address_space, Chardev *chr,
->       s->pending_read = 0;
->       s->allow_tohost = 0;
->       s->fromhost_inprogress = 0;
-> +    s->target_is_bigendian = target_is_bigendian;
->       qemu_chr_fe_init(&s->chr, chr, &error_abort);
->       qemu_chr_fe_set_handlers(&s->chr, htif_can_recv, htif_recv, htif_event,
->           htif_be_change, s, NULL, true);
-> diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
-> index 64074395bc..0989cd4a41 100644
-> --- a/hw/riscv/spike.c
-> +++ b/hw/riscv/spike.c
-> @@ -327,7 +327,7 @@ static void spike_board_init(MachineState *machine)
->   
->       /* initialize HTIF using symbols found in load_kernel */
->       htif_mm_init(system_memory, serial_hd(0), memmap[SPIKE_HTIF].base,
-> -                 htif_custom_base);
-> +                 htif_custom_base, TARGET_BIG_ENDIAN);
->   }
->   
->   static void spike_set_signature(Object *obj, const char *val, Error **errp)
+> +/* ACPI 6.2: 18.3.2.7: Generic Hardware Error Source
+> + * Table 18-380: 'Error Status Address' field
+> + */
+> +#define GHES_ERR_ST_ADDR_OFFSET  (20 + GAS_ADDR_OFFSET)
+> +
+>  /*
+>   * Values for error_severity field
+>   */
+> @@ -218,14 +235,6 @@ static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker,
+>  {
+>      int i, error_status_block_offset;
+>  
+> -    /*
+> -     * TODO: Current version supports only one source.
+> -     * A further patch will drop this check, after adding a proper migration
+> -     * code, as, for the code to work, we need to store a bios pointer to the
+> -     * HEST table.
+> -     */
+> -    assert(num_sources == 1);
+> -
+>      /* Build error_block_address */
+>      for (i = 0; i < num_sources; i++) {
+>          build_append_int_noprefix(hardware_errors, 0, sizeof(uint64_t));
+> @@ -425,6 +434,65 @@ static void get_ghes_offsets(uint64_t ghes_addr,
+>      *read_ack_register_addr = ghes_addr + sizeof(uint64_t);
+>  }
+>  
+> +static void get_hest_offsets(uint16_t source_id, uint64_t hest_addr,
+> +                             uint64_t *cper_addr,
+> +                             uint64_t *read_ack_start_addr,
+> +                              Error **errp)
+
+cper/read_ack are GHES specific only, aren't they?
+
+perhaps s/get_hest_offsets/get_ghes_source_offsets/
+
+
+> +{
+> +    uint64_t hest_err_block_addr, hest_read_ack_start_addr;
+> +    uint64_t err_source_struct, error_block_addr;
+> +    uint32_t num_sources, i;
+> +
+> +    if (!hest_addr) {
+> +        return;
+> +    }
+> +
+> +    cpu_physical_memory_read(hest_addr, &num_sources, sizeof(num_sources));
+> +
+> +    err_source_struct = hest_addr + sizeof(num_sources);
+> +
+> +    /*
+> +     * Currently, HEST Error source navigates only for GHESv2 tables
+> +     */
+> +
+> +    for (i = 0; i < num_sources; i++) {
+
+missing le2cpu(num_sources)
+
+> +        uint64_t addr = err_source_struct;
+> +        uint16_t type, src_id;
+> +
+> +        cpu_physical_memory_read(addr, &type, sizeof(type));
+
+ditto for anything larger than 1 byte that you read from guest memory
+(all over the patch)
+
+> +
+> +        /* For now, we only know the size of GHESv2 table */
+> +        assert(type == ACPI_GHES_SOURCE_GENERIC_ERROR_V2);
+
+Imagine in qemu-9.3 we add non GHES error source, and then try to migrate
+such guest to qemu-9.2. It will explode here.
+Of-cause we can add some compat property to ged or machine type to
+make sure that code works old way in qemu-9.3 for virt-9.2
+at expense of keeping 9.2 code in 9.3. Which adds to maintenance burden
+and fragile, also it's a matter of time before we screw it up and release
+non-migratable/broken QEMU.
+
+So I'd like to avoid piling up compat code/knobs on to of each other
+and do it in a way where this src id lookup could gracefully skip
+not implemented yet error sources.
+This way we won't need any compat knobs to deal with in the future. 
+
+> +
+> +        /* It is GHES. Compare CPER source address */
+> +        addr += sizeof(type);
+> +        cpu_physical_memory_read(addr, &src_id, sizeof(src_id));
+> +
+> +        if (src_id == source_id) {
+> +            break;
+> +        }
+> +
+> +        err_source_struct += HEST_GHES_V2_TABLE_SIZE;
+> +    }
+> +    if (i == num_sources) {
+> +        error_setg(errp, "HEST: Source %d not found.", source_id);
+> +        return;
+> +    }
+> +
+> +    /* Navigate though table address pointers */
+> +    hest_err_block_addr = err_source_struct + GHES_ERR_ST_ADDR_OFFSET;
+> +    hest_read_ack_start_addr = err_source_struct + GHES_ACK_OFFSET;
+
+s/hest_read_ack_start_addr/hest_read_ack_addr/
+
+> +
+> +    cpu_physical_memory_read(hest_err_block_addr, &error_block_addr,
+> +                             sizeof(error_block_addr));
+> +
+> +    cpu_physical_memory_read(error_block_addr, cper_addr,
+> +                             sizeof(*cper_addr));
+> +
+> +    cpu_physical_memory_read(hest_read_ack_start_addr, read_ack_start_addr,
+> +                             sizeof(*read_ack_start_addr));
+> +}
+> +
+>  void ghes_record_cper_errors(const void *cper, size_t len,
+>                               uint16_t source_id, Error **errp)
+>  {
+> @@ -445,8 +513,13 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+>      }
+>      ags = &acpi_ged_state->ghes_state;
+>  
+> -    get_ghes_offsets(le64_to_cpu(ags->hw_error_le),
+> -                     &cper_addr, &read_ack_register_addr);
+> +    if (!ags->hest_addr_le) {
+> +        get_ghes_offsets(le64_to_cpu(ags->hw_error_le),
+
+should it be named get_hw_error_offsets
+
+> +                         &cper_addr, &read_ack_register_addr);
+> +    } else {
+> +        get_hest_offsets(source_id, le64_to_cpu(ags->hest_addr_le),
+> +                         &cper_addr, &read_ack_register_addr, errp);
+> +    }
+>  
+>      if (!cper_addr) {
+>          error_setg(errp, "can not find Generic Error Status Block");
+
 
