@@ -4,88 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D737ACF3197
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 05:58:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A22E2CF3196
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 05:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svsIY-0000kn-8c; Wed, 02 Oct 2024 01:53:18 -0400
+	id 1svsOV-0007wn-Av; Wed, 02 Oct 2024 01:59:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1svsIA-0008NN-9Y
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:52:54 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1svsHt-0004wz-0P
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:52:38 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-20b95359440so23921815ad.0
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 22:52:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727848355; x=1728453155; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ftWfC3oARtAVIvtxTn0s9O5BFrqOSkjWvZbvQMGFxu0=;
- b=PD80hyFiCqPtxcjglsyADDlcoxjoZ8WXLjMTIznJe+Y0/VRVym3P5juVh10vW94GBD
- MY8VITqKBpb8rE2Bsi/QSaPanDP5ecZA1OHGgSYLLr45JVeqbEh/IoA+gNmQOV3DSBOP
- L17nxbLcnXR7lSm1DBa+VjsehCGMLLq11xVd5z+hSziih1twK6cTwaYbiJ+zd12FBsUA
- OT9HxoSAVFxoYYQqdecSRNihw1CofVh+CCUM0ZxfZZ0Trxm2Pki4kvS/E75Je0sSYqLc
- D93ujp7RHe3BTRdsiJVnDzd5EyRnub8z8Kd0cuJiMz+SNa2I/oOHyaDudIfynxXKt+Gz
- W+zA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727848355; x=1728453155;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ftWfC3oARtAVIvtxTn0s9O5BFrqOSkjWvZbvQMGFxu0=;
- b=w0I/3HgTMsxZNXckupXDr42qaloD3KnfYSpIaL0IOdtMefNt8KGsLVB9j13lgR8uPQ
- RpLSObs4ow7Sro2lD5XKjolDLCs8GOiZNBtRjPckJ8gjYZMYbQ0xhFD09I6+YW+2SCOW
- TWBNmEezgc2pHbWUd4P8Zutn33AKa6sLPKM8USGdF9mvoXDqpcURDZYNKmsBLORZDBxo
- C1B9ggeX49vGZoIabhY97HvOHMEctDAHS+Z3uRFzJwPwPg4cjzUvnsEExDmtJMumk94S
- xN5RVsIh85dTMn1BhioSA3/N6Bs8lda+NXcreQ+Pv6qcUgO+vPlsRc+K34REKjsBtmc0
- qoDg==
-X-Gm-Message-State: AOJu0YxdGv0JmtTz3Scssb+zsCCJnJBLX5TZzZ67rXDzMMMD4iEtKmiq
- nnPDwbyUy7/pEj4KC7PC3QPxJ7qT3M0z+wo4ZzURN+IAvJEVfVW002KLfSmU
-X-Google-Smtp-Source: AGHT+IFz1RPq7phBXVI6ELQQGk4BXO//KaXH8IHuB/0Z8f/Fy0tnxea5CWH4Lm3NaY+mP59Z5cCyCA==
-X-Received: by 2002:a17:902:ec88:b0:20b:7633:6e5 with SMTP id
- d9443c01a7336-20bc5aa367cmr22095005ad.50.1727848355563; 
- Tue, 01 Oct 2024 22:52:35 -0700 (PDT)
-Received: from toolbox.alistair23.me
- (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
- [2403:580b:97e8:0:82ce:f179:8a79:69f4])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20b37e60c76sm78324235ad.269.2024.10.01.22.52.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 22:52:35 -0700 (PDT)
-From: Alistair Francis <alistair23@gmail.com>
-X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
-To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Mark Corbin <mark@dibsco.co.uk>,
- Ajeet Singh <itachis@FreeBSD.org>, Warner Losh <imp@bsdimp.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v3 31/35] bsd-user: Define RISC-V signal handling structures
- and constants
-Date: Wed,  2 Oct 2024 15:50:44 +1000
-Message-ID: <20241002055048.556083-32-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20241002055048.556083-1-alistair.francis@wdc.com>
-References: <20241002055048.556083-1-alistair.francis@wdc.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1svsOP-0007p9-3D
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:59:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1svsON-0005OT-K1
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:59:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727848757;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0AMb/Hh/Wj5DDVpqPxcI9SO65BGEzu2ChwEglgq8vg4=;
+ b=ZBMWOepW0Ce/KhV1M8uht0deQmfuiI/f8IXalVZmxJAzhaMgP1KK8QtZz15cpKnJNGtYEq
+ sZmo+CFHrjN3wUA5NNBO6UoF6FCJX3A/YtkraQJvc3k5mjwKUuxjl5lzKv5/KqZq2S++1H
+ K6dN+GA0NZdLqeBn/IkMhD2o+n748DQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-102-tTePpOpjNnaVWdliVZPdPw-1; Wed,
+ 02 Oct 2024 01:59:08 -0400
+X-MC-Unique: tTePpOpjNnaVWdliVZPdPw-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 193A719560A2; Wed,  2 Oct 2024 05:59:07 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.47])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 80BF93000198; Wed,  2 Oct 2024 05:59:06 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 508F021E6A28; Wed,  2 Oct 2024 07:58:48 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Jiang Jiacheng
+ <jiangjiacheng@huawei.com>,  qemu-devel@nongnu.org,  Prasad Pandit
+ <ppandit@redhat.com>,  Julia Suvorova <jusual@redhat.com>,  Fabiano Rosas
+ <farosas@suse.de>,  Juraj Marcin <jmarcin@redhat.com>,  "Dr . David Alan
+ Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH 0/7] migration: query-migrationthreads enhancements and
+ cleanups
+In-Reply-To: <ZvwQB1Calv407MH0@x1n> (Peter Xu's message of "Tue, 1 Oct 2024
+ 11:06:47 -0400")
+References: <20240930195837.825728-1-peterx@redhat.com>
+ <87o744e5pa.fsf@pond.sub.org> <ZvwGSgDnW8KfgFEh@redhat.com>
+ <ZvwQB1Calv407MH0@x1n>
+Date: Wed, 02 Oct 2024 07:58:48 +0200
+Message-ID: <87h69vavvr.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,104 +92,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Corbin <mark@dibsco.co.uk>
+Peter Xu <peterx@redhat.com> writes:
 
-Added definitions for RISC-V signal handling, including structures
-and constants for managing signal frames and context
+> On Tue, Oct 01, 2024 at 03:25:14PM +0100, Daniel P. Berrang=C3=A9 wrote:
+>> On Tue, Oct 01, 2024 at 07:46:09AM +0200, Markus Armbruster wrote:
+>> > Command query-migrationthreads went in without a QAPI ACK.  Issues
+>> > review should have caught:
+>> >=20
+>> > * Flawed documentation.  Fixed in commit e6c60bf02d1.
+>> >=20
+>> > * It should have been spelled query-migration-threads.  Not worth fixi=
+ng
+>> >   now, I guess.
+>> >=20
+>> > * What are the use cases?  The commit message doesn't tell!  If it's
+>> >   just for debugging, the command should be marked unstable.
+>>=20
+>> It is hard to use too.
+>>=20
+>> Lets say a mgmt app wants to restrict migration threads to some
+>> certain pCPUs. It can't call query-migrationthreads beforehand
+>> as the threads don't exist until migration is started. If it
+>> calls after migration is started, then there's a window where
+>> threads are running on arbitrary pCPUs that QEMU has access
+>> to. There's no synchronization point where threads have been
+>> created & can be queried, but are not yet sending data (and
+>> thus burning CPU time)
+>
+> Indeed, I suppose tricks needed if to work with such model, e.g., mgmt
+> needs to turn bw=3D0, start migration, query TIDs, then restore bw.
+>
+> However that still lacks at least the dest multifd threads, as currently =
+it
+> only reports src multifd threads TIDs.  I don't see why a serious mgmt
+> would like to pin and care only src threads, not dest threads, which can
+> also eat as much (or even more) pCPU resources.
 
-Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
-Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
-Co-authored-by: Warner Losh <imp@bsdimp.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240916155119.14610-14-itachis@FreeBSD.org>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- bsd-user/riscv/target_arch_signal.h | 75 +++++++++++++++++++++++++++++
- 1 file changed, 75 insertions(+)
- create mode 100644 bsd-user/riscv/target_arch_signal.h
+Sounds like there's a use case for management applications querying
+TIDs, but query-migrationthreads falls short of serving it.
 
-diff --git a/bsd-user/riscv/target_arch_signal.h b/bsd-user/riscv/target_arch_signal.h
-new file mode 100644
-index 0000000000..1a634b865b
---- /dev/null
-+++ b/bsd-user/riscv/target_arch_signal.h
-@@ -0,0 +1,75 @@
-+/*
-+ *  RISC-V signal definitions
-+ *
-+ *  Copyright (c) 2019 Mark Corbin
-+ *
-+ *  This program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2 of the License, or
-+ *  (at your option) any later version.
-+ *
-+ *  This program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#ifndef TARGET_ARCH_SIGNAL_H
-+#define TARGET_ARCH_SIGNAL_H
-+
-+#include "cpu.h"
-+
-+
-+#define TARGET_INSN_SIZE     4  /* riscv instruction size */
-+
-+/* Size of the signal trampoline code placed on the stack. */
-+#define TARGET_SZSIGCODE    ((abi_ulong)(7 * TARGET_INSN_SIZE))
-+
-+/* Compare with riscv/include/_limits.h */
-+#define TARGET_MINSIGSTKSZ  (1024 * 4)
-+#define TARGET_SIGSTKSZ     (TARGET_MINSIGSTKSZ + 32768)
-+
-+struct target_gpregs {
-+    uint64_t    gp_ra;
-+    uint64_t    gp_sp;
-+    uint64_t    gp_gp;
-+    uint64_t    gp_tp;
-+    uint64_t    gp_t[7];
-+    uint64_t    gp_s[12];
-+    uint64_t    gp_a[8];
-+    uint64_t    gp_sepc;
-+    uint64_t    gp_sstatus;
-+};
-+
-+struct target_fpregs {
-+    uint64_t        fp_x[32][2];
-+    uint64_t        fp_fcsr;
-+    uint32_t        fp_flags;
-+    uint32_t        pad;
-+};
-+
-+typedef struct target_mcontext {
-+    struct target_gpregs   mc_gpregs;
-+    struct target_fpregs   mc_fpregs;
-+    uint32_t               mc_flags;
-+#define TARGET_MC_FP_VALID 0x01
-+    uint32_t               mc_pad;
-+    uint64_t               mc_spare[8];
-+} target_mcontext_t;
-+
-+#define TARGET_MCONTEXT_SIZE 864
-+#define TARGET_UCONTEXT_SIZE 936
-+
-+#include "target_os_ucontext.h"
-+
-+struct target_sigframe {
-+    target_ucontext_t   sf_uc; /* = *sf_uncontext */
-+    target_siginfo_t    sf_si; /* = *sf_siginfo (SA_SIGINFO case)*/
-+};
-+
-+#define TARGET_SIGSTACK_ALIGN 16
-+
-+#endif /* TARGET_ARCH_SIGNAL_H */
--- 
-2.46.2
+> For real debugging purpose, I actually don't see a major value out of it
+> either, because GDB can provide all information that this API wants to
+> provide, and only better with thread stacks if we want.
+
+True.
+
+> Since I don't see how this can be used right, it didn't get proper QAPI
+> reviews, and further I highly suspect whether this API is consumed by
+> anyone at all.. in any serious way.  Shall we remove this API (with/witho=
+ut
+> going through the deprecation process)?
+
+If we decide we want to serve the management application use case now,
+we should provide a suitable interface, then deprecate
+query-migrationthreads.
+
+If we decide not now or not at all, we can deprecate it right away.
+Removal without deprecation is also possible, but I doubt breaking our
+compatibility promise is justified.
+
+> I added the author Jiacheng too.
+
+Users of query-migrationthreads, please speak up!
 
 
