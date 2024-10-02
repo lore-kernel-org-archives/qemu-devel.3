@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F15CECF3195
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 05:54:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 376CECF3196
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 05:54:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svsHA-00061x-SD; Wed, 02 Oct 2024 01:51:52 -0400
+	id 1svsHj-0007aI-9U; Wed, 02 Oct 2024 01:52:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1svsGu-0005bE-3E
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:51:38 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1svsHh-0007MU-Ap
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:52:25 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1svsGm-0004r0-AR
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:51:35 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-20b833f9b35so26746125ad.2
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 22:51:26 -0700 (PDT)
+ id 1svsHf-0004vx-IA
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:52:25 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-20b5fb2e89dso26948665ad.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 22:52:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727848274; x=1728453074; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727848342; x=1728453142; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NH0zhu0FnJOH36Tztins+VRQFpDAQeoIDsJfE3P9dRM=;
- b=I1mqUJiNEIXiuXGrBdybRsaueRQxA4CqLzAJcUyZVFlwFWCOmxDCN7P0s9fEnstjX0
- aOXTqzipyet0tV47iBplnLNFks5cbZ6TPlviB+RALmLuo1exsVr/vNxyRAvVl66rwTfw
- oYesCHenTOJPrRJbExBzdFAGZzR4DgCO1IdA5NsviwPxlDh46gYt/kqIaOP8qWsfAGRe
- DhEAswCWaD96lmOtKyph5Cfo4UP7AUgjYVwTV5ro4klNUjezZUrA5JNf5LOunRcArce1
- sT1r26/kpQMe8Z2ZrtUylYcjalkll8GBYqJ7+eqoqnPyhSb4xRwgF/IQO0zFr18BieXg
- uhGw==
+ bh=lTv4QjqmkJPLDgXsVFnvP++RiH8vKcNV+GzOrq1miS4=;
+ b=Ebk9YeTOabwdmod9koNAjMXw8m7zhe64Elp3rM30uzxfHFvUvBm6MDxJZhZEJ/EkmQ
+ NGSN92oKu6ACRMv0v3oGBHqm+g3BBZY93uQtELJnrXXxnhFq4ik+1ytTHh+bknsKPi8S
+ kiPMr2y8JClTtNm+gWAPHRBQ6Jt0BicWmHnSXtoWmhxnvN1Y+fKgk+JeUxidN3U3yHUn
+ yj9gjOb9SrpU7CRKCxy6aK95PHEbQcrtvl9QtqG4rG52ztA+VSeBO+HIASXlXR5gV3hv
+ BBrvM86aHDFawW8j3JhCzBzi2POcf/ylrlPnX59w/cdyeaR7cRQIqtfq9JFCdAmUSQKe
+ pi9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727848274; x=1728453074;
+ d=1e100.net; s=20230601; t=1727848342; x=1728453142;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NH0zhu0FnJOH36Tztins+VRQFpDAQeoIDsJfE3P9dRM=;
- b=BvY+TlTebn5dGc9G6rz/XXtIg9tCih8KHejxsp5kUZm3N734ZY5YD0aofwiMMZsiU/
- klVXdkHRiSUAZn6IcbZ3DjbHRluI0MGDaL6Av/Xz9kzBW35BmFYmVph1tRLQQGgkxnSK
- bq41arnvmmofh/1W8nvqt2wLIQJxmQGOM0Z+eodaOjGLfzw0VIUvEnChtDCGeTysv1Oz
- bT+dlI3ymybAlhpSNYnYVYl1TjE09NhRjK1eXmUmLkQvFW4ThbGbddEt+l5ekOq9kHpH
- adtu01miSJ78xy5l2kBCRJB2aLZFJz6Le/BxkRipzBgaF7h6s/urVZVq+aBNHlQfMbmC
- abWQ==
-X-Gm-Message-State: AOJu0YzyFOZertX0zc2doJ/U82aDqnkZ5mw+eaq8DIeP3Xh85IeXChcZ
- RqxW5mXQFVdjMs5WuJMp/oeWYz/ZMmvVaGKVILj2W1vpFk6EWRJuFdmVIpzp
-X-Google-Smtp-Source: AGHT+IEG2n76BWsCj04veYLdlwDCP1pf3lwmWMPxpflUnJiebQGFGmaJyRDcJc/MsQoyYHvmQbvUIA==
-X-Received: by 2002:a17:902:e5c8:b0:20b:a10c:9bdf with SMTP id
- d9443c01a7336-20bc59fdcffmr31488965ad.32.1727848274347; 
- Tue, 01 Oct 2024 22:51:14 -0700 (PDT)
+ bh=lTv4QjqmkJPLDgXsVFnvP++RiH8vKcNV+GzOrq1miS4=;
+ b=ebrx6G7vNMjEk8ZU3ZBdjR3ILzGz/c9mVBCh10MS3WrMWmEF2Wz8/IST11f5dPOjCe
+ OKE+ANf5Sa52B6NKW0NfM0Aj5bMTPcHYF6TJOBxAnVXpZxqOcg8qPVJUT0hQOos3sX9b
+ EKi7HvAqqSGBA28GAtGTyC3/KFGkwFyCfCZxJtF0BepFhF3XBzgeBZlaPcx/omH4tDfP
+ 24aajUhYAshBe34Re9ylku+OMoqlhQ2LpAPClVdsRM4hA8lR8ns6FWnHUCQ7JC09saso
+ r7CKYuvAq9wavSobaZeGRrPFJzyimGTODAVWJ9Rny4ZU2HOmAfxVbpkCh9D7ZTFeTdLC
+ 69yQ==
+X-Gm-Message-State: AOJu0Yxat+hsi2XUVS5+Mx93Rq9CiTPOG7Q1SWHpIarfx/Yvr3rABV/+
+ oAux+9R8osQolggHdELL+HghGqYtkrxcEGl9H6wADMO7wp9UFAHbXBC/CZtM
+X-Google-Smtp-Source: AGHT+IHXtCw/7v0lj4EY9RIMpY6fL58sCeUb+MNlV/3oqhFjgCTL+b/4EryUyHCDjeBIp2CKgW2lUw==
+X-Received: by 2002:a17:902:e848:b0:20b:54e5:e803 with SMTP id
+ d9443c01a7336-20bc5a77deamr25359465ad.50.1727848342038; 
+ Tue, 01 Oct 2024 22:52:22 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20b37e60c76sm78324235ad.269.2024.10.01.22.51.11
+ d9443c01a7336-20b37e60c76sm78324235ad.269.2024.10.01.22.52.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 22:51:13 -0700 (PDT)
+ Tue, 01 Oct 2024 22:52:21 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Frank Chang <frank.chang@sifive.com>,
+Cc: alistair23@gmail.com, Mark Corbin <mark@dibsco.co.uk>,
+ Ajeet Singh <itachis@FreeBSD.org>, Jessica Clarke <jrtc27@jrtc27.com>,
+ Kyle Evans <kevans@FreeBSD.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v3 05/35] target/riscv/tcg/tcg-cpu.c: consider MISA bit choice
- in implied rule
-Date: Wed,  2 Oct 2024 15:50:18 +1000
-Message-ID: <20241002055048.556083-6-alistair.francis@wdc.com>
+Subject: [PULL v3 27/35] bsd-user: Add RISC-V thread setup and initialization
+ support
+Date: Wed,  2 Oct 2024 15:50:40 +1000
+Message-ID: <20241002055048.556083-28-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002055048.556083-1-alistair.francis@wdc.com>
 References: <20241002055048.556083-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,79 +102,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Mark Corbin <mark@dibsco.co.uk>
 
-Gitlab issue [1] reports a misleading error when trying to run a 'rv64'
-cpu with 'zfinx' and without 'f':
+Implemented functions for setting up and initializing threads in the
+RISC-V architecture.
+The 'target_thread_set_upcall' function sets up the stack pointer,
+program counter, and function argument for new threads.
+The 'target_thread_init' function initializes thread registers based on
+the provided image information.
 
-$ ./build/qemu-system-riscv64 -nographic -M virt -cpu rv64,zfinx=true,f=false
-qemu-system-riscv64: Zfinx cannot be supported together with F extension
-
-The user explicitly disabled F and the error message mentions a conflict
-with Zfinx and F.
-
-The problem isn't the error reporting, but the logic used when applying
-the implied ZFA rule that enables RVF unconditionally, without honoring
-user choice (i.e. keep F disabled).
-
-Change cpu_enable_implied_rule() to check if the user deliberately
-disabled a MISA bit. In this case we shouldn't either re-enable the bit
-nor apply any implied rules related to it.
-
-After this change the error message now shows:
-
-$ ./build/qemu-system-riscv64 -nographic -M virt -cpu rv64,zfinx=true,f=false
-qemu-system-riscv64: Zfa extension requires F extension
-
-Disabling 'zfa':
-
-$ ./build/qemu-system-riscv64 -nographic -M virt -cpu rv64,zfinx=true,f=false,zfa=false
-qemu-system-riscv64: D extension requires F extension
-
-And finally after disabling 'd':
-
-$ ./build/qemu-system-riscv64 -nographic -M virt -cpu rv64,zfinx=true,f=false,zfa=false,d=false
-(OpenSBI boots ...)
-
-[1] https://gitlab.com/qemu-project/qemu/-/issues/2486
-
-Cc: Frank Chang <frank.chang@sifive.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2486
-Fixes: 047da861f9 ("target/riscv: Introduce extension implied rule helpers")
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240824173338.316666-1-dbarboza@ventanamicro.com>
+Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
+Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Co-authored-by: Jessica Clarke <jrtc27@jrtc27.com>
+Co-authored-by: Kyle Evans <kevans@FreeBSD.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240916155119.14610-10-itachis@FreeBSD.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/tcg-cpu.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ bsd-user/riscv/target_arch_thread.h | 47 +++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+ create mode 100644 bsd-user/riscv/target_arch_thread.h
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index b8814ab753..dea8ab7a43 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -778,11 +778,18 @@ static void cpu_enable_implied_rule(RISCVCPU *cpu,
-     if (!enabled) {
-         /* Enable the implied MISAs. */
-         if (rule->implied_misa_exts) {
--            riscv_cpu_set_misa_ext(env,
--                                   env->misa_ext | rule->implied_misa_exts);
--
-             for (i = 0; misa_bits[i] != 0; i++) {
-                 if (rule->implied_misa_exts & misa_bits[i]) {
-+                    /*
-+                     * If the user disabled the misa_bit do not re-enable it
-+                     * and do not apply any implied rules related to it.
-+                     */
-+                    if (cpu_misa_ext_is_user_set(misa_bits[i]) &&
-+                        !(env->misa_ext & misa_bits[i])) {
-+                        continue;
-+                    }
+diff --git a/bsd-user/riscv/target_arch_thread.h b/bsd-user/riscv/target_arch_thread.h
+new file mode 100644
+index 0000000000..95cd0b6ad7
+--- /dev/null
++++ b/bsd-user/riscv/target_arch_thread.h
+@@ -0,0 +1,47 @@
++/*
++ *  RISC-V thread support
++ *
++ *  Copyright (c) 2019 Mark Corbin
++ *
++ *  This program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2 of the License, or
++ *  (at your option) any later version.
++ *
++ *  This program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
 +
-+                    riscv_cpu_set_misa_ext(env, env->misa_ext | misa_bits[i]);
-                     ir = g_hash_table_lookup(misa_ext_implied_rules,
-                                              GUINT_TO_POINTER(misa_bits[i]));
- 
++#ifndef TARGET_ARCH_THREAD_H
++#define TARGET_ARCH_THREAD_H
++
++/* Compare with cpu_set_upcall() in riscv/riscv/vm_machdep.c */
++static inline void target_thread_set_upcall(CPURISCVState *regs,
++    abi_ulong entry, abi_ulong arg, abi_ulong stack_base,
++    abi_ulong stack_size)
++{
++    abi_ulong sp;
++
++    sp = ROUND_DOWN(stack_base + stack_size, 16);
++
++    regs->gpr[xSP] = sp;
++    regs->pc = entry;
++    regs->gpr[xA0] = arg;
++}
++
++/* Compare with exec_setregs() in riscv/riscv/machdep.c */
++static inline void target_thread_init(struct target_pt_regs *regs,
++    struct image_info *infop)
++{
++    regs->sepc = infop->entry;
++    regs->regs[xRA] = infop->entry;
++    regs->regs[xA0] = infop->start_stack;
++    regs->regs[xSP] = ROUND_DOWN(infop->start_stack, 16);
++}
++
++#endif /* TARGET_ARCH_THREAD_H */
 -- 
 2.46.2
 
