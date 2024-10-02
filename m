@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC825CF31AF
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:26:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E7ABCF31B0
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:29:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svwYR-0000Mg-T9; Wed, 02 Oct 2024 06:26:00 -0400
+	id 1svwbF-0001BY-Hb; Wed, 02 Oct 2024 06:28:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwYL-0000ML-HB
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:25:53 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwb9-0001Av-Ut
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:28:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwYJ-0000Wf-Rn
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:25:53 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwb5-0000mF-Tk
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:28:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727864750;
+ s=mimecast20190719; t=1727864921;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XMwMtz76lfJcPKySIzdnPKszxiHpDniIFN0UI66uwGE=;
- b=ah5ddOroFfwElnQr37f2W7rE1eWJVwFx9yJW94Xvgpbo4/AgvgEXA51BFGVFHUGGOv6OGb
- a6R9aEechh7tlUjn1U78FGE77BTLOwHgJ58b45c2W9Y37gAfpXG6QOzfPJ0d1kJYipWDt+
- Suk5T1Ub3A6mLDTAvgaHY2Y6d/4qOdM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=p883nUjD9I9bH7pXn8fnsrsSdauN9+KrpyibHluFdfA=;
+ b=eZO4ruPaU11ZfWRtNvo4L2Sx1GdGJzUe8D5N+NJ9MPankU2luHV/3ZmgZB5ahH9S7nom0n
+ 3NgREs2ZIDgLnqrWTbjd9VQ9HUbH9ZHP+4vws3NHTzWHsYa4MnaL3ZWO4nXyHjEW8IRnO2
+ r/ye4/7QNvCVSEPrN+f66QdPiQqYYtY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-372-7J8Q0kVSNAil0j-Tftk5TQ-1; Wed, 02 Oct 2024 06:25:49 -0400
-X-MC-Unique: 7J8Q0kVSNAil0j-Tftk5TQ-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42cb2c9027dso49781805e9.1
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 03:25:49 -0700 (PDT)
+ us-mta-348-0tMsuOWxNBC5YW9WhzMrfA-1; Wed, 02 Oct 2024 06:28:39 -0400
+X-MC-Unique: 0tMsuOWxNBC5YW9WhzMrfA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42cae209243so40322365e9.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 03:28:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727864748; x=1728469548;
+ d=1e100.net; s=20230601; t=1727864918; x=1728469718;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XMwMtz76lfJcPKySIzdnPKszxiHpDniIFN0UI66uwGE=;
- b=LkZwI18rRaYrWs2m581PuM2+xkorbXDCiGGS8A9pSv5FZyucoILl5iKpthOMdiO5ps
- zCiU5RzK/eP7aOU6Gh9xjbmQQqrNp9egCEB4KdmJREfJRh1DNWG4dkEnUhsnj/wMwAxs
- +Rs/U972KWW7MfMraI4tumNbyM4YA7SA83we1xYFxf6yQD4DLtbxnlGlBJ+fI1NkErFD
- LdQO+1KDXKCBFsvf+NAp6A3soPMaqai100m/T6A/Fg8vuhLSs53iXju1/287Z884LTwG
- W2FAmrXtzUvI+D+DbxBazgrfRMRhg5wWPMRcTTcXdOIbNcBSGMXTHaR/zaraTg3hoRP5
- hsfA==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=p883nUjD9I9bH7pXn8fnsrsSdauN9+KrpyibHluFdfA=;
+ b=H5JUHl0XBZsHC2UaYT7o5tLj5yGG33mhLI6zNx8o3FP8RhnWaWHQrk2xiSNF/cLl5W
+ GvMuGWPYjoehdECI2lggnB3tpl0sOQ+sI1aZPHXTE/3TX25i1KuSjnS6TjeeFrM4/v1Z
+ JRrIRRu2y1K3QrYJ0mdyW5HP1QYvguwVcDlMXXYmMkWINzN8dLgVnfvMln623Uxlk9Uv
+ hNPGwM/tlkhC73lOZFbc4uBy3wvueS/88VmI93toqr5M2Z9mDhb98ZEBX+ng/WvjbVzr
+ ABj8WUI3lxskgfV2GUaECC8lNXc9LncImXNFb6xtk7zAGQwkuj1pGUdt7vRvKFWHTFff
+ G+Hw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVBdb7T5E53s10HtynY7FnFQ2tqZZBV2gJvozLcByvWiTbSGOcwzvaGY+adkHxNXfwQ1enHXGsXapFt@nongnu.org
-X-Gm-Message-State: AOJu0YxpKaSbWkEYxyHubvVTt7IHdKLuidY0u7LhPOd8LDQfvYRyy8T7
- PhQwiqgXrtW1bHk8JpAfOmyb+O9vDIXl3lAnR1UXBSUtnstEw5vs5sv6k+X4K/Y3s8rQ5xu2oLn
- HVf9tmMya3l6pfQI6jeGdRnITfJRjOVNf8BnMKpVf0kJYVTPPag2d
-X-Received: by 2002:a05:600c:3b03:b0:42c:b63e:fea6 with SMTP id
- 5b1f17b1804b1-42f777ee31amr21694725e9.22.1727864748355; 
- Wed, 02 Oct 2024 03:25:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF+jLvOZbOcEN+T8mygG4Xp+1ksnZoFvPLzjm0Rx8NQIi1TBH5V/5NqSM0WWZG1ZJ6kX9tmgw==
-X-Received: by 2002:a05:600c:3b03:b0:42c:b63e:fea6 with SMTP id
- 5b1f17b1804b1-42f777ee31amr21694565e9.22.1727864747907; 
- Wed, 02 Oct 2024 03:25:47 -0700 (PDT)
+ AJvYcCVBFCfVRtD7PN5YU9WmxgntLEIONm7cliKvWm4QcaH6PHWRyBCeqjGC16Lr1lxHYpauxRaDZIGYMgIw@nongnu.org
+X-Gm-Message-State: AOJu0YzTAjqzvK6XuGYhS4nm9WmfOCzWonBLgNMrrN0+fUGeyXFF6KWO
+ ZZL2JOFEwqVGpWbY1WelvKuZZzMyiZTmgueKX/kCeIfV1nIPGb2E3KXWwLbi+eYv5uhEWuwNs+J
+ q/97zkSl9o/T+lV/hhv2nJtXVH03j55VwBdAG1IuWGGXZnG3+UzVh
+X-Received: by 2002:a05:600c:4ec7:b0:426:6326:4cec with SMTP id
+ 5b1f17b1804b1-42f7909736bmr14280605e9.29.1727864918517; 
+ Wed, 02 Oct 2024 03:28:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFVZg9izWtAPUkmaPbNAuD46j3dKwKRkiLJULk5WIhEnC5f+NpEXMwEiu5qEgoANLja9V40Yg==
+X-Received: by 2002:a05:600c:4ec7:b0:426:6326:4cec with SMTP id
+ 5b1f17b1804b1-42f7909736bmr14280415e9.29.1727864918175; 
+ Wed, 02 Oct 2024 03:28:38 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-143.web.vodafone.de.
  [109.42.49.143]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f79ff92desm14912885e9.40.2024.10.02.03.25.46
+ 5b1f17b1804b1-42f79ff5b4asm14915925e9.35.2024.10.02.03.28.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Oct 2024 03:25:47 -0700 (PDT)
-Message-ID: <408f72f4-4d18-46e6-9e8a-89542acaa306@redhat.com>
-Date: Wed, 2 Oct 2024 12:25:45 +0200
+ Wed, 02 Oct 2024 03:28:37 -0700 (PDT)
+Message-ID: <f62ac9a0-c119-4b77-8845-9353a7a294ec@redhat.com>
+Date: Wed, 2 Oct 2024 12:28:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/xen: Remove deadcode
-To: dave@treblig.org, sstabellini@kernel.org, anthony@xenproject.org,
- paul@xen.org, edgar.iglesias@gmail.com
-Cc: xen-devel@lists.xenproject.org, qemu-devel@nongnu.org,
- QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20240917002212.330893-1-dave@treblig.org>
+Subject: Re: [PATCH] q35: Remove unused mch_mcfg_base
+To: dave@treblig.org, mst@redhat.com, marcel.apfelbaum@gmail.com,
+ qemu-devel@nongnu.org, QEMU Trivial <qemu-trivial@nongnu.org>
+References: <20240918005132.187517-1-dave@treblig.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -120,7 +117,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240917002212.330893-1-dave@treblig.org>
+In-Reply-To: <20240918005132.187517-1-dave@treblig.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -132,7 +129,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,91 +145,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/09/2024 02.22, dave@treblig.org wrote:
+On 18/09/2024 02.51, dave@treblig.org wrote:
 > From: "Dr. David Alan Gilbert" <dave@treblig.org>
 > 
-> xen_be_copy_grant_refs is unused since 2019's
->    19f87870ba ("xen: remove the legacy 'xen_disk' backend")
+> mch_mcfg_base has been unused since it was added by
+>    6f1426ab0f ("ich9: APIs for pc guest info")
+> back in 2013.
 > 
-> xen_config_dev_console is unused since 2018's
->    6d7c06c213 ("Remove broken Xen PV domain builder")
-> 
-> Remove them.
+> Remove it.
 > 
 > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 > ---
->   hw/xen/xen-legacy-backend.c         | 18 ------------------
->   hw/xen/xen_devconfig.c              |  8 --------
->   include/hw/xen/xen-legacy-backend.h |  5 -----
->   3 files changed, 31 deletions(-)
+>   hw/pci-host/q35.c         | 10 ----------
+>   include/hw/pci-host/q35.h |  2 --
+>   2 files changed, 12 deletions(-)
 > 
-> diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
-> index 5514184f9c..e8e1ee4f7d 100644
-> --- a/hw/xen/xen-legacy-backend.c
-> +++ b/hw/xen/xen-legacy-backend.c
-> @@ -147,24 +147,6 @@ void xen_be_unmap_grant_refs(struct XenLegacyDevice *xendev, void *ptr,
->       }
+> diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+> index d5a657a02a..f3e713318e 100644
+> --- a/hw/pci-host/q35.c
+> +++ b/hw/pci-host/q35.c
+> @@ -662,16 +662,6 @@ static void mch_realize(PCIDevice *d, Error **errp)
+>                                      OBJECT(&mch->smram));
 >   }
 >   
-> -int xen_be_copy_grant_refs(struct XenLegacyDevice *xendev,
-> -                           bool to_domain,
-> -                           XenGrantCopySegment segs[],
-> -                           unsigned int nr_segs)
+> -uint64_t mch_mcfg_base(void)
 > -{
-> -    int rc;
-> -
-> -    assert(xendev->ops->flags & DEVOPS_FLAG_NEED_GNTDEV);
-> -
-> -    rc = qemu_xen_gnttab_grant_copy(xendev->gnttabdev, to_domain, xen_domid,
-> -                                    segs, nr_segs, NULL);
-> -    if (rc) {
-> -        xen_pv_printf(xendev, 0, "xengnttab_grant_copy failed: %s\n",
-> -                      strerror(-rc));
+> -    bool ambiguous;
+> -    Object *o = object_resolve_path_type("", TYPE_MCH_PCI_DEVICE, &ambiguous);
+> -    if (!o) {
+> -        return 0;
 > -    }
-> -    return rc;
+> -    return MCH_HOST_BRIDGE_PCIEXBAR_DEFAULT;
 > -}
+> -
+>   static Property mch_props[] = {
+>       DEFINE_PROP_UINT16("extended-tseg-mbytes", MCHPCIState, ext_tseg_mbytes,
+>                          16),
+> diff --git a/include/hw/pci-host/q35.h b/include/hw/pci-host/q35.h
+> index 22fadfa3ed..ddafc3f2e3 100644
+> --- a/include/hw/pci-host/q35.h
+> +++ b/include/hw/pci-host/q35.h
+> @@ -181,8 +181,6 @@ struct Q35PCIHost {
+>   #define MCH_PCIE_DEV                           1
+>   #define MCH_PCIE_FUNC                          0
+>   
+> -uint64_t mch_mcfg_base(void);
 > -
 >   /*
->    * get xen backend device, allocate a new one if it doesn't exist.
->    */
-> diff --git a/hw/xen/xen_devconfig.c b/hw/xen/xen_devconfig.c
-> index 2150869f60..45ae134b84 100644
-> --- a/hw/xen/xen_devconfig.c
-> +++ b/hw/xen/xen_devconfig.c
-> @@ -66,11 +66,3 @@ int xen_config_dev_vkbd(int vdev)
->       xen_config_dev_dirs("vkbd", "vkbd", vdev, fe, be, sizeof(fe));
->       return xen_config_dev_all(fe, be);
->   }
-> -
-> -int xen_config_dev_console(int vdev)
-> -{
-> -    char fe[256], be[256];
-> -
-> -    xen_config_dev_dirs("console", "console", vdev, fe, be, sizeof(fe));
-> -    return xen_config_dev_all(fe, be);
-> -}
-> diff --git a/include/hw/xen/xen-legacy-backend.h b/include/hw/xen/xen-legacy-backend.h
-> index 943732b8d1..e198b120c5 100644
-> --- a/include/hw/xen/xen-legacy-backend.h
-> +++ b/include/hw/xen/xen-legacy-backend.h
-> @@ -50,10 +50,6 @@ void *xen_be_map_grant_refs(struct XenLegacyDevice *xendev, uint32_t *refs,
->   void xen_be_unmap_grant_refs(struct XenLegacyDevice *xendev, void *ptr,
->                                uint32_t *refs, unsigned int nr_refs);
->   
-> -int xen_be_copy_grant_refs(struct XenLegacyDevice *xendev,
-> -                           bool to_domain, XenGrantCopySegment segs[],
-> -                           unsigned int nr_segs);
-> -
->   static inline void *xen_be_map_grant_ref(struct XenLegacyDevice *xendev,
->                                            uint32_t ref, int prot)
->   {
-> @@ -70,6 +66,5 @@ static inline void xen_be_unmap_grant_ref(struct XenLegacyDevice *xendev,
->   void xen_config_cleanup(void);
->   int xen_config_dev_vfb(int vdev, const char *type);
->   int xen_config_dev_vkbd(int vdev);
-> -int xen_config_dev_console(int vdev);
->   
->   #endif /* HW_XEN_LEGACY_BACKEND_H */
+>    * Arbitrary but unique BNF number for IOAPIC device.
+>    *
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
