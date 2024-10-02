@@ -4,87 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E18CF6D38
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 15:35:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0D93CF6D38
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 15:47:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sw1Nh-0003FY-Br; Wed, 02 Oct 2024 11:35:13 -0400
+	id 1sw1Yn-0005sK-7J; Wed, 02 Oct 2024 11:46:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sw1Ng-0003Et-Dw
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:35:12 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sw1Ne-0006rM-HC
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:35:12 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-42cc8782869so64190405e9.2
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 08:35:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727883308; x=1728488108; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Kv6D0fnNT3xGR1IIrR9rSYETvaIuEB74TGsumxGegAk=;
- b=ROJ5CFah+GFYsrcqg1NICSnUcr4ewKH0drOVipVCIGC5W2JsKrCA5hdXzfuQ9w8Lol
- zt0yLe7lHHQ1nJXrfnKxsAUAdvm5lAjTS4zqF+s9Q840igr2Se3CTmdAvPGXNggMKKUO
- IpL0Fhd7E7SVWSQCYUTwIl/LTjH/b+k4HvAqd5OJ4GbKbjzVJHvqyAVcQfyZrcY7r7ge
- coGlqhfQuQvg7S8v5mb35T72P8/r2nOwHGZ1ni7DYlZQl1oiGOs7BpjE8xxD0B2n6emI
- D196RVcLlGnyMAAWXuUzt8GcTOqgJfhC+BqdxroCL7oVUwynyrHhjY6qU8Jk4qp7GD5+
- psZg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sw1Yl-0005s2-CF
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:46:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sw1Yj-0008F2-Ny
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:46:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727883996;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=vP9GlQIfYORSZI5Is17sfvk9DUDB6lv1VsEsk5XjhH4=;
+ b=P8bC1HNz6CfYs0VEnjDIH9S2napRg9N5Q/nJGqN51ixQREVL+L9wWiLpkHC3CqcYXZSOlQ
+ NP9krqeksXmSQfiETCrOk3eslRaXVF4tOjbavbTeDNdtGxCrWOgApcGmL07WCXgGPVR8v7
+ hnnNRXqzfqcmcl0lSoMXhPsSpPc68l0=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-692-nZoBz7QFM7Kpu9TB2MX_SQ-1; Wed, 02 Oct 2024 11:46:35 -0400
+X-MC-Unique: nZoBz7QFM7Kpu9TB2MX_SQ-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-458432fe9baso86454171cf.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 08:46:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727883308; x=1728488108;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Kv6D0fnNT3xGR1IIrR9rSYETvaIuEB74TGsumxGegAk=;
- b=QgdTIxIpObwwGHFMZWOd5cOKi4khVKfnEgzeU6ZhqT0KWAtXVNcERlcpijjCGVI3bC
- 0lES2PPnACaLiB0xBYuFoE+LweuiSmNIVIxj8Y7bG1WR/fhTlXv+FXlqOZo5ZO26TIfm
- TggrqkhQti696TEnLPjWUzpggY4mIP3GYs1gzQPODwfRRhj6KvJZlNwI6Lse8bpXxQWy
- ccN3t67yPbIM+0Jiy5DGfvuyQ0nQ98gpIboZsycW208UWk7hQJ1fJqiBs6/qZnp9sen0
- Pxmzi6PjM/P8gcTcAfv0dQbwj6oaXmCjGdopFCGOBcKsau/B9MznLf/zLSrYS+W1M/S2
- 4VjA==
+ d=1e100.net; s=20230601; t=1727883995; x=1728488795;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vP9GlQIfYORSZI5Is17sfvk9DUDB6lv1VsEsk5XjhH4=;
+ b=CmTnvajB/OUDSTbrt+TnAtVI6hdOlpMoSSfIaboIQOaPrIBQQLPPxn1iHW8vT4Bid8
+ kTFKgYXTMnIA3o5te2jzEy8ilsDpM23VWUO8YCjOIqkKN6dnp6Sn7NK1jzcFyYx0QKfM
+ V9/YsBZA0KHooEmMW3B1ybcX5kfTZIKPVRJ/Cw8c17F9j7G/6qpfX8CvUMkfPW6uMWw0
+ LX553iQhM9UydcBK1B/2Rol7bSS6mY/CoZCEnasJm649FxVDss/qNNgWiZ82QOZqE+l6
+ pESEQ9zul1LrcP9T2pBV7r4rGLFHAzBBrLDXS9ZGGacjmhSvQaE1E2SALx8GiMnvtxbT
+ 6Z2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVZwxxF3YscOzlgZgLG3/pOuKXpjxkeVXcib/nvyhUMFmHnT1jYuPiye/lXFP49PpKd0Eg79wboO+B4@nongnu.org
-X-Gm-Message-State: AOJu0Yy2zKQnRyRL2cE34cuQxzO7Lpv74CZEe/gAmTBgd5ddUUsmv2eK
- f2e/V4I8yWK02WpITKPp+jp1QpjzD3gimF0hcaQIqB0RQTUjcyoOEnMsnpIfYyc=
-X-Google-Smtp-Source: AGHT+IH1kXy/4tu8wtewLOUFrHEoFP/8lP+J1G+2LcEEnoqjITxckaRZVCvi+AMVzIy0KRPWogji6g==
-X-Received: by 2002:a05:600c:4fc1:b0:42c:b950:680b with SMTP id
- 5b1f17b1804b1-42f777c3830mr25786205e9.20.1727883308476; 
- Wed, 02 Oct 2024 08:35:08 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f79d8d693sm21703755e9.2.2024.10.02.08.35.07
+ AJvYcCUaKzZem5E7l3BPBuEF9+k7Pzd6rVl8pBlreVYlWA6jKjMEJyo9olgNHx//HefY0+OzRA2yKrdLObV9@nongnu.org
+X-Gm-Message-State: AOJu0Yy3HbhMDy8wPFPFnbfU0wDwXMmFp7n5ghSRjCEi4rQARb+BIkkp
+ 1cN7Dpc4iMI8ZrPpr4SVEEKpHJC4yrJjk2mow85utrdwvISpwlREJmosbXZbqPaMB2x3fGjOsOC
+ N8iNn3hFcEtWMUO6cKFkowfVV9Oq6jX50ffg/779rw3fKKAWjJlsM
+X-Received: by 2002:a05:622a:5c7:b0:45d:797b:b780 with SMTP id
+ d75a77b69052e-45d80492e13mr44140861cf.11.1727883994779; 
+ Wed, 02 Oct 2024 08:46:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHdgiO0qZWdEv0SRcqJWln00zHqXFqFkLhb/OqdhhQaGuGxpQZhZaPZDw7D+1YP6n9KNRiDEw==
+X-Received: by 2002:a05:622a:5c7:b0:45d:797b:b780 with SMTP id
+ d75a77b69052e-45d80492e13mr44140591cf.11.1727883994377; 
+ Wed, 02 Oct 2024 08:46:34 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-45c9f3394aasm57106251cf.64.2024.10.02.08.46.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Oct 2024 08:35:07 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C55FE5F780;
- Wed,  2 Oct 2024 16:35:06 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Helge Deller <deller@kernel.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- qemu-devel@nongnu.org,  linux-parisc@vger.kernel.org
-Subject: Re: {PATCH] accel/tcg: Fix CPU specific unaligned behaviour
-In-Reply-To: <Zvyx1kM4JljbzxQW@p100> (Helge Deller's message of "Wed, 2 Oct
- 2024 04:37:10 +0200")
-References: <Zvyx1kM4JljbzxQW@p100>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Wed, 02 Oct 2024 16:35:06 +0100
-Message-ID: <87cykimsb9.fsf@draig.linaro.org>
+ Wed, 02 Oct 2024 08:46:33 -0700 (PDT)
+Date: Wed, 2 Oct 2024 11:46:31 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, linux-kernel@vger.kernel.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH RFC 3/5] acpi/generic_event_device: Update GHES migration
+ to cover hest addr
+Message-ID: <Zv1q141LZt59SDSM@x1n>
+References: <cover.1727782588.git.mchehab+huawei@kernel.org>
+ <d29cdf2bbb67c660142841c2d854db280c18e5e0.1727782588.git.mchehab+huawei@kernel.org>
+ <20241002171543.703ab6e1@imammedo.users.ipa.redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Disposition: inline
+In-Reply-To: <20241002171543.703ab6e1@imammedo.users.ipa.redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,116 +107,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Helge Deller <deller@kernel.org> writes:
+On Wed, Oct 02, 2024 at 05:15:43PM +0200, Igor Mammedov wrote:
+> On Tue,  1 Oct 2024 13:42:48 +0200
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> 
+> > The GHES migration logic at GED should now support HEST table
+> > location too.
+> > 
+> > Increase migration version and change needed to check for both
+> > ghes_addr_le and hest_addr_le.
+> > 
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> 
+> other than minor issues below, lgtm
+> 
+> > ---
+> >  hw/acpi/generic_event_device.c | 29 +++++++++++++++++++++++++++++
+> >  1 file changed, 29 insertions(+)
+> > 
+> > diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+> > index d4dbfb45e181..49ca1fb8e84a 100644
+> > --- a/hw/acpi/generic_event_device.c
+> > +++ b/hw/acpi/generic_event_device.c
+> > @@ -369,6 +369,34 @@ static const VMStateDescription vmstate_ghes_state = {
+> >      }
+> >  };
+> >  
+> > +static const VMStateDescription vmstate_hest = {
+> > +    .name = "acpi-ghes",
+> duplicate name for section, we use that already for hw_error address
+> I don't know ramification of (CCIng Peter)
 
-> When the emulated CPU reads or writes to a memory location
-> a) for which no read/write permissions exists, *and*
-> b) the access happens unaligned (non-natural alignment),
-> then the CPU should either
-> - trigger a permission fault, or
-> - trigger an unalign access fault.
->
-> In the current code the alignment check happens before the memory
-> permission checks, so only unalignment faults will be triggered.
->
-> This behaviour breaks the emulation of the PARISC architecture, where the=
- CPU
-> does a memory verification first. The behaviour can be tested with the te=
-stcase
-> from the bugzilla report.
->
-> Add the necessary code to allow PARISC and possibly other architectures to
-> trigger a memory fault instead.
->
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> Fixes: https://bugzilla.kernel.org/show_bug.cgi?id=3D219339
->
->
-> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index 117b516739..dd1da358fb 100644
-> --- a/accel/tcg/cputlb.c
-> +++ b/accel/tcg/cputlb.c
-> @@ -1684,6 +1684,26 @@ static void mmu_watch_or_dirty(CPUState *cpu, MMUL=
-ookupPageData *data,
->      data->flags =3D flags;
->  }
->=20=20
-> +/* when accessing unreadable memory unaligned, will the CPU issue
-> + * a alignment trap or a memory access trap ? */
-> +#ifdef TARGET_HPPA
-> +# define CPU_ALIGNMENT_CHECK_AFTER_MEMCHECK  1
-> +#else
-> +# define CPU_ALIGNMENT_CHECK_AFTER_MEMCHECK  0
-> +#endif
+Currently the existing vmstate_ghes is embeded inside vmstate_ghes_state,
+so maybe.. it's ok, as I remember QEMU only registers top level vmsds (via
+vmstate_register_with_alias_id()).
 
-I'm pretty certain we don't want to be introducing per-guest hacks into
-the core cputlb.c code when we are aiming to make it a compile once
-object.
+We do have a sanity check in savevm_state_handler_insert() making sure no
+duplicated entry will co-exist since commit caa91b3c44cd.
 
-I guess the real question is where could we put this flag? My gut says
-we should expand the MO_ALIGN bits in MemOp to express the precedence or
-not of the alignment check in relation to permissions.
+> 
+> Perhaps
+> s/ghes/hest/
 
-> +
-> +static void mmu_check_alignment(CPUState *cpu, vaddr addr,
-> +                       uintptr_t ra, MMUAccessType type, MMULookupLocals=
- *l)
-> +{
-> +    unsigned a_bits;
-> +
-> +    /* Handle CPU specific unaligned behaviour */
-> +    a_bits =3D get_alignment_bits(l->memop);
-> +    if (addr & ((1 << a_bits) - 1)) {
-> +        cpu_unaligned_access(cpu, addr, type, l->mmu_idx, ra);
-> +    }
-> +}
-> +
->  /**
->   * mmu_lookup: translate page(s)
->   * @cpu: generic cpu state
-> @@ -1699,7 +1719,6 @@ static void mmu_watch_or_dirty(CPUState *cpu, MMULo=
-okupPageData *data,
->  static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
->                         uintptr_t ra, MMUAccessType type, MMULookupLocals=
- *l)
->  {
-> -    unsigned a_bits;
->      bool crosspage;
->      int flags;
->=20=20
-> @@ -1708,10 +1727,8 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, =
-MemOpIdx oi,
->=20=20
->      tcg_debug_assert(l->mmu_idx < NB_MMU_MODES);
->=20=20
-> -    /* Handle CPU specific unaligned behaviour */
-> -    a_bits =3D get_alignment_bits(l->memop);
-> -    if (addr & ((1 << a_bits) - 1)) {
-> -        cpu_unaligned_access(cpu, addr, type, l->mmu_idx, ra);
-> +    if (!CPU_ALIGNMENT_CHECK_AFTER_MEMCHECK) {
+Said that, perhaps it'll still be nice to try avoiding same names indeed if
+possible, at least it could make debugging / reading easier sometimes.
 
-Then this would be something like:
+> 
+> 
+> 
+> > +    .version_id = 1,
+> > +    .minimum_version_id = 1,
+> > +    .fields = (const VMStateField[]) {
+> > +        VMSTATE_UINT64(hest_addr_le, AcpiGhesState),
+> > +        VMSTATE_END_OF_LIST()
+> > +    },
+> > +};
+> > +
+> > +static bool hest_needed(void *opaque)
+> > +{
+> > +    AcpiGedState *s = opaque;
+> > +    return s->ghes_state.hest_addr_le;
+> > +}
+> > +
+> > +static const VMStateDescription vmstate_hest_state = {
+> > +    .name = "acpi-ged/ghes",
+> 
+> ditto
+> 
+> > +    .version_id = 1,
+> > +    .minimum_version_id = 1,
+> > +    .needed = hest_needed,
+> > +    .fields = (const VMStateField[]) {
+> > +        VMSTATE_STRUCT(ghes_state, AcpiGedState, 1,
+> > +                       vmstate_hest, AcpiGhesState),
+> > +        VMSTATE_END_OF_LIST()
+> > +    }
+> > +};
+> > +
+> >  static const VMStateDescription vmstate_acpi_ged = {
+> >      .name = "acpi-ged",
+> >      .version_id = 1,
+> > @@ -380,6 +408,7 @@ static const VMStateDescription vmstate_acpi_ged = {
+> >      .subsections = (const VMStateDescription * const []) {
+> >          &vmstate_memhp_state,
+> >          &vmstate_ghes_state,
+> > +        &vmstate_hest_state,
+> >          NULL
+> >      }
+> >  };
+> 
 
-  if (!(memop & MO_ALIGN_PP)) or something
+-- 
+Peter Xu
 
-> +        mmu_check_alignment(cpu, addr, ra, type, l);
->      }
->=20=20
->      l->page[0].addr =3D addr;
-> @@ -1760,6 +1777,10 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, =
-MemOpIdx oi,
->          tcg_debug_assert((flags & TLB_BSWAP) =3D=3D 0);
->      }
->=20=20
-> +    if (CPU_ALIGNMENT_CHECK_AFTER_MEMCHECK) {
-> +        mmu_check_alignment(cpu, addr, ra, type, l);
-> +    }
-> +
->      /*
->       * This alignment check differs from the one above, in that this is
->       * based on the atomicity of the operation. The intended use case is
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
