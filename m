@@ -4,56 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E2C3CF319C
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 08:37:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73D73CF319C
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 08:37:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svuqy-000142-LX; Wed, 02 Oct 2024 04:37:00 -0400
+	id 1svur3-00014n-NN; Wed, 02 Oct 2024 04:37:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1svuqv-00013s-85
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 04:36:57 -0400
+ id 1svur2-00014V-RF
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 04:37:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1svuqt-0005dJ-23
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 04:36:56 -0400
+ id 1svuqz-0005e6-80
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 04:37:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727858213;
+ s=mimecast20190719; t=1727858218;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=zPmehwjaIJ/aiZJChPUDyyteVMFwMsJuswsWN9nORC4=;
- b=R8/hLvwp8+HibChzlrLTDx0r96t7nJJWCvUYfQ2GYkyXAQMLu+FonigU8mcQA67gs0uWn4
- 4Ga0VO/JvZ2DKlmzYXkDZiq5P+dX/znM3zSV538cc2W2JqBP1/0+zQKVhYnVgHOvDv2G3T
- LfPIaCK0EFaLnhMJUg81mCfAFGsOaLk=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uhM4mUe4SOwd5IXKZy3s8JqZaDqEwhiZJ//8HTUJpqA=;
+ b=c0fNmk4adGRfdTYsA1Iij/HjL4+PPbiDfVSeox2ip9AgSkr1d23vApj0WkoLvT17e+pjbV
+ 2qMex2FCRp0/QlQ3mVXx8A/v8Vyuiq/6Z5JmhzKzrPWf0Ek2uPMnIeB8xj45avHrGlL4Fu
+ xWSvvmOP1tyr8GpjKT1He6rT3nI+eWk=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-ZZIk3CRJMRqUNRBQj4R3yA-1; Wed,
- 02 Oct 2024 04:36:52 -0400
-X-MC-Unique: ZZIk3CRJMRqUNRBQj4R3yA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-qpHbL0ZdPm6Y9aSyYcvWBw-1; Wed,
+ 02 Oct 2024 04:36:56 -0400
+X-MC-Unique: qpHbL0ZdPm6Y9aSyYcvWBw-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1635519560A5; Wed,  2 Oct 2024 08:36:51 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C07691955D5B; Wed,  2 Oct 2024 08:36:55 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.36])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D3F1719560AD; Wed,  2 Oct 2024 08:36:49 +0000 (UTC)
+ id 8055819560AD; Wed,  2 Oct 2024 08:36:54 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 00/22] -Werror=maybe-uninitialized fixes
-Date: Wed,  2 Oct 2024 12:36:23 +0400
-Message-ID: <20241002083646.2893078-1-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>
+Subject: [PULL 01/22] util/coroutine: fix -Werror=maybe-uninitialized
+ false-positive
+Date: Wed,  2 Oct 2024 12:36:24 +0400
+Message-ID: <20241002083646.2893078-2-marcandre.lureau@redhat.com>
+In-Reply-To: <20241002083646.2893078-1-marcandre.lureau@redhat.com>
+References: <20241002083646.2893078-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124;
@@ -84,73 +89,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The following changes since commit 718780d20470c66a3a36d036b29148d5809dc855:
+../util/qemu-coroutine.c:150:8: error: ‘batch’ may be used uninitialized [-Werror=maybe-uninitialized]
 
-  Merge tag 'pull-nvme-20241001' of https://gitlab.com/birkelund/qemu into staging (2024-10-01 11:34:07 +0100)
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ util/qemu-coroutine.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/marcandre.lureau/qemu.git tags/warn-pull-request
-
-for you to fetch changes up to baad82ecfb27474f17f4318502725622ab7170fc:
-
-  qom/object: fix -Werror=maybe-uninitialized (2024-10-02 11:36:12 +0400)
-
-----------------------------------------------------------------
--Werror=maybe-uninitialized fixes
-
-----------------------------------------------------------------
-
-Marc-André Lureau (22):
-  util/coroutine: fix -Werror=maybe-uninitialized false-positive
-  util/timer: fix -Werror=maybe-uninitialized false-positive
-  hw/qxl: fix -Werror=maybe-uninitialized false-positives
-  nbd: fix -Werror=maybe-uninitialized false-positive
-  block/mirror: fix -Werror=maybe-uninitialized false-positive
-  block/mirror: fix -Werror=maybe-uninitialized false-positive
-  block/stream: fix -Werror=maybe-uninitialized false-positives
-  hw/ahci: fix -Werror=maybe-uninitialized false-positive
-  hw/vhost-scsi: fix -Werror=maybe-uninitialized
-  hw/sdhci: fix -Werror=maybe-uninitialized false-positive
-  block/block-copy: fix -Werror=maybe-uninitialized false-positive
-  migration: fix -Werror=maybe-uninitialized false-positives
-  hw/virtio-blk: fix -Werror=maybe-uninitialized false-positive
-  migration: fix -Werror=maybe-uninitialized false-positive
-  linux-user/hppa: fix -Werror=maybe-uninitialized false-positive
-  target/loongarch: fix -Werror=maybe-uninitialized false-positive
-  tests: fix -Werror=maybe-uninitialized false-positive
-  hw/virtio: fix -Werror=maybe-uninitialized
-  hw/virtio: freeing leaked memory from vhost_svq_get_buf in
-    vhost_svq_poll
-  block: fix -Werror=maybe-uninitialized false-positive
-  fsdep/9p: fix -Werror=maybe-uninitialized false-positive
-  qom/object: fix -Werror=maybe-uninitialized
-
- block/block-copy.c                 |  2 +-
- block/file-posix.c                 |  2 +-
- block/mirror.c                     |  8 ++++----
- block/stream.c                     |  6 +++---
- fsdev/9p-iov-marshal.c             | 15 ++++++++++++---
- hw/block/virtio-blk.c              |  2 +-
- hw/display/qxl.c                   |  4 ++--
- hw/ide/ahci.c                      |  3 ++-
- hw/scsi/vhost-scsi.c               |  2 +-
- hw/sd/sdhci.c                      |  2 +-
- hw/virtio/vhost-shadow-virtqueue.c |  6 ++++--
- linux-user/hppa/cpu_loop.c         |  2 ++
- migration/dirtyrate.c              |  4 ++--
- migration/migration.c              |  2 +-
- migration/ram.c                    |  2 +-
- nbd/client-connection.c            |  2 +-
- qom/object.c                       |  2 +-
- target/loongarch/gdbstub.c         | 26 ++++++++++++++------------
- tests/unit/test-bdrv-drain.c       |  2 +-
- tests/unit/test-block-iothread.c   |  2 +-
- util/qemu-coroutine.c              |  2 +-
- util/qemu-timer.c                  |  6 +++---
- roms/openbios                      |  2 +-
- 23 files changed, 61 insertions(+), 45 deletions(-)
-
+diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
+index eb4eebefdf..64d6264fc7 100644
+--- a/util/qemu-coroutine.c
++++ b/util/qemu-coroutine.c
+@@ -136,7 +136,7 @@ static Coroutine *coroutine_pool_get_local(void)
+ static void coroutine_pool_refill_local(void)
+ {
+     CoroutinePool *local_pool = get_ptr_local_pool();
+-    CoroutinePoolBatch *batch;
++    CoroutinePoolBatch *batch = NULL;
+ 
+     WITH_QEMU_LOCK_GUARD(&global_pool_lock) {
+         batch = QSLIST_FIRST(&global_pool);
 -- 
 2.45.2.827.g557ae147e6
 
