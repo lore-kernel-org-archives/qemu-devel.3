@@ -4,134 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E2B0CF31B0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:45:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1385DCF31AF
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:53:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svwr7-0005Eo-L6; Wed, 02 Oct 2024 06:45:17 -0400
+	id 1svwyP-0006V4-Fx; Wed, 02 Oct 2024 06:52:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwr3-0005E2-CU
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:45:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwr1-0002v4-Ln
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:45:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727865911;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ue3DTV1r4Qpr0FPmYGYIUyFyOTcGLiCNiOvL4dHrRFE=;
- b=BWrsTQh+mjE43soO7o7O49AXTQzAOxVlHpXA9QOZgh7LecXuzCyM4Uylb1DkUx3QWhYlSS
- X1Gftt1SDCtjFm+QE0GwTG3hhnMNrngIsFdJjNxOjGALEFSHrUZiEKB3O0njZ3mExpQpRt
- +IHw/vXw/znJc3JgL/BtGPAF8QgeN7Y=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-84-XJGIKUdbM5OSfZ-qrdE4aQ-1; Wed, 02 Oct 2024 06:45:09 -0400
-X-MC-Unique: XJGIKUdbM5OSfZ-qrdE4aQ-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42e77b5d3dcso43042225e9.1
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 03:45:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727865908; x=1728470708;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ue3DTV1r4Qpr0FPmYGYIUyFyOTcGLiCNiOvL4dHrRFE=;
- b=ZCv6uNqKgriQZd4kNZsZD3xm0sRbEDAaJlzXhRARvfvyqJBOalZ6g2sAjlFgs9oj47
- ZOr5frTTLkliJ8sJDLy2rqutK7i5jbjH3L1jAUNidVDxCZ0NLPdDAhgJHrDfVv4Q+e9J
- OfJFJ59npL+GHDm54gAdNm5gtA1QmiYdQuABojiSihHk2ikDgkskIqRfMcHODUu4osce
- vcg/d3xOR2xJbsqmVRcIm0vVXgZQnK3/papmdpbpFrbMC0mK23ot9egmWLOM0FAXFYF0
- l+Rp3wBYuufVirij5X3GLgz0Et1cgZLrEAUMOJ2fj8mJ8r/QhWmFHR0/Sk+L1wtYgVnr
- Ljow==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXPJ8EsRS+sVJxaGhyU98uIdPFFFWDe++H7wMZcmJB165agRKMrBPtllWTn0dhMYFt/6rwEpyFpbx/y@nongnu.org
-X-Gm-Message-State: AOJu0YwrcC0nFPtaJueEomv4fCB4A6irRV/D/TYBUrDuydEhtE0EYaOB
- pZFfBSh4q907zGwY7maNba23MWiKI7IwmG0jnhJk8BDqyFYv9NSz3nQnx1khisqYZLkLObvnhxz
- GF9uspZuNPGTgHFDWRk8P0KLUrjU/86KjIcl4eiAxQNt+yluALvjGS2LQBEz7tEE=
-X-Received: by 2002:a05:600c:1d1f:b0:42c:b22e:fbfa with SMTP id
- 5b1f17b1804b1-42f777dba40mr17665535e9.21.1727865908333; 
- Wed, 02 Oct 2024 03:45:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGNpO8ewpCb381GNY0IuIeaFhkGI8GrFRjdAQ2gOriciX5FxmXo3gtZsIdlp3qdfsUcLaj2Eg==
-X-Received: by 2002:a05:600c:1d1f:b0:42c:b22e:fbfa with SMTP id
- 5b1f17b1804b1-42f777dba40mr17665375e9.21.1727865907874; 
- Wed, 02 Oct 2024 03:45:07 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-49-143.web.vodafone.de.
- [109.42.49.143]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f7a01f4a4sm15185315e9.29.2024.10.02.03.45.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Oct 2024 03:45:07 -0700 (PDT)
-Message-ID: <17c2adb4-9346-46dc-a93b-b0bfa3207cfe@redhat.com>
-Date: Wed, 2 Oct 2024 12:45:05 +0200
+ (Exim 4.90_1) (envelope-from <unisono@quyllur.org>)
+ id 1svwyN-0006Uc-6l
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:52:47 -0400
+Received: from quyllur.org ([185.247.226.42])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <unisono@quyllur.org>)
+ id 1svwyK-0003rT-Ik
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:52:46 -0400
+Received: from quyllur.org (localhost [127.0.0.1])
+ by quyllur.org (OpenSMTPD) with ESMTP id 6956af8c
+ for <qemu-devel@nongnu.org>; Wed, 2 Oct 2024 13:26:00 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=quyllur.org; h=message-id
+ :date:mime-version:from:subject:to:content-type; s=dkimselector;
+ bh=uhwPRJ/2Gh2gfpWcvuafszH87WY=; b=xWiTSJ5+pyUsD+N8vO8lWZsFIBhP
+ 2p/bcM+Kq7n9nsSakifx4mPl6si6G+dEfOBgO+qkG0b0GWCI0vuP5kUYx2JH5Zz+
+ 8YiLNYbs+BY2Odh8JTHolwAvmK1OfgEcatNanQeTmHnd1bwR1wREEP0/ydz7F0MJ
+ kD5MCFihRhIgbcU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=quyllur.org; h=message-id
+ :date:mime-version:from:subject:to:content-type; q=dns; s=
+ dkimselector; b=cKjtV0TobMrCpRS2wKd5jtzu+oK7L2R5NTUGlNQbzi+t4D3J
+ HTe4L+6PjriexnBm08RO7hT0uMl2gpJcNGp02MP2lwA9M1HY7Ak4ZfPGefBCQDXU
+ 1IyhNrZxFVcyQ7u2DNeUukvlDheE7TcoTtOBqHeCG8xgBRIDewhSf8FbTRk=
+Received: from [10.137.0.39] (<unknown> [154.47.30.154])
+ by quyllur.org (OpenSMTPD) with ESMTPSA id 468f1824
+ (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+ for <qemu-devel@nongnu.org>; Wed, 2 Oct 2024 13:25:59 +0300 (EEST)
+Message-ID: <a5c8b6f0-7675-4063-a48f-ffd96180d431@quyllur.org>
+Date: Wed, 2 Oct 2024 05:25:50 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block-backend: Remove deadcode
-To: dave@treblig.org, kwolf@redhat.com, hreitz@redhat.com,
- QEMU Trivial <qemu-trivial@nongnu.org>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
-References: <20240917002056.330818-1-dave@treblig.org>
-From: Thomas Huth <thuth@redhat.com>
+From: Rot127 <unisono@quyllur.org>
+Subject: Capstone v6-Alpha is released
+To: qemu-devel@nongnu.org
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240917002056.330818-1-dave@treblig.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Autocrypt: addr=unisono@quyllur.org; keydata=
+ xjMEY7wq3BYJKwYBBAHaRw8BAQdAsuxTQjfbARGo4F2Egj2t3sSK2cbhl5w744NBKJJRi/PN
+ HFJvdDEyNyA8dW5pc29ub0BxdXlsbHVyLm9yZz7CkwQTFgoAOxYhBBVvnxKqKhsnIpRsAsep
+ z77sou9aBQJjvESaAhsDBQsJCAcCAiICBhUKCQgLAgQWAgMBAh4HAheAAAoJEMepz77sou9a
+ WdEA/jVTgTB6GTphNhqA3UoUjkRXDhLDcaNWbgVZqUU7jHIGAP0XFDgu8B8170B83LiTVrIe
+ 0d9v3AGanC6ur+kO2ts4B87AzQRjvDrnAQwAp27wT6kz0YywKLXtV7ZQ781KE9OR3sP/Shhh
+ lpXa7fr8nBDlR5R6nK+H8VybMFG8B43Dtwmv6G94xZIlAv9HU/JfNZcArdHFrX/et7Bk1j+R
+ MyoPcf9Hw5Xl7442PiCDPjbnOPtLtxOWTNSBHNQBtGm3K1H8KYOMuKdh+4coWyZJrrfxpqVF
+ fyYOPU0Q/XvXqKGjn478IGb4EsP00x6nGxj28CfgSbuSELmTJWNX9PHGcquJn9tFb4frflaq
+ LaEGXUM85MSXvbl1rtDm3jHwfBS94Hj0jVo0mnlJeIcZ4OyfGJ1cL3Ub0YLICKdeng3xY2V7
+ qb+RxoiE7T0+O/pKWCwBVinlF0UUW9SAIoWgN174NeYYfIU0bTk6TP8RXPETPC9VmigTr52D
+ kgftUlGbfG7elARfDBvwHoaHvZbr9GQVasvlbJiyaGnrV6ySeSaEL0YbUsdI7ogwVwH9dWLQ
+ W0fsqCQWavSapz3pkV8SOlKmdfmuCQc4Wni+mW9B3vyDABEBAAHCwXQEGBYKACYWIQQVb58S
+ qiobJyKUbALHqc++7KLvWgUCY7w65wIbDgUJA8JnAAHACRDHqc++7KLvWsD0IAQZAQgAHRYh
+ BGhy9Q1ij6yxegWz3jgSuCWIEK9nBQJjvDrnAAoJEDgSuCWIEK9nDE8L/2Sy8kZZ3WJvsRMW
+ AxPlpovhPIWB2doN2sPCCQ9TGZOEYJ6Ge4Peid5RJH6iSl3W0/K/59dG+s0ZABXzQOoo5yOQ
+ zMr5V5+YPkW2Cvzpyc3iJLHXduxIGl6J4d8bFfPy+rAAt4ALz8Hr5OGrLj4viYjBifXRwux8
+ Ifq3u8C6Qy5u/uagGIFxMgczana+O+w1JDFA/kRem209LgzZZByWXLAO5yc2VtbKdWkiL2vc
+ EfGo1znoD2V5Js647Y9z0bMdtSvzwf/dqzINDLP3jODGgivLqU4Z+DMBWtO0JOQjnaDC5Geq
+ ereJa78jtMSShmvG3KmrocEE1JZpZ6rxAsgHBTv5j5nZAG+FWeyyQowfiIiqXJo2K/SjjUYw
+ Yk843Wg0fmwZYmzqaeXE26l9+1skQHuPR89ipZgMUOo228JhnzYC/Dv29tTudJ1DEzO7jUWh
+ rIFB4aIf4aIwsoyJS9ByRjS+Gt7gC85J0yevYREwlK+pRWPoERfGLJfLBXBsEkxbINCNAP0f
+ aDyLotRx7+8DEw83adqHwyu4GGMHJrOTcLt00pt7nQEAolZ3IJOtoP0wtwwqupaePZjf+cei
+ RqM+ZobpFZYy2As=
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------9G7hj200Qk9ZYT4yopKBJmyk"
+Received-SPF: pass client-ip=185.247.226.42; envelope-from=unisono@quyllur.org;
+ helo=quyllur.org
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_SBL=0.141,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,190 +97,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/09/2024 02.20, dave@treblig.org wrote:
-> From: "Dr. David Alan Gilbert" <dave@treblig.org>
-> 
-> blk_by_public last use was removed in 2017 by
->    c61791fc23 ("block: add aio_context field in ThrottleGroupMember")
-> 
-> blk_activate last use was removed earlier this year by
->    eef0bae3a7 ("migration: Remove block migration")
-> 
-> blk_add_insert_bs_notifier, blk_op_block_all, blk_op_unblock_all
-> last uses were removed in 2016 by
->    ef8875b549 ("virtio-scsi: Remove op blocker for dataplane")
-> 
-> blk_iostatus_disable last use was removed in 2016 by
->    66a0fae438 ("blockjob: Don't touch BDS iostatus")
-> 
-> Remove them.
-> 
-> Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
-> ---
->   block/block-backend.c                       | 73 ---------------------
->   include/sysemu/block-backend-global-state.h |  8 ---
->   2 files changed, 81 deletions(-)
-> 
-> diff --git a/block/block-backend.c b/block/block-backend.c
-> index db6f9b92a3..7bea43bf72 100644
-> --- a/block/block-backend.c
-> +++ b/block/block-backend.c
-> @@ -853,15 +853,6 @@ BlockBackendPublic *blk_get_public(BlockBackend *blk)
->       return &blk->public;
->   }
->   
-> -/*
-> - * Returns a BlockBackend given the associated @public fields.
-> - */
-> -BlockBackend *blk_by_public(BlockBackendPublic *public)
-> -{
-> -    GLOBAL_STATE_CODE();
-> -    return container_of(public, BlockBackend, public);
-> -}
-> -
->   /*
->    * Disassociates the currently associated BlockDriverState from @blk.
->    */
-> @@ -1214,12 +1205,6 @@ BlockDeviceIoStatus blk_iostatus(const BlockBackend *blk)
->       return blk->iostatus;
->   }
->   
-> -void blk_iostatus_disable(BlockBackend *blk)
-> -{
-> -    GLOBAL_STATE_CODE();
-> -    blk->iostatus_enabled = false;
-> -}
-> -
->   void blk_iostatus_reset(BlockBackend *blk)
->   {
->       GLOBAL_STATE_CODE();
-> @@ -2228,28 +2213,6 @@ void blk_set_enable_write_cache(BlockBackend *blk, bool wce)
->       blk->enable_write_cache = wce;
->   }
->   
-> -void blk_activate(BlockBackend *blk, Error **errp)
-> -{
-> -    BlockDriverState *bs = blk_bs(blk);
-> -    GLOBAL_STATE_CODE();
-> -
-> -    if (!bs) {
-> -        error_setg(errp, "Device '%s' has no medium", blk->name);
-> -        return;
-> -    }
-> -
-> -    /*
-> -     * Migration code can call this function in coroutine context, so leave
-> -     * coroutine context if necessary.
-> -     */
-> -    if (qemu_in_coroutine()) {
-> -        bdrv_co_activate(bs, errp);
-> -    } else {
-> -        GRAPH_RDLOCK_GUARD_MAINLOOP();
-> -        bdrv_activate(bs, errp);
-> -    }
-> -}
-> -
->   bool coroutine_fn blk_co_is_inserted(BlockBackend *blk)
->   {
->       BlockDriverState *bs = blk_bs(blk);
-> @@ -2380,36 +2343,6 @@ bool blk_op_is_blocked(BlockBackend *blk, BlockOpType op, Error **errp)
->       return bdrv_op_is_blocked(bs, op, errp);
->   }
->   
-> -void blk_op_unblock(BlockBackend *blk, BlockOpType op, Error *reason)
-> -{
-> -    BlockDriverState *bs = blk_bs(blk);
-> -    GLOBAL_STATE_CODE();
-> -
-> -    if (bs) {
-> -        bdrv_op_unblock(bs, op, reason);
-> -    }
-> -}
-> -
-> -void blk_op_block_all(BlockBackend *blk, Error *reason)
-> -{
-> -    BlockDriverState *bs = blk_bs(blk);
-> -    GLOBAL_STATE_CODE();
-> -
-> -    if (bs) {
-> -        bdrv_op_block_all(bs, reason);
-> -    }
-> -}
-> -
-> -void blk_op_unblock_all(BlockBackend *blk, Error *reason)
-> -{
-> -    BlockDriverState *bs = blk_bs(blk);
-> -    GLOBAL_STATE_CODE();
-> -
-> -    if (bs) {
-> -        bdrv_op_unblock_all(bs, reason);
-> -    }
-> -}
-> -
->   /**
->    * Return BB's current AioContext.  Note that this context may change
->    * concurrently at any time, with one exception: If the BB has a root node
-> @@ -2564,12 +2497,6 @@ void blk_add_remove_bs_notifier(BlockBackend *blk, Notifier *notify)
->       notifier_list_add(&blk->remove_bs_notifiers, notify);
->   }
->   
-> -void blk_add_insert_bs_notifier(BlockBackend *blk, Notifier *notify)
-> -{
-> -    GLOBAL_STATE_CODE();
-> -    notifier_list_add(&blk->insert_bs_notifiers, notify);
-> -}
-> -
->   BlockAcctStats *blk_get_stats(BlockBackend *blk)
->   {
->       IO_CODE();
-> diff --git a/include/sysemu/block-backend-global-state.h b/include/sysemu/block-backend-global-state.h
-> index 49c12b0fa9..9cc9b008ec 100644
-> --- a/include/sysemu/block-backend-global-state.h
-> +++ b/include/sysemu/block-backend-global-state.h
-> @@ -54,7 +54,6 @@ bool monitor_add_blk(BlockBackend *blk, const char *name, Error **errp);
->   void monitor_remove_blk(BlockBackend *blk);
->   
->   BlockBackendPublic *blk_get_public(BlockBackend *blk);
-> -BlockBackend *blk_by_public(BlockBackendPublic *public);
->   
->   void blk_remove_bs(BlockBackend *blk);
->   int blk_insert_bs(BlockBackend *blk, BlockDriverState *bs, Error **errp);
-> @@ -67,7 +66,6 @@ void blk_get_perm(BlockBackend *blk, uint64_t *perm, uint64_t *shared_perm);
->   
->   void blk_iostatus_enable(BlockBackend *blk);
->   BlockDeviceIoStatus blk_iostatus(const BlockBackend *blk);
-> -void blk_iostatus_disable(BlockBackend *blk);
->   void blk_iostatus_reset(BlockBackend *blk);
->   int blk_attach_dev(BlockBackend *blk, DeviceState *dev);
->   void blk_detach_dev(BlockBackend *blk, DeviceState *dev);
-> @@ -76,8 +74,6 @@ BlockBackend *blk_by_dev(void *dev);
->   BlockBackend *blk_by_qdev_id(const char *id, Error **errp);
->   void blk_set_dev_ops(BlockBackend *blk, const BlockDevOps *ops, void *opaque);
->   
-> -void blk_activate(BlockBackend *blk, Error **errp);
-> -
->   int blk_make_zero(BlockBackend *blk, BdrvRequestFlags flags);
->   void blk_aio_cancel(BlockAIOCB *acb);
->   int blk_commit_all(void);
-> @@ -91,9 +87,6 @@ bool blk_is_sg(BlockBackend *blk);
->   void blk_set_enable_write_cache(BlockBackend *blk, bool wce);
->   int blk_get_flags(BlockBackend *blk);
->   bool blk_op_is_blocked(BlockBackend *blk, BlockOpType op, Error **errp);
-> -void blk_op_unblock(BlockBackend *blk, BlockOpType op, Error *reason);
-> -void blk_op_block_all(BlockBackend *blk, Error *reason);
-> -void blk_op_unblock_all(BlockBackend *blk, Error *reason);
->   int blk_set_aio_context(BlockBackend *blk, AioContext *new_context,
->                           Error **errp);
->   void blk_add_aio_context_notifier(BlockBackend *blk,
-> @@ -105,7 +98,6 @@ void blk_remove_aio_context_notifier(BlockBackend *blk,
->                                        void (*detach_aio_context)(void *),
->                                        void *opaque);
->   void blk_add_remove_bs_notifier(BlockBackend *blk, Notifier *notify);
-> -void blk_add_insert_bs_notifier(BlockBackend *blk, Notifier *notify);
->   BlockBackendRootState *blk_get_root_state(BlockBackend *blk);
->   void blk_update_root_state(BlockBackend *blk);
->   bool blk_get_detect_zeroes_from_root_state(BlockBackend *blk);
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------9G7hj200Qk9ZYT4yopKBJmyk
+Content-Type: multipart/mixed; boundary="------------DwVMHwXnyIkAV6pWH0tYWH1Q";
+ protected-headers="v1"
+From: Rot127 <unisono@quyllur.org>
+To: qemu-devel@nongnu.org
+Message-ID: <a5c8b6f0-7675-4063-a48f-ffd96180d431@quyllur.org>
+Subject: Capstone v6-Alpha is released
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+--------------DwVMHwXnyIkAV6pWH0tYWH1Q
+Content-Type: multipart/mixed; boundary="------------zyrF05vG6fLtYRfbIbezo7kU"
 
+--------------zyrF05vG6fLtYRfbIbezo7kU
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+
+V2UgYXJlIHZlcnkgaGFwcHkgdG8gYW5ub3VuY2UgdGhlIHJlbGVhc2Ugb2YgQ2Fwc3RvbmUg
+djYtQWxwaGExLg0KDQpBbHRob3VnaCBpdCBpcyBtYXJrZWQgYXMgQWxwaGEsIGl0IHJ1bnMg
+anVzdCBhcyBzdGFibGUgYW5kIGhhcyBhdCBsZWFzdCANCnRoZSBzYW1lIHF1YWxpdHkgYXMg
+YW55IG90aGVyIHJlbGVhc2UgYmVmb3JlLg0KSW4gZmFjdCwgaXQgc2hvdWxkIGJlIGV2ZW4g
+YmV0dGVyIGJlY2F1c2Ugd2UgaW1wcm92ZWQgb3VyIHRlc3RpbmcgDQpzaWduaWZpY2FudGx5
+IChjbGFuZy10aWR5LCBBU0FOLCBWYWxncmluZCwgdGVzdGluZyB0b29sIHJld3JpdHRlbiku
+DQoNCkkgcXVpY2tseSB3YW50ZWQgdG8gbGlzdCBhbGwgbmV3IGZlYXR1cmVzIHRoYXQgYXJl
+IGxpa2VseSBvZiBpbnRlcmVzdCB0byANClFlbXUgZGV2ZWxvcGVyczoNCg0KLSBVcGRhdGVk
+IHRvIExMVk0gMTg6IEFBcmNoNjQgKGZvcm1lciBBUk02NCksIFN5c3RlbVosIE1pcHMuDQot
+IEFkZGVkIE5hbm9NaXBzIGV4dGVuc2lvbiBmcm9tIHRoZSBNZWRpYVRlayBMTFZNIGZvcmsu
+DQotIFVwZGF0ZWQgdG8gTExWTSAxNjogQVJNLCBQUEMgLSBVcGRhdGUgdG8gTExWTSAxOCAo
+b3IgbGF0ZXIpIHdpbGwgY29tZSANCndpdGggdjYtQmV0YS4NCi0gTmV3IG1vZHVsZXM6IFh0
+ZW5zYSwgTG9vbmdBcmNoLCBIUFBBLCBBbHBoYSAoYmFzZWQgb24gTExWTSAzKSwgVHJpQ29y
+ZSANCihzaW5jZSB2NSkuDQotIFBQQyBQYWlyZWQgU2luZ2xlIGV4dGVuc2lvbiBhZGRlZC4N
+Cg0KWW91IGNhbiBmaW5kIHRoZSBmdWxsIHJlbGVhc2UgZ3VpZGUgd2l0aCBhbGwgZGV0YWls
+cyBoZXJlOiANCmh0dHBzOi8vZ2l0aHViLmNvbS9jYXBzdG9uZS1lbmdpbmUvY2Fwc3RvbmUv
+YmxvYi9uZXh0L2RvY3MvY3NfdjZfcmVsZWFzZV9ndWlkZS5tZA0KDQpJZiB5b3UgYXJlIGlu
+dGVyZXN0ZWQgaW4gdGhlIGRldGFpbHMgb2YgdGhlIG5ldyB1cGRhdGUgZnJhbWV3b3JrIA0K
+QXV0by1TeW5jICh3aGljaCBtYWRlIHY2IHBvc3NpYmxlKSwgeW91IGNhbiByZWFkIG91ciBi
+bG9nIHBvc3Q6DQpodHRwczovL3JpemluLnJlL3Bvc3RzL2F1dG8tc3luYy8NCg0KUGxlYXNl
+IGxldCBtZSBrbm93IGFueSBxdWVzdGlvbnMgeW91IGZvbGtzIG1pZ2h0IGhhdmUuDQoNCg0K
+
+--------------zyrF05vG6fLtYRfbIbezo7kU
+Content-Type: application/pgp-keys; name="OpenPGP_0xC7A9CFBEECA2EF5A.asc"
+Content-Disposition: attachment; filename="OpenPGP_0xC7A9CFBEECA2EF5A.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+okajPmaG6RWWMtgL
+=3DJky5
+-----END PGP PUBLIC KEY BLOCK-----
+
+
+--------------zyrF05vG6fLtYRfbIbezo7kU--
+
+--------------DwVMHwXnyIkAV6pWH0tYWH1Q--
+
+--------------9G7hj200Qk9ZYT4yopKBJmyk
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQGzBAEBCAAdFiEEaHL1DWKPrLF6BbPeOBK4JYgQr2cFAmb9H68ACgkQOBK4JYgQ
+r2fEnwv+P7QDgtyOkCN4e9pTcfVyHgm+Evk264aGvV0v3Yq7WKyDZVbqIyewcjKL
+Bxp6vC6pOBrfoZIANW+eNaV5v/j5YS0fk8WMAycVZZKS+GYsfM7s6Et8uB45lF8f
+Q1Zb1KX4K4S/g5rl7nY/Dcg4EuRLbearx5VnJ4fJUZgpB30tNICEbMAW7Ilga9af
+8Sjj1wLh7p4NYdkmbvRqmu04hXOqa5qZ249mupFAfcArq8oJu2NseDmPPldcE83S
+pHg7yAH5cr2SkCSV7bd8oVxNGj0l57T99jDMM4lfUM806SXNEltnsfSCXMidDw5K
+cFBPSq3m9uAQFAPQy7gKSuyKxbbloY9Wov3l75+9tfD+NQteKv5nlehMK1PQdXyu
+Ne142dL0bTVT7FvfcZ2V96Q7mYehNJyKTYGhe9QClLeTwScAek9O//sKm5SLPBOu
+mqoZfGc8r45oDz2Lk0LaVEEe3y+ZoVTDIZm7G+mtzf08vIXZkfysBRwCJvACWFWG
+ZBMgUTS5
+=5L0Q
+-----END PGP SIGNATURE-----
+
+--------------9G7hj200Qk9ZYT4yopKBJmyk--
 
