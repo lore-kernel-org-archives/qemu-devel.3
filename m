@@ -4,73 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE6E6CF3195
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 05:47:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4606BCF3196
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 05:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svsBW-0004Fi-Gp; Wed, 02 Oct 2024 01:46:04 -0400
+	id 1svsGW-0005Vw-5l; Wed, 02 Oct 2024 01:51:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1svsBQ-0004FJ-Nu; Wed, 02 Oct 2024 01:45:56 -0400
-Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
+ id 1svsGT-0005VU-54
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:51:09 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1svsBP-0004Qe-1V; Wed, 02 Oct 2024 01:45:56 -0400
-Received: by mail-ua1-x930.google.com with SMTP id
- a1e0cc1a2514c-84e962c9a99so1867580241.2; 
- Tue, 01 Oct 2024 22:45:51 -0700 (PDT)
+ id 1svsGQ-0004pM-84
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:51:08 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-20b9b35c7c7so17990895ad.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 22:51:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727847950; x=1728452750; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1727848262; x=1728453062; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KmSQcK0z0DgYs22RTHsqMdyBfifB74uH137hPv4CngQ=;
- b=JXdJTDoChElKYW3tceQ5QebaNAlm2Jes3Rz2TorBWMZWZqq1jqLEb+cSGAeqR97hBA
- 6n5VerxErpaizOAIl0e63//YDau/1KpNi5zk3wduga0mtNyvkTFRPVCFjB7RA96xzgMb
- 4fQ0zPYixicEelPEHbkzSDaFCSYU0KUePooCPNiivmcqyl+GnP6YrxU89ofmpo8DLPB2
- yCqn6nOhbf4UpifdRkGAgaYRTQy3EC6F4Uqt+YZ+EKNrJJbFX9Y0qAVzGI2AcPTAbHX1
- fhFAQCJkKElAUfz4hR1Rb6cv6pW2lzGdpsmF0TVb3fZKdnmntNcy6Ts65W8YhpXwIudK
- 7dJA==
+ bh=EGbvTTMJSfmS2eLzhKOmc7FBrGBYUzIf4fRt7YlJWNY=;
+ b=Bllmz6Mu0P1D5xf0xy6XN1NeBQ8NhzgvPfz5nY/npYOQpuwaL0rt8t5MCkGS2gYHLV
+ OfemDPWd2IeByeIxn5SH47iUwRj6GmH4O3xc+GPo5LXZSj9NJoQFTGq+RE/TpBmyLQ/Y
+ xbKYfNfPaZyk85TSz4qhUPYKx1TDACN31bMOs9aQaWKLNoZK1EzSi+igQayONhkita74
+ qzMopvGTLF/4G4BTZEpc8jWSxCsS721LePU/95GhU+jGMDeG4mUNgoNNrBQQwRFSR87a
+ c+tyXFylrUjNqR/PgFf1JQRQg4BVqY/6U9mINwa3OZOfImPbtcZF/kC/FF5tHIPjjDdy
+ +2bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727847950; x=1728452750;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1727848262; x=1728453062;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KmSQcK0z0DgYs22RTHsqMdyBfifB74uH137hPv4CngQ=;
- b=sLFhPAl7VuIDAkoRsnSijVZIrNT9vJi9oS5v0X5oXakPqYTCNGb4yMOJNEXdwcN3zr
- 194kgbUW2+kBrgOXptGAwUc5MwG1k56VQKUqvQZJWs6dreb6hCaiQ2q1QVCbmCRR7v23
- qSNgZQV0junLtJ4Qr6l/abR4eliEdxJ+VlPqGAQTACMmsG9u+Wlv9KCtVS8POxaa7H5K
- vEJ+Ej6fEoGffdNJgVybnnjuBQq3ixwxbVbiOR6Lm2C5lLQp4dUXVQgpsEsvHdkcAA8t
- CRQQPAeY7hImlRqRm1oxTl/0p/Shda4/5bvffdzQdEwuKbsWURu0unyIgAEB5jkf7wY0
- A0Jg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWx7vqtMrqQ/xua/jiTpXGLve+y2x6T4wGrMkDSA5bVrEecJEFzeqKpKgKGlq3fObFm5ym0phkUtFB3@nongnu.org,
- AJvYcCXj2TRm4LfKzaBAc/ctOebvEt8xDkUfRjCC+itU9PpIA3N8CX3DOewkNVDCMrRHBYCpK9RpKRtxIXr1Uw==@nongnu.org
-X-Gm-Message-State: AOJu0YzAKUX90S2vLYCoNQKfaP5bBVtkF8etCNTO0HK8kmuTTRs7jJQR
- E6QTRB2kEDyEPCN2WOy3j5FH8qrSq7PzSE2ocpDxHRRVnEFHcdVTAuXxtjbqToABA8tLqfQiHXS
- hWqd3Cv4UQ8JDOPeLbfusDlPjf7I=
-X-Google-Smtp-Source: AGHT+IEKhOq/ywkWJZckvMl4Nv6dVN8znO54E6I8P8fZgJ8/tpR5W6aFoCHXbrfFVZudt8t9rG0bCXu3g8ocl6ufXTQ=
-X-Received: by 2002:a05:6102:3a0b:b0:49b:e62d:b5d4 with SMTP id
- ada2fe7eead31-4a3e6929ef9mr2069719137.21.1727847950509; Tue, 01 Oct 2024
- 22:45:50 -0700 (PDT)
-MIME-Version: 1.0
-References: <70658cf5-4a72-4b83-8390-cb0a3506e6eb@ventanamicro.com>
- <20240926083944.15807-1-evgenii.prokopiev@syntacore.com>
-In-Reply-To: <20240926083944.15807-1-evgenii.prokopiev@syntacore.com>
+ bh=EGbvTTMJSfmS2eLzhKOmc7FBrGBYUzIf4fRt7YlJWNY=;
+ b=kxN3WLQjPMM6RRnyTVO//1Aw6QoY0yteYnBwikw76efAMQw1XCnrHh6wMlPkeWJSrf
+ w1OrrU8amfLVWp/bU8ISeckOTM5l3goHhl2+y2hqmoXeMqmqpcKq9L9h0MlIqwr+lOxP
+ NLDw6vps8aqUemTpypaBZDS38YKxIoNZ2DqscdhvGCmNXdapBDlSDgy4JKEAA+rpav5m
+ D7c2j08ykGtPttmaQS9YsmPKZgvZmkEP7pHHtSLPycYm7s0UOQso7XjkS01fzaQhb/rN
+ JTiABRso8yP9hIso+oQn8attSekdGfsiUYwPfWvIGVsk4ACN5bmOnXOMH70BRndkcVTT
+ WsVA==
+X-Gm-Message-State: AOJu0Yyz7beBGGBp1+yYqJ480SRQI/hEnvqQYJ/YkNIMkTKIwN4ySRJr
+ 8nvd//xlwfAAseavA7x3PFOd7NgVhvZE9C6zreRRljZU8rHOa4NTsr0eAt49
+X-Google-Smtp-Source: AGHT+IHYl0U6GIPxAefW5iWfccO+Hic6TL9sJ8XpJwtFhkYalPL3RylYtDq12WxTBLg0s7hYHtWpYw==
+X-Received: by 2002:a17:903:234b:b0:20b:4f95:9339 with SMTP id
+ d9443c01a7336-20bc5a876ccmr25801315ad.60.1727848262376; 
+ Tue, 01 Oct 2024 22:51:02 -0700 (PDT)
+Received: from toolbox.alistair23.me
+ (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
+ [2403:580b:97e8:0:82ce:f179:8a79:69f4])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20b37e60c76sm78324235ad.269.2024.10.01.22.50.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 01 Oct 2024 22:51:01 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 2 Oct 2024 15:45:24 +1000
-Message-ID: <CAKmqyKMmYPG0_jyrJFxvnxhTGTCAz4L5Lf6FouZpy3ZtywNiGA@mail.gmail.com>
-Subject: Re: [PATCH v2] target/riscv/csr.c: Fix an access to VXSAT
-To: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
-Cc: dbarboza@ventanamicro.com, alistair.francis@wdc.com, bmeng.cn@gmail.com, 
- liwei1518@gmail.com, palmer@dabbelt.com, qemu-devel@nongnu.org, 
- qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
+X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
+To: qemu-devel@nongnu.org
+Cc: alistair23@gmail.com, Jason Chien <jason.chien@sifive.com>,
+ Frank Chang <frank.chang@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL v3 01/35] target/riscv: Add a property to set vl to ceil(AVL/2)
+Date: Wed,  2 Oct 2024 15:50:14 +1000
+Message-ID: <20241002055048.556083-2-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.46.2
+In-Reply-To: <20241002055048.556083-1-alistair.francis@wdc.com>
+References: <20241002055048.556083-1-alistair.francis@wdc.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -94,58 +99,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 26, 2024 at 6:41=E2=80=AFPM Evgenii Prokopiev
-<evgenii.prokopiev@syntacore.com> wrote:
->
-> The register VXSAT should be RW only to the first bit.
-> The remaining bits should be 0.
->
-> The RISC-V Instruction Set Manual Volume I: Unprivileged Architecture
->
-> The vxsat CSR has a single read-write least-significant bit (vxsat[0])
-> that indicates if a fixed-point instruction has had to saturate an output
-> value to fit into a destination format. Bits vxsat[XLEN-1:1]
-> should be written as zeros.
->
-> Signed-off-by: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Jason Chien <jason.chien@sifive.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+RVV spec allows implementations to set vl with values within
+[ceil(AVL/2),VLMAX] when VLMAX < AVL < 2*VLMAX. This commit adds a
+property "rvv_vl_half_avl" to enable setting vl = ceil(AVL/2). This
+behavior helps identify compiler issues and bugs.
 
-Alistair
+Signed-off-by: Jason Chien <jason.chien@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Message-ID: <20240722175004.23666-1-jason.chien@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/cpu_cfg.h       | 1 +
+ target/riscv/cpu.c           | 1 +
+ target/riscv/vector_helper.c | 2 ++
+ 3 files changed, 4 insertions(+)
 
-> ---
-> Changes since v1:
->         - Added reviewed-by tag
->  target/riscv/csr.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index bd080f92b5..69c41212e9 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -717,7 +717,7 @@ static RISCVException write_vxrm(CPURISCVState *env, =
-int csrno,
->  static RISCVException read_vxsat(CPURISCVState *env, int csrno,
->                                   target_ulong *val)
->  {
-> -    *val =3D env->vxsat;
-> +    *val =3D env->vxsat & BIT(0);
->      return RISCV_EXCP_NONE;
->  }
->
-> @@ -727,7 +727,7 @@ static RISCVException write_vxsat(CPURISCVState *env,=
- int csrno,
->  #if !defined(CONFIG_USER_ONLY)
->      env->mstatus |=3D MSTATUS_VS;
->  #endif
-> -    env->vxsat =3D val;
-> +    env->vxsat =3D val & BIT(0);
->      return RISCV_EXCP_NONE;
->  }
->
-> --
-> 2.34.1
->
->
+diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+index 8b272fb826..96fe26d4ea 100644
+--- a/target/riscv/cpu_cfg.h
++++ b/target/riscv/cpu_cfg.h
+@@ -127,6 +127,7 @@ struct RISCVCPUConfig {
+     bool ext_smepmp;
+     bool rvv_ta_all_1s;
+     bool rvv_ma_all_1s;
++    bool rvv_vl_half_avl;
+ 
+     uint32_t mvendorid;
+     uint64_t marchid;
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 4bda754b01..cc5552500a 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2661,6 +2661,7 @@ static Property riscv_cpu_properties[] = {
+ 
+     DEFINE_PROP_BOOL("rvv_ta_all_1s", RISCVCPU, cfg.rvv_ta_all_1s, false),
+     DEFINE_PROP_BOOL("rvv_ma_all_1s", RISCVCPU, cfg.rvv_ma_all_1s, false),
++    DEFINE_PROP_BOOL("rvv_vl_half_avl", RISCVCPU, cfg.rvv_vl_half_avl, false),
+ 
+     /*
+      * write_misa() is marked as experimental for now so mark
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 10a52ceb5b..072bd444b1 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -75,6 +75,8 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+     vlmax = vext_get_vlmax(cpu->cfg.vlenb, vsew, lmul);
+     if (s1 <= vlmax) {
+         vl = s1;
++    } else if (s1 < 2 * vlmax && cpu->cfg.rvv_vl_half_avl) {
++        vl = (s1 + 1) >> 1;
+     } else {
+         vl = vlmax;
+     }
+-- 
+2.46.2
+
 
