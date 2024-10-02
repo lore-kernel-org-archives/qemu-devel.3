@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 330C8CF3195
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 05:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83473CF3195
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 05:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svsGY-0005WG-UL; Wed, 02 Oct 2024 01:51:14 -0400
+	id 1svsGc-0005Wu-P8; Wed, 02 Oct 2024 01:51:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1svsGV-0005Vm-6k
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:51:11 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1svsGX-0005WK-5M
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:51:14 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1svsGR-0004pi-2u
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:51:09 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-20bb92346caso3597515ad.0
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 22:51:06 -0700 (PDT)
+ id 1svsGU-0004q1-VW
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:51:12 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-20b4a0940e3so46141085ad.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 22:51:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727848265; x=1728453065; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727848268; x=1728453068; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mr8ztux/WjHsRrRRjwNMAfL9hLtaU+DJEJRiO/tD+UY=;
- b=OzBaWzbN/IDPDoPbcm3GF9nFpPVcXXXcaW3SM0TO4rx8nKIjAjc69dLiwKX/XiYu5I
- q+pSdNeJSRzEgLjLF6k5kxDD03OkqVZE1ofPoqQ30wNb/IRGiFlyU9glNFlbsExXIKBh
- j7IOzknM+I/LO2dhf7gWIxZqX9LO3Zag8VZCe7uqXXlc7ZauEucUyeY2eQo6YT0n8Dl7
- NQYVYB/WEqVlmMYninMgqcSdLwXzlGzhBFgX8cr2sxgWmRSBL4zmqpgQeR6IlBEs+ac1
- v6KJTvIzmkRoc5ccY4sWKDUzl5LuawAAlT1TSnMvfdRRTSeKwII9i2+tQI47nVqHPpFk
- +miA==
+ bh=617/1eGxW8JSsbGjaBrf05d+I+s82Dtx88n7iyNI4kA=;
+ b=kGBZDR8OEKZ/GKv8hcKiiiQl86FeodZk1hlq82Zebc+atfFOk7ux+no+2GoBk8YbY+
+ FCqaNn8LAvsb1ahO54l/mkfw3OEaAlW3gT+2JPQnbAA4bAoQjKgYrLcCuAYm1oluUoj5
+ quRwZEURa5p/p0C+/Prx+5DpGojhKWtF6UpWwRt6qqf93V63iKm1rtLAHlayQtHgZGtp
+ fgf02MK6K4NTO9+wc/XIjJHRSo3oSpUBMfu7xHX9iH2hv4be7ve1q7O3kTWxmv//rROO
+ lvePXjRFuhEn5fqsM4ONwxr+aSfh6+rsaMmEqvtrsSE5qYnVlXAB2qWE+XRe/iM320fq
+ LaQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727848265; x=1728453065;
+ d=1e100.net; s=20230601; t=1727848268; x=1728453068;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mr8ztux/WjHsRrRRjwNMAfL9hLtaU+DJEJRiO/tD+UY=;
- b=W3J/4ZhR74lKjbr5MRntoasxmWrjl+5EBkYBbx79M74h8RRKaOxGcnntVaa0dc1ugP
- XxAajRaAeVwi+mQHBb1wxSlAwqPg51BVRx1m8ultn1CdYfSNpLHXZR5oYaiX3jvKB7hc
- 2cqtL4R4/Susbd3niKF6CdFv++dOtvi4R070mKWylRSb8fFK1u3Bhk2Iz84GxTsP1VQa
- e+WsIc1yxIH8GB7UbGsL+EgWt1pmv2elT7Y5pa0ssOqMySo1QmBLnycmeiEOVajKzbnz
- i7zPw3Sm0EBuyTlqR0aguvR6rMleyOwLhXmzItwLZaWM5lFvDXOI5au/yFc3OI1GOuYO
- 2i3A==
-X-Gm-Message-State: AOJu0YzgQJlmTStqzLhTtFe00BhNNB8mVyn01u9nel7909RPnR7LPhDt
- EawYwg7xqkCu64qTgz8H+QcqEwS+kt8MvHpwPvURxxSIRaybfnTT3ItDOvlL
-X-Google-Smtp-Source: AGHT+IHx965BcMkWoDudsx2/bwopNVMnCLg9Wn1wrWsWDbRY2Rn73eC8/c+cNNVz53oqhRe+XqmNmA==
-X-Received: by 2002:a17:902:c947:b0:20a:fd4e:fef6 with SMTP id
- d9443c01a7336-20ba9ebb492mr88355655ad.8.1727848265351; 
- Tue, 01 Oct 2024 22:51:05 -0700 (PDT)
+ bh=617/1eGxW8JSsbGjaBrf05d+I+s82Dtx88n7iyNI4kA=;
+ b=RITNt7fYGhCQ5/3/SpomskCexkbFjvrMrEVNJZJsY2P1u26KnFv7VkMIu685NTmOMR
+ yYoOpAarojNOle/NYTsWT38FzVQJC/Qp7Z0knk8ZmRHdgHYkCuQWLb/lKio5hgIJp/gc
+ ezViEC9p3yTJQH3u4JxSKi+Zm4SR70CgntC2xYUIBaV2cSGgyUebPjv0gCSqYziJiRut
+ lt+JphrQCoHqTicfzTiA5WlSN8bcgJGSU0xGEqpQeY04LJb383Z1aSxUWuTmjbJtVhGA
+ 3D8e0k0y5VtcKaRanNvU8TyE3g1riEjzdoWYBbToucoi9HyCpbnU2r2uQaJaqai12yKv
+ tjAA==
+X-Gm-Message-State: AOJu0Yxv2xcLpGNdGEZxZNFqQavNnN2a4jfTprVczVumI9PINjQwTpSg
+ JzazDMw/h5ThlMDwF0HbdQ6IxzcT/Z6jB7rLzOvXR7oZwMoFczWk8eE3UVYA
+X-Google-Smtp-Source: AGHT+IEtX9t52Tz0N5zCd0OiySl8kBpDd6FmkLvYzMfMJOY4kD2fIgdlKis10r8B8B+pnuOm5ldpSA==
+X-Received: by 2002:a17:902:e88e:b0:206:aac4:b844 with SMTP id
+ d9443c01a7336-20bc59f1cadmr30928885ad.6.1727848268365; 
+ Tue, 01 Oct 2024 22:51:08 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20b37e60c76sm78324235ad.269.2024.10.01.22.51.02
+ d9443c01a7336-20b37e60c76sm78324235ad.269.2024.10.01.22.51.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 22:51:04 -0700 (PDT)
+ Tue, 01 Oct 2024 22:51:07 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Haibo Xu <haibo1.xu@intel.com>,
  Sunil V L <sunilvl@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v3 02/35] tests/acpi: Add empty ACPI SRAT data file for RISC-V
-Date: Wed,  2 Oct 2024 15:50:15 +1000
-Message-ID: <20241002055048.556083-3-alistair.francis@wdc.com>
+Subject: [PULL v3 03/35] tests/qtest/bios-tables-test.c: Enable numamem
+ testing for RISC-V
+Date: Wed,  2 Oct 2024 15:50:16 +1000
+Message-ID: <20241002055048.556083-4-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002055048.556083-1-alistair.francis@wdc.com>
 References: <20241002055048.556083-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,31 +102,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Haibo Xu <haibo1.xu@intel.com>
 
-As per process documented (steps 1-3) in bios-tables-test.c, add
-empty AML data file for RISC-V ACPI SRAT table and add the entry
-in bios-tables-test-allowed-diff.h.
+Add ACPI SRAT table test case for RISC-V when NUMA was enabled.
 
 Signed-off-by: Haibo Xu <haibo1.xu@intel.com>
 Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <0e30216273f2f59916bc651350578d8e8bc3a75f.1723172696.git.haibo1.xu@intel.com>
+Message-ID: <a6f7e1a4b20ff7eb199e94ca0c8aa2e6794ce5b2.1723172696.git.haibo1.xu@intel.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 1 +
- tests/data/acpi/riscv64/virt/SRAT.numamem   | 0
- 2 files changed, 1 insertion(+)
- create mode 100644 tests/data/acpi/riscv64/virt/SRAT.numamem
+ tests/qtest/bios-tables-test.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..a3e01d2eb7 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,2 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/riscv64/virt/SRAT.numamem",
-diff --git a/tests/data/acpi/riscv64/virt/SRAT.numamem b/tests/data/acpi/riscv64/virt/SRAT.numamem
-new file mode 100644
-index 0000000000..e69de29bb2
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index 36e5c0adde..e79f3a03df 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -1706,6 +1706,32 @@ static void test_acpi_microvm_ioapic2_tcg(void)
+     free_test_data(&data);
+ }
+ 
++static void test_acpi_riscv64_virt_tcg_numamem(void)
++{
++    test_data data = {
++        .machine = "virt",
++        .arch = "riscv64",
++        .tcg_only = true,
++        .uefi_fl1 = "pc-bios/edk2-riscv-code.fd",
++        .uefi_fl2 = "pc-bios/edk2-riscv-vars.fd",
++        .cd = "tests/data/uefi-boot-images/bios-tables-test.riscv64.iso.qcow2",
++        .ram_start = 0x80000000ULL,
++        .scan_len = 128ULL * 1024 * 1024,
++    };
++
++    data.variant = ".numamem";
++    /*
++     * RHCT will have ISA string encoded. To reduce the effort
++     * of updating expected AML file for any new default ISA extension,
++     * use the profile rva22s64.
++     */
++    test_acpi_one(" -cpu rva22s64"
++                  " -object memory-backend-ram,id=ram0,size=128M"
++                  " -numa node,memdev=ram0",
++                  &data);
++    free_test_data(&data);
++}
++
+ static void test_acpi_aarch64_virt_tcg_numamem(void)
+ {
+     test_data data = {
+@@ -2466,6 +2492,8 @@ int main(int argc, char *argv[])
+     } else if (strcmp(arch, "riscv64") == 0) {
+         if (has_tcg && qtest_has_device("virtio-blk-pci")) {
+             qtest_add_func("acpi/virt", test_acpi_riscv64_virt_tcg);
++            qtest_add_func("acpi/virt/numamem",
++                           test_acpi_riscv64_virt_tcg_numamem);
+         }
+     }
+     ret = g_test_run();
 -- 
 2.46.2
 
