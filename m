@@ -4,53 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2928CF3198
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 06:57:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 015F5CF3198
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 07:00:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svtIH-0002S6-Kz; Wed, 02 Oct 2024 02:57:05 -0400
+	id 1svtLa-0003dE-2w; Wed, 02 Oct 2024 03:00:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=nzkv=Q6=kaod.org=clg@ozlabs.org>)
- id 1svtIG-0002Rp-Ma; Wed, 02 Oct 2024 02:57:04 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1svtLS-0003Yl-P1; Wed, 02 Oct 2024 03:00:26 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=nzkv=Q6=kaod.org=clg@ozlabs.org>)
- id 1svtIE-0003ai-Nm; Wed, 02 Oct 2024 02:57:04 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4XJQbH6pd6z4wbv;
- Wed,  2 Oct 2024 16:56:59 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4XJQbG00JFz4w2M;
- Wed,  2 Oct 2024 16:56:57 +1000 (AEST)
-Message-ID: <c39f54de-65f4-42a6-bde7-b5a4ea0c2056@kaod.org>
-Date: Wed, 2 Oct 2024 08:56:56 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1svtLQ-0003wg-Ec; Wed, 02 Oct 2024 03:00:22 -0400
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:b1cb:0:640:2a1e:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 0791260A52;
+ Wed,  2 Oct 2024 10:00:14 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:8026::1:2f] (unknown
+ [2a02:6b8:b081:8026::1:2f])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 90VJ162IjeA0-gfQQfmDx; Wed, 02 Oct 2024 10:00:13 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1727852413;
+ bh=bnTMcUpa/lUbvx0VTzF+1J8Fma2kPqb+tdwDBgowbNE=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=iyGxA5rejqrr4Xob7F+xx/n2tCP8KdefHyXr8ijcAUtLtgwiy0lu2NKoPbHe1Gos4
+ 5kkfyvzbz2HvIdZdjSZQLQouDi/GjGp570txcackEzXQ9VzY3MsY+Wts7U57WCjIs+
+ HgPslUGuKOzxliYau3TtojZgfbz14NsnM8vF5uAE=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <d97950d9-3f82-4838-a6e8-9e00859e72f6@yandex-team.ru>
+Date: Wed, 2 Oct 2024 10:00:09 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/11] ppc/spapr: remove deprecated machines specific
- code
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, danielhb413@gmail.com
-References: <20241001092910.1030913-1-harshpb@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20241001092910.1030913-1-harshpb@linux.ibm.com>
+Subject: Re: [PATCH v3 21/22] qom/object: fix -Werror=maybe-uninitialized
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, Fam Zheng <fam@euphon.net>,
+ Song Gao <gaosong@loongson.cn>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-block@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Greg Kurz <groug@kaod.org>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
+ <eperezma@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
+ Eric Blake <eblake@redhat.com>, Hyman Huang <yong.huang@smartx.com>,
+ Kevin Wolf <kwolf@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, John Snow <jsnow@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Jesper Devantier <foss@defmacro.it>,
+ Peter Xu <peterx@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Klaus Jensen <its@irrelevant.dk>, Keith Busch <kbusch@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Yuval Shaia <yuval.shaia.ml@gmail.com>,
+ Bin Meng <bin.meng@windriver.com>
+References: <20240930081458.1926382-1-marcandre.lureau@redhat.com>
+ <20240930081458.1926382-22-marcandre.lureau@redhat.com>
+ <c02e70b2-c76a-49ff-844d-3e8b66a4fe3b@yandex-team.ru>
+ <CAJ+F1C+n3NJDmSP53o9p6qZvPnVzKv20rB0_U7vn+8JRq0Rc0A@mail.gmail.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <CAJ+F1C+n3NJDmSP53o9p6qZvPnVzKv20rB0_U7vn+8JRq0Rc0A@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=nzkv=Q6=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Yandex-Filter: 1
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,60 +97,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Harsh,
-
-On 10/1/24 11:28, Harsh Prateek Bora wrote:
-> Commit 1392617d3576 intended to tag pseries-2.1 - 2.11 machines as
-> deprecated with reasons mentioned in its commit log.
-> Removing the arch specific code for the now deprecated machine types.
+On 01.10.24 18:22, Marc-André Lureau wrote:
+> Hi Vladimir
 > 
-> v2: Addressed review comments from Cedric
-> v1: <20240917060300.943496-1-harshpb@linux.ibm.com>
->   
-> Harsh Prateek Bora (11):
->    ppc/spapr: remove deprecated machine pseries-2.1
->    ppc/spapr: remove deprecated machine pseries-2.2
->    ppc/spapr: remove deprecated machine pseries-2.3
->    ppc/spapr: remove deprecated machine pseries-2.4
->    ppc/spapr: remove deprecated machine pseries-2.5
->    ppc/spapr: remove deprecated machine pseries-2.6
->    ppc/spapr: remove deprecated machine pseries-2.7
->    ppc/spapr: remove deprecated machine pseries-2.8
->    ppc/spapr: remove deprecated machine pseries-2.9
->    ppc/spapr: remove deprecated machine pseries-2.10
->    ppc/spapr: remove deprecated machine pseries-2.11
+> On Tue, Oct 1, 2024 at 6:06 PM Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru <mailto:vsementsov@yandex-team.ru>> wrote:
+> 
+>     On 30.09.24 11:14, marcandre.lureau@redhat.com <mailto:marcandre.lureau@redhat.com> wrote:
+>      > From: Marc-André Lureau <marcandre.lureau@redhat.com <mailto:marcandre.lureau@redhat.com>>
+>      >
+>      > object_resolve_path_type() didn't always set *ambiguousp.
+>      >
+>      > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com <mailto:marcandre.lureau@redhat.com>>
+>      > ---
+>      >   qom/object.c | 5 ++++-
+>      >   1 file changed, 4 insertions(+), 1 deletion(-)
+>      >
+>      > diff --git a/qom/object.c b/qom/object.c
+>      > index 28c5b66eab..bdc8a2c666 100644
+>      > --- a/qom/object.c
+>      > +++ b/qom/object.c
+>      > @@ -2201,6 +2201,9 @@ Object *object_resolve_path_type(const char *path, const char *typename,
+>      >           }
+>      >       } else {
+>      >           obj = object_resolve_abs_path(object_get_root(), parts + 1, typename);
+>      > +        if (ambiguousp) {
+>      > +            *ambiguousp = false;
+>      > +        }
+> 
+>     Doesn't this hunk in isolation fix the issue? With this object_resolve_path_type() should set the pointer on all paths if it is non-null..
+> 
+> 
+> 
+>     Hmm, called object_resolve_partial_path() also doesn't set ambiguous on every path, so this hunk is at lease incomplete.
+> 
+> 
+> yeah, but object_resolve_path_type() initializes it.
+> 
+>     I'm unsure about what semantics expected around ambigous pointers, but it seems to me that it is set only on failure paths, as a reason, why we failed. If this is true, I think, we need only the second hunk, which initializes local "ambig".
+> 
+> 
+> right, and that seems good enough.
+> 
+> Do you ack/rb this change then?
+> 
+> 
+>      qom/object: fix -Werror=maybe-uninitialized
+> 
+>      object_resolve_path_type() didn't always set *ambiguousp.
+> 
+>      Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com <mailto:marcandre.lureau@redhat.com>>
+> 
+> diff --git a/qom/object.c b/qom/object.c
+> index 28c5b66eab..d3d3003541 100644
+> --- a/qom/object.c
+> +++ b/qom/object.c
+> @@ -2226,7 +2226,7 @@ Object *object_resolve_path_at(Object *parent, const char *path)
+> 
+>   Object *object_resolve_type_unambiguous(const char *typename, Error **errp)
+>   {
+> -    bool ambig;
+> +    bool ambig = false;
+>       Object *o = object_resolve_path_type("", typename, &ambig);
+> 
+>       if (ambig) {
+> 
+> 
 
-LGTM, I had a few questions.
+Yes, I think this one in isolation is OK:
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Please be aware that the next QEMU cycle will have more machines
-to deprecate.
 
-pseries-2.1          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-2.10         pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-2.11         pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-2.12         pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-2.12-sxxm    pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-2.2          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-2.3          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-2.4          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-2.5          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-2.6          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-2.7          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-2.8          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-2.9          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-3.0          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-3.1          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-4.0          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-4.1          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-4.2          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-5.0          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-5.1          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-5.2          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-6.0          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-6.1          pSeries Logical Partition (PAPR compliant) (deprecated)
+> thanks!
+> 
+>      >       }
+>      >
+>      >       g_strfreev(parts);
+>      > @@ -2226,7 +2229,7 @@ Object *object_resolve_path_at(Object *parent, const char *path)
+>      >
+>      >   Object *object_resolve_type_unambiguous(const char *typename, Error **errp)
+>      >   {
+>      > -    bool ambig;
+>      > +    bool ambig = false;
+>      >       Object *o = object_resolve_path_type("", typename, &ambig);
+>      >
+>      >       if (ambig) {
+> 
+>     -- 
+>     Best regards,
+>     Vladimir
+> 
+> 
+> 
+> 
+> -- 
+> Marc-André Lureau
 
-Thanks,
-
-C.
+-- 
+Best regards,
+Vladimir
 
 
