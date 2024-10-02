@@ -4,85 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02510CF6D38
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 15:15:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E3D8CF6D2D
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 15:16:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sw14F-0003f8-HB; Wed, 02 Oct 2024 11:15:09 -0400
+	id 1sw158-0004Bf-54; Wed, 02 Oct 2024 11:16:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sw14A-0003cc-41
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:15:02 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sw148-0004Db-Ea
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:15:01 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-42e5e1e6d37so62698315e9.3
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 08:14:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727882097; x=1728486897; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=F1MIQgPs+0xA8AvPQlQaLpUykGZqgvAuH2N6S+TT5O0=;
- b=YV6JfyGpL8tvxqYlNIIh+ZK51JsN90Pq04YUm/RxTat19wnrj+yX8lbuYVAUa+CtW3
- Eq4yJwXNLzhXPLwFub5oDPVcSOStIOXJCd5Dp/WHdxzsz0JbPcT1+bzHsLSHtosPOMir
- j8RxIZpuIHHrScZURFXNE9IcaGhikagNFw5Q/c8M9UZEitwwHXPQoHNixuYS2eyOiRFS
- 3t+7WChWx2IHbuOzI9FtfLHypuX53von8UHv14oyx53mpnyWX+b/Ka36/IpwtOaz0cse
- rYgvCbRclFo1ufZHbzWap87gIofE9y1QwBssauKo5K/I7Sd2aTddNoDXH72d0ZlAonpD
- ZJ4Q==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sw14x-0003vo-4V
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:15:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sw14v-0004cM-EA
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:15:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727882148;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RG7pacTsb3Z1pKhgoiCAeMHrnd1TFk28biALoK/dBSA=;
+ b=DpIE4CBcdmhp4n91jt3tuBFC1KM9S5cY/ktZnNFWk1uwqYVtMeGXaUFBsVER4yJkmm6q6F
+ nmC0/CSmdYvYqmmd6aR4UEy3bOVJ6S8NDIHRei30xhPLJ4n0oujhG8wuZBD4fcqT6G/5p3
+ FzdtB/yQLtLG6ZV1CtUEU5Zi+H2aWFw=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-517-b_1Ld0YvODGI7zOG5OdlTQ-1; Wed, 02 Oct 2024 11:15:47 -0400
+X-MC-Unique: b_1Ld0YvODGI7zOG5OdlTQ-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-42ca8037d9aso44633085e9.3
+ for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 08:15:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727882097; x=1728486897;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=F1MIQgPs+0xA8AvPQlQaLpUykGZqgvAuH2N6S+TT5O0=;
- b=TnVGlY3PSHpsIWzNX32zV/dkiehZfSCnxKCGYE4HSmcqqq4gINMCAgzNPUuXubpWop
- WXmrzlWgqR8nGv8L90NA12n0ardHlEC5UWzN6rutgY/Uc9bjrZd/VqdsriER+ISwV6za
- 9Od2reaqT1r1Td7RaBw93Gh3XC/VI+EdgyCNL01JHpX4KentjoGoqtWqnqIJ2Dp41kbt
- y0P6cUteCgnzzTyO6Yf0+JMdfsCIyl6ywTUI/SSNTAZP9ArAS2W34HcCtuEgUWFJ0quf
- RaGu7oN+JasGSSycySuDGbULJnSP10PSsSxCEWR/CZy1u47jWdybFoY8eJkebFxHWKkc
- lfsQ==
-X-Gm-Message-State: AOJu0YxU0nY00Jopjfpk/vtIyKEhqLxj+hSVrnAx6va+47PG9Cq/QnhD
- gXsfx68/B/7AvhUYhpMYEe5ejG8q4XwAIE4NVTW943rifiu1Gxas0SXhvdD84+5JmSvQ5IgVLc1
- e
-X-Google-Smtp-Source: AGHT+IHl0EmTzyRfZDY6mUGlm2Xl2Vpzo4c6NUpMyLdY8RLXIMD3KIs7mtDecLv+EgyRchUzkHCFGA==
-X-Received: by 2002:a5d:69c8:0:b0:377:9867:9028 with SMTP id
- ffacd0b85a97d-37cfba0a658mr2353526f8f.44.1727882097303; 
- Wed, 02 Oct 2024 08:14:57 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd57429e5sm14092592f8f.98.2024.10.02.08.14.56
+ d=1e100.net; s=20230601; t=1727882146; x=1728486946;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RG7pacTsb3Z1pKhgoiCAeMHrnd1TFk28biALoK/dBSA=;
+ b=f56u0rek6t/5pFGdx83Chlnxnk4MdVfObgdIHf2z+WQlCW3ROSCUrgquKo2bcBbZ9l
+ nXkF5cnlnbBJMmvEuEbyzDXfxGEktoIB6rfv7I6TVrH3L9yfCjQyUiYUQasOhIg7Fx/8
+ yzIIBX2fZCivR3Sq0mvM1opfpIoynmNdaVT7y3Lv8BJoaZiWCG/AocrzmhALSX7dlyzP
+ ZHEB0alPC1UxGgU2MxsBz/tGH5QXKr7u7Vza9gEhlgGhguulTElCJet4RkOX9GrMZi6y
+ RrDWHQ+SKUOr8PRz6ZFsnS1QvjRoQHy0KzjsbxDn6pVXlos+8CB8d/CPJhnwJJURKJoT
+ RcRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXTr+YdM1KN+SbnM6ceuzJSZm2V2JdKVrPTFGmJ9JTis7T7r81pBovvQO1uZ3d31pWEIdVRYUi+WBm0@nongnu.org
+X-Gm-Message-State: AOJu0Yy1IGbrT440Fp+v4A1o35ZFfjcvaJ1GSA89ZaqeR+lbT455bBik
+ RCOLSeevLV+Oqf5ZmbVuCSdHbd8LvkLIn030sWdhPLjAj8CSJouJKg1j+q0hWcia/ap0VgV4NS4
+ o/oJvJAIiRz0ep3CD5lN21j5XcAOMLA8yDTD/VNAdMvPmsimwUlz9
+X-Received: by 2002:a05:600c:1d1f:b0:42c:b22e:fbfa with SMTP id
+ 5b1f17b1804b1-42f777dba40mr23824565e9.21.1727882146012; 
+ Wed, 02 Oct 2024 08:15:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEsK+5K05akORUjistIGZUjbBnDCo25jpAOQvMzy3UiB8KuFLG4FXkVEoB0X6hHQIGL2t3orw==
+X-Received: by 2002:a05:600c:1d1f:b0:42c:b22e:fbfa with SMTP id
+ 5b1f17b1804b1-42f777dba40mr23824365e9.21.1727882145626; 
+ Wed, 02 Oct 2024 08:15:45 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42f79db2b97sm21240245e9.6.2024.10.02.08.15.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Oct 2024 08:14:56 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B7A1B5F780;
- Wed,  2 Oct 2024 16:14:55 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,  qemu-trivial@nongnu.org
-Subject: Re: [PATCH] tests/tcg/plugins: Remove remainder of the cris target
-In-Reply-To: <20241002143708.376707-1-thuth@redhat.com> (Thomas Huth's message
- of "Wed, 2 Oct 2024 16:37:08 +0200")
-References: <20241002143708.376707-1-thuth@redhat.com>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Wed, 02 Oct 2024 16:14:55 +0100
-Message-ID: <87ikuamt8w.fsf@draig.linaro.org>
+ Wed, 02 Oct 2024 08:15:45 -0700 (PDT)
+Date: Wed, 2 Oct 2024 17:15:43 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
+ <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
+ <anisinha@redhat.com>, linux-kernel@vger.kernel.org, qemu-devel@nongnu.org,
+ peterx@redhat.com
+Subject: Re: [PATCH RFC 3/5] acpi/generic_event_device: Update GHES
+ migration to cover hest addr
+Message-ID: <20241002171543.703ab6e1@imammedo.users.ipa.redhat.com>
+In-Reply-To: <d29cdf2bbb67c660142841c2d854db280c18e5e0.1727782588.git.mchehab+huawei@kernel.org>
+References: <cover.1727782588.git.mchehab+huawei@kernel.org>
+ <d29cdf2bbb67c660142841c2d854db280c18e5e0.1727782588.git.mchehab+huawei@kernel.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,34 +109,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+On Tue,  1 Oct 2024 13:42:48 +0200
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-> The cris target has recently been removed (see commit 44e4075bf4 -
-> "target/cris: Remove the deprecated CRIS target"), but apparently this
-> line has been forgotten. So clean it up now.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> The GHES migration logic at GED should now support HEST table
+> location too.
+> 
+> Increase migration version and change needed to check for both
+> ghes_addr_le and hest_addr_le.
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+
+other than minor issues below, lgtm
+
 > ---
->  tests/tcg/plugins/syscall.c | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
-> index 89dc7f49b1..ff452178b1 100644
-> --- a/tests/tcg/plugins/syscall.c
-> +++ b/tests/tcg/plugins/syscall.c
-> @@ -34,7 +34,6 @@ static const struct SyscallInfo arch_syscall_info[] =3D=
- {
->      { "arm", 4 },
->      { "armeb", 4 },
->      { "avr", -1 },
-> -    { "cris", -1 },
->      { "hexagon", 64 },
->      { "hppa", -1 },
->      { "i386", 4 },
+>  hw/acpi/generic_event_device.c | 29 +++++++++++++++++++++++++++++
+>  1 file changed, 29 insertions(+)
+> 
+> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+> index d4dbfb45e181..49ca1fb8e84a 100644
+> --- a/hw/acpi/generic_event_device.c
+> +++ b/hw/acpi/generic_event_device.c
+> @@ -369,6 +369,34 @@ static const VMStateDescription vmstate_ghes_state = {
+>      }
+>  };
+>  
+> +static const VMStateDescription vmstate_hest = {
+> +    .name = "acpi-ghes",
+duplicate name for section, we use that already for hw_error address
+I don't know ramification of (CCIng Peter)
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Perhaps
+s/ghes/hest/
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
+
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT64(hest_addr_le, AcpiGhesState),
+> +        VMSTATE_END_OF_LIST()
+> +    },
+> +};
+> +
+> +static bool hest_needed(void *opaque)
+> +{
+> +    AcpiGedState *s = opaque;
+> +    return s->ghes_state.hest_addr_le;
+> +}
+> +
+> +static const VMStateDescription vmstate_hest_state = {
+> +    .name = "acpi-ged/ghes",
+
+ditto
+
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .needed = hest_needed,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_STRUCT(ghes_state, AcpiGedState, 1,
+> +                       vmstate_hest, AcpiGhesState),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+>  static const VMStateDescription vmstate_acpi_ged = {
+>      .name = "acpi-ged",
+>      .version_id = 1,
+> @@ -380,6 +408,7 @@ static const VMStateDescription vmstate_acpi_ged = {
+>      .subsections = (const VMStateDescription * const []) {
+>          &vmstate_memhp_state,
+>          &vmstate_ghes_state,
+> +        &vmstate_hest_state,
+>          NULL
+>      }
+>  };
+
 
