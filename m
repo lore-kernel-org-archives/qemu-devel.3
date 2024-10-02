@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F447CF31B4
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 12:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67FBCCF31B4
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 12:07:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svy37-00019O-RR; Wed, 02 Oct 2024 08:01:45 -0400
+	id 1svy8U-0002cW-6D; Wed, 02 Oct 2024 08:07:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1svy2w-00017h-E6
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 08:01:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1svy2u-0003Uz-PU
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 08:01:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727870491;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=F0pHY42ZhujEfgLa4ymvUuXv/8tQGt1pFPcOGX4Khcs=;
- b=PLKZa6kQR7YcU0S5nVpKO3KTmMcSKxq+H+X54WCBnRcZMKCD4AJeYm78GU5TmLNo9XS3NW
- BwCYkr1jWqwx8w63rUOiBbAH0CUO+O45m01Lawd+zZQ9h3dSpsk1Nn9U3+KJ4iHI5e9olZ
- DKiPM5/2oXV4EeBpCrWyMbPzlXEDmXI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-578-EWLqehXyMQqbQmHgEBBiKw-1; Wed,
- 02 Oct 2024 08:01:26 -0400
-X-MC-Unique: EWLqehXyMQqbQmHgEBBiKw-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 96B061955F42; Wed,  2 Oct 2024 12:01:25 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.127])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6C79B19560A3; Wed,  2 Oct 2024 12:01:23 +0000 (UTC)
-Date: Wed, 2 Oct 2024 13:01:20 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Simon Rowe <simon.rowe@nutanix.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- "freddy77@gmail.com" <freddy77@gmail.com>
-Subject: Re: Corrupt VNC display for 1366x768
-Message-ID: <Zv02EDIKgmq2L0fg@redhat.com>
-References: <DM8PR02MB81217D61C42562572F8AFFB093702@DM8PR02MB8121.namprd02.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1svy8P-0002c1-Bc
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 08:07:13 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1svy8G-0004EZ-FR
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 08:07:07 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a8a7903cb7dso571485466b.3
+ for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 05:07:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727870821; x=1728475621; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=L3qYmUvOiOsGi4aszyqe9rzwIUR0RYnnGQCFOcsMzhQ=;
+ b=l48dqKlSPEQWdG2SSnmOWx1N+oIqEDShkdF+X3yHlB8zB4cUIohlPDgadFnUF1P1Ib
+ iQOuSMCYqk1Q7Ace9C3O5cGkIXHnSKMekbePFuU30lnGaX3U3UuX9AHyew3HWpjy5O9b
+ f4klGLmv5XooDS9FM6aRlT02TijIsIFVnX7CXkvpMaEP/IesnlnylRrPVe7d/zDddI6d
+ LWfP9LtF2X51wsTTP2hdRjuDivhcoFhQ5GVxWkeB3IwAnVOLnAs3aRTHv9gLdZhqtwtx
+ BDAhwqRD/XXPcGWtSefcqcCPfY8Iutso3TISiAs4gTO3N7g4vNC7j2WH9Z6tTY/quAry
+ jUwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727870821; x=1728475621;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=L3qYmUvOiOsGi4aszyqe9rzwIUR0RYnnGQCFOcsMzhQ=;
+ b=Lj9qUPc9YKj3YsgIgh1dzaNO7lrrHQcFzk1BxBYW2xMWr5Bgdby6+D4rVfSUXYJutQ
+ xac20brW95X4oWfYJt9HcajjBC4Gn3fKnX6w5jIZhUPU+J8BhnwqFaqJKzPLzsLlGN5V
+ D4pNJu/hQgUVL+NZe5U3LDJ/962lx5tkGZOJ5DZpbOY0ktAEduSSj+qvJT3W+StxbACW
+ juOi/2bOD8Xl7VPWU7PBMUipNQyyIJH+IgrkonPskU/dCm8aeAgYZ2EXCKKMpX9zCDVd
+ /KqAA+gGWMpy3CZf9uyuHCKM76Q2O9WMQmjd2lt0IjIp/cHckKcAoTOWC+tJ+8A8RTXf
+ Wq6Q==
+X-Gm-Message-State: AOJu0Yx7BXib9L8IC6mB/n+AhztGZ+FJSjhM3b6oSPNkeccyobZri6wq
+ YkbzeDCSjATOftzd8oyLBAI3ujkXrPxgK+24Aj6/qmZx/m3lnLPQIO008krVdHh7YJ9QWX/5ANf
+ hpifIM2WaVtQvlq7nuB0+bbqQJYiiZnZaMs95SMh1jqyctmyS
+X-Google-Smtp-Source: AGHT+IFuVitQddJMeVmh3n+6+7UjxR2zGFnHQUlCYtmwQH5/4bEItD2MqTdi9mI2DwRuvOR4VsLbJEz85uLQnyceNSw=
+X-Received: by 2002:a05:6402:4405:b0:5c8:9f44:a0b2 with SMTP id
+ 4fb4d7f45d1cf-5c8b18b9d5cmr3458636a12.5.1727870821287; Wed, 02 Oct 2024
+ 05:07:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <DM8PR02MB81217D61C42562572F8AFFB093702@DM8PR02MB8121.namprd02.prod.outlook.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20241001163918.1275441-1-peter.maydell@linaro.org>
+In-Reply-To: <20241001163918.1275441-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 2 Oct 2024 13:06:49 +0100
+Message-ID: <CAFEAcA_sMm8qRHc2cM1hw6XkOQX-jwVYQ5uo4gw4zxfeAFa+CA@mail.gmail.com>
+Subject: Re: [PULL 00/54] target-arm queue
+To: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,33 +82,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 02, 2024 at 11:09:13AM +0000, Simon Rowe wrote:
-> I've been trying to track down the cause of a glitch that affects guest VNC consoles when the resolution is set to 1366x768. This results in a "stair case" effect where each successive row is offset to the right by a handful of pixels. I believe this is related to the fact that the horizontal resolution only divisible by 2, not 16 which most others are.
-> 
-> There was a similar report many years ago, with a proposed patch
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2013-03/msg02732.html
-> 
-> but this was never committed and the code has been significantly reworked in the meantime.
-> 
-> Could anyone give me any pointers as to where the problem may lie?
+On Tue, 1 Oct 2024 at 17:39, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> This pullreq has a few miscellaneous fixes, plus the
+> non-controversial (and largely reviewed) parts of my
+> series removing deprecated arm boards. (The rest of that
+> series I will send out a v2 for once this lands.)
+>
+> -- PMM
+>
+> The following changes since commit 718780d20470c66a3a36d036b29148d5809dc855:
+>
+>   Merge tag 'pull-nvme-20241001' of https://gitlab.com/birkelund/qemu into staging (2024-10-01 11:34:07 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20241001
+>
+> for you to fetch changes up to be025ce676d0f8fd094d17b34e87305a1c8fb595:
+>
+>   hw: Remove omap2 specific defines and enums (2024-10-01 16:08:02 +0100)
+>
+> ----------------------------------------------------------------
+> target-arm queue:
+>  * MAINTAINERS: Update STM32L4x5 and B-L475E-IOT01A maintainers
+>  * hw/arm/xlnx: Connect secondary CGEM IRQs
+>  * m25p80: Add SFDP table for mt35xu01g flash
+>  * target/arm: Avoid target_ulong for physical address lookups
+>  * hw/ssi/xilinx_spips: Fix flash erase assert in dual parallel configuration
+>  * hw: fix memory leak in IRQState allocation
+>  * hw/sd/sdcard: Fix handling of disabled boot partitions
+>  * arm: Remove deprecated board models
+>
 
-There's a newer bug report here, but not real progress:
 
-  https://gitlab.com/qemu-project/qemu/-/issues/90
+Applied, thanks.
 
-1366 is particularly problematic as it apparently can't be represented
-exactly in EDID which needs a x8 multiple.
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+-- PMM
 
