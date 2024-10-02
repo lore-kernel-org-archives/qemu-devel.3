@@ -4,94 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E3D8CF6D2D
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 15:16:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 905D5CF6D36
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 15:18:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sw158-0004Bf-54; Wed, 02 Oct 2024 11:16:03 -0400
+	id 1sw17k-0005lY-J2; Wed, 02 Oct 2024 11:18:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sw14x-0003vo-4V
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:15:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sw17b-0005im-Gh; Wed, 02 Oct 2024 11:18:36 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sw14v-0004cM-EA
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:15:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727882148;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RG7pacTsb3Z1pKhgoiCAeMHrnd1TFk28biALoK/dBSA=;
- b=DpIE4CBcdmhp4n91jt3tuBFC1KM9S5cY/ktZnNFWk1uwqYVtMeGXaUFBsVER4yJkmm6q6F
- nmC0/CSmdYvYqmmd6aR4UEy3bOVJ6S8NDIHRei30xhPLJ4n0oujhG8wuZBD4fcqT6G/5p3
- FzdtB/yQLtLG6ZV1CtUEU5Zi+H2aWFw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-517-b_1Ld0YvODGI7zOG5OdlTQ-1; Wed, 02 Oct 2024 11:15:47 -0400
-X-MC-Unique: b_1Ld0YvODGI7zOG5OdlTQ-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42ca8037d9aso44633085e9.3
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 08:15:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727882146; x=1728486946;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RG7pacTsb3Z1pKhgoiCAeMHrnd1TFk28biALoK/dBSA=;
- b=f56u0rek6t/5pFGdx83Chlnxnk4MdVfObgdIHf2z+WQlCW3ROSCUrgquKo2bcBbZ9l
- nXkF5cnlnbBJMmvEuEbyzDXfxGEktoIB6rfv7I6TVrH3L9yfCjQyUiYUQasOhIg7Fx/8
- yzIIBX2fZCivR3Sq0mvM1opfpIoynmNdaVT7y3Lv8BJoaZiWCG/AocrzmhALSX7dlyzP
- ZHEB0alPC1UxGgU2MxsBz/tGH5QXKr7u7Vza9gEhlgGhguulTElCJet4RkOX9GrMZi6y
- RrDWHQ+SKUOr8PRz6ZFsnS1QvjRoQHy0KzjsbxDn6pVXlos+8CB8d/CPJhnwJJURKJoT
- RcRw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXTr+YdM1KN+SbnM6ceuzJSZm2V2JdKVrPTFGmJ9JTis7T7r81pBovvQO1uZ3d31pWEIdVRYUi+WBm0@nongnu.org
-X-Gm-Message-State: AOJu0Yy1IGbrT440Fp+v4A1o35ZFfjcvaJ1GSA89ZaqeR+lbT455bBik
- RCOLSeevLV+Oqf5ZmbVuCSdHbd8LvkLIn030sWdhPLjAj8CSJouJKg1j+q0hWcia/ap0VgV4NS4
- o/oJvJAIiRz0ep3CD5lN21j5XcAOMLA8yDTD/VNAdMvPmsimwUlz9
-X-Received: by 2002:a05:600c:1d1f:b0:42c:b22e:fbfa with SMTP id
- 5b1f17b1804b1-42f777dba40mr23824565e9.21.1727882146012; 
- Wed, 02 Oct 2024 08:15:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEsK+5K05akORUjistIGZUjbBnDCo25jpAOQvMzy3UiB8KuFLG4FXkVEoB0X6hHQIGL2t3orw==
-X-Received: by 2002:a05:600c:1d1f:b0:42c:b22e:fbfa with SMTP id
- 5b1f17b1804b1-42f777dba40mr23824365e9.21.1727882145626; 
- Wed, 02 Oct 2024 08:15:45 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f79db2b97sm21240245e9.6.2024.10.02.08.15.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Oct 2024 08:15:45 -0700 (PDT)
-Date: Wed, 2 Oct 2024 17:15:43 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, linux-kernel@vger.kernel.org, qemu-devel@nongnu.org,
- peterx@redhat.com
-Subject: Re: [PATCH RFC 3/5] acpi/generic_event_device: Update GHES
- migration to cover hest addr
-Message-ID: <20241002171543.703ab6e1@imammedo.users.ipa.redhat.com>
-In-Reply-To: <d29cdf2bbb67c660142841c2d854db280c18e5e0.1727782588.git.mchehab+huawei@kernel.org>
-References: <cover.1727782588.git.mchehab+huawei@kernel.org>
- <d29cdf2bbb67c660142841c2d854db280c18e5e0.1727782588.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sw17Y-0004px-Ta; Wed, 02 Oct 2024 11:18:35 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c23:1301:0:640:a2b5:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id AB03360D4F;
+ Wed,  2 Oct 2024 18:18:28 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:8026::1:2f])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 7IdRVm1IaeA0-1YgGQtpV; Wed, 02 Oct 2024 18:18:28 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1727882308;
+ bh=QoBSQBwzTsqhFyxMo8qE6QO6e5IVO+nGcgo0RDbBEiE=;
+ h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=0Gkwnh0GhT9gFWZFCUclO9X2pAiG8656m/or9MMSf1P++k6yLDeEsnaxzCgaaCJu3
+ JZ0gjtysWzJINLHytOyi5jAfV9Z20eVRQWbGW89ONF+Qnlk2+J68nzXTTalp/EP3w2
+ ecPxaZmTRF6bj4oQuxqWDTPEUPFpMSOgKjK+JMOo=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, eblake@redhat.com, armbru@redhat.com,
+ dave@treblig.org, hreitz@redhat.com, kwolf@redhat.com,
+ Leonid Kaplan <xeor@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PATCH v3 2/2] block-backend: per-device throttling of BLOCK_IO_ERROR
+ reports
+Date: Wed,  2 Oct 2024 18:18:06 +0300
+Message-Id: <20241002151806.592469-3-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241002151806.592469-1-vsementsov@yandex-team.ru>
+References: <20241002151806.592469-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+X-Yandex-Filter: 1
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,80 +77,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue,  1 Oct 2024 13:42:48 +0200
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+From: Leonid Kaplan <xeor@yandex-team.ru>
 
-> The GHES migration logic at GED should now support HEST table
-> location too.
-> 
-> Increase migration version and change needed to check for both
-> ghes_addr_le and hest_addr_le.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+BLOCK_IO_ERROR events comes from guest, so we must throttle them.
+We still want per-device throttling, so let's use device id as a key.
 
-other than minor issues below, lgtm
+Signed-off-by: Leonid Kaplan <xeor@yandex-team.ru>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ monitor/monitor.c    | 7 +++++--
+ qapi/block-core.json | 2 ++
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-> ---
->  hw/acpi/generic_event_device.c | 29 +++++++++++++++++++++++++++++
->  1 file changed, 29 insertions(+)
-> 
-> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-> index d4dbfb45e181..49ca1fb8e84a 100644
-> --- a/hw/acpi/generic_event_device.c
-> +++ b/hw/acpi/generic_event_device.c
-> @@ -369,6 +369,34 @@ static const VMStateDescription vmstate_ghes_state = {
->      }
->  };
->  
-> +static const VMStateDescription vmstate_hest = {
-> +    .name = "acpi-ghes",
-duplicate name for section, we use that already for hw_error address
-I don't know ramification of (CCIng Peter)
-
-Perhaps
-s/ghes/hest/
-
-
-
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINT64(hest_addr_le, AcpiGhesState),
-> +        VMSTATE_END_OF_LIST()
-> +    },
-> +};
-> +
-> +static bool hest_needed(void *opaque)
-> +{
-> +    AcpiGedState *s = opaque;
-> +    return s->ghes_state.hest_addr_le;
-> +}
-> +
-> +static const VMStateDescription vmstate_hest_state = {
-> +    .name = "acpi-ged/ghes",
-
-ditto
-
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = hest_needed,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_STRUCT(ghes_state, AcpiGedState, 1,
-> +                       vmstate_hest, AcpiGhesState),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->  static const VMStateDescription vmstate_acpi_ged = {
->      .name = "acpi-ged",
->      .version_id = 1,
-> @@ -380,6 +408,7 @@ static const VMStateDescription vmstate_acpi_ged = {
->      .subsections = (const VMStateDescription * const []) {
->          &vmstate_memhp_state,
->          &vmstate_ghes_state,
-> +        &vmstate_hest_state,
->          NULL
->      }
->  };
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index db52a9c7ef..56786c0ccc 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -308,6 +308,7 @@ int error_printf_unless_qmp(const char *fmt, ...)
+ static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
+     /* Limit guest-triggerable events to 1 per second */
+     [QAPI_EVENT_RTC_CHANGE]        = { 1000 * SCALE_MS },
++    [QAPI_EVENT_BLOCK_IO_ERROR]    = { 1000 * SCALE_MS },
+     [QAPI_EVENT_WATCHDOG]          = { 1000 * SCALE_MS },
+     [QAPI_EVENT_BALLOON_CHANGE]    = { 1000 * SCALE_MS },
+     [QAPI_EVENT_QUORUM_REPORT_BAD] = { 1000 * SCALE_MS },
+@@ -493,7 +494,8 @@ static unsigned int qapi_event_throttle_hash(const void *key)
+         hash += g_str_hash(qdict_get_str(evstate->data, "node-name"));
+     }
+ 
+-    if (evstate->event == QAPI_EVENT_MEMORY_DEVICE_SIZE_CHANGE) {
++    if (evstate->event == QAPI_EVENT_MEMORY_DEVICE_SIZE_CHANGE ||
++        evstate->event == QAPI_EVENT_BLOCK_IO_ERROR) {
+         hash += g_str_hash(qdict_get_str(evstate->data, "qom-path"));
+     }
+ 
+@@ -519,7 +521,8 @@ static gboolean qapi_event_throttle_equal(const void *a, const void *b)
+                        qdict_get_str(evb->data, "node-name"));
+     }
+ 
+-    if (eva->event == QAPI_EVENT_MEMORY_DEVICE_SIZE_CHANGE) {
++    if (eva->event == QAPI_EVENT_MEMORY_DEVICE_SIZE_CHANGE ||
++        eva->event == QAPI_EVENT_BLOCK_IO_ERROR) {
+         return !strcmp(qdict_get_str(eva->data, "qom-path"),
+                        qdict_get_str(evb->data, "qom-path"));
+     }
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index b3743022be..835f90b118 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -5607,6 +5607,8 @@
+ # .. note:: If action is "stop", a STOP event will eventually follow
+ #    the BLOCK_IO_ERROR event.
+ #
++# .. note:: This event is rate-limited.
++#
+ # Since: 0.13
+ #
+ # .. qmp-example::
+-- 
+2.34.1
 
 
