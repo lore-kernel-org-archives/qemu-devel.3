@@ -4,65 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AE77CF6D28
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 13:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D752BCF6D2C
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 14:02:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svzs3-00081Z-5J; Wed, 02 Oct 2024 09:58:27 -0400
+	id 1svzvv-00026w-CY; Wed, 02 Oct 2024 10:02:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1svzru-0007s5-OL; Wed, 02 Oct 2024 09:58:18 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svzvt-00026i-Qr
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 10:02:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1svzrs-0003fe-Bs; Wed, 02 Oct 2024 09:58:18 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c08:f69e:0:640:3ef4:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 8DD8860BAE;
- Wed,  2 Oct 2024 16:58:11 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:8026::1:2f] (unknown
- [2a02:6b8:b081:8026::1:2f])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id AwbhXp1IdOs0-DZTN8r9G; Wed, 02 Oct 2024 16:58:10 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1727877490;
- bh=P1CYH8mUxQMTkwYRT96zQoZAg3RIKRe6HJvEzb7VE2o=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=g5CoPmRAu+r0YytDaTp6u9VBzph+/KIrCac+b4ZNPMHy/hLzs7KP03B6P/v3idFkG
- W3X7AUEwFxMiLRlfY08u92Fzjv1kytUkzmrd/YxBRL8eJJgqQRA5ab7tEsVJqcgAx1
- LM0NAd2Sk5F+aGT/zE7/xlUjI3Vu6j3WUn2f54xs=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <a2747d44-9f1d-4bec-a9dd-c7e9f7363575@yandex-team.ru>
-Date: Wed, 2 Oct 2024 16:58:10 +0300
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svzvr-0004Cu-T0
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 10:02:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727877741;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=tFxh2VhNAi4ytg54s53HDlDncclHDC3jlrKkVli28nY=;
+ b=K1pn3ulq1FqJPacyO70Wh7LHy8/WA+POHv+pY2/j/yPh6wUCNnEuJEOOrwIz8j3Hf7KyZH
+ z8aZEPCQR8RG67u+ruoEsECr4xPzSDGvFqKc/R+nI3fAIzIRCwmQE5ak2pSqrOzINoBGyQ
+ WAvVoVwVVv5rWL5bDhFxh32nlz6siY0=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-202-LOM_0HvfNniCYKpoCTCopQ-1; Wed,
+ 02 Oct 2024 10:02:18 -0400
+X-MC-Unique: LOM_0HvfNniCYKpoCTCopQ-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C8681955EAB; Wed,  2 Oct 2024 14:02:17 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.193.239])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AB9EB3000198; Wed,  2 Oct 2024 14:02:14 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] tests/functional: Bump timeout of some tests
+Date: Wed,  2 Oct 2024 16:02:12 +0200
+Message-ID: <20241002140212.350467-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] nbd/server: Allow users to adjust handshake limit in
- QMP
-To: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
- berrange@redhat.com, qemu-block@nongnu.org, den@virtuozzo.com,
- andrey.drobyshev@virtuozzo.com, alexander.ivanov@virtuozzo.com
-References: <20240809161828.1342831-4-eblake@redhat.com>
- <20240809161828.1342831-6-eblake@redhat.com> <87wmiqy5rl.fsf@pond.sub.org>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <87wmiqy5rl.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Yandex-Filter: 1
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -80,81 +78,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02.10.24 16:49, Markus Armbruster wrote:
-> Eric Blake <eblake@redhat.com> writes:
-> 
->> Although defaulting the handshake limit to 10 seconds was a nice QoI
->> change to weed out intentionally slow clients, it can interfere with
->> integration testing done with manual NBD_OPT commands over 'nbdsh
->> --opt-mode'.  Expose a QMP knob 'handshake-max-secs' to allow the user
->> to alter the timeout away from the default.
->>
->> The parameter name here intentionally matches the spelling of the
->> constant added in commit fb1c2aaa98, and not the command-line spelling
->> added in the previous patch for qemu-nbd; that's because in QMP,
->> longer names serve as good self-documentation, and unlike the command
->> line, machines don't have problems generating longer spellings.
->>
->> Signed-off-by: Eric Blake <eblake@redhat.com>
->> ---
->>   qapi/block-export.json         | 10 ++++++++++
->>   include/block/nbd.h            |  6 +++---
->>   block/monitor/block-hmp-cmds.c |  4 ++--
->>   blockdev-nbd.c                 | 26 ++++++++++++++++++--------
->>   4 files changed, 33 insertions(+), 13 deletions(-)
->>
->> diff --git a/qapi/block-export.json b/qapi/block-export.json
->> index ce33fe378df..c110dd375ad 100644
->> --- a/qapi/block-export.json
->> +++ b/qapi/block-export.json
->> @@ -17,6 +17,10 @@
->>   #
->>   # @addr: Address on which to listen.
->>   #
->> +# @handshake-max-secs: Time limit, in seconds, at which a client that
->> +#     has not completed the negotiation handshake will be disconnected,
->> +#     or 0 for no limit (since 9.2; default: 10).
->> +#
->>   # @tls-creds: ID of the TLS credentials object (since 2.6).
->>   #
->>   # @tls-authz: ID of the QAuthZ authorization object used to validate
->> @@ -34,6 +38,7 @@
->>   ##
->>   { 'struct': 'NbdServerOptions',
->>     'data': { 'addr': 'SocketAddress',
->> +            '*handshake-max-secs': 'uint32',
->>               '*tls-creds': 'str',
->>               '*tls-authz': 'str',
->>               '*max-connections': 'uint32' } }
->> @@ -52,6 +57,10 @@
->>   #
->>   # @addr: Address on which to listen.
->>   #
->> +# @handshake-max-secs: Time limit, in seconds, at which a client that
->> +#     has not completed the negotiation handshake will be disconnected,
->> +#     or 0 for no limit (since 9.2; default: 10).
->> +#
->>   # @tls-creds: ID of the TLS credentials object (since 2.6).
->>   #
->>   # @tls-authz: ID of the QAuthZ authorization object used to validate
->> @@ -72,6 +81,7 @@
->>   ##
->>   { 'command': 'nbd-server-start',
->>     'data': { 'addr': 'SocketAddressLegacy',
->> +            '*handshake-max-secs': 'uint32',
->>               '*tls-creds': 'str',
->>               '*tls-authz': 'str',
->>               '*max-connections': 'uint32' },
-> 
-> Are we confident we'll never need less than a full second?
-> 
+These tests occasionally time out when the host system is under heavy
+load. Increase the timeout setting to allow for more headroom here.
 
-Hmm, recent "[PATCH v2] chardev: introduce 'reconnect-ms' and deprecate 'reconnect'" shows that at least sometimes second is not enough precision.
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/functional/meson.build | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-Maybe, using milliseconds consistently for all relatively short time intervals in QAPI would be a good rule?
-
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 7713f8eb55..c90c02517a 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -11,15 +11,18 @@ endif
+ 
+ # Timeouts for individual tests that can be slow e.g. with debugging enabled
+ test_timeouts = {
++  'aarch64_raspi4' : 120,
+   'aarch64_sbsaref' : 600,
+   'aarch64_virt' : 360,
+   'acpi_bits' : 240,
++  'arm_raspi2' : 120,
++  'mips_malta' : 120,
+   'netdev_ethtool' : 180,
+   'ppc_40p' : 240,
+   'ppc64_hv' : 1000,
+-  'ppc64_powernv' : 120,
+-  'ppc64_pseries' : 120,
+-  's390x_ccw_virtio' : 180,
++  'ppc64_powernv' : 240,
++  'ppc64_pseries' : 240,
++  's390x_ccw_virtio' : 240,
+ }
+ 
+ tests_generic_system = [
 -- 
-Best regards,
-Vladimir
+2.46.1
 
 
