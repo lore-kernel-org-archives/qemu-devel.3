@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5742CCF3198
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 05:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9832CF3196
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 05:57:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svsH4-0005go-BO; Wed, 02 Oct 2024 01:51:46 -0400
+	id 1svsHf-000773-Df; Wed, 02 Oct 2024 01:52:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1svsGu-0005cw-NZ
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:51:38 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1svsHR-0006cj-HG
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:52:10 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1svsGm-0004r5-Cs
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:51:36 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-20b7259be6fso35678315ad.0
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 22:51:27 -0700 (PDT)
+ id 1svsHO-0004um-SY
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 01:52:09 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-20bb610be6aso15600525ad.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 22:52:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727848286; x=1728453086; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1727848325; x=1728453125; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Hbikr594/iimyg8M1wgRy/vgwVnLu0o4ezc5WEdg1Rw=;
- b=TIzsLXiIaob/nZ5d6rlgbri+dwA7GzP9sfXfU2l5BynsDdNBcOc8vhc6vI/QyD+3Nd
- F+0p3+lJSTSFueouEgIX4ZkzBJxjr8i88SnhKtM2ngO2Ee+0mcs/nVHdIRNlTCewxBOS
- E0vHYyDkDL/JSwdW8hkg9FygKgsERzXEiPA48mCX5RPsImfouRUhtxAiU4laopo9/nGd
- FjJTIkLHnqgpUfoYdJwblpX5F3K7NvXvRE9sL1IlAA39pW2adxMH2VFIdm9A5kswD9H6
- 6udWwo4q3sG7lBfBKPiKaUzgUqrJYB4Bx07jaIcGEMuIIavEeGchAa8attITMxgepOUV
- ifwg==
+ bh=E9q8o1rqxr0ztdJ6JFR1Lgtcsz6qa9Ata3gYfSSUHnU=;
+ b=jJmwI6yARVEuscCMhaRbCrI/jl6vFSEbnqrdaa0XJLjCCmilvD3N4lgQWbytoAWArH
+ ZaWAb7jyigyPZPJ2MsCm8Xu+rRQFEAv3GpyuvI7vxi3LWgqag/XHcIfV2dfR4Zk49WUH
+ yf2IZO0ORDvzneEqQ7DwXoSyxggQEjO4yGFwugNzgdvsLaKibr7kqpb5zBBQjpNk7Z1m
+ ii2aN5f3AnhOT0sTZ+ef1HDVp8a2719xrmaa0YQjKCFNxzvEkgB5zixvEFM3+wRXGTwd
+ yoCJtzCpUuFkShPTYjXvxTISSpxOKEHmXFNwjxVNDxURCbVWNMfiKYpfJIWYVrrDsp29
+ FI6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727848286; x=1728453086;
+ d=1e100.net; s=20230601; t=1727848325; x=1728453125;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Hbikr594/iimyg8M1wgRy/vgwVnLu0o4ezc5WEdg1Rw=;
- b=qscKvZM6xqU28GR0gT4oKXMcSeeVmQWwUTnZ/TUTgxodklQokrOEA8XFc6lTA636h9
- l/TSdQ9CD088nm3xSnTcStRA+6TQomb7zUsWni5YArvKFSmiY3FVpsMSn/Mp8njSaTfK
- pBX35D9nxcPh5+QxoCs5pDRKwEK4Q5paSg4PpAwBJi9RwG7YtJuZN3sdQhCvcI40uJ1u
- EzscXwAgwgo5hMJi+G72hF80sD8PpirVzN/O2Bhe3ZWJz3TfUATyIeb1yV8uaVFPwSdF
- lrn/NDe6L+738Xntg5IGheA0pN601CvB8jUy/AppEtH7feHG4KoVp6Q0txHN4SICWV2D
- bNZA==
-X-Gm-Message-State: AOJu0YyIJdyjdCC4vG1v2/OHZSo+v9uBFe3CCkgg6uzETney8efkICrK
- 17eCrrSaLb8d8QhfcoBb6xz/gvg2sOUr+j2MR/pZfJmz4r945/syqZone5i8
-X-Google-Smtp-Source: AGHT+IE2o5t/gBELdsspKeF4CAb9mEzS5ksRNPFlwIS8NtWQMLUkTuAWJIGBiBYx9XLERXhgL7tIgQ==
-X-Received: by 2002:a17:902:c40e:b0:207:4c7c:743b with SMTP id
- d9443c01a7336-20bc54c2b37mr33355035ad.0.1727848285759; 
- Tue, 01 Oct 2024 22:51:25 -0700 (PDT)
+ bh=E9q8o1rqxr0ztdJ6JFR1Lgtcsz6qa9Ata3gYfSSUHnU=;
+ b=KpjInLtCDZU1Wq07ZJa8Mcrf33X1EFPTRwcXkrrHCC8j9QbzwpY4Hc1DjyiLbg7EWl
+ moVZ2isFrJYROykbYG6bOOg+tsg+6Cc+mvjMBb1MgxWFC5xp9wue3abnTJWNSkkwf9sh
+ p4e0zd8rDVG99bnkCY2KANSxDJoS7za7x1JjJO3wN8jcfFN9OJAoo9L2Jzrgg9wdyKcx
+ 6E+IIDZdCKBVJeLkft760Pj3xG5Ix7hEtBa6iuH/WblFuRllq5OEIrvxHbF0BGh2V7jJ
+ aVaNN8nchASLTYCF7Qwvg9GXmk4lPFor8rZKlqtLKFFDagN7z1B9HgCLACuN0S52qjLK
+ xY8A==
+X-Gm-Message-State: AOJu0YxWT0k3Eptd6nF1DmSw2jymg+lZ5AVztRBUzCvbrD6rRb8CFkO1
+ erva6L0bI6GJ9xxGXkD4seUWiksyp065fsrZV7tYHZEtd5GUdv8INPkfaIOe
+X-Google-Smtp-Source: AGHT+IFCbG3QMi8BMfBp88QxxixZ1Desvk/ExKDaLrpb6EgRcmiGobHgwTROCDnLZFrEQpDlRhhUHQ==
+X-Received: by 2002:a17:902:da8f:b0:20b:5231:cd61 with SMTP id
+ d9443c01a7336-20bc5a20b08mr29326885ad.24.1727848324947; 
+ Tue, 01 Oct 2024 22:52:04 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20b37e60c76sm78324235ad.269.2024.10.01.22.51.23
+ d9443c01a7336-20b37e60c76sm78324235ad.269.2024.10.01.22.52.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 22:51:25 -0700 (PDT)
+ Tue, 01 Oct 2024 22:52:04 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Andrew Jones <ajones@ventanamicro.com>,
+Cc: alistair23@gmail.com, Mark Corbin <mark@dibsco.co.uk>,
+ Ajeet Singh <itachis@FreeBSD.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v3 09/35] target/riscv: Stop timer with infinite timecmp
-Date: Wed,  2 Oct 2024 15:50:22 +1000
-Message-ID: <20241002055048.556083-10-alistair.francis@wdc.com>
+Subject: [PULL v3 22/35] bsd-user: Implement RISC-V TLS register setup
+Date: Wed,  2 Oct 2024 15:50:35 +1000
+Message-ID: <20241002055048.556083-23-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241002055048.556083-1-alistair.francis@wdc.com>
 References: <20241002055048.556083-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,42 +100,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Jones <ajones@ventanamicro.com>
+From: Mark Corbin <mark@dibsco.co.uk>
 
-While the spec doesn't state it, setting timecmp to UINT64_MAX is
-another way to stop a timer, as it's considered setting the next
-timer event to occur at infinity. And, even if the time CSR does
-eventually reach UINT64_MAX, the very next tick will bring it back to
-zero, once again less than timecmp. For this reason
-riscv_timer_write_timecmp() special cases UINT64_MAX. However, if a
-previously set timecmp has not yet expired, then setting timecmp to
-UINT64_MAX to disable / stop it would not work, as the special case
-left the previous QEMU timer active, which would then still deliver
-an interrupt at that previous timecmp time. Ensure the stopped timer
-will not still deliver an interrupt by also deleting the QEMU timer
-in the UINT64_MAX special case.
+Included the prototype for the 'target_cpu_set_tls' function in the
+'target_arch.h' header file. This function is responsible for setting
+the Thread Local Storage (TLS) register for RISC-V architecture.
 
-Fixes: ae0edf2188b3 ("target/riscv: No need to re-start QEMU timer when timecmp == UINT64_MAX")
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240829084002.1805006-2-ajones@ventanamicro.com>
+Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
+Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240916155119.14610-5-itachis@FreeBSD.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/time_helper.c | 1 +
- 1 file changed, 1 insertion(+)
+ bsd-user/riscv/target_arch.h     | 27 +++++++++++++++++++++++++++
+ bsd-user/riscv/target_arch_cpu.c | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 56 insertions(+)
+ create mode 100644 bsd-user/riscv/target_arch.h
+ create mode 100644 bsd-user/riscv/target_arch_cpu.c
 
-diff --git a/target/riscv/time_helper.c b/target/riscv/time_helper.c
-index 8d245bed3a..bc0d9a0c4c 100644
---- a/target/riscv/time_helper.c
-+++ b/target/riscv/time_helper.c
-@@ -92,6 +92,7 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
-      * equals UINT64_MAX.
-      */
-     if (timecmp == UINT64_MAX) {
-+        timer_del(timer);
-         return;
-     }
- 
+diff --git a/bsd-user/riscv/target_arch.h b/bsd-user/riscv/target_arch.h
+new file mode 100644
+index 0000000000..26ce07f343
+--- /dev/null
++++ b/bsd-user/riscv/target_arch.h
+@@ -0,0 +1,27 @@
++/*
++ * RISC-V specific prototypes
++ *
++ * Copyright (c) 2019 Mark Corbin <mark.corbin@embecsom.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef TARGET_ARCH_H
++#define TARGET_ARCH_H
++
++#include "qemu.h"
++
++void target_cpu_set_tls(CPURISCVState *env, target_ulong newtls);
++
++#endif /* TARGET_ARCH_H */
+diff --git a/bsd-user/riscv/target_arch_cpu.c b/bsd-user/riscv/target_arch_cpu.c
+new file mode 100644
+index 0000000000..44e25d2ddf
+--- /dev/null
++++ b/bsd-user/riscv/target_arch_cpu.c
+@@ -0,0 +1,29 @@
++/*
++ *  RISC-V CPU related code
++ *
++ *  Copyright (c) 2019 Mark Corbin
++ *
++ *  This program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2 of the License, or
++ *  (at your option) any later version.
++ *
++ *  This program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
++#include "qemu/osdep.h"
++
++#include "target_arch.h"
++
++#define TP_OFFSET       16
++
++/* Compare with cpu_set_user_tls() in riscv/riscv/vm_machdep.c */
++void target_cpu_set_tls(CPURISCVState *env, target_ulong newtls)
++{
++    env->gpr[xTP] = newtls + TP_OFFSET;
++}
 -- 
 2.46.2
 
