@@ -4,86 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20137CF31B4
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 12:47:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C369CF31B7
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 12:53:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svykh-00052h-J4; Wed, 02 Oct 2024 08:46:47 -0400
+	id 1svyqP-0006bm-0T; Wed, 02 Oct 2024 08:52:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1svykX-0004ti-3w
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 08:46:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svyqM-0006bE-9m
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 08:52:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1svykV-0002m3-Ct
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 08:46:36 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svyqJ-0003ab-Km
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 08:52:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727873194;
+ s=mimecast20190719; t=1727873553;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DRd2IPTTLSDR0JY8la8Jnse8DqiuCfGZKtSPqIBVrXM=;
- b=MzLwmOU7bPTc5rA7/fLESHz/LA3zv/KskZ3HRLcaxUhTBNtmV4Ea6E+BR5AJCYKtt7hsZI
- 3K/asLMO6DiVoTEzc4P8o7pEvzKZRavyoJftiNmwYembFU8P3IhTt3G9iSGHTN/gDHLpz7
- BNDJEvqK5WXQOr81lNxVqPpBefpI0uI=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-435-MQZ_1pBOMKi1CjVtfWLkNQ-1; Wed, 02 Oct 2024 08:46:32 -0400
-X-MC-Unique: MQZ_1pBOMKi1CjVtfWLkNQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37cd19d0e83so2854139f8f.2
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 05:46:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727873192; x=1728477992;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DRd2IPTTLSDR0JY8la8Jnse8DqiuCfGZKtSPqIBVrXM=;
- b=MI6ScC6hTTgfRTD24YMIbDKIU2HDVAXNVwl78vz084MzLuAaAOJGMd8ZGzlN2JVLlb
- 8jmiBBSBeCh1F/3U1SXn8FwzH6BoTLSeJxpQ9aZtNauxMrOgpmgIpTN85RD095bA5+CI
- ODNefaF4QLhzpJCK4PwDA/aGLR4EfzTNW3TyLOo2O4mVkzw3e9oPDt0oUa4dxzzmk7+a
- FMc0hUOuy5zxr7frzE73FpMzIHei1irjq+14stPB2/VBS4EbKJz3/qZiaObOrrUdDtkd
- GrX5VlEoOQ+3GaXqS/KPMGOiz78q2VgWgKt1uzknfPkKL964qDwRgaskrSD6Z1uP3UKe
- 1SmA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWQPjCNAdVZi3idImYgH07oPCF0GfyyItiAaWXyFbZOMXoXwBCPgzd+kl2bRmHJtmr8BJWDIOzTk/bk@nongnu.org
-X-Gm-Message-State: AOJu0YwyK2gwT97IbygQ4nyHSXLsF4Sj/af6K6KwIW3ME66PfTqlJq3j
- jMgOQpKcOg6NuLXXVZDABWrP38Umb+1oyM/3F5Ss/IsEexPso7wQIOlg76zJyixBKkUoxRKnF+f
- cEk6AFNu3BUQMZU5xHnQd9T+imW0qEM7zE6fzUXIYttsn3SHrGEeb
-X-Received: by 2002:a5d:6283:0:b0:374:c942:a6b4 with SMTP id
- ffacd0b85a97d-37cfb8b567bmr2019748f8f.20.1727873191658; 
- Wed, 02 Oct 2024 05:46:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF2PexkVT7Txl6Bb82fMhSXSDAiku9xoeWYMrqFmP3lO1ymceSSFLAoDOWFkn8RM4zZGf3o9g==
-X-Received: by 2002:a5d:6283:0:b0:374:c942:a6b4 with SMTP id
- ffacd0b85a97d-37cfb8b567bmr2019732f8f.20.1727873191343; 
- Wed, 02 Oct 2024 05:46:31 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f79ff6e28sm17615235e9.37.2024.10.02.05.46.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Oct 2024 05:46:30 -0700 (PDT)
-Date: Wed, 2 Oct 2024 14:46:30 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 12/15] acpi/ghes: don't crash QEMU if ghes GED is not
- found
-Message-ID: <20241002144630.1f8b68c1@imammedo.users.ipa.redhat.com>
-In-Reply-To: <18c69e8c7a6b6ac365397fe1f442f3ba0cb83be8.1727766088.git.mchehab+huawei@kernel.org>
-References: <cover.1727766088.git.mchehab+huawei@kernel.org>
- <18c69e8c7a6b6ac365397fe1f442f3ba0cb83be8.1727766088.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ bh=NnMtzQZsnT39I6Kb35DxAolLEhPWUu4gl/W6Toi/joc=;
+ b=HkO7cmKgLO99GaVA75VyWlKigfGYNEn14JUgDFZWoFJYzk+siVFmbWpl3NIgExngXQucrO
+ ircJzP34Wjvv22SM3lWIB2bASgkk2ZLDxsSb8K546dnSC34fl7H/WqROM310s2VMi1FJYC
+ iy4FZxSJsi2KyzzKw1HxjMeBZw2ha2M=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-492-7m1JjNwDO32P5O4jutV74g-1; Wed,
+ 02 Oct 2024 08:52:32 -0400
+X-MC-Unique: 7m1JjNwDO32P5O4jutV74g-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9EC87195608D; Wed,  2 Oct 2024 12:52:31 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.193.239])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2A6B219560A3; Wed,  2 Oct 2024 12:52:29 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 1/5] testing: bump mips64el cross to bookworm and fix package
+ list
+Date: Wed,  2 Oct 2024 14:52:22 +0200
+Message-ID: <20241002125226.282193-2-thuth@redhat.com>
+In-Reply-To: <20241002125226.282193-1-thuth@redhat.com>
+References: <20241002125226.282193-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -92,7 +66,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,35 +82,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue,  1 Oct 2024 09:03:49 +0200
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+From: Alex Bennée <alex.bennee@linaro.org>
 
-> Instead, produce an error and continue working
+The mips64el cross setup is very broken for bullseye which has now
+entered LTS support so is unlikely to be fixed. While we still can't
+build the container with all packages for bookworm due to a single
+missing dependency that will hopefully get fixed in due course. For
+the sake of keeping the CI green we disable the problematic packages
+via the lcitool's mappings.yml file.
 
-s/^^^^/make error handling within ... consistent, i.e. instead abort just print a error in case ... /
+See also: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1081535
 
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+[thuth: Disable the problematic packages via lcitool's mappings.yml]
+Message-ID: <20241002080333.127172-1-thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ .../dockerfiles/debian-mips64el-cross.docker  | 18 +++----------
+ tests/lcitool/mappings.yml                    | 26 +++++++++++++++++++
+ tests/lcitool/refresh                         |  2 +-
+ 3 files changed, 31 insertions(+), 15 deletions(-)
 
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> ---
->  hw/acpi/ghes.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index 3af1cd16d4d7..209095f67e9a 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -418,7 +418,10 @@ void ghes_record_cper_errors(const void *cper, size_t len,
->  
->      acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,
->                                                         NULL));
-> -    g_assert(acpi_ged_state);
-> +    if (!acpi_ged_state) {
-> +        error_setg(errp, "Can't find ACPI_GED object");
-> +        return;
-> +    }
->      ags = &acpi_ged_state->ghes_state;
->  
->      get_ghes_offsets(le64_to_cpu(ags->ghes_addr_le),
+diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+index 2862785692..bfa96cb507 100644
+--- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
++++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+@@ -1,10 +1,10 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all --cross-arch mips64el debian-11 qemu
++#  $ lcitool dockerfile --layers all --cross-arch mips64el debian-12 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
+ 
+-FROM docker.io/library/debian:11-slim
++FROM docker.io/library/debian:12-slim
+ 
+ RUN export DEBIAN_FRONTEND=noninteractive && \
+     apt-get update && \
+@@ -48,16 +48,15 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-opencv \
+                       python3-pillow \
+                       python3-pip \
+-                      python3-setuptools \
+                       python3-sphinx \
+                       python3-sphinx-rtd-theme \
+                       python3-venv \
+-                      python3-wheel \
+                       python3-yaml \
+                       rpm2cpio \
+                       sed \
+                       socat \
+                       sparse \
++                      swtpm \
+                       tar \
+                       tesseract-ocr \
+                       tesseract-ocr-eng \
+@@ -69,8 +68,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     dpkg-reconfigure locales && \
+     rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
+ 
+-RUN /usr/bin/pip3 install tomli
+-
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+ ENV MAKE "/usr/bin/make"
+@@ -97,17 +94,13 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       libcmocka-dev:mips64el \
+                       libcurl4-gnutls-dev:mips64el \
+                       libdaxctl-dev:mips64el \
+-                      libdrm-dev:mips64el \
+-                      libepoxy-dev:mips64el \
+                       libfdt-dev:mips64el \
+                       libffi-dev:mips64el \
+                       libfuse3-dev:mips64el \
+-                      libgbm-dev:mips64el \
+                       libgcrypt20-dev:mips64el \
+                       libglib2.0-dev:mips64el \
+                       libglusterfs-dev:mips64el \
+                       libgnutls28-dev:mips64el \
+-                      libgtk-3-dev:mips64el \
+                       libibverbs-dev:mips64el \
+                       libiscsi-dev:mips64el \
+                       libjemalloc-dev:mips64el \
+@@ -126,8 +119,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       librbd-dev:mips64el \
+                       librdmacm-dev:mips64el \
+                       libsasl2-dev:mips64el \
+-                      libsdl2-dev:mips64el \
+-                      libsdl2-image-dev:mips64el \
+                       libseccomp-dev:mips64el \
+                       libselinux1-dev:mips64el \
+                       libslirp-dev:mips64el \
+@@ -141,8 +132,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       libusb-1.0-0-dev:mips64el \
+                       libusbredirhost-dev:mips64el \
+                       libvdeplug-dev:mips64el \
+-                      libvirglrenderer-dev:mips64el \
+-                      libvte-2.91-dev:mips64el \
++                      libxdp-dev:mips64el \
+                       libzstd-dev:mips64el \
+                       nettle-dev:mips64el \
+                       systemtap-sdt-dev:mips64el \
+diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
+index 03b974ad02..0ab3a89013 100644
+--- a/tests/lcitool/mappings.yml
++++ b/tests/lcitool/mappings.yml
+@@ -2,6 +2,20 @@ mappings:
+   flake8:
+     OpenSUSELeap15:
+ 
++  # Due to https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1081535 we
++  # have to disable all packages that depend on libgl1-mesa-dri:mips64el
++  gtk3:
++    mips64el-deb:
++
++  libdrm:
++    mips64el-deb:
++
++  libepoxy:
++    mips64el-deb:
++
++  mesa-libgbm:
++    mips64el-deb:
++
+   meson:
+     OpenSUSELeap15:
+ 
+@@ -60,6 +74,18 @@ mappings:
+   python3-wheel:
+     OpenSUSELeap15: python311-pip
+ 
++  sdl2:
++    mips64el-deb:
++
++  sdl2-image:
++    mips64el-deb:
++
++  virglrenderer:
++    mips64el-deb:
++
++  vte:
++    mips64el-deb:
++
+ pypi_mappings:
+   # Request more recent version
+   meson:
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 92381f3c46..a78219f7bc 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -166,7 +166,7 @@ try:
+                                             "x86_64-linux-user,"
+                                             "i386-softmmu,i386-linux-user"))
+ 
+-    generate_dockerfile("debian-mips64el-cross", "debian-11",
++    generate_dockerfile("debian-mips64el-cross", "debian-12",
+                         cross="mips64el",
+                         trailer=cross_build("mips64el-linux-gnuabi64-",
+                                             "mips64el-softmmu,mips64el-linux-user"))
+-- 
+2.46.1
 
 
