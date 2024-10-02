@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A963CF31B0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:42:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2B9ACF31AF
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:44:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svwoG-0003W8-2Z; Wed, 02 Oct 2024 06:42:20 -0400
+	id 1svwpR-0004UP-Nt; Wed, 02 Oct 2024 06:43:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwoF-0003Vj-3e
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:42:19 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwpA-0004Tj-Qg
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:43:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwoD-0002en-PN
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:42:18 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwp7-0002gE-Uk
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:43:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727865735;
+ s=mimecast20190719; t=1727865793;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=biPmuPpkrqekA6H9Bm40Z1QrtuWIvhatsbwVzg085u0=;
- b=OEhXTmxikSLwqpB9mwjK82CoASn02/ctdVPtEWsud2Lvixm/DlglBmy4OwfUslYsJuJv8D
- uNeRADFbxp+lipvkkv+rdbf86Vp8uDb3gn3b+QIlbaHICFbPyErstPiwXjavL8kzrnNNQN
- RUkiGe6rIfu3bGeJw6CNcE7HltKnZ7U=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uaoyH1JLEp/2pIr4KBEExzIi3qSVppTrtmAri/LRB+o=;
+ b=HrW095NuB2OCDcbIi0drpRrtU+/kVQrGuKComjcGuXW8gIe/cgh034EvW0766qRraTKrIp
+ Mb6hRkIntChHn6ssR492Wm7YlcwNoU+s5PDlQXgqjG6S0zzQkpKVBNuLEiklO+AsJwAcXi
+ yp110O39w5rR3lNmehmkmGompPQjx+4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-438-hhFO-RLaMJOA4sPJd90yBg-1; Wed, 02 Oct 2024 06:42:13 -0400
-X-MC-Unique: hhFO-RLaMJOA4sPJd90yBg-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42e611963c2so50124885e9.1
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 03:42:12 -0700 (PDT)
+ us-mta-202-qrkjAlRSOZioX5IVn_tCqg-1; Wed, 02 Oct 2024 06:43:11 -0400
+X-MC-Unique: qrkjAlRSOZioX5IVn_tCqg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42caf073db8so54426585e9.3
+ for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 03:43:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727865731; x=1728470531;
+ d=1e100.net; s=20230601; t=1727865791; x=1728470591;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=biPmuPpkrqekA6H9Bm40Z1QrtuWIvhatsbwVzg085u0=;
- b=voBD+DRvUmabhqxZZ7kHTg4Wq5iGGsjI2U8tkanF0BLV7+SrXVlDP8IlrVwufO9mbo
- NmRzSiweqMIqbTJEVSnsysQ07wE+GOvGs1FhzYAXacUpdOjH4gFuYHLxSWEnsQegi8ne
- xBSa4t4Rw/pmzy/O2N4NxnCTMV45gZy7iriHxK5cL0LszXUzTT8pOdxxicyKwmB6wjPU
- LOp/nZNGQQ01MFlcJVreY0bXcQ8ZkFkYnsa2iOIBZfVoIHXI6OCELAa5Ut3+rjUZo6ha
- YyFQWywh8kMDjzqOSDez1uRa3u0Nnpsu49C9FyKPPjw9CGxb1F2EkC6WYyuV72v6CJNK
- xSFA==
+ bh=uaoyH1JLEp/2pIr4KBEExzIi3qSVppTrtmAri/LRB+o=;
+ b=QjUhjvZomldBu94J5lyYM+wyoqNUAeYH3BhCHZLT8zzqTGLHrO5x6DpDnqieLdH5Ar
+ iVMUjfBeHptcIZN+jvGHn5meUvkPoNtwENOYGy9se19/bk8wZYTvNOC3T/B4cZ94t5pC
+ LANxICPj7b5DJSuhrZrfZPo1P5Cbm/yvqrKFlIBTfGYz+/tWVzK2L/DYS629sQuE3CkL
+ MT0XnpNE42kd+o77uURBVFJcBVk3EBpPWYe2aInjWS+qr24AN3Nkwnl/EHWVuxcWSVxg
+ mnN1/buqxiLbEes0gnNsDOM9QYAOWyHIn2rYALYvRsu/w9S7s6e2nNOkH0+srUqKLttI
+ 24+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXIZbRl+6xkE1RXudqJMuG1T0rQWPvgc26qsghknJ0i6vpOp7dGE4vqmtj5iqRDO7l2NVFc6WK6ZtYD@nongnu.org
-X-Gm-Message-State: AOJu0YwlcuquW1l7wcMXnhRcJudmptOSeQtSx4Oom61Rb4uvELlvl3V1
- jP0TZCM+MlNVLXwH3DYLOpOxcUBi5viHKTnNgDnwzPJjfs5sh57ogVPU2GBdqYS/hNbVcJnRM2X
- UtiJcyjQJg1ljFcEb9wPBlhcyv+RrzjRyHOTiPSTRqoQfx+trdC2W
-X-Received: by 2002:a05:600c:1c98:b0:42c:bb41:a079 with SMTP id
- 5b1f17b1804b1-42f777b631bmr21872395e9.1.1727865731597; 
- Wed, 02 Oct 2024 03:42:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHhr+72AOrAx7SjYWAvmB1urrRChcFrMjz66oYhTp5MLgMsM7VSSHBAgba4OCyVghM71A/CFg==
-X-Received: by 2002:a05:600c:1c98:b0:42c:bb41:a079 with SMTP id
- 5b1f17b1804b1-42f777b631bmr21872135e9.1.1727865731157; 
- Wed, 02 Oct 2024 03:42:11 -0700 (PDT)
+ AJvYcCVp7EGDnyXouM5yKs7LF41dB8X9Z3hWfhSZC+I7Ag6SccUeuHQQTuUPRe9+9SdN+wD07oWabJnqHWRP@nongnu.org
+X-Gm-Message-State: AOJu0Ywep1Gf7UFvXZL0gxbqubPWKOD8yDUEe7/2qkFJub6GKmsSiNvg
+ UuNa0XsvjYSmWXzlzMeE4zcaqYp1jmfS+v2WRnFc4lftugNADDkO9c642r0GdDQScNkRozaITD9
+ GfUnOSSraVB0be9vcFx0l+Nm6CKmABdQyJMSETj3klg0qDfN2PqdQp2INpUp+9/0=
+X-Received: by 2002:a05:600c:1d20:b0:42c:b905:2bf9 with SMTP id
+ 5b1f17b1804b1-42f777c1a6fmr20946265e9.16.1727865790672; 
+ Wed, 02 Oct 2024 03:43:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHY1YhCtW3gaCOkfoNUfFRQvZH/rOhpXoH8huasV9V4Ry2ZwGT/w2IuApsNcyWA5Ms2izjaxQ==
+X-Received: by 2002:a05:600c:1d20:b0:42c:b905:2bf9 with SMTP id
+ 5b1f17b1804b1-42f777c1a6fmr20946115e9.16.1727865790294; 
+ Wed, 02 Oct 2024 03:43:10 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-143.web.vodafone.de.
  [109.42.49.143]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f7a01fc92sm15113775e9.36.2024.10.02.03.42.10
+ 5b1f17b1804b1-42f7728b382sm13826505e9.1.2024.10.02.03.43.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Oct 2024 03:42:10 -0700 (PDT)
-Message-ID: <edeb3df1-1a73-4c8b-8870-866221f7a30b@redhat.com>
-Date: Wed, 2 Oct 2024 12:42:09 +0200
+ Wed, 02 Oct 2024 03:43:09 -0700 (PDT)
+Message-ID: <03a317f1-1868-4a45-96f6-5797478a22da@redhat.com>
+Date: Wed, 2 Oct 2024 12:43:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/pci: Remove unused pcie_chassis_find_slot
-To: dave@treblig.org, mst@redhat.com, marcel.apfelbaum@gmail.com,
+Subject: Re: [PATCH] hw/net/rocker: Remove unused rocker_fp_ports
+To: dave@treblig.org, jiri@resnulli.us, jasowang@redhat.com,
  qemu-devel@nongnu.org, QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20240918234748.468148-1-dave@treblig.org>
+References: <20240918231447.458796-1-dave@treblig.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -117,7 +117,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240918234748.468148-1-dave@treblig.org>
+In-Reply-To: <20240918231447.458796-1-dave@treblig.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -145,52 +145,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/09/2024 01.47, dave@treblig.org wrote:
+On 19/09/2024 01.14, dave@treblig.org wrote:
 > From: "Dr. David Alan Gilbert" <dave@treblig.org>
 > 
-> pcie_chassis_find_slot has been unused since it was added.
-> 
+> rocker_fp_ports hasn't been used since it was added back in 2015.
 > Remove it.
 > 
 > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 > ---
->   hw/pci/pcie_port.c         | 10 ----------
->   include/hw/pci/pcie_port.h |  1 -
->   2 files changed, 11 deletions(-)
+>   hw/net/rocker/rocker.c | 5 -----
+>   hw/net/rocker/rocker.h | 1 -
+>   2 files changed, 6 deletions(-)
 > 
-> diff --git a/hw/pci/pcie_port.c b/hw/pci/pcie_port.c
-> index 20ff2b39e8..9f978ba164 100644
-> --- a/hw/pci/pcie_port.c
-> +++ b/hw/pci/pcie_port.c
-> @@ -92,16 +92,6 @@ static PCIESlot *pcie_chassis_find_slot_with_chassis(struct PCIEChassis *c,
->       return s;
+> diff --git a/hw/net/rocker/rocker.c b/hw/net/rocker/rocker.c
+> index 1ab5852113..5e74acc969 100644
+> --- a/hw/net/rocker/rocker.c
+> +++ b/hw/net/rocker/rocker.c
+> @@ -134,11 +134,6 @@ RockerPortList *qmp_query_rocker_ports(const char *name, Error **errp)
+>       return list;
 >   }
 >   
-> -PCIESlot *pcie_chassis_find_slot(uint8_t chassis_number, uint16_t slot)
+> -uint32_t rocker_fp_ports(Rocker *r)
 > -{
-> -    struct PCIEChassis *c;
-> -    c = pcie_chassis_find(chassis_number);
-> -    if (!c) {
-> -        return NULL;
-> -    }
-> -    return pcie_chassis_find_slot_with_chassis(c, slot);
+> -    return r->fp_ports;
 > -}
 > -
->   int pcie_chassis_add_slot(struct PCIESlot *slot)
+>   static uint32_t rocker_get_pport_by_tx_ring(Rocker *r,
+>                                               DescRing *ring)
 >   {
->       struct PCIEChassis *c;
-> diff --git a/include/hw/pci/pcie_port.h b/include/hw/pci/pcie_port.h
-> index 90e6cf45b8..7cd7af8cfa 100644
-> --- a/include/hw/pci/pcie_port.h
-> +++ b/include/hw/pci/pcie_port.h
-> @@ -72,7 +72,6 @@ struct PCIESlot {
->   };
+> diff --git a/hw/net/rocker/rocker.h b/hw/net/rocker/rocker.h
+> index f85354d9d1..6e0962f47a 100644
+> --- a/hw/net/rocker/rocker.h
+> +++ b/hw/net/rocker/rocker.h
+> @@ -72,7 +72,6 @@ DECLARE_INSTANCE_CHECKER(Rocker, ROCKER,
+>                            TYPE_ROCKER)
 >   
->   void pcie_chassis_create(uint8_t chassis_number);
-> -PCIESlot *pcie_chassis_find_slot(uint8_t chassis, uint16_t slot);
->   int pcie_chassis_add_slot(struct PCIESlot *slot);
->   void pcie_chassis_del_slot(PCIESlot *s);
->   
+>   Rocker *rocker_find(const char *name);
+> -uint32_t rocker_fp_ports(Rocker *r);
+>   int rocker_event_link_changed(Rocker *r, uint32_t pport, bool link_up);
+>   int rocker_event_mac_vlan_seen(Rocker *r, uint32_t pport, uint8_t *addr,
+>                                  uint16_t vlan_id);
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
