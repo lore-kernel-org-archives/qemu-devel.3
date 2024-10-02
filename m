@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEBEDCF6D24
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 13:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FFE2CF6D21
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 13:18:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svzCi-0007mH-25; Wed, 02 Oct 2024 09:15:44 -0400
+	id 1svzEl-0001b7-VR; Wed, 02 Oct 2024 09:17:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1svzCZ-0007l8-IX
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 09:15:35 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1svzCV-0006kT-Nc
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 09:15:34 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-2e0afd945d4so4411901a91.0
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 06:15:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1727874928; x=1728479728; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Tgc83BXg8hwd9CZT0qOG0SAgSPmVwE/FaBCfY1TpFqA=;
- b=c3gXO7Frvw1s0EY51phCTDOiwz7RHHgVhyh6HZewoPQW9eakrOAVSsluBr0Qu3Var1
- 8gkAHm9zAPmalPV2nfnO05g9Wni8aNY/gZC7kvqaRmRHGeqysdPbONizRem1Gb5iGnsx
- 9SaK3DL4HelVrY7xb6FKEILeKDZ5B/7WwBOFPgbUQR7fb7fuD7p7nq3Aqe+4Lz3Tpjz1
- 5vZlHkfDWaRMV6njwQqaI3PBSsViVD4SOwKL32Hxk5RX3l0bD0cnudGlm3UvjwJtVw2r
- S+ZVq1n8nq4BNJeV4KRvO8h0rixU0jgYdKceHldbU590074GJWu6gooh0gKTzYR11uvP
- HUdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727874928; x=1728479728;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Tgc83BXg8hwd9CZT0qOG0SAgSPmVwE/FaBCfY1TpFqA=;
- b=uLRaQbqBm7Vo4ws+DqVX+xz8EzVpX9HfuqLms0fMPOKbJ0ZofH1HeTmkyBFVYUlKjB
- GUHomXVCGwDWBXlznwo7eCqaL/JvEnqMbwjXUkq8LvFicqOt0P1KmLQ8HX4WD29OCHtx
- CMQ/cw/sFVMSlD6ClvzrAh74sCE8yusFtUmuBRDZkwSezALo4uxNExGJbL4pXl600gAy
- WyFro5Ks4IPNWGjCaVJrbh0WVargEXrKiLnVUoNv0ZH6EErJVyYJvQ7BE1Y96elKemes
- Z9cutl53jAEvlriTp2TGGM3JT2sUofTEKJsKfM/P9cde0l5qZ+EMZM0IueOnE9NT3r2j
- +4nw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUsS3TCZq7L0i2hazsjweeeFtUWK9wde9+uaq+yIJ6ndpJBDnUDXy5i3srNi6iXNQwEnVv2dCUVgBop@nongnu.org
-X-Gm-Message-State: AOJu0YzvQoxtNN8EmR06ml6i1E2XPUgJ/zKNo3MkkaRzBUIVSFB29Uxo
- N+oc6+Etsuid9QEMcW0GymkVc/ugMR6hGufOc3Xylabmd27BZhdZOaVPQ6u0lzM=
-X-Google-Smtp-Source: AGHT+IHKigGQYpGgK1AxcJzYIsKr3wcF0VBHvvBahTXR6Gtx3JS7WMLnvbQEStaXmrGXOtgZFTSf9Q==
-X-Received: by 2002:a17:90b:4a51:b0:2e0:9b50:ae28 with SMTP id
- 98e67ed59e1d1-2e184901f12mr3906306a91.31.1727874928309; 
- Wed, 02 Oct 2024 06:15:28 -0700 (PDT)
-Received: from [192.168.68.110] (200-206-229-93.dsl.telesp.net.br.
- [200.206.229.93]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e18fa54fe3sm1476012a91.54.2024.10.02.06.15.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Oct 2024 06:15:27 -0700 (PDT)
-Message-ID: <44dae84e-b30c-48e7-a031-a19885488d66@ventanamicro.com>
-Date: Wed, 2 Oct 2024 10:15:24 -0300
+ (Exim 4.90_1) (envelope-from <unisono@quyllur.org>)
+ id 1svqem-0005DH-TL
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 00:08:09 -0400
+Received: from quyllur.org ([185.247.226.42])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <unisono@quyllur.org>)
+ id 1svqek-0003vQ-3U
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 00:08:07 -0400
+Received: from quyllur.org (localhost [127.0.0.1])
+ by quyllur.org (OpenSMTPD) with ESMTP id 5db46bc8
+ for <qemu-devel@nongnu.org>; Wed, 2 Oct 2024 07:07:59 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=quyllur.org; h=message-id
+ :date:mime-version:from:subject:to:content-type; s=dkimselector;
+ bh=4wL8pnI8nf37S7XRi3737JmmH7U=; b=UmU1jiL1INfkXy4tFC81LUxbBdoz
+ o8VJyCNi9U83R5Oqv8td+wB1WDrLGrSmkft7bT2M71EHap+U5ioJH5kFnaXoGzEh
+ NBxrawrg4ESQPZNw0aGSLH2Rma3K2vrDRm+upxv84zg/bepsrJLdPuQ9u8qhH6UH
+ /zMPkH0YzS0R/Hc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=quyllur.org; h=message-id
+ :date:mime-version:from:subject:to:content-type; q=dns; s=
+ dkimselector; b=y8qxzpRWXecgR51ukRpmN682ZVODAVppRCwSA1cnUyDsFu/c
+ 8meZjXlA16s6iNpJHu4vzC8CjwAEKKHVFu3uxRTQRKd88PiJfkdkaOjCOZrNAGLq
+ f4AC4POjcoSr36n0BVFrQMPxtw0f/6NteILhPseP5bUlVMV4+ZAPryM7EFw=
+Received: from [10.137.0.39] (unn-154-47-29-26.datapacket.com [154.47.29.26])
+ by quyllur.org (OpenSMTPD) with ESMTPSA id 7f8cf8fb
+ (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+ for <qemu-devel@nongnu.org>; Wed, 2 Oct 2024 07:07:59 +0300 (EEST)
+Message-ID: <d4e5202c-00d0-446c-8b23-d0d31ed3235b@quyllur.org>
+Date: Tue, 1 Oct 2024 23:07:55 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Set vtype.vill on CPU reset
-To: Rob Bradford <rbradford@rivosinc.com>, qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
-References: <20240930165258.72258-1-rbradford@rivosinc.com>
+From: Rot127 <unisono@quyllur.org>
+Subject: Capstone v6-Alpha is released
+To: qemu-devel@nongnu.org
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240930165258.72258-1-rbradford@rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102e.google.com
+Autocrypt: addr=unisono@quyllur.org; keydata=
+ xjMEY7wq3BYJKwYBBAHaRw8BAQdAsuxTQjfbARGo4F2Egj2t3sSK2cbhl5w744NBKJJRi/PN
+ HFJvdDEyNyA8dW5pc29ub0BxdXlsbHVyLm9yZz7CkwQTFgoAOxYhBBVvnxKqKhsnIpRsAsep
+ z77sou9aBQJjvESaAhsDBQsJCAcCAiICBhUKCQgLAgQWAgMBAh4HAheAAAoJEMepz77sou9a
+ WdEA/jVTgTB6GTphNhqA3UoUjkRXDhLDcaNWbgVZqUU7jHIGAP0XFDgu8B8170B83LiTVrIe
+ 0d9v3AGanC6ur+kO2ts4B87AzQRjvDrnAQwAp27wT6kz0YywKLXtV7ZQ781KE9OR3sP/Shhh
+ lpXa7fr8nBDlR5R6nK+H8VybMFG8B43Dtwmv6G94xZIlAv9HU/JfNZcArdHFrX/et7Bk1j+R
+ MyoPcf9Hw5Xl7442PiCDPjbnOPtLtxOWTNSBHNQBtGm3K1H8KYOMuKdh+4coWyZJrrfxpqVF
+ fyYOPU0Q/XvXqKGjn478IGb4EsP00x6nGxj28CfgSbuSELmTJWNX9PHGcquJn9tFb4frflaq
+ LaEGXUM85MSXvbl1rtDm3jHwfBS94Hj0jVo0mnlJeIcZ4OyfGJ1cL3Ub0YLICKdeng3xY2V7
+ qb+RxoiE7T0+O/pKWCwBVinlF0UUW9SAIoWgN174NeYYfIU0bTk6TP8RXPETPC9VmigTr52D
+ kgftUlGbfG7elARfDBvwHoaHvZbr9GQVasvlbJiyaGnrV6ySeSaEL0YbUsdI7ogwVwH9dWLQ
+ W0fsqCQWavSapz3pkV8SOlKmdfmuCQc4Wni+mW9B3vyDABEBAAHCwXQEGBYKACYWIQQVb58S
+ qiobJyKUbALHqc++7KLvWgUCY7w65wIbDgUJA8JnAAHACRDHqc++7KLvWsD0IAQZAQgAHRYh
+ BGhy9Q1ij6yxegWz3jgSuCWIEK9nBQJjvDrnAAoJEDgSuCWIEK9nDE8L/2Sy8kZZ3WJvsRMW
+ AxPlpovhPIWB2doN2sPCCQ9TGZOEYJ6Ge4Peid5RJH6iSl3W0/K/59dG+s0ZABXzQOoo5yOQ
+ zMr5V5+YPkW2Cvzpyc3iJLHXduxIGl6J4d8bFfPy+rAAt4ALz8Hr5OGrLj4viYjBifXRwux8
+ Ifq3u8C6Qy5u/uagGIFxMgczana+O+w1JDFA/kRem209LgzZZByWXLAO5yc2VtbKdWkiL2vc
+ EfGo1znoD2V5Js647Y9z0bMdtSvzwf/dqzINDLP3jODGgivLqU4Z+DMBWtO0JOQjnaDC5Geq
+ ereJa78jtMSShmvG3KmrocEE1JZpZ6rxAsgHBTv5j5nZAG+FWeyyQowfiIiqXJo2K/SjjUYw
+ Yk843Wg0fmwZYmzqaeXE26l9+1skQHuPR89ipZgMUOo228JhnzYC/Dv29tTudJ1DEzO7jUWh
+ rIFB4aIf4aIwsoyJS9ByRjS+Gt7gC85J0yevYREwlK+pRWPoERfGLJfLBXBsEkxbINCNAP0f
+ aDyLotRx7+8DEw83adqHwyu4GGMHJrOTcLt00pt7nQEAolZ3IJOtoP0wtwwqupaePZjf+cei
+ RqM+ZobpFZYy2As=
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------kEMdO7qX7kfHNItN432OKCvI"
+Received-SPF: pass client-ip=185.247.226.42; envelope-from=unisono@quyllur.org;
+ helo=quyllur.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 02 Oct 2024 09:17:43 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,35 +98,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------kEMdO7qX7kfHNItN432OKCvI
+Content-Type: multipart/mixed; boundary="------------cWA4B45w2F9Ub3f2hKdwGRAs";
+ protected-headers="v1"
+From: Rot127 <unisono@quyllur.org>
+To: qemu-devel@nongnu.org
+Message-ID: <d4e5202c-00d0-446c-8b23-d0d31ed3235b@quyllur.org>
+Subject: Capstone v6-Alpha is released
 
+--------------cWA4B45w2F9Ub3f2hKdwGRAs
+Content-Type: multipart/mixed; boundary="------------p4SdXcGxVYqUE8hT0TDQOhN0"
 
-On 9/30/24 1:52 PM, Rob Bradford wrote:
-> The RISC-V unprivileged specification "31.3.11. State of Vector
-> Extension at Reset" has a note that recommends vtype.vill be set on
-> reset as part of ensuring that the vector extension have a consistent
-> state at reset.
-> 
-> This change now makes QEMU consistent with Spike which sets vtype.vill
-> on reset.
-> 
-> Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
-> ---
+--------------p4SdXcGxVYqUE8hT0TDQOhN0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+V2UgYXJlIHZlcnkgaGFwcHkgdG8gYW5ub3VuY2UgdGhlIHJlbGVhc2Ugb2YgQ2Fwc3RvbmUg
+djYtQWxwaGExLg0KDQpBbHRob3VnaCBpdCBpcyBtYXJrZWQgYXMgQWxwaGEsIGl0IHJ1bnMg
+anVzdCBhcyBzdGFibGUgYW5kIGhhcyBhdCBsZWFzdCANCnRoZSBzYW1lIHF1YWxpdHkgYXMg
+YW55IG90aGVyIHJlbGVhc2UgYmVmb3JlLg0KSW4gZmFjdCwgaXQgc2hvdWxkIGJlIGV2ZW4g
+YmV0dGVyIGJlY2F1c2Ugd2UgaW1wcm92ZWQgb3VyIHRlc3RpbmcgDQpzaWduaWZpY2FudGx5
+IChjbGFuZy10aWR5LCBBU0FOLCBWYWxncmluZCwgdGVzdGluZyB0b29sIHJld3JpdHRlbiku
+DQoNCkkgcXVpY2tseSB3YW50ZWQgdG8gbGlzdCBhbGwgbmV3IGZlYXR1cmVzIHRoYXQgYXJl
+IGxpa2VseSBvZiBpbnRlcmVzdCB0byANClFlbXUgZGV2ZWxvcGVyczoNCg0KLSBVcGRhdGVk
+IHRvIExMVk0gMTg6IEFBcmNoNjQgKGZvcm1lciBBUk02NCksIFN5c3RlbVosIE1pcHMuDQot
+IEFkZGVkIE5hbm9NaXBzIGV4dGVuc2lvbiBmcm9tIHRoZSBNZWRpYVRlayBMTFZNIGZvcmsu
+DQotIFVwZGF0ZWQgdG8gTExWTSAxNjogQVJNLCBQUEMgLSBVcGRhdGUgdG8gTExWTSAxOCAo
+b3IgbGF0ZXIpIHdpbGwgY29tZSANCndpdGggdjYtQmV0YS4NCi0gTmV3IG1vZHVsZXM6IFh0
+ZW5zYSwgTG9vbmdBcmNoLCBIUFBBLCBBbHBoYSAoYmFzZWQgb24gTExWTSAzKSwgVHJpQ29y
+ZSANCihzaW5jZSB2NSkuDQotIFBQQyBQYWlyZWQgU2luZ2xlIGV4dGVuc2lvbiBhZGRlZC4N
+Cg0KWW91IGNhbiBmaW5kIHRoZSBmdWxsIHJlbGVhc2UgZ3VpZGUgd2l0aCBhbGwgZGV0YWls
+cyBoZXJlOiANCmh0dHBzOi8vZ2l0aHViLmNvbS9jYXBzdG9uZS1lbmdpbmUvY2Fwc3RvbmUv
+YmxvYi9uZXh0L2RvY3MvY3NfdjZfcmVsZWFzZV9ndWlkZS5tZA0KDQpJZiB5b3UgYXJlIGlu
+dGVyZXN0ZWQgaW4gdGhlIGRldGFpbHMgb2YgdGhlIG5ldyB1cGRhdGUgZnJhbWV3b3JrIA0K
+QXV0by1TeW5jICh3aGljaCBtYWRlIHY2IHBvc3NpYmxlKSwgeW91IGNhbiByZWFkIG91ciBi
+bG9nIHBvc3Q6DQpodHRwczovL3JpemluLnJlL3Bvc3RzL2F1dG8tc3luYy8NCg0KUGxlYXNl
+IGxldCBtZSBrbm93IGFueSBxdWVzdGlvbnMgeW91IGZvbGtzIG1pZ2h0IGhhdmUuDQoNCg==
 
->   target/riscv/cpu.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 4bda754b01..af602e3caf 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -997,6 +997,7 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
->       cs->exception_index = RISCV_EXCP_NONE;
->       env->load_res = -1;
->       set_default_nan_mode(1, &env->fp_status);
-> +    env->vill = true;
->   
->   #ifndef CONFIG_USER_ONLY
->       if (cpu->cfg.debug) {
+--------------p4SdXcGxVYqUE8hT0TDQOhN0
+Content-Type: application/pgp-keys; name="OpenPGP_0xC7A9CFBEECA2EF5A.asc"
+Content-Disposition: attachment; filename="OpenPGP_0xC7A9CFBEECA2EF5A.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+okajPmaG6RWWMtgL
+=3DJky5
+-----END PGP PUBLIC KEY BLOCK-----
+
+--------------p4SdXcGxVYqUE8hT0TDQOhN0--
+
+--------------cWA4B45w2F9Ub3f2hKdwGRAs--
+
+--------------kEMdO7qX7kfHNItN432OKCvI
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQGzBAEBCAAdFiEEaHL1DWKPrLF6BbPeOBK4JYgQr2cFAmb8xxsACgkQOBK4JYgQ
+r2d6gAv8D6zgdhDY7cRbEoPfzZkLhzVR/snXjueOW0lwvToVrCssRoPtXbNTGxC4
+KCfRfsO3lWabAky5wXaQSs6cT8JSjYjDv1NzkC1IWfARC+hzIuLrzOBBPVMKxS85
+VlRfoc0n4T4n0YTQeNfHpZydeAyYjRFGeeeUjPoJIffRqxUXkJ5OrVvuA+emjPkZ
+f9Oljo4N71YYr1KlVoQO9EnmOVsuAU/61LhR2rKLzlWNy9Fkelor0M8qe89/ROc+
+nmCcSTfYbNAcKZjxK983f/G0ZCEi4JDKlbBoxx7FmUXsIimTxl2Eb+VeXQDJZI/y
+EZlIxgGDQJlinNjr0Q/VYDcnug8ddHFpG2G8KIh8oJSBKfJ+coZ8qmpbSW36/wEX
+TMZP4XMmFZEYLFVMvWqlXu7jCs9qPL8UQkSeGw4M0uoY2ODHjB+8NVb/eIQxagV2
+VQ2DTChQatQgnNdNkzp7FZd1YhApLdE4ZM0fPT09mef9kj0LCoV3igI9dnwTAS60
+aDJ80oXw
+=uNT6
+-----END PGP SIGNATURE-----
+
+--------------kEMdO7qX7kfHNItN432OKCvI--
 
