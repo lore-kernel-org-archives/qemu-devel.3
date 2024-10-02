@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA103CF3189
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 01:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FAACCF318A
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 01:05:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svnn5-0007bT-6h; Tue, 01 Oct 2024 21:04:31 -0400
+	id 1svnnV-00080r-Oy; Tue, 01 Oct 2024 21:04:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1svnmb-0006z1-12
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 21:04:02 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1svnmk-00073E-EP
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 21:04:20 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1svnmY-0002oh-GD
- for qemu-devel@nongnu.org; Tue, 01 Oct 2024 21:04:00 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-20b90ab6c19so26994805ad.0
- for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 18:03:55 -0700 (PDT)
+ id 1svnme-0002rp-78
+ for qemu-devel@nongnu.org; Tue, 01 Oct 2024 21:04:06 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-20bb610be6aso13769765ad.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Oct 2024 18:04:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1727831034; x=1728435834; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1727831042; x=1728435842; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7TdWh9p5vMX8IrhAn7LAcQM8v0JpvZ5z88OfeimNelY=;
- b=V2K/flZfdjD9lBbm10lKxzzql2wBEkaIOGFXaZDCmGf8ob0NaaaeT55chNeYRBcx+y
- hAGKrDR81qkQHb+/GJAPuzG3HCyRR1o8ReRXamEuxtUfIYqVLpD2T7dkbKW5b3iO9U+s
- QfYkh4+EIWCEPQU/kPNSXm7olBLa5rNdzYIQnUUuUmw44eusU+vKpwjWc2RszIKhdyA0
- ugywvoviz13pzWcljS8hINnUjrOh/emZD4PxnNjBMGU2PWW+E3djzvQmlryXXKQ8ATJL
- Swh82GO28xLIQj1RLghvsEls46UuBaP22RqyuHPUP8M6Pxnjq8ak7/ZgaiJexdvbnlH6
- bmMw==
+ bh=S8OV9slWCqGfaCLWfWBNZMKpoiP4jDzulY/saMCxV/s=;
+ b=XQMrHgVrG5dnFHAP+PKYUviALD3HUZkW4Qi4hSp6IDZNZTcCSzOCpdmQEByFr7jH9q
+ Fo1wtKgPqMfOlpKf4Qq9Abb3QNbmTfCPpXGSv45R9hjasaECK5p3q8Mc4tEcIJTwREck
+ 4PpbfNC3IhBI5fkJ5pmuRBUJQ8LmhhMUD5Y5tgbNHJhmk0ZvuT1kMjndqaxL76kLlQwh
+ S2ZvbaivhTP2LcHqD9PdCC3NLEyAJpOo7g4e64Xf9Z9c489ZgR5OdVnEPqXq5srlt5YV
+ 29U9l5muQUBp3pNFSNBoHbRyFK59Splacd/53zHLQyesAI78xCZjsJltsJzu+6Oamqq5
+ rKCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727831034; x=1728435834;
+ d=1e100.net; s=20230601; t=1727831042; x=1728435842;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7TdWh9p5vMX8IrhAn7LAcQM8v0JpvZ5z88OfeimNelY=;
- b=r4NXzm7HhZeJ/y2kU0U0QE0cekir5vXu29AumDpSeWMz8QN6RVv1d14eKXx7xUX+fC
- fdIZsZsaY2Qp/+FqgHyFzKGV2a+pDNj9N4pBeazngK115EZShfGWjOWtVT2cDIEygGDA
- diPgHQdX5cXcnzrW58Rs3lS5En88RjmtZqr2vsfG24krRXU4FBpQxJ4eM6Ib68jg6ea6
- oOxWcm5BPVrRfFnVfpNi74tBqfIxfeSJvikB1NuGjGfZj8fn/LfihVSI75da2NNjRs75
- ysm6eg5/DQlj4DAHkMAHyshKc9Vnn3SfLEgsbkcrIBfjx7Z8hL6RAyUxGUzX6DVhu7bi
- PXug==
-X-Gm-Message-State: AOJu0Yz/Ne29sJLvxlEkMVd4Z3PbBncezwNyW/i4NQO0m5JIyAmCGWr1
- mgg8rK+QWxbavv8M/gOs25wgtmocLhXumT7cviXxkmm+hCl8iliEPyBwifSnQ/KnughO/CKb2ZS
- 1
-X-Google-Smtp-Source: AGHT+IH94ICad4w1vmr6uItgtQva1PFHl243BqUrlXvMxe8Elfb3XtmDXqbEyddk+rgjJO4z58bzKA==
-X-Received: by 2002:a17:902:c952:b0:20b:8f04:b076 with SMTP id
- d9443c01a7336-20bc5a0542dmr26659405ad.13.1727831034455; 
- Tue, 01 Oct 2024 18:03:54 -0700 (PDT)
+ bh=S8OV9slWCqGfaCLWfWBNZMKpoiP4jDzulY/saMCxV/s=;
+ b=sLk52uI5CDhObYv5qp4i0FmmDc9llqzXVo2Nw8QbBDJFiGJ9iLz+WBZzEdImoXVxI4
+ hdGfkCfegifWgPEyvlpyoeEkhtafXV6wDuaqnI82HEwnXq7CM74xT7ZjntCmacbEJQWt
+ bIiwuWudtgAFecS52sH7E3oIaUABaZVkLdr/+kz+4YupBVXv4egwrDOnXR5Fw2eT0Dk7
+ w5NOlVfW8zIxh6vCVtpXYjlqi9GZ639WwNumCzPsIwCsAUCK65m4xHAVMI8gIbwolChA
+ leO1Ii0SSfxqDRkqHGs8+YlKCZZRyYeLbhSvpZuURMEoJn4Eill01ZkbaYQ9H5RkC9wA
+ rZRw==
+X-Gm-Message-State: AOJu0Yyg5MUlkIEJT9F4L5M3ISKr/VyIpNsHFx/RdsSfuqz+HSlRrsLU
+ vxS/lil47leWd6NZ5HghGF/Cdtc4hjHtox/qxgDfyir2ummyv/Ol3LH6CYVmpWh/ZTQO3oOGbTs
+ W
+X-Google-Smtp-Source: AGHT+IESvil3xp6qd5fpEgrdXU0Hri8Xv1W+558+eHgpB89Q2nXGqvJ4OWrijlV/BXDfTEHO5+szSg==
+X-Received: by 2002:a17:902:e84a:b0:20b:93be:a2a2 with SMTP id
+ d9443c01a7336-20bc5aaa630mr20453325ad.38.1727831042427; 
+ Tue, 01 Oct 2024 18:04:02 -0700 (PDT)
 Received: from grind.. (200-206-229-93.dsl.telesp.net.br. [200.206.229.93])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20b37d63971sm76061295ad.4.2024.10.01.18.03.50
+ d9443c01a7336-20b37d63971sm76061295ad.4.2024.10.01.18.03.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Oct 2024 18:03:54 -0700 (PDT)
+ Tue, 01 Oct 2024 18:04:02 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- peter.maydell@linaro.org, Tomasz Jeznach <tjeznach@rivosinc.com>,
+ peter.maydell@linaro.org,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH v8 09/12] hw/riscv/riscv-iommu: add ATS support
-Date: Tue,  1 Oct 2024 22:03:04 -0300
-Message-ID: <20241002010314.1928515-10-dbarboza@ventanamicro.com>
+Subject: [PATCH v8 11/12] qtest/riscv-iommu-test: add init queues test
+Date: Tue,  1 Oct 2024 22:03:06 -0300
+Message-ID: <20241002010314.1928515-12-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241002010314.1928515-1-dbarboza@ventanamicro.com>
 References: <20241002010314.1928515-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,319 +98,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
+Add an additional test to further exercise the IOMMU where we attempt to
+initialize the command, fault and page-request queues.
 
-Add PCIe Address Translation Services (ATS) capabilities to the IOMMU.
-This will add support for ATS translation requests in Fault/Event
-queues, Page-request queue and IOATC invalidations.
+These steps are taken from chapter 6.2 of the RISC-V IOMMU spec,
+"Guidelines for initialization". It emulates what we expect from the
+software/OS when initializing the IOMMU.
 
-Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Frank Chang <frank.chang@sifive.com>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/riscv-iommu-bits.h |  43 +++++++++++-
- hw/riscv/riscv-iommu.c      | 127 +++++++++++++++++++++++++++++++++++-
- hw/riscv/riscv-iommu.h      |   1 +
- hw/riscv/trace-events       |   3 +
- 4 files changed, 171 insertions(+), 3 deletions(-)
+ tests/qtest/libqos/riscv-iommu.h |  30 ++++++++
+ tests/qtest/riscv-iommu-test.c   | 125 +++++++++++++++++++++++++++++++
+ 2 files changed, 155 insertions(+)
 
-diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-index b1c477f5c3..96a994b9aa 100644
---- a/hw/riscv/riscv-iommu-bits.h
-+++ b/hw/riscv/riscv-iommu-bits.h
-@@ -79,6 +79,7 @@ struct riscv_iommu_pq_record {
- #define RISCV_IOMMU_CAP_SV57X4          BIT_ULL(19)
- #define RISCV_IOMMU_CAP_MSI_FLAT        BIT_ULL(22)
- #define RISCV_IOMMU_CAP_MSI_MRIF        BIT_ULL(23)
-+#define RISCV_IOMMU_CAP_ATS             BIT_ULL(25)
- #define RISCV_IOMMU_CAP_T2GPA           BIT_ULL(26)
- #define RISCV_IOMMU_CAP_IGS             GENMASK_ULL(29, 28)
- #define RISCV_IOMMU_CAP_PAS             GENMASK_ULL(37, 32)
-@@ -212,6 +213,7 @@ struct riscv_iommu_dc {
+diff --git a/tests/qtest/libqos/riscv-iommu.h b/tests/qtest/libqos/riscv-iommu.h
+index d123efb41f..318db13799 100644
+--- a/tests/qtest/libqos/riscv-iommu.h
++++ b/tests/qtest/libqos/riscv-iommu.h
+@@ -62,6 +62,36 @@
  
- /* Translation control fields */
- #define RISCV_IOMMU_DC_TC_V             BIT_ULL(0)
-+#define RISCV_IOMMU_DC_TC_EN_ATS        BIT_ULL(1)
- #define RISCV_IOMMU_DC_TC_EN_PRI        BIT_ULL(2)
- #define RISCV_IOMMU_DC_TC_T2GPA         BIT_ULL(3)
- #define RISCV_IOMMU_DC_TC_DTF           BIT_ULL(4)
-@@ -273,6 +275,20 @@ struct riscv_iommu_command {
- #define RISCV_IOMMU_CMD_IODIR_DV        BIT_ULL(33)
- #define RISCV_IOMMU_CMD_IODIR_DID       GENMASK_ULL(63, 40)
+ #define RISCV_IOMMU_REG_IPSR            0x0054
  
-+/* 3.1.4 I/O MMU PCIe ATS */
-+#define RISCV_IOMMU_CMD_ATS_OPCODE              4
-+#define RISCV_IOMMU_CMD_ATS_FUNC_INVAL          0
-+#define RISCV_IOMMU_CMD_ATS_FUNC_PRGR           1
-+#define RISCV_IOMMU_CMD_ATS_PID         GENMASK_ULL(31, 12)
-+#define RISCV_IOMMU_CMD_ATS_PV          BIT_ULL(32)
-+#define RISCV_IOMMU_CMD_ATS_DSV         BIT_ULL(33)
-+#define RISCV_IOMMU_CMD_ATS_RID         GENMASK_ULL(55, 40)
-+#define RISCV_IOMMU_CMD_ATS_DSEG        GENMASK_ULL(63, 56)
-+/* dword1 is the ATS payload, two different payload types for INVAL and PRGR */
++#define RISCV_IOMMU_REG_IVEC            0x02F8
++#define RISCV_IOMMU_REG_IVEC_CIV        GENMASK_ULL(3, 0)
++#define RISCV_IOMMU_REG_IVEC_FIV        GENMASK_ULL(7, 4)
++#define RISCV_IOMMU_REG_IVEC_PMIV       GENMASK_ULL(11, 8)
++#define RISCV_IOMMU_REG_IVEC_PIV        GENMASK_ULL(15, 12)
 +
-+/* ATS.PRGR payload */
-+#define RISCV_IOMMU_CMD_ATS_PRGR_RESP_CODE      GENMASK_ULL(47, 44)
++#define RISCV_IOMMU_REG_CQB             0x0018
++#define RISCV_IOMMU_CQB_PPN_START       10
++#define RISCV_IOMMU_CQB_PPN_LEN         44
++#define RISCV_IOMMU_CQB_LOG2SZ_START    0
++#define RISCV_IOMMU_CQB_LOG2SZ_LEN      5
 +
- enum riscv_iommu_dc_fsc_atp_modes {
-     RISCV_IOMMU_DC_FSC_MODE_BARE = 0,
-     RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV32 = 8,
-@@ -339,7 +355,32 @@ enum riscv_iommu_fq_ttypes {
-     RISCV_IOMMU_FQ_TTYPE_TADDR_INST_FETCH = 5,
-     RISCV_IOMMU_FQ_TTYPE_TADDR_RD = 6,
-     RISCV_IOMMU_FQ_TTYPE_TADDR_WR = 7,
--    RISCV_IOMMU_FW_TTYPE_PCIE_MSG_REQ = 8,
-+    RISCV_IOMMU_FQ_TTYPE_PCIE_ATS_REQ = 8,
-+    RISCV_IOMMU_FW_TTYPE_PCIE_MSG_REQ = 9,
-+};
++#define RISCV_IOMMU_REG_CQT             0x0024
 +
-+/* Header fields */
-+#define RISCV_IOMMU_PREQ_HDR_PID        GENMASK_ULL(31, 12)
-+#define RISCV_IOMMU_PREQ_HDR_PV         BIT_ULL(32)
-+#define RISCV_IOMMU_PREQ_HDR_PRIV       BIT_ULL(33)
-+#define RISCV_IOMMU_PREQ_HDR_EXEC       BIT_ULL(34)
-+#define RISCV_IOMMU_PREQ_HDR_DID        GENMASK_ULL(63, 40)
++#define RISCV_IOMMU_REG_FQB             0x0028
++#define RISCV_IOMMU_FQB_PPN_START       10
++#define RISCV_IOMMU_FQB_PPN_LEN         44
++#define RISCV_IOMMU_FQB_LOG2SZ_START    0
++#define RISCV_IOMMU_FQB_LOG2SZ_LEN      5
 +
-+/* Payload fields */
-+#define RISCV_IOMMU_PREQ_PAYLOAD_R      BIT_ULL(0)
-+#define RISCV_IOMMU_PREQ_PAYLOAD_W      BIT_ULL(1)
-+#define RISCV_IOMMU_PREQ_PAYLOAD_L      BIT_ULL(2)
-+#define RISCV_IOMMU_PREQ_PAYLOAD_M      GENMASK_ULL(2, 0)
-+#define RISCV_IOMMU_PREQ_PRG_INDEX      GENMASK_ULL(11, 3)
-+#define RISCV_IOMMU_PREQ_UADDR          GENMASK_ULL(63, 12)
++#define RISCV_IOMMU_REG_FQT             0x0034
 +
++#define RISCV_IOMMU_REG_PQB             0x0038
++#define RISCV_IOMMU_PQB_PPN_START       10
++#define RISCV_IOMMU_PQB_PPN_LEN         44
++#define RISCV_IOMMU_PQB_LOG2SZ_START    0
++#define RISCV_IOMMU_PQB_LOG2SZ_LEN      5
 +
-+/*
-+ * struct riscv_iommu_msi_pte - MSI Page Table Entry
-+ */
-+struct riscv_iommu_msi_pte {
-+      uint64_t pte;
-+      uint64_t mrif_info;
- };
- 
- /* Fields on pte */
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index e3597af67c..6bb7ab6c53 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -666,6 +666,20 @@ static bool riscv_iommu_validate_device_ctx(RISCVIOMMUState *s,
-                                             RISCVIOMMUContext *ctx)
- {
-     uint32_t fsc_mode, msi_mode;
-+    uint64_t gatp;
++#define RISCV_IOMMU_REG_PQT             0x0044
 +
-+    if (!(s->cap & RISCV_IOMMU_CAP_ATS) &&
-+        (ctx->tc & RISCV_IOMMU_DC_TC_EN_ATS ||
-+         ctx->tc & RISCV_IOMMU_DC_TC_EN_PRI ||
-+         ctx->tc & RISCV_IOMMU_DC_TC_PRPR)) {
-+        return false;
-+    }
-+
-+    if (!(ctx->tc & RISCV_IOMMU_DC_TC_EN_ATS) &&
-+        (ctx->tc & RISCV_IOMMU_DC_TC_T2GPA ||
-+         ctx->tc & RISCV_IOMMU_DC_TC_EN_PRI)) {
-+        return false;
-+    }
- 
-     if (!(ctx->tc & RISCV_IOMMU_DC_TC_EN_PRI) &&
-         ctx->tc & RISCV_IOMMU_DC_TC_PRPR) {
-@@ -686,6 +700,12 @@ static bool riscv_iommu_validate_device_ctx(RISCVIOMMUState *s,
-         }
-     }
- 
-+    gatp = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
-+    if (ctx->tc & RISCV_IOMMU_DC_TC_T2GPA &&
-+        gatp == RISCV_IOMMU_DC_IOHGATP_MODE_BARE) {
-+        return false;
-+    }
-+
-     fsc_mode = get_field(ctx->satp, RISCV_IOMMU_DC_FSC_MODE);
- 
-     if (ctx->tc & RISCV_IOMMU_DC_TC_PDTV) {
-@@ -836,7 +856,12 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
-             RISCV_IOMMU_DC_IOHGATP_MODE_BARE);
-         ctx->satp = set_field(0, RISCV_IOMMU_ATP_MODE_FIELD,
-             RISCV_IOMMU_DC_FSC_MODE_BARE);
-+
-         ctx->tc = RISCV_IOMMU_DC_TC_V;
-+        if (s->enable_ats) {
-+            ctx->tc |= RISCV_IOMMU_DC_TC_EN_ATS;
-+        }
-+
-         ctx->ta = 0;
-         ctx->msiptp = 0;
-         return 0;
-@@ -1293,6 +1318,16 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-     enable_pri = (iotlb->perm == IOMMU_NONE) && (ctx->tc & BIT_ULL(32));
-     enable_pid = (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
- 
-+    /* Check for ATS request. */
-+    if (iotlb->perm == IOMMU_NONE) {
-+        /* Check if ATS is disabled. */
-+        if (!(ctx->tc & RISCV_IOMMU_DC_TC_EN_ATS)) {
-+            enable_pri = false;
-+            fault = RISCV_IOMMU_FQ_CAUSE_TTYPE_BLOCKED;
-+            goto done;
-+        }
-+    }
-+
-     iot = riscv_iommu_iot_lookup(ctx, iot_cache, iotlb->iova);
-     perm = iot ? iot->perm : IOMMU_NONE;
-     if (perm != IOMMU_NONE) {
-@@ -1344,11 +1379,11 @@ done:
-     }
- 
-     if (fault) {
--        unsigned ttype;
-+        unsigned ttype = RISCV_IOMMU_FQ_TTYPE_PCIE_ATS_REQ;
- 
-         if (iotlb->perm & IOMMU_RW) {
-             ttype = RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
--        } else {
-+        } else if (iotlb->perm & IOMMU_RO) {
-             ttype = RISCV_IOMMU_FQ_TTYPE_UADDR_RD;
-         }
- 
-@@ -1376,6 +1411,71 @@ static MemTxResult riscv_iommu_iofence(RISCVIOMMUState *s, bool notify,
-         MEMTXATTRS_UNSPECIFIED);
+ typedef struct QRISCVIOMMU {
+     QOSGraphObject obj;
+     QPCIDevice dev;
+diff --git a/tests/qtest/riscv-iommu-test.c b/tests/qtest/riscv-iommu-test.c
+index be72cf3d74..df0c7813ec 100644
+--- a/tests/qtest/riscv-iommu-test.c
++++ b/tests/qtest/riscv-iommu-test.c
+@@ -25,6 +25,18 @@ static uint64_t riscv_iommu_read_reg64(QRISCVIOMMU *r_iommu, int reg_offset)
+     return qpci_io_readq(&r_iommu->dev, r_iommu->reg_bar, reg_offset);
  }
  
-+static void riscv_iommu_ats(RISCVIOMMUState *s,
-+    struct riscv_iommu_command *cmd, IOMMUNotifierFlag flag,
-+    IOMMUAccessFlags perm,
-+    void (*trace_fn)(const char *id))
++static void riscv_iommu_write_reg32(QRISCVIOMMU *r_iommu, int reg_offset,
++                                    uint32_t val)
 +{
-+    RISCVIOMMUSpace *as = NULL;
-+    IOMMUNotifier *n;
-+    IOMMUTLBEvent event;
-+    uint32_t pid;
-+    uint32_t devid;
-+    const bool pv = cmd->dword0 & RISCV_IOMMU_CMD_ATS_PV;
-+
-+    if (cmd->dword0 & RISCV_IOMMU_CMD_ATS_DSV) {
-+        /* Use device segment and requester id */
-+        devid = get_field(cmd->dword0,
-+            RISCV_IOMMU_CMD_ATS_DSEG | RISCV_IOMMU_CMD_ATS_RID);
-+    } else {
-+        devid = get_field(cmd->dword0, RISCV_IOMMU_CMD_ATS_RID);
-+    }
-+
-+    pid = get_field(cmd->dword0, RISCV_IOMMU_CMD_ATS_PID);
-+
-+    QLIST_FOREACH(as, &s->spaces, list) {
-+        if (as->devid == devid) {
-+            break;
-+        }
-+    }
-+
-+    if (!as || !as->notifier) {
-+        return;
-+    }
-+
-+    event.type = flag;
-+    event.entry.perm = perm;
-+    event.entry.target_as = s->target_as;
-+
-+    IOMMU_NOTIFIER_FOREACH(n, &as->iova_mr) {
-+        if (!pv || n->iommu_idx == pid) {
-+            event.entry.iova = n->start;
-+            event.entry.addr_mask = n->end - n->start;
-+            trace_fn(as->iova_mr.parent_obj.name);
-+            memory_region_notify_iommu_one(n, &event);
-+        }
-+    }
++    qpci_io_writel(&r_iommu->dev, r_iommu->reg_bar, reg_offset, val);
 +}
 +
-+static void riscv_iommu_ats_inval(RISCVIOMMUState *s,
-+    struct riscv_iommu_command *cmd)
++static void riscv_iommu_write_reg64(QRISCVIOMMU *r_iommu, int reg_offset,
++                                    uint64_t val)
 +{
-+    return riscv_iommu_ats(s, cmd, IOMMU_NOTIFIER_DEVIOTLB_UNMAP, IOMMU_NONE,
-+                           trace_riscv_iommu_ats_inval);
++    qpci_io_writeq(&r_iommu->dev, r_iommu->reg_bar, reg_offset, val);
 +}
 +
-+static void riscv_iommu_ats_prgr(RISCVIOMMUState *s,
-+    struct riscv_iommu_command *cmd)
-+{
-+    unsigned resp_code = get_field(cmd->dword1,
-+                                   RISCV_IOMMU_CMD_ATS_PRGR_RESP_CODE);
-+
-+    /* Using the access flag to carry response code information */
-+    IOMMUAccessFlags perm = resp_code ? IOMMU_NONE : IOMMU_RW;
-+    return riscv_iommu_ats(s, cmd, IOMMU_NOTIFIER_MAP, perm,
-+                           trace_riscv_iommu_ats_prgr);
-+}
-+
- static void riscv_iommu_process_ddtp(RISCVIOMMUState *s)
+ static void test_pci_config(void *obj, void *data, QGuestAllocator *t_alloc)
  {
-     uint64_t old_ddtp = s->ddtp;
-@@ -1531,6 +1631,25 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
-                 get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_PID));
-             break;
+     QRISCVIOMMU *r_iommu = obj;
+@@ -76,10 +88,123 @@ static void test_reg_reset(void *obj, void *data, QGuestAllocator *t_alloc)
+     g_assert_cmpuint(reg, ==, 0);
+ }
  
-+        /* ATS commands */
-+        case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_ATS_FUNC_INVAL,
-+                             RISCV_IOMMU_CMD_ATS_OPCODE):
-+            if (!s->enable_ats) {
-+                goto cmd_ill;
-+            }
++/*
++ * Common timeout-based poll for CQCSR, FQCSR and PQCSR. All
++ * their ON bits are mapped as RISCV_IOMMU_QUEUE_ACTIVE (16),
++ */
++static void qtest_wait_for_queue_active(QRISCVIOMMU *r_iommu,
++                                        uint32_t queue_csr)
++{
++    QTestState *qts = global_qtest;
++    guint64 timeout_us = 2 * 1000 * 1000;
++    gint64 start_time = g_get_monotonic_time();
++    uint32_t reg;
 +
-+            riscv_iommu_ats_inval(s, &cmd);
++    for (;;) {
++        qtest_clock_step(qts, 100);
++
++        reg = riscv_iommu_read_reg32(r_iommu, queue_csr);
++        if (reg & RISCV_IOMMU_QUEUE_ACTIVE) {
 +            break;
-+
-+        case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_ATS_FUNC_PRGR,
-+                             RISCV_IOMMU_CMD_ATS_OPCODE):
-+            if (!s->enable_ats) {
-+                goto cmd_ill;
-+            }
-+
-+            riscv_iommu_ats_prgr(s, &cmd);
-+            break;
-+
-         default:
-         cmd_ill:
-             /* Invalid instruction, do not advance instruction index. */
-@@ -1932,6 +2051,9 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
-     if (s->enable_msi) {
-         s->cap |= RISCV_IOMMU_CAP_MSI_FLAT | RISCV_IOMMU_CAP_MSI_MRIF;
-     }
-+    if (s->enable_ats) {
-+        s->cap |= RISCV_IOMMU_CAP_ATS;
++        }
++        g_assert(g_get_monotonic_time() - start_time <= timeout_us);
 +    }
-     if (s->enable_s_stage) {
-         s->cap |= RISCV_IOMMU_CAP_SV32 | RISCV_IOMMU_CAP_SV39 |
-                   RISCV_IOMMU_CAP_SV48 | RISCV_IOMMU_CAP_SV57;
-@@ -2041,6 +2163,7 @@ static Property riscv_iommu_properties[] = {
-     DEFINE_PROP_UINT32("ioatc-limit", RISCVIOMMUState, iot_limit,
-         LIMIT_CACHE_IOT),
-     DEFINE_PROP_BOOL("intremap", RISCVIOMMUState, enable_msi, TRUE),
-+    DEFINE_PROP_BOOL("ats", RISCVIOMMUState, enable_ats, TRUE),
-     DEFINE_PROP_BOOL("off", RISCVIOMMUState, enable_off, TRUE),
-     DEFINE_PROP_BOOL("s-stage", RISCVIOMMUState, enable_s_stage, TRUE),
-     DEFINE_PROP_BOOL("g-stage", RISCVIOMMUState, enable_g_stage, TRUE),
-diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-index 9f15f3b27f..da3f03440c 100644
---- a/hw/riscv/riscv-iommu.h
-+++ b/hw/riscv/riscv-iommu.h
-@@ -37,6 +37,7 @@ struct RISCVIOMMUState {
++}
++
++/*
++ * Goes through the queue activation procedures of chapter 6.2,
++ * "Guidelines for initialization", of the RISCV-IOMMU spec.
++ */
++static void test_iommu_init_queues(void *obj, void *data,
++                                   QGuestAllocator *t_alloc)
++{
++    QRISCVIOMMU *r_iommu = obj;
++    uint64_t reg64, q_addr;
++    uint32_t reg;
++    int k = 2;
++
++    reg64 = riscv_iommu_read_reg64(r_iommu, RISCV_IOMMU_REG_CAP);
++    g_assert_cmpuint(reg64 & RISCV_IOMMU_CAP_VERSION, ==, 0x10);
++
++    /*
++     * Program the command queue. Write 0xF to civ, fiv, pmiv and
++     * piv. With the current PCI device impl we expect 2 writable
++     * bits for each (k = 2) since we have N = 4 total vectors (2^k).
++     */
++    riscv_iommu_write_reg32(r_iommu, RISCV_IOMMU_REG_IVEC, 0xFFFF);
++    reg = riscv_iommu_read_reg32(r_iommu, RISCV_IOMMU_REG_IVEC);
++    g_assert_cmpuint(reg & RISCV_IOMMU_REG_IVEC_CIV, ==, 0x3);
++    g_assert_cmpuint(reg & RISCV_IOMMU_REG_IVEC_FIV, ==, 0x30);
++    g_assert_cmpuint(reg & RISCV_IOMMU_REG_IVEC_PMIV, ==, 0x300);
++    g_assert_cmpuint(reg & RISCV_IOMMU_REG_IVEC_PIV, ==, 0x3000);
++
++    /* Alloc a 4*16 bytes buffer and use it to set cqb */
++    q_addr = guest_alloc(t_alloc, 4 * 16);
++    reg64 = 0;
++    deposit64(reg64, RISCV_IOMMU_CQB_PPN_START,
++              RISCV_IOMMU_CQB_PPN_LEN, q_addr);
++    deposit64(reg64, RISCV_IOMMU_CQB_LOG2SZ_START,
++              RISCV_IOMMU_CQB_LOG2SZ_LEN, k - 1);
++    riscv_iommu_write_reg64(r_iommu, RISCV_IOMMU_REG_CQB, reg64);
++
++    /* cqt = 0, cqcsr.cqen = 1, poll cqcsr.cqon until it reads 1 */
++    riscv_iommu_write_reg32(r_iommu, RISCV_IOMMU_REG_CQT, 0);
++
++    reg = riscv_iommu_read_reg32(r_iommu, RISCV_IOMMU_REG_CQCSR);
++    reg |= RISCV_IOMMU_CQCSR_CQEN;
++    riscv_iommu_write_reg32(r_iommu, RISCV_IOMMU_REG_CQCSR, reg);
++
++    qtest_wait_for_queue_active(r_iommu, RISCV_IOMMU_REG_CQCSR);
++
++    /*
++     * Program the fault queue. Alloc a 4*32 bytes (instead of 4*16)
++     * buffer and use it to set fqb.
++     */
++    q_addr = guest_alloc(t_alloc, 4 * 32);
++    reg64 = 0;
++    deposit64(reg64, RISCV_IOMMU_FQB_PPN_START,
++              RISCV_IOMMU_FQB_PPN_LEN, q_addr);
++    deposit64(reg64, RISCV_IOMMU_FQB_LOG2SZ_START,
++              RISCV_IOMMU_FQB_LOG2SZ_LEN, k - 1);
++    riscv_iommu_write_reg64(r_iommu, RISCV_IOMMU_REG_FQB, reg64);
++
++    /* fqt = 0, fqcsr.fqen = 1, poll fqcsr.fqon until it reads 1 */
++    riscv_iommu_write_reg32(r_iommu, RISCV_IOMMU_REG_FQT, 0);
++
++    reg = riscv_iommu_read_reg32(r_iommu, RISCV_IOMMU_REG_FQCSR);
++    reg |= RISCV_IOMMU_FQCSR_FQEN;
++    riscv_iommu_write_reg32(r_iommu, RISCV_IOMMU_REG_FQCSR, reg);
++
++    qtest_wait_for_queue_active(r_iommu, RISCV_IOMMU_REG_FQCSR);
++
++    /*
++     * Program the page-request queue. Alloc a 4*16 bytes buffer
++     * and use it to set pqb.
++     */
++    q_addr = guest_alloc(t_alloc, 4 * 16);
++    reg64 = 0;
++    deposit64(reg64, RISCV_IOMMU_PQB_PPN_START,
++              RISCV_IOMMU_PQB_PPN_LEN, q_addr);
++    deposit64(reg64, RISCV_IOMMU_PQB_LOG2SZ_START,
++              RISCV_IOMMU_PQB_LOG2SZ_LEN, k - 1);
++    riscv_iommu_write_reg64(r_iommu, RISCV_IOMMU_REG_PQB, reg64);
++
++    /* pqt = 0, pqcsr.pqen = 1, poll pqcsr.pqon until it reads 1 */
++    riscv_iommu_write_reg32(r_iommu, RISCV_IOMMU_REG_PQT, 0);
++
++    reg = riscv_iommu_read_reg32(r_iommu, RISCV_IOMMU_REG_PQCSR);
++    reg |= RISCV_IOMMU_PQCSR_PQEN;
++    riscv_iommu_write_reg32(r_iommu, RISCV_IOMMU_REG_PQCSR, reg);
++
++    qtest_wait_for_queue_active(r_iommu, RISCV_IOMMU_REG_PQCSR);
++}
++
+ static void register_riscv_iommu_test(void)
+ {
+     qos_add_test("pci_config", "riscv-iommu-pci", test_pci_config, NULL);
+     qos_add_test("reg_reset", "riscv-iommu-pci", test_reg_reset, NULL);
++    qos_add_test("iommu_init_queues", "riscv-iommu-pci",
++                 test_iommu_init_queues, NULL);
+ }
  
-     bool enable_off;      /* Enable out-of-reset OFF mode (DMA disabled) */
-     bool enable_msi;      /* Enable MSI remapping */
-+    bool enable_ats;      /* Enable ATS support */
-     bool enable_s_stage;  /* Enable S/VS-Stage translation */
-     bool enable_g_stage;  /* Enable G-Stage translation */
- 
-diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
-index 3d5c33102d..0527c56c91 100644
---- a/hw/riscv/trace-events
-+++ b/hw/riscv/trace-events
-@@ -12,3 +12,6 @@ riscv_iommu_notifier_add(const char *id) "%s: dev-iotlb notifier added"
- riscv_iommu_notifier_del(const char *id) "%s: dev-iotlb notifier removed"
- riscv_iommu_notify_int_vector(uint32_t cause, uint32_t vector) "Interrupt cause 0x%x sent via vector 0x%x"
- riscv_iommu_icvec_write(uint32_t orig, uint32_t actual) "ICVEC write: incoming 0x%x actual 0x%x"
-+riscv_iommu_ats(const char *id, unsigned b, unsigned d, unsigned f, uint64_t iova) "%s: translate request %04x:%02x.%u iova: 0x%"PRIx64
-+riscv_iommu_ats_inval(const char *id) "%s: dev-iotlb invalidate"
-+riscv_iommu_ats_prgr(const char *id) "%s: dev-iotlb page request group response"
+ libqos_init(register_riscv_iommu_test);
 -- 
 2.45.2
 
