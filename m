@@ -4,71 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBA26CF6D2D
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 15:04:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FAACF6D28
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 15:06:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sw0tX-0007TL-SC; Wed, 02 Oct 2024 11:04:04 -0400
+	id 1sw0vQ-0008Vl-20; Wed, 02 Oct 2024 11:06:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sw0tW-0007TC-6A
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:04:02 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sw0tT-0002xr-VM
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:04:01 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8F6E4948EF;
- Wed,  2 Oct 2024 18:03:18 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2E16B14B085;
- Wed,  2 Oct 2024 18:03:57 +0300 (MSK)
-Message-ID: <6035f465-e118-4ba4-8558-e5d3fb4060e9@tls.msk.ru>
-Date: Wed, 2 Oct 2024 18:03:57 +0300
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1sw0vO-0008VM-DD
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:05:58 -0400
+Received: from smtpx.feld.cvut.cz ([147.32.210.153] helo=smtpx.fel.cvut.cz)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1sw0vK-0003GA-HI
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 11:05:58 -0400
+Received: from localhost (unknown [192.168.200.27])
+ by smtpx.fel.cvut.cz (Postfix) with ESMTP id 13E453A408;
+ Wed,  2 Oct 2024 17:05:49 +0200 (CEST)
+X-Virus-Scanned: IMAP STYX AMAVIS
+Authentication-Results: cerokez-250.feld.cvut.cz (amavis);
+ dkim=pass (2048-bit key) header.d=fel.cvut.cz
+Received: from smtpx.fel.cvut.cz ([192.168.200.2])
+ by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
+ with ESMTP id HLa_EXDG2ejY; Wed,  2 Oct 2024 17:05:46 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
+ s=felmail; t=1727881546;
+ bh=+t4Ct48h3uXjz7yaHBzHssJlhzgCNmriDar/m7TGElM=;
+ h=From:To:Subject:Date:From;
+ b=b2tfi1nD8LODmqCx5GNGHH6DZ4jEx4cngtkbX+9kwjSnMBu2Bv0JwEfb03GFvvq4r
+ tt/wMrgS20AmXaG9X58m50gd6fmpEpMP4Xo44NtdKkI+p2H9bHYvfyUhz7bZyGkH2y
+ //fdnZpsbwrk62uvSUSjW7fjueGpNO6a7gC+WzsVRIkuWCJ8Z+rkHjfUzF4Cy5gsqW
+ JnI43kYMrhQA/wfWdaq3d0eyN3H2EnloObpLvL5vFQxJVNjY1EnmBRoVNG25l1YeGh
+ qAUH9dG8X45E51++7rqNXmukHSvwJXcZM+8hNemR0DZNkU9ZrBANEhEF+26XQtBcnu
+ WzkhBNCHTRmsw==
+Received: from [147.32.86.119] (unknown [147.32.86.119])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: pisa)
+ by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id 8B4183A2D4;
+ Wed,  2 Oct 2024 17:05:46 +0200 (CEST)
+From: Pavel Pisa <pisa@fel.cvut.cz>
+To: Nikita Ostrenkov <n.ostrenkov@gmail.com>, qemu-devel@nongnu.org,
+ Matyas Bobek <bobekmat@fel.cvut.cz>
+Subject: Plea for advice with PCIe on QEMU for iMX6 and plan to add FlexCAN
+ controller support
+Date: Wed, 2 Oct 2024 17:06:01 +0200
+User-Agent: KMail/1.9.10
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/elfload.c: keep GNU0_MAGIC in host byte order
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20241002091119.995467-1-mjt@tls.msk.ru>
- <b7b893d6-48b5-4eb5-95e4-50af746ddf4f@vivier.eu>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <b7b893d6-48b5-4eb5-95e4-50af746ddf4f@vivier.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: Text/Plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Message-Id: <202410021706.01967.pisa@fel.cvut.cz>
+Received-SPF: pass client-ip=147.32.210.153; envelope-from=pisa@fel.cvut.cz;
+ helo=smtpx.fel.cvut.cz
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -86,26 +80,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-02.10.2024 16:51, Laurent Vivier wrote:
-> Le 02/10/2024 à 11:11, Michael Tokarev a écrit :
->> Other places of this file operate in host byte order.  Only
->> this constant is defined as little-endian.  This does not
->> work, for example, on s390x host when running an arm64 binary:
->>
->>   qemu-arm64: /usr/bin/busybox: Invalid note in PT_GNU_PROPERTY
->>
->> This change is tested on all combinations of host/guest for
->> which debian provides release architectures, namely:
->>
->>    amd64 arm64 armel armhf i386 mips64el ppc64el riscv64 s390x
+Dear Nikita and other,
 
-Actually this is wrong.  The only architecture on debian where this
-.note.gnu.property field is actually used is aarch64.  On all other
-architectures, this code path is not tested.  But for aarch64 binary
-I actually tested on all (host) architectures listed above.  I should
-update the commit comment.
+my student Matyas Bobek has chosen to work
+on QEMU CAN support in a frame of his study
+final project.
 
-Thanks,
+We have identified iMX6 FlexCAN as the next interesting
+CAN controller for emulation. One of our industrial partners
+is using iMX6 based system with CAN and iMX6 SabreLite
+is supported by QEMU. iMX6 is often used in industry
+still and FlexCAN has use even for iMX8 emulation
+if it is added into QEMU in the future.
 
-/mjt
+In the preparatory work, we want to setup
+shared directory between host and guest
+kernel using 9P FS on PCI virtio.
+
+The development environment is based on current
+mainline QEMU and mainline Linux kernel sources.
+
+We use standard QEMU options
+
+  -virtfs local,path=shareddir,security_model=none,mount_tag=shareddir
+
+and the 1af4:1009 is seen by monitor command "info pci"
+but on the guest kernel side only "16c3:abcd" DWC_usb3 / PCIe bridge
+is seen but none from the mapped devices, virtio (1af4:1009),
+CTU CAN FD, Kvaser CAN.
+
+The imx6q-sabrelite DTS is used with standard device-tree
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm/boot/dts/nxp/imx/imx6q-sabrelite.dts
+
+We hope that all required drivers are enabled
+in the kernel. But it is possible that something
+has been overlooked.
+
+Do you have some hint or some kernel
+and QEMU working example for iMX6 PCIe
+device mapping?
+
+Thanks in advance.
+
+Best wishes,
+
+                Pavel
+--
+                Pavel Pisa
+    phone:      +420 603531357
+    e-mail:     pisa@cmp.felk.cvut.cz
+    Department of Control Engineering FEE CVUT
+    Karlovo namesti 13, 121 35, Prague 2
+    university: http://control.fel.cvut.cz/
+    personal:   http://cmp.felk.cvut.cz/~pisa
+    social:     https://social.kernel.org/ppisa
+    projects:   https://www.openhub.net/accounts/ppisa
+    CAN related:http://canbus.pages.fel.cvut.cz/
+    RISC-V education: https://comparch.edu.cvut.cz/
+    Open Technologies Research Education and Exchange Services
+    https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
 
