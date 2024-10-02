@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1506CF31B0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33882CF31B0
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:41:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svwm8-0001u1-1h; Wed, 02 Oct 2024 06:40:08 -0400
+	id 1svwnJ-0002am-8I; Wed, 02 Oct 2024 06:41:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwm5-0001rb-Ku
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:40:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwnG-0002aE-6y
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:41:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwm3-0002HF-UF
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:40:05 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwnE-0002Yr-Az
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:41:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727865602;
+ s=mimecast20190719; t=1727865673;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=YHukl+IKOol9Bnc66BawQ4L4CvfySS29sw4jng/sBDE=;
- b=GgFeu6DblYSnQn0iHj3K/0oHc9jM7tICN6QedLXQT2lp4L6tkwrP35FvY/gCYlw22MsoCb
- PgccTvu2so+nBmPtcfVb3ZjE2XypbonnJVVOqoeOXscjCIdBTL8ZHHk7ggqIVm/u4MKFKe
- qWbARtdZ8JEFDntGFbZF8bz+zdHEWz4=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6lvvepeCr/w31iiapTDJFAzQrCKLFbSQiEUqxFrebgw=;
+ b=XpzWL/Fl06GaP1MkE5gWVV9quaSBa26Rrny41ZjG6m/jVJ4+8oQpV4r+AAy5Kh6RMeGmSX
+ b3Xi+0XX2gmZINpGIfumH3J8/nnVVEjvcUrg4oMiyGUpC8S+nDJ50Z5WOZIVTQAyOtMGXQ
+ 6gAEww5mEUOXyyPXvyeLzo9KVvOhrlE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-CDq8Z2oiOZGe93FPc9o1pw-1; Wed, 02 Oct 2024 06:40:00 -0400
-X-MC-Unique: CDq8Z2oiOZGe93FPc9o1pw-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37ccd39115bso4102040f8f.0
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 03:40:00 -0700 (PDT)
+ us-mta-372--V0B-coRPRuF9O49jkwERQ-1; Wed, 02 Oct 2024 06:41:11 -0400
+X-MC-Unique: -V0B-coRPRuF9O49jkwERQ-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-42cb236ad4aso37298405e9.3
+ for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 03:41:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727865599; x=1728470399;
+ d=1e100.net; s=20230601; t=1727865670; x=1728470470;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YHukl+IKOol9Bnc66BawQ4L4CvfySS29sw4jng/sBDE=;
- b=qQLiupz7MO2/MwiEZjc/nSqwVfdM0mRPSyDN8+n6ceXA/GoLMV1tJAqHqTVi/R32/e
- 40bOy0qTmxbPu4zhK8hBQ0ucq57bBRDQH66kWloGNd8Fnr7ZSNhqEr8nrAxuHs4WHuCe
- gHxwjQEBIVBYUApqvf14e61FxjRuqMlqlA2VmaQXj9Colkfo2YgzSgWcgggOdUSFq9bL
- sSPahFQSJ1dgifkDuEKmL68pmcbSq358OlSjpq3keLq0dC3mI57lBp8WJ4GlJV91HHZH
- h+IIx1778yI4GeN4/LYFCYgcdtmqbWTBv4HbZ8efAEMwgtj5KapOeIxdDmkE/iwni9c0
- cGdA==
-X-Gm-Message-State: AOJu0YyPUdDSk5zeiSnaQ2P5/1AyuF5snEdIbTJ+h4Y6o5uEcTpo9aj4
- E5t6qll8cyAY2FandbjH2CYnugwnnZy0b9S1FDjWdTE8HsqJVbdrVzzyb7kwJomdcTFEShM8vKA
- rVApjY3FiXpUyCnSBlc19/gV/jj8r+x5Mk7yjQKfdIdCNkD1Uqn9c
-X-Received: by 2002:adf:ee4e:0:b0:374:b9a7:5ed6 with SMTP id
- ffacd0b85a97d-37cfb8c7949mr1698706f8f.22.1727865599536; 
- Wed, 02 Oct 2024 03:39:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUetIOSAKZTWZGMt+jtK32PjutF92nMD/DMRknmGmNcp0qZ7LWTTiROiszy6y1mFYaYMthLw==
-X-Received: by 2002:adf:ee4e:0:b0:374:b9a7:5ed6 with SMTP id
- ffacd0b85a97d-37cfb8c7949mr1698689f8f.22.1727865599092; 
- Wed, 02 Oct 2024 03:39:59 -0700 (PDT)
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6lvvepeCr/w31iiapTDJFAzQrCKLFbSQiEUqxFrebgw=;
+ b=wOdBv4jcQ5fkWXX31/dcpreYbsh0jwioF5MSb2PjccAt9Ioy0GAm1RuKQRo8EIEkaG
+ SHHXnK6RrFNFnhqA3LJ3TMNR8Xl4OCmERAwY/gRFVyP+N+TXGdTCMnr0WespXOZNJZe5
+ sRx2VTG2or4I5e4cR1DP8WYLBP9Wj41lJgtkZb+VVSqfhEYjItILyZuhQoxwCsPxFs3r
+ bfCg3igx4YeHEKH1egAFx78y4yKxG1uYro5RQfDN7ECYQGnCYGVR33At+ddbaaBRRF5L
+ 89hFxNq57sfVSjk0eA9FFsi4OKtemTwYXk06S4AFN2wKU6w4noMKiZHCSeX2TVOmK0r/
+ eGFg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWedcJWyfME3g9ZGIbR4biNulGhsYM3RbVVkjE8tWGoQLSvB7SyypvXDUq0XAHWidsO9vFmfkvPQDaY@nongnu.org
+X-Gm-Message-State: AOJu0YwghMjIlxA/VnIkPdvSIJkQxEOZF+76br9DElhLXZkv12KmuOmt
+ F6+Ki1V3XlP0jakZ8hpZVqkTE1scLrS6vrME4+5yP9n8r8ZxvnFBes3FPnjj4nqQArDFwucdlYR
+ YN3vW+vImtU2TUx7JQubzqhiPDuEjRe45yz8m5bhep9liZQJYiUGkuYrvGe6uXC8=
+X-Received: by 2002:a05:600c:4705:b0:42e:93f4:5383 with SMTP id
+ 5b1f17b1804b1-42f777ecf6dmr16705575e9.23.1727865669628; 
+ Wed, 02 Oct 2024 03:41:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGjrRCfjE5CyiCwnTqrjl0B3KeyzxI0sIDQFmmrnoK3wgcS4mE6nqKbQ1GsnTssSkyG5bCs/A==
+X-Received: by 2002:a05:600c:4705:b0:42e:93f4:5383 with SMTP id
+ 5b1f17b1804b1-42f777ecf6dmr16705365e9.23.1727865669199; 
+ Wed, 02 Oct 2024 03:41:09 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-143.web.vodafone.de.
  [109.42.49.143]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f7a01f4a4sm15077195e9.29.2024.10.02.03.39.58
+ 5b1f17b1804b1-42f7a00bc5csm15175585e9.45.2024.10.02.03.41.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Oct 2024 03:39:58 -0700 (PDT)
-Message-ID: <6135cbe3-74bf-4452-a64a-d5e7924ec406@redhat.com>
-Date: Wed, 2 Oct 2024 12:39:57 +0200
+ Wed, 02 Oct 2024 03:41:08 -0700 (PDT)
+Message-ID: <2149788c-ea6a-4e6c-be95-b4daa5c5aefe@redhat.com>
+Date: Wed, 2 Oct 2024 12:41:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vhost: Remove unused vhost_dev_{load|save}_inflight
-To: dave@treblig.org, mst@redhat.com, sgarzare@redhat.com,
- QEMU Trivial <qemu-trivial@nongnu.org>
-Cc: qemu-devel@nongnu.org
-References: <20240918121034.16417-1-dave@treblig.org>
+Subject: Re: [PATCH] remote: Remove unused remote_iohub_finalize
+To: dave@treblig.org, elena.ufimtseva@oracle.com, jag.raman@oracle.com,
+ qemu-devel@nongnu.org, QEMU Trivial <qemu-trivial@nongnu.org>
+References: <20240919165852.322707-1-dave@treblig.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -117,10 +117,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240918121034.16417-1-dave@treblig.org>
+In-Reply-To: <20240919165852.322707-1-dave@treblig.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -129,7 +129,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,102 +145,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/09/2024 14.10, dave@treblig.org wrote:
+On 19/09/2024 18.58, dave@treblig.org wrote:
 > From: "Dr. David Alan Gilbert" <dave@treblig.org>
 > 
-> vhost_dev_load_inflight and vhost_dev_save_inflight have been
-> unused since they were added in 2019 by:
+> remote_iohub_finalize has never been used.
 > 
-> 5ad204bf2a ("vhost-user: Support transferring inflight buffer between qemu and backend")
-> 
-> Remove them, and their helper vhost_dev_resize_inflight.
+> Remove it.
 > 
 > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 > ---
->   hw/virtio/vhost.c         | 56 ---------------------------------------
->   include/hw/virtio/vhost.h |  2 --
->   2 files changed, 58 deletions(-)
+>   hw/remote/iohub.c         | 13 -------------
+>   include/hw/remote/iohub.h |  1 -
+>   2 files changed, 14 deletions(-)
 > 
-> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index 7c5ef81b55..76f9b2aaad 100644
-> --- a/hw/virtio/vhost.c
-> +++ b/hw/virtio/vhost.c
-> @@ -1930,62 +1930,6 @@ void vhost_dev_free_inflight(struct vhost_inflight *inflight)
+> diff --git a/hw/remote/iohub.c b/hw/remote/iohub.c
+> index 40dfee4bad..988d3285cc 100644
+> --- a/hw/remote/iohub.c
+> +++ b/hw/remote/iohub.c
+> @@ -33,19 +33,6 @@ void remote_iohub_init(RemoteIOHubState *iohub)
 >       }
 >   }
 >   
-> -static int vhost_dev_resize_inflight(struct vhost_inflight *inflight,
-> -                                     uint64_t new_size)
+> -void remote_iohub_finalize(RemoteIOHubState *iohub)
 > -{
-> -    Error *err = NULL;
-> -    int fd = -1;
-> -    void *addr = qemu_memfd_alloc("vhost-inflight", new_size,
-> -                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
-> -                                  &fd, &err);
+> -    int pirq;
 > -
-> -    if (err) {
-> -        error_report_err(err);
-> -        return -ENOMEM;
-> -    }
-> -
-> -    vhost_dev_free_inflight(inflight);
-> -    inflight->offset = 0;
-> -    inflight->addr = addr;
-> -    inflight->fd = fd;
-> -    inflight->size = new_size;
-> -
-> -    return 0;
-> -}
-> -
-> -void vhost_dev_save_inflight(struct vhost_inflight *inflight, QEMUFile *f)
-> -{
-> -    if (inflight->addr) {
-> -        qemu_put_be64(f, inflight->size);
-> -        qemu_put_be16(f, inflight->queue_size);
-> -        qemu_put_buffer(f, inflight->addr, inflight->size);
-> -    } else {
-> -        qemu_put_be64(f, 0);
+> -    for (pirq = 0; pirq < REMOTE_IOHUB_NB_PIRQS; pirq++) {
+> -        qemu_set_fd_handler(event_notifier_get_fd(&iohub->resamplefds[pirq]),
+> -                            NULL, NULL, NULL);
+> -        event_notifier_cleanup(&iohub->irqfds[pirq]);
+> -        event_notifier_cleanup(&iohub->resamplefds[pirq]);
+> -        qemu_mutex_destroy(&iohub->irq_level_lock[pirq]);
 > -    }
 > -}
 > -
-> -int vhost_dev_load_inflight(struct vhost_inflight *inflight, QEMUFile *f)
-> -{
-> -    uint64_t size;
-> -
-> -    size = qemu_get_be64(f);
-> -    if (!size) {
-> -        return 0;
-> -    }
-> -
-> -    if (inflight->size != size) {
-> -        int ret = vhost_dev_resize_inflight(inflight, size);
-> -        if (ret < 0) {
-> -            return ret;
-> -        }
-> -    }
-> -    inflight->queue_size = qemu_get_be16(f);
-> -
-> -    qemu_get_buffer(f, inflight->addr, size);
-> -
-> -    return 0;
-> -}
-> -
->   int vhost_dev_prepare_inflight(struct vhost_dev *hdev, VirtIODevice *vdev)
+>   int remote_iohub_map_irq(PCIDevice *pci_dev, int intx)
 >   {
->       int r;
-> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-> index c75be46c06..461c168c37 100644
-> --- a/include/hw/virtio/vhost.h
-> +++ b/include/hw/virtio/vhost.h
-> @@ -338,8 +338,6 @@ void vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
+>       return pci_dev->devfn;
+> diff --git a/include/hw/remote/iohub.h b/include/hw/remote/iohub.h
+> index 6a8444f9a9..09ee6c77b6 100644
+> --- a/include/hw/remote/iohub.h
+> +++ b/include/hw/remote/iohub.h
+> @@ -37,6 +37,5 @@ void remote_iohub_set_irq(void *opaque, int pirq, int level);
+>   void process_set_irqfd_msg(PCIDevice *pci_dev, MPQemuMsg *msg);
 >   
->   void vhost_dev_reset_inflight(struct vhost_inflight *inflight);
->   void vhost_dev_free_inflight(struct vhost_inflight *inflight);
-> -void vhost_dev_save_inflight(struct vhost_inflight *inflight, QEMUFile *f);
-> -int vhost_dev_load_inflight(struct vhost_inflight *inflight, QEMUFile *f);
->   int vhost_dev_prepare_inflight(struct vhost_dev *hdev, VirtIODevice *vdev);
->   int vhost_dev_set_inflight(struct vhost_dev *dev,
->                              struct vhost_inflight *inflight);
+>   void remote_iohub_init(RemoteIOHubState *iohub);
+> -void remote_iohub_finalize(RemoteIOHubState *iohub);
+>   
+>   #endif
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
