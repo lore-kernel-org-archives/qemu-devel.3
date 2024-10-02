@@ -4,73 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC695CF31B7
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 12:12:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D188CF31B7
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 12:20:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svyCW-0003j3-PR; Wed, 02 Oct 2024 08:11:28 -0400
+	id 1svyK3-0005kB-6B; Wed, 02 Oct 2024 08:19:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svyCU-0003im-1S
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 08:11:26 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1svyJo-0005j2-Gb
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 08:19:01 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1svyCS-00053M-3j
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 08:11:25 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5c89668464cso4681878a12.1
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 05:11:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1svyJm-0006VE-QZ
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 08:19:00 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-42cbbb1727eso59412915e9.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 05:18:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727871082; x=1728475882; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1727871537; x=1728476337; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7n5pj8j1hX3CXtg/aVHhmUbsHDv+jfAUcllp9MYePvU=;
- b=u0s7l9WcWNhdON9f//r/jrDbyb0kGodczrFAGytRVwoCopon9TWJ7ZJWNRpx7mSyIA
- PKD4H0Km0k+6gF9nqgPDVgPFCzNnNmexPSw3LlH7uxKIUD5jELrhF09nO5OYidSdxwCu
- 5Vj56UUKGMNyDn1pWz9kWnpSBzi8UdfaeFn5bDC3SVSMqcy/jkl9es+rXXj1AeoubAH5
- iFub9GjJt/ID/+VYRNIW/p/4LEYRn/7XG6SMeWJqfzi5/fspOMknttM+R8Qn3QB9QpDL
- eEoASfbIsPQwx1+OkCDp51EWUhbTpNPI0sOVXgmghtzHpSTB37eiaoV4MKS9YnvxAom/
- VCvg==
+ bh=nL1NKeL/SJWly8UEXyUTWDBdWaCTAKVEYbE+1JoYOTQ=;
+ b=pCwuAAM834uTqi3cIXwIRv8QvqohFLKiRLAVWZQXBd46PygYXcVN7L+MR8bCCqxT8d
+ NAKxvGUDUa3QSrmdmq2W0rIDz98pjzdrci0ZQnvMqai8MBeihRAF0EInocuco1K+H3wi
+ mc7MFsCEH666+saaRzcd65bGySEsuCAxQDAF9dW9v4+Qimtpg5yGo9nnLIqVe7vwbaWZ
+ 3mqXG8TlZ2JNIZQObgYOEqTUcVXGIlL1OUFk7cN7by6u9QyzJlUTIBhsJfMfr4TPPuPc
+ ZO3mV8SAPg9t2COf4Dqv8Au0MEBa5HiwiK11PnDEFRBbVhJW//5GItwT58QZwpt1/LxT
+ 7Xog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727871082; x=1728475882;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7n5pj8j1hX3CXtg/aVHhmUbsHDv+jfAUcllp9MYePvU=;
- b=JmX7DXRsQ8HJe8UlX1tcSJ9shz2kc86Ix62A1PefgTl+3sBM/JXDez0hyzTlsLUASJ
- gHoMhYKEKFENYIuL5K7OtL0ck8zgU9B118EWyBER+nuKA+/+idl2BK6xi+BPIxGaR6nq
- 72P7/HChF7qGtyjKx3UkSEKIfYtA5zsOsKTNhdtBqYpB0VUZGSq7yI4h07laGPnfNnEb
- mU2GXEfsH77wvhjF4hSKDprhu682tMJFjYoqrI3ByLdAiBibkqYQTUoIMICbAR/0zcka
- 8hN37lxiRvXCXGIp7xENyJQvVsICaVs8MQcpJhCfAMAeJh+FzmBvXh/RbLYRhL9WrHb8
- ijVg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUw5pBYHm71XX4rFXg0jH+RTaD2Hn8TzpxKBzKO16/mqP0BYB9pesLrZct7lN74/07LkxN1uGKKgkzb@nongnu.org
-X-Gm-Message-State: AOJu0Yxh2PFnu8dw9lzVTqtGXCzYJ5GnZ+FUjwMjHGzac4aNkB1XRWGA
- Y3cdK0gHPkWGEGaVNv+dZyw9C3IQKQsGSBnfvdCVnWBw6eIxZ1ZPeCMrOdsoqVR/lL0QJBakNjr
- n7scvUuVY6ejnSlVw8dc2ma58Kbm+MIbHQp2skA==
-X-Google-Smtp-Source: AGHT+IHEpFoI3dZz2PMChIqo2a1rcbMBCAGprQ6wkinb6Kx7uf1Ag79meqRAHpkyKa4uUe+At2EQu9bNOLgE1tN8PfQ=
-X-Received: by 2002:a05:6402:27d2:b0:5c8:9515:cc6 with SMTP id
- 4fb4d7f45d1cf-5c8b1925b82mr1776817a12.12.1727871081994; Wed, 02 Oct 2024
- 05:11:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1727871537; x=1728476337;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=nL1NKeL/SJWly8UEXyUTWDBdWaCTAKVEYbE+1JoYOTQ=;
+ b=uZyJ9vPMck8bd/fddgij3D5DaZA7J8ny6UOFKzCk0viOWxuKpbTUmrGOoB9pkSOlOI
+ 2b025C4VQiyWcEjygTZslPFOf0ZNaTHSwY9EXglhuFx/sJ4O3y5QItGo7anW5+NZZvNv
+ qZ3j/z7MKeONpvxPaR7//jPlvF1BfdNqDLhZhZgDGD7+ohnhyPEDLc3B9kiZFpwdjEm8
+ XQp+/Q8tawjPhKhJQu2K/8seCtDT0EuDfIa+VM/oSmrdEER3OvzS+MgExHsIqbKfrmvQ
+ nECTbf7NQXawo0FCPp2AQeVaq5YZiR5lVDbU3Wrh6kVklaCidGK0Quq97gR+5rVfBuLt
+ XqJg==
+X-Gm-Message-State: AOJu0YxP/T0wUgzYc/vul4xJAKAEhAkPLJmdaagSENiQi9xhvYol1tz2
+ muXXZoSoxIG1+XA8h81pNl4z1pgpOna1fqPVyX2+9qfhemnQ6Bbz8Mta5UJwyW8=
+X-Google-Smtp-Source: AGHT+IGWTgVGHg/HvxfaCBtIB4GgWODIDUgKifd39GecC9xP1H2eeTKAP0OqPyejctDlkF7nWX67Zg==
+X-Received: by 2002:a5d:6d86:0:b0:37c:ce58:5a1b with SMTP id
+ ffacd0b85a97d-37cfba16a81mr2249045f8f.51.1727871536775; 
+ Wed, 02 Oct 2024 05:18:56 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37cd572fa2fsm13732798f8f.68.2024.10.02.05.18.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Oct 2024 05:18:56 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 3A29F5F780;
+ Wed,  2 Oct 2024 13:18:55 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Thomas Huth <thuth@redhat.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,  Jason Wang <jasowang@redhat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>,  Anton Johansson <anjo@rev.ng>,
+ Peter Maydell <peter.maydell@linaro.org>,  Huacai Chen
+ <chenhuacai@kernel.org>,  "Michael S. Tsirkin" <mst@redhat.com>,  Sven
+ Schnelle <svens@stackframe.org>,  Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-arm@nongnu.org,  Aurelien Jarno <aurelien@aurel32.net>,  Pierrick
+ Bouvier <pierrick.bouvier@linaro.org>,  Max Filippov <jcmvbkbc@gmail.com>,
+ Paul Burton <paulburton@kernel.org>
+Subject: Re: [PATCH 06/13] tests/tcg/plugins: Use the ld/st_endian_p() API
+In-Reply-To: <20240930073450.33195-7-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 30 Sep 2024 09:34:43
+ +0200")
+References: <20240930073450.33195-1-philmd@linaro.org>
+ <20240930073450.33195-7-philmd@linaro.org>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Wed, 02 Oct 2024 13:18:55 +0100
+Message-ID: <87ttdun1e8.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20241002083646.2893078-1-marcandre.lureau@redhat.com>
- <b5c138db-2632-4ae4-bb65-afaf20aa89b9@redhat.com>
- <CAJ+F1CKbMQ8drnyur5puC63OP8e3WT+ASmoazOL2-OoC+zfQ6g@mail.gmail.com>
-In-Reply-To: <CAJ+F1CKbMQ8drnyur5puC63OP8e3WT+ASmoazOL2-OoC+zfQ6g@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 2 Oct 2024 13:11:11 +0100
-Message-ID: <CAFEAcA-126RPg+6JTAkL5NHYRwNKwo3AoKg07m8-jWy90mPNjA@mail.gmail.com>
-Subject: Re: [PULL 00/22] -Werror=maybe-uninitialized fixes
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,100 +108,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2 Oct 2024 at 09:45, Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@gmail.com> wrote:
->
-> Hi
->
-> On Wed, Oct 2, 2024 at 12:43=E2=80=AFPM Thomas Huth <thuth@redhat.com> wr=
-ote:
->>
->> On 02/10/2024 10.36, marcandre.lureau@redhat.com wrote:
->> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->> >
->> > The following changes since commit 718780d20470c66a3a36d036b29148d5809=
-dc855:
->> >
->> >    Merge tag 'pull-nvme-20241001' of https://gitlab.com/birkelund/qemu=
- into staging (2024-10-01 11:34:07 +0100)
->> >
->> > are available in the Git repository at:
->> >
->> >    https://gitlab.com/marcandre.lureau/qemu.git tags/warn-pull-request
->> >
->> > for you to fetch changes up to baad82ecfb27474f17f4318502725622ab7170f=
-c:
->> >
->> >    qom/object: fix -Werror=3Dmaybe-uninitialized (2024-10-02 11:36:12 =
-+0400)
->> >
->> > ----------------------------------------------------------------
->> > -Werror=3Dmaybe-uninitialized fixes
->> >
->> > ----------------------------------------------------------------
->> >
->> > Marc-Andr=C3=A9 Lureau (22):
->> >    util/coroutine: fix -Werror=3Dmaybe-uninitialized false-positive
->> >    util/timer: fix -Werror=3Dmaybe-uninitialized false-positive
->> >    hw/qxl: fix -Werror=3Dmaybe-uninitialized false-positives
->> >    nbd: fix -Werror=3Dmaybe-uninitialized false-positive
->> >    block/mirror: fix -Werror=3Dmaybe-uninitialized false-positive
->> >    block/mirror: fix -Werror=3Dmaybe-uninitialized false-positive
->> >    block/stream: fix -Werror=3Dmaybe-uninitialized false-positives
->> >    hw/ahci: fix -Werror=3Dmaybe-uninitialized false-positive
->> >    hw/vhost-scsi: fix -Werror=3Dmaybe-uninitialized
->> >    hw/sdhci: fix -Werror=3Dmaybe-uninitialized false-positive
->> >    block/block-copy: fix -Werror=3Dmaybe-uninitialized false-positive
->> >    migration: fix -Werror=3Dmaybe-uninitialized false-positives
->> >    hw/virtio-blk: fix -Werror=3Dmaybe-uninitialized false-positive
->> >    migration: fix -Werror=3Dmaybe-uninitialized false-positive
->> >    linux-user/hppa: fix -Werror=3Dmaybe-uninitialized false-positive
->> >    target/loongarch: fix -Werror=3Dmaybe-uninitialized false-positive
->> >    tests: fix -Werror=3Dmaybe-uninitialized false-positive
->> >    hw/virtio: fix -Werror=3Dmaybe-uninitialized
->> >    hw/virtio: freeing leaked memory from vhost_svq_get_buf in
->> >      vhost_svq_poll
->> >    block: fix -Werror=3Dmaybe-uninitialized false-positive
->> >    fsdep/9p: fix -Werror=3Dmaybe-uninitialized false-positive
->> >    qom/object: fix -Werror=3Dmaybe-uninitialized
->> >
->> >   block/block-copy.c                 |  2 +-
->> >   block/file-posix.c                 |  2 +-
->> >   block/mirror.c                     |  8 ++++----
->> >   block/stream.c                     |  6 +++---
->> >   fsdev/9p-iov-marshal.c             | 15 ++++++++++++---
->> >   hw/block/virtio-blk.c              |  2 +-
->> >   hw/display/qxl.c                   |  4 ++--
->> >   hw/ide/ahci.c                      |  3 ++-
->> >   hw/scsi/vhost-scsi.c               |  2 +-
->> >   hw/sd/sdhci.c                      |  2 +-
->> >   hw/virtio/vhost-shadow-virtqueue.c |  6 ++++--
->> >   linux-user/hppa/cpu_loop.c         |  2 ++
->> >   migration/dirtyrate.c              |  4 ++--
->> >   migration/migration.c              |  2 +-
->> >   migration/ram.c                    |  2 +-
->> >   nbd/client-connection.c            |  2 +-
->> >   qom/object.c                       |  2 +-
->> >   target/loongarch/gdbstub.c         | 26 ++++++++++++++------------
->> >   tests/unit/test-bdrv-drain.c       |  2 +-
->> >   tests/unit/test-block-iothread.c   |  2 +-
->> >   util/qemu-coroutine.c              |  2 +-
->> >   util/qemu-timer.c                  |  6 +++---
->> >   roms/openbios                      |  2 +-
->>
->> Replying here as well, so that Peter has a chance to see it:
->>
->> The update to roms/openbios in patch 03 seems to have slipped in by
->> accident, so I'd suggest to fix that first before merging this.
->>
->
-> \o/ submodules :)
->
-> Peter, do you want a v2?
-> thanks
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Yes, you'll need to resend the pullreq. (You can send just
-the cover letter for a trivial tweak like this.)
+> Refactor to use the recently introduced ld/st_endian_p() API
+> No logical change intended.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
--- PMM
+Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
