@@ -4,88 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D115CEB2E2
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 18:07:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05A74CF31B9
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 19:39:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sw3k0-0001Ah-OH; Wed, 02 Oct 2024 14:06:24 -0400
+	id 1sw5BK-0004EB-5F; Wed, 02 Oct 2024 15:38:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sw3jy-0001AT-1g
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 14:06:22 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sw3ju-0007UT-Az
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 14:06:20 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-20b6458ee37so367495ad.1
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 11:06:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1727892376; x=1728497176; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tEAo1oH+MhSaFS6az2wX8kCjONWVnHZfwbRWsJF/fbA=;
- b=TW5EWGzzKLS9uaOYPa7gtwHBXWyXyoUsRu3ux0IOWe9Pkmi7wwC47X44QvU5k7oc81
- nYjnej84Z2ObaucaHzT1fxSQVAx6PqQ/B/3iVppCfd29iChEIvQyLwvon2pXyU/CeeGm
- B3zDhhrx1mIQInOyDbW8YyF7pIYqFgxruV5u/nSmymv4ibdm26NoUNGPNJOaquXqMW2T
- mMOCnxERoF6FVNQAcmDrMdTULcSmG88OHDJV+rutf+FMkDSlwZMk36puZD1nanptAk5M
- N98eEzFRDRnWX7ShP3HaxXEPDyC98/xCquVqK3OxENM71GgAY5CSbwiSbXh6lQn8VTZh
- 7v2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727892376; x=1728497176;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tEAo1oH+MhSaFS6az2wX8kCjONWVnHZfwbRWsJF/fbA=;
- b=P7Biallp1rE0e+p4v5Gbb9LUoKTEi9Xkh7gJ0hm4fqER5VTKl+FwORp6j2uwIam3Ng
- tQb2WVVYFjtQXUDn3na3+gYnZuvlgdnPEoDUz7X/VVQdqxOM04s1AuvkKIPaZrbLZmiH
- WsLDQ59MFYfE30UOS2BHMqACWkL7bj3yORv3xUx5b2Y32TgJD8F6M7TMfOlK+Ds7JlYM
- Xai9nbVYHoXNLc/5jMouP1AzCbYc2qcGmXOEJLGlwHMImys1cnxH6VI8/Jjk9YqAa6Ky
- /GH12JWWIK0mD1D35m5GKGW9baHTXRU2r9ERQjfbI4RP/brMt1ocbfkuvInaxua4B6Vj
- UqBg==
-X-Gm-Message-State: AOJu0YxdaeR5vLAPoLVwGr5Y6UlDRgK93ZIjOzZ2jpcS+m3FauZwPImW
- Qv857bVQBvMQUIcglZ8B1vGoBTB5D8LcT2sNibwls9qgHL7dBR2r0UAnRlQxm08=
-X-Google-Smtp-Source: AGHT+IF1GwoDHlUe1kjO+VUW+MfyAoRoYK+3i5FfBAJPWoIvH8x+TBT66dEV9U25sIBSUf4h9Bhshg==
-X-Received: by 2002:a17:903:112:b0:20b:9f1c:6877 with SMTP id
- d9443c01a7336-20bc5a879d8mr42013355ad.57.1727892375730; 
- Wed, 02 Oct 2024 11:06:15 -0700 (PDT)
-Received: from [192.168.68.110] (200-206-229-93.dsl.telesp.net.br.
- [200.206.229.93]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20b37e5fd40sm86754215ad.266.2024.10.02.11.06.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Oct 2024 11:06:15 -0700 (PDT)
-Message-ID: <046df1e9-5e4c-4f1c-8edb-1ee1244fe340@ventanamicro.com>
-Date: Wed, 2 Oct 2024 15:06:11 -0300
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1sw5BI-0004Dr-CX
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 15:38:40 -0400
+Received: from mout.gmx.net ([212.227.15.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1sw5BF-0001X8-T4
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 15:38:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1727897911; x=1728502711; i=deller@gmx.de;
+ bh=jh8q2iiTxcrq7mWBbjp8ALUZER0F8ATlcu8/MCFVIr0=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=im8h6cddRa1Am/dMLVfj3NP0j7M1Tnh4ekXKS+sEFcFwE0GZAwtBN8JCxob6xJ9m
+ eemTJw1Ze/UDBpMlHiGPR5h+dRqSIHRN3ZT1XCwvAoFpGcu/Wz010OGaob4aSIpHU
+ ibTNXg/b1e08WsvaPAqiMvCyYPRNe0ZXrOWIdyboNsQxwI0sX2uScAl43dM1J2aAy
+ upUjfC/VXjYtuiUYO91aQhbdWVfPJEz7FbrwnSUt72VlDdIFy+91FfFK0sxk3aBS/
+ o/Kdc9/c5qLdqxWWtnZYRaxzLCm5Qs7HjzaOu3VQ+Nn7nCQ5audfEaN8ajikf6VMk
+ qbQMBa+q613FWt9Tdg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.55] ([109.250.63.79]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N33Il-1rsoyB3JVt-010IWQ; Wed, 02
+ Oct 2024 21:38:30 +0200
+Message-ID: <5e1dd7c4-4f99-4f68-ad49-eea67b99bd5a@gmx.de>
+Date: Wed, 2 Oct 2024 21:38:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qapi, machine-qmp-cmds.c: query-accelerator support
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com,
- zhao1.liu@intel.com, eblake@redhat.com, armbru@redhat.com,
- ajones@ventanamicro.com
-References: <20240919112056.620917-1-dbarboza@ventanamicro.com>
- <ZuwXjyqhxwHBEvR_@redhat.com>
- <f4c52806-1722-43fc-b4b4-ab17c930d4cd@ventanamicro.com>
- <ZvaN7-W4VLr6TGsm@redhat.com>
+Subject: Re: {PATCH] accel/tcg: Fix CPU specific unaligned behaviour
+To: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Helge Deller <deller@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ linux-parisc@vger.kernel.org
+References: <Zvyx1kM4JljbzxQW@p100> <87cykimsb9.fsf@draig.linaro.org>
+ <CAFEAcA81YtAGO0iFZRWXGjJb91DhWEDTGr+cjWbNWEW4yJDksQ@mail.gmail.com>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <ZvaN7-W4VLr6TGsm@redhat.com>
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <CAFEAcA81YtAGO0iFZRWXGjJb91DhWEDTGr+cjWbNWEW4yJDksQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:MxIFdAZMQJyeQXSc2PQqsryIewM357IeOXnO/RK5nsg4mz/rIWp
+ TdKYlNsLntt+xTq8jqPEuPoODiLayRq1U7M4pF/8TJgjIZA2MIFCkXwelfKTGK9jClNT+eU
+ 7nPDutErGzVVtO6s8erkjAQKKX0ya8piXKBcQlxPE0KCOjoa2K9q2SH8EHeb+XsazOjtkP9
+ FDU3zXLLo0qaPNKv5aNeA==
+UI-OutboundReport: notjunk:1;M01:P0:Bt9yKMfASec=;nOFLeXinyFO+ffTcgHjTBAzU40f
+ d7WuwEx7/tHisD7wW0Wv4CiO4HWqKOKuIW18M4jrvlPJ68A67bRb0pB/q3YWlFchXJZ7nZYLI
+ OYHNcE+6DNY1ChMH/o8bbLuCN5Khj2aTrzATFasw3xxjHVxjAdbyIBHS7F9+dB1W63VeFh5KF
+ 8lznSQWR4wa7M51Xgr0Bf+fK+98NIayFep2JdoX1nbJ9KPEZNVGIwYQcslmNqX7moESS9A9QI
+ SXJ4AiosuYxMR+l//4CXoTUqBwzA8lpmW6xnd/QT4N5VJfJ76QO7mlV5yf61QO3KvH9Q2mQR+
+ yidagHsvep25G4wMQMcpRwMntPPP8BO3p1OW3TMfHQJVqgijJ0WlR1hXE3zMQ5TFNWMtkozSf
+ lIt5oeXEqTdX6qXyCo6ru3sh3CVyTu1jNQwaedbmWlfWLtX7geyPGwxiJTZe03uY4z7MLYuOg
+ 2wOpc2z5Z9ArUD3wPDCdpHU3jzPTBRD6flc9YXKRnh9f1OEyDgyf1lRdylMnXmppJNTQOoBS0
+ cBuJ3ssSBu+R/tBCivErGAjnefNIpLb3k1aeDEiAJkDCJtYpO99xplUupyDBG4wlDb25KPrbc
+ k6L8a9c86v0li8YJ5w5euYrBWG5AACbzPjXCubUjui0fc8llmtOsPv4bJWhqm+g9YfrnJ29oI
+ nf/PZWcu4KXE2x7BPfXLdZetsSfRnTvdxlVLEzsF6fvM8tJTttFpHcWox++oq5HQwOe93tcK5
+ IoU1StI+WnEyClJ68Qc1XAda0ntf3B/roaMdVL7o522TrLOWBdUwzWicRLolfTGLE91OolHm6
+ tn5L1llacDG5uOJaxlRIVBzg==
+Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,235 +138,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 9/27/24 7:50 AM, Daniel P. Berrangé wrote:
-> Markus: QAPI design Qs for you at the bottom
-> 
-> On Wed, Sep 25, 2024 at 10:19:33AM -0300, Daniel Henrique Barboza wrote:
+On 10/2/24 17:47, Peter Maydell wrote:
+> On Wed, 2 Oct 2024 at 16:35, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
+rote:
 >>
+>> Helge Deller <deller@kernel.org> writes:
 >>
->> On 9/19/24 9:22 AM, Daniel P. Berrangé wrote:
->>> On Thu, Sep 19, 2024 at 08:20:56AM -0300, Daniel Henrique Barboza wrote:
->>>> Add a QMP command that shows all specific properties of the current
->>>> accelerator in use.
+>>> When the emulated CPU reads or writes to a memory location
+>>> a) for which no read/write permissions exists, *and*
+>>> b) the access happens unaligned (non-natural alignment),
+>>> then the CPU should either
+>>> - trigger a permission fault, or
+>>> - trigger an unalign access fault.
 >>>
->>> Why do we need to expose /everything/ ?
+>>> In the current code the alignment check happens before the memory
+>>> permission checks, so only unalignment faults will be triggered.
+>>>
+>>> This behaviour breaks the emulation of the PARISC architecture, where =
+the CPU
+>>> does a memory verification first. The behaviour can be tested with the=
+ testcase
+>>> from the bugzilla report.
+>>>
+>>> Add the necessary code to allow PARISC and possibly other architecture=
+s to
+>>> trigger a memory fault instead.
+>>>
+>>> Signed-off-by: Helge Deller <deller@gmx.de>
+>>> Fixes: https://bugzilla.kernel.org/show_bug.cgi?id=3D219339
+>>>
+>>>
+>>> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+>>> index 117b516739..dd1da358fb 100644
+>>> --- a/accel/tcg/cputlb.c
+>>> +++ b/accel/tcg/cputlb.c
+>>> @@ -1684,6 +1684,26 @@ static void mmu_watch_or_dirty(CPUState *cpu, M=
+MULookupPageData *data,
+>>>       data->flags =3D flags;
+>>>   }
+>>>
+>>> +/* when accessing unreadable memory unaligned, will the CPU issue
+>>> + * a alignment trap or a memory access trap ? */
+>>> +#ifdef TARGET_HPPA
+>>> +# define CPU_ALIGNMENT_CHECK_AFTER_MEMCHECK  1
+>>> +#else
+>>> +# define CPU_ALIGNMENT_CHECK_AFTER_MEMCHECK  0
+>>> +#endif
 >>
->> I wouldn't mind pick and choose advertised properties for the accelerators
->> like we do with other APIs.
->>
->> This would mean that each arch should choose what to advertise or not, given that
->> some accelerator properties might be relevant just for some archs. The API would
->> be implemented by each arch individually.
-> 
-> Well with qemu-system-any we might get multiple arches reporting
-> info in the same binary, so we'll need to fan out to fill in the
-> per-arch info, after doing a common base.
-> 
-> Hmmm, i wonder if qemu-system-any will support mixing KVM and TCG ?
-> ie KVM for the host native accelerator, combined with TCG for the
-> foreign archs ??? Hopefully not !
+>> I'm pretty certain we don't want to be introducing per-guest hacks into
+>> the core cputlb.c code when we are aiming to make it a compile once
+>> object.
 
-If you're talking about Phil's patches it seems that it'll be TCG only:
+Ah, I didn't know.
 
-https://lore.kernel.org/qemu-devel/20240305220938.85410-1-philmd@linaro.org/
+I'm fine with either implementation people agree on and
+which gets accepted in the end.
 
-Patch 2 commit msg states:
+> There's also something curious going on here -- this patch
+> says "we check alignment before permissions, and that's wrong
+> on PARISC".
 
-------
-Add the 'any'-architecture target.
+Yes, that's correct.
+The first hunk of code in mmu_lookup() which I remove is the first
+alignment check.
+Then the memory access permissions are checked.
 
-- Only consider 64-bit targets
-- Do not use any hardware accelerator (except qtest)
-- For architecture constants, use:
-   . max of supported targets phys/virt address space
-   . max of supported targets MMU modes
-   . min of supported targets variable page bits
-------
+> But there's a comment in target/arm/ptw.c that
+> says "we check permissions before alignment, and that's
+> wrong on Arm":
+>
+>       * Enable alignment checks on Device memory.
+>       *
+>       * Per R_XCHFJ, this check is mis-ordered. The correct ordering
+>       * for alignment, permission, and stage 2 faults should be:
+>       *    - Alignment fault caused by the memory type
+>       *    - Permission fault
+>       *    - A stage 2 fault on the memory access
+>       * but due to the way the TCG softmmu TLB operates, we will have
+>       * implicitly done the permission check and the stage2 lookup in
+>       * finding the TLB entry, so the alignment check cannot be done soo=
+ner.
 
+I'm no arm expert. Note there is a second ARM-related aligment check
+in that function. See TLB_CHECK_ALIGNED.
 
-Thanks,
+> So do we check alignment first, or permissions first, or does
+> the order vary depending on what we're doing?
 
-Daniel
+currently alignment first.
 
-
-
-> 
->>>> This can be used as a complement of other APIs like query-machines and
->>>> query-cpu-model-expansion, allowing management to get a more complete
->>>> picture of the running QEMU process.
->>>
->>> query-machines doesn't return every single QOM property, just
->>> a hand selected set of information pieces.
->>>
->>> The query-cpu-model-expansion does return everything, but I
->>> consider that command to be bad design, as it doesn't distinguish
->>> between hardware CPU features, and QEMU QOM properties
->>>
->>>>
->>>> This is the output with a x86_64 TCG guest:
->>>>
->>>> $ ./build/qemu-system-x86_64 -S  -display none -accel tcg -qmp tcp:localhost:1234,server,wait=off
->>>>
->>>> $ ./scripts/qmp/qmp-shell localhost:1234
->>>> Welcome to the QMP low-level shell!
->>>> Connected to QEMU 9.1.50
->>>>
->>>> (QEMU) query-accelerator
->>>> {"return": {"name": "tcg", "props": {"one-insn-per-tb": false, "thread": "multi", "tb-size": 0, "split-wx": false, "type": "tcg-accel"}}}
->>>>
->>>> And for a x86_64 KVM guest:
->>>>
->>>> $ ./build/qemu-system-x86_64 -S  -display none -accel kvm -qmp tcp:localhost:1234,server,wait=off
->>>>
->>>> $ ./scripts/qmp/qmp-shell localhost:1234
->>>> Welcome to the QMP low-level shell!
->>>> Connected to QEMU 9.1.50
->>>>
->>>> (QEMU) query-accelerator
->>>> {"return": {"name": "KVM", "props": {"mem-container-smram[0]": "", "xen-gnttab-max-frames": 64, "device": "", "xen-version": 0, "mem-smram[0]": "", "notify-window": 0, "dirty-ring-size": 0, "kvm-shadow-mem": -1, "type": "kvm-accel", "notify-vmexit": "run", "xen-evtchn-max-pirq": 256}}}
->>>>
->>>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->>>> ---
->>>>    hw/core/machine-qmp-cmds.c | 34 ++++++++++++++++++++++++++++++++++
->>>>    qapi/machine.json          | 27 +++++++++++++++++++++++++++
->>>>    2 files changed, 61 insertions(+)
->>>>
->>>> diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
->>>> index 130217da8f..eac803bf36 100644
->>>> --- a/hw/core/machine-qmp-cmds.c
->>>> +++ b/hw/core/machine-qmp-cmds.c
->>>
->>>> +AccelInfo *qmp_query_accelerator(Error **errp)
->>>> +{
->>>> +    AccelState *accel = current_accel();
->>>> +    AccelClass *acc = ACCEL_GET_CLASS(accel);
->>>> +    AccelInfo *info = g_new0(AccelInfo, 1);
->>>> +    QDict *qdict_out = qdict_new();
->>>> +    ObjectPropertyIterator iter;
->>>> +    ObjectProperty *prop;
->>>> +
->>>> +    info->name = g_strdup(acc->name);
->>>> +
->>>> +    object_property_iter_init(&iter, OBJECT(accel));
->>>> +    while ((prop = object_property_iter_next(&iter))) {
->>>> +        QObject *value;
->>>> +
->>>> +        if (!prop->get) {
->>>> +            continue;
->>>> +        }
->>>> +
->>>> +        value = object_property_get_qobject(OBJECT(accel), prop->name,
->>>> +                                                  &error_abort);
->>>> +        qdict_put_obj(qdict_out, prop->name, value);
->>>> +    }
->>>
->>> I'm not at all convinced trhat we should be exposing every single
->>> QOM property on the accelerator class as public QMP data
->>>
->>>> +
->>>> +    if (!qdict_size(qdict_out)) {
->>>> +        qobject_unref(qdict_out);
->>>> +    } else {
->>>> +        info->props = QOBJECT(qdict_out);
->>>> +    }
->>>> +
->>>> +    return info;
->>>> +}
->>>> diff --git a/qapi/machine.json b/qapi/machine.json
->>>> index a6b8795b09..d0d527d1eb 100644
->>>> --- a/qapi/machine.json
->>>> +++ b/qapi/machine.json
->>>> @@ -1898,3 +1898,30 @@
->>>>    { 'command': 'x-query-interrupt-controllers',
->>>>      'returns': 'HumanReadableText',
->>>>      'features': [ 'unstable' ]}
->>>> +
->>>> +##
->>>> +# @AccelInfo:
->>>> +#
->>>> +# Information about the current accelerator.
->>>> +#
->>>> +# @name: the name of the current accelerator being used
->>>> +#
->>>> +# @props: a dictionary of the accelerator properties
->>>> +#
->>>> +# Since: 9.2
->>>> +##
->>>> +{ 'struct': 'AccelInfo',
->>>> +  'data': { 'name': 'str',
->>>> +            '*props': 'any' } }
->>>
->>> This is way too open ended. IMHO ideally we would never add more
->>> instances of the 'any' type, as it has many downsides
->>>
->>>    - zero documentation about what is available
->>>    - no version info about when each prop was introduced
->>>    - no ability to tag fields as deprecated
->>>
->>> For this new API, IMHO 'name' should be an enumeration of the
->>> accelerator types, and thenm 'props' should be a discrinated
->>> union of accelerator specific structs
->>
->> We have accelerator properties that differs from arch to arch, e.g. x86 has properties like
->> notify-vmexit, declared in kvm_arch_accel_class_init() from target/i386/kvm/kvm.c, that no
->> other arch has access to. RISC-V has its own share of these properties too.
->>
->> Is it possible to declare specific structs based on arch for the API? In a quick glance
->> it seems like we're doing something like that with query-cpus-fast, where s390x has
->> additional properties that are exposed.
-> 
-> To allow for qemu-system-any, which will eventually have multiple arches in
-> one, I guess we'll need multiple levels of nesting. Perhaps  something like
-> this:
-> 
->    { 'enum': 'AccelType',
->      'data': ['tcg', 'kvm', ....] }
-> 
->    { 'union': 'AccelInfo',
->      'type': 'AccelType',
->      'data': {
->          'tcg': 'AccelInfoTCG',
-> 	'kvm': 'AccelInfoKVM',
->      } }
-> 
->    { 'struct': 'AccelInfoTCGX86',
->      'data': {
->          'notify-vmexit': ...
->      } }
-> 
->    { 'struct': 'AccelInfoTCGArch',
->      'data': {
->         'x86': 'AccelInfoTCGX86',
->         'riscv': 'AccelInfoTCGRiscV',
->         ...etc...
->      }
-> 
->    { 'struct': 'AccelInfoTCG',
->      'data': {
->           ...non-arch specific fields...,
-> 	 'arch': 'AccelInfoTCGArch',
->      } }
-> 
->   ...equiv AccelInfoKVM* structs....
-> 
-> Markus:  any other/better ideas ?
-> 
->>>> +
->>>> +##
->>>> +# @query-accelerator:
->>>> +#
->>>> +# Shows information about the accelerator in use.
->>>> +#
->>>> +# Returns: a CpuModelExpansionInfo describing the expanded CPU model
->>>> +#
->>>> +# Since: 9.2
->>>> +##
->>>> +{ 'command': 'query-accelerator',
->>>> +  'returns': 'AccelInfo' }
->>>> -- 
-> 
-> With regards,
-> Daniel
+Helge
 
