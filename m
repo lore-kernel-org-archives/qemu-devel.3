@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E7ABCF31B0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:29:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5EB9CF31B0
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:30:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svwbF-0001BY-Hb; Wed, 02 Oct 2024 06:28:53 -0400
+	id 1svwck-00024s-2j; Wed, 02 Oct 2024 06:30:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwb9-0001Av-Ut
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:28:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwcc-00024W-Iy
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:30:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwb5-0000mF-Tk
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:28:46 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwcQ-000157-6E
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:30:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727864921;
+ s=mimecast20190719; t=1727865004;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=p883nUjD9I9bH7pXn8fnsrsSdauN9+KrpyibHluFdfA=;
- b=eZO4ruPaU11ZfWRtNvo4L2Sx1GdGJzUe8D5N+NJ9MPankU2luHV/3ZmgZB5ahH9S7nom0n
- 3NgREs2ZIDgLnqrWTbjd9VQ9HUbH9ZHP+4vws3NHTzWHsYa4MnaL3ZWO4nXyHjEW8IRnO2
- r/ye4/7QNvCVSEPrN+f66QdPiQqYYtY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IX7nuUOMUjsGUsuGWGQC7qxPPHIzgyhjeG0CmEToIBA=;
+ b=K4IwVfOEcuzOZpJ3WwwZp2YJ9Be6uUYtVnfaZ4oSpI9VVqzzeUBtUsG44yMogt0agfyLa/
+ UYgK3nOOXPAMyKxJGxWwUM79M/+Y+H6fLHunfvL6rCC9caJhyybd8lSxTDx5vkFBgbTv7k
+ 1U9ky9BuMmWjBO8jHVlXvgQBverocsY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-348-0tMsuOWxNBC5YW9WhzMrfA-1; Wed, 02 Oct 2024 06:28:39 -0400
-X-MC-Unique: 0tMsuOWxNBC5YW9WhzMrfA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42cae209243so40322365e9.1
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 03:28:39 -0700 (PDT)
+ us-mta-441-oDXeTEnxOK6fYD4iJXubMA-1; Wed, 02 Oct 2024 06:30:03 -0400
+X-MC-Unique: oDXeTEnxOK6fYD4iJXubMA-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-37cd4acb55aso3910950f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 03:30:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727864918; x=1728469718;
+ d=1e100.net; s=20230601; t=1727865002; x=1728469802;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=p883nUjD9I9bH7pXn8fnsrsSdauN9+KrpyibHluFdfA=;
- b=H5JUHl0XBZsHC2UaYT7o5tLj5yGG33mhLI6zNx8o3FP8RhnWaWHQrk2xiSNF/cLl5W
- GvMuGWPYjoehdECI2lggnB3tpl0sOQ+sI1aZPHXTE/3TX25i1KuSjnS6TjeeFrM4/v1Z
- JRrIRRu2y1K3QrYJ0mdyW5HP1QYvguwVcDlMXXYmMkWINzN8dLgVnfvMln623Uxlk9Uv
- hNPGwM/tlkhC73lOZFbc4uBy3wvueS/88VmI93toqr5M2Z9mDhb98ZEBX+ng/WvjbVzr
- ABj8WUI3lxskgfV2GUaECC8lNXc9LncImXNFb6xtk7zAGQwkuj1pGUdt7vRvKFWHTFff
- G+Hw==
+ bh=IX7nuUOMUjsGUsuGWGQC7qxPPHIzgyhjeG0CmEToIBA=;
+ b=b6YnJdWyXCIExIBZ5lntqBfFr4ohfwSP1BhUyMV5veA57qX+4pL8k3Kx9ds5YzGw9U
+ Me+KBzOxQGN49iUcav3oSIl0FjVMQAXJJAXv/JMq3m2Y/bYpZ2dlWmdkBbKplsW7D0Tb
+ D7Zr6CMflHEx+8w9b3a1U9QweW3Mnw7AiQh0zxQ6cBf/R9GkutyEp+w3uTwST640BAMX
+ Ljn59+952AIM+2I/bLlB7F6FhZsnhpcdsgGJgLsoO7v3jOBmPDMdKN6NWHRRQS0QMYTe
+ aEXsWbgCcSzRZaOJvOA3RJjxPGJIQ/sRbAl3ST8NimbPlex38nvstbS9B7przxfPBReR
+ de/Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVBFCfVRtD7PN5YU9WmxgntLEIONm7cliKvWm4QcaH6PHWRyBCeqjGC16Lr1lxHYpauxRaDZIGYMgIw@nongnu.org
-X-Gm-Message-State: AOJu0YzTAjqzvK6XuGYhS4nm9WmfOCzWonBLgNMrrN0+fUGeyXFF6KWO
- ZZL2JOFEwqVGpWbY1WelvKuZZzMyiZTmgueKX/kCeIfV1nIPGb2E3KXWwLbi+eYv5uhEWuwNs+J
- q/97zkSl9o/T+lV/hhv2nJtXVH03j55VwBdAG1IuWGGXZnG3+UzVh
-X-Received: by 2002:a05:600c:4ec7:b0:426:6326:4cec with SMTP id
- 5b1f17b1804b1-42f7909736bmr14280605e9.29.1727864918517; 
- Wed, 02 Oct 2024 03:28:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFVZg9izWtAPUkmaPbNAuD46j3dKwKRkiLJULk5WIhEnC5f+NpEXMwEiu5qEgoANLja9V40Yg==
-X-Received: by 2002:a05:600c:4ec7:b0:426:6326:4cec with SMTP id
- 5b1f17b1804b1-42f7909736bmr14280415e9.29.1727864918175; 
- Wed, 02 Oct 2024 03:28:38 -0700 (PDT)
+ AJvYcCXGcKN9XdVo0WYlkvphfzETJAsYmVSBAcYRbk/wYQi5LuIpvzNt3jFQLQuY3ORw3r1S3yoyh2aTWZpg@nongnu.org
+X-Gm-Message-State: AOJu0YzN1woaaTTEX+zChgk1j3unUSzCpJ2TszJzhLQvgtoAJN7jqwi7
+ z/nALxj5hmYL/dYSZqNEUoG477by8ry/uTqTdchaZpEtV+PqMzHhUy0s3PNioABmc3t/SQIUhKD
+ rmDBdV/9tFXa0k7QWLOm3hDgrfi+nQgG+axrs+T417fTF2Ql8GCBUPvOpcJZPJTo=
+X-Received: by 2002:adf:e8d2:0:b0:374:c11c:c5ca with SMTP id
+ ffacd0b85a97d-37cfba0a75dmr2123735f8f.46.1727865002103; 
+ Wed, 02 Oct 2024 03:30:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFNHj+Ydlo1ab9AYsVb/g4W/+cW521RymdGL3c+NW6xLFsLnIpL5JvZ55g8bXh2LdjTQs6MbA==
+X-Received: by 2002:adf:e8d2:0:b0:374:c11c:c5ca with SMTP id
+ ffacd0b85a97d-37cfba0a75dmr2123711f8f.46.1727865001658; 
+ Wed, 02 Oct 2024 03:30:01 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-143.web.vodafone.de.
  [109.42.49.143]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f79ff5b4asm14915925e9.35.2024.10.02.03.28.37
+ ffacd0b85a97d-37cd575de8fsm13558496f8f.116.2024.10.02.03.30.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Oct 2024 03:28:37 -0700 (PDT)
-Message-ID: <f62ac9a0-c119-4b77-8845-9353a7a294ec@redhat.com>
-Date: Wed, 2 Oct 2024 12:28:36 +0200
+ Wed, 02 Oct 2024 03:30:01 -0700 (PDT)
+Message-ID: <569ca97e-2463-48d7-a05c-abc4b7289658@redhat.com>
+Date: Wed, 2 Oct 2024 12:30:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] q35: Remove unused mch_mcfg_base
-To: dave@treblig.org, mst@redhat.com, marcel.apfelbaum@gmail.com,
- qemu-devel@nongnu.org, QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20240918005132.187517-1-dave@treblig.org>
+Subject: Re: [PATCH] net: Remove deadcode
+To: dave@treblig.org, jasowang@redhat.com, qemu-devel@nongnu.org,
+ QEMU Trivial <qemu-trivial@nongnu.org>
+References: <20240918205258.444880-1-dave@treblig.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -117,19 +117,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240918005132.187517-1-dave@treblig.org>
+In-Reply-To: <20240918205258.444880-1-dave@treblig.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,55 +144,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/09/2024 02.51, dave@treblig.org wrote:
+On 18/09/2024 22.52, dave@treblig.org wrote:
 > From: "Dr. David Alan Gilbert" <dave@treblig.org>
 > 
-> mch_mcfg_base has been unused since it was added by
->    6f1426ab0f ("ich9: APIs for pc guest info")
-> back in 2013.
+> net_hub_port_find is unused since 2018's commit
+>    af1a5c3eb4 ("net: Remove the deprecated "vlan" parameter")
 > 
-> Remove it.
+> qemu_receive_packet_iov is unused since commit
+>    ffbd2dbd8e ("e1000e: Perform software segmentation for loopback")
+> 
+> in turn it was the last user of qemu_net_queue_receive_iov.
+> 
+> Remove them.
 > 
 > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 > ---
->   hw/pci-host/q35.c         | 10 ----------
->   include/hw/pci-host/q35.h |  2 --
->   2 files changed, 12 deletions(-)
+>   include/net/net.h   |  4 ----
+>   include/net/queue.h |  4 ----
+>   net/hub.c           | 25 -------------------------
+>   net/net.c           | 10 ----------
+>   net/queue.c         | 11 -----------
+>   5 files changed, 54 deletions(-)
 > 
-> diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-> index d5a657a02a..f3e713318e 100644
-> --- a/hw/pci-host/q35.c
-> +++ b/hw/pci-host/q35.c
-> @@ -662,16 +662,6 @@ static void mch_realize(PCIDevice *d, Error **errp)
->                                      OBJECT(&mch->smram));
+> diff --git a/include/net/net.h b/include/net/net.h
+> index c8f679761b..cdd5b109b0 100644
+> --- a/include/net/net.h
+> +++ b/include/net/net.h
+> @@ -172,9 +172,6 @@ ssize_t qemu_sendv_packet_async(NetClientState *nc, const struct iovec *iov,
+>                                   int iovcnt, NetPacketSent *sent_cb);
+>   ssize_t qemu_send_packet(NetClientState *nc, const uint8_t *buf, int size);
+>   ssize_t qemu_receive_packet(NetClientState *nc, const uint8_t *buf, int size);
+> -ssize_t qemu_receive_packet_iov(NetClientState *nc,
+> -                                const struct iovec *iov,
+> -                                int iovcnt);
+>   ssize_t qemu_send_packet_raw(NetClientState *nc, const uint8_t *buf, int size);
+>   ssize_t qemu_send_packet_async(NetClientState *nc, const uint8_t *buf,
+>                                  int size, NetPacketSent *sent_cb);
+> @@ -307,7 +304,6 @@ void hmp_host_net_remove(Monitor *mon, const QDict *qdict);
+>   void netdev_add(QemuOpts *opts, Error **errp);
+>   
+>   int net_hub_id_for_client(NetClientState *nc, int *id);
+> -NetClientState *net_hub_port_find(int hub_id);
+>   
+>   #define DEFAULT_NETWORK_SCRIPT CONFIG_SYSCONFDIR "/qemu-ifup"
+>   #define DEFAULT_NETWORK_DOWN_SCRIPT CONFIG_SYSCONFDIR "/qemu-ifdown"
+> diff --git a/include/net/queue.h b/include/net/queue.h
+> index 9f2f289d77..2e686b1b61 100644
+> --- a/include/net/queue.h
+> +++ b/include/net/queue.h
+> @@ -59,10 +59,6 @@ ssize_t qemu_net_queue_receive(NetQueue *queue,
+>                                  const uint8_t *data,
+>                                  size_t size);
+>   
+> -ssize_t qemu_net_queue_receive_iov(NetQueue *queue,
+> -                                   const struct iovec *iov,
+> -                                   int iovcnt);
+> -
+>   ssize_t qemu_net_queue_send(NetQueue *queue,
+>                               NetClientState *sender,
+>                               unsigned flags,
+> diff --git a/net/hub.c b/net/hub.c
+> index 4c8a469a50..496a3d3b4b 100644
+> --- a/net/hub.c
+> +++ b/net/hub.c
+> @@ -193,31 +193,6 @@ NetClientState *net_hub_add_port(int hub_id, const char *name,
+>       return &port->nc;
 >   }
 >   
-> -uint64_t mch_mcfg_base(void)
+> -/**
+> - * Find a available port on a hub; otherwise create one new port
+> - */
+> -NetClientState *net_hub_port_find(int hub_id)
 > -{
-> -    bool ambiguous;
-> -    Object *o = object_resolve_path_type("", TYPE_MCH_PCI_DEVICE, &ambiguous);
-> -    if (!o) {
-> -        return 0;
+> -    NetHub *hub;
+> -    NetHubPort *port;
+> -    NetClientState *nc;
+> -
+> -    QLIST_FOREACH(hub, &hubs, next) {
+> -        if (hub->id == hub_id) {
+> -            QLIST_FOREACH(port, &hub->ports, next) {
+> -                nc = port->nc.peer;
+> -                if (!nc) {
+> -                    return &(port->nc);
+> -                }
+> -            }
+> -            break;
+> -        }
 > -    }
-> -    return MCH_HOST_BRIDGE_PCIEXBAR_DEFAULT;
+> -
+> -    nc = net_hub_add_port(hub_id, NULL, NULL);
+> -    return nc;
 > -}
 > -
->   static Property mch_props[] = {
->       DEFINE_PROP_UINT16("extended-tseg-mbytes", MCHPCIState, ext_tseg_mbytes,
->                          16),
-> diff --git a/include/hw/pci-host/q35.h b/include/hw/pci-host/q35.h
-> index 22fadfa3ed..ddafc3f2e3 100644
-> --- a/include/hw/pci-host/q35.h
-> +++ b/include/hw/pci-host/q35.h
-> @@ -181,8 +181,6 @@ struct Q35PCIHost {
->   #define MCH_PCIE_DEV                           1
->   #define MCH_PCIE_FUNC                          0
+>   /**
+>    * Print hub configuration
+>    */
+> diff --git a/net/net.c b/net/net.c
+> index fc1125111c..d9b23a8f8c 100644
+> --- a/net/net.c
+> +++ b/net/net.c
+> @@ -750,16 +750,6 @@ ssize_t qemu_receive_packet(NetClientState *nc, const uint8_t *buf, int size)
+>       return qemu_net_queue_receive(nc->incoming_queue, buf, size);
+>   }
 >   
-> -uint64_t mch_mcfg_base(void);
+> -ssize_t qemu_receive_packet_iov(NetClientState *nc, const struct iovec *iov,
+> -                                int iovcnt)
+> -{
+> -    if (!qemu_can_receive_packet(nc)) {
+> -        return 0;
+> -    }
 > -
->   /*
->    * Arbitrary but unique BNF number for IOAPIC device.
->    *
+> -    return qemu_net_queue_receive_iov(nc->incoming_queue, iov, iovcnt);
+> -}
+> -
+>   ssize_t qemu_send_packet_raw(NetClientState *nc, const uint8_t *buf, int size)
+>   {
+>       return qemu_send_packet_async_with_flags(nc, QEMU_NET_PACKET_FLAG_RAW,
+> diff --git a/net/queue.c b/net/queue.c
+> index c872d51df8..fb33856c18 100644
+> --- a/net/queue.c
+> +++ b/net/queue.c
+> @@ -193,17 +193,6 @@ ssize_t qemu_net_queue_receive(NetQueue *queue,
+>       return qemu_net_queue_deliver(queue, NULL, 0, data, size);
+>   }
+>   
+> -ssize_t qemu_net_queue_receive_iov(NetQueue *queue,
+> -                                   const struct iovec *iov,
+> -                                   int iovcnt)
+> -{
+> -    if (queue->delivering) {
+> -        return 0;
+> -    }
+> -
+> -    return qemu_net_queue_deliver_iov(queue, NULL, 0, iov, iovcnt);
+> -}
+> -
+>   ssize_t qemu_net_queue_send(NetQueue *queue,
+>                               NetClientState *sender,
+>                               unsigned flags,
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
