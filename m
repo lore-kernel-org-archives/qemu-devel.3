@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BAB7CF31AF
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:42:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A963CF31B0
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 10:42:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svwnu-00034n-IS; Wed, 02 Oct 2024 06:41:58 -0400
+	id 1svwoG-0003W8-2Z; Wed, 02 Oct 2024 06:42:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwns-0002xQ-3r
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:41:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwoF-0003Vj-3e
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:42:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwnl-0002a0-Uh
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:41:55 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1svwoD-0002en-PN
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 06:42:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727865708;
+ s=mimecast20190719; t=1727865735;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Jk+6uwbU3+q/YGIC1U4HcCbOtPCb9GLeymuWSf5rIMg=;
- b=ZYdqkLnxwvTqbgR/boVAENzU2NQcERdCj/PUb6xWaWLfr9nrmofQtc23ChFXa1buYqD99J
- 7QzxUsncGFZL027YVEH92HSdrRGqVLE9BCycdXrDAZpMHGgqvP2QPZsoqgQv+eRWyraA2T
- u4gjXoBWqLFklBuaVbRg8AAlMSDl9MI=
+ bh=biPmuPpkrqekA6H9Bm40Z1QrtuWIvhatsbwVzg085u0=;
+ b=OEhXTmxikSLwqpB9mwjK82CoASn02/ctdVPtEWsud2Lvixm/DlglBmy4OwfUslYsJuJv8D
+ uNeRADFbxp+lipvkkv+rdbf86Vp8uDb3gn3b+QIlbaHICFbPyErstPiwXjavL8kzrnNNQN
+ RUkiGe6rIfu3bGeJw6CNcE7HltKnZ7U=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-387-qxt5bM7MMJSENn28hCXXUQ-1; Wed, 02 Oct 2024 06:41:47 -0400
-X-MC-Unique: qxt5bM7MMJSENn28hCXXUQ-1
+ us-mta-438-hhFO-RLaMJOA4sPJd90yBg-1; Wed, 02 Oct 2024 06:42:13 -0400
+X-MC-Unique: hhFO-RLaMJOA4sPJd90yBg-1
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42cb115566eso65157185e9.2
- for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 03:41:47 -0700 (PDT)
+ 5b1f17b1804b1-42e611963c2so50124885e9.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Oct 2024 03:42:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727865706; x=1728470506;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Jk+6uwbU3+q/YGIC1U4HcCbOtPCb9GLeymuWSf5rIMg=;
- b=UBlCXT/BrIgG4ev0eM93syf4cwWhbT6pp0WCgjAeRnrKeCcTMUT/RrQVMquQlHiCZg
- 0ZJMYDgA0FDLH88XgZRFJ3o8HeTPlaUNm9WP3ktSLP7D4fH+xcWWjNxbS5IbjkjEkRyr
- afWjq370JrhbaN4PH3qX3ohW/huKYhYj08WziDO5VK309lHZMianMizqhda0ZgGuuFuL
- BuHl9Ey7xMahH8wPuLwmcpOMIYFRsHQ0vBIi+0XVKP2Vs7otcpdWjmGp1cdLLlTR4JYm
- 4Wa4zWMSU6XMJLMZ3I6jBiNplLCFjPMuu+51hblkTuVeK/0xBtmeOxgMkL/Tr7vj4qBw
- 88oQ==
+ d=1e100.net; s=20230601; t=1727865731; x=1728470531;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=biPmuPpkrqekA6H9Bm40Z1QrtuWIvhatsbwVzg085u0=;
+ b=voBD+DRvUmabhqxZZ7kHTg4Wq5iGGsjI2U8tkanF0BLV7+SrXVlDP8IlrVwufO9mbo
+ NmRzSiweqMIqbTJEVSnsysQ07wE+GOvGs1FhzYAXacUpdOjH4gFuYHLxSWEnsQegi8ne
+ xBSa4t4Rw/pmzy/O2N4NxnCTMV45gZy7iriHxK5cL0LszXUzTT8pOdxxicyKwmB6wjPU
+ LOp/nZNGQQ01MFlcJVreY0bXcQ8ZkFkYnsa2iOIBZfVoIHXI6OCELAa5Ut3+rjUZo6ha
+ YyFQWywh8kMDjzqOSDez1uRa3u0Nnpsu49C9FyKPPjw9CGxb1F2EkC6WYyuV72v6CJNK
+ xSFA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX7A51vjFYiJsvLkm+0mNvlPhihmw3YcYJFPdAc5ZL6xIVMWJRUbQA2jsHMCG3yiSGrfJA2isUHm7iK@nongnu.org
-X-Gm-Message-State: AOJu0Ywv+1MgsUbdIF1YiCkeW4KcKw6sBy4RD95STDCxjg0qME2cqcwZ
- d15iqSabAo8j53iHasX3igKfiZPT0J8Dk/fXLvY7hFjj34vhNWup4hAv9u0YEugUEEphYcurOYS
- yuZGM6b2dnjOHHS6qOPlw65rHMjI/QYhH02r4QxGrrllzCxIeEzTH
-X-Received: by 2002:a05:6000:c9:b0:37c:d2e3:1298 with SMTP id
- ffacd0b85a97d-37cfba19c9amr2397619f8f.55.1727865706494; 
- Wed, 02 Oct 2024 03:41:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFsT/UcOOX1wF4XzUTMJamNALfDPq/+4M53dYqDtYVw6vCmJjwxLUBmA8EGusw1CZLiIXHbhg==
-X-Received: by 2002:a05:6000:c9:b0:37c:d2e3:1298 with SMTP id
- ffacd0b85a97d-37cfba19c9amr2397587f8f.55.1727865706004; 
- Wed, 02 Oct 2024 03:41:46 -0700 (PDT)
+ AJvYcCXIZbRl+6xkE1RXudqJMuG1T0rQWPvgc26qsghknJ0i6vpOp7dGE4vqmtj5iqRDO7l2NVFc6WK6ZtYD@nongnu.org
+X-Gm-Message-State: AOJu0YwlcuquW1l7wcMXnhRcJudmptOSeQtSx4Oom61Rb4uvELlvl3V1
+ jP0TZCM+MlNVLXwH3DYLOpOxcUBi5viHKTnNgDnwzPJjfs5sh57ogVPU2GBdqYS/hNbVcJnRM2X
+ UtiJcyjQJg1ljFcEb9wPBlhcyv+RrzjRyHOTiPSTRqoQfx+trdC2W
+X-Received: by 2002:a05:600c:1c98:b0:42c:bb41:a079 with SMTP id
+ 5b1f17b1804b1-42f777b631bmr21872395e9.1.1727865731597; 
+ Wed, 02 Oct 2024 03:42:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHhr+72AOrAx7SjYWAvmB1urrRChcFrMjz66oYhTp5MLgMsM7VSSHBAgba4OCyVghM71A/CFg==
+X-Received: by 2002:a05:600c:1c98:b0:42c:bb41:a079 with SMTP id
+ 5b1f17b1804b1-42f777b631bmr21872135e9.1.1727865731157; 
+ Wed, 02 Oct 2024 03:42:11 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-143.web.vodafone.de.
  [109.42.49.143]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37cd564d27csm13629502f8f.23.2024.10.02.03.41.45
+ 5b1f17b1804b1-42f7a01fc92sm15113775e9.36.2024.10.02.03.42.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Oct 2024 03:41:45 -0700 (PDT)
-Message-ID: <31578ca3-4819-463a-85ba-d12aa784e377@redhat.com>
-Date: Wed, 2 Oct 2024 12:41:44 +0200
+ Wed, 02 Oct 2024 03:42:10 -0700 (PDT)
+Message-ID: <edeb3df1-1a73-4c8b-8870-866221f7a30b@redhat.com>
+Date: Wed, 2 Oct 2024 12:42:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] replay: Remove unused replay_disable_events
-To: dave@treblig.org, pavel.dovgaluk@ispras.ru, pbonzini@redhat.com,
+Subject: Re: [PATCH] hw/pci: Remove unused pcie_chassis_find_slot
+To: dave@treblig.org, mst@redhat.com, marcel.apfelbaum@gmail.com,
  qemu-devel@nongnu.org, QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20240918234005.466999-1-dave@treblig.org>
-Content-Language: en-US
+References: <20240918234748.468148-1-dave@treblig.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -118,10 +117,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240918234005.466999-1-dave@treblig.org>
+In-Reply-To: <20240918234748.468148-1-dave@treblig.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -130,7 +129,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,53 +145,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/09/2024 01.40, dave@treblig.org wrote:
+On 19/09/2024 01.47, dave@treblig.org wrote:
 > From: "Dr. David Alan Gilbert" <dave@treblig.org>
 > 
-> replay_disable_events has been unused since 2019's
->    c8aa7895eb ("replay: don't drain/flush bdrv queue while RR is working")
+> pcie_chassis_find_slot has been unused since it was added.
 > 
 > Remove it.
 > 
 > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 > ---
->   include/sysemu/replay.h | 2 --
->   replay/replay-events.c  | 9 ---------
+>   hw/pci/pcie_port.c         | 10 ----------
+>   include/hw/pci/pcie_port.h |  1 -
 >   2 files changed, 11 deletions(-)
 > 
-> diff --git a/include/sysemu/replay.h b/include/sysemu/replay.h
-> index 8102fa54f0..cba74fa9bc 100644
-> --- a/include/sysemu/replay.h
-> +++ b/include/sysemu/replay.h
-> @@ -117,8 +117,6 @@ void replay_async_events(void);
->   
->   /* Asynchronous events queue */
->   
-> -/*! Disables storing events in the queue */
-> -void replay_disable_events(void);
->   /*! Enables storing events in the queue */
->   void replay_enable_events(void);
->   /*! Returns true when saving events is enabled */
-> diff --git a/replay/replay-events.c b/replay/replay-events.c
-> index af0721cc1a..2e46eda6bf 100644
-> --- a/replay/replay-events.c
-> +++ b/replay/replay-events.c
-> @@ -92,15 +92,6 @@ void replay_flush_events(void)
->       }
+> diff --git a/hw/pci/pcie_port.c b/hw/pci/pcie_port.c
+> index 20ff2b39e8..9f978ba164 100644
+> --- a/hw/pci/pcie_port.c
+> +++ b/hw/pci/pcie_port.c
+> @@ -92,16 +92,6 @@ static PCIESlot *pcie_chassis_find_slot_with_chassis(struct PCIEChassis *c,
+>       return s;
 >   }
 >   
-> -void replay_disable_events(void)
+> -PCIESlot *pcie_chassis_find_slot(uint8_t chassis_number, uint16_t slot)
 > -{
-> -    if (replay_mode != REPLAY_MODE_NONE) {
-> -        events_enabled = false;
-> -        /* Flush events queue before waiting of completion */
-> -        replay_flush_events();
+> -    struct PCIEChassis *c;
+> -    c = pcie_chassis_find(chassis_number);
+> -    if (!c) {
+> -        return NULL;
 > -    }
+> -    return pcie_chassis_find_slot_with_chassis(c, slot);
 > -}
 > -
->   /*! Adds specified async event to the queue */
->   void replay_add_event(ReplayAsyncEventKind event_kind,
->                         void *opaque,
+>   int pcie_chassis_add_slot(struct PCIESlot *slot)
+>   {
+>       struct PCIEChassis *c;
+> diff --git a/include/hw/pci/pcie_port.h b/include/hw/pci/pcie_port.h
+> index 90e6cf45b8..7cd7af8cfa 100644
+> --- a/include/hw/pci/pcie_port.h
+> +++ b/include/hw/pci/pcie_port.h
+> @@ -72,7 +72,6 @@ struct PCIESlot {
+>   };
+>   
+>   void pcie_chassis_create(uint8_t chassis_number);
+> -PCIESlot *pcie_chassis_find_slot(uint8_t chassis, uint16_t slot);
+>   int pcie_chassis_add_slot(struct PCIESlot *slot);
+>   void pcie_chassis_del_slot(PCIESlot *s);
+>   
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
