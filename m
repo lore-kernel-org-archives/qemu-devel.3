@@ -4,95 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07C19CF31A0
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 08:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CF89CF319D
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Oct 2024 08:16:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1svuPX-0006ki-64; Wed, 02 Oct 2024 04:08:39 -0400
+	id 1svuX1-00029i-JC; Wed, 02 Oct 2024 04:16:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1svuPT-0006jc-By
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 04:08:35 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1svuWv-00029S-NP
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 04:16:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1svuPR-0002bT-AM
- for qemu-devel@nongnu.org; Wed, 02 Oct 2024 04:08:35 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49284i7q012248;
- Wed, 2 Oct 2024 08:08:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:subject:from:to:cc:date:in-reply-to:references
- :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- C3wkXVEnJJToyLZInQR0lVnJ4vl+x4k4gnBBFJ5X6gw=; b=oTk7Jo+OUf9hbPYy
- uNOHyp2L6qHeUd+bVLS7iAy9XMgMdXsblsm6AOal4NTcWHCljrICA3t522TnZMBY
- ha211U6saD/TUsovL3WfT6rMfbV7euSJSVvz+sJ0QwzU2IUZjdoNs9bZHrE4gdgN
- 77dy1ik85OM5DeUUAwniqtPQcbmm576FoG5zmHVA8860/3zpx3JvgNDFtjE4D1ls
- KiRqGvnT1AD8ZD69Mx8+KS2MqZAZ1unbRBLkquZI2w/AXPR06NIIHjT+GZPoA4Xz
- aw2ixxTr8QWyr+AIPZ60ONLZYilBk3OWKizSsbKaz3RCfilUT2fE1ipmUc4tNHzV
- ocn68w==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4212bmr0ng-5
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Oct 2024 08:08:31 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4927PHce014145;
- Wed, 2 Oct 2024 07:54:10 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41xwmk8tmm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Oct 2024 07:54:10 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4927s8Kk50331976
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 2 Oct 2024 07:54:08 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6AFCA20043;
- Wed,  2 Oct 2024 07:54:08 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 142DF20040;
- Wed,  2 Oct 2024 07:54:08 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  2 Oct 2024 07:54:07 +0000 (GMT)
-Message-ID: <476e5647ed10327c955809de9a4bafd45e8c2c1f.camel@linux.ibm.com>
-Subject: Re: [PATCH v3 1/5] linux-user: Correct print_sockaddr() format
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Zach van Rijn <me@zv.io>, Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Date: Wed, 02 Oct 2024 09:54:07 +0200
-In-Reply-To: <20240807124306.52903-2-philmd@linaro.org>
-References: <20240807124306.52903-1-philmd@linaro.org>
- <20240807124306.52903-2-philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1svuWu-0003MI-7Y
+ for qemu-devel@nongnu.org; Wed, 02 Oct 2024 04:16:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1727856975;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:resent-to:
+ resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
+ bh=RJin89XPIXkmM1E4OIXhKKg8uHQjwGmSKJcPoEppeOU=;
+ b=BNxVIDvPjSEyYlwuhFO04QYk+KLX5BSO9kfjQMOqiPduMAIDMSWxmn8t/iJmNLIhCe5Oe/
+ LMpNf9GPgSm44Gl+1MkZuCDeHs90sdjk/o/+SpESAJprUKkH+1nw+nxxaG6wzq0mc6gHfo
+ Y0U3fJ92GDPBpmZ4vJ4/LXUXpLGhzEk=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-375-W3-vnt6KM1me9RLXZerlbw-1; Wed,
+ 02 Oct 2024 04:16:12 -0400
+X-MC-Unique: W3-vnt6KM1me9RLXZerlbw-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CAABA19560A5; Wed,  2 Oct 2024 08:16:10 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.47])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6117F3000198; Wed,  2 Oct 2024 08:16:10 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id EC05621E6A28; Wed,  2 Oct 2024 10:16:07 +0200 (CEST)
+Resent-To: peter.maydell@linaro.org, philmd@linaro.org, qemu-devel@nongnu.org
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Wed, 02 Oct 2024 10:16:07 +0200
+Resent-Message-ID: <87ttdu6htk.fsf@pond.sub.org>
+X-From-Line: armbru@redhat.com  Wed Oct  2 09:44:04 2024
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id E149D21E688F; Wed,  2 Oct 2024 09:44:04 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PULL 05/10] qapi/pci: Supply missing member documentation
+Date: Wed,  2 Oct 2024 09:43:59 +0200
+Message-ID: <20241002074404.1983368-6-armbru@redhat.com>
+In-Reply-To: <20241002074404.1983368-1-armbru@redhat.com>
+References: <20241002074404.1983368-1-armbru@redhat.com>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: q9ZEgbyBPkrE8aTw4vb2mKvPTFxSGfce
-X-Proofpoint-ORIG-GUID: q9ZEgbyBPkrE8aTw4vb2mKvPTFxSGfce
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-02_07,2024-09-30_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0
- mlxlogscore=999 mlxscore=0 priorityscore=1501 clxscore=1015 adultscore=0
- lowpriorityscore=0 phishscore=0 malwarescore=0 suspectscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2410020059
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,45 +92,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2024-08-07 at 14:43 +0200, Philippe Mathieu-Daud=C3=A9 wrote:
-> When the %addr argument can not be accessed, a double comma
-> is logged (the final qemu_log call prepend a comma). Call
-> print_raw_param with last=3D1 to avoid the extra comma.
-> Remove spurious space.
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
-> =C2=A0linux-user/strace.c | 4 ++--
-> =C2=A01 file changed, 2 insertions(+), 2 deletions(-)
->=20
-> diff --git a/linux-user/strace.c b/linux-user/strace.c
-> index b4d1098170..73f81e66fc 100644
-> --- a/linux-user/strace.c
-> +++ b/linux-user/strace.c
-> @@ -434,9 +434,9 @@ print_sockaddr(abi_ulong addr, abi_long addrlen,
-> int last)
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 unlock_user(sa, addr, 0)=
-;
-> =C2=A0=C2=A0=C2=A0=C2=A0 } else {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 print_raw_param("0x"TARGET_AB=
-I_FMT_lx, addr, 0);
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 print_raw_param("0x"TARGET_AB=
-I_FMT_lx, addr, 1);
-> =C2=A0=C2=A0=C2=A0=C2=A0 }
-> -=C2=A0=C2=A0=C2=A0 qemu_log(", "TARGET_ABI_FMT_ld"%s", addrlen, get_comm=
-a(last));
-> +=C2=A0=C2=A0=C2=A0 qemu_log(","TARGET_ABI_FMT_ld"%s", addrlen, get_comma=
-(last));
-> =C2=A0}
-> =C2=A0
-> =C2=A0static void
+Since we neglect to document a member of PciMemoryRegion, its
+description in the QEMU QMP Reference manual is "Not documented".  Fix
+that.
 
-I see why this works, but it feels a bit wrong semantically: addr is
-not the last argument.
-Wouldn't it be better to add commas to the preceding switch's cases?
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240911112545.2248881-6-armbru@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ qapi/pci.json    | 2 ++
+ qapi/pragma.json | 1 -
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-Anyhow:
+diff --git a/qapi/pci.json b/qapi/pci.json
+index 78bee57b77..dc85a41d28 100644
+--- a/qapi/pci.json
++++ b/qapi/pci.json
+@@ -33,6 +33,8 @@
+ #     - 'io' if the region is a PIO region
+ #     - 'memory' if the region is a MMIO region
+ #
++# @address: memory address
++#
+ # @size: memory size
+ #
+ # @prefetch: if @type is 'memory', true if the memory is prefetchable
+diff --git a/qapi/pragma.json b/qapi/pragma.json
+index 7b0e12f42b..baeae5bf52 100644
+--- a/qapi/pragma.json
++++ b/qapi/pragma.json
+@@ -62,7 +62,6 @@
+         'MemoryDeviceInfoKind',
+         'NetClientDriver',
+         'ObjectType',
+-        'PciMemoryRegion',
+         'QCryptodevBackendServiceType',
+         'QKeyCode',
+         'RbdAuthMode',
+-- 
+2.46.0
 
-Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
+
 
