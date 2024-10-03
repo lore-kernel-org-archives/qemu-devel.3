@@ -4,85 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F05FCCF34AD
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 20:51:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97F0ACF34AD
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 21:00:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swSmv-0005EL-A7; Thu, 03 Oct 2024 16:51:05 -0400
+	id 1swSv5-0006Mi-Lb; Thu, 03 Oct 2024 16:59:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swSms-0005DN-6J
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 16:51:02 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swSv4-0006MJ-25
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 16:59:30 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swSmq-0006y5-Mz
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 16:51:01 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-37cd1ccaf71so1439329f8f.0
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 13:50:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swSv1-0008E6-Rk
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 16:59:29 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-5369f1c7cb8so1459802e87.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 13:59:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727988658; x=1728593458; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727989166; x=1728593966; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=I8KwwV6cPoYlAXm1UCsfz3UXPAIlrMmYqtEhYKNa01M=;
- b=hW0p+FaXzM5QY2K1xJk02iwm0yMnYPUc8SAVZlHNulzwLLw7uKFDJnSALMzCm5KKJX
- nPFqmss0SXOK7y2ixEfS27ULQMcSKiZbnVpvOVLAOtJcMCkFYLSq6sU6SQTQ600DbxXw
- yUxki2jYAohXZPXfYUCc3xyIyQl+ffCxi4i2noYEhwMAohsgsoH2J20nWYEd46/Eljms
- jyVfkKVIoru1eBGg1CmDAJQLYigsLvwMGibePYTGDfGbvwVduzADX5dGu7d1XwaGcIxK
- 3ir+bZs6se0I7T8I68wRTk1WX3mWuOBEN6XnVfqgL5RS+H1HeR5VFtUDYCy2vEmlC5a1
- FztQ==
+ bh=YTgKq4VoQ/uwlOIQTH0KDZ7hgfPURLwKhBkke9AV0zo=;
+ b=Cm1LCry/0Jao9KSGVWvUd1DTyeC+T0A8sHV2tYip1Bd+pyAMF6t1ERtw97OZpZRZtI
+ qiWFfk4dnERbGVi7Dg6yY6HRMI6dV2YqSQ1ZrWxO0ciYxlANxcdS8PtHVlTlGKyyaj9+
+ z/7dlhV0zaOV46+nsED7QqIctfeBDkwlBlAiNE+ha1jvhGlNFm5AvVp3aGycuNH4zs+M
+ h/VlLH9rVYgBn9vJguCR4+///n/PZeIXJ8WA9PjLk4fyRrOIQLTNvEUcltkJFRcrQFcm
+ vzs0A3mHMn2TxKx74nwopdz6Os1jPYBkTwry5pWVm3eWGn46pvAquTHLoSyc5EiwY2oS
+ /amA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727988658; x=1728593458;
+ d=1e100.net; s=20230601; t=1727989166; x=1728593966;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=I8KwwV6cPoYlAXm1UCsfz3UXPAIlrMmYqtEhYKNa01M=;
- b=GuiYMVYMgodmd8S5t+Ajtf818jOiNvNT0eK9UEqStao63F0wJtLFl2/yTiPOyMHtJl
- XTQBz9B/KEamUOCs18Be/sGVmoIUavTeWmpHcbMQroqGZUSlL2iVZXPEAFGthuxcN1b9
- 1CvYTzxNr/Zkc5tVQ7tYiC4NPhG7I41Abqh70E38+2Yq5QP3MJM4kzbLiIHnppYQpgDv
- TlIqLgbdlDWkWi5UW+zr+4H51hPWizAaZfq7FkimQe+3Fshfk2yuEmrSv0h19EWt8WQ/
- JT52fDzGyFweM6NjJPEQ/aY/o0pfIRPfqZaY3rgayRbsxBoC/9iQxlRAjiO2XydHUoM3
- n7BQ==
-X-Gm-Message-State: AOJu0YzTV0pVQanKqlviioARoQCfTe+z4Gyk9Om404zsYrEcvrwUGX4S
- g7Z8D5JAFRFaUOwUUT8P85yw+MSK1Qbj7q8soXZO1BsKdwhmZ6+pGRaKicF7syJPFkxVF3EYnL/
- 96oM=
-X-Google-Smtp-Source: AGHT+IH1mo7DalbKvkLgigXtYyVJZR9IxRNksPSeOcbziKjzHtfV0KQN28K7ltFU0fIsRKgZRNYolA==
-X-Received: by 2002:a5d:538d:0:b0:378:c6d5:e2b3 with SMTP id
- ffacd0b85a97d-37d04a57a45mr2626299f8f.23.1727988658462; 
- Thu, 03 Oct 2024 13:50:58 -0700 (PDT)
+ bh=YTgKq4VoQ/uwlOIQTH0KDZ7hgfPURLwKhBkke9AV0zo=;
+ b=Z9cWTiA4MO2OFl0FMnYIZeOsunVmIRFG4ARIp3CUYpV6tIRk65IQPJ9TOf1BnvAzBj
+ dDocUF4GtccRfoz781+BD06dlRh52fid/Zm1B1HlVljRkFXJmFKTF11Tb37WEa/RuIq9
+ 68b0AaFfflmjRwbV8q/xu6faQXrmZgFEf0O2lqQwJgI/PHAjnTpJhLcNxvRjYNuBDa9u
+ 0h1twM47hw2fRrWIKjFrPr+JvnKupRnLJW8HDD/kkWk5pJ8Rw6GFg903GS+fiZh9xjtD
+ rFidIHYbIzWBk+8ez4hvf2S6Li0DNjKqkoalGj+zgsQBVQ37VbzvGPwB27x60B1RwS5R
+ /U1w==
+X-Gm-Message-State: AOJu0Yxae2uJxXBgNKpWDwB2NFRbpF87GwfIa2OGpbFYOoE9+kaIlHL2
+ oXO/4BQ/j/CQL9oexORcvhgNJ8mE1I1/YlqJda1O95RYN1jPXIQQa3eHqgbYr0U=
+X-Google-Smtp-Source: AGHT+IHf2OoOB+7ighGkuRIODz1kYtzZ5WbQUyMqcXkWNaNbW+5sVmrWpMb55GL/sg+kOL1rG4Aq7g==
+X-Received: by 2002:a05:6512:33ce:b0:536:741a:6bad with SMTP id
+ 2adb3069b0e04-539ab85b43cmr351887e87.12.1727989165741; 
+ Thu, 03 Oct 2024 13:59:25 -0700 (PDT)
 Received: from [172.33.27.23] (134.pool62-36-43.static.orange.es.
  [62.36.43.134]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f8025b3d6sm23484715e9.18.2024.10.03.13.50.56
+ 5b1f17b1804b1-42f79d8d3edsm52344535e9.7.2024.10.03.13.59.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Oct 2024 13:50:57 -0700 (PDT)
-Message-ID: <4c8e6941-e73d-4504-b289-987ddf49582d@linaro.org>
-Date: Thu, 3 Oct 2024 22:50:55 +0200
+ Thu, 03 Oct 2024 13:59:25 -0700 (PDT)
+Message-ID: <e898c191-23f8-4e5d-9361-0ae7e8c5b78b@linaro.org>
+Date: Thu, 3 Oct 2024 22:59:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/13] qemu/bswap: Introduce ld/st_endian_p() API
-To: qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Thomas Huth
- <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Jason Wang <jasowang@redhat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Anton Johansson <anjo@rev.ng>,
- Peter Maydell <peter.maydell@linaro.org>, Huacai Chen
- <chenhuacai@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Sven Schnelle <svens@stackframe.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-arm@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Max Filippov <jcmvbkbc@gmail.com>, Paul Burton <paulburton@kernel.org>
-References: <20240930073450.33195-1-philmd@linaro.org>
- <20240930073450.33195-2-philmd@linaro.org>
+Subject: Re: [PATCH] qapi, machine-qmp-cmds.c: query-accelerator support
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, wangyanan55@huawei.com, zhao1.liu@intel.com,
+ eblake@redhat.com, armbru@redhat.com, ajones@ventanamicro.com
+References: <20240919112056.620917-1-dbarboza@ventanamicro.com>
+ <ZuwXjyqhxwHBEvR_@redhat.com>
+ <f4c52806-1722-43fc-b4b4-ab17c930d4cd@ventanamicro.com>
+ <ZvaN7-W4VLr6TGsm@redhat.com>
+ <046df1e9-5e4c-4f1c-8edb-1ee1244fe340@ventanamicro.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240930073450.33195-2-philmd@linaro.org>
+In-Reply-To: <046df1e9-5e4c-4f1c-8edb-1ee1244fe340@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,48 +100,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/9/24 09:34, Philippe Mathieu-Daudé wrote:
-> Introduce the ld/st_endian_p() API, which takes an extra
-
-Alternatively we could use ld/st_te_p() since we already
-have ld/st_he_p() for host endianness.
-
-> boolean argument to dispatch to ld/st_{be,le}_p() methods.
+On 2/10/24 20:06, Daniel Henrique Barboza wrote:
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> TODO: Update docstring regexp
-> ---
->   include/qemu/bswap.h | 19 +++++++++++++++++++
->   1 file changed, 19 insertions(+)
 > 
-> diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
-> index ad22910a5d..ec813a756d 100644
-> --- a/include/qemu/bswap.h
-> +++ b/include/qemu/bswap.h
-> @@ -433,4 +433,23 @@ DO_STN_LDN_P(be)
->   #undef le_bswaps
->   #undef be_bswaps
->   
-> +#define lduw_endian_p(big_endian, p) \
-> +                     (big_endian) ? lduw_be_p(p) : lduw_le_p(p)
-> +#define ldsw_endian_p(big_endian, p) \
-> +                     (big_endian) ? ldsw_be_p(p) : ldsw_be_p(p)
-> +#define ldl_endian_p(big_endian, p) \
-> +                    (big_endian) ? ldl_be_p(p) : ldl_le_p(p)
-> +#define ldq_endian_p(big_endian, p) \
-> +                    (big_endian) ? ldq_be_p(p) : ldq_le_p(p)
-> +#define stw_endian_p(big_endian, p, v) \
-> +                    (big_endian) ? stw_be_p(p, v) : stw_le_p(p, v)
-> +#define stl_endian_p(big_endian, p, v) \
-> +                    (big_endian) ? stl_be_p(p, v) : stl_le_p(p, v)
-> +#define stq_endian_p(big_endian, p, v) \
-> +                    (big_endian) ? stq_be_p(p, v) : stq_le_p(p, v)
-> +#define ldn_endian_p(big_endian, p, sz) \
-> +                     (big_endian) ? ldn_be_p(p, sz) : ldn_le_p(p, sz)
-> +#define stn_endian_p(big_endian, p, sz, v) \
-> +                    (big_endian) ? stn_be_p(p, sz, v) : stn_le_p(p, sz, v)
-> +
->   #endif /* BSWAP_H */
+> On 9/27/24 7:50 AM, Daniel P. Berrangé wrote:
+>> Markus: QAPI design Qs for you at the bottom
+>>
+>> On Wed, Sep 25, 2024 at 10:19:33AM -0300, Daniel Henrique Barboza wrote:
+>>>
+>>>
+>>> On 9/19/24 9:22 AM, Daniel P. Berrangé wrote:
+>>>> On Thu, Sep 19, 2024 at 08:20:56AM -0300, Daniel Henrique Barboza 
+>>>> wrote:
+>>>>> Add a QMP command that shows all specific properties of the current
+>>>>> accelerator in use.
+>>>>
+>>>> Why do we need to expose /everything/ ?
+>>>
+>>> I wouldn't mind pick and choose advertised properties for the 
+>>> accelerators
+>>> like we do with other APIs.
+>>>
+>>> This would mean that each arch should choose what to advertise or 
+>>> not, given that
+>>> some accelerator properties might be relevant just for some archs. 
+>>> The API would
+>>> be implemented by each arch individually.
+>>
+>> Well with qemu-system-any we might get multiple arches reporting
+>> info in the same binary, so we'll need to fan out to fill in the
+>> per-arch info, after doing a common base.
+>>
+>> Hmmm, i wonder if qemu-system-any will support mixing KVM and TCG ?
+>> ie KVM for the host native accelerator, combined with TCG for the
+>> foreign archs ??? Hopefully not !
+> 
+> If you're talking about Phil's patches it seems that it'll be TCG only:
+
+Orthogonaly to the single binary series (mentioned below with the
+'any'-architecture target), we plan to add a "Dual HW/SW accelerator".
+It will be implemented using the same AccelOps structure we currently
+have, and internally it will dispatch between HW/SW. First prototype
+plan to provide HVF+TCG.
+
+IMHO query-accelerator should expose accelerator generic properties,
+not the target-specific ones. At least by default, we could add an
+optional flag to include target-specific stuff. At least that'd keep
+the core accel core simpler.
+
+> https://lore.kernel.org/qemu-devel/20240305220938.85410-1-philmd@linaro.org/
+> 
+> Patch 2 commit msg states:
+> 
+> ------
+> Add the 'any'-architecture target.
+> 
+> - Only consider 64-bit targets
+> - Do not use any hardware accelerator (except qtest)
+> - For architecture constants, use:
+>    . max of supported targets phys/virt address space
+>    . max of supported targets MMU modes
+>    . min of supported targets variable page bits
+> ------
+> 
+> 
+> Thanks,
+> 
+> Daniel
 
 
