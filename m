@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6269ECF8574
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 10:21:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6719CCF8573
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 10:21:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swIH5-0000RU-5g; Thu, 03 Oct 2024 05:37:36 -0400
+	id 1swHA0-0003tp-EM; Thu, 03 Oct 2024 04:26:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1swIEi-0000NG-Lw
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 05:35:07 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1swIDz-00016T-0k
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 05:34:59 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2faccada15bso7851611fa.3
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 02:32:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727947948; x=1728552748; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=keauJ5uKWDGk1vURGpPsSf3/hOl1FhrfQ4AArH0jO/0=;
- b=keVLk7ALan7ziK328t+6/jbIET68m9CazkCxNWucQWBfg0nj3v6is9fwa+ZiHFMV4I
- ST2vInmTv1GIc6oBmuG6sGG4CMYCl+ywim1SIvRmCZQToqioxbar9CVRLLXy+EA0x07P
- HuSXw74QrGvpovm61ZFdOJvXSnTil3/fTwdfHzpf8G0N7gbmS5DLO3s4I84nTP1Vb83a
- HOJgEnbViSgOMe5R+fjPMqy/pkyV7enwQVBs0yZBd75NznMTmT3kRQQVVpYk5fGAPXQG
- Ghgx5z1l2Ru5v4TJGFl2WqnpKLZhOibcVYEEMEZ2LeBFs+1sbCcs0FWJi3z5o/lglrJ1
- tSJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727947948; x=1728552748;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=keauJ5uKWDGk1vURGpPsSf3/hOl1FhrfQ4AArH0jO/0=;
- b=sqLx/Ep97pm4VXVHG8ihOnaxqv0ghzzWJBz5bRu0MDjZe344rPu4SiGYITrRIfAFqK
- yg2dLdq2k5ns8QZ7YcJV0H6PjL5NL2sHEimOhH9ZMIUDaWBj2OPpENhfONSqJQg8rExS
- yUtCBdL3SK/iaLJ2toiFR53DIv1LGsIs9QQJC6qbf5UB7pM173a6cxVVy0NbmSBuR1Qb
- nsdzmjGD+7wM2MXVQBDyOuLCdLdo/YdO9waEEj74r5kWrltV4XxKErh4Ty6VO2MAEYvX
- Hq6+ucQ7aJr71InaNS7JCha7AtGoTPv+md0gQv0ULVbyVwD/R2Cxl9mZ9LEc28ywiJiM
- 2JOg==
-X-Gm-Message-State: AOJu0YxOChBp+BQWclroSME+RRrE2kyh0vRTGlfe5FuX+Z4NczKdQsSk
- ZXXutERupLAhgyq+ZcG0Ta3ZFK7aZg2ah7jRdtpcEdGWkl6y5XONjZH8S+jtDHbwyjrQAkiIa8b
- 8B1Uz41DKlZXLbYrhOSWQda0UIMImj+JLzWU5fA==
-X-Google-Smtp-Source: AGHT+IHSsvYClCg23lAg/JZ6Y7dGABSb3LZfg3E/Ovj9Em413KduCgq3Zh+i6aYKuRzRs6NV33YJQNqpUW/LLaxaO3Y=
-X-Received: by 2002:a2e:515a:0:b0:2fa:c0fc:e3d8 with SMTP id
- 38308e7fff4ca-2fae10e7f15mr26969121fa.38.1727947947755; Thu, 03 Oct 2024
- 02:32:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1swH9m-0003sT-26
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 04:25:57 -0400
+Received: from zproxy3.enst.fr ([2001:660:330f:2::de])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1swH9I-00059V-2k
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 04:25:49 -0400
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy3.enst.fr (Postfix) with ESMTP id 0039CA0835;
+ Thu,  3 Oct 2024 10:11:13 +0200 (CEST)
+Received: from zproxy3.enst.fr ([IPv6:::1])
+ by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
+ id t65Z8H-bmKti; Thu,  3 Oct 2024 10:11:13 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy3.enst.fr (Postfix) with ESMTP id 61FD4A0817;
+ Thu,  3 Oct 2024 10:11:13 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy3.enst.fr 61FD4A0817
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1727943073;
+ bh=bvCArfBxkPutYzyakD7t3ZBavD+tFjEHb8BCFcBKAmc=;
+ h=From:To:Date:Message-ID:MIME-Version;
+ b=M+JyCmTMF878Q6rSgZUvzn4W5492/zmXDxsucy5e3B6DhAmX/2vGE7AX/B7l9rBBe
+ kuKoM9wVZb4WoswhJL8dX66CSxWTQ5mUW/tFiKO2DP6v0kvLA84z2kseuPwS3okgUB
+ qeHbecjlvLW4hXEo42b4y6pSMTNWjd2SXJ5lWOvg=
+X-Virus-Scanned: amavis at enst.fr
+Received: from zproxy3.enst.fr ([IPv6:::1])
+ by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
+ id zU-J1kxmMKz7; Thu,  3 Oct 2024 10:11:13 +0200 (CEST)
+Received: from inesv-Inspiron-3501.enst.fr (unknown
+ [IPv6:2a04:8ec0:0:124::190c])
+ by zproxy3.enst.fr (Postfix) with ESMTPSA id 03272A0677;
+ Thu,  3 Oct 2024 10:11:12 +0200 (CEST)
+From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
+To: qemu-devel@nongnu.org
+Cc: Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>, Luc Michel <luc@lmichel.fr>,
+ qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Samuel Tardieu <sam@rfc1149.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Damien Hedde <damien.hedde@dahe.fr>,
+ =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
+ Laurent Vivier <lvivier@redhat.com>
+Subject: [PING PATCH v5 1/3] hw/misc: Create STM32L4x5 SYSCFG clock
+Date: Thu,  3 Oct 2024 10:10:04 +0200
+Message-ID: <20241003081105.40836-2-ines.varhol@telecom-paris.fr>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241003081105.40836-1-ines.varhol@telecom-paris.fr>
+References: <20241003081105.40836-1-ines.varhol@telecom-paris.fr>
 MIME-Version: 1.0
-References: <20241002125226.282193-1-thuth@redhat.com>
-In-Reply-To: <20241002125226.282193-1-thuth@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 3 Oct 2024 10:32:16 +0100
-Message-ID: <CAFEAcA9FuJ4dJwu6oXt4Tkj-2Y5yg2i2c0OBBav8FQGOJX+WNQ@mail.gmail.com>
-Subject: Re: [PULL 0/5] Fix mips64el CI job + some other misc patches
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2001:660:330f:2::de;
+ envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy3.enst.fr
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,32 +90,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2 Oct 2024 at 13:52, Thomas Huth <thuth@redhat.com> wrote:
->
-> The following changes since commit 718780d20470c66a3a36d036b29148d5809dc855:
->
->   Merge tag 'pull-nvme-20241001' of https://gitlab.com/birkelund/qemu into staging (2024-10-01 11:34:07 +0100)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-10-02
->
-> for you to fetch changes up to e5a007001824f9cde0db58cc960d4efcf1b93f27:
->
->   tests/tcg/s390x: Test modifying an EXECUTE target (2024-10-02 13:01:26 +0200)
->
-> ----------------------------------------------------------------
-> * Fix mips64el in the CI
-> * Remove unused sh4eb target
-> * Add an additional EXECUTE TCG test for s390x
->
-> ----------------------------------------------------------------
+This commit creates a clock in STM32L4x5 SYSCFG and wires it up to the
+corresponding clock from STM32L4x5 RCC.
 
+Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+Reviewed-by: Luc Michel <luc@lmichel.fr>
+---
+ include/hw/misc/stm32l4x5_syscfg.h |  1 +
+ hw/arm/stm32l4x5_soc.c             |  2 ++
+ hw/misc/stm32l4x5_syscfg.c         | 19 +++++++++++++++++--
+ 3 files changed, 20 insertions(+), 2 deletions(-)
 
-Applied, thanks.
+diff --git a/include/hw/misc/stm32l4x5_syscfg.h b/include/hw/misc/stm32l4=
+x5_syscfg.h
+index 23bb564150..c450df2b9e 100644
+--- a/include/hw/misc/stm32l4x5_syscfg.h
++++ b/include/hw/misc/stm32l4x5_syscfg.h
+@@ -48,6 +48,7 @@ struct Stm32l4x5SyscfgState {
+     uint32_t swpr2;
+=20
+     qemu_irq gpio_out[GPIO_NUM_PINS];
++    Clock *clk;
+ };
+=20
+ #endif
+diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
+index fac83d349c..16e3505dcb 100644
+--- a/hw/arm/stm32l4x5_soc.c
++++ b/hw/arm/stm32l4x5_soc.c
+@@ -236,6 +236,8 @@ static void stm32l4x5_soc_realize(DeviceState *dev_so=
+c, Error **errp)
+=20
+     /* System configuration controller */
+     busdev =3D SYS_BUS_DEVICE(&s->syscfg);
++    qdev_connect_clock_in(DEVICE(&s->syscfg), "clk",
++        qdev_get_clock_out(DEVICE(&(s->rcc)), "syscfg-out"));
+     if (!sysbus_realize(busdev, errp)) {
+         return;
+     }
+diff --git a/hw/misc/stm32l4x5_syscfg.c b/hw/misc/stm32l4x5_syscfg.c
+index a5a1ce2680..a947a9e036 100644
+--- a/hw/misc/stm32l4x5_syscfg.c
++++ b/hw/misc/stm32l4x5_syscfg.c
+@@ -26,6 +26,9 @@
+ #include "trace.h"
+ #include "hw/irq.h"
+ #include "migration/vmstate.h"
++#include "hw/clock.h"
++#include "hw/qdev-clock.h"
++#include "qapi/error.h"
+ #include "hw/misc/stm32l4x5_syscfg.h"
+ #include "hw/gpio/stm32l4x5_gpio.h"
+=20
+@@ -225,12 +228,22 @@ static void stm32l4x5_syscfg_init(Object *obj)
+     qdev_init_gpio_in(DEVICE(obj), stm32l4x5_syscfg_set_irq,
+                       GPIO_NUM_PINS * NUM_GPIOS);
+     qdev_init_gpio_out(DEVICE(obj), s->gpio_out, GPIO_NUM_PINS);
++    s->clk =3D qdev_init_clock_in(DEVICE(s), "clk", NULL, s, 0);
++}
++
++static void stm32l4x5_syscfg_realize(DeviceState *dev, Error **errp)
++{
++    Stm32l4x5SyscfgState *s =3D STM32L4X5_SYSCFG(dev);
++    if (!clock_has_source(s->clk)) {
++        error_setg(errp, "SYSCFG: clk input must be connected");
++        return;
++    }
+ }
+=20
+ static const VMStateDescription vmstate_stm32l4x5_syscfg =3D {
+     .name =3D TYPE_STM32L4X5_SYSCFG,
+-    .version_id =3D 1,
+-    .minimum_version_id =3D 1,
++    .version_id =3D 2,
++    .minimum_version_id =3D 2,
+     .fields =3D (VMStateField[]) {
+         VMSTATE_UINT32(memrmp, Stm32l4x5SyscfgState),
+         VMSTATE_UINT32(cfgr1, Stm32l4x5SyscfgState),
+@@ -241,6 +254,7 @@ static const VMStateDescription vmstate_stm32l4x5_sys=
+cfg =3D {
+         VMSTATE_UINT32(swpr, Stm32l4x5SyscfgState),
+         VMSTATE_UINT32(skr, Stm32l4x5SyscfgState),
+         VMSTATE_UINT32(swpr2, Stm32l4x5SyscfgState),
++        VMSTATE_CLOCK(clk, Stm32l4x5SyscfgState),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+@@ -251,6 +265,7 @@ static void stm32l4x5_syscfg_class_init(ObjectClass *=
+klass, void *data)
+     ResettableClass *rc =3D RESETTABLE_CLASS(klass);
+=20
+     dc->vmsd =3D &vmstate_stm32l4x5_syscfg;
++    dc->realize =3D stm32l4x5_syscfg_realize;
+     rc->phases.hold =3D stm32l4x5_syscfg_hold_reset;
+ }
+=20
+--=20
+2.45.2
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
-
--- PMM
 
