@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24CF0CF34D3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 23:02:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5CC7CF34D4
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 23:09:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swUpg-0000xa-MJ; Thu, 03 Oct 2024 19:02:04 -0400
+	id 1swUwK-0002jz-3t; Thu, 03 Oct 2024 19:08:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1swUpf-0000xQ-6M
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 19:02:03 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1swUwI-0002jh-AU
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 19:08:54 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1swUpd-0002EP-Gz
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 19:02:02 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-718f4fd89e5so1483679b3a.0
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 16:02:01 -0700 (PDT)
+ id 1swUwG-0004iW-Se
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 19:08:54 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-20b9b35c7c3so15327785ad.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 16:08:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727996520; x=1728601320; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727996931; x=1728601731; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Tg0Pc4L9aTrL2GaSDCaVgrqx+ntS6Yu+5qvhc6yR++8=;
- b=F6SYywt8djlDibz50mX/NCqEX4M50KphWmydF5SIOqtUsNQ5WVDHODhKkb96No/eAY
- oDXjCSaWmXOUQ/QdldidDyuP7Qqu6T79EaK8KxBOV5ynkdXkLvtx1lGwFgCQGoVANW80
- 3fFb1u60XrSFr6Xvkn1eOHwEXYH8JAoiC5vqSWQnCwzQzmE0YPfuE29h0XpRJBw/7rUX
- fOGS8WZK79HrXF2HoEl6Sx/wHhIXYSqLB8W/LvvZWgRdlNGMKRaEXZiBWI1BkMb6iNeI
- pg9/5YRBqPrFABy/PrAF7QOua+RtvzluDdMdyu4zpf07nIY9/jg33XxsbA1PFx9eKolL
- KQnw==
+ bh=fq49TKAL9KYj/9vFkhY/8M25ZrgzMs6TnCNYxCvIdD8=;
+ b=Vlj61hEIDFddcLEBlQs72O0EnQde2cUzXac0EthxSG8JfCUGPnbXYkkBLZly6Y/ij9
+ SR6hFwgyEW3KiIbamtKhROb6Z/bdO5/uPjdDSa36clB4t4XsWT0qOBluDm3i8yrSd+tq
+ c78R909jS6Y6NmZRCkisHH15Nsv3Je8NBkAoRQYPnf7h3wRbuJU1IOAXCwu5LWJ3w5Lg
+ RTRDHvw7H1gD4WqaVvDn2kaBIyj++I2YIyQcHn/qWR8I1CfbeXtlE8UGMe/wq5mk/LJd
+ jG1D4aFsFeuhk6DN7KSU12ZgQL9o2+Z1OrjtADl4+Df7mMGLBpXMBLbbqFatJ5zOQIeH
+ mZbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727996520; x=1728601320;
+ d=1e100.net; s=20230601; t=1727996931; x=1728601731;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Tg0Pc4L9aTrL2GaSDCaVgrqx+ntS6Yu+5qvhc6yR++8=;
- b=H2+8CIRiEwNeEAzFZtkdTHDW/YRs2TbqHEioMa11C6OnLGymEiFwr5TJTp86c1BTrd
- wU2UfYWITg6Hf8dSzdH0EeVYzYggyQs4/duZqU3AeIORNTPjsfC44uM+CgpFkAkrDOkD
- szo+reMJMpbsDPCBN80fgomXGm/353Folv9kcIfej1d2ol0sTQpDybxv4dHaBHSsaj6V
- oAWYpZTnABztEu0U6BZyKCFxPMQhBDxipzZLKdzuicHFb3de4HCIfrK8eyMbeUNtcmyu
- YABunl3JSUwtEBERYmYM7Pi8A+AYnSnel+zJBGTnUjxoYg3gF0veOB7k7p/SvHYJmC0i
- 7J1w==
+ bh=fq49TKAL9KYj/9vFkhY/8M25ZrgzMs6TnCNYxCvIdD8=;
+ b=vsqB1RQVzY1xEozi/97tOCPf6z2IFDl3YHYyVGdVFJ6ANxUQurXwaw7sqIi9UDWCxI
+ KIIOi5UpcBrvjhoCGxCgCoUdXTMXy/eCZ6mOlyXmtiXd79LcvR4Q4kxuQ8p+U6v2uXiS
+ sj4NL8MvizrtcFRqSIa0O1HDhP19yPKIJmFw42b/GY120evFL0Ztw9ozEydydXrOz/4a
+ 3W9tmGbt47UFE77Ih+knWexwjD6hzgJ84P7oNUq/U54I5PMHptzh9HtibnNjPN52EGVv
+ ajmR0HyP4EXs0gpB2cKwkKwPEBwOOxBVa660ERrPgfuP4PyOAnZ4/A4YLrE+Lb3bhG5P
+ xURg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUfn73iftY8vleh+fqCXpyGtgelEI+lVOdhZn91vGdQ1kE27vjGb4M6gpA3gANBrhukFPILUhd/A+Ma@nongnu.org
-X-Gm-Message-State: AOJu0YwDogIbfUk8XXZQIGX5W8j8oSWYrK+hZmeT8+l8kcwyYQ6+SQFr
- X496RFlWd+VyoLYjm5YFPck1eJ6jKql+bL0B9XRDbgYojdq8YQ1GIa14uUHgttM=
-X-Google-Smtp-Source: AGHT+IEMn3uK7U6M0ZktLa3icW4WJzyuEjVsS0iR64N4/tGLwbnAwRheHxMxm46Nt2Vwmo6I0U65EA==
-X-Received: by 2002:a05:6a00:850:b0:717:8d81:e548 with SMTP id
- d2e1a72fcca58-71de239e806mr1158386b3a.1.1727996519837; 
- Thu, 03 Oct 2024 16:01:59 -0700 (PDT)
+ AJvYcCVBVPS68PwiCy3YqOtaOpvakDhovUxwVZHmVNOQCTlv2g0lBHvkc8VvIDgf67iL9X/LmuiuRmsBV1b4@nongnu.org
+X-Gm-Message-State: AOJu0Yx569AdvQ+T1EmssxczzYDx0GHWa3gDJp7vZby0trZH8kSLDyig
+ Sd7DKV+O80LXnQ5bO9Opsiz3DMwbEKyMsWzRRnSw4d66pYhxvclsJ7s/ta2iT9Y=
+X-Google-Smtp-Source: AGHT+IH6OJ4/Uk3BY0xSOJOLFONofUTjInCargyH5ZqquWtNHXAf25T/7/V34A8Fz0nm7YlN0wT8gA==
+X-Received: by 2002:a17:902:f688:b0:20b:6308:fd2f with SMTP id
+ d9443c01a7336-20bfdf6bdc6mr10331065ad.11.1727996931083; 
+ Thu, 03 Oct 2024 16:08:51 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71dd9df50ecsm1917611b3a.181.2024.10.03.16.01.58
+ d9443c01a7336-20beef8ea48sm13719805ad.149.2024.10.03.16.08.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Oct 2024 16:01:59 -0700 (PDT)
-Message-ID: <dade7ca6-71d0-40f8-9431-5d3fb4685bc9@linaro.org>
-Date: Thu, 3 Oct 2024 16:01:57 -0700
+ Thu, 03 Oct 2024 16:08:50 -0700 (PDT)
+Message-ID: <9635d3ed-b60f-4406-aa57-3d8764b4f5bb@linaro.org>
+Date: Thu, 3 Oct 2024 16:08:48 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/12] target/mips: Remove target-specific code in
- mips_cpu_reset_hold()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo
- <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>,
- Anton Johansson <anjo@rev.ng>
-References: <20240930091101.40591-1-philmd@linaro.org>
- <20240930091101.40591-12-philmd@linaro.org>
+Subject: Re: {PATCH] accel/tcg: Fix CPU specific unaligned behaviour
+To: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org,
+ linux-parisc@vger.kernel.org
+References: <Zvyx1kM4JljbzxQW@p100> <87cykimsb9.fsf@draig.linaro.org>
+ <CAFEAcA81YtAGO0iFZRWXGjJb91DhWEDTGr+cjWbNWEW4yJDksQ@mail.gmail.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240930091101.40591-12-philmd@linaro.org>
+In-Reply-To: <CAFEAcA81YtAGO0iFZRWXGjJb91DhWEDTGr+cjWbNWEW4yJDksQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,32 +100,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/30/24 02:11, Philippe Mathieu-Daudé wrote:
-> Since all code creating vCPUs now set the 'cpu-big-endian' property,
-> we can remove the target-specific #ifdef'ry in mips_cpu_reset_hold():
-> the CP0C0_BE bit is set using the property cpu->is_big_endian value.
+On 10/2/24 08:47, Peter Maydell wrote:
+> There's also something curious going on here -- this patch
+> says "we check alignment before permissions, and that's wrong
+> on PARISC". But there's a comment in target/arm/ptw.c that
+> says "we check permissions before alignment, and that's
+> wrong on Arm":
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/mips/cpu.c | 3 ---
->   1 file changed, 3 deletions(-)
+>       * Enable alignment checks on Device memory.
+>       *
+>       * Per R_XCHFJ, this check is mis-ordered. The correct ordering
+>       * for alignment, permission, and stage 2 faults should be:
+>       *    - Alignment fault caused by the memory type
+>       *    - Permission fault
+>       *    - A stage 2 fault on the memory access
+>       * but due to the way the TCG softmmu TLB operates, we will have
+>       * implicitly done the permission check and the stage2 lookup in
+>       * finding the TLB entry, so the alignment check cannot be done sooner.
 > 
-> diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-> index 02e2e72f2d..9724e71a5e 100644
-> --- a/target/mips/cpu.c
-> +++ b/target/mips/cpu.c
-> @@ -202,9 +202,6 @@ static void mips_cpu_reset_hold(Object *obj, ResetType type)
->       env->CP0_PRid = env->cpu_model->CP0_PRid;
->       env->CP0_Config0 = deposit32(env->cpu_model->CP0_Config0,
->                                    CP0C0_BE, 1, cpu->is_big_endian);
-> -#if TARGET_BIG_ENDIAN
-> -    env->CP0_Config0 |= (1 << CP0C0_BE);
-> -#endif
->       env->CP0_Config1 = env->cpu_model->CP0_Config1;
->       env->CP0_Config2 = env->cpu_model->CP0_Config2;
->       env->CP0_Config3 = env->cpu_model->CP0_Config3;
+> So do we check alignment first, or permissions first, or does
+> the order vary depending on what we're doing?
 
-I think this must be merged into patch 8, or patch 8 doesn't work.
+There are two different alignment fault checks.  The one for 'alignment fault caused by 
+memory type' is later, after we verify that the TLB entry is for the correct page, which 
+implicitly tests r/w permissions.
 
 
 r~
