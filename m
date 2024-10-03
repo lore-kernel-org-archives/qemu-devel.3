@@ -4,73 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B19ACF857A
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 10:59:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D7A7CF857A
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 11:23:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swJY4-0004NS-8t; Thu, 03 Oct 2024 06:59:08 -0400
+	id 1swJvN-0000ie-RT; Thu, 03 Oct 2024 07:23:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1swJY2-0004N6-HG
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 06:59:06 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1swJvL-0000ho-08
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 07:23:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1swJY0-0003H2-PX
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 06:59:06 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1swJvG-0004q9-FM
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 07:23:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727953143;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=ve8SluRQWsJbUb/sHWf136hFfh9On4akHKETqQ/MBbU=;
- b=ckLKYjDONAeDLxudOZFLIsA/+SqI+ev2PYkr2YfOigwjIeYix2zHCe1S8qwaWu85IhxZZn
- G8Jgic1ttQ7tmbJe1k0ZhrfBN5CDGP/OqxuUraFhF2vIrOmFBhJYhP5eims662iyZCWJ47
- +zEKXDQqKC73iyGYzJEkUcufKKWD41U=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ s=mimecast20190719; t=1727954584;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pHm6wTPTzUjfAO4AzpcMzfTLULgYF6KhJ4rnk6cMfEI=;
+ b=V0j8BlVS4+G+Wlvt9rD+4lxLyNCaUIaPnoTIJ4uEE4CqD9IE00dYZmLGflQyyfGftkpt5y
+ +zLpWUUNIn2Xhkv6+mdgdWsB71Hug5tHsJDgCEOC6FgMdqNh8lvB9Is0c9fY9K2Y4EToAy
+ uyf6YwZNuj1ePqvgmhR71t/hSGeiLig=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-dGSBT1kKPYqBgXTHWC2KAA-1; Thu,
- 03 Oct 2024 06:58:58 -0400
-X-MC-Unique: dGSBT1kKPYqBgXTHWC2KAA-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-_ZMQ2v7pNvq1Fpysyg6O_w-1; Thu,
+ 03 Oct 2024 07:23:01 -0400
+X-MC-Unique: _ZMQ2v7pNvq1Fpysyg6O_w-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C8B34195609E; Thu,  3 Oct 2024 10:58:52 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.46])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 348901956086; Thu,  3 Oct 2024 10:58:33 +0000 (UTC)
-Date: Thu, 3 Oct 2024 11:58:27 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Warner Losh <imp@bsdimp.com>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Hanna Reitz <hreitz@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- pkg-qemu-devel@lists.alioth.debian.org,
- Michael Tokarev <mjt@tls.msk.ru>, ncopa@alpinelinux.org,
- bofh@freebsd.org, emulation@freebsd.org, virtualization@gentoo.org,
- dilfridge@gentoo.org, hi@alyssa.is, edolstra+nixpkgs@gmail.com,
- brad@comstyle.com, Paolo Bonzini <pbonzini@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, dvzrv@archlinux.org,
- anatol.pomozov@gmail.com, Miroslav Rezanina <mrezanin@redhat.com>
-Subject: Re: Rust BoF and maintainer minutes and planning the roadmap to Rust
-Message-ID: <Zv540yb8V1sSnZP3@redhat.com>
-References: <871q16fq9c.fsf@draig.linaro.org>
- <CANCZdfoU4stiEDJKOUEpU-ek_tOBHe0rBH3G9S2Wymc8jHKzCQ@mail.gmail.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D4F491955F54; Thu,  3 Oct 2024 11:22:59 +0000 (UTC)
+Received: from localhost (unknown [10.39.208.36])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EA60019560A3; Thu,  3 Oct 2024 11:22:57 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ belmouss@redhat.com, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH 02/16] hw/audio/hda: fix memory leak on audio setup
+Date: Thu,  3 Oct 2024 15:22:29 +0400
+Message-ID: <20241003112244.3340697-3-marcandre.lureau@redhat.com>
+In-Reply-To: <20241003112244.3340697-1-marcandre.lureau@redhat.com>
+References: <20241003112244.3340697-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CANCZdfoU4stiEDJKOUEpU-ek_tOBHe0rBH3G9S2Wymc8jHKzCQ@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -92,47 +87,92 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 03, 2024 at 02:53:08AM -0600, Warner Losh wrote:
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-> commitment by the Rust community is troubling. Even more troubling because
-> rust still uses the old FreeBSD 11 compat syscalls, despite upgraded
-> being available for years at this point (though maybe this info has changed
-> in the last month or two, the years long delay in moving off the interfaces
-> that the FreeBSD project obsoleted about 8 years ago is troubling on its
-> own).
+When SET_STREAM_FORMAT is called, we should clear the existing setup.
 
-Is this problem resolved by this change updating to FreeBSD 12 ABI:
+Factor out common function to close a stream.
 
-  https://github.com/rust-lang/libc/pull/3434
+Direct leak of 144 byte(s) in 3 object(s) allocated from:
+    #0 0x7f91d38f7350 in calloc (/lib64/libasan.so.8+0xf7350) (BuildId: a4ad7eb954b390cf00f07fa10952988a41d9fc7a)
+    #1 0x7f91d2ab7871 in g_malloc0 (/lib64/libglib-2.0.so.0+0x64871) (BuildId: 36b60dbd02e796145a982d0151ce37202ec05649)
+    #2 0x562fa2f447ee in timer_new_full /home/elmarco/src/qemu/include/qemu/timer.h:538
+    #3 0x562fa2f4486f in timer_new /home/elmarco/src/qemu/include/qemu/timer.h:559
+    #4 0x562fa2f448a9 in timer_new_ns /home/elmarco/src/qemu/include/qemu/timer.h:577
+    #5 0x562fa2f47955 in hda_audio_setup ../hw/audio/hda-codec.c:490
+    #6 0x562fa2f4897e in hda_audio_command ../hw/audio/hda-codec.c:605
 
-Or is there more beyond that which remains an issue ?
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ hw/audio/hda-codec.c | 33 ++++++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 13 deletions(-)
 
-Also what's the best source of truth about Rust support in FreeBSD 
-eg I see this:
-
-  https://wiki.freebsd.org/Rust
-
- Reports i386, amd64, armv6, armv7, aarch64, power64, power64le
- and riscv64
-
-and then this
-
-  https://www.freshports.org/lang/rust
-
-but doesn't say anything about riscv64, and armv6/i386 is listed as
-"N/A" for FreeBSD 15 - are those arches no longer supported in 15 ?
-
-power64le is outdated there compared to other arches
-
-With regards,
-Daniel
+diff --git a/hw/audio/hda-codec.c b/hw/audio/hda-codec.c
+index 74c0292284..bc661504cf 100644
+--- a/hw/audio/hda-codec.c
++++ b/hw/audio/hda-codec.c
+@@ -472,6 +472,24 @@ static void hda_audio_set_amp(HDAAudioStream *st)
+     }
+ }
+ 
++static void hda_close_stream(HDAAudioState *a, HDAAudioStream *st)
++{
++    if (st->node == NULL) {
++        return;
++    }
++    if (a->use_timer) {
++        timer_free(st->buft);
++        st->buft = NULL;
++    }
++    if (st->output) {
++        AUD_close_out(&a->card, st->voice.out);
++        st->voice.out = NULL;
++    } else {
++        AUD_close_in(&a->card, st->voice.in);
++        st->voice.in = NULL;
++    }
++}
++
+ static void hda_audio_setup(HDAAudioStream *st)
+ {
+     bool use_timer = st->state->use_timer;
+@@ -484,6 +502,7 @@ static void hda_audio_setup(HDAAudioStream *st)
+     trace_hda_audio_format(st->node->name, st->as.nchannels,
+                            fmt2name[st->as.fmt], st->as.freq);
+ 
++    hda_close_stream(st->state, st);
+     if (st->output) {
+         if (use_timer) {
+             cb = hda_audio_output_cb;
+@@ -741,23 +760,11 @@ static void hda_audio_init(HDACodecDevice *hda,
+ static void hda_audio_exit(HDACodecDevice *hda)
+ {
+     HDAAudioState *a = HDA_AUDIO(hda);
+-    HDAAudioStream *st;
+     int i;
+ 
+     dprint(a, 1, "%s\n", __func__);
+     for (i = 0; i < ARRAY_SIZE(a->st); i++) {
+-        st = a->st + i;
+-        if (st->node == NULL) {
+-            continue;
+-        }
+-        if (a->use_timer) {
+-            timer_free(st->buft);
+-        }
+-        if (st->output) {
+-            AUD_close_out(&a->card, st->voice.out);
+-        } else {
+-            AUD_close_in(&a->card, st->voice.in);
+-        }
++        hda_close_stream(a, a->st + i);
+     }
+     AUD_remove_card(&a->card);
+ }
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.45.2.827.g557ae147e6
 
 
