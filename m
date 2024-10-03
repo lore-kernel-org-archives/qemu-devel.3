@@ -4,85 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC05DCF34AD
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 13:32:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4C6ACF34A9
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 13:32:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swLw1-0003Gt-KB; Thu, 03 Oct 2024 09:32:02 -0400
+	id 1swLtW-0008T9-2J; Thu, 03 Oct 2024 09:29:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1swLvx-00031c-PG
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 09:31:58 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1swLtT-0008Sa-7d
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 09:29:23 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1swLvs-0006Np-Ss
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 09:31:57 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-37cd5016d98so751594f8f.1
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 06:31:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1swLtR-0005wx-00
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 09:29:22 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5c896b9b3e1so1298541a12.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 06:29:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1727962308; x=1728567108; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=F9cOXpNhSmBifNEyV/bBsyxBMVGRUf/psW3BKjgVN30=;
- b=Oz1+mYa91cYyx4WqyrR2Ayc4ChITEm0Bw2eUeuQtqlTmKZ7xv8jE70JnyR0WCyDXbL
- 5yhedo7jZ1KAqO+5dZysTZZ1m7MjQK2QnF2Hh6VrZKCImZQdinYzvDSCKA1XJFdkTPLW
- y1h7Ta1b89DhDnvezlaZMZHpcJEYSe5VxxFuVOoTk4eHMwThk14dd3DHvTKI2xVas426
- nLgXWmrLXvEcGrykYFAyHpyosTrfY93nnER7LP0xZj+XBDUjAxvcf1KA4TU/1patOayy
- hzPiTF5nuyAokDU4e9+elvd4Fyxp3uBvPjzDjC67UHuSHUXi3p1aZJeM3/ej5bDaq3hj
- CAVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727962308; x=1728567108;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1727962159; x=1728566959; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=F9cOXpNhSmBifNEyV/bBsyxBMVGRUf/psW3BKjgVN30=;
- b=InfINo1F49IusKNTJLaauZn1+1InMahOn7MQKyLNo79B4BY5YL4UkKaLH9En8pODJm
- jxVK2Etmv4wcxHMIkpx+C56zG/dHIBF7hW1GojkZ4fiYjq9woxQjpJ01fsEC8+VH335A
- AKX+zAKhkNpu/qxEtx5u533LS0n+XIeGu99lTdN0k8CaIZy3Oj0PkoL3I9ARts+1yHAB
- jIK48DvQVtF55pXumLTX8mAMPYlFqQqNwI+QxRj0iBEcvmCQ9YRpU5sztnxdOOaHBY0T
- kRqdZBBG4HodD4ln8cQ6UihUMONGGFGmASndvWxfAQznTJExERI5QEDFBi/Uzm7bQIJ+
- Hnrw==
-X-Gm-Message-State: AOJu0YyXTq6H9nLQVpvsln4+bYpFYTOPJJDDV+6E+VyZ7odx1pFXDJ14
- MXUA6Qf4dN9JMcOCcpONTZ9iOrbNFHANEsP6j6G0Izjrpt6/SXiBSwfsMBRV9R0=
-X-Google-Smtp-Source: AGHT+IGJmAISL+dKwgLSNoTCm5TjYgEQYsuTea/TcfdXlz6huTi7P2+8RHZ3GwjvxHq7KKUij2mmxg==
-X-Received: by 2002:adf:a791:0:b0:37c:ccdf:a2e3 with SMTP id
- ffacd0b85a97d-37cfb9d0f43mr3607978f8f.33.1727962307705; 
- Thu, 03 Oct 2024 06:31:47 -0700 (PDT)
-Received: from localhost (cst2-173-13.cust.vodafone.cz. [31.30.173.13])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d082e6f35sm1270467f8f.113.2024.10.03.06.31.46
+ bh=Z3Xdhp6yyQlwRtRuGyDS4ZcnYai095EmGKb8STz9hr8=;
+ b=PNzpLWbk49WOkDtLr9rP8lDi/71ahljOlTDLCLAZgesRaasWdPWCVEg+HWQrQnxYSQ
+ dOoyzp+G/t3mTZPVJI0Dv6GDicj2cfUNEdud96yQS28ZLM22hZdC2PRiY85aQBGe2OAK
+ Kh67x2eyfXlPudR4jYoF3SyG3JIiw7fZ5jOzBs+XJ5Ut0d8kGiIldD9yw0k0L9s51g3q
+ fS4atba9LOh8BH7pAcyzAmWLPlVl3NUkrEm9Ke/Irk5xnb98UNypVYyFTVl4pDNFD46D
+ dxm1zUwQDxaj+5/ZaWly6y90+Pi4MgjjBO9Z5M/AaIaVHnaLBjEO2vGvCWFXnyeLjdDC
+ Vrfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727962159; x=1728566959;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Z3Xdhp6yyQlwRtRuGyDS4ZcnYai095EmGKb8STz9hr8=;
+ b=FsQHq2KP9K7AmvUZ57DYHOUDzccLU/2cQ+MTO76PU0Jmf9plfU8uxSEPDQ892W3xHg
+ MMsFLEeNhjQlDDk0cdRkVSllcPF+YzfsUTJqShPxFr+Perhpxdf1RJv0rcTf4m4owNgE
+ /cjErcGa92vYZBPdCcKbLNEpUgDhnFkYq/0yI0CORRfab70wF2nN8eQjLX9hwrL2mrPy
+ +rbfQ0PTk02bZ520jhp6eYVOQMzJ6hhZ0nSXAyx0x6Bhc03UHYA38yc1l7vH612CKA3c
+ /SruEjdnwKdJsEXKk5z1mJfYoe6kTN/864OVhwxlw0T2PlQA59tb44/fT6nJCn57basS
+ vMYQ==
+X-Gm-Message-State: AOJu0Yx9JqlE9SoN9y7NsxG3ZZyoBls8fbhf9c7q6d/Sf6r2aR9Lkmxd
+ 2d/m4b1RImry+YPhkr1226rOxWwqbfSDZpNDIkCrgIlhVnvQI0ba0iAJbxrfs6sAALkDPvQZKXJ
+ 0AdE=
+X-Google-Smtp-Source: AGHT+IG4NnM/UtmyXr+Nov1tC1qsgf39k+yeBIjF011U1lkmtJNBws9rut2khJNLZBOXNn6GZArVcg==
+X-Received: by 2002:a17:907:920a:b0:a99:a89:47cd with SMTP id
+ a640c23a62f3a-a990a894c5bmr239464266b.3.1727962159266; 
+ Thu, 03 Oct 2024 06:29:19 -0700 (PDT)
+Received: from localhost.localdomain (adsl-122.37.6.160.tellas.gr.
+ [37.6.160.122]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a99102a4cdcsm86528366b.57.2024.10.03.06.29.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Oct 2024 06:31:47 -0700 (PDT)
-Date: Thu, 3 Oct 2024 15:31:46 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, peter.maydell@linaro.org,
- Tomasz Jeznach <tjeznach@rivosinc.com>, Sebastien Boeuf <seb@rivosinc.com>
-Subject: Re: [PATCH v8 03/12] hw/riscv: add RISC-V IOMMU base emulation
-Message-ID: <20241003-bd98395898af6d83eeef0be4@orel>
-References: <20241002010314.1928515-1-dbarboza@ventanamicro.com>
- <20241002010314.1928515-4-dbarboza@ventanamicro.com>
- <20241003-c10c27e0855533db764a1490@orel>
- <7c5f0fce-fc66-4fca-90be-aa2d4f7a4b04@ventanamicro.com>
+ Thu, 03 Oct 2024 06:29:19 -0700 (PDT)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>, Junjie Mao <junjie.mao@hotmail.com>,
+ Junjie Mao <junjie.mao@intel.com>, Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, berrange@redhat.com, hi@alyssa.is
+Subject: [PATCH v11 3/9] configure, meson: detect Rust toolchain
+Date: Thu,  3 Oct 2024 16:28:45 +0300
+Message-ID: <207d2640b32d511e9c27478ce3192f5bb0bf3169.1727961605.git.manos.pitsidianakis@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <cover.1727961605.git.manos.pitsidianakis@linaro.org>
+References: <cover.1727961605.git.manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7c5f0fce-fc66-4fca-90be-aa2d4f7a4b04@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x432.google.com
+Content-Type: text/plain; charset=UTF8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,148 +107,317 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 03, 2024 at 10:06:11AM GMT, Daniel Henrique Barboza wrote:
-> 
-> 
-> On 10/3/24 6:26 AM, Andrew Jones wrote:
-> > On Tue, Oct 01, 2024 at 10:02:58PM GMT, Daniel Henrique Barboza wrote:
-> > ...
-> > > +/*
-> > > + * RISCV IOMMU Address Translation Lookup - Page Table Walk
-> > > + *
-> > > + * Note: Code is based on get_physical_address() from target/riscv/cpu_helper.c
-> > > + * Both implementation can be merged into single helper function in future.
-> > > + * Keeping them separate for now, as error reporting and flow specifics are
-> > > + * sufficiently different for separate implementation.
-> > > + *
-> > > + * @s        : IOMMU Device State
-> > > + * @ctx      : Translation context for device id and process address space id.
-> > > + * @iotlb    : translation data: physical address and access mode.
-> > > + * @return   : success or fault cause code.
-> > > + */
-> > > +static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-> > > +    IOMMUTLBEntry *iotlb)
-> > > +{
-> > > +    dma_addr_t addr, base;
-> > > +    uint64_t satp, gatp, pte;
-> > > +    bool en_s, en_g;
-> > > +    struct {
-> > > +        unsigned char step;
-> > > +        unsigned char levels;
-> > > +        unsigned char ptidxbits;
-> > > +        unsigned char ptesize;
-> > > +    } sc[2];
-> > > +    /* Translation stage phase */
-> > > +    enum {
-> > > +        S_STAGE = 0,
-> > > +        G_STAGE = 1,
-> > > +    } pass;
-> > > +    MemTxResult ret;
-> > > +
-> > > +    satp = get_field(ctx->satp, RISCV_IOMMU_ATP_MODE_FIELD);
-> > > +    gatp = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
-> > > +
-> > > +    en_s = satp != RISCV_IOMMU_DC_FSC_MODE_BARE;
-> > > +    en_g = gatp != RISCV_IOMMU_DC_IOHGATP_MODE_BARE;
-> > > +
-> > > +    /*
-> > > +     * Early check for MSI address match when IOVA == GPA. This check
-> > > +     * is required to ensure MSI translation is applied in case
-> > > +     * first-stage translation is set to BARE mode. In this case IOVA
-> > > +     * provided is a valid GPA. Running translation through page walk
-> > > +     * second stage translation will incorrectly try to translate GPA
-> > > +     * to host physical page, likely hitting IOPF.
-> > > +     */
-> > 
-> > Why was this comment expanded from the simple
-> > 
-> > "Early check for MSI address match when IOVA == GPA."
-> > 
-> > The comment is now incorrect since the check is required even when
-> > first-stage translation is not BARE. I just skimmed the spec again trying
-> > to figure out if the removal of '!en_s' is a hack or a fix, and I'm
-> > inclined to say "fix", but it's an incomplete fix. I found a sentence that
-> > says
-> > 
-> > "If the virtual memory scheme selected for first-stage is Bare but the
-> > scheme for the second-stage is not Bare then the IOVA is a GPA."
-> > 
-> > which, in a way, defines a GPA to only be a GPA when second-stage is used
-> > (and all MSI translation specifications refer to GPAs). However, maybe I
-> > missed it, but I couldn't find any actual reason that the MSI table can't
-> > be used when first-stage is not BARE and second-stage is (and, of course,
-> > it makes no difference for single-stage translations to call IOVAs GPAs
-> > or not).
-> > 
-> > Now, I also see
-> > 
-> > "If the virtual memory scheme selected for neither stage is Bare then the
-> > IOVA is a VA. Two-stage address translation is in effect. The first-stage
-> > translates the VA to a GPA and the second-stage translates the GPA to a
-> > SPA."
-> > 
-> > in the spec, which means we should probably change the removal of '!en_s'
-> > to '!(en_s && en_g)'. VFIO+irqbypass would still work with that and, when
-> > Linux learns to support two-stage translation, we wouldn't incorrectly try
-> > to check for a GVA in the MSI table.
-> 
-> Ok. It seems to me that we can't rely on the riscv-iommu spec alone to let
-> us know how to detect if IOVA == GPA, given that one of the main usages
-> we have ATM (VFIO irqbypass) will use GPAs with S-stage enabled.
-> 
-> (Note: shouldn't we open a bug against the riscv-iommu spec?)
-> 
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-I can try writing a sentence or two for the spec to clarify this and send
-a PR.
+Include the correct path and arguments to rustc in the native
+and cross files (native compilation is needed for procedural
+macros).
 
-> I like the idea of ruling out the case where IOVA == VA since that is clear
-> in the spec. We also know that MSI entries will always contains GPAs.
-> 
-> This is the change I'm going to make in v9:
-> 
-> 
->     /*
->      * Early check for MSI address match when IOVA == GPA to
->      * support VFIO+irqbypass. The riscv-iommu spec doesn't
->      * consider the case where a GPA can be produced by S-stage
->      * only, but we have real life examples like Linux VFIO that
->      * work that way. The spec alone does not provide a reliable
->      * way of detecting if IOVA == GPA.
->      *
->      * The spec is clear about what is a VA: "If the virtual
->      * memory scheme selected for neither stage is Bare then
->      * the IOVA is a VA", in our case "(en_s && en_g)". We also
->      * know that MSI tables will always hold GPAs.
->      *
->      * Thus the check consists of ruling out VAs and checking
->      * the MSI table.
->      */
->     if (!(en_s && en_g) && (iotlb->perm & IOMMU_WO) &&
->         riscv_iommu_msi_check(s, ctx, iotlb->iova)) {
->         iotlb->target_as = &s->trap_as;
->         iotlb->translated_addr = iotlb->iova;
->         iotlb->addr_mask = ~TARGET_PAGE_MASK;
->         return 0;
->     }
+Based on the host architecture and OS, the compiler and optionally the argument
+to --cpu, the Rust target triple can be detected automatically for either a
+native or a cross compiler.
 
-LGTM
+In general, it is only a matter of translating the architecture and OS, and
+adding a machine to form the triple, but there are some special cases (e.g.
+detecting soft vs. hard floating point on ARM) and some inconsistencies.
 
-Thanks,
-drew
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+ configure   | 163 +++++++++++++++++++++++++++++++++++++++++++++++++++-
+ meson.build |   5 +-
+ 2 files changed, 164 insertions(+), 4 deletions(-)
 
-> 
-> Tomasz, let me know if you have any opinions against it. I intend to send
-> the v9 start of next week.
-> 
-> 
-> Thanks,
-> 
-> 
-> Daniel
-> 
-> 
-> > 
-> > Thanks,
-> > drew
+diff --git a/configure b/configure
+index aa7aae70fa..0ccc92074e 100755
+--- a/configure
++++ b/configure
+@@ -207,6 +207,8 @@ for opt do
+   ;;
+   --objcc=*) objcc="$optarg"
+   ;;
++  --rustc=*) RUSTC="$optarg"
++  ;;
+   --cpu=*) cpu="$optarg"
+   ;;
+   --extra-cflags=*)
+@@ -252,6 +254,8 @@ python=
+ download="enabled"
+ skip_meson=no
+ use_containers="yes"
++rust="auto"
++rust_target_triple=""
+ gdb_bin=$(command -v "gdb-multiarch" || command -v "gdb")
+ gdb_arches=""
+ 
+@@ -310,6 +314,7 @@ objcopy="${OBJCOPY-${cross_prefix}objcopy}"
+ ld="${LD-${cross_prefix}ld}"
+ ranlib="${RANLIB-${cross_prefix}ranlib}"
+ nm="${NM-${cross_prefix}nm}"
++readelf="${READELF-${cross_prefix}readelf}"
+ strip="${STRIP-${cross_prefix}strip}"
+ widl="${WIDL-${cross_prefix}widl}"
+ windres="${WINDRES-${cross_prefix}windres}"
+@@ -317,6 +322,8 @@ windmc="${WINDMC-${cross_prefix}windmc}"
+ pkg_config="${PKG_CONFIG-${cross_prefix}pkg-config}"
+ sdl2_config="${SDL2_CONFIG-${cross_prefix}sdl2-config}"
+ 
++rustc="${RUSTC-rustc}"
++
+ check_define() {
+ cat > $TMPC <<EOF
+ #if !defined($1)
+@@ -425,6 +432,7 @@ fi
+ # Please keep it sorted and synchronized with meson.build's host_arch.
+ host_arch=
+ linux_arch=
++raw_cpu=$cpu
+ case "$cpu" in
+   aarch64)
+     host_arch=aarch64
+@@ -658,6 +666,8 @@ for opt do
+   ;;
+   --objcc=*)
+   ;;
++  --rustc=*)
++  ;;
+   --make=*)
+   ;;
+   --install=*)
+@@ -777,8 +787,14 @@ for opt do
+   ;;
+   --container-engine=*) container_engine="$optarg"
+   ;;
++  --rust-target-triple=*) rust_target_triple="$optarg"
++  ;;
+   --gdb=*) gdb_bin="$optarg"
+   ;;
++  --enable-rust) rust=enabled
++  ;;
++  --disable-rust) rust=disabled
++  ;;
+   # everything else has the same name in configure and meson
+   --*) meson_option_parse "$opt" "$optarg"
+   ;;
+@@ -881,6 +897,7 @@ Advanced options (experts only):
+                            at build time [$host_cc]
+   --cxx=CXX                use C++ compiler CXX [$cxx]
+   --objcc=OBJCC            use Objective-C compiler OBJCC [$objcc]
++  --rustc=RUSTC            use Rust compiler RUSTC [$rustc]
+   --extra-cflags=CFLAGS    append extra C compiler flags CFLAGS
+   --extra-cxxflags=CXXFLAGS append extra C++ compiler flags CXXFLAGS
+   --extra-objcflags=OBJCFLAGS append extra Objective C compiler flags OBJCFLAGS
+@@ -891,8 +908,9 @@ Advanced options (experts only):
+   --python=PYTHON          use specified python [$python]
+   --ninja=NINJA            use specified ninja [$ninja]
+   --static                 enable static build [$static]
+-  --without-default-features default all --enable-* options to "disabled"
+-  --without-default-devices  do not include any device that is not needed to
++  --rust-target-triple=TRIPLE  compilation target for Rust code [autodetect]
++  --without-default-features   default all --enable-* options to "disabled"
++  --without-default-devices    do not include any device that is not needed to
+                            start the emulator (only use if you are including
+                            desired devices in configs/devices/)
+   --with-devices-ARCH=NAME override default configs/devices
+@@ -1167,6 +1185,132 @@ EOF
+ fi
+ 
+ ##########################################
++# detect rust triple
++
++if test "$rust" != disabled && has "$rustc" && $rustc -vV > "${TMPDIR1}/${TMPB}.out"; then
++  rust_host_triple=$(sed -n 's/^host: //p' "${TMPDIR1}/${TMPB}.out")
++else
++  if test "$rust" = enabled; then
++    error_exit "could not execute rustc binary \"$rustc\""
++  fi
++  rust=disabled
++fi
++if test "$rust" != disabled && test -z "$rust_target_triple"; then
++  # arch and os generally matches between meson and rust
++  rust_arch=$host_arch
++  rust_os=$host_os
++  rust_machine=unknown
++  rust_osvariant=
++
++  # tweak rust_os if needed; also, machine and variant depend on the OS
++  android=no
++  case "$host_os" in
++  darwin)
++    # e.g. aarch64-apple-darwin
++    rust_machine=apple
++    ;;
++
++  linux)
++    # detect android/glibc/musl
++    if check_define __ANDROID__; then
++      rust_osvariant=android
++      android=yes
++    else
++      cat > $TMPC << EOF
++#define _GNU_SOURCE
++#include <features.h>
++#ifndef __USE_GNU
++error using musl
++#endif
++EOF
++      if compile_object; then
++        rust_osvariant=gnu
++      else
++        rust_osvariant=musl
++      fi
++    fi
++
++    case "$host_arch" in
++    arm)
++      # e.g. arm-unknown-linux-gnueabi, arm-unknown-linux-gnueabihf
++      write_c_skeleton
++      compile_object
++      if $READELF -A $TMPO | grep Tag_API_VFP_args: > /dev/null; then
++        rust_osvariant=${rust_osvariant}eabihf
++      else
++        rust_osvariant=${rust_osvariant}eabi
++      fi
++      ;;
++
++    mips64)
++      # e.g. mips64-unknown-linux-gnuabi64
++      rust_osvariant=${rust_osvariant}abi64
++      ;;
++    esac
++    ;;
++
++  netbsd)
++    # e.g. arm-unknown-netbsd-eabihf
++    test "$host_arch" = arm && rust_osvariant=eabihf
++    ;;
++
++  sunos)
++    rust_machine=pc
++    rust_os=solaris
++    ;;
++
++  windows)
++    # e.g. aarch64-pc-windows-gnullvm, x86_64-pc-windows-gnu (MSVC not supported)
++    rust_machine=pc
++    if test "$host_arch" = aarch64; then
++      rust_osvariant=gnullvm
++    else
++      rust_osvariant=gnu
++    fi
++    ;;
++  esac
++
++  # now tweak the architecture part, possibly based on pre-canonicalization --cpu
++  case "$host_arch" in
++  arm)
++    # preserve ISA version (armv7 etc.) from $raw_cpu if passed via --cpu
++    rust_arch=$raw_cpu
++    test "$rust_arch" = arm && test "$rust_os" != linux && rust_arch=armv7
++    ;;
++
++  mips|mips64)
++    # preserve ISA version (mipsisa64r6 etc.) and include endianness
++    rust_arch=${raw_cpu%el}
++    test "$bigendian" = no && rust_arch=${rust_arch}el
++    ;;
++
++  riscv32|riscv64)
++    # e.g. riscv64gc-unknown-linux-gnu, but riscv64-linux-android
++    test "$android" = no && rust_arch=${rust_arch}gc
++    ;;
++
++  sparc64)
++    if test "$rust_os" = solaris; then
++      rust_arch=sparcv9
++      rust_machine=sun
++    fi
++    ;;
++
++  x86_64)
++    # e.g. x86_64-unknown-linux-gnux32
++    test "$raw_cpu" = x32 && rust_osvariant=${rust_osvariant}x32
++    ;;
++  esac
++
++  if test "$android" = yes; then
++    # e.g. aarch64-linux-android
++    rust_target_triple=$rust_arch-$rust_os-$rust_osvariant
++  else
++    rust_target_triple=$rust_arch-$rust_machine-$rust_os${rust_osvariant+-$rust_osvariant}
++  fi
++fi
++
++##########################################
+ # functions to probe cross compilers
+ 
+ container="no"
+@@ -1628,6 +1772,9 @@ if test "$container" != no; then
+     echo "RUNC=$runc" >> $config_host_mak
+ fi
+ echo "SUBDIRS=$subdirs" >> $config_host_mak
++if test "$rust" != disabled; then
++  echo "RUST_TARGET_TRIPLE=$rust_target_triple" >> $config_host_mak
++fi
+ echo "PYTHON=$python" >> $config_host_mak
+ echo "MKVENV_ENSUREGROUP=$mkvenv ensuregroup $mkvenv_online_flag" >> $config_host_mak
+ echo "GENISOIMAGE=$genisoimage" >> $config_host_mak
+@@ -1764,12 +1911,20 @@ if test "$skip_meson" = no; then
+   echo "c = [$(meson_quote $cc $CPU_CFLAGS)]" >> $cross
+   test -n "$cxx" && echo "cpp = [$(meson_quote $cxx $CPU_CFLAGS)]" >> $cross
+   test -n "$objcc" && echo "objc = [$(meson_quote $objcc $CPU_CFLAGS)]" >> $cross
++  if test "$rust" != disabled; then
++    if test "$rust_host_triple" != "$rust_target_triple"; then
++      echo "rust = [$(meson_quote $rustc --target "$rust_target_triple")]" >> $cross
++    else
++      echo "rust = [$(meson_quote $rustc)]" >> $cross
++    fi
++  fi
+   echo "ar = [$(meson_quote $ar)]" >> $cross
+   echo "dlltool = [$(meson_quote $dlltool)]" >> $cross
+   echo "nm = [$(meson_quote $nm)]" >> $cross
+   echo "pkgconfig = [$(meson_quote $pkg_config)]" >> $cross
+   echo "pkg-config = [$(meson_quote $pkg_config)]" >> $cross
+   echo "ranlib = [$(meson_quote $ranlib)]" >> $cross
++  echo "readelf = [$(meson_quote $readelf)]" >> $cross
+   if has $sdl2_config; then
+     echo "sdl2-config = [$(meson_quote $sdl2_config)]" >> $cross
+   fi
+@@ -1799,6 +1954,9 @@ if test "$skip_meson" = no; then
+     echo "# Automatically generated by configure - do not modify" > $native
+     echo "[binaries]" >> $native
+     echo "c = [$(meson_quote $host_cc)]" >> $native
++    if test "$rust" != disabled; then
++      echo "rust = [$(meson_quote $rustc)]" >> $cross
++    fi
+     mv $native config-meson.native
+     meson_option_add --native-file
+     meson_option_add config-meson.native
+@@ -1817,6 +1975,7 @@ if test "$skip_meson" = no; then
+   test "$pie" = no && meson_option_add -Db_pie=false
+ 
+   # QEMU options
++  test "$rust" != "auto" && meson_option_add "-Drust=$rust"
+   test "$cfi" != false && meson_option_add "-Dcfi=$cfi" "-Db_lto=$cfi"
+   test "$docs" != auto && meson_option_add "-Ddocs=$docs"
+   test -n "${LIB_FUZZING_ENGINE+xxx}" && meson_option_add "-Dfuzzing_engine=$LIB_FUZZING_ENGINE"
+diff --git a/meson.build b/meson.build
+index 8a106e39c2..8ddb5fa38d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4332,8 +4332,9 @@ else
+ endif
+ summary_info += {'Rust support':      have_rust}
+ if have_rust
+-  summary_info += {'rustc version':      rustc.version()}
+-  summary_info += {'rustc':      ' '.join(rustc.cmd_array())}
++  summary_info += {'rustc version':   rustc.version()}
++  summary_info += {'rustc':           ' '.join(rustc.cmd_array())}
++  summary_info += {'Rust target':     config_host['RUST_TARGET_TRIPLE']}
+ endif
+ option_cflags = (get_option('debug') ? ['-g'] : [])
+ if get_option('optimization') != 'plain'
+-- 
+γαῖα πυρί μιχθήτω
+
 
