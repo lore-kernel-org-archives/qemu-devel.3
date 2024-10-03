@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B33CF34AD
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 13:31:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F411CF34AF
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 13:31:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swLtT-0008Sj-Mo; Thu, 03 Oct 2024 09:29:23 -0400
+	id 1swLtY-0008Tu-9X; Thu, 03 Oct 2024 09:29:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1swLtR-0008S4-FI
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 09:29:21 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ id 1swLtV-0008T3-Ik
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 09:29:25 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1swLtP-0005wW-J3
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 09:29:21 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a90349aa7e5so135180366b.0
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 06:29:19 -0700 (PDT)
+ id 1swLtT-0005xh-9q
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 09:29:25 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a8ce5db8668so159018866b.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 06:29:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727962157; x=1728566957; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727962161; x=1728566961; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=x2ZKKykwImDhoaWZeHGDZQxSxR5oO5NarAAhJf0FEpE=;
- b=qFHaoIrF+0W4EbBDQkxHEKngaS5a2wEOe8m9CPzAnpVJWnkHt0kZZS3ieiqia04KJs
- AAq2SAjaFQbAtOVZn/yjxpPbEeMcOhA8l/dssl7cPWXTRXUfuULKJWwNro1FAETKaW+5
- 5hi98svrwnMLM9NuDvT2A8tbAiojWj04NTIhKdFhw3VUDXmJ29tXBEpfDYK7PLBMEzWg
- 0CruvuDoh2rfTG6UdTDpEDFutkEL3gaE6wnDMjcVUQnpe3Zs2Nm8gLdlv5CK0Y3/R7Rh
- 7td7ZMyxZyeGH4WmnDFulUKkpU/KxAxpKPh1ihVPx4gR5xwVGCzZTvk/AZlsWT5vhyOG
- X4bQ==
+ bh=COLiot0kgdxbDu8qK8bh7okAMTefqr/bJualjgNCU3g=;
+ b=uo+8b0MBwqiPYpf1w+Jamp6Jwmxit9fSanLmJ//0bFxJ3WSUIdMJGqQ5/C6hnttsy7
+ 2qOz7hndKHtY/xjFU8+hapkEJpxs9+5Bm+3aB04BsPg9CDy4W9vy32hF9QWCS/Qb9yzU
+ AaJwT98WN+pLWCXjfdedPzo3/XhHiBVakA6AvjmDXDCuM8KZrKaASUXQIT3jJhA/z0mi
+ IFsSk3ACEnVpqjhmwmAXfDiTjZlj14/qIsNNT/sjccjWxsruIWg3go1xG0b9YmUGXtNL
+ TqZYmIrqmXAgDrIpgTzXQxzMPBmV+LT1S1A6PddmzNJN/j4T1EEPLwl9EQXKalmZFU73
+ MKiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727962157; x=1728566957;
+ d=1e100.net; s=20230601; t=1727962161; x=1728566961;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=x2ZKKykwImDhoaWZeHGDZQxSxR5oO5NarAAhJf0FEpE=;
- b=XUkxQm27wDTTZAaOdYOYd2B0K4FVOFbK20FUXw+f4kFzlevolI4mTQad6vp/gzifqo
- XZkDh+fHKeLTdFl/kdS7TbjJFcAX2hhAtDZUrQA2wbbrE94U2kQ5IQ0vvKYKRqx75svY
- SzSovrxupe8gHriGsCNBEqWLd/btSVAUvDG0qB4e+Ikl3MUd3ZATn/KcsHuS4VDdTI2q
- 323BQiLlNmUxj4QfUEIL6CjGoej0zR0BgEuWipfqIQaM5UUkVBLIjkdWFse5SI21XHBF
- xQJw+D1Wf5sZ4FNv4xeRV2iUFOpyuyQ9eUGDRxzqs5UAd2xZ/HAW8rSMX4TkDRZvTqBW
- Ow3Q==
-X-Gm-Message-State: AOJu0YxDwOzk1w8xK6vEUYrkmZ96D2zc8JT5N+20jQT3Qof1+AqnjmPK
- lpZI43CaqdmKq6GDNwBAKhPzpmYzSJYXIJSPbZqrfeo8GXld+JNX/821LGiQbIyrQq35AT47Rfh
- 579Q=
-X-Google-Smtp-Source: AGHT+IFMPh42cK0C4Rj5sg4KyfpMi6Wo/u22LHgV3NwHDo457VjUXlbuxdyjmRrLr60R4cOakYmTsA==
-X-Received: by 2002:a17:906:f589:b0:a8a:7bed:d327 with SMTP id
- a640c23a62f3a-a98f825aa3dmr523652066b.36.1727962156909; 
- Thu, 03 Oct 2024 06:29:16 -0700 (PDT)
+ bh=COLiot0kgdxbDu8qK8bh7okAMTefqr/bJualjgNCU3g=;
+ b=frSpsZO/v5OVNhfFX7j7cW9ic2rtCIgVqJYX3D8PLSvYU6vi0srw9sUXnW567SiiE4
+ /sLZyuQ3p+wiQfqfB1vS+qOPsCIUXbExivbujA8YGKrG5g0ZNKDOwB2iWUlp499MFzCc
+ y274lTjoNb070RV8iznXXZQfOhLomkO/cqtt6Hfs79mFyZgwaOIsyMBN+u63IK6u6DfA
+ 7yiqdSiY99/E0uiBg/VODsL4mdoGQh4dKVrHZwrtVZ7oGjn8CBnzJ2jDz+yh4NRbUOL1
+ m0ypSphlpNFjnRKpnZPpiG9psQAGGv+4p4xVE9WHcbULNOqdyRbGcFIS76ZZohjMBQG7
+ LAsw==
+X-Gm-Message-State: AOJu0Yw7JvgaN2kWDcnWMys9kW32D1bD6c1TuX/LmvONkFCWQRB313VN
+ wBMNElogioKKImCkBW2TFfuYrXkBSC4EHINyDkRu/IF6y4Ct1HgcAqsFNcQmJaCzgYTLdnB1xbY
+ FosA=
+X-Google-Smtp-Source: AGHT+IHlHijx8XCgNJFa+BUfNwP3t9j/x7vQTumWJgF8VUma2JhSR8xdQQSol44I4E8+pFoSEYvwGg==
+X-Received: by 2002:a17:907:960c:b0:a8a:78bb:1e2 with SMTP id
+ a640c23a62f3a-a98f8207fe8mr691848266b.6.1727962161376; 
+ Thu, 03 Oct 2024 06:29:21 -0700 (PDT)
 Received: from localhost.localdomain (adsl-122.37.6.160.tellas.gr.
  [37.6.160.122]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a99102a4cdcsm86528366b.57.2024.10.03.06.29.14
+ a640c23a62f3a-a99102a4cdcsm86528366b.57.2024.10.03.06.29.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Oct 2024 06:29:16 -0700 (PDT)
+ Thu, 03 Oct 2024 06:29:21 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -73,17 +73,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, berrange@redhat.com, hi@alyssa.is
-Subject: [PATCH v11 2/9] build-sys: Add rust feature option
-Date: Thu,  3 Oct 2024 16:28:44 +0300
-Message-ID: <14642d80fbccbc60f7aa78b449a7deb5e2784ed9.1727961605.git.manos.pitsidianakis@linaro.org>
+Subject: [PATCH v11 4/9] rust: add bindgen step as a meson dependency
+Date: Thu,  3 Oct 2024 16:28:46 +0300
+Message-ID: <1be89a27719049b7203eaf2eca8bbb75b33f18d4.1727961605.git.manos.pitsidianakis@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <cover.1727961605.git.manos.pitsidianakis@linaro.org>
 References: <cover.1727961605.git.manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,147 +106,298 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add rust feature in meson.build, configure, to prepare for adding Rust
-code in the followup commits.
+Add bindings_rs target for generating rust bindings to target-independent
+qemu C APIs.
 
+The bindings need be created before any rust crate that uses them is
+compiled.
+
+The bindings.rs file will end up in BUILDDIR/bindings.rs and have the
+same name as a target:
+
+  ninja bindings.rs
+
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- MAINTAINERS                   |  5 +++++
- meson.build                   | 22 +++++++++++++++++++++-
- Kconfig                       |  1 +
- Kconfig.host                  |  3 +++
- meson_options.txt             |  3 +++
- rust/Kconfig                  |  0
- scripts/meson-buildoptions.sh |  3 +++
- 7 files changed, 36 insertions(+), 1 deletion(-)
- create mode 100644 rust/Kconfig
+ MAINTAINERS                |  4 ++
+ configure                  |  7 ++++
+ meson.build                | 68 ++++++++++++++++++++++++++++++
+ rust/wrapper.h             | 47 +++++++++++++++++++++
+ rust/.gitignore            |  3 ++
+ rust/meson.build           |  0
+ scripts/rust/rustc_args.py | 84 ++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 213 insertions(+)
+ create mode 100644 rust/wrapper.h
+ create mode 100644 rust/.gitignore
+ create mode 100644 rust/meson.build
+ create mode 100644 scripts/rust/rustc_args.py
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 4ee2699543..35278c016a 100644
+index 35278c016a..82a928265c 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -4195,6 +4195,11 @@ F: docs/sphinx/
- F: docs/_templates/
- F: docs/devel/docs.rst
+@@ -4198,7 +4198,11 @@ F: docs/devel/docs.rst
+ Rust build system integration
+ M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+ S: Maintained
++F: scripts/rust/
++F: rust/.gitignore
+ F: rust/Kconfig
++F: rust/meson.build
++F: rust/wrapper.h
  
-+Rust build system integration
-+M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+S: Maintained
-+F: rust/Kconfig
-+
  Miscellaneous
  -------------
- Performance Tools and Tests
+diff --git a/configure b/configure
+index 0ccc92074e..4f432e2a70 100755
+--- a/configure
++++ b/configure
+@@ -2060,3 +2060,10 @@ echo ' "$@"' >>config.status
+ chmod +x config.status
+ 
+ rm -r "$TMPDIR1"
++
++if test "$rust" != disabled; then
++  echo '\nINFO: Rust bindings generation with `bindgen` might fail in some cases where'
++  echo 'the detected `libclang` does not match the expected `clang` version/target. In'
++  echo 'this case you must pass the path to `clang` and `libclang` to your build'
++  echo 'command invocation using the environment variables CLANG_PATH and LIBCLANG_PATH'
++fi
 diff --git a/meson.build b/meson.build
-index 127b673540..8a106e39c2 100644
+index 8ddb5fa38d..04fd17bb6b 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -70,6 +70,19 @@ if host_os == 'darwin' and \
-   all_languages += ['objc']
-   objc = meson.get_compiler('objc')
- endif
-+have_rust = false
-+if not get_option('rust').disabled() and add_languages('rust', required: get_option('rust'), native: false)
-+  rustc = meson.get_compiler('rust')
-+  have_rust = true
-+  if rustc.version().version_compare('<1.80.0')
-+    if get_option('rust').enabled()
-+      error('rustc version ' + rustc.version() + ' is unsupported: Please upgrade to at least 1.80.0')
-+    else
-+      warning('rustc version ' + rustc.version() + ' is unsupported: Disabling Rust compilation. Please upgrade to at least 1.80.0 to use Rust.')
-+      have_rust = false
-+    endif
-+  endif
-+endif
+@@ -3899,6 +3899,74 @@ common_all = static_library('common',
+                             implicit_include_directories: false,
+                             dependencies: common_ss.all_dependencies())
  
- dtrace = not_found
- stap = not_found
-@@ -2158,6 +2171,7 @@ endif
- 
- config_host_data = configuration_data()
- 
-+config_host_data.set('CONFIG_HAVE_RUST', have_rust)
- audio_drivers_selected = []
- if have_system
-   audio_drivers_available = {
-@@ -3104,7 +3118,8 @@ host_kconfig = \
-   (host_os == 'linux' ? ['CONFIG_LINUX=y'] : []) + \
-   (multiprocess_allowed ? ['CONFIG_MULTIPROCESS_ALLOWED=y'] : []) + \
-   (vfio_user_server_allowed ? ['CONFIG_VFIO_USER_SERVER_ALLOWED=y'] : []) + \
--  (hv_balloon ? ['CONFIG_HV_BALLOON_POSSIBLE=y'] : [])
-+  (hv_balloon ? ['CONFIG_HV_BALLOON_POSSIBLE=y'] : []) + \
-+  (have_rust ? ['CONFIG_HAVE_RUST=y'] : [])
- 
- ignored = [ 'TARGET_XML_FILES', 'TARGET_ABI_DIR', 'TARGET_ARCH' ]
- 
-@@ -4315,6 +4330,11 @@ if 'objc' in all_languages
- else
-   summary_info += {'Objective-C compiler': false}
- endif
-+summary_info += {'Rust support':      have_rust}
-+if have_rust
-+  summary_info += {'rustc version':      rustc.version()}
-+  summary_info += {'rustc':      ' '.join(rustc.cmd_array())}
-+endif
- option_cflags = (get_option('debug') ? ['-g'] : [])
- if get_option('optimization') != 'plain'
-   option_cflags += ['-O' + get_option('optimization')]
-diff --git a/Kconfig b/Kconfig
-index fb6a24a2de..63ca7f46df 100644
---- a/Kconfig
-+++ b/Kconfig
-@@ -4,3 +4,4 @@ source accel/Kconfig
- source target/Kconfig
- source hw/Kconfig
- source semihosting/Kconfig
-+source rust/Kconfig
-diff --git a/Kconfig.host b/Kconfig.host
-index 17f405004b..4ade7899d6 100644
---- a/Kconfig.host
-+++ b/Kconfig.host
-@@ -52,3 +52,6 @@ config VFIO_USER_SERVER_ALLOWED
- 
- config HV_BALLOON_POSSIBLE
-     bool
++if have_rust and have_system
++  rustc_args = run_command(
++    find_program('scripts/rust/rustc_args.py'),
++    '--config-headers', meson.project_build_root() / 'config-host.h',
++    capture : true,
++    check: true).stdout().strip().split()
++  rustc_args += ['-D', 'unsafe_op_in_unsafe_fn']
++  bindgen_args = [
++    '--disable-header-comment',
++    '--raw-line', '// @generated',
++    '--ctypes-prefix', 'core::ffi',
++    '--formatter', 'rustfmt',
++    '--generate-block',
++    '--generate-cstr',
++    '--impl-debug',
++    '--merge-extern-blocks',
++    '--no-doc-comments',
++    '--use-core',
++    '--with-derive-default',
++    '--no-size_t-is-usize',
++    '--no-layout-tests',
++    '--no-prepend-enum-name',
++    '--allowlist-file', meson.project_source_root() + '/include/.*',
++    '--allowlist-file', meson.project_source_root() + '/.*',
++    '--allowlist-file', meson.project_build_root() + '/.*'
++    ]
++  c_enums = [
++    'DeviceCategory',
++    'GpioPolarity',
++    'MachineInitPhase',
++    'MemoryDeviceInfoKind',
++    'MigrationPolicy',
++    'MigrationPriority',
++    'QEMUChrEvent',
++    'QEMUClockType',
++    'device_endian',
++    'module_init_type',
++  ]
++  foreach enum : c_enums
++    bindgen_args += ['--rustified-enum', enum]
++  endforeach
++  c_bitfields = [
++    'ClockEvent',
++    'VMStateFlags',
++  ]
++  foreach enum : c_bitfields
++    bindgen_args += ['--bitfield-enum', enum]
++  endforeach
 +
-+config HAVE_RUST
-+    bool
-diff --git a/meson_options.txt b/meson_options.txt
-index 783b56bcb9..bf0d5d2d2f 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -375,3 +375,6 @@ option('hexagon_idef_parser', type : 'boolean', value : true,
- 
- option('x86_version', type : 'combo', choices : ['0', '1', '2', '3', '4'], value: '1',
-        description: 'tweak required x86_64 architecture version beyond compiler default')
++  # TODO: Remove this comment when the clang/libclang mismatch issue is solved.
++  #
++  # Rust bindings generation with `bindgen` might fail in some cases where the
++  # detected `libclang` does not match the expected `clang` version/target. In
++  # this case you must pass the path to `clang` and `libclang` to your build
++  # command invocation using the environment variables CLANG_PATH and
++  # LIBCLANG_PATH
++  bindings_rs = import('rust').bindgen(
++    input: 'rust/wrapper.h',
++    dependencies: common_ss.all_dependencies(),
++    output: 'bindings.rs',
++    include_directories: include_directories('.', 'include'),
++    bindgen_version: ['>=0.69.4'],
++    args: bindgen_args,
++    )
++  subdir('rust')
++endif
 +
-+option('rust', type: 'feature', value: 'auto',
-+       description: 'Rust support')
-diff --git a/rust/Kconfig b/rust/Kconfig
++
+ feature_to_c = find_program('scripts/feature_to_c.py')
+ 
+ if host_os == 'darwin'
+diff --git a/rust/wrapper.h b/rust/wrapper.h
+new file mode 100644
+index 0000000000..77e40213ef
+--- /dev/null
++++ b/rust/wrapper.h
+@@ -0,0 +1,47 @@
++/*
++ * QEMU System Emulator
++ *
++ * Copyright (c) 2024 Linaro Ltd.
++ *
++ * Authors: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ */
++
++
++/*
++ * This header file is meant to be used as input to the `bindgen` application
++ * in order to generate C FFI compatible Rust bindings.
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/module.h"
++#include "qemu-io.h"
++#include "sysemu/sysemu.h"
++#include "hw/sysbus.h"
++#include "exec/memory.h"
++#include "chardev/char-fe.h"
++#include "hw/clock.h"
++#include "hw/qdev-clock.h"
++#include "hw/qdev-properties.h"
++#include "hw/qdev-properties-system.h"
++#include "hw/irq.h"
++#include "qapi/error.h"
++#include "migration/vmstate.h"
++#include "chardev/char-serial.h"
+diff --git a/rust/.gitignore b/rust/.gitignore
+new file mode 100644
+index 0000000000..1bf71b1f68
+--- /dev/null
++++ b/rust/.gitignore
+@@ -0,0 +1,3 @@
++# Ignore any cargo development build artifacts; for qemu-wide builds, all build
++# artifacts will go to the meson build directory.
++target
+diff --git a/rust/meson.build b/rust/meson.build
 new file mode 100644
 index 0000000000..e69de29bb2
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index 107a8f69ce..e2a22c0ee7 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -172,6 +172,7 @@ meson_options_help() {
-   printf "%s\n" '  rbd             Ceph block device driver'
-   printf "%s\n" '  rdma            Enable RDMA-based migration'
-   printf "%s\n" '  replication     replication support'
-+  printf "%s\n" '  rust            Rust support'
-   printf "%s\n" '  rutabaga-gfx    rutabaga_gfx support'
-   printf "%s\n" '  sdl             SDL user interface'
-   printf "%s\n" '  sdl-image       SDL Image support for icons'
-@@ -458,6 +459,8 @@ _meson_option_parse() {
-     --disable-replication) printf "%s" -Dreplication=disabled ;;
-     --enable-rng-none) printf "%s" -Drng_none=true ;;
-     --disable-rng-none) printf "%s" -Drng_none=false ;;
-+    --enable-rust) printf "%s" -Drust=enabled ;;
-+    --disable-rust) printf "%s" -Drust=disabled ;;
-     --enable-rutabaga-gfx) printf "%s" -Drutabaga_gfx=enabled ;;
-     --disable-rutabaga-gfx) printf "%s" -Drutabaga_gfx=disabled ;;
-     --enable-safe-stack) printf "%s" -Dsafe_stack=true ;;
+diff --git a/scripts/rust/rustc_args.py b/scripts/rust/rustc_args.py
+new file mode 100644
+index 0000000000..e4cc9720e1
+--- /dev/null
++++ b/scripts/rust/rustc_args.py
+@@ -0,0 +1,84 @@
++#!/usr/bin/env python3
++
++"""Generate rustc arguments for meson rust builds.
++
++This program generates --cfg compile flags for the configuration headers passed
++as arguments.
++
++Copyright (c) 2024 Linaro Ltd.
++
++Authors:
++ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++
++This program is free software; you can redistribute it and/or modify
++it under the terms of the GNU General Public License as published by
++the Free Software Foundation; either version 2 of the License, or
++(at your option) any later version.
++
++This program is distributed in the hope that it will be useful,
++but WITHOUT ANY WARRANTY; without even the implied warranty of
++MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++GNU General Public License for more details.
++
++You should have received a copy of the GNU General Public License
++along with this program.  If not, see <http://www.gnu.org/licenses/>.
++"""
++
++import argparse
++import logging
++
++from typing import List
++
++
++def generate_cfg_flags(header: str) -> List[str]:
++    """Converts defines from config[..].h headers to rustc --cfg flags."""
++
++    def cfg_name(name: str) -> str:
++        """Filter function for C #defines"""
++        if (
++            name.startswith("CONFIG_")
++            or name.startswith("TARGET_")
++            or name.startswith("HAVE_")
++        ):
++            return name
++        return ""
++
++    with open(header, encoding="utf-8") as cfg:
++        config = [l.split()[1:] for l in cfg if l.startswith("#define")]
++
++    cfg_list = []
++    for cfg in config:
++        name = cfg_name(cfg[0])
++        if not name:
++            continue
++        if len(cfg) >= 2 and cfg[1] != "1":
++            continue
++        cfg_list.append("--cfg")
++        cfg_list.append(name)
++    return cfg_list
++
++
++def main() -> None:
++    # pylint: disable=missing-function-docstring
++    parser = argparse.ArgumentParser()
++    parser.add_argument("-v", "--verbose", action="store_true")
++    parser.add_argument(
++        "--config-headers",
++        metavar="CONFIG_HEADER",
++        action="append",
++        dest="config_headers",
++        help="paths to any configuration C headers (*.h files), if any",
++        required=False,
++        default=[],
++    )
++    args = parser.parse_args()
++    if args.verbose:
++        logging.basicConfig(level=logging.DEBUG)
++    logging.debug("args: %s", args)
++    for header in args.config_headers:
++        for tok in generate_cfg_flags(header):
++            print(tok)
++
++
++if __name__ == "__main__":
++    main()
 -- 
 γαῖα πυρί μιχθήτω
 
