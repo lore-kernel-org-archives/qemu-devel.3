@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CDC2CF34B0
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 15:56:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15402CF34B0
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 15:56:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swO9Q-0006Nr-O7; Thu, 03 Oct 2024 11:54:00 -0400
+	id 1swOBJ-0000kZ-2u; Thu, 03 Oct 2024 11:55:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swO9P-0006Nc-Sj
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 11:53:59 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swOB6-0000V2-GV
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 11:55:45 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swO9O-0003Kb-HE
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 11:53:59 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-42e748f78d6so10614535e9.0
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 08:53:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swOB4-0004mf-3K
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 11:55:44 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-37cc5fb1e45so935514f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 08:55:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727970837; x=1728575637; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727970940; x=1728575740; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=APlSNHRKvXFou5Ts1BnGZEWqHMevuN/wl68E4bPbLxg=;
- b=b7kXIzPdvh25Y+UlcBJYNlfbjSMjEoccoTICB8cuSgbr73XWpmMcpWeA+nAI74VZj0
- Y4dyXch31+INx56Lkjee4Z8S6+hlQ2c+lgiaYPLXTiIIX7Z9FLi+8LwDYu3jkv9/CrPv
- +awMQIuWTt1Qlro7lYFX50mWQ98S5aLGSewLbq1SlTQ6YDQG1mnZLel+UNlIZgMTNPKz
- bKl5fsab+AAfAYqEs36Rq6D9DKvXplKLDiar2nCkrjw54nzLIKztHNs5JCbpLzDL7plh
- OWJDHRaVR987csa1quRkQ/Wk/jJ/To62je9ZhbEzQikG8Urgzlm8QMzFa5ITS9pMY9fb
- dG4w==
+ bh=4LcvxLvUuSJ/+4Vqu61S+TKGcuUJJdo6fzBIEzZfS48=;
+ b=TiJIN0KrYraeceyJBh2qjKyf6zIT/oNPhtGMtud965VJI45gaKZ7hPlqTCy4+hVjtC
+ kVPSP1Ditqh/NOdp/8t2i401jiNE0TIm0xYB5SF9Iy6csQ8vN/bhqqvQpT9Yqx1TaEgh
+ i5jl5xBxncE1/ZkmrBV2tpyO7T2HvIrLqDCm1ZpnzgtHCNDDNAuZeUuqDCnuXTgENqSB
+ o7vNzM+18aG0xkTwtD6QKCxmc3a5nPKOQBYxdfj48QCGqOMuadk0Z0ul1R7ehtbAeu/d
+ dlQtwbAa5J4LIr0ArD/JT76Cyg5RtQ09VYNrGNA14+4SWqblvPULsLdtVVpPlP7iUo8L
+ ja4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727970837; x=1728575637;
+ d=1e100.net; s=20230601; t=1727970940; x=1728575740;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=APlSNHRKvXFou5Ts1BnGZEWqHMevuN/wl68E4bPbLxg=;
- b=tXM2fYDd9Xtd99c4/guKdY8mZkwJViEbkxNh6weYuzc45xcEe7Hrhghd2GDgw7IuU+
- 1XyBzTG4rkLxyFZvHZWFMhzRcR6szQ+XiJHWr0MkHhUuobgKSV+PNk0L9YxBi/tiAXL/
- SSC7ir9l/qdZmCIbhVchKJvimeBpovxiJM/4fyTo+CUdrYh84DrHMkklQ2rulxLiTJwW
- TyKWtJXjH7gRfdfPSGwIK5sp8+gUGYvSnfeMLl1JkmdvVfW7Aj4321MwF+6cMxEffPKr
- 0WuGlCw1wLzIk0opVyZsXRzsN62RskyhQiWUVaOdDBWFlhpvKUQedB92Ox/1XEcjQST4
- KJiw==
+ bh=4LcvxLvUuSJ/+4Vqu61S+TKGcuUJJdo6fzBIEzZfS48=;
+ b=rY4CTxye83vwJbpP6+szRg9U3TZTFXcqZNYCx3Y1AvudolZ6hU7l8BeLWsXSX/gc6Q
+ 2IH8woLdiS/8kSJ7h/I+MxUYKlQyVOT9H8vOQPnoYBbL+xIijJ0TohWFw85i7/lFrjkj
+ PzS69VuGDdid/Whx1PjQX1BaiJsQJioSEhYU08v8EFNq3zDfHb2YIN8xiQvXhOLww3Og
+ a53Mk/CK0OEvA487BSIEcNHEzb64Pd/3JkId+BuRDbWdhEyt18Qh4eIFroqdHvkgSySL
+ FGNy9OOK0Lm20UTpCVI2+a7SAgKGpHCOa+kWwqKGxo3aKxNO9mWgMIRCXIfqW6IGUnkc
+ B4/A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVzZ8SI4JN76+dO/UnzNodo5qFrSb7iV24V2SZxfBfwHmlKYSbFXtHQODR1oijxi3xgdGKOgI/UOkWy@nongnu.org
-X-Gm-Message-State: AOJu0Yze9/J2Q2eOuZyVOgY9ooBuOtAXiXt0Jsgcp57/E96sOBGCkdF+
- tcnbY/MhO0bKFYILye+PndvvfnQXQpESDIwtQLJbxmqmZikSXdwdbm0HKgO2RnQ=
-X-Google-Smtp-Source: AGHT+IFm9fwrB70dfmY18JwpB1Mw73cspHDbO/fXYVmlURKlfHczwwapYNSyximSrbazv2coudq34g==
-X-Received: by 2002:a5d:5341:0:b0:37c:cd59:5a6b with SMTP id
- ffacd0b85a97d-37cfb8cb7b9mr4845866f8f.27.1727970836707; 
- Thu, 03 Oct 2024 08:53:56 -0700 (PDT)
+ AJvYcCXGPEiV7MZO+yGbH8Zc3pHmu8XwwVSfWtX5TfD1+K7/hDEBggug/n3JiAEa5VDJn4nMkW31gDxJDxBw@nongnu.org
+X-Gm-Message-State: AOJu0Yy8NWdBaV07Pxukokt/x2MyDEO+jh3G8U4aWQWYNQOVTCUe6oJI
+ n31uCwzdZupKJ/OzmyF3Sf+SDEZRz103BUwHCv9NjLBpQ+Bh8PmA+wh9ayZM65w=
+X-Google-Smtp-Source: AGHT+IGqRKwEJbPbcC+bqihg9GvRgQqmwy0OTbBkWtWjZDID9Cc3f5G87dFAuo1v1UoLYUH4Y6/r0Q==
+X-Received: by 2002:a5d:584c:0:b0:374:c3e4:d6de with SMTP id
+ ffacd0b85a97d-37cfba04c62mr6668172f8f.41.1727970940146; 
+ Thu, 03 Oct 2024 08:55:40 -0700 (PDT)
 Received: from [192.168.13.175] (49.red-88-29-183.dynamicip.rima-tde.net.
  [88.29.183.49]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d082425f5sm1544489f8f.50.2024.10.03.08.53.53
+ ffacd0b85a97d-37d08226177sm1536397f8f.36.2024.10.03.08.55.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Oct 2024 08:53:56 -0700 (PDT)
-Message-ID: <eaebae31-7e4d-478a-a064-dbbeb7943355@linaro.org>
-Date: Thu, 3 Oct 2024 17:36:34 +0200
+ Thu, 03 Oct 2024 08:55:39 -0700 (PDT)
+Message-ID: <2a36635b-90ca-451a-b1f0-e69f6cbd9ca5@linaro.org>
+Date: Thu, 3 Oct 2024 17:55:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] hw/gpio: Remove MAX7310 device
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+Subject: Re: [PATCH] MAINTAINERS: Update STM32L4x5 and B-L475E-IOT01A
+ maintainers
+To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
  qemu-devel@nongnu.org
-Cc: Guenter Roeck <linux@roeck-us.net>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20241003140010.1653808-1-peter.maydell@linaro.org>
- <20241003140010.1653808-3-peter.maydell@linaro.org>
+Cc: Samuel Tardieu <sam@rfc1149.net>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Jacob Abrams <satur9nine@gmail.com>
+References: <20240921104751.43671-1-ines.varhol@telecom-paris.fr>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241003140010.1653808-3-peter.maydell@linaro.org>
+In-Reply-To: <20240921104751.43671-1-ines.varhol@telecom-paris.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,26 +99,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/10/24 16:00, Peter Maydell wrote:
-> The MAX7310 GPIO controller was used only by the XScale-based Zaurus
-> machine types.  Now they have been removed we can remove this device
-> model as well.
+On 21/9/24 12:47, Inès Varhol wrote:
+> It has been a learning experience to contribute to QEMU for our
+> end-of-studies project. For a few months now, Arnaud and I aren't
+> actively involved anymore as we lack time and access to the hardware.
+> Therefore it's high time to update the maintainers file: from now on,
+> Samuel Tardieu who is behind the project will be taking up the role of
+> maintainer.
 > 
-> Because this device is an I2C device, in theory it could be created
-> by users on the command line for boards with a different I2c
-> controller, but we don't believe users are doing this -- it would be
-> impossible on the command line to connect up the GPIO inputs/outputs.
-> The only example a web search produces for "device max7310" is a user
-> trying to create this because they didn't realize that there was no
-> way to manipulate the GPIO lines.
+> This commit updates maintainers and the list of files, and places the
+> two devices in alphabetical order.
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
 > ---
->   hw/gpio/max7310.c   | 217 --------------------------------------------
->   hw/gpio/Kconfig     |   4 -
->   hw/gpio/meson.build |   1 -
->   3 files changed, 222 deletions(-)
->   delete mode 100644 hw/gpio/max7310.c
+>   MAINTAINERS | 41 +++++++++++++++++++++--------------------
+>   1 file changed, 21 insertions(+), 20 deletions(-)
+
+
+> -STM32L4x5 SoC Family
+> -M: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+> -M: Inès Varhol <ines.varhol@telecom-paris.fr>
+
+Thank you both Inès and Arnaud, it was a good experience to review
+your contributions and see how you improved over time :)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
