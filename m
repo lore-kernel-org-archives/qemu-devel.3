@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7F13CF34BE
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 18:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82FA4CF34BF
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 18:37:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swQet-0007Xx-S0; Thu, 03 Oct 2024 14:34:39 -0400
+	id 1swQer-0007Vp-0t; Thu, 03 Oct 2024 14:34:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1swQeW-0007Gq-2W
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 14:34:19 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1swQeR-0007GF-98
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 14:34:18 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1swQeU-00056x-2Y
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 14:34:15 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-208cf673b8dso13430425ad.3
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 11:34:11 -0700 (PDT)
+ id 1swQeO-000549-JK
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 14:34:10 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2e0b9bca173so1031190a91.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 11:34:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1727980451; x=1728585251;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1727980444; x=1728585244;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3TSRZRYfN0fde9td8T2Zgyxq8CzAPhtR30l69z8A4EM=;
- b=2XoE+nBsiMnfxuAa6AhmJOsbrff4Hq/QloVvpvlbYukmXdZWUJBVkVafKpS1uBvbjw
- p6qdXTPEzAy/WXrfMRbJE+NsHsQS5rufbti9i0mnxPWOrkP5B5lMiYXuqOaS1kzjLxSI
- hbcf5P/pkwsLG3KoHtL0A92bZqbCj6na5oYlWYion1Y/NkeWHo6NJTgk/Z44lGhu3cVA
- UhGBz/EWwO9YujQ/GNlIlfRE2OZuKWcAjn3Gpgr4i2uJBqpRD7UBQmsq1Zx+wDZaRGPp
- dHSpsXfOt2HUs4VJ4H8JtmlLLJFhgXBBSKiI2ade0vR0bS2tg/QvZQDrk6+CBA1ELljt
- VFsw==
+ bh=JhjOwzCsS1orZG5ZY7aLF1dqoua4hIdgdYgEn8nEbDM=;
+ b=17bnmnJT/xO9g5nY3abJSOpQscKhsYF5mTV6p6TvikhZi7Qa+YtM+2PbRREg+AZSwm
+ nnTHM/RceU6Fkh8IvYNPmvUuw1IXBwNNhCwRpEQ+Fh/1vIyuhP94hkJ0iDyg68SYz//W
+ hAByOILCOziI3HrOGTgxVKyQro5K/kozLORtcC2n7h8U66CBuoAU1ZYgvtKupAOkIFoW
+ bJbo2M3xGMQyTnPrSv1c3eJhVDeFZ16EtxZZfZSgEjxbgOvbGQ2sXT7FPh35heNuTKZJ
+ oxu2VWV7jw8juyy7Eg8vPF3cKe6MOwoDGsCm5k1H7EpPYXsz6JbZIvb1zCe/VOJ/juIJ
+ jUQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727980451; x=1728585251;
+ d=1e100.net; s=20230601; t=1727980444; x=1728585244;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3TSRZRYfN0fde9td8T2Zgyxq8CzAPhtR30l69z8A4EM=;
- b=UKCoOziq5aPWv3N47B/BpMvX6C1pnaJwvP5+zfvzAFFo6Vp0r2OlgZ7VOZE46gEfKR
- DbeXRMivEkq7D5XmI8hUIcOUqdxJFfRXCGQ2KntWfekKZE9YXllTjNDOQFrjkX8OVGXj
- VlIXE8sdD1a5/AEumyh8Y/qDc0z+Inc6lTG7WRAyEsJ6dJ0pH3AUB/HMif63TyuyTIiX
- gk08fMyViq7tSaTKW67wES+0VQgO6tX9yWB+snA/BHGJ/O0W59wStqixRYA0nOdT/3d/
- yFYl6kT3/vZsBj867uKj6+6TOmFqZ8657+KlD231fgBJ1ZftcZEn3gE1MNWcUkQ0I6lg
- MlVA==
+ bh=JhjOwzCsS1orZG5ZY7aLF1dqoua4hIdgdYgEn8nEbDM=;
+ b=q9kTJUbSPYWT3h/7Kf340s/kMe1av4aKYVFrzTLayCtL8pg6hjOg0VRK96dns7DDCp
+ nmi6cXeek6HfN6QIvmz6Q2WZxNpA1BrHzA3ourFtx6Ge5quKAURIyaxECbXwPhdj0ZKq
+ rXel34NeiihXNMgvfGTz8rItKTvzKy3o9zp+eqcKuebhAr/ClfawBPfyA3DP7nZh+1tr
+ xsejCLR05ZJZmBHBHm9fc5wqJfscxSDMuN6g0Y63yMfunG7bVCV91r1kYsE35vCsK9nl
+ /YZt/L6y0NUR+arEHnV/nI+7LVvtV1UN6pEFIOGRM9/UBvlASJLkIltHvY85fyr3O2cF
+ s6pw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXyzRvebr9rsMAbftD2wjBrewk/xB3QZN1OVCrrpQXyyd2d9olwVUPi/rSO4e1hT5tWwmpG/gkUyZ8F@nongnu.org
-X-Gm-Message-State: AOJu0YwkKET8L3Om7x8u5SK00x3B/R4P5m249Zm6RfZs7tjhtRqq1e1S
- tmLoNKuU7F2aP36S9xTyB82cvtShiSDb4E8pXnMUMo50XOEP1KP/GsNuda7S/T4=
-X-Google-Smtp-Source: AGHT+IHrr1IN+1Nh7BLepB3GNGfOl5yT4WCcN8mB1SH6hfKXIPGaH/jPIFFNMnyq+pTUhfuwoPF+dQ==
-X-Received: by 2002:a17:902:ec82:b0:20b:fbcf:f941 with SMTP id
- d9443c01a7336-20bff039359mr1234625ad.47.1727980450742; 
- Thu, 03 Oct 2024 11:34:10 -0700 (PDT)
+ AJvYcCVif3rST5bFn+tZIEQxQunwNQHsPpZoyfT9mJQdFLSf9J+nEvkYT2vdAZAZclu++XbWvgFuwOstXY4E@nongnu.org
+X-Gm-Message-State: AOJu0YwWP8XsQKHR89Y+SEWc6lsjcGpyKAr7W+YqLTnBFEarnAxUVXGA
+ 448H2Wb103YrR3bFP4rEhEdJJMlfwPi5wpyEJNCzGJcgQC2EADauhjkXcJJoq0g=
+X-Google-Smtp-Source: AGHT+IFfU/G7oq1PDmVTtJJXpBzYI9aDFAfcrvqJiPQ8RN0I/Bb4yRpCKfZue/6BaQS0hSVwWhcthA==
+X-Received: by 2002:a17:90b:51cf:b0:2e0:f81c:731f with SMTP id
+ 98e67ed59e1d1-2e1e6296d4cmr36033a91.24.1727980444471; 
+ Thu, 03 Oct 2024 11:34:04 -0700 (PDT)
 Received: from debug.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20beefad16asm11796245ad.193.2024.10.03.11.34.09
+ d9443c01a7336-20beefad16asm11796245ad.193.2024.10.03.11.34.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Oct 2024 11:34:10 -0700 (PDT)
+ Thu, 03 Oct 2024 11:34:04 -0700 (PDT)
 From: Deepak Gupta <debug@rivosinc.com>
 To: qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, bmeng.cn@gmail.com,
  liwei1518@gmail.com, dbarboza@ventanamicro.com,
  zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, kito.cheng@sifive.com,
- Deepak Gupta <debug@rivosinc.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v15 19/21] disas/riscv: enable disassembly for zicfiss
- instructions
-Date: Thu,  3 Oct 2024 11:33:40 -0700
-Message-ID: <20241003183342.679249-20-debug@rivosinc.com>
+ Deepak Gupta <debug@rivosinc.com>
+Subject: [PATCH v15 14/21] target/riscv: disallow probe accesses to shadow
+ stack
+Date: Thu,  3 Oct 2024 11:33:35 -0700
+Message-ID: <20241003183342.679249-15-debug@rivosinc.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20241003183342.679249-1-debug@rivosinc.com>
 References: <20241003183342.679249-1-debug@rivosinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=debug@rivosinc.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=debug@rivosinc.com; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,119 +100,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enable disassembly for sspush, sspopchk, ssrdp & ssamoswap.
-Disasembly is only enabled if zimop and zicfiss ext is set to true.
+`check_zicbom_access` (`cbo.clean/flush/inval`) may probe shadow stack
+memory and must always raise store/AMO access fault because it has store
+semantics.
+
+For non-shadow stack memory even though `cbo.clean/flush/inval` have
+store semantics, it will not fault if read is allowed (probably to follow
+`clflush` on x86). Although if read is not allowed, eventually
+`probe_write` will do store page (or access) fault (if permissions don't
+allow it).
+
+cbo operations on shadow stack memory must always raise store access fault.
+Thus extending `get_physical_address` to recieve `probe` parameter as well.
 
 Signed-off-by: Deepak Gupta <debug@rivosinc.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- disas/riscv.c | 40 +++++++++++++++++++++++++++++++++++++++-
- disas/riscv.h |  1 +
- 2 files changed, 40 insertions(+), 1 deletion(-)
+ target/riscv/cpu_helper.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 2942a5800f..0f9ecd8a14 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -977,6 +977,11 @@ typedef enum {
-     rv_op_wrs_sto = 946,
-     rv_op_wrs_nto = 947,
-     rv_op_lpad = 948,
-+    rv_op_sspush = 949,
-+    rv_op_sspopchk = 950,
-+    rv_op_ssrdp = 951,
-+    rv_op_ssamoswap_w = 952,
-+    rv_op_ssamoswap_d = 953,
- } rv_op;
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 5580f5f3f3..ab46f694b5 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -884,7 +884,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+                                 target_ulong *fault_pte_addr,
+                                 int access_type, int mmu_idx,
+                                 bool first_stage, bool two_stage,
+-                                bool is_debug)
++                                bool is_debug, bool is_probe)
+ {
+     /*
+      * NOTE: the env->pc value visible here will not be
+@@ -1030,7 +1030,7 @@ restart:
+             int vbase_ret = get_physical_address(env, &vbase, &vbase_prot,
+                                                  base, NULL, MMU_DATA_LOAD,
+                                                  MMUIdx_U, false, true,
+-                                                 is_debug);
++                                                 is_debug, false);
  
- /* register names */
-@@ -2238,6 +2243,11 @@ const rv_opcode_data rvi_opcode_data[] = {
-     { "wrs.sto", rv_codec_none, rv_fmt_none, NULL, 0, 0, 0 },
-     { "wrs.nto", rv_codec_none, rv_fmt_none, NULL, 0, 0, 0 },
-     { "lpad", rv_codec_lp, rv_fmt_imm, NULL, 0, 0, 0 },
-+    { "sspush", rv_codec_r, rv_fmt_rs2, NULL, 0, 0, 0 },
-+    { "sspopchk", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
-+    { "ssrdp", rv_codec_r, rv_fmt_rd, NULL, 0, 0, 0 },
-+    { "ssamoswap.w", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
-+    { "ssamoswap.d", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
- };
+             if (vbase_ret != TRANSLATE_SUCCESS) {
+                 if (fault_pte_addr) {
+@@ -1117,8 +1117,11 @@ restart:
+         /* if bcfi enabled, PTE_W is not reserved and shadow stack page */
+         if (cpu_get_bcfien(env) && first_stage) {
+             sstack_page = true;
+-            /* if ss index, read and write allowed. else only read allowed */
+-            rwx = is_sstack_idx ? PTE_R | PTE_W : PTE_R;
++            /*
++             * if ss index, read and write allowed. else if not a probe
++             * then only read allowed
++             */
++            rwx = is_sstack_idx ? (PTE_R | PTE_W) : (is_probe ? rwx :  PTE_R);
+             break;
+         }
+         return TRANSLATE_FAIL;
+@@ -1327,13 +1330,13 @@ hwaddr riscv_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+     int mmu_idx = riscv_env_mmu_index(&cpu->env, false);
  
- /* CSR names */
-@@ -2255,6 +2265,7 @@ static const char *csr_name(int csrno)
-     case 0x0009: return "vxsat";
-     case 0x000a: return "vxrm";
-     case 0x000f: return "vcsr";
-+    case 0x0011: return "ssp";
-     case 0x0015: return "seed";
-     case 0x0017: return "jvt";
-     case 0x0040: return "uscratch";
-@@ -3081,6 +3092,8 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
-             case 66: op = rv_op_amoor_w; break;
-             case 67: op = rv_op_amoor_d; break;
-             case 68: op = rv_op_amoor_q; break;
-+            case 74: op = rv_op_ssamoswap_w; break;
-+            case 75: op = rv_op_ssamoswap_d; break;
-             case 96: op = rv_op_amoand_b; break;
-             case 97: op = rv_op_amoand_h; break;
-             case 98: op = rv_op_amoand_w; break;
-@@ -4034,7 +4047,7 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
-             case 3: op = rv_op_csrrc; break;
-             case 4:
-                 if (dec->cfg->ext_zimop) {
--                    int imm_mop5, imm_mop3;
-+                    int imm_mop5, imm_mop3, reg_num;
-                     if ((extract32(inst, 22, 10) & 0b1011001111)
-                         == 0b1000000111) {
-                         imm_mop5 = deposit32(deposit32(extract32(inst, 20, 2),
-@@ -4042,11 +4055,36 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
-                                                        extract32(inst, 26, 2)),
-                                              4, 1, extract32(inst, 30, 1));
-                         op = rv_mop_r_0 + imm_mop5;
-+                        /* if zicfiss enabled and mop5 is shadow stack */
-+                        if (dec->cfg->ext_zicfiss &&
-+                            ((imm_mop5 & 0b11100) == 0b11100)) {
-+                                /* rs1=0 means ssrdp */
-+                                if ((inst & (0b011111 << 15)) == 0) {
-+                                    op = rv_op_ssrdp;
-+                                }
-+                                /* rd=0 means sspopchk */
-+                                reg_num = (inst >> 15) & 0b011111;
-+                                if (((inst & (0b011111 << 7)) == 0) &&
-+                                    ((reg_num == 1) || (reg_num == 5))) {
-+                                    op = rv_op_sspopchk;
-+                                }
-+                        }
-                     } else if ((extract32(inst, 25, 7) & 0b1011001)
-                                == 0b1000001) {
-                         imm_mop3 = deposit32(extract32(inst, 26, 2),
-                                              2, 1, extract32(inst, 30, 1));
-                         op = rv_mop_rr_0 + imm_mop3;
-+                        /* if zicfiss enabled and mop3 is shadow stack */
-+                        if (dec->cfg->ext_zicfiss &&
-+                            ((imm_mop3 & 0b111) == 0b111)) {
-+                                /* rs1=0 and rd=0 means sspush */
-+                                reg_num = (inst >> 20) & 0b011111;
-+                                if (((inst & (0b011111 << 15)) == 0) &&
-+                                    ((inst & (0b011111 << 7)) == 0) &&
-+                                    ((reg_num == 1) || (reg_num == 5))) {
-+                                    op = rv_op_sspush;
-+                                }
-+                        }
-                     }
-                 }
-                 break;
-diff --git a/disas/riscv.h b/disas/riscv.h
-index 1182457aff..4895c5a301 100644
---- a/disas/riscv.h
-+++ b/disas/riscv.h
-@@ -224,6 +224,7 @@ enum {
+     if (get_physical_address(env, &phys_addr, &prot, addr, NULL, 0, mmu_idx,
+-                             true, env->virt_enabled, true)) {
++                             true, env->virt_enabled, true, false)) {
+         return -1;
+     }
  
- #define rv_fmt_none                   "O\t"
- #define rv_fmt_rs1                    "O\t1"
-+#define rv_fmt_rs2                    "O\t2"
- #define rv_fmt_offset                 "O\to"
- #define rv_fmt_pred_succ              "O\tp,s"
- #define rv_fmt_rs1_rs2                "O\t1,2"
+     if (env->virt_enabled) {
+         if (get_physical_address(env, &phys_addr, &prot, phys_addr, NULL,
+-                                 0, MMUIdx_U, false, true, true)) {
++                                 0, MMUIdx_U, false, true, true, false)) {
+             return -1;
+         }
+     }
+@@ -1447,7 +1450,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+         /* Two stage lookup */
+         ret = get_physical_address(env, &pa, &prot, address,
+                                    &env->guest_phys_fault_addr, access_type,
+-                                   mmu_idx, true, true, false);
++                                   mmu_idx, true, true, false, probe);
+ 
+         /*
+          * A G-stage exception may be triggered during two state lookup.
+@@ -1470,7 +1473,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+ 
+             ret = get_physical_address(env, &pa, &prot2, im_address, NULL,
+                                        access_type, MMUIdx_U, false, true,
+-                                       false);
++                                       false, probe);
+ 
+             qemu_log_mask(CPU_LOG_MMU,
+                           "%s 2nd-stage address=%" VADDR_PRIx
+@@ -1507,7 +1510,8 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     } else {
+         /* Single stage lookup */
+         ret = get_physical_address(env, &pa, &prot, address, NULL,
+-                                   access_type, mmu_idx, true, false, false);
++                                   access_type, mmu_idx, true, false, false,
++                                   probe);
+ 
+         qemu_log_mask(CPU_LOG_MMU,
+                       "%s address=%" VADDR_PRIx " ret %d physical "
 -- 
 2.45.0
 
