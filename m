@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5458ACF34D2
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 22:59:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24CF0CF34D3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 23:02:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swUnI-00009T-Q7; Thu, 03 Oct 2024 18:59:36 -0400
+	id 1swUpg-0000xa-MJ; Thu, 03 Oct 2024 19:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1swUnH-00009G-7R
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 18:59:35 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1swUpf-0000xQ-6M
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 19:02:03 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1swUnF-0001nP-Nu
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 18:59:35 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2e18aa9f06dso1132753a91.0
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 15:59:33 -0700 (PDT)
+ id 1swUpd-0002EP-Gz
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 19:02:02 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-718f4fd89e5so1483679b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 16:02:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727996372; x=1728601172; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727996520; x=1728601320; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=6fUjC/r1BiNPLkXVH5U7muy5GSG888GqF23jVBvV4N4=;
- b=wGbowRheobZip8nNOvQJuqt1y1FySJeCH2dT73he011HObRnwSwW+Pgd/R4vBaEtD7
- nCrgNjXh4NDGUBAf8foOI7ilTEtvbB9s2ARD3GQiEkVVpPhIAdQQ7liNth5Lpw5Vm3hR
- VpVbV583emRdKotQ6Hmyap7FUUccHplVovkwp3WGfL6BgeHL9FZ+WNwWkUs/v3sp1gMy
- ftg0rieW4bPWdxTHzwzE4A7Wh/n7p5W2lhCfkQOxsdoAxp0cHVTdhOZjUbM/jr0plvQS
- wlh3wCLj7nLk+7dTWYBAZYfqLlrVTrM3wLUfDhC2Av/IqjkAvQekutEPhV9jEbaH4JlU
- LRZQ==
+ bh=Tg0Pc4L9aTrL2GaSDCaVgrqx+ntS6Yu+5qvhc6yR++8=;
+ b=F6SYywt8djlDibz50mX/NCqEX4M50KphWmydF5SIOqtUsNQ5WVDHODhKkb96No/eAY
+ oDXjCSaWmXOUQ/QdldidDyuP7Qqu6T79EaK8KxBOV5ynkdXkLvtx1lGwFgCQGoVANW80
+ 3fFb1u60XrSFr6Xvkn1eOHwEXYH8JAoiC5vqSWQnCwzQzmE0YPfuE29h0XpRJBw/7rUX
+ fOGS8WZK79HrXF2HoEl6Sx/wHhIXYSqLB8W/LvvZWgRdlNGMKRaEXZiBWI1BkMb6iNeI
+ pg9/5YRBqPrFABy/PrAF7QOua+RtvzluDdMdyu4zpf07nIY9/jg33XxsbA1PFx9eKolL
+ KQnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727996372; x=1728601172;
+ d=1e100.net; s=20230601; t=1727996520; x=1728601320;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6fUjC/r1BiNPLkXVH5U7muy5GSG888GqF23jVBvV4N4=;
- b=cLBFfBUrE+Ze4viKLPRl6cf201Ct+ihdZl0nuSczNZnQ715vl1hOhpTCnqqXcn+a9g
- BcT+RDZGR/o+1dhDA4zHHsYE91jFp2ePP3YUJq5xmaGBkYgFV2grDtqHqoA2n8sdXRlQ
- q9d2LXeKyt4IEgXqlXsyFie/b3pqZF+Zq/v/hkGz4QwgiALTbu7c7eL7SXW5yibPfNLv
- RbhT9WKi+sMYOteRlyI9Z5dkqryjIfXvUaazoXUamI2qalqQ/Gmv1BjMNWUz/S3LMPc4
- Cf212SBO4OprQtC7NvVUCKQFU1SDwQ8tRtqINLe3zj62jwVd7jeHDJiWTvjKz0v2edtK
- wvNg==
+ bh=Tg0Pc4L9aTrL2GaSDCaVgrqx+ntS6Yu+5qvhc6yR++8=;
+ b=H2+8CIRiEwNeEAzFZtkdTHDW/YRs2TbqHEioMa11C6OnLGymEiFwr5TJTp86c1BTrd
+ wU2UfYWITg6Hf8dSzdH0EeVYzYggyQs4/duZqU3AeIORNTPjsfC44uM+CgpFkAkrDOkD
+ szo+reMJMpbsDPCBN80fgomXGm/353Folv9kcIfej1d2ol0sTQpDybxv4dHaBHSsaj6V
+ oAWYpZTnABztEu0U6BZyKCFxPMQhBDxipzZLKdzuicHFb3de4HCIfrK8eyMbeUNtcmyu
+ YABunl3JSUwtEBERYmYM7Pi8A+AYnSnel+zJBGTnUjxoYg3gF0veOB7k7p/SvHYJmC0i
+ 7J1w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUjxLq7mpmfMK5T/kbb8xdkpFUNOzgqZgP/ZAPD12EKEp7cGu84i+TYkgzN5opeIcc2NqgvBGa0c9lP@nongnu.org
-X-Gm-Message-State: AOJu0YxYgT1QdbEYLFfoVfh2Mu9tvf1xt7w4ck5PXWEvcFOx5Tqm51w3
- K0pHxTPYf7fGzXqDI+P9ZpzF+bnZe19w4Ppj1wWdOs3QBnDhjBgLLcb5XjZB3tk=
-X-Google-Smtp-Source: AGHT+IHS7d2IgscbCCGD2qV6wnjgQawthRS/htZ5IbUeO7aVc6gxRAqGgqV4MA80GUGNO7/3o8GYGw==
-X-Received: by 2002:a17:90a:4945:b0:2d8:7445:7ab2 with SMTP id
- 98e67ed59e1d1-2e1e5dbc50amr835811a91.20.1727996372307; 
- Thu, 03 Oct 2024 15:59:32 -0700 (PDT)
+ AJvYcCUfn73iftY8vleh+fqCXpyGtgelEI+lVOdhZn91vGdQ1kE27vjGb4M6gpA3gANBrhukFPILUhd/A+Ma@nongnu.org
+X-Gm-Message-State: AOJu0YwDogIbfUk8XXZQIGX5W8j8oSWYrK+hZmeT8+l8kcwyYQ6+SQFr
+ X496RFlWd+VyoLYjm5YFPck1eJ6jKql+bL0B9XRDbgYojdq8YQ1GIa14uUHgttM=
+X-Google-Smtp-Source: AGHT+IEMn3uK7U6M0ZktLa3icW4WJzyuEjVsS0iR64N4/tGLwbnAwRheHxMxm46Nt2Vwmo6I0U65EA==
+X-Received: by 2002:a05:6a00:850:b0:717:8d81:e548 with SMTP id
+ d2e1a72fcca58-71de239e806mr1158386b3a.1.1727996519837; 
+ Thu, 03 Oct 2024 16:01:59 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e1e85d34desm57323a91.19.2024.10.03.15.59.31
+ d2e1a72fcca58-71dd9df50ecsm1917611b3a.181.2024.10.03.16.01.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Oct 2024 15:59:31 -0700 (PDT)
-Message-ID: <0a892c40-e8b0-437b-89cc-fe1127a330ef@linaro.org>
-Date: Thu, 3 Oct 2024 15:59:30 -0700
+ Thu, 03 Oct 2024 16:01:59 -0700 (PDT)
+Message-ID: <dade7ca6-71d0-40f8-9431-5d3fb4685bc9@linaro.org>
+Date: Thu, 3 Oct 2024 16:01:57 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/12] target/mips: Expose MIPSCPU::is_big_endian property
+Subject: Re: [PATCH 11/12] target/mips: Remove target-specific code in
+ mips_cpu_reset_hold()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
@@ -73,14 +74,14 @@ Cc: Thomas Huth <thuth@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
  <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>,
  Anton Johansson <anjo@rev.ng>
 References: <20240930091101.40591-1-philmd@linaro.org>
- <20240930091101.40591-9-philmd@linaro.org>
+ <20240930091101.40591-12-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240930091101.40591-9-philmd@linaro.org>
+In-Reply-To: <20240930091101.40591-12-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,45 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/30/24 02:10, Philippe Mathieu-Daudé wrote:
-> Add the "big-endian" property and set the CP0C0_BE bit in CP0_Config0.
+On 9/30/24 02:11, Philippe Mathieu-Daudé wrote:
+> Since all code creating vCPUs now set the 'cpu-big-endian' property,
+> we can remove the target-specific #ifdef'ry in mips_cpu_reset_hold():
+> the CP0C0_BE bit is set using the property cpu->is_big_endian value.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/mips/cpu.h | 3 +++
->   target/mips/cpu.c | 9 ++++++++-
->   2 files changed, 11 insertions(+), 1 deletion(-)
+>   target/mips/cpu.c | 3 ---
+>   1 file changed, 3 deletions(-)
 > 
-> diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-> index 3e906a175a..070e11fe0d 100644
-> --- a/target/mips/cpu.h
-> +++ b/target/mips/cpu.h
-> @@ -1209,6 +1209,9 @@ struct ArchCPU {
->   
->       Clock *clock;
->       Clock *count_div; /* Divider for CP0_Count clock */
-> +
-> +    /* Properties */
-> +    bool is_big_endian;
->   };
->   
->   /**
 > diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-> index 89655b1900..982f5bb4e2 100644
+> index 02e2e72f2d..9724e71a5e 100644
 > --- a/target/mips/cpu.c
 > +++ b/target/mips/cpu.c
-> @@ -200,7 +200,8 @@ static void mips_cpu_reset_hold(Object *obj, ResetType type)
->   
->       /* Reset registers to their default values */
+> @@ -202,9 +202,6 @@ static void mips_cpu_reset_hold(Object *obj, ResetType type)
 >       env->CP0_PRid = env->cpu_model->CP0_PRid;
-> -    env->CP0_Config0 = env->cpu_model->CP0_Config0;
-> +    env->CP0_Config0 = deposit32(env->cpu_model->CP0_Config0,
-> +                                 CP0C0_BE, 1, cpu->is_big_endian);
->   #if TARGET_BIG_ENDIAN
->       env->CP0_Config0 |= (1 << CP0C0_BE);
->   #endif
+>       env->CP0_Config0 = deposit32(env->cpu_model->CP0_Config0,
+>                                    CP0C0_BE, 1, cpu->is_big_endian);
+> -#if TARGET_BIG_ENDIAN
+> -    env->CP0_Config0 |= (1 << CP0C0_BE);
+> -#endif
+>       env->CP0_Config1 = env->cpu_model->CP0_Config1;
+>       env->CP0_Config2 = env->cpu_model->CP0_Config2;
+>       env->CP0_Config3 = env->cpu_model->CP0_Config3;
 
-Missed removing this ifdef.
+I think this must be merged into patch 8, or patch 8 doesn't work.
 
 
 r~
