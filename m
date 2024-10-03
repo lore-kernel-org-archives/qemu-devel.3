@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18AB2CF34C3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 19:57:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28DC1CF34C3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 20:14:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swRwC-0004Ec-15; Thu, 03 Oct 2024 15:56:36 -0400
+	id 1swSD5-00070d-DO; Thu, 03 Oct 2024 16:14:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1swRwA-0004EJ-2t
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 15:56:34 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1swSD3-000703-7g
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 16:14:01 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1swRw8-0007a7-Cp
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 15:56:33 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-717934728adso1218167b3a.2
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 12:56:31 -0700 (PDT)
+ id 1swSD1-0005z2-Pf
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 16:14:00 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-20bb610be6aso15642045ad.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 13:13:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727985390; x=1728590190; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727986437; x=1728591237; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1K9X+TY89oBYMX4PjqJvocsPvmc3bOMw9kZy7Pcn6xk=;
- b=uD/Bsz2xnsvI5nuWBfXspEleAa4qmA6wU9X12bPmv1yI61Q/QJsfmkzUlCVe/QVV+D
- SzjLnwPSFh7LXa/eNTJ7svN/oiNVxsTb4WeHIjbQDXIptu49DBcv0YDVEIA2OU5ueill
- K3rbBzKGKB+rdoB9CSPdVp8aQEpdyWauqp5ppSPhAhOgFq8/fXnSgtPQ07+xPs2vCTjv
- lT5UfejM2OR18NC2iztn99t8k27kCEANMaJuxO9ll4hvC6658e4liRGbu0lUOfa+uzDJ
- qQ726spqTXbjjs3ubOmUOMlG4aY2W1IgYRBM3GtOtPFsyZWceSWkS3pDM5iP4DoTDv4+
- 4GfQ==
+ bh=fKyZ9yVdYOlQzlf3uyZhmFnGqIRBgzBvUTn8lHAqFzU=;
+ b=DJeHhQceIDbDl1LuR0bzdNYQI1KUP7s+bSLIWmXN6WGue0uL4HkVrW7dxkS/jMJEid
+ ViH+zzsgqQ8+2C6kJYafYXgJF5H6V+VoI0y1tKDThyCz2a4cYDnoe3QJ/svRrA9LVAes
+ V9USIJnTjsGGNCjPETc6+gD2J5j0rW/NKWEG0FomwNJpyGLNSH2NPs6hBm1GvvHw6nrO
+ +b7OVJuuSAmspizgYG0IyiUDWJKHmvi8lWJWDDbzCbdNBLZW5Q2mBxTekajxhJ6o+wCp
+ w8A/BBH70sc7hUFMgQtisKMRGe+1yobCj86m6DJDf3t5BNF27YaZySEx7pTDzJELZ+gO
+ urzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727985390; x=1728590190;
+ d=1e100.net; s=20230601; t=1727986437; x=1728591237;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1K9X+TY89oBYMX4PjqJvocsPvmc3bOMw9kZy7Pcn6xk=;
- b=WBAG/JoTVB2uAy013MDDOnnOfY0lUt9/is9o4tZznJOr9wrF/6ALdgr2Va3U0EgrYh
- v7KKt9yTZJjK4GanBhNOOInwMeqNY7GtVaPGJiC958TS4yrZIANeLWjzHS65U1go5Xeh
- QObNwVsHNhIklyMz76nVQGTGl99V5WCkW8AJ2ThIO8up+tXTQNsvlvqZebQpziM+uDKx
- uSSxs5K2cSTS0mHySf+6M2rtUJoRaENg9qMrB7Y/xK2q2rEebjHDJU98dnKMqT0S2bmO
- +4mPEJmcQDVdJgjw4ttRwTutSqq/mtVkgWw92H4p9+dkt4X5BixT0GtoxT6tjfhfcpl9
- Lfhg==
-X-Gm-Message-State: AOJu0YySI25n/4A53sg/cw+/EIP+OSNKeHZgLr30pmhtWKZc5sA77mKh
- +4TwHVPMoHHFO7Re5nnRjyWQxnEeJ661Qt0Lyxlr5XOQAAqPeHieicb/XhsgqE0=
-X-Google-Smtp-Source: AGHT+IE5RPNWxqjQoMPO+hm2E+lq1cGFh/YD3zbTUY/QJ1ncNYXezqynR1UwZr9uWlY+P7L9YQCcuA==
-X-Received: by 2002:a05:6a00:4b55:b0:70d:2708:d7ec with SMTP id
- d2e1a72fcca58-71de23a4f94mr353331b3a.5.1727985390250; 
- Thu, 03 Oct 2024 12:56:30 -0700 (PDT)
+ bh=fKyZ9yVdYOlQzlf3uyZhmFnGqIRBgzBvUTn8lHAqFzU=;
+ b=i2JY6ratuMaHu6Y5cyoFqrbPre9ihOlhALeDdQ75DQNt2YkMf6uyGSULnVE1SmJAcG
+ uy9SvM+YSB8L4LjPX9P9qL6ckmtycaoD7sFkn/BKIiSNEFSypiFgslYNet/US6BOcDS5
+ e+3zEV/mDQpft/apahjLT+asen3zHU0lgP2e62fUqhZdI+EutWZO6YSJ8umdmaAp+qjc
+ o/H7ZjT7jZCc/OPk3x4kWSA5b07G0yXzIpGftRUih8ZK6efzxO1a0B4Mz5JMBVO0NAhb
+ AkXiQtg89aQ7db3mHdBxarJ5Y2KYQ06P4l0+tIg3jFGT3LO0EwfL0vsk5ImLenamKJxr
+ RVaQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU4CSWqKl/+qYJNUFt0riG1UYFgemjuazkdB/5FJ5hAU9NoLCbUxgiHX+lI6NMwvp76wIIk0jRkCONI@nongnu.org
+X-Gm-Message-State: AOJu0YwCBlkEH6oIQ86LUcfkTGvI9ZSPPLp1IQsopSW6JmKwP7tmfypi
+ COFCM/kBo6SgPaq+rJRsNb4RRqIyA2NVTXm4g6p7EEeonB1eCnyJWT9dT2+2bG8j4YiKEgaGoZu
+ w
+X-Google-Smtp-Source: AGHT+IHmSwp0VgLVNhVl0z+b8Z/GEgFcduHi1Xqkrc5oaxbtc1PL02DnlVz43gOXBgBfR+EzDG8mvQ==
+X-Received: by 2002:a17:902:c952:b0:20b:9b07:7779 with SMTP id
+ d9443c01a7336-20bfdf84225mr5835355ad.15.1727986437554; 
+ Thu, 03 Oct 2024 13:13:57 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71dd9ddc8d6sm1748122b3a.125.2024.10.03.12.56.29
+ d9443c01a7336-20bef7fbca9sm12537755ad.238.2024.10.03.13.13.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Oct 2024 12:56:29 -0700 (PDT)
-Message-ID: <ac79fcea-b1b7-4396-8f82-eaa3ba78b455@linaro.org>
-Date: Thu, 3 Oct 2024 12:56:28 -0700
+ Thu, 03 Oct 2024 13:13:56 -0700 (PDT)
+Message-ID: <163e6cfc-755e-487d-8653-a5524876e171@linaro.org>
+Date: Thu, 3 Oct 2024 13:13:55 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] tests/tcg/x86_64: Add cross-modifying code test
-To: Ilya Leoshkevich <iii@linux.ibm.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-Cc: qemu-devel@nongnu.org
-References: <20241001150617.9977-1-iii@linux.ibm.com>
+Subject: Re: [PATCH v3] target/riscv/csr.c: Fix an access to VXSAT
+To: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>, alistair23@gmail.com
+Cc: alistair.francis@wdc.com, bmeng.cn@gmail.com, dbarboza@ventanamicro.com,
+ liwei1518@gmail.com, palmer@dabbelt.com, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com
+References: <CAKmqyKMmYPG0_jyrJFxvnxhTGTCAz4L5Lf6FouZpy3ZtywNiGA@mail.gmail.com>
+ <20241002084436.89347-1-evgenii.prokopiev@syntacore.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241001150617.9977-1-iii@linux.ibm.com>
+In-Reply-To: <20241002084436.89347-1-evgenii.prokopiev@syntacore.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,40 +101,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/1/24 08:03, Ilya Leoshkevich wrote:
-> commit f025692c992c ("accel/tcg: Clear PAGE_WRITE before translation")
-> fixed cross-modifying code handling, but did not add a test. The
-> changed code was further improved recently [1], and I was not sure
-> whether these modifications were safe (spoiler: they were fine).
+On 10/2/24 01:44, Evgenii Prokopiev wrote:
+> The register VXSAT should be RW only to the first bit.
+> The remaining bits should be 0.
 > 
-> Add a test to make sure there are no regressions.
+> The RISC-V Instruction Set Manual Volume I: Unprivileged Architecture
 > 
-> [1]https://lists.gnu.org/archive/html/qemu-devel/2022-09/msg00034.html
+> The vxsat CSR has a single read-write least-significant bit (vxsat[0])
+> that indicates if a fixed-point instruction has had to saturate an output
+> value to fit into a destination format. Bits vxsat[XLEN-1:1]
+> should be written as zeros.
 > 
-> Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
+> Signed-off-by: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 > ---
-> 
-> v3:https://lore.kernel.org/qemu-devel/20230316214711.318339-1-iii@linux.ibm.com/
-> v3 -> v4: Rebase.
->            I've been looking into the .NET failures under QEMU again and
->            what this test looks for was a suspect. It turned out to be
->            https://gitlab.com/qemu-project/qemu/-/issues/2600
->            but it would be good to have this test upstream to ensure
->            there are no regressions.
-> 
-> v2:https://patchew.org/QEMU/20220905154944.1284289-1-iii@linux.ibm.com/
-> v2 -> v3: Resend with a trivial rebase.
-> 
-> v1:https://lists.gnu.org/archive/html/qemu-devel/2022-09/msg00455.html
-> v1 -> v2: Fix tweaking the flags (Alex).
->            Keep the custom build rule for now.
-> 
->   tests/tcg/x86_64/Makefile.target        |  4 ++
->   tests/tcg/x86_64/cross-modifying-code.c | 80 +++++++++++++++++++++++++
->   2 files changed, 84 insertions(+)
->   create mode 100644 tests/tcg/x86_64/cross-modifying-code.c
+> Changes since v2:
+>      - Added reviewed-by tag
+>   target/riscv/csr.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+New versions should not be replies to previous versions.
+No need to re-spin *only* to collect tags; tools can do that.
+
+> 
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index bd080f92b5..69c41212e9 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -717,7 +717,7 @@ static RISCVException write_vxrm(CPURISCVState *env, int csrno,
+>   static RISCVException read_vxsat(CPURISCVState *env, int csrno,
+>                                    target_ulong *val)
+>   {
+> -    *val = env->vxsat;
+> +    *val = env->vxsat & BIT(0);
+>       return RISCV_EXCP_NONE;
+>   }
+
+Nit: no need to mask on read...
+
+>   
+> @@ -727,7 +727,7 @@ static RISCVException write_vxsat(CPURISCVState *env, int csrno,
+>   #if !defined(CONFIG_USER_ONLY)
+>       env->mstatus |= MSTATUS_VS;
+>   #endif
+> -    env->vxsat = val;
+> +    env->vxsat = val & BIT(0);
+>       return RISCV_EXCP_NONE;
+>   }
+
+... because you know the value is already correct from the write.
 
 
 r~
