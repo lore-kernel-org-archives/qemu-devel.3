@@ -4,110 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E4BDCF34CA
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 21:43:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC34FCF34CC
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 21:46:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swTbb-0003XU-1a; Thu, 03 Oct 2024 17:43:27 -0400
+	id 1swTeO-0004U9-O1; Thu, 03 Oct 2024 17:46:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1swTbZ-0003X4-H4
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:43:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1swTbX-0000fs-PV
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:43:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727991801;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nR3gvsTeUeSK+aIRUGB28gwBzBHYFQhEYR+AW9GuXQQ=;
- b=HoPNPpaKyLcfFr8gcIBb/I/S0QuX1HfCyJBCAfnIMI4eHNm7dfxHdGBEONPtjhRhKFACLw
- tGBaB/RF6iAsjwpS0rIWMuC8O98erfnayW0P7NVXVXWA1nHsZLYNUMkUWR73hvuDq9Xseh
- hP5SHTEMRZpg5nkPbfbLEvUIIko6q9A=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-417-kSwP7KLaN2OpiwUtoxTMmw-1; Thu, 03 Oct 2024 17:43:20 -0400
-X-MC-Unique: kSwP7KLaN2OpiwUtoxTMmw-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7ae5c5ba98bso231420685a.0
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 14:43:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swTeE-0004TH-Qt
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:46:16 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swTeC-0002X7-NL
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:46:10 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-42cb58d810eso15128155e9.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 14:46:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727991967; x=1728596767; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=vnN6jLsDl+p4pWf+ZTOLJ12/z5S4Sk1IkjuFC/29rAs=;
+ b=Ib9qjY4+uMdfH1ae7rQrbkXl8fBluyxf0MRU/+uKQB9Rifs86dnQDdUB8+7xP9uMEd
+ 2H1/mcbw0lJyrWhzqO1yZxJS1l6qg0uh+ikjTRxD9WqxmogBCQkNtVjzGwgOttr09VY4
+ 3vIOm3B4+i77X69X1Xn9eGzi3UOfpnktitdTSP+ZS/FjtcOaRsKCOZXCSUfZxg87f+d5
+ 6zZvt5iJplaS9JELegbuWOcLjTIuEupwG3Y1Jhkh3g35Pmh33LUxAvGIV6RneYxPuSc3
+ WT0rGfGTYl6MIaXJ+tLKld+Oy0+4NFfm6LXIhva7H9j8wds1cDWvDSj68pSkPj13jeQF
+ ACVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727991800; x=1728596600;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nR3gvsTeUeSK+aIRUGB28gwBzBHYFQhEYR+AW9GuXQQ=;
- b=oJY/h43g+f3hLrMoohbFfcwt5u9JaNbIT5sj3ibLyo81VpnvCeo11gVeYlEdsv+tT6
- NJI201bcX62SNza+aJ+U6IINhlRu6ktxe1Rje9T4B77B+/2dz45JIys5WzfwfdeIJ3cN
- 3ca/D5mvk2Tblo6slIlDhf8yXPegaObbKRODNdCPST987D2XFIl/Xe9xbAOxU/YusFf7
- JbpJg2lf4V8puEx0XB1UQbdxhXB/jr7V57RM3GRYiC607hAqqj8JCFx8JN1dg+JkozUQ
- 9KvXlSqUW6bQ+fKvO/NtSS3TD3hVvYs2X1oZ9HHrP21dgAzGyTGspmqSxJ4ERG3NULuR
- fwxg==
+ d=1e100.net; s=20230601; t=1727991967; x=1728596767;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vnN6jLsDl+p4pWf+ZTOLJ12/z5S4Sk1IkjuFC/29rAs=;
+ b=k3FLC4kqouL7iCpWsEpqQUPTdyxKV1wXa50BmcZ2/RHLM6ZNrf5y/IA8sMnzUz2S/B
+ njPBdWoXhFDQJFQ9NiJLQoFJyTvYVX+qazF+0DCtPV+uaFd930rgm9Wn1Et9ax6xxS0u
+ dNCckUM1lr08ZubwmcDYk/6Ci4vRIX4Po/FkSSzRGk1FYuZDY2ero/+3T03uiMf+ZOcf
+ FeU3DS6jCxfjQjVWN5teDF/1nTsRxmQOvfJFIM7SnVhGypCCYlSw9VOqjjO1VF3QKLDL
+ 5kV2OBJQT/CUVwrBBuAuKBUFSnsV3NRXIdGp4bMbuZjH0H57bMH7xX6DmdKtuJ1pteR8
+ Nvyg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVCVdD9fZFNwZbpyM2FcCtKuRM8tsoyorR5WXLSt6n8ubB8n6tyuKo2dXyZNhwEQJkDhW/7JXGhTsfi@nongnu.org
-X-Gm-Message-State: AOJu0YwEo65pTGiKj0u1hvEOnIc02/FwJipOOSeH+2cecrG/DMdE/Tc6
- I/5XjbNZWDNL+xXJmnnryb9+zSfq3oaOE8/wDhT7Lja+vslNecggK/qd+8Pbb+6PIKmGEL/XpQG
- 4nf/nJ7IjGrVtItnTERGzGmEG4hVcuBsrt1ATnZF9WqunVTBWqq73
-X-Received: by 2002:a05:620a:2697:b0:7a1:e2d4:4ff3 with SMTP id
- af79cd13be357-7ae6f4219b9mr96792285a.3.1727991800200; 
- Thu, 03 Oct 2024 14:43:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG/53UMHwmSM1e7BOlwpHt+KhS5OF0e43lF0H85i9xfKHdWbLE/c2fnEfAVmGp683vIAUKDlA==
-X-Received: by 2002:a05:620a:2697:b0:7a1:e2d4:4ff3 with SMTP id
- af79cd13be357-7ae6f4219b9mr96787885a.3.1727991799857; 
- Thu, 03 Oct 2024 14:43:19 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7ae6b3dae76sm80824085a.113.2024.10.03.14.43.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Oct 2024 14:43:17 -0700 (PDT)
-Date: Thu, 3 Oct 2024 17:43:14 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Michael Galaxy <mgalaxy@akamai.com>
-Cc: Sean Hefty <shefty@nvidia.com>, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "yu.zhang@ionos.com" <yu.zhang@ionos.com>,
- "elmar.gerdes@ionos.com" <elmar.gerdes@ionos.com>,
- zhengchuan <zhengchuan@huawei.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "lizhijian@fujitsu.com" <lizhijian@fujitsu.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- Xiexiangyou <xiexiangyou@huawei.com>,
- "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
- "lixiao (H)" <lixiao91@huawei.com>,
- "jinpu.wang@ionos.com" <jinpu.wang@ionos.com>,
- Wangjialin <wangjialin23@huawei.com>
-Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
-Message-ID: <Zv8P8uQmSowF8sGl@x1n>
-References: <20240827165643-mutt-send-email-mst@kernel.org>
- <027c4f24-f515-4fdb-8770-6bf2433e0f43@akamai.com>
- <84c74f1a95a648b18c9d41b8c5ef2f60@huawei.com>
- <ZvQnbzV9SlXKlarV@x1n>
- <DM6PR12MB431364C7A2D94609B4AAF9A8BD6B2@DM6PR12MB4313.namprd12.prod.outlook.com>
- <0730fa9b-49cd-46e4-9264-afabe2486154@akamai.com>
- <Zvrq7nSbiLfPQoIY@x1n>
- <DM6PR12MB4313D6BA256740DE1ACA29E9BD762@DM6PR12MB4313.namprd12.prod.outlook.com>
- <ZvsAV0MugV85HuZf@x1n>
- <c24fa344-0add-477d-8ed3-bf2e91550e0b@akamai.com>
+ AJvYcCU21ydHGb5QX4ZC9sdk0gnJgxnES4DX5dpZHQM6Ra657Gqows8qX8V8uzskca2OfoQkVzNr4OYrKZI2@nongnu.org
+X-Gm-Message-State: AOJu0YyLrUyKZnDb1kjP6QZfKbQQp7rekqU8AQvxGOv2nY9T8UWa9j2G
+ wDRdNjOsPPlHigCcRC3o4e6LFwXVV6c0aD6iozZSLqTYXGar/LRYuGzJtguj/5/1H9/jogQW6oT
+ dFo0=
+X-Google-Smtp-Source: AGHT+IHH6xFK2NyltzuqQlBRcKqEFBGVJA9EPjyJWN0CIaRkCtMJ0mnmjmNAxkLLpn03DEeCkAN1Wg==
+X-Received: by 2002:adf:fd50:0:b0:371:8685:84c with SMTP id
+ ffacd0b85a97d-37d0f6c612fmr242941f8f.15.1727991966964; 
+ Thu, 03 Oct 2024 14:46:06 -0700 (PDT)
+Received: from [172.33.27.23] (134.pool62-36-43.static.orange.es.
+ [62.36.43.134]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37d0824502fsm2031592f8f.52.2024.10.03.14.46.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Oct 2024 14:46:05 -0700 (PDT)
+Message-ID: <2d126eab-8521-4a6f-9144-15b43252892c@linaro.org>
+Date: Thu, 3 Oct 2024 23:46:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <c24fa344-0add-477d-8ed3-bf2e91550e0b@akamai.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/13] qemu/bswap: Introduce ld/st_endian_p() API
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240930073450.33195-1-philmd@linaro.org>
+ <20240930073450.33195-2-philmd@linaro.org>
+ <4c8e6941-e73d-4504-b289-987ddf49582d@linaro.org>
+ <39042725-ed09-4ab4-9cd2-52d4899c2e3b@linaro.org>
+ <f2b0908d-6e8f-4625-a297-5ad189da790b@linaro.org>
+ <3146a8f5-7439-4566-ab24-eb0771dd0954@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <3146a8f5-7439-4566-ab24-eb0771dd0954@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,22 +100,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 03, 2024 at 04:26:27PM -0500, Michael Galaxy wrote:
-> What about the testing solution that I mentioned?
+On 3/10/24 23:37, Richard Henderson wrote:
+> On 10/3/24 14:34, Philippe Mathieu-Daudé wrote:
+>> On 3/10/24 23:28, Richard Henderson wrote:
+>>> On 10/3/24 13:50, Philippe Mathieu-Daudé wrote:
+>>>> On 30/9/24 09:34, Philippe Mathieu-Daudé wrote:
+>>>>> Introduce the ld/st_endian_p() API, which takes an extra
+>>>>
+>>>> Alternatively we could use ld/st_te_p() since we already
+>>>> have ld/st_he_p() for host endianness.
+>>>
+>>> That's what ld/st_p are -- target-specific, in exec/cpu-all.h.
+>>
+>> They are indeed *target-specific*, so we can not use them in
+>> target-agnostic code.
+>>
+>> By explicitly passing the endianness, ld/st_endian_p() API is
+>> target-agnostic.
 > 
-> Does that satisfy your concerns? Or is there still a gap here that needs to
-> be met?
+> Then I miss whatever you meant here re st_te_p().
+> Care to elaborate?
 
-I think such testing framework would be helpful, especially if we can kick
-it off in CI when preparing pull requests, then we can make sure nothing
-will break RDMA easily.
+I might had a bad start by adding this now endian-agnostic API
+before removing the current endian-specific one.
 
-Meanwhile, we still need people committed to this and actively maintain it,
-who knows the rdma code well.
+Goal is instead of having machine code build twice, one for each
+endianness, the same machine will be built once, but registering
+2x machines. Endianness being a machine property, propagated to
+the vCPUs and HW.
 
-Thanks,
+Instead of the following target-specific API:
 
--- 
-Peter Xu
+   #if TARGET_BIG_ENDIAN
+   #define stl_p(p, v) stl_be_p(p, v)
+   #else
+   #define stl_p(p, v) stl_le_p(p, v)
+   #endif
 
+I'm suggesting this target-agnostic one:
+
+   #define stl_endian_p(big_endian, p, v) \
+                       (big_endian) ? stl_be_p(p, v) : stl_le_p(p, v)
 
