@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D7A7CF857A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37122CF857D
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 11:23:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swJvN-0000ie-RT; Thu, 03 Oct 2024 07:23:13 -0400
+	id 1swJvJ-0000h8-1U; Thu, 03 Oct 2024 07:23:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1swJvL-0000ho-08
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 07:23:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1swJvE-0000ft-9Y
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 07:23:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1swJvG-0004q9-FM
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 07:23:10 -0400
+ id 1swJvC-0004pm-UF
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 07:23:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727954584;
+ s=mimecast20190719; t=1727954581;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pHm6wTPTzUjfAO4AzpcMzfTLULgYF6KhJ4rnk6cMfEI=;
- b=V0j8BlVS4+G+Wlvt9rD+4lxLyNCaUIaPnoTIJ4uEE4CqD9IE00dYZmLGflQyyfGftkpt5y
- +zLpWUUNIn2Xhkv6+mdgdWsB71Hug5tHsJDgCEOC6FgMdqNh8lvB9Is0c9fY9K2Y4EToAy
- uyf6YwZNuj1ePqvgmhR71t/hSGeiLig=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=O6C1hDu3cQzCMMLEEH03Ybt186w7zh//uiMvt3AxpV4=;
+ b=TYzjfFBKyyr3YGKIWadBM4kLNFTBm6B47KQXpRuw3uFnrw4ERTNRvmOxPgi4vCS1J62e98
+ 4Ua8YocwjI0DfRnw+tycOX85WsPF4FmEVAEy6/IrM92wqr2izH5EDzA5TGDNpdj3PzNChI
+ cvPL1tWPXamBdl3zXbercW1Y7D63HDM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-_ZMQ2v7pNvq1Fpysyg6O_w-1; Thu,
- 03 Oct 2024 07:23:01 -0400
-X-MC-Unique: _ZMQ2v7pNvq1Fpysyg6O_w-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-98-GSEgY-g6PdyDpPfjUZQGJw-1; Thu,
+ 03 Oct 2024 07:22:55 -0400
+X-MC-Unique: GSEgY-g6PdyDpPfjUZQGJw-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D4F491955F54; Thu,  3 Oct 2024 11:22:59 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7B96A19560AB; Thu,  3 Oct 2024 11:22:54 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.36])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EA60019560A3; Thu,  3 Oct 2024 11:22:57 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 04AC919560A3; Thu,  3 Oct 2024 11:22:52 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -55,16 +55,16 @@ Cc: peter.maydell@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 02/16] hw/audio/hda: fix memory leak on audio setup
-Date: Thu,  3 Oct 2024 15:22:29 +0400
-Message-ID: <20241003112244.3340697-3-marcandre.lureau@redhat.com>
+Subject: [PATCH 01/16] hw/audio/hda: free timer on exit
+Date: Thu,  3 Oct 2024 15:22:28 +0400
+Message-ID: <20241003112244.3340697-2-marcandre.lureau@redhat.com>
 In-Reply-To: <20241003112244.3340697-1-marcandre.lureau@redhat.com>
 References: <20241003112244.3340697-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -92,86 +92,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-When SET_STREAM_FORMAT is called, we should clear the existing setup.
-
-Factor out common function to close a stream.
-
-Direct leak of 144 byte(s) in 3 object(s) allocated from:
-    #0 0x7f91d38f7350 in calloc (/lib64/libasan.so.8+0xf7350) (BuildId: a4ad7eb954b390cf00f07fa10952988a41d9fc7a)
-    #1 0x7f91d2ab7871 in g_malloc0 (/lib64/libglib-2.0.so.0+0x64871) (BuildId: 36b60dbd02e796145a982d0151ce37202ec05649)
-    #2 0x562fa2f447ee in timer_new_full /home/elmarco/src/qemu/include/qemu/timer.h:538
-    #3 0x562fa2f4486f in timer_new /home/elmarco/src/qemu/include/qemu/timer.h:559
-    #4 0x562fa2f448a9 in timer_new_ns /home/elmarco/src/qemu/include/qemu/timer.h:577
-    #5 0x562fa2f47955 in hda_audio_setup ../hw/audio/hda-codec.c:490
-    #6 0x562fa2f4897e in hda_audio_command ../hw/audio/hda-codec.c:605
+Fixes: 280c1e1cd ("audio/hda: create millisecond timers that handle IO")
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/audio/hda-codec.c | 33 ++++++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 13 deletions(-)
+ hw/audio/hda-codec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/hw/audio/hda-codec.c b/hw/audio/hda-codec.c
-index 74c0292284..bc661504cf 100644
+index b40eec9604..74c0292284 100644
 --- a/hw/audio/hda-codec.c
 +++ b/hw/audio/hda-codec.c
-@@ -472,6 +472,24 @@ static void hda_audio_set_amp(HDAAudioStream *st)
-     }
- }
- 
-+static void hda_close_stream(HDAAudioState *a, HDAAudioStream *st)
-+{
-+    if (st->node == NULL) {
-+        return;
-+    }
-+    if (a->use_timer) {
-+        timer_free(st->buft);
-+        st->buft = NULL;
-+    }
-+    if (st->output) {
-+        AUD_close_out(&a->card, st->voice.out);
-+        st->voice.out = NULL;
-+    } else {
-+        AUD_close_in(&a->card, st->voice.in);
-+        st->voice.in = NULL;
-+    }
-+}
-+
- static void hda_audio_setup(HDAAudioStream *st)
- {
-     bool use_timer = st->state->use_timer;
-@@ -484,6 +502,7 @@ static void hda_audio_setup(HDAAudioStream *st)
-     trace_hda_audio_format(st->node->name, st->as.nchannels,
-                            fmt2name[st->as.fmt], st->as.freq);
- 
-+    hda_close_stream(st->state, st);
-     if (st->output) {
-         if (use_timer) {
-             cb = hda_audio_output_cb;
-@@ -741,23 +760,11 @@ static void hda_audio_init(HDACodecDevice *hda,
- static void hda_audio_exit(HDACodecDevice *hda)
- {
-     HDAAudioState *a = HDA_AUDIO(hda);
--    HDAAudioStream *st;
-     int i;
- 
-     dprint(a, 1, "%s\n", __func__);
-     for (i = 0; i < ARRAY_SIZE(a->st); i++) {
--        st = a->st + i;
--        if (st->node == NULL) {
--            continue;
--        }
--        if (a->use_timer) {
--            timer_free(st->buft);
--        }
--        if (st->output) {
--            AUD_close_out(&a->card, st->voice.out);
--        } else {
--            AUD_close_in(&a->card, st->voice.in);
--        }
-+        hda_close_stream(a, a->st + i);
-     }
-     AUD_remove_card(&a->card);
- }
+@@ -751,7 +751,7 @@ static void hda_audio_exit(HDACodecDevice *hda)
+             continue;
+         }
+         if (a->use_timer) {
+-            timer_del(st->buft);
++            timer_free(st->buft);
+         }
+         if (st->output) {
+             AUD_close_out(&a->card, st->voice.out);
 -- 
 2.45.2.827.g557ae147e6
 
