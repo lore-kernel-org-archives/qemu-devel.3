@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC34FCF34CC
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 21:46:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67ED7CF34CC
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 21:47:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swTeO-0004U9-O1; Thu, 03 Oct 2024 17:46:24 -0400
+	id 1swTfj-00057u-7e; Thu, 03 Oct 2024 17:47:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swTeE-0004TH-Qt
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:46:16 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1swTfh-00057j-Hj
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:47:41 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swTeC-0002X7-NL
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:46:10 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-42cb58d810eso15128155e9.0
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 14:46:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1swTfg-0003AY-26
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:47:41 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-20aff65aa37so12142865ad.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 14:47:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727991967; x=1728596767; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727992058; x=1728596858; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vnN6jLsDl+p4pWf+ZTOLJ12/z5S4Sk1IkjuFC/29rAs=;
- b=Ib9qjY4+uMdfH1ae7rQrbkXl8fBluyxf0MRU/+uKQB9Rifs86dnQDdUB8+7xP9uMEd
- 2H1/mcbw0lJyrWhzqO1yZxJS1l6qg0uh+ikjTRxD9WqxmogBCQkNtVjzGwgOttr09VY4
- 3vIOm3B4+i77X69X1Xn9eGzi3UOfpnktitdTSP+ZS/FjtcOaRsKCOZXCSUfZxg87f+d5
- 6zZvt5iJplaS9JELegbuWOcLjTIuEupwG3Y1Jhkh3g35Pmh33LUxAvGIV6RneYxPuSc3
- WT0rGfGTYl6MIaXJ+tLKld+Oy0+4NFfm6LXIhva7H9j8wds1cDWvDSj68pSkPj13jeQF
- ACVw==
+ bh=3QxWi9pEixgIiFTkrRcIXA33MaiMpqS+3eoTnMi3J2E=;
+ b=CF0Wyj9+4MSTC8HifPgCWRmWPK+uO0fLPC0J34S4iQj6K/FOFzX+GnvuWGFwqzitD0
+ 6XGWj/O9rfFMsegZQ1DR3LlNokO1w6N/A7F/fdgdRmMn0BCpBPh3OvT9s0ltD5wsnvLo
+ ugdEv0iQYZKY5OYXKk2is4DgCI6/qlISOzMe66W5EcmTtOBFSSzLW6/qtwj+iJHlwFyE
+ Lmp9OQls1xcm2mX3DPF/g2PM6yjLnajDhN4ZQpEGeXgBFI8zaiwDJ7tCjIE2KAivzu0H
+ OsfTUNp4tdL2zV0bdeOiboH6SCwJwj98vz8hL3MQgb1N75OxzUM1gxK0yXKoe7KqAiqe
+ f2DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727991967; x=1728596767;
+ d=1e100.net; s=20230601; t=1727992058; x=1728596858;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vnN6jLsDl+p4pWf+ZTOLJ12/z5S4Sk1IkjuFC/29rAs=;
- b=k3FLC4kqouL7iCpWsEpqQUPTdyxKV1wXa50BmcZ2/RHLM6ZNrf5y/IA8sMnzUz2S/B
- njPBdWoXhFDQJFQ9NiJLQoFJyTvYVX+qazF+0DCtPV+uaFd930rgm9Wn1Et9ax6xxS0u
- dNCckUM1lr08ZubwmcDYk/6Ci4vRIX4Po/FkSSzRGk1FYuZDY2ero/+3T03uiMf+ZOcf
- FeU3DS6jCxfjQjVWN5teDF/1nTsRxmQOvfJFIM7SnVhGypCCYlSw9VOqjjO1VF3QKLDL
- 5kV2OBJQT/CUVwrBBuAuKBUFSnsV3NRXIdGp4bMbuZjH0H57bMH7xX6DmdKtuJ1pteR8
- Nvyg==
+ bh=3QxWi9pEixgIiFTkrRcIXA33MaiMpqS+3eoTnMi3J2E=;
+ b=kNJdiw8aRucKptcpjSgsVPxXaY7ENeNFHHCyOiXXA9L99pd/Py/DDqCdlyciNFVJTv
+ BRwe7fjl+dI9TQWCTz08mGkfyIjNYeR2oH5M3D0Moh8Fr2WXocFAJDc/pbeiAhCkCvdp
+ yHPKIK8JIAnJoD52BMXs2mT5xroRvApTYQ2936i8QF+jQU+CCxGn2SilgCuUmNlyk8sX
+ 4kRoLECK9lDQyMYNH2irPjGnx3ERvb6n4twyhzE1o2KhAF0pV5m/p9fHrFHQbwYTf0zJ
+ n+HvNsa9JnYMK5hxiKhQ79pwZGXFBsVZOTILB7jzRKhif3d2WuUpnqbGwKlazkkvuakk
+ GwNQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU21ydHGb5QX4ZC9sdk0gnJgxnES4DX5dpZHQM6Ra657Gqows8qX8V8uzskca2OfoQkVzNr4OYrKZI2@nongnu.org
-X-Gm-Message-State: AOJu0YyLrUyKZnDb1kjP6QZfKbQQp7rekqU8AQvxGOv2nY9T8UWa9j2G
- wDRdNjOsPPlHigCcRC3o4e6LFwXVV6c0aD6iozZSLqTYXGar/LRYuGzJtguj/5/1H9/jogQW6oT
- dFo0=
-X-Google-Smtp-Source: AGHT+IHH6xFK2NyltzuqQlBRcKqEFBGVJA9EPjyJWN0CIaRkCtMJ0mnmjmNAxkLLpn03DEeCkAN1Wg==
-X-Received: by 2002:adf:fd50:0:b0:371:8685:84c with SMTP id
- ffacd0b85a97d-37d0f6c612fmr242941f8f.15.1727991966964; 
- Thu, 03 Oct 2024 14:46:06 -0700 (PDT)
-Received: from [172.33.27.23] (134.pool62-36-43.static.orange.es.
- [62.36.43.134]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d0824502fsm2031592f8f.52.2024.10.03.14.46.05
+ AJvYcCV8u7VQ3BVBck2OrBlxHx7aPpJpggU8tcFDmyiei3Hss5+bKtRjolgRkabkDPnJvfB92ZGOzp7r+TPA@nongnu.org
+X-Gm-Message-State: AOJu0YwST4p+BtEx/857U3m5/uWCx4ki0qyenpglq4HmN7zjBJ09k3+C
+ UjESdLYHDJsn9MmPyKlIdDDO16f824heRf8NC+AtgAo6Gm7DuzGrYTVPkOphVp1n9TamLgvcw9S
+ i
+X-Google-Smtp-Source: AGHT+IGXaB6BURlL2MCAdzNVdUjIWPVniut2vueC/X0s4z0v7p3OQU3iBCjcnqekZ0exOFWsmVGF9w==
+X-Received: by 2002:a17:90b:3890:b0:2e0:876c:8cb4 with SMTP id
+ 98e67ed59e1d1-2e1e6321821mr588228a91.30.1727992058495; 
+ Thu, 03 Oct 2024 14:47:38 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e18f54168bsm4376406a91.7.2024.10.03.14.47.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Oct 2024 14:46:05 -0700 (PDT)
-Message-ID: <2d126eab-8521-4a6f-9144-15b43252892c@linaro.org>
-Date: Thu, 3 Oct 2024 23:46:04 +0200
+ Thu, 03 Oct 2024 14:47:38 -0700 (PDT)
+Message-ID: <7d865af1-41d9-4e0a-a76a-c7acc495f1b7@linaro.org>
+Date: Thu, 3 Oct 2024 14:47:36 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/13] qemu/bswap: Introduce ld/st_endian_p() API
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 09/13] exec/memory_ldst_phys: Introduce
+ ld/st_endian_phys() API
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
 References: <20240930073450.33195-1-philmd@linaro.org>
- <20240930073450.33195-2-philmd@linaro.org>
- <4c8e6941-e73d-4504-b289-987ddf49582d@linaro.org>
- <39042725-ed09-4ab4-9cd2-52d4899c2e3b@linaro.org>
- <f2b0908d-6e8f-4625-a297-5ad189da790b@linaro.org>
- <3146a8f5-7439-4566-ab24-eb0771dd0954@linaro.org>
+ <20240930073450.33195-10-philmd@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <3146a8f5-7439-4566-ab24-eb0771dd0954@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240930073450.33195-10-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,45 +100,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/10/24 23:37, Richard Henderson wrote:
-> On 10/3/24 14:34, Philippe Mathieu-Daudé wrote:
->> On 3/10/24 23:28, Richard Henderson wrote:
->>> On 10/3/24 13:50, Philippe Mathieu-Daudé wrote:
->>>> On 30/9/24 09:34, Philippe Mathieu-Daudé wrote:
->>>>> Introduce the ld/st_endian_p() API, which takes an extra
->>>>
->>>> Alternatively we could use ld/st_te_p() since we already
->>>> have ld/st_he_p() for host endianness.
->>>
->>> That's what ld/st_p are -- target-specific, in exec/cpu-all.h.
->>
->> They are indeed *target-specific*, so we can not use them in
->> target-agnostic code.
->>
->> By explicitly passing the endianness, ld/st_endian_p() API is
->> target-agnostic.
+On 9/30/24 00:34, Philippe Mathieu-Daudé wrote:
+> Introduce the ld/st_endian_phys() API, which takes an extra
+> boolean argument to dispatch to ld/st_{be,le}_phys() methods.
 > 
-> Then I miss whatever you meant here re st_te_p().
-> Care to elaborate?
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> TODO: Update docstring regexp
+> ---
+>   include/exec/memory_ldst_phys.h.inc | 66 +++++++++++++++++++++++++++++
+>   1 file changed, 66 insertions(+)
+> 
+> diff --git a/include/exec/memory_ldst_phys.h.inc b/include/exec/memory_ldst_phys.h.inc
+> index ecd678610d..8ea162b40d 100644
+> --- a/include/exec/memory_ldst_phys.h.inc
+> +++ b/include/exec/memory_ldst_phys.h.inc
+> @@ -74,6 +74,16 @@ static inline uint16_t glue(lduw_be_phys, SUFFIX)(ARG1_DECL, hwaddr addr)
+>                                                  MEMTXATTRS_UNSPECIFIED, NULL);
+>   }
+>   
+> +static inline uint16_t glue(lduw_endian_phys, SUFFIX)(bool big_endian,
+> +                                                      ARG1_DECL, hwaddr addr)
+> +{
+> +    return big_endian
+> +           ? glue(address_space_lduw_le, SUFFIX)(ARG1, addr,
+> +                                                 MEMTXATTRS_UNSPECIFIED, NULL)
+> +           : glue(address_space_lduw_be, SUFFIX)(ARG1, addr,
+> +                                                 MEMTXATTRS_UNSPECIFIED, NULL);
+> +}
 
-I might had a bad start by adding this now endian-agnostic API
-before removing the current endian-specific one.
+Endian swap aside, I think you should expose this at the address_space_* level first, 
+where the internals already have
 
-Goal is instead of having machine code build twice, one for each
-endianness, the same machine will be built once, but registering
-2x machines. Endianness being a machine property, propagated to
-the vCPUs and HW.
+     return glue(address_space_lduw_internal, SUFFIX)(ARG1, addr, attrs, result,
+                                                      DEVICE_LITTLE_ENDIAN);
 
-Instead of the following target-specific API:
+then you can pass big_endian directly (perhaps frobbed into DEVICE_* space).
 
-   #if TARGET_BIG_ENDIAN
-   #define stl_p(p, v) stl_be_p(p, v)
-   #else
-   #define stl_p(p, v) stl_le_p(p, v)
-   #endif
+That leaves one unconditional function call instead of two conditional calls.
 
-I'm suggesting this target-agnostic one:
 
-   #define stl_endian_p(big_endian, p, v) \
-                       (big_endian) ? stl_be_p(p, v) : stl_le_p(p, v)
+r~
+
 
