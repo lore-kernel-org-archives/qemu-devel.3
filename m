@@ -4,98 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59563CF34A9
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 14:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A793CF34A9
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 14:55:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swNB6-0005v0-GI; Thu, 03 Oct 2024 10:51:40 -0400
+	id 1swNEM-0006nq-EH; Thu, 03 Oct 2024 10:55:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1swNAw-0005uN-CI
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 10:51:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1swNAu-0003RR-Fq
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 10:51:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727967087;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GFOC5ltxjnukHbOiTZnLdPhdjlEFGzr/Dkn5csRqcok=;
- b=FDtK/xN88MSfVgz0opIvRwHSeukVAdOnKoQUuLfITDSLunS1Nan4IHTkAS3ZMjqUVdSh5t
- o62CRvNYaG2UQ9qxWLOhhHnO3GcZaelHkUnGmM5teocnk19Nc+t6jERYt+FWxoBhWA5n8v
- zwaNrCFWTu1ZKYrk2J+Ua5t0ffV1G4o=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-140-6R4OGSTCN5-lpsi05erGnQ-1; Thu, 03 Oct 2024 10:51:25 -0400
-X-MC-Unique: 6R4OGSTCN5-lpsi05erGnQ-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-42f310f0ed2so8818985e9.1
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 07:51:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1swNEK-0006nQ-P9
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 10:55:00 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1swNEJ-0003oL-4B
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 10:55:00 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2fabc9bc5dfso15043711fa.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 07:54:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727967297; x=1728572097; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=cqimRBy0v2IPGVyeJPgjgqfnG1RerwuQyi6dDHbl1Fw=;
+ b=AlfPmvRxKgN3idZo705X2wlJlGl1N7YBS6/9ZViminyNbd26snTsJD0BFuyL75FPu4
+ yIn7VDeGUcD00ZnRmtg3eQ7CCwYdRjh/a7zT3nYUwrc1QmFuTHR0rUjQQcn4TOnUzyDs
+ 9NYgVB5I3miHe3l1MOJK75uScSb6AhJknsVi+hvVVXVTqPcqnTnoODaKFXoQZ3d10RZI
+ 8cmHnRSvAYLbL1Q75Y/tlX81WQtcJStUuXgJo0X2B/FeDmirPfiEhiMQCYN2iz9WpFIa
+ paGaB0eBm7t/dn33nnYdeSUuwvfrjHn5rutKxdG2enQ0+voI8NGswQr8IxBa5zDSC/RT
+ 3bxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727967084; x=1728571884;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GFOC5ltxjnukHbOiTZnLdPhdjlEFGzr/Dkn5csRqcok=;
- b=J8XJpC7u6fwS8v+7fj9y8heNZcJSRTSaoaaFLkefosy3i0oGEncUYACW2D5PP/kpkM
- bNhhWTqXyt5cDUyPFuIEhuidMWuk/ek36kOj1kNH71GiA/FUHXKmVoVGBQam1fxccOXs
- oNge2ng+lvNwFf/miWCHENtO7HozIN+AceKnl295fgidlQ28lXfNBE0HZkAj+TSwDZoT
- C+AXfZff0TcKC9B5F1whFARjiS0PKWI8kKg9RQR2pfYDFezzQ2bR8F+0gnJkFrfWrhBI
- v2eAfHAvZALp0Yo07QJmqURBMMURnLeBOOjyVBQeE0jy2saMmmIc8VIBGRDDzaitDfG6
- /v2Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWHV7Pzfb4LRhkfnJjSF2XWjJy8/slGKvmP0lv9CEFybJoxr4z5HTNAPs6SMASi9qPBC1eMPE/epWj3@nongnu.org
-X-Gm-Message-State: AOJu0YwQM2Aozl9jra8r2s+dmov/QzXiL035S8eVuxcbhoFB+1/4j4/0
- yUi4megMMkg7Xk0tKgXhxuG3ydVv6OKxS5FlMprww2XoLPSIPov5BLn0lkGFNjCsp4/dx6r4XwP
- XnXf6fLWRQdVeu9MUgp3KD2ijzYNeru1koEmSTZ61bVzURax4iT8o
-X-Received: by 2002:a05:600c:1c26:b0:42c:b77a:bd21 with SMTP id
- 5b1f17b1804b1-42f777f00e0mr60514335e9.28.1727967083973; 
- Thu, 03 Oct 2024 07:51:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHZ6G3k/NxXaYRH9TBJ2crwndAkg4Z4yJNGSH7D8/wlS2L/LsF4ysezGdqf2xJL5nGToZ36Hg==
-X-Received: by 2002:a05:600c:1c26:b0:42c:b77a:bd21 with SMTP id
- 5b1f17b1804b1-42f777f00e0mr60514045e9.28.1727967083570; 
- Thu, 03 Oct 2024 07:51:23 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f802a0216sm17413925e9.33.2024.10.03.07.51.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Oct 2024 07:51:23 -0700 (PDT)
-Date: Thu, 3 Oct 2024 16:51:22 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v10 07/21] acpi/ghes: rework the logic to handle HEST
- source ID
-Message-ID: <20241003165122.542dd026@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20241001135759.474452d8@foz.lan>
-References: <cover.1726293808.git.mchehab+huawei@kernel.org>
- <0dd7081717b23b4c1536bc86abfa926388cf2139.1726293808.git.mchehab+huawei@kernel.org>
- <20240917135934.38579213@imammedo.users.ipa.redhat.com>
- <20241001135759.474452d8@foz.lan>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1727967297; x=1728572097;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cqimRBy0v2IPGVyeJPgjgqfnG1RerwuQyi6dDHbl1Fw=;
+ b=Q+cPioo0EH+aKMPV2iEy8M6SAAqp13e6UHqWaQH0rlMGNO0eTQmQwJ/D45V4g4gMbv
+ LSRo7YBvuyBPmEjy7pnjthwP/dYWhB31UyL8HoAHCgGhpGWlIXnxZHsVFAgMjQU38t+9
+ yzzpYwsolDs/2hkmunVR4IKzVX4ek4Mjz30EWrMl7GSeQYfpSCkPCxx2T1GiAw+67S7u
+ xpvB11Y+lAUcd3o2+lKpg390Vgllt2AoieIqE3uBkPPZgX4jGNu+nyoDxmnGJuLQHyu0
+ HlzcTZxPgJwnja5e6FAfFfM7D3yobDAZau2deQcoksqrEQq5d0IJ+4QA/S0m65OIjDc+
+ j1xw==
+X-Gm-Message-State: AOJu0Yx7qwGA+IOzxgauejqgbEjFxQ1JSZqYVhyxSBvfqBddX/iy1/Eu
+ XSqjMFinqYGQUJlWbAN0NyTaYNu1CWm2ATYa46b4JArWvCGlmr5EQDQuNOvwtlNyPheJ4q/UBBD
+ cwLEM2ylVgh8XBw26Uag3ZK/n9ah/i2W8qbZc3x4C+8PRTFyc
+X-Google-Smtp-Source: AGHT+IFeK3n+Mcg7Pa026KsNGRj6MLPZFmBS8CFcuQypa6Z79Ys5GPTvpHaPx2dAOxHYAA4nysaNGV5jcoDup/XIdr8=
+X-Received: by 2002:a05:651c:2209:b0:2fa:d296:6fbf with SMTP id
+ 38308e7fff4ca-2fae0ffcb20mr48393961fa.1.1727967297107; Thu, 03 Oct 2024
+ 07:54:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20240819144303.37852-1-peter.maydell@linaro.org>
+ <20240910110344.10e4805e@imammedo.users.ipa.redhat.com>
+ <CAFEAcA_Rjiy1so28OVPpL=+++XuU+gSXhn-v_WHMcpc_wa_xMw@mail.gmail.com>
+ <CAFEAcA94EdUOOk71nv4oFRJXNBM=62FCD9dfwVSWMS-VM_OZtw@mail.gmail.com>
+ <20240920124551.56f1e832@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240920124551.56f1e832@imammedo.users.ipa.redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 3 Oct 2024 15:54:45 +0100
+Message-ID: <CAFEAcA9weMO1Djm16fQB4JBDUCggXnOfzZ4cXHjqeMseXQRyEw@mail.gmail.com>
+Subject: Re: [PATCH] docs/system/cpu-hotplug: Update example's
+ socket-id/core-id
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,59 +92,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 1 Oct 2024 13:57:59 +0200
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+On Fri, 20 Sept 2024 at 11:45, Igor Mammedov <imammedo@redhat.com> wrote:
+>
+> On Thu, 19 Sep 2024 13:34:54 +0100
+> Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> > On Tue, 10 Sept 2024 at 10:38, Peter Maydell <peter.maydell@linaro.org> wrote:
+> > >
+> > > On Tue, 10 Sept 2024 at 10:03, Igor Mammedov <imammedo@redhat.com> wrote:
+> > > >
+> > > > On Mon, 19 Aug 2024 15:43:03 +0100
+> > > > Peter Maydell <peter.maydell@linaro.org> wrote:
+> > > > > @@ -83,34 +83,32 @@ vCPU hotplug
+> > > > >
+> > > > >        (QEMU) query-cpus-fast
+> > > > >        {
+> > > > > -          "execute": "query-cpus-fast",
+> > > > >            "arguments": {}
+> > > > > +          "execute": "query-cpus-fast",
+> > > > >        }
+> > > > >        {
+> > > > >            "return": [
+> > > > >                {
+> > > > > -                  "qom-path": "/machine/unattached/device[0]",
+> > > > > -                  "target": "x86_64",
+> > > > > -                  "thread-id": 11534,
+> > > > >                    "cpu-index": 0,
+> > > > >                    "props": {
+> > > > > -                      "socket-id": 0,
+> > > > >                        "core-id": 0,
+> > > > > +                      "socket-id": 0,
+> > > > >                        "thread-id": 0
+> > > > >                    },
+> > > > > -                  "arch": "x86"
+> > > > > +                  "qom-path": "/machine/unattached/device[0]",
+> > > > > +                  "target": "x86_64",
+> > > > > +                  "thread-id": 28957
+> > > > >                },
+> > > > >                {
+> > > > > -                  "qom-path": "/machine/peripheral/cpu-2",
+> > > > > -                  "target": "x86_64",
+> > > > > -                  "thread-id": 12106,
+> > > > >                    "cpu-index": 1,
+> > > > >                    "props": {
+> > > > > -                      "socket-id": 1,
+> > > > > -                      "core-id": 0,
+> > > > > +                      "core-id": 1,
+> > > > > +                      "socket-id": 0,
+> > > > >                        "thread-id": 0
+> > > > >                    },
+> > > > > -                  "arch": "x86"
+> > > > > +                  "qom-path": "/machine/peripheral/cpu-2",
+> > > > > +                  "target": "x86_64",
+> > > > > +                  "thread-id": 29095
+> > > > >                }
+> > > >
+> > > > beside reordering, which seems fine, this hunk also introduces target change
+> > > > perhaps a separate patch for that?
+> > >
+> > > What target change? It all says "target": "x86_64" both before
+> > > and after.
+>
+> my mistake,
+> I should've said  '"arch": "x86"' instead, which is gone after the patch
 
-> Em Tue, 17 Sep 2024 13:59:34 +0200
-> Igor Mammedov <imammedo@redhat.com> escreveu:
-> 
-> > On Sat, 14 Sep 2024 08:13:28 +0200
-> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> >   
-> > > The current logic is based on a lot of duct tape, with
-> > > offsets calculated based on one define with the number of
-> > > source IDs and an enum.
-> > > 
-> > > Rewrite the logic in a way that it would be more resilient
-> > > of code changes, by moving the source ID count to an enum
-> > > and make the offset calculus more explicit.
-> > > 
-> > > Such change was inspired on a patch from Jonathan Cameron
-> > > splitting the logic to get the CPER address on a separate
-> > > function, as this will be needed to support generic error
-> > > injection.    
-> > 
-> > so this patch switches to using HEST to lookup error status block
-> > by source id, though nothing in commit message mentions that.
-> > Perhaps it's time to rewrite commit message to be more
-> > specific/clear on what it's doing.  
-> > 
-> > now, I'd split this on several patches that should also take care of
-> > wiring needed to preserve old lookup to keep migration with 9.1 machines
-> > working:
-[...]
+This is because the "arch" output member was removed
+from the query-cpus-fast output in QEMU 6.0. If we
+mention this also in the commit message, is that OK?
 
+======
+docs/system/cpu-hotplug: Update example to match current QEMU
 
-> >  6. cleanup fwcfg based on x-has-hardware_errors_addr,
-> >        i.e. for 'true':
-> >           ask for write pointer to hardware_errors like it's done in current code
-> >           and don't register hest_addr write pointer
-> >        while for 'false'
-> >           do opposite of above.  
-> 
-> This doesn't work. without the fw_cfg logic for both, QEMU/BIOS won't boot 
-> and/or the hardware_errors won't work, causing ghes to do nothing.
+The example of how to do vCPU hotplug and hot-unlpug in the
+cpu-hotplug documentation no longer works, because the way
+we allocate socket-id and core-id to CPUs by default has
+changed at some point. The output also no longer matches what
+current QEMU produces in some more cosmetic ways.
 
-we should look more into it,
-only 1 of them hest_addr(9.2+) or hwerror_addr(9.1) is necessary
-so if it breaks, it looks like a bug somewhere to me.
+Update the example to match current QEMU. The differences are:
+ * the second CPU is now socket-id=0 core-id=1,
+   not socket-id=1 core-id=0
+ * the order of fields from the qmp_shell is now in
+   alphabetical order
+ * the "arch" member is no longer present in the query-cpus-fast
+   output (it was removed in QEMU 6.0)
 
-> 
-[...]
-> 
-> 
-> Thanks,
-> Mauro
-> 
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+======
 
+If that seems OK to you I'll send out a v2 with the updated
+commit message and the fix to the device_add line.
+
+thanks
+-- PMM
 
