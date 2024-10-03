@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D5D2CF34A2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A98ACF34A0
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 12:02:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swKXF-00016j-30; Thu, 03 Oct 2024 08:02:21 -0400
+	id 1swKXG-00018u-O7; Thu, 03 Oct 2024 08:02:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1swKX6-00013d-6u
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 08:02:13 -0400
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ id 1swKX9-00016N-Gn
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 08:02:17 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1swKWt-0003jT-EG
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 08:02:11 -0400
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-537a399e06dso984845e87.1
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 05:01:58 -0700 (PDT)
+ id 1swKX5-0003mO-VG
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 08:02:13 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a8a706236bfso58295766b.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 05:02:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727956917; x=1728561717; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=miVKMR4+8TB0V0xL2jTpdCXf/qy0jYYmyQBozO4nE6E=;
- b=yqI710PjO4W0VN8zecuX+65OjRHMCswCmC9TfqdDsZ3pNMOJWqEf1viGQjXTXlHzM1
- lrHt8RSVTaoJ5FDkN7cI1UH6Dncb0dwF3ewEX52M4Z0tKU0YhfvqJ4+xkhIDQOqUNQHx
- vhTMTWql+t+RJoD1vtYp3f9aj+J6U3e4FfhW8WGzizhqagSwsXZVgwt/N5a/gKPGg1+2
- 5RnePaHe9cF6durDtZrejURGE/yMsx19SsSBJDr7D5qrwAuGXw/Glo+xq8LbfDP/dI+J
- EexPVIy3HRU77zz4PUNFqQTQoyI+UYHZb3ihe519J1LKyX87yS/uCzwrmT6gHdhlLBBj
- 6D7A==
+ d=linaro.org; s=google; t=1727956929; x=1728561729; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zAvSrjhWim9UP0Hyli75iN10SnffLjufaKxnCvC5Z3k=;
+ b=ji6O7HodHHNvKp6FgQjNQMEuHPaHTQczMj5t/RfD5l1NTIA3B2A0Y9BefybqZJ/fEE
+ Dndv2UuK57M7WrljOgkSvor+3z7z9PEurqMU4KNqE3ykICKzmhYxmI/SIym8hdZ0Yhga
+ UgOrqjzowfhDxlnY996z6stygCp1RQdAumumA8qeDUie7qvyyYVJrElx7rtEzhZlINcB
+ sJJZWPxcV4K6u7KRlWo1Ex1msC+5hWoppVXN23O8YgihleHZFPKys3fFrjGoR4f8euYG
+ 6GWzdFWkPRq3oSRZan/tbAl6CyozQy5xrZyVdIcr8ELKyqJzaosiNWRxrmP+PobshRqd
+ Bkbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727956917; x=1728561717;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=miVKMR4+8TB0V0xL2jTpdCXf/qy0jYYmyQBozO4nE6E=;
- b=QVTAySnZqPvz3dGjAiXYO5Q8te9IBTjx3VyEeYUGxStz5yCxwJVgNvCQbG3EmRjD37
- oa+eOpf+vekkl0BfeLmzXl939wJC93tMLZBx3RZIiyGGd0SjHffZlm2feBt048DLUeti
- jTJBg4wpW0uk295TKIlDNUI30Rhx8H/4XArNk5EnxWQHQH8wUOkOjrGwTdKfzsffPpxx
- kIDAyISlBHEScQhOpiiEJChb/glK0A+VqfGxOMyyuKaDK1dXxuZYkk2iW6K3FnwRSvZS
- yiI84UEDzdY+LzX2A5ShMPkl9lzXCSgkXdQ2vhpcq+GnocUQwBDT0h2nkXAMr3a7ZaLu
- 7OuQ==
-X-Gm-Message-State: AOJu0Yw5Rd4tAzZNDzkzAb1gCcQDLLzBkROJSqArHW9X/rcwU/eDYj3s
- tPTydgHxD3dzkqnu+ObmoUl6QZIOVaPi083wmX4QMHRz4Mch1omroBNUT90/7PQOp7YG3t/PBti
- Mse6GPO/t/Bq7mnhDOVm/9roZCzHttGenGEmjxw==
-X-Google-Smtp-Source: AGHT+IEHw1waWpAg1uh/JxTUwqahQsF4DuhddXwJ4yqyg/yUa00qkCgYpZpvK8fq4wVincFAL4O/tWS9x1m5+siRUmg=
-X-Received: by 2002:a05:6512:e9a:b0:539:958f:1b8b with SMTP id
- 2adb3069b0e04-539a07a8926mr3803345e87.50.1727956917110; Thu, 03 Oct 2024
- 05:01:57 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1727956929; x=1728561729;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zAvSrjhWim9UP0Hyli75iN10SnffLjufaKxnCvC5Z3k=;
+ b=NxNHJi2w4pyJxu6Q0zT+hsas/98K+LLI01+BZK9V7fm4GMEOzDnXOMHj178VcvJN83
+ jDKyKBBGNFlKszH0lMORlp5g40VeZl1TnmHZizWyNo/1ZdXyQ8k78LsMPBj0CMPz5ONY
+ f+RqezY2azu56xwKgMnnKl5VZQ00MO8knSsUhsYRx4ESjlqQFsmTUMv9TxUbSJ7+x+Uc
+ f0mMtUhVNXiN0sfwNlL3bDarAQuHvJ3aUMdeMfiB5ydseKHk/2fdrOpKI5mgzgMtk3jk
+ sSTht/EIKullCl8hkf8HPEdBRB6++2pe7dHQd9FmBQpoaaF/aDEnC5ajoq8pRSyx6Kn5
+ pNbg==
+X-Gm-Message-State: AOJu0Yxo5nczHqCyYYa7SNhl/OMRc/euO0YT3Z2qyFnxJMqKcDcXGuNB
+ Eg0rxGARJoUq8EDU06XZYkArWHucX33OM7gqySmXskx/nMgx6ET98bwJv2zyWMH/51SGXQ37RV3
+ 1wgRsyvvVpMvBaeX4OaeclKj+i46J7VSNLwIiXQ==
+X-Google-Smtp-Source: AGHT+IGsGkptWF2JrdrqfFlDNNTVkaFBwrQ3Y2PXfbFiRZPoEAuaw2sHteWAFy+wTajdzRTyAjaPQ+iUa1UPRhK8ZAA=
+X-Received: by 2002:a05:6402:4405:b0:5c8:9f44:a0b2 with SMTP id
+ 4fb4d7f45d1cf-5c8b18b9d5cmr7891724a12.5.1727956929408; Thu, 03 Oct 2024
+ 05:02:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20241002074404.1983368-1-armbru@redhat.com>
-In-Reply-To: <20241002074404.1983368-1-armbru@redhat.com>
+References: <20241002123417.2974893-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20241002123417.2974893-1-marcandre.lureau@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 3 Oct 2024 13:01:45 +0100
-Message-ID: <CAFEAcA92__1AJuTiW2z5rA5pKU4_sx2pW3r208=L5+x1NtGq0A@mail.gmail.com>
-Subject: Re: [PULL 00/10] QAPI patches patches for 2024-10-02
-To: Markus Armbruster <armbru@redhat.com>
+Date: Thu, 3 Oct 2024 13:01:58 +0100
+Message-ID: <CAFEAcA-GCt0BwmvtZeL+f0i8MSJfPCwB2mHC1BndYfvaAqa6Zg@mail.gmail.com>
+Subject: Re: [PULL v2 00/22] -Werror=maybe-uninitialized fixes
+To: marcandre.lureau@redhat.com
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12d.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,23 +89,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2 Oct 2024 at 08:44, Markus Armbruster <armbru@redhat.com> wrote:
+On Wed, 2 Oct 2024 at 13:34, <marcandre.lureau@redhat.com> wrote:
 >
-> The following changes since commit 718780d20470c66a3a36d036b29148d5809dc855:
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 >
->   Merge tag 'pull-nvme-20241001' of https://gitlab.com/birkelund/qemu into staging (2024-10-01 11:34:07 +0100)
+> The following changes since commit 062cfce8d4c077800d252b84c65da8a2dd03fd=
+6f:
+>
+>   Merge tag 'pull-target-arm-20241001' of https://git.linaro.org/people/p=
+maydell/qemu-arm into staging (2024-10-01 17:40:25 +0100)
 >
 > are available in the Git repository at:
 >
->   https://repo.or.cz/qemu/armbru.git tags/pull-qapi-2024-10-02
+>   https://gitlab.com/marcandre.lureau/qemu.git tags/warn-pull-request
 >
-> for you to fetch changes up to b3bd7617dbae8e5f84c27a1ab8df89cba371a276:
+> for you to fetch changes up to 8f3375434d45e56db51b5ecd4d8a929146ba5641:
 >
->   qapi/block-core: Drop drive-backup's "Any other error" documentation (2024-10-02 09:10:01 +0200)
+>   qom/object: fix -Werror=3Dmaybe-uninitialized (2024-10-02 16:14:29 +040=
+0)
 >
 > ----------------------------------------------------------------
-> QAPI patches patches for 2024-10-02
+> -Werror=3Dmaybe-uninitialized fixes
 >
+> ----------------------------------------------------------------
 
 
 Applied, thanks.
