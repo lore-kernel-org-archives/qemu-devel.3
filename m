@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B9F3CF34A9
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 13:54:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 969C5CF34AD
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 14:01:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swMGo-0002FU-L8; Thu, 03 Oct 2024 09:53:30 -0400
+	id 1swMNX-000473-Tf; Thu, 03 Oct 2024 10:00:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1swMGm-0002F4-U1
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 09:53:29 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1swMNN-00046c-CB
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 10:00:18 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1swMGl-0001OA-4m
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 09:53:28 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-37cc84c12c2so586920f8f.3
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 06:53:26 -0700 (PDT)
+ id 1swMNK-0002qf-2S
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 10:00:16 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-37ccfada422so658132f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 07:00:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727963605; x=1728568405; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727964012; x=1728568812; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Y21cd3Mlo1rSCOVF7OXO2uYDEWo70U3Lo9wLvPMq9f4=;
- b=txncFebg1qj+oesfbUlI0JoYhm0n5B4gjSdzdsK94OYpfeKX+KYHBwLAs0/5c0nV67
- wRdP8iySPCG7CeTINf5drHTZGJV9KLgao98+lOHI7jRoMycMIZ/4I6nfqlkNZVlWDNVC
- Pxn0sakdu98GuEj0KuVHCBm6DxGWWf1Hw3OeiO6sPtZHbSb5BcP8GGP6HCIgLLtnUewH
- 03m5G2gScPJPUYw/n5xsDoG83Yo9+jzApP9ok5dh3d24Z3o0M/Pi+WM4QncA2RGsrbb9
- JbTCYwrCiNm47tMRF/ZZqblCaUSt+vUDDikc2z7fDTwahrn3y/x0C3wl3cH05bj/TiVG
- 26OA==
+ bh=Pv5cgA5tzehOzZwhcqZ8BLb8c5W4q5Yxc57Fkm02PHw=;
+ b=jlH4uxJjZwzeD4eCeQGQkwjo2S6US9lqh/lubGv2ipoY9BNwiZtJbCIFiZYVIv4rdG
+ mjYC6lNgFMUii+NT5XxRgECDAWoz5AZhWvpIjVN/5LTpeCmWFCBR+6Lp8uaTUzqUfGL3
+ VAXWQ2k05gAKmCrybaGCoeszhxGoXR5ksJy7TMGyup2SBKFNvgH1XrAdbOBw8UmApOtW
+ sKL8YilT6sTtls+nAkMoa3Uq3GSD6z1UkzORB0JAAflEvhrxKlnzNvWEJPA5cs3xNCH2
+ HqIlvfNo1v6fYNEuKAJf0/8Q10cU0Eg4fCEoF8bkJNQvtlsLvC22Bwhsc4H5wMHTjnzE
+ Enug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727963605; x=1728568405;
+ d=1e100.net; s=20230601; t=1727964012; x=1728568812;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Y21cd3Mlo1rSCOVF7OXO2uYDEWo70U3Lo9wLvPMq9f4=;
- b=l2pxvyVON3Cvzhi1Oy3Un7yEbvRTzOPGg6qBjzyp6cTnZCXcJLlBph+Iur3tJ+ATE2
- ZtsyOdiPBsmXA3HKgk5qMjJf4iCfVaCX7IZ7F8mjSD1FFvp41RHhK3GZHon3W4pENPUP
- rSxQlzgxU+lIlDn/332w1fxdwG8NEeLw7qVYo6i4qWIfoBy2iva/kLhmWHMO3rUTuv8o
- dpFe64kTquhmh5/hNhbSFdHuHl0AgcJE6l/AP9zXOa/a23hNTcJrqDv5rQRBtSarzd02
- 1pYEMatKhvWqfRsjCEWO1tMm+gIGrrZKEcbZpf1Cx237daeow4oNNaj4mVifKNnmHIdH
- a+LA==
+ bh=Pv5cgA5tzehOzZwhcqZ8BLb8c5W4q5Yxc57Fkm02PHw=;
+ b=PPRxohx+PiWIixJjGeWPfWvuRLHDrIcuJF8nIGSMDwAwB7mMvUmXlpKOzp+YdV0e/G
+ Is+/RsOWPPI6MY/gNP2gyYUToNzcQ3tboJOVPg91ayzyeTDXb/iWW9ktD0gyBr2RwvUb
+ 6XECUuF7loVZlVizMzFsDJh3npWfvO7ddSoNmfcSFIBskh5ZbayiP5NX3CK4LtEJKjCa
+ ftDrXV7CO5MqLO3k+7Y9Odh+FBQpXjKvQ0dOQGodjaR8DOsHeW37BbrAMbu/sZdn64Vs
+ jxZlGbTneuKatYDF4TI4G5qwJBXorg8qUVi6MJBbxHpNoUqep3bLqGXFihRQTEyZYju/
+ dEdQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmLAfrBiGiqlCyLNst08R059lpL5YAGTlQiywdXC6izhqZg9hy8yFjz31SROjNnpY4TSKJv8SjKd6H@nongnu.org
-X-Gm-Message-State: AOJu0YweFX2FlpuImAk4FqZFjub+u9GjT/Xg1Ff8Pi3pyMFIxtLtrJK9
- raG8/VkMIhOTj7kuKjdRAwYclTixqZmgEEUkJHaMexSPq8CsdURGi2w8yzUJPwo=
-X-Google-Smtp-Source: AGHT+IHnqWKjWbo5b+j9jDs4mN7w7RaWF524s4MIPe7zWeGir3cfLdK8/BoDorLpMxXhBznzpdW+xg==
-X-Received: by 2002:a05:6000:18a6:b0:36b:bb84:33e2 with SMTP id
- ffacd0b85a97d-37cfb9f9d0fmr4570817f8f.37.1727963605227; 
- Thu, 03 Oct 2024 06:53:25 -0700 (PDT)
+ AJvYcCUdo5QdcX26hJ8p1z4dvpzn+HxRJI37GYWA8sknJITGl4Dsg80xTWd3wfRSvlKTr3zLwLlwcCius6BY@nongnu.org
+X-Gm-Message-State: AOJu0Yw+Uaelwy0z+TrGkV3gzFusVX8kpZK31DsVHQRi0/cEn4r4s4Pk
+ KPzquKLvRzOF4AEnifSokrTsgzBJoirAcz6YV6z2lqed+wlt+qAz5cxtbdnU1qg=
+X-Google-Smtp-Source: AGHT+IHvfztpwtRlla1h9qamgf/ISrL85/GcMBow9HicA4XcTDcvEwxBo7dfmG9sP78ygz2jhKZznw==
+X-Received: by 2002:a5d:584c:0:b0:377:6073:48df with SMTP id
+ ffacd0b85a97d-37cfba1832amr5298622f8f.58.1727964012190; 
+ Thu, 03 Oct 2024 07:00:12 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f79ead8d8sm45285905e9.19.2024.10.03.06.53.24
+ ffacd0b85a97d-37d0822bc38sm1340255f8f.45.2024.10.03.07.00.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Oct 2024 06:53:24 -0700 (PDT)
+ Thu, 03 Oct 2024 07:00:11 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] hw/intc/omap_intc: Remove now-unnecessary abstract base class
-Date: Thu,  3 Oct 2024 14:53:23 +0100
-Message-Id: <20241003135323.1653230-1-peter.maydell@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Guenter Roeck <linux@roeck-us.net>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v2 0/6] arm: drop last bits from deprecated boards
+Date: Thu,  3 Oct 2024 15:00:04 +0100
+Message-Id: <20241003140010.1653808-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,62 +95,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The OMAP interrupt controller code used to have an omap-intc
-class and an omap2-intc class, which shared common code via
-the abstract class common-omap-intc. Now we have deleted
-omap2-intc, we don't need the separate abstract base class;
-fold int into omap-intc.
+This series is the remaining patches not yet applied from my "arm:
+Drop deprecated boards" series; this is essentially the device
+removals which didn't get review in that series and/or which had some
+discussion about whether we should remove them.
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- include/hw/arm/omap.h |  2 +-
- hw/intc/omap_intc.c   | 13 +++----------
- 2 files changed, 4 insertions(+), 11 deletions(-)
+To summarise the remaining removals:
 
-diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
-index cf5f0219a2f..4d28f391fb4 100644
---- a/include/hw/arm/omap.h
-+++ b/include/hw/arm/omap.h
-@@ -59,7 +59,7 @@ int64_t omap_clk_getrate(omap_clk clk);
- void omap_clk_reparent(omap_clk clk, omap_clk parent);
- 
- /* omap_intc.c */
--#define TYPE_OMAP_INTC "common-omap-intc"
-+#define TYPE_OMAP_INTC "omap-intc"
- typedef struct OMAPIntcState OMAPIntcState;
- DECLARE_INSTANCE_CHECKER(OMAPIntcState, OMAP_INTC, TYPE_OMAP_INTC)
- 
-diff --git a/hw/intc/omap_intc.c b/hw/intc/omap_intc.c
-index a48e6fcd6d3..a98358d92e2 100644
---- a/hw/intc/omap_intc.c
-+++ b/hw/intc/omap_intc.c
-@@ -392,22 +392,15 @@ static void omap_intc_class_init(ObjectClass *klass, void *data)
- }
- 
- static const TypeInfo omap_intc_info = {
--    .name          = "omap-intc",
--    .parent        = TYPE_OMAP_INTC,
-+    .name          = TYPE_OMAP_INTC,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(OMAPIntcState),
-     .instance_init = omap_intc_init,
-     .class_init    = omap_intc_class_init,
- };
- 
--static const TypeInfo omap_intc_type_info = {
--    .name          = TYPE_OMAP_INTC,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(OMAPIntcState),
--    .abstract      = true,
--};
--
- static void omap_intc_register_types(void)
- {
--    type_register_static(&omap_intc_type_info);
-     type_register_static(&omap_intc_info);
- }
- 
+ * max1110 and max1111 are SSI devices so in theory could be
+   created by users on the command line. However I found no
+   evidence of doing this when I did a web search for
+   "device max1110", and the utility of doing so is unclear
+   to me since it's not possible for the command line device
+   to have its ADC inputs or its interrupt line output
+   wired up to anything.
+ * max7310 is an I2C GPIO controller, so it has the same
+   "in theory a user could create this on the command line
+   but in practice it's pretty useless because there's no
+   way to wire up the GPIO lines to anything" status.
+ * the microdrive device can only be used with our PCMCIA
+   bus emulation, and we no longer have any boards using
+   that, so I think these are uncontroversially deleteable.
+   Some boards we still have should in theory have a
+   PCMCIA controller (strongarm, kzm, sh7750), but we don't
+   model those controllers and none of those boards are
+   sufficiently interesting or active that it's likely
+   anybody will ever add one.
+ * The ECC code is entirely unused now; this is an
+   uncontroversial removal of dead code, and I only didn't
+   put it in my pullreq because it wasn't reviewed yet.
+ * Consensus on the v1 series was that we could get rid of
+   -portrait/-rotate even though in theory you could use
+   them on a non-pxa2xx machine type to achieve the odd
+   effect of rotating mouse input. I've added a section
+   to removed-features.rst about this and beefed up the
+   patch commit message.
+
+Of these, I think we should definitely be dropping microdrive,
+pcmcia, ecc, and the portrait/rotate options, and I didn't hear any
+dissenting opinions on v1.
+
+For max111x and max7310: these are fairly small (a couple of hundred
+lines each) and not too badly behind the curve for code quality/API
+usage (in particular they're both QOM devices), so I could fairly
+easily be persuaded that they should stay.  However I would like in
+that case to see:
+
+ (a) what's the use case/user ? (e.g. examples of "I'm
+     actually using this on the command line, like this"
+     or "I'm using this in the machine model I plan to submit
+     in the next six months")
+ (b) some kind of testing of them (which we can write
+     based on the answer to a.)
+
+thanks
+-- PMM
+
+Peter Maydell (6):
+  hw/adc: Remove MAX111X device
+  hw/gpio: Remove MAX7310 device
+  hw/ide: Remove DSCM-1XXXX microdrive device model
+  hw: Remove PCMCIA subsystem
+  hw/block: Remove ecc
+  vl.c: Remove pxa2xx-specific -portrait and -rotate options
+
+ docs/about/removed-features.rst |  22 ++
+ include/hw/adc/max111x.h        |  56 ---
+ include/hw/block/flash.h        |  11 -
+ include/hw/pcmcia.h             |  66 ----
+ include/sysemu/sysemu.h         |   1 -
+ hw/adc/max111x.c                | 236 ------------
+ hw/block/ecc.c                  |  91 -----
+ hw/gpio/max7310.c               | 217 -----------
+ hw/ide/microdrive.c             | 644 --------------------------------
+ hw/pcmcia/pcmcia.c              |  24 --
+ system/globals.c                |   1 -
+ system/vl.c                     |  11 -
+ ui/input.c                      |  36 --
+ hw/Kconfig                      |   1 -
+ hw/adc/Kconfig                  |   3 -
+ hw/adc/meson.build              |   1 -
+ hw/arm/Kconfig                  |   1 -
+ hw/block/Kconfig                |   3 -
+ hw/block/meson.build            |   1 -
+ hw/gpio/Kconfig                 |   4 -
+ hw/gpio/meson.build             |   1 -
+ hw/ide/Kconfig                  |   6 -
+ hw/ide/meson.build              |   1 -
+ hw/meson.build                  |   1 -
+ hw/misc/Kconfig                 |   1 -
+ hw/pcmcia/Kconfig               |   2 -
+ hw/pcmcia/meson.build           |   1 -
+ qemu-options.hx                 |  16 -
+ 28 files changed, 22 insertions(+), 1437 deletions(-)
+ delete mode 100644 include/hw/adc/max111x.h
+ delete mode 100644 include/hw/pcmcia.h
+ delete mode 100644 hw/adc/max111x.c
+ delete mode 100644 hw/block/ecc.c
+ delete mode 100644 hw/gpio/max7310.c
+ delete mode 100644 hw/ide/microdrive.c
+ delete mode 100644 hw/pcmcia/pcmcia.c
+ delete mode 100644 hw/pcmcia/Kconfig
+ delete mode 100644 hw/pcmcia/meson.build
+
 -- 
 2.34.1
 
