@@ -4,76 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A98ACF34A0
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 12:02:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCDFCCF34A1
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 12:18:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swKXG-00018u-O7; Thu, 03 Oct 2024 08:02:22 -0400
+	id 1swKlW-0004NC-JE; Thu, 03 Oct 2024 08:17:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1swKX9-00016N-Gn
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 08:02:17 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1swKX5-0003mO-VG
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 08:02:13 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a8a706236bfso58295766b.0
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 05:02:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727956929; x=1728561729; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zAvSrjhWim9UP0Hyli75iN10SnffLjufaKxnCvC5Z3k=;
- b=ji6O7HodHHNvKp6FgQjNQMEuHPaHTQczMj5t/RfD5l1NTIA3B2A0Y9BefybqZJ/fEE
- Dndv2UuK57M7WrljOgkSvor+3z7z9PEurqMU4KNqE3ykICKzmhYxmI/SIym8hdZ0Yhga
- UgOrqjzowfhDxlnY996z6stygCp1RQdAumumA8qeDUie7qvyyYVJrElx7rtEzhZlINcB
- sJJZWPxcV4K6u7KRlWo1Ex1msC+5hWoppVXN23O8YgihleHZFPKys3fFrjGoR4f8euYG
- 6GWzdFWkPRq3oSRZan/tbAl6CyozQy5xrZyVdIcr8ELKyqJzaosiNWRxrmP+PobshRqd
- Bkbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727956929; x=1728561729;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zAvSrjhWim9UP0Hyli75iN10SnffLjufaKxnCvC5Z3k=;
- b=NxNHJi2w4pyJxu6Q0zT+hsas/98K+LLI01+BZK9V7fm4GMEOzDnXOMHj178VcvJN83
- jDKyKBBGNFlKszH0lMORlp5g40VeZl1TnmHZizWyNo/1ZdXyQ8k78LsMPBj0CMPz5ONY
- f+RqezY2azu56xwKgMnnKl5VZQ00MO8knSsUhsYRx4ESjlqQFsmTUMv9TxUbSJ7+x+Uc
- f0mMtUhVNXiN0sfwNlL3bDarAQuHvJ3aUMdeMfiB5ydseKHk/2fdrOpKI5mgzgMtk3jk
- sSTht/EIKullCl8hkf8HPEdBRB6++2pe7dHQd9FmBQpoaaF/aDEnC5ajoq8pRSyx6Kn5
- pNbg==
-X-Gm-Message-State: AOJu0Yxo5nczHqCyYYa7SNhl/OMRc/euO0YT3Z2qyFnxJMqKcDcXGuNB
- Eg0rxGARJoUq8EDU06XZYkArWHucX33OM7gqySmXskx/nMgx6ET98bwJv2zyWMH/51SGXQ37RV3
- 1wgRsyvvVpMvBaeX4OaeclKj+i46J7VSNLwIiXQ==
-X-Google-Smtp-Source: AGHT+IGsGkptWF2JrdrqfFlDNNTVkaFBwrQ3Y2PXfbFiRZPoEAuaw2sHteWAFy+wTajdzRTyAjaPQ+iUa1UPRhK8ZAA=
-X-Received: by 2002:a05:6402:4405:b0:5c8:9f44:a0b2 with SMTP id
- 4fb4d7f45d1cf-5c8b18b9d5cmr7891724a12.5.1727956929408; Thu, 03 Oct 2024
- 05:02:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1swKlU-0004Mf-2i; Thu, 03 Oct 2024 08:17:04 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1swKlR-0001k3-Vr; Thu, 03 Oct 2024 08:17:03 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id C866B94E58;
+ Thu,  3 Oct 2024 15:16:17 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id B3C4814B975;
+ Thu,  3 Oct 2024 15:16:57 +0300 (MSK)
+Received: (nullmailer pid 1173626 invoked by uid 1000);
+ Thu, 03 Oct 2024 12:16:57 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-trivial@nongnu.org,
+ Alexander Bulekov <alxndr@bu.edu>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH trivial] gitlab-ci/build-oss-fuzz: print FAILED marker in case
+ the test failed and run all tests
+Date: Thu,  3 Oct 2024 15:16:56 +0300
+Message-Id: <20241003121656.1173612-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-References: <20241002123417.2974893-1-marcandre.lureau@redhat.com>
-In-Reply-To: <20241002123417.2974893-1-marcandre.lureau@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 3 Oct 2024 13:01:58 +0100
-Message-ID: <CAFEAcA-GCt0BwmvtZeL+f0i8MSJfPCwB2mHC1BndYfvaAqa6Zg@mail.gmail.com>
-Subject: Re: [PULL v2 00/22] -Werror=maybe-uninitialized fixes
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,35 +62,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2 Oct 2024 at 13:34, <marcandre.lureau@redhat.com> wrote:
->
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> The following changes since commit 062cfce8d4c077800d252b84c65da8a2dd03fd=
-6f:
->
->   Merge tag 'pull-target-arm-20241001' of https://git.linaro.org/people/p=
-maydell/qemu-arm into staging (2024-10-01 17:40:25 +0100)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/marcandre.lureau/qemu.git tags/warn-pull-request
->
-> for you to fetch changes up to 8f3375434d45e56db51b5ecd4d8a929146ba5641:
->
->   qom/object: fix -Werror=3Dmaybe-uninitialized (2024-10-02 16:14:29 +040=
-0)
->
-> ----------------------------------------------------------------
-> -Werror=3Dmaybe-uninitialized fixes
->
-> ----------------------------------------------------------------
+currently, if an oss-fuzz fails, the script does just `exit 1`
+without any additional output, and looking at the build log in
+the gitlab ci it is not clear what actually failed, without
+looking at build-oss-fuzz script and seeing this `exit 1`.
 
+Print easily recognizable error message about test failure, so
+it becomes obvious what exactly has failed.
 
-Applied, thanks.
+While at it, continue running other tests even in case of
+failure, and exit non-zero if at least one test failed.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ .gitlab-ci.d/buildtest.yml | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
--- PMM
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 87848c2ffe..25c481e43a 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -628,12 +628,15 @@ build-oss-fuzz:
+     - CC="clang" CXX="clang++" CFLAGS="-fsanitize=address"
+       ./scripts/oss-fuzz/build.sh
+     - export ASAN_OPTIONS="fast_unwind_on_malloc=0"
++    - failures=0
+     - for fuzzer in $(find ./build-oss-fuzz/DEST_DIR/ -executable -type f
+                       | grep -v slirp); do
+         grep "LLVMFuzzerTestOneInput" ${fuzzer} > /dev/null 2>&1 || continue ;
+         echo Testing ${fuzzer} ... ;
+-        "${fuzzer}" -runs=1 -seed=1 || exit 1 ;
++        "${fuzzer}" -runs=1 -seed=1 || { echo "FAILED:"" ${fuzzer} exit code is $?"; failures=$(($failures+1)); };
+       done
++    - echo "Number of failures:"" $failures"
++    - test $failures = 0
+ 
+ build-tci:
+   extends: .native_build_job_template
+-- 
+2.39.5
+
 
