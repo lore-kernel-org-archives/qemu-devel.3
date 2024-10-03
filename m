@@ -4,93 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8A35CF34C8
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 21:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98513CF34C3
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 21:32:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swTPj-0005l5-CN; Thu, 03 Oct 2024 17:31:11 -0400
+	id 1swTQZ-0006MU-HL; Thu, 03 Oct 2024 17:32:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1swTPf-0005kA-3Z
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:31:10 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swTQH-0006HB-KH
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:31:45 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1swTPc-00065i-AH
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:31:06 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-20b78ee6298so9121245ad.2
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 14:31:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swTQE-0006DE-QH
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:31:44 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-42cb6f3a5bcso18315765e9.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 14:31:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727991063; x=1728595863; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
+ d=linaro.org; s=google; t=1727991101; x=1728595901; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4B361wxAFVRbvhVHWi1pgIVtEGILyIVUI91bqrA+uiU=;
- b=WcfkYl7v2DjVmXjW+HWpzGRGatwkEKKZMzG2xlALlzP44LBFLEpJRmfN0yyIMiC+uF
- dzkGZppbiowJQj1L9MAEHwIJTkCJcPph91Kgr97JdC10teZZYwUFsQzT3VowVXGmtvA0
- xA3YXFo6CgoAkgivCv18RH8jrJUamElHR+PaAx6TAAFseyyYGQdYA/VqspCCXANec9fB
- cGIz1Cq6HDy4nT3v9OOzG3hATQkHiH4Ao17cc48nUTRoxsBeUIvqZ6w2+zmH6W8FfqEv
- rJDWv4cJWwO98ooVpw4ls3pqQTu+XIKnfyWtguoxfnRrnBp4/fzF77F4kHd/GSq+s4a+
- T+Vw==
+ bh=iV4qUultcJ3EMlxRUyNSvbx2EABLveRP2j1Xf4Oarv4=;
+ b=cVMUKnPrqxaA59moXvg6NUGQ8tKgsKBwQSLcyiwCjv3yCdcMtfgjeeQ1DOcLBgmbyK
+ yNWklgHRFbgrEC+uKRJNNe5lUrrb/eugCh9ks/9k5j/e/i7asHZEODvaxfht/fpHE/2s
+ oAjV6ot+hUGyLYdDmRc3LtlWrFJAUNaqBWq36p6azEXw7JPcYHSeLLXIC+ZoEBVUCt0u
+ zAKcxDcRtgj1Q/QFf9171Cxy9Gun1O687r8QT+RIJj3MCQZVrSLEGUOLXLRkRI+QlCBN
+ s4m2zMeUlWl/r+7YH1PMc7NJaHWK0ypj3/h2wlHlxZ1stCzuCvzojyUonPdphzqhpru2
+ ZAPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727991063; x=1728595863;
- h=content-transfer-encoding:in-reply-to:content-language:from
+ d=1e100.net; s=20230601; t=1727991101; x=1728595901;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4B361wxAFVRbvhVHWi1pgIVtEGILyIVUI91bqrA+uiU=;
- b=qs2gb06HfW3oht0BL/bPeqgU/c1JPDN886+TIHp1I+i6SbsUNS9fSreFtyKD9trfUS
- Al4dHn9jHX+6ZKIbmmbHEHqU/Hf8YwHW63k54hJyLKg9eTzISoEiouA9+E2eInkyUaSq
- P8fM8kqiMmd4Qq43ZDPkUo/kHzfp2aSkEAGbJmtPJmfo08xeR+L08N0RX08bwTvqGxLn
- idrgv7W0GlxgugOwGl2usNiOanMZs4DKe85F4KYYGnmTPkvrJSIH9g0+NKp2WaQP0E8j
- i4BLCLt5AYK1YDee0ckqU+E4HE91gcN0fIbc0fSyvIniX6eT/kLBff3b7CudIo7LuarQ
- 7bDA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVkOo16Q70X+mzdhEUgrI21NXJnltbemY0mBN/sRAeDSExdG0DxugTf8aJDgiBsZM5F1Meop6bNOqIU@nongnu.org
-X-Gm-Message-State: AOJu0YxYMnAa6PHxlEpOfbgcHPF0IL2VHCkkBNp76RsZ+nLnzsx2Vxcf
- 702EtdgzF/oPkjmNNZCVEfjYT8PK4JgU5pve6fiybLmPwBXHTvBAM4B0CAIIKLE=
-X-Google-Smtp-Source: AGHT+IFtzjsiaxuS6VNNzw2rUJTcOOE8bHrdlmfZiF2WsUw+IZmEqafl+i6EZBs4E1mhm91mmMeQ+A==
-X-Received: by 2002:a17:902:e885:b0:205:2a59:a28c with SMTP id
- d9443c01a7336-20bfde555b8mr7047295ad.1.1727991062772; 
- Thu, 03 Oct 2024 14:31:02 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20beefafc65sm12994565ad.217.2024.10.03.14.31.01
+ bh=iV4qUultcJ3EMlxRUyNSvbx2EABLveRP2j1Xf4Oarv4=;
+ b=RPJM9nK4vFjzIzn2VbITouy6oNPPozN4Rq8i+nKguspsW2wLmXgiOXdey0WJZ492yH
+ ElHAp0W/JJNvolgs0MKW1Ta1+Ek/G1Liy5GA8aS7SpNlWsYWJ9liI9Ir7EkwN60WsyRG
+ 0HFJSdMJpC0UzTbx+4y9jNFZppO2uOm8OnJdrEjr9pKkyJZ8TwWJ3LYDSycKqKCRIBek
+ 88YWcE99mzzZJ2RUUbrgrE1fBFvfMbOP1OFjitjI3O6TiZN/FTF4UQgXKTez9MUpHtOY
+ ZgnslehQkhfjuSSI3N1rxHmEbzjnfw0gZ2bBe6UWgqGHm4YoJFLf+mLJChKloFSveXNb
+ vM0w==
+X-Gm-Message-State: AOJu0YyFouLPA0PZCbNsqmJtIHGdCsp90+y7AT3PbT8kjTK3d2VlPWq/
+ S9mkHHMkEXngw8bsAV6hB5dB7gKI5xKacIyS/rsBfKdsWFXp12H/+Zj4LyqUqNg=
+X-Google-Smtp-Source: AGHT+IH8v9IQWqfKATX+QRx7zWsJi2yjxHAr1w6KKlcYWRTw9f5a2czQBpEqVW01v6697HKfC++Asg==
+X-Received: by 2002:a05:600c:19c9:b0:426:59fe:ac27 with SMTP id
+ 5b1f17b1804b1-42f85ae94dbmr3680655e9.26.1727991100968; 
+ Thu, 03 Oct 2024 14:31:40 -0700 (PDT)
+Received: from [172.33.27.23] (134.pool62-36-43.static.orange.es.
+ [62.36.43.134]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42f802b2805sm23962575e9.44.2024.10.03.14.31.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Oct 2024 14:31:02 -0700 (PDT)
-Message-ID: <aeb88605-989b-4c26-9371-15fbe44a9e3a@linaro.org>
-Date: Thu, 3 Oct 2024 14:31:01 -0700
+ Thu, 03 Oct 2024 14:31:40 -0700 (PDT)
+Message-ID: <39a12ec9-91a8-4871-8a37-e5353a3a5e68@linaro.org>
+Date: Thu, 3 Oct 2024 23:31:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/13] hw/xtensa/xtfpga: Replace memcpy()+tswap32() by
- stl_endian_p()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Jason Wang <jasowang@redhat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Anton Johansson <anjo@rev.ng>,
- Peter Maydell <peter.maydell@linaro.org>, Huacai Chen
- <chenhuacai@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Sven Schnelle <svens@stackframe.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-arm@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>,
- Max Filippov <jcmvbkbc@gmail.com>, Paul Burton <paulburton@kernel.org>
-References: <20240930073450.33195-1-philmd@linaro.org>
- <20240930073450.33195-9-philmd@linaro.org>
- <257b0de0-6744-4ae8-a2c5-f05eec29a3f0@redhat.com>
- <0c28a435-0af6-450f-8558-14dddc6cb6a6@linaro.org>
- <a14cd43c-087b-4a5d-b036-39aa6a80e691@linaro.org>
- <f20cebfe-027a-4664-82f0-3769c7047e38@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH] hw/sd/sdcard: Fix handling of disabled boot partitions
+To: Peter Maydell <peter.maydell@linaro.org>, jlu@pengutronix.de
+Cc: qemu-devel@nongnu.org, Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org
+References: <20240906164834.130257-1-jlu@pengutronix.de>
+ <CAFEAcA-_=vrtqVPUdu02ryUtdH5MwifEnHgeQVq=V4Z2Jp_dUg@mail.gmail.com>
+ <d6e9f2f8d7185e90e7b80dff7b222fd99c899903.camel@pengutronix.de>
+ <CAFEAcA-uMnP3Zyw5f2ha_9H1+QrnZXMau4FwEjP4UXNnjs-OqA@mail.gmail.com>
 Content-Language: en-US
-In-Reply-To: <f20cebfe-027a-4664-82f0-3769c7047e38@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA-uMnP3Zyw5f2ha_9H1+QrnZXMau4FwEjP4UXNnjs-OqA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,56 +96,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTAvMy8yNCAxMzo0OCwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IE9u
-IDMvMTAvMjQgMTg6MDQsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBPbiAxMC8zLzI0
-IDA5OjAyLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4+PiBPbiAzMC85LzI0
-IDE2OjMyLCBUaG9tYXMgSHV0aCB3cm90ZToNCj4+Pj4gT24gMzAvMDkvMjAyNCAwOS4zNCwg
-UGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+Pj4+PiBSZXBsYWNlIGEgcGFpciBv
-ZiBtZW1jcHkoKSArIHRzd2FwMzIoKSBieSBzdGxfZW5kaWFuX3AoKSwNCj4+Pj4+IHdoaWNo
-IGFsc28gc3dhcCB0aGUgdmFsdWUgdXNpbmcgdGFyZ2V0IGVuZGlhbm5lc3MuDQo+Pj4+Pg0K
-Pj4+Pj4gU2lnbmVkLW9mZi1ieTogUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBs
-aW5hcm8ub3JnPg0KPj4+Pj4gLS0tDQo+Pj4+PiAgwqDCoCBody94dGVuc2EveHRmcGdhLmMg
-fCA2ICsrLS0tLQ0KPj4+Pj4gIMKgwqAgMSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygr
-KSwgNCBkZWxldGlvbnMoLSkNCj4+Pj4+DQo+Pj4+PiBkaWZmIC0tZ2l0IGEvaHcveHRlbnNh
-L3h0ZnBnYS5jIGIvaHcveHRlbnNhL3h0ZnBnYS5jDQo+Pj4+PiBpbmRleCAyMjhmMDBiMDQ1
-Li41MjFmZTg0YjAxIDEwMDY0NA0KPj4+Pj4gLS0tIGEvaHcveHRlbnNhL3h0ZnBnYS5jDQo+
-Pj4+PiArKysgYi9ody94dGVuc2EveHRmcGdhLmMNCj4+Pj4+IEBAIC00MzgsMTEgKzQzOCw5
-IEBAIHN0YXRpYyB2b2lkIHh0ZnBnYV9pbml0KGNvbnN0IFh0ZnBnYUJvYXJkRGVzYw0KPj4+
-Pj4gKmJvYXJkLCBNYWNoaW5lU3RhdGUgKm1hY2hpbmUpDQo+Pj4+PiAgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoCBjb25zdCBzaXplX3QgYm9vdF9zeiA9IFRBUkdFVF9CSUdfRU5E
-SUFOID8NCj4+Pj4+IHNpemVvZihib290X2JlKQ0KPj4+Pj4gIMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIDoNCj4+Pj4+IHNpemVv
-Zihib290X2xlKTsNCj4+Pj4+ICDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQ4
-X3QgKmJvb3QgPSBUQVJHRVRfQklHX0VORElBTiA/IGJvb3RfYmUgOiBib290X2xlOw0KPj4+
-Pj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdWludDMyX3QgZW50cnlfcGMgPSB0c3dhcDMy
-KGVudHJ5X3BvaW50KTsNCj4+Pj4+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQzMl90
-IGVudHJ5X2EyID0gdHN3YXAzMih0YWdwdHIpOw0KPj4+Pj4gLcKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgbWVtY3B5KGJvb3QgKyA0LCAmZW50cnlfcGMsIHNpemVvZihlbnRyeV9wYykpOw0K
-Pj4+Pj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgbWVtY3B5KGJvb3QgKyA4LCAmZW50cnlf
-YTIsIHNpemVvZihlbnRyeV9hMikpOw0KPj4+Pj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-c3RsX2VuZGlhbl9wKFRBUkdFVF9CSUdfRU5ESUFOLCBib290ICsgNCwgZW50cnlfcG9pbnQp
-Ow0KPj4+Pj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgc3RsX2VuZGlhbl9wKFRBUkdFVF9C
-SUdfRU5ESUFOLCBib290ICsgOCwgdGFncHRyKTsNCj4+Pj4NCj4+Pj4gV2h5IGRvbid0IHlv
-dSBzaW1wbHkgdXNlIHN0bF9wKCkgaGVyZT8NCj4+Pg0KPj4+IFdlIHdhbnQgdG8gcmVtb3Zl
-IHRoZSB0c3dhcDMyKCkgY2FsbHMuLi4NCj4+Pg0KPj4NCj4+IEkgdGhpbmsgaXMgcG9pbnQg
-aXMgdGhhdCB5b3UgY291bGQgZGlyZWN0bHkgdXNlIHN0bF9iZV9wLCBpbnN0ZWFkIG9mDQo+
-PiBzdGxfZW5kaWFuX3AoVEFSR0VUX0JJVF9FTkRJQU4sIC4uLikuDQo+IA0KPiBUQVJHRVRf
-QklHX0VORElBTiBpcyBkZWZpbmVkIGFzIDAgb24gbGl0dGxlIGVuZGlhbiwgYW5kIDEgb24g
-YmlnIG9uZS4NCj4gDQo+IFRoZSBmb2xsb3dpbmcgY2hhbmdlIGlzbid0IHdvcnRoIGl0Og0K
-PiANCj4gICAgIGlmIChUQVJHRVRfQklHX0VORElBTikgew0KPiAgICAgICBzdGxfYmVfcChi
-b290ICsgOCwgdGFncHRyKTsNCj4gICAgIH0gZWxzZSB7DQo+ICAgICAgIHN0bF9sZV9wKGJv
-b3QgKyA4LCB0YWdwdHIpOw0KPiAgICAgfQ0KPiANCj4gTWF5YmUgSSdtIG1pc3NpbmcgVGhv
-bWFzIHBvaW50LCBhcyB0aGUgeHRmcGdhIG1hY2hpbmVzIGFyZSBhdmFpbGFibGUNCj4gZm9y
-IGJvdGggeHRlbnNhLXNvZnRtbXUgKExFKSBhbmQgeHRlbnNhZWItc29mdG1tdSAoQkUpLg0K
-PiANCj4+IEkgZG9uJ3Qga25vdyBpZiB5b3VyIGludGVudCBpcyB0byBtYWtlIGJlL2xlIHZh
-cmlhbnQgInByaXZhdGUiIGFuZA0KPj4gcmVsaWVzIG9ubHkgb24gZW5kaWFuX3AgdGhvdWdo
-Lg0KPiANCj4gTXkgaW50ZW50IGlzIHRvIGVuZm9yY2UgZW5kaWFuIGFnbm9zdGljIEFQSSB1
-c2VzIHdoZW4gcG9zc2libGUsIGFuZA0KPiB1c2UgTEUvQkUgc3BlY2lmaWMgdmFyaWFudCB3
-aGVuIGl0IGlzIGtub3duIGF0IGJ1aWxkIHRpbWUuDQoNCk9oIG9rLCBpdCdzIG1lIHdobyBt
-aXNzZWQgeW91ciBwb2ludCB0aGVuLg0KRm9yIHNvbWUgcmVhc29uLCBJIHRob3VnaHQgd2Ug
-d2VyZSBhbHdheXMgY2FsbGluZyBiaWcgZW5kaWFuIHZhcmlhbnQuDQoNClRodXMsIHlvdXIg
-aW1wbGVtZW50YXRpb24gbWFrZXMgdG90YWxseSBzZW5zZS4NCg0KTGV0J3Mgc2VlIGlmIFRo
-b21hcyBtZWFudCBzb21ldGhpbmcgZGlmZmVyZW50Lg0KRWxzZSwNClJldmlld2VkLWJ5OiBQ
-aWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo=
+On 1/10/24 15:01, Peter Maydell wrote:
+> On Mon, 30 Sept 2024 at 21:05, Jan Lübbe <jlu@pengutronix.de> wrote:
+>>
+>> On Mon, 2024-09-30 at 15:18 +0100, Peter Maydell wrote:
+>>> On Fri, 6 Sept 2024 at 17:51, Jan Luebbe <jlu@pengutronix.de> wrote:
+>>>>
+>>>> The enable bits in the EXT_CSD_PART_CONFIG ext_csd register do *not*
+>>>> specify whether the boot partitions exist, but whether they are enabled
+>>>> for booting. Existence of the boot partitions is specified by a
+>>>> EXT_CSD_BOOT_MULT != 0.
+>>>>
+>>>> Currently, in the case of boot-partition-size=1M and boot-config=0,
+>>>> Linux detects boot partitions of 1M. But as sd_bootpart_offset always
+>>>> returns 0, all reads/writes are mapped to the same offset in the backing
+>>>> file.
+>>>>
+>>>> Fix this bug by calculating the offset independent of which partition is
+>>>> enabled for booting.
+>>>
+>>> Looking at the spec this change seems correct to me.
+>>>
+>>> Can you elaborate on when users might run into this bug?
+>>> As far as I can see only aspeed.c sets boot-partition-size,
+>>> and when it does so it also sets boot-config to 8. Or are
+>>> we fixing this for the benefit of future board types?
+>>
+>> I stumbled across this when trying to use the eMMC emulation for the RAUC test
+>> suite (with some unrelated local hacks, which I still need to clean up for
+>> submission) [1]. Future boards would be affected as well.
+>>
+>> One other possible issue would be disabling the boot partition by using 'mmc
+>> bootpart enable 0 0 /dev/mmcblk0' (or similar) from Linux. The layout of the
+>> backing file shouldn't change in that case.
+> 
+> Thanks for the clarification. I've applied this patch to
+> target-arm.next with the following paragraph added to the
+> commit message:
+>   This bug is unlikely to affect many users with QEMU's current set of
+>   boards, because only aspeed sets boot-partition-size, and it also
+>   sets boot-config to 8. So to run into this a user would have to
+>   manually mark the boot partition non-booting from within the guest.
+> 
+> and I cc'd it to stable.
+
+Thanks Jan for the fix and Peter for merging this patch!
+
 
