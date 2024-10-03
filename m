@@ -4,72 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7477CF34AD
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 14:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55DFFCF34AD
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 14:32:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swMrI-00065F-On; Thu, 03 Oct 2024 10:31:12 -0400
+	id 1swMrL-00065w-QB; Thu, 03 Oct 2024 10:31:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1swMrH-00064w-Lr
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 10:31:11 -0400
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ id 1swMrJ-00065I-6T
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 10:31:13 -0400
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1swMrG-0003e7-1o
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 10:31:11 -0400
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-2facf00b0c7so19575431fa.1
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 07:31:09 -0700 (PDT)
+ id 1swMrH-0003f0-K2
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 10:31:12 -0400
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-5398fb1a871so1074353e87.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 07:31:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727965867; x=1728570667; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=8C4nrNcSwpJCvhGlbR4nfMYnpTDxaR88Y6Ftc/fnJec=;
- b=X7hjEoKLpL5mlbcUeBaE+bpke0DZfxo3xgjz6t49k9oYpKX0dJoMAbD3dEcwyb/NMz
- Y7lfl2xFVbTPN2xb0Dkn5qcjjdaDq0eR1zNXsMdH7b9H2g7fAI4iZdwuj5BmIWCMFvgO
- Ssi8t5juxML2LDw8+0qjrVzx1acmvCvH6P6W7E+7UBfmwWioI0fvKRypvAVpm3Pdv8Mh
- 6DYi+s3c0LIAEhJRSnIwTXyDlUfkOfNu/S79eXprd2E4GBE0qzqAOQ5An5WS3U6McLde
- PeCQknFYhVKp+9Iz7PdUuHbyfecEBVLITH1D9CkgibixWVkmHHNvzXGRle53DnzQViD/
- 69Kw==
+ d=gmail.com; s=20230601; t=1727965869; x=1728570669; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5QkDAThvHzn8nk+HGJi0H/5a08f7RDTFwzrMcXuWa4E=;
+ b=gMRide/ZcyZRlctI752xWBQEDLLVPrqdKBK2eK7zq5peH3ei092rZ5Nu2MHyJNbh37
+ mSD7RyeM1RdhPLNmNJkpOWicqg6qb0soNDJ6GgInbitESRNRe73yaP8srkbLfjuCx50s
+ 5BPVdGjI0SW1Skt/ztsSDVrakSDwA9hlQYCp2o/PP7ZJr8mQvnjiwwIk9Li8mQfI8CUy
+ 3r+BV4phciu795m8n32crmIVQV3x9r6Yk6UT3du0PXjfIp9K25CEQpH2yGae3ZdsyN9d
+ S/0qDkmFp3T7UtcYKayisydKkIZJ4Ne56fJb2i9s531Y8otRNsBgOIStfn7hJMPCK8Mn
+ 5ydw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727965867; x=1728570667;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8C4nrNcSwpJCvhGlbR4nfMYnpTDxaR88Y6Ftc/fnJec=;
- b=XRPj/5LBMEZhQ15wqP0gLLV3sKBCxusyu1Z16d7q8zGRgX5/bq1btrDRtdfnq7y4YV
- 4arsz0LCGiUCSLD+IUK4uMHoSMUPNf22wXHXzznD5vcbWeqrrsbMPqTQIjyGsDZesW0r
- 5TrZk1v1gL11OVTTZzdHOdSqGOzzrEUESZ7n6Ew6t84ULzjlZj7uMCeNV12RcLkYgxUE
- 8kjMc0UdNzhRB4o8OVFAzK/grBvd7NmdU2qOY562ntpcZXcZtuGLYgJUgJngg2JN2zLu
- vLl25jCcP/u83T/mkN5SpxkCfj+hF3w4ZXMfIYE6AyBRKk6JiUVixbRAHkpOendU7/EJ
- WErQ==
-X-Gm-Message-State: AOJu0Yz28jve4XGLwTpUEZozkKHgMJ9diNUdRenCJEyeJ9vDlArQaFnN
- maHueZ9HCOmFXrwO0tKd9IaLNnm8DDaH3YZ/9DRLOu2mfgOT6/xRxSouJW9U
-X-Google-Smtp-Source: AGHT+IEPodM5ZEmWqwQcLk3Nzn9ipU/whmdCEXyUk1Yq/FAtjqQ4wTbfCBEYct8NK3LaRXLoVZ8Q7Q==
-X-Received: by 2002:a2e:5159:0:b0:2f3:f1cf:5314 with SMTP id
- 38308e7fff4ca-2faea223edemr10746221fa.10.1727965867122; 
- Thu, 03 Oct 2024 07:31:07 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1727965869; x=1728570669;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5QkDAThvHzn8nk+HGJi0H/5a08f7RDTFwzrMcXuWa4E=;
+ b=NwMzezWMyuECM5h4uX4vg9smEgkWjXV6sGz77Fb7j9f5vnhJsweEe7ldajRxZ/0lHG
+ 75YkJfhE+yif82CcBZWIuHOrtTDL7MtFu61mM7iuSp/GSkR/9FQ6Ur/gioPeeHo14DtU
+ ME1mM7aETWUuiHqA3KHgpjHjQtcnZhl3iflYsF7uMJOyOaaf++sFDGVdJyiH92m6hWnt
+ j3+czRlK1vq5cDrAgMY5gP2xcX/b/2e3tIUIfKVKvPbgMkZEPj9RSMGZgnwLwMXDlN8d
+ OY1wp5g4CGdP/TyDtE/ut4ERO2my1enVarqF/J+pAe6JoPjPA4h7uBVxXlLjrbu479GY
+ ICRw==
+X-Gm-Message-State: AOJu0YwYNxAW9l0sTXAfqKsxXBmOuRcqphf80HeKyBZcfhLHxXgBkzXG
+ xuIQMmVq80gibkyP1q/YL+cki0iGveUWEKVFijjWS0X6/x4ztYjjz3qaSVzC
+X-Google-Smtp-Source: AGHT+IENz5mwtWHtkPPjZFK+I8sGggUcDkXaE5WZHxkY3QmdHU4icE62BAzIHG+lJO+kM3iPAsGlug==
+X-Received: by 2002:a05:6512:2813:b0:539:9746:2d77 with SMTP id
+ 2adb3069b0e04-539a07af74fmr3419652e87.61.1727965869012; 
+ Thu, 03 Oct 2024 07:31:09 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2faecca88d9sm2299871fa.125.2024.10.03.07.31.06
+ 2adb3069b0e04-539a8296ba3sm191801e87.133.2024.10.03.07.31.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Oct 2024 07:31:06 -0700 (PDT)
+ Thu, 03 Oct 2024 07:31:07 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
  peter.maydell@linaro.org, edgar.iglesias@amd.com,
- xen-devel@lists.xenproject.org
-Subject: [PULL v1 0/5] Xen Queue
-Date: Thu,  3 Oct 2024 16:30:57 +0200
-Message-ID: <20241003143103.1476805-1-edgar.iglesias@gmail.com>
+ xen-devel@lists.xenproject.org,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Anthony PERARD <anthony.perard@vates.tech>, Thomas Huth <thuth@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: [PULL v1 1/5] hw/xen: Remove deadcode
+Date: Thu,  3 Oct 2024 16:30:58 +0200
+Message-ID: <20241003143103.1476805-2-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241003143103.1476805-1-edgar.iglesias@gmail.com>
+References: <20241003143103.1476805-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x22f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,46 +98,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-The following changes since commit 423be09ab9492735924e73a2d36069784441ebc6:
+xen_be_copy_grant_refs is unused since 2019's
+  19f87870ba ("xen: remove the legacy 'xen_disk' backend")
 
-  Merge tag 'warn-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2024-10-03 10:32:54 +0100)
+xen_config_dev_console is unused since 2018's
+  6d7c06c213 ("Remove broken Xen PV domain builder")
 
-are available in the Git repository at:
+Remove them.
 
-  https://gitlab.com/edgar.iglesias/qemu.git tags/edgar/xen-queue-2024-10-03.for-upstream
+Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+Acked-by: Anthony PERARD <anthony.perard@vates.tech>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+---
+ hw/xen/xen-legacy-backend.c         | 18 ------------------
+ hw/xen/xen_devconfig.c              |  8 --------
+ include/hw/xen/xen-legacy-backend.h |  5 -----
+ 3 files changed, 31 deletions(-)
 
-for you to fetch changes up to 507118c2a066b70e8069702c120461ad8c98ccd5:
-
-  hw/arm: xenpvh: Enable PCI for ARM PVH (2024-10-03 15:24:42 +0200)
-
-----------------------------------------------------------------
-Edgars Xen Queue.
-
-----------------------------------------------------------------
-Dr. David Alan Gilbert (1):
-      hw/xen: Remove deadcode
-
-Edgar E. Iglesias (4):
-      hw/xen: Expose handle_bufioreq in xen_register_ioreq
-      hw/xen: xenpvh: Disable buffered IOREQs for ARM
-      hw/xen: xenpvh: Add pci-intx-irq-base property
-      hw/arm: xenpvh: Enable PCI for ARM PVH
-
- hw/arm/xen-pvh.c                    |  17 ++++++
- hw/i386/xen/xen-hvm.c               |   4 +-
- hw/i386/xen/xen-pvh.c               |   3 ++
- hw/xen/xen-hvm-common.c             | 101 ++++++++++++++++++++++--------------
- hw/xen/xen-legacy-backend.c         |  18 -------
- hw/xen/xen-pvh-common.c             |  40 +++++++++++++-
- hw/xen/xen_devconfig.c              |   8 ---
- include/hw/xen/xen-hvm-common.h     |   3 ++
- include/hw/xen/xen-legacy-backend.h |   5 --
- include/hw/xen/xen-pvh-common.h     |   3 ++
- include/hw/xen/xen_native.h         |   3 +-
- 11 files changed, 133 insertions(+), 72 deletions(-)
-
+diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
+index 5514184f9c..e8e1ee4f7d 100644
+--- a/hw/xen/xen-legacy-backend.c
++++ b/hw/xen/xen-legacy-backend.c
+@@ -147,24 +147,6 @@ void xen_be_unmap_grant_refs(struct XenLegacyDevice *xendev, void *ptr,
+     }
+ }
+ 
+-int xen_be_copy_grant_refs(struct XenLegacyDevice *xendev,
+-                           bool to_domain,
+-                           XenGrantCopySegment segs[],
+-                           unsigned int nr_segs)
+-{
+-    int rc;
+-
+-    assert(xendev->ops->flags & DEVOPS_FLAG_NEED_GNTDEV);
+-
+-    rc = qemu_xen_gnttab_grant_copy(xendev->gnttabdev, to_domain, xen_domid,
+-                                    segs, nr_segs, NULL);
+-    if (rc) {
+-        xen_pv_printf(xendev, 0, "xengnttab_grant_copy failed: %s\n",
+-                      strerror(-rc));
+-    }
+-    return rc;
+-}
+-
+ /*
+  * get xen backend device, allocate a new one if it doesn't exist.
+  */
+diff --git a/hw/xen/xen_devconfig.c b/hw/xen/xen_devconfig.c
+index 2150869f60..45ae134b84 100644
+--- a/hw/xen/xen_devconfig.c
++++ b/hw/xen/xen_devconfig.c
+@@ -66,11 +66,3 @@ int xen_config_dev_vkbd(int vdev)
+     xen_config_dev_dirs("vkbd", "vkbd", vdev, fe, be, sizeof(fe));
+     return xen_config_dev_all(fe, be);
+ }
+-
+-int xen_config_dev_console(int vdev)
+-{
+-    char fe[256], be[256];
+-
+-    xen_config_dev_dirs("console", "console", vdev, fe, be, sizeof(fe));
+-    return xen_config_dev_all(fe, be);
+-}
+diff --git a/include/hw/xen/xen-legacy-backend.h b/include/hw/xen/xen-legacy-backend.h
+index 943732b8d1..e198b120c5 100644
+--- a/include/hw/xen/xen-legacy-backend.h
++++ b/include/hw/xen/xen-legacy-backend.h
+@@ -50,10 +50,6 @@ void *xen_be_map_grant_refs(struct XenLegacyDevice *xendev, uint32_t *refs,
+ void xen_be_unmap_grant_refs(struct XenLegacyDevice *xendev, void *ptr,
+                              uint32_t *refs, unsigned int nr_refs);
+ 
+-int xen_be_copy_grant_refs(struct XenLegacyDevice *xendev,
+-                           bool to_domain, XenGrantCopySegment segs[],
+-                           unsigned int nr_segs);
+-
+ static inline void *xen_be_map_grant_ref(struct XenLegacyDevice *xendev,
+                                          uint32_t ref, int prot)
+ {
+@@ -70,6 +66,5 @@ static inline void xen_be_unmap_grant_ref(struct XenLegacyDevice *xendev,
+ void xen_config_cleanup(void);
+ int xen_config_dev_vfb(int vdev, const char *type);
+ int xen_config_dev_vkbd(int vdev);
+-int xen_config_dev_console(int vdev);
+ 
+ #endif /* HW_XEN_LEGACY_BACKEND_H */
 -- 
 2.43.0
 
