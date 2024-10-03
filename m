@@ -4,89 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F1B5CF856D
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 08:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D5BDCF856D
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 08:26:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swGvM-0000p7-Q5; Thu, 03 Oct 2024 04:11:07 -0400
+	id 1swGyU-0001m9-AO; Thu, 03 Oct 2024 04:14:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1swGsh-0000oD-9H
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 04:08:19 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1swGs6-0003QX-Tx
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 04:08:10 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-42cb6f3a5bcso8413885e9.2
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 01:06:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727942795; x=1728547595; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vvBKTO3dP+NrEQD+3clX7ZfukCYX41HRIF/EK8j55EU=;
- b=Kp5c+nIiD58vkxUMBo/XCaDxEI5CGLwsye5d3dRLXz6apxUMZevicGGkZ9FxA6qiJz
- U74C6DZxT0cqOIhL/ihrM/zzxjGyG14LE4nw+TsREbEyPxkJDf5cIfHqO4ex98+U9yrv
- 1hqF4X5JSyhtE6vul49ARf31feygTOVptT/ihgPyGLRynEPereGstyQYVu4D6Y9bc9fX
- I1wBGrZXMuQ2p1Jon8aib98MOcp/mjRvXM1eYYOzlnspvn+4Jy+Lw3JlXLnowmsRelTH
- WIbGg3Ohp5LRex+PULWnA3Ng69QkF0PtC16t19Dww1TZT74j9pSaf2rCmyZ8AnK4tepp
- y6Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727942795; x=1728547595;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=vvBKTO3dP+NrEQD+3clX7ZfukCYX41HRIF/EK8j55EU=;
- b=WjYAws2nt9idl4e6F6TcA6ZoZGTIKMKt5QYNVMIrkiiwemj8jg1BBZ+f9/5wq+TN2L
- 7V84rKg5yohJKRjZpJLqX5DkHJWvj+U78AZSbuUV9rEXlzWrobGuGqw97TY2YnD8deFl
- 4DD8rYO/u3MPW/vxbIiuzhDggX4OUdLbliGHgOq6UY+CUFxY84eqgYUKIHo2w7y8j0Nc
- jgE7iwSqrKyyiI00+zCVlOqqFmK1r+N77iJboZBV7nytFrNPu8h3UyH65hdqFtDeSxtr
- rtf2hGGJrySg0LHtn/EojDun/cSjgYWbVAMQZV1KSyy7XjoKYN26sZzt8EmrYLjV5JlH
- JSLQ==
-X-Gm-Message-State: AOJu0Yzh01jQ3DosZz4LuOA/d2DMTTh592Zyjg20ptUQwaPsmKAg81gQ
- u4Mjxcp6AMFecRvOAxWXDQhsNCnbb1JqhjKpmfuftTHZqmZYfC2p1RQBpfDEE8c=
-X-Google-Smtp-Source: AGHT+IGbKlZmsIpMAvqQRIQbLdehGpnfEC1XO6nnn8XK2JCZ0OAr90xiHAjwG7CqYMw+iXS00j/XPg==
-X-Received: by 2002:a05:600c:3b11:b0:42f:6878:a683 with SMTP id
- 5b1f17b1804b1-42f777ef1a0mr59134725e9.22.1727942794771; 
- Thu, 03 Oct 2024 01:06:34 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f7a01f539sm38206725e9.31.2024.10.03.01.06.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Oct 2024 01:06:33 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7BB6A5F756;
- Thu,  3 Oct 2024 09:06:32 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Phil Dennis-Jordan <phil@philjordan.eu>
-Cc: qemu-devel@nongnu.org,  agraf@csgraf.de,  peter.maydell@linaro.org,
- pbonzini@redhat.com,  rad@semihalf.com,  quic_llindhol@quicinc.com,
- marcin.juszkiewicz@linaro.org,  stefanha@redhat.com,  mst@redhat.com,
- slp@redhat.com,  richard.henderson@linaro.org,  eduardo@habkost.net,
- marcel.apfelbaum@gmail.com,  gaosong@loongson.cn,
- jiaxun.yang@flygoat.com,  chenhuacai@kernel.org,  kwolf@redhat.com,
- hreitz@redhat.com,  philmd@linaro.org,  shorne@gmail.com,
- palmer@dabbelt.com,  alistair.francis@wdc.com,  bmeng.cn@gmail.com,
- liwei1518@gmail.com,  dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com,  jcmvbkbc@gmail.com,
- marcandre.lureau@redhat.com,  berrange@redhat.com,
- akihiko.odaki@daynix.com,  qemu-arm@nongnu.org,  qemu-block@nongnu.org,
- qemu-riscv@nongnu.org
-Subject: Re: [PATCH v3 00/14] macOS PV Graphics and new vmapple machine type
-In-Reply-To: <20240928085727.56883-1-phil@philjordan.eu> (Phil Dennis-Jordan's
- message of "Sat, 28 Sep 2024 10:57:13 +0200")
-References: <20240928085727.56883-1-phil@philjordan.eu>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Thu, 03 Oct 2024 09:06:32 +0100
-Message-ID: <871q0xmwzb.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1swGyJ-0001lG-Vn; Thu, 03 Oct 2024 04:14:03 -0400
+Received: from zproxy3.enst.fr ([137.194.2.222])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1swGxS-0003cq-K3; Thu, 03 Oct 2024 04:13:50 -0400
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy3.enst.fr (Postfix) with ESMTP id B366BA0662;
+ Thu,  3 Oct 2024 10:11:12 +0200 (CEST)
+Received: from zproxy3.enst.fr ([IPv6:::1])
+ by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
+ id gBiOnLwkVKek; Thu,  3 Oct 2024 10:11:12 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy3.enst.fr (Postfix) with ESMTP id 1BDCAA06B3;
+ Thu,  3 Oct 2024 10:11:12 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy3.enst.fr 1BDCAA06B3
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1727943072;
+ bh=SdTacgwXlOQE7qPrAZC0vzcZsDUWZve9UsTlQIJud6M=;
+ h=From:To:Date:Message-ID:MIME-Version;
+ b=waOT6tNB4k8dBcwasxxRdKUANpB7LN2Mu3yxZ4quGNxmPcjG7pYPMbFwbVPcLM3vy
+ fRLlo2SAxFahBtK2T3DCCPWUg41D+43vom7AGlqH98HVSosoiwWb8szmdRoH0N+34n
+ sKvk5Ffm7RMBRNM2f6OJl6ivTttomEBNW+SHVnsk=
+X-Virus-Scanned: amavis at enst.fr
+Received: from zproxy3.enst.fr ([IPv6:::1])
+ by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
+ id lU-7fIyEQFLC; Thu,  3 Oct 2024 10:11:11 +0200 (CEST)
+Received: from inesv-Inspiron-3501.enst.fr (unknown
+ [IPv6:2a04:8ec0:0:124::190c])
+ by zproxy3.enst.fr (Postfix) with ESMTPSA id 5ED24A0677;
+ Thu,  3 Oct 2024 10:11:11 +0200 (CEST)
+From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
+To: qemu-devel@nongnu.org
+Cc: Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>, Luc Michel <luc@lmichel.fr>,
+ qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Samuel Tardieu <sam@rfc1149.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Damien Hedde <damien.hedde@dahe.fr>,
+ =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
+ Laurent Vivier <lvivier@redhat.com>
+Subject: [PING PATCH v5 0/3] Check clock connection between STM32L4x5 RCC and
+ peripherals
+Date: Thu,  3 Oct 2024 10:10:03 +0200
+Message-ID: <20241003081105.40836-1-ines.varhol@telecom-paris.fr>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=137.194.2.222;
+ envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy3.enst.fr
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,40 +88,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Phil Dennis-Jordan <phil@philjordan.eu> writes:
+Among implemented STM32L4x5 devices, USART, GPIO and SYSCFG
+have a clock source, but none has a corresponding test in QEMU.
 
-> (Apologies to anyone who has received more than one version of this
-> series of emails; my git-send-email was misconfigured and this is
-> a new attempt.)
->
-> This patch set introduces a new ARM and macOS HVF specific machine type
-> called "vmapple", as well as a family of display devices based on the
-> ParavirtualizedGraphics.framework in macOS. One of the display adapter
-> variants, apple-gfx-vmapple, is required for the new machine type, while
-> apple-gfx-pci can be used to enable 3D graphics acceleration with x86-64
-> macOS guest OSes.
->
-<snip>
->
-> There are currently a few limitations to this which aren't intrinsic,
-> just imperfect emulation of the VZF, but it's good enough to be just
-> about usable for some purposes:
->
->  * macOS 12 guests only. Versions 13+ currently fail during early boot.
->  * macOS 11+ arm64 hosts only, with hvf accel. (Perhaps some differences
->    between Apple M series CPUs and TCG's aarch64 implementation? macOS
->    hosts only because ParavirtualizedGraphics.framework is a black box
->    implementing most of the logic behind the apple-gfx device.)
+This patch makes sure that all 3 devices create a clock correctly,
+adds a QOM property to access clocks' periods from QTests,
+and adds QTests checking that clock enable in RCC has the
+expected results for all 3 devices.
 
-We don't currently have TCG CPU models for the Apple Silicon processors.
-They are not too hard to add (basically setting the correct ID register
-bits, c.f. aarch64_neoverse_n1_initfn for an example). However that
-would only cover Aarch64 architectural features. We do no modelling of
-the extra instructions that Apple added (although in theory that should
-only be run in Apples own ML libraries).
+Thank you for the reviews.
 
+Changes from v4 to v5: none
+(just added new reviewers in commit messages)
+
+Changes from v3 to v4:
+- removed 2nd commit (it was bumping up version id in
+`vmstate_stm32l4x5_usart_base`, which is useless when not adding
+any fields), it was a misunderstanding
+- in `clock.c`, `vmstate_stm32l4x5_usart_base`, renamed `freq_hz` to
+`period`
+- in `clocks.rst`, specified that `qtest-clock-period` is only usable
+from the QTests and not QEMU
+- in `qtest/stm32l4x5.h`, used macros from "clock.h" to compute
+the expected clock period in the right unit
+- in `qtest/stm32l4x5.h`, removed "osdep.h" include
+
+Changes from "v1" to v3:
+- adding a commit to expose `qtest-clock-period`, a QOM property for
+all clocks, only accessible from QTests, and mention it in clock.rst
+- adapt QTests so that they use clock period instead of clock frequency
+- remove `clock-freq-hz` QOM property in STM32L4x5 USART and SYSCFG
+- dropping the commit migrating GPIO clocks as it's already upstream
+
+Changes from v1 to an unfortunate second "v1":
+- upgrading `VMStateDescription` to version 2 to account for
+`VMSTATE_CLOCK()`
+- QTests : consolidating `get_clock_freq_hz()` in a header
+and making appropriate changes in stm32l4x5q_*-test.c
+
+Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+Reviewed-by: Luc Michel <luc@lmichel.fr>
+
+In=C3=A8s Varhol (3):
+  hw/misc: Create STM32L4x5 SYSCFG clock
+  hw/clock: Expose 'qtest-clock-period' QOM property for QTests
+  tests/qtest: Check STM32L4x5 clock connections
+
+ docs/devel/clocks.rst               |  6 +++++
+ include/hw/misc/stm32l4x5_syscfg.h  |  1 +
+ tests/qtest/stm32l4x5.h             | 42 +++++++++++++++++++++++++++++
+ hw/arm/stm32l4x5_soc.c              |  2 ++
+ hw/core/clock.c                     | 16 +++++++++++
+ hw/misc/stm32l4x5_syscfg.c          | 19 +++++++++++--
+ tests/qtest/stm32l4x5_gpio-test.c   | 23 ++++++++++++++++
+ tests/qtest/stm32l4x5_syscfg-test.c | 20 ++++++++++++--
+ tests/qtest/stm32l4x5_usart-test.c  | 26 ++++++++++++++++++
+ 9 files changed, 151 insertions(+), 4 deletions(-)
+ create mode 100644 tests/qtest/stm32l4x5.h
 
 --=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+2.45.2
+
 
