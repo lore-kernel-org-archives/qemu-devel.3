@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EE81CF34D8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CA08CF34D6
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 23:43:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swVSx-0007Mt-Vr; Thu, 03 Oct 2024 19:42:40 -0400
+	id 1swVSq-0007JO-SF; Thu, 03 Oct 2024 19:42:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swVSv-0007ME-Ln
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 19:42:37 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swVSo-0007Io-Ew
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 19:42:30 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swVSt-0003Sw-8y
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 19:42:37 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-42cbbb1727eso15203235e9.2
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 16:42:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swVSm-0003OE-9U
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 19:42:30 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-42cc43454d5so12151755e9.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 16:42:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727998953; x=1728603753; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727998946; x=1728603746; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TcCRLsqYRrcM/7jknEY1pNA2GOIFR+Tysnifvuzq9yg=;
- b=VLZS/p4b3cPVk1SpmpLXfm0vR+hMLyvQbQngtYb7kghcFN3fcbceDorfgSJmmHHR/v
- 8fIKfLhEOn3+oNq8m3KOCOBdqO0Zq2o5hwAjmKLHVWOWOoOQ0FscgV2Z7tps+NV6fBH3
- X4wrNEhWMou6guvJk/+XLV0cOTn7DbSebtikPJ/O2ZvkbQbkXwDhTKUeIo7raLOevXxK
- 5J0q+FbbXsQB2dFw4gjuOU20sHiP2+uOd6jFzw8bvH8+997HZ1R9l+Of3AXVd1ji22m5
- /SnGSegNwz748lD3cCD/cjexaL8jWl0LRn6JU9vaKjBrf1+VYffQXmeeuG8K83VuhbMs
- Z/kw==
+ bh=hjVB53iD7/yKN8TlGeZ4BX8eqm15vighx+LztRMtmDo=;
+ b=zjwh96r/za/WtD691dZ0ovxjwhy5R7jlMdykmxrF4YCz3GSYylzec5dGJ3OUJCD7hA
+ goruyYSsPSVnu/vMmLgWaz4mSYFCG0wdSoqsF440+cKhJb/L/qpO6dpObSAFnWVDkgwT
+ LqIp4s7RB+Na8NakiqhyFbrnXvb2zO0gcOicPdlhXljFhG6FgjfwfXWBQixlPo6JbJuD
+ K1C1lcbEwJ1vJK+kbBy9cnFta5xARUsdG7khN6wekDWP6XXLtPD70VEY18/ZMgNG5Trb
+ p2jeBTXQbF/zIs/EHmyEKttBKagUpsZUmVfZIDpI2OPJ2/VNwCvT2jpAB4doetrHUkV6
+ XKdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727998953; x=1728603753;
+ d=1e100.net; s=20230601; t=1727998946; x=1728603746;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TcCRLsqYRrcM/7jknEY1pNA2GOIFR+Tysnifvuzq9yg=;
- b=TIeAAL92Y36oXygk++cyTLVCmX3wjFdoXCIngUVy+FVDHsmmPFWgra6GZ24duxRP3m
- 3UZQgyjSQO5wxOr0iV/3w0QqebC0dCEO76VDwe3gZWTVmWg1qr/CmqQ9lmINt1OOzYSz
- yD8k0kgkxXWc6oVDqrHMe+2ayF0ji4JmM/4tv1WLMLA3IHQ7HE+iyfSQt+P+2vHGLMKF
- 5KeKsSAM24yDoHV4NmcqzB3kcvFEQ0k9U8XZ5/791+qmWf/m/VduqSk36IjGs7B0ELqT
- vaGiCN5nZ+1nS0whWd99xCmGLDJnoANZQSB24Nn+CWMpdaBtfWc4xP1+Pa7u12hB5/cO
- w5hw==
-X-Gm-Message-State: AOJu0YynOa2hovdLcJdKqjQW0xHsvG0CihLhOozO6YfnmfOznOWSJJVh
- +vJlJp7VW9TItdPGYP5uu0FiUVGDkID6D45ocxxAxJZhFCUNXVMSDA1lVeD6jJnnP95yHY4GDNn
- t+QQ=
-X-Google-Smtp-Source: AGHT+IFAX5JsfYFznjj6kznenaTo+F69obC9mIHSdm+s6fhWvEVRA+aYLlo8UcVg7quHOQXqgCCcgw==
-X-Received: by 2002:a5d:5048:0:b0:37c:d49c:3ac7 with SMTP id
- ffacd0b85a97d-37d0e8f4b9fmr555862f8f.48.1727998953470; 
- Thu, 03 Oct 2024 16:42:33 -0700 (PDT)
+ bh=hjVB53iD7/yKN8TlGeZ4BX8eqm15vighx+LztRMtmDo=;
+ b=XWwYTvSexleyA6o1ukNBlBgi2i+cWxogdY1nUQo3lYz5Mskijvcoc868aIpEZO39EQ
+ BmlWe4tPEv0PfmGY9bcFWjzZDTG1FXArBqIjiAhAgPRg31LtMij8jess7P+CMDw+PPiL
+ Ax9vQNqAR4ZFnX69Ms6YbtlRsr+JI3+WZk4ZAemaQ74dnUHS2Pj/mlUXaMPS/aB1sqT8
+ 3fhbLL19uHig90+ktdtTyuMMpM+Cc21De2XTqKBk11D8I0n/gL6QGtN+5GMJfW2WL84x
+ AeGCa6j2pVSH/G7kI9L6n4K3HPvhrFycAcjIL+yf1pTqkiZutr51U3a16372uCWwiDp0
+ nJog==
+X-Gm-Message-State: AOJu0YxlmVXtIc/YJHntB85y7nzCjleBGXDB+PNIyYOp4dGTAe9Kr/bV
+ cz/gIj/FeXWz+f3LqJP4KWTOuK70Ju8xx1tUS5pvClDwSoq5TZye/xiarsgy/bYKv8dVXMcdiDJ
+ YxXE=
+X-Google-Smtp-Source: AGHT+IGLwHCdkB/RhpUtcOQmM8s5Ft6eGONxZVMIWQGP+Ee0mmONGxrTyU4Gv+Xxv0liMtV1c0KvZg==
+X-Received: by 2002:adf:f603:0:b0:37c:d567:7c8c with SMTP id
+ ffacd0b85a97d-37d0e7781c5mr398122f8f.30.1727998946200; 
+ Thu, 03 Oct 2024 16:42:26 -0700 (PDT)
 Received: from localhost.localdomain (45.red-88-29-191.dynamicip.rima-tde.net.
  [88.29.191.45]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d081f7141sm2192334f8f.6.2024.10.03.16.42.30
+ 5b1f17b1804b1-42f86a0afc1sm1338845e9.1.2024.10.03.16.42.22
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Oct 2024 16:42:32 -0700 (PDT)
+ Thu, 03 Oct 2024 16:42:25 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Michael Rolnik <mrolnik@gmail.com>,
@@ -79,17 +79,17 @@ Cc: qemu-ppc@nongnu.org, Michael Rolnik <mrolnik@gmail.com>,
  Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 02/16] exec/memop: Remove unused memop_big_endian() helper
-Date: Fri,  4 Oct 2024 01:41:57 +0200
-Message-ID: <20241003234211.53644-3-philmd@linaro.org>
+Subject: [PATCH 01/16] qemu/bswap: Undefine CPU_CONVERT() once done
+Date: Fri,  4 Oct 2024 01:41:56 +0200
+Message-ID: <20241003234211.53644-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241003234211.53644-1-philmd@linaro.org>
 References: <20241003234211.53644-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,29 +112,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Last use of memop_big_endian() was removed in commit 592134617c9
-("accel/tcg: Reorg system mode store helpers").
+Better undefined macros once we are done with them,
+like we do few lines later with DO_STN_LDN_P().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/exec/memop.h | 6 ------
- 1 file changed, 6 deletions(-)
+ include/qemu/bswap.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/exec/memop.h b/include/exec/memop.h
-index f881fe7af4e..899ea0a2aae 100644
---- a/include/exec/memop.h
-+++ b/include/exec/memop.h
-@@ -164,10 +164,4 @@ static inline MemOp size_memop(unsigned size)
-     return (MemOp)ctz32(size);
- }
+diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
+index ad22910a5d1..b915835bead 100644
+--- a/include/qemu/bswap.h
++++ b/include/qemu/bswap.h
+@@ -140,6 +140,8 @@ CPU_CONVERT(le, 16, uint16_t)
+ CPU_CONVERT(le, 32, uint32_t)
+ CPU_CONVERT(le, 64, uint64_t)
  
--/* Big endianness from MemOp.  */
--static inline bool memop_big_endian(MemOp op)
--{
--    return (op & MO_BSWAP) == MO_BE;
--}
--
- #endif
++#undef CPU_CONVERT
++
+ /*
+  * Same as cpu_to_le{16,32,64}, except that gcc will figure the result is
+  * a compile-time constant if you pass in a constant.  So this can be
 -- 
 2.45.2
 
