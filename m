@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0AF8CF8571
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 09:15:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72EDECF8571
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 09:18:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swHiZ-0001l9-Ai; Thu, 03 Oct 2024 05:01:57 -0400
+	id 1swHmk-0002l0-OM; Thu, 03 Oct 2024 05:06:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1swHiH-0001kY-25
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 05:01:35 -0400
-Received: from mail-qk1-x72f.google.com ([2607:f8b0:4864:20::72f])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1swHmb-0002ee-CB
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 05:06:01 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1swHha-0003Yh-GT
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 05:01:26 -0400
-Received: by mail-qk1-x72f.google.com with SMTP id
- af79cd13be357-7a99e8d5df1so78449085a.2
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 01:59:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1swHm2-00048D-Uw
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 05:05:56 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2e0a74ce880so655343a91.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 02:04:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1727945970; x=1728550770;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1727946259; x=1728551059;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ctF6ZCsxmnjqNoA/TJanV3/QwxKpQtVltx+hHIdWicQ=;
- b=jizHfJYYBO5lkaoC4R+035obhvdz1awRydl9Pb0DNQBwo7f9d/Ld7/2uLbggWx3c1O
- 6b0aWbFOJ04siDWHLI85M5CFs/duKrac1wa3pObEzTRwgZc+nGZFPlN3xv6l+CbMolE5
- KxE/zWL3Pz0ZC9XcDcUxxBWv6cIRcB2LBi9LQi3VB/18eRmlTUd5sOGTajgXzAWbeTP7
- tSYVNQdRw6Opat7shsIByPImZ/4gew5sRmvgu95uyVNJPJ+yqQ8vf7cTvTibmbrcPkhN
- MpQVNSgNO8FsXtzwa0Z1V0GyC2k4nzIsHBG9ByGjJuYHTPN61tEL+py53UbJcl3tq3ob
- ZHtw==
+ bh=MwoKLbjiWk5W2MOxtv+/pJ1HZ7kuDq+4CZj2XYWI1CE=;
+ b=ALx+b0ndFOe1/vcB+kYFNgTeiBBPf/qJICUR4xisXkJnd1pTz6oKdFm8I+6qY2Mii6
+ +dTkeTEXgue/nxBYOx0DxC2WRTa4POtoeeGW1tX8Q3tqX5YcIm+iUpdAO3FKmjGfSDpr
+ cGNBQbJFWW2SA0TIxB3wRKSDa0/DgcZwxabvckZT1OqmSctAX/pK6dXjUyI0aPSBqmN5
+ jgR8+C7Q5U+IIUnMFAQuAl5k9tizaId2wbeM2pLRQ+kDaZfq9E9VcSzAuz0DmpDSTgos
+ wt9Z5FT901lkRjeaA0CsoPH0D0Q68NdgDa5N5741xzxVqW2sF8PCga77dz6Qz39A2LyN
+ uOlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727945970; x=1728550770;
+ d=1e100.net; s=20230601; t=1727946259; x=1728551059;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ctF6ZCsxmnjqNoA/TJanV3/QwxKpQtVltx+hHIdWicQ=;
- b=GZGTvS/TvRwmyL7UrfOxc1G1FEy6Dh8yxGyQ3uGEgxTYw/NrtGWGJ6TC1qYLsmI6Q+
- SatgNNsDZll3NtnugxqYbn6PC5AK6xtVHm5HFVb9DPFVQ3xkG2tt6Gipo1BDit5DK07/
- oXuOkHJgwkBJMRH3eUWDtjiH35u7/20fDMmVCziBVbVE51Jw6DK4Ayw2qoRREvnrARF/
- UfwEYeEBsC/Kl45izobTAz5+fzxLJ/j26qQ81UpUtIkSuOGUcDjNri63e0//IVWjqpp7
- iOGV1uMBeuFGQWQIXgMesWsXTvwQoq/EnV/zWEL3w5mTa2tEjdKsz2T/6BG80WC+D1il
- OdeA==
-X-Gm-Message-State: AOJu0YyS6zeTT6GDpt/LUs40Scqo5y+weWl7ya1A6xHx5f6p1J4Yxyr5
- jrUgAuwAHS4VHrEulbUWZKHu05ovzGXljCw5tl9vYOvi2KmNxQHPlSmK7JdOQKT+rffi1y+tkDM
- dHHGT4GDcGTDR0Zv9QEJIB0yKy1Sk0uxPlz5pV+uje0TG5edv
-X-Google-Smtp-Source: AGHT+IFfTth3oxdU/4J+bD6AxI58/ss5l0oKVUzPUdizv7QVUGXzdw6dSSYxow50QYgzirxB5BLIHC6TpFydaXn451g=
-X-Received: by 2002:a17:90a:77c4:b0:2e0:74c9:ecea with SMTP id
- 98e67ed59e1d1-2e184681664mr7494564a91.10.1727945599817; Thu, 03 Oct 2024
- 01:53:19 -0700 (PDT)
+ bh=MwoKLbjiWk5W2MOxtv+/pJ1HZ7kuDq+4CZj2XYWI1CE=;
+ b=CNk6aCeW6Xl5bnzfIk5nQ5Mtd7L1aCR5szx/Iveq6jYRlmWKVDw1qr+1q/4xVE9V/W
+ qqCpsSBge8RW13dS9U5gInrvTMN5Ah+yWJVbklfoFjOaXGzKTa0FJWjbdlYfyBwKrDXt
+ wL8Irrw1s0GSlM99iLO70jeRdQLB8deQA4SY+hHpy9MANP/v7oKoGFuXDDT3dUiaQ3CU
+ XobCsoGg62UwL1ixncW6xRPO5f9E25L+E9S5x5FaX6liGmjhYI1WQcmYWDLxjWwt/X48
+ z7Gvc+PBVnZ93Gdqqtfn2+3pBsXDxaD9IhGUFtI4lieLPOMtC4qfkYUL4oOD9/hAlgfM
+ nY9A==
+X-Gm-Message-State: AOJu0YyxI05equZB0z9Okcd4LhziUjyHix+1jGpqcm8J8EBlFarsItW4
+ hTMpQH2XOvWV/RH9ytOqrxfq6x1bIeROm8Z/3o9wj2bd2v56m65zc7npixr5HDYVCG+SOWfYoeo
+ FidbPtUDrA02aPSFmz9dG8Ve049zBveNlh3HwJPJ1gHKPc6Vh
+X-Google-Smtp-Source: AGHT+IGzfRDiCREnIh1eVZNS0aIXd6paZQTQGY3XjjAmlRtRLFiVsWAGuXzK4cECVmkwMNk2pUU5hPz+r1kSe3MYbbk=
+X-Received: by 2002:a17:90a:be10:b0:2e0:7b2b:f76 with SMTP id
+ 98e67ed59e1d1-2e18468cc49mr8127290a91.19.1727945758413; Thu, 03 Oct 2024
+ 01:55:58 -0700 (PDT)
 MIME-Version: 1.0
 References: <871q16fq9c.fsf@draig.linaro.org>
-In-Reply-To: <871q16fq9c.fsf@draig.linaro.org>
+ <CANCZdfoU4stiEDJKOUEpU-ek_tOBHe0rBH3G9S2Wymc8jHKzCQ@mail.gmail.com>
+In-Reply-To: <CANCZdfoU4stiEDJKOUEpU-ek_tOBHe0rBH3G9S2Wymc8jHKzCQ@mail.gmail.com>
 From: Warner Losh <imp@bsdimp.com>
-Date: Thu, 3 Oct 2024 02:53:08 -0600
-Message-ID: <CANCZdfoU4stiEDJKOUEpU-ek_tOBHe0rBH3G9S2Wymc8jHKzCQ@mail.gmail.com>
+Date: Thu, 3 Oct 2024 02:55:47 -0600
+Message-ID: <CANCZdfpWN+nYGLBtMb5xdpFW+=iGZ473UhknLN0vW6PyHSQScQ@mail.gmail.com>
 Subject: Re: Rust BoF and maintainer minutes and planning the roadmap to Rust
 To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
 Cc: qemu-devel <qemu-devel@nongnu.org>, 
@@ -72,9 +73,9 @@ Cc: qemu-devel <qemu-devel@nongnu.org>,
  Thomas Huth <thuth@redhat.com>, 
  Stefan Hajnoczi <stefanha@redhat.com>, dvzrv@archlinux.org,
  anatol.pomozov@gmail.com, Miroslav Rezanina <mrezanin@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000ab3e0106238eaf04"
-Received-SPF: none client-ip=2607:f8b0:4864:20::72f;
- envelope-from=wlosh@bsdimp.com; helo=mail-qk1-x72f.google.com
+Content-Type: multipart/alternative; boundary="0000000000001f2eb306238eb936"
+Received-SPF: none client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -96,109 +97,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ab3e0106238eaf04
+--0000000000001f2eb306238eb936
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Sep 26, 2024 at 8:24=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@linar=
-o.org> wrote:
+On Thu, Oct 3, 2024 at 2:53=E2=80=AFAM Warner Losh <imp@bsdimp.com> wrote:
 
-> One output from this discussion should be a clear statement that we are
-> going forward with this work and the road map. A rough roadmap might
-> look like:
 >
->   - 9.2   --enable-rust is available and developers can build with it.
->           rust devices have -x-device or -rust-device CLI flags for
->           runtime selection.
 >
->   - 10.x  rust devices feature complete and migration compatible, enabled
->           by default when rust compiler detected. No CLI selection
->           required as legacy portions won't be built. Any partial
->           conversions should be behind --enable-prototype-rust configure
->           flag.
+> On Thu, Sep 26, 2024 at 8:24=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@lin=
+aro.org>
+> wrote:
 >
->   - 11.x  distros have enough infrastructure to build on supported
->           platforms. Rust becomes a mandatory dependency, old C versions
->           of converted code removed from build.
+>> One output from this discussion should be a clear statement that we are
+>> going forward with this work and the road map. A rough roadmap might
+>> look like:
+>>
+>>   - 9.2   --enable-rust is available and developers can build with it.
+>>           rust devices have -x-device or -rust-device CLI flags for
+>>           runtime selection.
+>>
+>>   - 10.x  rust devices feature complete and migration compatible, enable=
+d
+>>           by default when rust compiler detected. No CLI selection
+>>           required as legacy portions won't be built. Any partial
+>>           conversions should be behind --enable-prototype-rust configure
+>>           flag.
+>>
+>>   - 11.x  distros have enough infrastructure to build on supported
+>>           platforms. Rust becomes a mandatory dependency, old C versions
+>>           of converted code removed from build.
+>>
+>>   - xx.y  QEMU becomes a pure native rust program and all C is expunged.
+>>           We may never get to this point.
+>>
+>> We should publish the intention and the road map prominently although it
+>> was unclear if a blog post would be the best place vs expanding a
+>> section in the developers manual. Perhaps both make sense with a blog
+>> post for the statement of intent and rough timeline and the developer
+>> manual being expanded with any new rules and standards to follow?
+>>
 >
->   - xx.y  QEMU becomes a pure native rust program and all C is expunged.
->           We may never get to this point.
->
-> We should publish the intention and the road map prominently although it
-> was unclear if a blog post would be the best place vs expanding a
-> section in the developers manual. Perhaps both make sense with a blog
-> post for the statement of intent and rough timeline and the developer
-> manual being expanded with any new rules and standards to follow?
+> FreeBSD is Tier 1 in rust only for amd64 (x86_64). It's Tier 2 for i386
+> (which
+> admittedly is going away) and Tier 3 for everything else.
 >
 
-FreeBSD is Tier 1 in rust only for amd64 (x86_64). It's Tier 2 for i386
-(which
-admittedly is going away) and Tier 3 for everything else.
+oops, I should have said it's Tier 2 with hosts for amd64, Tier 2 w/o hosts
+and
+tier 3 for aarch64 (and everything else). In FreeBSD, amd64 and aarch64 are
+tier 1 supported platforms and I got those confused. It is an important
+difference
+and later in my email I refer to it, so I thought a correction was in order=
+.
 
-There was some concern about the missing gaps in the support matrix
-> especially as we support a number of "legacy" TCG backends. While *-user
-> support is more insulated from the effects of rust conversions due to
-> its relatively low set of dependencies it will still be a problem if we
-> convert the core CPU QOM classes to rust.
+
+> There was some concern about the missing gaps in the support matrix
+>> especially as we support a number of "legacy" TCG backends. While *-user
+>> support is more insulated from the effects of rust conversions due to
+>> its relatively low set of dependencies it will still be a problem if we
+>> convert the core CPU QOM classes to rust.
+>>
 >
-
-Indeed. I have great concerns here, though we've already dropped
-32-bit host support for bsd-user. The status of aarch64 support and rumored
-difficulty getting that rust support upgraded give me pause for concern
-because it's a FreeBSD Tier 1 platform. While it basically works, the lack
-of
-commitment by the Rust community is troubling. Even more troubling because
-rust still uses the old FreeBSD 11 compat syscalls, despite upgraded
-being available for years at this point (though maybe this info has changed
-in the last month or two, the years long delay in moving off the interfaces
-that the FreeBSD project obsoleted about 8 years ago is troubling on its
-own).
-Much of the resistance I'm told (I'm not a big rust person, so I have to
-reply
-on others) has been in the rust team because they don't have enough
-familiarity
-with FreeBSD to make any kind of decision so even properly solved issues
-linger in the official upstream. The FreeBSD project critically depends on
-bsd-user for its release process, though that dependency so far has been
-only on x86 and aarch64, both of which work almost all the time, even if
-they aren't Tier 1 rust platforms.
-
-For -system use, this could limit where qemu runs, though to be honest
-the only platform I know has users that might be affected running -system
-might be RISCV.
-
-There's similar issues with other BSDs, but I've heard even less reliable
-information
-about them, so I'll just leave it at that.
-
-So a strawman timeline of 2 years strikes me as unrealistically agressive
-for it to be an absolute requirement given the slow rate of change I've see=
+> Indeed. I have great concerns here, though we've already dropped
+> 32-bit host support for bsd-user. The status of aarch64 support and rumor=
+ed
+> difficulty getting that rust support upgraded give me pause for concern
+> because it's a FreeBSD Tier 1 platform. While it basically works, the lac=
+k
+> of
+> commitment by the Rust community is troubling. Even more troubling becaus=
+e
+> rust still uses the old FreeBSD 11 compat syscalls, despite upgraded
+> being available for years at this point (though maybe this info has chang=
+ed
+> in the last month or two, the years long delay in moving off the interfac=
+es
+> that the FreeBSD project obsoleted about 8 years ago is troubling on its
+> own).
+> Much of the resistance I'm told (I'm not a big rust person, so I have to
+> reply
+> on others) has been in the rust team because they don't have enough
+> familiarity
+> with FreeBSD to make any kind of decision so even properly solved issues
+> linger in the official upstream. The FreeBSD project critically depends o=
 n
-with upstream rust WRT FreeBSD. At the very least, it would put qemu on
-non-x86/non-aarch64 platforms at risk. While not a huge audience, there are
-some users there. The Tier 2 status for Rust at best for FreeBSD is also a
-bit worrying for elimination of all C or a big reliance on rust in the core
-that
-can't realistically be avoided. I'm not sure this should gate the start of
-the rust
-experiment, but I raise it now so as that experiment progresses towards
-production
-people think to talk to me or others in the FreeBSD community as they
-progress.
+> bsd-user for its release process, though that dependency so far has been
+> only on x86 and aarch64, both of which work almost all the time, even if
+> they aren't Tier 1 rust platforms.
+>
+> For -system use, this could limit where qemu runs, though to be honest
+> the only platform I know has users that might be affected running -system
+> might be RISCV.
+>
+> There's similar issues with other BSDs, but I've heard even less reliable
+> information
+> about them, so I'll just leave it at that.
+>
+> So a strawman timeline of 2 years strikes me as unrealistically agressive
+> for it to be an absolute requirement given the slow rate of change I've
+> seen
+> with upstream rust WRT FreeBSD. At the very least, it would put qemu on
+> non-x86/non-aarch64 platforms at risk. While not a huge audience, there a=
+re
+> some users there. The Tier 2 status for Rust at best for FreeBSD is also =
+a
+> bit worrying for elimination of all C or a big reliance on rust in the
+> core that
+> can't realistically be avoided. I'm not sure this should gate the start o=
+f
+> the rust
+> experiment, but I raise it now so as that experiment progresses towards
+> production
+> people think to talk to me or others in the FreeBSD community as they
+> progress.
+>
+> Warner
+>
 
-Warner
-
---000000000000ab3e0106238eaf04
+--0000000000001f2eb306238eb936
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Thu, Sep 26, 2024 at 8:24=E2=80=AF=
-AM Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.benn=
-ee@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
-le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
-ng-left:1ex">One output from this discussion should be a clear statement th=
-at we are<br>
+<div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 3, 2024 at 2:53=E2=80=AFA=
+M Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt; =
+wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
+px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=
+=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote"><div dir=
+=3D"ltr" class=3D"gmail_attr">On Thu, Sep 26, 2024 at 8:24=E2=80=AFAM Alex =
+Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org" target=3D"_blank"=
+>alex.bennee@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
+204);padding-left:1ex">One output from this discussion should be a clear st=
+atement that we are<br>
 going forward with this work and the road map. A rough roadmap might<br>
 look like:<br>
 <br>
@@ -237,10 +269,17 @@ post for the statement of intent and rough timeline and the developer<br>
 manual being expanded with any new rules and standards to follow?<br></bloc=
 kquote><div><br></div><div>FreeBSD is Tier 1 in rust only for amd64 (x86_64=
 ). It&#39;s Tier 2 for i386 (which</div><div>admittedly is going away) and =
-Tier 3 for everything else.</div><div><br></div><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">There was some concern about the missing gaps in the=
- support matrix<br>
+Tier 3 for everything else.</div></div></div></blockquote><div><br></div><d=
+iv>oops, I should have said it&#39;s Tier 2 with hosts for amd64, Tier 2 w/=
+o hosts and</div><div>tier 3 for aarch64 (and everything else). In FreeBSD,=
+ amd64 and aarch64 are</div><div>tier 1 supported=C2=A0platforms and I got =
+those confused. It is an important difference</div><div>and later in my ema=
+il I refer to it, so I thought a correction was in order.</div><div>=C2=A0<=
+/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
+rder-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><di=
+v class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0=
+px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">T=
+here was some concern about the missing gaps in the support matrix<br>
 especially as we support a number of &quot;legacy&quot; TCG backends. While=
  *-user<br>
 support is more insulated from the effects of rust conversions due to<br>
@@ -281,6 +320,7 @@ ld gate the start of the rust</div><div>experiment, but I raise it now so a=
 s that experiment progresses towards production</div><div>people think to t=
 alk to me or others in the FreeBSD community as they progress.</div><div><b=
 r></div><div>Warner</div></div></div>
+</blockquote></div></div>
 
---000000000000ab3e0106238eaf04--
+--0000000000001f2eb306238eb936--
 
