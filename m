@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FC6CCF34C3
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 21:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 021DACF34AD
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 21:16:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swT9e-0001LU-4s; Thu, 03 Oct 2024 17:14:34 -0400
+	id 1swTB3-00022f-PS; Thu, 03 Oct 2024 17:16:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swT9c-0001Kx-1O
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:14:32 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swTB0-00022N-92
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:15:58 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swT9a-0002W6-DS
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:14:31 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-42ca4e0299eso13010935e9.2
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 14:14:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swTAw-0002nk-L0
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:15:58 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-37cfff59d04so1444451f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 14:15:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727990069; x=1728594869; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727990140; x=1728594940; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=y/FiKwEQtzIllpWf/huDp/8qVIbiBSmNTcCwpny6jN4=;
- b=BEj0Y37bAFD5MRqMuzFwSMumk809O/5a2WYaRrae4P3fF83HsQ2oXcMbb9OjEgDhuW
- rZ1MmUhRYsgijK5GZKeMu28OAP4fyVQYrw6nLDuPidLuzgbfoUoK/XIHaelLHB0te4YL
- K3xLE3p7mhCEjz7Kzv3MnpbnnQd5rR31gXhfblry7kwSQmq0G0aTN8AC+Hj13LQ4OS8r
- PtJirwuSQnaJzLvS2SUe8FiIOqux5hlPNsUnABZoNO4iV43ZvHcfj84+JoDUkc12tDKP
- 8reiLWCDkRVQrS0aHTORP0qfBlTFuxr09VUMqbbDVzt4qafIhAZyiCChiVRC5/ksE6tY
- UaiQ==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=xlvzzjZlFFA+4yuIB0/aX53wNEZ27w33GYF04DZffi8=;
+ b=wAEc0WE7AoLwPGGbXfjeM47JuinTDW6MTaT8tXVM0rw+E+CkzrMHrO5V1e2oayzRfp
+ /5OhhbPydnycwwv4Sk1k/dgB+/hZTo5YWYi0BKQZJvdt0RjJbfIOqNzgHhm4UeKACt5X
+ o+sjC7YXSWX3NTubnD/vbhoDajWWuYwWhJez5gz5FbWTOdRjIk3v2Vlzvf7Hsktp8oKJ
+ gEtSkjioYOsHQ0d8wvDeVIhjuGmgb2gop549/1XoOuhLCEac3RZXEzEq2D1UiYxn6W4q
+ nZiUw1CcU8X+R1QqX8DKH7rok15V9RVcTjbckQcTAGljR7njqF0me2B9eOk9nR0s1e9W
+ CgxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727990069; x=1728594869;
+ d=1e100.net; s=20230601; t=1727990140; x=1728594940;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y/FiKwEQtzIllpWf/huDp/8qVIbiBSmNTcCwpny6jN4=;
- b=t2CrReRB08Di1xIn916oXib9Sz+ewC81QyApwkJQKEOBe6ujE5/WH3ktBx0JFDCDwF
- RlRKB4hVEgnGIecBGsslWJ37t44uv4NFZ741VOvp45wouyYz/MEYA2AUSyJs8ta5vuj6
- 9Rpjm9x1B184GWUPb9nYq9F8/bDB60Tj2vwPXd9ttIHbdiO9yfq9W8Eok2XNM68PuD3w
- 8jGmccI5iMBNbPxyCVXVL0uH4CuzDSRe1K7UuIjmyWCwj/JLUA1f/2eGn03ACLlkSoNt
- bAPhQQT2Q5dHBWy4IXoxWom0U7M4SlzA9PutrBW3mZKP70g7QLoJkiM/1Fc12FeFxc2o
- wd2A==
+ bh=xlvzzjZlFFA+4yuIB0/aX53wNEZ27w33GYF04DZffi8=;
+ b=f6nvttAv42rBIAeoaLQlm3SWXG/1BQhz32TP6wpE3NFMCMsND6dEDLzgPNwNIk3anr
+ w0SY7XKOOCvyXvTAe4/xJApV1FCrrsA+A8bcxDRgXNG1LiA6lWz23e6vjSMbH4sKjs78
+ WXrnyloe5gUf5qPEdGBngYQJ6Uj0CrEjrCDoG596MQS29QQs2Q5+f8lpL5Li5ln0EDgy
+ rCU5J6uNSxV1IS2Lb9KwQrDNBWyjDQbvlVIosVk2rrTS9ogYmSLu0wCGWj+AdmBJVyQl
+ FYgFZIl8I4zd1YCI/U6ZYNVML9MR5MZ6+QY18ZypbHgU1TpBXRqwDnKUojdLLcBbJW6n
+ AOQw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5mT0YxESey/BB7i+uoC5NhWOFb2qso/nk/3TErPS6ATPQp6GGeR3u3cpfR8RJM0RJ+Vi3dCa33dpm@nongnu.org
-X-Gm-Message-State: AOJu0YwlPDLacRqhKJLhV1NmGicZdm7LV4SogXEIO4cfXk0oSXNe/HOk
- 2sAPXgoKNLlqoiUtcenhZ9Sz/OjSUoMLhLKDhLxIDu7XS31BhNcXr8cQmX7lA2M=
-X-Google-Smtp-Source: AGHT+IFpWMncJuJSCjk+l4zOWqhzYWh1b/ubMxKn7Wu021W+7RnUnxTf6PZdS4XPP6Z0Hefup0aalQ==
-X-Received: by 2002:a05:600c:450f:b0:42b:afe3:e9f4 with SMTP id
- 5b1f17b1804b1-42f85aa3965mr2638735e9.3.1727990068763; 
- Thu, 03 Oct 2024 14:14:28 -0700 (PDT)
+ AJvYcCX0ru3tMtTd6rpxpfUTaxG4FVpJD1A2HiLPBWaW8crVjLUiu+lArgXuWOsjX7j9ixtiarDoXdI0+aPD@nongnu.org
+X-Gm-Message-State: AOJu0YyL7byY305NKonpZfyehkkV7ngflZ6B4PRzRAspOzh9Y4NHtSZv
+ Fx3+uiRxPyLSu89ETJbVGzsi0P2WWcTAjeqKYHlULc+2y/52vQmWX72hng+JArY=
+X-Google-Smtp-Source: AGHT+IE9ebjAJpMSxZl/p8qgShh6Rbu9N3jJ2bYWLShDI34KVAE1eV3cdkvBRj0J9jamAqAgDo/l9w==
+X-Received: by 2002:adf:b35b:0:b0:37c:f997:5b94 with SMTP id
+ ffacd0b85a97d-37d049ea426mr2815036f8f.12.1727990140368; 
+ Thu, 03 Oct 2024 14:15:40 -0700 (PDT)
 Received: from [172.33.27.23] (134.pool62-36-43.static.orange.es.
  [62.36.43.134]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f80255f01sm23847665e9.9.2024.10.03.14.14.27
+ 5b1f17b1804b1-42f7a01f514sm52969535e9.32.2024.10.03.14.15.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Oct 2024 14:14:28 -0700 (PDT)
-Message-ID: <b61ee567-7cb2-4788-8c28-745fff6fa155@linaro.org>
-Date: Thu, 3 Oct 2024 23:14:27 +0200
+ Thu, 03 Oct 2024 14:15:39 -0700 (PDT)
+Message-ID: <e873ce71-0178-46ba-b3e5-1312497c37d7@linaro.org>
+Date: Thu, 3 Oct 2024 23:15:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/char: Remove unused serial_set_frequency
-To: dave@treblig.org, mst@redhat.com, pbonzini@redhat.com,
- BALATON Zoltan <balaton@eik.bme.hu>
-Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-References: <20240918144122.155351-1-dave@treblig.org>
+Subject: Re: [PATCH] hw/pci: Remove unused pcie_chassis_find_slot
+To: dave@treblig.org, mst@redhat.com, marcel.apfelbaum@gmail.com,
+ qemu-devel@nongnu.org
+References: <20240918234748.468148-1-dave@treblig.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240918144122.155351-1-dave@treblig.org>
+In-Reply-To: <20240918234748.468148-1-dave@treblig.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,58 +95,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/9/24 16:41, dave@treblig.org wrote:
+On 19/9/24 01:47, dave@treblig.org wrote:
 > From: "Dr. David Alan Gilbert" <dave@treblig.org>
 > 
-> serial_set_frequnecy has been unused since it was added in 2009:
->    038eaf82c8 ("serial: Add interface to set reference oscillator frequency")
-> 
-> It looks like the 'baudbase' is now a property anyway so the wrapper
-> isn't needed.
+> pcie_chassis_find_slot has been unused since it was added.
 > 
 > Remove it.
-
-See previous patch from Bernhard:
-https://lore.kernel.org/qemu-devel/d8ffe38c-756d-4187-875e-e6697631b7fa@linaro.org/
-Anyhow no objection at this point.
-
 > 
 > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 > ---
->   hw/char/serial.c         | 7 -------
->   include/hw/char/serial.h | 2 --
->   2 files changed, 9 deletions(-)
-> 
-> diff --git a/hw/char/serial.c b/hw/char/serial.c
-> index d8b2db5082..6c5c4a23c7 100644
-> --- a/hw/char/serial.c
-> +++ b/hw/char/serial.c
-> @@ -951,13 +951,6 @@ static void serial_unrealize(DeviceState *dev)
->       qemu_unregister_reset(serial_reset, s);
->   }
->   
-> -/* Change the main reference oscillator frequency. */
-> -void serial_set_frequency(SerialState *s, uint32_t frequency)
-> -{
-> -    s->baudbase = frequency;
-> -    serial_update_parameters(s);
-> -}
-> -
->   const MemoryRegionOps serial_io_ops = {
->       .read = serial_ioport_read,
->       .write = serial_ioport_write,
-> diff --git a/include/hw/char/serial.h b/include/hw/char/serial.h
-> index 6e14099ee7..40aad21df3 100644
-> --- a/include/hw/char/serial.h
-> +++ b/include/hw/char/serial.h
-> @@ -93,8 +93,6 @@ struct SerialMM {
->   extern const VMStateDescription vmstate_serial;
->   extern const MemoryRegionOps serial_io_ops;
->   
-> -void serial_set_frequency(SerialState *s, uint32_t frequency);
-> -
->   #define TYPE_SERIAL "serial"
->   OBJECT_DECLARE_SIMPLE_TYPE(SerialState, SERIAL)
->   
+>   hw/pci/pcie_port.c         | 10 ----------
+>   include/hw/pci/pcie_port.h |  1 -
+>   2 files changed, 11 deletions(-)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
