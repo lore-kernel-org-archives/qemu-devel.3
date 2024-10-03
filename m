@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB655CF34AD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE70BCF34AE
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 14:02:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swMOC-0004Lf-EN; Thu, 03 Oct 2024 10:01:08 -0400
+	id 1swMO7-0004Eu-Jn; Thu, 03 Oct 2024 10:01:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1swMNQ-000471-NU
+ id 1swMNQ-00046x-Jb
  for qemu-devel@nongnu.org; Thu, 03 Oct 2024 10:00:25 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1swMNO-0002rV-Af
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 10:00:20 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-37ccd81de57so617229f8f.0
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 07:00:17 -0700 (PDT)
+ id 1swMNM-0002qr-P5
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 10:00:18 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-37ccfbbd467so857406f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 07:00:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727964016; x=1728568816; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727964014; x=1728568814; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LPD0ziR8yfL/HjZu6b/yEmmqErN3Sv3BQp33o6QEumo=;
- b=paSZkejcLJehhIKtxeAm7c6dbsEA+0qHftsZSbuKCTOOt2h23ReqjdvnTr459qqFas
- TJ6RFkql2+9bZs3+AwImySZZr4kuZsGUwxzVR/ikY5yQTCpHeWhbyT4dpu4+FFt06Gfx
- 8GYfOy4/eeL1b48CCoJbucAl/E1aDZOQPB+7eQsF8qUbnjOCbkv/oUPGcljLXUwQ0mmo
- 0Lh+S1A2ZKwGgVJMDVz8BQuki+EYEdUa3kaLzsdySnBhoIckdR7do1RKoh8MYcb2lszJ
- ZKUrXRfb/JhFB/Fy8XJ64qxVrQhVaUb76T20iiTqGOAdi9Bs46yFJTmmQW3NptT1RIkX
- qcyg==
+ bh=GbrP9MmrJ0+K+HvI7PXjyGE5YoOWjRR/6vqiaVbTMdM=;
+ b=Bda4ATXeYCa0rgPOiGPzxlfkgvxo5RWqayLxF+4dN1MYBeEMnPTaXyrIi+iBTEIrM5
+ 4mp4ndwagFO+uA+/Atlw1TDqychVrYNxOfjwpMhaC9aLiShBcIFkv/kY5TCRPEWeHIWn
+ f9wofnxAje5SF2IoSeQvOVKs1TpcfkO0LjOabMYwrLi8duzUweknLtDDBj/pZPEmpFog
+ yGcwPp6wX84niAoyIxDaDlExID44BBckgSM3FIpJrTZq1D3J02J32/UX/1lZU/avakSi
+ IPT/6E3ZUHkzAcabdhrt1E+CWNo2gqO9YEaAC8+GqYHApi92V0WsB8sDY2VFV4M8kjXv
+ G1mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727964016; x=1728568816;
+ d=1e100.net; s=20230601; t=1727964014; x=1728568814;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LPD0ziR8yfL/HjZu6b/yEmmqErN3Sv3BQp33o6QEumo=;
- b=cjkHQ7Jx6flfQLZON+hbs52XsIM3sKXaunGjnhVt+0GvAftLeLUcC3eYxdNe6vOwD+
- IpJUImSrabxkJYoFtUiaTLLzvyttyR8MbdsU7CVoPRSqDRLsBLTbdfWqd6OeQOWxi8+r
- w4ethW1ClEL0yG624enIPJDujiax8xI8PmXG5Ds9Kdlu85D/OZcdMbZ4mkE3dqJ75p8H
- kcLC1YgWGLwFRIi1ka/kkuWqCdfYrkDYNXFistfmDmTG9nD/hdUjdFgSR3dOsLOLo7U7
- ZBNQHrc+bYa0lUHxXU33okhuN543NfEl1BOh9nEGFeoxTeMqzWQdquf0DP1aeJUaDEVW
- P/VQ==
+ bh=GbrP9MmrJ0+K+HvI7PXjyGE5YoOWjRR/6vqiaVbTMdM=;
+ b=pwdfg6LMl2ERciYwKIq6kzc1XlHpz+4Ec2s3/1OdKB/orOo404432VskxBBpYWDGk/
+ 65l3fPHzBRhSRZgvae7L7oaTvRsmlmfHBcSXf5rtbcAZDBNZpGI594wtCCITLK8nw0xr
+ McmAyH72GlbLUlnGVU9wrjOYA6Mpj7FqolhcMd+I4eLR0VX56gO+eMuC/wwCz3npCdM4
+ oqVeLLlkkqPCwOxTy1fMDcSwHjyAnK5qOL+vgk56arYVMLBJN2isu3EM6SOGzDScfqo4
+ Q8m2cI2tPnI6iKte7MSZJrtGkJgrgPTqcXEJuSylebr6yzhLrCJIqRduT4vLMTOrFLuf
+ QWLA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVKO71mNCBpQ6qo8AM3s3odT4B0M/YtXVSoa/v/NgY8+W4kP7mwnE52v2mY+YDW1v7Zdsh4pa9JwZzZ@nongnu.org
-X-Gm-Message-State: AOJu0Yx9n0Mb9/lcBk80LGRdKIhFuZ7BA908flw2eFBAsiTM+/H63CN/
- B2GJ4QxkbqVxbJIw93Vhc3KKQyJB/r5FHs86xi1mXtkHeY7Vboila6g7ydRjRck=
-X-Google-Smtp-Source: AGHT+IH5Z0RKAGC5X2uA0/Qz4r3miR4YAsUlg8Gozod07a36v2WxqNiXC10l952fNrLtXzgkADKkLw==
-X-Received: by 2002:adf:a30d:0:b0:37c:f561:1130 with SMTP id
- ffacd0b85a97d-37d04a04aa2mr2286429f8f.18.1727964016185; 
- Thu, 03 Oct 2024 07:00:16 -0700 (PDT)
+ AJvYcCVv5mpnTwJ16jf0pfkRP7F0ty8lszyVCsvQ+WWWpzGvQMQCFTX4WiHEnnuxKFfarRhrd/54I/BA/zeR@nongnu.org
+X-Gm-Message-State: AOJu0Yzzs6cB8EkSvdPC2k4JhYaQFQd8oYgwv3dTwWmXEv/ikZeW2nOB
+ wbTgRgPCieDGWX8D21ykFgTTKu3DvF//JamIZi7n0xx3nM6px9ZVAT8t7JLAk9o=
+X-Google-Smtp-Source: AGHT+IEf1wqv7MQTo/JQx/bXJaMVL1+VHsrfDQSySpTcKREzY6fKdFU930TTZJGewrKpgpr3+YIE3w==
+X-Received: by 2002:adf:a2de:0:b0:37c:c5fc:89f4 with SMTP id
+ ffacd0b85a97d-37cfba139a9mr4222227f8f.51.1727964013556; 
+ Thu, 03 Oct 2024 07:00:13 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d0822bc38sm1340255f8f.45.2024.10.03.07.00.15
+ ffacd0b85a97d-37d0822bc38sm1340255f8f.45.2024.10.03.07.00.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Oct 2024 07:00:15 -0700 (PDT)
+ Thu, 03 Oct 2024 07:00:13 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Guenter Roeck <linux@roeck-us.net>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 5/6] hw/block: Remove ecc
-Date: Thu,  3 Oct 2024 15:00:09 +0100
-Message-Id: <20241003140010.1653808-6-peter.maydell@linaro.org>
+Subject: [PATCH v2 2/6] hw/gpio: Remove MAX7310 device
+Date: Thu,  3 Oct 2024 15:00:06 +0100
+Message-Id: <20241003140010.1653808-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241003140010.1653808-1-peter.maydell@linaro.org>
 References: <20241003140010.1653808-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,192 +97,273 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ecc.c code was used only by the PXA2xx and OMAP2 SoC devices,
-which we have removed, so it is now completely unused.
+The MAX7310 GPIO controller was used only by the XScale-based Zaurus
+machine types.  Now they have been removed we can remove this device
+model as well.
 
-Note that hw/misc/eccmemctl.c does not in fact use any of the
-code frome ecc.c, so that KConfig dependency was incorrect.
+Because this device is an I2C device, in theory it could be created
+by users on the command line for boards with a different I2c
+controller, but we don't believe users are doing this -- it would be
+impossible on the command line to connect up the GPIO inputs/outputs.
+The only example a web search produces for "device max7310" is a user
+trying to create this because they didn't realize that there was no
+way to manipulate the GPIO lines.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/block/flash.h | 11 -----
- hw/block/ecc.c           | 91 ----------------------------------------
- hw/arm/Kconfig           |  1 -
- hw/block/Kconfig         |  3 --
- hw/block/meson.build     |  1 -
- hw/misc/Kconfig          |  1 -
- 6 files changed, 108 deletions(-)
- delete mode 100644 hw/block/ecc.c
+ hw/gpio/max7310.c   | 217 --------------------------------------------
+ hw/gpio/Kconfig     |   4 -
+ hw/gpio/meson.build |   1 -
+ 3 files changed, 222 deletions(-)
+ delete mode 100644 hw/gpio/max7310.c
 
-diff --git a/include/hw/block/flash.h b/include/hw/block/flash.h
-index b985c825a01..5fd67f5bb79 100644
---- a/include/hw/block/flash.h
-+++ b/include/hw/block/flash.h
-@@ -62,17 +62,6 @@ uint32_t nand_getbuswidth(DeviceState *dev);
- #define NAND_MFR_HYNIX      0xad
- #define NAND_MFR_MICRON     0x2c
- 
--/* ecc.c */
--typedef struct {
--    uint8_t cp;     /* Column parity */
--    uint16_t lp[2]; /* Line parity */
--    uint16_t count;
--} ECCState;
--
--uint8_t ecc_digest(ECCState *s, uint8_t sample);
--void ecc_reset(ECCState *s);
--extern const VMStateDescription vmstate_ecc_state;
--
- /* m25p80.c */
- 
- #define TYPE_M25P80 "m25p80-generic"
-diff --git a/hw/block/ecc.c b/hw/block/ecc.c
+diff --git a/hw/gpio/max7310.c b/hw/gpio/max7310.c
 deleted file mode 100644
-index ed889a4184f..00000000000
---- a/hw/block/ecc.c
+index 43a92b8db97..00000000000
+--- a/hw/gpio/max7310.c
 +++ /dev/null
-@@ -1,91 +0,0 @@
+@@ -1,217 +0,0 @@
 -/*
-- * Calculate Error-correcting Codes. Used by NAND Flash controllers
-- * (not by NAND chips).
+- * MAX7310 8-port GPIO expansion chip.
 - *
 - * Copyright (c) 2006 Openedhand Ltd.
 - * Written by Andrzej Zaborowski <balrog@zabor.org>
 - *
-- * This code is licensed under the GNU GPL v2.
-- *
-- * Contributions after 2012-01-13 are licensed under the terms of the
-- * GNU GPL, version 2 or (at your option) any later version.
+- * This file is licensed under GNU GPL.
 - */
 -
 -#include "qemu/osdep.h"
+-#include "hw/i2c/i2c.h"
+-#include "hw/irq.h"
 -#include "migration/vmstate.h"
--#include "hw/block/flash.h"
+-#include "qemu/log.h"
+-#include "qemu/module.h"
+-#include "qom/object.h"
 -
--/*
-- * Pre-calculated 256-way 1 byte column parity.  Table borrowed from Linux.
-- */
--static const uint8_t nand_ecc_precalc_table[] = {
--    0x00, 0x55, 0x56, 0x03, 0x59, 0x0c, 0x0f, 0x5a,
--    0x5a, 0x0f, 0x0c, 0x59, 0x03, 0x56, 0x55, 0x00,
--    0x65, 0x30, 0x33, 0x66, 0x3c, 0x69, 0x6a, 0x3f,
--    0x3f, 0x6a, 0x69, 0x3c, 0x66, 0x33, 0x30, 0x65,
--    0x66, 0x33, 0x30, 0x65, 0x3f, 0x6a, 0x69, 0x3c,
--    0x3c, 0x69, 0x6a, 0x3f, 0x65, 0x30, 0x33, 0x66,
--    0x03, 0x56, 0x55, 0x00, 0x5a, 0x0f, 0x0c, 0x59,
--    0x59, 0x0c, 0x0f, 0x5a, 0x00, 0x55, 0x56, 0x03,
--    0x69, 0x3c, 0x3f, 0x6a, 0x30, 0x65, 0x66, 0x33,
--    0x33, 0x66, 0x65, 0x30, 0x6a, 0x3f, 0x3c, 0x69,
--    0x0c, 0x59, 0x5a, 0x0f, 0x55, 0x00, 0x03, 0x56,
--    0x56, 0x03, 0x00, 0x55, 0x0f, 0x5a, 0x59, 0x0c,
--    0x0f, 0x5a, 0x59, 0x0c, 0x56, 0x03, 0x00, 0x55,
--    0x55, 0x00, 0x03, 0x56, 0x0c, 0x59, 0x5a, 0x0f,
--    0x6a, 0x3f, 0x3c, 0x69, 0x33, 0x66, 0x65, 0x30,
--    0x30, 0x65, 0x66, 0x33, 0x69, 0x3c, 0x3f, 0x6a,
--    0x6a, 0x3f, 0x3c, 0x69, 0x33, 0x66, 0x65, 0x30,
--    0x30, 0x65, 0x66, 0x33, 0x69, 0x3c, 0x3f, 0x6a,
--    0x0f, 0x5a, 0x59, 0x0c, 0x56, 0x03, 0x00, 0x55,
--    0x55, 0x00, 0x03, 0x56, 0x0c, 0x59, 0x5a, 0x0f,
--    0x0c, 0x59, 0x5a, 0x0f, 0x55, 0x00, 0x03, 0x56,
--    0x56, 0x03, 0x00, 0x55, 0x0f, 0x5a, 0x59, 0x0c,
--    0x69, 0x3c, 0x3f, 0x6a, 0x30, 0x65, 0x66, 0x33,
--    0x33, 0x66, 0x65, 0x30, 0x6a, 0x3f, 0x3c, 0x69,
--    0x03, 0x56, 0x55, 0x00, 0x5a, 0x0f, 0x0c, 0x59,
--    0x59, 0x0c, 0x0f, 0x5a, 0x00, 0x55, 0x56, 0x03,
--    0x66, 0x33, 0x30, 0x65, 0x3f, 0x6a, 0x69, 0x3c,
--    0x3c, 0x69, 0x6a, 0x3f, 0x65, 0x30, 0x33, 0x66,
--    0x65, 0x30, 0x33, 0x66, 0x3c, 0x69, 0x6a, 0x3f,
--    0x3f, 0x6a, 0x69, 0x3c, 0x66, 0x33, 0x30, 0x65,
--    0x00, 0x55, 0x56, 0x03, 0x59, 0x0c, 0x0f, 0x5a,
--    0x5a, 0x0f, 0x0c, 0x59, 0x03, 0x56, 0x55, 0x00,
+-#define TYPE_MAX7310 "max7310"
+-OBJECT_DECLARE_SIMPLE_TYPE(MAX7310State, MAX7310)
+-
+-struct MAX7310State {
+-    I2CSlave parent_obj;
+-
+-    int i2c_command_byte;
+-    int len;
+-
+-    uint8_t level;
+-    uint8_t direction;
+-    uint8_t polarity;
+-    uint8_t status;
+-    uint8_t command;
+-    qemu_irq handler[8];
+-    qemu_irq *gpio_in;
 -};
 -
--/* Update ECC parity count.  */
--uint8_t ecc_digest(ECCState *s, uint8_t sample)
+-static void max7310_reset(DeviceState *dev)
 -{
--    uint8_t idx = nand_ecc_precalc_table[sample];
+-    MAX7310State *s = MAX7310(dev);
 -
--    s->cp ^= idx & 0x3f;
--    if (idx & 0x40) {
--        s->lp[0] ^= ~s->count;
--        s->lp[1] ^= s->count;
+-    s->level &= s->direction;
+-    s->direction = 0xff;
+-    s->polarity = 0xf0;
+-    s->status = 0x01;
+-    s->command = 0x00;
+-}
+-
+-static uint8_t max7310_rx(I2CSlave *i2c)
+-{
+-    MAX7310State *s = MAX7310(i2c);
+-
+-    switch (s->command) {
+-    case 0x00:  /* Input port */
+-        return s->level ^ s->polarity;
+-
+-    case 0x01:  /* Output port */
+-        return s->level & ~s->direction;
+-
+-    case 0x02:  /* Polarity inversion */
+-        return s->polarity;
+-
+-    case 0x03:  /* Configuration */
+-        return s->direction;
+-
+-    case 0x04:  /* Timeout */
+-        return s->status;
+-
+-    case 0xff:  /* Reserved */
+-        return 0xff;
+-
+-    default:
+-        qemu_log_mask(LOG_UNIMP, "%s: Unsupported register 0x02%" PRIx8 "\n",
+-                      __func__, s->command);
+-        break;
 -    }
--    s->count ++;
--
--    return sample;
+-    return 0xff;
 -}
 -
--/* Reinitialise the counters.  */
--void ecc_reset(ECCState *s)
+-static int max7310_tx(I2CSlave *i2c, uint8_t data)
 -{
--    s->lp[0] = 0x0000;
--    s->lp[1] = 0x0000;
--    s->cp = 0x00;
--    s->count = 0;
+-    MAX7310State *s = MAX7310(i2c);
+-    uint8_t diff;
+-    int line;
+-
+-    if (s->len ++ > 1) {
+-#ifdef VERBOSE
+-        printf("%s: message too long (%i bytes)\n", __func__, s->len);
+-#endif
+-        return 1;
+-    }
+-
+-    if (s->i2c_command_byte) {
+-        s->command = data;
+-        s->i2c_command_byte = 0;
+-        return 0;
+-    }
+-
+-    switch (s->command) {
+-    case 0x01:  /* Output port */
+-        for (diff = (data ^ s->level) & ~s->direction; diff;
+-                        diff &= ~(1 << line)) {
+-            line = ctz32(diff);
+-            if (s->handler[line])
+-                qemu_set_irq(s->handler[line], (data >> line) & 1);
+-        }
+-        s->level = (s->level & s->direction) | (data & ~s->direction);
+-        break;
+-
+-    case 0x02:  /* Polarity inversion */
+-        s->polarity = data;
+-        break;
+-
+-    case 0x03:  /* Configuration */
+-        s->level &= ~(s->direction ^ data);
+-        s->direction = data;
+-        break;
+-
+-    case 0x04:  /* Timeout */
+-        s->status = data;
+-        break;
+-
+-    case 0x00:  /* Input port - ignore writes */
+-        break;
+-    default:
+-        qemu_log_mask(LOG_UNIMP, "%s: Unsupported register 0x02%" PRIx8 "\n",
+-                      __func__, s->command);
+-        return 1;
+-    }
+-
+-    return 0;
 -}
 -
--/* Save/restore */
--const VMStateDescription vmstate_ecc_state = {
--    .name = "ecc-state",
+-static int max7310_event(I2CSlave *i2c, enum i2c_event event)
+-{
+-    MAX7310State *s = MAX7310(i2c);
+-    s->len = 0;
+-
+-    switch (event) {
+-    case I2C_START_SEND:
+-        s->i2c_command_byte = 1;
+-        break;
+-    case I2C_FINISH:
+-#ifdef VERBOSE
+-        if (s->len == 1)
+-            printf("%s: message too short (%i bytes)\n", __func__, s->len);
+-#endif
+-        break;
+-    default:
+-        break;
+-    }
+-
+-    return 0;
+-}
+-
+-static const VMStateDescription vmstate_max7310 = {
+-    .name = "max7310",
 -    .version_id = 0,
 -    .minimum_version_id = 0,
 -    .fields = (const VMStateField[]) {
--        VMSTATE_UINT8(cp, ECCState),
--        VMSTATE_UINT16_ARRAY(lp, ECCState, 2),
--        VMSTATE_UINT16(count, ECCState),
--        VMSTATE_END_OF_LIST(),
--    },
+-        VMSTATE_INT32(i2c_command_byte, MAX7310State),
+-        VMSTATE_INT32(len, MAX7310State),
+-        VMSTATE_UINT8(level, MAX7310State),
+-        VMSTATE_UINT8(direction, MAX7310State),
+-        VMSTATE_UINT8(polarity, MAX7310State),
+-        VMSTATE_UINT8(status, MAX7310State),
+-        VMSTATE_UINT8(command, MAX7310State),
+-        VMSTATE_I2C_SLAVE(parent_obj, MAX7310State),
+-        VMSTATE_END_OF_LIST()
+-    }
 -};
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index a70ceff504b..7b19a9559f6 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -146,7 +146,6 @@ config OMAP
-     bool
-     select FRAMEBUFFER
-     select I2C
--    select ECC
-     select NAND
-     select PFLASH_CFI01
-     select SD
-diff --git a/hw/block/Kconfig b/hw/block/Kconfig
-index e67a6fd8af7..a898e04f03b 100644
---- a/hw/block/Kconfig
-+++ b/hw/block/Kconfig
-@@ -22,9 +22,6 @@ config PFLASH_CFI01
- config PFLASH_CFI02
-     bool
- 
--config ECC
--    bool
 -
- config VIRTIO_BLK
+-static void max7310_gpio_set(void *opaque, int line, int level)
+-{
+-    MAX7310State *s = (MAX7310State *) opaque;
+-    assert(line >= 0 && line < ARRAY_SIZE(s->handler));
+-
+-    if (level)
+-        s->level |= s->direction & (1 << line);
+-    else
+-        s->level &= ~(s->direction & (1 << line));
+-}
+-
+-/* MAX7310 is SMBus-compatible (can be used with only SMBus protocols),
+- * but also accepts sequences that are not SMBus so return an I2C device.  */
+-static void max7310_realize(DeviceState *dev, Error **errp)
+-{
+-    MAX7310State *s = MAX7310(dev);
+-
+-    qdev_init_gpio_in(dev, max7310_gpio_set, ARRAY_SIZE(s->handler));
+-    qdev_init_gpio_out(dev, s->handler, ARRAY_SIZE(s->handler));
+-}
+-
+-static void max7310_class_init(ObjectClass *klass, void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
+-
+-    dc->realize = max7310_realize;
+-    k->event = max7310_event;
+-    k->recv = max7310_rx;
+-    k->send = max7310_tx;
+-    device_class_set_legacy_reset(dc, max7310_reset);
+-    dc->vmsd = &vmstate_max7310;
+-}
+-
+-static const TypeInfo max7310_info = {
+-    .name          = TYPE_MAX7310,
+-    .parent        = TYPE_I2C_SLAVE,
+-    .instance_size = sizeof(MAX7310State),
+-    .class_init    = max7310_class_init,
+-};
+-
+-static void max7310_register_types(void)
+-{
+-    type_register_static(&max7310_info);
+-}
+-
+-type_init(max7310_register_types)
+diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
+index 843630d4f5f..c423e10f59f 100644
+--- a/hw/gpio/Kconfig
++++ b/hw/gpio/Kconfig
+@@ -1,7 +1,3 @@
+-config MAX7310
+-    bool
+-    depends on I2C
+-
+ config PL061
      bool
-     default y
-diff --git a/hw/block/meson.build b/hw/block/meson.build
-index 999a93d900f..16a51bf8e21 100644
---- a/hw/block/meson.build
-+++ b/hw/block/meson.build
-@@ -3,7 +3,6 @@ system_ss.add(files(
-   'cdrom.c',
-   'hd-geometry.c'
- ))
--system_ss.add(when: 'CONFIG_ECC', if_true: files('ecc.c'))
- system_ss.add(when: 'CONFIG_FDC', if_true: files('fdc.c'))
- system_ss.add(when: 'CONFIG_FDC_ISA', if_true: files('fdc-isa.c'))
- system_ss.add(when: 'CONFIG_FDC_SYSBUS', if_true: files('fdc-sysbus.c'))
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 1e08785b832..8568aaa2293 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -74,7 +74,6 @@ config IVSHMEM_DEVICE
  
- config ECCMEMCTL
-     bool
--    select ECC
- 
- config IMX
-     bool
+diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
+index 089b24802ef..74840619c01 100644
+--- a/hw/gpio/meson.build
++++ b/hw/gpio/meson.build
+@@ -1,7 +1,6 @@
+ system_ss.add(when: 'CONFIG_GPIO_KEY', if_true: files('gpio_key.c'))
+ system_ss.add(when: 'CONFIG_GPIO_MPC8XXX', if_true: files('mpc8xxx.c'))
+ system_ss.add(when: 'CONFIG_GPIO_PWR', if_true: files('gpio_pwr.c'))
+-system_ss.add(when: 'CONFIG_MAX7310', if_true: files('max7310.c'))
+ system_ss.add(when: 'CONFIG_PCA9552', if_true: files('pca9552.c'))
+ system_ss.add(when: 'CONFIG_PCA9554', if_true: files('pca9554.c'))
+ system_ss.add(when: 'CONFIG_PL061', if_true: files('pl061.c'))
 -- 
 2.34.1
 
