@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AFFECF34BD
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 18:10:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61133CF34BD
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 18:10:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swQGL-0003AF-GL; Thu, 03 Oct 2024 14:09:17 -0400
+	id 1swQHX-0003op-QI; Thu, 03 Oct 2024 14:10:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1swQGI-00039s-G2
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 14:09:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1swQGE-0006A5-Fu
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 14:09:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727978949;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=HdfQSiNpKH6YUJZr0b3w0Vcyi9pcKWYGidksMEsmzEc=;
- b=ew19GqzuvFb46E/HYTH1z6vk4I6mllNyLXvkS2xvlMJ6vx9GTXMbg3WsWeUM6Z9BZJSWhb
- i1PE2gHVOfsvlJRYCeWNdDZ7kL21TJOzwlNi1RPbnwLUCkQyQiaUhuywcV+Cj5HtW9Mbkv
- hBaycPHZ1LYtghKxn9Oa0cjDu5L6Z4c=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-551-NU1-EI0fP-WuMXkf6DyNOQ-1; Thu,
- 03 Oct 2024 14:09:07 -0400
-X-MC-Unique: NU1-EI0fP-WuMXkf6DyNOQ-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D42341955F42; Thu,  3 Oct 2024 18:09:04 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.46])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0DFDA1955E8C; Thu,  3 Oct 2024 18:08:57 +0000 (UTC)
-Date: Thu, 3 Oct 2024 19:08:54 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Peter Xu <peterx@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
- Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
- Isaku Yamahata <isaku.yamahata@gmail.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: Re: [PATCH v5 49/65] i386/tdx: handle TDG.VP.VMCALL<GetQuote>
-Message-ID: <Zv7dtghi20DZ9ozz@redhat.com>
-References: <20240229063726.610065-1-xiaoyao.li@intel.com>
- <20240229063726.610065-50-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1swQHW-0003mU-1l
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 14:10:30 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1swQHU-0006xJ-9u
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 14:10:29 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-20bb39d97d1so11342405ad.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 11:10:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1727979026; x=1728583826; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wlExpvMTsPp3gUtX3rXfzKJzkoOyoB0lLS5DEqxnYeE=;
+ b=Hj05F+uRbomWSxWiiVxPV/L0KVzKZ0gjbdOltAAcb6ilvf/QczHGCQjWxH26bK0PmV
+ XveMQGMhP7RCFH6uiGuFihaUgp7/RrrI2ULQmo/ANdTahkDlLKuoPSIpKU7sdcnpKa3E
+ 2An5n5QJepbrb7s6UzSXADLlbpu3On+Z4QOzq6qvFn49SdeoHw1LZj6/RYbktXOK2mXe
+ 15LTO9mTHTgpC6GzCeMw8WO1DHFnW5fJn05xjTwULbbNKBQhTC1T+5eBJMeRzZy/YX8g
+ GHDrkOZvZTXbS3ed56/pFWSwJPx4NagDarf6O4Lalb1mUzBqMaArbBNBfeuOo9Z1s/AH
+ IwkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1727979026; x=1728583826;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wlExpvMTsPp3gUtX3rXfzKJzkoOyoB0lLS5DEqxnYeE=;
+ b=NQULm6L6ezqJFUzAzHm71F+r5j+uxUz78qZi7NP0nPcarvoiF1ED21ROSp43nJq/js
+ iw2poR14ug1BvaaM8KgPADy3itedH4luBAfZvJQzSoZ6io/LgMptuAhZG/rTRJWvS4Aq
+ DK33EdGWKb3zJaW8ZXwS0mfwtq2hCVKi8KrS82vweJygauzbxJlZhc9CvXpE6lP15P0q
+ oPPr3GtGoW9p09N8wrztIdvBVMmeenwAMD4aQ2jzWNTi2/tTzrDWYPEAW0o/Tp6wmsJ9
+ +KHEljq9bUV+2A8bg/kOANpJ/HcR+xd67oWqBVCUoINbiOu+KPoikkcBYwVKKRyvPPJs
+ HwEg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWLeA4U24bh5P2jrCtTaxGq7xqg15mzMO8GwJZlNi1I68poxsOXkaiMT6ZAN3+DqD6iiIxbk9q5bMwB@nongnu.org
+X-Gm-Message-State: AOJu0Yy4HhysfKoq7EcwX7PLbaukCQYCp4OcZPA5Te9JNISx0vi+1oYq
+ ELMsziJuSVJNunCSXihTAR/ncNsjIV8NbqRzwfh/QuNYdj2Olam9+K+JjKH8bJU=
+X-Google-Smtp-Source: AGHT+IFYO76hNNAtpQEv3crXMRlJHAatZ31D8xb65ApUHIvCMTiYgfhuE2GQnmDOrRKgf59LZSAAvA==
+X-Received: by 2002:a17:902:e94e:b0:207:18f5:7e78 with SMTP id
+ d9443c01a7336-20bff1c8aaamr654315ad.48.1727979026477; 
+ Thu, 03 Oct 2024 11:10:26 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20bef706e87sm11637075ad.239.2024.10.03.11.10.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Oct 2024 11:10:26 -0700 (PDT)
+Message-ID: <8920d4e9-9289-4a7d-be04-ff0f60806e78@linaro.org>
+Date: Thu, 3 Oct 2024 11:10:24 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240229063726.610065-50-xiaoyao.li@intel.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 09/12] target/arm: Implement the SETG* instructions
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>
+References: <20230912140434.1333369-1-peter.maydell@linaro.org>
+ <20230912140434.1333369-10-peter.maydell@linaro.org>
+ <7c750b58-e845-4d80-b5a5-7eda8f505fb6@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <7c750b58-e845-4d80-b5a5-7eda8f505fb6@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,445 +98,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 29, 2024 at 01:37:10AM -0500, Xiaoyao Li wrote:
-> From: Isaku Yamahata <isaku.yamahata@intel.com>
+On 9/24/24 12:14, Philippe Mathieu-Daudé wrote:
+> Hi Peter,
 > 
-> Add property "quote-generation-socket" to tdx-guest, which is a property
-> of type SocketAddress to specify Quote Generation Service(QGS).
+> (patch merged as commit 6087df574400659226861fa5ba47970f1fbd277b).
 > 
-> On request of GetQuote, it connects to the QGS socket, read request
-> data from shared guest memory, send the request data to the QGS,
-> and store the response into shared guest memory, at last notify
-> TD guest by interrupt.
+> On 12/9/23 16:04, Peter Maydell wrote:
+>> The FEAT_MOPS SETG* instructions are very similar to the SET*
+>> instructions, but as well as setting memory contents they also
+>> set the MTE tags. They are architecturally required to operate
+>> on tag-granule aligned regions only.
+>>
+>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>> v2: - separate helper functions calling do_setp/setm/sete
+>>      - use cpu_st16_mmu()
 > 
-> command line example:
->   qemu-system-x86_64 \
->     -object '{"qom-type":"tdx-guest","id":"tdx0","quote-generation-socket":{"type": "vsock", "cid":"1","port":"1234"}}' \
->     -machine confidential-guest-support=tdx0
+> So you replaced the pair of cpu_stq_mmuidx_ra() from v1 by
+> cpu_st16_mmu().
 > 
-> Note, above example uses vsock type socket because the QGS we used
-> implements the vsock socket. It can be other types, like UNIX socket,
-> which depends on the implementation of QGS.
+>> ---
+>>   target/arm/internals.h         | 10 ++++
+>>   target/arm/tcg/helper-a64.h    |  3 ++
+>>   target/arm/tcg/a64.decode      |  5 ++
+>>   target/arm/tcg/helper-a64.c    | 86 ++++++++++++++++++++++++++++++++--
+>>   target/arm/tcg/mte_helper.c    | 40 ++++++++++++++++
+>>   target/arm/tcg/translate-a64.c | 20 +++++---
+>>   6 files changed, 155 insertions(+), 9 deletions(-)
 > 
-> To avoid no response from QGS server, setup a timer for the transaction.
-> If timeout, make it an error and interrupt guest. Define the threshold of
-> time to 30s at present, maybe change to other value if not appropriate.
 > 
-> Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
-> Codeveloped-by: Chenyi Qiang <chenyi.qiang@intel.com>
-> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
-> Codeveloped-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>> +/*
+>> + * Similar, but setting tags. The architecture requires us to do this
+>> + * in 16-byte chunks. SETP accesses are not tag checked; they set
+>> + * the tags.
+>> + */
+>> +static uint64_t set_step_tags(CPUARMState *env, uint64_t toaddr,
+>> +                              uint64_t setsize, uint32_t data, int memidx,
+>> +                              uint32_t *mtedesc, uintptr_t ra)
+>> +{
+>> +    void *mem;
+>> +    uint64_t cleanaddr;
+>> +
+>> +    setsize = MIN(setsize, page_limit(toaddr));
+>> +
+>> +    cleanaddr = useronly_clean_ptr(toaddr);
+>> +    /*
+>> +     * Trapless lookup: returns NULL for invalid page, I/O,
+>> +     * watchpoints, clean pages, etc.
+>> +     */
+>> +    mem = tlb_vaddr_to_host(env, cleanaddr, MMU_DATA_STORE, memidx);
+>> +
+>> +#ifndef CONFIG_USER_ONLY
+>> +    if (unlikely(!mem)) {
+>> +        /*
+>> +         * Slow-path: just do one write. This will handle the
+>> +         * watchpoint, invalid page, etc handling correctly.
+>> +         * The architecture requires that we do 16 bytes at a time,
+>> +         * and we know both ptr and size are 16 byte aligned.
+>> +         * For clean code pages, the next iteration will see
+>> +         * the page dirty and will use the fast path.
+>> +         */
+>> +        uint64_t repldata = data * 0x0101010101010101ULL;
+>> +        MemOpIdx oi16 = make_memop_idx(MO_TE | MO_128, memidx);
+> 
+> I'm trying to understand the MO_TE use, but I'm not seeing it in
+> https://developer.arm.com/documentation/ddi0602/2024-06/Base-Instructions/SETGP--SETGM-- 
+> SETGE--Memory-set-with-tag-setting-
+> pseudo code. I also checked
+> https://developer.arm.com/documentation/ddi0602/2024-06/Shared-Pseudocode/aarch64- 
+> functions-mops?lang=en#impl-aarch64.MemSetBytes.4
+> and https://developer.arm.com/documentation/ddi0602/2024-06/Shared-Pseudocode/aarch64- 
+> functions-memory?lang=en#AArch64.MemSingleWrite.5
+
+It's not actually needed.  All of the bytes stored are identical (see the construction of 
+repldata).
+
+Removing MO_TE will store the bytes in host byte order, which will avoid an unnecessary 
+bswap on big-endian hosts.
+
+The stores here are all from
+
+     while tagstep > 0 do
+         tagaddr = memset.toaddress + memset.setsize + (tagstep - 1) * 16;
+         AArch64.MemTag[tagaddr, accdesc] = tag;
+         tagstep = tagstep - 1;
 
 
-> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-> index 49f94d9d46f4..7dfda507cc8c 100644
-> --- a/target/i386/kvm/tdx.c
-> +++ b/target/i386/kvm/tdx.c
-
-> +static int tdx_handle_get_quote(X86CPU *cpu, struct kvm_tdx_vmcall *vmcall)
-> +{
-> +    struct tdx_generate_quote_task *task;
-> +    struct tdx_get_quote_header hdr;
-> +    hwaddr buf_gpa = vmcall->in_r12;
-> +    uint64_t buf_len = vmcall->in_r13;
-> +
-> +    QEMU_BUILD_BUG_ON(sizeof(struct tdx_get_quote_header) != TDX_GET_QUOTE_HDR_SIZE);
-> +
-> +    vmcall->status_code = TDG_VP_VMCALL_INVALID_OPERAND;
-> +
-> +    if (buf_len == 0) {
-> +        return 0;
-> +    }
-> +
-> +    /* GPA must be shared. */
-> +    if (!(buf_gpa & tdx_shared_bit(cpu))) {
-> +        return 0;
-> +    }
-> +    buf_gpa &= ~tdx_shared_bit(cpu);
-> +
-> +    if (!QEMU_IS_ALIGNED(buf_gpa, 4096) || !QEMU_IS_ALIGNED(buf_len, 4096)) {
-> +        vmcall->status_code = TDG_VP_VMCALL_ALIGN_ERROR;
-> +        return 0;
-> +    }
-> +
-> +    if (address_space_read(&address_space_memory, buf_gpa, MEMTXATTRS_UNSPECIFIED,
-> +                           &hdr, TDX_GET_QUOTE_HDR_SIZE) != MEMTX_OK) {
-> +        error_report("TDX: get-quote: failed to read GetQuote header.\n");
-> +        return -1;
-> +    }
-> +
-> +    if (le64_to_cpu(hdr.structure_version) != TDX_GET_QUOTE_STRUCTURE_VERSION) {
-> +        return 0;
-> +    }
-> +
-> +    /*
-> +     * Paranoid: Guest should clear error_code and out_len to avoid information
-> +     * leak.  Enforce it.  The initial value of them doesn't matter for qemu to
-> +     * process the request.
-> +     */
-> +    if (le64_to_cpu(hdr.error_code) != TDX_VP_GET_QUOTE_SUCCESS ||
-> +        le32_to_cpu(hdr.out_len) != 0) {
-> +        return 0;
-> +    }
-> +
-> +    /* Only safe-guard check to avoid too large buffer size. */
-> +    if (buf_len > TDX_GET_QUOTE_MAX_BUF_LEN ||
-> +        le32_to_cpu(hdr.in_len) > buf_len - TDX_GET_QUOTE_HDR_SIZE) {
-> +        return 0;
-> +    }
-> +
-> +    vmcall->status_code = TDG_VP_VMCALL_SUCCESS;
-> +    if (!tdx_guest->quote_generator) {
-> +        hdr.error_code = cpu_to_le64(TDX_VP_GET_QUOTE_QGS_UNAVAILABLE);
-> +        if (address_space_write(&address_space_memory, buf_gpa,
-> +                                MEMTXATTRS_UNSPECIFIED,
-> +                                &hdr, TDX_GET_QUOTE_HDR_SIZE) != MEMTX_OK) {
-> +            error_report("TDX: failed to update GetQuote header.\n");
-> +            return -1;
-> +        }
-> +        return 0;
-> +    }
-> +
-> +    qemu_mutex_lock(&tdx_guest->quote_generator->lock);
-> +    if (tdx_guest->quote_generator->num >= TDX_MAX_GET_QUOTE_REQUEST) {
-> +        qemu_mutex_unlock(&tdx_guest->quote_generator->lock);
-> +        vmcall->status_code = TDG_VP_VMCALL_RETRY;
-> +        return 0;
-> +    }
-> +    tdx_guest->quote_generator->num++;
-> +    qemu_mutex_unlock(&tdx_guest->quote_generator->lock);
-> +
-> +    /* Mark the buffer in-flight. */
-> +    hdr.error_code = cpu_to_le64(TDX_VP_GET_QUOTE_IN_FLIGHT);
-> +    if (address_space_write(&address_space_memory, buf_gpa,
-> +                            MEMTXATTRS_UNSPECIFIED,
-> +                            &hdr, TDX_GET_QUOTE_HDR_SIZE) != MEMTX_OK) {
-> +        error_report("TDX: failed to update GetQuote header.\n");
-> +        return -1;
-> +    }
-> +
-> +    task = g_malloc(sizeof(*task));
-> +    task->buf_gpa = buf_gpa;
-> +    task->payload_gpa = buf_gpa + TDX_GET_QUOTE_HDR_SIZE;
-> +    task->payload_len = buf_len - TDX_GET_QUOTE_HDR_SIZE;
-> +    task->hdr = hdr;
-> +    task->quote_gen = tdx_guest->quote_generator;
-> +    task->completion = tdx_get_quote_completion;
-> +
-> +    task->send_data_size = le32_to_cpu(hdr.in_len);
-> +    task->send_data = g_malloc(task->send_data_size);
-> +    task->send_data_sent = 0;
-> +
-> +    if (address_space_read(&address_space_memory, task->payload_gpa,
-> +                           MEMTXATTRS_UNSPECIFIED, task->send_data,
-> +                           task->send_data_size) != MEMTX_OK) {
-> +        g_free(task->send_data);
-> +        return -1;
-> +    }
-
-In this method we've received "struct tdx_get_quote_header" from
-the guest OS, and the 'hdr.in_len' field in that struct tells us
-the payload to read from guest memory. This payload is treated as
-opaque by QEMU and sent over the UNIX socket directly to QGS with
-no validation of the payload.
-
-The payload is supposed to be a raw TDX report, that QGS will turn
-into a quote.
-
-Nothing guarantees that the guest OS has actually given QEMU a
-payload that represents a TDX report.
-
-The only validation done in this patch is to check the 'hdr.in_len'
-was not ridiculously huge:
-
-     #define TDX_GET_QUOTE_MAX_BUF_LEN       (128 * 1024)
-
-     #define TDX_GET_QUOTE_HDR_SIZE          24
-
-     ...
- 
-     /* Only safe-guard check to avoid too large buffer size. */
-     if (buf_len > TDX_GET_QUOTE_MAX_BUF_LEN ||
-         le32_to_cpu(hdr.in_len) > buf_len - TDX_GET_QUOTE_HDR_SIZE) {
-         return 0;
-     }
-
-IOW, hdr.in_len can be any value between 0 and 131048, and
-the payload data read can contain arbitrary bytes.
-
-
-Over in the QGS code, QGS historically had a socket protocol
-taking various messages from the libtdxattest library which
-were defined in this:
-
-  https://github.com/intel/SGXDataCenterAttestationPrimitives/blob/main/QuoteGeneration/quote_wrapper/qgs_msg_lib/inc/qgs_msg_lib.h
-
-  typedef enum _qgs_msg_type_t {
-    GET_QUOTE_REQ = 0,
-    GET_QUOTE_RESP = 1,
-    GET_COLLATERAL_REQ = 2,
-    GET_COLLATERAL_RESP = 3,
-    GET_PLATFORM_INFO_REQ = 4,
-    GET_PLATFORM_INFO_RESP = 5,
-    QGS_MSG_TYPE_MAX
-  } qgs_msg_type_t;
-
-  typedef struct _qgs_msg_header_t {
-    uint16_t major_version;
-    uint16_t minor_version;
-    uint32_t type;
-    uint32_t size;              // size of the whole message, include this header, in byte
-    uint32_t error_code;        // used in response only
-  } qgs_msg_header_t;
-
-such messages are processed by the 'get_resp' method in QGS:
-
-  https://github.com/intel/SGXDataCenterAttestationPrimitives/blob/main/QuoteGeneration/quote_wrapper/qgs/qgs_ql_logic.cpp#L78
-
-The 1.21 release of DCAP introduced a new "raw" mode in QGS which
-just receives the raw 1024 byte packet from the client which is
-supposed to be a raw TDX report.  This is what this QEMU patch
-is relying on IIUC.
-
-
-The QGS daemon decides whether a client is speaking the formal
-protocol, or "raw" mode, by trying to interpret the incoming
-data as a 'qgs_msg_header_t' struct. If the header size looks
-wrong & it has exactly 1024 bytes, then QGS assumes it has got
-a raw TDX report:
-
-  https://github.com/intel/SGXDataCenterAttestationPrimitives/blob/main/QuoteGeneration/quote_wrapper/qgs/qgs_server.cpp#L165
-
-This all works if the data QEMU gets from the guest is indeed a
-1024 byte raw TDX report, but what happens if we face a malicious
-guest ?
-
-AFAICT, the guest OS is able to send a "qgs_msg_header_t" packet
-to QEMU, which QEMU blindly passes on to QGS. This allows the
-guest OS to invoke any of the three QGS commands - GET_QUOTE_REQ,
-GET_COLLATERAL_REQ, or GET_PLATFORM_INFO_REQ. Fortunately I think
-those three messages are all safe to invoke, but none the less,
-this should not be permitted, as it leaves a wide open door for
-possible future exploits.
-
-As mentioned before, I don't know why this raw mode was invented
-for QGS, when QEMU itself could just take the guest report and
-pack it into the 'GET_QUOTE_REQ' message format and send it to
-QGS. This prevents the guest OS from being able to exploit QEMU
-to invoke arbirtary QGS messages.
-
-IMHO, QEMU should be made to pack & unpack the TDX report from
-the guest into the GET_QUOTE_REQ / GET_QUOTE_RESP messages, and
-this "raw" mode should be removed to QGS as it is inherantly
-dangerous to have this magic protocol overloading.
-
-Below is a patch on top of this one that illustrates how QEMU
-could use the GET_QUOTE_REQ / GET_QUOTE_RESP messages and avoid
-the "raw" mode of QGS.
-
-> +
-> +    task->receive_buf = g_malloc0(task->payload_len);
-> +    task->receive_buf_received = 0;
-> +
-> +    tdx_generate_quote(task);
-> +
-> +    return 0;
-> +}
-
---- qemu-9.0.0-rc3/target/i386/kvm/tdx-quote-generator.c	2024-10-02 11:05:31.328003392 -0400
-+++ qemu-9.0.0/target/i386/kvm/tdx-quote-generator.c	2024-10-03 13:46:25.744775539 -0400
-@@ -24,6 +24,61 @@
- 
- OBJECT_DEFINE_TYPE(TdxQuoteGenerator, tdx_quote_generator, TDX_QUOTE_GENERATOR, OBJECT)
- 
-+const uint32_t QGS_MSG_LIB_MAJOR_VER = 1;
-+const uint32_t QGS_MSG_LIB_MINOR_VER = 1;
-+
-+typedef enum _qgs_msg_type_t {
-+    GET_QUOTE_REQ = 0,
-+    GET_QUOTE_RESP = 1,
-+    GET_COLLATERAL_REQ = 2,
-+    GET_COLLATERAL_RESP = 3,
-+    GET_PLATFORM_INFO_REQ = 4,
-+    GET_PLATFORM_INFO_RESP = 5,
-+    QGS_MSG_TYPE_MAX
-+} qgs_msg_type_t;
-+
-+typedef struct _qgs_msg_header_t {
-+    uint16_t major_version;
-+    uint16_t minor_version;
-+    uint32_t type;
-+    uint32_t size;              // size of the whole message, include this header, in byte
-+    uint32_t error_code;        // used in response only
-+} qgs_msg_header_t;
-+
-+typedef struct _qgs_msg_get_quote_req_t {
-+    qgs_msg_header_t header;    // header.type = GET_QUOTE_REQ
-+    uint32_t report_size;       // cannot be 0
-+    uint32_t id_list_size;      // length of id_list, in byte, can be 0
-+} qgs_msg_get_quote_req_t;
-+
-+typedef struct _qgs_msg_get_quote_resp_s {
-+    qgs_msg_header_t header;    // header.type = GET_QUOTE_RESP
-+    uint32_t selected_id_size;  // can be 0 in case only one id is sent in request
-+    uint32_t quote_size;        // length of quote_data, in byte
-+    uint8_t id_quote[];         // selected id followed by quote
-+} qgs_msg_get_quote_resp_t;
-+
-+const unsigned HEADER_SIZE = 4;
-+
-+static uint32_t decode_header(const char *buf, size_t len) {
-+    if (len < HEADER_SIZE) {
-+        return 0;
-+    }
-+    uint32_t msg_size = 0;
-+    for (uint32_t i = 0; i < HEADER_SIZE; ++i) {
-+        msg_size = msg_size * 256 + (buf[i] & 0xFF);
-+    }
-+    return msg_size;
-+}
-+
-+static void encode_header(char *buf, size_t len, uint32_t size) {
-+    assert(len >= HEADER_SIZE);
-+    buf[0] = ((size >> 24) & 0xFF);
-+    buf[1] = ((size >> 16) & 0xFF);
-+    buf[2] = ((size >> 8) & 0xFF);
-+    buf[3] = (size & 0xFF);
-+}
-+
- static void tdx_quote_generator_finalize(Object *obj)
- {
- }
-@@ -70,9 +125,86 @@
-             goto end;
-         }
-     }
-+    
-+    if (ret == 0) {
-+        error_report("End of file before reply received");
-+        task->status_code = TDX_VP_GET_QUOTE_ERROR;
-+        goto end;
-+    }
- 
-     task->receive_buf_received += ret;
--    if (ret == 0 || task->receive_buf_received == task->payload_len) {
-+    if (task->receive_buf_received >= HEADER_SIZE) {
-+        uint32_t len = decode_header(task->receive_buf,
-+                                     task->receive_buf_received);
-+        if (len == 0 ||
-+            len > (task->payload_len - HEADER_SIZE)) {
-+            error_report("Message len %u must be non-zero & less than %zu",
-+                         len, (task->payload_len - HEADER_SIZE));
-+            task->status_code = TDX_VP_GET_QUOTE_ERROR;
-+            goto end;
-+        }
-+
-+        /* Now we know the size, shrink to fit */
-+        task->payload_len = HEADER_SIZE + len;
-+        task->receive_buf = g_renew(char,
-+                                    task->receive_buf,
-+                                    task->payload_len);
-+    }
-+    
-+    if (task->receive_buf_received >= (sizeof(qgs_msg_header_t) + HEADER_SIZE)) {
-+        qgs_msg_header_t *hdr = (qgs_msg_header_t *)(task->receive_buf + HEADER_SIZE);
-+        if (hdr->major_version != QGS_MSG_LIB_MAJOR_VER ||
-+            hdr->minor_version != QGS_MSG_LIB_MINOR_VER) {
-+            error_report("Invalid QGS message header version %d.%d\n",
-+                         hdr->major_version,
-+                         hdr->minor_version);
-+            task->status_code = TDX_VP_GET_QUOTE_ERROR;
-+            goto end;
-+        }
-+        if (hdr->type != GET_QUOTE_RESP) {
-+            error_report("Invalid QGS message type %d\n",
-+                         hdr->type);
-+            task->status_code = TDX_VP_GET_QUOTE_ERROR;
-+            goto end;
-+        }
-+        if (hdr->size > (task->payload_len - HEADER_SIZE)) {
-+            error_report("QGS message size %d exceeds payload capacity %zu",
-+                         hdr->size, task->payload_len);
-+            task->status_code = TDX_VP_GET_QUOTE_ERROR;
-+            goto end;
-+        }
-+        if (hdr->error_code != 0) {
-+            error_report("QGS message error code %d",
-+                         hdr->error_code);
-+            task->status_code = TDX_VP_GET_QUOTE_ERROR;
-+            goto end;
-+        }
-+    }
-+    if (task->receive_buf_received >= (sizeof(qgs_msg_get_quote_resp_t) + HEADER_SIZE)) {
-+        qgs_msg_get_quote_resp_t *msg = (qgs_msg_get_quote_resp_t *)(task->receive_buf + HEADER_SIZE);
-+        if (msg->selected_id_size != 0) {
-+            error_report("QGS message selected ID was %d not 0",
-+                         msg->selected_id_size);
-+            task->status_code = TDX_VP_GET_QUOTE_ERROR;
-+            goto end;
-+        }
-+
-+        if ((task->payload_len - HEADER_SIZE - sizeof(qgs_msg_get_quote_resp_t)) !=
-+            msg->quote_size) {
-+            error_report("QGS quote size %d should be %zu",
-+                         msg->quote_size,
-+                         (task->payload_len - sizeof(qgs_msg_get_quote_resp_t)));
-+            task->status_code = TDX_VP_GET_QUOTE_ERROR;
-+            goto end;
-+        }
-+    }
-+
-+    if (task->receive_buf_received == task->payload_len) {
-+        size_t strip = HEADER_SIZE + sizeof(qgs_msg_get_quote_resp_t);
-+        memmove(task->receive_buf,
-+                task->receive_buf + strip,
-+                task->receive_buf_received - strip);
-+        task->receive_buf_received -= strip;
-         task->status_code = TDX_VP_GET_QUOTE_SUCCESS;
-         goto end;
-     }
-@@ -158,6 +290,29 @@
- {
-     struct TdxQuoteGenerator *quote_gen = task->quote_gen;
-     QIOChannelSocket *sioc;
-+    qgs_msg_get_quote_req_t msg;
-+
-+    /* Prepare a QGS message prelude */
-+    msg.header.major_version = QGS_MSG_LIB_MAJOR_VER;
-+    msg.header.minor_version = QGS_MSG_LIB_MINOR_VER;
-+    msg.header.type = GET_QUOTE_REQ;
-+    msg.header.size = sizeof(msg) + task->send_data_size;
-+    msg.header.error_code = 0;
-+    msg.report_size = task->send_data_size;
-+    msg.id_list_size = 0;
-+
-+    /* Make room to add the QGS message prelude */
-+    task->send_data = g_renew(char,
-+                              task->send_data,
-+                              task->send_data_size + sizeof(msg) + HEADER_SIZE);
-+    memmove(task->send_data + sizeof(msg) + HEADER_SIZE,
-+            task->send_data,
-+            task->send_data_size);
-+    memcpy(task->send_data + HEADER_SIZE,
-+           &msg,
-+           sizeof(msg));
-+    encode_header(task->send_data, HEADER_SIZE, task->send_data_size + sizeof(msg));
-+    task->send_data_size += sizeof(msg) + HEADER_SIZE;
- 
-     sioc = qio_channel_socket_new();
-     task->sioc = sioc;
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+r~
 
