@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63F1ECF34BE
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 18:58:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 210A1CF34BE
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 18:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swR0s-0000nH-3C; Thu, 03 Oct 2024 14:57:22 -0400
+	id 1swR2h-0004Ur-Ih; Thu, 03 Oct 2024 14:59:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1swR0n-0000mN-8U; Thu, 03 Oct 2024 14:57:17 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1swR2f-0004Se-CR
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 14:59:13 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1swR0l-0003Jz-2U; Thu, 03 Oct 2024 14:57:16 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-2fac63abf63so15452061fa.1; 
- Thu, 03 Oct 2024 11:57:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1swR2d-0003TI-WD
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 14:59:13 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-2e0be1afa85so1185783a91.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 11:59:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1727981832; x=1728586632; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7NqZgDSIdmym8k9v4wrElx9POiJdcsjS85l4BMSFw2Y=;
- b=NSgjaM1edaz9MFceqbDunFyA+WRG+jmdv2EvgYiw16oexOHKrK5/0N5jyjomGEG3eq
- DOFEda1ucm0BUBzA7mByyq3Idha9hINZlqs0lsOCWbBcSPsWNskuQSfdEc+b2OVu/dbJ
- CJQzwPj6RRi89g5NbEHCp13v9Rzhy0C4gYRuOwb6WBQOhwOQKq0JSCyeEh/sI18adegu
- nHJbodaNmCGLA7EXhxLRokFhgGZPCsakmxNV8jrtaM9ni/RuBm1ZxfszS3ELwQE1TZGu
- pXtisFxkAbvrq9pk6jZ8cB65p66dzxYfMPibKmc8RmpRGBzJeZTPvkLbaK3CSjWtCu3F
- dhdQ==
+ d=linaro.org; s=google; t=1727981950; x=1728586750; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/TvMjeS3E4TFlzpCcoVrD1vmCtyQ2aLQeiABCCCG8hI=;
+ b=x3+6gPH5DHq49u2/kr4+bwjfN9yJJBYMkoNn6LjCU7BN7us49HM8lnmZLIDmzZ6YeG
+ JH6TpzQXLjH7kR7J1bCzLdj1tmbGkcu9PfFqiPfldv/hUk4SxuITmkc2hpGI3zXO+lFN
+ cKA8ZFUOnpP6mFD/PbQqRDnLrYBw1BwcKMbkqhbvNaNGPu7l/WHbaB3Cc4A5/ytsl0wr
+ fybEbgsyMOZEWSwF/db8ieEedqrni0NC25pCoygBDadKE3BfRxhm0W2po+j7d1bZBHNy
+ HqrAYnJjDpHhe/PvfmozwaibzWqEk9iTvTXJ1RaV61yHiT8bOgO6/qPbGZ7Dl0EjulWD
+ j2kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727981832; x=1728586632;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7NqZgDSIdmym8k9v4wrElx9POiJdcsjS85l4BMSFw2Y=;
- b=DDdDC2eI0UwdLjdAnVHxRJHLub6fEx0u56MdT9F2SyFgrcMUTcP830WdoQhy6FaBOR
- hxzFESimcmo4IoQB9Tl//WpQW1WVDKIO3BNrvVSv3jRUGWW1hndBTzpE889RbO1Mb+lS
- FVqC9GR2AbtriZ+9GJUlcpRf7SlW7TPZPAfJwdQLKdbfFwP6oI1iv608+/dDJKvMnwXd
- Ee3/+T6td/NeKxlSIweFHjzbCOMdxFe//GNfJfi6DMIR+z6hkcHPZpP+e+WwGl/Y5Z8P
- ZL2LpYye6OgjU2xjSgJcyMUphDFWD/t7bSd8lwceBA0we+/gIJbsj2LyV6DCFDsFDoXi
- qwSw==
+ d=1e100.net; s=20230601; t=1727981950; x=1728586750;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/TvMjeS3E4TFlzpCcoVrD1vmCtyQ2aLQeiABCCCG8hI=;
+ b=KUYYe/f+FO+eCvS4Em1CdfwgFJ+dAJhVDG/zCXEwCQHPTZC0Qjw197qieoYKZh0qhJ
+ nKMagP64x2k48UOI5YdloOShvUBhB/yUFgyWA+yVXFHoJEc2cyePROaR4wlmGwRHv6xX
+ t2pccE2/+Ij9YcA7FeFTQRrMt9u1G82SF55+MnHdzrIDierhPPaVTBORNem6Zz91HieB
+ yFWgD/uio6zOMqqTHDC4WqaYAoddzlP1GD1IWEaEuKYGAqCuvcEos/Rk4XdPbPS6ELlj
+ xnmTvo9eqmuhwTwKs5OtHCuZWNrXf3jowBeGdcMpRW/6RfPmeHSEQNjl3z1gi5GfPQeC
+ B+tg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXrv70LIPwtZrbVh+tnUf4U0OsjqKzojwprtiOCkEi33MyaRxDsE6syjspy7gY2+xt52/3j8jnzxg==@nongnu.org
-X-Gm-Message-State: AOJu0YzY7ahEstiIUy1wME1aWBQMoMFjYPydDsZ5SFFTyJOO+nl+y/gp
- KjwlPf54YLsi1hVzxwz63+y0H94NVZud/i1xRRd53HQvyt/S6kvYd95Q4bYF
-X-Google-Smtp-Source: AGHT+IGdtsrhdXwp14pMpvdvc+CdpPcIPMIZgK2C81T/sez5hURdlMZpHD5usN8FxM0Nz2NV9uyp/Q==
-X-Received: by 2002:a2e:be20:0:b0:2f5:2ba:2c99 with SMTP id
- 38308e7fff4ca-2faf3c1400cmr307781fa.9.1727981832153; 
- Thu, 03 Oct 2024 11:57:12 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ AJvYcCVrGtuy0WhOfSP1Ote0ZjEKuqnvBX+LtaRJ9pKAR723egxQBfOnCXdjImSnlLaIpHw7PrUifXBPmpj0@nongnu.org
+X-Gm-Message-State: AOJu0YzOFtrnlDLJeOLXl4Kq2NJnEp8SnhaQMLA0KJil/oz2uQvugaDh
+ 6bYoYGaZ/aRDs6ZmbSMM1Y2PqDZ/7b/6gOiOIlObcar+bYGkCSCoyrVRJvAzT/g=
+X-Google-Smtp-Source: AGHT+IGYGFW3yFQAXiHklu6vSyeTrTYpdtlGEHAXZXwSmojdW1RIpBCP+RvrCXTQ8k6Dm4ZNu0uNhA==
+X-Received: by 2002:a17:90a:39c7:b0:2e0:6c40:e389 with SMTP id
+ 98e67ed59e1d1-2e1e63650aamr89182a91.33.1727981950011; 
+ Thu, 03 Oct 2024 11:59:10 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2faecc13b2asm2706361fa.69.2024.10.03.11.57.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Oct 2024 11:57:11 -0700 (PDT)
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
- peter.maydell@linaro.org, edgar.iglesias@amd.com,
- xen-devel@lists.xenproject.org, qemu-arm@nongnu.org
-Subject: [PULL v2 5/5] hw/arm: xenpvh: Enable PCI for ARM PVH
-Date: Thu,  3 Oct 2024 20:56:54 +0200
-Message-ID: <20241003185655.1480819-6-edgar.iglesias@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241003185655.1480819-1-edgar.iglesias@gmail.com>
-References: <20241003185655.1480819-1-edgar.iglesias@gmail.com>
+ 98e67ed59e1d1-2e18f541bbesm4196727a91.11.2024.10.03.11.59.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Oct 2024 11:59:09 -0700 (PDT)
+Message-ID: <cc91f4b4-3d9d-42af-8c43-11b54abcaaf3@linaro.org>
+Date: Thu, 3 Oct 2024 11:59:07 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/audio/virtio-snd: Remove unnecessary "exec/tswap.h"
+ header
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+References: <20240926102113.64890-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240926102113.64890-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x235.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,50 +101,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+On 9/26/24 03:21, Philippe Mathieu-Daudé wrote:
+> We were including the "exec/tswap.h" header to get
+> target_words_bigendian() declaration, but since commit a276ec8e26
+> ("hw/audio/virtio-snd: Always use little endian audio format")
+> removed this method call, we don't need this header anymore.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   hw/audio/virtio-snd.c | 1 -
+>   1 file changed, 1 deletion(-)
 
-Enable PCI support for the ARM Xen PVH machine.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
----
- hw/arm/xen-pvh.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
-
-diff --git a/hw/arm/xen-pvh.c b/hw/arm/xen-pvh.c
-index 28af3910ea..33f0dd5982 100644
---- a/hw/arm/xen-pvh.c
-+++ b/hw/arm/xen-pvh.c
-@@ -39,6 +39,16 @@ static void xen_arm_instance_init(Object *obj)
-                                          VIRTIO_MMIO_DEV_SIZE };
- }
- 
-+static void xen_pvh_set_pci_intx_irq(void *opaque, int intx_irq, int level)
-+{
-+    XenPVHMachineState *s = XEN_PVH_MACHINE(opaque);
-+    int irq = s->cfg.pci_intx_irq_base + intx_irq;
-+
-+    if (xendevicemodel_set_irq_level(xen_dmod, xen_domid, irq, level)) {
-+        error_report("xendevicemodel_set_pci_intx_level failed");
-+    }
-+}
-+
- static void xen_arm_machine_class_init(ObjectClass *oc, void *data)
- {
-     XenPVHMachineClass *xpc = XEN_PVH_MACHINE_CLASS(oc);
-@@ -69,7 +79,11 @@ static void xen_arm_machine_class_init(ObjectClass *oc, void *data)
-     /* Xen/ARM does not use buffered IOREQs.  */
-     xpc->handle_bufioreq = HVM_IOREQSRV_BUFIOREQ_OFF;
- 
-+    /* PCI INTX delivery.  */
-+    xpc->set_pci_intx_irq = xen_pvh_set_pci_intx_irq;
-+
-     /* List of supported features known to work on PVH ARM.  */
-+    xpc->has_pci = true;
-     xpc->has_tpm = true;
-     xpc->has_virtio_mmio = true;
- 
--- 
-2.43.0
-
+r~
 
