@@ -4,80 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67ED7CF34CC
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 21:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 139DECF34CA
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 22:05:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swTfj-00057u-7e; Thu, 03 Oct 2024 17:47:43 -0400
+	id 1swTw9-0007bx-Ea; Thu, 03 Oct 2024 18:04:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1swTfh-00057j-Hj
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:47:41 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1swTw8-0007bc-M8
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 18:04:40 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1swTfg-0003AY-26
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 17:47:41 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-20aff65aa37so12142865ad.1
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 14:47:39 -0700 (PDT)
+ id 1swTw6-0005t5-V0
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 18:04:40 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-207115e3056so13544645ad.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 15:04:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727992058; x=1728596858; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727993077; x=1728597877; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3QxWi9pEixgIiFTkrRcIXA33MaiMpqS+3eoTnMi3J2E=;
- b=CF0Wyj9+4MSTC8HifPgCWRmWPK+uO0fLPC0J34S4iQj6K/FOFzX+GnvuWGFwqzitD0
- 6XGWj/O9rfFMsegZQ1DR3LlNokO1w6N/A7F/fdgdRmMn0BCpBPh3OvT9s0ltD5wsnvLo
- ugdEv0iQYZKY5OYXKk2is4DgCI6/qlISOzMe66W5EcmTtOBFSSzLW6/qtwj+iJHlwFyE
- Lmp9OQls1xcm2mX3DPF/g2PM6yjLnajDhN4ZQpEGeXgBFI8zaiwDJ7tCjIE2KAivzu0H
- OsfTUNp4tdL2zV0bdeOiboH6SCwJwj98vz8hL3MQgb1N75OxzUM1gxK0yXKoe7KqAiqe
- f2DQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/AWLh8DpbVrqbWuKOyEAhIitSVZCLGR7kgeNMBJDwZo=;
+ b=BfsMQekuEfRYEoZr06F6xwPAc++TJXMK5Ol7X9F6tKW/rsiDUxisFMSLjhlA8H0fNq
+ RQROoK2dflin7F4RxnxCBPIvgYq7htzHpyrKzXYEcXDXQLZ27HoH+5Aas/5G5R6dVdF+
+ PCheDbhR16uToTUl5vRE6DjvmD6Mp87jrStIcs1TppxMXeP/TfMnuX2yPKtVQV5D/5k9
+ iPFLyCSgc0stNz2TbmeydcP01Pzdi97xYjfpysoRBdWxZn2gEcxJFCTdXmjJguODVUro
+ Z4d/QDKVjqty2BsLIeKkBRNJ92ISPdmUZjGuHo+p7ijQOhv+1ZxRFuCS8xr/kEsDXoNH
+ P30A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727992058; x=1728596858;
+ d=1e100.net; s=20230601; t=1727993077; x=1728597877;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3QxWi9pEixgIiFTkrRcIXA33MaiMpqS+3eoTnMi3J2E=;
- b=kNJdiw8aRucKptcpjSgsVPxXaY7ENeNFHHCyOiXXA9L99pd/Py/DDqCdlyciNFVJTv
- BRwe7fjl+dI9TQWCTz08mGkfyIjNYeR2oH5M3D0Moh8Fr2WXocFAJDc/pbeiAhCkCvdp
- yHPKIK8JIAnJoD52BMXs2mT5xroRvApTYQ2936i8QF+jQU+CCxGn2SilgCuUmNlyk8sX
- 4kRoLECK9lDQyMYNH2irPjGnx3ERvb6n4twyhzE1o2KhAF0pV5m/p9fHrFHQbwYTf0zJ
- n+HvNsa9JnYMK5hxiKhQ79pwZGXFBsVZOTILB7jzRKhif3d2WuUpnqbGwKlazkkvuakk
- GwNQ==
+ bh=/AWLh8DpbVrqbWuKOyEAhIitSVZCLGR7kgeNMBJDwZo=;
+ b=E2sP+n9fEhCz77zOOpfGrfSIkj35OfH1bOOtSZAKhhA28cCKuYx0WGi7ulTmYFQirO
+ kvpd/3MtBuG/h5rXy5ktU0P6AaZnMMQciaiHJlCb7E6DsiJ3jnvG3glG3ZfleLkTpDkF
+ r0IJT3UbTlrfik0cB+GLvg0qONVtzcEAg9vf8K6p8Bbaxt7CxmEGZJzFyWlC+NBfn7EU
+ 1VDaVN1VNcUU5c+eNCzZw48DWwYgG8634gia8zELQqo1rlNoV4CnGv9HG2NPV6Ei9vsJ
+ dj7/NTE6fdFvs+1UJRTsguVyXUEPdXMSezFMf4CX7NvxofY8cipfNZ4b5CglS0TkO9w4
+ t6jQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8u7VQ3BVBck2OrBlxHx7aPpJpggU8tcFDmyiei3Hss5+bKtRjolgRkabkDPnJvfB92ZGOzp7r+TPA@nongnu.org
-X-Gm-Message-State: AOJu0YwST4p+BtEx/857U3m5/uWCx4ki0qyenpglq4HmN7zjBJ09k3+C
- UjESdLYHDJsn9MmPyKlIdDDO16f824heRf8NC+AtgAo6Gm7DuzGrYTVPkOphVp1n9TamLgvcw9S
- i
-X-Google-Smtp-Source: AGHT+IGXaB6BURlL2MCAdzNVdUjIWPVniut2vueC/X0s4z0v7p3OQU3iBCjcnqekZ0exOFWsmVGF9w==
-X-Received: by 2002:a17:90b:3890:b0:2e0:876c:8cb4 with SMTP id
- 98e67ed59e1d1-2e1e6321821mr588228a91.30.1727992058495; 
- Thu, 03 Oct 2024 14:47:38 -0700 (PDT)
+ AJvYcCWKPGAjWLXWT/HZuMERBdrdHbiK+Pk3jOaoyHP1KK2uGLIW+AMJy96sCtaNPn5vY5MK16ijETQKBybJ@nongnu.org
+X-Gm-Message-State: AOJu0YzDk6bkTr2oItgM5ZHeNDCXIBj21OCvpMiPiYTrcsx5TCeM4XpA
+ Cb4bqxPodiYq0e6JcdVHbUHN4iz5lgtJVhNPnVW2041Ei/sHaYEOcD/LNe7qp7E=
+X-Google-Smtp-Source: AGHT+IFpIC5jHFpGAlG+G54myKK0r4QOJp4/Lv2CcM5fMnf5vb0BSWEY7gS57DPf75F/wdd6ecE7ew==
+X-Received: by 2002:a17:903:8c8:b0:20b:5808:3e29 with SMTP id
+ d9443c01a7336-20bff1dc073mr9644565ad.58.1727993077224; 
+ Thu, 03 Oct 2024 15:04:37 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e18f54168bsm4376406a91.7.2024.10.03.14.47.37
+ d9443c01a7336-20beead4f18sm13506575ad.38.2024.10.03.15.04.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Oct 2024 14:47:38 -0700 (PDT)
-Message-ID: <7d865af1-41d9-4e0a-a76a-c7acc495f1b7@linaro.org>
-Date: Thu, 3 Oct 2024 14:47:36 -0700
+ Thu, 03 Oct 2024 15:04:36 -0700 (PDT)
+Message-ID: <eac7b54f-26a3-4881-b889-5fb79f8104fd@linaro.org>
+Date: Thu, 3 Oct 2024 15:04:34 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/13] exec/memory_ldst_phys: Introduce
- ld/st_endian_phys() API
+Subject: Re: [PATCH 12/13] hw/pci/pci_device: Introduce ld/st_endian_pci_dma()
+ API
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
+Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Thomas Huth
+ <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Jason Wang <jasowang@redhat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Anton Johansson <anjo@rev.ng>,
+ Peter Maydell <peter.maydell@linaro.org>, Huacai Chen
+ <chenhuacai@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Sven Schnelle <svens@stackframe.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-arm@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Max Filippov <jcmvbkbc@gmail.com>, Paul Burton <paulburton@kernel.org>
 References: <20240930073450.33195-1-philmd@linaro.org>
- <20240930073450.33195-10-philmd@linaro.org>
+ <20240930073450.33195-13-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240930073450.33195-10-philmd@linaro.org>
+In-Reply-To: <20240930073450.33195-13-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,45 +111,41 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/30/24 00:34, Philippe Mathieu-Daudé wrote:
-> Introduce the ld/st_endian_phys() API, which takes an extra
-> boolean argument to dispatch to ld/st_{be,le}_phys() methods.
+> Introduce the ld/st_endian_pci_dma() API, which takes an extra
+> boolean argument to dispatch to ld/st_{be,le}_pci_dma() methods.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
 > TODO: Update docstring regexp
 > ---
->   include/exec/memory_ldst_phys.h.inc | 66 +++++++++++++++++++++++++++++
->   1 file changed, 66 insertions(+)
+>   include/hw/pci/pci_device.h | 24 +++++++++++++++++++++++-
+>   1 file changed, 23 insertions(+), 1 deletion(-)
 > 
-> diff --git a/include/exec/memory_ldst_phys.h.inc b/include/exec/memory_ldst_phys.h.inc
-> index ecd678610d..8ea162b40d 100644
-> --- a/include/exec/memory_ldst_phys.h.inc
-> +++ b/include/exec/memory_ldst_phys.h.inc
-> @@ -74,6 +74,16 @@ static inline uint16_t glue(lduw_be_phys, SUFFIX)(ARG1_DECL, hwaddr addr)
->                                                  MEMTXATTRS_UNSPECIFIED, NULL);
->   }
+> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+> index ff619241a4..dc9b17dded 100644
+> --- a/include/hw/pci/pci_device.h
+> +++ b/include/hw/pci/pci_device.h
+> @@ -300,7 +300,29 @@ static inline MemTxResult pci_dma_write(PCIDevice *dev, dma_addr_t addr,
 >   
-> +static inline uint16_t glue(lduw_endian_phys, SUFFIX)(bool big_endian,
-> +                                                      ARG1_DECL, hwaddr addr)
-> +{
-> +    return big_endian
-> +           ? glue(address_space_lduw_le, SUFFIX)(ARG1, addr,
-> +                                                 MEMTXATTRS_UNSPECIFIED, NULL)
-> +           : glue(address_space_lduw_be, SUFFIX)(ARG1, addr,
-> +                                                 MEMTXATTRS_UNSPECIFIED, NULL);
-> +}
+>   #define PCI_DMA_DEFINE_LDST_END(_l, _s, _bits) \
+>       PCI_DMA_DEFINE_LDST(_l##_le, _s##_le, _bits) \
+> -    PCI_DMA_DEFINE_LDST(_l##_be, _s##_be, _bits)
+> +    PCI_DMA_DEFINE_LDST(_l##_be, _s##_be, _bits) \
+> +    static inline MemTxResult ld##_l##_endian_pci_dma(bool is_big_endian, \
+> +                                                      PCIDevice *dev, \
+> +                                                      dma_addr_t addr, \
+> +                                                      uint##_bits##_t *val, \
+> +                                                      MemTxAttrs attrs) \
+> +    { \
+> +        AddressSpace *pci_as = pci_get_address_space(dev); \
+> +        return is_big_endian \
+> +               ? ld##_l##_be_dma(pci_as, addr, val, attrs) \
+> +               : ld##_l##_le_dma(pci_as, addr, val, attrs); \
+> +    } \
 
-Endian swap aside, I think you should expose this at the address_space_* level first, 
-where the internals already have
-
-     return glue(address_space_lduw_internal, SUFFIX)(ARG1, addr, attrs, result,
-                                                      DEVICE_LITTLE_ENDIAN);
-
-then you can pass big_endian directly (perhaps frobbed into DEVICE_* space).
-
-That leaves one unconditional function call instead of two conditional calls.
+Like the address_space_* functions, I think the endianness is being handled at the wrong 
+level here.  Improve sysemu/dma.h first.
 
 
 r~
-
 
