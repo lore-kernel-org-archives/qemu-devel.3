@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7634CF857A
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 11:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ACEBCF857D
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 11:25:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swJvY-0000nl-Uc; Thu, 03 Oct 2024 07:23:24 -0400
+	id 1swJwE-0001Hk-W1; Thu, 03 Oct 2024 07:24:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1swJvY-0000nQ-86
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 07:23:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1swJwC-00016v-84
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 07:24:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1swJvW-0004uG-Te
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 07:23:24 -0400
+ id 1swJwA-0004wO-DN
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 07:24:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1727954602;
+ s=mimecast20190719; t=1727954613;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fT3Q75y9U/TwgYuHTQ23ZMlJcVZ68x1SDstEaJ1IH8s=;
- b=BLGa23o5/mUl0HDEHHj+mxuMSW8hPKAwOFi6aXT/m4AKJlOH87hxswum5UPAgHZB0MIP3q
- nrRKzW/ZiaDAtVoMMcSj5L2M1ARE8gy42KhMV1AU95exQ1TkpWA9k9nHUoCO0u+jdcUXxW
- hb65sKxOZK5GqKVvpTXN2Op6NPTiMqY=
+ bh=x4RgxPEZ+83XTh0E5h/0jQL2wf1ulFytIkVzyIHRDpk=;
+ b=SWzqMbBSB+H2MfNXp8XVoZ+3Y1Lmyz8FW/uSVnbKbHKaVLlExejV9pBDWxnuk77J7+0eB8
+ CUhpoB90fhVPbDUYHH0DChEz+l5g48o1CvjNSve/8R6MlSSfqdqkfF4l6I6BQJMBaIZ2//
+ smovI6sP8hNeNmmmHyq6zTE3Sdgtmb0=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-55-W-nQY8KDOtetA3UHXT-ixw-1; Thu,
- 03 Oct 2024 07:23:21 -0400
-X-MC-Unique: W-nQY8KDOtetA3UHXT-ixw-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-436-dUXTT1lvMw28hUKF_lX86g-1; Thu,
+ 03 Oct 2024 07:23:29 -0400
+X-MC-Unique: dUXTT1lvMw28hUKF_lX86g-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CD55B193579B; Thu,  3 Oct 2024 11:23:18 +0000 (UTC)
+ id D149119560A5; Thu,  3 Oct 2024 11:23:28 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.36])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 32A4E19560AE; Thu,  3 Oct 2024 11:23:16 +0000 (UTC)
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 547F61956086; Thu,  3 Oct 2024 11:23:26 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -55,16 +55,16 @@ Cc: peter.maydell@linaro.org, "Michael S. Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 06/16] ui/dbus: discard display messages on disable
-Date: Thu,  3 Oct 2024 15:22:33 +0400
-Message-ID: <20241003112244.3340697-7-marcandre.lureau@redhat.com>
+Subject: [PATCH 08/16] util/memfd: report potential errors on free
+Date: Thu,  3 Oct 2024 15:22:35 +0400
+Message-ID: <20241003112244.3340697-9-marcandre.lureau@redhat.com>
 In-Reply-To: <20241003112244.3340697-1-marcandre.lureau@redhat.com>
 References: <20241003112244.3340697-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -94,22 +94,39 @@ From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/dbus-listener.c | 2 ++
- 1 file changed, 2 insertions(+)
+ util/memfd.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index a70cad3a90..23a4633fa4 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -107,6 +107,8 @@ static void dbus_scanout_disable(DisplayChangeListener *dcl)
- {
-     DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
+diff --git a/util/memfd.c b/util/memfd.c
+index 4a3c07e0be..8a2e906962 100644
+--- a/util/memfd.c
++++ b/util/memfd.c
+@@ -28,6 +28,7 @@
+ #include "qemu/osdep.h"
  
-+    ddl_discard_display_messages(ddl);
-+
-     qemu_dbus_display1_listener_call_disable(
-         ddl->proxy, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
+ #include "qapi/error.h"
++#include "qemu/error-report.h"
+ #include "qemu/memfd.h"
+ #include "qemu/host-utils.h"
+ 
+@@ -149,11 +150,15 @@ err:
+ void qemu_memfd_free(void *ptr, size_t size, int fd)
+ {
+     if (ptr) {
+-        munmap(ptr, size);
++        if (munmap(ptr, size) != 0) {
++            error_report("memfd munmap() failed: %s", strerror(errno));
++        }
+     }
+ 
+     if (fd != -1) {
+-        close(fd);
++        if (close(fd) != 0) {
++            error_report("memfd close() failed: %s", strerror(errno));
++        }
+     }
  }
+ 
 -- 
 2.45.2.827.g557ae147e6
 
