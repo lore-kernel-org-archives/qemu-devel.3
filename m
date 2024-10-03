@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A792FCF34CF
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 22:34:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 219A3CF34D0
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Oct 2024 22:53:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swUOi-0004Dx-4k; Thu, 03 Oct 2024 18:34:12 -0400
+	id 1swUgs-0006R3-8W; Thu, 03 Oct 2024 18:52:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1swUOf-0004Cl-O0
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 18:34:09 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1swUgo-0006QZ-3d
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 18:52:54 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1swUOe-0007EN-70
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 18:34:09 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-20b78ee6298so9372325ad.2
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 15:34:07 -0700 (PDT)
+ id 1swUgm-0000xA-LT
+ for qemu-devel@nongnu.org; Thu, 03 Oct 2024 18:52:53 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2e0894f1b14so1184533a91.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 15:52:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1727994846; x=1728599646; darn=nongnu.org;
+ d=linaro.org; s=google; t=1727995971; x=1728600771; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=J7bBt6CmLbj1cMr7uXzauCS8p6kN5TMr9ti3dZWMwos=;
- b=TuObqK6R0wRoqknWAGETzp3MOfn8TosRYLYKdOGCtXrTXjaRF6ArfH+fLLvR/CF0OR
- Yx1Ng6xVAh/pkQfzRe66WHx0M14QODivrPLuZ7OVxxjAf+i3YE6w6TYtFzbKBfovU/YA
- oTi2gmYbthEgymOVcCKackwHvdSkYW/Lg6I6i0IXKf4JhG8CnCBQviP+bFbOBz994VQH
- QkiVX2KIs1ikc8VjyrYCUbCz+7jDCR96r41hmKCIagjNISYfv34FqbypjvYIR0eI+qeI
- KU2fjt+nOJ0ufRC+dGuVTh4HHU3oEajM7uYQp0zU8AK6JngLqae/z31Mimkh5pBbvG5K
- oPTQ==
+ bh=z06gW5wTSQECxDfRhAythjDYf+v+MVr/DNEElTMltQA=;
+ b=wrfLoUFJz4ALsJdjLLuUL1zaF7IMQyMObpu6WrH28Xrc28jBu1kkY2eVXHffSqXXle
+ nNbtMKrLdqVyj93i1pAvDrKMZy1L6K6FSTosMaaw/jZJIaHEzKhJBb7bIm5lhbS9aBcl
+ Tc9U1oR7ppn0c903gOpN2PUgNqrUUH4tGzGsi1NKd91zWwZmnSZ5NooDNsU52UMHLSla
+ CtMpC635Caf9NrdHKW1B+N35bhXzKILR2X6DtWmAUX9z87k1NQfpPykTjxkRtA78eVMr
+ WYabVuuykGKQDHNOKleZFhUNdTPtBADNaLjji4ghvyA0b5CVydyymb0i+/6wNoXgXkrT
+ eKLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727994846; x=1728599646;
+ d=1e100.net; s=20230601; t=1727995971; x=1728600771;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=J7bBt6CmLbj1cMr7uXzauCS8p6kN5TMr9ti3dZWMwos=;
- b=jDigUhaqkFWJg1wcnrgl3+Z+RuNuXCnbAHbcnztfnlXlzXBbb7DzoYHMJKaMeyj/v7
- tELrtG7LK2HfSJeskSVNMwK6wa6MHQ9KmLpxd/e056UcPFCsFI6vAI9S/r+sn4EIqDxc
- Pq9b45iZ7gXDEHzt5ZSFEJIZFvysSDRA+6D4aaAsiQnXLXyY2jmX1b7uKX9jJ4XZB3lM
- Ugtj+tsxqQd6BF+epgmaM2AtzztXbIYACAKC+aHUnK9ns6K+Fb53zB9N41rZDABOAMEG
- IrKObJQClajUV/NSSdr1o2rT82yhNlI2Xq0g8ZAoRj1yxxROSkvMJuc24RVra31tsIGv
- jIog==
+ bh=z06gW5wTSQECxDfRhAythjDYf+v+MVr/DNEElTMltQA=;
+ b=A46eVwLAbMDBhIP4+sElbyYsbvSlPL6tqgy2QG/IEtGVSHLn1kmoi6iWhkhoL3Veb5
+ dDHh8fQMM5CkOEzUn4sLe+C35moMAoWfQRQjVF9Q0+g+4EK3iC8pL/rC5sxhTzPXsBCi
+ cocPrixQHyd4RNqtN3ZHqo61BMpLvdPCm2kdR4ouxJX8qZ8K9pVX/xfYtc0Qi1rNg6eM
+ 5R0KJ4Vi/hEAv04gwvGOvplWYGVPFJiTmqzRzNg4HEg7nPPyvzN819P74cTnMdVmEQWv
+ +bXZztTz8NhKmfdBcl09qfl+ncIU6vBoZ/f1Jxkbv3nEROEgstd8fpnGpiUeTxiVV/2G
+ wkSg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW121JM8ekq+19/V7+VXxq18EPaB/Zba6TWhcJOMBbgnVCl683can7/3t8V+Z9i7JkkJoGOyXyVMNZ+@nongnu.org
-X-Gm-Message-State: AOJu0YxGQsXUl5I+PANtheF/dkp7BMAGJpOyC1918puKaSENf740y90t
- UP0dlsRslGRdP2oiIvvHhZ+x7Wb+v6EKGtLrRIR+43HUWTivIKls/BkcdaOEFiM=
-X-Google-Smtp-Source: AGHT+IFIaD/PUBZ6ys5i+4kTnynUykBKsGNzGiyEF5wUGV4ZYHTUO2pr9V2EccMTIlAqw+g2AlGxkg==
-X-Received: by 2002:a17:902:c949:b0:204:e4c9:ce91 with SMTP id
- d9443c01a7336-20bfde55489mr10894295ad.7.1727994846582; 
- Thu, 03 Oct 2024 15:34:06 -0700 (PDT)
+ AJvYcCVAiiMtoMwwm1y13nRjGJwVI4Qd6ogu/RnBFLM+SIz/rFBWx2tN/Eg4TzKvbgMcUye/tOB8czJ+ZeHK@nongnu.org
+X-Gm-Message-State: AOJu0YyAw6YAgwSPevUjjFgtyLPKP5wjH0ynG4mMTqza8EA1vCwCkDlV
+ 1HQyVFb6l1z4EIOgec0rRvkIaaypeB8IfgEQAREgfz7DyMUT0HGsyPMpf3LpzpE=
+X-Google-Smtp-Source: AGHT+IEyPgR16QWagfcAGg1XNUSvHecGP9oUsyhOXAKxK/khLvoIuGKuL9BrLS+yAaINQv9eBmt4ZA==
+X-Received: by 2002:a17:90a:4805:b0:2c8:647:1600 with SMTP id
+ 98e67ed59e1d1-2e1e6221a3dmr767818a91.9.1727995969382; 
+ Thu, 03 Oct 2024 15:52:49 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20beefafda0sm13497735ad.211.2024.10.03.15.34.05
+ 98e67ed59e1d1-2e1e86a9400sm44826a91.47.2024.10.03.15.52.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Oct 2024 15:34:06 -0700 (PDT)
-Message-ID: <f7ce2afa-9f64-4965-bbd4-fa7d04cdd060@linaro.org>
-Date: Thu, 3 Oct 2024 15:34:04 -0700
+ Thu, 03 Oct 2024 15:52:49 -0700 (PDT)
+Message-ID: <68fd0426-66cf-412c-9d2b-63838c313b04@linaro.org>
+Date: Thu, 3 Oct 2024 15:52:47 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] net/l2tpv3: Simplify LD/ST API uses
+Subject: Re: [PATCH 01/12] target/mips: Declare cpu_is_bigendian_env() in
+ 'internal.h'
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
- Jason Wang <jasowang@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>, qemu-ppc@nongnu.org,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20240927215040.20552-1-philmd@linaro.org>
- <20240927215040.20552-5-philmd@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo
+ <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>,
+ Anton Johansson <anjo@rev.ng>
+References: <20240930091101.40591-1-philmd@linaro.org>
+ <20240930091101.40591-2-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240927215040.20552-5-philmd@linaro.org>
+In-Reply-To: <20240930091101.40591-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,33 +104,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/27/24 14:50, Philippe Mathieu-Daudé wrote:
-> Directly call ldn_be_p once instead of ldl_be_p / ldq_be_p.
+On 9/30/24 02:10, Philippe Mathieu-Daudé wrote:
+> In order to re-use cpu_is_bigendian(), declare it on "internal.h"
+> after renaming it as cpu_is_bigendian_env().
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   net/l2tpv3.c | 6 +-----
->   1 file changed, 1 insertion(+), 5 deletions(-)
+>   target/mips/internal.h        |  6 ++++++
+>   target/mips/tcg/ldst_helper.c | 15 +++++----------
+>   2 files changed, 11 insertions(+), 10 deletions(-)
 > 
-> diff --git a/net/l2tpv3.c b/net/l2tpv3.c
-> index b5547cb917..7a0d5dcfe9 100644
-> --- a/net/l2tpv3.c
-> +++ b/net/l2tpv3.c
-> @@ -318,11 +318,7 @@ static int l2tpv3_verify_header(NetL2TPV3State *s, uint8_t *buf)
->       */
+> diff --git a/target/mips/internal.h b/target/mips/internal.h
+> index a9a22ea00e..1ce2bbf62d 100644
+> --- a/target/mips/internal.h
+> +++ b/target/mips/internal.h
+> @@ -9,6 +9,7 @@
+>   #define MIPS_INTERNAL_H
 >   
->       if (s->cookie) {
-> -        if (s->cookie_is_64) {
-> -            cookie = ldq_be_p(buf + s->cookie_offset);
-> -        } else {
-> -            cookie = ldl_be_p(buf + s->cookie_offset) & 0xffffffffULL;
-> -        }
-> +        cookie = ldn_be_p(buf + s->cookie_offset, s->cookie_is_64 ? 8 : 4);
->           if (cookie != s->rx_cookie) {
->               if (!s->header_mismatch) {
->                   error_report("unknown cookie id");
+>   #include "exec/memattrs.h"
+> +#include "exec/memop.h"
+>   #ifdef CONFIG_TCG
+>   #include "tcg/tcg-internal.h"
+>   #endif
+> @@ -287,6 +288,11 @@ static inline int mips_vp_active(CPUMIPSState *env)
+>       return 1;
+>   }
+>   
+> +static inline bool cpu_is_bigendian_env(CPUMIPSState *env)
+> +{
+> +    return extract32(env->CP0_Config0, CP0C0_BE, 1);
+> +}
 
-Is this really an improvement?  I don't see it.
+Using the cpu_is_bigendian name for DisasContext is the error I think.
 
 
 r~
