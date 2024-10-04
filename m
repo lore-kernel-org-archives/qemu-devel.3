@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CC15CF8840
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:06:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB8E6CF884E
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:06:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swknc-0002Zv-E9; Fri, 04 Oct 2024 12:05:00 -0400
+	id 1swkn7-000228-K7; Fri, 04 Oct 2024 12:04:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1swknW-0002Uu-SB; Fri, 04 Oct 2024 12:04:54 -0400
+ id 1swkn1-0001x5-6r; Fri, 04 Oct 2024 12:04:23 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1swknV-0001f8-Cl; Fri, 04 Oct 2024 12:04:54 -0400
+ id 1swkmy-0001Zy-Q1; Fri, 04 Oct 2024 12:04:22 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AE31C95576;
+ by isrv.corpit.ru (Postfix) with ESMTP id 46A369556E;
  Fri,  4 Oct 2024 19:03:30 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E81F514D984;
+ by tsrv.corpit.ru (Postfix) with SMTP id 8175214D97C;
  Fri,  4 Oct 2024 19:03:32 +0300 (MSK)
-Received: (nullmailer pid 1282557 invoked by uid 1000);
+Received: (nullmailer pid 1282530 invoked by uid 1000);
  Fri, 04 Oct 2024 16:03:32 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 17/23] hw/net/rocker: Remove unused rocker_fp_ports
-Date: Fri,  4 Oct 2024 19:03:25 +0300
-Message-Id: <20241004160331.1282441-18-mjt@tls.msk.ru>
+Subject: [PULL 09/23] hw/char: Remove unused serial_set_frequency
+Date: Fri,  4 Oct 2024 19:03:17 +0300
+Message-Id: <20241004160331.1282441-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241004160331.1282441-1-mjt@tls.msk.ru>
 References: <20241004160331.1282441-1-mjt@tls.msk.ru>
@@ -63,7 +63,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-rocker_fp_ports hasn't been used since it was added back in 2015.
+serial_set_frequnecy has been unused since it was added in 2009:
+  038eaf82c8 ("serial: Add interface to set reference oscillator frequency")
+
+It looks like the 'baudbase' is now a property anyway so the wrapper
+isn't needed.
+
 Remove it.
 
 Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
@@ -71,38 +76,41 @@ Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/net/rocker/rocker.c | 5 -----
- hw/net/rocker/rocker.h | 1 -
- 2 files changed, 6 deletions(-)
+ hw/char/serial.c         | 7 -------
+ include/hw/char/serial.h | 2 --
+ 2 files changed, 9 deletions(-)
 
-diff --git a/hw/net/rocker/rocker.c b/hw/net/rocker/rocker.c
-index 1ab5852113..5e74acc969 100644
---- a/hw/net/rocker/rocker.c
-+++ b/hw/net/rocker/rocker.c
-@@ -134,11 +134,6 @@ RockerPortList *qmp_query_rocker_ports(const char *name, Error **errp)
-     return list;
+diff --git a/hw/char/serial.c b/hw/char/serial.c
+index d8b2db5082..6c5c4a23c7 100644
+--- a/hw/char/serial.c
++++ b/hw/char/serial.c
+@@ -951,13 +951,6 @@ static void serial_unrealize(DeviceState *dev)
+     qemu_unregister_reset(serial_reset, s);
  }
  
--uint32_t rocker_fp_ports(Rocker *r)
+-/* Change the main reference oscillator frequency. */
+-void serial_set_frequency(SerialState *s, uint32_t frequency)
 -{
--    return r->fp_ports;
+-    s->baudbase = frequency;
+-    serial_update_parameters(s);
 -}
 -
- static uint32_t rocker_get_pport_by_tx_ring(Rocker *r,
-                                             DescRing *ring)
- {
-diff --git a/hw/net/rocker/rocker.h b/hw/net/rocker/rocker.h
-index f85354d9d1..6e0962f47a 100644
---- a/hw/net/rocker/rocker.h
-+++ b/hw/net/rocker/rocker.h
-@@ -72,7 +72,6 @@ DECLARE_INSTANCE_CHECKER(Rocker, ROCKER,
-                          TYPE_ROCKER)
+ const MemoryRegionOps serial_io_ops = {
+     .read = serial_ioport_read,
+     .write = serial_ioport_write,
+diff --git a/include/hw/char/serial.h b/include/hw/char/serial.h
+index 6e14099ee7..40aad21df3 100644
+--- a/include/hw/char/serial.h
++++ b/include/hw/char/serial.h
+@@ -93,8 +93,6 @@ struct SerialMM {
+ extern const VMStateDescription vmstate_serial;
+ extern const MemoryRegionOps serial_io_ops;
  
- Rocker *rocker_find(const char *name);
--uint32_t rocker_fp_ports(Rocker *r);
- int rocker_event_link_changed(Rocker *r, uint32_t pport, bool link_up);
- int rocker_event_mac_vlan_seen(Rocker *r, uint32_t pport, uint8_t *addr,
-                                uint16_t vlan_id);
+-void serial_set_frequency(SerialState *s, uint32_t frequency);
+-
+ #define TYPE_SERIAL "serial"
+ OBJECT_DECLARE_SIMPLE_TYPE(SerialState, SERIAL)
+ 
 -- 
 2.39.5
 
