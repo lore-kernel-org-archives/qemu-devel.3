@@ -4,85 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCC8ACF34D7
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 00:37:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9C7ECF34DD
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 01:25:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swWJ2-0004Mi-Mv; Thu, 03 Oct 2024 20:36:28 -0400
+	id 1swX3W-0000tg-Eg; Thu, 03 Oct 2024 21:24:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1swWIz-0004Lo-J7
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 20:36:25 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1swWIx-0005tv-Hb
- for qemu-devel@nongnu.org; Thu, 03 Oct 2024 20:36:25 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2e1bfa9ddb3so1076183a91.0
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 17:36:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1728002181; x=1728606981;
- darn=nongnu.org; 
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=/MFfB4q8izso0/HXm1SZlNmo7GAp+rQZtUeNXDZQm+Y=;
- b=jsVTImU+fKMuFIO8Mdslgt+UEF3C18js0onE0LLhpLleF2XniE1TMEVg1LflFl+Aca
- WfCv1upg6xUS+hu8ufZrm4M/lx0tD/kdjbwEGqJGBFLZOL3kjtRnuJVpM/gZcPiuVGzW
- P6BEEiLZ8FFXj/ufYs59uDwETfbCwMsxQjrKiL8Vwm2QFXCkxPQGzhVE8P2YjH4RTQz8
- ZW8vgaJaE8pqqBsKofg+5h60FC8mJhKoLejRebolL7JlSr+rj+WspdVIRJ0+dC7F9SD3
- ctyCZRR8VT0/6xOIzijWflug+ULV0EDaJudTMAVRuhrps7Cl2zqrsCPib3Z3YmbE2gFQ
- UKmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728002181; x=1728606981;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/MFfB4q8izso0/HXm1SZlNmo7GAp+rQZtUeNXDZQm+Y=;
- b=Km116udirTjLn/fiVXmDdRU6FP1A2UnIvNJuL6ktH9b17ntdYmDN+GqahYsYKZWEet
- BN0klJ0NVBjdzUrXPQOMzVwmbkzuF03ijOKQYrr0Ml5ufA9UlnDE5zzQfZWqPu56fnHe
- wVCubvtDKbE5MMbPzlIqTSx/8RYkOfaJL/mZ5dhGoj+jJvF9Q28bibXCVlr4J5AsSMkE
- NuS3RMcA7bZFbbR+xq6LqTnedf2pH96G8Ot7QDmyS57Hco6odlJBtAtaFm7cEbCvO9HH
- zdBgIbAyYdqRvdpHYj2ydw1nB8ShJwzFVOw+IB4lUsTRtd74evpxKKIPBaoJI/au0ZFK
- 6YSg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXS79EdBy9nhvT28JRFkgSgPGCX2S5OjehatevLrPD+675p1fZ0dT1R595ORUJthfq9OOwIDX5xIn73@nongnu.org
-X-Gm-Message-State: AOJu0YxnQxjrx38GqIlEePgb20WAeH2FUKn3s/fXaspV03319xGPQj3X
- bvG5tvcGxcKuMr2MrZ1uMHBgoytvNavWfiK9Mi6MfMHP3rHVRW7ICWvPJb0kOLY=
-X-Google-Smtp-Source: AGHT+IFzlRbujHTH/uM+D0RWrqHnxAj60ytKlOgOg8yqjM3UgQu7KIS62LEakQimR8qKIMDfIvYUlw==
-X-Received: by 2002:a17:90b:b83:b0:2e0:8719:5efa with SMTP id
- 98e67ed59e1d1-2e1e621e79bmr1105313a91.13.1728002181567; 
- Thu, 03 Oct 2024 17:36:21 -0700 (PDT)
-Received: from debug.ba.rivosinc.com ([64.71.180.162])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e1e86657casm151245a91.43.2024.10.03.17.36.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Oct 2024 17:36:21 -0700 (PDT)
-Date: Thu, 3 Oct 2024 17:36:19 -0700
-From: Deepak Gupta <debug@rivosinc.com>
-To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, bmeng.cn@gmail.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, kito.cheng@sifive.com
-Subject: Re: [PATCH v15 14/21] target/riscv: disallow probe accesses to
- shadow stack
-Message-ID: <Zv84gz6RPTuIkAWw@debug.ba.rivosinc.com>
-References: <20241003183342.679249-1-debug@rivosinc.com>
- <20241003183342.679249-15-debug@rivosinc.com>
+ (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1swX3U-0000tC-Fo; Thu, 03 Oct 2024 21:24:28 -0400
+Received: from dedi548.your-server.de ([85.10.215.148])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1swX3S-0000BR-Hg; Thu, 03 Oct 2024 21:24:28 -0400
+Received: from sslproxy01.your-server.de ([78.46.139.224])
+ by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1swX3N-000FUM-2A; Fri, 04 Oct 2024 03:24:21 +0200
+Received: from [82.100.198.138] (helo=mail.embedded-brains.de)
+ by sslproxy01.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1swX3N-000CN5-1U; Fri, 04 Oct 2024 03:24:21 +0200
+Received: from localhost (localhost [127.0.0.1])
+ by mail.embedded-brains.de (Postfix) with ESMTP id 01C69480024;
+ Fri,  4 Oct 2024 03:24:21 +0200 (CEST)
+Received: from mail.embedded-brains.de ([127.0.0.1])
+ by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
+ with ESMTP id NutkYs6pUrXq; Fri,  4 Oct 2024 03:24:20 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by mail.embedded-brains.de (Postfix) with ESMTP id 91E47480175;
+ Fri,  4 Oct 2024 03:24:20 +0200 (CEST)
+X-Virus-Scanned: amavis at zimbra.eb.localhost
+Received: from mail.embedded-brains.de ([127.0.0.1])
+ by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id L8XOtu4SS9o9; Fri,  4 Oct 2024 03:24:20 +0200 (CEST)
+Received: from zimbra.eb.localhost (zimbra.eb.localhost [192.168.96.204])
+ by mail.embedded-brains.de (Postfix) with ESMTP id 60C99480136;
+ Fri,  4 Oct 2024 03:24:20 +0200 (CEST)
+Date: Fri, 4 Oct 2024 03:24:11 +0200 (CEST)
+From: Sebastian Huber <sebastian.huber@embedded-brains.de>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>
+Message-ID: <1809049101.17000.1728005051804.JavaMail.zimbra@embedded-brains.de>
+In-Reply-To: <CAFEAcA8Wf-PzAC-YGdma3YVETyuatLJHmvjrrb_kG2NjDSGs+Q@mail.gmail.com>
+References: <20240923035632.81304-1-sebastian.huber@embedded-brains.de>
+ <20240923035632.81304-2-sebastian.huber@embedded-brains.de>
+ <CAFEAcA8Wf-PzAC-YGdma3YVETyuatLJHmvjrrb_kG2NjDSGs+Q@mail.gmail.com>
+Subject: Re: [PATCH 1/2] hw/arm/boot: Use hooks if PSCI is disabled
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20241003183342.679249-15-debug@rivosinc.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=debug@rivosinc.com; helo=mail-pj1-x102d.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [192.168.96.204]
+X-Mailer: Zimbra 9.0.0_GA_4653 (ZimbraWebClient - FF128 (Linux)/9.0.0_GA_4653)
+Thread-Topic: hw/arm/boot: Use hooks if PSCI is disabled
+Thread-Index: t7Yqbd/pJnIoutZ9d7bQpaN4HrY5JA==
+X-Authenticated-Sender: smtp-embedded@poldi-networks.de
+X-Virus-Scanned: Clear (ClamAV 1.0.5/27416/Thu Oct  3 10:37:25 2024)
+Received-SPF: pass client-ip=85.10.215.148;
+ envelope-from=sebastian.huber@embedded-brains.de; helo=dedi548.your-server.de
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,119 +84,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 03, 2024 at 11:33:35AM -0700, Deepak Gupta wrote:
->`check_zicbom_access` (`cbo.clean/flush/inval`) may probe shadow stack
->memory and must always raise store/AMO access fault because it has store
->semantics.
->
->For non-shadow stack memory even though `cbo.clean/flush/inval` have
->store semantics, it will not fault if read is allowed (probably to follow
->`clflush` on x86). Although if read is not allowed, eventually
->`probe_write` will do store page (or access) fault (if permissions don't
->allow it).
->
->cbo operations on shadow stack memory must always raise store access fault.
->Thus extending `get_physical_address` to recieve `probe` parameter as well.
->
->Signed-off-by: Deepak Gupta <debug@rivosinc.com>
->---
-> target/riscv/cpu_helper.c | 22 +++++++++++++---------
-> 1 file changed, 13 insertions(+), 9 deletions(-)
->
->diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
->index 5580f5f3f3..ab46f694b5 100644
->--- a/target/riscv/cpu_helper.c
->+++ b/target/riscv/cpu_helper.c
->@@ -884,7 +884,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
->                                 target_ulong *fault_pte_addr,
->                                 int access_type, int mmu_idx,
->                                 bool first_stage, bool two_stage,
->-                                bool is_debug)
->+                                bool is_debug, bool is_probe)
-> {
->     /*
->      * NOTE: the env->pc value visible here will not be
->@@ -1030,7 +1030,7 @@ restart:
->             int vbase_ret = get_physical_address(env, &vbase, &vbase_prot,
->                                                  base, NULL, MMU_DATA_LOAD,
->                                                  MMUIdx_U, false, true,
->-                                                 is_debug);
->+                                                 is_debug, false);
->
->             if (vbase_ret != TRANSLATE_SUCCESS) {
->                 if (fault_pte_addr) {
->@@ -1117,8 +1117,11 @@ restart:
->         /* if bcfi enabled, PTE_W is not reserved and shadow stack page */
->         if (cpu_get_bcfien(env) && first_stage) {
->             sstack_page = true;
->-            /* if ss index, read and write allowed. else only read allowed */
->-            rwx = is_sstack_idx ? PTE_R | PTE_W : PTE_R;
->+            /*
->+             * if ss index, read and write allowed. else if not a probe
->+             * then only read allowed
->+             */
->+            rwx = is_sstack_idx ? (PTE_R | PTE_W) : (is_probe ? rwx :  PTE_R);
+----- Am 30. Sep 2024 um 17:16 schrieb Peter Maydell peter.maydell@linaro.o=
+rg:
 
-hmm... there is a bug here. Above would allow writes to go through if probed.
+> On Mon, 23 Sept 2024 at 04:57, Sebastian Huber
+> <sebastian.huber@embedded-brains.de> wrote:
+>>
+>> In arm_load_kernel(), use the secondary boot hooks provided by the
+>> platform if PSCI is disabled also while booting a non-Linux kernel.
+>> While booting Linux with PSCI disabled, provide default hooks if needed.
+>>
+>> In do_cpu_reset(), use the secondary CPU reset hook provided by the
+>> platform for resetting a non-Linux kernel.
+>>
+>> This change allows a more accurate simulation of the platform reset
+>> behaviour.
+>=20
+> So, the difficulty with this is that it's effectively
+> introducing an extra way of booting. At the moment we
+> have two boot approaches for Arm guests:
+>=20
+> (1) Booting Linux -- the boot.c code simulates what the BIOS,
+> boot rom etc, does, both to set up the 1st CPU for the kernel
+> boot entry, and to set up the secondaries in whatever way
+> the bootrom does that the kernel expects to release them from.
+>=20
+> (2) Booting bare-metal -- boot.c assumes the guest code is going
+> to do whatever the BIOS/bootrom does, so you get what you get
+> for real-hardware CPU reset. (Either the secondaries start
+> in power-off state and the primary will release them via some
+> kind of power controller device, or else all the CPUs start at
+> once at the reset vector and the bootrom is going to sort the
+> secondaries out and put them in a pen.)
+>=20
+> What you want is a third thing:
+>=20
+> (3) Booting not-a-kernel but not 100% bare-metal: emulate what
+> the bootrom does for primary and secondary CPUs but don't
+> boot the guest binary as if it was a Linux kernel.
+>=20
+> The problem with adding that is that we don't have any
+> way to distinguish whether the user wanted that or our
+> existing type (2), because both are "user gave us a binary
+> that isn't a Linux kernel". (It also has a bit of a
+> "continuously expanding job" problem because the bootrom
+> could do arbitrarily complicated things, like boot directly
+> from SD cards, which we have historically not wanted to
+> emulate within QEMU itself.)
+>=20
+> There are other platforms where the real hardware's bootrom
+> has a particular "this is what a bare-metal-under-the-bootrom
+> startup looks like" definition, notably the raspberry pi
+> boards. There too we don't currently implement that, and
+> instead effectively tell users "pick one of the two boot
+> paradigms we do support"...
 
-It should be 
+Ok, I understand your concerns. What I would like to do is running unmodifi=
+ed executables on Qemu so that I can test exactly the same program which wo=
+uld run on the real hardware. To properly initialize an SMP system, you hav=
+e to do certain things in a proper order. Currently, when I start the Zynq =
+machine it immediately executes the ELF entry on both cores. This conflicts=
+ with the normal system start sequence which assumes that initially the sec=
+ond core waits in an idle loop. For example, the second core is normally re=
+leased after the GIC distributor is initialized.
 
+Changing all the existing machines to use this third way is probably a bad =
+idea, but would it be possible to make it configurable though the platform =
+info or a command line option?
 
-               rwx = is_sstack_idx ? (PTE_R | PTE_W) : (is_probe ? 0 :  PTE_R);
+--=20
+embedded brains GmbH & Co. KG
+Herr Sebastian HUBER
+Dornierstr. 4
+82178 Puchheim
+Germany
+email: sebastian.huber@embedded-brains.de
+phone: +49-89-18 94 741 - 16
+fax:   +49-89-18 94 741 - 08
 
-I'll fix it in next version.
-Still need higher level feedback on patch that if it's okay to extend
-`get_physical_address` to recieve `probe` parameter.
-
-
->             break;
->         }
->         return TRANSLATE_FAIL;
->@@ -1327,13 +1330,13 @@ hwaddr riscv_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
->     int mmu_idx = riscv_env_mmu_index(&cpu->env, false);
->
->     if (get_physical_address(env, &phys_addr, &prot, addr, NULL, 0, mmu_idx,
->-                             true, env->virt_enabled, true)) {
->+                             true, env->virt_enabled, true, false)) {
->         return -1;
->     }
->
->     if (env->virt_enabled) {
->         if (get_physical_address(env, &phys_addr, &prot, phys_addr, NULL,
->-                                 0, MMUIdx_U, false, true, true)) {
->+                                 0, MMUIdx_U, false, true, true, false)) {
->             return -1;
->         }
->     }
->@@ -1447,7 +1450,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->         /* Two stage lookup */
->         ret = get_physical_address(env, &pa, &prot, address,
->                                    &env->guest_phys_fault_addr, access_type,
->-                                   mmu_idx, true, true, false);
->+                                   mmu_idx, true, true, false, probe);
->
->         /*
->          * A G-stage exception may be triggered during two state lookup.
->@@ -1470,7 +1473,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->
->             ret = get_physical_address(env, &pa, &prot2, im_address, NULL,
->                                        access_type, MMUIdx_U, false, true,
->-                                       false);
->+                                       false, probe);
->
->             qemu_log_mask(CPU_LOG_MMU,
->                           "%s 2nd-stage address=%" VADDR_PRIx
->@@ -1507,7 +1510,8 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->     } else {
->         /* Single stage lookup */
->         ret = get_physical_address(env, &pa, &prot, address, NULL,
->-                                   access_type, mmu_idx, true, false, false);
->+                                   access_type, mmu_idx, true, false, false,
->+                                   probe);
->
->         qemu_log_mask(CPU_LOG_MMU,
->                       "%s address=%" VADDR_PRIx " ret %d physical "
->-- 
->2.45.0
->
+Registergericht: Amtsgericht M=C3=BCnchen
+Registernummer: HRB 157899
+Vertretungsberechtigte Gesch=C3=A4ftsf=C3=BChrer: Peter Rasmussen, Thomas D=
+=C3=B6rfler
+Unsere Datenschutzerkl=C3=A4rung finden Sie hier:
+https://embedded-brains.de/datenschutzerklaerung/
 
