@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 990E9CF884D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C5DCCF8840
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:07:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swknZ-0002Wv-0U; Fri, 04 Oct 2024 12:04:57 -0400
+	id 1swknV-0002T7-C6; Fri, 04 Oct 2024 12:04:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1swknV-0002TT-Ls; Fri, 04 Oct 2024 12:04:53 -0400
+ id 1swknT-0002R8-Vy; Fri, 04 Oct 2024 12:04:52 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1swknU-0001ev-4w; Fri, 04 Oct 2024 12:04:53 -0400
+ id 1swknS-0001ei-Gq; Fri, 04 Oct 2024 12:04:51 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A121995575;
+ by isrv.corpit.ru (Postfix) with ESMTP id 937C395574;
  Fri,  4 Oct 2024 19:03:30 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id DB22A14D983;
+ by tsrv.corpit.ru (Postfix) with SMTP id CDD1914D982;
  Fri,  4 Oct 2024 19:03:32 +0300 (MSK)
-Received: (nullmailer pid 1282551 invoked by uid 1000);
+Received: (nullmailer pid 1282548 invoked by uid 1000);
  Fri, 04 Oct 2024 16:03:32 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 16/23] hw/pci: Remove unused pcie_chassis_find_slot
-Date: Fri,  4 Oct 2024 19:03:24 +0300
-Message-Id: <20241004160331.1282441-17-mjt@tls.msk.ru>
+Subject: [PULL 15/23] replay: Remove unused replay_disable_events
+Date: Fri,  4 Oct 2024 19:03:23 +0300
+Message-Id: <20241004160331.1282441-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241004160331.1282441-1-mjt@tls.msk.ru>
 References: <20241004160331.1282441-1-mjt@tls.msk.ru>
@@ -63,52 +63,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-pcie_chassis_find_slot has been unused since it was added.
+replay_disable_events has been unused since 2019's
+  c8aa7895eb ("replay: don't drain/flush bdrv queue while RR is working")
 
 Remove it.
 
 Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+Reviewed-by: Pavel Dovgalyuk <pavel.dovgalyuk@ispras.ru>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/pci/pcie_port.c         | 10 ----------
- include/hw/pci/pcie_port.h |  1 -
+ include/sysemu/replay.h | 2 --
+ replay/replay-events.c  | 9 ---------
  2 files changed, 11 deletions(-)
 
-diff --git a/hw/pci/pcie_port.c b/hw/pci/pcie_port.c
-index 20ff2b39e8..9f978ba164 100644
---- a/hw/pci/pcie_port.c
-+++ b/hw/pci/pcie_port.c
-@@ -92,16 +92,6 @@ static PCIESlot *pcie_chassis_find_slot_with_chassis(struct PCIEChassis *c,
-     return s;
+diff --git a/include/sysemu/replay.h b/include/sysemu/replay.h
+index 8102fa54f0..cba74fa9bc 100644
+--- a/include/sysemu/replay.h
++++ b/include/sysemu/replay.h
+@@ -117,8 +117,6 @@ void replay_async_events(void);
+ 
+ /* Asynchronous events queue */
+ 
+-/*! Disables storing events in the queue */
+-void replay_disable_events(void);
+ /*! Enables storing events in the queue */
+ void replay_enable_events(void);
+ /*! Returns true when saving events is enabled */
+diff --git a/replay/replay-events.c b/replay/replay-events.c
+index af0721cc1a..2e46eda6bf 100644
+--- a/replay/replay-events.c
++++ b/replay/replay-events.c
+@@ -92,15 +92,6 @@ void replay_flush_events(void)
+     }
  }
  
--PCIESlot *pcie_chassis_find_slot(uint8_t chassis_number, uint16_t slot)
+-void replay_disable_events(void)
 -{
--    struct PCIEChassis *c;
--    c = pcie_chassis_find(chassis_number);
--    if (!c) {
--        return NULL;
+-    if (replay_mode != REPLAY_MODE_NONE) {
+-        events_enabled = false;
+-        /* Flush events queue before waiting of completion */
+-        replay_flush_events();
 -    }
--    return pcie_chassis_find_slot_with_chassis(c, slot);
 -}
 -
- int pcie_chassis_add_slot(struct PCIESlot *slot)
- {
-     struct PCIEChassis *c;
-diff --git a/include/hw/pci/pcie_port.h b/include/hw/pci/pcie_port.h
-index 90e6cf45b8..7cd7af8cfa 100644
---- a/include/hw/pci/pcie_port.h
-+++ b/include/hw/pci/pcie_port.h
-@@ -72,7 +72,6 @@ struct PCIESlot {
- };
- 
- void pcie_chassis_create(uint8_t chassis_number);
--PCIESlot *pcie_chassis_find_slot(uint8_t chassis, uint16_t slot);
- int pcie_chassis_add_slot(struct PCIESlot *slot);
- void pcie_chassis_del_slot(PCIESlot *s);
- 
+ /*! Adds specified async event to the queue */
+ void replay_add_event(ReplayAsyncEventKind event_kind,
+                       void *opaque,
 -- 
 2.39.5
 
