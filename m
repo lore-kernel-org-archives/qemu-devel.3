@@ -4,84 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7F21CFA765
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 10:48:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1524CFA774
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 12:23:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swfqf-0003P9-FD; Fri, 04 Oct 2024 06:47:49 -0400
+	id 1swhKe-0000I6-5X; Fri, 04 Oct 2024 08:22:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1swfqY-0003LB-O8
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 06:47:42 -0400
-Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1swfqX-0002Kn-5Y
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 06:47:42 -0400
-Received: by mail-oi1-x233.google.com with SMTP id
- 5614622812f47-3e03981dad2so1774093b6e.1
- for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 03:47:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1728038859; x=1728643659; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wbclNKWlQeocfWH96H2fInmvfZv7Ua5kpU90qZnIBuM=;
- b=ktxjYUlsE+a5/sQia1vF51kHIAgqVlgfU/CvES5YsynO8xQo6L6bYVoP8cWXFUZbjc
- dJ1gjTuYLdNeSj9aTbTwMm25XKT3BSlP4ATJrm2eXN31un8VMQN88421j0FDP09fVzYk
- 2iYXAhNNLdr1hcViCOAPnEx314JQGbxE8n3nmxj8ZS5AX3SqpTZc3kviS13Q7plzIMD2
- 2tQPwSBZdqmeKMbh1lNQvYTx5w0Tf6bpjSM1dsfPThrrAB8eaHHmZOj12I0LKNYKu3nI
- F40kVMqN11KIOCidGajQfrgoMc/lx0Z0Fq1ODipUyZX5a1sxDJuXKiy5qRdpB5J2bU7E
- AzHg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1swhKY-0000GW-Mt
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 08:22:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1swhKT-0001PR-S1
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 08:22:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728044559;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2Zxb368gKxy8SQkaFZ/CLr5LcRz9BDCWm++n8wri5D4=;
+ b=SVQTRJzAcrbzM1cTI1N2u5j42+MPlxJfi84+Im2urthMjugXFBeGnK4aEbh47g1gx8IRU4
+ 3MedTTbWxd/V0DBq1bmmMqQTIHHACW8VbeI2+6xip0y0Kf9ubCsxXoHoytJFZsI1fYtTar
+ mQAJy1o2cmtpsMEecuTQt24Wz+A4nsI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-575-p0_J-sd3M06-ZLnsbf7KGw-1; Fri, 04 Oct 2024 08:22:35 -0400
+X-MC-Unique: p0_J-sd3M06-ZLnsbf7KGw-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-37ccc96d3e6so857693f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 05:22:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728038859; x=1728643659;
+ d=1e100.net; s=20230601; t=1728044555; x=1728649355;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wbclNKWlQeocfWH96H2fInmvfZv7Ua5kpU90qZnIBuM=;
- b=m3oGlcmN+7UHXZnDotMb00ZE3jsrUdz1W0VUzMbcqlyBhYKi3qh/VFxjUYvSFiXnSy
- nkKUbMW+GscNKE8ivq4oXgpMgmsmrgIlZKV5Njlt/dWfVCTOiafk3qFQPbX7xKHiZB+/
- axukHneP+1gPc+0iDy6VQL4+cGBjza4cJfckZp71onbTDkjWpJ0gw4BYLuJ5zdhueHrE
- D+Q1AQbMdmhVLiIftNftQ48En6Wvd+oHlyKSeeGIjPl2blhTyI6ODrAmy79500M5b2ME
- HlG9M7GyIrDWJGK78G317p331uVwozr4DNBEP8FSpEBWT2NEgV3ZkVCSyRVYT1a+5CTe
- QtBg==
-X-Gm-Message-State: AOJu0Yx4GkWYDHbc7beWsq2VFVK8B5AJ0KbsfpwsJ4eS6xvTPRbo2jMF
- r9zOISTUeSJeYdtgm3RljVzsQFi6VanzSP5GzRicpp68tmGdoKs9AZ/Y/8sMKs65d0rNYupD2bm
- DUPgna0vbgdGSzEXtBfrQSRcEuf+ebAFoadlCyw==
-X-Google-Smtp-Source: AGHT+IE311UPTJfIJtLbL/BgRhPb672q6w7DTdCAJSHWLgBhfZAhWkmEdCsCBxuu/2dgVWGyjRGbAd3c5a9l4Sz4cK4=
-X-Received: by 2002:a05:6808:1284:b0:3df:2ea:51cb with SMTP id
- 5614622812f47-3e3ba1ad7a3mr2914362b6e.6.1728038859557; Fri, 04 Oct 2024
- 03:47:39 -0700 (PDT)
+ bh=2Zxb368gKxy8SQkaFZ/CLr5LcRz9BDCWm++n8wri5D4=;
+ b=o1ON4L+F3bEcMQD+CsMLUiJqWrcqhR14VmqqJmY99pIHD9aDUq//H/EQJgsMHp2WSR
+ KO4IgQAMoDYD0TWivPOxR7s2v/l/wYpsIkp0X0KVqs8T7PmNFB7idY9mkbwj479yU9Wx
+ 2xBwtRJ7cUqQ1D1lfD4GaMynUMCdyKfDYrO1n38iZ6HNHeN+F1yUD7qdvRJ6k+++yH0H
+ Lbpxz4Na6hyk3gS9ci+Z1yeDzaJL/Zmv0vDffERxu0CjCB1vNiwv2uQuis8Bnbgxstn3
+ 43b+SeY3B2mi9GI5/SNkk0m6qhL8WFU0k7D6peZXFcmUxP5apFr0MclHR8qSn4n5lsCT
+ IrtA==
+X-Gm-Message-State: AOJu0Yznsnperw/mfC+E9miotqJ2YfJkVc/4CsP/0J5aIy+ujT4Da9MK
+ dsBHtOoaQ6L8tXUaKqY5Y4tRlpVGtA+Um2e6I1kTj6NmXE6tlQoWj2D/4wvO7Jfb472abh239J6
+ PBVU8DU+f7cOHHsezMSHdRB62Hb1hr79dUV+R1D9Ewa8Vwf2fYl2eDFSFrUdKp80LRefJ4WAxUi
+ oal6onPrMg/gptaYKBUUpHTvQimNg=
+X-Received: by 2002:a5d:5915:0:b0:37c:d1bc:2666 with SMTP id
+ ffacd0b85a97d-37d0e6f2254mr1583362f8f.4.1728044554626; 
+ Fri, 04 Oct 2024 05:22:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJ52eJ+HsW/Q89opxjj/WsqSfgz76nbedrEoOkjLdRwR2a+mnNZqXybGPADXJ5HuxTRzhO/tcTSZyXIu85/cA=
+X-Received: by 2002:a5d:5915:0:b0:37c:d1bc:2666 with SMTP id
+ ffacd0b85a97d-37d0e6f2254mr1583336f8f.4.1728044554261; Fri, 04 Oct 2024
+ 05:22:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240808082030.25940-1-yongxuan.wang@sifive.com>
- <aad11c6d-8c5d-40bd-8b0d-3dae10b80d4d@ventanamicro.com>
- <CAMWQL2h6=MO1YFW2tUONM_yDnmdtG-CfGyk+RCPZo3u2s6o4Uw@mail.gmail.com>
-In-Reply-To: <CAMWQL2h6=MO1YFW2tUONM_yDnmdtG-CfGyk+RCPZo3u2s6o4Uw@mail.gmail.com>
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Date: Fri, 4 Oct 2024 18:47:28 +0800
-Message-ID: <CAMWQL2iXud84Uu8=i7eRque0ixA9pRU+=ZSG9jaju_ZfTR7gtw@mail.gmail.com>
-Subject: Re: [PATCH 1/1] hw/intc/riscv_aplic: Fix APLIC in clrip and clripnum
- write emulation
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, greentime.hu@sifive.com, 
- vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Anup Patel <apatel@ventanamicro.com>
+References: <cover.1727961605.git.manos.pitsidianakis@linaro.org>
+In-Reply-To: <cover.1727961605.git.manos.pitsidianakis@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 4 Oct 2024 14:22:21 +0200
+Message-ID: <CABgObfZ7bHgejGdDRyqze1eV66ugt2_CK80MW7ir_A8_9ULo5A@mail.gmail.com>
+Subject: Re: [PATCH v11 0/9] Add Rust build support, ARM PL011 device impl
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Gustavo Romero <gustavo.romero@linaro.org>, Hanna Reitz <hreitz@redhat.com>, 
+ Junjie Mao <junjie.mao@hotmail.com>, Junjie Mao <junjie.mao@intel.com>, 
+ Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ berrange@redhat.com, hi@alyssa.is
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
- envelope-from=yongxuan.wang@sifive.com; helo=mail-oi1-x233.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.146,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,86 +109,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping
+On Thu, Oct 3, 2024 at 3:29=E2=80=AFPM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+>
+> WARNING: This series contains a patch with blob diffs (update of python
+> wheels) and thus problems may arise with your patch workflow. The
+> revision is available at
+> https://gitlab.com/epilys/qemu/-/tree/20240814-rust-pl011-v7-v11 for you
+> to fetch. HEAD is 6ec1d4fb8db2a1d7ba94c73e65d9770371b7857d
+>
+> Hello everyone,
+>
+> This series adds:
+>
+> - build system support for the Rust compiler
+> - a small Rust library, qemu-api, which includes bindings to QEMU's C
+>   interface generated with bindgen, and qemu-api-macros, a procedural
+>   macro library.
+> - a proof of concept ARM PL011 device implementation in Rust, chosen for
+>   its low complexity. The device is used in the arm virt machine if qemu
+>   is compiled with rust enabled (./configure --enable-rust [...])
 
-On Fri, Aug 9, 2024 at 11:28=E2=80=AFAM Yong-Xuan Wang <yongxuan.wang@sifiv=
-e.com> wrote:
->
-> Hi Daniel,
->
-> On Fri, Aug 9, 2024 at 5:40=E2=80=AFAM Daniel Henrique Barboza
-> <dbarboza@ventanamicro.com> wrote:
-> >
-> > Ccing Anup
-> >
-> > On 8/8/24 5:20 AM, Yong-Xuan Wang wrote:
-> > > In the section "4.7 Precise effects on interrupt-pending bits"
-> > > of the RISC-V AIA specification defines that:
-> > >
-> > > If the source mode is Level1 or Level0 and the interrupt domain
-> > > is configured in MSI delivery mode (domaincfg.DM =3D 1):
-> > > The pending bit is cleared whenever the rectified input value is
-> > > low, when the interrupt is forwarded by MSI, or by a relevant
-> > > write to an in clrip register or to clripnum.
-> > >
-> > > Update the riscv_aplic_set_pending() to match the spec.
-> > >
-> >
-> > This would need a
-> >
-> > Fixes: bf31cf06eb ("hw/intc/riscv_aplic: Fix setipnum_le write emulatio=
-n for APLIC MSI-mode")
-> >
->
-> I will add it into next version. Thank you!
->
-> > > Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-> > > ---
-> > >   hw/intc/riscv_aplic.c | 2 +-
-> > >   1 file changed, 1 insertion(+), 1 deletion(-)
-> > >
-> > > diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> > > index c1748c2d17d1..45d8b4089229 100644
-> > > --- a/hw/intc/riscv_aplic.c
-> > > +++ b/hw/intc/riscv_aplic.c
-> > > @@ -247,7 +247,7 @@ static void riscv_aplic_set_pending(RISCVAPLICSta=
-te *aplic,
-> > >
-> > >       if ((sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_HIGH) ||
-> > >           (sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_LOW)) {
-> > > -        if (!aplic->msimode || (aplic->msimode && !pending)) {
-> > > +        if (!aplic->msimode) {
-> >
-> > The change you're doing here seems sensible to me but I'd rather have A=
-nup take
-> > a look to see if this somehow undo what was made here in commit bf31cf0=
-6.
-> >
-> > In particular w.r.t this paragraph from section 4.9.2 of AIA:
-> >
-> > "A second option is for the interrupt service routine to write the
-> > APLIC=E2=80=99s source identity number for the interrupt to the domain=
-=E2=80=99s
-> > setipnum register just before exiting. This will cause the interrupt=E2=
-=80=99s
-> > pending bit to be set to one again if the source is still asserting
-> > an interrupt, but not if the source is not asserting an interrupt."
-> >
->
-> I think that this patch won't affect setipnum. For the setipnum case,
-> the pending value would
-> be true. And it is handled by the 2 if conditions below.
->
-> Regards,
-> Yong-Xuan
->
-> >
-> > Thanks,
-> >
-> > Daniel
-> >
-> >
-> > >               return;
-> > >           }
-> > >           if ((aplic->state[irq] & APLIC_ISTATE_INPUT) &&
+Thanks, I think this is good for committing. There are certainly a lot
+of things that are still a bit rough, but they can be handled
+separately. In particular the priorities for the build system should
+be:
+
+- lowering the minimum supported Rust version
+
+- completing support for CI and for clippy
+
+- possibly, figuring out the magic that Linux uses to run doctests,
+and port it to meson (ideally upstream meson would do that and also
+support "cargo doc", but a QEMU-specific implementation would do)
+
+As to PL011State, some mostly independent steps could be:
+
+- improve initialization to avoid use of raw pointers. Two different
+ways could be simply to use MaybeUninit<>, or something more complex
+like the Linux pinned_init crate
+
+- write bindings to the Chardev API (probably requires basic support
+for QOM methods first, for which
+https://lore.kernel.org/r/all/20240701145853.1394967-1-pbonzini@redhat.com/
+has some mostly-developed ideas)
+
+- generalize the extern "C" "thunks" that invoke idiomatic-Rust
+implementations via a reusable trait, in particular:
+  - figuring out the design for the callback design pattern (see for
+example https://lpc.events/event/18/contributions/1786/attachments/1431/322=
+6/hrtimer%20Rust%20Abstractions.pdf),
+i.e.
+  - make functions like pl011_realize or pl011_reset generic, so that
+other devices can reuse them
+
+- expand #[derive(Object)] into a more complete design that allows
+overriding QOM methods, for example taking care of defining the
+class_init methods
+
+I was also wondering if an useful exercise could be to place a level
+of maturity for each of the files, for example:
+
+A: ready for production use, API supports the full functionality available =
+in C
+B: ready for production use, API should be safe (when possible) and stable
+C: proof of concept for safe and/or idiomatic Rust code
+D: still essentially C code
+
+Paolo
+
 
