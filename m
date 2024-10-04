@@ -4,99 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E234CFA77A
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 13:25:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C73ECFA77F
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 13:49:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swiIs-0004np-Ts; Fri, 04 Oct 2024 09:25:06 -0400
+	id 1swig2-0008Nd-PF; Fri, 04 Oct 2024 09:49:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1swiIq-0004nP-89
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 09:25:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <evgenii.prokopiev@syntacore.com>)
+ id 1swig1-0008NM-AU; Fri, 04 Oct 2024 09:49:01 -0400
+Received: from mta-03.yadro.com ([89.207.88.253])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1swiIn-0002Um-Qp
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 09:25:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728048300;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ryLgpvU+mrMzBx/KUuGjsTntNFag5rv6vyy/BMh9TJw=;
- b=Px07NKTGyznijd/uHj/7iGvWPB3DW6biU6z+f5I4dm3A4hHPM0wP37kAjG7SW9d0vm0zMR
- m1faaqpuxXYq0vS76bebIO8idQJyYTct2s/yYd6/sVilvMDaVH1u+WnaiZrq6gCOkuwEu8
- aPaRT/aAPAhZRzk+4I77MBbuI45M618=
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
- [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-106-78gQ_sfgO4C63h8l4t-okA-1; Fri, 04 Oct 2024 09:24:59 -0400
-X-MC-Unique: 78gQ_sfgO4C63h8l4t-okA-1
-Received: by mail-io1-f71.google.com with SMTP id
- ca18e2360f4ac-82ce3316d51so188512139f.1
- for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 06:24:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728048298; x=1728653098;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ryLgpvU+mrMzBx/KUuGjsTntNFag5rv6vyy/BMh9TJw=;
- b=kBScGoEorz2OKXXXkWAU0v5EqEqv2CgbZ7GIj+EglG+Ahf839+feZWFwdUef21Bh07
- him64atD3wYpgzOOAw3bziovdGa6H8Zc+qBEkSaPs3qqk8S1h0szr+q3mcVVB9eRBKco
- LkfWVgQgsOQxT9Jjfq4i8S0+oi3339UgzPRPoTGKyKFdxBVuVs+2mVhJt9x3KIei/y5u
- OBSkmFzdMDxjhIGQUZSacG559nXaWcc0TInyI1rILtzNDnjezazDw/Vud6RRP3k6BxcK
- Wu6yscvAkkUOvDZ7V52IZ51psAjWXPAEq50rabxxubt76X8fYjkSw8x8/IwpGIVhkpYZ
- uh+g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUEGQsaJ5UxAyrjkP5FQEERdg8OuZbkC4RgIfc+TMYQ7HqVSeHOh0yMTS8Wqbhf0/qY+14fbMlWoi7y@nongnu.org
-X-Gm-Message-State: AOJu0YxiB3bfnFk+vWxbTDOddZ9C4tXV9kY9PT3ZoWX1Nr8x0pGEg6rH
- uWn+aUxcgLeH8zaEnWwyXqWUzk6mTdzjiNe9Iec1idvOBEtFpm83gZJO5uQGCpTI9gDyHx0Wsr0
- st1QGmkklwGB9lYAPkiJER7DRTdCQVVwb5g3EwenBiUwcCNDCl3YU
-X-Received: by 2002:a05:6602:1588:b0:834:d7b6:4fea with SMTP id
- ca18e2360f4ac-834f7cdd476mr275837239f.6.1728048298307; 
- Fri, 04 Oct 2024 06:24:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE8ayMMxh+CNgoRwu1uk43Oe9pHlmmoN076XcEnbZ8E4d5HheeSPX/+9b/EWYzZWU6HL901Nw==
-X-Received: by 2002:a05:6602:1588:b0:834:d7b6:4fea with SMTP id
- ca18e2360f4ac-834f7cdd476mr275832939f.6.1728048297785; 
- Fri, 04 Oct 2024 06:24:57 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4db559b058csm734267173.84.2024.10.04.06.24.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Oct 2024 06:24:57 -0700 (PDT)
-Date: Fri, 4 Oct 2024 09:24:54 -0400
-From: Peter Xu <peterx@redhat.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Igor Mammedov <imammedo@redhat.com>
-Subject: Re: [PATCH V2 01/13] machine: alloc-anon option
-Message-ID: <Zv_spkFwqwgxGkNY@x1n>
-References: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
- <1727725244-105198-2-git-send-email-steven.sistare@oracle.com>
- <Zv7C7MeVP2X8bEJU@x1n>
- <2143f803-439e-4b8b-ae92-07caa913d646@redhat.com>
- <Zv_ghrH6i4QOzne8@x1n>
- <bffa3dc0-36b7-4fa1-a0b6-cce34743a46c@redhat.com>
+ (Exim 4.90_1) (envelope-from <evgenii.prokopiev@syntacore.com>)
+ id 1swifz-0006FZ-BX; Fri, 04 Oct 2024 09:49:01 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-03.yadro.com 79574E000D
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-04; t=1728049732;
+ bh=CbH+BUzFMYoAoZTZfq7XLh5YiM1FPSP7QoyIDeItUJ0=;
+ h=Message-ID:Date:MIME-Version:Subject:From:To:Content-Type:From;
+ b=mmox61c4Er413B5tnDt/yOnV7J2Vh53zvr3U71o4SM/sLiLl6Zl572nYs0iW/Exv1
+ JSaeqb0pGOLUy9K6h3AjEdFf4b3Bd0rjNm5/Lu0PN3C2F3xQ+jZWIkbAinFGiggeFL
+ vPFDOSIwB/R9SU9hy/5CNXV3jIk8y0LN9a5/MSST7LIIf/wcPpbWaQhpheSlIdAuJM
+ LC94Wr3hvhXDb45IldqR5Kzv4gordAQ4o9E+OTh6imwq1JcP0Hq40z0gFrNSBeXil6
+ UiILAs7l54IV2ZaMnizQdQbujJss1iqSANHwf4wT1GaE0Ytzat9+I//QP7eMJ6MJwT
+ tsMXz0L6z4+zg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-03; t=1728049732;
+ bh=CbH+BUzFMYoAoZTZfq7XLh5YiM1FPSP7QoyIDeItUJ0=;
+ h=Message-ID:Date:MIME-Version:Subject:From:To:Content-Type:From;
+ b=EolURUCWmuKZHIrfXdm2KLXVWNzZFv13ptjpEu5+iQLxRfwHgpvSSQfit+H+j/aLm
+ z1J+LPNUENjIVA3Pkw93k4dcE1wZfPj0MNKuuVQCzehQraHfuFqYiXTCnU/hAn4LR0
+ UFZYUvPUJ0H9SV7rgaTjtHqCypxK+YRB91e2qrzBUnCBjCRTtNPeVYe0ECFAkaUsqf
+ b0il6D2OW76q89lhuSQvXmZkujMIl6KF/9TSwnafPEL0UHTnP9qQZl4OeGplEsCZMV
+ 3t+OEYFviBYvDUy9Jhs4MxT/0ZXrvyPK8haJx4pcXQQr30d55IQdnZI25CJ+6623oK
+ hNmyf1xKY5heg==
+Message-ID: <44442707-dbe7-46dc-9039-2d88ec636c23@syntacore.com>
+Date: Fri, 4 Oct 2024 16:48:50 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <bffa3dc0-36b7-4fa1-a0b6-cce34743a46c@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] target/riscv/csr.c: Fix an access to VXSAT
+From: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
+To: Richard Henderson <richard.henderson@linaro.org>, <alistair23@gmail.com>
+CC: <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
+ <dbarboza@ventanamicro.com>, <liwei1518@gmail.com>, <palmer@dabbelt.com>,
+ <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>,
+ <zhiwei_liu@linux.alibaba.com>
+References: <CAKmqyKMmYPG0_jyrJFxvnxhTGTCAz4L5Lf6FouZpy3ZtywNiGA@mail.gmail.com>
+ <20241002084436.89347-1-evgenii.prokopiev@syntacore.com>
+ <163e6cfc-755e-487d-8653-a5524876e171@linaro.org>
+ <ed5cf837-e397-44b8-b719-5c5b97646d10@syntacore.com>
+Content-Language: en-US
+In-Reply-To: <ed5cf837-e397-44b8-b719-5c5b97646d10@syntacore.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: T-Exch-05.corp.yadro.com (172.17.10.109) To
+ T-EXCH-12.corp.yadro.com (172.17.11.143)
+Received-SPF: permerror client-ip=89.207.88.253;
+ envelope-from=evgenii.prokopiev@syntacore.com; helo=mta-03.yadro.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.146,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,217 +84,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 04, 2024 at 02:54:38PM +0200, David Hildenbrand wrote:
-> On 04.10.24 14:33, Peter Xu wrote:
-> > On Fri, Oct 04, 2024 at 12:14:35PM +0200, David Hildenbrand wrote:
-> > > On 03.10.24 18:14, Peter Xu wrote:
-> > > > On Mon, Sep 30, 2024 at 12:40:32PM -0700, Steve Sistare wrote:
-> > > > > Allocate anonymous memory using mmap MAP_ANON or memfd_create depending
-> > > > > on the value of the anon-alloc machine property.  This option applies to
-> > > > > memory allocated as a side effect of creating various devices. It does
-> > > > > not apply to memory-backend-objects, whether explicitly specified on
-> > > > > the command line, or implicitly created by the -m command line option.
-> > > > > 
-> > > > > The memfd option is intended to support new migration modes, in which the
-> > > > > memory region can be transferred in place to a new QEMU process, by sending
-> > > > > the memfd file descriptor to the process.  Memory contents are preserved,
-> > > > > and if the mode also transfers device descriptors, then pages that are
-> > > > > locked in memory for DMA remain locked.  This behavior is a pre-requisite
-> > > > > for supporting vfio, vdpa, and iommufd devices with the new modes.
-> > > > > 
-> > > > > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> > > > 
-> > > > [Igor seems missing in the loop; added]
-> > > > 
-> > > > > ---
-> > > > >    hw/core/machine.c   | 19 +++++++++++++++++++
-> > > > >    include/hw/boards.h |  1 +
-> > > > >    qapi/machine.json   | 14 ++++++++++++++
-> > > > >    qemu-options.hx     | 11 +++++++++++
-> > > > >    system/physmem.c    | 35 +++++++++++++++++++++++++++++++++++
-> > > > >    system/trace-events |  3 +++
-> > > > >    6 files changed, 83 insertions(+)
-> > > > > 
-> > > > > diff --git a/hw/core/machine.c b/hw/core/machine.c
-> > > > > index adaba17..a89a32b 100644
-> > > > > --- a/hw/core/machine.c
-> > > > > +++ b/hw/core/machine.c
-> > > > > @@ -460,6 +460,20 @@ static void machine_set_mem_merge(Object *obj, bool value, Error **errp)
-> > > > >        ms->mem_merge = value;
-> > > > >    }
-> > > > > +static int machine_get_anon_alloc(Object *obj, Error **errp)
-> > > > > +{
-> > > > > +    MachineState *ms = MACHINE(obj);
-> > > > > +
-> > > > > +    return ms->anon_alloc;
-> > > > > +}
-> > > > > +
-> > > > > +static void machine_set_anon_alloc(Object *obj, int value, Error **errp)
-> > > > > +{
-> > > > > +    MachineState *ms = MACHINE(obj);
-> > > > > +
-> > > > > +    ms->anon_alloc = value;
-> > > > > +}
-> > > > > +
-> > > > >    static bool machine_get_usb(Object *obj, Error **errp)
-> > > > >    {
-> > > > >        MachineState *ms = MACHINE(obj);
-> > > > > @@ -1078,6 +1092,11 @@ static void machine_class_init(ObjectClass *oc, void *data)
-> > > > >        object_class_property_set_description(oc, "mem-merge",
-> > > > >            "Enable/disable memory merge support");
-> > > > > +    object_class_property_add_enum(oc, "anon-alloc", "AnonAllocOption",
-> > > > > +                                   &AnonAllocOption_lookup,
-> > > > > +                                   machine_get_anon_alloc,
-> > > > > +                                   machine_set_anon_alloc);
-> > > > > +
-> > > > >        object_class_property_add_bool(oc, "usb",
-> > > > >            machine_get_usb, machine_set_usb);
-> > > > >        object_class_property_set_description(oc, "usb",
-> > > > > diff --git a/include/hw/boards.h b/include/hw/boards.h
-> > > > > index 5966069..5a87647 100644
-> > > > > --- a/include/hw/boards.h
-> > > > > +++ b/include/hw/boards.h
-> > > > > @@ -393,6 +393,7 @@ struct MachineState {
-> > > > >        bool enable_graphics;
-> > > > >        ConfidentialGuestSupport *cgs;
-> > > > >        HostMemoryBackend *memdev;
-> > > > > +    AnonAllocOption anon_alloc;
-> > > > >        /*
-> > > > >         * convenience alias to ram_memdev_id backend memory region
-> > > > >         * or to numa container memory region
-> > > > > diff --git a/qapi/machine.json b/qapi/machine.json
-> > > > > index a6b8795..d4a63f5 100644
-> > > > > --- a/qapi/machine.json
-> > > > > +++ b/qapi/machine.json
-> > > > > @@ -1898,3 +1898,17 @@
-> > > > >    { 'command': 'x-query-interrupt-controllers',
-> > > > >      'returns': 'HumanReadableText',
-> > > > >      'features': [ 'unstable' ]}
-> > > > > +
-> > > > > +##
-> > > > > +# @AnonAllocOption:
-> > > > > +#
-> > > > > +# An enumeration of the options for allocating anonymous guest memory.
-> > > > > +#
-> > > > > +# @mmap: allocate using mmap MAP_ANON
-> > > > > +#
-> > > > > +# @memfd: allocate using memfd_create
-> > > > > +#
-> > > > > +# Since: 9.2
-> > > > > +##
-> > > > > +{ 'enum': 'AnonAllocOption',
-> > > > > +  'data': [ 'mmap', 'memfd' ] }
-> > > > > diff --git a/qemu-options.hx b/qemu-options.hx
-> > > > > index d94e2cb..90ab943 100644
-> > > > > --- a/qemu-options.hx
-> > > > > +++ b/qemu-options.hx
-> > > > > @@ -38,6 +38,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
-> > > > >        "                nvdimm=on|off controls NVDIMM support (default=off)\n"
-> > > > >        "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
-> > > > >        "                hmat=on|off controls ACPI HMAT support (default=off)\n"
-> > > > > +    "                anon-alloc=mmap|memfd allocate anonymous guest RAM using mmap MAP_ANON or memfd_create (default: mmap)\n"
-> > > > >        "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
-> > > > >        "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n",
-> > > > >        QEMU_ARCH_ALL)
-> > > > > @@ -101,6 +102,16 @@ SRST
-> > > > >            Enables or disables ACPI Heterogeneous Memory Attribute Table
-> > > > >            (HMAT) support. The default is off.
-> > > > > +    ``anon-alloc=mmap|memfd``
-> > > > > +        Allocate anonymous guest RAM using mmap MAP_ANON (the default)
-> > > > > +        or memfd_create.  This option applies to memory allocated as a
-> > > > > +        side effect of creating various devices. It does not apply to
-> > > > > +        memory-backend-objects, whether explicitly specified on the
-> > > > > +        command line, or implicitly created by the -m command line
-> > > > > +        option.
-> > > > > +
-> > > > > +        Some migration modes require anon-alloc=memfd.
-> > > > > +
-> > > > >        ``memory-backend='id'``
-> > > > >            An alternative to legacy ``-mem-path`` and ``mem-prealloc`` options.
-> > > > >            Allows to use a memory backend as main RAM.
-> > > > > diff --git a/system/physmem.c b/system/physmem.c
-> > > > > index dc1db3a..174f7e0 100644
-> > > > > --- a/system/physmem.c
-> > > > > +++ b/system/physmem.c
-> > > > > @@ -47,6 +47,7 @@
-> > > > >    #include "qemu/qemu-print.h"
-> > > > >    #include "qemu/log.h"
-> > > > >    #include "qemu/memalign.h"
-> > > > > +#include "qemu/memfd.h"
-> > > > >    #include "exec/memory.h"
-> > > > >    #include "exec/ioport.h"
-> > > > >    #include "sysemu/dma.h"
-> > > > > @@ -69,6 +70,8 @@
-> > > > >    #include "qemu/pmem.h"
-> > > > > +#include "qapi/qapi-types-migration.h"
-> > > > > +#include "migration/options.h"
-> > > > >    #include "migration/vmstate.h"
-> > > > >    #include "qemu/range.h"
-> > > > > @@ -1849,6 +1852,35 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-> > > > >                    qemu_mutex_unlock_ramlist();
-> > > > >                    return;
-> > > > >                }
-> > > > > +
-> > > > > +        } else if (current_machine->anon_alloc == ANON_ALLOC_OPTION_MEMFD &&
-> > > > > +                   !object_dynamic_cast(new_block->mr->parent_obj.parent,
-> > > > > +                                        TYPE_MEMORY_BACKEND)) {
-> > > > 
-> > > > This is pretty fragile.. if someone adds yet another layer on top of memory
-> > > > backend objects, the ownership links can change and this might silently run
-> > > > into something else even without any warning..
-> > > > 
-> > > > I wished we dig into what is missing, but maybe that's too trivial.  If
-> > > > not, we still need to make this as solid.  Perhaps that can be a ram flag
-> > > > and let relevant callers pass in that flag explicitly.
-> > > 
-> > > How would they decide whether or not we want to set the flag in the current
-> > > configuration?
-> > 
-> > It was in the previous email where it got cut..  I listed four paths that
-> > may need change.
+
+
+On 04.10.2024 16:38, Evgenii Prokopiev wrote:
 > 
-> That's not my question. Who would decide whether we want to set MAP_SHARED
-> in these callers or not?
 > 
-> If you have "unconditionally" in mind, I think it's a bad idea. If there is
-> some other toggle to perform that setting conditionally, why not.
-
-Yes I thought it could be unconditionally.  We can discuss downside below,
-I think we can still use a new flag otherwise, but the idea would be the
-same, where I want the flag to be explicit in the callers not implicitly
-with the object type check, which I think can be hackish.
-
-> 
-> > 
-> > > 
-> > > > 
-> > > > I think RAM_SHARED can actually be that flag already - I mean, in all paths
-> > > > that we may create anon mem (but not memory-backend-* objects), is it
-> > > > always safe we always switch to RAM_SHARED from anon?
-> > > 
-> > > Do you mean only setting the flag (-> anonymous shmem) or switching also to
-> > > memfd, which is a bigger change?
-> > 
-> > Switching to memfd.  I thought anon shmem (mmap(MAP_SHARED)) is mostly the
-> > same internally, if we create memfd then mmap(MAP_SHARED) on top of it, no?
-> 
-> Memfd is Linux specific, keep that in mind. Apart from that there shouldn't
-> be much difference between anon shmem and memfd (there are memory commit
-> differences, though).
-
-Could you elaborate the memory commit difference and what does that imply
-to QEMU's usage?
-
-> 
-> Of course, there is a difference between anon memory and shmem, for example
-> regarding what viritofsd faced (e.g., KSM) recently.
-
-The four paths shouldn't be KSM target, AFAICT.  None of them are major
-part of guest RAM, but only very small chunks like vram or roms.
-
-Thanks,
+> On 03.10.2024 23:13, Richard Henderson wrote:
+>> On 10/2/24 01:44, Evgenii Prokopiev wrote:
+>>> The register VXSAT should be RW only to the first bit.
+>>> The remaining bits should be 0.
+>>>
+>>> The RISC-V Instruction Set Manual Volume I: Unprivileged Architecture
+>>>
+>>> The vxsat CSR has a single read-write least-significant bit (vxsat[0])
+>>> that indicates if a fixed-point instruction has had to saturate an 
+>>> output
+>>> value to fit into a destination format. Bits vxsat[XLEN-1:1]
+>>> should be written as zeros.
+>>>
+>>> Signed-off-by: Evgenii Prokopiev <evgenii.prokopiev@syntacore.com>
+>>> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>>> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+>>> ---
+>>> Changes since v2:
+>>>      - Added reviewed-by tag
+>>>   target/riscv/csr.c | 4 ++--
+>>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> New versions should not be replies to previous versions.
+>> No need to re-spin *only* to collect tags; tools can do that.
+>>
+> Hi!
+> Thanks for your explanation.
+>>>
+>>> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+>>> index bd080f92b5..69c41212e9 100644
+>>> --- a/target/riscv/csr.c
+>>> +++ b/target/riscv/csr.c
+>>> @@ -717,7 +717,7 @@ static RISCVException write_vxrm(CPURISCVState 
+>>> *env, int csrno,
+>>>   static RISCVException read_vxsat(CPURISCVState *env, int csrno,
+>>>                                    target_ulong *val)
+>>>   {
+>>> -    *val = env->vxsat;
+>>> +    *val = env->vxsat & BIT(0);
+>>>       return RISCV_EXCP_NONE;
+>>>   }
+>>
+>> Nit: no need to mask on read...
+>>
+>>> @@ -727,7 +727,7 @@ static RISCVException write_vxsat(CPURISCVState 
+>>> *env, int csrno,
+>>>   #if !defined(CONFIG_USER_ONLY)
+>>>       env->mstatus |= MSTATUS_VS;
+>>>   #endif
+>>> -    env->vxsat = val;
+>>> +    env->vxsat = val & BIT(0);
+>>>       return RISCV_EXCP_NONE;
+>>>   }
+>>
+>> ... because you know the value is already correct from the write.
+>>
+> Yes, we mask the value when we make a write. But this value could be
+> changed in other places. So I added a mask when reading happens too.
+> If additional verification is not required, I will delete it.
+>>
+>> r~
 
 -- 
-Peter Xu
-
+Sincerely,
+Evgenii Prokopiev
 
