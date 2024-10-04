@@ -4,90 +4,170 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35141CFA750
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 08:34:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D24B8CFA74C
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 08:40:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swdky-0008UP-Pf; Fri, 04 Oct 2024 04:33:48 -0400
+	id 1swdqr-0001Z7-VA; Fri, 04 Oct 2024 04:39:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1swdkx-0008Tk-42
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 04:33:47 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1swdku-0005Gm-Vf
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 04:33:46 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-42e5e1e6d37so17627595e9.3
- for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 01:33:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1728030823; x=1728635623; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=NX1DIh9sXghlblX73NWkF6svT+pBeh8+IHHszzhYzNE=;
- b=eEYDuCHZ2w/oyWTNtzkmNGexld0SpnBwvPEMXJ3hUiPgGZXJolQrbYK4gZFhN5oKI4
- WguQUjWyoZ58BBSB0hPGFPu24e3J2UYyql8SVZQic+NQmuMcyVHC98I4PSj9H+NT+u9R
- 6meNFFQCdJJrHGlp5IrT3bnMlWH124wBiysPtk176CtEZD7bLm9VTQRp24EkE5PrYK/s
- 1kQMPXlGc7Dvxn8XKSBO0hedqa8vdHLnnrwt7TVrgtPPAT5CA1+0YI1bG8b3KFl9weJ/
- Lo3wqe5lkqKbFS/pDMdKS2CQoOaLy56LoOt+FkAehkU58jLpNjeYdGV39d9MhQM9VWf7
- 4T6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728030823; x=1728635623;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NX1DIh9sXghlblX73NWkF6svT+pBeh8+IHHszzhYzNE=;
- b=QzwEzhq6Q+vOhoCyKLh7Thxxgwr8tKWUsexxigFwBEWCi7p90lgixeZZCc65W49z84
- VMlBEci0DDRUL1IHrnIDDdO+0VMPTeWQ//I1RgrLHC6uDkbA1jn1Nc5SNPVtaZY1T6C4
- rdzG2AMLezTHa+Qp9HgA+m3A10DN4Qac7HEFZ19+duf1Ro01VxXRvwkqAv+bqNyUPwQ6
- BUxRVARJOtBDwoJXZ/AvCwOqvoAvpu0WdqPHn36l2WruExSZxuUT8OIHUi8uhjrQEf0L
- Dt/udnrsCD+Rd7MM539eBOdxZeePSvUgIkQfHQxYajApYUIZMLtumNk4lrmSglUbPkiL
- Texg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVYAOpvqE/plnzNdtPo9gtLtzGpJI9k3HqJtnZcJ1fPeVV65rPg6Gw1sPZjgwIsWHYkNrnbL6+5LObW@nongnu.org
-X-Gm-Message-State: AOJu0YzxZM4QGesZTQrmNlQnBsQv3kyY8+kGQXEpK+MXNw+eJGYqof41
- 44xayyOjxsikGtkDlhJls50v+VrKzDgkZrKM8c8IhCKfx1VP8i23gWEPtWriyPI=
-X-Google-Smtp-Source: AGHT+IEdRfRhtjc5qJOSKeguahs0d7Kmokhoozt6NCZN7TsY//45P0ms4y7JhMUVYn62Sy+V46ujqg==
-X-Received: by 2002:a5d:63ca:0:b0:374:c15a:8556 with SMTP id
- ffacd0b85a97d-37d0eae4bc3mr1217682f8f.50.1728030823056; 
- Fri, 04 Oct 2024 01:33:43 -0700 (PDT)
-Received: from localhost (cst2-173-13.cust.vodafone.cz. [31.30.173.13])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d082d1f11sm2779517f8f.96.2024.10.04.01.33.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Oct 2024 01:33:42 -0700 (PDT)
-Date: Fri, 4 Oct 2024 10:33:41 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Tomasz Jeznach <tjeznach@rivosinc.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, peter.maydell@linaro.org,
- Sebastien Boeuf <seb@rivosinc.com>
-Subject: Re: [PATCH v8 03/12] hw/riscv: add RISC-V IOMMU base emulation
-Message-ID: <20241004-2c8c6a6af4d598c78638a091@orel>
-References: <20241002010314.1928515-1-dbarboza@ventanamicro.com>
- <20241002010314.1928515-4-dbarboza@ventanamicro.com>
- <20241003-c10c27e0855533db764a1490@orel>
- <7c5f0fce-fc66-4fca-90be-aa2d4f7a4b04@ventanamicro.com>
- <CAH2o1u6h5nOMuGq8opXQNm6M=D=TrvygmoS+hHwmrgViy3reFA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+ (Exim 4.90_1) (envelope-from <simon.rowe@nutanix.com>)
+ id 1swdqn-0001Yk-E5
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 04:39:49 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <simon.rowe@nutanix.com>)
+ id 1swdql-0006Ph-EQ
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 04:39:48 -0400
+Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4946T73H012418;
+ Fri, 4 Oct 2024 01:39:45 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=proofpoint20171006; bh=8+Ul24fiup7Pv
+ /Tij5W2Dkss4GS6O6M105PjJ5dbzs0=; b=aZt4q5IIt4WSFAdWiddCdbQhVWR0M
+ pzcKn6cL9sQT1iYxHlSuYjik2/bokEus9B0BjBV0J37N2ECs/RuttTPriyR5TFDS
+ cqmms0uvm8drbXN3gMZsK1lmTy23CQcgEaUvba4tPKbPUQlSV5fQrQNUDKclXQBe
+ jHWaH2z5ZB+tnAtT3ZlkoSMUjCEOkEzu0tKbrKx2KEsYKnSzOBhG5dlUNBGbu9bE
+ /1W1XO1MunvL0xGLNVU3rTWktpc6yEtfzDrog38FSHdOX/9B70VNUlDAJbNN5gUm
+ iYGwQ0RFlYtHPeqhu2uFqEA45z/YrY8CoaLuKCoqVYmVn75iwqZDL1gUQ==
+Received: from nam12-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam12lp2176.outbound.protection.outlook.com [104.47.59.176])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 42205csp96-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 04 Oct 2024 01:39:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rCdhc8YuwDeUfe8AUz2xSaYmcBjFDRdnK8M5PN5cy541BNXt28NP07gb82AqpMcK5MF3WLtO2iNTYrPZh7PyG092RnVbCsqMHpFklaT0OhIuLCvY0ZJYKFFrX8AbbOlXUeJRpUvAxhq6XdlJ8m5jm7SChYWMrhcrtIoB845azq+xHmv03G3moffv6dwcCSc4OfqLSk8HObZvb7xZ+B0jnftJXZ22MAR6F0RpdE2YHp4ANI40V8MbTqULA9Qn4EU965/kiPAHyo8+MBQb4dPPh65L7P6KrI30gJairzuBz7Qlaoycxy59DcZcwF/ZJ4w9hwWEWxBu/KxuYuYrk3iyow==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8+Ul24fiup7Pv/Tij5W2Dkss4GS6O6M105PjJ5dbzs0=;
+ b=qmusT0TJ3Z7MSIyf0QPTri/MmotbhPKBIi3dPM1iKFRZqGIA8PF5GGblOL0U+HXjt52yxfy3BL/SlNOXrFNJ4e80ftH37I90jE0xmvbJNZSVic9Z5KOucnCiaAaVVcHKr2AbXhRVZGrae1ojaBloiZp6cXl3lqggjhbHyq6OQP5Nt26sCN6N6xc7hDU0CjZp7Ske9yLWydnnx2ArthFSLcJ7A2WzDXiDjuc20dfVJsD1F15Xd/mcjvWUJ+Sdz2rlWvlpCvgHVbO+G4OlDLwwXWKjElg6p8cqVXo6uakUHdT/JHBTW0kGgwDB2Ss5Zs7id8G+kdCEJJPPhMVEYF1shA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8+Ul24fiup7Pv/Tij5W2Dkss4GS6O6M105PjJ5dbzs0=;
+ b=zCfFULUdSggdL0DW8nGs8Y8xQno3tgfKE0upfco0n68A3fg5vNoGThv8iji8B6Wti2SNzERuO5MVovDGJFalDiBbLAtj1nEu0aNSg6iTP5jqvFpbPqjSMqMmotemNPsDUgTWMawSVB3LtozvuH9Oo9iHifkI8BT4Na5K1T2sIZjQCAy/WKkH3/yaR02w69noRaE7ldFnDMZI8ImGWUGzwuGYOxzoo6WEQmtcoeh3w065JcimpJHrxXTi9cO+008v9hldFzDsMd83kcLM5Ue69hmQ3aUFZsgXonZwOdKy8Sii82+fQjqyDFoYYa9r6E5v2QqFZFmP0SwikUlGJeQyaA==
+Received: from DM8PR02MB8121.namprd02.prod.outlook.com (2603:10b6:8:1a::12) by
+ CYYPR02MB9801.namprd02.prod.outlook.com (2603:10b6:930:bb::19) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8026.18; Fri, 4 Oct 2024 08:39:42 +0000
+Received: from DM8PR02MB8121.namprd02.prod.outlook.com
+ ([fe80::ca00:b1fb:aa3a:f3e4]) by DM8PR02MB8121.namprd02.prod.outlook.com
+ ([fe80::ca00:b1fb:aa3a:f3e4%4]) with mapi id 15.20.8026.016; Fri, 4 Oct 2024
+ 08:39:42 +0000
+From: Simon Rowe <simon.rowe@nutanix.com>
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, Simon Rowe <simon.rowe@nutanix.com>
+Subject: [PATCH] vga: relax restriction on display width
+Date: Fri,  4 Oct 2024 08:39:37 +0000
+Message-Id: <20241004083937.73595-1-simon.rowe@nutanix.com>
+X-Mailer: git-send-email 2.22.3
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAH2o1u6h5nOMuGq8opXQNm6M=D=TrvygmoS+hHwmrgViy3reFA@mail.gmail.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-ClientProxiedBy: SJ0PR03CA0106.namprd03.prod.outlook.com
+ (2603:10b6:a03:333::21) To DM8PR02MB8121.namprd02.prod.outlook.com
+ (2603:10b6:8:1a::12)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM8PR02MB8121:EE_|CYYPR02MB9801:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5fb93368-357d-4f17-15a3-08dce4501780
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|52116014|38350700014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?dw0vtCWwVdwWnz47xgnbJbF3LHe4vZlSsG8WVLebLnzzD2DWoVSG+GKkwwx+?=
+ =?us-ascii?Q?nGcJ/nCxUQTdp74HaiSFaiw+SUAe0dVpijA7xyZh7J8PkOJgTppy4Qnrnuay?=
+ =?us-ascii?Q?EpzveARS+pLWgGROsobACaR4W1uRl1vtvZpdyiyGfnZtbx61B+ZBi7nQvs65?=
+ =?us-ascii?Q?poarNcXimh/8wUpMZbhBCfwUski/+9s5XZavvYZ8BWMMBaDtNpzD/Sorq1Dy?=
+ =?us-ascii?Q?F9JChX3yz2yUSLxuxQBu0tRGl91r2u0tnvOiQrGx7P3X5dxOzBCts9Y69fCn?=
+ =?us-ascii?Q?+af8cG4EBOl171ubPaH0LuAIPFNcX9uXkyFVAAQqhhwiA2r6K91cLuJqHGMx?=
+ =?us-ascii?Q?lrWdvLr3omc0/hdY2yjYxeIaYeAgSjFwsxEXpeIbjRSbXhNUb3dER1V8uXMt?=
+ =?us-ascii?Q?fBuy2srTP/jGyQ5GWRL5r+u1LNI4k4NSGhRvlK99p3g+z7E5qk4+2PD/N16O?=
+ =?us-ascii?Q?AUXFFEYzkAyRzl/bFlGo6rtnQnqb0XGMWh4JTnKDEjGwz41kBOrbgE7e6E+P?=
+ =?us-ascii?Q?PcH9P7AvKebkedk7IEeT2/WIiokwWRdjACqWr1GTpGnozRCVwu+oHS8mwH1Y?=
+ =?us-ascii?Q?/ft9xBCoimQsclPzWOVWR0PBds1Dqxo8gZiB3t49DRX9XQPura/FEgvVMGpn?=
+ =?us-ascii?Q?sjuWvDAN2IXJYqHCt83OPyHohPi2YH64Uywu1wcaL14JNjqi0oDbzgQH64y+?=
+ =?us-ascii?Q?qHHkjt+O7xOo2vRiM2mhckjSxGvabXEBE9x0fWpcItT6lmA3QjbC6Ob6UNN0?=
+ =?us-ascii?Q?whQS8eKdoC0yFVKAonzcGR3Or9iPWMxak5h1CO8LfpPOd8Mqw6YpYfl0PiMt?=
+ =?us-ascii?Q?lTRedFKJRjzdgylddfxZOCYIJ506yllBrJeMsZrslCwDfl9iRLvT+TIsGmnY?=
+ =?us-ascii?Q?9Jcf/muktEWNR4WJpId5dzBhmxNKDtq98B7CxGPE5q+Zd++/2skOFf+jM8qR?=
+ =?us-ascii?Q?L21Pvz5XdpalKFBAIJxKxNaraBNiju1dS9SMUPB0mxeqahTHJdYr/z/hRVpH?=
+ =?us-ascii?Q?jjQ8s1x27kLZSCweUSiYPPwuamS6CknND57o/w6SS8f5mZYqBBcr9aHOrRSv?=
+ =?us-ascii?Q?NcvPj1BDzKj/czzIOUhZwLRBvFWasJ96MV3kUBRKvTslPCla1FOec3VbTaW9?=
+ =?us-ascii?Q?GGwM0Z1NLHLnc1cG5bUZhOkaI21rkAppqOcwM0RmXj1bWuKcc/PED0z4LB/l?=
+ =?us-ascii?Q?RCcvFgFq9gjv0Wd43oiKcHawC1/L2an9X3COvRfssj7Q95xtg9z+WFg9ib8u?=
+ =?us-ascii?Q?V2NsLlH4ucH8S2GrT05hwZUyKxYUVUnUn2QRW4x6JmkY85mdtqlP6tJqlIMf?=
+ =?us-ascii?Q?1WLHgzlmRyeqa5jcXD5DUYz0X5VQ/Q6jtAd8BT2cz3rGuA=3D=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM8PR02MB8121.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(52116014)(38350700014); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?vGO0ar7V5Wg+tiLdqjuIh8i2w9gljVtsAty2595nlFxY6fn+/jkTDqqz/vi+?=
+ =?us-ascii?Q?g3fYbo6sSky2tAu/yLUN7VeI0FNHGsv7SuLkccy2iEY55jkq2Kfw9zwrH8pd?=
+ =?us-ascii?Q?PyqypdHPoE7xs25sTvGLqXUOw43oWy8kJC8oC4jHVmB+iA8m/KnnyVrvHiqJ?=
+ =?us-ascii?Q?uWC8JkMsnc9s/u0xp9aE+BV871zBgSRJXOCYzgZrGv6+74RJ8e0t3bxo/dyo?=
+ =?us-ascii?Q?8gq6+f/oZI5ygMoZ/Me/KAnNK8u2erQxhVfaNZbSNz2w3zuC3DMCMRxf8vHx?=
+ =?us-ascii?Q?EvhNy2sKqAdaxeA5TOqq3KlKHVrDK1ixj77La7Ga7HselVOfBP0+QKj8Swbs?=
+ =?us-ascii?Q?1USmVm+YYFqm1jW1L/ri4+X5wzsyxgmrAQM/F5AoJeNKAGYd2effmo6KEnns?=
+ =?us-ascii?Q?HAMPomKF0TaDojtHEDjYqTm2qORgaCAV8ZiEk82RlkB8QtuEIXhGSOJ5Kozr?=
+ =?us-ascii?Q?NrIsn7T3LJQVIFSYaNzFUB0n3np3GkKcZjNly+lhozklIFo9RaNUREWzcdDr?=
+ =?us-ascii?Q?PO5qetbKqn0eWNW2ojv40X1azcOOxxwQ+7lCD/YGmh6EIxr+5J5/xVoQL5h9?=
+ =?us-ascii?Q?QUyW/qkwrKCkZgUZX36pdi/CSg27YVxu0WJPQez7Vr4Px8Bc4zbA7c50l5Gp?=
+ =?us-ascii?Q?9efwLOxswQCmBJyRpGY+H98kUdUBFF+6DepFgg7Ze17uvrQxyurrmuCgZuU/?=
+ =?us-ascii?Q?03vqGcRdTRzM+/O2CoUrQXLUWEr2p+S0lZH5y4wYaEwJINdzKapd5aCQskcJ?=
+ =?us-ascii?Q?kk3jUDOmdoRm1LqJQwz2FUgcpySuMcfIKoy26qT/enCWCFUY4AceGV0TMmE+?=
+ =?us-ascii?Q?hArcJRkf7f9+4i6Qq8C8D5ru6HBgIgojO07m9HHFkX381EYNIlNUZWLkuVJY?=
+ =?us-ascii?Q?wb5lWrm+lvtV+oiPR7gG42fLRMKSNORyA2s27FFD0Fz5NdcBIYYb7vsHHBy1?=
+ =?us-ascii?Q?FsBoP5lplMMFhc1zcnZB3duWWz/WuUsztpZrb8XhMEe8vxKOE9ZjURxbFJya?=
+ =?us-ascii?Q?hSh3By22F+WO7Xvnyl36T0Tb1PO+RZYfovAtFn7UiZa+mqymXTvb2JUwBeWU?=
+ =?us-ascii?Q?VyH/qE6fI/8n31Dhch6jPrGEDugfDYBBOUneMIm+CSEeUizpixRgOp2PWNRe?=
+ =?us-ascii?Q?3kNduY2rDjWgniQm2yfuylisveY9jF+7PJ7nfR7BtzsRQuw0lyrH38mCQGN7?=
+ =?us-ascii?Q?GKYEY0m3B1St46kGvOCQ1ijv6bby0Yl2l9RNiNToGRlhEtcU17erzk23uLbO?=
+ =?us-ascii?Q?v7ud+gN+HXICvjpQnNWJuWZ+X5QI2pUfk9Ou3FeFW6rwB4IEFC4kaOnZm0lL?=
+ =?us-ascii?Q?ZL28/OvThKqd3OKjrtpl4yhf5jmpxFL7Vn/JVM1TXeE1eQkdKq1PMAIPoKTf?=
+ =?us-ascii?Q?xvHPuAeVu18m27BjsLE4qiEQUpw271GMP2z1gbjt6O7RDtnu80cfwf4ls3CO?=
+ =?us-ascii?Q?gQWEYTllZnz3svXUkdHsfikOYmVv/M/Yennz6o2H8o1mk/w1fnAGvc7ps2J8?=
+ =?us-ascii?Q?UqjRqihb2Kk4UaVJ9m/PZO4e0lZ/e5V+gdwXgMyKIJUZ/KqYF9KtoiHMOLF/?=
+ =?us-ascii?Q?hctpR5Wof1n3rNetjG6nj3+TZF9OLSeD//OHq1AdT4GzycqjPSgf9Y1mYCl+?=
+ =?us-ascii?Q?XA=3D=3D?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5fb93368-357d-4f17-15a3-08dce4501780
+X-MS-Exchange-CrossTenant-AuthSource: DM8PR02MB8121.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Oct 2024 08:39:42.4728 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: x/j7m2TBoHNhj4kJKwPij2v5MXu7N7ciP1iArB83CG4PrnuMLiSVL3Bh7Gj0buv9Rlmg4umJ+jBNGAhixln1dg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR02MB9801
+X-Proofpoint-ORIG-GUID: S-1L8UQmuHIzeIxtPPtPtMwj0x2XS9nT
+X-Authority-Analysis: v=2.4 cv=cJuysUeN c=1 sm=1 tr=0 ts=66ffa9d0 cx=c_pps
+ a=nskeBUqQUen4dZUz4TdP1w==:117 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=DAUX931o1VcA:10 a=0034W8JfsZAA:10 a=0kUYKlekyDsA:10
+ a=64Cc0HZtAAAA:8 a=_6F_Gvem9JLtgjso58YA:9
+ a=14NRyaPF5x3gF6G45PvQ:22
+X-Proofpoint-GUID: S-1L8UQmuHIzeIxtPPtPtMwj0x2XS9nT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-04_06,2024-10-03_01,2024-09-30_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=simon.rowe@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,184 +184,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 03, 2024 at 11:36:00AM GMT, Tomasz Jeznach wrote:
-> On Thu, Oct 3, 2024 at 6:06 AM Daniel Henrique Barboza
-> <dbarboza@ventanamicro.com> wrote:
-> >
-> >
-> >
-> > On 10/3/24 6:26 AM, Andrew Jones wrote:
-> > > On Tue, Oct 01, 2024 at 10:02:58PM GMT, Daniel Henrique Barboza wrote:
-> > > ...
-> > >> +/*
-> > >> + * RISCV IOMMU Address Translation Lookup - Page Table Walk
-> > >> + *
-> > >> + * Note: Code is based on get_physical_address() from target/riscv/cpu_helper.c
-> > >> + * Both implementation can be merged into single helper function in future.
-> > >> + * Keeping them separate for now, as error reporting and flow specifics are
-> > >> + * sufficiently different for separate implementation.
-> > >> + *
-> > >> + * @s        : IOMMU Device State
-> > >> + * @ctx      : Translation context for device id and process address space id.
-> > >> + * @iotlb    : translation data: physical address and access mode.
-> > >> + * @return   : success or fault cause code.
-> > >> + */
-> > >> +static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-> > >> +    IOMMUTLBEntry *iotlb)
-> > >> +{
-> > >> +    dma_addr_t addr, base;
-> > >> +    uint64_t satp, gatp, pte;
-> > >> +    bool en_s, en_g;
-> > >> +    struct {
-> > >> +        unsigned char step;
-> > >> +        unsigned char levels;
-> > >> +        unsigned char ptidxbits;
-> > >> +        unsigned char ptesize;
-> > >> +    } sc[2];
-> > >> +    /* Translation stage phase */
-> > >> +    enum {
-> > >> +        S_STAGE = 0,
-> > >> +        G_STAGE = 1,
-> > >> +    } pass;
-> > >> +    MemTxResult ret;
-> > >> +
-> > >> +    satp = get_field(ctx->satp, RISCV_IOMMU_ATP_MODE_FIELD);
-> > >> +    gatp = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
-> > >> +
-> > >> +    en_s = satp != RISCV_IOMMU_DC_FSC_MODE_BARE;
-> > >> +    en_g = gatp != RISCV_IOMMU_DC_IOHGATP_MODE_BARE;
-> > >> +
-> > >> +    /*
-> > >> +     * Early check for MSI address match when IOVA == GPA. This check
-> > >> +     * is required to ensure MSI translation is applied in case
-> > >> +     * first-stage translation is set to BARE mode. In this case IOVA
-> > >> +     * provided is a valid GPA. Running translation through page walk
-> > >> +     * second stage translation will incorrectly try to translate GPA
-> > >> +     * to host physical page, likely hitting IOPF.
-> > >> +     */
-> > >
-> > > Why was this comment expanded from the simple
-> > >
-> > > "Early check for MSI address match when IOVA == GPA."
-> > >
-> > > The comment is now incorrect since the check is required even when
-> > > first-stage translation is not BARE. I just skimmed the spec again trying
-> > > to figure out if the removal of '!en_s' is a hack or a fix, and I'm
-> > > inclined to say "fix", but it's an incomplete fix. I found a sentence that
-> > > says
-> > >
-> > > "If the virtual memory scheme selected for first-stage is Bare but the
-> > > scheme for the second-stage is not Bare then the IOVA is a GPA."
-> > >
-> > > which, in a way, defines a GPA to only be a GPA when second-stage is used
-> > > (and all MSI translation specifications refer to GPAs). However, maybe I
-> > > missed it, but I couldn't find any actual reason that the MSI table can't
-> > > be used when first-stage is not BARE and second-stage is (and, of course,
-> > > it makes no difference for single-stage translations to call IOVAs GPAs
-> > > or not).
-> > >
-> > > Now, I also see
-> > >
-> > > "If the virtual memory scheme selected for neither stage is Bare then the
-> > > IOVA is a VA. Two-stage address translation is in effect. The first-stage
-> > > translates the VA to a GPA and the second-stage translates the GPA to a
-> > > SPA."
-> > >
-> > > in the spec, which means we should probably change the removal of '!en_s'
-> > > to '!(en_s && en_g)'. VFIO+irqbypass would still work with that and, when
-> > > Linux learns to support two-stage translation, we wouldn't incorrectly try
-> > > to check for a GVA in the MSI table.
-> >
-> > Ok. It seems to me that we can't rely on the riscv-iommu spec alone to let
-> > us know how to detect if IOVA == GPA, given that one of the main usages
-> > we have ATM (VFIO irqbypass) will use GPAs with S-stage enabled.
-> >
-> > (Note: shouldn't we open a bug against the riscv-iommu spec?)
-> >
-> > I like the idea of ruling out the case where IOVA == VA since that is clear
-> > in the spec. We also know that MSI entries will always contains GPAs.
-> >
-> > This is the change I'm going to make in v9:
-> >
-> >
-> 
-> It might be worth it to quote spec definitions of IOVA, GPA, SPA.
-> 
-> IOVA: I/O Virtual Address: Virtual address for DMA by devices
-> GPA: Guest Physical Address: An address in the virtualized physical
-> memory space of a virtual machine.
-> SPA: Supervisor Physical Address: Physical address used to access
-> memory and memory-mapped resources.
-> 
-> From IOMMU specification it's pretty clear, an untranslated address is
-> always an IOVA.
-> 
-> If you look at the introduction section and section 2.3. "Process to
-> translate an IOVA", translation (if enabled by the device/process
-> context) to GPA, SPA is expressed as:
-> 
-> step #17: GPA = FSC[IOVA]
-> step #19: SPA = IOHGATP[GPA]
-> 
-> With that, MSI address translations always use GPA as an input
-> (section 2.3.3. "Process to translate addresses of MSIs"), and is done
-> as step #18 of the IOVA translation.
-> 
-> And now:
-> If FSC.Mode == Bare, step #17 translation is simple GPA = IOVA
-> If IOHGATP.Mode == Bare, step #19 translation is simple SPA = GPA
-> 
-> If both FSC and IOHGATP modes are bare, no address translation is
-> performed, and SPA = GPA = IOVA. However if "MSI page tables are
-> enabled, then the MSI address translation process specified in Section
-> 2.3.3 is invoked".  This was the reason to put the
-> riscv_iommu_msi_check() function before check for pass-through mode
-> check.
-> 
-> If FSC.Mode == Bare and untranslated address given to the function
-> riscv_iommu_spa_fetch() is an GPA = IOVA. It could also be SPA if
-> IOHGATP.Mode == Bare, but it is irrelevant for the MSI address
-> translation.  That is the reason to put only the check for !en_s in
-> before riscv_iommu_msi_check() call.
-> 
-> I'm aware that VFIO uses S-Stage translation only, but it does not
-> change the hardware logic. For such cases VFIO can provide IMSIC
-> register mappings in S-Stage PT to emulate MSI doorbell registers (if
-> needed). When S-Stage translation is used, an untranslated address
-> processed by the IOMMU hardware is still an IOVA, even if the guest OS
-> / VFIO user treats it as PA.
+When validating the parameters of VBE ioport writes the X co-ordinate
+is silently rounded down to a multiple of 8. For valid resolutions
+(such as 1366x768) which are not divisible by 8 this causes
+miscalculations because the display surface has shorter lines than
+expected. For example, a VNC client receives updates with a
+"staircase" effect.
 
-This would work for guest interrupt file mappings, but MRIFs won't work
-and the note of the "Device contexts at an IOMMU" section of the AIA spec
-points out that VCPU migration may become more difficult to manage.
+Reduce the rounding to a multiple of two.
 
-> 
-> Modification of the check to include en_g ( !(en_s && en_g) && ,,, )
-> will incorrectly enable MSI address translation for an IOVA address
-> (as defined in IOMMU spec) if G-Stage translation is set to Bare mode.
-> 
-> I'd suggest to keep the s/g stage checks here as:
->       if ((iotlb->perm & IOMMU_WO) && !en_s &&
->           riscv_iommu_msi_check(s, ctx, iotlb->iova)) {
->           ...
->       }
-> 
-> Hope that helps this discussion.
+Signed-off-by: Simon Rowe <simon.rowe@nutanix.com>
+---
+ hw/display/vga.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Yes, it certainly helps, thank you. It points out that step 17 of "Process
-to translate an IOVA" produces a GPA which is consumed by step 18 for the
-MSI translation (and there's no other way to get to step 18). OIOW, we
-must do a first-stage translation before we check the MSI page table,
-which means we can't do an early MSI check unless we have strictly !en_s.
+diff --git a/hw/display/vga.c b/hw/display/vga.c
+index 892fedc8dc..ea659e2812 100644
+--- a/hw/display/vga.c
++++ b/hw/display/vga.c
+@@ -581,14 +581,14 @@ static void vbe_fixup_regs(VGACommonState *s)
+     }
+ 
+     /* check width */
+-    r[VBE_DISPI_INDEX_XRES] &= ~7u;
++    r[VBE_DISPI_INDEX_XRES] &= ~1u;
+     if (r[VBE_DISPI_INDEX_XRES] == 0) {
+         r[VBE_DISPI_INDEX_XRES] = 8;
+     }
+     if (r[VBE_DISPI_INDEX_XRES] > VBE_DISPI_MAX_XRES) {
+         r[VBE_DISPI_INDEX_XRES] = VBE_DISPI_MAX_XRES;
+     }
+-    r[VBE_DISPI_INDEX_VIRT_WIDTH] &= ~7u;
++    r[VBE_DISPI_INDEX_VIRT_WIDTH] &= ~1u;
+     if (r[VBE_DISPI_INDEX_VIRT_WIDTH] > VBE_DISPI_MAX_XRES) {
+         r[VBE_DISPI_INDEX_VIRT_WIDTH] = VBE_DISPI_MAX_XRES;
+     }
+-- 
+2.22.3
 
-This is unfortunate, considering the current state of VFIO+irqbypass and
-the IOMMU driver. I also wonder if it's really necessary. It seems to me
-that the MSI page table should always be checked first when either S-stage
-or G-stage is Bare (so there's only a single-stage of translation) and
-msiptp.MODE is not Off. I can't see what harm could come from that and it
-would give system software the ability to leverage code that already knows
-how to manage single-stage IOMMUs for device assignment.
-
-Thanks,
-drew
 
