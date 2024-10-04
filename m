@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E3CCCF884D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:07:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B549CF884E
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:07:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swknZ-0002Xg-HJ; Fri, 04 Oct 2024 12:04:57 -0400
+	id 1swkn7-000219-Ax; Fri, 04 Oct 2024 12:04:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1swknS-0002OP-Qb; Fri, 04 Oct 2024 12:04:50 -0400
+ id 1swkmu-0001sQ-LB; Fri, 04 Oct 2024 12:04:17 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1swknR-0001cD-8x; Fri, 04 Oct 2024 12:04:50 -0400
+ id 1swkmY-0001Wt-0J; Fri, 04 Oct 2024 12:04:16 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8727C95573;
+ by isrv.corpit.ru (Postfix) with ESMTP id 06ABF95569;
  Fri,  4 Oct 2024 19:03:30 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C13E014D981;
+ by tsrv.corpit.ru (Postfix) with SMTP id 40CCA14D977;
  Fri,  4 Oct 2024 19:03:32 +0300 (MSK)
-Received: (nullmailer pid 1282545 invoked by uid 1000);
+Received: (nullmailer pid 1282515 invoked by uid 1000);
  Fri, 04 Oct 2024 16:03:32 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-trivial@nongnu.org,
+Cc: Laurent Vivier <laurent@vivier.eu>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 14/23] remote: Remove unused remote_iohub_finalize
-Date: Fri,  4 Oct 2024 19:03:22 +0300
-Message-Id: <20241004160331.1282441-15-mjt@tls.msk.ru>
+Subject: [PULL 04/23] MAINTAINERS: remove gensyscalls.sh from the linux-user
+ section
+Date: Fri,  4 Oct 2024 19:03:12 +0300
+Message-Id: <20241004160331.1282441-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241004160331.1282441-1-mjt@tls.msk.ru>
 References: <20241004160331.1282441-1-mjt@tls.msk.ru>
@@ -61,57 +62,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
+From: Laurent Vivier <laurent@vivier.eu>
 
-remote_iohub_finalize has never been used.
+The file has been removed by c52e40596834
+("linux-user,loongarch: move to syscalltbl file").
 
-Remove it.
-
-Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
-Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Laurent Vivier <laurent@vivier.eu>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/remote/iohub.c         | 13 -------------
- include/hw/remote/iohub.h |  1 -
- 2 files changed, 14 deletions(-)
+ MAINTAINERS | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/remote/iohub.c b/hw/remote/iohub.c
-index 40dfee4bad..988d3285cc 100644
---- a/hw/remote/iohub.c
-+++ b/hw/remote/iohub.c
-@@ -33,19 +33,6 @@ void remote_iohub_init(RemoteIOHubState *iohub)
-     }
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 4ee2699543..d013db1ccb 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3685,7 +3685,6 @@ F: configs/targets/*linux-user.mak
+ F: scripts/qemu-binfmt-conf.sh
+ F: scripts/update-syscalltbl.sh
+ F: scripts/update-mips-syscall-args.sh
+-F: scripts/gensyscalls.sh
  
--void remote_iohub_finalize(RemoteIOHubState *iohub)
--{
--    int pirq;
--
--    for (pirq = 0; pirq < REMOTE_IOHUB_NB_PIRQS; pirq++) {
--        qemu_set_fd_handler(event_notifier_get_fd(&iohub->resamplefds[pirq]),
--                            NULL, NULL, NULL);
--        event_notifier_cleanup(&iohub->irqfds[pirq]);
--        event_notifier_cleanup(&iohub->resamplefds[pirq]);
--        qemu_mutex_destroy(&iohub->irq_level_lock[pirq]);
--    }
--}
--
- int remote_iohub_map_irq(PCIDevice *pci_dev, int intx)
- {
-     return pci_dev->devfn;
-diff --git a/include/hw/remote/iohub.h b/include/hw/remote/iohub.h
-index 6a8444f9a9..09ee6c77b6 100644
---- a/include/hw/remote/iohub.h
-+++ b/include/hw/remote/iohub.h
-@@ -37,6 +37,5 @@ void remote_iohub_set_irq(void *opaque, int pirq, int level);
- void process_set_irqfd_msg(PCIDevice *pci_dev, MPQemuMsg *msg);
- 
- void remote_iohub_init(RemoteIOHubState *iohub);
--void remote_iohub_finalize(RemoteIOHubState *iohub);
- 
- #endif
+ Tiny Code Generator (TCG)
+ -------------------------
 -- 
 2.39.5
 
