@@ -4,69 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA12DCFA773
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 12:45:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C98ECFA776
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 12:45:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swhg3-0004Wu-IG; Fri, 04 Oct 2024 08:44:59 -0400
+	id 1swhg0-0004Vu-Uj; Fri, 04 Oct 2024 08:44:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1swhg1-0004WC-4L
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 08:44:57 -0400
+ id 1swhfz-0004Vc-Lr
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 08:44:55 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1swhfy-0005EY-FY
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 08:44:56 -0400
+ id 1swhfx-0005EQ-Ss
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 08:44:55 -0400
 Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 494CMYR0026749;
- Fri, 4 Oct 2024 12:44:52 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 494CMX5s026710;
+ Fri, 4 Oct 2024 12:44:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=corp-2023-11-20; bh=Q
- AJuSOyaE4Dz4mMOJfpiJfDTVKFK/928JyeyEQvN5c8=; b=SRmyqSuOeNEBtyVlZ
- Nv7TLzBq3Q4wSquZ3GY/36yAt/6zROr0M0B0jtzET/zReZ35hzbxjaNtqJ1fm+FO
- vPLSj2OadC3PlBACEHi7fosle7HgRIGx4QZFImNC5ZGW9Z3qE44JernBE1X5UlJt
- IGYz/XXw+BDL26AoAQErM5PsRVhMyrXUsnAwxkUhZKcW9nWuJkvm7cnXYaeTbwkk
- GXIMONomCs4D41EA8iofuWmaeDgW8jUCVPzSRTQS8lAyVYM6FhdqWxir2teVukR9
- 1UBG7iEXZKPP8QSYuHggjQNU8HTtcrIJViWjYDck04Y0v/aS9biTITdcDeK5AT7K
- vJ76w==
+ from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=corp-2023-11-20; bh=ZRvDUFA2jmi6uR
+ QiaHXn3nIiJrvVTTmwCd4QFgfHhwo=; b=Yz86ICTktFi3X+dPJ02EwHeHr9MBoL
+ Mbuoj2iV9kSbx7fvYPTV7IERsC109ulOEWyt32+ivQUtB8PO8YbtpQnRtQ30GTX4
+ hejZrsTg+WP+lSU4ZoRnfUUY6jHoGG/6ivuXLHwQQhpgQZegD3epIiQXx2B8k8J9
+ +8jnlFHOFmbl3twza+t+nTihGZLDVkMCiu00j+kxGXOoInPlf5WGVS/OQQm50mOR
+ DTewJmPUt5PZqI8nUHVPnAZaWQi5/NHXOekCR/OVzyGpWAi8TpAwH6h760pZgdDM
+ Fo8enTvArhAeR42xSRShRyhEooR1rhBuf30C0Mb+p7N7lhVZD9ZHcQsQ==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4220489htt-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4220489htq-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 04 Oct 2024 12:44:52 +0000 (GMT)
+ Fri, 04 Oct 2024 12:44:49 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 494Bct3m005903; Fri, 4 Oct 2024 12:44:51 GMT
+ with ESMTP id 494BS14I005858; Fri, 4 Oct 2024 12:44:49 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 422056fcfx-1
+ 422056fcf1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 04 Oct 2024 12:44:51 +0000
+ Fri, 04 Oct 2024 12:44:48 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 494Cimo6020535;
- Fri, 4 Oct 2024 12:44:50 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 494Cimo2020535;
+ Fri, 4 Oct 2024 12:44:48 GMT
 Received: from jonah-ol8.us.oracle.com (dhcp-10-65-167-128.vpn.oracle.com
  [10.65.167.128])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 422056fce8-3; Fri, 04 Oct 2024 12:44:50 +0000
+ 422056fce8-1; Fri, 04 Oct 2024 12:44:48 +0000
 From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: eperezma@redhat.com, mst@redhat.com, leiyang@redhat.com, peterx@redhat.com,
  dtatulea@nvidia.com, jasowang@redhat.com, si-wei.liu@oracle.com,
  boris.ostrovsky@oracle.com, jonah.palmer@oracle.com
-Subject: [RFC v2 2/2] vhost-svq: Translate guest-backed memory with IOVA->GPA
- tree
-Date: Fri,  4 Oct 2024 08:44:42 -0400
-Message-ID: <20241004124445.3802090-3-jonah.palmer@oracle.com>
+Subject: [RFC v2 0/2] Handling aliased guest memory maps in vhost-vDPA SVQs
+Date: Fri,  4 Oct 2024 08:44:40 -0400
+Message-ID: <20241004124445.3802090-1-jonah.palmer@oracle.com>
 X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20241004124445.3802090-1-jonah.palmer@oracle.com>
-References: <20241004124445.3802090-1-jonah.palmer@oracle.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
@@ -74,11 +70,11 @@ X-Proofpoint-Virus-Version: vendor=baseguard
  definitions=2024-10-04_10,2024-10-03_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  phishscore=0
- suspectscore=0 adultscore=0 bulkscore=0 mlxscore=0 mlxlogscore=999
+ suspectscore=0 adultscore=0 bulkscore=0 mlxscore=0 mlxlogscore=832
  spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2409260000 definitions=main-2410040093
-X-Proofpoint-ORIG-GUID: k9ss4RUbAR95It_w3A179Ws9CrbK7vjV
-X-Proofpoint-GUID: k9ss4RUbAR95It_w3A179Ws9CrbK7vjV
+X-Proofpoint-ORIG-GUID: vJYRizNJyVWOBzGThD2n1hpfvxcLkLmW
+X-Proofpoint-GUID: vJYRizNJyVWOBzGThD2n1hpfvxcLkLmW
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -104,161 +100,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implements searching the IOVA->GPA tree when translating guest-backed
-memory (and searching the IOVA->HVA tree when translating host-only
-memory).
+The guest may overlap guest memory regions when mapping IOVA to HVA
+translations in the IOVA->HVA tree. This means that different HVAs, that
+correspond to different guest memory region mappings, may translate to
+the same IOVA. This can cause conflicts when a mapping is incorrectly
+referenced.
 
-By using the IOVA->GPA tree to find IOVA translations, we avoid the
-issue where, if the guest has overlapping memory regions, HVAs backed by
-guest memory can lead to multiple different GPAs. In other words, we may
-translate to an incorrect IOVA if we search the IOVA->HVA tree using an
-HVA that's backed by guest memory.
+For example, consider this example of mapped guest memory regions:
 
-Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
----
- hw/virtio/vhost-shadow-virtqueue.c | 61 ++++++++++++++++++++++++------
- 1 file changed, 49 insertions(+), 12 deletions(-)
+              HVA                            GPA                         IOVA
+-------------------------------  --------------------------- ----------------------------
+[0x7f7903e00000, 0x7f7983e00000) [0x0, 0x80000000)           [0x1000, 0x80000000)
+[0x7f7983e00000, 0x7f9903e00000) [0x100000000, 0x2080000000) [0x80001000, 0x2000001000)
+[0x7f7903ea0000, 0x7f7903ec0000) [0xfeda0000, 0xfedc0000)    [0x2000001000, 0x2000021000)
 
-diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index fc5f408f77..a72093c00b 100644
---- a/hw/virtio/vhost-shadow-virtqueue.c
-+++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -16,6 +16,7 @@
- #include "qemu/log.h"
- #include "qemu/memalign.h"
- #include "linux-headers/linux/vhost.h"
-+#include "exec/ramblock.h"
- 
- /**
-  * Validate the transport device features that both guests can use with the SVQ
-@@ -78,24 +79,55 @@ uint16_t vhost_svq_available_slots(const VhostShadowVirtqueue *svq)
-  * @vaddr: Translated IOVA addresses
-  * @iovec: Source qemu's VA addresses
-  * @num: Length of iovec and minimum length of vaddr
-+ * @is_guest_memory: True if iovec is backed by guest memory
-  */
- static bool vhost_svq_translate_addr(const VhostShadowVirtqueue *svq,
-                                      hwaddr *addrs, const struct iovec *iovec,
--                                     size_t num)
-+                                     size_t num, bool is_guest_memory)
- {
-     if (num == 0) {
-         return true;
-     }
- 
-     for (size_t i = 0; i < num; ++i) {
--        DMAMap needle = {
--            .translated_addr = (hwaddr)(uintptr_t)iovec[i].iov_base,
--            .size = iovec[i].iov_len,
--        };
-         Int128 needle_last, map_last;
-         size_t off;
-+        const DMAMap *map;
-+        DMAMap needle;
-+
-+        /*
-+         * If the HVA is backed by guest memory, find its GPA and search the
-+         * IOVA->GPA tree for the translated IOVA
-+         */
-+        if (is_guest_memory) {
-+            RAMBlock *rb;
-+            hwaddr gpa;
-+            ram_addr_t offset;
-+
-+            rb = qemu_ram_block_from_host(iovec[i].iov_base, false, &offset);
-+            if (unlikely(!rb)) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "No expected RAMBlock found at HVA 0x%"HWADDR_PRIx"",
-+                              (hwaddr)(uintptr_t)iovec[i].iov_base);
-+                return false;
-+            }
-+            gpa = rb->offset + offset;
-+
-+            /* Search IOVA->GPA tree */
-+            needle = (DMAMap) {
-+                .translated_addr = gpa,
-+                .size = iovec[i].iov_len,
-+            };
-+            map = vhost_iova_gpa_tree_find_iova(svq->iova_tree, &needle);
-+        } else {
-+            /* Search IOVA->HVA tree */
-+            needle = (DMAMap) {
-+                .translated_addr = (hwaddr)(uintptr_t)iovec[i].iov_base,
-+                .size = iovec[i].iov_len,
-+            };
-+            map = vhost_iova_tree_find_iova(svq->iova_tree, &needle);
-+        }
- 
--        const DMAMap *map = vhost_iova_tree_find_iova(svq->iova_tree, &needle);
-         /*
-          * Map cannot be NULL since iova map contains all guest space and
-          * qemu already has a physical address mapped
-@@ -132,12 +164,14 @@ static bool vhost_svq_translate_addr(const VhostShadowVirtqueue *svq,
-  * @num: iovec length
-  * @more_descs: True if more descriptors come in the chain
-  * @write: True if they are writeable descriptors
-+ * @is_guest_memory: True if iovec is backed by guest memory
-  *
-  * Return true if success, false otherwise and print error.
-  */
- static bool vhost_svq_vring_write_descs(VhostShadowVirtqueue *svq, hwaddr *sg,
-                                         const struct iovec *iovec, size_t num,
--                                        bool more_descs, bool write)
-+                                        bool more_descs, bool write,
-+                                        bool is_guest_memory)
- {
-     uint16_t i = svq->free_head, last = svq->free_head;
-     unsigned n;
-@@ -149,7 +183,7 @@ static bool vhost_svq_vring_write_descs(VhostShadowVirtqueue *svq, hwaddr *sg,
-         return true;
-     }
- 
--    ok = vhost_svq_translate_addr(svq, sg, iovec, num);
-+    ok = vhost_svq_translate_addr(svq, sg, iovec, num, is_guest_memory);
-     if (unlikely(!ok)) {
-         return false;
-     }
-@@ -175,7 +209,7 @@ static bool vhost_svq_vring_write_descs(VhostShadowVirtqueue *svq, hwaddr *sg,
- static bool vhost_svq_add_split(VhostShadowVirtqueue *svq,
-                                 const struct iovec *out_sg, size_t out_num,
-                                 const struct iovec *in_sg, size_t in_num,
--                                unsigned *head)
-+                                unsigned *head, bool is_guest_memory)
- {
-     unsigned avail_idx;
-     vring_avail_t *avail = svq->vring.avail;
-@@ -192,12 +226,13 @@ static bool vhost_svq_add_split(VhostShadowVirtqueue *svq,
-     }
- 
-     ok = vhost_svq_vring_write_descs(svq, sgs, out_sg, out_num, in_num > 0,
--                                     false);
-+                                     false, is_guest_memory);
-     if (unlikely(!ok)) {
-         return false;
-     }
- 
--    ok = vhost_svq_vring_write_descs(svq, sgs, in_sg, in_num, false, true);
-+    ok = vhost_svq_vring_write_descs(svq, sgs, in_sg, in_num, false, true,
-+                                     is_guest_memory);
-     if (unlikely(!ok)) {
-         return false;
-     }
-@@ -253,12 +288,14 @@ int vhost_svq_add(VhostShadowVirtqueue *svq, const struct iovec *out_sg,
-     unsigned qemu_head;
-     unsigned ndescs = in_num + out_num;
-     bool ok;
-+    bool is_guest_memory = (elem != NULL) ? true : false;
- 
-     if (unlikely(ndescs > vhost_svq_available_slots(svq))) {
-         return -ENOSPC;
-     }
- 
--    ok = vhost_svq_add_split(svq, out_sg, out_num, in_sg, in_num, &qemu_head);
-+    ok = vhost_svq_add_split(svq, out_sg, out_num, in_sg, in_num, &qemu_head,
-+                             is_guest_memory);
-     if (unlikely(!ok)) {
-         return -EINVAL;
-     }
+The last HVA range [0x7f7903ea0000, 0x7f7903ec0000) is contained within
+the first HVA range [0x7f7903e00000, 0x7f7983e00000). Despite this, the
+GPA ranges for the first and third mappings don't overlap, so the guest
+sees them as different physical memory regions.
+
+So, for example, say we're given an HVA of 0x7f7903eb0000 when we go to
+unmap the mapping associated with this address. This HVA technically
+fits in the first and third mapped HVA ranges.
+
+When we go to search the IOVA->HVA tree, we'll stop at the first mapping
+whose HVA range accommodates our given HVA. Given that IOVATrees are
+GTrees which are balanced binary red-black trees, the search will stop
+at the first mapping, which has an HVA range of [0x7f7903e00000,
+0x7f7983e00000).
+
+However, the correct mapping to remove in this case is the third mapping
+because the HVA to GPA translation would result in a GPA of 0xfedb0000,
+which only fits in the third mapping's GPA range.
+
+To avoid this issue, we can create a IOVA->GPA tree for guest memory
+mappings and use the GPA to find the correct IOVA translation, as GPAs
+wont overlap and will always translate to the correct IOVA.
+
+--------
+This series is a different approach of [1] and is based off of [2],
+where this issue was originally discovered.
+
+RFC v2:
+-------
+ * Don't decouple IOVA allocator.
+ * Build a IOVA->GPA tree (instead of GPA->IOVA tree).
+ * Remove IOVA-only tree and keep the full IOVA->HVA tree.
+ * Only search through RAMBlocks when we know the HVA is backed by
+   guest memory.
+ * Slight rewording of function names.
+
+RFC v1:
+-------
+ * Alternative approach of [1].
+ * First attempt to address this issue found in [2].
+
+[1] https://lore.kernel.org/qemu-devel/20240410100345.389462-1-eperezma@redhat.com
+[2] https://lore.kernel.org/qemu-devel/20240201180924.487579-1-eperezma@redhat.com
+
+
+Jonah Palmer (2):
+  vhost-vdpa: Implement IOVA->GPA tree
+  vhost-svq: Translate guest-backed memory with IOVA->GPA tree
+
+ hw/virtio/vhost-iova-tree.c        | 78 ++++++++++++++++++++++++++++--
+ hw/virtio/vhost-iova-tree.h        |  5 ++
+ hw/virtio/vhost-shadow-virtqueue.c | 61 ++++++++++++++++++-----
+ hw/virtio/vhost-vdpa.c             | 20 +++++---
+ 4 files changed, 141 insertions(+), 23 deletions(-)
+
 -- 
 2.43.5
 
