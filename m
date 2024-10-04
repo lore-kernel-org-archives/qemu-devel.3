@@ -4,65 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C98ECFA776
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 12:45:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15BA4CFA773
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 12:45:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swhg0-0004Vu-Uj; Fri, 04 Oct 2024 08:44:56 -0400
+	id 1swhg2-0004Wd-0e; Fri, 04 Oct 2024 08:44:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1swhfz-0004Vc-Lr
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 08:44:55 -0400
+ id 1swhg0-0004Vl-3T
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 08:44:56 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1swhfx-0005EQ-Ss
+ id 1swhfy-0005EU-9k
  for qemu-devel@nongnu.org; Fri, 04 Oct 2024 08:44:55 -0400
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 494CMX5s026710;
- Fri, 4 Oct 2024 12:44:50 GMT
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 494CMZbO000873;
+ Fri, 4 Oct 2024 12:44:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=corp-2023-11-20; bh=ZRvDUFA2jmi6uR
- QiaHXn3nIiJrvVTTmwCd4QFgfHhwo=; b=Yz86ICTktFi3X+dPJ02EwHeHr9MBoL
- Mbuoj2iV9kSbx7fvYPTV7IERsC109ulOEWyt32+ivQUtB8PO8YbtpQnRtQ30GTX4
- hejZrsTg+WP+lSU4ZoRnfUUY6jHoGG/6ivuXLHwQQhpgQZegD3epIiQXx2B8k8J9
- +8jnlFHOFmbl3twza+t+nTihGZLDVkMCiu00j+kxGXOoInPlf5WGVS/OQQm50mOR
- DTewJmPUt5PZqI8nUHVPnAZaWQi5/NHXOekCR/OVzyGpWAi8TpAwH6h760pZgdDM
- Fo8enTvArhAeR42xSRShRyhEooR1rhBuf30C0Mb+p7N7lhVZD9ZHcQsQ==
+ from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding; s=corp-2023-11-20; bh=x
+ tR5OwVYJBoZ58v61LyRSYl31KA/FDiR+Fq3tzLMaJQ=; b=PMFf/lE0kQXkO8IxU
+ LE2qjUT87PgfV50EUBug7cRpE/19FSRVqaGWjQtNzOhKGv1Ry9B2CshOjV1nPysn
+ vBa4g38a0uB80y81WN4DTcFlxyR7G1nYEtF+LaSZKsQLQ8g0NpAn4fZfLBw30xum
+ owm8sdUgwi8mfpSZuUK8Qa56cBK9vA3GX2R+WaEKke41aGxH0rRkRWb2w5VfitOW
+ GODghon/qaNA7mYilM/xE9W7us90g8u3tjQZtj5B0bHrBI9Hwb18n1GUgiD9yF87
+ 8c/qpdYSBH7ocfb98q03E9IQdMVmQea7wAGRBOAHV5SWGhGxRHIx/ZHPmKp6GwFu
+ X3HUA==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4220489htq-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42204b1hnk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 04 Oct 2024 12:44:49 +0000 (GMT)
+ Fri, 04 Oct 2024 12:44:51 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 494BS14I005858; Fri, 4 Oct 2024 12:44:49 GMT
+ with ESMTP id 494BDCwF005916; Fri, 4 Oct 2024 12:44:50 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 422056fcf1-1
+ 422056fcfh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 04 Oct 2024 12:44:48 +0000
+ Fri, 04 Oct 2024 12:44:50 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 494Cimo2020535;
- Fri, 4 Oct 2024 12:44:48 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 494Cimo4020535;
+ Fri, 4 Oct 2024 12:44:49 GMT
 Received: from jonah-ol8.us.oracle.com (dhcp-10-65-167-128.vpn.oracle.com
  [10.65.167.128])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 422056fce8-1; Fri, 04 Oct 2024 12:44:48 +0000
+ 422056fce8-2; Fri, 04 Oct 2024 12:44:49 +0000
 From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: eperezma@redhat.com, mst@redhat.com, leiyang@redhat.com, peterx@redhat.com,
  dtatulea@nvidia.com, jasowang@redhat.com, si-wei.liu@oracle.com,
  boris.ostrovsky@oracle.com, jonah.palmer@oracle.com
-Subject: [RFC v2 0/2] Handling aliased guest memory maps in vhost-vDPA SVQs
-Date: Fri,  4 Oct 2024 08:44:40 -0400
-Message-ID: <20241004124445.3802090-1-jonah.palmer@oracle.com>
+Subject: [RFC v2 1/2] vhost-vdpa: Implement IOVA->GPA tree
+Date: Fri,  4 Oct 2024 08:44:41 -0400
+Message-ID: <20241004124445.3802090-2-jonah.palmer@oracle.com>
 X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20241004124445.3802090-1-jonah.palmer@oracle.com>
+References: <20241004124445.3802090-1-jonah.palmer@oracle.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
@@ -70,11 +73,11 @@ X-Proofpoint-Virus-Version: vendor=baseguard
  definitions=2024-10-04_10,2024-10-03_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  phishscore=0
- suspectscore=0 adultscore=0 bulkscore=0 mlxscore=0 mlxlogscore=832
+ suspectscore=0 adultscore=0 bulkscore=0 mlxscore=0 mlxlogscore=999
  spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2409260000 definitions=main-2410040093
-X-Proofpoint-ORIG-GUID: vJYRizNJyVWOBzGThD2n1hpfvxcLkLmW
-X-Proofpoint-GUID: vJYRizNJyVWOBzGThD2n1hpfvxcLkLmW
+X-Proofpoint-ORIG-GUID: L0fH6H537sOoxBFpvsDQyAMpYkqJuyaZ
+X-Proofpoint-GUID: L0fH6H537sOoxBFpvsDQyAMpYkqJuyaZ
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -100,75 +103,211 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The guest may overlap guest memory regions when mapping IOVA to HVA
-translations in the IOVA->HVA tree. This means that different HVAs, that
-correspond to different guest memory region mappings, may translate to
-the same IOVA. This can cause conflicts when a mapping is incorrectly
-referenced.
+Implements the IOVA->GPA tree for handling mapping, unmapping, and
+translations for guest memory regions.
 
-For example, consider this example of mapped guest memory regions:
+When the guest has overlapping memory regions, an HVA to IOVA translation
+may return an incorrect IOVA when searching the IOVA->HVA tree. This is
+due to one HVA range being contained (overlapping) in another HVA range
+in the IOVA->HVA tree. By creating an IOVA->GPA tree, we can use GPAs to
+translate and find the correct IOVA for guest memory regions.
 
-              HVA                            GPA                         IOVA
--------------------------------  --------------------------- ----------------------------
-[0x7f7903e00000, 0x7f7983e00000) [0x0, 0x80000000)           [0x1000, 0x80000000)
-[0x7f7983e00000, 0x7f9903e00000) [0x100000000, 0x2080000000) [0x80001000, 0x2000001000)
-[0x7f7903ea0000, 0x7f7903ec0000) [0xfeda0000, 0xfedc0000)    [0x2000001000, 0x2000021000)
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+---
+ hw/virtio/vhost-iova-tree.c | 78 +++++++++++++++++++++++++++++++++++--
+ hw/virtio/vhost-iova-tree.h |  5 +++
+ hw/virtio/vhost-vdpa.c      | 20 ++++++----
+ 3 files changed, 92 insertions(+), 11 deletions(-)
 
-The last HVA range [0x7f7903ea0000, 0x7f7903ec0000) is contained within
-the first HVA range [0x7f7903e00000, 0x7f7983e00000). Despite this, the
-GPA ranges for the first and third mappings don't overlap, so the guest
-sees them as different physical memory regions.
-
-So, for example, say we're given an HVA of 0x7f7903eb0000 when we go to
-unmap the mapping associated with this address. This HVA technically
-fits in the first and third mapped HVA ranges.
-
-When we go to search the IOVA->HVA tree, we'll stop at the first mapping
-whose HVA range accommodates our given HVA. Given that IOVATrees are
-GTrees which are balanced binary red-black trees, the search will stop
-at the first mapping, which has an HVA range of [0x7f7903e00000,
-0x7f7983e00000).
-
-However, the correct mapping to remove in this case is the third mapping
-because the HVA to GPA translation would result in a GPA of 0xfedb0000,
-which only fits in the third mapping's GPA range.
-
-To avoid this issue, we can create a IOVA->GPA tree for guest memory
-mappings and use the GPA to find the correct IOVA translation, as GPAs
-wont overlap and will always translate to the correct IOVA.
-
---------
-This series is a different approach of [1] and is based off of [2],
-where this issue was originally discovered.
-
-RFC v2:
--------
- * Don't decouple IOVA allocator.
- * Build a IOVA->GPA tree (instead of GPA->IOVA tree).
- * Remove IOVA-only tree and keep the full IOVA->HVA tree.
- * Only search through RAMBlocks when we know the HVA is backed by
-   guest memory.
- * Slight rewording of function names.
-
-RFC v1:
--------
- * Alternative approach of [1].
- * First attempt to address this issue found in [2].
-
-[1] https://lore.kernel.org/qemu-devel/20240410100345.389462-1-eperezma@redhat.com
-[2] https://lore.kernel.org/qemu-devel/20240201180924.487579-1-eperezma@redhat.com
-
-
-Jonah Palmer (2):
-  vhost-vdpa: Implement IOVA->GPA tree
-  vhost-svq: Translate guest-backed memory with IOVA->GPA tree
-
- hw/virtio/vhost-iova-tree.c        | 78 ++++++++++++++++++++++++++++--
- hw/virtio/vhost-iova-tree.h        |  5 ++
- hw/virtio/vhost-shadow-virtqueue.c | 61 ++++++++++++++++++-----
- hw/virtio/vhost-vdpa.c             | 20 +++++---
- 4 files changed, 141 insertions(+), 23 deletions(-)
-
+diff --git a/hw/virtio/vhost-iova-tree.c b/hw/virtio/vhost-iova-tree.c
+index 3d03395a77..e33fd56225 100644
+--- a/hw/virtio/vhost-iova-tree.c
++++ b/hw/virtio/vhost-iova-tree.c
+@@ -28,12 +28,15 @@ struct VhostIOVATree {
+ 
+     /* IOVA address to qemu memory maps. */
+     IOVATree *iova_taddr_map;
++
++    /* IOVA address to guest memory maps. */
++    IOVATree *iova_gpa_map;
+ };
+ 
+ /**
+- * Create a new IOVA tree
++ * Create a new VhostIOVATree
+  *
+- * Returns the new IOVA tree
++ * Returns the new VhostIOVATree
+  */
+ VhostIOVATree *vhost_iova_tree_new(hwaddr iova_first, hwaddr iova_last)
+ {
+@@ -44,6 +47,7 @@ VhostIOVATree *vhost_iova_tree_new(hwaddr iova_first, hwaddr iova_last)
+     tree->iova_last = iova_last;
+ 
+     tree->iova_taddr_map = iova_tree_new();
++    tree->iova_gpa_map = iova_tree_new();
+     return tree;
+ }
+ 
+@@ -53,6 +57,7 @@ VhostIOVATree *vhost_iova_tree_new(hwaddr iova_first, hwaddr iova_last)
+ void vhost_iova_tree_delete(VhostIOVATree *iova_tree)
+ {
+     iova_tree_destroy(iova_tree->iova_taddr_map);
++    iova_tree_destroy(iova_tree->iova_gpa_map);
+     g_free(iova_tree);
+ }
+ 
+@@ -71,7 +76,7 @@ const DMAMap *vhost_iova_tree_find_iova(const VhostIOVATree *tree,
+ }
+ 
+ /**
+- * Allocate a new mapping
++ * Allocate a new mapping in the IOVA->HVA tree
+  *
+  * @tree: The iova tree
+  * @map: The iova map
+@@ -108,3 +113,70 @@ void vhost_iova_tree_remove(VhostIOVATree *iova_tree, DMAMap map)
+ {
+     iova_tree_remove(iova_tree->iova_taddr_map, map);
+ }
++
++/**
++ * Find the IOVA address stored from a guest memory address
++ *
++ * @tree: The VhostIOVATree
++ * @map: The map with the guest memory address
++ *
++ * Return the stored mapping, or NULL if not found.
++ */
++const DMAMap *vhost_iova_gpa_tree_find_iova(const VhostIOVATree *tree,
++                                            const DMAMap *map)
++{
++    return iova_tree_find_iova(tree->iova_gpa_map, map);
++}
++
++/**
++ * Allocate new mappings in the IOVA->HVA & IOVA->GPA trees
++ *
++ * @tree: The VhostIOVATree
++ * @map: The iova map
++ * @gpa: The guest physical address (GPA)
++ *
++ * Returns:
++ * - IOVA_OK if the map fits both containers
++ * - IOVA_ERR_INVALID if the map does not make sense (like size overflow)
++ * - IOVA_ERR_NOMEM if the IOVA->HVA tree cannot allocate more space
++ *
++ * It returns an assigned iova in map->iova if return value is IOVA_OK.
++ */
++int vhost_iova_tree_map_alloc_gpa(VhostIOVATree *tree, DMAMap *map, hwaddr gpa)
++{
++    int ret;
++
++    /* Some vhost devices don't like addr 0. Skip first page */
++    hwaddr iova_first = tree->iova_first ?: qemu_real_host_page_size();
++
++    if (map->translated_addr + map->size < map->translated_addr ||
++        map->perm == IOMMU_NONE) {
++        return IOVA_ERR_INVALID;
++    }
++
++    /* Allocate a node in the IOVA->HVA tree */
++    ret = iova_tree_alloc_map(tree->iova_taddr_map, map, iova_first,
++                              tree->iova_last);
++    if (unlikely(ret != IOVA_OK)) {
++        return ret;
++    }
++
++    /* Insert a node in the IOVA->GPA tree */
++    map->translated_addr = gpa;
++    return iova_tree_insert(tree->iova_gpa_map, map);
++}
++
++/**
++ * Remove existing mappings from the IOVA->HVA & IOVA->GPA trees
++ *
++ * @iova_tree: The VhostIOVATree
++ * @map: The map to remove
++ */
++void vhost_iova_tree_remove_gpa(VhostIOVATree *iova_tree, DMAMap map)
++{
++    /* Remove the existing mapping from the IOVA->GPA tree */
++    iova_tree_remove(iova_tree->iova_gpa_map, map);
++
++    /* Remove the corresponding mapping from the IOVA->HVA tree */
++    iova_tree_remove(iova_tree->iova_taddr_map, map);
++}
+diff --git a/hw/virtio/vhost-iova-tree.h b/hw/virtio/vhost-iova-tree.h
+index 4adfd79ff0..511c6d18ae 100644
+--- a/hw/virtio/vhost-iova-tree.h
++++ b/hw/virtio/vhost-iova-tree.h
+@@ -23,5 +23,10 @@ const DMAMap *vhost_iova_tree_find_iova(const VhostIOVATree *iova_tree,
+                                         const DMAMap *map);
+ int vhost_iova_tree_map_alloc(VhostIOVATree *iova_tree, DMAMap *map);
+ void vhost_iova_tree_remove(VhostIOVATree *iova_tree, DMAMap map);
++const DMAMap *vhost_iova_gpa_tree_find_iova(const VhostIOVATree *iova_tree,
++                                            const DMAMap *map);
++int vhost_iova_tree_map_alloc_gpa(VhostIOVATree *iova_tree, DMAMap *map,
++                                  hwaddr gpa);
++void vhost_iova_tree_remove_gpa(VhostIOVATree *iova_tree, DMAMap map);
+ 
+ #endif
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index 3cdaa12ed5..591ff426e7 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -365,9 +365,16 @@ static void vhost_vdpa_listener_region_add(MemoryListener *listener,
+         mem_region.size = int128_get64(llsize) - 1,
+         mem_region.perm = IOMMU_ACCESS_FLAG(true, section->readonly),
+ 
+-        r = vhost_iova_tree_map_alloc(s->iova_tree, &mem_region);
++        r = vhost_iova_tree_map_alloc_gpa(s->iova_tree, &mem_region,
++                                          section->offset_within_address_space);
+         if (unlikely(r != IOVA_OK)) {
+             error_report("Can't allocate a mapping (%d)", r);
++
++            /* Insertion to IOVA->GPA tree failed */
++            if (mem_region.translated_addr ==
++                section->offset_within_address_space) {
++                goto fail_map;
++            }
+             goto fail;
+         }
+ 
+@@ -386,7 +393,7 @@ static void vhost_vdpa_listener_region_add(MemoryListener *listener,
+ 
+ fail_map:
+     if (s->shadow_data) {
+-        vhost_iova_tree_remove(s->iova_tree, mem_region);
++        vhost_iova_tree_remove_gpa(s->iova_tree, mem_region);
+     }
+ 
+ fail:
+@@ -440,21 +447,18 @@ static void vhost_vdpa_listener_region_del(MemoryListener *listener,
+ 
+     if (s->shadow_data) {
+         const DMAMap *result;
+-        const void *vaddr = memory_region_get_ram_ptr(section->mr) +
+-            section->offset_within_region +
+-            (iova - section->offset_within_address_space);
+         DMAMap mem_region = {
+-            .translated_addr = (hwaddr)(uintptr_t)vaddr,
++            .translated_addr = section->offset_within_address_space,
+             .size = int128_get64(llsize) - 1,
+         };
+ 
+-        result = vhost_iova_tree_find_iova(s->iova_tree, &mem_region);
++        result = vhost_iova_gpa_tree_find_iova(s->iova_tree, &mem_region);
+         if (!result) {
+             /* The memory listener map wasn't mapped */
+             return;
+         }
+         iova = result->iova;
+-        vhost_iova_tree_remove(s->iova_tree, *result);
++        vhost_iova_tree_remove_gpa(s->iova_tree, *result);
+     }
+     vhost_vdpa_iotlb_batch_begin_once(s);
+     /*
 -- 
 2.43.5
 
