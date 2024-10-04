@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 278C0CF8840
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:41:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23B48CF884D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:41:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swlLa-0002Du-79; Fri, 04 Oct 2024 12:40:06 -0400
+	id 1swlIr-0002p3-F9; Fri, 04 Oct 2024 12:37:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swlLQ-00020Z-Ty
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 12:39:59 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swlHh-0001Kc-Un
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 12:36:09 -0400
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swlLM-0006qf-5H
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 12:39:54 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2fac3f20f1dso27049821fa.3
- for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 09:39:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swlHe-0006b3-TW
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 12:36:05 -0400
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2fad100dd9eso26961711fa.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 09:36:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728059990; x=1728664790; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=OduKhiXCyYFySIBtIZ3CtR/jspZalHt3tyCkSIlunGo=;
- b=ixBaspbj/nqI6/gBTmYRt/ITBm6V+/tvnm0rfIqDvC6ESzzSLGi5bKnu0BVlN/ndT8
- whVsRJtYDlVq7kcBHdRkT1VkYwzlyv/asW9CqoijTy8nyPT6BC92aYnEDZl36dfFZEoC
- q+DFoIEpGLrb7njiIisUBraNNjabIN96oslB554cI7g+AFL+74IAx3vqXba+Ma5SfdJ+
- ny1ZuZ/WkmyEqOn+SGS0LaKlA/DDks2CgAUNhOYqgkurlQ3hR516fWntkWfmVtwxM6Xi
- Ue7UkoMOPZjCDwXzuEwJ7ChCtJRAl/1Spgem7VUhki55xqvVaN1mIidw/avPInW/1I3K
- K3Sw==
+ d=linaro.org; s=google; t=1728059761; x=1728664561; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OORWjVjOZFqIjyOcIzgstQ5I3F8E3+RG/c415FzxU5E=;
+ b=TyBD6zukJ3Kij6T6j4InFLVBuqL1a3MAlIXxjuTQxV+6Zu/i5pii/71GF6SuoJ+gHs
+ 6QMFLfe50P5cywZ3AfnS0b3MrU/zpe4boKYgyuQCLnhZ86zQDyUopGvPTempbvuTtX3u
+ yGoHsb/NMoF7QWg0nrtr8sgTIQMqwDljtbUZkA1CWOe6mBliX7MDXl0mhwuffiatMGsy
+ Gp0TqnRmuZWfmz3dtoIYm8KsW21lMB1QrvmvvYFN0qEXcXfkBwVBscjRcZ7/SFIFj+e5
+ gAtkaxlPV5eyFdzv75CRKZMoZmWUeB3q86j4plAg9j1L4r/gP8E6dgH9XNs+Nz2Nm4zO
+ 3RQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728059990; x=1728664790;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OduKhiXCyYFySIBtIZ3CtR/jspZalHt3tyCkSIlunGo=;
- b=mWG+S4IDS3v5IFMNx3GI1zAwAQAasATzr+JzbRHJaHJGMTpTPoKyh2TMG0mWEHvQvm
- jOZq8HYae2wEUaHRZfennRR2mGm8FuhHtB/Wj3lnc4Wy5Q0xkrwvgSZnWmk9avylglX8
- lL3R+eyt6e9hqjSz7/2+xBIM5M+5F5tMQvxkh5HhLNd6mDyootxpdLAEaZMxQ/A0oPIn
- 7QorolU+D/5cWnRP/wNp64xOs4S7dxZuLHEbRQ24Td60uu0ebTRBKZxqpCdW3zqiNRkB
- G1ymz5pu9PdhEUup3XJpDIrtGbYyjrzf44hgzSm3J5ZCmgjcVnNKwJCL8ho4bX8nrtlT
- w+sA==
-X-Gm-Message-State: AOJu0YwRiGxtfFrjRA7D3/qcKrO0bX5x70giaGvfChh7Ha5zceirXV3G
- +wdCQnmm7ZckFIom5VOxGUIk2l5Jizcjn9UxoLVGcscylXlAa3FgsYd3tm7E+EXlNFRMZGwtRUf
- fmzbP1Q==
-X-Google-Smtp-Source: AGHT+IFN41KCa3rQKIQLm9FRgNXP9TI22UuiVASOiLeECzngWfDBpupAX0t2k5IkMlSp/I1qiUwNpw==
-X-Received: by 2002:a2e:511a:0:b0:2ef:c281:54f7 with SMTP id
- 38308e7fff4ca-2faf3d6e4a7mr14502871fa.37.1728059989804; 
- Fri, 04 Oct 2024 09:39:49 -0700 (PDT)
-Received: from [192.168.132.175] ([91.223.100.150])
+ d=1e100.net; s=20230601; t=1728059761; x=1728664561;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=OORWjVjOZFqIjyOcIzgstQ5I3F8E3+RG/c415FzxU5E=;
+ b=X/ur9Y0RuVSfMcEM2GTCwL8yFDVdeZydpWTkKWJiiF+uN1wuR/INrGZiBdxBgxIxXW
+ /wgT/68GuTc60B7Sq+EgVKXC6nidO7/CB9pODa2pNpkj5Wf3waAb2RshQoIXiXKW8JJI
+ vf1miI34CmcfWQdsaC0EMmXsmEI+YJdSZeAVJXkYSklRoKopG9rkLA6rPRfirjIhJQWZ
+ wep0BHa+1VUAGEUkYTB66T1d2v2C87tKgFXLqz8y5ALiabaHCG56iRKJUV4CVa/RxUJs
+ Pjp0I8+oJ5QpbzSNH079bjxEeY2GVYdf9m03xK/gmBBocfqZfVZWqDTqhe+JZbY/fsOp
+ VgmA==
+X-Gm-Message-State: AOJu0YxTlcj3fZHWLKNRVNuBJdMSWeKdudYtcrydEtsIuE5bbH/BTZN/
+ VjWPM/bdGXmtFa/kqePTg8mZN344+Mdpu6Q8kq7Fn1Oeot2+FSZvWhmEhdjIRMRQm4xWzpDEk0/
+ 7Xl/RTQ==
+X-Google-Smtp-Source: AGHT+IGThjDUuL9uRpDV3ZvuaVWWraIJPbDLq54yh68I9sL1Oe1J7rZUEDrM7ohnD0TaA40IBq0wDg==
+X-Received: by 2002:a2e:a543:0:b0:2fa:c5b0:3994 with SMTP id
+ 38308e7fff4ca-2faf3c60358mr21419471fa.13.1728059760737; 
+ Fri, 04 Oct 2024 09:36:00 -0700 (PDT)
+Received: from localhost.localdomain ([91.223.100.150])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2faf9ab2b19sm222001fa.5.2024.10.04.09.39.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Oct 2024 09:39:49 -0700 (PDT)
-Message-ID: <ee7d7f37-50d8-4cb1-a95e-1214f9ac8f0a@linaro.org>
-Date: Fri, 4 Oct 2024 13:39:43 -0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/25] misc: Use explicit endian LD/ST API
+ 38308e7fff4ca-2faf9b336c3sm214031fa.113.2024.10.04.09.35.54
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 04 Oct 2024 09:35:59 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-ppc@nongnu.org
-References: <20241004163042.85922-1-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-ppc@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 21/25] target/hppa: Use explicit big-endian LD/ST API
+Date: Fri,  4 Oct 2024 13:30:37 -0300
+Message-ID: <20241004163042.85922-22-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241004163042.85922-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+References: <20241004163042.85922-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x230.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,113 +97,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/10/24 18:30, Philippe Mathieu-Daudé wrote:
-> For targets (or HW) which are only built for a particular
-> endianness, the generic LD/ST helpers are defined as the
-> target endianness variant. For example, on big-endian
-> targets, stl_p() is equivalent of stl_be_p().
-> 
-> This series replaces in bulk these LD/ST calls.
+The HPPA architecture uses big endianness. Directly use
+the big-endian LD/ST API.
 
-This is the first part where we only convert the targets
-built for a single endianness.
+Mechanical change using:
 
-The rest (MIPS, ARM, PPC, MicroBlaze and Xtensa) will be
-handled in different series.
+  $ end=be; \
+    for acc in uw w l q tul; do \
+      sed -i -e "s/ld${acc}_p(/ld${acc}_${end}_p(/" \
+             -e "s/st${acc}_p(/st${acc}_${end}_p(/" \
+        $(git grep -wlE '(ld|st)t?u?[wlq]_p' target/hppa/); \
+    done
 
-I'm keeping hw/virtio/virtio-config-io.c last. Possibly
-current API will then be restricted to user-emu & system/
-to avoid further uses.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/hppa/gdbstub.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-$ git grep -wlE '(ld|st)t?u?[wlq]_p'
-hw/mips/bootloader.c
-hw/mips/fuloong2e.c
-hw/mips/malta.c
-hw/ppc/spapr.c
-hw/ppc/spapr_vhyp_mmu.c
-target/arm/cpu.c
-target/arm/gdbstub.c
-target/arm/gdbstub64.c
-target/microblaze/gdbstub.c
-target/mips/gdbstub.c
-target/ppc/gdbstub.c
-target/ppc/mmu-hash64.h
-target/xtensa/gdbstub.c
-
-accel/tcg/user-exec.c
-hw/virtio/virtio-config-io.c
-include/exec/cpu-all.h
-include/gdbstub/helpers.h
-monitor/hmp-cmds-target.c
-system/ioport.c
-system/memory_ldst.c.inc
-
-
-> This is helpful for the single binary project where we
-> want to build a single binary for multiple targets of
-> different endianness.
-> 
-> Philippe Mathieu-Daudé (25):
->    gdbstub/helpers: Have ldtul_p() definition use ldn_p()
->    target/hexagon: Replace ldtul_p() -> ldl_p()
->    target/alpha: Replace ldtul_p() -> ldq_p()
->    target/s390x: Replace ldtul_p() -> ldq_p()
->    gdbstub/helpers: Introduce ldtul_$endian_p() helpers
->    target/alpha: Use explicit little-endian LD/ST API
->    target/hexagon: Use explicit little-endian LD/ST API
->    hw/i386: Use explicit little-endian LD/ST API
->    target/i386: Use explicit little-endian LD/ST API
->    target/avr: Use explicit little-endian LD/ST API
->    linux-user/i386: Use explicit little-endian LD/ST API
->    target/loongarch: Use explicit little-endian LD/ST API
->    target/sh4: Use explicit little-endian LD/ST API
->    target/tricore: Use explicit little-endian LD/ST API
->    target/rx: Use explicit little-endian LD/ST API
->    target/riscv: Use explicit little-endian LD/ST API
->    hw/m68k: Use explicit big-endian LD/ST API
->    target/m68k: Use explicit big-endian LD/ST API
->    hw/sparc: Use explicit big-endian LD/ST API
->    target/sparc: Use explicit big-endian LD/ST API
->    target/hppa: Use explicit big-endian LD/ST API
->    hw/s390x: Use explicit big-endian LD/ST API
->    target/s390x: Use explicit big-endian LD/ST API
->    target/openrisc: Use explicit big-endian LD/ST API
->    hw/ppc/e500: Use explicit big-endian LD/ST API
-> 
->   hw/m68k/bootinfo.h                   |  28 ++---
->   include/gdbstub/helpers.h            |   6 +-
->   hw/i386/multiboot.c                  |  36 +++---
->   hw/i386/x86-common.c                 |  26 ++---
->   hw/m68k/mcf5208.c                    |   2 +-
->   hw/m68k/next-cube.c                  |   2 +-
->   hw/m68k/q800.c                       |   4 +-
->   hw/ppc/ppce500_spin.c                |  24 ++--
->   hw/s390x/ipl.c                       |   4 +-
->   hw/s390x/s390-pci-inst.c             | 166 +++++++++++++--------------
->   hw/sparc/leon3.c                     |  42 +++----
->   hw/sparc/sun4m.c                     |   6 +-
->   hw/sparc64/sun4u.c                   |   6 +-
->   linux-user/i386/signal.c             |   4 +-
->   target/alpha/gdbstub.c               |   2 +-
->   target/avr/gdbstub.c                 |   4 +-
->   target/hexagon/gdbstub.c             |  10 +-
->   target/hppa/gdbstub.c                |   2 +-
->   target/i386/gdbstub.c                |  30 ++---
->   target/i386/tcg/sysemu/excp_helper.c |   4 +-
->   target/i386/xsave_helper.c           |  32 +++---
->   target/loongarch/gdbstub.c           |   8 +-
->   target/m68k/gdbstub.c                |   2 +-
->   target/m68k/helper.c                 |  10 +-
->   target/openrisc/gdbstub.c            |   2 +-
->   target/riscv/gdbstub.c               |  14 +--
->   target/rx/cpu.c                      |   2 +-
->   target/rx/gdbstub.c                  |  24 ++--
->   target/s390x/gdbstub.c               |  34 +++---
->   target/s390x/ioinst.c                |   2 +-
->   target/sh4/gdbstub.c                 |  36 +++---
->   target/sparc/gdbstub.c               |   6 +-
->   target/tricore/gdbstub.c             |   2 +-
->   33 files changed, 292 insertions(+), 290 deletions(-)
-> 
+diff --git a/target/hppa/gdbstub.c b/target/hppa/gdbstub.c
+index 0daa52f7af2..537d0d2dfff 100644
+--- a/target/hppa/gdbstub.c
++++ b/target/hppa/gdbstub.c
+@@ -150,7 +150,7 @@ int hppa_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+     CPUHPPAState *env = cpu_env(cs);
+-    uint32_t val = ldl_p(mem_buf);
++    uint32_t val = ldl_be_p(mem_buf);
+ 
+     switch (n) {
+     case 0:
+-- 
+2.45.2
 
 
