@@ -4,144 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F33A1CFA758
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 10:15:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B06DACFA763
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 10:37:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swfKg-00057U-Rc; Fri, 04 Oct 2024 06:14:46 -0400
+	id 1swffY-0007PZ-9X; Fri, 04 Oct 2024 06:36:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1swfKe-00056z-Io
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 06:14:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1swfKc-0004dl-NW
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 06:14:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728036879;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=/Yrb3we+S6ScjEKfW05QRBajlsb0yOe2eeUKGBsOpS8=;
- b=UjOec+kcTXTVb2NX90gfXWuqSwnhLZzC6p/m9mA+2U2XpYjjFH/ksgLNNOQyHOj8XLmDV5
- KpFqWCN77Fnx+rUpwq7j5DCABjRRcQ8GVxsE35rXwLmYn3e0ksfPc3SuYu2mbqplep4Ba5
- +qseOTKtKLZHXZRdEeC+HIo1OO8bn/U=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-449-vUdy22uTPfKZtK1r4etySg-1; Fri, 04 Oct 2024 06:14:38 -0400
-X-MC-Unique: vUdy22uTPfKZtK1r4etySg-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42cae209243so11400735e9.1
- for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 03:14:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1swffX-0007Om-3g
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 06:36:19 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1swffV-0008H3-Cf
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 06:36:18 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5c42e7adbddso2237299a12.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 03:36:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728038174; x=1728642974; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=W9OlicifHtCtS77O14+qa+y/eM2RaCg2lpgZjfc3j5w=;
+ b=Op4rFDWc9ffEV2KNmEaRfu0n9Sq+G61ISttP+Hm/sgupCnYdLIHeY/qv+gf9G4DPE0
+ iwooVcl6KgkS40nGJVt5F/TmYJq2BpmHBEzydFK8RbiVse1AlndF/DhEln4F9sLHa/Qt
+ FP9mlX4G2fORNLNeRxVOihM0ISdqzsVFsVZ0KTjhZ/AUxROeBoAL0V0mkqiQf9ReD+AS
+ rsSThTo6lrShGgrK+0WyCK57TBTZpVur+GTxNYRYPWC+64zj7JNhEbaGXrP/70CdUpg1
+ fnu3u4DDsSMExCZFEMLCubxmTFA9HNSfBgSfhSEH/YImx7dVAFVWjHYo9nQp6SVZRxW3
+ Nkeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728036877; x=1728641677;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=/Yrb3we+S6ScjEKfW05QRBajlsb0yOe2eeUKGBsOpS8=;
- b=E0sVQkjU1JzXPN0n56t5mYC4Pwmo5JpLKyqg/3cRsYg4P4sO+W94q5TjHUcDqPRXKC
- Z5pOUPKHNsH3S7xkKmS18RqrPMOP3arNMVdanXd/BtCwQbwRe1SKv4/S6ZhNg1SKOeIR
- geyMKEPfVitb9oYNBYAUf5HX/V++sYl+emKHvisudFSqMknTs1VgiTF3TRXmK8m3K925
- Pl0OaofVRPWJEx0xMM8oUUsOyyfxqnmoLf+Jphd2xnMVUhtIKqf+U9v7FuLNm9GBP34D
- nvPOdSh6uBfF8xZ2BnURvHN9J8UOZz7VrxHqQePlTWc23mg73Dq9bwVeJ/iEUS92WE0o
- 7eCw==
-X-Gm-Message-State: AOJu0YxXwx/kLA6L3xXvrmRRSE3L76gwCjP8gNa06YTdnY1VnrBuKC/V
- TCeff4IBzEbmHMNaOIzlt7/1uSw9A+DHDFS6EyN9UiMcyH23fabSp8Do4QVPgAV2M2wyLdH++Gw
- A5/RyRH/UXaOR9nai5RxALYiuhPdg/T3J2JNoBDQVfYN1JY9XN6yl
-X-Received: by 2002:a05:600c:3106:b0:426:6876:83bb with SMTP id
- 5b1f17b1804b1-42f85abeb0cmr14069335e9.17.1728036877039; 
- Fri, 04 Oct 2024 03:14:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGumHkbmCnZqoNJmNIdhd7JzaM35u+MbjrvYsj42BpyFPIOnWkfFQcD2fXVEsluf7txYMSAwQ==
-X-Received: by 2002:a05:600c:3106:b0:426:6876:83bb with SMTP id
- 5b1f17b1804b1-42f85abeb0cmr14069065e9.17.1728036876608; 
- Fri, 04 Oct 2024 03:14:36 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c714:d00:a1ab:bff4:268f:d7c5?
- (p200300cbc7140d00a1abbff4268fd7c5.dip0.t-ipconnect.de.
- [2003:cb:c714:d00:a1ab:bff4:268f:d7c5])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d081f74b0sm2969369f8f.16.2024.10.04.03.14.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Oct 2024 03:14:36 -0700 (PDT)
-Message-ID: <2143f803-439e-4b8b-ae92-07caa913d646@redhat.com>
-Date: Fri, 4 Oct 2024 12:14:35 +0200
+ d=1e100.net; s=20230601; t=1728038174; x=1728642974;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=W9OlicifHtCtS77O14+qa+y/eM2RaCg2lpgZjfc3j5w=;
+ b=w3mz5TbaJXkVq1E2/CP7orH2Rm+XXvB25QmqIsdlwmZbujFlB47N+zbJUdvD1ZS4uN
+ qhFo37kyMJEBRyp5GgzW4clLnH9/7xNR37C3sGIbudni94+6EGchhTqKDjvwf5MHm5WX
+ fL/otZHCF2bf4aMk4l10nNaUne7uofwx5ePMYLo66NeCd2kSWg311omkebKoWBscTp9D
+ hEchGDFWen+TL3mCMtkjM5ENPomaBD8r6qpEDdhmK9uEZod+ckxvbm1vahMMCfvwEj2B
+ 9ZGhOggsNF9kiv8v5n5AZxI8VuqPzvIIRczmp9W99YxVEMCr/TGj4zEgKJj0rw9ctPTe
+ 8JiA==
+X-Gm-Message-State: AOJu0YyOP4BrAhuChycOY/2zvKU2DmFGWrXWeSfzbvnGzxg0x23NFF0x
+ +gko2SJB+Yx32ztolCszBki5G30ZQ4w2tIfzsR3EjPHDdVk57vtjUZ7lNd3mUyYx3TEwDPJEnuP
+ Xdg2lSL18U6JbCziKWkcbnBfvBebL2ZHbTj36MQ==
+X-Google-Smtp-Source: AGHT+IFEjbQaWuCjcKs/2KwarwPrZdoRWb13CGnS2mZ64GJMUUoDKl85FmqyvSkUUOMW7EHBWEZTeMytYCPaH6HMwAA=
+X-Received: by 2002:a05:6402:440a:b0:5c8:8db1:1d55 with SMTP id
+ 4fb4d7f45d1cf-5c8d2e3a6b2mr1657000a12.10.1728038174213; Fri, 04 Oct 2024
+ 03:36:14 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 01/13] machine: alloc-anon option
-To: Peter Xu <peterx@redhat.com>, Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>
-References: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
- <1727725244-105198-2-git-send-email-steven.sistare@oracle.com>
- <Zv7C7MeVP2X8bEJU@x1n>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <Zv7C7MeVP2X8bEJU@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20240923035632.81304-1-sebastian.huber@embedded-brains.de>
+ <20240923035632.81304-2-sebastian.huber@embedded-brains.de>
+ <CAFEAcA8Wf-PzAC-YGdma3YVETyuatLJHmvjrrb_kG2NjDSGs+Q@mail.gmail.com>
+ <1809049101.17000.1728005051804.JavaMail.zimbra@embedded-brains.de>
+In-Reply-To: <1809049101.17000.1728005051804.JavaMail.zimbra@embedded-brains.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 4 Oct 2024 11:36:01 +0100
+Message-ID: <CAFEAcA_zcdNaR5NTnTLmCZ5EgzBb=mFqqpLQKergk7z80kaEZA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] hw/arm/boot: Use hooks if PSCI is disabled
+To: Sebastian Huber <sebastian.huber@embedded-brains.de>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,186 +92,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03.10.24 18:14, Peter Xu wrote:
-> On Mon, Sep 30, 2024 at 12:40:32PM -0700, Steve Sistare wrote:
->> Allocate anonymous memory using mmap MAP_ANON or memfd_create depending
->> on the value of the anon-alloc machine property.  This option applies to
->> memory allocated as a side effect of creating various devices. It does
->> not apply to memory-backend-objects, whether explicitly specified on
->> the command line, or implicitly created by the -m command line option.
->>
->> The memfd option is intended to support new migration modes, in which the
->> memory region can be transferred in place to a new QEMU process, by sending
->> the memfd file descriptor to the process.  Memory contents are preserved,
->> and if the mode also transfers device descriptors, then pages that are
->> locked in memory for DMA remain locked.  This behavior is a pre-requisite
->> for supporting vfio, vdpa, and iommufd devices with the new modes.
->>
->> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> 
-> [Igor seems missing in the loop; added]
-> 
->> ---
->>   hw/core/machine.c   | 19 +++++++++++++++++++
->>   include/hw/boards.h |  1 +
->>   qapi/machine.json   | 14 ++++++++++++++
->>   qemu-options.hx     | 11 +++++++++++
->>   system/physmem.c    | 35 +++++++++++++++++++++++++++++++++++
->>   system/trace-events |  3 +++
->>   6 files changed, 83 insertions(+)
->>
->> diff --git a/hw/core/machine.c b/hw/core/machine.c
->> index adaba17..a89a32b 100644
->> --- a/hw/core/machine.c
->> +++ b/hw/core/machine.c
->> @@ -460,6 +460,20 @@ static void machine_set_mem_merge(Object *obj, bool value, Error **errp)
->>       ms->mem_merge = value;
->>   }
->>   
->> +static int machine_get_anon_alloc(Object *obj, Error **errp)
->> +{
->> +    MachineState *ms = MACHINE(obj);
->> +
->> +    return ms->anon_alloc;
->> +}
->> +
->> +static void machine_set_anon_alloc(Object *obj, int value, Error **errp)
->> +{
->> +    MachineState *ms = MACHINE(obj);
->> +
->> +    ms->anon_alloc = value;
->> +}
->> +
->>   static bool machine_get_usb(Object *obj, Error **errp)
->>   {
->>       MachineState *ms = MACHINE(obj);
->> @@ -1078,6 +1092,11 @@ static void machine_class_init(ObjectClass *oc, void *data)
->>       object_class_property_set_description(oc, "mem-merge",
->>           "Enable/disable memory merge support");
->>   
->> +    object_class_property_add_enum(oc, "anon-alloc", "AnonAllocOption",
->> +                                   &AnonAllocOption_lookup,
->> +                                   machine_get_anon_alloc,
->> +                                   machine_set_anon_alloc);
->> +
->>       object_class_property_add_bool(oc, "usb",
->>           machine_get_usb, machine_set_usb);
->>       object_class_property_set_description(oc, "usb",
->> diff --git a/include/hw/boards.h b/include/hw/boards.h
->> index 5966069..5a87647 100644
->> --- a/include/hw/boards.h
->> +++ b/include/hw/boards.h
->> @@ -393,6 +393,7 @@ struct MachineState {
->>       bool enable_graphics;
->>       ConfidentialGuestSupport *cgs;
->>       HostMemoryBackend *memdev;
->> +    AnonAllocOption anon_alloc;
->>       /*
->>        * convenience alias to ram_memdev_id backend memory region
->>        * or to numa container memory region
->> diff --git a/qapi/machine.json b/qapi/machine.json
->> index a6b8795..d4a63f5 100644
->> --- a/qapi/machine.json
->> +++ b/qapi/machine.json
->> @@ -1898,3 +1898,17 @@
->>   { 'command': 'x-query-interrupt-controllers',
->>     'returns': 'HumanReadableText',
->>     'features': [ 'unstable' ]}
->> +
->> +##
->> +# @AnonAllocOption:
->> +#
->> +# An enumeration of the options for allocating anonymous guest memory.
->> +#
->> +# @mmap: allocate using mmap MAP_ANON
->> +#
->> +# @memfd: allocate using memfd_create
->> +#
->> +# Since: 9.2
->> +##
->> +{ 'enum': 'AnonAllocOption',
->> +  'data': [ 'mmap', 'memfd' ] }
->> diff --git a/qemu-options.hx b/qemu-options.hx
->> index d94e2cb..90ab943 100644
->> --- a/qemu-options.hx
->> +++ b/qemu-options.hx
->> @@ -38,6 +38,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
->>       "                nvdimm=on|off controls NVDIMM support (default=off)\n"
->>       "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
->>       "                hmat=on|off controls ACPI HMAT support (default=off)\n"
->> +    "                anon-alloc=mmap|memfd allocate anonymous guest RAM using mmap MAP_ANON or memfd_create (default: mmap)\n"
->>       "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
->>       "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n",
->>       QEMU_ARCH_ALL)
->> @@ -101,6 +102,16 @@ SRST
->>           Enables or disables ACPI Heterogeneous Memory Attribute Table
->>           (HMAT) support. The default is off.
->>   
->> +    ``anon-alloc=mmap|memfd``
->> +        Allocate anonymous guest RAM using mmap MAP_ANON (the default)
->> +        or memfd_create.  This option applies to memory allocated as a
->> +        side effect of creating various devices. It does not apply to
->> +        memory-backend-objects, whether explicitly specified on the
->> +        command line, or implicitly created by the -m command line
->> +        option.
->> +
->> +        Some migration modes require anon-alloc=memfd.
->> +
->>       ``memory-backend='id'``
->>           An alternative to legacy ``-mem-path`` and ``mem-prealloc`` options.
->>           Allows to use a memory backend as main RAM.
->> diff --git a/system/physmem.c b/system/physmem.c
->> index dc1db3a..174f7e0 100644
->> --- a/system/physmem.c
->> +++ b/system/physmem.c
->> @@ -47,6 +47,7 @@
->>   #include "qemu/qemu-print.h"
->>   #include "qemu/log.h"
->>   #include "qemu/memalign.h"
->> +#include "qemu/memfd.h"
->>   #include "exec/memory.h"
->>   #include "exec/ioport.h"
->>   #include "sysemu/dma.h"
->> @@ -69,6 +70,8 @@
->>   
->>   #include "qemu/pmem.h"
->>   
->> +#include "qapi/qapi-types-migration.h"
->> +#include "migration/options.h"
->>   #include "migration/vmstate.h"
->>   
->>   #include "qemu/range.h"
->> @@ -1849,6 +1852,35 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
->>                   qemu_mutex_unlock_ramlist();
->>                   return;
->>               }
->> +
->> +        } else if (current_machine->anon_alloc == ANON_ALLOC_OPTION_MEMFD &&
->> +                   !object_dynamic_cast(new_block->mr->parent_obj.parent,
->> +                                        TYPE_MEMORY_BACKEND)) {
-> 
-> This is pretty fragile.. if someone adds yet another layer on top of memory
-> backend objects, the ownership links can change and this might silently run
-> into something else even without any warning..
-> 
-> I wished we dig into what is missing, but maybe that's too trivial.  If
-> not, we still need to make this as solid.  Perhaps that can be a ram flag
-> and let relevant callers pass in that flag explicitly.
+On Fri, 4 Oct 2024 at 02:24, Sebastian Huber
+<sebastian.huber@embedded-brains.de> wrote:
+>
+> ----- Am 30. Sep 2024 um 17:16 schrieb Peter Maydell peter.maydell@linaro=
+.org:
+>
+> > On Mon, 23 Sept 2024 at 04:57, Sebastian Huber
+> > <sebastian.huber@embedded-brains.de> wrote:
+> >>
+> >> In arm_load_kernel(), use the secondary boot hooks provided by the
+> >> platform if PSCI is disabled also while booting a non-Linux kernel.
+> >> While booting Linux with PSCI disabled, provide default hooks if neede=
+d.
+> >>
+> >> In do_cpu_reset(), use the secondary CPU reset hook provided by the
+> >> platform for resetting a non-Linux kernel.
+> >>
+> >> This change allows a more accurate simulation of the platform reset
+> >> behaviour.
+> >
+> > So, the difficulty with this is that it's effectively
+> > introducing an extra way of booting. At the moment we
+> > have two boot approaches for Arm guests:
+> >
+> > (1) Booting Linux -- the boot.c code simulates what the BIOS,
+> > boot rom etc, does, both to set up the 1st CPU for the kernel
+> > boot entry, and to set up the secondaries in whatever way
+> > the bootrom does that the kernel expects to release them from.
+> >
+> > (2) Booting bare-metal -- boot.c assumes the guest code is going
+> > to do whatever the BIOS/bootrom does, so you get what you get
+> > for real-hardware CPU reset. (Either the secondaries start
+> > in power-off state and the primary will release them via some
+> > kind of power controller device, or else all the CPUs start at
+> > once at the reset vector and the bootrom is going to sort the
+> > secondaries out and put them in a pen.)
+> >
+> > What you want is a third thing:
+> >
+> > (3) Booting not-a-kernel but not 100% bare-metal: emulate what
+> > the bootrom does for primary and secondary CPUs but don't
+> > boot the guest binary as if it was a Linux kernel.
+> >
+> > The problem with adding that is that we don't have any
+> > way to distinguish whether the user wanted that or our
+> > existing type (2), because both are "user gave us a binary
+> > that isn't a Linux kernel". (It also has a bit of a
+> > "continuously expanding job" problem because the bootrom
+> > could do arbitrarily complicated things, like boot directly
+> > from SD cards, which we have historically not wanted to
+> > emulate within QEMU itself.)
+> >
+> > There are other platforms where the real hardware's bootrom
+> > has a particular "this is what a bare-metal-under-the-bootrom
+> > startup looks like" definition, notably the raspberry pi
+> > boards. There too we don't currently implement that, and
+> > instead effectively tell users "pick one of the two boot
+> > paradigms we do support"...
+>
+> Ok, I understand your concerns. What I would like to do is running unmodi=
+fied executables on Qemu so that I can test exactly the same program which =
+would run on the real hardware. To properly initialize an SMP system, you h=
+ave to do certain things in a proper order. Currently, when I start the Zyn=
+q machine it immediately executes the ELF entry on both cores. This conflic=
+ts with the normal system start sequence which assumes that initially the s=
+econd core waits in an idle loop. For example, the second core is normally =
+released after the GIC distributor is initialized.
+>
+> Changing all the existing machines to use this third way is probably a ba=
+d idea, but would it be possible to make it configurable though the platfor=
+m info or a command line option?
 
-How would they decide whether or not we want to set the flag in the 
-current configuration?
+Image loading is already weird and inconsistent across
+architectures and across machines. I'm not really
+enthusiastic about adding an extra thing that only
+applies to one machine type.
 
-> 
-> I think RAM_SHARED can actually be that flag already - I mean, in all paths
-> that we may create anon mem (but not memory-backend-* objects), is it
-> always safe we always switch to RAM_SHARED from anon?
+You might be able to get the effect you want by writing a
+guest binary that does the things the boot-rom does before
+starting the main executable, and telling QEMU to load
+both that "bootrom/bios" ELF file and the main ELF file.
 
-Do you mean only setting the flag (-> anonymous shmem) or switching also 
-to memfd, which is a bigger change?
-
--- 
-Cheers,
-
-David / dhildenb
-
+thanks
+-- PMM
 
