@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 344DDCF884D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:34:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B27CF884E
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:34:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swlEM-0005uh-Bw; Fri, 04 Oct 2024 12:32:38 -0400
+	id 1swlFJ-0007zW-Qw; Fri, 04 Oct 2024 12:33:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swlEC-0005gG-NG
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 12:32:34 -0400
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swlEq-0007HL-K9
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 12:33:08 -0400
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swlE9-0005kj-W8
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 12:32:28 -0400
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2fac63abf63so25047911fa.1
- for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 09:32:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swlEn-0005pQ-OY
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 12:33:08 -0400
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-5369f1c7cb8so2581146e87.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 09:33:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728059542; x=1728664342; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728059583; x=1728664383; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QzpcifQjg9M7Tjl4Y4YKKldff3x1a+0LoVxsWg9JdC4=;
- b=R32ISY0a9VYrEpZe/73+yuht4TWKcVQ7NYJ0QKDbfHpJy/297pFRbhFfsnUiQqfSRD
- zvJSqDNyZXKBY8r3bctqFslhmxxdTl9bGT86tuxrNEQv3xLf01zrCPXiuwhuYoZcfqUi
- bTwefUDxfRFb69kEkedgLRBkQ6SD2wq38giNCNM0mxftTDKSc6GNpTvJIw7GgEWld6mZ
- oJadFK2DW10/T0UH8CAAsBFsnVWmgBKUvcVVHwyt6dDNaitvqqTISDaK3ONmbwTsb/9s
- /Ka9ns2ZL67E00Cu9WWGlPOPO7zJezWbeK48ZY8FNjipG3WKtxPoO6ZuLK+lclL8Daw0
- WdZA==
+ bh=2s/tzGPg/LmnPo+rxsPQADcqJffZEpvaXgXhuXN6AeQ=;
+ b=sAI8EQpCYesTCsw2GsCCQcrNrdCSx9ho3tzjWRFFR+Z9PfhiJZwNYB3qZrw6eJyY+E
+ s2tVNL7nTS6yuzxKCK5TB7BJShNnDhTU4DOs3pZbRYicp/2KYbShxGJtjWjSIs9OlP+5
+ oGiEidj7NwcWp5RYo5bD8mR7ECWelg1f9hRmejNg16Mpwf840eFImEdkRbQk3sVWXt9E
+ iUM61x/1UhF28HcF8IP7qMPnkG+4gcOv4i486Zzgh3ZZV0vw93mk5N+0mSXxxdSgAvDs
+ FEUOTltjwd9dBo/H1M/nkwi8gd8UfnfvlKH2nmBPFR95MI/BEBmAaxr/GIq15edMji0U
+ Vjww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728059542; x=1728664342;
+ d=1e100.net; s=20230601; t=1728059583; x=1728664383;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QzpcifQjg9M7Tjl4Y4YKKldff3x1a+0LoVxsWg9JdC4=;
- b=v0WtcJmZTd/niV5nINO2K/IzJyzeYI2j2CpPKLwpiL3JoDNDoXaI0hNLiDqn3rZYXx
- ybZobGzrxGgMqoCPkYcIn9bWTcFYRzUhBdNy/rXrMmAlO2vO+AjVj7zEURYYTMm+Nrt4
- BNAHG7SkXpg4UE+PEqkYr+KIhV8cG4ssV1RCfT1Qfl5QasQdrdTkOHJNv+i+9YxejrzR
- iD9Ei2UdZwLKsvsZi/d4ei0eCHWayrNXar4F+6KI6Bk0esZnh0GnzA23NjNjWdVvTknu
- blluSa3XrzYkXYMFgzrsA2yWYuLqwOWuHaDFos4bPsfwio1JEHKi/2204hWvD2wDFSn7
- xL3w==
-X-Gm-Message-State: AOJu0Yw9caXwOxctpnRTxCuw6x+j3tJRgZq7D+Uu/Q7qt7geu7nZsyty
- 65wO350KT8bcXNAfL5DaJgDzF425XiFgPNmjZgG56bH9nAjNJJkXGJJPDC2FiWSfb71s1zfnZlk
- GtEming==
-X-Google-Smtp-Source: AGHT+IGgWyImcEeFeTlRUGEKkfktsC4bhR7+Qv6CuiD2h3y4GK2dynOFsG0i2aNds4XPUlX7ZIWXMg==
-X-Received: by 2002:a2e:a543:0:b0:2fa:d177:13e6 with SMTP id
- 38308e7fff4ca-2faf3c416f8mr18290571fa.21.1728059542529; 
- Fri, 04 Oct 2024 09:32:22 -0700 (PDT)
+ bh=2s/tzGPg/LmnPo+rxsPQADcqJffZEpvaXgXhuXN6AeQ=;
+ b=mvHZdHRmSixA4FM2p0K0juHZqhbwFsWlX+IRzL4VbP+M5WkBroSGDpYKVYWBpqJ76T
+ JtU8eGLyqX7nlqvtOW9/sPllijSg8KuYXdyM51kDBolgQ4ec346LraFq2U5Xg0FtTRoT
+ EZj8FBzfpZKSh3ZiKIe14mLzKmBLzOiAHwq5UBaufx1I5scX7EtoQEUusZ++4vAtZDB6
+ ZBnRLB56+DK8txsU+iTvCyY7njguz6vErPG95Lbxr6b0mPczgs1M1Z5okai13kBk8i5L
+ a8fBkCuQaKgv3J/LscSxDIJ5RiOFEG+hItLClHfzUaaJIUmOBQ8GDAj23Ar9/mfVoZWO
+ 8NaA==
+X-Gm-Message-State: AOJu0YwBbvFNwlTjUHeYEZeqW/eOXtcsZ7rSIP6JzpSlxEugLdfUmtsC
+ 9frW8SdiLOm8BXyoqfPDTu+aTWFR2jETo85M5ye+5acgc3tx9IOSG5p0eowlFrtfmZCLZgtmZ+s
+ +lfwvxQ==
+X-Google-Smtp-Source: AGHT+IGC4fHpQTA+27ggAZsNhRcHU2c/GQgEsPn+l3WUcVvbsSReakNbFECwUaxnJDpvvOqCLsru5w==
+X-Received: by 2002:a05:6512:39c5:b0:535:6cbf:51a3 with SMTP id
+ 2adb3069b0e04-539ab88a017mr2509555e87.25.1728059582806; 
+ Fri, 04 Oct 2024 09:33:02 -0700 (PDT)
 Received: from localhost.localdomain ([91.223.100.150])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2faf9b3374bsm195171fa.117.2024.10.04.09.32.14
+ 2adb3069b0e04-539afec8255sm1950e87.83.2024.10.04.09.32.57
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 04 Oct 2024 09:32:21 -0700 (PDT)
+ Fri, 04 Oct 2024 09:33:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
@@ -64,17 +64,17 @@ Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 06/25] target/alpha: Use explicit little-endian LD/ST API
-Date: Fri,  4 Oct 2024 13:30:22 -0300
-Message-ID: <20241004163042.85922-7-philmd@linaro.org>
+Subject: [PATCH v2 09/25] target/i386: Use explicit little-endian LD/ST API
+Date: Fri,  4 Oct 2024 13:30:25 -0300
+Message-ID: <20241004163042.85922-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241004163042.85922-1-philmd@linaro.org>
 References: <20241004163042.85922-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,7 +97,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Alpha architecture uses little endianness. Directly use
+The x86 architecture uses little endianness. Directly use
 the little-endian LD/ST API.
 
 Mechanical change using:
@@ -106,27 +106,217 @@ Mechanical change using:
     for acc in uw w l q tul; do \
       sed -i -e "s/ld${acc}_p(/ld${acc}_${end}_p(/" \
              -e "s/st${acc}_p(/st${acc}_${end}_p(/" \
-        $(git grep -wlE '(ld|st)t?u?[wlq]_p' target/alpha/); \
+        $(git grep -wlE '(ld|st)t?u?[wlq]_p' target/i386/); \
     done
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/alpha/gdbstub.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/i386/gdbstub.c                | 30 +++++++++++++-------------
+ target/i386/tcg/sysemu/excp_helper.c |  4 ++--
+ target/i386/xsave_helper.c           | 32 ++++++++++++++--------------
+ 3 files changed, 33 insertions(+), 33 deletions(-)
 
-diff --git a/target/alpha/gdbstub.c b/target/alpha/gdbstub.c
-index bf5091c2a6e..1a7e2dd9202 100644
---- a/target/alpha/gdbstub.c
-+++ b/target/alpha/gdbstub.c
-@@ -59,7 +59,7 @@ int alpha_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- int alpha_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+diff --git a/target/i386/gdbstub.c b/target/i386/gdbstub.c
+index 4acf485879e..28ccf06309d 100644
+--- a/target/i386/gdbstub.c
++++ b/target/i386/gdbstub.c
+@@ -89,10 +89,10 @@ static int gdb_read_reg_cs64(uint32_t hflags, GByteArray *buf, target_ulong val)
+ static int gdb_write_reg_cs64(uint32_t hflags, uint8_t *buf, target_ulong *val)
  {
-     CPUAlphaState *env = cpu_env(cs);
--    target_ulong tmp = ldq_p(mem_buf);
-+    target_ulong tmp = ldq_le_p(mem_buf);
-     CPU_DoubleU d;
+     if (hflags & HF_CS64_MASK) {
+-        *val = ldq_p(buf);
++        *val = ldq_le_p(buf);
+         return 8;
+     }
+-    *val = ldl_p(buf);
++    *val = ldl_le_p(buf);
+     return 4;
+ }
  
-     switch (n) {
+@@ -221,7 +221,7 @@ int x86_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ static int x86_cpu_gdb_load_seg(X86CPU *cpu, X86Seg sreg, uint8_t *mem_buf)
+ {
+     CPUX86State *env = &cpu->env;
+-    uint16_t selector = ldl_p(mem_buf);
++    uint16_t selector = ldl_le_p(mem_buf);
+ 
+     if (selector != env->segs[sreg].selector) {
+ #if defined(CONFIG_USER_ONLY)
+@@ -262,15 +262,15 @@ int x86_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+     if (n < CPU_NB_REGS) {
+         if (TARGET_LONG_BITS == 64) {
+             if (env->hflags & HF_CS64_MASK) {
+-                env->regs[gpr_map[n]] = ldtul_p(mem_buf);
++                env->regs[gpr_map[n]] = ldtul_le_p(mem_buf);
+             } else if (n < CPU_NB_REGS32) {
+-                env->regs[gpr_map[n]] = ldtul_p(mem_buf) & 0xffffffffUL;
++                env->regs[gpr_map[n]] = ldtul_le_p(mem_buf) & 0xffffffffUL;
+             }
+             return sizeof(target_ulong);
+         } else if (n < CPU_NB_REGS32) {
+             n = gpr_map32[n];
+             env->regs[n] &= ~0xffffffffUL;
+-            env->regs[n] |= (uint32_t)ldl_p(mem_buf);
++            env->regs[n] |= (uint32_t)ldl_le_p(mem_buf);
+             return 4;
+         }
+     } else if (n >= IDX_FP_REGS && n < IDX_FP_REGS + 8) {
+@@ -281,8 +281,8 @@ int x86_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+     } else if (n >= IDX_XMM_REGS && n < IDX_XMM_REGS + CPU_NB_REGS) {
+         n -= IDX_XMM_REGS;
+         if (n < CPU_NB_REGS32 || TARGET_LONG_BITS == 64) {
+-            env->xmm_regs[n].ZMM_Q(0) = ldq_p(mem_buf);
+-            env->xmm_regs[n].ZMM_Q(1) = ldq_p(mem_buf + 8);
++            env->xmm_regs[n].ZMM_Q(0) = ldq_le_p(mem_buf);
++            env->xmm_regs[n].ZMM_Q(1) = ldq_le_p(mem_buf + 8);
+             return 16;
+         }
+     } else {
+@@ -290,18 +290,18 @@ int x86_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+         case IDX_IP_REG:
+             if (TARGET_LONG_BITS == 64) {
+                 if (env->hflags & HF_CS64_MASK) {
+-                    env->eip = ldq_p(mem_buf);
++                    env->eip = ldq_le_p(mem_buf);
+                 } else {
+-                    env->eip = ldq_p(mem_buf) & 0xffffffffUL;
++                    env->eip = ldq_le_p(mem_buf) & 0xffffffffUL;
+                 }
+                 return 8;
+             } else {
+                 env->eip &= ~0xffffffffUL;
+-                env->eip |= (uint32_t)ldl_p(mem_buf);
++                env->eip |= (uint32_t)ldl_le_p(mem_buf);
+                 return 4;
+             }
+         case IDX_FLAGS_REG:
+-            env->eflags = ldl_p(mem_buf);
++            env->eflags = ldl_le_p(mem_buf);
+             return 4;
+ 
+         case IDX_SEG_REGS:
+@@ -327,10 +327,10 @@ int x86_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+             return 4;
+ 
+         case IDX_FP_REGS + 8:
+-            cpu_set_fpuc(env, ldl_p(mem_buf));
++            cpu_set_fpuc(env, ldl_le_p(mem_buf));
+             return 4;
+         case IDX_FP_REGS + 9:
+-            tmp = ldl_p(mem_buf);
++            tmp = ldl_le_p(mem_buf);
+             env->fpstt = (tmp >> 11) & 7;
+             env->fpus = tmp & ~0x3800;
+             return 4;
+@@ -348,7 +348,7 @@ int x86_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+             return 4;
+ 
+         case IDX_MXCSR_REG:
+-            cpu_set_mxcsr(env, ldl_p(mem_buf));
++            cpu_set_mxcsr(env, ldl_le_p(mem_buf));
+             return 4;
+ 
+         case IDX_CTL_CR0_REG:
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index 8fb05b1f531..de6765099f3 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -86,7 +86,7 @@ static bool ptw_translate(PTETranslate *inout, hwaddr addr, uint64_t ra)
+ static inline uint32_t ptw_ldl(const PTETranslate *in, uint64_t ra)
+ {
+     if (likely(in->haddr)) {
+-        return ldl_p(in->haddr);
++        return ldl_le_p(in->haddr);
+     }
+     return cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
+ }
+@@ -94,7 +94,7 @@ static inline uint32_t ptw_ldl(const PTETranslate *in, uint64_t ra)
+ static inline uint64_t ptw_ldq(const PTETranslate *in, uint64_t ra)
+ {
+     if (likely(in->haddr)) {
+-        return ldq_p(in->haddr);
++        return ldq_le_p(in->haddr);
+     }
+     return cpu_ldq_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
+ }
+diff --git a/target/i386/xsave_helper.c b/target/i386/xsave_helper.c
+index 996e9f3bfef..fc10bfa6718 100644
+--- a/target/i386/xsave_helper.c
++++ b/target/i386/xsave_helper.c
+@@ -43,8 +43,8 @@ void x86_cpu_xsave_all_areas(X86CPU *cpu, void *buf, uint32_t buflen)
+     for (i = 0; i < CPU_NB_REGS; i++) {
+         uint8_t *xmm = legacy->xmm_regs[i];
+ 
+-        stq_p(xmm,     env->xmm_regs[i].ZMM_Q(0));
+-        stq_p(xmm + 8, env->xmm_regs[i].ZMM_Q(1));
++        stq_le_p(xmm,     env->xmm_regs[i].ZMM_Q(0));
++        stq_le_p(xmm + 8, env->xmm_regs[i].ZMM_Q(1));
+     }
+ 
+     header->xstate_bv = env->xstate_bv;
+@@ -58,8 +58,8 @@ void x86_cpu_xsave_all_areas(X86CPU *cpu, void *buf, uint32_t buflen)
+         for (i = 0; i < CPU_NB_REGS; i++) {
+             uint8_t *ymmh = avx->ymmh[i];
+ 
+-            stq_p(ymmh,     env->xmm_regs[i].ZMM_Q(2));
+-            stq_p(ymmh + 8, env->xmm_regs[i].ZMM_Q(3));
++            stq_le_p(ymmh,     env->xmm_regs[i].ZMM_Q(2));
++            stq_le_p(ymmh + 8, env->xmm_regs[i].ZMM_Q(3));
+         }
+     }
+ 
+@@ -101,10 +101,10 @@ void x86_cpu_xsave_all_areas(X86CPU *cpu, void *buf, uint32_t buflen)
+         for (i = 0; i < CPU_NB_REGS; i++) {
+             uint8_t *zmmh = zmm_hi256->zmm_hi256[i];
+ 
+-            stq_p(zmmh,      env->xmm_regs[i].ZMM_Q(4));
+-            stq_p(zmmh + 8,  env->xmm_regs[i].ZMM_Q(5));
+-            stq_p(zmmh + 16, env->xmm_regs[i].ZMM_Q(6));
+-            stq_p(zmmh + 24, env->xmm_regs[i].ZMM_Q(7));
++            stq_le_p(zmmh,      env->xmm_regs[i].ZMM_Q(4));
++            stq_le_p(zmmh + 8,  env->xmm_regs[i].ZMM_Q(5));
++            stq_le_p(zmmh + 16, env->xmm_regs[i].ZMM_Q(6));
++            stq_le_p(zmmh + 24, env->xmm_regs[i].ZMM_Q(7));
+         }
+ 
+ #ifdef TARGET_X86_64
+@@ -177,8 +177,8 @@ void x86_cpu_xrstor_all_areas(X86CPU *cpu, const void *buf, uint32_t buflen)
+     for (i = 0; i < CPU_NB_REGS; i++) {
+         const uint8_t *xmm = legacy->xmm_regs[i];
+ 
+-        env->xmm_regs[i].ZMM_Q(0) = ldq_p(xmm);
+-        env->xmm_regs[i].ZMM_Q(1) = ldq_p(xmm + 8);
++        env->xmm_regs[i].ZMM_Q(0) = ldq_le_p(xmm);
++        env->xmm_regs[i].ZMM_Q(1) = ldq_le_p(xmm + 8);
+     }
+ 
+     env->xstate_bv = header->xstate_bv;
+@@ -191,8 +191,8 @@ void x86_cpu_xrstor_all_areas(X86CPU *cpu, const void *buf, uint32_t buflen)
+         for (i = 0; i < CPU_NB_REGS; i++) {
+             const uint8_t *ymmh = avx->ymmh[i];
+ 
+-            env->xmm_regs[i].ZMM_Q(2) = ldq_p(ymmh);
+-            env->xmm_regs[i].ZMM_Q(3) = ldq_p(ymmh + 8);
++            env->xmm_regs[i].ZMM_Q(2) = ldq_le_p(ymmh);
++            env->xmm_regs[i].ZMM_Q(3) = ldq_le_p(ymmh + 8);
+         }
+     }
+ 
+@@ -241,10 +241,10 @@ void x86_cpu_xrstor_all_areas(X86CPU *cpu, const void *buf, uint32_t buflen)
+         for (i = 0; i < CPU_NB_REGS; i++) {
+             const uint8_t *zmmh = zmm_hi256->zmm_hi256[i];
+ 
+-            env->xmm_regs[i].ZMM_Q(4) = ldq_p(zmmh);
+-            env->xmm_regs[i].ZMM_Q(5) = ldq_p(zmmh + 8);
+-            env->xmm_regs[i].ZMM_Q(6) = ldq_p(zmmh + 16);
+-            env->xmm_regs[i].ZMM_Q(7) = ldq_p(zmmh + 24);
++            env->xmm_regs[i].ZMM_Q(4) = ldq_le_p(zmmh);
++            env->xmm_regs[i].ZMM_Q(5) = ldq_le_p(zmmh + 8);
++            env->xmm_regs[i].ZMM_Q(6) = ldq_le_p(zmmh + 16);
++            env->xmm_regs[i].ZMM_Q(7) = ldq_le_p(zmmh + 24);
+         }
+ 
+ #ifdef TARGET_X86_64
 -- 
 2.45.2
 
