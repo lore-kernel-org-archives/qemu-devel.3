@@ -4,136 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07BD2CFA74D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 07:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35141CFA750
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 08:34:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swcLU-0003tM-VE; Fri, 04 Oct 2024 03:03:25 -0400
+	id 1swdky-0008UP-Pf; Fri, 04 Oct 2024 04:33:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1swcLR-0003sw-8g
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 03:03:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1swcLJ-0006TE-Ot
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 03:03:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728025391;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1qAuTlvRADrHjVzx7ryFC+9Zs4UiNbLvUu5vKbhWMRs=;
- b=AXBUvEvzF1ZHI1ngO/8Wf6wYhIe79GU4oKyO9zhZ1duB8woft4y6QZH9qjVS7ZQ/P4k5mE
- AfSeUMv9/u5L1QvHSo4Aa+RC0ZdNs0UGBzv5B2xamm+KtHTuIVULIndCFug297u21dNm1J
- Kn1VPp0iNPi9wn5OO5XmxShYKmGSSYI=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-271-lm0GkTwaNoymyWBd16r54w-1; Fri, 04 Oct 2024 03:03:08 -0400
-X-MC-Unique: lm0GkTwaNoymyWBd16r54w-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5c8adadc575so3253203a12.0
- for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 00:03:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1swdkx-0008Tk-42
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 04:33:47 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1swdku-0005Gm-Vf
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 04:33:46 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-42e5e1e6d37so17627595e9.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 01:33:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1728030823; x=1728635623; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=NX1DIh9sXghlblX73NWkF6svT+pBeh8+IHHszzhYzNE=;
+ b=eEYDuCHZ2w/oyWTNtzkmNGexld0SpnBwvPEMXJ3hUiPgGZXJolQrbYK4gZFhN5oKI4
+ WguQUjWyoZ58BBSB0hPGFPu24e3J2UYyql8SVZQic+NQmuMcyVHC98I4PSj9H+NT+u9R
+ 6meNFFQCdJJrHGlp5IrT3bnMlWH124wBiysPtk176CtEZD7bLm9VTQRp24EkE5PrYK/s
+ 1kQMPXlGc7Dvxn8XKSBO0hedqa8vdHLnnrwt7TVrgtPPAT5CA1+0YI1bG8b3KFl9weJ/
+ Lo3wqe5lkqKbFS/pDMdKS2CQoOaLy56LoOt+FkAehkU58jLpNjeYdGV39d9MhQM9VWf7
+ 4T6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728025387; x=1728630187;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1qAuTlvRADrHjVzx7ryFC+9Zs4UiNbLvUu5vKbhWMRs=;
- b=fshrGHSV96HFc+Y1ufDw/csGND02L7VgYFuRgy65nB92osUg4nri/xMzUmFQ9LXDyg
- FzbTizPnGftG3STeOLxd9nswDgs2m3AQNbJzf+kK3+qM3GDeepzyZ7Ixmb8w4yPb5+1b
- ec2d2hDoI4a2fTPKsAisLOzbgIXwccIFx0nEuWIwGNFVFE/3mcc519fH1wtVU5hQ6ENt
- /poSR1gdT+aneMHkTCXmRBPrqnNyi5xh+BpQNjIiWbCukWLCf2mE3xdqa/UbnuahNy7+
- xmheRM09jXnWFcFu4sfb4JctSly3iUQic71wV/ghMncUsuWB/1fe5If9sXscUYntskww
- bAow==
+ d=1e100.net; s=20230601; t=1728030823; x=1728635623;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NX1DIh9sXghlblX73NWkF6svT+pBeh8+IHHszzhYzNE=;
+ b=QzwEzhq6Q+vOhoCyKLh7Thxxgwr8tKWUsexxigFwBEWCi7p90lgixeZZCc65W49z84
+ VMlBEci0DDRUL1IHrnIDDdO+0VMPTeWQ//I1RgrLHC6uDkbA1jn1Nc5SNPVtaZY1T6C4
+ rdzG2AMLezTHa+Qp9HgA+m3A10DN4Qac7HEFZ19+duf1Ro01VxXRvwkqAv+bqNyUPwQ6
+ BUxRVARJOtBDwoJXZ/AvCwOqvoAvpu0WdqPHn36l2WruExSZxuUT8OIHUi8uhjrQEf0L
+ Dt/udnrsCD+Rd7MM539eBOdxZeePSvUgIkQfHQxYajApYUIZMLtumNk4lrmSglUbPkiL
+ Texg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXh2Zs9BoGjxA3mNzGsnIzmy9COzTmjO0r63rf9WavINgaXi5hIVg9YPkFl4r8DrXdV+4dBSEKAK9eQ@nongnu.org
-X-Gm-Message-State: AOJu0YxG3cQbG5RgJO675cxyW0rhw39QDd4+mZhZc3X6+taztdvOdrje
- 5Itzs1rnW71KNzs8SgatWYYGW7uzAT0EwbAxnNlBbpZL4pCuDF7ucj5X0ZARoJAA/3SC0C0AbBu
- qazfyY6MGUKQ3t6S3iY6emVQGCbC9dVu/1p3Q9bqPxB638F3sGKAF
-X-Received: by 2002:a05:6402:2710:b0:5c8:78dd:8027 with SMTP id
- 4fb4d7f45d1cf-5c8d2f7d634mr1583682a12.12.1728025386795; 
- Fri, 04 Oct 2024 00:03:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFbRglHKlDAfu//PR4QoDJWpwvgEinLZyJ2qIo1UC5CCcPWZujLHI3WJf/MswxQJgh++sDUCA==
-X-Received: by 2002:a05:6402:2710:b0:5c8:78dd:8027 with SMTP id
- 4fb4d7f45d1cf-5c8d2f7d634mr1583644a12.12.1728025386354; 
- Fri, 04 Oct 2024 00:03:06 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-49-143.web.vodafone.de.
- [109.42.49.143]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c8ca3dfe2csm1531939a12.34.2024.10.04.00.03.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Oct 2024 00:03:05 -0700 (PDT)
-Message-ID: <c6b188c1-bfba-417c-bf6f-5dc943a1e130@redhat.com>
-Date: Fri, 4 Oct 2024 09:03:04 +0200
+ AJvYcCVYAOpvqE/plnzNdtPo9gtLtzGpJI9k3HqJtnZcJ1fPeVV65rPg6Gw1sPZjgwIsWHYkNrnbL6+5LObW@nongnu.org
+X-Gm-Message-State: AOJu0YzxZM4QGesZTQrmNlQnBsQv3kyY8+kGQXEpK+MXNw+eJGYqof41
+ 44xayyOjxsikGtkDlhJls50v+VrKzDgkZrKM8c8IhCKfx1VP8i23gWEPtWriyPI=
+X-Google-Smtp-Source: AGHT+IEdRfRhtjc5qJOSKeguahs0d7Kmokhoozt6NCZN7TsY//45P0ms4y7JhMUVYn62Sy+V46ujqg==
+X-Received: by 2002:a5d:63ca:0:b0:374:c15a:8556 with SMTP id
+ ffacd0b85a97d-37d0eae4bc3mr1217682f8f.50.1728030823056; 
+ Fri, 04 Oct 2024 01:33:43 -0700 (PDT)
+Received: from localhost (cst2-173-13.cust.vodafone.cz. [31.30.173.13])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37d082d1f11sm2779517f8f.96.2024.10.04.01.33.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Oct 2024 01:33:42 -0700 (PDT)
+Date: Fri, 4 Oct 2024 10:33:41 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Tomasz Jeznach <tjeznach@rivosinc.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, peter.maydell@linaro.org,
+ Sebastien Boeuf <seb@rivosinc.com>
+Subject: Re: [PATCH v8 03/12] hw/riscv: add RISC-V IOMMU base emulation
+Message-ID: <20241004-2c8c6a6af4d598c78638a091@orel>
+References: <20241002010314.1928515-1-dbarboza@ventanamicro.com>
+ <20241002010314.1928515-4-dbarboza@ventanamicro.com>
+ <20241003-c10c27e0855533db764a1490@orel>
+ <7c5f0fce-fc66-4fca-90be-aa2d4f7a4b04@ventanamicro.com>
+ <CAH2o1u6h5nOMuGq8opXQNm6M=D=TrvygmoS+hHwmrgViy3reFA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH trivial] gitlab-ci/build-oss-fuzz: print FAILED marker in
- case the test failed and run all tests
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Alexander Bulekov <alxndr@bu.edu>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20241003121656.1173612-1-mjt@tls.msk.ru>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241003121656.1173612-1-mjt@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAH2o1u6h5nOMuGq8opXQNm6M=D=TrvygmoS+hHwmrgViy3reFA@mail.gmail.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,45 +104,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/10/2024 14.16, Michael Tokarev wrote:
-> currently, if an oss-fuzz fails, the script does just `exit 1`
-> without any additional output, and looking at the build log in
-> the gitlab ci it is not clear what actually failed, without
-> looking at build-oss-fuzz script and seeing this `exit 1`.
+On Thu, Oct 03, 2024 at 11:36:00AM GMT, Tomasz Jeznach wrote:
+> On Thu, Oct 3, 2024 at 6:06 AM Daniel Henrique Barboza
+> <dbarboza@ventanamicro.com> wrote:
+> >
+> >
+> >
+> > On 10/3/24 6:26 AM, Andrew Jones wrote:
+> > > On Tue, Oct 01, 2024 at 10:02:58PM GMT, Daniel Henrique Barboza wrote:
+> > > ...
+> > >> +/*
+> > >> + * RISCV IOMMU Address Translation Lookup - Page Table Walk
+> > >> + *
+> > >> + * Note: Code is based on get_physical_address() from target/riscv/cpu_helper.c
+> > >> + * Both implementation can be merged into single helper function in future.
+> > >> + * Keeping them separate for now, as error reporting and flow specifics are
+> > >> + * sufficiently different for separate implementation.
+> > >> + *
+> > >> + * @s        : IOMMU Device State
+> > >> + * @ctx      : Translation context for device id and process address space id.
+> > >> + * @iotlb    : translation data: physical address and access mode.
+> > >> + * @return   : success or fault cause code.
+> > >> + */
+> > >> +static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+> > >> +    IOMMUTLBEntry *iotlb)
+> > >> +{
+> > >> +    dma_addr_t addr, base;
+> > >> +    uint64_t satp, gatp, pte;
+> > >> +    bool en_s, en_g;
+> > >> +    struct {
+> > >> +        unsigned char step;
+> > >> +        unsigned char levels;
+> > >> +        unsigned char ptidxbits;
+> > >> +        unsigned char ptesize;
+> > >> +    } sc[2];
+> > >> +    /* Translation stage phase */
+> > >> +    enum {
+> > >> +        S_STAGE = 0,
+> > >> +        G_STAGE = 1,
+> > >> +    } pass;
+> > >> +    MemTxResult ret;
+> > >> +
+> > >> +    satp = get_field(ctx->satp, RISCV_IOMMU_ATP_MODE_FIELD);
+> > >> +    gatp = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
+> > >> +
+> > >> +    en_s = satp != RISCV_IOMMU_DC_FSC_MODE_BARE;
+> > >> +    en_g = gatp != RISCV_IOMMU_DC_IOHGATP_MODE_BARE;
+> > >> +
+> > >> +    /*
+> > >> +     * Early check for MSI address match when IOVA == GPA. This check
+> > >> +     * is required to ensure MSI translation is applied in case
+> > >> +     * first-stage translation is set to BARE mode. In this case IOVA
+> > >> +     * provided is a valid GPA. Running translation through page walk
+> > >> +     * second stage translation will incorrectly try to translate GPA
+> > >> +     * to host physical page, likely hitting IOPF.
+> > >> +     */
+> > >
+> > > Why was this comment expanded from the simple
+> > >
+> > > "Early check for MSI address match when IOVA == GPA."
+> > >
+> > > The comment is now incorrect since the check is required even when
+> > > first-stage translation is not BARE. I just skimmed the spec again trying
+> > > to figure out if the removal of '!en_s' is a hack or a fix, and I'm
+> > > inclined to say "fix", but it's an incomplete fix. I found a sentence that
+> > > says
+> > >
+> > > "If the virtual memory scheme selected for first-stage is Bare but the
+> > > scheme for the second-stage is not Bare then the IOVA is a GPA."
+> > >
+> > > which, in a way, defines a GPA to only be a GPA when second-stage is used
+> > > (and all MSI translation specifications refer to GPAs). However, maybe I
+> > > missed it, but I couldn't find any actual reason that the MSI table can't
+> > > be used when first-stage is not BARE and second-stage is (and, of course,
+> > > it makes no difference for single-stage translations to call IOVAs GPAs
+> > > or not).
+> > >
+> > > Now, I also see
+> > >
+> > > "If the virtual memory scheme selected for neither stage is Bare then the
+> > > IOVA is a VA. Two-stage address translation is in effect. The first-stage
+> > > translates the VA to a GPA and the second-stage translates the GPA to a
+> > > SPA."
+> > >
+> > > in the spec, which means we should probably change the removal of '!en_s'
+> > > to '!(en_s && en_g)'. VFIO+irqbypass would still work with that and, when
+> > > Linux learns to support two-stage translation, we wouldn't incorrectly try
+> > > to check for a GVA in the MSI table.
+> >
+> > Ok. It seems to me that we can't rely on the riscv-iommu spec alone to let
+> > us know how to detect if IOVA == GPA, given that one of the main usages
+> > we have ATM (VFIO irqbypass) will use GPAs with S-stage enabled.
+> >
+> > (Note: shouldn't we open a bug against the riscv-iommu spec?)
+> >
+> > I like the idea of ruling out the case where IOVA == VA since that is clear
+> > in the spec. We also know that MSI entries will always contains GPAs.
+> >
+> > This is the change I'm going to make in v9:
+> >
+> >
 > 
-> Print easily recognizable error message about test failure, so
-> it becomes obvious what exactly has failed.
+> It might be worth it to quote spec definitions of IOVA, GPA, SPA.
 > 
-> While at it, continue running other tests even in case of
-> failure, and exit non-zero if at least one test failed.
+> IOVA: I/O Virtual Address: Virtual address for DMA by devices
+> GPA: Guest Physical Address: An address in the virtualized physical
+> memory space of a virtual machine.
+> SPA: Supervisor Physical Address: Physical address used to access
+> memory and memory-mapped resources.
 > 
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
->   .gitlab-ci.d/buildtest.yml | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+> From IOMMU specification it's pretty clear, an untranslated address is
+> always an IOVA.
 > 
-> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-> index 87848c2ffe..25c481e43a 100644
-> --- a/.gitlab-ci.d/buildtest.yml
-> +++ b/.gitlab-ci.d/buildtest.yml
-> @@ -628,12 +628,15 @@ build-oss-fuzz:
->       - CC="clang" CXX="clang++" CFLAGS="-fsanitize=address"
->         ./scripts/oss-fuzz/build.sh
->       - export ASAN_OPTIONS="fast_unwind_on_malloc=0"
-> +    - failures=0
->       - for fuzzer in $(find ./build-oss-fuzz/DEST_DIR/ -executable -type f
->                         | grep -v slirp); do
->           grep "LLVMFuzzerTestOneInput" ${fuzzer} > /dev/null 2>&1 || continue ;
->           echo Testing ${fuzzer} ... ;
-> -        "${fuzzer}" -runs=1 -seed=1 || exit 1 ;
-> +        "${fuzzer}" -runs=1 -seed=1 || { echo "FAILED:"" ${fuzzer} exit code is $?"; failures=$(($failures+1)); };
->         done
-> +    - echo "Number of failures:"" $failures"
-> +    - test $failures = 0
->   
->   build-tci:
->     extends: .native_build_job_template
+> If you look at the introduction section and section 2.3. "Process to
+> translate an IOVA", translation (if enabled by the device/process
+> context) to GPA, SPA is expressed as:
+> 
+> step #17: GPA = FSC[IOVA]
+> step #19: SPA = IOHGATP[GPA]
+> 
+> With that, MSI address translations always use GPA as an input
+> (section 2.3.3. "Process to translate addresses of MSIs"), and is done
+> as step #18 of the IOVA translation.
+> 
+> And now:
+> If FSC.Mode == Bare, step #17 translation is simple GPA = IOVA
+> If IOHGATP.Mode == Bare, step #19 translation is simple SPA = GPA
+> 
+> If both FSC and IOHGATP modes are bare, no address translation is
+> performed, and SPA = GPA = IOVA. However if "MSI page tables are
+> enabled, then the MSI address translation process specified in Section
+> 2.3.3 is invoked".  This was the reason to put the
+> riscv_iommu_msi_check() function before check for pass-through mode
+> check.
+> 
+> If FSC.Mode == Bare and untranslated address given to the function
+> riscv_iommu_spa_fetch() is an GPA = IOVA. It could also be SPA if
+> IOHGATP.Mode == Bare, but it is irrelevant for the MSI address
+> translation.  That is the reason to put only the check for !en_s in
+> before riscv_iommu_msi_check() call.
+> 
+> I'm aware that VFIO uses S-Stage translation only, but it does not
+> change the hardware logic. For such cases VFIO can provide IMSIC
+> register mappings in S-Stage PT to emulate MSI doorbell registers (if
+> needed). When S-Stage translation is used, an untranslated address
+> processed by the IOMMU hardware is still an IOVA, even if the guest OS
+> / VFIO user treats it as PA.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+This would work for guest interrupt file mappings, but MRIFs won't work
+and the note of the "Device contexts at an IOMMU" section of the AIA spec
+points out that VCPU migration may become more difficult to manage.
 
+> 
+> Modification of the check to include en_g ( !(en_s && en_g) && ,,, )
+> will incorrectly enable MSI address translation for an IOVA address
+> (as defined in IOMMU spec) if G-Stage translation is set to Bare mode.
+> 
+> I'd suggest to keep the s/g stage checks here as:
+>       if ((iotlb->perm & IOMMU_WO) && !en_s &&
+>           riscv_iommu_msi_check(s, ctx, iotlb->iova)) {
+>           ...
+>       }
+> 
+> Hope that helps this discussion.
+
+Yes, it certainly helps, thank you. It points out that step 17 of "Process
+to translate an IOVA" produces a GPA which is consumed by step 18 for the
+MSI translation (and there's no other way to get to step 18). OIOW, we
+must do a first-stage translation before we check the MSI page table,
+which means we can't do an early MSI check unless we have strictly !en_s.
+
+This is unfortunate, considering the current state of VFIO+irqbypass and
+the IOMMU driver. I also wonder if it's really necessary. It seems to me
+that the MSI page table should always be checked first when either S-stage
+or G-stage is Bare (so there's only a single-stage of translation) and
+msiptp.MODE is not Off. I can't see what harm could come from that and it
+would give system software the ability to leverage code that already knows
+how to manage single-stage IOMMUs for device assignment.
+
+Thanks,
+drew
 
