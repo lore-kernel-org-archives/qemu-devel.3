@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83CEACF8840
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:06:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D521FCF884D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:06:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swkoM-0005eW-M9; Fri, 04 Oct 2024 12:05:47 -0400
+	id 1swkmz-0001uF-2P; Fri, 04 Oct 2024 12:04:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1swkoK-0005Sa-5P; Fri, 04 Oct 2024 12:05:44 -0400
+ id 1swkmu-0001sS-LK; Fri, 04 Oct 2024 12:04:17 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1swkoI-0001yV-MV; Fri, 04 Oct 2024 12:05:43 -0400
+ id 1swkmg-0001X0-PG; Fri, 04 Oct 2024 12:04:16 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 08C559557C;
- Fri,  4 Oct 2024 19:03:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1344E9556A;
+ Fri,  4 Oct 2024 19:03:30 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 42AC914D98A;
- Fri,  4 Oct 2024 19:03:33 +0300 (MSK)
-Received: (nullmailer pid 1282575 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 4D67414D978;
+ Fri,  4 Oct 2024 19:03:32 +0300 (MSK)
+Received: (nullmailer pid 1282518 invoked by uid 1000);
  Fri, 04 Oct 2024 16:03:32 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>, qemu-trivial@nongnu.org,
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 23/23] MAINTAINERS: Add myself as maintainer of e500 machines
-Date: Fri,  4 Oct 2024 19:03:31 +0300
-Message-Id: <20241004160331.1282441-24-mjt@tls.msk.ru>
+Subject: [PULL 05/23] hw/xen: Remove deadcode
+Date: Fri,  4 Oct 2024 19:03:13 +0300
+Message-Id: <20241004160331.1282441-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241004160331.1282441-1-mjt@tls.msk.ru>
 References: <20241004160331.1282441-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,43 +61,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+xen_be_copy_grant_refs is unused since 2019's
+  19f87870ba ("xen: remove the legacy 'xen_disk' backend")
+
+xen_config_dev_console is unused since 2018's
+  6d7c06c213 ("Remove broken Xen PV domain builder")
+
+Remove them.
+
+Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+Acked-by: Anthony PERARD <anthony.perard@vates.tech>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- MAINTAINERS | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ hw/xen/xen-legacy-backend.c         | 18 ------------------
+ hw/xen/xen_devconfig.c              |  8 --------
+ include/hw/xen/xen-legacy-backend.h |  5 -----
+ 3 files changed, 31 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d013db1ccb..34fffcb5be 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1378,8 +1378,9 @@ F: hw/pci-host/ppc4xx_pci.c
- F: tests/functional/test_ppc_bamboo.py
+diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
+index 5514184f9c..e8e1ee4f7d 100644
+--- a/hw/xen/xen-legacy-backend.c
++++ b/hw/xen/xen-legacy-backend.c
+@@ -147,24 +147,6 @@ void xen_be_unmap_grant_refs(struct XenLegacyDevice *xendev, void *ptr,
+     }
+ }
  
- e500
-+M: Bernhard Beschow <shentey@gmail.com>
- L: qemu-ppc@nongnu.org
--S: Orphan
-+S: Odd Fixes
- F: hw/ppc/e500*
- F: hw/ppc/ppce500_spin.c
- F: hw/gpio/mpc8xxx.c
-@@ -1395,8 +1396,9 @@ F: docs/system/ppc/ppce500.rst
- F: tests/functional/test_ppc64_e500.py
+-int xen_be_copy_grant_refs(struct XenLegacyDevice *xendev,
+-                           bool to_domain,
+-                           XenGrantCopySegment segs[],
+-                           unsigned int nr_segs)
+-{
+-    int rc;
+-
+-    assert(xendev->ops->flags & DEVOPS_FLAG_NEED_GNTDEV);
+-
+-    rc = qemu_xen_gnttab_grant_copy(xendev->gnttabdev, to_domain, xen_domid,
+-                                    segs, nr_segs, NULL);
+-    if (rc) {
+-        xen_pv_printf(xendev, 0, "xengnttab_grant_copy failed: %s\n",
+-                      strerror(-rc));
+-    }
+-    return rc;
+-}
+-
+ /*
+  * get xen backend device, allocate a new one if it doesn't exist.
+  */
+diff --git a/hw/xen/xen_devconfig.c b/hw/xen/xen_devconfig.c
+index 2150869f60..45ae134b84 100644
+--- a/hw/xen/xen_devconfig.c
++++ b/hw/xen/xen_devconfig.c
+@@ -66,11 +66,3 @@ int xen_config_dev_vkbd(int vdev)
+     xen_config_dev_dirs("vkbd", "vkbd", vdev, fe, be, sizeof(fe));
+     return xen_config_dev_all(fe, be);
+ }
+-
+-int xen_config_dev_console(int vdev)
+-{
+-    char fe[256], be[256];
+-
+-    xen_config_dev_dirs("console", "console", vdev, fe, be, sizeof(fe));
+-    return xen_config_dev_all(fe, be);
+-}
+diff --git a/include/hw/xen/xen-legacy-backend.h b/include/hw/xen/xen-legacy-backend.h
+index 943732b8d1..e198b120c5 100644
+--- a/include/hw/xen/xen-legacy-backend.h
++++ b/include/hw/xen/xen-legacy-backend.h
+@@ -50,10 +50,6 @@ void *xen_be_map_grant_refs(struct XenLegacyDevice *xendev, uint32_t *refs,
+ void xen_be_unmap_grant_refs(struct XenLegacyDevice *xendev, void *ptr,
+                              uint32_t *refs, unsigned int nr_refs);
  
- mpc8544ds
-+M: Bernhard Beschow <shentey@gmail.com>
- L: qemu-ppc@nongnu.org
--S: Orphan
-+S: Odd Fixes
- F: hw/ppc/mpc8544ds.c
- F: hw/ppc/mpc8544_guts.c
- F: tests/functional/test_ppc_mpc8544ds.py
+-int xen_be_copy_grant_refs(struct XenLegacyDevice *xendev,
+-                           bool to_domain, XenGrantCopySegment segs[],
+-                           unsigned int nr_segs);
+-
+ static inline void *xen_be_map_grant_ref(struct XenLegacyDevice *xendev,
+                                          uint32_t ref, int prot)
+ {
+@@ -70,6 +66,5 @@ static inline void xen_be_unmap_grant_ref(struct XenLegacyDevice *xendev,
+ void xen_config_cleanup(void);
+ int xen_config_dev_vfb(int vdev, const char *type);
+ int xen_config_dev_vkbd(int vdev);
+-int xen_config_dev_console(int vdev);
+ 
+ #endif /* HW_XEN_LEGACY_BACKEND_H */
 -- 
 2.39.5
 
