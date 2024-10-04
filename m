@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B549CF884E
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 990E9CF884D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:07:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swkn7-000219-Ax; Fri, 04 Oct 2024 12:04:29 -0400
+	id 1swknZ-0002Wv-0U; Fri, 04 Oct 2024 12:04:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1swkmu-0001sQ-LB; Fri, 04 Oct 2024 12:04:17 -0400
+ id 1swknV-0002TT-Ls; Fri, 04 Oct 2024 12:04:53 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1swkmY-0001Wt-0J; Fri, 04 Oct 2024 12:04:16 -0400
+ id 1swknU-0001ev-4w; Fri, 04 Oct 2024 12:04:53 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 06ABF95569;
+ by isrv.corpit.ru (Postfix) with ESMTP id A121995575;
  Fri,  4 Oct 2024 19:03:30 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 40CCA14D977;
+ by tsrv.corpit.ru (Postfix) with SMTP id DB22A14D983;
  Fri,  4 Oct 2024 19:03:32 +0300 (MSK)
-Received: (nullmailer pid 1282515 invoked by uid 1000);
+Received: (nullmailer pid 1282551 invoked by uid 1000);
  Fri, 04 Oct 2024 16:03:32 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, qemu-trivial@nongnu.org,
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 04/23] MAINTAINERS: remove gensyscalls.sh from the linux-user
- section
-Date: Fri,  4 Oct 2024 19:03:12 +0300
-Message-Id: <20241004160331.1282441-5-mjt@tls.msk.ru>
+Subject: [PULL 16/23] hw/pci: Remove unused pcie_chassis_find_slot
+Date: Fri,  4 Oct 2024 19:03:24 +0300
+Message-Id: <20241004160331.1282441-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241004160331.1282441-1-mjt@tls.msk.ru>
 References: <20241004160331.1282441-1-mjt@tls.msk.ru>
@@ -62,29 +61,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <laurent@vivier.eu>
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-The file has been removed by c52e40596834
-("linux-user,loongarch: move to syscalltbl file").
+pcie_chassis_find_slot has been unused since it was added.
 
-Signed-off-by: Laurent Vivier <laurent@vivier.eu>
+Remove it.
+
+Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- MAINTAINERS | 1 -
- 1 file changed, 1 deletion(-)
+ hw/pci/pcie_port.c         | 10 ----------
+ include/hw/pci/pcie_port.h |  1 -
+ 2 files changed, 11 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 4ee2699543..d013db1ccb 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3685,7 +3685,6 @@ F: configs/targets/*linux-user.mak
- F: scripts/qemu-binfmt-conf.sh
- F: scripts/update-syscalltbl.sh
- F: scripts/update-mips-syscall-args.sh
--F: scripts/gensyscalls.sh
+diff --git a/hw/pci/pcie_port.c b/hw/pci/pcie_port.c
+index 20ff2b39e8..9f978ba164 100644
+--- a/hw/pci/pcie_port.c
++++ b/hw/pci/pcie_port.c
+@@ -92,16 +92,6 @@ static PCIESlot *pcie_chassis_find_slot_with_chassis(struct PCIEChassis *c,
+     return s;
+ }
  
- Tiny Code Generator (TCG)
- -------------------------
+-PCIESlot *pcie_chassis_find_slot(uint8_t chassis_number, uint16_t slot)
+-{
+-    struct PCIEChassis *c;
+-    c = pcie_chassis_find(chassis_number);
+-    if (!c) {
+-        return NULL;
+-    }
+-    return pcie_chassis_find_slot_with_chassis(c, slot);
+-}
+-
+ int pcie_chassis_add_slot(struct PCIESlot *slot)
+ {
+     struct PCIEChassis *c;
+diff --git a/include/hw/pci/pcie_port.h b/include/hw/pci/pcie_port.h
+index 90e6cf45b8..7cd7af8cfa 100644
+--- a/include/hw/pci/pcie_port.h
++++ b/include/hw/pci/pcie_port.h
+@@ -72,7 +72,6 @@ struct PCIESlot {
+ };
+ 
+ void pcie_chassis_create(uint8_t chassis_number);
+-PCIESlot *pcie_chassis_find_slot(uint8_t chassis, uint16_t slot);
+ int pcie_chassis_add_slot(struct PCIESlot *slot);
+ void pcie_chassis_del_slot(PCIESlot *s);
+ 
 -- 
 2.39.5
 
